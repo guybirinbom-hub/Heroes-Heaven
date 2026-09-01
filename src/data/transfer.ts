@@ -747,7 +747,12 @@ function importFromWg(obj: any, content: ContentDatabase): ImportResult {
   for (const a of Object.values(content.actions)) if (a.traits?.includes('tactic')) tacIdx.set(norm(a.name), a.id);
   const tacticIds = [...new Set(features.map((f) => tacIdx.get(norm(f.name))).filter((x): x is string => !!x))];
   for (const f of features) if (tacIdx.has(norm(f.name))) accountedFor.add(norm(f.name));
-  const matchedTactics: string[] = cls?.id === 'commander' || cls2?.id === 'commander' ? tacticIds : [];
+  /* …and the ARCHETYPE commander, whose dedication grants the tactics feature and a folio of its own.
+   * Gating on the CLASS alone dropped an imported archetype commander's tactics: they were "accounted
+   * for" as recognised features and then fed to nobody. */
+  const hasCommanderDedication = features.some((f) => norm(f.name) === norm('Commander Dedication'));
+  const matchedTactics: string[] =
+    cls?.id === 'commander' || cls2?.id === 'commander' || hasCommanderDedication ? tacticIds : [];
   if (matchedTactics.length) resolved.push(`${matchedTactics.length} commander tactic${matchedTactics.length === 1 ? '' : 's'} matched.`);
 
   // Key attribute: WG gives final scores; pick the class's best-scoring key option.

@@ -26,7 +26,7 @@
 import { readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { ALLOWED, BUCKET_QUIRK, buildDocIndex, resolveDoc, stripSynthetic } from './lib/aonid-categories.mjs';
+import { ALLOWED, BUCKET_QUIRK, CATEGORY_ABSENT_FROM_EXPORT, buildDocIndex, resolveDoc, stripSynthetic } from './lib/aonid-categories.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const EXPORT = 'C:/trying ai 2/hh-data-export/without-images/data';
@@ -81,7 +81,8 @@ for (const [bucket, recs] of Object.entries(core)) {
     // Resolve FIRST, then judge the category the index actually holds it under — the id prefix is only
     // a hint (`equipment-category-1` lives in category-page.json).
     const { doc, via } = resolveDoc(byId, rec.aonId);
-    const quirk = BUCKET_QUIRK.has(`${bucket}/${id}`);
+    // A per-record quirk, or a whole category this import export predates (see that set's own comment).
+    const quirk = BUCKET_QUIRK.has(`${bucket}/${id}`) || CATEGORY_ABSENT_FROM_EXPORT.has(catOf(rec.aonId));
     const row = { bucket, id, aonId: rec.aonId, name: rec.name, cat: doc?.cat ?? catOf(rec.aonId) };
     if (!doc) { (quirk ? findings.quirk : findings.noDoc).push(row); continue; }
     const allow = ALLOWED[bucket];

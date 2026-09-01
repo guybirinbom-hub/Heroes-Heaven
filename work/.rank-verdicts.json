@@ -1,0 +1,222 @@
+[
+ {
+  "suspect": "lifes-last-breath:paralyze",
+  "verdict": "WRONG-RANK",
+  "printedRank": 9,
+  "fixRow": "{\"category\":\"items\",\"id\":\"lifes-last-breath\",\"field\":\"heldSpells\",\"value\":{\"9\":[\"paralyze\"]}}",
+  "reason": "Unique item, no graded siblings, one page (equipment-659.json) with exactly one paralyze clause: 'Effect You cast a 9th-level paralyze spell on the target' (stored .d renders it '9th-rank Paralyze spell'). Not conditional, not a trigger, not a choice - it is the Reaction activation's own cast rank. Stored heldSpells is {\"3\":[\"paralyze\"]}, i.e. Paralyze's base rank 3, so the printed heightening was dropped. Item level 18 unique artifact-grade rhoka sword, once/day, makes rank 9 plausible. heldSpells holds only this one spell, so the whole corrected map is {\"9\":[\"paralyze\"]}."
+ },
+ {
+  "suspect": "five-feather-wreath-major:wall-of-wind",
+  "verdict": "WRONG-RANK",
+  "printedRank": 4,
+  "fixRow": "{\"category\":\"items\",\"id\":\"five-feather-wreath-major\",\"field\":\"heldSpells\",\"value\":{\"0\":[\"gale-blast\"],\"4\":[\"wall-of-wind\",\"air-walk\"]}}",
+  "reason": "equipment-1013-972.json shares one page across three grades; the MAJOR (Item 12) block's own activation reads 'You cast 4th-level wall of wind' while the GREATER (Item 8) block above reads plain 'You cast wall of wind' (base rank 3). Stored {\"3\":[...]} is the Greater's value leaking into the Major record; the per-variant description in core-descriptions.json for five-feather-wreath-major itself says '4th rank Wall of Wind', so the clause belongs to THIS variant. Corrected map keeps gale-blast (cantrip lane, rank 0) and air-walk (base rank 4, printed unranked in the Major block - unchanged) and moves wall-of-wind to 4."
+ },
+ {
+  "suspect": "grim-sandglass-greater:harm",
+  "verdict": "WRONG-RANK",
+  "printedRank": 2,
+  "fixRow": "{\"category\":\"items\",\"id\":\"grim-sandglass-greater\",\"field\":\"heldSpells\",\"value\":{\"0\":[\"void-warp\"],\"2\":[\"harm\",\"heal\"]}}",
+  "reason": "equipment-1015-977.json, GREATER (Item 8) block: 'You cast 2nd-level harm or heal' - the Major block's separate '4th-level harm or heal' belongs to the sibling and is not what I used. The greater's own stored .d confirms '2nd-rank Harm or Heal'. Stored {\"1\":[\"harm\",\"heal\"]} is just the base rank of both spells. NOTE: the '2nd-level' modifier governs BOTH spells in the single 'harm or heal' choice clause, so the restated value moves heal to 2 as well; if heal is also someone else's suspect the identical value makes the rows idempotent. void-warp stays in the rank-0 cantrip lane."
+ },
+ {
+  "suspect": "grim-sandglass-major:harm",
+  "verdict": "WRONG-RANK",
+  "printedRank": 4,
+  "fixRow": "{\"category\":\"items\",\"id\":\"grim-sandglass-major\",\"field\":\"heldSpells\",\"value\":{\"0\":[\"void-warp\"],\"4\":[\"harm\",\"heal\",\"restoration\",\"whispers-of-the-void\"]}}",
+  "reason": "equipment-1015-978.json, MAJOR (Item 12) block: 'You cast 4th-level harm or heal'; the 2nd-level version is the Greater sibling's clause, and spellheart grades restate rather than stack, so the Major record should not carry a rank-1 or rank-2 harm/heal at all. Stored {\"1\":[\"harm\",\"heal\"]} is base rank. The existing rank-4 entries are already right and are preserved: restoration (base rank 2, printed '4th-level restoration' - already heightened correctly, proof this dataset does encode printed heightenings) and whispers-of-the-void (remastered enervation, base rank 4, printed unranked). Again the '4th-level' governs both harm and heal in the one choice clause."
+ },
+ {
+  "suspect": "perfect-droplet-major:aqueous-orb",
+  "verdict": "WRONG-RANK",
+  "printedRank": 4,
+  "fixRow": "{\"category\":\"items\",\"id\":\"perfect-droplet-major\",\"field\":\"heldSpells\",\"value\":{\"0\":[\"spout\"],\"4\":[\"aqueous-orb\",\"feet-to-fins\",\"hydraulic-torrent\"]}}",
+  "reason": "equipment-1016-981.json, MAJOR (Item 12) block: 'You cast 4th-level aqueous orb or feet to fins'; the GREATER (Item 8) block prints them unranked (base rank 3), which is exactly the stored {\"3\":[\"aqueous-orb\",\"feet-to-fins\"]} - the Greater's value on the Major record. perfect-droplet-major's own .d says '4th-rank Aqueous Orb or Feet to Fins', so the clause is this variant's. Both spells sit in one 'or' choice clause under the same 4th-level modifier, so both move. hydraulic-torrent (base rank 4, printed unranked in the Major block) is already correct at 4 and is preserved in the same key; spout stays in the rank-0 cantrip lane."
+ },
+ {
+  "suspect": "dawnlight-major:holy-light",
+  "verdict": "WRONG-RANK",
+  "printedRank": 4,
+  "fixRow": "{\"category\":\"items\",\"id\":\"dawnlight-major\",\"field\":\"heldSpells\",\"value\":{\"0\":[\"vitality-lash\",\"light\"],\"4\":[\"holy-light\",\"vital-beacon\"]}}",
+  "reason": "equipment-1534-1454.json, MAJOR (Item 11) block: 'Change the list of spells to 5th-level versions of disrupt undead and light, and 4th-level versions of searing light and vital beacon.' searing light is remastered holy-light (base rank 3). The GREATER (Item 7) block says '3rd-level versions of disrupt undead, light, and searing light' - that 3 is the sibling's value and is what is currently stored, so the Major record is carrying the Greater's rank. dawnlight-major's own .d confirms '4th-rank Holy Light or Vital Beacon'. Deliberately conservative on the rest: vitality-lash and light are printed at '5th-level versions' but are cantrips, and this codex stores cantrips in the rank-0 lane (the check's own isCantrip guard exempts them), so I leave {\"0\":[\"vitality-lash\",\"light\"]} untouched rather than invent a rank-5 cantrip key. vital-beacon (base rank 4, printed 4th) is already correct and preserved; the now-empty \"3\" key is dropped."
+ },
+ {
+  "suspect": "oculus-of-abaddon:suggestion",
+  "verdict": "CORRECT-AS-STORED",
+  "reason": "The '8th level' number belongs to a DIFFERENT spell in a conditional drawback, not to this item's suggestion. equipment-1747.json: 'if you aren't evil, each time you activate an oculus of Abaddon, you must succeed at a DC 36 Will save or become affected by a subconscious suggestion (heightened to 8th level)' - that is Subconscious Suggestion (AoN spell 314, base rank 5, a separate id 'subconscious-suggestion' in core.json), a penalty the item inflicts on the wielder, not a spell it grants; the name lane matched only because 'subconscious suggestion' ends in 'suggestion'. The clause that actually concerns Suggestion (AoN spell 315) is the once-per-year activation: 'This functions as suggestion, but with a range of 1 mile' - no rank printed, so base rank 4 applies, which is exactly what heldSpells stores. Shape to teach the check: skip a reversed/heightened match whose matched name is a proper suffix of a longer adjacent spell name ('subconscious suggestion', 'subconscious weakness'), and treat 'must succeed at a save or become affected by X' as a drawback clause rather than a cast. SEPARATE NOTE (not my suspects, no fixRow emitted so no collision): the same item stores scrying and binding-circle at 6 while its own text says 'Scrying, heightened to 7th level' and 'Binding Circle ritual, heightened to 7th level' - those two look like genuine rank-7 misses and, per the one-fixRow-per-field rule, whoever owns them must restate the whole map as {\"2\":[\"darkvision\"],\"4\":[\"suggestion\"],\"7\":[\"scrying\",\"binding-circle\"]} with suggestion left at 4."
+ },
+ {
+  "suspect": "jaws-of-the-grogrisant:telepathy",
+  "verdict": "WRONG-RANK",
+  "printedRank": 6,
+  "reason": "AoN equipment-3780 (Item 17, Shining Kingdoms pg. 173) Activate—Primal Empathy: \"You cast telepathy at 6th rank, which can only be used to communicate with creatures that have the primal trait.\" The trailing clause is a USE restriction (who you may talk to), not a rank condition, so 6th rank binds unconditionally. Not a graded item — single page, single block, no sibling to borrow from. Carrier is items.jaws-of-the-grogrisant.heldSpells, currently {\"4\":[\"telepathy\"]} — that 4 is merely Telepathy's base rank (core.spells.telepathy.rank=4), i.e. the importer never read the heightening. telepathy is the only spell in the map.",
+  "fixRow": "{\"category\":\"items\",\"id\":\"jaws-of-the-grogrisant\",\"field\":\"heldSpells\",\"value\":{\"6\":[\"telepathy\"]}}"
+ },
+ {
+  "suspect": "shadow-shroud:darkness",
+  "verdict": "WRONG-RANK",
+  "printedRank": 4,
+  "reason": "AoN equipment-3822 (Item 10, Battlecry! pg. 123) Activate—Shroud: \"You cast darkness as a 4th-rank spell centered on you.\" Independently corroborated by the item's own Craft Requirements: \"Supply a casting of darkness (4th rank).\" Two printed statements of 4, zero of 2. Not graded — one page, one variant. Carrier is items.shadow-shroud.heldSpells, currently {\"2\":[\"darkness\"]}, which is just core.spells.darkness.rank=2 (base rank) — the reversed-prose heightening was missed. darkness is the only spell in the map.",
+  "fixRow": "{\"category\":\"items\",\"id\":\"shadow-shroud\",\"field\":\"heldSpells\",\"value\":{\"4\":[\"darkness\"]}}"
+ },
+ {
+  "suspect": "gravediggers-call:rouse-skeletons",
+  "verdict": "WRONG-RANK",
+  "printedRank": 5,
+  "reason": "AoN equipment-3846 (Item 12, Battlecry! pg. 127) Activate—Call the Fallen: \"You cast rouse skeletons as a 5th-rank occult spell. The DC is 30.\" Corroborated by Craft Requirements: \"Supply one casting of rouse skeletons (5th rank).\" Not graded — single variant page. Carrier is items.gravediggers-call.heldSpells, currently {\"3\":[\"rouse-skeletons\"]}, equal to core.spells.rouse-skeletons.rank=3 (base rank), so the stored value is the un-heightened default rather than the printed cast rank. rouse-skeletons is the only spell in the map.",
+  "fixRow": "{\"category\":\"items\",\"id\":\"gravediggers-call\",\"field\":\"heldSpells\",\"value\":{\"5\":[\"rouse-skeletons\"]}}"
+ },
+ {
+  "suspect": "telekinetic-converters:telekinetic-maneuver",
+  "verdict": "WRONG-RANK",
+  "printedRank": 5,
+  "reason": "AoN equipment-4033 (Item 12, Gatewalkers pg. 235) Activate—Over Matter / \"Mind Over Matter\": \"You cast your choice of telekinetic haul or telekinetic maneuver as a 5th-rank occult spell.\" I checked this against the two documented false-positive guards and neither applies: the \"or\" is a choice of SPELL, not of rank (unlike the-mountain-man's \"2nd-rank or 4th-rank\"), and the \"unexpended spell slot of 5th rank or higher\" is in Requirements — a trigger, not the cast rank — while the Effect line states 5th rank outright. The sibling activation (Mental Fling) casts telekinetic projectile as a cantrip \"heightened to a spell rank equal to half your level\", which is level-dependent and correctly stays at key 0. Carrier is items.telekinetic-converters.heldSpells = {\"0\":[\"telekinetic-projectile\"],\"2\":[\"telekinetic-maneuver\"],\"5\":[\"telekinetic-haul\"]}. Note the map is self-contradictory today: haul, cast by the SAME sentence, is already stored at 5, while maneuver sits at 2 (= core.spells.telekinetic-maneuver.rank, its base). The fix merges maneuver into the existing rank-5 array and drops the now-empty \"2\" key, preserving telekinetic-projectile at 0 and telekinetic-haul at 5.",
+  "fixRow": "{\"category\":\"items\",\"id\":\"telekinetic-converters\",\"field\":\"heldSpells\",\"value\":{\"0\":[\"telekinetic-projectile\"],\"5\":[\"telekinetic-haul\",\"telekinetic-maneuver\"]}}"
+ },
+ {
+  "suspect": "pickled-demon-tongue-greater:acidic-burst",
+  "verdict": "WRONG-RANK",
+  "printedRank": 3,
+  "reason": "Graded family — I isolated THIS variant's block. AoN equipment-2414-2218 is the shared 2414 page; under the <title level=\"2\" right=\"Item 8\"> Pickled Demon Tongue (Greater) heading its own block reads: \"Resistance when affixed to armor is 5, extra damage ... is 1d6, the spell attack roll is +14, and the spell DC is 24. Activate ... Effect You cast 3rd-level acidic burst.\" Those numbers (5 / 1d6 / +14 / DC 24) match core.json's stored passiveEffects and effectChoices for the GREATER record exactly, confirming I read the right sibling; the Major block below says 4th-level and the base Item 3 block has no acidic burst at all. The codex's own per-variant prose is not shared here either — core-descriptions.items.pickled-demon-tongue-greater.d ends \"You cast 3rd-rank Acidic Burst\", full stop, with no Major clause. This is NOT a self-heightening \"heightened to\" clause about higher grades of the item; it is this grade's fixed cast rank. Carrier is items.pickled-demon-tongue-greater.heldSpells = {\"0\":[\"caustic-blast\"],\"1\":[\"acidic-burst\"]}; the stored 1 is exactly Acidic Burst's base rank (core.spells.acidic-burst.rank=1, confirmed against archive spell-2340 \"Spell 1\"), so the +2 heightening was dropped. caustic-blast at key 0 comes from the shared base body's unranked \"You cast acid splash / Caustic Blast\" and is not flagged — preserved unchanged.",
+  "fixRow": "{\"category\":\"items\",\"id\":\"pickled-demon-tongue-greater\",\"field\":\"heldSpells\",\"value\":{\"0\":[\"caustic-blast\"],\"3\":[\"acidic-burst\"]}}"
+ },
+ {
+  "suspect": "pickled-demon-tongue-major:acidic-burst",
+  "verdict": "WRONG-RANK",
+  "printedRank": 4,
+  "reason": "Graded family — THIS variant's block on the shared 2414 page is under <title level=\"2\" right=\"Item 12\"> Pickled Demon Tongue (Major): \"Resistance ... is 10, extra damage ... is 1d8, the spell attack roll is +19, and the spell DC is 29\", then TWO separate once-per-day activations: \"You cast 4th-level acid arrow\" and \"You cast 4th-level acidic burst.\" The 10 / 1d8 / +19 / DC 29 line matches the Major record's stored passiveEffects and effectChoices, so this is the correct sibling; the Greater block's \"3rd-level\" belongs to the Item 8 record, not this one, and the Major block supersedes rather than stacks with it. Corroborated by the two counters (freq, freq2) already stored on this record for the two activations. Carrier is items.pickled-demon-tongue-major.heldSpells = {\"0\":[\"caustic-blast\"],\"1\":[\"acidic-burst\"],\"4\":[\"acid-grip\"]}. Here too the map is internally inconsistent: acid-grip (remaster of acid arrow) is already correctly at 4 from the sibling activation of the same block, while acidic-burst sits at its base rank 1. The fix merges acidic-burst into the existing rank-4 array, drops the emptied \"1\" key, and preserves caustic-blast at 0 and acid-grip at 4.",
+  "fixRow": "{\"category\":\"items\",\"id\":\"pickled-demon-tongue-major\",\"field\":\"heldSpells\",\"value\":{\"0\":[\"caustic-blast\"],\"4\":[\"acid-grip\",\"acidic-burst\"]}}"
+ },
+ {
+  "suspect": "polished-demon-horn-greater:fear",
+  "verdict": "WRONG-RANK",
+  "printedRank": 3,
+  "reason": "Graded family — AoN equipment-2415-2221 is the shared 2415 page; THIS variant's block is under <title level=\"2\" right=\"Item 8\"> Polished Demon Horn (Greater): \"Resistance when affixed to armor is 5, extra damage ... is 1d6, and the spell DC is 24. Activate ... Frequency once per day; Effect You cast 3rd-level fear.\" The 5 / 1d6 / DC 24 line matches the Greater record's stored passiveEffects and effectChoices, so this is its own block, not the Major's (which casts agonizing despair and outcast's curse and never mentions fear) nor the base Item 3 block (daze only, unranked). Codex prose is per-variant and agrees: core-descriptions.items.polished-demon-horn-greater.d ends \"You cast 3rd-rank Fear\". Carrier is items.polished-demon-horn-greater.heldSpells = {\"0\":[\"daze\"],\"1\":[\"fear\"]}; the stored 1 is Fear's base rank (core.spells.fear.rank=1, confirmed against archive spell-1524 \"Spell 1\"), so the printed +2 heightening was lost. daze at key 0 is the shared base body's unranked cantrip activation, not flagged — preserved unchanged.",
+  "fixRow": "{\"category\":\"items\",\"id\":\"polished-demon-horn-greater\",\"field\":\"heldSpells\",\"value\":{\"0\":[\"daze\"],\"3\":[\"fear\"]}}"
+ },
+ {
+  "suspect": "oculus-of-abaddon:scrying",
+  "verdict": "WRONG-RANK",
+  "printedRank": 7,
+  "fixRow": "{\"category\":\"items\",\"id\":\"oculus-of-abaddon\",\"field\":\"heldSpells\",\"value\":{\"2\":[\"darkvision\"],\"4\":[\"suggestion\"],\"7\":[\"scrying\",\"binding-circle\"]}}",
+  "reason": "AoN equipment-1747 (single-item page, no graded siblings) prints the 10-minute envision activation as: 'Effect You gain the effects of scrying, heightened to 7th level.' That clause is attached to the oculus's OWN casting, not to a condition or trigger. Carrier is items['oculus-of-abaddon'].heldSpells, currently keying scrying under \"6\" (scrying's base rank, i.e. the importer never read the heightening qualifier). The other rank-bearing prose on the page belongs elsewhere and is correctly NOT this spell: 'subconscious suggestion (heightened to 8th level)' is the non-evil-wielder curse and maps to a different spell id; 'creatures that are 7th level or higher' is a creature level gate on the once-per-year mass suggestion. Stored suggestion=4 and darkvision=2 are correct and are preserved verbatim in the fixRow. NOTE: this item holds two flagged spells, so the single fixRow above carries BOTH corrections for the heldSpells field — key \"6\" disappears entirely and both scrying and binding-circle move to \"7\"."
+ },
+ {
+  "suspect": "oculus-of-abaddon:binding-circle",
+  "verdict": "WRONG-RANK",
+  "printedRank": 7,
+  "fixRow": "{\"category\":\"items\",\"id\":\"oculus-of-abaddon\",\"field\":\"heldSpells\",\"value\":{\"2\":[\"darkvision\"],\"4\":[\"suggestion\"],\"7\":[\"scrying\",\"binding-circle\"]}}",
+  "reason": "AoN equipment-1747 prints the once-per-week Cast a Spell activation as: 'You use the oculus of Abaddon to cast a planar binding ritual, heightened to 7th level.' The codex's own core-descriptions text carries the remastered name for the same clause: 'You use the oculus of Abaddon to cast a Binding Circle ritual, heightened to 7th level.' So binding-circle IS the right spell id (core.spells['binding-circle'].rank = 6, matching Planar Binding's base rank 6) and the heightening binds the item's own casting directly — not a sibling, not a conditional. Carrier items['oculus-of-abaddon'].heldSpells currently stores it under \"6\" (the base rank). Same fixRow as the scrying finding: one row must carry all corrections for this field, so it restates the whole corrected map including darkvision/suggestion."
+ },
+ {
+  "suspect": "ring-of-bestial-friendship:charm",
+  "verdict": "WRONG-RANK",
+  "printedRank": 4,
+  "fixRow": "{\"category\":\"items\",\"id\":\"ring-of-bestial-friendship\",\"field\":\"heldSpells\",\"value\":{\"4\":[\"charm\"]}}",
+  "reason": "AoN equipment-1749 is a single unique item (no graded variants). Its only activation reads: 'Effect You cast charm (heightened to 4th level) on an animal or beast within 30 feet.' The heightening is on the ring's own casting; the surrounding cursed-item prose (Nyrissa scrying through the wearer, the 6d6 lightning explosion, the enraged-creature aftermath) carries no competing rank. Carrier items['ring-of-bestial-friendship'].heldSpells stores charm under \"1\" (charm's base rank). heldSpells has no other entries, so the whole corrected value is just {\"4\":[\"charm\"]}. This matters mechanically: charm is an incapacitation spell, so the stored rank drives the incapacitation gate as well as the counteract rank."
+ },
+ {
+  "suspect": "cube-of-nex:antimagic-field",
+  "verdict": "WRONG-RANK",
+  "printedRank": 10,
+  "fixRow": "{\"category\":\"items\",\"id\":\"cube-of-nex\",\"field\":\"heldSpells\",\"value\":{\"6\":[\"wall-of-force\"],\"10\":[\"antimagic-field\"]}}",
+  "reason": "Checked the sibling explicitly. items['cube-of-nex'].aonId = equipment-1805 = the level-25 'Cube of Nex', which is its OWN page, distinct from equipment-1804 'Lesser Cube of Nex' (level 20), stored separately as items['lesser-cube-of-nex'] (which has no heldSpells at all). Page 1805's body: 'The Cube of Nex acts as a Lesser Cube of Nex except it suppresses all magic within 5 feet of it with the effects of a 10th-level antimagic field spell, instead of just one school.' The codex description matches: '...with the effects of a 10th-rank Antimagic Field spell.' So 10 is this record's own printed rank, not a sibling's borrowed number (the Lesser's clause also says 10th-level, but scoped to one school — either way nothing in print supports 8). Carrier items['cube-of-nex'].heldSpells stores antimagic-field under \"8\" (the spell's base rank; artifacts legitimately exceed rank 8). wall-of-force at \"6\" comes from the cube-of-force chassis, has no contradicting clause, and is preserved in the restated value."
+ },
+ {
+  "suspect": "reef-heart-greater:coral-eruption",
+  "verdict": "WRONG-RANK",
+  "printedRank": 7,
+  "fixRow": "{\"category\":\"items\",\"id\":\"reef-heart-greater\",\"field\":\"heldSpells\",\"value\":{\"7\":[\"coral-eruption\"]}}",
+  "reason": "This is the graded-variant case, so I isolated THIS variant's block. equipment-1851 is an 'Item 12+' page holding two grade blocks; items['reef-heart-greater'].aonId = equipment-1851-1610, the level-15 Greater. The shared body's activation says only 'You cast coral eruption' with no rank, and the trailing block that follows the 'Reef Heart (Greater), Item 15' title reads: 'The reef heart is +2 greater resilient coral armor, the swim Speed is equal to your full land Speed, and the coral eruption is 7th level.' The +2 GREATER resilient and full-Speed swim in that same sentence are the Greater's stats (base is +2 resilient, half Speed), which pins the sentence to the Greater grade rather than the base. Confirmed against the codex's per-variant text too: reef-heart-greater's description says 'You cast a 7th rank Coral Eruption' while base reef-heart (equipment-1851-1609) has NO rank clause at all — so base staying at 4 is right and only the Greater is wrong. Carrier items['reef-heart-greater'].heldSpells stores coral-eruption under \"4\" (base rank), identical to the base variant; heldSpells holds nothing else."
+ },
+ {
+  "suspect": "artificer-spectacles:mending",
+  "verdict": "WRONG-RANK",
+  "printedRank": 3,
+  "fixRow": "{\"category\":\"items\",\"id\":\"artificer-spectacles\",\"field\":\"heldSpells\",\"value\":{\"3\":[\"mending\"]}}",
+  "reason": "AoN equipment-2134 is a single apex item with exactly one activation: 'Activate (two actions, manipulate) Frequency once per hour; Effect You cast a 3rd-rank mending spell on an item you touch.' Explicit forward 'Nth-rank <Spell>' bound to the item's own casting — not a trigger threshold ('at Nth rank or higher'), not a player choice, not a later boon stage. No graded siblings share this page. Carrier items['artificer-spectacles'].heldSpells stores mending under \"1\" (base rank). heldSpells has no other entries. The rank is load-bearing here: mending's repairable Hit Points and item-level cap scale with rank, so a 1st-rank mending repairs far less than the printed 3rd-rank one."
+ },
+ {
+  "suspect": "kindled-tome:fireball",
+  "verdict": "WRONG-RANK",
+  "printedRank": 5,
+  "fixRow": "{\"category\":\"items\",\"id\":\"kindled-tome\",\"field\":\"heldSpells\",\"value\":{\"5\":[\"fireball\"]}}",
+  "reason": "I checked the inherited-chassis escape hatch and it does not apply. equipment-2397 says 'In addition to the activation of a book of lingering blazes, a kindled tome has the following activations', so I read the parent (equipment-990, Book of Lingering Blaze): its sole activation is a single-action metamagic that lets a prepared fire evocation ignore up to 10 fire resistance — it casts NO spell and holds no fireball. Therefore the stored \"3\" cannot be an inherited parent casting; it is just fireball's base rank. The kindled tome's own second activation prints: 'Effect The tome casts fireball at 5th level to your specifications' (codex description: 'The tome casts Fireball at 5th rank'). The tome's other activation is a reaction that adds 2d6 persistent fire and carries no rank. Carrier items['kindled-tome'].heldSpells has only this one entry, so the whole corrected value is {\"5\":[\"fireball\"]}."
+ },
+ {
+  "suspect": "polished-demon-horn-major:fear",
+  "verdict": "WRONG-RANK",
+  "printedRank": 3,
+  "reason": "AoN equipment-2415-2222 is the shared graded page, but the Major's OWN carrier text is per-variant here and binds 3: the base .d has only daze, the Greater .d has daze + '3rd-rank Fear', and the Major .d restates 'You cast 3rd-rank Fear ()' alongside its own Outcast's Curse and Vision of Death activations. On the AoN page the Greater (Item 8) block prints 'You cast 3rd-level fear' and the Major (Item 12) block adds agonizing despair + outcast's curse without overriding fear, so the Major inherits the 3rd-level fear activation. Carrier is items['polished-demon-horn-major'].heldSpells, currently key '1' (fear's native rank 1) - the printed heightening was never applied. Not a sibling-clause false positive and not a heightened-to-a-higher-grade clause. Note: polished-demon-horn-greater has the identical bug (stores fear at 1, prints 3rd-rank) but is outside this suspect list.",
+  "fixRow": "{\"category\":\"items\",\"id\":\"polished-demon-horn-major\",\"field\":\"heldSpells\",\"value\":{\"0\":[\"daze\"],\"3\":[\"fear\"],\"4\":[\"outcasts-curse\",\"vision-of-death\"]}}"
+ },
+ {
+  "suspect": "razmiri-mask-gold:sunburst",
+  "verdict": "WRONG-RANK",
+  "printedRank": 8,
+  "reason": "The AoN mirror has NO page for the gold variant - items['razmiri-mask-gold'].aonId points at equipment-3593, which is the base iron Razmiri Mask (Item 2) and mentions gold/porcelain only as flavor ('can be made of silver, gold, or even porcelain'), with no sunburst activation anywhere on it. The variant's printed Divine Mysteries pg. 290 text lives in the codex description and is per-variant, not shared: it opens 'A gold Razmiri mask grants a +3 item bonus to Deception...' and its Call Upon Razmir's Wrath block reads 'You cast Sunburst as an 8th-rank occult spell, but for undead targets the spell has the incapacitation trait.' The 8th-rank qualifier is unconditional; only the incapacitation rider is conditional. Carrier is heldSpells key '7' (sunburst's native rank 7). Cleanse Affliction at key '2' is correct-as-stored (its rank is 'equal to half your level', level-dependent) and must be preserved in the restated map.",
+  "fixRow": "{\"category\":\"items\",\"id\":\"razmiri-mask-gold\",\"field\":\"heldSpells\",\"value\":{\"2\":[\"cleanse-affliction\"],\"8\":[\"sunburst\"]}}"
+ },
+ {
+  "suspect": "razmiri-mask-porcelain:sunburst",
+  "verdict": "WRONG-RANK",
+  "printedRank": 8,
+  "reason": "Same as the gold mask, on its own separate per-variant block. aonId equipment-3593 is again the base iron Item 2 page with no sunburst text; no gold/porcelain page exists anywhere in the AoN equipment mirror (grep for 'razmir' returns only equipment-3593 plus unrelated equipment-470* material entries). The porcelain variant's own printed text opens 'A porcelain Razmiri mask grants a +4 item bonus...' and its Call Upon Razmir's Wrath block independently states 'You cast Sunburst as an 8th-rank occult spell'. Carrier is heldSpells key '7'. The other two entries are correct and preserved: cleanse-affliction at '2' (half-your-level, level-dependent) and manifestation at '10' (Power of the Living God prints 'as a 10th-rank occult spell').",
+  "fixRow": "{\"category\":\"items\",\"id\":\"razmiri-mask-porcelain\",\"field\":\"heldSpells\",\"value\":{\"2\":[\"cleanse-affliction\"],\"8\":[\"sunburst\"],\"10\":[\"manifestation\"]}}"
+ },
+ {
+  "suspect": "sack-of-hydras-teeth:rouse-skeletons",
+  "verdict": "WRONG-RANK",
+  "printedRank": 5,
+  "reason": "AoN equipment-3943 (Battlecry! pg. 146) is a single ungraded Item 12 with no variant siblings, so there is no sibling-block ambiguity. Its Fist Full of Fangs activation prints 'casting rouse skeletons as a 5th-rank spell (DC 30)' - unconditional, not a trigger threshold, not a choice list, not a later-stage clause. Carrier is items['sack-of-hydras-teeth'].heldSpells key '3', which is rouse skeletons' native rank, so the printed heightening was never applied. The Sow a Tooth activation's phantasmal-minion at key '1' is correct as stored (native rank 1, no printed qualifier) and is preserved in the restated map.",
+  "fixRow": "{\"category\":\"items\",\"id\":\"sack-of-hydras-teeth\",\"field\":\"heldSpells\",\"value\":{\"1\":[\"phantasmal-minion\"],\"5\":[\"rouse-skeletons\"]}}"
+ },
+ {
+  "suspect": "storm-flash:lightning-bolt",
+  "verdict": "WRONG-RANK",
+  "printedRank": 6,
+  "fixRow": "{\"category\":\"items\",\"id\":\"storm-flash\",\"field\":\"heldSpells\",\"value\":{\"6\":[\"lightning-bolt\"]}}",
+  "reason": "AoN equipment-2873-2706 (Storm Flash, Item 14, the base grade whose own Item 14 / 4,000 gp block owns the shared 'Item 14+' body): 'Activate-Lighting Stab ... Effect You cast a 6th-rank lightning bolt (DC 33).' The Greater's separate Item 18 block is the only place 8 appears, so 6 is this record's own clause. Carrier is items['storm-flash'].heldSpells, currently {\"3\":[\"lightning-bolt\"]} - 3 is just Lightning Bolt's natural spell rank (core.spells['lightning-bolt'].rank === 3), i.e. the importer's fallback, not the printed cast rank. Repo description for this record also reads 'You cast a 6th-rank Lightning Bolt (DC 33)'. Map holds no other spell, so the whole corrected value is {\"6\":[\"lightning-bolt\"]}. Dice impact: 6th-rank Lightning Bolt is 8d12 vs 4d12 at 3rd."
+ },
+ {
+  "suspect": "storm-flash-greater:lightning-bolt",
+  "verdict": "WRONG-RANK",
+  "printedRank": 8,
+  "fixRow": "{\"category\":\"items\",\"id\":\"storm-flash-greater\",\"field\":\"heldSpells\",\"value\":{\"8\":[\"lightning-bolt\"]}}",
+  "reason": "AoN equipment-2873-2707, the Item 18 / 21,000 gp block (this variant's own): 'This is a +3 greater striking greater shock rapier. When activating the sword to cast lightning bolt, the spell is 8th rank (DC 38).' The '6th-rank lightning bolt' sentence higher on the shared page is the base grade's, so the flag's printed 6 undershoots - the binding rank for THIS record is 8. Carrier items['storm-flash-greater'].heldSpells = {\"3\":[\"lightning-bolt\"]} (again the spell's natural rank 3, not a printed value); repo description for this record already says 'You cast a 8th-rank Lightning Bolt (DC 38)'. No other spells in the map."
+ },
+ {
+  "suspect": "necklace-of-allure:charm",
+  "verdict": "WRONG-RANK",
+  "printedRank": 4,
+  "fixRow": "{\"category\":\"items\",\"id\":\"necklace-of-allure\",\"field\":\"heldSpells\",\"value\":{\"4\":[\"charm\"]}}",
+  "reason": "AoN equipment-3012 is a single-grade page (Item 17, no sibling blocks, no 'Item N+' family header), so there is no variant confusion: 'Activate-Win Them Over Two Actions (concentrate) Frequency once per hour; Effect You cast a 4th-rank charm spell (DC 38).' Carrier items['necklace-of-allure'].heldSpells = {\"1\":[\"charm\"]}, and 1 is exactly core.spells['charm'].rank - the base-rank fallback. 4th-rank Charm is the whole point of the activation (it beats the incapacitation trait against most level-17-appropriate targets), so this is mechanics, not flavour. Map holds only charm."
+ },
+ {
+  "suspect": "pendant-of-the-occult-greater:dream-message",
+  "verdict": "WRONG-RANK",
+  "printedRank": 4,
+  "fixRow": "{\"category\":\"items\",\"id\":\"pendant-of-the-occult-greater\",\"field\":\"heldSpells\",\"value\":{\"0\":[\"guidance\"],\"4\":[\"dream-message\"]}}",
+  "reason": "AoN equipment-3098-3043, the Item 9 / 650 gp block (Pendant of the Occult (Greater), this variant's own text): 'The pendant grants a +2 item bonus and can be activated. Activate-Dream Message ... Effect You cast a 4th-rank dream message spell.' The Item 3 base block grants no activation at all, so nothing here belongs to a sibling. Carrier items['pendant-of-the-occult-greater'].heldSpells = {\"0\":[\"guidance\"],\"3\":[\"dream-message\"]}; the 3 is core.spells['dream-message'].rank (base-rank fallback). Guidance is a cantrip granted by the shared body and must survive, hence the whole restated value keeps \"0\":[\"guidance\"]."
+ },
+ {
+  "suspect": "mask-of-the-mantis-greater:darkvision",
+  "verdict": "WRONG-RANK",
+  "printedRank": 5,
+  "fixRow": "{\"category\":\"items\",\"id\":\"mask-of-the-mantis-greater\",\"field\":\"heldSpells\",\"value\":{\"5\":[\"darkvision\",\"see-the-unseen\"]}}",
+  "reason": "AoN equipment-3497-3390, the Item 11 / 1,350 gp block (Mask of the Mantis (Greater), this variant's own): 'The item bonus to Perception and Intimidation is +2. When you Enhance Vision, the darkvision spell or see the unseen spell is heightened to 5th-rank.' This is a per-variant 'heightened to' clause about what THIS grade does, and the stored {\"2\":[\"darkvision\",\"see-the-unseen\"]} is the base grade's value (2 is also both spells' natural rank), so it is the base's number sitting on the greater's record. NOTE the same one sentence binds BOTH spells, and see-the-unseen escaped the checker only because the reversed-prose regex needs the rank adjacent to the spell name - so the corrected whole value moves both to 5 (5th-rank Darkvision = greater darkvision; 5th-rank See the Unseen). Carrier is heldSpells only; no innateSpells/spellSlot/resonant on this record."
+ },
+ {
+  "suspect": "mask-of-the-mantis-major:darkvision",
+  "verdict": "ASK-OWNER",
+  "reason": "Genuine print gap, not a data error I can settle. In AoN equipment-3497-3391 the '...heightened to 5th-rank' sentence sits in the Item 11 (Greater) block; the Major's OWN Item 18 / 19,000 gp block reads only 'The item bonus to Perception and Intimidation is +3.' plus the new Activate-Locate Target (pinpoint) - it neither restates nor revokes the Enhance Vision heightening. Two defensible readings: (a) variants state their deltas from the BASE (the corpus convention - grim-sandglass, perfect-droplet, dawnlight, five-feather-wreath all restate a rank per grade), so silence = base = 2nd rank, which is what is stored; (b) grades are cumulative, so a level-18 mask cannot cast a WEAKER darkvision than its level-11 sibling, giving 5th. This is not a sibling-page artefact I can teach the checker away, because this record's OWN composed description in public/core-descriptions.json already reads 'You cast either a 5th-rank Darkvision or See the Unseen on yourself' - so the record currently contradicts itself (text says 5, heldSpells says 2) whichever way the owner rules. If the owner picks reading (b), the corrected whole value is {\"5\":[\"darkvision\",\"see-the-unseen\"],\"8\":[\"pinpoint\"]} for items['mask-of-the-mantis-major'].heldSpells (pinpoint stays at 8, its printed/natural rank); if reading (a), the stored 2 stands and the description should be corrected instead. I am deliberately not supplying an applyable fixRow so this is not auto-applied."
+ },
+ {
+  "suspect": "lions-call:locate",
+  "verdict": "WRONG-RANK",
+  "printedRank": 5,
+  "fixRow": "{\"category\":\"items\",\"id\":\"lions-call\",\"field\":\"heldSpells\",\"value\":{\"5\":[\"locate\"]}}",
+  "reason": "AoN equipment-3777 is a single-grade page (Item 10, Shining Kingdoms pg. 173 - no variant blocks at all): 'Activate-Find the Pride Three Actions (arcane, concentrate, manipulate) Frequency once per day; Effect You cast locate at 5th rank to learn the location of one of the following...'. Reversed-prose shape but unconditional and unquestionably this record's own clause. Carrier items['lions-call'].heldSpells = {\"3\":[\"locate\"]} = core.spells['locate'].rank, the base-rank fallback. The rank is load-bearing: Locate at 5th rank is what lets it find a specific creature/person (a Lion Blade agent, kith, or another lion's call bearer) rather than only an object type. Map holds only locate."
+ }
+]

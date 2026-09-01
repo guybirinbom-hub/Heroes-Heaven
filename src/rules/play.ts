@@ -145,6 +145,16 @@ export interface PlayState {
   /** Commander tactics prepared today (subset of the folio, up to preparedMax); reset on rest. */
   preparedTactics?: string[];
   /**
+   * Runesmith runes currently etched (subset of the repertoire, up to etchedMax).
+   *
+   * ⚠ NOT reset on rest, unlike its sibling `preparedTactics`. The printed rule is explicit that these
+   * outlast a night: *"Your etched runes remain indefinitely until they are expended or removed or
+   * until you etch more runes than your maximum, which causes your oldest rune to fade."* Re-etching is
+   * merely *allowed* each morning — *"You can etch any number of runes up to your maximum during your
+   * daily preparations or by spending 10 minutes in exploration mode"* — not required.
+   */
+  etchedRunes?: string[];
+  /**
    * Spell Blending trades made during this morning's preparation, per spellcasting entry.
    *
    * A ledger of references, not a rewritten slot table: slot counts stay build-derived, and a trade
@@ -613,6 +623,14 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
             .slice(0, ch.commanderTactics.preparedMax),
         }
       : ch.commanderTactics,
+    runicRepertoire: ch.runicRepertoire
+      ? {
+          ...ch.runicRepertoire,
+          etched: (play.etchedRunes ?? [])
+            .filter((id) => ch.runicRepertoire!.known.includes(id))
+            .slice(0, ch.runicRepertoire.etchedMax),
+        }
+      : ch.runicRepertoire,
   };
 }
 
@@ -1657,6 +1675,20 @@ export function toggleTactic(play: PlayState, tacticId: string, preparedMax: num
   if (cur.includes(tacticId)) return { ...play, preparedTactics: cur.filter((id) => id !== tacticId) };
   if (cur.length >= preparedMax) return play; // already at capacity — ignore
   return { ...play, preparedTactics: [...cur, tacticId] };
+}
+
+/**
+ * Etch/unetch a runesmith rune for the day (capped at etchedMax).
+ *
+ * Unlike a prepared tactic, going over the cap is not a no-op — the printed rule is *"until you etch
+ * more runes than your maximum, which causes your OLDEST rune to fade"*, so the list behaves as a
+ * queue: etching past capacity drops the front of it.
+ */
+export function toggleEtchedRune(play: PlayState, runeId: string, etchedMax: number): PlayState {
+  const cur = play.etchedRunes ?? [];
+  if (cur.includes(runeId)) return { ...play, etchedRunes: cur.filter((id) => id !== runeId) };
+  const next = [...cur, runeId];
+  return { ...play, etchedRunes: next.slice(Math.max(0, next.length - etchedMax)) };
 }
 
 /** Pin/unpin an activity by its key (Main-tab favorites). */

@@ -1,0 +1,218 @@
+[
+ {
+  "batch": 18,
+  "id": "mediums-awareness",
+  "verdict": "FIXED",
+  "evidence": "Adversarially verified (work/b018-verify.json 'investigation:mediums-awareness') and applied this session: Single edit, src/rules/situationalBonuses.ts line 423. Replace: \"mediums-awareness\": [{ targets: [{ kind: 'initiative' }], when: \"to Seek and for initiative rolls\", bonus: \"+2 status (+3 at 12th, +4 at 20th)\" }], with: \"mediums-awareness\": [{ targets: [{ kind: 'perception' }], when: \"on Perception checks to Seek, and when you roll Perception for initiative\", bonus: \"+2 status (+3 at 12th, +4 at 20th)\" }], Target change is the load-bearing part; the `when` rewording is optional polish matching house style (whispering-veil:1015) and print's \"when using Perception for your initiative roll\" - keep"
+ },
+ {
+  "batch": 18,
+  "id": "arboreals-revenge",
+  "verdict": "FIXED",
+  "evidence": "Adversarially verified (work/b018-verify.json 'investigation:arboreals-revenge') and applied this session: Add ONE row to the top-level array in scripts/data/effect-backfill.json: {\"category\":\"items\",\"id\":\"arboreals-revenge\",\"field\":\"passiveEffects\",\"value\":{\"weaknesses\":[{\"type\":\"fire\",\"value\":5}]}} Then run `node scripts/apply-backfill-now.mjs` — the row alone does nothing until replayed into the shipped minified public/core.json (the applier is idempotent and reproduced by `npm run data`). Corrections to the finder's spec: - The item has no existing passiveEffects, so this is a create, not a merge — no field is clobbered. - passiveEffects.weaknesses is still the right home, but the finder's rati"
+ },
+ {
+  "batch": 18,
+  "id": "munitions-machinist",
+  "verdict": "FIXED",
+  "evidence": "Adversarially verified (work/b018-verify.json 'investigation:munitions-machinist') and applied this session: (1) src/rules/classResources.ts — append a FIFTH versatile-vials entry to the `alchemist` bucket, immediately after the firework-technician entry (which closes at line 126, before the `],` on 127): { id: 'versatile-vials', name: 'Versatile Vials', kind: 'counter', refresh: 'rest', maxBase: 4, maxPerLevel: 0, feat: 'munitions-machinist', note: 'Munitions Machinist: up to 4 versatile vials during your daily preparations. Your Quick Alchemy can make only bombs or alchemical ammunition, and using it to make alchemical ammunition also counts as 1 action toward activating that ammunition.' }. Last p"
+ },
+ {
+  "batch": 18,
+  "id": "deflecting-pulse",
+  "verdict": "FIXED",
+  "evidence": "Adversarially verified (work/b018-verify.json 'investigation:deflecting-pulse') and applied this session: Fix as specified, both rows required, appended to scripts/data/effect-backfill.json (12308 rows; 114 actionCost, 221 grantsActions; applied by applyBackfill at import-core-v2.mjs:717, BEFORE the grantsActions REAL-cost filter at ~805, which keeps this link since actions/turn-aside-ambient-magic is {actions,1}): { \"category\":\"feats\",\"id\":\"deflecting-pulse\",\"field\":\"grantsActions\",\"value\":[\"turn-aside-ambient-magic\"] } { \"category\":\"feats\",\"id\":\"deflecting-pulse\",\"field\":\"actionCost\",\"value\":{\"type\":\"passive\"} } Corrections/caveats the finder missed: 1. ROOT CAUSE: grantedCost() in scripts/lib/a"
+ },
+ {
+  "batch": 18,
+  "id": "fade-presence",
+  "verdict": "FIXED",
+  "evidence": "Adversarially verified (work/b018-verify.json 'investigation:fade-presence') and applied this session: Append TWO rows to scripts/data/effect-backfill.json, then replay with `node scripts/apply-backfill-now.mjs` (overlay-durability.test.ts requires overlay and shipped public/core.json to agree; core.json is never hand-edited). (a) { \"category\": \"feats\", \"id\": \"fade-presence\", \"field\": \"innateSpells\", \"value\": [ { \"spellId\": \"invisibility\", \"tradition\": \"occult\", \"rank\": 2, \"usesPerDay\": 1, \"usesPer\": \"hour\" }, { \"spellId\": \"silence\", \"tradition\": \"occult\", \"rank\": 2, \"usesPerDay\": 1, \"usesPer\": \"hour\" } ] } tradition:\"occult\" is mandatory — build.ts:6635 defaults to traditions[0], which is arca"
+ },
+ {
+  "batch": 18,
+  "id": "expert-tactician",
+  "verdict": "FIXED",
+  "evidence": "Adversarially verified (work/b018-verify.json 'investigation:expert-tactician') and applied this session: PRIMARY (WG-backed, apply): append ONE row to the scripts/data/effect-backfill.json array (overlay applied by scripts/apply-backfill-now.mjs; never edit public/core.json directly): {\"category\":\"classFeatures\",\"id\":\"expert-tactician\",\"field\":\"skillProgression\",\"value\":[{\"skill\":\"lore:warfare\",\"at\":[{\"level\":7,\"rank\":\"master\"}]}]} Shape is identical to the three existing skillProgression rows (undead-lore, esoteric-lore, warfare-expertise). Key it on expert-tactician, not by extending warfare-expertise's row — that mirrors WG's own attribution (SKILL_LORE_WARFARE=M sits on this record) and leave"
+ },
+ {
+  "batch": 18,
+  "id": "grave-mummification",
+  "verdict": "FIXED",
+  "evidence": "Adversarially verified (work/b018-verify.json 'investigation:grave-mummification') and applied this session: Append two rows to scripts/data/effect-backfill.json (shape {category,id,field,value}; applied last by applyBackfill in scripts/import-core-v2.mjs:714-720): 1) {\"category\":\"feats\",\"id\":\"grave-mummification\",\"field\":\"senses\",\"value\":[{\"name\":\"darkvision\"}]} 2) {\"category\":\"feats\",\"id\":\"grave-mummification\",\"field\":\"resistances\",\"value\":[{\"type\":\"poison\",\"value\":\"max(1,floor(@actor.level/2))\"},{\"type\":\"damage from your bound terrain\",\"value\":\"floor(@actor.level/2)\",\"condition\":\"including its dangerous temperatures, weather, hazardous terrain, and environmental hazards\"}]} Correction to the finde"
+ },
+ {
+  "batch": 18,
+  "id": "daywalker",
+  "verdict": "FIXED",
+  "evidence": "Adversarially verified (work/b018-verify.json 'investigation:daywalker') and applied this session: APPLY (mechanics only): A) scripts/data/effect-backfill.json — two rows, verbatim twins of the grave-strength pair: {\"category\":\"feats\",\"id\":\"daywalker\",\"field\":\"senses\",\"value\":[{\"name\":\"darkvision\"}]} {\"category\":\"feats\",\"id\":\"daywalker\",\"field\":\"resistances\",\"value\":[{\"type\":\"poison\",\"value\":\"max(1,floor(@actor.level/2))\"}]} then node scripts/apply-backfill-now.mjs. B) situationalBonuses.ts FEAT_SITUATIONAL: \"daywalker\": copy of the grave-mummification row (line 2996) — save/all \"against disease and poison\" +2 circumstance; save/all \"against paralysis and sleep effects\" +1 circumstance. Ins"
+ },
+ {
+  "batch": 18,
+  "id": "devout-blessing",
+  "verdict": "FIXED",
+  "evidence": "Adversarially verified (work/b018-verify.json 'investigation:devout-blessing') and applied this session: scripts/data/effect-backfill.json — replace the existing rows (dedupe key category|id|field, per apply-champion-blessing.mjs) for BOTH feats, adding ownsFeature:true and a real prompt, options unchanged (all three values are real classFeatures ids): {\"category\":\"feats\",\"id\":\"devout-blessing\",\"field\":\"choice\",\"value\":{\"flag\":\"divineAlly\",\"prompt\":\"Blessing of the Devoted\",\"kind\":\"array\",\"ownsFeature\":true,\"options\":[{\"value\":\"blessed-armament\",\"label\":\"Blessed Armament\"},{\"value\":\"blessed-shield\",\"label\":\"Blessed Shield\"},{\"value\":\"blessed-swiftness\",\"label\":\"Blessed Swiftness\"}]}} …and the sam"
+ },
+ {
+  "batch": 18,
+  "id": "harrow-ritualist",
+  "verdict": "FIXED",
+  "evidence": "Adversarially verified (work/b018-verify.json 'investigation:harrow-ritualist') and applied this session: Fix is right in shape, but its ENGINE half is incomplete and would ship inert. (1) DATA — append to scripts/data/effect-backfill.json: {\"category\":\"feats\",\"id\":\"harrow-ritualist\",\"field\":\"choice\",\"value\":{\"flag\":\"harrowRitual\",\"prompt\":\"Ritual learned\",\"kind\":\"array\",\"picks\":2,\"distinct\":true,\"distinctAcrossTakes\":true,\"options\":[{\"value\":\"astral-projection\",\"label\":\"Astral Projection\",\"grant\":{\"grantsRituals\":[{\"spellId\":\"astral-projection\"}]}}, …same for call-spirit, commune, collective-memories, binding-circle]}}. Five options only: verified `commune-with-nature` is absent from public/core."
+ },
+ {
+  "batch": 18,
+  "id": "greater-lesson",
+  "verdict": "FIXED",
+  "evidence": "Adversarially verified (work/b018-verify.json 'investigation:greater-lesson') and applied this session: Carrier is right: scripts/data/effect-backfill.json row at :55328 (feats/greater-lesson/choice) — applied LAST by scripts/import-core-v2.mjs:715-721 (the `npm run data` chain), so it survives regen. Also write public/core.json directly (shipped artifact read by src/data + test/_content.ts), per the convention in scripts/backfill-lesson-of-elements.mjs. CORRECTION 1 — omit the description strings. build.ts:1699-1704 auto-fills an ownsFeature option's description from content.classFeatures[value] with the `aon-` prefix stripped, and all six lesson records have descriptions in core-descriptions.j"
+ },
+ {
+  "batch": 18,
+  "id": "soul-arsenal",
+  "verdict": "FIXED",
+  "evidence": "Adversarially verified (work/b018-verify.json 'investigation:soul-arsenal') and applied this session: Two edits to scripts/data/effect-backfill.json. (1) Append a new row: {\"category\":\"feats\",\"id\":\"soul-arsenal\",\"field\":\"effectChoices\",\"value\":[{\"id\":\"soul-arsenal-essence\",\"prompt\":\"Essence power for the additional armament\",\"options\":[ …13 {value,label} pairs copied verbatim from the soulforger-dedication `choice.options` block (effect-backfill.json:65195-65244): adaptable-persona, bounding-spirit, deep-seeded-fear, determined-toughness, harmful-malice, heroic-heart, healing-grace, magical-resilience, planar-bond, planar-pain, pull-of-stasis, reflecting-spirit, resolute-defiance… ]}]} Those l"
+ },
+ {
+  "batch": 18,
+  "id": "stonebound-magic",
+  "verdict": "FIXED",
+  "evidence": "Adversarially verified (work/b018-verify.json 'investigation:stonebound-magic') and applied this session: Edit the single existing overlay row in scripts/data/effect-backfill.json (row opens at line 66470; \"id\": \"stonebound-magic\" at 66472, field innateSpells) — add minLevel to the three leveled grants only: [{\"spellId\":\"scatter-scree\",\"tradition\":\"primal\",\"atWill\":true}, {\"spellId\":\"one-with-stone\",\"tradition\":\"primal\",\"usesPerDay\":1,\"usesPer\":\"day\",\"minLevel\":8}, {\"spellId\":\"shape-stone\",\"tradition\":\"primal\",\"usesPerDay\":1,\"usesPer\":\"day\",\"minLevel\":10}, {\"spellId\":\"wall-of-stone\",\"tradition\":\"primal\",\"usesPerDay\":1,\"usesPer\":\"day\",\"minLevel\":12}] Do NOT add a second row and do NOT create a new "
+ },
+ {
+  "batch": 18,
+  "id": "eldritch-archer-dedication",
+  "verdict": "FIXED",
+  "evidence": "Adversarially verified (work/b018-verify.json 'investigation:eldritch-archer-dedication') and applied this session: Append ONE row to scripts/data/effect-backfill.json, then `node scripts/apply-backfill-now.mjs`: {\"category\":\"feats\",\"id\":\"eldritch-archer-dedication\",\"field\":\"actionCost\",\"value\":{\"type\":\"passive\"}} Leave everything else alone: actions['eldritch-shot'].actionCost stays {type:'actions',value:3} (that record is right and is what MainTab renders via the existing grantsActions row at effect-backfill.json:89354); add NO tradition/cantrip row — casterArchetypes.ts:182 `mk('arcane','cha',1,'eldritch-archer', true)` (5th arg = choiceTradition, mk at :355-371) plus membership in SPONTANEOUS_DEDICATION"
+ },
+ {
+  "batch": 18,
+  "id": "reaction-time",
+  "verdict": "FIXED",
+  "evidence": "Adversarially verified (work/b018-verify.json 'investigation:reaction-time') and applied this session: APPLY AS A NORMAL FIX (no owner question). Append one row to scripts/data/effect-backfill.json (via scripts/lib/write-backfill.mjs; never hand-edit public/core.json), then stamp it with `node scripts/apply-backfill-now.mjs`: {\"category\":\"classFeatures\",\"id\":\"reaction-time\",\"field\":\"extraReaction\",\"value\":{\"usableFor\":\"a reaction from a guardian feat or class feature (including Shield Block)\"}} Shape matches the 15 existing feats rows (quick-shield-block {\"usableFor\":\"Shield Block\"}); `count` omitted and defaults to 1 at build.ts:7088. Live chain verified end to end: public/core.json classes.gu"
+ },
+ {
+  "batch": 18,
+  "id": "advanced-fury",
+  "verdict": "MATCHES",
+  "evidence": "Verified equivalent (adversarially, work/b018-verify.json 'investigation:advanced-fury'): wg-diff VERIFIED_EQUIVALENT + wg-values SETTLED_VALUES 'advanced-fury' — their flat 3 HP hangs on this feat; ours lives once on barbarian-resiliency.maxHpBonus (perArchetypeFeat 3, scales as the book says). Owner ruling 2026-08-22."
+ },
+ {
+  "batch": 18,
+  "id": "knight-reclaimant-dedication",
+  "verdict": "MATCHES",
+  "evidence": "Verified equivalent (adversarially, work/b018-verify.json 'investigation:knight-reclaimant-dedication'): wg-diff VERIFIED_EQUIVALENT 'knight-reclaimant-dedication' — their casting-source hanger grants no spell/slot/proficiency; ours holds the printed profile on the feats that print it (invoke-the-crimson-oath spellcastingGrant + focusSpells)."
+ },
+ {
+  "batch": 18,
+  "id": "aeon-stone-delaying",
+  "verdict": "MATCHES",
+  "evidence": "Verified equivalent (adversarially, work/b018-verify.json 'investigation:aeon-stone-delaying'): wg-diff VERIFIED_EQUIVALENT 'aeon-stone-delaying' — their MAX_HEALTH_BONUS op has no value/type (prose parked on the HP variable); ours delivers the clause as prose + the live 1/day frequency counter, and the resonant select/spell as resonant."
+ },
+ {
+  "batch": 18,
+  "id": "aeon-stone-nourishing",
+  "verdict": "MATCHES",
+  "evidence": "Verified equivalent (adversarially, work/b018-verify.json 'investigation:aeon-stone-nourishing'): wg-diff VERIFIED_EQUIVALENT 'aeon-stone-nourishing' — same prose-on-HP-variable shape; ours: resonant {note + air-bubble innate 1/day} + description."
+ },
+ {
+  "batch": 18,
+  "id": "aeon-stone-smoothing",
+  "verdict": "MATCHES",
+  "evidence": "Verified equivalent (adversarially, work/b018-verify.json 'investigation:aeon-stone-smoothing'): wg-diff VERIFIED_EQUIVALENT 'aeon-stone-smoothing' — same shape; ours: the ignore-status-penalties clause as a situational star + resonant guidance at will."
+ },
+ {
+  "batch": 18,
+  "id": "precise-finisher",
+  "verdict": "FIXED",
+  "evidence": "Adversarially verified (work/b018-verify.json 'parity:precise-finisher') and applied this session: Apply ONE overlay row in scripts/data/effect-backfill.json (schema matches shipped rows, e.g. rune-singer): {\"category\":\"feats\",\"id\":\"precise-finisher\",\"field\":\"recordMarks\",\"value\":[{\"on\":\"action\",\"id\":\"confident-finisher\",\"note\":\"On a failure, you apply your FULL Precise Strike damage instead of half.\"}]} Carrier liveness verified end to end: backfill -> public/core.json feats.precise-finisher.recordMarks (35 feats already carry the field) -> explain.ts:392 recordMarksFor walks c.feats (line 400) -> merged into `extra` at explain.ts:632 -> markersFor (situationalBonuses.ts:3962, filters m.on"
+ },
+ {
+  "batch": 18,
+  "id": "volatile-grease",
+  "verdict": "FIXED",
+  "evidence": "Adversarially verified (work/b018-verify.json 'parity:volatile-grease') and applied this session: "
+ },
+ {
+  "batch": 18,
+  "id": "rapid-affixture",
+  "verdict": "FIXED",
+  "evidence": "Adversarially verified (work/b018-verify.json 'parity:rapid-affixture') and applied this session: Two edits, both required — part (2) of the proposal as written does NOT wire up. (1) scripts/data/effect-backfill.json, new row: {\"category\":\"feats\",\"id\":\"rapid-affixture\",\"field\":\"recordMarks\",\"value\":[{\"on\":\"action\",\"id\":\"affix-a-talisman\",\"value\":\"1 minute; 3 actions if legendary\",\"note\":\"You take only 1 minute to Affix a Talisman. If you're legendary in Crafting, you can Affix a Talisman as a 3-action activity.\"}]} → core.json recordMarks → explain.ts:392 recordMarksFor → recordMarkersFor (explain.ts:594). (2) CORRECTION: the new src/rules/skillActions.ts \"crafting\" row (after Quick Repair"
+ },
+ {
+  "batch": 18,
+  "id": "halcyon-speaker-dedication",
+  "verdict": "FIXED",
+  "evidence": "Adversarially verified (work/b018-verify.json 'parity:halcyon-speaker-dedication') and applied this session: CODE FIX per owner ruling R4 (docs/gold-set-answers.md:552) — not ASK-OWNER, and NOT the finder's \"prefer the later dedication\", which drops the Magaambyan config's traditionOptionFeats (Cascade Bearer's divine/occult widening) exactly as R4's warning says. (1) src/rules/casterArchetypes.ts: when both dedications are held, activeCasterArchetype (:390) returns ONE archetype keyed 'magaambyan-attendant-dedication' (R4: keep that entry id) whose config is Magaambyan merged with Halcyon's — cantrips 3 (1 Attendant + 2 Halcyon; WG defines the single HALCYON_SPELLS spontaneous-repertoire source on t"
+ },
+ {
+  "batch": 18,
+  "id": "drenching-mist",
+  "verdict": "FIXED",
+  "evidence": "Adversarially verified (work/b018-verify.json 'parity:drenching-mist') and applied this session: Add one row to scripts/data/effect-backfill.json (array of {category,id,field,value}), matching the shipped sibling rows verbatim in shape: {\"category\":\"feats\",\"id\":\"drenching-mist\",\"field\":\"spellNotes\",\"value\":[{\"spellId\":\"mist\",\"note\":\"Drenching Mist: when you cast this spell, you can modify it to add the following heightened entry to its effects. **Heightened (3rd)** Your mist is particularly laden with moisture. Non-magical fires within the area are automatically extinguished. Choose one magical fire or fire spell in the area and attempt to counteract it.\"}]} Two corrections to the finder'"
+ },
+ {
+  "batch": 18,
+  "id": "paragon-battle-medicine",
+  "verdict": "FIXED",
+  "evidence": "Adversarially verified (work/b018-verify.json 'parity:paragon-battle-medicine') and applied this session: Add ONE row to scripts/data/effect-backfill.json, with BOTH targets (the finder's 'feature'-only proposal under-delivers: \"Battle Medicine\" is also an action row — src/rules/actions.ts:83 ACTIVITIES and src/rules/skillActions.ts:583 Medicine list — read via recordMarkersFor(...,'action', actionId/actionSlug(name)) = 'battle-medicine' at MainTab.tsx:631 and StatDetailModal.tsx:185; shipped rows unimpeded-step / energize-wings / return-fire author the feature+action pair the same way): {\"category\":\"feats\",\"id\":\"paragon-battle-medicine\",\"field\":\"recordMarks\",\"value\":[ {\"on\":\"feature\",\"id\":\"battle"
+ },
+ {
+  "batch": 18,
+  "id": "fabricated-connections",
+  "verdict": "FIXED",
+  "evidence": "Adversarially verified (work/b018-verify.json 'parity:fabricated-connections') and applied this session: REQUIRED — add to scripts/data/effect-backfill.json: {\"category\":\"feats\",\"id\":\"fabricated-connections\",\"field\":\"recordMarks\",\"value\":[ {\"on\":\"action\",\"id\":\"make-an-impression\",\"note\":\"Once per day you can roll Deception in place of the normal skill.\"}, {\"on\":\"action\",\"id\":\"request\",\"note\":\"Once per day you can roll Deception in place of the normal skill.\"}, {\"on\":\"action\",\"id\":\"earn-income\",\"note\":\"Once per week you can roll Deception in place of the normal skill.\"}, {\"on\":\"action\",\"id\":\"subsist\",\"note\":\"Once per week you can roll Deception in place of the normal skill.\"}]} No `value` key (sit"
+ },
+ {
+  "batch": 18,
+  "id": "animal-skin",
+  "verdict": "FIXED",
+  "evidence": "Adversarially verified (work/b018-verify.json 'parity:animal-skin') and applied this session: "
+ },
+ {
+  "batch": 18,
+  "id": "crown-of-the-saumen-kar",
+  "verdict": "FIXED",
+  "evidence": "Adversarially verified (work/b018-verify.json 'parity:crown-of-the-saumen-kar') and applied this session: "
+ },
+ {
+  "batch": 18,
+  "id": "five-breath-vanguard-dedication",
+  "verdict": "FIXED",
+  "evidence": "Adversarially verified (work/b018-verify.json 'parity:five-breath-vanguard-dedication') and applied this session: "
+ },
+ {
+  "batch": 18,
+  "id": "animate-net",
+  "verdict": "FIXED",
+  "evidence": "Adversarially verified (work/b018-verify.json 'parity:animate-net') and applied this session: Add one row to scripts/data/effect-backfill.json (then replay with `node scripts/apply-backfill-now.mjs`): {\"category\":\"feats\",\"id\":\"animate-net\",\"field\":\"spellNotes\",\"value\":[{\"spellId\":\"animate-rope\",\"note\":\"You can modify the spell's target to be 1 net. If you do, this replaces the spell's standard effects: you cause a net to animate and throw itself at a Medium or smaller creature within 20 feet of the net. Attempt a spell attack roll against the target's Reflex DC. On a success, the target is off-guard and takes a -10-foot circumstance penalty to its Speeds until it Escapes; on a critical"
+ },
+ {
+  "batch": 18,
+  "id": "advanced-first-aid",
+  "verdict": "FIXED",
+  "evidence": "Adversarially verified (work/b018-verify.json 'parity:advanced-first-aid') and applied this session: "
+ },
+ {
+  "batch": 18,
+  "id": "terrified-retreat",
+  "verdict": "FIXED",
+  "evidence": "Adversarially verified (work/b018-verify.json 'parity:terrified-retreat') and applied this session: "
+ },
+ {
+  "batch": 18,
+  "id": "battle-cry",
+  "verdict": "MATCHES",
+  "evidence": "The reader's MISMATCH was adversarially REFUTED: SKILL_ACTIONS.intimidation carries a Battle Cry row (src/rules/skillActions.ts:472-479, costText 'free', minRank master, featName 'Battle Cry', desc covering both the initiative free action and the legendary reaction). Live chain: StatDetailModal.tsx:58 skillActionsFor gated on featNames. WG's whole encoding is one injectText of the printed paragraph (their 19945 → ability_block 19624 Demoralize); ours delivers the same content on the same action surface."
+ },
+ {
+  "batch": 18,
+  "id": "tumbling-theft",
+  "verdict": "OWNER-QUEUED",
+  "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 18) and awaits his ruling; until ruled the record stays as it is (the standing rule at the top of that file). Verified a genuine conflict by the adversarial pass (work/b018-verify.json 'investigation:tumbling-theft')."
+ },
+ {
+  "batch": 18,
+  "id": "monarch",
+  "verdict": "OWNER-QUEUED",
+  "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 18) and awaits his ruling; until ruled the record stays as it is (the standing rule at the top of that file). Verified a genuine conflict by the adversarial pass (work/b018-verify.json 'investigation:monarch')."
+ }
+]

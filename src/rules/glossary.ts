@@ -43,8 +43,14 @@ export const SENSE_GLOSSARY: Record<string, string> = {
   echolocation: 'Echolocation: you use sound to precisely sense your surroundings within the listed range.',
   bloodsense: 'Bloodsense: an imprecise sense that detects the blood of living creatures within range, letting you notice them even without sight.',
   magicsense: 'Magicsense: an imprecise sense that detects active spells and magic items within range, alerting you to nearby magic.',
+  /* Distinct from magicsense above, which finds active spells and magic ITEMS: spellsense finds the
+   * CASTER — *"detects only creatures capable of casting spells (including creatures with innate
+   * spells)"*. Without an entry here the sense renders as a bare unexplained word. */
+  spellsense: 'Spellsense: an imprecise sense that detects creatures capable of casting spells within range, including creatures with innate spells.',
   wavesense: 'Wavesense: an imprecise sense that detects motion in water within range, much as tremorsense detects motion on the ground.',
   'touch-telepathy': 'Touch telepathy: you can communicate silently and mentally with any creature you are touching, as long as you share a language. A range in feet is shown when an effect extends it beyond touch.',
+  /* Kashrishi (batch 19): the printed Empathic Sense is a NAMED imprecise sense with its own range. */
+  'empathic-sense': 'Empathic sense: an imprecise sense that detects the emotions of non-mindless creatures within range, even when you cannot see them.',
 };
 
 /** Common creature-type traits (ancestry traits are described generically from the data). */

@@ -22,7 +22,7 @@ type Rec = {
   effectChoices?: { options?: { value?: string; grant?: { innateSpells?: { spellId: string }[]; focusSpells?: string[] } }[] }[];
 };
 
-type EC = { id?: string; prompt?: string; options?: { value?: string }[]; spellFilter?: unknown };
+type EC = { id?: string; prompt?: string; options?: { value?: string }[]; spellFilter?: unknown; openFrom?: unknown };
 
 const COLLECTIONS = ['feats', 'classFeatures', 'items', 'heritages', 'backgrounds', 'ancestries'] as const;
 const records = () =>
@@ -105,12 +105,16 @@ describe('effect choices are well-formed', () => {
     expect(bad).toEqual([]);
   });
 
-  it('each has exactly one source of options — a list OR a spell filter', () => {
+  it('each has exactly one source of options — a list, a spell filter, or an open pool', () => {
+    /* `openFrom` is the third source (Syncretism's second favored weapon: an open weapon list no
+     * static `options` array could carry without printing 400 weapons into the record). Counted rather
+     * than compared pairwise, so a fourth source cannot be added and quietly bypass this. */
     const bad: string[] = [];
     for (const { where, ecs } of all)
       for (const e of ecs) {
-        if (e.options && e.spellFilter) bad.push(`${where}/${e.id}: both`);
-        if (!e.options && !e.spellFilter) bad.push(`${where}/${e.id}: neither`);
+        const sources = [e.options, e.spellFilter, e.openFrom].filter(Boolean).length;
+        if (sources > 1) bad.push(`${where}/${e.id}: ${sources} sources of options`);
+        if (sources === 0) bad.push(`${where}/${e.id}: neither`);
       }
     expect(bad).toEqual([]);
   });

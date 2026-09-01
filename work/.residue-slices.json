@@ -1,0 +1,375 @@
+[
+ {
+  "agentIndex": 0,
+  "ids": [
+   "roster",
+   "agile-hand",
+   "forceful-push",
+   "barrier-shield",
+   "beacon-mark",
+   "choking-smoke",
+   "directed-poison"
+  ]
+ },
+ {
+  "agentIndex": 0,
+  "ids": [
+   "confounding-image",
+   "disk-rider"
+  ]
+ },
+ {
+  "agentIndex": 1,
+  "ids": [
+   "items/glimmering-missive",
+   "items/illusory-backdrop",
+   "items/incense-of-distilled-death",
+   "items/lacquered-waist-drum",
+   "items/paradigm-cube",
+   "items/screech-shooter",
+   "items/screech-shooter-greater"
+  ]
+ },
+ {
+  "agentIndex": 1,
+  "ids": [
+   "items/screech-shooter-major",
+   "items/singing-shortbow",
+   "items/singing-shortbow-greater",
+   "items/sphere-of-annihilation",
+   "items/wyrm-spindle",
+   "items/wyrm-spindle-greater",
+   "items/wyrm-spindle-major"
+  ]
+ },
+ {
+  "agentIndex": 1,
+  "ids": [
+   "spells/final-fate-of-the-locust-host",
+   "spells/garden-of-the-green-mans-growth",
+   "spells/holy-host",
+   "spells/instant-minefield",
+   "spells/nature-incarnate",
+   "spells/summon-elemental-herald"
+  ]
+ },
+ {
+  "agentIndex": 2,
+  "ids": [
+   "ST2-01 forceful-push",
+   "ST2-02 larcenous-hand",
+   "ST2-03 lingering-flames",
+   "ST2-04 obscured-terrain",
+   "ST2-05 scattered-fire",
+   "ST2-06 shining-arms",
+   "ST2-07 siphoning-touch"
+  ]
+ },
+ {
+  "agentIndex": 2,
+  "ids": [
+   "ST2-08 smoldering-explosion",
+   "ST2-09 steal-vitality"
+  ]
+ },
+ {
+  "agentIndex": 3,
+  "ids": [
+   "classFeatures/energetic-meltdown",
+   "familiarAbilities/purify-air",
+   "feats/zombie-horde",
+   "conditions/stupefied",
+   "feats/draconic-acolyte-dedication",
+   "feats/nanite-surge",
+   "feats/radiant-burst"
+  ]
+ },
+ {
+  "agentIndex": 3,
+  "ids": [
+   "feats/topple-the-titans",
+   "items/boulder-seed",
+   "items/boulder-seed-greater",
+   "items/camp-shroud-minor",
+   "items/camp-shroud-lesser",
+   "items/camp-shroud-moderate",
+   "items/camp-shroud-greater"
+  ]
+ },
+ {
+  "agentIndex": 3,
+  "ids": [
+   "items/camp-shroud-major",
+   "items/explosive-mine-lesser",
+   "items/explosive-mine-moderate",
+   "items/explosive-mine-greater",
+   "items/explosive-mine-major",
+   "items/explosive-missive"
+  ]
+ },
+ {
+  "agentIndex": 4,
+  "ids": [
+   "print-text-of-record",
+   "clause-a-named-breastplate-overgrant",
+   "clause-b-conditional-branch-missing",
+   "clause-c-mirror-rider-covered",
+   "clause-d-unarmored-13th-rider",
+   "clause-e-free-armor-suit",
+   "inert-choice-print-contradiction"
+  ]
+ },
+ {
+  "agentIndex": 4,
+  "ids": [
+   "named-armor-items-present",
+   "description-intact-no-repair"
+  ]
+ },
+ {
+  "agentIndex": 5,
+  "ids": [
+   "smoldering-explosion",
+   "steal-vitality",
+   "summon-ensemble",
+   "surrounding-flames",
+   "toppling-tentacles",
+   "tracing-sigil",
+   "uneasy-rest"
+  ]
+ },
+ {
+  "agentIndex": 5,
+  "ids": [
+   "wild-lights"
+  ]
+ },
+ {
+  "agentIndex": 6,
+  "ids": [
+   "IMPORTER-aon-facets-bodyOf",
+   "aeon-stone-consumed",
+   "aeon-stone-pink-rhomboid",
+   "aeon-stone-dusty-rose-prism",
+   "aeon-stone-pearly-white-spindle",
+   "aeon-stone-black-disc",
+   "aeon-stone-mottled-ellipsoid"
+  ]
+ },
+ {
+  "agentIndex": 6,
+  "ids": [
+   "aeon-stone-cymophane-cabochon",
+   "aeon-stone-polished-pebble",
+   "aeon-stone-agate-ellipsoid",
+   "aeon-stone-black-pearl",
+   "aeon-stone-western-star",
+   "aeon-stone-amplifying",
+   "aeon-stone-peering"
+  ]
+ },
+ {
+  "agentIndex": 6,
+  "ids": [
+   "aeon-stone-smoothing",
+   "aeon-stone-vital-amplification",
+   "aeon-stone-envisioning",
+   "aeon-stone-nourishing",
+   "aeon-stone-formulating",
+   "aeon-stone-repairing",
+   "aeon-stone-pale-lavender-ellipsoid"
+  ]
+ },
+ {
+  "agentIndex": 6,
+  "ids": [
+   "aeon-stone-lavender-and-green-ellipsoid",
+   "aeon-stone-azure-briolette",
+   "aeon-stone-amber-sphere",
+   "aeon-stone-rainbow-prism",
+   "aeon-stone-pearlescent-pyramid",
+   "aeon-stone-flickering",
+   "aeon-stone-olivine-pendeloque"
+  ]
+ },
+ {
+  "agentIndex": 6,
+  "ids": [
+   "aeon-stone-pale-orange-rhomboid",
+   "wayfinder-of-rescue"
+  ]
+ },
+ {
+  "agentIndex": 7,
+  "ids": [
+   "engine-itemcounter-every",
+   "parser-parsefrequencies",
+   "anchor-spear",
+   "heedless-spurs",
+   "guiding-star",
+   "rowan-rifle",
+   "little-love"
+  ]
+ },
+ {
+  "agentIndex": 7,
+  "ids": [
+   "turnabout-shield",
+   "communion-mat",
+   "morphing-weapon",
+   "twisting-gale",
+   "ring-of-sigils",
+   "obsidian-edge",
+   "obsidian-edge-greater"
+  ]
+ },
+ {
+  "agentIndex": 7,
+  "ids": [
+   "obsidian-edge-major",
+   "obsidian-edge-true",
+   "flashblade",
+   "flashblade-greater",
+   "flashblade-major",
+   "boreal-staff",
+   "boreal-staff-greater"
+  ]
+ },
+ {
+  "agentIndex": 7,
+  "ids": [
+   "boreal-staff-major",
+   "wintershot",
+   "auspicious-scepter",
+   "sparkshade-parasol",
+   "dreamcrusher",
+   "imposing-shield",
+   "kithrender"
+  ]
+ },
+ {
+  "agentIndex": 7,
+  "ids": [
+   "jistkan-war-crossbow",
+   "whispering-wire",
+   "whispering-wire-greater",
+   "chimera-flail",
+   "vambrace-of-gorum",
+   "storm-flash",
+   "storm-flash-greater"
+  ]
+ },
+ {
+  "agentIndex": 7,
+  "ids": [
+   "lifes-last-breath",
+   "blast-foot",
+   "dragonauts-wingsuit",
+   "phylactery-of-faithfulness-greater",
+   "unmemorable-mantle-major",
+   "bracers-of-missile-deflection-greater",
+   "brooch-of-inspiration-major"
+  ]
+ },
+ {
+  "agentIndex": 7,
+  "ids": [
+   "arachnid-harness-greater",
+   "ash-gown-greater",
+   "energized-shield-lesser",
+   "energized-shield-moderate",
+   "energized-shield-greater",
+   "energized-shield-major",
+   "taljjaes-mask-the-nobleman"
+  ]
+ },
+ {
+  "agentIndex": 7,
+  "ids": [
+   "zealot-staff",
+   "already-done-batch-18",
+   "coverage-gap-aon-sourced-no-counter",
+   "dice-cadence-roaring-potion",
+   "feat-lane-reader-drops-every"
+  ]
+ },
+ {
+  "agentIndex": 8,
+  "ids": [
+   "held-spell-rank-check.mjs",
+   "wand-of-teeming-ghosts-3rd-rank",
+   "wand-of-teeming-ghosts-4th-rank",
+   "wand-of-teeming-ghosts-5th-rank",
+   "wand-of-teeming-ghosts-6th-rank",
+   "wand-of-teeming-ghosts-7th-rank",
+   "wand-of-teeming-ghosts-8th-rank"
+  ]
+ },
+ {
+  "agentIndex": 8,
+  "ids": [
+   "wand-of-teeming-ghosts-9th-rank",
+   "wand-of-noisome-acid-4nd-rank",
+   "wand-of-noisome-acid-6th-rank",
+   "wand-of-noisome-acid-8th-rank",
+   "wand-of-overflowing-life-3rd-rank-spell",
+   "wand-of-overflowing-life-4th-rank-spell",
+   "wand-of-overflowing-life-5th-rank-spell"
+  ]
+ },
+ {
+  "agentIndex": 8,
+  "ids": [
+   "wand-of-overflowing-life-6th-rank-spell",
+   "wand-of-overflowing-life-7th-rank-spell",
+   "wand-of-overflowing-life-8th-rank-spell",
+   "wand-of-smoldering-fireballs-5th-rank-spell",
+   "wand-of-smoldering-fireballs-7th-rank-spell",
+   "wand-of-smoldering-fireballs-9th-rank-spell",
+   "wand-of-crackling-lightning-4th-rank-spell"
+  ]
+ },
+ {
+  "agentIndex": 8,
+  "ids": [
+   "wand-of-crackling-lightning-6th-rank-spell",
+   "wand-of-crackling-lightning-8th-rank-spell",
+   "wand-of-shardstorm-3rd-rank-spell",
+   "wand-of-shardstorm-5th-rank-spell",
+   "wand-of-shardstorm-7th-rank-spell",
+   "wand-of-slaughter-8th-rank-spell",
+   "wand-of-slaughter-9th-rank-spell"
+  ]
+ },
+ {
+  "agentIndex": 8,
+  "ids": [
+   "wand-of-the-snowfields-7th-rank-spell",
+   "wand-of-the-spider-4th-rank-spell",
+   "wand-of-hopeless-night-4th-rank-spell",
+   "wand-of-pernicious-poison-1st-rank-spell"
+  ]
+ },
+ {
+  "agentIndex": 9,
+  "ids": [
+   "F1-heuristic-and-narrowed-predicate",
+   "F2-dead-subcondition",
+   "F3-damage-census",
+   "F4-carrier-reader-chain",
+   "F5-repairs-spells",
+   "F6-repairs-actions-backgrounds-heritages-deities",
+   "F7-repairs-classfeatures-live"
+  ]
+ },
+ {
+  "agentIndex": 9,
+  "ids": [
+   "F8-repairs-items-live",
+   "F9-ast-also-missing-escalation",
+   "F10-remaining-164-rows",
+   "F11-hand-transcribe-five",
+   "F12-detector-shape"
+  ]
+ }
+]

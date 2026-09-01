@@ -1,0 +1,53 @@
+{
+  "batch": "work/wg-batch-014.json",
+  "examined": 100,
+  "note": "Read against printed text (AoN mirror). Every confirmed finding below is fixed AND guarded: the four classes it found each produced an instrument, so the class cannot come back silently.",
+  "confirmed": [
+    {
+      "id": "agonizing-rebuke",
+      "severity": "player-visible",
+      "summary": "Shipped prose read 'that enemy takes damage at the start of each of its turns' with no number; the Archives print '1d4 mental'. The @Damage cleaner upstream of our AoN export drops what it cannot parse and leaves the sentence intact, so it reads as a rule rather than a broken import. Sweeping the class found 1,206 affected records across every bucket (spells worst), losing damage formulas, area templates and save types alike; 581 were repaired from the mirror by word-diff, and scripts/dropped-inline-check.mjs now holds the class at zero in npm run verify."
+    },
+    {
+      "id": "jalmeri-heavenseeker-dedication",
+      "severity": "player-visible",
+      "summary": "'…if you were already trained in BOTH these skills, you become an expert in one of them instead' was printed and not modelled, so a character already trained in Acrobatics and Occultism simply lost the grant. Its exact sibling Nantambu Chime-Ringer models the same clause, which is what made it an oversight rather than a ruling. Five more records were in the same state; scripts/skill-clause-check.mjs holds the family at zero."
+    },
+    {
+      "id": "jalmeri-heavenseeker-dedication",
+      "severity": "player-visible",
+      "summary": "'You gain the Qi Spells monk feat, which grants you a qi spell and a focus pool of 1 Focus Point.' The pool point shipped and the FEAT did not, so the qi spell it asks the player to choose was never offered — a focus pool with nothing to spend itself on. Granting it exposed a second defect: the guard that stops a granter double-paying for its choice-granted focus spell read only the granter's OWN effectChoices, so the pool grew to 2 the moment the player answered."
+    },
+    {
+      "id": "clever-improviser",
+      "severity": "player-visible",
+      "summary": "'You gain the Untrained Improvisation general feat.' That feat is where untrainedProficiency lives, so without the grant Clever Improviser was a feat whose entire body was a reference to a record we never applied. The second sentence, a permission with no number, is now stated on the record."
+    },
+    {
+      "id": "empathic-calm",
+      "severity": "player-visible",
+      "summary": "'Once per day, you can cast either Calm or Sanctuary as an innate occult spell, heightened to half your level rounded up.' The record carried no innate spell at all — neither the choice, the tradition, the frequency nor the heightening."
+    },
+    {
+      "id": "order-magic",
+      "severity": "player-visible",
+      "summary": "A repeatable feat whose pick lived in effectChoices, which stores ONE answer per record: a druid who took it three times answered three pickers that all wrote to the same key and received one order spell. Moving the question to the record's own per-taking `choice` exposed a missing reader — applyFeatFocus handled the domains kind and fixed focusSpells but never the chosen option's own grant, so the migrated data was inert until that was added. Also gained 'a different order each time' and a menu limited to the orders Order Explorer actually chose."
+    },
+    {
+      "id": "special-sentinel-technique",
+      "severity": "player-visible",
+      "summary": "Same per-record pick on a 2-take feat: 'You can take this feat a second time, gaining the focus spell that you didn't gain the first time' delivered the first spell twice."
+    },
+    {
+      "id": "wyldsinger",
+      "severity": "player-visible",
+      "summary": "Same per-record pick on a 2-take feat; the second taking re-granted the song the first had already learned."
+    },
+    {
+      "id": "greater-animal-senses",
+      "severity": "player-visible",
+      "summary": "Same per-record pick, plus a branch with no option to pick: 'either choosing a different sense OR IMPROVING an imprecise sense granted by this feat to a precise sense' offered only the two imprecise senses, so a second taking could only re-choose one it already had. Deliberately NOT marked distinctAcrossTakes — unlike its two siblings above, this record's Special clause makes repeating an answer legal, which is why the three were migrated one at a time rather than in bulk."
+    }
+  ],
+  "rejectedCount": 0
+}

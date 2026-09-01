@@ -1,0 +1,1354 @@
+[
+ {
+  "id": "ancestral-insight",
+  "name": "Ancestral Insight",
+  "level": 1,
+  "printed": "You have extensive knowledge of your ancestors' ancient origins. You gain the trained proficiency rank in Alghollthu Lore and Azlanti Lore. If you roll a critical failure on an Alghollthu Lore or Azlanti Lore check to Recall Knowledge, you get a failure instead.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "degreeShifts": [
+    {
+     "shift": "critFailToFail",
+     "when": "on an Alghollthu Lore or Azlanti Lore check to Recall Knowledge",
+     "skills": [
+      "lore:alghollthu",
+      "lore:azlanti"
+     ],
+     "actions": [
+      "recall-knowledge"
+     ]
+    }
+   ]
+  },
+  "ourRegistries": [
+   {
+    "file": "featGrantsLane.ts",
+    "entry": "'ancestral-insight': {\"skills\":{\"lore:alghollthu\":\"trained\",\"lore:azlanti\":\"trained\"}},"
+   }
+  ],
+  "theirProse": [
+   {
+    "variable": "SKILL_LORE_ALGHOLLTHU",
+    "value": null,
+    "text": "If you roll a critical failure on an Alghollthu Lore check to Recall Knowledge, you get a failure instead."
+   },
+   {
+    "variable": "SKILL_LORE_AZLANTI",
+    "value": null,
+    "text": "If you roll a critical failure on an Azlanti Lore check to Recall Knowledge, you get a failure instead."
+   }
+  ]
+ },
+ {
+  "id": "fire-savvy",
+  "name": "Fire Savvy",
+  "level": 1,
+  "printed": "**Access** You are from Dongun Hold or Alkenstar. --- You've grown up around a forge and are well-suited to dealing with smoke and flame. Your flat check to remove persistent fire damage is DC 10 instead of DC 15, which is reduced to DC 5 with appropriate assistance. In addition, if you roll a success on a saving throw against suffocation or choking due to smoke or ash, you get a critical success instead.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "degreeShifts": [
+    {
+     "shift": "successToCrit",
+     "when": "on a save against suffocation or choking from smoke or ash",
+     "saves": [
+      "fortitude"
+     ]
+    }
+   ]
+  },
+  "ourRegistries": [
+   {
+    "file": "situationalBonuses.ts",
+    "entry": "\"fire-savvy\": [{ targets: [{ kind: \"hp\" }], when: \"on the flat check to remove persistent fire damage\", bonus: \"DC 10 instead of 15 (DC 5 with appropriate assistance)\" }],"
+   }
+  ],
+  "theirProse": [
+   {
+    "variable": "SAVE_FORT",
+    "value": null,
+    "text": "When you roll a success on a saving throw against suffocation or choking due to smoke or ash, you get a critical success instead."
+   }
+  ]
+ },
+ {
+  "id": "sturdy-bindings",
+  "name": "Sturdy Bindings",
+  "level": 1,
+  "printed": "Your grapples are incredibly reliable. When you roll a critical failure on a check to grapple a target, you get a failure instead. In addition, when a creature you have grabbed rolls a failure on its check to Escape, it gets a critical failure instead, and if it rolls a critical success, it gets a success instead.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "archetype": "hellknight",
+   "degreeShifts": [
+    {
+     "shift": "critFailToFail",
+     "when": "on your check to Grapple",
+     "skills": [
+      "athletics"
+     ],
+     "actions": [
+      "grapple"
+     ]
+    }
+   ]
+  },
+  "ourRegistries": [
+   {
+    "file": "situationalBonuses.ts",
+    "entry": "'sturdy-bindings': [{ on: \"action\", id: \"grapple\", note: \"Sturdy Bindings: a creature you have grabbed turns a failed Escape into a critical failure, and a critical success into a success.\" }],"
+   }
+  ],
+  "theirProse": [
+   {
+    "variable": "SKILL_ATHLETICS",
+    "value": null,
+    "text": "When you roll a critical failure on a check to Grapple a target, you get a failure instead."
+   }
+  ]
+ },
+ {
+  "id": "sure-feet",
+  "name": "Sure Feet",
+  "level": 1,
+  "printed": "Whether keeping your balance or climbing, your feet easily find purchase. If you roll a success on an Acrobatics check to Balance or an Athletics check to Climb, you get a critical success instead. You're not off-guard when you attempt to Balance or Climb.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "degreeShifts": [
+    {
+     "shift": "successToCrit",
+     "when": "on an Acrobatics check to Balance",
+     "skills": [
+      "acrobatics"
+     ],
+     "actions": [
+      "balance"
+     ]
+    },
+    {
+     "shift": "successToCrit",
+     "when": "on an Athletics check to Climb",
+     "skills": [
+      "athletics"
+     ],
+     "actions": [
+      "climb"
+     ]
+    }
+   ]
+  },
+  "ourRegistries": [
+   {
+    "file": "situationalBonuses.ts",
+    "entry": "'sure-feet': [{ on: \"action\", id: \"balance\", note: \"Sure Feet: you're not off-guard while you Balance.\" }, { on: \"action\", id: \"climb\", note: \"Sure Feet: you're not off-guard while you Climb.\" }],"
+   }
+  ],
+  "theirProse": [
+   {
+    "variable": "SKILL_ACROBATICS",
+    "value": null,
+    "text": "If you roll a success to Balance, you get a critical success instead."
+   },
+   {
+    "variable": "SKILL_ATHLETICS",
+    "value": null,
+    "text": "If you roll a success to Climb, you get a critical success instead."
+   }
+  ]
+ },
+ {
+  "id": "storm-born",
+  "name": "Storm Born",
+  "level": 1,
+  "printed": "You are at home out in the elements, reveling in the power of nature unleashed. You do not take circumstance penalties to ranged spell attacks or Perception checks caused by weather, and your targeted spells don't require a flat check to succeed against a target concealed by weather (such as fog).",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "situational": [
+    {
+     "targets": [
+      {
+       "kind": "perception"
+      },
+      {
+       "kind": "spell",
+       "detail": "attack"
+      }
+     ],
+     "when": "weather would impose a circumstance penalty to a ranged spell attack roll or a Perception check",
+     "bonus": "you take no circumstance penalty"
+    },
+    {
+     "targets": [
+      {
+       "kind": "spell",
+       "detail": "all"
+      }
+     ],
+     "when": "your targeted spell's target is concealed by weather (fog and the like)",
+     "bonus": "no flat check required"
+    }
+   ]
+  },
+  "ourRegistries": [],
+  "theirProse": [
+   {
+    "variable": "PERCEPTION",
+    "value": null,
+    "text": "You don't take circumstance penalties caused by weather."
+   }
+  ]
+ },
+ {
+  "id": "fear-no-law-fear-no-one",
+  "name": "Fear No Law, Fear No One",
+  "level": 1,
+  "printed": "When your allies see you stand up to fear, they become similarly emboldened. Make a Strike. If you hit and deal damage, each ally within a around you who can see you reduces the value of their frightened condition by 1. If the target of your Strike was the source of their frightened condition, they reduce the value by 2 instead.",
+  "ourFields": {
+   "actionCost": {
+    "type": "actions",
+    "value": 1
+   },
+   "archetype": "hellknight"
+  },
+  "ourRegistries": [],
+  "theirProse": [
+   {
+    "variable": "SAVE_FORT",
+    "value": null,
+    "text": "When you roll a success against a fear effect, you get a critical success instead"
+   },
+   {
+    "variable": "SAVE_REFLEX",
+    "value": null,
+    "text": "When you roll a success against a fear effect, you get a critical success instead"
+   },
+   {
+    "variable": "SAVE_WILL",
+    "value": null,
+    "text": "When you roll a success against a fear effect, you get a critical success instead"
+   }
+  ]
+ },
+ {
+  "id": "earned-glory",
+  "name": "Earned Glory",
+  "level": 1,
+  "printed": "Elves often struggle with underestimating aiuvarins, and you are experienced at telling stories of your accomplishments to gain their respect. You are trained in Performance. If you would automatically become trained in Performance (from your background or class, for example), you instead become trained in a skill of your choice. You gain the Impressive Performance feat. When you attempt a Performance check to Make an Impression on an elf, if you roll a critical failure, you get a failure instead.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "degreeShifts": [
+    {
+     "shift": "critFailToFail",
+     "when": "on a Performance check to Make an Impression on an elf",
+     "skills": [
+      "performance"
+     ],
+     "actions": [
+      "make-an-impression"
+     ]
+    }
+   ]
+  },
+  "ourRegistries": [
+   {
+    "file": "featGrantsAuto.ts",
+    "entry": "'earned-glory': { skills: { performance: 'trained' }, redundantFallback: true },"
+   },
+   {
+    "file": "featFeatGrants.ts",
+    "entry": "'earned-glory': ['impressive-performance'],"
+   }
+  ],
+  "theirProse": [
+   {
+    "variable": "SKILL_PERFORMANCE",
+    "value": null,
+    "text": "When you Make an Impression on an elf, if you roll a critical failure, you get a failure instead."
+   }
+  ]
+ },
+ {
+  "id": "fascinated-by-society",
+  "name": "Fascinated by Society",
+  "level": 1,
+  "printed": "Just as some humanoids find themselves driven to study nature, you are obsessed with the artificial constructs of society and can't get enough. You are trained in Society. If you would automatically become trained in Society, you instead become trained in a skill of your choice. As a newcomer, sometimes your understanding is a bit off target. When you fail, but don't critically fail, a Society check to Recall Knowledge or Decipher Writing, you learn the correct information (as you would on a success) and erroneous information (as you would on a critical failure). You don't have any way to differentiate which is which.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "situational": [
+    {
+     "targets": [
+      {
+       "kind": "skill",
+       "detail": "society"
+      }
+     ],
+     "when": "when you fail, but don't critically fail, a Society check to Recall Knowledge or Decipher Writing",
+     "bonus": "you learn the correct information (as on a success) and erroneous information (as on a critical failure), with no way to tell which is which"
+    }
+   ]
+  },
+  "ourRegistries": [
+   {
+    "file": "featGrantsAuto.ts",
+    "entry": "'fascinated-by-society': { skills: { society: 'trained' }, redundantFallback: true },"
+   }
+  ],
+  "theirProse": [
+   {
+    "variable": "SKILL_SOCIETY",
+    "value": null,
+    "text": "When you fail, but don’t critically fail, to Recall Knowledge or Decipher Writing, you learn the correct information and erroneous information. You don’t have any way to differentiate which is which."
+   }
+  ]
+ },
+ {
+  "id": "morph-risen",
+  "name": "Morph-Risen",
+  "level": 1,
+  "printed": "You were once a shapeshifter or spellcaster using polymorph magic, but something went wrong, and you became trapped in the form of the creature you were imitating. This accident might have drained your power, or you might have retained some of your skills, but either way, your form resists further forced transformation. You gain a +1 circumstance bonus to saving throws against morph and polymorph effects, and if you roll a success on a saving throw against a hostile morph or polymorph effect, you get a critical success instead.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "degreeShifts": [
+    {
+     "shift": "successToCrit",
+     "when": "on a save against a hostile morph or polymorph effect",
+     "saves": [
+      "all"
+     ]
+    }
+   ],
+   "situational": [
+    {
+     "targets": [
+      {
+       "kind": "save",
+       "detail": "all"
+      }
+     ],
+     "when": "against morph and polymorph effects",
+     "bonus": "+1 circumstance"
+    }
+   ],
+   "situationalReplaces": true
+  },
+  "ourRegistries": [
+   {
+    "file": "situationalBonuses.ts",
+    "entry": "\"morph-risen\": [{ targets: [{ kind: 'save', detail: 'all' }], when: \"against forced polymorph/transformation effects\", bonus: \"+1 circumstance\" }],"
+   }
+  ],
+  "theirProse": [
+   {
+    "variable": "SAVE_FORT",
+    "value": "1",
+    "text": "against morph and polymorph effects."
+   },
+   {
+    "variable": "SAVE_REFLEX",
+    "value": "1",
+    "text": "against morph and polymorph effects."
+   },
+   {
+    "variable": "SAVE_WILL",
+    "value": "1",
+    "text": "against morph and polymorph effects."
+   },
+   {
+    "variable": "SAVE_FORT",
+    "value": "",
+    "text": "f you roll a success against a hostile morph or polymorph effect, you get a critical success instead."
+   },
+   {
+    "variable": "SAVE_REFLEX",
+    "value": "",
+    "text": "f you roll a success against a hostile morph or polymorph effect, you get a critical success instead."
+   },
+   {
+    "variable": "SAVE_WILL",
+    "value": "",
+    "text": "f you roll a success against a hostile morph or polymorph effect, you get a critical success instead."
+   }
+  ]
+ },
+ {
+  "id": "officers-medical-training",
+  "name": "Officer's Medical Training",
+  "level": 1,
+  "printed": "**Requirements** You can prepare at least three tactics. --- You received formal training in battlefield triage and wound treatment. You are trained in Medicine and can use your Intelligence modifier in place of your Wisdom modifier for Medicine checks. If you are already trained in Medicine, you instead become trained in another skill of your choosing. You gain the Battle Medicine feat.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "skillAbilitySwap": {
+    "skill": "medicine",
+    "use": "int"
+   }
+  },
+  "ourRegistries": [
+   {
+    "file": "featGrantsAuto.ts",
+    "entry": "'officers-medical-training': { skills: { medicine: 'trained' }, redundantFallback: true },"
+   },
+   {
+    "file": "featFeatGrants.ts",
+    "entry": "'officers-medical-training': ['battle-medicine'],"
+   }
+  ],
+  "theirProse": [
+   {
+    "variable": "SKILL_MEDICINE",
+    "value": null,
+    "text": "You can use your Intelligence modifier in place of your Wisdom modifier"
+   }
+  ]
+ },
+ {
+  "id": "steady-on-stone",
+  "name": "Steady on Stone",
+  "level": 1,
+  "printed": "Your connection to the earth makes natural uneven surfaces less of a hindrance for you. You can ignore difficult terrain caused by rubble and uneven ground made of stone and earth. In addition, when you use the Acrobatics skill to Balance on narrow surfaces or uneven ground made of stone and earth, you aren't off-guard, and when you roll a success at one of these Acrobatics checks, you get a critical success instead.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "degreeShifts": [
+    {
+     "shift": "successToCrit",
+     "when": "on an Acrobatics check to Balance on narrow surfaces or uneven ground of stone and earth",
+     "skills": [
+      "acrobatics"
+     ],
+     "actions": [
+      "balance"
+     ]
+    }
+   ],
+   "situational": [
+    {
+     "targets": [
+      {
+       "kind": "skill",
+       "detail": "acrobatics"
+      }
+     ],
+     "when": "when you Balance on narrow surfaces or uneven ground of stone and earth",
+     "bonus": "you aren't off-guard, and you ignore difficult terrain from rubble and uneven stone or earth"
+    }
+   ]
+  },
+  "ourRegistries": [],
+  "theirProse": [
+   {
+    "variable": "SKILL_ACROBATICS",
+    "value": null,
+    "text": "when you Balance on narrow surfaces or uneven ground made of stone and earth, you aren't off-guard, and when you roll a success at one of these Acrobatics checks, you get a critical success instead"
+   }
+  ]
+ },
+ {
+  "id": "alghollthu-bound",
+  "name": "Alghollthu Bound",
+  "level": 1,
+  "printed": "Although you may not even be aware, the alghollthus your ancestors once served maintain a stranglehold on the deepest, tethered parts of your mind. You receive a +2 circumstance bonus to Will saves against mental effects that would make you controlled, and if you roll a success against such an effect, you get a critical success instead. However, you gain none of these benefits against effects originating from alghollthus and instead take a -2 circumstance penalty against mental effects from alghollthus.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "degreeShifts": [
+    {
+     "shift": "successToCrit",
+     "when": "on a save against a mental effect that would make you controlled, unless the effect originates from an alghollthu",
+     "saves": [
+      "will"
+     ]
+    }
+   ]
+  },
+  "ourRegistries": [
+   {
+    "file": "situationalBonuses.ts",
+    "entry": "\"alghollthu-bound\": [{ targets: [{ kind: 'save', detail: 'will' }], when: \"against mental effects that would make you controlled, unless the effect originates from an alghollthu\", bonus: \"+2 circumstance\" }, { targets: [{ kind: 'save', detail: 'will' }], when: \"against mental effects from alghollthus\", bonus: \"-2 circumstance\" }],\n  /* R2 keeps this star: it is not a bonus inside the feat's own activity but a new outcome for the\n   * player's ORDINARY use of Survival to Subsist. Q20's second test (\"does it name a specific stat?\")\n   * puts the `*` on Survival even though no number moves. */"
+   }
+  ],
+  "theirProse": [
+   {
+    "variable": "SAVE_WILL",
+    "value": 2,
+    "text": "against mental effects that would make you controlled, except against alghollthus."
+   },
+   {
+    "variable": "SAVE_WILL",
+    "value": -2,
+    "text": "against mental effects from alghollthus"
+   },
+   {
+    "variable": "SAVE_WILL",
+    "value": null,
+    "text": "When you roll a success against a mental effect that would make you controlled, you get a critical success instead. You don't gain this benefit against mental effects from alghollthus."
+   }
+  ]
+ },
+ {
+  "id": "gorilla-stance",
+  "name": "Gorilla Stance",
+  "level": 1,
+  "printed": "You lower yourself to the ground and take an imposing, knuckle - walking stance. While in this stance, the only Strikes you can make are gorilla slam unarmed attacks. These deal 1d8 bludgeoning damage; are in the brawling group; and have the backswing, forceful, grapple, nonlethal, and unarmed traits. While you are in Gorilla Stance, you gain a +2 circumstance bonus to Athletics checks to Climb, and if you roll a success on an Athletics check to Climb, you get a critical success instead.",
+  "ourFields": {
+   "actionCost": {
+    "type": "actions",
+    "value": 1
+   },
+   "archetype": "martial-artist",
+   "degreeShifts": [
+    {
+     "shift": "successToCrit",
+     "when": "on an Athletics check to Climb while in Gorilla Stance",
+     "skills": [
+      "athletics"
+     ],
+     "actions": [
+      "climb"
+     ]
+    }
+   ],
+   "grantedStrikes": [
+    {
+     "name": "Gorilla Slam",
+     "die": "d8",
+     "damageType": "bludgeoning",
+     "traits": [
+      "backswing",
+      "forceful",
+      "grapple",
+      "nonlethal",
+      "unarmed"
+     ],
+     "group": "brawling"
+    }
+   ]
+  },
+  "ourRegistries": [
+   {
+    "file": "situationalBonuses.ts",
+    "entry": "\"gorilla-stance\": [{ targets: [{ kind: \"skill\", detail: \"athletics\" }], when: \"on Athletics checks to Climb while in Gorilla Stance\", bonus: \"+2 circumstance\" }],"
+   }
+  ],
+  "theirProse": [
+   {
+    "variable": "SKILL_ATHLETICS",
+    "value": null,
+    "text": "when you roll a success to Climb, you get a critical success instead."
+   }
+  ]
+ },
+ {
+  "id": "brine-may",
+  "name": "Brine May",
+  "level": 1,
+  "printed": "Your mother was a sea hag, granting you one sea-green or blue eye. You find comfort both in the sea and on the shore. Whenever you roll a success on an Athletics check to Swim, you get a critical success instead. If you end your turn in water without having succeeded at a Swim action that round, you don't sink (but you might still be moved by the current).",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "degreeShifts": [
+    {
+     "shift": "successToCrit",
+     "when": "on an Athletics check to Swim",
+     "skills": [
+      "athletics"
+     ],
+     "actions": [
+      "swim"
+     ]
+    }
+   ]
+  },
+  "ourRegistries": [
+   {
+    "file": "situationalBonuses.ts",
+    "entry": "\"brine-may\": [{ targets: [{ kind: \"skill\", detail: \"athletics\" }], when: \"on an Athletics check to Swim\", bonus: \"you don't sink if you end your turn in water without having succeeded at a Swim that round\" }],"
+   }
+  ],
+  "theirProse": [
+   {
+    "variable": "SKILL_ATHLETICS",
+    "value": null,
+    "text": "Whenever you roll a success to Swim, you get a critical success instead."
+   }
+  ]
+ },
+ {
+  "id": "warren-navigator",
+  "name": "Warren Navigator",
+  "level": 1,
+  "printed": "You gain the trained proficiency rank in Survival. If you would automatically become trained in Survival (from your background or class, for example), you become trained in another skill of your choice. When you Sense Direction or attempt a roll against a Quandary spell, you get a result one degree of success better than you rolled. You don't take a penalty to Sense Direction when you lack a compass.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "effectChoices": [
+    {
+     "id": "warren-navigator-skill",
+     "prompt": "You become trained in Survival. If you would automatically become trained in Survival from another source, choose another skill to become trained in instead.",
+     "options": [
+      {
+       "value": "acrobatics",
+       "label": "Acrobatics",
+       "grant": {
+        "skills": {
+         "acrobatics": "trained"
+        }
+       }
+      },
+      {
+       "value": "arcana",
+       "label": "Arcana",
+       "grant": {
+        "skills": {
+         "arcana": "trained"
+        }
+       }
+      },
+      {
+       "value": "athletics",
+       "label": "Athletics",
+       "grant": {
+        "skills": {
+         "athletics": "trained"
+        }
+       }
+      },
+      {
+       "value": "crafting",
+       "label": "Crafting",
+       "grant": {
+        "skills": {
+         "crafting": "trained"
+        }
+       }
+      },
+      {
+       "value": "deception",
+       "label": "Deception",
+       "grant": {
+        "skills": {
+         "deception": "trained"
+        }
+       }
+      },
+      {
+       "value": "diplomacy",
+       "label": "Diplomacy",
+       "grant": {
+        "skills": {
+         "diplomacy": "trained"
+        }
+       }
+      },
+      {
+       "value": "intimidation",
+       "label": "Intimidation",
+       "grant": {
+        "skills": {
+         "intimidation": "trained"
+        }
+       }
+      },
+      {
+       "value": "medicine",
+       "label": "Medicine",
+       "grant": {
+        "skills": {
+         "medicine": "trained"
+        }
+       }
+      },
+      {
+       "value": "nature",
+       "label": "Nature",
+       "grant": {
+        "skills": {
+         "nature": "trained"
+        }
+       }
+      },
+      {
+       "value": "occultism",
+       "label": "Occultism",
+       "grant": {
+        "skills": {
+         "occultism": "trained"
+        }
+       }
+      },
+      {
+       "value": "performance",
+       "label": "Performance",
+       "grant": {
+        "skills": {
+         "performance": "trained"
+        }
+       }
+      },
+      {
+       "value": "religion",
+       "label": "Religion",
+       "grant": {
+        "skills": {
+         "religion": "trained"
+        }
+       }
+      },
+      {
+       "value": "society",
+       "label": "Society",
+       "grant": {
+        "skills": {
+         "society": "trained"
+        }
+       }
+      },
+      {
+       "value": "stealth",
+       "label": "Stealth",
+       "grant": {
+        "skills": {
+         "stealth": "trained"
+        }
+       }
+      },
+      {
+       "value": "thievery",
+       "label": "Thievery",
+       "grant": {
+        "skills": {
+         "thievery": "trained"
+        }
+       }
+      }
+     ]
+    }
+   ],
+   "degreeShifts": [
+    {
+     "shift": "oneBetter",
+     "when": "when you Sense Direction, or on a roll against a Quandary spell",
+     "skills": [
+      "survival"
+     ],
+     "actions": [
+      "sense-direction"
+     ]
+    }
+   ]
+  },
+  "ourRegistries": [
+   {
+    "file": "featGrantsAuto.ts",
+    "entry": "'warren-navigator': { skills: { survival: 'trained' }, redundantFallback: true },"
+   }
+  ],
+  "theirProse": [
+   {
+    "variable": "SKILL_SURVIVAL",
+    "value": null,
+    "text": "When you Sense Direction or attempt a roll against a quandary spell, you get a result one degree of success better than you rolled. You don't take a penalty to Sense Direction when you lack a compass"
+   }
+  ]
+ },
+ {
+  "id": "pelagic-aptitude",
+  "name": "Pelagic Aptitude",
+  "level": 1,
+  "printed": "You've learned special tricks to survive underwater. You gain the trained proficiency rank in Survival. When in an aquatic environment, if you roll a critical failure on a Survival skill check to Sense Direction or Subsist, you get a failure instead.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "degreeShifts": [
+    {
+     "shift": "critFailToFail",
+     "when": "in an aquatic environment, on a Survival check to Sense Direction or Subsist",
+     "skills": [
+      "survival"
+     ],
+     "actions": [
+      "sense-direction",
+      "subsist"
+     ]
+    }
+   ]
+  },
+  "ourRegistries": [
+   {
+    "file": "featGrantsAuto.ts",
+    "entry": "'pelagic-aptitude': { skills: { survival: 'trained' } },"
+   }
+  ],
+  "theirProse": [
+   {
+    "variable": "SKILL_SURVIVAL",
+    "value": null,
+    "text": "If you critically fail to Sense Direction or Subsist while in an aquatic environment, you get a failure instead."
+   }
+  ]
+ },
+ {
+  "id": "spelunker",
+  "name": "Spelunker",
+  "level": 1,
+  "printed": "Living underground, you have learned to find your way without landmarks or even solid ground. If you roll a success on a Survival check to Sense Direction or an Athletics check to Climb, you get a critical success instead. You're not off-guard when you attempt to Climb.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "degreeShifts": [
+    {
+     "shift": "successToCrit",
+     "when": "on a Survival check to Sense Direction or an Athletics check to Climb",
+     "skills": [
+      "survival",
+      "athletics"
+     ],
+     "actions": [
+      "sense-direction",
+      "climb"
+     ]
+    }
+   ],
+   "situational": [
+    {
+     "targets": [
+      {
+       "kind": "skill",
+       "detail": "athletics"
+      }
+     ],
+     "when": "when you attempt to Climb",
+     "bonus": "you aren't off-guard"
+    }
+   ]
+  },
+  "ourRegistries": [],
+  "theirProse": [
+   {
+    "variable": "SKILL_ATHLETICS",
+    "value": null,
+    "text": "when you roll a success on a check to Climb, you get a critical success instead. You're not off-guard when you attempt to Climb"
+   },
+   {
+    "variable": "SKILL_SURVIVAL",
+    "value": null,
+    "text": "when you roll a success on a check to Sense Direction, you get a critical success instead"
+   }
+  ]
+ },
+ {
+  "id": "haughty-obstinacy",
+  "name": "Haughty Obstinacy",
+  "level": 1,
+  "printed": "Your powerful ego makes it harder for others to order you around. If you roll a success on a saving throw against a mental effect that attempts to directly control your actions, you critically succeed instead. If a creature rolls a failure on a check to Coerce you using Intimidation, it gets a critical failure instead (so it can't try to Coerce you again for 1 week).",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "degreeShifts": [
+    {
+     "shift": "successToCrit",
+     "when": "on a save against a mental effect that directly controls your actions",
+     "saves": [
+      "all"
+     ]
+    }
+   ],
+   "situational": [
+    {
+     "targets": [
+      {
+       "kind": "skill",
+       "detail": "intimidation"
+      }
+     ],
+     "when": "when a creature Coerces you",
+     "bonus": "a failure on its Intimidation check becomes a critical failure (it cannot try again for a week)"
+    }
+   ]
+  },
+  "ourRegistries": [],
+  "theirProse": [
+   {
+    "variable": "SAVE_FORT",
+    "value": null,
+    "text": "If you roll a success against a mental effect that attempts to directly control your actions, you critically succeed instead."
+   },
+   {
+    "variable": "SAVE_REFLEX",
+    "value": null,
+    "text": "If you roll a success against a mental effect that attempts to directly control your actions, you critically succeed instead."
+   },
+   {
+    "variable": "SAVE_WILL",
+    "value": null,
+    "text": "If you roll a success against a mental effect that attempts to directly control your actions, you critically succeed instead."
+   }
+  ]
+ },
+ {
+  "id": "assurance",
+  "name": "Assurance",
+  "level": 1,
+  "printed": "Even in the worst circumstances, you can perform basic tasks. Choose a skill you're trained in. You can forgo rolling a skill check for that skill to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers). --- **Special** You can select this feat multiple times. Each time, choose a different skill and gain the benefits for that skill.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "maxTakable": null,
+   "choice": {
+    "flag": "assuredSkill",
+    "prompt": "Skill",
+    "kind": "skills",
+    "distinctAcrossTakes": true
+   }
+  },
+  "ourRegistries": [
+   {
+    "file": "situationalBonuses.ts",
+    "entry": "\"assurance\": [{ when: \"you forgo the roll; no other bonus, penalty or modifier applies\", bonus: \"take 10 + your proficiency bonus instead of rolling\" }],\n  // Prerequisite is \"Assurance in that skill\", so this star sits beside Assurance's own on the same\n  // skill — two different things the player does with it, and both belong where they look it up."
+   }
+  ],
+  "theirProse": [
+   {
+    "variable": "SKILL_ACROBATICS",
+    "value": null,
+    "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+   },
+   {
+    "variable": "SKILL_ARCANA",
+    "value": null,
+    "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+   },
+   {
+    "variable": "SKILL_ATHLETICS",
+    "value": null,
+    "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+   },
+   {
+    "variable": "SKILL_CRAFTING",
+    "value": null,
+    "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+   },
+   {
+    "variable": "SKILL_DECEPTION",
+    "value": null,
+    "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+   },
+   {
+    "variable": "SKILL_DIPLOMACY",
+    "value": null,
+    "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+   },
+   {
+    "variable": "SKILL_INTIMIDATION",
+    "value": null,
+    "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+   },
+   {
+    "variable": "SKILL_MEDICINE",
+    "value": null,
+    "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+   },
+   {
+    "variable": "SKILL_NATURE",
+    "value": null,
+    "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+   },
+   {
+    "variable": "SKILL_OCCULTISM",
+    "value": null,
+    "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+   },
+   {
+    "variable": "SKILL_PERFORMANCE",
+    "value": null,
+    "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+   },
+   {
+    "variable": "SKILL_RELIGION",
+    "value": null,
+    "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+   },
+   {
+    "variable": "SKILL_SOCIETY",
+    "value": null,
+    "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+   },
+   {
+    "variable": "SKILL_STEALTH",
+    "value": null,
+    "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+   },
+   {
+    "variable": "SKILL_SURVIVAL",
+    "value": null,
+    "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+   },
+   {
+    "variable": "SKILL_THIEVERY",
+    "value": null,
+    "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+   }
+  ]
+ },
+ {
+  "id": "disillusionment",
+  "name": "Disillusionment",
+  "level": 1,
+  "printed": "Dreams are pointless illusions you seek to quash. If you roll a success on a saving throw against an illusion or dream effect or a Perception check to disbelieve an illusion, you get a critical success instead. If you roll a critical failure on any of those checks, you get a failure instead.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "archetype": "hellknight",
+   "degreeShifts": [
+    {
+     "shift": "successToCrit",
+     "when": "on a save against an illusion or dream effect, and on a Perception check to disbelieve an illusion",
+     "saves": [
+      "all"
+     ],
+     "perception": true
+    },
+    {
+     "shift": "critFailToFail",
+     "when": "on a save against an illusion or dream effect, and on a Perception check to disbelieve an illusion",
+     "saves": [
+      "all"
+     ],
+     "perception": true
+    }
+   ]
+  },
+  "ourRegistries": [],
+  "theirProse": [
+   {
+    "variable": "SAVE_FORT",
+    "value": null,
+    "text": "If you roll a success against an illusion or dream effect, you get a critical success instead. If you roll a critical failure, you get a failure instead."
+   },
+   {
+    "variable": "SAVE_REFLEX",
+    "value": null,
+    "text": "If you roll a success against an illusion or dream effect, you get a critical success instead. If you roll a critical failure, you get a failure instead."
+   },
+   {
+    "variable": "SAVE_WILL",
+    "value": null,
+    "text": "If you roll a success against an illusion or dream effect, you get a critical success instead. If you roll a critical failure, you get a failure instead."
+   },
+   {
+    "variable": "PERCEPTION",
+    "value": null,
+    "text": "If you roll a success to disbelieve an illusion, you get a critical success instead. If you roll a critical failure, you get a failure instead."
+   }
+  ]
+ },
+ {
+  "id": "cantorian-reinforcement",
+  "name": "Cantorian Reinforcement",
+  "level": 1,
+  "printed": "The life energy that helped create the first hobgoblins is particularly potent in you, protecting you from ongoing maladies. If you roll a success on a saving throw against a disease or poison, you get a critical success instead. If you have a different ability that would improve the save in this way (such as the Battle Hardened fighter class feature), if you roll a critical failure on the save you get a failure instead.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "degreeShifts": [
+    {
+     "shift": "successToCrit",
+     "when": "on a save against a disease or poison",
+     "saves": [
+      "all"
+     ]
+    },
+    {
+     "shift": "critFailToFail",
+     "when": "on a save against a disease or poison, if you also have Battle Hardened or a similar ability",
+     "saves": [
+      "all"
+     ]
+    }
+   ]
+  },
+  "ourRegistries": [],
+  "theirProse": [
+   {
+    "variable": "SAVE_FORT",
+    "value": null,
+    "text": "If you roll a success on a saving throw against a disease or poison, you get a critical success instead. If you have a different ability that would improve the save in this way, if you roll a critical failure on the save you get a failure instead."
+   },
+   {
+    "variable": "SAVE_REFLEX",
+    "value": null,
+    "text": "If you roll a success on a saving throw against a disease or poison, you get a critical success instead. If you have a different ability that would improve the save in this way, if you roll a critical failure on the save you get a failure instead."
+   },
+   {
+    "variable": "SAVE_WILL",
+    "value": null,
+    "text": "If you roll a success on a saving throw against a disease or poison, you get a critical success instead. If you have a different ability that would improve the save in this way, if you roll a critical failure on the save you get a failure instead."
+   }
+  ]
+ },
+ {
+  "id": "adroit-manipulation",
+  "name": "Adroit Manipulation",
+  "level": 1,
+  "printed": "**Access** Mihrini ethnicity --- You've fiddled with knots, locks, and blacksmith's puzzles since you were a child to give your hands something to do. You gain the trained proficiency rank in Thievery (or another skill of your choice, if you're already trained in Thievery). If you roll a success on a Thievery check to Pick a Lock, you get a critical success instead.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "degreeShifts": [
+    {
+     "shift": "successToCrit",
+     "when": "on a Thievery check to Pick a Lock",
+     "skills": [
+      "thievery"
+     ],
+     "actions": [
+      "pick-a-lock"
+     ]
+    }
+   ]
+  },
+  "ourRegistries": [
+   {
+    "file": "featGrantsAuto.ts",
+    "entry": "'adroit-manipulation': { skills: { thievery: 'trained' }, redundantFallback: true },\r\n  // ⚠ \"You become trained in ALCHEMICAL BOMBS, the alchemist class DC, and Crafting.\" The class DC\r\n  // (`classDcGrant`) and Crafting both shipped; the BOMB proficiency did not, so an archetype\r\n  // alchemist threw their own bombs untrained."
+   }
+  ],
+  "theirProse": [
+   {
+    "variable": "SKILL_THIEVERY",
+    "value": null,
+    "text": "If you roll a success to Pick a Lock, you get a critical success instead."
+   }
+  ]
+ },
+ {
+  "id": "elven-aloofness",
+  "name": "Elven Aloofness",
+  "level": 1,
+  "printed": "As much as you might care for them, you've come to terms with the ephemeral nature of non-elves, and it makes their threats feel less troublesome. If a non-elf rolls a failure on a check to Coerce you using Intimidation, it gets a critical failure instead (and thus can't try to Coerce you again for 1 week). When a non-elf attempts to Demoralize you, you become temporarily immune for 1 day, instead of 10 minutes.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "situational": [
+    {
+     "targets": [
+      {
+       "kind": "skill",
+       "detail": "intimidation"
+      }
+     ],
+     "when": "when a non-elf Coerces you",
+     "bonus": "a failure on its Intimidation check becomes a critical failure (it cannot try again for 1 week)"
+    },
+    {
+     "targets": [
+      {
+       "kind": "skill",
+       "detail": "intimidation"
+      }
+     ],
+     "when": "when a non-elf Demoralizes you",
+     "bonus": "you become temporarily immune for 1 day instead of 10 minutes"
+    }
+   ]
+  },
+  "ourRegistries": [],
+  "theirProse": [
+   {
+    "variable": "SAVE_WILL",
+    "value": null,
+    "text": "If a non-elf rolls a failure on a check to Coerce you using Intimidation, it gets a critical failure instead (and thus can't try to Coerce you again for 1 week). When a non-elf attempts to Demoralize you, you become temporarily immune for 1 day, instead of 10 minutes."
+   }
+  ]
+ },
+ {
+  "id": "powder-punch-stance",
+  "name": "Powder Punch Stance",
+  "level": 2,
+  "printed": "**Access** You're from Alkenstar or the Mana Wastes. --- You infuse your handwraps with black powder. On your first melee Strike each round with an unarmed attack, Knuckle Duster, or Black Powder Knuckle Dusters, you deal an additional 1 fire Damage. If you critically succeed at an attempt to Shove while in this stance, the target is pushed back an additional 5 feet.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "archetype": "martial-artist",
+   "situational": [
+    {
+     "targets": [
+      {
+       "kind": "strikeDamage"
+      }
+     ],
+     "when": "on your first melee Strike each round while in Powder Punch Stance, with an unarmed attack, a Knuckle Duster or Black Powder Knuckle Dusters",
+     "bonus": "+1 fire damage"
+    },
+    {
+     "targets": [
+      {
+       "kind": "skill",
+       "detail": "athletics"
+      }
+     ],
+     "when": "when you critically succeed to Shove while in Powder Punch Stance",
+     "bonus": "the target is pushed an additional 5 feet"
+    }
+   ]
+  },
+  "ourRegistries": [],
+  "theirProse": [
+   {
+    "variable": "ATTACK_DAMAGE_BONUS",
+    "value": 1,
+    "text": "On your first melee Strike each round with an unarmed attack, knuckle duster, or black powder knuckle duster, you deal an additional 1 fire damage."
+   },
+   {
+    "variable": "SKILL_ATHLETICS",
+    "value": null,
+    "text": "If you critically succeed at an attempt to Shove while in Powder Punch Stance, the target is pushed back an additional 5 feet."
+   }
+  ]
+ },
+ {
+  "id": "half-truths",
+  "name": "Half-Truths",
+  "level": 2,
+  "printed": "You are able to weave your words in such a way that you never use actual lies, but still mislead people to certain conclusions. You can attempt to make a Request of a creature using Deception instead of Diplomacy. You can attempt to Lie to a creature using Diplomacy instead of Deception. If you fail your check to Lie, the creature realizes that you were twisting words to fool them without outright lying.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "skillSubstitutions": [
+    {
+     "use": "deception",
+     "forSkill": "diplomacy",
+     "when": "to Make a Request"
+    },
+    {
+     "use": "diplomacy",
+     "forSkill": "deception",
+     "when": "to Lie"
+    }
+   ]
+  },
+  "ourRegistries": [],
+  "theirProse": [
+   {
+    "variable": "SKILL_DECEPTION",
+    "value": null,
+    "text": "You can attempt to make a Request of a creature using Deception instead of Diplomacy."
+   },
+   {
+    "variable": "SKILL_DIPLOMACY",
+    "value": null,
+    "text": "You can attempt to Lie to a creature using Diplomacy instead of Deception. If you fail your check to Lie, the creature realizes that you were twisting words to fool them without outright lying."
+   }
+  ]
+ },
+ {
+  "id": "viking-dedication",
+  "name": "Viking Dedication",
+  "level": 2,
+  "printed": "Vikings spend long periods of time at sea, only to leap from their boats at a moment's notice, charge through the surf, and take their enemies by storm. You gain the Additional Lore general feat for Sailing Lore and Warfare Lore. When using your land Speed, you ignore difficult terrain from shallow water, such as in bogs or on beaches. In addition, if you roll a success on an Athletics check to Swim, you get a critical success instead.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "archetype": "viking",
+   "degreeShifts": [
+    {
+     "shift": "successToCrit",
+     "when": "on an Athletics check to Swim",
+     "skills": [
+      "athletics"
+     ],
+     "actions": [
+      "swim"
+     ]
+    }
+   ]
+  },
+  "ourRegistries": [
+   {
+    "file": "featGrantsAuto.ts",
+    "entry": "'viking-dedication': { skills: { 'lore:sailing': 'trained', 'lore:warfare': 'trained' } },"
+   },
+   {
+    "file": "featFeatGrants.ts",
+    "entry": "'viking-dedication': { 'additional-lore': { kind: 'fixedLore', lore: ['sailing', 'warfare'] } },\r\n  // \"You also gain the Additional Lore general feat for Warfare Lore.\""
+   },
+   {
+    "file": "featFeatGrants.ts",
+    "entry": "'viking-dedication': ['additional-lore'],"
+   }
+  ],
+  "theirProse": [
+   {
+    "variable": "SKILL_ATHLETICS",
+    "value": null,
+    "text": "if you roll a success to Swim, you get a critical success instead"
+   }
+  ]
+ },
+ {
+  "id": "edgewatch-detective-dedication",
+  "name": "Edgewatch Detective Dedication",
+  "level": 2,
+  "printed": "You become trained in Society or Thievery; if you are already trained in both of these skills, you instead become trained in a skill of your choice. You can use Perception instead of Survival to Track, and you gain the Experienced Tracker skill feat.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "archetype": "edgewatch-detective",
+   "skillSubstitutions": [
+    {
+     "use": "perception",
+     "forSkill": "survival",
+     "when": "to Track"
+    }
+   ]
+  },
+  "ourRegistries": [
+   {
+    "file": "featGrantsAuto.ts",
+    "entry": "'edgewatch-detective-dedication': { skillChoices: [{ options: ['society', 'thievery'], rank: 'trained', redundantFallback: true }] },"
+   },
+   {
+    "file": "featFeatGrants.ts",
+    "entry": "'edgewatch-detective-dedication': ['experienced-tracker'],"
+   }
+  ],
+  "theirProse": [
+   {
+    "variable": "SKILL_SURVIVAL",
+    "value": null,
+    "text": "You can use Perception instead of Survival to Track."
+   }
+  ]
+ }
+]

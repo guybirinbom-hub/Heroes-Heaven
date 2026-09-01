@@ -30,8 +30,17 @@ const grantsInnate = (r: {
   (r.enhancement?.grant?.innateSpells ?? []).length > 0;
 
 describe('innate spell grants', () => {
-  it('a named single spell', () => {
-    expect(c.feats['more-real-than-real'].innateSpells).toEqual([{ spellId: 'fabricated-truth', tradition: 'occult' }]);
+  it('a named single spell, with the frequency its text states', () => {
+    /*
+     * *"You gain the ability to cast Fabricated Truth ONCE PER DAY as an occult innate spell."*
+     *
+     * `usesPerDay` used to be absent, and this test pinned that shape as the example of a clean
+     * single-spell grant — which is exactly what made it worth keeping as one. An innate grant with no
+     * frequency is castable AT WILL, so 79 grants across the corpus were handing out at-will
+     * Regenerate, Chain Lightning and Prismatic Armor. `scripts/innate-frequency-check.mjs` holds the
+     * class at zero now, and the frequency belongs in the example.
+     */
+    expect(c.feats['more-real-than-real'].innateSpells).toEqual([{ spellId: 'fabricated-truth', tradition: 'occult', usesPerDay: 1 }]);
   });
 
   it('two named spells from one sentence', () => {

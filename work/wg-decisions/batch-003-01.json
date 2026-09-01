@@ -1,0 +1,226 @@
+[
+ {
+  "category": "feats",
+  "id": "summiting-dragonblood",
+  "field": "speeds",
+  "value": {
+   "climb": "min(@actor.speed.climb,1)*(@actor.speed.climb-15)+20"
+  },
+  "why": "\"You gain a climb Speed of 20 feet; if you already have a base climb Speed, it increases by 5 feet.\" min(C,1) is the indicator for \"already have one\", so the expression is C+5 when C>0 and 20 when C==0, and the max(existing,v) fold is a no-op because C+5 > C. 20, not WG's setValue 15 — the printed feat and the AoN mirror (feat-8077) both say 20; 15 is their swim number copied onto the climb feat. Verified end-to-end: no base -> 20, cecaelia-merfolk (climb 10) -> 15, climbing-animal (climb 20) -> 25."
+ },
+ {
+  "category": "feats",
+  "id": "aqueous-dragonblood",
+  "field": "speeds",
+  "value": {
+   "swim": "min(@actor.speed.swim,1)*(@actor.speed.swim-10)+15"
+  },
+  "why": "\"You gain a swim Speed of 15 feet; if you already have a base swim Speed, it increases by 5 feet.\" Same indicator, offset -10 because the grant is 15. Verified end-to-end: no base -> 15, undine (10) -> 15, mistbreath-azarketi (15) -> 20, wetlander-lizardfolk (15) -> 20, seaweed-leshy (20) -> 25, aquatic-elf (30) -> 35. Six shipped heritages sit at swim 15 exactly, where the old max() ate the entire +5."
+ },
+ {
+  "category": "feats",
+  "id": "like-a-fish-in-water",
+  "field": "speeds",
+  "value": {
+   "swim": "min(@actor.speed.swim,1)*(@actor.speed.swim-10)+15"
+  },
+  "why": "NOT IN THE BATCH — found by scanning all descriptions for the clause. \"You gain a swim Speed of 15 feet... If you already have a swim Speed, it increases by 5 feet.\" Identical mechanic and identical numbers to Aqueous Dragonblood; it was missed because it omits the word \"base\". Leaving it on the bare 15 would leave the shape half-built and the new data guard failing."
+ },
+ {
+  "category": "feats",
+  "id": "kobold-breath",
+  "field": "specialStatistic",
+  "value": {
+   "key": "kobold-breath-dc",
+   "name": "Kobold Breath DC",
+   "kind": "dc",
+   "basis": {
+    "higherOfClassDcOrSpellDc": true
+   },
+   "note": "Creatures in your breath's area attempt a basic save against this DC."
+  },
+  "why": "\"a basic saving throw against the higher of your class DC or spell DC\" is verbatim the `higherOfClassDcOrSpellDc` basis (src/rules/types.ts:660, src/rules/derive.ts:534-577), which compares BY VALUE and yields no row when the character has neither track. Until now the DC was prose inside a dataWarning; it is now a number in the Special statistics rail card (src/sheet/VitalsRail.tsx:844-870) with a clickable breakdown. Same shape as feats/chronoskimmer-dedication, which is the precedent for this basis on a FEAT rather than a class feature."
+ },
+ {
+  "category": "feats",
+  "id": "kobold-breath",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "breath-shape",
+    "prompt": "Your draconic benefactor's breath shape — Kobold Breath is a 30-foot line or a 15-foot cone, whichever shape your benefactor's own breath takes",
+    "options": [
+     {
+      "value": "line",
+      "label": "30-foot line",
+      "note": "Your breath fills a 30-foot line."
+     },
+     {
+      "value": "cone",
+      "label": "15-foot cone",
+      "note": "Your breath fills a 15-foot cone."
+     }
+    ]
+   },
+   {
+    "id": "breath-damage",
+    "prompt": "Your draconic benefactor's breath damage type (these are the twelve the app's own dragon table uses; if your GM allows a dragon from another source, pick its type)",
+    "options": [
+     {
+      "value": "acid",
+      "label": "Acid",
+      "note": "The breath deals acid damage, and the activity gains the acid trait."
+     },
+     {
+      "value": "bludgeoning",
+      "label": "Bludgeoning",
+      "note": "The breath deals bludgeoning damage. Physical damage carries no trait of its own, so the activity gains only your benefactor's tradition trait."
+     },
+     {
+      "value": "cold",
+      "label": "Cold",
+      "note": "The breath deals cold damage, and the activity gains the cold trait."
+     },
+     {
+      "value": "electricity",
+      "label": "Electricity",
+      "note": "The breath deals electricity damage, and the activity gains the electricity trait."
+     },
+     {
+      "value": "fire",
+      "label": "Fire",
+      "note": "The breath deals fire damage, and the activity gains the fire trait."
+     },
+     {
+      "value": "force",
+      "label": "Force",
+      "note": "The breath deals force damage, and the activity gains the force trait."
+     },
+     {
+      "value": "mental",
+      "label": "Mental",
+      "note": "The breath deals mental damage, and the activity gains the mental trait."
+     },
+     {
+      "value": "piercing",
+      "label": "Piercing",
+      "note": "The breath deals piercing damage. Physical damage carries no trait of its own, so the activity gains only your benefactor's tradition trait."
+     },
+     {
+      "value": "poison",
+      "label": "Poison",
+      "note": "The breath deals poison damage, and the activity gains the poison trait."
+     },
+     {
+      "value": "sonic",
+      "label": "Sonic",
+      "note": "The breath deals sonic damage, and the activity gains the sonic trait."
+     },
+     {
+      "value": "spirit",
+      "label": "Spirit",
+      "note": "The breath deals spirit damage, and the activity gains the spirit trait."
+     },
+     {
+      "value": "void",
+      "label": "Void",
+      "note": "The breath deals void damage, and the activity gains the void trait."
+     }
+    ]
+   },
+   {
+    "id": "breath-save",
+    "prompt": "The basic save your draconic benefactor's breath calls for",
+    "options": [
+     {
+      "value": "reflex",
+      "label": "Basic Reflex",
+      "note": "Each creature in the area attempts a basic Reflex save against your Kobold Breath DC."
+     },
+     {
+      "value": "fortitude",
+      "label": "Basic Fortitude",
+      "note": "Each creature in the area attempts a basic Fortitude save against your Kobold Breath DC."
+     },
+     {
+      "value": "will",
+      "label": "Basic Will",
+      "note": "Each creature in the area attempts a basic Will save against your Kobold Breath DC."
+     }
+    ]
+   }
+  ],
+  "why": "\"The breath shape, damage type, and the saving throw match those of your draconic benefactor\" is THREE independent facts, and the printed sentence names them as three. Each is an `effectChoices` pick whose option carries a note and no grant — the shape build.ts:3818-3825 explicitly supports (\"Record the pick even when the option carries no grant\") and which the same book's feats/benefactors-resistance already uses for this very family. Nothing here holds the Draconic Benefactors table, so nothing here can drift from the four copies of the exemplar table the app already carries. Three separate choices rather than one 40-option dragon list on purpose: a dragon list would be a FIFTH copy of a table the app cannot source (8 of the 40 dragons have no breath at all in any shipped data), and the printed rule already contemplates a dragon from another source. The twelve damage types are exactly those the app's own classFeatures/dragon-instinct labels use. ⚠ Every choice has >= 2 options deliberately: build.ts:3817 auto-applies a one-option choice even unanswered."
+ },
+ {
+  "category": "feats",
+  "id": "kobold-breath",
+  "field": "note",
+  "value": "Damage is 1d4, rising by 1d4 at 3rd level and every 2 levels after — 2d4 at 3rd, 3d4 at 5th, up to 10d4 at 19th. You can't use it again for 1d4 rounds. The activity also gains the trait of your benefactor's magical tradition (arcane, divine, occult or primal). The Draconic Benefactors table is not in this data source, so the three picks above are where your benefactor's row is recorded.",
+  "why": "The Feats tab and the Main tab are different surfaces and neither shows the other's text: FeatsTab.tsx:99 asks for marks `on:'feature'` and so never sees the `on:'action'` mark above, while the action row never renders `withPicks`. `note` is the Feats-tab half (FeatsTab.tsx:101-102, \"here is the part you apply yourself\"). It also carries the one clause with no lane anywhere — the tradition trait on the activity. Activity traits are not modelled: EffectGrant (types.ts:1397-1454) has no trait lane except `grantsCreatureTraits`, and a feat's `traits` array is the feat's own. Ruling H applies — print the trigger, star nothing you cannot compute."
+ },
+ {
+  "category": "feats",
+  "id": "kobold-breath",
+  "field": "dataWarning",
+  "value": null,
+  "why": "The overlay ALREADY carries a dataWarning row for this feat (measured: exactly one row in scripts/data/effect-backfill.json), so deleting the field from core.json alone lasts until the next `npm run data`. `value: null` means REMOVE (scripts/lib/apply-backfill.mjs). The warning must go: dataWarning renders the red \"Missing data\" banner, and after these four fields the only thing still absent is the illustrative table, which the three pickers replace. This is the rule test/integrity-sweeps.test.ts:251-279 encodes — \"no record warns about a mechanic it now carries\" — applied before that test could catch it (its MECHANICAL list does not yet name effectChoices or specialStatistic, so it would NOT have fired; leaving the warning would have been a silent false alarm)."
+ },
+ {
+  "category": "feats",
+  "id": "proteankin",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "chaos-resistance",
+    "prompt": "Resistance type for today (randomly determined each day)",
+    "options": [
+     {
+      "value": "acid",
+      "label": "Acid resistance (half your level)",
+      "grant": {
+       "resistances": [
+        {
+         "type": "acid",
+         "value": "max(1,floor(@actor.level/2))"
+        }
+       ]
+      }
+     },
+     {
+      "value": "electricity",
+      "label": "Electricity resistance (half your level)",
+      "grant": {
+       "resistances": [
+        {
+         "type": "electricity",
+         "value": "max(1,floor(@actor.level/2))"
+        }
+       ]
+      }
+     },
+     {
+      "value": "sonic",
+      "label": "Sonic resistance (half your level)",
+      "grant": {
+       "resistances": [
+        {
+         "type": "sonic",
+         "value": "max(1,floor(@actor.level/2))"
+        }
+       ]
+      }
+     }
+    ]
+   }
+  ],
+  "why": "Verbatim twin of the heritages/aon-ganzi row already in effect-backfill.json — same choice id, same prompt, same formula — because the two records print the IDENTICAL sentence ('resistance to a single damage type equal to half your level; at the beginning of each day, determine randomly whether this resistance applies to acid, electricity, or sonic damage'). Proteankin is the remaster nephilim-lineage twin of the legacy Ganzi heritage, so anything but a verbatim copy would make two records of one rule disagree. `effectChoices` (not `choiceResistance`) is the carrier: it is the lane 16 other feats already use and the one build.ts:3952 resolves for a picked feat, whereas `choiceResistance` is heritage-only with a single-slot store (BuildState.heritageResistanceChoice) that cannot hold a feat's answer. `max(1,floor(@actor.level/2))` and not WG's `{level/2}`: 13 shipped records with this exact printed wording use the minimum-1 form, and deriveDefenses drops any resistance resolving to <= 0, so the literal reading would make a 1st-level lineage feat show nothing at all. The record's other printed clause (+1 circumstance vs the controlled condition) needs no row — situationalBonuses.ts:390 already carries it."
+ },
+ {
+  "category": "feats",
+  "id": "kobold-breath",
+  "field": "recordMarks",
+  "value": null,
+  "why": "DELETE. A recordMarks row here duplicated the mark Draconic Paragon already puts on the Kobold Breath action through the gated grantMarkers channel — test/grant-modification.test.ts asserts exactly one mark and saw two. Removing the row alone was not enough: the value was already baked into core.json, and dropping a row stops it being SET without undoing it. value:null is the deletion the overlay provides for exactly this."
+ }
+]

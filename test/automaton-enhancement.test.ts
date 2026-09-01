@@ -226,7 +226,9 @@ describe('the display half — the one fact the printed text cannot carry is tha
       const ch = db.feats[id].effectChoices?.find((c) => c.id === 'enhancement');
       expect(ch, `${id} lost its enhancement choice`).toBeTruthy();
       for (const o of ch!.options ?? []) expect(o.note, `${id} -> ${o.value} has no note`).toBeTruthy();
-      expect((ch!.options ?? []).filter((o) => /Computed on your sheet/.test(o.note ?? ''))).toHaveLength(4);
+      // 4 -> 5 -> 6: Undead Hunter's Infuse Vitality (batch 4) and Powerful Tail's climb Speed
+      // (batch 6) are both computed now.
+      expect((ch!.options ?? []).filter((o) => /Computed on your sheet/.test(o.note ?? ''))).toHaveLength(6);
     }
     // The old note claimed "this feat's effect is one the app does not compute". It now does.
     expect(db.feats['lesser-augmentation'].note).not.toContain('does not compute');
@@ -247,12 +249,20 @@ describe('every record printing an **Enhancement** is accounted for', () => {
     optionWithoutNote: string[]; badGate: string[];
   };
 
-  it('19 print one, 4 are computed, 14 carry a note, 1 is exempt with a stated reason', () => {
-    expect(a.printing).toHaveLength(19);
+  /*
+   * ⚠ 19 -> 30. The scanner's marker was `**Enhancement**` only, and some records' plain-text
+   * descriptions lose their bold markers in the AoN import (Undead Hunter's reads a bare line-start
+   * "Enhancement You can infuse…"). Eleven records printing a tier were invisible to the scan, and all
+   * eleven were offered by NEITHER Augmentation picker — their benefit was unreachable. Found while
+   * authoring Undead Hunter, which the old marker then reported as SPURIOUS.
+   */
+  it('30 print one, 6 are computed, 23 carry a note, 1 is exempt with a stated reason', () => {
+    expect(a.printing).toHaveLength(30);
     expect(a.computed.sort()).toEqual([
       'feats/arcane-communication', 'feats/arcane-eye', 'feats/automaton-armament', 'feats/automaton-lore',
+      'feats/powerful-tail', 'feats/undead-hunter',
     ]);
-    expect(a.proseOnly).toHaveLength(14);
+    expect(a.proseOnly).toHaveLength(23);
     expect(Object.keys(EXEMPT)).toEqual(['feats/lesser-augmentation']);
   });
 

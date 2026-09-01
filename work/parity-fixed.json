@@ -1,0 +1,47 @@
+[
+ {
+  "batch": "001",
+  "id": "scrutinizing-gaze",
+  "evidence": "The record's own `situational` carries all three printed clauses; a situationalBonuses.ts entry duplicated the first with the WRONG condition ('determine if a creature is undead' where the text says 'possessed or under the influence of an effect that would make them controlled'). Registry entry removed."
+ },
+ {
+  "batch": "001",
+  "id": "basic-prophet-spellcasting",
+  "evidence": "The archetype was defined as a PREPARED caster; the feat prints 'add a common occult spell of the appropriate rank… to your REPERTOIRE', and their side defines the casting source as spontaneous. casterArchetypes.ts now carries repertoire: true."
+ },
+ {
+  "batch": "001",
+  "id": "invulnerable-rager",
+  "evidence": "Granted heavy armour at trained forever. The printed clause mirrors the barbarian's MEDIUM track (expert at 13 via Medium Armor Expertise, master at 19 via Armor Mastery), so rankUpgrade now carries those two steps. Asserted on built characters at 12/13/19, plus a control that heavy never outruns medium."
+ },
+ {
+  "batch": "002",
+  "id": "svetocher",
+  "evidence": "Shipped an unconditional maxHpBonus of 1/level for a clause that only softens the DRAINED penalty. Now `drainedReduction: 1`, read by effectiveDrainedValue (HP) and conditionsWithDrainedReduction (the Fortitude save). Asserted both halves plus the undrained control."
+ },
+ {
+  "batch": "004",
+  "id": "puncturing-horn",
+  "evidence": "The d8 rider sat on the FEAT, so every kashrishi got the upgrade; the text gates it on the xyloshi heritage. Moved to heritages/xyloshi with fromRecord aimed at the horn this feat grants."
+ },
+ {
+  "batch": "004",
+  "id": "first-world-magic",
+  "evidence": "Its pick list offered superseded spells; repointed from each legacy AoN page's remaster_id in the same corpus-wide sweep that fixed 48 routes. superseded-grant-check.mjs now guards it."
+ },
+ {
+  "batch": "004",
+  "id": "alchemical-scholar",
+  "evidence": "Covered by the superseded-spell sweep and the duplicate-lane removal; the record now has one prompt and no legacy grant. Re-read against their encoding after both fixes."
+ },
+ {
+  "batch": "003",
+  "id": "stylish-combatant",
+  "evidence": "Its duplicate fallback picker was removed with the other ten; the conditional `redundantFallback` grant is the single lane, and Builder.tsx renders the replacement from skillFallbacks only when the grant is actually redundant."
+ },
+ {
+  "batch": "003",
+  "id": "dedication-to-the-five",
+  "evidence": "The divine-focus clause is stated on the record as a note; their encoding carries no mechanical content for it either (the religious-symbol permission is not a value on any sheet)."
+ }
+]

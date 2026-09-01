@@ -55,6 +55,22 @@ const usedDocs = (() => { try { return read('used-docs.json'); } catch { return 
 /** Buckets Heroes Heaven authors by hand — user-confirmed these stay and have no archive doc. */
 const AUTHORED = new Set(['modes', 'stances', 'runes', 'services', 'followers', 'pets', 'companionAdvanced', 'specificFamiliars']);
 
+/**
+ * `<bucket>|<id>` of every record the effect overlay INSERTS rather than edits (`create: true` in
+ * effect-backfill.json). Read here so the fallback at the bottom of the chain can call an inserted
+ * record hand-authored when no archive branch claimed it — see the comment on that branch for why it
+ * sits last and not first.
+ */
+const OVERLAY_CREATED = (() => {
+  const out = new Set();
+  try {
+    for (const r of JSON.parse(readFileSync('scripts/data/effect-backfill.json', 'utf8'))) {
+      if (r?.create && r.category && r.id) out.add(`${r.category}|${r.id}`);
+    }
+  } catch { /* the overlay is optional to this script */ }
+  return out;
+})();
+
 /*
  * The six size traits. Verified in stage 1b: the Archives hold 907 `trait` docs and ZERO size traits —
  * AoN treats size as a rules concept, not a trait page, while Heroes Heaven models it as a trait.
@@ -248,6 +264,19 @@ for (const [bucket, records] of Object.entries(core)) {
        * rule then hides, deleting the item from the game. Caught by test/umbrella-items.test.ts.
        */
       entry = { status: 'doc', docId: String(rec.aonId), how: 'record carries its own aonId (targeted merge)' };
+    } else if (OVERLAY_CREATED.has(`${bucket}|${key}`)) {
+      /*
+       * A record the effect overlay INSERTS (`create: true` in effect-backfill.json) that nothing
+       * above could place. Those are the pieces of gear a printed feature conjures but the Archives
+       * never gave a page of their own — Metal Carapace's armour and shield, Armor in Earth's two
+       * grades. The FEAT has a doc and keeps it; the armour it creates is Heroes Heaven content.
+       *
+       * A rule rather than six names, because every future `create: true` row would otherwise land
+       * here as `open` and break `npm run data` again — which is exactly how the aonId wipe above
+       * happened twice. Deliberately BELOW every join branch: 25 of the 83 created records DO have an
+       * archive page (the four new heritages, the five animal companions) and must keep matching it.
+       */
+      entry = { status: 'authored', how: 'overlay-created record with no archive page' };
     } else {
       entry = { status: 'open', how: null };
       open.push({ bucket, key, name, book: (rec.source || {}).book || '' });

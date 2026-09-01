@@ -380,5 +380,26 @@
   "field": "trainedSkill",
   "value": "performance",
   "why": "Printed Background details say \"Trained Skill Performance\", and the background grants Impressive Performance, whose prerequisite is trained in Performance. Both our record and the mirror’s structured skill field said Acrobatics; the printed text and the granted feat agree against them."
+ },
+ {
+  "category": "feats",
+  "id": "advanced-death-dealing",
+  "field": "maxTakable",
+  "value": null,
+  "why": "Printed Special: \"You can select this feat more than once. Each time you select it, you gain another feat.\" WG meta_data can_select_multiple_times:true agrees. maxTakable:null = unlimited; absent reads as 1, so the record could never be taken twice. Set here because effect-backfill value:null DELETES rather than sets."
+ },
+ {
+  "category": "feats",
+  "id": "advanced-rune-magic",
+  "field": "maxTakable",
+  "value": null,
+  "why": "Printed Special: \"You can select this feat more than once. Each time you select it, you gain another feat.\" WG meta_data can_select_multiple_times:true agrees. maxTakable:null = unlimited; absent reads as 1, so the record could never be taken twice. Set here because effect-backfill value:null DELETES rather than sets."
+ },
+ {
+  "category": "feats",
+  "id": "widespread-fascination",
+  "field": "maxTakable",
+  "value": null,
+  "why": "Printed Special: \"You can select this feat more than once, choosing a different grave spell each time.\" maxTakable:null = unlimited (maxTakes reads absent as 1). The old effect-backfill row could not say it — value:null DELETES a field there — so it sat inert and the feat could never be taken twice."
  }
 ]

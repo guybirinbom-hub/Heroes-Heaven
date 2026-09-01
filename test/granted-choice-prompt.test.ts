@@ -35,12 +35,29 @@ describe('a granted feat’s choice is labelled from its flag, like a picked one
   // Measured: 23 before that deletion, 21 after. The six other phantom pickers deleted in the same
   // pass are not in this set, because their prompts are real or their flags humanise to the same
   // string the un-flagged call already produces.
-  it('two dozen feats were mislabelled on the granted lane, so this is not one record', () => {
+  // 14, down from 21, for that same reason once more. The batches 5–16 parity read found the phantom-
+  // picker shape on a further TWENTY-SEVEN records, removed in two sweeps: twelve whose bare `choice`
+  // duplicated a FEAT_GRANTS skill slot (captain-dedication, rogue-dedication, past-life, …) and
+  // fifteen whose bare `choice` duplicated their own `effectChoices` (dualborn, draconic-resistance,
+  // hold-mark, …). Each was proven inert on a BUILT character before removal — and molten-wit, which
+  // the same measurement swept up, was restored when a test caught that CHOICE_FEAT_GRANTS reads its
+  // answer to pick which skill feat to grant. The bound stays a FLOOR precisely so this keeps being
+  // legal: a record leaving the set by losing a duplicate picker is the fix working, not a regression.
+  it('a dozen-plus feats were mislabelled on the granted lane, so this is not one record', () => {
     const affected = Object.values(c.feats).filter((f) => {
       const d = f?.choice;
       return d && featChoicePrompt(d.prompt) !== featChoicePrompt(d.prompt, d.flag);
     });
-    expect(affected.length).toBeGreaterThanOrEqual(21);
+    // 13, down from 14: fighting-horn LEFT the set by gaining a real prompt ("Horn weapon trait"),
+    // the same way Manifold Modifications and Sterling Dynamo Dedication left it above. Its choice
+    // became `picks: 2` (*"Choose two of the following weapon traits"*), and the flag fallback
+    // labelled the two pickers "Trait one 1 of 2" / "Trait one 2 of 2" — wrong for a choice that
+    // asks twice, and out of step with every other `picks > 1` record, all of which carry a real
+    // prompt naming the singular unit. A record leaving by getting BETTER is why this is a floor.
+    // 12, down from 13: devout-blessing left the same way in the batch-18 parity fix — its
+    // placeholder "Prompt" became the real "Blessing of the Devoted" (second-blessing gained
+    // "Second Blessing" in the same edit).
+    expect(affected.length).toBeGreaterThanOrEqual(12);
   });
 
   /**

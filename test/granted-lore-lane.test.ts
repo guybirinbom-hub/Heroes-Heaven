@@ -162,8 +162,8 @@ describe('one stored answer per taking', () => {
     expect(legacy.feats.find((f) => f.featId === 'assurance')?.choice).toEqual({ value: 'lore:games', label: 'Games Lore' });
 
     // …and the direct helper, both ways round.
-    expect(boundGrantChoice({ featLoreChoices: { '1:ancestry:0:0': 'Games' } }, 'gnome-obsession', 'assurance', '1:ancestry:0')?.value).toBe('lore:games');
-    expect(boundGrantChoice({ featLoreChoices: { 'gnome-obsession:0': 'Games' } }, 'gnome-obsession', 'assurance')?.value).toBe('lore:games');
+    expect(boundGrantChoice({ featLoreChoices: { '1:ancestry:0:0': 'Games' } }, db, 'gnome-obsession', 'assurance', '1:ancestry:0')?.value).toBe('lore:games');
+    expect(boundGrantChoice({ featLoreChoices: { 'gnome-obsession:0': 'Games' } }, db, 'gnome-obsession', 'assurance')?.value).toBe('lore:games');
   });
 });
 
@@ -238,9 +238,13 @@ describe('Bardic Lore is gated on Occultism and locked against increases', () =>
 
   it('the builder has a reason to print when it greys the option', () => {
     // Q27: an option that cannot be picked must LOOK unpickable, and say why.
-    expect(LOCKED_SKILL_KEYS['lore:bardic']).toMatch(/can't be increased/);
-    // Nothing else is locked, so no other skill's picker changes.
-    expect(Object.keys(LOCKED_SKILL_KEYS)).toEqual(['lore:bardic']);
+    // Every locked key must carry a reason, not just be listed.
+    for (const [key, why] of Object.entries(LOCKED_SKILL_KEYS)) expect(why, key).toMatch(/can't be increased/);
+    /* The three Lores whose printed text forbids raising them by any other means. Folktales and Gossip
+     * joined in parity batch 13, where their conditional expert step was built — the lock is the other
+     * half of the same sentence ("…but you can't increase your proficiency rank … by any other means").
+     * Pinned so a NEW lock stays a deliberate act: locking a skill removes a player's choice. */
+    expect(Object.keys(LOCKED_SKILL_KEYS).sort()).toEqual(['lore:bardic', 'lore:folktales', 'lore:gossip']);
   });
 });
 

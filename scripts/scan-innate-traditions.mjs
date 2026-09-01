@@ -31,8 +31,11 @@
  *
  * ⚠ KNOWN FALSE NEGATIVE, deliberately left: `basic-skysage-divination` prints "You can Cast this
  * Spell as an occult Oatia skysage spell" — a tradition named without the word "innate" or "spell
- * list". Its pick already carries `tradition: 'occult'`, so nothing is lost; it is recorded here so
- * the next person does not re-derive it as a gap or widen the regex to catch one record.
+ * list". NOTHING IS LOST AND NOTHING SHOULD BE ADDED: that sentence is not an innate grant at all.
+ * The spell goes into the Oatia skysage REPERTOIRE (casterArchetypes.ts, rank 1/2/3 at levels 4/6/8),
+ * and the FEAT_CANTRIP_GRANTS entry that used to carry it was REMOVED for granting a second, innate
+ * casting on top. Do NOT widen the regex to catch this record — doing so would push it straight back
+ * into the innate lane, which is the exact defect that removal fixed.
  */
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';

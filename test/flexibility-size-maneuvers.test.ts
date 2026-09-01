@@ -95,15 +95,23 @@ describe('Primal Howl', () => {
     expect(mod?.maneuvers).toHaveLength(1);
   });
 
-  it('the text is the FULL printed one, not the truncated copy that ships', () => {
-    // core.json's copy lost its template substitutions: "All creatures in a take damage for every 2
-    // levels your companion has, with a save against your spell DC".
+  it('every printed value survives — in the maneuver text AND in the shipped record', () => {
+    /*
+     * This used to pin the DEFECT: core.json's copy had lost its template substitutions ("All
+     * creatures in a take damage for every 2 levels your companion has, with a save against your
+     * spell DC"), the authored maneuver text carried the real values, and the test asserted the
+     * shipped record was still truncated — with a note to revisit if it were ever repaired.
+     *
+     * It has been. `scripts/repair-dropped-inline.mjs` restored the area, the formula and the save
+     * from the Archives across 581 records, and `dropped-inline-check.mjs` in `npm run verify` now
+     * holds the whole class at zero. So the assertion flips: the two sources must AGREE, which is
+     * what makes the hand-authored maneuver text safe to keep.
+     */
     const m = COMPANION_MODS['primal-howl'].maneuvers![0];
-    expect(m).toMatch(/30-foot cone/);
-    expect(m).toMatch(/1d6 sonic/);
-    expect(m).toMatch(/basic Fortitude/);
-    // And the shipped record really is still truncated — if that is ever repaired, revisit this.
     const shipped = String(db.actions['primal-howl']?.description ?? '');
-    expect(shipped).not.toMatch(/30-foot cone/);
+    for (const printed of [/30-foot cone/, /1d6 sonic/, /basic Fortitude/]) {
+      expect(m).toMatch(printed);
+      expect(shipped, 'the shipped record lost a value the Archives print').toMatch(printed);
+    }
   });
 });

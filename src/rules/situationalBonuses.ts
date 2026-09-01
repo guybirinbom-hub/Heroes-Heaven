@@ -75,6 +75,17 @@ export interface SituationalBonus {
   when: string;
   /** The modifier, e.g. "+1 circumstance", or a short effect phrase. */
   bonus: string;
+  /**
+   * On an ITEM: this clause fires while the item is merely CARRIED — not held, worn or invested.
+   *
+   * Item clauses otherwise require the item to be in use, which is the right default: a charm in your
+   * pack does nothing. A few print the other trigger, though — the evercursed crystal gives *"a –1
+   * item penalty to all saving throws against curse effects while carrying an evercursed crystal"* —
+   * and nothing in the app equips a loose crystal, so the equip test hid that clause outright rather
+   * than qualifying it. It sits on the CLAUSE, not the item, because one item can print both kinds of
+   * sentence and only the carrying one should escape the gate.
+   */
+  whileCarried?: boolean;
 }
 
 /**
@@ -123,7 +134,12 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "amorphous-aspect": [{ targets: [{ kind: 'skill', detail: 'acrobatics' }, { kind: 'skill', detail: 'athletics' }], when: "to Escape or Squeeze", bonus: "+1 circumstance" }],
   "analyze-idiolect": [{ targets: [{ kind: 'skill', detail: 'deception' }], when: "to Impersonate someone you studied for 10+ minutes", bonus: "+4 circumstance" }],
   "ancestral-suspicion": [{ targets: [{ kind: 'save', detail: 'all' }, { kind: 'perception' }], when: "against effects that would make you controlled (e.g. Dominate)", bonus: "+2 circumstance" }],
-  "animal-actor": [{ targets: [{ kind: 'skill', detail: 'deception' }], when: "to Impersonate an animal of a type you have Lore about", bonus: "+2 circumstance" }],
+  /* REPLACED, not extended. The old entry starred DECEPTION for "Impersonate an animal" — a clause the
+   * feat does not contain: its printed text mentions neither Deception nor Impersonate anywhere. What
+   * it does say is *"You gain a +2 circumstance bonus to all checks to Command an Animal and Recall
+   * Knowledge about creatures with the animal trait"*, which is Nature. So the star sat on a skill the
+   * feat never touches while the skill it does touch carried none. */
+  "animal-actor": [{ targets: [{ kind: 'skill', detail: 'nature' }], when: "to Command an Animal, and to Recall Knowledge about creatures with the animal trait", bonus: "+2 circumstance" }],
   "animal-elocutionist": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "to Make an Impression on animals", bonus: "+1 circumstance" }, { targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "with animals — you hear their sounds as conversation and can respond in turn", bonus: "you can ask questions of, receive answers from, and use Diplomacy with animals" }],
   // R1's shape — one star carrying the printed sentence — for a clause that grants a NEW USE of a
   // skill rather than a bonus inside an activity (both feats are passive, so R2 does not reach them).
@@ -221,12 +237,18 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "community-minded": [{ targets: [{ kind: 'perception' }], when: "to Sense Motive, resist a Lie, or spot someone Impersonating another", bonus: "+1 circumstance" }],
   "construct-dynamo": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against magic", bonus: "+1 status" }],
   "coral-detoxification": [{ targets: [{ kind: 'save', detail: 'all' }], when: "on a save against a poison affecting you (once per hour)", bonus: "+2 circumstance" }],
-  "coral-symbiotes": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against poisons", bonus: "+1 status" }],
+  /* The flat-check half was missing: *"your flat check to remove persistent poison damage is DC 10
+   * instead of DC 15, reduced to DC 5 if another creature uses a particularly appropriate action to
+   * help."* `cindersoul` carries the same shape. The hydration requirement rides the `when`. */
+  "coral-symbiotes": [
+    { targets: [{ kind: 'save', detail: 'all' }], when: "against poisons, while hydrated (submerge once every 24 hours)", bonus: "+1 status" },
+    { targets: [{ kind: 'hp' }], when: "flat check to end persistent poison damage, while hydrated", bonus: "DC 10 instead of 15 (DC 5 if helped)" },
+  ],
   "covet-hoard": [{ targets: [{ kind: 'perception' }, { kind: 'save', detail: 'all' }], when: "your Perception DC vs attempts to Steal from you, and saves vs effects targeting an item you hold or carry", bonus: "+2 circumstance" }],
   "crane-flutter": [{ targets: [{ kind: 'ac' }], when: "against a triggering attack while in Crane Stance", bonus: "+3 circumstance (vs the triggering attack)" }],
   "creative-prodigy": [{ targets: [{ kind: 'skill', detail: 'performance' }], when: "when you use Performance to Make an Impression", bonus: "+1 circumstance" }],
   "crossbow-terror": [{ targets: [{ kind: 'skill', detail: 'intimidation' }], when: "to Demoralize if you hit a Strike with a crossbow this turn", bonus: "+2 circumstance" }],
-  "crown-of-the-saumen-kar": [{ targets: [{ kind: 'skill', detail: 'stealth' }], when: "to Sneak or Hide in ice or snow", bonus: "+1 circumstance" }],
+  "crown-of-the-saumen-kar": [{ targets: [{ kind: 'skill', detail: 'stealth' }], when: "to Sneak or Hide in areas of forest and snow", bonus: "+1 circumstance" }],
   "cut-from-the-air": [{ targets: [{ kind: 'ac' }], when: "against the triggering physical ranged Strike (reaction)", bonus: "+4 circumstance" }],
   "dangerous-sorcery": [{ targets: [{ kind: 'spellDamage' }], when: "when you Cast a Spell from a spell slot that deals damage and has no duration", bonus: "+status equal to the spell's rank" }],
   "death-warden": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against effects with the void trait", bonus: "+1 status" }],
@@ -250,18 +272,31 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "do-you-know-who-i-am": [{ targets: [{ kind: 'skill', detail: 'intimidation' }], when: "you throw your reputation around to break a foe's mind (once/hour)", bonus: "+1 circumstance" }],
   "dodge-away": [{ targets: [{ kind: 'ac' }], when: "reaction vs a melee attack when aware and not off-guard", bonus: "+1 circumstance" }],
   "draconic-arrogance": [{ targets: [{ kind: 'save', detail: 'all' }], when: "while raging, against emotion effects", bonus: "+2 status" }],
-  "draconic-sycophant": [{ targets: [{ kind: 'perception' }, { kind: 'save', detail: 'all' }], when: "against dragons", bonus: "+2 circumstance" }],
+  /* The second half was missing: *"you can attempt a Diplomacy check to Make an Impression on that
+   * creature IMMEDIATELY, rather than after conversing for 1 minute; you take a –5 circumstance
+   * penalty to this check."* A penalty is a legal entry here — `self-emptying-pocket` ships one. */
+  "draconic-sycophant": [
+    { targets: [{ kind: 'perception' }, { kind: 'save', detail: 'all' }], when: "against dragons", bonus: "+2 circumstance" },
+    { targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "to Make an Impression on a dragon immediately, not after 1 minute", bonus: "−5 circumstance" },
+  ],
   "dragon-grip": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "Make an Impression on a creature with the dragon trait", bonus: "+2 circumstance" }],
   "dragonet-resistances": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against sleep effects and effects that would paralyze you", bonus: "+2 circumstance" }],
-  "dragons-presence": [{ targets: [{ kind: 'skill', detail: 'intimidation' }], when: "Demoralize a foe of your size or larger", bonus: "+1 circumstance" }],
+  /* ⚠ The shipped condition was WRONG, not merely missing: it read *"a foe of your size or larger"*
+   * where the book says *"when you attempt to Demoralize a foe OF YOUR LEVEL OR LOWER"* — a different
+   * test, and in many encounters the opposite one, so the sheet told the player to apply +1 in
+   * precisely the fights where it does not. A wrong star is worse than no star. */
+  "dragons-presence": [{ targets: [{ kind: 'skill', detail: 'intimidation' }], when: "Demoralize a foe of your level or lower", bonus: "+1 circumstance" }],
   "dream-may": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against sleep effects and effects that cause or alter dreams", bonus: "+2 circumstance" }],
   "elude-the-divine": [{ targets: [{ kind: 'skill', detail: 'deception' }], when: "against divination effects trying to discern your deity", bonus: "+2 circumstance" }],
   "elven-verve": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against effects that would immobilize, paralyze, or slow you", bonus: "+1 circumstance" }],
-  "elysiums-cadence": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "Make an Impression or gather-information", bonus: "+1 circumstance" }],
+  "elysiums-cadence": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "Make an Impression", bonus: "+1 circumstance (+2 if the target is holy)" }],
   "emberkin": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against fire effects", bonus: "+1 circumstance" }],
   "emotional-partitions": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against emotion effects", bonus: "+1 circumstance" }],
   "emotionless": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against emotion or fear effects (success becomes crit success)", bonus: "+1 circumstance" }],
-  "entreat-with-forebears": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }, { kind: 'skill', detail: 'deception' }, { kind: 'skill', detail: 'intimidation' }, { kind: 'save', detail: 'all' }], when: "interacting with (or resisting the tricks of) creatures of your bloodline's trait", bonus: "+1 circumstance" }],
+  /* *"…and you gain a +1 circumstance bonus to Perception and saving throws against such creatures."*
+   * Perception was the one target missing from this list. It stays CONDITIONAL — their side flattens it
+   * to a bare +1 Perception, which would apply to initiative and every other check. */
+  "entreat-with-forebears": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }, { kind: 'skill', detail: 'deception' }, { kind: 'skill', detail: 'intimidation' }, { kind: 'perception' }, { kind: 'save', detail: 'all' }], when: "interacting with (or resisting the tricks of) creatures of your bloodline's trait", bonus: "+1 circumstance" }],
   "exalted-greatness": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against effects created by enemies in your champion's aura", bonus: "+2 status" }],
   "exhort-the-faithful": [{ targets: [{ kind: 'skill', detail: 'religion' }, { kind: 'skill', detail: 'diplomacy' }, { kind: 'skill', detail: 'intimidation' }], when: "Request or Coerce members of your own faith (may use Religion for the check)", bonus: "+2 circumstance" }],
   "extra-squishy": [{ targets: [{ kind: 'save', detail: 'fortitude' }, { kind: 'save', detail: 'reflex' }], when: "to resist being forcibly moved or dislodged from a tight space", bonus: "+4 circumstance" }],
@@ -282,7 +317,17 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "fire-resistance": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against fire effects", bonus: "+1 circumstance" }],
   "flashy-dodge": [{ targets: [{ kind: 'ac' }], when: "against a triggering attack from a creature you can see (not encumbered)", bonus: "+2 circumstance" }],
   "flashy-roll": [{ targets: [{ kind: 'save', detail: 'reflex' }], when: "on a Reflex save when you use Flashy Dodge against it", bonus: "+2 circumstance" }],
-  "fluttering-misdirection": [{ targets: [{ kind: 'skill', detail: 'stealth' }], when: "to Hide or Sneak while wielding a fan (you and adjacent allies)", bonus: "+1 circumstance" }],
+  /*
+   * ⚠ THE ENTRY EXISTED AND MODELLED THE WRONG THING, which is worse than an empty one: every "is this
+   * covered?" grep answered yes. Verbatim: *"…giving you and adjacent allies a constant +1 circumstance
+   * bonus to STEALTH checks to secretly CONCEAL AN OBJECT and to THIEVERY checks to STEAL OR PALM AN
+   * OBJECT."* It said Hide or Sneak — neither of which the feat mentions — and dropped the Thievery
+   * half entirely. Found by batch 1's value gate, which saw their Thievery bonus against our nothing.
+   */
+  "fluttering-misdirection": [
+    { targets: [{ kind: 'skill', detail: 'stealth' }], when: "to secretly Conceal an Object while wielding a fan (you and adjacent allies)", bonus: "+1 circumstance" },
+    { targets: [{ kind: 'skill', detail: 'thievery' }], when: "to Steal or Palm an Object while wielding a fan (you and adjacent allies)", bonus: "+1 circumstance" },
+  ],
   "folk-healer": [{ targets: [{ kind: 'skill', detail: 'medicine' }], when: "to Treat Wounds and similar Medicine tasks", bonus: "+1 circumstance" }],
   /* The degree clause is trimmed here for the same reason it is on breath-control below: the record's
    * own `degreeShifts` entry states it, and explain.ts merges both into ONE star list. Found by
@@ -294,9 +339,17 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "frostbite-runes": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against evil and necromancy spells and effects", bonus: "+1 status" }],
   "furious-bully": [{ targets: [{ kind: 'skill', detail: 'athletics' }], when: "for attack actions (Shove, Trip, Grapple, Disarm) while raging", bonus: "+2 circumstance" }],
   "game-hunter-dedication": [{ targets: [{ kind: 'skill', detail: 'stealth' }], when: "against your hunted prey", bonus: "+2 circumstance" }],
-  "goloma-courage": [{ targets: [{ kind: 'save', detail: 'will' }], when: "against fear effects; +2 vs Demoralize", bonus: "+1 circumstance" }],
+  /*
+   * Goloma Courage moved ONTO ITS RECORD, and must not also be here.
+   *
+   * Its entry read `when: "against fear effects; +2 vs Demoralize"` with `bonus: "+1 circumstance"` —
+   * the second of the feat's two printed bonuses written into the CONDITION, where nothing reads it,
+   * and aimed at the save the player rolls rather than the Will DC an enemy rolls against. The record
+   * now carries both as separate entries, the second with `dcOnly`. Leaving this row would list the
+   * +1 twice on the same save.
+   */
   "graft-technician": [{ targets: [{ kind: 'skill', detail: 'medicine' }], when: "to implant grafts (+2 if master in Medicine)", bonus: "+1 circumstance" }],
-  "gravel-guts": [{ targets: [{ kind: 'save', detail: 'fortitude' }], when: "against the sickened condition", bonus: "+1 circumstance" }],
+  "gravel-guts": [{ targets: [{ kind: 'save', detail: 'fortitude' }, { kind: 'save', detail: 'reflex' }, { kind: 'save', detail: 'will' }], when: "against the sickened condition", bonus: "+1 circumstance" }],
   "green-empathy": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "to Make an Impression on or Request from plants and fungi", bonus: "+2 circumstance" }],
   "grit-and-tenacity": [{ targets: [{ kind: 'save', detail: 'fortitude' }, { kind: 'save', detail: 'will' }], when: "reroll once/hour after failing a Fortitude or Will save", bonus: "+2 circumstance" }],
   "grove-harbored": [{ targets: [{ kind: 'save', detail: 'fortitude' }, { kind: 'save', detail: 'reflex' }, { kind: 'save', detail: 'will' }], when: "against plant, poison, and wood effects", bonus: "+1 circumstance" }],
@@ -318,11 +371,21 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "innate-understanding": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "attempting a trained-only skill action while untrained", bonus: "+2 circumstance" }],
   "instinctive-maneuvers": [{ targets: [{ kind: 'skill', detail: 'athletics' }], when: "to Grapple, Reposition, Shove, or Trip after Relinquishing Control", bonus: "+2 status" }],
   "interrogate": [{ targets: [{ kind: 'skill', detail: 'intimidation' }], when: "vs a target of your faith (or undead/werecreature posing as one)", bonus: "+2 circumstance" }],
-  "intimidating-prowess": [{ targets: [{ kind: 'skill', detail: 'intimidation' }], when: "you Coerce or Demoralize a target you can physically menace", bonus: "+1 circumstance (and ignore the not-sharing-a-language penalty)" }],
+  /* The second sentence was missing: *"If your Strength modifier is +5 OR HIGHER and you are a MASTER
+   * in Intimidation, this bonus INCREASES TO +2."* The star printed a flat +1 and the doubled value
+   * appeared nowhere, so a qualifying character had no way to learn their bonus had grown. */
+  "intimidating-prowess": [
+    { targets: [{ kind: 'skill', detail: 'intimidation' }], when: "you Coerce or Demoralize a target you can physically menace", bonus: "+1 circumstance (and ignore the not-sharing-a-language penalty)" },
+    { targets: [{ kind: 'skill', detail: 'intimidation' }], when: "the same, with Strength +5 or higher and master in Intimidation", bonus: "+2 circumstance instead" },
+  ],
   "intuitive-cooperation": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "to Aid, or when an ally Aids you", bonus: "+2 circumstance" }],
   "investigate-haunting": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "to disable a haunt", bonus: "+2 circumstance" }],
   "ironblood-surge": [{ targets: [{ kind: 'ac' }], when: "until your next turn while in Ironblood Stance", bonus: "+1 circumstance" }],
-  "kaiju-defense-oath": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against creatures at least 2 sizes larger than you", bonus: "+2 circumstance" }],
+  /* *"You also gain a +2 circumstance bonus to saving throws and DCs against kaiju hazards."* The
+   * "2 sizes larger" test belongs to the DAMAGE sentence, which is authored on the record itself
+   * (effect-backfill.json, `situational` -> strikeDamage) and concatenates with this row. Their side
+   * splits the same way: three addBonusToValue on SAVE_FORT/REFLEX/WILL, all "against kaiju hazards". */
+  "kaiju-defense-oath": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against kaiju hazards", bonus: "+2 circumstance" }],
   "keen-nose": [{ targets: [{ kind: 'save', detail: 'fortitude' }], when: "vs olfactory effects that make you sickened", bonus: "+1 circumstance" }],
   "kin-hunter": [{ targets: [{ kind: 'save', detail: 'all' }], when: "for 1 min vs a creature you identified with an Occultism/Yaoguai Lore RK", bonus: "+1 circumstance" }],
   "kitharodian-actor-dedication": [{ targets: [{ kind: 'skill', detail: 'performance' }, { kind: 'skill', detail: 'deception' }], when: "performing or deceiving as a theatrical role", bonus: "+2 circumstance (+3 at 10th, +4 at 17th)" }],
@@ -334,14 +397,30 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "legendary-leader": [{ targets: [{ kind: 'skill', detail: 'intimidation' }, { kind: 'skill', detail: 'diplomacy' }], when: "to Coerce or Make an Impression on someone who has heard of you", bonus: "+2 circumstance" }],
   "legs-of-stone": [{ targets: [{ kind: 'save', detail: 'fortitude' }, { kind: 'save', detail: 'reflex' }], when: "against attempts to Shove or Trip you", bonus: "+2 status" }],
   "leshy-superstition": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against a spell or magical effect (when triggered)", bonus: "+1 circumstance" }],
-  "lie-detector": [{ targets: [{ kind: 'perception' }], when: "Perception to Sense Motive, and DC vs attempts to Lie to you", bonus: "+1 circumstance" }],
+  /* Only the Perception half was registered. The feat's second sentence is a bonus on four SKILLS —
+   * *"you can use their deceit to your advantage to gain a +1 circumstance bonus to the next
+   * Deception, Diplomacy, Intimidation, or Performance check you attempt against that creature within
+   * the next minute"* — so those four rows carried no star at all. */
+  "lie-detector": [
+    { targets: [{ kind: 'perception' }], when: "Perception to Sense Motive, and DC vs attempts to Lie to you", bonus: "+1 circumstance" },
+    {
+      targets: [{ kind: 'skill', detail: 'deception' }, { kind: 'skill', detail: 'diplomacy' }, { kind: 'skill', detail: 'intimidation' }, { kind: 'skill', detail: 'performance' }],
+      when: "your next check vs a creature you caught lying, within 1 minute",
+      bonus: "+1 circumstance",
+    },
+  ],
+  /* *"When you succeed at a spell attack roll against an off-guard foe's AC and the spell deals
+   * damage, you can add your sneak attack damage to the damage roll."* The record was bare and the
+   * clause lived only in its prose, so nothing on the sheet said a rogue's sneak attack can ride a
+   * damaging spell attack. */
+  "magical-trickster": [{ targets: [{ kind: 'spellDamage' }], when: "a damaging spell attack that hits an off-guard foe (once per target)", bonus: "add your sneak attack damage" }],
   "linguistic-revival": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "while Truespeech is active, speaking a language you don't share", bonus: "+2 circumstance" }],
   "living-stone": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against diseases, poisons, and petrification", bonus: "+2 circumstance" }],
   "maguss-analysis": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "to Recall Knowledge about a creature you hit with a Strike this turn", bonus: "+1 circumstance" }],
   "manipulative-charm": [{ targets: [{ kind: 'skill', detail: 'deception' }, { kind: 'skill', detail: 'diplomacy' }], when: "vs humanoids: Lie, Gather Information, Make an Impression", bonus: "+1 circumstance" }],
   "mask-of-rejection": [{ targets: [{ kind: 'save', detail: 'all' }], when: "reroll a failed save vs your warmask tradition (once/day)", bonus: "+2 circumstance" }],
   "masked-casting": [{ targets: [{ kind: 'save', detail: 'all' }, { kind: 'skill', detail: 'all' }], when: "to disbelieve illusions while Averting your Gaze", bonus: "+2 circumstance" }],
-  "mediums-awareness": [{ targets: [{ kind: 'initiative' }], when: "to Seek and for initiative rolls", bonus: "+2 status (+3 at 12th, +4 at 20th)" }],
+  "mediums-awareness": [{ targets: [{ kind: 'perception' }], when: "on Perception checks to Seek, and when you roll Perception for initiative", bonus: "+2 status (+3 at 12th, +4 at 20th)" }],
   "mercenary-motivation": [{ targets: [{ kind: 'perception' }, { kind: 'skill', detail: 'all' }], when: "toward the planned task (after 1 min planning)", bonus: "+1 circumstance" }],
   "mighty-bulwark": [{ targets: [{ kind: 'save', detail: 'reflex' }], when: "on all Reflex saves (bulwark now applies to non-damaging too)", bonus: "+4 (bulwark)" }],
   "monstrous-peacemaker": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }, { kind: 'perception' }], when: "vs non-humanoid intelligent creatures and marginalized humanoids", bonus: "+1 circumstance" }],
@@ -350,6 +429,42 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "multilingual-cipher": [{ targets: [{ kind: 'skill', detail: 'arcana' }, { kind: 'skill', detail: 'occultism' }, { kind: 'skill', detail: 'religion' }, { kind: 'skill', detail: 'society' }], when: "to Decipher Writing", bonus: "+1 circumstance" }],
   "musetouched": [{ targets: [{ kind: 'skill', detail: 'acrobatics' }, { kind: 'skill', detail: 'athletics' }], when: "to Escape", bonus: "+1 circumstance" }],
   "mutant-physique": [{ targets: [{ kind: 'skill', detail: 'intimidation' }], when: "while affected by a Bestial Mutagen", bonus: "mutagen's item bonus" }],
+
+  /* ---- from the batches 1–12 residual read -------------------------------------------------------
+   * Each printed a bonus that reached nothing. Grouped here rather than scattered, so the batch they
+   * came from stays legible; every `when` is the record's own wording.
+   */
+  "seek-the-hidden-glyphs": [{ targets: [{ kind: 'perception' }], when: "to find magical traps", bonus: "+1 circumstance" }],
+  "living-nexus-dedication": [{ targets: [{ kind: 'save', detail: 'all' }], when: "while overflowing, against arcane, divine, occult, primal or otherwise magical effects", bonus: "+1 status" }],
+  "world-rouser-dedication": [
+    { targets: [{ kind: 'skill', detail: 'athletics' }, { kind: 'skill', detail: 'acrobatics' }], when: "while in your waking world (you and your allies)", bonus: "+1 circumstance" },
+    { targets: [{ kind: 'skill', detail: 'nature' }], when: "while in your waking world, to Recall Knowledge about creatures and hazards in the area", bonus: "+1 circumstance" },
+  ],
+  "inspired-memory": [
+    { targets: [{ kind: 'skill', detail: 'all' }], when: "to Recall Knowledge about a creature whose magic you have absorbed within the last minute", bonus: "+1 circumstance" },
+    { targets: [{ kind: 'skill', detail: 'all' }], when: "to Learn a Spell you have absorbed within the last week", bonus: "+1 circumstance" },
+  ],
+  "coyote-cloak": [{ targets: [{ kind: 'skill', detail: 'survival' }], when: "while worn and invested", bonus: "+1 item" }],
+  /* ⚠ The bonus is REAL — this is a cursed item, but the curse is in its ACTIVATION (a −10-foot Speed
+   * penalty where the player expects +10), not in the Acrobatics bonus it genuinely grants. */
+  "sluggish-bracelet": [{ targets: [{ kind: 'skill', detail: 'acrobatics' }], when: "while worn", bonus: "+1 item" }],
+  /* ⚠ NO NUMBER, on purpose. *"The signet grants an item bonus to Diplomacy checks…"* — the Archives
+   * print it without a value too (checked against the mirror, so it is not prose damage on our side).
+   * Inventing +2 because the item is level 7 would be a number the book does not state. */
+  "commanders-signet": [
+    { targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "to Make an Impression, while worn", bonus: "item bonus (no value printed)" },
+    { targets: [{ kind: 'skill', detail: 'intimidation' }], when: "to Coerce, while worn", bonus: "item bonus (no value printed)" },
+  ],
+  /* *"When you have the drained condition, calculate the penalty to your Fortitude saves and your Hit
+   * Point reduction as though the condition value were 1 lower."* */
+  "svetocher": [{ targets: [{ kind: 'save', detail: 'fortitude' }], when: "while drained — the condition counts as 1 lower for the save penalty and the HP reduction", bonus: "+1 (effectively)" }],
+  /* *"…nor do you take a –5 penalty if you Subsist after 8 hours or less of exploration."* */
+  /* Kept under a line per ruling H — the full clause is on the Subsist action's own marker below. */
+  "like-a-roach": [{ targets: [{ kind: 'skill', detail: 'survival' }], when: "to Subsist in unusual environments", bonus: "no minimum proficiency; no −5 after a short exploration" }],
+  /* *"You need to spend at least an hour each day assuaging the entity within you or you take a –1
+   * penalty to Will saves for 24 hours."* A PENALTY, and it belongs on the sheet for the same reason a
+   * bonus does — the player has to know the number can be there. */
+  "living-vessel-dedication": [{ targets: [{ kind: 'save', detail: 'will' }], when: "for 24 hours, if you did not spend an hour assuaging the entity within you", bonus: "−1" }],
   "myth-of-realm-walking": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against planar anchor/banishment effects with incapacitation", bonus: "+4 status" }],
   "necromantic-deflection": [{ targets: [{ kind: 'save', detail: 'all' }, { kind: 'ac' }], when: "against necromancy spells while your shield is raised", bonus: "shield's circumstance bonus" }],
   "necromantic-physiology": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against diseases", bonus: "+2 circumstance" }],
@@ -418,7 +533,11 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "scattering-in-spring": [{ targets: [{ kind: 'ac' }], when: "against the triggering melee attack (Twisting Petal Stance)", bonus: "+2 circumstance" }],
   "scavengers-search": [{ targets: [{ kind: 'perception' }], when: "Seek to locate objects, secret doors, or hazards within 30 feet", bonus: "+2 circumstance" }],
   "scroll-trickster-dedication": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "Trick Magic Item on scrolls", bonus: "+2 circumstance" }],
-  "scrutinizing-gaze": [{ targets: [{ kind: 'perception' }], when: "Sense Motive to determine if a creature is undead", bonus: "+2 circumstance" }],
+  /* scrutinizing-gaze — REMOVED. The record's own `situational` carries all THREE printed clauses
+   * (possessed-or-controlled, seeing through undead disguises, Seeking hidden undead within 30 feet),
+   * and this entry duplicated the first of them with the wrong condition: it said *"determine if a
+   * creature is undead"* where the printed text says *"possessed or under the influence of an effect
+   * that would make them controlled"*. Two stars on one stat, one of them wrong. */
   "seasoned": [{ targets: [{ kind: 'skill', detail: 'crafting' }], when: "Craft food and drink (including elixirs/potions)", bonus: "+1 circumstance (+2 if master)" }],
   "shadowdancer-dedication": [{ targets: [{ kind: 'skill', detail: 'stealth' }], when: "Stealth while in dim light or darkness", bonus: "+2 circumstance" }],
   "shadowplay": [{ targets: [{ kind: 'skill', detail: 'acrobatics' }], when: "Tumble Through the opponent's space after a damaging melee Strike", bonus: "+2 circumstance" }],
@@ -557,7 +676,7 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "wood-ward": [{ targets: [{ kind: 'ac' }], when: "against the triggering attack when you react with Wood Ward…", bonus: "+2 circumstance (standard cover)" }],
   "metallic-skin": [{ targets: [{ kind: 'ac' }], when: "for 1 minute after you activate Metallic Skin (once per day) — you also take a -10-foot Speed penalty", bonus: "+2 status" }],
   "current-spell": [{ targets: [{ kind: 'ac' }], when: "until the start of your next turn, after Current Spell precedes a spell with the air or water trait", bonus: "+1 circumstance (+2 against ranged attacks)" }, { targets: [{ kind: 'save', detail: 'all' }], when: "against effects with the air and/or water trait , until the start of your next turn…", bonus: "+1 circumstance" }],
-  "stoney-deflection": [{ targets: [{ kind: 'ac' }], when: "until the beginning of your next turn, after you use Stoney Deflection while in Stonestrike Stance", bonus: "+2 circumstance" }],
+  "stoney-deflection": [{ targets: [{ kind: 'ac' }], when: "until the beginning of your next turn, after you use Stoney Deflection while in Stonestrike Stance", bonus: "+2 circumstance" }, { targets: [{ kind: 'save', detail: 'fortitude', dcOnly: true }, { kind: 'save', detail: 'reflex', dcOnly: true }], when: "until the beginning of your next turn, after you use Stoney Deflection, against attempts to Shove or Trip you", bonus: "+2 circumstance" }],
   "mountain-strategy": [{ targets: [{ kind: 'strikeDamage' }], when: "on damage with weapons and unarmed attacks against creatures with the giant, goblin…", bonus: "+1 circumstance per weapon damage die" }],
   "guided-by-the-stars": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "once per day, on the triggering skill check, if it's night and you can see the stars…", bonus: "+1 circumstance" }, { targets: [{ kind: 'save', detail: 'all' }], when: "once per day, on the triggering saving throw, if it's night and you can see the stars…", bonus: "+1 circumstance" }],
   "lifebloods-call": [{ targets: [{ kind: 'strikeDamage' }], when: "on melee Strikes while you have the wounded and/or doomed condition", bonus: "+2 circumstance per point of wounded/doomed (max +8)" }],
@@ -725,7 +844,10 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "dragon-disciple-dedication": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against sleep effects and effects that would make you paralyzed", bonus: "+1 circumstance" }],
   "horizon-walker-dedication": [{ targets: [{ kind: 'speed' }], when: "to your travel Speed while in your favored terrain (exploration travel only, not your encounter Speed)", bonus: "+10-foot circumstance" }],
   "sure-foot": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "on any skill check to move within your favored terrain…", bonus: "+2 circumstance" }],
-  "loremaster-dedication": [{ targets: [{ kind: 'skill', detail: 'lore:bardic-lore' }], when: "on skill checks with Bardic Lore (only if you have the Bardic Lore class feat)", bonus: "+1 circumstance" }],
+  /* ⚠ `lore:bardic`, not `lore:bardic-lore`. Both Lore-key normalisers strip the word "lore" from the
+   * subject, and featGrantsAuto grants `lore:bardic` — so this star pointed at a key no character has
+   * and had never rendered for anyone. */
+  "loremaster-dedication": [{ targets: [{ kind: 'skill', detail: 'lore:bardic' }], when: "on skill checks with Bardic Lore (only if you have the Bardic Lore class feat)", bonus: "+1 circumstance" }],
   "flamboyant-cruelty": [{ targets: [{ kind: 'strikeDamage' }], when: "on a melee weapon Strike against a foe with at least two of clumsy, drained, enfeebled…", bonus: "circumstance bonus equal to the number of qualifying conditions on the foe" }, { targets: [{ kind: 'skill', detail: 'acrobatics' }], when: "on Acrobatics checks to Tumble Through until the end of your turn, after you hit such a foe", bonus: "+1 circumstance" }, { targets: [{ kind: 'skill', detail: 'all' }], when: "to perform your style's panache-granting actions until the end of your turn, after you hit such a foe", bonus: "+1 circumstance" }],
   "janatimos-lessons": [{ targets: [{ kind: 'strikeAttack' }], when: "your allies' next attack roll against a creature you succeeded at Uzunjati Recollection +…", bonus: "+1 circumstance" }, { targets: [{ kind: 'save', detail: 'all' }], when: "your allies' next saving throw against that creature — the bonus is theirs, not yours…", bonus: "+1 circumstance" }, { targets: [{ kind: 'ac' }], when: "your allies' AC against that creature's next attack — the bonus is theirs, not yours…", bonus: "+1 circumstance" }],
   "uncanny-suction": [{ targets: [{ kind: 'save', detail: 'reflex' }], when: "to your Reflex DC when someone attempts to Disarm you", bonus: "+2 circumstance" }],
@@ -737,6 +859,20 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "hydraulic-deflection": [{ targets: [{ kind: 'ac' }], when: "until the start of your next turn, after you use Hydraulic Deflection", bonus: "+1 circumstance" }],
   "striking-retribution": [{ targets: [{ kind: 'strikeDamage' }], when: "on damage with weapons and unarmed attacks against alghollthus and creatures that serve them (GM decides who serves)", bonus: "+2 circumstance (+4 for 1 minute after an alghollthu enchants you or an ally within 60 feet)" }],
   "azarketi-purification": [{ targets: [{ kind: 'save', detail: 'all' }], when: "for 1 minute, on ongoing saves against poisons already in the creature's body when you…", bonus: "+2 status" }],
+  // Skeleton (Undeath, basic undead benefits): worded to PRINT, which grants the bonus to any defense
+  // against disease and poison, not only to the saves WG's narrower op names.
+  "skeleton": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against disease and poison (and any other defense against them)", bonus: "+1 circumstance" }],
+  // Batch-19 ancestry blocks whose printed conditional bonuses had no carrier (each adversarially
+  // confirmed against the mirror page named in work/.b019-findings.json).
+  "android": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against diseases, poisons, and radiation (Constructed)", bonus: "+1 circumstance" }],
+  "halfling": [{ targets: [{ kind: 'perception' }], when: "when you Seek to find hidden or undetected creatures within 30 feet (Keen Eyes)", bonus: "+2 circumstance" }],
+  "kashrishi": [{ targets: [{ kind: 'perception' }], when: "to Sense Motive against non-mindless creatures within 15 feet (Empathic Sense)", bonus: "+2 circumstance" }],
+  "samsaran": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "on skill checks in which you are untrained (Cryptomnesia)", bonus: "+1 circumstance" }],
+  // Bookish Providence's granted action (batch 21): reached because the background's grantsActions id
+  // flows into characterSituationalIds — the pursue-a-lead precedent, one lane over.
+  // Hammered by Fate's granted action (batch 22) — the same granted-background-action lane.
+  "harrow-the-fiend": [{ targets: [{ kind: 'strikeAttack' }], when: "against fiends for the combat after you Harrow the Fiend (1/day)", bonus: "+1 status" }, { targets: [{ kind: 'spell', detail: 'attack' }], when: "against fiends for the combat after you Harrow the Fiend (1/day)", bonus: "+1 status" }, { targets: [{ kind: 'strikeAttack' }], when: "once that combat, draw a harrow card after a hit on a fiend: a Hammers card raises the degree of success by one", bonus: "degree +1" }],
+  "recall-under-pressure": [{ targets: [{ kind: 'save', detail: 'all' }], when: "for the rest of the encounter after your Recall Under Pressure check helped (+2 if the drawn card was of Books)", bonus: "+1 status (+2)" }],
   "harsh-judgment": [{ targets: [{ kind: 'perception' }], when: "while you have a condemned foe: to Seek that foe", bonus: "+2 circumstance" }, { targets: [{ kind: 'skill', detail: 'intimidation' }], when: "while you have a condemned foe: to Demoralize that foe", bonus: "+2 circumstance" }, { targets: [{ kind: 'perception' }], when: "while you have a condemned foe: to Seek any creature other than that foe", bonus: "-1 circumstance (penalty)" }, { targets: [{ kind: 'skill', detail: 'intimidation' }], when: "while you have a condemned foe: to Demoralize anyone other than that foe", bonus: "-1 circumstance (penalty)" }],
   "accurate-swing": [{ targets: [{ kind: 'strikeDamage' }], when: "on a melee Strike with a sweep weapon or sweep unarmed attack against a frightened…", bonus: "+circumstance equal to your weapon damage dice" }],
   "macabre-virtuoso": [{ targets: [{ kind: 'skill', detail: 'arcana' }], when: "on the primary check when you are the primary caster of a create undead ritual", bonus: "+2 circumstance" }, { targets: [{ kind: 'skill', detail: 'occultism' }], when: "on the primary check when you are the primary caster of a create undead ritual", bonus: "+2 circumstance" }, { targets: [{ kind: 'skill', detail: 'religion' }], when: "on the primary check when you are the primary caster of a create undead ritual", bonus: "+2 circumstance" }],
@@ -835,7 +971,10 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "borrowed-ability": [{ targets: [{ kind: 'save', detail: 'all' }], when: "for the 1-minute duration of Borrowed Ability…", bonus: "+1 circumstance" }],
   "high-speed-regeneration": [{ targets: [{ kind: 'speed' }], when: "until the end of your turn, on a turn you use High-Speed Regeneration — requires the second Awakening", bonus: "+10 status" }],
   "distant-wandering": [{ targets: [{ kind: 'speed' }], when: "while in spirit form from Distant Wandering — requires the first Awakening", bonus: "+20 status" }],
-  "tip-the-scales": [{ targets: [{ kind: 'skill', detail: 'acrobatics' }], when: "to Escape", bonus: "+1 circumstance" }, { targets: [{ kind: 'skill', detail: 'athletics' }], when: "to Escape", bonus: "+1 circumstance" }],
+  /* The third clause is the gap batch 15 found: Escape may be rolled with Acrobatics, Athletics OR
+   * your UNARMED ATTACK MODIFIER, and only the two skills were listed — so the bonus went missing for
+   * the character most likely to use it. Their side encodes all three. */
+  "tip-the-scales": [{ targets: [{ kind: 'skill', detail: 'acrobatics' }], when: "to Escape", bonus: "+1 circumstance" }, { targets: [{ kind: 'skill', detail: 'athletics' }], when: "to Escape", bonus: "+1 circumstance" }, { targets: [{ kind: 'strikeAttack' }], when: "on an Escape check rolled with your unarmed attack modifier", bonus: "+1 circumstance" }],
   "earthbond": [{ targets: [{ kind: 'save', detail: 'fortitude' }], when: "to your Fortitude DC against Reposition and Shove, and to Fortitude saves against effects that would force you to move", bonus: "+2 circumstance" }, { targets: [{ kind: 'save', detail: 'reflex' }], when: "to your Reflex DC against Reposition and Shove, and to Reflex saves against effects that would force you to move", bonus: "+2 circumstance" }],
   "sheltering-wing": [{ targets: [{ kind: 'ac' }], when: "until the start of your next turn after you use Sheltering Wing", bonus: "+2 circumstance" }, { targets: [{ kind: 'save', detail: 'all' }], when: "against spells that target you, until the start of your next turn after you use Sheltering Wing", bonus: "+2 circumstance" }],
   "draconic-resilience": [{ targets: [{ kind: 'ac' }], when: "until the start of your next turn after you use Draconic Resilience, while holding or wearing your draconic gift", bonus: "+1 status" }],
@@ -1040,10 +1179,10 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "venomous-cure-fulu": [{ targets: [{ kind: 'save', detail: 'all' }], when: "on a saving throw against an injected poison (activate before rolling; consumed on use)", bonus: "+2 status" }],
   "fulu-compendium": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "to any skill check to determine a fulu's function or authenticity, while using the compendium as a reference", bonus: "+2 item" }],
   "codex-of-unimpeded-sight-greater": [{ targets: [{ kind: 'perception' }], when: "to Seek, immediately after casting a divination spell prepared from this grimoire (once per hour)", bonus: "+1 item" }, { targets: [{ kind: 'skill', detail: 'all' }], when: "to Recall Knowledge, immediately after casting a divination spell prepared from this grimoire (once per hour)", bonus: "+1 item" }],
-  "warding-tattoo": [{ targets: [{ kind: 'ac' }], when: "against the triggering attack/effect only, until the end of that turn (⟨5⟩ reaction, once per day)", bonus: "+1 status" }, { targets: [{ kind: 'save', detail: 'all' }], when: "against the triggering attack/effect only, until the end of that turn (⟨5⟩ reaction, once per day)", bonus: "+1 status" }],
-  "warding-tattoo-trail": [{ targets: [{ kind: 'ac' }], when: "against the triggering attack/effect only, until the end of that turn (⟨5⟩ reaction, once per day)", bonus: "+1 status" }, { targets: [{ kind: 'save', detail: 'all' }], when: "against the triggering attack/effect only, until the end of that turn (⟨5⟩ reaction, once per day)", bonus: "+1 status" }],
-  "warding-tattoo-wave": [{ targets: [{ kind: 'ac' }], when: "against the triggering attack/effect only, until the end of that turn…", bonus: "+1 status" }, { targets: [{ kind: 'save', detail: 'all' }], when: "against the triggering attack/effect only, until the end of that turn…", bonus: "+1 status" }],
-  "warding-tattoo-fiend": [{ targets: [{ kind: 'ac' }], when: "against the triggering attack/effect only, until the end of that turn (⟨5⟩ reaction, once per day)", bonus: "+1 status" }, { targets: [{ kind: 'save', detail: 'all' }], when: "against the triggering attack/effect only, until the end of that turn (⟨5⟩ reaction, once per day)", bonus: "+1 status" }],
+  "warding-tattoo": [{ targets: [{ kind: 'ac' }], when: "against the triggering attack/effect only, until the end of that turn (⟨5⟩ reaction, once per day)", bonus: "+1 status" }, { targets: [{ kind: 'save', detail: 'all' }], when: "against the triggering attack/effect only, until the end of that turn (⟨5⟩ reaction, once per day)", bonus: "+1 status" }, { targets: [{ kind: 'hp' }], when: "against the triggering attack/effect only, until the end of that turn (⟨5⟩ reaction, once per day)", bonus: "resistance 2 to damage" }],
+  "warding-tattoo-trail": [{ targets: [{ kind: 'ac' }], when: "against the triggering attack/effect only, until the end of that turn (⟨5⟩ reaction, once per day)", bonus: "+1 status" }, { targets: [{ kind: 'save', detail: 'all' }], when: "against the triggering attack/effect only, until the end of that turn (⟨5⟩ reaction, once per day)", bonus: "+1 status" }, { targets: [{ kind: 'hp' }], when: "against the triggering attack/effect only, until the end of that turn (⟨5⟩ reaction, once per day)", bonus: "resistance 2 to damage" }, { targets: [{ kind: 'hp' }], when: "against damage from hazardous terrain and environmental hazards (always on while the tattoo is invested)", bonus: "resistance 2" }],
+  "warding-tattoo-wave": [{ targets: [{ kind: 'ac' }], when: "against the triggering attack/effect only, until the end of that turn…", bonus: "+1 status" }, { targets: [{ kind: 'save', detail: 'all' }], when: "against the triggering attack/effect only, until the end of that turn…", bonus: "+1 status" }, { targets: [{ kind: 'hp' }], when: "against the triggering attack/effect only, until the end of that turn…", bonus: "resistance 2 to damage" }],
+  "warding-tattoo-fiend": [{ targets: [{ kind: 'ac' }], when: "against the triggering attack/effect only, until the end of that turn (⟨5⟩ reaction, once per day)", bonus: "+1 status" }, { targets: [{ kind: 'save', detail: 'all' }], when: "against the triggering attack/effect only, until the end of that turn (⟨5⟩ reaction, once per day)", bonus: "+1 status" }, { targets: [{ kind: 'hp' }], when: "against the triggering attack/effect only, until the end of that turn (⟨5⟩ reaction, once per day)", bonus: "resistance 2 to damage" }, { targets: [{ kind: 'hp' }], when: "against spells cast by fiends and magical attacks by fiends (always on while the tattoo is invested)", bonus: "resistance 2" }],
   "orchestral-brooch": [{ targets: [{ kind: 'skill', detail: 'performance' }], when: "on a Performance check, if you're a master in Performance…", bonus: "+1 status" }],
   "potion-of-minute-echoes": [{ targets: [{ kind: 'perception' }], when: "to Perception checks to hear, for 1 minute after drinking the potion", bonus: "+2 status" }],
   "potion-of-stable-form": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against transmutation effects, for 1 hour after drinking the potion", bonus: "+2 item" }, { targets: [{ kind: 'save', detail: 'all' }], when: "against polymorph effects instead, for 1 hour after drinking the potion…", bonus: "+3 item" }],
@@ -1060,7 +1199,12 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "investigator-expertise": [{ targets: [{ kind: 'perception' }], when: "on a Perception check that gets you closer to answering the question at the heart of an…", bonus: "+2 circumstance (up from +1)" }, { targets: [{ kind: 'skill', detail: 'all' }], when: "on any skill check that gets you closer to answering the question at the heart of an…", bonus: "+2 circumstance (up from +1)" }],
   "incredible-movement": [{ targets: [{ kind: 'speed' }], when: "whenever you're not wearing armor", bonus: "+10 status, +5 more for every 4 levels past 3rd" }],
   "stylish-combatant": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "on skill checks with the bravado trait, while in a combat encounter", bonus: "+1 circumstance" }, { targets: [{ kind: 'speed' }], when: "while you have panache", bonus: "+5 status" }],
-  "vivacious-speed": [{ targets: [{ kind: 'speed' }], when: "while you have panache (without panache you still get half this, rounded down to the nearest 5-foot increment)", bonus: "+10 status, increasing by 5 feet at 7th, 11th, 15th and 19th level" }],
+  /* Split, per the owner's rule that a Speed is a real number only when it is ALWAYS on. The
+   * without-panache half IS always on and is now a real `landSpeedBonus` on the record, so this star
+   * covers only the panache-dependent remainder — and says the floor is already counted, in the
+   * wording the clarity-goggles-greater / mirror-goggles stars established. Repeating "+10 status"
+   * without that clause would state the same feet twice on one sheet. */
+  "vivacious-speed": [{ targets: [{ kind: 'speed' }], when: "while you have panache", bonus: "+10 status, increasing by 5 feet at 7th, 11th, 15th and 19th level (half of it, rounded down to the nearest 5 feet, is always on and already in your Speed)" }],
   "exemplary-finisher": [{ targets: [{ kind: 'strikeDamage' }], when: "Gymnast style only: when a Strike you make as part of a finisher hits a foe that is grabbed, restrained, or prone", bonus: "circumstance bonus equal to double your number of weapon damage dice" }],
   "swashbuckler-expertise": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "on skill checks with the bravado trait, while in a combat encounter", bonus: "+2 circumstance (up from +1)" }],
   "continuous-flair": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "on skill checks with the bravado trait in exploration mode, not just in a combat encounter", bonus: "+1 circumstance (+2 with Swashbuckler Expertise)" }],
@@ -1152,7 +1296,7 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "spirit-singer-incredible-handheld": [{ targets: [{ kind: 'skill', detail: 'performance' }], when: "on Performance checks made in the presence of a significant spiritual disturbance (a haunt or incorporeal undead)", bonus: "+2 item" }, { targets: [{ kind: 'perception' }], when: "while playing the spirit-singer, on checks to detect a haunt or incorporeal undead", bonus: "+2 item" }],
   "day-goggles": [{ targets: [{ kind: 'save', detail: 'all' }], when: "on saving throws against visual light effects, while wearing the goggles over your eyes", bonus: "+1 item" }, { targets: [{ kind: 'perception' }], when: "on VISUAL Perception checks, while wearing the goggles over your eyes", bonus: "-2 item (penalty)" }],
   "holy-steam-ball": [{ targets: [{ kind: 'save', detail: 'will' }], when: "for 1 hour after use, on Will saves against possession…", bonus: "+2 item" }],
-  "arboreals-revenge": [{ targets: [{ kind: 'save', detail: 'reflex' }], when: "to your Reflex DC against attempts to Disarm you of this blunderbuss…", bonus: "+4 circumstance" }],
+  "arboreals-revenge": [{ targets: [{ kind: 'save', detail: 'reflex' }], when: "to your Reflex DC against attempts to Disarm you of this blunderbuss…", bonus: "+4 circumstance" }, { targets: [{ kind: 'hp' }], when: "on the flat check to recover from persistent fire damage", bonus: "DC 17 instead of 15 (DC 12 with appropriate assistance)" }],
   "immolation-clan-pistol": [{ targets: [{ kind: 'skill', detail: 'intimidation' }], when: "for 1 minute after Flaming Possession (once per day), on Intimidation checks", bonus: "+2 status" }],
   "aromatic-ammunition": [{ targets: [{ kind: 'skill', detail: 'survival' }], when: "on Survival checks to Track a creature marked by this ammunition (up to 1 hour, or until the scent is washed off)", bonus: "+1 item" }],
   "camouflage-suit": [{ targets: [{ kind: 'skill', detail: 'stealth' }], when: "on Stealth checks to Hide or Sneak, in the specific environment the suit was prepared for…", bonus: "+1 item" }],
@@ -1672,7 +1816,7 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "tales-in-timber-greater": [{ targets: [{ kind: 'skill', detail: 'nature' }], when: "to Nature checks to Recall Knowledge (while the armor is invested)", bonus: "+2 item" }, { targets: [{ kind: 'skill', detail: 'deception' }], when: "to Deception checks and DCs to pass as an inanimate wooden statue…", bonus: "+2 item" }],
   "tales-in-timber-major": [{ targets: [{ kind: 'skill', detail: 'nature' }], when: "to Nature checks to Recall Knowledge (while the armor is invested)", bonus: "+3 item" }, { targets: [{ kind: 'skill', detail: 'deception' }], when: "to Deception checks and DCs to pass as an inanimate wooden statue…", bonus: "+2 item" }],
   "janns-prism": [{ targets: [{ kind: 'perception' }], when: "to visual Perception checks, while holding the prism up to your eye", bonus: "+2 item" }],
-  "sparkwarden": [{ targets: [{ kind: 'ac' }], when: "against the triggering effect until the end of the turn…", bonus: "+1 status" }, { targets: [{ kind: 'save', detail: 'fortitude' }], when: "against the triggering effect until the end of the turn, after you spend the once-per-day reaction", bonus: "+1 status" }, { targets: [{ kind: 'save', detail: 'reflex' }], when: "against the triggering effect until the end of the turn, after you spend the once-per-day reaction", bonus: "+1 status" }, { targets: [{ kind: 'save', detail: 'will' }], when: "against the triggering effect until the end of the turn, after you spend the once-per-day reaction", bonus: "+1 status" }],
+  "sparkwarden": [{ targets: [{ kind: 'ac' }], when: "against the triggering effect until the end of the turn…", bonus: "+1 status" }, { targets: [{ kind: 'save', detail: 'fortitude' }], when: "against the triggering effect until the end of the turn, after you spend the once-per-day reaction", bonus: "+1 status" }, { targets: [{ kind: 'save', detail: 'reflex' }], when: "against the triggering effect until the end of the turn, after you spend the once-per-day reaction", bonus: "+1 status" }, { targets: [{ kind: 'save', detail: 'will' }], when: "against the triggering effect until the end of the turn, after you spend the once-per-day reaction", bonus: "+1 status" }, { targets: [{ kind: 'hp' }], when: "against the triggering effect until the end of the turn, after you spend the once-per-day reaction", bonus: "resistance 2 to damage" }],
   "spore-shepherds-staff": [{ targets: [{ kind: 'skill', detail: 'nature' }], when: "to Nature checks to identify fungus, while wielding the staff", bonus: "+2 circumstance" }],
   "spore-shepherds-staff-greater": [{ targets: [{ kind: 'skill', detail: 'nature' }], when: "to Nature checks to identify fungus, while wielding the staff", bonus: "+2 circumstance" }],
   "steadyfoot-tassel": [{ targets: [{ kind: 'skill', detail: 'acrobatics' }], when: "your companion's Acrobatics checks to Balance, while the tassel is attached to it", bonus: "+1 item" }, { targets: [{ kind: 'save', detail: 'reflex' }], when: "your companion's Reflex DC against Trip attempts, while the tassel is attached to it", bonus: "+1 item" }],
@@ -1689,9 +1833,9 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "staff-of-phantasms": [{ targets: [{ kind: 'perception' }], when: "while wielding the staff, on checks to disbelieve an illusion", bonus: "+2 status" }],
   "staff-of-phantasms-greater": [{ targets: [{ kind: 'perception' }], when: "while wielding the staff, on checks to disbelieve an illusion", bonus: "+2 status" }],
   "staff-of-phantasms-major": [{ targets: [{ kind: 'perception' }], when: "while wielding the staff, on checks to disbelieve an illusion", bonus: "+2 status" }],
-  "staff-of-protection": [{ targets: [{ kind: 'save', detail: 'fortitude' }], when: "to your Fortitude DC against Shove, while wielding the staff", bonus: "+1 circumstance" }, { targets: [{ kind: 'save', detail: 'reflex' }], when: "to your Reflex DC against Trip, while wielding the staff", bonus: "+1 circumstance" }],
-  "staff-of-protection-greater": [{ targets: [{ kind: 'save', detail: 'fortitude' }], when: "to your Fortitude DC against Shove, while wielding the staff", bonus: "+1 circumstance" }, { targets: [{ kind: 'save', detail: 'reflex' }], when: "to your Reflex DC against Trip, while wielding the staff", bonus: "+1 circumstance" }],
-  "staff-of-protection-major": [{ targets: [{ kind: 'save', detail: 'fortitude' }], when: "to your Fortitude DC against Shove, while wielding the staff", bonus: "+1 circumstance" }, { targets: [{ kind: 'save', detail: 'reflex' }], when: "to your Reflex DC against Trip, while wielding the staff", bonus: "+1 circumstance" }],
+  "staff-of-protection": [{ targets: [{ kind: 'save', detail: 'fortitude', dcOnly: true }], when: "to your Fortitude DC against Shove, while wielding the staff", bonus: "+1 circumstance" }, { targets: [{ kind: 'save', detail: 'reflex', dcOnly: true }], when: "to your Reflex DC against Trip, while wielding the staff", bonus: "+1 circumstance" }],
+  "staff-of-protection-greater": [{ targets: [{ kind: 'save', detail: 'fortitude', dcOnly: true }], when: "to your Fortitude DC against Shove, while wielding the staff", bonus: "+1 circumstance" }, { targets: [{ kind: 'save', detail: 'reflex', dcOnly: true }], when: "to your Reflex DC against Trip, while wielding the staff", bonus: "+1 circumstance" }],
+  "staff-of-protection-major": [{ targets: [{ kind: 'save', detail: 'fortitude', dcOnly: true }], when: "to your Fortitude DC against Shove, while wielding the staff", bonus: "+1 circumstance" }, { targets: [{ kind: 'save', detail: 'reflex', dcOnly: true }], when: "to your Reflex DC against Trip, while wielding the staff", bonus: "+1 circumstance" }],
   "staff-of-the-unblinking-eye": [{ targets: [{ kind: 'perception' }], when: "on Perception checks rolled for initiative, while wielding the staff", bonus: "+1 status" }],
   "staff-of-the-unblinking-eye-greater": [{ targets: [{ kind: 'perception' }], when: "on Perception checks rolled for initiative, while wielding the staff", bonus: "+1 status" }],
   "staff-of-the-unblinking-eye-major": [{ targets: [{ kind: 'perception' }], when: "on Perception checks rolled for initiative, while wielding the staff", bonus: "+1 status" }],
@@ -1822,7 +1966,11 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "mask-of-the-mantis-major": [{ targets: [{ kind: 'skill', detail: 'intimidation' }], when: "while Vernai's Ire is activated (requires membership in the Vernai)", bonus: "+3 item" }],
   "final-scalecloak": [{ targets: [{ kind: 'ac' }], when: "for 1 minute after activating Embody the Storm, against ranged projectiles at least partly made of metal", bonus: "+4 status" }],
   "shadowpiercer": [{ targets: [{ kind: 'save', detail: 'all' }], when: "while wielding Shadowpiercer, against darkness and shadow effects", bonus: "+2 status" }],
-  "wandering-pipe": [{ targets: [{ kind: 'skill', detail: 'stealth' }], when: "on Stealth checks to Hide or Sneak (the smoke plume gives away your position)", bonus: "-1 circumstance" }],
+  /* BOTH halves are stars, per the clandestine-cloak precedent for gear-state bonuses — and the +2 is
+   * CIRCUMSTANCE in print ("grants its holder a +2 circumstance bonus to Deception checks"), which the
+   * passive lane cannot say: it pools everything as an ITEM bonus, so the number stacked wrongly with
+   * both circumstance and item sources. The passive row was removed with this change. */
+  "wandering-pipe": [{ targets: [{ kind: 'skill', detail: 'deception' }], when: "while holding the pipe in one hand", bonus: "+2 circumstance" }, { targets: [{ kind: 'skill', detail: 'stealth' }], when: "on Stealth checks to Hide or Sneak (the smoke plume gives away your position)", bonus: "-1 circumstance" }],
   "conspirators-cookie": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "for 1 hour after eating it, on Diplomacy checks to Make an Impression or Request in the cookie's language", bonus: "+1 item" }],
   "echo-token": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "on your next Recall Knowledge check with the specific Lore the token taught you (once, within a year)", bonus: "+1 status" }],
   "mnemonic-feather": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "to Recall Knowledge about a topic contained in the book the feather is placed in (book must be on your plane)", bonus: "+1 status" }],
@@ -2095,9 +2243,8 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "skitter-knot-major": [{ targets: [{ kind: 'ac' }], when: "after the talisman activates — counts as Raising a Shield…", bonus: "+1 circumstance" }],
   "slithermaws-bane-heroic": [{ targets: [{ kind: 'save', detail: 'all' }], when: "on saving throws against poison", bonus: "+1 item (the resilient rune's bonus becomes +4 instead of +3)" }, { targets: [{ kind: 'save', detail: 'all' }], when: "after activating Terrain Adaptation , against environmental hazards…", bonus: "+2 circumstance" }],
   "soulcutter-heroic": [{ targets: [{ kind: 'save', detail: 'all' }], when: "on saving throws against mental effects, as long as you carry Soulcutter", bonus: "+3 item (the blade's potency bonus)" }, { targets: [{ kind: 'save', detail: 'all' }], when: "on saving throws against possession effects (replaces the +3, not cumulative)", bonus: "+5 item" }],
-  "spore-shephards-staff-greater": [{ targets: [{ kind: 'skill', detail: 'nature' }], when: "while wielding the staff, on Nature checks to identify fungus", bonus: "+2 circumstance" }],
-  "spore-shephards-staff-major": [{ targets: [{ kind: 'skill', detail: 'nature' }], when: "while wielding the staff, on Nature checks to identify fungus", bonus: "+2 circumstance" }],
-  "spore-shephards-staff": [{ targets: [{ kind: 'skill', detail: 'nature' }], when: "while wielding the staff, on Nature checks to identify fungus", bonus: "+2 circumstance" }],
+  // The misspelled "Spore Shephard's Staff" triplet is hidden (NEAR_DUPLICATE_IDS — same AoN
+  // documents as the visible "Shepherd's" rungs, which carry this star themselves above/below).
   "stalk-goggles-greater": [{ targets: [{ kind: 'perception' }], when: "while Looksee is active (1 action, once per day, lasts 1 minute), on Perception checks involving sight", bonus: "+1 item" }],
   "stalk-goggles-major": [{ targets: [{ kind: 'perception' }], when: "while Looksee is active (1 action, once per day, lasts 1 minute), on Perception checks involving sight", bonus: "+2 item" }],
   "stormshard-greater": [{ targets: [{ kind: 'skill', detail: 'intimidation' }], when: "while holding the stormshard, on Intimidation checks to influence undead", bonus: "+2 item" }],
@@ -2163,7 +2310,7 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "sleepless-suns-star": [{ targets: [{ kind: 'skill', detail: 'deception' }], when: "when interacting with members of the Sleepless Suns and residents of the Foreign Quarter", bonus: "+1 circumstance" }, { targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "when interacting with members of the Sleepless Suns and residents of the Foreign Quarter", bonus: "+1 circumstance" }, { targets: [{ kind: 'skill', detail: 'intimidation' }], when: "when interacting with members of the Sleepless Suns and residents of the Foreign Quarter", bonus: "+1 circumstance" }],
   "undercover-lotus-guard": [{ targets: [{ kind: 'skill', detail: 'deception' }], when: "when interacting with Lotus Guards and high-ranking criminals such as guild masters, gang leaders, and mob bosses", bonus: "+1 circumstance" }, { targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "when interacting with Lotus Guards and high-ranking criminals such as guild masters, gang leaders, and mob bosses", bonus: "+1 circumstance" }, { targets: [{ kind: 'skill', detail: 'intimidation' }], when: "when interacting with Lotus Guards and high-ranking criminals such as guild masters, gang leaders, and mob bosses", bonus: "+1 circumstance" }],
   "tech-reliant": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against spells", bonus: "+1 circumstance" }],
-  "wished-alive": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "once per day, after spending a single concentrate action to wish - applies only to the…", bonus: "+2 circumstance" }],
+  "wished-alive": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "once per day, after a concentrate action spent wishing; first skill check before your turn ends toward fulfilling it", bonus: "+2 circumstance" }],
   "sun-dancer": [{ targets: [{ kind: 'skill', detail: 'performance' }], when: "when you use Fascinating Performance outdoors in direct sunlight", bonus: "+1 circumstance" }],
   "tide-watcher": [{ targets: [{ kind: 'skill', detail: 'survival' }], when: "at night when you can see the moon, to discern weather patterns and predict upcoming weather", bonus: "+1 circumstance (+2 near the ocean)" }],
   "glorianas-fixer": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "to Gather Information during the Getting Started segment of an adventure briefed with Gloriana Morilla present", bonus: "+2 circumstance" }, { targets: [{ kind: 'skill', detail: 'all' }], when: "to Recall Knowledge during the Getting Started segment of an adventure briefed with Gloriana Morilla present", bonus: "+2 circumstance" }],
@@ -2192,7 +2339,16 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "serene-mutagen-major": [{ targets: [{ kind: 'save', detail: 'will' }], when: "the major serene mutagen is active (1 hour)", bonus: "+4 item" }, { targets: [{ kind: 'save', detail: 'will' }], when: "Will saves against mental effects while the major serene mutagen is active…", bonus: "+4 item" }, { targets: [{ kind: 'perception' }], when: "the major serene mutagen is active", bonus: "+4 item" }, { targets: [{ kind: 'skill', detail: 'medicine' }], when: "the major serene mutagen is active", bonus: "+4 item" }, { targets: [{ kind: 'skill', detail: 'nature' }], when: "the major serene mutagen is active", bonus: "+4 item" }, { targets: [{ kind: 'skill', detail: 'religion' }], when: "the major serene mutagen is active", bonus: "+4 item" }, { targets: [{ kind: 'skill', detail: 'survival' }], when: "the major serene mutagen is active", bonus: "+4 item" }, { targets: [{ kind: 'strikeAttack' }], when: "drawback - all attack rolls while the major serene mutagen is active", bonus: "-1 untyped" }, { targets: [{ kind: 'spell', detail: 'attack' }], when: "drawback - spell attack rolls while the major serene mutagen is active", bonus: "-1 untyped" }, { targets: [{ kind: 'spell', detail: 'dc' }], when: "drawback - save DCs of your offensive spells while the major serene mutagen is active", bonus: "-1 untyped" }, { targets: [{ kind: 'strikeDamage' }, { kind: 'spellDamage' }], when: "drawback - all weapon, unarmed attack and spell damage while the major serene mutagen is active", bonus: "-1 untyped per damage die" }],
   "covenant-tea": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "for 10 minutes after drinking it (1 hour if brewed with the Tea Ceremony)", bonus: "+1 item" }],
   "emotion-surge": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "for 1 minute after activating the relic, on the checks its emotion sets", bonus: "+1 status" }],
-  "draconic-resistance": [{ targets: [{ kind: 'ac' }], when: "against attacks made by dragons", bonus: "+1 status" }],
+  /*
+   * ⚠ THE OLD ENTRY WAS NOT THIS FEAT'S CLAUSE AT ALL. It said *"+1 status to AC against attacks made
+   * by dragons"*, and the printed text says nothing of the kind. What the feat actually prints is
+   * *"DOUBLE THIS RESISTANCE against damage of that type dealt to you by dragons"* — a resistance with
+   * a SOURCE qualifier, which no `resistances` entry can express (every one holds {type, value} and
+   * nothing about who dealt the damage). So it is a star, on the resistance rather than on AC.
+   */
+  "draconic-resistance": [
+    { targets: [{ kind: 'hp' }], when: "against damage of your exemplar's type dealt by a DRAGON", bonus: "double your resistance" },
+  ],
   "elixir-of-the-peaks": [{ targets: [{ kind: 'skill', detail: 'athletics' }], when: "for the elixir's duration after drinking it in mountainous terrain…", bonus: "+1 to +3 item (lesser +1 / moderate +2 / greater +3 / major +3)" }, { targets: [{ kind: 'save', detail: 'all' }], when: "for the elixir's duration after drinking it in mountainous terrain, against the effects of high altitude", bonus: "+1 to +3 item (lesser +1 / moderate +2 / greater +3 / major +3)" }],
   "monks-attire": [{ targets: [{ kind: 'save', detail: 'will' }], when: "for 10 minutes after dominant emotion or emotion conduit counteracts an effect - while…", bonus: "+2 status" }],
   "scavenger-strix": [{ targets: [{ kind: 'skill', detail: 'survival' }], when: "Survival checks to Subsist", bonus: "+1 circumstance" }],
@@ -2210,6 +2366,17 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "rose-warden-dedication": [{ targets: [{ kind: 'save', detail: 'fortitude' }], when: "to your Fortitude DC against that figure of authority's attempts to make you grabbed…", bonus: "+1 circumstance" }, { targets: [{ kind: 'save', detail: 'all' }], when: "on saves against being confused, controlled, grabbed, immobilized…", bonus: "+1 circumstance" }],
   "golden-legion-epaulet": [{ targets: [{ kind: 'strikeAttack' }], when: "for 1 round after you activate the epaulet (1/day), until the beginning of your next turn", bonus: "+1 status" }, { targets: [{ kind: 'strikeDamage' }], when: "for 1 round after you activate the epaulet (1/day), until the beginning of your next turn", bonus: "+1 status" }, { targets: [{ kind: 'save', detail: 'all' }], when: "on saves against fear, for 1 round after you activate the epaulet (1/day), until the beginning of your next turn", bonus: "+1 status" }],
   "aeon-stone-polished-pebble": [{ targets: [{ kind: 'save', detail: 'all' }], when: "on saves (and on your save DCs) against attempts to Grapple or Swallow you", bonus: "+1 item" }],
+  /* Hunt Prey (action-2257): *"You gain a +2 circumstance bonus to Perception checks when you Seek
+   * your prey and a +2 circumstance bonus to Survival checks when you Track your prey."* — the ranger's
+   * defining bonus, and it was nowhere. Note how narrow it is: not all Perception, not initiative, not
+   * all Survival, and only against the one designated prey. Their side flattens it to a bare +2 on both
+   * tracks, which would over-grant on every other check. `masterful-hunter` below has said "(replaces
+   * the usual +2)" since it was written — this is the +2 that sentence refers to. */
+  "hunt-prey": [
+    { targets: [{ kind: 'perception' }], when: "you Seek your hunted prey", bonus: "+2 circumstance" },
+    { targets: [{ kind: 'skill', detail: 'survival' }], when: "you Track your hunted prey", bonus: "+2 circumstance" },
+    { targets: [{ kind: 'strikeAttack' }], when: "making a ranged attack against your hunted prey within your second range increment", bonus: "ignore the range increment penalty" },
+  ],
   "masterful-hunter": [{ targets: [{ kind: 'perception' }], when: "you Seek your hunted prey, if you are a master in Perception (replaces the usual +2)", bonus: "+4 circumstance" }, { targets: [{ kind: 'skill', detail: 'survival' }], when: "you Track your hunted prey, if you are a master in Survival (replaces the usual +2)", bonus: "+4 circumstance" }, { targets: [{ kind: 'skill', detail: 'deception' }], when: "against your hunted prey, with the Outwit edge, if you are a master in Deception (replaces the usual +2)", bonus: "+4 circumstance" }, { targets: [{ kind: 'skill', detail: 'intimidation' }], when: "against your hunted prey, with the Outwit edge, if you are a master in Intimidation (replaces the usual +2)", bonus: "+4 circumstance" }, { targets: [{ kind: 'skill', detail: 'stealth' }], when: "against your hunted prey, with the Outwit edge, if you are a master in Stealth (replaces the usual +2)", bonus: "+4 circumstance" }, { targets: [{ kind: 'ac' }], when: "against your hunted prey's attacks, with the Outwit edge…", bonus: "+2 circumstance" }, { targets: [{ kind: 'strikeAttack' }], when: "attacking your hunted prey within your ranged weapon's second or third range increment…", bonus: "ignore the range increment penalty" }],
   "the-infinite-eye": [{ targets: [{ kind: 'save', detail: 'all' }], when: "for 3 rounds, on saves against magic from an enemy or hazard whose magic you detected with an amped detect magic", bonus: "+1 status (+2 when the amp is heightened to 7th)" }, { targets: [{ kind: 'strikeAttack' }], when: "against the creature you scanned with an amped omnidirectional scan, until the scan ends", bonus: "+1 circumstance" }, { targets: [{ kind: 'strikeDamage' }], when: "against the creature you scanned with an amped omnidirectional scan, until the scan ends", bonus: "+1 circumstance" }],
   "fire-gate": [{ targets: [{ kind: 'skill', detail: 'intimidation' }], when: "while your kinetic aura is active, if you took the fire gate's Intimidation skill junction", bonus: "+1 status (+2 at 10th, +3 at 17th)" }],
@@ -2242,8 +2409,34 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "skybearers-belt": [{ targets: [{ kind: 'skill', detail: 'athletics' }], when: "to Disarm, Grapple, Shove or Trip, while your divine spark is in this ikon…", bonus: "+1 circumstance" }, { targets: [{ kind: 'save', detail: 'fortitude' }], when: "to resist a Grapple or a Shove, while your divine spark is in this ikon", bonus: "+1 circumstance" }, { targets: [{ kind: 'save', detail: 'reflex' }], when: "to resist a Disarm or a Trip, while your divine spark is in this ikon", bonus: "+1 circumstance" }],
   "initiate-benefit-lantern": [{ targets: [{ kind: 'perception' }], when: "on visual Perception checks to notice something inside your lit lantern's 20-foot aura", bonus: "+1 status" }, { targets: [{ kind: 'skill', detail: 'all' }], when: "to Recall Knowledge about a creature inside your lit lantern's aura", bonus: "+1 status" }],
   "paragon-benefit-tome": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "to Recall Knowledge, while you hold your tome implement", bonus: "+2 circumstance (up from +1)" }, { targets: [{ kind: 'strikeAttack' }], when: "on attack rolls against a creature you succeeded at the tome's start-of-turn Recall…", bonus: "+1 circumstance" }, { targets: [{ kind: 'skill', detail: 'lore:esoteric' }], when: "when you roll Esoteric Lore for initiative against creatures or haunts, while holding your tome", bonus: "+3 circumstance" }],
-  "earth-gate": [{ targets: [{ kind: 'ac' }], when: "until the start of your next turn, after you use an earth impulse that takes 2 or more…", bonus: "+1 circumstance" }, { targets: [{ kind: 'skill', detail: 'athletics' }], when: "if you took the earth skill junction: while your kinetic aura is active", bonus: "+1 status (+2 at 10th, +3 at 17th)" }],
-  "warriors-training-ring": [{ targets: [{ kind: 'strikeAttack' }], when: "once per day, free action, when you make an attack with a weapon you're untrained in", bonus: "+2 circumstance (+4 if you're expert in any weapon)" }],
+  /* The SKILL junction only — a dual gate can buy that one at a Gate's Threshold. The earth IMPULSE
+   * junction moved to `junction:earth-gate` below. Kinetic Gate grants an impulse junction under
+   * SINGLE GATE alone ("Choose one element … In addition, you gain an impulse junction"); the Dual
+   * Gate paragraph grants none. Keyed on the ELEMENT record, this handed every dual-gate earth
+   * kineticist a +1 circumstance AC from 1st level that the printed text does not give them. */
+  "earth-gate": [{ targets: [{ kind: 'skill', detail: 'athletics' }], when: "if you took the earth skill junction: while your kinetic aura is active", bonus: "+1 status (+2 at 10th, +3 at 17th)" }],
+  /* The earth impulse junction, reachable ONLY through the synthetic `junction:` id that
+   * `characterSituationalIds` derives from the character's element COUNT — never by owning the gate.
+   * Earth's is the only one of the six impulse junctions that moves a number (air Strides, fire changes
+   * a damage die size, metal deals reactive damage, water and wood are non-numeric), which is why this
+   * is one key and not six. */
+  "junction:earth-gate": [{ targets: [{ kind: 'ac' }], when: "after an earth impulse of 2+ actions, until the start of your next turn (once per round)", bonus: "+1 circumstance" }],
+  /* TWO printed clauses, and only the ACTIVATION was here. The ring's always-on sentence — *"While
+   * wearing this ring, you add your level to your attack rolls with all weapons with which you are
+   * untrained"* — is the one Wanderer's Guide encodes (an `addBonusToValue` on ATTACK_ROLLS_BONUS
+   * carrying that sentence as `text` with no `value`, i.e. prose; their numeric operations all carry
+   * `value` and `type`). On our side it had no entry at all, so the attack-roll popup showed only the
+   * 1/day activation.
+   *
+   * PROSE, not a number, and the reason is NOT that the app cannot model this clause — it can:
+   * `untrainedWeaponProficiency` (types.ts) → `untrainedWeaponBonus` (derive.ts) → the `untrainedFloor`
+   * in strike attack, which is how Martial Experience's identical *"treat your level as your
+   * proficiency bonus"* becomes a real number. That reader walks `c.feats` and reads `db.feats[...]`
+   * ONLY, so no item can reach it, and Wanderer's Guide gives the ring prose here too (they reserve
+   * their numeric MARTIAL_EXPERIENCE variable for the feat). Turning this into a number would mean
+   * extending a feat-only lane to items and delivering more than they do — not ours to decide.
+   * Same prose-star shape as `keen-recollection` ("counts as trained (add your level)"). */
+  "warriors-training-ring": [{ targets: [{ kind: 'strikeAttack' }], when: "while wearing the ring, on attacks with any weapon you're untrained in", bonus: "add your level (untrained proficiency counts your level)" }, { targets: [{ kind: 'strikeAttack' }], when: "once per day, free action, when you make an attack with a weapon you're untrained in", bonus: "+2 circumstance (+4 if you're expert in any weapon)" }],
   "cloak-of-repute": [{ targets: [{ kind: "skill", detail: "diplomacy" }], when: "on Diplomacy checks to Make an Impression, while wearing the cloak", bonus: "+1 item" }],
   "cloak-of-repute-greater": [{ targets: [{ kind: "skill", detail: "diplomacy" }], when: "on Diplomacy checks to Make an Impression, while wearing the cloak", bonus: "+2 item" }],
   "cloak-of-repute-major": [{ targets: [{ kind: "skill", detail: "diplomacy" }], when: "on Diplomacy checks to Make an Impression, while wearing the cloak", bonus: "+3 item" }],
@@ -2286,7 +2479,7 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "retribution-axe": [{ targets: [{ kind: 'strikeDamage' }], when: "on your next damage roll against the creature that most recently damaged you with an…", bonus: "+2 circumstance" }],
   "iron-medallion": [{ targets: [{ kind: 'save', detail: 'will' }], when: "on the triggering Will save against fear and on other saves against fear for 1 minute…", bonus: "+2 status" }],
   "alacritous-horseshoes": [{ targets: [{ kind: 'skill', detail: 'athletics' }], when: "on the animal companion's Athletics checks to High Jump and Long Jump, while it has the horseshoes invested", bonus: "+2 circumstance" }],
-  "clandestine-cloak": [{ targets: [{ kind: 'skill', detail: 'stealth' }], when: "while the cloak's hood is up (Interact to raise it)", bonus: "+1 item" }, { targets: [{ kind: 'skill', detail: 'deception' }], when: "while the hood is up, to Impersonate a forgettable background character such as a servant", bonus: "+1 item" }, { targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "while the cloak's hood is up", bonus: "-1 item" }, { targets: [{ kind: 'skill', detail: 'intimidation' }], when: "while the cloak's hood is up", bonus: "-1 item" }, { targets: [{ kind: 'skill', detail: 'deception' }], when: "never — placeholder removed", bonus: "+2 status" }],
+  "clandestine-cloak": [{ targets: [{ kind: 'skill', detail: 'stealth' }], when: "while the cloak's hood is up (Interact to raise it)", bonus: "+1 item" }, { targets: [{ kind: 'skill', detail: 'deception' }], when: "while the hood is up, to Impersonate a forgettable background character such as a servant", bonus: "+1 item" }, { targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "while the cloak's hood is up", bonus: "-1 item" }, { targets: [{ kind: 'skill', detail: 'intimidation' }], when: "while the cloak's hood is up", bonus: "-1 item" }],
   "kraken-figurehead": [{ targets: [{ kind: 'skill', detail: 'athletics' }], when: "on Athletics checks to Swim while you are in the water inside your ship's Lash Out!…", bonus: "-2 circumstance" }],
   "kraken-figurehead-wracking": [{ targets: [{ kind: 'skill', detail: 'athletics' }], when: "on Athletics checks to Swim while you are in the water inside your ship's Lash Out!…", bonus: "-2 circumstance" }],
   "spore-shepherds-staff-major": [{ targets: [{ kind: 'skill', detail: 'nature' }], when: "on Nature checks to identify fungus, while wielding the staff", bonus: "+2 circumstance" }],
@@ -2304,7 +2497,7 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "knowledge-is-power": [{ targets: [{ kind: 'strikeAttack' }], when: "on your next attack roll against a creature you critically identified with Recall…", bonus: "+1 circumstance" }, { targets: [{ kind: 'spell', detail: 'attack' }], when: "on your next spell attack roll against a creature you critically identified with Recall…", bonus: "+1 circumstance" }, { targets: [{ kind: 'ac' }], when: "to your AC against that creature's next attack roll (ends after 1 minute if unused)", bonus: "+1 circumstance" }, { targets: [{ kind: 'save', detail: 'all' }], when: "on your save against that creature's next effect requiring a save (ends after 1 minute if unused)", bonus: "+1 circumstance" }],
   "pass-vengeful-judgement": [{ targets: [{ kind: 'skill', detail: 'intimidation' }], when: "for 1 month after you spend a Mythic Point on Pass Vengeful Judgement…", bonus: "+2 status" }],
   "bloc-tactics": [{ targets: [{ kind: 'skill', detail: 'deception' }], when: "while wearing the disguise from your daily Bloc Tactics preparation…", bonus: "+4 status" }, { targets: [{ kind: 'save', detail: 'all' }], when: "while wearing your Bloc Tactics disguise, on saves against smoke, fumes, and inhaled substances", bonus: "+3 status" }],
-  "swordmaster-dedication": [{ targets: [{ kind: 'save', detail: 'reflex' }], when: "to your Reflex DC when a foe attempts to Disarm you", bonus: "+2 circumstance" }, { targets: [{ kind: 'strikeAttack' }], when: "the first attack roll after you critically succeed at Aiding an ally's attack roll (requires Deft Cooperation)", bonus: "+2 circumstance (instead of Deft Cooperation's +1)" }, { targets: [{ kind: 'skill', detail: 'all' }], when: "the first skill check after you critically succeed at Aiding an ally's skill check (requires Deft Cooperation)", bonus: "+2 circumstance (instead of Deft Cooperation's +1)" }],
+  "swordmaster-dedication": [{ targets: [{ kind: 'save', detail: 'reflex', dcOnly: true }], when: "when a foe attempts to Disarm you", bonus: "+2 circumstance" }, { targets: [{ kind: 'strikeAttack' }], when: "the first attack roll after you critically succeed at Aiding an ally's attack roll (requires Deft Cooperation)", bonus: "+2 circumstance (instead of Deft Cooperation's +1)" }, { targets: [{ kind: 'skill', detail: 'all' }], when: "the first skill check after you critically succeed at Aiding an ally's skill check (requires Deft Cooperation)", bonus: "+2 circumstance (instead of Deft Cooperation's +1)" }],
   "magic-warrior-dedication": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against divination effects", bonus: "+1 circumstance" }],
   "entourage": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "when your admirers assist you to Gather Information, while in a civilized settlement…", bonus: "+1 circumstance" }, { targets: [{ kind: 'skill', detail: 'deception' }], when: "when your admirers assist you to Sow Rumor, while in a civilized settlement (requires the Sow Rumor feat)", bonus: "+1 circumstance" }],
   "deft-cooperation": [{ targets: [{ kind: 'strikeAttack' }], when: "against an enemy whose attack roll you successfully Aided, until the end of your next turn", bonus: "+1 circumstance" }, { targets: [{ kind: 'ac' }], when: "against an enemy whose AC you successfully Aided, until the end of your next turn", bonus: "+1 circumstance" }, { targets: [{ kind: 'skill', detail: 'all' }], when: "on your next turn, when you repeat the exact same skill check you successfully Aided", bonus: "+1 circumstance" }],
@@ -2360,7 +2553,7 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "flickering": [{ targets: [{ kind: 'save', detail: 'reflex' }], when: "an enemy attempts to Disarm this weapon from you", bonus: "item bonus equal to the weapon's potency rune, to your Reflex DC (not to your Reflex save)" }, { targets: [{ kind: 'perception' }], when: "an enemy attempts to Steal this weapon", bonus: "item bonus equal to the weapon's potency rune, to your Perception DC (not to your Perception check)" }],
   "bellows-pipes": [{ targets: [{ kind: 'skill', detail: 'performance' }], when: "playing music with this instrument", bonus: "+1 item" }, { targets: [{ kind: 'strikeAttack' }], when: "your next attack roll before the end of your next turn, after you Activate Hand Chords…", bonus: "+1 status" }, { targets: [{ kind: 'perception' }], when: "your next Perception check before the end of your next turn…", bonus: "+1 status" }, { targets: [{ kind: 'save', detail: 'all' }], when: "your next saving throw before the end of your next turn, after you Activate Hand Chords…", bonus: "+1 status" }, { targets: [{ kind: 'skill', detail: 'all' }], when: "your next skill check before the end of your next turn, after you Activate Hand Chords…", bonus: "+1 status" }],
   "vine-baton": [{ targets: [{ kind: 'initiative' }], when: "your initiative roll, if you enter an encounter during the extra hour of Hustle from Forward March! (Activate, 1/day)", bonus: "+2 status" }],
-  "golden-greaves": [{ targets: [{ kind: 'save', detail: 'fortitude' }], when: "an enemy tries to Shove or Reposition you, or another forced-movement effect targets you", bonus: "+1 item to your Fortitude DC (not to your Fortitude save)" }, { targets: [{ kind: 'save', detail: 'reflex' }], when: "an enemy tries to Trip you or another effect would knock you prone", bonus: "+1 item to your Reflex DC (not to your Reflex save)" }],
+  "golden-greaves": [{ targets: [{ kind: 'save', detail: 'fortitude', dcOnly: true }], when: "an enemy tries to Shove or Reposition you, or another forced-movement effect targets you", bonus: "+1 item to your Fortitude DC (not to your Fortitude save)" }, { targets: [{ kind: 'save', detail: 'reflex', dcOnly: true }], when: "an enemy tries to Trip you or another effect would knock you prone", bonus: "+1 item to your Reflex DC (not to your Reflex save)" }],
   "storied-skin": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "Recall Knowledge with the Lore skill chosen when you got the tattoo, adding the visual trait to study your tattoos", bonus: "+1 item" }],
   "drumish-pearl-token": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "Diplomacy checks to Make an Impression", bonus: "+2 item" }, { targets: [{ kind: 'perception' }], when: "someone attempts to Lie to you", bonus: "+2 item to your Perception DC (not to your Perception check)" }],
   "cleft-head-marking": [{ targets: [{ kind: 'skill', detail: 'deception' }], when: "Deception checks to Feint (tattoo must be invested)", bonus: "+1 item" }, { targets: [{ kind: 'strikeDamage' }], when: "once per day, when you Activate Unexpected Strike after Striking an off-guard creature with a weapon", bonus: "1d6 precision damage" }],
@@ -2476,7 +2669,7 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "lightweave-scarf-greater": [{ targets: [{ kind: 'save', detail: 'all' }], when: "while the scarf is affixed to armor, on saving throws against illusions", bonus: "+2 item" }, { targets: [{ kind: 'skill', detail: 'deception' }], when: "while the scarf is affixed to armor, on Deception checks to Create a Diversion", bonus: "+2 item" }],
   "living-leaf-weave": [{ targets: [{ kind: 'skill', detail: 'athletics' }], when: "to Grapple, for 3 rounds after activating the armor with an elixir of life installed", bonus: "+ the installed elixir's item bonus (item)" }, { targets: [{ kind: 'save', detail: 'fortitude', dcOnly: true }, { kind: 'save', detail: 'reflex', dcOnly: true }], when: "for those 3 rounds, when a creature tries to Grapple, Disarm or Shove you or Trip you…", bonus: "+ the installed elixir's item bonus (item)" }],
   "mountain-stance": [{ targets: [{ kind: 'ac' }, { kind: 'save', detail: 'all' }], when: "while in Mountain Stance, against Reposition, Shove, Trip…", bonus: "+2 circumstance" }, { targets: [{ kind: 'save', detail: 'fortitude', dcOnly: true }], when: "while in Mountain Stance, on the Fortitude DC an opponent rolls against to Reposition…", bonus: "+2 circumstance" }],
-  "northridge-scholar": [{ targets: [{ kind: 'save', detail: 'all' }], when: "you witness a sibling PC critically fail a significant skill check or attack roll…", bonus: "+1 status" }],
+  "northridge-scholar": [{ targets: [{ kind: 'save', detail: 'all' }], when: "Bickering adjustment only: after you witness a sibling PC critically fail a significant check…", bonus: "+1 status" }],
   "outskirt-dweller": [{ targets: [{ kind: 'save', detail: 'all' }], when: "you witness a sibling PC critically fail a significant skill check or attack roll…", bonus: "+1 status" }],
   "runelord-researcher": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "when you Recall Knowledge about runelords or ancient Thassilon", bonus: "+2 circumstance" }, { targets: [{ kind: 'save', detail: 'all' }], when: "against the effects of the Thassilonian school you chose during daily preparations…", bonus: "+1 status" }],
   "sixfingers-elixir-greater": [{ targets: [{ kind: 'save', detail: 'reflex', dcOnly: true }], when: "for 8 hours after drinking, when a creature tries to Disarm you…", bonus: "+2 item" }],
@@ -2604,7 +2797,14 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "redpitch-bomb-greater": [{ targets: [{ kind: 'strikeAttack' }], when: "on attack rolls with this bomb", bonus: "+2 item" }],
   "redpitch-bomb-major": [{ targets: [{ kind: 'strikeAttack' }], when: "on attack rolls with this bomb", bonus: "+3 item" }],
   "redpitch-bomb-moderate": [{ targets: [{ kind: 'strikeAttack' }], when: "on attack rolls with this bomb", bonus: "+1 item" }],
-  "reinforced-chassis": [{ targets: [{ kind: 'ac' }], when: "from 5th level, and again from 10th — your chassis's own item bonus to AC increases with…", bonus: "+4 item at 5th level and +5 item at 10th, replacing the base +3" }],
+  /*
+   * Reinforced Chassis is GONE from this table on purpose. Its entry was a note reading "your
+   * chassis's own item bonus to AC increases with level" — a `*` on AC standing in for armour the
+   * character did not have, so an automaton computed AC 10 + Dex with no armour at all. The chassis
+   * now ships as a real medium-armour item the feat grants (`acBonusByLevel` carries the +3/+4/+5),
+   * and a star beside a number the sheet already computes would be telling the player to apply it
+   * twice.
+   */
   "saved-by-clockwork": [{ targets: [{ kind: 'initiative' }], when: "on initiative rolls (whatever statistic you roll for initiative)", bonus: "+2 circumstance" }],
   "shadow": [{ targets: [{ kind: 'skill', detail: 'stealth' }], when: "while wearing the armor this rune is etched onto", bonus: "+1 item" }],
   "shadow-greater": [{ targets: [{ kind: 'skill', detail: 'stealth' }], when: "while wearing the armor this rune is etched onto", bonus: "+2 item" }],
@@ -2722,6 +2922,10 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "doom-switch": [{ targets: [{ kind: 'strikeAttack' }], when: "against the target for 1 minute after a successful Bragging Rights Strike", bonus: "+1 status" }, { targets: [{ kind: 'strikeAttack' }], when: "against the target for 1 round if the Bragging Rights Strike fails", bonus: "-1 status" }, { targets: [{ kind: 'strikeAttack' }], when: "against the target for 1 round on a critical failure", bonus: "-2 status" }],
   "dragonscale-bo-staff": [{ targets: [{ kind: 'save', detail: 'all' }], when: "while benefiting from the staff's parry AC bonus, vs magic of the dragon's tradition", bonus: "+1 circumstance, plus resistance 5 to that tradition's damage type (force/spirit/mental/fire)" }],
   "dragonscale-staff": [{ targets: [{ kind: 'strikeDamage' }], when: "for 1 round after the staff's resistance prevents you from taking damage", bonus: "+1 damage of the resisted type" }],
+  // Daywalker (vampire archetype, feat-3549) prints the same save pair as Grave Mummification; the
+  // aon- spelling twin gets only the star, per the ghostly-grasp / ghostly-grasp-ghost precedent.
+  "daywalker": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against disease and poison", bonus: "+2 circumstance" }, { targets: [{ kind: 'save', detail: 'all' }], when: "against paralysis and sleep effects", bonus: "+1 circumstance" }],
+  "daywalker-vampire": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against disease and poison", bonus: "+2 circumstance" }, { targets: [{ kind: 'save', detail: 'all' }], when: "against paralysis and sleep effects", bonus: "+1 circumstance" }],
   "feather-of-the-unfounded-bravado": [{ targets: [{ kind: 'skill', detail: 'intimidation' }], when: "to Demoralize, for 1 hour after activating the feather (once per day)", bonus: "+1 item" }, { targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "to Make an Impression, for 1 hour after activating the feather", bonus: "+1 item" }, { targets: [{ kind: 'skill', detail: 'acrobatics' }], when: "for 1 hour after activating the feather (once per day)", bonus: "-1 item" }, { targets: [{ kind: 'skill', detail: 'athletics' }], when: "for 1 hour after activating the feather (once per day)", bonus: "-1 item" }],
   "fluid-form-staff": [{ targets: [{ kind: 'perception' }], when: "to identify morph and polymorph magic, while wielding the staff", bonus: "+2 circumstance" }],
   "fluid-form-staff-greater": [{ targets: [{ kind: 'perception' }], when: "to identify morph and polymorph magic, while wielding the staff", bonus: "+2 circumstance" }],
@@ -2837,6 +3041,10 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "sly-striker": [{ targets: [{ kind: 'strikeDamage' }], when: "you hit a creature that isn't off-guard with a sneak-attack-capable weapon", bonus: "+1d6 precision (2d6 at 14th level if you'd deal 3d6+ sneak attack)" }],
   "steadfast-grip": [{ targets: [{ kind: 'save', detail: 'reflex', dcOnly: true }], when: "against attempts to Disarm, Steal or otherwise remove your warshard weapon", bonus: "calculated at mythic proficiency" }],
   "stonebane": [{ targets: [{ kind: 'strikeDamage' }], when: "stonestrike vs constructs, earth-trait creatures, or earthen objects", bonus: "+1d6" }],
+  /* The BASE of the ladder, never authored — the successor on the next line names it ("…(Rising Blood
+   * Magic)") as the tier it stacks onto, so the app printed a total resting on a bonus no record
+   * carried. Grep found `rising-blood-magic` in src/ only as bloodrager-dedication's basicId. */
+  "rising-blood-magic": [{ targets: [{ kind: 'spellDamage' }], when: "raging repertoire spell while Drained 1+", bonus: "+1" }],
   "surging-blood-magic": [{ targets: [{ kind: 'spellDamage' }], when: "raging repertoire spell while Drained 2+ (Rising Blood Magic)", bonus: "+2 (total 3)" }],
   "swordlord-exile": [{ targets: [{ kind: 'strikeDamage' }], when: "first hit each round with an Aldori dueling sword", bonus: "+5 precision" }],
   "takedown-expert": [{ targets: [{ kind: 'strikeAttack' }], when: "attack stratagem with a one-handed club-group weapon", bonus: "use Int on the attack roll; the Strike qualifies for strategic strike" }],
@@ -3254,10 +3462,44 @@ export const DEGREE_SHIFT_SHORT: Record<DegreeShift['shift'], string> = {
   oneWorse: 'one degree worse',
 };
 
+/**
+ * Ids whose AUTHORED entries REPLACE the shipped ones rather than adding to them.
+ *
+ * Populated by `authoredSituational` in explain.ts from each record's `situationalReplaces` flag, and
+ * read here. A module-level set rather than a fifth parameter because `entriesFor` is called from four
+ * places, and threading an argument through all of them is the kind of change that gets half-done.
+ *
+ * Concatenation alone cannot express "delete the way we did it and do it their way" — the owner's rule
+ * for the Wanderer's Guide parity pass. Without this, a corrected entry renders NEXT TO the one it was
+ * meant to supersede and the player reads two versions of one rule.
+ */
+const replacedIds = new Set<string>();
+export const setSituationalReplacements = (ids: Iterable<string>): void => {
+  replacedIds.clear();
+  for (const id of ids) replacedIds.add(id);
+};
+
+/*
+ * Ids whose SHIPPED entries are dropped for this character — a record that grants another record's
+ * ability on explicitly different terms.
+ *
+ * Finishing Precision is the case: *"You gain the Precise Strike class feature but you deal 1
+ * additional damage on a hit and 1d6 damage on a finisher. This damage doesn't increase as you gain
+ * levels."* Granting `precise-strike` put the swashbuckler's SCALING star on the sheet next to this
+ * feat's own frozen one, so the strike row stated a number the feat forbids. `situationalReplaces`
+ * could not say this: it only replaces a record's own id, and this record needs to silence another's.
+ */
+const suppressedIds = new Set<string>();
+export const setSituationalSuppressions = (ids: Iterable<string>): void => {
+  suppressedIds.clear();
+  for (const id of ids) suppressedIds.add(id);
+};
+
 const entriesFor = (id: string, extra?: ExtraSituational): readonly SituationalBonus[] => {
-  const shipped = FEAT_SITUATIONAL[id];
+  const shipped = suppressedIds.has(id) ? undefined : FEAT_SITUATIONAL[id];
   const authored = extra?.[id];
   if (!authored?.length) return shipped ?? [];
+  if (replacedIds.has(id)) return authored;
   return shipped?.length ? [...shipped, ...authored] : authored;
 };
 
@@ -3435,9 +3677,21 @@ export const RECORD_MARKERS: Record<string, RecordMarker[]> = {
   // renders through `character.classChoices` (FeatsTab), which has no recordId to mark.
   // ⚠ The note does NOT open with this record's own name: all three renderers prefix it themselves.
   "ancestral-blood-magic": [{ on: 'feature', id: 'bloodline', note: "you also gain your blood magic effect when you cast a non-cantrip spell you gained from a heritage or an ancestry feat, in addition to the normal circumstances that trigger it." }],
+  // Skeleton's void healing is a mechanic on HEALING, and dying is where the player meets it. The
+  // boolean half (negativeHealing) is on the ancestry record; this is the visibility half.
+  "skeleton": [{ on: 'condition', id: 'dying', note: "void healing (Undeath): vitality damage harms you and vitality healing does not heal you; you take no void damage, and void effects that heal undead heal you." }],
   "come-and-get-me": [{ on: 'condition', id: 'off-guard', note: "Until your rage ends you are off-guard, and damage rolls against you gain a +2 circumstanc" }],
+  /* *"When you Step, you can move 10 feet instead of 5."* The feat's ENTIRE printed content changes
+   * another action, and the record carried nothing — so the Step row said 5 feet to a character whose
+   * Step is 10. Marks the action itself, which is where a player reads it. */
+  "smoke-through-bamboo": [{ on: 'action', id: 'step', value: "10 feet", note: "You Step 10 feet instead of 5, and can Step into and within difficult terrain." }],
   "berserkers-cloak": [{ on: 'action', id: 'rage', value: "jaws 1d10 P, claws 1d6 S (agile)", note: "While raging you grow jaws and claws bearing a +1 potency and striking rune…" }],
   "berserkers-cloak-greater": [{ on: 'action', id: 'rage', value: "jaws 1d10 P, claws 1d6 S (agile)", note: "While raging you grow jaws and claws bearing a +2 potency and greater striking rune…" }],
+  /* Eclipseborn's Ill Omen innate carries a printed two-part rider neither our record nor WG models
+   * as numbers (batch 23): a GM-forced misfortune reroll after casting, and a conditional second
+   * cast that day if the reroll fails. No sheet number changes, so a mark on Cast a Spell — the row
+   * a caster reads — is the carrier; the innate grant itself already reaches the Spells page. */
+  "eclipseborn": [{ on: 'action', id: 'cast-a-spell', note: "after you cast Ill Omen, the GM can force you to reroll one successful save, attack roll, or skill check before you regain the spell (misfortune); if that reroll fails, you can cast Ill Omen a second time that day." }],
   // Coverage sweep: registry-lane records the field applier could not write (they are registry
   // entries, not record fields). Values quoted from each record's own text.
   "the-harder-they-fall-ranger": [{ on: 'action', id: 'trip', value: "+1d8 bludgeoning", note: "a foe larger than you takes 1d8 bludgeoning (2d8 on a critical success)" }],
@@ -3445,6 +3699,7 @@ export const RECORD_MARKERS: Record<string, RecordMarker[]> = {
 "black-powder-boost": [{ on: 'action', id: 'leap', value: "+10 feet", note: "Discharging a loaded firearm as you Leap adds a +10-foot status bonus to the distance…" }],
   "elemental-blast": [{ on: 'action', id: 'elemental-blast', value: "2 actions: +Con to damage", note: "Spending 2 actions adds a status bonus to the blast's damage equal to your Constitution…" }],
   "face-your-fears": [{ on: 'condition', id: 'frightened', value: "-1", note: "Once per hour you can reduce your frightened value by 1…" }],
+  "gravel-guts": [{ on: 'condition', id: 'sickened', value: "-2 (-3 on a critical success)", note: "When you succeed at a Fortitude save to reduce your sickened value, you reduce it by 2 instead of 1 (or by 3 on a critical success)." }],
   // The feat audit's adversary identified this lane but would not author into a key it had not been
   // handed, so it is written here. Only the PLAYER half is modelled — the aura also steps each ally's
   // frightened value down at the end of your turn, and an ally's conditions are not this sheet.
@@ -3529,6 +3784,20 @@ export const RECORD_MARKERS: Record<string, RecordMarker[]> = {
   'fancy-moves': [{"on":"action","id":"demoralize","note":"You can roll Performance instead of Intimidation to Demoralize."}],
   'fantastic-leaps': [{"on":"action","id":"leap","value":"+10 ft / +5 ft up","note":"Your maximum Leap distance is 10 feet farther horizontally and 5 feet higher vertically."}],
   'feather-step': [{"on":"action","id":"step","note":"You can Step into difficult terrain."}],
+  /* *"You ignore difficult terrain resulting from shallow water."* — the FIRST of Shore Step's two
+   * printed sentences (AoN feat-2971), and the one that had no carrier at all. The second (success ->
+   * critical success on Balance and Swim) ships as `degreeShifts` on the record and already matches.
+   * Wanderer's Guide injects this sentence onto Stride AND Step (their feat 22597 -> injectText on
+   * actions 19855 and 19853, resolved from their link_action refs), so both rows are reproduced here
+   * one-for-one. Same shape as feather-step above and rock-runner below.
+   * ⚠ Deliberately placed ABOVE the generated marks sentinel that apply-feature-audit.mjs keys on:
+   * everything from that line to this table's close is stripped and regenerated by that script, and
+   * its `existingMarkers` dedupe set is built from the ALREADY-STRIPPED source — so a hand-authored
+   * row down there is both deleted on the next run and invisible to the duplicate check. */
+  'shore-step': [
+    { on: 'action', id: 'stride', note: 'Shore Step: you ignore difficult terrain resulting from shallow water.' },
+    { on: 'action', id: 'step', note: 'Shore Step: you ignore difficult terrain resulting from shallow water.' },
+  ],
   'full-automation': [{"on":"condition","id":"quickened","value":"always on","note":"Full Automation: you're permanently quickened. Armor innovation - the extra action Strides, Steps, or uses a movement form your innovation provides; construct - Command your construct; weapon - Strike with your innovation."}],
   'panache-paragon': [{"on":"condition","id":"quickened","value":"always on","note":"Panache Paragon: you are permanently quickened; the extra action can be used only to perform a bravado action."}],
   'peerless-captain': [{"on":"condition","id":"quickened","value":"with an active follower","note":"Peerless Captain: while you have an active follower in an encounter you are quickened; the extra action can be used only to Direct your Follower."}],
@@ -3563,9 +3832,57 @@ export const RECORD_MARKERS: Record<string, RecordMarker[]> = {
   // "Animal Companion (Ranger): Animal Companion (Ranger): when you Hunt Prey…".
   "animal-companion-ranger": [{ on: "action", id: "hunt-prey", value: "your animal companion too", note: "when you Hunt Prey, your animal companion gains the action's benefits against that target — and your hunter's edge benefit if you have one." }],
 
+  // Inexorable (batch-16 residual): the flat check on the three conditions it modifies, plus the whole
+  // Worm Form rider as a 'feature' mark — gated on the SOURCE (this feat), rendered on worm-form's row,
+  // so it stays silent for a Worm Form user who never took Inexorable. No ignore-difficult-terrain lane
+  // exists in types.ts, so the terrain clause rides the note. The 'condition' rows surface on the
+  // VitalsRail pill when the condition is actually applied.
+  "inexorable": [
+    { on: 'condition', id: 'paralyzed', value: "DC 15 flat", note: "When you gain this condition, roll a DC 15 flat check; on a success you ignore it." },
+    { on: 'condition', id: 'slowed', value: "DC 15 flat", note: "When you gain this condition, roll a DC 15 flat check; on a success you ignore it." },
+    { on: 'condition', id: 'stunned', value: "DC 15 flat", note: "When you gain this condition, roll a DC 15 flat check; on a success you ignore it." },
+    { on: 'feature', id: 'worm-form', note: "While using Worm Form you are immune to penalties to your Speed and to the immobilized condition, and you ignore difficult terrain and greater difficult terrain." },
+  ],
+
+  // Draconic Familiar (batch-16 residual): the free-action Command rider on the dedication's action.
+  // Deliberately NO value — that string renders beside the action's cost, and "free action" there would
+  // misread as Channel Draconic Essence itself costing a free action.
+  "draconic-familiar": [{ on: 'action', id: 'channel-draconic-essence', note: 'You can also Command your familiar as a free action when you Channel Draconic Essence.' }],
+
 
   // ---- full feature audit — action/condition marks ----
   // 36 records that change an ACTION or a CONDITION rather than a stat.
+  /* BATCH 1. *"In natural terrain, you can Hide and Sneak even without cover or being concealed."* The
+   * record held nothing at all — the prose gate found it holding no assertion on our side. Same shape
+   * and same lane as `camouflage-tripkee` below, which prints the identical clause for its own terrain. */
+  'one-with-the-wild': [
+    { on: 'action', id: 'hide', note: 'One with the Wild: in natural terrain you can Hide without cover or being concealed.' },
+    { on: 'action', id: 'sneak', note: 'One with the Wild: in natural terrain you can Sneak without cover or being concealed.' },
+  ],
+
+  /* ---- from the batches 1–12 residual read: clauses that CHANGE AN ACTION -------------------------
+   * Each of these alters what an action costs, how far it reaches, or what it requires — none of which
+   * is a number on a stat, so none had anywhere to live. They land on the action's own row, which is
+   * where a player looks for them.
+   */
+  'quick-jump': [
+    { on: 'action', id: 'high-jump', value: '1 action', note: 'Quick Jump: you can High Jump as a single action instead of 2, and you do not need to Stride 10 feet first.' },
+    { on: 'action', id: 'long-jump', value: '1 action', note: 'Quick Jump: you can Long Jump as a single action instead of 2, and you do not need to Stride 10 feet first.' },
+  ],
+  'slink': [{ on: 'action', id: 'sneak', value: '+5 feet', note: 'Slink: you can move 5 feet farther when you Sneak, up to your Speed.' }],
+  'subtle-theft': [{ on: 'action', id: 'steal', note: 'Subtle Theft: observers other than the target take a −2 circumstance penalty to their Perception DCs to notice your theft.' }],
+  'rock-runner': [{ on: 'action', id: 'stride', note: 'Rock Runner: you ignore difficult terrain from stone and uneven ground made of stone or earth.' }],
+  /* All THREE printed clauses. The DC reduction was missing, and it is the only number the feat
+   * prints: *"When you Subsist during downtime, THE DC FOR YOUR SKILL CHECK IS REDUCED BY 2. You
+   * don't need a minimum proficiency rank to Subsist in unusual environments, nor do you take a -5
+   * penalty if you Subsist after 8 hours or less of exploration."* Wanderer's Guide injects the whole
+   * sentence onto the Subsist action (their feat 39238 -> injectText on action 19857); this is the
+   * same carrier, so it has to carry the same content. */
+  'like-a-roach': [{ on: 'action', id: 'subsist', note: 'Like a Roach: when you Subsist during downtime the DC of your check is reduced by 2; you need no minimum proficiency to Subsist in unusual environments, and take no −5 for subsisting after 8 hours or less of exploration.' }],
+  /* ⚠ The parenthetical is the record's OWN condition, not one I supplied: *"as a three action activity
+   * (ONE ACTION IF YOU ARE LEGENDARY IN DECEPTION)"*. My first draft wrote "if you have a disguise
+   * ready", which is a different rule from a different feat. Read the sentence, do not recall it. */
+  'beneath-notice': [{ on: 'action', id: 'impersonate', value: '3 actions (1 if legendary in Deception)', note: 'Beneath Notice: while in a crowd you can Impersonate a nondescript member of it as a three-action activity — one action if you are legendary in Deception. Impersonate is otherwise an exploration activity with no encounter cost.' }],
   'abundant-vials': [{"on":"condition","id":"quickened","value":"always on","note":"Abundant Vials: you are permanently quickened; the extra action can only be used to Quick Alchemy a quick vial, and only one vial even if you have Double Brew."}],
   'athamasi': [{"on":"action","id":"climb","value":"not off-guard","note":"Your secondary arms let you Climb even with both primary hands full, and you aren't off-guard while Climbing."},{"on":"action","id":"grab-an-edge","note":"You can Grab an Edge with your secondary arms even if one or both primary hands are full."}],
   'bravery': [{ on: "condition", id: "frightened", value: "-1 when gained", note: "Bravery: anytime you gain the frightened condition, reduce its value by 1." }],
@@ -3574,6 +3891,8 @@ export const RECORD_MARKERS: Record<string, RecordMarker[]> = {
   'caveclimber-kobold': [{ on: "action", id: "climb", note: "You Climb with your clawed feet and tail, leaving your hands free." }],
   'cavernstalker-kobold': [{"on":"action","id":"climb","value":"half Speed on a success","note":"On rock walls, stalactites and other natural stone you Climb at half Speed on a success and full Speed on a critical success (full on a success with Quick Climb). Not while using a climb Speed."}],
   'cliffscale-lizardfolk': [{ on: "action", id: "climb", note: "While not wearing footwear you climb with the sticky pads on your feet, leaving your hands free." }],
+  // Awakened Mind: the printed permission half of the awakened animal's block (batch 19).
+  'awakened-animal': [{ on: "action", id: "make-an-impression", note: "Awakened Mind: you can ask questions of, receive answers from, and use Diplomacy with animals of your kind, and you may allow yourself to be affected by effects that target animals." }],
   'dark-fields-kitsune': [{"on":"action","id":"demoralize","value":"visual, not auditory","note":"Your Demoralize loses the auditory trait and gains the visual trait, and you take no penalty against a creature that doesn't understand your language."}],
   'deny-advantage': [{"on":"condition","id":"off-guard","value":"not off-guard to equal/lower-level foes","note":"Deny Advantage: you aren't off-guard to hidden, undetected or flanking creatures of your level or lower, or to such creatures using surprise attack. They can still help their allies flank."}],
   'frilled-lizardfolk': [{"on":"action","id":"demoralize","value":"visual, not auditory","note":"Your Demoralize loses the auditory trait and gains the visual trait, and you take no penalty against a creature that doesn't understand your language."}],
@@ -3657,6 +3976,13 @@ export function spellMarkersFor(spellId: string, ownedIds: Iterable<string>): Sp
  */
 export const SITUATIONAL_SUPERSEDES: Record<string, string[]> = {
   "seers-array": ['recalculate'],
+  /* Advanced Undead Benefits (rules-1695): *"Your bonus against disease and poison INCREASES to +2"*
+   * — an increase, not a second bonus, so the advanced feat's +2 star replaces its own dedication's
+   * basic +1 rather than sitting beside it. Each pair is archetype-matched; the dedication's only
+   * star is that +1, so dropping the id drops exactly the superseded line. */
+  "grave-strength": ['ghoul-dedication'],
+  "daywalker": ['vampire-dedication'],
+  "grave-mummification": ['mummy-dedication'],
 };
 
 /** The ids to drop from a lookup because a record the character ALSO has supersedes them. */

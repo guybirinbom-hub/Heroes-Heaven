@@ -4,6 +4,8 @@ import path from 'node:path';
 import { build, content } from './_content';
 import { emptyBuild, levelGrants, type BuildState } from '../src/rules/build';
 import { eligibleFeatsForSlot } from '../src/rules/featSlots';
+import { CATALOG_MODES } from '../src/rules/modes';
+import { CASTER_ARCHETYPES } from '../src/rules/casterArchetypes';
 
 /**
  * Standing sweeps for the BUG CLASSES this codebase has actually produced, rather than for specific
@@ -111,9 +113,84 @@ describe('a grant that points at nothing', () => {
     const dead: string[] = [];
     for (const [id, m] of Object.entries(db.modes ?? {})) {
       if (m.fromItemId && !has('items', m.fromItemId)) dead.push(`modes/${id} item ${m.fromItemId}`);
-      for (const f of m.feats ?? []) if (!has('feats', f) && !has('classFeatures', f)) dead.push(`modes/${id} gate ${f}`);
+      /* A HERITAGE is a legal gate too — the hardshell surki's Dampening Harmonics force field is one.
+       * The gate is matched against `modeGateIds()`, which is feats + owned class features + the
+       * heritage; this list must stay in step with that helper or a mode gated on a real record reads
+       * as dead here, and a mode gated on nothing reads as fine on the sheet. */
+      for (const f of m.feats ?? []) {
+        /* A gate may be `<recordId>:<answer>` when the record's own choice decides which modes apply
+         * (the werecreature's nine types). Both halves have to be real: the record must exist AND the
+         * answer must be one its choice actually offers, or the mode is as unreachable as a gate on a
+         * record that does not exist. */
+        const [base, answer] = String(f).split(':');
+        if (!has('feats', base) && !has('classFeatures', base) && !has('heritages', base)) {
+          dead.push(`modes/${id} gate ${f}`);
+          continue;
+        }
+        if (answer) {
+          const rec = (db.feats[base] ?? db.classFeatures[base] ?? db.heritages[base]) as { choice?: { options?: { value: string }[] } };
+          const offered = (rec?.choice?.options ?? []).map((o) => o.value);
+          if (!offered.includes(answer)) dead.push(`modes/${id} gate ${f} — "${answer}" is not one of its choice options`);
+        }
+      }
     }
     expect(dead).toEqual([]);
+  });
+
+  /*
+   * The same question asked of the CODE catalogue, and of the other two gate kinds.
+   *
+   * The sweep above reads `db.modes` — the data-driven ones — so the app-provided catalogue in
+   * `modes.ts` was never swept at all, and neither was `ancestries`, which is matched against
+   * `character.ancestryId`. Four modes were gated `ancestries: ['werecreature' | 'dragonkin' |
+   * 'ikeshti']`; none of the three is an ancestry we ship, so not one of those toggles could be
+   * offered to any character. A gate nothing can satisfy is invisible in exactly the way a missing
+   * mode is, which is why only a sweep finds it.
+   */
+  /* Modes deliberately gated on content we do not ship yet: the solarian class and the dragonkin /
+   * ikeshti ancestries. Each is written and waiting; naming it here keeps that state visible instead
+   * of letting it read as a live toggle. */
+  const AWAITING_CONTENT = new Set([
+    'cat-size-ancients',
+    'cat-rivener-state',
+    'cat-photon-attuned',
+    'cat-graviton-attuned',
+    'cat-perfectly-attuned',
+    'cat-photon-attunement',
+    'cat-graviton-attunement',
+  ]);
+
+  it('every catalogue mode is gated on something a character can actually hold', () => {
+    const dead: string[] = [];
+    for (const m of CATALOG_MODES) {
+      if (AWAITING_CONTENT.has(m.id)) continue;
+      for (const f of m.feats ?? []) {
+        if (!has('feats', f) && !has('classFeatures', f) && !has('heritages', f)) dead.push(`${m.id} feat gate ${f}`);
+      }
+      for (const a of m.ancestries ?? []) {
+        if (!has('ancestries', a) && !has('heritages', a)) dead.push(`${m.id} ancestry gate ${a}`);
+      }
+      for (const c of m.classes ?? []) {
+        if (!db.classes[c]) dead.push(`${m.id} class gate ${c}`);
+      }
+    }
+    expect(dead).toEqual([]);
+  });
+
+  it('every awaiting-content mode is still genuinely waiting on content', () => {
+    /* The allowlist is a register of missing CONTENT, not an excuse for a broken gate. When the
+     * solarian class or the dragonkin/ikeshti ancestries ship, this fails — and the fix is to delete
+     * the entry so the sweep above starts covering the mode, never to loosen the sweep. */
+    const stillMissing: string[] = [];
+    for (const id of AWAITING_CONTENT) {
+      const m = CATALOG_MODES.find((x) => x.id === id);
+      expect(m, `${id} is allowlisted but no longer exists — drop it`).toBeTruthy();
+      const live =
+        (m!.classes ?? []).some((c) => db.classes[c]) ||
+        (m!.ancestries ?? []).some((a) => has('ancestries', a) || has('heritages', a));
+      if (!live) stillMissing.push(id);
+    }
+    expect(stillMissing.sort(), 'a mode whose content HAS shipped must leave the allowlist').toEqual([...AWAITING_CONTENT].sort());
   });
 
   it('every spellSlotBonus entryId names an entry the builder can produce', () => {
@@ -121,6 +198,12 @@ describe('a grant that points at nothing', () => {
     const legal = new Set<string>(['animist-apparition-casting', 'innate-casting']);
     for (const c of Object.keys(db.classes)) legal.add(`${c}-casting`);
     for (const f of Object.keys(db.feats)) if (f.endsWith('-dedication')) legal.add(`${f}-casting`);
+    /* …and every caster archetype, read from the REGISTRY rather than guessed from the id. Not all are
+     * keyed on a Dedication: `first-frost` and `cantrip-casting` (the generic basic/expert/master
+     * Spellcasting ladder) hang off a different root feat, and build.ts names the entry
+     * `${arch.dedicationId}-casting` whatever that key is. Guessing by suffix made a perfectly legal
+     * entry look like a typo the moment a non-dedication archetype gained a slot bonus. */
+    for (const k of Object.keys(CASTER_ARCHETYPES)) legal.add(`${k}-casting`);
     const bad: string[] = [];
     for (const cat of ['feats', 'classFeatures', 'items'] as const) {
       for (const [id, rec] of Object.entries(db[cat] ?? {})) {
@@ -265,6 +348,16 @@ describe('a warning that outlived the thing it warns about', () => {
       'items/talisman-cord-lesser': 'same as talisman-cord',
       'items/talisman-cord-greater': 'same as talisman-cord',
       'backgrounds/verduran-city-folk': 'the grants are present; the warning is about the second skill FEAT, whose name is missing from the source data',
+      // Batch 20: each of these warnings names an UNMODELLED printed clause on a record whose other
+      // halves ARE modelled — the warning and the mechanics describe different sentences.
+      'backgrounds/sally-guard-neophyte': 'the gear is granted (grantsItems); the warning is about SHODDY, which has no model on either side',
+      'backgrounds/royalty': 'skill and feat are granted; the warning is about the influence/connections campaign clause the app cannot track',
+      'backgrounds/cathedral-child': 'skill and feat are granted; the warning is about the party-reputation shifts, a table-level tracker',
+      'backgrounds/child-of-the-twin-village': 'the skill is granted; the warning is about the nightly dream-message link the GM plays',
+      // Batch 21: the same warnings-about-OTHER-clauses shape.
+      'backgrounds/tech-reliant': 'both skills are granted; the warning is about the blanket healing-magic immunity no field can express',
+      'backgrounds/otherworldly-mission': 'the skill is granted; the warning is about the once-per-adventure ask, which prints no action economy to pip',
+      'backgrounds/reborn-soul': 'the Lores are granted; the warning is about the restricted EXTRA skill increases at 3/7/15, which have no lane',
     };
     const bad: string[] = [];
     for (const cat of ['feats', 'classFeatures', 'heritages', 'backgrounds', 'items', 'ancestries'] as const) {

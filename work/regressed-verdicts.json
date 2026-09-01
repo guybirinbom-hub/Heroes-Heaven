@@ -1,0 +1,156 @@
+[
+ {
+  "id": "orc-warmask",
+  "batch": 3,
+  "verdict": "MATCHES-ON-REVIEW",
+  "confidence": "high",
+  "evidence": "[regressed-batch re-read, verified] BATCH 3 (work/wg-batch-003.json). Prior verdict in work/wg-batch-003-parity.json was MATCHES, evidenced on \"src/rules/featGrantsAuto.ts:519 (skillChoices over religion / nature / arcana / occultism) plus effectChoices on the core.json record\". WHY IT RE-OPENED — a recent (still UNCOMMITTED) fix moved the grant to a carrier the comparer cannot read; the mechanic did not move. `git show HEAD:src/rules/featGrantsAuto.ts` line 252 still has 'orc-warmask': { skillChoices: [{ options: ['religion','nature','arcana','occultism'], rank: 'trained' }] }; the working tree replaces it with the comment at src/rules/featGrantsAuto.ts:569-572 (\"MOVED to the record's own `choice` (flag 'warmaskTradition')\"), and the overlay deletes effectChoices. So BOTH carriers wg-values could read are gone and the single surviving carrier is `choice`. THE '1' IS NOT OU"
+ },
+ {
+  "id": "creative-prodigy",
+  "batch": 4,
+  "verdict": "MATCHES-ON-REVIEW",
+  "confidence": "high",
+  "evidence": "[regressed-batch re-read, verified] BATCH 4 (work/wg-batch-004.json). WHY IT RE-OPENED — this is a NAME-TWIN MIS-PAIRING, and batch 4's own fix is what exposed it. work/wg-batch-004-parity.json records verdict FIXED: \"featGrantsAuto granted performance + deception + lore:art where the printed text and their encoding give ONE skill. Now { skills: { performance: 'trained' }, redundantFallback: true }.\" That earlier authoring had (wrongly) carried the GANZI feat's three grants on the nephilim record; removing them was right per feat-7199, and it left nothing for the Ganzi row's SKILL_DECEPTION to land on. The pairing is deterministic and provably wrong: scripts/lib/wg-parse.mjs wgRowsByBucket (:245-267) keys one row per normalised NAME and keeps the row with the LONGER operations string (:260-262) — row 23367 is 561 chars, row 38501 is 551, so the Ganzi twin wins by 10 charact"
+ },
+ {
+  "id": "oatia-skysage-dedication",
+  "batch": 7,
+  "verdict": "MATCHES-ON-REVIEW",
+  "confidence": "high",
+  "evidence": "[regressed-batch re-read, verified] BATCH 7 (work/wg-batch-007.json). Prior verdict in work/wg-batch-007-parity.json was FIXED, and it named TWO live carriers for the skill — \"the effectChoices path is build.ts:4743-4753 (resolvePick → applyAlwaysOn …) … the lane path is FEAT_GRANTS … featGrantsLane.ts:39\". WHY IT RE-OPENED — a recent (still UNCOMMITTED) fix deleted the lane slot, and wg-diff was only ever crediting the skill through that slot. `git show HEAD:src/rules/featGrantsLane.ts` line 29 still has 'oatia-skysage-dedication': {\"skillChoices\":[{\"options\":[\"lore:astronomy\",\"occultism\"],\"rank\":\"trained\"}]}; the working tree replaces it with the REMOVED note at src/rules/featGrantsLane.ts:54-70, and the removal is CORRECT — that slot could only offer Occultism at TRAINED where the book says EXPERT, and it asked the one printed question a second time. wg-diff's kind harve"
+ },
+ {
+  "id": "animistic-practice",
+  "batch": 6,
+  "verdict": "MATCHES-ON-REVIEW",
+  "confidence": "high",
+  "evidence": "[regressed-batch re-read, verified] BATCH 6. WHY IT IS RE-OPEN: a recent fix regressed the gate — this is a tooling regression, not a data gap, and the gap never existed. scripts/drop-fixed-settles.mjs (untracked, new) carries FIXED['animistic-practice'] = \"the Medium's Dual Invocation now raises the focus pool from 9th\" and removes settles by matching /^\\s*'([a-z0-9-]+)':\\s*\\[/ across all three registries — i.e. keyed by RECORD ID, with no bucket scoping. One genuinely-stale reason (the focus-pool divergence, since fixed at build.ts:3880) therefore deleted the WHOLE key from BOTH registries, taking the three save settles and the AC settle with it. Both removals are still visible as markers: scripts/wg-diff.mjs:1585 and scripts/wg-values.mjs:1006, each reading \"/* animistic-practice — settle REMOVED: divergence fixed (the Medium's Dual Invocation now raises the focus pool f"
+ },
+ {
+  "id": "ghostly-resistance",
+  "batch": 14,
+  "verdict": "ALREADY-FIXED",
+  "confidence": "high",
+  "evidence": "[regressed-batch re-read, verified] BATCH 14. WHY IT RE-OPENED — a registry change, not a data regression, but it exposed a real defect. At HEAD the overlay row was a single band: git show HEAD:scripts/data/effect-backfill.json → {\"category\":\"feats\",\"id\":\"ghostly-resistance\",\"field\":\"resistances\",\"value\":[{\"type\":\"all-damage\",\"value\":\"floor((@actor.level+2)/6)\"}]}. In the working tree scripts/backfill-parity-fixes.mjs:193-212 added the second (non-magical) band, and scripts/drop-fixed-settles.mjs:29 then removed the settle that had silenced the gap, with the reason 'the base no longer reads 0 below 4th, and the non-magical band is authored'. The removal marker is still in place at scripts/wg-values.mjs:889: \"/* ghostly-resistance — settle REMOVED: divergence fixed (...). Re-report if it returns. */\". The settle that was removed was keyed set|resistances — a SET key. Its two FIXED THIS PASS: overlay: scripts/data/effect-backfill.json — the existing row {category:\"feats\", id:\"ghostly-resistance\", field:\"resistances\"} keeps its formulas (both verified against print at all 20 levels) but its two entr | registry: Do NOT re-add a SETTLED_VALUES settle for this record. scripts/drop-fixed-settles.mjs's own doctrine applies — \"a settle outlives the reason it was written: it silences that difference in every future"
+ },
+ {
+  "id": "sea-touch-elixir-lesser",
+  "batch": 16,
+  "verdict": "MATCHES-ON-REVIEW",
+  "confidence": "high",
+  "evidence": "[regressed-batch re-read, verified] BATCH 16. WHY IT RE-OPENED — neither a data regression nor a lost regeneration: the fix landed and the comparer cannot see the carrier it landed in. The mode is NEW in the working tree (`git show HEAD:scripts/data/consumable-modes.json | grep -c sea-touch` → 0; `git diff --stat` shows +397 lines on that file), authored by scripts/add-sea-touch-modes.mjs, whose header records the finding and the lane rule verbatim: \"THE SEA TOUCH ELIXIRS GRANTED NO SWIM SPEED... None of the three had a mode, so drinking one changed nothing on the sheet — their side sets a swim Speed of 20\" and \"A MODE MUST LIVE IN ITS SOURCE FILE, NOT THE OVERLAY. The verified fix added the lesser elixir as a `create` row in effect-backfill.json, and test/integrity-sweeps.test.ts caught it... So the row is removed and the entry authored here instead.\" That is precisely Rul"
+ },
+ {
+  "id": "shining-hackle",
+  "batch": 16,
+  "verdict": "MATCHES-ON-REVIEW",
+  "confidence": "high",
+  "evidence": "[regressed-batch re-read, verified] BATCH 16. WHY IT RE-OPENED — comparer-side, not data-side. The overlay row is byte-identical to HEAD: `git show HEAD:scripts/data/effect-backfill.json` yields {\"category\":\"items\",\"id\":\"shining-hackle\",\"field\":\"passiveEffects\",\"value\":{\"skills\":{\"stealth\":-1},\"perception\":1}} — the same value the working tree holds, so no regeneration dropped anything and no recent fix regressed it. scripts/wg-values.mjs is an UNTRACKED file (`git status --short` → `?? scripts/wg-values.mjs`), i.e. the value comparer itself is new; this row is a comparer taught a new field (item `passiveEffects.skills`, read at :648), and the field it was taught it reads asymmetrically. THE ASYMMETRY, EXACTLY. THEIR side is normalised to magnitude at scripts/wg-values.mjs:257-261, deliberately: \"A PENALTY is the same rule as its magnitude: theirs writes -2, ours writes the"
+ },
+ {
+  "id": "aeon-stone-repairing",
+  "batch": 16,
+  "verdict": "MATCHES-ON-REVIEW",
+  "confidence": "high",
+  "evidence": "[regressed-batch re-read, verified] BATCH 16. WHY RE-OPENED: a comparer taught new fields; the gap never existed in our data. `git status` shows `?? scripts/wg-identity.mjs` — the names comparer is UNTRACKED, i.e. the newest of the three, and it never received the two `resonant` descents its committed sibling scripts/wg-diff.mjs already carries. wg-diff.mjs:290 lists 'resonant.innateSpells' in the `spell` kind list with the comment \"a reader that only looks at top-level fields calls 15 stones spell-less\"; wg-diff.mjs:616-627 does `kinds.add('choice')` for any record with `resonant`, commented \"Their side encodes 'is this stone slotted in a wayfinder?' as a `select` with two branches... Ours is a per-item designation the player toggles on the stone itself... Same question asked, same two answers; only the control differs.\" wg-identity.mjs has NEITHER: its ours-side spell col"
+ },
+ {
+  "id": "aeon-stone-formulating",
+  "batch": 16,
+  "verdict": "MATCHES-ON-REVIEW",
+  "confidence": "high",
+  "evidence": "[regressed-batch re-read, verified] BATCH 16. WHY RE-OPENED: comparer taught new fields — identical cause to aeon-stone-repairing. wg-identity.mjs is untracked (`??` in git status) and lacks both `resonant` descents that wg-diff.mjs:290 and wg-diff.mjs:616-627 already carry. Our data is intact and unregenerated. Rank/casts agree exactly (theirs rank 1 casts 1; ours rank 1 usesPerDay 1); the tradition they omit is not a disagreement — print states \"arcane\" and our note transcribes it, and their giveSpell simply carries no tradition key. Name join checked: key('phantasmal-minion') normalises to 'phantasmalminion', exactly the key wg-identity reports as theirs-not-ours. RAW OP TREE READ ON BOTH SIDES. Corroborated by scripts/verify-aeon-parity.mjs (this stone is in its AGREE set)."
+ },
+ {
+  "id": "aeon-stone-clear-quartz-octagon",
+  "batch": 16,
+  "verdict": "MATCHES-ON-REVIEW",
+  "confidence": "high",
+  "evidence": "[regressed-batch re-read, verified] BATCH 16. WHY RE-OPENED: comparer taught new fields. This is the cleanest proof that our data was never the problem — the two sides agree on tradition, rank AND casts, and scripts/verify-aeon-parity.mjs prints it verbatim in its AGREE sample: \"aeon-stone-clear-quartz-octagon: theirs divine rank 1 casts 1 | ours mending divine rank 1 casts 1\". wg-identity nonetheless reports \"spells theirs-not-ours=[mending] ours=[(nothing)]\" purely because ourIdentities() stops at top-level `innateSpells` (wg-identity.mjs:200) and our mending lives at `resonant.innateSpells`. Not a regeneration drop and not a regression: the overlay row is present today and dates from commit b673684. RAW OP TREE READ ON BOTH SIDES. OUT-OF-GATE OBSERVATION for the owner, not part of this finding: our record carries activationCost {type:'actions', value:1} while print says "
+ },
+ {
+  "id": "aeon-stone-preserving",
+  "batch": 16,
+  "verdict": "MATCHES-ON-REVIEW",
+  "confidence": "high",
+  "evidence": "[regressed-batch re-read, verified] BATCH 16. WHY RE-OPENED: comparer taught new fields — same untracked-wg-identity cause. Both sides encode primal, rank 0, no cast cap; scripts/verify-aeon-parity.mjs agrees. Confirmed by `npm run feat -- aeon-stone-preserving --no-evidence`, which lists `resonant` among the AUTHORED FIELDS and reports its overlay rows (passiveEffects, resistances, resonant) as surviving `npm run data` — so no regeneration dropped anything. RAW OP TREE READ ON BOTH SIDES. TWO OUT-OF-GATE OBSERVATIONS for the owner: (1) our record carries frequency {max:1, per:\"hour\"}, which the printed clause does not state anywhere and their row does not encode; (2) feat-doctor reports \"no authoring script names this record\" even though scripts/backfill-aeon-resonance.mjs is demonstrably the lane owner that wrote the `resonant` row — feat-doctor's owner index does not kno"
+ },
+ {
+  "id": "aeon-stone-agate-ellipsoid",
+  "batch": 16,
+  "verdict": "ALREADY-FIXED",
+  "confidence": "high",
+  "evidence": "[regressed-batch re-read, verified] BATCH 16. TWO SEPARATE THINGS, and they have different causes. (a) The reported `options theirs-not-ours=[yes, no]` is the same comparer blind spot as the other four — wg-identity.mjs is untracked and lacks the resonant-select equivalence wg-diff.mjs:616-627 already records; our carrier is the `wayfinder-slotted` designation. No `spells` gap is reported here at all, because our augury sits at top level where the collector already reads it. (b) A REAL DEFECT that the gate did not report and that this read found: the only carrier we have for this resonant power is prose, and the prose is broken. This is IMPORT DAMAGE, not a WG-vs-print contradiction — all three sources agree on the content (print says \"the DC 6 flat check\", their injectText says \"the DC 6 flat check\"), and the phrase was a rules link that the importer stripped along with it FIXED THIS PASS: src-edit: Add a row to the REPAIRS table in scripts/apply-import-damaged-text.mjs — the lane that owns import-deleted prose and the only writer that updates BOTH the durable overlay row and public/core-descript | src-edit: THEN re-run `node scripts/backfill-aeon-resonance.mjs --write` so the derived `resonant` overlay row picks the repaired clause back up. Required and order-dependent: that script reads the clause out o | src-edit: scripts/wg-identity.mjs, theirIdentities() lines 88-93: skip the select titled with their resonant-investment question, mirroring wg-diff.mjs:616-627. Suppress on THEIR side only — do not add 'yes'/'n"
+ },
+ {
+  "id": "spirit-dwelling",
+  "batch": 16,
+  "verdict": "ALREADY-FIXED",
+  "confidence": "high",
+  "evidence": "[regressed-batch re-read, verified] BATCH 16. Prior parity verdict THEY-ENCODE-NOTHING-USEFUL: \"Their only op is an opaque ability-block grant; the flattened encoding carries no numbers, targets or grants.\" RECONCILING THE TWO — THE IDENTITY GATE IS RIGHT AND THE BATCH-16 VERDICT IS WRONG AS WRITTEN. Read on the raw op trees on both sides, which is what a settle or a dismissal requires. The batch-16 reader was right about ONE thing and wrong about the conclusion: the TARGET ability_block 25715 has an empty `operations` column, so when the tree is flattened (parseOps → flattenOps, the path wg-diff and wg-values both take) it yields an op with no variable, no value and no target — nothing to compare a NUMBER against. That is a true statement about the VALUES screen. But the op itself is not opaque: `abilityBlockId: 25715` resolves in the same dump to a named record, \"Collect  FIXED THIS PASS: overlay: Row {category:'items', id:'spirit-dwelling', field:'grantsActions', value:['collect-spirit-remnant']} in scripts/data/effect-backfill.json. This is exact parity with their carrier: WG hangs the grant  | overlay: REQUIRED SECOND ROW — without it the first is write-only. Row {category:'feats', id:'exorcist-dedication', field:'grantsItems', value:[{itemId:'spirit-dwelling', worn:true}]}, replacing the current [{ | src-edit: ALTERNATIVE TO THE SECOND ROW, and the semantically honest one — pick this OR the worn:true row, not both. Widen the item source at src/sheet/MainTab.tsx:265-268 so an item's grantsActions is not gate"
+ },
+ {
+  "id": "speaker-in-training",
+  "batch": 15,
+  "verdict": "MATCHES-ON-REVIEW",
+  "confidence": "high",
+  "evidence": "[regressed-batch re-read, verified] BATCH 15. WHY IT IS OPEN NOW: a recent fix regressed the gate — the gap did not exist at gate time and no comparer learned a new field. work/.stale-diff.json records this record as theirKinds [conditional,choice,spell,specialStat] / ourKinds [choice,specialStat,spell] / missing []; work/.gate-diff.json now records ourKinds [spell,choice] / missing [conditional,specialStat]. The delta is the two overlay `null` rows above. work/fixed-verdicts.json (batch 015, id speaker-in-training) documents why they were written: both lanes were live and build.ts dedupes innate grants by spellId keeping the FIRST occurrence, so the record's own two entries beat the pick — \"(a) the character gets TWO 1/day innate spells from a clause that grants one; (b) Fleet Step is granted as divine, a tradition it does not have; (c) the innate entry's tradition VOTE co"
+ },
+ {
+  "id": "the-moon-weavers-art",
+  "batch": 15,
+  "verdict": "MATCHES-ON-REVIEW",
+  "confidence": "high",
+  "evidence": "[regressed-batch re-read, verified] BATCH 15. WHY IT IS OPEN NOW: a recent fix regressed it, and specifically the settle-drop did. scripts/drop-fixed-settles.mjs:34 lists 'the-moon-weavers-art' => 'the duplicate registry picker is gone; one clause, one prompt' and its loop (lines 44-56) deletes ANY line matching /^\\s*'<id>':\\s*\\[/ from all three registries, keyed on the record id alone. The entry it deleted was VERIFIED_EQUIVALENT['the-moon-weavers-art'] = ['conditional','spellcasting'] — a settle about the INNATE-PROFICIENCY vocabulary, not about the duplicate picker that was fixed. The proof is still in the file: the justification comment survives at scripts/wg-diff.mjs:1049-1065 and its twin 'labyrinthine-echoes': ['conditional','spellcasting'] survives at line 1064 with the identical reading, while line 1066 is the removal marker. wg-diff now reports exactly missing=[sp"
+ },
+ {
+  "id": "ascended-dragonet-heritage",
+  "batch": 15,
+  "verdict": "MATCHES-ON-REVIEW",
+  "confidence": "high",
+  "evidence": "[regressed-batch re-read, verified] BATCH 15. WHY IT IS OPEN NOW: a recent fix regressed it, by the same id-keyed settle drop as the-moon-weavers-art. scripts/drop-fixed-settles.mjs:33 lists 'ascended-dragonet-heritage' => \"the second heritage's innate spells now reach the character\", and its loop deleted the entry from every registry that had one — VERIFIED_EQUIVALENT['ascended-dragonet-heritage'] = ['grantsRecord'] (marker now at scripts/wg-diff.mjs:1047) and SETTLED_IDENTITIES['ascended-dragonet-heritage'] = ['grants','options'] (marker now at scripts/wg-identity.mjs:489). Both justification comments SURVIVE immediately above their markers and both describe the CARRIER question (\"an OPEN choice has no enumerated options to compare\"; \"ours names the HERITAGE, which is the thing the sentence points at\"), not the innate-spell bug that was fixed. The fix itself is real and i"
+ },
+ {
+  "id": "gates-threshold",
+  "batch": 15,
+  "verdict": "ALREADY-FIXED",
+  "confidence": "high",
+  "evidence": "[regressed-batch re-read, verified] BATCH 15. WHY IT IS OPEN NOW: a recent fix regressed it — scripts/drop-fixed-settles.mjs:32 lists 'gates-threshold' => 'the Fork the Path branch grants its impulse feat' and its id-keyed loop removed the entry from BOTH registries (markers at scripts/wg-diff.mjs:1101 and scripts/wg-identity.mjs:497). The surviving comment blocks above both markers (wg-diff.mjs:1081-1100, wg-identity.mjs:492-496) describe the BRANCH-CARRIER question, not the impulse-grant bug that was fixed; the fix itself is in the tree at build.ts:4115-4136, whose comment records that the loop used to `continue` on a forked threshold and left a kineticist \"four impulse feats short by 17th level\". So the settle and the fix answered different questions. THAT MUCH IS SETTLE-ABLE — but reading their raw tree on both sides (Rule 6) exposed a second, real divergence on this sa FIXED THIS PASS: src-edit: Gate the record's 'gate-junction' effectChoices on the Expand the Portal branch, matching print (\"Expand the Portal: … You also gain a gate junction\"; Fork the Path grants none) and their nesting. Con | overlay: Delete the three duplicate branch pickers: scripts/data/effect-backfill.json rows {category:'classFeatures', id:'second-gates-threshold'|'third-gates-threshold'|'fourth-gates-threshold', field:'choice | settle: AFTER the two fixes above land, restore both settles: SETTLED_IDENTITIES['gates-threshold'] = ['options'] in scripts/wg-identity.mjs (replacing the marker at line 497, under the surviving comment at 4"
+ },
+ {
+  "id": "armor-potency-1",
+  "batch": 16,
+  "verdict": "MATCHES-ON-REVIEW",
+  "confidence": "high",
+  "evidence": "[regressed-batch re-read, verified] BATCH 16. WHY IT IS OPEN NOW — two causes, neither a regression: (1) A COMPARER TAUGHT A NEW FIELD. scripts/wg-values.mjs is UNTRACKED in git (`git ls-files` returns only wg-diff.mjs of the four comparers), i.e. the entire value comparer post-dates the last commit, and its own header note says of the variable it now maps: \"Untaught, every one of their 1,613 AC_BONUS ops read as 'nobody has taught this'\" (wg-values.mjs:77-81, `AC_BONUS: ['ac', null]`). The batch-16 packets were cut 2026-08-25 13:18; wg-values.mjs and wg-diff.mjs were last written 15:33 and 17:36 the same day. So the `VALUES MISSING ac| theirs=1 ours=(nothing)` row is newly visible on a gap that always existed. (2) THE ADJUDICATION WAS NEVER SETTLED. work/wg-batch-016-parity.json already holds this record with verdict MATCHES and the evidence \"the mechanic lives in the rune"
+ },
+ {
+  "id": "assisting",
+  "batch": 16,
+  "verdict": "MATCHES-ON-REVIEW",
+  "confidence": "high",
+  "evidence": "[regressed-batch re-read, verified] BATCH 16. WHY IT IS OPEN NOW — same two causes as armor-potency-1, and the same systemic root: (1) The comparer was taught the field but not the bucket. scripts/wg-diff.mjs:350-356 was recently widened and its own comment names THIS RUNE: \"`bulkLimitBonus` has two homes — top-level on a feat (Beast of Burden) and `passiveEffects.bulkLimitBonus` on an item or rune (Lifting Belt, the Assisting rune) — and only the first was listed, so a correctly authored ITEM read as modelling no carrying capacity at all\", giving `carry: ['bulkBonus','bulkLimitBonus','bulkMaxBonus','passiveEffects.bulkLimitBonus']`. The nested PATH was added; the runes BUCKET was not, so the record still resolves to the chassis and still reports missing. wg-values.mjs:76 likewise maps `BULK_LIMIT_BONUS: ['bulk', null]` and reads it at :608/:615 off `rec.bulkLimitBonus` / `"
+ },
+ {
+  "id": "bolkas-blessing",
+  "batch": 16,
+  "verdict": "THEY-ENCODE-NOTHING-USEFUL",
+  "confidence": "high",
+  "evidence": "[regressed-batch re-read, verified] BATCH 16. WHY IT IS OPEN NOW: a comparer classification artefact, not a data change. scripts/wg-diff.mjs kindOfTheirOp() routes an addBonusToValue by matching its `data.variable` against a chain of patterns; a variable of \"\" matches none of them and falls to the named fallback at wg-diff.mjs:214, `return 'unmapped'`. The gate then reports `bolkas-blessing missing=[unmapped]` — which reads like a lane we have not built, when in fact there is nothing on their side to build to. work/wg-batch-016-parity.json already holds this record with verdict MATCHES and the correct reasoning (\"Their two ops flatten without targets or values, so only the shape is comparable\"), so the read was done and the gate simply re-raises it. I MEASURED THE BLAST RADIUS before proposing the general fix: across BOTH their tables (ability_block and item), flattening ev"
+ },
+ {
+  "id": "warriors-training-ring",
+  "batch": 16,
+  "verdict": "MATCHES-ON-REVIEW",
+  "confidence": "high",
+  "evidence": "[regressed-batch re-read, verified] BATCH 16. WHY IT IS OPEN NOW: A NEW GATE ON AN ALREADY-FIXED RECORD. work/wg-batch-016-parity.json records verdict FIXED for this id, marked \"[FIXED, high confidence; adversarially verified]\", and the fix it describes — the FEAT_SITUATIONAL star carrying the always-on level-adds clause — is present in the file today at :2422 with both clauses. So the DATA is done. What re-opened is scripts/wg-batch-gate.mjs's \"VALUES: N variable(s) nothing has ever compared\" gate, which is fed by wg-values.mjs and which is NEW: `git ls-files scripts/wg-values.mjs scripts/wg-identity.mjs scripts/wg-batch-gate.mjs` returns NOTHING (only wg-diff.mjs is tracked), so all three post-date the last commit, and wg-values.mjs was last written 2026-08-25 15:33 — after the batch-16 packets were cut at 13:18. ATTACK_ROLLS_BONUS is in neither VAR (wg-values.mjs:62-82) "
+ },
+ {
+  "id": "beastmasters-sigil",
+  "batch": 16,
+  "verdict": "ALREADY-FIXED",
+  "confidence": "high",
+  "evidence": "[regressed-batch re-read, verified] BATCH 16, and it is open on TWO gates, not one: `KINDS: beastmasters-sigil missing=[choice]` from wg-diff, and `IDENTITY: options theirs-not-ours=[armor, meleeweapon, rangedweapon] ours=[(nothing)]` from wg-identity (I ran `node scripts/wg-identity.mjs --batch work/wg-batch-016.json` to get the named row; the gate only prints the count). WHY IT IS OPEN NOW: the batch-16 read settled for the situational stars alone. work/wg-batch-016-parity.json holds verdict MATCHES with the reasoning \"they hold the affix state as an answered question, we hold it as the restriction text on the star, and either way the player applies the same +1\". The VALUES half of that is correct and still holds — wg-values reports `ok beastmasters-sigil (4 values, 0 sets agree)`, i.e. every number on both sides agrees. But the IDENTITY comparer, which is untracked in gi FIXED THIS PASS: overlay: THREE rows in scripts/data/effect-backfill.json, one per grade — the sigil, its greater and its major, because situationalBonuses.ts already carries all three and leaving two without the picker would "
+ }
+]

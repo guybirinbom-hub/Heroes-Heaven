@@ -1,12 +1,12 @@
 {
   "name": "heroes-heaven",
   "private": true,
-  "version": "0.1.22",
+  "version": "0.1.23",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "_data_note": "Order is load-bearing. stamp-aonid CLEARS and rewrites every aon* field from map.json, so the four steps after it must follow it, not precede it: import-archive-buckets adds the 5 categories REF_SKIP used to drop; fix-aonid-collisions re-applies the repoints and deletions stamping would undo; backfill-ast-edition needs the FINAL ast files and aonIds, so it is last but one; repair-topup-prose fixes prose the top-up wrote. All four are idempotent and report-only without --write.",
-    "data": "node scripts/import-core-v2.mjs && node scripts/import-siege-and-gaps.mjs && node scripts/split-descriptions.mjs && node scripts/migration/stamp-aonid.mjs --write && node scripts/import-archive-buckets.mjs --write && node scripts/fix-aonid-collisions.mjs --write && node scripts/backfill-ast-edition.mjs --write && node scripts/repair-topup-prose.mjs --write && node scripts/edition-drift-check.mjs --write",
+    "_data_note": "Order is load-bearing. stamp-aonid CLEARS and rewrites every aon* field from map.json, so the four steps after it must follow it, not precede it: import-archive-buckets adds the 5 categories REF_SKIP used to drop AND fills those fields in on the lightweight copies stage 1 now emits; fix-aonid-collisions re-applies the repoints and deletions stamping would undo; backfill-ast-edition needs the FINAL ast files and aonIds, so it is last but one; repair-topup-prose fixes prose the top-up wrote. All are idempotent and report-only without --write. import-new-classes merges work/new-classes/*.json (necromancer, runesmith) and must run BEFORE stamp-aonid, because it stamps its own aonIds and build-map.mjs only sees a targeted merge through its 'record carries its own aonId' branch — left out of this chain, a regen DELETED both classes and all 24 of their features. It must also run AFTER split-descriptions: split REBUILDS core-descriptions.json from whatever core.json holds, so prose written by a later merger is simply not in the rebuild and both class pages came out blank. build-map rebuilds out/map.json from the core.json the merge steps just produced; it used to be a manual step, so ANY step that added records left the map stale and stamp-aonid then refused to write — aborting the chain and dropping all 24,879 aonIds plus every later step. It is idempotent and reads only committed artefacts.",
+    "data": "node scripts/import-core-v2.mjs && node scripts/import-siege-and-gaps.mjs && node scripts/split-descriptions.mjs && node scripts/import-new-classes.mjs && node scripts/migration/build-map.mjs && node scripts/migration/stamp-aonid.mjs --write && node scripts/import-archive-buckets.mjs --write && node scripts/fix-aonid-collisions.mjs --write && node scripts/backfill-ast-edition.mjs --write && node scripts/repair-topup-prose.mjs --write && node scripts/edition-drift-check.mjs --write",
     "data:foundry": "node scripts/import-core.mjs",
     "build": "tsc -b && vite build",
     "build:web": "vite build",
@@ -16,8 +16,8 @@
     "android:release": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-android-release.ps1",
     "test": "vitest run",
     "test:watch": "vitest",
-    "_verify_note": "render-check / aonid-integrity / process-parity run EARLY, before identity-check: the chain is && and identity-check exits non-zero on 3 deferred background picks, so anything after it never ran.",
-    "verify": "jiti scripts/verify-characters.mjs && node scripts/bestiary-fields-check.mjs && node scripts/render-check.mjs && node scripts/aonid-integrity.mjs && node scripts/classfeature-page-check.mjs && node scripts/edition-drift-check.mjs && node scripts/process-parity.mjs && node scripts/class-table-diff.mjs && jiti scripts/orphan-features.mjs && node scripts/price-check.mjs && node scripts/field-diff.mjs && node scripts/stat-check.mjs && node scripts/identity-check.mjs && node scripts/spell-check.mjs && node scripts/action-cost-check.mjs && jiti scripts/check-remaster-reprints.mjs",
+    "_verify_note": "render-check / aonid-integrity / process-parity run EARLY, before identity-check: the chain is && and identity-check exits non-zero on 3 deferred background picks, so anything after it never ran. nested-activate-check and dropped-inline-check run early for the same reason: they guard data defects that must not be gated behind identity-check.",
+    "verify": "jiti scripts/verify-characters.mjs && node scripts/regen-durability-check.mjs && node scripts/nested-activate-check.mjs && node scripts/bestiary-fields-check.mjs && node scripts/render-check.mjs && node scripts/aonid-integrity.mjs && node scripts/classfeature-page-check.mjs && node scripts/ast-content-check.mjs && node scripts/edition-drift-check.mjs && node scripts/dropped-inline-check.mjs && jiti scripts/skill-clause-check.mjs && node scripts/granted-strike-and-action-check.mjs && node scripts/innate-frequency-check.mjs && node scripts/held-spell-rank-check.mjs && node scripts/resiliency-clause-check.mjs && node scripts/conditional-speed-check.mjs && jiti scripts/unrestricted-skill-slot-check.mjs && node scripts/duplicate-pick-check.mjs && node scripts/grant-reach-check.mjs && node scripts/parity-residual-check.mjs && node scripts/superseded-grant-check.mjs && node scripts/readable-record-check.mjs && node scripts/settle-divergence-audit.mjs && node scripts/archetype-cantrip-check.mjs && node scripts/process-parity.mjs && node scripts/class-table-diff.mjs && jiti scripts/orphan-features.mjs && node scripts/price-check.mjs && node scripts/field-diff.mjs && node scripts/stat-check.mjs && node scripts/identity-check.mjs && node scripts/spell-check.mjs && node scripts/action-cost-check.mjs && jiti scripts/check-remaster-reprints.mjs && node scripts/actioncost-vs-aon.mjs",
     "evidence": "jiti scripts/feat-evidence.mjs && jiti scripts/builder-evidence.mjs && node scripts/merge-evidence.mjs",
     "triage": "node scripts/triage-mechanics.mjs",
     "coverage": "node scripts/coverage-report.mjs",
@@ -34,7 +34,8 @@
     "scan:traditions": "node scripts/scan-innate-traditions.mjs",
     "scan:choices": "node scripts/scan-choice-sets.mjs",
     "scan:dupe-feats": "jiti scripts/scan-duplicate-feats.mjs",
-    "scan:reprints": "jiti scripts/check-remaster-reprints.mjs"
+    "scan:reprints": "jiti scripts/check-remaster-reprints.mjs",
+    "wg-gate": "node scripts/wg-batch-gate.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.110.1",

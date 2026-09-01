@@ -35,8 +35,20 @@ describe('Gunslinger firearms & crossbows proficiency', () => {
     expect(rankOf(1, 'crossbow')).toBe('expert');
     expect(rankOf(5, 'crossbow')).toBe('master');
   });
-  it('generic weapons never advance: a dagger stays trained; an advanced non-firearm stays untrained', () => {
+  it('generic weapons advance too — expert at 5, master at 13, but never legendary', () => {
+    /*
+     * ⚠ THIS TEST USED TO ASSERT THE OPPOSITE, and it was pinning a misreading. Both features say it
+     * outright — Gunslinger Weapon Mastery (5th): *"Your proficiency rank for advanced firearms and
+     * crossbows, SIMPLE WEAPONS, MARTIAL WEAPONS, AND UNARMED ATTACKS increases to expert"*; Gunslinging
+     * Legend (13th): *"…for simple weapons, martial weapons, and unarmed attacks increases to MASTER."*
+     * So a 13th-level gunslinger's dagger sat three steps behind the book.
+     *
+     * The half that IS true, and worth keeping pinned, is the CEILING: only firearms and crossbows
+     * reach legendary. A dagger stops at master.
+     */
     expect(rankOf(1, 'dagger')).toBe('trained');
-    expect(rankOf(13, 'dagger')).toBe('trained'); // was wrongly 'legendary' before the fix
+    expect(rankOf(5, 'dagger')).toBe('expert');
+    expect(rankOf(13, 'dagger')).toBe('master');
+    expect(rankOf(20, 'dagger'), 'only firearms and crossbows reach legendary').toBe('master');
   });
 });

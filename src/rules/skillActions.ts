@@ -325,6 +325,12 @@ export const SKILL_ACTIONS: Record<string, SkillAction[]> = {
       "feat": true,
       "featName": "Quick Repair",
       "desc": "A Crafting skill feat that lets you Repair an item in 1 minute instead of 10 (it also loses the exploration trait). If you're a master in Crafting it takes 3 actions; if you're legendary it takes a single action."
+    },
+    {
+      "name": "Affix a Talisman",
+      "costText": "10 minutes",
+      "minRank": "untrained",
+      "desc": "Spend 10 minutes with a repair toolkit affixing a talisman to an item placed on a stable surface, using both hands; the same activity removes one. Attaching more than one talisman to an item deactivates all of them until they are removed and re-affixed."
     }
   ],
   "deception": [

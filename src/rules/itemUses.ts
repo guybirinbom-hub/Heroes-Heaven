@@ -19,7 +19,13 @@ export interface CounterUse {
   resetsOnRest: boolean;
   /** day/hour/… for a recurring use; absent for a raw pool. */
   per?: string;
+  /** Period multiplier ("once every 10 minutes" → per:'minute', every:10); absent means 1. */
+  every?: number;
 }
+
+/** "10 minutes" for {per:'minute', every:10}; the bare period otherwise (mirrors featUses.ts). */
+export const counterPeriod = (c: { per?: string; every?: number }) =>
+  (c.every ?? 1) > 1 ? `${c.every} ${c.per}s` : c.per;
 
 /** Static counter descriptors for an item (max resolved), incl. legacy frequency/uses synthesis. */
 function counterDefs(item: Item | undefined): (ItemCounter & { max: number })[] {
@@ -55,7 +61,7 @@ export function itemCounters(item: Item | undefined, inv: InventoryItem): Counte
     const legacy = c.id === 'freq' || c.id === 'uses' ? inv.charges?.current : undefined;
     const start = c.startsFull === false ? 0 : c.max;
     const current = live ?? legacy ?? start;
-    return { id: c.id, label: c.label, current: Math.max(0, Math.min(c.max, current)), max: c.max, resetsOnRest: c.resetsOnRest, per: c.per };
+    return { id: c.id, label: c.label, current: Math.max(0, Math.min(c.max, current)), max: c.max, resetsOnRest: c.resetsOnRest, per: c.per, ...(c.every ? { every: c.every } : {}) };
   });
 }
 

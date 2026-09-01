@@ -311,6 +311,35 @@ function bodyOf(rec) {
   return t ? md.slice(t.index + t[0].length) : md;
 }
 
+/**
+ * The scan scopes for a record's OWN stat lines, in priority order. On a multi-variant page the
+ * first Activate/Frequency anywhere in the body may belong to a SIBLING — the aeon-stone pages
+ * stamped one sibling's "once per day" onto 24 stones (measured: 265 frequency and 75 activation
+ * cross-variant leaks corpus-wide) — so:
+ *   - no `<title level="2">` marks → the whole body (single-record page, unchanged behaviour);
+ *   - the record's name matches a variant section → [own section, section 0] — the section-0
+ *     fallback is required, not a leak: Greater/Major grades and "functions as" variants genuinely
+ *     inherit the base entry's lines;
+ *   - marks exist but nothing matches → section 0 only (the base record itself).
+ * Never a sibling. The splitter mirrors heldSpellsOf's, which already solved this shape.
+ */
+function variantScopes(rec) {
+  const md = String(rec?.data?.markdown ?? rec?.markdown ?? '');
+  const marks = [...md.matchAll(/<title\s+level="2"[^>]*>([\s\S]*?)<\/title>/g)];
+  if (!marks.length) return [bodyOf(rec)];
+  const bounds = [0, ...marks.map((m) => m.index), md.length];
+  const sections = [];
+  for (let i = 0; i < bounds.length - 1; i++) {
+    sections.push({
+      title: i === 0 ? String(rec.name ?? '') : String(marks[i - 1][1]).replace(/\s+/g, ' ').trim(),
+      text: md.slice(bounds[i], bounds[i + 1]),
+    });
+  }
+  const want = norm(String(rec?.name ?? ''));
+  const own = sections.findIndex((s, i) => i > 0 && norm(s.title) === want);
+  return own > 0 ? [sections[own].text, sections[0].text] : [sections[0].text];
+}
+
 /*
  * A feat can be passive ITSELF while granting an activity that costs actions — and Heroes Heaven needs
  * that cost, or the ability cannot be filtered as a reaction/action. The Archives state it in the body,
@@ -340,7 +369,38 @@ function grantedCost(rec) {
    * its bogus 3 actions came from following the Manifest Eidolon embed, which is handled separately
    * and now yields `passive` plus a link.
    */
-  const m = /<actions\s+string="([^"]+)"/.exec(bodyOf(rec));
+  /*
+   * ⚠ …BUT NEVER FROM A **NAMED** ACTIVATE LINE. That was the hole.
+   *
+   * `**Activate—Host of Wrath** <actions string="Two Actions" />` names a DISTINCT activity that this
+   * page GRANTS. The name is the marker: an unnamed `**Activate**` (Ka Stone Ritual) or a bare tag
+   * (Glass Skin) describes what this page IS, while a named one describes something it HANDS YOU. The
+   * old regex took whichever glyph came first, so the granted activity's cost landed on the feat.
+   *
+   * The six mythic Avenger feats are the proof. Five stored Two Actions and Avenger of Lust stored a
+   * REACTION — each exactly matching its OWN nested activity — while all six bodies are pure grant
+   * language and all six title glyphs are `<actions string="" />`.
+   *
+   * MEASURED over the feat archive: 17 pages carry an empty title glyph and a named Activate glyph,
+   * and 13 had it copied onto the record. Skipping the named form leaves the shapes this path was
+   * actually built for untouched — 14 unnamed `**Activate**` pages and 175 bare-tag pages.
+   *
+   * ⚠ 7 of those 13 legitimately KEEP the cost, because the activity they grant has no record of its
+   * own and the feat is the only place a player can reach it. Those are pinned in
+   * scripts/data/effect-backfill.json by scripts/actioncost-nested-activate.mjs — the overlay is
+   * applied after this runs, so the hand-authored exception wins. `scripts/nested-activate-check.mjs`
+   * in `npm run verify` is what stops the two groups drifting back together.
+   */
+  const body = bodyOf(rec);
+  const withoutNamed = body
+    .replace(/\*\*Activate[—–-][^*]*\*\*\s*<actions\s+string="[^"]*"\s*\/?>/g, '')
+    /* A granted activity's own block — "**Drape Ambient Magic** <actions .../>"— is a bolded action
+     * NAME with a glyph and no "Activate" prefix, and its cost belongs to the ACTIVITY record, not
+     * the feat. The ostilli family shipped four wrong feat costs through this hole (batch 18). The
+     * unnamed "**Activate**" form is the record's own and stays. */
+    .replace(/\*\*(?!Activate\*\*)[^*]+\*\*\s*<actions\s+string="[^"]*"\s*\/?>/g, '');
+
+  const m = /<actions\s+string="([^"]+)"/.exec(withoutNamed);
   return m ? { cost: parseAonActions(m[1]), via: 'inline glyph' } : null;
 }
 
@@ -382,8 +442,11 @@ export function grantedActionIds(rec) {
  * 93.5% of the existing values and fills 238 the app did not have.
  */
 export function activationOf(rec) {
-  const m = /\*\*Activate\*\*\s*<actions\s+string="([^"]+)"/.exec(bodyOf(rec));
-  return m ? parseAonActions(m[1]) : null;
+  for (const scope of variantScopes(rec)) {
+    const m = /\*\*Activate\*\*\s*<actions\s+string="([^"]+)"/.exec(scope);
+    if (m) return parseAonActions(m[1]);
+  }
+  return null;
 }
 
 /**
@@ -415,7 +478,11 @@ const FREQ_WORD = { once: 1, twice: 2, 'three times': 3, 'four times': 4, 'five 
 const FREQ_PER = new Set(['round', 'turn', 'minute', 'hour', 'day', 'week', 'month']);
 
 export function frequencyOf(rec) {
-  const line = /\*\*Frequency\*\*\s*([^\n*]+)/.exec(bodyOf(rec));
+  let line = null;
+  for (const scope of variantScopes(rec)) {
+    line = /\*\*Frequency\*\*\s*([^\n*]+)/.exec(scope);
+    if (line) break;
+  }
   if (!line) return null;
 
   const t = String(line[1]).trim().toLowerCase()

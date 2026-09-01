@@ -24,9 +24,13 @@ export interface FeatUse {
   upgradedBy?: string;
 }
 
+/** The period half alone — "10 minutes" for {per:'minute', every:10}, else the bare period.
+ *  Shared with the FeatsTab per-line and the item-counter lane; one formatter, not three. */
+export const periodLabel = (u: { per: string; every?: number }) =>
+  (u.every ?? 1) > 1 ? `${u.every} ${u.per}s` : u.per;
+
 /** The period label the sheet shows next to the pips. */
-export const usesLabel = (u: { max: number; per: string; every?: number }) =>
-  `${u.max}/${(u.every ?? 1) > 1 ? `${u.every} ${u.per}s` : u.per}`;
+export const usesLabel = (u: { max: number; per: string; every?: number }) => `${u.max}/${periodLabel(u)}`;
 
 /**
  * The limit that actually applies, after any feat that RETUNES it.

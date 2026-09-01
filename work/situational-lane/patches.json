@@ -2443,15 +2443,9 @@
     "when": "while the cloak's hood is up",
     "targetKind": "skill",
     "detail": "intimidation"
-   },
-   {
-    "bonus": "+2 status",
-    "when": "never — placeholder removed",
-    "targetKind": "skill",
-    "detail": "deception"
    }
   ],
-  "reason": "NOTE: the 5th row must be ignored/deleted — see next field; Cloak Identity grants Veil of Privacy, which counteracts detection/scrying and gives no Deception bonus, so only the four hood-up modifiers are real."
+  "reason": "Exactly the four hood-up modifiers WG and print both carry. Cloak Identity grants Veil of Privacy, which counteracts detection/scrying and gives no Deception bonus — a fifth placeholder row shipped from this very patch once (apply-corrections.mjs re-emits every object in bonuses verbatim and never reads this reason string), so the row was DELETED here as well as in the registry. Do not re-add it."
  },
  {
   "id": "crown-of-witchcraft",

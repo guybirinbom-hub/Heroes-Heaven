@@ -27,6 +27,7 @@ import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
 import { gzipSync } from 'node:zlib';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { applyBackfill } from './lib/apply-backfill.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const SRC = join(ROOT, 'work/new-classes');
@@ -233,6 +234,34 @@ function writeDescriptionsAndAst(list) {
     if (doc.ast) { ast[cls.id] = resolveAst(doc.ast); index[cls.id] = 'classes'; wroteAst++; }
   }
 
+  /*
+   * THE FEATURES' PROSE, split the way every other record's is.
+   *
+   * The features are authored with their `description` inline, and this script runs after
+   * `split-descriptions.mjs` — which rebuilds core-descriptions.json from core.json and therefore
+   * cannot see anything written later. So the prose stayed inline: `useDescription` reads the split
+   * file, and all 24 feature popups came up blank while core.json quietly grew the text back.
+   *
+   * Doing the same move here, for its own records only, is what a post-split merger owes:
+   * `import-archive-buckets.mjs` writes straight into the split file for the same reason.
+   */
+  let splitDesc = 0;
+  for (const { features } of list) {
+    for (const fid of Object.keys(features ?? {})) {
+      const rec = core.classFeatures?.[fid];
+      if (!rec) continue;
+      const d = rec.description;
+      const r = rec.descRefs;
+      if (!d && !r) continue;
+      descs.classFeatures ??= {};
+      const entry = (descs.classFeatures[fid] ??= {});
+      if (d) { entry.d = d; delete rec.description; }
+      if (r) { entry.r = r; delete rec.descRefs; }
+      splitDesc++;
+    }
+  }
+  if (splitDesc) console.log(`  feature descriptions split out: ${splitDesc}`);
+
   const orderedAst = {};
   for (const k of Object.keys(ast).sort()) orderedAst[k] = ast[k];
   const json = JSON.stringify(orderedAst);
@@ -245,7 +274,45 @@ function writeDescriptionsAndAst(list) {
   console.log(`  descriptions written: ${wroteDesc}   ast written: ${wroteAst}`);
 }
 
+/*
+ * The records this script MERGES do not exist when import-core-v2 applies effect-backfill.json, so
+ * every overlay row aimed at them is skipped there and never lands. Measured on 2026-08-19: all 24
+ * necromancer + runesmith features lost their `edition` on a regen, because that is where
+ * `backfill-ast-edition.mjs` writes what it learns — and it then reads its own row back, sees the row
+ * exists, and reports "0 editions to add", so the loss is invisible from that end too.
+ *
+ * `import-siege-and-gaps.mjs` re-applies for exactly this reason and its comment says so; this script
+ * is the same kind of targeted merger and needs the same step. Safe to run twice: every row is an
+ * absolute assignment.
+ */
+{
+  /*
+   * SCOPED to the records this script merged, and that scoping is load-bearing.
+   *
+   * This step runs AFTER `split-descriptions.mjs` (it has to: split rebuilds core-descriptions.json
+   * from core.json, so prose written before it is simply not in the rebuild and both class pages came
+   * out blank). The overlay holds ~570 `description` rows, and re-applying the WHOLE overlay here put
+   * every one of them back inline in core.json — undoing the split for 568 records in one line.
+   *
+   * The view is built from the same record objects, so patches land on the real records; only the
+   * SEARCH SPACE is narrowed.
+   */
+  const view = { classes: {}, classFeatures: {} };
+  for (const { cls, features } of added) {
+    if (core.classes?.[cls.id]) view.classes[cls.id] = core.classes[cls.id];
+    for (const fid of Object.keys(features ?? {})) {
+      if (core.classFeatures?.[fid]) view.classFeatures[fid] = core.classFeatures[fid];
+    }
+  }
+  const { applied, unresolved } = applyBackfill(view);
+  console.log(`\nre-applied ${applied} effect backfills over the ${Object.keys(view.classes).length} merged class record(s)`);
+  if (unresolved.length) console.warn(`!! ${unresolved.length} backfill paths did not resolve:\n  ` + unresolved.join('\n  '));
+}
+
 if (DRY) { console.log('\n--dry-run: core.json NOT written.'); process.exit(0); }
-writeFileSync(CORE, JSON.stringify(core));
+// core.json is written AFTER the descriptions step, not before: that step now MOVES each feature's
+// prose out of the record into core-descriptions.json, and a core.json written first would keep the
+// inline copy it had just deleted.
 writeDescriptionsAndAst(added);
+writeFileSync(CORE, JSON.stringify(core));
 console.log(`\nwrote public/core.json — classes ${Object.keys(core.classes).length}, classFeatures ${Object.keys(core.classFeatures).length}`);

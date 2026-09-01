@@ -41,6 +41,7 @@ import { casterSlots, wizardSpellbookBudget, cantripsKnown } from '../rules/spel
 import {
   askedAtDailyPrep,
   characterSenseKeys,
+  classFeatureIdsOwned,
   domainPoolForChoice,
   effectiveChoiceLimits,
   effectiveChoiceOptions,
@@ -48,10 +49,11 @@ import {
   senseGateReason,
   type NarrowedOption,
 } from '../rules/derive';
+import { narrowSpellFilter, skillSlotOptions } from '../rules/build';
 import { signaturesAt } from '../rules/build';
-import { activeCasterArchetype, archetypeSlots, archetypeTraditionOptions } from '../rules/casterArchetypes';
-import { exhaustedGrantReason, FEAT_GRANTS, featUpgradesAtLevel, LOCKED_SKILL_KEYS } from '../rules/featGrants';
-import { FEAT_PICK_GRANTS, pickableFeats } from '../rules/featPickGrants';
+import { activeCasterArchetype, archetypeEntryIds, archetypeSlots, archetypeTraditionOptions } from '../rules/casterArchetypes';
+import { choiceGrantFor, exhaustedGrantReason, FEAT_GRANTS, featUpgradesAtLevel, LOCKED_SKILL_KEYS, maxTakes } from '../rules/featGrants';
+import { FEAT_PICK_GRANTS, pickKeysFor, pickPrompt, pickableFeats } from '../rules/featPickGrants';
 import { FEAT_FEAT_GRANTS, isBoundGrant } from '../rules/featFeatGrants';
 import { isBoundBackgroundGrant } from '../rules/backgroundGrants';
 import { spellsMatching } from '../rules/spellChoice';
@@ -96,6 +98,8 @@ const FEAT_LABEL: Record<FeatCategory, string> = {
   general: 'General feat',
   archetype: 'Archetype feat',
   bonus: 'Bonus feat',
+  // Kinetic Gate's two 1st-level impulse feats — named for what the player is choosing, not for the slot.
+  impulse: 'Impulse feat',
   mythic: 'Mythic feat',
 };
 const FEAT_ICON: Record<FeatCategory, string> = {
@@ -106,6 +110,8 @@ const FEAT_ICON: Record<FeatCategory, string> = {
   general: 'ti-medal',
   archetype: 'ti-books',
   bonus: 'ti-plus',
+  // An impulse channels an element — the same wave the kineticist's own surfaces use.
+  impulse: 'ti-wave-sine',
   mythic: 'ti-flame',
 };
 
@@ -365,10 +371,33 @@ export function Builder({
   const isUmtBook = casterCls?.id === 'wizard' && subOption?.id === 'school-of-unified-magical-theory';
   const spellbookSize = wizardSpellbookBudget(build.level, isUmtBook);
   const learnedTotal = Object.values(build.spells).reduce((n, arr) => n + arr.length, 0);
+  /* Known-beyond-slots for an archetype pool (the halcyon "2 common 1st-rank spells" over one slot,
+   * Shattered Sacrament's extra known). The BUILDER's per-rank counts are pick caps, not the slot
+   * pool, so they must include these or the sheet keeps spells the player was never given a picker
+   * for. Applied only to ranks the schedule has opened — the extra known arrives WITH the slot. */
+  const archExtraKnownAt = (base: Record<number, number>): Record<number, number> => {
+    if (!archCaster) return base;
+    const extra: Record<number, number> = { ...(archCaster.config.extraKnown ?? {}) };
+    const entryIds = archetypeEntryIds(archCaster);
+    for (const id of Object.values(build.featPicks)) {
+      const b = id ? content.feats[id]?.spellSlotBonus : undefined;
+      if (!b?.entryId || !entryIds.has(b.entryId)) continue;
+      for (const [rankStr, n] of Object.entries(b.extraKnown ?? {})) {
+        const r = Number(rankStr);
+        if (Number.isFinite(r) && r > 0 && n > 0) extra[r] = (extra[r] ?? 0) + n;
+      }
+    }
+    const out: Record<number, number> = { ...base };
+    for (const [rankStr, n] of Object.entries(extra)) {
+      const r = Number(rankStr);
+      if ((out[r] ?? 0) > 0) out[r] += n;
+    }
+    return out;
+  };
   const slotCounts = casting
     ? casterSlots(build.level, castProgression)
     : archCaster
-      ? archetypeSlots(build.level, archCaster)
+      ? archExtraKnownAt(archetypeSlots(build.level, archCaster))
       : {};
   // Cantrip Expansion and its kin raise this. Without the same bonus here the extra cantrips exist on
   // the sheet and the builder gives the player no slot in which to choose them.
@@ -591,7 +620,7 @@ export function Builder({
       // The granter's SLOT, because a Lore answer is stored per taking now — without it Gnome
       // Obsession's bound Assurance reads blank and the card says "answer that and this fills in"
       // forever, even though the player already typed the Lore.
-      const bound = boundGrantChoice(build, granter, grantedId, featPrereqChar.feats.find((f) => f.featId === granter)?.slotKey);
+      const bound = boundGrantChoice(build, content, granter, grantedId, featPrereqChar.feats.find((f) => f.featId === granter)?.slotKey);
       const granterName = content.feats[granter]?.name ?? granter;
       return (
         <SubCard
@@ -738,11 +767,31 @@ export function Builder({
         // Only the plain list-widening lane belongs in this picker — 'repertoire' and 'font' grants
         // are applied by buildCharacter and are not the player's to choose here.
         if (add.as && add.as !== 'list') continue;
+        // …and only widenings aimed at the CLASS pools this picker fills. An `entryId`-scoped row
+        // (Psi Development's six psi cantrips → `psychic-dedication-casting`) belongs to the
+        // archetype pool's own picker in shared.tsx; un-gated it offered them in the class list too.
+        if (add.entryId && add.entryId !== `${build.classId}-casting` && add.entryId !== `${build.classId2}-casting`) continue;
         for (const s of add.spells ?? []) if (content.spells[s]) out.add(s);
         // "Add up to three of your deity's spells to your spell list" — resolved from the build's own
         // deity, so the picker offers the right three the moment the player picks a deity.
         if (add.from === 'deity' && build.deityId)
           for (const s of content.deities[build.deityId]?.spells ?? []) if (content.spells[s]) out.add(s);
+        if (add.traditions === 'any') anyTradition = true;
+        else for (const t of add.traditions ?? []) openTraditions.add(t);
+      }
+    }
+    /* …and a widening carried by a CLASS FEATURE rather than a feat. The necromancer's dirge grants
+     * occult access to Harm — a divine spell — so without this the SHEET offered it and the builder,
+     * which is where a prepared caster's book is actually filled, did not. Same body as the feat loop
+     * above: only the plain list lane, since 'repertoire' and 'font' grants are buildCharacter's. */
+    for (const fid of classFeatureIdsOwned(
+      { classId: build.classId, subclassId: build.subclassId, level: build.level },
+      content,
+    )) {
+      const list = content.classFeatures[fid]?.spellListAdditions;
+      for (const add of list == null ? [] : Array.isArray(list) ? list : [list]) {
+        if (add.as && add.as !== 'list') continue;
+        for (const s of add.spells ?? []) if (content.spells[s]) out.add(s);
         if (add.traditions === 'any') anyTradition = true;
         else for (const t of add.traditions ?? []) openTraditions.add(t);
       }
@@ -754,7 +803,7 @@ export function Builder({
       }
     }
     return out;
-  }, [build.featPicks, build.deityId, content]);
+  }, [build.featPicks, build.deityId, build.classId, build.classId2, build.subclassId, build.level, content]);
   /**
    * A class archetype that REPLACES the list ("Replace your spell list with the elemental spell
    * list"). The tradition index is still the right starting point for everyone else, so this
@@ -844,7 +893,7 @@ export function Builder({
   // --- per-level spell progression (spells are chosen on the level where they're gained) ---
   // Spell slots per rank at a given character level (0 = before play).
   const slotsAt = (L: number): Record<number, number> =>
-    L < 1 ? {} : casting ? casterSlots(L, castProgression) : archCaster ? archetypeSlots(L, archCaster) : {};
+    L < 1 ? {} : casting ? casterSlots(L, castProgression) : archCaster ? archExtraKnownAt(archetypeSlots(L, archCaster)) : {};
   // Wizard spellbook budget (a single across-rank total) at a given level — includes the UMT +1.
   const bookAt = (L: number) => (L < 1 ? 0 : wizardSpellbookBudget(L, isUmtBook));
   // The first level this character can cast — cantrips, tradition, and divine font live here.
@@ -1506,6 +1555,17 @@ export function Builder({
               const askingGrantedFeats = bgFeatAtThisLevel
                 ? backgroundGrantedFeats(bg, build.backgroundSkillChoice).filter((gid) => !!content.feats[gid]?.choice)
                 : [];
+              /* The BACKGROUND-granted Additional Lore lane. Seven backgrounds print "You gain the
+               * Additional Lore skill feat" with the subject left to the player, and the subject box
+               * mounted only under a slot-PICKED or feat-GRANTED taking (Builder's `f.grantedBy`
+               * filter) — a background grant has neither, so the feat sat on the sheet with nowhere
+               * to type its Lore. Returned's is bound (Boneyard) and asks nothing. Writes the bare
+               * `<featId>:<idx>` key, which build.ts's loreChoices lane already reads. */
+              const loreAskingGrantedFeats = bgFeatAtThisLevel
+                ? backgroundGrantedFeats(bg, build.backgroundSkillChoice).filter(
+                    (gid) => (FEAT_GRANTS[gid]?.loreChoices ?? 0) > 0 && !isBoundBackgroundGrant(bg?.id, gid),
+                  )
+                : [];
 
               return (
                 <>
@@ -1598,7 +1658,7 @@ export function Builder({
                         player scans for things to answer, rather than under "You gain automatically" —
                         each one labelled with the feature that asked it, so it is still obvious where
                         it came from. */}
-                    {(askingFeatures.length > 0 || askingGrantedFeats.length > 0) && (
+                    {(askingFeatures.length > 0 || askingGrantedFeats.length > 0 || loreAskingGrantedFeats.length > 0) && (
                       <div className="lvl-group">
                         <div className="lvl-group-h">
                           <i className="ti ti-help-circle" aria-hidden="true" /> Choices from what you gained
@@ -1622,15 +1682,19 @@ export function Builder({
                               {FEAT_PICK_GRANTS[f.id] && (() => {
                                 const spec = FEAT_PICK_GRANTS[f.id];
                                 const opts = pickableFeats(spec, build, content).map((o) => ({ value: o.id, label: o.name, description: o.description }));
-                                return (
+                                /* A spec may grant SEVERAL feats (*"choose up to two…"*). Answers past
+                                 * the first are keyed `<id>#<i>`, so index 0 keeps the bare key and no
+                                 * saved character loses its pick. See FeatPickSpec.picks. */
+                                return pickKeysFor(f.id, spec.picks).map((key, i) => (
                                   <PopupSelect
-                                    title={spec.prompt}
-                                    placeholder={`${spec.prompt}…`}
-                                    value={build.pickFeatChoices?.[f.id] ?? ''}
-                                    onChange={(v) => actions.patch({ pickFeatChoices: { ...(build.pickFeatChoices ?? {}), [f.id]: v } })}
+                                    key={key}
+                                    title={pickPrompt(spec.prompt, i, spec.picks)}
+                                    placeholder={`${pickPrompt(spec.prompt, i, spec.picks)}…`}
+                                    value={build.pickFeatChoices?.[key] ?? ''}
+                                    onChange={(v) => actions.patch({ pickFeatChoices: { ...(build.pickFeatChoices ?? {}), [key]: v } })}
                                     options={opts}
                                   />
-                                );
+                                ));
                               })()}
                             </SubCard>
                           ))}
@@ -1639,6 +1703,21 @@ export function Builder({
                               {grantedChoicePicker(gid)}
                             </SubCard>
                           ))}
+                          {loreAskingGrantedFeats.flatMap((gid) =>
+                            Array.from({ length: FEAT_GRANTS[gid]!.loreChoices! }).map((_, li) => {
+                              const key = `${gid}:${li}`;
+                              return (
+                                <SubCard icon="ti-bulb" label={`Trained Lore (from ${content.feats[gid]?.name ?? gid})`} key={`bglore-${key}`}>
+                                  <input
+                                    className="lvl-lore-input"
+                                    placeholder="Lore subject (e.g. Warfare)…"
+                                    value={build.featLoreChoices?.[key] ?? ''}
+                                    onChange={(e) => actions.patch({ featLoreChoices: { ...(build.featLoreChoices ?? {}), [key]: e.target.value } })}
+                                  />
+                                </SubCard>
+                              );
+                            }),
+                          )}
                         </div>
                       </div>
                     )}
@@ -1704,13 +1783,16 @@ export function Builder({
                             const opts = pickableFeats(spec, build, content).map((o) => ({ value: o.id, label: o.name, description: o.description }));
                             return (
                               <SubCard icon="ti-medal" label={spec.prompt}>
-                                <PopupSelect
-                                  title={spec.prompt}
-                                  placeholder={`${spec.prompt}…`}
-                                  value={build.pickFeatChoices?.[sid] ?? ''}
-                                  onChange={(v) => actions.patch({ pickFeatChoices: { ...(build.pickFeatChoices ?? {}), [sid]: v } })}
-                                  options={opts}
-                                />
+                                {pickKeysFor(sid, spec.picks).map((k, i) => (
+                                  <PopupSelect
+                                    key={k}
+                                    title={pickPrompt(spec.prompt, i, spec.picks)}
+                                    placeholder={`${pickPrompt(spec.prompt, i, spec.picks)}…`}
+                                    value={build.pickFeatChoices?.[k] ?? ''}
+                                    onChange={(v) => actions.patch({ pickFeatChoices: { ...(build.pickFeatChoices ?? {}), [k]: v } })}
+                                    options={opts}
+                                  />
+                                ))}
                               </SubCard>
                             );
                           })()}
@@ -1736,6 +1818,36 @@ export function Builder({
                                 .filter((gid) => !handled.has(gid) && content.feats[gid]?.choice)
                                 .map((gid) => grantedChoicePicker(gid));
                             })()}
+                          {/* …and the same lane's "trained in a Lore of your choice".
+                              A GRANTED feat has no slot, and the Lore input was mounted only under a
+                              slot-PICKED feat — so every unbound granted Additional Lore (a sage
+                              jotunborn's, a Settlement Scholastics take, Surface Culture's) arrived on
+                              the sheet with a subject the player had nowhere to type. Iterated over the
+                              feat ROWS, not the ids: one granter can owe two takings and each needs its
+                              own answer. A grant whose Lore the granter NAMED asks nothing. */}
+                          {subAnchorId &&
+                            featPrereqChar.feats
+                              .filter((f) => f.grantedBy && !f.slotKey && (FEAT_GRANTS[f.featId]?.loreChoices ?? 0) > 0)
+                              .filter((f) => f.grantVariant || !isBoundGrant(f.grantedBy!, f.featId))
+                              .flatMap((f) =>
+                                Array.from({ length: FEAT_GRANTS[f.featId]!.loreChoices! }).map((_, li) => {
+                                  const gKey = `${f.grantedBy}${f.grantVariant ? `#${f.grantVariant}` : ''}:${f.featId}:${li}`;
+                                  // The bare key is still READ by build.ts, so a character saved before
+                                  // this keeps its subject; the first edit moves it to the granter key.
+                                  const legacy = `${f.featId}:${li}`;
+                                  const from = content.feats[f.grantedBy!]?.name ?? content.heritages[f.grantedBy!]?.name ?? f.grantedBy;
+                                  return (
+                                    <SubCard key={`glore-${gKey}`} icon="ti-bulb" label={`Trained Lore (from ${from})`}>
+                                      <input
+                                        className="lvl-lore-input"
+                                        placeholder="Lore subject (e.g. Warfare)…"
+                                        value={build.featLoreChoices?.[gKey] ?? build.featLoreChoices?.[legacy] ?? ''}
+                                        onChange={(e) => actions.patch({ featLoreChoices: { ...(build.featLoreChoices ?? {}), [gKey]: e.target.value } })}
+                                      />
+                                    </SubCard>
+                                  );
+                                }),
+                              )}
                           {/* …and the SAME lane's `effectChoices`. This block filtered on `choice`
                               alone, so a granted feat asking its second question through
                               `effectChoices` had no control at all — Advanced Weaponry, which a
@@ -1906,9 +2018,22 @@ export function Builder({
                               the bonus skill feat (Rogue Dedication) — surfaced from FEAT_GRANTS below
                               the picked feat, so the player resolves each grant in context. */}
                           {picked &&
-                            (FEAT_GRANTS[picked]?.skillChoices ?? []).map((slot, si) => {
-                              const opts = slot.options === 'any' ? SKILLS : slot.options;
-                              const skKey = `${picked}:${si}`;
+                            [
+                              ...(FEAT_GRANTS[picked]?.skillChoices ?? []).map((slot, si) => ({ slot, skKey: `${picked}:${si}` })),
+                              /* …and the slots belonging to the grant the player's OWN answer selected.
+                                 Clan Lore's twelve listed clans hand over a named pair of skills; an
+                                 unlisted clan's are "determined by your GM", so that one answer — and no
+                                 other — asks a further question. Keyed by the answer exactly as
+                                 featSkillChoiceValue keys it, so the builder and the engine read one key. */
+                              ...(choiceGrantFor(FEAT_GRANTS[picked], build.featChoices?.[key])?.skillChoices ?? []).map(
+                                (slot, si) => ({ slot, skKey: `${picked}:${build.featChoices?.[key]}:${si}` }),
+                              ),
+                            ].map(({ slot, skKey }) => {
+                              /* Shared with the engine — a slot whose skill the printed text DERIVES
+                                 from an answer already given (Surki Lore's magiphage tradition) offers
+                                 that one skill, not four. Computing the list here a second way is how
+                                 the builder and the sheet come to disagree about one slot. */
+                              const opts = skillSlotOptions(slot, build, content);
                               // The option this slot is CURRENTLY granting — the player's answer, or the
                               // engine's default when unanswered. Its rank on the built character already
                               // includes this grant, so it can never be judged redundant against itself.
@@ -1949,8 +2074,22 @@ export function Builder({
                               .filter((fb) => fb.featId === picked)
                               .map((fb) => {
                                 const fbKey = `${picked}:fallback:${fb.skill}`;
+                                const heading = fb.note ? cap(fb.note) : `Already trained in ${cap(fb.skill)}`;
+                                /* Ghost Hunter's replacement is *"a new LORE skill of your choice"*, so the
+                                   player types a subject; the sixteen-skill select cannot express one. */
+                                if (fb.lore)
+                                  return (
+                                    <SubCard key={fbKey} icon="ti-bulb" label={`${heading} — replacement Lore`}>
+                                      <input
+                                        className="lvl-lore-input"
+                                        placeholder="Lore subject (e.g. Warfare)…"
+                                        value={build.featLoreChoices?.[fbKey] ?? ''}
+                                        onChange={(e) => actions.patch({ featLoreChoices: { ...(build.featLoreChoices ?? {}), [fbKey]: e.target.value } })}
+                                      />
+                                    </SubCard>
+                                  );
                                 return (
-                                  <SubCard key={fbKey} icon="ti-bulb" label={`Already trained in ${cap(fb.skill)} — replacement skill`}>
+                                  <SubCard key={fbKey} icon="ti-bulb" label={`${heading} — replacement skill`}>
                                     <PopupSelect
                                       title="Replacement skill"
                                       placeholder="Choose a skill…"
@@ -1978,6 +2117,40 @@ export function Builder({
                                   </SubCard>
                                 );
                               })}
+                          {/* "For each of these feats you already have, you can INSTEAD gain a different
+                              feat from the following list" — the engine reports which grants landed on a
+                              feat the character already had; offer the replacement it owes them. */}
+                          {picked &&
+                            (featPrereqChar.featSubstitutions ?? [])
+                              .filter((sb) => sb.featId === picked)
+                              .map((sb) => (
+                                <SubCard
+                                  key={sb.key}
+                                  icon="ti-bulb"
+                                  label={`Already have ${content.feats[sb.ifHave]?.name ?? sb.ifHave} — replacement feat`}
+                                >
+                                  <PopupSelect
+                                    title="Replacement feat"
+                                    placeholder="Choose a feat…"
+                                    value={build.pickFeatChoices?.[sb.key] ?? ''}
+                                    onChange={(v) => actions.patch({ pickFeatChoices: { ...(build.pickFeatChoices ?? {}), [sb.key]: v } })}
+                                    // A feat already held is a dead end — print says "a DIFFERENT feat",
+                                    // and the engine refuses it, so the picker must not offer it live.
+                                    options={sb.options
+                                      .filter((id) => content.feats[id])
+                                      .map((id) => {
+                                        const held = id !== build.pickFeatChoices?.[sb.key] && featPrereqChar.feats.some((f) => f.featId === id);
+                                        return {
+                                          value: id,
+                                          label: content.feats[id]!.name,
+                                          description: content.feats[id]!.description,
+                                          disabled: held,
+                                          disabledReason: held ? 'Already have this feat — pick a different one.' : undefined,
+                                        };
+                                      })}
+                                  />
+                                </SubCard>
+                              ))}
                           {picked &&
                             Array.from({ length: FEAT_GRANTS[picked]?.loreChoices ?? 0 }).map((_, li) => {
                               // Keyed by SLOT, not by feat id. Additional Lore is `maxTakable: null` and
@@ -2024,16 +2197,21 @@ export function Builder({
                               // Stored per SLOT, so a repeatable grant taken twice shows two pickers
                               // rather than two views of one answer. The bare feat-id key is still
                               // READ, so a character saved before this keeps the pick it had.
-                              const cur = build.pickFeatChoices?.[key] ?? build.pickFeatChoices?.[picked] ?? '';
+                              // A `picks` spec asks more than once; index 0 keeps the bare key so an
+                              // existing answer never moves — the same convention build.ts reads.
+                              const idKeys = pickKeysFor(picked, spec.picks);
                               return (
                                 <SubCard icon="ti-medal" label={spec.prompt}>
-                                  <PopupSelect
-                                    title={spec.prompt}
-                                    placeholder={`${spec.prompt}…`}
-                                    value={cur}
-                                    onChange={(v) => actions.patch({ pickFeatChoices: { ...(build.pickFeatChoices ?? {}), [key]: v } })}
-                                    options={opts}
-                                  />
+                                  {pickKeysFor(key, spec.picks).map((k, i) => (
+                                    <PopupSelect
+                                      key={k}
+                                      title={pickPrompt(spec.prompt, i, spec.picks)}
+                                      placeholder={`${pickPrompt(spec.prompt, i, spec.picks)}…`}
+                                      value={build.pickFeatChoices?.[k] ?? build.pickFeatChoices?.[idKeys[i]] ?? ''}
+                                      onChange={(v) => actions.patch({ pickFeatChoices: { ...(build.pickFeatChoices ?? {}), [k]: v } })}
+                                      options={opts}
+                                    />
+                                  ))}
                                 </SubCard>
                               );
                             })()}
@@ -2056,20 +2234,50 @@ export function Builder({
                                   (featPrereqChar.enhancements ?? []).some((e) => e.featId === picked),
                               )
                               .map((ch) => {
-                              const ecKey = `${picked}:${ch.id}`;
+                              /*
+                               * A REPEATABLE feat's OPEN pick is answered per TAKING — Qi Spells is
+                               * *"choose a different spell each time"* — so its answer is keyed by
+                               * SLOT rather than by record, or every take writes over the last one.
+                               * The 21 enumerated repeatable picks moved to `choice` instead;
+                               * `spellFilter` is the one shape `choice` cannot hold, so these four
+                               * change the KEY rather than the lane. The record key is still READ, so
+                               * a monk who answered before this keeps the spell they chose.
+                               */
+                              const perTaking = !!ch.spellFilter && maxTakes(content.feats[picked]) > 1;
+                              const ecKey = perTaking ? `${key}:${ch.id}` : `${picked}:${ch.id}`;
+                              const ecValue = build.effectChoices?.[ecKey] ?? (perTaking ? build.effectChoices?.[`${picked}:${ch.id}`] : undefined);
                               const set = (v: string) => actions.patch({ effectChoices: { ...(build.effectChoices ?? {}), [ecKey]: v } });
                               // An OPEN pick ("any 1st-rank arcane spell") gets a searchable spell list;
                               // a fixed set gets the plain dropdown. Hidden until its unlock level.
                               if (ch.spellFilter) {
                                 if (build.level < (ch.spellFilter.minLevel ?? 1)) return null;
-                                const opts = spellsMatching(ch.spellFilter, content, build.hideLegacy).map((s) => ({
+                                // "Choose a different spell each time" (the qi-spells family): the
+                                // spells OTHER takes of this same feat already claimed are greyed
+                                // with the reason — never removed, and never this slot's own stored
+                                // answer (Q27; same rule as `choice.distinctAcrossTakes`).
+                                const claimed = new Set<string>();
+                                if (perTaking && ch.spellFilter.distinctAcrossTakes) {
+                                  for (const [k, id] of Object.entries(build.featPicks)) {
+                                    if (id !== picked || k === key) continue;
+                                    const v = build.effectChoices?.[`${k}:${ch.id}`];
+                                    if (v) claimed.add(v);
+                                  }
+                                  // The legacy record-keyed answer belongs to whichever take reads it
+                                  // through the fallback — do not grey it against ITSELF.
+                                  const legacy = build.effectChoices?.[`${picked}:${ch.id}`];
+                                  if (legacy && legacy !== ecValue) claimed.add(legacy);
+                                }
+                                const opts = spellsMatching(narrowSpellFilter(ch.spellFilter, build, content), content, build.hideLegacy).map((s) => ({
                                   id: s.id,
                                   name: s.name,
                                   note: (s.rank ?? 0) === 0 ? 'Cantrip' : `${s.rank} rank`,
+                                  ...(claimed.has(s.id) && s.id !== ecValue
+                                    ? { disabled: `Already chosen by another ${content.feats[picked]?.name ?? 'take'} — choose a different spell each time.` }
+                                    : {}),
                                 }));
                                 return (
                                   <SubCard key={`ec-${ecKey}`} icon="ti-sparkles" label={ch.prompt}>
-                                    <SearchSelect bare label="Spell" placeholder="Search spells…" value={build.effectChoices?.[ecKey] ?? null} onChange={set} options={opts} />
+                                    <SearchSelect bare label="Spell" placeholder="Search spells…" value={ecValue ?? null} onChange={set} options={opts} />
                                   </SubCard>
                                 );
                               }
@@ -2078,7 +2286,7 @@ export function Builder({
                                   <PopupSelect
                                     title={ch.prompt}
                                     placeholder={`${ch.prompt}…`}
-                                    value={build.effectChoices?.[ecKey] ?? ''}
+                                    value={ecValue ?? ''}
                                     onChange={set}
                                     // An option may carry a note instead of a grant (a kineticist gate
                                     // junction: only Elemental Resistance moves a stat). Show the note as

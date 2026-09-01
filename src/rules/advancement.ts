@@ -17,7 +17,10 @@
  * Cleric is doctrine-dependent: the `cleric` key is the Cloistered Cleric default
  * (divine spell expert@7/master@15/legendary@19); `warpriest` is a subclass-keyed
  * override (armor + martial weapons, Fort master@15, spell capped at master@19).
- * buildCharacter looks up CLASS_ADVANCEMENT[subclassId] first, then [classId].
+ *
+ * Nothing indexes this map directly — every reader goes through `advancementRows`
+ * at the bottom of this file, which owns the two-shape key convention (a bare
+ * `<subclassId>` REPLACES the class table, a `<classId>-<subclassId>` SUPPLEMENTS it).
  */
 import type { AdvancementEntry } from './types';
 
@@ -231,10 +234,13 @@ export const CLASS_ADVANCEMENT: Record<string, AdvancementEntry[]> = {
   ],
   /*
    * The Reaper subclass grants martial weapons and medium armour that the base class never gets, and
-   * advances them later. `buildCharacter` looks up CLASS_ADVANCEMENT by subclass id before class id
-   * — the `warpriest` precedent — so the subclass rows live under their own key.
+   * advances them later. ⚠ NOT under a bare `reaper` key: the subclass lookup REPLACES the class table
+   * when it finds one — the right semantics for a warpriest, whose doctrine table is complete — so a
+   * bare-key reaper silently lost every base necromancer row (Will expert@3, spellcasting expert@7,
+   * all of it) and kept only these two. The `<class>-<subclass>` key is the SUPPLEMENT convention:
+   * applied ON TOP of the base table, never instead of it.
    */
-  reaper: [
+  'necromancer-reaper': [
     { level: 11, track: 'martial', rank: 'expert', source: 'reapers-edge' },
     { level: 13, track: 'medium', rank: 'expert', source: 'reapers-edge' },
   ],
@@ -427,10 +433,26 @@ export const CLASS_ADVANCEMENT: Record<string, AdvancementEntry[]> = {
   ],
   gunslinger: [
     { level: 3, track: 'will', rank: 'expert', source: 'stubborn' },
-    // NOTE: the gunslinger's weapon advancement is FIREARMS & CROSSBOWS ONLY (Gunslinger Weapon Mastery /
-    // Gunslinging Legend) — the generic simple/martial/advanced/unarmed categories never advance (they stay
-    // at the L1 class ranks). That firearms/crossbows-by-category progression is handled by proficiencies.
-    // firearmProf in build.ts (a single weapon-GROUP rank can't express it), NOT by rows here.
+    /*
+     * ⚠ THE NOTE THAT USED TO SIT HERE WAS WRONG, and it cost the gunslinger two whole proficiency
+     * steps. It read "the generic simple/martial/advanced/unarmed categories never advance", but both
+     * features say otherwise in as many words:
+     *
+     *   Gunslinger Weapon Mastery (5th): *"Your proficiency rank for advanced firearms and crossbows,
+     *   SIMPLE WEAPONS, MARTIAL WEAPONS, AND UNARMED ATTACKS increases to expert."*
+     *   Gunslinging Legend (13th): *"Your proficiency rank for simple weapons, martial weapons, and
+     *   unarmed attacks increases to MASTER."*
+     *
+     * So a 13th-level gunslinger swung a sword or a fist at the level-1 rank. The rows below carry
+     * that; the firearms-and-crossbows-BY-CATEGORY half is still `proficiencies.firearmProf` in
+     * build.ts, because one weapon-GROUP rank cannot express "simple and martial firearms".
+     */
+    { level: 5, track: 'simple', rank: 'expert', source: 'gunslinger-weapon-mastery' },
+    { level: 5, track: 'martial', rank: 'expert', source: 'gunslinger-weapon-mastery' },
+    { level: 5, track: 'unarmed', rank: 'expert', source: 'gunslinger-weapon-mastery' },
+    { level: 13, track: 'simple', rank: 'master', source: 'gunslinging-legend' },
+    { level: 13, track: 'martial', rank: 'master', source: 'gunslinging-legend' },
+    { level: 13, track: 'unarmed', rank: 'master', source: 'gunslinging-legend' },
     { level: 7, track: 'perception', rank: 'master', source: 'perception-mastery' },
     { level: 9, track: 'classDc', rank: 'expert', source: 'gunslinger-expertise' },
     { level: 11, track: 'reflex', rank: 'master', source: 'blast-dodger' },
@@ -626,3 +648,30 @@ export const CLASS_ADVANCEMENT: Record<string, AdvancementEntry[]> = {
     { level: 19, track: 'medium', rank: 'master', source: 'medium-armor-mastery' },
   ],
 };
+
+/**
+ * The advancement rows that apply to one class + subclass pair, in table order.
+ *
+ * ⚠ THIS IS THE ONLY PLACE THAT KNOWS THE KEY CONVENTION. Two call sites used to spell it out
+ * independently — `buildCharacter` (what the sheet computes) and `explain.ts` (why the sheet says
+ * so) — and they drifted: build learned the supplement key and explain did not, so a level-13
+ * Reaper's AC was computed at expert medium armour while clicking it showed an EMPTY timeline.
+ * Adding a third caller that re-spells the lookup re-opens that gap, so route every reader here.
+ *
+ * Two key shapes, two meanings:
+ *  - `<subclassId>` is a COMPLETE table that REPLACES the class default (warpriest, battle-creed:
+ *    a cleric doctrine restates the whole ladder, including the rows it deliberately drops).
+ *  - `<classId>-<subclassId>` is a SUPPLEMENT applied ON TOP of whatever the first lookup chose
+ *    (necromancer-reaper: two extra weapon/armour rows and nothing else).
+ *
+ * Picking the wrong shape is silent and expensive: reaper's two rows sat under a bare key, which
+ * replaced the entire necromancer table, so a level-3 reaper lost Will expert and a level-7 one lost
+ * expert spellcasting. `test/advancement.test.ts` now fails any bare subclass key that advances
+ * fewer tracks than its class table — that is the shape of the mistake, caught mechanically.
+ */
+export function advancementRows(classId: string, subclassId?: string | null): AdvancementEntry[] {
+  return [
+    ...((subclassId ? CLASS_ADVANCEMENT[subclassId] : undefined) ?? CLASS_ADVANCEMENT[classId] ?? []),
+    ...((subclassId ? CLASS_ADVANCEMENT[`${classId}-${subclassId}`] : undefined) ?? []),
+  ];
+}

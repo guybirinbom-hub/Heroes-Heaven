@@ -218,14 +218,24 @@ const RAW_MODES: ModeDef[] = [
   // ---- Barbarian — rage states (one at a time) ----
   { id: 'cat-rage', name: 'Rage', category: 'Barbarian', classes: ['barbarian'], exclusiveGroup: 'barbarian-rage', modifiers: [m(2, 'untyped', 'damage', { appliesWhen: 'melee or unarmed Strikes while raging' })], note: 'Gain temporary Hit Points and +2 damage on melee & unarmed Strikes (more at higher levels). You can’t use concentrate actions (except Seek) while raging.' },
   { id: 'cat-rage-legacy', name: 'Rage (legacy)', category: 'Barbarian', classes: ['barbarian'], exclusiveGroup: 'barbarian-rage', modifiers: [m(2, 'untyped', 'damage', { appliesWhen: 'melee or unarmed Strikes while raging' }), m(-1, 'untyped', 'ac')], note: 'Pre-Remaster Rage: +2 Strike damage and a −1 penalty to AC while raging.' },
-  { id: 'cat-rotting-rage', name: 'Rotting Rage', category: 'Barbarian', classes: ['barbarian'], exclusiveGroup: 'barbarian-rage', modifiers: [m(2, 'untyped', 'damage', { appliesWhen: 'melee or unarmed Strikes while raging' })], note: 'A variant rage state — apply your instinct/feat’s specific rage effect in addition to the base benefits.' },
-  { id: 'cat-wooden-rage', name: 'Wooden Rage', category: 'Barbarian', classes: ['barbarian'], exclusiveGroup: 'barbarian-rage', modifiers: [m(2, 'untyped', 'damage', { appliesWhen: 'melee or unarmed Strikes while raging' })], note: 'A variant rage state — apply your instinct/feat’s specific rage effect in addition to the base benefits.' },
+  // Rotting Rage (Decay) and Wooden Rage (Ligneous) are the instinct abilities of PF #202's two
+  // instincts, and both are a CHOICE made as the rage begins: "you can choose to increase the
+  // additional damage from Rage from 2 to 6". Both shipped as copies of the generic rage template —
+  // +2 damage and a placeholder note — so the trade the whole ability consists of (the bigger die for
+  // a real cost) reached the sheet as an ordinary Rage. The damage is 6 because these REPLACE the
+  // base rage state (one `barbarian-rage` mode at a time), not stack with it.
+  { id: 'cat-rotting-rage', name: 'Rotting Rage', category: 'Barbarian', classes: ['barbarian'], feats: ['decay-instinct'], exclusiveGroup: 'barbarian-rage', modifiers: [m(6, 'untyped', 'damage', { appliesWhen: 'melee or unarmed Strikes while raging (poison damage instead of the weapon’s type)' })], note: 'Decay: Rage’s additional damage becomes 6 and its type becomes poison; your Rage action gains the primal and poison traits. You take 1 damage at the end of each of your turns, which can’t be reduced or avoided by any means. With weapon specialization the damage is 10 and you take 5; with greater weapon specialization it is 18 and you take 10. Chosen only as the rage begins, and it lasts until the rage ends.' },
+  { id: 'cat-wooden-rage', name: 'Wooden Rage', category: 'Barbarian', classes: ['barbarian'], feats: ['ligneous-instinct'], exclusiveGroup: 'barbarian-rage', modifiers: [m(6, 'untyped', 'damage', { appliesWhen: 'melee or unarmed Strikes while raging' }), m(-10, 'untyped', 'speed')], note: 'Ligneous: Rage’s additional damage becomes 6, and the bark plates reduce your Speed by 10 feet. That reduction can’t be overcome by any means, though it can be offset by Speed increases. With weapon specialization the damage is 10; with greater weapon specialization, 18.' },
 
   // ---- Bard — compositions (one at a time) ----
   { id: 'cat-inspire-courage', name: 'Courageous Anthem', category: 'Bard', classes: ['bard'], exclusiveGroup: 'bard-composition', modifiers: [m(1, 'status', 'attack'), m(1, 'status', 'damage'), m(1, 'status', 'save', { detail: 'will', appliesWhen: 'vs fear effects' })], note: 'Allies gain a +1 status bonus to attack rolls, damage rolls, and saves vs fear.' },
   { id: 'cat-rallying-anthem', name: 'Rallying Anthem', category: 'Bard', classes: ['bard'], exclusiveGroup: 'bard-composition', modifiers: [m(1, 'status', 'ac'), m(1, 'status', 'save')], note: 'Allies gain a +1 status bonus to AC and saving throws.' },
   { id: 'cat-song-of-strength', name: 'Song of Strength', category: 'Bard', classes: ['bard'], exclusiveGroup: 'bard-composition', modifiers: [m(1, 'status', 'skill', { detail: 'athletics' })], note: 'Allies gain a +1 status bonus to Strength-based checks (Athletics, Escape, etc.).' },
-  { id: 'cat-triple-time', name: 'Triple Time', category: 'Bard', classes: ['bard'], exclusiveGroup: 'bard-composition', modifiers: [], note: 'Allies gain a +10-foot status bonus to their Speeds.' },
+  /* *"You and all allies in the area gain a +10-foot status bonus to all Speeds for 1 round."* The
+   * toggle shipped with NO modifiers, so a bard who switched this composition on saw their own Speed
+   * unchanged — while its three siblings on the surrounding lines all apply their bonus to the
+   * character. "Allies" in the old note was also wrong: the spell says "You and all allies". */
+  { id: 'cat-triple-time', name: 'Triple Time', category: 'Bard', classes: ['bard'], exclusiveGroup: 'bard-composition', modifiers: [m(10, 'status', 'speed')], note: 'You and allies gain a +10-foot status bonus to all Speeds.' },
 
   // ---- Oracle — cursebound stages (one at a time) ----
   { id: 'cat-cursebound-1', name: 'Cursebound One', category: 'Oracle', classes: ['oracle'], exclusiveGroup: 'oracle-cursebound', modifiers: [], note: 'Curse escalated to stage 1 — apply your mystery’s stage-1 curse effects.' },
@@ -250,6 +260,26 @@ const RAW_MODES: ModeDef[] = [
 
   // ---- Magus ----
   { id: 'cat-arcane-cascade', name: 'Arcane Cascade', category: 'Magus', classes: ['magus'], modifiers: [m(1, 'untyped', 'damage', { appliesWhen: 'your Strikes while in Arcane Cascade stance' })], note: 'Stance: your Strikes deal +1 extra damage (+2 if expert in your tradition), of a type tied to your last spell.' },
+  /*
+   * *"While you're in Arcane Cascade stance, your staff gains the deadly d6 trait, with the damage from
+   * the deadly die being the same damage type as the extra damage from Arcane Cascade."*
+   *
+   * A SEPARATE toggle rather than a clause of Arcane Cascade above: the stance is the requirement, the
+   * trait comes from a feat, and a magus who never took Student of the Staff must not have their staff
+   * gain deadly d6 for entering the stance. Exactly the reasoning Invoke Offense already uses.
+   *
+   * The record itself carries only `critSpec`/`critSpecWeapons`, which cover its FIRST sentence; the
+   * deadly die had no carrier at all, so a staff crit never picked up the extra die.
+   */
+  {
+    id: 'cat-student-of-the-staff',
+    name: 'Student of the Staff',
+    category: 'Magus',
+    feats: ['student-of-the-staff'],
+    modifiers: [],
+    note: "While you're in Arcane Cascade stance, your staff gains deadly d6; the deadly die's damage type matches Arcane Cascade's extra damage.",
+    weaponTraits: { match: { items: ['staff'] }, add: ['deadly-d6'] },
+  },
 
   // ---- Monk ----
   { id: 'cat-mountain-stance', name: 'Mountain Stance', category: 'Monk', classes: ['monk'], modifiers: [], note: 'Stance (incl. the Supported Armor version): falling-stone unarmed Strikes and a strong defensive posture; apply the stance’s AC effect per its rules.' },
@@ -270,11 +300,34 @@ const RAW_MODES: ModeDef[] = [
   { id: 'cat-app-vanguard', name: 'Vanguard of Roaring Waters', category: 'Animist (apparitions)', classes: ['animist'], exclusiveGroup: 'animist-apparition', modifiers: [], note: 'Primary apparition (water & storms) — grants its vessel spells and attunement benefit.' },
   { id: 'cat-app-witness', name: 'Witness to Ancient Battles', category: 'Animist (apparitions)', classes: ['animist'], exclusiveGroup: 'animist-apparition', modifiers: [], note: 'Primary apparition (war & weapons) — grants its vessel spells and attunement benefit.' },
 
-  // ---- Ancestry shapes/states (ancestries not yet in the bundled data — shown under "show all") ----
-  { id: 'cat-were-animal', name: 'Animal Shape', category: 'Werecreature', ancestries: ['werecreature'], exclusiveGroup: 'werecreature-shape', modifiers: [], note: 'Changed Shape: assume your full animal form.' },
-  { id: 'cat-were-hybrid', name: 'Hybrid Shape', category: 'Werecreature', ancestries: ['werecreature'], exclusiveGroup: 'werecreature-shape', modifiers: [], note: 'Changed Shape: assume your bipedal hybrid form with natural weapons.' },
+  /*
+   * ---- Ancestry shapes/states ----
+   *
+   * ⚠ `ancestries` is matched against `character.ancestryId`, a core.json ancestry KEY. None of
+   * `werecreature`, `dragonkin` or `ikeshti` is an ancestry we ship (nor a heritage), so all four of
+   * these modes were gated on a value no character can hold and could never be offered to anyone.
+   *
+   * The werecreature pair is GONE from here. Re-gating them onto the dedication made them reachable,
+   * which then showed what they actually were: `modifiers: []` and no `battleForm` — prose pretending
+   * to be a toggle, one generic "Animal Shape" for all nine printed types. Change Shape *"grants a
+   * movement speed, unarmed attacks, and potentially other abilities based on your werecreature type"*,
+   * so the real thing is eighteen forms (nine types x animal/hybrid) with per-type speeds, and those
+   * live in `scripts/data/toggle-modes.json` beside the other sixteen battle forms. They gate on
+   * `werecreature-dedication:<type>`, which `modeGateIds()` resolves from the record's own answer, so a
+   * werebat is offered the bat's two shapes and not the werewolf's.
+   *
+   * The other two below have NO record of any kind on our side, so their gate is left naming the
+   * ancestry it awaits: when that content ships they light up, and until then the gate names honestly
+   * what is missing rather than pretending to be live.
+   */
+  // AWAITING CONTENT: no dragonkin ancestry, heritage or feat ships today.
   { id: 'cat-size-ancients', name: 'Size of the Ancients', category: 'Dragonkin', ancestries: ['dragonkin'], modifiers: [], note: 'Grow to Large size for a time, with the usual reach and Strike benefits.' },
+  // AWAITING CONTENT: no ikeshti ancestry, heritage or feat ships today.
   { id: 'cat-rivener-state', name: 'Rivener State', category: 'Ikeshti', ancestries: ['ikeshti'], modifiers: [], note: 'Enter your feral rivener state.' },
+  /* (No Dampening Harmonics here: the Hardshell Surki's force field already ships complete in
+   * `scripts/data/toggle-modes.json` — gate, duration, and the `against`-qualified resistance 10 — and
+   * that file is merged into `core.modes`. A second copy in this catalogue would put two identical
+   * toggles in front of the player.) */
 
   // ---- Archetype trances/forms (gated to the dedication that grants them) ----
   { id: 'cat-spirit-trance', name: 'Spirit Trance', category: 'Archetype', feats: ['rivethun-invoker-dedication'], modifiers: [], note: 'Rivethun Invoker (Divine Mysteries): enter a trance to commune with spirits.' },
@@ -308,7 +361,68 @@ const RAW_MODES: ModeDef[] = [
     ],
   },
   { id: 'cat-sentinel-form', name: 'Sentinel Form', category: 'Archetype', feats: ['starlit-sentinel-dedication'], modifiers: [], note: 'Starlit Sentinel (Tian Xia): assume your sentinel form.' },
-  { id: 'cat-daydream-trance', name: 'Daydream Trance', category: 'Archetype', feats: ['sleepwalker-dedication'], modifiers: [], note: 'Sleepwalker (Dark Archive): enter a daydream trance.' },
+  /*
+   * The trance shipped with NO modifiers and a note carrying none of the printed numbers, so a
+   * sleepwalker who switched it on saw nothing change. Printed (Daydream Trance): *"You gain a +1
+   * status bonus to Will saves. This bonus increases to +2 against mental effects. If you're legendary
+   * in Occultism, the bonus against mental effects increases to +3."* and *"You take a –1 penalty to
+   * Perception checks and initiative rolls."*
+   *
+   * The mental step is a SECOND status entry rather than a bigger single one: status bonuses do not
+   * stack, the higher applies, and the legendary rung is carried in `appliesWhen` because it depends
+   * on a proficiency the mode cannot read.
+   */
+  {
+    id: 'cat-daydream-trance',
+    name: 'Daydream Trance',
+    category: 'Archetype',
+    feats: ['sleepwalker-dedication'],
+    modifiers: [
+      m(1, 'status', 'save', { detail: 'will' }),
+      m(2, 'status', 'save', { detail: 'will', appliesWhen: 'against mental effects (+3 instead if you are legendary in Occultism)' }),
+      m(-1, 'untyped', 'perception'),
+      m(-1, 'untyped', 'initiative'),
+    ],
+    note: 'Sleepwalker (Dark Archive): +1 status to Will saves (+2 vs mental effects, +3 if legendary in Occultism); −1 to Perception checks and initiative. Lasts 1 minute.',
+  },
+  /*
+   * TWO TRANSFORMATIONS whose whole content is the attacks they grant.
+   *
+   * A printed attack that lasts "for the next minute" or "while transformed" is not a `grantedStrikes`
+   * on the record — that would hand it to the character permanently — and neither feat is a stance, so
+   * the stance lane could not hold it either. A toggle is what the app already has for "this is on
+   * right now", and it is where Invoke Offense above puts exactly the same thing.
+   *
+   * Measured before authoring: 12 records in the database print an unarmed attack and ship none
+   * anywhere. Two are feats and are here; eight are items and are in consumable-modes.json; one
+   * (Horn of the Aoyin) grants the attack to the creatures its curse AFFECTS rather than to the
+   * wielder, so it is not a player grant at all; the last three are the Tooth and Claw Tattoos, whose
+   * attack has "the same damage as your best unarmed attack" — a mirror no strike field can state.
+   */
+  {
+    id: 'cat-ursine-avenger-form',
+    name: 'Ursine Avenger Form',
+    category: 'Archetype',
+    feats: ['ursine-avenger-form'],
+    modifiers: [],
+    note: 'While transformed you cannot speak complex sentences, so effects needing a shared or spoken language are unavailable.',
+    grantedStrikes: [
+      { name: 'Jaws', dice: 1, die: 'd8', damageType: 'piercing', group: 'brawling', traits: ['unarmed'] },
+      { name: 'Claws', dice: 1, die: 'd6', damageType: 'slashing', group: 'brawling', traits: ['agile', 'unarmed'] },
+    ],
+  },
+  {
+    id: 'cat-howling-aspect',
+    name: 'Howling Aspect',
+    category: 'Ancestry',
+    feats: ['howling-aspect'],
+    modifiers: [],
+    note: 'Yaksha (Tian Xia): 1 minute, once per 10 minutes.',
+    grantedStrikes: [
+      { name: 'Tusks', dice: 1, die: 'd6', damageType: 'piercing', group: 'brawling', traits: ['finesse', 'unarmed'] },
+      { name: 'Flame-hair', dice: 1, die: 'd4', damageType: 'fire', group: 'brawling', traits: ['agile', 'finesse', 'unarmed'] },
+    ],
+  },
 ];
 
 /** All predefined modes (every catalog entry is directly toggleable + usable as a template). */
@@ -416,6 +530,9 @@ export function modeRelevant(
   if (mode.classes) gates.push(classId != null && mode.classes.includes(classId));
   if (mode.ancestries) gates.push(ancestryId != null && mode.ancestries.includes(ancestryId));
   if (mode.feats) gates.push(!!featIds && mode.feats.some((f) => featIds.has(f)));
+  // The background gate matches through the same gate-id set the feat gate uses — modeGateIds adds
+  // the character's backgroundId, so callers need no extra argument.
+  if (mode.backgrounds) gates.push(!!featIds && mode.backgrounds.some((b) => featIds.has(b)));
   if (gates.length === 0) return true; // ungated ⇒ general
   return gates.some(Boolean); // matches any gate
 }

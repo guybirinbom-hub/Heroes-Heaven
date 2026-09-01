@@ -23,6 +23,47 @@ import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { FEAT_SKILL_GRANTS } from '../src/rules/featGrantsAuto.ts';
+import { FEAT_LANE_GRANTS } from '../src/rules/featGrantsLane.ts';
+
+/*
+ * BOTH auto tables, not one. FEAT_LANE_GRANTS was outside this scan for its whole life, so its 62
+ * entries were never checked — and two of them print the clause. A guard that reads one of two
+ * tables reports zero and means nothing, which is how gildedsoul kept a printed clause and no
+ * mechanic while the suite stayed green. Hand-authored FEAT_GRANTS wins the merge in featGrants.ts,
+ * so the same precedence is used here.
+ */
+const GRANTS = { ...FEAT_SKILL_GRANTS, ...FEAT_LANE_GRANTS };
+
+/*
+ * SATISFIED STRUCTURALLY, because the flag has TWO readers of different shapes.
+ *
+ * `redundantFallback` on the GRANT fires per static `skills` entry (build.ts). A record whose only
+ * training is a `skillChoices` slot has no static entry, so the record-wide flag there would be
+ * authored, counted as modelled, and inert — the exact failure this scan exists to prevent. Such a
+ * record carries the flag on the SLOT instead.
+ *
+ * An `options: 'any'` slot is EXEMPT: the player picks from all sixteen skills, so the grant is
+ * redundant only for a character trained in every one of them, and the clause has no reachable case.
+ * `free-heart` is the only such record (its own `choice` already carries the note explaining that
+ * the two open pickers are Heroes Heaven's stand-in for a background package it cannot apply).
+ * Exempting it is not the same as ignoring it — a BOUNDED slot is never exempt.
+ */
+/*
+ * …INCLUDING the slots inside `choiceGrants`.
+ *
+ * A record whose training depends on an answer it asks itself has no top-level `skillChoices` at all —
+ * every slot sits under the branch that answer selects. Swashbuckler Dedication is the case: *"you
+ * become trained in Acrobatics and the skill associated with your chosen style… If you were already
+ * trained in one of these skills, you become trained in a skill of your choice"*, six style branches,
+ * six slots, none of them top-level. Reading only `g.skillChoices` therefore saw NO slots, could not
+ * observe the flag wherever it was authored, and reported the record as missing the clause forever —
+ * and a guard that cannot be satisfied is one people learn to route around.
+ */
+const slotsOf = (g) => [...(g.skillChoices ?? []), ...Object.values(g.choiceGrants ?? {}).flatMap((b) => b?.skillChoices ?? [])];
+const boundedSlots = (g) => slotsOf(g).filter((s) => s.options !== 'any');
+const satisfied = (g) =>
+  !!g.redundantFallback || (boundedSlots(g).length > 0 && boundedSlots(g).every((s) => s.redundantFallback));
+const exempt = (g) => !g.skills && slotsOf(g).length > 0 && boundedSlots(g).length === 0;
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const LIST = process.argv.includes('--list');
@@ -63,18 +104,19 @@ export function audit() {
   /* The other direction, and it matters just as much: a flag on a record whose text does NOT print the
    * clause is the app inventing a choice the book never offered. */
   const spurious = [];
-  for (const [id, grant] of Object.entries(FEAT_SKILL_GRANTS)) {
+  for (const [id, grant] of Object.entries(GRANTS)) {
     const t = textOf(id);
     if (!t) { noText.push(id); continue; }
     if (!prints(t)) { if (grant.redundantFallback) spurious.push(id); continue; }
-    (grant.redundantFallback ? has : missing).push(id);
+    if (exempt(grant)) continue;
+    (satisfied(grant) ? has : missing).push(id);
   }
   return { has, missing, noText, spurious };
 }
 
 const { has, missing, noText, spurious } = audit();
 
-console.log(`FEAT_SKILL_GRANTS entries          ${Object.keys(FEAT_SKILL_GRANTS).length}`);
+console.log(`FEAT_SKILL_GRANTS + FEAT_LANE_GRANTS ${Object.keys(GRANTS).length}`);
 console.log(`  print the redundancy clause      ${has.length + missing.length}`);
 console.log(`    …and carry redundantFallback   ${has.length}`);
 console.log(`    …and DO NOT                    ${missing.length}   <- the player silently loses a skill`);

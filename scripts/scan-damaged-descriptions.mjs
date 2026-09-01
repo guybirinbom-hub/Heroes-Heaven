@@ -46,6 +46,11 @@ export const SHAPES = [
    * the clause, or runs straight into the save it should have been quantified before. */
   { key: 'takes-damage-unquantified', re: /\btakes\s+damage\s*(?:[.,;]|with a\b|$)/, why: 'a damage expression with no dice and no type' },
   { key: 'against-a-save', re: /\bwith a save against\b/, why: 'the save is unnamed: "a basic Reflex save" became "a save"' },
+  /* Anchored on a sequence impossible in correct English (an article running straight into a
+   * preposition), never on whitespace — the crackling-bubble-gum family shipped "in a with a save"
+   * for months and NONE of the shapes above could see it: the article had text after it, the damage
+   * had dice, and the save was nowhere near the article. */
+  { key: 'article-into-preposition', re: /\b(?:a|an)\s+(?:with|against|from|into|onto|upon)\b/, why: 'an article running straight into a preposition — the noun between them was removed ("in a with a save" was "in a 15-foot cone with a DC 19 basic Fortitude save")' },
   { key: 'empty-parens', re: /\(\s*\)/, why: 'a parenthetical whose contents were removed' },
 ];
 

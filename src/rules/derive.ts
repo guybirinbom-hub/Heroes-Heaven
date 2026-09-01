@@ -12,6 +12,7 @@ import type {
   BattleForm,
   AbilityId,
   ArmorCategory,
+  WeaponCategory,
   ItemPassiveEffects,
   ArmorAdjust,
   ArmorAdjustMode,
@@ -25,6 +26,7 @@ import type {
   AbilityScores,
   InventoryItem,
   DieSize,
+  Size,
   Item,
   WeaponItem,
   EffectGrant,
@@ -52,7 +54,7 @@ import type {
   WeaponRunes,
 } from './types';
 import { PROFICIENCY_RANKS } from './types';
-import { conditionPenalty, conditionTypedMods, drainedHpLoss } from './conditions';
+import { conditionPenalty, conditionTypedMods, conditionsWithDrainedReduction, drainedHpLoss } from './conditions';
 import { DOMAIN_SPELLS } from './domains';
 import { applyCounterMods } from './counterMods';
 import { armorSpecEffect, armorSpecValue } from './armorSpec';
@@ -140,7 +142,10 @@ const SAVE_ABILITY: Record<SaveId, AbilityId> = {
   will: 'wis',
 };
 
-function skillAbility(key: ProficiencyKey): AbilityId {
+/** The attribute a skill runs off. Every Lore is Intelligence, whatever its subject. Exported because
+ *  featSlots.ts needs the same answer for Skillful Lessons' "Int-, Wis- or Cha-based skill" clause, and
+ *  a second copy of the map is how the two would drift. */
+export function skillAbility(key: ProficiencyKey): AbilityId {
   return key.startsWith('lore:') ? 'int' : SKILL_ABILITY[key as SkillId];
 }
 
@@ -162,7 +167,7 @@ export interface StatLine {
   modifier: number;
   /** Set when this number is not the skill's own — an unconditional substitution beat it. Carries
    *  the skill actually rolled and the record that allows it, so the sheet can say both. */
-  substitutedFrom?: { skill: SkillId; source: string };
+  substitutedFrom?: { skill: ProficiencyKey; source: string };
 }
 
 /**
@@ -214,11 +219,28 @@ export function deriveSave(c: Character, save: SaveId, db?: ContentDatabase): St
     poolTypedMods([
       { type: 'item', value: itemBonus },
       ...(stanceSave ? [{ type: stanceSave.type as TypedMod['type'], value: stanceSave.value }] : []),
-      ...conditionTypedMods(c.conditions, ability, 'save'),
+      /* Fortitude reads the REDUCED Drained value where a feat lowers it — *"calculate the penalty to
+       * your Fortitude saves … as though the condition value were 1 lower"* (Svetocher). Reflex and
+       * Will are unaffected by Drained anyway, so passing the adjusted list for all three is safe and
+       * says the rule in one place. */
+      ...conditionTypedMods(save === 'fortitude' ? conditionsWithDrainedReduction(c) : c.conditions, ability, 'save'),
       ...modeTypedMods(c.activeModes, { kind: 'save', detail: save }),
     ]);
   return { rank, modifier };
 }
+
+/**
+ * Is this item's passive clause live? Worn, held, invested — OR AFFIXED to a host.
+ *
+ * ⚠ The affixed case is the one that was missing. Attaching a spellheart deliberately clears
+ * worn/equipped/invested so it is not double-counted as loose gear, which meant every spellheart's
+ * *"while affixed to your armor"* clause switched OFF at the exact moment the player affixed it — the
+ * only state in which the printed text says it works. Measured: all 61 attachable records carrying a
+ * passive or situational clause are spellhearts or banners, and every one prints its benefit while
+ * affixed, so widening the gate over-grants nothing.
+ */
+export const itemInUse = (inv: InventoryItem): boolean =>
+  !!(inv.worn || inv.invested || inv.equipped || inv.attachedTo);
 
 /** The best item bonus from a Monster-Parts refined Perception item (kind 'perception', Table 4D) or
  *  skill item (kind 'skill', Table 4E) that is invested/worn/equipped. For a skill item, `skillKey`
@@ -254,11 +276,48 @@ export function passiveItemBonus(
     best = Math.max(best, v);
   };
   for (const inv of c.inventory) {
-    if (!(inv.worn || inv.invested || inv.equipped)) continue;
+    if (!itemInUse(inv)) continue;
     read(db.items[inv.itemId]?.passiveEffects);
     read(c.resolvedItemPassives?.[inv.itemId]); // a resolved "choose one of N" item passive
+    /* An ETCHED property rune's passives — Trudd's Strength prints "+1 item bonus to Athletics
+     * checks" and the mechanic lives on core.runes, which no reader here consulted; the same class
+     * as Assisting's bulk bonus. ⚠ Gate on itemInUse (already above), NOT worn&&invested — a held
+     * clan dagger is `equipped`, never `worn`, and the armour-shaped gate would keep this at zero. */
+    for (const r of propertyRuneDefs(inv, db)) read(r.passiveEffects);
   }
+  // …and a BODY rune (tattooed, not etched on gear), once, outside the inventory walk.
+  read(bodyRuneDef(c, db)?.passiveEffects);
   return best;
+}
+
+/**
+ * The worst unconditional item PENALTY to one skill, from the same worn/invested inventory.
+ *
+ * `passiveItemBonus` starts at `best = 0` and takes Math.max, so a NEGATIVE passiveEffects.skills
+ * entry could never reach a number — the shining hackle's printed "−1 item penalty to your Stealth
+ * checks" was authored, shipped and applied to nobody. A separate helper rather than a signed return,
+ * because an item penalty and an item bonus are not competing for one slot: RAW both apply, and
+ * `poolTypedMods` already keeps bonus[item] and penalty[item] apart and sums them.
+ *
+ * ⚠ SKILL LANE ONLY, deliberately. The corpus holds exactly three negative item passives: two
+ * unconditional skill rows (shining-hackle, wandering-pipe — the latter's was conditional in print
+ * and moved to its situational star) and day-goggles' perception −2, which is CONDITIONAL in print
+ * ("visual Perception checks only") and correctly lives as a situational star — wiring this helper
+ * into the perception/save/AC assemblies would apply that −2 flat and manufacture a regression.
+ */
+export function passiveItemPenalty(c: Character, db: ContentDatabase | undefined, skillKey: ProficiencyKey): number {
+  if (!db) return 0;
+  let worst = 0;
+  const read = (pe?: ItemPassiveEffects) => {
+    const v = pe?.skills?.[skillKey] ?? 0;
+    if (v < 0) worst = Math.min(worst, v);
+  };
+  for (const inv of c.inventory) {
+    if (!itemInUse(inv)) continue;
+    read(db.items[inv.itemId]?.passiveEffects);
+    read(c.resolvedItemPassives?.[inv.itemId]);
+  }
+  return worst;
 }
 
 /**
@@ -283,11 +342,15 @@ export function passiveItemBonusDetail(
     if (v && (!best || v > best.value)) best = { value: v, name };
   };
   for (const inv of c.inventory) {
-    if (!(inv.worn || inv.invested || inv.equipped)) continue;
+    if (!itemInUse(inv)) continue;
     const name = db.items[inv.itemId]?.name ?? inv.itemId;
     read(db.items[inv.itemId]?.passiveEffects, name);
     read(c.resolvedItemPassives?.[inv.itemId], name);
+    // Etched property runes, mirroring passiveItemBonus — so the breakdown names the rune.
+    for (const r of propertyRuneDefs(inv, db)) read(r.passiveEffects, r.name ?? inv.itemId);
   }
+  const br = bodyRuneDef(c, db);
+  if (br) read(br.passiveEffects, br.name ?? 'Body rune');
   return best;
 }
 
@@ -338,11 +401,20 @@ export function derivePerception(c: Character, db?: ContentDatabase): StatLine {
  * Skipped under Proficiency Without Level: that variant re-bases every rank, and "equal to your
  * level" has no meaning in it. Better to leave the variant's own number alone than to invent one.
  */
-export function untrainedSkillBonus(c: Character, db?: ContentDatabase): number | null {
+/**
+ * *"When wielding a weapon you aren't proficient with, treat your LEVEL as your proficiency bonus."*
+ * (Martial Experience.) The weapon-side twin of `untrainedSkillBonus`, and it works the same way: a
+ * FLOOR under the proficiency contribution, never a rank — the weapon stays untrained, so anything
+ * gated on being trained with it still is not.
+ *
+ * Returns null under Proficiency Without Level, where "treat your level as your bonus" has no meaning,
+ * exactly as the skill version does rather than inventing a number for that variant.
+ */
+export function untrainedWeaponBonus(c: Character, db?: ContentDatabase): number | null {
   if (!db || pwl(c)) return null;
   let best: number | null = null;
   for (const fc of c.feats ?? []) {
-    const u = db.feats[fc.featId]?.untrainedProficiency;
+    const u = db.feats[fc.featId]?.untrainedWeaponProficiency;
     if (!u) continue;
     const v = c.level - u.levelMinus;
     if (best == null || v > best) best = v;
@@ -350,9 +422,33 @@ export function untrainedSkillBonus(c: Character, db?: ContentDatabase): number 
   return best;
 }
 
+export function untrainedSkillBonus(c: Character, db?: ContentDatabase): number | null {
+  if (!db || pwl(c)) return null;
+  let best: number | null = null;
+  for (const fc of c.feats ?? []) {
+    const u = db.feats[fc.featId]?.untrainedProficiency;
+    if (!u) continue;
+    /*
+     * The subtraction can IMPROVE with level — Untrained Improvisation prints *"level –2, improving to
+     * level –1 at 5th and your full level at 7th"*, and only the opening −2 was ever read, so the feat
+     * never got better. Take the smallest subtraction whose level the character has reached; steps are
+     * not assumed sorted, and the base always applies.
+     */
+    let minus = u.levelMinus;
+    for (const s of u.steps ?? []) if (c.level >= s.atLevel) minus = Math.min(minus, s.levelMinus);
+    const v = c.level - minus;
+    if (best == null || v > best) best = v;
+  }
+  return best;
+}
+
 /** One resolved skill substitution, with the record it came from so the sheet can name it. */
 export interface ResolvedSkillSub {
-  use: SkillId;
+  /** The skill rolled instead — a core skill, a LORE (Deceptive Tactics: *"use your Warfare Lore
+   *  modifier in place of your Deception modifier"*), or PERCEPTION (Edgewatch Detective: *"use
+   *  Perception instead of Survival to Track"*). Neither of the last two is a SkillId, and both are
+   *  statistics you roll all the same. */
+  use: ProficiencyKey | 'perception';
   forSkill: SkillId;
   /** Absent = unconditional. */
   when?: string;
@@ -380,7 +476,7 @@ export function skillSubstitutions(c: Character, db: ContentDatabase | undefined
   for (const fid of ownedFeatureIds(c, db)) take(db.classFeatures[fid]?.skillSubstitutions, fid, db.classFeatures[fid]?.name ?? fid);
   for (const h of heritageRecords(c, db)) take(h.skillSubstitutions, h.id, h.name);
   for (const inv of c.inventory ?? []) {
-    if (!(inv.worn || inv.invested || inv.equipped)) continue;
+    if (!itemInUse(inv)) continue;
     const item = db.items[inv.itemId];
     take(item?.passiveEffects?.skillSubstitutions, inv.itemId, item?.name ?? inv.itemId);
     // …and the TOP-LEVEL form. self-emptying-pocket carries its substitution there and has no
@@ -403,15 +499,51 @@ export function skillSubstituteFor(
   key: ProficiencyKey,
   db: ContentDatabase | undefined,
   own: StatLine,
-): (ResolvedSkillSub & { modifier: number; rank: ProficiencyRank }) | undefined {
-  let best: (ResolvedSkillSub & { modifier: number; rank: ProficiencyRank }) | undefined;
+  // `use` narrows back to a plain SkillId on the way out: the Perception form is skipped below, so a
+  // caller can put this straight into `substitutedFrom.skill`.
+): (Omit<ResolvedSkillSub, 'use'> & { use: ProficiencyKey; modifier: number; rank: ProficiencyRank }) | undefined {
+  let best: (Omit<ResolvedSkillSub, 'use'> & { use: ProficiencyKey; modifier: number; rank: ProficiencyRank }) | undefined;
   for (const s of skillSubstitutions(c, db)) {
     if (s.when || s.forSkill !== key) continue;
-    const alt = deriveSkill(c, s.use, db, true);
+    /*
+     * PERCEPTION cannot stand in for a skill's DISPLAYED number. This branch replaces what the sheet
+     * shows for the skill, and it only ever fires for an UNCONDITIONAL substitution; the one record
+     * that substitutes Perception (Edgewatch Detective: "instead of Survival TO TRACK") is
+     * conditional, so it belongs on the check and not on the row. Skipped explicitly rather than left
+     * to the `when` guard above, so a future unconditional one cannot slip through and rewrite a
+     * skill row with a Perception modifier.
+     */
+    const use = s.use;
+    if (use === 'perception') continue;
+    const alt = deriveSkill(c, use, db, true);
     if (alt.modifier <= own.modifier) continue;
-    if (!best || alt.modifier > best.modifier) best = { ...s, modifier: alt.modifier, rank: alt.rank };
+    if (!best || alt.modifier > best.modifier) best = { ...s, use, modifier: alt.modifier, rank: alt.rank };
   }
   return best;
+}
+
+/**
+ * The attribute a record lets this skill run off instead of its printed one, if any.
+ *
+ * Read from every owned feat and class feature, so a future record needs only the field. Returns the
+ * FIRST match — no record stacks two swaps on one skill, and the caller takes the better of the two
+ * attributes anyway, so ordering cannot change a number.
+ */
+export function skillAbilitySwapFor(
+  c: Character,
+  db: ContentDatabase | undefined,
+  key: ProficiencyKey,
+): { use: AbilityId; mandatory?: boolean } | undefined {
+  if (!db) return undefined;
+  const sources: ({ skillAbilitySwap?: { skill: string; use: AbilityId; mandatory?: boolean } } | undefined)[] = [
+    ...(c.feats ?? []).map((fc) => db.feats[fc.featId]),
+    ...[...ownedFeatureIds(c, db)].map((id) => db.classFeatures[id]),
+  ];
+  for (const src of sources) {
+    const s = src?.skillAbilitySwap;
+    if (s && s.skill === key) return { use: s.use, mandatory: s.mandatory };
+  }
+  return undefined;
 }
 
 /** `noSubstitute` stops the substitution lookup recursing when it derives the stand-in skill. */
@@ -420,6 +552,15 @@ export function deriveSkill(c: Character, key: ProficiencyKey, db?: ContentDatab
   // grants are already folded into `proficiencies`; a daily one is play state resolved after the
   // build, so it has to be maxed in here or the answer moves nothing on the sheet.
   const rank = dailySkillRank(c, db, key) ?? c.proficiencies.skills[key] ?? 'untrained';
+  /*
+   * A record may swap which ATTRIBUTE a skill runs off: Officer's Medical Training prints *"you are
+   * trained in Medicine and can use your Intelligence modifier in place of your Wisdom modifier for
+   * Medicine checks"*. `skillAbility()` is a fixed map, so this had nowhere to live and shipped as a
+   * display note beside a number still computed from Wisdom — the sheet said Int and rolled Wis.
+   *
+   * Takes the BEST of the printed attribute and the swap, never blindly the swap: the printed clause
+   * is an option ("can use"), and a character with higher Wisdom than Intelligence keeps Wisdom.
+   */
   const ability = skillAbility(key);
   // Item bonus: the best of an ABP skill item, a Monster-Parts refined skill item, a passive skill item
   // (Cloak of Social Graces), and a dynamic bloodline/deity skill item (Sanguine Pendant). Don't stack.
@@ -428,11 +569,22 @@ export function deriveSkill(c: Character, key: ProficiencyKey, db?: ContentDatab
   // replace that with your level (minus what they print). Never LOWERS it.
   const untrained = rank === 'untrained' ? untrainedSkillBonus(c, db) : null;
   const prof = untrained != null ? Math.max(profBonus(rank, c.level, pwl(c)), untrained) : profBonus(rank, c.level, pwl(c));
+  const swap = skillAbilitySwapFor(c, db, key);
+  const swapAbility = swap?.use;
+  const abilityMod =
+    !swapAbility || swapAbility === ability ? abilityModOf(c, ability)
+      // "you USE Charisma" replaces outright; "you CAN use" is an option, so take the better.
+    : swap.mandatory ? abilityModOf(c, swapAbility)
+    : Math.max(abilityModOf(c, ability), abilityModOf(c, swapAbility));
   let modifier =
-    abilityModOf(c, ability) +
+    abilityMod +
     prof +
     poolTypedMods([
       { type: 'item', value: itemBonus },
+      // An item PENALTY is its own term, never folded into the bonus max — RAW an item bonus and an
+      // item penalty both apply, and poolTypedMods keeps the two pools apart (shining hackle: −1
+      // Stealth beside whatever item bonus the character's other gear provides).
+      { type: 'item', value: passiveItemPenalty(c, db, key) },
       ...conditionTypedMods(c.conditions, ability, 'skill'),
       ...modeTypedMods(c.activeModes, { kind: 'skill', detail: key }),
     ]);
@@ -608,7 +760,7 @@ export function deriveSpecialStats(c: Character, db: ContentDatabase): SpecialSt
     let itemBonus = 0;
     let itemBonusFrom: string | undefined;
     for (const inv of c.inventory) {
-      if (!(inv.worn || inv.invested || inv.equipped)) continue;
+      if (!itemInUse(inv)) continue;
       const b = db.items[inv.itemId]?.passiveEffects?.specialStatBonus;
       if (b?.key !== key || !b.value || b.value <= itemBonus) continue;
       itemBonus = b.value;
@@ -695,7 +847,11 @@ export function deriveMaxHp(c: Character, db: ContentDatabase): number {
   const cls = c.classId ? db.classes[c.classId] : undefined;
   // Dual Class: Hit Points use the higher per-level value of the two classes.
   const cls2 = c.variantRules?.dualClass && c.classId2 ? db.classes[c.classId2] : undefined;
-  const base = ancestry?.hp ?? 0;
+  // A build-time answer can move the ancestry HP off the record scalar (awakened animal's size
+  // table; Mightyfall Kobold's 10-instead-of-6) — buildCharacter emits the resolved value as
+  // c.ancestryHp. The size-keyed table via c.size is the fallback for characters built before that
+  // field existed; the scalar `hp` covers every other ancestry.
+  const base = c.ancestryHp ?? (ancestry && (ancestry.hpBySize?.[(c.size as Size | undefined) ?? ancestry.size] ?? ancestry.hp)) ?? 0;
   const perLevel = Math.max(cls?.hpPerLevel ?? 0, cls2?.hpPerLevel ?? 0) + abilityModOf(c, 'con');
   // A mode targeting maximum HP is a flat shift of the total, not a per-level one.
   const modeHp = modeNumberBonus(c.activeModes, { kind: 'max-hp' });
@@ -772,6 +928,9 @@ function applyArmorAdjusts(c: Character, db: ContentDatabase, worn: WornArmor): 
     if (mode.dexCap != null && out.dexCap != null) out = { ...out, dexCap: Math.max(0, out.dexCap + mode.dexCap) };
     if (mode.checkPenalty) out = { ...out, checkPenalty: Math.min(0, (out.checkPenalty ?? 0) + mode.checkPenalty) };
     if (mode.strength != null && out.strength != null) out = { ...out, strength: out.strength + mode.strength };
+    /* *"The armor is slightly bulkier, increasing the Bulk by 1."* Bulk is a number here; a suit whose
+     * Bulk is L (stored as a fraction) still adds correctly, and nothing is invented when it is absent. */
+    if (mode.bulk && typeof out.bulk === 'number') out = { ...out, bulk: out.bulk + mode.bulk };
     if (mode.setGroup) out = { ...out, group: mode.setGroup };
     if (mode.addTraits?.length) out = { ...out, traits: [...new Set([...(out.traits ?? []), ...mode.addTraits])] };
     if (mode.categoryStep) {
@@ -940,7 +1099,9 @@ function ownedWhileActive(c: Character, db: ContentDatabase): { from: string; wa
     // 9th-level feature. Without the gate a 1st-level barbarian would rage with a 9th-level defence.
     for (const wa of g?.whileActive ?? []) if (c.level >= (wa.minLevel ?? 0)) out.push({ from: g?.name ?? 'Active state', wa });
   };
-  for (const f of c.feats) scan(db.feats[f.featId]);
+  // `?? []` for the same reason deriveBulk guards it: this is also reached from hand-built partial
+  // characters (the container-nesting tests), which carry no feats array at all.
+  for (const f of c.feats ?? []) scan(db.feats[f.featId]);
   for (const h of heritageRecords(c, db)) scan(h);
   for (const fid of ownedFeatureIds(c, db)) scan(db.classFeatures[fid]);
   // A resolved PICK may itself be state-gated — Giant Instinct's "your choice of cold, electricity,
@@ -951,9 +1112,12 @@ function ownedWhileActive(c: Character, db: ContentDatabase): { from: string; wa
 
 /** The `whileActive` grants from owned feats/features whose resource STATE is currently toggled on
  *  (Raging Resistance while raging). Shared by deriveDefenses (IWR/senses) and deriveSpeeds (speeds). */
-export function activeStateGrants(c: Character, db: ContentDatabase): NonNullable<DefenseGrants['whileActive']> {
+export function activeStateGrants(c: Character, db: ContentDatabase): (WhileActiveClause & { name: string })[] {
   const on = (state: string) => (c.classResources?.[state] ?? 0) > 0;
-  return ownedWhileActive(c, db).filter((e) => on(e.wa.state)).map((e) => e.wa);
+  // Carry the OWNING record's name through. The IWR breakdown labels every entry with its source, and
+  // dropping `from` here meant each state-gated resistance was attributed to a bare "Active state" —
+  // the reader asked for a `name` no caller had ever put on the clause.
+  return ownedWhileActive(c, db).filter((e) => on(e.wa.state)).map((e) => ({ ...e.wa, name: e.from }));
 }
 
 /**
@@ -984,6 +1148,13 @@ export function stateGrantSummary(
     for (const t of wa.immunities ?? []) other.push(`immunity to ${t}`);
     for (const k of Object.keys(wa.speeds ?? {})) other.push(`${k} Speed`);
     if (wa.speedPenalty) other.push(`${wa.speedPenalty} ft Speed penalty`);
+    // A state-gated grant that only fires IF you already hold a named sense (Nocturnal Senses) has no
+    // entry in `senses`, so without this the Rage card listed nothing for it — the exact blindness this
+    // summary was written to remove. Named, not resolved, like every other line here.
+    for (const cs of wa.conditionalSenses ?? []) {
+      const gain = cs.upgraded ?? cs.base;
+      if (gain) other.push(`${gain.name}${gain.range ? ` ${gain.range} ft` : ''} if you have ${cs.ifPresent.replace(/-/g, ' ')}`);
+    }
     const senses = wa.senses ?? [];
     if (senses.length || other.length) out.push({ from, senses, other });
   }
@@ -1256,11 +1427,38 @@ export function bodyRuneExcluded(rune: RuneDef, db: ContentDatabase): boolean {
  * Anything that is not the character's own sanctification must not answer here.
  */
 const NOT_YOUR_SANCTIFICATION = new Set(['sanctified-relic']);
-export function sanctificationOf(c: Character): 'holy' | 'unholy' | null {
-  const label = (c.effectPicks ?? [])
-    .find((p) => p.choiceId === 'sanctification' && !NOT_YOUR_SANCTIFICATION.has(p.recordId))
-    ?.label?.toLowerCase();
-  return label === 'holy' || label === 'unholy' ? label : null;
+export function sanctificationOf(c: Character, db?: ContentDatabase): 'holy' | 'unholy' | null {
+  const ok = (s?: string) => (s === 'holy' || s === 'unholy' ? s : null);
+  const fromEffect = ok(
+    (c.effectPicks ?? [])
+      .find((p) => p.choiceId === 'sanctification' && !NOT_YOUR_SANCTIFICATION.has(p.recordId))
+      ?.label?.toLowerCase(),
+  );
+  if (fromEffect) return fromEffect;
+  /*
+   * ⚠ …and the OTHER shape, which is the one the data actually uses.
+   *
+   * `effectPicks` is built from `effectChoices` only, and NO record carries an effectChoice with id
+   * `sanctification` — both existing carriers (`classFeatures/deity-champion`, `feats/sanctified-soul`)
+   * ask through `choice` with `flag: 'sanctification'`. So this function returned null for every
+   * character in the game, and `addIfSanctified` option-widening never fired for anyone. Found while
+   * authoring the cleric/champion dedications' sanctification, which print the same clause.
+   *
+   * The answer lives on the taken feat (`c.feats[].choice`) and, for a class feature, in `classChoices`.
+   * `db` is optional so existing callers keep working; without it only the effectPicks path runs.
+   */
+  for (const f of c.feats ?? []) {
+    if (NOT_YOUR_SANCTIFICATION.has(f.featId)) continue;
+    if (db && db.feats[f.featId]?.choice?.flag !== 'sanctification') continue;
+    const hit = ok(f.choice?.value?.toLowerCase());
+    if (hit) return hit;
+  }
+  for (const cc of c.classChoices ?? []) {
+    if (cc.group !== 'sanctification' || (cc.id && NOT_YOUR_SANCTIFICATION.has(cc.id))) continue;
+    const hit = ok(String(cc.name ?? '').toLowerCase());
+    if (hit) return hit;
+  }
+  return null;
 }
 
 /**
@@ -1286,7 +1484,7 @@ export function effectiveChoiceOptions(
   sources.push(...heritageRecords(c, db));
 
   const extra: NonNullable<FeatChoiceDef['options']> = [];
-  const sanct = sanctificationOf(c);
+  const sanct = sanctificationOf(c, db);
   for (const src of sources) {
     for (const a of src.choiceOptionAdditions ?? []) {
       if (a.target !== recordId) continue;
@@ -1557,6 +1755,19 @@ export function deriveAc(c: Character, db: ContentDatabase): AcResult {
     const refAc = mpActive(c, worn.inv) ? mpArmorRefine(worn.inv.monsterPart, c.level).ac : 0;
     // Guard against a data-incomplete armor (missing acBonus) corrupting AC into NaN.
     armorBase = worn.armor.acBonus ?? 0;
+    /*
+     * …and armour whose OWN item bonus rises with its wearer's level rather than with a rune.
+     *
+     * An automaton's Reinforced Chassis prints *"a +3 item bonus to AC with a Dexterity cap of +1. If
+     * you are at least 5th level, the item bonus increases to +4 and at 10th level it increases to
+     * +5."* — the same shape `unarmoredAc.upgradeAtLevel` already carries for natural armour, on a
+     * suit the character wears instead. Measured across every record printing a rising item bonus to
+     * AC: the chassis is the only one that is worn armour, so this is one field on the armour block
+     * rather than a second lane. Highest qualifying step wins; a suit without the field is untouched.
+     */
+    for (const up of worn.armor.acBonusByLevel ?? []) {
+      if (c.level >= up.level) armorBase = Math.max(armorBase, up.acBonus);
+    }
     // Battleforger's temporary +1 potency is an ITEM bonus like any other, so it takes the highest
     // rather than adding — which is also exactly the feat's own "no effect if it already had a
     // potency rune".
@@ -1578,9 +1789,69 @@ export function deriveAc(c: Character, db: ContentDatabase): AcResult {
   // AC — they don't stack with each other or the armor potency rune, so take the highest.
   acItem = Math.max(acItem, passiveItemBonus(c, db, 'ac'), abpOn(c) ? abpDefense(c.level) : 0);
 
+  /*
+   * NATURAL ARMOUR — *"When you're unarmored, your scales give you a +1 item bonus to AC with a
+   * Dexterity cap of +3. The item bonus increases to +2 at 5th level."*
+   *
+   * Four feats print this and none had any authoring: Scales of Steel, Scales of the Dragon, Scaly
+   * Hide and Wormskin. There was no field for it, so all four moved no AC at all.
+   *
+   * An ITEM bonus, so by DEFAULT it takes the highest with everything above rather than adding: the
+   * rune and the scales are the same bonus type, and the better one stands. Records whose text says
+   * "cumulative with armor potency runes on your explorer's clothing" are the printed exception and
+   * are pooled separately below — this paragraph used to cite that sentence as the reason for the
+   * competing behaviour, which is backwards. The Dex cap is applied like any other, as the LOWER of
+   * the caps in play.
+   *
+   * ⚠ Only while unarmored, via the same `isUnarmored` helper the rest of the file uses — explorer's
+   * clothing is `unarmored`-category armour, so "are you unarmored?" is not "is `worn` null".
+   */
+  if (isUnarmored(c, db)) {
+    let natAc = 0;
+    /** Natural armour whose text says it ADDS to potency runes rather than competing with them. */
+    let natCumulative = 0;
+    let natCap: number | null = null;
+    for (const src of [
+      ...c.feats.map((fc) => db.feats[fc.featId]),
+      ...heritageRecords(c, db),
+      ...[...ownedFeatureIds(c, db)].map((id) => db.classFeatures[id]),
+    ]) {
+      const n = src?.unarmoredAc;
+      if (!n) continue;
+      const bonus = n.upgradeAtLevel && c.level >= n.upgradeAtLevel.level ? n.upgradeAtLevel.acBonus : n.acBonus;
+      /* A record whose text says its bonus is CUMULATIVE with potency runes is kept apart from the
+       * competing pool: Scaly Hide prints *"The item bonus to AC from these scales is cumulative with
+       * armor potency runes on your explorer's clothing, the Mystic Armor spell, or Bands of Force."*
+       * Folding it into the max cost such a character 1–2 AC at every level. */
+      if (n.cumulative) {
+        /* MAX, not sum. The printed exception is cumulative "with armor POTENCY RUNES on your
+         * explorer's clothing / mage armor / bracers of armor" — it says nothing about a second set
+         * of scales, and two scale clauses are both item bonuses to AC, which do not stack. Summing
+         * was invisible while `scaly-hide` was the only record carrying the flag; the moment
+         * `scales-of-steel` and `scales-of-the-dragon` gained it (they print the same sentence
+         * verbatim) a character with two would have added them. */
+        natCumulative = Math.max(natCumulative, bonus);
+        if (n.dexCap != null) natCap = natCap == null ? n.dexCap : Math.min(natCap, n.dexCap);
+        continue;
+      }
+      if (bonus > natAc) {
+        natAc = bonus;
+        natCap = n.dexCap ?? null;
+      }
+    }
+    if (natAc) acItem = Math.max(acItem, natAc);
+    acItem += natCumulative;
+    if ((natAc || natCumulative) && natCap != null) dexCap = dexCap == null ? natCap : Math.min(dexCap, natCap);
+  }
+
   // A character can wear an item whose category isn't one of the four PC defense tracks (e.g. animal
   // "light-barding"/"heavy-barding"); fall back to the unarmored rank so AC never computes to NaN.
-  const rank = c.proficiencies.defenses[category] ?? c.proficiencies.defenses.unarmored;
+  // A named-armour override (Armiger's Protection's Hellknight suits) beats the worn item's category
+  // rank — the armour twin of weaponOverrides on Strikes.
+  const rank = betterRank(
+    c.proficiencies.defenses[category] ?? c.proficiencies.defenses.unarmored,
+    worn ? c.proficiencies.armorOverrides?.[worn.inv.itemId] : undefined,
+  );
   const dex = abilityModOf(c, 'dex');
   // An active stance may add an AC bonus (e.g. Mountain +4) and/or cap Dex-to-AC (Mountain +0); take the
   // lower of the armor cap and the stance cap.
@@ -2060,6 +2331,21 @@ export function propertyRuneCapacity(
  *  selected feats, and auto-granted class features (by level). Resistances/weaknesses
  *  of the same type don't stack — the highest value wins. Conditional (predicated) and
  *  choice-based grants aren't parsed at import, so they don't appear here. */
+/**
+ * Does the character currently meet a record's equipment gate for its DEFENCES?
+ *
+ * The mirror of the `speedsIf` equipment gates, and used for the same reason: the owner's ruling that a
+ * value is a real number only while it is always on. Where the sheet can evaluate the condition from
+ * the character's own gear, it does — a star would understate a defence the player genuinely has while
+ * wearing their suit.
+ */
+export function meetsDefenceGate(c: Character, db: ContentDatabase, gate: NonNullable<ClassFeature['defensesRequire']>): boolean {
+  if (gate.unarmored && !isUnarmored(c, db)) return false;
+  if (gate.armored && isUnarmored(c, db)) return false;
+  if (gate.wearingDesignated && !(c.inventory ?? []).some((i) => i.worn && i.designations?.includes(gate.wearingDesignated!))) return false;
+  return true;
+}
+
 export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefenses {
   // Each source carries the NAME of what granted it, so the sheet can answer "where is my Fire 2
   // coming from?" — the same question every other stat's breakdown already answers.
@@ -2109,6 +2395,14 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
       const base = sub && id.endsWith(sub) ? id.slice(0, -sub.length) : id;
       if (suppressed.has(id) || suppressed.has(base)) continue;
       const rec = db.classFeatures[id];
+      /*
+       * EQUIPMENT-GATED DEFENCES. *"WHILE WEARING YOUR ARMOR, you gain resistance to slashing damage
+       * equal to half your level."* Five inventor armour modifications print that clause and were
+       * granting their resistance with the suit off, because this loop pushed every owned feature
+       * unconditionally. Same shape as the Speed defect the owner's ruling exposed, and the same
+       * answer: the sheet can SEE whether the designated innovation is worn, so it is evaluated.
+       */
+      if (rec?.defensesRequire && !meetsDefenceGate(c, db, rec.defensesRequire)) continue;
       if (rec) push(rec.name ?? id, id === fullLevelRes ? withFullLevelResistance(rec) : rec);
     }
   }
@@ -2118,7 +2412,7 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
   // Worn/invested items with passive senses/resistances/immunities (Goggles of Night pattern) count as
   // grant sources too — the generic magic-item lane.
   for (const inv of c.inventory) {
-    if (!(inv.worn || inv.invested || inv.equipped)) continue;
+    if (!itemInUse(inv)) continue;
     for (const pe of [
       db.items[inv.itemId]?.passiveEffects,
       c.resolvedItemPassives?.[inv.itemId],
@@ -2150,8 +2444,8 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
     // fire weakness from the same clause. Dropping the cost would have made the instinct strictly
     // better than the text.
     push(
-      (wa as { name?: string }).name ?? 'Active state',
-      { resistances: wa.resistances, weaknesses: wa.weaknesses, senses: wa.senses, immunities: wa.immunities },
+      wa.name,
+      { resistances: wa.resistances, weaknesses: wa.weaknesses, senses: wa.senses, immunities: wa.immunities, conditionalSenses: wa.conditionalSenses },
       'only while that state is active',
     );
   }
@@ -2211,19 +2505,53 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
     attribution.set(key, list);
   };
   for (const src of sources) {
-    for (const s of src.senses ?? []) addSense(s);
+    /* A sense whose RANGE grows with level (Worm Sense: 5 feet, 10 at 8th, 15 at 12th). Resolved here
+     * rather than at author time because it depends on the character: the highest rung reached wins,
+     * and an entry carrying no ladder passes through untouched. */
+    for (const s of src.senses ?? []) {
+      const reached = (s.rangeAt ?? []).filter((r) => c.level >= r.level).sort((a, b) => b.range - a.range)[0];
+      addSense(reached ? { ...s, range: Math.max(s.range ?? 0, reached.range) } : s);
+    }
     for (const r of src.resistances ?? []) {
+      // A clause that only starts at a level, carried by a record the character owns from level 1.
+      if (r.minLevel != null && c.level < r.minLevel) continue;
+      /* …and one gated on WHAT THE CHARACTER IS. The Channel Protection Amulet resists void damage if
+       * you are living and vitality damage if you are undead: one item, two mutually exclusive entries,
+       * and which applies is a fact the sheet already holds. Read through the single creature-trait
+       * helper so this can never disagree with the Details tab. */
+      if (r.whenCreatureTrait && !hasCreatureTrait(c, db, r.whenCreatureTrait)) continue;
+      if (r.unlessCreatureTrait && hasCreatureTrait(c, db, r.unlessCreatureTrait)) continue;
       const v = resolveFormula(r.value, scope);
-      if (v > 0) {
-        res.set(r.type, Math.max(res.get(r.type) ?? 0, v));
-        note(`resistance:${r.type}`, src.__from, v, src.__cond);
+      if (v <= 0) continue;
+      /*
+       * A SOURCE-QUALIFIED entry never enters the total — "double this resistance against damage dealt
+       * to you by dragons" cannot be resolved from the sheet, because whether the attacker is a dragon
+       * is not a fact the character has. It still gets its own note, so the IWR breakdown shows the
+       * conditional line with its trigger, exactly as a situational bonus shows beside a stat.
+       *
+       * Skipping the `res.set` is what keeps the headline number honest: folding a conditional value
+       * into it would claim a resistance the character usually does not have.
+       */
+      if (r.against) {
+        note(`resistance:${r.type}`, src.__from, v, `against ${r.against}`);
+        continue;
       }
+      res.set(r.type, Math.max(res.get(r.type) ?? 0, v));
+      /* `condition` ANNOTATES a counted entry, where `against` withholds one. Backfire Mantle resists
+       * splash "from your own alchemical items and those of your allies" — a real, always-on resistance
+       * whose scope the sheet cannot check, so the number counts and the clause rides along with it. */
+      note(`resistance:${r.type}`, src.__from, v, r.condition ?? src.__cond);
     }
     for (const w of src.weaknesses ?? []) {
+      // The same two gates as the resistance loop above. Honouring a field on only half of one shared
+      // type is how a field becomes silently write-only for the other half.
+      if (w.minLevel != null && c.level < w.minLevel) continue;
+      if (w.whenCreatureTrait && !hasCreatureTrait(c, db, w.whenCreatureTrait)) continue;
+      if (w.unlessCreatureTrait && hasCreatureTrait(c, db, w.unlessCreatureTrait)) continue;
       const v = resolveFormula(w.value, scope);
       if (v > 0) {
         weak.set(w.type, Math.max(weak.get(w.type) ?? 0, v));
-        note(`weakness:${w.type}`, src.__from, v, src.__cond);
+        note(`weakness:${w.type}`, src.__from, v, w.condition ?? src.__cond);
       }
     }
     for (const t of src.immunities ?? []) {
@@ -2291,7 +2619,31 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
       return norm(ancestryVision) === n || [...senses.keys()].some((k) => norm(k) === n);
     };
     for (const src of sources) {
-      for (const cs of src.conditionalSenses ?? []) addSense(has(cs.ifPresent) ? cs.upgraded : cs.base);
+      for (const cs of src.conditionalSenses ?? []) {
+        if (!has(cs.ifPresent)) { if (cs.base) addSense(cs.base); continue; }
+        /*
+         * "…if you already have tremorsense, INCREASE ITS RANGE BY 5 FEET." A RELATIVE increase, on
+         * whatever range you already have — which a fixed `upgraded` entry cannot state. Authoring the
+         * arithmetic for one assumed base (30 + 5 = 35) is wrong for every other: a character with
+         * tremorsense 60 from Tunneling Claws should reach 65, and `addSense` keeps the better range, so
+         * a hardcoded 35 was silently discarded and the feat did nothing at all.
+         *
+         * Two records print this shape — Terra Dragonblood (+5 tremorsense) and Vigilant Mask (+60
+         * precise scent) — measured across the corpus.
+         */
+        if (cs.increaseRangeBy) {
+          const key = [...senses.keys()].find((k) => norm(k) === norm(cs.ifPresent));
+          const cur = key ? senses.get(key) : undefined;
+          if (cur?.range != null) addSense({ ...cur, range: cur.range + cs.increaseRangeBy });
+          else if (cs.base) addSense(cs.base);
+          continue;
+        }
+        // A TYPE upgrade ("low-light, or darkvision if you already have low-light"). `upgraded` is
+        // optional now that the relative form exists, so fall back to the base rather than adding
+        // nothing at all if a record sets neither.
+        const upgrade = cs.upgraded ?? cs.base;
+        if (upgrade) addSense(upgrade);
+      }
     }
   }
   // A BATTLE FORM's senses REPLACE yours, so this clears the map rather than merging into it. `addSense`
@@ -2332,6 +2684,14 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
     const v = heritage.choiceResistance.halfLevel === false ? 1 : Math.max(1, Math.floor(c.level / 2));
     res.set(c.heritageResistanceChoice, Math.max(res.get(c.heritageResistanceChoice) ?? 0, v));
   }
+  // The BACKGROUND twin (Energy Scarred: "resistance to that energy type equal to half your level
+  // (minimum 1)"). The answer is the record's own `choice`, already defaulted by buildCharacter, so
+  // an unanswered build still resists its first option like every other unanswered choice.
+  const bgRes = c.backgroundId ? db.backgrounds[c.backgroundId]?.choiceResistance : undefined;
+  if (bgRes && c.backgroundResistanceChoice) {
+    const v = bgRes.halfLevel === false ? 1 : Math.max(1, Math.floor(c.level / 2));
+    res.set(c.backgroundResistanceChoice, Math.max(res.get(c.backgroundResistanceChoice) ?? 0, v));
+  }
 
   // Pathfinder 2e: same-type resistances (and weaknesses) DO NOT stack — the highest applies. Mark the
   // losers so the breakdown can show "Ring of Fire Resistance 2 — superseded" instead of silently
@@ -2358,7 +2718,10 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
     immunities: [...imm].sort(),
     sources: Object.fromEntries(attribution),
     negativeHealing:
+      !!(c.ancestryId && db.ancestries[c.ancestryId]?.negativeHealing) ||
       !!heritage?.negativeHealing ||
+      // …and the BACKGROUND (Revenant, batch 21).
+      !!(c.backgroundId && db.backgrounds[c.backgroundId]?.negativeHealing) ||
       c.feats.some((f) => db.feats[f.featId]?.negativeHealing) ||
       c.inventory.some((inv) => inv.invested && db.items[inv.itemId]?.negativeHealing),
     // "You can breathe underwater." A permanent capability with no number attached, so it fitted no
@@ -2368,6 +2731,8 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
       heritageRecords(c, db).some((h) => h.breathesWater) ||
       c.feats.some((f) => db.feats[f.featId]?.breathesWater) ||
       [...ownedFeatureIds(c, db)].some((id) => db.classFeatures[id]?.breathesWater) ||
+      // …and the BACKGROUND (Song of the Deep, batch 20).
+      !!(c.backgroundId && db.backgrounds[c.backgroundId]?.breathesWater) ||
       c.inventory.some((inv) => inv.invested && db.items[inv.itemId]?.breathesWater),
   };
 }
@@ -2398,6 +2763,12 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
  * Swimming Animal breathed water, every champion was holy, and an untransformed worm caller standing
  * in a tavern was an animal.
  */
+/** Does the character have this creature trait? One reader, so every gate that asks agrees with the
+ *  Details tab — matched case-insensitively, since records spell traits both ways. */
+function hasCreatureTrait(c: Character, db: ContentDatabase, trait: string): boolean {
+  return creatureTraitsOf(c, db).some((t) => String(t.trait).toLowerCase() === trait.toLowerCase());
+}
+
 export function creatureTraitsOf(
   c: Character,
   db: ContentDatabase,
@@ -2648,7 +3019,27 @@ export function handwrapsRuneSharing(c: Character, db: ContentDatabase, inv: Inv
  *  property runes duplicated from another wielded weapon set as its `copyRunesFrom` source. The source's
  *  runes win where higher; the base rings require the two weapons to share a group (greater lifts that). */
 export function effectiveWeaponRunes(c: Character, db: ContentDatabase, inv: InventoryItem): WeaponRunes | undefined {
-  const own = inv.runes as WeaponRunes | undefined;
+  /*
+   * A SPECIFIC MAGIC WEAPON carries its fundamental runes in its own name — *"This +1 striking
+   * longsword…"* — and they are not etched, so nothing ever put them on the inventory row. Measured: a
+   * Cooperative Blade rolled attack 14 for 1d8+2, which is exactly what a PLAIN longsword rolls, where
+   * the book says +1 and 2d8.
+   *
+   * `builtInRunes` on the item record is a FLOOR under whatever the row carries, never a replacement:
+   * a player who etches a higher potency keeps it, and one who etches nothing still gets what they
+   * bought. Merged here rather than at add-to-inventory time so it is true of every character who
+   * already owns one, including saved ones.
+   */
+  const builtIn = (db.items[inv.itemId] as { builtInRunes?: WeaponRunes } | undefined)?.builtInRunes;
+  const merge = (r: WeaponRunes | undefined): WeaponRunes | undefined => {
+    if (!builtIn) return r;
+    const STRIKING = ['', 'striking', 'greater', 'major'];
+    const best = (a?: string, b?: string) => (STRIKING.indexOf(a ?? '') >= STRIKING.indexOf(b ?? '') ? a : b);
+    const potency = Math.max(r?.potency ?? 0, builtIn.potency ?? 0);
+    const striking = best(r?.striking, builtIn.striking);
+    return { ...(r ?? {}), ...(potency ? { potency } : {}), ...(striking ? { striking } : {}) } as WeaponRunes;
+  };
+  const own = merge(inv.runes as WeaponRunes | undefined);
   if (!inv.copyRunesFrom) return own;
   const source = c.inventory.find((x) => x.instanceId === inv.copyRunesFrom);
   const srcItem = source && db.items[source.itemId];
@@ -2750,6 +3141,30 @@ export function classFeatureIdsOwned(
   for (const cc of opts.classChoices ?? []) {
     if (cc.id && cc.level <= opts.level && db.classFeatures[cc.id]) out.add(cc.id);
   }
+  return out;
+}
+
+/**
+ * Every record id a MODE may be gated on: taken feats, owned class features, and the HERITAGE.
+ *
+ * A mode's `feats` gate was matched against feats + owned features only, so a heritage that grants a
+ * toggleable effect could not gate one — the hardshell surki's Dampening Harmonics force field is the
+ * case, and a mode gated on it would simply never be offered. `test/integrity-sweeps.test.ts` catches
+ * exactly that ("every mode names a real item and a real gate"), which is how this was found.
+ *
+ * One helper rather than three call-site spreads, so the three panels that offer modes cannot drift
+ * apart about what counts as owning the thing that unlocks one.
+ */
+export function modeGateIds(c: Character, db: ContentDatabase): Set<string> {
+  const out = new Set<string>([...c.feats.map((f) => f.featId), ...ownedFeatureIds(c, db)]);
+  for (const h of heritageRecords(c, db)) out.add(h.id);
+  // The BACKGROUND too — a mode can gate on one (Awful Scab's Sealed Outfit daily counteract).
+  if (c.backgroundId) out.add(c.backgroundId);
+  /* …and `<featId>:<answer>` for a feat whose ANSWER decides which modes apply. The werecreature
+   * dedication ships nine types and eighteen shapes; a werebat must be offered the bat's forms and not
+   * the werewolf's, and a gate naming only the feat cannot tell them apart. Plain ids still match
+   * exactly as before — this only adds keys. */
+  for (const f of c.feats) if (f.choice?.value) out.add(`${f.featId}:${f.choice.value}`);
   return out;
 }
 
@@ -2875,7 +3290,10 @@ export function choiceOwnedFeatureIds(
     if (!d) continue;
     const answer = answerOf(d.fromFeat);
     if (!answer) continue; // the dedication is not taken, or its choice is unanswered — grant nothing
-    const id = `${d.prefix ?? ''}${answer.replace(/^aon-/, '')}${d.suffix ?? ''}`;
+    const bare = answer.replace(/^aon-/, '');
+    // A NAMED relation (`map`) beats a derived one: a gunslinger way's initial deed shares no stem
+    // with the way's id, so prefix/suffix could never reach it.
+    const id = d.map ? (d.map[bare] ?? '') : `${d.prefix ?? ''}${bare}${d.suffix ?? ''}`;
     if (db.classFeatures[id]) out.push(id);
   }
   return out;
@@ -2971,7 +3389,7 @@ const RAGE_DAMAGE: Record<string, { tiers: [number, number, number]; type?: stri
  *  leading `*` in the note flags the condition. */
 function rageStrikeRider(
   c: Character,
-  opts: { ranged: boolean; unarmed: boolean; weaponType: string; thrown?: boolean },
+  opts: { ranged: boolean; unarmed: boolean; weaponType: string; thrown?: boolean; agile?: boolean },
 ): { text: string; note: string } | null {
   if (!c.classResources?.rage) return null; // not currently raging → no bonus
   const isBarb = c.classId === 'barbarian';
@@ -2994,6 +3412,15 @@ function rageStrikeRider(
       if (inst.largerWeapon) note = '* while raging with a larger weapon (Clumsy 1)';
     }
   }
+  /* *"This additional damage is halved if your weapon or unarmed attack is agile."* — printed on the
+   * Rage action itself and applied by neither side until an adversarial audit caught it. Halved and
+   * rounded down like every PF2e halving — and SAID on the note: the baseline Fist is agile, so most
+   * barbarians see the halved number on their first Strike and deserve to know why it is not the one
+   * their instinct prints. */
+  if (opts.agile) {
+    value = Math.floor(value / 2);
+    note += ', halved: agile';
+  }
   return { text: `${value} ${type}`, note };
 }
 
@@ -3002,6 +3429,8 @@ function rageStrikeRider(
 export interface CritSpecSource {
   level: number;
   weapons?: DefenseGrants['critSpecWeapons'];
+  /** A per-target condition to print beside the effect — see DefenseGrants.critSpecCondition. */
+  condition?: string;
 }
 
 /** Every crit-spec grant the character has, from class features (Weapon Mastery/Expertise, …),
@@ -3011,37 +3440,91 @@ export interface CritSpecSource {
  *  narrowing. Compute once, then test each Strike with `strikeShowsCritSpec`. */
 export function critSpecSources(c: Character, db: ContentDatabase): CritSpecSource[] {
   const out: CritSpecSource[] = [];
-  const add = (e: DefenseGrants & { critSpec?: boolean; critSpecLevel?: number } | undefined, gainLevel: number) => {
+  /* The answer the SOURCE record itself holds, kept alongside each entry: an `{item|…}` placeholder
+   * means "this record's own pick", and without it the resolver below has no way to find one. */
+  const ownAnswer = new Map<CritSpecSource, string | undefined>();
+  const add = (
+    e: (DefenseGrants & { critSpec?: boolean; critSpecLevel?: number }) | undefined,
+    gainLevel: number,
+    choiceValue?: string,
+  ) => {
     if (!e?.critSpec) return;
-    out.push({ level: Math.max(gainLevel, e.critSpecLevel ?? 0), weapons: e.critSpecWeapons });
+    /* *"WHILE RAGING, you have the critical specialization benefits…"* — a state gate, not a level one.
+     * Keyed by exclusive GROUP so every spelling of the state counts (a Decay barbarian rages through
+     * `cat-rotting-rage`); before this, the two records carrying the clause granted it unconditionally. */
+    const group = e.critSpecRequiresModeGroup;
+    if (group && !(c.activeModes ?? []).some((m) => m.exclusiveGroup === group)) return;
+    const entry: CritSpecSource = { level: Math.max(gainLevel, e.critSpecLevel ?? 0), weapons: e.critSpecWeapons, condition: e.critSpecCondition };
+    out.push(entry);
+    ownAnswer.set(entry, choiceValue);
   };
   const cls = c.classId ? db.classes[c.classId] : undefined;
-  if (cls) for (const cf of cls.features) add(db.classFeatures[cf.featureId], cf.level);
-  for (const f of c.feats) add(db.feats[f.featId], f.level ?? 1);
+  /** Class-feature ids already contributed, so the catch-all pass at the end cannot add one twice. */
+  const addedFeatures = new Set<string>();
+  if (cls) for (const cf of cls.features) { add(db.classFeatures[cf.featureId], cf.level); addedFeatures.add(cf.featureId); }
+  for (const f of c.feats) add(db.feats[f.featId], f.level ?? 1, f.choice?.value);
   // A base of the form "{actor|flags.system.<flag>}" is an UNSUBSTITUTED Foundry template that ships
   // in the source data — Gird Champion's favored weapon is stored exactly that way, so its crit
   // specialization could never match any weapon. The placeholder names the choice flag, so the
   // player's own answer is what belongs there.
   for (const src of out) {
     const bases = src.weapons?.bases;
-    if (!bases?.some((b) => b.startsWith('{actor|flags.'))) continue;
+    if (!bases?.some((b) => b.startsWith('{actor|flags.') || b.startsWith('{item|flags.'))) continue;
     src.weapons = {
       ...src.weapons,
       bases: bases.flatMap((b) => {
         // Braces, the pipe and the dots ALL need escaping: unescaped, the pipe reads as an
         // alternation that matches "^{actor" with no capture group, so every lookup silently missed.
         const m = /^\{actor\|flags\.[^.]+\.([^}]+)\}$/.exec(b);
-        if (!m) return [b];
-        const answer = c.feats.find((f) => db.feats[f.featId]?.choice?.flag === m[1])?.choice?.value;
-        return answer ? [answer] : [];
+        if (m) {
+          const answer = c.feats.find((f) => db.feats[f.featId]?.choice?.flag === m[1])?.choice?.value;
+          return answer ? [answer] : [];
+        }
+        /*
+         * The `{item|flags.system.rulesSelections.<name>}` form, which this resolver never handled —
+         * so Surki Weapon Familiarity's chosen weapon and BOTH of Samsaran Weapon Memory's resolved to
+         * nothing, silently. Unlike the `{actor|…}` form its captured name is Foundry's own
+         * ("weapon", "weaponOne", "weaponTwo") and matches no `choice.flag` of ours, so it means
+         * "this record's OWN pick" — and a trailing One/Two selects which of a multi-pick answer.
+         *
+         * Fails CLOSED: an unanswered pick contributes nothing rather than widening the list, which is
+         * the dangerous direction (crit specialization with EVERY weapon).
+         */
+        const im = /^\{item\|flags\.[^}]*?([A-Za-z]+?)(One|Two)?\}$/.exec(b);
+        if (!im) return [b];
+        /* A multi-pick answer is stored comma-joined (the convention the builder already uses), so the
+         * One/Two suffix indexes into it; a single pick has no suffix and is the whole answer. */
+        const parts = String(ownAnswer.get(src) ?? '').split(',').map((s) => s.trim()).filter(Boolean);
+        if (!parts.length) return [];
+        if (im[2] === 'One') return parts[0] ? [parts[0]] : [];
+        if (im[2] === 'Two') return parts[1] ? [parts[1]] : [];
+        return [parts[0]];
       }),
     };
   }
   if (c.subclassId) {
     add(db.classFeatures[c.subclassId], db.classFeatures[c.subclassId]?.level ?? 1);
+    addedFeatures.add(c.subclassId);
     // Doctrines and other subclass-suffixed features aren't listed in cls.features.
     const suffix = '-' + c.subclassId;
-    for (const cf of Object.values(db.classFeatures)) if (cf.critSpec && cf.id.endsWith(suffix)) add(cf, cf.level);
+    for (const cf of Object.values(db.classFeatures)) {
+      if (cf.critSpec && cf.id.endsWith(suffix)) { add(cf, cf.level); addedFeatures.add(cf.id); }
+    }
+  }
+  /*
+   * …and EVERY other owned class feature. The three passes above reach `cls.features`, the chosen
+   * subclass and its `-<subclassId>` variants — but not an extra-choice option, a feature a subclass
+   * brings with it, an inventor modification or a mythic calling, all of which `ownedFeatureIds`
+   * already resolves and any of which may carry `critSpec`. Measured: 8 exemplar epithets and the
+   * cleric's Lesser Creed were unreachable, so their crit specialization never applied.
+   * The earlier passes stay for their level and answer handling, and `addedFeatures` keeps this one
+   * from contributing the same record a second time — a duplicate source would not change which
+   * weapons qualify, but it would double the row in any breakdown that lists them.
+   */
+  for (const fid of ownedFeatureIds(c, db)) {
+    if (addedFeatures.has(fid)) continue;
+    const cf = db.classFeatures[fid];
+    if (cf?.critSpec) add(cf, cf.level ?? 1);
   }
   return out.filter((s) => s.level <= c.level);
 }
@@ -3085,6 +3568,14 @@ export function armorSpecAccess(c: Character, db: ContentDatabase): ArmorSpecAcc
 
 function weaponMatches(strike: Strike, w?: DefenseGrants['critSpecWeapons'], c?: Character): boolean {
   if (!w) return true;
+  /* A rank the STRIKE must already reach — Archer Dedication's *"If you are at least an expert in the
+   * bow you are using, you gain access to its critical specialization effect."* Tested against this
+   * attack's own rank rather than a weapon-category rank, because the two part company the moment a
+   * familiarity feat or a rune moves one weapon on its own. */
+  if (w.minRank) {
+    const have = RANK_ORDER.indexOf(strike.rank as (typeof RANK_ORDER)[number]);
+    if (have < RANK_ORDER.indexOf(w.minRank as (typeof RANK_ORDER)[number])) return false;
+  }
   if (w.melee && strike.ranged) return false;
   // "Your innovation gains critical specialization." Narrows to the ONE designated item, and matches
   // nothing when nothing is designated — an unnarrowed entry returns true below, which would light up
@@ -3093,11 +3584,18 @@ function weaponMatches(strike: Strike, w?: DefenseGrants['critSpecWeapons'], c?:
     const inv = c?.inventory?.find((i) => i.instanceId === strike.instanceId);
     return (inv?.designations ?? []).includes(w.designated);
   }
-  const narrowed = !!(w.groups?.length || w.traits?.length || w.bases?.length);
+  const narrowed = !!(w.groups?.length || w.traits?.length || w.bases?.length || w.names?.length);
   if (!narrowed) return true;
   if (strike.group && w.groups?.includes(strike.group)) return true;
   if (w.traits?.some((t) => strike.traits.includes(t))) return true;
   if (strike.base && w.bases?.includes(strike.base)) return true;
+  /* By NAME, for a named unarmed attack — "…or with your horns unarmed strike". A natural attack's
+   * `base` is `natural:<index>`, never a weapon slug, so `bases` can never reach one; the trait and
+   * group routes would light crit spec on every unarmed strike. See the field comment in types.ts. */
+  if (w.names?.length) {
+    const n = strike.name.toLowerCase();
+    if (w.names.some((x) => n.includes(String(x).toLowerCase()))) return true;
+  }
   return false;
 }
 
@@ -3108,6 +3606,23 @@ export function strikeShowsCritSpec(strike: Strike, sources: CritSpecSource[], c
   // critSpecWeapons filters by group, trait or base weapon, never by one particular attack.
   if (strike.critSpec) return true;
   return sources.some((s) => weaponMatches(strike, s.weapons, c));
+}
+
+/**
+ * The per-target condition to print beside a strike's crit-spec effect, or undefined when there is
+ * none to print.
+ *
+ * *"…when attacking your hunted prey"* is true of the Ranger Weapon Expertise source and of nothing
+ * else, so it may only be shown when EVERY source that reaches this strike carries a condition — a
+ * ranger who also has an unconditional grant really does have it unconditionally, and printing the
+ * narrower clause there would take something away. A per-strike `unarmedTraits.critSpec` rider is one
+ * such unconditional source.
+ */
+export function critSpecConditionFor(strike: Strike, sources: CritSpecSource[], c?: Character): string | undefined {
+  if (strike.critSpec) return undefined;
+  const matching = sources.filter((s) => weaponMatches(strike, s.weapons, c));
+  if (!matching.length || matching.some((s) => !s.condition)) return undefined;
+  return [...new Set(matching.map((s) => s.condition!))].join('; ');
 }
 
 /** Weapon Specialization bonus damage at a given attack proficiency rank: +2/+3/+4 at
@@ -3351,6 +3866,34 @@ function strikeReaches(c: Character, db: ContentDatabase, ctx: ReachContext): St
  * wields. Die steps deliberately DO NOT COMPOUND — the best single step wins, or a champion with two
  * such feats turns a d6 into a d10.
  */
+/**
+ * Every answer the character gave to a choice carrying this flag — one per TAKING.
+ *
+ * Fighting Horn prints *"Choose two of the following weapon traits: disarm, grapple, shove, and trip.
+ * Your horn gains the chosen traits"*, with a Special allowing a second taking. A fixed `add` list
+ * cannot say which traits, and the single-answer form used for "your favored weapon" a few hundred
+ * lines above reads only the first taking — so a character who took the feat twice would see one
+ * trait. Gathering across takings is what makes the repeat mean something.
+ *
+ * ⚠ A MULTI-PICK ANSWER ARRIVES COMMA-JOINED. `picks: 2` fans the pickers out to `<slot>#0`/`#1`
+ * (`choiceKeys`, build.ts:482), and build.ts:2996 stores the whole set on the built feat as ONE value
+ * — `{ value: values.join(','), label: labels.join(', ') }`. Reading that string whole is what kept
+ * Fighting Horn (*"Choose two of the following weapon traits"*) short by one: measured on a built
+ * kashrishi, the Horn came out with a single invented trait "disarm,shove" and NEITHER chosen trait.
+ * Choice values are slugs, so a comma is never part of one answer and the split is unambiguous; for a
+ * single-pick answer `'x'.split(',')` is `['x']`, byte-identical to the old behaviour.
+ */
+function answersForChoiceFlag(c: Character, db: ContentDatabase, flag: string): string[] {
+  const out: string[] = [];
+  for (const f of c.feats ?? []) {
+    if (db.feats[f.featId]?.choice?.flag !== flag) continue;
+    for (const v of String(f.choice?.value ?? '').split(',').map((s) => s.trim())) {
+      if (v && !out.includes(v)) out.push(v);
+    }
+  }
+  return out;
+}
+
 function applyWeaponRiders(c: Character, db: ContentDatabase, w: WeaponItem, inv?: InventoryItem): WeaponItem {
   const sources: (DefenseGrants | Pick<ModeDef, 'weaponTraits'> | undefined)[] = [
     ...(c.feats ?? []).map((fc) => db.feats[fc.featId]),
@@ -3389,12 +3932,17 @@ function applyWeaponRiders(c: Character, db: ContentDatabase, w: WeaponItem, inv
       // "first weapon" fallback would hand a greatsword's modifications to a dagger.
       if (m.designated && !(inv?.designations ?? []).includes(m.designated)) continue;
 
-      if (r.add?.length) {
+      /* …or the traits the PLAYER chose. Fighting Horn prints *"Choose two of the following weapon
+       * traits: disarm, grapple, shove, and trip. Your horn gains the chosen traits."* — a fixed
+       * `add` list cannot say that, so the answers are read off the choice that asked. */
+      const chosen = r.addFromChoiceFlag ? answersForChoiceFlag(c, db, r.addFromChoiceFlag) : [];
+      const toAdd = [...(r.add ?? []), ...chosen];
+      if (toAdd.length) {
         // "…that doesn't have the deadly trait": skip a weapon already carrying the family, or the
         // rider would replace a deadly d10 with a d8.
         const add = r.onlyIfMissing
-          ? r.add.filter((t) => !traits.some((existing) => traitFamily(existing) === traitFamily(t)))
-          : r.add;
+          ? toAdd.filter((t) => !traits.some((existing) => traitFamily(existing) === traitFamily(t)))
+          : toAdd;
         if (add.length) traits = mergeTraits(traits, add);
       }
       if (r.remove?.length) traits = traits.filter((t) => !r.remove!.includes(t));
@@ -3471,7 +4019,16 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
   // the same class (take the higher — a refined weapon carries no runes, so this is refinement-vs-ABP).
   // Battleforger's temporary +1 potency: an item bonus of the same class, so it takes the highest
   // rather than adding — which matches the feat's "no effect if it already had a potency rune".
-  const potencyBonus = Math.max(abpOn(c) ? abpAttack(c.level) : runes?.potency ?? 0, mpRef?.attack ?? 0, inv.battleforged ? 1 : 0);
+  /* …and the weapon's OWN printed item bonus — the alchemical bomb grades ("+1 item bonus to attack
+   * rolls" on a moderate, +2 greater, +3 major). A bomb takes no runes, so the potency slot that
+   * normally carries a weapon's item-class attack bonus was permanently 0 and the printed number had
+   * nowhere to land. Same bonus class as a rune, so the highest wins rather than summing. */
+  const potencyBonus = Math.max(
+    abpOn(c) ? abpAttack(c.level) : runes?.potency ?? 0,
+    mpRef?.attack ?? 0,
+    inv.battleforged ? 1 : 0,
+    w.attackItemBonus ?? 0,
+  );
   // Clumsy penalizes EVERY ranged attack roll, including thrown weapons that use Str to hit. Status
   // penalties don't stack and both calls carry the same Frightened/Prone, so taking the worst (min) of
   // the attack-ability and Dex penalties folds in Clumsy for a thrown strike without double-counting.
@@ -3480,9 +4037,14 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
   const condMods = ranged
     ? [...conditionTypedMods(c.conditions, atkAbility, 'attack'), ...conditionTypedMods(c.conditions, 'dex', 'attack')]
     : conditionTypedMods(c.conditions, atkAbility, 'attack');
+  /* *"…treat your level as your proficiency bonus"* for a weapon you are NOT proficient with. A floor
+   * under the contribution rather than a rank, and only where the weapon really is untrained — the
+   * clause exists to rescue the weapon you picked up, not to improve the one you trained with. */
+  const untrainedFloor = rank === 'untrained' ? untrainedWeaponBonus(c, db) : null;
+  const profPart = untrainedFloor != null ? Math.max(profBonus(rank, c.level, pwl(c)), untrainedFloor) : profBonus(rank, c.level, pwl(c));
   const base =
     abMod +
-    profBonus(rank, c.level, pwl(c)) +
+    profPart +
     // Weapon potency (item), condition penalties, and mode modifiers pool by type across sources.
     poolTypedMods([{ type: 'item', value: potencyBonus }, ...condMods, ...modeTypedMods(c.activeModes, { kind: 'attack' })]);
 
@@ -3567,6 +4129,7 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
     // The trait ships as "thrown" on a melee weapon you may hurl and "thrown-20-ft" where a range is
     // printed, so match the prefix rather than the bare word.
     thrown: w.traits.some((t) => t === 'thrown' || t.startsWith('thrown-')),
+    agile: w.traits.includes('agile'),
   });
   if (rageRider) conditionalDamage.push(rageRider);
   // A `thrown-N` weapon carries a range and is still wielded in the hand — the app models its single
@@ -3736,6 +4299,9 @@ interface UnarmedProfile {
   /** Carried from `NaturalAttack.dieNote`, so the damage breakdown can name what stepped this
    *  attack's die up. Survives applyUnarmedRiders, which rebuilds the profile by spreading it. */
   dieNote?: string;
+  /** Set when this profile is a WEAPON Strike granted by a stance rather than an unarmed attack, so
+   *  it rolls at that category's proficiency and handwraps do not touch it. See StanceStrike. */
+  weaponCategory?: WeaponCategory;
 }
 
 const FIST_PROFILE: UnarmedProfile = {
@@ -3770,7 +4336,11 @@ function deriveUnarmedStrike(
   const usesDex = isRanged || (p.traits.includes('finesse') && dexMod > strMod);
   const atkAbility: AbilityId = usesDex ? 'dex' : 'str';
   const abMod = usesDex ? dexMod : strMod;
-  const rank = c.proficiencies.attacks.unarmed;
+  /* A stance can grant a WEAPON Strike (Haft Striker Stance's haft is *"a simple weapon"*), and it
+   * rolls at that category's proficiency, not at unarmed. Everything else here is shared, because a
+   * granted weapon Strike is otherwise derived exactly like a granted unarmed one — it has no
+   * inventory item behind it to carry runes or a base weapon. */
+  const rank = p.weaponCategory ? c.proficiencies.attacks[p.weaponCategory] : c.proficiencies.attacks.unarmed;
   // Monster-Parts refined handwraps buff unarmed attacks like the weapon table (attack + striking).
   const mpRef = mpHandwraps ? mpWeaponRefine(mpHandwraps, c.level) : null;
   const potencyBonus = Math.max(abpOn(c) ? abpAttack(c.level) : hwRunes?.potency ?? 0, mpRef?.attack ?? 0);
@@ -3839,7 +4409,7 @@ function deriveUnarmedStrike(
     (nCritRiders.length ? ` (plus ${nCritRiders.join(', ')} on a crit)` : '') +
     (nFatal ? ` (fatal ${nFatal})` : '');
   const conditionalDamage = strikePrecisionRiders(c, db, { traits: p.traits, ranged: isRanged, unarmed: true });
-  const rageRider = rageStrikeRider(c, { ranged: isRanged, unarmed: true, weaponType: p.damageType });
+  const rageRider = rageStrikeRider(c, { ranged: isRanged, unarmed: true, weaponType: p.damageType, agile: p.traits.includes('agile') });
   if (rageRider) conditionalDamage.push(rageRider);
   return {
     instanceId: p.instanceId,
@@ -3884,24 +4454,38 @@ function applyUnarmedRiders(c: Character, db: ContentDatabase, p: UnarmedProfile
   let out = p;
   // Class features carry these too, now that both riders live on DefenseGrants — the monk's Powerful
   // Fist is a class feature, and so is every subclass that reshapes an attack.
-  const sources: (DefenseGrants | undefined)[] = [
-    ...(c.feats ?? []).map((fc) => db.feats[fc.featId]),
-    ...[...ownedFeatureIds(c, db)].map((id) => db.classFeatures[id]),
+  /* The record AND the answer the player gave it, because a rider may be gated on one branch of the
+   * granting record's own choice. A class feature carries no per-character answer here, so its riders
+   * must be ungated to fire — which is the case for every one that exists. */
+  const sources: { rec: DefenseGrants | undefined; choiceValue?: string }[] = [
+    ...(c.feats ?? []).map((fc) => ({ rec: db.feats[fc.featId], choiceValue: fc.choice?.value })),
+    ...[...ownedFeatureIds(c, db)].map((id) => ({ rec: db.classFeatures[id] as DefenseGrants | undefined })),
+    /* …and HERITAGES. Warrior Automaton prints *"the damage die for your fist increases to 1d6 instead
+     * of 1d4"* and there was no route for it: riders came from feats and class features only, so the
+     * field could be authored on the heritage and would never fire. A reader that never looks is the
+     * same as no data — and worse, it looks like data. */
+    ...heritageRecords(c, db).map((h) => ({ rec: h as DefenseGrants | undefined })),
   ];
   let bestStep = 0;
   let setDie: string | undefined;
   let gainsCritSpec = false;
 
   for (const src of sources) {
-    for (const r of asRiders(src?.unarmedTraits)) {
+    for (const r of asRiders(src.rec?.unarmedTraits)) {
       // A rider may name which attack it changes ("your beak", "your hair"); most name none = all.
       if (r.match?.length && !r.match.some((m) => out.name.toLowerCase().includes(m.toLowerCase()))) continue;
       // Or name the RECORD that granted the strike. "Claw" is Draconic Aspect's attack and also a
       // nephilim's Bestial Manifestation, so a name match hands the wrong character a deadly d8.
       // Fails closed: a strike with no recorded source matches no `fromRecord` rider.
       if (r.fromRecord && out.source !== r.fromRecord) continue;
+      // Or be one branch of the granting record's own choice: Iruxi Armaments upgrades your claw only
+      // for the player who picked Claws, not the one who picked Fangs. Fails CLOSED — an unanswered
+      // choice grants no branch, rather than every branch.
+      if (r.choiceValue && src.choiceValue !== r.choiceValue) continue;
 
-      const add = r.add ?? [];
+      /* …plus the traits the PLAYER chose, for a record whose printed clause names no traits of its
+       * own ("your horn gains the chosen traits"). Gathered across takings — see the helper. */
+      const add = [...(r.add ?? []), ...(r.addFromChoiceFlag ? answersForChoiceFlag(c, db, r.addFromChoiceFlag) : [])];
       // "any that already had one or both of these" — tested BEFORE the new traits are merged in.
       const had = add.some((t) => out.traits.some((existing) => traitFamily(existing) === traitFamily(t)));
       if (add.length) out = { ...out, traits: mergeTraits(out.traits, add) };
@@ -3969,9 +4553,21 @@ export function deriveStrikes(c: Character, db: ContentDatabase): Strike[] {
     });
   }
   // Handwraps never appear as their own Strike (under any carry flag) — their runes buff every unarmed attack.
+  // A COMBINATION weapon is *"one weapon with two usages"*, so one equipped item yields TWO Strikes: the
+  // ranged usage the base record holds, then the melee usage — the order the printed combination weapons
+  // table uses ("lists the ranged weapon statistics first and the melee weapon statistics indented
+  // beneath"). `combinationMeleeForm` had named that second usage on all 18 of these since import, but
+  // nothing ever read it, so every combination weapon was a one-Strike weapon on the sheet.
+  // The melee usage is derived from the SAME inventory row, which is what makes *"both usages share any
+  // fundamental runes"* fall out for free: potency, striking and ABP all come off `inv`, not off the item.
   const weapons = c.inventory
     .filter((inv) => inv.equipped && !isHandwraps(db.items[inv.itemId]))
-    .map((inv) => deriveStrike(c, db, inv))
+    .flatMap((inv) => {
+      const held = db.items[inv.itemId];
+      const meleeId = held?.itemType === 'weapon' ? held.combinationMeleeForm : undefined;
+      if (!meleeId || !db.items[meleeId]) return [deriveStrike(c, db, inv)];
+      return [deriveStrike(c, db, inv), deriveStrike(c, db, { ...inv, itemId: meleeId, instanceId: `${inv.instanceId}:melee` })];
+    })
     .filter((s): s is Strike => s != null);
   const hwRunes = bestHandwrapsRunes(c, db);
   // A Monster-Parts-mode handwraps buffs every unarmed attack via its refinement + imbuements.
@@ -3984,6 +4580,9 @@ export function deriveStrikes(c: Character, db: ContentDatabase): Strike[] {
       applyUnarmedRiders(c, db, {
         instanceId: `natural:${i}`,
         name: na.name,
+        /* WHICH record granted it, so `UnarmedRider.fromRecord` can gate on identity rather than on a
+         * name two different records both use ("Claw" is Draconic Aspect's and a nephilim's). */
+        source: na.source,
         die: na.die,
         damageType: na.damageType,
         traits: na.traits?.length ? na.traits : ['unarmed'],
@@ -3996,10 +4595,18 @@ export function deriveStrikes(c: Character, db: ContentDatabase): Strike[] {
       mpHw,
     ),
   );
-  // The Fist's damage die increases to 1d6 (and it loses the nonlethal trait) from Powerful Fist (level-1
-  // monk class feature) OR the Warrior Automaton / Warrior Jotunborn heritages, which grant the same upgrade.
-  const fistDieUpgraded =
-    ownedFeatureIds(c, db).has('powerful-fist') || hasHeritage(c, 'warrior-automaton') || hasHeritage(c, 'warrior-jotunborn');
+  /*
+   * The Fist's damage die increases to 1d6 (and it loses the nonlethal trait) from Powerful Fist, the
+   * level-1 monk class feature.
+   *
+   * ⚠ The Warrior Automaton and Warrior Jotunborn heritages USED TO BE IN THIS LIST, and being in it
+   * gave them the same treatment — which is wrong, because their sentences differ: the jotunborn drops
+   * the lethal-attack penalty for *"your fist"* and the automaton for *"your fist OR ANY OTHER UNARMED
+   * ATTACK"*. One hard-coded id list cannot say that, so the automaton's wider clause was silently the
+   * narrow one. Both now carry their own `unarmedTraits`, which is also the only way a future heritage
+   * can join them without an engine edit.
+   */
+  const fistDieUpgraded = ownedFeatureIds(c, db).has('powerful-fist');
   const fistProfile: UnarmedProfile = fistDieUpgraded
     ? { ...FIST_PROFILE, die: 'd6', traits: FIST_PROFILE.traits.filter((t) => t !== 'nonlethal') }
     : FIST_PROFILE;
@@ -4015,8 +4622,16 @@ export function deriveStrikes(c: Character, db: ContentDatabase): Strike[] {
     ...(activeStanceDef(c, db)?.strikes ?? []).map((s, i) => ({ s, key: `stance:${i}` })),
     ...(c.activeModes ?? []).flatMap((m) => (m.grantedStrikes ?? []).map((s, i) => ({ s, key: `mode:${m.id}:${i}` }))),
   ];
-  const stanceStrikes = granted.map(({ s, key }) =>
-    deriveUnarmedStrike(
+  const stanceStrikes = granted.map(({ s, key }) => {
+    /*
+     * A stance Strike is unarmed unless it says otherwise. Haft Striker Stance is the one that does:
+     * its haft is *"a simple weapon"* in the club group, which Wanderer's Guide also models as a
+     * simple-category item rather than an unarmed attack. For that case the `unarmed` trait is NOT
+     * added (it would pull in unarmed-attack feats and Handwraps), no handwrap runes are passed, and
+     * the default brawling group does not apply — the record names its own.
+     */
+    const asWeapon = s.weaponCategory;
+    return deriveUnarmedStrike(
       c,
       db,
       applyUnarmedRiders(c, db, {
@@ -4024,18 +4639,19 @@ export function deriveStrikes(c: Character, db: ContentDatabase): Strike[] {
         name: s.name,
         die: s.die,
         damageType: s.damageType,
-        traits: s.traits?.length ? [...new Set([...s.traits, 'unarmed'])] : ['unarmed'],
-        group: s.group ?? 'brawling',
+        traits: asWeapon ? [...new Set(s.traits ?? [])] : s.traits?.length ? [...new Set([...s.traits, 'unarmed'])] : ['unarmed'],
+        group: s.group ?? (asWeapon ? '' : 'brawling'),
+        ...(asWeapon ? { weaponCategory: asWeapon } : {}),
         strikingFloor: Math.max(
           0,
           ...(s.strikingByLevel ?? []).filter((t) => c.level >= t.level).map((t) => t.extraDice),
         ),
       }),
-      hwRunes,
+      asWeapon ? undefined : hwRunes,
       false,
-      mpHw,
-    ),
-  );
+      asWeapon ? undefined : mpHw,
+    );
+  });
   // Always offer the baseline Fist (PF2e gives every character an unarmed Strike), listed after naturals.
   return [
     ...stanceStrikes,
@@ -4053,13 +4669,28 @@ export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {
   // have made a pest-form dwarf walk at 45 and kept a fly Speed the bat form never had.
   const form = activeBattleForm(c);
   const formSpeeds = form?.speeds;
+  /* A heritage that STATES a Speed replaces the ancestry chassis value of that type — the Mistbreath
+   * Azarketi's printed swim 15 stands where the azarketi chassis says 30, because the heritage is the
+   * more specific printed statement about THIS character. A type the ancestry lacks simply sets
+   * itself (Cecaelia's climb), which the old max() path also produced; same-type-but-lower is the
+   * case max() got wrong. The later grant loop still max()es these sources, which cannot raise a
+   * value back above its own statement. */
+  const heritageBase: Record<string, number> = {};
+  for (const h of heritageRecords(c, db)) {
+    for (const [k, v] of Object.entries(h.speeds ?? {})) {
+      // A ZERO is the data's "no statement here" placeholder (seaweed-leshy stores land: 0 beside its
+      // swim 20) — under replace semantics it must stay absent, not become "your Speed is 0".
+      if (typeof v === 'number' && v > 0) heritageBase[k] = Math.max(heritageBase[k] ?? 0, v);
+    }
+  }
+  const baseSpeeds = { ...(ancestry?.speeds ?? {}), ...heritageBase };
   const speeds: Speeds = formSpeeds
     ? Object.fromEntries(
         Object.entries(formSpeeds)
-          .map(([k, v]) => [k, typeof v === 'number' ? v : resolveFormula(v as string, { level: c.level, abilities: c.abilities, speeds: { ...(ancestry?.speeds ?? {}) } })])
+          .map(([k, v]) => [k, typeof v === 'number' ? v : resolveFormula(v as string, { level: c.level, abilities: c.abilities, speeds: baseSpeeds })])
           .filter(([, v]) => typeof v === 'number'),
       )
-    : { ...(ancestry?.speeds ?? {}) };
+    : { ...baseSpeeds };
 
   // Non-land speeds granted (unconditionally) by the heritage, selected feats, or a worn/invested
   // item's passive effects (the generic magic-item lane).
@@ -4077,13 +4708,18 @@ export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {
   for (const wa of activeStateGrants(c, db)) statePenalty += wa.speedPenalty ?? 0;
   // Flat additive land-Speed from feats/class features/heritage (Hyper Boosters: +10 ft). After the base.
   let featLandBonus = 0;
-  for (const f of c.feats) featLandBonus += db.feats[f.featId]?.landSpeedBonus ?? 0;
-  for (const fid of ownedFeatureIds(c, db)) featLandBonus += db.classFeatures[fid]?.landSpeedBonus ?? 0;
-  for (const h of heritageRecords(c, db)) featLandBonus += h.landSpeedBonus ?? 0;
+  /* A LEVEL-SCALING bonus is written as a formula (Vivacious Speed's always-on half steps at 11th and
+   * 19th), in the same vocabulary every other speed value uses. Resolved through ONE helper so the
+   * three record kinds cannot disagree about what a string means; a plain number passes through. */
+  const landBonusOf = (v: number | string | undefined) =>
+    v == null ? 0 : typeof v === 'number' ? v : resolveFormula(v, { level: c.level, abilities: c.abilities, speeds });
+  for (const f of c.feats) featLandBonus += landBonusOf(db.feats[f.featId]?.landSpeedBonus);
+  for (const fid of ownedFeatureIds(c, db)) featLandBonus += landBonusOf(db.classFeatures[fid]?.landSpeedBonus);
+  for (const h of heritageRecords(c, db)) featLandBonus += landBonusOf(h.landSpeedBonus);
   let passiveSpeedPenalty = 0;
   let passiveLandBonus = 0;
   for (const inv of c.inventory) {
-    if (!(inv.worn || inv.invested || inv.equipped)) continue;
+    if (!itemInUse(inv)) continue;
     for (const pe of [db.items[inv.itemId]?.passiveEffects, c.resolvedItemPassives?.[inv.itemId]]) {
       if (!pe) continue;
       if (pe.speeds) grantSources.push({ speeds: pe.speeds });
@@ -4110,7 +4746,20 @@ export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {
       const skillOk = !g.skill || !g.rank || PROFICIENCY_RANKS.indexOf(c.proficiencies.skills[g.skill] ?? 'untrained') >= PROFICIENCY_RANKS.indexOf(g.rank);
       // Heritage gate (Swift Swimmer's wetlander lizardfolk) — pass if no heritage named.
       const heritageOk = !g.heritage || hasHeritage(c, g.heritage);
-      if (skillOk && heritageOk) gatedSpeeds.push(g.speeds);
+      /* Feat gate — *"If you also have the Cave Climber ancestry feat, your total climb Speed increases
+       * to your land Speed."* Four records print this and had no way to say it. */
+      const featOk = !g.feat || (c.feats ?? []).some((f) => f.featId === g.feat);
+      /*
+       * EQUIPMENT gates. Owner ruling: a Speed is a real number only while it is always on, and these
+       * four clauses are gated on gear the sheet can actually see — so they are evaluated, not starred.
+       * Monk Moves paid its +10 in full plate until this ran.
+       */
+      const unarmoredOk = !g.unarmored || isUnarmored(c, db);
+      const wearingOk = !g.wearingDesignated || (c.inventory ?? []).some((i) => i.worn && i.designations?.includes(g.wearingDesignated!));
+      /* "Holding" is not a field the sheet tracks per-hand, so the designation itself is the evidence:
+       * a thaumaturge who designated an implement is carrying it. Wielding is not asserted beyond that. */
+      const holdingOk = !g.holdingDesignated || (c.inventory ?? []).some((i) => i.designations?.includes(g.holdingDesignated!));
+      if (skillOk && heritageOk && featOk && unarmoredOk && wearingOk && holdingOk) gatedSpeeds.push(g.speeds);
     }
   }
   for (const src of [...grantSources, ...gatedSpeeds.map((speeds) => ({ speeds }))]) {
@@ -4284,13 +4933,27 @@ export function deriveBulk(c: Character, db: ContentDatabase): BulkResult {
   // as 1 Bulk lighter" (Armor Regiment Training). Both thresholds were computed from Strength alone,
   // so these feats moved no number on the sheet at all.
   let limitBonus = 0;
-  const armorCuts: { by: number; categories?: ArmorCategory[] }[] = [];
+  /* A bonus to the MAXIMUM limit only — see Feat.bulkMaxBonus. Kept separate rather than folded into
+   * `limitBonus`, because the two thresholds are computed from it at the end. */
+  let maxOnlyBonus = 0;
+  const armorCuts: { by: number; categories?: ArmorCategory[]; whenBulkAtLeast?: number; floor?: number }[] = [];
   // `?? []` because deriveBulk is also called on hand-built partial characters (container-nesting tests).
   for (const fc of c.feats ?? []) {
     const f = db.feats[fc.featId];
     if (f?.bulkLimitBonus) limitBonus += f.bulkLimitBonus;
+    if (f?.bulkMaxBonus) maxOnlyBonus += f.bulkMaxBonus;
     if (f?.armorBulkReduction) armorCuts.push(f.armorBulkReduction);
   }
+  // …and the ANCESTRY. Centaur's Robust — "+2 to your maximum and encumbered Bulk limits" — is the
+  // printed case; `bulkLimitBonus` already means both thresholds.
+  {
+    const anc = c.ancestryId ? db.ancestries[c.ancestryId] : undefined;
+    if (anc?.bulkLimitBonus) limitBonus += anc.bulkLimitBonus;
+  }
+  // …and a STATE-GATED one. Adrenaline Rush raises both Bulk limits by 2 "while you are Raging", which
+  // the standing field above could only express as always-on. Read through the same `activeStateGrants`
+  // walk as every other whileActive effect, so it appears exactly when the toggle is on.
+  for (const wa of activeStateGrants(c, db)) limitBonus += wa.bulkLimitBonus ?? 0;
   // An armour PROPERTY RUNE can raise the thresholds too — Assisting sets them to 6 + Str and
   // 11 + Str. Only while the armour is actually worn and invested, since the rune's own text keys
   // off investing it. Highest wins rather than summing: two of the same rune is still one set of
@@ -4302,17 +4965,42 @@ export function deriveBulk(c: Character, db: ContentDatabase): BulkResult {
   }
   // …and the rune on the character's own body (Living Rune), which is worn by definition.
   runeBonus = Math.max(runeBonus, bodyRuneDef(c, db)?.passiveEffects?.bulkLimitBonus ?? 0);
-  limitBonus += runeBonus;
+  /* …and THE ITEM ITSELF. A Lifting Belt prints the very thresholds the Assisting rune sets — *"you can
+   * carry Bulk equal to 6 + your Strength modifier before becoming encumbered, and you can hold up to
+   * 11 + your Strength modifier"* — but only a RUNE's `bulkLimitBonus` was ever read, so the identical
+   * field on an item was authorable, looked authored, and moved nothing. */
+  let itemLimitBonus = 0;
+  for (const inv of c.inventory ?? []) {
+    if (!itemInUse(inv)) continue;
+    for (const pe of [db.items[inv.itemId]?.passiveEffects, c.resolvedItemPassives?.[inv.itemId]]) {
+      itemLimitBonus = Math.max(itemLimitBonus, pe?.bulkLimitBonus ?? 0);
+    }
+  }
+  // Rune and item restate the same untyped threshold, so the highest wins rather than summing —
+  // exactly as two copies of the rune already do.
+  limitBonus += Math.max(runeBonus, itemLimitBonus);
   /** How much Bulk this feat set forgives on a given worn item — armour only, and never below 0. */
   const armorRelief = (inv: InventoryItem): number => {
     if (!armorCuts.length || !inv.worn) return 0;
     const item = db.items[inv.itemId];
     if (!item || item.itemType !== 'armor') return 0;
     const cat = item.category as ArmorCategory | undefined;
-    const by = armorCuts
-      .filter((r) => !r.categories?.length || (cat && r.categories.includes(cat)))
-      .reduce((s, r) => s + r.by, 0);
-    return Math.min(by, item.bulk * inv.quantity);
+    /*
+     * A cut applies when the armour matches its CATEGORY list (Armor Regiment Training: heavy) or
+     * clears its BULK THRESHOLD (Warpriest's Armor: "of 2 Bulk or higher"). A cut naming neither
+     * applies to any worn armour, which is the shape that was already here.
+     */
+    const applicable = armorCuts.filter(
+      (r) =>
+        (!r.categories?.length || (cat && r.categories.includes(cat)))
+        && (r.whenBulkAtLeast == null || item.bulk >= r.whenBulkAtLeast),
+    );
+    const by = applicable.reduce((s, r) => s + r.by, 0);
+    // …and the printed floor ("to a minimum of 1 Bulk") is a floor on the RESULT, so it caps how much
+    // can be taken off. The strictest floor among the cuts that fired wins.
+    const floor = applicable.reduce((f, r) => Math.max(f, r.floor ?? 0), 0);
+    const worn = item.bulk * inv.quantity;
+    return Math.min(by, Math.max(0, worn - floor * inv.quantity));
   };
   const { effBulk, containerIds } = makeEffBulk(c, db);
   const topLevel = c.inventory.filter((i) => !(i.containerInstanceId && containerIds.has(i.containerInstanceId)));
@@ -4322,7 +5010,7 @@ export function deriveBulk(c: Character, db: ContentDatabase): BulkResult {
   const coins = (c.currency.pp ?? 0) + (c.currency.gp ?? 0) + (c.currency.sp ?? 0) + (c.currency.cp ?? 0);
   total += coins / 1000;
   total = Math.max(0, Math.round(total * 10) / 10);
-  return { total, encTotal: Math.floor(total), encumberedAt: 5 + strMod + limitBonus, max: 10 + strMod + limitBonus };
+  return { total, encTotal: Math.floor(total), encumberedAt: 5 + strMod + limitBonus, max: 10 + strMod + limitBonus + maxOnlyBonus };
 }
 
 /** How full each container is: the raw Bulk of its DIRECT contents vs its capacity. Used to

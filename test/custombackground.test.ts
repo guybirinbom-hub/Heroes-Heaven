@@ -34,7 +34,8 @@ describe('custom ("deep") background', () => {
 
   it('trains the chosen skill and the Lore', () => {
     expect(ch.proficiencies.skills.athletics).toBe('trained');
-    expect(ch.proficiencies.skills['lore:Sailing']).toBe('trained');
+    // The Lore key is NORMALIZED on write (batch 20 — no more capitalized lore:X twins).
+    expect(ch.proficiencies.skills['lore:sailing']).toBe('trained');
   });
 
   it('grants the chosen skill feat', () => {

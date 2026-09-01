@@ -1,0 +1,248 @@
+[
+ {
+  "category": "feats",
+  "id": "tupilaq-carver",
+  "field": "spellListAdditions",
+  "value": { "spells": ["summon-construct"], "as": "list" },
+  "why": "Printed: \"Add the Summon Construct spell to your spell list.\" We encode only actionCost:passive and no registry mentions tupilaq. Reader: collector at src/rules/build.ts:4174-4213 scans every owned feat and routes as:'list' into character.spellListAdditions['*']; surfaced src/sheet/SpellsTab.tsx:286 and src/builder/Builder.tsx:724. 'list' not 'repertoire' because the printed verb is \"add to your spell list\". summon-construct verified in core.json (level 1, arcane, remaster, common). Load-bearing: the feat's prerequisite is divine/primal casting and the spell is arcane, so without the widening the feat is inert. The +4 status to the summoned construct's Perception is the summon's stat, not the PC's — carve-outs 1 and 2."
+ },
+ {
+  "category": "feats",
+  "id": "terrain-stalker",
+  "field": "choice",
+  "value": {
+   "flag": "choice",
+   "prompt": "Difficult terrain",
+   "kind": "array",
+   "options": [
+    { "value": "rubble", "label": "Rubble" },
+    { "value": "snow", "label": "Snow" },
+    { "value": "underbrush", "label": "Underbrush" }
+   ],
+   "allowCustom": {
+    "label": "Type another type of difficult terrain…",
+    "placeholder": "Difficult terrain (e.g. deep mud)…"
+   },
+   "distinctAcrossTakes": true
+  },
+  "why": "NOT a WG parity change — a repair of the importer's placeholder. Printed: \"Select one type of difficult terrain from the following list: rubble, snow, or underbrush\". The record ships prompt \"Prompt\", and featChoicePrompt (src/rules/build.ts:1470) cannot rescue it because its fallback is guarded by flag !== 'choice' and this flag IS 'choice', so the picker renders \"Choose an option\". Reader featChoicePrompt, called from src/builder/Builder.tsx:429,442,460,481,484-485,577,600,638. \"Difficult terrain\" matches the shipped sibling underbrush-trailblazer. Verified against core.json: every other key is byte-identical, which is load-bearing — the option VALUES feed BACKGROUND_GRANT_BOUND_CHOICE (src/rules/backgroundGrants.ts:94) and flag is matched by choiceOptionAdditions/choiceOptionLimits."
+ },
+ {
+  "category": "feats",
+  "id": "terrain-stalker",
+  "field": "situational",
+  "value": [
+   {
+    "targets": [{ "kind": "skill", "detail": "stealth" }],
+    "when": "while undetected by all non-allies in your chosen difficult terrain, if you move no more than 5 feet and do not pass within 10 feet of an enemy during your movement",
+    "bonus": "Sneak without attempting a Stealth check"
+   },
+   {
+    "targets": [{ "kind": "skill", "detail": "stealth" }],
+    "when": "during exploration, while Avoiding their Notice in your chosen difficult terrain, as long as they aren't actively Searching or on guard",
+    "bonus": "automatically approach within 15 feet of other creatures"
+   }
+  ],
+  "why": "Printed, verbatim: \"While undetected by all non-allies in that type of terrain, you can Sneak without attempting a Stealth check as long as you move no more than 5 feet and do not pass within 10 feet of an enemy during your movement.\" and \"During exploration, this also allows you to automatically approach within 15 feet of other creatures while Avoiding their Notice, as long as they aren't actively Searching or on guard.\" WG attaches exactly these two clauses via two injectText ops per option — a SHEET surface. Today the feat has NO surface: no FEAT_SITUATIONAL key, no CHOICE_SITUATIONAL, no situational in core.json — while terrain-scout, which grants it, already carries a Stealth star about Terrain Stalker. Readers: src/rules/explain.ts:408 (authoredSituational) and src/sheet/StatDetailModal.tsx:109. Stealth target on the shooters-camouflage precedent. No number moves. No situationalReplaces — nothing shipped to replace."
+ },
+ {
+  "category": "feats",
+  "id": "wilderness-born",
+  "field": "situational",
+  "value": [
+   {
+    "targets": [{ "kind": "skill", "detail": "stealth" }],
+    "when": "to Hide and Sneak in natural terrain",
+    "bonus": "+1 circumstance"
+   },
+   {
+    "targets": [{ "kind": "skill", "detail": "survival" }],
+    "when": "to Sense Direction in natural terrain",
+    "bonus": "+1 circumstance"
+   }
+  ],
+  "why": "Printed: \"You gain a +1 circumstance bonus to Hide and Sneak in natural terrain, and a +1 circumstance bonus to Sense Direction in natural terrain.\" Two bonuses, each naming its own actions. Our shipped entry src/rules/situationalBonuses.ts:500 FUSES them into one entry targeting stealth AND survival with when \"to Hide, Sneak, and Sense Direction in natural terrain\", so the Survival star promises a bonus on Stealth actions and vice versa. WG splits it (SKILL_STEALTH +1 \"to Hide and Sneak in natural terrain\"; SKILL_SURVIVAL +1 \"to Sense Direction in natural terrain\"). Adopt theirs. Readers src/rules/explain.ts:408 and src/sheet/StatDetailModal.tsx:109. situationalReplaces is DERIVED by the applier (wilderness-born is in the shipped table), so entriesFor returns the authored pair INSTEAD of the fused one."
+ },
+ {
+  "category": "feats",
+  "id": "wilderness-born",
+  "field": "recordMarks",
+  "value": [
+   {
+    "on": "action",
+    "id": "cover-tracks",
+    "note": "While in natural terrain, you're always considered to be Covering Tracks, even if you chose a different activity in exploration mode."
+   }
+  ],
+  "why": "Printed third clause verbatim. We encode nothing for it; WG carries it as a separate injectText beside the two skill bonuses. It changes an ACTION, not a stat, and explain.ts:570-575 states a clause naming no stat can never display through situational. Reader src/rules/explain.ts:366 (recordMarksFor), merged at explain.ts:584. Target verified: core.json actions has id \"cover-tracks\" (a Survival action per src/rules/actions.ts:101), found by actionSlug at src/sheet/StatDetailModal.tsx:185. No RECORD_MARKERS entry exists, so nothing duplicates. value omitted — no changed number. Note does not open with the record's own name (all three renderers prefix it)."
+ },
+ {
+  "category": "feats",
+  "id": "ocean-wariness",
+  "field": "situational",
+  "value": [
+   {
+    "targets": [{ "kind": "perception" }, { "kind": "save", "detail": "will" }],
+    "when": "to your defenses against Deception, Diplomacy, Intimidation, and Performance checks (the Perception DC or Will DC the creature rolls against)",
+    "bonus": "+1 circumstance"
+   }
+  ],
+  "why": "Printed: \"You gain a +1 circumstance bonus to your defenses against Deception, Diplomacy, Intimidation, and Performance checks.\" ONE undivided clause. Our shipped FEAT_SITUATIONAL entry (src/rules/situationalBonuses.ts:2208) splits it — Perception only vs Deception, Will only vs the other three, truncated with an ellipsis. WG attaches the SAME undivided trigger to both stats (PERCEPTION +1 and SAVE_WILL +1, identical text), so only the scoping disagrees; adopt their scoping. The DC framing is KEPT because WG encodes nothing about roll-vs-DC (carve-out 1) and printed \"defenses\" means the DC. dcOnly deliberately not introduced. One entry with two targets renders on BOTH stats (featSituationalFor uses targets.find, hasFeatSituational uses targets.some — situationalBonuses.ts:3304, 3772); shipped idiom at situationalBonuses.ts:125 (ancestral-suspicion). situationalReplaces derived by the applier."
+ },
+ {
+  "category": "feats",
+  "id": "kobold-breath",
+  "field": "dataWarning",
+  "value": "Not tracked: your draconic benefactor. The breath is a 30-foot line or a 15-foot cone dealing 1d4 damage, increasing by 1d4 at 3rd level and every 2 levels after; each creature in the area attempts a basic saving throw against the higher of your class DC or spell DC. Which of the two shapes it takes, its damage type, and which save it calls for all match your draconic benefactor, and the Draconic Benefactors table is not in this data source — read all three off that table.",
+  "why": "PARTIAL — a disclosure, not the mechanic; the lane is filed as a gap. Printed (verified against AoN feat-8068 in the local archive, because the shipped copy is corrupted to \"manifests as a or a , dealing damage\"): shape/damage type/save all match your draconic benefactor, damage 1d4 +1d4 every 2 levels, basic save vs the higher of class or spell DC. WG spends its whole encoding on that conditional — 40 conditional/injectText pairs keyed on DRACONIC_EXEMPLAR_NAME. We encode none of it and the Draconic Benefactors table is absent from our data (categoryPage/draconic-benefactors is a name-only stub). Their JSON is the only accessible source for the table and it is GPL-3.0, so the values cannot be adopted. dataWarning is the field built for this: declared src/rules/types.ts:1122, collected for any owned feat at src/rules/build.ts:4675, rendered in the Missing data banner at src/sheet/FeatsTab.tsx:326-337. House voice matches feats/miraculous-flight."
+ },
+ {
+  "category": "feats",
+  "id": "morph-risen",
+  "field": "situational",
+  "value": [
+   {
+    "targets": [{ "kind": "save", "detail": "all" }],
+    "when": "against morph and polymorph effects",
+    "bonus": "+1 circumstance"
+   }
+  ],
+  "why": "Printed: \"You gain a +1 circumstance bonus to saving throws against morph and polymorph effects, and if you roll a success on a saving throw against a hostile morph or polymorph effect, you get a critical success instead.\" \"Hostile\" qualifies ONLY the second clause. Our shipped entry (src/rules/situationalBonuses.ts:349) reads \"against forced polymorph/transformation effects\" — drops \"morph\", imports \"forced\" from the next sentence. WG agrees with print (SAVE_FORT/REFLEX/WILL +1, \"against morph and polymorph effects\"). detail:'all' is read as all three saves. Reader src/rules/explain.ts:408 → src/sheet/StatDetailModal.tsx:109. Does not touch the success→critical-success clause, already ours as degreeShifts. situationalReplaces derived by the applier."
+ },
+ {
+  "category": "feats",
+  "id": "fascinated-by-society",
+  "field": "situational",
+  "value": [
+   {
+    "targets": [{ "kind": "skill", "detail": "society" }],
+    "when": "when you fail, but don't critically fail, a Society check to Recall Knowledge or Decipher Writing",
+    "bonus": "you learn the correct information (as on a success) and erroneous information (as on a critical failure), with no way to tell which is which"
+   }
+  ],
+  "why": "Printed second paragraph: \"When you fail, but don't critically fail, a Society check to Recall Knowledge or Decipher Writing, you learn the correct information (as you would on a success) and erroneous information (as you would on a critical failure). You don't have any way to differentiate which is which.\" We encode only paragraph 1 (FEAT_SKILL_GRANTS, src/rules/featGrantsAuto.ts:148); grep of src/ returns that one line, so no shipped star and no situationalReplaces belongs here. WG encodes it as a valueless note on SKILL_SOCIETY — their target is the SKILL, so situational and not recordMarks. Not degreeShifts: that shift union (situationalBonuses.ts:3187) has no \"success result AND critical-failure result at once\" member. Prose-only bonus on a skill star has precedent (all-of-the-animal). Readers src/rules/explain.ts:408, src/sheet/StatDetailModal.tsx:109."
+ },
+ {
+  "category": "feats",
+  "id": "ongoing-selfishness",
+  "field": "recordMarks",
+  "value": [
+   {
+    "on": "action",
+    "id": "selfish-shield",
+    "note": "After you use Selfish Shield, you gain resistance to all further damage from the triggering enemy until the end of the turn on which you used the reaction. This resistance is equal to half your Selfish Shield resistance."
+   }
+  ],
+  "why": "Printed verbatim. WE SHIP NOTHING: core.json carries only level/category/traits/prerequisites/actionCost, and grep of src/ for 'ongoing-selfishness|selfish-shield' returns ZERO lines. WG surfaces it as injectText — a text rider, not a number. Reader src/rules/explain.ts:366 → recordMarkersFor (explain.ts:541), gated on characterSituationalIds (explain.ts:234) which includes taken feat ids. Target reachable: champion cause 'desecration' lists featureIds selfish-shield (the feat's own prerequisite), resolved through src/rules/derive.ts:2829-2830; it is a reaction, so it lands in featActions and renders a MarkTag at src/sheet/MainTab.tsx:589 via actionId('Selfish Shield') = 'selfish-shield'. value omitted: the resistance is 2 + half level, re-based to Cha + half level by Relentless Reaction at 9th, so half of it is not a single printable value. Not situational (SituationalTarget has no 'resistance' member); not an IwrEntry (that would print a permanent-looking line for a once-per-turn rider)."
+ },
+ {
+  "category": "feats",
+  "id": "different-worlds",
+  "field": "situational",
+  "value": [
+   {
+    "targets": [{ "kind": "skill", "detail": "deception" }],
+    "when": "when making a statement that would be true of your second identity or when disguising yourself as your second identity",
+    "bonus": "+4 circumstance"
+   }
+  ],
+  "why": "Printed: \"you gain a +4 circumstance bonus to Deception checks when making a statement that would be true of your second identity or when disguising yourself as your second identity\" — TWO triggers. Our shipped FEAT_SITUATIONAL entry (src/rules/situationalBonuses.ts:242) reads only \"to Impersonate as your second identity\", dropping the Lie half; WG keeps both. Readers src/rules/explain.ts:408, src/sheet/StatDetailModal.tsx:109. The other code reference to this id, src/rules/featGrantsLane.ts:14 {loreChoices:1}, covers their OTHER op (the second background's Lore pick), so nothing here duplicates. situationalReplaces derived by the applier — verified live: the derivation's key regex was repaired and now reads all 2,791 double-quoted keys, and 'different-worlds' is among them."
+ },
+ {
+  "category": "feats",
+  "id": "hard-to-fool",
+  "field": "situational",
+  "value": [
+   {
+    "targets": [{ "kind": "perception" }],
+    "when": "against illusions",
+    "bonus": "+1 circumstance"
+   },
+   {
+    "targets": [{ "kind": "save", "detail": "will" }],
+    "when": "against illusions and shadow effects",
+    "bonus": "+1 circumstance"
+   }
+  ],
+  "why": "Printed: \"You gain a +1 circumstance bonus on Perception checks against illusions as well as to Will saves against illusions and shadow effects.\" Two clauses with DIFFERENT triggers. WG encodes two entries with per-target text. We ship ONE entry with both targets and a merged trigger at src/rules/situationalBonuses.ts:306 (\"Perception vs illusions; Will vs illusion and shadow effects\"), and because featSituationalFor pushes the entry's single `when` for whichever target matched (situationalBonuses.ts:3296-3312), that merged string prints IN FULL on both rows — the Perception popup states the shadow clause and vice versa. Ours also mis-quotes print as singular \"illusion\". No number moves. Readers src/rules/explain.ts:427-432 → entriesFor (situationalBonuses.ts:3285) → src/sheet/StatDetailModal.tsx:109. situationalReplaces derived by the applier."
+ },
+ {
+  "category": "feats",
+  "id": "iruxi-armaments",
+  "field": "critSpecWeapons",
+  "value": { "names": ["claw", "fangs", "tail"] },
+  "why": "Printed: \"whenever you get a critical hit with one of the unarmed attacks you have gained or improved with this feat, you get its critical specialization effect.\" We ship critSpec:true + critSpecLevel:5 with NO narrowing, and weaponMatches (src/rules/derive.ts:3098-3099) returns true for an unnarrowed entry. Measured: a level-5 lizardfolk WIZARD with a longsword currently shows crit spec on Longsword AND Fist; with this value only the granted/improved attack lights. All three names listed because the feat is maxTakable:3; an unpicked option costs nothing — grantedStrikes are pick-gated at src/rules/build.ts:1837 and the Claw strike comes from FEAT_CHOICE_STRIKES only when picked. `names` is the batch-002 lane for exactly this shape (bases cannot reach a natural attack; groups/traits would light the Fist). Precedent feats/oni-weapon-familiarity. Read by src/rules/derive.ts:3016 via critSpecSources, matched at derive.ts:3116-3119. NOTE: WG encodes NO crit spec here — this row is authored from the printed clause alone, correcting an over-grant of ours."
+ },
+ {
+  "category": "feats",
+  "id": "orc-warmask",
+  "field": "grantsItems",
+  "value": [{ "itemId": "orc-warmask" }],
+  "why": "Printed: \"You paint your face to create a Warmask, an invested magic item of negligible Bulk with an item level equal to your level and a usage of worn (mask).\" The feat's headline benefit IS an item and we hand the player nothing. Reader src/rules/build.ts:4970 walks content.feats[featId].grantsItems and requires content.items[itemId] — items/orc-warmask exists (level 0, invested+magical, wornmask) and its own description already opens \"Granted by Orc Warmask\", a claim nothing currently makes true. Emitted at build.ts:5723 with grantedBy, skipped if already owned, seeds play.inventory (play.ts:229). Precedent feats/razmiran-priest-dedication → items/razmiri-mask. `invested` deliberately NOT set: WG encode nothing about investment, the granted entry is emitted worn:false/equipped:false, and invested:true would consume one of ten invested slots on a mask the player may never don. Their per-option skill training and giveAbilityBlock are already ours (effectChoices + featGrantsAuto.ts:252 + featFeatGrants.ts:317)."
+ },
+ {
+  "category": "feats",
+  "id": "primal-dragonblood",
+  "field": "skillSubstitutions",
+  "value": [
+   { "use": "nature", "forSkill": "survival", "when": "to Sense Direction in the wilds" },
+   { "use": "nature", "forSkill": "survival", "when": "to Subsist in the wilds" }
+  ],
+  "why": "Printed: \"You can use Nature to Sense Direction and Subsist in the wilds.\" Unencoded today (only featGrantsAuto.ts:263 nature-trained plus the record's choice fallback; no FEAT_SITUATIONAL, no shipped skillSubstitutions). WG splits it into two injectText notes, each repeating \"in the wilds\" — their reading, adopted. Reader skillSubstitutions() at src/rules/derive.ts:376, which scans c.feats; both entries carry a `when`, so they bypass skillSubstituteFor (unconditional only) and surface as situational notes on Survival via src/rules/explain.ts:495. Correct: this does not substitute Nature for Survival generally, so Survival's number must not move. forSkill survival for both — actions.sense-direction is a Survival check and actions.subsist is Survival \"in the wild\". Precedent feats/wilderness-spotter; multi-entry arrays ship at feats/versatile-performance."
+ },
+ {
+  "category": "feats",
+  "id": "tangle-tongues-wit",
+  "field": "languageChoices",
+  "value": 2,
+  "why": "Printed: \"You learn two new languages, chosen from languages you have access to.\" core.json carries only actionCost and the sole repo-wide reference is the save star at src/rules/situationalBonuses.ts:463, so a player taking this feat gets zero language slots. WG emits two `select from:LANGUAGE`. Reader recordLanguageSlots at src/rules/build.ts:1536 → bonusLanguageSlots (build.ts:1555) → the picker at src/builder/shared.tsx:3694; it iterates every built feat, so an ancestry feat is in scope. Precedent feats/multilingual. Not grantsLanguages — no specific language is named. WHICH languages the picker offers stays ours (carve-out 3). The +2 save half is already ours and matches their three SAVE_* ops."
+ },
+ {
+  "category": "feats",
+  "id": "brilliant-flash",
+  "field": "recordMarks",
+  "value": [
+   {
+    "on": "action",
+    "id": "flash-of-grandeur",
+    "value": "off-guard 1 round",
+    "note": "The attacker is also off-guard for 1 round."
+   }
+  ],
+  "why": "Printed: \"When you use Flash of Grandeur, the attacker is also off-guard for 1 round.\" The record ships only actionCost:passive and is in NO registry (grep for 'brilliant-flash|flash-of-grandeur' returns nothing), so the clause was invisible. It changes an ACTION, not a stat: situational cannot hold it and modifiesGrant.actionRider is gated on the target being an owned feat/class feature. Placement fixed by the printed sentence and the record's own descRefs. Reader src/rules/explain.ts:366 → recordMarkersFor → markersFor; src/sheet/MainTab.tsx:589 looks marks up by actionId(a.name) = 'flash-of-grandeur'. Reach verified: classFeatures/flash-of-grandeur is a reaction listed in champion cause 'grandeur' featureIds, pulled by ownedFeatureIds at src/rules/derive.ts:2830 into MainTab.tsx:240. Note omits the record's own name — markTooltip prefixes it."
+ },
+ {
+  "category": "feats",
+  "id": "officers-medical-training",
+  "field": "situational",
+  "value": [
+   {
+    "targets": [{ "kind": "skill", "detail": "medicine" }],
+    "when": "on Medicine checks",
+    "bonus": "use your Intelligence modifier in place of your Wisdom modifier"
+   }
+  ],
+  "why": "Printed: \"You are trained in Medicine and can use your Intelligence modifier in place of your Wisdom modifier for Medicine checks.\" We already encode the training (featGrantsAuto.ts:246) and the granted feat (featFeatGrants.ts:316); the ability-substitution clause reached nothing. No recomputation lane exists — skillSubstitutions is skill-for-skill and a skill's key ability is hardcoded in SKILL_ABILITY/skillAbility (src/rules/derive.ts:143). WG's third op is a VALUELESS text rider on the Medicine row, i.e. a displayed note, which in our fields is situational. Readers src/rules/explain.ts:408 (feat route explain.ts:427) and src/sheet/StatDetailModal.tsx:109. No situationalReplaces — no shipped entry. `bonus` is the bare imperative because explain.ts:723 renders `${bonus} from ${source} — ${when}`, matching guardian-mastery and the-bear."
+ },
+ {
+  "category": "feats",
+  "id": "zoophonic-communication",
+  "field": "skillSubstitutions",
+  "value": [
+   {
+    "use": "performance",
+    "forSkill": "diplomacy",
+    "when": "to Request from animals, as though you shared a language"
+   },
+   { "use": "performance", "forSkill": "nature", "when": "to Command an Animal" }
+  ],
+  "why": "Printed: \"You can Request from animals using Performance instead of Diplomacy as though you shared a language… You can also use Performance instead of Nature to Command an Animal.\" TWO substitutions; the shipped record carries only the Nature one (verified in core.json) and grep finds no registry entry, so the Request clause is unencoded. WG carries both as two separate injectText ops. Reader skillSubstitutions() at src/rules/derive.ts:376. The whole array is written because the field is written whole and the existing Nature entry must survive; order now follows the printed order. Both carry `when`, so skillSubstituteFor leaves both skill numbers alone and explain.ts:495 surfaces each as a note. \"as though you shared a language\" is mechanical, not flavour: Request normally requires the target to understand you."
+ },
+ {
+  "category": "feats",
+  "id": "the-unholy-dead",
+  "field": "grantsCreatureTraits",
+  "value": ["unholy"],
+  "why": "Printed: \"You and your thralls gain the unholy trait.\" Unconditional. Genuinely unencoded: core.json carries only identity fields and grep for 'unholy-dead' in src/ returns ZERO hits. The record's own traits [necromancer, unholy] are the FEAT's trait line and never reach creatureTraitsOf, so no duplication. Reader src/rules/derive.ts:2436 reads it off db.feats[featId] for every taken feat → creatureTraitsOf → src/sheet/DetailsTab.tsx:76 → the granted-trait pill at DetailsTab.tsx:414. core.json trait 'unholy' exists so traitDesc resolves. Precedent feats/fiend-eternal (which grants both fiend and unholy because its text says so). Their single op is giveTrait, so carve-out 2: the thrall spirit-damage rider and the anathema stay unencoded."
+ }
+]

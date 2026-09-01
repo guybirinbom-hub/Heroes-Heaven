@@ -1,0 +1,76 @@
+[
+ {
+  "id": "eagle-hunter",
+  "name": "Eagle Hunter",
+  "printed": "You're a hunter bonded to an eagle animal companion since youth. You've trained your eagle to hunt with you, simultaneously becoming an extension of yourself and a trusted partner you can rely on. The nomadic peoples of Hongal created this practice to hunt across their hardy terrain. You hunt small game, typically foxes and hares, or participate in hunting events, drawing crowds of spectators. Perhaps it was the prospect of a greater audience that called out to you, or maybe the promise of larger game outside of your usual hunting grounds. Who knows what lures a hunter toward adventure? Choose two attribute boosts. One must be to **Strength** or **Wisdom**, and one is a free attribute boost. You're trained in Nature and Hunting Lore. You gain the Pet general feat and the Train Animal skill feat, but you can use these feats only to gain and train eagles. Your trained eagles can perform the Aid action when you attempt a Nature, Perception, or Survival skill check. This benefit applies to only you and other characters with the eagle hunter background. --- ## Background details **Attribute Boosts** Strength or Wisdom, one free **Trained Skill** Nature **Lore** Hunting Lore **Skill Feat** Train Animal",
+  "ourFields": {
+   "abilityBoosts": [
+    {
+     "kind": "choice",
+     "options": [
+      "str",
+      "wis"
+     ]
+    },
+    {
+     "kind": "free"
+    }
+   ],
+   "trainedSkill": "nature",
+   "trainedLore": "hunting",
+   "grantedFeatId": [
+    "pet",
+    "train-animal"
+   ],
+   "situational": [
+    {
+     "targets": [
+      {
+       "kind": "skill",
+       "detail": "nature"
+      },
+      {
+       "kind": "skill",
+       "detail": "survival"
+      },
+      {
+       "kind": "perception"
+      }
+     ],
+     "when": "when your trained eagle is present",
+     "bonus": "your eagle can Aid the check"
+    }
+   ],
+   "recordMarks": [
+    {
+     "on": "feature",
+     "id": "pet",
+     "note": "from Eagle Hunter, you can use this feat only to gain an eagle."
+    },
+    {
+     "on": "feature",
+     "id": "train-animal",
+     "note": "from Eagle Hunter, you can use this feat only to train eagles."
+    }
+   ]
+  },
+  "ourRegistries": [],
+  "theirProse": [
+   {
+    "variable": "SKILL_NATURE",
+    "value": null,
+    "text": "Your trained eagles can perform the Aid action when you attempt a Nature skill check."
+   },
+   {
+    "variable": "SKILL_SURVIVAL",
+    "value": null,
+    "text": "Your trained eagles can perform the Aid action when you attempt a Survival skill check."
+   },
+   {
+    "variable": "PERCEPTION",
+    "value": null,
+    "text": "Your trained eagles can perform the Aid action when you attempt a Perception check."
+   }
+  ]
+ }
+]

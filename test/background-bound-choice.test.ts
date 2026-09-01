@@ -90,9 +90,12 @@ describe('a background-granted feat whose answer the background already gave', (
     expect(statHasSituational(ch, { kind: 'skill', skill: 'athletics' }, db)).toBe(false);
   });
 
-  it('Driver’s “the chosen lore” waits for the subject rather than inventing one', () => {
-    expect(answerOn('driver', 'assurance')).toBeUndefined();
-    expect(answerOn('driver', 'assurance', { backgroundLore: 'Piloting' })).toEqual({
+  it('Driver’s “the chosen lore” follows the pick, defaulting to the first printed option', () => {
+    /* Batch 21 made Driver's Lore the printed two-way pick (`trainedLoreOptions: driving/piloting`),
+     * so an unanswered build defaults to Driving like every other unanswered named choice — the old
+     * "waits for free text" behavior belonged to the free-text era of this record. */
+    expect(answerOn('driver', 'assurance')).toEqual({ value: 'lore:driving', label: 'Driving Lore' });
+    expect(answerOn('driver', 'assurance', { backgroundLore: 'piloting' })).toEqual({
       value: 'lore:piloting',
       label: 'Piloting Lore',
     });
@@ -138,11 +141,19 @@ describe('the binding table describes records that really exist', () => {
       }
       for (const grantedId of Object.keys(grants)) {
         // Either branch of a by-choice grant counts — Conservator only grants Assurance on one.
-        const reachable = [undefined, ...(bg.trainedSkillChoice ?? [])].some((s) =>
-          backgroundGrantedFeats(bg, s as SkillId | undefined).includes(grantedId),
-        );
+        // A FEAT-VALUED background `choice` counts too: Hermean Heritor's either/or (batch 20)
+        // grants whichever feat the option names, through the bgChoiceFeat lane.
+        const reachable =
+          [undefined, ...(bg.trainedSkillChoice ?? [])].some((s) =>
+            backgroundGrantedFeats(bg, s as SkillId | undefined).includes(grantedId),
+          ) || (bg.choice?.options ?? []).some((o) => o.value === grantedId);
         if (!reachable) bad.push(`${bgId} does not grant ${grantedId}`);
-        if (!db.feats[grantedId]?.choice) bad.push(`${grantedId} has no choice to bind`);
+        // A fixedLore/bgLore binding can answer a question the feat asks OFF-record: Additional
+        // Lore's subject is featGrantsAuto's loreChoices lane (Returned binds it to Boneyard,
+        // batch 23), so "no record-level choice" is not "nothing to bind" for the lore kinds.
+        const spec = grants[grantedId];
+        const answersLoreLane = spec.kind === 'fixedLore' || spec.kind === 'bgLore';
+        if (!db.feats[grantedId]?.choice && !answersLoreLane) bad.push(`${grantedId} has no choice to bind`);
       }
     }
     expect(bad).toEqual([]);
@@ -187,7 +198,9 @@ describe('the binding table describes records that really exist', () => {
     // Driver's Lore and Raised by Belief's deity both have a window where the binding exists and the
     // answer does not, and offering the 16-skill list there hands the player a discarded control.
     expect(isBoundBackgroundGrant('driver', 'assurance')).toBe(true);
-    expect(boundBackgroundGrantChoice({}, db, db.backgrounds['driver'], 'assurance')).toBeUndefined();
+    // Driver now resolves even unanswered (first printed option — batch 21); Raised by Belief still
+    // has the unresolvable window (no deity chosen), which is what this property is really about.
+    expect(boundBackgroundGrantChoice({}, db, db.backgrounds['driver'], 'assurance')).toEqual({ value: 'lore:driving', label: 'Driving Lore' });
     expect(isBoundBackgroundGrant('raised-by-belief', 'assurance')).toBe(true);
     // An ordinary grant is untouched.
     expect(isBoundBackgroundGrant('keys-to-destiny', 'assurance')).toBe(false);

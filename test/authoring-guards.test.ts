@@ -288,7 +288,10 @@ describe('the redundancy clause', () => {
     expect(
       missing,
       'These print "trained in a skill of your choice" and carry no redundantFallback.\n' +
-        'Fix with: npx jiti scripts/apply-redundant-fallback.mjs',
+        'For a grant with a static `skills` map: npx jiti scripts/apply-redundant-fallback.mjs\n' +
+        '(that applier only writes featGrantsAuto.ts). For a record whose only training is a\n' +
+        '`skillChoices` slot the record-wide flag is INERT — author `redundantFallback: true` on the\n' +
+        'SLOT instead, by hand, wherever the entry lives.',
     ).toEqual([]);
   });
 });

@@ -57,11 +57,15 @@ describe('backgrounds', () => {
   it('the two-option backgrounds offer exactly their two printed feats', () => {
     for (const [bg, ids] of [
       ['professional-letter-writer', ['specialty-crafting', 'multilingual']],
-      ['sponsored-by-a-stranger', ['dubious-knowledge', 'quick-identification']],
     ] as const) {
       const opts = pickableFeats(FEAT_PICK_GRANTS[bg], mk({ backgroundId: bg }), db).map((f) => f.id);
       expect(new Set(opts), bg).toEqual(new Set(ids));
     }
+    // sponsored-by-a-stranger moved OFF this lane in batch 23: its record's own `choice` (flag
+    // bgFeat) is the single carrier, like hermean-heritor — a FEAT_PICK_GRANTS row here mounted a
+    // SECOND picker for the same feat. The either/or itself is guarded in batch23-parity.test.ts.
+    expect(FEAT_PICK_GRANTS['sponsored-by-a-stranger']).toBeUndefined();
+    expect(db.backgrounds['sponsored-by-a-stranger'].choice?.options?.map((o) => o.value)).toEqual(['dubious-knowledge', 'quick-identification']);
   });
 });
 
@@ -97,13 +101,25 @@ describe('class features', () => {
 });
 
 describe('the option that the data lost', () => {
-  it('Verduran City Folk warns instead of inventing the missing feat', () => {
+  it('Verduran City Folk offers the recovered pick — the warning era is over', () => {
+    // The missing name was "Multilingual", eaten by the importer's 12-15-char ID heuristic and
+    // restored from the mirror in the residue pass. With both names known, the record graduated
+    // from warn-and-grant-the-nameable-half to the hermean-heritor shape: a real sub-choice.
     const bg = db.backgrounds['verduran-city-folk'];
-    // "You gain either or Streetwise as a skill feat" — the first option's name is not in the export.
-    expect(bg.description).toMatch(/either\s+or\s+Streetwise/i);
-    expect(bg.dataWarning, 'the player must be told the data is incomplete').toMatch(/missing/i);
-    // The half that CAN be named is granted; no picker pretends to offer a choice.
-    expect(bg.grantedFeatId).toBe('streetwise');
+    expect(bg.description).toMatch(/either\s+Multilingual\s+or\s+Streetwise/i);
+    expect(bg.dataWarning).toBeUndefined();
+    expect(bg.choice?.options?.map((o: { value: string }) => o.value)).toEqual(['streetwise', 'multilingual']);
+    /* The batch-19 read caught the pair double-granting: `grantedFeatId: 'streetwise'` fired
+     * unconditionally BESIDE the choice, so answering Multilingual granted both feats. The choice is
+     * now the single carrier — and the warning-era promise is kept by the choice's own defaulting
+     * (Streetwise stays FIRST), asserted here on BUILT characters rather than on the field. */
+    expect(bg.grantedFeatId).toBeUndefined();
     expect(FEAT_PICK_GRANTS['verduran-city-folk']).toBeUndefined();
+    const names = (b: BuildState) => buildCharacter(b, db).feats.filter((f) => ['streetwise', 'multilingual'].includes(f.featId)).map((f) => f.featId);
+    expect(names(mk({ backgroundId: 'verduran-city-folk' })), 'unanswered keeps the warning-era Streetwise').toEqual(['streetwise']);
+    expect(
+      names(mk({ backgroundId: 'verduran-city-folk', featChoices: { 'background:verduran-city-folk': 'multilingual' } } as Partial<BuildState>)),
+      'an answered pick grants ONLY the pick',
+    ).toEqual(['multilingual']);
   });
 });

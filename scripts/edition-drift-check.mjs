@@ -26,6 +26,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { readBackfill, writeBackfill } from './lib/write-backfill.mjs';
 import { buildDocIndex } from './lib/aonid-categories.mjs';
+import { HIDDEN, CURRENT } from './lib/edition.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const EXPORT = process.env.AON_EXPORT || 'C:/trying ai 2/hh-data-export/without-images/data';
@@ -45,10 +46,6 @@ const docFor = (aonId) => {
   }
   return cache.get(hit.cat)[aonId] ?? null;
 };
-
-/** The two values applyEditionFilter drops, and the three it keeps. */
-const HIDDEN = new Set(['legacy', 'legacy-era']);
-const CURRENT = new Set(['remaster', 'remaster-era', 'neutral']);
 
 const drift = [];
 for (const [bucket, recs] of Object.entries(core)) {

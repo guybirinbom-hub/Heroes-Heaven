@@ -62,6 +62,17 @@ const ACCEPTED_BACKGROUND = {
   'verduran-city-folk': 'prints "either Multilingual or Streetwise" — a free pick, not one keyed to a skill, so it is not a grantedFeatByChoice',
   'anti-thrune-saboteur':
     'prints both halves ("If you chose Deception … Lengthy Diversion. If you chose Thievery … Dirty Trick") and the app already keys both; the `feat` field lists only the first',
+  'hermean-heritor':
+    'prints "choose either the Assurance skill feat with Society or the Multilingual skill feat" — batch 20 made it the real two-way pick; the `feat` field lists only Multilingual',
+  'aon-wishes-for-riches':
+    'prints Subtle Theft PLUS a dragon-or-leech pick granting Consume Energy or Borrowed Ability — batch 20 modelled the pick; the `feat` field lists only Subtle Theft',
+  // Batch 21 — the deviant-classification pickers now grant their branch feats; the mirror's `feat`
+  // sidebar lists only the unconditional grant on all five.
+  'sense-of-belonging': 'prints flicker→Sonic Dash / wraith→Eerie Flicker beside the flat Forager; the sidebar lists only Forager',
+  'dreams-of-vengeance': 'prints dragon→Blasting Beams (fire) / troll→Titan Swing beside Titan Wrestler; the sidebar lists only Titan Wrestler',
+  'lost-loved-one': 'prints leech→Draining Touch / wraith→Ghostly Grasp beside Multilingual; the sidebar lists only Multilingual',
+  'total-power': 'prints dragon→Blasting Beams (electricity) / troll→Bone Spikes beside Intimidating Glare; the sidebar lists only Intimidating Glare',
+  'wanderlust': 'prints flicker→Overclock Senses / troll→Titan Swing beside Express Rider; the sidebar lists only Express Rider',
 };
 
 let compared = 0;
@@ -149,8 +160,25 @@ const note = (coll, id, field, have, want) => bad.push({ coll, id, field, have, 
     const wantFeats = set(m.feat);
     // A background whose grant depends on the trained skill lists BOTH feats — the app holds them in
     // `grantedFeatByChoice`, keyed by skill, so both have to be counted or every one looks half done.
+    /*
+     * …and a background may instead ASK. "You gain the Dubious Knowledge or Quick Identification skill
+     * feat" is ONE grant with two possible answers: the app models it as a picker on the record
+     * (`choice.options`), the mirror flattens both names into its `feat` field. Reading only the fixed
+     * grant made three records — Sponsored by a Stranger, Corpse Stitcher, Professional Letter Writer
+     * — look like they granted half of what they should. That single red guard sat at the head of an
+     * `&&`-joined verify chain, so the four checks after it never ran at all.
+     *
+     * A picker is the THIRD place a granted feat can live, beside `grantedFeatId` and
+     * `grantedFeatByChoice`; counting all three is the same fix as the comment above, one shape later.
+     * Filtered to option values that really are feats, so a picker asking something else (a terrain, a
+     * tradition) cannot smuggle its answers into this comparison.
+     */
+    const askedFeats = [rec.choice, ...(rec.effectChoices ?? [])]
+      .filter((ch) => ch && ch.kind === 'array')
+      .flatMap((ch) => (ch.options ?? []).map((o) => o?.value))
+      .filter((v) => typeof v === 'string' && db.feats?.[v]);
     const haveFeats = set(
-      [rec.grantedFeatId, ...Object.values(rec.grantedFeatByChoice ?? {})]
+      [rec.grantedFeatId, ...Object.values(rec.grantedFeatByChoice ?? {}), ...askedFeats]
         .flat()
         .filter(Boolean)
         .map((f) => String(f).replace(/-/g, ' ')),

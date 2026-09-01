@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
-import { content, build } from './_content';
+import { content, build, grantPicker } from './_content';
 import { buildCharacter, buildChoiceOptions, emptyBuild, type BuildState } from '../src/rules/build';
 import { adoptedAncestryIds, eligibleFeatsForSlot } from '../src/rules/featSlots';
 import { characterSenseKeys, senseGateReason } from '../src/rules/derive';
@@ -330,26 +330,49 @@ describe('Beast Trainer grants the branch the player picked', () => {
 describe('a picker whose answer nothing reads is deleted, not left live', () => {
   const DELETED = [
     'adroit-manipulation',
-    'animal-senses',
-    'greater-animal-senses',
-    'natural-senses',
     'benefactors-resistance',
     'aqueous-dragonblood',
     'summiting-dragonblood',
     'animal-actor',
   ];
 
-  it('all eight phantom pickers are gone', () => {
+  it('every phantom picker is gone', () => {
     for (const id of DELETED) expect(c.feats[id]?.choice, id).toBeUndefined();
+  });
+
+  it('a REPEATABLE record keeps the other half — the per-record picker is the phantom there', () => {
+    /*
+     * These three were originally resolved the same way as the five above: delete the `choice`, keep
+     * the `effectChoices` picker carrying the grants. That is right for a record taken once, and wrong
+     * for one taken many times — an `effectChoices` answer is stored once per RECORD, so on a
+     * repeatable feat the surviving picker was the one that CANNOT serve a second taking. A ranger who
+     * took Greater Animal Senses twice answered two pickers writing to one key and gained one sense.
+     *
+     * So the direction flipped, and it flipped for the whole class: 24 repeatable records now hold
+     * their pick on the per-taking `choice`, and the per-record one is gone. The invariant this block
+     * defends is unchanged — exactly one picker, and the survivor is the one that does the work.
+     */
+    for (const id of ['greater-animal-senses', 'animal-senses', 'natural-senses']) {
+      const rec = c.feats[id];
+      expect(rec.effectChoices, `${id}: the per-record picker is the phantom on a repeatable feat`).toBeUndefined();
+      expect(rec.choice?.options?.every((o) => o.grant), `${id}: every option must carry its own grant`).toBe(true);
+    }
+    /*
+     * …and `distinctAcrossTakes` is NOT uniform across them, which is the whole reason these were
+     * migrated one at a time. Animal Senses and Natural Senses print *"choosing a different sense each
+     * time"*; GREATER Animal Senses prints *"either choosing a different sense OR IMPROVING an
+     * imprecise sense granted by this feat to a precise sense"* — repeating an answer is explicitly
+     * legal there, and marking it distinct would forbid half of what it prints.
+     */
+    expect(c.feats['animal-senses'].choice?.distinctAcrossTakes).toBe(true);
+    expect(c.feats['natural-senses'].choice?.distinctAcrossTakes).toBe(true);
+    expect(c.feats['greater-animal-senses'].choice?.distinctAcrossTakes, 'its Special permits repeating to upgrade').toBeUndefined();
   });
 
   it('…and the picker that does the work survived in each case', () => {
     // Deleting the wrong half is the failure this guards. Four are "asked twice": the surviving
     // effectChoices picker is the one carrying grants.
     for (const [id, choiceId] of [
-      ['animal-senses', 'sense'],
-      ['greater-animal-senses', 'sense'],
-      ['natural-senses', 'sense'],
       ['benefactors-resistance', 'breath-type'],
     ] as const) {
       const ec = (c.feats[id].effectChoices ?? []).find((x) => x.id === choiceId);
@@ -388,15 +411,27 @@ describe('an answer is printed once, however many pickers and takings there are'
         ancestryId: 'human',
         classId: 'fighter',
         featPicks: { '4:class:0': 'wormskin', '6:class:0': 'wormskin', '8:class:0': 'wormskin' },
-        effectChoices: { 'wormskin:resistance': 'cold' },
+        featChoices: { '4:class:0': 'fire', '6:class:0': 'cold', '8:class:0': 'bludgeoning' },
       },
       c,
     );
     expect(ch.feats.filter((f) => f.featId === 'wormskin')).toHaveLength(3);
-    // OLD BEHAVIOUR: resolvePick ran once per taking and pushed a row each time, so FeatsTab printed
-    // "Wormskin (Cold) (Cold, Cold, Cold)".
-    const picks = (ch.effectPicks ?? []).filter((p) => p.recordId === 'wormskin' && p.choiceId === 'resistance');
-    expect(picks.length).toBe(1);
+    /*
+     * WORMSKIN MOVED OFF `effectChoices` ONTO THE PER-TAKING `choice` LANE (parity batch 13).
+     *
+     * The old shape stored ONE answer per (record, choiceId), which is why this test used to pin
+     * "exactly one row": three takings could only ever share a single answer, and printing it three
+     * times read "Wormskin (Cold, Cold, Cold)". But the printed Special is *"chosen when you take the
+     * feat"*, a different type each time — so the shared answer was the deeper bug and the
+     * de-duplication was only hiding it: a player who spent three feats received ONE resistance.
+     *
+     * The per-taking lane keys the answer by SLOT, so each taking carries its own. What this now
+     * guards is that each taking keeps ITS OWN answer, and that none is printed twice.
+     */
+    const answers = ch.feats.filter((f) => f.featId === 'wormskin').map((f) => f.choice?.value);
+    expect(answers).toEqual(['fire', 'cold', 'bludgeoning']);
+    // …and no per-record effect-pick row survives, because the record no longer asks that way.
+    expect((ch.effectPicks ?? []).filter((p) => p.recordId === 'wormskin')).toHaveLength(0);
   });
 
   it('every sense is spelt exactly one way', () => {
@@ -425,18 +460,22 @@ describe('the over-wide lists', () => {
   });
 
   it('Animal Senses gates darkvision on already having low-light vision', () => {
-    const sense = (c.feats['animal-senses'].effectChoices ?? []).find((x) => x.id === 'sense')!;
-    const dark = sense.options!.find((o) => o.value === 'darkvision')!;
+    /* Asked through grantPicker: Animal Senses is repeatable, so its pick lives on the per-taking
+     * `choice` rather than `effectChoices`. The GATE is what this test is about and is unchanged. */
+    const sense = grantPicker(c.feats['animal-senses'])! as { options: { value: string; grant?: { senses?: { name: string }[] }; requiresAnySense?: string[] }[] };
+    const dark = sense.options.find((o) => o.value === 'darkvision')!;
     expect(dark.requiresAnySense).toEqual(['low-light-vision', 'darkvision']);
     // …and the low-light grant is spelt the way every ancestry spells it, so it MERGES with an
     // ancestry's row instead of adding a second one.
-    const low = sense.options!.find((o) => o.value === 'low-light-vision')!;
+    const low = sense.options.find((o) => o.value === 'low-light-vision')!;
     expect(low.grant?.senses?.[0].name).toBe('low-light-vision');
   });
 
   it('…and the gate says NO to a normal-sighted character and YES to an elf', () => {
-    const sense = (c.feats['animal-senses'].effectChoices ?? []).find((x) => x.id === 'sense')!;
-    const dark = sense.options!.find((o) => o.value === 'darkvision')!;
+    /* Asked through grantPicker: Animal Senses is repeatable, so its pick lives on the per-taking
+     * `choice` rather than `effectChoices`. The GATE is what this test is about and is unchanged. */
+    const sense = grantPicker(c.feats['animal-senses'])! as { options: { value: string; grant?: { senses?: { name: string }[] }; requiresAnySense?: string[] }[] };
+    const dark = sense.options.find((o) => o.value === 'darkvision')!;
     const senses = (ancestryId: string) =>
       characterSenseKeys(buildCharacter({ ...emptyBuild(), level: 1, ancestryId, classId: 'fighter' }, c), c);
     // OLD BEHAVIOUR: the picker rendered every option live, so the harness's normal-sighted human

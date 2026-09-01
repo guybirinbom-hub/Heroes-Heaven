@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { content, build } from './_content';
+import { content, build, grantPicker } from './_content';
 import { DOMAIN_SPELLS } from '../src/rules/domains';
 
 /**
@@ -60,7 +60,9 @@ describe('domain focus spells', () => {
     // Advanced Domain already listed all 64 with their advanced spells, which is how the gap showed:
     // a cleric could take the advanced spell of a domain whose initial spell the app could not give
     // them. The legacy aliases are in both, because deity records carry those spellings.
-    const options = ((c().feats['advanced-domain'].effectChoices ?? [])[0]?.options ?? []).map((o) => o.value);
+    /* Asked through grantPicker: Advanced Domain is repeatable, so its pick moved to the per-taking
+     * `choice`. What this test compares — the two halves offering the SAME domains — is unchanged. */
+    const options = ((grantPicker(c().feats['advanced-domain'])?.options ?? []) as { value: string }[]).map((o) => o.value);
     expect([...options].sort()).toEqual(Object.keys(DOMAIN_SPELLS).sort());
   });
 });

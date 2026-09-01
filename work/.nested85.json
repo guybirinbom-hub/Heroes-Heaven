@@ -1,0 +1,984 @@
+[
+ {
+  "featId": "smokesoul",
+  "activityName": "Smoke Blending",
+  "at": "actions/smoke-blending",
+  "glyphCost": "reaction",
+  "activityStoredCost": "reaction",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/smokesoul"
+  ]
+ },
+ {
+  "featId": "brinesoul",
+  "activityName": "Salt Wound",
+  "at": "actions/salt-wound",
+  "glyphCost": "reaction",
+  "activityStoredCost": "reaction",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/brinesoul"
+  ]
+ },
+ {
+  "featId": "mistsoul",
+  "activityName": "Mist Blending",
+  "at": "actions/mist-blending",
+  "glyphCost": "reaction",
+  "activityStoredCost": "reaction",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/mistsoul"
+  ]
+ },
+ {
+  "featId": "cathartic-mage-dedication",
+  "activityName": "Catharsis",
+  "at": "actions/catharsis",
+  "glyphCost": "reaction",
+  "activityStoredCost": "reaction",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/cathartic-mage-dedication"
+  ]
+ },
+ {
+  "featId": "soulforger-dedication",
+  "activityName": "Manifest Soulforged Armament",
+  "at": "actions/manifest-soulforged-armament",
+  "glyphCost": "1",
+  "activityStoredCost": "1",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/soulforger-dedication"
+  ]
+ },
+ {
+  "featId": "folklorist-dedication",
+  "activityName": "Spin Tale",
+  "at": "actions/spin-tale",
+  "glyphCost": "1",
+  "activityStoredCost": "1",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/folklorist-dedication"
+  ]
+ },
+ {
+  "featId": "beast-gunner-dedication",
+  "activityName": "Spellsling",
+  "at": "actions/spellsling",
+  "glyphCost": "3",
+  "activityStoredCost": "3",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/beast-gunner-dedication"
+  ]
+ },
+ {
+  "featId": "bullet-dancer-dedication",
+  "activityName": "Bullet Dancer Stance",
+  "at": "actions/bullet-dancer-stance",
+  "glyphCost": "1",
+  "activityStoredCost": "1",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/bullet-dancer-dedication"
+  ]
+ },
+ {
+  "featId": "demolitionist-dedication",
+  "activityName": "Set Explosives",
+  "at": "actions/set-explosives",
+  "glyphCost": "2",
+  "activityStoredCost": "2",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/demolitionist-dedication"
+  ]
+ },
+ {
+  "featId": "firework-technician-dedication",
+  "activityName": "Launch Fireworks",
+  "at": "actions/launch-fireworks",
+  "glyphCost": "1",
+  "activityStoredCost": "1",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/firework-technician-dedication"
+  ]
+ },
+ {
+  "featId": "coughing-dragon-display",
+  "activityName": "Coughing Dragon",
+  "at": "actions/coughing-dragon",
+  "glyphCost": "2",
+  "activityStoredCost": "2",
+  "costsAgree": true,
+  "featGrantsIt": false,
+  "anyWriter": []
+ },
+ {
+  "featId": "jumping-jenny-display",
+  "activityName": "Jumping Jenny",
+  "at": "actions/jumping-jenny",
+  "glyphCost": "1",
+  "activityStoredCost": "1",
+  "costsAgree": true,
+  "featGrantsIt": false,
+  "anyWriter": []
+ },
+ {
+  "featId": "goblin-jubilee-display",
+  "activityName": "Goblin Jubilee",
+  "at": "actions/goblin-jubilee",
+  "glyphCost": "3",
+  "activityStoredCost": "3",
+  "costsAgree": true,
+  "featGrantsIt": false,
+  "anyWriter": []
+ },
+ {
+  "featId": "banshee-cry-display",
+  "activityName": "Banshee Cry",
+  "at": "actions/banshee-cry",
+  "glyphCost": "reaction",
+  "activityStoredCost": "reaction",
+  "costsAgree": true,
+  "featGrantsIt": false,
+  "anyWriter": []
+ },
+ {
+  "featId": "unexpected-sharpshooter-dedication",
+  "activityName": "Accidental Shot",
+  "at": "actions/accidental-shot",
+  "glyphCost": "2",
+  "activityStoredCost": "2",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/unexpected-sharpshooter-dedication"
+  ]
+ },
+ {
+  "featId": "bound-in-ice",
+  "activityName": "Blizzard Evasion",
+  "at": "actions/blizzard-evasion",
+  "glyphCost": "reaction",
+  "activityStoredCost": "reaction",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/bound-in-ice"
+  ]
+ },
+ {
+  "featId": "undead-slayer-dedication",
+  "activityName": "Slayer's Identification",
+  "at": "actions/slayers-identification",
+  "glyphCost": "free",
+  "activityStoredCost": "free",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/undead-slayer-dedication"
+  ]
+ },
+ {
+  "featId": "ghoul-dedication",
+  "activityName": "Consume Flesh",
+  "at": "actions/consume-flesh",
+  "glyphCost": "1",
+  "activityStoredCost": "1",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/ghoul-dedication"
+  ]
+ },
+ {
+  "featId": "vampire-dedication",
+  "activityName": "Drink Blood",
+  "at": "actions/drink-blood",
+  "glyphCost": "1",
+  "activityStoredCost": "1",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/vampire-dedication"
+  ]
+ },
+ {
+  "featId": "out-of-hand",
+  "activityName": "Lay Down Arms",
+  "at": "actions/lay-down-arms",
+  "glyphCost": "1",
+  "activityStoredCost": "1",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/out-of-hand"
+  ]
+ },
+ {
+  "featId": "glass-skin",
+  "activityName": "Shatter Glass",
+  "at": "actions/shatter-glass",
+  "glyphCost": "reaction",
+  "activityStoredCost": "reaction",
+  "costsAgree": true,
+  "featGrantsIt": false,
+  "anyWriter": []
+ },
+ {
+  "featId": "harrower-dedication",
+  "activityName": "Avoid Dire Fate",
+  "at": "actions/avoid-dire-fate",
+  "glyphCost": "reaction",
+  "activityStoredCost": "reaction",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/harrower-dedication"
+  ]
+ },
+ {
+  "featId": "stalwart-defender-dedication",
+  "activityName": "Tenacious Stance",
+  "at": "actions/tenacious-stance",
+  "glyphCost": "1",
+  "activityStoredCost": "1",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/stalwart-defender-dedication"
+  ]
+ },
+ {
+  "featId": "safe-elements",
+  "activityName": "Pacifying Infusion",
+  "at": "actions/pacifying-infusion",
+  "glyphCost": "1",
+  "activityStoredCost": "1",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/safe-elements"
+  ]
+ },
+ {
+  "featId": "moldersoul",
+  "activityName": "Decompose",
+  "at": "actions/decompose",
+  "glyphCost": "2",
+  "activityStoredCost": "2",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/moldersoul"
+  ]
+ },
+ {
+  "featId": "quicksoul",
+  "activityName": "Toxic Touch",
+  "at": "actions/toxic-touch",
+  "glyphCost": "1",
+  "activityStoredCost": "1",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/quicksoul"
+  ]
+ },
+ {
+  "featId": "stone-brawler-dedication",
+  "activityName": "Stonestrike Stance",
+  "at": "actions/stonestrike-stance",
+  "glyphCost": "1",
+  "activityStoredCost": "1",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/stone-brawler-dedication"
+  ]
+ },
+ {
+  "featId": "primal-howl",
+  "activityName": "Primal Howl",
+  "at": "feats/primal-howl",
+  "glyphCost": "2",
+  "activityStoredCost": "2",
+  "costsAgree": true,
+  "featGrantsIt": false,
+  "anyWriter": []
+ },
+ {
+  "featId": "verdant-metamorphosis",
+  "activityName": "Verdant Rest",
+  "at": "actions/verdant-rest",
+  "glyphCost": "1",
+  "activityStoredCost": "1",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/verdant-metamorphosis"
+  ]
+ },
+ {
+  "featId": "true-shapeshifter",
+  "activityName": "True Shapeshift",
+  "at": "actions/true-shapeshift",
+  "glyphCost": "2",
+  "activityStoredCost": "2",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/true-shapeshifter"
+  ]
+ },
+ {
+  "featId": "inspired-stratagem",
+  "activityName": "Inspired Stratagem",
+  "at": "feats/inspired-stratagem",
+  "glyphCost": "reaction",
+  "activityStoredCost": "reaction",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/inspired-stratagem"
+  ]
+ },
+ {
+  "featId": "spirit-familiar-witch",
+  "activityName": "Shed Spirit",
+  "at": "actions/shed-spirit",
+  "glyphCost": "2",
+  "activityStoredCost": "2",
+  "costsAgree": true,
+  "featGrantsIt": false,
+  "anyWriter": []
+ },
+ {
+  "featId": "stitched-familiar",
+  "activityName": "Stitching Strike",
+  "at": "actions/stitching-strike",
+  "glyphCost": "2",
+  "activityStoredCost": "2",
+  "costsAgree": true,
+  "featGrantsIt": false,
+  "anyWriter": []
+ },
+ {
+  "featId": "patrons-presence",
+  "activityName": "Patron’s Presence",
+  "at": "feats/patrons-presence",
+  "glyphCost": "2",
+  "activityStoredCost": "2",
+  "costsAgree": true,
+  "featGrantsIt": false,
+  "anyWriter": []
+ },
+ {
+  "featId": "patrons-claim",
+  "activityName": "Patron’s Claim",
+  "at": "feats/patrons-claim",
+  "glyphCost": "2",
+  "activityStoredCost": "2",
+  "costsAgree": true,
+  "featGrantsIt": false,
+  "anyWriter": []
+ },
+ {
+  "featId": "stubborn-defiance",
+  "activityName": "I Defy You!",
+  "at": "actions/i-defy-you",
+  "glyphCost": "reaction",
+  "activityStoredCost": "reaction",
+  "costsAgree": true,
+  "featGrantsIt": false,
+  "anyWriter": []
+ },
+ {
+  "featId": "ferocious-charge",
+  "activityName": "Ferocious Charge",
+  "at": "feats/ferocious-charge",
+  "glyphCost": "2",
+  "activityStoredCost": "2",
+  "costsAgree": true,
+  "featGrantsIt": false,
+  "anyWriter": []
+ },
+ {
+  "featId": "running-kick",
+  "activityName": "Running Kick",
+  "at": "feats/running-kick",
+  "glyphCost": "2",
+  "activityStoredCost": "2",
+  "costsAgree": true,
+  "featGrantsIt": false,
+  "anyWriter": []
+ },
+ {
+  "featId": "sinking-jaws",
+  "activityName": "Sinking Jaws",
+  "at": "feats/sinking-jaws",
+  "glyphCost": "1",
+  "activityStoredCost": "1",
+  "costsAgree": true,
+  "featGrantsIt": false,
+  "anyWriter": []
+ },
+ {
+  "featId": "sweeping-tail",
+  "activityName": "Sweeping Tail",
+  "at": "feats/sweeping-tail",
+  "glyphCost": "2",
+  "activityStoredCost": "2",
+  "costsAgree": true,
+  "featGrantsIt": false,
+  "anyWriter": []
+ },
+ {
+  "featId": "vicious-rend",
+  "activityName": "Vicious Rend",
+  "at": "feats/vicious-rend",
+  "glyphCost": "2",
+  "activityStoredCost": "2",
+  "costsAgree": true,
+  "featGrantsIt": false,
+  "anyWriter": []
+ },
+ {
+  "featId": "clawdancer-dedication",
+  "activityName": "Claw Stance",
+  "at": "actions/claw-stance",
+  "glyphCost": "1",
+  "activityStoredCost": "1",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/clawdancer-dedication"
+  ]
+ },
+ {
+  "featId": "spell-swallow",
+  "activityName": "Devour Ambient Magic",
+  "at": "actions/devour-ambient-magic",
+  "glyphCost": "reaction",
+  "activityStoredCost": "reaction",
+  "costsAgree": true,
+  "featGrantsIt": false,
+  "anyWriter": []
+ },
+ {
+  "featId": "swarmkeeper-dedication",
+  "activityName": "Swarm Forth",
+  "at": "actions/swarm-forth",
+  "glyphCost": "2",
+  "activityStoredCost": "2",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/swarmkeeper-dedication"
+  ]
+ },
+ {
+  "featId": "werecreature-dedication",
+  "activityName": "Change Shape",
+  "at": "actions/change-shape",
+  "glyphCost": "1",
+  "activityStoredCost": "1",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/werecreature-dedication"
+  ]
+ },
+ {
+  "featId": "plummeting-roll",
+  "activityName": "Plummeting Roll",
+  "at": "feats/plummeting-roll",
+  "glyphCost": "reaction",
+  "activityStoredCost": "reaction",
+  "costsAgree": true,
+  "featGrantsIt": false,
+  "anyWriter": []
+ },
+ {
+  "featId": "finishing-precision",
+  "activityName": "Basic Finisher",
+  "at": "actions/basic-finisher",
+  "glyphCost": "1",
+  "activityStoredCost": "1",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/finishing-precision"
+  ]
+ },
+ {
+  "featId": "assassin-dedication",
+  "activityName": "Mark for Death",
+  "at": "actions/mark-for-death",
+  "glyphCost": "3",
+  "activityStoredCost": "3",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/assassin-dedication"
+  ]
+ },
+ {
+  "featId": "magic-ammunition",
+  "activityName": "Transform Ammunition",
+  "at": "actions/transform-ammunition",
+  "glyphCost": "free",
+  "activityStoredCost": "free",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/magic-ammunition"
+  ]
+ },
+ {
+  "featId": "faultspawn",
+  "activityName": "Find Fault",
+  "at": "actions/find-fault",
+  "glyphCost": "reaction",
+  "activityStoredCost": "reaction",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/faultspawn"
+  ]
+ },
+ {
+  "featId": "one-among-the-masses",
+  "activityName": "Overawe Crowd",
+  "at": "actions/overawe-crowd",
+  "glyphCost": "2",
+  "activityStoredCost": "2",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/one-among-the-masses"
+  ]
+ },
+ {
+  "featId": "ascended-celestial-dedication",
+  "activityName": "Bless Ally",
+  "at": "actions/bless-ally",
+  "glyphCost": "1",
+  "activityStoredCost": "1",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/ascended-celestial-dedication"
+  ]
+ },
+ {
+  "featId": "broken-chain-dedication",
+  "activityName": "Ultimatum of Liberation",
+  "at": "actions/ultimatum-of-liberation",
+  "glyphCost": "1",
+  "activityStoredCost": "1",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/broken-chain-dedication"
+  ]
+ },
+ {
+  "featId": "spell-woven-shot",
+  "activityName": "Spell-Woven Shot",
+  "at": "feats/spell-woven-shot",
+  "glyphCost": "3",
+  "activityStoredCost": "3",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/spell-woven-shot"
+  ]
+ },
+ {
+  "featId": "rivethun-invoker-dedication",
+  "activityName": "Enter Spirit Trance",
+  "at": "actions/enter-spirit-trance",
+  "glyphCost": "1",
+  "activityStoredCost": "1",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/rivethun-invoker-dedication"
+  ]
+ },
+ {
+  "featId": "unbowed-unbroken",
+  "activityName": "Unwavering Resilience",
+  "at": "actions/unwavering-resilience",
+  "glyphCost": "reaction",
+  "activityStoredCost": "reaction",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/unbowed-unbroken"
+  ]
+ },
+ {
+  "featId": "perfect-pitch",
+  "activityName": "Pitch-Perfect Projection",
+  "at": "actions/pitch-perfect-projection",
+  "glyphCost": "1",
+  "activityStoredCost": "1",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/perfect-pitch"
+  ]
+ },
+ {
+  "featId": "virtuosic-dancer",
+  "activityName": "Dancing Dodge",
+  "at": "actions/dancing-dodge",
+  "glyphCost": "reaction",
+  "activityStoredCost": "reaction",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/virtuosic-dancer"
+  ]
+ },
+ {
+  "featId": "fight-choreography",
+  "activityName": "Swift Choreography",
+  "at": "actions/swift-choreography",
+  "glyphCost": "reaction",
+  "activityStoredCost": "reaction",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/fight-choreography"
+  ]
+ },
+ {
+  "featId": "headless-haunt",
+  "activityName": "Remove Head",
+  "at": "actions/remove-head",
+  "glyphCost": "1",
+  "activityStoredCost": "1",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/headless-haunt"
+  ]
+ },
+ {
+  "featId": "ulfen-guard-dedication",
+  "activityName": "Designate Ally",
+  "at": "actions/designate-ally",
+  "glyphCost": "1",
+  "activityStoredCost": "1",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/ulfen-guard-dedication"
+  ]
+ },
+ {
+  "featId": "faith-in-the-fallen",
+  "activityName": "Spirit Sanctification",
+  "at": "actions/spirit-sanctification",
+  "glyphCost": "1",
+  "activityStoredCost": "1",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/faith-in-the-fallen"
+  ]
+ },
+ {
+  "featId": "crossbow-infiltrator-dedication",
+  "activityName": "Infiltrator's Draw",
+  "at": "actions/infiltrators-draw",
+  "glyphCost": "1",
+  "activityStoredCost": "1",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/crossbow-infiltrator-dedication"
+  ]
+ },
+ {
+  "featId": "crescent-cross-training",
+  "activityName": "Crescent Spray",
+  "at": "actions/crescent-spray",
+  "glyphCost": "2",
+  "activityStoredCost": "2",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/crescent-cross-training"
+  ]
+ },
+ {
+  "featId": "guerrilla-weaponry",
+  "activityName": "Guerrilla Assault",
+  "at": "actions/guerrilla-assault",
+  "glyphCost": "1",
+  "activityStoredCost": "1",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/guerrilla-weaponry"
+  ]
+ },
+ {
+  "featId": "munitions-master-dedication",
+  "activityName": "Engineer's Efficiency",
+  "at": "actions/engineers-efficiency",
+  "glyphCost": "1",
+  "activityStoredCost": "1",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/munitions-master-dedication"
+  ]
+ },
+ {
+  "featId": "necrologist-dedication",
+  "activityName": "Raise the Horde",
+  "at": "actions/raise-the-horde",
+  "glyphCost": "2",
+  "activityStoredCost": "2",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/necrologist-dedication"
+  ]
+ },
+ {
+  "featId": "heroic-weakness",
+  "activityName": "Makes Me Stronger",
+  "at": "actions/makes-me-stronger",
+  "glyphCost": "reaction",
+  "activityStoredCost": "reaction",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/heroic-weakness"
+  ]
+ },
+ {
+  "featId": "bond-companion",
+  "activityName": "Fortify Focus",
+  "at": "actions/fortify-focus",
+  "glyphCost": "2",
+  "activityStoredCost": "2",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/bond-companion"
+  ]
+ },
+ {
+  "featId": "draconic-acolyte-dedication",
+  "activityName": "Channel Draconic Essence",
+  "at": "actions/channel-draconic-essence",
+  "glyphCost": "1",
+  "activityStoredCost": "1",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/draconic-acolyte-dedication"
+  ]
+ },
+ {
+  "featId": "winged-leap",
+  "activityName": "Winged Leap",
+  "at": "feats/winged-leap",
+  "glyphCost": "1",
+  "activityStoredCost": "1",
+  "costsAgree": true,
+  "featGrantsIt": false,
+  "anyWriter": []
+ },
+ {
+  "featId": "spiritual-aid",
+  "activityName": "Spiritual Aid",
+  "at": "feats/spiritual-aid",
+  "glyphCost": "reaction",
+  "activityStoredCost": "reaction",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/spiritual-aid"
+  ]
+ },
+ {
+  "featId": "thaumaturge-dedication",
+  "activityName": "Glimpse Vulnerability",
+  "at": "actions/glimpse-vulnerability",
+  "glyphCost": "1",
+  "activityStoredCost": "1",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/thaumaturge-dedication"
+  ]
+ },
+ {
+  "featId": "devils-eye",
+  "activityName": "Objection",
+  "at": "actions/objection",
+  "glyphCost": "reaction",
+  "activityStoredCost": "reaction",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/devils-eye"
+  ]
+ },
+ {
+  "featId": "echo-of-the-fallen",
+  "activityName": "Accept Echo",
+  "at": "actions/accept-echo",
+  "glyphCost": "1",
+  "activityStoredCost": "1",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/echo-of-the-fallen"
+  ]
+ },
+ {
+  "featId": "elysiums-cadence",
+  "activityName": "Set Free",
+  "at": "actions/set-free",
+  "glyphCost": "reaction",
+  "activityStoredCost": "reaction",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/elysiums-cadence"
+  ]
+ },
+ {
+  "featId": "dormant-eruption",
+  "activityName": "Thermal Eruption",
+  "at": "actions/thermal-eruption",
+  "glyphCost": "2",
+  "activityStoredCost": "2",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/dormant-eruption"
+  ]
+ },
+ {
+  "featId": "clone-risen",
+  "activityName": "Empty Vessel",
+  "at": "actions/empty-vessel",
+  "glyphCost": "reaction",
+  "activityStoredCost": "reaction",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/clone-risen"
+  ]
+ },
+ {
+  "featId": "living-vessel-dedication",
+  "activityName": "Entity's Resurgence",
+  "at": "actions/entitys-resurgence",
+  "glyphCost": "reaction",
+  "activityStoredCost": "reaction",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/living-vessel-dedication"
+  ]
+ },
+ {
+  "featId": "pactbinder-dedication",
+  "activityName": "Binding Vow",
+  "at": "actions/binding-vow",
+  "glyphCost": "1",
+  "activityStoredCost": "1",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/pactbinder-dedication"
+  ]
+ },
+ {
+  "featId": "pact-of-draconic-fury",
+  "activityName": "Dragon Breath",
+  "at": "actions/dragon-breath",
+  "glyphCost": "2",
+  "activityStoredCost": "2",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/pact-of-draconic-fury"
+  ]
+ },
+ {
+  "featId": "curse-maelstrom-dedication",
+  "activityName": "Expel Maelstrom",
+  "at": "actions/expel-maelstrom",
+  "glyphCost": "1",
+  "activityStoredCost": "1",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/curse-maelstrom-dedication"
+  ]
+ },
+ {
+  "featId": "sleepwalker-dedication",
+  "activityName": "Daydream Trance",
+  "at": "actions/daydream-trance",
+  "glyphCost": "1",
+  "activityStoredCost": "1",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/sleepwalker-dedication"
+  ]
+ },
+ {
+  "featId": "hellknight-errant",
+  "activityName": "Warding Shift",
+  "at": "actions/warding-shift",
+  "glyphCost": "1",
+  "activityStoredCost": "1",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/hellknight-errant"
+  ]
+ },
+ {
+  "featId": "steel-falcon-dedication",
+  "activityName": "Size Up",
+  "at": "actions/size-up",
+  "glyphCost": "1",
+  "activityStoredCost": "1",
+  "costsAgree": true,
+  "featGrantsIt": true,
+  "anyWriter": [
+   "feats/steel-falcon-dedication"
+  ]
+ }
+]

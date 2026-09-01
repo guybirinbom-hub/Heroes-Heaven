@@ -188,6 +188,45 @@ export interface FeatGrant {
      *  trained" (Lion Blade). When set, the PICKED skill gets `upgraded` if it already met `base`
      *  before this grant, else `base`; the flat `rank` is ignored. */
     conditionalRank?: { base: ProficiencyRank; upgraded: ProficiencyRank };
+    /**
+     * The redundancy clause for THIS SLOT rather than for the record's static `skills` map.
+     *
+     * A record whose only training comes from a slot cannot use the record-wide `redundantFallback`
+     * below — that flag walks the static map, which is empty here, so it is inert. Gildedsoul is the
+     * case: *"you become trained in your choice of Diplomacy or Society. If you would automatically
+     * become trained in BOTH these skills, you instead become trained in a skill of your choice."*
+     * The flag fires when the slot's pick bought nothing, which — because `skillSlotGrant` greys a
+     * dead option — can only happen when EVERY option is dead, exactly matching that condition.
+     */
+    redundantFallback?: boolean;
+    /**
+     * The redundancy replacement for a LORE slot is another LORE, not one of the sixteen skills.
+     *
+     * *"…you become trained in a new Lore skill of your choice"* — so a redundant Lore pick offers a
+     * free-text Lore subject (answered in `BuildState.featLoreChoices`) rather than the skill picker.
+     * Without this a Lore slot is excluded from the fallback entirely, because a Lore can almost never
+     * be redundant and offering the sixteen skills would be the wrong sentence.
+     */
+    loreFallback?: boolean;
+    /**
+     * The slot is DETERMINED by an answer the character already gave, not asked again.
+     *
+     * *"You become trained in Survival AND THE SKILL ASSOCIATED WITH THE MAGICAL TRADITION FROM YOUR
+     * MAGIPHAGE ABILITY (Arcana for arcane, Nature for primal, Occultism for occult, or Religion for
+     * divine)."* (Surki Lore.) The surki's tradition is asked ONCE, on the ancestry, under
+     * `choice.flag: 'magiphageTradition'` — so the printed sentence does not offer a choice, it READS
+     * one. Shipped as four live options, this let a primal surki train Arcana off a feat whose own
+     * text names Nature; their side derives it from the same answer through four conditionals.
+     *
+     * `flag` names the question and `map` turns its answer into the one skill. While the question is
+     * UNANSWERED the slot stays wide — an empty picker on a half-built character is worse than a
+     * premature one, and `featSkillChoiceValue` falls back to `options[0]`, so narrowing to a guess
+     * would silently train Arcana on every surki alive.
+     *
+     * Read through `skillSlotOptions`, which the engine and the builder's picker share: narrowing in
+     * only one of them is the shape that produces a sheet and a builder that disagree.
+     */
+    optionsFromChoiceFlag?: { flag: string; map: Partial<Record<string, ProficiencyKey>> };
   }[];
   /**
    * "If you were already trained in <the granted skill(s)>, you instead become trained in a skill of
@@ -197,6 +236,66 @@ export interface FeatGrant {
    * from BuildState.featSkillChoices keyed `<featId>:fallback:<skill>` (trained, RAISES only).
    */
   redundantFallback?: boolean;
+  /**
+   * A rank granted only while the character OWNS a named class feature.
+   *
+   * *"If you already have Hunt Prey, you become an expert in Survival"* (Game Hunter Dedication) — a
+   * condition on a FEATURE rather than on a skill rank, which `conditionalSkills` cannot express
+   * because it compares the skill against itself.
+   */
+  skillsIfFeature?: { featureId: string; skills: Partial<Record<ProficiencyKey, ProficiencyRank>> };
+  /**
+   * The ARMOUR twin of `weaponFamiliarity.mirrorBestCategory`.
+   *
+   * *"Whenever you gain a class feature that grants you expert or greater proficiency in any type of
+   * armor, you also gain that proficiency in the armor types granted to you by this feat."* Sentinel
+   * Dedication and Mountain Skin both print it word for word, and neither could express it: their
+   * granted categories were frozen at `trained` for the character's whole career, so a 13th-level
+   * fighter with Sentinel Dedication wore medium armour at trained while their own class had made
+   * them a master of it.
+   *
+   * Lists the categories THIS feat granted. They then track the character's best rank among
+   * light/medium/heavy — deliberately NOT unarmored, which the sentence excludes in parentheses.
+   * Applied after class advancement, for the same reason the weapon mirror is: that is precisely
+   * when "a class feature grants you expert or greater" has finished happening.
+   */
+  armorMirrorBest?: ArmorCategory[];
+  /**
+   * An armour rank granted only when the character is ALREADY trained in every listed category.
+   *
+   * *"You become trained in light and medium armor… If you already have trained proficiency in both,
+   * you instead become trained in all armor"* — the heavy step is contingent on the other two, so it
+   * cannot be written as a flat entry in `armor` without handing heavy armour to everyone.
+   */
+  conditionalArmor?: { ifTrainedIn: ArmorCategory[]; grant: ArmorCategory; rank: ProficiencyRank };
+  /**
+   * The armour twin of `weaponFamiliarity` — proficiency in NAMED armour ITEMS, not a category.
+   * Armiger's Protection is the case: *"You become trained in light armor and Hellknight
+   * breastplate, A MEDIUM ARMOR"* names one medium ITEM, and encoding it as `armor.medium` handed
+   * every taker the whole medium category (a 13th-level rogue read expert 17 in an ordinary
+   * Breastplate where print leaves them at untrained +0). Writes `Proficiencies.armorOverrides`,
+   * which AC derivation maxes against the worn armour's category rank. `mirrorBest` tracks the
+   * character's best light/medium/heavy rank (deliberately NOT unarmored — the printed sentence
+   * excludes it in parentheses), applied after class advancement like `armorMirrorBest`.
+   */
+  armorFamiliarity?: { armors: string[]; rank?: ProficiencyRank; mirrorBest?: boolean };
+  /**
+   * The item-keyed twin of `conditionalArmor` — named armours granted only when the character was
+   * ALREADY trained in every listed category. *"If you were already trained in light armor and
+   * medium armor, you gain training in Hellknight half plate and Hellknight plate"* names two heavy
+   * ITEMS; `conditionalArmor.grant: 'heavy'` would hand a ranger Full Plate too. Read BEFORE the
+   * static grant, for the reason conditionalArmor's reader documents. The granted armours join the
+   * feat's `armorFamiliarity` set for mirrorBest/crossConditionalArmor purposes.
+   */
+  conditionalArmorFamiliarity?: { ifTrainedIn: ArmorCategory[]; armors: string[]; rank: ProficiencyRank };
+  /**
+   * *"If you have a class feature that grants you expert proficiency in unarmored defense and
+   * you're 13th level or higher, you also become an expert in the armor types granted to you by
+   * this feat."* Tested against the FINAL unarmored rank after class advancement rather than its
+   * class-feature source — the same approximation the armour mirror already ships. Raises the
+   * feat's armorFamiliarity/conditionalArmorFamiliarity overrides to `rank`.
+   */
+  crossConditionalArmor?: { whenDefense: ArmorCategory; whenRank: ProficiencyRank; minLevel?: number; rank: ProficiencyRank };
   /**
    * Ancestry Weapon Familiarity / Expertise — proficiency in NAMED weapons rather than a whole
    * category. `rank` is a flat grant ("you're trained in the dogslicer and horsechopper"); with
@@ -216,7 +315,19 @@ export interface FeatGrant {
    * build.ts's grant loop, after class advancement and after skill increases, so the gate sees the
    * character's final rank rather than a half-built one.
    */
-  crossConditionalSkills?: Record<string, { whenSkill: ProficiencyKey; whenRank: ProficiencyRank; rank: ProficiencyRank }>;
+  /* `whenSkill` may be a LIST, in which case ANY of them opens the gate: Loremaster Dedication's is
+   * *"if you have legendary proficiency in a skill used to decipher writing"* — Arcana, Occultism,
+   * Religion or Society — and this map is keyed by the GRANTED skill, so four entries cannot say it. */
+  crossConditionalSkills?: Record<string, { whenSkill: ProficiencyKey | ProficiencyKey[]; whenRank: ProficiencyRank; rank: ProficiencyRank }>;
+  /**
+   * *"If you are already an expert in BOTH skills, you become trained in a skill of your choice."*
+   *
+   * ONE replacement pick, offered only when EVERY `conditionalSkills` entry was already at `whenAll`
+   * before this grant. The record-wide `redundantFallback` says neither of those things: it fires per
+   * skill (so two skills would offer two picks) and it triggers on a single redundant grant rather
+   * than on all of them.
+   */
+  conditionalSkillsFallback?: { whenAll: ProficiencyRank };
   /**
    * The feat grants a BONUS skill feat the player picks (Rogue Dedication: "You gain a skill feat").
    * Injected as an extra level-<feat's level> skill-feat slot; the pick is stored in
@@ -297,16 +408,107 @@ export interface FeatGrant {
  *   your choice") is NOT modeled — Foundry itself omits it, so repeat takes are inert.
  */
 const HAND_AUTHORED_GRANTS: Record<string, FeatGrant> = {
-  'sentinel-dedication': { armor: { light: 'trained', medium: 'trained' } },
+  /*
+   * *"You become trained in Survival AND THE SKILL ASSOCIATED WITH THE MAGICAL TRADITION FROM YOUR
+   * MAGIPHAGE ABILITY (Arcana for arcane, Nature for primal, Occultism for occult, or Religion for
+   * divine). If you would automatically become trained in one of those skills… you instead become
+   * trained in a skill of your choice."*
+   *
+   * The generated entry offered all four as a live pick, so a PRIMAL surki could train Arcana off a
+   * feat whose own parenthesis names Nature. The tradition is asked once, on the ancestry
+   * (`ancestries.surki.choice.flag = 'magiphageTradition'`), and their side reads the same answer
+   * through four conditionals rather than asking again.
+   *
+   * Hand-authored here because featGrantsAuto.ts is re-serialised whole by scripts that cannot emit
+   * `optionsFromChoiceFlag` — a row there would vanish at the next regeneration. The rest of the entry
+   * is restated verbatim: this merge REPLACES the generated one, so dropping the redundancy clause
+   * (the half we already do better than they do) would be a silent regression.
+   */
+  'surki-lore': {
+    skills: { survival: 'trained' },
+    skillChoices: [
+      {
+        options: ['arcana', 'nature', 'occultism', 'religion'],
+        rank: 'trained',
+        redundantFallback: true,
+        optionsFromChoiceFlag: {
+          flag: 'magiphageTradition',
+          map: { arcane: 'arcana', primal: 'nature', occult: 'occultism', divine: 'religion' },
+        },
+      },
+    ],
+    redundantFallback: true,
+  },
+  /* *"…Whenever you gain a class feature that grants you expert or greater proficiency in any type of
+   * armor, you also gain that proficiency in the armor types granted to you by this feat."* The last
+   * sentence had no carrier, so the two categories this dedication grants stayed at `trained` for the
+   * character's whole career — a 13th-level fighter wore medium armour at trained while their class
+   * had made them a master of it. Heavy is listed too: it is granted by the conditional above, and the
+   * mirror is a raise-only max, so a character who never earned heavy is unaffected. */
+  'sentinel-dedication': {
+    armor: { light: 'trained', medium: 'trained' },
+    conditionalArmor: { ifTrainedIn: ['light', 'medium'], grant: 'heavy', rank: 'trained' },
+    armorMirrorBest: ['light', 'medium', 'heavy'],
+  },
+  /*
+   * ---- the "already trained in BOTH" clause ------------------------------------------------------
+   *
+   * Fourteen records print a version of it, and it has two different payoffs needing two different
+   * fields: *"you instead become trained in ANOTHER skill of your choice"* is `redundantFallback`,
+   * and *"you become an EXPERT in one of them instead"* is `conditionalRank`. Four records printed
+   * the clause with NEITHER field set, so a character already trained in both options simply lost the
+   * grant. `scripts/skill-clause-check.mjs` holds the whole family at zero.
+   *
+   * Both readers key off the rank of the skill the player PICKED rather than off all the options at
+   * once — the same thing in play, since a character trained in only one option picks the other and
+   * is trained normally. Nantambu Chime-Ringer already modelled its clause this way; these four match
+   * it rather than introducing a second convention for one sentence.
+   */
   'fighter-dedication': {
     weapon: { martial: 'trained' },
-    skillChoices: [{ options: ['acrobatics', 'athletics'], rank: 'trained' }],
+    skillChoices: [{ options: ['acrobatics', 'athletics'], rank: 'trained', redundantFallback: true }]
   },
   'rogue-dedication': {
     armor: { light: 'trained' },
-    skillChoices: [{ options: ['stealth', 'thievery'], rank: 'trained' }, { options: 'any', rank: 'trained' }],
-    bonusSkillFeat: true,
+    /* The fallback belongs to the Stealth/Thievery slot ONLY — the second slot is the *"plus one skill
+     * of your choice"* the same sentence grants unconditionally, which nothing redirects. */
+    skillChoices: [{ options: ['stealth', 'thievery'], rank: 'trained', redundantFallback: true }, { options: 'any', rank: 'trained' }],
+    bonusSkillFeat: true
   },
+  /* *"…if you were already trained in both these skills, you become an expert in one of them instead."* */
+  'jalmeri-heavenseeker-dedication': {
+    skillChoices: [{ options: ['acrobatics', 'occultism'], rank: 'trained', conditionalRank: { base: 'trained', upgraded: 'expert' } }]
+  },
+  /* *"…if you are already trained in both, you become an expert in one instead."* */
+  'guerrilla-dedication': {
+    skillChoices: [{ options: ['deception', 'thievery'], rank: 'trained', conditionalRank: { base: 'trained', upgraded: 'expert' } }]
+  },
+  /*
+   * Pure Legion Enforcer prints the clause as a THREE-step ladder: *"You become trained in Intimidation
+   * and Religion. If you are already trained in one or both of these skills, you become an expert in
+   * that skill. If you are already an expert in both skills, you become trained in a skill of your
+   * choice."* The first two steps are `conditionalSkills`; the third needed `conditionalSkillsFallback`,
+   * because it is owed only when BOTH are already expert and yields ONE pick, neither of which the
+   * record-wide `redundantFallback` it carried can say — and on a record with no static `skills` map
+   * and no choice slot, that flag reached no reader at all.
+   */
+  'pure-legion-enforcer-dedication': {
+    conditionalSkills: { intimidation: { base: 'trained', upgraded: 'expert' }, religion: { base: 'trained', upgraded: 'expert' } },
+    conditionalSkillsFallback: { whenAll: 'expert' }
+  },
+  /* *"Pick Spirit Lore or Haunt Lore; you become trained in this skill. If you were already trained in
+   * both skills, you become trained in a new Lore skill of your choice."* */
+  'ghost-hunter-dedication': {
+    skillChoices: [{ options: ['lore:spirit', 'lore:haunt'], rank: 'trained', redundantFallback: true, loreFallback: true }]
+  },
+  /*
+   * ⚠ NO `skilled-human` ENTRY, deliberately. *"You become trained in one skill of your choice. At 5th
+   * level, you become an expert in the chosen skill"* is ALREADY implemented — `build.heritageSkill`
+   * with its own builder control, and buildCharacter applies the 5th-level step beside it. An entry
+   * here was added on the strength of a grep across featGrants*.ts alone, which is not where that lane
+   * lives; it granted a SECOND skill on top and broke the reverse-build round-trip. Grep the record id
+   * across ALL of src/ before concluding a printed clause reaches nothing.
+   */
   'medic-dedication': { skills: { medicine: 'expert' } },
   'canny-acumen': {
     rankUpgrade: { level: 17, rank: 'master' },
@@ -314,8 +516,8 @@ const HAND_AUTHORED_GRANTS: Record<string, FeatGrant> = {
       fortitude: { save: { fortitude: 'expert' } },
       reflex: { save: { reflex: 'expert' } },
       will: { save: { will: 'expert' } },
-      perception: { perception: 'expert' },
-    },
+      perception: { perception: 'expert' }
+    }
   },
   /*
    * Battle Harbinger Dedication: *"You become trained in your choice of Athletics or Acrobatics."*
@@ -337,11 +539,53 @@ const HAND_AUTHORED_GRANTS: Record<string, FeatGrant> = {
    * than claimed here. Offering all sixteen to everyone in order to serve that one case is the defect
    * the ruling names, not the fix for it.
    */
+  /*
+   * Bloodrager Dedication trains the skill that matches the bloodline you pick on the feat itself —
+   * Arcane bloodlines train Arcana, Divine ones Religion. The auto table had it as an OPEN slot
+   * (`options: 'any'`), and an unanswered open slot resolves to SKILLS[0], so every bloodrager in the
+   * app was quietly trained in ACROBATICS instead. Keyed by the record's own `choice` values.
+   */
+  'bloodrager-dedication': {
+    choiceGrants: {
+      arcana: { skills: { arcana: 'trained' } },
+      religion: { skills: { religion: 'trained' } }
+    },
+    redundantFallback: true
+  },
   'battle-harbinger-dedication': {
     choiceGrants: {
       acrobatics: { skills: { acrobatics: 'trained' } },
-      athletics: { skills: { athletics: 'trained' } },
+      athletics: { skills: { athletics: 'trained' } }
+    }
+  },
+  /*
+   * *"Choose a gunslinger way. You become trained in YOUR WAY'S associated skill."* The way is the
+   * question the record already asks (`choice.flag = 'gunslingerWay'`), so the grant is keyed on that
+   * answer rather than offered as a free pick over the union of all seven way-skills — which let a
+   * Sniper train Arcana, and silently trained Acrobatics for anyone who never opened the picker. Way
+   * skills verified against the AoN `way` pages: Drifter/Acrobatics, Pistolero/Deception-or-Intimidation,
+   * Sniper/Stealth, Vanguard/Athletics, Spellshot/Arcana, Triggerbrand/Thievery.
+   *
+   * ⚠ NOT `redundantFallback`. That reader is guarded `src === g` on a STATIC `skills` grant and never
+   * fires through `choiceGrants`, and the answered-grant `skillChoices` loop reads no fallback either —
+   * so *"if you were already trained in this skill, you become trained in a skill of your choice"* is
+   * stated on the record's `note` instead, exactly as battle-harbinger-dedication above does.
+   *
+   * The weapon half is unchanged from the featGrantsAuto.ts entry this replaces.
+   */
+  'gunslinger-dedication': {
+    choiceGrants: {
+      'way-of-the-drifter': { skills: { acrobatics: 'trained' } },
+      'way-of-the-pistolero': { skillChoices: [{ options: ['deception', 'intimidation'], rank: 'trained' }] },
+      'way-of-the-sniper': { skills: { stealth: 'trained' } },
+      'way-of-the-spellshot': { skills: { arcana: 'trained' } },
+      'way-of-the-triggerbrand': { skills: { thievery: 'trained' } },
+      'way-of-the-vanguard': { skills: { athletics: 'trained' } }
     },
+    weaponFamiliarity: [
+    { weapons: [], groups: ['crossbow'], category: 'martial', mirrorCategory: 'simple' },
+    { weapons: [], groups: ['firearm'], category: 'martial', mirrorCategory: 'simple' }]
+
   },
   'armor-proficiency': { armorCascade: true, rankUpgrade: { level: 13, rank: 'expert' } },
   'weapon-proficiency': { weapon: { martial: 'trained' }, rankUpgrade: { level: 11, rank: 'expert' } },
@@ -350,8 +594,8 @@ const HAND_AUTHORED_GRANTS: Record<string, FeatGrant> = {
   'viking-shieldbearer': {
     choiceGrants: {
       'battle-axe': { weaponFamiliarity: { weapons: ['battle-axe'], rank: 'trained' } },
-      longsword: { weaponFamiliarity: { weapons: ['longsword'], rank: 'trained' } },
-    },
+      longsword: { weaponFamiliarity: { weapons: ['longsword'], rank: 'trained' } }
+    }
   },
   // "You gain proficiency with all advanced <X> as if they were martial <X>." The feat audit flagged
   // all four; every weapon list below is enumerated from core.json (category 'advanced' + the stated
@@ -365,19 +609,47 @@ const HAND_AUTHORED_GRANTS: Record<string, FeatGrant> = {
    * `weapons` list can name it — which is why the feat shipped marked "Recorded only".
    */
   'unconventional-weaponry': {
-    weaponFamiliarity: { weapons: [], weaponFromChoiceFlag: 'unconventionalWeapon', treatAsLowerCategory: true },
+    weaponFamiliarity: { weapons: [], weaponFromChoiceFlag: 'unconventionalWeapon', treatAsLowerCategory: true }
   },
   // "Whenever you gain a class feature that grants you expert or greater proficiency in certain
   // weapons, you also gain that proficiency in the weapon you chose for Unconventional Weaponry."
   // The SAME chosen weapon, now tracking the best category rank instead of the lowered one.
   'unconventional-expertise': {
-    weaponFamiliarity: { weapons: [], weaponFromChoiceFlag: 'unconventionalWeapon', mirrorBestCategory: true },
+    weaponFamiliarity: { weapons: [], weaponFromChoiceFlag: 'unconventionalWeapon', mirrorBestCategory: true }
   },
   /* "Your proficiency rank for light, medium, and heavy armor increases to expert for whichever of
      those you already had the trained rank in." The armor lane only ever RAISES a rank, which IS the
      "for whichever you already had" clause: a category the character is untrained in is left alone,
      because minRank semantics never promote untrained past the grant. */
   'armored-exercise': { armor: { light: 'expert', medium: 'expert', heavy: 'expert' } },
+  /* "Your proficiency in unarmored defense increases to expert." Unconditional — it is NOT gated on
+     raging or on being unarmored; only the +2/+3 item bonus and Dex cap +3 are, and those stay on the
+     situational star (situationalBonuses.ts, 'animal-skin'). */
+  'animal-skin': { armor: { unarmored: 'expert' } },
+  /*
+   * ARMIGER'S PROTECTION (Hellfire Dispatches p.25) — all four printed clauses, replacing the
+   * generated `armor.medium` over-grant (which handed every taker the whole medium CATEGORY where
+   * print names ONE medium item; a 13th-level rogue read expert 17 in an ordinary Breastplate where
+   * print leaves them at untrained +0):
+   *  - "trained in light armor and Hellknight breastplate, a medium armor" → armor.light +
+   *    armorFamiliarity (the named item, item-keyed).
+   *  - "If you were already trained in light armor and medium armor, you gain training in
+   *    Hellknight half plate and Hellknight plate" → conditionalArmorFamiliarity (both named armours
+   *    are category 'heavy'; conditionalArmor.grant:'heavy' would hand a ranger Full Plate too).
+   *  - the class-feature mirror rider → armorFamiliarity.mirrorBest (light/medium/heavy best, never
+   *    unarmored — print's parenthetical).
+   *  - "expert in unarmored defense and 13th level or higher → expert in the armor types granted by
+   *    this feat" → crossConditionalArmor.
+   * Hand-authored because featGrantsAuto.ts is re-serialised whole; this merge REPLACES its row.
+   * The free non-magical suit is a grantsItems overlay row; the printed three-way suit pick is
+   * owner-queued (the shipped choice granted nothing and offered a non-existent 'hellknight-plates').
+   */
+  'armigers-protection': {
+    armor: { light: 'trained' },
+    armorFamiliarity: { armors: ['hellknight-breastplate'], rank: 'trained', mirrorBest: true },
+    conditionalArmorFamiliarity: { ifTrainedIn: ['light', 'medium'], armors: ['hellknight-half-plate', 'hellknight-plate'], rank: 'trained' },
+    crossConditionalArmor: { whenDefense: 'unarmored', whenRank: 'expert', minLevel: 13, rank: 'expert' },
+  },
   'advanced-bow-training': { weaponFamiliarity: { weapons: ['daikyu', 'hongali-hornbow', 'phalanx-piercer'], mirrorCategory: 'martial' } },
   /* "You have familiarity with bombs and firearms; for the purposes of proficiency you treat bombs and
      martial firearms as simple weapons, and advanced firearms as martial weapons." Three clauses over
@@ -386,25 +658,25 @@ const HAND_AUTHORED_GRANTS: Record<string, FeatGrant> = {
      firearm group would hand advanced firearms the simple rank the feat withholds. */
   'explosive-savant': {
     weaponFamiliarity: [
-      { weapons: [], groups: ['bomb'], mirrorCategory: 'simple' },
-      { weapons: [], groups: ['firearm'], category: 'martial', mirrorCategory: 'simple' },
-      { weapons: [], groups: ['firearm'], category: 'advanced', mirrorCategory: 'martial' },
-    ],
+    { weapons: [], groups: ['bomb'], mirrorCategory: 'simple' },
+    { weapons: [], groups: ['firearm'], category: 'martial', mirrorCategory: 'simple' },
+    { weapons: [], groups: ['firearm'], category: 'advanced', mirrorCategory: 'martial' }]
+
   },
   'advanced-monastic-weaponry': { weaponFamiliarity: { weapons: ['butterfly-sword', 'feng-huo-lun', 'heavenly-rolling-flames', 'hook-sword'], mirrorCategory: 'martial' } },
   'advanced-firearm-familiarity': {
     weaponFamiliarity: {
       weapons: ['animate-dreamer', 'barricade-buster', 'dwarven-scattergun', 'explosive-dogslicer', 'explosive-dogslicer-ranged', 'flingflenser', 'ghosthands-comet', 'kaldemashs-lament', 'rowan-rifle'],
-      mirrorCategory: 'martial',
-    },
+      mirrorCategory: 'martial'
+    }
   },
   // Firearms AND crossbows — the only one of the four that spans two groups.
   'advanced-shooter': {
     weaponFamiliarity: {
       weapons: ['animate-dreamer', 'barricade-buster', 'dwarven-scattergun', 'explosive-dogslicer', 'explosive-dogslicer-ranged', 'flingflenser', 'ghosthands-comet', 'kaldemashs-lament', 'rowan-rifle', 'repeating-crossbow', 'repeating-hand-crossbow', 'taw-launcher'],
-      mirrorCategory: 'martial',
-    },
-  },
+      mirrorCategory: 'martial'
+    }
+  }
 };
 
 /** The full feat-proficiency table: auto-extracted skill grants (featGrantsAuto.ts), then the
@@ -433,6 +705,12 @@ export const FEAT_GRANTS: Record<string, FeatGrant> = {
  */
 export const LOCKED_SKILL_KEYS: Record<string, string> = {
   'lore:bardic': "Bardic Lore can't be increased by any other means — it becomes expert only if your Occultism is legendary.",
+  /* The same printed lock, on the two Lore feats whose conditional expert step was built in parity
+   * batch 13: *"…but you can't increase your proficiency rank in Folktales Lore by any other means."*
+   * Without it a player could still spend an ordinary skill increase on the Lore — the exact thing the
+   * sentence forbids, and the thing Bardic Lore above was already guarded against. */
+  'lore:folktales': "Folktales Lore can't be increased by any other means — it becomes expert only if your Performance is legendary.",
+  'lore:gossip': "Gossip Lore can't be increased by any other means — it becomes expert only if your Society is legendary."
 };
 
 /**

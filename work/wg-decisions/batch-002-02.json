@@ -1,0 +1,19 @@
+[
+ {
+  "category": "feats",
+  "id": "oni-weapon-familiarity",
+  "field": "critSpecWeapons",
+  "value": {
+   "bases": [
+    "khakkhara",
+    "nodachi",
+    "ogre-hook",
+    "tetsubo"
+   ],
+   "names": [
+    "horns"
+   ]
+  },
+  "why": "PRINTED: 'At 5th level, whenever you get a critical hit with one of these weapons, OR WITH YOUR HORNS UNARMED STRIKE, you get its critical specialization effect.' We covered the four weapons; the horns half reached nothing. bases matches strike.base, which for a natural attack is natural:<index> and never a slug; groups/traits would light crit spec on Fist and every other unarmed strike. New critSpecWeapons.names, read by weaponMatches (derive.ts), matches the strike NAME. The 'At 5th level' gate comes free: this record already carries critSpecLevel 5, which CritSpecSource applies."
+ }
+]

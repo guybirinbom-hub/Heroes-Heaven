@@ -1,0 +1,108 @@
+{
+  "batch": "work/wg-batch-015.json",
+  "examined": 100,
+  "note": "Read against printed text (AoN mirror). Every confirmed finding is fixed, and each defect CLASS produced an instrument: dropped-inline (extended), skill-clause, granted-strike-and-action, innate-frequency. Several fixes reach records outside this batch because the class does.",
+  "confirmed": [
+    {
+      "id": "distant-cackle",
+      "severity": "player-visible",
+      "summary": "An innate spell granted with no `usesPerDay` is castable AT WILL. The record printed 'once per day' and carried no limit. Sweeping the class found 79 grants in the same state across ~70 records — at-will Regenerate, Chain Lightning, Prismatic Armor and Hypercognition among them. All repaired from each record's own sentence; scripts/innate-frequency-check.mjs now holds the class at zero in npm run verify, in both directions (a frequency we invent that the text does not state is also a defect)."
+    },
+    {
+      "id": "spiritual-echo",
+      "severity": "player-visible",
+      "summary": "Five innate spells granted at once where the text gives one: 'the TYPE of spell is determined by the clan of the sarangay, WHICH YOU CHOOSE'. Surfaced by the frequency sweep, which capped each at 1/day and made five separate once-a-day 4th-rank spells visible as the wrong shape. Now a five-option clan choice. Outside this batch; same defect."
+    },
+    {
+      "id": "fighter-weapon-mastery",
+      "severity": "player-visible",
+      "summary": "'…master with the simple weapons, martial weapons, and unarmed attacks in that group, and to EXPERT with the ADVANCED weapons in that group.' The advanced clause was skipped: a flat per-group rank covers the whole group, so an advanced weapon of the chosen group rolled at MASTER from 5th level — one rank above the book, permanently, and visible only to a fighter who wielded one. Now carried by weaponGroupRanks, which has the category axis."
+    },
+    {
+      "id": "martial-experience",
+      "severity": "player-visible",
+      "summary": "Both printed sentences reached nothing. The untrained-proficiency lane covered SKILLS only, so 'treat your level as your proficiency bonus' for an unfamiliar weapon had no weapon-side twin — a character swung at a flat +0 for ten levels — and 'at 11th level you become trained in all weapons' was not modelled at all. New field untrainedWeaponProficiency: a floor for the first clause, a real rank for the second."
+    },
+    {
+      "id": "brutality",
+      "severity": "player-visible",
+      "summary": "'WHILE RAGING, you have the critical specialization benefits for melee weapons and unarmed attacks.' Ours granted it unconditionally, so a barbarian carried it out of combat. New critSpecRequiresModeGroup, keyed by exclusive GROUP so every instinct's spelling of Rage counts (a Decay barbarian rages through cat-rotting-rage, not cat-rage). Bard Weapon Expertise carried the same clause for compositions and was fixed with it."
+    },
+    {
+      "id": "gates-threshold",
+      "severity": "player-visible",
+      "summary": "Fork the Path was folded into the list that carries an element's GRANTS but not into the one the character DISPLAYS — so a kineticist who forked into Air had Air Gate's Stealth, impulses and junction, and no air element anywhere on their sheet. Two readers of one answer, and only one had been told about forks."
+    },
+    {
+      "id": "venom-spit",
+      "severity": "player-visible",
+      "summary": "The granted Strike shipped named 'StrikeLabel', an unsubstituted Foundry placeholder a leshy read on their own sheet. The guard written for it found three more — Wild Witch's Armaments (named StrikeLabel, and under it PIERCING quills in the DART group shipped as bludgeoning/brawling, so the damage type and critical specialization were both wrong), plus Animal Instinct's ape Fist and Accursed Clay Fist, both bare 'Label', which my own scan had missed by searching for the longer spelling."
+    },
+    {
+      "id": "anchoring-roots",
+      "severity": "player-visible",
+      "summary": "'You gain the Steady Balance skill feat … and you can use the Anchor action.' Anchor was never granted, and the feat stored Anchor's 1-action cost as its own — so the sentence delivered nothing and charged an action for it. NOT inferred from AoN's empty badge (that direction is not evidence); the evidence is the sentence plus Anchor existing as its own record with its own cost. Call Gun was the same shape and was fixed with it."
+    },
+    {
+      "id": "ascended-dragonet-heritage",
+      "severity": "player-visible",
+      "summary": "'You gain all the mechanical benefits of the dragonet heritage you selected at first level.' The record carried neither the choice nor the grant, while its two siblings (Awakened Yaoguai Heritage, Late Awakener) model exactly this clause with secondHeritage plus an open choice over the ancestry's heritages."
+    },
+    {
+      "id": "jalmeri-heavenseeker-dedication",
+      "severity": "player-visible",
+      "summary": "Batch 14's clause family reappeared here: six records printed 'if you were already trained in BOTH … you instead' and modelled none of it. scripts/skill-clause-check.mjs now holds the family at zero. ⚠ The guard was first built from a stale CODE COMMENT rather than from the reader, and called three correctly-modelled records defects."
+    },
+    {
+      "id": "the-moon-weavers-art",
+      "severity": "player-visible",
+      "summary": "'You can cast either Illusory Object or Invisible Item as an occult innate spell once per day.' The record modelled neither spell, so the whole feat was inert."
+    },
+    {
+      "id": "tengu-feather-fan",
+      "severity": "player-visible",
+      "summary": "'You gain a tengu feather fan: a magic item of light Bulk with a level equal to your level.' The spell it casts and the once-a-day limit were modelled; the ITEM was not, so the object the whole feat is about was not in the character's inventory. Glorious Gamtu had the same omission, and both items already shipped."
+    },
+    {
+      "id": "embodied-dreadnought-subjectivity",
+      "severity": "player-visible",
+      "summary": "'You gain the Hefty Hauler skill feat, and your maximum Bulk limit further increases by 3, for a total of 2 to your encumbered limit and 5 to your maximum limit.' Neither half reached anything. The +3 needed a new asymmetric field (bulkMaxBonus) — the existing bulkLimitBonus moves BOTH thresholds and would have printed +5 encumbered, a number the same sentence contradicts."
+    },
+    {
+      "id": "tip-the-scales",
+      "severity": "player-visible",
+      "summary": "'+1 circumstance bonus to checks to Escape.' Escape may be rolled with Acrobatics, Athletics OR your unarmed attack modifier; only the two skills were listed, so the bonus went missing for the character most likely to use it. The second sentence (a triggered use of your ordinary reaction — deliberately not extraReaction, which grants an ADDITIONAL one) is now stated on the record."
+    },
+    {
+      "id": "myriad-forms",
+      "severity": "player-visible",
+      "summary": "'You gain the alternate form of a kitsune heritage other than your own.' The record carried no question at all, so the pick was never made or kept. The list stays at all six heritages rather than their two forms: menu contents are the one call the parity rule leaves to us, and adopting their shorter list would delete four legal answers."
+    },
+    {
+      "id": "skilled-climber",
+      "severity": "player-visible",
+      "summary": "'If you also have the Scuttle Up ancestry feat, your climb Speed increases to your land Speed.' speedsIf could gate on a skill rank or a heritage and not on a FEAT, so the second sentence of four records (also Tree Climber (Goblin), Skillful Climber, Uncanny Suction) reached nothing — the holder had 10 feet whether or not they had paid for the feat that upgrades it. Three of the four restrict the upgrade to particular terrain, which no sheet state knows; the number is granted and the restriction is stated."
+    },
+    {
+      "id": "ranger-weapon-expertise",
+      "severity": "player-visible",
+      "summary": "Critical specialization granted only 'when attacking your hunted prey', shown on the strike card with nothing beside it — so a ranger read it as always-on. Unlike Brutality's 'while raging' this cannot be enforced (it depends on the creature being struck), so it is annotated via critSpecCondition, and only when EVERY source reaching that strike carries one. Avenger and Weapon Tricks carry the same shape and were fixed with it."
+    },
+    {
+      "id": "strong-of-wing",
+      "severity": "player-visible",
+      "summary": "'The fly Speed you gain from Take Flight increases to 25 feet' reached nothing. NOT a standing speed grant — Take Flight's fly Speed lasts 'for this movement', so a standing one would hand a 5th-level character permanent flight; carried as a rider on the activity instead. Loud Singer ('the range of your Goblin Song is increased to 60 feet, and you can target one additional enemy') was the same shape."
+    },
+    {
+      "id": "labyrinthine-echoes",
+      "severity": "cosmetic",
+      "summary": "Shipped prose reads 'you can cast as an occult innate spell' — the spell NAME was deleted by the same upstream cleaner that drops @Damage and @Check. Distinct from the value class already swept: a dropped @UUID link leaves a name-shaped hole that the word-diff repairer deliberately refuses, since a proper noun is not a value it can trust. The record's own innateSpells knows the answer; left visible rather than guessed."
+    },
+    {
+      "id": "wild-witchs-armaments",
+      "severity": "player-visible",
+      "summary": "Reading it exposed a fifth hole shape for the dropped-inline sweep: 'must succeed at a save against…' loses its save type by a verb the four existing patterns walked straight past. Adding that one shape found 218 further records — DCs and save types across items and spells — all repaired. A full unfiltered sweep afterwards (19,460 records aligned instead of 892) found nothing more, so the class is measurably closed for the current data."
+    }
+  ],
+  "rejectedCount": 0
+}

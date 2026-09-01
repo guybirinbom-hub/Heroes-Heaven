@@ -1,0 +1,831 @@
+{
+ "pairs": [
+  {
+   "slug": "draconicExemplar/forest",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "Record draconic-exemplar-15 'Forest' is a Draconic Exemplar option (Draconic Codex pg. 206): Primal tradition, Nature skill, gifts 2nd animal messenger / 5th nature's pathway / 8th punishing winds. AST doc bloodline-23 'Draconic' is the whole sorcerer bloodline (Player Core 2 pg. 150) with Intimidation, Blood Magic Scaly Hide, and bloodline spells flurry of claws/dragon breath/dragon wings; its markdown collapses the specific dragon exemplars ('Click the arrow'), so none of Forest's rules text appears. Same /Bloodlines.aspx?ID=23 URL is the only overlap."
+  },
+  {
+   "slug": "draconicExemplar/fortune",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "draconic-exemplar-16 'Fortune' is a Draconic Codex pg. 206 exemplar: Arcane tradition, Arcana skill, gifts 2nd invisibility / 5th scouting eye / 8th uncontrollable dance. AST doc bloodline-23 is the parent Draconic sorcerer bloodline (Player Core 2 pg. 150) whose text never lists the specific dragon exemplars; rendering it shows the generic bloodline chassis instead of Fortune's tradition/skill/gifts."
+  },
+  {
+   "slug": "draconicExemplar/horned",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "draconic-exemplar-17 'Horned' is a Draconic Codex pg. 206 exemplar: Primal tradition, Nature skill, gifts 2nd one with plants / 5th toxic cloud / 8th desiccate. AST doc bloodline-23 is the Draconic sorcerer bloodline (Player Core 2 pg. 150), a different document with no exemplar-specific stats in its markdown."
+  },
+  {
+   "slug": "draconicExemplar/magma",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "draconic-exemplar-18 'Magma' is a Draconic Codex pg. 206 exemplar: Primal tradition, Nature skill, gifts 2nd revealing light / 5th toxic cloud / 8th rainbow fumarole. AST doc bloodline-23 is the parent Draconic sorcerer bloodline (Player Core 2 pg. 150); its rendered text gives the generic Arcane/Divine/Occult/Primal table only, not Magma's spell list."
+  },
+  {
+   "slug": "draconicExemplar/mirage",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "draconic-exemplar-19 'Mirage' is a Draconic Codex pg. 206 exemplar: Arcane tradition, Arcana skill, gifts 2nd see the unseen / 5th hallucination / 8th disappearance. AST doc bloodline-23 is the Draconic sorcerer bloodline (Player Core 2 pg. 150) — different content, none of Mirage's rules appear on it."
+  },
+  {
+   "slug": "draconicExemplar/mocking",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "draconic-exemplar-20 'Mocking' is a Draconic Codex pg. 206 exemplar: Occult tradition, Occultism skill, gifts 2nd laughing fit / 5th cloak of colors / 8th uncontrollable dance. AST doc bloodline-23 is the parent Draconic sorcerer bloodline (Player Core 2 pg. 150), which omits the specific dragon exemplar entries entirely."
+  },
+  {
+   "slug": "draconicExemplar/oath",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "draconic-exemplar-21 'Oath' is a Draconic Codex pg. 206 exemplar: Divine tradition, Religion skill, gifts 2nd cleanse affliction / 5th truespeech / 8th divine inspiration. AST doc bloodline-23 is the Draconic sorcerer bloodline (Player Core 2 pg. 150); rendering it shows the bloodline chassis, not Oath's tradition/skill/gifts."
+  },
+  {
+   "slug": "draconicExemplar/omen",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "draconic-exemplar-22 'Omen' is a Draconic Codex pg. 206 exemplar: Occult tradition, Occultism skill, gifts 2nd status / 5th wave of despair / 8th hidden mind. AST doc bloodline-23 is the parent Draconic sorcerer bloodline (Player Core 2 pg. 150) — genuinely different content sharing only the /Bloodlines.aspx?ID=23 URL."
+  },
+  {
+   "slug": "draconicExemplar/phase",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "draconic-exemplar-23 'Phase' is a Draconic Codex pg. 206 exemplar: Arcane tradition, Arcana skill, gifts 2nd blur / 5th banishment / 8th disappearance. AST doc bloodline-23 is the Draconic sorcerer bloodline (Player Core 2 pg. 150); its markdown collapses the specific exemplars, so Phase's rules are absent from the rendered page."
+  },
+  {
+   "slug": "draconicExemplar/requiem",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "draconic-exemplar-24 'Requiem' is a Draconic Codex pg. 206 exemplar: Divine tradition, Religion skill, gifts 2nd see the unseen / 5th banishment / 8th spirit song. AST doc bloodline-23 is the parent Draconic sorcerer bloodline (Player Core 2 pg. 150), a different document whose text never states Requiem's tradition, skill, or gift spells."
+  },
+  {
+   "slug": "draconicExemplar/cinder",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "draconic-exemplar-5 'Cinder' is a specific dragon exemplar option (Draconic Codex pg. 206): Primal tradition, Nature bloodline skill, gifts 2nd floating flame / 5th flame dancer / 8th rainbow fumarole. bloodline-23 'Draconic' is the parent Sorcerer Bloodline (Player Core 2 pg. 150) with the generic Arcane/Divine/Occult/Primal exemplar table, Intimidation skill, and the shield/fear/haste/fly/dragon form gift chain -- it contains none of Cinder's tradition, skill, or spells. They share only the /Bloodlines.aspx?ID=23 URL; the app renders the bloodline instead of the exemplar."
+  },
+  {
+   "slug": "draconicExemplar/cloud",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "draconic-exemplar-6 'Cloud' is a specific dragon exemplar option (Draconic Codex pg. 206): Primal tradition, Nature skill, gifts 2nd resist energy / 5th howling blizzard / 8th punishing winds. bloodline-23 'Draconic' is the parent Sorcerer Bloodline (Player Core 2 pg. 150) listing only the four generic exemplar categories and the shared gift chain; none of Cloud's spells appear on it. Same URL, different content."
+  },
+  {
+   "slug": "draconicExemplar/conspirator",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "draconic-exemplar-7 'Conspirator' is a specific dragon exemplar option (Draconic Codex pg. 206): Occult tradition, Occultism skill, gifts 2nd paranoia / 5th synaptic pulse / 8th unrelenting observation. bloodline-23 'Draconic' is the parent Sorcerer Bloodline (Player Core 2 pg. 150) whose generic Occult row is instead blood vendetta/slither/unrelenting observation; the exemplar's rules are absent from the AST doc."
+  },
+  {
+   "slug": "draconicExemplar/coral",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "draconic-exemplar-8 'Coral' is a specific dragon exemplar option (Draconic Codex pg. 206): Primal tradition, Nature skill, gifts 2nd water breathing / 5th control water / 8th whirlpool. bloodline-23 'Draconic' is the parent Sorcerer Bloodline (Player Core 2 pg. 150) whose generic Primal row is shatter/howling blizzard/earthquake -- entirely different spells; rendering it shows the wrong rules."
+  },
+  {
+   "slug": "draconicExemplar/crystal",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "draconic-exemplar-9 'Crystal' is a specific dragon exemplar option (Draconic Codex pg. 206): Primal tradition, Nature skill, gifts 2nd expeditious excavation / 5th wall of stone / 8th earthquake. bloodline-23 'Draconic' is the parent Sorcerer Bloodline (Player Core 2 pg. 150) with only the generic category table; Crystal's 2nd/5th gifts do not appear there."
+  },
+  {
+   "slug": "draconicExemplar/delight",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "draconic-exemplar-10 'Delight' is a specific dragon exemplar option (Draconic Codex pg. 206): Divine tradition, Religion skill, gifts 2nd laughing fit / 5th breath of life / 8th moment of renewal. bloodline-23 'Draconic' is the parent Sorcerer Bloodline (Player Core 2 pg. 150) whose generic Divine row is augury/divine immolation/divine inspiration -- different mechanics, different doc."
+  },
+  {
+   "slug": "draconicExemplar/despair",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "draconic-exemplar-11 'Despair' is a specific dragon exemplar option (Draconic Codex pg. 206): Occult tradition, Occultism skill, gifts 2nd paranoia / 5th wave of despair / 8th canticle of everlasting grief. bloodline-23 'Draconic' is the parent Sorcerer Bloodline (Player Core 2 pg. 150) with the generic exemplar table only; none of Despair's gift spells are on it."
+  },
+  {
+   "slug": "draconicExemplar/diabolic",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "draconic-exemplar-12 'Diabolic' is a specific dragon exemplar option (Draconic Codex pg. 206): Divine tradition, Religion skill, gifts 2nd blood vendetta / 5th divine immolation / 8th canticle of everlasting grief. bloodline-23 'Draconic' is the parent Sorcerer Bloodline (Player Core 2 pg. 150); its generic Divine row differs (augury 2nd, divine inspiration 8th) and it carries the bloodline-wide gifts and Scaly Hide blood magic instead."
+  },
+  {
+   "slug": "draconicExemplar/empyreal",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "draconic-exemplar-13 'Empyreal' is a specific dragon exemplar option (Draconic Codex pg. 206): Divine tradition, Religion skill, gifts 2nd share life / 5th breath of life / 8th divine inspiration. bloodline-23 'Draconic' is the parent Sorcerer Bloodline (Player Core 2 pg. 150) with the generic Divine row augury/divine immolation/divine inspiration -- the exemplar's 2nd and 5th gifts are absent."
+  },
+  {
+   "slug": "draconicExemplar/executor",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "draconic-exemplar-14 'Executor' is a specific dragon exemplar option (Draconic Codex pg. 206): Divine tradition, Religion skill, gifts 2nd revealing light / 5th divine immolation / 8th divine inspiration. bloodline-23 'Draconic' is the parent Sorcerer Bloodline (Player Core 2 pg. 150) whose page lists only the four generic exemplar categories, so Executor's specific gift list is never shown."
+  },
+  {
+   "slug": "draconicExemplar/resurrection",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "draconic-exemplar-25 'Resurrection' is a specific draconic exemplar (Draconic Codex pg. 206): Divine tradition, Religion skill, gifts spirit sense / invoke spirits / moment of renewal. astAon bloodline-23 'Draconic' is the sorcerer Draconic bloodline itself (Player Core 2 pg. 150) with the generic Arcane/Divine/Occult/Primal exemplar table; its markdown hides the specific exemplars behind an unrendered 'Click the arrow' collapse, so the Resurrection gifts never appear. App renders the wrong page."
+  },
+  {
+   "slug": "draconicExemplar/rime",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "draconic-exemplar-26 'Rime' is a specific draconic exemplar (Draconic Codex pg. 206): Primal tradition, Nature skill, gifts shatter / howling blizzard / arctic rift. astAon bloodline-23 'Draconic' is the sorcerer bloodline entry (Player Core 2 pg. 150) whose only listed Primal gifts are shatter / howling blizzard / earthquake — different 8th-rank gift and no Rime entry at all. Distinct content."
+  },
+  {
+   "slug": "draconicExemplar/rune",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "draconic-exemplar-27 'Rune' is a specific draconic exemplar (Draconic Codex pg. 206): Arcane tradition, Arcana skill, gifts embed message / imaginary lockbox / quandary. astAon bloodline-23 'Draconic' is the sorcerer Draconic bloodline (Player Core 2 pg. 150) listing generic Arcane gifts blazing bolt / subconscious suggestion / quandary; the Rune-specific gifts are absent from the rendered page."
+  },
+  {
+   "slug": "draconicExemplar/sage",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "draconic-exemplar-28 'Sage' is a specific draconic exemplar (Draconic Codex pg. 206): Occult tradition, Occultism skill, gifts translate / scouting eye / quandary. astAon bloodline-23 'Draconic' is the sorcerer bloodline (Player Core 2 pg. 150) whose generic Occult row is blood vendetta / slither / unrelenting observation — different rules text entirely."
+  },
+  {
+   "slug": "draconicExemplar/sea",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "draconic-exemplar-29 'Sea' is a specific draconic exemplar (Draconic Codex pg. 206): Arcane tradition, Arcana skill, gifts water breathing / mariner's curse / desiccate. astAon bloodline-23 'Draconic' is the sorcerer Draconic bloodline page (Player Core 2 pg. 150) with the four generic tradition exemplars only; none of the Sea gifts are on it."
+  },
+  {
+   "slug": "draconicExemplar/sky",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "draconic-exemplar-30 'Sky' is a specific draconic exemplar (Draconic Codex pg. 206): Divine tradition, Religion skill, gifts augury / lightning storm / divine inspiration. astAon bloodline-23 'Draconic' is the sorcerer bloodline itself (Player Core 2 pg. 150), whose generic Divine row is augury / divine immolation / divine inspiration — a different 5th-rank gift, and no Sky entry. Not a re-export."
+  },
+  {
+   "slug": "draconicExemplar/sovereign",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "draconic-exemplar-31 'Sovereign' is a specific draconic exemplar (Draconic Codex pg. 206): Occult tradition, Occultism skill, gifts clear mind / overwhelming memory / dream council. astAon bloodline-23 'Draconic' is the sorcerer Draconic bloodline (Player Core 2 pg. 150) with generic Occult gifts blood vendetta / slither / unrelenting observation. Materially different rules."
+  },
+  {
+   "slug": "draconicExemplar/stormcrown",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "draconic-exemplar-32 'Stormcrown' is a specific draconic exemplar (Draconic Codex pg. 206): Primal tradition, Nature skill, gifts deafness / lightning storm / punishing winds. astAon bloodline-23 'Draconic' is the sorcerer bloodline entry (Player Core 2 pg. 150) listing generic Primal gifts shatter / howling blizzard / earthquake — no overlap with Stormcrown's list."
+  },
+  {
+   "slug": "draconicExemplar/time",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "draconic-exemplar-33 'Time' is a specific draconic exemplar (Draconic Codex pg. 206): Arcane tradition, Arcana skill, gifts loose time's arrow / banishment / quandary. astAon bloodline-23 'Draconic' is the sorcerer Draconic bloodline (Player Core 2 pg. 150) with generic Arcane gifts blazing bolt / subconscious suggestion / quandary; the Time exemplar's 2nd/5th gifts are not on that page."
+  },
+  {
+   "slug": "draconicExemplar/umbral",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "draconic-exemplar-34 'Umbral' is a specific draconic exemplar (Draconic Codex pg. 206): Occult tradition, Occultism skill, gifts reaper's lantern / shadow blast / disappearance. astAon bloodline-23 'Draconic' is the sorcerer Draconic bloodline page (Player Core 2 pg. 150) with the generic Occult row blood vendetta / slither / unrelenting observation. Genuinely different content, only sharing the /Bloodlines.aspx?ID=23 URL."
+  },
+  {
+   "slug": "siegeWeapons/ballista",
+   "verdict": "SAME-CONTENT",
+   "reason": "siege-weapon-69 (Guns & Gears, 2021-10-13, Sources 318) and siege-weapon-2 (Guns & Gears Remastered, 2025-02-18, Sources 98) are the same printed Ballista re-exported under a new ID: identical Siege Weapon 5, 320 gp, ballista bolt ammo, Uncommon/Large/Mounted, Crew 2, AC 17, Fort +12, Ref +11, Hardness 10, HP 40, Speed 20 ft, and identical Aim 35 ft / Load 2x / Launch 4d12 piercing, DC 19 Reflex text. Only differences are remaster-era trait relinking (Uncommon trait 721 -> 159) and whitespace."
+  },
+  {
+   "slug": "siegeWeapons/battering-ram-covered",
+   "verdict": "SAME-CONTENT",
+   "reason": "siege-weapon-70-7 is the '(covered)' Item 6 sub-entry of the legacy Guns & Gears Battering Ram page (ID 70); siege-weapon-3 is the Remastered Battering Ram page which carries the very same 'Battering Ram (covered)' Item 6 sub-entry at 250 gp with word-for-word identical rules (roof AC 23, Hardness 12, HP 48, BT 24, cover on left/right flank, breaking roof ends cover) plus the shared Ram two-action 5d8 + highest Str. Same printed item, renumbered export. (Note: the remaster doc lists the plain Battering Ram Item 5 at 2,400 gp vs 160 gp legacy - an AoN price glitch on the sibling sub-entry, not on the covered ram this record points at.)"
+  },
+  {
+   "slug": "siegeWeapons/blasting-ram",
+   "verdict": "SAME-CONTENT",
+   "reason": "siege-weapon-80 (Guns & Gears pg. 173) vs siege-weapon-11 (Guns & Gears Remastered pg. 173): same Siege Weapon 7, 360 gp, ram powder charge ammo, Uncommon/Large/Portable, held in 8 hands, Bulk 14, Crew 4, Load 2x, Ram 7d8 + highest Str. Only change is the remaster's Strike phrasing ('the damage of this Strike is' -> 'this Strike deals bludgeoning damage equal to') and trait relinking."
+  },
+  {
+   "slug": "siegeWeapons/bombard",
+   "verdict": "SAME-CONTENT",
+   "reason": "siege-weapon-81 (Guns & Gears pg. 173) vs siege-weapon-12 (Remastered pg. 173): identical Siege Weapon 5, 300 gp, stone spheres ammo, Crew 2-4, AC 17, Fort +12, Ref +5, Hardness 10, HP 40, Speed 10 ft, Aim 30 ft, Load 2x DC 20 Athletics, Launch 4d10 bludgeoning 10-foot burst DC 19 Reflex. Differences are cosmetic ('2 to 4' -> '2-4', 'pulled or pushed' -> 'pushed or pulled', trait/skill link IDs)."
+  },
+  {
+   "slug": "siegeWeapons/cannon",
+   "verdict": "SAME-CONTENT",
+   "reason": "siege-weapon-82 (Guns & Gears pg. 174) vs siege-weapon-13 (Remastered pg. 174): identical Siege Weapon 8, 900 gp, cannonball ammo, Crew 2-4, AC 22, Fort +16, Ref +9, Hardness 15, HP 80, Speed 15 ft, Aim 100 ft/min 50 ft, Load 2x DC 20 Athletics, Launch 6d12 bludgeoning single target DC 23 Reflex, same flavor paragraph. Pure re-export under a new ID."
+  },
+  {
+   "slug": "siegeWeapons/catapult",
+   "verdict": "SAME-CONTENT",
+   "reason": "siege-weapon-71 (Guns & Gears pg. 75) vs siege-weapon-5 (Remastered pg. 75): identical Siege Weapon 7, 650 gp, stones ammo, Crew 2-4, AC 20, Fort +15, Ref +8, Hardness 10, HP 60, Speed 15 ft, Aim 50 ft, Load 2x DC 20 Athletics, Launch 5d10 bludgeoning 10-foot burst DC 22 Reflex, same flavor text."
+  },
+  {
+   "slug": "siegeWeapons/door-ram",
+   "verdict": "SAME-CONTENT",
+   "reason": "siege-weapon-73 (Guns & Gears pg. 75) vs siege-weapon-6 (Remastered pg. 75): identical Siege Weapon 2, 30 gp, Uncommon/Small/Portable, held in 4 hands, Bulk 3, Crew 2, simple proficiency, Ram two-action 2d8 + highest Str. Only the remaster's 'This Strike deals bludgeoning damage equal to' rewording differs."
+  },
+  {
+   "slug": "siegeWeapons/fiends-mouth-cannon",
+   "verdict": "SAME-CONTENT",
+   "reason": "siege-weapon-84 (Guns & Gears pg. 174) vs siege-weapon-14 (Remastered pg. 174): identical Siege Weapon 11, 2,800 gp, cannonball ammo, Huge/Mounted, Crew 3-6, AC 26, Fort +21, Ref +13, Hardness 18, HP 90, Aim 200 ft/min 50 ft, Load 2x DC 20 Athletics, Launch 8d12 bludgeoning single target DC 27 Reflex, same flavor paragraph."
+  },
+  {
+   "slug": "siegeWeapons/firedrake",
+   "verdict": "SAME-CONTENT",
+   "reason": "siege-weapon-85 (Guns & Gears pg. 175) vs siege-weapon-15 (Remastered pg. 175): identical Siege Weapon 8, 1,000 gp, alchemical fire barrel ammo, Huge/Mounted, Crew 3-5, AC 22, Fort +16, Ref +9, Hardness 12, HP 70, Speed 15 ft, Aim rotate 45 degrees, Load 3x DC 20 Athletics, Launch 8d6 fire plus 1d6 persistent fire, 60-foot line or 30-foot cone, DC 23 Reflex, line/cone switch via Interact. Only the Space entry changed ('5 feet long' -> '15 feet long'), the remaster's own correction of an obvious legacy typo for a Huge 12-ft-wide weapon."
+  },
+  {
+   "slug": "siegeWeapons/heavy-ballista",
+   "verdict": "SAME-CONTENT",
+   "reason": "siege-weapon-74 (Guns & Gears pg. 75) vs siege-weapon-7 (Remastered pg. 75): identical Siege Weapon 8, 900 gp, heavy ballista bolt ammo, Huge/Mounted, Crew 3-6, AC 22, Fort +18, Ref +12, Hardness 15, HP 80, Speed 15 ft, Aim 60 ft/min 40 ft, Load 3x DC 20 Athletics, Launch 7d12 piercing single target DC 23 Reflex, same flavor sentence."
+  },
+  {
+   "slug": "draconicExemplar/underworld",
+   "verdict": "SAME-CONTENT",
+   "reason": "AST tree is verbatim draconic-exemplar-35's own markdown (Draconic Codex pg. 206; Tradition Arcane, Skill Arcana, gifts Resist Energy/Toxic Cloud/Earthquake), not bloodline-23's. The astAon=bloodline-23 is a detection artifact: every draconic-exemplar record carries url=/Bloodlines.aspx?ID=23, so its own title self-link resolves to the parent bloodline doc. Player sees the correct Underworld exemplar rules."
+  },
+  {
+   "slug": "draconicExemplar/vizier",
+   "verdict": "SAME-CONTENT",
+   "reason": "AST tree is verbatim draconic-exemplar-36's own markdown (Draconic Codex pg. 206; Tradition Occult, Skill Occultism, gifts Dispel Magic/Subconscious Suggestion/Hidden Mind). astAon=bloodline-23 comes only from the record's own url=/Bloodlines.aspx?ID=23 title self-link, not from rendering the bloodline page. Correct rules shown."
+  },
+  {
+   "slug": "draconicExemplar/vorpal",
+   "verdict": "SAME-CONTENT",
+   "reason": "AST tree is verbatim draconic-exemplar-37's own markdown (Draconic Codex pg. 206; Tradition Arcane, Skill Arcana, gifts Revealing Light/Impaling Spike/Ferrous Form). astAon=bloodline-23 is the title self-link artifact from the shared /Bloodlines.aspx?ID=23 url field. Correct rules shown."
+  },
+  {
+   "slug": "draconicExemplar/wailing",
+   "verdict": "SAME-CONTENT",
+   "reason": "AST tree is verbatim draconic-exemplar-38's own markdown (Draconic Codex pg. 206; Tradition Arcane, Skill Arcana, gifts Noise Blast/Confusing Cry/Spirit Song). astAon=bloodline-23 is the title self-link artifact from the shared /Bloodlines.aspx?ID=23 url field. Correct rules shown."
+  },
+  {
+   "slug": "draconicExemplar/whisper",
+   "verdict": "SAME-CONTENT",
+   "reason": "AST tree is verbatim draconic-exemplar-39's own markdown (Draconic Codex pg. 206; Tradition Occult, Skill Occultism, gifts Humanoid Form/Scouting Eye/Dream Council). astAon=bloodline-23 is the title self-link artifact from the shared /Bloodlines.aspx?ID=23 url field. Correct rules shown."
+  },
+  {
+   "slug": "draconicExemplar/wish",
+   "verdict": "SAME-CONTENT",
+   "reason": "AST tree is verbatim draconic-exemplar-40's own markdown (Draconic Codex pg. 206; Tradition Arcane, Skill Arcana, gifts Phantasmal Treasure/Hallucination/Confusing Colors). astAon=bloodline-23 is the title self-link artifact from the shared /Bloodlines.aspx?ID=23 url field. Correct rules shown."
+  },
+  {
+   "slug": "draconicExemplar/arcane",
+   "verdict": "SAME-CONTENT",
+   "reason": "AST tree is verbatim draconic-exemplar-41's own markdown (Player Core 2 pg. 150; Tradition Arcane, Skill Arcana, gifts Blazing Bolt/Subconscious Suggestion/Quandary) — and that exact row is also printed in bloodline-23's Draconic Exemplars table, same book and page, so the two docs are the same printed thing exported twice. Correct rules shown either way."
+  },
+  {
+   "slug": "draconicExemplar/divine",
+   "verdict": "SAME-CONTENT",
+   "reason": "AST tree is verbatim draconic-exemplar-42's own markdown (Player Core 2 pg. 150; Tradition Divine, Skill Religion, gifts Augury/Divine Immolation/Divine Inspiration), matching the identical row printed in bloodline-23's Draconic Exemplars table on the same page. Correct rules shown either way."
+  },
+  {
+   "slug": "draconicExemplar/occult",
+   "verdict": "SAME-CONTENT",
+   "reason": "AST tree is verbatim draconic-exemplar-43's own markdown (Player Core 2 pg. 150; Tradition Occult, Skill Occultism, gifts Blood Vendetta/Slither/Unrelenting Observation), matching the identical row printed in bloodline-23's Draconic Exemplars table on the same page. Correct rules shown either way."
+  },
+  {
+   "slug": "draconicExemplar/primal",
+   "verdict": "SAME-CONTENT",
+   "reason": "AST tree is verbatim draconic-exemplar-44's own markdown (Player Core 2 pg. 150; Tradition Primal, Skill Nature, gifts Shatter/Howling Blizzard/Earthquake), matching the identical row printed in bloodline-23's Draconic Exemplars table on the same page. Correct rules shown either way."
+  },
+  {
+   "slug": "items/dazzling-rosary",
+   "verdict": "SAME-CONTENT",
+   "reason": "equipment-1003-956 (Secrets of Magic pg. 168) and equipment-5047 (Impossible Magic pg. 214) are the same catalyst re-exported for the remaster: identical traits (Catalyst/Consumable/Magical), identical Item 4/Item 12 tiers at 15 gp / 350 gp, identical dazzled-on-crit effect. Only differences are the remaster's own renames (spiritual weapon -> spiritual armament, spell level -> spell rank, 'Dazzling Rosary (Greater)' -> 'Greater Dazzling Rosary')."
+  },
+  {
+   "slug": "items/dragon-pearl",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "Genuinely different items sharing a name. recAon equipment-4011 is the Item 16, 9,000 gp Invested/Magical/Uncommon worn dragon-scale pearl from Draconic Codex pg. 222 (+2 item bonus to Intimidation; Pearlescent Shell activation granting an 8th-rank containment spell with resistance 15). astAon equipment-3482 is the Item 10, 180 gp Alchemical/Consumable/Rare fermented tea pearl from Tian Xia Character Guide pg. 105 (10 minutes of void resistance 15, +1d6 vitality on unarmed Strikes, reaction to survive at 10 HP). Different level, price, traits, book and mechanics."
+  },
+  {
+   "slug": "items/duelists-blazon",
+   "verdict": "SAME-CONTENT",
+   "reason": "set-relic-10 (Treasure Vault pg. 202) and set-relic-3 (Treasure Vault (Remastered) pg. 202) are the same relic set exported twice, once pre- and once post-remaster: same page, same Emotion (pride)/Luck aspects, same flavor text, same five gifts (Dominant Emotion, Whammy, Steal Luck, Emotion Conduit, Against All Odds) and identical Two/Three/Four/Five Item collective features. The only deltas are the remaster's own item renames in the set list (Quick Runner's Shirt -> Bravery Baldric (Fleet), Winged Boots -> Winged Sandals)."
+  },
+  {
+   "slug": "items/fish",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "Two distinct Travel Guide entries. recAon equipment-1768 is the Trade Goods 'Fish' commodity from Travel Guide pg. 36 (Item 0, no price, no usage, effectively a table stub with no rules text). astAon equipment-1678 is the Animals and Gear / Animals pet 'Fish' from Travel Guide pg. 103 (Item 0, Price 1 cp, PFS note that it can be bought as a pet but never combat trained). Different page, category, price and content."
+  },
+  {
+   "slug": "items/force-tiles",
+   "verdict": "SAME-CONTENT",
+   "reason": "equipment-1006 (Secrets of Magic pg. 168) and equipment-5052 (Impossible Magic pg. 215, which itself also cites Secrets of Magic pg. 168) are the same catalyst re-exported: same Item 13, same 525 gp, same traits, and word-for-word identical rules text (wall of force to 80 ft long / 40 ft high, 2d6 force damage on entering or being Shoved into it). Only typographic apostrophes differ."
+  },
+  {
+   "slug": "items/griffon-cane",
+   "verdict": "SAME-CONTENT",
+   "reason": "Both are the Griffon Cane from Grand Bazaar pg. 67 at 1 gp, exported into two AoN tables. weapon-228 is the Weapons entry (martial club, 1d6 B, backswing, two-hand d10, Bulk L, plus boilerplate critical specialization text); equipment-1345 is the Assistive Items / Canes & Crutches entry with the same flavor paragraph and the same explicit statement that it deals 1d6 bludgeoning, has backswing and two-hand d10, and is a martial melee club-group weapon. Same printed item, same rules."
+  },
+  {
+   "slug": "items/impactful",
+   "verdict": "SAME-CONTENT",
+   "reason": "equipment-1062-1007 (Secrets of Magic pg. 185) and equipment-4990 (Impossible Magic pg. 204) are the same weapon property rune re-exported for the remaster: same Item 10+ / Item 17 tiers, same 1,000 gp and 15,000 gp prices, same +1d6 force damage, same DC 27 (greater DC 37) Fortitude save pushing 5 ft (greater 10 ft). Only remaster-native changes: the Evocation trait is dropped (school traits were removed) and 'Impactful (Greater)' is renamed 'Greater Impactful'."
+  },
+  {
+   "slug": "items/infiltration-garb",
+   "verdict": "SAME-CONTENT",
+   "reason": "set-relic-11 (Treasure Vault pg. 202) and set-relic-4 (Treasure Vault (Remastered) pg. 202) are the same relic set pre- and post-remaster: same Death and Shadow aspects, identical flavor text, identical gifts (Obscure, Death Gaze, Dark Roads, Tide of Death, Grim Specter) and identical collective features. Deltas are purely remaster renames: Hat of Disguise -> Masquerade Scarf, Goggles of Night -> Obsidian Goggles, Unmemorable Mantle (Greater) -> Clandestine Cloak (Greater) (level 9 -> 10), and positive energy -> vitality energy in the five-item feature."
+  },
+  {
+   "slug": "items/instructions-for-lasting-agony",
+   "verdict": "SAME-CONTENT",
+   "reason": "equipment-993 (Secrets of Magic pg. 163) and equipment-5129 (Impossible Magic pg. 229) are the same grimoire re-exported for the remaster: same Item 5, same 200 gp, same Bulk L, same 'worn and stained manual emits a chill' flavor, same once-per-day single-action activation that makes a failed save against the following spell inflict sickened 1. Differences are remaster-native only (Necromancy trait -> void damage type, metamagic -> spellshape, Title Case name, PFS Limited -> Standard)."
+  },
+  {
+   "slug": "items/martyrs-shield",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "Two unrelated shields sharing a name. recAon equipment-4193 is the Item 7, 360 gp Uncommon/Magical specific shield from Pathfinder #222: Hellbreakers pg. 214 - a minor reinforcing steel shield (Hardness 8, HP 64, BT 32) with the Self Sacrifice reaction that intercepts damage aimed at an ally within 20 feet. astAon equipment-3126 is the Item 7 Rare/Divine/Intelligent item from GM Core pg. 305 - a lesser sturdy shield with Perception +12, speech in Common and Empyrean, Diplomacy +15/Religion +13, that spends its own reaction each round to Shield Block for an adjacent ally whether you want it to or not. Different book, traits, base shield and mechanics."
+  },
+  {
+   "slug": "siegeWeapons/heavy-bombard",
+   "verdict": "SAME-CONTENT",
+   "reason": "siege-weapon-87 (Guns & Gears, pg. 175) vs siege-weapon-17 (Guns & Gears Remastered, pg. 175) are the same printed weapon re-exported with renumbered IDs. Every stat is byte-identical: Level 9, Price 1,400 gp, ammo large stone spheres (8 gp, 16 Bulk), Gargantuan/Mounted/Uncommon, AC 23, Fort +18, Ref +10, Hardness 18, HP 50, Crew 3-6, martial, Aim 50 ft (min 50 ft), Load 2-action x3 DC 20 Athletics, Launch 1-action range increment 250 ft. Only diffs are the source label gaining '(Remastered)', 'Crew 3 to 6' rendered as '3-6', curly-vs-straight apostrophes, and trait words (manipulate, range increment, burst) becoming hyperlinks in the remaster export."
+  },
+  {
+   "slug": "siegeWeapons/hwacha",
+   "verdict": "SAME-CONTENT",
+   "reason": "siege-weapon-88 (Guns & Gears pg. 175) vs siege-weapon-18 (Guns & Gears Remastered pg. 175): identical Level 4, Price 180 gp, 100 hwacha arrows (2 gp, 1 Bulk), AC 16, Fort +11, Ref +4, Hardness 5, HP 40, Speed 25 ft, Crew 3-4, simple, Aim 2-action 40 ft (min 40 ft), Load 3-action 10 arrows each, Launch 1-action range increment 300 ft, 4d8 piercing, 20-foot burst. Same flavor paragraph verbatim. Only diffs: source label '(Remastered)', 'Crew 3 to 4' vs '3-4', and additional trait hyperlinking/<br /> whitespace placement."
+  },
+  {
+   "slug": "siegeWeapons/mortar",
+   "verdict": "SAME-CONTENT",
+   "reason": "siege-weapon-89 (Guns & Gears pg. 176) vs siege-weapon-19 (Guns & Gears Remastered pg. 176): identical Level 7, Price 720 gp, mortar round (5 gp, 1 Bulk), AC 20, Fort +15, Ref +8, Hardness 12, HP 40, Speed 20 ft, Crew 3-4, martial, Aim 40 ft (min 50 ft), Load 2-action x3, Launch 2-action range increment 100 ft, 5d10 slashing, 20-foot burst, DC 21, plus the same 'descends from above, not in a straight line' clause. Only diffs are the '(Remastered)' source label, '3 to 4' vs '3-4', and trait hyperlinking."
+  },
+  {
+   "slug": "siegeWeapons/springald",
+   "verdict": "SAME-CONTENT",
+   "reason": "siege-weapon-75 (Guns & Gears pg. 76) vs siege-weapon-8 (Guns & Gears Remastered pg. 76): identical Level 7, Price 700 gp, springald arrows (5 sp, 2 Bulk), AC 20, Fort +16, Ref +13, Hardness 10, HP 40, Speed 10 ft, Crew 3-5, martial, Aim 30 ft (min 50 ft), Load 2-action x3, Launch 1-action attack/manipulate/range increment 100 ft, 5d8 piercing at three targets within a 15-foot burst. Same flavor text verbatim. Diffs are cosmetic only: '(Remastered)' source, '3 to 5' vs '3-5', the legacy export's duplicated '**Speed** Speed 10 feet (pulled or pushed)' typo fixed to '10 feet (pushed or pulled)', and trait hyperlinking."
+  },
+  {
+   "slug": "siegeWeapons/steelheart-21",
+   "verdict": "SAME-CONTENT",
+   "reason": "siege-weapon-86 (Guns & Gears pg. 175) vs siege-weapon-16 (Guns & Gears Remastered pg. 175): identical Level 13, Price 6,000 gp, artillery shell (80 gp, 4 Bulk), AC 29, Fort +23, Ref +16, Hardness 18, HP 150, Speed 20 ft, Crew 3-6, martial, the same Brondar Steelheart flavor paragraph verbatim, the same Quick Aim reaction (trigger/effect wording identical, 10 feet), Aim 100 ft (min 150 ft), Load 2-action x3 DC 20 Athletics, Launch 1-action range increment 500 ft, 8d12 bludgeoning, 20-foot burst. Only diffs: '(Remastered)' source label, '3 to 6' vs '3-6', apostrophe style, and trait hyperlinking."
+  },
+  {
+   "slug": "siegeWeapons/trebuchet",
+   "verdict": "SAME-CONTENT",
+   "reason": "siege-weapon-76 (Guns & Gears pg. 76) vs siege-weapon-9 (Guns & Gears Remastered pg. 76): identical Level 10, Price 2,000 gp, stones (0 gp, 6 Bulk), AC 24, Fort +21, Ref +16, Hardness 17, HP 68, Crew 3-6, martial, Aim 100 ft (min 200 ft), Load 2-action x3 DC 20 Athletics, Launch 1-action attack/manipulate/range increment 400 ft, 8d10 bludgeoning, 20-foot burst, and the same one-sentence flavor text. Only diffs: '(Remastered)' source label, '3 to 6' vs '3-6', apostrophe style, and trait hyperlinking."
+  },
+  {
+   "slug": "draconicExemplar/adamantine",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "Different game content. Record draconic-exemplar-1 'Adamantine' is a specific Draconic Exemplar option from Draconic Codex pg. 206: Primal tradition, Nature bloodline skill, sorcerous gifts 2nd shatter / 5th impaling spike / 8th earthquake. AST doc bloodline-23 'Draconic' is the parent Sorcerer Bloodline from Player Core 2 pg. 150 (Intimidation + variable skill, gifts shield/fear/haste/fly/dragon form/mask of terror/overwhelming presence, bloodline spells flurry of claws / dragon breath / dragon wings, Scaly Hide blood magic). Its exemplar table only lists the four generic categories (Arcane/Divine/Occult/Primal) and explicitly defers the named dragons to a separate 'Specific Draconic Exemplars' list, so Adamantine's impaling spike gift appears nowhere on the rendered bloodline page."
+  },
+  {
+   "slug": "draconicExemplar/barrage",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "Different game content. Record draconic-exemplar-2 'Barrage' is a specific Draconic Exemplar from Draconic Codex pg. 206: Arcane tradition, Arcana bloodline skill, gifts 2nd telekinetic maneuver / 5th telekinetic haul / 8th quandary. AST doc bloodline-23 'Draconic' is the Player Core 2 pg. 150 Sorcerer Bloodline; its generic Arcane exemplar row gives a different gift set (2nd blazing bolt / 5th subconscious suggestion / 8th quandary), so rendering it shows the player the wrong 2nd- and 5th-rank gifts."
+  },
+  {
+   "slug": "draconicExemplar/bog",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "Different game content. Record draconic-exemplar-3 'Bog' is a specific Draconic Exemplar from Draconic Codex pg. 206: Primal tradition, Nature skill, gifts 2nd sudden blight / 5th corrosive muck / 8th desiccate. AST doc bloodline-23 'Draconic' is the Player Core 2 pg. 150 Sorcerer Bloodline, whose generic Primal row lists shatter / howling blizzard / earthquake instead; none of Bog's three gifts appear on that page."
+  },
+  {
+   "slug": "draconicExemplar/brine",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "Different game content. Record draconic-exemplar-4 'Brine' is a specific Draconic Exemplar from Draconic Codex pg. 206: Primal tradition, Nature skill, gifts 2nd water breathing / 5th corrosive muck / 8th desiccate. AST doc bloodline-23 'Draconic' is the Player Core 2 pg. 150 Sorcerer Bloodline (generic Primal row: shatter / howling blizzard / earthquake), so the rendered page never shows Brine's actual gift list."
+  },
+  {
+   "slug": "backgrounds/driver",
+   "verdict": "SAME-CONTENT",
+   "reason": "background-451 (Player Core 2 pg. 50, primary) and background-254 (Guns & Gears Remastered pg. 45, primary) are the same Driver background exported twice — both list Str/Dex + free boost, trained in Acrobatics and Driving Lore or Piloting Lore, and the Assurance skill feat, and both cite BOTH sources (PC2 pg. 50 + G&G-R pg. 45) in swapped order. Only differences are source-ordering, internal skill/feat link IDs, and a garbled 'Driving Lore Lore' string in the 254 export. Reprint AoN failed to cross-link."
+  },
+  {
+   "slug": "backgrounds/saboteur",
+   "verdict": "SAME-CONTENT",
+   "reason": "background-457 (Player Core 2 pg. 51) and background-260 (Guns & Gears Remastered pg. 45) are the same Saboteur background exported twice — identical flavor text, Str/Dex + free boost, trained in Thievery and Engineering Lore, Concealing Legerdemain skill feat (same feat ID 2116 in both). Both docs cite both sources in swapped order; only the Thievery skill link ID differs. Reprint with no legacy_id link."
+  },
+  {
+   "slug": "languages/wayang",
+   "verdict": "SAME-CONTENT",
+   "reason": "language-180 (Tian Xia Character Guide pg. 71) and language-91 (Pathfinder #167: Ready? Fight! pg. 40) are the same Wayang language re-listed. Neither doc has any rules text at all — both render as just the name plus a source line. The only differences are the reprint's own metadata: rarity rare (original AP appearance, spoiler-tagged for Fists of the Ruby Phoenix) vs common (TXCG makes it a standard Tian Xia language, PFS Standard). No mechanics differ because neither doc contains any."
+  },
+  {
+   "slug": "actions/breath-weapon",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "Two unrelated abilities sharing a name. action-767 (shipped record) is the summoner eidolon's Breath Weapon evolution — Secrets of Magic pg. 64, traits Arcane/Eidolon/Evocation, two actions, 1d6 (+1d6 per 2 levels) in a chosen area/damage type vs. basic Reflex against your spell DC, then unusable for 1d4 rounds. action-560 (AST source) is the riding drake animal companion's Breath Weapon — Advanced Player's Guide pg. 145, two actions, frequency once per hour, 30-foot cone of fire dealing 1d6 fire per 2 drake levels, trained/expert DC off the drake's Constitution. Different area, frequency, DC, and owner; the app renders the drake page for the eidolon feat."
+  },
+  {
+   "slug": "actions/change-shape",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "Two different ancestry abilities with the same name. action-730 (shipped record) is the anadi ancestry Change Shape — The Mwangi Expanse pg. 103, traits Anadi/Arcane/Concentrate/Polymorph/Transmutation, switches between human and spider shapes with manipulate-action restrictions and no off-guard while climbing in spider form. action-700 (AST source) is the beastkin versatile heritage Change Shape — Ancestry Guide pg. 79, traits Concentrate/Polymorph/Primal/Transmutation, switches between humanoid and hybrid shape and grants a 1d4 agile finesse jaws unarmed Strike. Entirely different traits, forms, and mechanics."
+  },
+  {
+   "slug": "actions/concentration",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "Both docs are AoN name-parse casualties (name rendered as '(concentration)') from Pathfinder AP #219: Lord of the Trinity Star pg. 70, but they are two distinct activations of the Empty Robes item. action-3524 (shipped record) is a Reaction: trigger is taking persistent damage or a critical hit from a Strike while Empty Robes is in effect; spend 1 Mythic Point to go 'hollow', reducing crit damage to 0 and ending all persistent damage. action-3523 (AST source) is a Single Action, frequency once per hour: the wearer turns invisible inside the robes for 1 minute, gear stays visible so they aren't concealed, granting a +2 item bonus to Intimidation. Different action cost, trigger, cost, and effect."
+  },
+  {
+   "slug": "actions/disengage",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "Two unrelated subsystem actions sharing a name. action-4230 (shipped record) is the vehicle/boarding-combat Disengage — High Seas pg. 35, Move trait, two actions, requires piloting a sea vehicle during boarding combat, very hard piloting check (typically Sailing Lore vs vessel level + 5) to break the ship free and move up to its Speed. action-1423 (AST source) is the Kingmaker army war action Disengage — Kingmaker Adventure Path pg. 579, Maneuver trait, two actions, a Maneuver check against each engaged enemy army with four degrees of success. Different subsystem (vehicles vs mass combat), traits, and resolution."
+  },
+  {
+   "slug": "actions/explode",
+   "verdict": "SAME-CONTENT",
+   "reason": "action-3656 (Guns & Gears pg. 20, 2021) and action-902 (Guns & Gears Remastered pg. 19, 2025) are the same inventor Explode action re-exported for the remaster. Identical traits (Fire, Inventor, Manipulate, Unstable), identical two-action cost, and word-for-word identical rules text: 2d6 fire, basic Reflex, 5-foot emanation, +1d6 at 3rd level and every level after, and the same breakthrough/revolutionary innovation emanation upgrades to 10 or 15 feet. Only the curly-vs-straight apostrophes and page number differ. The remaster doc's legacy_id points at action-3666, not action-3656, which is why the link is missing."
+  },
+  {
+   "slug": "siegeWeapons/alchemical-springald",
+   "verdict": "SAME-CONTENT",
+   "reason": "siege-weapon-77 (Guns & Gears pg. 173) and siege-weapon-10 (Guns & Gears Remastered pg. 173) are the same item renumbered in the remaster re-export. Every stat matches: level 13, uncommon, 6,000 gp, bomb arrows ammo (100 gp, 2 Bulk), mounted (black powder), Space 15x12x15, martial, AC 29, Fort +23, Ref +16, Hardness 15, HP 200, Speed 10 feet, Aim/Load/Launch identical down to 10d6 + 3 splash, three targets in a 15-foot burst, DC 30 Reflex. Only cosmetic differences ('Crew 3 to 5' vs 'Crew 3-5', 'pulled or pushed' vs 'pushed or pulled')."
+  },
+  {
+   "slug": "siegeWeapons/alkenstar-cannon",
+   "verdict": "SAME-CONTENT",
+   "reason": "siege-weapon-90 (Guns & Gears pg. 176) and siege-weapon-20 (Guns & Gears Remastered pg. 176) are the same item renumbered in the remaster re-export. Identical level 15, rare, 12,000 gp, scattershot barrels (25 gp, 5 Bulk), Space 18x7x8, martial, AC 32, Fort +26, Ref +18, Hardness 15, HP 200, Speed 10 feet, identical Ancil Alkenstar flavor text, and identical Aim (3 actions, 50 feet, min 50) / Load (3 actions, DC 20 Athletics) / Launch (2 actions, range increment 50 feet, 10d12 bludgeoning, 50-foot burst, DC 33 Reflex). Only 'Crew 4 to 6' vs 'Crew 4-6' and Speed word order differ."
+  },
+  {
+   "slug": "items/agathion-raiment",
+   "verdict": "SAME-CONTENT",
+   "reason": "set-relic-8 (Treasure Vault pg. 201) and set-relic-1 (Treasure Vault Remastered pg. 201) are the same relic set re-exported after the remaster: identical aspects (Beast and Celestial), identical five gifts (Word of Faith, Feral Claws, Righteous Call, Form of Fury, Angelic Vessel) and identical Two/Three/Four/Five-Item collective features. All deltas are the remaster's own renames: good creatures -> holy creatures, good damage -> spirit damage, weakness to evil -> weakness to unholy, and the OGL-item swaps in the Set Items line (Aeon Stone (Gold Nodule) -> Aeon Stone (Envisioning), Celestial Armor -> Holy Chain). AoN simply never linked the re-export back."
+  },
+  {
+   "slug": "items/aon-adamantine",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "Genuinely different docs. recAon draconic-exemplar-1 is the Adamantine draconic exemplar (a sorcerer Draconic-bloodline exemplar option from Draconic Codex pg. 206: primal tradition, Nature bloodline skill, sorcerous gifts 2nd shatter / 5th impaling spike / 8th earthquake). astAon bloodline-23 is the whole Sorcerer Draconic bloodline (Player Core 2 pg. 150: Intimidation, blood magic Scaly Hide, bloodline spells flurry of claws/dragon breath/dragon wings, and a generic Arcane/Divine/Occult/Primal exemplar table). The bloodline page's Primal row gives 5th howling blizzard, not impaling spike, so the Adamantine exemplar's actual gift list is nowhere on the rendered page - the app shows the wrong record's rules."
+  },
+  {
+   "slug": "items/archmages-regalia",
+   "verdict": "SAME-CONTENT",
+   "reason": "set-relic-9 (Treasure Vault pg. 201) and set-relic-2 (Treasure Vault Remastered pg. 201) are the same relic set, pre- and post-remaster. Same aspects (Life and Mind), same flavor text (Nex's regalia), identical five gifts (Repository of Knowledge, Bestow Life, Psychic Scream, Vitality Siphon, Mental Bastion) and identical collective features (extra Lore, minion at level-4, 30-foot burst psychic scream, one degree better on Identify Magic/Learn a Spell/Recall Knowledge). Only the Set Items list changed, and that is the remaster's own replacement of OGL-tainted gear (Hat of the Magi -> Mage's Hat, Ring of Wizardry II -> Accolade Robe, Aeon Stone (Pale Lavender Ellipsoid) -> Bands of Force (Greater), Robe of the Archmagi -> Greater Staff of Arcane Might)."
+  },
+  {
+   "slug": "items/backfire-mantle",
+   "verdict": "SAME-CONTENT",
+   "reason": "equipment-1040-991 is the Item 3 child variant of Backfire Mantle (Secrets of Magic pg. 179); equipment-5182 is the remaster re-export (Impossible Magic pg. 244) whose legacy_id points at the parent equipment-1040, not at the child - hence the missing linkage. Rules text is word-for-word the same cloak (circumstance bonus to Reflex vs your own and allies' spells, resistance to splash damage), same level 3/8 tiers, same prices 45 gp / 430 gp, same +1/resistance 3 and +2/resistance 10. Only differences are the dropped Abjuration school trait and 'Backfire Mantle (Greater)' -> 'Greater Backfire Mantle', both remaster conventions."
+  },
+  {
+   "slug": "items/binding-coil",
+   "verdict": "SAME-CONTENT",
+   "reason": "equipment-1018-985 is the Item 6 child of Binding Coil (Secrets of Magic pg. 173); equipment-5101 is the remaster re-export (Impossible Magic pg. 224) carrying legacy_id equipment-1018 (the parent) instead of the child. Same talisman: affixed to a weapon, free-action activation, same trigger (your Strike with the affixed weapon damages a creature), same expert-in-Athletics requirement, Grapple with Escape DC 20 (DC 30 for the greater), same level 6/13 tiers and same 50 gp / 450 gp prices. Deltas are remaster-only: Transmutation school trait dropped, 'envision' -> concentrate, and the coil effect reworded as 'Grapple's normal effects except...' instead of the bespoke wording."
+  },
+  {
+   "slug": "items/blade-of-four-energies",
+   "verdict": "SAME-CONTENT",
+   "reason": "equipment-1042-993 is the Item 13 child of Blade of Four Energies (Secrets of Magic pg. 180); equipment-5013 is the remaster re-export (Impossible Magic pg. 208) with legacy_id equipment-1042 / legacy_name 'Blade of Four Energies' - it links to the parent, not the child. Identical weapon: +2 greater striking shifting shortsword, free-action 1d4 rune cycle (corrosive/flaming/frost/shock) once per round, two-action once-per-day 5th-rank blast at DC 30, greater version +3 with greater runes at 7th rank DC 38, same 3,000 gp / 20,000 gp prices. Only remaster renames differ: acid arrow -> acid grip, cone of cold -> howling blizzard, khakkara-style Title Case, Evocation trait dropped, spell 'level' -> 'rank'."
+  },
+  {
+   "slug": "items/cantrip-deck-5-pack",
+   "verdict": "SAME-CONTENT",
+   "reason": "equipment-1046-1000 is the 'Cantrip Deck (5-Pack)' child variant of Cantrip Deck (Secrets of Magic pg. 181); equipment-5140 is the remaster re-export of the Cantrip Deck parent (Impossible Magic pg. 232, legacy_id equipment-1046) and it still contains the 5-pack section at the same 5 gp price and level 1. Same Nethys flavor, same activation (envision the cantrip, deck casts it as a 1st-rank spell, DC 15, spell attack +5, card crumbles). Deltas are remaster-only: Evocation trait dropped, envision/Interact -> manipulate, and the Full Pack now lists 25 Player Core cantrips instead of 24 Core Rulebook ones."
+  },
+  {
+   "slug": "items/chatterer-of-follies",
+   "verdict": "SAME-CONTENT",
+   "reason": "equipment-1047 (Secrets of Magic pg. 181) and equipment-5015 (Impossible Magic pg. 208) are the same weapon - equipment-5015 even cites both printings in its Source line ('Impossible Magic pg. 208, Secrets of Magic pg. 181'). Both are the uncommon Item 6 +1 striking khakkara/khakkhara at 200 gp, held in 1 hand, Bulk 1, with the same pyrite/grinning-idol flavor, the same -1 status penalty to Will saves for an adjacent creature after you move, and the same concealment when you cast the relevant spells. Deltas are the remaster's own: khakkara -> khakkhara spelling, the removed Enchantment school with enchantment+illusion spells recast as illusion+mental, and the effect packaged as a named free-action activation (Confounding Chatter, once per round)."
+  },
+  {
+   "slug": "items/codex-of-unimpeded-sight",
+   "verdict": "SAME-CONTENT",
+   "reason": "equipment-991-943 is the Item 6 child of Codex of Unimpeded Sight (Secrets of Magic pg. 162); equipment-5126 is the remaster re-export (Impossible Magic pg. 229) whose legacy_id/legacy_name point at the parent equipment-991, not the child. Same grimoire: same blindfolded-figure flavor, free-action once-per-day activation after casting a prepared spell from the grimoire letting you Seek or Recall Knowledge, greater version at Item 12 with once-per-hour frequency and a +1 item bonus, and identical prices 215 gp / 1,800 gp. Only remaster renames differ: Divination school trait dropped and 'divination spell' -> 'prediction or scrying spell', envision -> concentrate."
+  },
+  {
+   "slug": "items/cursed-dreamstone",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "Two different items from Pathfinder #147: Tomorrow Must Burn pg. 71. recAon equipment-641 is Cursed Dreamstone - a rare Item 9 Cursed Item with no price, whose whole rules text is a DC 26 Will save that on a failure leaves you fatigued on waking and gives a -2 item penalty to saves against sleep. astAon equipment-507 is Dreamstone - the uncommon Item 9+ held item costing 700 gp that grants 2-hour full rest and a +2 item bonus to saves against sleep plus a once-per-day metamagic activation. The AST page does carry the curse text in a subsection, but the record the app renders is titled, priced, and statted as the beneficial Dreamstone, i.e. the wrong item."
+  },
+  {
+   "slug": "items/monks-attire",
+   "verdict": "SAME-CONTENT",
+   "reason": "set-relic-12 (Treasure Vault pg. 203) vs set-relic-5 (Treasure Vault Remastered pg. 202) are the same set relic re-exported for the remaster. Identical aspects (Emotion (dedication) and Life), identical flavor text, identical Gifts list (Overflowing Life / Dominant Emotion / Inextinguishable / Emotion Conduit / Quickening Emotion) and verbatim-identical Collective Features (item bonus = relic level, mental-effect trigger, recovery checks one step better, 5d10+5 HP and +2 status bonus). Only the Set Items component list changed, and every change is the remaster's own item rename: +1 Cloth Armor -> +1 explorer's clothing, Bracers of Armor I -> Bands of Force, Ki-Channeling Beads -> Mala Beads of Foresight. Rendering either page gives the player the same relic rules."
+  },
+  {
+   "slug": "items/noxious-incense",
+   "verdict": "SAME-CONTENT",
+   "reason": "equipment-1008-964 (Secrets of Magic pg. 169) vs equipment-5060 (Impossible Magic pg. 216) are the same catalyst re-exported for the remaster; the AST doc even carries legacy_id ['equipment-1008'], which failed to match only because the shipped record uses the variant id equipment-1008-964. Identical Item 9+ catalyst/consumable/magical, held in 1 hand, Bulk L, Activate Cast a Spell, verbatim-identical effect text (adds thick foul smoke in all squares adjacent to a wall of fire, creatures concealed, lasts the spell's duration), identical variants Item 9 / 125 gp and Item 14 / 750 gp. Sole differences are remaster vocabulary ('6th level'->'6th rank', 'spell level'->'spell rank') and the Greater name moving to a prefix."
+  },
+  {
+   "slug": "items/pharasmas-command",
+   "verdict": "SAME-CONTENT",
+   "reason": "set-relic-13 (Treasure Vault pg. 203) vs set-relic-6 (Treasure Vault Remastered pg. 202) are the same set relic re-exported for the remaster. Identical aspects (Life and Time), identical flavor text and Pharasmin edicts/anathema caveat, identical Gifts list (Healing Wave / Sands of the Hourglass / Inextinguishable / Temporal Pulse / Life Everlasting) and identical Collective Features (1d6 per relic level, 30-foot line, recovery checks one step better, 1d4 per relic level on temporal pulse). Differences are the remaster's own: damage-type renames negative->void and positive->vitality, '3rd-Level Spell'->'3rd-Rank Spell', and Set Items swapped to remastered equivalents (Necklace of Knives -> +1 dagger, Holy Prayer Beads -> Symbol of Conflict, Cassock of Devotion -> Devoted Vestments, Staff of Final Rest (Major) -> Staff of Healing (True))."
+  },
+  {
+   "slug": "items/potion-of-stable-form",
+   "verdict": "SAME-CONTENT",
+   "reason": "equipment-1029-987 (Secrets of Magic pg. 175) vs equipment-5100 (Impossible Magic pg. 223) are the same potion re-exported for the remaster; the AST doc carries legacy_id ['equipment-1029'] and only missed linkage because the record uses the variant id equipment-1029-987. Same Item 10+ consumable/magical/potion, held in 1 hand, Bulk L, Single Action Interact, same moly-derived flavor, same counteract-all-hostile-effects-on-drink, same 1 hour duration, same success-becomes-critical-success rider, same variants Item 10 / 180 gp (counteract 5, +17) and Item 16 / 1,800 gp (counteract 8, +25). The deltas are all the remaster's own: the removed magic schools mean 'transmutation' becomes 'morph and polymorph' and the Abjuration trait is dropped, 'counteract level'->'counteract rank', and the two-tier bonus (+2, or +3 vs polymorph / +3, or +4 vs polymorph) collapses to the single higher value (+3 / +4) now that there is no separate transmutation category."
+  },
+  {
+   "slug": "items/probing-cane",
+   "verdict": "SAME-CONTENT",
+   "reason": "weapon-229 and equipment-1346 are AoN's two exports of one printed item: both cite Grand Bazaar pg. 67, both Price 5 sp, Bulk L, held in 1 hand, and both carry the identical descriptive paragraph plus the identical stat sentence ('deals 1d6 bludgeoning damage, has the finesse and sweep traits, and is a martial melee weapon in the club weapon group'). weapon-229 is the weapons-table export (structured Damage 1d6 B / Martial / Group Club fields plus boilerplate Critical Specialization text), equipment-1346 is the equipment-list export (adds the PFS access note for Morhen's Mobility Apparel). Same rules either way."
+  },
+  {
+   "slug": "items/retrieval-prism",
+   "verdict": "SAME-CONTENT",
+   "reason": "equipment-1032-989 (Secrets of Magic pg. 176) vs equipment-5108 (Impossible Magic pg. 225) are the same talisman re-exported for the remaster; the AST doc carries legacy_id ['equipment-1032'] and only missed linkage because the record uses the variant id equipment-1032-989. Same Item 3+ consumable/magical/talisman/teleportation, affixed to armor, Free Action activation, same requirement of a free hand, verbatim-identical effect (attune to one item of 1 Bulk or less on Affixing, it teleports into your hand, cannot retrieve off-plane or extradimensional items, can be re-attuned by Affixing again), and identical variants Item 3 / 12 gp and Item 10 / 200 gp with the same no-attunement Greater benefit. Differences are remaster-only: 'bag of holding' -> 'spacious pouch', the removed Conjuration trait, and 'command' -> 'concentrate' action trait."
+  },
+  {
+   "slug": "items/seers-array",
+   "verdict": "SAME-CONTENT",
+   "reason": "set-relic-14 (Treasure Vault pg. 203) vs set-relic-7 (Treasure Vault Remastered pg. 202) are the same set relic re-exported for the remaster. Identical aspects (Mind and Time), verbatim-identical flavor text, identical Gifts list (Recalculate / Borrow Time / Time Jump / Precognition / Time Reversal) and verbatim-identical Collective Features including the full flat-check wording for time jump and precognition. Only the Set Items list differs, and every entry is the remastered equivalent of the legacy item: Staff of Divination -> Staff of the Unblinking Eye, Brooch of Inspiration -> Clarity Goggles (Lesser), Robe of Eyes -> Amulet of the Third Eye (Pendant of the Occult and Crystal Ball (Clear Quartz) are unchanged)."
+  },
+  {
+   "slug": "items/singing-shortbow",
+   "verdict": "SAME-CONTENT",
+   "reason": "equipment-1074-1012 (Secrets of Magic pg. 189) vs equipment-5028 (Impossible Magic pg. 211) are the same specific magic weapon re-exported for the remaster; the AST doc carries legacy_id ['equipment-1074'] and only missed linkage because the record uses the variant id equipment-1074-1012. Both are a +2 greater striking thundering composite shortbow, Item 14+, Bulk 1, with the same gut-string flavor, the same Two Action auditory activation at Frequency once per hour, the same 10-foot emanation from the struck creature, and numerically identical Song of Soothing (3d10 HP, +1 status bonus to saves vs mental for 1 minute) and Song of Suffering (3d10 sonic, DC 31 basic Fortitude), with identical variants Item 14 / 4,500 gp and Item 18 / 22,500 gp (+3 greater striking greater thundering, 5d10, DC 38). Differences are remaster-only: the removed Enchantment/Evocation school traits, 'command' -> 'concentrate', and the activation gaining the name Harmonic Shot."
+  },
+  {
+   "slug": "items/sonic-tuning-mace",
+   "verdict": "SAME-CONTENT",
+   "reason": "equipment-1075-1014 (Secrets of Magic pg. 189) vs equipment-5029 (Impossible Magic pg. 211) are the same specific magic weapon re-exported for the remaster; the AST doc carries legacy_id ['equipment-1075'] and only missed linkage because the record uses the variant id equipment-1075-1014. Both are a +1 striking thundering light mace, Item 9+, Bulk L, with identical twin-tip flavor, the same Two Action activation at Frequency once per day, the same DC 25 4th-level/4th-rank spell cast by tapping the mace on a surface, and identical variants Item 9 / 700 gp and Item 13 / 3,000 gp (+2 greater striking thundering, spell becomes 6th level/rank at DC 30). Differences are remaster-only: 'sound burst' -> 'noise blast' (its remaster name), 'level' -> 'rank', the removed Evocation trait, 'command, Interact' -> 'concentrate, manipulate', and the activation gaining the name Cacophony."
+  },
+  {
+   "slug": "items/spirit-sealing-fulu",
+   "verdict": "SAME-CONTENT",
+   "reason": "equipment-983-941 (Secrets of Magic pg. 160) vs equipment-5083 (Impossible Magic pg. 221) are the same fulu re-exported for the remaster; the AST doc carries legacy_id ['equipment-983'] and only missed linkage because the record uses the variant id equipment-983-941. Same Item 3+ consumable/fulu/incapacitation/magical, affixed to one undead creature, 1 round duration, same effect (target undead attempts a Will save or is paralyzed for 1 round), same DC 17 at Item 3 / 10 gp and DC 27 at Item 10 / 155 gp with the same critical-failure 4-round paralysis and end-of-turn re-save clause. Differences are remaster-only: 'negative energy' -> 'void energy' and the removed Necromancy trait."
+  },
+  {
+   "slug": "items/wheel-blades",
+   "verdict": "SAME-CONTENT",
+   "reason": "weapon-231 (Weapons table export) and equipment-1363 (Assistive Items > Mobility Devices export) are the same Grand Bazaar pg. 72 item, level 0, price 5 sp. The rules body is verbatim identical in both ('A set of large blades have been attached to your chair's wheels... 1d4 slashing... agile, attached, free-hand... simple melee weapon in the sword group... A wheelchair can only have one attached weapon.'). The equipment export just omits the weapon stat block/traits and adds the PFS assistive-item note; the weapon export adds the generic Critical Specialization Effects boilerplate. Same printed thing exported into two AoN categories."
+  },
+  {
+   "slug": "items/wheel-spikes",
+   "verdict": "SAME-CONTENT",
+   "reason": "weapon-232 and equipment-1364 are the same Grand Bazaar pg. 72 item, level 0, price 5 sp, with verbatim identical body text ('A set of thick, sharp spikes... 1d4 piercing... agile, attached, free-hand... simple melee weapon in the knife group'). Dual export into the Weapons table and the Assistive Items/Mobility Devices list; the equipment copy only drops the stat-block traits and adds the PFS assistive-item note."
+  },
+  {
+   "slug": "feats/banshee-cry-display",
+   "verdict": "SAME-CONTENT",
+   "reason": "feat-3250 carries AoN's own banner 'There is a more recent version of this, click here to view. (/Feats.aspx?ID=8533)' pointing at the AST doc. Both are Firework Technician archetype feat 12, Guns & Gears (Remastered) pg. 134-135, same prerequisite (Firework Technician Dedication), same reaction, same trigger (creature within 30 feet Casts a Spell or Activates an Item with concentrate), same Will save with identical Success/Failure/Critical Failure wording. Only delta is the archetype's remaster resource conversion (old: 'expend 1 fireworks display or 3 versatile vials'; new: just sets off the firework) and trait/condition ID renumbering. Legacy vs errata re-export of one feat; the mirror lacks the legacy_id link (8533's legacy_id points to feat-8755, not 3250)."
+  },
+  {
+   "slug": "feats/coughing-dragon-display",
+   "verdict": "SAME-CONTENT",
+   "reason": "feat-3246 has AoN's 'more recent version' banner pointing at feat-8529. Both are Firework Technician archetype feat 4, Guns & Gears (Remastered) pg. 134, same prerequisite, same two-action Coughing Dragon display, same mechanic: choose auditory or visual, counteract those effects within 60 feet, success suppresses until the start of your next turn, Fireworks Lore as counteract modifier, counteract level/rank = half your level rounded up, with an upscaled version that counteracts both at once. Deltas are purely the remaster's own resource/terminology conversion ('2/3 batches of infused reagents' -> '2 versatile vials and 3 actions'; 'counteract level' -> 'counteract rank'; 'within 60 feet' -> '60-foot emanation')."
+  },
+  {
+   "slug": "feats/death-from-above",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "Genuinely different feats sharing a name; the app renders the wrong page. feat-7610 (record) is Death from Above, uncommon Verduran Shadow archetype feat 8 from Pathfinder #201: Pactbreaker pg. 80 (prereqs Canopy Predator + Verduran Shadow Dedication + expert Athletics) - a two-action Athletics Leap onto a target vs its Reflex DC with deadly d8 and bonus bludgeoning damage. feat-7380 (AST) is Death from Above, a common Mythic feat 16 for the Eternal Legend archetype from War of Immortals pg. 128 - Stride up a vertical surface, then a ranged or melee Strike with two extra weapon dice and a Fortitude save vs stunned 1."
+  },
+  {
+   "slug": "feats/even-the-odds",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "Genuinely different feats sharing a name; the app renders the wrong page. feat-7675 (record) is Even the Odds, an Eagle Knight archetype feat 14 (archetype, fortune) from Shining Kingdoms pg. 51, once per day, prereq Commitment to Equality - reroll the Diplomacy check for Commitment to Equality and grant 25 temporary HP. feat-6145 (AST) is Even the Odds, a Swashbuckler class feat 4 from Player Core 2 pg. 165, free action once per 10 minutes, triggered when your turn begins while you are flanked - you gain panache until the end of your turn."
+  },
+  {
+   "slug": "feats/expert-fireworks-crafter",
+   "verdict": "SAME-CONTENT",
+   "reason": "feat-3247 carries AoN's 'There is a more recent version of this' banner pointing at feat-8530. Both are Firework Technician archetype feat 6, Guns & Gears (Remastered) pg. 134-135, same prerequisites (Firework Technician Dedication, expert in Crafting), same flavor sentence and same purpose: you make more fireworks per day than normal. The mechanic is stated in the archetype's pre- vs post-remaster resource ('2 fireworks displays per expended daily consumable from advanced alchemy' vs 'your versatile vials per day increases to 5'), which is exactly the remaster's own conversion of the archetype's daily resource. Legacy vs errata re-export of one feat, unlinked in the mirror (8530's legacy_id is feat-8752)."
+  },
+  {
+   "slug": "feats/firework-technician-dedication",
+   "verdict": "SAME-CONTENT",
+   "reason": "feat-3245 carries AoN's 'more recent version' banner pointing at feat-8528. Both are Firework Technician Dedication, uncommon archetype/dedication feat 2, Guns & Gears (Remastered) pg. 134, prereq trained in Crafting, identical flavor paragraph, identical benefits shape: trained (or expert) in Fireworks Lore, 4 versatile vials at daily preparations replenishable during exploration like an alchemist, the Launch Fireworks action with basic effects, more displays via later archetype feats, DC = higher of class DC or spell DC. Deltas are the remaster's own resource cleanup (dropping Alchemical Crafting/advanced alchemy and the separate 'fireworks display' currency in favor of pyrotechnic versatile vials) and trait ID renumbering."
+  },
+  {
+   "slug": "feats/goblin-jubilee-display",
+   "verdict": "SAME-CONTENT",
+   "reason": "feat-3249 carries AoN's 'more recent version' banner pointing at feat-8532. Both are Firework Technician archetype feat 10, Guns & Gears (Remastered) pg. 134-135, same three-action Goblin Jubilee display with fire/sonic/visual traits, identical area and damage (20-foot burst within 120 feet, 3d6 fire + 3d6 sonic, Fortitude save) and verbatim identical four degrees of success (dazzled/deafened/blinded wording). Only delta is the remaster's own resource/scaling rewrite of the expend-more-vials clause ('expend versatile vials, +1d6 each' -> 'every 3 levels +1d6, or expend 2 vials instead of 1 for +1d6, +2d6 at 16th') and condition/trait ID renumbering."
+  },
+  {
+   "slug": "feats/jumping-jenny-display",
+   "verdict": "SAME-CONTENT",
+   "reason": "feat-3248 carries AoN's 'more recent version' banner pointing at feat-8531. Both are Firework Technician archetype feat 8, Guns & Gears (Remastered) pg. 134-135, same single-action Jumping Jenny display, same flavor text, and the effect wording is otherwise verbatim: target a flying creature within 60 feet, until the start of your next turn each Fly attempt requires an Acrobatics Maneuver in Flight check against the display DC or Fly is disrupted, and if all attempts are disrupted it falls harmlessly at end of turn. Only delta is the removal of the legacy cost line ('costs 2 batches of infused reagents rather than 1'), i.e. the remaster's own conversion to versatile vials, plus 'DC of your fireworks display' -> 'DC of Launch Fireworks'."
+  },
+  {
+   "slug": "innovation/armor",
+   "verdict": "SAME-CONTENT",
+   "reason": "Both are the Inventor's Armor Innovation, same book/page: innovation-5 = Guns & Gears (2021) pg. 16, innovation-1 = Guns & Gears (Remastered) 2025 pg. 16. Identical structure and the exact same 22 modifications (harmonic oscillator ... rune capacity), word-for-word. The only deltas are the remaster's own: Strength entry converted from score to modifier (16 -> 3, 10 -> 0), the across-the-board armor AC bump (power suit +4 -> +5, subterfuge suit +1 -> +2), negative/positive -> void/vitality, and alignment-damage resistance rewritten as spirit/sanctified holy-unholy. Same printed thing exported twice, AoN just never linked them."
+  },
+  {
+   "slug": "innovation/construct",
+   "verdict": "SAME-CONTENT",
+   "reason": "Inventor's Construct Innovation: innovation-6 = Guns & Gears (2021) pg. 18, innovation-2 = Guns & Gears (Remastered) pg. 17. Texts are effectively byte-identical (1181 vs 1182 words); the only differences are the source line, non-breaking hyphens in 'built-in'/'2-action', and 'one of the' -> 'any'. Pure re-export duplicate."
+  },
+  {
+   "slug": "innovation/weapon",
+   "verdict": "SAME-CONTENT",
+   "reason": "Inventor's Weapon Innovation: innovation-7 = Guns & Gears (2021) pg. 18, innovation-3 = Guns & Gears (Remastered) pg. 17. Same feature, same opening rules (level 0 simple/martial base, runes, everyone else untrained, Overdrive fire damage), same modification roster (25 vs 26) in the same order. Differences are the remaster's own revision of that same entry: the 'pay for a 1st-level weapon' option replaced by the level 0 advanced-weapon option, Blunt Shot retuned to concussive/ranged trip, Complex Simplicity granting two traits plus razing, 'Momentum Retainer' renamed 'Momentum Enhancer', and one new modification (Advanced Design). Not two different game elements - one innovation reprinted."
+  },
+  {
+   "slug": "mystery/time",
+   "verdict": "SAME-CONTENT",
+   "reason": "Both are the Time Oracle Mystery citing the same two printings (Divine Mysteries pg. 286 + Dark Archives (Remastered) pg. 188) and both carry legacy_id mystery-9; mystery-23 (2026 re-export) just reorders the sources. Mystery Skill (Occultism), granted spells (Time Sense, Deja Vu, Time Pocket, Time Beacon), all three revelation spells, related domains, and the Curse of Turbulent Moments text are identical - only the spell link IDs were re-pointed at the re-exported spell docs. Cosmetic deltas: mystery-23 drops the flavor opener and the curse's trait block, and lists a different associated Oracle Feat (Trance of Celerity vs Oracular Warning), which is a sidebar cross-reference, not the mystery's rules. Same mystery exported twice."
+  },
+  {
+   "slug": "way/way-of-the-drifter",
+   "verdict": "SAME-CONTENT",
+   "reason": "Gunslinger Way: way-7 = Guns & Gears (2021) pg. 108, way-1 = Guns & Gears (Remastered) pg. 108 - same page, same book. Flavor text, Way Skill (Acrobatics), Slinger's Reload, and initial/advanced/greater deeds are identical; the only difference is curly-to-straight apostrophes ('You're'). Re-export duplicate."
+  },
+  {
+   "slug": "way/way-of-the-pistolero",
+   "verdict": "SAME-CONTENT",
+   "reason": "Gunslinger Way: way-8 = Guns & Gears (2021) pg. 109, way-2 = Guns & Gears (Remastered) pg. 109. Identical flavor, Way Skill (Deception or Intimidation), Slinger's Reload, and all three deeds; only apostrophe encoding differs. Re-export duplicate."
+  },
+  {
+   "slug": "way/way-of-the-sniper",
+   "verdict": "SAME-CONTENT",
+   "reason": "Gunslinger Way: way-9 = Guns & Gears (2021) pg. 109, way-3 = Guns & Gears (Remastered) pg. 109. Text matches word for word (Way Skill Stealth, same deeds); the only delta is the source label gaining '(Remastered)'. Re-export duplicate."
+  },
+  {
+   "slug": "way/way-of-the-vanguard",
+   "verdict": "SAME-CONTENT",
+   "reason": "Gunslinger Way: way-10 = Guns & Gears (2021) pg. 110, way-4 = Guns & Gears (Remastered) pg. 110. Identical flavor and mechanics (Way Skill Athletics, same Slinger's Reload and deeds); source label is the only difference. Re-export duplicate."
+  },
+  {
+   "slug": "way/way-of-the-spellshot",
+   "verdict": "SAME-CONTENT",
+   "reason": "Gunslinger Way: way-11 = Guns & Gears (2021) pg. 140, way-5 = Guns & Gears (Remastered) pg. 140. Same Way Skill (Arcana), same Slinger's Reload and deeds, same requirement to take Spellshot Dedication as the 2nd-level class feat. Only editorial rewording from the remaster pass: 'You must be a gunslinger' -> 'Must be a gunslinger' and the dedication clause adding 'from the Spellshot archetype'. Re-export duplicate."
+  },
+  {
+   "slug": "feats/keep-pace",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "feat-3427 is the Game Hunter archetype's Keep Pace (Feat 6, reaction, Pathfinder #175: Broken Tusk Moon, prereq Game Hunter Dedication, PFS Limited); feat-6284 is the Bounty Hunter archetype's Keep Pace (Feat 6, Player Core 2 p.191, prereq Bounty Hunter Dedication, PFS Standard, and it carries legacy_id feat-1917 = the APG Bounty Hunter feat). The Stride-after-fleeing-prey effect text is near-verbatim shared, but these are two separately printed feats on two different archetypes' feat lists, so the rendered archetype, prerequisite, source and PFS line are all wrong."
+  },
+  {
+   "slug": "feats/many-guises",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "feat-6883 is a Kitsune ancestry feat (Feat 9, Tian Xia Character Guide p.50, prereq Shifting Faces) that simply lets you use Shifting Faces three times per day; feat-6432 is a Vigilante archetype feat (Feat 8, Player Core 2 p.219, prereq Vigilante Dedication + master in Deception) letting you assume a nondescript ordinary identity. Completely different mechanics."
+  },
+  {
+   "slug": "feats/practical-magic",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "feat-3920 is a General/Kingdom kingdom-building feat (Feat 1, Kingmaker Adventure Path p.532, prereq trained in Magic) granting +1 status to Magic checks and cheaper Hire Adventurers; feat-9331 is a Hedge Mage archetype feat (Feat 6, Impossible Magic p.95, prereq Hedge Mage Dedication) that lets you craft temporary spell catalysts daily. Unrelated subsystems."
+  },
+  {
+   "slug": "feats/rallying-charge",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "feat-7750 is a Knight Vigilant archetype feat (Feat 16, Claws of the Tyrant p.112, prereq Knight Vigilant + Lead the Way) that upgrades Lead the Way to move any number of allies; feat-6357 is a Marshal archetype feat (Feat 6, two-action, visual, Player Core 2 p.205, prereq Marshal Dedication) that Strides + Strikes and grants allies temporary HP. Different actions, levels and effects."
+  },
+  {
+   "slug": "feats/sixth-pillar-mastery",
+   "verdict": "SAME-CONTENT",
+   "reason": "Both are the Sixth Pillar archetype's Sixth Pillar Mastery with the same prerequisite (Sixth Pillar Dedication) and the same source pair (Pathfinder #167: Ready? Fight! p.77 / Fists of the Ruby Phoenix Hardcover p.223) - one AoN entry per printing. feat-2742 (Feat 16) even carries AoN's own banner 'There is a more recent version of this, click here to view (ID=4078)', so feat-4078 (Feat 14) is the updated hardcover printing of the same feat; the hardcover rewrite (and the level shuffle with Touch Focus) is Paizo's own revision, and the AST renders the current version."
+  },
+  {
+   "slug": "feats/stone-blood",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "feat-890 is the Living Monolith archetype's Stone Blood (Feat 6, World Guide p.59, prereq Ka Stone Ritual, PFS Standard); feat-4380 is the Stonebound archetype's Stone Blood (Feat 6, Pathfinder #195: Heavy is the Crown p.83, prereq Stonebound Dedication, PFS Limited). The bleed-flat-check/drained effect text is reused verbatim between them, but they are two distinct printed feats on two distinct archetypes' lists with no legacy linkage, so the rendered archetype, prerequisite, source and PFS legality are wrong."
+  },
+  {
+   "slug": "feats/touch-focus",
+   "verdict": "SAME-CONTENT",
+   "reason": "Both are the Sixth Pillar archetype's Touch Focus with the same prerequisite and the same source pair (Pathfinder #167 p.77 / Fists of the Ruby Phoenix Hardcover p.223). feat-2743 (Feat 14, single action) carries AoN's own 'There is a more recent version of this (ID=4079)' banner; feat-4079 (Feat 16, free action with a trigger, prone rider instead of the follow-up Disarm/Shove/Trip) is the updated hardcover printing of the same feat, and the AST renders that current version."
+  },
+  {
+   "slug": "feats/watch-your-back",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "feat-8845 is a Golden Legionnaire archetype feat (Feat 14, Hellfire Dispatches p.33, auditory/linguistic/mental, prereq Golden Legionnaire Dedication) that stops an ally being off-guard from flanking; feat-4948 is a Rogue class feat (Feat 6, Player Core p.173, emotion/fear/mental, prereq trained in Intimidation) that uses Intimidation to give a foe +2 Perception vs you but -2 Will vs fear. Different class/archetype and different mechanics."
+  },
+  {
+   "slug": "feats/zombie-horde",
+   "verdict": "DIFFERENT-RECORD",
+   "reason": "feat-3654 is a Clockwork Reanimator archetype feat (Feat 20, three actions, Pathfinder #180: The Smoking Gun p.79, prereq Clockwork Reanimator Dedication) that splits your reanimated construct companion into a swarm; feat-9122 is a Necromancer class feat (Feat 6, Impossible Magic p.37) that simply teaches the zombie horde grave spell. Different class/archetype, level and effect."
+  },
+  {
+   "slug": "backgrounds/archdevil-apostate",
+   "verdict": "SAME-CONTENT",
+   "reason": "background-642 and background-591 are the same Uncommon background exported twice from the two printings of the same players' guide - both list the identical source pair (Hellbreakers Players Guide p.7 / Hell's Destiny Player's Guide p.8), the same boosts (Charisma or Intelligence plus a free boost), the same trained skills (Religion, Devil Lore) and the same Student of the Canon skill feat, with byte-level differences only in punctuation and which words are hyperlinked."
+  }
+ ],
+ "f10": [
+  {
+   "id": "idx0 classFeatures/bloodline-demonic:Disintegrate (aonId bloodline-3)",
+   "verdict": "CONFIRMED",
+   "reason": "Shipped core-descriptions.json classFeatures/bloodline-demonic reads '**Sorcerous Gifts** cantrip: Caustic Blast; 1st: Fear; ... 5th: Blister; 6th: ; 7th: Divine Decree' — the 6th-rank slot is empty, and its `r` array has no entry between 'Blister' and 'Divine Decree'. Mirror bloodline/bloodline-3.json prints '- **6th** [Disintegrate](/Spells.aspx?ID=76)'. Repair word Disintegrate matches print; the anchor '6th: ; ' occurs once in the record. (Other name deltas — Acid Splash→Caustic Blast, Abyssal Plague→Blister, Divine Aura→Canticle of Everlasting Grief, Glutton's Jaw→Glutton's Jaws, Abyssal Wrath→Chthonian Wrath — are the remaster's own renames and are not part of this claim.)"
+  },
+  {
+   "id": "idx3 classFeatures/bloodline-phoenix:Disintegrate (aonId bloodline-15)",
+   "verdict": "CONFIRMED",
+   "reason": "Shipped text reads '5th: Breath of Life; 6th: ; 7th: Contingency' — empty 6th slot, no matching label in `r`. Mirror bloodline/bloodline-15.json prints '- **6th** [Disintegrate](/Spells.aspx?ID=76)'. Damage real, unique anchor, repair matches print. (Burning Hands→Breathe Fire, See Invisibility→See the Unseen, Remove Curse→Cleanse Affliction, Meteor Swarm→Falling Stars are remaster renames, not claimed here.)"
+  },
+  {
+   "id": "idx6 classFeatures/impostor-in-hidden-places:Invisibility+Disappearance+Phantasmagoria (aonId apparition-6)",
+   "verdict": "CONFIRMED",
+   "reason": "Shipped Apparition Spells list has exactly three empty rows: '- **2nd**', '- **8th**', '- **9th**' (all other ranks carry names, and `r` holds only the 7 surviving spell labels). Mirror apparition/apparition-6.json prints 2nd Invisibility, 8th Disappearance, 9th Phantasmagoria — three lost words in list order, each anchor ('**2nd**', '**8th**', '**9th**') unique in the record."
+  },
+  {
+   "id": "idx9 classFeatures/monarch-of-the-fey-courts:Hallucination (aonId apparition-8)",
+   "verdict": "CONFIRMED",
+   "reason": "Shipped list has one empty row, '- **5th**', between '4th Suggestion' and '6th Dominate'. Mirror apparition/apparition-8.json prints '- **5th** [Hallucination](/Spells.aspx?ID=1551)'. Single damaged slot, unique anchor, repair matches print."
+  },
+  {
+   "id": "idx12 classFeatures/red-mantis-magic-school:Invisibility+Clairaudience+Clairvoyance+Hallucination+Disappearance+Phantasmagoria (aonId arcane-school-23)",
+   "verdict": "CONFIRMED",
+   "reason": "Shipped curriculum shows six damage points, each a dangling leading comma or empty rank: '- **2nd** , Mist', '- **3rd** , Paralyze', '- **4th** , Translocate', '- **5th** , Illusory Scene', '- **8th** , Unrelenting Observation', '- **9th**'. Mirror arcane-school/arcane-school-23.json prints 2nd Invisibility, 3rd Clairaudience, 4th Clairvoyance, 5th Hallucination, 8th Disappearance, 9th Phantasmagoria — exactly the six claimed words in exactly those slots; each rank-label anchor is unique."
+  },
+  {
+   "id": "idx15 classFeatures/school-of-civic-wizardry:Prestidigitation (aonId arcane-school-18)",
+   "verdict": "CONFIRMED",
+   "reason": "Shipped text opens the curriculum '- **cantrips:** , Read Aura' — leading comma with the first cantrip missing, and `r` starts at 'Read Aura'. Mirror arcane-school/arcane-school-18.json prints 'Cantrips: [Prestidigitation](/Spells.aspx?ID=1639), [Read Aura]'. Anchor '**cantrips:** , Read Aura' is unique in the record; the record's other two blanks (6th, 7th) are the separate F10 row school-of-civic-wizardry:Disintegrate+Retrocognition, which the mirror likewise confirms (6th Disintegrate, 7th Retrocognition)."
+  },
+  {
+   "id": "idx18 classFeatures/school-of-kalistrade:Retrocognition+Disappearance (aonId arcane-school-27)",
+   "verdict": "CONFIRMED",
+   "reason": "Shipped text has five blanks; this row claims the last two: '- **7th:** Project Image,' (trailing comma, nothing after) and '- **8th:** , Hidden Mind' (leading comma). Mirror arcane-school/arcane-school-27.json prints 7th 'Project Image, Retrocognition' and 8th 'Disappearance, Hidden Mind' — so the lost words are Retrocognition then Disappearance, as claimed and in that order. Both rank anchors are unique; the other three blanks (cantrips Prestidigitation, 2nd Invisibility, 3rd Clairaudience) belong to the sibling F10 row and also match print."
+  },
+  {
+   "id": "idx21 classFeatures/school-of-thassilonian-rune-magic:Clairaudience+Clairvoyance (aonId arcane-school-25)",
+   "verdict": "CONFIRMED",
+   "reason": "Shipped curriculum reads '- **3rd:** , Veil of Privacy' and '- **4th:** , Fly' — two leading-comma blanks, and `r` jumps from 'See the Unseen' to 'Veil of Privacy'. Mirror arcane-school/arcane-school-25.json prints 3rd 'Clairaudience, Veil of Privacy' and 4th 'Clairvoyance, Fly'. Both repairs match print and both anchors are unique. (Shipped 8th lists 'Unrelenting Observation, Hidden Mind' where print has them reversed — an ordering nit outside this claim, not a damage.)"
+  },
+  {
+   "id": "idx24 classFeatures/swarm-eidolon:Redistribute (aonId eidolon-13)",
+   "verdict": "CONFIRMED",
+   "reason": "Shipped Sudden Shift text ends 'In addition, your eidolon gains the reaction.' — article with no noun. Mirror eidolon/eidolon-13.json prints 'your eidolon gains the Redistribute reaction.' The string 'gains the reaction' occurs once (the 17th-level entry reads 'gains the Sickening Assault action'), so the find is unique and the repair matches print."
+  },
+  {
+   "id": "idx27 classFeatures/the-tangible-dream:Invisibility (aonId conscious-mind-11)",
+   "verdict": "CONFIRMED",
+   "reason": "Shipped Granted Spells reads '- 1st: Dizzying Colors' then an empty '- 2nd:' then '- 3rd: Sea of Thought'; `r` has no label between them. Mirror conscious-mind/conscious-mind-11.json prints '- **2nd** [Invisibility](/Spells.aspx?ID=1577)'. Anchor '- 2nd:' unique. (The record carries a second, unrelated gap — 'The area changes to a ,' in the Astral Rain amp, an area/template link rather than a spell label — which is outside this row's claim and does not refute it.)"
+  },
+  {
+   "id": "idx30 items/branch-attendants-mask:Prestidigitation (aonId equipment-3561)",
+   "verdict": "CONFIRMED",
+   "reason": "Shipped bullet list ends '- **Uzunjati**' with no cantrip, while the other four branches each carry one; `r` holds only 4 labels. Mirror equipment/equipment-3561.json prints '**Uzunjati** [_prestidigitation_](/Spells.aspx?ID=1639)'. Anchor '**Uzunjati**' unique in the record, repair matches print."
+  },
+  {
+   "id": "idx33 items/conch-of-otherworldly-seas:Clairaudience (aonId equipment-2626)",
+   "verdict": "CONFIRMED",
+   "reason": "Shipped Sounds of the Deep effect reads 'causing the conch to cast a 5th-rank spell for your benefit' — the spell name is gone, and `r` lists only 'Interplanar Teleport'. Mirror equipment/equipment-2626.json prints 'causing the conch to cast a 5th-rank [_clairaudience_](/Spells.aspx?ID=39) spell for your benefit.' Anchor '5th-rank spell' occurs once; repair matches print."
+  },
+  {
+   "id": "F10#2 classFeatures/bloodline-harrow:Retrocognition",
+   "verdict": "CONFIRMED",
+   "reason": "Record classFeatures/bloodline-harrow (aonId bloodline-18). Shipped core-descriptions.json d reads \"...6th: Truesight; 7th: ; 8th: Unrelenting Observation...\" — the 7th-rank granted spell is an empty slot. Mirror bloodline/bloodline-18.json prints \"- **7th** [Retrocognition](/Spells.aspx?ID=260)\". Damage real, implied repair (insert Retrocognition at 7th) matches print, find \"7th: ;\" occurs exactly once in the shipped d. (Unrelated aside: shipped \"6th: Truesight\" vs print \"True Seeing\" is a remaster rename, not part of this row.)"
+  },
+  {
+   "id": "F10#5 classFeatures/echo-of-lost-moments:Retrocognition",
+   "verdict": "CONFIRMED",
+   "reason": "Record classFeatures/echo-of-lost-moments (aonId apparition-5). Shipped d has the Apparition Spells bullet list with \"- **6th** Phantasmal Calamity\\n- **7th**\\n- **8th** Quandary\" — the 7th bullet has no spell. Mirror apparition/apparition-5.json prints \"- **7th** [Retrocognition](/Spells.aspx?ID=1652)\". Every other rank in the shipped list matches print exactly. Find \"- **7th**\\n\" unique."
+  },
+  {
+   "id": "F10#8 classFeatures/lore:Hypercognition",
+   "verdict": "CONFIRMED",
+   "reason": "Record classFeatures/lore (Oracle Lore mystery, aonId mystery-18). Shipped d Granted Spells reads \"- **cantrip:** Read Aura\\n- **1st:** Mindlink\\n- **3rd:**\\n- **6th:** Never Mind\" — the 3rd-rank entry is empty. Mirror mystery/mystery-18.json prints \"- **3rd** [Hypercognition](/Spells.aspx?ID=1563)\". Damage real, repair matches print, find \"- **3rd:**\\n\" unique."
+  },
+  {
+   "id": "F10#11 classFeatures/psychopomp-eidolon:Invisibility",
+   "verdict": "CONFIRMED",
+   "reason": "Record classFeatures/psychopomp-eidolon (aonId eidolon-10). Shipped d, Hidden Watcher 7th: \"Once per hour, it can cast targeting you, them, or both of you at once.\" — the spell name is gone, leaving an ungrammatical \"cast targeting\". Mirror eidolon/eidolon-10.json prints \"it can cast [_invisibility_](/Spells.aspx?ID=164) targeting you, them, or both of you at once.\" Find \"it can cast targeting\" unique."
+  },
+  {
+   "id": "F10#14 classFeatures/school-of-battle-magic:Disintegrate",
+   "verdict": "CONFIRMED",
+   "reason": "Record classFeatures/school-of-battle-magic (aonId arcane-school-22). Shipped d curriculum reads \"- **6th:** Chain Lightning,\" with a dangling comma and no second spell. Mirror arcane-school/arcane-school-22.json prints \"- 6th: [Chain Lightning](/Spells.aspx?ID=1462), [Disintegrate](/Spells.aspx?ID=1492)\". All other ranks match. Find \"Chain Lightning,\\n\" unique."
+  },
+  {
+   "id": "F10#17 classFeatures/school-of-kalistrade:Prestidigitation+Invisibility+Clairaudience",
+   "verdict": "CONFIRMED",
+   "reason": "Record classFeatures/school-of-kalistrade (aonId arcane-school-27). Shipped d shows three gaps matching this row: \"- **cantrips:** , Read Aura\" (leading comma), \"- **2nd:** Ghostly Carrier,\" (trailing comma), \"- **3rd:** , Veil of Privacy\". Mirror arcane-school/arcane-school-27.json prints Cantrips [Prestidigitation], 2nd [Ghostly Carrier], [Invisibility], 3rd [Clairaudience], [Veil of Privacy]. All three implied repairs match print; find \"**cantrips:** , Read Aura\" unique. (Print also confirms the sibling row's 7th Retrocognition and 8th Disappearance, which are likewise blank in the shipped text.)"
+  },
+  {
+   "id": "F10#20 classFeatures/school-of-protean-form:Metamorphosis",
+   "verdict": "CONFIRMED",
+   "reason": "Record classFeatures/school-of-protean-form (aonId arcane-school-20). Shipped d curriculum ends \"- **8th:** Desiccate, Monstrosity Form\\n- **9th:**\" — the 9th-rank entry is empty. Mirror arcane-school/arcane-school-20.json prints \"- 9th: [Metamorphosis](/Spells.aspx?ID=1599)\". Damage real, repair matches print, find \"- **9th:**\" unique."
+  },
+  {
+   "id": "F10#23 classFeatures/speaker-in-sibilance:Hypercognition",
+   "verdict": "CONFIRMED",
+   "reason": "Record classFeatures/speaker-in-sibilance (aonId apparition-15). Shipped d Apparition Spells reads \"- **2nd** Stupefy\\n- **3rd**\\n- **4th** Snake Fangs\" — the 3rd bullet is bare. Mirror apparition/apparition-15.json prints \"- **3rd** [Hypercognition](/Spells.aspx?ID=1563)\". Find \"- **3rd**\\n\" unique."
+  },
+  {
+   "id": "F10#26 classFeatures/the-infinite-eye:Clairvoyance",
+   "verdict": "CONFIRMED",
+   "reason": "Record classFeatures/the-infinite-eye (Psychic conscious mind, aonId conscious-mind-8). Shipped d Granted Spells reads \"- 3rd: Locate\\n- 4th:\\n- 5th: Scouting Eye\" — the 4th-rank slot is empty. Mirror conscious-mind/conscious-mind-8.json prints \"- **4th** [Clairvoyance](/Spells.aspx?ID=1466)\". Find \"- 4th:\\n\" unique."
+  },
+  {
+   "id": "F10#29 items/autumns-embrace:Invisibility",
+   "verdict": "CONFIRMED",
+   "reason": "Record items/autumns-embrace (aonId equipment-1840). Shipped d reads \"When activating the armor's property rune, you disappear in a swirl of colorful leaves.\" Mirror equipment/equipment-1840.json prints \"When activating the armor's _invisibility_ property rune...\". Damage real, repair matches print, find \"armor's property rune\" unique. Note: the same shipped description carries a second, separately-lost span not claimed by this row — \"These leaves swirl in a for 1 minute\" vs print \"swirl in a 20-foot emanation for 1 minute\" — which does not affect this row's verdict but is an extra repair the F10 list does not cover."
+  },
+  {
+   "id": "F10#32 items/cloak-of-elvenkind + -greater:Invisibility",
+   "verdict": "CONFIRMED",
+   "reason": "Records items/cloak-of-elvenkind (aonId equipment-424) and items/cloak-of-elvenkind-greater (aonId equipment-424-514). Base ships \"You draw the hood up and gain the effects of , with the spell's normal duration\"; greater ships \"gain the effects of a 4th-rank , with the spell's normal duration\". Mirror equipment-424.json / equipment-424-514.json print \"gain the effects of [_invisibility_](/Spells.aspx?ID=164), with the spell's normal duration\", and the greater sub-entry prints \"the effects of 4th-level _invisibility_\". Both damages real, both repairs match print, finds \"effects of , with\" and \"4th-rank , with\" each unique in their record."
+  },
+  {
+   "id": "F10#35 items/crystal-ball-clear-quartz/-moonstone/-obsidian/-peridot/-selenite:Clairvoyance",
+   "verdict": "CONFIRMED",
+   "reason": "Records items/crystal-ball-clear-quartz (equipment-3019-2870), -selenite (…-2871), -moonstone (…-2872), -peridot (…-2873), -obsidian (…-2874). All five ship \"**Effect** The *crystal ball* casts to your specifications.\" under Activate—Clairvoyance — spell name gone. All five mirror docs print \"**Effect** The crystal ball casts [_clairvoyance_](/Spells.aspx?ID=40) to your specifications.\" Find \"casts to your specifications\" occurs exactly once per record (the Scrying activation reads \"casts a Scrying spell to your specifications\", so it is not matched)."
+  },
+  {
+   "id": "F10 idx1 classFeatures/bloodline-genie:Invisibility",
+   "verdict": "CONFIRMED",
+   "reason": "Record classFeatures/bloodline-genie (aonId bloodline-11). Shipped core-descriptions.json reads \"- **Jaathoom** 2nd: ; 5th: Illusory Scene; 8th: Punishing Winds\" — the 2nd-level slot is an empty gap. Mirror bloodline/bloodline-11.json prints \"**Djinni** 2nd: [_invisibility_]; 5th: [_illusory scene_]; 8th: [_punishing winds_]\" (Jaathoom is the remaster rename of Djinni; the flanking 5th/8th entries match exactly). Insert 'Invisibility'; find string \"**Jaathoom** 2nd: ;\" occurs exactly once in the record."
+  },
+  {
+   "id": "F10 idx4 classFeatures/bloodline-shadow:Disappearance",
+   "verdict": "CONFIRMED",
+   "reason": "Record classFeatures/bloodline-shadow (aonId bloodline-14). Shipped text: \"7th: Duplicate Foe; 8th: ; 9th: Weird\" — empty 8th-rank slot. Mirror bloodline/bloodline-14.json prints \"- **8th** [Disappearance](/Spells.aspx?ID=73)\" between Duplicate Foe and Weird. Repair matches print; find \"8th: ;\" in that sequence is unique in the record."
+  },
+  {
+   "id": "F10 idx7 classFeatures/lesson-of-memory:Hypercognition",
+   "verdict": "CONFIRMED",
+   "reason": "Record classFeatures/lesson-of-memory (aonId lesson-31). Shipped text ends \"...and your familiar learns .\" Mirror lesson/lesson-31.json prints \"You gain the [Unravel Knowledge] hex, and your familiar learns [Hypercognition](/Spells.aspx?ID=1563).\" Damage is real, repair word matches print, find \"your familiar learns .\" occurs once."
+  },
+  {
+   "id": "F10 idx10 classFeatures/order-of-the-rack:Disillusionment",
+   "verdict": "CONFIRMED",
+   "reason": "Record classFeatures/order-of-the-rack (aonId hellknight-order-6). Shipped text has a bare \"**Lesser Benefit**\" with no name, while the parallel line reads \"**Greater Benefit** Silence Heresy\". Mirror hellknight-order/hellknight-order-6.json titles the Lesser Order Benefit \"Disillusionment\" (Character Guide pg. 83). Repair matches print; \"**Lesser Benefit**\" occurs once."
+  },
+  {
+   "id": "F10 idx13 classFeatures/reveler-in-lost-glee:Prestidigitation",
+   "verdict": "CONFIRMED",
+   "reason": "Record classFeatures/reveler-in-lost-glee (aonId apparition-9). Shipped Apparition Spells list begins \"- **Cantrip**\" with nothing after it, then \"- **1st** Dizzying Colors\". Mirror apparition/apparition-9.json prints \"- **Cantrip** [Prestidigitation](/Spells.aspx?ID=1639)\". Rest of the ladder matches shipped exactly; find \"- **Cantrip**\\n\" is unique."
+  },
+  {
+   "id": "F10 idx16 classFeatures/school-of-civic-wizardry:Disintegrate+Retrocognition",
+   "verdict": "CONFIRMED",
+   "reason": "Record classFeatures/school-of-civic-wizardry (aonId arcane-school-18). Shipped curriculum reads \"- **6th:** , Wall of Force\" and \"- **7th:** Planar Palace,\" — two gaps. Mirror arcane-school/arcane-school-18.json prints 6th: Disintegrate, Wall of Force and 7th: Planar Palace, Retrocognition. Both repairs match print; each find string occurs exactly once. (The same record's separate cantrip gap \"- **cantrips:** , Read Aura\" = Prestidigitation is the other listed row, also real.)"
+  },
+  {
+   "id": "F10 idx19 classFeatures/school-of-mentalism:Hallucination+Disappearance+Phantasmagoria",
+   "verdict": "CONFIRMED",
+   "reason": "Record classFeatures/school-of-mentalism (aonId arcane-school-19). Shipped reads \"- **5th:** , Illusory Scene\", \"- **8th:** , Uncontrollable Dance\", and a bare \"- **9th:**\". Mirror arcane-school/arcane-school-19.json prints 5th: Hallucination, Illusory Scene; 8th: Disappearance, Uncontrollable Dance; 9th: Phantasmagoria. All three repairs match print; all three find strings unique in the record."
+  },
+  {
+   "id": "F10 idx22 classFeatures/school-of-the-reclamation:Retrocognition+Metamorphosis",
+   "verdict": "CONFIRMED",
+   "reason": "Record classFeatures/school-of-the-reclamation (aonId arcane-school-26). Shipped reads \"- **7th:** Restore Ground,\" (trailing comma, nothing after) and a bare \"- **9th:**\". Mirror arcane-school/arcane-school-26.json prints 7th: Restore Ground, Retrocognition and 9th: Metamorphosis. Repairs match print; both finds unique."
+  },
+  {
+   "id": "F10 idx25 classFeatures/tempest:Thunderstrike+Thunderburst",
+   "verdict": "CONFIRMED",
+   "reason": "Record classFeatures/tempest (aonId mystery-19, Oracle Mystery). Shipped Granted Spells has a bare \"- **1st:**\" and Revelation Spells has a bare \"- **advanced:**\". Mirror mystery/mystery-19.json prints \"- **1st** [Thunderstrike](/Spells.aspx?ID=1721)\" and \"**Advanced Revelation Spell** [Thunderburst](/Spells.aspx?ID=2088)\". Repairs match print; both finds unique."
+  },
+  {
+   "id": "F10 idx28 items/assassins-bracers-type-i/-ii/-iii:Invisibility",
+   "verdict": "CONFIRMED",
+   "reason": "Records items/assassins-bracers-type-i (equipment-3495-3384), -type-ii (equipment-3495-3385), -type-iii (equipment-3495-3386). All three ship \"You cast 4th-rank on yourself, but the designated creature can still see you.\" Mirror equipment/equipment-3495-3384.json prints \"You cast 4th-rank [_invisibility_](/Spells.aspx?ID=1577) on yourself...\" (the -ii/-iii variants inherit the same activation block, differing only in the +2/+3 bonus). Find \"You cast 4th-rank on yourself\" occurs exactly once in each of the three records."
+  },
+  {
+   "id": "F10 idx31 items/cantrip-deck-full-pack:Prestidigitation",
+   "verdict": "REFUTED",
+   "reason": "Claim 'text is damaged' fails against the shipped file. items/cantrip-deck-full-pack (aonId equipment-1046-1001) currently ships the full 24-card list with \"- Message\\n- Prestidigitation\\n- Ignition\" — the word is present and matches print (mirror equipment/equipment-1046-1001.json lists prestidigitation 16th of 24). The row was valid when written: work/core-descriptions.json.pre-delta.bak still has the gap (\"- Message\\n-\\n- Ignition\"), and this is the ONLY one of the 12 sampled records that differs from that backup, so its repair has already landed. Re-applying is a no-op at best. Residual (different defect, not what the row claims): the entry's r[] link array has 22 entries for 24 bullets — no \"Prestidigitation\" ref and only one \"Light\" ref — so the restored word is unlinked."
+  },
+  {
+   "id": "F10 idx34 items/crown-of-intellect:Hypercognition",
+   "verdict": "CONFIRMED",
+   "reason": "Record items/crown-of-intellect (aonId equipment-3010). Shipped activation ends \"**Effect** You gain the effects of .\" Mirror equipment/equipment-3010.json prints \"**Effect** You gain the effects of [_hypercognition_](/Spells.aspx?ID=156).\" Damage real, repair matches print, find \"You gain the effects of .\" occurs once."
+  }
+ ]
+}

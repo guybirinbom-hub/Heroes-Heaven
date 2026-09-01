@@ -26,7 +26,9 @@ describe('choice definitions are well-formed', () => {
   });
 
   it('every choice has a flag, a prompt and a kind the builder understands', () => {
-    const KINDS = new Set(['array', 'skills', 'domains', 'text', 'open']);
+    // 'ikons' resolves against the character's own exemplar picks, narrowed by the asking feat's
+    // printed Usage line — see buildChoiceOptions and test/ikon-imbue.test.ts.
+    const KINDS = new Set(['array', 'skills', 'domains', 'text', 'open', 'ikons']);
     const bad = all.filter((x) => !x.choice.flag || !x.choice.prompt || !KINDS.has(String(x.choice.kind)));
     expect(bad.map((x) => `${x.id}(${x.choice.kind})`), 'malformed choice defs').toEqual([]);
   });
@@ -108,7 +110,10 @@ describe('choice options use app ids, not import artifacts', () => {
   });
 
   it('skill and save options use the keys the app uses elsewhere', () => {
-    expect(c.feats['rogue-dedication'].choice?.options?.map((o) => o.value)).toEqual(['stealth', 'thievery']);
+    /* Was Rogue Dedication; its `choice` was the inert half of a two-lane skill question and has been
+     * removed (drop-inert-skill-choices.mjs). Bloodrager Dedication is the record that KEEPS a skill
+     * `choice`, because its grant reads the answer through `choiceGrants`. */
+    expect(c.feats['bloodrager-dedication'].choice?.options?.map((o) => o.value)).toEqual(['arcana', 'religion']);
     expect(c.feats['canny-acumen'].choice?.options?.map((o) => o.value)).toEqual(['fortitude', 'reflex', 'will', 'perception']);
   });
 });

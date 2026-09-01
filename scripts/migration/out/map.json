@@ -1,12 +1,12 @@
 {
  "tally": {
-  "doc": 24658,
+  "doc": 24926,
   "subblock": 572,
   "drop": 145,
   "table": 21,
   "scraped": 1,
-  "derived": 22,
-  "authored": 843
+  "authored": 910,
+  "derived": 22
  },
  "map": {
   "spells": {
@@ -12414,6 +12414,168 @@
     "name": "Niyaháat",
     "status": "doc",
     "docId": "armor-55",
+    "how": "importer:the doc this record was built from"
+   },
+   "baked-spider-legs": {
+    "name": "Baked Spider Legs",
+    "status": "doc",
+    "docId": "campsite-meal-1",
+    "how": "importer:the doc this record was built from"
+   },
+   "black-linnorm-stew": {
+    "name": "Black Linnorm Stew",
+    "status": "doc",
+    "docId": "campsite-meal-2",
+    "how": "importer:the doc this record was built from"
+   },
+   "broiled-tuskwater-oysters": {
+    "name": "Broiled Tuskwater Oysters",
+    "status": "doc",
+    "docId": "campsite-meal-3",
+    "how": "importer:the doc this record was built from"
+   },
+   "cheese-crostata": {
+    "name": "Cheese Crostata",
+    "status": "doc",
+    "docId": "campsite-meal-4",
+    "how": "importer:the doc this record was built from"
+   },
+   "chocolate-ice-cream": {
+    "name": "Chocolate Ice Cream",
+    "status": "doc",
+    "docId": "campsite-meal-5",
+    "how": "importer:the doc this record was built from"
+   },
+   "first-world-mince-pie": {
+    "name": "First World Mince Pie",
+    "status": "doc",
+    "docId": "campsite-meal-6",
+    "how": "importer:the doc this record was built from"
+   },
+   "fish-on-a-stick": {
+    "name": "Fish-on-a-Stick",
+    "status": "doc",
+    "docId": "campsite-meal-7",
+    "how": "importer:the doc this record was built from"
+   },
+   "galt-ragout": {
+    "name": "Galt Ragout",
+    "status": "doc",
+    "docId": "campsite-meal-8",
+    "how": "importer:the doc this record was built from"
+   },
+   "giant-scrambled-egg-with-shambletus": {
+    "name": "Giant Scrambled Egg with Shambletus",
+    "status": "doc",
+    "docId": "campsite-meal-9",
+    "how": "importer:the doc this record was built from"
+   },
+   "grilled-silver-eel": {
+    "name": "Grilled Silver Eel",
+    "status": "doc",
+    "docId": "campsite-meal-10",
+    "how": "importer:the doc this record was built from"
+   },
+   "haggis": {
+    "name": "Haggis",
+    "status": "doc",
+    "docId": "campsite-meal-11",
+    "how": "importer:the doc this record was built from"
+   },
+   "hearty-meal": {
+    "name": "Hearty Meal",
+    "status": "doc",
+    "docId": "campsite-meal-12",
+    "how": "importer:the doc this record was built from"
+   },
+   "hearty-purple-soup": {
+    "name": "Hearty Purple Soup",
+    "status": "doc",
+    "docId": "campsite-meal-13",
+    "how": "importer:the doc this record was built from"
+   },
+   "hunters-roast": {
+    "name": "Hunter's Roast",
+    "status": "doc",
+    "docId": "campsite-meal-14",
+    "how": "importer:the doc this record was built from"
+   },
+   "jeweled-rice": {
+    "name": "Jeweled Rice",
+    "status": "doc",
+    "docId": "campsite-meal-15",
+    "how": "importer:the doc this record was built from"
+   },
+   "kameberry-pie": {
+    "name": "Kameberry Pie",
+    "status": "doc",
+    "docId": "campsite-meal-16",
+    "how": "importer:the doc this record was built from"
+   },
+   "mastodon-steak": {
+    "name": "Mastodon Steak",
+    "status": "doc",
+    "docId": "campsite-meal-17",
+    "how": "importer:the doc this record was built from"
+   },
+   "monster-casserole": {
+    "name": "Monster Casserole",
+    "status": "doc",
+    "docId": "campsite-meal-18",
+    "how": "importer:the doc this record was built from"
+   },
+   "onion-soup": {
+    "name": "Onion Soup",
+    "status": "doc",
+    "docId": "campsite-meal-19",
+    "how": "importer:the doc this record was built from"
+   },
+   "owlbear-omelet": {
+    "name": "Owlbear Omelet",
+    "status": "doc",
+    "docId": "campsite-meal-20",
+    "how": "importer:the doc this record was built from"
+   },
+   "rice-n-nut-pudding": {
+    "name": "Rice-n-Nut Pudding",
+    "status": "doc",
+    "docId": "campsite-meal-21",
+    "how": "importer:the doc this record was built from"
+   },
+   "seasoned-wings-and-thighs": {
+    "name": "Seasoned Wings and Thighs",
+    "status": "doc",
+    "docId": "campsite-meal-22",
+    "how": "importer:the doc this record was built from"
+   },
+   "shepherds-pie": {
+    "name": "Shepherd's Pie",
+    "status": "doc",
+    "docId": "campsite-meal-23",
+    "how": "importer:the doc this record was built from"
+   },
+   "smoked-trout-and-hydra-pate": {
+    "name": "Smoked Trout and Hydra Pate",
+    "status": "doc",
+    "docId": "campsite-meal-24",
+    "how": "importer:the doc this record was built from"
+   },
+   "succulent-sausages": {
+    "name": "Succulent Sausages",
+    "status": "doc",
+    "docId": "campsite-meal-25",
+    "how": "importer:the doc this record was built from"
+   },
+   "sweet-pancakes": {
+    "name": "Sweet Pancakes",
+    "status": "doc",
+    "docId": "campsite-meal-26",
+    "how": "importer:the doc this record was built from"
+   },
+   "whiterose-oysters": {
+    "name": "Whiterose Oysters",
+    "status": "doc",
+    "docId": "campsite-meal-27",
     "how": "importer:the doc this record was built from"
    },
    "alchemist-kit": {
@@ -58972,6 +59134,71 @@
     "status": "subblock",
     "parentDocId": "arcane-thesis-5",
     "how": "fts"
+   },
+   "metal-carapace-armor": {
+    "name": "Metal Carapace",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "metal-carapace-shield": {
+    "name": "Metal Carapace Shield",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "hardwood-armor-armor": {
+    "name": "Hardwood Armor",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "hardwood-armor-shield": {
+    "name": "Hardwood Shield",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "armor-in-earth-medium": {
+    "name": "Armor in Earth",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "armor-in-earth-heavy": {
+    "name": "Armor in Earth (3rd level)",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "reinforced-chassis-armor": {
+    "name": "Reinforced Chassis",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "draconic-gift": {
+    "name": "Draconic Gift",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "transformation-seal": {
+    "name": "Transformation Seal",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "mind-weapon": {
+    "name": "Mind Weapon",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "mind-smiths-keepsake": {
+    "name": "Mind Smith's Keepsake",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "palatine-detectives-charm": {
+    "name": "Esoteric Charm",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "spirit-dwelling": {
+    "name": "Spirit Dwelling",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
    }
   },
   "classes": {
@@ -65254,6 +65481,42 @@
     "status": "doc",
     "docId": "action-925",
     "how": "slug-any"
+   },
+   "fascination-blood": {
+    "name": "Grim Fascination: Blood",
+    "status": "doc",
+    "docId": "grim-fascination-1",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "fascination-bone": {
+    "name": "Grim Fascination: Bone",
+    "status": "doc",
+    "docId": "grim-fascination-2",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "fascination-flesh": {
+    "name": "Grim Fascination: Flesh",
+    "status": "doc",
+    "docId": "grim-fascination-3",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "fascination-spirit": {
+    "name": "Grim Fascination: Spirit",
+    "status": "doc",
+    "docId": "grim-fascination-4",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "puppeteer": {
+    "name": "Puppeteer",
+    "status": "doc",
+    "docId": "fatal-method-1",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "reaper": {
+    "name": "Reaper",
+    "status": "doc",
+    "docId": "fatal-method-2",
+    "how": "record carries its own aonId (targeted merge)"
    },
    "necromancer-spellcasting": {
     "name": "Necromancer Spellcasting",
@@ -118888,6 +119151,46 @@
     "status": "subblock",
     "parentDocId": "feat-7120",
     "how": "manual:activity described inside the feat of the same name"
+   },
+   "consume-thrall": {
+    "name": "Consume Thrall",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "absorb-magic": {
+    "name": "Absorb Magic",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "overflowing-blade": {
+    "name": "Overflowing Blade",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "rouse-the-world": {
+    "name": "Rouse the World",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "command-a-thrall": {
+    "name": "Command a Thrall",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "part-the-veil": {
+    "name": "Part the Veil",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "solitary-invocation": {
+    "name": "Solitary Invocation",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
+   },
+   "spellshifter-shift-spell": {
+    "name": "Shift Spell",
+    "status": "authored",
+    "how": "overlay-created record with no archive page"
    }
   },
   "conditions": {
@@ -125452,6 +125755,430 @@
     "how": "importer:the doc this record was built from"
    }
   },
+  "creatureAdjustment": {
+   "undead": {
+    "name": "Undead",
+    "status": "doc",
+    "docId": "creature-adjustment-3",
+    "how": "importer:the doc this record was built from"
+   },
+   "ghost": {
+    "name": "Ghost",
+    "status": "doc",
+    "docId": "creature-adjustment-4",
+    "how": "importer:the doc this record was built from"
+   },
+   "ghoul": {
+    "name": "Ghoul",
+    "status": "doc",
+    "docId": "creature-adjustment-5",
+    "how": "importer:the doc this record was built from"
+   },
+   "mummy": {
+    "name": "Mummy",
+    "status": "doc",
+    "docId": "creature-adjustment-6",
+    "how": "importer:the doc this record was built from"
+   },
+   "shadow": {
+    "name": "Shadow",
+    "status": "doc",
+    "docId": "creature-adjustment-7",
+    "how": "importer:the doc this record was built from"
+   },
+   "skeleton": {
+    "name": "Skeleton",
+    "status": "doc",
+    "docId": "creature-adjustment-8",
+    "how": "importer:the doc this record was built from"
+   },
+   "vampire": {
+    "name": "Vampire",
+    "status": "doc",
+    "docId": "creature-adjustment-9",
+    "how": "importer:the doc this record was built from"
+   },
+   "wight": {
+    "name": "Wight",
+    "status": "doc",
+    "docId": "creature-adjustment-10",
+    "how": "importer:the doc this record was built from"
+   },
+   "zombie": {
+    "name": "Zombie",
+    "status": "doc",
+    "docId": "creature-adjustment-11",
+    "how": "importer:the doc this record was built from"
+   },
+   "air": {
+    "name": "Air",
+    "status": "doc",
+    "docId": "creature-adjustment-16",
+    "how": "importer:the doc this record was built from"
+   },
+   "earth": {
+    "name": "Earth",
+    "status": "doc",
+    "docId": "creature-adjustment-17",
+    "how": "importer:the doc this record was built from"
+   },
+   "fire": {
+    "name": "Fire",
+    "status": "doc",
+    "docId": "creature-adjustment-18",
+    "how": "importer:the doc this record was built from"
+   },
+   "metal": {
+    "name": "Metal",
+    "status": "doc",
+    "docId": "creature-adjustment-19",
+    "how": "importer:the doc this record was built from"
+   },
+   "water": {
+    "name": "Water",
+    "status": "doc",
+    "docId": "creature-adjustment-20",
+    "how": "importer:the doc this record was built from"
+   },
+   "wood": {
+    "name": "Wood",
+    "status": "doc",
+    "docId": "creature-adjustment-21",
+    "how": "importer:the doc this record was built from"
+   },
+   "elite": {
+    "name": "Elite",
+    "status": "doc",
+    "docId": "creature-adjustment-22",
+    "how": "importer:the doc this record was built from"
+   },
+   "weak": {
+    "name": "Weak",
+    "status": "doc",
+    "docId": "creature-adjustment-23",
+    "how": "importer:the doc this record was built from"
+   },
+   "amphibious": {
+    "name": "Amphibious",
+    "status": "doc",
+    "docId": "creature-adjustment-24",
+    "how": "importer:the doc this record was built from"
+   },
+   "frostbound": {
+    "name": "Frostbound",
+    "status": "doc",
+    "docId": "creature-adjustment-25",
+    "how": "importer:the doc this record was built from"
+   },
+   "miniature": {
+    "name": "Miniature",
+    "status": "doc",
+    "docId": "creature-adjustment-26",
+    "how": "importer:the doc this record was built from"
+   },
+   "sandbound": {
+    "name": "Sandbound",
+    "status": "doc",
+    "docId": "creature-adjustment-27",
+    "how": "importer:the doc this record was built from"
+   },
+   "twinned": {
+    "name": "Twinned",
+    "status": "doc",
+    "docId": "creature-adjustment-28",
+    "how": "importer:the doc this record was built from"
+   },
+   "winged": {
+    "name": "Winged",
+    "status": "doc",
+    "docId": "creature-adjustment-29",
+    "how": "importer:the doc this record was built from"
+   },
+   "broodpiercer": {
+    "name": "Broodpiercer",
+    "status": "doc",
+    "docId": "creature-adjustment-30",
+    "how": "importer:the doc this record was built from"
+   },
+   "mythic-ambusher": {
+    "name": "Mythic Ambusher",
+    "status": "doc",
+    "docId": "creature-adjustment-31",
+    "how": "importer:the doc this record was built from"
+   },
+   "mythic-brute": {
+    "name": "Mythic Brute",
+    "status": "doc",
+    "docId": "creature-adjustment-32",
+    "how": "importer:the doc this record was built from"
+   },
+   "mythic-caster": {
+    "name": "Mythic Caster",
+    "status": "doc",
+    "docId": "creature-adjustment-33",
+    "how": "importer:the doc this record was built from"
+   },
+   "mythic-striker": {
+    "name": "Mythic Striker",
+    "status": "doc",
+    "docId": "creature-adjustment-34",
+    "how": "importer:the doc this record was built from"
+   },
+   "union-organizer": {
+    "name": "Union Organizer",
+    "status": "doc",
+    "docId": "creature-adjustment-35",
+    "how": "importer:the doc this record was built from"
+   },
+   "retired": {
+    "name": "Retired",
+    "status": "doc",
+    "docId": "creature-adjustment-36",
+    "how": "importer:the doc this record was built from"
+   },
+   "guerrilla": {
+    "name": "Guerrilla",
+    "status": "doc",
+    "docId": "creature-adjustment-37",
+    "how": "importer:the doc this record was built from"
+   },
+   "corrupt": {
+    "name": "Corrupt",
+    "status": "doc",
+    "docId": "creature-adjustment-38",
+    "how": "importer:the doc this record was built from"
+   },
+   "athamaru": {
+    "name": "Athamaru",
+    "status": "doc",
+    "docId": "creature-adjustment-39",
+    "how": "importer:the doc this record was built from"
+   },
+   "merfolk": {
+    "name": "Merfolk",
+    "status": "doc",
+    "docId": "creature-adjustment-40",
+    "how": "importer:the doc this record was built from"
+   },
+   "catfolk": {
+    "name": "Catfolk",
+    "status": "doc",
+    "docId": "creature-adjustment-41",
+    "how": "importer:the doc this record was built from"
+   },
+   "dwarf": {
+    "name": "Dwarf",
+    "status": "doc",
+    "docId": "creature-adjustment-42",
+    "how": "importer:the doc this record was built from"
+   },
+   "elf": {
+    "name": "Elf",
+    "status": "doc",
+    "docId": "creature-adjustment-43",
+    "how": "importer:the doc this record was built from"
+   },
+   "goblin": {
+    "name": "Goblin",
+    "status": "doc",
+    "docId": "creature-adjustment-44",
+    "how": "importer:the doc this record was built from"
+   },
+   "gnome": {
+    "name": "Gnome",
+    "status": "doc",
+    "docId": "creature-adjustment-45",
+    "how": "importer:the doc this record was built from"
+   },
+   "halfling": {
+    "name": "Halfling",
+    "status": "doc",
+    "docId": "creature-adjustment-46",
+    "how": "importer:the doc this record was built from"
+   },
+   "hobgoblin": {
+    "name": "Hobgoblin",
+    "status": "doc",
+    "docId": "creature-adjustment-47",
+    "how": "importer:the doc this record was built from"
+   },
+   "kholo": {
+    "name": "Kholo",
+    "status": "doc",
+    "docId": "creature-adjustment-48",
+    "how": "importer:the doc this record was built from"
+   },
+   "kobold": {
+    "name": "Kobold",
+    "status": "doc",
+    "docId": "creature-adjustment-49",
+    "how": "importer:the doc this record was built from"
+   },
+   "leshy": {
+    "name": "Leshy",
+    "status": "doc",
+    "docId": "creature-adjustment-50",
+    "how": "importer:the doc this record was built from"
+   },
+   "lizardfolk": {
+    "name": "Lizardfolk",
+    "status": "doc",
+    "docId": "creature-adjustment-51",
+    "how": "importer:the doc this record was built from"
+   },
+   "orc": {
+    "name": "Orc",
+    "status": "doc",
+    "docId": "creature-adjustment-52",
+    "how": "importer:the doc this record was built from"
+   },
+   "ratfolk": {
+    "name": "Ratfolk",
+    "status": "doc",
+    "docId": "creature-adjustment-53",
+    "how": "importer:the doc this record was built from"
+   },
+   "tengu": {
+    "name": "Tengu",
+    "status": "doc",
+    "docId": "creature-adjustment-54",
+    "how": "importer:the doc this record was built from"
+   },
+   "tripkee": {
+    "name": "Tripkee",
+    "status": "doc",
+    "docId": "creature-adjustment-55",
+    "how": "importer:the doc this record was built from"
+   },
+   "experimental-cryptids": {
+    "name": "Experimental Cryptids",
+    "status": "doc",
+    "docId": "creature-adjustment-56",
+    "how": "importer:the doc this record was built from"
+   },
+   "mutant-cryptids": {
+    "name": "Mutant Cryptids",
+    "status": "doc",
+    "docId": "creature-adjustment-57",
+    "how": "importer:the doc this record was built from"
+   },
+   "primeval-cryptid": {
+    "name": "Primeval Cryptid",
+    "status": "doc",
+    "docId": "creature-adjustment-58",
+    "how": "importer:the doc this record was built from"
+   },
+   "rumored-cryptid": {
+    "name": "Rumored Cryptid",
+    "status": "doc",
+    "docId": "creature-adjustment-59",
+    "how": "importer:the doc this record was built from"
+   },
+   "secret-society-member": {
+    "name": "Secret Society Member",
+    "status": "doc",
+    "docId": "creature-adjustment-60",
+    "how": "importer:the doc this record was built from"
+   }
+  },
+  "creatureThemeTemplate": {
+   "aldori-swordlords": {
+    "name": "Aldori Swordlords",
+    "status": "doc",
+    "docId": "creature-theme-template-1",
+    "how": "importer:the doc this record was built from"
+   },
+   "aspis-consortium": {
+    "name": "Aspis Consortium",
+    "status": "doc",
+    "docId": "creature-theme-template-2",
+    "how": "importer:the doc this record was built from"
+   },
+   "bellflower-network": {
+    "name": "Bellflower Network",
+    "status": "doc",
+    "docId": "creature-theme-template-3",
+    "how": "importer:the doc this record was built from"
+   },
+   "eagle-knights": {
+    "name": "Eagle Knights",
+    "status": "doc",
+    "docId": "creature-theme-template-4",
+    "how": "importer:the doc this record was built from"
+   },
+   "firebrands": {
+    "name": "Firebrands",
+    "status": "doc",
+    "docId": "creature-theme-template-5",
+    "how": "importer:the doc this record was built from"
+   },
+   "hellknights": {
+    "name": "Hellknights",
+    "status": "doc",
+    "docId": "creature-theme-template-6",
+    "how": "importer:the doc this record was built from"
+   },
+   "houses-of-perfection": {
+    "name": "Houses of Perfection",
+    "status": "doc",
+    "docId": "creature-theme-template-7",
+    "how": "importer:the doc this record was built from"
+   },
+   "knights-of-lastwall": {
+    "name": "Knights of Lastwall",
+    "status": "doc",
+    "docId": "creature-theme-template-8",
+    "how": "importer:the doc this record was built from"
+   },
+   "lion-blades": {
+    "name": "Lion Blades",
+    "status": "doc",
+    "docId": "creature-theme-template-9",
+    "how": "importer:the doc this record was built from"
+   },
+   "pathfinder-society": {
+    "name": "Pathfinder Society",
+    "status": "doc",
+    "docId": "creature-theme-template-11",
+    "how": "importer:the doc this record was built from"
+   },
+   "red-mantis-assassin": {
+    "name": "Red Mantis Assassin",
+    "status": "doc",
+    "docId": "creature-theme-template-12",
+    "how": "importer:the doc this record was built from"
+   },
+   "whispering-way": {
+    "name": "Whispering Way",
+    "status": "doc",
+    "docId": "creature-theme-template-13",
+    "how": "importer:the doc this record was built from"
+   },
+   "deity-worshiper": {
+    "name": "Deity Worshiper",
+    "status": "doc",
+    "docId": "creature-theme-template-14",
+    "how": "importer:the doc this record was built from"
+   },
+   "the-magaambya": {
+    "name": "The Magaambya",
+    "status": "doc",
+    "docId": "creature-theme-template-15",
+    "how": "importer:the doc this record was built from"
+   },
+   "hellbound-creature": {
+    "name": "Hellbound Creature",
+    "status": "doc",
+    "docId": "creature-theme-template-16",
+    "how": "importer:the doc this record was built from"
+   },
+   "hellbound-creatures": {
+    "name": "Hellbound Creatures",
+    "status": "doc",
+    "docId": "creature-theme-template-17",
+    "how": "importer:the doc this record was built from"
+   }
+  },
   "curse": {
    "arrow-attracting": {
     "name": "Arrow Attracting",
@@ -131809,6 +132536,736 @@
     "name": "Runic Skullcap",
     "status": "doc",
     "docId": "equipment-5208-bonus-1714",
+    "how": "importer:the doc this record was built from"
+   }
+  },
+  "kingdomEvent": {
+   "archaeological-find": {
+    "name": "Archaeological Find",
+    "status": "doc",
+    "docId": "kingdom-event-1",
+    "how": "importer:the doc this record was built from"
+   },
+   "assassination-attempt": {
+    "name": "Assassination Attempt",
+    "status": "doc",
+    "docId": "kingdom-event-2",
+    "how": "importer:the doc this record was built from"
+   },
+   "bandit-activity": {
+    "name": "Bandit Activity",
+    "status": "doc",
+    "docId": "kingdom-event-3",
+    "how": "importer:the doc this record was built from"
+   },
+   "boomtown": {
+    "name": "Boomtown",
+    "status": "doc",
+    "docId": "kingdom-event-4",
+    "how": "importer:the doc this record was built from"
+   },
+   "building-demand": {
+    "name": "Building Demand",
+    "status": "doc",
+    "docId": "kingdom-event-5",
+    "how": "importer:the doc this record was built from"
+   },
+   "crop-failure": {
+    "name": "Crop Failure",
+    "status": "doc",
+    "docId": "kingdom-event-6",
+    "how": "importer:the doc this record was built from"
+   },
+   "cult-activity": {
+    "name": "Cult Activity",
+    "status": "doc",
+    "docId": "kingdom-event-7",
+    "how": "importer:the doc this record was built from"
+   },
+   "diplomatic-overture": {
+    "name": "Diplomatic Overture",
+    "status": "doc",
+    "docId": "kingdom-event-8",
+    "how": "importer:the doc this record was built from"
+   },
+   "discovery": {
+    "name": "Discovery",
+    "status": "doc",
+    "docId": "kingdom-event-9",
+    "how": "importer:the doc this record was built from"
+   },
+   "drug-den": {
+    "name": "Drug Den",
+    "status": "doc",
+    "docId": "kingdom-event-10",
+    "how": "importer:the doc this record was built from"
+   },
+   "economic-surge": {
+    "name": "Economic Surge",
+    "status": "doc",
+    "docId": "kingdom-event-11",
+    "how": "importer:the doc this record was built from"
+   },
+   "expansion-demand": {
+    "name": "Expansion Demand",
+    "status": "doc",
+    "docId": "kingdom-event-12",
+    "how": "importer:the doc this record was built from"
+   },
+   "festive-invitation": {
+    "name": "Festive Invitation",
+    "status": "doc",
+    "docId": "kingdom-event-13",
+    "how": "importer:the doc this record was built from"
+   },
+   "feud": {
+    "name": "Feud",
+    "status": "doc",
+    "docId": "kingdom-event-14",
+    "how": "importer:the doc this record was built from"
+   },
+   "food-shortage": {
+    "name": "Food Shortage",
+    "status": "doc",
+    "docId": "kingdom-event-15",
+    "how": "importer:the doc this record was built from"
+   },
+   "food-surplus": {
+    "name": "Food Surplus",
+    "status": "doc",
+    "docId": "kingdom-event-16",
+    "how": "importer:the doc this record was built from"
+   },
+   "good-weather": {
+    "name": "Good Weather",
+    "status": "doc",
+    "docId": "kingdom-event-17",
+    "how": "importer:the doc this record was built from"
+   },
+   "inquisition": {
+    "name": "Inquisition",
+    "status": "doc",
+    "docId": "kingdom-event-18",
+    "how": "importer:the doc this record was built from"
+   },
+   "justice-prevails": {
+    "name": "Justice Prevails",
+    "status": "doc",
+    "docId": "kingdom-event-19",
+    "how": "importer:the doc this record was built from"
+   },
+   "land-rush": {
+    "name": "Land Rush",
+    "status": "doc",
+    "docId": "kingdom-event-20",
+    "how": "importer:the doc this record was built from"
+   },
+   "local-disaster": {
+    "name": "Local Disaster",
+    "status": "doc",
+    "docId": "kingdom-event-21",
+    "how": "importer:the doc this record was built from"
+   },
+   "monster-activity": {
+    "name": "Monster Activity",
+    "status": "doc",
+    "docId": "kingdom-event-22",
+    "how": "importer:the doc this record was built from"
+   },
+   "natural-disaster": {
+    "name": "Natural Disaster",
+    "status": "doc",
+    "docId": "kingdom-event-23",
+    "how": "importer:the doc this record was built from"
+   },
+   "natures-blessing": {
+    "name": "Nature’s Blessing",
+    "status": "doc",
+    "docId": "kingdom-event-24",
+    "how": "importer:the doc this record was built from"
+   },
+   "new-subjects": {
+    "name": "New Subjects",
+    "status": "doc",
+    "docId": "kingdom-event-25",
+    "how": "importer:the doc this record was built from"
+   },
+   "noblesse-oblige": {
+    "name": "Noblesse Oblige",
+    "status": "doc",
+    "docId": "kingdom-event-26",
+    "how": "importer:the doc this record was built from"
+   },
+   "outstanding-success": {
+    "name": "Outstanding Success",
+    "status": "doc",
+    "docId": "kingdom-event-27",
+    "how": "importer:the doc this record was built from"
+   },
+   "pilgrimage": {
+    "name": "Pilgrimage",
+    "status": "doc",
+    "docId": "kingdom-event-28",
+    "how": "importer:the doc this record was built from"
+   },
+   "plague": {
+    "name": "Plague",
+    "status": "doc",
+    "docId": "kingdom-event-29",
+    "how": "importer:the doc this record was built from"
+   },
+   "political-calm": {
+    "name": "Political Calm",
+    "status": "doc",
+    "docId": "kingdom-event-30",
+    "how": "importer:the doc this record was built from"
+   },
+   "public-scandal": {
+    "name": "Public Scandal",
+    "status": "doc",
+    "docId": "kingdom-event-31",
+    "how": "importer:the doc this record was built from"
+   },
+   "remarkable-treasure": {
+    "name": "Remarkable Treasure",
+    "status": "doc",
+    "docId": "kingdom-event-32",
+    "how": "importer:the doc this record was built from"
+   },
+   "sacrifices": {
+    "name": "Sacrifices",
+    "status": "doc",
+    "docId": "kingdom-event-33",
+    "how": "importer:the doc this record was built from"
+   },
+   "sensational-crime": {
+    "name": "Sensational Crime",
+    "status": "doc",
+    "docId": "kingdom-event-34",
+    "how": "importer:the doc this record was built from"
+   },
+   "squatters": {
+    "name": "Squatters",
+    "status": "doc",
+    "docId": "kingdom-event-35",
+    "how": "importer:the doc this record was built from"
+   },
+   "undead-uprising": {
+    "name": "Undead Uprising",
+    "status": "doc",
+    "docId": "kingdom-event-36",
+    "how": "importer:the doc this record was built from"
+   },
+   "unexpected-find": {
+    "name": "Unexpected Find",
+    "status": "doc",
+    "docId": "kingdom-event-37",
+    "how": "importer:the doc this record was built from"
+   },
+   "vandals": {
+    "name": "Vandals",
+    "status": "doc",
+    "docId": "kingdom-event-38",
+    "how": "importer:the doc this record was built from"
+   },
+   "visiting-celebrity": {
+    "name": "Visiting Celebrity",
+    "status": "doc",
+    "docId": "kingdom-event-39",
+    "how": "importer:the doc this record was built from"
+   },
+   "wealthy-immigrant": {
+    "name": "Wealthy Immigrant",
+    "status": "doc",
+    "docId": "kingdom-event-40",
+    "how": "importer:the doc this record was built from"
+   },
+   "monster-hunt": {
+    "name": "Monster Hunt",
+    "status": "doc",
+    "docId": "kingdom-event-41",
+    "how": "importer:the doc this record was built from"
+   },
+   "barbarian-immigrants": {
+    "name": "Barbarian Immigrants",
+    "status": "doc",
+    "docId": "kingdom-event-42",
+    "how": "importer:the doc this record was built from"
+   },
+   "the-local-paper": {
+    "name": "The Local Paper",
+    "status": "doc",
+    "docId": "kingdom-event-43",
+    "how": "importer:the doc this record was built from"
+   },
+   "special-edition": {
+    "name": "Special Edition",
+    "status": "doc",
+    "docId": "kingdom-event-44",
+    "how": "importer:the doc this record was built from"
+   },
+   "goblin-backlash": {
+    "name": "Goblin Backlash",
+    "status": "doc",
+    "docId": "kingdom-event-45",
+    "how": "importer:the doc this record was built from"
+   }
+  },
+  "kingdomStructure": {
+   "academy": {
+    "name": "Academy",
+    "status": "doc",
+    "docId": "kingdom-structure-1",
+    "how": "importer:the doc this record was built from"
+   },
+   "alchemy-laboratory": {
+    "name": "Alchemy Laboratory",
+    "status": "doc",
+    "docId": "kingdom-structure-2",
+    "how": "importer:the doc this record was built from"
+   },
+   "arcanists-tower": {
+    "name": "Arcanist's Tower",
+    "status": "doc",
+    "docId": "kingdom-structure-3",
+    "how": "importer:the doc this record was built from"
+   },
+   "arena": {
+    "name": "Arena",
+    "status": "doc",
+    "docId": "kingdom-structure-4",
+    "how": "importer:the doc this record was built from"
+   },
+   "bank": {
+    "name": "Bank",
+    "status": "doc",
+    "docId": "kingdom-structure-5",
+    "how": "importer:the doc this record was built from"
+   },
+   "barracks": {
+    "name": "Barracks",
+    "status": "doc",
+    "docId": "kingdom-structure-6",
+    "how": "importer:the doc this record was built from"
+   },
+   "brewery": {
+    "name": "Brewery",
+    "status": "doc",
+    "docId": "kingdom-structure-7",
+    "how": "importer:the doc this record was built from"
+   },
+   "bridge": {
+    "name": "Bridge",
+    "status": "doc",
+    "docId": "kingdom-structure-8",
+    "how": "importer:the doc this record was built from"
+   },
+   "castle": {
+    "name": "Castle",
+    "status": "doc",
+    "docId": "kingdom-structure-9",
+    "how": "importer:the doc this record was built from"
+   },
+   "cathedral": {
+    "name": "Cathedral",
+    "status": "doc",
+    "docId": "kingdom-structure-10",
+    "how": "importer:the doc this record was built from"
+   },
+   "cemetery": {
+    "name": "Cemetery",
+    "status": "doc",
+    "docId": "kingdom-structure-11",
+    "how": "importer:the doc this record was built from"
+   },
+   "construction-yard": {
+    "name": "Construction Yard",
+    "status": "doc",
+    "docId": "kingdom-structure-12",
+    "how": "importer:the doc this record was built from"
+   },
+   "dump": {
+    "name": "Dump",
+    "status": "doc",
+    "docId": "kingdom-structure-13",
+    "how": "importer:the doc this record was built from"
+   },
+   "embassy": {
+    "name": "Embassy",
+    "status": "doc",
+    "docId": "kingdom-structure-14",
+    "how": "importer:the doc this record was built from"
+   },
+   "festival-hall": {
+    "name": "Festival Hall",
+    "status": "doc",
+    "docId": "kingdom-structure-15",
+    "how": "importer:the doc this record was built from"
+   },
+   "foundry": {
+    "name": "Foundry",
+    "status": "doc",
+    "docId": "kingdom-structure-16",
+    "how": "importer:the doc this record was built from"
+   },
+   "garrison": {
+    "name": "Garrison",
+    "status": "doc",
+    "docId": "kingdom-structure-17",
+    "how": "importer:the doc this record was built from"
+   },
+   "general-store": {
+    "name": "General Store",
+    "status": "doc",
+    "docId": "kingdom-structure-18",
+    "how": "importer:the doc this record was built from"
+   },
+   "granary": {
+    "name": "Granary",
+    "status": "doc",
+    "docId": "kingdom-structure-19",
+    "how": "importer:the doc this record was built from"
+   },
+   "guildhall": {
+    "name": "Guildhall",
+    "status": "doc",
+    "docId": "kingdom-structure-20",
+    "how": "importer:the doc this record was built from"
+   },
+   "herbalist": {
+    "name": "Herbalist",
+    "status": "doc",
+    "docId": "kingdom-structure-21",
+    "how": "importer:the doc this record was built from"
+   },
+   "hospital": {
+    "name": "Hospital",
+    "status": "doc",
+    "docId": "kingdom-structure-22",
+    "how": "importer:the doc this record was built from"
+   },
+   "houses": {
+    "name": "Houses",
+    "status": "doc",
+    "docId": "kingdom-structure-23",
+    "how": "importer:the doc this record was built from"
+   },
+   "illicit-market": {
+    "name": "Illicit Market",
+    "status": "doc",
+    "docId": "kingdom-structure-24",
+    "how": "importer:the doc this record was built from"
+   },
+   "inn": {
+    "name": "Inn",
+    "status": "doc",
+    "docId": "kingdom-structure-25",
+    "how": "importer:the doc this record was built from"
+   },
+   "jail": {
+    "name": "Jail",
+    "status": "doc",
+    "docId": "kingdom-structure-26",
+    "how": "importer:the doc this record was built from"
+   },
+   "keep": {
+    "name": "Keep",
+    "status": "doc",
+    "docId": "kingdom-structure-27",
+    "how": "importer:the doc this record was built from"
+   },
+   "library": {
+    "name": "Library",
+    "status": "doc",
+    "docId": "kingdom-structure-28",
+    "how": "importer:the doc this record was built from"
+   },
+   "lumberyard": {
+    "name": "Lumberyard",
+    "status": "doc",
+    "docId": "kingdom-structure-29",
+    "how": "importer:the doc this record was built from"
+   },
+   "luxury-store": {
+    "name": "Luxury Store",
+    "status": "doc",
+    "docId": "kingdom-structure-30",
+    "how": "importer:the doc this record was built from"
+   },
+   "magic-shop": {
+    "name": "Magic Shop",
+    "status": "doc",
+    "docId": "kingdom-structure-31",
+    "how": "importer:the doc this record was built from"
+   },
+   "magical-streetlamps": {
+    "name": "Magical Streetlamps",
+    "status": "doc",
+    "docId": "kingdom-structure-32",
+    "how": "importer:the doc this record was built from"
+   },
+   "mansion": {
+    "name": "Mansion",
+    "status": "doc",
+    "docId": "kingdom-structure-33",
+    "how": "importer:the doc this record was built from"
+   },
+   "marketplace": {
+    "name": "Marketplace",
+    "status": "doc",
+    "docId": "kingdom-structure-34",
+    "how": "importer:the doc this record was built from"
+   },
+   "menagerie": {
+    "name": "Menagerie",
+    "status": "doc",
+    "docId": "kingdom-structure-35",
+    "how": "importer:the doc this record was built from"
+   },
+   "military-academy": {
+    "name": "Military Academy",
+    "status": "doc",
+    "docId": "kingdom-structure-36",
+    "how": "importer:the doc this record was built from"
+   },
+   "mill": {
+    "name": "Mill",
+    "status": "doc",
+    "docId": "kingdom-structure-37",
+    "how": "importer:the doc this record was built from"
+   },
+   "mint": {
+    "name": "Mint",
+    "status": "doc",
+    "docId": "kingdom-structure-38",
+    "how": "importer:the doc this record was built from"
+   },
+   "monument": {
+    "name": "Monument",
+    "status": "doc",
+    "docId": "kingdom-structure-39",
+    "how": "importer:the doc this record was built from"
+   },
+   "museum": {
+    "name": "Museum",
+    "status": "doc",
+    "docId": "kingdom-structure-40",
+    "how": "importer:the doc this record was built from"
+   },
+   "noble-villa": {
+    "name": "Noble Villa",
+    "status": "doc",
+    "docId": "kingdom-structure-41",
+    "how": "importer:the doc this record was built from"
+   },
+   "occult-shop": {
+    "name": "Occult Shop",
+    "status": "doc",
+    "docId": "kingdom-structure-42",
+    "how": "importer:the doc this record was built from"
+   },
+   "opera-house": {
+    "name": "Opera House",
+    "status": "doc",
+    "docId": "kingdom-structure-43",
+    "how": "importer:the doc this record was built from"
+   },
+   "orphanage": {
+    "name": "Orphanage",
+    "status": "doc",
+    "docId": "kingdom-structure-44",
+    "how": "importer:the doc this record was built from"
+   },
+   "palace": {
+    "name": "Palace",
+    "status": "doc",
+    "docId": "kingdom-structure-45",
+    "how": "importer:the doc this record was built from"
+   },
+   "park": {
+    "name": "Park",
+    "status": "doc",
+    "docId": "kingdom-structure-46",
+    "how": "importer:the doc this record was built from"
+   },
+   "paved-streets": {
+    "name": "Paved Streets",
+    "status": "doc",
+    "docId": "kingdom-structure-47",
+    "how": "importer:the doc this record was built from"
+   },
+   "pier": {
+    "name": "Pier",
+    "status": "doc",
+    "docId": "kingdom-structure-48",
+    "how": "importer:the doc this record was built from"
+   },
+   "rubble": {
+    "name": "Rubble",
+    "status": "doc",
+    "docId": "kingdom-structure-49",
+    "how": "importer:the doc this record was built from"
+   },
+   "sacred-grove": {
+    "name": "Sacred Grove",
+    "status": "doc",
+    "docId": "kingdom-structure-50",
+    "how": "importer:the doc this record was built from"
+   },
+   "secure-warehouse": {
+    "name": "Secure Warehouse",
+    "status": "doc",
+    "docId": "kingdom-structure-51",
+    "how": "importer:the doc this record was built from"
+   },
+   "sewer-system": {
+    "name": "Sewer System",
+    "status": "doc",
+    "docId": "kingdom-structure-52",
+    "how": "importer:the doc this record was built from"
+   },
+   "shrine": {
+    "name": "Shrine",
+    "status": "doc",
+    "docId": "kingdom-structure-53",
+    "how": "importer:the doc this record was built from"
+   },
+   "smithy": {
+    "name": "Smithy",
+    "status": "doc",
+    "docId": "kingdom-structure-54",
+    "how": "importer:the doc this record was built from"
+   },
+   "specialized-artisan": {
+    "name": "Specialized Artisan",
+    "status": "doc",
+    "docId": "kingdom-structure-55",
+    "how": "importer:the doc this record was built from"
+   },
+   "stable": {
+    "name": "Stable",
+    "status": "doc",
+    "docId": "kingdom-structure-56",
+    "how": "importer:the doc this record was built from"
+   },
+   "stockyard": {
+    "name": "Stockyard",
+    "status": "doc",
+    "docId": "kingdom-structure-57",
+    "how": "importer:the doc this record was built from"
+   },
+   "stonemason": {
+    "name": "Stonemason",
+    "status": "doc",
+    "docId": "kingdom-structure-58",
+    "how": "importer:the doc this record was built from"
+   },
+   "tannery": {
+    "name": "Tannery",
+    "status": "doc",
+    "docId": "kingdom-structure-59",
+    "how": "importer:the doc this record was built from"
+   },
+   "tavern-dive": {
+    "name": "Tavern, Dive",
+    "status": "doc",
+    "docId": "kingdom-structure-60",
+    "how": "importer:the doc this record was built from"
+   },
+   "tavern-popular": {
+    "name": "Tavern, Popular",
+    "status": "doc",
+    "docId": "kingdom-structure-61",
+    "how": "importer:the doc this record was built from"
+   },
+   "tavern-luxury": {
+    "name": "Tavern, Luxury",
+    "status": "doc",
+    "docId": "kingdom-structure-62",
+    "how": "importer:the doc this record was built from"
+   },
+   "tavern-world-class": {
+    "name": "Tavern, World-Class",
+    "status": "doc",
+    "docId": "kingdom-structure-63",
+    "how": "importer:the doc this record was built from"
+   },
+   "temple": {
+    "name": "Temple",
+    "status": "doc",
+    "docId": "kingdom-structure-64",
+    "how": "importer:the doc this record was built from"
+   },
+   "tenement": {
+    "name": "Tenement",
+    "status": "doc",
+    "docId": "kingdom-structure-65",
+    "how": "importer:the doc this record was built from"
+   },
+   "theater": {
+    "name": "Theater",
+    "status": "doc",
+    "docId": "kingdom-structure-66",
+    "how": "importer:the doc this record was built from"
+   },
+   "thieves-guild": {
+    "name": "Thieves' Guild",
+    "status": "doc",
+    "docId": "kingdom-structure-67",
+    "how": "importer:the doc this record was built from"
+   },
+   "town-hall": {
+    "name": "Town Hall",
+    "status": "doc",
+    "docId": "kingdom-structure-68",
+    "how": "importer:the doc this record was built from"
+   },
+   "trade-shop": {
+    "name": "Trade Shop",
+    "status": "doc",
+    "docId": "kingdom-structure-69",
+    "how": "importer:the doc this record was built from"
+   },
+   "university": {
+    "name": "University",
+    "status": "doc",
+    "docId": "kingdom-structure-70",
+    "how": "importer:the doc this record was built from"
+   },
+   "wall-stone": {
+    "name": "Wall, Stone",
+    "status": "doc",
+    "docId": "kingdom-structure-71",
+    "how": "importer:the doc this record was built from"
+   },
+   "wall-wooden": {
+    "name": "Wall, Wooden",
+    "status": "doc",
+    "docId": "kingdom-structure-72",
+    "how": "importer:the doc this record was built from"
+   },
+   "watchtower": {
+    "name": "Watchtower",
+    "status": "doc",
+    "docId": "kingdom-structure-73",
+    "how": "importer:the doc this record was built from"
+   },
+   "waterfront": {
+    "name": "Waterfront",
+    "status": "doc",
+    "docId": "kingdom-structure-74",
+    "how": "importer:the doc this record was built from"
+   },
+   "gladiatorial-arena": {
+    "name": "Gladiatorial Arena",
+    "status": "doc",
+    "docId": "kingdom-structure-76",
+    "how": "importer:the doc this record was built from"
+   },
+   "printing-house": {
+    "name": "Printing House",
+    "status": "doc",
+    "docId": "kingdom-structure-77",
     "how": "importer:the doc this record was built from"
    }
   },
@@ -154280,6 +155737,11 @@
     "status": "authored",
     "how": "hand-authored bucket"
    },
+   "item-apricot-of-bestial-might": {
+    "name": "Bestial Might",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
    "item-aroma-concealer": {
     "name": "Aroma Concealer",
     "status": "authored",
@@ -154395,6 +155857,11 @@
     "status": "authored",
     "how": "hand-authored bucket"
    },
+   "item-clawed-bracers": {
+    "name": "Extended Claws",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
    "item-cloud-buns-greater": {
     "name": "Cloud Buns",
     "status": "authored",
@@ -154477,6 +155944,16 @@
    },
    "item-demortification-oil": {
     "name": "Demortification Oil Applied",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "item-dinosaur-boots": {
+    "name": "Dinosaur Legs",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "item-dinosaur-boots-greater": {
+    "name": "Dinosaur Legs",
     "status": "authored",
     "how": "hand-authored bucket"
    },
@@ -154855,6 +156332,11 @@
     "status": "authored",
     "how": "hand-authored bucket"
    },
+   "item-mana-rattler-liniment": {
+    "name": "Serpentine Form",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
    "item-marking-snare": {
     "name": "Marked Quarry",
     "status": "authored",
@@ -154985,8 +156467,83 @@
     "status": "authored",
     "how": "hand-authored bucket"
    },
+   "item-potion-of-acid-resistance-greater": {
+    "name": "Acid Resistance 15",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "item-potion-of-acid-resistance-lesser": {
+    "name": "Acid Resistance 5",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "item-potion-of-acid-resistance-moderate": {
+    "name": "Acid Resistance 10",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "item-potion-of-cold-resistance-greater": {
+    "name": "Cold Resistance 15",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "item-potion-of-cold-resistance-lesser": {
+    "name": "Cold Resistance 5",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "item-potion-of-cold-resistance-moderate": {
+    "name": "Cold Resistance 10",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "item-potion-of-electricity-resistance-greater": {
+    "name": "Electricity Resistance 15",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "item-potion-of-electricity-resistance-lesser": {
+    "name": "Electricity Resistance 5",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "item-potion-of-electricity-resistance-moderate": {
+    "name": "Electricity Resistance 10",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "item-potion-of-fire-resistance-greater": {
+    "name": "Fire Resistance 15",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "item-potion-of-fire-resistance-lesser": {
+    "name": "Fire Resistance 5",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "item-potion-of-fire-resistance-moderate": {
+    "name": "Fire Resistance 10",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
    "item-potion-of-minute-echoes": {
     "name": "Minute Echoes",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "item-potion-of-sonic-resistance-greater": {
+    "name": "Sonic Resistance 15",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "item-potion-of-sonic-resistance-lesser": {
+    "name": "Sonic Resistance 5",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "item-potion-of-sonic-resistance-moderate": {
+    "name": "Sonic Resistance 10",
     "status": "authored",
     "how": "hand-authored bucket"
    },
@@ -155225,6 +156782,21 @@
     "status": "authored",
     "how": "hand-authored bucket"
    },
+   "item-tooth-and-claw-tattoo": {
+    "name": "Tooth and Claw",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "item-tooth-and-claw-tattoo-greater": {
+    "name": "Tooth and Claw",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "item-tooth-and-claw-tattoo-major": {
+    "name": "Tooth and Claw",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
    "item-trackers-stew": {
     "name": "Tracker's Stew",
     "status": "authored",
@@ -155300,8 +156872,53 @@
     "status": "authored",
     "how": "hand-authored bucket"
    },
+   "item-wolfjaw-armor": {
+    "name": "Witchwarg Jaws",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "item-sea-touch-elixir-lesser": {
+    "name": "Sea Touch (Lesser)",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "item-sea-touch-elixir-moderate": {
+    "name": "Sea Touch (Moderate)",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "item-sea-touch-elixir-greater": {
+    "name": "Sea Touch (Greater)",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "a-little-bird-told-me": {
+    "name": "A Little Bird Told Me",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
    "adept-benefit-amulet": {
     "name": "Amulet's Abeyance",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "agile-shield-grip": {
+    "name": "Agile Shield Grip",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "ancestors-rage": {
+    "name": "Ancestors’ Rage (canine)",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "animal-rage": {
+    "name": "Animal Rage",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "armor-in-earth": {
+    "name": "Armor in Earth",
     "status": "authored",
     "how": "hand-authored bucket"
    },
@@ -155310,13 +156927,218 @@
     "status": "authored",
     "how": "hand-authored bucket"
    },
+   "aura-air-gate-junction": {
+    "name": "Air Gate — Aura Junction",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "aura-area-armor": {
+    "name": "Area Armor",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "aura-ascended-celestial-dedication": {
+    "name": "Nimbus of Light",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "aura-aura-of-confidence": {
+    "name": "Aura of Confidence",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "aura-cavaliers-banner": {
+    "name": "Cavalier's Banner",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "aura-champions-aura": {
+    "name": "Champion's Aura",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "aura-channel-elements": {
+    "name": "Kinetic Aura",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "aura-commander-dedication": {
+    "name": "Commander's Banner (archetype)",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "aura-commanders-banner": {
+    "name": "Commander's Banner",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "aura-consecrated-aura": {
+    "name": "Consecrated Aura",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "aura-convocation-of-earth-and-moon": {
+    "name": "Convocation of Earth and Moon",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "aura-corpse-stench": {
+    "name": "Corpse Stench",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "aura-dominion-aura": {
+    "name": "Dominion Aura",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "aura-earth-gate-junction": {
+    "name": "Earth Gate — Aura Junction",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "aura-empyreal-aura": {
+    "name": "Empyreal Aura",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "aura-enlightened-presence": {
+    "name": "Enlightened Presence",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "aura-eternal-blessing": {
+    "name": "Eternal Blessing (bless)",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "aura-fetching-bangles": {
+    "name": "Fetching Bangles (immanence)",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "aura-fire-gate-junction": {
+    "name": "Fire Gate — Aura Junction",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "aura-frightening-indignation": {
+    "name": "Frightening Indignation",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "aura-frightful-aura": {
+    "name": "Frightful Aura",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "aura-initiate-benefit-lantern": {
+    "name": "Lantern's Aura",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "aura-initiate-benefit-regalia": {
+    "name": "Inspiring Aura (Regalia)",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "aura-irradiate": {
+    "name": "Irradiate",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "aura-marshal-dedication": {
+    "name": "Marshal's Aura",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "aura-metal-gate-junction": {
+    "name": "Metal Gate — Aura Junction",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "aura-mirrored-aegis": {
+    "name": "Mirrored Aegis (immanence)",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "aura-overwatch-dedication": {
+    "name": "Overwatch Field",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "aura-paragon-benefit-shield": {
+    "name": "Shield Implement — allies within 15 feet",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "aura-primal-aegis": {
+    "name": "Primal Aegis",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "aura-repel-darkness": {
+    "name": "Repel Darkness",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "aura-shepherd-of-desolation": {
+    "name": "Shepherd of Desolation",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "aura-shield-the-faithful": {
+    "name": "Shield the Faithful",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "aura-undying-conviction": {
+    "name": "Undying Conviction",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "aura-victors-wreath": {
+    "name": "Victor's Wreath (immanence)",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "aura-water-gate-junction": {
+    "name": "Water Gate — Aura Junction",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "aura-wood-gate-junction": {
+    "name": "Wood Gate — Aura Junction",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "aura-wrathful-presence": {
+    "name": "Wrathful Presence",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
    "axe-climber": {
     "name": "Axe Climbing",
     "status": "authored",
     "how": "hand-authored bucket"
    },
+   "bat-form": {
+    "name": "Bat Form",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
    "battle-scars": {
     "name": "Battle Scars (vs. devils)",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "bon-mot-backfired": {
+    "name": "Bon Mot backfired",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "bone-swarm": {
+    "name": "Bone Swarm",
     "status": "authored",
     "how": "hand-authored bucket"
    },
@@ -155342,6 +157164,16 @@
    },
    "close-formation": {
     "name": "Close Formation",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "crawling-form": {
+    "name": "Crawling Form",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "critter-shape": {
+    "name": "Critter Shape",
     "status": "authored",
     "how": "hand-authored bucket"
    },
@@ -155455,6 +157287,11 @@
     "status": "authored",
     "how": "hand-authored bucket"
    },
+   "dampening-harmonics": {
+    "name": "Dampening Harmonics",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
    "deadeye": {
     "name": "Deadeye",
     "status": "authored",
@@ -155482,6 +157319,11 @@
    },
    "dissolutions-sight": {
     "name": "Dissolution's Sight",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "dragon-transformation": {
+    "name": "Dragon Transformation",
     "status": "authored",
     "how": "hand-authored bucket"
    },
@@ -155540,6 +157382,11 @@
     "status": "authored",
     "how": "hand-authored bucket"
    },
+   "fey-life-revived": {
+    "name": "Fey Life (revived)",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
    "field-vial-mutagenist": {
     "name": "Field Vial (Mutagenist)",
     "status": "authored",
@@ -155557,6 +157404,16 @@
    },
    "form-a-flock": {
     "name": "Form a Flock",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "form-of-the-bat": {
+    "name": "Form of the Bat",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "form-of-the-beloved-mother": {
+    "name": "Form of the Beloved Mother (snake)",
     "status": "authored",
     "how": "hand-authored bucket"
    },
@@ -156220,6 +158077,11 @@
     "status": "authored",
     "how": "hand-authored bucket"
    },
+   "rat-form": {
+    "name": "Rat Form",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
    "renewing-cycle": {
     "name": "Renewing Cycle",
     "status": "authored",
@@ -156285,6 +158147,11 @@
     "status": "authored",
     "how": "hand-authored bucket"
    },
+   "storm-form": {
+    "name": "Storm Form (air elemental)",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
    "strand-strider-spider-shape": {
     "name": "Spider Shape (Strand Strider)",
     "status": "authored",
@@ -156297,6 +158164,16 @@
    },
    "the-tyrant-falls": {
     "name": "The Tyrant Falls!",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "transcend-the-azimuth-moon": {
+    "name": "Transcend the Azimuth (moon)",
+    "status": "authored",
+    "how": "hand-authored bucket"
+   },
+   "transcend-the-azimuth-sun": {
+    "name": "Transcend the Azimuth (sun)",
     "status": "authored",
     "how": "hand-authored bucket"
    },
@@ -156315,58 +158192,8 @@
     "status": "authored",
     "how": "hand-authored bucket"
    },
-   "critter-shape": {
-    "name": "Critter Shape",
-    "status": "authored",
-    "how": "hand-authored bucket"
-   },
-   "rat-form": {
-    "name": "Rat Form",
-    "status": "authored",
-    "how": "hand-authored bucket"
-   },
-   "crawling-form": {
-    "name": "Crawling Form",
-    "status": "authored",
-    "how": "hand-authored bucket"
-   },
-   "bat-form": {
-    "name": "Bat Form",
-    "status": "authored",
-    "how": "hand-authored bucket"
-   },
-   "form-of-the-bat": {
-    "name": "Form of the Bat",
-    "status": "authored",
-    "how": "hand-authored bucket"
-   },
-   "a-little-bird-told-me": {
-    "name": "A Little Bird Told Me",
-    "status": "authored",
-    "how": "hand-authored bucket"
-   },
-   "ancestors-rage": {
-    "name": "Ancestors’ Rage (canine)",
-    "status": "authored",
-    "how": "hand-authored bucket"
-   },
-   "form-of-the-beloved-mother": {
-    "name": "Form of the Beloved Mother (snake)",
-    "status": "authored",
-    "how": "hand-authored bucket"
-   },
-   "storm-form": {
-    "name": "Storm Form (air elemental)",
-    "status": "authored",
-    "how": "hand-authored bucket"
-   },
-   "transcend-the-azimuth-sun": {
-    "name": "Transcend the Azimuth (sun)",
-    "status": "authored",
-    "how": "hand-authored bucket"
-   },
-   "transcend-the-azimuth-moon": {
-    "name": "Transcend the Azimuth (moon)",
+   "worm-form-hybrid": {
+    "name": "Worm Form (humanoid-worm hybrid)",
     "status": "authored",
     "how": "hand-authored bucket"
    },
@@ -156375,233 +158202,93 @@
     "status": "authored",
     "how": "hand-authored bucket"
    },
-   "worm-form-hybrid": {
-    "name": "Worm Form (humanoid-worm hybrid)",
+   "were-werebat-animal": {
+    "name": "Animal Shape (Werebat)",
     "status": "authored",
     "how": "hand-authored bucket"
    },
-   "dragon-transformation": {
-    "name": "Dragon Transformation",
+   "were-werebat-hybrid": {
+    "name": "Hybrid Shape (Werebat)",
     "status": "authored",
     "how": "hand-authored bucket"
    },
-   "animal-rage": {
-    "name": "Animal Rage",
+   "were-werebear-animal": {
+    "name": "Animal Shape (Werebear)",
     "status": "authored",
     "how": "hand-authored bucket"
    },
-   "bone-swarm": {
-    "name": "Bone Swarm",
+   "were-werebear-hybrid": {
+    "name": "Hybrid Shape (Werebear)",
     "status": "authored",
     "how": "hand-authored bucket"
    },
-   "aura-marshal-dedication": {
-    "name": "Marshal's Aura",
+   "were-wereboar-animal": {
+    "name": "Animal Shape (Wereboar)",
     "status": "authored",
     "how": "hand-authored bucket"
    },
-   "aura-overwatch-dedication": {
-    "name": "Overwatch Field",
+   "were-wereboar-hybrid": {
+    "name": "Hybrid Shape (Wereboar)",
     "status": "authored",
     "how": "hand-authored bucket"
    },
-   "aura-aura-of-confidence": {
-    "name": "Aura of Confidence",
+   "were-werecrocodile-animal": {
+    "name": "Animal Shape (Werecrocodile)",
     "status": "authored",
     "how": "hand-authored bucket"
    },
-   "aura-enlightened-presence": {
-    "name": "Enlightened Presence",
+   "were-werecrocodile-hybrid": {
+    "name": "Hybrid Shape (Werecrocodile)",
     "status": "authored",
     "how": "hand-authored bucket"
    },
-   "aura-primal-aegis": {
-    "name": "Primal Aegis",
+   "were-weremoose-animal": {
+    "name": "Animal Shape (Weremoose)",
     "status": "authored",
     "how": "hand-authored bucket"
    },
-   "aura-area-armor": {
-    "name": "Area Armor",
+   "were-weremoose-hybrid": {
+    "name": "Hybrid Shape (Weremoose)",
     "status": "authored",
     "how": "hand-authored bucket"
    },
-   "aura-undying-conviction": {
-    "name": "Undying Conviction",
+   "were-wererat-animal": {
+    "name": "Animal Shape (Wererat)",
     "status": "authored",
     "how": "hand-authored bucket"
    },
-   "aura-consecrated-aura": {
-    "name": "Consecrated Aura",
+   "were-wererat-hybrid": {
+    "name": "Hybrid Shape (Wererat)",
     "status": "authored",
     "how": "hand-authored bucket"
    },
-   "aura-corpse-stench": {
-    "name": "Corpse Stench",
+   "were-wereshark-animal": {
+    "name": "Animal Shape (Wereshark)",
     "status": "authored",
     "how": "hand-authored bucket"
    },
-   "aura-empyreal-aura": {
-    "name": "Empyreal Aura",
+   "were-wereshark-hybrid": {
+    "name": "Hybrid Shape (Wereshark)",
     "status": "authored",
     "how": "hand-authored bucket"
    },
-   "aura-frightful-aura": {
-    "name": "Frightful Aura",
+   "were-weretiger-animal": {
+    "name": "Animal Shape (Weretiger)",
     "status": "authored",
     "how": "hand-authored bucket"
    },
-   "aura-shepherd-of-desolation": {
-    "name": "Shepherd of Desolation",
+   "were-weretiger-hybrid": {
+    "name": "Hybrid Shape (Weretiger)",
     "status": "authored",
     "how": "hand-authored bucket"
    },
-   "aura-eternal-blessing": {
-    "name": "Eternal Blessing (bless)",
+   "were-werewolf-animal": {
+    "name": "Animal Shape (Werewolf)",
     "status": "authored",
     "how": "hand-authored bucket"
    },
-   "aura-shield-the-faithful": {
-    "name": "Shield the Faithful",
-    "status": "authored",
-    "how": "hand-authored bucket"
-   },
-   "aura-wrathful-presence": {
-    "name": "Wrathful Presence",
-    "status": "authored",
-    "how": "hand-authored bucket"
-   },
-   "aura-frightening-indignation": {
-    "name": "Frightening Indignation",
-    "status": "authored",
-    "how": "hand-authored bucket"
-   },
-   "aura-repel-darkness": {
-    "name": "Repel Darkness",
-    "status": "authored",
-    "how": "hand-authored bucket"
-   },
-   "aura-dominion-aura": {
-    "name": "Dominion Aura",
-    "status": "authored",
-    "how": "hand-authored bucket"
-   },
-   "aura-irradiate": {
-    "name": "Irradiate",
-    "status": "authored",
-    "how": "hand-authored bucket"
-   },
-   "aura-convocation-of-earth-and-moon": {
-    "name": "Convocation of Earth and Moon",
-    "status": "authored",
-    "how": "hand-authored bucket"
-   },
-   "aura-ascended-celestial-dedication": {
-    "name": "Nimbus of Light",
-    "status": "authored",
-    "how": "hand-authored bucket"
-   },
-   "aura-champions-aura": {
-    "name": "Champion's Aura",
-    "status": "authored",
-    "how": "hand-authored bucket"
-   },
-   "aura-commanders-banner": {
-    "name": "Commander's Banner",
-    "status": "authored",
-    "how": "hand-authored bucket"
-   },
-   "aura-initiate-benefit-regalia": {
-    "name": "Inspiring Aura (Regalia)",
-    "status": "authored",
-    "how": "hand-authored bucket"
-   },
-   "aura-initiate-benefit-lantern": {
-    "name": "Lantern's Aura",
-    "status": "authored",
-    "how": "hand-authored bucket"
-   },
-   "aura-mirrored-aegis": {
-    "name": "Mirrored Aegis (immanence)",
-    "status": "authored",
-    "how": "hand-authored bucket"
-   },
-   "aura-victors-wreath": {
-    "name": "Victor's Wreath (immanence)",
-    "status": "authored",
-    "how": "hand-authored bucket"
-   },
-   "aura-fetching-bangles": {
-    "name": "Fetching Bangles (immanence)",
-    "status": "authored",
-    "how": "hand-authored bucket"
-   },
-   "aura-paragon-benefit-shield": {
-    "name": "Shield Implement — allies within 15 feet",
-    "status": "authored",
-    "how": "hand-authored bucket"
-   },
-   "aura-cavaliers-banner": {
-    "name": "Cavalier's Banner",
-    "status": "authored",
-    "how": "hand-authored bucket"
-   },
-   "aura-commander-dedication": {
-    "name": "Commander's Banner (archetype)",
-    "status": "authored",
-    "how": "hand-authored bucket"
-   },
-   "aura-channel-elements": {
-    "name": "Kinetic Aura",
-    "status": "authored",
-    "how": "hand-authored bucket"
-   },
-   "aura-air-gate-junction": {
-    "name": "Air Gate — Aura Junction",
-    "status": "authored",
-    "how": "hand-authored bucket"
-   },
-   "aura-earth-gate-junction": {
-    "name": "Earth Gate — Aura Junction",
-    "status": "authored",
-    "how": "hand-authored bucket"
-   },
-   "aura-fire-gate-junction": {
-    "name": "Fire Gate — Aura Junction",
-    "status": "authored",
-    "how": "hand-authored bucket"
-   },
-   "aura-metal-gate-junction": {
-    "name": "Metal Gate — Aura Junction",
-    "status": "authored",
-    "how": "hand-authored bucket"
-   },
-   "aura-water-gate-junction": {
-    "name": "Water Gate — Aura Junction",
-    "status": "authored",
-    "how": "hand-authored bucket"
-   },
-   "aura-wood-gate-junction": {
-    "name": "Wood Gate — Aura Junction",
-    "status": "authored",
-    "how": "hand-authored bucket"
-   },
-   "fey-life-revived": {
-    "name": "Fey Life (revived)",
-    "status": "authored",
-    "how": "hand-authored bucket"
-   },
-   "armor-in-earth": {
-    "name": "Armor in Earth",
-    "status": "authored",
-    "how": "hand-authored bucket"
-   },
-   "agile-shield-grip": {
-    "name": "Agile Shield Grip",
-    "status": "authored",
-    "how": "hand-authored bucket"
-   },
-   "bon-mot-backfired": {
-    "name": "Bon Mot backfired",
+   "were-werewolf-hybrid": {
+    "name": "Hybrid Shape (Werewolf)",
     "status": "authored",
     "how": "hand-authored bucket"
    }
@@ -156823,6 +158510,272 @@
     "name": "Clockwork Familiar",
     "status": "authored",
     "how": "hand-authored bucket"
+   }
+  },
+  "runesmithRune": {
+   "atryl-rune-of-fire": {
+    "name": "Atryl, Rune of Fire",
+    "status": "doc",
+    "docId": "runesmith-rune-1",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "baruiel-rune-of-holds-bravery": {
+    "name": "Baruiel, Rune of Hold's Bravery",
+    "status": "doc",
+    "docId": "runesmith-rune-2",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "camonica-rune-of-perplexity": {
+    "name": "Camonica, Rune of Perplexity",
+    "status": "doc",
+    "docId": "runesmith-rune-3",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "esvadir-rune-of-whetstones": {
+    "name": "Esvadir, Rune of Whetstones",
+    "status": "doc",
+    "docId": "runesmith-rune-4",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "holtrik-rune-of-dwarven-ramparts": {
+    "name": "Holtrik, Rune of Dwarven Ramparts",
+    "status": "doc",
+    "docId": "runesmith-rune-5",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "ledria-rune-of-appeal": {
+    "name": "Ledria, Rune of Appeal",
+    "status": "doc",
+    "docId": "runesmith-rune-6",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "lyskel-rune-of-frost": {
+    "name": "Lyskel, Rune of Frost",
+    "status": "doc",
+    "docId": "runesmith-rune-7",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "marssyl-rune-of-impact": {
+    "name": "Marssyl, Rune of Impact",
+    "status": "doc",
+    "docId": "runesmith-rune-8",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "oljinex-rune-of-cowards-bane": {
+    "name": "Oljinex, Rune of Cowards' Bane",
+    "status": "doc",
+    "docId": "runesmith-rune-9",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "pluuna-rune-of-illumination": {
+    "name": "Pluuna, Rune of Illumination",
+    "status": "doc",
+    "docId": "runesmith-rune-10",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "ranshu-rune-of-thunder": {
+    "name": "Ranshu, Rune of Thunder",
+    "status": "doc",
+    "docId": "runesmith-rune-11",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "rehgog-rune-of-bestial-might": {
+    "name": "Rehgog, Rune of Bestial Might",
+    "status": "doc",
+    "docId": "runesmith-rune-12",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "sertum-rune-of-preparedness": {
+    "name": "Sertum, Rune of Preparedness",
+    "status": "doc",
+    "docId": "runesmith-rune-13",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "thullax-rune-of-corrosion": {
+    "name": "Thullax, Rune of Corrosion",
+    "status": "doc",
+    "docId": "runesmith-rune-14",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "tilus-rune-of-vocabulary": {
+    "name": "Tilus, Rune of Vocabulary",
+    "status": "doc",
+    "docId": "runesmith-rune-15",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "zohk-rune-of-homecoming": {
+    "name": "Zohk, Rune of Homecoming",
+    "status": "doc",
+    "docId": "runesmith-rune-16",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "av-diacritic-rune-of-succession": {
+    "name": "Av-, Diacritic Rune of Succession",
+    "status": "doc",
+    "docId": "runesmith-rune-17",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "en-diacritic-rune-of-expansion": {
+    "name": "En-, Diacritic Rune of Expansion",
+    "status": "doc",
+    "docId": "runesmith-rune-18",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "fob-diacritic-rune-of-doubling": {
+    "name": "Fob-, Diacritic Rune of Doubling",
+    "status": "doc",
+    "docId": "runesmith-rune-19",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "kit-diacritic-rune-of-mercy": {
+    "name": "Kit-, Diacritic Rune of Mercy",
+    "status": "doc",
+    "docId": "runesmith-rune-20",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "per-diacritic-rune-of-continuum": {
+    "name": "Per-, Diacritic Rune of Continuum",
+    "status": "doc",
+    "docId": "runesmith-rune-21",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "sun-diacritic-rune-of-preservation": {
+    "name": "Sun-, Diacritic Rune of Preservation",
+    "status": "doc",
+    "docId": "runesmith-rune-22",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "ti-diacritic-rune-of-fundaments": {
+    "name": "Ti-, Diacritic Rune of Fundaments",
+    "status": "doc",
+    "docId": "runesmith-rune-23",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "ur-diacritic-rune-of-intensity": {
+    "name": "Ur-, Diacritic Rune of Intensity",
+    "status": "doc",
+    "docId": "runesmith-rune-24",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "astillu-rune-of-submersion": {
+    "name": "Astillu, Rune of Submersion",
+    "status": "doc",
+    "docId": "runesmith-rune-25",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "cruonign-rune-of-leeching": {
+    "name": "Cruonign, Rune of Leeching",
+    "status": "doc",
+    "docId": "runesmith-rune-26",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "feikris-rune-of-gravity": {
+    "name": "Feikris, Rune of Gravity",
+    "status": "doc",
+    "docId": "runesmith-rune-27",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "germantria-rune-of-partnership": {
+    "name": "Germantria, Rune of Partnership",
+    "status": "doc",
+    "docId": "runesmith-rune-28",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "ichelsu-rune-of-observation": {
+    "name": "Ichelsu, Rune of Observation",
+    "status": "doc",
+    "docId": "runesmith-rune-29",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "jurroz-rune-of-dragon-fury": {
+    "name": "Jurroz, Rune of Dragon Fury",
+    "status": "doc",
+    "docId": "runesmith-rune-30",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "kojastri-rune-of-insulation": {
+    "name": "Kojastri, Rune of Insulation",
+    "status": "doc",
+    "docId": "runesmith-rune-31",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "oraloq-rune-of-inarticulateness": {
+    "name": "Oraloq, Rune of Inarticulateness",
+    "status": "doc",
+    "docId": "runesmith-rune-32",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "piteregrin-rune-of-transposition": {
+    "name": "Piteregrin, Rune of Transposition",
+    "status": "doc",
+    "docId": "runesmith-rune-33",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "trolistri-rune-of-forlorn-sorrow": {
+    "name": "Trolistri, Rune of Forlorn Sorrow",
+    "status": "doc",
+    "docId": "runesmith-rune-34",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "ulgatus-rune-of-restraint": {
+    "name": "Ulgatus, Rune of Restraint",
+    "status": "doc",
+    "docId": "runesmith-rune-35",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "yudici-rune-of-remonstrance": {
+    "name": "Yudici, Rune of Remonstrance",
+    "status": "doc",
+    "docId": "runesmith-rune-36",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "eck-diacritic-rune-of-phantasma": {
+    "name": "Eck-, Diacritic Rune of Phantasma",
+    "status": "doc",
+    "docId": "runesmith-rune-37",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "inth-diacritic-rune-of-corruption": {
+    "name": "Inth-, Diacritic Rune of Corruption",
+    "status": "doc",
+    "docId": "runesmith-rune-38",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "nesh-diacritic-rune-of-contingency": {
+    "name": "Nesh-, Diacritic Rune of Contingency",
+    "status": "doc",
+    "docId": "runesmith-rune-39",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "sar-diacritic-rune-of-righteousness": {
+    "name": "Sar-, Diacritic Rune of Righteousness",
+    "status": "doc",
+    "docId": "runesmith-rune-40",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "aiuen-the-elf-gate-key": {
+    "name": "Aiuen, The Elf-Gate Key",
+    "status": "doc",
+    "docId": "runesmith-rune-41",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "ochygholl-the-poisoned-star": {
+    "name": "Ochygholl, The Poisoned Star",
+    "status": "doc",
+    "docId": "runesmith-rune-42",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "rovan-seal-of-the-dead-vault": {
+    "name": "Rovan, Seal of the Dead Vault",
+    "status": "doc",
+    "docId": "runesmith-rune-43",
+    "how": "record carries its own aonId (targeted merge)"
+   },
+   "xinsala-the-well-of-virtues": {
+    "name": "Xinsala, The Well of Virtues",
+    "status": "doc",
+    "docId": "runesmith-rune-44",
+    "how": "record carries its own aonId (targeted merge)"
    }
   }
  }

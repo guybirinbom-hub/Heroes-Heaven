@@ -1,0 +1,1281 @@
+[
+ {
+  "bucket": "items",
+  "slug": "agathion-raiment",
+  "recAon": "set-relic-8",
+  "recName": "Agathion Raiment",
+  "astAon": "set-relic-1",
+  "astName": "Agathion Raiment",
+  "sameName": true
+ },
+ {
+  "bucket": "items",
+  "slug": "aon-adamantine",
+  "recAon": "draconic-exemplar-1",
+  "recName": "Adamantine",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "items",
+  "slug": "archmages-regalia",
+  "recAon": "set-relic-9",
+  "recName": "Archmage's Regalia",
+  "astAon": "set-relic-2",
+  "astName": "Archmage's Regalia",
+  "sameName": true
+ },
+ {
+  "bucket": "items",
+  "slug": "backfire-mantle",
+  "recAon": "equipment-1040-991",
+  "recName": "Backfire Mantle",
+  "recLevel": 3,
+  "astAon": "equipment-5182",
+  "astName": "Backfire Mantle",
+  "astLevel": 3,
+  "sameName": true
+ },
+ {
+  "bucket": "items",
+  "slug": "binding-coil",
+  "recAon": "equipment-1018-985",
+  "recName": "Binding Coil",
+  "recLevel": 6,
+  "astAon": "equipment-5101",
+  "astName": "Binding Coil",
+  "astLevel": 6,
+  "sameName": true
+ },
+ {
+  "bucket": "items",
+  "slug": "blade-of-four-energies",
+  "recAon": "equipment-1042-993",
+  "recName": "Blade of Four Energies",
+  "recLevel": 13,
+  "astAon": "equipment-5013",
+  "astName": "Blade Of Four Energies",
+  "astLevel": 13,
+  "sameName": true
+ },
+ {
+  "bucket": "items",
+  "slug": "cantrip-deck-5-pack",
+  "recAon": "equipment-1046-1000",
+  "recName": "Cantrip Deck (5-Pack)",
+  "recLevel": 1,
+  "astAon": "equipment-5140",
+  "astName": "Cantrip Deck",
+  "astLevel": 1,
+  "sameName": false
+ },
+ {
+  "bucket": "items",
+  "slug": "chatterer-of-follies",
+  "recAon": "equipment-1047",
+  "recName": "Chatterer of Follies",
+  "recLevel": 6,
+  "astAon": "equipment-5015",
+  "astName": "Chatterer Of Follies",
+  "astLevel": 6,
+  "sameName": true
+ },
+ {
+  "bucket": "items",
+  "slug": "codex-of-unimpeded-sight",
+  "recAon": "equipment-991-943",
+  "recName": "Codex of Unimpeded Sight",
+  "recLevel": 6,
+  "astAon": "equipment-5126",
+  "astName": "Codex Of Unimpeded Sight",
+  "astLevel": 6,
+  "sameName": true
+ },
+ {
+  "bucket": "items",
+  "slug": "cursed-dreamstone",
+  "recAon": "equipment-641",
+  "recName": "Cursed Dreamstone",
+  "recLevel": 9,
+  "astAon": "equipment-507",
+  "astName": "Dreamstone",
+  "astLevel": 9,
+  "sameName": false
+ },
+ {
+  "bucket": "items",
+  "slug": "dazzling-rosary",
+  "recAon": "equipment-1003-956",
+  "recName": "Dazzling Rosary",
+  "recLevel": 4,
+  "astAon": "equipment-5047",
+  "astName": "Dazzling Rosary",
+  "astLevel": 4,
+  "sameName": true
+ },
+ {
+  "bucket": "items",
+  "slug": "dragon-pearl",
+  "recAon": "equipment-4011",
+  "recName": "Dragon Pearl",
+  "recLevel": 16,
+  "astAon": "equipment-3482",
+  "astName": "Dragon Pearl",
+  "astLevel": 10,
+  "sameName": true
+ },
+ {
+  "bucket": "items",
+  "slug": "duelists-blazon",
+  "recAon": "set-relic-10",
+  "recName": "Duelist's Blazon",
+  "astAon": "set-relic-3",
+  "astName": "Duelist's Blazon",
+  "sameName": true
+ },
+ {
+  "bucket": "items",
+  "slug": "fish",
+  "recAon": "equipment-1768",
+  "recName": "Fish",
+  "recLevel": 0,
+  "astAon": "equipment-1678",
+  "astName": "Fish",
+  "astLevel": 0,
+  "sameName": true
+ },
+ {
+  "bucket": "items",
+  "slug": "force-tiles",
+  "recAon": "equipment-1006",
+  "recName": "Force Tiles",
+  "recLevel": 13,
+  "astAon": "equipment-5052",
+  "astName": "Force Tiles",
+  "astLevel": 13,
+  "sameName": true
+ },
+ {
+  "bucket": "items",
+  "slug": "griffon-cane",
+  "recAon": "weapon-228",
+  "recName": "Griffon Cane",
+  "recLevel": 0,
+  "astAon": "equipment-1345",
+  "astName": "Griffon  Cane",
+  "astLevel": 0,
+  "sameName": true
+ },
+ {
+  "bucket": "items",
+  "slug": "impactful",
+  "recAon": "equipment-1062-1007",
+  "recName": "Impactful",
+  "recLevel": 10,
+  "astAon": "equipment-4990",
+  "astName": "Impactful",
+  "astLevel": 10,
+  "sameName": true
+ },
+ {
+  "bucket": "items",
+  "slug": "infiltration-garb",
+  "recAon": "set-relic-11",
+  "recName": "Infiltration Garb",
+  "astAon": "set-relic-4",
+  "astName": "Infiltration Garb",
+  "sameName": true
+ },
+ {
+  "bucket": "items",
+  "slug": "instructions-for-lasting-agony",
+  "recAon": "equipment-993",
+  "recName": "Instructions for Lasting Agony",
+  "recLevel": 5,
+  "astAon": "equipment-5129",
+  "astName": "Instructions For Lasting Agony",
+  "astLevel": 5,
+  "sameName": true
+ },
+ {
+  "bucket": "items",
+  "slug": "martyrs-shield",
+  "recAon": "equipment-4193",
+  "recName": "Martyr's Shield",
+  "recLevel": 7,
+  "astAon": "equipment-3126",
+  "astName": "Martyr's Shield",
+  "astLevel": 7,
+  "sameName": true
+ },
+ {
+  "bucket": "items",
+  "slug": "monks-attire",
+  "recAon": "set-relic-12",
+  "recName": "Monk's Attire",
+  "astAon": "set-relic-5",
+  "astName": "Monk's Attire",
+  "sameName": true
+ },
+ {
+  "bucket": "items",
+  "slug": "noxious-incense",
+  "recAon": "equipment-1008-964",
+  "recName": "Noxious Incense",
+  "recLevel": 9,
+  "astAon": "equipment-5060",
+  "astName": "Noxious Incense",
+  "astLevel": 9,
+  "sameName": true
+ },
+ {
+  "bucket": "items",
+  "slug": "pharasmas-command",
+  "recAon": "set-relic-13",
+  "recName": "Pharasma's Command",
+  "astAon": "set-relic-6",
+  "astName": "Pharasma's Command",
+  "sameName": true
+ },
+ {
+  "bucket": "items",
+  "slug": "potion-of-stable-form",
+  "recAon": "equipment-1029-987",
+  "recName": "Potion of Stable Form",
+  "recLevel": 10,
+  "astAon": "equipment-5100",
+  "astName": "Potion Of Stable Form",
+  "astLevel": 10,
+  "sameName": true
+ },
+ {
+  "bucket": "items",
+  "slug": "probing-cane",
+  "recAon": "weapon-229",
+  "recName": "Probing Cane",
+  "recLevel": 0,
+  "astAon": "equipment-1346",
+  "astName": "Probing Cane",
+  "astLevel": 0,
+  "sameName": true
+ },
+ {
+  "bucket": "items",
+  "slug": "retrieval-prism",
+  "recAon": "equipment-1032-989",
+  "recName": "Retrieval Prism",
+  "recLevel": 3,
+  "astAon": "equipment-5108",
+  "astName": "Retrieval Prism",
+  "astLevel": 3,
+  "sameName": true
+ },
+ {
+  "bucket": "items",
+  "slug": "seers-array",
+  "recAon": "set-relic-14",
+  "recName": "Seer's Array",
+  "astAon": "set-relic-7",
+  "astName": "Seer's Array",
+  "sameName": true
+ },
+ {
+  "bucket": "items",
+  "slug": "singing-shortbow",
+  "recAon": "equipment-1074-1012",
+  "recName": "Singing Shortbow",
+  "recLevel": 14,
+  "astAon": "equipment-5028",
+  "astName": "Singing Shortbow",
+  "astLevel": 14,
+  "sameName": true
+ },
+ {
+  "bucket": "items",
+  "slug": "sonic-tuning-mace",
+  "recAon": "equipment-1075-1014",
+  "recName": "Sonic Tuning Mace",
+  "recLevel": 9,
+  "astAon": "equipment-5029",
+  "astName": "Sonic Tuning Mace",
+  "astLevel": 9,
+  "sameName": true
+ },
+ {
+  "bucket": "items",
+  "slug": "spirit-sealing-fulu",
+  "recAon": "equipment-983-941",
+  "recName": "Spirit-Sealing Fulu",
+  "recLevel": 3,
+  "astAon": "equipment-5083",
+  "astName": "Spirit-sealing Fulu",
+  "astLevel": 3,
+  "sameName": true
+ },
+ {
+  "bucket": "items",
+  "slug": "wheel-blades",
+  "recAon": "weapon-231",
+  "recName": "Wheel Blades",
+  "recLevel": 0,
+  "astAon": "equipment-1363",
+  "astName": "Wheel Blades",
+  "astLevel": 0,
+  "sameName": true
+ },
+ {
+  "bucket": "items",
+  "slug": "wheel-spikes",
+  "recAon": "weapon-232",
+  "recName": "Wheel Spikes",
+  "recLevel": 0,
+  "astAon": "equipment-1364",
+  "astName": "Wheel Spikes",
+  "astLevel": 0,
+  "sameName": true
+ },
+ {
+  "bucket": "feats",
+  "slug": "banshee-cry-display",
+  "recAon": "feat-3250",
+  "recName": "Banshee Cry Display",
+  "recLevel": 12,
+  "astAon": "feat-8533",
+  "astName": "Banshee Cry Display",
+  "astLevel": 12,
+  "sameName": true
+ },
+ {
+  "bucket": "feats",
+  "slug": "coughing-dragon-display",
+  "recAon": "feat-3246",
+  "recName": "Coughing Dragon Display",
+  "recLevel": 4,
+  "astAon": "feat-8529",
+  "astName": "Coughing Dragon Display",
+  "astLevel": 4,
+  "sameName": true
+ },
+ {
+  "bucket": "feats",
+  "slug": "death-from-above",
+  "recAon": "feat-7610",
+  "recName": "Death from Above",
+  "recLevel": 8,
+  "astAon": "feat-7380",
+  "astName": "Death from Above",
+  "astLevel": 16,
+  "sameName": true
+ },
+ {
+  "bucket": "feats",
+  "slug": "even-the-odds",
+  "recAon": "feat-7675",
+  "recName": "Even the Odds",
+  "recLevel": 14,
+  "astAon": "feat-6145",
+  "astName": "Even the Odds",
+  "astLevel": 4,
+  "sameName": true
+ },
+ {
+  "bucket": "feats",
+  "slug": "expert-fireworks-crafter",
+  "recAon": "feat-3247",
+  "recName": "Expert Fireworks Crafter",
+  "recLevel": 6,
+  "astAon": "feat-8530",
+  "astName": "Expert Fireworks Crafter",
+  "astLevel": 6,
+  "sameName": true
+ },
+ {
+  "bucket": "feats",
+  "slug": "firework-technician-dedication",
+  "recAon": "feat-3245",
+  "recName": "Firework Technician Dedication",
+  "recLevel": 2,
+  "astAon": "feat-8528",
+  "astName": "Firework Technician Dedication",
+  "astLevel": 2,
+  "sameName": true
+ },
+ {
+  "bucket": "feats",
+  "slug": "goblin-jubilee-display",
+  "recAon": "feat-3249",
+  "recName": "Goblin Jubilee Display",
+  "recLevel": 10,
+  "astAon": "feat-8532",
+  "astName": "Goblin Jubilee Display",
+  "astLevel": 10,
+  "sameName": true
+ },
+ {
+  "bucket": "feats",
+  "slug": "jumping-jenny-display",
+  "recAon": "feat-3248",
+  "recName": "Jumping Jenny Display",
+  "recLevel": 8,
+  "astAon": "feat-8531",
+  "astName": "Jumping Jenny Display",
+  "astLevel": 8,
+  "sameName": true
+ },
+ {
+  "bucket": "feats",
+  "slug": "keep-pace",
+  "recAon": "feat-3427",
+  "recName": "Keep Pace",
+  "recLevel": 6,
+  "astAon": "feat-6284",
+  "astName": "Keep Pace",
+  "astLevel": 6,
+  "sameName": true
+ },
+ {
+  "bucket": "feats",
+  "slug": "many-guises",
+  "recAon": "feat-6883",
+  "recName": "Many Guises",
+  "recLevel": 9,
+  "astAon": "feat-6432",
+  "astName": "Many Guises",
+  "astLevel": 8,
+  "sameName": true
+ },
+ {
+  "bucket": "feats",
+  "slug": "practical-magic",
+  "recAon": "feat-3920",
+  "recName": "Practical Magic",
+  "recLevel": 1,
+  "astAon": "feat-9331",
+  "astName": "Practical Magic",
+  "astLevel": 6,
+  "sameName": true
+ },
+ {
+  "bucket": "feats",
+  "slug": "rallying-charge",
+  "recAon": "feat-7750",
+  "recName": "Rallying Charge",
+  "recLevel": 16,
+  "astAon": "feat-6357",
+  "astName": "Rallying Charge",
+  "astLevel": 6,
+  "sameName": true
+ },
+ {
+  "bucket": "feats",
+  "slug": "sixth-pillar-mastery",
+  "recAon": "feat-2742",
+  "recName": "Sixth Pillar Mastery",
+  "recLevel": 16,
+  "astAon": "feat-4078",
+  "astName": "Sixth Pillar Mastery",
+  "astLevel": 14,
+  "sameName": true
+ },
+ {
+  "bucket": "feats",
+  "slug": "stone-blood",
+  "recAon": "feat-890",
+  "recName": "Stone Blood",
+  "recLevel": 6,
+  "astAon": "feat-4380",
+  "astName": "Stone Blood",
+  "astLevel": 6,
+  "sameName": true
+ },
+ {
+  "bucket": "feats",
+  "slug": "touch-focus",
+  "recAon": "feat-2743",
+  "recName": "Touch Focus",
+  "recLevel": 14,
+  "astAon": "feat-4079",
+  "astName": "Touch Focus",
+  "astLevel": 16,
+  "sameName": true
+ },
+ {
+  "bucket": "feats",
+  "slug": "watch-your-back",
+  "recAon": "feat-8845",
+  "recName": "Watch Your Back",
+  "recLevel": 14,
+  "astAon": "feat-4948",
+  "astName": "Watch Your Back",
+  "astLevel": 6,
+  "sameName": true
+ },
+ {
+  "bucket": "feats",
+  "slug": "zombie-horde",
+  "recAon": "feat-3654",
+  "recName": "Zombie Horde",
+  "recLevel": 20,
+  "astAon": "feat-9122",
+  "astName": "Zombie Horde",
+  "astLevel": 6,
+  "sameName": true
+ },
+ {
+  "bucket": "backgrounds",
+  "slug": "archdevil-apostate",
+  "recAon": "background-642",
+  "recName": "Archdevil Apostate",
+  "astAon": "background-591",
+  "astName": "Archdevil Apostate",
+  "sameName": true
+ },
+ {
+  "bucket": "backgrounds",
+  "slug": "driver",
+  "recAon": "background-451",
+  "recName": "Driver",
+  "astAon": "background-254",
+  "astName": "Driver",
+  "sameName": true
+ },
+ {
+  "bucket": "backgrounds",
+  "slug": "saboteur",
+  "recAon": "background-457",
+  "recName": "Saboteur",
+  "astAon": "background-260",
+  "astName": "Saboteur",
+  "sameName": true
+ },
+ {
+  "bucket": "languages",
+  "slug": "wayang",
+  "recAon": "language-180",
+  "recName": "Wayang",
+  "astAon": "language-91",
+  "astName": "Wayang",
+  "sameName": true
+ },
+ {
+  "bucket": "actions",
+  "slug": "breath-weapon",
+  "recAon": "action-767",
+  "recName": "Breath Weapon",
+  "astAon": "action-560",
+  "astName": "Breath Weapon",
+  "sameName": true
+ },
+ {
+  "bucket": "actions",
+  "slug": "change-shape",
+  "recAon": "action-730",
+  "recName": "Change Shape",
+  "astAon": "action-700",
+  "astName": "Change Shape",
+  "sameName": true
+ },
+ {
+  "bucket": "actions",
+  "slug": "concentration",
+  "recAon": "action-3524",
+  "recName": "(concentration)",
+  "astAon": "action-3523",
+  "astName": "(concentration)",
+  "sameName": true
+ },
+ {
+  "bucket": "actions",
+  "slug": "disengage",
+  "recAon": "action-4230",
+  "recName": "Disengage",
+  "astAon": "action-1423",
+  "astName": "Disengage",
+  "sameName": true
+ },
+ {
+  "bucket": "actions",
+  "slug": "explode",
+  "recAon": "action-3656",
+  "recName": "Explode",
+  "astAon": "action-902",
+  "astName": "Explode",
+  "sameName": true
+ },
+ {
+  "bucket": "siegeWeapons",
+  "slug": "alchemical-springald",
+  "recAon": "siege-weapon-77",
+  "recName": "Alchemical Springald",
+  "recLevel": 13,
+  "astAon": "siege-weapon-10",
+  "astName": "Alchemical Springald",
+  "astLevel": 13,
+  "sameName": true
+ },
+ {
+  "bucket": "siegeWeapons",
+  "slug": "alkenstar-cannon",
+  "recAon": "siege-weapon-90",
+  "recName": "Alkenstar Cannon",
+  "recLevel": 15,
+  "astAon": "siege-weapon-20",
+  "astName": "Alkenstar Cannon",
+  "astLevel": 15,
+  "sameName": true
+ },
+ {
+  "bucket": "siegeWeapons",
+  "slug": "ballista",
+  "recAon": "siege-weapon-69",
+  "recName": "Ballista",
+  "recLevel": 5,
+  "astAon": "siege-weapon-2",
+  "astName": "Ballista",
+  "astLevel": 5,
+  "sameName": true
+ },
+ {
+  "bucket": "siegeWeapons",
+  "slug": "battering-ram-covered",
+  "recAon": "siege-weapon-70-7",
+  "recName": "Battering Ram (covered)",
+  "recLevel": 6,
+  "astAon": "siege-weapon-3",
+  "astName": "Battering Ram",
+  "astLevel": 5,
+  "sameName": false
+ },
+ {
+  "bucket": "siegeWeapons",
+  "slug": "blasting-ram",
+  "recAon": "siege-weapon-80",
+  "recName": "Blasting Ram",
+  "recLevel": 7,
+  "astAon": "siege-weapon-11",
+  "astName": "Blasting Ram",
+  "astLevel": 7,
+  "sameName": true
+ },
+ {
+  "bucket": "siegeWeapons",
+  "slug": "bombard",
+  "recAon": "siege-weapon-81",
+  "recName": "Bombard",
+  "recLevel": 5,
+  "astAon": "siege-weapon-12",
+  "astName": "Bombard",
+  "astLevel": 5,
+  "sameName": true
+ },
+ {
+  "bucket": "siegeWeapons",
+  "slug": "cannon",
+  "recAon": "siege-weapon-82",
+  "recName": "Cannon",
+  "recLevel": 8,
+  "astAon": "siege-weapon-13",
+  "astName": "Cannon",
+  "astLevel": 8,
+  "sameName": true
+ },
+ {
+  "bucket": "siegeWeapons",
+  "slug": "catapult",
+  "recAon": "siege-weapon-71",
+  "recName": "Catapult",
+  "recLevel": 7,
+  "astAon": "siege-weapon-5",
+  "astName": "Catapult",
+  "astLevel": 7,
+  "sameName": true
+ },
+ {
+  "bucket": "siegeWeapons",
+  "slug": "door-ram",
+  "recAon": "siege-weapon-73",
+  "recName": "Door Ram",
+  "recLevel": 2,
+  "astAon": "siege-weapon-6",
+  "astName": "Door Ram",
+  "astLevel": 2,
+  "sameName": true
+ },
+ {
+  "bucket": "siegeWeapons",
+  "slug": "fiends-mouth-cannon",
+  "recAon": "siege-weapon-84",
+  "recName": "Fiend's Mouth Cannon",
+  "recLevel": 11,
+  "astAon": "siege-weapon-14",
+  "astName": "Fiend's Mouth Cannon",
+  "astLevel": 11,
+  "sameName": true
+ },
+ {
+  "bucket": "siegeWeapons",
+  "slug": "firedrake",
+  "recAon": "siege-weapon-85",
+  "recName": "Firedrake",
+  "recLevel": 8,
+  "astAon": "siege-weapon-15",
+  "astName": "Firedrake",
+  "astLevel": 8,
+  "sameName": true
+ },
+ {
+  "bucket": "siegeWeapons",
+  "slug": "heavy-ballista",
+  "recAon": "siege-weapon-74",
+  "recName": "Heavy Ballista",
+  "recLevel": 8,
+  "astAon": "siege-weapon-7",
+  "astName": "Heavy Ballista",
+  "astLevel": 8,
+  "sameName": true
+ },
+ {
+  "bucket": "siegeWeapons",
+  "slug": "heavy-bombard",
+  "recAon": "siege-weapon-87",
+  "recName": "Heavy Bombard",
+  "recLevel": 9,
+  "astAon": "siege-weapon-17",
+  "astName": "Heavy Bombard",
+  "astLevel": 9,
+  "sameName": true
+ },
+ {
+  "bucket": "siegeWeapons",
+  "slug": "hwacha",
+  "recAon": "siege-weapon-88",
+  "recName": "Hwacha",
+  "recLevel": 4,
+  "astAon": "siege-weapon-18",
+  "astName": "Hwacha",
+  "astLevel": 4,
+  "sameName": true
+ },
+ {
+  "bucket": "siegeWeapons",
+  "slug": "mortar",
+  "recAon": "siege-weapon-89",
+  "recName": "Mortar",
+  "recLevel": 7,
+  "astAon": "siege-weapon-19",
+  "astName": "Mortar",
+  "astLevel": 7,
+  "sameName": true
+ },
+ {
+  "bucket": "siegeWeapons",
+  "slug": "springald",
+  "recAon": "siege-weapon-75",
+  "recName": "Springald",
+  "recLevel": 7,
+  "astAon": "siege-weapon-8",
+  "astName": "Springald",
+  "astLevel": 7,
+  "sameName": true
+ },
+ {
+  "bucket": "siegeWeapons",
+  "slug": "steelheart-21",
+  "recAon": "siege-weapon-86",
+  "recName": "Steelheart 21",
+  "recLevel": 13,
+  "astAon": "siege-weapon-16",
+  "astName": "Steelheart 21",
+  "astLevel": 13,
+  "sameName": true
+ },
+ {
+  "bucket": "siegeWeapons",
+  "slug": "trebuchet",
+  "recAon": "siege-weapon-76",
+  "recName": "Trebuchet",
+  "recLevel": 10,
+  "astAon": "siege-weapon-9",
+  "astName": "Trebuchet",
+  "astLevel": 10,
+  "sameName": true
+ },
+ {
+  "bucket": "draconicExemplar",
+  "slug": "adamantine",
+  "recAon": "draconic-exemplar-1",
+  "recName": "Adamantine",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "draconicExemplar",
+  "slug": "barrage",
+  "recAon": "draconic-exemplar-2",
+  "recName": "Barrage",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "draconicExemplar",
+  "slug": "bog",
+  "recAon": "draconic-exemplar-3",
+  "recName": "Bog",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "draconicExemplar",
+  "slug": "brine",
+  "recAon": "draconic-exemplar-4",
+  "recName": "Brine",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "draconicExemplar",
+  "slug": "cinder",
+  "recAon": "draconic-exemplar-5",
+  "recName": "Cinder",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "draconicExemplar",
+  "slug": "cloud",
+  "recAon": "draconic-exemplar-6",
+  "recName": "Cloud",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "draconicExemplar",
+  "slug": "conspirator",
+  "recAon": "draconic-exemplar-7",
+  "recName": "Conspirator",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "draconicExemplar",
+  "slug": "coral",
+  "recAon": "draconic-exemplar-8",
+  "recName": "Coral",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "draconicExemplar",
+  "slug": "crystal",
+  "recAon": "draconic-exemplar-9",
+  "recName": "Crystal",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "draconicExemplar",
+  "slug": "delight",
+  "recAon": "draconic-exemplar-10",
+  "recName": "Delight",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "draconicExemplar",
+  "slug": "despair",
+  "recAon": "draconic-exemplar-11",
+  "recName": "Despair",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "draconicExemplar",
+  "slug": "diabolic",
+  "recAon": "draconic-exemplar-12",
+  "recName": "Diabolic",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "draconicExemplar",
+  "slug": "empyreal",
+  "recAon": "draconic-exemplar-13",
+  "recName": "Empyreal",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "draconicExemplar",
+  "slug": "executor",
+  "recAon": "draconic-exemplar-14",
+  "recName": "Executor",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "draconicExemplar",
+  "slug": "forest",
+  "recAon": "draconic-exemplar-15",
+  "recName": "Forest",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "draconicExemplar",
+  "slug": "fortune",
+  "recAon": "draconic-exemplar-16",
+  "recName": "Fortune",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "draconicExemplar",
+  "slug": "horned",
+  "recAon": "draconic-exemplar-17",
+  "recName": "Horned",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "draconicExemplar",
+  "slug": "magma",
+  "recAon": "draconic-exemplar-18",
+  "recName": "Magma",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "draconicExemplar",
+  "slug": "mirage",
+  "recAon": "draconic-exemplar-19",
+  "recName": "Mirage",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "draconicExemplar",
+  "slug": "mocking",
+  "recAon": "draconic-exemplar-20",
+  "recName": "Mocking",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "draconicExemplar",
+  "slug": "oath",
+  "recAon": "draconic-exemplar-21",
+  "recName": "Oath",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "draconicExemplar",
+  "slug": "omen",
+  "recAon": "draconic-exemplar-22",
+  "recName": "Omen",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "draconicExemplar",
+  "slug": "phase",
+  "recAon": "draconic-exemplar-23",
+  "recName": "Phase",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "draconicExemplar",
+  "slug": "requiem",
+  "recAon": "draconic-exemplar-24",
+  "recName": "Requiem",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "draconicExemplar",
+  "slug": "resurrection",
+  "recAon": "draconic-exemplar-25",
+  "recName": "Resurrection",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "draconicExemplar",
+  "slug": "rime",
+  "recAon": "draconic-exemplar-26",
+  "recName": "Rime",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "draconicExemplar",
+  "slug": "rune",
+  "recAon": "draconic-exemplar-27",
+  "recName": "Rune",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "draconicExemplar",
+  "slug": "sage",
+  "recAon": "draconic-exemplar-28",
+  "recName": "Sage",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "draconicExemplar",
+  "slug": "sea",
+  "recAon": "draconic-exemplar-29",
+  "recName": "Sea",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "draconicExemplar",
+  "slug": "sky",
+  "recAon": "draconic-exemplar-30",
+  "recName": "Sky",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "draconicExemplar",
+  "slug": "sovereign",
+  "recAon": "draconic-exemplar-31",
+  "recName": "Sovereign",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "draconicExemplar",
+  "slug": "stormcrown",
+  "recAon": "draconic-exemplar-32",
+  "recName": "Stormcrown",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "draconicExemplar",
+  "slug": "time",
+  "recAon": "draconic-exemplar-33",
+  "recName": "Time",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "draconicExemplar",
+  "slug": "umbral",
+  "recAon": "draconic-exemplar-34",
+  "recName": "Umbral",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "draconicExemplar",
+  "slug": "underworld",
+  "recAon": "draconic-exemplar-35",
+  "recName": "Underworld",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "draconicExemplar",
+  "slug": "vizier",
+  "recAon": "draconic-exemplar-36",
+  "recName": "Vizier",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "draconicExemplar",
+  "slug": "vorpal",
+  "recAon": "draconic-exemplar-37",
+  "recName": "Vorpal",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "draconicExemplar",
+  "slug": "wailing",
+  "recAon": "draconic-exemplar-38",
+  "recName": "Wailing",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "draconicExemplar",
+  "slug": "whisper",
+  "recAon": "draconic-exemplar-39",
+  "recName": "Whisper",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "draconicExemplar",
+  "slug": "wish",
+  "recAon": "draconic-exemplar-40",
+  "recName": "Wish",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "draconicExemplar",
+  "slug": "arcane",
+  "recAon": "draconic-exemplar-41",
+  "recName": "Arcane",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "draconicExemplar",
+  "slug": "divine",
+  "recAon": "draconic-exemplar-42",
+  "recName": "Divine",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "draconicExemplar",
+  "slug": "occult",
+  "recAon": "draconic-exemplar-43",
+  "recName": "Occult",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "draconicExemplar",
+  "slug": "primal",
+  "recAon": "draconic-exemplar-44",
+  "recName": "Primal",
+  "astAon": "bloodline-23",
+  "astName": "Draconic",
+  "sameName": false
+ },
+ {
+  "bucket": "innovation",
+  "slug": "armor",
+  "recAon": "innovation-5",
+  "recName": "Armor",
+  "astAon": "innovation-1",
+  "astName": "Armor",
+  "sameName": true
+ },
+ {
+  "bucket": "innovation",
+  "slug": "construct",
+  "recAon": "innovation-6",
+  "recName": "Construct",
+  "astAon": "innovation-2",
+  "astName": "Construct",
+  "sameName": true
+ },
+ {
+  "bucket": "innovation",
+  "slug": "weapon",
+  "recAon": "innovation-7",
+  "recName": "Weapon",
+  "astAon": "innovation-3",
+  "astName": "Weapon",
+  "sameName": true
+ },
+ {
+  "bucket": "mystery",
+  "slug": "time",
+  "recAon": "mystery-23",
+  "recName": "Time",
+  "astAon": "mystery-22",
+  "astName": "Time",
+  "sameName": true
+ },
+ {
+  "bucket": "way",
+  "slug": "way-of-the-drifter",
+  "recAon": "way-7",
+  "recName": "Way of the Drifter",
+  "astAon": "way-1",
+  "astName": "Way of the Drifter",
+  "sameName": true
+ },
+ {
+  "bucket": "way",
+  "slug": "way-of-the-pistolero",
+  "recAon": "way-8",
+  "recName": "Way of the Pistolero",
+  "astAon": "way-2",
+  "astName": "Way of the Pistolero",
+  "sameName": true
+ },
+ {
+  "bucket": "way",
+  "slug": "way-of-the-sniper",
+  "recAon": "way-9",
+  "recName": "Way of the Sniper",
+  "astAon": "way-3",
+  "astName": "Way of the Sniper",
+  "sameName": true
+ },
+ {
+  "bucket": "way",
+  "slug": "way-of-the-vanguard",
+  "recAon": "way-10",
+  "recName": "Way of the Vanguard",
+  "astAon": "way-4",
+  "astName": "Way of the Vanguard",
+  "sameName": true
+ },
+ {
+  "bucket": "way",
+  "slug": "way-of-the-spellshot",
+  "recAon": "way-11",
+  "recName": "Way of the Spellshot",
+  "astAon": "way-5",
+  "astName": "Way of the Spellshot",
+  "sameName": true
+ }
+]

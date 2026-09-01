@@ -16,8 +16,11 @@ const firstOf = (kind: 'skill' | 'lore' | 'feat' | 'other') =>
   withChoice.find(([, b]) => backgroundChoiceKind(b.choice!, db) === kind && b.choice!.options?.length)!;
 
 describe('what a background asks', () => {
-  it('71 backgrounds carry one', () => {
-    expect(withChoice.length).toBeGreaterThan(60);
+  it('dozens of backgrounds carry one', () => {
+    /* 71 at first; batches 19–20 retired the DUPLICATE-carrier choices (a choice firing beside
+     * trainedLoreOptions/trainedSkillChoice trained two skills from a background that prints one),
+     * so the count is lower by exactly those removals — the lane itself is as alive as ever. */
+    expect(withChoice.length).toBeGreaterThan(40);
   });
 
   it('every one classifies, and every kind is represented', () => {

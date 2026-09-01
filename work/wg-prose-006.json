@@ -1,0 +1,177 @@
+[
+ {
+  "id": "disillusionment",
+  "name": "Disillusionment",
+  "level": 1,
+  "printed": "Dreams are pointless illusions you seek to quash. If you roll a success on a saving throw against an illusion or dream effect or a Perception check to disbelieve an illusion, you get a critical success instead. If you roll a critical failure on any of those checks, you get a failure instead.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "archetype": "hellknight",
+   "degreeShifts": [
+    {
+     "shift": "successToCrit",
+     "when": "on a save against an illusion or dream effect, and on a Perception check to disbelieve an illusion",
+     "saves": [
+      "all"
+     ],
+     "perception": true
+    },
+    {
+     "shift": "critFailToFail",
+     "when": "on a save against an illusion or dream effect, and on a Perception check to disbelieve an illusion",
+     "saves": [
+      "all"
+     ],
+     "perception": true
+    }
+   ]
+  },
+  "ourRegistries": [],
+  "theirProse": [
+   {
+    "variable": "SAVE_FORT",
+    "value": null,
+    "text": "If you roll a success against an illusion or dream effect, you get a critical success instead. If you roll a critical failure, you get a failure instead."
+   },
+   {
+    "variable": "SAVE_REFLEX",
+    "value": null,
+    "text": "If you roll a success against an illusion or dream effect, you get a critical success instead. If you roll a critical failure, you get a failure instead."
+   },
+   {
+    "variable": "SAVE_WILL",
+    "value": null,
+    "text": "If you roll a success against an illusion or dream effect, you get a critical success instead. If you roll a critical failure, you get a failure instead."
+   },
+   {
+    "variable": "PERCEPTION",
+    "value": null,
+    "text": "If you roll a success to disbelieve an illusion, you get a critical success instead. If you roll a critical failure, you get a failure instead."
+   }
+  ]
+ },
+ {
+  "id": "cantorian-reinforcement",
+  "name": "Cantorian Reinforcement",
+  "level": 1,
+  "printed": "The life energy that helped create the first hobgoblins is particularly potent in you, protecting you from ongoing maladies. If you roll a success on a saving throw against a disease or poison, you get a critical success instead. If you have a different ability that would improve the save in this way (such as the Battle Hardened fighter class feature), if you roll a critical failure on the save you get a failure instead.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "degreeShifts": [
+    {
+     "shift": "successToCrit",
+     "when": "on a save against a disease or poison",
+     "saves": [
+      "all"
+     ]
+    },
+    {
+     "shift": "critFailToFail",
+     "when": "on a save against a disease or poison, if you also have Battle Hardened or a similar ability",
+     "saves": [
+      "all"
+     ]
+    }
+   ]
+  },
+  "ourRegistries": [],
+  "theirProse": [
+   {
+    "variable": "SAVE_FORT",
+    "value": null,
+    "text": "If you roll a success on a saving throw against a disease or poison, you get a critical success instead. If you have a different ability that would improve the save in this way, if you roll a critical failure on the save you get a failure instead."
+   },
+   {
+    "variable": "SAVE_REFLEX",
+    "value": null,
+    "text": "If you roll a success on a saving throw against a disease or poison, you get a critical success instead. If you have a different ability that would improve the save in this way, if you roll a critical failure on the save you get a failure instead."
+   },
+   {
+    "variable": "SAVE_WILL",
+    "value": null,
+    "text": "If you roll a success on a saving throw against a disease or poison, you get a critical success instead. If you have a different ability that would improve the save in this way, if you roll a critical failure on the save you get a failure instead."
+   }
+  ]
+ },
+ {
+  "id": "adroit-manipulation",
+  "name": "Adroit Manipulation",
+  "level": 1,
+  "printed": "**Access** Mihrini ethnicity --- You've fiddled with knots, locks, and blacksmith's puzzles since you were a child to give your hands something to do. You gain the trained proficiency rank in Thievery (or another skill of your choice, if you're already trained in Thievery). If you roll a success on a Thievery check to Pick a Lock, you get a critical success instead.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "degreeShifts": [
+    {
+     "shift": "successToCrit",
+     "when": "on a Thievery check to Pick a Lock",
+     "skills": [
+      "thievery"
+     ],
+     "actions": [
+      "pick-a-lock"
+     ]
+    }
+   ]
+  },
+  "ourRegistries": [
+   {
+    "file": "featGrantsAuto.ts",
+    "entry": "'adroit-manipulation': { skills: { thievery: 'trained' }, redundantFallback: true },"
+   }
+  ],
+  "theirProse": [
+   {
+    "variable": "SKILL_THIEVERY",
+    "value": null,
+    "text": "If you roll a success to Pick a Lock, you get a critical success instead."
+   }
+  ]
+ },
+ {
+  "id": "elven-aloofness",
+  "name": "Elven Aloofness",
+  "level": 1,
+  "printed": "As much as you might care for them, you've come to terms with the ephemeral nature of non-elves, and it makes their threats feel less troublesome. If a non-elf rolls a failure on a check to Coerce you using Intimidation, it gets a critical failure instead (and thus can't try to Coerce you again for 1 week). When a non-elf attempts to Demoralize you, you become temporarily immune for 1 day, instead of 10 minutes.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "situational": [
+    {
+     "targets": [
+      {
+       "kind": "skill",
+       "detail": "intimidation"
+      }
+     ],
+     "when": "when a non-elf Coerces you",
+     "bonus": "a failure on its Intimidation check becomes a critical failure (it cannot try again for 1 week)"
+    },
+    {
+     "targets": [
+      {
+       "kind": "skill",
+       "detail": "intimidation"
+      }
+     ],
+     "when": "when a non-elf Demoralizes you",
+     "bonus": "you become temporarily immune for 1 day instead of 10 minutes"
+    }
+   ]
+  },
+  "ourRegistries": [],
+  "theirProse": [
+   {
+    "variable": "SAVE_WILL",
+    "value": null,
+    "text": "If a non-elf rolls a failure on a check to Coerce you using Intimidation, it gets a critical failure instead (and thus can't try to Coerce you again for 1 week). When a non-elf attempts to Demoralize you, you become temporarily immune for 1 day, instead of 10 minutes."
+   }
+  ]
+ }
+]

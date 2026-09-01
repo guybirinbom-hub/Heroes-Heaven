@@ -113,7 +113,13 @@ describe('the clause is NOT general — the other dedications keep the default',
   it('only a small minority of dedications carry a gate of their own', () => {
     const deds = Object.values(db.feats).filter((f) => f.traits.includes('dedication'));
     const gated = deds.filter((f) => f.dedicationGate);
-    expect(gated.length).toBe(14);
+    // 16 since Stone Brawler and Living Monolith were authored — both PRINT the Special clause
+    // ("you cannot select another dedication feat until you have gained two other feats from the …
+    // archetype") and carried no gate. 17 since Stonebound, whose own description had DROPPED that
+    // Special sentence entirely — which is exactly why its missing gate went unnoticed. Pinned rather
+    // than bounded, so a gate added to a record that does NOT print the clause still has to come past
+    // this line.
+    expect(gated.length).toBe(17);
     // The ruling's whole point: authoring one archetype's exception onto all of them would hand out
     // dedications the rules withhold.
     expect(deds.length - gated.length).toBeGreaterThan(200);

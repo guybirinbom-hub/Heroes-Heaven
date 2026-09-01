@@ -158,10 +158,25 @@ describe('a record can grant a class feature', () => {
     expect(dead).toEqual([]);
   });
 
-  it('nothing grants itself', () => {
-    for (const coll of ['feats', 'classFeatures', 'heritages'] as const) {
+  it('no CLASS FEATURE grants itself', () => {
+    /* Within one bucket, a record naming its own id is a no-op at best and a loop at worst. ACROSS
+     * buckets it is legitimate and sometimes unavoidable: the investigator's Keen Recollection exists
+     * as both a feat (the archetype route) and a class feature (the class route) under one id, and the
+     * feat's entire content is "you gain that class feature". So the guard asks the question that is
+     * actually wrong — a class feature naming itself — instead of treating a shared id as a fault. */
+    for (const [id, r] of Object.entries(db.classFeatures)) {
+      expect((r as { grantsClassFeatures?: string[] }).grantsClassFeatures ?? [], id).not.toContain(id);
+    }
+  });
+
+  it('a feat granting a class feature names one that ships', () => {
+    // The other half of the same question: a cross-bucket grant is fine, a grant pointing at nothing
+    // is not — and an id shared between buckets is exactly where that mistake would hide.
+    for (const coll of ['feats', 'heritages'] as const) {
       for (const [id, r] of Object.entries(db[coll])) {
-        expect((r as { grantsClassFeatures?: string[] }).grantsClassFeatures ?? [], id).not.toContain(id);
+        for (const target of (r as { grantsClassFeatures?: string[] }).grantsClassFeatures ?? []) {
+          expect(db.classFeatures[target], `${coll}/${id} grants "${target}"`).toBeTruthy();
+        }
       }
     }
   });

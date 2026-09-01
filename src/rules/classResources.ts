@@ -66,6 +66,76 @@ export const CLASS_RESOURCES: Record<string, ClassResource[]> = {
       maxAbility: 'int',
       note: 'Remaster: 2 + your Intelligence modifier; refill 2 per 10 min of exploration. Power Quick/Advanced Alchemy.',
     },
+    /*
+     * …and the ARCHETYPE alchemist, who prints a flat four rather than the class's 2 + Int:
+     * *"You gain the Quick Alchemy benefits, creating up to 4 versatile vials during your daily
+     * preparations."* (Alchemist Dedication.)
+     *
+     * The entry above carries no `feat` gate, and `resourcesForCharacter` admits an ungated resource
+     * only when `classId === 'alchemist'` — so a dedicated alchemist had no vial counter at all, and
+     * with no vials their Quick Alchemy had nothing to spend. Same id as the class entry, and the class
+     * entry is listed FIRST, so the `seen` dedup gives a real alchemist their 2 + Int and this one to
+     * everyone else.
+     */
+    {
+      id: 'versatile-vials',
+      name: 'Versatile Vials',
+      kind: 'counter',
+      refresh: 'rest',
+      maxBase: 4,
+      maxPerLevel: 0,
+      feat: 'alchemist-dedication',
+      note: 'Alchemist Dedication: up to 4 versatile vials during your daily preparations; refill 2 per 10 min of exploration.',
+    },
+    /* The WANDERING CHEF gets the same flat four — *"You create up to 4 versatile vials during your
+     * daily preparations. Typically, a wandering chef's versatile vials take the form of parcels of
+     * foraged ingredients."* Same id and same bucket as the two above, deliberately: `resourcesForCharacter`
+     * walks buckets in key order and dedupes by id, and the class's own 2 + Int entry is listed first,
+     * so a real alchemist keeps theirs and a dedicated character gets this one. Filed under a separate
+     * bucket it would win that dedup instead and hand every alchemist a flat 4. */
+    {
+      id: 'versatile-vials',
+      name: 'Versatile Vials',
+      kind: 'counter',
+      refresh: 'rest',
+      maxBase: 4,
+      maxPerLevel: 0,
+      feat: 'wandering-chef-dedication',
+      note: 'Wandering Chef: up to 4 versatile vials during your daily preparations, as parcels of foraged ingredients. Your Quick Alchemy can make only alchemical food.',
+    },
+    /*
+     * The FIREWORK TECHNICIAN, same flat four — *"creating up to 4 PYROTECHNIC versatile vials during
+     * your daily preparations. These vials have the fire trait and deal fire damage instead of acid."*
+     *
+     * Ours had modelled this as an Advanced Alchemy prepared-item budget of 4, which is a DIFFERENT
+     * subsystem the printed feat never grants: the character got a prepare-items allowance and no vial
+     * counter at all, so Launch Fireworks — the action this archetype exists for — had nothing to
+     * spend. Found by the Wanderer's Guide parity audit; their side grants the vials.
+     *
+     * Same id and bucket as the three above for the same dedup reason stated there.
+     */
+    {
+      id: 'versatile-vials',
+      name: 'Versatile Vials',
+      kind: 'counter',
+      refresh: 'rest',
+      maxBase: 4,
+      maxPerLevel: 0,
+      feat: 'firework-technician-dedication',
+      note: 'Firework Technician: up to 4 pyrotechnic versatile vials during your daily preparations. They have the fire trait and deal fire damage instead of acid, and can only be thrown as bombs, used for Launch Fireworks, or spent on Quick Alchemy for fireworks consumables.',
+    },
+    // Munitions Machinist, the gunslinger's four — a real alchemist still gets the class 2+Int
+    // because resourcesForCharacter dedups by id with the class entry first.
+    {
+      id: 'versatile-vials',
+      name: 'Versatile Vials',
+      kind: 'counter',
+      refresh: 'rest',
+      maxBase: 4,
+      maxPerLevel: 0,
+      feat: 'munitions-machinist',
+      note: 'Munitions Machinist: up to 4 versatile vials during your daily preparations. Your Quick Alchemy can make only bombs or alchemical ammunition, and using it to make alchemical ammunition also counts as 1 action toward activating that ammunition.',
+    },
   ],
   barbarian: [
     { id: 'rage', name: 'Rage', kind: 'toggle', refresh: 'encounter', feat: 'barbarian-dedication', note: 'Raging: lasts 1 min / until the encounter ends.' },

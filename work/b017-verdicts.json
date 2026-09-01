@@ -1,0 +1,282 @@
+[
+ {
+  "id": "advanced-devotion",
+  "batch": 17,
+  "verdict": "MATCHES-ON-REVIEW",
+  "confidence": "high",
+  "evidence": "Ran: node scripts/wg-show.mjs advanced-devotion --raw (both rows); node scripts/wg-values.mjs --ids … --verbose → \"MISSING hp| theirs=3 ours=(nothing)\"; node -e over public/core.json for advanced-devotion + champion-resiliency; grep -rn advanced-devotion src/ scripts/data/. The inversion is a KNOWN, ALREADY-DECIDED divergence: scripts/resiliency-clause-check.mjs (in npm run verify) documents owner ruling 2026-08-22 — \"the book wins\" — and fails any record printing the per-archetype-feat clause whose maxHpBonus.perArchetypeFeat disagrees. Identical settles already shipped for 'basic-kata' (wg-values.mjs:848), 'basic-glory' (wg-diff.mjs:1797), 'monk-dedication'/'exemplar-dedication' (wg-diff.mjs:1675-1676), 'barbarian-dedication' (wg-values.mjs:962). No fresh ASK-OWNER: the WG-vs-print question here is the one the owner already answered."
+ },
+ {
+  "id": "advanced-glory",
+  "batch": 17,
+  "verdict": "MATCHES-ON-REVIEW",
+  "confidence": "high",
+  "evidence": "Ran: node scripts/wg-show.mjs advanced-glory --raw; node scripts/wg-values.mjs --ids … --verbose → \"MISSING hp| theirs=3 ours=(nothing)\"; node -e over public/core.json (advanced-glory, exemplar-resiliency). This is the exact twin of the settle already in wg-diff.mjs:1797 for 'basic-glory' (\"Their only `hp` op is a conditional gated on FEAT_NAMES including 'exemplar resiliency' … We hold them ONCE, on the feat that prints them\") — advanced-glory is the other half of that same archetype pair and was simply not listed. OBSERVATION (not a fix on this record): our exemplar-resiliency HP-per-level prerequisite is prose only — grep -rn \"no more Hit Points\" src/ and grep -rn \"hpPerLevel\" against a prerequisite evaluator both return nothing — so a d10 class could take Exemplar Resiliency and keep the HP where WG's live condition would drop it. That gap belongs to the prerequisite-enforcement lane"
+ },
+ {
+  "id": "advanced-kata",
+  "batch": 17,
+  "verdict": "MATCHES-ON-REVIEW",
+  "confidence": "high",
+  "evidence": "Ran: node scripts/wg-show.mjs advanced-kata --raw (modern 32037 + legacy 29486); node scripts/wg-values.mjs --ids … --verbose → \"MISSING hp| theirs=3 ours=(nothing)\"; node -e over public/core.json (advanced-kata, monk-resiliency); grep -rn advanced-kata src/. Precedent is explicit and by name: wg-values.mjs:840-848 already settles 'basic-kata' with \"Their row hangs a FLAT MAX_HEALTH_BONUS 3 off Basic Kata, gated on having picked Monk Resiliency … Ours is maxHpBonus.perArchetypeFeat: 3 on monk-resiliency itself … THEIR NUMBER CONTRADICTS THE BOOK and is on the wrong record. Not adopted; recorded.\" advanced-kata is the same row on the advanced half of the same archetype."
+ },
+ {
+  "id": "advanced-defender",
+  "batch": 17,
+  "verdict": "MATCHES-ON-REVIEW",
+  "confidence": "high",
+  "evidence": "Ran: node scripts/wg-show.mjs advanced-defender --raw; node scripts/wg-values.mjs --ids … --verbose → \"MISSING hp| theirs=3 ours=(nothing)\"; node -e over public/core.json (advanced-defender, guardian-resiliency). Same family as the settled 'basic-kata'/'basic-glory'/'monk-dedication'/'exemplar-dedication'/'barbarian-dedication' rows; guardian is simply the newest archetype to reach the differ, and scripts/resiliency-clause-check.mjs was written for exactly this (\"in the future there will be more resiliency feats — make sure we don't make a mistake\") and passes on guardian-resiliency today. OBSERVATION: as with advanced-glory, the <=10 HP-per-level gate is prose-only on our side (no prerequisite evaluator reads hpPerLevel); that belongs to guardian-resiliency's prerequisite lane, not to this record."
+ },
+ {
+  "id": "champions-reaction",
+  "batch": 17,
+  "verdict": "MATCHES-ON-REVIEW",
+  "confidence": "high",
+  "evidence": "Ran: node scripts/wg-show.mjs \"Champion's Reaction\" --raw (the slug 'champions-reaction' finds nothing because their name carries the apostrophe); node scripts/wg-values.mjs --ids … --verbose → \"MISSING hp| theirs=3 ours=(nothing)\"; node scripts/wg-identity.mjs --ids guardians-intercept,champions-reaction --verbose → champions-reaction is NOT reported (they name no granted thing on the modern row). grep -rn champions-reaction src/ scripts/data/ → only an edition overlay row for the classFeatures twin. Same settle family as basic-kata / basic-glory / monk-dedication / exemplar-dedication / barbarian-dedication. OBSERVATION (deliberately NOT a fix here): the printed cause-reaction grant is unencoded on our side, but it is unencoded on theirs too on the row the differ compares, and our champion CAUSE records (core.cause: desecration/grandeur/iniquity/justice/liberation/obedience/redemption)"
+ },
+ {
+  "id": "guardians-intercept",
+  "batch": 17,
+  "verdict": "ALREADY-FIXED",
+  "confidence": "high",
+  "evidence": "Ran: node scripts/wg-show.mjs \"Guardian's Intercept\" --raw and node scripts/wg-show.mjs --wgid 44952 --raw; node scripts/wg-identity.mjs --ids guardians-intercept,champions-reaction --verbose → \"grants theirs-not-ours=[interceptattack] ours=[(nothing)]\"; node scripts/wg-values.mjs --ids … --verbose → \"MISSING hp| theirs=3 ours=(nothing)\"; npm run feat -- guardians-intercept --no-evidence; grep -rn \"guardians-intercept|intercept-attack\" src/ scripts/data/. The target record exists on our side twice: actions['intercept-attack'] (reaction, guardian trait, aonId action-3305) and classFeatures['intercept-attack']. Our established carrier for exactly this shape is classFeatures['guardians-techniques'].grantsActions = ['intercept-attack'] — i.e. grantsActions naming a core.actions id. wg-diff OUR_KEYS maps grantsRecord → ['grantsFeats','grantsClassFeatures','grantsActions',…] (wg-diff.mjs:306)  FIXED THIS PASS: overlay: Add to scripts/data/effect-backfill.json: {\"category\":\"feats\",\"id\":\"guardians-intercept\",\"field\":\"grantsActions\",\"value\":[\"intercept-attack\"]} Same shape as the 217 existing grantsActions rows (e.g. {\"category\":\"feats\",\" | overlay: Add to scripts/data/effect-backfill.json: {\"category\":\"feats\",\"id\":\"guardians-intercept\",\"field\":\"limitedUses\",\"value\":{\"max\":1,\"per\":\"minute\",\"every\":10}} This is the printed \"once per 10 minutes\" — the same clause thei | settle: Add to VERIFIED_EQUIVALENT in scripts/wg-diff.mjs — the HP KIND ONLY (do NOT settle grantsRecord; that half is fixed by the grantsActions overlay above): /* * The `conditional`/`hp` half only — the `grantsRecord` half is | settle: Add to SETTLED_VALUES in scripts/wg-values.mjs: /* Value half of the wg-diff settle: their flat 3 on this feat vs `maxHpBonus.perArchetypeFeat: 3` on * `guardian-resiliency`, which scales as printed. Not adopted; recorde"
+ },
+ {
+  "id": "grave-strength",
+  "batch": 17,
+  "verdict": "ALREADY-FIXED",
+  "confidence": "high",
+  "evidence": "Ran: `node scripts/wg-show.mjs grave-strength --raw`, `node scripts/wg-show.mjs --wgid 28471 --raw`, `node scripts/wg-show.mjs --wgid 20769 --raw`, `npm run feat -- grave-strength --no-evidence`, `grep -rn \"grave-strength\" src/ scripts/data/`. PRECEDENT for how our side models this package: the three sibling feats that print the same clause carry it INLINE as two situational stars — situationalBonuses.ts:2991 ghostly-grasp, :2992 ghostly-grasp-ghost, :2993 grave-mummification, each `[{save/all, \"against disease and poison\", \"+2 circumstance\"}, {save/all, \"against paralysis and sleep effects\", \"+1 circumstance\"}]`. The same inlining precedent is already SETTLED for the basic package at scripts/wg-diff.mjs:1708-1714 ('ghost-dedication'/'zombie-dedication': ['grantsRecord'] — \"Their grantsRecord points at the Basic Undead Benefits block; ours INLINES it … There is no grantsRules field to po FIXED THIS PASS: overlay: Add to scripts/data/effect-backfill.json: {\"category\":\"feats\",\"id\":\"grave-strength\",\"field\":\"senses\",\"value\":[{\"name\":\"darkvision\"}]} — rules-1695 \"Darkvision: You gain darkvision if you don't already have it\", their giv | overlay: Add to scripts/data/effect-backfill.json: {\"category\":\"feats\",\"id\":\"grave-strength\",\"field\":\"resistances\",\"value\":[{\"type\":\"poison\",\"value\":\"max(1,floor(@actor.level/2))\"}]} — rules-1695 \"You gain poison resistance equal | registry: src/rules/situationalBonuses.ts, FEAT_SITUATIONAL (declared line 96). UNIQUE FIND (line 866): ` \"grave-strength\": [{ targets: [{ kind: 'speed' }], when: \"while you are satiated (Ghoul archetype)\", bonus: \"+5 feet status\" | settle: ONLY AFTER the three rows above land. (a) scripts/wg-diff.mjs VERIFIED_EQUIVALENT (opens line 884), add `'grave-strength': ['grantsRecord'],` beside the existing 'ghost-dedication'/'zombie-dedication' entries at line 171"
+ },
+ {
+  "id": "ghostly-grasp-ghost",
+  "batch": 17,
+  "verdict": "ALREADY-FIXED",
+  "confidence": "high",
+  "evidence": "Ran: `node scripts/wg-show.mjs ghostly-grasp-ghost --raw`, `node scripts/wg-show.mjs --wgid 28471 --raw`, `npm run feat -- ghostly-grasp-ghost --no-evidence`, `grep -rn \"ghostly-grasp-ghost\" src/ scripts/data/`, and a scan of core-descriptions.json for the printed clause which returned exactly 7 feats (ghostly-grasp-ghost, grave-strength, hand-of-the-lich, grave-mummification, numb, ghostly-grasp, daywalker-vampire). Checked every carrier named in the brief: no effect-backfill row (only an `edition` row exists, for the sibling id ghostly-grasp), nothing in featGrants.ts / featGrantsAuto.ts / featGrantsLane.ts / featFeatGrants.ts / featPickGrants.ts / featCantripGrants.ts / companionGrants.ts / counterMods.ts / modes.ts. This record is the closest our corpus gets to the package today, which is why the gap is only two clauses wide. NOTE (out of scope, same defect): the sibling feats/ghostl FIXED THIS PASS: overlay: Add to scripts/data/effect-backfill.json: {\"category\":\"feats\",\"id\":\"ghostly-grasp-ghost\",\"field\":\"senses\",\"value\":[{\"name\":\"darkvision\"}]} — rules-1695 \"Darkvision: You gain darkvision if you don't already have it\", thei | overlay: Add to scripts/data/effect-backfill.json: {\"category\":\"feats\",\"id\":\"ghostly-grasp-ghost\",\"field\":\"resistances\",\"value\":[{\"type\":\"poison\",\"value\":\"max(1,floor(@actor.level/2))\"}]} — rules-1695 \"You gain poison resistance  | settle: ONLY AFTER the two rows above land — the two save halves are already shipped at situationalBonuses.ts:2992. (a) scripts/wg-diff.mjs VERIFIED_EQUIVALENT (opens line 884), add `'ghostly-grasp-ghost': ['grantsRecord'],` nex"
+ },
+ {
+  "id": "numb",
+  "batch": 17,
+  "verdict": "ALREADY-FIXED",
+  "confidence": "high",
+  "evidence": "Ran: `node scripts/wg-show.mjs numb --raw`, `node scripts/wg-show.mjs --wgid 28471 --raw`, `npm run feat -- numb --no-evidence`, `grep -rn \"\\bnumb\\b\" src/rules/*.ts src/sheet/*.tsx scripts/data/*.json` (loose, unquoted-key safe) — hits are situationalBonuses.ts:2380 and the unrelated numb-to-death at :936, plus the degreeShifts backfill row. Nothing in featGrants*.ts, featFeatGrants.ts, featPickGrants.ts, featCantripGrants.ts, companionGrants.ts, counterMods.ts, modes.ts (grep for 'deteriorated' in modes.ts returns nothing). The inlining precedent and the settled 'ghost-dedication'/'zombie-dedication' basic-package entry are at scripts/wg-diff.mjs:1708-1714; the inlined-clause shape to mirror is situationalBonuses.ts:2991-2993. FIXED THIS PASS: overlay: Add to scripts/data/effect-backfill.json: {\"category\":\"feats\",\"id\":\"numb\",\"field\":\"senses\",\"value\":[{\"name\":\"darkvision\"}]} — rules-1695 \"Darkvision: You gain darkvision if you don't already have it\", their giveAbilityBl | overlay: Add to scripts/data/effect-backfill.json: {\"category\":\"feats\",\"id\":\"numb\",\"field\":\"resistances\",\"value\":[{\"type\":\"poison\",\"value\":\"max(1,floor(@actor.level/2))\"}]} — rules-1695 \"You gain poison resistance equal to half y | registry: src/rules/situationalBonuses.ts, FEAT_SITUATIONAL (declared line 96). UNIQUE FIND (line 2380): ` \"numb\": [{ targets: [{ kind: \"save\", detail: \"all\" }], when: \"on saves against emotion and pain effects\", bonus: \"+1 circum | settle: ONLY AFTER the three rows above land. (a) scripts/wg-diff.mjs VERIFIED_EQUIVALENT (opens line 884), add `'numb': ['grantsRecord'],` beside 'zombie-dedication' (line 1714), reasoning: their giveAbilityBlock hands over abi"
+ },
+ {
+  "id": "inevitable-thralls",
+  "batch": 17,
+  "verdict": "ALREADY-FIXED",
+  "confidence": "high",
+  "evidence": "Ran: `node scripts/wg-show.mjs inevitable-thralls --raw`, `node scripts/wg-show.mjs --wgid 57835 --raw`, `npm run feat -- inevitable-thralls --no-evidence` (\"(none — this record carries no mechanics at all)\"), `grep -rn \"inevitable-thralls\" src/ scripts/data/` (no output), and a core.json scan for /inevitable/ which found classFeatures/inevitable-return and actions/inevitable-return. PRECEDENT: an archetype feat handing over another class's feature is `grantsClassFeatures` — ranger-dedication ['hunt-prey'], rogue-dedication ['surprise-attack'], uncanny-dodge ['deny-advantage'], shadow-sneak-attack ['sneak-attack'] — and derive.ts:3157-3163 documents exactly this case (\"'You gain the Sneak Attack class feature.' A record handing over a CLASS FEATURE rather than a feat — the archetype route into another class's signature ability\"). No settle is needed here: scripts/wg-diff.mjs:306 lists `g FIXED THIS PASS: overlay: Add to scripts/data/effect-backfill.json: {\"category\":\"feats\",\"id\":\"inevitable-thralls\",\"field\":\"grantsClassFeatures\",\"value\":[\"inevitable-return\"]} — same row shape as the shipped {\"category\":\"feats\",\"id\":\"shadow-sneak-"
+ },
+ {
+  "id": "macabre-virtuoso",
+  "batch": 17,
+  "verdict": "ALREADY-FIXED",
+  "confidence": "high",
+  "evidence": "Ran `node scripts/wg-show.mjs macabre-virtuoso --raw`; `npm run feat -- macabre-virtuoso --no-evidence` (AUTHORED FIELDS = actionCost/maxTakable/archetype only, \"no overlay rows\"); grepped `macabre-virtuoso` across src/ and scripts/data/ — single hit, situationalBonuses.ts:864. The carrier that fits already exists and is used for this exact ritual: public/core.json feats.undead-creator = {\"grantsRituals\":[{\"spellId\":\"create-undead\",\"note\":\"cast without a secondary caster; …\"}]}, and public/core.json spells['create-undead'] has ritual:true so the reader's gate passes. No entry for this id in wg-diff.mjs VERIFIED_EQUIVALENT (line 884), wg-values.mjs SETTLED_VALUES (771) or wg-identity.mjs SETTLED_IDENTITIES (426). FIXED THIS PASS: overlay: Add to scripts/data/effect-backfill.json: {\"category\":\"feats\",\"id\":\"macabre-virtuoso\",\"field\":\"grantsRituals\",\"value\":[{\"spellId\":\"create-undead\",\"note\":\"Two types of common undead you meet the prerequisites for; you may"
+ },
+ {
+  "id": "conjurer-of-corpses",
+  "batch": 17,
+  "verdict": "ALREADY-FIXED",
+  "confidence": "high",
+  "evidence": "Ran `node scripts/wg-show.mjs conjurer-of-corpses --raw` (head+tail, full 20-row slot ladder read); `npm run feat -- conjurer-of-corpses --no-evidence` → \"(none — this record carries no mechanics at all)\", \"no overlay rows\"; `grep -rn conjurer-of-corpses src/ scripts/data/` → no hits. Restricted-slot lane read end to end: src/rules/build.ts:5805-5846 (collect spellSlotBonus from feats/features/heritages/invested items → `if (bonus.restricted) (entry.restrictedSlots ??= []).push(...resolveRestrictedSlots(...))`), src/rules/restrictedSlots.ts:62 (`grant.highestOnly` → `counts[highest] += n`, highest taken from the entry's own slot table), render at src/sheet/SpellsTab.tsx:843 and :1521, play overlay at src/rules/play.ts:426. Existing template with identical printed shape: public/core.json feats['divine-evolution'].spellSlotBonus = {\"restricted\":{\"label\":\"Divine Evolution\",\"note\":\"An extra  FIXED THIS PASS: overlay: Add to scripts/data/effect-backfill.json: {\"category\":\"feats\",\"id\":\"conjurer-of-corpses\",\"field\":\"spellSlotBonus\",\"value\":{\"entryId\":\"necromancer-casting\",\"restricted\":{\"label\":\"Conjurer of Corpses\",\"note\":\"An extra slot | settle: wg-diff.mjs VERIFIED_EQUIVALENT (scripts/wg-diff.mjs:884) — add, in the same commented style as the neighbouring entries: `'conjurer-of-corpses': ['spell'],` with the comment: \"Printed: 'You learn the summon undead spell"
+ },
+ {
+  "id": "bind-heroic-spirit",
+  "batch": 17,
+  "verdict": "ALREADY-FIXED",
+  "confidence": "high",
+  "evidence": "Ran `node scripts/wg-show.mjs bind-heroic-spirit --raw`; `npm run feat -- bind-heroic-spirit --no-evidence` → \"(none — this record carries no mechanics at all)\"; `grep -rn bind-heroic-spirit src/ scripts/data/` → nothing; scanned every collection of public/core.json for the string 'bind-heroic-spirit' outside the spell/feat records themselves → no other referrer. Sibling necromancer grave-spell feats already use the carrier and nothing else: feats['deathly-scream'].focusSpells = [\"deathly-scream\"], feats['bony-barrage'].focusSpells = [\"bony-barrage\"], feats['muscle-barrage'/'song-of-the-soul'/'bloody-tendrils'/'perfected-thrall'] the same — and none of them carries focusPoolBonus, because the pool is derived from the count (build.ts:3849 `pointCostingKnown = focusSpells.filter(costsAFocusPoint)`, and our spell carries the `focus` trait). Not in VERIFIED_EQUIVALENT / SETTLED_VALUES / SETT FIXED THIS PASS: overlay: Add to scripts/data/effect-backfill.json: {\"category\":\"feats\",\"id\":\"bind-heroic-spirit\",\"field\":\"focusSpells\",\"value\":[\"bind-heroic-spirit\"]} — the feat id and the spell id are the same slug in different collections, whi"
+ },
+ {
+  "id": "conjurers-countermeasure",
+  "batch": 17,
+  "verdict": "ALREADY-FIXED",
+  "confidence": "high",
+  "evidence": "Ran `node scripts/wg-show.mjs \"conjurer's countermeasure\" --raw` (and the failing slug form, to document why the gate under-reports); `npm run feat -- conjurers-countermeasure --no-evidence` → \"(none — this record carries no mechanics at all)\", \"no overlay rows\"; `grep -rn conjurers-countermeasure src/ scripts/data/` → nothing; whole-core.json scan for the string outside its own two records → no referrer. Established magus conflux carrier: feats['cascade-countermeasure'] = {…,\"focusSpells\":[\"cascade-countermeasure\"]}, feats['force-fang'], feats['runic-impression'], feats['hasted-assault'] — all bare focusSpells, no focusPoolBonus. Not in any of the three settle registries. FIXED THIS PASS: overlay: Add to scripts/data/effect-backfill.json: {\"category\":\"feats\",\"id\":\"conjurers-countermeasure\",\"field\":\"focusSpells\",\"value\":[\"conjurers-countermeasure\"]} — identical shape to feats['cascade-countermeasure'], the other ma | src-edit: Optional, tooling not data — the gate reported this record as \"WG does not carry it\" because wg-show/the differ slug their `name` and ours strips the apostrophe differently. In scripts/wg-show.mjs the name→slug normalise"
+ },
+ {
+  "id": "nameless-anonymity",
+  "batch": 17,
+  "verdict": "ALREADY-FIXED",
+  "confidence": "high",
+  "evidence": "Ran `node scripts/wg-show.mjs nameless-anonymity --raw` and `node scripts/wg-show.mjs magic-warrior-dedication --raw`. Resolved spellId 4930 from COPY public.spell in work/wg/wg-data.sql. Read C:/wonderers guide/aon-2e-archive/data/by-category/feat/feat-906.json and feat-903.json. Carrier sweep before claiming the gap: `grep -rn \"magic-warrior\" src/` returns only src/rules/featGrantsAuto.ts:498 (lore + arcana/nature skill choice) and src/rules/situationalBonuses.ts:2484 (+1 vs divination); magic-warrior-dedication's own record carries only `focusFromSpellSlots` and a mask-animal effectChoice — no tradition question anywhere; the only rows in scripts/data/effect-backfill.json for nameless-anonymity are innateSpells and spellNotes. Consequence: at src/rules/build.ts:6598-6605 the entry's tradition falls back to core.json spells['veil-of-privacy'].traditions[0] = \"arcane\", so a divine magic FIXED THIS PASS: overlay: Add to scripts/data/effect-backfill.json: {\"category\":\"feats\",\"id\":\"nameless-anonymity\",\"field\":\"choice\",\"value\":{\"flag\":\"namelessAnonymityTradition\",\"prompt\":\"Tradition of your magic warrior focus spells\",\"kind\":\"array\" | overlay: Replace the existing innateSpells overlay row with: {\"category\":\"feats\",\"id\":\"nameless-anonymity\",\"field\":\"innateSpells\",\"value\":[{\"spellId\":\"veil-of-privacy\",\"usesPerDay\":1,\"heightenHalfLevel\":true,\"traditionFromChoiceF"
+ },
+ {
+  "id": "spellmaster-dedication",
+  "batch": 17,
+  "verdict": "THEY-ENCODE-NOTHING-USEFUL",
+  "confidence": "high",
+  "evidence": "Ran `node scripts/wg-show.mjs spellmaster-dedication --raw` (the raw tree is two flat ops — no nested trueOperations/falseOperations to hide anything) and `npm run feat -- spellmaster-dedication --no-evidence`. Read C:/wonderers guide/aon-2e-archive/data/by-category/feat/feat-1134.json markdown in full. Grepped the dump for every other consumer of the SPELLMASTER casting source (one hit, its own definition). Carrier check on our side: `grep -rn \"spellmaster\" src/` → situationalBonuses.ts:565 (the dedication's +2), :566 spellmasters-resilience, :2510 spellmasters-tenacity; not in src/rules/casterArchetypes.ts, and correctly so — no Basic/Expert/Master Spellmaster Spellcasting feat exists (feat-1134's leads-to list has none). The reader for the +2 is `featSituationalFor` (src/rules/situationalBonuses.ts:3486), called from src/rules/explain.ts:571, :580 and :740."
+ },
+ {
+  "id": "sound-mirror",
+  "batch": 17,
+  "verdict": "ALREADY-FIXED",
+  "confidence": "high",
+  "evidence": "Ran `node scripts/wg-show.mjs sound-mirror --raw` and resolved 4836/4931/4620 out of COPY public.spell in work/wg/wg-data.sql. Read the aonId page feat-8452.json markdown (quoted above). Confirmed nothing blocked ventriloquism on our side: public/core.json spells['ventriloquism'] exists — rank 1, traditions [arcane,divine,occult,primal], source Pathfinder Player Core / ORC, edition \"remaster\", aonId spell-1740 (the same spell the printed page links) — and it is already used in shipped grants (scripts/wg-batch14-residual.mjs:55-56, src/rules/featCantripGrants.ts:132). So this is not an edition/rename question: the remaster identity of ID 1740 IS ventriloquism in our own data, and the 2-vs-1 spell count is not a difference at all (they grant three, we grant three; only the 1st-rank identity differs). Carrier sweep for the proficiency clause: `grep -rn \"alter-ego\" src/ scripts/data/*.json`  FIXED THIS PASS: overlay: Replace the existing innateSpells overlay row in scripts/data/effect-backfill.json with: {\"category\":\"feats\",\"id\":\"sound-mirror\",\"field\":\"innateSpells\",\"value\":[{\"spellId\":\"figment\",\"tradition\":\"occult\",\"atWill\":true},{\" | overlay: Add to scripts/data/effect-backfill.json: {\"category\":\"feats\",\"id\":\"sound-mirror\",\"field\":\"spellcastingGrant\",\"value\":{\"tradition\":\"occult\",\"keyAbility\":\"cha\",\"proficiency\":\"trained\"}} — their adjValue SPELL_ATTACK/SPELL | overlay: SECONDARY, text-only: our prose contradicts its own aonId page. Add {\"category\":\"feats\",\"id\":\"sound-mirror\",\"field\":\"description\",\"value\":\"You twist not just the visual, but the auditory as well, allowing you to pass wit"
+ },
+ {
+  "id": "beast-gunner-dedication",
+  "batch": 17,
+  "verdict": "ALREADY-FIXED",
+  "confidence": "high",
+  "evidence": "Ran `node scripts/wg-show.mjs beast-gunner-dedication --raw` (full tree, including the nested per-option SPELL selects and the 20-row giveSpellSlot tail) and resolved abilityBlockId 25481 out of COPY public.ability_block in work/wg/wg-data.sql → \"Spellsling | feat | lvl 1\". Read the aonId page feat-3229.json markdown. Carrier sweep: `grep -rn \"beast-gunner\" src/` → casterArchetypes.ts:33/181/183/347 and build.ts:279/6121 only; scripts/data/effect-backfill.json holds three rows for the id (dataWarning, choice bondedBeastGun, grantsActions) and none touches the key attribute. Precedent for the fix is one line below the defect: casterArchetypes.ts:185 `'psychic-dedication': { ...mk('occult','int',1,'psychic'), choiceKeyAbility: ['int','cha'] }`. Their per-option cantrip filter (traits [\"Attack\"], one tradition, rank 0) is menu-option filtering — ours per Rule 3 — so I am proposing nothing t FIXED THIS PASS: src-edit: File src/rules/casterArchetypes.ts. Unique find: ` 'beast-gunner-dedication': { ...mk('arcane', 'cha', 1, 'beast-gunner', true), traditionOptions: ['arcane', 'primal'] },` Replace with: ` // Their four options are tradit | overlay: SECONDARY, lower confidence — flagging rather than insisting. The record's dataWarning reads \"...(Whole caster-dedication spellcasting: grants Cast a Spell, a spell repertoire with a chosen arcane/primal cantrip, spell)\""
+ },
+ {
+  "id": "psi-development",
+  "batch": 17,
+  "verdict": "ALREADY-FIXED",
+  "confidence": "high",
+  "evidence": "Ran: `node scripts/wg-show.mjs psi-development --raw`; `npm run feat -- psi-development --no-evidence`; `node -e` against public/core.json for feats['psi-development'], feats['psychic-dedication'] and the six surface cantrips; `grep -rn \"psi-development\" src/` (empty); `grep -n psi-development scripts/data/effect-backfill.json` (empty). psychic-dedication carries `choice.flag: \"psychicConsciousMind\"` with exactly WG's six mind values — the variable their conditionals read — plus `choice.note` naming each mind's two standard psi cantrips. The six UNIQUE surface cantrips all exist in our spell DB at rank 0 but with `traditions: []` (telekinetic-rend, glimpse-weakness, thermal-stasis, forbidden-thought, imaginary-weapon, distortion-lens), so they can never surface in an occult cantrip picker (Builder.tsx:801 `spellIndex.cantrips[tradition]`) — WG's whole \"Unique Surface\" branch is unreachab FIXED THIS PASS: overlay: scripts/data/effect-backfill.json, add row: {\"category\":\"feats\",\"id\":\"psi-development\",\"field\":\"spellSlotBonus\",\"value\":{\"entryId\":\"psychic-dedication-casting\",\"cantrips\":1}} — raises the psychic archetype pool from 1 kn | overlay: scripts/data/effect-backfill.json, add row: {\"category\":\"feats\",\"id\":\"psi-development\",\"field\":\"spellListAdditions\",\"value\":{\"entryId\":\"psychic-dedication-casting\",\"as\":\"list\",\"spells\":[\"telekinetic-rend\",\"glimpse-weakne"
+ },
+ {
+  "id": "parallel-breakthrough",
+  "batch": 17,
+  "verdict": "ALREADY-FIXED",
+  "confidence": "high",
+  "evidence": "Ran: `node scripts/wg-show.mjs parallel-breakthrough --raw` (full 6x3 tree read, including the option `description` fields that name each spell id); `npm run feat -- parallel-breakthrough --no-evidence`; `grep -rn \"parallel-breakthrough\" src/`; `node -e` on public/core.json. Two concrete defects. (a) OPTION SET: 12 vs their 18 — telekinetic-rend, glimpse-weakness, thermal-stasis, forbidden-thought, imaginary-weapon and distortion-lens all exist in our spell DB (verified: rank 0, traits include `cantrip`+`psychic`) but are absent from the options array, so print's \"either the unique surface cantrip\" is unbuildable. This is NOT the ours-to-filter narrowing of Rule 3 — WG offers all six minds too; the missing rows are a whole printed branch. (b) TRADITION: the reader pushes the pick bare and the pooled innate entry votes `const t = g.tradition ?? content.spells[g.spellId]?.traditions?.[0]`  FIXED THIS PASS: src-edit: src/rules/featCantripGrants.ts (line 108). FIND (unique in the repo): 'parallel-breakthrough': { prompt: \"Choose a cantrip\", options: ['daze', 'detect-magic', 'figment', 'frostbite', 'guidance', 'ignition', 'message', 'p"
+ },
+ {
+  "id": "motionless-cutter",
+  "batch": 17,
+  "verdict": "ALREADY-FIXED",
+  "confidence": "high",
+  "evidence": "Carrier sweep (rule 4): `grep -rn \"motionless-cutter|sever-four-dragonfly-wings\" src/ scripts/*.mjs scripts/data/*.json | grep -v effect-backfill.json` → ZERO hits. Not in featGrants*.ts, featFeatGrants.ts, featPickGrants.ts, featCantripGrants.ts, companionGrants.ts, situationalBonuses.ts, modes.ts, counterMods.ts. Not in any settle registry (`grep -n motionless-cutter scripts/wg-values.mjs scripts/wg-identity.mjs scripts/wg-diff.mjs` → nothing). PRIOR ART: six feats already ship `choice.kind:'ikons'` (twin-stars, hurl-at-the-horizon, leap-the-falls, red-gold-mortality, steel-on-steel, through-the-needles-eye); through-the-needles-eye's overlay row is the literal template at scripts/wg-batch13-lanes.mjs:88-99. The 21 ikons carry `ikonType` in core.json's `ikon` bucket (10 weapon / 7 worn / 4 body). Our picker resolves against the character's OWN chosen ikons and falls back to all of that FIXED THIS PASS: overlay: Add to scripts/data/effect-backfill.json: { \"category\": \"feats\", \"id\": \"motionless-cutter\", \"field\": \"choice\", \"value\": { \"flag\": \"imbuedIkon\", \"prompt\": \"The slashing melee weapon ikon Motionless Cutter is imbued into\", | registry: Ownership: `npm run feat -- motionless-cutter --no-evidence` reports \"⚠ no authoring script names this record\" — its existing grantsClassFeatures row is an orphan. Emit the new `choice` row from the script that owns this"
+ },
+ {
+  "id": "binding-serpents-celestial-arrow",
+  "batch": 17,
+  "verdict": "ALREADY-FIXED",
+  "confidence": "high",
+  "evidence": "Carrier sweep (rule 4): `grep -rn \"binding-serpents-celestial-arrow|coiling-serpents\" src/ scripts/*.mjs scripts/data/*.json | grep -v effect-backfill.json` → ZERO hits. Absent from featGrants.ts / featGrantsAuto.ts / featGrantsLane.ts / featFeatGrants.ts / featPickGrants.ts / featCantripGrants.ts / companionGrants.ts / situationalBonuses.ts / modes.ts CATALOG_MODES / consumable-modes.json / counterMods.ts. Not in VERIFIED_EQUIVALENT (scripts/wg-diff.mjs:884), SETTLED_VALUES, or SETTLED_IDENTITIES (scripts/wg-identity.mjs:426). Trait audit run: `node -e` over public/core.json counted 18 transcendence classFeatures with the trait, 0 without, and printed coiling-serpents' record showing `traits: []` and no aonParentId/aonSection. Prior art for the picker: the six shipped `choice.kind:'ikons'` records and the through-the-needles-eye template at scripts/wg-batch13-lanes.mjs:88-99. FIXED THIS PASS: overlay: Add to scripts/data/effect-backfill.json: { \"category\": \"feats\", \"id\": \"binding-serpents-celestial-arrow\", \"field\": \"choice\", \"value\": { \"flag\": \"imbuedIkon\", \"prompt\": \"The ranged or thrown weapon ikon Binding Serpents  | overlay: Secondary, print-driven (WG encodes the trait only inside prose, so this is not a WG delta — it is our record disagreeing with feat-7164's \"(transcendence)\" and with its own sibling). Two rows in scripts/data/effect-back"
+ },
+ {
+  "id": "slingers-readiness",
+  "batch": 17,
+  "verdict": "ALREADY-FIXED",
+  "confidence": "high",
+  "evidence": "THE ANSWER ALREADY EXISTS ON OUR SIDE — only the dereference is missing. `feats/gunslinger-dedication` carries `choice: { flag: 'gunslingerWay', prompt: 'Way', kind: 'array', options: [way-of-the-drifter, way-of-the-pistolero, way-of-the-sniper, way-of-the-spellshot, way-of-the-triggerbrand, way-of-the-vanguard] }` — the exact twin of their GUNSLINGER_DEDICATION_WAY (scripts/wg-diff.mjs:320 says so in as many words). `classes.gunslinger.subclass.options[].featureIds` gives the initial deed per way (level-1 entry): drifter/into-the-fray, pistolero/ten-paces, sniper/one-shot-one-kill, spellshot/energy-shot, triggerbrand/spring-the-trap, vanguard/living-fortification. All six exist in core.json `classFeatures` with `actionCost:{type:'free'}`, so owning one puts the deed straight into the encounter action list (src/sheet/MainTab.tsx:240 `actionRecords` walks `ownedFeatureIds(character, conte FIXED THIS PASS: src-edit: FILE src/rules/types.ts — widen `derivedGrant` so a NAMED answer->record relation can be stated. FIND (unique — the only occurrence of this comment): /** How the answer becomes a record id: `initiate-benefit-` + `chalice | src-edit: FILE src/rules/derive.ts — teach the derivedGrant reader to honour `map`. FIND (unique — the only template literal built from d.prefix/d.suffix in the repo): const id = `${d.prefix ?? ''}${answer.replace(/^aon-/, '')}${d | overlay: scripts/data/effect-backfill.json — one row: {\"category\":\"feats\",\"id\":\"slingers-readiness\",\"field\":\"derivedGrant\",\"value\":{\"fromFeat\":\"gunslinger-dedication\",\"map\":{\"way-of-the-drifter\":\"into-the-fray\",\"way-of-the-pistol | registry: FILE scripts/wg-diff.mjs — register the field so the gate stops reporting [conditional, grantsRecord] missing on a record that now delivers both. (a) line 306, FIND: ` grantsRecord: ['grantsFeats', 'grantsClassFeatures',"
+ },
+ {
+  "id": "poison-coat",
+  "batch": 17,
+  "verdict": "ALREADY-FIXED",
+  "confidence": "high",
+  "evidence": "WE ALREADY HOLD THE TARGET: `actions/once-bitten` exists in core.json with `actionCost: {type:'reaction'}` and a description that is the printed reaction verbatim in structure (\"**Trigger** A creature adjacent to you hits you with a melee unarmed Strike / **Requirements** You have prepared your clothing to poison attackers / **Effect** …\"). Only the grant is missing — the same shape scripts/backfill-slingers-reload.mjs describes: \"All six action records already exist — only the grant was missing.\" THE LANE IS `grantsActions`, and it is heavily populated for exactly this case: 149 feats carry it, including every sibling that ends \"…you gain the <X> action\" (`ostilli-host-dedication: ['spit-ambient-magic','repel-ambient-magic']`, `soothing-pulse: ['administer-ambient-magic']`, `hellknight-errant: ['warding-shift']`). READERS, BOTH LIVE: (1) src/sheet/MainTab.tsx:252 `grantedActions` — \"The FIXED THIS PASS: overlay: scripts/data/effect-backfill.json — one row: {\"category\":\"feats\",\"id\":\"poison-coat\",\"field\":\"grantsActions\",\"value\":[\"once-bitten\"]} This is byte-for-byte the same claim as their single `giveAbilityBlock feat 34227`: han"
+ },
+ {
+  "id": "cloaking-pulse",
+  "batch": 17,
+  "verdict": "ALREADY-FIXED",
+  "confidence": "high",
+  "evidence": "WE ALREADY HOLD THE TARGET: `actions/drape-ambient-magic` exists in core.json — `traits:['illusion']`, `actionCost:{type:'actions',value:1}`, `aonParentId:'feat-5455'`, `aonSection:'Drape Ambient Magic'` — with the printed Frequency/Effect text and condition refs for hidden and off-guard. Only the grant is missing. ITS OWN ARCHETYPE SIBLINGS ALREADY USE THE LANE, which is what makes the carrier unambiguous: `feats/ostilli-host-dedication.grantsActions = ['spit-ambient-magic','repel-ambient-magic']` and `feats/soothing-pulse.grantsActions = ['administer-ambient-magic']`. Cloaking Pulse is the one member of that family with the field left off. READERS: src/sheet/MainTab.tsx:252 `grantedActions` (\"The actions a record HANDS you rather than IS\"), consumed by `featActions` at MainTab.tsx:278 — the encounter action list; plus src/rules/explain.ts:256 `characterSituationalIds`. Target survives  FIXED THIS PASS: overlay: scripts/data/effect-backfill.json — one row: {\"category\":\"feats\",\"id\":\"cloaking-pulse\",\"field\":\"grantsActions\",\"value\":[\"drape-ambient-magic\"]} Exactly their one `giveAbilityBlock feat 28881` and nothing more — no hidden"
+ },
+ {
+  "id": "predictive-purchase-investigator",
+  "batch": 17,
+  "verdict": "ALREADY-FIXED",
+  "confidence": "high",
+  "evidence": "BOTH TARGETS EXIST: `feats/prescient-planner` (general, level 3, aonId feat-5191) and `feats/prescient-consumable` (general, level 7, aonId feat-5190, prereq Prescient Planner). READER FOR `grantsFeats`: src/rules/build.ts:4279 — `for (const fc of [...feats]) grantSources.push({ id: fc.featId, grants: content.feats[fc.featId]?.grantsFeats })` — the feat->feat expansion queue; the granted rows land tagged `grantedBy` (types.ts:4424) and render on the Feats tab. STILL REACHABLE DESPITE 'superseded': build.ts:2521-2523 hides a superseded record from PICKERS only (`const hide = ed === 'superseded' || …`); the grant walk at :4279 applies no edition filter, so a character who already holds this feat (a legacy or imported build) gets the two feats. That is precisely the population WG's own legacy twin 22261 serves. WHY OVERLAY, NOT FEAT_FEAT_GRANTS: everything after `FEAT_FEAT_GRANTS_MARKER` (s FIXED THIS PASS: overlay: scripts/data/effect-backfill.json — one row, mirroring the row that already exists for the remaster twin `predictive-purchase`: {\"category\":\"feats\",\"id\":\"predictive-purchase-investigator\",\"field\":\"grantsFeats\",\"value\":[\""
+ },
+ {
+  "id": "gravel-guts",
+  "batch": 17,
+  "verdict": "ALREADY-FIXED",
+  "confidence": "high",
+  "evidence": "`node scripts/wg-show.mjs gravel-guts --raw` (raw tree above — three flat addBonusToValue, no trueOperations). `node scripts/wg-values.mjs --ids gravel-guts,armor-specialist,additional-servings,nocturnal-senses --verbose` prints exactly: `--- gravel-guts (Gravel Guts) / MISSING save|reflex theirs=1 ours=(nothing) / MISSING save|will theirs=1 ours=(nothing) / ours(all): save|fortitude=1`. Carrier check per rule 4: `grep -rn gravel-guts src/ scripts/ --include=*.ts --include=*.mjs --include=*.json -l` hits only src/rules/situationalBonuses.ts (plus audit/migration artefacts) — featGrants*, featFeatGrants, featPickGrants, featCantripGrants, companionGrants, modes.ts, consumable-modes.json and counterMods.ts all return nothing. Reader chain for the row: FEAT_SITUATIONAL → `entriesFor` (situationalBonuses.ts:3477) → `featSituationalFor` (situationalBonuses.ts:3486) → `featSituationalLines` (s FIXED THIS PASS: src-edit: File src/rules/situationalBonuses.ts. FIND (unique, verified `grep -c -F` == 1) the whole line 352: \"gravel-guts\": [{ targets: [{ kind: 'save', detail: 'fortitude' }], when: \"against the sickened condition\", bonus: \"+1 c | src-edit: Second clause, which nothing on our side carries and which they keep as prose on the SAVE_FORT op's `text`. File src/rules/situationalBonuses.ts, in RECORD_MARKERS. FIND (unique, verified) the existing line beginning: \"f"
+ },
+ {
+  "id": "armor-specialist",
+  "batch": 17,
+  "verdict": "MATCHES-ON-REVIEW",
+  "confidence": "high",
+  "evidence": "`node scripts/wg-show.mjs armor-specialist --raw` — raw op tree read, including the trueOperations nesting the flattened view hides (both WG rows quoted above). `node -e` dump of public/core.json feats['armor-specialist'] shows `armorSpec:{anyProficient:true}`. `grep -rn armorSpec src/ --include=*.ts` → src/rules/derive.ts:3461-3486 (`armorSpecAccess`) and derive.ts:2517 (the caller), types.ts:1323 (the declaration). The only delta is our extra `'unarmored'` entry, which the code comment at derive.ts:3472-3474 explains is inert: no armour group defines a specialization value for unarmoured, so including it changes nothing. Nothing to change on the data side. The only gap is the DIFFER: `node scripts/wg-values.mjs --ids ... --verbose` reports armor-specialist under `NO VAR MAPPING — nobody has taught this yet: ARMOR_SPECIALIZATION_LIGHT, ARMOR_SPECIALIZATION_MEDIUM, ARMOR_SPECIALIZATION_H"
+ },
+ {
+  "id": "additional-servings",
+  "batch": 17,
+  "verdict": "MATCHES-ON-REVIEW",
+  "confidence": "high",
+  "evidence": "`node scripts/wg-show.mjs additional-servings --raw` (full raw tree quoted above — the injectText-only trueOperations are invisible in the flattened view). `npm run feat -- additional-servings --no-evidence` shows `resourceMaxSet {\"resourceId\":\"versatile-vials\",\"values\":[5,6,7]}` as an overlay row that survives `npm run data`. `grep -rn resourceMaxSet src/ --include=*.ts` → build.ts:5609 + types.ts:2693; `grep -rn resourceFloors src/` → build.ts:5604/5613/5614/7027, classResources.ts:206/209, types.ts:5190; `grep -rn resourceMaxFor src/` → AlchemyPanel.tsx:46, VitalsRail.tsx:899. `grep -rn versatile-vials src/rules/*.ts` → classResources.ts:60/81/97/118 (the resource id is real on all four alchemist tracks) and play.ts:1781. No mechanical gap in either direction. The only gap is the DIFFER: `node scripts/wg-values.mjs --ids ... --verbose` reports `NO VAR MAPPING — nobody has taught this "
+ },
+ {
+  "id": "nocturnal-senses",
+  "batch": 17,
+  "verdict": "ALREADY-FIXED",
+  "confidence": "high",
+  "evidence": "`node scripts/wg-show.mjs nocturnal-senses --raw` (raw tree above; the two-condition AND and the giveAbilityBlock are only visible there). `node scripts/wg-values.mjs --ids ... --verbose` reports it as `not a scalar we hold: SENSES_IMPRECISE (a sense, not a value — covered by senses / conditionalSenses)` — that settle's claimed lane is FALSE for this record today, which is exactly what makes it a silent hole. Our lane exists and is live: `whileActive: [{ state: 'rage' | ..., senses, resistances, ... }]` at src/rules/types.ts:1112-1134, aggregated by `ownedWhileActive`/`activeStateGrants` (src/rules/derive.ts:1046/1065) and pushed into deriveDefenses at derive.ts:2380-2389; shipped precedents in scripts/data/effect-backfill.json are `acute-vision` → `[{\"state\":\"rage\",\"senses\":[{\"name\":\"darkvision\",\"acuity\":\"precise\"}]}]` and `acute-scent` → `[{\"state\":\"rage\",\"senses\":[{\"name\":\"scent\",\"ran FIXED THIS PASS: src-edit: (1 of 2 src edits — the lane join.) File src/rules/types.ts. FIND (unique, verified `grep -c -F` == 1 on \"grants weakness to fire.\"): * grants weakness to fire. A benefit block that could only ever help would have droppe | src-edit: (2 of 2 src edits — a gate with NO fallback.) Today `base` is required and is granted when `ifPresent` is absent, which is right for Superior Sight (\"you gain low-light vision, or darkvision if you already have low-light | overlay: File scripts/data/effect-backfill.json — add one row (the same shape as the shipped `acute-vision` / `acute-scent` whileActive rows): { \"category\": \"feats\", \"id\": \"nocturnal-senses\", \"field\": \"whileActive\", \"value\": [ { "
+ },
+ {
+  "id": "jelly-body",
+  "batch": 17,
+  "verdict": "ALREADY-FIXED",
+  "confidence": "high",
+  "evidence": "Ran: `node scripts/wg-show.mjs jelly-body --raw`; resolved item 16389 by reading the public.item COPY block of work/wg/wg-data.sql directly (wg-show only walks ability_block); `npm run feat -- jelly-body --no-evidence`; `node scripts/wg-identity.mjs --ids … --verbose` -> \"items theirs-not-ours=[jellybody] ours=[(nothing)]\"; `node scripts/wg-values.mjs --ids …`. Precedent read in full: feats/extradimensional-stash ships `grantsItems: [{itemId:\"extradimensional-stash-space\"}]` against a create:true item `extradimensional-stash-space` (itemType container, capacity.bulk 5, ignoredBulk 5, price {}, bulk 0) — the identical shape, and the only existing example of a feat whose benefit is a body-cavity container. Our items already ship capacity-1/ignoredBulk-1 containers (pathfinders-pouch). FIXED THIS PASS: overlay: scripts/data/effect-backfill.json — add three rows, mirroring the extradimensional-stash precedent exactly (id suffixed `-space` so it cannot collide with feats/jelly-body; wg-diff's own header warns that a shared id acr | settle: Do NOT settle this one. It is on both work lists for a real reason — record it as fixed rather than equivalent. After the overlay lands, re-run `node scripts/wg-identity.mjs --ids jelly-body --verbose` (expect items thei"
+ },
+ {
+  "id": "aeon-stone-western-star",
+  "batch": 17,
+  "verdict": "MATCHES-ON-REVIEW",
+  "confidence": "high",
+  "evidence": "Ran: `node scripts/wg-show.mjs aeon-stone-western-star --raw` (no ability_block row — read their public.item row 15075 out of work/wg/wg-data.sql directly, line 24022, operations column index 13); `npm run feat -- aeon-stone-western-star --no-evidence`; `node scripts/wg-identity.mjs --ids … --verbose` -> \"options theirs-not-ours=[no, yes] ours=[(nothing)]\"; `node scripts/wg-values.mjs --ids …` -> prose-only. Read src/rules/build.ts:6460-6482, src/sheet/ItemDetail.tsx:491-495, src/rules/itemUses.ts:25-45, src/sheet/InventoryTab.tsx:284-286. Rule-4 sweep: the id appears only in scripts/data/effect-backfill.json (2 rows) and scripts/audit/inventory.json; not in toggle-modes.json, not in consumable-modes.json, not in modes.ts CATALOG_MODES — correctly so, since the yes/no is not a toggled MODE but the per-inventory-row `wayfinder-slotted` designation the resonant lane already ships."
+ },
+ {
+  "id": "emerald-boughs-accustomation",
+  "batch": 17,
+  "verdict": "MATCHES-ON-REVIEW",
+  "confidence": "high",
+  "evidence": "Commands actually run from C:/trying ai 2/pf2e codex: - `node scripts/wg-show.mjs emerald-boughs-accustomation --raw` → the two flat addBonusToValue ops quoted above; the `--- raw ---` tree confirms no nested true/falseOperations. - `npm run feat -- emerald-boughs-accustomation --no-evidence` → AUTHORED FIELDS shows degreeShifts; WHO OWNS IT = scripts/apply-degree-shifts.mjs; \"overlay rows (survive `npm run data`): degreeShifts\". - `node -e` on public/core.json feats bucket → full record printed above; aonId \"feat-1106\". - Printed text read from C:/wonderers guide/aon-2e-archive/data/by-category/feat/feat-1106.json markdown field. CARRIER DURABILITY: scripts/data/effect-backfill.json already holds exactly one row for this id — {category:\"feats\", id:\"emerald-boughs-accustomation\", field:\"degreeShifts\", value:[the three entries]} (line 106336 region), so the field survives a rebuild. Its g"
+ },
+ {
+  "id": "elysiums-cadence",
+  "batch": 17,
+  "verdict": "ALREADY-FIXED",
+  "confidence": "high",
+  "evidence": "[verified CONFIRMED, fix applied this pass] DEFECT: our Diplomacy star is scoped to a check print does not cover and drops the printed +2 tier. THEIRS (ability_block 22701, raw): a single addBonusToValue — variable SKILL_DIPLOMACY, value \"1\", type circumstance, text \"checks to Make an Impression, or +2 if the target is holy.\" PRINT (C:/wonderers guide/aon-2e-archive/data/by-category/feat/feat-8407.json): \"You gain a +1 circumstance bonus to checks to Make an Impression, or a +2 circumstance bonus if the target is holy. You gain the Set Free reaction.\" OURS (C:/trying ai 2/pf2e codex/src/rules/situationalBonuses.ts line 292): \"elysiums-cadence\": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }], when: \"Make an Impression or gather-information\", bonus: \"+1 circumstance\" }]. EXACT DIFFERENCE, two parts: (1) we extend the bonus to Gather Information, which appears in neither their op nor print; (2) we omit the +2-if-the-target-is-h"
+ },
+ {
+  "id": "clandestine-cloak",
+  "batch": 17,
+  "verdict": "ALREADY-FIXED",
+  "confidence": "high",
+  "evidence": "[verified CONFIRMED, fix applied this pass] THEIRS (item row id 6798) has EXACTLY four ops: SKILL_STEALTH +1 item \"when the hood is up\"; SKILL_DECEPTION +1 item \"to Impersonate a forgettable background character when the hood is up\"; SKILL_DIPLOMACY -1 item; SKILL_INTIMIDATION -1 item. PRINT (equipment/equipment-3067-2998.json) has the same four and no others: \"+1 item bonus to Stealth checks and to Deception checks to Impersonate a forgettable background character, such as a servant, but also taking a -1 item penalty to Diplomacy and Intimidation checks\"; the activation grants veil of privacy, which is a spell effect, not a skill bonus. OURS ships FIVE. src/rules/situationalBonuses.ts:2465 FEAT_SITUATIONAL[\"clandestine-cloak\"] ends with a fifth element: { targets: [{ kind: 'skill', detail: 'deception' }], when: \"never — placeholder removed\", bonus: \"+2 status\" }. It is live code, not commented out, and nothing filters it: entries"
+ },
+ {
+  "id": "harbingers-protection",
+  "batch": 17,
+  "verdict": "ALREADY-FIXED",
+  "confidence": "high",
+  "evidence": "[verified CONFIRMED, fix applied this pass] THEIRS (feat row, 13 ops): `adjValue HEAVY_ARMOR = {\"value\":\"T\"}` and then SIX conditionals that MIRROR the character's other armour ranks into heavy — IF LIGHT_ARMOR is E/M/L → adjValue HEAVY_ARMOR = E/M/L, and the same three off MEDIUM_ARMOR. OURS carries only the first op: src/rules/featGrantsAuto.ts:408 — 'harbingers-protection': { armor: { heavy: 'trained' } }. Grep of src/ for the id returns that line and nothing else; no featGrants.ts, featGrantsLane.ts, passiveEffects or proficiencies carrier exists. PRINT (feat-7509): \"You are trained in heavy armor. When you gain expert or greater proficiency in any type of armor, you also gain that proficiency in heavy armor.\" So a 13th-level battle harbinger whose class made them a master of medium armour wears heavy armour at TRAINED on our sheet — three ranks low — where their side has it at master. EXACT FIX: the field already exists and i"
+ },
+ {
+  "id": "inscribed-with-elders-deeds",
+  "batch": 17,
+  "verdict": "ALREADY-FIXED",
+  "confidence": "high",
+  "evidence": "[verified CONFIRMED, fix applied this pass] THEIRS (feat 51601): a `conditional` on `LEVEL GREATER_THAN_OR_EQUALS 13` — trueOperations = select ABILITY_BLOCK filtered {abilityBlockType:'feat', traits:['Orc'], level:{max:5}}; falseOperations = the same select with level:{max:1}. OURS caps at 1 forever: core.json choice { flag:'eldersDeedsFeat', kind:'open', daily:true, from:{ type:'feat', maxLevel:1, traits:['orc'] }, note:\"From 13th level you may instead choose a 5th-level orc ancestry feat…\" } — the 13th-level step lives only in that prose note, and no registry carries it (grep of src/ for the id returns nothing outside scripts/data/effect-backfill.json). PRINT (feat-7653) confirms their branch: \"granting you a 1st-level ancestry feat with the orc trait until you prepare again … At 13th level, you can instead gain a 5th-level ancestry feat with the orc trait.\" MEASURED: core.json has 10 orc-trait ancestry feats at level ≤1 and 19"
+ },
+ {
+  "id": "confounding-image",
+  "batch": 17,
+  "verdict": "ALREADY-FIXED",
+  "confidence": "high",
+  "evidence": "[verified CONFIRMED, fix applied this pass] THEIRS (raw): injectText with data.type='spell', data.id=5142 — i.e. the whole rewrite is attached TO THE MIRROR IMAGE SPELL RECORD, not to the feat. OURS: core.json feats.confounding-image carries only actionCost passive + archetype spell-trickster; it has no spellNotes, and grep of src/ (featGrants*, featFeatGrants, featPickGrants, featCantripGrants, companionGrants, situationalBonuses, modes.ts, consumable-modes.json, counterMods) for 'confounding-image' returns zero hits. PRINT (feat-3377) confirms the clause. EXACT DIFFERENCE: a Spell Trickster who opens Mirror Image on the Spells tab sees the spell as printed with no sign that a feat they own rewrites its duration to sustained-1-minute, its range to 30 feet and its entire effect; their side shows it there. This is the documented `spellNote` lane and it does NOT require the record to grant the spell — 8 records already annotate spel"
+ },
+ {
+  "id": "stoney-deflection",
+  "batch": 17,
+  "verdict": "ALREADY-FIXED",
+  "confidence": "high",
+  "evidence": "[verified CONFIRMED, fix applied this pass] THEIRS (raw): one op, adjValue STONE_BRAWLER_FEAT_COUNT = 1 — an internal archetype-feat tally, so their side gives no parity signal here. The mismatch is against PRINT. PRINT (feat-4373, and our own description): 'You gain a +2 circumstance bonus to AC and to any defenses against being Shoved or Tripped until the beginning of your next turn.' OURS: FEAT_SITUATIONAL['stoney-deflection'] at src/rules/situationalBonuses.ts:679 carries ONE entry with ONE target — targets [{kind:'ac'}], when 'until the beginning of your next turn, after you use Stoney Deflection while in Stonestrike Stance', bonus '+2 circumstance'. Grep of src/ for the id returns only that line; there is no mode in modes.ts and no other registry row. EXACT DIFFERENCE: the 'defenses against being Shoved or Tripped' half is delivered nowhere. Shove is rolled against your Fortitude DC and Trip against your Reflex DC, so a +2 c"
+ },
+ {
+  "id": "advanced-death-dealing",
+  "batch": 17,
+  "verdict": "ALREADY-FIXED",
+  "confidence": "high",
+  "evidence": "[verified CONFIRMED, fix applied this pass] THEIRS (raw): one select — {title:'Select a Feat', modeType:'FILTERED', optionType:'ABILITY_BLOCK', optionsFilters:{type:'ABILITY_BLOCK', abilityBlockType:'feat', level:{max:10}, traits:[5135]}}; I resolved trait 5135 in their trait table = 'Necromancer'. OURS matches and improves on that half: FEAT_PICK_GRANTS['advanced-death-dealing'] at src/rules/featPickGrants.ts:248 = {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['necromancer']} — a live half-level cap where theirs is a static 10 — and all 74 necromancer-trait feats ship as category 'class', so the picker resolves. EXACT DIFFERENCE (against print): AoN feat-9298 prints 'Special You can select this feat more than once. Each time you select it, you gain another necromancer feat.' Our core.json record carries no `maxTakable` at all, and maxTakes() at src/rules/featGrants.ts:665 returns 1 when the field is ab"
+ }
+]

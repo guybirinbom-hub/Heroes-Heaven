@@ -1,0 +1,386 @@
+[
+ {
+  "batch": 18,
+  "id": "spirit-striking",
+  "verdict": "MATCHES",
+  "evidence": "Reader chain: derive.ts:3612-3670 strikeDamageRiders — `for (const fid of ownedFeatureIds(c, db)) if (db.classFeatures[fid]?.strikeDamage) sources.push(...)` (ownedFeatureIds at derive.ts:3146 walks cls.features up to c.level), then `if (r.byStrikeProficiency) flat = Math.max(flat, RANK_I.indexOf(ctx.rank) >= 2 ? r.byStrikeProficiency[key] ?? 0 : 0)` — untrained/trained get 0, matching print's \"in which you are an expert\". Called for wielded weapons at derive.ts:4079 and for unarmed Strikes at derive.ts:4377, folded into the Strike's \"plus …\" damage text. WG's LEVEL<15 gate is reproduced by `flatByType.set(r.type, Math.max(existing, flat))` (\"Same-type flat riders don't stack — highest wins (Greater Spirit Striking replaces Spirit Striking)\"), so a 15th-level exemplar shows 4/6/8, not the sum. One deliberate improvement, not a divergence in outcome: WG keys off the single global SIMPLE_WEAPONS variable, ours keys off the actual Strike's rank (ctx.rank), which is what AoN class-feature-1071 prints — \"weapons and unarmed attacks in which you are an expert\"."
+ },
+ {
+  "batch": 18,
+  "id": "ash-gown",
+  "verdict": "MATCHES",
+  "evidence": "Print (C:\\wonderers guide\\aon-2e-archive\\data\\by-category\\equipment\\equipment-2599-2354.json): \"The gown grants you resistance 5 to fire and a +1 item bonus to Intimidation checks.\" Print agrees with OUR spelling; theirs is a data typo, not a divergence. Reader chains: (a) Intimidation — src/rules/derive.ts:241 itemInUse gate → derive.ts:262-289 passiveItemBonus(kind:'skill') reads pe.skills[skillKey] → derive.ts:566 `Math.max(abpSkillBonus, mpSenseSkillItemBonus, passiveItemBonus(c,db,'skill',key), …)` is the skill's item bonus. (b) fire 5 — derive.ts:2404-2423 walks c.inventory, gates on itemInUse, and pushes `{resistances: pe.resistances}` into the defense grants; derive.ts:2505 + 2558 fold it with `res.set(g.type, Math.max(...))`. Both render through explainDefense/explainStat (src/rules/explain.ts:916, 1487) into src/sheet/CharacterSheet.tsx:717."
+ },
+ {
+  "batch": 18,
+  "id": "quick-climb",
+  "verdict": "MATCHES",
+  "evidence": "Print (feat/feat-5192.json) matches the injectText word for word, so nothing WG encodes is missing. Reader chain for the climb Speed: src/rules/derive.ts:4657-4661 pushes every taken feat record into `grantSources`; derive.ts:4703-4706 loops `src.speedsIf` and gates on `PROFICIENCY_RANKS.indexOf(c.proficiencies.skills[g.skill]) >= PROFICIENCY_RANKS.indexOf(g.rank)` (legendary is the ceiling, so >= and WG's `EQUALS L` are the same set); derive.ts:4722 pushes the qualifying block into `gatedSpeeds`; derive.ts:4725-4737 resolves `\"@actor.speed.land\"` through resolveFormula against the already-finished land Speed and applies `speeds.climb = Math.max(existing, v)`. Comment at derive.ts:4700 names Quick Climb as the case. Swept the modifiesGrant lane (build.ts:5221-5233): no record modifies quick-climb — the only cross-reference is uncanny-suction's `speedsIf:[{feat:\"quick-climb\",…}]` (effect-backfill.json:142082-142093), which uses the same live gate at derive.ts:4711."
+ },
+ {
+  "batch": 18,
+  "id": "domain-spirit",
+  "verdict": "MATCHES",
+  "evidence": "Reader chain: build.ts:3247-3249 walks each owned record's effectChoices and reads build.effectChoices['<recordId>:<choiceId>'], build.ts:3292 pushes opt.grant.focusSpells into the focus list, build.ts:3314-3319 covers the repeatable/slot-keyed path, and build.ts:3745-3750 makes a feat whose focus spell arrives through an effectChoices OPTION count for the focus-casting entry; focusPoolBonus is handled at build.ts:3096-3108. Print (AoN feat-7573) enumerates exactly those 16 domains — \"You always have the option to select the healing or soul domain… creature: ambition, confidence, family, might, protection, or trickery… terrain: air, cities, darkness, earth, nature, travel, water, or wood\" — and \"You gain the initial domain spell for that domain. This domain spell is a Rivethun focus spell.\" WG's FILTERED select is looser than print (any rank-≤1 Domain focus spell); ours is the printed list, so no divergence to raise."
+ },
+ {
+  "batch": 18,
+  "id": "dominion-epithet",
+  "verdict": "MATCHES",
+  "evidence": "Reader chain: build.ts:4102-4111 resolves grantedChoiceFeats for every selected extra-choice option, reads build.grantedChoiceFeatTraits['grant:<optId>:<featId>'], defaults to allowed[0] and pushes the feat with its resolved choice; builder/shared.tsx:3090-3100 renders the energy-type picker; build.ts:7482-7485 round-trips the answer; build.ts:7715 keeps it out of the manual-slot count. content.feats['energized-spark'].choice offers the same 12 traits WG's block does, maxTakable null. critSpec is reached by derive.ts:3499-3502 (the ownedFeatureIds pass added specifically because \"8 exemplar epithets\" were unreachable). Print (AoN epithet-7/8/9/10/11/12) confirms the Energized Spark grants and their trait lists, and confirms Peerless under Heaven grants no feat — so print, WG's 38691 row and ours all agree."
+ },
+ {
+  "batch": 18,
+  "id": "expert-spellcaster",
+  "verdict": "MATCHES",
+  "evidence": "Reader chain: advancement.ts:672 advancementRows -> build.ts:3943 -> applyAdvancement build.ts:1239-1240 (track 'spellcasting' raises SpellcastingEntry.proficiency for entries keyed `${classId}-casting`, built at build.ts:3366) -> derive.ts:809-819 deriveSpellcasting, where the ONE proficiency feeds BOTH `attack` and `dc` — i.e. their two adjValues. Timeline: explain.ts:895/900 profTimeline. Class levels cross-checked against public/core.json classes[*].features (magus/summoner expert-spellcaster L9, the other eight L7), matching WG's own row levels. The CLASS_DC op is NOT a PF2e clause: wg 35051's own description reads \"You have formed a more powerful bond with your connection. Your proficiency ranks for class DC, spell attack modifier, and spell DC statistics increase to expert\" — the Starfinder Playtest Mystic/Witchwarper feature, a class we do not model. AoN class-feature-1154 (psychic printing) prints spell attack + spell DC only."
+ },
+ {
+  "batch": 18,
+  "id": "expert-necromancy",
+  "verdict": "MATCHES",
+  "evidence": "AoN class-feature-1299 (Impossible Magic p.27, Necromancer): \"Your proficiency ranks for spell attack modifier and spell DC increase to expert.\" Reader chain: advancement.ts:672 advancementRows -> build.ts:3943 -> applyAdvancement build.ts:1239-1240; the necromancer's entry is created at build.ts:3366 as `necromancer-casting`, so the ownerClassId prefix test passes (public/core.json classes.necromancer.spellcasting = {type:prepared, tradition:occult, keyAbility:int}). derive.ts:809-819 then derives attack AND dc from that one rank, covering both of their adjValues. Level cross-check: public/core.json classes.necromancer.features lists expert-necromancy at L7 = their row level. No other carrier needed; core.json classFeatures['expert-necromancy'] is a bare stub by design."
+ },
+ {
+  "batch": 18,
+  "id": "expert-runes",
+  "verdict": "MATCHES",
+  "evidence": "AoN class-feature-1322 (Impossible Magic p.43, Runesmith): \"Your proficiency rank for your runesmith class DC increases to expert.\" Print agrees with the E row, so the stale M row needs no owner call. Reader chain: advancement.ts:672 advancementRows -> build.ts:3943 -> applyAdvancement build.ts:1235 (`p.classDc = maxRank(...)`) -> derive.ts:4197 profBonus(c.proficiencies.classDc, ...) for the class DC number and derive.ts:609/675 for its breakdown. Base rank confirmed trained at L1 (public/core.json classes.runesmith.classDc = 'trained'), and classes.runesmith.features lists expert-runes at L7, matching their row level. No second carrier claims this rank (no skillProgression/effect-backfill row for expert-runes)."
+ },
+ {
+  "batch": 18,
+  "id": "kinetic-expertise",
+  "verdict": "MATCHES",
+  "evidence": "AoN class-feature-608 (Rage of Elements p.13, Kineticist): \"Your proficiency rank for your kineticist class DC increases to expert.\" Reader chain: advancement.ts:672 advancementRows -> build.ts:3943 -> applyAdvancement build.ts:1235 -> derive.ts:4197 / 609-675 (class DC value + its explain breakdown). Base rank trained (public/core.json classes.kineticist.classDc='trained'); classes.kineticist.features lists kinetic-expertise at L7, equal to their row level. Their record carries no second op, and our record needs none — the class DC is what impulse DCs read."
+ },
+ {
+  "batch": 18,
+  "id": "reflex-expertise",
+  "verdict": "MATCHES",
+  "evidence": "AoN class-feature-1127 (Battlecry! p.37, Guardian): \"Even in the heaviest of armors, you can brace yourself against widespread effects. Your proficiency rank for Reflex saves increases to expert.\" Reader chain: advancement.ts:672 advancementRows -> build.ts:3943 -> applyAdvancement build.ts:1241 (SAVE_TRACKS -> p.saves.reflex = maxRank(...)) -> derive.ts:207 (`const rank = c.proficiencies.saves[save]`) for the save number, explain.ts:900 profTimeline for its breakdown. Every class carrying the record's traits (barbarian, bard, champion, cleric, druid, guardian, sorcerer, thaumaturge, witch, wizard) has a row, and each row's level equals the level in public/core.json classes[*].features. Their record carries no second op, so nothing else is owed. (Magus's L5 Reflex-expert row is sourced 'lightning-reflexes' — the name Secrets of Magic actually prints; a label, not a number.)"
+ },
+ {
+  "batch": 18,
+  "id": "juggernaut",
+  "verdict": "MATCHES",
+  "evidence": "AoN class-feature-854 (Player Core 2 p.70, Barbarian) prints exactly their two clauses. Rank reader chain: advancement.ts:672 -> build.ts:3943 -> applyAdvancement build.ts:1241 -> derive.ts:207. Degree-shift reader chain: explain.ts:311-331 degreeShiftRecords (walks ownedFeatureIds -> db.classFeatures[id].degreeShifts) -> explain.ts:495-513 which turns saves:['fortitude'] into a SituationalTarget consumed by statHasSituational (explain.ts:565) for the `*` on the Fortitude row and its popup text, plus explain.ts:368-383 degreeShiftMarkers -> recordMarkersFor (explain.ts:601-610) for the action/feature mark. Level cross-check: classes.barbarian.features juggernaut L7 = their row level; classes.magus.features juggernaut L15."
+ },
+ {
+  "batch": 18,
+  "id": "confident-evasion",
+  "verdict": "MATCHES",
+  "evidence": "AoN class-feature-1020 (Player Core 2 p.158, Swashbuckler) prints exactly their two clauses. Rank reader chain: advancement.ts:672 -> build.ts:3943 -> applyAdvancement build.ts:1241 -> derive.ts:207. Degree-shift reader chain: explain.ts:311-331 -> explain.ts:495-513 -> statHasSituational (explain.ts:565) star + popup, and explain.ts:368-383 -> recordMarkersFor. Level cross-check: classes.swashbuckler.features confident-evasion L7 = their row level. Observation (not a WG gap, and systemic rather than family-specific): the FEAT_SITUATIONAL row at situationalBonuses.ts:3076 restates the record's own degreeShifts, so the clause reaches the Reflex popup twice — the same duplication the file's own comments (situationalBonuses.ts:208, 2970, 2989) say degreeShifts exists to end. chemical-hardiness, churning-mind, commanding-will, disciplined-mind and assured-evasion carry the same double."
+ },
+ {
+  "batch": 18,
+  "id": "evasive-reflexes",
+  "verdict": "MATCHES",
+  "evidence": "AoN class-feature-752 (Player Core p.164, Rogue) prints exactly their two clauses. Rank reader chain: advancement.ts:672 advancementRows -> build.ts:3943 -> applyAdvancement build.ts:1241 (p.saves.reflex = maxRank) -> derive.ts:207. Degree-shift reader chain: explain.ts:311-331 degreeShiftRecords -> explain.ts:495-513 (saves -> SituationalTarget) -> statHasSituational explain.ts:565 (`*` on the Reflex row + popup wording from DEGREE_SHIFT_TEXT), and explain.ts:368-383 degreeShiftMarkers -> recordMarkersFor explain.ts:601-610. Level cross-check: public/core.json classes.rogue.features lists evasive-reflexes at L7 = their row level. Unlike confident-evasion, this one has NO duplicate situationalBonuses.ts row, so the clause is stated once."
+ },
+ {
+  "batch": 18,
+  "id": "predatory-claws",
+  "verdict": "MATCHES",
+  "evidence": "Their raw op (wg-show --raw, their id 28682) is a single `giveItem {itemId:14167}` — the Claw unarmed item, no bonus/select values on it. Ours: public/core.json feats.predatory-claws.grantedStrikes = [{name:'Claw',die:'d4',damageType:'slashing',traits:['unarmed','agile','finesse'],group:'brawling'}] — every value the printed sentence names. LIVE READER CHAIN: src/rules/build.ts:2256 pushes `enhRec?.grantedStrikes` for each taken feat into naturalAttacks → src/rules/derive.ts:4551 `const naturals = (c.naturalAttacks ?? []).map(...)` wraps each in applyUnarmedRiders + deriveUnarmedStrike → returned in the Strikes list rendered on MainTab. Nothing of theirs is left over."
+ },
+ {
+  "batch": 18,
+  "id": "swordmaster-dedication",
+  "verdict": "MATCHES",
+  "evidence": "Their single op with values: `addBonusToValue variable=SAVE_REFLEX value=2 type=circumstance text=\"when foes attempt to Disarm you\"`. Ours at src/rules/situationalBonuses.ts:2486 first entry: `{targets:[{kind:'save',detail:'reflex'}], when:\"to your Reflex DC when a foe attempts to Disarm you\", bonus:\"+2 circumstance\"}` — same stat, same magnitude, same bonus type, same trigger text. Ours is a SUPERSET: two further entries cover the Deft Cooperation half (strikeAttack and skill/all, +2 circumstance instead of +1) which WG does not encode at all. READER CHAIN: FEAT_SITUATIONAL is consumed by featSituationalFor (situationalBonuses.ts:3481) → src/rules/explain.ts:564 statHasSituational / saveDcHasSituational:580 → src/sheet/VitalsRail.tsx (save rows, statMarkClass import line 45) and MainTab.tsx:28. The Special dedication clause is enforced generically by build.ts:649-728."
+ },
+ {
+  "batch": 18,
+  "id": "performative-weapons-training",
+  "verdict": "MATCHES",
+  "evidence": "Their 7 ops with values: adjValue WEAPON_FAMILIARITY = bo staff / dueling cape / spiked chain / sword cane / trident / war flail / whip (their remaster row 32641; their legacy row 22238 lists only 5 — ours matches the REMASTER set, which is what our aonId feat-6337 record is). Ours: src/rules/featGrantsLane.ts:171 `'performative-weapons-training': { weaponFamiliarity: { weapons: ['bo-staff','dueling-cape','spiked-chain','sword-cane','trident','war-flail','whip'], treatAsLowerCategory: true } }` — same 7, plus the 'treat as simple' half WG's flat adjValue cannot say. READER: featGrants.ts:25 imports FEAT_LANE_GRANTS into FEAT_GRANTS → src/rules/build.ts:5681-5687 walks `FEAT_GRANTS[fc.featId].weaponFamiliarity` and applies the lowered category. Crit-spec half is on the record (critSpec:true + critSpecWeapons.bases) → derive.ts:3438 `for (const f of c.feats) add(db.feats[f.featId], …)` → weaponMatches:3544."
+ },
+ {
+  "batch": 18,
+  "id": "choker-of-elocution",
+  "verdict": "MATCHES",
+  "evidence": "Their raw op (wg-item.mjs, their item id 6795): `addBonusToValue {variable:'SKILL_SOCIETY', value:1, type:'item', text:''}` — plus a Foundry mirror rule {key:FlatModifier, selector:society, type:item, value:1}. Ours: public/core.json items['choker-of-elocution'].passiveEffects = {skills:{society:1}}, sourced from scripts/data/effect-backfill.json:5377. READER CHAIN: src/rules/derive.ts:262 passiveItemBonus walks worn/invested inventory reading `db.items[inv.itemId]?.passiveEffects.skills[key]` → called at derive.ts:566 inside deriveSkills (`Math.max(abpSkillBonus, mpSenseSkillItemBonus, passiveItemBonus(c, db, 'skill', key), …)`) and named in the breakdown by passiveItemBonusDetail:329. Value, bonus type (item) and skill all agree; WG encodes nothing beyond this one op."
+ },
+ {
+  "batch": 18,
+  "id": "eidolons-wrath",
+  "verdict": "MATCHES",
+  "evidence": "Their ops with values (wg-show, id 22507): `giveSpell type=FOCUS` then `select optionType=CUSTOM` with EIGHT options whose injectTexts are acid / cold / electricity / fire / sonic / spirit / vitality / void. Ours matches option-for-option: public/core.json feats['eidolons-wrath'].focusSpells=['eidolons-wrath'] and .choice.options = the identical 8 values, plus spellNotes[{spellId:'eidolons-wrath',fromChoice:true,…}] (all three from effect-backfill.json:34282/103042). Their spell TYPE (FOCUS) matches our focusSpells lane, not innateSpells. READERS: build.ts:3070 `const ffs = (feat.focusSpells ?? []).filter(id => content.spells[id])` → featFocusSpells + \"Each granted spell carries its own pool point\" (build.ts:3080 comment / 3112 guard), which is how \"Increase the number of Focus Points in your focus pool by 1\" is paid. The choice answer is substituted at build.ts:5486-5490 (`n.note.replace(/\\{choice\\}/g, answer)`) → explain.ts:688 → SpellsTab.tsx:2226. Note both sides map the legacy negative/positive/alignment options to void/vitality/spirit identically, so there is no print-vs-WG conflict to escalate."
+ },
+ {
+  "batch": 18,
+  "id": "advanced-dogma",
+  "verdict": "MATCHES",
+  "evidence": "Their single op: `select optionType=ABILITY_BLOCK` labelled \"Select a Cleric Feat\" — no count, no level value stored on it. Ours: src/rules/featPickGrants.ts:251 `'advanced-dogma': { prompt: \"Choose a class feat\", category: 'class', maxLevel: 'half', traits: ['cleric'] }` — the same one-feat cleric pick, and `maxLevel:'half'` additionally encodes the prerequisite clause WG's bare select does not carry. READER CHAIN: FEAT_PICK_GRANTS is imported by src/rules/build.ts:60 and consumed at build.ts:4185 (`const spec = FEAT_PICK_GRANTS[fc.featId]`) to materialise the granted feat, and by src/builder/Builder.tsx:56/1648-1649 to render the picker (pickableFeats filters by category+traits+maxLevel). The repeatable Special is carried by `maxTakable: null` on the core.json record → src/rules/featGrants.ts:665 maxTakes() → Infinity, read by Builder.tsx:2107."
+ },
+ {
+  "batch": 18,
+  "id": "predictive-purchase",
+  "verdict": "MATCHES",
+  "evidence": "Their two `giveAbilityBlock type=feat` ops (snapshot matched their id 58187/20425) correspond exactly to our public/core.json feats['predictive-purchase'].grantsFeats = ['prescient-planner','prescient-consumable'] (overlay row scripts/data/effect-backfill.json:49312). Both target feats ship: prescient-planner (L3) and prescient-consumable (L7). READER CHAIN: src/rules/build.ts:4287 `for (const fc of [...feats]) grantSources.push({ id: fc.featId, grants: content.feats[fc.featId]?.grantsFeats })` → the granted feats enter the built feat list and render on FeatsTab. ⚠ The snapshot cross-matched their LEVEL-8 Twilight Talon row; the row that actually corresponds to our aonId feat-5953 (their id 32665, \"Predictive Purchase (Investigator)\", level 6) carries a THIRD op — see the residual below."
+ },
+ {
+  "batch": 18,
+  "id": "powerful-lash",
+  "verdict": "MATCHES",
+  "evidence": "Their single op (id 28224): `injectText type=item text=\"The damage die is increased to 1d6 instead of 1d4 and it has the [sweep] trait.\"` — text only, no structured values. Ours delivers the same mechanic COMPUTED, not narrated: public/core.json feats['powerful-lash'].unarmedTraits = {match:['lash'], add:['sweep'], stepDie:true} (overlay rows scripts/data/effect-backfill.json:49298 and :100836, the latter setting actionCost {actions:1} to match AoN's `<actions string=\"Single Action\"/>`). Target verified present: feats['thlipit-contestant-dedication'].grantedStrikes grants a Lash, d4, group flail. READER CHAIN: src/rules/derive.ts:4436 applyUnarmedRiders builds its `sources` list from `(c.feats ?? []).map(fc => ({rec: db.feats[fc.featId] …}))`, matches `r.match` against the strike name (derive.ts:4451), merges `add` traits and applies the die step; invoked on natural attacks at derive.ts:4555. So d4→d6 + sweep land on the Lash Strike row."
+ },
+ {
+  "batch": 18,
+  "id": "quick-unlock",
+  "verdict": "MATCHES",
+  "evidence": "Their single op (id 20450): `injectText type=action text=\"**Quick Unlock** You can Pick a Lock using 1 action instead of 2.\"` — action-scoped text, no values. Ours delivers the same on the same surface, with the changed cost structured: src/rules/situationalBonuses.ts:3693 `\"quick-unlock\": [{ on:'action', id:'pick-a-lock', value:\"1 action\", note:\"You Pick a Lock using 1 action instead of 2.\" }]`. Target verified: public/core.json actions['pick-a-lock'] exists. READER CHAIN: RECORD_MARKERS → markersFor (situationalBonuses.ts:3961-3976) → src/rules/explain.ts:594 recordMarkersFor → src/sheet/MainTab.tsx:631 `recordMarkersFor(character, content, 'action', actionId(a.name))`, which renders `(1 action)` inline with a star, and StatDetailModal.tsx:185 under Thievery. A second surface also exists: the feat-gated \"Quick Unlock\" row in src/rules/skillActions.ts:1020-1025 (costText \"1 action\", minRank master)."
+ },
+ {
+  "batch": 18,
+  "id": "bloodsense",
+  "verdict": "MATCHES",
+  "evidence": "⚠ SNAPSHOT CROSS-MATCH, verified: `node scripts/wg-show.mjs Bloodsense` returns \"No ability_block row whose name slugs to 'bloodsense'\" — WG does not carry our record (aonId feat-7761, PF #213, general L7, 15 ft) at all. The snapshot's theirOps ['giveAbilityBlock'] came from their DIFFERENT feat \"Blood Sense\" (their ids 21140/42805, level 5), whose chain is `giveAbilityBlock type=sense` → a sense block emitting `adjValue SENSES_IMPRECISE = \"blood sense, 30\"` — 30 ft, a different feat, so the 15/30 difference is not a delta against us (print for feat-7761 says \"a range of 15 feet\"). Structurally ours delivers the same shape their giveAbilityBlock does: public/core.json feats['bloodsense'].senses = [{name:'bloodsense', range:15, acuity:'imprecise'}]. READER CHAIN: src/rules/derive.ts:2365-2368 `for (const f of c.feats) { const feat = db.feats[f.featId]; if (feat) push(feat.name ?? f.featId, feat); }` inside deriveDefenses reads a feat record's own `senses` → addSense (derive.ts:2501/2559) → defenses.senses (2697) → rendered at src/sheet/VitalsRail.tsx:732-735 and DetailsTab.tsx:74/457, with the term's gloss from src/rules/glossary.ts:44 via senseDesc."
+ },
+ {
+  "batch": 18,
+  "id": "advanced-mysteries",
+  "verdict": "MATCHES",
+  "evidence": "Their one op: `select from:ABILITY_BLOCK \"Select a Feat\"`. Ours: src/rules/featPickGrants.ts:261 `'advanced-mysteries': { prompt: \"Choose a class feat\", category: 'class', maxLevel: 'half', traits: ['oracle'] }`. maxLevel:'half' is documented at featPickGrants.ts:22-25 as encoding \"your <class> level is equal to half your character level\" (a feat's own level IS the prereq), resolved in pickableFeats() at :308-309 `Math.floor(build.level/2)`. Reader chain: Builder.tsx:1648/2144 renders the picker (options = pickableFeats), answer stored in build.pickFeatChoices → src/rules/build.ts:4185-4199 grants the picked feat with its own effects, per-SLOT key so repeat takes each get their own pick. The Special repeatability rides on core.json feats.advanced-mysteries `maxTakable: null`, read by featGrants.ts:665-668 maxTakes() → Infinity."
+ },
+ {
+  "batch": 18,
+  "id": "staff-of-protection",
+  "verdict": "MATCHES",
+  "evidence": "Their one op: `addBonusToValue SAVE_FORT = \"+1\" text:\"to avoid being Shoved or Tripped\"`. Ours: src/rules/situationalBonuses.ts:1822 carries TWO rows — Fortitude (\"to your Fortitude DC against Shove, while wielding the staff\", +1 circumstance) and Reflex (\"to your Reflex DC against Trip\", +1 circumstance). Ours is a superset: print's \"shoved or tripped\" targets Fort DC (Shove) and Reflex DC (Trip), so the Reflex row is print-correct and WG simply omits it. Reader chain: situationalBonuses.ts:3489-3507 featSituationalFor → explain.ts:571 statHasSituational / :580 saveDcHasSituational → sheet/VitalsRail.tsx:45 + StatDetailModal.tsx. The staff's Cast-a-Spell half is core.json items.staff-of-protection `counters:[{id:'pool',max:'level',resetsOnRest:true}]` + `heldSpells` {0,1,2}, read by itemUses.ts:27-31 counterDefs and build.ts:6386-6390."
+ },
+ {
+  "batch": 18,
+  "id": "fulu-familiar",
+  "verdict": "MATCHES",
+  "evidence": "Their one op: `giveAbilityBlock` (the Create Familiar Fulu activity). Ours: core.json feats.fulu-familiar `grantsActions:[\"create-familiar-fulu\"]` + `limitedUses:{max:1,per:\"day\",maxByLevel:{12:2,18:3}}`, both durable in scripts/data/effect-backfill.json (#5477 grantsActions, #1286 limitedUses). core.json actions['create-familiar-fulu'] exists (2 actions, concentrate/manipulate, aonId action-2945 — the same <document id=\"action-2945\"/> AoN attaches to the feat). Reader chains: grantsActions → src/sheet/MainTab.tsx:268-270 (feat-granted actions folded into the actions list) and explain.ts:257; limitedUses+maxByLevel → src/rules/featUses.ts:40-45 (`for (const [lvl,n] of Object.entries(lim.maxByLevel)) if (c.level >= Number(lvl) && n > max) max = n`) → FeatsTab.tsx:427 / FeatDetail.tsx use pips. types.ts:2122-2124 names Fulu Familiar as the reason maxByLevel exists."
+ },
+ {
+  "batch": 18,
+  "id": "song-of-marching",
+  "verdict": "MATCHES",
+  "evidence": "Their one op: `giveSpell`. Ours: core.json feats.song-of-marching `focusSpells:[\"song-of-marching\"]` (durable overlay row scripts/data/effect-backfill.json #3503), and the spell record core.json spells['song-of-marching'] exists (rank 0, traits bard/cantrip/composition, 60-ft emanation, 1 hour, with its full description + heightened 6th/9th in core-descriptions.json). Reader chain: src/rules/build.ts:3070 `const ffs = (feat.focusSpells ?? []).filter((id) => content.spells[id])` → :3074-3077 pushes into featFocusSpells with focusSource[name], and each granted focus spell carries its own focus-pool point (comment at :3078-3080) → the class focus spellcasting entry built at build.ts:3802. Identical shape to the sibling composition feats song-of-strength and lingering-composition, which also carry focusSpells only."
+ },
+ {
+  "batch": 18,
+  "id": "advanced-shooting",
+  "verdict": "MATCHES",
+  "evidence": "Their one op: `select from:ABILITY_BLOCK \"Select a Feat\"`. Ours: src/rules/featPickGrants.ts:263 `'advanced-shooting': { prompt: \"Choose a class feat\", category: 'class', maxLevel: 'half', traits: ['gunslinger'] }`. maxLevel:'half' resolves at pickableFeats() featPickGrants.ts:308-309 to Math.floor(level/2), which is exactly the printed \"your gunslinger level is equal to half your level\" prerequisite cap (documented at :22-25). Reader chain: Builder.tsx:1648/2144 picker (options from pickableFeats) → build.pickFeatChoices → src/rules/build.ts:4185-4199 adds the chosen feat with its own effects, keyed per SLOT so a repeat take gets its own picker. Repeatability from core.json feats.advanced-shooting `maxTakable: null` → featGrants.ts:665-668 maxTakes() → Infinity."
+ },
+ {
+  "batch": 18,
+  "id": "grub-gloves-lesser",
+  "verdict": "MATCHES",
+  "evidence": "Their two ops: `addBonusToValue SKILL_ATHLETICS = 1` and `addBonusToValue SAVE_REFLEX = 2 text:\"to Grab an Edge. If you roll a success to Grab an Edge, you get a critical success instead\"`. Ours splits the second op's two halves across the two carriers built for them: (a) `passiveEffects:{skills:{athletics:1}}` (overlay #386) → src/rules/derive.ts:270-288 passiveItemBonus, gated on itemInUse, applied as an ITEM bonus; (b) src/rules/situationalBonuses.ts:1750 `[{ targets:[{kind:'save',detail:'reflex'}], when:\"on Reflex saves to Grab an Edge\", bonus:\"+2 circumstance\" }]` → featSituationalFor :3489 → explain.ts:571 → VitalsRail/StatDetailModal star; (c) `degreeShifts:[{shift:'successToCrit', when:'on a Reflex save to Grab an Edge', saves:['reflex'], actions:['grab-an-edge']}]` (overlay #7108) → explain.ts:318 and :365-382 degreeShiftMarkers → a RecordMarker on the grab-an-edge action row (core.json actions['grab-an-edge'] exists). Frequency: counters freq 1/day → itemUses.ts:27-31."
+ },
+ {
+  "batch": 18,
+  "id": "basic-magus-spellcasting",
+  "verdict": "MATCHES",
+  "evidence": "Their one op: `giveSpellSlot`. Ours delivers it by DERIVED ID, which is why the batch's ourFields/ourRegistries looked empty: src/rules/casterArchetypes.ts:100 `'magus-dedication': mk('arcane','int',2,'magus')` and mk() at :355-368 mints `basicId: 'basic-magus-spellcasting'`. Reader chain: activeCasterArchetype (:389-403) sets `tier.basic = taken.has(config.basicId)` → archetypeSlots (:429-442) walks RANK_UNLOCKS [[1,4,'basic'],[2,6,'basic'],[3,8,'basic']] → src/rules/build.ts:6024 then :6156-6162 builds the PREPARED archetype entry (magus is absent from SPONTANEOUS_DEDICATIONS at :344-353) with archetypeProficiency → 'trained'. That is exactly the printed basic bounded spellcasting benefits (1st-rank slot, 2nd at 6th, 3rd at 8th). test/caster-archetypes.test.ts:41-44 asserts c.feats[cfg.basicId] exists for every non-custom archetype, so the id linkage is covered."
+ },
+ {
+  "batch": 18,
+  "id": "explosion",
+  "verdict": "MATCHES",
+  "evidence": "Their one op: `giveAbilityBlock` (the Explode action). Ours: core.json feats.explosion `grantsActions:[\"explode\"]`, durable in scripts/data/effect-backfill.json #5446, and the target record core.json actions['explode'] exists (2 actions; traits fire/inventor/manipulate/unstable; aonId action-3656 — the same Actions.aspx?ID=902 AoN links from the feat). Reader chain: src/sheet/MainTab.tsx:264-270 collects `(f?.grantsActions ?? []).map((id) => ({ id, from: f }))` across the character's feats and renders each as an action row (with MainTab.tsx:631 pulling any RecordMarkers onto it); explain.ts:257 folds the same ids into the record's own explanation. Print's entire mechanical content is that one grant."
+ },
+ {
+  "batch": 18,
+  "id": "blakenshipper",
+  "verdict": "MATCHES",
+  "evidence": "Their one op: `addBonusToValue SKILL_PERFORMANCE = \"1\" text:\"while playing music with the blakenshipper\"`. Ours: src/rules/situationalBonuses.ts:2588 `\"blakenshipper\": [{ targets: [{ kind: 'skill', detail: 'performance' }], when: \"while playing music with the instrument\", bonus: \"+1 item\" }]` — same stat, same magnitude, same trigger scope, and the bonus TYPE (item) that print states and WG's raw op omits. Reader chain: situationalBonuses.ts:3489-3507 featSituationalFor → explain.ts:571 statHasSituational / SITUATIONAL lines → sheet/StatDetailModal.tsx + VitalsRail.tsx star beside Performance. Deliberately situational rather than a flat passiveEffects.skills bonus (effect-backfill #576 explicitly sets passiveEffects null for this item), because it applies only while playing the instrument. The 1/day activation is tracked via counters [{id:'freq',max:1,per:'day'}] + activationCost {actions:3} → itemUses.ts:27-31."
+ },
+ {
+  "batch": 18,
+  "id": "primeval-mistletoe",
+  "verdict": "MATCHES",
+  "evidence": "Their raw op tree (wg-item.mjs, item 7679) is exactly one op: {\"type\":\"addBonusToValue\",\"data\":{\"variable\":\"SKILL_NATURE\",\"value\":1,\"type\":\"item\",\"text\":\"\"}} — unscoped, item-typed, value 1. Ours: public/core.json items.primeval-mistletoe.passiveEffects.skills.nature = 1, written by the overlay row scripts/data/effect-backfill.json {category:\"items\",id:\"primeval-mistletoe\",field:\"passiveEffects\",value:{skills:{nature:1}}}. Live reader chain: src/rules/derive.ts:262 passiveItemBonus() reads db.items[inv.itemId].passiveEffects for every itemInUse inventory entry (line 279) → src/rules/derive.ts:566 folds it into the skill total as the item-bonus term → MainTab skill row. Same variable, same value, same bonus type, same (absent) scope. WG encodes nothing for either Activate, so their side is fully covered."
+ },
+ {
+  "batch": 18,
+  "id": "advanced-martial-magic",
+  "verdict": "MATCHES",
+  "evidence": "Their whole op tree (wg-show.mjs, their id 22466) is one op: `select optionType=ABILITY_BLOCK` — a single pick of one ability block, with no rank/count/filter values exposed in the dump. Ours encodes the pick with its filter: src/rules/featPickGrants.ts:259 'advanced-martial-magic': { prompt: \"Choose a class feat\", category: 'class', maxLevel: 'half', traits: ['magus'] } — `maxLevel:'half'` is the direct encoding of the printed \"your magus level is equal to half your character level\" (featPickGrants.ts:22-24 documents exactly that reasoning), and the magus pool is non-empty (71 class feats with the magus trait). Live reader chain: src/builder/Builder.tsx:1529 offers the picker for any fid in FEAT_PICK_GRANTS → answer stored in build.pickFeatChoices → src/rules/build.ts:4185 reads FEAT_PICK_GRANTS[fc.featId] and grants the picked feat with its own effects → build.ts:3191 even routes the pick through pushFocusBonus so a picked focus feat contributes its pool point. Repeatability: core.json feats.advanced-martial-magic.maxTakable = null, which featGrants.ts maxTakes() reads as unlimited."
+ },
+ {
+  "batch": 18,
+  "id": "food-preservation",
+  "verdict": "THEY-ENCODE-NOTHING-USEFUL",
+  "evidence": "Their entire op tree (wg-show.mjs, their id 37606) is a single `injectText type=feat text=\"When you use advanced alchemy to create alchemical food, you can designate one infused item to not automatically expire when you next make your daily preparations. When you preserve another item in this way, the previous item becomes inedible.\\n\\nThe number of items you can preserve … increases to two if you're an expert in Crafting or Cooking Lore, to three if you're a master, and to five if you're legendary.\"` — a verbatim reprint of the feat text into their sheet, carrying no variable, no bonus, no select, no grant. Ours delivers strictly MORE: core.json feats.food-preservation.choice = {flag:\"preservedFood\", prompt:\"Alchemical food to preserve?\", kind:\"text\", daily:true, note:\"…\"} (overlay row in effect-backfill.json). Live reader: derive.ts:1193 askedAtDailyPrep() returns true for daily+kind:'text' → src/rules/dailyChoices.ts:43 dailyChoicesFor() emits it → src/sheet/CharacterSheet.tsx:230 renders it on the daily-prep sheet."
+ },
+ {
+  "batch": 18,
+  "id": "propulsive-mutation",
+  "verdict": "THEY-ENCODE-NOTHING-USEFUL",
+  "evidence": "Their entire op tree (wg-show.mjs, their id 28228) is one op: `injectText type=feat text=\"**Propulsive Mutation** The range increases to 60 feet.\"` — a text splice into the sheet, no variable touched, no bonus, no grant. Nothing mechanical for a comparer to align against. Ours also carries no mechanical field (core.json feats.propulsive-mutation has only actionCost:{type:'passive'}, archetype, prerequisites); no row in effect-backfill.json, no FEAT_SITUATIONAL / RECORD_MARKERS entry (grep over src/ returns zero hits for propulsive-mutation), no counterMods/itemUses/modes entry. So on the parity half there is nothing on their side to miss — the real gap is the printed clause, reported below."
+ },
+ {
+  "batch": 18,
+  "id": "hedge-prison",
+  "verdict": "MATCHES",
+  "evidence": "Their whole op tree (wg-show.mjs, their id 34363) is one op: `giveSpell type=FOCUS` (no rank/tradition values carried on the op — the rank rides the spell record). Ours: core.json feats['hedge-prison'].focusSpells = ['hedge-prison'], plus the target spell core.json spells['hedge-prison'] (rank 3, primal, druid/focus/plant, 2-action, 30 ft, Reflex, heightening levels 5 → Large target, 7 → Huge target). Live reader chain: src/rules/build.ts:3070 `const ffs = (feat.focusSpells ?? []).filter(id => content.spells[id])` → :3075-3078 pushes them into featFocusSpells with focusSource, and the comment at :3079-3081 states the pool rule — \"Each granted spell carries its own pool point\" — so the printed \"Increase the number of Focus Points in your focus pool by 1\" is delivered automatically by the same grant rather than needing a separate focusPoolBonus. Spell then appears in the focus entry assembled at build.ts:3714."
+ },
+ {
+  "batch": 18,
+  "id": "advanced-rune-magic",
+  "verdict": "MATCHES",
+  "evidence": "Their whole op tree (wg-show.mjs, their id 58097) is one op: `select optionType=ABILITY_BLOCK`. Ours encodes the pick with its filter at src/rules/featPickGrants.ts:262 — 'advanced-rune-magic': { prompt: \"Choose a class feat\", category: 'class', maxLevel: 'half', traits: ['runesmith'] }; the pool is non-empty (52 class feats carry the runesmith trait) and `maxLevel:'half'` encodes \"your runesmith level is equal to half your character level\" (rationale at featPickGrants.ts:22-24). Live reader chain: src/builder/Builder.tsx:1529 renders the picker for any id in FEAT_PICK_GRANTS → stored in build.pickFeatChoices → src/rules/build.ts:4185 grants the picked feat with its own effects. Repeatability delivered: core.json feats.advanced-rune-magic.maxTakable = null (set by scripts/data/fixes.json:393, since an effect-backfill value:null would delete rather than set), read as unlimited by maxTakes() in featGrants.ts."
+ },
+ {
+  "batch": 18,
+  "id": "advanced-hunters-trick",
+  "verdict": "MATCHES",
+  "evidence": "Their whole op tree (wg-show.mjs, their id 19881) is one op: `select optionType=ABILITY_BLOCK`. Ours: src/rules/featPickGrants.ts:256 'advanced-hunters-trick': { prompt: \"Choose a class feat\", category: 'class', maxLevel: 'half', traits: ['ranger'] } — the ranger pool is non-empty (114 class feats with the ranger trait) and maxLevel:'half' is the direct encoding of \"your ranger level is equal to half your character level\" (featPickGrants.ts:22-24). Live reader chain: src/builder/Builder.tsx:1529 offers the picker for any FEAT_PICK_GRANTS id → build.pickFeatChoices → src/rules/build.ts:4185 grants the chosen feat with its own effects (and build.ts:3191 routes the pick through pushFocusBonus so a picked focus feat still contributes its pool point). Repeatable: core.json feats.advanced-hunters-trick.maxTakable = null → maxTakes() (featGrants.ts) returns Infinity, matching \"you can select this feat more than once\". Record also carries archetype:'ranger' and prerequisites:['Basic Hunter's Trick']."
+ },
+ {
+  "batch": 18,
+  "id": "butterflys-sting",
+  "verdict": "MATCHES",
+  "evidence": "Their whole op tree (wg-show.mjs, their id 29294) is one op: `giveAbilityBlock type=class-feature` — hand over the Sneak Attack class feature, with no dice value on the op. Ours delivers both halves: core.json feats['butterflys-sting'].grantsClassFeatures = ['sneak-attack'] AND precisionDice = {dice:1, die:'d6'} (two overlay rows in scripts/data/effect-backfill.json at 62718 and 62987). Live reader chain: src/rules/derive.ts:3221-3231 walks c.feats and adds every grantsClassFeatures id into the owned-feature set (fixed-point loop, so downstream grants also resolve) → src/rules/derive.ts:3305-3330 computes the sneak-attack line and, because the character is not a NATIVE sneak-attack class, reads db.feats[f.featId].precisionDice at line 3320 and freezes the output at 1d6. The comment at derive.ts:3305-3308 names this feat explicitly as the reason the cap exists — \"reading only the grant gave a 17th-level fighter with Butterfly's Sting the rogue's 4d6\" — so the printed \"You don't increase the number of dice as you gain levels\" is delivered, not just the grant."
+ },
+ {
+  "batch": 18,
+  "id": "draconic-verge",
+  "verdict": "MATCHES",
+  "evidence": "Their whole op tree (wg-item.mjs, item 18628) is one op: {\"type\":\"addBonusToValue\",\"data\":{\"variable\":\"SKILL_INTIMIDATION\",\"value\":\"1\",\"type\":\"item\",\"text\":\"to Demoralize\"}} — a flat +1 item to all Intimidation with the Demoralize scope carried only as annotation text. Ours encodes the scope as a real condition: src/rules/situationalBonuses.ts:2208 \"draconic-verge\": [{ targets:[{kind:'skill', detail:'intimidation'}], when:\"on Intimidation checks to Demoralize, while holding the verge\", bonus:\"+1 item\" }]. Live reader chain: situationalBonuses.ts:3480 entriesFor → :3489 featSituationalFor → src/rules/explain.ts:265-275 characterSituationalIds pushes inv.itemId for every itemInUse entry (the verge is held-in-1-hand, no invested trait needed) → src/sheet/MainTab.tsx:867 statHasSituational renders the star on the Intimidation row. Shape difference is deliberate per the gold-set ruling that conditional bonuses are situational stars — their flat number over-applies to non-Demoralize Intimidation, ours does not."
+ },
+ {
+  "batch": 18,
+  "id": "read-shibboleths",
+  "verdict": "MATCHES",
+  "evidence": "Their remaster record (wg-show.mjs, their id 32700) carries two ops: addBonusToValue SKILL_DIPLOMACY value=1 type=circumstance text=\"to checks against an individual you interacted with someone for at least 10 minutes\", and the identical op on SKILL_DECEPTION. (Their legacy twin, id 22279, encodes nothing.) Ours carries both, with the same value and the same bonus TYPE: src/rules/situationalBonuses.ts:748 \"read-shibboleths\": [{targets:[{kind:'skill',detail:'diplomacy'}], when:\"on checks with a person about whom you have gleaned one or more true minor facts (10+ minutes of interaction)\", bonus:\"+1 circumstance\"}, {targets:[{kind:'skill',detail:'deception'}], when: same, bonus:\"+1 circumstance\"}]. Live reader chain: situationalBonuses.ts:3480 entriesFor → :3489 featSituationalFor → explain.ts:240-241 characterSituationalIds (feat ids) → src/sheet/MainTab.tsx:867 star on the Diplomacy and Deception rows. No dcOnly star is owed: the \"against your Society DC\" clause states an opposed DC, it grants no bonus to it."
+ },
+ {
+  "batch": 18,
+  "id": "cloak-of-illusions",
+  "verdict": "MATCHES",
+  "evidence": "Their op tree (wg-item.mjs, item 6812) is three ops: (1) giveSpell {spellId:4620 (figment), type:\"INNATE\", rank:0, tradition:\"OCCULT\", castingSource:\"\"}; (2) adjValue PRIMARY_SHEET_TABS = \"spells\" — a pure sheet-tab toggle with no mechanical content; (3) addBonusToValue SKILL_STEALTH value=\"1\" type=\"item\" text=\"\". Ours matches op 1 and op 3 exactly: core.json items['cloak-of-illusions'].innateSpells = [{spellId:'figment', tradition:'occult', atWill:true}] and passiveEffects.skills.stealth = 1 (both from effect-backfill.json rows 5397/5407). Their rank:0 is figment's base rank (core.spells.figment.rank = 0, cantrip); our atWill with no rank auto-heightens, which is the PF2e innate-cantrip rule documented at types.ts:2131-2134. Live readers: src/rules/build.ts:6485-6490 walks invested inventory and pushes item.innateSpells into innateGrants; derive.ts:262/566 passiveItemBonus folds the Stealth +1 into the skill total."
+ },
+ {
+  "batch": 18,
+  "id": "venomed-tongue",
+  "verdict": "MATCHES",
+  "evidence": "Their whole op tree (wg-item.mjs, item 14939) is one op: {\"type\":\"addBonusToValue\",\"data\":{\"variable\":\"SKILL_DECEPTION\",\"value\":1,\"type\":\"item\",\"text\":\"\"}} — unscoped, item-typed, value 1. Ours: core.json items['venomed-tongue'].passiveEffects.skills.deception = 1, from the overlay row scripts/data/effect-backfill.json:4144 {category:\"items\",id:\"venomed-tongue\",field:\"passiveEffects\",value:{skills:{deception:1}}}. Live reader chain: src/rules/derive.ts:262 passiveItemBonus() reads db.items[inv.itemId].passiveEffects for each itemInUse entry (line 279) → src/rules/derive.ts:566 folds it in as the item term of the Deception total → MainTab skill row. Same variable, value, type and scope. Their record encodes nothing for the once-per-day Activate; ours carries counters [{id:'freq',per:'day'}] + activationCost {actions:1}, so the use is at least trackable."
+ },
+ {
+  "batch": 18,
+  "id": "advanced-field-training",
+  "verdict": "MATCHES",
+  "evidence": "THEIRS (wg-show, id 45702): one op — select, modeType FILTERED, optionType ABILITY_BLOCK, title \"Select a Feat\", optionsFilters {level:{max:10}, traits:[\"Commander\"], abilityBlockType:\"feat\"}. No other op.\nOURS: src/rules/featPickGrants.ts:252 'advanced-field-training': { prompt: \"Choose a class feat\", category: 'class', maxLevel: 'half', traits: ['commander'] } — same kind (pick one class feat), same trait filter, and maxLevel:'half' resolves to their static max 10 at level 20 while tracking print at lower levels (measured: 32 commander class feats <= 10 in core.feats).\nREADER CHAIN: build.ts:60 imports FEAT_PICK_GRANTS -> build.ts:4185 `const spec = FEAT_PICK_GRANTS[fc.featId]` folds the picked feat into the built feat list; src/builder/Builder.tsx:1648-1649 renders the picker. Repeatability: core.json feats.advanced-field-training maxTakable:null (types.ts:2661 \"null = unlimited\"), keyed per slot at build.ts:4775 / Builder.tsx:2107."
+ },
+ {
+  "batch": 18,
+  "id": "advanced-witchcraft",
+  "verdict": "MATCHES",
+  "evidence": "THEIRS (wg-show, id 19889): one op — select, FILTERED, ABILITY_BLOCK, title \"Select a Feat\", optionsFilters {level:{min:1,max:10}, traits:[\"Witch\"], abilityBlockType:\"feat\"}.\nOURS: src/rules/featPickGrants.ts:269 'advanced-witchcraft': { prompt: \"Choose a class feat\", category: 'class', maxLevel: 'half', traits: ['witch'] }. Same kind, same trait, same effective cap (40 witch class feats <= 10 in core.feats).\nREADER CHAIN: FEAT_PICK_GRANTS -> src/rules/build.ts:4185 (resolves the pick into character.feats) -> src/builder/Builder.tsx:1648 (offers the picker). The Special repeat clause is carried by core.json feats.advanced-witchcraft maxTakable:null (types.ts:2661), consumed slot-keyed at build.ts:4775.\nNo value inside their op is unmodelled: their level cap is a literal 10, ours is the printed formula, and neither side encodes anything else."
+ },
+ {
+  "batch": 18,
+  "id": "simple-crystal-magic",
+  "verdict": "MATCHES",
+  "evidence": "THEIRS (wg-show --raw, id 26594): giveSpell {spellId:4794, type:\"INNATE\", rank:null} and giveSpell {spellId:4835, type:\"INNATE\", rank:0}. Resolved against their spell table: 4794 = Read Aura (rank 0), 4835 = Sigil (rank 0). Neither op carries a tradition.\nOURS: public/core.json feats.simple-crystal-magic.innateSpells = [{read-aura, arcane, atWill:true},{sigil, arcane, atWill:true}] (written by scripts/data/effect-backfill.json row category=feats field=innateSpells).\nREADER CHAIN: src/rules/build.ts:6509 `for (const g of content.feats[f.featId]?.innateSpells ?? [])` collects the grant into the innate spell entry rendered on the Spells tab. atWill with no `rank` auto-heightens (types.ts InnateSpellGrant: \"An at-will cantrip grant with no `rank` auto-heightens\"), which delivers print's \"heightened to a spell rank equal to half your level rounded up\". We additionally encode the arcane tradition print states and they omit."
+ },
+ {
+  "batch": 18,
+  "id": "guangu-of-the-steppe",
+  "verdict": "MATCHES",
+  "evidence": "THEIRS (wg-item --raw, item 18560): one op — addBonusToValue {variable:\"SKILL_PERFORMANCE\", value:\"1\", type:\"item\", text:\"while playing music with the guangu of the steppe\"}. Nothing encodes the activation.\nOURS: src/rules/situationalBonuses.ts:2609 \"guangu-of-the-steppe\": [{ targets: [{ kind: 'skill', detail: 'performance' }], when: \"while playing music with the instrument\", bonus: \"+1 item\" }] — same stat, same value, same bonus type, same scope (our wording is print-verbatim where theirs substitutes the item name).\nREADER CHAIN: explain.ts:240 characterSituationalIds pushes inv.itemId when itemInUse (derive.ts:241 worn||invested||equipped) -> explain.ts:728 featSituationalLines -> explain.ts:965 skill breakdown -> StatDetailModal star. scripts/data/effect-backfill.json:6951 deliberately nulls passiveEffects so the conditional bonus stays a star rather than a flat +1.\nThe ally-facing activation is Ruling A/M territory (aura, allies' sheets) — text only."
+ },
+ {
+  "batch": 18,
+  "id": "aeon-stone-sprouting",
+  "verdict": "MATCHES",
+  "evidence": "THEIRS (wg-item --raw, item 6685): select {optionType:CUSTOM, title:\"Is this granting the resonant power?\"} with option \"No\" -> [] and option \"Yes\" -> giveSpell {spellId:4888, type:INNATE, rank:0, tradition:\"PRIMAL\"}. Their spell table: 4888 = Tangle Vine, rank 0.\nOURS: core.json items.aeon-stone-sprouting.resonant = { note, innateSpells:[{spellId:'tangle-vine', tradition:'primal', rank:0}] } (scripts/data/effect-backfill.json:152302). Same spell, same rank 0, same tradition — every value inside their giveSpell matches.\nREADER CHAIN: build.ts:6501 `if (item?.resonant && inv.designations?.includes('wayfinder-slotted'))` -> build.ts:6502-6504 pushes the innate grant and labels its source \"(resonant)\"; the designation the gate reads is offered by src/sheet/ItemDetail.tsx:491-495, which filters the option to items that actually carry `resonant`. Their select-question and our wayfinder-slotted designation are the same gate expressed two ways."
+ },
+ {
+  "batch": 18,
+  "id": "ring-of-sigils-greater",
+  "verdict": "MATCHES",
+  "evidence": "THEIRS (wg-item --raw, item 7711): one op — giveSpell {type:\"INNATE\", rank:0, spellId:4835}. Their spell table: 4835 = Sigil, rank 0. No tradition on the op; nothing encodes Track Sigil.\nOURS: core.json items.ring-of-sigils-greater.innateSpells = [{spellId:'sigil', tradition:'arcane', atWill:true}] (scripts/data/effect-backfill.json:131485). Same spell; their rank:0 and our atWill+no-rank are the same thing for a cantrip (types.ts InnateSpellGrant: at-will cantrip with no rank auto-heightens), and we additionally carry the arcane tradition print names.\nREADER CHAIN: src/rules/build.ts:6488 `for (const g of item?.innateSpells ?? [])` over invested inventory -> innate spell entry on the Spells tab.\nActivation half: we carry activationCost {actions:1} + a counter; they carry nothing. See residual for the counter's period."
+ },
+ {
+  "batch": 18,
+  "id": "arachnid-harness",
+  "verdict": "MATCHES",
+  "evidence": "THEIRS (wg-item --raw, item 11709): one op — adjValue {variable:\"RESISTANCES\", value:\"poison, 2\"} (their foundry meta mirrors it: rules [{key:\"Resistance\", type:\"poison\", value:2}]). Their meta_data also holds ac_bonus 1, dex_cap 4, check_penalty -1, category light, group leather, runes {potency:1} — chassis, not ops.\nOURS: core.json items.arachnid-harness.passiveEffects.resistances = [{type:'poison', value:2}] (scripts/data/effect-backfill.json:4165), plus matching acBonus 1 / dexCap 4 / checkPenalty -1 / speedPenalty 0 / strength 0 / category light / group leather.\nREADER CHAIN for the resistance: src/rules/derive.ts:2402-2422 walks inventory, gates on itemInUse (derive.ts:241), and pushes db.items[id].passiveEffects.resistances into deriveDefenses, which feeds the Defenses card / DefensesPills.\nTheir single op is fully matched; the two residuals below are chassis and activation, which their ops do not touch."
+ },
+ {
+  "batch": 18,
+  "id": "tubeworm-gland",
+  "verdict": "MATCHES",
+  "evidence": "THEIRS (wg-item --raw, item 14052): one op — addBonusToValue {variable:\"SAVE_FORT\", value:2, type:\"item\", text:\"against ingested diseases and poisons\"} (their foundry meta mirrors it as a FlatModifier on selector fortitude, predicate ingested + disease/poison).\nOURS: src/rules/situationalBonuses.ts:1845 \"tubeworm-gland\": [{ targets: [{ kind: 'save', detail: 'fortitude' }], when: \"on Fortitude saves against ingested diseases and poisons\", bonus: \"+2 item\" }] — identical stat, identical value, identical bonus type, identical scope text.\nREADER CHAIN: src/rules/explain.ts:240-275 characterSituationalIds pushes inv.itemId once itemInUse (derive.ts:241; the gland is `invested`, usage implanted) -> explain.ts:728 featSituationalLines -> explain.ts:1020 save breakdown -> the Fortitude star in VitalsRail/StatDetailModal. The record carries no passiveEffects, which is correct: the bonus is conditional, so it is a star and not a flat +2.\nThe printed text is one sentence of flavour plus this one clause; nothing else is encoded on either side."
+ },
+ {
+  "batch": 18,
+  "id": "clockwork-heels",
+  "verdict": "MATCHES",
+  "evidence": "THEIRS (wg-item --raw, item 15570): one op — addBonusToValue {variable:\"SPEED\", value:5, type:\"item\", text:\"\"}. No scope text, nothing else.\nOURS: core.json items.clockwork-heels.passiveEffects.speeds = {land: 5} (scripts/data/effect-backfill.json:3781).\nREADER CHAIN: src/rules/derive.ts:4681-4685 walks inventory, gates on itemInUse (derive.ts:241 — worn||invested||equipped, and the heels are usage 'wornshoes' so worn is enough) and pushes {speeds: pe.speeds} onto grantSources; src/rules/derive.ts:4725-4736 then applies it, and for key 'land' the lane is ADDITIVE (`speeds.land = (speeds.land ?? 0) + v`), so a 25-ft character walks 30. Value and target both match their op.\nThe only unmatched datum is their bonus TYPE ('item'): the speeds lane has no typed-bonus machinery at all (derive.ts:4735 comment: land grants are \"additive, untyped\"), which is systemic across every speed grant in the app, not a value delta on this record."
+ },
+ {
+  "batch": 18,
+  "id": "dirge-of-doom",
+  "verdict": "MATCHES",
+  "evidence": "THEIR op (wg-show, rows 20054 & 58205): giveSpell {spellId:4567 «Dirge of Doom», type:FOCUS, castingSource:BARD, rank:0}. OURS: public/core.json feats.dirge-of-doom.focusSpells=['dirge-of-doom'] (overlay scripts/data/effect-backfill.json:66937). READER: src/rules/build.ts:3070 `const ffs = (feat.focusSpells ?? []).filter(...)` -> featFocusSpells -> build.ts:3678 focusSpells assembly -> focus spellcasting entry + poolMax. VALUE parity checked, not just op names: their rank:0 = cantrip, and core.spells['dirge-of-doom'] is rank 0 with traits [bard,cantrip,composition] and NO 'focus' trait, so build.ts:3858 costsAFocusPoint excludes it from poolMax (build.ts:3907) — a composition cantrip that costs no Focus Point, exactly as their rank:0 says. castingSource BARD matches our bard-class focus entry (build.ts:3713 focusCls)."
+ },
+ {
+  "batch": 18,
+  "id": "advanced-maneuver",
+  "verdict": "MATCHES",
+  "evidence": "THEIR op (row 19882): select {title 'Select a Feat', modeType FILTERED, optionType ABILITY_BLOCK, optionsFilters {abilityBlockType:'feat', traits:['Fighter'], level:{min:1,max:10}}}. OURS: src/rules/featPickGrants.ts:258 'advanced-maneuver': {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['fighter']}. READER: build.ts:4185 `const spec = FEAT_PICK_GRANTS[fc.featId]` -> pickableFeats (featPickGrants.ts:300-337) -> Builder.tsx:1648/2144 renders the picker; the chosen feat is added with its own effects. VALUES: their fixed level max 10 is the printed 'fighter level = half your character level' frozen at level 20; our maxLevel:'half' (featPickGrants.ts:309 Math.floor(build.level/2)) is the same cap made dynamic. Repeatability: core maxTakable:null -> featGrants.ts:665 maxTakes = Infinity, and build.ts:4192-4195 keys the pick by SLOT so takes 2+ each grant a feat."
+ },
+ {
+  "batch": 18,
+  "id": "echolocation",
+  "verdict": "MATCHES",
+  "evidence": "The snapshot's theirOps ['giveAbilityBlock'] came from the WRONG WG row. Their ability_block table holds two feats named Echolocation: id 40543 (level 1, source 1, desc 'Your pet can use hearing as a precise sense within 20 feet') whose op is giveAbilityBlock->sense 21083 «Echolocation (precise 20 ft)», and id 27799 (level 6, source 185 = Howl of the Wild, text identical to our print) which wg-show reports as '(no operations)'. Our record is the level-6 werecreature feat (aonId feat-5493), so the correctly matched row encodes nothing. OURS delivers it anyway: public/core.json modes.echolocation {feats:['echolocation'], senses:[{name:'echolocation', range:40, acuity:'precise'}], duration:'until the start of your next turn', note covering Seek and Search} (overlay scripts/data/toggle-modes.json:1638). READER: modes.ts:513 contentGatedModes + modes.ts:520 modeRelevant gate it to a character holding the feat -> activeModes -> derive.ts:2455-2459 pushes m.senses into deriveDefenses().senses."
+ },
+ {
+  "batch": 18,
+  "id": "animists-power",
+  "verdict": "MATCHES",
+  "evidence": "THEIR op (row 39210): select {optionType ABILITY_BLOCK, FILTERED, optionsFilters {abilityBlockType:'feat', traits:['Animist'], level:{max:10}}}. OURS: featPickGrants.ts:235 'animists-power': {category:'class', maxLevel:'half', traits:['animist'], excludeTraits:['wandering']}. READER: build.ts:4185 -> pickableFeats featPickGrants.ts:319-336 (excludeTraits enforced at :330, trait match at :326, level cap at :320) -> Builder.tsx picker; repeatable via core maxTakable:null (featGrants.ts:665) with per-slot answer keys (build.ts:4192). VALUE note: WG's filter carries NO wandering exclusion, so their picker offers feats the printed text forbids ('You can't use this feat to gain animist feats with the wandering trait'); ours enforces it. Ours is a strict superset of their encoding and agrees with print, so no ASK-OWNER is raised."
+ },
+ {
+  "batch": 18,
+  "id": "flowing-palm-deflection",
+  "verdict": "MATCHES",
+  "evidence": "THEIR op (row 34857): injectText {type:'item', id:16222 = «Spirit Warrior Fist», text: '**Flowing Palm Deflection** When you [parry] with your fist, increase the circumstance bonus to AC it grants from +1 to +2.'} — a note pinned to the fist item. OURS: src/rules/situationalBonuses.ts:780 \"flowing-palm-deflection\": [{targets:[{kind:'ac'}], when:'while you are parrying with your fist', bonus:'+2 circumstance (up from +1)'}]. READER: featSituationalFor (situationalBonuses.ts:3489) -> explain.ts:564 statHasSituational / explain.ts:741 -> VitalsRail.tsx:45 AC star + tooltip. Same mechanic, different anchor: ours puts it where the number is read (Ruling J), and ~15 sibling parry feats (dueling-parry, raise-haft, aldori-parry, defensive-armaments) use the identical shape. The fist really does have parry: core.feats['spirit-warrior-dedication'].unarmedTraits = [{match:['fist'], setDie:'d6', add:['parry']}]."
+ },
+ {
+  "batch": 18,
+  "id": "grown-of-oak",
+  "verdict": "MATCHES",
+  "evidence": "THEIR op (row 20196): giveSpell {spellId:4744 «Oaken Resilience», type:INNATE, rank:2, tradition:'PRIMAL', casts:0}. OURS: core.json feats.grown-of-oak.innateSpells [{spellId:'oaken-resilience', tradition:'primal', atWill:true, rank:2, heightenAt:[{7,3},{9,4},{11,5},{13,6},{15,7},{17,8}]}] (overlay effect-backfill.json:9657). READER: build.ts:6509 `for (const g of content.feats[f.featId]?.innateSpells ?? [])`; the rank step resolves at build.ts:6598 `(g.heightenAt ?? []).filter(h => level >= h.level)`. Every value in their op is present in ours (spell, INNATE, primal, base rank 2, casts:0 = at-will), and ours additionally scales the rank, which theirs freezes at 2 forever. Residuals below are against PRINT, not against them."
+ },
+ {
+  "batch": 18,
+  "id": "scrollmaster-dedication",
+  "verdict": "MATCHES",
+  "evidence": "THEIR single op (row 25997): injectText {type:'feat', id:27121 = «Thorough Reports», text 'If you have expert proficiency in the skill you're using to Recall Knowledge, your circumstance bonus to Recall Knowledge about creatures you've identified increases to +4.'} — only the +4 clause, pinned to the other feat. OURS carries BOTH printed bonuses at src/rules/situationalBonuses.ts:774: [{targets:[{kind:'skill',detail:'all'}], when:'on checks to remember a detail that has already come up in the current adventure', bonus:'+2 circumstance'}, {targets:[{kind:'skill',detail:'all'}], when:'to Recall Knowledge about creatures via Thorough Reports, if you have that feat and expert proficiency in the skill used', bonus:'+4 circumstance (instead of +2)'}]. READER: featSituationalFor situationalBonuses.ts:3489 -> explain.ts:564/741 -> MainTab.tsx skill stars. Ours is a superset of theirs; only the anchor differs (skill rows vs the other feat's entry)."
+ },
+ {
+  "batch": 18,
+  "id": "red-mantis-school-spell",
+  "verdict": "MATCHES",
+  "evidence": "THEIR op (row 40184): giveSpell {spellId:7524 «Debilitating Terror», type:FOCUS, castingSource:'RED_MANTIS_ASSASSIN', rank:1}. OURS: core.json feats.red-mantis-school-spell.focusSpells=['debilitating-terror'] (overlay effect-backfill.json:8631) + focusPoolBonus:1. Print authority agrees: mirror arcane-school/arcane-school-23.json lists 'School Spells - Initial: Debilitating Terror'. READER: build.ts:3070 feat.focusSpells -> featFocusSpells -> build.ts:3678 focusSpells assembly. The pool clause is handled without a double point: core.spells['debilitating-terror'] carries the 'focus' trait, so build.ts:3858 costsAFocusPoint counts it into poolMax at build.ts:3907, while build.ts:3111 suppresses feat.focusPoolBonus because this feat contributed a spell (contributedSpell true at build.ts:3075) — i.e. exactly one point, matching 'if you don't already have one, you gain a focus pool of 1 Focus Point'."
+ },
+ {
+  "batch": 18,
+  "id": "advanced-arcana",
+  "verdict": "MATCHES",
+  "evidence": "THEIR ops: two rows, 27501 select {title 'Select a Wizard Feat', ABILITY_BLOCK, traits ['Wizard'], abilityBlockType 'feat', level {}} and 19876 select {title 'Select a Feat', same filter, level {max:10}}. OURS: src/rules/featPickGrants.ts:240 'advanced-arcana': {prompt:'Choose a class feat', category:'class', maxLevel:'half', traits:['wizard']}. READER: build.ts:4185 FEAT_PICK_GRANTS lookup -> pickableFeats featPickGrants.ts:319-336 -> Builder.tsx:1648/2144 picker, and the picked feat is granted with its own effects. VALUES: 'half' encodes the printed 'your wizard level is equal to half your character level' as the level cap (featPickGrants.ts:22-25, :309), which is what their max:10 approximates at level 20. Repeatable: core maxTakable:null -> featGrants.ts:665 maxTakes Infinity, with per-slot answer keys at build.ts:4192-4195 whose comment names Advanced Arcana explicitly."
+ },
+ {
+  "batch": 18,
+  "id": "advanced-qi-spells",
+  "verdict": "MATCHES",
+  "evidence": "THEIR op (row 32041): select {optionType SPELL, FILTERED, optionsFilters {level:{min:3,max:3}, traits:['Monk'], spellData:{type:'FOCUS', castingSource:'MONK'}}}. OURS: core.json feats.advanced-qi-spells.effectChoices[0].spellFilter {traits:['monk'], rank:3, grantAs:'focus'} (overlay effect-backfill.json:48204). READER: Builder.tsx:2205 spellsMatching(narrowSpellFilter(...)) renders the searchable picker; build.ts:3315-3325 reads the answer under the per-TAKING key (guarded by maxTakes(rec)>1 at build.ts:3313) -> grantForSpellPick (spellChoice.ts:32, grantAs 'focus' -> {focusSpells:[id]}) -> featFocusSpells -> poolMax. Filter parity verified against data rather than assumed: the only rank-3 monk-trait spells in core.json are qi-blast, shrink-the-span and ki-cutting-sight, all carrying the 'focus' trait, so omitting their spellData FOCUS clause admits nothing extra."
+ },
+ {
+  "batch": 18,
+  "id": "maestros-chair",
+  "verdict": "MATCHES",
+  "evidence": "THEIR only op (their item 15691): addBonusToValue {variable:'SKILL_PERFORMANCE', value:1, type:'item', text:\"when using the maestro's chair\"} — a flat +1 item plus a scope note. OURS carries both halves: the number in core.json items.maestros-chair.passiveEffects.skills.performance = 1 (overlay effect-backfill.json:3914), read by derive.ts:262 passiveItemBonus / derive.ts:329 passiveItemBonusDetail (gated on itemInUse, so it applies only while the chair is in use); and the scope in situationalBonuses.ts:1332 \"maestros-chair\": [{targets:[{kind:'skill', detail:'performance'}], when:\"on Performance checks made by playing the chair's built-in pipe organ (uses both hands)\", bonus:'+1 item'}], reached because explain.ts:265-275 pushes in-use inventory item ids into characterSituationalIds -> featSituationalFor situationalBonuses.ts:3489 -> explain.ts:564/741 -> Performance row star. Their op maps 1:1."
+ }
+]

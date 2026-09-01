@@ -42,6 +42,7 @@ export function PickerRow({
   disabledReason,
   chosen,
   dim,
+  sub,
 }: {
   /** Optional leading badge (a feat's level, a spell's cast cost, a ×count). */
   lead?: ReactNode;
@@ -65,6 +66,15 @@ export function PickerRow({
   chosen?: boolean;
   /** Dim the row (e.g. a feat whose prerequisites aren't met) — the body stays readable. */
   dim?: boolean;
+  /**
+   * A control belonging to the row — a sub-question the chosen option asks (the familiar ability Fast
+   * Movement asks WHICH Speed it raises).
+   *
+   * Rendered OUTSIDE `pick-body` deliberately: that body is a `<button>` whenever a description is
+   * available, and an interactive control nested inside a button is invalid markup whose clicks the
+   * description handler would swallow. `meta` sits inside the same button and cannot be used either.
+   */
+  sub?: ReactNode;
 }) {
   const body = (
     <>
@@ -104,6 +114,7 @@ export function PickerRow({
           {selectLabel}
         </button>
       )}
+      {sub}
     </div>
   );
 }

@@ -26,6 +26,31 @@ export const KINETIC_ELEMENTS = ['air', 'earth', 'fire', 'metal', 'water', 'wood
 const ARCHETYPE_ELEMENT_FEATS: readonly string[] = ['kineticist-dedication', 'add-element'];
 
 /**
+ * Where the Kinetic Gate's own question is stored: the `choice` on the `kinetic-gate` class feature,
+ * under the standard `feature:<id>` key. It is a class FEATURE choice rather than a second
+ * `extraChoices` group because `single`/`dual` are not content records — a group whose options are
+ * not classFeatures fails referential-integrity — and because the feature already renders its own picker.
+ */
+export const GATE_MODE_KEY = 'feature:kinetic-gate';
+
+/**
+ * How many elements the Kinetic Gate allows: "You can choose either a single gate (one element) or
+ * dual gate (two elements) at 1st level."
+ *
+ * ⚠ UNANSWERED IS **DUAL**, on purpose. Two is what every kineticist got before this question existed,
+ * and there is no migration hook that could fix them up if the default narrowed: saved records carry
+ * their own BuildState (App.tsx prefers `active.build` over `deriveBuildFromCharacter`), so they never
+ * pass through the reverse-derive. Defaulting to dual makes this change a no-op on disk.
+ *
+ * ONE rule, ONE place. Both readers ask here — `extraPickCount` (how many the picker may offer) and
+ * `kineticistElements` (how many you actually have). A second copy is how the impulse gate itself came
+ * to be written out three times.
+ */
+export function gateElementLimit(build: { featChoices?: Record<string, string> }): number {
+  return build.featChoices?.[GATE_MODE_KEY] === 'single' ? 1 : 2;
+}
+
+/**
  * A character's effective kinetic elements: the L1 gate picks plus any gained via Fork the Path at a
  * reached Gate's Threshold — or, for an ARCHETYPE kineticist, the elements their dedication and Add
  * Element named. Returns element option ids (e.g. 'fire-gate').
@@ -36,7 +61,12 @@ const ARCHETYPE_ELEMENT_FEATS: readonly string[] = ['kineticist-dedication', 'ad
  * archetype kineticist was offered every element's impulses regardless of what they chose.
  */
 export function kineticistElements(build: BuildState, level: number): string[] {
-  const base = build.extraChoices?.['element'] ?? [];
+  // Clamped at READ, never truncated in storage. Switching dual -> single after two elements were
+  // already picked must not destroy the second answer (switching back restores it), but it must not
+  // leave the character quietly holding two elements, two Elemental Blasts and two skill junctions
+  // while the sheet claims a single gate. This is the chokepoint: kineticistElements is what the
+  // blasts, the element skill grants and both impulse-feat filters all read.
+  const base = (build.extraChoices?.['element'] ?? []).slice(0, gateElementLimit(build));
   const forks = Object.entries(build.gateForks ?? {})
     .filter(([lvl, el]) => !!el && Number(lvl) <= level)
     .map(([, el]) => el);

@@ -17,7 +17,7 @@ import type {
   ArmorRunes,
 } from './types';
 import type { BuildState } from './build';
-import { CLASS_ADVANCEMENT } from './advancement';
+import { advancementRows } from './advancement';
 import { deriveInitiative } from './initiative';
 import { conditionPenalty } from './conditions';
 import { modeModifiersFor, hasConditionalMode, activeModesTouch, type ModeTarget } from './modes';
@@ -46,19 +46,26 @@ import {
   pwl,
   ownedFeatureIds,
   passiveItemBonusDetail,
+  passiveItemPenalty,
   dynamicItemSkillBonus,
   mpActive,
   shieldSwappedModes,
   skillSubstitutions,
+  skillAbilitySwapFor,
+  itemInUse,
+  resolveFormula,
 } from './derive';
 import { mpArmorRefine } from './monsterParts';
 import { traitLabel } from './glossary';
+import { KINETIC_ELEMENTS } from './kineticElements';
 import {
   choiceSituationalFor,
   featSituationalFor,
   hasFeatSituational,
   markersFor,
   poolSituationalLines,
+  setSituationalReplacements,
+  setSituationalSuppressions,
   spellMarkersFor,
   supersededIds,
   DEGREE_SHIFT_SHORT,
@@ -204,18 +211,74 @@ export function statHasActiveMode(c: Character, ref: StatRef): boolean {
  * callers that have it get feature bonuses too, callers that don't still get everything else rather
  * than nothing.
  */
-function characterSituationalIds(c: Character, db?: ContentDatabase): string[] {
+/**
+ * The element gates whose IMPULSE junction this character has, as `junction:<gate-id>` ids.
+ *
+ * Kinetic Gate: "You can choose either a single gate (one element) or dual gate (two elements)."
+ * Only the SINGLE GATE paragraph says "you gain an impulse junction" — the Dual Gate paragraph grants
+ * none. So the junction cannot be keyed on OWNING the element, which is exactly what
+ * FEAT_SITUATIONAL["earth-gate"] used to do: measured live, a level-1 earth+fire dual gate received
+ * "+1 circumstance from Earth Gate" on AC that the printed text does not grant.
+ *
+ * Reads the CHARACTER, not the BuildState, on purpose: `classChoices` carries the 1st-level gate picks
+ * and nothing else — a Fork the Path element lives in `build.gateForks`, which the classChoices emit
+ * never reads — so "exactly one element row" IS the printed "single gate (one element)", and it stays
+ * true after forking at a Gate's Threshold. It also survives every round trip (import, campaign copy,
+ * backup) that a BuildState-only answer would not.
+ *
+ * ⚠ Membership is tested against KINETIC_ELEMENTS, not a `/-gate$/` regex: the wizard ships
+ * `school-of-gates` and would otherwise answer here.
+ */
+function impulseJunctionIds(c: Character): string[] {
+  const isGate = (id?: string) => !!id && (KINETIC_ELEMENTS as readonly string[]).includes(String(id).replace(/-gate$/, ''));
+  const gates = (c.classChoices ?? []).filter((cc) => isGate(cc.id));
+  return gates.length === 1 ? [`junction:${gates[0].id}`] : [];
+}
+
+/** Exported so a guard can assert WHICH ids an inventory contributes — the item's own id follows the
+ *  item, while `trait:` ids and etched runes stay gated on the thing actually being in use. */
+export function characterSituationalIds(c: Character, db?: ContentDatabase): string[] {
   const ids: string[] = c.feats.map((f) => f.featId);
   if (c.ancestryId) ids.push(c.ancestryId);
   if (c.heritageId) ids.push(c.heritageId);
   if (c.backgroundId) ids.push(c.backgroundId);
   if (db) for (const id of ownedFeatureIds(c, db)) ids.push(id);
+  /*
+   * An ACTION a record hands you is its own record with its own id, and a bonus printed inside the
+   * action's text is naturally authored under THAT id — `pursue-a-lead`, not `on-the-case`. Owning
+   * the granter was the only test here, so every such entry was unreachable: the investigator's
+   * Pursue a Lead bonus and the ranger's Hunt Prey bonuses had been written and could never fire.
+   */
+  if (db) {
+    for (const rec of [
+      ...c.feats.map((f) => db.feats[f.featId]),
+      ...[...ownedFeatureIds(c, db)].map((id) => db.classFeatures[id]),
+      // The ancestry, heritage and background grant actions too (Envenom, Change Shape, Tail Toxin,
+      // Enlightenment in Adversity) — a star authored under the ACTION's id needs the grant followed
+      // from every collection that can make it.
+      c.ancestryId ? db.ancestries[c.ancestryId] : undefined,
+      c.heritageId ? db.heritages[c.heritageId] : undefined,
+      c.backgroundId ? db.backgrounds[c.backgroundId] : undefined,
+    ]) {
+      for (const a of (rec as { grantsActions?: string[] } | undefined)?.grantsActions ?? []) ids.push(a);
+    }
+  }
   // The property rune etched on the character's own body (Living Rune). It sits on no item, so the
   // inventory walk below cannot reach it and its situational bonuses would silently not apply.
   if (c.bodyRune) ids.push(c.bodyRune);
+  // IMPULSE JUNCTIONS. Owning an element gate is NOT the test — see `impulseJunctionIds`.
+  for (const id of impulseJunctionIds(c)) ids.push(id);
   for (const inv of c.inventory ?? []) {
-    if (!(inv.equipped || inv.worn || inv.invested)) continue;
-    ids.push(inv.itemId);
+    /* An item's bonuses need the item IN USE — a charm in your pack does nothing, which is the ruling
+     * the rest of this lane rests on. The exception is a clause whose printed trigger is CARRYING
+     * rather than wearing: the evercursed crystal reads *"a –1 item penalty to all saving throws
+     * against curse effects while carrying an evercursed crystal"*, and nothing in the app equips a
+     * loose crystal, so an equip test hid the clause instead of qualifying it. Marked per clause with
+     * `whileCarried`, because it is a property of the sentence, not of the item. */
+    const carriedOnly = (db?.items[inv.itemId]?.situational ?? []).some((s) => s.whileCarried);
+    if (carriedOnly) ids.push(inv.itemId);
+    if (!itemInUse(inv)) continue;
+    if (!carriedOnly) ids.push(inv.itemId);
     // Etching CONSUMES the loose rune item and records its id here, so `inv.itemId` never names it.
     // Without this, a rune's conditional bonuses vanished at exactly the moment the rune started
     // working — listed while it sat unused in your pack, silent once it was on the weapon.
@@ -325,6 +388,38 @@ function degreeShiftMarkers(c: Character, db?: ContentDatabase): Record<string, 
   return out;
 }
 
+/**
+ * Every `recordMarks` entry the character owns, keyed by the record that carries it.
+ *
+ * The data twin of the hand-authored `RECORD_MARKERS` table. Ownership uses the same routes the rest
+ * of the engine already trusts — a taken feat, an owned class feature, the background, ancestry and
+ * heritage — so nothing here invents a new notion of "has".
+ */
+function recordMarksFor(c: Character, db: ContentDatabase): Record<string, RecordMarker[]> | undefined {
+  let out: Record<string, RecordMarker[]> | undefined;
+  const take = (rec: { id?: string; recordMarks?: RecordMarker[] } | undefined) => {
+    if (!rec?.id || !rec.recordMarks?.length) return;
+    (out ??= {})[rec.id] = [...(out[rec.id] ?? []), ...rec.recordMarks];
+  };
+  for (const f of c.feats ?? []) take(db.feats?.[f.featId]);
+  for (const id of ownedFeatureIds(c, db)) take(db.classFeatures?.[id]);
+  take(db.backgrounds?.[c.backgroundId ?? '']);
+  take(db.ancestries?.[c.ancestryId ?? '']);
+  take(db.heritages?.[c.heritageId ?? '']);
+  /*
+   * ITEMS were missing from this walk, so an item's `recordMarks` was a WRITE-ONLY field: it would
+   * import, store, and never reach a sheet. Found when the Shootist Bandolier's printed clause —
+   * *"you reduce the reload time for a repeating hand crossbow magazine from the bandolier by 1"* —
+   * had nowhere to live that anything read. Gated on the item actually being in play, the same test
+   * the other item lanes use, so a bandolier in the backpack does not annotate an action.
+   */
+  for (const inv of c.inventory ?? []) {
+    if (!(inv.worn || inv.invested || inv.equipped)) continue;
+    take(db.items?.[inv.itemId] as { id?: string; recordMarks?: RecordMarker[] } | undefined);
+  }
+  return out;
+}
+
 function authoredSituational(c: Character, db?: ContentDatabase): ExtraSituational | undefined {
   let out: Record<string, SituationalBonus[]> | undefined;
   /*
@@ -354,12 +449,51 @@ function authoredSituational(c: Character, db?: ContentDatabase): ExtraSituation
     for (const b of choiceSituationalFor(f.featId, answer, f.choice?.label ?? answer)) ((out ??= {})[f.featId] ??= []).push(b);
   }
   if (!db) return out;
+  /*
+   * An item's authored clauses. In use by default — a charm in your pack does nothing — except for a
+   * clause whose printed trigger is CARRYING (see `whileCarried`), which is filtered in rather than
+   * letting one such sentence open the gate for the whole item.
+   */
   for (const inv of c.inventory ?? []) {
-    if (!(inv.equipped || inv.worn || inv.invested)) continue;
     const authored = db.items[inv.itemId]?.situational;
     if (!authored?.length) continue;
-    (out ??= {})[inv.itemId] = authored;
+    const inUse = itemInUse(inv);
+    const usable = inUse ? authored : authored.filter((s) => s.whileCarried);
+    if (usable.length) (out ??= {})[inv.itemId] = usable;
   }
+  /*
+   * The SAME field on every other kind of record the character owns.
+   *
+   * `situational` used to live on ItemBase, so a conditional bonus on a FEAT could only be expressed in
+   * the `FEAT_SITUATIONAL` code table — unreachable from a data pass. That made every situational
+   * disagreement the Wanderer's Guide comparison raised on a feat, class feature, background or
+   * heritage impossible to act on, which blocked the comparison method rather than any one record.
+   * The field is on ContentBase now; this is the reader that makes it do something.
+   *
+   * Ownership is by the same routes the rest of the engine already trusts — a feat the character took,
+   * a class feature they own, their background, ancestry and heritage — so nothing here invents a new
+   * notion of "has". Records whose entries REPLACE the shipped table register their id, and
+   * `entriesFor` reads that set instead of concatenating.
+   */
+  const replacing: string[] = [];
+  /* …and ids a record SILENCES: it grants another record's ability on different printed terms, so
+   * that record's shipped star would state a number this one forbids. Collected even when the
+   * silencing record authors no situational of its own. */
+  const suppressing: string[] = [];
+  const take = (rec: { id?: string; situational?: SituationalBonus[]; situationalReplaces?: boolean; suppressesSituational?: string[] } | undefined) => {
+    if (!rec?.id) return;
+    for (const s of rec.suppressesSituational ?? []) suppressing.push(s);
+    if (!rec.situational?.length) return;
+    (out ??= {})[rec.id] = rec.situational;
+    if (rec.situationalReplaces) replacing.push(rec.id);
+  };
+  for (const f of c.feats ?? []) take(db.feats?.[f.featId]);
+  for (const id of ownedFeatureIds(c, db)) take(db.classFeatures?.[id]);
+  take(db.backgrounds?.[c.backgroundId ?? '']);
+  take(db.ancestries?.[c.ancestryId ?? '']);
+  take(db.heritages?.[c.heritageId ?? '']);
+  setSituationalReplacements(replacing);
+  setSituationalSuppressions(suppressing);
   // DEGREE-OF-SUCCESS shifts fan out here into the SKILL and SAVE halves of ruling Q2. The ACTION half
   // comes from `degreeShiftMarkers` off the SAME field, so one authored entry reaches every surface it
   // names and the halves cannot drift apart — which is exactly what went wrong when they were two
@@ -481,6 +615,30 @@ export function recordMarkersFor(
   if (shifts) {
     extra = { ...(extra ?? {}) };
     for (const [id, marks] of Object.entries(shifts)) extra[id] = [...(extra[id] ?? []), ...marks];
+  }
+  /*
+   * …and the record's OWN `recordMarks`, the DATA route into this same channel.
+   *
+   * `RECORD_MARKERS` had exactly the right shape and was hand-authored code, so a data pass could not
+   * write one. That left a whole class of printed clause with nowhere to go — the ones that change an
+   * ACTION rather than a stat: Rune Singer ("you use the 2-action version of Trace Rune as a single
+   * action without needing an artisan's toolkit, and you remove the manipulate trait"), Titan Wrestler,
+   * Group Coercion, plus Whip Tail and Boots of Bounding from batch 001. Five wanters, and the
+   * Wanderer's Guide comparison rates their `injectText{type:'action'}` one of their two commonest
+   * operations, so the list only grows.
+   *
+   * ⚠ NOT expressible any other way. `situational` cannot hold it: SituationalTarget mirrors StatRef,
+   * so a clause naming no stat can never display. `modifiesGrant.actionRider` is gated on
+   * `ownedIds.has(mod.from)` over feats + classFeatures only, so it stays silent for a record whose
+   * target lives in the actions bucket.
+   *
+   * Merged rather than assigned, for the same reason the two above are: one record can carry a mark,
+   * modify a grant and shift a degree, and none of the three may silently drop the others.
+   */
+  const owned = db ? recordMarksFor(c, db) : undefined;
+  if (owned) {
+    extra = { ...(extra ?? {}) };
+    for (const [rid, marks] of Object.entries(owned)) extra[rid] = [...(extra[rid] ?? []), ...marks];
   }
   return markersFor(characterSituationalIds(c, db), on, id, extra);
 }
@@ -730,10 +888,17 @@ function modeAdjust(c: Character, target: ModeTarget, parts: CalcPart[]): Situat
   return situational;
 }
 
-/** The class advancement entries (subclass override first) up to the character's level. */
+/**
+ * The class advancement entries up to the character's level.
+ *
+ * Goes through `advancementRows` — the SAME lookup buildCharacter uses — because this function used
+ * to spell the lookup out itself and so knew only about bare subclass keys. It therefore missed every
+ * `<classId>-<subclassId>` supplement: a level-13 Reaper necromancer's AC was computed at expert
+ * medium armour, and clicking that AC showed a timeline with nothing in it at all.
+ */
 function advancementFor(c: Character) {
-  const list = (c.subclassId && CLASS_ADVANCEMENT[c.subclassId]) || (c.classId && CLASS_ADVANCEMENT[c.classId]) || [];
-  return list.filter((e) => e.level <= c.level);
+  if (!c.classId) return [];
+  return advancementRows(c.classId, c.subclassId).filter((e) => e.level <= c.level);
 }
 
 /** Timeline for a class-advancement track (saves / perception / classDc / spellcasting / armor),
@@ -759,7 +924,17 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
   switch (ref.kind) {
     case 'skill': {
       const d = deriveSkill(c, ref.skill, db);
-      const ability = skillAbilityOf(ref.skill);
+      /* A record may move a skill onto another attribute — Esoteric Lore runs off Charisma, Officer's
+       * Medical Training lets Medicine run off Intelligence. `skillAbilityOf` is a fixed map, so the
+       * breakdown printed the Int/Wis row while deriveSkill had already used the other one: parts that
+       * do not add up to their own total. Resolve it the same way the sheet does. */
+      const swap = skillAbilitySwapFor(c, db, ref.skill);
+      const printed = skillAbilityOf(ref.skill);
+      const ability: AbilityId =
+        !swap || swap.use === printed ? printed
+        : swap.mandatory ? swap.use
+        : abilityMod(c.abilities[swap.use]) > abilityMod(c.abilities[printed]) ? swap.use
+        : printed;
       const parts: CalcPart[] = [profPart(d.rank, lvl, pwl(c)), abilityPart(c, ability)];
       // Skill item bonus — the higher of ABP skill potency and a Monster-Parts refined skill item (they
       // don't stack; deriveSkill takes the max). List whichever wins so the parts reconcile with the total.
@@ -777,6 +952,15 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
           : mpSp > abpSp ? 'Monster Parts (refined)'
           : 'ABP skill potency';
         parts.push({ label, note: 'item bonus', value: skillItem });
+      }
+      /* An item PENALTY is its own line — deriveSkill adds it as a separate poolTypedMods term
+       * (shining hackle: −1 Stealth), so without this the breakdown stopped summing to the total. */
+      {
+        const pen = passiveItemPenalty(c, db, ref.skill);
+        if (pen) {
+          const src = (c.inventory ?? []).find((inv) => itemInUse(inv) && ((db?.items[inv.itemId]?.passiveEffects?.skills?.[ref.skill] ?? 0) < 0 || (c.resolvedItemPassives?.[inv.itemId]?.skills?.[ref.skill] ?? 0) < 0));
+          parts.push({ label: src ? db?.items[src.itemId]?.name ?? src.itemId : 'Item penalty', note: 'item penalty', value: pen });
+        }
       }
       if (ability === 'str' || ability === 'dex') {
         const acp = deriveArmorCheckPenalty(c, db, ref.skill);
@@ -1158,7 +1342,7 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
       // 15 feet"), then increased by every additive source. This mirrors deriveSpeeds exactly —
       // it previously used raise-to semantics for `speeds.land` while deriveSpeeds added it, so a
       // +5 from Fleet was in the total but missing from the parts, and the breakdown didn't sum.
-      const named: { name?: string; landSpeedBonus?: number; landSpeedMin?: number; speeds?: SpeedGrants }[] = [];
+      const named: { name?: string; landSpeedBonus?: number | string; landSpeedMin?: number; speeds?: SpeedGrants }[] = [];
       if (c.heritageId && db.heritages[c.heritageId]) named.push(db.heritages[c.heritageId]);
       for (const f of c.feats) {
         const ft = db.feats[f.featId];
@@ -1178,7 +1362,13 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
       }
       let preArmorLand = Math.max(ancestryLand, floor);
       for (const src of named) {
-        const add = (src.landSpeedBonus ?? 0) + (typeof src.speeds?.land === 'number' ? src.speeds.land : 0);
+        /* A formula-valued bonus (Vivacious Speed) is resolved the same way deriveSpeeds resolves it,
+         * so the breakdown still SUMS to the total — the property this block exists to preserve. */
+        const bonus =
+          typeof src.landSpeedBonus === 'string'
+            ? resolveFormula(src.landSpeedBonus, { level: c.level, abilities: c.abilities, speeds })
+            : (src.landSpeedBonus ?? 0);
+        const add = bonus + (typeof src.speeds?.land === 'number' ? src.speeds.land : 0);
         if (!add) continue;
         parts.push({ label: 'Speed increase', note: src.name, value: add });
         preArmorLand += add;

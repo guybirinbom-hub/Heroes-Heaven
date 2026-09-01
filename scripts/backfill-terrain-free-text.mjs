@@ -125,6 +125,19 @@ for (const [key, why] of Object.entries(CLOSED)) {
   const [bucket, id] = key.split('/');
   const rec = core[bucket]?.[id];
   if (!rec) die(`${key} does not exist — the closed list is stale`);
+  /*
+   * A record narrows a list in one of TWO ways, and this check knew only the first. Isgeri Reclaimer
+   * grants Terrain Stalker "in either rubble or underbrush" and now says so with `choiceOptionLimits`
+   * — it constrains the GRANTED feat's picker rather than carrying a choice of its own — so reading
+   * only `choice`/`effectChoices` reported it as a stale entry on a record that is doing exactly what
+   * this list claims. Its narrowing still has to be verified, so it is checked in its own shape: a
+   * limit that had gained a free-text escape would defeat the narrowing just as `allowCustom` would.
+   */
+  const limits = rec.choiceOptionLimits;
+  if (Array.isArray(limits) && limits.length) {
+    if (limits.some((l) => l.allowCustom)) die(`${key} opted in through choiceOptionLimits, but it is closed (${why})`);
+    continue;
+  }
   const def = rec.choice ?? rec.effectChoices?.[0];
   if (!def) die(`${key} has no choice — the closed list is stale`);
   if (def.allowCustom) die(`${key} opted in, but it is closed (${why})`);

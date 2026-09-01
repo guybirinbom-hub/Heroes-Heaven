@@ -65,6 +65,34 @@ export const NEAR_DUPLICATE_IDS = new Set([
   // none of the three). ⚠ Do NOT generalise this into a sweep from `npm run scan:dupe-feats` — that
   // scanner finds 40 colliding groups and its own EXEMPT notes record why no blanket rule works.
   'animal-empathy-druid', // -> animal-empathy
+  // A MISSPELLING, not a variant: 'exemplar-resilency' (one 'i') is the same feat as
+  // 'exemplar-resiliency'. The aon- twin was hidden but this one was not, so the picker offered the
+  // feat twice and the two carried different HP.
+  'exemplar-resilency', // -> exemplar-resiliency
+  // A MISSPELLING FAMILY, same rule: 'spore-shephards-staff' (a for e) triplicates the Spore
+  // Shepherd's Staff. The `aon-` twin was hidden; these three were not, so the picker offered TWO
+  // working staff families for one printed item. The kept ids are the correctly-spelled ones, which
+  // wg-parse and UMBRELLA_KEEP_IDS both already name canonical; they now carry the full staff
+  // (heldSpells + charge pool) via the overlay. Hidden, never deleted: a saved character keeps its pick.
+  'spore-shephards-staff', // -> spore-shepherds-staff
+  'spore-shephards-staff-greater', // -> spore-shepherds-staff-greater
+  'spore-shephards-staff-major', // -> spore-shepherds-staff-major
+  // TWO imports of the Knight Vigilant's Rallying Charge, under names too different for the exact-name
+  // pass to pair. MEASURED on the live db: a level-16 class slot offered `rallying-charge`,
+  // `rallying-charge-knight-vigilant` AND `rallying-charge-marshal`, the first two being one feat.
+  // The KEPT id is `rallying-charge-knight-vigilant`: it is the modelled record of the pair (parsed
+  // prose, an `actionCost`, and the `archetype: 'knight-vigilant'` that files it). The hidden one
+  // still carries the page's RAW SCRAPE as its description — "Rallying Charge Source Claws of the
+  // Tyrant pg. 112 Archetype Knight Vigilant Prerequisites…" — so a player who picked it read the
+  // scrape instead of the feat.
+  // ⚠ `rallying-charge-marshal` is a DIFFERENT feat (level 6, Marshal, 2 actions) and stays visible.
+  'rallying-charge', // -> rallying-charge-knight-vigilant
+  // A THIRD copy of AoN feat-6876, which the two automatic rules both miss: the `aon-` prefix rule
+  // hides `aon-no-hands-no-problems`, and the exact-name rule pairs nothing because this one is
+  // SINGULAR — "No Hands, No Problem" against the canonical "No Hands, No Problems". One letter.
+  // The kept id is `no-hands-no-problems`: it carries the aonId and the arcane/occult `effectChoices`,
+  // where this copy has no aonId and an occult-only `innateSpells` that offers no choice at all.
+  'no-hands-no-problem', // -> no-hands-no-problems
 ]);
 
 /**
@@ -228,7 +256,16 @@ function gradeSpellingDuplicates(db: ContentDatabase): string[] {
     if (ids.length < 2) continue;
     if (new Set(ids.map((i) => items[i].level ?? null)).size !== 1) continue; // different item — leave both
     if (new Set(ids.map((i) => copper(items[i].price))).size !== 1) continue;
-    // Keep the "Name (Grade)" spelling; hide the "Grade Name" one.
+    /*
+     * Keep the "Name (Grade)" spelling; hide the "Grade Name" one.
+     *
+     * ⚠ Do NOT "improve" this by preferring the half with the correct AoN BLOCK id. That was tried:
+     * the "Grade Name" rows do carry their own block id while the "Name (Grade)" rows reuse the family
+     * PAGE id — but the "Name (Grade)" rows are also the ones carrying the MECHANICS (usage, damage,
+     * activationCost). Flipping the survivor showed the better-linked record and the emptier one, on
+     * 170 pairs, which `test/grade-spelling-duplicates.test.ts` catches. The link is repaired on the
+     * surviving record instead — see the aonId repoint in scripts/fix-aonid-collisions.mjs.
+     */
     const prefixed = ids.filter((i) => !/\)\s*$/.test(items[i].name!));
     if (prefixed.length && prefixed.length < ids.length) out.push(...prefixed);
   }
@@ -363,9 +400,40 @@ export function listValues<T>(content: ContentDatabase, map: Record<string, T>):
   // Umbrella summaries hide through the same chokepoint as duplicate scrapes — both are records the
   // player should never be offered, and both stay resolvable by direct id lookup.
   const umbrellas = map === (content.items as unknown as Record<string, T>) ? content.umbrellaIds : undefined;
-  if (!dupes?.size && !umbrellas?.size) return Object.values(map);
+  /*
+   * A COMBINATION WEAPON'S FORMS hide through the same chokepoint, for the same reason.
+   *
+   * Its trait says *"switching between the melee weapon usage and the ranged weapon usage requires an
+   * Interact action"* — one weapon you own, two usages of it. The data ships three records per weapon
+   * (the base, plus `-melee` and `-ranged` twins) all priced identically, so a player searching "gun
+   * sword" was offered THREE buyable rows at 13 gp each: 54 shop rows for 18 weapons. The twins carry
+   * `formOf`, and like a duplicate scrape or an umbrella summary they stay resolvable by direct id
+   * lookup — the melee usage's stats have to be readable in order to be shown.
+   */
+  const forms = map === (content.items as unknown as Record<string, T>) ? content.combinationFormIds : undefined;
+  if (!dupes?.size && !umbrellas?.size && !forms?.size) return Object.values(map);
   const out: T[] = [];
-  for (const id in map) if (!dupes?.has(id) && !umbrellas?.has(id)) out.push(map[id]);
+  for (const id in map) {
+    if (dupes?.has(id) || umbrellas?.has(id) || forms?.has(id)) continue;
+    out.push(map[id]);
+  }
+  return out;
+}
+
+/**
+ * Ids that are a FORM of another weapon rather than a weapon you buy — `formOf` naming its base.
+ *
+ * Derived, never a hand-kept list: a form is any item whose `formOf` resolves to an item that exists.
+ * Authored on 36 records — 18 combination weapons × two usages.
+ */
+export function findCombinationFormIds(items: Record<string, unknown> | undefined): Set<string> {
+  const out = new Set<string>();
+  if (!items) return out;
+  const rec = items as Record<string, { formOf?: string }>;
+  for (const [id, it] of Object.entries(rec)) {
+    const base = it?.formOf;
+    if (base && base !== id && rec[base]) out.add(id);
+  }
   return out;
 }
 
@@ -411,6 +479,7 @@ function mergeWithSeed(core: Partial<ContentDatabase>): ContentDatabase {
     modes: merge(merge(CATALOG_MODE_MAP, c.modes ?? {}), loadModes()),
     stances: merge(seedContent.stances ?? {}, c.stances ?? {}),
     runes: c.runes ?? {},
+    runesmithRune: c.runesmithRune ?? {},
   };
   for (const id of EXCLUDED_FEATS) delete db.feats[id];
   // Carry over any EXTRA buckets core ships that aren't in the explicit list above — the glossary/reference
@@ -423,6 +492,7 @@ function mergeWithSeed(core: Partial<ContentDatabase>): ContentDatabase {
   // homebrew entry CAN be the canonical twin that unmasks a duplicate).
   db.duplicateIds = findDuplicateIds(db);
   db.umbrellaIds = findUmbrellaIds(db.items as unknown as Record<string, unknown>);
+  db.combinationFormIds = findCombinationFormIds(db.items as unknown as Record<string, unknown>);
   return db;
 }
 

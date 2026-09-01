@@ -640,14 +640,6 @@
   }
  },
  {
-  "name": "Tengu Feather Fan",
-  "via": "inline glyph",
-  "cost": {
-   "type": "actions",
-   "value": 1
-  }
- },
- {
   "name": "Plummeting Roll",
   "via": "inline glyph",
   "cost": {
@@ -723,29 +715,6 @@
   }
  },
  {
-  "name": "Inherit the Dreaming Heirloom",
-  "via": "inline glyph",
-  "cost": {
-   "type": "actions",
-   "value": 1
-  }
- },
- {
-  "name": "Rouse the Dreaming Relic",
-  "via": "inline glyph",
-  "cost": {
-   "type": "free"
-  }
- },
- {
-  "name": "Sever the Dreaming Shadow",
-  "via": "inline glyph",
-  "cost": {
-   "type": "actions",
-   "value": 2
-  }
- },
- {
   "name": "Morphic Strike",
   "via": "inline glyph",
   "cost": {
@@ -770,26 +739,10 @@
   }
  },
  {
-  "name": "Spirit Warrior Dedication",
-  "via": "inline glyph",
-  "cost": {
-   "type": "actions",
-   "value": 1
-  }
- },
- {
   "name": "Intercepting Hand",
   "via": "passive, grants action-2944",
   "cost": {
    "type": "passive"
-  }
- },
- {
-  "name": "Starlit Sentinel Dedication",
-  "via": "inline glyph",
-  "cost": {
-   "type": "actions",
-   "value": 1
   }
  },
  {
@@ -1106,30 +1059,6 @@
   }
  },
  {
-  "name": "Mask of The 12th Step",
-  "via": "inline glyph",
-  "cost": {
-   "type": "actions",
-   "value": 2
-  }
- },
- {
-  "name": "Mask of The 15th Step",
-  "via": "inline glyph",
-  "cost": {
-   "type": "actions",
-   "value": 2
-  }
- },
- {
-  "name": "Living God",
-  "via": "inline glyph",
-  "cost": {
-   "type": "actions",
-   "value": 3
-  }
- },
- {
   "name": "Rivethun Invoker Dedication",
   "via": "inline glyph",
   "cost": {
@@ -1428,14 +1357,6 @@
   }
  },
  {
-  "name": "I Am the Weapon",
-  "via": "inline glyph",
-  "cost": {
-   "type": "actions",
-   "value": 2
-  }
- },
- {
   "name": "Thaumaturge's Demesne",
   "via": "prose",
   "cost": {
@@ -1551,14 +1472,6 @@
   }
  },
  {
-  "name": "Talon's Mark",
-  "via": "inline glyph",
-  "cost": {
-   "type": "actions",
-   "value": 1
-  }
- },
- {
   "name": "Cayden's Freedom",
   "via": "passive, grants action-3759",
   "cost": {
@@ -1577,53 +1490,6 @@
   "via": "inline glyph",
   "cost": {
    "type": "free"
-  }
- },
- {
-  "name": "Avenger of Envy",
-  "via": "inline glyph",
-  "cost": {
-   "type": "actions",
-   "value": 2
-  }
- },
- {
-  "name": "Avenger of Gluttony",
-  "via": "inline glyph",
-  "cost": {
-   "type": "actions",
-   "value": 2
-  }
- },
- {
-  "name": "Avenger of Greed",
-  "via": "inline glyph",
-  "cost": {
-   "type": "actions",
-   "value": 2
-  }
- },
- {
-  "name": "Avenger of Lust",
-  "via": "inline glyph",
-  "cost": {
-   "type": "reaction"
-  }
- },
- {
-  "name": "Avenger of Sloth",
-  "via": "inline glyph",
-  "cost": {
-   "type": "actions",
-   "value": 2
-  }
- },
- {
-  "name": "Avenger of Wrath",
-  "via": "inline glyph",
-  "cost": {
-   "type": "actions",
-   "value": 2
   }
  }
 ]

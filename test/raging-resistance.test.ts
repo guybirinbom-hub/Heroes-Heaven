@@ -58,6 +58,17 @@ describe('each instinct resists what its own text says', () => {
     expect(undead?.value).toBe(resistOf(c, 'void'));
   });
 
+  /* The IWR breakdown names the record each line came from. `activeStateGrants` returned the clause
+   * without its owner, so every state-gated resistance in the game was attributed to a bare "Active
+   * state" — the reader asked for a `name` the clause never carried. A defence you cannot trace to
+   * the feature that granted it is the thing the breakdown exists to prevent. */
+  it('a state-gated resistance is attributed to the instinct that granted it', () => {
+    const d = deriveDefenses(barb(9, 'ligneous-instinct', true), db);
+    const from = (d.sources['resistance:piercing'] ?? []).map((s) => s.from);
+    expect(from).toContain('Ligneous Instinct');
+    expect(from).not.toContain('Active state');
+  });
+
   it('ligneous also takes the WEAKNESS its own clause imposes', () => {
     const c = barb(9, 'ligneous-instinct', true);
     const con = Math.floor((c.abilities.con - 10) / 2);

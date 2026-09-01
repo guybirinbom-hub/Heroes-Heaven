@@ -1,6 +1,13 @@
 import { describe, it, expect } from 'vitest';
 import { content, build } from './_content';
 
+/*
+ * ⚠ These name the CURRENT printings (Figment, Revealing Light), not the legacy ones they used to.
+ * Our corpus keeps superseded records so archive links resolve, and 48 grant routes were still pointing
+ * at them — a Cloak of Elvenkind cast Ghost Sound rather than Figment. Repointed from each legacy AoN
+ * page's own remaster_id pointer; scripts/superseded-grant-check.mjs keeps it that way.
+ */
+
 const c = content();
 
 /**
@@ -16,12 +23,12 @@ describe('spell grants from items and class features', () => {
     build('fighter', lvl, { inventory: [{ instanceId: 'i1', itemId, quantity: 1, invested }] });
 
   it('an INVESTED item grants its innate spell', () => {
-    expect(c.items['cloak-of-elvenkind']?.innateSpells?.[0]?.spellId).toBe('ghost-sound');
-    expect(JSON.stringify(withItem(5, 'cloak-of-elvenkind', true))).toContain('ghost-sound');
+    expect(c.items['cloak-of-elvenkind']?.innateSpells?.[0]?.spellId).toBe('figment');
+    expect(JSON.stringify(withItem(5, 'cloak-of-elvenkind', true))).toContain('figment');
   });
 
   it('the SAME item carried but not invested grants nothing', () => {
-    expect(JSON.stringify(withItem(5, 'cloak-of-elvenkind', false))).not.toContain('ghost-sound');
+    expect(JSON.stringify(withItem(5, 'cloak-of-elvenkind', false))).not.toContain('figment');
   });
 
   it("Hero's Defiance arrives at 19th level, not before", () => {

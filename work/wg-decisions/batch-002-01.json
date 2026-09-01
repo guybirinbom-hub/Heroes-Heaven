@@ -1,0 +1,143 @@
+[
+ {
+  "category": "feats",
+  "id": "folk-healer",
+  "field": "situational",
+  "value": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "medicine"
+     }
+    ],
+    "when": "to Treat Wounds and Treat Disease",
+    "bonus": "+1 circumstance"
+   }
+  ],
+  "why": "PRINTED: 'You gain a +1 circumstance bonus to Medicine checks to Treat Wounds and Treat Disease.' Our shipped entry at src/rules/situationalBonuses.ts:286 reads 'to Treat Wounds and similar Medicine tasks' — an open-ended widening the printed sentence does not license; the printed text names exactly two Medicine actions. READER: entriesFor() in src/rules/situationalBonuses.ts:3274 merges the record's authored `situational` (gathered by authoredSituational() in src/rules/explain.ts:379-384) with FEAT_SITUATIONAL, and featSituationalFor() (situationalBonuses.ts:3283) renders when/bonus in the Medicine popup. The record's other clauses are untouched: the two trained skills stay in src/rules/featGrantsAuto.ts:154 and the redundantFallback has no counterpart in their encoding (carve-out 1)."
+ },
+ {
+  "category": "feats",
+  "id": "covet-hoard",
+  "field": "situational",
+  "value": [
+   {
+    "targets": [
+     {
+      "kind": "perception"
+     }
+    ],
+    "when": "your Perception DC against attempts to Steal from you",
+    "bonus": "+2 circumstance"
+   },
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "against an effect targeting an item you're holding or carrying",
+    "bonus": "+2 circumstance"
+   }
+  ],
+  "why": "PRINTED: \"+2 circumstance bonus to your Perception DC against attempts to steal from you AND to any saving throw against an effect targeting an item you're holding or carrying.\" Two distinct triggers on two distinct stats. Our shipped entry (src/rules/situationalBonuses.ts:225) merges them into ONE entry with the combined `when` \"your Perception DC vs attempts to Steal from you, and saves vs effects targeting an item you hold or carry\" — so the Fortitude and Reflex star lists print a Perception-DC clause that does not apply to them, and the Perception list prints the item-save clause. Splitting restores one trigger per stat. READER: authoredSituational at src/rules/explain.ts:384 takes db.feats[featId].situational; featSituationalFor (situationalBonuses.ts:3283) matches per target; rendered in src/sheet/StatDetailModal.tsx:121. NOTE: no dcOnly on the perception target — statHasSituational (explain.ts:467) only honours dcOnly for kind 'save', and situationalList (explain.ts:652) would append \"not your own save\" to a Perception line; the `when` says \"your Perception DC\" instead."
+ },
+ {
+  "category": "feats",
+  "id": "stone-face",
+  "field": "situational",
+  "value": [
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "all"
+     }
+    ],
+    "when": "against effects with the fear trait",
+    "bonus": "+1 circumstance"
+   },
+   {
+    "targets": [
+     {
+      "kind": "save",
+      "detail": "will",
+      "dcOnly": true
+     }
+    ],
+    "when": "against Intimidation skill actions, such as Demoralize",
+    "bonus": "+2 circumstance"
+   }
+  ],
+  "why": "PRINTED: \"+1 circumstance bonus to saves against effects with the fear trait AND a +2 circumstance bonus to your Will DC against Intimidation skill actions, such as Demoralize.\" Two bonuses, different sizes, different scopes. Our shipped entry (src/rules/situationalBonuses.ts:450) carries only the fear entry and smuggles the second into its `bonus` string as \"+1 circumstance (also +2 to Will DC vs Demoralize)\" — so the FORTITUDE and REFLEX rows both advertise a Will-DC bonus, and the Will DC itself (the number an enemy's Demoralize rolls against) gets no star at all. `dcOnly: true` is the printed text's own wording — \"your Will DC\", not your Will save. READERS: authoredSituational (explain.ts:384); dcOnly is honoured for saves specifically — statHasSituational (explain.ts:471) keeps the `*` OFF the save's name and saveDcHasSituational (explain.ts:479-484) puts it beside the DC; situationalList (explain.ts:652) appends \"(raises the DC others roll against, not your own save)\". Identical shape already shipped for \"commanders-banner\" (situationalBonuses.ts:2468)."
+ },
+ {
+  "category": "feats",
+  "id": "scamper-underfoot",
+  "field": "situational",
+  "value": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "acrobatics"
+     }
+    ],
+    "when": "to Tumble Through the spaces of Medium or larger enemies",
+    "bonus": "+1 circumstance"
+   },
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "acrobatics"
+     }
+    ],
+    "when": "when you move through an enemy's square",
+    "bonus": "the enemy's presence doesn't make those squares difficult terrain"
+   }
+  ],
+  "why": "PRINTED: \"+1 circumstance bonus to Acrobatics checks to Tumble Through the spaces of Medium or larger enemies, AND the presence of an enemy doesn't make the squares difficult terrain.\" We encode only the first half (src/rules/situationalBonuses.ts:417); the terrain clause was nowhere in the data. The second entry is the effect-phrase shape the table already uses for a clause that moves no number — \"all-of-the-animal\" (situationalBonuses.ts:118) ships bonus: \"feeds you and one additional Medium creature…\" under the same rule. READER: authoredSituational (explain.ts:384) → featSituationalFor (situationalBonuses.ts:3283) → src/sheet/StatDetailModal.tsx:121. Filed on Acrobatics rather than an action row because RECORD_MARKERS is a code table with no data writer (already logged in work/wg-lane-backlog.md), and modifiesGrant cannot reach it: build.ts:4097 gates actionRider on ownedIds.has(from), which a universal skill action like Tumble Through never satisfies."
+ },
+ {
+  "category": "feats",
+  "id": "straveika",
+  "field": "situational",
+  "value": [
+   {
+    "targets": [
+     {
+      "kind": "perception"
+     }
+    ],
+    "when": "to Sense Motive, and on the Perception DC against attempts to Lie to you",
+    "bonus": "+1 circumstance"
+   }
+  ],
+  "why": "Printed: \"You gain a +1 circumstance bonus to Perception checks to Sense Motive AND Perception DCs against attempts to Lie to you.\" Our shipped entry (src/rules/situationalBonuses.ts:455) carries only \"to Sense Motive\" — the second half of the printed sentence, the Perception DC a liar rolls against, is nowhere in the record. Reader: ContentBase.situational (src/rules/types.ts:235) is collected by authoredSituational() in src/rules/explain.ts:379-388 for feats, and rendered via featSituationalFor -> StatDetailModal.tsx:121. One entry rather than two because the printed sentence is one bonus governing both uses; SituationalTarget has no perception-DC kind (src/rules/situationalBonuses.ts:25-43) and the `dcOnly` flag prints save-specific wording (explain.ts:652), so the DC clause has to ride in the `when` prose."
+ },
+ {
+  "category": "feats",
+  "id": "ravenings-desperation",
+  "field": "situational",
+  "value": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "survival"
+     },
+     {
+      "kind": "skill",
+      "detail": "stealth"
+     }
+    ],
+    "when": "while your current Hit Points are less than half your maximum — less than a quarter, +2 instead",
+    "bonus": "+1 circumstance"
+   }
+  ],
+  "why": "Printed: \"...you gain a +1 circumstance bonus to Survival and Stealth checks. If your current Hit Points are less than a quarter your maximum Hit Points, the circumstance bonus is +2 instead.\" Our shipped entry (src/rules/situationalBonuses.ts:393) says only \"(more below a quarter)\" and never states the printed +2, so the player is told a second tier exists but not its value. Same reader as above: ContentBase.situational -> authoredSituational (explain.ts:379-388) -> StatDetailModal.tsx:121. Targets and the +1 are unchanged."
+ }
+]

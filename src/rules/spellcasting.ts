@@ -135,11 +135,32 @@ export function magusStudiousSpells(level: number): { rank: number; spells: stri
   return { rank: 2, spells: ['sure-strike', 'water-breathing'] };
 }
 
+/**
+ * Sorcerer / oracle spell slots: the SAME rank ladder as a full caster with ONE MORE slot at every
+ * rank — 3 the level a rank opens, 4 thereafter, plus the capstone 10th-rank slot at 19th.
+ *
+ * Transcribed from the Archives of Nethys "Oracle Spells per Day" table (class-61, Player Core 2),
+ * which the class text also states in words: "Each day, you can cast up to three 1st-rank spells."
+ * The universal full-caster table starts at TWO, so an oracle was one slot short at every rank from
+ * 1st to 20th, and one repertoire pick short with it. The sorcerer table (class-62) is identical,
+ * but the sorcerer record stays on 'full' until the owner rules on it.
+ */
+export function fullPlusCasterSlots(level: number): Record<number, number> {
+  const slots: Record<number, number> = {};
+  for (let r = 1; r <= 9; r++) {
+    if (level >= 2 * r) slots[r] = 4;
+    else if (level === 2 * r - 1) slots[r] = 3;
+  }
+  if (level >= 19) slots[10] = 1; // capstone 10th-rank slot
+  return slots;
+}
+
 /** Spell slots per rank for the given class progression (defaults to full caster). */
 export function casterSlots(
   level: number,
-  progression: 'full' | 'two-rank' | 'psychic' | 'animist' = 'full',
+  progression: 'full' | 'full-plus' | 'two-rank' | 'psychic' | 'animist' = 'full',
 ): Record<number, number> {
+  if (progression === 'full-plus') return fullPlusCasterSlots(level);
   if (progression === 'two-rank') return twoRankCasterSlots(level);
   if (progression === 'psychic') return psychicSlots(level);
   if (progression === 'animist') return animistPreparedSlots(level); // prepared pool; apparition pool added separately

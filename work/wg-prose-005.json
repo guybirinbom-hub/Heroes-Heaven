@@ -1,0 +1,208 @@
+[
+ {
+  "id": "spelunker",
+  "name": "Spelunker",
+  "level": 1,
+  "printed": "Living underground, you have learned to find your way without landmarks or even solid ground. If you roll a success on a Survival check to Sense Direction or an Athletics check to Climb, you get a critical success instead. You're not off-guard when you attempt to Climb.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "degreeShifts": [
+    {
+     "shift": "successToCrit",
+     "when": "on a Survival check to Sense Direction or an Athletics check to Climb",
+     "skills": [
+      "survival",
+      "athletics"
+     ],
+     "actions": [
+      "sense-direction",
+      "climb"
+     ]
+    }
+   ],
+   "situational": [
+    {
+     "targets": [
+      {
+       "kind": "skill",
+       "detail": "athletics"
+      }
+     ],
+     "when": "when you attempt to Climb",
+     "bonus": "you aren't off-guard"
+    }
+   ]
+  },
+  "ourRegistries": [],
+  "theirProse": [
+   {
+    "variable": "SKILL_ATHLETICS",
+    "value": null,
+    "text": "when you roll a success on a check to Climb, you get a critical success instead. You're not off-guard when you attempt to Climb"
+   },
+   {
+    "variable": "SKILL_SURVIVAL",
+    "value": null,
+    "text": "when you roll a success on a check to Sense Direction, you get a critical success instead"
+   }
+  ]
+ },
+ {
+  "id": "haughty-obstinacy",
+  "name": "Haughty Obstinacy",
+  "level": 1,
+  "printed": "Your powerful ego makes it harder for others to order you around. If you roll a success on a saving throw against a mental effect that attempts to directly control your actions, you critically succeed instead. If a creature rolls a failure on a check to Coerce you using Intimidation, it gets a critical failure instead (so it can't try to Coerce you again for 1 week).",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "degreeShifts": [
+    {
+     "shift": "successToCrit",
+     "when": "on a save against a mental effect that directly controls your actions",
+     "saves": [
+      "all"
+     ]
+    }
+   ],
+   "situational": [
+    {
+     "targets": [
+      {
+       "kind": "skill",
+       "detail": "intimidation"
+      }
+     ],
+     "when": "when a creature Coerces you",
+     "bonus": "a failure on its Intimidation check becomes a critical failure (it cannot try again for a week)"
+    }
+   ]
+  },
+  "ourRegistries": [],
+  "theirProse": [
+   {
+    "variable": "SAVE_FORT",
+    "value": null,
+    "text": "If you roll a success against a mental effect that attempts to directly control your actions, you critically succeed instead."
+   },
+   {
+    "variable": "SAVE_REFLEX",
+    "value": null,
+    "text": "If you roll a success against a mental effect that attempts to directly control your actions, you critically succeed instead."
+   },
+   {
+    "variable": "SAVE_WILL",
+    "value": null,
+    "text": "If you roll a success against a mental effect that attempts to directly control your actions, you critically succeed instead."
+   }
+  ]
+ },
+ {
+  "id": "assurance",
+  "name": "Assurance",
+  "level": 1,
+  "printed": "Even in the worst circumstances, you can perform basic tasks. Choose a skill you're trained in. You can forgo rolling a skill check for that skill to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers). --- **Special** You can select this feat multiple times. Each time, choose a different skill and gain the benefits for that skill.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "maxTakable": null,
+   "choice": {
+    "flag": "assuredSkill",
+    "prompt": "Skill",
+    "kind": "skills",
+    "distinctAcrossTakes": true
+   }
+  },
+  "ourRegistries": [
+   {
+    "file": "situationalBonuses.ts",
+    "entry": "\"assurance\": [{ when: \"you forgo the roll; no other bonus, penalty or modifier applies\", bonus: \"take 10 + your proficiency bonus instead of rolling\" }],\n  // Prerequisite is \"Assurance in that skill\", so this star sits beside Assurance's own on the same\n  // skill — two different things the player does with it, and both belong where they look it up."
+   }
+  ],
+  "theirProse": [
+   {
+    "variable": "SKILL_ACROBATICS",
+    "value": null,
+    "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+   },
+   {
+    "variable": "SKILL_ARCANA",
+    "value": null,
+    "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+   },
+   {
+    "variable": "SKILL_ATHLETICS",
+    "value": null,
+    "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+   },
+   {
+    "variable": "SKILL_CRAFTING",
+    "value": null,
+    "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+   },
+   {
+    "variable": "SKILL_DECEPTION",
+    "value": null,
+    "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+   },
+   {
+    "variable": "SKILL_DIPLOMACY",
+    "value": null,
+    "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+   },
+   {
+    "variable": "SKILL_INTIMIDATION",
+    "value": null,
+    "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+   },
+   {
+    "variable": "SKILL_MEDICINE",
+    "value": null,
+    "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+   },
+   {
+    "variable": "SKILL_NATURE",
+    "value": null,
+    "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+   },
+   {
+    "variable": "SKILL_OCCULTISM",
+    "value": null,
+    "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+   },
+   {
+    "variable": "SKILL_PERFORMANCE",
+    "value": null,
+    "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+   },
+   {
+    "variable": "SKILL_RELIGION",
+    "value": null,
+    "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+   },
+   {
+    "variable": "SKILL_SOCIETY",
+    "value": null,
+    "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+   },
+   {
+    "variable": "SKILL_STEALTH",
+    "value": null,
+    "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+   },
+   {
+    "variable": "SKILL_SURVIVAL",
+    "value": null,
+    "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+   },
+   {
+    "variable": "SKILL_THIEVERY",
+    "value": null,
+    "text": "You can forgo rolling a skill check to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)"
+   }
+  ]
+ }
+]

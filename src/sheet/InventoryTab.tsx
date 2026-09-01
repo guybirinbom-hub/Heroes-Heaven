@@ -654,7 +654,26 @@ export function InventoryTab({
   const carried = loose.filter((inv) => isContainer(inv) || !(inv.worn || inv.equipped || inv.invested)).filter(match);
   // Only items that are actually investable (carry the `invested` trait) count toward the
   // 10-item cap — not anything that happens to have a stale invested flag.
-  const investedCount = character.inventory.filter((inv) => inv.invested && resolve(inv)?.traits?.includes('invested')).length;
+  /*
+   * …and items sharing an `investmentGroup` count ONCE between them: *"No matter how many magical
+   * medals you have, they COLLECTIVELY COUNT AS ONE invested item."* All five medals each consumed a
+   * slot of the ten, so a decorated soldier lost half their investments to their own medals. An item
+   * with no group counts individually, which is every other item in the game.
+   */
+  const investedCount = (() => {
+    const groups = new Set<string>();
+    let n = 0;
+    for (const inv of character.inventory) {
+      const item = resolve(inv);
+      if (!inv.invested || !item?.traits?.includes('invested')) continue;
+      const group = (item as { investmentGroup?: string }).investmentGroup;
+      if (!group) { n++; continue; }
+      if (groups.has(group)) continue;
+      groups.add(group);
+      n++;
+    }
+    return n;
+  })();
   const investedLimit = character.investedLimit ?? INVESTED_LIMIT;
   /**
    * Which "this item IS my …" marks this character can use. Offered only where the class actually has
@@ -681,6 +700,10 @@ export function InventoryTab({
     if (owned.has('wizard')) out.push({ kind: 'bonded', label: 'Bonded item' });
     if (hasIkon) out.push({ kind: 'ikon', label: 'Ikon' });
     out.push({ kind: 'rune-source', label: 'Rune source' });
+    /* Offered to everyone, like `rune-source`: slotting an aeon stone into a wayfinder is not
+     * class-specific, and the mark is what turns a stone's RESONANT power on. Only aeon stones can use
+     * it, which the per-item gate below enforces — nothing else carries `resonant`. */
+    out.push({ kind: 'wayfinder-slotted', label: 'Slotted in a wayfinder' });
     return out;
   }, [character.classId, character.classId2, character.feats, content]);
   // When the character holds more than one instance of the same item, number them (" 1", " 2", …)

@@ -58,6 +58,15 @@ export interface FormulaGrantSpec {
    *  Alchemy prepare list and the Quick Alchemy picker (ruling Q19). */
   alchemical?: boolean;
   parts: FormulaGrantPart[];
+  /**
+   * Records whose formula list this one REPLACES rather than adds to.
+   *
+   * *"You gain the Alchemical Crafting feat, EXCEPT you must select the following items to add to your
+   * formula book…"* (Skilled Herbalist). The granter hands Alchemical Crafting over, so both records
+   * were owned and both specs fired: the character wrote the three named herbal formulas AND the four
+   * free common formulas belonging to the very list this one was supposed to override.
+   */
+  supersedes?: string[];
 }
 
 /*
@@ -110,6 +119,10 @@ export const FORMULA_GRANTS: Record<string, FormulaGrantSpec> = {
   'skilled-herbalist': {
     book: true,
     alchemical: true,
+    /* *"You gain the Alchemical Crafting feat, EXCEPT you must select the following items…"* — this
+     * list is Alchemical Crafting's, replaced. Without this both fired and the herbalist wrote four
+     * extra free formulas. */
+    supersedes: ['alchemical-crafting'],
     parts: [
       { label: 'Named herbal formula', fixed: ['antidote-lesser', 'antiplague-lesser', 'elixir-of-life-minor'] },
       { label: 'Common 1st-level alchemical formula', count: 1, traits: ['alchemical'], maxLevel: 1, rarities: ['common'] },
@@ -206,7 +219,10 @@ export interface FormulaSlot {
 export function formulaGrantsOwned(featIds: Iterable<string>, featureIds: Iterable<string>): string[] {
   const out: string[] = [];
   for (const id of [...featIds, ...featureIds]) if (FORMULA_GRANTS[id] && !out.includes(id)) out.push(id);
-  return out;
+  /* A record that REPLACES another's list wins over it — see `supersedes`. Resolved after collection
+   * so it does not matter which of the pair was reached first. */
+  const superseded = new Set(out.flatMap((id) => FORMULA_GRANTS[id]?.supersedes ?? []));
+  return superseded.size ? out.filter((id) => !superseded.has(id)) : out;
 }
 
 /** True when one of these records hands the character a formula book. */

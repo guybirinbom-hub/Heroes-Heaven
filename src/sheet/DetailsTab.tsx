@@ -112,6 +112,13 @@ export function DetailsTab({
     rank,
     desc: content.items[id]?.description,
   }));
+  // Named-armour overrides (Armiger's Protection's Hellknight suits) — the armour twin of the rows
+  // above, and otherwise invisible here while quietly setting AC in those specific suits.
+  const armorOverrideRows: ProfRow[] = Object.entries(character.proficiencies.armorOverrides ?? {}).map(([id, rank]) => ({
+    name: content.items[id]?.name ?? cap(id),
+    rank,
+    desc: content.items[id]?.description,
+  }));
   // Group-wide familiarity ("treat bombs as simple weapons"), which is a rule rather than a list of
   // weapons — it would otherwise be invisible here while quietly raising 172 Strikes.
   const groupRanks: ProfRow[] = (character.proficiencies.weaponGroupRanks ?? []).map((r) => ({
@@ -151,7 +158,7 @@ export function DetailsTab({
 
   const groups: { label: string; rows: ProfRow[] }[] = [
     { label: 'Attacks', rows: [...attacks, ...groupTracks, ...firearmRows, ...groupRanks, ...overrides] },
-    { label: 'Defenses', rows: defenses },
+    { label: 'Defenses', rows: [...defenses, ...armorOverrideRows] },
     { label: 'Spellcasting', rows: spellRows },
     { label: 'Class', rows: [{ name: 'Class DC', rank: character.proficiencies.classDc, desc: proficiencyDesc('classDc') }] },
   ].filter((g) => g.rows.length > 0);

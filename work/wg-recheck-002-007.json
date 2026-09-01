@@ -1,0 +1,4202 @@
+{
+ "deitys-domain": {
+  "id": "deitys-domain",
+  "bucket": "feats",
+  "name": "Deity's Domain",
+  "level": 1,
+  "batch": 2
+ },
+ "extended-kinesis": {
+  "id": "extended-kinesis",
+  "bucket": "feats",
+  "name": "Extended Kinesis",
+  "level": 1,
+  "batch": 2
+ },
+ "keen-nose": {
+  "id": "keen-nose",
+  "bucket": "feats",
+  "name": "Keen Nose",
+  "level": 1,
+  "batch": 2
+ },
+ "cause": {
+  "id": "cause",
+  "bucket": "classFeatures",
+  "name": "Cause",
+  "level": 1,
+  "batch": 2
+ },
+ "stoked-flame-stance": {
+  "id": "stoked-flame-stance",
+  "bucket": "feats",
+  "name": "Stoked Flame Stance",
+  "level": 1,
+  "batch": 2
+ },
+ "subconscious-mind": {
+  "id": "subconscious-mind",
+  "bucket": "classFeatures",
+  "name": "Subconscious Mind",
+  "level": 1,
+  "batch": 2
+ },
+ "tengu-lore": {
+  "id": "tengu-lore",
+  "bucket": "feats",
+  "name": "Tengu Lore",
+  "level": 1,
+  "batch": 2
+ },
+ "dragon-spit": {
+  "id": "dragon-spit",
+  "bucket": "feats",
+  "name": "Dragon Spit",
+  "level": 1,
+  "batch": 2
+ },
+ "climbing-tail": {
+  "id": "climbing-tail",
+  "bucket": "feats",
+  "name": "Climbing Tail",
+  "level": 1,
+  "batch": 2
+ },
+ "bloodline": {
+  "id": "bloodline",
+  "bucket": "classFeatures",
+  "name": "Bloodline",
+  "level": 1,
+  "batch": 2
+ },
+ "breath-control": {
+  "id": "breath-control",
+  "bucket": "feats",
+  "name": "Breath Control",
+  "level": 1,
+  "batch": 2
+ },
+ "orc-sight": {
+  "id": "orc-sight",
+  "bucket": "feats",
+  "name": "Orc Sight",
+  "level": 1,
+  "batch": 2
+ },
+ "titan-wrestler": {
+  "id": "titan-wrestler",
+  "bucket": "feats",
+  "name": "Titan Wrestler",
+  "level": 1,
+  "batch": 2
+ },
+ "dragon-stance": {
+  "id": "dragon-stance",
+  "bucket": "feats",
+  "name": "Dragon Stance",
+  "level": 1,
+  "batch": 2
+ },
+ "arcane-sense": {
+  "id": "arcane-sense",
+  "bucket": "feats",
+  "name": "Arcane Sense",
+  "level": 1,
+  "batch": 2
+ },
+ "natural-ambition": {
+  "id": "natural-ambition",
+  "bucket": "feats",
+  "name": "Natural Ambition",
+  "level": 1,
+  "batch": 2
+ },
+ "folk-healer": {
+  "id": "folk-healer",
+  "bucket": "feats",
+  "name": "Folk Healer",
+  "level": 1,
+  "batch": 2
+ },
+ "learn-by-watching": {
+  "id": "learn-by-watching",
+  "bucket": "feats",
+  "name": "Learn by Watching",
+  "level": 1,
+  "batch": 2
+ },
+ "elven-weapon-familiarity": {
+  "id": "elven-weapon-familiarity",
+  "bucket": "feats",
+  "name": "Elven Weapon Familiarity",
+  "level": 1,
+  "batch": 2
+ },
+ "aegis-of-the-dissolution": {
+  "id": "aegis-of-the-dissolution",
+  "bucket": "feats",
+  "name": "Aegis of the Dissolution",
+  "level": 1,
+  "batch": 2
+ },
+ "fumesoul": {
+  "id": "fumesoul",
+  "bucket": "feats",
+  "name": "Fumesoul",
+  "level": 1,
+  "batch": 2
+ },
+ "draconic-aspect": {
+  "id": "draconic-aspect",
+  "bucket": "feats",
+  "name": "Draconic Aspect",
+  "level": 1,
+  "batch": 2
+ },
+ "dwarven-weapon-familiarity": {
+  "id": "dwarven-weapon-familiarity",
+  "bucket": "feats",
+  "name": "Dwarven Weapon Familiarity",
+  "level": 1,
+  "batch": 2
+ },
+ "oni-weapon-familiarity": {
+  "id": "oni-weapon-familiarity",
+  "bucket": "feats",
+  "name": "Oni Weapon Familiarity",
+  "level": 1,
+  "batch": 2
+ },
+ "arcane-thesis": {
+  "id": "arcane-thesis",
+  "bucket": "classFeatures",
+  "name": "Arcane Thesis",
+  "level": 1,
+  "batch": 2
+ },
+ "arcane-bond": {
+  "id": "arcane-bond",
+  "bucket": "classFeatures",
+  "name": "Arcane Bond",
+  "level": 1,
+  "batch": 2
+ },
+ "wind-tempered": {
+  "id": "wind-tempered",
+  "bucket": "feats",
+  "name": "Wind Tempered",
+  "level": 1,
+  "batch": 2
+ },
+ "deepvision": {
+  "id": "deepvision",
+  "bucket": "feats",
+  "name": "Deepvision",
+  "level": 1,
+  "batch": 2
+ },
+ "svetocher": {
+  "id": "svetocher",
+  "bucket": "feats",
+  "name": "Svetocher",
+  "level": 1,
+  "batch": 2
+ },
+ "tide-hardened": {
+  "id": "tide-hardened",
+  "bucket": "feats",
+  "name": "Tide-Hardened",
+  "level": 1,
+  "batch": 2
+ },
+ "merfolk-weapon-familiarity": {
+  "id": "merfolk-weapon-familiarity",
+  "bucket": "feats",
+  "name": "Merfolk Weapon Familiarity",
+  "level": 1,
+  "batch": 2
+ },
+ "initiate-warden": {
+  "id": "initiate-warden",
+  "bucket": "feats",
+  "name": "Initiate Warden",
+  "level": 1,
+  "batch": 2
+ },
+ "water-nagaji": {
+  "id": "water-nagaji",
+  "bucket": "feats",
+  "name": "Water Nagaji",
+  "level": 1,
+  "batch": 2
+ },
+ "woodworker": {
+  "id": "woodworker",
+  "bucket": "feats",
+  "name": "Woodworker",
+  "level": 1,
+  "batch": 2
+ },
+ "versatile-performance": {
+  "id": "versatile-performance",
+  "bucket": "feats",
+  "name": "Versatile Performance",
+  "level": 1,
+  "batch": 2
+ },
+ "iron-fists": {
+  "id": "iron-fists",
+  "bucket": "feats",
+  "name": "Iron Fists",
+  "level": 1,
+  "batch": 2
+ },
+ "fetchling-lore": {
+  "id": "fetchling-lore",
+  "bucket": "feats",
+  "name": "Fetchling Lore",
+  "level": 1,
+  "batch": 2
+ },
+ "feather-step": {
+  "id": "feather-step",
+  "bucket": "feats",
+  "name": "Feather Step",
+  "level": 1,
+  "batch": 2
+ },
+ "animal-senses": {
+  "id": "animal-senses",
+  "bucket": "feats",
+  "name": "Animal Senses",
+  "level": 1,
+  "batch": 2
+ },
+ "guardians-armor": {
+  "id": "guardians-armor",
+  "bucket": "classFeatures",
+  "name": "Guardian's Armor",
+  "level": 1,
+  "batch": 2
+ },
+ "gloomseer": {
+  "id": "gloomseer",
+  "bucket": "feats",
+  "name": "Gloomseer",
+  "level": 1,
+  "batch": 2
+ },
+ "hybrid-study": {
+  "id": "hybrid-study",
+  "bucket": "classFeatures",
+  "name": "Hybrid Study",
+  "level": 1,
+  "batch": 2
+ },
+ "iron-belly": {
+  "id": "iron-belly",
+  "bucket": "feats",
+  "name": "Iron Belly",
+  "level": 1,
+  "batch": 2
+ },
+ "goblin-weapon-familiarity": {
+  "id": "goblin-weapon-familiarity",
+  "bucket": "feats",
+  "name": "Goblin Weapon Familiarity",
+  "level": 1,
+  "batch": 2
+ },
+ "unfetter-eidolon": {
+  "id": "unfetter-eidolon",
+  "bucket": "feats",
+  "name": "Unfetter Eidolon",
+  "level": 1,
+  "batch": 2
+ },
+ "tough-skin": {
+  "id": "tough-skin",
+  "bucket": "feats",
+  "name": "Tough Skin",
+  "level": 1,
+  "batch": 2
+ },
+ "whitecape": {
+  "id": "whitecape",
+  "bucket": "feats",
+  "name": "Whitecape",
+  "level": 1,
+  "batch": 2
+ },
+ "research-field": {
+  "id": "research-field",
+  "bucket": "classFeatures",
+  "name": "Research Field",
+  "level": 1,
+  "batch": 2
+ },
+ "corgi-mount": {
+  "id": "corgi-mount",
+  "bucket": "feats",
+  "name": "Corgi Mount",
+  "level": 1,
+  "batch": 2
+ },
+ "caretakers-intuition": {
+  "id": "caretakers-intuition",
+  "bucket": "feats",
+  "name": "Caretaker's Intuition",
+  "level": 1,
+  "batch": 2
+ },
+ "azarketi-lore": {
+  "id": "azarketi-lore",
+  "bucket": "feats",
+  "name": "Azarketi Lore",
+  "level": 1,
+  "batch": 2
+ },
+ "rogues-racket": {
+  "id": "rogues-racket",
+  "bucket": "classFeatures",
+  "name": "Rogue's Racket",
+  "level": 1,
+  "batch": 2
+ },
+ "ancestral-insight": {
+  "id": "ancestral-insight",
+  "bucket": "feats",
+  "name": "Ancestral Insight",
+  "level": 1,
+  "batch": 2
+ },
+ "tripkee-lore": {
+  "id": "tripkee-lore",
+  "bucket": "feats",
+  "name": "Tripkee Lore",
+  "level": 1,
+  "batch": 2
+ },
+ "divine-dragonblood": {
+  "id": "divine-dragonblood",
+  "bucket": "feats",
+  "name": "Divine Dragonblood",
+  "level": 1,
+  "batch": 2
+ },
+ "nimble-elf": {
+  "id": "nimble-elf",
+  "bucket": "feats",
+  "name": "Nimble Elf",
+  "level": 1,
+  "batch": 2
+ },
+ "acrobatic-performer": {
+  "id": "acrobatic-performer",
+  "bucket": "feats",
+  "name": "Acrobatic Performer",
+  "level": 1,
+  "batch": 2
+ },
+ "kinetic-gate": {
+  "id": "kinetic-gate",
+  "bucket": "classFeatures",
+  "name": "Kinetic Gate",
+  "level": 1,
+  "batch": 2
+ },
+ "cackle": {
+  "id": "cackle",
+  "bucket": "feats",
+  "name": "Cackle",
+  "level": 1,
+  "batch": 2
+ },
+ "studious-magic": {
+  "id": "studious-magic",
+  "bucket": "feats",
+  "name": "Studious Magic",
+  "level": 1,
+  "batch": 2
+ },
+ "exploit-vulnerability": {
+  "id": "exploit-vulnerability",
+  "bucket": "classFeatures",
+  "name": "Exploit Vulnerability",
+  "level": 1,
+  "batch": 2
+ },
+ "rune-singer": {
+  "id": "rune-singer",
+  "bucket": "feats",
+  "name": "Rune-Singer",
+  "level": 1,
+  "batch": 2
+ },
+ "fire-savvy": {
+  "id": "fire-savvy",
+  "bucket": "feats",
+  "name": "Fire Savvy",
+  "level": 1,
+  "batch": 2
+ },
+ "well-met-traveler": {
+  "id": "well-met-traveler",
+  "bucket": "feats",
+  "name": "Well-Met Traveler",
+  "level": 1,
+  "batch": 2
+ },
+ "quah-bond": {
+  "id": "quah-bond",
+  "bucket": "feats",
+  "name": "Quah Bond",
+  "level": 1,
+  "batch": 2
+ },
+ "skull-creeper": {
+  "id": "skull-creeper",
+  "bucket": "feats",
+  "name": "Skull Creeper",
+  "level": 1,
+  "batch": 2
+ },
+ "sinister-appearance": {
+  "id": "sinister-appearance",
+  "bucket": "feats",
+  "name": "Sinister Appearance",
+  "level": 1,
+  "batch": 2
+ },
+ "elemental-embellish": {
+  "id": "elemental-embellish",
+  "bucket": "feats",
+  "name": "Elemental Embellish",
+  "level": 1,
+  "batch": 2
+ },
+ "parthenogenic-hatchling": {
+  "id": "parthenogenic-hatchling",
+  "bucket": "feats",
+  "name": "Parthenogenic Hatchling",
+  "level": 1,
+  "batch": 2
+ },
+ "group-coercion": {
+  "id": "group-coercion",
+  "bucket": "feats",
+  "name": "Group Coercion",
+  "level": 1,
+  "batch": 2
+ },
+ "sturdy-bindings": {
+  "id": "sturdy-bindings",
+  "bucket": "feats",
+  "name": "Sturdy Bindings",
+  "level": 1,
+  "batch": 2
+ },
+ "psychic-spellcasting": {
+  "id": "psychic-spellcasting",
+  "bucket": "classFeatures",
+  "name": "Psychic Spellcasting",
+  "level": 1,
+  "batch": 2
+ },
+ "grove-harbored": {
+  "id": "grove-harbored",
+  "bucket": "feats",
+  "name": "Grove-Harbored",
+  "level": 1,
+  "batch": 2
+ },
+ "impulses": {
+  "id": "impulses",
+  "bucket": "classFeatures",
+  "name": "Impulses",
+  "level": 1,
+  "batch": 2
+ },
+ "reactive-strike": {
+  "id": "reactive-strike",
+  "bucket": "classFeatures",
+  "name": "Reactive Strike",
+  "level": 1,
+  "batch": 2
+ },
+ "backup-runic-enhancement": {
+  "id": "backup-runic-enhancement",
+  "bucket": "feats",
+  "name": "Backup Runic Enhancement",
+  "level": 1,
+  "batch": 2
+ },
+ "hyena-familiar": {
+  "id": "hyena-familiar",
+  "bucket": "feats",
+  "name": "Hyena Familiar",
+  "level": 1,
+  "batch": 2
+ },
+ "ravenings-desperation": {
+  "id": "ravenings-desperation",
+  "bucket": "feats",
+  "name": "Ravening's Desperation",
+  "level": 1,
+  "batch": 2
+ },
+ "straveika": {
+  "id": "straveika",
+  "bucket": "feats",
+  "name": "Straveika",
+  "level": 1,
+  "batch": 2
+ },
+ "youre-so-cute": {
+  "id": "youre-so-cute",
+  "bucket": "feats",
+  "name": "You're So Cute!",
+  "level": 1,
+  "batch": 2
+ },
+ "skilled-herbalist": {
+  "id": "skilled-herbalist",
+  "bucket": "feats",
+  "name": "Skilled Herbalist",
+  "level": 1,
+  "batch": 2
+ },
+ "healing-hands": {
+  "id": "healing-hands",
+  "bucket": "feats",
+  "name": "Healing Hands",
+  "level": 1,
+  "batch": 2
+ },
+ "mystery": {
+  "id": "mystery",
+  "bucket": "classFeatures",
+  "name": "Mystery",
+  "level": 1,
+  "batch": 2
+ },
+ "covet-hoard": {
+  "id": "covet-hoard",
+  "bucket": "feats",
+  "name": "Covet Hoard",
+  "level": 1,
+  "batch": 2
+ },
+ "scamper-underfoot": {
+  "id": "scamper-underfoot",
+  "bucket": "feats",
+  "name": "Scamper Underfoot",
+  "level": 1,
+  "batch": 2
+ },
+ "sure-feet": {
+  "id": "sure-feet",
+  "bucket": "feats",
+  "name": "Sure Feet",
+  "level": 1,
+  "batch": 2
+ },
+ "harmless-doll": {
+  "id": "harmless-doll",
+  "bucket": "feats",
+  "name": "Harmless Doll",
+  "level": 1,
+  "batch": 2
+ },
+ "stone-face": {
+  "id": "stone-face",
+  "bucket": "feats",
+  "name": "Stone Face",
+  "level": 1,
+  "batch": 2
+ },
+ "courtly-graces": {
+  "id": "courtly-graces",
+  "bucket": "feats",
+  "name": "Courtly Graces",
+  "level": 1,
+  "batch": 2
+ },
+ "nightvision-adaptation": {
+  "id": "nightvision-adaptation",
+  "bucket": "feats",
+  "name": "Nightvision Adaptation",
+  "level": 1,
+  "batch": 2
+ },
+ "foxfire": {
+  "id": "foxfire",
+  "bucket": "feats",
+  "name": "Foxfire",
+  "level": 1,
+  "batch": 2
+ },
+ "familiar": {
+  "id": "familiar",
+  "bucket": "feats",
+  "name": "Familiar",
+  "level": 1,
+  "batch": 2
+ },
+ "storm-born": {
+  "id": "storm-born",
+  "bucket": "feats",
+  "name": "Storm Born",
+  "level": 1,
+  "batch": 2
+ },
+ "circle-of-spirits": {
+  "id": "circle-of-spirits",
+  "bucket": "feats",
+  "name": "Circle of Spirits",
+  "level": 1,
+  "batch": 2
+ },
+ "contract-negotiator": {
+  "id": "contract-negotiator",
+  "bucket": "feats",
+  "name": "Contract Negotiator",
+  "level": 1,
+  "batch": 2
+ },
+ "wolf-stance": {
+  "id": "wolf-stance",
+  "bucket": "feats",
+  "name": "Wolf Stance",
+  "level": 1,
+  "batch": 2
+ },
+ "quadruped": {
+  "id": "quadruped",
+  "bucket": "feats",
+  "name": "Quadruped",
+  "level": 1,
+  "batch": 2
+ },
+ "draconic-resistance": {
+  "id": "draconic-resistance",
+  "bucket": "feats",
+  "name": "Draconic Resistance",
+  "level": 1,
+  "batch": 2
+ },
+ "overlooked-mastermind": {
+  "id": "overlooked-mastermind",
+  "bucket": "feats",
+  "name": "Overlooked Mastermind",
+  "level": 1,
+  "batch": 2
+ },
+ "devil-allies": {
+  "id": "devil-allies",
+  "bucket": "feats",
+  "name": "Devil Allies",
+  "level": 1,
+  "batch": 2
+ },
+ "tupilaq-carver": {
+  "id": "tupilaq-carver",
+  "bucket": "feats",
+  "name": "Tupilaq Carver",
+  "level": 1,
+  "batch": 3
+ },
+ "ancestral-longevity": {
+  "id": "ancestral-longevity",
+  "bucket": "feats",
+  "name": "Ancestral Longevity",
+  "level": 1,
+  "batch": 3
+ },
+ "alchemical-familiar": {
+  "id": "alchemical-familiar",
+  "bucket": "feats",
+  "name": "Alchemical Familiar",
+  "level": 1,
+  "batch": 3
+ },
+ "terrain-stalker": {
+  "id": "terrain-stalker",
+  "bucket": "feats",
+  "name": "Terrain Stalker",
+  "level": 1,
+  "batch": 3
+ },
+ "seedpod": {
+  "id": "seedpod",
+  "bucket": "feats",
+  "name": "Seedpod",
+  "level": 1,
+  "batch": 3
+ },
+ "skill-training": {
+  "id": "skill-training",
+  "bucket": "feats",
+  "name": "Skill Training",
+  "level": 1,
+  "batch": 3
+ },
+ "dragonet-breath": {
+  "id": "dragonet-breath",
+  "bucket": "feats",
+  "name": "Dragonet Breath",
+  "level": 1,
+  "batch": 3
+ },
+ "wilderness-born": {
+  "id": "wilderness-born",
+  "bucket": "feats",
+  "name": "Wilderness Born",
+  "level": 1,
+  "batch": 3
+ },
+ "weight-of-experience": {
+  "id": "weight-of-experience",
+  "bucket": "feats",
+  "name": "Weight of Experience",
+  "level": 1,
+  "batch": 3
+ },
+ "made-for-combat": {
+  "id": "made-for-combat",
+  "bucket": "feats",
+  "name": "Made for Combat",
+  "level": 1,
+  "batch": 3
+ },
+ "shoony-lore": {
+  "id": "shoony-lore",
+  "bucket": "feats",
+  "name": "Shoony Lore",
+  "level": 1,
+  "batch": 3
+ },
+ "pantheon-magic": {
+  "id": "pantheon-magic",
+  "bucket": "feats",
+  "name": "Pantheon Magic",
+  "level": 1,
+  "batch": 3
+ },
+ "illusion-sense": {
+  "id": "illusion-sense",
+  "bucket": "feats",
+  "name": "Illusion Sense",
+  "level": 1,
+  "batch": 3
+ },
+ "axiomatic-lore": {
+  "id": "axiomatic-lore",
+  "bucket": "feats",
+  "name": "Axiomatic Lore",
+  "level": 1,
+  "batch": 3
+ },
+ "fear-no-law-fear-no-one": {
+  "id": "fear-no-law-fear-no-one",
+  "bucket": "feats",
+  "name": "Fear No Law, Fear No One",
+  "level": 1,
+  "batch": 3
+ },
+ "pet": {
+  "id": "pet",
+  "bucket": "feats",
+  "name": "Pet",
+  "level": 1,
+  "batch": 3
+ },
+ "conrasu-lore": {
+  "id": "conrasu-lore",
+  "bucket": "feats",
+  "name": "Conrasu Lore",
+  "level": 1,
+  "batch": 3
+ },
+ "crocodiles-twin": {
+  "id": "crocodiles-twin",
+  "bucket": "feats",
+  "name": "Crocodile's Twin",
+  "level": 1,
+  "batch": 3
+ },
+ "metal-carapace": {
+  "id": "metal-carapace",
+  "bucket": "feats",
+  "name": "Metal Carapace",
+  "level": 1,
+  "batch": 3
+ },
+ "nalinivatis-light": {
+  "id": "nalinivatis-light",
+  "bucket": "feats",
+  "name": "Nalinivati's Light",
+  "level": 1,
+  "batch": 3
+ },
+ "focused-fascination": {
+  "id": "focused-fascination",
+  "bucket": "feats",
+  "name": "Focused Fascination",
+  "level": 1,
+  "batch": 3
+ },
+ "ocean-wariness": {
+  "id": "ocean-wariness",
+  "bucket": "feats",
+  "name": "Ocean Wariness",
+  "level": 1,
+  "batch": 3
+ },
+ "proteankin": {
+  "id": "proteankin",
+  "bucket": "feats",
+  "name": "Proteankin",
+  "level": 1,
+  "batch": 3
+ },
+ "taunt": {
+  "id": "taunt",
+  "bucket": "classFeatures",
+  "name": "Taunt",
+  "level": 1,
+  "batch": 3
+ },
+ "catfolk-lore": {
+  "id": "catfolk-lore",
+  "bucket": "feats",
+  "name": "Catfolk Lore",
+  "level": 1,
+  "batch": 3
+ },
+ "earned-glory": {
+  "id": "earned-glory",
+  "bucket": "feats",
+  "name": "Earned Glory",
+  "level": 1,
+  "batch": 3
+ },
+ "devotion-spells": {
+  "id": "devotion-spells",
+  "bucket": "classFeatures",
+  "name": "Devotion Spells",
+  "level": 1,
+  "batch": 3
+ },
+ "patron": {
+  "id": "patron",
+  "bucket": "classFeatures",
+  "name": "Patron",
+  "level": 1,
+  "batch": 3
+ },
+ "wind-pillow": {
+  "id": "wind-pillow",
+  "bucket": "feats",
+  "name": "Wind Pillow",
+  "level": 1,
+  "batch": 3
+ },
+ "overdrive": {
+  "id": "overdrive",
+  "bucket": "classFeatures",
+  "name": "Overdrive",
+  "level": 1,
+  "batch": 3
+ },
+ "sarangay-lore": {
+  "id": "sarangay-lore",
+  "bucket": "feats",
+  "name": "Sarangay Lore",
+  "level": 1,
+  "batch": 3
+ },
+ "summoner-spellcasting": {
+  "id": "summoner-spellcasting",
+  "bucket": "classFeatures",
+  "name": "Summoner Spellcasting",
+  "level": 1,
+  "batch": 3
+ },
+ "arcane-tattoos": {
+  "id": "arcane-tattoos",
+  "bucket": "feats",
+  "name": "Arcane Tattoos",
+  "level": 1,
+  "batch": 3
+ },
+ "round-ears": {
+  "id": "round-ears",
+  "bucket": "feats",
+  "name": "Round Ears",
+  "level": 1,
+  "batch": 3
+ },
+ "hefty-hauler": {
+  "id": "hefty-hauler",
+  "bucket": "feats",
+  "name": "Hefty Hauler",
+  "level": 1,
+  "batch": 3
+ },
+ "kobold-breath": {
+  "id": "kobold-breath",
+  "bucket": "feats",
+  "name": "Kobold Breath",
+  "level": 1,
+  "batch": 3
+ },
+ "vestigial-wings": {
+  "id": "vestigial-wings",
+  "bucket": "feats",
+  "name": "Vestigial Wings",
+  "level": 1,
+  "batch": 3
+ },
+ "instinct": {
+  "id": "instinct",
+  "bucket": "classFeatures",
+  "name": "Instinct",
+  "level": 1,
+  "batch": 3
+ },
+ "canopy-sight": {
+  "id": "canopy-sight",
+  "bucket": "feats",
+  "name": "Canopy Sight",
+  "level": 1,
+  "batch": 3
+ },
+ "summiting-dragonblood": {
+  "id": "summiting-dragonblood",
+  "bucket": "feats",
+  "name": "Summiting Dragonblood",
+  "level": 1,
+  "batch": 3
+ },
+ "undead-familiar": {
+  "id": "undead-familiar",
+  "bucket": "feats",
+  "name": "Undead Familiar",
+  "level": 1,
+  "batch": 3
+ },
+ "genie-weapon-familiarity": {
+  "id": "genie-weapon-familiarity",
+  "bucket": "feats",
+  "name": "Genie Weapon Familiarity",
+  "level": 1,
+  "batch": 3
+ },
+ "witchs-armaments": {
+  "id": "witchs-armaments",
+  "bucket": "feats",
+  "name": "Witch's Armaments",
+  "level": 1,
+  "batch": 3
+ },
+ "azarketi-weapon-familiarity": {
+  "id": "azarketi-weapon-familiarity",
+  "bucket": "feats",
+  "name": "Azarketi Weapon Familiarity",
+  "level": 1,
+  "batch": 3
+ },
+ "fascinated-by-society": {
+  "id": "fascinated-by-society",
+  "bucket": "feats",
+  "name": "Fascinated by Society",
+  "level": 1,
+  "batch": 3
+ },
+ "morph-risen": {
+  "id": "morph-risen",
+  "bucket": "feats",
+  "name": "Morph-Risen",
+  "level": 1,
+  "batch": 3
+ },
+ "aquatic-eyes": {
+  "id": "aquatic-eyes",
+  "bucket": "feats",
+  "name": "Aquatic Eyes",
+  "level": 1,
+  "batch": 3
+ },
+ "vampire-lore": {
+  "id": "vampire-lore",
+  "bucket": "feats",
+  "name": "Vampire Lore",
+  "level": 1,
+  "batch": 3
+ },
+ "divine-spark-and-ikons": {
+  "id": "divine-spark-and-ikons",
+  "bucket": "classFeatures",
+  "name": "Divine Spark and Ikons",
+  "level": 1,
+  "batch": 3
+ },
+ "esteemed-visitor": {
+  "id": "esteemed-visitor",
+  "bucket": "feats",
+  "name": "Esteemed Visitor",
+  "level": 1,
+  "batch": 3
+ },
+ "voice-of-the-night": {
+  "id": "voice-of-the-night",
+  "bucket": "feats",
+  "name": "Voice of the Night",
+  "level": 1,
+  "batch": 3
+ },
+ "ongoing-selfishness": {
+  "id": "ongoing-selfishness",
+  "bucket": "feats",
+  "name": "Ongoing Selfishness",
+  "level": 1,
+  "batch": 3
+ },
+ "deep-vision": {
+  "id": "deep-vision",
+  "bucket": "feats",
+  "name": "Deep Vision",
+  "level": 1,
+  "batch": 3
+ },
+ "flurry-of-blows": {
+  "id": "flurry-of-blows",
+  "bucket": "classFeatures",
+  "name": "Flurry of Blows",
+  "level": 1,
+  "batch": 3
+ },
+ "my-claws-are-daggers": {
+  "id": "my-claws-are-daggers",
+  "bucket": "feats",
+  "name": "My Claws are Daggers",
+  "level": 1,
+  "batch": 3
+ },
+ "bodyguard": {
+  "id": "bodyguard",
+  "bucket": "feats",
+  "name": "Bodyguard",
+  "level": 1,
+  "batch": 3
+ },
+ "druidic-order": {
+  "id": "druidic-order",
+  "bucket": "classFeatures",
+  "name": "Druidic Order",
+  "level": 1,
+  "batch": 3
+ },
+ "shrouded-magic": {
+  "id": "shrouded-magic",
+  "bucket": "feats",
+  "name": "Shrouded Magic",
+  "level": 1,
+  "batch": 3
+ },
+ "nagaji-lore": {
+  "id": "nagaji-lore",
+  "bucket": "feats",
+  "name": "Nagaji Lore",
+  "level": 1,
+  "batch": 3
+ },
+ "brinesoul": {
+  "id": "brinesoul",
+  "bucket": "feats",
+  "name": "Brinesoul",
+  "level": 1,
+  "batch": 3
+ },
+ "animist-apparition-spellcasting": {
+  "id": "animist-apparition-spellcasting",
+  "bucket": "classFeatures",
+  "name": "Animist & Apparition Spellcasting",
+  "level": 1,
+  "batch": 3
+ },
+ "hard-to-fool": {
+  "id": "hard-to-fool",
+  "bucket": "feats",
+  "name": "Hard to Fool",
+  "level": 1,
+  "batch": 3
+ },
+ "different-worlds": {
+  "id": "different-worlds",
+  "bucket": "feats",
+  "name": "Different Worlds",
+  "level": 1,
+  "batch": 3
+ },
+ "moon-may": {
+  "id": "moon-may",
+  "bucket": "feats",
+  "name": "Moon May",
+  "level": 1,
+  "batch": 3
+ },
+ "spellbook-prodigy": {
+  "id": "spellbook-prodigy",
+  "bucket": "feats",
+  "name": "Spellbook Prodigy",
+  "level": 1,
+  "batch": 3
+ },
+ "explode": {
+  "id": "explode",
+  "bucket": "classFeatures",
+  "name": "Explode",
+  "level": 1,
+  "batch": 3
+ },
+ "vishkanya-weapon-familiarity": {
+  "id": "vishkanya-weapon-familiarity",
+  "bucket": "feats",
+  "name": "Vishkanya Weapon Familiarity",
+  "level": 1,
+  "batch": 3
+ },
+ "shiny-button-eyes": {
+  "id": "shiny-button-eyes",
+  "bucket": "feats",
+  "name": "Shiny Button Eyes",
+  "level": 1,
+  "batch": 3
+ },
+ "natural-performer": {
+  "id": "natural-performer",
+  "bucket": "feats",
+  "name": "Natural Performer",
+  "level": 1,
+  "batch": 3
+ },
+ "iruxi-armaments": {
+  "id": "iruxi-armaments",
+  "bucket": "feats",
+  "name": "Iruxi Armaments",
+  "level": 1,
+  "batch": 3
+ },
+ "bouncy-goblin": {
+  "id": "bouncy-goblin",
+  "bucket": "feats",
+  "name": "Bouncy Goblin",
+  "level": 1,
+  "batch": 3
+ },
+ "orc-warmask": {
+  "id": "orc-warmask",
+  "bucket": "feats",
+  "name": "Orc Warmask",
+  "level": 1,
+  "batch": 3
+ },
+ "refined-motion-in-darkness": {
+  "id": "refined-motion-in-darkness",
+  "bucket": "feats",
+  "name": "Refined Motion in Darkness",
+  "level": 1,
+  "batch": 3
+ },
+ "adaptive-vision": {
+  "id": "adaptive-vision",
+  "bucket": "feats",
+  "name": "Adaptive Vision",
+  "level": 1,
+  "batch": 3
+ },
+ "innovation": {
+  "id": "innovation",
+  "bucket": "classFeatures",
+  "name": "Innovation",
+  "level": 1,
+  "batch": 3
+ },
+ "primal-dragonblood": {
+  "id": "primal-dragonblood",
+  "bucket": "feats",
+  "name": "Primal Dragonblood",
+  "level": 1,
+  "batch": 3
+ },
+ "stylish-combatant": {
+  "id": "stylish-combatant",
+  "bucket": "classFeatures",
+  "name": "Stylish Combatant",
+  "level": 1,
+  "batch": 3
+ },
+ "web-weaver": {
+  "id": "web-weaver",
+  "bucket": "feats",
+  "name": "Web Weaver",
+  "level": 1,
+  "batch": 3
+ },
+ "tangle-tongues-wit": {
+  "id": "tangle-tongues-wit",
+  "bucket": "feats",
+  "name": "Tangle-tongue's Wit",
+  "level": 1,
+  "batch": 3
+ },
+ "dedication-to-the-five": {
+  "id": "dedication-to-the-five",
+  "bucket": "feats",
+  "name": "Dedication to the Five",
+  "level": 1,
+  "batch": 3
+ },
+ "snare-setter": {
+  "id": "snare-setter",
+  "bucket": "feats",
+  "name": "Snare Setter",
+  "level": 1,
+  "batch": 3
+ },
+ "gildedsoul": {
+  "id": "gildedsoul",
+  "bucket": "feats",
+  "name": "Gildedsoul",
+  "level": 1,
+  "batch": 3
+ },
+ "terrain-expertise": {
+  "id": "terrain-expertise",
+  "bucket": "feats",
+  "name": "Terrain Expertise",
+  "level": 1,
+  "batch": 3
+ },
+ "shrouded-mien": {
+  "id": "shrouded-mien",
+  "bucket": "feats",
+  "name": "Shrouded Mien",
+  "level": 1,
+  "batch": 3
+ },
+ "acute-vision": {
+  "id": "acute-vision",
+  "bucket": "feats",
+  "name": "Acute Vision",
+  "level": 1,
+  "batch": 3
+ },
+ "cleric-spellcasting": {
+  "id": "cleric-spellcasting",
+  "bucket": "classFeatures",
+  "name": "Cleric Spellcasting",
+  "level": 1,
+  "batch": 3
+ },
+ "runic-repertoire": {
+  "id": "runic-repertoire",
+  "bucket": "classFeatures",
+  "name": "Runic Repertoire",
+  "level": 1,
+  "batch": 3
+ },
+ "brilliant-flash": {
+  "id": "brilliant-flash",
+  "bucket": "feats",
+  "name": "Brilliant Flash",
+  "level": 1,
+  "batch": 3
+ },
+ "undaunted": {
+  "id": "undaunted",
+  "bucket": "feats",
+  "name": "Undaunted",
+  "level": 1,
+  "batch": 3
+ },
+ "officers-medical-training": {
+  "id": "officers-medical-training",
+  "bucket": "feats",
+  "name": "Officer's Medical Training",
+  "level": 1,
+  "batch": 3
+ },
+ "stonemasons-eye": {
+  "id": "stonemasons-eye",
+  "bucket": "feats",
+  "name": "Stonemason's Eye",
+  "level": 1,
+  "batch": 3
+ },
+ "advanced-weaponry": {
+  "id": "advanced-weaponry",
+  "bucket": "feats",
+  "name": "Advanced Weaponry",
+  "level": 1,
+  "batch": 3
+ },
+ "aqueous-dragonblood": {
+  "id": "aqueous-dragonblood",
+  "bucket": "feats",
+  "name": "Aqueous Dragonblood",
+  "level": 1,
+  "batch": 3
+ },
+ "sea-legs": {
+  "id": "sea-legs",
+  "bucket": "feats",
+  "name": "Sea Legs",
+  "level": 1,
+  "batch": 3
+ },
+ "halfling-lore": {
+  "id": "halfling-lore",
+  "bucket": "feats",
+  "name": "Halfling Lore",
+  "level": 1,
+  "batch": 3
+ },
+ "twisting-petal-stance": {
+  "id": "twisting-petal-stance",
+  "bucket": "feats",
+  "name": "Twisting Petal Stance",
+  "level": 1,
+  "batch": 3
+ },
+ "the-unholy-dead": {
+  "id": "the-unholy-dead",
+  "bucket": "feats",
+  "name": "The Unholy Dead",
+  "level": 1,
+  "batch": 3
+ },
+ "sage-of-scattered-leaves": {
+  "id": "sage-of-scattered-leaves",
+  "bucket": "feats",
+  "name": "Sage of Scattered Leaves",
+  "level": 1,
+  "batch": 3
+ },
+ "zoophonic-communication": {
+  "id": "zoophonic-communication",
+  "bucket": "feats",
+  "name": "Zoophonic Communication",
+  "level": 1,
+  "batch": 3
+ },
+ "yaoguai-historian": {
+  "id": "yaoguai-historian",
+  "bucket": "feats",
+  "name": "Yaoguai Historian",
+  "level": 1,
+  "batch": 3
+ },
+ "medical-researcher": {
+  "id": "medical-researcher",
+  "bucket": "feats",
+  "name": "Medical Researcher",
+  "level": 1,
+  "batch": 4
+ },
+ "rimesoul": {
+  "id": "rimesoul",
+  "bucket": "feats",
+  "name": "Rimesoul",
+  "level": 1,
+  "batch": 4
+ },
+ "steady-on-stone": {
+  "id": "steady-on-stone",
+  "bucket": "feats",
+  "name": "Steady on Stone",
+  "level": 1,
+  "batch": 4
+ },
+ "wildborn-magic": {
+  "id": "wildborn-magic",
+  "bucket": "feats",
+  "name": "Wildborn Magic",
+  "level": 1,
+  "batch": 4
+ },
+ "reptile-rider": {
+  "id": "reptile-rider",
+  "bucket": "feats",
+  "name": "Reptile Rider",
+  "level": 1,
+  "batch": 4
+ },
+ "link-spells": {
+  "id": "link-spells",
+  "bucket": "classFeatures",
+  "name": "Link Spells",
+  "level": 1,
+  "batch": 4
+ },
+ "extend-boost": {
+  "id": "extend-boost",
+  "bucket": "feats",
+  "name": "Extend Boost",
+  "level": 1,
+  "batch": 4
+ },
+ "hag-claws": {
+  "id": "hag-claws",
+  "bucket": "feats",
+  "name": "Hag Claws",
+  "level": 1,
+  "batch": 4
+ },
+ "hunters-edge": {
+  "id": "hunters-edge",
+  "bucket": "classFeatures",
+  "name": "Hunter's Edge",
+  "level": 1,
+  "batch": 4
+ },
+ "mountain-stance": {
+  "id": "mountain-stance",
+  "bucket": "feats",
+  "name": "Mountain Stance",
+  "level": 1,
+  "batch": 4
+ },
+ "moldersoul": {
+  "id": "moldersoul",
+  "bucket": "feats",
+  "name": "Moldersoul",
+  "level": 1,
+  "batch": 4
+ },
+ "rock-runner": {
+  "id": "rock-runner",
+  "bucket": "feats",
+  "name": "Rock Runner",
+  "level": 1,
+  "batch": 4
+ },
+ "animal-accomplice": {
+  "id": "animal-accomplice",
+  "bucket": "feats",
+  "name": "Animal Accomplice",
+  "level": 1,
+  "batch": 4
+ },
+ "share-thoughts": {
+  "id": "share-thoughts",
+  "bucket": "feats",
+  "name": "Share Thoughts",
+  "level": 1,
+  "batch": 4
+ },
+ "locate-lawbreakers": {
+  "id": "locate-lawbreakers",
+  "bucket": "feats",
+  "name": "Locate Lawbreakers",
+  "level": 1,
+  "batch": 4
+ },
+ "swift": {
+  "id": "swift",
+  "bucket": "feats",
+  "name": "Swift",
+  "level": 1,
+  "batch": 4
+ },
+ "seasoned": {
+  "id": "seasoned",
+  "bucket": "feats",
+  "name": "Seasoned",
+  "level": 1,
+  "batch": 4
+ },
+ "as-in-life-so-in-death": {
+  "id": "as-in-life-so-in-death",
+  "bucket": "feats",
+  "name": "As in Life, So in Death",
+  "level": 1,
+  "batch": 4
+ },
+ "apparition-sense": {
+  "id": "apparition-sense",
+  "bucket": "feats",
+  "name": "Apparition Sense",
+  "level": 1,
+  "batch": 4
+ },
+ "catch-the-details": {
+  "id": "catch-the-details",
+  "bucket": "feats",
+  "name": "Catch the Details",
+  "level": 1,
+  "batch": 4
+ },
+ "elf-atavism": {
+  "id": "elf-atavism",
+  "bucket": "feats",
+  "name": "Elf Atavism",
+  "level": 1,
+  "batch": 4
+ },
+ "athamaru-weapon-familiarity": {
+  "id": "athamaru-weapon-familiarity",
+  "bucket": "feats",
+  "name": "Athamaru Weapon Familiarity",
+  "level": 1,
+  "batch": 4
+ },
+ "splinter-faith": {
+  "id": "splinter-faith",
+  "bucket": "feats",
+  "name": "Splinter Faith",
+  "level": 1,
+  "batch": 4
+ },
+ "peerless-inventor": {
+  "id": "peerless-inventor",
+  "bucket": "classFeatures",
+  "name": "Peerless Inventor",
+  "level": 1,
+  "batch": 4
+ },
+ "natural-skill": {
+  "id": "natural-skill",
+  "bucket": "feats",
+  "name": "Natural Skill",
+  "level": 1,
+  "batch": 4
+ },
+ "first-world-magic": {
+  "id": "first-world-magic",
+  "bucket": "feats",
+  "name": "First World Magic",
+  "level": 1,
+  "batch": 4
+ },
+ "tengu-weapon-familiarity": {
+  "id": "tengu-weapon-familiarity",
+  "bucket": "feats",
+  "name": "Tengu Weapon Familiarity",
+  "level": 1,
+  "batch": 4
+ },
+ "undead-hunter": {
+  "id": "undead-hunter",
+  "bucket": "feats",
+  "name": "Undead Hunter",
+  "level": 1,
+  "batch": 4
+ },
+ "mental-buffer": {
+  "id": "mental-buffer",
+  "bucket": "feats",
+  "name": "Mental Buffer",
+  "level": 1,
+  "batch": 4
+ },
+ "scavengers-search": {
+  "id": "scavengers-search",
+  "bucket": "feats",
+  "name": "Scavenger's Search",
+  "level": 1,
+  "batch": 4
+ },
+ "star-orb": {
+  "id": "star-orb",
+  "bucket": "feats",
+  "name": "Star Orb",
+  "level": 1,
+  "batch": 4
+ },
+ "kitsune-spell-familiarity": {
+  "id": "kitsune-spell-familiarity",
+  "bucket": "feats",
+  "name": "Kitsune Spell Familiarity",
+  "level": 1,
+  "batch": 4
+ },
+ "concealing-legerdemain": {
+  "id": "concealing-legerdemain",
+  "bucket": "feats",
+  "name": "Concealing Legerdemain",
+  "level": 1,
+  "batch": 4
+ },
+ "lavasoul": {
+  "id": "lavasoul",
+  "bucket": "feats",
+  "name": "Lavasoul",
+  "level": 1,
+  "batch": 4
+ },
+ "dwarven-lore": {
+  "id": "dwarven-lore",
+  "bucket": "feats",
+  "name": "Dwarven Lore",
+  "level": 1,
+  "batch": 4
+ },
+ "veil-may": {
+  "id": "veil-may",
+  "bucket": "feats",
+  "name": "Veil May",
+  "level": 1,
+  "batch": 4
+ },
+ "scales-of-steel": {
+  "id": "scales-of-steel",
+  "bucket": "feats",
+  "name": "Scales of Steel",
+  "level": 1,
+  "batch": 4
+ },
+ "rough-rider": {
+  "id": "rough-rider",
+  "bucket": "feats",
+  "name": "Rough Rider",
+  "level": 1,
+  "batch": 4
+ },
+ "elemental-lore": {
+  "id": "elemental-lore",
+  "bucket": "feats",
+  "name": "Elemental Lore",
+  "level": 1,
+  "batch": 4
+ },
+ "slag-may": {
+  "id": "slag-may",
+  "bucket": "feats",
+  "name": "Slag May",
+  "level": 1,
+  "batch": 4
+ },
+ "alghollthu-bound": {
+  "id": "alghollthu-bound",
+  "bucket": "feats",
+  "name": "Alghollthu Bound",
+  "level": 1,
+  "batch": 4
+ },
+ "undead-lore": {
+  "id": "undead-lore",
+  "bucket": "classFeatures",
+  "name": "Undead Lore",
+  "level": 1,
+  "batch": 4
+ },
+ "gorilla-stance": {
+  "id": "gorilla-stance",
+  "bucket": "feats",
+  "name": "Gorilla Stance",
+  "level": 1,
+  "batch": 4
+ },
+ "tooth-and-claw": {
+  "id": "tooth-and-claw",
+  "bucket": "feats",
+  "name": "Tooth and Claw",
+  "level": 1,
+  "batch": 4
+ },
+ "dual-studies": {
+  "id": "dual-studies",
+  "bucket": "feats",
+  "name": "Dual Studies",
+  "level": 1,
+  "batch": 4
+ },
+ "forlorn": {
+  "id": "forlorn",
+  "bucket": "feats",
+  "name": "Forlorn",
+  "level": 1,
+  "batch": 4
+ },
+ "crown-of-bone": {
+  "id": "crown-of-bone",
+  "bucket": "feats",
+  "name": "Crown of Bone",
+  "level": 1,
+  "batch": 4
+ },
+ "seek-the-hidden-glyphs": {
+  "id": "seek-the-hidden-glyphs",
+  "bucket": "feats",
+  "name": "Seek the Hidden Glyphs",
+  "level": 1,
+  "batch": 4
+ },
+ "grimspawn": {
+  "id": "grimspawn",
+  "bucket": "feats",
+  "name": "Grimspawn",
+  "level": 1,
+  "batch": 4
+ },
+ "story-crooner": {
+  "id": "story-crooner",
+  "bucket": "feats",
+  "name": "Story Crooner",
+  "level": 1,
+  "batch": 4
+ },
+ "commanders-companion": {
+  "id": "commanders-companion",
+  "bucket": "feats",
+  "name": "Commander's Companion",
+  "level": 1,
+  "batch": 4
+ },
+ "mirror-risen": {
+  "id": "mirror-risen",
+  "bucket": "feats",
+  "name": "Mirror-Risen",
+  "level": 1,
+  "batch": 4
+ },
+ "monastic-archer-stance": {
+  "id": "monastic-archer-stance",
+  "bucket": "feats",
+  "name": "Monastic Archer Stance",
+  "level": 1,
+  "batch": 4
+ },
+ "jotunborn-grappler": {
+  "id": "jotunborn-grappler",
+  "bucket": "feats",
+  "name": "Jotunborn Grappler",
+  "level": 1,
+  "batch": 4
+ },
+ "eidolon": {
+  "id": "eidolon",
+  "bucket": "classFeatures",
+  "name": "Eidolon",
+  "level": 1,
+  "batch": 4
+ },
+ "alchemical-scholar": {
+  "id": "alchemical-scholar",
+  "bucket": "feats",
+  "name": "Alchemical Scholar",
+  "level": 1,
+  "batch": 4
+ },
+ "alabaster-eyes": {
+  "id": "alabaster-eyes",
+  "bucket": "feats",
+  "name": "Alabaster Eyes",
+  "level": 1,
+  "batch": 4
+ },
+ "kobold-weapon-familiarity": {
+  "id": "kobold-weapon-familiarity",
+  "bucket": "feats",
+  "name": "Kobold Weapon Familiarity",
+  "level": 1,
+  "batch": 4
+ },
+ "crunch": {
+  "id": "crunch",
+  "bucket": "feats",
+  "name": "Crunch",
+  "level": 1,
+  "batch": 4
+ },
+ "virga-may": {
+  "id": "virga-may",
+  "bucket": "feats",
+  "name": "Virga May",
+  "level": 1,
+  "batch": 4
+ },
+ "wildsong": {
+  "id": "wildsong",
+  "bucket": "classFeatures",
+  "name": "Wildsong",
+  "level": 1,
+  "batch": 4
+ },
+ "on-the-case": {
+  "id": "on-the-case",
+  "bucket": "classFeatures",
+  "name": "On the Case",
+  "level": 1,
+  "batch": 4
+ },
+ "brine-may": {
+  "id": "brine-may",
+  "bucket": "feats",
+  "name": "Brine May",
+  "level": 1,
+  "batch": 4
+ },
+ "warren-navigator": {
+  "id": "warren-navigator",
+  "bucket": "feats",
+  "name": "Warren Navigator",
+  "level": 1,
+  "batch": 4
+ },
+ "pelagic-aptitude": {
+  "id": "pelagic-aptitude",
+  "bucket": "feats",
+  "name": "Pelagic Aptitude",
+  "level": 1,
+  "batch": 4
+ },
+ "deceptive-tactics": {
+  "id": "deceptive-tactics",
+  "bucket": "feats",
+  "name": "Deceptive Tactics",
+  "level": 1,
+  "batch": 4
+ },
+ "inherit-the-dreaming-heirloom": {
+  "id": "inherit-the-dreaming-heirloom",
+  "bucket": "feats",
+  "name": "Inherit the Dreaming Heirloom",
+  "level": 1,
+  "batch": 4
+ },
+ "remnants-of-the-past": {
+  "id": "remnants-of-the-past",
+  "bucket": "feats",
+  "name": "Remnants of the Past",
+  "level": 1,
+  "batch": 4
+ },
+ "kobold-lore": {
+  "id": "kobold-lore",
+  "bucket": "feats",
+  "name": "Kobold Lore",
+  "level": 1,
+  "batch": 4
+ },
+ "strix-defender": {
+  "id": "strix-defender",
+  "bucket": "feats",
+  "name": "Strix Defender",
+  "level": 1,
+  "batch": 4
+ },
+ "striking-retribution": {
+  "id": "striking-retribution",
+  "bucket": "feats",
+  "name": "Striking Retribution",
+  "level": 1,
+  "batch": 4
+ },
+ "battleblooded": {
+  "id": "battleblooded",
+  "bucket": "feats",
+  "name": "Battleblooded",
+  "level": 1,
+  "batch": 4
+ },
+ "munitions-crafter": {
+  "id": "munitions-crafter",
+  "bucket": "feats",
+  "name": "Munitions Crafter",
+  "level": 1,
+  "batch": 4
+ },
+ "sensitive-nose": {
+  "id": "sensitive-nose",
+  "bucket": "feats",
+  "name": "Sensitive Nose",
+  "level": 1,
+  "batch": 4
+ },
+ "puncturing-horn": {
+  "id": "puncturing-horn",
+  "bucket": "feats",
+  "name": "Puncturing Horn",
+  "level": 1,
+  "batch": 4
+ },
+ "vishkanya-lore": {
+  "id": "vishkanya-lore",
+  "bucket": "feats",
+  "name": "Vishkanya Lore",
+  "level": 1,
+  "batch": 4
+ },
+ "social-camouflage": {
+  "id": "social-camouflage",
+  "bucket": "feats",
+  "name": "Social Camouflage",
+  "level": 1,
+  "batch": 4
+ },
+ "underworld-investigator": {
+  "id": "underworld-investigator",
+  "bucket": "feats",
+  "name": "Underworld Investigator",
+  "level": 1,
+  "batch": 4
+ },
+ "ratfolk-lore": {
+  "id": "ratfolk-lore",
+  "bucket": "feats",
+  "name": "Ratfolk Lore",
+  "level": 1,
+  "batch": 4
+ },
+ "kinetic-aura": {
+  "id": "kinetic-aura",
+  "bucket": "classFeatures",
+  "name": "Kinetic Aura",
+  "level": 1,
+  "batch": 4
+ },
+ "spine-stabber": {
+  "id": "spine-stabber",
+  "bucket": "feats",
+  "name": "Spine Stabber",
+  "level": 1,
+  "batch": 4
+ },
+ "glean-contents": {
+  "id": "glean-contents",
+  "bucket": "feats",
+  "name": "Glean Contents",
+  "level": 1,
+  "batch": 4
+ },
+ "gemsoul": {
+  "id": "gemsoul",
+  "bucket": "feats",
+  "name": "Gemsoul",
+  "level": 1,
+  "batch": 4
+ },
+ "weight-of-guilt": {
+  "id": "weight-of-guilt",
+  "bucket": "feats",
+  "name": "Weight of Guilt",
+  "level": 1,
+  "batch": 4
+ },
+ "halfling-weapon-familiarity": {
+  "id": "halfling-weapon-familiarity",
+  "bucket": "feats",
+  "name": "Halfling Weapon Familiarity",
+  "level": 1,
+  "batch": 4
+ },
+ "embodied-legionary-subjectivity": {
+  "id": "embodied-legionary-subjectivity",
+  "bucket": "feats",
+  "name": "Embodied Legionary Subjectivity",
+  "level": 1,
+  "batch": 4
+ },
+ "centaur-lore": {
+  "id": "centaur-lore",
+  "bucket": "feats",
+  "name": "Centaur Lore",
+  "level": 1,
+  "batch": 4
+ },
+ "creative-prodigy": {
+  "id": "creative-prodigy",
+  "bucket": "feats",
+  "name": "Creative Prodigy",
+  "level": 1,
+  "batch": 4
+ },
+ "cynical": {
+  "id": "cynical",
+  "bucket": "feats",
+  "name": "Cynical",
+  "level": 1,
+  "batch": 4
+ },
+ "draconic-sycophant": {
+  "id": "draconic-sycophant",
+  "bucket": "feats",
+  "name": "Draconic Sycophant",
+  "level": 1,
+  "batch": 4
+ },
+ "unassuming-dedication": {
+  "id": "unassuming-dedication",
+  "bucket": "feats",
+  "name": "Unassuming Dedication",
+  "level": 1,
+  "batch": 4
+ },
+ "suli-jann": {
+  "id": "suli-jann",
+  "bucket": "feats",
+  "name": "Suli-Jann",
+  "level": 1,
+  "batch": 4
+ },
+ "dragonscaled-lore": {
+  "id": "dragonscaled-lore",
+  "bucket": "feats",
+  "name": "Dragonscaled Lore",
+  "level": 1,
+  "batch": 4
+ },
+ "qi-spells": {
+  "id": "qi-spells",
+  "bucket": "feats",
+  "name": "Qi Spells",
+  "level": 1,
+  "batch": 4
+ },
+ "messenger": {
+  "id": "messenger",
+  "bucket": "feats",
+  "name": "Messenger",
+  "level": 1,
+  "batch": 4
+ },
+ "dragon-lore": {
+  "id": "dragon-lore",
+  "bucket": "feats",
+  "name": "Dragon Lore",
+  "level": 1,
+  "batch": 4
+ },
+ "adrenaline-rush": {
+  "id": "adrenaline-rush",
+  "bucket": "feats",
+  "name": "Adrenaline Rush",
+  "level": 1,
+  "batch": 4
+ },
+ "elven-lore": {
+  "id": "elven-lore",
+  "bucket": "feats",
+  "name": "Elven Lore",
+  "level": 1,
+  "batch": 4
+ },
+ "handy-with-your-paws": {
+  "id": "handy-with-your-paws",
+  "bucket": "feats",
+  "name": "Handy with Your Paws",
+  "level": 1,
+  "batch": 4
+ },
+ "gnome-obsession": {
+  "id": "gnome-obsession",
+  "bucket": "feats",
+  "name": "Gnome Obsession",
+  "level": 1,
+  "batch": 4
+ },
+ "flexible-form": {
+  "id": "flexible-form",
+  "bucket": "feats",
+  "name": "Flexible Form",
+  "level": 1,
+  "batch": 5
+ },
+ "awakened-magic": {
+  "id": "awakened-magic",
+  "bucket": "feats",
+  "name": "Awakened Magic",
+  "level": 1,
+  "batch": 5
+ },
+ "centaur-weapon-familiarity": {
+  "id": "centaur-weapon-familiarity",
+  "bucket": "feats",
+  "name": "Centaur Weapon Familiarity",
+  "level": 1,
+  "batch": 5
+ },
+ "leshy-lore": {
+  "id": "leshy-lore",
+  "bucket": "feats",
+  "name": "Leshy Lore",
+  "level": 1,
+  "batch": 5
+ },
+ "dualborn": {
+  "id": "dualborn",
+  "bucket": "feats",
+  "name": "Dualborn",
+  "level": 1,
+  "batch": 5
+ },
+ "nosois-mask": {
+  "id": "nosois-mask",
+  "bucket": "feats",
+  "name": "Nosoi's Mask",
+  "level": 1,
+  "batch": 5
+ },
+ "travelers-counsel": {
+  "id": "travelers-counsel",
+  "bucket": "feats",
+  "name": "Traveler's Counsel",
+  "level": 1,
+  "batch": 5
+ },
+ "goloma-lore": {
+  "id": "goloma-lore",
+  "bucket": "feats",
+  "name": "Goloma Lore",
+  "level": 1,
+  "batch": 5
+ },
+ "wisdom-from-another-life": {
+  "id": "wisdom-from-another-life",
+  "bucket": "feats",
+  "name": "Wisdom From Another Life",
+  "level": 1,
+  "batch": 5
+ },
+ "read-psychometric-resonance": {
+  "id": "read-psychometric-resonance",
+  "bucket": "feats",
+  "name": "Read Psychometric Resonance",
+  "level": 1,
+  "batch": 5
+ },
+ "hellspawn": {
+  "id": "hellspawn",
+  "bucket": "feats",
+  "name": "Hellspawn",
+  "level": 1,
+  "batch": 5
+ },
+ "twilight-dweller": {
+  "id": "twilight-dweller",
+  "bucket": "feats",
+  "name": "Twilight Dweller",
+  "level": 1,
+  "batch": 5
+ },
+ "seven-changes-performance": {
+  "id": "seven-changes-performance",
+  "bucket": "feats",
+  "name": "Seven Changes Performance",
+  "level": 1,
+  "batch": 5
+ },
+ "hunt-prey": {
+  "id": "hunt-prey",
+  "bucket": "classFeatures",
+  "name": "Hunt Prey",
+  "level": 1,
+  "batch": 5
+ },
+ "charming-liar": {
+  "id": "charming-liar",
+  "bucket": "feats",
+  "name": "Charming Liar",
+  "level": 1,
+  "batch": 5
+ },
+ "coral-symbiotes": {
+  "id": "coral-symbiotes",
+  "bucket": "feats",
+  "name": "Coral Symbiotes",
+  "level": 1,
+  "batch": 5
+ },
+ "vicious-vengeance": {
+  "id": "vicious-vengeance",
+  "bucket": "feats",
+  "name": "Vicious Vengeance",
+  "level": 1,
+  "batch": 5
+ },
+ "automaton-lore": {
+  "id": "automaton-lore",
+  "bucket": "feats",
+  "name": "Automaton Lore",
+  "level": 1,
+  "batch": 5
+ },
+ "wayang-lore": {
+  "id": "wayang-lore",
+  "bucket": "feats",
+  "name": "Wayang Lore",
+  "level": 1,
+  "batch": 5
+ },
+ "hobgoblin-weapon-familiarity": {
+  "id": "hobgoblin-weapon-familiarity",
+  "bucket": "feats",
+  "name": "Hobgoblin Weapon Familiarity",
+  "level": 1,
+  "batch": 5
+ },
+ "fey-fellowship": {
+  "id": "fey-fellowship",
+  "bucket": "feats",
+  "name": "Fey Fellowship",
+  "level": 1,
+  "batch": 5
+ },
+ "orc-weapon-familiarity": {
+  "id": "orc-weapon-familiarity",
+  "bucket": "feats",
+  "name": "Orc Weapon Familiarity",
+  "level": 1,
+  "batch": 5
+ },
+ "faultspawn": {
+  "id": "faultspawn",
+  "bucket": "feats",
+  "name": "Faultspawn",
+  "level": 1,
+  "batch": 5
+ },
+ "methodology": {
+  "id": "methodology",
+  "bucket": "classFeatures",
+  "name": "Methodology",
+  "level": 1,
+  "batch": 5
+ },
+ "prototype-companion": {
+  "id": "prototype-companion",
+  "bucket": "feats",
+  "name": "Prototype Companion",
+  "level": 1,
+  "batch": 5
+ },
+ "sanctified-soul": {
+  "id": "sanctified-soul",
+  "bucket": "feats",
+  "name": "Sanctified Soul",
+  "level": 1,
+  "batch": 5
+ },
+ "stumbling-stance": {
+  "id": "stumbling-stance",
+  "bucket": "feats",
+  "name": "Stumbling Stance",
+  "level": 1,
+  "batch": 5
+ },
+ "jotunborn-lore": {
+  "id": "jotunborn-lore",
+  "bucket": "feats",
+  "name": "Jotunborn Lore",
+  "level": 1,
+  "batch": 5
+ },
+ "lingering-composition": {
+  "id": "lingering-composition",
+  "bucket": "feats",
+  "name": "Lingering Composition",
+  "level": 1,
+  "batch": 5
+ },
+ "shield-block": {
+  "id": "shield-block",
+  "bucket": "classFeatures",
+  "name": "Shield Block",
+  "level": 1,
+  "batch": 5
+ },
+ "arcane-eye": {
+  "id": "arcane-eye",
+  "bucket": "feats",
+  "name": "Arcane Eye",
+  "level": 1,
+  "batch": 5
+ },
+ "spelunker": {
+  "id": "spelunker",
+  "bucket": "feats",
+  "name": "Spelunker",
+  "level": 1,
+  "batch": 5
+ },
+ "arcane-cascade": {
+  "id": "arcane-cascade",
+  "bucket": "classFeatures",
+  "name": "Arcane Cascade",
+  "level": 1,
+  "batch": 5
+ },
+ "elemental-familiar-kineticist": {
+  "id": "elemental-familiar-kineticist",
+  "bucket": "feats",
+  "name": "Elemental Familiar (Kineticist)",
+  "level": 1,
+  "batch": 5
+ },
+ "voice-of-nature": {
+  "id": "voice-of-nature",
+  "bucket": "classFeatures",
+  "name": "Voice of Nature",
+  "level": 1,
+  "batch": 5
+ },
+ "samsaran-lore": {
+  "id": "samsaran-lore",
+  "bucket": "feats",
+  "name": "Samsaran Lore",
+  "level": 1,
+  "batch": 5
+ },
+ "jotunborn-weapon-familiarity": {
+  "id": "jotunborn-weapon-familiarity",
+  "bucket": "feats",
+  "name": "Jotunborn Weapon Familiarity",
+  "level": 1,
+  "batch": 5
+ },
+ "quick-jump": {
+  "id": "quick-jump",
+  "bucket": "feats",
+  "name": "Quick Jump",
+  "level": 1,
+  "batch": 5
+ },
+ "embers-eyes": {
+  "id": "embers-eyes",
+  "bucket": "feats",
+  "name": "Ember's Eyes",
+  "level": 1,
+  "batch": 5
+ },
+ "arcane-dragonblood": {
+  "id": "arcane-dragonblood",
+  "bucket": "feats",
+  "name": "Arcane Dragonblood",
+  "level": 1,
+  "batch": 5
+ },
+ "wizard-spellcasting": {
+  "id": "wizard-spellcasting",
+  "bucket": "classFeatures",
+  "name": "Wizard Spellcasting",
+  "level": 1,
+  "batch": 5
+ },
+ "dongun-education": {
+  "id": "dongun-education",
+  "bucket": "feats",
+  "name": "Dongun Education",
+  "level": 1,
+  "batch": 5
+ },
+ "canny-acumen": {
+  "id": "canny-acumen",
+  "bucket": "feats",
+  "name": "Canny Acumen",
+  "level": 1,
+  "batch": 5
+ },
+ "ghoran-lore": {
+  "id": "ghoran-lore",
+  "bucket": "feats",
+  "name": "Ghoran Lore",
+  "level": 1,
+  "batch": 5
+ },
+ "rivethun-disciple": {
+  "id": "rivethun-disciple",
+  "bucket": "feats",
+  "name": "Rivethun Disciple",
+  "level": 1,
+  "batch": 5
+ },
+ "subtle-theft": {
+  "id": "subtle-theft",
+  "bucket": "feats",
+  "name": "Subtle Theft",
+  "level": 1,
+  "batch": 5
+ },
+ "multilingual": {
+  "id": "multilingual",
+  "bucket": "feats",
+  "name": "Multilingual",
+  "level": 1,
+  "batch": 5
+ },
+ "mighty-dragonet": {
+  "id": "mighty-dragonet",
+  "bucket": "feats",
+  "name": "Mighty Dragonet",
+  "level": 1,
+  "batch": 5
+ },
+ "monastic-weaponry": {
+  "id": "monastic-weaponry",
+  "bucket": "feats",
+  "name": "Monastic Weaponry",
+  "level": 1,
+  "batch": 5
+ },
+ "beast-trainer": {
+  "id": "beast-trainer",
+  "bucket": "feats",
+  "name": "Beast Trainer",
+  "level": 1,
+  "batch": 5
+ },
+ "raise-a-tome": {
+  "id": "raise-a-tome",
+  "bucket": "feats",
+  "name": "Raise a Tome",
+  "level": 1,
+  "batch": 5
+ },
+ "nocturnal-tripkee": {
+  "id": "nocturnal-tripkee",
+  "bucket": "feats",
+  "name": "Nocturnal Tripkee",
+  "level": 1,
+  "batch": 5
+ },
+ "sociable": {
+  "id": "sociable",
+  "bucket": "feats",
+  "name": "Sociable",
+  "level": 1,
+  "batch": 5
+ },
+ "ghoran-weapon-familiarity": {
+  "id": "ghoran-weapon-familiarity",
+  "bucket": "feats",
+  "name": "Ghoran Weapon Familiarity",
+  "level": 1,
+  "batch": 5
+ },
+ "elemental-wrath": {
+  "id": "elemental-wrath",
+  "bucket": "feats",
+  "name": "Elemental Wrath",
+  "level": 1,
+  "batch": 5
+ },
+ "prairie-rider": {
+  "id": "prairie-rider",
+  "bucket": "feats",
+  "name": "Prairie Rider",
+  "level": 1,
+  "batch": 5
+ },
+ "artisanal-crafter": {
+  "id": "artisanal-crafter",
+  "bucket": "feats",
+  "name": "Artisanal Crafter",
+  "level": 1,
+  "batch": 5
+ },
+ "changeling-lore": {
+  "id": "changeling-lore",
+  "bucket": "feats",
+  "name": "Changeling Lore",
+  "level": 1,
+  "batch": 5
+ },
+ "explosive-savant": {
+  "id": "explosive-savant",
+  "bucket": "feats",
+  "name": "Explosive Savant",
+  "level": 1,
+  "batch": 5
+ },
+ "esoteric-lore": {
+  "id": "esoteric-lore",
+  "bucket": "classFeatures",
+  "name": "Esoteric Lore",
+  "level": 1,
+  "batch": 5
+ },
+ "athamaru-lore": {
+  "id": "athamaru-lore",
+  "bucket": "feats",
+  "name": "Athamaru Lore",
+  "level": 1,
+  "batch": 5
+ },
+ "unleash-psyche": {
+  "id": "unleash-psyche",
+  "bucket": "classFeatures",
+  "name": "Unleash Psyche",
+  "level": 1,
+  "batch": 5
+ },
+ "ancient-memories": {
+  "id": "ancient-memories",
+  "bucket": "feats",
+  "name": "Ancient Memories",
+  "level": 1,
+  "batch": 5
+ },
+ "slink": {
+  "id": "slink",
+  "bucket": "feats",
+  "name": "Slink",
+  "level": 1,
+  "batch": 5
+ },
+ "natural-senses": {
+  "id": "natural-senses",
+  "bucket": "feats",
+  "name": "Natural Senses",
+  "level": 1,
+  "batch": 5
+ },
+ "pilgrims-token": {
+  "id": "pilgrims-token",
+  "bucket": "feats",
+  "name": "Pilgrim's Token",
+  "level": 1,
+  "batch": 5
+ },
+ "eyes-of-night": {
+  "id": "eyes-of-night",
+  "bucket": "feats",
+  "name": "Eyes of Night",
+  "level": 1,
+  "batch": 5
+ },
+ "steadying-stone": {
+  "id": "steadying-stone",
+  "bucket": "feats",
+  "name": "Steadying Stone",
+  "level": 1,
+  "batch": 5
+ },
+ "dragonet-resistances": {
+  "id": "dragonet-resistances",
+  "bucket": "feats",
+  "name": "Dragonet Resistances",
+  "level": 1,
+  "batch": 5
+ },
+ "bestial-manifestation": {
+  "id": "bestial-manifestation",
+  "bucket": "feats",
+  "name": "Bestial Manifestation",
+  "level": 1,
+  "batch": 5
+ },
+ "nephilim-lore": {
+  "id": "nephilim-lore",
+  "bucket": "feats",
+  "name": "Nephilim Lore",
+  "level": 1,
+  "batch": 5
+ },
+ "strix-lore": {
+  "id": "strix-lore",
+  "bucket": "feats",
+  "name": "Strix Lore",
+  "level": 1,
+  "batch": 5
+ },
+ "open-mind": {
+  "id": "open-mind",
+  "bucket": "feats",
+  "name": "Open Mind",
+  "level": 1,
+  "batch": 5
+ },
+ "waxed-feathers": {
+  "id": "waxed-feathers",
+  "bucket": "feats",
+  "name": "Waxed Feathers",
+  "level": 1,
+  "batch": 5
+ },
+ "haughty-obstinacy": {
+  "id": "haughty-obstinacy",
+  "bucket": "feats",
+  "name": "Haughty Obstinacy",
+  "level": 1,
+  "batch": 5
+ },
+ "animal-companion-ranger": {
+  "id": "animal-companion-ranger",
+  "bucket": "feats",
+  "name": "Animal Companion (Ranger)",
+  "level": 1,
+  "batch": 5
+ },
+ "awakened-animal-lore": {
+  "id": "awakened-animal-lore",
+  "bucket": "feats",
+  "name": "Awakened Animal Lore",
+  "level": 1,
+  "batch": 5
+ },
+ "goblin-lore": {
+  "id": "goblin-lore",
+  "bucket": "feats",
+  "name": "Goblin Lore",
+  "level": 1,
+  "batch": 5
+ },
+ "anadi-lore": {
+  "id": "anadi-lore",
+  "bucket": "feats",
+  "name": "Anadi Lore",
+  "level": 1,
+  "batch": 5
+ },
+ "hex-spells": {
+  "id": "hex-spells",
+  "bucket": "classFeatures",
+  "name": "Hex Spells",
+  "level": 1,
+  "batch": 5
+ },
+ "animal-elocutionist": {
+  "id": "animal-elocutionist",
+  "bucket": "feats",
+  "name": "Animal Elocutionist",
+  "level": 1,
+  "batch": 5
+ },
+ "callow-may": {
+  "id": "callow-may",
+  "bucket": "feats",
+  "name": "Callow May",
+  "level": 1,
+  "batch": 5
+ },
+ "assurance": {
+  "id": "assurance",
+  "bucket": "feats",
+  "name": "Assurance",
+  "level": 1,
+  "batch": 5
+ },
+ "meticulous-restorer": {
+  "id": "meticulous-restorer",
+  "bucket": "feats",
+  "name": "Meticulous Restorer",
+  "level": 1,
+  "batch": 5
+ },
+ "conscious-mind": {
+  "id": "conscious-mind",
+  "bucket": "classFeatures",
+  "name": "Conscious Mind",
+  "level": 1,
+  "batch": 5
+ },
+ "raging-intimidation": {
+  "id": "raging-intimidation",
+  "bucket": "feats",
+  "name": "Raging Intimidation",
+  "level": 1,
+  "batch": 5
+ },
+ "quicksoul": {
+  "id": "quicksoul",
+  "bucket": "feats",
+  "name": "Quicksoul",
+  "level": 1,
+  "batch": 5
+ },
+ "muses": {
+  "id": "muses",
+  "bucket": "classFeatures",
+  "name": "Muses",
+  "level": 1,
+  "batch": 5
+ },
+ "versatile-blasts": {
+  "id": "versatile-blasts",
+  "bucket": "feats",
+  "name": "Versatile Blasts",
+  "level": 1,
+  "batch": 5
+ },
+ "ru-shi": {
+  "id": "ru-shi",
+  "bucket": "feats",
+  "name": "Ru-Shi",
+  "level": 1,
+  "batch": 5
+ },
+ "tangle-of-limbs": {
+  "id": "tangle-of-limbs",
+  "bucket": "feats",
+  "name": "Tangle of Limbs",
+  "level": 1,
+  "batch": 5
+ },
+ "hardwood-armor": {
+  "id": "hardwood-armor",
+  "bucket": "feats",
+  "name": "Hardwood Armor",
+  "level": 1,
+  "batch": 5
+ },
+ "additional-lore": {
+  "id": "additional-lore",
+  "bucket": "feats",
+  "name": "Additional Lore",
+  "level": 1,
+  "batch": 5
+ },
+ "pitborn": {
+  "id": "pitborn",
+  "bucket": "feats",
+  "name": "Pitborn",
+  "level": 1,
+  "batch": 5
+ },
+ "confident-finisher": {
+  "id": "confident-finisher",
+  "bucket": "classFeatures",
+  "name": "Confident Finisher",
+  "level": 1,
+  "batch": 5
+ },
+ "steady-balance": {
+  "id": "steady-balance",
+  "bucket": "feats",
+  "name": "Steady Balance",
+  "level": 1,
+  "batch": 5
+ },
+ "oceans-bite": {
+  "id": "oceans-bite",
+  "bucket": "feats",
+  "name": "Ocean's Bite",
+  "level": 1,
+  "batch": 5
+ },
+ "oracle-spellcasting": {
+  "id": "oracle-spellcasting",
+  "bucket": "classFeatures",
+  "name": "Oracle Spellcasting",
+  "level": 1,
+  "batch": 5
+ },
+ "quick-coercion": {
+  "id": "quick-coercion",
+  "bucket": "feats",
+  "name": "Quick Coercion",
+  "level": 1,
+  "batch": 5
+ },
+ "occult-dragonblood": {
+  "id": "occult-dragonblood",
+  "bucket": "feats",
+  "name": "Occult Dragonblood",
+  "level": 1,
+  "batch": 5
+ },
+ "smokesoul": {
+  "id": "smokesoul",
+  "bucket": "feats",
+  "name": "Smokesoul",
+  "level": 1,
+  "batch": 6
+ },
+ "silent-stone": {
+  "id": "silent-stone",
+  "bucket": "feats",
+  "name": "Silent Stone",
+  "level": 1,
+  "batch": 6
+ },
+ "childlike-plant": {
+  "id": "childlike-plant",
+  "bucket": "feats",
+  "name": "Childlike Plant",
+  "level": 1,
+  "batch": 6
+ },
+ "disarming-flair": {
+  "id": "disarming-flair",
+  "bucket": "feats",
+  "name": "Disarming Flair",
+  "level": 1,
+  "batch": 6
+ },
+ "bardic-lore": {
+  "id": "bardic-lore",
+  "bucket": "feats",
+  "name": "Bardic Lore",
+  "level": 1,
+  "batch": 6
+ },
+ "proximity-alert": {
+  "id": "proximity-alert",
+  "bucket": "feats",
+  "name": "Proximity Alert",
+  "level": 1,
+  "batch": 6
+ },
+ "elucidating-vision": {
+  "id": "elucidating-vision",
+  "bucket": "feats",
+  "name": "Elucidating Vision",
+  "level": 1,
+  "batch": 6
+ },
+ "miresoul": {
+  "id": "miresoul",
+  "bucket": "feats",
+  "name": "Miresoul",
+  "level": 1,
+  "batch": 6
+ },
+ "gunslingers-way": {
+  "id": "gunslingers-way",
+  "bucket": "classFeatures",
+  "name": "Gunslinger's Way",
+  "level": 1,
+  "batch": 6
+ },
+ "draconic-sight": {
+  "id": "draconic-sight",
+  "bucket": "feats",
+  "name": "Draconic Sight",
+  "level": 1,
+  "batch": 6
+ },
+ "android-lore": {
+  "id": "android-lore",
+  "bucket": "feats",
+  "name": "Android Lore",
+  "level": 1,
+  "batch": 6
+ },
+ "gnome-polyglot": {
+  "id": "gnome-polyglot",
+  "bucket": "feats",
+  "name": "Gnome Polyglot",
+  "level": 1,
+  "batch": 6
+ },
+ "leshy-familiar": {
+  "id": "leshy-familiar",
+  "bucket": "feats",
+  "name": "Leshy Familiar",
+  "level": 1,
+  "batch": 6
+ },
+ "tactics": {
+  "id": "tactics",
+  "bucket": "classFeatures",
+  "name": "Tactics",
+  "level": 1,
+  "batch": 6
+ },
+ "viking-shieldbearer": {
+  "id": "viking-shieldbearer",
+  "bucket": "feats",
+  "name": "Viking Shieldbearer",
+  "level": 1,
+  "batch": 6
+ },
+ "tiger-stance": {
+  "id": "tiger-stance",
+  "bucket": "feats",
+  "name": "Tiger Stance",
+  "level": 1,
+  "batch": 6
+ },
+ "faithful-steed": {
+  "id": "faithful-steed",
+  "bucket": "feats",
+  "name": "Faithful Steed",
+  "level": 1,
+  "batch": 6
+ },
+ "minuscule-mentee": {
+  "id": "minuscule-mentee",
+  "bucket": "feats",
+  "name": "Minuscule Mentee",
+  "level": 1,
+  "batch": 6
+ },
+ "eye-for-masonry": {
+  "id": "eye-for-masonry",
+  "bucket": "feats",
+  "name": "Eye for Masonry",
+  "level": 1,
+  "batch": 6
+ },
+ "grave-spells": {
+  "id": "grave-spells",
+  "bucket": "classFeatures",
+  "name": "Grave Spells",
+  "level": 1,
+  "batch": 6
+ },
+ "practiced-brawn": {
+  "id": "practiced-brawn",
+  "bucket": "feats",
+  "name": "Practiced Brawn",
+  "level": 1,
+  "batch": 6
+ },
+ "demonbane-warrior": {
+  "id": "demonbane-warrior",
+  "bucket": "feats",
+  "name": "Demonbane Warrior",
+  "level": 1,
+  "batch": 6
+ },
+ "iron-repercussions": {
+  "id": "iron-repercussions",
+  "bucket": "feats",
+  "name": "Iron Repercussions",
+  "level": 1,
+  "batch": 6
+ },
+ "hold-mark": {
+  "id": "hold-mark",
+  "bucket": "feats",
+  "name": "Hold Mark",
+  "level": 1,
+  "batch": 6
+ },
+ "scuttle-up": {
+  "id": "scuttle-up",
+  "bucket": "feats",
+  "name": "Scuttle Up",
+  "level": 1,
+  "batch": 6
+ },
+ "twin-stars": {
+  "id": "twin-stars",
+  "bucket": "feats",
+  "name": "Twin Stars",
+  "level": 1,
+  "batch": 6
+ },
+ "dream-may": {
+  "id": "dream-may",
+  "bucket": "feats",
+  "name": "Dream May",
+  "level": 1,
+  "batch": 6
+ },
+ "animistic-practice": {
+  "id": "animistic-practice",
+  "bucket": "classFeatures",
+  "name": "Animistic Practice",
+  "level": 1,
+  "batch": 6
+ },
+ "vicious-incisors": {
+  "id": "vicious-incisors",
+  "bucket": "feats",
+  "name": "Vicious Incisors",
+  "level": 1,
+  "batch": 6
+ },
+ "orc-lore": {
+  "id": "orc-lore",
+  "bucket": "feats",
+  "name": "Orc Lore",
+  "level": 1,
+  "batch": 6
+ },
+ "bone-magic": {
+  "id": "bone-magic",
+  "bucket": "feats",
+  "name": "Bone Magic",
+  "level": 1,
+  "batch": 6
+ },
+ "duskwalker-weapon-familiarity": {
+  "id": "duskwalker-weapon-familiarity",
+  "bucket": "feats",
+  "name": "Duskwalker Weapon Familiarity",
+  "level": 1,
+  "batch": 6
+ },
+ "draconic-arrogance": {
+  "id": "draconic-arrogance",
+  "bucket": "feats",
+  "name": "Draconic Arrogance",
+  "level": 1,
+  "batch": 6
+ },
+ "catfolk-weapon-familiarity": {
+  "id": "catfolk-weapon-familiarity",
+  "bucket": "feats",
+  "name": "Catfolk Weapon Familiarity",
+  "level": 1,
+  "batch": 6
+ },
+ "brightsoul": {
+  "id": "brightsoul",
+  "bucket": "feats",
+  "name": "Brightsoul",
+  "level": 1,
+  "batch": 6
+ },
+ "hags-sight": {
+  "id": "hags-sight",
+  "bucket": "feats",
+  "name": "Hag's Sight",
+  "level": 1,
+  "batch": 6
+ },
+ "weapon-proficiency": {
+  "id": "weapon-proficiency",
+  "bucket": "feats",
+  "name": "Weapon Proficiency",
+  "level": 1,
+  "batch": 6
+ },
+ "dokkaebi-fire": {
+  "id": "dokkaebi-fire",
+  "bucket": "feats",
+  "name": "Dokkaebi Fire",
+  "level": 1,
+  "batch": 6
+ },
+ "armor-proficiency": {
+  "id": "armor-proficiency",
+  "bucket": "feats",
+  "name": "Armor Proficiency",
+  "level": 1,
+  "batch": 6
+ },
+ "devise-a-stratagem": {
+  "id": "devise-a-stratagem",
+  "bucket": "classFeatures",
+  "name": "Devise a Stratagem",
+  "level": 1,
+  "batch": 6
+ },
+ "benefactors-resistance": {
+  "id": "benefactors-resistance",
+  "bucket": "feats",
+  "name": "Benefactor's Resistance",
+  "level": 1,
+  "batch": 6
+ },
+ "armor-in-earth": {
+  "id": "armor-in-earth",
+  "bucket": "feats",
+  "name": "Armor in Earth",
+  "level": 1,
+  "batch": 6
+ },
+ "nephilim-eyes": {
+  "id": "nephilim-eyes",
+  "bucket": "feats",
+  "name": "Nephilim Eyes",
+  "level": 1,
+  "batch": 6
+ },
+ "elver-pet": {
+  "id": "elver-pet",
+  "bucket": "feats",
+  "name": "Elver Pet",
+  "level": 1,
+  "batch": 6
+ },
+ "avowed-insight": {
+  "id": "avowed-insight",
+  "bucket": "feats",
+  "name": "Avowed Insight",
+  "level": 1,
+  "batch": 6
+ },
+ "lengthy-diversion": {
+  "id": "lengthy-diversion",
+  "bucket": "feats",
+  "name": "Lengthy Diversion",
+  "level": 1,
+  "batch": 6
+ },
+ "rushing-goat-stance": {
+  "id": "rushing-goat-stance",
+  "bucket": "feats",
+  "name": "Rushing Goat Stance",
+  "level": 1,
+  "batch": 6
+ },
+ "fatal-method": {
+  "id": "fatal-method",
+  "bucket": "classFeatures",
+  "name": "Fatal Method",
+  "level": 1,
+  "batch": 6
+ },
+ "monstrous-peacemaker": {
+  "id": "monstrous-peacemaker",
+  "bucket": "feats",
+  "name": "Monstrous Peacemaker",
+  "level": 1,
+  "batch": 6
+ },
+ "panache": {
+  "id": "panache",
+  "bucket": "classFeatures",
+  "name": "Panache",
+  "level": 1,
+  "batch": 6
+ },
+ "living-weapon": {
+  "id": "living-weapon",
+  "bucket": "feats",
+  "name": "Living Weapon",
+  "level": 1,
+  "batch": 6
+ },
+ "combat-climber": {
+  "id": "combat-climber",
+  "bucket": "feats",
+  "name": "Combat Climber",
+  "level": 1,
+  "batch": 6
+ },
+ "hungry-eyes": {
+  "id": "hungry-eyes",
+  "bucket": "feats",
+  "name": "Hungry Eyes",
+  "level": 1,
+  "batch": 6
+ },
+ "terra-dragonblood": {
+  "id": "terra-dragonblood",
+  "bucket": "feats",
+  "name": "Terra Dragonblood",
+  "level": 1,
+  "batch": 6
+ },
+ "shackleborn": {
+  "id": "shackleborn",
+  "bucket": "feats",
+  "name": "Shackleborn",
+  "level": 1,
+  "batch": 6
+ },
+ "molten-wit": {
+  "id": "molten-wit",
+  "bucket": "feats",
+  "name": "Molten Wit",
+  "level": 1,
+  "batch": 6
+ },
+ "toughness": {
+  "id": "toughness",
+  "bucket": "feats",
+  "name": "Toughness",
+  "level": 1,
+  "batch": 6
+ },
+ "clone-risen": {
+  "id": "clone-risen",
+  "bucket": "feats",
+  "name": "Clone-Risen",
+  "level": 1,
+  "batch": 6
+ },
+ "conrasu-weapon-familiarity": {
+  "id": "conrasu-weapon-familiarity",
+  "bucket": "feats",
+  "name": "Conrasu Weapon Familiarity",
+  "level": 1,
+  "batch": 6
+ },
+ "elegant-buckler": {
+  "id": "elegant-buckler",
+  "bucket": "feats",
+  "name": "Elegant Buckler",
+  "level": 1,
+  "batch": 6
+ },
+ "storms-lash": {
+  "id": "storms-lash",
+  "bucket": "feats",
+  "name": "Storm's Lash",
+  "level": 1,
+  "batch": 6
+ },
+ "fleet": {
+  "id": "fleet",
+  "bucket": "feats",
+  "name": "Fleet",
+  "level": 1,
+  "batch": 6
+ },
+ "sublime-mobility": {
+  "id": "sublime-mobility",
+  "bucket": "feats",
+  "name": "Sublime Mobility",
+  "level": 1,
+  "batch": 6
+ },
+ "angelkin": {
+  "id": "angelkin",
+  "bucket": "feats",
+  "name": "Angelkin",
+  "level": 1,
+  "batch": 6
+ },
+ "evolution-feat": {
+  "id": "evolution-feat",
+  "bucket": "classFeatures",
+  "name": "Evolution Feat",
+  "level": 1,
+  "batch": 6
+ },
+ "lawbringer": {
+  "id": "lawbringer",
+  "bucket": "feats",
+  "name": "Lawbringer",
+  "level": 1,
+  "batch": 6
+ },
+ "witch-spellcasting": {
+  "id": "witch-spellcasting",
+  "bucket": "classFeatures",
+  "name": "Witch Spellcasting",
+  "level": 1,
+  "batch": 6
+ },
+ "kholo-weapon-familiarity": {
+  "id": "kholo-weapon-familiarity",
+  "bucket": "feats",
+  "name": "Kholo Weapon Familiarity",
+  "level": 1,
+  "batch": 6
+ },
+ "doctrine": {
+  "id": "doctrine",
+  "bucket": "classFeatures",
+  "name": "Doctrine",
+  "level": 1,
+  "batch": 6
+ },
+ "awakened-jewel": {
+  "id": "awakened-jewel",
+  "bucket": "feats",
+  "name": "Awakened Jewel",
+  "level": 1,
+  "batch": 6
+ },
+ "hymn-of-healing": {
+  "id": "hymn-of-healing",
+  "bucket": "feats",
+  "name": "Hymn of Healing",
+  "level": 1,
+  "batch": 6
+ },
+ "minotaur-weapon-familiarity": {
+  "id": "minotaur-weapon-familiarity",
+  "bucket": "feats",
+  "name": "Minotaur Weapon Familiarity",
+  "level": 1,
+  "batch": 6
+ },
+ "intimidating-glare": {
+  "id": "intimidating-glare",
+  "bucket": "feats",
+  "name": "Intimidating Glare",
+  "level": 1,
+  "batch": 6
+ },
+ "like-a-roach": {
+  "id": "like-a-roach",
+  "bucket": "feats",
+  "name": "Like a Roach",
+  "level": 1,
+  "batch": 6
+ },
+ "merfolk-lore": {
+  "id": "merfolk-lore",
+  "bucket": "feats",
+  "name": "Merfolk Lore",
+  "level": 1,
+  "batch": 6
+ },
+ "disillusionment": {
+  "id": "disillusionment",
+  "bucket": "feats",
+  "name": "Disillusionment",
+  "level": 1,
+  "batch": 6
+ },
+ "powerful-tail": {
+  "id": "powerful-tail",
+  "bucket": "feats",
+  "name": "Powerful Tail",
+  "level": 1,
+  "batch": 6
+ },
+ "domain-initiate": {
+  "id": "domain-initiate",
+  "bucket": "feats",
+  "name": "Domain Initiate",
+  "level": 1,
+  "batch": 6
+ },
+ "cantorian-reinforcement": {
+  "id": "cantorian-reinforcement",
+  "bucket": "feats",
+  "name": "Cantorian Reinforcement",
+  "level": 1,
+  "batch": 6
+ },
+ "death-speaker": {
+  "id": "death-speaker",
+  "bucket": "feats",
+  "name": "Death Speaker",
+  "level": 1,
+  "batch": 6
+ },
+ "vanara-weapon-familiarity": {
+  "id": "vanara-weapon-familiarity",
+  "bucket": "feats",
+  "name": "Vanara Weapon Familiarity",
+  "level": 1,
+  "batch": 6
+ },
+ "adroit-manipulation": {
+  "id": "adroit-manipulation",
+  "bucket": "feats",
+  "name": "Adroit Manipulation",
+  "level": 1,
+  "batch": 6
+ },
+ "syncretism": {
+  "id": "syncretism",
+  "bucket": "feats",
+  "name": "Syncretism",
+  "level": 1,
+  "batch": 6
+ },
+ "unburdened-iron": {
+  "id": "unburdened-iron",
+  "bucket": "feats",
+  "name": "Unburdened Iron",
+  "level": 1,
+  "batch": 6
+ },
+ "elven-aloofness": {
+  "id": "elven-aloofness",
+  "bucket": "feats",
+  "name": "Elven Aloofness",
+  "level": 1,
+  "batch": 6
+ },
+ "well-versed": {
+  "id": "well-versed",
+  "bucket": "feats",
+  "name": "Well-Versed",
+  "level": 1,
+  "batch": 6
+ },
+ "vestigial-magicsense": {
+  "id": "vestigial-magicsense",
+  "bucket": "feats",
+  "name": "Vestigial Magicsense",
+  "level": 1,
+  "batch": 6
+ },
+ "cold-minded": {
+  "id": "cold-minded",
+  "bucket": "feats",
+  "name": "Cold Minded",
+  "level": 1,
+  "batch": 6
+ },
+ "specialty-crafting": {
+  "id": "specialty-crafting",
+  "bucket": "feats",
+  "name": "Specialty Crafting",
+  "level": 1,
+  "batch": 6
+ },
+ "shore-step": {
+  "id": "shore-step",
+  "bucket": "feats",
+  "name": "Shore Step",
+  "level": 1,
+  "batch": 6
+ },
+ "shisk-lore": {
+  "id": "shisk-lore",
+  "bucket": "feats",
+  "name": "Shisk Lore",
+  "level": 1,
+  "batch": 6
+ },
+ "springsoul": {
+  "id": "springsoul",
+  "bucket": "feats",
+  "name": "Springsoul",
+  "level": 1,
+  "batch": 6
+ },
+ "fangs": {
+  "id": "fangs",
+  "bucket": "feats",
+  "name": "Fangs",
+  "level": 1,
+  "batch": 6
+ },
+ "divine-font": {
+  "id": "divine-font",
+  "bucket": "classFeatures",
+  "name": "Divine Font",
+  "level": 1,
+  "batch": 6
+ },
+ "progenitor-lore": {
+  "id": "progenitor-lore",
+  "bucket": "feats",
+  "name": "Progenitor Lore",
+  "level": 1,
+  "batch": 6
+ },
+ "stormsoul": {
+  "id": "stormsoul",
+  "bucket": "feats",
+  "name": "Stormsoul",
+  "level": 1,
+  "batch": 6
+ },
+ "native-waters": {
+  "id": "native-waters",
+  "bucket": "feats",
+  "name": "Native Waters",
+  "level": 1,
+  "batch": 6
+ },
+ "emotionless": {
+  "id": "emotionless",
+  "bucket": "feats",
+  "name": "Emotionless",
+  "level": 1,
+  "batch": 6
+ },
+ "goading-feint": {
+  "id": "goading-feint",
+  "bucket": "feats",
+  "name": "Goading Feint",
+  "level": 1,
+  "batch": 6
+ },
+ "surface-culture": {
+  "id": "surface-culture",
+  "bucket": "feats",
+  "name": "Surface Culture",
+  "level": 1,
+  "batch": 6
+ },
+ "saber-teeth": {
+  "id": "saber-teeth",
+  "bucket": "feats",
+  "name": "Saber Teeth",
+  "level": 1,
+  "batch": 7
+ },
+ "witch-warden": {
+  "id": "witch-warden",
+  "bucket": "feats",
+  "name": "Witch Warden",
+  "level": 1,
+  "batch": 7
+ },
+ "mauler-dedication": {
+  "id": "mauler-dedication",
+  "bucket": "feats",
+  "name": "Mauler Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "zombie-dedication": {
+  "id": "zombie-dedication",
+  "bucket": "feats",
+  "name": "Zombie Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "scout-dedication": {
+  "id": "scout-dedication",
+  "bucket": "feats",
+  "name": "Scout Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "bullet-dancer-dedication": {
+  "id": "bullet-dancer-dedication",
+  "bucket": "feats",
+  "name": "Bullet Dancer Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "archaeologist-dedication": {
+  "id": "archaeologist-dedication",
+  "bucket": "feats",
+  "name": "Archaeologist Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "dancing-leaf": {
+  "id": "dancing-leaf",
+  "bucket": "feats",
+  "name": "Dancing Leaf",
+  "level": 2,
+  "batch": 7
+ },
+ "firework-technician-dedication": {
+  "id": "firework-technician-dedication",
+  "bucket": "feats",
+  "name": "Firework Technician Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "song-of-the-soul": {
+  "id": "song-of-the-soul",
+  "bucket": "feats",
+  "name": "Song of the Soul",
+  "level": 2,
+  "batch": 7
+ },
+ "reanimator-dedication": {
+  "id": "reanimator-dedication",
+  "bucket": "feats",
+  "name": "Reanimator Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "sentinel-dedication": {
+  "id": "sentinel-dedication",
+  "bucket": "feats",
+  "name": "Sentinel Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "runescarred-dedication": {
+  "id": "runescarred-dedication",
+  "bucket": "feats",
+  "name": "Runescarred Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "minor-magic": {
+  "id": "minor-magic",
+  "bucket": "feats",
+  "name": "Minor Magic",
+  "level": 2,
+  "batch": 7
+ },
+ "cantrip-expansion": {
+  "id": "cantrip-expansion",
+  "bucket": "feats",
+  "name": "Cantrip Expansion",
+  "level": 2,
+  "batch": 7
+ },
+ "nantambu-chime-ringer-dedication": {
+  "id": "nantambu-chime-ringer-dedication",
+  "bucket": "feats",
+  "name": "Nantambu Chime-Ringer Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "swarmkeeper-dedication": {
+  "id": "swarmkeeper-dedication",
+  "bucket": "feats",
+  "name": "Swarmkeeper Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "druid-dedication": {
+  "id": "druid-dedication",
+  "bucket": "feats",
+  "name": "Druid Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "expansive-spellstrike": {
+  "id": "expansive-spellstrike",
+  "bucket": "feats",
+  "name": "Expansive Spellstrike",
+  "level": 2,
+  "batch": 7
+ },
+ "oatia-skysage-dedication": {
+  "id": "oatia-skysage-dedication",
+  "bucket": "feats",
+  "name": "Oatia Skysage Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "discreet-inquiry": {
+  "id": "discreet-inquiry",
+  "bucket": "feats",
+  "name": "Discreet Inquiry",
+  "level": 2,
+  "batch": 7
+ },
+ "vehicle-mechanic-dedication": {
+  "id": "vehicle-mechanic-dedication",
+  "bucket": "feats",
+  "name": "Vehicle Mechanic Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "student-of-water": {
+  "id": "student-of-water",
+  "bucket": "feats",
+  "name": "Student of Water",
+  "level": 2,
+  "batch": 7
+ },
+ "commander-dedication": {
+  "id": "commander-dedication",
+  "bucket": "feats",
+  "name": "Commander Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "confabulator": {
+  "id": "confabulator",
+  "bucket": "feats",
+  "name": "Confabulator",
+  "level": 2,
+  "batch": 7
+ },
+ "captain-dedication": {
+  "id": "captain-dedication",
+  "bucket": "feats",
+  "name": "Captain Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "embodiment-of-the-balance": {
+  "id": "embodiment-of-the-balance",
+  "bucket": "feats",
+  "name": "Embodiment Of The Balance",
+  "level": 2,
+  "batch": 7
+ },
+ "powder-punch-stance": {
+  "id": "powder-punch-stance",
+  "bucket": "feats",
+  "name": "Powder Punch Stance",
+  "level": 2,
+  "batch": 7
+ },
+ "blackjacket-dedication": {
+  "id": "blackjacket-dedication",
+  "bucket": "feats",
+  "name": "Blackjacket Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "dual-weapon-warrior-dedication": {
+  "id": "dual-weapon-warrior-dedication",
+  "bucket": "feats",
+  "name": "Dual-Weapon Warrior Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "deathly-scream": {
+  "id": "deathly-scream",
+  "bucket": "feats",
+  "name": "Deathly Scream",
+  "level": 2,
+  "batch": 7
+ },
+ "half-truths": {
+  "id": "half-truths",
+  "bucket": "feats",
+  "name": "Half-Truths",
+  "level": 2,
+  "batch": 7
+ },
+ "multifarious-muse": {
+  "id": "multifarious-muse",
+  "bucket": "feats",
+  "name": "Multifarious Muse",
+  "level": 2,
+  "batch": 7
+ },
+ "continual-recovery": {
+  "id": "continual-recovery",
+  "bucket": "feats",
+  "name": "Continual Recovery",
+  "level": 2,
+  "batch": 7
+ },
+ "oozemorph-dedication": {
+  "id": "oozemorph-dedication",
+  "bucket": "feats",
+  "name": "Oozemorph Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "marshal-dedication": {
+  "id": "marshal-dedication",
+  "bucket": "feats",
+  "name": "Marshal Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "campfire-chronicler-dedication": {
+  "id": "campfire-chronicler-dedication",
+  "bucket": "feats",
+  "name": "Campfire Chronicler Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "trick-driver-dedication": {
+  "id": "trick-driver-dedication",
+  "bucket": "feats",
+  "name": "Trick Driver Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "warpriests-armor": {
+  "id": "warpriests-armor",
+  "bucket": "feats",
+  "name": "Warpriest’s Armor",
+  "level": 2,
+  "batch": 7
+ },
+ "draconic-acolyte-dedication": {
+  "id": "draconic-acolyte-dedication",
+  "bucket": "feats",
+  "name": "Draconic Acolyte Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "antagonize": {
+  "id": "antagonize",
+  "bucket": "feats",
+  "name": "Antagonize",
+  "level": 2,
+  "batch": 7
+ },
+ "eyes-of-the-city": {
+  "id": "eyes-of-the-city",
+  "bucket": "feats",
+  "name": "Eyes of the City",
+  "level": 2,
+  "batch": 7
+ },
+ "alchemist-dedication": {
+  "id": "alchemist-dedication",
+  "bucket": "feats",
+  "name": "Alchemist Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "hellknight-dedication": {
+  "id": "hellknight-dedication",
+  "bucket": "feats",
+  "name": "Hellknight Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "tattoo-artist": {
+  "id": "tattoo-artist",
+  "bucket": "feats",
+  "name": "Tattoo Artist",
+  "level": 2,
+  "batch": 7
+ },
+ "bright-lion-dedication": {
+  "id": "bright-lion-dedication",
+  "bucket": "feats",
+  "name": "Bright Lion Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "shieldmarshal-dedication": {
+  "id": "shieldmarshal-dedication",
+  "bucket": "feats",
+  "name": "Shieldmarshal Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "wylderheart-dedication": {
+  "id": "wylderheart-dedication",
+  "bucket": "feats",
+  "name": "Wylderheart Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "magical-shorthand": {
+  "id": "magical-shorthand",
+  "bucket": "feats",
+  "name": "Magical Shorthand",
+  "level": 2,
+  "batch": 7
+ },
+ "undead-creator": {
+  "id": "undead-creator",
+  "bucket": "feats",
+  "name": "Undead Creator",
+  "level": 2,
+  "batch": 7
+ },
+ "folklorist-dedication": {
+  "id": "folklorist-dedication",
+  "bucket": "feats",
+  "name": "Folklorist Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "game-hunter-dedication": {
+  "id": "game-hunter-dedication",
+  "bucket": "feats",
+  "name": "Game Hunter Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "swashbuckler-dedication": {
+  "id": "swashbuckler-dedication",
+  "bucket": "feats",
+  "name": "Swashbuckler Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "pirate-dedication": {
+  "id": "pirate-dedication",
+  "bucket": "feats",
+  "name": "Pirate Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "reinforce-eidolon": {
+  "id": "reinforce-eidolon",
+  "bucket": "feats",
+  "name": "Reinforce Eidolon",
+  "level": 2,
+  "batch": 7
+ },
+ "dragon-disciple-dedication": {
+  "id": "dragon-disciple-dedication",
+  "bucket": "feats",
+  "name": "Dragon Disciple Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "barbarian-dedication": {
+  "id": "barbarian-dedication",
+  "bucket": "feats",
+  "name": "Barbarian Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "ghoul-dedication": {
+  "id": "ghoul-dedication",
+  "bucket": "feats",
+  "name": "Ghoul Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "animal-trainer-dedication": {
+  "id": "animal-trainer-dedication",
+  "bucket": "feats",
+  "name": "Animal Trainer Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "robust-recovery": {
+  "id": "robust-recovery",
+  "bucket": "feats",
+  "name": "Robust Recovery",
+  "level": 2,
+  "batch": 7
+ },
+ "lastwall-sentry-dedication": {
+  "id": "lastwall-sentry-dedication",
+  "bucket": "feats",
+  "name": "Lastwall Sentry Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "viking-dedication": {
+  "id": "viking-dedication",
+  "bucket": "feats",
+  "name": "Viking Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "rivethun-invoker-dedication": {
+  "id": "rivethun-invoker-dedication",
+  "bucket": "feats",
+  "name": "Rivethun Invoker Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "reverse-engineer": {
+  "id": "reverse-engineer",
+  "bucket": "feats",
+  "name": "Reverse Engineer",
+  "level": 2,
+  "batch": 7
+ },
+ "edgewatch-detective-dedication": {
+  "id": "edgewatch-detective-dedication",
+  "bucket": "feats",
+  "name": "Edgewatch Detective Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "field-propagandist-dedication": {
+  "id": "field-propagandist-dedication",
+  "bucket": "feats",
+  "name": "Field Propagandist Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "seneschal-witch-dedication": {
+  "id": "seneschal-witch-dedication",
+  "bucket": "feats",
+  "name": "Seneschal Witch Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "rivethun-emissary-dedication": {
+  "id": "rivethun-emissary-dedication",
+  "bucket": "feats",
+  "name": "Rivethun Emissary Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "twilight-speaker-dedication": {
+  "id": "twilight-speaker-dedication",
+  "bucket": "feats",
+  "name": "Twilight Speaker Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "finishing-follow-through": {
+  "id": "finishing-follow-through",
+  "bucket": "feats",
+  "name": "Finishing Follow-through",
+  "level": 2,
+  "batch": 7
+ },
+ "inventor-dedication": {
+  "id": "inventor-dedication",
+  "bucket": "feats",
+  "name": "Inventor Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "duelist-dedication": {
+  "id": "duelist-dedication",
+  "bucket": "feats",
+  "name": "Duelist Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "winged-warrior-dedication": {
+  "id": "winged-warrior-dedication",
+  "bucket": "feats",
+  "name": "Winged Warrior Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "alter-ego-dedication": {
+  "id": "alter-ego-dedication",
+  "bucket": "feats",
+  "name": "Alter Ego Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "bastion-dedication": {
+  "id": "bastion-dedication",
+  "bucket": "feats",
+  "name": "Bastion Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "resilient-mind": {
+  "id": "resilient-mind",
+  "bucket": "feats",
+  "name": "Resilient Mind",
+  "level": 2,
+  "batch": 7
+ },
+ "dandy-dedication": {
+  "id": "dandy-dedication",
+  "bucket": "feats",
+  "name": "Dandy Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "leap-the-falls": {
+  "id": "leap-the-falls",
+  "bucket": "feats",
+  "name": "Leap the Falls",
+  "level": 2,
+  "batch": 7
+ },
+ "magaambyan-attendant-dedication": {
+  "id": "magaambyan-attendant-dedication",
+  "bucket": "feats",
+  "name": "Magaambyan Attendant Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "zephyr-guard-dedication": {
+  "id": "zephyr-guard-dedication",
+  "bucket": "feats",
+  "name": "Zephyr Guard Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "spirit-warrior-dedication": {
+  "id": "spirit-warrior-dedication",
+  "bucket": "feats",
+  "name": "Spirit Warrior Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "tactical-expansion": {
+  "id": "tactical-expansion",
+  "bucket": "feats",
+  "name": "Tactical Expansion",
+  "level": 2,
+  "batch": 7
+ },
+ "order-explorer": {
+  "id": "order-explorer",
+  "bucket": "feats",
+  "name": "Order Explorer",
+  "level": 2,
+  "batch": 7
+ },
+ "lasting-coercion": {
+  "id": "lasting-coercion",
+  "bucket": "feats",
+  "name": "Lasting Coercion",
+  "level": 2,
+  "batch": 7
+ },
+ "aldori-duelist-dedication": {
+  "id": "aldori-duelist-dedication",
+  "bucket": "feats",
+  "name": "Aldori Duelist Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "drake-rider-dedication": {
+  "id": "drake-rider-dedication",
+  "bucket": "feats",
+  "name": "Drake Rider Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "war-mage-dedication": {
+  "id": "war-mage-dedication",
+  "bucket": "feats",
+  "name": "War Mage Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "spellshifter-dedication": {
+  "id": "spellshifter-dedication",
+  "bucket": "feats",
+  "name": "Spellshifter Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "basic-lesson": {
+  "id": "basic-lesson",
+  "bucket": "feats",
+  "name": "Basic Lesson",
+  "level": 2,
+  "batch": 7
+ },
+ "celebrity-dedication": {
+  "id": "celebrity-dedication",
+  "bucket": "feats",
+  "name": "Celebrity Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "wizard-dedication": {
+  "id": "wizard-dedication",
+  "bucket": "feats",
+  "name": "Wizard Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "medic-dedication": {
+  "id": "medic-dedication",
+  "bucket": "feats",
+  "name": "Medic Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "worm-caller-dedication": {
+  "id": "worm-caller-dedication",
+  "bucket": "feats",
+  "name": "Worm Caller Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "kitharodian-actor-dedication": {
+  "id": "kitharodian-actor-dedication",
+  "bucket": "feats",
+  "name": "Kitharodian Actor Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "overwatch-dedication": {
+  "id": "overwatch-dedication",
+  "bucket": "feats",
+  "name": "Overwatch Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "guerrilla-dedication": {
+  "id": "guerrilla-dedication",
+  "bucket": "feats",
+  "name": "Guerrilla Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "vampire-dedication": {
+  "id": "vampire-dedication",
+  "bucket": "feats",
+  "name": "Vampire Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "munitions-master-dedication": {
+  "id": "munitions-master-dedication",
+  "bucket": "feats",
+  "name": "Munitions Master Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "fan-dancer-dedication": {
+  "id": "fan-dancer-dedication",
+  "bucket": "feats",
+  "name": "Fan Dancer Dedication",
+  "level": 2,
+  "batch": 7
+ },
+ "horizon-walker-dedication": {
+  "id": "horizon-walker-dedication",
+  "bucket": "feats",
+  "name": "Horizon Walker Dedication",
+  "level": 2,
+  "batch": 7
+ }
+}

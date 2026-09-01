@@ -1,0 +1,132 @@
+[
+  {
+    "category": "feats",
+    "id": "elven-weapon-familiarity",
+    "field": "critSpecWeapons",
+    "value": {
+      "traits": ["elf"],
+      "bases": ["longbow", "composite-longbow", "rapier", "shortbow", "composite-shortbow"]
+    },
+    "why": "PRINTED: 'You have familiarity with weapons with the elf trait plus Longbows, Composite Longbows, Rapiers, Shortbows, and Composite Shortbows.' We ship bases ['longbow','rapier','shortbow'], so the two composite bows the sentence names are covered by nothing. weaponMatches() (src/rules/derive.ts:3100) tests `w.bases?.includes(strike.base)` — an EXACT id membership test — and composite-longbow / composite-shortbow are separate weapon items in core.json with no elf trait, so neither half of the field reaches them and strikeShowsCritSpec() returns false today. Fixing the field also fixes the proficiency half: scripts/apply-weapon-familiarity.mjs:60-71 derives featGrantsLane.ts's weaponFamiliarity.weapons from this same critSpecWeapons.bases, and build.ts:4494-4508 applies treatAsLowerCategory (martial -> simple), which is the printed remap for both composites."
+  },
+  {
+    "category": "feats",
+    "id": "versatile-performance",
+    "field": "skillSubstitutions",
+    "value": [
+      { "use": "performance", "forSkill": "diplomacy", "when": "to Make an Impression" },
+      { "use": "performance", "forSkill": "intimidation", "when": "to Demoralize" },
+      { "use": "performance", "forSkill": "deception", "when": "to Impersonate, using an acting Performance" }
+    ],
+    "why": "Printed text names THREE substitutions: 'You can use Performance instead of Diplomacy to make-an-impression ... and instead of Intimidation to demoralize ... You can also use an acting Performance instead of Deception to impersonate.' Our shipped value has two rows and crams the Intimidation clause into the Diplomacy row's `when`. authoredConditional (src/rules/explain.ts:447-455) keys the note on `s.forSkill`, so today Intimidation gets NO note and the Demoralize clause prints on Diplomacy. Each `when` is kept non-empty deliberately: skillSubstituteFor (derive.ts:401-415) skips entries with a `when`, so a conditional substitution correctly does not overwrite the skill's printed number."
+  },
+  {
+    "category": "feats",
+    "id": "tough-skin",
+    "field": "grantsItems",
+    "value": [{ "itemId": "tough-skin" }],
+    "why": "Printed: 'Your skin is medium armor in the plate armor group that grants a +4 item bonus to AC, and has a Dex cap of +1, a check penalty of -2, a Speed penalty of -5 feet, a Strength value of +3, and the comfort trait. You can never wear other armor or remove your hide.' The feat's entire benefit IS a piece of armour, and items['tough-skin'] already carries it verbatim, but feats['tough-skin'] carried only actionCost+onlyAtLevel, so the +4 AC reached no sheet. build.ts:4952 walks grantsItems into grantedItems; build.ts:5703-5712 emits the inventory row; play.ts:229 seeds play.inventory from it, so the worn armour feeds deriveDefenses exactly like a bought suit. Same lane already in service for razmiran-priest-dedication and extradimensional-stash."
+  },
+  {
+    "category": "feats",
+    "id": "elemental-embellish",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [{ "kind": "skill", "detail": "intimidation" }],
+        "when": "when you Demoralize via an elemental display",
+        "bonus": "Demoralize is visual instead of auditory and ignores the not-sharing-a-language penalty"
+      }
+    ],
+    "why": "PRINTED: 'When you Demoralize a foe, if you choose to Demoralize via an elemental display, Demoralize loses the auditory trait and gains the visual trait, and you don't take a penalty when you attempt to Demoralize a creature that doesn't understand your language.' We encoded ONLY the skill half (featGrantsAuto.ts:135, trained Intimidation + redundantFallback); this clause reached no surface. authoredSituational (explain.ts:379) -> entriesFor (situationalBonuses.ts:3274) -> statHasSituational/situationalFor puts the star on Intimidation and prints the clause in StatDetailModal. No FEAT_SITUATIONAL['elemental-embellish'] exists, so append is correct and no situationalReplaces is needed. Wording mirrors the shipped entry for the byte-identical printed clause on intimidating-glare (situationalBonuses.ts:2816)."
+  },
+  {
+    "category": "feats",
+    "id": "backup-runic-enhancement",
+    "field": "innateSpells",
+    "value": [{ "spellId": "sigil", "atWill": true }],
+    "why": "Printed: 'You can cast the sigil cantrip as an innate spell at will.' The record carried NOTHING mechanical (id/name/traits/source/level/category/aonId only), so the feat granted no spell. Feat.innateSpells (types.ts:2279) is read at build.ts:5128-5133 and pushed onto the character's innate entry. sigil is a rank-0 cantrip in core.json so it auto-heightens, which is what the printed 'rank equal to half your level, rounded up' means for it."
+  },
+  {
+    "category": "feats",
+    "id": "backup-runic-enhancement",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "backup-runic-spell",
+        "prompt": "Backup Runic Enhancement: choose runic body or runic weapon",
+        "options": [
+          {
+            "value": "runic-body",
+            "label": "Runic Body",
+            "grant": { "innateSpells": [{ "spellId": "runic-body", "heightenHalfLevel": true }] }
+          },
+          {
+            "value": "runic-weapon",
+            "label": "Runic Weapon",
+            "grant": { "innateSpells": [{ "spellId": "runic-weapon", "heightenHalfLevel": true }] }
+          }
+        ]
+      }
+    ],
+    "why": "Printed: 'choose either runic body or runic weapon. You can cast this spell once per day as an innate spell. The rank of these spells is equal to half your level, rounded up.' A choice, so both must not be granted outright. Feat.effectChoices (types.ts:2381) is resolved by resolvePick (build.ts:3934) into applyAlwaysOn (build.ts:3887-3897), whose g.innateSpells push reaches the innate entry at build.ts:5135-5138. NOT Feat.choice: a feat's plain `choice` grant is applied only for classFeatures (build.ts:3963-3977) and would be inert. heightenHalfLevel is read at build.ts:5190; usesPerDay omitted because 1/day is the field default (types.ts:1674). Both spell ids verified present in core.json."
+  },
+  {
+    "category": "feats",
+    "id": "skilled-herbalist",
+    "field": "skillSubstitutions",
+    "value": [
+      { "use": "nature", "forSkill": "crafting", "when": "to Craft an alchemical item that has the healing trait" }
+    ],
+    "why": "PRINTED: 'You can use Nature to Craft an alchemical item that has the healing trait, rather than Crafting.' That clause had NO encoding — the feat's other two halves are done (Alchemical Crafting in featFeatGrants.ts:352, the four formulas in formulaBook.ts:110) and this third one was inert. skillSubstitutions() (derive.ts:379) reads it; because `when` is present it is CONDITIONAL, so it does not move Crafting's number (derive.ts:409) and renders as a Crafting star via explain.ts:447-455. Exactly Natural Medicine's shape, which the field's own doc comment (types.ts:752-773) cites as the archetype."
+  },
+  {
+    "category": "feats",
+    "id": "sure-feet",
+    "field": "degreeShifts",
+    "value": [
+      {
+        "shift": "successToCrit",
+        "when": "on an Acrobatics check to Balance",
+        "skills": ["acrobatics"],
+        "actions": ["balance"]
+      },
+      {
+        "shift": "successToCrit",
+        "when": "on an Athletics check to Climb",
+        "skills": ["athletics"],
+        "actions": ["climb"]
+      }
+    ],
+    "why": "PRINTED: 'If you roll a success on an Acrobatics check to Balance OR an Athletics check to Climb, you get a critical success instead.' The text pairs each skill with its own action. Our shipped shift is a single entry with both skills and both actions, so explain.ts:397 fans the SAME combined `when` onto both skills — the Athletics star reads a clause about Acrobatics/Balance and vice versa, and degreeShiftMarkers (explain.ts:312-322) puts the mixed sentence on both action rows. Splitting gives each skill and each action only the clause that governs it, and preserves both action markers. The off-guard half of the feat stays in RECORD_MARKERS (situationalBonuses.ts:3563) — they encode nothing about it."
+  },
+  {
+    "category": "feats",
+    "id": "foxfire",
+    "field": "grantedStrikes",
+    "value": [
+      { "name": "Foxfire", "die": "d4", "damageType": "electricity", "traits": ["unarmed", "magical"], "group": "sling", "range": 20, "choiceValue": "electricity" },
+      { "name": "Foxfire", "die": "d4", "damageType": "fire", "traits": ["unarmed", "magical"], "group": "sling", "range": 20, "choiceValue": "fire" },
+      { "name": "Foxfire", "die": "d4", "damageType": "cold", "traits": ["unarmed", "magical"], "group": "sling", "range": 20, "choiceValue": "cold" }
+    ],
+    "why": "PRINTED: 'Choose either electricity or fire when you gain this feat... The attack deals 1d4 damage of the chosen type', plus 'Special: If you are a frozen wind kitsune, your foxfire deals cold damage instead'. collectGrantedNaturals (build.ts:1818-1831) copies damageType VERBATIM onto the NaturalAttack and gates each entry with `if (g.choiceValue && g.choiceValue !== pick) continue`, where pick is f.choice?.value. The record already carries choice{flag:'damage', options: electricity|fire|cold}, so the gate resolves. Today it ships ONE ungated entry whose damageType is the raw Foundry token '{item|flags.system.rulesSelections.damage}', which nothing in src/ substitutes, so the Strikes row prints a template string instead of a damage type."
+  },
+  {
+    "category": "feats",
+    "id": "storm-born",
+    "field": "situational",
+    "value": [
+      {
+        "targets": [{ "kind": "perception" }, { "kind": "spell", "detail": "attack" }],
+        "when": "weather would impose a circumstance penalty to a ranged spell attack roll or a Perception check",
+        "bonus": "you take no circumstance penalty"
+      },
+      {
+        "targets": [{ "kind": "spell", "detail": "all" }],
+        "when": "your targeted spell's target is concealed by weather (fog and the like)",
+        "bonus": "no flat check required"
+      }
+    ],
+    "why": "PRINTED: 'You do not take circumstance penalties to ranged spell attacks or Perception checks caused by weather, and your targeted spells don't require a flat check to succeed against a target concealed by weather (such as fog).' The record is bare apart from actionCost — it appears in featPickGrants.ts only as an OPTION in Order Explorer's / Natural Ambition's pick lists, which encodes nothing about what it does, so the whole printed sentence reached no surface. authoredSituational (explain.ts:379-389) feeds entriesFor/statHasSituational. No shipped FEAT_SITUATIONAL entry exists for this id, so no situationalReplaces is needed. Target kinds 'perception' and 'spell' (detail 'attack'/'all') are both in SituationalTarget."
+  }
+]

@@ -99,7 +99,12 @@ describe('the eleven records the scan found, that nobody had read', () => {
    * contradicts. These five are the ones a player would have seen wrong. */
   const CASES: [string, string, string, string][] = [
     ['heroes-call', 'heroism', 'occult', 'divine'],
-    ['elemental-wrath', 'acid-splash', 'primal', 'arcane'],
+    /* Caustic Blast, not Acid Splash: the grant used to point at our `acid-splash` record, which our
+     * own corpus stamps edition 'superseded' — the legacy printing (a single-target spell attack with
+     * splash and persistent damage) rather than the current 5-foot burst. The case this asserts is
+     * unchanged, because Caustic Blast's own first tradition is arcane too: the feat's `primal` is an
+     * override either way. */
+    ['elemental-wrath', 'caustic-blast', 'primal', 'arcane'],
     ['sense-thoughts', 'mind-reading', 'occult', 'arcane'],
     ['brilliant-vision', 'see-the-unseen', 'occult', 'arcane'],
     ['replicate', 'illusory-disguise', 'occult', 'arcane'],

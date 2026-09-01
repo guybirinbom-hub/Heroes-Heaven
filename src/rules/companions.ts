@@ -712,15 +712,29 @@ export function deriveFamiliar(
   // Aquatic familiars (Elver Pet) gain the aquatic trait, breathe water, and swap land Speed for a
   // swim Speed of the same value.
   const aquatic = cfg.grantSlug === 'elver-pet';
+  /*
+   * FAST MOVEMENT RAISES *ONE* SPEED, AND THE PLAYER CHOOSES WHICH.
+   *
+   * Printed: *"Increase ONE of your familiar's Speeds from 25 feet to 40 feet."* The 40 was applied to
+   * the land Speed and nowhere else, so a familiar with Flier or Climber — each a 25-foot Speed the
+   * ability explicitly may raise — had no way to point it there. The answer lives in
+   * `cfg.abilityChoices['fast-movement']` and defaults to land, which is what every familiar had.
+   *
+   * The 25-foot precondition is kept: Burrower grants 5 feet, so choosing burrow offers the option and
+   * correctly changes nothing — the same way their own per-option conditional behaves.
+   */
+  const fastTarget = has('fast-movement') ? (cfg.abilityChoices?.['fast-movement'] ?? 'land') : null;
+  const fast = (type: string, base: number) => (fastTarget === type && base === 25 ? 40 : base);
+
   // An offer's printed Speed REPLACES the familiar's ("except its Speed is 5 feet"), so it wins over
   // Fast Movement rather than being maxed with it.
-  const baseSpeed = offer?.familiar?.speed ?? (has('fast-movement') ? 40 : 25);
+  const baseSpeed = offer?.familiar?.speed ?? fast('land', 25);
   const land = aquatic ? 0 : baseSpeed;
   const extraSpeeds: string[] = [];
-  if (aquatic) extraSpeeds.push(`swim ${baseSpeed} feet (aquatic — breathes water, not air)`);
-  if (has('flier')) extraSpeeds.push('fly 25 feet');
-  if (has('climber')) extraSpeeds.push('climb 25 feet');
-  if (has('burrower')) extraSpeeds.push('burrow 5 feet');
+  if (aquatic) extraSpeeds.push(`swim ${fast('swim', baseSpeed)} feet (aquatic — breathes water, not air)`);
+  if (has('flier')) extraSpeeds.push(`fly ${fast('fly', 25)} feet`);
+  if (has('climber')) extraSpeeds.push(`climb ${fast('climb', 25)} feet`);
+  if (has('burrower')) extraSpeeds.push(`burrow ${fast('burrow', 5)} feet`);
   return {
     name: cfg.name || offer?.name || sf?.name || 'Familiar',
     level: character.level,

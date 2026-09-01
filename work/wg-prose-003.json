@@ -1,0 +1,220 @@
+[
+ {
+  "id": "fear-no-law-fear-no-one",
+  "name": "Fear No Law, Fear No One",
+  "level": 1,
+  "printed": "When your allies see you stand up to fear, they become similarly emboldened. Make a Strike. If you hit and deal damage, each ally within a around you who can see you reduces the value of their frightened condition by 1. If the target of your Strike was the source of their frightened condition, they reduce the value by 2 instead.",
+  "ourFields": {
+   "actionCost": {
+    "type": "actions",
+    "value": 1
+   },
+   "archetype": "hellknight"
+  },
+  "ourRegistries": [],
+  "theirProse": [
+   {
+    "variable": "SAVE_FORT",
+    "value": null,
+    "text": "When you roll a success against a fear effect, you get a critical success instead"
+   },
+   {
+    "variable": "SAVE_REFLEX",
+    "value": null,
+    "text": "When you roll a success against a fear effect, you get a critical success instead"
+   },
+   {
+    "variable": "SAVE_WILL",
+    "value": null,
+    "text": "When you roll a success against a fear effect, you get a critical success instead"
+   }
+  ]
+ },
+ {
+  "id": "earned-glory",
+  "name": "Earned Glory",
+  "level": 1,
+  "printed": "Elves often struggle with underestimating aiuvarins, and you are experienced at telling stories of your accomplishments to gain their respect. You are trained in Performance. If you would automatically become trained in Performance (from your background or class, for example), you instead become trained in a skill of your choice. You gain the Impressive Performance feat. When you attempt a Performance check to Make an Impression on an elf, if you roll a critical failure, you get a failure instead.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "degreeShifts": [
+    {
+     "shift": "critFailToFail",
+     "when": "on a Performance check to Make an Impression on an elf",
+     "skills": [
+      "performance"
+     ],
+     "actions": [
+      "make-an-impression"
+     ]
+    }
+   ]
+  },
+  "ourRegistries": [
+   {
+    "file": "featGrantsAuto.ts",
+    "entry": "'earned-glory': { skills: { performance: 'trained' }, redundantFallback: true },"
+   },
+   {
+    "file": "featFeatGrants.ts",
+    "entry": "'earned-glory': ['impressive-performance'],"
+   }
+  ],
+  "theirProse": [
+   {
+    "variable": "SKILL_PERFORMANCE",
+    "value": null,
+    "text": "When you Make an Impression on an elf, if you roll a critical failure, you get a failure instead."
+   }
+  ]
+ },
+ {
+  "id": "fascinated-by-society",
+  "name": "Fascinated by Society",
+  "level": 1,
+  "printed": "Just as some humanoids find themselves driven to study nature, you are obsessed with the artificial constructs of society and can't get enough. You are trained in Society. If you would automatically become trained in Society, you instead become trained in a skill of your choice. As a newcomer, sometimes your understanding is a bit off target. When you fail, but don't critically fail, a Society check to Recall Knowledge or Decipher Writing, you learn the correct information (as you would on a success) and erroneous information (as you would on a critical failure). You don't have any way to differentiate which is which.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "situational": [
+    {
+     "targets": [
+      {
+       "kind": "skill",
+       "detail": "society"
+      }
+     ],
+     "when": "when you fail, but don't critically fail, a Society check to Recall Knowledge or Decipher Writing",
+     "bonus": "you learn the correct information (as on a success) and erroneous information (as on a critical failure), with no way to tell which is which"
+    }
+   ]
+  },
+  "ourRegistries": [
+   {
+    "file": "featGrantsAuto.ts",
+    "entry": "'fascinated-by-society': { skills: { society: 'trained' }, redundantFallback: true },"
+   }
+  ],
+  "theirProse": [
+   {
+    "variable": "SKILL_SOCIETY",
+    "value": null,
+    "text": "When you fail, but don’t critically fail, to Recall Knowledge or Decipher Writing, you learn the correct information and erroneous information. You don’t have any way to differentiate which is which."
+   }
+  ]
+ },
+ {
+  "id": "morph-risen",
+  "name": "Morph-Risen",
+  "level": 1,
+  "printed": "You were once a shapeshifter or spellcaster using polymorph magic, but something went wrong, and you became trapped in the form of the creature you were imitating. This accident might have drained your power, or you might have retained some of your skills, but either way, your form resists further forced transformation. You gain a +1 circumstance bonus to saving throws against morph and polymorph effects, and if you roll a success on a saving throw against a hostile morph or polymorph effect, you get a critical success instead.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "degreeShifts": [
+    {
+     "shift": "successToCrit",
+     "when": "on a save against a hostile morph or polymorph effect",
+     "saves": [
+      "all"
+     ]
+    }
+   ],
+   "situational": [
+    {
+     "targets": [
+      {
+       "kind": "save",
+       "detail": "all"
+      }
+     ],
+     "when": "against morph and polymorph effects",
+     "bonus": "+1 circumstance"
+    }
+   ],
+   "situationalReplaces": true
+  },
+  "ourRegistries": [
+   {
+    "file": "situationalBonuses.ts",
+    "entry": "\"morph-risen\": [{ targets: [{ kind: 'save', detail: 'all' }], when: \"against forced polymorph/transformation effects\", bonus: \"+1 circumstance\" }],"
+   }
+  ],
+  "theirProse": [
+   {
+    "variable": "SAVE_FORT",
+    "value": "1",
+    "text": "against morph and polymorph effects."
+   },
+   {
+    "variable": "SAVE_REFLEX",
+    "value": "1",
+    "text": "against morph and polymorph effects."
+   },
+   {
+    "variable": "SAVE_WILL",
+    "value": "1",
+    "text": "against morph and polymorph effects."
+   },
+   {
+    "variable": "SAVE_FORT",
+    "value": "",
+    "text": "f you roll a success against a hostile morph or polymorph effect, you get a critical success instead."
+   },
+   {
+    "variable": "SAVE_REFLEX",
+    "value": "",
+    "text": "f you roll a success against a hostile morph or polymorph effect, you get a critical success instead."
+   },
+   {
+    "variable": "SAVE_WILL",
+    "value": "",
+    "text": "f you roll a success against a hostile morph or polymorph effect, you get a critical success instead."
+   }
+  ]
+ },
+ {
+  "id": "officers-medical-training",
+  "name": "Officer's Medical Training",
+  "level": 1,
+  "printed": "**Requirements** You can prepare at least three tactics. --- You received formal training in battlefield triage and wound treatment. You are trained in Medicine and can use your Intelligence modifier in place of your Wisdom modifier for Medicine checks. If you are already trained in Medicine, you instead become trained in another skill of your choosing. You gain the Battle Medicine feat.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "situational": [
+    {
+     "targets": [
+      {
+       "kind": "skill",
+       "detail": "medicine"
+      }
+     ],
+     "when": "on Medicine checks",
+     "bonus": "use your Intelligence modifier in place of your Wisdom modifier"
+    }
+   ]
+  },
+  "ourRegistries": [
+   {
+    "file": "featGrantsAuto.ts",
+    "entry": "'officers-medical-training': { skills: { medicine: 'trained' }, redundantFallback: true },"
+   },
+   {
+    "file": "featFeatGrants.ts",
+    "entry": "'officers-medical-training': ['battle-medicine'],"
+   }
+  ],
+  "theirProse": [
+   {
+    "variable": "SKILL_MEDICINE",
+    "value": null,
+    "text": "You can use your Intelligence modifier in place of your Wisdom modifier"
+   }
+  ]
+ }
+]

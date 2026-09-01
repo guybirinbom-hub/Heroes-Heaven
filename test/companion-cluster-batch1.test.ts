@@ -33,10 +33,17 @@ describe('a locked familiar ability is FREE only where the record prints that it
   });
 
   it('lockedFree is set on exactly the records that print it', () => {
-    // Each of these four prints the clause; the other four grants with lockedAbilities print the
-    // OPPOSITE ("counts against your limit … as normal"), and adding one here overpays the player.
+    // Each of these prints the clause; the other grants with lockedAbilities print the OPPOSITE
+    // ("counts against your limit … as normal"), and adding one here overpays the player.
+    //
+    // `glyph-familiar` joined on 2026-08-18 (WG parity batch 003) on its printed wording: "You choose
+    // one familiar or master ability per day instead of two, but your familiar ALSO ALWAYS HAS THREE
+    // ADDITIONAL familiar abilities: construct, flier, and tough." "Additional" is the clause — the
+    // three do not come out of the one pick. This list is hand-maintained rather than derived, so a new
+    // grant reaches it only with its printed sentence quoted; that is what stops it becoming a rubber
+    // stamp that widens every time something is added.
     const free = Object.entries(FEAT_COMPANION_GRANTS).filter(([, g]) => g.lockedFree).map(([k]) => k).sort();
-    expect(free).toEqual(['alchemical-familiar', 'elver-pet', 'friend-of-the-sea', 'spore-order']);
+    expect(free).toEqual(['alchemical-familiar', 'elver-pet', 'friend-of-the-sea', 'glyph-familiar', 'spore-order']);
   });
 
   it('a free lock costs no ability slot and cannot be spent', () => {

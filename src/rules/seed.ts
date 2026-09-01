@@ -184,6 +184,8 @@ export const seedContent: ContentDatabase = {
   modes: {},
   stances: {},
   runes: {},
+  /* The 44 runesmith runes ship in core.json (Impossible Magic); the seed carries none. */
+  runesmithRune: {},
 };
 
 export const kyra: Character = {

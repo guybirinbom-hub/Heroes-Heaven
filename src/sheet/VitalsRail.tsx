@@ -15,7 +15,7 @@ import {
   deriveSpeeds,
   deriveSpellcasting,
   formatMod,
-  ownedFeatureIds,
+  modeGateIds,
   stateGrantSummary,
   type DefenseSource,
 } from '../rules/derive';
@@ -1116,6 +1116,38 @@ export function VitalsRail({
                 ) : (
                   c.value ? ' ' + c.value : ''
                 )}
+                {/*
+                 * THE RECOVERY DC, on the one pill where it is the number you need.
+                 *
+                 * A dying character rolls a flat check at the start of their turn against DC 10 + their
+                 * dying value, and nine records change that DC — Toughness's *"you reduce the DC of
+                 * recovery checks by 1"* among them. None had a field, so the reduction lived nowhere and
+                 * the player had to remember it. Shown here rather than starred on a stat, because a flat
+                 * check has no stat row to sit on — the same reasoning as ruling D above, which marks the
+                 * condition itself.
+                 */}
+                {c.id === 'dying' && !dead && (() => {
+                  /*
+                   * DC 10 + your dying value, less any reduction — except for the two records that
+                   * restate the formula rather than reducing it: Mountain's Stoutness only reduces it at
+                   * Dying 1 (`recoveryDcOnlyAtDying`), and Nine Lives Catfolk does not add the dying
+                   * value at all (`recoveryDcIgnoresDyingValue`).
+                   */
+                  const dying = c.value ?? 1;
+                  const gate = character.recoveryDcOnlyAtDying;
+                  const cut = gate != null && dying > gate ? 0 : character.recoveryDcReduction ?? 0;
+                  const dc = 10 + (character.recoveryDcIgnoresDyingValue ? 0 : dying) - cut;
+                  const why = [
+                    character.recoveryDcIgnoresDyingValue ? 'your dying value is not added' : null,
+                    cut ? `reduced by ${cut}` : null,
+                    gate != null && dying > gate ? `your reduction applies only at Dying ${gate}` : null,
+                  ].filter(Boolean).join('; ');
+                  return (
+                    <span className="cond-pill-dc" title={`Flat check at the start of your turn: DC 10 + your dying value${why ? ` — ${why}` : ''}.`}>
+                      {`recovery DC ${dc}`}
+                    </span>
+                  );
+                })()}
                 {onPlay && (
                   <button className="cond-pill-x" aria-label={`Remove ${name}`} onClick={() => onPlay((p) => removeCondition(p, c.id))}>
                     <i className="ti ti-x" aria-hidden="true" />
@@ -1260,7 +1292,7 @@ export function VitalsRail({
           // cursebound stages, a thaumaturge's Amulet benefit) could never match a set built from
           // character.feats — those ids live in ownedFeatureIds. Every mode shipped before this
           // gated on a dedication FEAT, so the gap never showed until class-feature modes existed.
-          featIds={new Set([...character.feats.map((f) => f.featId), ...ownedFeatureIds(character, content)])}
+          featIds={modeGateIds(character, content)}
           charKey={charKey}
           charName={character.name}
           // This character's own Lore subjects, so a custom mode can point at one by name.

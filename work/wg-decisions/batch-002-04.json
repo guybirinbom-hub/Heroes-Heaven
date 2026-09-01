@@ -1,0 +1,61 @@
+[
+ {
+  "category": "feats",
+  "id": "rune-singer",
+  "field": "recordMarks",
+  "value": [
+   {
+    "on": "action",
+    "id": "trace-rune",
+    "note": "Once per 10 minutes you can Trace a Rune with song alone: the 2-action version becomes a single action, needs no artisan's toolkit, and loses the manipulate trait."
+   }
+  ],
+  "why": "PRINTED: 'Once per 10 minutes, you can Trace a Rune with song alone. When you do, you use the 2-action version of Trace Rune as a single action without needing an artisan's toolkit, and you remove the action's manipulate trait.' The record carried NO mechanical field and no registry entry — completely inert. situational cannot hold it (SituationalTarget mirrors StatRef and this clause names no stat); modifiesGrant.actionRider is gated on ownedIds.has(from) over feats+classFeatures, and trace-rune is in the ACTIONS bucket. New ContentBase.recordMarks, read by recordMarksFor -> recordMarkers -> markersFor (explain.ts), puts the note on the Trace Rune row."
+ },
+ {
+  "category": "feats",
+  "id": "titan-wrestler",
+  "field": "recordMarks",
+  "value": [
+   {
+    "on": "action",
+    "id": "disarm",
+    "note": "You can attempt this against creatures up to two sizes larger than you — three if you are legendary in Athletics."
+   },
+   {
+    "on": "action",
+    "id": "grapple",
+    "note": "You can attempt this against creatures up to two sizes larger than you — three if you are legendary in Athletics."
+   },
+   {
+    "on": "action",
+    "id": "reposition",
+    "note": "You can attempt this against creatures up to two sizes larger than you — three if you are legendary in Athletics."
+   },
+   {
+    "on": "action",
+    "id": "shove",
+    "note": "You can attempt this against creatures up to two sizes larger than you — three if you are legendary in Athletics."
+   },
+   {
+    "on": "action",
+    "id": "trip",
+    "note": "You can attempt this against creatures up to two sizes larger than you — three if you are legendary in Athletics."
+   }
+  ],
+  "why": "PRINTED: 'You can attempt to Disarm, Grapple, Reposition, Shove, or Trip creatures up to two sizes larger than you, or up to three sizes larger than you if you're legendary in Athletics.' The record carried nothing mechanical. The clause changes WHO each of five actions can target, which is not a stat, so it belongs on the action rows — the same surface Wanderer's Guide uses (five injectText ops, one per action)."
+ },
+ {
+  "category": "feats",
+  "id": "group-coercion",
+  "field": "recordMarks",
+  "value": [
+   {
+    "on": "action",
+    "id": "coerce",
+    "note": "You can compare your Intimidation result to the Will DCs of up to 5 targets at once (10 if expert, 25 if master, 50 if legendary), with a separate degree of success for each."
+   }
+  ],
+  "why": "PRINTED: 'When you Coerce, you can compare your Intimidation check result to the Will DCs of up to five targets instead of one... increases to 10 if you're an expert, 25 if you're a master, and 50 if you're legendary.' The record carried nothing mechanical. Target COUNT is not a stat, so no situational target can express it; it belongs on the Coerce action row."
+ }
+]

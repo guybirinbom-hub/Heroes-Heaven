@@ -77,6 +77,7 @@ function normProficiencies(p: unknown): Proficiencies {
     defenses,
     classDc: src.classDc ?? UNTRAINED,
     weaponOverrides: src.weaponOverrides,
+    armorOverrides: src.armorOverrides,
     weaponGroups: src.weaponGroups,
     // This function REBUILDS the proficiency object, so a field it forgets is one the character loses
     // on every load. `firearmProf` was forgotten: a gunslinger's per-category firearm rank — the whole
@@ -179,6 +180,7 @@ export function normalizePlay(input: unknown): PlayState {
     ...(p.inventory !== undefined ? { inventory: migrateInventoryIds(arr(p.inventory)) as PlayState['inventory'] } : {}),
     ...(p.activeModes !== undefined ? { activeModes: arr(p.activeModes) } : {}),
     ...(p.preparedTactics !== undefined ? { preparedTactics: arr(p.preparedTactics) } : {}),
+    ...(p.etchedRunes !== undefined ? { etchedRunes: arr(p.etchedRunes) } : {}),
     // Objects the overlay reads by key / spreads.
     expendedSlots: obj(p.expendedSlots, {}),
     slotsUsed: obj(p.slotsUsed, {}),

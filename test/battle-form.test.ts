@@ -136,7 +136,17 @@ describe('battleForm — the shipped modes', () => {
       // Ungated modes are "general" and show for every character (modeRelevant), which would put
       // sixteen polymorph forms in front of a fighter who can use none of them.
       expect(`${m.id}: ${(m.feats ?? []).length > 0}`).toBe(`${m.id}: true`);
-      for (const f of m.feats ?? []) expect(`${m.id}: ${f}`).toBe(`${m.id}: ${con.feats[f] ? f : 'NO SUCH FEAT'}`);
+      /* A gate may be `<featId>:<answer>` when the record's OWN choice picks which form — the
+       * werecreature dedication has nine types with two shapes each, and a gate naming only the feat
+       * would offer a werebat the werewolf's shapes. Both halves have to be real. */
+      for (const f of m.feats ?? []) {
+        const [base, answer] = String(f).split(':');
+        expect(`${m.id}: ${base}`).toBe(`${m.id}: ${con.feats[base] ? base : 'NO SUCH FEAT'}`);
+        if (answer) {
+          const offered = (con.feats[base]?.choice?.options ?? []).map((o) => o.value);
+          expect(`${m.id}: ${answer}`).toBe(`${m.id}: ${offered.includes(answer) ? answer : 'NOT AN OPTION'}`);
+        }
+      }
     }
   });
 

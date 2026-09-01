@@ -143,9 +143,27 @@ describe('every choice has somewhere to be answered', () => {
     expect(stranded.length - covered.length, 'of those, ones with no other route to the player').toBeLessThanOrEqual(40);
   });
 
+  /*
+   * ANCESTRIES sat on the list below until the surki's Magiphage needed a home. *"Choose what tradition
+   * of magic you most consumed as a larva"* is asked by the ancestry itself and four records key off
+   * the answer, so the builder now renders an ancestry choice under `ancestry:<id>`, exactly as it does
+   * a heritage's. The collection moved from "nowhere to go" to "rendered" — asserted here rather than
+   * simply deleted, so a NEW ancestry choice is still a deliberate act someone has to come past.
+   */
+  it('ancestry choices are rendered, and only the ones we mean to have exist', () => {
+    const withChoice = Object.entries(c.ancestries)
+      .filter(([, a]) => (a as unknown as { choice?: unknown }).choice)
+      .map(([id]) => id)
+      .sort();
+    /* Batch 19 added the printed SIZE choices (flag `bodySize`, read by ancestryBodySize):
+     * "Medium or Small" on automaton and fleshwarp, the awakened animal's four-way pick that also
+     * keys its ancestry HP. The surki's Magiphage stays the only non-size ancestry choice. */
+    expect(withChoice).toEqual(['automaton', 'awakened-animal', 'fleshwarp', 'surki']);
+  });
+
   it('no OTHER collection carries a choice with nowhere to go', () => {
     const bad: string[] = [];
-    for (const col of ['ancestries', 'spells', 'actions'] as const) {
+    for (const col of ['spells', 'actions'] as const) {
       for (const [id, r] of Object.entries((c as unknown as Record<string, Record<string, { choice?: { daily?: boolean } }>>)[col] ?? {})) {
         if (r.choice && !r.choice.daily) bad.push(`${col}/${id}`);
       }

@@ -41,7 +41,19 @@ const REGISTRY_FLOOR: Record<string, number> = {
   featGrants: 8,
   featGrantsAuto: 311,
   featPickGrants: 38,
-  featCantripGrants: 51,
+  /* 46, down from 51. SIX records left this registry, every one of them to a lane that says more:
+   *   · FIVE moved to the record's own `effectChoices`. Colugo's Traversal and Empathic Calm print a
+   *     heightening (*"at 9th level, these spells are heightened to 3rd rank"*) that a bare
+   *     {spellId, tradition} push cannot express, so the spell stayed rank 1 from 5th to 20th; keeping
+   *     both lanes live meant two prompts for one clause and, on differing answers, two spells.
+   *   · ONE (basic-skysage-divination) was in the WRONG LANE ENTIRELY. This registry grants an INNATE
+   *     spell; the feat puts it in the REPERTOIRE (*"add … to your spell repertoire"*), which the Oatia
+   *     archetype already carries. Measured, holding both gave the character an innate casting ON TOP
+   *     of the archetype's own rank-1 slot — one clause, two castings.
+   *
+   * A floor is a ratchet against a registry shrinking by NEGLECT; a record that moved to a better lane
+   * is not neglect. Lowered deliberately, with each destination named. */
+  featCantripGrants: 46,
   featFeatGrants: 254,
   companionGrants: 78,
   situationalBonuses: 2299,

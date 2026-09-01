@@ -35,6 +35,15 @@ export const COUNTER_MODS: Record<string, CounterMod[]> = {
   'ubiquitous-snares': [{ counter: 'snares-prepared', op: 'mul', value: 2 }],
   // "Increase the number of tactics in your folio by 2." Repeatable.
   'tactical-expansion': [{ counter: 'commander-folio', op: 'add', value: 2, repeatable: true }],
+  /* *"You add two new mobility or offensive tactics to your folio and increase your maximum number of
+   * tactics prepared by 1."* The record carried nothing, so neither half reached the player: the folio
+   * did not grow and the prepared cap did not move. `repeatable` because it prints *"You can select
+   * this feat a second time at 8th level"* and the mod is counted once per taking. */
+  /* ⚠ Only the FOLIO half belongs here. The other half — *"increase your maximum number of tactics
+   * prepared by 1"* — has its own field, `preparedTacticsBonus`, summed over the character's feats at
+   * src/rules/build.ts:6203. A `commander-tactics-prepared` counter would have been a plausible-looking
+   * id that nothing reads. */
+  'tactical-excellence': [{ counter: 'commander-folio', op: 'add', value: 2, repeatable: true }],
   // "You gain an additional ikon."
   'additional-ikon': [{ counter: 'ikon-picks', op: 'add', value: 1 }],
   'second-ikon': [{ counter: 'ikon-picks', op: 'add', value: 1 }],

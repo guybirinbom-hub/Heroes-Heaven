@@ -30,13 +30,18 @@ describe('every situational entry names a record a character can actually own', 
     expect(offenders).toEqual([]);
   });
 
-  it('every key resolves to a real record, or is a trait: entry', () => {
+  it('every key resolves to a real record, or is a trait:/junction: entry', () => {
     const db = c();
         // Every collection a situational key may name — companion records and specializations included,
     // because a companion's own bonuses are keyed the same way.
     const buckets = [db.feats, db.classFeatures, db.items, db.heritages, db.ancestries, db.backgrounds, db.deities, db.spells, db.actions, db.animalCompanions, db.companionSpecializations, db.specificFamiliars, db.stances, db.siegeWeapons];
     const unknown = Object.keys(FEAT_SITUATIONAL).filter(
-      (id) => !id.startsWith('trait:') && !buckets.some((b) => b?.[id]),
+      (id) => !id.startsWith('trait:')
+        // A `junction:` key resolves through the GATE record it names. The kineticist impulse junction
+        // belongs to an element gate but is granted only by a SINGLE gate, so keying it on the gate
+        // record itself handed every dual-gate kineticist a bonus the printed text withholds.
+        && !(id.startsWith('junction:') && buckets.some((b) => b?.[id.slice('junction:'.length)]))
+        && !buckets.some((b) => b?.[id]),
     );
     expect(unknown).toEqual([]);
   });

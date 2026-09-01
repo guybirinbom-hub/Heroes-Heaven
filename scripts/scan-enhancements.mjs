@@ -36,8 +36,17 @@ const desc = JSON.parse(readFileSync(join(root, 'public/core-descriptions.json')
 /** Descriptions live in a SECOND file; core.json's copy is a stale fallback where it exists at all. */
 const textOf = (col, id) => String(desc[col]?.[id]?.d ?? core[col]?.[id]?.description ?? '');
 
-/** The printed marker. `**Enhancement**` as a paragraph head — not the word "enhancement" in prose. */
-const PRINTS_TIER = /\*\*Enhancement\*\*/;
+/**
+ * The printed marker: `**Enhancement**` as a paragraph head — not the word "enhancement" in prose.
+ *
+ * ⚠ A BARE line-start `Enhancement ` counts too. Some records' plain-text descriptions come out of the
+ * AoN import with their bold markers stripped (Undead Hunter's reads `\nEnhancement You can infuse…`),
+ * so the asterisk-only pattern missed a record that plainly prints a tier — and then reported it as
+ * SPURIOUS the moment its enhancement was authored, which is the opposite of the truth. Still a
+ * paragraph head, so the "not the word in prose" property holds: it must open the line and be followed
+ * by text.
+ */
+const PRINTS_TIER = /\*\*Enhancement\*\*|^Enhancement\s+\S/m;
 
 /**
  * DELIBERATELY not offered, and not a defect. Written here with its reason rather than left to be

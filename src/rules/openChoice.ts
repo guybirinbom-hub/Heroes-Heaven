@@ -36,6 +36,7 @@ export const OPEN_SOURCE_LABEL: Record<string, string> = {
   language: 'languages',
   heritage: 'heritages',
   ancestry: 'ancestries',
+  background: 'backgrounds',
   'own-deity-spell': "your deity's spells",
   'own-spell': 'spells you know',
   'own-feat': 'feats you have',
@@ -44,12 +45,19 @@ export const OPEN_SOURCE_LABEL: Record<string, string> = {
 };
 
 /** Feats a filter admits: category, level ceiling and required traits. */
-function featsMatching(from: OpenChoiceFrom, content: ContentDatabase): Feat[] {
+function featsMatching(from: OpenChoiceFrom, content: ContentDatabase, level?: number): Feat[] {
   const wantTraits = (from.traits ?? []).map((t) => t.toLowerCase());
+  /* A ceiling that RISES at a printed level (Inscribed with Elders' Deeds: 1st-level orc feats, "at
+   * 13th level … a 5th-level ancestry feat"). Highest reached step wins; `stepped || from.maxLevel`
+   * is the characterless fallback — without a level the base ceiling stands, never zero. */
+  const stepped = (from.maxLevelByLevel ?? [])
+    .filter((e) => level !== undefined && level >= e.level)
+    .reduce((n, e) => Math.max(n, e.maxLevel), 0);
+  const cap = stepped || from.maxLevel;
   return Object.values(content.feats)
     .filter((f) => {
       if (from.featCategory && f.category !== from.featCategory) return false;
-      if (from.maxLevel !== undefined && f.level > from.maxLevel) return false;
+      if (cap !== undefined && f.level > cap) return false;
       if (wantTraits.length) {
         const tr = new Set((f.traits ?? []).map((t) => String(t).toLowerCase()));
         if (!wantTraits.every((t) => tr.has(t))) return false;
@@ -104,7 +112,7 @@ export function openChoiceOptions(
       }));
     }
     case 'feat':
-      return featsMatching(from, content).map((f) => ({
+      return featsMatching(from, content, opts?.character?.level).map((f) => ({
         id: f.id,
         name: f.name,
         note: `Level ${f.level}`,
@@ -158,6 +166,20 @@ export function openChoiceOptions(
           note: a.rarity !== 'common' ? a.rarity : undefined,
           description: a.description,
         }));
+
+    /*
+     * *"Choose a COMMON BACKGROUND that relates to a passion you've pursued"* (Free Heart). The feat
+     * recorded a free-text answer and said so — its `inert` note admitted the answer changed nothing.
+     * `rarity` is the printed restriction and is applied here rather than left to the player, and the
+     * character's OWN background is excluded: the feat grants this package *"in addition to those in
+     * your normal background"*, so picking the one you already have buys nothing.
+     */
+    case 'background':
+      return Object.values(content.backgrounds ?? {})
+        .filter((b) => !from.rarity || (b.rarity ?? 'common') === from.rarity)
+        .filter((b) => !(from.excludeOwn && b.id === opts?.character?.backgroundId))
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .map((b) => ({ id: b.id, name: b.name, description: b.description }));
 
     // ---- BUILD-RESOLVED sources: the pool is what this character has -------------------------
     // Without a character these return [] rather than falling back to all of content, because

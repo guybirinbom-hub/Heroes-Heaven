@@ -62,6 +62,17 @@ export const KNOWN_SENSES = new Set(
     'deathsense',
     'spiritsense',
     'magicsense',
+    /* Added in parity batch 13 with `tactile-magic-feedback`, whose printed text NAMES it as a sense
+     * rather than describing one: *"You gain an imprecise sense known as spellsense, which has a range
+     * of 60 feet and detects only creatures capable of casting spells (including creatures with innate
+     * spells)."* Distinct from `magicsense` above, which finds active spells and magic ITEMS — this one
+     * finds the CASTER. Its glossary line is in src/rules/glossary.ts, without which the sheet renders
+     * a bare unexplained word. */
+    'spellsense',
+    /* Kashrishi (batch 19): print NAMES it — *"Empathic Sense … an imprecise sense with a range of
+     * 15 feet"* detecting non-mindless creatures. A named capability with acuity and range — the
+     * spellsense shape; glossary line in src/rules/glossary.ts. */
+    'empathic-sense',
     'thoughtsense',
     'bloodsense',
     'motion-sense',

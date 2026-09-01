@@ -1,6 +1,13 @@
 import { describe, it, expect } from 'vitest';
 import { build } from './_content';
 
+/*
+ * ⚠ These name the CURRENT printings (Figment, Revealing Light), not the legacy ones they used to.
+ * Our corpus keeps superseded records so archive links resolve, and 48 grant routes were still pointing
+ * at them — a Wand of Fey Flames cast Faerie Fire rather than Revealing Light. Repointed from each
+ * legacy AoN page's own remaster_id pointer; scripts/superseded-grant-check.mjs keeps it that way.
+ */
+
 /**
  * A magic item that casts a specific named spell — via "Activate — Cast a Spell" / "You cast <spell>"
  * (worn items, prose-cast wands) as well as the staff/spellheart/wand cases — must surface on the
@@ -21,13 +28,15 @@ describe('spell-casting items become Spells-page sources', () => {
     const ch = build('wizard', 5, carry('ring-of-bestial-friendship'));
     const entry = ch.spellcasting.find((e) => e.type === 'items' && e.name === 'Ring of Bestial Friendship');
     expect(entry).toBeTruthy();
-    expect(entry!.repertoire[1]).toContain('charm');
+    // Print: "you can cast charm at 4th rank" — the ring casts it heightened, not at base rank 1
+    // (the residue pass's held-spell-rank sweep; the rank key is the repertoire rank, i.e. dice).
+    expect(entry!.repertoire[4]).toContain('charm');
   });
 
-  it('a prose-cast wand — Wand of Fey Flames → Faerie Fire', () => {
+  it('a prose-cast wand — Wand of Fey Flames → Revealing Light', () => {
     const ch = build('wizard', 5, carry('wand-of-fey-flames'));
     const entry = ch.spellcasting.find((e) => e.type === 'items' && /Fey Flames/.test(e.name));
     expect(entry).toBeTruthy();
-    expect(entry!.repertoire[2]).toContain('faerie-fire');
+    expect(entry!.repertoire[2]).toContain('revealing-light');
   });
 });

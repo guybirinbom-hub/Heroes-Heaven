@@ -41,7 +41,18 @@ export function grantForSpellPick(
   if (filter.grantAs === 'focus') return { focusSpells: [spellId] };
   // 'staff': the pick is LOADED INTO a staff the record hands you, not cast from nothing.
   if (filter.grantAs === 'staff') return { staffSpells: [spellId] };
-  return { innateSpells: [{ spellId, ...(filter.innate ?? {}) }] };
+  /*
+   * THE TRADITION THE PLAYER ANSWERED HAS TO REACH THE GRANTED SPELL.
+   *
+   * A filter narrowed to ONE tradition is the record asking a question whose answer decides how the
+   * spell is cast — Minor Magic's arcane/divine/occult/primal, Wayfinder Resonance Tinkerer's
+   * wayfinder cantrip, Esoteric Spellcasting's occult-or-divine. Without this the innate spell fell
+   * back to the SPELL's own first tradition, so a player who answered "divine" could be handed an
+   * arcane cantrip. Callers narrow the filter first (`narrowSpellFilter`); a filter still naming
+   * several traditions, or none, behaves exactly as before.
+   */
+  const only = filter.traditions?.length === 1 ? filter.traditions[0] : undefined;
+  return { innateSpells: [{ spellId, ...(only ? { tradition: only } : {}), ...(filter.innate ?? {}) }] };
 }
 
 /** The filtered choices on a record that are unlocked at this level (a scaling feat offers more picks

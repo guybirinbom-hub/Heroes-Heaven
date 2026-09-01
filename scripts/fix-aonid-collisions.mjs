@@ -86,6 +86,41 @@ const REPOINTS = [
   { category: 'items', id: 'furnace-of-endings', to: 'equipment-2552-2299', page: 'Furnace of Endings (level 5)', refreshAst: true },
   { category: 'items', id: 'atmospheric-staff', to: 'equipment-2576-2328', page: 'Atmospheric Staff (level 8)', refreshAst: true },
   { category: 'items', id: 'irritating-seedpod', to: 'equipment-3735-3517', page: 'Irritating Seedpod (level 7)', refreshAst: true },
+
+  /*
+   * THREE records named "Rallying Charge", two AoN pages, and the pointers crossed.
+   *
+   * `rallying-charge-knight-vigilant` held feat-6357 — which is the MARSHAL's page (Player Core 2
+   * pg. 205, *"You Stride up to your Speed and make a melee Strike"*, 2 actions) and is correctly held
+   * by `rallying-charge-marshal`. Its own content is the Knight Vigilant feat: *"When you Lead the
+   * Way, instead of choosing one ally that has a reaction available, you can choose any number of
+   * allies within 10 feet."*
+   *
+   * The right page is feat-7750, and the evidence is inside our own data: `rallying-charge` — a
+   * second, unmodelled import of the same Knight Vigilant feat — holds feat-7750 and still carries the
+   * page's RAW SCRAPE as its description, reading *"Rallying Charge Source Claws of the Tyrant pg. 112
+   * Archetype Knight Vigilant Prerequisites Knight Vigilant; Lead the Way…"*. That is the Knight
+   * Vigilant page naming itself.
+   *
+   * Repointing also RESTORES THE EVIDENCE the dedupe guards ask for: once both Knight Vigilant records
+   * share feat-7750, `rallying-charge` can be hidden as a near-duplicate on the strength of a shared
+   * document id — the same proof `animal-empathy-druid` rests on. Hiding it first, with the pointers
+   * still crossed, failed test/aon-dedupe.test.ts, and correctly so: nothing then showed the two were
+   * one feat.
+   */
+  { category: 'feats', id: 'rallying-charge-knight-vigilant', to: 'feat-7750', page: 'Rallying Charge (Knight Vigilant)', refreshAst: true },
+
+  /*
+   * A THIRD copy of feat-6876 with no provenance at all. `no-hands-no-problems` (plural) and its
+   * `aon-` twin both carry feat-6876; this one — SINGULAR, "No Hands, No Problem" — carries no aonId,
+   * so neither automatic dedupe rule could pair it and the picker offered the feat twice, the second
+   * copy with an occult-only innate spell in place of the real arcane/occult choice.
+   *
+   * Stamped rather than deleted, for the reason this whole table exists: a record that names its page
+   * can be recognised as the duplicate it is, which is what lets NEAR_DUPLICATE_IDS hide it on the
+   * strength of a shared document rather than on a name that happens to be one letter away.
+   */
+  { category: 'feats', id: 'no-hands-no-problem', to: 'feat-6876', page: 'No Hands, No Problems' },
 ];
 
 /*
@@ -179,14 +214,39 @@ function refreshAst(bucket, id, aonId) {
   return null;
 }
 
-let added = 0, skipped = 0;
+let added = 0, skipped = 0, mirrored = 0;
 
 /** Upsert one overlay row, and mirror it onto the in-memory record so core.json is written too. */
 function set(category, id, field, value, note) {
   const i = rows.findIndex((r) => r.category === category && r.id === id && r.field === field);
   const row = { category, id, field, value };
   if (i >= 0) {
-    if (JSON.stringify(rows[i]) === JSON.stringify(row)) { console.log(`  ok   ${category}/${id} ${field} — already in the overlay`); return false; }
+    if (JSON.stringify(rows[i]) === JSON.stringify(row)) {
+      /*
+       * The ROW is already written — which says nothing about core.json.
+       *
+       * These repoints reach core.json through import-core-v2, which applies the overlay. Then
+       * `stamp-aonid.mjs` runs LATER, clears every aon* field and re-stamps from map.json — putting
+       * back exactly the wrong answer this script exists to override. So on each regen the correction
+       * is undone, this function sees its own row still present, prints "already in the overlay" and
+       * returns, leaving the record pointing at the wrong page while the run reports "0 change(s)".
+       * Measured 2026-08-19: 37 records, including Avenger reading the Avenger ARCHETYPE, Bomber a
+       * class sample and Battering Ram a creature family.
+       *
+       * Checking the ARTEFACT instead of the bookkeeping is the fix. `skipped`/`added` are unchanged —
+       * nothing about the overlay changed — so `mirrored` carries it and gates the write of its own.
+       */
+      const rec = core[category]?.[id];
+      const holds = value === null
+        ? !rec || !(field in rec)
+        : JSON.stringify(rec?.[field]) === JSON.stringify(value);
+      if (holds || !rec) { console.log(`  ok   ${category}/${id} ${field} — already in the overlay`); return false; }
+      if (value === null) delete rec[field];
+      else rec[field] = value;
+      mirrored++;
+      console.log(`  re-  ${(category + '/' + id).padEnd(38)} ${field} -> ${JSON.stringify(value)}   (a later step had undone it)`);
+      return false;
+    }
     rows[i] = row;
   } else rows.push(row);
   if (value === null) delete core[category][id][field];
@@ -234,9 +294,9 @@ if (UNRESOLVED.length) {
   for (const u of UNRESOLVED) console.log(`  ${u}`);
 }
 
-console.log(`\n${added} change(s), ${skipped} skipped; overlay ${rows.length} rows.`);
+console.log(`\n${added} change(s), ${mirrored} re-applied to core.json, ${skipped} skipped; overlay ${rows.length} rows.`);
 if (!WRITE) { console.log('report only — pass --write to apply.'); process.exit(0); }
-if (added) {
+if (added || mirrored) {
   writeBackfill(ROOT, rows);
   writeFileSync(join(ROOT, 'public/core.json'), JSON.stringify(core));
   for (const [bucket, tree] of astDirty) {

@@ -107,10 +107,27 @@ describe('§9.1 Dual Class grants both classes\' initial key-attribute boosts', 
 });
 
 describe('§13.7 Warrior Automaton/Jotunborn heritages upgrade the fist die to 1d6', () => {
+  const fistOf = (heritageId: string) => {
+    const ch = { ...build('fighter', 1), heritageId } as Character;
+    return deriveStrikes(ch, c).find((s) => /fist/i.test(s.name))!;
+  };
+
   it('a Warrior Automaton character has a 1d6 fist (not 1d4 nonlethal)', () => {
-    const base = build('fighter', 1);
-    const ch = { ...base, heritageId: 'warrior-automaton' } as Character;
-    const fist = deriveStrikes(ch, c).find((s) => /fist/i.test(s.name))!;
+    const fist = fistOf('warrior-automaton');
+    expect(fist.damage).toMatch(/^1d6/);
+    expect(fist.traits).not.toContain('nonlethal');
+  });
+
+  it('…and its jotunborn sibling too, now that both are DATA rather than an id list', () => {
+    /*
+     * Both used to be named in the ENGINE, in one hard-coded list beside Powerful Fist — which gave
+     * them identical treatment, and their sentences are not identical: the jotunborn drops the
+     * lethal-attack penalty for *"your fist"*, the automaton for *"your fist OR ANY OTHER UNARMED
+     * ATTACK"*. A list of ids cannot hold that difference, so the automaton's wider clause was
+     * silently the narrow one. Each now carries its own `unarmedTraits`, which is the only shape that
+     * lets them differ — and the only one a future heritage can join without an engine edit.
+     */
+    const fist = fistOf('warrior-jotunborn');
     expect(fist.damage).toMatch(/^1d6/);
     expect(fist.traits).not.toContain('nonlethal');
   });

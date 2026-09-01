@@ -276,16 +276,18 @@ describe('shipped effect-choice data resolves', () => {
     const { deriveDefenses } = await import('../src/rules/derive');
     const db = content();
     const dragonChoice = db.feats['dragon-disciple-dedication'].effectChoices![0].id;
-    const senseChoice = db.feats['animal-senses'].effectChoices![0].id;
+    /* Animal Senses is repeatable, so its pick moved to the per-taking `choice`. A feat added
+     * through OVERRIDES has no slot, so it answers under the synthetic `override:<featId>` key. */
     const picks: Record<string, string> = {};
     picks[`dragon-disciple-dedication:${dragonChoice}`] = 'red';
-    picks[`animal-senses:${senseChoice}`] = 'darkvision';
+
     const ch = build('fighter', 8, {
       overrides: { addedFeats: [
         { featId: 'dragon-disciple-dedication', level: 2, category: 'class' },
         { featId: 'animal-senses', level: 1, category: 'ancestry' },
       ] },
       effectChoices: picks,
+      featChoices: { 'override:animal-senses': 'darkvision' },
     });
     const d = deriveDefenses(ch, db);
     expect(d.resistances.some((r) => r.type === 'fire' && r.value === 4)).toBe(true); // level 8 → 4

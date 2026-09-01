@@ -401,6 +401,27 @@
   ]
  },
  {
+  "id": "item-apricot-of-bestial-might",
+  "modifiers": [],
+  "fromItemId": "apricot-of-bestial-might",
+  "name": "Bestial Might",
+  "duration": "1 hour (the grade its own text points at — the statblock omits a duration)",
+  "note": "Boar-faced battle form. Also 8 resistance to all physical damage; you are Clumsy 1 and must succeed at a flat check to take auditory or linguistic actions.",
+  "grantedStrikes": [
+   {
+    "name": "Tusk",
+    "dice": 1,
+    "die": "d10",
+    "damageType": "piercing",
+    "group": "brawling",
+    "traits": [
+     "deadly-d12",
+     "unarmed"
+    ]
+   }
+  ]
+ },
+ {
   "id": "item-aroma-concealer",
   "name": "Aroma Concealer",
   "fromItemId": "aroma-concealer",
@@ -886,6 +907,28 @@
   ]
  },
  {
+  "id": "item-clawed-bracers",
+  "modifiers": [],
+  "fromItemId": "clawed-bracers",
+  "name": "Extended Claws",
+  "duration": "10 minutes",
+  "note": "Once per hour. You also gain a climb Speed of 20 feet.",
+  "grantedStrikes": [
+   {
+    "name": "Claw",
+    "dice": 1,
+    "die": "d6",
+    "damageType": "slashing",
+    "group": "brawling",
+    "traits": [
+     "agile",
+     "finesse",
+     "unarmed"
+    ]
+   }
+  ]
+ },
+ {
   "id": "item-cloud-buns-greater",
   "name": "Cloud Buns",
   "fromItemId": "cloud-buns-greater",
@@ -921,7 +964,7 @@
   "name": "Bubble Gum (Greater)",
   "fromItemId": "crackling-bubble-gum-greater",
   "duration": "up to 10 minutes",
-  "note": "Secondary Effect deals 8d4 sonic in a burst; the -10-foot Speed penalty for 1 minute applies to creatures that fail the save, not to you.",
+  "note": "Secondary Effect (2 actions, sonic): the pop deals 8d4 sonic damage in a 15-foot cone, DC 30 basic Fortitude; a creature that fails is also stuck with a -10-foot item penalty to its Speed for 1 minute (3 Interact actions to remove). That penalty lands on the targets, not on you, and the gum becomes inert — switch this mode off.",
   "modifiers": [
    {
     "value": 2,
@@ -936,7 +979,7 @@
   "name": "Bubble Gum (Lesser)",
   "fromItemId": "crackling-bubble-gum-lesser",
   "duration": "up to 10 minutes",
-  "note": "Secondary Effect (blow the bubble) deals 4d4 sonic in a burst and inflicts a -10-foot item penalty to Speed for 1 minute on creatures that fail — that penalty lands on the targets, not on you, and ends the gum.",
+  "note": "Secondary Effect (2 actions, sonic): the pop deals 4d4 sonic damage in a 15-foot cone, DC 19 basic Fortitude; a creature that fails is also stuck with a -10-foot item penalty to its Speed for 1 minute (3 Interact actions to remove). That penalty lands on the targets, not on you, and the gum becomes inert — switch this mode off.",
   "modifiers": [
    {
     "value": 1,
@@ -951,7 +994,7 @@
   "name": "Bubble Gum (Major)",
   "fromItemId": "crackling-bubble-gum-major",
   "duration": "up to 10 minutes",
-  "note": "Secondary Effect deals 9d4 sonic in a burst; the -10-foot Speed penalty for 1 minute applies to creatures that fail the save, not to you.",
+  "note": "Secondary Effect (2 actions, sonic): the pop deals 9d4 sonic damage in a 15-foot cone, DC 34 basic Fortitude; a creature that fails is also stuck with a -10-foot item penalty to its Speed for 1 minute (3 Interact actions to remove). That penalty lands on the targets, not on you, and the gum becomes inert — switch this mode off.",
   "modifiers": [
    {
     "value": 3,
@@ -966,7 +1009,7 @@
   "name": "Bubble Gum (Moderate)",
   "fromItemId": "crackling-bubble-gum-moderate",
   "duration": "up to 10 minutes",
-  "note": "Secondary Effect deals 6d4 sonic in a burst; the -10-foot Speed penalty for 1 minute applies to creatures that fail the save, not to you.",
+  "note": "Secondary Effect (2 actions, sonic): the pop deals 6d4 sonic damage in a 15-foot cone, DC 25 basic Fortitude; a creature that fails is also stuck with a -10-foot item penalty to its Speed for 1 minute (3 Interact actions to remove). That penalty lands on the targets, not on you, and the gum becomes inert — switch this mode off.",
   "modifiers": [
    {
     "value": 2,
@@ -1170,6 +1213,52 @@
   "duration": "1 hour",
   "note": "The non-incorporeal undead you oiled has a +1 item bonus to AC for 1 hour. Your own AC does not change.",
   "modifiers": []
+ },
+ {
+  "id": "item-dinosaur-boots",
+  "modifiers": [],
+  "fromItemId": "dinosaur-boots",
+  "name": "Dinosaur Legs",
+  "duration": "1 minute",
+  "note": "Also the effects of Enlarge, and one Trample during the duration.",
+  "grantedStrikes": [
+   {
+    "name": "Foot",
+    "dice": 1,
+    "die": "d6",
+    "damageType": "bludgeoning",
+    "group": "brawling",
+    "traits": [
+     "agile",
+     "finesse",
+     "nonlethal",
+     "unarmed"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "item-dinosaur-boots-greater",
+  "modifiers": [],
+  "fromItemId": "dinosaur-boots-greater",
+  "name": "Dinosaur Legs",
+  "duration": "1 minute",
+  "note": "Also the effects of 4th-rank Enlarge (Huge if you choose), and Trample during the duration.",
+  "grantedStrikes": [
+   {
+    "name": "Foot",
+    "dice": 1,
+    "die": "d8",
+    "damageType": "bludgeoning",
+    "group": "brawling",
+    "traits": [
+     "agile",
+     "finesse",
+     "nonlethal",
+     "unarmed"
+    ]
+   }
+  ]
  },
  {
   "id": "item-diplomats-charcuterie",
@@ -2685,6 +2774,26 @@
   ]
  },
  {
+  "id": "item-mana-rattler-liniment",
+  "modifiers": [],
+  "fromItemId": "mana-rattler-liniment",
+  "name": "Serpentine Form",
+  "duration": "1 hour",
+  "note": "On application you may also counteract one poison or disease afflicting you (counteract rank 5, +15).",
+  "grantedStrikes": [
+   {
+    "name": "Fangs",
+    "dice": 1,
+    "die": "d6",
+    "damageType": "piercing",
+    "group": "brawling",
+    "traits": [
+     "unarmed"
+    ]
+   }
+  ]
+ },
+ {
   "id": "item-marking-snare",
   "name": "Marked Quarry",
   "fromItemId": "marking-snare",
@@ -3097,6 +3206,174 @@
   ]
  },
  {
+  "id": "item-potion-of-acid-resistance-greater",
+  "name": "Acid Resistance 15",
+  "fromItemId": "potion-of-acid-resistance-greater",
+  "duration": "1 hour",
+  "modifiers": [],
+  "resistances": [
+   {
+    "type": "acid",
+    "value": 15
+   }
+  ],
+  "note": "Potion of Acid Resistance (Greater): resistance 15 to acid damage for 1 hour."
+ },
+ {
+  "id": "item-potion-of-acid-resistance-lesser",
+  "name": "Acid Resistance 5",
+  "fromItemId": "potion-of-acid-resistance-lesser",
+  "duration": "1 hour",
+  "modifiers": [],
+  "resistances": [
+   {
+    "type": "acid",
+    "value": 5
+   }
+  ],
+  "note": "Potion of Acid Resistance (Lesser): resistance 5 to acid damage for 1 hour."
+ },
+ {
+  "id": "item-potion-of-acid-resistance-moderate",
+  "name": "Acid Resistance 10",
+  "fromItemId": "potion-of-acid-resistance-moderate",
+  "duration": "1 hour",
+  "modifiers": [],
+  "resistances": [
+   {
+    "type": "acid",
+    "value": 10
+   }
+  ],
+  "note": "Potion of Acid Resistance (Moderate): resistance 10 to acid damage for 1 hour."
+ },
+ {
+  "id": "item-potion-of-cold-resistance-greater",
+  "name": "Cold Resistance 15",
+  "fromItemId": "potion-of-cold-resistance-greater",
+  "duration": "1 hour",
+  "modifiers": [],
+  "resistances": [
+   {
+    "type": "cold",
+    "value": 15
+   }
+  ],
+  "note": "Potion of Cold Resistance (Greater): resistance 15 to cold damage for 1 hour."
+ },
+ {
+  "id": "item-potion-of-cold-resistance-lesser",
+  "name": "Cold Resistance 5",
+  "fromItemId": "potion-of-cold-resistance-lesser",
+  "duration": "1 hour",
+  "modifiers": [],
+  "resistances": [
+   {
+    "type": "cold",
+    "value": 5
+   }
+  ],
+  "note": "Potion of Cold Resistance (Lesser): resistance 5 to cold damage for 1 hour."
+ },
+ {
+  "id": "item-potion-of-cold-resistance-moderate",
+  "name": "Cold Resistance 10",
+  "fromItemId": "potion-of-cold-resistance-moderate",
+  "duration": "1 hour",
+  "modifiers": [],
+  "resistances": [
+   {
+    "type": "cold",
+    "value": 10
+   }
+  ],
+  "note": "Potion of Cold Resistance (Moderate): resistance 10 to cold damage for 1 hour."
+ },
+ {
+  "id": "item-potion-of-electricity-resistance-greater",
+  "name": "Electricity Resistance 15",
+  "fromItemId": "potion-of-electricity-resistance-greater",
+  "duration": "1 hour",
+  "modifiers": [],
+  "resistances": [
+   {
+    "type": "electricity",
+    "value": 15
+   }
+  ],
+  "note": "Potion of Electricity Resistance (Greater): resistance 15 to electricity damage for 1 hour."
+ },
+ {
+  "id": "item-potion-of-electricity-resistance-lesser",
+  "name": "Electricity Resistance 5",
+  "fromItemId": "potion-of-electricity-resistance-lesser",
+  "duration": "1 hour",
+  "modifiers": [],
+  "resistances": [
+   {
+    "type": "electricity",
+    "value": 5
+   }
+  ],
+  "note": "Potion of Electricity Resistance (Lesser): resistance 5 to electricity damage for 1 hour."
+ },
+ {
+  "id": "item-potion-of-electricity-resistance-moderate",
+  "name": "Electricity Resistance 10",
+  "fromItemId": "potion-of-electricity-resistance-moderate",
+  "duration": "1 hour",
+  "modifiers": [],
+  "resistances": [
+   {
+    "type": "electricity",
+    "value": 10
+   }
+  ],
+  "note": "Potion of Electricity Resistance (Moderate): resistance 10 to electricity damage for 1 hour."
+ },
+ {
+  "id": "item-potion-of-fire-resistance-greater",
+  "name": "Fire Resistance 15",
+  "fromItemId": "potion-of-fire-resistance-greater",
+  "duration": "1 hour",
+  "modifiers": [],
+  "resistances": [
+   {
+    "type": "fire",
+    "value": 15
+   }
+  ],
+  "note": "Potion of Fire Resistance (Greater): resistance 15 to fire damage for 1 hour."
+ },
+ {
+  "id": "item-potion-of-fire-resistance-lesser",
+  "name": "Fire Resistance 5",
+  "fromItemId": "potion-of-fire-resistance-lesser",
+  "duration": "1 hour",
+  "modifiers": [],
+  "resistances": [
+   {
+    "type": "fire",
+    "value": 5
+   }
+  ],
+  "note": "Potion of Fire Resistance (Lesser): resistance 5 to fire damage for 1 hour."
+ },
+ {
+  "id": "item-potion-of-fire-resistance-moderate",
+  "name": "Fire Resistance 10",
+  "fromItemId": "potion-of-fire-resistance-moderate",
+  "duration": "1 hour",
+  "modifiers": [],
+  "resistances": [
+   {
+    "type": "fire",
+    "value": 10
+   }
+  ],
+  "note": "Potion of Fire Resistance (Moderate): resistance 10 to fire damage for 1 hour."
+ },
+ {
   "id": "item-potion-of-minute-echoes",
   "name": "Minute Echoes",
   "fromItemId": "potion-of-minute-echoes",
@@ -3110,6 +3387,48 @@
     "appliesWhen": "to checks to hear"
    }
   ]
+ },
+ {
+  "id": "item-potion-of-sonic-resistance-greater",
+  "name": "Sonic Resistance 15",
+  "fromItemId": "potion-of-sonic-resistance-greater",
+  "duration": "1 hour",
+  "modifiers": [],
+  "resistances": [
+   {
+    "type": "sonic",
+    "value": 15
+   }
+  ],
+  "note": "Potion of Sonic Resistance (Greater): resistance 15 to sonic damage for 1 hour."
+ },
+ {
+  "id": "item-potion-of-sonic-resistance-lesser",
+  "name": "Sonic Resistance 5",
+  "fromItemId": "potion-of-sonic-resistance-lesser",
+  "duration": "1 hour",
+  "modifiers": [],
+  "resistances": [
+   {
+    "type": "sonic",
+    "value": 5
+   }
+  ],
+  "note": "Potion of Sonic Resistance (Lesser): resistance 5 to sonic damage for 1 hour."
+ },
+ {
+  "id": "item-potion-of-sonic-resistance-moderate",
+  "name": "Sonic Resistance 10",
+  "fromItemId": "potion-of-sonic-resistance-moderate",
+  "duration": "1 hour",
+  "modifiers": [],
+  "resistances": [
+   {
+    "type": "sonic",
+    "value": 10
+   }
+  ],
+  "note": "Potion of Sonic Resistance (Moderate): resistance 10 to sonic damage for 1 hour."
  },
  {
   "id": "item-preserved-moonflower",
@@ -4178,6 +4497,30 @@
   ]
  },
  {
+  "id": "item-tooth-and-claw-tattoo",
+  "modifiers": [],
+  "fromItemId": "tooth-and-claw-tattoo",
+  "name": "Tooth and Claw",
+  "duration": "1 minute",
+  "note": "The attack matches the tattoo's animal and has the SAME damage and traits as your best unarmed attack — read them off that attack."
+ },
+ {
+  "id": "item-tooth-and-claw-tattoo-greater",
+  "modifiers": [],
+  "fromItemId": "tooth-and-claw-tattoo-greater",
+  "name": "Tooth and Claw",
+  "duration": "1 minute",
+  "note": "The attack matches the tattoo's animal and has the SAME damage and traits as your best unarmed attack — read them off that attack."
+ },
+ {
+  "id": "item-tooth-and-claw-tattoo-major",
+  "modifiers": [],
+  "fromItemId": "tooth-and-claw-tattoo-major",
+  "name": "Tooth and Claw",
+  "duration": "1 minute",
+  "note": "The attack matches the tattoo's animal and has the SAME damage and traits as your best unarmed attack — read them off that attack."
+ },
+ {
   "id": "item-trackers-stew",
   "name": "Tracker's Stew",
   "fromItemId": "trackers-stew",
@@ -4461,6 +4804,167 @@
     "type": "status",
     "value": 2,
     "appliesWhen": "against emotion effects"
+   }
+  ]
+ },
+ {
+  "id": "item-wolfjaw-armor",
+  "modifiers": [],
+  "fromItemId": "wolfjaw-armor",
+  "name": "Witchwarg Jaws",
+  "duration": "1 minute (not printed — the statblock omits one)",
+  "note": "Once per hour. The jaws are made using your hands. They deal 1 cold damage on top of the die.",
+  "grantedStrikes": [
+   {
+    "name": "Jaws",
+    "dice": 1,
+    "die": "d8",
+    "damageType": "piercing",
+    "group": "brawling",
+    "traits": [
+     "trip",
+     "unarmed"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "item-sea-touch-elixir-lesser",
+  "name": "Sea Touch (Lesser)",
+  "fromItemId": "sea-touch-elixir-lesser",
+  "duration": "10 minutes",
+  "modifiers": [],
+  "speeds": {
+   "swim": 20
+  },
+  "note": "The skin of your hands and feet webs over: a swim Speed of 20 feet for 10 minutes."
+ },
+ {
+  "id": "item-sea-touch-elixir-moderate",
+  "name": "Sea Touch (Moderate)",
+  "fromItemId": "sea-touch-elixir-moderate",
+  "duration": "1 hour",
+  "modifiers": [],
+  "speeds": {
+   "swim": 20
+  },
+  "note": "The skin of your hands and feet webs over: a swim Speed of 20 feet for 1 hour. You can also breathe underwater."
+ },
+ {
+  "id": "item-sea-touch-elixir-greater",
+  "name": "Sea Touch (Greater)",
+  "fromItemId": "sea-touch-elixir-greater",
+  "duration": "24 hours",
+  "modifiers": [],
+  "speeds": {
+   "swim": 20
+  },
+  "note": "The skin of your hands and feet webs over: a swim Speed of 20 feet for 24 hours. You can also breathe underwater."
+ },
+ {
+  "id": "item-phantom-roll",
+  "name": "Phantom Roll",
+  "fromItemId": "phantom-roll",
+  "duration": "24 hours or until your next daily preparations, whichever comes first",
+  "survivesRest": true,
+  "note": "For the same duration you can also Avoid Notice at full Speed, or combine Avoid Notice with Investigate or Scout while moving at half Speed, which is not a sheet number.",
+  "modifiers": [
+   {
+    "value": 1,
+    "type": "item",
+    "target": "skill",
+    "detail": "stealth",
+    "appliesWhen": "on Stealth checks during the Avoid Notice exploration activity"
+   }
+  ]
+ },
+ {
+  "id": "item-gas-mask-of-clean-air",
+  "name": "Breathe Clean",
+  "fromItemId": "gas-mask-of-clean-air",
+  "duration": "1 round",
+  "note": "Once per day, ⟨1⟩ (manipulate). While it runs you can breathe normally even if the air around you is unbreathable, you are underwater, or you are in a vacuum. Inhaled poisons, inhaled diseases or olfactory effects you were already suffering when you activated the mask continue as normal — the immunity does not end them.",
+  "modifiers": [],
+  "immunities": [
+   "inhaled poisons",
+   "inhaled diseases",
+   "olfactory effects"
+  ]
+ },
+ {
+  "id": "item-eagle-eye-elixir-lesser",
+  "name": "Eagle-Eye Elixir",
+  "fromItemId": "eagle-eye-elixir-lesser",
+  "duration": "1 hour",
+  "modifiers": [
+   {
+    "value": 1,
+    "type": "item",
+    "target": "perception"
+   },
+   {
+    "value": 2,
+    "type": "item",
+    "target": "perception",
+    "appliesWhen": "on checks to find secret doors and traps (this replaces the +1, it does not stack)"
+   }
+  ]
+ },
+ {
+  "id": "item-eagle-eye-elixir-moderate",
+  "name": "Eagle-Eye Elixir",
+  "fromItemId": "eagle-eye-elixir-moderate",
+  "duration": "1 hour",
+  "modifiers": [
+   {
+    "value": 2,
+    "type": "item",
+    "target": "perception"
+   },
+   {
+    "value": 3,
+    "type": "item",
+    "target": "perception",
+    "appliesWhen": "on checks to find secret doors and traps (this replaces the +2, it does not stack)"
+   }
+  ]
+ },
+ {
+  "id": "item-eagle-eye-elixir-greater",
+  "name": "Eagle-Eye Elixir",
+  "fromItemId": "eagle-eye-elixir-greater",
+  "duration": "1 hour",
+  "modifiers": [
+   {
+    "value": 3,
+    "type": "item",
+    "target": "perception"
+   },
+   {
+    "value": 4,
+    "type": "item",
+    "target": "perception",
+    "appliesWhen": "on checks to find secret doors and traps (this replaces the +3, it does not stack)"
+   }
+  ]
+ },
+ {
+  "id": "item-eagle-eye-elixir-major",
+  "name": "Eagle-Eye Elixir",
+  "fromItemId": "eagle-eye-elixir-major",
+  "duration": "1 hour",
+  "note": "Each time you pass within 10 feet of a secret door or trap, the GM automatically rolls a secret check for you to find it.",
+  "modifiers": [
+   {
+    "value": 3,
+    "type": "item",
+    "target": "perception"
+   },
+   {
+    "value": 4,
+    "type": "item",
+    "target": "perception",
+    "appliesWhen": "on checks to find secret doors and traps (this replaces the +3, it does not stack)"
    }
   ]
  }

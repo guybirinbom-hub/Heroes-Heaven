@@ -36,7 +36,24 @@ describe('consumable modes: the data', () => {
     // which is a fire weakness lasting past the night — hence its own `survivesRest` entry.
     // +1 for the Candle of Invocation, whose two restricted spell slots are a mode rather than the
     // item's own spellSlotBonus: that field only fires for INVESTED items, and a candle is lit.
-    expect(itemModes().length).toBe(332);
+    // +9 from the batch-8 parity pass: items whose activation grants an UNARMED ATTACK for a stated
+    // span and which shipped none anywhere. A temporary attack cannot be `grantedStrikes` on the item
+    // (that hands it over permanently), so it is a toggle like every other timed transformation here —
+    // six carry the attack's stat block, and the three Tooth and Claw Tattoos carry only a note,
+    // because their attack has "the same damage as your best unarmed attack" and no strike field can
+    // state a mirror of another attack.
+    // +15 from batch 1's value gate: the resistance potions — acid/cold/electricity/fire/sonic in
+    // lesser/moderate/greater — printed "grants resistance N against X damage for 1 hour" and shipped
+    // no mode at all, so drinking one moved no number on the sheet.
+    // +3 from the batches 5–16 parity read: the three Sea Touch Elixirs print *"granting you a swim
+    // Speed of 20 feet"* for 10 minutes / 1 hour / 24 hours and had no mode either, so drinking one
+    // left the character with no swim Speed at all. Their side sets the Speed to 20.
+    // +13 from the batch-16 residual read: the four Eagle-Eye Elixir grades (Perception item bonus,
+    // bigger vs secret doors), Phantom Roll, Gas Mask of Clean Air, Hunter's Brooch, the three
+    // Camouflaging Chromatophores grades, Underbrush Cloak, Obsidian Goggles' activation, and the
+    // Darkvision Scope — each a stated-span activation that had no mode.
+    // +2 from batch 18: the Arachnid Harness grades' Spider Limbs climb Speed (1 minute).
+    expect(itemModes().length).toBe(374);
   });
 
   it('every item mode points at an item that actually exists', () => {
@@ -115,7 +132,8 @@ describe('consumable modes: hidden from the player list', () => {
   });
 
   it('an ordinary catalog mode is still offered', () => {
-    const ordinary = Object.values(content().modes).find((m) => !m.fromItemId && !m.classes && !m.ancestries && !m.feats);
+    // "Ordinary" = carrying NO gate of any kind — `backgrounds` joined the gate kinds in batch 19.
+    const ordinary = Object.values(content().modes).find((m) => !m.fromItemId && !m.classes && !m.ancestries && !m.feats && !(m as ModeDef).backgrounds);
     if (ordinary) expect(modeRelevant(ordinary as ModeDef, 'fighter', 'human', new Set())).toBe(true);
   });
 });

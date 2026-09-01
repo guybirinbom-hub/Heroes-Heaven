@@ -69,15 +69,36 @@ describe('class resources — archetype dedication parity', () => {
     expect(resourcesForCharacter('fighter', new Set())).toEqual([]);
   });
 
-  it('magus / psychic / alchemist / oracle dedications do NOT auto-grant their resource (not a clean RAW grant)', () => {
+  it('magus / psychic / oracle dedications do NOT auto-grant their resource (not a clean RAW grant)', () => {
     const ids = resourcesForCharacter(
       'fighter',
-      new Set(['magus-dedication', 'psychic-dedication', 'alchemist-dedication', 'oracle-dedication']),
+      new Set(['magus-dedication', 'psychic-dedication', 'oracle-dedication']),
     ).map((r) => r.id);
+    // None of these three grants the resource itself — Arcane Cascade, Unleash Psyche and the
+    // cursebound condition all come from LATER feats or class features, not from the dedication.
     expect(ids).not.toContain('arcane-cascade');
     expect(ids).not.toContain('unleash-psyche');
-    expect(ids).not.toContain('versatile-vials');
     expect(ids).not.toContain('cursebound');
+  });
+
+  /*
+   * …but the ALCHEMIST's was wrongly grouped with those three. Alchemist Dedication prints the grant
+   * outright: *"You gain the Quick Alchemy benefits, CREATING UP TO 4 VERSATILE VIALS during your daily
+   * preparations."* A named resource with a stated number — as clean as Barbarian Dedication's Rage
+   * above. Without it a dedicated alchemist had no vial counter at all, so their Quick Alchemy had
+   * nothing to spend.
+   */
+  it('an Alchemist Dedication DOES grant versatile vials — a flat 4, not the class 2 + Int', () => {
+    const arch = resourcesForCharacter('fighter', new Set(['alchemist-dedication'])).find((r) => r.id === 'versatile-vials');
+    expect(arch, 'a dedicated alchemist has no vial counter').toBeTruthy();
+    expect(arch!.maxBase).toBe(4);
+    expect(arch!.maxAbility, 'the archetype number is flat; 2 + Int is the class feature').toBeUndefined();
+  });
+
+  it('…and a real alchemist keeps the class form, not the archetype one', () => {
+    const own = resourcesForCharacter('alchemist', new Set(['alchemist-dedication'])).find((r) => r.id === 'versatile-vials');
+    expect(own!.maxBase).toBe(2);
+    expect(own!.maxAbility).toBe('int');
   });
 });
 

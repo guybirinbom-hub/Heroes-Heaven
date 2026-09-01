@@ -37,11 +37,11 @@ import {
   updatePlayCompanion,
   type PlayUpdater,
 } from '../rules/play';
-import { formatMod, ownedFeatureIds } from '../rules/derive';
+import { formatMod, modeGateIds, ownedFeatureIds } from '../rules/derive';
 import { InventoryTab } from './InventoryTab';
 import { HpControl } from './HpControl';
 import { specificFamiliars } from '../rules/specificFamiliars';
-import { companionModKeys, featGrantedCompanions, offeredCreatures, CREATURE_OFFERS, FEAT_COMPANION_GRANTS, type CreatureOffer } from '../rules/companionGrants';
+import { companionModKeys, featGrantedCompanions, offeredCreatures, CREATURE_OFFERS, FEAT_COMPANION_GRANTS, FAMILIAR_ABILITY_CHOICES, type CreatureOffer } from '../rules/companionGrants';
 import { ActionGlyph } from './widgets';
 import { InfoTerm } from './InfoTerm';
 import { ConditionsModal } from './ConditionsModal';
@@ -336,12 +336,18 @@ function AddCompanionModal({ content, currency, enabledSources, offers, onAdd, o
 
 /* ============================ Choice pickers ============================ */
 
+/** The sub-questions a chosen familiar ability asks — the table lives in the rules layer, because the
+ *  derive path reads it too and a table hidden in a .tsx is invisible to the data audits. */
+const ABILITY_SUB_CHOICE = FAMILIAR_ABILITY_CHOICES;
+
 function FamiliarAbilityPicker({
   content,
   chosen,
   granted,
   grantLabel,
   onToggle,
+  abilityChoices,
+  onAbilityChoice,
   onClose,
 }: {
   content: ContentDatabase;
@@ -353,6 +359,9 @@ function FamiliarAbilityPicker({
   /** The granting record's own name, for the reason line. */
   grantLabel?: string;
   onToggle: (id: string) => void;
+  /** Answers to the sub-questions in `ABILITY_SUB_CHOICE`, keyed by ability id. */
+  abilityChoices?: Record<string, string>;
+  onAbilityChoice?: (abilityId: string, value: string) => void;
   onClose: () => void;
 }) {
   const [q, setQ] = useState('');
@@ -401,6 +410,23 @@ function FamiliarAbilityPicker({
                     : undefined
                 }
                 onSelect={() => onToggle(a.id)}
+                sub={
+                  /* The sub-question only exists once the ability is actually the familiar's —
+                   * asking "which Speed?" beside an ability they have not taken is noise. */
+                  (on || isFree) && ABILITY_SUB_CHOICE[a.id] && onAbilityChoice ? (
+                    <label className="cmp-sub-choice">
+                      {ABILITY_SUB_CHOICE[a.id].prompt}{' '}
+                      <select
+                        value={abilityChoices?.[a.id] ?? ABILITY_SUB_CHOICE[a.id].options[0].value}
+                        onChange={(e) => onAbilityChoice(a.id, e.target.value)}
+                      >
+                        {ABILITY_SUB_CHOICE[a.id].options.map((o) => (
+                          <option key={o.value} value={o.value}>{o.label}</option>
+                        ))}
+                      </select>
+                    </label>
+                  ) : undefined
+                }
               />
             );
           })}
@@ -1350,9 +1376,12 @@ function EditChoices({ cfg, character, content, onPlay, onAbilities, onSpecializ
               <i className="ti ti-sparkles" aria-hidden="true" /> {(cfg.abilities ?? []).filter((a) => !famFree.has(a)).length}{famBudget != null ? ` of ${famBudget}` : ''} chosen
             </button>
           </div>
+          {/* Singular matters from here on: Undead Familiar and Glyph Familiar are the first grants in
+              the table with a budget of ONE ("you can choose only one familiar ability per day … instead
+              of two"), and the hardcoded plural read "lets you choose 1 familiar abilities". */}
           <div className="cmp-note">
             {famBudget != null
-              ? `${famGrant?.label ?? 'The record that granted this familiar'} lets you choose ${famBudget} familiar abilities.${famFree.size ? ' Any it grants outright are listed on the stat block as “from a feat” and do not count against that number.' : ''}`
+              ? `${famGrant?.label ?? 'The record that granted this familiar'} lets you choose ${famBudget} familiar ${famBudget === 1 ? 'ability' : 'abilities'}.${famFree.size ? ' Any it grants outright are listed on the stat block as “from a feat” and do not count against that number.' : ''}`
               : 'Your class and feats determine how many familiar abilities you can choose.'}
           </div>
         </>
@@ -1507,7 +1536,10 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
   if (character.subclassId2) grantSourceIds.add(character.subclassId2);
   for (const cc of character.classChoices ?? [])
     grantSourceIds.add(cc.name.toLowerCase().normalize('NFKD').replace(/[’']/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''));
-  const autoGranted: CompanionConfig[] = featGrantedCompanions(grantSourceIds)
+  /* The record's own answer, for a grant whose companion is conditional on it — Familiar Master's
+   * "Do you already have a familiar?" decides between a familiar and the Enhanced Familiar feat. */
+  const featAnswer = new Map(character.feats.filter((f) => f.choice?.value).map((f) => [f.featId, f.choice!.value]));
+  const autoGranted: CompanionConfig[] = featGrantedCompanions(grantSourceIds, (id) => featAnswer.get(id))
     .filter((g) => !explicit.some((c) => c.grantSlug === g.grantSlug))
     // `abilities` is the PLAYER's list. A locked ability that COUNTS against the budget is still one of
     // their picks (Corgi Mount's Scent), so it is seeded here as before. A FREE one is not: seeding it
@@ -1680,7 +1712,7 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
           classId={character.classId}
           ancestryId={character.ancestryId}
           // Class features too — see the note at the matching VitalsRail call site.
-          featIds={new Set([...character.feats.map((f) => f.featId), ...ownedFeatureIds(character, content)])}
+          featIds={modeGateIds(character, content)}
           charKey={charKey}
           activeModeIds={modesOf(condFor).map((m) => m.id)}
           onToggleMode={(id) => onPlay((p) => toggleCompanionMode(p, condFor, id, content.modes))}
@@ -1712,6 +1744,10 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
             granted={g?.lockedFree ? g.lockedAbilities ?? [] : []}
             grantLabel={g?.label}
             onToggle={(aid) => onPlay((p) => updatePlayCompanion(p, abilityFor, { abilities: chosen.includes(aid) ? chosen.filter((x) => x !== aid) : [...chosen, aid] }))}
+            abilityChoices={comp?.abilityChoices}
+            onAbilityChoice={(aid, value) =>
+              onPlay((p) => updatePlayCompanion(p, abilityFor, { abilityChoices: { ...(comp?.abilityChoices ?? {}), [aid]: value } }))
+            }
             onClose={() => setAbilityFor(null)}
           />
         );

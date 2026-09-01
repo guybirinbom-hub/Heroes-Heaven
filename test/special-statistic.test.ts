@@ -146,9 +146,16 @@ describe('archetype class DCs the dedications print', () => {
   });
 
   it('Brilliant Crafter can raise the inventor DC it names', () => {
-    // "at 15th level … you become an expert in your inventor class DC" — the upgrade carried no
-    // `classDcRank`, and Inventor Dedication carried no grant, so the pair moved nothing at all.
-    expect(db.feats['brilliant-crafter']?.classDcRank).toEqual({ classId: 'inventor', rank: 'expert' });
+    /*
+     * *"At 7th level you become a master in Crafting, and AT 15TH LEVEL, you become legendary in
+     * Crafting and you become an expert in your inventor class DC."* The upgrade carried no
+     * `classDcRank`, and Inventor Dedication carried no grant, so the pair moved nothing at all.
+     *
+     * `level: 15` is part of that clause, not decoration: without it the expert DC landed the moment
+     * the feat was taken — which can be 7th level, eight levels early. Asserted so the gate cannot
+     * quietly go missing again.
+     */
+    expect(db.feats['brilliant-crafter']?.classDcRank).toEqual({ classId: 'inventor', rank: 'expert', level: 15 });
   });
 });
 

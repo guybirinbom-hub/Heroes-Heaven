@@ -137,9 +137,9 @@ describe('the scope: a list the book declines to close, not choices in general',
    */
   it('exactly the lists whose printed options are illustrative opt in', () => {
     expect(customAnswerRecords(c())).toEqual([
-      'backgrounds/hired-killer',
-      'backgrounds/spotter',
-      'backgrounds/trailblazer',
+      // spotter/trailblazer's background-level copies were DELETED in batch 22, and hired-killer's
+      // followed in batch 23 — all three were duplicates of the granted feat's own picker, which is
+      // the surviving free-text lane below.
       // "the trait appropriate to the type of servitor you've become (…, for example / such as …)"
       'feats/celestial-form',
       'feats/fiendish-form',
@@ -250,18 +250,16 @@ describe('the builder actually offers it — the pixel, not the predicate', () =
     r.stop();
   });
 
-  it('the two OTHER pickers that can ask a terrain question offer it too', () => {
-    // Trailblazer asks its own terrain on the setup page (the background lane) and asks the granted
-    // Terrain Expertise's on level 1 (the granted-feat lane). Three separate call sites render a
-    // FeatChoiceDef; wiring two and forgetting the third is exactly how a lane ships half-built.
+  it('the granted-feat picker (now the ONLY terrain lane for Trailblazer) offers it too', () => {
+    /* Batch 22 deleted Trailblazer's background-level terrain choice — a duplicate of the granted
+     * Terrain Expertise's own picker, the one whose answer the sheet actually reads. The free-text
+     * opt-in must survive on the surviving lane, and no Terrain card may appear on setup at all. */
     const tb: BuildState = { ...emptyBuild(), name: 't', level: 1, classId: 'ranger', ancestryId: 'human', backgroundId: 'trailblazer', keyAbility: 'dex' };
     const r = renderDom(<Builder content={c()} initial={tb} onCancel={noop} onCreate={noop} />);
 
     r.click([...r.host.querySelectorAll<HTMLButtonElement>('button')].find((x) => (x.textContent ?? '').trim() === '0') ?? null);
-    const bgCard = [...r.host.querySelectorAll<HTMLElement>('.lvl-subcard')].find((el) => (el.textContent ?? '').startsWith('Terrain'))!;
-    r.click(bgCard.querySelector('button.popsel, button.lvl-card'));
-    expect(rowNames(r.host).some((n) => n.startsWith('Type another terrain'))).toBe(true);
-    r.click(r.host.querySelector('.picker-close'));
+    const bgCard = [...r.host.querySelectorAll<HTMLElement>('.lvl-subcard')].find((el) => (el.textContent ?? '').startsWith('Terrain'));
+    expect(bgCard, 'the duplicate setup-page terrain card is gone').toBeUndefined();
 
     r.click([...r.host.querySelectorAll<HTMLButtonElement>('button')].find((x) => (x.textContent ?? '').trim() === '1') ?? null);
     const grantCard = [...r.host.querySelectorAll<HTMLElement>('.lvl-subcard')].find((el) =>

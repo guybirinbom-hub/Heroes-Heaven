@@ -57,8 +57,10 @@ describe('feat-driven Bulk limits', () => {
   it('Efficient Preparation raises the commander prepared-tactics cap', () => {
     const plain = build('commander', 8, {});
     const withIt = build('commander', 8, { featPicks: { '8:class': 'efficient-preparation' } });
-    expect(plain.commanderTactics?.preparedMax).toBe(3);
-    expect(withIt.commanderTactics?.preparedMax).toBe(4);
+    // An L8 commander's base cap is FOUR — Expert Tactician (7th) prints "The total number of
+    // tactics you can have prepared increases to four" (commanderPreparedMax, batch-18 parity fix).
+    expect(plain.commanderTactics?.preparedMax).toBe(4);
+    expect(withIt.commanderTactics?.preparedMax).toBe(5);
   });
 
   it('the data carries both fields', () => {

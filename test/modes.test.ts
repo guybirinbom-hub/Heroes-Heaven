@@ -3,7 +3,7 @@ import { modeNumberBonus, hasConditionalMode, modeModifiersFor, CATALOG_MODES, C
 import { deriveSave } from '../src/rules/derive';
 import { toggleMode, type PlayState } from '../src/rules/play';
 import type { ModeDef, ModeModifier } from '../src/rules/types';
-import { build } from './_content';
+import { build, content } from './_content';
 
 const mode = (modifiers: ModeModifier[]): ModeDef => ({ id: 'm', name: 'Test', modifiers });
 
@@ -83,7 +83,11 @@ describe('predefined modes catalog', () => {
       'Cursebound One', 'Cursebound Two', 'Cursebound Three', 'Cursebound Four',
       'Photon-Attuned', 'Graviton-Attuned', 'Perfectly-Attuned', 'Photon Attunement', 'Graviton Attunement',
       'Overdrive', 'Critical Overdrive', 'Panache', 'Panache (legacy)', 'Arcane Cascade', 'Mountain Stance', 'Unleash Psyche',
-      'Animal Shape', 'Hybrid Shape', 'Size of the Ancients', 'Rivener State',
+      // 'Animal Shape' / 'Hybrid Shape' deliberately absent: the werecreature's shapes moved to
+      // scripts/data/toggle-modes.json as eighteen real battle forms (nine types x two shapes) with
+      // the printed per-type speeds. The two generic shells here had `modifiers: []` and no
+      // battleForm — one "Animal Shape" for all nine types, which changed nothing on any sheet.
+      'Size of the Ancients', 'Rivener State',
       'Spirit Trance', 'Sentinel Form', 'Daydream Trance',
     ];
     for (const name of wanted) {
@@ -123,8 +127,33 @@ describe('modeRelevant — class/ancestry gating', () => {
   });
 
   it('ancestry-gated modes show only for that ancestry', () => {
-    expect(modeRelevant(byName('Animal Shape'), 'fighter', 'werecreature')).toBe(true);
-    expect(modeRelevant(byName('Animal Shape'), 'fighter', 'human')).toBe(false);
+    // `ancestries` is matched against `character.ancestryId`, so a gate naming an ancestry we do not
+    // ship can never be satisfied. Size of the Ancients still awaits dragonkin content, which is what
+    // makes it the honest example of the gate: it names what is missing instead of pretending to be
+    // live. Werecreature's pair moved to the dedication feat below, where it has a real carrier.
+    expect(modeRelevant(byName('Size of the Ancients'), 'fighter', 'dragonkin')).toBe(true);
+    expect(modeRelevant(byName('Size of the Ancients'), 'fighter', 'human')).toBe(false);
+  });
+
+  it('the werecreature shapes left this catalogue for the data one, per TYPE', () => {
+    /* They began gated `ancestries: ['werecreature']` — no such ancestry or heritage exists, so neither
+     * could be offered to anyone. Re-gating them onto the dedication made them reachable, which then
+     * showed what they were: `modifiers: []`, no battleForm, ONE generic "Animal Shape" for all nine
+     * printed types. The real thing is eighteen battle forms with per-type speeds, in
+     * scripts/data/toggle-modes.json, each gated on `werecreature-dedication:<type>` so a werebat is
+     * offered the bat's shapes and not the werewolf's. */
+    expect(CATALOG_MODES.some((m) => m.name === 'Animal Shape' || m.name === 'Hybrid Shape')).toBe(false);
+    const forms = Object.values(content().modes ?? {}).filter((m) =>
+      (m.feats ?? []).some((f) => String(f).startsWith('werecreature-dedication:')),
+    );
+    expect(forms.length, 'nine types x animal/hybrid').toBe(18);
+    for (const m of forms) {
+      expect(Object.keys(m.battleForm?.speeds ?? {}).length, m.id).toBeGreaterThan(0);
+      expect(m.exclusiveGroup, m.id).toBe('battle-form');
+    }
+    // A werebat is offered the bat's two shapes and nothing else.
+    const bat = forms.filter((m) => modeRelevant(m, 'fighter', 'human', new Set(['werecreature-dedication:werebat'])));
+    expect(bat.map((m) => m.id).sort()).toEqual(['were-werebat-animal', 'were-werebat-hybrid']);
   });
 
   it('archetype modes are gated to the dedication feat that grants them', () => {

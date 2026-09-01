@@ -619,3 +619,35 @@ all correct.** A ruling is for when two of his own decisions genuinely point opp
 printed text does not settle a mechanic. Where to put a control is neither. He has said twice that the
 volume of what I put in front of him is the problem; a question he did not need to answer is part of
 that volume.
+
+### R10 · The purpose of batching — under-implementation is NOT a finding
+
+His words (2026-08-27, on the "gain the effects of a spell" item family): *"the point of this entire
+batching system is to create a starting point I can trust; this means that following what WG does is
+what I want even if they under-implement things. The important thing is to find if they implement
+WRONGLY, not if they under-implement."*
+
+**Standing consequences for every future batch:**
+- A record where WG encodes LESS than print (prose-only activations, un-modeled riders) is AT PARITY.
+  Match them. It is not a defect, not an owner question, and must not be queued.
+- Only a record where WG encodes something print CONTRADICTS is an owner question.
+- Under-implementations worth revisiting later go to `work/owner-questions.json` → `deferred`
+  (created 2026-08-27), the after-batching list. The gates honor `deferred` exactly like `open`.
+- The relic-gift family (7 relics) is deferred there by his explicit instruction: *"not urgent …
+  only after finishing the entire batching process; for now skip these if they appear in the future,
+  keep them in a list somewhere accessible."* New relic-gift records found in later batches are
+  APPENDED to `deferred`, never fixed and never re-asked.
+
+### R11 · Resiliency Hit Points — per-feat, live, and symmetric
+
+*"3 extra maximum HP per barbarian archetype class feat held, recomputed as more are taken — make
+sure that also recomputes when they are removed; things that are given when added must disappear if
+they are removed in the builder."* (2026-08-27; closes the barbarian-resiliency and monk-resiliency
+queue entries — the same call as the 2026-08-22 champion-family ruling.)
+
+Our `maxHpBonus { perArchetypeFeat: 3, archetype: '<class>' }` shape is exactly this, and
+buildCharacter being a pure function of the build state is what makes removal symmetric. The property
+is now ASSERTED on built characters (add +3 / remove restores / removing the resiliency itself drops
+the whole bonus) in test/batch12-parity.test.ts, so a caching or accumulate-in-place regression can
+never ship silently. The wider principle — anything granted by a feat must vanish when the feat is
+removed in the builder — is the standing expectation for every lane.

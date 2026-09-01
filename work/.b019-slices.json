@@ -1,0 +1,502 @@
+[
+ {
+  "id": "trade-representative",
+  "bucket": "backgrounds",
+  "name": "Trade Representative"
+ },
+ {
+  "id": "green-faith-pilgrim",
+  "bucket": "backgrounds",
+  "name": "Green Faith Pilgrim"
+ },
+ {
+  "id": "prisoner",
+  "bucket": "backgrounds",
+  "name": "Prisoner"
+ },
+ {
+  "id": "press-ganged-g-g",
+  "bucket": "backgrounds",
+  "name": "Press-Ganged (G&G)"
+ },
+ {
+  "id": "keys-to-destiny",
+  "bucket": "backgrounds",
+  "name": "Keys to Destiny"
+ },
+ {
+  "id": "undercover-contender",
+  "bucket": "backgrounds",
+  "name": "Undercover Contender"
+ },
+ {
+  "id": "strix",
+  "bucket": "ancestries",
+  "name": "Strix"
+ },
+ {
+  "id": "battlefield-scrounger",
+  "bucket": "backgrounds",
+  "name": "Battlefield Scrounger"
+ },
+ {
+  "id": "harbor-guard-moonlighter",
+  "bucket": "backgrounds",
+  "name": "Harbor Guard Moonlighter"
+ },
+ {
+  "id": "banished-celestial",
+  "bucket": "backgrounds",
+  "name": "Banished Celestial"
+ },
+ {
+  "id": "political-scion",
+  "bucket": "backgrounds",
+  "name": "Political Scion"
+ },
+ {
+  "id": "root-worker",
+  "bucket": "backgrounds",
+  "name": "Root Worker"
+ },
+ {
+  "id": "quartermaster",
+  "bucket": "backgrounds",
+  "name": "Quartermaster"
+ },
+ {
+  "id": "once-bitten",
+  "bucket": "backgrounds",
+  "name": "Once Bitten"
+ },
+ {
+  "id": "reclaimed",
+  "bucket": "backgrounds",
+  "name": "Reclaimed"
+ },
+ {
+  "id": "student-of-magic",
+  "bucket": "backgrounds",
+  "name": "Student of Magic"
+ },
+ {
+  "id": "money-counter",
+  "bucket": "backgrounds",
+  "name": "Money Counter"
+ },
+ {
+  "id": "genie-blessed",
+  "bucket": "backgrounds",
+  "name": "Genie-Blessed"
+ },
+ {
+  "id": "tengu",
+  "bucket": "ancestries",
+  "name": "Tengu"
+ },
+ {
+  "id": "pilgrim",
+  "bucket": "backgrounds",
+  "name": "Pilgrim"
+ },
+ {
+  "id": "food-trader",
+  "bucket": "backgrounds",
+  "name": "Food Trader"
+ },
+ {
+  "id": "wonder-taster",
+  "bucket": "backgrounds",
+  "name": "Wonder Taster"
+ },
+ {
+  "id": "awful-scab",
+  "bucket": "backgrounds",
+  "name": "Awful Scab"
+ },
+ {
+  "id": "town-troublemaker",
+  "bucket": "backgrounds",
+  "name": "Town Troublemaker"
+ },
+ {
+  "id": "shadow-haunted",
+  "bucket": "backgrounds",
+  "name": "Shadow Haunted"
+ },
+ {
+  "id": "verduran-city-folk",
+  "bucket": "backgrounds",
+  "name": "Verduran City Folk"
+ },
+ {
+  "id": "borderlands-pioneer",
+  "bucket": "backgrounds",
+  "name": "Borderlands Pioneer"
+ },
+ {
+  "id": "cursed-family",
+  "bucket": "backgrounds",
+  "name": "Cursed Family"
+ },
+ {
+  "id": "winters-child",
+  "bucket": "backgrounds",
+  "name": "Winter's Child"
+ },
+ {
+  "id": "rigger",
+  "bucket": "backgrounds",
+  "name": "Rigger"
+ },
+ {
+  "id": "yaksha",
+  "bucket": "ancestries",
+  "name": "Yaksha"
+ },
+ {
+  "id": "academic-scion",
+  "bucket": "backgrounds",
+  "name": "Academic Scion"
+ },
+ {
+  "id": "bounty-hunter",
+  "bucket": "backgrounds",
+  "name": "Bounty Hunter"
+ },
+ {
+  "id": "haunted-citizen",
+  "bucket": "backgrounds",
+  "name": "Haunted Citizen"
+ },
+ {
+  "id": "dreamer-of-the-verdant-moon",
+  "bucket": "backgrounds",
+  "name": "Dreamer of the Verdant Moon"
+ },
+ {
+  "id": "thrill-seeker",
+  "bucket": "backgrounds",
+  "name": "Thrill-Seeker"
+ },
+ {
+  "id": "witchlight-follower",
+  "bucket": "backgrounds",
+  "name": "Witchlight Follower"
+ },
+ {
+  "id": "human",
+  "bucket": "ancestries",
+  "name": "Human"
+ },
+ {
+  "id": "merfolk",
+  "bucket": "ancestries",
+  "name": "Merfolk"
+ },
+ {
+  "id": "pathfinder-hopeful",
+  "bucket": "backgrounds",
+  "name": "Pathfinder Hopeful"
+ },
+ {
+  "id": "ratted-out-gun-runner",
+  "bucket": "backgrounds",
+  "name": "Ratted-Out Gun Runner"
+ },
+ {
+  "id": "rostlander",
+  "bucket": "backgrounds",
+  "name": "Rostlander"
+ },
+ {
+  "id": "wished-alive",
+  "bucket": "backgrounds",
+  "name": "Wished Alive"
+ },
+ {
+  "id": "hellknight-historian",
+  "bucket": "backgrounds",
+  "name": "Hellknight Historian"
+ },
+ {
+  "id": "concordance-scout",
+  "bucket": "backgrounds",
+  "name": "Concordance Scout"
+ },
+ {
+  "id": "osprey-scion",
+  "bucket": "backgrounds",
+  "name": "Osprey Scion"
+ },
+ {
+  "id": "planar-migrant",
+  "bucket": "backgrounds",
+  "name": "Planar Migrant"
+ },
+ {
+  "id": "osprey-barnraiser",
+  "bucket": "backgrounds",
+  "name": "Osprey Barnraiser"
+ },
+ {
+  "id": "teacher",
+  "bucket": "backgrounds",
+  "name": "Teacher"
+ },
+ {
+  "id": "legendary-parents",
+  "bucket": "backgrounds",
+  "name": "Legendary Parents"
+ },
+ {
+  "id": "dauntless",
+  "bucket": "backgrounds",
+  "name": "Dauntless"
+ },
+ {
+  "id": "runelord-scholar",
+  "bucket": "backgrounds",
+  "name": "Runelord Scholar"
+ },
+ {
+  "id": "disciple-of-the-gear",
+  "bucket": "backgrounds",
+  "name": "Disciple of the Gear"
+ },
+ {
+  "id": "astrologer",
+  "bucket": "backgrounds",
+  "name": "Astrologer"
+ },
+ {
+  "id": "bekyar-restorer",
+  "bucket": "backgrounds",
+  "name": "Bekyar Restorer"
+ },
+ {
+  "id": "sarangay",
+  "bucket": "ancestries",
+  "name": "Sarangay"
+ },
+ {
+  "id": "automaton",
+  "bucket": "ancestries",
+  "name": "Automaton"
+ },
+ {
+  "id": "kholo",
+  "bucket": "ancestries",
+  "name": "Kholo"
+ },
+ {
+  "id": "goblin",
+  "bucket": "ancestries",
+  "name": "Goblin"
+ },
+ {
+  "id": "kashrishi",
+  "bucket": "ancestries",
+  "name": "Kashrishi"
+ },
+ {
+  "id": "shisk",
+  "bucket": "ancestries",
+  "name": "Shisk"
+ },
+ {
+  "id": "dwarf",
+  "bucket": "ancestries",
+  "name": "Dwarf"
+ },
+ {
+  "id": "azarketi",
+  "bucket": "ancestries",
+  "name": "Azarketi"
+ },
+ {
+  "id": "fleshwarp",
+  "bucket": "ancestries",
+  "name": "Fleshwarp"
+ },
+ {
+  "id": "shoony",
+  "bucket": "ancestries",
+  "name": "Shoony"
+ },
+ {
+  "id": "vishkanya",
+  "bucket": "ancestries",
+  "name": "Vishkanya"
+ },
+ {
+  "id": "leshy",
+  "bucket": "ancestries",
+  "name": "Leshy"
+ },
+ {
+  "id": "hobgoblin",
+  "bucket": "ancestries",
+  "name": "Hobgoblin"
+ },
+ {
+  "id": "ratfolk",
+  "bucket": "ancestries",
+  "name": "Ratfolk"
+ },
+ {
+  "id": "poppet",
+  "bucket": "ancestries",
+  "name": "Poppet"
+ },
+ {
+  "id": "elf",
+  "bucket": "ancestries",
+  "name": "Elf"
+ },
+ {
+  "id": "fetchling",
+  "bucket": "ancestries",
+  "name": "Fetchling"
+ },
+ {
+  "id": "vanara",
+  "bucket": "ancestries",
+  "name": "Vanara"
+ },
+ {
+  "id": "conrasu",
+  "bucket": "ancestries",
+  "name": "Conrasu"
+ },
+ {
+  "id": "goloma",
+  "bucket": "ancestries",
+  "name": "Goloma"
+ },
+ {
+  "id": "samsaran",
+  "bucket": "ancestries",
+  "name": "Samsaran"
+ },
+ {
+  "id": "surki",
+  "bucket": "ancestries",
+  "name": "Surki"
+ },
+ {
+  "id": "centaur",
+  "bucket": "ancestries",
+  "name": "Centaur"
+ },
+ {
+  "id": "kitsune",
+  "bucket": "ancestries",
+  "name": "Kitsune"
+ },
+ {
+  "id": "yaoguai",
+  "bucket": "ancestries",
+  "name": "Yaoguai"
+ },
+ {
+  "id": "nagaji",
+  "bucket": "ancestries",
+  "name": "Nagaji"
+ },
+ {
+  "id": "dragonet",
+  "bucket": "ancestries",
+  "name": "Dragonet"
+ },
+ {
+  "id": "anadi",
+  "bucket": "ancestries",
+  "name": "Anadi"
+ },
+ {
+  "id": "minotaur",
+  "bucket": "ancestries",
+  "name": "Minotaur"
+ },
+ {
+  "id": "wayang",
+  "bucket": "ancestries",
+  "name": "Wayang"
+ },
+ {
+  "id": "jotunborn",
+  "bucket": "ancestries",
+  "name": "Jotunborn"
+ },
+ {
+  "id": "awakened-animal",
+  "bucket": "ancestries",
+  "name": "Awakened Animal"
+ },
+ {
+  "id": "orc",
+  "bucket": "ancestries",
+  "name": "Orc"
+ },
+ {
+  "id": "lizardfolk",
+  "bucket": "ancestries",
+  "name": "Lizardfolk"
+ },
+ {
+  "id": "tripkee",
+  "bucket": "ancestries",
+  "name": "Tripkee"
+ },
+ {
+  "id": "catfolk",
+  "bucket": "ancestries",
+  "name": "Catfolk"
+ },
+ {
+  "id": "athamaru",
+  "bucket": "ancestries",
+  "name": "Athamaru"
+ },
+ {
+  "id": "tanuki",
+  "bucket": "ancestries",
+  "name": "Tanuki"
+ },
+ {
+  "id": "ghoran",
+  "bucket": "ancestries",
+  "name": "Ghoran"
+ },
+ {
+  "id": "skeleton",
+  "bucket": "ancestries",
+  "name": "Skeleton"
+ },
+ {
+  "id": "kobold",
+  "bucket": "ancestries",
+  "name": "Kobold"
+ },
+ {
+  "id": "sprite",
+  "bucket": "ancestries",
+  "name": "Sprite"
+ },
+ {
+  "id": "halfling",
+  "bucket": "ancestries",
+  "name": "Halfling"
+ },
+ {
+  "id": "gnome",
+  "bucket": "ancestries",
+  "name": "Gnome"
+ },
+ {
+  "id": "android",
+  "bucket": "ancestries",
+  "name": "Android"
+ }
+]

@@ -60,6 +60,19 @@ export const ALLOWED = {
     'arcane-school', 'arcane-thesis', 'hybrid-study', 'innovation', 'way', 'element', 'practice',
     'epithet', 'mythic-calling', 'tactic', 'draconic-exemplar', 'curse', 'hellknight-order',
     'ikon', 'archetype', 'action', 'creature', 'creature-ability', 'spell', 'plane', 'tradition',
+    /*
+     * The necromancer's four GRIM FASCINATIONS (Impossible Magic pg. 30 — AoN `grim-fascination-1..4`).
+     * Pre-stamped, like the runesmith's runes below: the archive export predates the category and holds
+     * no grim-fascination file at all, so the ids come from the page rather than from a name match.
+     * Classified anyway so a later stamp into the WRONG bucket still fails — Blood, Bone, Flesh and
+     * Spirit are each words that name other things in this data.
+     */
+    'grim-fascination',
+    /* The necromancer's two FATAL METHODS (Impossible Magic pg. 29 — AoN `fatal-method-1..2`), the
+     * subclass-option category that belongs beside `practice` and `mystery` above. They shipped as
+     * bare subclass options with no classFeatures record at all — the 2 of 160 options that could not
+     * be owned by anything — so this category had never been reachable from here. */
+    'fatal-method',
     'rules', 'sidebar'],
   actions: ['action', 'feat', 'class-feature', 'skill', 'skill-general-action', 'creature-ability',
     'tactic', 'warfare-tactic', 'spell', 'rules'],
@@ -84,6 +97,12 @@ export const ALLOWED = {
   kingdomEvent: ['kingdom-event'],
   creatureThemeTemplate: ['creature-theme-template'],
   creatureAdjustment: ['creature-adjustment'],
+  // The runesmith's 44 runes. These arrive PRE-STAMPED from the archive doc id
+  // (`runesmith-rune-N`) rather than matched by name, because stamp-aonid.mjs reads the export and
+  // the export has no runesmith-rune.json. Classified anyway, so a later stamp into the wrong bucket
+  // still fails — `Runic Tattoo` is simultaneously a feat and an item, and `Sun-` collides with
+  // nothing today only by luck.
+  runesmithRune: ['runesmith-rune'],
   categoryPage: null, // an index page legitimately points at any category
 };
 
@@ -99,7 +118,66 @@ export const ALLOWED = {
  * store raw ids (inventory[].itemId, feats[].featId), and 149 of these `aon-` records are the only copy
  * of their content — so relocating or deleting them orphans saved characters.
  */
+/**
+ * AoN CATEGORIES THE IMPORT EXPORT DOES NOT HAVE.
+ *
+ * The 93-file export this check resolves against is a snapshot; the pristine mirror at
+ * `aon-2e-archive/data/by-category` is newer and has categories the export never saw. An id in one of
+ * these resolves to no document, and the link is nonetheless correct — it was read off the page.
+ *
+ * Listed as CATEGORIES rather than as per-record quirks because the whole category is absent: naming
+ * 44 runesmith runes one at a time would say "these 44 links are odd" when the truth is "this export
+ * is one book behind". Each entry clears itself the next time the archive export is refreshed.
+ *
+ * ⚠ A category here still has to be in ALLOWED for its bucket — this waives "no document found", never
+ * "pointed at the wrong kind of page".
+ */
+export const CATEGORY_ABSENT_FROM_EXPORT = new Set([
+  'grim-fascination',  // Impossible Magic pg. 30 — the necromancer's four fascinations
+  'fatal-method',      // Impossible Magic pg. 29 — the necromancer's two fatal methods
+  'runesmith-rune',    // Impossible Magic pg. 55–61 — the 44 runes of the runic repertoire
+]);
+
 export const BUCKET_QUIRK = new Set([
+  /*
+   * NOT mis-bucketed — the LINK IS RIGHT and the DOCUMENT IS ABSENT FROM OUR MIRROR.
+   *
+   * The necromancer's four grim fascinations carry `grim-fascination-1..4`, read from
+   * https://2e.aonprd.com/GrimFascinations.aspx (Impossible Magic pg. 30, AoN's own category slug is
+   * `grim-fascination`, four entries, verified against the index and each `?ID=n` page). The archive
+   * export this app imports from predates the category and has no grim-fascination file at all, so the
+   * integrity check can resolve no document and would otherwise call four correct links hard failures.
+   *
+   * This clears itself the next time the archive is refreshed — see project memory on the AoN update
+   * pipeline. Until then the ids are right and are the reason the four records exist at all.
+   */
+  'classFeatures/fascination-blood', 'classFeatures/fascination-bone',
+  'classFeatures/fascination-flesh', 'classFeatures/fascination-spirit',
+
+  /*
+   * The yaoguai and tanuki Change Shape actions (batch 19) are PRINTED INSIDE their ancestry's
+   * mechanics block — AoN has no standalone action page for either (the kitsune's, by contrast, is
+   * action-701 and links there). The ancestry page IS the printed source, so the link is right and
+   * the bucket difference is the quirk.
+   */
+  'actions/change-shape-yaoguai', 'actions/change-shape-tanuki',
+  /* Batch 21's created background actions — each printed INSIDE its background's block, no
+   * standalone action page exists: the two Season of Ghosts Seasonal Boons, the Tian Xia
+   * merge-with-ward. The background page IS the printed source. */
+  'actions/seasonal-boon', 'actions/seasonal-boon-folklore', 'actions/merge-with-ward',
+  'actions/seasonal-boon-southbank', 'actions/seasonal-boon-outskirt', 'actions/seasonal-boon-northridge',
+  // Batch 23 found the fifth Season of Ghosts boon (Close Ties) — same shape, same quirk.
+  'actions/seasonal-boon-close-ties',
+
+  /*
+   * Same shape, same book: the necromancer's two FATAL METHODS carry `fatal-method-1..2` (Impossible
+   * Magic pg. 29; AoN's own category slug is `fatal-method`, two entries — Puppeteer and Reaper —
+   * and both documents are present in the pristine mirror at aon-2e-archive/data/by-category). It is
+   * the 93-file EXPORT this check resolves against that predates the category, so the link is right
+   * and no document can be found. Clears itself on the next archive refresh, like the four above.
+   */
+  'classFeatures/puppeteer', 'classFeatures/reaper',
+
   // animal companions and armour groups filed under items by an old scrape
   'items/aon-badger', 'items/aon-bat', 'items/aon-bird', 'items/aon-cat', 'items/aon-dinosaur',
   'items/aon-dog', 'items/aon-fish', 'items/aon-fox', 'items/aon-frog', 'items/aon-horse',

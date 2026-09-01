@@ -17,10 +17,16 @@ const c = content();
 // ---------------------------------------------------------------------------
 
 describe('background trained-skill recovery (importer fallback)', () => {
-  it('brevic-noble recovers its fixed skill + lore from the description', () => {
+  it('brevic-noble asks the printed lineage select (batch 20) — Garess first, so the old default holds', () => {
+    /* This used to assert the importer fallback's flat trainedSkill/trainedLore. Batch 20 modelled
+     * the printed six-lineage choice instead: the skill pick drives the Lore (trainedLoreByChoice)
+     * and the feat (grantedFeatByChoice), and the unanswered default is the first option — Garess'
+     * crafting + Architecture Lore, exactly what the flat fields used to deliver. */
     const bg = c.backgrounds['brevic-noble'];
-    expect(bg.trainedSkill).toBe('crafting');
-    expect(bg.trainedLore).toBe('architecture');
+    expect(bg.trainedSkill).toBeUndefined();
+    expect(bg.trainedSkillChoice?.[0]).toBe('crafting');
+    expect(bg.trainedLoreByChoice?.crafting).toBe('architecture');
+    expect(bg.grantedFeatByChoice?.crafting).toBe('specialty-crafting');
   });
 
   it('brevic-outcast recovers its lore (it grants no core skill)', () => {

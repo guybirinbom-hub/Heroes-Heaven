@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { readFileSync } from 'node:fs';
 import { content, build, mainCasting } from './_content';
 import { applyPlayState, initialPlay } from '../src/rules/play';
 
@@ -126,5 +127,24 @@ describe('Master Summoner', () => {
     const entry = live.spellcasting.find((e) => e.type === 'spontaneous')!;
     const slot = (entry.restrictedSlots ?? []).find((s) => s.label === 'Summoning slots')!;
     expect((slot.rankOptions ?? []).length).toBeGreaterThan(1);
+  });
+
+  it('…and the SHEET actually offers the designation to a spontaneous caster', () => {
+    /* The lane above was write-only for months: the summoner's slots are `spontaneous`, and
+     * SpellsTab's spontaneous branch early-returned BEFORE the one control that reads `rankOptions`
+     * — so the printed "designate one of your spell slots" was computed and unanswerable. The engine
+     * half is asserted above; this pins the UI half: the spontaneous branch must render the
+     * `ms-rank-select` control (a source-shape guard, the same class as the registry-text guards,
+     * because no DOM harness exists here and a reader nothing renders is the defect this repo keeps
+     * rediscovering). */
+    const ch = summoner(true);
+    const live = applyPlayState(ch, initialPlay(ch, c()), c());
+    const entry = live.spellcasting.find((e) => e.type === 'spontaneous')!;
+    const slot = (entry.restrictedSlots ?? []).find((s) => s.label === 'Summoning slots')!;
+    expect(slot.spontaneous, 'the summoner slot is the spontaneous shape').toBe(true);
+    const src = readFileSync('src/sheet/SpellsTab.tsx', 'utf8');
+    const spontaneousBranch = src.slice(src.indexOf('if (slot.spontaneous)'), src.indexOf('// Spell Combination'));
+    expect(spontaneousBranch).toContain('ms-rank-select');
+    expect(spontaneousBranch).toContain('setRestrictedRank');
   });
 });

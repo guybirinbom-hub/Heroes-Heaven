@@ -23,13 +23,23 @@ describe('grantsActions', () => {
     // the same widening MainTab's own isActionCost gate carries. 'passive' stays out: a passive record
     // granting a passive record would list nothing.
     const costs = new Set(['actions', 'reaction', 'free', 'variable', 'duration']);
+    /*
+     * …and an EXPLORATION or DOWNTIME activity, which has no action symbol at all and is typed
+     * `passive` throughout this data — 43 of the 46 exploration activities are. Read Psychometric
+     * Resonance grants one ("This EXPLORATION ACTIVITY functions similarly to Detect Magic"), and the
+     * cost-only rule rejected it as "not an action" on a record that plainly grants something the
+     * player does. The `passive` exclusion above still holds for everything else.
+     */
+    const isActivity = (a: { actionCost?: { type?: string }; traits?: string[] }) =>
+      costs.has(a.actionCost?.type ?? '') ||
+      (a.traits ?? []).some((t) => t === 'exploration' || t === 'downtime');
     let n = 0;
     for (const bucket of buckets) {
       for (const rec of Object.values(c[bucket] as Record<string, { grantsActions?: string[]; name: string }>)) {
         for (const id of rec.grantsActions ?? []) {
           const act = c.actions[id];
           expect(act, `${rec.name} grants missing action ${id}`).toBeTruthy();
-          expect(costs.has(act!.actionCost?.type ?? ''), `${id} is not an action`).toBe(true);
+          expect(isActivity(act!), `${id} is not an action or activity`).toBe(true);
           n++;
         }
       }

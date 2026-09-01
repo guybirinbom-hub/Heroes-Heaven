@@ -14,7 +14,29 @@ import { backgroundGrantedFeats, resolveBackground } from './build';
 import { maxTakes } from './featGrants';
 import { elementTraitsOf, impulseAllowedFor } from './kineticElements';
 import { mythicSlotAllows } from './mythic';
-import type { ContentDatabase, Feat, FeatCategory } from './types';
+import type { ContentDatabase, Feat, FeatCategory, ProficiencyKey } from './types';
+import { SKILLS } from './types';
+import { skillAbility } from './derive';
+
+/**
+ * Which SKILL a skill feat is for, read off its prerequisites — *"trained in Deception"*.
+ *
+ * PF2e never states this as a field; the prerequisite line is the only place a skill feat says which
+ * skill it belongs to, and the clause that needs the answer (Skillful Lessons' *"an Int-, Wis- or
+ * Cha-based skill"*) is written in those terms. A feat naming none is not "for" any skill — Assurance
+ * and Dubious Knowledge apply to whatever you have — and returns an empty list rather than a guess.
+ */
+function skillKeysOfFeat(f: Feat): ProficiencyKey[] {
+  const out = new Set<ProficiencyKey>();
+  for (const p of f.prerequisites ?? []) {
+    for (const m of String(p).matchAll(/(?:trained|expert|master|legendary)\s+in\s+([A-Z][A-Za-z]*)(\s+Lore)?/g)) {
+      const name = m[1].toLowerCase();
+      if (m[2]) out.add(`lore:${name}` as ProficiencyKey);
+      else if ((SKILLS as readonly string[]).includes(name)) out.add(name as ProficiencyKey);
+    }
+  }
+  return [...out];
+}
 
 export interface FeatSlotRef {
   level: number;
@@ -118,6 +140,61 @@ export function eligibleFeatsForSlot(build: BuildState, content: ContentDatabase
     if (p.category === 'bonus') {
       if (!f.traits.includes('fighter')) return false;
       return f.level <= (p.level === 20 ? 18 : p.level - 1);
+    }
+    /*
+     * A KINETIC GATE slot takes an impulse feat — and a DUAL gate binds one slot to each element:
+     * *"select two 1st-level impulse feats, one with the trait of the first element and one with the
+     * trait of the other."* Offering both elements in both slots would let a dual-gate kineticist take
+     * two impulses of the same element, which that sentence forbids. A single gate has one element, so
+     * the narrowing is a no-op there and both slots offer it.
+     */
+    if (p.category === 'impulse') {
+      if (!f.traits.includes('impulse')) return false;
+      const els = elementTraitsOf(build, build.level);
+      if (els.length > 1 && !f.traits.includes(els[p.idx % els.length])) return false;
+      /* SHORT-CIRCUITS the category test below, exactly as the archetype, mythic and bonus slots do:
+       * an impulse feat ships as category 'class', so matching category against 'impulse' offers
+       * nothing and the slot would be unfillable. */
+      return true;
+    }
+    /*
+     * A CLASS slot takes an ARCHETYPE feat. RAW an archetype feat is bought with a class feat, so a
+     * class slot that refused them made every archetype unreachable from the slot that pays for it.
+     */
+    if (p.category === 'class' && f.category === 'archetype' && f.traits.includes('archetype')) return true;
+    /*
+     * A class feature may NARROW a skill-feat slot rather than grant it. The investigator's Skillful
+     * Lessons gives bonus skill feats, and *"the feat must be one for an Intelligence-, Wisdom-, or
+     * Charisma-based skill, or for the skill you gained from your methodology."*
+     *
+     * Applied while LISTING, because that is where the restriction is felt: the printed rule is about
+     * which feats the slot may hold. A feat that names no skill at all (Assurance, Dubious Knowledge)
+     * stays legal — the clause restricts which skill a skill feat may be FOR, and a feat that is for
+     * no particular skill is not excluded by it.
+     */
+    const restrict = content.classes[build.classId ?? '']?.restrictedSkillFeatLevels;
+    if (restrict && p.category === 'skill' && restrict.levels.includes(p.level)) {
+      const named = skillKeysOfFeat(f);
+      if (named.length) {
+        const allowed = new Set<string>(restrict.skills ?? []);
+        if (restrict.abilities?.length) {
+          for (const s of SKILLS) if (restrict.abilities.includes(skillAbility(s))) allowed.add(s);
+        }
+        /*
+         * *"…or the trained skill from your swashbuckler's STYLE"* / *"…or for the skill you gained from
+         * your METHODOLOGY"* — which skill is legal depends on a pick the character made, so no static
+         * `skills` list can hold it. `includeSubclassGrantedSkills` shipped declared (types.ts) and
+         * authored (swashbuckler) but READ NOWHERE, so the swashbuckler's allowed set was {acrobatics}
+         * alone: a Braggart could not spend a Stylish Tricks slot on an Intimidation feat, which is the
+         * one thing the printed rule reserves that slot for. Wanderer's Guide narrows neither half.
+         */
+        if (restrict.includeSubclassGrantedSkills) {
+          const restrictCls = content.classes[build.classId ?? ''];
+          const restrictSub = restrictCls?.subclass?.options.find((o) => o.id === build.subclassId);
+          for (const s of restrictSub?.grants?.skills ?? []) allowed.add(s);
+        }
+        if (!named.some((k) => allowed.has(k))) return false;
+      }
     }
     // A general feat slot may take any qualifying SKILL feat (skill feats are a subset of general
     // feats). The reverse is not true — a skill slot takes only skill feats.

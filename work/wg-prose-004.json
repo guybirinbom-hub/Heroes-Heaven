@@ -1,0 +1,390 @@
+[
+ {
+  "id": "steady-on-stone",
+  "name": "Steady on Stone",
+  "level": 1,
+  "printed": "Your connection to the earth makes natural uneven surfaces less of a hindrance for you. You can ignore difficult terrain caused by rubble and uneven ground made of stone and earth. In addition, when you use the Acrobatics skill to Balance on narrow surfaces or uneven ground made of stone and earth, you aren't off-guard, and when you roll a success at one of these Acrobatics checks, you get a critical success instead.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "degreeShifts": [
+    {
+     "shift": "successToCrit",
+     "when": "on an Acrobatics check to Balance on narrow surfaces or uneven ground of stone and earth",
+     "skills": [
+      "acrobatics"
+     ],
+     "actions": [
+      "balance"
+     ]
+    }
+   ]
+  },
+  "ourRegistries": [],
+  "theirProse": [
+   {
+    "variable": "SKILL_ACROBATICS",
+    "value": null,
+    "text": "when you Balance on narrow surfaces or uneven ground made of stone and earth, you aren't off-guard, and when you roll a success at one of these Acrobatics checks, you get a critical success instead"
+   }
+  ]
+ },
+ {
+  "id": "alghollthu-bound",
+  "name": "Alghollthu Bound",
+  "level": 1,
+  "printed": "Although you may not even be aware, the alghollthus your ancestors once served maintain a stranglehold on the deepest, tethered parts of your mind. You receive a +2 circumstance bonus to Will saves against mental effects that would make you controlled, and if you roll a success against such an effect, you get a critical success instead. However, you gain none of these benefits against effects originating from alghollthus and instead take a -2 circumstance penalty against mental effects from alghollthus.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "degreeShifts": [
+    {
+     "shift": "successToCrit",
+     "when": "on a save against a mental effect that would make you controlled, unless the effect originates from an alghollthu",
+     "saves": [
+      "will"
+     ]
+    }
+   ]
+  },
+  "ourRegistries": [
+   {
+    "file": "situationalBonuses.ts",
+    "entry": "\"alghollthu-bound\": [{ targets: [{ kind: 'save', detail: 'will' }], when: \"against mental effects that would make you controlled, unless the effect originates from an alghollthu\", bonus: \"+2 circumstance\" }, { targets: [{ kind: 'save', detail: 'will' }], when: \"against mental effects from alghollthus\", bonus: \"-2 circumstance\" }],\n  /* R2 keeps this star: it is not a bonus inside the feat's own activity but a new outcome for the\n   * player's ORDINARY use of Survival to Subsist. Q20's second test (\"does it name a specific stat?\")\n   * puts the `*` on Survival even though no number moves. */"
+   }
+  ],
+  "theirProse": [
+   {
+    "variable": "SAVE_WILL",
+    "value": 2,
+    "text": "against mental effects that would make you controlled, except against alghollthus."
+   },
+   {
+    "variable": "SAVE_WILL",
+    "value": -2,
+    "text": "against mental effects from alghollthus"
+   },
+   {
+    "variable": "SAVE_WILL",
+    "value": null,
+    "text": "When you roll a success against a mental effect that would make you controlled, you get a critical success instead. You don't gain this benefit against mental effects from alghollthus."
+   }
+  ]
+ },
+ {
+  "id": "gorilla-stance",
+  "name": "Gorilla Stance",
+  "level": 1,
+  "printed": "You lower yourself to the ground and take an imposing, knuckle - walking stance. While in this stance, the only Strikes you can make are gorilla slam unarmed attacks. These deal 1d8 bludgeoning damage; are in the brawling group; and have the backswing, forceful, grapple, nonlethal, and unarmed traits. While you are in Gorilla Stance, you gain a +2 circumstance bonus to Athletics checks to Climb, and if you roll a success on an Athletics check to Climb, you get a critical success instead.",
+  "ourFields": {
+   "actionCost": {
+    "type": "actions",
+    "value": 1
+   },
+   "archetype": "martial-artist",
+   "degreeShifts": [
+    {
+     "shift": "successToCrit",
+     "when": "on an Athletics check to Climb while in Gorilla Stance",
+     "skills": [
+      "athletics"
+     ],
+     "actions": [
+      "climb"
+     ]
+    }
+   ],
+   "grantedStrikes": [
+    {
+     "name": "Gorilla Slam",
+     "die": "d8",
+     "damageType": "bludgeoning",
+     "traits": [
+      "backswing",
+      "forceful",
+      "grapple",
+      "nonlethal",
+      "unarmed"
+     ],
+     "group": "brawling"
+    }
+   ]
+  },
+  "ourRegistries": [
+   {
+    "file": "situationalBonuses.ts",
+    "entry": "\"gorilla-stance\": [{ targets: [{ kind: \"skill\", detail: \"athletics\" }], when: \"on Athletics checks to Climb while in Gorilla Stance\", bonus: \"+2 circumstance\" }],"
+   }
+  ],
+  "theirProse": [
+   {
+    "variable": "SKILL_ATHLETICS",
+    "value": null,
+    "text": "when you roll a success to Climb, you get a critical success instead."
+   }
+  ]
+ },
+ {
+  "id": "brine-may",
+  "name": "Brine May",
+  "level": 1,
+  "printed": "Your mother was a sea hag, granting you one sea-green or blue eye. You find comfort both in the sea and on the shore. Whenever you roll a success on an Athletics check to Swim, you get a critical success instead. If you end your turn in water without having succeeded at a Swim action that round, you don't sink (but you might still be moved by the current).",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "degreeShifts": [
+    {
+     "shift": "successToCrit",
+     "when": "on an Athletics check to Swim",
+     "skills": [
+      "athletics"
+     ],
+     "actions": [
+      "swim"
+     ]
+    }
+   ]
+  },
+  "ourRegistries": [
+   {
+    "file": "situationalBonuses.ts",
+    "entry": "\"brine-may\": [{ targets: [{ kind: \"skill\", detail: \"athletics\" }], when: \"on an Athletics check to Swim\", bonus: \"you don't sink if you end your turn in water without having succeeded at a Swim that round\" }],"
+   }
+  ],
+  "theirProse": [
+   {
+    "variable": "SKILL_ATHLETICS",
+    "value": null,
+    "text": "Whenever you roll a success to Swim, you get a critical success instead."
+   }
+  ]
+ },
+ {
+  "id": "warren-navigator",
+  "name": "Warren Navigator",
+  "level": 1,
+  "printed": "You gain the trained proficiency rank in Survival. If you would automatically become trained in Survival (from your background or class, for example), you become trained in another skill of your choice. When you Sense Direction or attempt a roll against a Quandary spell, you get a result one degree of success better than you rolled. You don't take a penalty to Sense Direction when you lack a compass.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "effectChoices": [
+    {
+     "id": "warren-navigator-skill",
+     "prompt": "You become trained in Survival. If you would automatically become trained in Survival from another source, choose another skill to become trained in instead.",
+     "options": [
+      {
+       "value": "acrobatics",
+       "label": "Acrobatics",
+       "grant": {
+        "skills": {
+         "acrobatics": "trained"
+        }
+       }
+      },
+      {
+       "value": "arcana",
+       "label": "Arcana",
+       "grant": {
+        "skills": {
+         "arcana": "trained"
+        }
+       }
+      },
+      {
+       "value": "athletics",
+       "label": "Athletics",
+       "grant": {
+        "skills": {
+         "athletics": "trained"
+        }
+       }
+      },
+      {
+       "value": "crafting",
+       "label": "Crafting",
+       "grant": {
+        "skills": {
+         "crafting": "trained"
+        }
+       }
+      },
+      {
+       "value": "deception",
+       "label": "Deception",
+       "grant": {
+        "skills": {
+         "deception": "trained"
+        }
+       }
+      },
+      {
+       "value": "diplomacy",
+       "label": "Diplomacy",
+       "grant": {
+        "skills": {
+         "diplomacy": "trained"
+        }
+       }
+      },
+      {
+       "value": "intimidation",
+       "label": "Intimidation",
+       "grant": {
+        "skills": {
+         "intimidation": "trained"
+        }
+       }
+      },
+      {
+       "value": "medicine",
+       "label": "Medicine",
+       "grant": {
+        "skills": {
+         "medicine": "trained"
+        }
+       }
+      },
+      {
+       "value": "nature",
+       "label": "Nature",
+       "grant": {
+        "skills": {
+         "nature": "trained"
+        }
+       }
+      },
+      {
+       "value": "occultism",
+       "label": "Occultism",
+       "grant": {
+        "skills": {
+         "occultism": "trained"
+        }
+       }
+      },
+      {
+       "value": "performance",
+       "label": "Performance",
+       "grant": {
+        "skills": {
+         "performance": "trained"
+        }
+       }
+      },
+      {
+       "value": "religion",
+       "label": "Religion",
+       "grant": {
+        "skills": {
+         "religion": "trained"
+        }
+       }
+      },
+      {
+       "value": "society",
+       "label": "Society",
+       "grant": {
+        "skills": {
+         "society": "trained"
+        }
+       }
+      },
+      {
+       "value": "stealth",
+       "label": "Stealth",
+       "grant": {
+        "skills": {
+         "stealth": "trained"
+        }
+       }
+      },
+      {
+       "value": "thievery",
+       "label": "Thievery",
+       "grant": {
+        "skills": {
+         "thievery": "trained"
+        }
+       }
+      }
+     ]
+    }
+   ],
+   "degreeShifts": [
+    {
+     "shift": "oneBetter",
+     "when": "when you Sense Direction",
+     "skills": [
+      "survival"
+     ],
+     "actions": [
+      "sense-direction"
+     ]
+    },
+    {
+     "shift": "oneBetter",
+     "when": "on a roll to escape a Quandary spell",
+     "skills": [
+      "occultism",
+      "thievery"
+     ],
+     "perception": true
+    }
+   ]
+  },
+  "ourRegistries": [
+   {
+    "file": "featGrantsAuto.ts",
+    "entry": "'warren-navigator': { skills: { survival: 'trained' }, redundantFallback: true },"
+   }
+  ],
+  "theirProse": [
+   {
+    "variable": "SKILL_SURVIVAL",
+    "value": null,
+    "text": "When you Sense Direction or attempt a roll against a quandary spell, you get a result one degree of success better than you rolled. You don't take a penalty to Sense Direction when you lack a compass"
+   }
+  ]
+ },
+ {
+  "id": "pelagic-aptitude",
+  "name": "Pelagic Aptitude",
+  "level": 1,
+  "printed": "You've learned special tricks to survive underwater. You gain the trained proficiency rank in Survival. When in an aquatic environment, if you roll a critical failure on a Survival skill check to Sense Direction or Subsist, you get a failure instead.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "degreeShifts": [
+    {
+     "shift": "critFailToFail",
+     "when": "in an aquatic environment, on a Survival check to Sense Direction or Subsist",
+     "skills": [
+      "survival"
+     ],
+     "actions": [
+      "sense-direction",
+      "subsist"
+     ]
+    }
+   ]
+  },
+  "ourRegistries": [
+   {
+    "file": "featGrantsAuto.ts",
+    "entry": "'pelagic-aptitude': { skills: { survival: 'trained' } },"
+   }
+  ],
+  "theirProse": [
+   {
+    "variable": "SKILL_SURVIVAL",
+    "value": null,
+    "text": "If you critically fail to Sense Direction or Subsist while in an aquatic environment, you get a failure instead."
+   }
+  ]
+ }
+]

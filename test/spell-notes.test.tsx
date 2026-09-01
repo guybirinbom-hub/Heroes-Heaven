@@ -6,6 +6,14 @@ import { SpellsTab } from '../src/sheet/SpellsTab';
 import { spellNotesFor } from '../src/rules/explain';
 import { FEAT_CANTRIP_GRANTS } from '../src/rules/featCantripGrants';
 import type { SpellNote } from '../src/rules/types';
+import { readFileSync } from 'node:fs';
+
+/** Prose lives in core-descriptions.json since the core.json split; the guard below reads a record's
+ *  own printed text to decide whether a note about a spell it does not grant is legitimate. */
+const descs = JSON.parse(readFileSync('public/core-descriptions.json', 'utf8').replace(/^﻿/, '')) as Record<
+  string,
+  Record<string, { d?: string }>
+>;
 
 /**
  * N2 — a record that modifies a spell it grants writes its text INTO that spell's description,
@@ -61,6 +69,21 @@ describe('a record writes a note onto a spell it grants', () => {
   });
 });
 
+/*
+ * …OR A SPELL THE PROSE NAMES BY OTHER MEANS. The substring test below cannot see two legitimate
+ * naming shapes, so each entry here must quote the prose phrase that does the naming:
+ *  - a PRE-REMASTER name: Disk Rider's text reads "When you cast Floating Disk…", and the app ships
+ *    that spell's remaster identity, `carryall`. (REMASTER_RENAME in scripts/lib/edition.mjs maps
+ *    rules TERMS, not spell names, so there is no table to consult instead.)
+ *  - a named SET: Folding Drums' text reads "a composition cantrip that has an emanation", and the
+ *    notes enumerate that set's shipped members — verified against the spell list when authored.
+ * A note about a spell the record never mentions in ANY form stays caught.
+ */
+const NAMED_BY_OTHER_MEANS: Record<string, string[]> = {
+  'feats/disk-rider': ['carryall'],
+  'items/folding-drums': ['courageous-anthem', 'rallying-anthem', 'song-of-marching', 'song-of-strength', 'triple-time', 'silvers-refrain', 'dirge-of-doom'],
+};
+
 describe('the authored notes', () => {
   it('only ever name a spell that ships AND that the record actually grants', () => {
     // A note on a spell the record does not grant would print on a page the feat has no business
@@ -107,8 +130,38 @@ describe('the authored notes', () => {
             if (!n.note?.trim()) bad.push(`${collection}/${id} → empty fromAncestrySpells note`);
             continue;
           }
-          if (!c().spells[n.spellId]) bad.push(`${collection}/${id} → missing spell ${n.spellId}`);
-          else if (!granted.has(n.spellId)) bad.push(`${collection}/${id} → does not grant ${n.spellId}`);
+          const spell = c().spells[n.spellId as string] as { traits?: string[] } | undefined;
+          /*
+           * …OR A SPELL OF THE RECORD'S OWN CLASS, which the class grants even though no RECORD says
+           * so. Mercy and Cruelty are the case: both are champion feats whose whole content is a
+           * clause about the champion's devotion spell (*"You can cast lay on hands … using 2 actions
+           * instead of 1"*), and the devotion spell is handed out by a build-time lane —
+           * `championDevotionSpell` in build.ts, font-gated on the deity — not by a record this static
+           * walk can see. Read literally, the guard called a champion feat's note about a champion
+           * spell "a page the feat has no business touching".
+           *
+           * The exemption is narrow on purpose: the spell must carry the SAME class trait the record
+           * does. A champion feat may comment on a champion spell; it still may not comment on a
+           * wizard's.
+           */
+          const sharedClass = (spell?.traits ?? []).some((t) => ((rec.traits as string[]) ?? []).includes(t));
+          /*
+           * …OR A SPELL THE RECORD'S OWN PRINTED TEXT NAMES. Overwhelming Harm is the case:
+           * *"Whenever you cast the 3-action version of HARM, you can extend the area to a 60-foot
+           * emanation."* The clause is entirely about that spell, but `harm` carries no class trait
+           * (manipulate, void) so the class test above cannot reach it, and no record "grants" a
+           * necromancer their harm.
+           *
+           * Still tight: the feat has to SAY the spell's name. A note about a spell the record never
+           * mentions is exactly what this guard exists to catch, and remains caught.
+           */
+          const prose = String(
+            (descs[collection] as Record<string, { d?: string }> | undefined)?.[id]?.d ?? '',
+          ).toLowerCase();
+          const namesIt = !!spell?.name && prose.includes(spell.name.toLowerCase());
+          const namedOtherwise = NAMED_BY_OTHER_MEANS[`${collection}/${id}`]?.includes(n.spellId as string) ?? false;
+          if (!spell) bad.push(`${collection}/${id} → missing spell ${n.spellId}`);
+          else if (!granted.has(n.spellId) && !sharedClass && !namesIt && !namedOtherwise) bad.push(`${collection}/${id} → does not grant ${n.spellId}`);
           if (!n.note?.trim()) bad.push(`${collection}/${id} → empty note on ${n.spellId}`);
         }
       }

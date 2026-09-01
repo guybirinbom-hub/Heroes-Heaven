@@ -56,6 +56,9 @@ export function resolveRestrictedSlots(
     const half = Math.floor(highest / 2);
     if (half > 0) counts[half] = (counts[half] ?? 0) + grant.halfHighest;
   }
+  // *"one additional spell slot of your highest spell rank"* (Divine Evolution) — the top of the
+  // caster's OWN table, so it follows them up as they level and needs no per-level rewriting.
+  if (grant.highestOnly && highest > 0) counts[highest] = (counts[highest] ?? 0) + grant.highestOnly;
   // "One slot of each rank of spell you can cast, except 2nd rank and 1st rank" — follows the caster's
   // own table, so it needs no rewriting as they level.
   if (grant.perRankFrom != null) for (const r of castable) if (r >= grant.perRankFrom) counts[r] = (counts[r] ?? 0) + 1;

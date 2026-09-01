@@ -1,0 +1,158 @@
+[
+ {
+  "id": "powder-punch-stance",
+  "name": "Powder Punch Stance",
+  "level": 2,
+  "printed": "**Access** You're from Alkenstar or the Mana Wastes. --- You infuse your handwraps with black powder. On your first melee Strike each round with an unarmed attack, Knuckle Duster, or Black Powder Knuckle Dusters, you deal an additional 1 fire Damage. If you critically succeed at an attempt to Shove while in this stance, the target is pushed back an additional 5 feet.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "archetype": "martial-artist",
+   "situational": [
+    {
+     "targets": [
+      {
+       "kind": "strikeDamage"
+      }
+     ],
+     "when": "on your first melee Strike each round while in Powder Punch Stance, with an unarmed attack, a Knuckle Duster or Black Powder Knuckle Dusters",
+     "bonus": "+1 fire damage"
+    },
+    {
+     "targets": [
+      {
+       "kind": "skill",
+       "detail": "athletics"
+      }
+     ],
+     "when": "when you critically succeed to Shove while in Powder Punch Stance",
+     "bonus": "the target is pushed an additional 5 feet"
+    }
+   ]
+  },
+  "ourRegistries": [],
+  "theirProse": [
+   {
+    "variable": "ATTACK_DAMAGE_BONUS",
+    "value": 1,
+    "text": "On your first melee Strike each round with an unarmed attack, knuckle duster, or black powder knuckle duster, you deal an additional 1 fire damage."
+   },
+   {
+    "variable": "SKILL_ATHLETICS",
+    "value": null,
+    "text": "If you critically succeed at an attempt to Shove while in Powder Punch Stance, the target is pushed back an additional 5 feet."
+   }
+  ]
+ },
+ {
+  "id": "half-truths",
+  "name": "Half-Truths",
+  "level": 2,
+  "printed": "You are able to weave your words in such a way that you never use actual lies, but still mislead people to certain conclusions. You can attempt to make a Request of a creature using Deception instead of Diplomacy. You can attempt to Lie to a creature using Diplomacy instead of Deception. If you fail your check to Lie, the creature realizes that you were twisting words to fool them without outright lying.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "skillSubstitutions": [
+    {
+     "use": "deception",
+     "forSkill": "diplomacy",
+     "when": "to Make a Request"
+    },
+    {
+     "use": "diplomacy",
+     "forSkill": "deception",
+     "when": "to Lie"
+    }
+   ]
+  },
+  "ourRegistries": [],
+  "theirProse": [
+   {
+    "variable": "SKILL_DECEPTION",
+    "value": null,
+    "text": "You can attempt to make a Request of a creature using Deception instead of Diplomacy."
+   },
+   {
+    "variable": "SKILL_DIPLOMACY",
+    "value": null,
+    "text": "You can attempt to Lie to a creature using Diplomacy instead of Deception. If you fail your check to Lie, the creature realizes that you were twisting words to fool them without outright lying."
+   }
+  ]
+ },
+ {
+  "id": "viking-dedication",
+  "name": "Viking Dedication",
+  "level": 2,
+  "printed": "Vikings spend long periods of time at sea, only to leap from their boats at a moment's notice, charge through the surf, and take their enemies by storm. You gain the Additional Lore general feat for Sailing Lore and Warfare Lore. When using your land Speed, you ignore difficult terrain from shallow water, such as in bogs or on beaches. In addition, if you roll a success on an Athletics check to Swim, you get a critical success instead.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "archetype": "viking",
+   "degreeShifts": [
+    {
+     "shift": "successToCrit",
+     "when": "on an Athletics check to Swim",
+     "skills": [
+      "athletics"
+     ],
+     "actions": [
+      "swim"
+     ]
+    }
+   ]
+  },
+  "ourRegistries": [
+   {
+    "file": "featGrantsAuto.ts",
+    "entry": "'viking-dedication': { skills: { 'lore:sailing': 'trained', 'lore:warfare': 'trained' } },"
+   },
+   {
+    "file": "featFeatGrants.ts",
+    "entry": "'viking-dedication': { 'additional-lore': { kind: 'fixedLore', lore: ['sailing', 'warfare'] } },\r\n  // \"You also gain the Additional Lore general feat for Warfare Lore.\""
+   },
+   {
+    "file": "featFeatGrants.ts",
+    "entry": "'viking-dedication': ['additional-lore'],"
+   }
+  ],
+  "theirProse": [
+   {
+    "variable": "SKILL_ATHLETICS",
+    "value": null,
+    "text": "if you roll a success to Swim, you get a critical success instead"
+   }
+  ]
+ },
+ {
+  "id": "edgewatch-detective-dedication",
+  "name": "Edgewatch Detective Dedication",
+  "level": 2,
+  "printed": "You become trained in Society or Thievery; if you are already trained in both of these skills, you instead become trained in a skill of your choice. You can use Perception instead of Survival to Track, and you gain the Experienced Tracker skill feat.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "archetype": "edgewatch-detective"
+  },
+  "ourRegistries": [
+   {
+    "file": "featGrantsAuto.ts",
+    "entry": "'edgewatch-detective-dedication': { skillChoices: [{ options: 'any', rank: 'trained' }, { options: 'any', rank: 'trained' }, { options: 'any', rank: 'trained' }], redundantFallback: true },"
+   },
+   {
+    "file": "featFeatGrants.ts",
+    "entry": "'edgewatch-detective-dedication': ['experienced-tracker'],"
+   }
+  ],
+  "theirProse": [
+   {
+    "variable": "SKILL_SURVIVAL",
+    "value": null,
+    "text": "You can use Perception instead of Survival to Track."
+   }
+  ]
+ }
+]

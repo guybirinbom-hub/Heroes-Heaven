@@ -129,6 +129,30 @@ export function audit(grants = FEAT_COMPANION_GRANTS) {
   return rows.sort((a, b) => a.id.localeCompare(b.id));
 }
 
+/**
+ * THE OTHER WAY A GRANT GOES MISSING — no row at all.
+ *
+ * `audit()` above cannot see this one. Its loop is entered only by a record printing a FREE/COUNTS
+ * always-present-ability clause, so a feat whose whole content is "You gain a familiar" never reaches
+ * it. Undead Familiar and Glyph Familiar both sat that way: two complete feats encoding nothing, with
+ * every guard in the suite green.
+ *
+ * MEASURED over feats + classFeatures + heritages: 17 records print the phrase, 15 are in the table,
+ * and exactly 2 were not. Zero false positives, so this is a ratchet rather than a report — a new
+ * familiar-granting record cannot land without its row.
+ *
+ * Scoped to FAMILIARS deliberately. "You gain an animal companion" is a different sentence with looser
+ * phrasing across the corpus, and a matcher nobody has measured is how a guard starts lying.
+ */
+const GAIN_A_FAMILIAR = /\byou gain (?:a|an) (?:[a-z\- ]{0,24})?familiar\b/i;
+export function auditUngranted(grants = FEAT_COMPANION_GRANTS) {
+  const out = [];
+  for (const coll of COLLECTIONS)
+    for (const id of Object.keys(core[coll] ?? {}))
+      if (!grants[id] && GAIN_A_FAMILIAR.test(textOf(coll, id))) out.push({ coll, id });
+  return out.sort((a, b) => a.id.localeCompare(b.id));
+}
+
 // Run-as-a-script detection, not `import.meta.url === process.argv[1]`: jiti rewrites argv[1] to its
 // own loader, so that comparison is false when the scanner is run the documented way and the script
 // prints nothing at all. Measured — the first version of this file was silent under `npx jiti`.
@@ -149,5 +173,8 @@ if (RUN_DIRECTLY) {
       for (const p of r.problems) console.log('         ⚠ ' + p);
     }
   }
-  if (bad.length) process.exitCode = 1;
+  const ungranted = auditUngranted();
+  console.log(`records printing "you gain a familiar" with NO grant row: ${ungranted.length}`);
+  for (const r of ungranted) console.log(`         ⚠ ${r.coll}/${r.id} grants a familiar and has no FEAT_COMPANION_GRANTS entry — the feat is inert`);
+  if (bad.length || ungranted.length) process.exitCode = 1;
 }

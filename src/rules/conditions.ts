@@ -111,10 +111,44 @@ export function conditionTypedMods(conditions: ActiveCondition[], ability: Abili
   return out;
 }
 
-/** Max-HP reduction from Drained (value × level). */
-export function drainedHpLoss(c: Character): number {
+/**
+ * The Drained value this character actually suffers.
+ *
+ * *"When you have the drained condition, calculate the penalty to your Fortitude saves and your Hit
+ * Point reduction AS THOUGH THE CONDITION VALUE WERE 1 LOWER."* (Svetocher — the only record in the
+ * corpus printing this, checked rather than assumed.) It is a reduction of the CONDITION, not a bonus:
+ * ours modelled it as a flat `maxHpBonus` of 1 per level, which paid out permanently, so a svetocher
+ * who had never been drained walked around with extra Hit Points.
+ *
+ * Never below 0 — a character at drained 1 with this feat suffers nothing, which is what "one lower"
+ * means at 1.
+ */
+export function effectiveDrainedValue(c: Character): number {
   const d = c.conditions.find((x) => x.id === 'drained');
-  return d ? (d.value ?? 1) * c.level : 0;
+  if (!d) return 0;
+  return Math.max(0, (d.value ?? 1) - (c.drainedReduction ?? 0));
+}
+
+/** Max-HP reduction from Drained (value × level), after any reduction the character's feats grant. */
+export function drainedHpLoss(c: Character): number {
+  return effectiveDrainedValue(c) * c.level;
+}
+
+/**
+ * The character's conditions with Drained lowered by whatever their feats reduce it by.
+ *
+ * The penalty functions take a CONDITIONS ARRAY rather than the character, so they cannot see the
+ * reduction themselves. Callers that compute something the printed clause names — the Fortitude save —
+ * pass this instead of `c.conditions`.
+ *
+ * ⚠ Deliberately NOT applied everywhere Drained appears. Svetocher reduces the penalty to *"your
+ * FORTITUDE SAVES and your Hit Point reduction"* and nothing else, so a Constitution-based check that
+ * is not a Fortitude save still suffers the full value.
+ */
+export function conditionsWithDrainedReduction(c: Character): ActiveCondition[] {
+  const reduce = c.drainedReduction ?? 0;
+  if (!reduce) return c.conditions;
+  return c.conditions.map((x) => (x.id === 'drained' ? { ...x, value: Math.max(0, (x.value ?? 1) - reduce) } : x));
 }
 
 /**

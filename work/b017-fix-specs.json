@@ -1,0 +1,147 @@
+[
+ {
+  "id": "guardians-intercept",
+  "backfillRows": [
+   { "category": "feats", "id": "guardians-intercept", "field": "grantsActions", "value": ["intercept-attack"] },
+   { "category": "feats", "id": "guardians-intercept", "field": "limitedUses", "value": { "max": 1, "per": "minute", "every": 10 } }
+  ]
+ },
+ {
+  "id": "grave-strength",
+  "backfillRows": [
+   { "category": "feats", "id": "grave-strength", "field": "senses", "value": [{ "name": "darkvision" }] },
+   { "category": "feats", "id": "grave-strength", "field": "resistances", "value": [{ "type": "poison", "value": "max(1,floor(@actor.level/2))" }] }
+  ]
+ },
+ {
+  "id": "ghostly-grasp-ghost",
+  "backfillRows": [
+   { "category": "feats", "id": "ghostly-grasp-ghost", "field": "senses", "value": [{ "name": "darkvision" }] },
+   { "category": "feats", "id": "ghostly-grasp-ghost", "field": "resistances", "value": [{ "type": "poison", "value": "max(1,floor(@actor.level/2))" }] }
+  ]
+ },
+ {
+  "id": "numb",
+  "backfillRows": [
+   { "category": "feats", "id": "numb", "field": "senses", "value": [{ "name": "darkvision" }] },
+   { "category": "feats", "id": "numb", "field": "resistances", "value": [{ "type": "poison", "value": "max(1,floor(@actor.level/2))" }] }
+  ]
+ },
+ {
+  "id": "inevitable-thralls",
+  "backfillRows": [
+   { "category": "feats", "id": "inevitable-thralls", "field": "grantsClassFeatures", "value": ["inevitable-return"] }
+  ]
+ },
+ {
+  "id": "macabre-virtuoso",
+  "backfillRows": [
+   { "category": "feats", "id": "macabre-virtuoso", "field": "grantsRituals", "value": [{ "spellId": "create-undead", "note": "Two types of common undead you meet the prerequisites for; you may change either when you gain a level. As primary caster you finish the ritual in 4 hours instead of 1 day and need no secondary caster — you attempt the secondary check yourself." }] }
+  ]
+ },
+ {
+  "id": "conjurer-of-corpses",
+  "backfillRows": [
+   { "category": "feats", "id": "conjurer-of-corpses", "field": "spellSlotBonus", "value": { "entryId": "necromancer-casting", "restricted": { "label": "Conjurer of Corpses", "note": "An extra slot each day at your highest rank of necromancer spell slots. Only Summon Undead can be prepared in it.", "highestOnly": 1, "spells": ["summon-undead"] } } }
+  ]
+ },
+ {
+  "id": "bind-heroic-spirit",
+  "backfillRows": [
+   { "category": "feats", "id": "bind-heroic-spirit", "field": "focusSpells", "value": ["bind-heroic-spirit"] }
+  ]
+ },
+ {
+  "id": "conjurers-countermeasure",
+  "backfillRows": [
+   { "category": "feats", "id": "conjurers-countermeasure", "field": "focusSpells", "value": ["conjurers-countermeasure"] }
+  ]
+ },
+ {
+  "id": "nameless-anonymity",
+  "backfillRows": [
+   { "category": "feats", "id": "nameless-anonymity", "field": "choice", "value": { "flag": "namelessAnonymityTradition", "prompt": "Tradition of your magic warrior focus spells", "kind": "array", "options": [{ "value": "arcane", "label": "Arcane" }, { "value": "divine", "label": "Divine" }, { "value": "occult", "label": "Occult" }, { "value": "primal", "label": "Primal" }], "note": "Magic Warrior Dedication: 'Your focus spells from the magic warrior archetype are the same tradition as your other spells (choose one if you have spells from multiple traditions).' Your answer sets the tradition of the Veil of Privacy this feat grants." } },
+   { "category": "feats", "id": "nameless-anonymity", "field": "innateSpells", "value": [{ "spellId": "veil-of-privacy", "usesPerDay": 1, "heightenHalfLevel": true, "traditionFromChoiceFlag": "namelessAnonymityTradition" }] }
+  ]
+ },
+ {
+  "id": "sound-mirror",
+  "backfillRows": [
+   { "category": "feats", "id": "sound-mirror", "field": "innateSpells", "value": [{ "spellId": "figment", "tradition": "occult", "atWill": true }, { "spellId": "ventriloquism", "tradition": "occult", "rank": 1, "usesPerDay": 1 }, { "spellId": "silence", "tradition": "occult", "rank": 2, "usesPerDay": 1 }] },
+   { "category": "feats", "id": "sound-mirror", "field": "description", "value": "You twist not just the visual, but the auditory as well, allowing you to pass without a sound and create minor noises as distractions—perfect for misdirection and infiltration. You can cast Silence on yourself as a 2nd-rank innate occult spell and Ventriloquism as a 1st-rank innate occult spell, each once per day. You also can cast Figment as an innate occult cantrip. You become trained in the spell attack modifier and spell DC statistics, and your key spellcasting attribute for alter ego archetype spells is Charisma." },
+   { "category": "feats", "id": "sound-mirror", "field": "descRefs", "value": [{ "label": "Ventriloquism", "key": "spells" }, { "label": "Figment", "key": "spells" }] }
+  ]
+ },
+ {
+  "id": "psi-development",
+  "backfillRows": [
+   { "category": "feats", "id": "psi-development", "field": "spellSlotBonus", "value": { "entryId": "psychic-dedication-casting", "cantrips": 1 } },
+   { "category": "feats", "id": "psi-development", "field": "spellListAdditions", "value": { "entryId": "psychic-dedication-casting", "as": "list", "spells": ["telekinetic-rend", "glimpse-weakness", "thermal-stasis", "forbidden-thought", "imaginary-weapon", "distortion-lens"] } }
+  ]
+ },
+ {
+  "id": "motionless-cutter",
+  "backfillRows": [
+   { "category": "feats", "id": "motionless-cutter", "field": "choice", "value": { "flag": "imbuedIkon", "prompt": "The slashing melee weapon ikon Motionless Cutter is imbued into", "kind": "ikons", "ikonType": "weapon", "note": "Printed Usage: imbued into a melee weapon ikon that deals slashing damage. The list offers your weapon ikons; 'melee' and 'deals slashing damage' are yours to honour, because no ikon record carries a reach or a damage type." } }
+  ]
+ },
+ {
+  "id": "binding-serpents-celestial-arrow",
+  "backfillRows": [
+   { "category": "feats", "id": "binding-serpents-celestial-arrow", "field": "choice", "value": { "flag": "imbuedIkon", "prompt": "The ranged or thrown weapon ikon Binding Serpents Celestial Arrow is imbued into", "kind": "ikons", "ikonType": "weapon", "note": "Printed Usage: imbued into a ranged weapon ikon, or a melee weapon ikon with the thrown trait. The list offers your weapon ikons; 'ranged or thrown' is yours to honour, because no ikon record carries a range." } },
+   { "category": "classFeatures", "id": "coiling-serpents", "field": "traits", "value": ["transcendence"] },
+   { "category": "actions", "id": "coiling-serpents", "field": "traits", "value": ["transcendence"] }
+  ]
+ },
+ {
+  "id": "slingers-readiness",
+  "backfillRows": [
+   { "category": "feats", "id": "slingers-readiness", "field": "derivedGrant", "value": { "fromFeat": "gunslinger-dedication", "map": { "way-of-the-drifter": "into-the-fray", "way-of-the-pistolero": "ten-paces", "way-of-the-sniper": "one-shot-one-kill", "way-of-the-spellshot": "energy-shot", "way-of-the-triggerbrand": "spring-the-trap", "way-of-the-vanguard": "living-fortification" } } }
+  ]
+ },
+ {
+  "id": "poison-coat",
+  "backfillRows": [
+   { "category": "feats", "id": "poison-coat", "field": "grantsActions", "value": ["once-bitten"] },
+   { "category": "feats", "id": "poison-coat", "field": "actionCost", "value": { "type": "passive" } }
+  ]
+ },
+ {
+  "id": "cloaking-pulse",
+  "backfillRows": [
+   { "category": "feats", "id": "cloaking-pulse", "field": "grantsActions", "value": ["drape-ambient-magic"] },
+   { "category": "feats", "id": "cloaking-pulse", "field": "limitedUses", "value": { "max": 1, "per": "round" } }
+  ]
+ },
+ {
+  "id": "predictive-purchase-investigator",
+  "backfillRows": [
+   { "category": "feats", "id": "predictive-purchase-investigator", "field": "grantsFeats", "value": ["prescient-planner", "prescient-consumable"] }
+  ]
+ },
+ {
+  "id": "nocturnal-senses",
+  "backfillRows": [
+   { "category": "feats", "id": "nocturnal-senses", "field": "whileActive", "value": [{ "state": "rage", "conditionalSenses": [{ "ifPresent": "low-light-vision", "upgraded": { "name": "darkvision", "acuity": "precise" } }, { "ifPresent": "scent", "upgraded": { "name": "scent", "range": 60, "acuity": "imprecise" } }] }] }
+  ]
+ },
+ {
+  "id": "jelly-body",
+  "backfillRows": [
+   { "category": "items", "id": "jelly-body-space", "create": true, "value": { "id": "jelly-body-space", "name": "Jelly Body", "level": 6, "bulk": 0, "traits": ["aftermath", "magical"], "rarity": "common", "itemType": "container", "capacity": { "bulk": 1 }, "ignoredBulk": 1, "price": {}, "description": "Items submerged inside your body, from the Jelly Body feat. It holds up to 1 Bulk; the protrusion is still visible from the outside, but stored items count toward neither your encumbered threshold nor your maximum Bulk. You can Interact to retrieve or store an item submerged into your body.", "source": { "book": "Pathfinder Dark Archive (Remastered)", "license": "ORC" }, "edition": "remaster" } },
+   { "category": "feats", "id": "jelly-body", "field": "grantsItems", "value": [{ "itemId": "jelly-body-space" }] }
+  ]
+ },
+ {
+  "id": "confounding-image",
+  "backfillRows": [
+   { "category": "feats", "id": "confounding-image", "field": "spellNotes", "value": [{ "spellId": "mirror-image", "note": "Confounding Image: you can cast this spell with its duration changed to sustained up to 1 minute and its range changed to 30 feet. Doing so replaces the spell's normal effects: you create a single illusory duplicate of yourself in an unoccupied square within range. The image occupies its space, has a 5-foot reach, and your allies can flank with it. It has no other creature statistics beyond an AC equal to your spell DC and saving throw modifiers equal to your spell DC - 10. Creatures can move through its space freely. The spell ends if the image is hit by an attack, if it fails a save, or if you are ever more than 30 feet from it. When you Sustain the Spell, you can move the image to another unoccupied square within range." }] }
+  ]
+ },
+ {
+  "id": "inscribed-with-elders-deeds",
+  "backfillRows": [
+   { "category": "feats", "id": "inscribed-with-elders-deeds", "field": "choice", "value": { "flag": "eldersDeedsFeat", "prompt": "Orc ancestry feat your storied skin depicts today", "kind": "open", "daily": true, "from": { "type": "feat", "maxLevel": 1, "traits": ["orc"], "maxLevelByLevel": [{ "level": 13, "maxLevel": 5 }] }, "note": "Temporary, so it can't be a prerequisite for anything permanent, and it can't require a physiological feature you lack." } }
+  ]
+ }
+]

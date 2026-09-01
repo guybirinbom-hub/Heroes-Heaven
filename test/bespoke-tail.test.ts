@@ -54,13 +54,72 @@ describe('Armored Stealth', () => {
 });
 
 describe('Circle of Spirits', () => {
-  it("raises an animist's focus pool to their focus-spell count", () => {
-    const plain = build('animist', 6, {});
-    const withIt = build('animist', 6, { featPicks: { '4:class:0': 'circle-of-spirits' } });
-    // The animist pool was pinned to the 1/7/15 apparition ladder; the feat's Special clause says it
-    // is the HIGHER of that and the number of focus spells, capped at 3.
-    expect(withIt.focus?.max ?? 0).toBeGreaterThanOrEqual(plain.focus?.max ?? 0);
-    expect(withIt.focus?.max ?? 0).toBeLessThanOrEqual(3);
+  /*
+   * This used to build `animist` 6 with no apparitions and assert `withIt >= plain` and `<= 3`. An
+   * animist who has attuned nothing has NO focus entry at all, so both sides were `undefined`, the
+   * assertions reduced to `0 >= 0` and `0 <= 3`, and the test could not fail for any implementation —
+   * including the feature being deleted outright. Apparitions have to be attuned before an animist
+   * has a pool to raise.
+   */
+  const APPS = (content().classes.animist.extraChoices?.find((g) => g.id === 'apparition')?.options ?? []).map(
+    (o) => (o as { value?: string; id?: string }).value ?? (o as { id: string }).id,
+  );
+  const animist = (practice: string, feat: string, apparitions = 4) =>
+    build('animist', 12, {
+      subclassId: practice,
+      extraChoices: { apparition: APPS.slice(0, apparitions) },
+      featPicks: { '4:class:0': feat } as never,
+    });
+
+  it('the pool is the HIGHER of the apparition ladder and the focus-spell count, capped at 3', () => {
+    // A liturgist is granted Circle of Spirits by their practice (classFeatures.liturgist.grantsFeats),
+    // so it never enters `featPicks`. The gate reads the transitive owned-feature closure for exactly
+    // this reason; while it read `featPicks` the liturgist — the one character who always has this
+    // feature — was the one character it never applied to. A medium taking the same feat is the
+    // control: same level, same apparitions, same feat, and no Circle of Spirits.
+    expect((content().classFeatures['liturgist'] as { grantsFeats?: string[] }).grantsFeats).toContain('circle-of-spirits');
+    expect(animist('liturgist', 'rites-of-liberation').focus?.max, 'liturgist reaches the focus-spell count').toBe(3);
+
+    /*
+     * ⚠ THE MEDIUM WAS THE WRONG CONTROL, and asserting 2 here froze a real defect in place.
+     *
+     * This case picked the Medium as "an animist without Circle of Spirits", but the Medium reaches the
+     * SAME clause by its own route: *"Dual Invocation (9TH): … you can select TWO of your attuned
+     * apparitions to be your primary apparitions… The number of Focus Points in your focus pool is
+     * equal to the number of focus spells you have or the number of PRIMARY apparitions you are
+     * attuned to, whichever is higher (maximum 3)."* At 12th with this many apparitions that is 3, and
+     * ours said 2 because nothing read the practice at all — found by the Wanderer's Guide parity audit.
+     *
+     * The control that actually isolates Circle of Spirits is a Medium BELOW 9th, where Dual Invocation
+     * has not arrived yet.
+     */
+    expect(animist('medium', 'rites-of-liberation').focus?.max, 'a 12th-level Medium has Dual Invocation').toBe(3);
+  });
+
+  it('the Medium reaches its own clause only from 9th level', () => {
+    /* Below 9th a Medium has one primary apparition like everyone else, so the ladder still governs. */
+    const below = build('animist', 8, {
+      subclassId: 'medium',
+      extraChoices: { apparition: APPS.slice(0, 4) },
+      featPicks: { '4:class:0': 'rites-of-liberation' } as never,
+    });
+    expect(below.focus?.max, 'Dual Invocation has not arrived').toBeLessThan(3);
+  });
+
+  it('a focusPoolBonus feat raises the animist pool too', () => {
+    /*
+     * `poolMax += featPoolBonus` in the animist branch — before this the animist was the one class
+     * whose pool ignored such feats entirely.
+     *
+     * ⚠ The example used to be Universal Versatility, which is no longer a pool-ONLY feat: it prints
+     * *"during your daily preparations, choose one of the school spells"* and now carries that choice,
+     * so the chosen SPELL brings the point and the flat bonus was removed to stop it paying twice.
+     * Psi Development is a pool feat that demonstrably reaches this branch — verified by sweeping every
+     * focusPoolBonus feat rather than picking one that merely looks equivalent.
+     */
+    expect(content().feats['psi-development']?.focusPoolBonus).toBe(1);
+    expect(animist('medium', 'psi-development').focus?.max).toBe(3);
+    expect(animist('liturgist', 'psi-development').focus?.max).toBe(3);
   });
 });
 

@@ -1,0 +1,109 @@
+[
+ {
+  "id": "goloma-courage",
+  "name": "Goloma Courage",
+  "level": 1,
+  "printed": "The most important thing you've learned living with fear is how to overcome it. When you roll a success on a saving throw against a fear effect, you get a critical success instead. In addition, you gain a +1 circumstance bonus to Will saves against fear effects and a +2 circumstance bonus to your Will DC against attempts to Demoralize you.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "degreeShifts": [
+    {
+     "shift": "successToCrit",
+     "when": "on a save against a fear effect",
+     "saves": [
+      "all"
+     ]
+    }
+   ],
+   "situational": [
+    {
+     "targets": [
+      {
+       "kind": "save",
+       "detail": "will"
+      }
+     ],
+     "when": "against fear effects",
+     "bonus": "+1 circumstance"
+    },
+    {
+     "targets": [
+      {
+       "kind": "save",
+       "detail": "will",
+       "dcOnly": true
+      }
+     ],
+     "when": "against attempts to Demoralize you — the Will DC the enemy rolls against",
+     "bonus": "+2 circumstance"
+    }
+   ]
+  },
+  "ourRegistries": [],
+  "theirProse": [
+   {
+    "variable": "SAVE_WILL",
+    "value": null,
+    "text": "When you roll a success on a saving throw against a fear effect, you get a critical success instead."
+   },
+   {
+    "variable": "SAVE_WILL",
+    "value": 1,
+    "text": "against fear effects"
+   },
+   {
+    "variable": "SAVE_WILL",
+    "value": 2,
+    "text": "to your Will DC against attempts to Demoralize you"
+   },
+   {
+    "variable": "SAVE_REFLEX",
+    "value": null,
+    "text": "When you roll a success on a saving throw against a fear effect, you get a critical success instead."
+   },
+   {
+    "variable": "SAVE_FORT",
+    "value": null,
+    "text": "When you roll a success on a saving throw against a fear effect, you get a critical success instead."
+   }
+  ]
+ },
+ {
+  "id": "innocuous",
+  "name": "Innocuous",
+  "level": 1,
+  "printed": "**Access** Jaric ethnicity --- Halflings have been unobtrusive assistants of larger folk for untold ages, and your people count on this assumption of innocence. You gain the trained proficiency rank in Deception (or another skill of your choice, if you're already trained in Deception). If you fail a Deception check to Create a Diversion, humanoid creatures aren't aware that you were trying to trick them unless you get a critical failure on your roll.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "situational": [
+    {
+     "targets": [
+      {
+       "kind": "skill",
+       "detail": "deception"
+      }
+     ],
+     "when": "Create a Diversion against humanoids — on a FAILURE they do not realise you were trying to trick them (a critical failure still gives you away)",
+     "bonus": "no bonus; the failure is simply not noticed"
+    }
+   ]
+  },
+  "ourRegistries": [
+   {
+    "file": "featGrantsAuto.ts",
+    "entry": "'innocuous': { skills: { deception: 'trained' }, redundantFallback: true },"
+   }
+  ],
+  "theirProse": [
+   {
+    "variable": "SKILL_DECEPTION",
+    "value": null,
+    "text": "If you fail to Create a Diversion, humanoid creatures aren’t aware that you were trying to trick them unless you get a critical failure on your roll."
+   }
+  ]
+ }
+]

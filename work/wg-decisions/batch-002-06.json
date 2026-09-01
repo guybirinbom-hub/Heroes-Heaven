@@ -1,0 +1,39 @@
+[
+ {
+  "category": "feats",
+  "id": "devil-allies",
+  "field": "choice",
+  "value": {
+   "flag": "devilAlliesTradition",
+   "prompt": "Tradition",
+   "kind": "array",
+   "options": [
+    { "value": "arcane", "label": "Arcane" },
+    { "value": "divine", "label": "Divine" },
+    { "value": "occult", "label": "Occult" },
+    { "value": "primal", "label": "Primal" }
+   ]
+  },
+  "why": "PRINTED: 'You gain Summon Fiend as a 6th-rank innate spell OF A TRADITION OF YOUR CHOICE, which you can cast once per day.' The record carried no `choice`, so the player was never asked and the innate spell took whatever tradition the spell record itself votes for. READER: the picker renders for any feat carrying `choice` (Builder.tsx), and the answer is read back by traditionFromFlag in build.ts, which scans the character's feats for a matching `choice.flag`. The flag is namespaced BECAUSE that scan is global — a bare `tradition` would collide; the only other user today is boneMagicTradition."
+ },
+ {
+  "category": "feats",
+  "id": "devil-allies",
+  "field": "innateSpells",
+  "value": [
+   {
+    "spellId": "summon-fiend",
+    "rank": 6,
+    "usesPerDay": 1,
+    "traditionFromChoiceFlag": "devilAlliesTradition",
+    "heightenAt": [
+     { "level": 14, "rank": 7 },
+     { "level": 16, "rank": 8 },
+     { "level": 18, "rank": 9 },
+     { "level": 20, "rank": 10 }
+    ]
+   }
+  ],
+  "why": "Only the TRADITION half changes; rank, usesPerDay and the heightenAt ladder already match the printed text ('At 14th level and every 2 levels thereafter, the spell is heightened by one rank, to a maximum of 10th rank when you reach 20th level') and are kept exactly as shipped. READER: InnateSpellGrant.traditionFromChoiceFlag (types.ts:1758) is consumed at build.ts:5119, which stamps the chosen tradition onto the granted spell. Two records already use this lane, so it is proven rather than new."
+ }
+]

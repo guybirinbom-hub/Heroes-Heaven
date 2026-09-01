@@ -25,11 +25,17 @@ describe('untrained skill proficiency', () => {
     expect(deriveSkill(ch, key, db).modifier).toBe(abilityMod(ch.abilities[skillAbilityOf(key)]));
   });
 
-  it('Untrained Improvisation makes it your level minus 2', () => {
-    const ch = build('fighter', 10, { featPicks: { '3:general': 'untrained-improvisation' } });
-    expect(untrainedSkillBonus(ch, db)).toBe(8);
+  /*
+   * This case used to build a LEVEL 10 character and assert level−2. That is the feat's opening value,
+   * not its value at 10th: *"This improves to your level –1 at 5th level and your full level at 7th."*
+   * The −2 is now asserted at a level where it is actually the printed answer, and the improvements
+   * have their own case below. Testing the opening value at 10th froze the missing half in place.
+   */
+  it('Untrained Improvisation makes it your level minus 2 before it improves', () => {
+    const ch = build('fighter', 4, { featPicks: { '3:general': 'untrained-improvisation' } });
+    expect(untrainedSkillBonus(ch, db)).toBe(2);
     const key = anUntrainedSkill(ch);
-    expect(deriveSkill(ch, key, db).modifier).toBe(abilityMod(ch.abilities[skillAbilityOf(key)]) + 8);
+    expect(deriveSkill(ch, key, db).modifier).toBe(abilityMod(ch.abilities[skillAbilityOf(key)]) + 2);
   });
 
   it('Eclectic Skill makes it your full level', () => {
@@ -56,8 +62,29 @@ describe('untrained skill proficiency', () => {
   });
 
   it('the data carries both, with the printed subtraction', () => {
-    expect(db.feats['untrained-improvisation'].untrainedProficiency).toEqual({ levelMinus: 2 });
-    expect(db.feats['eclectic-skill'].untrainedProficiency).toEqual({ levelMinus: 0 });
+    /*
+     * Untrained Improvisation prints THREE values, not one: *"equal to your level –2. This improves to
+     * your level –1 at 5th level and your full level at 7th level."* Only the −2 was ever stored, so
+     * the feat never improved and a 7th-level character stayed two points short of the printed bonus
+     * for the rest of their career.
+     */
+    expect(db.feats['untrained-improvisation'].untrainedProficiency).toEqual({
+      levelMinus: 2,
+      steps: [
+        { atLevel: 5, levelMinus: 1 },
+        { atLevel: 7, levelMinus: 0 },
+      ],
+    });
+    expect(db.feats['eclectic-skill'].untrainedProficiency, 'a flat "equal to your level" needs no steps').toEqual({ levelMinus: 0 });
+  });
+
+  it('Untrained Improvisation improves at 5th and again at 7th', () => {
+    const at = (level: number) => untrainedSkillBonus(build('fighter', level, { featPicks: { '3:general': 'untrained-improvisation' } }), db);
+    expect(at(4), 'level 4: 4 − 2, the opening subtraction').toBe(2);
+    expect(at(5), 'level 5: −1 now').toBe(4);
+    expect(at(6), 'still −1 the level before the next step').toBe(5);
+    expect(at(7), 'level 7: the full level').toBe(7);
+    expect(at(12), 'and it stays the full level').toBe(12);
   });
 });
 

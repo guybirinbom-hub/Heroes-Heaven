@@ -143,7 +143,13 @@ describe("Principle C — the champion's aura is what eleven feats attach to", (
     const reachable = new Set<string>([
       ...ownedFeatureIds(build('champion', 14, { extraChoices: { blessing: ['blessed-swiftness'] } }), db),
       ...ownedFeatureIds(build('commander', 5), db),
-      ...ownedFeatureIds(build('kineticist', 9, { extraChoices: { element: ['air-gate', 'earth-gate', 'fire-gate', 'metal-gate', 'water-gate', 'wood-gate'] } }), db),
+      // THREE dual gates rather than one six-element character. A kinetic gate allows at most two
+      // elements, so the old single build was illegal and only appeared to prove reachability; the
+      // engine now clamps stored picks to what the group allows, which is what surfaced it. Each gate
+      // is still covered, by a character that could actually exist.
+      ...ownedFeatureIds(build('kineticist', 9, { extraChoices: { element: ['air-gate', 'earth-gate'] } }), db),
+      ...ownedFeatureIds(build('kineticist', 9, { extraChoices: { element: ['fire-gate', 'metal-gate'] } }), db),
+      ...ownedFeatureIds(build('kineticist', 9, { extraChoices: { element: ['water-gate', 'wood-gate'] } }), db),
       ...ownedFeatureIds(build('thaumaturge', 17, { extraChoices: { implement: ['regalia', 'shield', 'lantern'] } }), db),
       ...ownedFeatureIds(build('thaumaturge', 17, { extraChoices: { implement: ['shield', 'regalia', 'lantern'] } }), db),
       ...ownedFeatureIds(build('exemplar', 5, { extraChoices: { ikon: ['fetching-bangles'] } }), db),

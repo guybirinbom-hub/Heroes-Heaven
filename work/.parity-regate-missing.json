@@ -1,0 +1,344 @@
+[
+ {
+  "batch": 2,
+  "id": "backup-runic-enhancement",
+  "queued": true,
+  "opCount": 4
+ },
+ {
+  "batch": 2,
+  "id": "circle-of-spirits",
+  "queued": true,
+  "opCount": 1
+ },
+ {
+  "batch": 2,
+  "id": "devil-allies",
+  "queued": true,
+  "opCount": 34
+ },
+ {
+  "batch": 3,
+  "id": "fear-no-law-fear-no-one",
+  "queued": true,
+  "opCount": 3
+ },
+ {
+  "batch": 3,
+  "id": "summiting-dragonblood",
+  "queued": true,
+  "opCount": 4
+ },
+ {
+  "batch": 3,
+  "id": "animist-apparition-spellcasting",
+  "queued": true,
+  "opCount": 6
+ },
+ {
+  "batch": 4,
+  "id": "locate-lawbreakers",
+  "queued": true,
+  "opCount": 13
+ },
+ {
+  "batch": 4,
+  "id": "monastic-archer-stance",
+  "queued": true,
+  "opCount": 1
+ },
+ {
+  "batch": 5,
+  "id": "steady-balance",
+  "queued": true,
+  "opCount": 2
+ },
+ {
+  "batch": 6,
+  "id": "benefactors-resistance",
+  "queued": true,
+  "opCount": 72
+ },
+ {
+  "batch": 6,
+  "id": "armor-in-earth",
+  "queued": true,
+  "opCount": 3
+ },
+ {
+  "batch": 6,
+  "id": "molten-wit",
+  "queued": true,
+  "opCount": 2
+ },
+ {
+  "batch": 7,
+  "id": "firework-technician-dedication",
+  "queued": true,
+  "opCount": 7
+ },
+ {
+  "batch": 7,
+  "id": "hellknight-dedication",
+  "queued": true,
+  "opCount": 13
+ },
+ {
+  "batch": 7,
+  "id": "reverse-engineer",
+  "queued": true,
+  "opCount": 4
+ },
+ {
+  "batch": 8,
+  "id": "merchants-scale",
+  "queued": true,
+  "opCount": 7
+ },
+ {
+  "batch": 8,
+  "id": "sequestered-spell",
+  "queued": true,
+  "opCount": 13
+ },
+ {
+  "batch": 8,
+  "id": "breath-of-the-dragon",
+  "queued": true,
+  "opCount": 80
+ },
+ {
+  "batch": 8,
+  "id": "intuitive-crafting",
+  "queued": true,
+  "opCount": 4
+ },
+ {
+  "batch": 8,
+  "id": "nagaji-spell-familiarity",
+  "queued": true,
+  "opCount": 1
+ },
+ {
+  "batch": 8,
+  "id": "reinforced-chassis",
+  "queued": true,
+  "opCount": 2
+ },
+ {
+  "batch": 9,
+  "id": "shadowcaster-dedication",
+  "queued": true,
+  "opCount": 3
+ },
+ {
+  "batch": 9,
+  "id": "clawdancer-dedication",
+  "queued": true,
+  "opCount": 2
+ },
+ {
+  "batch": 9,
+  "id": "soul-warden-dedication",
+  "queued": true,
+  "opCount": 7
+ },
+ {
+  "batch": 10,
+  "id": "hardwood-armor-armor",
+  "queued": true,
+  "opCount": 6
+ },
+ {
+  "batch": 10,
+  "id": "favored-terrain",
+  "queued": true,
+  "opCount": 10
+ },
+ {
+  "batch": 10,
+  "id": "hallowed-necromancer-dedication",
+  "queued": true,
+  "opCount": 2
+ },
+ {
+  "batch": 10,
+  "id": "psychic-dedication",
+  "queued": true,
+  "opCount": 22
+ },
+ {
+  "batch": 11,
+  "id": "unifying-emblem-shundar-quah",
+  "queued": true,
+  "opCount": 3
+ },
+ {
+  "batch": 11,
+  "id": "unifying-emblem-sklar-quah",
+  "queued": true,
+  "opCount": 3
+ },
+ {
+  "batch": 11,
+  "id": "unifying-emblem-tamiir-quah",
+  "queued": true,
+  "opCount": 3
+ },
+ {
+  "batch": 12,
+  "id": "versatile-mutation",
+  "queued": true,
+  "opCount": 7
+ },
+ {
+  "batch": 12,
+  "id": "elemental-existence",
+  "queued": true,
+  "opCount": 4
+ },
+ {
+  "batch": 12,
+  "id": "monk-resiliency",
+  "queued": true,
+  "opCount": 1
+ },
+ {
+  "batch": 12,
+  "id": "barbarian-resiliency",
+  "queued": true,
+  "opCount": 1
+ },
+ {
+  "batch": 12,
+  "id": "thats-not-natural",
+  "queued": true,
+  "opCount": 3
+ },
+ {
+  "batch": 13,
+  "id": "aon-sacred-ki",
+  "queued": true,
+  "opCount": 5
+ },
+ {
+  "batch": 13,
+  "id": "ardent-armiger",
+  "queued": true,
+  "opCount": 3
+ },
+ {
+  "batch": 14,
+  "id": "devils-eye",
+  "queued": true,
+  "opCount": 1
+ },
+ {
+  "batch": 14,
+  "id": "hardened-chassis",
+  "queued": true,
+  "opCount": 21
+ },
+ {
+  "batch": 14,
+  "id": "gunslinger-weapon-mastery",
+  "queued": true,
+  "opCount": 5
+ },
+ {
+  "batch": 14,
+  "id": "weapon-expertise",
+  "queued": true,
+  "opCount": 3
+ },
+ {
+  "batch": 15,
+  "id": "nagaji-spell-mysteries",
+  "queued": true,
+  "opCount": 1
+ },
+ {
+  "batch": 15,
+  "id": "brutality",
+  "queued": true,
+  "opCount": 7
+ },
+ {
+  "batch": 15,
+  "id": "kitsune-spell-mysteries",
+  "queued": true,
+  "opCount": 1
+ },
+ {
+  "batch": 16,
+  "id": "skysunder",
+  "queued": true,
+  "opCount": 5
+ },
+ {
+  "batch": 16,
+  "id": "sparkwarden",
+  "queued": true,
+  "opCount": 5
+ },
+ {
+  "batch": 16,
+  "id": "uniter-of-clans",
+  "queued": true,
+  "opCount": 5
+ },
+ {
+  "batch": 16,
+  "id": "kalmaugs-journal",
+  "queued": true,
+  "opCount": 3
+ },
+ {
+  "batch": 16,
+  "id": "adamantine-echo",
+  "queued": true,
+  "opCount": 5
+ },
+ {
+  "batch": 16,
+  "id": "avernal-cape",
+  "queued": true,
+  "opCount": 5
+ },
+ {
+  "batch": 16,
+  "id": "astrolabe-of-falling-stars",
+  "queued": true,
+  "opCount": 1
+ },
+ {
+  "batch": 16,
+  "id": "advanced-red-mantis-magic",
+  "queued": true,
+  "opCount": 1
+ },
+ {
+  "batch": 16,
+  "id": "arcana-of-iron",
+  "queued": true,
+  "opCount": 4
+ },
+ {
+  "batch": 16,
+  "id": "instinct-ability",
+  "queued": true,
+  "opCount": 2
+ },
+ {
+  "batch": 17,
+  "id": "time-mage-dedication",
+  "queued": true,
+  "opCount": 10
+ },
+ {
+  "batch": 17,
+  "id": "basic-summoner-spellcasting",
+  "queued": true,
+  "opCount": 4
+ }
+]

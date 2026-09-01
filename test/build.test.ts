@@ -31,15 +31,27 @@ describe('proficiency advancement', () => {
     expect(prof(build('fighter', 13), 'advanced')).toBe('expert');
     expect(prof(build('fighter', 20), 'classDc')).toBe('master');
   });
-  it('fighter Weapon Mastery/Legend elevate ONLY the chosen weapon group', () => {
-    // A sword-group fighter: swords hit master@5 (group) while off-group stays expert (chassis);
-    // at 13 swords reach legendary via the group while general martial is only master.
+  it('fighter Weapon Mastery/Legend elevate ONLY the chosen weapon group, and by CATEGORY', () => {
+    /*
+     * A sword-group fighter: swords hit master@5 (group) while off-group stays expert (chassis); at 13
+     * swords reach legendary via the group while general martial is only master.
+     *
+     * Held in `weaponGroupRanks` rather than the flat `weaponGroups` this used to assert, because the
+     * sentence has a second half a flat per-group rank cannot say: *"…and to EXPERT with the ADVANCED
+     * weapons in that group."* Under the flat rank an advanced sword rolled at master from 5th level.
+     */
     const g = { fighterWeaponGroup: 'sword' };
+    const rankFor = (c: ReturnType<typeof build>, category: string) =>
+      (c.proficiencies.weaponGroupRanks ?? []).find((r) => r.group === 'sword' && r.category === category)?.rank;
+
     const l5 = build('fighter', 5, g);
-    expect(l5.proficiencies.weaponGroups?.sword).toBe('master');
+    expect(rankFor(l5, 'martial')).toBe('master');
+    expect(rankFor(l5, 'advanced'), 'advanced weapons of the group lag one rank').toBe('expert');
     expect(prof(l5, 'martial')).toBe('expert'); // off-group / general martial unchanged at 5
+
     const l13 = build('fighter', 13, g);
-    expect(l13.proficiencies.weaponGroups?.sword).toBe('legendary'); // chosen group
+    expect(rankFor(l13, 'martial')).toBe('legendary'); // chosen group
+    expect(rankFor(l13, 'advanced')).toBe('master');
     expect(prof(l13, 'martial')).toBe('master'); // general martial (off-group) only master
   });
   it('champion reaches legendary armor at 17', () => {

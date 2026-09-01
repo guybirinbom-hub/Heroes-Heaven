@@ -25,12 +25,24 @@ function backfillTarget(root, path) {
   return node && typeof node === 'object' ? node : null;
 }
 
-/** Apply every row of scripts/data/effect-backfill.json to `db`. Returns {applied, unresolved}. */
-export function applyBackfill(db, file = 'scripts/data/effect-backfill.json') {
+/**
+ * Apply every row of scripts/data/effect-backfill.json to `db`. Returns {applied, unresolved}.
+ *
+ * `skipFields` exists for ONE caller: a replay against the already-split public/core.json.
+ *
+ * In the pipeline this runs BEFORE `split-descriptions.mjs`, so the overlay's 289 `description` rows
+ * land in core.json and the split then moves them into core-descriptions.json, which is where the app
+ * reads prose from. Replaying the overlay against the FINISHED core.json instead puts all 289 back —
+ * measured, the file grew 184 KB and carried prose in two places, the exact state the split removed.
+ * The pipeline passes nothing here and is unaffected.
+ */
+export function applyBackfill(db, file = 'scripts/data/effect-backfill.json', { skipFields = [] } = {}) {
   if (!existsSync(file)) return { applied: 0, unresolved: [] };
+  const skip = new Set(skipFields);
   const unresolved = [];
   let applied = 0;
   for (const fix of JSON.parse(readFileSync(file, 'utf8'))) {
+    if (fix.field && skip.has(fix.field)) continue;
     // `create` adds a whole record rather than patching a field — needed where a record is filed in
     // the wrong collection upstream, or is hand-authored with no AoN source at all. Never overwrites.
     if (fix.create) {

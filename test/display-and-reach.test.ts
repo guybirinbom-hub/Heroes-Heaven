@@ -116,7 +116,10 @@ describe('a versatile heritage opens its own feat pool', () => {
 describe('the advanced half of every multiclass archetype', () => {
   it('each basic-* row has an advanced-* sibling naming the same class', () => {
     const basics = Object.keys(FEAT_PICK_GRANTS).filter((k) => k.startsWith('basic-'));
-    expect(basics.length).toBe(25);
+    /* 27 since parity batch 12 added the necromancer and runesmith archetypes. The count is a
+     * tripwire for exactly what happened there: both `basic-*` rows went in without their advanced
+     * halves, and the sibling assertion below is what named the two that were missing. */
+    expect(basics.length).toBe(27);
     for (const b of basics) {
       const a = b.replace(/^basic-/, 'advanced-');
       expect(FEAT_PICK_GRANTS[a], `${a} missing`).toBeTruthy();

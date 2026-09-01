@@ -155,11 +155,20 @@ const readPack = (name) => walk(join(ROOT, name)).map((f) => JSON.parse(readFile
 /** Derive a readable label for a LABEL-LESS @UUID/@Compendium reference from its document
  *  name (the last path segment), so condition/spell/feat references don't leave dangling
  *  sentences like "You are , you don't treat anyone as your ally". Conditions read lowercase
- *  ("off-guard"); other names keep their case ("Fear"). Opaque Foundry ids (no separators)
- *  have no readable name, so they're dropped. */
+ *  ("off-guard"); other names keep their case ("Fear").
+ *
+ *  A Foundry document id is exactly 16 chars from [A-Za-z0-9] (measured over every `_id` in the
+ *  pf2e packs: 18,144 ids, all length 16, alphabet 0-9A-Za-z). The old 12-15-char heuristic ate
+ *  real words — "Invisibility", "Comprehension", 254 occurrences across 29 names — and a
+ *  capitalised/all-lowercase single WORD can still collide with the 16-char length
+ *  ("Prestidigitation", "Inextinguishable"), so length alone is not the test: an id drawn
+ *  uniformly from 62 characters is word-shaped with probability ~1.6e-6. Nothing word-shaped
+ *  that reaches this function is an id. */
+const FOUNDRY_ID = /^[A-Za-z0-9]{16}$/;
+const WORD_LIKE = /^(?:[A-Z][a-z]+|[a-z]+)$/;
 function uuidLabel(ref) {
   const seg = (ref.split('.').pop() || '').trim();
-  if (!seg || (/^[A-Za-z0-9]{12,}$/.test(seg) && !/[ -]/.test(seg))) return '';
+  if (!seg || (FOUNDRY_ID.test(seg) && !WORD_LIKE.test(seg))) return '';
   return /conditionitems/i.test(ref) ? seg.toLowerCase() : seg;
 }
 
@@ -670,12 +679,14 @@ const FREQ_WORDS = { once: 1, one: 1, twice: 2, two: 2, thrice: 3, three: 3, fou
 /** All "Frequency N per/each/every <period>" activations in the prose (an item can have several). */
 function parseFrequencies(desc) {
   if (!desc) return [];
-  const re = /frequency\s+(once|twice|thrice|one|two|three|four|five|six|seven|eight|nine|ten|\d+)(?:\s*times?)?\s+(?:per|each|every)\s+(?:\d+\s+)?(day|hour|minute|round|turn|week|month)/gi;
+  const re = /frequency\s+(once|twice|thrice|one|two|three|four|five|six|seven|eight|nine|ten|\d+)(?:\s*times?)?\s+(?:per|each|every)\s+(?:(\d+)\s+)?(day|hour|minute|round|turn|week|month)/gi;
   const out = [];
   let m;
   while ((m = re.exec(desc))) {
     const w = m[1].toLowerCase();
-    out.push({ max: FREQ_WORDS[w] ?? (Number(w) || 1), per: m[2].toLowerCase() });
+    // The multiplier used to be matched-and-discarded — 'once every 10 minutes' shipped as per:'minute'.
+    const n = Number(m[2]);
+    out.push({ max: FREQ_WORDS[w] ?? (Number(w) || 1), per: m[3].toLowerCase(), ...(n > 1 ? { every: n } : {}) });
   }
   return out;
 }
@@ -693,7 +704,7 @@ function buildCounters(desc, traits, uses) {
     if (cm) counters.push({ id: 'pool', label: 'Charges', max: Number(cm[1]), resetsOnRest: !/reset[^.]*\bto 0\b/i.test(desc || '') });
   }
   parseFrequencies(desc).forEach((f, i) =>
-    counters.push({ id: i === 0 ? 'freq' : `freq${i + 1}`, label: `per ${f.per}`, max: f.max, per: f.per, resetsOnRest: !['week', 'month'].includes(f.per) }),
+    counters.push({ id: i === 0 ? 'freq' : `freq${i + 1}`, label: `per ${(f.every ?? 1) > 1 ? `${f.every} ${f.per}s` : f.per}`, max: f.max, per: f.per, ...(f.every ? { every: f.every } : {}), resetsOnRest: !['week', 'month'].includes(f.per) }),
   );
   if (uses && uses.max > 1) counters.push({ id: 'uses', label: 'Uses', max: uses.max, resetsOnRest: false });
   return counters;

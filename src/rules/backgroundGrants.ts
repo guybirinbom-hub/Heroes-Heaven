@@ -117,6 +117,18 @@ export const BACKGROUND_GRANT_BOUND_CHOICE: Record<string, Record<string, Backgr
   'witchlight-follower': { 'terrain-expertise': { kind: 'fixed', skill: 'swamp' } },
   // "You gain the Virtuosic Performer (Comedy) skill feat."
   clown: { 'virtuosic-performer': { kind: 'fixed', skill: 'comedy' } },
+  // "choose either the Assurance skill feat with Society or the Multilingual skill feat" — the
+  // Assurance branch names its skill outright; the Multilingual branch has no sub-answer to bind.
+  // (batch 20 — the either/or is now a real two-way choice on the record.)
+  'hermean-heritor': { assurance: { kind: 'fixed', skill: 'society' } },
+  // The record's own PFS note: the Specialty Crafting granted by Weaver takes Weaving — the same
+  // binding shape featFeatGrants' web-weaver already carries. Moved OFF the absent list (batch 20).
+  weaver: { 'specialty-crafting': { kind: 'fixed', skill: 'weaving' } },
+  // "You gain the Diehard feat and the Additional Lore feat for Boneyard Lore." The one background
+  // whose Additional Lore names its subject — the seven others granting the feat leave the subject
+  // to the player (their text box mounts through Builder's slotless-grant lane). Bound, the feat's
+  // 3rd/7th/15th rankUpgrade advances Boneyard Lore, which `trainedLore` alone never did. (batch 23)
+  returned: { 'additional-lore': { kind: 'fixedLore', subject: 'boneyard' } },
 
   /*
    * DELIBERATELY ABSENT — the text really does leave the pick to the player, so binding these would
@@ -125,7 +137,7 @@ export const BACKGROUND_GRANT_BOUND_CHOICE: Record<string, Record<string, Backgr
    *                     Lore skills…" — the Lore is chosen; the Assurance is not tied to it.
    *   emancipated, hired-killer, spotter, student-of-archery, hell-hunted  (Terrain Stalker)
    *   local-scion, shory-seeker, framed-in-ferrous-quarter, brevic-noble, close-ties, artisan,
-   *   artist, tinker, silk-farmer, weaver, professional-letter-writer, combat-carpenter
+   *   artist, tinker, silk-farmer, professional-letter-writer, combat-carpenter
    *                                                                    (Specialty Crafting)
    *   trailblazer, surge-investigator, obari-wanderer                   (Terrain Expertise)
    *   musical-prodigy, saloon-entertainer                               (Virtuosic Performer)
@@ -153,3 +165,19 @@ export const BACKGROUND_GRANT_BOUND_CHOICE: Record<string, Record<string, Backgr
 export function isBoundBackgroundGrant(backgroundId: string | undefined, grantedId: string): boolean {
   return !!(backgroundId && BACKGROUND_GRANT_BOUND_CHOICE[backgroundId]?.[grantedId]);
 }
+
+/*
+ * A BACKGROUND that grants a player-CHOSEN innate cantrip — the background twin of
+ * FEAT_CANTRIP_GRANTS (Dragon Spit's lane). The answer shares BuildState.pickCantripChoices, keyed by
+ * the background id; buildCharacter injects it into the pooled innate entry, and the builder renders
+ * the picker on the background card.
+ *
+ * Kept HERE rather than in featCantripGrants.ts because scripts/aon-verify/apply-clear.ts rewrites
+ * that file whole through a serialiser — anything it does not emit is deleted at its next run.
+ */
+export const BACKGROUND_CANTRIP_GRANTS: Record<string, { prompt: string; tradition?: string; options: string[] }> = {
+  /* *"You gain the ability to cast a common occult innate cantrip of your choice and can cast the
+   * cantrip at will."* (batch 20). The list is the shipped common-occult-cantrip enumeration
+   * Awakened Jewel already carries for the same printed criterion. */
+  'harrow-chosen': { prompt: 'Choose a common occult cantrip', tradition: 'occult', options: ['approximate', 'bullhorn', 'daze', 'detect-magic', 'detect-metal', 'eat-fire', 'figment', 'forbidding-ward', 'glamorize', 'guidance', 'haunting-hymn', 'illuminate', 'infectious-enthusiasm', 'know-the-way', 'light', 'message', 'musical-accompaniment', 'needle-darts', 'phase-bolt', 'prestidigitation', 'protect-companion', 'read-aura', 'read-the-air', 'shield', 'sigil', 'summon-instrument', 'tame', 'telekinetic-hand', 'telekinetic-projectile', 'time-sense', 'tremor-signs', 'void-warp', 'warp-step', 'wash-your-luck'] },
+};

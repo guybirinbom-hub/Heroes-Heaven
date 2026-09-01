@@ -362,8 +362,10 @@ describe('commander prepared tactics (play-mode)', () => {
     const applied = applyPlayState(cmdr, p, c);
     const prepared = applied.commanderTactics?.prepared ?? [];
     expect(prepared).not.toContain('not-in-folio'); // non-folio ids dropped
-    expect(prepared.length).toBe(3); // clamped to preparedMax
-    expect(prepared).toEqual(['pincer-attack', 'reload', 'strike-hard']);
+    // The L7 fixture's cap is FOUR: Expert Tactician prints "The total number of tactics you can
+    // have prepared increases to four" (commanderPreparedMax; a hardcoded 3 before batch 18).
+    expect(prepared.length).toBe(4); // clamped to preparedMax
+    expect(prepared).toEqual(['pincer-attack', 'reload', 'strike-hard', 'double-team']);
   });
 });
 

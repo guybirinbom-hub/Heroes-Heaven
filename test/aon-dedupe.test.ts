@@ -29,14 +29,17 @@ describe('aon- duplicate suppression', () => {
       if (!dupes.has(tid) && t?.name) visibleByName.set(key(t.name), tid);
     }
     // A FOURTH mechanism: two imports of the SAME AoN DOCUMENT under different names
-    // ("Animal Empathy" / "Animal Empathy (Druid)", both feat-4709). Neither the exact-name rule nor
-    // the grade-spelling rule can see that, and a shared document id is stronger evidence of a twin
-    // than either — so it satisfies the guarantee that matters, checked here rather than waived.
+    // ("Animal Empathy" / "Animal Empathy (Druid)", both feat-4709 — and the misspelled
+    // "Spore Shephard's Staff" triplet, each rung sharing its document id with the visible
+    // "Spore Shepherd's Staff" rung). Neither the exact-name rule nor the grade-spelling rule can
+    // see that, and a shared document id is stronger evidence of a twin than either — so it
+    // satisfies the guarantee that matters, checked here rather than waived.
     const visibleWithAonId = (aonId: string) =>
-      Object.entries(c.feats).some(([fid, f]) => !dupes.has(fid) && (f as { aonId?: string }).aonId === aonId);
+      Object.entries(c.feats).some(([fid, f]) => !dupes.has(fid) && (f as { aonId?: string }).aonId === aonId) ||
+      Object.entries(c.items).some(([tid, t]) => !dupes.has(tid) && (t as { aonId?: string }).aonId === aonId);
     for (const id of dupes) {
       if (id.startsWith('aon-')) continue;
-      const aonId = (c.feats[id] as { aonId?: string } | undefined)?.aonId;
+      const aonId = ((c.feats[id] ?? c.items[id]) as { aonId?: string } | undefined)?.aonId;
       if (aonId && visibleWithAonId(aonId)) continue;
       const rec = c.items[id];
       expect(rec, `${id} hidden but not an item`).toBeTruthy();
@@ -173,4 +176,5 @@ describe('aon- duplicate suppression', () => {
     expect(feats.some((f) => c.duplicateIds!.has(f.id))).toBe(false);
     expect(names.length).toBe(new Set(names).size);
   });
+
 });

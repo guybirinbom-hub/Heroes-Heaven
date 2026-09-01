@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
-import { build, content } from './_content';
+import { build, content, grantPicker } from './_content';
 import type { BuildState } from '../src/rules/build';
 import type { Character, SpellcastingEntry } from '../src/rules/types';
 
@@ -19,19 +19,26 @@ const mainSlots = (c: Character): Record<string, number> => {
 
 describe('THE BUG: Advanced Domain granted the initial spell as well as the advanced one', () => {
   const ad = db.feats['advanced-domain'];
-  const ec = ad.effectChoices![0];
-  const opt = ec.options!.find((o) => o.grant)!;
+  /*
+   * Asked through `grantPicker` rather than off `effectChoices` directly. The invariant is ONE picker,
+   * offering the ADVANCED domain spells — answering two of them handed a cleric pushing-gust AND
+   * disperse-into-air. WHICH lane holds it is a separate decision: Advanced Domain is `maxTakable:
+   * null`, and an `effectChoices` answer is stored once per RECORD, so a repeatable record's pick has
+   * to sit on the per-taking `choice`. It moved there; the invariant did not change.
+   */
+  const ec = grantPicker(ad)! as { id?: string; options: { value: string; grant?: { focusSpells?: string[] } }[] };
+  const opt = ec.options.find((o) => o.grant)!;
 
-  it('its initial-domain picker is gone — only the advanced picker remains', () => {
-    // Answering both handed a cleric pushing-gust AND disperse-into-air.
-    expect(ad.choice ?? null).toBeNull();
-    expect(ec.options!.length).toBeGreaterThan(30);
+  it('there is exactly ONE picker, and it offers the advanced domain spells', () => {
+    expect(ec, 'a grant-bearing picker must exist').toBeTruthy();
+    expect(ad.effectChoices?.length ?? 0, 'no second picker left on the other lane').toBe(0);
+    expect(ec.options.length).toBeGreaterThan(30);
   });
 
   it('a cleric taking it gains exactly ONE focus spell', () => {
     const c = build('cleric', 12, {
       featPicks: { '12:class': 'advanced-domain' },
-      effectChoices: { [`advanced-domain:${ec.id}`]: opt.value },
+      featChoices: { '12:class': opt.value },
     } as Partial<BuildState>);
     const granted = opt.grant!.focusSpells!;
     for (const s of granted) expect(focusSpells(c)).toContain(s);

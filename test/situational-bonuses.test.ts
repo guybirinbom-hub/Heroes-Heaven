@@ -14,7 +14,10 @@ describe('feat situational bonuses', () => {
     // SHAPE of the key, not just that it resolves.
     // `trait:<name>` is the one legal prefix — armour/shield traits are not records, so they cannot be
     // keyed by a record id, and the namespace stops them ever colliding with one.
-    const bad = Object.keys(FEAT_SITUATIONAL).filter((k) => !/^(trait:)?[a-z0-9-]+$/.test(k));
+    // A second legal prefix: a kineticist impulse junction belongs to an element gate but is granted
+    // only by a SINGLE gate, so it cannot be keyed on the gate record without handing every dual-gate
+    // kineticist a bonus the printed text withholds from them.
+    const bad = Object.keys(FEAT_SITUATIONAL).filter((k) => !/^(trait:|junction:)?[a-z0-9-]+$/.test(k));
     expect(bad, `malformed registry keys: ${bad.join(' | ')}`).toHaveLength(0);
   });
 
@@ -42,12 +45,20 @@ describe('feat situational bonuses', () => {
     // `steadfast-strider` (a companion specialization) legitimately carry conditional bonuses. Note
     // those bonuses apply to the COMPANION, not the PC, so they correctly do not raise a star on the
     // player's own rows — characterSituationalIds does not walk companions.
+    // …and ACTIONS: a bonus printed inside a granted action's own text is authored under THAT id
+    // (the pursue-a-lead lane) — recall-under-pressure (batch 21) is a granted background action.
     const cols: (Record<string, unknown> | undefined)[] = [
       c.feats, c.items, c.heritages, c.backgrounds, c.classFeatures, c.ancestries,
-      c.animalCompanions, c.companionSpecializations,
+      c.animalCompanions, c.companionSpecializations, c.actions,
     ];
     // `trait:` keys are checked by their own test above — they name an armour trait, not a record.
-    const dead = ids.filter((id) => !id.startsWith('trait:') && !cols.some((col) => col && col[id]));
+    // A junction: id resolves through the GATE record it names — it is derived from the character's
+    // element count at read time, never stored as a record of its own.
+    const dead = ids.filter(
+      (id) => !id.startsWith('trait:')
+        && !(id.startsWith('junction:') && cols.some((col) => col && col[id.slice('junction:'.length)]))
+        && !cols.some((col) => col && col[id]),
+    );
     expect(dead, `registry ids matching no record: ${dead.slice(0, 8).join(', ')}`).toHaveLength(0);
     for (const id of ids) {
       for (const b of FEAT_SITUATIONAL[id]) {
@@ -58,8 +69,11 @@ describe('feat situational bonuses', () => {
     }
   });
 
-  it('Intimidating Prowess flags Intimidation and lists its condition', () => {
-    expect(featSituationalFor(['intimidating-prowess'], { kind: 'skill', skill: 'intimidation' })).toHaveLength(1);
+  it('Intimidating Prowess flags Intimidation and lists BOTH its conditions', () => {
+    /* Two entries, not one: the feat prints a second sentence — *"If your Strength modifier is +5 or
+     * higher and you are a MASTER in Intimidation, this bonus INCREASES TO +2."* The star showed only
+     * the flat +1, so a qualifying character had no way to learn their bonus had grown. */
+    expect(featSituationalFor(['intimidating-prowess'], { kind: 'skill', skill: 'intimidation' })).toHaveLength(2);
     // …but not other skills.
     expect(featSituationalFor(['intimidating-prowess'], { kind: 'skill', skill: 'stealth' })).toHaveLength(0);
     expect(hasFeatSituational(['intimidating-prowess'], { kind: 'skill', skill: 'intimidation' })).toBe(true);

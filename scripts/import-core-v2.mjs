@@ -768,8 +768,16 @@ for (const bucket of AON_BUCKETS) {
   const newMap = bestByBucket[bucket] || {};
   const astOut = {};
   for (const s in newMap) {
-    const rec = newMap[s].rec;
-    if (rec.ast && (s in (db[bucket] || {}))) astOut[s] = resolveAst(rec.ast);
+    if (!(s in (db[bucket] || {}))) continue;
+    /* The AST must be the SHIPPED record's OWN page. bestByBucket picks per-slug by edition rank,
+     * but the record pipeline can ship a DIFFERENT same-name doc (pickByArchetype, a REF carry) —
+     * the two feats named "Zombie Horde" were the case: the shipped Clockwork Reanimator record
+     * (feat-3654, L20) rendered the Necromancer feat's page (feat-9122, L6) in full. When the
+     * shipped record's aonId names one of the slug's candidates, that candidate's ast wins. */
+    const shippedAon = db[bucket][s]?.aonId;
+    const own = shippedAon ? (allByBucket[bucket]?.[s] ?? []).find((r) => r.id === shippedAon) : null;
+    const rec = (own?.ast ? own : null) ?? newMap[s].rec;
+    if (rec.ast) astOut[s] = resolveAst(rec.ast);
   }
   const json = JSON.stringify(astOut);
   writeFileSync('public/ast/' + bucket + '.json', json);

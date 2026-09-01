@@ -103,7 +103,7 @@ for (const { cat, bucket, kind } of PLAN) {
   const ast = astWrites.get(bucket) ?? readAst(bucket);
   astWrites.set(bucket, ast);
 
-  let added = 0, skipped = 0, existed = 0, renormalised = 0;
+  let added = 0, skipped = 0, existed = 0, renormalised = 0, filled = 0;
   for (const [docId, doc] of Object.entries(docs)) {
     const name = String(doc?.name ?? doc?.data?.name ?? '').trim();
     if (!name) { skipped++; continue; }
@@ -111,23 +111,6 @@ for (const { cat, bucket, kind } of PLAN) {
     if (doc.superseded_by) { skipped++; continue; }   // a reprinted legacy printing
 
     const id = slug(name);
-    if (core[bucket][id]) {
-      existed++;
-      /*
-       * Add-only, with one exception: a record THIS script wrote (same aonId) gets its traits
-       * re-normalised. The first run leaked the rarity word into `traits` — First World Mince Pie
-       * shipped ["apex","meal","rare"] — and an add-only script cannot repair its own output, so a
-       * later fix to the rule would never reach the records already written. Scoped by aonId so it can
-       * never touch a record that came from anywhere else.
-       */
-      const cur = core[bucket][id];
-      if (cur.aonId === docId && Array.isArray(cur.traits)) {
-        const t = cur.traits.filter((x) => !RARITY.has(String(x).toLowerCase()));
-        if (t.length !== cur.traits.length) { cur.traits = t; renormalised++; }
-      }
-      continue;
-    }
-
     const rec = { id, name, aonId: docId };
     if (doc.edition) rec.edition = doc.edition;
     if (doc.rarity) rec.rarity = doc.rarity;
@@ -151,11 +134,59 @@ for (const { cat, bucket, kind } of PLAN) {
       if (prose) descWrites.push({ bucket, id, prose });
     }
 
+    const cur = core[bucket][id];
+    if (cur) {
+      existed++;
+      /*
+       * FILL-ONLY, not add-only.
+       *
+       * These five categories used to be produced by this script ALONE — `import-core-v2.mjs` skipped
+       * them, so "the record exists" could only mean "this script already wrote it". That stopped
+       * being true when they were removed from that importer's REF_SKIP so a regen would keep
+       * producing them: stage 1 now emits a LIGHTWEIGHT reference record ({id, name, edition} + ast)
+       * and this script, being add-only, skipped it. Measured on 2026-08-19: 76 kingdom structures,
+       * 45 kingdom events, 54 creature adjustments and 16 theme templates lost their rarity, level and
+       * source, and all 27 campsite meals lost their PRICE and their note — a shop full of food you
+       * could not buy.
+       *
+       * Filling only ABSENT fields keeps the original doctrine intact: a value that came from anywhere
+       * else is never overwritten, so this can never silently clobber authored data. The two producers
+       * now compose instead of racing.
+       */
+      for (const [k, v] of Object.entries(rec)) {
+        if (!(k in cur)) { cur[k] = v; filled++; }
+      }
+      /*
+       * ONE field is this script's ruling to make rather than stage 1's: `itemType`. The owner ruled
+       * that a campsite meal is something a player BUYS AND EATS, so the whole category is
+       * `consumable`; the generic importer classifies anything with a price as `equipment`, which put
+       * all 27 meals in the wrong shop tab the moment it started producing them. Scoped to this
+       * script's own kind and to a record whose aonId is the doc we are holding, so it can never
+       * reclassify an item that came from anywhere else.
+       */
+      if (kind === 'item' && cur.aonId === docId && cur.itemType !== rec.itemType) {
+        cur.itemType = rec.itemType;
+        filled++;
+      }
+      /*
+       * A record THIS script wrote (same aonId) gets its traits re-normalised. The first run leaked
+       * the rarity word into `traits` — First World Mince Pie shipped ["apex","meal","rare"] — and an
+       * add-only script cannot repair its own output, so a later fix to the rule would never reach the
+       * records already written. Scoped by aonId so it can never touch a record from anywhere else;
+       * the fill above is what puts that aonId on a stage-1 record in the first place.
+       */
+      if (cur.aonId === docId && Array.isArray(cur.traits)) {
+        const t = cur.traits.filter((x) => !RARITY.has(String(x).toLowerCase()));
+        if (t.length !== cur.traits.length) { cur.traits = t; renormalised++; }
+      }
+      continue;
+    }
+
     core[bucket][id] = rec;
     if (doc.ast) ast[id] = resolveAst(doc.ast);
     added++;
   }
-  report.push({ cat, bucket, total: Object.keys(docs).length, added, skipped, existed, renormalised });
+  report.push({ cat, bucket, total: Object.keys(docs).length, added, skipped, existed, renormalised, filled });
 }
 
 console.log(`${'category'.padEnd(26)} ${'-> bucket'.padEnd(24)} ${'docs'.padStart(5)} ${'ADD'.padStart(5)} ${'exists'.padStart(7)} ${'skip'.padStart(5)}`);
@@ -165,12 +196,14 @@ for (const r of report) {
 }
 const totalAdded = report.reduce((n, r) => n + r.added, 0);
 const totalRenorm = report.reduce((n, r) => n + (r.renormalised ?? 0), 0);
+const totalFilled = report.reduce((n, r) => n + (r.filled ?? 0), 0);
 if (totalRenorm) console.log(`${totalRenorm} existing record(s) had a rarity word stripped from traits.`);
+if (totalFilled) console.log(`${totalFilled} field(s) filled in on records stage 1 had already created.`);
 console.log(`\n${totalAdded} record(s) to add; ${descWrites.length} with prose.`);
 console.log('skips are AoN hidden pages (exclude_from_search) and reprinted legacy (superseded_by).');
 
 if (!WRITE) { console.log('\nreport only — pass --write to apply.'); process.exit(0); }
-if (!totalAdded && !totalRenorm) { console.log('\nnothing to add, nothing to re-normalise.'); process.exit(0); }
+if (!totalAdded && !totalRenorm && !totalFilled) { console.log('\nnothing to add, fill or re-normalise.'); process.exit(0); }
 
 mkdirSync(join(ROOT, 'public/ast'), { recursive: true });
 for (const [bucket, ast] of astWrites) {

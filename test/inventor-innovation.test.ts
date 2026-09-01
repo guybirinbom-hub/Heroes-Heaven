@@ -13,8 +13,17 @@ type Mods = NonNullable<BuildState['inventorModifications']>;
 const inv = (level: number, modifications: Mods, subclassId = 'armor-innovation') =>
   build('inventor', level, { subclassId, inventorModifications: modifications } as Partial<BuildState>);
 
+/*
+ * The armour is WORN here on purpose. Several modifications print *"while wearing your armor, you gain
+ * resistance…"* and that clause is now enforced (`defensesRequire.armored`), so an inventor tested in
+ * their underwear legitimately has no armour resistance. These cases are about the Enhanced Resistance
+ * upgrade MATH, so they equip the suit the modifications require; the gate itself is covered by
+ * test/armor-gated-defences.test.ts, including the with-the-suit-off case.
+ */
 const res = (level: number, modifications: Mods, subclassId?: string) => {
-  const d = deriveDefenses(inv(level, modifications, subclassId), db);
+  const base = inv(level, modifications, subclassId);
+  const armored = { ...base, inventory: [...base.inventory, { instanceId: 'suit', itemId: 'half-plate', quantity: 1, worn: true }] };
+  const d = deriveDefenses(armored, db);
   return Object.fromEntries(d.resistances.map((r) => [r.type, r.value]));
 };
 

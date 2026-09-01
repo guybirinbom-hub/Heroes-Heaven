@@ -487,7 +487,13 @@ export function ItemDetail({
             <div className="sd-uses">
               <span className="sd-uses-title">This is my</span>
               <span className="sd-uses-row">
-                {designationKinds.map(({ kind, label }) => {
+                {designationKinds
+                  /* `wayfinder-slotted` only makes sense on a record that HAS a resonant power. Every
+                   * other mark is class-gated; this one would otherwise offer to slot a longsword into
+                   * a wayfinder. The gate is the FIELD, so a newly imported aeon stone needs no UI
+                   * change to become slottable. */
+                  .filter(({ kind }) => kind !== 'wayfinder-slotted' || !!(item as { resonant?: unknown } | undefined)?.resonant)
+                  .map(({ kind, label }) => {
                   const on = (inv.designations ?? []).includes(kind);
                   return (
                     <button

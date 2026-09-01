@@ -120,6 +120,42 @@ for (const [bucket, records] of Object.entries(core)) {
   }
 }
 
+/*
+ * ---- the AUTHORED aonId always wins -------------------------------------------------------------
+ *
+ * Stamping is an automated guess made from a NAME, and the loop above deliberately clears every aon*
+ * field first so a reclassified record never keeps a stale pairing. That also throws away the
+ * hand-corrected links, which live as `aonId` rows in scripts/data/effect-backfill.json and reach
+ * core.json through import-core-v2 — a stage that runs BEFORE this one. So every regen quietly
+ * reinstated the wrong page and nothing said so: `fix-aonid-collisions.mjs` saw its own row still in
+ * the overlay and reported "0 change(s)".
+ *
+ * Measured 2026-08-19 — 25 records, all of them a subclass whose name is also something else:
+ *
+ *     classFeatures/thief    racket-9         ->  class-sample-15   (an NPC rogue named Thief)
+ *     classFeatures/bomber   research-field-5 ->  class-sample-2
+ *     classFeatures/battle   mystery-13       ->  action-1422       (the Battle action)
+ *     classFeatures/time     mystery-23       ->  domain-121        (the Time domain)
+ *
+ * A name-match cannot tell those apart; a person already did. Re-applying the authored rows LAST
+ * makes that ruling durable, and costs nothing where the two agree.
+ */
+{
+  let overlay = [];
+  try { overlay = JSON.parse(readFileSync('scripts/data/effect-backfill.json', 'utf8')); } catch { /* optional */ }
+  let restored = 0;
+  for (const r of overlay) {
+    if (r?.field !== 'aonId' || r.path?.length || r.create) continue;
+    const rec = core[r.category]?.[r.id];
+    if (!rec) continue;
+    if (r.value === null) { if ('aonId' in rec) { delete rec.aonId; restored++; } continue; }
+    if (rec.aonId === r.value) continue;
+    rec.aonId = r.value;
+    restored++;
+  }
+  if (restored) console.log(`\n${restored} authored aonId(s) re-applied over the stamp (the overlay is the ruling).`);
+}
+
 const total = Object.values(tally).reduce((a, b) => a + b, 0);
 console.log(`--- stamped ${total} records ---`);
 for (const [k, v] of Object.entries(tally).sort((a, b) => b[1] - a[1])) {

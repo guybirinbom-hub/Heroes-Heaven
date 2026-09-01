@@ -1,0 +1,26 @@
+[
+ {
+  "category": "classFeatures",
+  "id": "kinetic-gate",
+  "field": "choice",
+  "value": {
+   "flag": "gateMode",
+   "prompt": "Single gate or dual gate?",
+   "kind": "array",
+   "options": [
+    {
+     "value": "dual",
+     "label": "Dual Gate — two elements",
+     "description": "Two kinetic elements, and two 1st-level impulse feats: one with the trait of the first element, one with the trait of the other. A dual gate gains no impulse junction at 1st level."
+    },
+    {
+     "value": "single",
+     "label": "Single Gate — one element, plus an impulse junction",
+     "description": "One kinetic element, and two 1st-level impulse feats with that element's trait. You also gain that element's impulse junction, which triggers when you use an impulse of that element taking 2 or more actions — once per round."
+    }
+   ],
+   "note": "Unanswered counts as a dual gate. Composite impulses need two elements, so a single gate cannot take them; in exchange a single gate gets its element's impulse junction from 1st level."
+  },
+  "why": "WG parity 002. PRINTED: 'You can choose either a single gate (one element) or dual gate (two elements) at 1st level.' classes.kineticist.extraChoices.element.pickByLevel was {1:2} with no way to express the alternative, so Single Gate could not be built AT ALL and every kineticist was forced to two elements. Stored as a class-feature `choice` rather than a second extraChoices group because `single`/`dual` are not content records (referential-integrity and classfeature-page-check would both fire on options that resolve to no classFeatures record), and because kinetic-gate is already a level-1 feature so Builder.tsx's askingFeatures renders the picker with no new UI. pickByLevel deliberately LEFT at 2: unanswered = dual = the status quo, and there is no migration hook, since App.tsx prefers a stored BuildState over deriveBuildFromCharacter. The count is read through gateElementLimit() in kineticElements.ts, consulted by both extraPickCount (how many the picker offers) and kineticistElements (how many you have), and clamping happens at READ so switching dual->single never destroys the second stored element."
+ }
+]

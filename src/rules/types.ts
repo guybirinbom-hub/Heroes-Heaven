@@ -218,6 +218,51 @@ interface ContentBase {
   name: string;
   traits: Trait[];
   rarity: Rarity;
+  /**
+   * CONDITIONAL effects: a `*` on each stat named, with the trigger and the bonus spelled out when the
+   * player opens that stat. Nothing here changes a number — the whole point is effects that only apply
+   * sometimes, which no computed total can honestly include.
+   *
+   * ⚠ ON ContentBase, NOT ItemBase, since 2026-08-18. It began on items because the item editor's
+   * Advanced section writes it. That left every situational bonus on a FEAT, class feature, background
+   * or heritage reachable only from the `FEAT_SITUATIONAL` code table in situationalBonuses.ts — which
+   * a data pass cannot write. The Wanderer's Guide comparison hit this immediately: `conditional` is
+   * one of their commonest verbs (876 records), and every disagreement it raised on a non-item record
+   * was unreachable from a decision file. That blocked the METHOD, not one record.
+   *
+   * `entriesFor` merges this with the shipped table; see `situationalReplaces`.
+   */
+  situational?: SituationalBonus[];
+  /**
+   * Set when `situational` REPLACES the shipped `FEAT_SITUATIONAL` entries for this id rather than
+   * adding to them. Without it the two are concatenated and the player reads both versions of one
+   * rule. Appending cannot express "delete the way we did it and do it their way", which is exactly
+   * what the parity pass is for.
+   */
+  situationalReplaces?: boolean;
+  /**
+   * Ids whose SHIPPED situational entries this record SILENCES — it grants that record's ability on
+   * explicitly different printed terms. Finishing Precision: *"You gain the Precise Strike class
+   * feature but you deal 1 additional damage on a hit and 1d6 damage on a finisher. This damage
+   * doesn't increase as you gain levels."* Without this the swashbuckler's SCALING star renders
+   * beside this feat's frozen one, stating a number the feat forbids. `situationalReplaces` cannot
+   * say it: that flag only replaces the record's OWN id.
+   */
+  suppressesSituational?: string[];
+  /**
+   * A note this record adds to ANOTHER row — an action, a condition, or a class feature.
+   *
+   * The DATA twin of the hand-authored `RECORD_MARKERS` table in situationalBonuses.ts, read through
+   * the same `extra` channel by `recordMarkers` in explain.ts, so there is one display path and not two.
+   *
+   * ⚠ Exists because a whole class of printed clause changes an ACTION rather than a stat, and had
+   * nowhere to go: Rune Singer ("you use the 2-action version of Trace Rune as a single action …and
+   * you remove the action's manipulate trait"), Titan Wrestler, Group Coercion, Whip Tail, Boots of
+   * Bounding. `situational` cannot hold these — `SituationalTarget` mirrors `StatRef`, so a clause
+   * naming no stat can never display — and `modifiesGrant.actionRider` is gated on the target being a
+   * feat or class feature the character owns, which is silent when the target is in the actions bucket.
+   */
+  recordMarks?: RecordMarker[];
   /** Rich rules text (Markdown/HTML). Open Game / ORC content. */
   description: string;
   /** Cross-references found in `description` (from Foundry @UUID links), for in-text linking. */
@@ -355,6 +400,14 @@ export interface SpellNote {
    */
   fromChoice?: boolean;
   /**
+   * The note belongs to ONE answer of the granting record's choice — the champion's Mercy names a
+   * different condition per mercy taken.
+   *
+   * ⚠ Measured before adding: without it ALL of a record's notes rendered on the spell at once, so a
+   * champion read every mercy's text on Lay on Hands regardless of which one they had chosen.
+   */
+  whenChoice?: string;
+  /**
    * The clause belongs to the spell this record's PICK-A-CANTRIP answer chose, so `spellId` is
    * ignored and the answer supplies it. Awakened Jewel is the case: *"You gain one cantrip from the
    * occult spell list. **As long as you possess your head gem**, you can cast this spell as an innate
@@ -393,6 +446,15 @@ export interface SenseEntry {
   name: string;
   /** Range in feet, if limited. */
   range?: number;
+  /**
+   * A range that GROWS with the character — Worm Sense's *"tremorsense within 5 feet. The range …
+   * increases to 10 feet at 8th level and to 15 feet at 12th level."*
+   *
+   * The highest step the character has reached wins, and `range` above stays the level-1 value, so a
+   * record without a ladder behaves exactly as before. Nothing on the entry could express this, so a
+   * scaling sense was frozen at its first rung and a 12th-level character read 5 feet.
+   */
+  rangeAt?: { level: number; range: number }[];
   acuity?: 'precise' | 'imprecise' | 'vague';
   /** DISPLAY ONLY, set by `deriveDefenses` when a stronger rung of the same vision ladder is present
    *  (Q13: "Show only darkvision when it supersedes low-light"). The sense is still HELD — it stays in
@@ -406,6 +468,51 @@ export interface SenseEntry {
 export interface IwrEntry {
   type: string;
   value: number | string;
+  /**
+   * The entry only applies against a named SOURCE of damage — Draconic Resistance's "Double this
+   * resistance against damage of that type dealt to you by dragons".
+   *
+   * ⚠ DISPLAY-ONLY, and deliberately so. A qualified entry never enters the computed total, because
+   * whether the attacker is a dragon is not knowable from the character sheet; it renders as its own
+   * line in the IWR breakdown with this text, exactly as a situational bonus renders beside a stat.
+   * `deriveDefenses` skips any entry carrying this field, so an unqualified entry's number is
+   * unaffected and no total can silently include a conditional value.
+   *
+   * Measured before this existed: of every resistance shipped anywhere in core.json, ZERO carried
+   * anything beyond {type, value}, so a printed clause of this shape had nowhere to go at all.
+   */
+  against?: string;
+  /**
+   * The entry does not exist below this level. The seer animist's practice prints its resistance in a
+   * 9th-level invocation — *"You gain spirit resistance and void resistance equal to half your level"* —
+   * while the record that has to carry it is the 1st-level practice choice, because the invocations are
+   * not separate records on our side. A formula can express the gate arithmetically
+   * (`floor(@actor.level/2)*min(1,max(0,@actor.level-8))`) but nobody reading that can tell what the
+   * clause says, and the resistance total already drops any entry that resolves to 0.
+   */
+  minLevel?: number;
+  /**
+   * The entry belongs only to a character who HAS (`whenCreatureTrait`) or does NOT have
+   * (`unlessCreatureTrait`) this creature trait. The Channel Protection Amulet prints *"resistance 5
+   * against damage from harm spells if you're living, or against heal spells if you're undead"* — one
+   * item, two mutually exclusive resistances, and which one applies is a fact the sheet already holds.
+   * Resolved through the single creature-trait reader, so this cannot disagree with the Details tab.
+   * Absent gates mean unconditional, which is every other entry in the database.
+   */
+  whenCreatureTrait?: string;
+  unlessCreatureTrait?: string;
+  /**
+   * The printed clause the number is limited by, when that limit is NOT resolvable from the sheet but
+   * the entry is still COUNTED — Backfire Mantle's *"from your own alchemical items and those of your
+   * allies"*.
+   *
+   * ⚠ NOT the same as `against`. An `against` entry is deliberately withheld from the computed total,
+   * and both IWR surfaces iterate the resolved resistances — so a type whose ONLY contributor is
+   * `against` renders on no screen at all. That is why no record uses it, and why records instead
+   * smuggled the clause into `type` ("damage from swarms"), which breaks type matching. This annotates
+   * the value rather than hiding it.
+   */
+  condition?: string;
 }
 
 /** Innate defenses (senses + IWR) a content item grants. Mixed into Heritage,
@@ -429,9 +536,31 @@ export interface UnarmedRider {
    * nothing matches nothing.
    */
   fromRecord?: string;
+  /**
+   * Apply only when the GRANTING record's own choice was answered this way.
+   *
+   * Iruxi Armaments offers three branches and they are not the same shape: Fangs and Tail GRANT a new
+   * attack (two `grantedStrikes`, each with a `choiceValue`), while Claws UPGRADES the claw the iruxi
+   * ancestry already gave you — *"Your claw attack deals 1d6 slashing damage instead of 1d4 and gains
+   * the versatile P trait."* That half can only be an `unarmedTraits` rider, and without this gate it
+   * would fire for the player who picked Fangs too, handing them an upgrade they never took.
+   *
+   * Mirrors `grantedStrikes[].choiceValue`, so both halves of one three-way choice read one answer.
+   */
+  choiceValue?: string;
   /** Traits to add. A `deadly-dN` / `versatile-*` replaces a weaker one of the same family rather
    *  than sitting beside it, which is how the printed "or increase it to" clauses read. */
   add?: string[];
+  /**
+   * Add the traits the PLAYER chose, named by the flag of the choice that asked.
+   *
+   * Fighting Horn: *"Choose two of the following weapon traits: disarm, grapple, shove, and trip. Your
+   * horn gains the chosen traits."* A fixed `add` cannot say which — and the record asked the question
+   * and did nothing with the answer. Gathered across every TAKING, so its Special ("you can take this
+   * feat a second time, adding the traits you didn't choose") adds to the horn rather than re-reading
+   * the first answer.
+   */
+  addFromChoiceFlag?: string;
   /** Traits to REMOVE — "your fist attacks lose the nonlethal trait". Every field before this one
    *  could only add, so a feat whose whole content is losing a drawback did nothing. */
   remove?: string[];
@@ -488,6 +617,15 @@ export interface WeaponRider {
    *  "an agile or finesse melee weapon that DOESN'T have the deadly trait". Without this it would
    *  quietly downgrade a deadly d10 weapon to d8. */
   onlyIfMissing?: boolean;
+  /**
+   * Add the traits the PLAYER chose, named by the flag of the choice that asked.
+   *
+   * Fighting Horn: *"Choose two of the following weapon traits: disarm, grapple, shove, and trip. Your
+   * horn gains the chosen traits."* A fixed `add` list cannot say which — and the record used to ask
+   * the question and do nothing with the answer. Gathered across every TAKING, so the feat's Special
+   * ("you can take this feat a second time") adds a second trait rather than re-reading the first.
+   */
+  addFromChoiceFlag?: string;
   /** Step the damage die up. `true` is one step; a number is that many. Steps DO NOT COMPOUND across
    *  riders — the best single step wins, or a champion with two of these turns a d6 into a d10. */
   stepDie?: boolean | number;
@@ -626,6 +764,13 @@ export interface SpecialStatGrant {
 
 export interface DefenseGrants {
   /**
+   * *"While you're dying, you DON'T ADD YOUR DYING VALUE to the DC of your recovery checks (this means
+   * the DC is typically 10)"* — Nine Lives Catfolk, a HERITAGE, which is why this sits on the shared
+   * grants block rather than on Feat: not a reduction but a different formula, so it gets a flag rather
+   * than a number that cannot express it.
+   */
+  recoveryDcIgnoresDyingValue?: boolean;
+  /**
    * "You gain the instinct ability for the instinct you chose for Barbarian Dedication." The answer
    * was recorded when the DEDICATION was taken; this record just needs to dereference it.
    *
@@ -642,6 +787,14 @@ export interface DefenseGrants {
     /** How the answer becomes a record id: `initiate-benefit-` + `chalice`. */
     prefix?: string;
     suffix?: string;
+    /**
+     * …for the answers that do not TRANSFORM into an id. A gunslinger way's initial deed is NAMED,
+     * not derived — `way-of-the-drifter` → `into-the-fray` — so no prefix/suffix can reach it, and
+     * Slinger's Readiness ("You gain the initial deed for the way you selected with Gunslinger
+     * Dedication") delivered nothing at all. Keys are the granting feat's own `choice` answer values.
+     * Wins over prefix/suffix when present; an answer with no entry grants nothing.
+     */
+    map?: Record<string, string>;
   };
   /** Spells this record gives ACCESS to — see SpellAccessGrant. An array because one record can widen
    *  the list AND grant into a repertoire, and those are different promises. */
@@ -711,7 +864,34 @@ export interface DefenseGrants {
   /** Speeds granted only when a condition is met: a skill proficiency threshold (Quick Climb / Quick
    *  Swim — legendary Athletics) OR a specific heritage (Swift Swimmer's wetlander lizardfolk → swim 25).
    *  All present conditions must hold. */
-  speedsIf?: { skill?: ProficiencyKey; rank?: ProficiencyRank; heritage?: string; speeds: SpeedGrants }[];
+  /** …and `feat`, the gate four records print and none could express: *"If you ALSO HAVE the Cave
+   *  Climber ancestry feat, your total climb Speed increases to your land Speed"* (Tree Climber, Skilled
+   *  Climber, Skillful Climber, Uncanny Suction). The upgrade is the whole second sentence of each, and
+   *  with only skill and heritage gates available it reached nothing. */
+  /**
+   * …and the three EQUIPMENT gates, which the owner's rule made load-bearing: *"we give an actual
+   * speed only when it's ALWAYS; if it is dependent on something it's in a star."* Four records held a
+   * permanent Speed for a clause the printed text gates on gear — Monk Moves' *"+10-foot status bonus
+   * to your Speed WHEN YOU'RE NOT WEARING ARMOR"* was paying out in full plate.
+   *
+   * These are not stars, because the app can EVALUATE them exactly from the character's own equipment:
+   * the number is present precisely when the condition holds, which is what "always" means for a given
+   * loadout. A star is the right lane only for a condition the sheet cannot see — a terrain, a moment
+   * in an encounter. That is Favored Terrain's lane, not this one.
+   */
+  speedsIf?: {
+    skill?: ProficiencyKey;
+    rank?: ProficiencyRank;
+    heritage?: string;
+    feat?: string;
+    /** *"when you're not wearing armor"* — explorer's clothing counts as unarmored, per `isUnarmored`. */
+    unarmored?: boolean;
+    /** *"while wearing your armor innovation"* — the WORN item must carry this designation. */
+    wearingDesignated?: ItemDesignation;
+    /** *"as long as you're holding a thaumaturge implement"* — any carried item so designated. */
+    holdingDesignated?: ItemDesignation;
+    speeds: SpeedGrants;
+  }[];
   /** Arithmetic ON a Speed the character ALREADY has, which `speeds` cannot express: every non-land
    *  grant resolves as max(existing, granted), so a `speeds: { fly: 5 }` meaning "+5 feet to your fly
    *  Speed" (Winged Warrior Dedication) would be swallowed whole. Also the two penalty clauses. */
@@ -726,6 +906,14 @@ export interface DefenseGrants {
     /** Unburdened Iron's second clause: deduct this many feet from ONE other Speed penalty
      *  ("If your Speed is taking multiple penalties, pick only one penalty to reduce"). */
     reduceOtherPenalty?: number;
+    /**
+     * The adjustment applies only while one of these MODES is active — Animal Fleetness raises the
+     * Speeds of your werecreature shapes, not the Speeds you walk around town with.
+     *
+     * ⚠ Measured before adding: ungated, it took a plain humanoid from 25 to 35 feet, which the feat
+     * never grants. The gate is what makes it the printed rule instead of a free +10.
+     */
+    whileModes?: string[];
   };
   /**
    * "You can use your proficiency rank in Crafting for anything that requires a proficiency rank in
@@ -736,8 +924,19 @@ export interface DefenseGrants {
    * saying so.
    */
   skillSubstitutions?: {
-    /** The skill you may roll instead. */
-    use: SkillId;
+    /**
+     * The skill you may roll instead — or PERCEPTION.
+     *
+     * Edgewatch Detective Dedication prints *"You can use Perception instead of Survival to Track"*,
+     * and Perception is not a `SkillId`, so the clause had nowhere to live and the record shipped it
+     * as nothing at all. One record in the database prints this shape — measured — so it is a widened
+     * type rather than a new field.
+     */
+    /* …and a LORE, which is why this is `ProficiencyKey` rather than `SkillId`. Deceptive Tactics
+     * prints *"You can use your WARFARE LORE modifier in place of your Deception modifier"*, and a
+     * Lore is not a `SkillId` — the same reason Perception had to be widened in above. Two records
+     * print this shape; both had nowhere to put it. */
+    use: ProficiencyKey | 'perception';
     /** The skill it stands in for. */
     forSkill: SkillId;
     /**
@@ -752,6 +951,12 @@ export interface DefenseGrants {
   /** Languages this feat/heritage grants outright (a half-elf lineage's or a regional feat's specific
    *  language) — the record names WHICH languages. */
   grantsLanguages?: string[];
+  /** *"If you already speak Petran, you learn a common language of your choice."* A named language the
+   *  character already knows is a DEAD grant — languages union into a Set — so a record whose whole
+   *  benefit is one language gave nothing to exactly the characters most likely to have it already.
+   *  This converts the redundant case into a free pick, the same shape `redundantFallback` uses for a
+   *  skill that is already trained. */
+  languageRedundantFallback?: boolean;
   /** Languages the record lets the PLAYER choose ("You learn three new languages of your choice").
    *  Nothing expressed a language choice before, so Multilingual — the most-taken language feat in
    *  the game — did nothing at all. A formula string may reference `@item.level`. */
@@ -821,7 +1026,20 @@ export interface DefenseGrants {
    * inventory, so a feat whose benefit IS an item delivered nothing and the player had to know to
    * add it themselves.
    */
-  grantsItems?: { itemId: string; quantity?: number; invested?: boolean }[];
+  grantsItems?: {
+    itemId: string;
+    quantity?: number;
+    invested?: boolean;
+    /** Already worn when handed over. Granted items default to unworn — the player decides what to put
+     *  on — but a few are not removable kit: the Hardshell Surki's carapace IS the character's body
+     *  ("You can never wear other armor or remove your carapace"), so arriving unworn meant the one
+     *  ancestry that cannot buy armour showed no AC bonus, Dex cap or penalties from it. */
+    worn?: boolean;
+    /** This grant SUPPLANTS another source's granted item — Clan Pistol prints "This replaces your
+     *  clan dagger", and the dwarf ancestry grants the dagger. Applied after every carrier is
+     *  collected, so ordering between them cannot matter. */
+    replaces?: string;
+  }[];
   /**
    * "You gain all the mechanical benefits of the <X> heritage you selected at 1st level."
    *
@@ -910,15 +1128,58 @@ export interface DefenseGrants {
      *  grants weakness to fire. A benefit block that could only ever help would have dropped it. */
     weaknesses?: IwrEntry[];
     senses?: SenseEntry[];
+    /** Senses granted only if the character ALREADY HAS a named sense, and only while the state is on.
+     *  Nocturnal Senses: *"While raging, IF you have low-light vision you gain darkvision, and IF you
+     *  have scent the range of your imprecise scent increases to 60 feet"* — its printed prerequisite
+     *  is "low-light vision OR scent", so a holder may satisfy one branch and not the other, and a
+     *  bare `senses` grant here would hand a scent-only barbarian darkvision. Same shape and the SAME
+     *  READER as the standing top-level `conditionalSenses`; the only difference is the state gate. */
+    conditionalSenses?: DefenseGrants['conditionalSenses'];
     immunities?: string[];
     speeds?: SpeedGrants;
     /** Wooden Rage's −10 ft, which applies only while the state is on. */
     speedPenalty?: number;
+    /**
+     * Adrenaline Rush: *"While you are Raging, increase your encumbered and maximum Bulk limits by 2."*
+     *
+     * The standing `bulkLimitBonus` on a record is unconditional, so authoring it there would have
+     * given a barbarian the extra Bulk out of combat too. This is the same number behind the state
+     * gate everything else in this clause sits behind.
+     */
+    bulkLimitBonus?: number;
     /** The character level this clause starts at. Raging Resistance is a 9th-level class feature
      *  whose damage types are printed on an INSTINCT chosen at 1st — so without a gate the instinct
      *  would hand a 1st-level barbarian a 9th-level defence. */
     minLevel?: number;
   }[];
+  /**
+   * NATURAL ARMOUR — *"When you're unarmored, your scales give you a +1 item bonus to AC with a
+   * Dexterity cap of +3. The item bonus increases to +2 at 5th level."*
+   *
+   * Four records print exactly this shape (Scales of Steel, Scales of the Dragon, Scaly Hide,
+   * Wormskin) and none of them had a field to put it in, so all four moved no AC. A `situational`
+   * note was the closest authoring available, and a note is not a number.
+   *
+   * Applied as an ITEM bonus in `deriveAc`. By DEFAULT it competes — natural armour and a potency
+   * rune are the same bonus type, so the better one stands. But all four of these records print the
+   * opposite ("cumulative with armor potency runes on your explorer's clothing"), which is what the
+   * `cumulative` flag below records. This paragraph used to state the competing case as though it
+   * were what they print; it is the default they are each an exception to.
+   */
+  unarmoredAc?: {
+    acBonus: number;
+    /** The cap on Dex-to-AC while this applies, combined as the LOWER of any caps in play. */
+    dexCap?: number;
+    /** "The item bonus increases to +2 at 5th level." */
+    upgradeAtLevel?: { level: number; acBonus: number };
+    /**
+     * The printed exception to the item-bonus stacking rule: *"The item bonus to AC from these scales
+     * is CUMULATIVE with armor potency runes on your explorer's clothing, the Mystic Armor spell, or
+     * Bands of Force"* (Scaly Hide). Natural armour normally competes for the item slot and the higher
+     * wins; a record saying this ADDS instead, which is worth 1–2 AC to every character that has it.
+     */
+    cumulative?: boolean;
+  };
   /** This feat/heritage raises the character to at least this SIZE (Jotun's Heart → Large). */
   sizeOverride?: Size;
   /**
@@ -932,14 +1193,70 @@ export interface DefenseGrants {
   sizeSet?: Size;
   /** Natural reach in feet this feat/heritage grants (Jotun's Heart: 10). Highest wins. */
   reach?: number;
-  /** A flat additive bonus to LAND Speed (Hyper Boosters: +10, Fleet: +5). `speeds.land` is additive
-   *  too, but `speeds` SETS the non-land movement types, so a land entry there reads as a set when it
-   *  isn't — this field says "increases by N" unambiguously. */
-  landSpeedBonus?: number;
+  /**
+   * An additive bonus to LAND Speed (Hyper Boosters: +10, Fleet: +5). `speeds.land` is additive too,
+   * but `speeds` SETS the non-land movement types, so a land entry there reads as a set when it isn't
+   * — this field says "increases by N" unambiguously.
+   *
+   * A STRING is a formula in the same vocabulary the other speed values use (`@actor.level`, with
+   * floor/ceil/max/min), resolved through `resolveFormula`. Vivacious Speed's always-on half —
+   * *"when you don't have panache, you still get half this status bonus, rounded down to the nearest
+   * 5-foot increment"* — steps at 11th and 19th level, which no flat number can say; before this it
+   * had no numeric carrier at all and a 19th-level swashbuckler standing without panache read 25 ft
+   * where the printed floor is 40.
+   */
+  landSpeedBonus?: number | string;
   /** A land-Speed FLOOR: "your land Speed increases TO 15 feet" (Strong Tail), "becomes 10 feet"
    *  (Cecaelia merfolk). Applied to the ancestry base before any additive bonus, so a merfolk who
    *  takes Strong Tail and Fleet walks at 20, not 25. Highest floor wins. */
   landSpeedMin?: number;
+  /**
+   * Run a SKILL off a different attribute — *"you can use your Intelligence modifier in place of your
+   * Wisdom modifier for Medicine checks"* (Officer's Medical Training).
+   *
+   * `skillAbility()` in derive.ts is a fixed skill→attribute map with no override, so this clause had
+   * nowhere to live and shipped as a `situational` NOTE: the sheet said "use Intelligence" beside a
+   * Medicine number still computed from Wisdom. One record prints it — measured across every
+   * description in the database — so this is a field, not a lane.
+   *
+   * Applied as the BETTER of the two, never blindly the swap: the clause reads "CAN use", so a
+   * character with higher Wisdom keeps Wisdom.
+   *
+   * `mandatory` is for the OTHER wording, which is not an option at all: Esoteric Lore prints
+   * *"Unlike a normal Lore skill, you use Charisma as your modifier on Esoteric Lore checks"*. There
+   * the swap REPLACES the printed attribute even when it is worse, so best-of would quietly hand an
+   * Int-heavy thaumaturge a number the book does not give them.
+   */
+  skillAbilitySwap?: { skill: ProficiencyKey; use: AbilityId; mandatory?: boolean };
+  /**
+   * A skill whose rank climbs on its own schedule, independent of skill increases: *"At 3rd level, you
+   * become an expert in Undead Lore; at 7th level, you become a master in Undead Lore; and at 15th
+   * level, you become legendary in Undead Lore."* The class's `trainedSkills.lore` grants the 1st-level
+   * training and never raises it, so both the necromancer's and the thaumaturge's signature Lore sat at
+   * trained for twenty levels. Ranks are cumulative and applied as a maximum, so this can only ever
+   * raise a skill — never lower one another record has already pushed higher.
+   */
+  skillProgression?: { skill: ProficiencyKey; at: { level: number; rank: ProficiencyRank }[] }[];
+  /**
+   * The runesmith's two printed tables, each on the feature that prints it: how many runes the runic
+   * repertoire holds, and how many may be etched at once. Both step at 1/5/9/13/17, and both are read
+   * by `runeRepertoireMax` / `runeEtchedMax` in build.ts — the table is the source of truth, not a
+   * duplicate of a formula.
+   */
+  runesKnown?: { level: number; count: number }[];
+  runesEtched?: { level: number; count: number }[];
+  /**
+   * The ARCHETYPE commander's two smaller capacities, on the dedication that prints them.
+   *
+   * *"You gain the tactics class feature like a commander and gain your own folio; THIS FOLIO CONTAINS
+   * TWO common mobility or offensive tactics of your choosing. You can prepare ONE of these tactics
+   * whenever a commander would be able to prepare tactics."* The class's own numbers are 5 and 3, so a
+   * dedicated character reading the class ladder would carry a folio nearly three times the size the
+   * feat grants — which is why the numbers live on the record that prints them and are read through
+   * `tableMax`, exactly as the runesmith dedication's are, rather than written twice in code.
+   */
+  folioTactics?: { level: number; count: number }[];
+  preparedTactics?: { level: number; count: number }[];
   /** Grants void ("negative") healing — harmed by vitality, healed by void (dhampir-style). Surfaced on
    *  the Defenses card. Some ITEMS grant it too (Emerald Fulcrum Lens) — see ItemBase. */
   negativeHealing?: boolean;
@@ -983,7 +1300,17 @@ export interface DefenseGrants {
    * taken at its word (gold-set principle I — free-text player input is a legitimate choice type).
    * Resolved by `buildCharacter` into `Character.chosenCreatureTraits`, attributed to this record.
    */
-  grantsCreatureTraitFromChoice?: string;
+  /**
+   * Either the FLAG whose answer IS the trait ("the trait appropriate to the type of servitor you've
+   * become" — the answer is `demon`, and `demon` is the trait), or a MAP from answer to trait for a
+   * record whose answers are not themselves trait ids.
+   *
+   * ⚠ Both shapes are authored. `sanctified-soul` — the exemplar's level-1 sanctification — ships the
+   * MAP `{ holy: 'holy', unholy: 'unholy' }` against `choice.flag: 'sanctification'`, while the reader
+   * accepted only the string form and compared it to the flag. It matched nothing, so no exemplar ever
+   * gained holy or unholy, and therefore neither did their Strikes or their IWR.
+   */
+  grantsCreatureTraitFromChoice?: string | Record<string, string>;
   /**
    * DEGREE-OF-SUCCESS shifts this record grants — "a success on a Thievery check to Pick a Lock is a
    * critical success instead". No number moves, so it fits no numeric lane.
@@ -1029,23 +1356,81 @@ export interface DefenseGrants {
   /** The level the crit-spec effect activates, when gated by `self:level >= N` (e.g. ancestry
    *  weapon-familiarity feats grant it at 5, even though the feat is taken at 1). */
   critSpecLevel?: number;
+  /**
+   * The crit-spec grant applies only while a mode of this EXCLUSIVE GROUP is active — *"WHILE RAGING,
+   * you have the critical specialization benefits for melee weapons and unarmed attacks"* (Brutality),
+   * *"…while one of your compositions is active"* (Bard Weapon Expertise).
+   *
+   * Two records, and both were unconditional: a barbarian had the benefit out of combat and a bard had
+   * it in silence. Keyed by GROUP rather than by mode id because the state has several spellings — a
+   * Decay-instinct barbarian rages through `cat-rotting-rage`, not `cat-rage`, and naming ids would
+   * silently drop every instinct but the default one.
+   */
+  critSpecRequiresModeGroup?: string;
+  /**
+   * A per-TARGET condition on the crit-spec grant, printed beside the effect — *"…when attacking your
+   * HUNTED PREY"* (Ranger Weapon Expertise), *"…and the target has the off-guard condition"* (Avenger).
+   *
+   * Not a mode gate: whether it applies changes with the creature being struck, which no sheet state
+   * can know. So it is annotated rather than enforced — but it has to be SAID, because the strike card
+   * otherwise shows the effect unconditionally and a ranger reads it as always-on.
+   */
+  critSpecCondition?: string;
   /** Weapon restriction on the crit-spec grant — only matching weapons show the effect. */
   critSpecWeapons?: {
     groups?: string[];
     traits?: string[];
     bases?: string[];
+    /**
+     * Match by the strike's NAME. For a named unarmed attack only — "…or with your horns unarmed
+     * strike" (Oni Weapon Familiarity).
+     *
+     * ⚠ Needed because none of the other three can reach a natural attack. `bases` tests
+     * `strike.base`, which for a granted unarmed strike is `natural:<index>` and never a weapon slug;
+     * `groups:['brawling']` or `traits:['unarmed']` would light crit spec on Fist and every other
+     * unarmed strike the character has. `unarmedTraits[].critSpec` does reach one attack, but
+     * `UnarmedRider` carries no level, so it would grant from level 1 against a printed "At 5th
+     * level" — whereas a `critSpecWeapons` grant is already gated by this record's `critSpecLevel`.
+     *
+     * Matched case-insensitively as a substring, so "horns" finds "Horns" and "Horns (agile)".
+     */
+    names?: string[];
     melee?: boolean;
     /** Only the DESIGNATED item — "your innovation gains critical specialization". Without this the
      *  grant is unnarrowed, and weaponMatches returns true for an unnarrowed entry, so it would light
      *  up crit spec on every Strike the character makes. See InventoryItem.designations. */
     designated?: ItemDesignation;
+    /** A rank the STRIKE must already reach — Archer Dedication's *"If you are at least an expert in
+     *  the bow you are using, you gain access to its critical specialization effect."* Tested against
+     *  that strike's own attack rank, not a weapon-category rank, because the two differ the moment a
+     *  familiarity feat or a rune moves one weapon. Absent = ungated, which is every other entry. */
+    minRank?: ProficiencyRank;
   };
   /** Melee unarmed Strikes this feat/feature grants (from Foundry `Strike` rule elements). */
   grantedStrikes?: GrantedStrike[];
   /** "You gain X — or Y instead if you already have X" sense grants (Superior Sight, Ember's Eyes,
    *  Aquatic Eyes). `ifPresent` is the sense the character must ALREADY have (from ancestry vision or
    *  any other source) for the grant to upgrade from `base` to `upgraded`. */
-  conditionalSenses?: { ifPresent: string; base: SenseEntry; upgraded: SenseEntry }[];
+  conditionalSenses?: {
+    ifPresent: string;
+    /** OPTIONAL: omit it for a pure GATE that grants nothing when the named sense is absent — Nocturnal
+     *  Senses' "if you have low-light vision you gain darkvision" has no fallback, unlike Superior
+     *  Sight's "you gain low-light vision, or darkvision if you already have it". */
+    base?: SenseEntry;
+    /** The whole replacement sense, for a TYPE upgrade ("low-light vision, or darkvision if you already
+     *  have low-light"). Ignored when `increaseRangeBy` is set. */
+    upgraded?: SenseEntry;
+    /**
+     * …or a RELATIVE increase to the range you already have: *"if you already have tremorsense, increase
+     * ITS range by 5 feet"* (Terra Dragonblood), *"increase its range by 60 feet"* (Vigilant Mask).
+     *
+     * A fixed `upgraded` cannot state this. Authoring the arithmetic for one assumed base (30 + 5 = 35)
+     * is wrong for every other, and because the sense merge keeps the BETTER range, a character who
+     * already had tremorsense 60 discarded the 35 and got nothing from the feat at all — the exact
+     * character the clause is written for. Measured: two records print this shape.
+     */
+    increaseRangeBy?: number;
+  }[];
   /** "Choose one of N" effects the player picks when they take this feat/feature/heritage/item
    *  (a dragon tattoo's resistance TYPE, an energy heart's element, one of several skills). Each
    *  choice's picked option contributes a concrete effect. Stored in BuildState.effectChoices keyed
@@ -1058,8 +1443,16 @@ export interface DefenseGrants {
   dataWarning?: string;
   /** "You become trained in <tradition> spell attack rolls and spell DCs, using <attribute>" — the
    *  casting PROFILE a feat confers (Minor Magic, Shadow Magic, the esoteric dedications). Applied to
-   *  the character's innate entry (and raises an existing entry's rank rather than duplicating it). */
-  spellcastingGrant?: SpellcastingGrant;
+   *  the character's innate entry (and raises an existing entry's rank rather than duplicating it).
+   *  An ARRAY where the printed attribute depends on the chosen tradition — Nantambu Chime-Ringer:
+   *  *"Intelligence as your spellcasting ability if you choose arcane or Charisma … if you choose
+   *  occult"* — one grant per tradition; the innate entry already resolves by the spell's tradition. */
+  spellcastingGrant?: SpellcastingGrant | SpellcastingGrant[];
+  /** *"Focus spells from the hallowed necromancer archetype have the same tradition as your spell
+   *  slots."* The archetype's focus spells borrow the character's OWN casting tradition rather than
+   *  naming one, so the tradition cannot be written on the record — it is only knowable once the
+   *  character's spellcasting entry exists. */
+  focusFromSpellSlots?: boolean;
   /** Extra spell slots a feat grants ("+1 slot of each rank except your highest"). */
   spellSlotBonus?: SpellSlotBonus;
   /** A CLASS ARCHETYPE dedication (Runelord, War Magic, Vindicator…). Unlike a normal archetype these
@@ -1165,6 +1558,24 @@ export interface SpellcastingGrant {
   tradition: Tradition;
   keyAbility: AbilityId;
   proficiency: ProficiencyRank;
+  /**
+   * The grant is the archetype's FOCUS profile, not a spell-slot entry — *"When you gain your first
+   * beastmaster focus spell, you become trained in primal spell attack rolls and spell DCs, and your
+   * spellcasting ability for these spells is Charisma."*
+   *
+   * The dedication names the tradition and attribute but grants no focus spell of its own; those come
+   * from later archetype feats. Without this the profile could only be read off a record that carried
+   * BOTH, so a beastmaster's primal focus spells were cast at their class's default — occult, on a
+   * fighter. Kept as an explicit marker rather than "any dedication with a grant", so a real caster
+   * archetype's slot entry can never be mistaken for a focus profile.
+   */
+  focusOnly?: boolean;
+  /**
+   * The rank RISES at set levels — *"you become an expert in spell attack rolls and spell DCs at 12th
+   * level, and a master at 18th"*. A single `proficiency` states only the first rung, so a character
+   * who reached the later ones kept the opening rank for the rest of their career.
+   */
+  proficiencyAt?: { level: number; proficiency: ProficiencyRank }[];
 }
 
 /** Extra spell slots granted by a feat, applied to the character's slot-caster entry. */
@@ -1204,6 +1615,10 @@ export interface SpellSlotBonus {
   createRank?: boolean;
   /** Restrict to a specific entry id (defaults to the character's main slot caster). */
   entryId?: string;
+  /** Extra spells KNOWN (repertoire rows) at specific ranks WITHOUT a slot — Shattered Sacrament's
+   *  "you learn shattered sacrament, a 1st-rank halcyon spell" adds a known spell, not a cast. Only
+   *  read for entryId-targeted bonuses on a spontaneous ARCHETYPE entry. */
+  extraKnown?: Record<string, number>;
   /**
    * Extra CANTRIPS known. The slot applier filters `r > 0`, so `byRank['0']` was silently dropped and
    * nothing else could reach the cantrip cap — Cantrip Expansion, one of the most-taken feats in the
@@ -1262,6 +1677,10 @@ export interface RestrictedSlotGrant {
   /** N slots at HALF the caster's highest rank, rounded down — a Candle of Invocation ("4th-rank
    *  slots if the caster can cast 8th-rank spells"). Relative to the caster, so byRank can't say it. */
   halfHighest?: number;
+  /** N slots at the caster's HIGHEST rank — Divine Evolution's *"one additional spell slot of your
+   *  highest spell rank"*. `byRank` is absolute and would need rewriting at every level, and
+   *  `halfHighest` divides; this is the plain "top of your own table" case neither could express. */
+  highestOnly?: number;
   /** ONE slot at every rank the caster can cast from this rank upward — Spell Combination's "one slot
    *  of each rank of spell you can cast, except 2nd rank and 1st rank". `byRank` is absolute and would
    *  have to be rewritten at every level; this follows the caster's own table. */
@@ -1353,6 +1772,10 @@ export interface EffectGrant {
    */
   grantsLanguages?: string[];
   innateSpells?: InnateSpellGrant[];
+  /** Rituals the chosen option teaches (Harrow Ritualist's pick-two). Merged into the same
+   *  Character.grantedRituals list a record's own `grantsRituals` feeds; non-ritual spellIds are
+   *  dropped there. Not reachable from the item path — resolvedItemPassives has no ritual lane. */
+  grantsRituals?: { spellId: string; note?: string }[];
   /** Focus spells the chosen option grants (each carries its own Focus Point, like Feat.focusSpells) —
    *  for "choose one of N focus spells" feats (Additional Shadow Magic, Greater Deathly Secrets). */
   focusSpells?: string[];
@@ -1444,6 +1867,52 @@ export interface EffectChoice {
   /** Open-ended spell pick. The chosen spell id becomes the value; `grantTemplate` says how it is
    *  granted (as an innate spell at some cadence, or as a focus spell). */
   spellFilter?: SpellChoiceFilter;
+  /**
+   * The whole question is offered ONLY to a character who owns this class feature.
+   *
+   * *"IF YOU ARE A CLOISTERED CLERIC, select one of that deity's domains… IF YOU ARE A WARPRIEST, you
+   * gain the favored weapon of that deity as a second favored weapon."* (Syncretism.) Two branches of
+   * one feat, each belonging to a different doctrine — and until this existed the only feature gate in
+   * the whole grant vocabulary was `FeatGrant.skillsIfFeature`, which gates SKILLS and nothing else.
+   * Authoring either branch ungated would hand a warpriest a free domain focus spell (and a Focus
+   * Point), or hand a cloistered cleric a weapon proficiency: a wrong answer wearing the costume of a
+   * modelled one, which is worse than the honest "recorded only" the record used to carry.
+   *
+   * Read by `effectChoiceOffered`, which the builder's picker and every applier share — a gate honoured
+   * in only one of them either hides a question whose answer still applies, or applies an answer the
+   * player was never shown.
+   */
+  requiresFeature?: string;
+  /**
+   * The whole question is offered ONLY when the character has NOT forked this Gate's Threshold.
+   *
+   * *"Expand the Portal: … You also gain a gate junction. Fork the Path: …"* — only the Expand branch
+   * grants a junction, and their nesting says the same. The value is the THRESHOLD LEVEL (5/9/13/17)
+   * this group belongs to, because all four records share the choice id 'gate-junction' and
+   * `effectChoiceOffered` never sees the recordId, so the level cannot be inferred from the choice
+   * alone. Read against `build.gateForks[String(level)]` by the same shared predicate as
+   * `requiresFeature`, so the picker and both appliers hide the question and drop a stale answer
+   * together — a player who answers the junction then switches to Fork keeps neither.
+   */
+  requiresNoGateFork?: number;
+  /**
+   * Offered only while a SIBLING effect choice on the same record holds one of these answers —
+   * Magical Experiment prints "You gain ONE special ability", so its enhanced-sense follow-up exists
+   * only when 'enhanced senses' was the ability picked, and the resistant-skin type pickers only when
+   * 'resistant skin' was. Honoured by effectChoiceOffered (the one predicate the picker and both
+   * appliers share), so the question and any stale grant disappear together.
+   */
+  requiresChoice?: { id: string; values: string[] };
+  /**
+   * Open-ended pick from CONTENT (or from what the character already has) — the same vocabulary a
+   * `choice.kind: 'open'` uses, on this lane.
+   *
+   * `options` is a static list, which cannot express *"your deity's favored weapon"* without printing
+   * four hundred weapons into the record, and `spellFilter` only ever yields spells. Resolved through
+   * the same `openChoiceOptions` the choice lane uses, so the two cannot drift about what a `weapon`
+   * or an `own-feat` pick admits.
+   */
+  openFrom?: OpenChoiceFrom;
 }
 
 /** Constrains an open-ended spell choice, and says what taking it grants. */
@@ -1459,7 +1928,7 @@ export interface OpenChoiceFrom {
    * spell YOU KNOW of 5th rank or lower", Fuse Stance "two stances you already know". Offering the
    * whole of content for those would let the player choose something they don't have.
    */
-  type: 'spell' | 'feat' | 'weapon' | 'language' | 'heritage' | 'ancestry' | 'own-spell' | 'own-deity-spell' | 'own-feat' | 'own-item' | 'own-companion';
+  type: 'spell' | 'feat' | 'weapon' | 'language' | 'heritage' | 'ancestry' | 'background' | 'own-spell' | 'own-deity-spell' | 'own-feat' | 'own-item' | 'own-companion';
   /**
    * ancestry: the character's OWN ancestry is not on offer. Adopted Ancestry says "choose a common
    * ancestry or ANOTHER ancestry to which you have access", and the picker listed the human host's
@@ -1518,6 +1987,14 @@ export interface OpenChoiceFrom {
   grantLanguage?: boolean;
   /** feat: level ceiling. weapon: item-level ceiling ("choose a level 0 weapon"). */
   maxLevel?: number;
+  /** feat: the ceiling RISES at a printed level. Inscribed with Elders' Deeds offers a 1st-level orc
+   *  ancestry feat and "At 13th level, you can instead gain a 5th-level ancestry feat with the orc
+   *  trait" — 10 legal picks become 19, and with only a flat `maxLevel` the clause lived in `note`
+   *  and 9 picks the rules allow were unreachable for the rest of the career. Highest threshold the
+   *  character has reached wins; with NO character the base `maxLevel` stands, which is what keeps the
+   *  characterless guard in test/choice-lane-applied.test.ts green. Same shape as
+   *  `DailyItemDef.filter.spellRankByLevel`. */
+  maxLevelByLevel?: { level: number; maxLevel: number }[];
   /** weapon: required rarity ("an uncommon simple or martial weapon"). */
   rarity?: Rarity;
   /** weapon: restrict to a proficiency category. */
@@ -1535,6 +2012,21 @@ export interface OpenChoiceFrom {
 export interface SpellChoiceFilter {
   /** Allowed traditions (any if omitted). */
   traditions?: Tradition[];
+  /** Repeatable feat, printed "choose a different spell each time" (the four qi-spells feats).
+   *  The builder greys a spell another take of the SAME feat already claimed (Q27: greyed with the
+   *  reason, never removed; the stored answer itself is never greyed). */
+  distinctAcrossTakes?: boolean;
+  /**
+   * …or the allowed tradition is an ANSWER the character already gave, named by the `choice.flag` that
+   * asked for it. Minor Magic prints *"Choose arcane, divine, occult, or primal magic, and gain two
+   * cantrips from the common cantrips available to THAT tradition"* — one tradition binding both picks.
+   * It shipped as two independent pickers over all four lists, so a player could take an arcane cantrip
+   * and a primal one from a feat that allows only one tradition; the constraint lived in prose.
+   *
+   * Same field name and meaning as `InnateSpellGrant.traditionFromChoiceFlag`. Narrows `traditions`
+   * when the answer is present, and leaves the filter alone until it is.
+   */
+  traditionFromChoiceFlag?: string;
   /** Rank bounds — `rank` for exactly N, or min/max for a window. Cantrips are rank 0. */
   rank?: number;
   minRank?: number;
@@ -1558,9 +2050,16 @@ export interface ItemPassiveEffects {
   saves?: number;
   ac?: number;
   attack?: number;
+  /** Bonus language SLOTS the worn item grants (Choker of Elocution's "you learn a language" —
+   *  chosen, not named, so it must not be grantsLanguages). Read where invested items' passives
+   *  become DefenseGrants (build.ts) and folded into bonusLanguageSlots. */
+  languageChoices?: number;
   /** Raises BOTH Bulk thresholds — the Assisting armour rune sets them to 6 + Str and 11 + Str,
    *  which is the ordinary 5 + Str / 10 + Str plus one. */
   bulkLimitBonus?: number;
+  /** "If you are dying, the DC of recovery checks is reduced by 1" (Locket of Love Left Behind) —
+   *  the item half of Feat.recoveryDcReduction, counted only while worn or invested. */
+  recoveryDcReduction?: number;
   /** "You can use Nature instead of Occultism…" from a worn/invested item (Tales in Timber). */
   skillSubstitutions?: DefenseGrants['skillSubstitutions'];
   senses?: SenseEntry[];
@@ -1602,6 +2101,12 @@ export interface ItemPassiveEffects {
 export interface Ancestry extends ContentBase {
   hp: number;
   size: Size;
+  /**
+   * Ancestry HP that varies with the printed SIZE CHOICE — the awakened animal's block prints no
+   * single scalar: Tiny/Small are 6 HP, Medium 8, Large 10. Read wherever `hp` is (build's hpMax fold
+   * and deriveMaxHp), keyed by the size the `bodySize` choice resolved; `hp` stays the fallback.
+   */
+  hpBySize?: Partial<Record<Size, number>>;
   speeds: Speeds;
   /** IWR the ancestry itself carries — the poppet's Flammable is "weakness to fire equal to one-third
    *  your level". Read by deriveDefenses; `senses` and `speeds` above are consumed elsewhere, so only
@@ -1609,6 +2114,11 @@ export interface Ancestry extends ContentBase {
   resistances?: IwrEntry[];
   weaknesses?: IwrEntry[];
   immunities?: string[];
+  /** Void (negative) healing — the skeleton ancestry's Undeath. Aggregated by deriveDefenses and
+   *  build's hasVoidHealing beside the heritage/feat/item carriers. */
+  negativeHealing?: boolean;
+  /** "+2 to your maximum and encumbered Bulk limits" — centaur's Robust. Read by deriveBulk. */
+  bulkLimitBonus?: number;
   abilityBoosts: AbilityBoost[];
   abilityFlaws: AbilityId[];
   vision: Vision;
@@ -1621,6 +2131,22 @@ export interface Ancestry extends ContentBase {
   heritages: string[];
   /** Melee unarmed Strikes granted unconditionally by this ancestry (e.g. conrasu). */
   grantedStrikes?: GrantedStrike[];
+  /** Feats the ancestry's own mechanics block grants outright — lizardfolk's Aquatic Adaptation
+   *  prints "You gain the Breath Control general feat as a bonus feat." */
+  grantsFeats?: string[];
+  /** Items the ancestry hands you at creation — the dwarf's free clan dagger. */
+  grantsItems?: DefenseGrants['grantsItems'];
+  /**
+   * A pick the ANCESTRY itself asks for. The surki's Magiphage prints *"Choose what tradition of magic
+   * you most consumed as a larva; this type of magic has become so ingrained in your body that it
+   * changes the tradition of all surki spells and magical actions to that tradition."*
+   *
+   * Undeclared until now — the builder rendered choices for feats, class features and heritages only —
+   * so this question was asked by nothing while FOUR records keyed off its answer (Sequestered Spell's
+   * cantrip list, Consume Magic's and Magitaxis's triggers, and the hardshell surki's evolution
+   * resistance). Answered on the ancestry step, stored under `ancestry:<id>` beside the rest.
+   */
+  choice?: FeatChoiceDef;
 }
 
 /** An innate spell a feat/heritage grants (cast at a fixed tradition; cantrips at-will, else 1/day). */
@@ -1633,7 +2159,9 @@ export interface Ancestry extends ContentBase {
  */
 export interface LimitedUses {
   max: number;
-  per: 'round' | 'turn' | 'minute' | 'hour' | 'day' | 'week' | 'month';
+  /** 'adventure' (Otherworldly Mission, batch 21) never auto-resets — the pip is spent by hand and
+   *  restored by hand when the table starts a new adventure. */
+  per: 'round' | 'turn' | 'minute' | 'hour' | 'day' | 'week' | 'month' | 'adventure';
   /** Period multiplier; absent means 1. */
   every?: number;
   /** Cumulative max by character level, when the count grows ("once per day; at 12th twice, at 18th
@@ -1646,9 +2174,19 @@ export interface InnateSpellGrant {
   spellId: string;
   tradition?: string;
   atWill?: boolean;
+  /** Granted only while the RECORD's own `choice` holds this answer — Zodiac Bound's and Sign
+   *  Bound's per-sign spells (batch 21). The project's whenChoice idiom, one grant per sign. */
+  whenChoice?: string;
   /** Cast-at rank when it differs from the spell's base rank (Invisible Trickster: 4th-rank
-   *  Invisibility). Cantrip/at-will grants ignore this (they auto-heighten). */
+   *  Invisibility). An at-will cantrip grant with no `rank` auto-heightens; with a `rank` it is
+   *  FROZEN there unless `heightenIfTradition` unfreezes it. */
   rank?: number;
+  /** The at-will cantrip auto-heighten applies only when the character is a slot caster of THIS
+   *  tradition; otherwise `rank` is the frozen cast rank. Ring of Minor Arcana: "Each is cast as a
+   *  1st-rank spell. If you are an arcane spellcaster, these can instead be heightened to the rank
+   *  of your cantrips." Player Core p.298 allows the split: innate cantrips auto-heighten "unless
+   *  otherwise specified". */
+  heightenIfTradition?: Tradition;
   /** Daily castings when not 1 (Unfettered Growth: twice per day). Ignored for atWill. */
   usesPerDay?: number;
   /** The period `usesPerDay` counts against when it isn't a day (Azaersi's Roads: twice per WEEK).
@@ -1707,12 +2245,35 @@ export interface InnateSpellGrant {
    * on a spell the feat does not yet grant is worse than no clause.
    */
   minLevel?: number;
+  /**
+   * Only for a character with one of these HERITAGES — Fey Cantrips: *"You gain dancing lights and
+   * ghost sound as primal innate cantrips. If you have the grig heritage, you also gain detect magic,
+   * and if you have the draxie heritage, you gain prestidigitation."*
+   *
+   * One record, three grants, two of them conditional on a record the character chose at level 1.
+   * `minLevel` gates the same list by level; this gates it by heritage, and without it a feat like
+   * this can only ever ship the unconditional part — which is what it did.
+   */
+  whenHeritage?: string[];
 }
 
 export interface Heritage extends ContentBase, DefenseGrants {
   /** The owning ancestry, or null for a versatile heritage (any ancestry). */
   ancestryId: string | null;
   versatile: boolean;
+  /** "You gain an ancestry attribute boost to Wisdom INSTEAD OF Strength" — Full Moon Sarangay swaps
+   *  one of the ancestry's FIXED boosts for another attribute. Applied by
+   *  heritageAdjustedAncestryAttributes (build.ts) everywhere the ancestry's boosts are read. */
+  replaceAncestryBoost?: { from: AbilityId; to: AbilityId };
+  /** "…and you gain an attribute flaw in Constitution instead of Wisdom" — the flaw half. */
+  replaceAncestryFlaw?: { from: AbilityId; to: AbilityId };
+  /**
+   * A whole OPTIONAL replacement package the player may choose — Mightyfall Kobold: *"You gain 10
+   * Hit Points from your ancestry instead of 6. Instead of the normal attribute boosts and flaws,
+   * you can choose to gain a boost to Strength, a boost to Charisma, and a flaw in Intelligence."*
+   * Offered through the heritage's own `choice`; applies when its answer equals `whenChoice`.
+   */
+  alternateAttributes?: { whenChoice: string; abilityBoosts: AbilityBoost[]; abilityFlaws: AbilityId[]; hp?: number };
   /**
    * Extra traits an ANCESTRY FEAT SLOT will accept because of this heritage — "you can select elf,
    * half-elf, and human feats whenever you gain an ancestry feat".
@@ -1779,13 +2340,90 @@ export interface Background extends ContentBase {
   /** Innate spells the background grants outright — Blessed gives Guidance, Astrological Augur gives
    *  Augury. buildCharacter reads these alongside the heritage's; before that they were inert. */
   innateSpells?: InnateSpellGrant[];
+  /** Languages the background grants outright. Runelord Scholar is the case: it grants Multilingual
+   *  and prints that ONE of that feat's picks must be Thassilonian — delivered as the language plus a
+   *  `languageChoicesBonus` of −1 on the granted feat, because language slots are a fungible pool and
+   *  no per-slot answer exists to bind. */
+  grantsLanguages?: string[];
+  /** Adjusts the language-slot count another record contributes (extra may be negative). Same shape
+   *  as the DefenseGrants field; declared here because Background does not extend it. */
+  languageChoicesBonus?: { featId: string; extra: number }[];
+  /** Items the background hands you at creation — Sally Guard Neophyte's horse, half-plate, longsword
+   *  and lance. Read by buildCharacter's granted-items walk beside the ancestry arm (batch 20). */
+  grantsItems?: DefenseGrants['grantsItems'];
+  /** "You can breathe underwater" as a background benefit — Song of the Deep. Folded by
+   *  deriveDefenses' breathesWater beside the heritage/feat/item carriers. */
+  breathesWater?: boolean;
+  /** Void (negative) healing as a background — Revenant (batch 21). Folded beside the
+   *  ancestry/heritage/feat/item carriers in both aggregators. */
+  negativeHealing?: boolean;
+  /** A per-branch Lore keyed by the `trainedSkillChoice` pick — Brevic Noble's six lineages each
+   *  train a skill AND its lineage Lore AND grant a feat, and the three must never disagree, so the
+   *  Lore follows the same answer `grantedFeatByChoice` reads (first option when unanswered). */
+  trainedLoreByChoice?: Partial<Record<SkillId, string>>;
+  /** The subject the free-text Lore box starts on — Night Watch prints "either Legal Lore or the Lore
+   *  skill for your home settlement", so an unanswered pick must still land on Legal. */
+  trainedLoreChoiceDefault?: string;
+  /** An OPTIONAL attribute-package trade the background's own `choice` answers — Song of the Deep's
+   *  Special: lose air breathing, gain a second free boost. Boost half of the Heritage field's shape. */
+  alternateAttributes?: { whenChoice: string; abilityBoosts: AbilityBoost[] };
+  /** Prerequisites this background waives — Tall Tale: you meet the prerequisites for the named
+   *  feats even if you don't fulfill them. Read by the prerequisite check like overrides.allowedFeats. */
+  prerequisiteWaivers?: { featId: string }[];
+  /** The background's trained skill comes from the chosen DEITY — Raised by Belief trains the
+   *  deity's listed divine skill. */
+  trainedSkillFromDeity?: boolean;
+  /** ADDITIONAL fixed skills beside `trainedSkill` — Tech-Reliant prints Crafting AND Medicine. */
+  trainedSkills?: SkillId[];
+  /** A weapon-familiarity clause of the background's own — Sword Scion treats the Aldori dueling
+   *  sword as a martial weapon. The simple half of the feat lane's shape (static list + rank/mirror);
+   *  declared inline because the full WeaponFamiliarity type lives in featGrants.ts, which imports
+   *  this file. */
+  weaponFamiliarity?:
+    | { weapons?: string[]; rank?: ProficiencyRank; mirrorCategory?: WeaponCategory; mirrorBestCategory?: boolean }
+    | { weapons?: string[]; rank?: ProficiencyRank; mirrorCategory?: WeaponCategory; mirrorBestCategory?: boolean }[];
+  /** Bonus language SLOTS the background adds (a chosen language, not a named one — Post Guard of
+   *  All Trades). Read by recordLanguageSlots through the background source added in batch 19. */
+  languageChoices?: number;
+  /** The free-text Lore box asks for THIS many subjects — Reborn Soul prints two past-life Lores.
+   *  The second answer lives in BuildState.backgroundLore2. Absent = 1. */
+  trainedLoreChoiceCount?: number;
+  /** How many of `trainedLoreOptions` the player takes — Concordance Researcher prints "trained in
+   *  four of the following" six Plane Lores. Absent = 1 (the OR reading every other record has).
+   *  Answers live in BuildState.backgroundLore..backgroundLore4; unanswered slots default to the
+   *  earliest unpicked options, the way every other unanswered choice defaults. */
+  trainedLoreOptionsCount?: number;
+  /** The record's own `choice` answer names the trained Lore subject too — Energy Scarred's energy
+   *  pick trains "Acid Lore" etc. (WG binds SKILL_LORE_<energy> inside the same select). Declared
+   *  because `backgroundChoiceKind` cannot see a Lore in options named "Acid". */
+  trainedLoreFromChoice?: boolean;
+  /** Resistance to the damage type named by the record's own `choice` answer — Energy Scarred's
+   *  "resistance to that energy type equal to half your level (minimum 1)". Unlike the Heritage
+   *  field of the same name this carries no options list: the background already asks the question
+   *  through `choice`, and WG delivers the resistance inside that same select's branches. */
+  choiceResistance?: { halfLevel: boolean };
+  /** A hard printed ancestry gate — Sewer Dragon: "Prerequisite: kobold ancestry". The background
+   *  picker greys the option with the reason for any other ancestry. */
+  ancestryPrerequisite?: string[];
+  /** The background's boost array keyed by its own `choice` answer — Zodiac Bound and Sign Bound tie
+   *  one of the two boosts to the chosen sign. Consulted by backgroundEffectiveBoosts after
+   *  `alternateAttributes`; an answer with no key falls back to `abilityBoosts`. */
+  abilityBoostsByChoice?: Record<string, AbilityBoost[]>;
   /** Skill the background trains you in. */
   trainedSkill?: SkillId;
   /** A "trained in your choice of X or Y" background: the offered skills (trainedSkill is unset).
    *  The pick lives in BuildState.backgroundSkillChoice; unpicked defaults to the first option. */
   trainedSkillChoice?: SkillId[];
-  /** Lore subject granted (the `lore:` part). */
-  trainedLore?: string;
+  /**
+   * Lore subject granted (the `lore:` part), or SUBJECTS where the background grants more than one.
+   *
+   * A list, not a second field, because one background prints exactly that and no other does
+   * (measured): Undercover Lotus Guard is *"trained in the Deception skill, Art Lore, **and**
+   * Underworld Lore"* — an AND, where `trainedLoreOptions` is an OR. The importer had concatenated the
+   * pair into a single subject (`art-lore-and-underworld`), so the character was trained in a Lore
+   * that does not exist and neither real one was granted.
+   */
+  trainedLore?: string | string[];
   /** A background granting "a Lore subject of your choice" (rather than a fixed one): the player types
    *  the subject in the builder (Lore is free-text). Stored in BuildState.backgroundLore →
    *  lore:<typed> trained. */
@@ -1819,6 +2457,14 @@ export type FeatCategory =
   | 'general'
   | 'archetype'
   | 'bonus'
+  /**
+   * A kineticist's two 1st-level impulse feats. Kinetic Gate prints them under BOTH gate options —
+   * *"select two 1st-level impulse feats that have that element's trait"* (single gate) and *"select two
+   * 1st-level impulse feats, one with the trait of the first element and one with the trait of the
+   * other"* (dual) — and they are additional to the ordinary 1st-level class feat, so a 1st-level
+   * kineticist chooses three feats and the app offered one.
+   */
+  | 'impulse'
   | 'mythic';
 
 /**
@@ -1844,6 +2490,15 @@ export interface ChoiceOptionLimit {
   target: string;
   /** Which choice, when the target has more than one. Omitted = the target's only choice. */
   flag?: string;
+  /**
+   * The limit applies only while THIS record's own choice holds one of these answers — the Sterling
+   * Dynamo's prosthesis forms, where which attachment you fitted decides which options the later feat
+   * may offer.
+   *
+   * Without it the narrowing is unconditional, which would forbid options the character is entitled to
+   * as soon as they change their own answer.
+   */
+  requiresOwnChoice?: string[];
   allow: {
     value: string;
     /** The value survives only while the character meets this. Reputation Seeker's three terrains
@@ -1886,7 +2541,21 @@ export interface FeatChoiceDef {
    *  - 'open'    — an OPEN set described by `from`: "any 1st-level dwarf ancestry feat", "any common
    *                language". Resolved against content at render time and shown as a searchable list;
    *                baking the list into the record would bloat core.json and go stale. */
-  kind: 'domains' | 'array' | 'skills' | 'text' | 'open';
+  /*  - 'ikons'   — the exemplar ikons THIS CHARACTER chose, narrowed by `ikonType`. An imbue feat says
+   *                "The imbued ikon gains the following ability", so the answer must be one of your
+   *                own three, not a list of all 21 — and the three imbue feats shipped as inert free
+   *                text or as nothing at all, which recorded no answer anything could read. */
+  kind: 'domains' | 'array' | 'skills' | 'text' | 'open' | 'ikons';
+  /**
+   * Which ikons a `kind: 'ikons'` choice offers, from the printed Usage line of the feat that asks —
+   * Twin Stars is *"imbued into a one-handed weapon ikon"*, Leap the Falls *"imbued into a body ikon"*.
+   * The TYPE is the filter; a finer constraint in the same sentence (one-handed, thrown) stays in the
+   * prompt, which is the owner's standing carve-out for narrowing a selection menu.
+   */
+  /** Which kind of ikon the feat may be imbued into. An ARRAY when the printed Usage names more than
+   *  one ("a weapon or worn ikon") — Steel on Steel is the case. ⚠ Measured: the option builder matched
+   *  this by equality, so an array silently offered ZERO options where a single value offered ten. */
+  ikonType?: 'worn' | 'body' | 'weapon' | ('worn' | 'body' | 'weapon')[];
   /**
    * The listed options are ILLUSTRATIVE, so the picker also offers a "type your own" row and records
    * whatever the player writes. Gold-set principle **I**: *"free-text player input is a legitimate
@@ -2009,6 +2678,17 @@ export interface FeatChoiceDef {
    */
   distinctAcrossTakes?: boolean;
   /**
+   * Offer only the answers the character gave to ANOTHER record — *"Choose an order you have selected
+   * with Order Explorer"* (Order Magic). Without it the picker lists all nine druid orders and a
+   * character who explored one can take the initial spell of any of them.
+   *
+   * Falls back to the full list while that record has no answers yet, for the same reason the ikons
+   * branch does: a picker that is mysteriously EMPTY mid-build reads as broken data, where a picker
+   * that is briefly too wide reads as a list. Menu narrowing is the one place the parity project
+   * leaves to us, so this is a house decision rather than a rules one.
+   */
+  limitToAnswersOf?: string;
+  /**
    * The pick is re-made at DAILY PREPARATIONS ("During your daily preparations, choose…") rather than
    * once when the feat is taken — Environmental Adaptability's cold-or-heat, Mask of Power's spell.
    * These answers live in `PlayState.dailyChoices`, NOT in the build: they change nightly, so a
@@ -2041,6 +2721,15 @@ export interface Feat extends ContentBase, DefenseGrants {
    * Read by `eligibleFeatsForSlot` (featSlots.ts).
    */
   onlyAtLevel?: number;
+  /**
+   * Ancestry-feat TRAITS this record opens up — Elemental Existence: *"You can select feats with the
+   * oread trait."*
+   *
+   * The ancestry-feat picker gates on the character's own ancestry and versatile heritage, so a feat
+   * that widens the pool by TRAIT had no way to say so and offered nothing at all (measured: 0 oread
+   * feats reachable, though 23 ship). Note oread is a HERITAGE trait here, not an ancestry.
+   */
+  extraAncestryFeatTraits?: string[];
   /** Cantrips this feat gives the summoner's EIDOLON, cast as innate spells (Magical Understudy
    *  grants two). The eidolon had no spellcasting at all, so putting them in the feat's own
    *  innateSpells would have granted them to the SUMMONER instead. */
@@ -2122,6 +2811,10 @@ export interface Feat extends ContentBase, DefenseGrants {
   advancedAlchemy?: {
     items: number;
     addInt?: boolean;
+    /** …+ half your level, rounded up. Munitions Crafter prints *"a number of daily consumables equal
+     *  to 4 + half your level (rounded up)"* and the shape had only a flat count and an Int term, so
+     *  the feat's whole number was stuck at its 1st-level value. */
+    addHalfLevel?: boolean;
     atLevel?: { level: number; items: number };
     /**
      * The advanced alchemy LEVEL — which items you may make, as distinct from how many. Master
@@ -2177,6 +2870,26 @@ export interface Feat extends ContentBase, DefenseGrants {
   /** "You die from the dying condition at dying 5, rather than dying 4" (Diehard). Raises the death
    *  threshold; Doomed still steps it back down. See Character.dyingThreshold. */
   dyingThresholdBonus?: number;
+  /**
+   * *"You reduce the DC of recovery checks by 1"* (Toughness) — the flat check a dying character makes
+   * at the start of their turn, DC 10 + dying value.
+   *
+   * Nine records print a change to that DC and NONE had anywhere to put it, so a dying character rolled
+   * the base DC however many of them they had. Measured: six reduce it by a flat amount (Toughness,
+   * Heroic Scion Dedication, Eternal Hero, Timelessness, and two items), and three restate the DC in a
+   * way this cannot express and are recorded as such rather than approximated:
+   *   · Mountain's Stoutness — 9 + dying, but ONLY at Dying 1
+   *   · Defy Death          — 9 + dying, or 8 + dying with Toughness
+   *   · Nine Lives Catfolk  — drops the dying value from the DC entirely
+   *
+   * CUMULATIVE, and the data says so: Eternal Hero's own text is *"you reduce the DC of recovery checks
+   * by 1 (THIS IS CUMULATIVE with the reduction from the Heroic Scion Dedication feat)"*.
+   */
+  recoveryDcReduction?: number;
+  /** *"WHEN YOU HAVE THE DYING 1 CONDITION, the DC of your recovery checks is equal to 9 + your dying
+   *  value"* (Mountain's Stoutness) — the reduction above applies only while the dying value is at most
+   *  this. Absent means it always applies. */
+  recoveryDcOnlyAtDying?: number;
   /** "Increase your maximum and encumbered Bulk limits by 4" (Beast of Burden). Raises both
    *  thresholds; deriveBulk computes them from Strength alone without it. */
   bulkLimitBonus?: number;
@@ -2188,7 +2901,20 @@ export interface Feat extends ContentBase, DefenseGrants {
    * Improvisation) or "…equal to your level" (Eclectic Skill). `levelMinus` is what the text
    * subtracts. An untrained skill scored a flat 0 proficiency, so both feats were inert.
    */
-  untrainedProficiency?: { levelMinus: number };
+  /**
+   * …and `steps`, the half of Untrained Improvisation that was silently dropped: *"This IMPROVES to
+   * your level –1 at 5th level and your FULL LEVEL at 7th level."* Only the opening subtraction was
+   * stored, so the feat stayed at level−2 forever and a 7th-level character was short two points on
+   * every untrained skill for the rest of their career. Each step names the level it starts at and the
+   * subtraction from that level on; the best (lowest) applicable one wins.
+   */
+  untrainedProficiency?: { levelMinus: number; steps?: { atLevel: number; levelMinus: number }[] };
+  /**
+   * This record lowers the DRAINED value for the two things the printed clause names — the Fortitude
+   * save and the Hit Point reduction. *"…as though the condition value were 1 lower."* Only Svetocher
+   * prints it today; it is a field rather than a hard-coded id so a second one needs no code change.
+   */
+  drainedReduction?: number;
   /**
    * "You become an expert in the alchemist class DC" — an ARCHETYPE feat raising the BORROWED class
    * DC a dedication granted. The secondary DC was pinned at trained with no way to advance it, so
@@ -2228,9 +2954,38 @@ export interface Feat extends ContentBase, DefenseGrants {
    * point is undoing an earlier drawback left the drawback on the sheet.
    */
   removesWeaknesses?: string[];
-  /** "You treat heavy armor as if it were 1 Bulk lighter" (Armor Regiment Training). Reduces the Bulk
-   *  counted for WORN armor of the listed categories, never below 0 (Bulk 'L' armor stays L). */
-  armorBulkReduction?: { by: number; categories?: ArmorCategory[] };
+  /**
+   * A bonus to the MAXIMUM Bulk limit only, leaving the encumbered limit where it was.
+   *
+   * `bulkLimitBonus` moves both thresholds by the same amount, which is what almost every record
+   * prints. Embodied Dreadnought Subjectivity does not: *"You gain the Hefty Hauler skill feat, and
+   * your maximum Bulk limit FURTHER increases by 3, for a total of 2 to your encumbered limit and 5 to
+   * your maximum limit."* Hefty Hauler supplies the +2/+2; this is the +3 on top of the maximum alone,
+   * and authoring it as `bulkLimitBonus` would have printed +5 encumbered — a number the record
+   * explicitly contradicts in the same sentence.
+   */
+  bulkMaxBonus?: number;
+  /**
+   * *"When wielding a weapon you aren't proficient with, treat your level as your proficiency bonus.
+   * At 11th level, you become trained in all weapons."* (Martial Experience.)
+   *
+   * The weapon-side twin of `untrainedProficiency`, which covers only skills — so this record printed
+   * two sentences and delivered neither. `levelMinus` is subtracted from the character level to give
+   * the floor (0 here: the level itself). `trainedAtLevel` is the second sentence, and it IS a rank,
+   * unlike the floor above: from that level anything gated on being trained with the weapon applies.
+   */
+  untrainedWeaponProficiency?: { levelMinus: number; trainedAtLevel?: number };
+  /**
+   * "You treat heavy armor as if it were 1 Bulk lighter" (Armor Regiment Training). Reduces the Bulk
+   * counted for WORN armor of the listed categories, never below 0 (Bulk 'L' armor stays L).
+   *
+   * `whenBulkAtLeast` and `floor` carry the other printed shape of the same sentence. Warpriest's
+   * Armor says *"armor you wear OF 2 BULK OR HIGHER as though it were 1 Bulk lighter (TO A MINIMUM OF
+   * 1 BULK)"* — a threshold and a floor instead of a category list. Measured across every record in
+   * the database: it is the only one, so this is a widened field rather than a second one. Without
+   * them the clause had nowhere to live and the feat moved no Bulk at all.
+   */
+  armorBulkReduction?: { by: number; categories?: ArmorCategory[]; whenBulkAtLeast?: number; floor?: number };
   /**
    * Traits this feat adds to unarmed Strikes the character ALREADY has — "your unarmed attacks gain
    * the reach trait" (Effortless Reach), "your beak unarmed attack gains versatile S" (Dogfang Bite).
@@ -2282,6 +3037,23 @@ export interface Feat extends ContentBase, DefenseGrants {
 export interface ClassFeature extends ContentBase, DefenseGrants {
   level: number;
   actionCost?: ActionCost;
+  /**
+   * The feature's DEFENCES (resistances, weaknesses, immunities, senses) apply only while this
+   * equipment condition holds — *"WHILE WEARING YOUR ARMOR, you gain resistance to slashing damage
+   * equal to half your level."* Five inventor armour modifications print that and were granting the
+   * resistance with the suit off, because the defence aggregator pushed every owned feature outright.
+   *
+   * Evaluated rather than starred, for the same reason as the `speedsIf` equipment gates: the sheet can
+   * see what is worn, so the number is present exactly while it is true. See `meetsDefenceGate`.
+   *
+   * ⚠ `armored`, NOT `wearingDesignated: 'innovation'`, is what these five use — deliberately, and the
+   * first attempt got it wrong. A designation is a MANUAL toggle in play.ts and nothing ever sets it
+   * automatically, so gating on it silently stripped the resistance from every inventor who had never
+   * flipped that switch. Under-granting a defence the character really has is a worse failure than the
+   * over-grant being fixed: it hits the common case instead of the rare one. "While wearing your armor"
+   * is satisfied by wearing armour.
+   */
+  defensesRequire?: { unarmored?: boolean; armored?: boolean; wearingDesignated?: ItemDesignation };
   /** A Focus Point the FEATURE grants without a spell (Clarity of Focus, the psychic's 5th-level
    *  feature). The importer has been writing this; only `Feat.focusPoolBonus` was ever read, so it
    *  was undeclared, unread, and every psychic from 5th on was one Focus Point short. */
@@ -2376,6 +3148,37 @@ export interface InventorBuild {
 }
 
 /** A Commander's resolved tactics: the folio of known tactics + how many may be prepared/squadmates. */
+/**
+ * One of the 44 runesmith runes (Impossible Magic). NOT a `RuneDef` — that is an item property or
+ * fundamental rune you etch onto a weapon with gold. These are the runesmith's own magic, drawn on a
+ * creature or object and then invoked.
+ */
+export interface RunesmithRune extends ContentBase {
+  /** 1, 5, 9, 13 or 17 — and the eligibility rule is *"its level is equal to or less than your own"*. */
+  level: number;
+  /** The printed Usage line: what the rune may be drawn ON ("drawn on a creature or object"). */
+  usage?: string;
+  /**
+   * *"A diacritic can never be applied by itself, and any effect that would remove or invoke the base
+   * rune always also removes or invokes the diacritic rune. A rune can have only one diacritic. A base
+   * rune with a diacritic counts as one rune for the purposes of invoking."* A diacritic's Usage is
+   * "drawn on a rune", which is the whole distinction.
+   */
+  diacritic?: boolean;
+}
+
+/** The runesmith's chosen runes, resolved onto the character. */
+export interface RunicRepertoire {
+  /** Ids into `ContentDatabase.runesmithRune`, clamped to `repertoireMax` and filtered to level ≤ yours. */
+  known: string[];
+  /** *"4 / 6 / 8 / 10 / 12"* at levels 1 / 5 / 9 / 13 / 17. */
+  repertoireMax: number;
+  /** *"Your magic can sustain up to two etched runes at a time"* — 2 / 3 / 4 / 5 / 6 on the same steps. */
+  etchedMax: number;
+  /** The runes etched today (subset of `known`, ≤ etchedMax); overlaid from play-state. */
+  etched?: string[];
+}
+
 export interface CommanderTactics {
   /** Action ids of the chosen folio tactics (clamped to `folioMax`, filtered to unlocked tiers). */
   folio: string[];
@@ -2475,6 +3278,10 @@ export interface ChoiceGroup {
   name: string;
   pickByLevel: Record<number, number>;
   options: SubclassOption[];
+  /** The class feature whose printed text says "choose one" — the declared carrier. Four overlay rows
+   *  already write it, and the parity comparer reads it when crediting the `choice` kind, so it was a
+   *  field written by data and known only to a script. */
+  featureId?: string;
 }
 
 /** Spell slots available per character level, then per spell rank. */
@@ -2483,11 +3290,12 @@ export type SpellSlotTable = Record<number, Record<number, number>>;
 /**
  * Which spell-slot table a class uses:
  * - 'full' — the universal full-caster table (3 slots/rank, new rank every 2 levels).
+ * - 'full-plus' — sorcerer/oracle: the same rank ladder, one MORE slot at every rank (3 then 4).
  * - 'two-rank' — magus/summoner: 2 slots of the top rank + 2 of the rank below.
  * - 'psychic' — full rank progression but only 2 slots/rank (1 for a new rank).
  * - 'animist' — combined per-rank total of its prepared + apparition pools.
  */
-export type SpellProgression = 'full' | 'two-rank' | 'psychic' | 'animist';
+export type SpellProgression = 'full' | 'full-plus' | 'two-rank' | 'psychic' | 'animist';
 
 export interface ClassSpellcasting {
   type: SpellcastingType;
@@ -2537,6 +3345,36 @@ export interface ClassDef extends ContentBase {
   };
   /** Character levels at which a skill increase is granted (rogue gets extras). */
   skillIncreaseLevels: number[];
+  /**
+   * Levels granting an ADDITIONAL skill increase on top of `skillIncreaseLevels` — the swashbuckler's
+   * Stylish Tricks at 3rd, 7th and 15th.
+   *
+   * A SECOND list rather than duplicate entries in the first, because the build state stores one pick
+   * per level: two increases at level 3 need two slots to answer. The built character's list is an
+   * array and already round-trips two entries at one level.
+   */
+  bonusSkillIncreaseLevels?: number[];
+  /**
+   * Skill-feat slots a class feature NARROWS rather than grants — the investigator's Skillful Lessons
+   * (*"the feat must be one for an Intelligence-, Wisdom-, or Charisma-based skill, or for the skill
+   * you gained from your methodology"*) and the swashbuckler's Stylish Tricks.
+   *
+   * It lives on the CLASS because the restriction is a property of those slots, not of any feat: the
+   * picker has to apply it while listing options, and a feat naming no skill at all (Assurance,
+   * Dubious Knowledge) stays legal in the narrowed slot.
+   */
+  restrictedSkillFeatLevels?: {
+    levels: number[];
+    abilities?: AbilityId[];
+    skills?: SkillId[];
+    /** The feature whose text imposes it, so the picker can say why an option is missing. */
+    featureId?: string;
+    /** Also allow the skill the character's own SUBCLASS granted — *"or the trained skill from your
+     *  swashbuckler's style"*, *"or for the skill you gained from your methodology"*. A static `skills`
+     *  list cannot express it: which skill is legal depends on a pick the character made. */
+    includeSubclassGrantedSkills?: boolean;
+    reason: string;
+  };
   /** Focus spells granted by the class itself, regardless of subclass (e.g. bard compositions). */
   focusSpells?: string[];
 }
@@ -2609,6 +3447,38 @@ export interface Spell extends ContentBase {
 interface ItemBase extends ContentBase {
   level: number;
   /**
+   * An aeon stone's RESONANT POWER — what it does *"when slotted into a special magical item called a
+   * wayfinder"*, a second effect on top of the stone's own.
+   *
+   * 53 aeon stones ship and 34 print one; none of it was modelled, so a slotted stone's extra spell
+   * simply did not exist and the player had no way to learn what slotting bought them. Gated on the
+   * `wayfinder-slotted` designation rather than starred, because whether a stone sits in your
+   * wayfinder is a real state the sheet can hold — unlike a terrain or an ongoing spell.
+   *
+   * `note` is always present and carries the printed clause: half the resonant powers modify the base
+   * power in prose (*"increases the damage prevented from 5 to 10"*, *"grants a separate activation"*)
+   * and have no mechanical carrier at all. Stating those IS the fix for them.
+   */
+  resonant?: { note: string; innateSpells?: InnateSpellGrant[] };
+  /**
+   * A relic GIFT's aspects (Air, Beast, Fire, Mind…) — the key that says which relics may ever take it.
+   *
+   * A relic grows by gaining gifts, and its aspects decide which are eligible. All 219 relic pages in
+   * the AoN mirror carry this; the export dropped every one, so the 238 gift items shipped with no way
+   * to connect them to a relic at all. Same shape as the bestiary `family` loss: one load-bearing join
+   * key missing from a single import stage leaves both sides of a real relationship stranded.
+   */
+  relicAspects?: string[];
+  /**
+   * Items sharing this key count as ONE against the 10-item investment cap — *"No matter how many
+   * magical medals you have, they collectively count as one invested item."*
+   *
+   * The cap is enforced for real (InventoryTab disables the Invest button once it is reached), so
+   * without this all five medals each consumed a slot and a decorated soldier lost half their
+   * investments to their own decorations. Absent on every other item, which counts individually.
+   */
+  investmentGroup?: string;
+  /**
    * An item worn WITH armour that restates it. Exactly two items in the game do this: an Armored
    * Skirt and a Plated Duster, both of which make their host one step heavier and change which
    * proficiency you read. Distinct from `armorRestat`, which lives on a CLASS FEATURE and restates a
@@ -2680,6 +3550,16 @@ interface ItemBase extends ContentBase {
   /** Unarmed Strikes an invested item grants (Phantom Shroud → ghostly touch). Same shape as a feat's
    *  grantedStrikes — surfaced as natural attacks. */
   grantedStrikes?: GrantedStrike[];
+  /**
+   * Items this item HANDS YOU — an Exquisite Sword Cane comes with its sheath, a Musket Staff of the
+   * Void with its ammunition.
+   *
+   * Same shape as the feat/heritage field, and it needs its own reader: the grant loop in build.ts
+   * walked feats, class features and heritages but never ITEMS, so authoring this on an item looked
+   * right and delivered nothing. Measured before adding: a level-3 character holding the sword cane had
+   * exactly `["exquisite-sword-cane"]` in inventory and no sheath.
+   */
+  grantsItems?: DefenseGrants['grantsItems'];
   /** Monster Parts (variant rule): marks this created item as a harvested MONSTER PART — a raw
    *  resource, not a refined/imbued gear item. Its VALUE is the item's `price` (gp) and its tags are
    *  `monsterPartTags`. `true` = it is a monster part; absent = a normal item. (Presence of the flag,
@@ -2706,16 +3586,13 @@ interface ItemBase extends ContentBase {
    * the armor whose specialization it improves. `group` scopes it to the printed group.
    */
   armorSpecBonus?: { group?: string; value: number };
-  /**
-   * CONDITIONAL effects: a `*` on each stat named, with the trigger and the bonus spelled out when
-   * the player opens that stat. Nothing here changes a number — the whole point is the effects that
-   * only apply sometimes, which no computed total can honestly include.
-   *
-   * Shipped items get these from the situational registry, keyed by item id. This field is what the
-   * item editor's Advanced section writes, so a player can mark anything the data doesn't cover —
-   * or anything their table rules differently — without waiting for the app to model it.
+  /*
+   * `situational` moved up to ContentBase (2026-08-18) so feats, class features, backgrounds and
+   * heritages can carry one too — see the comment there for why. Items still behave exactly as before:
+   * shipped items get their entries from the registry keyed by item id, and this is the field the item
+   * editor's Advanced section writes, so a player can mark anything the data doesn't cover, or
+   * anything their table rules differently, without waiting for the app to model it.
    */
-  situational?: SituationalBonus[];
   /**
    * DEGREE-OF-SUCCESS shifts the item grants while in use — the Cloak of Repute's "a success becomes a
    * critical success; a critical failure becomes a failure". Same field and same fan-out as a feat's,
@@ -2756,6 +3633,8 @@ export interface ItemCounter {
   max: number | 'level';
   /** day/hour/minute/round/turn/week/month for a recurring use; absent for a raw pool. */
   per?: string;
+  /** Period multiplier — "once every 10 minutes" is { max:1, per:'minute', every:10 }; absent means 1. */
+  every?: number;
   /** Daily preparations refill it (true for day & sub-daily; false for week/month/finite stock). */
   resetsOnRest: boolean;
   /** Starts at max (default). false = starts empty and builds up (e.g. Tactician's Helm). */
@@ -2765,12 +3644,52 @@ export interface ItemCounter {
 export interface WeaponItem extends ItemBase {
   itemType: 'weapon';
   category: WeaponCategory;
+  /**
+   * A COMBINATION WEAPON's other usage. The base record IS the ranged usage — its own AoN document is
+   * the "(Ranged)" one — and this names the `-melee` record holding the melee usage's group, dice and
+   * traits. The trait rules the switch: *"switching between the melee weapon usage and the ranged
+   * weapon usage requires an Interact action"*, and both usages share fundamental runes.
+   */
+  combinationMeleeForm?: string;
+  /**
+   * Set on a USAGE record, naming the weapon you actually buy. Its presence is what keeps the usage out
+   * of the shop — three identically-priced rows per weapon were being offered. See
+   * `findCombinationFormIds`.
+   */
+  formOf?: string;
   /** Weapon group: sword, axe, bow, bomb, ... */
   group: string;
   damage: { dice: number; die: DieSize; type: DamageType };
   /** Range increment in feet (ranged/thrown). */
   range?: number;
   reload?: number;
+  /**
+   * The weapon's OWN item bonus to attack rolls — the alchemical bomb grades: *"You gain a +1 item
+   * bonus to attack rolls"* (moderate), +2 (greater), +3 (major).
+   *
+   * 103 bomb records print one and not one of them delivered it. A bomb carries no runes and cannot be
+   * etched, so the potency slot that normally holds a weapon's item-class attack bonus was always 0 and
+   * there was nowhere else for the number to go.
+   *
+   * ⚠ Deliberately NOT `passiveEffects.attack`: that lane returns one character-wide number for
+   * anything worn, invested or equipped, so a held acid flask would have raised every Strike the
+   * character makes, melee included.
+   */
+  attackItemBonus?: number;
+  /**
+   * The FUNDAMENTAL runes a specific magic weapon carries in its own name — *"This +1 striking
+   * longsword…"* (Cooperative Blade), *"a +3 greater striking…"* (Luck Blade).
+   *
+   * These are not etched, so nothing ever wrote them onto the inventory row, and `effectiveWeaponRunes`
+   * read the row alone: measured, a Cooperative Blade rolled attack 14 for 1d8+2 — exactly what a plain
+   * longsword rolls — where the book says +1 and 2d8. Applied as a FLOOR under whatever the row
+   * carries, so a player who etches a higher potency keeps it.
+   *
+   * ⚠ Distinct from `attackItemBonus`, which is the printed item bonus of something that takes no runes
+   * at all (an alchemical bomb's grade). A weapon whose bonus comes from a POTENCY rune must say so, or
+   * it stacks with an etched rune instead of being the same bonus.
+   */
+  builtInRunes?: WeaponRunes;
 }
 
 /** An item that restates the armour it is worn with (Armored Skirt, Plated Duster). */
@@ -2811,6 +3730,12 @@ export interface ArmorAdjustMode {
    */
   strength?: number;
   addTraits?: string[];
+  /**
+   * Delta to the host's Bulk — *"The armor is slightly bulkier, increasing the Bulk by 1"* (parade
+   * armor). The only adjustment clause with no carrier at all, so a character wearing parade armor
+   * carried a suit a full Bulk lighter than the rules say, which moves their encumbrance threshold.
+   */
+  bulk?: number;
   /** The duster "changes the armor's group to composite", which also moves its armour specialization. */
   setGroup?: string;
   /**
@@ -2826,6 +3751,21 @@ export interface ArmorItem extends ItemBase {
   category: ArmorCategory;
   group?: string;
   acBonus: number;
+  /**
+   * Armour whose OWN item bonus to AC rises with the WEARER'S LEVEL, not with a potency rune.
+   *
+   * An automaton's Reinforced Chassis is the case: *"a +3 item bonus to AC … If you are at least 5th
+   * level, the item bonus increases to +4 and at 10th level it increases to +5."* Same shape as
+   * `unarmoredAc.upgradeAtLevel` carries for natural armour, on a suit that is worn — and the chassis
+   * has to BE worn armour rather than natural, because the text makes it *"medium armor in the plate
+   * group for abilities and for etching runes"*: its AC reads off the medium proficiency track (an
+   * automaton fighter is expert there and only trained unarmored), and runes etch onto it.
+   *
+   * Measured across every record printing a rising item bonus to AC: the chassis is the only one that
+   * is worn armour, so this is a field on the armour block rather than a second lane. Highest
+   * qualifying step wins; armour without the field is untouched.
+   */
+  acBonusByLevel?: { level: number; acBonus: number }[];
   dexCap?: number;
   checkPenalty?: number;
   speedPenalty?: number;
@@ -3162,6 +4102,10 @@ export interface ModeDef {
   /** Gate to characters who have one of these feat ids (e.g. an archetype dedication). Used for
    *  archetype modes so they only show for characters who took the archetype. */
   feats?: string[];
+  /** Gate to characters with one of these BACKGROUND ids. Awful Scab's Sealed Outfit daily
+   *  counteract is the case — a background whose mechanic is a toggleable state, matched through the
+   *  same gate-id set the feat gate uses (modeGateIds carries the backgroundId). */
+  backgrounds?: string[];
   /** Short note describing effects that aren't captured as numeric modifiers (shown in the list). */
   note?: string;
   /**
@@ -3356,6 +4300,21 @@ export interface StanceStrike {
    *  this unarmed attack gains the benefits of a striking rune, at 12th greater, at 20th major".
    *  Highest qualifying entry wins, and it is a FLOOR: real handwraps still beat it if better. */
   strikingByLevel?: { level: number; extraDice: number }[];
+  /**
+   * Set when the stance grants a WEAPON Strike rather than an unarmed one, naming its category.
+   *
+   * Every other stance Strike in the corpus is unarmed, so deriveStrikes forced the `unarmed` trait
+   * onto all of them, rolled them at unarmed proficiency and buffed them with handwraps. Haft Striker
+   * Stance is the one that is not: *"You treat the haft of your wielded weapon as a SIMPLE WEAPON
+   * dealing 1d4 damage. The haft is in the club group and has the agile and finesse traits."*
+   * Wanderer's Guide agrees with the book — the item their feat hands out is category `simple`, group
+   * `club`, not an unarmed attack — so ours diverged from the printed text and from theirs at once,
+   * rolling a simple weapon at unarmed proficiency and applying Handwraps of Mighty Blows, which do
+   * not affect weapons.
+   *
+   * Leave undefined for a genuine unarmed Strike; that path is unchanged.
+   */
+  weaponCategory?: WeaponCategory;
 }
 /** The mechanical effects of a stance (extracted from its rules text; keyed by feat/action slug in
  *  ContentDatabase.stances). Only one stance is active at a time (Character.activeStance). */
@@ -3431,6 +4390,14 @@ export interface CompanionConfig {
   specialization?: string;
   /** Familiar: chosen familiar-ability ids. */
   abilities?: string[];
+  /**
+   * Familiar: the ANSWER to a sub-question a chosen ability asks, keyed by that ability's id.
+   *
+   * Fast Movement is the case that forced it: *"Increase ONE of your familiar's Speeds from 25 feet to
+   * 40 feet."* The picker was a bare on/off toggle and the engine hard-coded the 40 onto the LAND
+   * Speed, so a flier or a climber could never point it at the Speed the ability exists to raise.
+   */
+  abilityChoices?: Record<string, string>;
   /** Familiar: a specific-familiar template id (Pipefox, Imp, …); absent = a generic familiar. */
   specificFamiliarId?: string;
   /** Set when this companion was materialized from a feat/feature grant (e.g. the Pet feat). Ties the
@@ -3483,6 +4450,9 @@ export interface ContentDatabase {
   stances: Record<string, StanceDef>;
   /** Etchable runes (potency/striking/resilient/reinforcing + property runes), keyed by id. */
   runes: Record<string, RuneDef>;
+  /** The 44 RUNESMITH runes, keyed by id. Distinct from `runes` above, which are item runes bought
+   *  with gold; these are the runesmith's own repertoire — drawn on a target, then invoked. */
+  runesmithRune: Record<string, RunesmithRune>;
   /** Ids of `aon-` scrape records that duplicate a canonical record of the same name. They stay in
    *  the database (so a saved character that already picked one still resolves) but are omitted from
    *  user-facing LISTS. Computed at load time — see findDuplicateIds in src/data/index.ts. */
@@ -3490,6 +4460,10 @@ export interface ContentDatabase {
   /** Item ids that are an AoN family SUMMARY, not an ownable item — hidden from every picker but
    *  still resolvable by id, so a character who added one keeps it. See findUmbrellaIds. */
   umbrellaIds?: Set<string>;
+  /** Item ids that are one USAGE of a combination weapon (`formOf` names the weapon you buy) — hidden
+   *  from the shop for the same reason as an umbrella, still resolvable so the form's stats can be
+   *  shown. See findCombinationFormIds. */
+  combinationFormIds?: Set<string>;
 }
 
 /** An etchable rune (a weapon/armor/shield enhancement). */
@@ -3601,6 +4575,9 @@ export interface Proficiencies {
   classDc: ProficiencyRank;
   /** Per-weapon overrides (e.g. a deity's favored weapon), keyed by weapon id. Wins if higher than the category rank. */
   weaponOverrides?: Record<string, ProficiencyRank>;
+  /** Per-armour-ITEM overrides (Armiger's Protection's named Hellknight suits), keyed by armour item
+   *  id. Wins if higher than the worn armour's category rank — the armour twin of weaponOverrides. */
+  armorOverrides?: Record<string, ProficiencyRank>;
   /** Per-weapon-GROUP proficiency (alchemist bombs), keyed by weapon group. Wins if higher than the category rank. */
   weaponGroups?: Record<string, ProficiencyRank>;
   /** "Firearms & crossbows" proficiency by weapon CATEGORY (gunslinger). Consulted only for a weapon in the
@@ -3643,6 +4620,12 @@ export interface FeatChoice {
   /** For a feat granted by a pick-a-feat grant: the SLOT of the taking that granted it. Lets a
    *  rebuild pair each taking of a repeatable grant with the pick it actually made. */
   grantedBySlot?: string;
+  /** Which of a granter's SEVERAL takings of one repeatable feat this row is (EXTRA_FEAT_TAKINGS).
+   *  Jotunborn Lore grants Additional Lore twice — once bound to Jotunborn Lore, once *"for a lore of
+   *  your choice"* — and the two rows are otherwise identical, so the free one's subject would resolve
+   *  through the bound answer and both would train the same Lore. Also keys that subject:
+   *  `<grantedBy>#<grantVariant>:<featId>:<idx>` in BuildState.featLoreChoices. */
+  grantVariant?: string;
 }
 
 /** Build log of skill increases (for the builder to validate progression). */
@@ -3699,6 +4682,14 @@ export interface ArmorRunes {
  *  as a Strike using the unarmed proficiency; defaults to the brawling group + unarmed trait. */
 export interface NaturalAttack {
   name: string;
+  /**
+   * The RECORD that granted this attack, so a rider can name it instead of guessing by name.
+   * `UnarmedRider.fromRecord` was declared and read (`out.source !== r.fromRecord`) while nothing ever
+   * assigned it, which made Deadly Aspect — the only record using that gate — apply to nothing at all.
+   * "Claw" is Draconic Aspect's attack AND a nephilim's Bestial Manifestation, so the name alone
+   * cannot tell them apart, which is why the gate exists.
+   */
+  source?: string;
   /** Damage die, e.g. 'd6' / 'd8'. Base count is one die (Handwraps striking adds more). */
   die: string;
   /** 'piercing' | 'slashing' | 'bludgeoning' (or another damage type). */
@@ -3738,7 +4729,7 @@ export interface GrantedStrike {
  * inventor's innovation, the thaumaturge's weapon implement, the wizard's bonded item, an exemplar's
  * ikon, and a weapon acting as a rune source for another.
  */
-export type ItemDesignation = 'innovation' | 'weapon-implement' | 'bonded' | 'ikon' | 'rune-source';
+export type ItemDesignation = 'innovation' | 'weapon-implement' | 'bonded' | 'ikon' | 'rune-source' | 'wayfinder-slotted';
 
 /**
  * Spells a record gives the character ACCESS to, and in what sense.
@@ -3760,10 +4751,17 @@ export interface SpellAccessGrant {
    * every saved roster entry, to say something a rule says in one line. `'any'` means every tradition.
    */
   traditions?: Tradition[] | 'any';
-  /** …or a set resolved from the CHARACTER rather than written down: `'deity'` is "your deity's spells
-   *  (spells your deity grants to clerics)", which differs per worshipper and so could never be a
-   *  static list. */
-  from?: 'deity';
+  /**
+   * …or a set resolved from the CHARACTER rather than written down, because it differs per character
+   * and so could never be a static list:
+   *
+   *   'deity'      — "your deity's spells (spells your deity grants to clerics)".
+   *   'apparition' — the animist's BONDED apparition: *"in addition to standard divine tradition
+   *                  spells, you can prepare your bonded apparition's apparition spells in your spell
+   *                  slots."* The archetype's pool was a fixed divine list, so the one thing that
+   *                  makes an animist an animist could not be prepared in it.
+   */
+  from?: 'deity' | 'apparition';
   /** How many spells the widening allows at once. The engine does not police repertoire contents, so
    *  this is shown beside the widened options rather than enforced — saying it is honest, silently
    *  allowing five is not. */
@@ -4156,6 +5154,23 @@ export interface Character {
   secondHeritageId?: string;
   /** Chosen damage type for a choice-resistance heritage (Deep Fetchling / Elementheart Kobold). */
   heritageResistanceChoice?: string | null;
+  /** Chosen damage type for a choice-resistance BACKGROUND (Energy Scarred). The background's own
+   *  `choice` answer, first option when unanswered — set only when the record declares
+   *  `choiceResistance`, so derive need not re-run the defaulting. */
+  backgroundResistanceChoice?: string | null;
+  /**
+   * The ancestry's and heritage's OWN choice answers (`Ancestry.choice` / `Heritage.choice`), keyed
+   * exactly as `BuildState.featChoices` keys them: `ancestry:<id>` / `heritage:<id>`. The automaton's
+   * body size, the surki's magiphage tradition, the dragonblood's draconic exemplar, the Mightyfall
+   * Kobold's attribute package all live here.
+   *
+   * Emitted so the answers survive losing the build: `deriveBuildFromCharacter` (the lossy-import
+   * fallback for imported / GM-received characters) copies these back verbatim. Before this field the
+   * answers lived ONLY in `build.featChoices`, so every such pick silently reset on an import — and
+   * for characters saved without it, the derive falls back to the traces that ARE on the character
+   * (`size` for a bodySize choice, `ancestryHp` for an alternate-attributes package).
+   */
+  ancestryHeritageChoices?: Record<string, string>;
   backgroundId: string | null;
   classId: string | null;
   /** Chosen subclass option id (instinct, doctrine, bloodline, ...). */
@@ -4217,8 +5232,18 @@ export interface Character {
   proficiencies: Proficiencies;
   /** Triggered "already trained → a skill of your choice" fallbacks (FeatGrant.redundantFallback): the
    *  feat whose static skill grant was redundant + which skill. The builder offers a replacement picker
-   *  per entry (stored in BuildState.featSkillChoices `<featId>:fallback:<skill>`). */
-  skillFallbacks?: { featId: string; skill: ProficiencyKey }[];
+   *  per entry (stored in BuildState.featSkillChoices `<featId>:fallback:<skill>`).
+   *  `note` overrides the picker's heading where the pick is not owed to that one skill:
+   *  `conditionalSkillsFallback` is owed to ALL of them at once ("already expert in intimidation and
+   *  religion"), and a heading naming only the first would misstate why the picker appeared. */
+  skillFallbacks?: { featId: string; skill: ProficiencyKey; note?: string; lore?: true }[];
+  /** Replacements the character is OWED because a flat feat grant landed on a feat they already had —
+   *  *"for each of these feats you already have, you can instead gain a different feat from the
+   *  following list"* (FEAT_SUBSTITUTE_GRANTS). One entry per replaceable feat, present whether or not
+   *  it has been answered; the builder renders a picker per entry and stores the answer in
+   *  BuildState.pickFeatChoices under `key`. Reported by the engine rather than re-derived, because
+   *  "already have" is true only against the feats held BEFORE the granter's own grants ran. */
+  featSubstitutions?: { featId: string; ifHave: string; options: string[]; key: string }[];
   /**
    * Skills already trained by something OTHER than the class's free picks — keyed by skill, valued
    * with WHERE it came from ("your background", "your deity", …), in words a picker can print.
@@ -4299,6 +5324,10 @@ export interface Character {
   size?: Size;
   /** Natural reach in feet (5 by default; raised by a feat/heritage — Jotun's Heart → 10). */
   reach?: number;
+  /** The RESOLVED ancestry HP, present only when a build-time answer moved it off the record's
+   *  scalar (awakened animal's size table; Mightyfall Kobold's 10-instead-of-6). deriveMaxHp prefers
+   *  this so it can agree with buildCharacter about an answer only the build can see. */
+  ancestryHp?: number;
   /** Class-feature ids a CLASS ARCHETYPE removed, plus the features it substituted and a note per
    *  archetype. derive and the builder both honor these so the class reads as the archetype rebuilt it. */
   classArchetype?: {
@@ -4322,6 +5351,16 @@ export interface Character {
   mythicPoints?: number;
   focus?: FocusPool;
   conditions: ActiveCondition[];
+  /**
+   * How much a feat lowers the DRAINED value for the two things the clause names.
+   *
+   * *"When you have the drained condition, calculate the penalty to your Fortitude saves and your Hit
+   * Point reduction as though the condition value were 1 lower."* (Svetocher.) Ours had modelled this
+   * as a flat `maxHpBonus` of 1 per level, which paid out permanently — a svetocher who had never been
+   * drained carried extra Hit Points. Read by `effectiveDrainedValue` and
+   * `conditionsWithDrainedReduction` in conditions.ts.
+   */
+  drainedReduction?: number;
   /** Pinned/favorited activity keys (UI preference, persisted per character via play-state). */
   pinned?: string[];
   /** Favorited description popups (feats, spells, conditions, …) the player starred — shown in the
@@ -4358,6 +5397,15 @@ export interface Character {
   /** The Dying value at which this character dies before Doomed is applied — 4, or 5 with Diehard.
    *  Pass to dyingDeathThreshold(doomed, base); omitted means the default 4. */
   dyingThreshold?: number;
+  /** How much this character reduces the DC of recovery checks (normally 10 + dying value). Summed from
+   *  feats and invested items; omitted means no reduction. See Feat.recoveryDcReduction. */
+  recoveryDcReduction?: number;
+  /** The dying value at or below which `recoveryDcReduction` applies — Mountain's Stoutness reduces the
+   *  DC only while you are at Dying 1. Absent means the reduction always applies. */
+  recoveryDcOnlyAtDying?: number;
+  /** This character does not add their dying value to the recovery DC at all (Nine Lives Catfolk), so
+   *  the DC is a flat 10 less any reduction. */
+  recoveryDcIgnoresDyingValue?: boolean;
   /** Spell ids a feat added to the pool the prepare/repertoire picker offers, beyond what the entry's
    *  tradition contains. Keyed by spellcasting entry id; `'*'` applies to every entry. */
   spellListAdditions?: Record<string, string[]>;
@@ -4430,6 +5478,8 @@ export interface Character {
   skillIncreases?: SkillIncrease[];
   /** Commander folio tactics (chosen Action ids), with the tactics-feature metadata for display. */
   commanderTactics?: CommanderTactics;
+  /** The runesmith's runic repertoire — which runes they know, and how many they may have etched. */
+  runicRepertoire?: RunicRepertoire;
   /** Inventor innovation + chosen modifications (resolved for display). */
   inventor?: InventorBuild;
   /** Kineticist resolved elements (bare ids: air/earth/fire/metal/water/wood) — drives the Elemental Blast strike. */

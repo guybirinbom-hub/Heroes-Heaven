@@ -8,7 +8,7 @@ import { FeatDetail, type FeatEntry } from './FeatDetail';
 import { toPlainText } from './RichText';
 import { InfoTerm } from './InfoTerm';
 import { traitDesc, traitLabel } from '../rules/glossary';
-import { featUse, usesLabel, spendFeatUse, refundFeatUse, resetEncounterUses, isSubDaily } from '../rules/featUses';
+import { featUse, usesLabel, periodLabel, spendFeatUse, refundFeatUse, resetEncounterUses, isSubDaily } from '../rules/featUses';
 import type { PlayUpdater } from '../rules/play';
 
 const BUCKETS = ['Class', 'Archetype', 'Ancestry & heritage', 'Skill', 'General'];
@@ -460,7 +460,10 @@ export function FeatsTab({ character, content, onPlay }: { character: Character;
                           >
                             <i className="ti ti-plus" aria-hidden="true" />
                           </button>
-                          <span className="ff-uses-per">per {use.per}</span>
+                          {/* periodLabel keeps the multiplier ("per 10 minutes"); isSubDaily below
+                              deliberately keys off the RAW per — a once-per-10-minutes use is still
+                              sub-daily and keeps its encounter-reset button. */}
+                          <span className="ff-uses-per">per {periodLabel(use)}</span>
                           {isSubDaily(use.per) && (
                             <button
                               type="button"

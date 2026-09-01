@@ -1,0 +1,875 @@
+{
+ "_": "DEFERRED RULINGS. The owner's standing rule is that our implementation matches Wanderer's Guide EXACTLY; the only permitted divergences are ones he has explicitly allowed. Where their encoding looks to contradict the printed text, I do NOT decide — the case is recorded here and put to him when he asks, or at the end of all batches, whichever comes first. Nothing in this file is authorisation to diverge: until each is ruled on, the record stays as it is and is listed as an open question. STANDING INSTRUCTION (owner, 2026-08-27): in future batches, anything we do not know how to implement OR where WG looks WRONG gets APPENDED to this file — `open` if it needs the owner's word, `deferred` if the owner already ruled 'later'. Entries the owner skips during a rulings pass still need their word; they stay in `open` and are simply answered in a future pass.",
+ "authorisedExceptions": [
+  {
+   "ruling": "2026-08-22",
+   "what": "Where WG's data provably contradicts the printed text, the BOOK wins.",
+   "records": [
+    "summiting-dragonblood",
+    "monk-resiliency",
+    "barbarian-resiliency",
+    "champion-resiliency",
+    "werecreature-dedication",
+    "favored-terrain"
+   ],
+   "quote": "ours, also making sure it also grunts the combat climber skill feat / ours, evry archytype feat that belons to that archytyope / Book (keep ours)"
+  },
+  {
+   "ruling": "standing",
+   "what": "Filtering the options offered in a selection menu is ours to decide.",
+   "quote": "only place where we have the last word is filtering the options when giving a user selection menu"
+  },
+  {
+   "ruling": "2026-08-22",
+   "what": "A value is a real number only when it is ALWAYS on; a condition the sheet cannot see is a star.",
+   "quote": "we give an actual speed only when it's always, if it is dependent on something ist in a *"
+  }
+ ],
+ "open": [
+  {
+   "id": "devil-allies",
+   "batch": 2,
+   "printed": "(see record)",
+   "theirs": "A tradition picker with the four traditions, and under each one the summon spell at rank 5 below character level 16, rank 6 from 16, rank 7 from 18 and rank 8 from 20, one cast per day, plus injected prose restricting the summon to devils.",
+   "ours": "The same tradition picker, the same spell once per day, at rank 6 with heightening to 7 at level 14, 8 at 16, 9 at 18 and 10 at 20, plus the devil restriction as a note on the spell.",
+   "question": "Printed: \"You gain Summon Fiend as a 6th-rank innate spell of a tradition of your choice, which you can cast once per day… At 14th level and every 2 levels thereafter, the spell is heightened by one rank (to a maximum of 10th rank when you reach 20th level).\" Ours (public/core.json feats['devil-allies']): innateSpells [{spellId:'summon-fiend', rank:6, usesPerDay:1, traditionFromChoiceFlag:'devilAlliesTradition', heightenAt:[{14,7},{16,8},{18,9},{20,10}]}] plus a choice block offering the four traditions, wired through traditionFromChoiceFlag which is read at src/rules/build.ts:6079, and spellNotes carrying the devil restriction. I read their raw level gates directly: they have no bump at 14 "
+  },
+  {
+   "id": "animist-apparition-spellcasting",
+   "batch": 3,
+   "printed": "(see record)",
+   "theirs": "Two casting sources (animist prepared divine/Wis, apparition spontaneous-repertoire divine/Wis), the spells tab, +1 Focus Point, and two full 20-level spell-slot ladders.",
+   "ours": "The same two pools and focus point, but a prepared ladder that differs from theirs at levels 13–18.",
+   "question": "PRINTED (the Animist Spells per Day table, read from the AoN mirror C:\\wonderers guide\\aon-2e-archive\\data\\by-category\\class\\class-64.json, where each cell is \"prepared+apparition\"): level 13 gives 7th rank 1+1; level 14 gives 7th 2+1; level 15 gives 8th 1+1; level 16 gives 8th 2+1; level 17 gives 9th 1+1; level 18 gives 9th 2+1. THEIR ENCODING: their prepared ladder has no 7th-rank slot until 14, no 8th until 16, no 9th until 18 — one level late at each of those three ranks, and one slot short at 14/16/18. I diffed all 20 levels: 1–12, 19 and 20 agree exactly; only 13–18 differ. OUR ENCODING: animistPreparedSlots at src/rules/spellcasting.ts:86 (2 slots at level ≥ 2r, 1 slot at level = 2r−1"
+  },
+  {
+   "id": "fear-no-law-fear-no-one",
+   "batch": 3,
+   "printed": "Order of the Scourge, Lesser Order Benefit (Hellfire Dispatches pg. 29), a Single Action: 'When your allies see you stand up to fear, they become similarly emboldened. Make a Strike. If you hit and deal damage, each ally within a 20-foot emanation around you who can see you reduces the value of their frightened condition by 1. If the target of your Strike was the source of their frightened condition, they reduce the value by 2 instead.'",
+   "theirs": "addBonusToValue on SAVE_FORT, SAVE_REFLEX and SAVE_WILL, all three carrying the text 'When you roll a success against a fear effect, you get a critical success instead' — a save degree-of-success upgrade, with no Strike and no effect on allies.",
+   "ours": "The printed action, with actionCost 1. No save upgrade.",
+   "question": "Their encoding is a different ability from the one the book prints under this name. I searched the whole AoN mirror for any printed text matching 'success against a fear effect ... critical success' and found ZERO records, so theirs has no printed basis I can find in any edition. Do we adopt their save upgrade anyway (the standing rule is to match them), or keep the printed Strike?"
+  },
+  {
+   "id": "locate-lawbreakers",
+   "batch": 4,
+   "printed": "You gain Locate as an innate spell of a tradition of your choice, which you can cast once per day. If you're a member of the Order of the Gate, when you reach 14th level, the spell is heightened to 5th rank.",
+   "theirs": "select 'Select a Tradition' with four options (Arcane/Divine/Occult/Primal), each a giveSpell INNATE of Locate, wrapped in 'IF LEVEL < 14 THEN rank 3 ELSE rank 5' — the heightening is gated on LEVEL ALONE, for every character, with no check of the Hellknight order.",
+   "ours": "The tradition choice and the once-per-day Locate grant are now built and match theirs (the record previously shipped innateSpells:[] and granted nothing at all). No heighten ladder is encoded.",
+   "question": "The printed text gates the 14th-level heightening on BOTH level and membership of the Order of the Gate; they gate it on level only. Encoding it their way gives the rank-5 spell to Hellknights of every other order; encoding it the printed way diverges from them. Which?"
+  },
+  {
+   "id": "steady-balance",
+   "batch": 5,
+   "printed": "(see record)",
+   "theirs": "The printed clause as text, plus a second injected clause about substituting an Acrobatics check for a Reflex save.",
+   "ours": "successToCrit on Balance checks; the off-guard clause as description text.",
+   "question": "Our side matches the printed text: the record carries `degreeShifts[{shift:'successToCrit', skills:['acrobatics'], actions:['balance'], when:'on a check to Balance'}]`, and the not-off-guard clause is prose. Their side injects TWO clauses. The first restates the printed text. The second injects a clause letting you attempt an Acrobatics check in place of a Reflex save — a substitution that appears nowhere in the printed entry for this feat, which reads only: success on Balance becomes a critical success, and you are not off-guard while Balancing on narrow surfaces and uneven ground. I am not adopting either side. Please rule whether that save-substitution belongs to this feat (in which case "
+  },
+  {
+   "id": "armor-in-earth",
+   "batch": 6,
+   "printed": "Stone encases you like armor. The stone armor is medium armor but uses your highest armor proficiency. The stone armor's statistics are: AC Bonus +4; Dex Cap +1; Check Penalty -2; Speed Penalty -10 feet; Strength +3; Bulk 1; Group plate. ... Level (3rd) The armor becomes heavy armor. Its AC Bonus becomes +5, and it gains the bulwark armor trait. (C:/wonderers guide/aon-2e-archive/data/by-category/feat/feat-4221.json)",
+   "theirs": "`node scripts/wg-show.mjs armor-in-earth --raw` (their feat 21381): one `conditional` on LEVEL < 3 -> giveItem 13156, else giveItem 13157. `node scripts/wg-item.mjs 13156` = Armor in Earth (Medium), category medium, ac_bonus 4, dex_cap 1, check -2, speed -10, strength 3, bulk 1, group plate, and ONE operation: adjValue MEDIUM_ARMOR = T. `node scripts/wg-item.mjs 13157` = Armor in Earth (Heavy), category heavy, ac_bonus 5, trait 1594 (bulwark), and a THREE-RUNG ladder: adjValue HEAVY_ARMOR = T w…",
+   "ours": "public/core.json feats.armor-in-earth carries only `actionCost` + `grantsItems: [armor-in-earth-medium, armor-in-earth-heavy]` (authored at scripts/data/effect-backfill.json:125444-125515). Both created items match their statistics exactly. NO armour proficiency anywhere: `grep -rn \"armor-in-earth\" src/` returns ZERO hits in any registry (featGrants.ts / featGrantsAuto.ts / featGrantsLane.ts / featFeatGrants.ts / situationalBonuses.ts). Instead the medium item's `note` (effect-backfill.json:125…",
+   "question": "A fix was proposed and REFUSED on review because it picks a side in a WG-vs-print disagreement. The reviewer's reasoning: THE GAP IS REAL — I re-verified every factual claim — but the proposed edit must NOT be applied, for two independent reasons. WHAT I CONFIRMED (all re-run, not taken from the summary): - OURS: public/core.json feats[\"armor-in-earth\"] = actionCost + grantsItems[armor-in-earth-medium, armor-in-earth-heavy] + aonId only. `grep -rni \"armor.in.earth|armorInEarth\" src/` = ZERO hits, so no registry carries a proficiency. No duplicate record in classFeatures/actions (only feats). No classFeature grants a kineticist medium/heavy. The `armorRestat.proficiencyAs` lane (types.ts:2887, applied derive.ts:916) is gated on classFeature + inventor `designations`, so it is a different lane, not a duplicate. - IMPACT: classes.kineticist.defenses = {unarmored:trained, light:trained, med…"
+  },
+  {
+   "id": "benefactors-resistance",
+   "batch": 6,
+   "printed": "\"You gain resistance equal to half your level to the damage type dealt by the breath of your draconic benefactor. Examples are shown on the Draconic Benefactors table here.\\n\\nIf your draconic benefactor's breath deals bludgeoning, piercing, or slashing damage, instead of gaining resistance to that type, you must choose acid, cold, fire, electricity, or sonic.\" (feat-8064.json) — no clause about dragons anywhere, and the prerequisite heritage (Dragonscaled Kobold, heritage-334) prints only extra Hit Points and a +1 circumstance bonus to saves vs dragon breath, sleep and paralysed.",
+   "theirs": "Their ability_block 51115 branches on DRACONIC_EXEMPLAR_BREATH_TYPE and, for EVERY branch, emits FOUR adjValue RESISTANCES ops — for acid: `acid, 1` + `acid, {{level/2}}` (half level, minimum 1) AND `acid from dragons, 2` + `acid from dragons, {{level}}` (FULL level, minimum 2, against dragons). The b/p/s fallback is a select over acid/cold/fire/electricity/sonic carrying the same four ops each. The half-level-minimum-1 half matches print. The \"from dragons\" half — a resistance DOUBLED against …",
+   "ours": "public/core.json feats/benefactors-resistance.effectChoices: one `breath-type` pick over ten damage types, each option granting `resistances:[{type:<t>, value:\"max(1,floor(@actor.level/2))\"}]`. Half level, minimum 1 — which agrees with WG on the unconditional half — and nothing about dragons.",
+   "question": "Their encoding and the printed text disagree. RAN buildCharacter + deriveDefenses for a kobold with heritageId 'dragonscaled-kobold', the feat taken, and effectChoices{'benefactors-resistance:breath-type':'fire'}: L1 gives chosenEffects.resistances=[{fire, \"max(1,floor(@actor.level/2))\"}] and derived resistances=[{fire, 1}]; L6 gives [{fire, 3}]. So our number matches the printed sentence and matches WG's unconditional pair at every level. Read the printed text from the AoN mirror for BOTH the feat (feat-8064) and the prerequisite heritage (heritage-334) before concluding the dragon clause is unsupported. ALSO CONFIRMED ALREADY-FIXED by sweep (a): the bare duplicate `choice` this record used to carry is gone — scripts/data/effect-backfill.json index 7251 is feats/benefactors-resistance.choice=null and the live record has only `effectChoices`. The remaining shape difference — they auto-a…"
+  },
+  {
+   "id": "molten-wit",
+   "batch": 6,
+   "printed": "You either become trained in Deception and gain the Charming Liar skill feat, or you become trained in Diplomacy and gain the Group Impression skill feat. If you're already trained in one of these skills, you must take the other and can choose from either skill feat. If you're trained in both skills, you become trained in a different skill of your choice instead and can choose from either skill feat. (feat-3930)",
+   "theirs": "`node scripts/wg-show.mjs molten-wit --raw` (their feat 30145): exactly TWO selects. (1) \"Select a Skill\", optionType ADJ_VALUE, two predefined options - adjValue SKILL_DECEPTION=T or adjValue SKILL_DIPLOMACY=T. (2) \"Select a Skill Feat\", optionType ABILITY_BLOCK, two predefined options - giveAbilityBlock feat 19995 (Charming Liar) or 20195 (Group Impression). One question for the skill, one for the feat.",
+   "ours": "The same sentence is asked THREE times on our side, and the three answers are stored under three different keys and can disagree: (1) public/core.json feats.molten-wit.`choice` {flag:'skill', kind:'array', options deception/diplomacy} - this is the one CHOICE_FEAT_GRANTS reads; (2) feats.molten-wit.`effectChoices` [{id:'molten-wit-skill', options carry grant.skills}] (authored scripts/data/effect-backfill.json:18329-18359); (3) FEAT_LANE_GRANTS['molten-wit'] = {\"skillChoices\":[{\"options\":[\"dece…",
+   "question": "A fix was proposed and REFUSED on review because it picks a side in a WG-vs-print disagreement. The reviewer's reasoning: MISMATCH IS REAL, FIX MUST NOT BE APPLIED — verdict is ASK-OWNER. 1. THE PREMISE CHECKS OUT (verified, not taken on trust). public/core.json feats.molten-wit still carries BOTH `effectChoices` [{id:'molten-wit-skill', options carry grant.skills}] AND `choice` {flag:'skill', prompt:'Skill', options deception/diplomacy, NO grants}; src/rules/featGrantsLane.ts:26 still holds the third slot (grep -c on the finder's exact `find` string = 1). Three separate answer keys, confirmed by reading the readers: featSkillChoices['molten-wit:0'] (build.ts:4415 via featSkillChoiceValue), effectChoices['molten-wit:molten-wit-skill'] (build.ts:4752 resolvePick), and fc.choice.value (build.ts:4203 featFeatGrantsFor). LEGACY_SKILL_SLOT_KEYS (build.ts:1375) holds ONLY 'gildedsoul:0', so t…"
+  },
+  {
+   "id": "firework-technician-dedication",
+   "batch": 7,
+   "printed": "You become trained in Fireworks Lore or become an expert if you were already trained in it. You gain the quick alchemy benefits, creating up to 4 pyrotechnic versatile vials during your daily preparations. These vials have the fire trait and deal fire damage instead of acid. You can use pyrotechnic versatile vials only to throw as bombs, for the Launch Fireworks action (see below), or with Quick Alchemy to create fireworks consumables... (feat-8528, the current version; our record's aonId feat-3245 is the superseded printing, which AoN marks \"There is a more recent version of this\")",
+   "theirs": "`node scripts/wg-show.mjs firework-technician-dedication --raw` (their feat 25718), five ops: (1) createValue SKILL_LORE_FIREWORKS {value:'U', attribute:ATTRIBUTE_INT}; (2) conditional IF SKILL_LORE_FIREWORKS >= T -> adjValue = E, ELSE -> adjValue = E (both branches E, i.e. ALWAYS EXPERT); (3) giveAbilityBlock 33683 = \"Quick Alchemy Benefits\", which itself gives 19894 Alchemical Crafting + 31176 Quick Alchemy; (4) giveAbilityBlock 25719 = Launch Fireworks (carries no ops of its own); (5) giveIt…",
+   "ours": "Ops 2-4 match; op 5 has no counterpart at all. Fireworks Lore: src/rules/featGrantsAuto.ts:303 conditionalSkills {'lore:fireworks': {base:'trained', upgraded:'expert'}}. Alchemical Crafting: src/rules/featFeatGrants.ts:382 FEAT_FEAT_GRANTS['firework-technician-dedication'] = ['alchemical-crafting']. Quick Alchemy + Launch Fireworks: public/core.json feats.firework-technician-dedication.grantsActions = ['launch-fireworks','quick-alchemy'] (effect-backfill.json:89392-89400). THE VIALS ITEM: nothi…",
+   "question": "A fix was proposed and REFUSED on review because it picks a side in a WG-vs-print disagreement. The reviewer's reasoning: THE PREMISE IS REAL, THE ROW IS NOT THEIRS. I confirmed the gap and then refuted the fix on its own field values. WHAT I CONFIRMED (the finding is right about the gap) - Their side, re-run: `node scripts/wg-show.mjs firework-technician-dedication --raw` (their 25718) ends in `giveItem 22504`. `node scripts/wg-item.mjs 22504` = \"Pyrotechnic Versatile Vials\", group WEAPON, meta category martial, group bomb, damage {damageType fire, dice 1, die \"\"}, range 20, level 0, price {}. - Our side, re-read now: `public/core.json` feats['firework-technician-dedication'] has NO `grantsItems`; `public/core.json` items has no /pyrotechnic/ key; the only carrier is `src/rules/classResources.ts:117-126` (counter, maxBase 4). So the mismatch has NOT been closed by a later sweep. - Lane…"
+  },
+  {
+   "id": "hellknight-dedication",
+   "batch": 7,
+   "printed": "(see record)",
+   "theirs": "Intimidation at expert regardless of prior rank; light/medium/heavy armor training with expert follow-ons; an Intimidation bonus scaled by armor resilience; no mental resistance.",
+   "ours": "Mental resistance 1 + hellknight archetype feats; Intimidation trained, expert only if already trained; Additional Lore (Hell); the order recorded as a choice.",
+   "question": "Their encoding and the printed text disagree in three places. Printed (public/core-descriptions.json feats.hellknight-dedication, Hellfire Dispatches): \"You gain resistance to mental damage equal to 1 + your number of archetype class feats from the Hellknight archetype. You become trained in Intimidation; if you were already trained, you become an expert instead. In addition, you gain the Additional Lore general feat for Hell Lore…\" — no armor clause anywhere. THEIR ops: Intimidation set to EXPERT unconditionally; light/medium/heavy armor granted at trained behind a light-armor conditional; three further conditionals raising heavy and medium to expert and light+medium to expert at a level th"
+  },
+  {
+   "id": "reverse-engineer",
+   "batch": 7,
+   "printed": "(see record)",
+   "theirs": "A +2 Crafting bonus \"to reverse engineer a formula from an item\", plus three text injections for the Critical Crafting clause and the two Thievery substitutions.",
+   "ours": "skillSubstitutions [{use:'crafting', forSkill:'thievery'}] on the record, AND a \"+2 circumstance to Crafting to reverse engineer or disassemble an item\" star at src/rules/situationalBonuses.ts:513.",
+   "question": "The printed sentence, verbatim from the Remastered Guns & Gears text in the mirror (feat-3053): \"You are incredibly skilled at reverse engineering items to learn their formulas or disassembling them just to disable them. If you are using the Critical Crafting alternate rules and you get a critical success on your Crafting check to reverse engineer an item, you can reassemble the original item with one of the critical success crafting benefits (as determined by your GM.) Furthermore, you can use Crafting instead of Thievery to Disable a Device or Pick a Lock.\" There is no +2 anywhere in it. The +2 is the PRE-Remaster wording of this feat, and BOTH implementations still carry it — our record's"
+  },
+  {
+   "id": "intuitive-crafting",
+   "batch": 8,
+   "printed": "\"You are trained in Crafting. If you were already trained in Crafting, you instead gain the Specialty Crafting skill feat in a specialty of your choice; if you have both, you instead become trained in a skill of your choice. In addition, when you critically fail to Repair an item, you get a failure instead.\" (AoN mirror feat/feat-7200.json)",
+   "theirs": "WG row 38502: `conditional IF SKILL_CRAFTING >= T AND FEAT_NAMES NOT_INCLUDES \"specialty crafting\" THEN giveAbilityBlock 20570 (Specialty Crafting) ELSE adjValue SKILL_CRAFTING = T`, plus an injectText for the critical-failure clause. The skill feat is GATED on being already trained; an untrained character gets Crafting and nothing else. (Their older row 23459 is the unconditional version and is superseded.)",
+   "ours": "Both halves of the printed \"instead\" fire at once, in the wrong cases. FEAT_GRANTS['intuitive-crafting'] = {\"skills\":{\"crafting\":\"trained\"},\"redundantFallback\":true} (src/rules/featGrantsAuto.ts:416) AND FEAT_FEAT_GRANTS['intuitive-crafting'] = ['specialty-crafting'] (src/rules/featFeatGrants.ts:401), which is UNCONDITIONAL. Result: a character NOT trained in Crafting gets Crafting trained AND Specialty Crafting (over-delivery vs both WG and the book); a character already trained gets Specialty…",
+   "question": "A fix was proposed and REFUSED on review because it picks a side in a WG-vs-print disagreement. The reviewer's reasoning: REFUTED on three independent grounds: two of the three code edits are ALREADY APPLIED, the one remaining code edit settles a WG-vs-printed-text contradiction that is the owner's call, and the backfill row's stated premise is factually false. (1) STALE — 2 of 3 codeEdits already landed, verbatim comments and all. `grep -cF \"'intuitive-crafting': ['specialty-crafting'],\"` in src/rules/featFeatGrants.ts returns 0 — edit 1's `find` string does not exist; the MOVED comment block the spec proposes as its `replace` is already sitting at featFeatGrants.ts:409-412 above `'inventor-dedication': ['inventor'],`. Edit 2 is likewise already in: FEAT_RANK_FEAT_GRANTS at featFeatGrants.ts:86 already reads `'intuitive-crafting': [{ skill: 'crafting', rank: 'trained', feat: 'specialty…"
+  },
+  {
+   "id": "merchants-scale",
+   "batch": 8,
+   "printed": "The AoN mirror's ENTIRE printed entry is: \"Merchant's Scale Source Player Core pg. 290 Price 2 sp Hands 2 Bulk L\" — the record has NO rules body at all (C:/wonderers guide/aon-2e-archive/data/by-category/equipment/equipment-2734.json, `text` and `markdown`; the legacy printing equipment-34.json, Core Rulebook pg. 288, is equally bare).",
+   "theirs": "WG item 7585 carries SEVEN `addBonusToValue` ops: +1 ITEM bonus to SKILL_ARCANA, SKILL_CRAFTING, SKILL_MEDICINE, SKILL_NATURE, SKILL_OCCULTISM, SKILL_RELIGION and SKILL_SOCIETY, each with text \"to Recall Knowledge checks to determine the value of items, gems, or precious metals\", plus a descriptive paragraph asserting that bonus.",
+   "ours": "Nothing mechanical. public/core.json items.merchants-scale is a bare header (price {sp:2}, bulk 0.1, hands 2, usage held-in-two-hands, itemType equipment, aonId equipment-2734) with `description: \"\"`, no `situational`, no `passiveEffects`, and no entry in public/core-descriptions.json. Its public/ast/items.json tree renders only the title/traits/source/price block, so the item shows as a priced object with no text.",
+   "question": "Their encoding and the printed text disagree. RAN `node scripts/wg-item.mjs \"Merchant's Scale\"` — the seven addBonusToValue ops above. RAN a dump of the AoN mirror (equipment-2734.json + equipment-34.json): both bodies empty. I then tested whether that emptiness is a SCRAPE DEFECT or the real entry, because a blank body is exactly what a mirror bug looks like: I scanned every Player Core \"Adventuring Gear\" item in the mirror and measured the body text after the last `---` separator — 130 items, 117 WITH a paragraph, 13 without, and the 13 are Bedroll, Chain, Chalk, Cookware, Hammer, Hourglass, Ladder (10 ft.), Merchant's Scale, Mirror, Mug, Rations, Rope, Soap. That is a coherent set of mechanically inert tools, not a random scrape failure — the mirror provably carries Adventuring Gear bodies. Two INDEPENDENT encodings agree with the mirror: Foundry pf2e C:/foundry-pf2e-src/packs/pf2e/e…"
+  },
+  {
+   "id": "nagaji-spell-familiarity",
+   "batch": 8,
+   "printed": "\"During your daily preparations, choose daze, detect magic, or mage hand. Until your next daily preparations, you can cast the chosen spell as an occult innate cantrip.\" (AoN mirror feat/feat-3984.json — the legacy Impossible Lands printing; mage hand is now Telekinetic Hand)",
+   "theirs": "ONE select, `optionType=SPELL`, modeType PREDEFINED, with three giveSpell(type NORMAL) options: spell 4554 = Daze, 4562 = Detect Magic, 4890 = Telekinetic Hand. One question, asked once at build time. They do not model the daily re-choice at all.",
+   "ours": "The same grant, plus a SECOND picker that changes nothing. FEAT_CANTRIP_GRANTS['nagaji-spell-familiarity'] (src/rules/featCantripGrants.ts:83) = { tradition: 'occult', options: ['daze','detect-magic','telekinetic-hand'] } — an exact match for their three spells and the occult tradition, rendered by Builder.tsx:2174 and applied at build.ts:6181. On top of that the record still carries a top-level `choice` (flag 'nagajiFamiliaritySpell', daily: true) listing the SAME three spells with no `grant` …",
+   "question": "A fix was proposed and REFUSED on review because it picks a side in a WG-vs-print disagreement. The reviewer's reasoning: REFUSED — this fix settles a printed-text-vs-WG contradiction, which is the owner's call, not ours. WHAT I CONFIRMED (all of the finder's factual claims hold in the CURRENT tree): - The mismatch is real right now. `public/core.json` feats/nagaji-spell-familiarity still carries `choice` = {flag 'nagajiFamiliaritySpell', kind 'array', daily true, 3 options, NO `grant` on any option}, and `FEAT_CANTRIP_GRANTS['nagaji-spell-familiarity']` is still present — now at src/rules/featCantripGrants.ts:98 (the file moved from :83 in the restore) = {tradition 'occult', options ['daze','detect-magic','telekinetic-hand']}. - `node scripts/wg-show.mjs nagaji-spell-familiarity --raw` returns exactly ONE select, optionType=SPELL, PREDEFINED, three giveSpell(NORMAL) ops for spellIds 45…"
+  },
+  {
+   "id": "reinforced-chassis",
+   "batch": 8,
+   "printed": "\"Your chassis is made from reinforced armor plating that grants a +3 item bonus to AC with a Dexterity cap of +1. If you are at least 5th level, the item bonus increases to +4 and at 10th level it increases to +5.\" — C:/wonderers guide/aon-2e-archive/data/by-category/feat/feat-3095.json (Guns & Gears (Remastered) pg. 40).",
+   "theirs": "Two ops (node scripts/wg-show.mjs \"reinforced-chassis\" --raw): giveItem 13659 + giveAbilityBlock feat 25850. I opened both. Item 13659 (node scripts/wg-item.mjs 13659) is a MEDIUM armour, meta_data group \"plate\", ac_bonus 3, dex_cap 1, unselectable:true — and its `operations` column is EMPTY (wg-item prints an `operations:` block whenever there is one; there is none). `node scripts/wg-item.mjs \"Reinforced Chassis\"` returns exactly ONE item row, so there is no second scaling item, and `node scri…",
+   "ours": "feats/reinforced-chassis grantsItems → items/reinforced-chassis-armor (public/core.json: itemType armor, category medium, group plate, dexCap 1, acBonus 3, acBonusByLevel [{level:5,acBonus:4},{level:10,acBonus:5}]), plus grantsActions ['chassis-deflection'] — the same unconditional grant they make. acBonusByLevel has a live reader at src/rules/derive.ts:1711.",
+   "question": "Their encoding and the printed text disagree. OURS: public/core.json feats['reinforced-chassis'] + items['reinforced-chassis-armor']; both authored by scripts/data/effect-backfill.json:126460-126507 (the create row and the grantsItems row) and effect-backfill.json:89354-89359 (grantsActions). The scaling is deliberate and already regression-tested: test/batch8-parity.test.ts:160-166 asserts ac(5)-ac(4)===2 and ac(10)-ac(9)===2, and src/rules/situationalBonuses.ts:2760-2767 records that the old `*` star on AC was REMOVED precisely because \"the chassis now ships as a real medium-armour item the feat grants (`acBonusByLevel` carries the +3/+4/+5)\". THEIRS: ran wg-show + wg-item as above. MATCHING HALF: Chassis Deflection — both sides grant it unconditionally even though the printed clause sits under the **Enhancement** heading, so there is no parity gap there. TWO SIDE OBSERVATIONS, neithe…"
+  },
+  {
+   "id": "sequestered-spell",
+   "batch": 8,
+   "printed": "(see record)",
+   "theirs": "The same cantrip, tradition-gated; innate spell attack/DC trained, expert on a level-4 condition.",
+   "ours": "An at-will innate cantrip from the recorded magiphage tradition, heightened to half level; innate spell attack/DC trained, expert at 12th.",
+   "question": "THE CANTRIP LANE AGREES. Printed: \"Choose one cantrip from the spell list of your magiphage ability. You can cast this cantrip as an innate spell at will. A cantrip is heightened to a spell rank equal to half your level rounded up.\" Ours (live public/core.json — again newer than the packet's copy) is `effectChoices[0].spellFilter` with `cantripsOnly: true`, `grantAs: 'innate'`, `innate: { atWill: true, heightenHalfLevel: true }` AND `traditionFromChoiceFlag: 'magiphageTradition'`, narrowed at src/rules/build.ts:1507-1355 so the offered list is the tradition the surki ancestry already recorded. Theirs is the same choice, split into four tradition-gated selectors. THE PART TO RULE ON: their re"
+  },
+  {
+   "id": "clawdancer-dedication",
+   "batch": 9,
+   "printed": "\"Claw Stance … THE ONLY STRIKES YOU CAN MAKE ARE FRENZIED CLAW unarmed attacks. These deal 1d6 slashing damage, are in the brawling group, and have the agile, finesse, grapple, unarmed, and versatile piercing traits. Talon Stance … the only Strikes you can make are spinning talon unarmed attacks. These deal 1d8 slashing damage, are in the brawling group, and have the finesse, sweep, and unarmed traits.\" — feat-5436.json (Howl of the Wild pg. 68).",
+   "theirs": "giveAbilityBlock feat 28876 (Claw Stance) → giveItem 14206, and giveAbilityBlock feat 28877 (Talon Stance) → giveItem 14207. I opened both items: 14206 Frenzied Claw = unarmed_attack, 1d6 slashing, group brawling, traits agile/finesse/grapple/unarmed/versatile-piercing, unselectable; 14207 Spinning Talon = unarmed_attack, 1d8 slashing, group brawling, traits finesse/sweep(trait 1562)/unarmed, unselectable. Each Strike exists EXACTLY ONCE on their sheet.",
+   "ours": "The same two Strikes TWICE over, from two carriers: feats['clawdancer-dedication'].grantedStrikes (Frenzied Claw d6 slashing agile/finesse/grapple/unarmed/versatile-p brawling; Spinning Talon d8 slashing finesse/sweep/unarmed brawling) AND stances['claw-stance'].strikes / stances['talon-stance'].strikes, which carry the identical two Strikes.",
+   "question": "A fix was proposed and REFUSED on review because it picks a side in a WG-vs-print disagreement. The reviewer: REFUTED — this fix settles a WG-vs-printed-text contradiction by itself, and its primary `find` string no longer exists in the tree. WHAT IS TRUE (verified, not taken from the summary): - The duplicate is REAL and not already fixed. public/core.json feats['clawdancer-dedication'] still carries grantedStrikes (Frenzied Claw d6 slashing agile/finesse/grapple/unarmed/versatile-p brawling; Spinning Talon d8 slashing finesse/sweep/unarmed brawling) AND stances['claw-stance'].strikes / stances['talon-stance'].strikes carry the same two. The feat's traits are ['archetype','dedication'] — no 'stance' — and content.stances['clawdancer-dedication'] is undefined, so the guard at C:/trying ai 2/pf2e codex/src/rules/build.ts:2128-2129 cannot fire. derive.ts returns `[...stanceStrikes, ...wea…"
+  },
+  {
+   "id": "shadowcaster-dedication",
+   "batch": 9,
+   "printed": "(see record)",
+   "theirs": "Cloak of Shadow, +1 Focus Point, and a casting source pinned to the divine tradition keyed on Wisdom.",
+   "ours": "Cloak of Shadow as a focus spell plus 1 Focus Point, cast on the character's own class focus profile (their existing tradition and key attribute).",
+   "question": "Printed sentence: \"Your domain spells from the shadowcaster archetype are of the same tradition as the spells you used to meet the shadowcaster archetype's prerequisites.\" The prerequisite is only \"ability to cast spells\", so the tradition varies per character. Their encoding fixes it to divine with Wisdom as the key attribute, which the printed sentence does not support. Ours (public/core.json feats.shadowcaster-dedication: focusSpells ['cloak-of-shadow'], focusPoolBonus 1, and deliberately no spellcastingGrant) falls through the featFocusGrant filter at src/rules/build.ts:3561-3585 to the character's own class focus profile, i.e. the tradition and attribute they already cast with. The spel"
+  },
+  {
+   "id": "soul-warden-dedication",
+   "batch": 9,
+   "printed": "(see record)",
+   "theirs": "The same cantrip, source, key attribute and trained proficiency, plus an extra conditional that raises spell attack AND spell DC to expert at 12th level.",
+   "ours": "Vitality Lash as an at-will divine innate cantrip and trained divine spell attack/DC keyed on Wisdom, held at trained for all 20 levels.",
+   "question": "Printed says only \"You're trained in divine spell attack rolls and spell DCs. Your key spellcasting ability for these spells is Wisdom\" — it never grants a later increase. I resolved their truncated predicate in the raw dump: the condition is LEVEL >= 12, its true-branch sets spell attack and spell DC to expert, and there is no master step. No soul-warden feat in our data raises the rank either (checked all 11 archetype feats in public/core.json). Ours: feats.soul-warden-dedication carries innateSpells [{vitality-lash, divine, atWill}], spellcastingGrant {divine, wis, trained} and dedicationGate {soul-warden, count 2}; spellcastingGrant is a fixed rank with no level progression (src/rules/bu"
+  },
+  {
+   "id": "favored-terrain",
+   "batch": 10,
+   "printed": "(see record)",
+   "theirs": "An unconditional Speed change from level 2 with no unimpeded-journey and no in-terrain check",
+   "ours": "A conditional star on Speed, gated on unimpeded journey and on being in the chosen terrain; the number is not changed",
+   "question": "Their encoding appears to contradict the printed text and I did not decide it. PRINTED: 'When in that terrain, you can ignore the effects of non-magical difficult terrain. If you have the unimpeded journey class feature, you gain a second benefit while in your favored terrain, depending on your choice: … Plains You gain a +10-foot status bonus to your land Speed.' THEIR ENCODING: the terrain selection applies the speed benefits with no check for the unimpeded journey class feature and no check that the character is in the terrain — the Plains option adds +10 to land Speed outright, and the aquatic / forest-mountain-underground / sky options set or add a swim, climb or fly Speed with the only"
+  },
+  {
+   "id": "hallowed-necromancer-dedication",
+   "batch": 10,
+   "printed": "(see record)",
+   "theirs": "The granted spell plus a casting source hard-pinned to the divine tradition with Intelligence as the key attribute.",
+   "ours": "The Hallowed Ground focus spell and a focus point, with the focus entry's tradition following the character's own spell slots (record focusSpells + focusFromSpellSlots:true).",
+   "question": "Printed, verbatim: \"Focus spells from the hallowed necromancer archetype have the same tradition as your spell slots.\" Their encoding fixes the tradition to divine and the attribute to Intelligence regardless of what the character casts — an occult-slot character taking this archetype gets divine focus spells on their side and occult ones on ours. The prerequisite (\"able to cast spells using spell slots\") means the character always has slots for the printed rule to point at, so this is not a fallback for a missing value. Both sides also agree on the focus point (ours falls out of the point-costing focus spell). Reporting rather than deciding: adopting their side would break the printed sente"
+  },
+  {
+   "id": "hardwood-armor-armor",
+   "batch": 10,
+   "printed": "Wood and bark grow over your body like armor. This hardwood armor is medium armor but uses your highest armor proficiency. The wooden armor's statistics are: AC Bonus +3; Dex Cap +2; Check Penalty -2; Speed Penalty -5 feet; Strength +2; Bulk 1; Group wood.",
+   "theirs": "The same stat block (via base_item 'wooden-breastplate' plus meta_data ac_bonus 3, dex_cap 2, check_penalty -2, speed_penalty -5, strength 2, bulk 1, category 'medium'), item level 0, meta_data.unselectable = true - PLUS three level-gated operations on the item itself: MEDIUM_ARMOR=T while LEVEL<13, MEDIUM_ARMOR=E at LEVEL 13-18, MEDIUM_ARMOR=M at LEVEL>=19.",
+   "ours": "The identical stat block and, additionally, the printed armour GROUP ('wood') which their meta_data does not carry at all. But NO proficiency of any kind - the record ships a prose `note` telling the player to set it themselves. Because the item's category is 'medium' and a kineticist is untrained in medium armour, the app gives a kineticist wearing their own Hardwood Armor a flat +0 proficiency, i.e. the impulse currently leaves them worse off than their real armour.",
+   "question": "Their encoding and the printed text disagree. RAN `node scripts/wg-item.mjs \"Hardwood Armor\"` - their item id 13154, level 0, the meta_data above, unselectable: true, and the three MEDIUM_ARMOR conditionals verbatim. RAN a jiti buildCharacter probe: a level-5 kineticist with hardwood-armor-armor worn/invested/equipped comes out defenses {unarmored:trained, light:trained, medium:UNTRAINED, heavy:untrained} - nothing on our side moves medium. Printed text read from C:/wonderers guide/aon-2e-archive/data/by-category/feat/feat-4283.json (the impulse; there is no AoN item page - our record is aonOrigin 'authored' and is created wholesale by an overlay row with create:true). Our numbers match the printed stat block field for field including Group wood; our wooden-breastplate also carries group 'wood', so their base_item implies the same thing. WHY ASK-OWNER RATHER THAN A FIX: the printed rule…"
+  },
+  {
+   "id": "psychic-dedication",
+   "batch": 10,
+   "printed": "(see record)",
+   "theirs": "All of the above, PLUS one Focus Point granted by the dedication itself.",
+   "ours": "Occultism trained with a replacement pick (src/rules/featGrantsAuto.ts:541), an occult spontaneous repertoire of one cantrip keyed to the Int-or-Cha attribute the player qualified with (src/rules/casterArchetypes.ts:172, choiceKeyAbility ['int','cha']), trained spell attack + DC, and a recorded conscious-mind pick whose note names each mind's two standard psi cantrips. NO focus pool.",
+   "question": "The printed Dedication text (full description read from public/core-descriptions.json, not the packet) never mentions a focus pool. The pool belongs to Psi Development, the 6th-level archetype feat: its printed text reads \"You gain the ability to amp your psi cantrips. If you don't have one, you gain a focus pool of 1 Focus Point\", and our record carries focusPoolBonus:1 on 'psi-development' accordingly. So their side moves a 6th-level benefit onto a 2nd-level feat, which contradicts both records' printed text. Everything else matches one-for-one, including their Int/Cha branch and the two-option psi-cantrip pick per conscious mind. Reporting rather than deciding, per the rule about their en"
+  },
+  {
+   "id": "unifying-emblem-shundar-quah",
+   "batch": 11,
+   "printed": "The tattoo of the Spire clan depicts a cracked stone with a metal vein inside. It can cast thoughtful gift. — Activate ⟨1⟩ … Frequency once per day; Effect The tattoo casts its spell.",
+   "theirs": "WG (their item id 12580) encodes ONE conditional: IF LANGUAGE_NAMES INCLUDES \"shoanti\" THEN addBonusToValue SKILL_DIPLOMACY +1 item, text \"when speaking Shoanti to someone who understands it.\" ELSE giveLanguage 416 (Shoanti). Nothing for the once-per-day casting — their row has no spell-granting op.",
+   "ours": "The language/Diplomacy half matches. public/core.json items['unifying-emblem-shundar-quah'] has activationCost {actions:1}, frequency {1/day}, a resetsOnRest `freq` counter and passiveEffects.grantsLanguages ['shoanti'], but NO `innateSpells` and no `heldSpells`. Thoughtful Gift never reaches the Spells page; the 1-action activation and its daily counter sit in front of nothing. The description does render a clickable \"Thoughtful Gift\" descRef, which is navigation, not a castable spell.",
+   "question": "A fix was proposed and REFUSED on review because it picks a side in a WG-vs-print disagreement. The reviewer's reasoning: REFUTED — this is an ASK-OWNER case, and the finding's own evidence proves it. The fix must NOT be applied. THE FINDING REFUTES ITSELF. Its `theyDeliver` states plainly: \"Nothing for the once-per-day casting — their row has no spell-granting op.\" I re-ran `node scripts/wg-item.mjs \"Unifying Emblem (Shundar-Quah)\"` and confirmed it: their item 12580 has exactly three operations — one conditional (LANGUAGE_NAMES INCLUDES \"shoanti\" → +1 item Diplomacy; ELSE giveLanguage 416) and its two flattened children. No giveSpell. So on the spell half we ALREADY MATCH WG: both sides deliver nothing. Adding `innateSpells` does not close a gap with WG — it OPENS one. The proposed fix moves us AWAY from parity, which is the opposite of the mandate. I RAN ALL SEVEN. tamiir / lyrune / …"
+  },
+  {
+   "id": "unifying-emblem-sklar-quah",
+   "batch": 11,
+   "printed": "The tattoo allows you to understand and speak Shoanti. If you already know that language, you instead gain a +1 item bonus on Diplomacy checks you make when speaking Shoanti to someone who understands it. ... **Activate** <actions string=\"\" /> The actions required to Activate the tattoo are the same as those needed to cast its spell; **Frequency** once per day; **Effect** The tattoo casts its spell. ... The tattoo of the Sun clan depicts a songbird with flame emitting from its beak. It can cast concordant choir.",
+   "theirs": "WG DOES carry this record - in the `item` table (id 12581), not `ability_block`. Its whole encoding is one conditional: IF LANGUAGE_NAMES INCLUDES shoanti THEN addBonusToValue SKILL_DIPLOMACY +1 type=item text=\"when speaking Shoanti to someone who understands it.\" ELSE giveLanguage(416 = Shoanti). They encode NOTHING for the once-per-day spell.",
+   "ours": "The language half and the Diplomacy half, by different carriers: public/core.json items.unifying-emblem-sklar-quah.passiveEffects.grantsLanguages = [\"shoanti\"] (unconditional, which is a no-op difference from their else-branch since granting a language you already have changes nothing) and src/rules/situationalBonuses.ts:1643 as a +1 item Diplomacy star. NOT delivered: the once-per-day Concordant Choir. The record has no `innateSpells` and no `heldSpells`, so the spell never reaches the Spells …",
+   "question": "A fix was proposed and REFUSED on review because it picks a side in a WG-vs-print disagreement. The reviewer's reasoning: REFUTED ON PARITY GROUNDS — the fix picks a side in a WG-vs-print disagreement the owner reserved. Verdict should be ASK-OWNER; the row must NOT be applied. WHAT I CONFIRMED (all of the finder's factual claims hold): - The gap is real right now. public/core.json items.unifying-emblem-sklar-quah has passiveEffects.grantsLanguages:[\"shoanti\"], frequency 1/day, counters:[freq], NO innateSpells, NO activationCost. Full scan of the 12,163 rows of scripts/data/effect-backfill.json: the only row for this id is the passiveEffects one. No later sweep fixed it. - The instrument caveat is correct and important: `node scripts/wg-show.mjs unifying-emblem-sklar-quah` prints \"they do not carry this record at all\" — a FALSE NEGATIVE. wg-show reads only public.ability_block. `node sc…"
+  },
+  {
+   "id": "unifying-emblem-tamiir-quah",
+   "batch": 11,
+   "printed": "The tattoo allows you to understand and speak Shoanti. If you already know that language, you instead gain a +1 item bonus on Diplomacy checks you make when speaking Shoanti to someone who understands it. ... **Activate** ... **Frequency** once per day; **Effect** The tattoo casts its spell. ... The tattoo of the Wind clan depicts a pegasus riding a gust of wind. It can cast tailwind.",
+   "theirs": "WG item row 12577, identical in shape to every other emblem: IF LANGUAGE_NAMES INCLUDES shoanti THEN +1 item to SKILL_DIPLOMACY with the text \"when speaking Shoanti to someone who understands it.\" ELSE giveLanguage(416). Nothing for the daily spell.",
+   "ours": "Language via passiveEffects.grantsLanguages [\"shoanti\"], Diplomacy via the star at src/rules/situationalBonuses.ts:1638, activation via activationCost {actions:2} + frequency 1/day + counters[freq]. NOT delivered: Tailwind. No `innateSpells`, no `heldSpells`, so the two-action activation the record already models casts nothing.",
+   "question": "A fix was proposed and REFUSED on review because it picks a side in a WG-vs-print disagreement. The reviewer's reasoning: REFUTED — this is ASK-OWNER, and the row must not be applied. THE FACTS THE FINDING GOT RIGHT (all re-verified, none of them are the issue): - Our record genuinely has no `innateSpells`. Dumped from public/core.json: activationCost {type:'actions',value:2}, frequency {max:1,per:'day'}, counters[{id:'freq',max:1,per:'day',resetsOnRest:true}], passiveEffects.grantsLanguages ['shoanti'], aonId equipment-2223-1920, and nothing else. - The backfill bookkeeping is false. Scanning all 12,163 rows of scripts/data/effect-backfill.json for 'unifying-emblem' returns 8 passiveEffects rows + 3 innateSpells rows (shadde-quah, shriikirri-quah, skoan-quah) and nothing for tamiir-quah. work/wg-batch-011-residual.json marks it \"fixed\": true — and does the same for lyrune-quah, shundar…"
+  },
+  {
+   "id": "elemental-existence",
+   "batch": 12,
+   "printed": "Your body becomes infused with elemental earth. You gain the Adopted Ancestry feat and gain a 1st level oread ancestry feat as a bonus feat, ignoring the limitations of the lineage trait. When you gain new ancestry feats, you can select oread feats in addition to feats allowed by your ancestry and heritage.",
+   "theirs": "WG feat 30322, four ops: (1) a FILTERED select over ability_block feats, level max 1, trait Oread, type feat - the bonus oread feat; (2) `giveTrait(3041)` - I looked up trait 3041 in their `trait` table and it is Oread, meta_data {\"versatile_heritage_trait\": true}, which is how they open the oread feat pool; (3) `adjValue STONEBOUND_FEAT_COUNT +1`, their archetype-gate bookkeeping; (4) `adjValue BLACKLIST_ABILITY_BLOCKS \"adopted ancestry\"`. They never GRANT Adopted Ancestry - they REMOVE it fro…",
+   "ours": "All three printed clauses. src/rules/featPickGrants.ts:197 `'elemental-existence': { prompt: \"Choose a feat\", category: 'ancestry', maxLevel: 1, traits: ['oread'] }` = their filtered select. public/core.json feats.elemental-existence.extraAncestryFeatTraits [\"oread\"] (effect-backfill row #10163) = their giveTrait(Oread); src/rules/types.ts:2502-2508 names this very record as the reason the field exists (\"measured: 0 oread feats reachable, though 23 ship\"). And src/rules/featFeatGrants.ts:373 `'…",
+   "question": "Their encoding and the printed text disagree. RAN `node scripts/wg-show.mjs elemental-existence --raw` for the four ops, then resolved trait 3041 against their `trait` table (= Oread) rather than assuming. PRINTED TEXT from C:/wonderers guide/aon-2e-archive/data/by-category/feat/feat-4378.json: \"You gain the Adopted Ancestry feat and gain a 1st level oread ancestry feat as a bonus feat...\". I ESTABLISHED WHAT BLACKLIST_ABILITY_BLOCKS MEANS before drawing a conclusion from it, because \"blacklist\" could conceivably have implied a grant. It does not: the operation appears in exactly 4 rows of their entire dump (Fey Eidolon 34417, Magical Trickster 30634, Magical Trickster (Eldritch Trickster) 30633, Elemental Existence 30322), and the two Magical Tricksters blacklist EACH OTHER while granting nothing - it is pure mutual exclusion, a hide-from-the-list operation. I also checked whether the …"
+  },
+  {
+   "id": "thats-not-natural",
+   "batch": 12,
+   "printed": "(see record)",
+   "theirs": "+1 to Perception with a rider about resolving those creatures' Stealth checks in wilderness, plus a +2 version of the same, both sitting under one condition keyed on a PERCEPTION proficiency",
+   "ours": "+1 circumstance to the Perception DC against those creature types in wilderness (never scaling), +1 circumstance to initiative rising to +2 if master in Survival, and +2 circumstance to Survival for the Commune ritual",
+   "question": "PRINTED: \"...you gain a +1 circumstance bonus to all initiative checks made at the start of a battle in which at least one of your enemies is an aberration, fey, mutant, or undead... In wilderness regions, you also increase your Perception DC by 1 against these types of creatures for the purposes of resolving their Stealth checks. If you're master in Survival, this circumstance bonus increases to +2.\" OURS: the Perception-DC clause is on the record's own `situational` in public/core.json ('+1 circumstance to your Perception DC (not to your Perception checks)') and never scales; the master-Survival upgrade is attached instead to the initiative entry at src/rules/situationalBonuses.ts:871 ('+1"
+  },
+  {
+   "id": "versatile-mutation",
+   "batch": 12,
+   "printed": "Your ostilli's darts can deal different types of damage. When you Spit Ambient Magic, you can choose to have the ostilli deal bludgeoning or slashing damage instead of piercing damage. At 8th level, choose one of the following: acid, cold, electricity, fire, or sonic damage; when your ostilli Spits Ambient Magic, it can deal that damage type instead and adds that trait to the action.",
+   "theirs": "WG feat 28317: the five-option damage-type select is wrapped in `conditional IF LEVEL GREATER_THAN_OR_EQUALS 8`, so the question is not asked at all before 8th level. Each option's only operation is an `injectText` onto Spit Ambient Magic (feat 28879) - prose, no mechanical op. Their `special` column separately carries the printed Special clause.",
+   "ours": "The same five options with NO level gate. public/core.json feats.versatile-mutation.choice (from effect-backfill row #11771, field \"choice\") is a bare `kind:'array'` picker with `distinctAcrossTakes:true` and `maxTakable:2`, offered from 4th level - the level at which the feat is taken. A 4th-level Ostilli Host is asked for an energy type the rules do not give them until 8th.",
+   "question": "A fix was proposed and REFUSED on review because it picks a side in a WG-vs-print disagreement. The reviewer's reasoning: PREMISE CONFIRMED, FIX REFUTED. The mismatch is real: `node scripts/wg-show.mjs versatile-mutation --raw` shows WG 28317 as a single top-level `conditional` on LEVEL GREATER_THAN_OR_EQUALS 8 whose trueOperations hold the 5-option select (each option only `injectText` onto 28879), falseOperations empty. public/core.json feats.versatile-mutation.choice is `kind:'array'`, 5 options, distinctAcrossTakes:true, maxTakable:2, NO gate, on a level-4 feat. AoN feat-5454 prints \"At 8th level, choose one of the following\". So WG and PRINT agree and we differ from both - correctly NOT ask-owner on the gate. Lane/value-key checks clean: grep of src/rules, src/builder, src/sheet for the id and for \"Ostilli\" returns only 'ostilli-host-dedication' in featGrantsAuto.ts:537, so nothing…"
+  },
+  {
+   "id": "aon-sacred-ki",
+   "batch": 13,
+   "printed": "(see record)",
+   "theirs": "A two-option select — the two sanctification traits — each option injecting text about substituting that damage type into the ki focus spells.",
+   "ours": "Nothing — public/core.json feats.aon-sacred-ki has only `actionCost.passive` and no choice; no registry in src/ names it and effect-backfill.json:120700 holds no grant for it.",
+   "question": "The printed text on this record says the player chooses among FOUR alignment components (matching one of the deity's), and the substitution is of that alignment's damage. Their encoding offers only TWO options, the remaster sanctification pair, and describes substituting a sanctification damage type. That is their encoding contradicting the printed sentence, not a modelling choice I should settle: our record is `edition:'legacy-era'` (aonId feat-1184, Lost Omens Gods & Magic), so the app is holding the legacy printing while their row has been remastered. I am not adopting either side. Note the mechanical payload under each of their options is injected text only, so what is actually at stake "
+  },
+  {
+   "id": "ardent-armiger",
+   "batch": 13,
+   "printed": "(see record)",
+   "theirs": "+1 to Fortitude, Reflex and Will against mental effects that specifically improve your attitude, and on Will DC against being Coerced.",
+   "ours": "+1 circumstance bonus to all saves against effects that could inflict the controlled or frightened conditions (src/rules/situationalBonuses.ts:164).",
+   "question": "These are two different feats' worth of benefit under one id. The printed text on this record is the controlled/frightened version plus the free-action re-save when a mental effect would compel you to violate your order's tenets; our record is `edition:'remaster'`, aonId feat-8813, and our bonus follows that printed sentence exactly. Their encoding describes attitude-improving mental effects and a Coerce Will DC — the earlier printing of the feat, which the printed text here does not contain. Their encoding contradicts the printed authority, so I am not adopting either side and have changed nothing. Owner input needed on whether WG's row is simply stale against the reprint (in which case our"
+  },
+  {
+   "id": "devils-eye",
+   "batch": 14,
+   "printed": "(see record)",
+   "theirs": "Legal Lore at trained, nothing else",
+   "ours": "Expert Legal Lore rising to master at 7 and legendary at 15, the Objection reaction, and a +1 circumstance star",
+   "question": "Printed: \"You also become an expert in Legal Lore … At 7th level you become a master of Legal Lore, and at 15th level you become legendary in Legal Lore.\" THEIR encoding: a single createValue that brings the Legal Lore skill into existence at TRAINED, with no later rung and no other operation. OUR encoding: src/rules/featGrantsAuto.ts:228 grants lore:legal at 'expert' with rankUpgrade [{7,'master'},{15,'legendary'}], plus feats.devils-eye.grantsActions=['objection'] (core.actions['objection'] exists) and src/rules/situationalBonuses.ts:982 (+1 circumstance to any check to read or negotiate a treatise/contract). So their row grants one rank less than the printed sentence and omits the reactio"
+  },
+  {
+   "id": "gunslinger-weapon-mastery",
+   "batch": 14,
+   "printed": "(see record)",
+   "theirs": "The whole firearm and crossbow GROUPS at master (advanced included), simple/martial/unarmed at expert, and no critical-specialization row at all.",
+   "ours": "Simple and martial firearms/crossbows master at 5th; ADVANCED firearms/crossbows expert at 5th; simple, martial and unarmed expert at 5th; critical specialization on the firearm and crossbow groups.",
+   "question": "Printed: \"Your proficiency rank increases to master with simple and martial firearms and crossbows. Your proficiency rank for ADVANCED firearms and crossbows, simple weapons, martial weapons, and unarmed attacks increases to EXPERT. You gain access to the critical specialization effects for firearms and crossbows.\" OURS: src/rules/build.ts:2787-2793 sets a category-split firearmProf = {simple: master at 5, martial: master at 5, advanced: EXPERT at 5} and deletes the coarse firearm/crossbow group ranks so they cannot over-grant; src/rules/advancement.ts:450-452 adds simple/martial/unarmed expert at 5; and core.json classFeatures.gunslinger-weapon-mastery carries critSpec:true + critSpecWeapon"
+  },
+  {
+   "id": "hardened-chassis",
+   "batch": 14,
+   "printed": "Choose one type of damage among bludgeoning, piercing, or slashing damage. You gain resistance 3 to that type of damage. This resistance does not apply if the weapon or attack is adamantine. Enhancement Your chassis gets even tougher. Choose one of the following benefits: you gain resistance 3 to all physical damage, or your chosen resistance increases to a value equal to half your level (minimum 3). This resistance is still bypassed by adamantine.",
+   "theirs": "WG ability_block 57994 (`Hardened Chassis`, feat 5) encodes TWO selects. (1) \"Select a Damage Type\": three CUSTOM options, each createValue HARDENED_CHASSIS_TYPE=<type> then adjValue RESISTANCES `\"<type> (except adamantine),3\"`. (2) \"Enhancement?\": three CUSTOM options — \"No\" (nothing); \"Yes, All Types\" -> adjValue RESISTANCES `\"physical (except adamantine),3\"` (plus setting the variable to all three); \"Yes, Increase Resistance\" -> three conditionals on HARDENED_CHASSIS_TYPE that re-add the cho…",
+   "ours": "Select (1) only. core.json feats.hardened-chassis.choice = {flag:'hardenedChassisDamage', kind:'array', options: bludgeoning/piercing/slashing, each grant.resistances [{type:X, value:3, condition:'except against adamantine weapons and unarmed attacks'}]} (overlay row scripts/data/effect-backfill.json:134567). THE ENHANCEMENT TIER IS ENCODED NOWHERE: the record carries no `enhancement` field, and on the two records that point AT it — core.json feats.lesser-augmentation and feats.greater-augmenta…",
+   "question": "A fix was proposed and REFUSED on review because it picks a side in a WG-vs-print disagreement. The reviewer's reasoning: REFUTED ON CHECK 3 (WG vs PRINT). The gap the finder describes is real, and almost every technical claim it makes verifies — but the fix picks a side in a WG-vs-print contradiction without a ruling, which the decision rule forbids. Correct disposition: ASK-OWNER, and do NOT apply. WHAT VERIFIED (so this is not a lazy refusal): - The gap is real right now. `public/core.json` feats.hardened-chassis carries only id,name,traits,rarity,source,level,category,edition,choice,aonId — no `enhancement`, no `effectChoices`, no `note`, no `situational`. Only ONE backfill row exists for it (scripts/data/effect-backfill.json row index 10246, field `choice`), so row 3 would replace, not duplicate. No sweep has touched it. - The lane is real and complete. src/rules/types.ts:1781-1794…"
+  },
+  {
+   "id": "weapon-expertise",
+   "batch": 14,
+   "printed": "(see record)",
+   "theirs": "Simple, martial AND unarmed to expert, flat, for every class that has this feature.",
+   "ours": "Per class: simple + martial + unarmed to expert at 5th for champion, exemplar, guardian, investigator, magus, swashbuckler, thaumaturge and runesmith; simple + unarmed only, at 11th, for druid, witch, wizard, kineticist, oracle, psychic, sorcerer and necromancer. The swashbuckler's extra critical-specialization clause is carried by a class-suffixed variant record.",
+   "question": "Printed splits the classes explicitly: martial weapons are named only for Champion/Exemplar/Investigator/Magus, Guardian, Swashbuckler and Thaumaturge; Druid, Kineticist, Oracle, Psychic, Sorcerer, Witch and Wizard get simple weapons and unarmed attacks only. OURS is per-class in src/rules/advancement.ts (druid 114-115, witch 205-206, necromancer 227-228, runesmith 248-250, wizard 273, champion 338-340, exemplar 389-391, guardian 411-413, investigator 490-492, kineticist 515-516, magus 527-529, oracle 565-566, psychic 580-581, sorcerer 592-593, swashbuckler 612-614, thaumaturge 631-633) — martial appears only on the seven martial classes, and the caster rows sit at 11th, which is when those "
+  },
+  {
+   "id": "brutality",
+   "batch": 15,
+   "printed": "(see record)",
+   "theirs": "crit spec while raging on simple weapons, martial weapons and unarmed attacks, with no melee restriction",
+   "ours": "crit spec while raging, melee weapons and unarmed only",
+   "question": "Printed: \"While raging, you have the critical specialization benefits for melee weapons and unarmed attacks.\" Ours (core.json classFeatures/brutality): critSpec true, critSpecWeapons {melee:true}, critSpecRequiresModeGroup 'barbarian-rage' — crit spec only while a rage mode is active and only on melee attacks (gate at src/rules/derive.ts:3371-3373, filter at derive.ts:3487). Theirs: the same rage-mode conditional, but the crit-spec values it adds are the three weapon CATEGORIES — simple weapons, martial weapons and unarmed attacks — with no melee restriction. A raging barbarian holding a longbow or a crossbow gets the critical specialization effect on their side and not on ours; the printed "
+  },
+  {
+   "id": "kitsune-spell-mysteries",
+   "batch": 15,
+   "printed": "You know more kitsune magic. During your daily preparations, choose bane, illusory object, or sanctuary. You can cast this as a 1st-level divine innate spell once that day. (AoN mirror feat/feat-2624.json, field `text`.)",
+   "theirs": "A single `select` over SPELL with three predefined options. The FIRST (spellId 4409 = Bane) is `giveSpell {type:INNATE, rank:1, tradition:DIVINE, casts:1}` — identical to ours. The other two (4816 Sanctuary, 4678 Illusory Object) are bare `giveSpell {type:NORMAL}`: no innate type, no divine tradition, no rank, no daily casting. Picking either delivers nothing a non-caster's sheet can use.",
+   "ours": "src/rules/featCantripGrants.ts:76 — `{ prompt: \"Choose a spell\", tradition: 'divine', options: ['bane','illusory-object','sanctuary'] }`. Whichever of the three the player picks becomes a 1st-rank DIVINE innate spell at 1/day (rank from the spell's own rank via build.ts:6247, uses defaulted to 1 at build.ts:6272, tradition from the spec at build.ts:6194). That is what the book prints, for all three options.",
+   "question": "Their encoding and the printed text disagree. RAN `node scripts/wg-show.mjs \"kitsune-spell-mysteries\" --raw` (their id 23477) and resolved 4409/4816/4678 against the dump's spell table -> Bane / Sanctuary / Illusory Object, so the OPTION SET is identical to ours. Read our carrier at src/rules/featCantripGrants.ts:76 and traced it through src/rules/build.ts:6180-6198 to confirm the divine tradition really reaches the granted spell (the `spec.tradition` branch at :6194). This is NOT their house vocabulary for a spell menu: `node scripts/wg-show.mjs \"fey-influence\" --raw` shows all eight of that feat's options fully configured as `{type:INNATE, rank:1, tradition:PRIMAL, casts:1}`, so the bare-NORMAL options here are a per-record authoring artifact — and the SAME artifact appears on mask-of-power (batch 015), which is why I am raising it once rather than as a vocabulary question. BOTH SIDES…"
+  },
+  {
+   "id": "nagaji-spell-mysteries",
+   "batch": 15,
+   "printed": "During your daily preparations, choose charm, fleet step, or heal. You can cast the chosen spell as a 1st-level occult innate spell once that day.",
+   "theirs": "ONE build-time select: select{modeType:PREDEFINED, optionType:SPELL} with three options, each giveSpell{type:'NORMAL'} — spellId 4516 (charm), spellId -1 (a dead pointer where fleet step should be), spellId 4656 (heal). No tradition, no rank, no casts on any of the three.",
+   "ours": "TWO askings for one decision, one of which grants nothing. (a) src/rules/featCantripGrants.ts:84 — FEAT_CANTRIP_GRANTS['nagaji-spell-mysteries'] = {tradition:'occult', options:['charm','fleet-step','heal']}, a build-time picker (Builder.tsx:2173-2193) whose answer becomes an innate grant at build.ts:6180-6198 with the default 1/day (build.ts:6272) at the spell's base rank 1. That lane matches the print exactly and is the only one that grants. (b) public/core.json feats.nagaji-spell-mysteries ch…",
+   "question": "A fix was proposed and REFUSED on review because it picks a side in a WG-vs-print disagreement. The reviewer's reasoning: DEFECT REAL, FIX MUST NOT BE APPLIED — this is ASK-OWNER. WHAT I CONFIRMED (all re-run, not taken from the summary): - `node scripts/wg-show.mjs nagaji-spell-mysteries --raw` reproduces the finder's read exactly: ONE build-time select{modeType:PREDEFINED, optionType:SPELL}, three giveSpell{type:'NORMAL'} options, spellIds 4516 / -1 / 4656, no tradition, no rank, no casts. - AoN mirror C:/wonderers guide/aon-2e-archive/data/by-category/feat/feat-3988.json: \"During your daily preparations, choose charm , fleet step , or heal . You can cast the chosen spell as a 1st-level occult innate spell once that day.\" - The DUPLICATE IS REAL. public/core.json feats['nagaji-spell-mysteries'].choice = {flag:'nagajiMysteriesSpell', kind:'array', daily:true, 3 options, ZERO of them ca…"
+  },
+  {
+   "id": "shoony-lore",
+   "batch": 15,
+   "printed": "You gain the trained proficiency rank in Diplomacy and Survival. If you would automatically become trained in one of those skills (from your background or class, for example), you instead become trained in a skill of your choice. You also become trained in Shoony Lore.",
+   "theirs": "adjValue SKILL_DIPLOMACY = T, adjValue SKILL_SURVIVAL = T, and giveAbilityBlock feat #19873 — which is the ADDITIONAL LORE feat, not a bare Lore: 'Choose a Lore skill subcategory. You become trained in it. At 3rd, 7th, and 15th levels, you gain an additional skill increase you can apply only to the chosen Lore subcategory.'",
+   "ours": "featGrantsAuto {skills:{diplomacy:'trained', survival:'trained', 'lore:shoony':'trained'}, redundantFallback:true} — the three trainings the text names, plus the redundant-training fallback.",
+   "question": "Granting Additional Lore gives a shoony three extra skill increases (3rd/7th/15th) that Shoony Lore's text never mentions, and lets the Lore be any subcategory rather than Shoony. It looks like they use Additional Lore as their generic 'gain a Lore' mechanism and accept the extra increases. Do we adopt their encoding (extra increases and all), or keep the printed trained-in-Shoony-Lore?"
+  },
+  {
+   "id": "advanced-red-mantis-magic",
+   "batch": 16,
+   "printed": "\"Add two 2nd-level spells to your Red Mantis assassin spellbook. You gain a 2nd-level spell slot… At 8th level… a 3rd-level spell slot… At 10th level… a 4th-level spell slot.\" (AoN feat-897, World Guide pg. 71)",
+   "theirs": "WG feat 30202 (the LEGACY printing): one `giveSpellSlot` whose table is the printed sentence exactly — cumulative r2×1 from level 6, +r3×1 from level 8, +r4×1 from level 10, held flat to 20. BUT its `castingSource` is the string \"RED_MANTIS\", and their dump never defines that source: the only `defineCastingSource` values anywhere are RED_MANTIS_ASSASSIN (2 occurrences, on legacy Basic 30201 and remaster Basic 40164). Exactly two ops reference the bare \"RED_MANTIS\" and both sit on legacy records…",
+   "ours": "Nothing. public/core.json feats.advanced-red-mantis-magic carries no spellSlotBonus (and no archetype field, category 'archetype', edition 'legacy'). Our Red Mantis slots come entirely from src/rules/casterArchetypes.ts:253 'red-mantis-assassin-dedication' running the standard RANK_UNLOCKS ladder (casterArchetypes.ts:406-415), where BASIC already grants rank 1 at level 4, rank 2 at 6 and rank 3 at 8 — two of the three slots this legacy feat prints.",
+   "question": "Their encoding and the printed text disagree. RAN `node scripts/wg-show.mjs \"Advanced Red Mantis Magic\" --raw` and summarised the table (r2@6, +r3@8, +r4@10). RAN `grep -o 'RED_MANTIS[A-Z_]*:::' work/wg/wg-data.sql | sort | uniq -c` → only `RED_MANTIS_ASSASSIN:::` ×2 (the defineCastingSource side). RAN `grep -o '\\\"castingSource\\\":\\\"RED_MANTIS[A-Z_]*\\\"' …` → RED_MANTIS ×2, RED_MANTIS_ASSASSIN ×4. RAN `grep -n 'castingSource…RED_MANTIS\\\"' work/wg/wg-data.sql` → lines 7888 (id 30202, this feat) and 11112 (id 30324, Mantis Form legacy). Verified their legacy Basic 30201 already grants rank 2 at level 6 and rank 3 at level 8 to RED_MANTIS_ASSASSIN. On our side: dumped all seven red-mantis feats from core.json (only vernai-training carries a spellSlotBonus, entryId 'red-mantis-assassin-dedication-casting'); read casterArchetypes.ts:253-260 and the RANK_UNLOCKS table at :406."
+  },
+  {
+   "id": "aeon-stone-agate-ellipsoid",
+   "batch": 16,
+   "printed": "The resonant power causes the augury spell from the aeon stone to always succeed at giving an answer other than \"nothing\".",
+   "theirs": "giveSpell { INNATE, rank 2, tradition DIVINE, casts 1 } in the resonant \"Yes\" branch — they re-grant augury rather than model the always-succeeds clause.",
+   "ours": "resonant.note only; no second grant.",
+   "question": "Their encoding grants the spell again where the text describes a change to the existing one. Adopt theirs, or keep the note?"
+  },
+  {
+   "id": "aeon-stone-dusty-rose-prism",
+   "batch": 16,
+   "printed": "The resonant power increases the damage prevented by your aeon stone's shield spell from 5 to 10.",
+   "theirs": "giveSpell { INNATE, rank 1 } in the resonant \"Yes\" branch.",
+   "ours": "resonant.note only; no second grant.",
+   "question": "Same shape as Agate Ellipsoid — a modification of an existing spell, encoded by them as a grant."
+  },
+  {
+   "id": "aeon-stone-western-star",
+   "batch": 16,
+   "printed": "The resonant power allows you to render all of your aeon stones and your wayfinder invisible whenever you use the activation to gain the effects of illusory disguise.",
+   "theirs": "giveSpell { INNATE, rank 1 } in the resonant \"Yes\" branch.",
+   "ours": "resonant.note only; no second grant.",
+   "question": "Same shape again — a rider on an existing activation, encoded by them as a grant."
+  },
+  {
+   "id": "arcana-of-iron",
+   "batch": 16,
+   "printed": "\"You become trained in advanced weapons. If you gain the Weapon Expertise class feature, your proficiency in martial and advanced weapons increases to expert. The extra damage you deal with Bespell Strikes increases to 1d8.\"",
+   "theirs": "WG feat 45949: `conditional` IF LEVEL GREATER_THAN_OR_EQUALS 13 THEN adjValue ADVANCED_WEAPONS = \"E\" ELSE adjValue ADVANCED_WEAPONS = \"T\"; plus an `injectText` restating the Bespell Strikes 1d8 clause on feat 19948. They model the expert step as a flat CHARACTER-LEVEL gate of 13, they never touch MARTIAL weapons, and they do not grant the Weapon Expertise class feature.",
+   "ours": "The trained half only, plus one thing nobody grants. src/rules/featGrantsAuto.ts:75 `'arcana-of-iron': { weapon: { advanced: 'trained' } },` — no `rankUpgrade`, no `minLevel`, so advanced weapons stay trained at every level. AND public/core.json feats.arcana-of-iron carries `grantsClassFeatures: [\"weapon-expertise\"]` (from scripts/data/effect-backfill.json:62897), which puts the Weapon Expertise class feature into `ownedFeatureIds` (src/rules/derive.ts:3176) and renders it in the sheet's featur…",
+   "question": "Their encoding and the printed text disagree. RAN `node scripts/wg-show.mjs \"Arcana of Iron\" --raw` → the LEVEL>=13 conditional and the injectText, in full. RAN `grep -n \"arcana-of-iron\" src/rules/featGrantsAuto.ts` → line 75 is the ONLY registry entry; `grep -n \"arcana-of-iron\" src/rules/featGrants.ts` → no hand-authored override. RAN `git log --oneline -S'\"id\": \"arcana-of-iron\"' -- scripts/data/effect-backfill.json` → 94113b6 \"Skill substitution, and records that hand over a class feature\" — i.e. the row came from a sweep for records that SAY \"you gain the X class feature\", which this record does not say. Checked the consequences of the spurious grant: derive.ts:3169-3178 is the only writer, `grep -rn \"weapon-expertise\" src/` shows the proficiency effect lives in src/rules/advancement.ts per-class tables (:114, :205, :227, :248, :273 etc.) keyed by class and level, NOT off ownedFeatur…"
+  },
+  {
+   "id": "astrolabe-of-falling-stars",
+   "batch": 16,
+   "printed": "\"An astrolabe also grants a +1 item bonus to checks to identify celestial bodies.\" (AoN equipment-4027, the family page) — reached because equipment-4028 says \"An astrolabe of falling stars can be used as a mariner's astrolabe.\"",
+   "theirs": "WG item 19819: `addBonusToValue` variable SKILL_SURVIVAL, value \"1\", type item, text \"to identify celestial bodies.\" — one restricted +1 item bonus, narrowed to Survival, with the restriction carried as a text rider on the bonus.",
+   "ours": "Nothing on this record. items.astrolabe-of-falling-stars (aonId equipment-4028) has no `situational`, no `passiveEffects`, and no key in FEAT_SITUATIONAL. Seven sibling astrolabe records DO carry the star, all as `{ kind:'skill', detail:'all' }` +1 item: src/rules/situationalBonuses.ts:2367 astrolabe-standard, :2368 astrolabe-mariners, :2480 astrolabe, :2559 astrolabe-of-the-falling-stars, :2589 mariners-astrolabe, :2604 standard-astrolabe. This one id was simply never given an entry.",
+   "question": "A fix was proposed and REFUSED on review because it picks a side in a WG-vs-print disagreement. The reviewer's reasoning: REFUSED: the fix settles a WG-vs-printed-text contradiction by itself. That is the owner's call, not the finder's. THE PREMISE IS SOUND — I confirmed the gap is real right now. `public/core.json` items.astrolabe-of-falling-stars (aonId equipment-4028) has `situational: undefined`; `grep -c \"astrolabe-of-falling-stars\" src/rules/situationalBonuses.ts` returns 0; the only hit anywhere in `src/` is `src/rules/itemAliases.ts:16`, which keys the DIFFERENT id `aon-astrolabe-of-falling-stars`. The only row for this id in `scripts/data/effect-backfill.json` is a `frequency` row (line ~76114), not a situational one. The reader lane is right too: `src/rules/explain.ts:449-455` reads `db.items[inv.itemId]?.situational` and gates on `itemInUse(inv)`; `entriesFor` (`src/rules/sit…"
+  },
+  {
+   "id": "instinct-ability",
+   "batch": 16,
+   "printed": "(see record)",
+   "theirs": "Nothing about instincts. Their single operation is a condition on whether the character holds a DIFFERENT archetype feat (the barbarian archetype's hit-point feat); if so, it adds +3 to maximum Hit Points. There is no grant of any instinct ability anywhere in their row.",
+   "ours": "public/core.json feats/instinct-ability.derivedGrant = {fromFeat: 'barbarian-dedication'}, read by derive.ts:3210 — the feat hands over whichever instinct ability matches the instinct chosen on Barbarian Dedication.",
+   "question": "The printed sentence is the whole feat: \"You gain the instinct ability for the instinct you chose for Barbarian Dedication.\" Their encoding delivers a Hit Point bonus the printed text never mentions, gated on a feat the printed text never mentions, and omits the one thing the printed text does say. I am not adopting either side. Two readings are possible — their row is misfiled from a neighbouring record, or they deliberately model something the printed text does not state — and only the owner should decide which. Our derivedGrant route implements the printed sentence and is currently live."
+  },
+  {
+   "id": "breath-of-the-dragon",
+   "batch": 8,
+   "printed": "The shape of the breath, the damage type, and the saving throw match those of your draconic exemplar (see above).",
+   "theirs": "40 conditionals on DRACONIC_EXEMPLAR_NAME, each injecting that exemplar's shape, damage type and save. One answer decides all three.",
+   "ours": "Three independent pickers (breath-shape (2 options), breath-damage (12 options), breath-save (3 options)), which together admit breaths no dragon has, and which ignore the exemplar answer the Dragonblood heritage already stores.",
+   "question": "PRINTED (Player Core 2 pg. 45): \"The shape of the breath, the damage type, and the saving throw match those of your draconic exemplar (see above).\" One answer decides all three.\n\nOURS: three independent pickers on the feat — breath-shape (2 options), breath-damage (12 options), breath-save (3 options) — so 72 combinations exist where the book allows 40, and a player can build a breath no dragon has. The exemplar itself is ALREADY asked, on heritages/dragonblood (choice.flag \"draconicExemplar\", 40 options), and this feat ignores it.\n\nTHEIRS: 40 conditionals on DRACONIC_EXEMPLAR_NAME, each stating that exemplar's breath. One stored answer, no illegal combination reachable. Their model is plainly the right one and I would build it — the engine can now derive a field from another record's answered flag (choiceFlagAnswer, built for Surki Lore).\n\nTHE BLOCK IS THE TABLE OF 40, AND IT IS YOUR CALL:\n  · Our own authority carries only EIGHT rows. The AoN mirror's Dragonblood heritage page prints them — Adamantine: Cone of bludgeoning [R save]; Conspirator: Cone of poison [F save]; Diabolic: Cone of fire [R save]; Empyreal: Cone of spirit [R save]; Fortune: Cone of force [R save]; Horned: Cone of poison [F save]; Mirage: Cone of mental [W save]; Omen: Cone of mental [W save] — and says of the rest, \"If you choose a dragon from a different source, work with your GM.\" The other 32 sit behind AoN's DraconicBenefactors page, which the mirror never fetched.\n  · WG has all 40, but work/wg/wg-data.sql is GPL-3.0 and is a differ, never a source.\n  · Foundry has all 40 and is licence-clean, and it DISAGREES WITH WG on at least three: crystal (Foundry Reflex, WG \"basic Will\"), sea (Foundry cone, WG \"30-foot line\"), wish (Foundry cone, WG \"30-foot line\"). On crystal the printed creature entries back Foundry — AoN creature-627/628/629 (Young/Adult/Ancient Crystal Dragon) all read piercing damage in a cone, basic Reflex.\n  · A fourth route: derive all 40 from each dragon's own creature entries in our mirror, which is printed authority and independent of both. That is the most work and would produce our own table — and where it contradicts WG, it is still your ruling, not mine.\n\nQUESTION: which table do I build from — Foundry, the creature entries, or the eight printed rows plus a \"work with your GM\" note for the rest? And do you accept the resulting divergences from WG on crystal, sea and wish?\n\nNOTE ON COST: the three current choice ids (\"breath-shape\", \"breath-damage\", \"breath-save\") hold answers on saved characters. Replacing them orphans those answers, which then fall back to each picker's first option. Whatever you rule, the change needs that migration handled rather than a straight swap."
+  },
+  {
+   "id": "basic-summoner-spellcasting",
+   "batch": 17,
+   "printed": "feat-2957 is \"Feat 6\" and grants \"the basic bounded spellcasting benefits\"; the linked rule (rules-1485, Bounded Spellcasting Archetype, Secrets of Magic p.74) defines those as: \"these feats give you a 1st-level spell slot and a 2nd-level spell slot from that magical tradition … At 10th level, you replace your 1st-level spell slot with a 3rd-level spell slot.\" TWO slots always, with a replacement at 10th.",
+   "theirs": "Their feat 22481 (listed at THEIR level 4, vs the printed Feat 6): SPELL_ATTACK/SPELL_DC trained, and giveSpellSlot castingSource SUMMONER with {lvl 1-20 rank0 amt2} + {lvl 4-20 rank1 amt1} + {lvl 6-20 rank2 amt1} + {lvl 8-20 rank3 amt1} — THREE leveled slots from 8th onward, all retained, no replacement ever.",
+   "ours": "We currently match THEM (three retained slots, no replacement), so under the parity rule we are \"at parity\" — with an encoding that contradicts the printed bounded-spellcasting rule.",
+   "question": "PRINTED (rules-1485): basic bounded spellcasting = a 1st AND a 2nd-level slot; at 10th the 1st-level slot is REPLACED by a 3rd-level one — two slots at every level. THEIRS: three slots from 8th (1st+2nd+3rd), nothing ever replaced, and the feat availability at level 4 where print says Feat 6. OURS TODAY = THEIRS. Which wins: keep their encoding (status quo, contradicts the printed rule), or adopt print (two slots with the 10th-level replacement — the restricted-slot machinery can express it)? NOTE: every basic bounded-spellcasting feat likely shares the shape — at least basic-magus-spellcasting if it exists in their dump — so the ruling should state whether it covers the whole bounded family or this record alone. (advanced-red-mantis-magic from batch 16 may be the same family; its investigation is checking.)"
+  },
+  {
+   "id": "time-mage-dedication",
+   "batch": 17,
+   "printed": "feat-8480 (Dark Archive Remastered p.184): \"you gain the delay consequence domain spell… You also gain time sense as an innate cantrip usable at will. This innate spell and your focus spells from the time mage archetype are OF THE SAME TRADITION AS THE SPELLS YOU USED TO MEET THE ARCHETYPE'S PREREQUISITES.\" (Prerequisite: \"You have a spellcasting class feature.\") The tradition is DERIVED from your class — not chosen.",
+   "theirs": "wg 22839: a free \"Select a Tradition\" with all FOUR options (arcane/divine/occult/primal) — the player picks any tradition regardless of class. AND their focus/innate assignment is INVERTED from print: their giveSpell hands Delay Consequence out as an INNATE rank-1 spell and Time Sense as the FOCUS spell (their Arcane option also omits the tradition field entirely — their own bug).",
+   "ours": "Print-faithful on the assignment: focusSpells:[\"delay-consequence\"], innateSpells:[time-sense atWill]. The FOCUS tradition already derives correctly from the prerequisite class (build.ts focusTradition falls through to the class's own tradition). The one gap: the INNATE cantrip carries no tradition, so it falls back to the spell's first listed tradition and a divine or primal time mage casts Time Sense as ARCANE.",
+   "question": "Their encoding contradicts the printed text TWICE: (1) a free 4-way tradition pick where print derives the tradition from your class (\"the same tradition as the spells you used to meet the archetype's prerequisites\"); (2) focus and innate swapped (Delay Consequence innate / Time Sense focus, where print says the opposite). Ours matches print except that the innate cantrip's tradition is underived. OPTIONS: (a) adopt theirs in full — the 4-option select and the inversion; (b) keep our print-faithful shape and DERIVE the innate cantrip's tradition from the prerequisite class the same way the focus side already does (a small src fix, no new lane needed). The parity rule's own exception clause (\"if their encoding is not according to the text, ask\") is why this is queued rather than built."
+  },
+  {
+   "id": "pistol-wand",
+   "batch": 16,
+   "printed": "\"This +1 flintlock pistol has a reinforced stock permanently attached to it, and the pistol's weapon potency rune (and any other runes) applies to Strikes with the stock as well.\" (equipment-3589)",
+   "theirs": "WG item 17456 has exactly one operation: giveItem 13707 — the BARE Reinforced Stock martial weapon (1d4 B, club, finesse, two-hand-d8), no rune. A Strike with their given stock gets no item bonus, which reads as contradicting the printed \"potency rune applies to the stock as well\".",
+   "ours": "items/pistol-wand-stock — the same weapon profile as the combination melee form (combinationMeleeForm), carrying builtInRunes {potency:1} so stock Strikes get the printed +1. The item identity itself is settled as equivalent (SETTLED_IDENTITIES 'pistol-wand' in wg-identity.mjs); only this rune delta is open.",
+   "question": "Ours follows the printed sentence (runes apply to the stock); theirs hands over the bare stock with no rune. Keep ours as-is, or strip the built-in potency from the stock to mirror WG exactly?"
+  },
+  {
+   "id": "tumbling-theft",
+   "batch": 18,
+   "printed": "PC2 pg. 235 (AoN feat-6513): \"If you critically succeed at your check to Tumble Through an enemy's space, you can attempt to Steal something from the enemy as a reaction. You gain a +1 circumstance bonus to your Thievery check to Steal…\" Prerequisites: Expert in Acrobatics; Expert in Thievery.",
+   "theirs": "WG feat 32919, two ops only (raw): injectText {type:action, id:19867, text: the printed paragraph verbatim, including 'You gain a +1 circumstance bonus to your Thievery check to Steal'}; addBonusToValue {variable:'SKILL_STEALTH', value:'1', type:'circumstance ', text:'when attempting to Steal during a critically successful Tumble Through'}. Their legacy row 26990 encodes nothing. SKILL_THIEVERY exists in their vocabulary (166 occurrences in work/wg/wg-data.sql), so the STEALTH variable is a target choice, not a missing variable.",
+   "ours": "src/rules/situationalBonuses.ts:939 — FEAT_SITUATIONAL['tumbling-theft'] +1 circumstance on the Thievery check to Steal after a critical Tumble Through, read by entriesFor/featSituationalFor → featSituationalLines → skill explain. No stealth carrier in any registry.",
+   "question": "Their +1 lands on Stealth; print, their own injected text and their own bonus label all say Steal/Thievery. Keep our Thievery star (print), or mirror WG and move the +1 to Stealth?"
+  },
+  {
+   "id": "mask-of-the-mantis-major",
+   "batch": "residue",
+   "printed": "equipment-3497-3391: the \"This darkvision is heightened to 5th-rank, allowing you to see through magical darkness\" sentence prints in the ITEM 11 (GREATER) block; the MAJOR (Item 17) block below it prints its own upgrades and is SILENT about the darkvision rank.",
+   "theirs": "(not a WG divergence — a print ambiguity. WG not consulted as authority.)",
+   "ours": "items.mask-of-the-mantis-major.heldSpells stores darkvision at rank 2 (the base). The GREATER record was corrected to rank 5, which its own block prints.",
+   "question": "Does the Major inherit the Greater's 5th-rank darkvision (the usual functions-as-the-greater reading), or does its silence mean the base rank-2 darkvision? Stored at 2 until ruled; the held-spell-rank guard excuses the id while this entry is open."
+  },
+  {
+   "id": "zealot-staff",
+   "batch": "residue",
+   "printed": "AoN equipment-2263 (Treasure Vault Remastered p.135): Activate is a FREE ACTION (concentrate), Trigger: you hit with a Strike using the staff — and NO Frequency line. The legacy page has none either.",
+   "theirs": "Foundry errata text (rendered nowhere in our app — the AST wins) adds **Frequency** once per 10 minutes and the sanctified/spirit traits.",
+   "ours": "core.json zealot-staff ships frequency {max:1,per:'minute'} and counters [Charges pool, 'per minute' pip] — a per-minute pip under a printed page with no Frequency at all.",
+   "question": "Is the Foundry once-per-10-minutes errata authoritative? YES -> replace the counters row with [Charges pool, {freq, per 10 minutes, every:10}] and surface the cadence in the description; NO -> drop the freq counter and the frequency field, leaving only the staff charge pool. Held as-is until ruled."
+  },
+  {
+   "id": "wild-lights",
+   "batch": "residue",
+   "printed": "feat-3375 (Grand Bazaar p.123): when you cast DANCING LIGHTS, 'modify its duration to be 1 minute and modify its standard effects to create a single floating light in the shape of a Tiny creature, instead of up to four floating lights.' The legacy spell dancing-lights (sustained, up to four lights) does not ship in our corpus.",
+   "theirs": "WG carries no Wild Lights record at all (no ability_block row).",
+   "ours": "No carrier. Our .d was retargeted at import to 'When you cast Light', which is FALSE against our Light (one orb; 'four spells active' is a cap, not four lights; a 1-minute duration would be a downgrade of until-next-daily-prep). The AST still displays 'dancing lights', so the wrong retarget is display-invisible.",
+   "question": "Dancing Lights doesn't ship and Light is not a faithful substitute. Options: (a) leave the feat prose-only (current state, AST shows the printed text); (b) author a spellNotes row on 'light' with an adaptation note flagged as such; (c) hide the feat as unreachable-legacy. Held prose-only until ruled."
+  },
+  {
+   "id": "toppling-tentacles",
+   "batch": "residue",
+   "printed": "feat-3391: when you cast BLACK TENTACLES, replace the standard effects: spell attack rolls vs each Reflex DC; success = prone + 3d6 bludgeoning; tentacles deal 1d6 to already-prone creatures; area is difficult terrain.",
+   "theirs": "WG identical to print (bludgeoning, black tentacles).",
+   "ours": "No carrier. spells['black-tentacles'] is edition 'superseded' (hidden); the mirror-declared successor is 'slither' (snakes, 3d6, Reflex, grabbed). Precedent both ways: feats/spew-tentacles ships its note on black-tentacles.",
+   "question": "Author the Toppling Tentacles note on 'black-tentacles' (legacy-only reach, matches the spew-tentacles precedent), on 'slither' (live successor, clean transplant, snake flavour), or both? Held with no carrier until ruled."
+  },
+  {
+   "id": "screech-shooter-greater",
+   "batch": "residue",
+   "printed": "equipment-1169-1109: the BASE blurb prints \"All creatures in a 30-foot emanation from you must attempt a DC 25 Will save\", and each grade adds a separate override line (\"A greater screech shooter... The DC for the activation is 30 and it affects creatures in a 40-foot emanation\").",
+   "theirs": "The AST (player-visible in the item popup) carries both parts verbatim.",
+   "ours": "The flattened variant .d dropped the area/DC entirely — and it IS player-visible as the raw item-action text on MainTab. The base record was repaired with its own printed numbers; the greater/major variants (and wyrm-spindle-greater/-major, same shape) are PARKED unrepaired.",
+   "question": "For a flattened variant description, do we (A) synthesise the per-variant sentence (\"in a 40-foot emanation ... DC 30 Will save\" — consistent, but a sentence no source prints), or (B) restore the printed base sentence and append the printed override line verbatim? Governs screech-shooter-greater/-major and wyrm-spindle-greater/-major."
+  },
+  {
+   "id": "armigers-protection",
+   "batch": "residue",
+   "printed": "feat-8814: \"...you receive a non-magical suit of Hellknight armor of a type you become trained in (Hellknight breastplate, Hellknight half plate, or Hellknight plate).\" The training clauses themselves are print-determined branches, not picks.",
+   "theirs": "WG carries no Armiger's Protection record at all.",
+   "ours": "core.json ships choice {flag:'hellknightDedication', prompt:'Choose an option', options: Hellknight Breastplate / Hellknight Plates} — it renders live, grants nothing, and 'hellknight-plates' is not an item id. The training clauses are now computed from prior training (the new armorFamiliarity lane); the free suit currently lands as a flat grantsItems breastplate (always legal — clause b is additive, so every taker trains in the breastplate).",
+   "question": "The inert picker: (A) delete it (choice:null row — elemental-lore/gildedsoul precedent) and keep the flat free breastplate, or (B) respec it as the free-suit pick with three options keyed to the real item ids (hellknight-breastplate / hellknight-half-plate / hellknight-plate), greying options whose training the character lacks? The branch itself must never be player-selected — print decides it."
+  },
+  {
+   "id": "keys-to-destiny",
+   "batch": 19,
+   "question": "WG CONTRADICTS PRINT and ours already matches print — confirm we do NOT adopt theirs. WG's Keys to Destiny 'Labor Lore' option trains Herbalism Lore instead of Labor Lore, contradicting the printed list — their op must not be adopted.",
+   "printed": "…are trained in one of the following [Lore](/Skills.aspx?ID=8) skills associated with a profession, as befits your history: Art Lore, Engineering Lore, Farming Lore, Herbalism Lore, Labor Lore, Mercantile Lore, Scribing Lore, Theater Lore, or Warfare Lore.",
+   "theirs": "background row id 1079, select 'Select a Lore', option {\"id\":\"c8db7f11-e9e1-41be-b077-99af8fec131a\",\"type\":\"CUSTOM\",\"title\":\"Labor Lore\",\"description\":\"You are trained in Labor Lore.\",\"operations\":[{\"id\":\"71c1990a-0919-4398-9f4c-964162a9737f\",\"type\":\"createValue\",\"data\":{\"variable\":\"SKILL_LORE_HERBALISM\",\"value\":{\"value\":\"T\",\"attribute\":\"ATTRIBUTE_INT\"},\"type\":\"prof\"}}]} — the title and description say Labor Lore, the operation writes SKILL_LORE_HERBALISM (a copy-paste of the preceding Herbalism",
+   "ours": "public/core.json backgrounds.keys-to-destiny offers `labor` in both `trainedLoreOptions` and `choice.options` ({value:'labor', label:'Labor Lore'}), and src/rules/build.ts:2806 trains `lore:labor` for that pick — ours matches print."
+  },
+  {
+   "id": "concordance-scout",
+   "batch": 19,
+   "question": "WG CONTRADICTS PRINT and ours already matches print — confirm we do NOT adopt theirs. WG's Concordance Scout lore select offers only FIVE planes — Plane of Earth Lore is missing entirely — and its Plane of Air option writes to a variable with a trailing space (\"SKILL_LORE_PLANE_OF_AIR \"), so that option trains nothing; print lists six planes.",
+   "printed": "You're trained in the Diplomacy skill and one of the following lore skills: Plane of Air Lore, Plane of Earth Lore, Plane of Fire Lore, Plane of Metal Lore, Plane of Water Lore, or Plane of Wood Lore.",
+   "theirs": "WG background row \"Concordance Scout\" (wgid 859), select op 48b8d61a-bfcf-4ab5-97b8-892ddccb1d32 \"Select Lore Skill\": optionsPredefined contains exactly SKILL_LORE_PLANE_OF_FIRE, SKILL_LORE_PLANE_OF_WATER, \"SKILL_LORE_PLANE_OF_AIR \" (trailing space), SKILL_LORE_PLANE_OF_METAL, SKILL_LORE_PLANE_OF_WOOD. No SKILL_LORE_PLANE_OF_EARTH entry exists. (Their own Planar Migrant select, wgid 864, does list all six including SKILL_LORE_PLANE_OF_EARTH, so this is an omission in this row rather than a vocab",
+   "ours": "public/core.json → backgrounds.concordance-scout.choice.options lists all six correctly: plane-of-air, plane-of-earth, plane-of-fire, plane-of-metal, plane-of-water, plane-of-wood. Ours agrees with print here."
+  },
+  {
+   "id": "poppet",
+   "batch": 19,
+   "question": "WG CONTRADICTS PRINT and ours already matches print — confirm we do NOT adopt theirs. WG's Flammable op computes fire weakness as level/3 with no minimum-1 clamp, which contradicts the printed \"(minimum 1)\" and would give a 1st- or 2nd-level poppet weakness 0.",
+   "printed": "AoN ancestry-49 (Poppet Mechanics), \"Flammable\": \"You have weakness to fire damage equal to one-third your level (minimum 1).\"",
+   "theirs": "ability_block 23233 \"Flammable\": conditional  IF PHYSICAL_FEATURE_NAMES INCLUDES non-flammable  ELSE → adjValue  variable=WEAKNESSES  value=\"fire,{{level/3}}\"  — the formula carries no max(1,…) and no floor.",
+   "ours": "public/core.json ancestries.poppet: \"weaknesses\":[{\"type\":\"fire\",\"value\":\"max(1,floor(@actor.level/3))\"}] — matches print exactly, including the minimum, and is read by deriveDefenses (src/rules/derive.ts:2359-2361)."
+  },
+  {
+   "id": "goloma",
+   "batch": 19,
+   "question": "WG CONTRADICTS PRINT and ours already matches print — confirm we do NOT adopt theirs. WG gives the goloma Common as a granted language where the printed ancestry gives Goloma; ours matches print, so this is a WG defect to not import.",
+   "printed": "ancestry-45 Goloma Mechanics, Languages: \"[Goloma](/Languages.aspx?ID=83)\" and \"[Mwangi](/Languages.aspx?ID=39)\" — Goloma and Mwangi, with additional languages equal to a positive Intelligence modifier.",
+   "theirs": "WG ancestry Goloma (wgid 92) issues giveLanguage for language id 81 (Common) and id 328 (Mwangi). Their own language table does contain id 322 \"Goloma\", so this is a wrong reference rather than a missing record — they hand every goloma Common instead of their own tongue.",
+   "ours": "public/core.json ancestries.goloma.languages = { granted: ['goloma','mwangi'], additional: 0 } — both ids exist in core.json languages. Correct per print."
+  },
+  {
+   "id": "android",
+   "batch": 19,
+   "question": "WG CONTRADICTS PRINT and ours already matches print — confirm we do NOT adopt theirs. Wanderer's Guide's Android row is the Starfinder Player Core printing, not the Lost Omens Ancestry Guide one our record mirrors: it is rarity COMMON and grants Common plus a free common language, where print is Rare and grants Androffan and Common.",
+   "printed": "\"**Source** [Lost Omens Ancestry Guide]\" with rarity \"Rare\", and \"<title level=\\\"3\\\">Languages</title> ... [Androffan](/Languages.aspx?ID=62) ... [Common](/Languages.aspx?ID=1) ... Additional languages equal to your Intelligence modifier (if positive).\" (ancestry-27.json)",
+   "theirs": "ancestry row 323, rarity=COMMON, content_source = \"Starfinder Player Core\". Languages: a single `giveLanguage {\"languageId\":909}` (= Common) plus `select {\"title\":\"Select a Language\",\"modeType\":\"FILTERED\",\"optionType\":\"LANGUAGE\",\"optionsFilters\":{\"type\":\"LANGUAGE\",\"rarity\":\"COMMON\"}}`. No Androffan. Their Constructed block (45843) also adds \"You always have basic environmental protections\", which ancestry-27 does not print.",
+   "ours": "public/core.json ancestries.android matches print: `\"rarity\": \"rare\"`, `\"source\": {\"book\": \"Pathfinder Lost Omens Ancestry Guide\", \"license\": \"OGL\"}`, `\"languages\": {\"granted\": [\"androffan\", \"common\"], \"additional\": 0}`, aonId ancestry-27."
+  },
+  {
+   "id": "aon-wishes-for-riches",
+   "batch": 20,
+   "question": "WG CONTRADICTS PRINT and ours matches print — confirm we do NOT adopt theirs. Wanderer's Guide carries the pre-remaster printing of Wishes for Riches: their text and their ops make the dragon classification and Consume Energy unconditional, where the current print offers a dragon-or-leech choice — so their op must not be adopted as written.",
+   "printed": "Your deviant abilities are of either the dragon or leech classification. If you choose dragon, you gain the Consume Energy deviant feat with the cold type. If you choose leech, you gain the Borrowed Ability deviant feat.",
+   "theirs": "WG background row id 1052's own description reads \"Your deviant abilities are of the dragon classification. You gain the Consume Energy deviant feat with the cold type.\" — no leech option — and its ops match that older text: a bare, unconditional {\"type\":\"giveAbilityBlock\",\"data\":{\"type\":\"feat\",\"abilityBlockId\":22675}} (Consume Energy), with nothing for Borrowed Ability (their ability_block for it is never referenced from this row) and no select wrapping the grant.",
+   "ours": "public/core.json backgrounds['aon-wishes-for-riches'] is `edition: 'remaster'`, `source: { book: \"Gatewalkers Player's Guide (Remastered)\", license: 'ORC' }`, aonId 'background-580', and its description matches the current AoN print (dragon OR leech). We deliver neither branch (see the separate grant finding)."
+  },
+  {
+   "id": "traveling-gourmand",
+   "batch": 20,
+   "question": "WG CONTRADICTS PRINT and ours matches print — confirm we do NOT adopt theirs. Wanderer's Guide's Traveling Gourmand sets Survival to Untrained (`\"value\":\"U\"`) where the printed background trains it — WG contradicts print, so nothing of theirs may be adopted here.",
+   "printed": "You're trained in the [Survival](/Skills.aspx?ID=49) skill, and the [Cooking Lore](/skills/lore) skill. You gain the [Forager](/Feats.aspx?ID=5152) skill feat.",
+   "theirs": "WG `background` table wgid 1192 (source: Tian Xia Character Guide). Note wg-show.mjs reads only `ability_block`, so it falsely reports \"they do not carry this record\"; the row is in `public.background`. Their exact op: {\"id\":\"62f378a0-b853-4aca-ac06-7e3b07dcfdb3\",\"type\":\"adjValue\",\"data\":{\"variable\":\"SKILL_SURVIVAL\",\"value\":{\"value\":\"U\"}}} — U, not T. Their other ops are correct: {\"type\":\"createValue\",\"data\":{\"variable\":\"SKILL_LORE_COOKING\",\"value\":{\"value\":\"T\",\"attribute\":\"ATTRIBUTE_INT\"},\"type",
+   "ours": "public/core.json backgrounds.traveling-gourmand: `trainedSkill: \"survival\"`, `trainedLore: \"cooking\"`, `grantedFeatId: \"forager\"`, `abilityBoosts: [{kind:'choice',options:['dex','int']},{kind:'free'}]`. `trainedSkill` is read at src/rules/build.ts:2830 (`const bgTrainedSkill = backgroundTrainedSkill(build, background); if (bgTrainedSkill) skills[bgTrainedSkill] = 'trained'`) and `trainedLore` at src/rules/build.ts:2834. Ours agrees with print in every particular."
+  },
+  {
+   "id": "seer-of-the-dead",
+   "batch": 20,
+   "question": "WG CONTRADICTS PRINT and ours matches print — confirm we do NOT adopt theirs. WG grants a second, FREE attribute boost that the printed background does not offer — print gives exactly one boost, restricted to Constitution or Wisdom.",
+   "printed": "You gain one ability boost. It must be to **Constitution** or **Wisdom**.",
+   "theirs": "WG background row id=786 emits TWO select ops: the predefined CON/WIS pair, and then {\"type\":\"select\",\"data\":{\"title\":\"Select an Attribute\",\"modeType\":\"FILTERED\",\"optionType\":\"ADJ_VALUE\",\"optionsPredefined\":[],\"optionsFilters\":{\"type\":\"ADJ_VALUE\",\"group\":\"ATTRIBUTE\",\"value\":{\"value\":1}}}} — the same free-boost op they attach to the nine other backgrounds in this slice, all of which DO print \"and one is a free attribute boost\". Seer of the Dead does not.",
+   "ours": "public/core.json backgrounds.seer-of-the-dead: abilityBoosts: [{\"kind\":\"choice\",\"options\":[\"con\",\"wis\"]}] — a single entry, no free boost. This agrees with print and with the AoN mirror's structured field (background-243.attribute = [\"Constitution\",\"Wisdom\"], one pair, where every other record in this slice lists a pair plus a free boost in its text)."
+  },
+  {
+   "id": "streetfood-vendor",
+   "batch": 20,
+   "question": "WG-vs-PRINT with OURS currently on WG's side: print trains Crafting only, but both WG and our trainedSkillChoice offer Society as an alternative. Rule: restrict to Crafting per print, or keep the Society option?",
+   "printed": "You're trained in the Crafting skill, and the Cooking Lore skill. You gain the Seasoned skill feat. — and background-479.json's structured fields agree: \"skill\": [\"Crafting\",\"Cooking Lore\"], skill_markdown \"[Crafting](/Skills.aspx?ID=37), Cooking [Lore](/Skills.aspx?ID=8)\", with the same wording in the plain `text` field.",
+   "theirs": "WG background row id=1189: {\"type\":\"select\",\"data\":{\"title\":\"Select a Skill\",\"modeType\":\"PREDEFINED\",\"optionType\":\"ADJ_VALUE\",\"optionsPredefined\":[{\"type\":\"ADJ_VALUE\",\"operation\":{\"type\":\"adjValue\",\"data\":{\"variable\":\"SKILL_CRAFTING\",\"value\":{\"value\":\"T\"}}}},{\"type\":\"ADJ_VALUE\",\"operation\":{\"type\":\"adjValue\",\"data\":{\"variable\":\"SKILL_SOCIETY\",\"value\":{\"value\":\"T\"}}}}]}}",
+   "ours": "public/core.json backgrounds.streetfood-vendor: trainedSkillChoice: [\"crafting\",\"society\"] plus a matching `choice` block — i.e. we side with WG, not with the AoN mirror. Our own description text (public/core-descriptions.json) also says \"either Crafting or Society\", so the two of us are consistent with each other and inconsistent with the print mirror. Caveat worth recording: background-479's markdown is one of AoN's regenerated attribute-boost templates (\"Choose two attribute boosts. One must "
+  },
+  {
+   "id": "haunted",
+   "batch": 20,
+   "question": "WG CONTRADICTS OUR PRINTING and ours matches it — confirm we do NOT adopt theirs. WG grants Haunted the Recognize Spell skill feat; the Player Core 2 printing we ship grants NO feat (trained Occultism + the entity's skill + the Aid-with-frightened-cost mechanic, all delivered). Their grant is the legacy APG printing.",
+   "printed": "You are trained in Occultism and an additional skill in which the haunting entity is well-versed, determined by the GM. [No feat grant appears in the Player Core 2 text.]",
+   "theirs": "giveAbilityBlock: Recognize Spell (their row follows the APG printing).",
+   "ours": "Trained Occultism + the entitySkill any-skill choice (batch 20) + the Aid star and frightened cost; no feat."
+  },
+  {
+   "id": "tree-friend",
+   "batch": 20,
+   "question": "WG CONTRADICTS PRINT in a small way — confirm we do NOT adopt theirs. Print: \"you can CHOOSE Arboreal as one of your known languages\" (a permission). WG GRANTS the language outright. Our picker already offers Arboreal (no rarity filter), so the permission is delivered; adopting their grant would hand out a language the player did not choose.",
+   "printed": "You gain the No Cause for Alarm skill feat, and you can choose Arboreal as one of your known languages.",
+   "theirs": "giveLanguage: Arboreal (unconditional).",
+   "ours": "No Cause for Alarm granted; Arboreal available in the language picker as one of the player's picks."
+  },
+  {
+   "id": "reborn-soul",
+   "batch": 21,
+   "question": "WG-vs-PRINT — WG auto-raises both past-life Lores to Expert at 3rd, Master at 7th and Legendary at 15th without consuming a skill increase, while print reads as a RESTRICTION on the skill increases the character already receives at those levels; ours models neither reading.",
+   "printed": "At 3rd level, 7th level, and 15th level, you receive skill increases, which you can apply only to these Lore skills.",
+   "theirs": "background id 836, three conditionals, each granting TWO Lore picks at a raised rank: `conditional  IF LEVEL GREATER_THAN_OR_EQUALS 3  IF LEVEL LESS_THAN 7  THEN  select title=Select a Lore optionsFilters={\"group\":\"ADD-LORE\",\"value\":{\"value\":\"E\"}}` (x2); `IF LEVEL GREATER_THAN_OR_EQUALS 7  IF LEVEL LESS_THAN 15  THEN` the same at `\"value\":\"M\"` (x2); `IF LEVEL GREATER_THAN_OR_EQUALS 15  THEN` the same at `\"value\":\"L\"` (x2). Their character keeps its normal 3rd/7th/15th skill increases in addition",
+   "ours": "No carrier at all — a field with no reader, and in fact no field. `skillIncreaseLevels` / `bonusSkillIncreaseLevels` (src/rules/types.ts:3303-3305) are CLASS chassis fields; nothing on `Background` adds a skill increase or constrains where one may be spent, and src/rules/restrictedSlots.ts is about spell slots only. grep 'reborn' across src returns only situationalBonuses.ts:3221."
+  },
+  {
+   "id": "sense-of-belonging",
+   "batch": 21,
+   "question": "WG-vs-PRINT — Wanderer's Guide grants Eerie Flicker unconditionally for Sense of Belonging, with no flicker/wraith selection anywhere in the record, so their build hands the wraith feat to a character who chose the flicker classification.",
+   "printed": "Your deviant abilities are of either the flicker or the wraith classification. If you choose flicker, you gain the Sonic Dash deviant feat. If you choose wraith, you gain the Eerie Flicker deviant feat.",
+   "theirs": "background wgid 862's five ops contain no select for the classification. The two feat ops are flat: {\"type\":\"giveAbilityBlock\",\"data\":{\"type\":\"feat\",\"abilityBlockId\":20167}} (Forager) and {\"type\":\"giveAbilityBlock\",\"data\":{\"type\":\"feat\",\"abilityBlockId\":22696}} (Eerie Flicker). Sonic Dash is never referenced.",
+   "ours": "backgrounds/sense-of-belonging does model the two-way pick — `choice: { flag: \"deviantClassification\", prompt: \"Deviant classification\", options: [flicker, wraith] }` — which agrees with print on the shape of the decision even though it currently delivers no feat (tracked separately as sense-of-belonging-deviant-feat-not-granted)."
+  },
+  {
+   "id": "sponsored-by-a-village",
+   "batch": 21,
+   "question": "WG-vs-PRINT — WG rarity for this background disagrees with print: they carry it as UNCOMMON where the printed entry carries no rarity trait (common).",
+   "printed": "<traits>\n\n</traits>  (AoN background-226, `rarity: \"common\"`, `trait_markdown: \"\"` — no rarity trait printed on the entry)",
+   "theirs": "WG background row 907 'Sponsored by a Village' has rarity = UNCOMMON.",
+   "ours": "public/core.json backgrounds.sponsored-by-a-village `rarity: \"common\"` — agrees with print."
+  },
+  {
+   "id": "sky-rider",
+   "batch": 21,
+   "question": "WG CONTRADICTS PRINT and ours matches print — confirm we do NOT adopt theirs. Print trains Acrobatics AND Plane of Air Lore (an and); WG offers a SELECT between them (an or).",
+   "printed": "You're trained in the Acrobatics skill, and the Plane of Air Lore skill. You gain the Cat Fall skill feat.",
+   "theirs": "A select offering SKILL_ACROBATICS or SKILL_LORE_PLANE_OF_AIR — one of the two.",
+   "ours": "trainedSkill acrobatics + trainedLore plane-of-air — both, as printed."
+  },
+  {
+   "id": "hammered-by-fate",
+   "batch": 22,
+   "question": "WG-vs-PRINT — WG's Hammered by Fate lore select offers Daemon Lore twice and never offers Demon Lore, contradicting the printed three-way choice.",
+   "printed": "You gain the [Hefty Hauler](/Feats.aspx?ID=790) skill feat and are trained in one of the following [Lore](/Skills.aspx?ID=8) skills, as fits your history: [Daemon](/MonsterFamilies.aspx?ID=26) Lore, [Demon](/MonsterFamilies.aspx?ID=28) Lore, or [Devil](/MonsterFamilies.aspx?ID=30) Lore.",
+   "theirs": "public.background row wgid=1078, `select title=\"Select a Lore\" modeType=PREDEFINED optionType=CUSTOM` with three options: OPTION CUSTOM → createValue variable=SKILL_LORE_DAEMON value={\"value\":\"T\",\"attribute\":\"ATTRIBUTE_INT\"} type=prof; OPTION CUSTOM → createValue variable=SKILL_LORE_DAEMON value={\"value\":\"T\",\"attribute\":\"ATTRIBUTE_INT\"} type=prof; OPTION CUSTOM → createValue variable=SKILL_LORE_DEVIL value={\"value\":\"T\",\"attribute\":\"ATTRIBUTE_INT\"} type=prof. Demon Lore is absent; Daemon Lore is ",
+   "ours": "public/core.json backgrounds.hammered-by-fate trainedLoreOptions:[\"daemon\",\"demon\",\"devil\"] — all three printed subjects, read by src/rules/build.ts:2904-2907. Ours matches print exactly."
+  },
+  {
+   "id": "lesser-scion",
+   "batch": 22,
+   "question": "WG-vs-PRINT — WG trains a misspelled Lore skill (SKILL_LORE_HERADLRY) instead of the printed Heraldry Lore.",
+   "printed": "You're trained in the [Diplomacy](/Skills.aspx?ID=6) skill, and the [Heraldry Lore](/skills/lore) skill. You gain the [Hobnobber](/Feats.aspx?ID=791) skill feat.",
+   "theirs": "public.background row wgid=1104 (Lesser Scion): `createValue variable=SKILL_LORE_HERADLRY value={\"value\":\"T\",\"attribute\":\"ATTRIBUTE_INT\"} type=prof` — the variable name is transposed, so their sheet creates a \"Heradlry Lore\" skill rather than Heraldry Lore.",
+   "ours": "public/core.json backgrounds.lesser-scion trainedLore:\"heraldry\", read by src/rules/build.ts:2866 into skills['lore:heraldry']. Ours matches print."
+  },
+  {
+   "id": "bachuan-revolutionary",
+   "batch": 22,
+   "question": "WG-vs-PRINT — WG's first attribute-boost option targets the non-existent variable ATTRIBUTE_WISR, so their Wisdom branch of the printed \"Wisdom or Strength\" boost delivers nothing.",
+   "printed": "Choose two attribute boosts. One must be to Wisdom or Strength, and one is a free attribute boost.",
+   "theirs": "WG background id=1183, first `select` (title \"Select an Attribute\", modeType PREDEFINED): option 1 = `{\"type\":\"adjValue\",\"data\":{\"variable\":\"ATTRIBUTE_WISR\",\"value\":{\"value\":1}}}`, option 2 = `{\"type\":\"adjValue\",\"data\":{\"variable\":\"ATTRIBUTE_STR\",\"value\":{\"value\":1}}}`. `ATTRIBUTE_WISR` is not one of their attribute variables (every other row in this batch uses `ATTRIBUTE_WIS`), so the Wisdom option is a dead write. Their remaining ops agree with ours: `createValue SKILL_LORE_LAW`, `giveAbilityB",
+   "ours": "public/core.json `backgrounds.bachuan-revolutionary.abilityBoosts` = `[{kind:\"choice\", options:[\"str\",\"wis\"]}, {kind:\"free\"}]` — matches print exactly; the rest of the record (`trainedSkill: \"society\"`, `trainedLore: \"law\"`, `grantedFeatId: \"sign-language\"`, `rarity: \"uncommon\"`) also matches print. Ours is correct and needs no change."
+  },
+  {
+   "id": "sponsored-by-teacher-ot",
+   "batch": 22,
+   "question": "WG-vs-PRINT — Sponsored by Teacher Ot carries the SAME \"Survival or Performance\" pick twice — once as `trainedSkillChoice` and once as a `choice` block with flag `bgSkill` — and the two answers are stored and applied independently, so a player who answers them differently is trained in two skills instead of the one the text grants. [ALSO: Wanderer's Guide marks Sponsored by Teacher Ot UNCOMMON, but the printed record carries no rarity trait and the AoN mirror records it as common — ours]",
+   "printed": "You're trained in your choice of the [Survival](/Skills.aspx?ID=16) or [Performance](/Skills.aspx?ID=12) skill. You gain a skill feat: [Survey Wildlife](/Feats.aspx?ID=849) if you chose Survival or [Impressive Performance](/Feats.aspx?ID=793) if you chose Performance. You're also trained in [Nantambu Lore](/Skills.aspx?ID=8).",
+   "theirs": "WG background row \"Sponsored by Teacher Ot\" (wgid 905) encodes the pick exactly ONCE, as a single CUSTOM select whose two options each carry both the training and the feat: {\"type\":\"select\",\"data\":{\"title\":\"Select a Skill\",\"modeType\":\"PREDEFINED\",\"optionType\":\"CUSTOM\",\"optionsPredefined\":[{\"title\":\"Survival\",\"operations\":[{\"type\":\"adjValue\",\"data\":{\"variable\":\"SKILL_SURVIVAL\",\"value\":{\"value\":\"T\"}}},{\"type\":\"giveAbilityBlock\",\"data\":{\"type\":\"feat\",\"abilityBlockId\":20608}}]},{\"title\":\"Performance",
+   "ours": "public/core.json backgrounds/sponsored-by-teacher-ot has BOTH `\"trainedSkillChoice\":[\"survival\",\"performance\"]` and `\"choice\":{\"flag\":\"bgSkill\",\"prompt\":\"Trained skill\",\"kind\":\"array\",\"options\":[{\"value\":\"survival\",...},{\"value\":\"performance\",...}]}`. They are two separate carriers with two separate answer stores and two separate UI controls: `trainedSkillChoice` is answered by `build.backgroundSkillChoice` (src/builder/shared.tsx:2903-2916 \"Background skill\" SubCard) and applied at src/rules/bu"
+  },
+  {
+   "id": "lost-loved-one",
+   "batch": 22,
+   "question": "WG-vs-PRINT — Wanderer's Guide hands every Lost Loved One character Ghostly Grasp outright, with no branch, although the print makes the deviant feat a two-way choice tied to the leech/wraith classification.",
+   "printed": "Your deviant abilities are of either the [leech](/DeviantFeats.aspx?ID=7), or the [wraith](/DeviantFeats.aspx?ID=3) classification. If you choose leech, you gain the [Draining Touch](/Feats.aspx?ID=8034) deviant feat. If you choose wraith, you gain the [Ghostly Grasp](/Feats.aspx?ID=8043) deviant feat.",
+   "theirs": "WG background row 1051: `giveAbilityBlock  type=feat  abilityBlockId=22720 «Ghostly Grasp (Deviant)»` and `giveAbilityBlock  type=feat  abilityBlockId=20356 «Multilingual»` — both plain unconditional grants, not a `select`. There is no conditional, no optionsPredefined, and no Draining Touch anywhere in the row, so a leech-classification Lost Loved One is unreachable on their side.",
+   "ours": "public/core.json backgrounds.lost-loved-one.choice models the two branches correctly in shape — options 'Leech — Draining Touch' and 'Wraith — Ghostly Grasp' — and build.ts:4165 grants whichever is picked. (The wraith option's target id is wrong; that is filed separately as b22-lost-loved-one-wrong-ghostly-grasp. The two-branch structure itself matches print and WG's does not.)"
+  },
+  {
+   "id": "unsponsored",
+   "batch": 22,
+   "question": "WG-vs-PRINT — Wanderer's Guide rates this background UNCOMMON where the printed record is common — ours already matches print.",
+   "printed": "AoN background-227 (Unsponsored) carries an empty `<traits>` block (no Uncommon or Rare trait) and the record's own field reads `\"rarity\": \"common\"`.",
+   "theirs": "WG background row id 908: `name=Unsponsored rarity=UNCOMMON` (content_source_id=39).",
+   "ours": "public/core.json backgrounds.unsponsored has `\"rarity\": \"common\"` — agrees with print."
+  },
+  {
+   "id": "wanderlust",
+   "batch": 22,
+   "question": "WG-vs-PRINT — Wanderer's Guide hands Wanderlust the Titan Swing (troll) deviant feat unconditionally, where the printed background offers a two-way classification choice — do not adopt their encoding here.",
+   "printed": "Your deviant abilities are of either the flicker or the troll classification. If you choose flicker, you gain the Overclock Senses deviant feat. If you choose troll, you gain the Titan Swing deviant feat.",
+   "theirs": "background row 863 emits `giveAbilityBlock  {\"type\":\"feat\",\"abilityBlockId\":22841}` -> «Titan Swing [type=feat, lvl=2]» with NO enclosing select and no conditional, plus `giveAbilityBlock {\"type\":\"feat\",\"abilityBlockId\":21816}` -> «Express Rider (legacy)». A flicker/Overclock Senses branch does not exist in their row.",
+   "ours": "backgrounds.wanderlust carries `choice: {\"flag\":\"deviantClassification\",\"prompt\":\"Deviant classification\",\"kind\":\"array\",\"options\":[{\"value\":\"overclock-senses\",\"label\":\"Flicker — Overclock Senses\"},{\"value\":\"titan-swing\",\"label\":\"Troll — Titan Swing\"}]}`. Both option values are real feats, so backgroundChoiceKind (src/rules/build.ts:484-495) classifies the choice as 'feat' and src/rules/build.ts:4164-4184 grants the answered one alongside grantedFeatId 'express-rider'. The classification itself "
+  },
+  {
+   "id": "sponsored-by-family",
+   "batch": 22,
+   "question": "WG-vs-PRINT — WG marks Sponsored by Family Uncommon; the printed record carries no rarity trait and AoN indexes it Common (ours already says common).",
+   "printed": "Sponsored by Family — background-395/223 markdown `<traits>` block is empty (no Uncommon or Rare trait), and the AoN record's own `rarity` field is \"common\".",
+   "theirs": "background row 904: `rarity = UNCOMMON`.",
+   "ours": "public/core.json backgrounds.sponsored-by-family `rarity: \"common\"` — agrees with print."
+  },
+  {
+   "id": "northridge-scholar",
+   "batch": 22,
+   "question": "WG-vs-PRINT — WG puts a \"Once per Season\" frequency on the Northridge Scholar Seasonal Boon that the printed record does not state.",
+   "printed": "**Seasonal Boon** <actions string=\"Free Action\" /> **Trigger** The party's reputation with Northridge increases; **Effect** Increase the party's reputation with Northridge by an additional 2 points (your GM has information about Willowshore reputation).  — no Frequency line appears in the printed entry.",
+   "theirs": "ability_block 24442 «Seasonal Boon - Northridge Scholar»: `frequency = Once per Season` (alongside actions=FREE-ACTION and the matching trigger/description).",
+   "ours": "We carry no Seasonal Boon record at all for this background (see northridge-scholar-seasonal-boon), so we neither state nor contradict a frequency."
+  },
+  {
+   "id": "dreams-of-vengeance",
+   "batch": 22,
+   "question": "WG-vs-PRINT (same family as #86/#93/#95) — WG grants BOTH deviant branch feats (Blasting Beams AND Titan Swing) flat, where print offers the dragon-or-troll choice; ours models the choice. Confirm we do NOT adopt their flat double grant. One answer settles this whole family.",
+   "printed": "Your deviant abilities are of either the dragon or the troll classification. If you choose dragon, you gain the Blasting Beams deviant feat with the fire type. If you choose troll, you gain the Titan Swing deviant feat.",
+   "theirs": "giveAbilityBlock Blasting Beams + giveAbilityBlock Titan Swing — both, unconditionally.",
+   "ours": "The printed two-way choice; the picked branch grants its feat (fire pinned on the dragon side)."
+  },
+  {
+   "id": "beast-blessed",
+   "batch": 23,
+   "question": "WG-vs-PRINT — WG’s Bestial Clarity triggers on a failed save against a MENTAL effect; print (and our text) says an ENCHANTMENT effect. Mental is strictly wider, so their reaction fires in cases print does not. Confirm we keep the printed enchantment trigger and do not adopt their wider one.",
+   "printed": "**Trigger** You  fail a saving throw against an [enchantment](/Traits.aspx?ID=61) effect;",
+   "theirs": "WG ability_block 29794 \"Bestial Clarity\" has `trigger=\"You fail a saving throw against an mental effect\"`. Mental is a broader category than enchantment (every enchantment effect is mental, but not every mental effect is enchantment), so their trigger fires in cases print does not. Reads like an unannounced remaster-vocabulary substitution on their side; the AoN mirror for background-362 (Firebrands) still prints enchantment.",
+   "ours": "public/core-descriptions.json actions.bestial-clarity reads \"**Trigger** You fail a saving throw against an enchantment effect\" — verbatim agreement with print, so ours is not the party at fault here."
+  },
+  {
+   "id": "sponsored-by-a-stranger",
+   "batch": 23,
+   "question": "WG-vs-PRINT — WG files Sponsored by a Stranger as UNCOMMON; the printed record carries no rarity trait (common), and ours already matches print. Confirm we keep common.",
+   "printed": "AoN background-225 field `\"rarity\": \"common\"`, and the record's traits block in `markdown` is empty: \"<traits>\\n\\n</traits>\" (no Uncommon/Rare trait line, unlike background-485 and background-469 which print `<trait label=\"Rare\" .../>`).",
+   "theirs": "WG background row 906 has the rarity column set to UNCOMMON (row: wgid 906 | Sponsored by a Stranger | rarity UNCOMMON).",
+   "ours": "public/core.json backgrounds.sponsored-by-a-stranger has `\"rarity\": \"common\"` — agrees with print. Surfaced to the player as the picker note via `note(b.rarity)` at src/builder/shared.tsx:2846."
+  },
+  {
+   "id": "total-power",
+   "batch": 23,
+   "question": "WG-vs-PRINT (same family as #86/#93/#95/#98) — WG grants Bone Spikes flat to every Total Power character with no dragon-or-troll question, so their dragon players never receive Blasting Beams (electricity). Ours models the printed choice. Confirm we keep it, with the family.",
+   "printed": "Your deviant abilities are of either the dragon or the troll classification. If you choose dragon, you gain the Blasting Beams deviant feat with the electricity type. If you choose troll, you gain the Bone Spikes deviant feat.",
+   "theirs": "background row id 861, flat operation list with no select or conditional over the classification: `adjValue variable=SKILL_INTIMIDATION value={\"value\":\"T\"}`; `createValue variable=SKILL_LORE_LEGAL value={\"value\":\"T\",\"attribute\":\"ATTRIBUTE_INT\"} type=prof`; `giveAbilityBlock 20267 «Intimidating Glare, type=feat»`; `giveAbilityBlock 22659 «Bone Spikes, type=feat»`. Blasting Beams (their ability_block for the dragon branch) appears nowhere in the row.",
+   "ours": "public/core.json backgrounds/total-power carries `choice` {flag:'deviantClassification', options blasting-beams|bone-spikes}; backgroundChoiceKind returns 'feat' (both values resolve in content.feats), so src/rules/build.ts:4165-4171 grants the chosen deviant feat. `blasting-beams` grantsClassFeatures ['dragon-deviant-classification'] and `bone-spikes` grantsClassFeatures ['troll-deviant-classification']; the record's `choiceOptionLimits` narrows dragon-deviant-classification's `deviantDamage` choice to electricity when blasting-beams is picked (consumed at src/rules/derive.ts:1526). Both printed branches are modelled."
+  }
+ ],
+ "deferred": [
+  {
+   "id": "avernal-cape",
+   "batch": 16,
+   "printed": "\"It functions as a dueling cape and while moved into a protective position, it also grants you fire resistance equal to twice the relic's number of gifts. … **Minor Gifts** feral claws, flare bolt, heat haze **Major Gifts** form of fury (snake form), searing wave\" — and \"**Usage** incorporated into armor\" (AoN mirror C:/wonderers guide/aon-2e-archive/data/by-category/equipment/equipment-2667.json, fields `text` and `usage`).",
+   "theirs": "WG item 17336 carries five `giveAbilityBlock` ops handing over the five relic gifts by id: 28858 Feral Claws (which itself does `giveItem` 9271 \"Claws\" — unarmed_attack, 1d6 slashing, brawling group), 29523 Flare Bolt (no ops), 29524 Heat Haze (no ops), 28859 Form of Fury (a 9-option `select` of animal forms, each option's operations empty), 29527 Searing Wave (no ops). Their `usage` column reads \"incorporated into armor\", verbatim from print. (node scripts/wg-item.mjs \"Avernal Cape\"; node scri…",
+   "ours": "Nothing. public/core.json items.avernal-cape has only id/name/level/price/bulk/traits/rarity/source/usage/itemType/edition/aonId — no grantsItems, grantsFeats, situational, passiveEffects or resistances. `grep -rn \"avernal\" src/rules/` returns zero registry hits. All five gift records DO ship (items.feral-claws relic-132 aspect Beast, flare-bolt relic-160 Fire, heat-haze relic-161 Fire, form-of-fury relic-133 Beast, searing-wave relic-164 Fire) but no relic reaches them: of the 37 items carryin…",
+   "question": "A fix was proposed and REFUSED on review because it picks a side in a WG-vs-print disagreement. The reviewer's reasoning: The mismatch is real (items.avernal-cape in public/core.json still has no grant fields, usage is still \"etched-onto-armor\", and grep over src/ returns zero hits for \"avernal\"), but the proposed fix must be refused on three counts. 1) IT SETTLES A WG-vs-PRINT CONTRADICTION — the owner's call. WG item 17336 carries five unconditional `giveAbilityBlock` ops (28858/29523/29524/28859/29527) on a LEVEL 5 item. The printed relic rules say the opposite: C:/wonderers guide/aon-2e-archive/data/by-category/rules/rules-1101.json (\"Advancing a Relic\") states \"this results in a relic gaining one gift for every 4 levels its bearer has\", and its Table 2-22 sets minimum levels — gift 1 at 1st, 2 at 5th, 3 (Major) at 9th, 4 (Major) at 13th, 5 (Grand) at 17th. WG's own ability blocks e…",
+   "deferredWhy": "relic-gifts (deferred until after batching)",
+   "deferredOn": "2026-08-27"
+  },
+  {
+   "id": "kalmaugs-journal",
+   "batch": 16,
+   "printed": "Kalmaug's Journal (AoN equipment-2668): \"When Chapter One is completed, this grimoire contains the following spells: allfood , deep sight , fate's travels , glowing trail , know location , stonesense , wanderer's guide .\" The defect is in the RANKS we file those under — Glowing Trail (AoN spell record) is printed at LEVEL 1, not a cantrip.",
+   "theirs": "WG item id 17343 carries NO spell list and no bonus. Its three ops are giveAbilityBlock feat 29505 / 28865 / 29509, which are the relic's gifts — Minor Gifts ease burden, word of faith; Major Gift underground bounty — exactly the three named in the printed relic block. (`node scripts/wg-show.mjs kalmaugs-journal --raw` reports \"no ability_block row\"; that is the wrong instrument, this is an ITEM. `node scripts/wg-item.mjs \"Kalmaug's Journal\"` is what shows the ops.) So on the SPELL LIST specifi…",
+   "ours": "public/core.json items.kalmaugs-journal.heldSpells = {\"0\":[\"glowing-trail\"],\"1\":[\"know-location\"],\"2\":[\"allfood\"],\"3\":[\"deep-sight\",\"fates-travels\",\"wanderers-guide\"],\"4\":[\"stonesense\"]}. All seven printed spells are present, and six of the seven are filed at the correct rank — but `glowing-trail` sits under key \"0\", the CANTRIP rank, while the spell is rank 1.",
+   "question": "A fix was proposed and REFUSED on review because it picks a side in a WG-vs-print disagreement. The reviewer's reasoning: REFUTED on the LANE CHECK, not on the arithmetic. The finder's facts are right; the fix direction is wrong and would make the sheet worse. WHAT I CONFIRMED (all re-run, not taken from the summary): - The record is unchanged: public/core.json items.kalmaugs-journal.heldSpells = {\"0\":[\"glowing-trail\"],\"1\":[\"know-location\"],\"2\":[\"allfood\"],\"3\":[\"deep-sight\",\"fates-travels\",\"wanderers-guide\"],\"4\":[\"stonesense\"]}. No effect-backfill row for the id (0 of 12,163 rows), and `grep -rn kalmaug -i src scripts/*.mjs` returns nothing — no code registry touches it. - AoN mirror levels: glowing-trail(spell-1428)=1, know-location=1, allfood=2, deep-sight=3, fate's-travels=3, stonesense=4. The relic's printed link for Wanderer's Guide is spell-368 (CRB, level 3); our record uses the …",
+   "deferredWhy": "relic-gifts (deferred until after batching)",
+   "deferredOn": "2026-08-27"
+  },
+  {
+   "id": "relic-gift-family-skysunder-sparkwarden-uniter-adamantine",
+   "batch": 16,
+   "printed": "Relic rules (rules-1101 + Table 2-22): a relic GAINS ITS GIFTS AS IT LEVELS — one gift per ~4 levels, the fifth at 17th. The gift records themselves ship on our side (238 items carrying relicAspects), but relicAspects has NO reader: no lane joins a relic to its gifts, so the six relic items grant nothing.",
+   "theirs": "Each relic hands over ALL its gifts unconditionally via giveAbilityBlock, regardless of level — a level-4 Skysunder grants all five (deadly-spark, divine-retribution, word-of-faith, holy-light, propelling-winds), where print puts the fifth at 17th. Skysunder aside: their Holy Light target is also the WRONG RECORD (ability_block 23261 is the legacy champion/cleric spell, not the relic gift).",
+   "ours": "The relics carry their non-gift mechanics (skysunder builtInRunes, uniter-of-clans passiveEffects, adamantine-echo runes.actsAs) and none of the gifts. No relic-gift lane exists.",
+   "question": "SAME QUESTION as the avernal-cape entry already in this queue (whose earlier proposed fix was REFUSED for settling this exact WG-vs-print contradiction) — this entry extends it to the four siblings the new identity comparer surfaced: skysunder, sparkwarden, uniter-of-clans, adamantine-echo (kalmaugs-journal is already queued separately). One ruling covers all six: (a) adopt THEIR shape — every gift granted unconditionally at any level; (b) follow PRINT — build a relic-gift lane that grants gifts on the printed level ladder (needs a new reader for relicAspects or a grantsItems-by-level shape); (c) something narrower you prefer. Whatever you rule, it should be ruled ONCE for the family — six per-record answers would drift.",
+   "deferredWhy": "relic-gifts (deferred until after batching)",
+   "deferredOn": "2026-08-27"
+  },
+  {
+   "id": "skysunder",
+   "batch": 16,
+   "printed": "(see relic-gift-family-skysunder-sparkwarden-uniter-adamantine)",
+   "theirs": "(see the family entry)",
+   "ours": "(see the family entry)",
+   "question": "Covered by the grouped entry relic-gift-family-skysunder-sparkwarden-uniter-adamantine — one ruling for the whole relic-gift family. This row exists so the per-record bookkeeping can see the id is owner-held.",
+   "deferredWhy": "relic-gifts (deferred until after batching)",
+   "deferredOn": "2026-08-27"
+  },
+  {
+   "id": "sparkwarden",
+   "batch": 16,
+   "printed": "(see relic-gift-family-skysunder-sparkwarden-uniter-adamantine)",
+   "theirs": "(see the family entry)",
+   "ours": "(see the family entry)",
+   "question": "Covered by the grouped entry relic-gift-family-skysunder-sparkwarden-uniter-adamantine — one ruling for the whole relic-gift family. This row exists so the per-record bookkeeping can see the id is owner-held.",
+   "deferredWhy": "relic-gifts (deferred until after batching)",
+   "deferredOn": "2026-08-27"
+  },
+  {
+   "id": "uniter-of-clans",
+   "batch": 16,
+   "printed": "(see relic-gift-family-skysunder-sparkwarden-uniter-adamantine)",
+   "theirs": "(see the family entry)",
+   "ours": "(see the family entry)",
+   "question": "Covered by the grouped entry relic-gift-family-skysunder-sparkwarden-uniter-adamantine — one ruling for the whole relic-gift family. This row exists so the per-record bookkeeping can see the id is owner-held.",
+   "deferredWhy": "relic-gifts (deferred until after batching)",
+   "deferredOn": "2026-08-27"
+  },
+  {
+   "id": "adamantine-echo",
+   "batch": 16,
+   "printed": "(see relic-gift-family-skysunder-sparkwarden-uniter-adamantine)",
+   "theirs": "(see the family entry)",
+   "ours": "(see the family entry)",
+   "question": "Covered by the grouped entry relic-gift-family-skysunder-sparkwarden-uniter-adamantine — one ruling for the whole relic-gift family. This row exists so the per-record bookkeeping can see the id is owner-held.",
+   "deferredWhy": "relic-gifts (deferred until after batching)",
+   "deferredOn": "2026-08-27"
+  },
+  {
+   "id": "spectacles-of-understanding",
+   "batch": 16,
+   "printed": "\"Activate <1> Interact; Frequency once per day; Effect Unfolding the spectacles onto the bridge of the nose, you gain the effects of 2nd-rank translate for one hour, except that it applies to all languages you see rather than a single language, and it does not apply to language you hear.\" (equipment-882-863; the Greater grade extends the duration to until folded up / investiture lost.)",
+   "theirs": "WG item 15189 carries EXACTLY ONE operation: addBonusToValue SKILL_SOCIETY +1 item, text 'to Decipher Writing'. No giveSpell of any kind for the once-per-day activation. Their -greater twin (15190) is identical with value 2.",
+   "ours": "The +1/+2 Decipher Writing star (matches their op), plus activationCost + frequency + the freq counter — but the counter sits in front of nothing: no spell is granted, the activation is prose only. Same as WG.",
+   "question": "This is the 'gain the effects of <spell>' item family (a sweep counts 69 of 85 such items delivering the activation as prose only, matching WG — same family as the unifying-emblem entries above). Adopt a spell grant against WG (innateSpells, rank pinned, riding the existing freq counter), or keep parity and leave the activation as prose?",
+   "deferredWhy": "effects-of-spell family — RULED keep parity with WG now (under-implementation is fine; wrongness is what we hunt); revisit after batching",
+   "deferredOn": "2026-08-27"
+  },
+  {
+   "id": "spectacles-of-understanding-greater",
+   "batch": 16,
+   "printed": "Same activation, +2 item bonus, duration until folded up or investiture lost.",
+   "theirs": "WG item 15190: one op, addBonusToValue SKILL_SOCIETY +2 item, 'to Decipher Writing'. No spell op.",
+   "ours": "The +2 star; activation is prose only, same as WG.",
+   "question": "Grouped under spectacles-of-understanding above — one ruling covers both grades.",
+   "deferredWhy": "effects-of-spell family — RULED keep parity with WG now; revisit after batching",
+   "deferredOn": "2026-08-27"
+  },
+  {
+   "id": "monarch",
+   "batch": 18,
+   "printed": "(see the relic-gift family rows: skysunder / sparkwarden / uniter-of-clans / adamantine-echo / avernal-cape / kalmaugs-journal) — equipment-3452, LEVEL 6: Minor Gifts wind barrier, word of faith; Major Gifts propelling winds, righteous call; Grand Gift azata's grace",
+   "theirs": "(see the family rows) — WG item 17374, five unconditional giveAbilityBlock ops: 28845 wind barrier (lvl 1), 28865 word of faith (lvl 1), 28847 propelling winds (lvl 9), 28866 righteous call (lvl 9, one injectText only), 39603 azata's grace (WG's OWN level 17) — all handed over at any level on a level-6 relic",
+   "ours": "(see the family rows) — items.monarch carries material/builtInRunes/frequency/counters only; no gift lane; relicAspects has no reader (types.ts:3340 declaration + backfill script only)",
+   "question": "Covered by the grouped relic-gift ruling — Monarch is the seventh member. Two secondary notes: (1) print's extra 1d6 vs aberrations and the once-per-day dream message activation are encoded by NEITHER side, so our freq counter fronts nothing (the unifying-emblem pattern); (2) descriptions for every relic in this family strip the printed Minor/Major/Grand gift trailer, so the gifts are invisible in prose as well as in mechanics.",
+   "deferredWhy": "relic-gifts (deferred until after batching)",
+   "deferredOn": "2026-08-27"
+  }
+ ],
+ "_deferred": "DEFERRED UNTIL AFTER THE ENTIRE BATCHING PROCESS — the owner's ruling (2026-08-27): (1) RELIC GIFTS: 'this is not urgent … it will need to be done but only after finishing the entire batching process; for now skip these if they appear in the future, keep them in a list somewhere accessible.' New relic-gift records found in later batches get appended HERE, not fixed and not re-asked. (2) 'GAIN THE EFFECTS OF A SPELL' ITEMS: ruled for parity NOW — 'following WG is what I want even if they under-implement; the important thing is to find if they implement WRONGLY, not if they under-implement.' The family stays prose-only exactly like WG; revisit the whole ~69-item family here after batching. This section is still honored by the gates/checks exactly like `open` — a deferred id never fails a gate.",
+ "ruled": [
+  {
+   "id": "barbarian-resiliency",
+   "batch": 12,
+   "printed": "(see record)",
+   "theirs": "a flat +3 maximum HP, regardless of how many barbarian archetype feats are held",
+   "ours": "3 extra maximum HP per barbarian archetype class feat held, recomputed as more are taken",
+   "question": "PRINTED: \"You gain 3 additional Hit Points for each barbarian archetype class feat you have. As you continue selecting barbarian archetype class feats, you continue to gain additional Hit Points in this way.\" OURS: public/core.json feats['barbarian-resiliency'] maxHpBonus:{perArchetypeFeat:3, archetype:'barbarian'} counted at src/rules/build.ts:6606-6607 / derive.ts:786-790. THEIRS: a single +3 added to the max-HP bonus with no feat counter in the value. Same shape as monk-resiliency — their encoding contradicts the printed 'for each ... class feat'. Reporting rather than deciding.",
+   "ruling": "2026-08-27 (R11): 3 extra maximum HP per <class> archetype class feat held, recomputed live — including when feats are REMOVED in the builder. Our per-feat maxHpBonus shape IS the ruled behavior; guarded by the add/remove test in test/batch12-parity.test.ts.",
+   "ruledOn": "2026-08-27"
+  },
+  {
+   "id": "monk-resiliency",
+   "batch": 12,
+   "printed": "(see record)",
+   "theirs": "a flat 3 extra maximum HP, regardless of how many monk archetype feats are held",
+   "ours": "3 extra maximum HP per monk archetype class feat held, recomputed as more are taken",
+   "question": "PRINTED: \"You gain 3 additional Hit Points for each monk archetype class feat you have. As you continue selecting monk archetype class feats, you continue to gain additional Hit Points in this way.\" OURS: public/core.json feats['monk-resiliency'] maxHpBonus:{perArchetypeFeat:3, archetype:'monk'}, applied at src/rules/build.ts:6606-6607 and src/rules/derive.ts:786-790 by counting the character's feats whose archetype is monk. THEIRS: a single adjustment writing the literal value 3 into the max-HP bonus, with no counter and no reference to the feat count — the packet carries no formula or variable in that value. A 20th-level monk archetype character with six archetype feats has +18 HP on our s",
+   "ruling": "2026-08-27 (R11): 3 extra maximum HP per <class> archetype class feat held, recomputed live — including when feats are REMOVED in the builder. Our per-feat maxHpBonus shape IS the ruled behavior; guarded by the add/remove test in test/batch12-parity.test.ts.",
+   "ruledOn": "2026-08-27"
+  },
+  {
+   "id": "backup-runic-enhancement",
+   "batch": 2,
+   "printed": "(see record)",
+   "theirs": "Their dump holds two versions of this record and they disagree with each other and with the printed text. The version the differ selected grants the cantrip as an innate spell AND both of the two named 1st-rank spells as innate, one cast each, with the rank pinned to 1. The other version grants the cantrip with a single cast and offers a choice between the two spells, but grants the chosen one as an ordinary known spell rather than a once-per-day innate.",
+   "ours": "The cantrip as an at-will innate spell, a choice of exactly one of the two named spells, that spell as a once-per-day innate, and its rank set to half your level rounded up.",
+   "question": "Printed: \"You can cast the sigil cantrip as an innate spell at will. In addition, choose either runic body or runic weapon. You can cast this spell once per day as an innate spell. The rank of these spells is equal to half your level, rounded up.\" Ours (public/core.json feats['backup-runic-enhancement']): innateSpells [{spellId:'sigil', atWill:true}] and effectChoices 'backup-runic-spell' offering the two spells, each granting innateSpells [{spellId:…, heightenHalfLevel:true}]. heightenHalfLevel resolves to ceil(level/2) at src/rules/build.ts:6206 and the missing usesPerDay defaults to 1/day at src/rules/build.ts:6235. So ours follows the printed sentence on all three points; theirs contradi",
+   "ruling": "OWNER-RULED 2026-08-27 (#1): keep ours — the printed sentence exactly. Sigil as an at-will innate cantrip; a choice of exactly ONE of runic body / runic weapon; the chosen spell as a once-per-day innate; rank = half level rounded up. Guarded on built runesmiths in test/owner-rulings-singles.test.ts.",
+   "ruledOn": "2026-08-27"
+  },
+  {
+   "id": "circle-of-spirits",
+   "batch": 2,
+   "printed": "(see record)",
+   "theirs": "A flat +1 to the focus pool, applied unconditionally whenever the character has this feat.",
+   "ours": "The focus pool set to the higher of the apparition ladder and the number of point-costing focus spells known, capped at 3 — the printed formula.",
+   "question": "Printed Special: \"The number of Focus Points in your focus pool is equal to the number of focus spells you have or the number of apparitions you are attuned to, whichever is higher (maximum 3).\" Ours: src/rules/build.ts:3696 does poolMax = Math.max(apparitionLadder, pointCostingKnown.length) when the character has this feat, and src/rules/build.ts:3713 applies Math.min(3, poolMax). Theirs adds one point instead of taking a maximum, which diverges whenever focus spells known is less than or equal to apparitions attuned — a level-1 animist with one apparition and one focus spell gets 1 point by the printed rule and by ours, but 2 by theirs. Their encoding appears to contradict the printed sent",
+   "ruling": "OWNER-RULED 2026-08-27 (#2): the action itself gets NO special implementation. The pool clause is the printed formula — max(number of focus spells, number of apparitions attuned), capped at 3 — which the engine already computes from the attunement ladder (we DO keep the number of attuned apparitions; it is the `apparition` extraChoices lane). Never WG's flat +1. Guarded in test/bespoke-tail.test.ts ('Circle of Spirits').",
+   "ruledOn": "2026-08-27"
+  },
+  {
+   "id": "summiting-dragonblood",
+   "batch": 3,
+   "printed": "(see record)",
+   "theirs": "A conditional on the character's climb Speed: if it is greater than 0, add 5; otherwise SET it to 15.",
+   "ours": "Climb Speed 20 when the character has none, or +5 when they already have one, plus the Combat Climber feat, plus an enforcement of the benefactor restriction.",
+   "question": "PRINTED: \"You gain a climb Speed of 20 feet; if you already have a base climb Speed, it increases by 5 feet.\" THEIR ENCODING (read from the raw operation, not the flattened line, because the packet's flattener prints trueOperations and falseOperations at the same indent with no branch label): condition = climb speed GREATER_THAN 0; trueOperations = adjust climb by 5; falseOperations = set climb to 15. So a character with no climb Speed gets 15 feet, not the printed 20. I calibrated the units against ~45 other climb-granting records in their dump — Cave Climber sets 10, Climber sets 25, their Climbing Animal heritage sets 20 — so their set-value is literal feet and this is not a unit differen",
+   "ruling": "OWNER-RULED 2026-08-27 (#6): keep ours — climb Speed 20 when the character has none, +5 when they already have one, plus the Combat Climber feat grant, plus enforcement of the benefactor (draconic exemplar) restriction. Guards: speed-increases.test.ts (the formula), draconic-exemplar.test.ts (the restriction), owner-rulings-singles.test.ts (the feat grant).",
+   "ruledOn": "2026-08-27"
+  },
+  {
+   "id": "monastic-archer-stance",
+   "batch": 4,
+   "printed": "(see record)",
+   "theirs": "Trained in the entire bow weapon group — all 32 bow-group weapons in the shipped data, including composite longbow and composite shortbow (martial, no monk trait) and the advanced bows daikyu, hongali hornbow and phalanx piercer — with no later increase to expert or master.",
+   "ours": "Trained in exactly longbow, shortbow and the five monk-trait bows in the bow group (gakgung, bow staff and its ranged form, mikazuki and its ranged form), with the proficiency mirroring the character's best weapon category so it rises with expert strikes and master strikes.",
+   "question": "The printed Special clause is: \"you become trained in the longbow, shortbow, and any simple and martial bows with the monk trait. If you gain the expert strikes class feature, your proficiency rank for these weapons increases to expert, and if you gain the master strikes class feature… to master.\" Their single operation sets the whole bow weapon group to trained. Ours is src/rules/featGrantsAuto.ts:474 — a seven-weapon list with mirrorBestCategory true (semantics documented at src/rules/featGrants.ts:276-281, applied at src/rules/build.ts:5387-5393). I enumerated every bow-group weapon in public/core.json: the monk-trait ones are exactly gakgung, bow-staff, bow-staff-ranged, mikazuki and mik",
+   "ruling": "OWNER-RULED 2026-08-27 (#8): ours — trained in exactly longbow, shortbow and the five monk-trait bow-group weapons (gakgung, bow staff + ranged form, mikazuki + ranged form), mirroring the best weapon category so it rises with expert strikes and master strikes. Never WG's whole-bow-group trained-forever. Guarded on built monks at 1/5/13 in test/owner-rulings-singles.test.ts.",
+   "ruledOn": "2026-08-27"
+  }
+ ]
+}

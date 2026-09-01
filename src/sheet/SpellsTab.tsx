@@ -547,7 +547,11 @@ function ManageSpellsModal({
   onClose: () => void;
 }) {
   useEscapeClose(onClose);
-  const spontaneous = !!entry.repertoire;
+  /* Key off the entry's declared TYPE, never the mere presence of `repertoire`. A PREPARED entry that
+   * picked up one granted spell used to flip to spontaneous here and hide all of its prepared ranks
+   * behind an empty picker — an entry's kind is a property of the caster, not of which fields happen
+   * to be populated. */
+  const spontaneous = entry.type === 'spontaneous';
   const [picking, setPicking] = useState<{ rank: number; slot: number | null; cantripTrade?: boolean; restricted?: string } | null>(null);
   const ranks = Object.keys((spontaneous ? entry.repertoire : entry.prepared) ?? {})
     .map(Number)
@@ -843,13 +847,34 @@ function ManageSpellsModal({
                 {group.map((slot) => {
                   const sp = slot.spellId ? content.spells[slot.spellId] : null;
                   // A spontaneous caster prepares nothing — its restricted slot is one extra CAST, so
-                  // there is nothing here to pick and the sheet shows it as a pip.
+                  // there is no SPELL to pick and the pip says so. The RANK select still renders: a
+                  // rank-choice group ("designate one of your spell slots" — Master Summoner) is
+                  // answered by this control and no other, and returning before it left the printed
+                  // designation unanswerable for every spontaneous bounded caster. The ordinary slot
+                  // it costs is deducted by the play overlay against the group's FINAL rank
+                  // (play.ts's documented invariant), so the select is the whole fix.
                   if (slot.spontaneous)
                     return (
-                      <div key={slot.id} className="ms-slot empty" aria-disabled="true">
-                        <span className="ms-slot-name">
-                          {ord(slot.rank)} rank — one extra cast<em className="ms-slot-tag"> · spend it on the sheet</em>
-                        </span>
+                      <div key={slot.id} style={{ display: 'flex', gap: 6, alignItems: 'stretch' }}>
+                        <div className="ms-slot empty" style={{ flex: 1 }} aria-disabled="true">
+                          <span className="ms-slot-name">
+                            {ord(slot.rank)} rank — one extra cast<em className="ms-slot-tag"> · spend it on the sheet</em>
+                          </span>
+                        </div>
+                        {!!slot.rankOptions?.length && (
+                          <select
+                            className="ms-rank-select"
+                            aria-label="Slot rank"
+                            value={slot.rank}
+                            onChange={(ev) => onPlay((p) => setRestrictedRank(p, slot.id, Number(ev.target.value)))}
+                          >
+                            {slot.rankOptions.map((r) => (
+                              <option key={r} value={r}>
+                                {ord(r)}
+                              </option>
+                            ))}
+                          </select>
+                        )}
                       </div>
                     );
                   // Spell Combination: the slot holds TWO spells, so it shows two buttons. The second

@@ -2,6 +2,38 @@ import { describe, it, expect } from 'vitest';
 import { build, content } from './_content';
 import { FEAT_GRANTS } from '../src/rules/featGrants';
 
+const dbWF = content();
+
+/**
+ * A `category` on a TRAIT clause is a restriction, and it has to bite.
+ *
+ * Bullet Dancer Dedication prints *"…and martial combination weapons as simple weapons."* The clause
+ * is trait-shaped (combination is a trait, not a group) and carries `category: 'martial'` — but
+ * `wf.category` was consulted only on the GROUP path, so the per-weapon trait sweep granted every
+ * combination weapon, including the six ADVANCED ones. An over-grant this project treats as worse
+ * than a gap: the monk was handed explosive dogslicer and wrecker at their simple rank.
+ */
+describe('a category on a trait-shaped weapon-familiarity clause', () => {
+  const combos = Object.entries(dbWF.items).filter(
+    ([, i]) => i?.itemType === 'weapon' && (i.traits ?? []).includes('combination'),
+  );
+  const advanced = combos.filter(([, i]) => i.category === 'advanced').map(([id]) => id);
+  const martial = combos.filter(([, i]) => i.category === 'martial').map(([id]) => id);
+
+  it('the corpus still has both categories, or this test proves nothing', () => {
+    expect(advanced.length).toBeGreaterThan(0);
+    expect(martial.length).toBeGreaterThan(0);
+  });
+
+  it('grants the martial combination weapons and withholds the advanced ones', () => {
+    const c = build('monk', 6, { featPicks: { '2:class': 'bullet-dancer-dedication' } });
+    const wo = c.proficiencies?.weaponOverrides ?? {};
+    expect(martial.some((w) => wo[w]), 'the printed martial half must arrive').toBe(true);
+    const leaked = advanced.filter((w) => wo[w]);
+    expect(leaked, 'advanced combination weapons are not in the printed clause').toEqual([]);
+  });
+});
+
 /**
  * "You gain proficiency with all advanced bows as if they were MARTIAL weapons."
  *

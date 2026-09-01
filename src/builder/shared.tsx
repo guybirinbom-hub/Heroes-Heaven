@@ -20,15 +20,22 @@ import {
   buildUsesDeity,
   championDevotionOptions,
   extraPickCount,
-  commanderFolioMax,
+  commanderFolioCapacity,
+  commanderTierFor,
   commanderTacticOptions,
+  qiSpellsPossible,
+  runeRepertoireMax,
+  runeRepertoireMaxViaDedication,
+  runesmithRuneOptions,
   GATE_THRESHOLD_LEVELS,
   innovationType,
   inventorModificationOptions,
   INVENTOR_TIER_LEVEL,
+  backgroundEffectiveBoosts,
   emptyCustomBackground,
   featChoiceLabel,
   fixedBoosts,
+  heritageAdjustedAncestryAttributes,
   resolveBackground,
   subclassKeyAbility,
   backgroundGrantedFeats,
@@ -43,10 +50,13 @@ import {
   removeChosenIds,
   withCustomAnswer,
 } from '../rules/build';
+import { effectChoiceOffered, narrowSpellFilter } from '../rules/build';
+import { BACKGROUND_CANTRIP_GRANTS } from '../rules/backgroundGrants';
+import { openChoiceOptions } from '../rules/openChoice';
 import { cantripsKnown } from '../rules/spellcasting';
 import { spellsMatching } from '../rules/spellChoice';
 import { abpSkillBudget } from '../rules/abp';
-import { activeCasterArchetype } from '../rules/casterArchetypes';
+import { activeCasterArchetype, archetypeEntryIds, archetypeSlots } from '../rules/casterArchetypes';
 import { snareAllowance, snareFormulaOptions, isBaseSnareSlot, SNARE_FORMULA_KEY } from '../rules/snareFormulas';
 import { formulaOptions, formulaSlots, type FormulaSlot } from '../rules/formulaBook';
 import { snareAllowanceFor } from '../rules/counterMods';
@@ -64,6 +74,8 @@ import {
   deriveSpellcasting,
   domainPoolForChoice,
   formatMod,
+  narrowChoiceOptions,
+  effectiveChoiceLimits,
 } from '../rules/derive';
 import { explainStat, statHasSituational, type StatRef } from '../rules/explain';
 import { useContent } from '../sheet/ContentContext';
@@ -151,6 +163,8 @@ export interface BuilderActions {
   /** Two-casters: the archetype pool's own tradition / key / cantrips (kept apart from the class pool). */
   setArchetypePoolTradition: (t: Tradition) => void;
   setArchetypePoolKey: (a: AbilityId) => void;
+  /** The ONE leveled spell an innate-ranked archetype (Captivator) learns at a rank; null clears it. */
+  setArchetypePoolSpell: (rank: number, spellId: string | null) => void;
   /** Dual Class variant: choose the second class (defaults its subclass to the first option). */
   setSecondClass: (id: string | null) => void;
   /** ABP skill potency: set a skill's item-bonus rank (0 removes it). */
@@ -395,6 +409,24 @@ export function useBuilderActions(
     },
     setArchetypePoolKey(a) {
       setBuild((b) => ({ ...b, archetypeSpells: { ...(b.archetypeSpells ?? { cantrips: [], spells: {} }), keyAbility: a } }));
+    },
+    /*
+     * The ONE leveled spell an innate-ranked archetype learns at a rank (Captivator).
+     *
+     * `archetypeSpells` had writers for cantrips, tradition and key attribute but NONE for `spells`,
+     * so a CASTER class taking Captivator Dedication + Basic Captivator Spellcasting unlocked all
+     * three ranks and had nothing to put in them — measured as `{1:[],2:[],3:[]}` on a bard, against a
+     * fighter's filled repertoire. A non-caster fills the same pool through the per-level pickers,
+     * which are gated on `!casting`; a caster had no surface at all.
+     */
+    setArchetypePoolSpell(rank, spellId) {
+      setBuild((b) => {
+        const as = b.archetypeSpells ?? { cantrips: [], spells: {} };
+        const spells = { ...(as.spells ?? {}) };
+        if (spellId) spells[rank] = [spellId];
+        else delete spells[rank];
+        return { ...b, archetypeSpells: { ...as, spells } };
+      });
     },
     setSecondClass(id) {
       // The second class's subclass and extra-choice groups (kineticist element, animist apparition, …)
@@ -653,7 +685,9 @@ export function SearchSelect({
 }: {
   label: string;
   value: string | null | undefined;
-  options: { id: string; name: string; note?: string; description?: string; descRefs?: DescRef[] }[];
+  /** `disabled` carries the REASON the option cannot be committed (Q27: unpickable must say why);
+   *  the stored answer is never disabled by the caller, so a pick cannot vanish under the player. */
+  options: { id: string; name: string; note?: string; description?: string; descRefs?: DescRef[]; disabled?: string }[];
   onChange: (id: string) => void;
   placeholder?: string;
   /** Render just the control (no .ocard/label wrapper) — for use inside a SetupCard. */
@@ -743,6 +777,7 @@ export function SearchSelect({
                 ? // Read-first rows: press the row to read its description; the Select button chooses it.
                   filtered.slice(0, 100).map((o) => {
                     const node = mkNode(o);
+                    const off = !!o.disabled && o.id !== value;
                     return (
                       <PickerRow
                         key={o.id}
@@ -751,6 +786,8 @@ export function SearchSelect({
                         chosen={o.id === value}
                         onOpenDesc={node ? () => setDescNode(node) : undefined}
                         selectLabel="Select"
+                        selectDisabled={off}
+                        disabledReason={off ? o.disabled : undefined}
                         onSelect={() => {
                           onChange(o.id);
                           setOpen(false);
@@ -758,22 +795,28 @@ export function SearchSelect({
                       />
                     );
                   })
-                : filtered.slice(0, 100).map((o) => (
-                    <button
-                      type="button"
-                      className={'picker-item' + (o.id === value ? ' chosen' : '')}
-                      key={o.id}
-                      onClick={() => {
-                        onChange(o.id);
-                        setOpen(false);
-                      }}
-                    >
-                      <div className="picker-text">
-                        <div className="picker-name">{o.name}</div>
-                        {o.note && <div className="picker-traits">{o.note}</div>}
-                      </div>
-                    </button>
-                  ))}
+                : filtered.slice(0, 100).map((o) => {
+                    const off = !!o.disabled && o.id !== value;
+                    return (
+                      <button
+                        type="button"
+                        className={'picker-item' + (o.id === value ? ' chosen' : '')}
+                        key={o.id}
+                        disabled={off}
+                        onClick={() => {
+                          if (off) return;
+                          onChange(o.id);
+                          setOpen(false);
+                        }}
+                      >
+                        <div className="picker-text">
+                          <div className="picker-name">{o.name}</div>
+                          {o.note && <div className="picker-traits">{o.note}</div>}
+                          {off && <div className="picker-why">{o.disabled}</div>}
+                        </div>
+                      </button>
+                    );
+                  })}
               {filtered.length === 0 && (
                 <div className="setup-note" style={{ padding: 12 }}>
                   No matches.
@@ -2473,10 +2516,21 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
   // "Deep background" (an Options toggle) unlocks building a custom background. Keep it visible if one
   // is already selected, so an existing custom-bg character never gets stuck with a hidden picker.
   const showCustomBg = !!build.options?.deepBackground || build.backgroundId === CUSTOM_BACKGROUND_ID;
-  const ancSlots = !ancestry ? [] : altBoosts ? ([{ kind: 'free' }, { kind: 'free' }] as BoostSlot[]) : boostSlots(ancestry.abilityBoosts);
-  const ancFixed = ancestry && !altBoosts ? fixedBoosts(ancestry.abilityBoosts) : [];
-  const bgSlots = background ? boostSlots(background.abilityBoosts) : [];
-  const bgFixed = background ? fixedBoosts(background.abilityBoosts) : [];
+  // The heritage can SWAP one of the ancestry's fixed boosts/flaws (Full Moon Sarangay) — the same
+  // adjusted view buildCharacter computes, so the picker and the math cannot disagree.
+  const ancAttrs = ancestry
+    ? heritageAdjustedAncestryAttributes(
+        ancestry,
+        build.heritageId ? content.heritages[build.heritageId] : undefined,
+        build.heritageId ? build.featChoices?.[`heritage:${build.heritageId}`] : undefined,
+      )
+    : undefined;
+  const ancSlots = !ancAttrs ? [] : altBoosts ? ([{ kind: 'free' }, { kind: 'free' }] as BoostSlot[]) : boostSlots(ancAttrs.abilityBoosts);
+  const ancFixed = ancAttrs && !altBoosts ? fixedBoosts(ancAttrs.abilityBoosts) : [];
+  // Through the effective view so an optional attribute trade (Song of the Deep's Special) opens its
+  // second free slot the moment the answer flips.
+  const bgSlots = background ? boostSlots(backgroundEffectiveBoosts(build, background)) : [];
+  const bgFixed = background ? fixedBoosts(backgroundEffectiveBoosts(build, background)) : [];
   const subKey = subclassKeyAbility(build, content);
   // A racket-style subclass offers a key-attribute CHOICE (Dex or the racket's attribute) — show
   // the picker restricted to those; otherwise a multi-key class shows its own list.
@@ -2485,6 +2539,14 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
   const keyChoice = keyOptions.length > 1;
   const keyAbility = subKey ?? build.keyAbility ?? cls?.keyAbility[0] ?? null;
   const heritage = build.heritageId ? content.heritages[build.heritageId] : undefined;
+  /*
+   * A heritage choice can be NARROWED by a feat the character has taken — the seven dragonblood feats
+   * filter which draconic exemplar is legal ("you must choose a dragon with a climb Speed"). The
+   * narrowing funnel needs a built character, so one is memoised here; every other picker already
+   * routes through the same funnel, and this card mapping raw options was the one that could not see
+   * a choiceOptionLimits row at all.
+   */
+  const limitChar = useMemo(() => { try { return buildCharacter(build, content); } catch { return undefined; } }, [build, content]);
   // Level-1 general feats (skill feats are a subset of general feats) for a feat-granting heritage
   // (Versatile Human). Content-static, so memoize away per-keystroke re-filters.
   const heritageFeatOpts = useMemo(
@@ -2550,13 +2612,13 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
               key={i}
               value={build.ancestryBoosts[i] ?? null}
               options={slot.kind === 'choice' && slot.options ? slot.options : ABILITIES}
-              exclude={altBoosts ? build.ancestryBoosts : [...build.ancestryBoosts, ...ancFixed, ...ancestry.abilityFlaws]}
+              exclude={altBoosts ? build.ancestryBoosts : [...build.ancestryBoosts, ...ancFixed, ...(ancAttrs?.abilityFlaws ?? [])]}
               onChange={(v) => actions.setBoost('ancestryBoosts', i, v)}
             />
           ))}
-          {!altBoosts && ancestry.abilityFlaws.length > 0 && (
+          {!altBoosts && (ancAttrs?.abilityFlaws.length ?? 0) > 0 && (
             <span style={{ fontSize: 11.5, color: 'var(--app-bad)' }}>
-              flaw: {ancestry.abilityFlaws.map((a) => ABILITY_LABEL[a]).join(', ')}
+              flaw: {(ancAttrs?.abilityFlaws ?? []).map((a) => ABILITY_LABEL[a]).join(', ')}
             </span>
           )}
         </SubCard>
@@ -2646,13 +2708,14 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           <p className="setup-hint">Resistance to the chosen damage type equal to half your level (minimum 1).</p>
         </SubCard>
       )}
-      {/* A heritage that asks for a pick of its own ("choose a type of animal" — Beastkin; "choose a
-          patron" — Forge-Blessed Dwarf). Six heritages shipped one and none was ever rendered, because
-          Heritage never declared the field. Stored beside the feat answers under `heritage:<id>`. */}
-      {heritage?.choice &&
+      {/* An ANCESTRY that asks a pick of its own. The surki's Magiphage — *"Choose what tradition of
+          magic you most consumed as a larva"* — is the case: four records key off the answer and
+          nothing asked the question, because only feats, class features and heritages were rendered.
+          Stored beside the rest under `ancestry:<id>`. */}
+      {ancestry?.choice &&
         (() => {
-          const def = heritage.choice!;
-          const key = `heritage:${heritage.id}`;
+          const def = ancestry.choice!;
+          const key = `ancestry:${ancestry.id}`;
           return (
             <SubCard icon="ti-adjustments" label={def.prompt}>
               {def.kind === 'text' ? (
@@ -2672,6 +2735,51 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                   options={(def.options ?? []).map((o) => ({ value: o.value, label: o.label, description: o.description }))}
                 />
               )}
+              {def.note && <p className="setup-hint">{def.note}</p>}
+              {def.inert && <p className="setup-hint">{def.inert}</p>}
+            </SubCard>
+          );
+        })()}
+      {/* A heritage that asks for a pick of its own ("choose a type of animal" — Beastkin; "choose a
+          patron" — Forge-Blessed Dwarf). Six heritages shipped one and none was ever rendered, because
+          Heritage never declared the field. Stored beside the feat answers under `heritage:<id>`. */}
+      {heritage?.choice &&
+        (() => {
+          const def = heritage.choice!;
+          const key = `heritage:${heritage.id}`;
+          /*
+           * Routed through the SAME funnel as every feat picker, so a `choiceOptionLimits` row from a
+           * taken feat narrows this list too. The dragonblood exemplar is the case: seven dragonblood
+           * feats print *"you must choose a dragon with a climb Speed"* / *"…an arcane dragon"*, and
+           * mapping raw options here was the one picker those limits could never reach. The active
+           * limits' reasons print under the control, so a narrowed list explains itself.
+           */
+          const narrowed = limitChar ? narrowChoiceOptions(heritage.id, def, def.options ?? [], limitChar, content) : (def.options ?? []);
+          const reasons = limitChar && def.options?.length ? effectiveChoiceLimits(heritage.id, def, limitChar, content).map((l) => l.reason).filter(Boolean) : [];
+          return (
+            <SubCard icon="ti-adjustments" label={def.prompt}>
+              {def.kind === 'text' ? (
+                <input
+                  className="txt"
+                  type="text"
+                  placeholder={`${def.prompt}…`}
+                  value={build.featChoices[key] ?? ''}
+                  onChange={(e) => actions.setFeatChoice(key, e.target.value)}
+                />
+              ) : (
+                <PopupSelect
+                  title={def.prompt}
+                  placeholder={`${def.prompt}…`}
+                  value={build.featChoices[key] ?? ''}
+                  onChange={(v) => actions.setFeatChoice(key, v)}
+                  options={narrowed.map((o) => ({ value: o.value, label: o.label, description: o.description, disabled: !!(o as { disabled?: string }).disabled, disabledReason: (o as { disabled?: string }).disabled }))}
+                />
+              )}
+              {reasons.map((r, i) => (
+                <p key={`lim-${i}`} className="setup-hint">
+                  {r}
+                </p>
+              ))}
               {def.note && <p className="setup-hint">{def.note}</p>}
               {def.inert && <p className="setup-hint">{def.inert}</p>}
             </SubCard>
@@ -2732,7 +2840,18 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           onChange={actions.changeBackground}
           options={[
             ...(showCustomBg ? [{ id: CUSTOM_BACKGROUND_ID, name: '✎ Custom background…' }] : []),
-            ...Object.values(content.backgrounds).map((b) => ({ id: b.id, name: b.name, note: note(b.rarity), description: b.description, descRefs: b.descRefs })),
+            ...Object.values(content.backgrounds).map((b) => ({
+              id: b.id,
+              name: b.name,
+              note: note(b.rarity),
+              description: b.description,
+              descRefs: b.descRefs,
+              // A printed ancestry gate (Sewer Dragon: kobold only) greys the option with its reason.
+              disabled:
+                b.ancestryPrerequisite?.length && build.ancestryId && !b.ancestryPrerequisite.includes(build.ancestryId)
+                  ? `Requires the ${b.ancestryPrerequisite.map(cap).join(' or ')} ancestry.`
+                  : undefined,
+            })),
           ]}
         />
         {background && build.backgroundId !== CUSTOM_BACKGROUND_ID && (
@@ -2745,8 +2864,9 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                     {background.trainedSkill
                       ? cap(background.trainedSkill)
                       : (background.trainedSkillChoice ?? []).map(cap).join(' or ')}
+                    {/* One subject, or several — Undercover Lotus Guard grants Art Lore AND Underworld Lore. */}
                     {background.trainedLore
-                      ? `${background.trainedSkill || background.trainedSkillChoice?.length ? ', ' : ''}${loreLabel(background.trainedLore)}`
+                      ? `${background.trainedSkill || background.trainedSkillChoice?.length ? ', ' : ''}${[background.trainedLore].flat().map(loreLabel).join(', ')}`
                       : ''}
                   </span>
                 )}
@@ -2797,27 +2917,60 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
       )}
       {/* "Legal Lore OR Underworld Lore" — two NAMED subjects, so a picker rather than a text box.
           These shipped with both subjects concatenated into one fake Lore ("Legal-lore-or-underworld
-          Lore") and no question asked. */}
+          Lore") and no question asked. Concordance Researcher takes FOUR of six
+          (trainedLoreOptionsCount), so the card renders one picker per pick; each picker hides the
+          other slots' answers, since training the same Lore twice is not a second training. */}
       {background && build.backgroundId !== CUSTOM_BACKGROUND_ID && (background.trainedLoreOptions ?? []).length > 0 && (
         <SubCard icon="ti-bulb" label="Background Lore">
-          <PopupSelect
-            title="Background Lore"
-            placeholder="Choose a Lore…"
-            value={build.backgroundLore ?? ''}
-            onChange={(v) => actions.patch({ backgroundLore: v })}
-            options={background.trainedLoreOptions!.map((s) => ({ value: s, label: `${cap(s)} Lore` }))}
-          />
+          {(() => {
+            const count = Math.min(background.trainedLoreOptionsCount ?? 1, background.trainedLoreOptions!.length);
+            const slots = ['backgroundLore', 'backgroundLore2', 'backgroundLore3', 'backgroundLore4'] as const;
+            const values = slots.map((k) => build[k] ?? '');
+            // "plane-of-air" → "Plane of Air Lore"; bare cap() would render the hyphens.
+            const loreLabel = (s: string) =>
+              s.split('-').map((w, i) => (i > 0 && ['of', 'the', 'a', 'an', 'and'].includes(w) ? w : cap(w))).join(' ') + ' Lore';
+            return slots.slice(0, count).map((k, i) => (
+              <PopupSelect
+                key={k}
+                title="Background Lore"
+                placeholder={count > 1 ? `Choose Lore ${i + 1}…` : 'Choose a Lore…'}
+                value={values[i]}
+                onChange={(v) => actions.patch({ [k]: v })}
+                options={background
+                  .trainedLoreOptions!.filter((s) => s === values[i] || !values.includes(s))
+                  .map((s) => ({ value: s, label: loreLabel(s) }))}
+              />
+            ));
+          })()}
         </SubCard>
       )}
-      {/* A "choose a Lore" background: Lore is free-text, so let the player type any subject. */}
+      {/* A "choose a Lore" background: Lore is free-text, so let the player type any subject.
+          A record naming a printed default (Night Watch's Legal) shows it as the placeholder; one
+          asking for TWO subjects (Reborn Soul) renders a second box. */}
       {background && build.backgroundId !== CUSTOM_BACKGROUND_ID && background.trainedLoreChoice && !(background.trainedLoreOptions ?? []).length && (
         <SubCard icon="ti-bulb" label="Background Lore">
           <input
             className="lvl-lore-input"
-            placeholder="Lore subject (e.g. Warfare)…"
+            placeholder={background.trainedLoreChoiceDefault ? `${cap(background.trainedLoreChoiceDefault)} (default)…` : 'Lore subject (e.g. Warfare)…'}
             value={build.backgroundLore ?? ''}
             onChange={(e) => actions.patch({ backgroundLore: e.target.value })}
           />
+          {(background.trainedLoreChoiceCount ?? 1) > 1 && (
+            <input
+              className="lvl-lore-input"
+              placeholder="Second Lore subject…"
+              value={build.backgroundLore2 ?? ''}
+              onChange={(e) => actions.patch({ backgroundLore2: e.target.value })}
+            />
+          )}
+          {(background.trainedLoreChoiceCount ?? 1) > 2 && (
+            <input
+              className="lvl-lore-input"
+              placeholder="Third Lore subject…"
+              value={build.backgroundLore3 ?? ''}
+              onChange={(e) => actions.patch({ backgroundLore3: e.target.value })}
+            />
+          )}
         </SubCard>
       )}
       {/* The background's OWN embedded sub-choice — "an Ancestry Lore of your choice", "Guild Lore
@@ -2857,6 +3010,21 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           {backgroundChoiceKind(background.choice, content) === 'other' && (
             <p className="confirm-note">Recorded on your sheet; this choice has no number of its own.</p>
           )}
+        </SubCard>
+      )}
+      {/* A background pick-a-cantrip (Harrow-Chosen) — the background twin of the feat lane, same
+          answer store keyed by the background id. */}
+      {background && build.backgroundId !== CUSTOM_BACKGROUND_ID && BACKGROUND_CANTRIP_GRANTS[background.id] && (
+        <SubCard icon="ti-sparkles" label={BACKGROUND_CANTRIP_GRANTS[background.id].prompt}>
+          <PopupSelect
+            title={BACKGROUND_CANTRIP_GRANTS[background.id].prompt}
+            placeholder="Choose…"
+            value={build.pickCantripChoices?.[background.id] ?? ''}
+            onChange={(v) => actions.patch({ pickCantripChoices: { ...(build.pickCantripChoices ?? {}), [background.id]: v } })}
+            options={BACKGROUND_CANTRIP_GRANTS[background.id].options
+              .filter((s) => content.spells[s])
+              .map((s) => ({ value: s, label: content.spells[s].name }))}
+          />
         </SubCard>
       )}
       {/* The background's `effectChoices`. types.ts documented these as "rendered by the shared
@@ -2979,9 +3147,12 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
         );
       })()}
       {[...(cls?.extraChoices ?? []), ...(cls2?.extraChoices ?? [])].map((g) => {
-        const max = extraPickCount(g, build.level);
+        const max = extraPickCount(g, build.level, build);
         if (max === 0) return null; // not yet unlocked at this level (e.g. higher-level epithets)
-        const selected = build.extraChoices[g.id] ?? [];
+        // Clamped to `max` for the same reason the engine clamps: a Single Gate kineticist who
+        // previously picked two elements still HAS both stored (so switching back to dual is
+        // lossless), and an unclamped read here would print "2/1" and offer a second live row.
+        const selected = (build.extraChoices[g.id] ?? []).slice(0, max);
         return (
           <SubCard icon="ti-adjustments" label={g.name} count={max > 1 ? `${selected.length}/${max}` : undefined} key={g.id}>
             {max <= 1 ? (
@@ -3096,10 +3267,16 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
             </>
           );
         })()}
-      {ownsClass('commander') &&
+      {/* …and the ARCHETYPE commander — *"You gain the tactics class feature like a commander and gain
+          your own folio"*. Gating on the CLASS alone left a dedicated character with the feature, the
+          banner and no way to put a single tactic in the folio. The capacity and the tier come from the
+          same two helpers the engine uses, so the picker cannot offer a tactic the sheet then drops. */}
+      {(ownsClass('commander') || Object.values(build.featPicks ?? {}).includes('commander-dedication')) &&
         (() => {
-          const options = commanderTacticOptions(build.level, content);
-          const max = commanderFolioMax(build.level);
+          const viaDedication = !ownsClass('commander');
+          const featIds = Object.values(build.featPicks ?? {}).filter(Boolean) as string[];
+          const options = commanderTacticOptions(build.level, content, commanderTierFor(build.level, featIds, viaDedication));
+          const max = commanderFolioCapacity(build.level, featIds, viaDedication, content);
           const selected = build.commanderTactics ?? [];
           const toggle = (id: string) => {
             const on = selected.includes(id);
@@ -3113,6 +3290,44 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                   id: o.id,
                   name: o.name,
                   note: o.tacticTier && o.tacticTier !== 'basic' ? o.tacticTier : undefined,
+                  description: o.description,
+                  descRefs: o.descRefs,
+                }))}
+                selected={selected}
+                max={max}
+                onToggle={toggle}
+              />
+            </SubCard>
+          );
+        })()}
+      {/* The runesmith's runic repertoire — *"At 1st level, you learn four 1st-level runes of your
+          choice … You can add any rune to your repertoire as long as it is common (or you have access
+          to it) and its level is equal to or less than your own."* Each rune's own level is shown as
+          the note, so a rune the character cannot take yet is visibly absent rather than mysteriously
+          missing. Before this the runesmith's defining feature offered nothing at all. */}
+      {/* …and for the ARCHETYPE runesmith, whose dedication grants its own smaller repertoire ("a
+          runic repertoire with two 1st-level runes of your choice"). Gating this picker on the CLASS
+          alone left a dedicated character holding a repertoire with no way to put anything in it. */}
+      {(ownsClass('runesmith') || Object.values(build.featPicks ?? {}).includes('runesmith-dedication')) &&
+        (() => {
+          const viaDedication = !ownsClass('runesmith');
+          const options = runesmithRuneOptions(build.level, content);
+          const max = viaDedication
+            ? runeRepertoireMaxViaDedication(build.level, content)
+            : runeRepertoireMax(build.level, content);
+          const selected = build.runesmithRunes ?? [];
+          const toggle = (id: string) => {
+            const on = selected.includes(id);
+            const next = on ? selected.filter((x) => x !== id) : selected.length < max ? [...selected, id] : selected;
+            actions.patch({ runesmithRunes: next });
+          };
+          return (
+            <SubCard icon="ti-writing-sign" label="Runic repertoire" count={`${selected.length}/${max}`}>
+              <MultiPickRows
+                options={options.map((o) => ({
+                  id: o.id,
+                  name: o.name,
+                  note: o.diacritic ? `diacritic · level ${o.level}` : `level ${o.level}`,
                   description: o.description,
                   descRefs: o.descRefs,
                 }))}
@@ -3264,6 +3479,41 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                       </div>
                     );
                   })()}
+                {cur !== '' &&
+                  (() => {
+                    /*
+                     * FORK THE PATH grants an impulse feat too — this picker did not exist, and the
+                     * grant loop skipped a forked threshold outright, so a kineticist who forked got the
+                     * new element and NO feat (up to four short by 17th).
+                     *
+                     * Its filter is narrower than Expand's, exactly as printed: *"Gain an impulse feat
+                     * of your level or lower WITH THE TRAIT OF THAT ELEMENT. You can't select a
+                     * COMPOSITE impulse feat with this feat selection."* So: the newly-forked element
+                     * only, and no composites — where Expand allows any owned element and does permit
+                     * a composite.
+                     */
+                    const forked = cur.replace(/-gate$/, '');
+                    const impulses = Object.values(content.feats)
+                      .filter(
+                        (f) =>
+                          f.traits.includes('impulse') &&
+                          f.level <= L &&
+                          f.traits.includes(forked) &&
+                          !f.traits.includes('composite'),
+                      )
+                      .sort((a, b) => a.level - b.level || a.name.localeCompare(b.name));
+                    return (
+                      <div className="ec-subpick">
+                        <span className="ec-subpick-label">Bonus impulse</span>
+                        <PopupSelect
+                          title="Fork the Path — bonus impulse feat (that element, non-composite)"
+                          value={build.gateForkImpulses?.[key] ?? ''}
+                          onChange={(v) => actions.patch({ gateForkImpulses: { ...(build.gateForkImpulses ?? {}), [key]: v } })}
+                          options={impulses.map((f) => ({ value: f.id, label: `${f.name} (L${f.level})`, description: f.description, descRefs: f.descRefs }))}
+                        />
+                      </div>
+                    );
+                  })()}
               </SubCard>
             );
           });
@@ -3380,8 +3630,30 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           if (!arch) return null;
           const as = build.archetypeSpells ?? { cantrips: [], spells: {}, tradition: null, keyAbility: null };
           const trad = (arch.config.choiceTradition ? as.tradition : arch.config.tradition) ?? arch.config.tradition;
+          /* A feat can widen THIS pool — Psi Development's extra known cantrip (`spellSlotBonus` with
+           * `cantrips`) and its six psi cantrips (`spellListAdditions`), both scoped by `entryId` to
+           * `${dedicationId}-casting`, the same gate buildCharacter's archCantripBonus uses — so the
+           * cap the picker enforces and the cap the sheet keeps cannot disagree. The list union
+           * matters because the six unique psi cantrips ship `traditions: []` and the tradition
+           * filter alone would never offer them. */
+          const takenIds = Object.values(build.featPicks).filter((v): v is string => !!v);
+          const archEntryIds = archetypeEntryIds(arch);
+          const archCantripBonus = takenIds.reduce((n, id) => {
+            const b = content.feats[id]?.spellSlotBonus;
+            return b?.entryId && archEntryIds.has(b.entryId) ? n + (b.cantrips ?? 0) : n;
+          }, 0);
+          const cantripCap = arch.config.cantrips + archCantripBonus;
+          const widened = new Set<string>();
+          for (const id of takenIds) {
+            const list = content.feats[id]?.spellListAdditions;
+            for (const add of list == null ? [] : Array.isArray(list) ? list : [list]) {
+              if (add.as && add.as !== 'list') continue;
+              if (add.entryId && !archEntryIds.has(add.entryId)) continue;
+              for (const sid of add.spells ?? []) if (content.spells[sid]?.rank === 0) widened.add(sid);
+            }
+          }
           const cantripList = Object.values(content.spells)
-            .filter((s) => s.rank === 0 && s.traditions.includes(trad))
+            .filter((s) => (s.rank === 0 && s.traditions.includes(trad)) || widened.has(s.id))
             .sort((a, b) => a.name.localeCompare(b.name));
           return (
             <SetupCard icon="ti-wand" label="Archetype spellcasting">
@@ -3417,11 +3689,11 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                   </div>
                 </SubCard>
               )}
-              <SubCard icon="ti-sparkles" label={`Cantrips (${as.cantrips.length}/${arch.config.cantrips})`}>
+              <SubCard icon="ti-sparkles" label={`Cantrips (${as.cantrips.length}/${cantripCap})`}>
                 <PopupSelect
                   title="Add a cantrip"
                   value=""
-                  onChange={(v) => v && actions.toggleArchetypeCantrip(v, arch.config.cantrips)}
+                  onChange={(v) => v && actions.toggleArchetypeCantrip(v, cantripCap)}
                   options={cantripList.map((s) => ({ value: s.id, label: s.name, description: s.description, descRefs: s.descRefs }))}
                 />
                 {as.cantrips.length > 0 && (
@@ -3431,15 +3703,42 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                         key={id}
                         type="button"
                         className="ec-chip on"
-                        onClick={() => actions.toggleArchetypeCantrip(id, arch.config.cantrips)}
+                        onClick={() => actions.toggleArchetypeCantrip(id, cantripCap)}
                       >
                         {content.spells[id]?.name ?? id} ✕
                       </button>
                     ))}
                   </div>
                 )}
-                <div className="bsec-note">Prepare leveled archetype spells on the Spells tab.</div>
+                {/* An innate-ranked archetype has no slots to prepare into — its leveled spells are
+                    LEARNED here, one per rank. Saying "prepare them on the Spells tab" to a captivator
+                    was a false promise: that tab has nothing for them to prepare. */}
+                {!arch.config.innateRanked && (
+                  <div className="bsec-note">Prepare leveled archetype spells on the Spells tab.</div>
+                )}
               </SubCard>
+              {arch.config.innateRanked && (
+                <SubCard icon="ti-book" label="Learned spells">
+                  {/* Captivator: *"you learn a 1st-level spell… at 6th level a 2nd-level spell, and at
+                      8th a 3rd"*, each cast as an innate spell 1/day. One pick per unlocked rank. */}
+                  {Object.keys(archetypeSlots(build.level, arch))
+                    .map(Number)
+                    .filter((r) => r > 0)
+                    .sort((a, b) => a - b)
+                    .map((rank) => (
+                      <PopupSelect
+                        key={rank}
+                        title={`Rank ${rank} spell`}
+                        value={(as.spells?.[rank] ?? [])[0] ?? ''}
+                        onChange={(v) => actions.setArchetypePoolSpell(rank, v || null)}
+                        options={Object.values(content.spells)
+                          .filter((s) => s.rank === rank && s.traditions.includes(trad))
+                          .sort((a, b) => a.name.localeCompare(b.name))
+                          .map((s) => ({ value: s.id, label: s.name, description: s.description, descRefs: s.descRefs }))}
+                      />
+                    ))}
+                </SubCard>
+              )}
             </SetupCard>
           );
         })()}
@@ -3471,6 +3770,27 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
             options={[
               { value: 'animal-empathy', label: content.feats['animal-empathy']?.name ?? 'Animal Empathy', description: content.feats['animal-empathy']?.description, descRefs: content.feats['animal-empathy']?.descRefs },
               { value: 'plant-empathy', label: content.feats['plant-empathy']?.name ?? 'Plant Empathy', description: content.feats['plant-empathy']?.description, descRefs: content.feats['plant-empathy']?.descRefs },
+            ]}
+          />
+        </SetupCard>
+      )}
+      {/* *"When you gain your first qi spell, you decide whether your qi spells are divine or occult
+          spells."* ONE decision for the character, however many qi spells they end up with and whichever
+          record brought the first — so a Setup card, not a per-feat pick. Before this the app silently
+          chose occult for everyone. */}
+      {qiSpellsPossible(build, content) && (
+        <SetupCard icon="ti-yin-yang" label="Qi spell tradition">
+          <div className="bsec-note">
+            When you gain your first qi spell you decide whether your qi spells are divine or occult. Your
+            key spellcasting attribute is Wisdom either way.
+          </div>
+          <PopupSelect
+            title="Qi spell tradition"
+            value={build.qiTradition ?? ''}
+            onChange={(v) => actions.patch({ qiTradition: (v || null) as 'divine' | 'occult' | null })}
+            options={[
+              { value: 'occult', label: 'Occult' },
+              { value: 'divine', label: 'Divine' },
             ]}
           />
         </SetupCard>
@@ -3693,9 +4013,15 @@ export function LanguageEditor({ build, actions, content }: EditorProps) {
   // Level 0 only shows the bonus languages you pick here; languages you already know (granted by
   // ancestry/Int) live in the side rail. No bonus slots → nothing to pick → hide the card.
   if (slots === 0) return null;
+  /* The printed "Choose from …" list on the ancestry's Languages line. Surfaced FIRST rather than
+   * enforced, because print keeps the escape clause "and any other languages to which you have
+   * access (such as the languages prevalent in your region)" — a hard filter would delete a printed
+   * permission. Every batch-19 ancestry ships the list; older records without one change nothing. */
+  const listed = new Set(ancestry?.languages.options ?? []);
   const available = Object.values(content.languages)
     .filter((l) => !granted.includes(l.id) && !chosen.includes(l.id))
-    .sort((a, b) => a.name.localeCompare(b.name));
+    .sort((a, b) => (listed.has(b.id) ? 1 : 0) - (listed.has(a.id) ? 1 : 0) || a.name.localeCompare(b.name))
+    .map((l) => (listed.has(l.id) ? { ...l, name: `${l.name} · ${ancestry?.name ?? 'ancestry'} list` } : l));
   return (
     <SetupCard icon="ti-language" label="Languages" count={`${chosen.length}/${slots} bonus`}>
       {chosen.map((id) => (
@@ -3979,14 +4305,29 @@ export function EffectChoicesPicker({
   if (!choices?.length) return null;
   return (
     <>
-      {choices.map((ch) => {
+      {/* A branch belonging to ONE class feature is asked only of a character who owns it —
+          Syncretism prints one branch for a cloistered cleric and another for a warpriest. Shared with
+          the appliers through `effectChoiceOffered`, so a question the player never sees can never
+          apply, and one they answered cannot vanish while its grant stays. */}
+      {choices.filter((ch) => effectChoiceOffered(ch, build, content, recordId)).map((ch) => {
         const ecKey = `${recordId}:${ch.id}`;
         const set = (v: string) => actions.patch({ effectChoices: { ...(build.effectChoices ?? {}), [ecKey]: v } });
+        /* An OPEN pick from content that is NOT a spell — Syncretism's second favored weapon. Resolved
+         * by the same `openChoiceOptions` the `choice.kind: 'open'` lane uses, so the two cannot
+         * disagree about what a `weapon` pick admits. */
+        if (ch.openFrom) {
+          const opts = openChoiceOptions(ch.openFrom, content, { hideLegacy: build.hideLegacy });
+          return (
+            <SubCard key={`ec-${ecKey}`} icon="ti-adjustments" label={ch.prompt}>
+              <SearchSelect bare label={ch.prompt} placeholder="Search…" value={build.effectChoices?.[ecKey] ?? null} onChange={set} options={opts} />
+            </SubCard>
+          );
+        }
         // An OPEN pick ("any 1st-rank arcane spell") gets a searchable list; a fixed set gets the
         // dropdown. Hidden until its unlock level, same as the feat path.
         if (ch.spellFilter) {
           if (build.level < (ch.spellFilter.minLevel ?? 1)) return null;
-          const opts = spellsMatching(ch.spellFilter, content, build.hideLegacy).map((s) => ({
+          const opts = spellsMatching(narrowSpellFilter(ch.spellFilter, build, content), content, build.hideLegacy).map((s) => ({
             id: s.id,
             name: s.name,
             note: (s.rank ?? 0) === 0 ? 'Cantrip' : `${s.rank} rank`,

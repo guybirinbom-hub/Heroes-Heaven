@@ -89,3 +89,21 @@ export function prof(ch: Character, track: string): string | undefined {
 export function mainCasting(ch: Character) {
   return ch.spellcasting.find((s) => s.type === 'prepared' || s.type === 'spontaneous');
 }
+
+/**
+ * The picker that carries a record's GRANTS, whichever lane it lives on.
+ *
+ * A record asks its question in one of two places, and which one is not a free choice: an
+ * `effectChoices` answer is stored once per RECORD, so a REPEATABLE record must keep its pick on the
+ * record's own `choice`, which is keyed by slot and therefore per TAKING. 21 records moved between the
+ * two lanes when that was fixed, and every test that had hard-coded `effectChoices![0]` broke at once —
+ * not because the behaviour changed, but because those tests were asserting the STORAGE rather than the
+ * mechanic. Ask through here, and a record that legitimately moves lanes stays covered.
+ */
+export function grantPicker(
+  rec: { effectChoices?: { id?: string; options?: { grant?: unknown }[] }[]; choice?: { options?: { grant?: unknown }[] } } | undefined,
+): { id?: string; options?: { grant?: unknown }[] } | undefined {
+  const fromEffect = (rec?.effectChoices ?? []).find((ec) => (ec.options ?? []).some((o) => o.grant));
+  if (fromEffect) return fromEffect;
+  return (rec?.choice?.options ?? []).some((o) => o.grant) ? rec!.choice : undefined;
+}

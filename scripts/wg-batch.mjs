@@ -23,6 +23,7 @@
  *   node scripts/wg-batch.mjs --count 100 --skip 100 --out work/wg-batch-002.json
  */
 import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseCopyBlock, parseOps, flattenOps, untsv } from './lib/wg-parse.mjs';
@@ -144,17 +145,61 @@ for (const [, bucket] of SOURCES.map((s) => [s[1], s[2]])) {
   }
 }
 
-/* Deterministic order so batch N is always the same 100 records. */
+/*
+ * ORDER. Two modes, both deterministic, so batch N is always the same records.
+ *
+ * `--order level` (default since 2026-08-18, the owner's instruction) walks the game bottom-up: "i want
+ * our priority to be from low to highe lvs so we start with the lowest lv things nad as we finish them
+ * we will go up in lvs". Low-level records are also the ones most characters actually hold, so early
+ * batches are worth more per record. Ties break on the hash, so equal-level records keep a fixed order
+ * and batch boundaries never shift under a re-run.
+ *
+ * `--order hash` is the original every-level-mixed spread, which batch 001 used. Kept so batch 001 can
+ * still be reproduced exactly.
+ *
+ * ⚠ A record with no level sorts LAST under `level`. Heritages, backgrounds and ancestries have none,
+ * and sorting them first would fill the whole batch before a single 1st-level feat appeared.
+ */
 const h = (s) => { let x = 0x811c9dc5; for (let i = 0; i < s.length; i++) { x ^= s.charCodeAt(i); x = Math.imul(x, 0x01000193) >>> 0; } return x / 0xffffffff; };
-packets.sort((a, b) => h(a.bucket + a.id) - h(b.bucket + b.id));
+const order = arg('--order', 'level');
+if (order === 'level') {
+  packets.sort((a, b) => {
+    const al = a.level ?? Number.POSITIVE_INFINITY;
+    const bl = b.level ?? Number.POSITIVE_INFINITY;
+    return al - bl || h(a.bucket + a.id) - h(b.bucket + b.id);
+  });
+} else {
+  packets.sort((a, b) => h(a.bucket + a.id) - h(b.bucket + b.id));
+}
+
+/*
+ * `--exclude` drops whole buckets. The owner's scope for batch 002: "the only thing we arent doing now
+ * is items". A feature here means anything a CHARACTER can get from any source — so feats, class
+ * features, heritages, backgrounds and ancestries are all in, and items wait their turn.
+ */
+const excluded = new Set(String(arg('--exclude', '')).split(',').filter(Boolean));
+const eligible = excluded.size ? packets.filter((p) => !excluded.has(p.bucket)) : packets;
 
 const skip = Number(arg('--skip', 0));
 const count = Number(arg('--count', 100));
-const batch = packets.slice(skip, skip + count);
+/*
+ * `--ids a,b,c` builds packets for NAMED records instead of the next slice. Added to re-cut a batch's
+ * unresolved tail: after a batch is worked, `wg-diff.mjs` still lists the records where their side
+ * models a kind ours does not, and those need the same self-contained packet the first pass had. A
+ * second `--skip` arithmetic guess would have re-cut the wrong records.
+ */
+const wantIds = new Set(String(arg('--ids', '')).split(',').map((s) => s.trim()).filter(Boolean));
+const batch = wantIds.size ? eligible.filter((p) => wantIds.has(p.id)) : eligible.slice(skip, skip + count);
+if (wantIds.size) {
+  const found = new Set(batch.map((p) => p.id));
+  const missed = [...wantIds].filter((i) => !found.has(i));
+  if (missed.length) console.log(`⚠ no packet for ${missed.length}: ${missed.join(', ')}`);
+}
 
 const byBucket = {};
 for (const p of packets) byBucket[p.bucket] = (byBucket[p.bucket] ?? 0) + 1;
 console.log(`records where BOTH sides exist and THEY encode something: ${packets.length.toLocaleString()}`);
+if (excluded.size) console.log(`  excluding ${[...excluded].join(', ')} -> ${eligible.length.toLocaleString()} eligible`);
 for (const [b, n] of Object.entries(byBucket).sort((a, b2) => b2[1] - a[1])) console.log(`  ${b.padEnd(16)} ${String(n).padStart(5)}`);
 console.log(`\nbatch: ${batch.length} records (skip ${skip})`);
 const bb = {};
@@ -165,4 +210,25 @@ const out = arg('--out', null);
 if (out) {
   writeFileSync(join(ROOT, out), JSON.stringify(batch, null, 1));
   console.log(`\n-> ${out}  (${(readFileSync(join(ROOT, out), 'utf8').length / 1024).toFixed(0)} KB)`);
+
+  /*
+   * THE FIELD CATALOGUE, written beside the batch.
+   *
+   * Measured on batch 002: 3.43M tokens for 100 records, and the bulk of its 1,276 tool calls were
+   * agents independently grepping the same engine files to answer one question — "does anything read
+   * this field?". That has one answer; it should be looked up once, not re-derived thirty-seven times.
+   * It is also the top rejection cause: a row against an inert field changes nothing a player sees.
+   *
+   * Generated fresh here rather than committed, so it can never be stale relative to the batch it
+   * ships with — the whole point is that every agent trusts it, which makes a stale entry a
+   * batch-wide error instead of a local one. test/field-catalogue.test.ts holds it to the source.
+   */
+  const catPath = out.replace(/\.json$/, '') + '-catalogue.json';
+  try {
+    execFileSync('node', [join(ROOT, 'scripts/wg-field-catalogue.mjs'), '--json', join(ROOT, catPath)], { cwd: ROOT, stdio: 'pipe' });
+    console.log(`-> ${catPath}  (${(readFileSync(join(ROOT, catPath), 'utf8').length / 1024).toFixed(0)} KB)  — every field, its shape, and whether anything reads it`);
+  } catch (e) {
+    console.error(`!! could not build the field catalogue: ${e.message}`);
+    console.error('   Run the batch without it only if you accept agents re-deriving readers by hand.');
+  }
 }

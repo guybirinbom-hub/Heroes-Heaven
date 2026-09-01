@@ -48,38 +48,56 @@ describe('Pitborn constrained skill-feat pick', () => {
 });
 
 describe('Bloodrager Dedication (caster archetype)', () => {
-  it('is a choice-tradition repertoire WITH a slot ladder', () => {
+  it('takes its tradition from the record\'s OWN bloodline pick, not a second picker', () => {
     // Corrected: this was recorded as cantrips-only because `basic-bloodrager-spellcasting` and its
     // siblings do not ship — which is true, and the wrong conclusion. The three rungs are named after
     // the blood, not the archetype, so the archetype never gained a single spell slot.
+    //
+    // Corrected again: it was ALSO a `choiceTradition` archetype, which rendered a separate "Tradition"
+    // picker beside the feat's own Arcane/Divine bloodline question. One printed choice, asked twice,
+    // and nothing kept the two answers in step — so the tradition now follows the record's own answer.
     const cfg = CASTER_ARCHETYPES['bloodrager-dedication'];
-    expect(cfg.choiceTradition).toBe(true);
-    expect(cfg.traditionOptions).toEqual(['arcane', 'divine']);
+    expect(cfg.choiceTradition, 'a second tradition picker is the bug, not the feature').toBeFalsy();
+    expect(cfg.traditionBySkill).toEqual({ arcana: 'arcane', religion: 'divine' });
     expect(cfg.keyAbility).toBe('cha');
     expect(cfg.cantrips).toBe(2);
     expect(cfg.basicId).toBe('rising-blood-magic');
     expect(cfg.expertId).toBe('surging-blood-magic');
     expect(cfg.masterId).toBe('exultant-blood-magic');
   });
+
+  /** A barbarian who took the dedication in their 2nd-level class slot and answered its bloodline. */
+  const blooded = (answer: string) =>
+    build('barbarian', 4, {
+      featPicks: { '2:class': 'bloodrager-dedication' },
+      featChoices: { '2:class': answer },
+    } as never);
+
   it('grants a Cha spell repertoire and the tradition skill (Arcana for arcane)', () => {
-    const ch = build('barbarian', 4, {
-      overrides: { addedFeats: [{ featId: 'bloodrager-dedication', level: 2, category: 'class' }] },
-      archetypeTradition: 'arcane',
-    });
+    const ch = blooded('arcana');
     const entry = ch.spellcasting.find((e) => e.id === 'bloodrager-dedication-casting');
     expect(entry).toBeTruthy();
     expect(entry!.tradition).toBe('arcane');
     expect(entry!.keyAbility).toBe('cha');
     expect(ch.proficiencies.skills.arcana).not.toBe('untrained');
   });
+
   it('grants Religion when the divine list is chosen', () => {
-    const ch = build('barbarian', 4, {
-      overrides: { addedFeats: [{ featId: 'bloodrager-dedication', level: 2, category: 'class' }] },
-      archetypeTradition: 'divine',
-    });
+    const ch = blooded('religion');
     const entry = ch.spellcasting.find((e) => e.id === 'bloodrager-dedication-casting');
     expect(entry!.tradition).toBe('divine');
     expect(ch.proficiencies.skills.religion).not.toBe('untrained');
+  });
+
+  it('trains ONLY the skill its answer names — no phantom skill from an open slot', () => {
+    // The auto table had this as `skillChoices: [{ options: 'any' }]`, and an unanswered open slot
+    // resolves to SKILLS[0], so every bloodrager was quietly trained in Acrobatics — a skill the feat
+    // never mentions — while the printed Arcana/Religion grant never arrived.
+    const plain = build('barbarian', 4, {});
+    const trained = (c: ReturnType<typeof build>) =>
+      Object.entries(c.proficiencies.skills).filter(([, r]) => r && r !== 'untrained').map(([k]) => k);
+    const gained = trained(blooded('arcana')).filter((s) => !trained(plain).includes(s));
+    expect(gained).toEqual(['arcana']);
   });
 });
 

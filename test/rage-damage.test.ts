@@ -2,32 +2,49 @@ import { describe, it, expect } from 'vitest';
 import { content } from './_content';
 import { buildCharacter, emptyBuild } from '../src/rules/build';
 import { deriveStrikes } from '../src/rules/derive';
-import type { Character } from '../src/rules/types';
+import type { Character, InventoryItem } from '../src/rules/types';
 
 const c = content();
 const anc = Object.keys(c.ancestries)[0];
 const bg = Object.keys(c.backgrounds)[0];
 
-function barb(level: number, subclassId: string, rageOn: boolean): Character {
+function barb(level: number, subclassId: string, rageOn: boolean, inventory: InventoryItem[] = []): Character {
   const ch = buildCharacter(
-    { ...emptyBuild(), name: 't', level, classId: 'barbarian', ancestryId: anc, backgroundId: bg, keyAbility: 'str', subclassId },
+    { ...emptyBuild(), name: 't', level, classId: 'barbarian', ancestryId: anc, backgroundId: bg, keyAbility: 'str', subclassId, inventory },
     c,
   );
   return { ...ch, classResources: { ...ch.classResources, rage: rageOn ? 1 : 0 } };
 }
 
-/** The Rage rider on the character's Fist (unarmed) Strike, if any. */
+/** The Rage rider on the character's Fist (unarmed) Strike, if any.
+ *  ⚠ The Fist is AGILE, so any number read here is the HALVED one — *"This additional damage is halved
+ *  if your weapon or unarmed attack is agile"* (Rage, Player Core 2 p.72). The instincts' full values
+ *  are asserted on a non-agile weapon via `rageRiderWeapon`. */
 function rageRider(ch: Character) {
   const fist = deriveStrikes(ch, c).find((s) => /fist/i.test(s.name));
   return fist?.conditionalDamage?.find((r) => r.note.includes('raging')) ?? null;
 }
 
+/** The Rage rider on a wielded NON-AGILE weapon (greatclub), which carries the unhalved value. */
+function rageRiderWeapon(level: number, subclassId: string) {
+  const ch = barb(level, subclassId, true, [{ instanceId: 'w1', itemId: 'greatclub', quantity: 1, equipped: true }]);
+  const w = deriveStrikes(ch, c).find((s) => /greatclub/i.test(s.name));
+  return w?.conditionalDamage?.find((r) => r.note.includes('raging')) ?? null;
+}
+
 describe('rage bonus damage (auto-applied while raging, melee/unarmed only)', () => {
-  it('a raging Fury-instinct barbarian (L5) adds +3 rage to unarmed, flagged with a *', () => {
-    const r = rageRider(barb(5, 'fury-instinct', true));
+  it('a raging Fury-instinct barbarian (L5) adds +3 rage to a non-agile weapon, flagged with a *', () => {
+    const r = rageRiderWeapon(5, 'fury-instinct');
     expect(r).toBeTruthy();
     expect(r!.text).toContain('3');
     expect(r!.note).toContain('*');
+  });
+
+  it('…and HALF that on the agile Fist, saying why', () => {
+    const r = rageRider(barb(5, 'fury-instinct', true));
+    expect(r).toBeTruthy();
+    expect(r!.text).toContain('1'); // floor(3/2)
+    expect(r!.note).toContain('halved: agile');
   });
 
   it('no rage bonus when not raging', () => {
@@ -35,32 +52,32 @@ describe('rage bonus damage (auto-applied while raging, melee/unarmed only)', ()
   });
 
   it('Fury scales at Weapon Specialization (L7 → 7) and Greater (L15 → 13)', () => {
-    expect(rageRider(barb(7, 'fury-instinct', true))!.text).toContain('7');
-    expect(rageRider(barb(15, 'fury-instinct', true))!.text).toContain('13');
+    expect(rageRiderWeapon(7, 'fury-instinct')!.text).toContain('7');
+    expect(rageRiderWeapon(15, 'fury-instinct')!.text).toContain('13');
   });
 
   it('Dragon instinct rages for energy-typed +4 at low levels', () => {
-    const r = rageRider(barb(5, 'dragon-instinct', true))!;
+    const r = rageRiderWeapon(5, 'dragon-instinct')!;
     expect(r.text).toContain('4');
     expect(r.text).toContain('energy');
   });
 
   it('Giant instinct rages for +6 and notes the larger weapon', () => {
-    const r = rageRider(barb(5, 'giant-instinct', true))!;
+    const r = rageRiderWeapon(5, 'giant-instinct')!;
     expect(r.text).toContain('6');
     expect(r.note).toMatch(/larger weapon/i);
   });
 
   it('Elemental / Decay / Ligneous / Bloodrager instincts use their own values (not the flat +2 fallback)', () => {
     // Elemental +4/+6/+12 energy; Decay +6/+10/+18 poison; Ligneous +6/+10/+18; Bloodrager +2/+4/+8.
-    const el = rageRider(barb(15, 'elemental-instinct', true))!;
+    const el = rageRiderWeapon(15, 'elemental-instinct')!;
     expect(el.text).toContain('12');
     expect(el.text).toContain('energy');
-    const decay = rageRider(barb(15, 'decay-instinct', true))!;
+    const decay = rageRiderWeapon(15, 'decay-instinct')!;
     expect(decay.text).toContain('18');
     expect(decay.text).toContain('poison');
-    expect(rageRider(barb(15, 'ligneous-instinct', true))!.text).toContain('18');
-    const blood = rageRider(barb(15, 'bloodrager', true))!;
+    expect(rageRiderWeapon(15, 'ligneous-instinct')!.text).toContain('18');
+    const blood = rageRiderWeapon(15, 'bloodrager')!;
     expect(blood.text).toContain('8'); // greater tier, not the flat +2
   });
 

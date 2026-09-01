@@ -209,6 +209,129 @@ describe('deriveBuildFromCharacter — Dual Class second caster spells', () => {
   });
 });
 
+describe('deriveBuildFromCharacter — ancestry/heritage own-choice answers (the lossy-import gap)', () => {
+  /*
+   * The one family of picks the reverse derive never recovered: answers stored under
+   * `ancestry:<id>` / `heritage:<id>` featChoices keys (bodySize, magiphageTradition,
+   * draconicExemplar, mightyfallAttributes, …). buildCharacter now emits them onto
+   * Character.ancestryHeritageChoices and the derive copies them back; a character saved BEFORE the
+   * carrier existed recovers what still leaves a trace — `size` for a bodySize choice, `ancestryHp`
+   * for an alternate-attributes package. Flagged in work/wg-batch-019-residual.json.
+   */
+  const strip = (ch: Character): Character => {
+    // A save from before the carrier existed.
+    const copy = { ...ch };
+    delete copy.ancestryHeritageChoices;
+    return copy;
+  };
+  const minimal = (over: Partial<BuildState>): BuildState => ({
+    ...emptyBuild(),
+    name: 't',
+    level: 1,
+    classId: 'fighter',
+    ancestryId: 'human',
+    backgroundId: 'acolyte',
+    keyAbility: 'str',
+    subclassId: firstSubclass('fighter'),
+    ancestryBoosts: ['str'],
+    backgroundBoosts: ['wis', 'dex'],
+    levelBoosts: ['str', 'dex', 'con', 'wis'],
+    ...over,
+  });
+
+  it('bodySize (awakened animal, Large): carried, and a legacy save recovers it from size + the HP table', () => {
+    const ch0 = buildCharacter(
+      minimal({ ancestryId: 'awakened-animal', featChoices: { 'ancestry:awakened-animal': 'large' } }),
+      C,
+    );
+    expect(ch0.size).toBe('large');
+    expect(ch0.ancestryHp, 'the Large row of hpBySize').toBe(10);
+    expect(ch0.ancestryHeritageChoices).toEqual({ 'ancestry:awakened-animal': 'large' });
+    // Carrier path: the answer survives verbatim and the rebuild agrees on size and HP.
+    expect(deriveBuildFromCharacter(ch0, C).featChoices['ancestry:awakened-animal']).toBe('large');
+    const reb = roundTrip(ch0);
+    expect(reb.size).toBe('large');
+    expect(reb.hitPoints.current).toBe(ch0.hitPoints.current);
+    expectSameBuild(ch0, reb);
+    // Legacy path: no carrier, but size + ancestryHp still name the pick.
+    expect(deriveBuildFromCharacter(strip(ch0), C).featChoices['ancestry:awakened-animal']).toBe('large');
+  });
+
+  it('bodySize (automaton, Small): an ancestry with no HP table recovers from `size` alone', () => {
+    const ch0 = buildCharacter(minimal({ ancestryId: 'automaton', featChoices: { 'ancestry:automaton': 'small' } }), C);
+    expect(ch0.size).toBe('small');
+    expect(ch0.ancestryHp, 'automaton HP does not vary with the pick').toBeUndefined();
+    const d = deriveBuildFromCharacter(strip(ch0), C);
+    expect(d.featChoices['ancestry:automaton']).toBe('small');
+    expect(buildCharacter(d, C).size).toBe('small');
+  });
+
+  it('magiphageTradition (surki, primal): survives via the carrier, and Surki Lore keeps training Nature', () => {
+    const ch0 = buildCharacter(
+      minimal({
+        ancestryId: 'surki',
+        featPicks: { '1:ancestry': 'surki-lore' },
+        featChoices: { 'ancestry:surki': 'primal' },
+      }),
+      C,
+    );
+    // The feat's parenthesis names Nature for a primal surki — the answer, not options[0] (Arcana).
+    expect(ch0.proficiencies.skills.nature).toBe('trained');
+    expect(ch0.proficiencies.skills.arcana ?? 'untrained').toBe('untrained');
+    const d = deriveBuildFromCharacter(ch0, C);
+    expect(d.featChoices['ancestry:surki']).toBe('primal');
+    const reb = buildCharacter(d, C);
+    expect(reb.proficiencies.skills.nature).toBe('trained');
+    expect(reb.proficiencies.skills.arcana ?? 'untrained').toBe('untrained');
+    // Without the carrier the answer leaves no trace at all — which is exactly why it exists.
+    expect(deriveBuildFromCharacter(strip(ch0), C).featChoices['ancestry:surki']).toBeUndefined();
+  });
+
+  it('draconicExemplar (dragonblood, Mirage): survives via the carrier; an illegal carried answer is refused', () => {
+    const ch0 = buildCharacter(minimal({ heritageId: 'dragonblood', featChoices: { 'heritage:dragonblood': 'mirage' } }), C);
+    expect(ch0.ancestryHeritageChoices).toEqual({ 'heritage:dragonblood': 'mirage' });
+    expect(deriveBuildFromCharacter(ch0, C).featChoices['heritage:dragonblood']).toBe('mirage');
+    // A tampered/stale carrier value that is not one of the 40 printed dragons must not be copied.
+    const tampered: Character = { ...ch0, ancestryHeritageChoices: { 'heritage:dragonblood': 'not-a-dragon' } };
+    expect(deriveBuildFromCharacter(tampered, C).featChoices['heritage:dragonblood']).toBeUndefined();
+  });
+
+  it('mightyfallAttributes (kaiju): boosts reconstruct against the package, and a legacy save recovers it from ancestryHp', () => {
+    const ch0 = buildCharacter(
+      minimal({
+        ancestryId: 'kobold',
+        heritageId: 'mightyfall-kobold',
+        // The package has no free ancestry boost (two fixed), so none is picked.
+        ancestryBoosts: [],
+        featChoices: { 'heritage:mightyfall-kobold': 'kaiju' },
+      }),
+      C,
+    );
+    expect(ch0.ancestryHp, "the package's 10-instead-of-6").toBe(10);
+    expect(ch0.abilities.int, "the package's flaw is Int (the normal kobold's is Con)").toBe(8);
+    expect(ch0.abilities.con).toBe(12);
+    // Carrier path: full structural equality after the round-trip.
+    expect(deriveBuildFromCharacter(ch0, C).featChoices['heritage:mightyfall-kobold']).toBe('kaiju');
+    expectSameBuild(ch0, roundTrip(ch0));
+    // Legacy path: ancestryHp === the package's HP is self-evidencing.
+    const d = deriveBuildFromCharacter(strip(ch0), C);
+    expect(d.featChoices['heritage:mightyfall-kobold']).toBe('kaiju');
+    const reb = buildCharacter(d, C);
+    expect(reb.abilities).toEqual(ch0.abilities);
+    expect(reb.hitPoints.current).toBe(ch0.hitPoints.current);
+  });
+
+  it('mightyfallAttributes (normal): the answer that changes nothing still round-trips via the carrier', () => {
+    const ch0 = buildCharacter(
+      minimal({ ancestryId: 'kobold', heritageId: 'mightyfall-kobold', featChoices: { 'heritage:mightyfall-kobold': 'normal' } }),
+      C,
+    );
+    expect(ch0.ancestryHp, 'normal kobold HP stays on the record scalar').toBeUndefined();
+    expect(deriveBuildFromCharacter(ch0, C).featChoices['heritage:mightyfall-kobold']).toBe('normal');
+    expectSameBuild(ch0, roundTrip(ch0));
+  });
+});
+
 describe('deriveBuildFromCharacter — the hand-authored seed (Kyra)', () => {
   it('reopening Kyra reproduces her abilities, identity, feats, and languages', () => {
     const reb = roundTrip(kyra);

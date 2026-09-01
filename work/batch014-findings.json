@@ -1,0 +1,73 @@
+{
+ "fey-influence": [
+  "KINDS[spellcasting,conditional]",
+  "IDENTITY options=[anteater, catsith, cursedbluebird, dryad, faun, gremlin, monarch, unicorn]"
+ ],
+ "scales-of-the-dragon": [
+  "KINDS[grantsRecord]",
+  "IDENTITY grants=[scalesofthedragon]"
+ ],
+ "apprentice-sea-witch": [
+  "KINDS[choice,conditional,spellcasting]"
+ ],
+ "soothing-pulse": [
+  "KINDS[grantsRecord]",
+  "IDENTITY grants=[administerambientmagic]"
+ ],
+ "geckos-grip": [
+  "KINDS[speed]",
+  "VALUES MISSING speed|climb theirs=15 ours=(nothing)"
+ ],
+ "primal-evolution": [
+  "KINDS[spellSlot]"
+ ],
+ "investigators-stratagem": [
+  "KINDS[grantsRecord]",
+  "IDENTITY grants=[deviseastratagem]"
+ ],
+ "onis-mask": [
+  "KINDS[spellcasting,conditional]"
+ ],
+ "colugos-traversal": [
+  "KINDS[conditional,spellcasting]"
+ ],
+ "stem-the-tide": [
+  "KINDS[spellcasting,conditional]"
+ ],
+ "awakened-yaoguai-heritage": [
+  "KINDS[grantsRecord]",
+  "IDENTITY grants=[bornofanimal, bornofcelestial, bornofelements, bornofitem, bornofvegetation]",
+  "IDENTITY options=[bornofanimal, bornofcelestial, bornofelements, bornofitem, bornofvegetation]"
+ ],
+ "planar-resilience": [
+  "KINDS[defense]",
+  "VALUES SET-GAP set|resistances theirs=cold,fire ours=(nothing)"
+ ],
+ "tactical-excellence": [
+  "KINDS[choice]"
+ ],
+ "mortification": [
+  "KINDS[defense]",
+  "VALUES SET-GAP set|resistances theirs=1 ours=(nothing)"
+ ],
+ "necrotic-bomber": [
+  "KINDS[spell]",
+  "IDENTITY spells=[necroticbomb]"
+ ],
+ "the-taste-of-magic": [
+  "KINDS[grantsRecord]"
+ ],
+ "hardened-chassis": [
+  "KINDS[choice,specialStat,conditional,defense]",
+  "IDENTITY options=[bludgeoning, piercing, slashing, no, yesalltypes, yesincreaseresistance]"
+ ],
+ "second-implement": [
+  "KINDS[choice]"
+ ],
+ "animal-actor": [
+  "VALUES DIFFERENT skill|nature theirs=2 ours=trained / expert"
+ ],
+ "deadly-aspect": [
+  "IDENTITY items=[deadlydragonbloodclaw, deadlydragonbloodjaws, deadlydragonbloodtail]"
+ ]
+}

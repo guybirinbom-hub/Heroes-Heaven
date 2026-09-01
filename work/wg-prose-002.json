@@ -1,0 +1,209 @@
+[
+ {
+  "id": "ancestral-insight",
+  "name": "Ancestral Insight",
+  "level": 1,
+  "printed": "You have extensive knowledge of your ancestors' ancient origins. You gain the trained proficiency rank in Alghollthu Lore and Azlanti Lore. If you roll a critical failure on an Alghollthu Lore or Azlanti Lore check to Recall Knowledge, you get a failure instead.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "degreeShifts": [
+    {
+     "shift": "critFailToFail",
+     "when": "on an Alghollthu Lore or Azlanti Lore check to Recall Knowledge",
+     "skills": [
+      "lore:alghollthu",
+      "lore:azlanti"
+     ],
+     "actions": [
+      "recall-knowledge"
+     ]
+    }
+   ]
+  },
+  "ourRegistries": [
+   {
+    "file": "featGrantsLane.ts",
+    "entry": "'ancestral-insight': {\"skills\":{\"lore:alghollthu\":\"trained\",\"lore:azlanti\":\"trained\"}},"
+   }
+  ],
+  "theirProse": [
+   {
+    "variable": "SKILL_LORE_ALGHOLLTHU",
+    "value": null,
+    "text": "If you roll a critical failure on an Alghollthu Lore check to Recall Knowledge, you get a failure instead."
+   },
+   {
+    "variable": "SKILL_LORE_AZLANTI",
+    "value": null,
+    "text": "If you roll a critical failure on an Azlanti Lore check to Recall Knowledge, you get a failure instead."
+   }
+  ]
+ },
+ {
+  "id": "fire-savvy",
+  "name": "Fire Savvy",
+  "level": 1,
+  "printed": "**Access** You are from Dongun Hold or Alkenstar. --- You've grown up around a forge and are well-suited to dealing with smoke and flame. Your flat check to remove persistent fire damage is DC 10 instead of DC 15, which is reduced to DC 5 with appropriate assistance. In addition, if you roll a success on a saving throw against suffocation or choking due to smoke or ash, you get a critical success instead.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "degreeShifts": [
+    {
+     "shift": "successToCrit",
+     "when": "on a save against suffocation or choking from smoke or ash",
+     "saves": [
+      "fortitude"
+     ]
+    }
+   ]
+  },
+  "ourRegistries": [
+   {
+    "file": "situationalBonuses.ts",
+    "entry": "\"fire-savvy\": [{ targets: [{ kind: \"hp\" }], when: \"on the flat check to remove persistent fire damage\", bonus: \"DC 10 instead of 15 (DC 5 with appropriate assistance)\" }],"
+   }
+  ],
+  "theirProse": [
+   {
+    "variable": "SAVE_FORT",
+    "value": null,
+    "text": "When you roll a success on a saving throw against suffocation or choking due to smoke or ash, you get a critical success instead."
+   }
+  ]
+ },
+ {
+  "id": "sturdy-bindings",
+  "name": "Sturdy Bindings",
+  "level": 1,
+  "printed": "Your grapples are incredibly reliable. When you roll a critical failure on a check to grapple a target, you get a failure instead. In addition, when a creature you have grabbed rolls a failure on its check to Escape, it gets a critical failure instead, and if it rolls a critical success, it gets a success instead.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "archetype": "hellknight",
+   "degreeShifts": [
+    {
+     "shift": "critFailToFail",
+     "when": "on your check to Grapple",
+     "skills": [
+      "athletics"
+     ],
+     "actions": [
+      "grapple"
+     ]
+    }
+   ]
+  },
+  "ourRegistries": [
+   {
+    "file": "situationalBonuses.ts",
+    "entry": "'sturdy-bindings': [{ on: \"action\", id: \"grapple\", note: \"Sturdy Bindings: a creature you have grabbed turns a failed Escape into a critical failure, and a critical success into a success.\" }],"
+   }
+  ],
+  "theirProse": [
+   {
+    "variable": "SKILL_ATHLETICS",
+    "value": null,
+    "text": "When you roll a critical failure on a check to Grapple a target, you get a failure instead."
+   }
+  ]
+ },
+ {
+  "id": "sure-feet",
+  "name": "Sure Feet",
+  "level": 1,
+  "printed": "Whether keeping your balance or climbing, your feet easily find purchase. If you roll a success on an Acrobatics check to Balance or an Athletics check to Climb, you get a critical success instead. You're not off-guard when you attempt to Balance or Climb.",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "degreeShifts": [
+    {
+     "shift": "successToCrit",
+     "when": "on an Acrobatics check to Balance",
+     "skills": [
+      "acrobatics"
+     ],
+     "actions": [
+      "balance"
+     ]
+    },
+    {
+     "shift": "successToCrit",
+     "when": "on an Athletics check to Climb",
+     "skills": [
+      "athletics"
+     ],
+     "actions": [
+      "climb"
+     ]
+    }
+   ]
+  },
+  "ourRegistries": [
+   {
+    "file": "situationalBonuses.ts",
+    "entry": "'sure-feet': [{ on: \"action\", id: \"balance\", note: \"Sure Feet: you're not off-guard while you Balance.\" }, { on: \"action\", id: \"climb\", note: \"Sure Feet: you're not off-guard while you Climb.\" }],"
+   }
+  ],
+  "theirProse": [
+   {
+    "variable": "SKILL_ACROBATICS",
+    "value": null,
+    "text": "If you roll a success to Balance, you get a critical success instead."
+   },
+   {
+    "variable": "SKILL_ATHLETICS",
+    "value": null,
+    "text": "If you roll a success to Climb, you get a critical success instead."
+   }
+  ]
+ },
+ {
+  "id": "storm-born",
+  "name": "Storm Born",
+  "level": 1,
+  "printed": "You are at home out in the elements, reveling in the power of nature unleashed. You do not take circumstance penalties to ranged spell attacks or Perception checks caused by weather, and your targeted spells don't require a flat check to succeed against a target concealed by weather (such as fog).",
+  "ourFields": {
+   "actionCost": {
+    "type": "passive"
+   },
+   "situational": [
+    {
+     "targets": [
+      {
+       "kind": "perception"
+      },
+      {
+       "kind": "spell",
+       "detail": "attack"
+      }
+     ],
+     "when": "weather would impose a circumstance penalty to a ranged spell attack roll or a Perception check",
+     "bonus": "you take no circumstance penalty"
+    },
+    {
+     "targets": [
+      {
+       "kind": "spell",
+       "detail": "all"
+      }
+     ],
+     "when": "your targeted spell's target is concealed by weather (fog and the like)",
+     "bonus": "no flat check required"
+    }
+   ]
+  },
+  "ourRegistries": [],
+  "theirProse": [
+   {
+    "variable": "PERCEPTION",
+    "value": null,
+    "text": "You don't take circumstance penalties caused by weather."
+   }
+  ]
+ }
+]

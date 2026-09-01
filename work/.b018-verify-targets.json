@@ -1,0 +1,474 @@
+[
+ {
+  "id": "mediums-awareness",
+  "kind": "investigation",
+  "proposal": "FIX"
+ },
+ {
+  "id": "arboreals-revenge",
+  "kind": "investigation",
+  "proposal": "FIX"
+ },
+ {
+  "id": "advanced-fury",
+  "kind": "investigation",
+  "proposal": "SETTLE"
+ },
+ {
+  "id": "knight-reclaimant-dedication",
+  "kind": "investigation",
+  "proposal": "SETTLE"
+ },
+ {
+  "id": "tumbling-theft",
+  "kind": "investigation",
+  "proposal": "ASK-OWNER"
+ },
+ {
+  "id": "aeon-stone-delaying",
+  "kind": "investigation",
+  "proposal": "SETTLE"
+ },
+ {
+  "id": "aeon-stone-nourishing",
+  "kind": "investigation",
+  "proposal": "SETTLE"
+ },
+ {
+  "id": "aeon-stone-smoothing",
+  "kind": "investigation",
+  "proposal": "SETTLE"
+ },
+ {
+  "id": "munitions-machinist",
+  "kind": "investigation",
+  "proposal": "FIX"
+ },
+ {
+  "id": "deflecting-pulse",
+  "kind": "investigation",
+  "proposal": "FIX"
+ },
+ {
+  "id": "fade-presence",
+  "kind": "investigation",
+  "proposal": "FIX"
+ },
+ {
+  "id": "expert-tactician",
+  "kind": "investigation",
+  "proposal": "FIX"
+ },
+ {
+  "id": "reaction-time",
+  "kind": "investigation",
+  "proposal": "ASK-OWNER"
+ },
+ {
+  "id": "grave-mummification",
+  "kind": "investigation",
+  "proposal": "FIX"
+ },
+ {
+  "id": "daywalker",
+  "kind": "investigation",
+  "proposal": "FIX"
+ },
+ {
+  "id": "devout-blessing",
+  "kind": "investigation",
+  "proposal": "FIX"
+ },
+ {
+  "id": "monarch",
+  "kind": "investigation",
+  "proposal": "ASK-OWNER"
+ },
+ {
+  "id": "harrow-ritualist",
+  "kind": "investigation",
+  "proposal": "FIX"
+ },
+ {
+  "id": "greater-lesson",
+  "kind": "investigation",
+  "proposal": "FIX"
+ },
+ {
+  "id": "soul-arsenal",
+  "kind": "investigation",
+  "proposal": "FIX"
+ },
+ {
+  "id": "stonebound-magic",
+  "kind": "investigation",
+  "proposal": "FIX"
+ },
+ {
+  "id": "eldritch-archer-dedication",
+  "kind": "investigation",
+  "proposal": "FIX"
+ },
+ {
+  "id": "precise-finisher",
+  "kind": "parity"
+ },
+ {
+  "id": "volatile-grease",
+  "kind": "parity"
+ },
+ {
+  "id": "rapid-affixture",
+  "kind": "parity"
+ },
+ {
+  "id": "halcyon-speaker-dedication",
+  "kind": "parity"
+ },
+ {
+  "id": "drenching-mist",
+  "kind": "parity"
+ },
+ {
+  "id": "paragon-battle-medicine",
+  "kind": "parity"
+ },
+ {
+  "id": "fabricated-connections",
+  "kind": "parity"
+ },
+ {
+  "id": "animal-skin",
+  "kind": "parity"
+ },
+ {
+  "id": "crown-of-the-saumen-kar",
+  "kind": "parity"
+ },
+ {
+  "id": "five-breath-vanguard-dedication",
+  "kind": "parity"
+ },
+ {
+  "id": "animate-net",
+  "kind": "parity"
+ },
+ {
+  "id": "advanced-first-aid",
+  "kind": "parity"
+ },
+ {
+  "id": "battle-cry",
+  "kind": "parity"
+ },
+ {
+  "id": "terrified-retreat",
+  "kind": "parity"
+ },
+ {
+  "id": "predatory-claws",
+  "kind": "residual",
+  "index": 0,
+  "claim": "The two-consecutive-claw-Strikes free Grapple rider is delivered nowhere."
+ },
+ {
+  "id": "precise-finisher",
+  "kind": "residual",
+  "index": 0,
+  "claim": "The failure-degree upgrade to Confident Finisher's precise strike damage has no "
+ },
+ {
+  "id": "swordmaster-dedication",
+  "kind": "residual",
+  "index": 0,
+  "claim": "The Reflex clause is delivered WRONGLY: it moves a DC other creatures roll again"
+ },
+ {
+  "id": "performative-weapons-training",
+  "kind": "residual",
+  "index": 0,
+  "claim": "The dueling cape's share of the familiarity/crit-spec clause reaches nothing, be"
+ },
+ {
+  "id": "choker-of-elocution",
+  "kind": "residual",
+  "index": 0,
+  "claim": "The language grant — the choker's headline effect — is delivered nowhere."
+ },
+ {
+  "id": "volatile-grease",
+  "kind": "residual",
+  "index": 0,
+  "claim": "The entire spell-modification clause (target change, Reflex save, the three degr"
+ },
+ {
+  "id": "predictive-purchase",
+  "kind": "residual",
+  "index": 0,
+  "claim": "The Prescient Planner speed-up rider is delivered nowhere."
+ },
+ {
+  "id": "rapid-affixture",
+  "kind": "residual",
+  "index": 0,
+  "claim": "Neither the 1-minute reduction nor the legendary 3-action version of Affix a Tal"
+ },
+ {
+  "id": "halcyon-speaker-dedication",
+  "kind": "residual",
+  "index": 0,
+  "claim": "The dedication's entire grant is inert for a legal halcyon speaker: the Magaamby"
+ },
+ {
+  "id": "halcyon-speaker-dedication",
+  "kind": "residual",
+  "index": 1,
+  "claim": "Only one 1st-rank halcyon spell is known, not the printed two — the spontaneous "
+ },
+ {
+  "id": "staff-of-protection",
+  "kind": "residual",
+  "index": 0,
+  "claim": "The +1 is delivered on the Fortitude/Reflex SAVE you roll instead of on the DC a"
+ },
+ {
+  "id": "drenching-mist",
+  "kind": "residual",
+  "index": 0,
+  "claim": "The added Heightened (3rd) entry never reaches the Mist spell — nothing writes i"
+ },
+ {
+  "id": "grub-gloves-lesser",
+  "kind": "residual",
+  "index": 0,
+  "claim": "The 2-action activation's effect (regain 3d8+10 HP and lose fatigued) has no mec"
+ },
+ {
+  "id": "basic-magus-spellcasting",
+  "kind": "residual",
+  "index": 0,
+  "claim": "The rendered description is a truncated stub that names no benefit at all — the "
+ },
+ {
+  "id": "paragon-battle-medicine",
+  "kind": "residual",
+  "index": 0,
+  "claim": "The rider on Battle Medicine — reducing a condition on the target — is not refle"
+ },
+ {
+  "id": "paragon-battle-medicine",
+  "kind": "residual",
+  "index": 1,
+  "claim": "The two upgrade branches (legendary Medicine; Godless Healing; Mortal Healing) a"
+ },
+ {
+  "id": "blakenshipper",
+  "kind": "residual",
+  "index": 0,
+  "claim": "The Be the Band activation's area is missing from the only surface that carries "
+ },
+ {
+  "id": "fabricated-connections",
+  "kind": "residual",
+  "index": 0,
+  "claim": "The Deception-for-another-skill substitution reaches none of the four action row"
+ },
+ {
+  "id": "fabricated-connections",
+  "kind": "residual",
+  "index": 1,
+  "claim": "The printed frequency is TWO pools (1/day and 1/week); ours models one 1/day poo"
+ },
+ {
+  "id": "fabricated-connections",
+  "kind": "residual",
+  "index": 2,
+  "claim": "The rendered description leaks raw slugs and parser tokens into player-facing pr"
+ },
+ {
+  "id": "primeval-mistletoe",
+  "kind": "residual",
+  "index": 0,
+  "claim": "Anoint's Frequency is once per 10 minutes; our tracker says once per MINUTE — te"
+ },
+ {
+  "id": "primeval-mistletoe",
+  "kind": "residual",
+  "index": 1,
+  "claim": "The Anoint activation casts runic weapon or runic body; ours grants neither spel"
+ },
+ {
+  "id": "primeval-mistletoe",
+  "kind": "residual",
+  "index": 2,
+  "claim": "The Bind activation casts one with plants once per day; ours grants it nowhere."
+ },
+ {
+  "id": "propulsive-mutation",
+  "kind": "residual",
+  "index": 0,
+  "claim": "The feat's entire printed content — Spit Ambient Magic's range going from 30 to "
+ },
+ {
+  "id": "hedge-prison",
+  "kind": "residual",
+  "index": 0,
+  "claim": "Our rendered feat text drops the printed focus-pool sentence entirely, so the pl"
+ },
+ {
+  "id": "animal-skin",
+  "kind": "residual",
+  "index": 0,
+  "claim": "\"Your proficiency in unarmored defense increases to expert\" is delivered by no c"
+ },
+ {
+  "id": "advanced-rune-magic",
+  "kind": "residual",
+  "index": 0,
+  "claim": "The printed Archetype line is not on the record: feats['advanced-rune-magic'] ha"
+ },
+ {
+  "id": "advanced-rune-magic",
+  "kind": "residual",
+  "index": 1,
+  "claim": "The printed Prerequisites line is missing from the record, so nothing gates or d"
+ },
+ {
+  "id": "advanced-rune-magic",
+  "kind": "residual",
+  "index": 2,
+  "claim": "The rendered feat text is a raw scrape: the title, Source, Archetype and Prerequ"
+ },
+ {
+  "id": "read-shibboleths",
+  "kind": "residual",
+  "index": 0,
+  "claim": "Our prose turns the printed SECRET check into an open one — \"they secretly attem"
+ },
+ {
+  "id": "cloak-of-illusions",
+  "kind": "residual",
+  "index": 0,
+  "claim": "The Draw Hood activation — 1/day invisibility — is granted by no castable carrie"
+ },
+ {
+  "id": "cloak-of-illusions",
+  "kind": "residual",
+  "index": 1,
+  "claim": "The rendered item text has the spell name deleted — the sentence reads \"gain the"
+ },
+ {
+  "id": "venomed-tongue",
+  "kind": "residual",
+  "index": 0,
+  "claim": "The rendered item text drops \"persistent poison\" from the activation's damage — "
+ },
+ {
+  "id": "simple-crystal-magic",
+  "kind": "residual",
+  "index": 0,
+  "claim": "The whole feat's benefit is gated on a daily-preparations ritual with a priced m"
+ },
+ {
+  "id": "guangu-of-the-steppe",
+  "kind": "residual",
+  "index": 0,
+  "claim": "Our shipped description of the Hammer of Hooves activation has lost the emanatio"
+ },
+ {
+  "id": "aeon-stone-sprouting",
+  "kind": "residual",
+  "index": 0,
+  "claim": "The Flow of Life activation's temporary Hit Points are not delivered anywhere — "
+ },
+ {
+  "id": "crown-of-the-saumen-kar",
+  "kind": "residual",
+  "index": 0,
+  "claim": "Our Stealth star states the wrong terrain scope: it omits forest (granted) and a"
+ },
+ {
+  "id": "ring-of-sigils-greater",
+  "kind": "residual",
+  "index": 0,
+  "claim": "The Track Sigil cooldown is delivered ten times too permissively: print says onc"
+ },
+ {
+  "id": "five-breath-vanguard-dedication",
+  "kind": "residual",
+  "index": 0,
+  "claim": "The dedication is encoded as a 1-action feat; the printed feat has no action cos"
+ },
+ {
+  "id": "arachnid-harness",
+  "kind": "residual",
+  "index": 0,
+  "claim": "The armor's built-in +1 potency rune is not delivered — a character wearing the "
+ },
+ {
+  "id": "arachnid-harness",
+  "kind": "residual",
+  "index": 1,
+  "claim": "The activation's climb Speed is not delivered; only the action cost and the dail"
+ },
+ {
+  "id": "animate-net",
+  "kind": "residual",
+  "index": 0,
+  "claim": "The feat's entire content — the alternate Animate Rope mode — is delivered nowhe"
+ },
+ {
+  "id": "advanced-first-aid",
+  "kind": "residual",
+  "index": 0,
+  "claim": "The feat's only clause — a third mode for Administer First Aid — is delivered no"
+ },
+ {
+  "id": "grown-of-oak",
+  "kind": "residual",
+  "index": 0,
+  "claim": "The innate rank ladder stops at 17->8, so at levels 19-20 the spell is cast one "
+ },
+ {
+  "id": "grown-of-oak",
+  "kind": "residual",
+  "index": 1,
+  "claim": "The familiar half of the spell's targeting is delivered by nothing."
+ },
+ {
+  "id": "advanced-qi-spells",
+  "kind": "residual",
+  "index": 0,
+  "claim": "The repeatable picker does not exclude the qi spell already chosen on another ta"
+ },
+ {
+  "id": "battle-cry",
+  "kind": "residual",
+  "index": 0,
+  "claim": "The free-action Demoralize on initiative is delivered by nothing."
+ },
+ {
+  "id": "battle-cry",
+  "kind": "residual",
+  "index": 1,
+  "claim": "The legendary-Intimidation reaction Demoralize is delivered by nothing."
+ },
+ {
+  "id": "terrified-retreat",
+  "kind": "residual",
+  "index": 0,
+  "claim": "The critical-success rider on Demoralize is delivered by nothing."
+ },
+ {
+  "id": "maestros-chair",
+  "kind": "residual",
+  "index": 0,
+  "claim": "The item's activation frequency is stored as once per MINUTE, ten times more oft"
+ },
+ {
+  "id": "maestros-chair",
+  "kind": "residual",
+  "index": 1,
+  "claim": "The Performance bonus is applied unconditionally although print restricts it to "
+ }
+]

@@ -1,0 +1,20 @@
+[
+ {
+  "category": "items",
+  "id": "shrieking-key",
+  "field": "situational",
+  "value": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "thievery"
+     }
+    ],
+    "when": "when you use the shrieking key to Pick a Lock",
+    "bonus": "-2 circumstance"
+   }
+  ],
+  "why": "Re-authored from the overlay so the situationalReplaces flag can DERIVE. The applier derives that flag from decision-file rows, and this row had none — its decision file was lost — so it was the one record of the seven that could not self-heal when the broken key regex was fixed. Value unchanged; this exists purely to give the derivation something to read."
+ }
+]

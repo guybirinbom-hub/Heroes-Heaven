@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import type { AbilityId, Character, ContentDatabase } from '../rules/types';
 import { abilityMod } from '../rules/derive';
-import { CLASS_RESOURCES, resourceMaxFor } from '../rules/classResources';
+import { resourceMaxFor, resourcesForCharacter } from '../rules/classResources';
 import { setAlchemyItem, quickAlchemy, type PlayUpdater } from '../rules/play';
 import { craftableFormulas } from '../rules/formulaBook';
 import { PickerRow, descNodeOf } from './FilterableSelect';
@@ -25,10 +25,23 @@ export function AlchemyPanel({ character, content, onPlay }: { character: Charac
   // Advanced Alchemy: 4 + Int items during daily prep, unless a feat raised it (Efficient Alchemy →
   // 6 + Int; Advanced Efficient Alchemy → 8 + Int, 10 + Int from 16th). This was a hardcoded 4 + Int,
   // which is why owning either feat changed nothing on this panel.
+  /** Advanced Alchemy — the daily prepared budget. An archetype alchemist has Quick Alchemy WITHOUT
+   *  this, so the panel's prepared-items half is hidden for them rather than showing an empty budget. */
+  const hasAdvanced = !!character.advancedAlchemy;
   const budget = character.advancedAlchemy?.max ?? 4 + intMod;
   const budgetSource = character.advancedAlchemy?.source;
   const levelSource = character.advancedAlchemy?.levelSource;
-  const vialDef = (CLASS_RESOURCES['alchemist'] ?? []).find((r) => r.id === 'versatile-vials');
+  /*
+   * The vial entry THIS character gets. There are two `versatile-vials` entries — the class's 2 + Int
+   * and the Alchemist Dedication's flat 4 — and a raw `.find` on the alchemist list always returned
+   * the first, so an archetype alchemist was shown the class's number. `resourcesForCharacter` is the
+   * one place that already resolves the pair correctly (class entry first, so its `seen` dedup gives a
+   * real alchemist the 2 + Int and everyone else the gated flat 4); going through it keeps this panel
+   * and the resource counter on the sheet from disagreeing about the same value.
+   */
+  const vialDef = resourcesForCharacter(character.classId ?? null, new Set(character.feats.map((f) => f.featId))).find(
+    (r) => r.id === 'versatile-vials',
+  );
   const abilityMods = Object.fromEntries(Object.entries(character.abilities).map(([k, v]) => [k, abilityMod(v as number)])) as Record<AbilityId, number>;
   const vialMax = vialDef ? resourceMaxFor(vialDef, character, abilityMods) : 2 + intMod;
   const vialsCur = character.classResources?.['versatile-vials'] ?? vialMax;
@@ -79,10 +92,14 @@ export function AlchemyPanel({ character, content, onPlay }: { character: Charac
       <div className="alchemy-head">
         <span className="alchemy-title">Alchemy</span>
         <span className="alchemy-meta" title={budgetSource ? `Daily maximum raised to ${budget} by ${budgetSource}` : undefined}>
-          Versatile Vials {vialsCur}/{vialMax} · prepared {preparedCount}/{budget}
+          Versatile Vials {vialsCur}/{vialMax}
+          {/* Alchemist Dedication grants "the Quick Alchemy benefits" and NOT Advanced Alchemy — that
+              is a separate feat it leads to. So an archetype alchemist has vials and no daily prepared
+              budget, and printing "prepared 0/4" would invent one. */}
+          {hasAdvanced ? ` · prepared ${preparedCount}/${budget}` : null}
           {/* The advanced alchemy LEVEL, which decides WHICH items you can make. Shown only when it
               differs from your own level, i.e. when a feat set it. */}
-          {alchLevel !== character.level ? (
+          {hasAdvanced && alchLevel !== character.level ? (
             <span title={levelSource ? `Advanced alchemy level ${alchLevel} from ${levelSource}` : undefined}>
               {' · alchemy level '}
               {alchLevel}
@@ -91,9 +108,11 @@ export function AlchemyPanel({ character, content, onPlay }: { character: Charac
         </span>
       </div>
       <div className="alchemy-actions">
-        <button type="button" className="btn" onClick={() => { setPicker('advanced'); setQ(''); }}>
-          <i className="ti ti-flask" aria-hidden="true" /> Prepare item
-        </button>
+        {hasAdvanced && (
+          <button type="button" className="btn" onClick={() => { setPicker('advanced'); setQ(''); }}>
+            <i className="ti ti-flask" aria-hidden="true" /> Prepare item
+          </button>
+        )}
         <button
           type="button"
           className="btn"

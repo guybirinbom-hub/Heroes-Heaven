@@ -1,0 +1,101 @@
+[
+ {
+  "category": "feats",
+  "id": "draconic-resistance",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "resistance-type",
+    "prompt": "Choose the damage type associated with your draconic exemplar",
+    "options": [
+     {
+      "value": "acid",
+      "label": "Acid",
+      "grant": {
+       "resistances": [
+        {
+         "type": "acid",
+         "value": "max(1,floor(@actor.level/2))"
+        },
+        {
+         "type": "acid",
+         "value": "max(2,@actor.level)",
+         "against": "dragons"
+        }
+       ]
+      }
+     },
+     {
+      "value": "cold",
+      "label": "Cold",
+      "grant": {
+       "resistances": [
+        {
+         "type": "cold",
+         "value": "max(1,floor(@actor.level/2))"
+        },
+        {
+         "type": "cold",
+         "value": "max(2,@actor.level)",
+         "against": "dragons"
+        }
+       ]
+      }
+     },
+     {
+      "value": "electricity",
+      "label": "Electricity",
+      "grant": {
+       "resistances": [
+        {
+         "type": "electricity",
+         "value": "max(1,floor(@actor.level/2))"
+        },
+        {
+         "type": "electricity",
+         "value": "max(2,@actor.level)",
+         "against": "dragons"
+        }
+       ]
+      }
+     },
+     {
+      "value": "fire",
+      "label": "Fire",
+      "grant": {
+       "resistances": [
+        {
+         "type": "fire",
+         "value": "max(1,floor(@actor.level/2))"
+        },
+        {
+         "type": "fire",
+         "value": "max(2,@actor.level)",
+         "against": "dragons"
+        }
+       ]
+      }
+     },
+     {
+      "value": "sonic",
+      "label": "Sonic",
+      "grant": {
+       "resistances": [
+        {
+         "type": "sonic",
+         "value": "max(1,floor(@actor.level/2))"
+        },
+        {
+         "type": "sonic",
+         "value": "max(2,@actor.level)",
+         "against": "dragons"
+        }
+       ]
+      }
+     }
+    ]
+   }
+  ],
+  "why": "PRINTED: 'Double this resistance against damage of that type dealt to you by dragons.' The clause was encoded NOWHERE — every option granted only the base resistance. Measured: of every resistance shipped anywhere in core.json, zero carried a qualifier beyond {type,value}, so there was no field to hold it; IwrEntry.against is new, and deriveDefenses renders a qualified entry as its own IWR line without folding it into the total. VALUE IS THEIRS, NOT OURS, PER THE OWNER'S RULE: they encode max(2,@actor.level) (double the unfloored half, then floor); ours would be 2*max(1,floor(level/2)). They differ at every odd level from 3 up (L5: 5 vs 4). The printed text reads our way, since 'double this resistance' doubles an already-floored number — recorded here because the rule says theirs wins and this is the one place in batch 002 where it overrides the printed text."
+ }
+]

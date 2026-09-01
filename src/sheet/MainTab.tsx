@@ -12,11 +12,12 @@ import {
   formatMod,
   critSpecSources,
   strikeShowsCritSpec,
+  critSpecConditionFor,
   skillTakesArmorPenalty,
   strikesBlockedBy,
   type Strike,
 } from '../rules/derive';
-import { togglePin, togglePinnedDesc, toggleTactic, setActiveStance, toggleMode, descId, type PlayUpdater } from '../rules/play';
+import { togglePin, togglePinnedDesc, toggleTactic, toggleEtchedRune, setActiveStance, toggleMode, descId, type PlayUpdater } from '../rules/play';
 import { resourcesForCharacter } from '../rules/classResources';
 import { featUse, spendFeatUse, refundFeatUse } from '../rules/featUses';
 import { actionGate, gateLabel, type ResourceGate } from '../rules/actionGates';
@@ -25,7 +26,7 @@ import { critSpec } from '../rules/critSpec';
 import { ACTIVITIES, type ActivityDef } from '../rules/actions';
 import { traitDesc } from '../rules/glossary';
 import { markTooltip, recordMarkersFor, statHasSituational, statMarkClass, type StatRef } from '../rules/explain';
-import { stanceRequirementIssue } from '../rules/derive';
+import { stanceRequirementIssue, modeGateIds } from '../rules/derive';
 import { ActionGlyph, RankPill, SituationalStar } from './widgets';
 import { DescriptionModal } from './DescriptionModal';
 import { DescBody } from './DescBody';
@@ -250,14 +251,32 @@ export function MainTab({
   // Tail Toxin, a Jinxed Halfling's Jinx, a Doomcaller's Stellar Misfortune.
   const grantedActions = [
     ...actionRecords,
+    // The ANCESTRY too — a vishkanya's Envenom, a kitsune's or yaoguai's Change Shape are printed on
+    // the ancestry's own mechanics block, and this walk was the only reader that never looked there.
+    character.ancestryId ? content.ancestries[character.ancestryId] : undefined,
     character.heritageId ? content.heritages[character.heritageId] : undefined,
     character.backgroundId ? content.backgrounds[character.backgroundId] : undefined,
+    /*
+     * …and an ITEM YOU ARE WIELDING. `grantsActions` is declared on ContentBase, so an item could always
+     * carry it legally — and nothing read it there, which is the write-only-without-a-reader trap.
+     *
+     * The case is the RESONANT trait: *"You gain the Conduct Energy free action while wielding a
+     * resonant weapon."* The action shipped and sat unreachable, because the grant hangs on the TRAIT
+     * rather than on an Activate line, so the `activationCost` route further down never sees it.
+     * Gated on held or worn, which is what "while wielding" means.
+     */
+    ...(character.inventory ?? [])
+      .filter((inv) => inv.equipped || inv.worn)
+      .map((inv) => content.items[inv.itemId])
+      .filter((it): it is NonNullable<typeof it> => !!it?.grantsActions?.length),
   ]
     .flatMap((f) => (f?.grantsActions ?? []).map((id) => ({ id, from: f! })))
     .map(({ id, from }) => {
       const act = content.actions[id];
-      // Carry the granter when IT holds the per-day limit — the action record itself does not.
-      return act && from.limitedUses ? { ...act, usesFrom: from } : act;
+      // The ACTION's own limit wins when it carries one (Raise the Horde prints once per 10 minutes
+      // on the action record itself); otherwise carry the granter's, where per-day limits usually live.
+      const holder = act?.limitedUses ? act : from.limitedUses ? from : null;
+      return act && holder ? { ...act, usesFrom: holder } : act;
     })
     .filter((a): a is NonNullable<typeof a> => !!a);
   const seenActionNames = new Set<string>();
@@ -279,10 +298,22 @@ export function MainTab({
     .map((a) => ({ id: a.id, name: a.name, cost: a.actionCost, desc: a.description, descRefs: a.descRefs, traits: a.traits }));
   const preparedTactics = new Set(character.commanderTactics?.prepared ?? []);
   const tacticPreparedMax = character.commanderTactics?.preparedMax ?? 3;
+  /* The runesmith's runic repertoire, in the same shape: the runes you KNOW are the rows, the ones
+   * currently ETCHED are the "prepared" subset. Without this the repertoire was chosen in the builder
+   * and then appeared nowhere a player could act on it. Runes have no action cost of their own — you
+   * apply them with Trace Rune and fire them with Invoke Rune, both already on the sheet. */
+  const runeActs: (Act & { id: string })[] = (character.runicRepertoire?.known ?? [])
+    .map((id) => content.runesmithRune?.[id])
+    .filter((r): r is NonNullable<typeof r> => !!r)
+    .map((r) => ({ id: r.id, name: r.name, desc: r.description, descRefs: r.descRefs, traits: r.traits }));
+  const etchedRunes = new Set(character.runicRepertoire?.etched ?? []);
+  const runeEtchedCap = character.runicRepertoire?.etchedMax ?? 2;
   // Signature resource STATES the character has (rage / panache, from the base class or an archetype
   // dedication) and whether each is currently active. An action gated on a state the character has but
   // hasn't turned on is shown with a "needs <state>" badge — still readable, just not usable yet.
   const resourceIds = new Set(resourcesForCharacter(character.classId, new Set(character.feats.map((f) => f.featId))).map((r) => r.id));
+  /** Vials mean Quick Alchemy, which the Alchemist Dedication grants without Advanced Alchemy. */
+  const hasVersatileVials = resourceIds.has('versatile-vials');
   const gateActive = (g: ResourceGate) => (character.classResources?.[g] ?? 0) > 0;
   /** The unmet gate for an action, or null (no gate / character lacks the state / already active). */
   const unmetGate = (a: Act): ResourceGate | null => {
@@ -314,8 +345,17 @@ export function MainTab({
    * than a chooser: the modes' shared `exclusiveGroup` already makes them mutually exclusive, and the
    * printed rules make you pick one anyway. 7 of the 8 have exactly one.
    */
+  /* A form's gate may be the bare feat id OR `<featId>:<answer>` — the werecreature's nine types each
+   * have their own two shapes, and an exact `includes` cannot match the composite. Membership in
+   * `modeGateIds` is what decides the character actually qualifies; the prefix test only decides which
+   * feat's button the form is listed under. */
+  const gateIds = modeGateIds(character, content);
   const formModesFor = (featId: string) =>
-    Object.values(content.modes ?? {}).filter((m) => (m.feats ?? []).includes(featId) && !!m.battleForm);
+    Object.values(content.modes ?? {}).filter(
+      (m) =>
+        !!m.battleForm &&
+        (m.feats ?? []).some((f) => (f === featId || f.startsWith(`${featId}:`)) && gateIds.has(f)),
+    );
   const activeModeIds = new Set((character.activeModes ?? []).map((m) => m.id));
   // Item actions: activatable carried items (consumables, or invested/worn/equipped magic items).
   const itemActions: (Act & { key: string })[] = (character.inventory ?? [])
@@ -343,6 +383,7 @@ export function MainTab({
   const shownStrikes = strikes.filter((s) => matchText(s.name) && matchCost(STRIKE_COST));
   const shownFeats = featActions.filter(matchAct);
   const shownTactics = tacticActions.filter(matchAct);
+  const shownRunes = runeActs.filter(matchAct);
   const shownItemActions = itemActions.filter(matchAct);
   const shownBasic = encActivities.filter((a) => !a.skill && matchAct(a));
   const shownSkill = encActivities.filter((a) => a.skill && matchAct(a));
@@ -504,6 +545,10 @@ export function MainTab({
           <div className="strike-crit">
             <span className="sc-label">Crit</span>
             <CritSpecText text={critSpec(s.group)!} content={content} />
+            {/* …and the per-target clause the grant is limited by, when every source carries one.
+                Ranger Weapon Expertise gives it only "when attacking your hunted prey"; without this
+                the card shows the effect unconditionally and a ranger reads it as always-on. */}
+            {critSpecConditionFor(s, critSources) ? <span className="sc-when"> — {critSpecConditionFor(s, critSources)}</span> : null}
           </div>
         )}
       </div>
@@ -1018,7 +1063,11 @@ export function MainTab({
                 gating on `classId === 'alchemist'` hid the panel from exactly the characters who had
                 to go looking for it — they were entitled to daily infused items and could neither
                 see nor prepare them. */}
-            {character.advancedAlchemy && <AlchemyPanel character={character} content={content} onPlay={onPlay} />}
+            {/* …and gating on `advancedAlchemy` ALONE hid it from the archetype alchemist, whose
+                dedication grants "the Quick Alchemy benefits, creating up to 4 versatile vials" and
+                not Advanced Alchemy. They were handed a 4-vial counter with no control anywhere to
+                spend it. Either half of the panel is reason enough to show it. */}
+            {(character.advancedAlchemy || hasVersatileVials) && <AlchemyPanel character={character} content={content} onPlay={onPlay} />}
 
             {subEff === 'strikes' ? (
               <div className="strikes">
@@ -1068,6 +1117,33 @@ export function MainTab({
                     ))}
                   </Section>
                 )}
+                {/* The runesmith's runes. Etching is the "prepared" toggle — and unlike a tactic it is
+                    never disabled, because the printed rule is that going over the maximum does not
+                    refuse the etch, it fades your oldest rune. */}
+                {showGeneral && shownRunes.length > 0 && (
+                  <Section
+                    id="runes"
+                    label="Runes"
+                    note={
+                      character.runicRepertoire && (
+                        <span className="acts-sec-note">
+                          {' '}
+                          · repertoire {character.runicRepertoire.known.length}/{character.runicRepertoire.repertoireMax} · etched{' '}
+                          {etchedRunes.size}/{runeEtchedCap}
+                        </span>
+                      )
+                    }
+                  >
+                    {shownRunes.map((a) => (
+                      <ActionRow
+                        key={a.id}
+                        a={a}
+                        prepared={etchedRunes.has(a.id)}
+                        onPrepare={onPlay ? () => onPlay((p) => toggleEtchedRune(p, a.id, runeEtchedCap)) : undefined}
+                      />
+                    ))}
+                  </Section>
+                )}
                 {showGeneral && shownFeats.length > 0 && (
                   <Section id="feats" label="Feat actions">
                     {shownFeats.map((a) => (
@@ -1102,7 +1178,7 @@ export function MainTab({
                     ))}
                   </Section>
                 )}
-                {(showGeneral ? shownTactics.length + shownFeats.length + shownBasic.length : 0) +
+                {(showGeneral ? shownTactics.length + shownRunes.length + shownFeats.length + shownBasic.length : 0) +
                   (showSkill ? shownSkill.length : 0) +
                   (showItem ? shownItemActions.length : 0) ===
                   0 && <div className="acts-empty">No actions match.</div>}

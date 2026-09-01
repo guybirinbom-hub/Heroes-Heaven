@@ -120,11 +120,21 @@ describe('builder-evidence — it sees the pickers that are known to exist', () 
     expect(p.filter((x) => x.lane === 'choice')).toHaveLength(0);
   });
 
-  it('Rogue Dedication: the registry lanes render too, not only the record field', () => {
+  it('Rogue Dedication: the registry lanes render, and the record does not ask a second time', () => {
+    /*
+     * This used to assert all THREE lanes rendered, the record's own `choice` among them — codifying a
+     * defect the batches 5–16 parity read found on twelve records: two "choose a skill" dropdowns on
+     * one feat, where their side asks once and the record's answer moved nothing. Proven inert (build
+     * the character with two different answers, compare the whole skill block — byte-identical) and
+     * removed. The FEAT_GRANTS slot is the surviving lane because it is the only one that can carry
+     * `redundantFallback`, the "if you would already be trained" clause. Same shape as the Pitborn
+     * case above, one lane over.
+     */
     const lanes = pickers('rogue-dedication').map((p) => p.lane);
     expect(lanes).toContain('skillChoice');    // FEAT_GRANTS.skillChoices
     expect(lanes).toContain('bonusSkillFeat'); // FEAT_GRANTS.bonusSkillFeat
-    expect(lanes).toContain('choice');         // the record's own
+    expect(lanes.filter((l) => l === 'choice')).toHaveLength(0);
+    expect(db.feats['rogue-dedication'].choice).toBeUndefined();
   });
 
   it('Multilingual: the language lane reports the BUDGET it grants, not a list of pickers', () => {
@@ -133,10 +143,12 @@ describe('builder-evidence — it sees the pickers that are known to exist', () 
     expect((lang as unknown as { slotsGranted: number }).slotsGranted).toBeGreaterThan(0);
   });
 
-  it('declaredChoices names both halves — the record field and the registry entry', () => {
+  it('declaredChoices names the registry entries, and no longer a duplicate record field', () => {
+    /* Rogue Dedication's `record.choice` was the inert half of a two-lane skill question; see above. */
     expect(declaredChoices('rogue-dedication', db)).toEqual(
-      expect.arrayContaining(['record.choice', 'registry.FEAT_GRANTS.skillChoices[0]', 'registry.FEAT_GRANTS.bonusSkillFeat']),
+      expect.arrayContaining(['registry.FEAT_GRANTS.skillChoices[0]', 'registry.FEAT_GRANTS.bonusSkillFeat']),
     );
+    expect(declaredChoices('rogue-dedication', db)).not.toContain('record.choice');
     expect(declaredChoices('multilingual', db)).toContain('record.languageChoices');
     expect(declaredChoices('general-training', db)).toContain('registry.FEAT_PICK_GRANTS');
   });

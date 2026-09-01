@@ -69,11 +69,20 @@ describe('campaign content toggles + new content', () => {
   });
 
   it('Basic/Greater/Major Lesson feats offer a tiered lesson sub-choice with descriptions', () => {
-    for (const [id, count] of [['basic-lesson', 6], ['greater-lesson', 9], ['major-lesson', 4]] as const) {
+    // Print offers the LOWER tiers too: Greater Lesson is "a greater lesson or a basic lesson"
+    // (9 + 6), Major Lesson "a major, greater, or basic lesson" (4 + 9 + 6) — batch-18 parity.
+    for (const [id, count] of [['basic-lesson', 6], ['greater-lesson', 15], ['major-lesson', 19]] as const) {
       const choice = c.feats[id]?.choice;
       expect(choice?.kind).toBe('array');
       expect(choice?.options?.length).toBe(count);
-      expect(choice?.options?.every((o) => o.label && o.description)).toBe(true);
+      // Every option is readable: an inline description, or (for the lower-tier options added by
+      // the batch-18 rows) the description auto-fills from the OWNED lesson feature at build time
+      // (ownsFeature, build.ts) — assert the target record really has prose to fill from.
+      expect(
+        choice?.options?.every(
+          (o) => o.label && (o.description || c.classFeatures[String(o.value).replace(/^aon-/, '')] || c.classFeatures[String(o.value)]),
+        ),
+      ).toBe(true);
     }
   });
 

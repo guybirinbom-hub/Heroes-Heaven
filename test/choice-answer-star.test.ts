@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { build, content } from './_content';
 import { buildCharacter, emptyBuild, boundGrantChoice, featSkillChoiceValue, type BuildState } from '../src/rules/build';
-import { FEAT_FEAT_GRANTS, FEAT_GRANT_BOUND_CHOICE, isBoundGrant } from '../src/rules/featFeatGrants';
+import { FEAT_FEAT_GRANTS, FEAT_GRANT_BOUND_CHOICE, FEAT_RANK_FEAT_GRANTS, isBoundGrant } from '../src/rules/featFeatGrants';
 import { FEAT_GRANTS } from '../src/rules/featGrants';
 import { CHOICE_SITUATIONAL } from '../src/rules/situationalBonuses';
 import { explainStat, statHasSituational } from '../src/rules/explain';
@@ -215,7 +215,7 @@ describe('a granted choice the granting feat already answered', () => {
     const bound = ch.feats.find((f) => f.featId === 'assurance')?.choice?.value as ProficiencyKey;
     expect(bound).toBeTruthy();
     expect(ch.proficiencies.skills[bound]).toBe('trained');
-    expect(bound).toBe(featSkillChoiceValue({}, 'weight-of-experience', 0));
+    expect(bound).toBe(featSkillChoiceValue({}, db, 'weight-of-experience', 0));
   });
 
   it('an un-named Lore binds nothing rather than inventing a subject', () => {
@@ -229,7 +229,7 @@ describe('a granted choice the granting feat already answered', () => {
     // window where the binding exists and the answer does not — and offering the 16-skill list there
     // would hand the player a control whose answer is thrown away the moment they type the subject.
     expect(isBoundGrant('gnome-obsession', 'assurance')).toBe(true);
-    expect(boundGrantChoice({}, 'gnome-obsession', 'assurance')).toBeUndefined();
+    expect(boundGrantChoice({}, db, 'gnome-obsession', 'assurance')).toBeUndefined();
     // An ordinary grant is untouched: Seeker of Truths' Domain Initiate still asks for itself.
     expect(isBoundGrant('seeker-of-truths', 'domain-initiate')).toBe(false);
   });
@@ -238,7 +238,13 @@ describe('a granted choice the granting feat already answered', () => {
     const bad: string[] = [];
     for (const [granter, grants] of Object.entries(FEAT_GRANT_BOUND_CHOICE)) {
       for (const [granted, spec] of Object.entries(grants)) {
-        if (!(FEAT_FEAT_GRANTS[granter] ?? []).includes(granted)) bad.push(`${granter} does not grant ${granted}`);
+        /* Every lane a binding can hang off. FEAT_RANK_FEAT_GRANTS was the third and this knew two,
+         * so binding Stonemason's Eye's Specialty Crafting to stonemasonry read as a broken binding
+         * rather than the conditional grant it answers. */
+        const grantsIt =
+          (FEAT_FEAT_GRANTS[granter] ?? []).includes(granted) ||
+          (FEAT_RANK_FEAT_GRANTS[granter] ?? []).some((r) => r.feat === granted);
+        if (!grantsIt) bad.push(`${granter} does not grant ${granted}`);
         /*
          * The granted feat must have a QUESTION for the binding to answer — but a record asks one of
          * two ways, and this used to know only the first. Assurance asks through `choice`, a
@@ -250,7 +256,7 @@ describe('a granted choice the granting feat already answered', () => {
         if (!db.feats[granted]?.choice && !FEAT_GRANTS[granted]?.loreChoices) bad.push(`${granted} has no choice to bind`);
         if (spec.kind === 'skillChoice' && !FEAT_GRANTS[granter]?.skillChoices?.[spec.index])
           bad.push(`${granter} has no skillChoices[${spec.index}]`);
-        if (spec.kind === 'fixed' && !boundGrantChoice({}, granter, granted))
+        if (spec.kind === 'fixed' && !boundGrantChoice({}, db, granter, granted))
           bad.push(`${granter} → ${granted} resolves to nothing`);
       }
     }

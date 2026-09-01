@@ -54,14 +54,39 @@ describe('focus pool is not double-counted', () => {
     // invariant to hold is not "the data is pristine" (the redundant field is harmless now) but
     // "every such record is seen by that guard". This asserts the guard's predicate covers all of
     // them, so none can double-count.
-    const grantsFocusViaEffectChoice = (f: { effectChoices?: { options?: { grant?: { focusSpells?: string[] } }[] }[] }) =>
-      (f.effectChoices ?? []).some((ec) => (ec.options ?? []).some((o) => (o.grant?.focusSpells?.length ?? 0) > 0));
+    /*
+     * ⚠ BOTH PICKER LANES, and that is the whole point of the check.
+     *
+     * A REPEATABLE focus feat's pick has to live on the record's own `choice` — the only lane whose
+     * answer is per TAKING — and 21 records were migrated there. The engine guard read `effectChoices`
+     * alone, so each migrated record paid its `focusPoolBonus` AND the chosen spell's own point: a
+     * 2-point pool for one focus spell, on 17 records. The lane a grant travels on must never decide
+     * whether it counts; asserting only the effectChoices lane is what let the migration do that
+     * silently, and this test caught it.
+     */
+    type Opt = { grant?: { focusSpells?: string[] } };
+    const grantsFocusViaChoice = (f: { effectChoices?: { options?: Opt[] }[]; choice?: { options?: Opt[] } }) =>
+      (f.effectChoices ?? []).some((ec) => (ec.options ?? []).some((o) => (o.grant?.focusSpells?.length ?? 0) > 0)) ||
+      (f.choice?.options ?? []).some((o) => (o.grant?.focusSpells?.length ?? 0) > 0);
 
-    const withBoth = Object.values(c.feats).filter((f) => grantsFocusViaEffectChoice(f) && f.focusPoolBonus);
+    const withBoth = Object.values(c.feats).filter((f) => grantsFocusViaChoice(f) && f.focusPoolBonus);
     expect(withBoth.length, 'expected the known set of double-declaring feats').toBeGreaterThanOrEqual(28);
     for (const f of withBoth) {
-      expect(grantsFocusViaEffectChoice(f), `${f.name} must be caught by the guard`).toBe(true);
+      expect(grantsFocusViaChoice(f), `${f.name} must be caught by the guard`).toBe(true);
     }
+  });
+
+  it('a MIGRATED repeatable focus feat still gets a 1-point pool, not 2', () => {
+    /* The behaviour behind the predicate above. Hallowed Initiate carries `focusPoolBonus: 1` and now
+     * grants its spell through the per-taking `choice`; while the guard read only `effectChoices` this
+     * produced a 2-point pool for one spell. */
+    const rec = c.feats['hallowed-initiate'];
+    const pick = rec.choice!.options![0].value;
+    const ch = buildCharacter(
+      { ...emptyBuild(), name: 't', level: 4, classId: 'cleric', featPicks: { '2:class': 'hallowed-initiate' }, featChoices: { '2:class': pick } } as BuildState,
+      c,
+    );
+    expect(ch.focus?.max, 'one focus spell, one Focus Point').toBe(1);
   });
 
   it('Shadow Magic gives a 1-point pool for its one focus spell', () => {
