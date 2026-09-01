@@ -110,8 +110,12 @@ function stripBuildOnlyAssets(): Plugin {
       const drop = (rel: string) => {
         const abs = path.join(root, rel);
         if (!existsSync(abs)) return;
-        const mb = statSync(abs).size / 1048576;
-        rmSync(abs);
+        // A stray backup can be a whole FOLDER too (public/data.pre-bestiary.bak — the bestiary
+        // repair recipe's copy of public/data). A bare rmSync threw EISDIR on it and failed the
+        // entire build; a directory's own stat size is meaningless, so it reports 0.0 MB.
+        const st = statSync(abs);
+        const mb = st.isDirectory() ? 0 : st.size / 1048576;
+        rmSync(abs, { recursive: true });
         removed.push(`${rel} (${mb.toFixed(1)} MB)`);
       };
 
