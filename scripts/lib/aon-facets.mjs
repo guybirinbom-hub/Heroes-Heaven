@@ -671,13 +671,22 @@ export function actionCostOf(rec, prev = {}, resolveDoc = null, report = null) {
  */
 const SAVE_T = '(fortitude|reflex|will)';
 const SAVE_LINK = /\[([^\]]*)\]\(([^)]*)\)/g;
+/* A save named only inside a BONUS/PENALTY clause is a buff on the target's saves, not a save
+ * against the spell — Soothing Words' "+1 status bonus to Will saving throws" was read by the body
+ * fallback as a Will save, and the popup printed a Defense row the print does not have. Stripped
+ * before the fallback runs; a printed Saving Throw/Defense ROW still wins untouched. Measured over
+ * all 1,852 mirrored spells: exactly six change, every one with no saving_throw on its AoN page. */
+const BONUS_CLAUSE = new RegExp(
+  `\\b(?:bonus|penalty)\\s+to\\s+(?:[A-Za-z'’ -]{0,40}?\\s)?(?:${SAVE_T}\\s+(?:and|or)\\s+)?${SAVE_T}\\s+(?:saving throws?|saves?)`,
+  'gi',
+);
 
 export function saveOf(rec) {
   const md = String(rec?.data?.markdown ?? '').replace(/\r\n?/g, '\n');
   const parts = md.split('\n---\n');
   const head = parts[0].replace(SAVE_LINK, '$1');
   const body = parts.length > 1 ? parts.slice(1).join('\n---\n') : '';
-  const bodyPlain = body.replace(SAVE_LINK, '$1');
+  const bodyPlain = body.replace(SAVE_LINK, '$1').replace(BONUS_CLAUSE, ' ');
 
   const rowRaw = rec?.data?.saving_throw_markdown
     ?? (new RegExp(`\\*\\*Saving Throw\\*\\*[ \\t]*\\n?([^\\n]*)`).exec(head) ?? [])[1]

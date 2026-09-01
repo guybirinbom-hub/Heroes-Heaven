@@ -145,13 +145,23 @@ export async function fetchGmEdits(): Promise<GmEdit[]> {
   }));
 }
 
-/** Player: drop a GM edit once it's been applied. */
-export async function deleteGmEdit(campaignId: string, charId: string): Promise<void> {
-  if (!supabase) return;
+/** Player: drop a GM edit once it's been applied. Returns HOW MANY rows the delete removed (null on
+ *  error/unreachable). Under RLS a missing `gce_owner_delete` policy makes the delete "succeed"
+ *  while removing NOTHING — which left the row re-applying on every poll tick forever — so the
+ *  caller wants to see the 0, not a void. */
+export async function deleteGmEdit(campaignId: string, charId: string): Promise<number | null> {
+  if (!supabase) return null;
   try {
-    await supabase.from('gm_character_edits').delete().eq('campaign_id', campaignId).eq('char_id', charId);
+    const { data, error } = await supabase
+      .from('gm_character_edits')
+      .delete()
+      .eq('campaign_id', campaignId)
+      .eq('char_id', charId)
+      .select('char_id');
+    if (error) return null;
+    return data?.length ?? 0;
   } catch {
-    /* best-effort */
+    return null; /* best-effort */
   }
 }
 

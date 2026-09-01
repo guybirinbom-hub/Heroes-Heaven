@@ -401,6 +401,33 @@ export function saveCharUpdated(map: Record<string, number>): void {
   }
 }
 
+const GM_EDITS_APPLIED_KEY = 'wanderers-codex:gm-edits-applied:v1';
+
+/** `campaignId|charId` → the `updated_at` of the last GM edit APPLIED on this device.
+ *
+ *  The applier's cleanup DELETE on `gm_character_edits` is best-effort — on a database missing the
+ *  `gce_owner_delete` policy (a setup that predates it) it silently removes NOTHING, and the same
+ *  edit then re-applied on every poll tick (2.5 s), clobbering every local change seconds after it
+ *  was made. This stamp is what makes that loop structurally impossible: an edit at or below the
+ *  stamp is already ours and is never applied again, whatever the delete did. */
+export function loadGmEditsApplied(): Record<string, string> {
+  try {
+    const raw = localStorage.getItem(GM_EDITS_APPLIED_KEY);
+    const p = raw ? JSON.parse(raw) : null;
+    return p && typeof p === 'object' ? (p as Record<string, string>) : {};
+  } catch {
+    return {};
+  }
+}
+
+export function saveGmEditsApplied(map: Record<string, string>): void {
+  try {
+    localStorage.setItem(GM_EDITS_APPLIED_KEY, JSON.stringify(map));
+  } catch {
+    /* non-fatal */
+  }
+}
+
 const PREFS_KEY = 'pf2e-codex.prefs';
 const APPEARANCE_KEY = 'pf2e-codex.appearance';
 const CUSTOMIZATION_KEY = 'pf2e-codex.customization';

@@ -23,6 +23,7 @@
  *   node scripts/spell-check.mjs --all   # also list what a guard is holding back
  */
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
+import { saveOf } from './lib/aon-facets.mjs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
@@ -47,12 +48,16 @@ for (const f of readdirSync(MIRROR)) {
 }
 /** name -> {type, basic} from Foundry, or null when its records disagree. */
 const foundry = new Map();
+/** EVERY Foundry spell name, saved or not — so "Foundry knows it and gives it NO save" is
+ *  distinguishable from "Foundry doesn't have it". The invented-save guard below needs the former. */
+const foundryNames = new Set();
 if (existsSync(FOUNDRY)) {
   const seen = new Map();
   for (const f of readdirSync(FOUNDRY)) {
     let j;
     try { j = JSON.parse(readFileSync(join(FOUNDRY, f), 'utf8')); } catch { continue; }
     for (const e of j.spell ?? []) {
+      if (e?.name) foundryNames.add(norm(e.name));
       if (!e?.name || !e.savingThrow?.type?.length) continue;
       const k = norm(e.name);
       const v = `${SAVE[norm(e.savingThrow.type[0])] ?? ''}|${!!e.savingThrow.basic}`;
@@ -97,6 +102,26 @@ for (const [id, rec] of Object.entries(db.spells ?? {})) {
       else if (fd.type !== have) bad.push({ id, field: 'save', have, want: fd.type });
     } else if (aonType && !fd) {
       held.push(`${id}: not in the Foundry data, so its save has only one source`);
+    }
+  }
+  /* ---- an INVENTED save: we carry one the FIXED parser no longer derives from the page. The
+   * facet parser used to read "+1 status bonus to Will saving throws" — a buff on the TARGET's
+   * saves — as a Will save (Soothing Words, batch 24); aon-facets' BONUS_CLAUSE strip fixed it,
+   * and this holds the class shut by recomputing the parse: a stored save with no structured row,
+   * no Foundry save, and a null re-parse is one the pipeline would not produce today. Body saves
+   * named OUTSIDE a bonus clause (Grease) still re-parse to a type and stay untouched. */
+  if (rec.save?.type && !raw && foundryNames.has(key) && !foundry.get(key)) {
+    // Per PAGE, not through resolve(): a name shared by remaster+legacy pages never settles to one
+    // markdown, and Ill Omen's structured "Will" lives on only ONE of its three pages.
+    const anyStructured = list.some((m) => m.saving_throw);
+    const anyParsed = list.some((m) => saveOf({ data: { markdown: m.markdown } })?.type);
+    // "…critically fails the save…" (Ranger's Bramble, inheriting entangling flora's Reflex): the
+    // page talks about a save the parser cannot type. A human question, not a defect row.
+    const mentionsSave = list.some((m) => /\b(?:the|a)\s+save\b|\bsaving throw\b/i.test(String(m.markdown ?? '')));
+    if (!anyStructured && !anyParsed) {
+      compared++;
+      if (mentionsSave) held.push(`${id}: carries save "${rec.save.type}" — the page names an (inherited?) save the parser cannot type; read by hand`);
+      else bad.push({ id, field: 'save', have: rec.save.type, want: null });
     }
   }
 

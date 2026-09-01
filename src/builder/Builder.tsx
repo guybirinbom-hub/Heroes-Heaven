@@ -18,6 +18,7 @@ import {
   featChoicePrompt,
   buildChoiceOptions,
   cantripBonusFor,
+  classArchetypeSpellMods,
   levelGrants,
   levelChoices,
   subclassAnchorAt,
@@ -42,7 +43,6 @@ import {
   askedAtDailyPrep,
   characterSenseKeys,
   classFeatureIdsOwned,
-  domainPoolForChoice,
   effectiveChoiceLimits,
   effectiveChoiceOptions,
   narrowChoiceOptions,
@@ -345,7 +345,11 @@ export function Builder({
     ? activeCasterArchetype(Object.values(build.featPicks).filter((v): v is string => !!v))
     : null;
   const showSpells = !!casting || !!archCaster;
-  const castType = casting?.type ?? (archCaster?.config.repertoire ? 'spontaneous' : 'prepared');
+  // A flexible spellcaster's class entry is a COLLECTION — a repertoire over the capped class
+  // table — so the picker must count "known" and offer the signature stars, exactly as the sheet
+  // builds the entry. Same function as buildCharacter, never a copy (the cantrip-cap lesson below).
+  const archMods = classArchetypeSpellMods(build, content);
+  const castType = archMods.spellCollection && casting ? 'spontaneous' : (casting?.type ?? (archCaster?.config.repertoire ? 'spontaneous' : 'prepared'));
   // For a choice-tradition archetype (sorcerer/witch), the player's pick; for a summoner archetype, the
   // chosen eidolon type's tradition; else the dedication's fixed tradition.
   const archTradition = archCaster
@@ -361,8 +365,11 @@ export function Builder({
   // Spontaneous casters can designate signature spells once the class grants the
   // feature (e.g. bard at level 3).
   const sigAvailable =
-    casting?.type === 'spontaneous' &&
-    !!casterCls?.features?.some((f) => f.featureId === 'signature-spells' && f.level <= build.level);
+    (casting?.type === 'spontaneous' &&
+      !!casterCls?.features?.some((f) => f.featureId === 'signature-spells' && f.level <= build.level)) ||
+    // A spell collection heightens EVERY collected spell once 2nd-rank spells arrive — the stars
+    // are fixed on (signatureFixed), so the builder shows them rather than offering a budget.
+    (archMods.spellCollection && !!casting && build.level >= 3);
   // Wizards and witches are LEARNED prepared casters: they learn a SPELLBOOK (a single budget across
   // ranks — the wizard's book, the witch's familiar) and can prepare only from it.
   const isWizardBook = !!casting && isPrepared && (casterCls?.id === 'wizard' || casterCls?.id === 'witch');
@@ -394,8 +401,14 @@ export function Builder({
     }
     return out;
   };
+  /* A class archetype's per-rank ceiling (Flexible Spellcaster's slotCap), applied to the CLASS
+   * table only — an archetype caster pool is not the table the cap is about. Same body as
+   * buildCharacter's capSlots; without it the picker offered the uncapped table and the sheet
+   * silently dropped the excess picks. */
+  const capArch = (counts: Record<number, number>): Record<number, number> =>
+    archMods.slotCap == null ? counts : Object.fromEntries(Object.entries(counts).map(([r, n]) => [r, Math.min(n, archMods.slotCap!)]));
   const slotCounts = casting
-    ? casterSlots(build.level, castProgression)
+    ? capArch(casterSlots(build.level, castProgression))
     : archCaster
       ? archExtraKnownAt(archetypeSlots(build.level, archCaster))
       : {};
@@ -406,7 +419,7 @@ export function Builder({
   // it ignored the `cantripsAt` LADDER, and it charged Adapted Cantrip's `-1` before its picker was
   // answered, so the page read "5 / 4" over a set of picks the sheet was perfectly happy with.
   const cantripBonus = cantripBonusFor(build, content);
-  const cantripCap = (casting ? cantripsKnown(build.classId) : archCaster?.config.cantrips ?? 0) + cantripBonus;
+  const cantripCap = Math.max(0, (casting ? cantripsKnown(build.classId) : archCaster?.config.cantrips ?? 0) + cantripBonus + (casting ? archMods.cantripDelta : 0));
   // The built character, used to evaluate feat prerequisites in the picker and the stats rail.
   // Memoized so the full per-level build pipeline runs once per build change, not 2–3× per render.
   const featPrereqChar = useMemo(() => buildCharacter(build, ovContent), [build, ovContent]);
@@ -641,7 +654,10 @@ export function Builder({
     }
     const opts: NarrowedOption[] =
       def.kind === 'domains'
-        ? domainPoolForChoice(build, content, grantedId, def.domainPool).map((d) => ({ value: d, label: cap(d) }))
+        ? /* Through buildChoiceOptions (no slotKey — this IS the granted taking), not a bare pool:
+           * the funnel is what greys a domain a slot take of the same repeatable feat already
+           * claimed, per Domain Initiate's "a different domain each time". */
+          buildChoiceOptions(grantedId, def, build, content, featPrereqChar)
         : def.kind === 'skills'
           ? SKILLS.map((s) => ({ value: s, label: cap(s) }))
           : def.kind === 'open'
@@ -792,6 +808,11 @@ export function Builder({
       for (const add of list == null ? [] : Array.isArray(list) ? list : [list]) {
         if (add.as && add.as !== 'list') continue;
         for (const s of add.spells ?? []) if (content.spells[s]) out.add(s);
+        // The same deity branch the feat loop has — Deity (Cleric) "adds your deity's spells to
+        // your spell list", and this copy of the loop was missing exactly this arm, so the sheet
+        // offered Jaidi's spells and the builder's book did not.
+        if (add.from === 'deity' && build.deityId)
+          for (const s of content.deities[build.deityId]?.spells ?? []) if (content.spells[s]) out.add(s);
         if (add.traditions === 'any') anyTradition = true;
         else for (const t of add.traditions ?? []) openTraditions.add(t);
       }
@@ -893,7 +914,7 @@ export function Builder({
   // --- per-level spell progression (spells are chosen on the level where they're gained) ---
   // Spell slots per rank at a given character level (0 = before play).
   const slotsAt = (L: number): Record<number, number> =>
-    L < 1 ? {} : casting ? casterSlots(L, castProgression) : archCaster ? archExtraKnownAt(archetypeSlots(L, archCaster)) : {};
+    L < 1 ? {} : casting ? capArch(casterSlots(L, castProgression)) : archCaster ? archExtraKnownAt(archetypeSlots(L, archCaster)) : {};
   // Wizard spellbook budget (a single across-rank total) at a given level — includes the UMT +1.
   const bookAt = (L: number) => (L < 1 ? 0 : wizardSpellbookBudget(L, isUmtBook));
   // The first level this character can cast — cantrips, tradition, and divine font live here.

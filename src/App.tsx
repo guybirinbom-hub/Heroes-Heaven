@@ -22,11 +22,11 @@ import { getLoginSkipped, setLoginSkipped } from './data/device';
 import { collectPortraitRefs, gcSharpPortraits, initPortraitStore } from './data/portraitStore';
 import { computeSummary } from './sheet/partySummary';
 import { publishCharacter, unpublishCharacter, fetchGmEdits, deleteGmEdit, currentUserId, subscribeGmEdits } from './data/party';
-import { loadRoster, saveRoster, newRosterId, duplicateChar, uniqueName, loadActiveId, saveActiveId, saveHomebrewItem, saveMode, deleteMode, loadCampaigns, saveCampaigns, ROSTER_KEY, localStorageBytes, type SavedChar } from './data/storage';
+import { loadRoster, saveRoster, newRosterId, duplicateChar, uniqueName, loadActiveId, saveActiveId, saveHomebrewItem, saveMode, deleteMode, loadCampaigns, saveCampaigns, loadGmEditsApplied, saveGmEditsApplied, ROSTER_KEY, localStorageBytes, type SavedChar } from './data/storage';
 import { isTauri } from './platform';
 import { getPrefs } from './data/prefs';
 import { useShowUndoButtons } from './sheet/useIsMobile';
-import { playerWorkWasOverwritten } from './sheet/gmSync';
+import { playerWorkWasOverwritten, editsToApply } from './sheet/gmSync';
 import { useHeightVar } from './sheet/useHeightVar';
 import { setupPersist, schedulePersist, persistNow, flushPersist, cancelPersist } from './data/persist';
 import { chooseDialog } from './sheet/confirm';
@@ -211,6 +211,8 @@ export default function App() {
   /** What we last PUBLISHED for each character, by roster id. Lets an incoming GM edit tell whether it
    *  is about to overwrite local work the player made but hadn't published yet — see the apply below. */
   const publishedSheetRef = useRef<Map<string, string>>(new Map());
+  /** Warn ONCE per session when the gm_character_edits cleanup delete removes no rows (RLS gap). */
+  const warnedGmEditDelete = useRef(false);
   useEffect(() => {
     if (auth.status !== 'signed-in' || !content) return;
     const readyContent = content;
@@ -297,40 +299,68 @@ export default function App() {
       // them, or a mid-sync gap) are LEFT in place — deleting them here would rob the owning device of
       // the edit. Read the latest roster via the ref so this async pull isn't scoped to a stale snapshot.
       const present = new Set(rosterRef.current.map((c) => c.id));
-      const applicable = edits.filter((e) => present.has(e.charId) && e.sheet && e.sheet.character);
-      if (!applicable.length) return;
-      // A character attached to two campaigns can have two pending edits (PK is campaign+char). Apply the
-      // NEWEST per character (last-writer-wins); an older one is superseded, never dropped-before-applied.
-      const newestByChar = new Map<string, (typeof applicable)[number]>();
-      for (const e of applicable) {
-        const prev = newestByChar.get(e.charId);
-        if (!prev || (e.updatedAt || '') > (prev.updatedAt || '')) newestByChar.set(e.charId, e);
+      const forThisDevice = edits.filter((e) => present.has(e.charId) && e.sheet && e.sheet.character);
+      if (!forThisDevice.length) return;
+      /* NEVER APPLY THE SAME EDIT TWICE. The cleanup delete below is best-effort, and on a database
+       * missing the `gce_owner_delete` policy (a setup that predates supabase-campaign-characters.sql's
+       * current version) it silently removes NOTHING — the row survived every apply, and this loop then
+       * re-applied it on each poll tick (2.5 s), rewinding the player's sheet to the GM's stale copy
+       * seconds after every local change, with no error anywhere. The applied stamp (per campaign+char,
+       * by updated_at) is the structural guard: a row can linger in the table forever and still apply
+       * exactly once. */
+      const appliedStamps = loadGmEditsApplied();
+      const applicable = editsToApply(forThisDevice, appliedStamps);
+      if (applicable.length) {
+        // A character attached to two campaigns can have two pending edits (PK is campaign+char). Apply the
+        // NEWEST per character (last-writer-wins); an older one is superseded, never dropped-before-applied.
+        const newestByChar = new Map<string, (typeof applicable)[number]>();
+        for (const e of applicable) {
+          const prev = newestByChar.get(e.charId);
+          if (!prev || (e.updatedAt || '') > (prev.updatedAt || '')) newestByChar.set(e.charId, e);
+        }
+        /*
+         * Last change wins — but say so when the loser was the player.
+         *
+         * A GM's edit replaces the whole sheet. If the player had changed something since their last
+         * publish (typed HP in the past second, or worked offline), the GM was editing a version that
+         * didn't include it, and applying silently would make that work vanish with no explanation. So
+         * compare what we last published against what's local right now: a difference means there WAS
+         * unpublished work, and the player gets told. It stays recoverable — the replacement is one step
+         * on the roster's undo timeline, so Ctrl+Z brings their version back.
+         */
+        const clobbered: string[] = [];
+        setRoster((r) =>
+          r.map((c) => {
+            const edit = newestByChar.get(c.id);
+            if (!edit) return c;
+            const lastPublished = publishedSheetRef.current.get(c.id);
+            const localNow = JSON.stringify({ id: c.id, character: c.character, build: c.build, play: c.play });
+            if (playerWorkWasOverwritten(lastPublished, localNow)) clobbered.push(c.character.name);
+            return { ...edit.sheet, id: c.id, archived: c.archived ?? false };
+          }),
+        );
+        if (clobbered.length) setGmOverwrote(clobbered);
+        // Stamp every edit we consumed (the applied newest AND the superseded older ones), so none of
+        // them can ever re-apply, whatever becomes of the delete below.
+        for (const e of applicable) appliedStamps[`${e.campaignId}|${e.charId}`] = e.updatedAt || new Date().toISOString();
+        // …and prune stamps for characters no longer on this device, so the map cannot grow forever.
+        for (const k of Object.keys(appliedStamps)) {
+          const charId = k.slice(k.indexOf('|') + 1);
+          if (!present.has(charId)) delete appliedStamps[k];
+        }
+        saveGmEditsApplied(appliedStamps);
       }
-      /*
-       * Last change wins — but say so when the loser was the player.
-       *
-       * A GM's edit replaces the whole sheet. If the player had changed something since their last
-       * publish (typed HP in the past second, or worked offline), the GM was editing a version that
-       * didn't include it, and applying silently would make that work vanish with no explanation. So
-       * compare what we last published against what's local right now: a difference means there WAS
-       * unpublished work, and the player gets told. It stays recoverable — the replacement is one step
-       * on the roster's undo timeline, so Ctrl+Z brings their version back.
-       */
-      const clobbered: string[] = [];
-      setRoster((r) =>
-        r.map((c) => {
-          const edit = newestByChar.get(c.id);
-          if (!edit) return c;
-          const lastPublished = publishedSheetRef.current.get(c.id);
-          const localNow = JSON.stringify({ id: c.id, character: c.character, build: c.build, play: c.play });
-          if (playerWorkWasOverwritten(lastPublished, localNow)) clobbered.push(c.character.name);
-          return { ...edit.sheet, id: c.id, archived: c.archived ?? false };
-        }),
-      );
-      if (clobbered.length) setGmOverwrote(clobbered);
-      // Clear every edit we resolved on THIS device (the applied newest + superseded older). Edits for
-      // characters not on this device are left for the device that owns them.
-      for (const e of applicable) void deleteGmEdit(e.campaignId, e.charId);
+      // Clear every fetched edit this device owns — INCLUDING already-stamped strays a failed delete
+      // left behind, so a later policy fix drains them. Verified: a delete that reports success but
+      // removes no rows is the silent RLS gap, said out loud once per session so it is diagnosable.
+      for (const e of forThisDevice) void deleteGmEdit(e.campaignId, e.charId).then((deleted) => {
+        if (deleted === 0 && !warnedGmEditDelete.current) {
+          warnedGmEditDelete.current = true;
+          console.warn(
+            '[HeavesParty] gm_character_edits cleanup deleted 0 rows — the database is likely missing the gce_owner_delete policy. Run the current supabase-campaign-characters.sql. (Applied edits are stamped locally, so nothing re-applies.)',
+          );
+        }
+      });
     };
     void apply();
     const onFocus = () => void apply();

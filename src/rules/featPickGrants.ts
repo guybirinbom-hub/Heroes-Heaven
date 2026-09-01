@@ -328,7 +328,20 @@ export function pickableFeats(spec: FeatPickSpec, build: BuildState, content: Co
       const tr = new Set(f.traits);
       if (spec.traits && !spec.traits.every((t) => tr.has(t))) return false;
       if (spec.dynamicTrait === 'class' && clsTrait && !tr.has(clsTrait)) return false;
-      if (spec.dynamicTrait === 'ancestry' && ancTrait && !tr.has(ancTrait)) return false;
+      if (spec.dynamicTrait === 'ancestry' && ancTrait) {
+        // A grant of "a 1st-level ancestry feat" (Ancestral Paragon) offers whatever an ancestry
+        // SLOT would offer, so this reads the same widened set as eligibleFeatsForSlot
+        // (featSlots.ts): a versatile heritage's own feats, the extra ancestry lists a heritage
+        // opens (Aiuvarin: elf), and universal-ancestry. Filtering on the bare ancestry trait
+        // offered Bellphor halfling feats only — not even the aiuvarin feats his heritage grants.
+        const her = build.heritageId ? content.heritages[build.heritageId] : undefined;
+        const widened = [
+          ancTrait,
+          ...(her?.versatile ? [her.id, ...(her.traits ?? [])] : []),
+          ...(her?.extraAncestryFeatTraits ?? []),
+        ];
+        if (!widened.some((t) => tr.has(t)) && !tr.has('universal-ancestry')) return false;
+      }
       if (spec.excludeTraits && spec.excludeTraits.some((t) => tr.has(t))) return false;
       // A multiclass dedication carries no class TRAIT — the class it belongs to is `archetype`.
       if (spec.excludeDynamicTrait === 'class' && clsTrait && (tr.has(clsTrait) || f.archetype === clsTrait)) return false;

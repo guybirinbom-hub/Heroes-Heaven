@@ -13,10 +13,11 @@
  * Skips cleanly when the AoN mirror is not present, so it does not fail on a machine without it.
  *
  * ⚠ IT RUNS BEHIND A PHRASE PREFILTER, which is exactly as complete as whoever wrote the phrase list.
- * `DROPPED_INLINE_ALL=1` drops the filter and aligns EVERY record instead — 19,460 rather than 892. It
- * was run that way after the sweep and found nothing further, so the filter is provably sufficient for
- * the current data; it is not provably sufficient for the next refresh, which may print a phrasing
- * nobody has thought of. Re-run the full sweep after any AoN update, not just this guard.
+ * `DROPPED_INLINE_ALL=1` drops the RECORD filter and aligns every record instead — but the per-
+ * SENTENCE hole test in the lib still applies the same HOLES list, so the env var does NOT prove the
+ * list sufficient: heal/harm's terminal-shape hole ("in a . This targets") passed a full sweep
+ * untouched until batch 24 added its HOLES row. The full sweep raises coverage; it is not a proof.
+ * Re-run it after any AoN update, not just this guard.
  *
  *   node scripts/dropped-inline-check.mjs
  *   DROPPED_INLINE_ALL=1 node scripts/repair-dropped-inline.mjs   # the periodic re-measure

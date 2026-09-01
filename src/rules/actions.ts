@@ -8,6 +8,9 @@ export interface ActivityDef {
   cost?: ActionCost;
   /** Governing skill, if it's a skill action. */
   skill?: string;
+  /** This activity IS a feat (Bon Mot, Battle Medicine): shown only to characters that OWN the feat,
+   *  and its full text comes from the feat record rather than an action record. */
+  featId?: string;
   traits?: string[];
   desc: string;
 }
@@ -77,10 +80,10 @@ export const ACTIVITIES: ActivityDef[] = [
   { name: 'Feint', mode: 'encounter', cost: A1, skill: 'Deception', traits: ['mental'], desc: "Deception vs. an adjacent foe's Perception DC to make it off-guard against your melee attacks until your next turn." },
   { name: 'Create a Diversion', mode: 'encounter', cost: A1, skill: 'Deception', traits: ['mental'], desc: 'Deception vs. Perception DCs using a gesture, trick, or false words to immediately Hide from those you fool.' },
   { name: 'Demoralize', mode: 'encounter', cost: A1, skill: 'Intimidation', traits: ['auditory', 'concentrate', 'emotion', 'fear', 'mental'], desc: "Intimidation vs. a creature's Will DC to make it frightened 1 (2 on a crit)." },
-  { name: 'Bon Mot', mode: 'encounter', cost: A1, skill: 'Diplomacy', traits: ['auditory', 'concentrate', 'emotion', 'linguistic', 'mental'], desc: 'A feat-granted Diplomacy check vs. Will DC to penalize the target’s Perception and Will saves.' },
+  { name: 'Bon Mot', mode: 'encounter', cost: A1, skill: 'Diplomacy', featId: 'bon-mot', traits: ['auditory', 'concentrate', 'emotion', 'linguistic', 'mental'], desc: 'A feat-granted Diplomacy check vs. Will DC to penalize the target’s Perception and Will saves.' },
   { name: 'Request', mode: 'encounter', cost: A1, skill: 'Diplomacy', traits: ['auditory', 'concentrate', 'linguistic', 'mental'], desc: "Diplomacy vs. a creature's Will DC to ask it to do something." },
   { name: 'Administer First Aid', mode: 'encounter', cost: A2, skill: 'Medicine', traits: ['manipulate'], desc: 'Medicine check to stabilize a dying adjacent creature or stop its persistent bleed damage.' },
-  { name: 'Battle Medicine', mode: 'encounter', cost: A1, skill: 'Medicine', traits: ['healing', 'manipulate'], desc: 'A feat-granted Medicine check to restore HP to yourself or an adjacent ally in combat.' },
+  { name: 'Battle Medicine', mode: 'encounter', cost: A1, skill: 'Medicine', featId: 'battle-medicine', traits: ['healing', 'manipulate'], desc: 'A feat-granted Medicine check to restore HP to yourself or an adjacent ally in combat.' },
   { name: 'Treat Poison', mode: 'encounter', cost: A1, skill: 'Medicine', traits: ['manipulate'], desc: "Medicine check to grant a poisoned adjacent creature a bonus to its next save against the poison." },
   { name: 'Perform', mode: 'encounter', cost: A1, skill: 'Performance', traits: ['concentrate'], desc: 'A single-action Performance check (a quick flourish) used by some feats and class features.' },
   { name: 'Steal', mode: 'encounter', cost: A1, skill: 'Thievery', traits: ['manipulate'], desc: "Thievery vs. Perception DC to take an object from a creature's person without being noticed." },

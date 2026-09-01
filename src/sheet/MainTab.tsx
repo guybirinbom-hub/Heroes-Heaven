@@ -207,17 +207,25 @@ export function MainTab({
   const actionId = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
   const enrichActivity = (a: ActivityDef): Act => {
     const full = content.actions[actionId(a.name)];
+    // A feat-activity (Bon Mot, Battle Medicine) has no action record — its full text lives on the
+    // FEAT record, and the row used to open with only the one-line curated summary.
+    const rec = a.featId ? content.feats[a.featId] : undefined;
     return {
       name: a.name,
       cost: a.cost,
       skill: a.skill,
-      traits: full?.traits ?? a.traits,
+      traits: full?.traits ?? rec?.traits ?? a.traits,
       desc: a.desc,
-      fullDesc: full?.description,
-      fullRefs: full?.descRefs,
+      fullDesc: full?.description ?? rec?.description,
+      fullRefs: full?.descRefs ?? rec?.descRefs,
     };
   };
-  const encActivities: Act[] = ACTIVITIES.filter((a) => a.mode === 'encounter').map(enrichActivity);
+  /* …and a feat-activity is shown only to a character who OWNS the feat: Battle Medicine sat in
+   * every character's Skill actions, promising an in-combat heal to fighters who never took it. */
+  const ownedFeatIdSet = new Set(character.feats.map((f) => f.featId));
+  const encActivities: Act[] = ACTIVITIES.filter((a) => a.mode === 'encounter')
+    .filter((a) => !a.featId || ownedFeatIdSet.has(a.featId))
+    .map(enrichActivity);
   const exploreActivities: Act[] = ACTIVITIES.filter((a) => a.mode === 'exploration').map(enrichActivity);
   const downtimeActivities: Act[] = ACTIVITIES.filter((a) => a.mode === 'downtime').map(enrichActivity);
   // Feats that ARE a curated activity (Bon Mot, Battle Medicine) already appear under Skill
@@ -289,7 +297,14 @@ export function MainTab({
       desc: f!.description,
       descRefs: f!.descRefs,
       traits: f!.traits,
-      ...((f as { usesFrom?: Act['usesFrom'] }).usesFrom ? { usesFrom: (f as { usesFrom?: Act['usesFrom'] }).usesFrom } : {}),
+      // …and a record that carries its OWN limit (Halfling Luck: free action + limitedUses 1/day).
+      // Only GRANTED actions were handed a usesFrom above, so a feat whose own record holds the
+      // frequency drew use pips on the Feats tab and none here — the page it is spent from.
+      ...((f as { usesFrom?: Act['usesFrom'] }).usesFrom
+        ? { usesFrom: (f as { usesFrom?: Act['usesFrom'] }).usesFrom }
+        : (f as { id?: string; limitedUses?: LimitedUses }).limitedUses
+          ? { usesFrom: { id: (f as { id: string }).id, name: f!.name, limitedUses: (f as { limitedUses?: LimitedUses }).limitedUses! } }
+          : {}),
     }));
   // Commander folio tactics are Action items the character knows — listed in their own section.
   const tacticActions: (Act & { id: string })[] = (character.commanderTactics?.folio ?? [])

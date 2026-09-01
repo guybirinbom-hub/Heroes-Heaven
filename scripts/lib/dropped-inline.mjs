@@ -54,6 +54,13 @@ const HOLES = [
    * `@Check`, reached by a different verb. Found in Wild Witch's Armaments while reading batch 15,
    * which the four shapes above walked straight past. */
   /\bsucceeds?\s+at\s+an?\s+(?:save|check|DC)\b/i,
+  /* A hole at the END of its clause — *"You disperse vital energy in a . This targets…"* (Heal and
+   * Harm's deleted 30-foot emanation, batch 24). Every shape above requires a following WORD, so a
+   * hole followed by punctuation was invisible to the prefilter. ⚠ Being visible is not yet being
+   * repairable: the sentence splitter's ⟨N⟩ lookahead below matters too — without it the hole merged
+   * into the previous clause and aligned against the wrong AoN sentence. heal/harm themselves were
+   * repaired as backfill rows; the ~183 remaining records of this shape are an open work item. */
+  /\b(?:in|within|into)\s+an?\s+[.,;]/i,
 ];
 
 const SAFE_WORD = /^(?:\d|basic|reflex|fortitude|will|save|cone|burst|emanation|line|radius|cube|foot|feet|-?f(?:oo|ee)t|persistent|damage|hit|points)/i;
@@ -75,7 +82,11 @@ export const plain = (s) => String(s ?? '').replace(/<[^>]+>/g, ' ').replace(/\[
  * which both starves the alignment of signal and squares into an LCS matrix big enough to exhaust the
  * heap. Splitting on `;` cuts it into the clauses that actually correspond one-to-one.
  */
-const sentences = (s) => s.split(/(?<=[.!?])\s+(?=[A-Z“"(*])|(?<=;)\s+/g).filter(Boolean);
+/* ⟨N⟩ opens a sentence too: our stored text renders action glyphs as ⟨1⟩/⟨2⟩/⟨3⟩ blocks ("…restored
+ * by 8.\n\n⟨3⟩ (concentrate) You disperse…"), and without it in the lookahead the whole glyph block
+ * merged into the previous clause — so a hole there aligned against the wrong AoN sentence and the
+ * repair scored below trust (measured on heal/harm, batch 24). */
+const sentences = (s) => s.split(/(?<=[.!?])\s+(?=[A-Z“"(*⟨])|(?<=;)\s+/g).filter(Boolean);
 const MAX_CELLS = 250_000; // an alignment bigger than this is not a sentence pair worth trusting
 
 const tok = (s) => plain(s).split(/\s+/).filter(Boolean);

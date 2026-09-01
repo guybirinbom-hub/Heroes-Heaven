@@ -378,7 +378,11 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
     { targets: [{ kind: 'skill', detail: 'intimidation' }], when: "you Coerce or Demoralize a target you can physically menace", bonus: "+1 circumstance (and ignore the not-sharing-a-language penalty)" },
     { targets: [{ kind: 'skill', detail: 'intimidation' }], when: "the same, with Strength +5 or higher and master in Intimidation", bonus: "+2 circumstance instead" },
   ],
-  "intuitive-cooperation": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "to Aid, or when an ally Aids you", bonus: "+2 circumstance" }],
+  /* Only the FIRST clause is a bonus to a roll this character makes. "Your allies gain a +2
+   * circumstance bonus to checks to Aid you" modifies the ALLY's Aid check, so wording the star on
+   * our own skills as "when an ally Aids you" promised a bonus to a roll that never gets one; the
+   * ally half stays readable in the feat's printed description on the Feats tab. (batch 24) */
+  "intuitive-cooperation": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "when you Aid an ally", bonus: "+2 circumstance" }],
   "investigate-haunting": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "to disable a haunt", bonus: "+2 circumstance" }],
   "ironblood-surge": [{ targets: [{ kind: 'ac' }], when: "until your next turn while in Ironblood Stance", bonus: "+1 circumstance" }],
   /* *"You also gain a +2 circumstance bonus to saving throws and DCs against kaiju hazards."* The
@@ -3893,6 +3897,9 @@ export const RECORD_MARKERS: Record<string, RecordMarker[]> = {
   'cliffscale-lizardfolk': [{ on: "action", id: "climb", note: "While not wearing footwear you climb with the sticky pads on your feet, leaving your hands free." }],
   // Awakened Mind: the printed permission half of the awakened animal's block (batch 19).
   'awakened-animal': [{ on: "action", id: "make-an-impression", note: "Awakened Mind: you can ask questions of, receive answers from, and use Diplomacy with animals of your kind, and you may allow yourself to be affected by effects that target animals." }],
+  /* Glad-Hand's ENTIRE mechanic modifies Make an Impression, and it lived only in its own feat text —
+   * the row it changes never said so (batch 24). */
+  'glad-hand': [{ on: 'action', id: 'make-an-impression', value: "no 1-minute conversation", note: "Glad-Hand: when you meet someone in a casual or social situation you can attempt the Diplomacy check to Make an Impression immediately, instead of conversing for 1 minute first. If you fail, you can still engage in 1 minute of conversation and attempt a new check at the end of it rather than accepting the failure or critical failure result." }],
   'dark-fields-kitsune': [{"on":"action","id":"demoralize","value":"visual, not auditory","note":"Your Demoralize loses the auditory trait and gains the visual trait, and you take no penalty against a creature that doesn't understand your language."}],
   'deny-advantage': [{"on":"condition","id":"off-guard","value":"not off-guard to equal/lower-level foes","note":"Deny Advantage: you aren't off-guard to hidden, undetected or flanking creatures of your level or lower, or to such creatures using surprise attack. They can still help their allies flank."}],
   'frilled-lizardfolk': [{"on":"action","id":"demoralize","value":"visual, not auditory","note":"Your Demoralize loses the auditory trait and gains the visual trait, and you take no penalty against a creature that doesn't understand your language."}],

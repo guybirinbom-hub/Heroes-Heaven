@@ -720,6 +720,24 @@ function importFromWg(obj: any, content: ContentDatabase): ImportResult {
     }
   }
 
+  // Divine font: WG carries the pick as a "Healing Font"/"Harmful Font" ability block in
+  // feats_features; fall back to the deity's own list when it offers exactly one (not a choice).
+  // Nothing set build.divineFont before, so every imported cleric arrived with NO font at all.
+  let divineFont: 'heal' | 'harm' | null = null;
+  {
+    const fonts = ((deityId ? content.deities[deityId]?.divineFont : undefined) ?? []) as ('heal' | 'harm')[];
+    if (featureNorms.includes('healing-font')) divineFont = 'heal';
+    else if (featureNorms.includes('harmful-font')) divineFont = 'harm';
+    else if (fonts.length === 1) divineFont = fonts[0];
+    // A font the deity does not offer is a WG data slip — take the deity's own.
+    if (divineFont && fonts.length && !fonts.includes(divineFont)) divineFont = fonts[0];
+    if (divineFont) {
+      accountedFor.add('healing-font');
+      accountedFor.add('harmful-font');
+      resolved.push(`Divine font: ${divineFont}`);
+    }
+  }
+
   // extraChoices (Kineticist elements, Animist apparitions, Exemplar ikons, Psychic minds, …): WG
   // lists these among feats_features but Codex models them as per-class multi-picks, so match each
   // group's options to the WG feature names (containment-loose: "Kinetic Element (Wood)" → "Wood").
@@ -802,6 +820,7 @@ function importFromWg(obj: any, content: ContentDatabase): ImportResult {
     classId2,
     subclassId,
     deityId,
+    divineFont,
     keyAbility,
     ...(Object.keys(importedVariants).length ? { variantRules: importedVariants } : {}),
     ...(Object.keys(importedOptions).length ? { options: importedOptions } : {}),

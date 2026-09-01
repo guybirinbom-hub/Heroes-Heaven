@@ -1733,10 +1733,6 @@ export function buildChoiceOptions(
   character: Character,
   slotKey?: string,
 ): NarrowedOption[] {
-  if (def.kind === 'domains') {
-    const featId = slotKey ? build.featPicks?.[slotKey] : undefined;
-    return domainPoolForChoice(build, content, featId, def.domainPool).map((d) => ({ value: d, label: cap(d) }));
-  }
   /*
    * THE IKONS THIS CHARACTER ACTUALLY CHOSE, narrowed to the type the feat's Usage line names.
    *
@@ -1789,6 +1785,14 @@ export function buildChoiceOptions(
   const limitTo = def.limitToAnswersOf ? answersInOtherTakes(def.limitToAnswersOf, build) : null;
   const limited = <T extends { value: string }>(opts: T[]): T[] => (limitTo?.size ? opts.filter((o) => limitTo.has(o.value)) : opts);
 
+  /* A domains picker used to RETURN AT THE TOP of this function, before the marking existed — so
+   * `distinctAcrossTakes` was authored on sibling domain feats and inert on the one kind that names
+   * domains directly, and Domain Initiate's "a different domain each time" greyed nothing. Q27
+   * applies unchanged: greyed with the reason, never removed, and never this slot's own answer. */
+  if (def.kind === 'domains') {
+    const featId = slotKey ? build.featPicks?.[slotKey] : undefined;
+    return limited(markClaimed(domainPoolForChoice(build, content, featId, def.domainPool).map((d) => ({ value: d, label: cap(d) }))));
+  }
   if (def.kind === 'skills') return limited(markClaimed(trainedSkillOptions(character, def.minRank ?? 'trained')));
   const narrowed = limited(markClaimed(narrowChoiceOptions(recordId, def, effectiveChoiceOptions(recordId, def, character, content), character, content)));
   // An `ownsFeature` option's value IS a classFeature id, so the record it names can describe it. The
@@ -1821,6 +1825,11 @@ function answersInOtherTakes(recordId: string, build: BuildState, slotKey?: stri
       if (v && (ck === k || ck.startsWith(`${k}#`))) out.add(v);
     }
   }
+  // A GRANTED taking's answer counts too — a cloistered cleric's doctrine hands over Domain
+  // Initiate and its domain lives in grantedFeatChoices, not in any slot. The `slotKey` test is
+  // what stops the granted taking's OWN picker (which passes no slotKey) greying its own answer.
+  const granted = build.grantedFeatChoices?.[recordId];
+  if (granted && slotKey) out.add(granted);
   return out;
 }
 
@@ -2017,6 +2026,36 @@ export function buildUsesDeity(build: BuildState, content: ContentDatabase): boo
  * because inside `buildCharacter` the cap is applied while the spellcasting entries are assembled —
  * before the spell-slot bonuses are collected and before `feats` exists.
  */
+/**
+ * A CLASS ARCHETYPE's spellcasting prices and shape, shared with the Builder exactly the way
+ * `cantripBonusFor` is: the sheet applied slotCap/cantripDelta while the builder's pickers kept
+ * offering the uncapped class table, so a flexible spellcaster picked six cantrips and three
+ * 1st-rank spells and the sheet silently kept four and two. One function, both sides.
+ */
+export function classArchetypeSpellMods(
+  build: BuildState,
+  content: ContentDatabase,
+): { slotCap?: number; cantripDelta: number; spellCollection: boolean } {
+  let slotCap: number | undefined;
+  let cantripDelta = 0;
+  let spellCollection = false;
+  for (const id of Object.values(build.featPicks ?? {})) {
+    const ca = id ? content.feats[id as string]?.classArchetype : undefined;
+    if (!ca) continue;
+    const classes = Array.isArray(ca.classId) ? ca.classId : [ca.classId];
+    if (!classes.includes(build.classId ?? '') && !classes.includes(build.classId2 ?? '')) continue;
+    if (ca.slotCap != null) slotCap = Math.min(slotCap ?? Infinity, ca.slotCap);
+    // ⚠ The FLAT feature cut only. The dedication's give-back ("four cantrips instead of three; at
+    // 4th, five instead of four") is NOT this field's job — it already lives on the feat record's
+    // spellSlotBonus.cantripsAt ladder, read by cantripBonusFor. The two COMPOSE to Table 5-1's
+    // cantrip column (cleric: 5-2+1=4 at 2nd-3rd, 5-2+2=5 from 4th); carrying the give-back here
+    // too double-counted it the one time it was tried.
+    cantripDelta += ca.cantripDelta ?? 0;
+    if (ca.spellCollection) spellCollection = true;
+  }
+  return { slotCap, cantripDelta, spellCollection };
+}
+
 export function cantripBonusFor(build: BuildState, content: ContentDatabase): number {
   /*
    * A record whose cantrip budget is NEGATIVE because it swaps a cantrip in — Adapted Cantrip's `-1`
@@ -2807,19 +2846,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
    * Computed here rather than in the class-archetype block further down, which runs long after the
    * spellcasting entries have been built — a slot cap applied there would change nothing.
    */
-  const archSpellMods = (() => {
-    let slotCap: number | undefined;
-    let cantripDelta = 0;
-    for (const id of Object.values(build.featPicks ?? {})) {
-      const ca = id ? content.feats[id as string]?.classArchetype : undefined;
-      if (!ca) continue;
-      const classes = Array.isArray(ca.classId) ? ca.classId : [ca.classId];
-      if (!classes.includes(build.classId ?? '') && !classes.includes(build.classId2 ?? '')) continue;
-      if (ca.slotCap != null) slotCap = Math.min(slotCap ?? Infinity, ca.slotCap);
-      cantripDelta += ca.cantripDelta ?? 0;
-    }
-    return { slotCap, cantripDelta };
-  })();
+  const archSpellMods = classArchetypeSpellMods(build, content);
   /** Apply a class archetype's per-rank slot ceiling. The archetype's own text exempts restricted
    *  slots ("the wizard's specialist school spells or the cleric's divine font spells"), and those
    *  live in `restrictedSlots` / `font` rather than in this table, so capping here is exactly right. */
@@ -3347,10 +3374,18 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   // under the granting feat in the builder).
   const focusBonusIds: string[] = [];
   const pushFocusBonus = (id?: string | null) => {
-    if (id && content.feats[id] && !focusSeen.has(id)) {
-      focusSeen.add(id);
-      focusBonusIds.push(id);
-    }
+    if (!id || !content.feats[id]) return;
+    const f = content.feats[id]!;
+    // A repeatable feat with a sub-choice can be held in a SLOT and GRANTED at once with two
+    // answers — Domain Initiate's "Special: select this feat multiple times, a different domain
+    // each time" — so the granted copy must still reach applyFeatFocus. Identical answers still
+    // collapse, because distinctFeatFocus dedupes by SPELL id: the doctrine's two records
+    // (cloistered-cleric + first-doctrine-cloistered-cleric, one printed grant on two ids, both
+    // reading the same grantedFeatChoices answer) keep paying exactly one Focus Point.
+    const repeatableChoice = maxTakes(f) > 1 && !!f.choice;
+    if (focusSeen.has(id) && !repeatableChoice) return;
+    focusSeen.add(id);
+    if (!focusBonusIds.includes(id)) focusBonusIds.push(id);
   };
   for (const id of backgroundGrantedFeats(resolveBackground(build, content), build.backgroundSkillChoice)) pushFocusBonus(id);
   pushFocusBonus(build.heritageFeatId);
@@ -3621,6 +3656,29 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
           });
         }
       }
+    } else if (archSpellMods.spellCollection) {
+      // FLEXIBLE SPELLCASTER: "you prepare a spell collection rather than preparing spells into
+      // each spell slot individually … you can cast any of the spells in your collection by using
+      // a spell slot of an appropriate level." The collection is a repertoire over the class's
+      // capped slot table (WG redefines the casting source SPONTANEOUS-REPERTOIRE — same shape),
+      // and once 2nd-rank spells arrive every collected spell heightens "similar to a spontaneous
+      // spellcaster's signature spells" — the Unlimited Signature Spells route, pinned with
+      // signatureFixed so the archetype's stars cannot be un-clicked. Before this branch the
+      // engine charged the archetype's prices (slotCap, cantripDelta) and still nailed one spell
+      // into one slot, withholding the entire benefit.
+      entry.type = 'spontaneous';
+      entry.slots = {};
+      entry.repertoire = {};
+      for (const [rankStr, count] of Object.entries(slotCounts)) {
+        const rank = Number(rankStr);
+        entry.slots[rank] = { max: count, used: 0 };
+        entry.repertoire[rank] = [...new Set([...(build.spells[rank] ?? []).slice(0, count), ...(grantedByRank[rank] ?? [])])];
+        if (grantedByRank[rank]?.length) (entry.grantedRepertoire ??= {})[rank] = [...grantedByRank[rank]];
+      }
+      if (Object.keys(slotCounts).some((r) => Number(r) >= 2)) {
+        entry.signature = [...new Set(Object.values(entry.repertoire).flat())];
+        entry.signatureFixed = [...entry.signature];
+      }
     } else {
       // Cleric/druid: prepare from the whole tradition list each day.
       entry.prepared = {};
@@ -3687,7 +3745,11 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     // with the class DC (not the spell DC).
     const fontSlots = level >= 15 ? 6 : level >= 5 ? 5 : 4;
     const hasFont = (cls.features ?? []).some((f) => f.featureId === 'divine-font');
-    const ranks = Object.keys(entry.prepared ?? {}).map(Number).filter((r) => r <= 9);
+    // `?? entry.slots`: a flexible spellcaster's entry is a repertoire with `slots` and no
+    // `prepared`, and the font's rank must not move — "extra spell slots you gain that have
+    // additional restrictions, like … the cleric's divine font spells, don't change due to this
+    // archetype". Without it the font fell to rank 1 the moment the collection branch landed.
+    const ranks = Object.keys(entry.prepared ?? entry.slots ?? {}).map(Number).filter((r) => r <= 9);
     const topRank = ranks.length ? Math.max(...ranks) : 1;
     if (subOption?.id === 'battle-creed') {
       entry.font = {
@@ -4174,6 +4236,20 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   // taken once, so dedup by id (the granted feat wins over a duplicate pick).
   const feats: FeatChoice[] = [];
   const takenFeats = new Set<string>();
+  /* A repeatable feat with a sub-choice can legally arrive TWICE — once from a slot, once granted
+   * (Domain Initiate: a cloistered cleric's doctrine grants it, and "Special: You can select this
+   * feat multiple times, selecting a different domain each time"). Keyed on the ANSWER, never the
+   * granter — which is exactly what keeps a grant carried on two record ids (cloistered-cleric +
+   * first-doctrine-cloistered-cleric, one printed grant) collapsed to one row. An unanswered grant
+   * counts as the empty answer, so the row (and with it the builder's domain picker) still appears
+   * before the player has chosen. */
+  const distinctRepeatableGrant = (gid: string, answer: string | undefined): boolean => {
+    const f = content.feats[gid];
+    if (!f?.choice || maxTakes(f) <= 1) return false;
+    const rows = feats.filter((x) => x.featId === gid);
+    if (rows.length >= maxTakes(f)) return false;
+    return !rows.some((x) => (x.choice?.value ?? '') === (answer ?? ''));
+  };
   // A background whose own sub-choice IS the feat ("Multilingual or Assurance") — four of them.
   // Read through the same classifier the skill/Lore branch uses, so one place decides what a
   // background's answer means.
@@ -4488,7 +4564,10 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     }
     for (const src of grantSources) {
       for (const gid of src.grants ?? []) {
-        if (takenFeats.has(gid) || !content.feats[gid]) continue;
+        if (!content.feats[gid]) continue;
+        // A repeatable feat the player ALSO spent a slot on is two takings, not one — see
+        // distinctRepeatableGrant above.
+        if (takenFeats.has(gid) && !distinctRepeatableGrant(gid, grantedChoiceById[gid]?.value)) continue;
         /* TWO VEHICLES CAN GRANT THE SAME FEAT, and this one does not know the answer.
          *
          * A record may carry `grantsFeats: ['additional-lore']` in core.json (here) AND an entry in
@@ -4594,7 +4673,10 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         const distinctTaking = FEAT_GRANT_BOUND_CHOICE[srcId]?.[gid]?.kind === 'fixedLore';
         const pair = `${srcId}|${gid}`;
         if (grantedPairs.has(pair)) continue;
-        if (takenFeats.has(gid) && !distinctTaking) continue;
+        // The row's choice is resolved ABOVE the guard so the two cannot disagree — the
+        // repeatable-grant test compares against the same answer the pushed row will carry.
+        const grantChoice = boundGrantChoice(build, content, srcId, gid, srcFc?.slotKey) ?? grantedChoiceById[gid];
+        if (takenFeats.has(gid) && !distinctTaking && !distinctRepeatableGrant(gid, grantChoice?.value)) continue;
         grantedPairs.add(pair);
         const alreadyQueued = takenFeats.has(gid);
         takenFeats.add(gid);
@@ -4607,7 +4689,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         // A BOUND answer wins over the granted feat's own picker: Weight of Experience's Assurance
         // belongs to the skill it just trained, and a stale free pick in `grantedFeatChoices` must
         // not override the feat's own text. Only this lane reads it — the granters are all feats.
-        feats.push({ featId: gid, level: srcLevel, category: content.feats[gid].category as FeatCategory, grantedBy: srcId, choice: boundGrantChoice(build, content, srcId, gid, srcFc?.slotKey) ?? grantedChoiceById[gid] });
+        feats.push({ featId: gid, level: srcLevel, category: content.feats[gid].category as FeatCategory, grantedBy: srcId, choice: grantChoice });
         if (!alreadyQueued) queue.push(gid);
       }
       /*
@@ -5267,6 +5349,19 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   // The DEITY and the BACKGROUND can carry a pick too (Lurlup's optional Unholy sanctification;
   // Magical Experiment). Neither was resolved, so both were questions with no answer and no effect.
   if (build.deityId) resolvePick(build.deityId, content.deities[build.deityId]?.effectChoices, applyAlwaysOn, content.deities[build.deityId]?.name ?? build.deityId);
+  /* "This gives you the holy or unholy trait" — Deity (Cleric). The ANSWER lives on the DEITY
+   * record's `sanctification` effect choice, whose options carry no grant (measured: 0 of 522
+   * options across the 261 sanctified deities), and applyAlwaysOn only ever sees `opt.grant` — so
+   * the trait reached nobody who got it the printed way while a CHAMPION of the same god (whose
+   * deity-champion choice ships a grant) got it fine. Gated on owning the cleric feature, so a
+   * fighter who merely worships Jaidi stays unsanctified — and deity-champion is deliberately NOT
+   * in the list: the champion answers through their own feature's choice, and reading the deity
+   * answer too could sanctify a champion against their explicit 'none'. */
+  if (build.deityId && ownedFeatureIds.has('deity-cleric')) {
+    const sanct = build.effectChoices?.[`${build.deityId}:sanctification`];
+    if (sanct === 'holy' || sanct === 'unholy')
+      chosenCreatureTraits.push({ trait: sanct, source: content.deities[build.deityId]?.name ?? build.deityId });
+  }
   if (build.backgroundId) resolvePick(build.backgroundId, content.backgrounds[build.backgroundId]?.effectChoices, applyAlwaysOn, content.backgrounds[build.backgroundId]?.name ?? build.backgroundId);
   for (const fid of ownedFeatureIds) resolvePick(fid, content.classFeatures[fid]?.effectChoices, applyAlwaysOn, content.classFeatures[fid]?.name ?? fid);
   // A chosen subclass / extra-choice option (a kineticist element gate, the wizard's Runelord school)

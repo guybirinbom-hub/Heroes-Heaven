@@ -101,12 +101,15 @@ function castText(c?: ActionCost): string {
 function SpellDetail({
   spell,
   maxRank,
+  atRank,
   signature,
   notes,
   onClose,
 }: {
   spell: Spell;
   maxRank?: number;
+  /** The rank of the SLOT this spell was opened from — a prepared/font slot heightens what it holds. */
+  atRank?: number;
   signature?: boolean;
   /** Principle N2 — clauses a record the character HAS writes onto this spell (see spellNotesFor). */
   notes?: { from: string; note: string }[];
@@ -128,7 +131,9 @@ function SpellDetail({
   // Focus spells heighten automatically to your maximum, exactly as cantrips do — "focus spells are
   // automatically heightened to half your level rounded up". Only cantrips were covered, so a focus
   // spell's detail view showed its 1st-rank damage forever.
-  const autoRank = isCantrip || isFocus ? top : baseRank;
+  // …or the rank of the slot it was opened from: a spell prepared in a higher-rank slot is cast at
+  // that slot's rank, so its numbers heighten to it (never past the entry's top).
+  const autoRank = isCantrip || isFocus ? top : Math.min(top, Math.max(baseRank, atRank ?? baseRank));
   const [castRank, setCastRank] = useState<number>(showPicker ? baseRank : autoRank);
   const r = showPicker ? castRank : autoRank;
   // Upcast scaling at the viewed rank — inline damage in the prose, area on the stat.
@@ -1164,6 +1169,14 @@ export function SpellsTab({
   const [filtersOpen, setFiltersOpen] = useState(false); // mobile: filter row toggles open over the results
   const [search, setSearch] = useState('');
   const [detail, setDetail] = useState<Spell | null>(null);
+  /* The rank of the SLOT a spell was opened from. A spell prepared in (or cast from) a higher-rank
+   * slot IS heightened to that slot — a rank-2 font Heal is 2d8, and the popup showed 1d8 forever.
+   * Set by the prepared-slot and font cards, cleared by every other opener (openDetail). */
+  const [detailAtRank, setDetailAtRank] = useState<number | undefined>(undefined);
+  const openDetail = (sp: Spell, atRank?: number) => {
+    setDetailAtRank(atRank);
+    setDetail(sp);
+  };
   // Mobile: the spellcasting-detail popup (which entry's details are shown), opened by tapping the header.
   const [scInfo, setScInfo] = useState<string | null>(null);
   // Mobile: which spell section tab is active (cantrips / a rank / focus / items / …); '' = first.
@@ -1328,7 +1341,7 @@ export function SpellsTab({
           // there; the class pool never wrote it, so the attribution costs no new field.
           const from = main.spellSources?.[id];
           return sp && visible(sp) ? (
-            <SpellCard key={id + i} name={sp.name} cost={sp.cast} meta={from ? `at will · from ${from}` : 'at will'} marks={marksFor(id)} onClick={() => setDetail(sp)} />
+            <SpellCard key={id + i} name={sp.name} cost={sp.cast} meta={from ? `at will · from ${from}` : 'at will'} marks={marksFor(id)} onClick={() => openDetail(sp)} />
           ) : null;
         })
         .concat(
@@ -1336,7 +1349,7 @@ export function SpellsTab({
             const sp = id ? content.spells[id] : null;
             if (!sp) return filtering ? null : <SpellCard key={'tc' + i} name="Empty cantrip" meta="traded" empty />;
             return visible(sp) ? (
-              <SpellCard key={'tc' + i} name={sp.name} cost={sp.cast} meta="traded · at will" marks={marksFor(sp.id)} onClick={() => setDetail(sp)} />
+              <SpellCard key={'tc' + i} name={sp.name} cost={sp.cast} meta="traded · at will" marks={marksFor(sp.id)} onClick={() => openDetail(sp)} />
             ) : null;
           }),
         )
@@ -1390,7 +1403,7 @@ export function SpellsTab({
               // A bonus slot carries its own key, derived from the rank it was traded FROM, so undoing
               // a different trade can't renumber it and move this spell.
               onPip={onPlay ? () => onPlay((p) => toggleExpended(p, slotKeyOf(main.id, rank, i, slot))) : undefined}
-              onClick={sp ? () => setDetail(sp) : undefined}
+              onClick={sp ? () => openDetail(sp, rank) : undefined}
             />
           );
         })
@@ -1434,7 +1447,7 @@ export function SpellsTab({
               cost={sp?.cast}
               meta={'rank ' + rank}
               sig={main.signature?.includes(id)}
-              onClick={sp ? () => setDetail(sp) : undefined}
+              onClick={sp ? () => openDetail(sp) : undefined}
             />
           );
         })
@@ -1450,7 +1463,7 @@ export function SpellsTab({
               cost={sp?.cast}
               meta={'rank ' + rank + ' · signature'}
               sig={true}
-              onClick={sp ? () => setDetail(sp) : undefined}
+              onClick={sp ? () => openDetail(sp) : undefined}
             />
           );
         });
@@ -1528,7 +1541,7 @@ export function SpellsTab({
               meta={ord(fr) + ' rank'}
               pip={(main.font!.expended ?? [])[i] ? 'filled' : 'empty'}
               onPip={onPlay ? () => onPlay((p) => toggleExpended(p, `${main.id}:font:${i}`)) : undefined}
-              onClick={fontSpell ? () => setDetail(fontSpell) : undefined}
+              onClick={fontSpell ? () => openDetail(fontSpell, fr) : undefined}
             />
           ))}
         </div>
@@ -1564,7 +1577,7 @@ export function SpellsTab({
             meta={`${ord(slot.rank)} rank · ${label.toLowerCase()}`}
             pip={slot.expended ? 'filled' : 'empty'}
             onPip={onPlay ? () => onPlay((p) => toggleExpended(p, slot.id)) : undefined}
-            onClick={sp ? () => setDetail(sp) : undefined}
+            onClick={sp ? () => openDetail(sp) : undefined}
             empty={!sp && !slot.spontaneous}
           />
         );
@@ -1606,7 +1619,7 @@ export function SpellsTab({
             name={sp?.name ?? id} marks={marksFor(id)}
             cost={sp?.cast}
             meta={ord(rank) + ' rank'}
-            onClick={sp ? () => setDetail(sp) : undefined}
+            onClick={sp ? () => openDetail(sp) : undefined}
           />,
         );
       }
@@ -1629,7 +1642,7 @@ export function SpellsTab({
             name={sp?.name ?? id} marks={marksFor(id)}
             cost={sp?.cast}
             meta={rank === 0 ? 'Cantrip' : ord(rank) + ' rank'}
-            onClick={sp ? () => setDetail(sp) : undefined}
+            onClick={sp ? () => openDetail(sp) : undefined}
           />,
         );
       }
@@ -1656,7 +1669,7 @@ export function SpellsTab({
             cost={sp?.cast}
             meta={`rank ${shown}${from ? ` · from ${from}` : ''}`}
             fp
-            onClick={sp ? () => setDetail(sp) : undefined}
+            onClick={sp ? () => openDetail(sp) : undefined}
           />,
         );
       }
@@ -1860,7 +1873,7 @@ export function SpellsTab({
         ? `at will · heightened to ${ord(Math.min(10, Math.ceil(character.level / 2)))}${cFrom ? ` · from ${cFrom}` : ''}${cTrad && cTrad !== entry.tradition ? ` · ${cTrad}` : ''}`
         : 'cantrip · at will';
       cards.push(
-        <SpellCard key={`${entry.id}:c:${id}`} name={sp?.name ?? id} cost={sp?.cast} meta={cMeta} marks={marksFor(id)} onClick={sp ? () => setDetail(sp) : undefined} />,
+        <SpellCard key={`${entry.id}:c:${id}`} name={sp?.name ?? id} cost={sp?.cast} meta={cMeta} marks={marksFor(id)} onClick={sp ? () => openDetail(sp) : undefined} />,
       );
     }
     for (const rank of Object.keys(entry.repertoire ?? {}).map(Number).sort((a, b) => a - b)) {
@@ -1891,7 +1904,7 @@ export function SpellsTab({
             name={sp?.name ?? id} marks={marksFor(id)}
             cost={sp?.cast}
             meta={meta}
-            onClick={sp ? () => setDetail(sp) : undefined}
+            onClick={sp ? () => openDetail(sp) : undefined}
             pip={isInnate && uses !== 0 ? (innateUsedSet.has(id) ? 'empty' : 'filled') : undefined}
             onPip={isInnate && uses !== 0 && onPlay ? () => onPlay((p) => toggleInnateCast(p, entry.id, id)) : undefined}
             {...castProps(rank)}
@@ -1975,7 +1988,7 @@ export function SpellsTab({
                 // The granting record and the clause it attaches — Read the Land's Commune is cast in
                 // 1 hour without a secondary caster, which is the whole reason to take the feat.
                 meta={`rank ${sp.rank}${sp.ritualPrimary ? ` · ${sp.ritualPrimary}` : ''}${grant ? ` · ${grant.from}` : ''}${grant?.note ? ` · ${grant.note}` : ''}`}
-                onClick={() => setDetail(sp)}
+                onClick={() => openDetail(sp)}
               />
             ))}
             {onPlay && (
@@ -2222,6 +2235,7 @@ export function SpellsTab({
           key={detail.id}
           spell={detail}
           maxRank={maxRank}
+          atRank={detailAtRank}
           signature={signatureIds.has(detail.id)}
           notes={spellNotesFor(character, detail.id)}
           onClose={() => setDetail(null)}

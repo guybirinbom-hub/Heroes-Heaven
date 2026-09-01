@@ -1530,6 +1530,12 @@ export interface ClassArchetype {
   /** A change to the number of cantrips the CLASS grants ("reduce the number of cantrips you gain
    *  from your class by 2"). Negative to reduce. Feats add theirs on top via `spellSlotBonus`. */
   cantripDelta?: number;
+  /** The archetype replaces per-slot preparation with a spell COLLECTION cast from any slot of an
+   *  appropriate rank (Flexible Spellcaster). The entry becomes a repertoire over the class's capped
+   *  slot table, with every collected spell heightenable once 2nd-rank spells arrive — the printed
+   *  "similar to a spontaneous spellcaster's signature spells". WG's shape: the class casting source
+   *  is redefined SPONTANEOUS-REPERTOIRE. */
+  spellCollection?: boolean;
   /**
    * "Replace your spell list with the elemental spell list" (Elemental Magic). The entry keeps its
    * tradition — spell attack rolls, DC and the slot table are untouched — but the pool the picker

@@ -34,3 +34,23 @@ export function reconcileGmWork(args: { live: string; work: string; dirty: boole
 export function playerWorkWasOverwritten(lastPublished: string | undefined, localNow: string): boolean {
   return !!lastPublished && lastPublished !== localNow;
 }
+
+/**
+ * Which fetched GM edits are NEW to this device — strictly newer than the stamp of the last edit
+ * applied for the same (campaign, character).
+ *
+ * The stamp exists because the cleanup DELETE on `gm_character_edits` is best-effort: on a database
+ * missing the `gce_owner_delete` policy it "succeeds" while removing NOTHING, and the surviving row
+ * was then re-applied on every poll tick (2.5 s) — the player's sheet rewound to the GM's stale copy
+ * seconds after every local change, inventory moves included, with no error anywhere. Filtering by
+ * stamp makes that loop structurally impossible: however long a row lingers, it applies exactly once.
+ *
+ * A missing/empty `updatedAt` on a fetched edit compares as '' and is filtered once any stamp exists
+ * for its key; with no stamp it is skipped too — a row with no timestamp cannot prove it is new.
+ */
+export function editsToApply<E extends { campaignId: string; charId: string; updatedAt?: string }>(
+  edits: E[],
+  appliedStamps: Record<string, string>,
+): E[] {
+  return edits.filter((e) => (appliedStamps[`${e.campaignId}|${e.charId}`] ?? '') < (e.updatedAt || ''));
+}
