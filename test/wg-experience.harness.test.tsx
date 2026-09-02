@@ -60,6 +60,9 @@ type Row = { bucket: string; id: string; name: string; level: number | null };
 
 const BATCH = process.env.WG_EXPERIENCE_BATCH;
 const OUT = process.env.WG_EXPERIENCE_OUT;
+/** REAL-CHARACTER MODE: a .codex.json export. The rows are everything that character owns and every
+ *  host is the character's own build — the same judge, on the sheet the owner actually plays. */
+const CHARACTER = process.env.WG_EXPERIENCE_CHARACTER;
 const noop = () => undefined;
 const num = (s: string | undefined) => (s === undefined || s === '' ? null : Number(s));
 
@@ -461,20 +464,23 @@ const ownedAt20 = (db: ContentDatabase, classId: string, subclassId: string | nu
   return s;
 };
 
-function classFeatureHost(db: ContentDatabase, id: string): Host {
-  let owner: { classId: string; subclassId: string | null } | null = null;
-  for (const classId of Object.keys(db.classes)) {
-    if (ownedAt20(db, classId, null).has(id)) { owner = { classId, subclassId: null }; break; }
-    for (const opt of db.classes[classId].subclass?.options ?? []) {
-      if (ownedAt20(db, classId, opt.id as string).has(id)) { owner = { classId, subclassId: opt.id as string }; break; }
+function classFeatureHost(db: ContentDatabase, id: string, fixed?: { build: BuildState; owner: { classId: string; subclassId: string | null } }): Host {
+  let owner: { classId: string; subclassId: string | null } | null = fixed?.owner ?? null;
+  if (!fixed) {
+    for (const classId of Object.keys(db.classes)) {
+      if (ownedAt20(db, classId, null).has(id)) { owner = { classId, subclassId: null }; break; }
+      for (const opt of db.classes[classId].subclass?.options ?? []) {
+        if (ownedAt20(db, classId, opt.id as string).has(id)) { owner = { classId, subclassId: opt.id as string }; break; }
+      }
+      if (owner) break;
     }
-    if (owner) break;
   }
-  const base = minimalHost(db, owner?.classId ?? null, 'human', 20);
+  // Real-character mode hands in the owner's own build; the reference host is a level-20 minimal one.
+  const base = fixed?.build ?? minimalHost(db, owner?.classId ?? null, 'human', 20);
   if (!owner) {
     return { supported: false, reason: 'no class or subclass grants this feature at level 20', withBuild: base, withoutBuild: base, withDb: db, withoutDb: db, pages: [], meta: {} };
   }
-  const withBuild = { ...base, subclassId: owner.subclassId ?? base.subclassId };
+  const withBuild = fixed ? base : { ...base, subclassId: owner.subclassId ?? base.subclassId };
   const cls = db.classes[owner.classId];
   // A `<feature>-<class>` / `<feature>-<subclass>` variant is owned through its BASE feature; removing
   // the base removes both, so the base's controls are attributed to the variant too — recorded in meta.
@@ -515,10 +521,10 @@ function classFeatureHost(db: ContentDatabase, id: string): Host {
     withoutBuild,
     withDb: db,
     withoutDb,
-    pages: pagesFor(20),
+    pages: pagesFor(base.level),
     meta: {
       ...owner,
-      level: 20,
+      level: base.level,
       grantLevel,
       answered,
       removedFromClass: [...baseIds].filter((b) => b !== id).length ? [...baseIds] : [id],
@@ -660,20 +666,74 @@ function attributable(
   return kept;
 }
 
+/* ---- REAL-CHARACTER MODE ------------------------------------------------------------------------- */
+
+type CharacterExport = { build: BuildState; play?: { inventory?: { itemId: string }[] } };
+
+/** Every record the exported character owns, as rows for the judge. */
+function characterRows(db: ContentDatabase, exp: CharacterExport): Row[] {
+  const b = exp.build;
+  const ch = buildCharacter(b, db);
+  const rows: Row[] = [];
+  const add = (bucket: string, id: string | null | undefined) => {
+    if (!id) return;
+    const rec = (db as unknown as Record<string, Record<string, { name?: string; level?: number | null }>>)[bucket]?.[id];
+    if (!rec || rows.some((r) => r.bucket === bucket && r.id === id)) return;
+    rows.push({ bucket, id, name: rec.name ?? id, level: rec.level ?? null });
+  };
+  add('ancestries', b.ancestryId);
+  add('heritages', b.heritageId);
+  if (b.backgroundId && b.backgroundId !== '__custom__') add('backgrounds', b.backgroundId);
+  for (const f of ch.feats) add('feats', f.featId);
+  if (b.classId) for (const id of classFeatureIdsOwned({ classId: b.classId, subclassId: b.subclassId ?? null, level: b.level }, db)) add('classFeatures', id);
+  for (const it of exp.play?.inventory ?? []) add('items', it.itemId);
+  return rows;
+}
+
+/** The character's own build is the WITH host; WITHOUT takes exactly that one record away. */
+function characterHost(db: ContentDatabase, exp: CharacterExport, row: Row): Host {
+  const cb = exp.build;
+  const pages = pagesFor(cb.level);
+  const meta0 = { classId: cb.classId, ancestryId: cb.ancestryId, level: cb.level, character: cb.name };
+  const host = (withoutBuild: BuildState, without: string, extra: Record<string, unknown> = {}): Host => ({
+    supported: true, withBuild: cb, withoutBuild, withDb: db, withoutDb: db, sheetBuild: cb, pages, meta: { ...meta0, without, ...extra },
+  });
+  if (row.bucket === 'feats') {
+    const slot = Object.entries(cb.featPicks ?? {}).find(([, v]) => v === row.id)?.[0];
+    if (slot) return host({ ...cb, featPicks: { ...cb.featPicks, [slot]: null } }, 'slot-empty', { slotKey: slot, slotRendered: true });
+    const pick = Object.entries(cb.pickFeatChoices ?? {}).find(([, v]) => v === row.id)?.[0];
+    if (pick) {
+      const p = { ...(cb.pickFeatChoices ?? {}) };
+      delete p[pick];
+      return host({ ...cb, pickFeatChoices: p }, 'pick-unanswered', { slotKey: pick, slotRendered: true, via: 'pick' });
+    }
+    if (cb.customBackground?.skillFeatId === row.id) return host({ ...cb, customBackground: { ...cb.customBackground, skillFeatId: null } }, 'background-feat-null');
+    const granter = buildCharacter(cb, db).feats.find((f) => f.featId === row.id)?.grantedBy ?? null;
+    return { supported: false, reason: `granted by ${granter ?? 'a record the build does not name'} — judged with that record`, withBuild: cb, withoutBuild: cb, withDb: db, withoutDb: db, pages: [], meta: { ...meta0, grantedBy: granter } };
+  }
+  if (row.bucket === 'classFeatures' && cb.classId) return classFeatureHost(db, row.id, { build: cb, owner: { classId: cb.classId, subclassId: cb.subclassId ?? null } });
+  if (row.bucket === 'heritages') return host({ ...cb, heritageId: null }, 'heritage-null');
+  if (row.bucket === 'ancestries') return host({ ...cb, ancestryId: null, heritageId: null }, 'ancestry-null');
+  if (row.bucket === 'backgrounds') return host({ ...cb, backgroundId: null }, 'background-null');
+  if (row.bucket === 'items') return { supported: true, kind: 'item', itemId: row.id, withBuild: cb, withoutBuild: cb, withDb: db, withoutDb: db, pages: ['item'], meta: { ...meta0, without: 'not-in-inventory', note: 'worn + equipped + invested on the character; controls read off the sheet ItemDetail card' } };
+  return { supported: false, reason: `no host strategy for bucket ${row.bucket}`, withBuild: cb, withoutBuild: cb, withDb: db, withoutDb: db, pages: [], meta: meta0 };
+}
+
 describe('wg experience harness', () => {
-  const run = BATCH && OUT ? it : it.skip;
+  const run = (BATCH || CHARACTER) && OUT ? it : it.skip;
   run(
     'records the controls and sheet effects every record in the batch adds',
     () => {
       const db = content();
-      const batch = JSON.parse(readFileSync(BATCH!, 'utf8').replace(/^﻿/, '')) as Row[];
+      const character = CHARACTER ? (JSON.parse(readFileSync(CHARACTER, 'utf8').replace(/^﻿/, '')) as CharacterExport) : null;
+      const batch: Row[] = character ? characterRows(db, character) : (JSON.parse(readFileSync(BATCH!, 'utf8').replace(/^﻿/, '')) as Row[]);
       const records: Record<string, unknown>[] = [];
       const started = Date.now();
       for (const row of batch) {
         const t0 = Date.now();
         const rec: Record<string, unknown> = { id: row.id, bucket: row.bucket, name: row.name, level: row.level };
         try {
-          const host = hostFor(db, row);
+          const host = character ? characterHost(db, character, row) : hostFor(db, row);
           rec.supported = host.supported;
           rec.host = host.meta;
           if (!host.supported) {

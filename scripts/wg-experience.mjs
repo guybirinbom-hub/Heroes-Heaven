@@ -36,23 +36,28 @@ const VERBOSE = process.argv.includes('--verbose');
 const HOST_LEVEL = 20; // the harness builds every host at level 20 so LEVEL-gated ops are reachable
 
 const batchPath = arg('--batch', null);
-if (!batchPath) { console.error('usage: node scripts/wg-experience.mjs --batch work/wg-batch-0NN.json [--skip-harness] [--verbose]'); process.exit(2); }
-const n = (batchPath.match(/wg-batch-(\d+)\.json$/) ?? [])[1];
-if (!n || !existsSync(join(ROOT, batchPath))) { console.error(`batch file must be an existing work/wg-batch-0NN.json (got ${batchPath})`); process.exit(2); }
+/* REAL-CHARACTER MODE: `--character work/wg/<name>.codex.json` — the rows are everything that exported
+ * character owns and every host is the character's own build (see the harness's characterHost). */
+const characterPath = arg('--character', null);
+if (!batchPath && !characterPath) { console.error('usage: node scripts/wg-experience.mjs --batch work/wg-batch-0NN.json | --character work/wg/<name>.codex.json [--skip-harness] [--verbose]'); process.exit(2); }
+const n = batchPath ? (batchPath.match(/wg-batch-(\d+)\.json$/) ?? [])[1] : null;
+if (batchPath && (!n || !existsSync(join(ROOT, batchPath)))) { console.error(`batch file must be an existing work/wg-batch-0NN.json (got ${batchPath})`); process.exit(2); }
+if (characterPath && !existsSync(join(ROOT, characterPath))) { console.error(`no character export at ${characterPath}`); process.exit(2); }
 const DUMP = join(ROOT, 'work/wg/wg-data.sql');
 if (!existsSync(DUMP)) { console.error("No Wanderer's Guide dump at work/wg/wg-data.sql (gitignored on purpose: GPL-3.0; differ only)."); process.exit(2); }
 
-const RAW = `work/.experience-raw-${n}.json`;
-const OUT = batchPath.replace(/\.json$/, '-experience.json');
+const slug = characterPath ? characterPath.replace(/^.*[\\/]/, '').replace(/\.codex\.json$/i, '').replace(/[^a-z0-9]+/gi, '-').toLowerCase() : null;
+const RAW = characterPath ? `work/.experience-raw-character-${slug}.json` : `work/.experience-raw-${n}.json`;
+const OUT = characterPath ? `work/wg-character-${slug}-experience.json` : batchPath.replace(/\.json$/, '-experience.json');
 const read = (p) => JSON.parse(readFileSync(join(ROOT, p), 'utf8').replace(/^﻿/, ''));
 const norm = (s) => String(s ?? '').toLowerCase().replace(/[^a-z0-9]+/g, '');
 
 /* ---- 1. play the batch on the real builder ------------------------------------------------------- */
 if (!process.argv.includes('--skip-harness')) {
-  console.log(`experience: playing ${batchPath} on the real builder (jsdom) …`);
+  console.log(`experience: playing ${batchPath ?? characterPath} on the real builder (jsdom) …`);
   const r = spawnSync('npx', ['vitest', 'run', 'test/wg-experience.harness.test.tsx', '--reporter=dot'], {
     cwd: ROOT, stdio: 'inherit', shell: true,
-    env: { ...process.env, WG_EXPERIENCE_BATCH: batchPath, WG_EXPERIENCE_OUT: RAW },
+    env: { ...process.env, ...(batchPath ? { WG_EXPERIENCE_BATCH: batchPath } : { WG_EXPERIENCE_CHARACTER: join(ROOT, characterPath) }), WG_EXPERIENCE_OUT: RAW },
   });
   if (r.status !== 0) { console.error(`experience: the harness failed (exit ${r.status}); no verdicts written`); process.exit(1); }
 }
@@ -61,7 +66,8 @@ if (!existsSync(join(ROOT, RAW))) { console.error(`experience: no harness output
 /* ---- 2. their side ------------------------------------------------------------------------------- */
 const raw = read(RAW);
 const ours = new Map((raw.records ?? []).map((r) => [r.id, r]));
-const batch = Object.values(read(batchPath));
+// In character mode the harness decided the rows (everything the character owns); they come back on the raw records.
+const batch = batchPath ? Object.values(read(batchPath)) : (raw.records ?? []).map((r) => ({ bucket: r.bucket, id: r.id, name: r.name, level: r.level ?? null }));
 const core = read('public/core.json');
 const sql = readFileSync(DUMP, 'utf8');
 const liveRows = wgRowsByBucket(sql);
