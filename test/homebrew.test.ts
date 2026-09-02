@@ -9,8 +9,12 @@ import {
 } from '../src/data/storage';
 import { SCHEMA_BY_TYPE, homebrewId } from '../src/sheet/homebrewSchemas';
 import { sourceCatalog, enabledBookSet } from '../src/rules/sources';
-import { applySources } from '../src/rules/build';
-import type { ContentDatabase } from '../src/rules/types';
+import { applySources, buildCharacter, emptyBuild } from '../src/rules/build';
+import { rebuildContent } from '../src/data';
+import { domainPoolFor } from '../src/rules/derive';
+import { mergeBundles } from '../src/data/cloudMerge';
+import { content as fullContent } from './_content';
+import type { ContentDatabase, Deity } from '../src/rules/types';
 
 const feat = (id: string, sourceId: string) =>
   ({ id, name: id, homebrewSourceId: sourceId, level: 1, category: 'general', traits: [], rarity: 'common', description: '' }) as never;
@@ -168,5 +172,134 @@ describe('homebrew integrates with the per-character Sources filter', () => {
   it('already-chosen homebrew survives even when its source is disabled', () => {
     const kept = applySources(content, enabledBookSet(undefined), new Set(['hbf']));
     expect(kept.feats.hbf).toBeTruthy();
+  });
+});
+
+/* ---- Homebrew DEITIES ---------------------------------------------------------------------------
+ * Owner, 2026-09-02: "i cant add a deity to home brew its a problem". `deities` was the one content
+ * bucket the Homebrew manager had no schema for AND the one bucket mergeWithSeed left out of the
+ * homebrew layer — so even a hand-written record would never have reached the builder. These pin both
+ * halves: the record a homebrew deity produces is shaped like a printed one, and every engine reader
+ * (font, deity skill, favored-weapon proficiency, Domain Initiate's pool, the cleric spell list)
+ * treats it identically. */
+describe('homebrew deities', () => {
+  const DEITY_FORM = {
+    name: 'Guyros',
+    edicts: ['Share your fire'],
+    anathema: ['Hoard warmth'],
+    divineFont: ['heal'],
+    skill: 'occultism',
+    sanctification: 'holy',
+    favoredWeapons: ['Scimitar'],
+    domains: ['fire', 'sun'],
+    alternateDomains: ['healing'],
+    spells: ['Fireball', 'Wall of Fire'],
+    traits: [],
+    rarity: 'common',
+    description: '<p>A homebrew god.</p>',
+  };
+  const makeDeity = (over: Record<string, string | string[]> = {}) =>
+    SCHEMA_BY_TYPE.deities.toEntry({ ...DEITY_FORM, ...over }, { id: 'hb-deities-guyros', sourceId: 's1', content: fullContent() }) as unknown as Deity;
+
+  it('is registered as an authorable homebrew type', () => {
+    expect(SCHEMA_BY_TYPE.deities?.label).toBe('Deity');
+    // The page pluralizes a label ending in "y" as "…ies", so the section reads "Deities".
+    expect(SCHEMA_BY_TYPE.deities.label.slice(0, -1) + 'ies').toBe('Deities');
+  });
+
+  it('toEntry produces a record shaped like a printed deity, with NAMES resolved to ids', () => {
+    const d = makeDeity();
+    // Every field a real record carries, in the same shape (compared against Sarenrae).
+    const real = fullContent().deities.sarenrae;
+    for (const k of ['domains', 'alternateDomains', 'divineFont', 'favoredWeapons', 'spells'] as const) {
+      expect(Array.isArray(d[k])).toBe(true);
+      expect(typeof d[k]![0]).toBe(typeof real[k]![0]);
+    }
+    expect(d.favoredWeapons).toEqual(['scimitar']); // "Scimitar" → the item id
+    expect(d.spells).toEqual(['fireball', 'wall-of-fire']); // spell NAMES → spell ids
+    expect(d.skill).toBe('occultism');
+    expect(d.divineFont).toEqual(['heal']);
+    expect(d.edicts).toEqual(['Share your fire']);
+    expect(d.anathema).toEqual(['Hoard warmth']);
+    // The exact sanctification shape printed deities use, so buildCharacter's
+    // `<deityId>:sanctification` answer and the builder's EffectChoicesPicker read it identically.
+    expect(d.effectChoices).toEqual(real.effectChoices);
+    expect(d.source).toEqual({ license: 'homebrew' });
+  });
+
+  it('sanctification modes map to the real option shapes (and "none" carries no choice at all)', () => {
+    expect(makeDeity({ sanctification: '' }).effectChoices).toBeUndefined();
+    expect(makeDeity({ sanctification: 'unholy' }).effectChoices![0].options!.map((o) => o.value)).toEqual(['unholy', 'none']);
+    expect(makeDeity({ sanctification: 'either' }).effectChoices![0].options!.map((o) => o.value)).toEqual(['holy', 'unholy', 'none']);
+  });
+
+  it('an unmatched weapon/spell name is kept verbatim and the engine simply ignores it', () => {
+    const d = makeDeity({ favoredWeapons: ['Nonexistent Blade'], spells: ['Nonexistent Spell'] });
+    expect(d.favoredWeapons).toEqual(['Nonexistent Blade']);
+    // Round-trips back into the editor unchanged, so the typo stays visible and fixable.
+    expect(SCHEMA_BY_TYPE.deities.toForm(d as unknown as Record<string, unknown>, fullContent()).favoredWeapons).toEqual(['Nonexistent Blade']);
+  });
+
+  it('toForm(toEntry(form)) round-trips every field', () => {
+    const back = SCHEMA_BY_TYPE.deities.toForm(makeDeity() as unknown as Record<string, unknown>, fullContent());
+    for (const k of Object.keys(DEITY_FORM) as (keyof typeof DEITY_FORM)[]) expect(back[k]).toEqual(DEITY_FORM[k]);
+  });
+
+  it('saving one and rebuilding content puts it in content.deities, tagged with its source book', () => {
+    saveHomebrewSource({ id: 's1', name: 'My Pantheon' });
+    saveHomebrewEntry('deities', makeDeity());
+    expect(loadHomebrewContent().deities['hb-deities-guyros'].name).toBe('Guyros');
+    const db = rebuildContent();
+    expect(db.deities['hb-deities-guyros']?.name).toBe('Guyros');
+    // The per-character Sources filter governs it like every other homebrew record.
+    expect(db.deities['hb-deities-guyros'].source).toEqual({ license: 'homebrew', book: 'My Pantheon' });
+  });
+
+  it('survives homebrew export → import (the generic file round-trip)', () => {
+    saveHomebrewEntry('deities', makeDeity());
+    const exported = JSON.parse(JSON.stringify({ sources: loadHomebrewSources(), content: loadHomebrewContent() }));
+    localStorage.clear();
+    for (const [type, entries] of Object.entries(exported.content) as [never, Record<string, never>][])
+      for (const e of Object.values(entries)) saveHomebrewEntry(type, e);
+    expect(loadHomebrewContent().deities['hb-deities-guyros'].spells).toEqual(['fireball', 'wall-of-fire']);
+  });
+
+  it('survives the cloud bundle merge', () => {
+    const d = makeDeity();
+    const empty = { roster: [], homebrew: loadHomebrewContent(), homebrewSources: {}, modes: {}, charUpdated: {} };
+    const local = { ...empty, homebrew: { ...empty.homebrew, deities: { 'hb-deities-guyros': d } } };
+    const merged = mergeBundles(local, empty);
+    expect(merged.homebrew.deities['hb-deities-guyros'].name).toBe('Guyros');
+  });
+
+  it('a level-1 cleric of a homebrew deity gets its font, skill, favored weapon, domains and spells', () => {
+    const d = makeDeity();
+    const db = { ...fullContent(), deities: { ...fullContent().deities, [d.id]: d } } as ContentDatabase;
+    const ch = buildCharacter(
+      {
+        ...emptyBuild(),
+        name: 't',
+        level: 1,
+        classId: 'cleric',
+        subclassId: 'cloistered-cleric',
+        keyAbility: 'wis',
+        ancestryId: 'human',
+        backgroundId: Object.keys(db.backgrounds)[0],
+        deityId: d.id,
+        divineFont: 'heal',
+      },
+      db,
+    );
+    // Divine font — constrained by the deity's own list.
+    expect(ch.spellcasting.find((s) => s.type === 'prepared')?.font?.type).toBe('heal');
+    // "Your deity grants you the trained proficiency rank in one skill…"
+    expect(ch.proficiencies.skills.occultism).toBe('trained');
+    // "…and with the deity's favored weapon."
+    expect(ch.proficiencies.weaponOverrides?.scimitar).toBe('trained');
+    // Domain Initiate offers the deity's domains.
+    expect(domainPoolFor(d.id, db, 'deity')).toEqual(['fire', 'sun']);
+    expect(domainPoolFor(d.id, db, 'deity+alternate')).toEqual(['fire', 'sun', 'healing']);
+    // The cleric's Deity feature adds the deity's spells to the cleric spell list.
+    expect(ch.spellListAdditions?.['cleric-casting']).toEqual(expect.arrayContaining(['fireball', 'wall-of-fire']));
   });
 });

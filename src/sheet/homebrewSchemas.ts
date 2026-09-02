@@ -18,6 +18,9 @@ import {
   type Action,
   type Ancestry,
   type Background,
+  type ContentDatabase,
+  type Deity,
+  type EffectChoice,
   type Feat,
   type Heritage,
   type SaveId,
@@ -28,6 +31,7 @@ import {
   type Vision,
 } from '../rules/types';
 import type { HomebrewType } from '../data/storage';
+import { DOMAIN_SPELLS } from '../rules/domains';
 
 export type FieldKind = 'text' | 'number' | 'rich' | 'select' | 'multi' | 'list';
 
@@ -50,8 +54,11 @@ export interface HBSchema {
   label: string;
   icon: string;
   fields: HBField[];
-  toForm: (entry: Record<string, unknown>) => HBForm;
-  toEntry: (form: HBForm, ctx: { id: string; sourceId: string }) => Record<string, unknown>;
+  /** `content` is the live database — only the schemas that store record IDS but ask the user for
+   *  NAMES (deity favored weapons / cleric spells) need it; it is optional so a converter stays a
+   *  pure function in tests that don't care. */
+  toForm: (entry: Record<string, unknown>, content?: ContentDatabase) => HBForm;
+  toEntry: (form: HBForm, ctx: { id: string; sourceId: string; content?: ContentDatabase }) => Record<string, unknown>;
 }
 
 // --- value helpers -------------------------------------------------------------------------------
@@ -127,6 +134,53 @@ const abilitiesToBoosts = (ids: string[], free: number): AbilityBoost[] => [
 ];
 
 const NAME_FIELD: HBField = { key: 'name', label: 'Name', kind: 'text', required: true, placeholder: 'Entry name' };
+
+/* ---- deity helpers ------------------------------------------------------------------------------
+ * A real deity record stores IDS for its favored weapons and its three cleric spells, but nobody
+ * knows an id — so the editor asks for NAMES and resolves them here. A name that matches nothing is
+ * kept verbatim: every engine reader dereferences these through `content.items[id]` /
+ * `content.spells[id]` (build.ts favored-weapon overrides, the deity spell-list addition), so an
+ * unresolved string is simply skipped rather than breaking the build. It also round-trips back into
+ * the editor unchanged, so a typo stays visible and fixable. */
+function toIds(map: Record<string, { id: string; name: string }> | undefined, names: string[]): string[] {
+  const byName = new Map(Object.values(map ?? {}).map((r) => [r.name.toLowerCase(), r.id]));
+  return names.map((x) => byName.get(x.trim().toLowerCase()) ?? x.trim()).filter(Boolean);
+}
+const toNames = (map: Record<string, { name: string }> | undefined, ids: string[]): string[] =>
+  ids.map((id) => map?.[id]?.name ?? id);
+
+/** Every cleric domain the engine knows — the same table Domain Initiate offers from, so a homebrew
+ *  deity can only name a domain that actually has a focus spell behind it. */
+const DOMAIN_OPTIONS = Object.keys(DOMAIN_SPELLS)
+  .sort()
+  .map((d) => ({ value: d, label: d }));
+
+const SANCTIFICATION_OPTIONS = [
+  { value: '', label: 'None (no sanctification)' },
+  { value: 'holy', label: 'Must choose holy' },
+  { value: 'unholy', label: 'Must choose unholy' },
+  { value: 'either', label: 'Holy or unholy' },
+] as const;
+const SANCT_OPT = {
+  holy: { value: 'holy', label: 'Holy' },
+  unholy: { value: 'unholy', label: 'Unholy' },
+  none: { value: 'none', label: 'None', note: 'You take no sanctification.' },
+} as const;
+/** The exact `effectChoices` shape printed deities carry (measured: only two variants exist in
+ *  core.json — holy|none and unholy|none), so buildCharacter's `${deityId}:sanctification` answer and
+ *  the builder's EffectChoicesPicker treat a homebrew deity identically. */
+function sanctificationChoices(mode: string): EffectChoice[] | undefined {
+  const opts =
+    mode === 'holy' ? [SANCT_OPT.holy] : mode === 'unholy' ? [SANCT_OPT.unholy] : mode === 'either' ? [SANCT_OPT.holy, SANCT_OPT.unholy] : null;
+  if (!opts) return undefined;
+  return [{ id: 'sanctification', prompt: 'Sanctification', options: [...opts, SANCT_OPT.none] }] as EffectChoice[];
+}
+function sanctificationMode(ecs: EffectChoice[] | undefined): string {
+  const values = (ecs ?? []).find((e) => e.id === 'sanctification')?.options?.map((o) => o.value) ?? [];
+  const holy = values.includes('holy');
+  const unholy = values.includes('unholy');
+  return holy && unholy ? 'either' : holy ? 'holy' : unholy ? 'unholy' : '';
+}
 
 export const HOMEBREW_SCHEMAS: HBSchema[] = [
   {
@@ -351,6 +405,72 @@ export const HOMEBREW_SCHEMAS: HBSchema[] = [
       const ac = toActionCost(s(f, 'actionCost'));
       if (ac) act.actionCost = ac;
       return act as Record<string, unknown>;
+    },
+  },
+  {
+    type: 'deities',
+    label: 'Deity',
+    // The same icon the builder's Deity setup card uses, so the two surfaces read as one thing.
+    icon: 'ti-flare',
+    fields: [
+      NAME_FIELD,
+      { key: 'edicts', label: 'Edicts', kind: 'list', placeholder: 'comma-separated' },
+      { key: 'anathema', label: 'Anathema', kind: 'list', placeholder: 'comma-separated' },
+      { key: 'divineFont', label: 'Divine font', kind: 'multi', options: opts(['heal', 'harm']) },
+      {
+        key: 'skill',
+        label: 'Divine skill',
+        kind: 'select',
+        half: true,
+        options: [{ value: '', label: '— none —' }, ...opts([...SKILLS])],
+        help: 'A cleric of this deity is trained in it.',
+      },
+      { key: 'sanctification', label: 'Sanctification', kind: 'select', half: true, options: SANCTIFICATION_OPTIONS },
+      {
+        key: 'favoredWeapons',
+        label: 'Favored weapons',
+        kind: 'list',
+        placeholder: 'e.g. Scimitar',
+        help: 'Weapon NAMES, matched against the item list (case-insensitive). A name that matches nothing is kept as typed and simply grants no proficiency.',
+      },
+      { key: 'domains', label: 'Domains', kind: 'multi', options: DOMAIN_OPTIONS },
+      { key: 'alternateDomains', label: 'Alternate domains', kind: 'multi', options: DOMAIN_OPTIONS },
+      {
+        key: 'spells',
+        label: 'Cleric spells',
+        kind: 'list',
+        placeholder: 'e.g. Fireball',
+        help: 'Spell NAMES, matched against the spell list (case-insensitive). Added to a cleric worshipper’s spell list. An unmatched name is ignored.',
+      },
+      ...TAIL,
+    ],
+    toForm: (e, content) => ({
+      ...baseForm(e),
+      edicts: (e.edicts as string[]) ?? [],
+      anathema: (e.anathema as string[]) ?? [],
+      divineFont: (e.divineFont as string[]) ?? [],
+      skill: (e.skill as string) ?? '',
+      sanctification: sanctificationMode(e.effectChoices as EffectChoice[] | undefined),
+      favoredWeapons: toNames(content?.items, (e.favoredWeapons as string[]) ?? []),
+      domains: (e.domains as string[]) ?? [],
+      alternateDomains: (e.alternateDomains as string[]) ?? [],
+      spells: toNames(content?.spells, (e.spells as string[]) ?? []),
+    }),
+    toEntry: (f, ctx): Record<string, unknown> => {
+      const deity: Deity = { ...(base(f, ctx) as unknown as Deity) };
+      if (arr(f, 'edicts').length) deity.edicts = arr(f, 'edicts');
+      if (arr(f, 'anathema').length) deity.anathema = arr(f, 'anathema');
+      if (arr(f, 'divineFont').length) deity.divineFont = arr(f, 'divineFont') as ('heal' | 'harm')[];
+      if (s(f, 'skill')) deity.skill = s(f, 'skill');
+      if (arr(f, 'domains').length) deity.domains = arr(f, 'domains');
+      if (arr(f, 'alternateDomains').length) deity.alternateDomains = arr(f, 'alternateDomains');
+      const weapons = toIds(ctx.content?.items, arr(f, 'favoredWeapons'));
+      if (weapons.length) deity.favoredWeapons = weapons;
+      const spells = toIds(ctx.content?.spells, arr(f, 'spells'));
+      if (spells.length) deity.spells = spells;
+      const ecs = sanctificationChoices(s(f, 'sanctification'));
+      if (ecs) deity.effectChoices = ecs;
+      return deity as unknown as Record<string, unknown>;
     },
   },
 ];

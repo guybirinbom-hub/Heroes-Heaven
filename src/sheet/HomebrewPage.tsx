@@ -72,7 +72,9 @@ function HBEditorModal({
   onClose: () => void;
 }) {
   useEscapeClose(onClose);
-  const [form, setForm] = useState<HBForm>(() => schema.toForm(initial ?? {}));
+  // `content` reaches both converters so a schema that STORES ids but ASKS for names (the deity's
+  // favored weapons and cleric spells) can resolve each way round.
+  const [form, setForm] = useState<HBForm>(() => schema.toForm(initial ?? {}, content));
   const set = (k: string, v: string | string[]) => setForm((f) => ({ ...f, [k]: v }));
 
   // Heritage's ancestry dropdown is populated from the live content DB.
@@ -91,7 +93,7 @@ function HBEditorModal({
     const name = (form.name as string)?.trim();
     if (!name) return;
     const id = initial?.id ?? homebrewId(schema.type, name);
-    const entry = schema.toEntry(form, { id, sourceId }) as EntryRec;
+    const entry = schema.toEntry(form, { id, sourceId, content }) as EntryRec;
     onSave(schema.type, entry);
     onClose();
   };
@@ -491,7 +493,7 @@ export function HomebrewPage({
                 <h3 className="settings-h">Homebrew</h3>
                 <p className="settings-desc">
                   Create a <strong>source</strong> to hold your custom content. Everything you make in it — items,
-                  feats, spells, ancestries, heritages, backgrounds, and actions — appears throughout the app
+                  feats, spells, ancestries, heritages, backgrounds, deities, and actions — appears throughout the app
                   alongside official content and can be toggled per character under Setup → Sources.
                 </p>
                 <button className="btn-primary" onClick={createSource}>

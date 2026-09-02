@@ -13,6 +13,7 @@ import type {
   Ancestry,
   Background,
   Character,
+  Deity,
   Feat,
   Heritage,
   Item,
@@ -145,6 +146,10 @@ export interface HomebrewContent {
   heritages: Record<string, Heritage>;
   backgrounds: Record<string, Background>;
   actions: Record<string, Action>;
+  /** Owner request 2026-09-02 ("i cant add a deity to home brew its a problem") — a homebrew deity
+   *  merges into content.deities and is read by the builder's Deity picker and the cleric engine
+   *  exactly like a printed one. */
+  deities: Record<string, Deity>;
 }
 export type HomebrewType = keyof HomebrewContent;
 export const HOMEBREW_TYPES: HomebrewType[] = [
@@ -155,6 +160,7 @@ export const HOMEBREW_TYPES: HomebrewType[] = [
   'heritages',
   'backgrounds',
   'actions',
+  'deities',
 ];
 
 const HOMEBREW_SOURCES_KEY = 'wanderers-codex:homebrew-sources:v1';
@@ -162,7 +168,7 @@ const HOMEBREW_CONTENT_KEY = 'wanderers-codex:homebrew-content:v1';
 const LEGACY_HOMEBREW_ITEMS_KEY = 'wanderers-codex:homebrew-items:v1';
 
 function emptyHomebrewContent(): HomebrewContent {
-  return { items: {}, feats: {}, spells: {}, ancestries: {}, heritages: {}, backgrounds: {}, actions: {} };
+  return { items: {}, feats: {}, spells: {}, ancestries: {}, heritages: {}, backgrounds: {}, actions: {}, deities: {} };
 }
 
 export function loadHomebrewSources(): Record<string, HomebrewSource> {

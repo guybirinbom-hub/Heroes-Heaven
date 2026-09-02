@@ -459,7 +459,9 @@ function mergeWithSeed(core: Partial<ContentDatabase>): ContentDatabase {
     feats: merge(merge(seedContent.feats, c.feats ?? {}), hb.feats),
     spells: merge(merge(seedContent.spells, c.spells ?? {}), hb.spells),
     items: merge(merge(seedContent.items, c.items ?? {}), hb.items),
-    deities: merge(seedContent.deities, c.deities ?? {}),
+    // Homebrew deities merge like every other authored type — the ONE bucket that was left out of the
+    // hb layer, which is why "i cant add a deity to home brew" (owner, 2026-09-02).
+    deities: merge(merge(seedContent.deities, c.deities ?? {}), hb.deities),
     languages: merge(seedContent.languages, c.languages ?? {}),
     animalCompanions: merge(seedContent.animalCompanions, c.animalCompanions ?? {}),
     familiarAbilities: merge(seedContent.familiarAbilities, c.familiarAbilities ?? {}),
