@@ -140,6 +140,26 @@ function groupBySkill(items: Act[]): [string, Act[]][] {
   return [...map.entries()].sort((x, y) => x[0].localeCompare(y[0]));
 }
 
+/* The Strikes / Actions / Skill / Item sub-tab last used on this device (see the state in MainTab). */
+type ActionsSub = 'strikes' | 'actions' | 'skill' | 'item';
+const ACTIONS_SUB_KEY = 'wanderers-codex:actions-sub:v1';
+const ACTIONS_SUBS: readonly ActionsSub[] = ['strikes', 'actions', 'skill', 'item'];
+function loadActionsSub(): ActionsSub {
+  try {
+    const v = localStorage.getItem(ACTIONS_SUB_KEY);
+    return v && (ACTIONS_SUBS as readonly string[]).includes(v) ? (v as ActionsSub) : 'strikes';
+  } catch {
+    return 'strikes';
+  }
+}
+function saveActionsSub(v: ActionsSub): void {
+  try {
+    localStorage.setItem(ACTIONS_SUB_KEY, v);
+  } catch {
+    /* storage unavailable — the tab still switches, it just isn't remembered */
+  }
+}
+
 export function MainTab({
   character,
   content,
@@ -160,7 +180,14 @@ export function MainTab({
   section?: 'all' | 'main' | 'actions';
 }) {
   const [mode, setMode] = useState('enc');
-  const [sub, setSub] = useState<'strikes' | 'actions' | 'skill' | 'item'>('strikes');
+  /* The Strikes / Actions / Skill / Item sub-tab reopens on the one last used on this device — owner
+   * (2026-09-02): "change it to be on the last one the user was on; if the user hadn't pressed them yet
+   * let it be on Strikes". Device-local like the sheet's remembered main tab, never character data. */
+  const [sub, setSubState] = useState<ActionsSub>(() => loadActionsSub());
+  const setSub = (v: ActionsSub) => {
+    setSubState(v);
+    saveActionsSub(v);
+  };
   const [filters, setFilters] = useState<Set<string>>(new Set());
   const [filtersOpen, setFiltersOpen] = useState(false); // mobile: filter row toggles open over the results
   const [query, setQuery] = useState('');
