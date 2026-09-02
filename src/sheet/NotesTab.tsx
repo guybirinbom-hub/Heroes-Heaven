@@ -528,12 +528,42 @@ function IconPickerModal({
   );
 }
 
+/* The last note page open, per character, on this device — like the sheet's remembered tab. Owner:
+ * "when I open notes open them on the last note that was open." Device-local (a UI convenience, not
+ * character data), so it never stamps the character as edited or syncs. A remembered page that was
+ * deleted since falls back to the first page. */
+const NOTES_ACTIVE_KEY = 'wanderers-codex:notes-active:v1';
+function loadLastNote(charId: string): string | null {
+  try {
+    const map = JSON.parse(localStorage.getItem(NOTES_ACTIVE_KEY) ?? '{}') as Record<string, string>;
+    return typeof map[charId] === 'string' ? map[charId] : null;
+  } catch {
+    return null;
+  }
+}
+function saveLastNote(charId: string, noteId: string): void {
+  try {
+    const map = JSON.parse(localStorage.getItem(NOTES_ACTIVE_KEY) ?? '{}') as Record<string, string>;
+    if (map[charId] === noteId) return;
+    map[charId] = noteId;
+    localStorage.setItem(NOTES_ACTIVE_KEY, JSON.stringify(map));
+  } catch {
+    /* storage unavailable — the page still opens, it just isn't remembered */
+  }
+}
+
 export function NotesTab({ character, onPlay, hidePrivate }: { character: Character; onPlay?: PlayUpdater; hidePrivate?: boolean }) {
   // A read-only teammate viewing this sheet doesn't see pages marked private; the owner and the GM do.
   const pages = hidePrivate ? character.notes.filter((p) => !p.private) : character.notes;
-  const [activeId, setActiveId] = useState<string | null>(pages[0]?.id ?? null);
+  const [activeId, setActiveId] = useState<string | null>(() => {
+    const remembered = loadLastNote(character.id);
+    return remembered && pages.some((p) => p.id === remembered) ? remembered : (pages[0]?.id ?? null);
+  });
   const [query, setQuery] = useState('');
   const active = pages.find((p) => p.id === activeId) ?? pages[0];
+  useEffect(() => {
+    if (active?.id) saveLastNote(character.id, active.id);
+  }, [character.id, active?.id]);
 
   const q = query.trim().toLowerCase();
   const shown = q ? pages.filter((p) => p.title.toLowerCase().includes(q) || p.content.toLowerCase().includes(q)) : pages;
