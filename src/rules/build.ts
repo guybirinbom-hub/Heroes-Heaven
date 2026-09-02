@@ -3600,6 +3600,12 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       // player-picked one.
       cantrips: [...new Set([...build.cantrips.slice(0, cantripAllowance), ...(grantedByRank[0] ?? [])])],
       cantripCap: cantripAllowance,
+      // A prepared CLASS prepares its cantrips each morning (kept under the flexible collection:
+      // "this archetype doesn't change the way you prepare cantrips"), so the sheet may re-prepare
+      // them; the builder's picks are the standing default. Granted cantrips ride separately so a
+      // re-preparation can never drop them.
+      ...(sp.type === 'prepared' ? { cantripsPrepared: true } : {}),
+      ...(grantedByRank[0]?.length ? { grantedCantrips: [...grantedByRank[0]] } : {}),
     };
     if (sp.repertoire) {
       // Spontaneous: a repertoire of known spells per rank + a slot pool.

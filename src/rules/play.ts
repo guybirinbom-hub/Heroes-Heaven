@@ -357,6 +357,27 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
       }
       out = { ...out, slots };
     }
+    /* A prepared caster's CANTRIPS re-prepare in play ("you prepare your cantrips" — daily prep,
+     * owner 2026-09-02). Per-opening: the builder's picks are the standing default, an override
+     * replaces (null empties) its opening, a stale override naming a dead spell falls back rather
+     * than casting nothing, and RECORD-granted cantrips are appended untouchable — a re-preparation
+     * can never drop a psychic's psi cantrips. `cantrips` stays the flat list every reader uses;
+     * `cantripSlots` is the per-opening view the Prepare panel edits. */
+    if (e.cantripsPrepared) {
+      const cap = e.cantripCap ?? e.cantrips.length;
+      const granted = new Set(e.grantedCantrips ?? []);
+      const defaults = e.cantrips.filter((id) => !granted.has(id));
+      const cantripSlots = Array.from({ length: cap }, (_, i) => {
+        const o = play.preparedSpells?.[preparedCantripKey(e.id, i)];
+        if (o === undefined) return defaults[i] ?? null;
+        return o && content.spells[o] ? o : null;
+      });
+      out = {
+        ...out,
+        cantripSlots,
+        cantrips: [...new Set([...cantripSlots.filter((x): x is string => !!x), ...(e.grantedCantrips ?? [])])],
+      };
+    }
     if (e.repertoire) {
       const repOverride = play.repertoireSpells?.[e.id];
       let repertoire = e.repertoire;
@@ -941,6 +962,16 @@ export const tradedCantripCount = (play: PlayState, entryId: string): number =>
 /** Fill (or clear) one of the cantrip openings bought with the cantrip trade. */
 export function setTradedCantrip(play: PlayState, entryId: string, index: number, spellId: string | null): PlayState {
   return { ...play, preparedSpells: { ...(play.preparedSpells ?? {}), [cantripTradeKey(entryId, index)]: spellId } };
+}
+
+/** A prepared caster's cantrip OPENING, re-prepared in play — "you prepare your cantrips" is part
+ *  of daily preparations, so a cleric changes them on the sheet like any slot (owner, 2026-09-02).
+ *  Rides `preparedSpells` under a non-numeric rank word, so it can never collide with a real slot's
+ *  `entry:rank:index` key — and `resetPreparedEntry`'s prefix wipe covers it for free. */
+export const preparedCantripKey = (entryId: string, index: number) => `${entryId}:cantrip:${index}`;
+
+export function setPreparedCantrip(play: PlayState, entryId: string, index: number, spellId: string | null): PlayState {
+  return { ...play, preparedSpells: { ...(play.preparedSpells ?? {}), [preparedCantripKey(entryId, index)]: spellId } };
 }
 
 /** Set a spontaneous caster's known spells for one rank, in play. */

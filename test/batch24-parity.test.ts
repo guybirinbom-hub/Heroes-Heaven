@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { build, content } from './_content';
 import { deriveDefenses } from '../src/rules/derive';
+import { applyPlayState, initialPlay, setPreparedCantrip } from '../src/rules/play';
 import { pickableFeats, FEAT_PICK_GRANTS } from '../src/rules/featPickGrants';
 import { buildChoiceOptions, buildCharacter, emptyBuild, classArchetypeSpellMods, cantripBonusFor, type BuildState } from '../src/rules/build';
 import { cantripsKnown } from '../src/rules/spellcasting';
@@ -147,6 +148,31 @@ describe('Deity (Cleric) delivers its printed halves', () => {
     expect(db.deities['jaidi'].spells).toEqual(['protector-tree', 'wall-of-thorns', 'natures-pathway']);
     const ch = buildCharacter(bellphor(), db);
     expect(ch.spellListAdditions?.['cleric-casting']).toEqual(['protector-tree', 'wall-of-thorns', 'natures-pathway']);
+  });
+});
+
+describe('cantrips are DAILY PREPARATION for a prepared class (owner, 2026-09-02)', () => {
+  it('the class entry says so, and the play overlay re-prepares per opening', () => {
+    const ch = buildCharacter(bellphor({ cantrips: ['guidance', 'shield', 'light', 'stabilize'] } as Partial<BuildState>), db);
+    const main = ch.spellcasting.find((e) => e.id === 'cleric-casting')!;
+    // The flexible collection keeps it: "this archetype doesn't change the way you prepare cantrips".
+    expect(main.cantripsPrepared).toBe(true);
+    // Re-prepare opening 1 (shield → divine lance), empty opening 3 for the day.
+    let play = initialPlay(ch, db);
+    play = setPreparedCantrip(play, 'cleric-casting', 1, 'divine-lance');
+    play = setPreparedCantrip(play, 'cleric-casting', 3, null);
+    const live = applyPlayState(ch, play, db).spellcasting.find((e) => e.id === 'cleric-casting')!;
+    expect(live.cantripSlots).toEqual(['guidance', 'divine-lance', 'light', null]);
+    expect(live.cantrips).toEqual(['guidance', 'divine-lance', 'light']);
+    // A stale override naming a dead spell falls back to empty rather than casting nothing.
+    const stale = applyPlayState(ch, setPreparedCantrip(initialPlay(ch, db), 'cleric-casting', 0, 'no-such-spell'), db)
+      .spellcasting.find((e) => e.id === 'cleric-casting')!;
+    expect(stale.cantripSlots?.[0]).toBeNull();
+  });
+
+  it("a spontaneous class's cantrips stay builder-known — no daily re-preparation", () => {
+    const bard = buildCharacter({ ...emptyBuild(), name: 'b', classId: 'bard', level: 1, cantrips: [] } as BuildState, db);
+    expect(bard.spellcasting.find((e) => e.id === 'bard-casting')?.cantripsPrepared).toBeUndefined();
   });
 });
 

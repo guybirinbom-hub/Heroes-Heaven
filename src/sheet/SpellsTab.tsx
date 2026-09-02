@@ -15,6 +15,7 @@ import { toggleKnownRitual,
   setRestrictedSpell,
   setRestrictedRank,
   setTradedCantrip,
+  setPreparedCantrip,
   setRepertoireRank,
   setSignatureSpells,
   learnSpell,
@@ -557,7 +558,7 @@ function ManageSpellsModal({
    * behind an empty picker — an entry's kind is a property of the caster, not of which fields happen
    * to be populated. */
   const spontaneous = entry.type === 'spontaneous';
-  const [picking, setPicking] = useState<{ rank: number; slot: number | null; cantripTrade?: boolean; restricted?: string } | null>(null);
+  const [picking, setPicking] = useState<{ rank: number; slot: number | null; cantripTrade?: boolean; preparedCantrip?: boolean; restricted?: string } | null>(null);
   const ranks = Object.keys((spontaneous ? entry.repertoire : entry.prepared) ?? {})
     .map(Number)
     .sort((a, b) => a - b);
@@ -611,7 +612,11 @@ function ManageSpellsModal({
 
   const pick = (spellId: string | null) => {
     if (picking) {
-      if (picking.restricted) {
+      if (picking.preparedCantrip) {
+        // A cantrip OPENING re-prepared for the day — before the spontaneous branch, because the
+        // flexible spellcaster's entry is spontaneous-shaped and still prepares its cantrips.
+        onPlay((p) => setPreparedCantrip(p, entry.id, picking.slot!, spellId));
+      } else if (picking.restricted) {
         onPlay((p) => setRestrictedSpell(p, picking.restricted!, spellId));
       } else if (spontaneous) {
         if (spellId) {
@@ -678,14 +683,20 @@ function ManageSpellsModal({
 
         {picking ? (
           <FilterableSelect
-            key={'pick-' + picking.rank}
-            title={`${spontaneous && !picking.restricted ? 'Add' : 'Prepare'} a ${ord(picking.rank)}-rank spell`}
-            items={optionsFor(picking.rank, picking.restricted)}
+            key={'pick-' + picking.rank + (picking.preparedCantrip ? ':c' : '')}
+            title={picking.preparedCantrip ? 'Prepare a cantrip' : `${spontaneous && !picking.restricted ? 'Add' : 'Prepare'} a ${ord(picking.rank)}-rank spell`}
+            items={
+              picking.preparedCantrip
+                ? // Today's other openings already hold their cantrips — offer the rest (an at-will
+                  // cantrip prepared twice does nothing). The opening's own current pick stays offered.
+                  optionsFor(0).filter((s) => !entry.cantrips.includes(s.id) || entry.cantripSlots?.[picking.slot!] === s.id)
+                : optionsFor(picking.rank, picking.restricted)
+            }
             spec={SPELL_SPEC_BUILDER}
             rowKey={(s) => s.id}
             onClose={() => setPicking(null)}
             headerExtra={
-              !spontaneous || picking.restricted ? (
+              !spontaneous || picking.restricted || picking.preparedCantrip ? (
                 <button className="fsel-arch" onClick={() => pick(null)}>
                   Leave slot empty
                 </button>
@@ -695,7 +706,7 @@ function ManageSpellsModal({
               const node = descNodeOf(s, 'spells');
               // A repertoire add that `pick` would refuse — already known at this rank, or the rank
               // full. Both bail without touching state, so the row has to say so rather than look live.
-              const addingToRepertoire = spontaneous && !picking.restricted;
+              const addingToRepertoire = spontaneous && !picking.restricted && !picking.preparedCantrip;
               const cur = addingToRepertoire ? entry.repertoire?.[picking.rank] ?? [] : [];
               const grantedHere = addingToRepertoire ? entry.grantedRepertoire?.[picking.rank] ?? [] : [];
               const alreadyKnown = addingToRepertoire && cur.includes(s.id);
@@ -741,6 +752,28 @@ function ManageSpellsModal({
                 ? 'Add or remove known spells; tap ★ to set a rank’s signature spell. Changes apply to this play session.'
                 : 'Tap a slot to change what’s prepared. Changes apply to this play session.'}
             </div>
+            {/* "You prepare your cantrips" — a prepared caster's cantrips are part of daily
+                preparations (owner, 2026-09-02), so they re-prepare here like any slot. Granted
+                cantrips (a psychic's psi cantrips) are not openings and don't appear — the overlay
+                keeps them whatever is prepared. */}
+            {entry.cantripsPrepared && (entry.cantripCap ?? 0) > 0 && (
+              <div className="ms-rank">
+                <div className="ms-rank-hdr">Cantrips</div>
+                {(entry.cantripSlots ?? Array.from({ length: entry.cantripCap! }, (_, i) => entry.cantrips[i] ?? null)).map((id, i) => {
+                  const sp = id ? content.spells[id] : null;
+                  return (
+                    <button
+                      key={'pc' + i}
+                      className={'ms-slot' + (id ? '' : ' empty')}
+                      onClick={() => setPicking({ rank: 0, slot: i, preparedCantrip: true })}
+                    >
+                      <span className="ms-slot-name">{sp?.name ?? 'Empty cantrip'}</span>
+                      <i className="ti ti-pencil" aria-hidden="true" />
+                    </button>
+                  );
+                })}
+              </div>
+            )}
             {ranks.map((rank) =>
               spontaneous ? (
                 (() => {
@@ -1362,7 +1395,14 @@ export function SpellsTab({
           filtering
             ? []
             : Array.from({ length: emptyCantrips }, (_, i) => (
-                <SpellCard key={'ec' + i} name="Empty cantrip" meta="pick in the builder (Edit)" empty />
+                <SpellCard
+                  key={'ec' + i}
+                  name="Empty cantrip"
+                  // A prepared caster prepares cantrips each morning — the Prepare button is the
+                  // affordance; a spontaneous class's cantrips are known, chosen in the builder.
+                  meta={main.cantripsPrepared ? 'tap Prepare to choose' : 'pick in the builder (Edit)'}
+                  empty
+                />
               )),
         )
         .filter(Boolean);

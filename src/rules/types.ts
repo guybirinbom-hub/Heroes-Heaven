@@ -4898,6 +4898,18 @@ export interface SpellcastingEntry {
    *  class entry so the sheet can draw empty openings for unpicked ones. The picks live in
    *  `cantrips`; without the cap, zero picks made the whole Cantrips section invisible. */
   cantripCap?: number;
+  /** A PREPARED caster's cantrips are prepared each morning like their slots ("you prepare your
+   *  cantrips") — the owner's 2026-09-02 point: a cleric must be able to change them on the sheet,
+   *  not only in the builder. Set on the class entry when the CLASS casts prepared (the flexible-
+   *  spellcaster collection keeps it: "this archetype doesn't change the way you prepare cantrips").
+   *  Spontaneous classes' cantrips stay builder-known. */
+  cantripsPrepared?: boolean;
+  /** Cantrips a RECORD put into this entry (a psychic's conscious-mind psi cantrips) — not the
+   *  player's daily preparation, so the play overlay must never let a re-preparation drop them. */
+  grantedCantrips?: string[];
+  /** OVERLAY ONLY: the per-opening view of today's prepared cantrips (`cantripCap` entries, null =
+   *  an emptied opening). `cantrips` stays the flat effective list every existing reader uses. */
+  cantripSlots?: (string | null)[];
   /** Prepared casters: slots per rank. */
   prepared?: Record<number, PreparedSlot[]>;
   /** Spontaneous casters: known spell ids per rank. */
