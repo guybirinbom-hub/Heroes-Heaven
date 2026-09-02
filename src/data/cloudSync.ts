@@ -28,7 +28,7 @@ import {
   type SavedChar,
 } from './storage';
 import { setOnPersisted, cancelPersist } from './persist';
-import { onLocalDataChanged } from './syncBus';
+import { loadCustomizationUpdated, loadSettingsUpdated, onLocalDataChanged } from './syncBus';
 import { reloadPrefs } from './prefs';
 import { reloadCustomization } from './customization';
 import { initTheme } from '../theme/theme-manager';
@@ -106,19 +106,36 @@ function rosterDiffers(next: SavedChar[]): boolean {
   return false;
 }
 
+/** Would adopting `merged` change this device's prefs/appearance or its sheet-customization default?
+ *  Both are merged on their own timestamps, so a stamp that differs from the local one is exactly "the
+ *  cloud brought a newer copy" (or the local one is ahead and about to be uploaded — also a change). */
+export function bundleSettingsChanged(merged: CloudBundle): boolean {
+  return (merged.settingsUpdated ?? 0) !== loadSettingsUpdated() || (merged.customizationUpdated ?? 0) !== loadCustomizationUpdated();
+}
+
 /** Adopt a merged bundle locally: write it to localStorage, re-apply live settings, and hand the
  *  roster to React only when it actually changed (so a no-op sync doesn't churn state / undo). */
 function adopt(merged: CloudBundle): void {
   const rosterChanged = rosterDiffers(merged.roster);
+  // Did the merge bring DIFFERENT settings / customization than this device holds? Only then is a
+  // reload + repaint warranted. Before this, every adopt — including the echo of this device's OWN
+  // push, ~3 s after each edit — re-read prefs, re-read the customization and re-ran initTheme(),
+  // which repaints the GLOBAL appearance over the open sheet's per-character overlay. To the owner
+  // that was "changing things in Customize is super laggy, I choose things and it reverts back
+  // immediately" (2026-09-02): the palette/font he had just picked snapped back to the device default
+  // on the next sync tick. A no-op sync now touches nothing on screen.
+  const settingsChanged = bundleSettingsChanged(merged);
   writeCloudBundle(merged);
   // writeCloudBundle only wrote the raw keys — re-read + re-apply so the theme repaints and prefs
   // subscribers fire. Non-fatal if it throws (settings still take effect on next load).
-  try {
-    reloadPrefs();
-    reloadCustomization();
-    initTheme();
-  } catch {
-    /* non-fatal */
+  if (settingsChanged) {
+    try {
+      reloadPrefs();
+      reloadCustomization();
+      initTheme();
+    } catch {
+      /* non-fatal */
+    }
   }
   fingerprints = new Map(merged.roster.map((c) => [c.id, charFingerprint(c)]));
   if (rosterChanged) applyRoster?.(merged.roster);

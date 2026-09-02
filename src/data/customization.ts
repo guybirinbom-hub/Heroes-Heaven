@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import type { Customization, SheetDensity } from '../rules/types';
-import { setConsumableColorOverride } from '../theme/theme-manager';
+import { clearSheetOverlay, setConsumableColorOverride } from '../theme/theme-manager';
 import { touchCustomization } from './syncBus';
 
 /*
@@ -123,6 +123,9 @@ export function getGlobalCustomization(): Customization {
  *  the sheet overlay while a character is open; this is the baseline used everywhere else.) */
 export function applyGlobalCustomizationDom(): void {
   try {
+    // The sheet overlay is sticky state now (it survives global repaints) — drop it explicitly here,
+    // which is the sheet's "revert to the global look" call.
+    clearSheetOverlay();
     document.documentElement.classList.toggle('sb-accent', !!globalCustom.scrollbarAccent);
     setConsumableColorOverride(globalCustom.consumableColor ?? null);
   } catch {

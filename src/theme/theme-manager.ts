@@ -146,9 +146,17 @@ function applyResolved(themeId: string, styleId: string, fontId: string, accent:
   root.style.colorScheme = polarity;
 }
 
-/** Write the current (device-global) appearance state onto <html>. */
+/** The open sheet's per-character overlay (see applySheetOverlay), or null when no sheet overrides. */
+let sheetOverlay: SheetOverlay | null = null;
+
+/** Write the current (device-global) appearance state onto <html> — UNDER the open sheet's overlay, if
+ *  one is set. Before this, any global repaint (a settings reload after a cloud sync, a prefs change)
+ *  reset every token to the device default and the sheet's chosen palette/font vanished until the next
+ *  customization edit re-ran its effect — the owner's "I choose things and it reverts back immediately"
+ *  (2026-09-02). The overlay is state, not a one-off write, so a repaint keeps it. */
 export function applyAppearance(): void {
-  applyResolved(state.themeId, state.styleId, state.fontId, state.accent, consumableOverride);
+  if (sheetOverlay) applyOverlayResolved(sheetOverlay);
+  else applyResolved(state.themeId, state.styleId, state.fontId, state.accent, consumableOverride);
 }
 
 /** The active theme's recommended consumable-highlight colour (ignores any user override). */
@@ -211,13 +219,15 @@ export function setAccent(accent: string | null): void {
  * re-runs applyAppearance and resets every token to the global default). Values here come from
  * effectiveCustomization for the viewed character.
  */
-export function applySheetOverlay(o: {
+export type SheetOverlay = {
   themeId?: string | null;
   styleId?: string | null;
   fontId?: string | null;
   accent?: string | null;
   consumable?: string | null;
-}): void {
+};
+
+function applyOverlayResolved(o: SheetOverlay): void {
   applyResolved(
     o.themeId ?? state.themeId,
     o.styleId ?? state.styleId,
@@ -228,4 +238,20 @@ export function applySheetOverlay(o: {
     o.accent ?? (o.themeId ? null : state.accent),
     o.consumable ?? consumableOverride,
   );
+}
+
+export function applySheetOverlay(o: SheetOverlay): void {
+  sheetOverlay = o;
+  applyOverlayResolved(o);
+}
+
+/** Drop the sheet overlay and repaint the device-global appearance (the sheet closed / changed). */
+export function clearSheetOverlay(): void {
+  sheetOverlay = null;
+  applyAppearance();
+}
+
+/** Is a sheet overlay currently applied? (tests / diagnostics) */
+export function hasSheetOverlay(): boolean {
+  return sheetOverlay !== null;
 }
