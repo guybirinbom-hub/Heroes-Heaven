@@ -192,9 +192,23 @@ function maybePull(): void {
   void pull().catch(() => {});
 }
 
+/**
+ * A DERIVED refresh is not an edit. The launch rebuild (and the rebuild after adopting a pulled roster)
+ * re-derives every `character` from its build against the current engine — the stored JSON changes, but
+ * nothing the player did changed. Before this, that change went through noteRosterChange like an edit:
+ * every character got stamped "updated now", the device went dirty and pushed, and a device that had
+ * merely been OPENED became the newest copy of every character. In a two-device account the freshly
+ * opened one then won every merge it should have lost — the owner's edits on the other device vanished
+ * a few seconds later (2026-09-02). Registering the refreshed roster here moves the edit-detection
+ * baseline forward WITHOUT touching timestamps or dirtiness, so only a real edit after it stamps.
+ */
+export function noteDerivedRefresh(roster: SavedChar[]): void {
+  for (const c of roster) fingerprints.set(c.id, charFingerprint(c));
+}
+
 /** After each local persist: bump timestamps for characters whose content changed (and prune ones
  *  that were deleted), then mark dirty so the next leave uploads. No network here (open/close model). */
-function noteRosterChange(roster: SavedChar[]): void {
+export function noteRosterChange(roster: SavedChar[]): void {
   const ts = loadCharUpdated();
   const now = Date.now();
   const present = new Set<string>();

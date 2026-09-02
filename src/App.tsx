@@ -16,7 +16,8 @@ import { HeroesHeavenLogo } from './sheet/Logo';
 import { loadContent, rebuildContent, onDescriptionsLoaded } from './data';
 import { pickScreen } from './appScreen';
 import { useAuth } from './data/useAuth';
-import { startCloudSync, hasSyncedOnce } from './data/cloudSync';
+import { startCloudSync, hasSyncedOnce, noteDerivedRefresh } from './data/cloudSync';
+import { rebuildRoster } from './data/rebuild';
 import { LoginScreen } from './sheet/LoginScreen';
 import { getLoginSkipped, setLoginSkipped } from './data/device';
 import { collectPortraitRefs, gcSharpPortraits, initPortraitStore } from './data/portraitStore';
@@ -140,22 +141,23 @@ export default function App() {
    * nothing ever re-derived it. Play state is deliberately untouched (the BUILD didn't change, so
    * there is nothing to reconcile — expended slots, HP and inventory stay put), and a character
    * whose rebuild throws keeps its stored snapshot rather than bricking the roster.
+   *
+   * ⚠ A rebuild is a DERIVED refresh, not an edit. The first version of this let the changed JSON
+   * reach cloud sync's edit detector, which stamped every character "updated now" and pushed — so a
+   * device that had merely been OPENED became the newest copy of everything and won merges against
+   * real edits made seconds earlier on another device (the owner's "it deletes what I did a couple of
+   * seconds later", 2026-09-02). `noteDerivedRefresh` moves the detector's baseline without stamping.
+   * (Idempotent, so React re-running the updater in dev strict mode is harmless.)
    */
   const rebuiltThisLaunch = useRef(false);
   useEffect(() => {
     if (!content || rebuiltThisLaunch.current) return;
     rebuiltThisLaunch.current = true;
-    setRoster((r) =>
-      r.map((c) => {
-        if (!c.build) return c;
-        try {
-          return { ...c, character: buildCharacter(c.build, applyOverrides(content, c.build.overrides)) };
-        } catch (e) {
-          console.warn(`[HeavesRebuild] kept the stored snapshot for "${c.character?.name ?? c.id}" — rebuild threw:`, e);
-          return c;
-        }
-      }),
-    );
+    setRoster((r) => {
+      const next = rebuildRoster(r, content);
+      noteDerivedRefresh(next);
+      return next;
+    });
   }, [content, setRoster]);
 
   useEffect(() => {
@@ -211,12 +213,22 @@ export default function App() {
   // Web build: once signed in, mirror the roster to/from the cloud — pull+merge on login, push on
   // change/background. `disabled` (desktop) never starts it. Applying the merged roster replaces
   // React state so the just-pulled cloud characters appear immediately.
+  // The content database as a live ref, so the sync callback below (registered once per sign-in) can
+  // rebuild an adopted roster against whatever content is loaded by the time a pull lands.
+  const contentRef = useRef(content);
+  contentRef.current = content;
   useEffect(() => {
     if (auth.status !== 'signed-in') return;
     let cleanup = () => {};
     let cancelled = false;
     void startCloudSync((merged) => {
-      if (!cancelled) setRoster(merged);
+      if (cancelled) return;
+      // A pulled copy was derived by whichever app version last saved it — re-derive it here, and
+      // register the result as a DERIVED refresh (not an edit) so it can never stamp or push.
+      const db = contentRef.current;
+      const next = db ? rebuildRoster(merged, db) : merged;
+      noteDerivedRefresh(next);
+      setRoster(next);
     }).then((c) => {
       if (cancelled) c();
       else cleanup = c;
