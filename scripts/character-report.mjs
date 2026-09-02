@@ -15,7 +15,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 import { seedContent } from '../src/rules/seed';
-import { buildCharacter } from '../src/rules/build';
+import { additionalClassSkills, buildCharacter } from '../src/rules/build';
 import { snapshot as snapshotWith } from './lib/sheet-snapshot.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -87,6 +87,11 @@ const sheet = {
 /* ---- 3. unanswered picks (a slot with no feat, a choice with no answer) ------------------------ */
 const pending = [];
 for (const [slot, id] of Object.entries(build.featPicks ?? {})) if (!id) pending.push(`empty feat slot ${slot}`);
+// Class skill picks the character is owed (2 + Int and so on) but has not chosen yet.
+const owedSkills = additionalClassSkills(build, db);
+const grantedSkills = new Set(Object.keys(fresh.grantedSkills ?? {}));
+const chosenSkills = (build.classSkills ?? []).filter((s) => !grantedSkills.has(s)).length;
+if (chosenSkills < owedSkills) pending.push(`${owedSkills - chosenSkills} class skill pick(s) unchosen (${chosenSkills} of ${owedSkills})`);
 for (const f of fresh.feats ?? []) {
   const rec = db.feats[f.featId];
   if (rec?.choice && !f.choice && rec.choice.kind !== 'text') pending.push(`${rec.name}: "${rec.choice.prompt}" not answered`);

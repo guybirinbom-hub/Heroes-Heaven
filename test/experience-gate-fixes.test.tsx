@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { content } from './_content';
 import { renderDom } from './_render';
 import { Builder } from '../src/builder/Builder';
-import { buildCharacter, buildUsesDeity, emptyBuild, levelGrants, type BuildState } from '../src/rules/build';
+import { additionalClassSkills, buildCharacter, buildUsesDeity, emptyBuild, levelGrants, type BuildState } from '../src/rules/build';
 import { askedAtDailyPrep } from '../src/rules/derive';
 import { FEAT_SITUATIONAL } from '../src/rules/situationalBonuses';
 import { sheetLoreKeys } from '../src/rules/explain';
@@ -167,6 +167,34 @@ describe('refuter round (2026-09-02) — what the adversarial pass found behind 
     expect(c().spells['commune-with-nature']?.ritual).toBe(true);
     const opts = c().feats['harrow-ritualist'].choice?.options ?? [];
     expect(opts.map((o) => o.value)).toEqual(['astral-projection', 'call-spirit', 'commune', 'commune-with-nature', 'collective-memories', 'binding-circle']);
+  });
+});
+
+describe("int-boost-adds-a-trained-skill — the owner's cleric was one skill short of his Wanderer's Guide sheet", () => {
+  // Cleric: 2 + Int additional skills. Int 12 at level 1 (+1) → 3; the level-3 boost makes it 14 (+2) → 4.
+  const cleric = (level: number) =>
+    host({
+      level,
+      classId: 'cleric',
+      subclassId: 'cloistered-cleric',
+      keyAbility: 'wis',
+      deityId: 'sarenrae',
+      ancestryBoosts: ['int'],
+      levelBoosts: ['wis', 'cha', 'con', 'dex'],
+      attributeBoosts: { 3: ['int', null, null, null] } as never,
+      variantRules: { gradualBoosts: true } as never,
+      classSkills: ['diplomacy', 'society', 'lore:cooking', 'arcana'],
+    });
+  it('counts the class skills off the CURRENT Intelligence modifier', () => {
+    const c1 = buildCharacter(cleric(1), c());
+    const c3 = buildCharacter(cleric(3), c());
+    expect(c1.abilities.int).toBe(12);
+    expect(c3.abilities.int).toBe(14);
+    expect(additionalClassSkills(cleric(1), c())).toBe(3);
+    expect(additionalClassSkills(cleric(3), c())).toBe(4);
+    // The fourth pick is really trained once the boost lands, and not before.
+    expect(c1.proficiencies.skills.arcana).toBe('untrained');
+    expect(c3.proficiencies.skills.arcana).toBe('trained');
   });
 });
 

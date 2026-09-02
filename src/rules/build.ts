@@ -708,14 +708,18 @@ export function ancestryBodySize(ancestry: Ancestry | undefined, build: Partial<
 }
 
 /**
- * How many additional skills the class lets you train: base + Int modifier.
- * Determined at level 1, so it uses the level-1 Int (later boosts don't add
- * retroactive initial trainings).
+ * How many additional skills the class lets you train: base + Int modifier — the CURRENT modifier.
+ *
+ * This used to read the level-1 Intelligence, on the reasoning that the initial trainings are set at
+ * level 1. Print says otherwise about later boosts — *"if an attribute boost increases your Intelligence
+ * modifier, you become trained in an additional skill of your choice"* — and Wanderer's Guide gives that
+ * skill (its class `skill_training_base` plus the live Int modifier). The owner's own level-3 cleric,
+ * Int 12 → 14 at 3rd, was one trained skill short of his Wanderer's Guide sheet (2026-09-02).
  */
 export function additionalClassSkills(build: BuildState, content: ContentDatabase): number {
   const cls = build.classId ? content.classes[build.classId] : undefined;
   if (!cls) return 0;
-  const abilities = computeAbilities(build, content, 1);
+  const abilities = computeAbilities(build, content);
   // Dual Class: use the LARGER of the two classes' base free-skill counts (not the sum).
   const cls2 = build.variantRules?.dualClass && build.classId2 ? content.classes[build.classId2] : undefined;
   const base = Math.max(cls.trainedSkills.additional, cls2?.trainedSkills.additional ?? 0);
@@ -3055,9 +3059,9 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     const k = clericDeitySkill as SkillId;
     (skills[k] = maxRank(skills[k] ?? 'untrained', 'trained')), lock(k, 'your deity');
   }
-  // Clamp the class's free skill picks to the legal count (base + level-1 Int),
-  // skipping any that duplicate a granted training, so the built character is
-  // always legal even if state was reached via a since-lowered Int.
+  // Clamp the class's free skill picks to the legal count (base + current Int modifier — an Int
+  // boost adds a trained skill, see additionalClassSkills), skipping any that duplicate a granted
+  // training, so the built character is always legal even if state was reached via a since-lowered Int.
   const maxClassSkills = additionalClassSkills(build, content);
   let added = 0;
   for (const sk of build.classSkills) {
