@@ -266,9 +266,17 @@ export default function App() {
           // Publish the full SavedChar (character + build + play) so a GM can fully edit it; the party's
           // read-only view derives the live character from it.
           const published = { id: sc.id, character: sc.character, build: sc.build, play: sc.play };
-          publishedSheetRef.current.set(sc.id, JSON.stringify(published));
+          const json = JSON.stringify(published);
+          // Only what CHANGED goes up. This effect runs on every roster change, so before this every
+          // attached character was re-uploaded (portrait and all) on every edit to ANY character —
+          // one Customize click on one sheet meant N uploads. An unchanged, already-published sheet
+          // is left alone; a campaign attached since the last publish still gets its first upload.
+          const unchanged = publishedSheetRef.current.get(sc.id) === json;
+          publishedSheetRef.current.set(sc.id, json);
           for (const cid of ids) {
-            desired.add(cid + '|' + sc.id);
+            const key = cid + '|' + sc.id;
+            desired.add(key);
+            if (unchanged && publishedRef.current.has(key)) continue;
             void publishCharacter(cid, sc.id, live.name, summary, published);
           }
         } catch {
