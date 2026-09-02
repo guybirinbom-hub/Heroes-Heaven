@@ -25,6 +25,20 @@ const TOOLS: { cmd: string; arg?: string; icon?: string; text?: string; title: s
   { cmd: 'removeFormat', icon: 'ti-clear-formatting', title: 'Clear formatting' },
 ];
 
+/**
+ * The table the "Insert table" toolbar button drops at the caret. Owner: "tables don't work in the
+ * notes" — there was no way to make one at all (no button, no markdown), so a table could only ever
+ * arrive by paste. Header row + 2 body rows × 3 columns; every cell holds a non-breaking space so the
+ * caret can be placed inside it (an empty <td> is unclickable), and the trailing paragraph is the
+ * escape hatch for a table inserted at the very end of a note — without it there is nowhere to type
+ * after the table. Plain HTML: this is what gets persisted into play.notes[].content.
+ */
+const NOTE_TABLE_HTML =
+  '<table><thead><tr><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th></tr></thead><tbody>' +
+  '<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>' +
+  '<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>' +
+  '</tbody></table><p><br></p>';
+
 /** Swatch palette for the notes text/highlight color pickers. */
 const NOTE_COLORS = ['#e5484d', '#f59e0b', '#10b981', '#0ea5e9', '#6366f1', '#a855f7', '#ec4899', '#64748b'];
 
@@ -124,6 +138,16 @@ function NoteEditor({
     save();
     setPop(null);
   };
+  // Insert a table at the caret. execCommand is the same path every other toolbar button uses, but it
+  // is deprecated and simply absent in some environments (jsdom, and any engine that finally drops it),
+  // where it would silently insert nothing — so fall back to appending the table to the note.
+  const insertTable = () => {
+    ref.current?.focus();
+    const ok = typeof document.execCommand === 'function' && document.execCommand('insertHTML', false, NOTE_TABLE_HTML);
+    if (!ok) ref.current?.insertAdjacentHTML('beforeend', NOTE_TABLE_HTML);
+    ref.current?.focus();
+    save();
+  };
   // Link flow: remember the selection, open the search; on pick, wrap the selection (or insert the
   // target's name) as a ref-link anchor that the read-only renderer makes clickable.
   const openLink = () => {
@@ -180,6 +204,9 @@ function NoteEditor({
             not Tabler's circled "1", which is a different mark that happens to contain a 1. */}
         <button className="tb-btn" title="Action glyph" onMouseDown={(e) => (e.preventDefault(), setPop(pop === 'glyph' ? null : 'glyph'))}>
           <span className="pf2-action" aria-hidden="true">1</span>
+        </button>
+        <button className="tb-btn" title="Insert table" onMouseDown={(e) => (e.preventDefault(), insertTable())}>
+          <i className="ti ti-table" aria-hidden="true" />
         </button>
         <button className="tb-btn" title="Link selected text to a description" onMouseDown={(e) => (e.preventDefault(), openLink())}>
           <i className="ti ti-link" aria-hidden="true" />

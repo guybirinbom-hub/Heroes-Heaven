@@ -12,6 +12,17 @@ import { useAstNode } from './useAst';
 /** A description is treated as rich HTML (user-authored, from the item editor) if it carries any
  *  HTML tag; otherwise it's curated markdown and RichText parses + auto-linkifies it. */
 const HTML_TAG = /<(a|strong|em|b|i|u|s|h[1-6]|ul|ol|li|blockquote|span|br|div|p|hr|mark)\b/i;
+/**
+ * `<table>` counts as rich HTML only for user-authored content (`dirAuto`, i.e. what our own
+ * contentEditable editors wrote). Owner: "tables don't work in the notes" — a note that is ONLY a
+ * table missed the rich branch, fell through to the markdown renderer and had its tags stripped by
+ * cleanRun, so the cells came out as a run of naked text.
+ *
+ * It is deliberately NOT in HTML_TAG itself: several curated rules descriptions (the Kingmaker
+ * kingdom/army pages) are markdown-lite that happens to embed a raw `<table>`, and routing those to
+ * the HTML renderer would print their "##" headings and {@action} links literally.
+ */
+const isRichHtml = (s: string, dirAuto?: boolean) => HTML_TAG.test(s) || (!!dirAuto && /<table\b/i.test(s));
 
 /**
  * Renders an inline description with its cross-references linkified; clicking a link opens the
@@ -52,7 +63,7 @@ export function DescBody({
   const useRich = !astId || (!ast && !astLoading);
   const richHtml = useMemo(
     () =>
-      useRich && description && HTML_TAG.test(description)
+      useRich && description && isRichHtml(description, dirAuto)
         ? dirAuto
           ? htmlWithAutoDir(sanitize(description))
           : sanitize(description)
@@ -84,7 +95,7 @@ export function DescBody({
 
   // Rich-HTML path: render the authored HTML directly, with .ref-link anchors made clickable
   // (each carries data-ref-key/data-ref-id pointing at a content entry to pop up).
-  if (HTML_TAG.test(description)) {
+  if (isRichHtml(description, dirAuto)) {
     const open = (key: string, id: string) => {
       const map = (content as unknown as Record<string, Record<string, { name: string; description?: string; descRefs?: DescRef[] }>> | null)?.[key];
       const e = map?.[id];

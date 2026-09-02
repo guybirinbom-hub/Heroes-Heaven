@@ -11573,10 +11573,13 @@ button.strike-name:hover {
 .ff-warnings li { margin: 2px 0; color: var(--app-text-dim, #726c7c); }
 
 /* Class-archetype banner (Feats & Features): what the archetype replaced in your class. */
-.ff-arch { display: flex; gap: 10px; align-items: flex-start; background: color-mix(in srgb, var(--accent, #7a5af8) 10%, var(--card-bg, #fff)); border: 1px solid color-mix(in srgb, var(--accent, #7a5af8) 35%, transparent); border-radius: 8px; padding: 10px 12px; margin: 0 0 10px; font-size: 13px; }
+/* `--card-bg` is not a variable this app defines, so the mix fell back to WHITE on every dark theme and
+   the dim grey text sat on a pale lavender panel — unreadable (owner, 2026-09-02). The panel now mixes
+   the accent into the real surface colour and the text uses the real text colour. */
+.ff-arch { display: flex; gap: 10px; align-items: flex-start; color: var(--app-text); background: color-mix(in srgb, var(--accent, #7a5af8) 12%, var(--app-surface)); border: 1px solid color-mix(in srgb, var(--accent, #7a5af8) 35%, transparent); border-radius: 8px; padding: 10px 12px; margin: 0 0 10px; font-size: 13px; }
 .ff-arch > i { color: var(--accent, #7a5af8); font-size: 18px; margin-top: 1px; }
 .ff-arch ul { margin: 4px 0 0; padding-left: 18px; }
-.ff-arch li { margin: 2px 0; color: var(--app-text-dim, #726c7c); }
+.ff-arch li { margin: 2px 0; color: var(--app-text); }
 
 /* Doubling Rings — rune-copy picker on a wielded weapon (Inventory). */
 .inv-runecopy { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; color: var(--app-text-dim); background: var(--app-surface-2); border: 1px solid var(--app-border); border-radius: var(--app-radius); padding: 3px 8px; }
@@ -11872,4 +11875,30 @@ button.strike-name:hover {
   gap: 8px;
   font-size: 12px;
   color: var(--app-text-dim);
+}
+
+/* ---- Tables in a note ----
+   Owner: "tables don't work in the notes". Nothing styled table/th/td inside .editor-body, so a
+   table (inserted by the toolbar button, or pasted) rendered as unbordered, unpadded text — the
+   cells ran together and it did not read as a table at all. One selector set covers both halves:
+   the contentEditable and the read-only view, which is a DescBody with the same .editor-body class. */
+.editor-body table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0 0 10px;
+  font-size: 0.95em;
+}
+.editor-body th,
+.editor-body td {
+  border: var(--app-bw) solid var(--app-border);
+  padding: 4px 8px;
+  text-align: start;
+  vertical-align: top;
+  color: var(--app-text);
+  /* Without a minimum an empty cell collapses to a hairline and can't be clicked into. */
+  min-width: 2em;
+}
+.editor-body th {
+  background: var(--app-surface);
+  font-weight: 600;
 }

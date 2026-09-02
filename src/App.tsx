@@ -46,7 +46,6 @@ import type { Character, ContentDatabase, Item, ModeDef } from './rules/types';
 
 /** How often to look for a GM's edit when the Realtime stream is DOWN. Only ever runs in that case, so
  *  it can be brisk: at the table a GM's change to your hit points has to land in about a second. */
-const GM_EDIT_POLL_MS = 2500;
 
 /**
  * How long to wait after a change before republishing to the party.
@@ -414,35 +413,24 @@ export default function App() {
     // know this user's id; the subscription triggers the same pull-and-apply above (including on each
     // (re)connect, so nothing pushed during a socket drop is missed).
     //
-    // …and a FALLBACK POLL for when that stream isn't up. Realtime needs the table in the
-    // supabase_realtime publication and a websocket that isn't blocked; when either is missing the
-    // only remaining trigger was focus/visibility, so a GM's change sat unapplied until the player
-    // touched their device. That is indistinguishable from "the sync is laggy". The poll runs ONLY
-    // while the stream is down, so a healthy setup makes no extra requests at all.
+    // NO POLLING. There used to be a 2.5-second fallback poll for when the Realtime stream was not up
+    // (the table missing from the supabase_realtime publication). On the owner's setup that stream was
+    // never up, so the "fallback" was the steady state: a request every 2.5 s for the whole session,
+    // and every stale row in that table re-applied on the next tick. The owner's model of this feature
+    // is the right one — a GM's change is PUSHED to the player's sheet when the GM makes it; the app
+    // does not go asking every second (2026-09-02). Without the stream, a GM edit arrives on the next
+    // focus / visibility / online / sign-in pull. Enabling the stream is a one-time SQL run
+    // (supabase-campaign-characters.sql).
     let unsubscribe = () => {};
-    let poll: ReturnType<typeof setInterval> | undefined;
-    const stopPoll = () => {
-      if (poll) clearInterval(poll);
-      poll = undefined;
-    };
     void currentUserId().then((id) => {
       if (cancelled || !id) return;
-      unsubscribe = subscribeGmEdits(
-        id,
-        () => void apply(),
-        (livestream) => {
-          if (cancelled) return;
-          if (livestream) stopPoll();
-          else if (!poll) poll = setInterval(() => void apply(), GM_EDIT_POLL_MS);
-        },
-      );
+      unsubscribe = subscribeGmEdits(id, () => void apply(), () => {});
     });
     return () => {
       cancelled = true;
       window.removeEventListener('focus', onFocus);
       window.removeEventListener('online', onFocus);
       document.removeEventListener('visibilitychange', onVisible);
-      stopPoll();
       unsubscribe();
     };
   }, [auth.status, setRoster]);

@@ -6,8 +6,6 @@ import { deityDomainsOf, deriveSpellcasting, deriveClassDc, formatMod, ownedFeat
 import { toggleKnownRitual,
   poolKey,
   removeInventoryItem,
-  resetPreparedEntry,
-  resetRepertoire,
   setFocusUsed,
   setItemCounter,
   setItemQuantity,
@@ -418,10 +416,15 @@ function LearnSpellModal({
     ...Object.values(entry.learned ?? {}).flat(),
   ]);
 
-  const options = [
-    ...(pool.byRank[0] ?? []),
-    ...(maxRank >= 1 ? pool.upTo[maxRank] ?? [] : []),
-  ].filter((s) => !known.has(s.id));
+  // A caster who prepares from the whole tradition list (cleric, druid) has no spell to learn — the
+  // picker is then the rituals route only (owner, 2026-09-02).
+  const spellsLearnable = canLearnSpells(entry);
+  const options = spellsLearnable
+    ? [
+        ...(pool.byRank[0] ?? []),
+        ...(maxRank >= 1 ? pool.upTo[maxRank] ?? [] : []),
+      ].filter((s) => !known.has(s.id))
+    : [];
 
   const learnedRanks = Object.keys(entry.learned ?? {})
     .map(Number)
@@ -430,6 +433,23 @@ function LearnSpellModal({
 
   const learn = (s: Spell) => {
     onPlay((p) => learnSpell(p, entry.id, s.rank, s.id));
+    setPicking(false);
+  };
+
+  // Rituals are tradition-less by rule, so no entry's spell list ever offers one — they used to need a
+  // separate "Learn a ritual" button and picker. Owner 2026-09-02: "the user will use Learn a spell to
+  // learn a ritual", so that picker's candidate list (every ritual the character doesn't already know)
+  // rides along here as a labelled group at the end of the results. Learning one still goes through
+  // toggleKnownRitual — the path the page's Rituals section reads from.
+  const rituals = useMemo(() => {
+    const have = new Set(character.knownRituals ?? []);
+    return listValues(content, content.spells)
+      .filter((s) => s.ritual && !have.has(s.id))
+      .sort((a, b) => a.rank - b.rank || a.name.localeCompare(b.name));
+  }, [content, character.knownRituals]);
+
+  const learnRitual = (s: Spell) => {
+    onPlay((p) => toggleKnownRitual(p, s.id));
     setPicking(false);
   };
 
@@ -472,6 +492,38 @@ function LearnSpellModal({
                   selectLabel="Learn"
                   onSelect={() => learn(s)}
                 />
+              );
+            }}
+            // The Rituals group. Rendered in the footer rather than mixed into `items`: the spell
+            // facets (tradition, rank against this entry's slots) describe a caster's spell list, and
+            // a ritual is on nobody's list — filtering by them would silently hide every ritual. It
+            // still answers the name search, which is how the group is actually used.
+            resultsFooter={(q, openDesc) => {
+              const ql = q.trim().toLowerCase();
+              const shown = ql ? rituals.filter((s) => s.name.toLowerCase().includes(ql)) : rituals;
+              if (!shown.length) return null;
+              return (
+                <>
+                  <div className="ms-rank-hdr">Rituals</div>
+                  {shown.map((s) => {
+                    const node = descNodeOf(s, 'spells');
+                    return (
+                      <PickerRow
+                        key={s.id}
+                        name={s.name}
+                        meta={
+                          <div className="picker-traits">
+                            {`${ord(s.rank)} rank`}
+                            {s.ritualPrimary ? ` · ${s.ritualPrimary}` : ''}
+                          </div>
+                        }
+                        onOpenDesc={node ? () => openDesc(node) : undefined}
+                        selectLabel="Learn"
+                        onSelect={() => learnRitual(s)}
+                      />
+                    );
+                  })}
+                </>
               );
             }}
           />
@@ -522,7 +574,9 @@ function LearnSpellModal({
                 </div>
               ))
             )}
-            <button className="ms-add" onClick={() => setPicking(true)} disabled={options.length === 0}>
+            {/* Rituals count: the picker has something to offer even when every spell on this
+                entry's list is already known. */}
+            <button className="ms-add" onClick={() => setPicking(true)} disabled={options.length === 0 && rituals.length === 0}>
               <i className="ti ti-plus" aria-hidden="true" /> Learn a spell
             </button>
           </div>
@@ -658,7 +712,7 @@ function ManageSpellsModal({
     }
   };
 
-  const reset = () => onPlay((p) => (spontaneous ? resetRepertoire(p, entry.id) : resetPreparedEntry(p, entry.id)));
+  // (The "Reset to default repertoire/preparation" button was removed at the owner's request, 2026-09-02.)
 
   return (
     <div className="picker-overlay" onClick={onClose}>
@@ -973,9 +1027,6 @@ function ManageSpellsModal({
                 })}
               </div>
             )}
-            <button className="ms-reset" onClick={reset}>
-              <i className="ti ti-rotate" aria-hidden="true" /> Reset to default {spontaneous ? 'repertoire' : 'preparation'}
-            </button>
           </div>
         )}
       </div>
@@ -1196,9 +1247,6 @@ export function SpellsTab({
   // looking at when you cast it". Gated on the character actually having the record that grants it.
   const marksFor = (spellId?: string) => (spellId ? spellSituationalFor(character, content, spellId) : []);
   const [filters, setFilters] = useState<Set<string>>(new Set());
-  /** The "Learn a ritual" picker. Rituals are tradition-less by rule, so 148 of the 151 are on no
-   *  spell list and had no route onto the sheet except Setup → Overrides, the rule-breaking panel. */
-  const [learningRitual, setLearningRitual] = useState(false);
   const [filtersOpen, setFiltersOpen] = useState(false); // mobile: filter row toggles open over the results
   const [search, setSearch] = useState('');
   const [detail, setDetail] = useState<Spell | null>(null);
@@ -1747,7 +1795,7 @@ export function SpellsTab({
     (spellbookCards.length > 0 ? 1 : 0) +
     (learnedCards.length > 0 ? 1 : 0) +
     (focusEntries.length > 0 ? 1 : 0) +
-    (ritualsShown.length > 0 || onPlay ? 1 : 0);
+    (ritualsShown.length > 0 ? 1 : 0);
 
   // ── Section nodes lifted out of the return so both the desktop stack AND the mobile
   // page-level tab row can render the SAME JSX. Each builder references in-scope locals
@@ -2021,9 +2069,10 @@ export function SpellsTab({
   // Rituals the character has — granted by a record, or added via Overrides. Hidden when there are none.
   const ritualsNode: ReactNode = (() => {
     const shown = ritualsShown;
-    // Shown whenever the character CAN learn one, not only once they have one — otherwise the picker
-    // that learns your first ritual lives inside a section that only appears after you have a ritual.
-    if (!shown.length && !onPlay) return null;
+    // Owner 2026-09-02: "if the character doesn't have any rituals then don't have a ritual section —
+    // if it's empty there isn't a point". The section no longer has to exist to host a picker: rituals
+    // are learned from the Learn a spell picker now, so an empty section is pure noise.
+    if (!shown.length) return null;
     return (
       <section className="card">
         <div className="ct" style={{ margin: secOpen('rituals') ? '0 0 10px' : 0 }}>
@@ -2043,11 +2092,6 @@ export function SpellsTab({
                 onClick={() => openDetail(sp)}
               />
             ))}
-            {onPlay && (
-              <button className="ms-add" onClick={() => setLearningRitual(true)}>
-                <i className="ti ti-plus" aria-hidden="true" /> Learn a ritual
-              </button>
-            )}
           </div>
         )}
       </section>
@@ -2133,10 +2177,11 @@ export function SpellsTab({
                       <i className="ti ti-pencil-plus" aria-hidden="true" /> {main.type === 'spontaneous' ? 'Repertoire' : 'Prepare'}
                     </button>
                   )}
-                  {/* Learn a Spell only means something for a caster whose repository is finite: a
-                      spellbook to write into, or a repertoire whose picks it widens. A cleric or druid
-                      prepares from the whole tradition list already, so there is nothing to learn. */}
-                  {onPlay && canLearnSpells(main) && (
+                  {/* Learn a Spell widens a finite repository (a spellbook, a repertoire). A cleric or
+                      druid prepares from the whole tradition list, so for them the picker offers
+                      RITUALS only — since the owner's 2026-09-02 decision made this the one way to learn
+                      a ritual on the sheet, every caster gets the button. */}
+                  {onPlay && (main.type === 'prepared' || main.type === 'spontaneous') && (
                     <button className="ms-btn" onClick={() => setLearnId(main.id)} title="Learn a Spell (exploration activity)">
                       <i className="ti ti-book-2" aria-hidden="true" /> Learn a spell
                     </button>
@@ -2292,40 +2337,6 @@ export function SpellsTab({
           notes={spellNotesFor(character, detail.id)}
           onClose={() => setDetail(null)}
         />
-      )}
-      {/* Learn (or forget) a ritual. Rituals are tradition-less by rule, so no spell list carries
-          them and the only previous route was Setup → Overrides — the panel for deliberately breaking
-          rules — to do something the rules simply let a character do. */}
-      {learningRitual && onPlay && (
-        <div className="picker-backdrop" onClick={() => setLearningRitual(false)}>
-          <div className="picker" onClick={(e) => e.stopPropagation()}>
-            <FilterableSelect
-              title="Learn a ritual"
-              items={listValues(content, content.spells).filter((s) => s.ritual)}
-              spec={SPELL_SPEC_BUILDER}
-              rowKey={(s) => s.id}
-              onClose={() => setLearningRitual(false)}
-              renderRow={(s, openDesc) => {
-                const node = descNodeOf(s, 'spells');
-                const known = (character.knownRituals ?? []).includes(s.id);
-                return (
-                  <PickerRow
-                    name={s.name}
-                    meta={
-                      <div className="picker-traits">
-                        {`${ord(s.rank)} rank`}
-                        {s.ritualPrimary ? ` · ${s.ritualPrimary}` : ''}
-                      </div>
-                    }
-                    onOpenDesc={node ? () => openDesc(node) : undefined}
-                    selectLabel={known ? 'Forget' : 'Learn'}
-                    onSelect={() => onPlay((p) => toggleKnownRitual(p, s.id))}
-                  />
-                );
-              }}
-            />
-          </div>
-        </div>
       )}
       {itemView &&
         (() => {

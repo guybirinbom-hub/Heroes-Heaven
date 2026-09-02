@@ -240,13 +240,26 @@ export function CharacterSheet({
   const dailyItems = useMemo(() => dailyItemSlots(character, content), [character, content]);
   const [dailyItemDraft, setDailyItemDraft] = useState<Record<string, string>>({});
   const dailyItemAnswer = (key: string) => dailyItemDraft[key] ?? character.dailyItems?.[key] ?? '';
+  /**
+   * Close the Daily preparations dialog WITHOUT preparing — and throw the morning's picks away.
+   *
+   * Owner: *"if I want to press Cancel the resources still got filled"*. Every close path only flipped
+   * `restOpen`, so a daily choice or a daily item picked and then cancelled stayed in the draft: it
+   * came back pre-selected on the next open, it re-enabled "Prepare for the day" for a question the
+   * player had not answered that morning, and the next confirm committed it. Cancel now means cancel.
+   */
+  const closeRest = () => {
+    setRestOpen(false);
+    setDailyDraft({});
+    setDailyItemDraft({});
+  };
   const [customizeOpen, setCustomizeOpen] = useState(false);
   useBackHandler(customizeOpen, () => setCustomizeOpen(false));
   const [portraitOpen, setPortraitOpen] = useState(false);
   // Android Back (mobile): unwind one step — close the portrait / rest sheet, else drop back to
   // the home tab — instead of exiting the app. (The menu, popups and Settings handle their own Back.)
   useBackHandler(isMobile && portraitOpen, () => setPortraitOpen(false));
-  useBackHandler(isMobile && restOpen, () => setRestOpen(false));
+  useBackHandler(isMobile && restOpen, closeRest);
   useBackHandler(isMobile && tab !== 'Main', () => setTab('Main'));
   useEffect(() => {
     try {
@@ -728,13 +741,13 @@ export function CharacterSheet({
       )}
 
       {restOpen && onRest && (
-        <div className="picker-overlay" onClick={() => setRestOpen(false)}>
+        <div className="picker-overlay" onClick={closeRest}>
           <div className="picker confirm-modal" onClick={(e) => e.stopPropagation()}>
             <div className="picker-head">
               <span>
                 <i className="ti ti-moon" aria-hidden="true" /> Daily preparations
               </span>
-              <button className="picker-close" onClick={() => setRestOpen(false)} aria-label="Close">
+              <button className="picker-close" onClick={closeRest} aria-label="Close">
                 <i className="ti ti-x" aria-hidden="true" />
               </button>
             </div>
@@ -859,7 +872,7 @@ export function CharacterSheet({
               )}
             </div>
             <div className="confirm-actions">
-              <button className="btn-ghost" onClick={() => setRestOpen(false)}>
+              <button className="btn-ghost" onClick={closeRest}>
                 Cancel
               </button>
               <button
