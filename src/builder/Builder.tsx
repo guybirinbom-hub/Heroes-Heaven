@@ -30,6 +30,7 @@ import {
   withCustomAnswer,
 } from '../rules/build';
 import { OPEN_SOURCE_LABEL, openChoiceOptions } from '../rules/openChoice';
+import { DOMAIN_SPELLS } from '../rules/domains';
 import { confirmDialog } from '../sheet/confirm';
 import { sourceCatalog, enabledBookSet } from '../rules/sources';
 import { eligibleFeatsForSlot, findHiddenFeatMatches } from '../rules/featSlots';
@@ -132,6 +133,18 @@ type Picker =
   | { kind: 'familiar-ability'; companionId: string };
 
 const skillLabel = (key: ProficiencyKey) => (key.startsWith('lore:') ? loreLabel(key) : cap(key));
+
+/** Every INITIATE domain spell, one option per SPELL (aliased domains — delirium, wyrmkin — dedupe),
+ *  labelled "Spell (Domain)" and sorted by spell name. The pool WG's "Select an Initial Domain
+ *  Spell" filter resolves to (rank-1 Domain focus spells), offered on every Domain Initiate take. */
+function initialDomainSpellOptions(content: ContentDatabase): { value: string; label: string }[] {
+  const seen = new Map<string, string>(); // spellId -> first domain carrying it
+  for (const [dom, sid] of Object.entries(DOMAIN_SPELLS)) if (!seen.has(sid)) seen.set(sid, dom);
+  return [...seen.entries()]
+    .filter(([sid]) => content.spells[sid])
+    .map(([sid, dom]) => ({ value: sid, label: `${content.spells[sid]!.name} (${cap(dom)})` }))
+    .sort((a, b) => a.label.localeCompare(b.label));
+}
 
 const atLeast = (have: ProficiencyRank, want: ProficiencyRank) =>
   PROFICIENCY_RANKS.indexOf(have) >= PROFICIENCY_RANKS.indexOf(want);
@@ -563,6 +576,23 @@ export function Builder({
                                       <span>{def.inert}</span>
                                     </div>
                                   )}
+                                  {/* WG's SECOND select on Domain Initiate: the INITIAL DOMAIN SPELL, chosen
+                                      from every initiate domain spell (their filter: rank-1 Domain focus
+                                      spells) — owner's 2026-09-02 ruling. Unpicked = the chosen domain's own
+                                      spell, which is the printed pairing and the placeholder says so. */}
+                                  {def.kind === 'domains' && recordId === 'domain-initiate' && (
+                                    <PopupSelect
+                                      title="Initial domain spell"
+                                      placeholder={(() => {
+                                        const dom = build.featChoices[key];
+                                        const dft = dom ? content.spells[DOMAIN_SPELLS[dom] ?? '']?.name : undefined;
+                                        return dft ? `Default: ${dft} (your domain’s spell)…` : 'Initial domain spell…';
+                                      })()}
+                                      value={build.featSpellChoices?.[key] ?? ''}
+                                      onChange={(v) => actions.patch({ featSpellChoices: { ...(build.featSpellChoices ?? {}), [key]: v } })}
+                                      options={initialDomainSpellOptions(content)}
+                                    />
+                                  )}
                                   {limitReasons.map((r) => (
                                     <div className="choice-inert" key={r}>
                                       <i className="ti ti-filter" aria-hidden="true" />
@@ -719,6 +749,20 @@ export function Builder({
             <i className="ti ti-info-circle" aria-hidden="true" />
             <span>{def.inert}</span>
           </div>
+        )}
+        {/* WG's second select on Domain Initiate — the granted copy (a cloistered cleric's doctrine)
+            asks it too, keyed apart from any slot take so each take picks its own spell. */}
+        {def.kind === 'domains' && grantedId === 'domain-initiate' && (
+          <PopupSelect
+            title="Initial domain spell"
+            placeholder={(() => {
+              const dft = answer ? content.spells[DOMAIN_SPELLS[answer] ?? '']?.name : undefined;
+              return dft ? `Default: ${dft} (your domain’s spell)…` : 'Initial domain spell…';
+            })()}
+            value={build.featSpellChoices?.[`granted:${grantedId}`] ?? ''}
+            onChange={(v) => actions.patch({ featSpellChoices: { ...(build.featSpellChoices ?? {}), [`granted:${grantedId}`]: v } })}
+            options={initialDomainSpellOptions(content)}
+          />
         )}
         {limitReasons.map((r) => (
           <div className="choice-inert" key={r}>

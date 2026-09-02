@@ -210,6 +210,10 @@ export interface BuildState {
   /** Lore subjects chosen for a feat's "trained in a Lore of your choice" grant (FeatGrant.loreChoices),
    *  keyed `<featId>:<slot index>` → the bare subject text (e.g. "Warfare"). Granted as lore:<subject>. */
   featLoreChoices?: Record<string, string>;
+  /** The INITIAL DOMAIN SPELL a Domain Initiate take picked — WG's second select on the feat, per
+   *  the owner's 2026-09-02 ruling. Keyed by the take: the SLOT key for a slot pick,
+   *  `granted:<featId>` for the granted copy. Absent = the chosen domain's own spell (print). */
+  featSpellChoices?: Record<string, string>;
   /**
    * The bonus skill feat a dedication grants via FEAT_GRANTS.bonusSkillFeat (Rogue Dedication),
    * keyed by the dedication's feat id → chosen skill-feat id. Injected as an extra skill-feat slot.
@@ -3217,7 +3221,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
    *  AND the feat's own fixed focusSpells / focusPoolBonus still apply — a feat with BOTH a sub-choice
    *  and a fixed grant contributes both (the old code skipped the fixed grant whenever a choice def
    *  existed, silently dropping e.g. a choice feat's focusPoolBonus). Returns the resolved choice. */
-  const applyFeatFocus = (featId: string, choiceValue: string | undefined) => {
+  const applyFeatFocus = (featId: string, choiceValue: string | undefined, spellOverride?: string) => {
     const feat = content.feats[featId];
     if (!feat) return undefined;
     let resolved: { value: string; label: string } | undefined;
@@ -3239,10 +3243,23 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
               ? featChoiceLabel(opt.label)
               : openChoiceLabel(choiceValue, content),
       };
-      if (def.kind === 'domains' && DOMAIN_SPELLS[choiceValue] && content.spells[DOMAIN_SPELLS[choiceValue]]) {
-        featFocusSpells.push(DOMAIN_SPELLS[choiceValue]);
-        focusSource[DOMAIN_SPELLS[choiceValue]] ??= feat.name;
-        contributedSpell = true;
+      if (def.kind === 'domains') {
+        /* The INITIAL DOMAIN SPELL is its own pick, like Wanderer's Guide's second select on Domain
+         * Initiate ("Select an Initial Domain Spell" — filtered to rank-1 Domain focus spells, NOT
+         * to the chosen domain). Owner's ruling 2026-09-02: the player chooses the spell as they do
+         * there. Unanswered defaults to the chosen domain's own spell — the printed pairing — and an
+         * override is honored only from the same pool WG filters to, so a stale answer can never
+         * smuggle in an arbitrary spell. */
+        const pool = Object.values(DOMAIN_SPELLS);
+        const spell =
+          spellOverride && pool.includes(spellOverride) && content.spells[spellOverride]
+            ? spellOverride
+            : DOMAIN_SPELLS[choiceValue];
+        if (spell && content.spells[spell]) {
+          featFocusSpells.push(spell);
+          focusSource[spell] ??= feat.name;
+          contributedSpell = true;
+        }
       }
       /*
        * …and a focus spell carried by the chosen option itself.
@@ -3336,7 +3353,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     // focus-spell grant — no multi-pick choice in the data grants a spell per pick.
     const keys = choiceKeys(slotKey, content.feats[featId]?.choice);
     const values = keys.map((k) => build.featChoices?.[k]).filter(Boolean) as string[];
-    const resolved = applyFeatFocus(featId, values[0]);
+    const resolved = applyFeatFocus(featId, values[0], build.featSpellChoices?.[slotKey]);
     if (resolved) {
       const def = content.feats[featId]?.choice;
       const labels = values.map(
@@ -3434,7 +3451,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     }
   }
   for (const id of focusBonusIds) {
-    const resolved = applyFeatFocus(id, build.grantedFeatChoices?.[id]);
+    const resolved = applyFeatFocus(id, build.grantedFeatChoices?.[id], build.featSpellChoices?.[`granted:${id}`]);
     if (resolved) grantedChoiceById[id] = resolved;
   }
   // "Choose one of N FOCUS spells" effect-choices (Additional Shadow Magic, Greater Deathly Secrets).
@@ -4243,17 +4260,19 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   const takenFeats = new Set<string>();
   /* A repeatable feat with a sub-choice can legally arrive TWICE — once from a slot, once granted
    * (Domain Initiate: a cloistered cleric's doctrine grants it, and "Special: You can select this
-   * feat multiple times, selecting a different domain each time"). Keyed on the ANSWER, never the
-   * granter — which is exactly what keeps a grant carried on two record ids (cloistered-cleric +
-   * first-doctrine-cloistered-cleric, one printed grant) collapsed to one row. An unanswered grant
-   * counts as the empty answer, so the row (and with it the builder's domain picker) still appears
-   * before the player has chosen. */
-  const distinctRepeatableGrant = (gid: string, answer: string | undefined): boolean => {
+   * feat multiple times, selecting a different domain each time"). The granted copy ALWAYS gets its
+   * own row when the feat is so far held only by SLOT picks — Wanderer's Guide shows both instances
+   * with their own pickers, and collapsing them when the answers matched made the doctrine look like
+   * it granted nothing (the owner: "I didn't get it, in WG I did"). Identical answers still cost one
+   * focus spell and one pool point, because distinctFeatFocus dedupes by SPELL id. Grant-vs-grant
+   * still collapses: once ONE granted row exists, a second granter (cloistered-cleric +
+   * first-doctrine-cloistered-cleric carry one printed grant on two ids) adds nothing. */
+  const distinctRepeatableGrant = (gid: string): boolean => {
     const f = content.feats[gid];
     if (!f?.choice || maxTakes(f) <= 1) return false;
     const rows = feats.filter((x) => x.featId === gid);
     if (rows.length >= maxTakes(f)) return false;
-    return !rows.some((x) => (x.choice?.value ?? '') === (answer ?? ''));
+    return rows.length > 0 && rows.every((x) => !x.grantedBy);
   };
   // A background whose own sub-choice IS the feat ("Multilingual or Assurance") — four of them.
   // Read through the same classifier the skill/Lore branch uses, so one place decides what a
@@ -4572,7 +4591,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         if (!content.feats[gid]) continue;
         // A repeatable feat the player ALSO spent a slot on is two takings, not one — see
         // distinctRepeatableGrant above.
-        if (takenFeats.has(gid) && !distinctRepeatableGrant(gid, grantedChoiceById[gid]?.value)) continue;
+        if (takenFeats.has(gid) && !distinctRepeatableGrant(gid)) continue;
         /* TWO VEHICLES CAN GRANT THE SAME FEAT, and this one does not know the answer.
          *
          * A record may carry `grantsFeats: ['additional-lore']` in core.json (here) AND an entry in
@@ -4681,7 +4700,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         // The row's choice is resolved ABOVE the guard so the two cannot disagree — the
         // repeatable-grant test compares against the same answer the pushed row will carry.
         const grantChoice = boundGrantChoice(build, content, srcId, gid, srcFc?.slotKey) ?? grantedChoiceById[gid];
-        if (takenFeats.has(gid) && !distinctTaking && !distinctRepeatableGrant(gid, grantChoice?.value)) continue;
+        if (takenFeats.has(gid) && !distinctTaking && !distinctRepeatableGrant(gid)) continue;
         grantedPairs.add(pair);
         const alreadyQueued = takenFeats.has(gid);
         takenFeats.add(gid);

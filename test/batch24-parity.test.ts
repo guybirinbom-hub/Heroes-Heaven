@@ -55,12 +55,35 @@ describe('the repeatable Domain Initiate', () => {
     expect(ch.focus).toEqual({ current: 2, max: 2 });
   });
 
-  it('the SAME domain twice still collapses to one row and one focus point', () => {
-    // The granted copy is ANSWERED family, like Bellphor's real file — an UNANSWERED grant
-    // deliberately keeps its own row (empty answer), or the doctrine's picker would never mount.
+  it('the SAME domain twice shows BOTH rows (WG-style) but still costs one spell and one pool point', () => {
+    // Owner 2026-09-02: collapsing the granted copy into a matching slot take made the doctrine
+    // look like it granted nothing ("I didn't get it, in WG I did"). Both instances render, each
+    // with its own pickers; distinctFeatFocus dedupes by SPELL id, so the same domain twice is
+    // still one focus spell and a 1-point pool — the printed economics under WG's display.
     const ch = buildCharacter(bellphor({ grantedFeatChoices: { 'domain-initiate': 'family' } } as Partial<BuildState>), db);
-    expect(ch.feats.filter((f) => f.featId === 'domain-initiate').length).toBe(1);
+    expect(ch.feats.filter((f) => f.featId === 'domain-initiate').length).toBe(2);
+    const rep = ch.spellcasting.find((e) => e.type === 'focus')?.repertoire?.[1] ?? [];
+    expect(rep).toEqual(['soothing-words']);
     expect(ch.focus).toEqual({ current: 1, max: 1 });
+  });
+
+  it("the INITIAL DOMAIN SPELL is the player's pick (WG's second select), defaulting to the domain's own", () => {
+    // Slot take: domain family, spell overridden to Fire Ray — the override wins for that take.
+    const slotPick = buildCharacter(bellphor({ featSpellChoices: { '2:class:0': 'fire-ray' } } as Partial<BuildState>), db);
+    const rep1 = slotPick.spellcasting.find((e) => e.type === 'focus')?.repertoire?.[1] ?? [];
+    expect(rep1).toContain('fire-ray');
+    expect(rep1).not.toContain('soothing-words');
+    // The granted copy keys apart (`granted:<featId>`), so each take picks its own spell.
+    const both = buildCharacter(
+      bellphor({ grantedFeatChoices: { 'domain-initiate': 'family' }, featSpellChoices: { '2:class:0': 'fire-ray', 'granted:domain-initiate': 'moonbeam' } } as Partial<BuildState>),
+      db,
+    );
+    const rep2 = both.spellcasting.find((e) => e.type === 'focus')?.repertoire?.[1] ?? [];
+    expect(new Set(rep2)).toEqual(new Set(['fire-ray', 'moonbeam']));
+    expect(both.focus).toEqual({ current: 2, max: 2 });
+    // An override from OUTSIDE the initiate pool is refused — the printed default returns.
+    const bogus = buildCharacter(bellphor({ featSpellChoices: { '2:class:0': 'heal' } } as Partial<BuildState>), db);
+    expect(bogus.spellcasting.find((e) => e.type === 'focus')?.repertoire?.[1]).toContain('soothing-words');
   });
 
   it('the domain picker greys a domain another take already claimed (Q27: shown, explained, never removed)', () => {
