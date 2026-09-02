@@ -4894,6 +4894,10 @@ export interface SpellcastingEntry {
    * bake today's temporary picks into the character permanently.
    */
   tradedCantrips?: (string | null)[];
+  /** How many cantrips this entry ALLOWS (class base ± bonuses/archetype deltas) — set on the main
+   *  class entry so the sheet can draw empty openings for unpicked ones. The picks live in
+   *  `cantrips`; without the cap, zero picks made the whole Cantrips section invisible. */
+  cantripCap?: number;
   /** Prepared casters: slots per rank. */
   prepared?: Record<number, PreparedSlot[]>;
   /** Spontaneous casters: known spell ids per rank. */

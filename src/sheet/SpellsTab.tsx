@@ -1331,7 +1331,12 @@ export function SpellsTab({
     // what today's trade actually bought them. An unfilled opening still shows, or the trade would
     // look like it did nothing.
     const tradedCantrips = main.tradedCantrips ?? [];
-    if (main.cantrips.length || tradedCantrips.length) {
+    /* Unpicked cantrip OPENINGS. With zero cantrips chosen the whole section used to vanish — a new
+     * caster asked "why don't I have a place for my cantrips?" and the sheet had no answer. The
+     * spell-slot convention already shows "Empty slot" cards, so unfilled cantrip openings get the
+     * same treatment, pointing at where the picking actually happens (the builder). */
+    const emptyCantrips = Math.max(0, (main.cantripCap ?? 0) - main.cantrips.length);
+    if (main.cantrips.length || tradedCantrips.length || emptyCantrips > 0) {
       const cards = main.cantrips
         .map((id, i) => {
           const sp = content.spells[id];
@@ -1352,6 +1357,13 @@ export function SpellsTab({
               <SpellCard key={'tc' + i} name={sp.name} cost={sp.cast} meta="traded · at will" marks={marksFor(sp.id)} onClick={() => openDetail(sp)} />
             ) : null;
           }),
+        )
+        .concat(
+          filtering
+            ? []
+            : Array.from({ length: emptyCantrips }, (_, i) => (
+                <SpellCard key={'ec' + i} name="Empty cantrip" meta="pick in the builder (Edit)" empty />
+              )),
         )
         .filter(Boolean);
       if (cards.length) {

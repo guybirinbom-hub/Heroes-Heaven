@@ -130,6 +130,34 @@ export default function App() {
     persistImmediately.current = true;
   };
 
+  /*
+   * REBUILD EVERY CHARACTER ONCE PER LAUNCH, from its build against the CURRENT engine and data.
+   *
+   * The stored `character` is a derived cache, and until now it was refreshed only when the player
+   * next edited the build — so every data fix and engine fix shipped BLIND to existing rosters. The
+   * owner updated to a build where his cleric's archetype finally worked, opened the sheet, and it
+   * still showed the old spellcasting: the snapshot on disk was built by the previous version and
+   * nothing ever re-derived it. Play state is deliberately untouched (the BUILD didn't change, so
+   * there is nothing to reconcile — expended slots, HP and inventory stay put), and a character
+   * whose rebuild throws keeps its stored snapshot rather than bricking the roster.
+   */
+  const rebuiltThisLaunch = useRef(false);
+  useEffect(() => {
+    if (!content || rebuiltThisLaunch.current) return;
+    rebuiltThisLaunch.current = true;
+    setRoster((r) =>
+      r.map((c) => {
+        if (!c.build) return c;
+        try {
+          return { ...c, character: buildCharacter(c.build, applyOverrides(content, c.build.overrides)) };
+        } catch (e) {
+          console.warn(`[HeavesRebuild] kept the stored snapshot for "${c.character?.name ?? c.id}" — rebuild threw:`, e);
+          return c;
+        }
+      }),
+    );
+  }, [content, setRoster]);
+
   useEffect(() => {
     // Any interaction while loading cancels the boot-time jump to the sheet.
     const cancel = () => {

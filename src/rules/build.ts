@@ -3568,6 +3568,10 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     const grantedByRank: Record<number, string[]> = {};
     for (const id of subOption?.grantedSpells ?? [])
       if (!notYetGranted.has(id)) (grantedByRank[content.spells[id]?.rank ?? 1] ??= []).push(id);
+    // The ALLOWANCE, not just the picks: the sheet needs it to draw empty cantrip openings — with
+    // zero picked, the whole Cantrips section used to vanish, and a new caster had no hint that
+    // cantrips exist or where to choose them (measured on a fresh cloistered cleric).
+    const cantripAllowance = Math.max(0, cantripsKnown(cls.id) - (isUmt ? 1 : 0) + cantripBonus + archSpellMods.cantripDelta);
     const entry: SpellcastingEntry = {
       id: `${cls.id}-casting`,
       name: `${cap(tradition)} ${sp.type} spellcasting`,
@@ -3577,7 +3581,8 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       proficiency: 'trained',
       // Dedup so a subclass-granted cantrip (psychic conscious mind) doesn't duplicate a
       // player-picked one.
-      cantrips: [...new Set([...build.cantrips.slice(0, Math.max(0, cantripsKnown(cls.id) - (isUmt ? 1 : 0) + cantripBonus + archSpellMods.cantripDelta)), ...(grantedByRank[0] ?? [])])],
+      cantrips: [...new Set([...build.cantrips.slice(0, cantripAllowance), ...(grantedByRank[0] ?? [])])],
+      cantripCap: cantripAllowance,
     };
     if (sp.repertoire) {
       // Spontaneous: a repertoire of known spells per rank + a slot pool.
