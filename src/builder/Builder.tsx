@@ -432,7 +432,18 @@ export function Builder({
   // it ignored the `cantripsAt` LADDER, and it charged Adapted Cantrip's `-1` before its picker was
   // answered, so the page read "5 / 4" over a set of picks the sheet was perfectly happy with.
   const cantripBonus = cantripBonusFor(build, content);
-  const cantripCap = Math.max(0, (casting ? cantripsKnown(build.classId) : archCaster?.config.cantrips ?? 0) + cantripBonus + (casting ? archMods.cantripDelta : 0));
+  // When the ARCHETYPE is the caster (no class spellcasting), the feats that raise ITS cantrip count
+  // (Psi Development's `spellSlotBonus {entryId, cantrips:1}`) are scoped to the archetype entry, which
+  // `cantripBonusFor` — the class pool's function — never sees; buildCharacter and the setup page
+  // (shared.tsx archCantripBonus) both add them, so the level page must too or the sheet has an opening
+  // the builder gives the player no slot to fill (experience gate, 2026-09-02).
+  const archCantripBonus = !casting && archCaster
+    ? Object.values(build.featPicks).filter((v): v is string => !!v).reduce((n, id) => {
+        const b = content.feats[id]?.spellSlotBonus;
+        return b?.entryId && archetypeEntryIds(archCaster).has(b.entryId) ? n + (b.cantrips ?? 0) : n;
+      }, 0)
+    : 0;
+  const cantripCap = Math.max(0, (casting ? cantripsKnown(build.classId) : (archCaster?.config.cantrips ?? 0) + archCantripBonus) + cantripBonus + (casting ? archMods.cantripDelta : 0));
   // The built character, used to evaluate feat prerequisites in the picker and the stats rail.
   // Memoized so the full per-level build pipeline runs once per build change, not 2–3× per render.
   const featPrereqChar = useMemo(() => buildCharacter(build, ovContent), [build, ovContent]);
@@ -494,6 +505,9 @@ export function Builder({
                                     <input
                                       className="txt"
                                       type="text"
+                                      data-ctl="text"
+                                      data-ctl-title={featChoicePrompt(def.prompt, def.flag)}
+                                      data-ctl-state={build.featChoices[key] ? 'picked' : 'empty'}
                                       placeholder={`${featChoicePrompt(def.prompt, def.flag)}…`}
                                       value={build.featChoices[key] ?? ''}
                                       onChange={(e) => actions.setFeatChoice(key, e.target.value)}
@@ -580,7 +594,11 @@ export function Builder({
                                       from every initiate domain spell (their filter: rank-1 Domain focus
                                       spells) — owner's 2026-09-02 ruling. Unpicked = the chosen domain's own
                                       spell, which is the printed pairing and the placeholder says so. */}
-                                  {def.kind === 'domains' && recordId === 'domain-initiate' && (
+                                  {/* Every single-pick domains choice, not Domain Initiate alone: Deity's Domain and
+                                      Domain Acumen carry the same WG "Choose an Initial Domain Spell" select, and the
+                                      engine (applyFeatFocus) already honours featSpellChoices for any domains choice —
+                                      only this gate kept the picker from the sibling records (experience gate, 2026-09-02). */}
+                                  {def.kind === 'domains' && (def.picks ?? 1) === 1 && (
                                     <PopupSelect
                                       title="Initial domain spell"
                                       placeholder={(() => {
@@ -752,7 +770,7 @@ export function Builder({
         )}
         {/* WG's second select on Domain Initiate — the granted copy (a cloistered cleric's doctrine)
             asks it too, keyed apart from any slot take so each take picks its own spell. */}
-        {def.kind === 'domains' && grantedId === 'domain-initiate' && (
+        {def.kind === 'domains' && (def.picks ?? 1) === 1 && (
           <PopupSelect
             title="Initial domain spell"
             placeholder={(() => {
@@ -1094,6 +1112,9 @@ export function Builder({
                 type="button"
                 disabled={build.cantrips.length >= cantripCap}
                 title={build.cantrips.length >= cantripCap ? `All ${cantripCap} cantrip slots are filled — remove one first.` : undefined}
+                data-ctl="spell"
+                data-ctl-title="Cantrip"
+                data-ctl-options={cantripCap}
                 onClick={() => setPicker({ kind: 'spell', rank: 0, cap: cantripCap })}
               >
                 + add
@@ -1127,7 +1148,7 @@ export function Builder({
                           </button>
                         </span>
                       ))}
-                      <button className="spr-add" type="button" disabled={learnedTotal >= bookAt(lvl)} title={learnedTotal >= bookAt(lvl) ? `Your spellbook holds all ${bookAt(lvl)} spells it can at this level.` : undefined} onClick={() => setPicker({ kind: 'spell', rank, cap: bookAt(lvl) })}>
+                      <button className="spr-add" type="button" disabled={learnedTotal >= bookAt(lvl)} title={learnedTotal >= bookAt(lvl) ? `Your spellbook holds all ${bookAt(lvl)} spells it can at this level.` : undefined} data-ctl="spell" data-ctl-title={rank === 0 ? 'Cantrip' : `Rank ${rank} spell`} onClick={() => setPicker({ kind: 'spell', rank, cap: bookAt(lvl) })}>
                         + add
                       </button>
                     </div>
@@ -1167,7 +1188,7 @@ export function Builder({
                       </button>
                     </span>
                   ))}
-                  <button className="spr-add" type="button" disabled={chosen.length >= capR} title={chosen.length >= capR ? `All ${capR} spells at this rank are chosen — remove one first.` : undefined} onClick={() => setPicker({ kind: 'spell', rank, cap: capR })}>
+                  <button className="spr-add" type="button" disabled={chosen.length >= capR} title={chosen.length >= capR ? `All ${capR} spells at this rank are chosen — remove one first.` : undefined} data-ctl="spell" data-ctl-title={rank === 0 ? 'Cantrip' : `Rank ${rank} spell`} data-ctl-options={capR} onClick={() => setPicker({ kind: 'spell', rank, cap: capR })}>
                     + add
                   </button>
                 </div>
@@ -1207,7 +1228,7 @@ export function Builder({
                   </button>
                 </span>
               ))}
-              <button className="spr-add" type="button" onClick={() => setPicker({ kind: 'spell', rank: 0, cap: cantripCap2, caster: 2 })}>
+              <button className="spr-add" type="button" data-ctl="spell" data-ctl-title="Cantrip (second class)" data-ctl-options={cantripCap2} onClick={() => setPicker({ kind: 'spell', rank: 0, cap: cantripCap2, caster: 2 })}>
                 + add
               </button>
             </div>
@@ -1246,7 +1267,7 @@ export function Builder({
                     </button>
                   </span>
                 ))}
-                <button className="spr-add" type="button" disabled={have >= capR} title={have >= capR ? `All ${capR} spells at this rank are chosen — remove one first.` : undefined} onClick={() => setPicker({ kind: 'spell', rank, cap: capR, caster: 2 })}>
+                <button className="spr-add" type="button" disabled={have >= capR} title={have >= capR ? `All ${capR} spells at this rank are chosen — remove one first.` : undefined} data-ctl="spell" data-ctl-title={rank === 0 ? 'Cantrip (second class)' : `Rank ${rank} spell (second class)`} data-ctl-options={capR} onClick={() => setPicker({ kind: 'spell', rank, cap: capR, caster: 2 })}>
                   + add
                 </button>
               </div>
@@ -1868,7 +1889,10 @@ export function Builder({
                               from only two of them, so the rest resolved an answer nobody could give.
                               Driven off the BUILT character rather than per-lane, so a seventh lane
                               cannot silently miss it. Rendered at level 0 so it has one home. */}
-                          {subAnchorId &&
+                          {/* Anchored to the subclass level — or to level 1 for the eight classes with no
+                              subclass, which otherwise never rendered these (Devil Allies via Order Training on a
+                              fighter asked its Tradition nowhere; experience gate, 2026-09-02). */}
+                          {(subAnchorId || (!cls?.subclass && lvl === 1)) &&
                             (() => {
                               // The two lanes that already mount their own picker under the granting
                               // row: a slot-picked feat's grants, and the background's. Everything
@@ -1921,7 +1945,10 @@ export function Builder({
                               browser: the card appeared with one question, and the answer the eidolon
                               needs could not be given. Same shape as the comment above — a lane that
                               mounts one picker and not the other. */}
-                          {subAnchorId &&
+                          {/* Anchored to the subclass level — or to level 1 for the eight classes with no
+                              subclass, which otherwise never rendered these (Devil Allies via Order Training on a
+                              fighter asked its Tradition nowhere; experience gate, 2026-09-02). */}
+                          {(subAnchorId || (!cls?.subclass && lvl === 1)) &&
                             (() => {
                               const slotPicked = new Set(Object.values(build.featPicks).filter(Boolean));
                               return [...new Set(featPrereqChar.feats.filter((f) => f.grantedBy).map((f) => f.featId))]
@@ -1994,6 +2021,9 @@ export function Builder({
                               // Replace button to swap it. An EMPTY slot: clicking opens the picker.
                               className={'lvl-card' + (picked ? '' : ' empty')}
                               type="button"
+                              data-ctl="slot"
+                              data-ctl-title={FEAT_LABEL[catg]}
+                              data-ctl-state={picked ? 'picked' : 'empty'}
                               title={picked ? 'Show description' : undefined}
                               onClick={() => {
                                 if (!picked) return setPicker({ kind: 'feat', level: lvl, category: catg, idx: i });
@@ -2478,6 +2508,67 @@ export function Builder({
                         </div>
                       </div>
                     )}
+
+                    {/* The class's BONUS skill increase (swashbuckler's Stylish Tricks at 3/7/15). The engine
+                        read `bonusSkillIncreases[lvl]` and the pending counter demanded it, but no control
+                        ever wrote it — a permanent "1 choice left" nothing on the page could clear
+                        (experience gate, 2026-09-02). */}
+                    {g.bonusSkillIncrease &&
+                      (() => {
+                        const chosenBonus = build.bonusSkillIncreases?.[lvl] ?? null;
+                        return (
+                          <div className="lvl-group">
+                            <div className="lvl-group-h">
+                              <i className="ti ti-bulb" aria-hidden="true" /> Skills (bonus increase)
+                            </div>
+                            <div className="lvl-cards">
+                              <div className={'lvl-card' + (chosenBonus ? '' : ' empty')}>
+                                <span className="lvl-card-icon">
+                                  <i className="ti ti-arrow-up" aria-hidden="true" />
+                                </span>
+                                <div className="lvl-card-text">
+                                  <div className="lvl-card-label">Bonus skill increase</div>
+                                  <div className="lvl-card-row">
+                                    <PopupSelect
+                                      title="Bonus skill increase"
+                                      placeholder="Choose a skill…"
+                                      value={chosenBonus ?? ''}
+                                      onChange={(v) => {
+                                        const next = { ...(build.bonusSkillIncreases ?? {}) };
+                                        if (v) next[lvl] = v as ProficiencyKey;
+                                        else delete next[lvl];
+                                        actions.patch({ bonusSkillIncreases: next });
+                                      }}
+                                      clearLabel="Clear"
+                                      options={skillOptions.map((k) => {
+                                        const cur = baseSkills[k] ?? 'untrained';
+                                        const next = naturalNextRank(cur);
+                                        const atAbsoluteMax = next === cur;
+                                        const allowedByLevel = PROFICIENCY_RANKS.indexOf(next) <= PROFICIENCY_RANKS.indexOf(skillIncreaseCap(lvl));
+                                        return {
+                                          value: k,
+                                          label: `${skillLabel(k)} (${atAbsoluteMax ? `${RANK_ABBR[cur]} — max` : `${RANK_ABBR[cur]} → ${RANK_ABBR[next]}`})`,
+                                          disabled: atAbsoluteMax || !allowedByLevel || !!LOCKED_SKILL_KEYS[k],
+                                          disabledReason: atAbsoluteMax
+                                            ? 'Already legendary — nothing left to increase.'
+                                            : !allowedByLevel
+                                              ? `This level's increases cap at ${skillIncreaseCap(lvl)}.`
+                                              : LOCKED_SKILL_KEYS[k],
+                                        };
+                                      })}
+                                    />
+                                    {chosenBonus && (
+                                      <span className="lvl-result">
+                                        → {nextRank(baseSkills[chosenBonus] ?? 'untrained', lvl)}
+                                      </span>
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })()}
 
                     {(() => {
                       // Monk Path to Perfection: a save-proficiency choice at L7/L11/L15.

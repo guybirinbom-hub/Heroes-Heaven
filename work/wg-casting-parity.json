@@ -1,0 +1,4121 @@
+{
+ "generated": "2026-09-02T10:39:33.877Z",
+ "classes": [
+  {
+   "classId": "animist",
+   "source": "ANIMIST",
+   "rows": [
+    "Animist & Apparition Spellcasting"
+   ],
+   "slotRows": [
+    "Animist & Apparition Spellcasting"
+   ],
+   "wg": {
+    "type": "prepared",
+    "traditions": [
+     "divine"
+    ],
+    "attributes": [
+     "wis"
+    ]
+   },
+   "ours": {
+    "type": "prepared",
+    "tradition": "divine",
+    "attribute": "wis",
+    "progression": "animist"
+   },
+   "mismatches": [
+    {
+     "kind": "slots",
+     "level": 13,
+     "rank": 7,
+     "detail": "rank 7: WG 1 slot(s), ours 2"
+    },
+    {
+     "kind": "slots",
+     "level": 14,
+     "rank": 7,
+     "detail": "rank 7: WG 2 slot(s), ours 3"
+    },
+    {
+     "kind": "slots",
+     "level": 15,
+     "rank": 8,
+     "detail": "rank 8: WG 1 slot(s), ours 2"
+    },
+    {
+     "kind": "slots",
+     "level": 16,
+     "rank": 8,
+     "detail": "rank 8: WG 2 slot(s), ours 3"
+    },
+    {
+     "kind": "slots",
+     "level": 17,
+     "rank": 9,
+     "detail": "rank 9: WG 1 slot(s), ours 2"
+    },
+    {
+     "kind": "slots",
+     "level": 18,
+     "rank": 9,
+     "detail": "rank 9: WG 2 slot(s), ours 3"
+    }
+   ],
+   "levels": [
+    {
+     "level": 1,
+     "wgCantrips": 4,
+     "ourCantrips": 4,
+     "wgSlots": {
+      "1": 2,
+      "5": 0
+     },
+     "ourSlots": {
+      "1": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 2,
+     "wgCantrips": 4,
+     "ourCantrips": 4,
+     "wgSlots": {
+      "1": 3
+     },
+     "ourSlots": {
+      "1": 3
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 3,
+     "wgCantrips": 4,
+     "ourCantrips": 4,
+     "wgSlots": {
+      "1": 3,
+      "2": 2
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 4,
+     "wgCantrips": 4,
+     "ourCantrips": 4,
+     "wgSlots": {
+      "1": 3,
+      "2": 3
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 5,
+     "wgCantrips": 4,
+     "ourCantrips": 4,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 2
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 6,
+     "wgCantrips": 4,
+     "ourCantrips": 4,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 7,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 2
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 8,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 9,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 2
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 10,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 3,
+      "5": 3
+     },
+     "ourSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 3,
+      "5": 3
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 11,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 3,
+      "6": 2
+     },
+     "ourSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 3,
+      "6": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 12,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 3,
+      "6": 3
+     },
+     "ourSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 3,
+      "6": 3
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 13,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 3,
+      "7": 1
+     },
+     "ourSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 3,
+      "7": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 14,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 3,
+      "7": 2
+     },
+     "ourSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 3,
+      "7": 3
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 15,
+     "wgCantrips": 6,
+     "ourCantrips": 6,
+     "wgSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 4,
+      "7": 3,
+      "8": 1
+     },
+     "ourSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 4,
+      "7": 3,
+      "8": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 16,
+     "wgCantrips": 6,
+     "ourCantrips": 6,
+     "wgSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 4,
+      "7": 3,
+      "8": 2
+     },
+     "ourSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 4,
+      "7": 3,
+      "8": 3
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 17,
+     "wgCantrips": 6,
+     "ourCantrips": 6,
+     "wgSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 4,
+      "7": 4,
+      "8": 3,
+      "9": 1
+     },
+     "ourSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 4,
+      "7": 4,
+      "8": 3,
+      "9": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 18,
+     "wgCantrips": 6,
+     "ourCantrips": 6,
+     "wgSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 4,
+      "7": 4,
+      "8": 3,
+      "9": 2
+     },
+     "ourSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 4,
+      "7": 4,
+      "8": 3,
+      "9": 3
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 19,
+     "wgCantrips": 6,
+     "ourCantrips": 6,
+     "wgSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 4,
+      "7": 4,
+      "8": 4,
+      "9": 3,
+      "10": 1
+     },
+     "ourSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 4,
+      "7": 4,
+      "8": 4,
+      "9": 3,
+      "10": 1
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 20,
+     "wgCantrips": 6,
+     "ourCantrips": 6,
+     "wgSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 4,
+      "7": 4,
+      "8": 4,
+      "9": 3,
+      "10": 1
+     },
+     "ourSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 4,
+      "7": 4,
+      "8": 4,
+      "9": 3,
+      "10": 1
+     },
+     "cantripsPrepared": true
+    }
+   ],
+   "subclass": {
+    "ours": "Liturgist",
+    "wgRow": null,
+    "wgSlotOps": 0
+   },
+   "extraSources": [
+    "ANIMIST_APPARITION (130 slot rows)"
+   ]
+  },
+  {
+   "classId": "bard",
+   "source": "BARD",
+   "rows": [
+    "Bard Spellcasting"
+   ],
+   "slotRows": [
+    "Bard Spellcasting"
+   ],
+   "wg": {
+    "type": "spontaneous",
+    "traditions": [
+     "occult"
+    ],
+    "attributes": [
+     "cha"
+    ]
+   },
+   "ours": {
+    "type": "spontaneous",
+    "tradition": "occult",
+    "attribute": "cha",
+    "progression": "full"
+   },
+   "mismatches": [],
+   "levels": [
+    {
+     "level": 1,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 2
+     },
+     "ourSlots": {
+      "1": 2
+     },
+     "cantripsPrepared": false
+    },
+    {
+     "level": 2,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3
+     },
+     "ourSlots": {
+      "1": 3
+     },
+     "cantripsPrepared": false
+    },
+    {
+     "level": 3,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 2
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 2
+     },
+     "cantripsPrepared": false
+    },
+    {
+     "level": 4,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3
+     },
+     "cantripsPrepared": false
+    },
+    {
+     "level": 5,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 2
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 2
+     },
+     "cantripsPrepared": false
+    },
+    {
+     "level": 6,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3
+     },
+     "cantripsPrepared": false
+    },
+    {
+     "level": 7,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 2
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 2
+     },
+     "cantripsPrepared": false
+    },
+    {
+     "level": 8,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3
+     },
+     "cantripsPrepared": false
+    },
+    {
+     "level": 9,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 2
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 2
+     },
+     "cantripsPrepared": false
+    },
+    {
+     "level": 10,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3
+     },
+     "cantripsPrepared": false
+    },
+    {
+     "level": 11,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 2
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 2
+     },
+     "cantripsPrepared": false
+    },
+    {
+     "level": 12,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3
+     },
+     "cantripsPrepared": false
+    },
+    {
+     "level": 13,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 2
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 2
+     },
+     "cantripsPrepared": false
+    },
+    {
+     "level": 14,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 0
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3
+     },
+     "cantripsPrepared": false
+    },
+    {
+     "level": 15,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 2
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 2
+     },
+     "cantripsPrepared": false
+    },
+    {
+     "level": 16,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 3
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 3
+     },
+     "cantripsPrepared": false
+    },
+    {
+     "level": 17,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 3,
+      "9": 2
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 3,
+      "9": 2
+     },
+     "cantripsPrepared": false
+    },
+    {
+     "level": 18,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 3,
+      "9": 3
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 3,
+      "9": 3
+     },
+     "cantripsPrepared": false
+    },
+    {
+     "level": 19,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 3,
+      "9": 3,
+      "10": 1
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 3,
+      "9": 3,
+      "10": 1
+     },
+     "cantripsPrepared": false
+    },
+    {
+     "level": 20,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 3,
+      "9": 3,
+      "10": 1
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 3,
+      "9": 3,
+      "10": 1
+     },
+     "cantripsPrepared": false
+    }
+   ],
+   "subclass": {
+    "ours": "Enigma",
+    "wgRow": null,
+    "wgSlotOps": 0
+   }
+  },
+  {
+   "classId": "champion",
+   "source": "CHAMPION",
+   "rows": [
+    "Devotion Spells"
+   ],
+   "slotRows": [],
+   "wg": {
+    "type": "focus-only",
+    "traditions": [
+     "divine"
+    ],
+    "attributes": [
+     "cha"
+    ]
+   },
+   "ours": null,
+   "mismatches": [],
+   "levels": []
+  },
+  {
+   "classId": "cleric",
+   "source": "CLERIC",
+   "rows": [
+    "Cleric Spellcasting"
+   ],
+   "slotRows": [
+    "Cleric Spellcasting"
+   ],
+   "wg": {
+    "type": "prepared",
+    "traditions": [
+     "divine"
+    ],
+    "attributes": [
+     "wis"
+    ]
+   },
+   "ours": {
+    "type": "prepared",
+    "tradition": "divine",
+    "attribute": "wis",
+    "progression": "full"
+   },
+   "mismatches": [],
+   "levels": [
+    {
+     "level": 1,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 2
+     },
+     "ourSlots": {
+      "1": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 2,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3
+     },
+     "ourSlots": {
+      "1": 3
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 3,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 2
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 4,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 5,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 2
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 6,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 7,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 2
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 8,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 9,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 2
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 10,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 11,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 2
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 12,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 13,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 2
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 14,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 0
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 15,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 2
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 16,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 3
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 3
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 17,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 3,
+      "9": 2
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 3,
+      "9": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 18,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 3,
+      "9": 3
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 3,
+      "9": 3
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 19,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 3,
+      "9": 3,
+      "10": 1
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 3,
+      "9": 3,
+      "10": 1
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 20,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 3,
+      "9": 3,
+      "10": 1
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 3,
+      "9": 3,
+      "10": 1
+     },
+     "cantripsPrepared": true
+    }
+   ],
+   "subclass": {
+    "ours": "Cloistered Cleric",
+    "wgRow": null,
+    "wgSlotOps": 0
+   }
+  },
+  {
+   "classId": "druid",
+   "source": "DRUID",
+   "rows": [
+    "Druid Spellcasting"
+   ],
+   "slotRows": [
+    "Druid Spellcasting"
+   ],
+   "wg": {
+    "type": "prepared",
+    "traditions": [
+     "primal"
+    ],
+    "attributes": [
+     "wis"
+    ]
+   },
+   "ours": {
+    "type": "prepared",
+    "tradition": "primal",
+    "attribute": "wis",
+    "progression": "full"
+   },
+   "mismatches": [],
+   "levels": [
+    {
+     "level": 1,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 2
+     },
+     "ourSlots": {
+      "1": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 2,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3
+     },
+     "ourSlots": {
+      "1": 3
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 3,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 2
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 4,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 5,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 2
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 6,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 7,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 2
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 8,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 9,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 2
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 10,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 11,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 2
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 12,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 13,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 2
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 14,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 0
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 15,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 2
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 16,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 3
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 3
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 17,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 3,
+      "9": 2
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 3,
+      "9": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 18,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 3,
+      "9": 3
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 3,
+      "9": 3
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 19,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 3,
+      "9": 3,
+      "10": 1
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 3,
+      "9": 3,
+      "10": 1
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 20,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 3,
+      "9": 3,
+      "10": 1
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 3,
+      "9": 3,
+      "10": 1
+     },
+     "cantripsPrepared": true
+    }
+   ],
+   "subclass": {
+    "ours": "Animal Order",
+    "wgRow": "Animal Order",
+    "wgSlotOps": 0
+   }
+  },
+  {
+   "classId": "magus",
+   "source": "MAGUS",
+   "rows": [
+    "Magus Spellcasting"
+   ],
+   "slotRows": [
+    "Magus Spellcasting"
+   ],
+   "wg": {
+    "type": "prepared",
+    "traditions": [
+     "arcane"
+    ],
+    "attributes": [
+     "int"
+    ]
+   },
+   "ours": {
+    "type": "prepared",
+    "tradition": "arcane",
+    "attribute": "int",
+    "progression": "two-rank"
+   },
+   "mismatches": [
+    {
+     "kind": "slots",
+     "level": 5,
+     "rank": 1,
+     "detail": "rank 1: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 5,
+     "rank": 3,
+     "detail": "rank 3: WG 1 slot(s), ours 2"
+    },
+    {
+     "kind": "slots",
+     "level": 6,
+     "rank": 1,
+     "detail": "rank 1: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 7,
+     "rank": 1,
+     "detail": "rank 1: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 7,
+     "rank": 4,
+     "detail": "rank 4: WG 1 slot(s), ours 2"
+    },
+    {
+     "kind": "slots",
+     "level": 8,
+     "rank": 1,
+     "detail": "rank 1: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 9,
+     "rank": 1,
+     "detail": "rank 1: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 9,
+     "rank": 3,
+     "detail": "rank 3: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 9,
+     "rank": 5,
+     "detail": "rank 5: WG 1 slot(s), ours 2"
+    },
+    {
+     "kind": "slots",
+     "level": 10,
+     "rank": 1,
+     "detail": "rank 1: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 10,
+     "rank": 3,
+     "detail": "rank 3: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 11,
+     "rank": 1,
+     "detail": "rank 1: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 11,
+     "rank": 2,
+     "detail": "rank 2: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 11,
+     "rank": 4,
+     "detail": "rank 4: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 11,
+     "rank": 6,
+     "detail": "rank 6: WG 1 slot(s), ours 2"
+    },
+    {
+     "kind": "slots",
+     "level": 12,
+     "rank": 1,
+     "detail": "rank 1: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 12,
+     "rank": 2,
+     "detail": "rank 2: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 12,
+     "rank": 4,
+     "detail": "rank 4: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 13,
+     "rank": 1,
+     "detail": "rank 1: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 13,
+     "rank": 2,
+     "detail": "rank 2: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 13,
+     "rank": 3,
+     "detail": "rank 3: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 13,
+     "rank": 5,
+     "detail": "rank 5: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 13,
+     "rank": 7,
+     "detail": "rank 7: WG 1 slot(s), ours 2"
+    },
+    {
+     "kind": "slots",
+     "level": 14,
+     "rank": 1,
+     "detail": "rank 1: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 14,
+     "rank": 2,
+     "detail": "rank 2: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 14,
+     "rank": 3,
+     "detail": "rank 3: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 14,
+     "rank": 5,
+     "detail": "rank 5: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 15,
+     "rank": 1,
+     "detail": "rank 1: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 15,
+     "rank": 2,
+     "detail": "rank 2: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 15,
+     "rank": 3,
+     "detail": "rank 3: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 15,
+     "rank": 5,
+     "detail": "rank 5: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 15,
+     "rank": 6,
+     "detail": "rank 6: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 15,
+     "rank": 8,
+     "detail": "rank 8: WG 1 slot(s), ours 2"
+    },
+    {
+     "kind": "slots",
+     "level": 16,
+     "rank": 1,
+     "detail": "rank 1: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 16,
+     "rank": 2,
+     "detail": "rank 2: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 16,
+     "rank": 3,
+     "detail": "rank 3: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 16,
+     "rank": 5,
+     "detail": "rank 5: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 16,
+     "rank": 6,
+     "detail": "rank 6: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 17,
+     "rank": 1,
+     "detail": "rank 1: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 17,
+     "rank": 2,
+     "detail": "rank 2: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 17,
+     "rank": 3,
+     "detail": "rank 3: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 17,
+     "rank": 5,
+     "detail": "rank 5: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 17,
+     "rank": 6,
+     "detail": "rank 6: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 17,
+     "rank": 7,
+     "detail": "rank 7: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 17,
+     "rank": 9,
+     "detail": "rank 9: WG 1 slot(s), ours 2"
+    },
+    {
+     "kind": "slots",
+     "level": 18,
+     "rank": 1,
+     "detail": "rank 1: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 18,
+     "rank": 2,
+     "detail": "rank 2: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 18,
+     "rank": 3,
+     "detail": "rank 3: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 18,
+     "rank": 5,
+     "detail": "rank 5: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 18,
+     "rank": 6,
+     "detail": "rank 6: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 18,
+     "rank": 7,
+     "detail": "rank 7: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 19,
+     "rank": 1,
+     "detail": "rank 1: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 19,
+     "rank": 2,
+     "detail": "rank 2: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 19,
+     "rank": 3,
+     "detail": "rank 3: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 19,
+     "rank": 5,
+     "detail": "rank 5: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 19,
+     "rank": 6,
+     "detail": "rank 6: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 19,
+     "rank": 7,
+     "detail": "rank 7: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 20,
+     "rank": 1,
+     "detail": "rank 1: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 20,
+     "rank": 2,
+     "detail": "rank 2: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 20,
+     "rank": 3,
+     "detail": "rank 3: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 20,
+     "rank": 5,
+     "detail": "rank 5: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 20,
+     "rank": 6,
+     "detail": "rank 6: WG 2 slot(s), ours 0"
+    },
+    {
+     "kind": "slots",
+     "level": 20,
+     "rank": 7,
+     "detail": "rank 7: WG 2 slot(s), ours 0"
+    }
+   ],
+   "levels": [
+    {
+     "level": 1,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 1,
+      "2": 0
+     },
+     "ourSlots": {
+      "1": 1
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 2,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 2
+     },
+     "ourSlots": {
+      "1": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 3,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 2,
+      "2": 1
+     },
+     "ourSlots": {
+      "1": 2,
+      "2": 1
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 4,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 2,
+      "2": 2
+     },
+     "ourSlots": {
+      "1": 2,
+      "2": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 5,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 1
+     },
+     "ourSlots": {
+      "2": 2,
+      "3": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 6,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2
+     },
+     "ourSlots": {
+      "2": 2,
+      "3": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 7,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 1
+     },
+     "ourSlots": {
+      "2": 2,
+      "3": 2,
+      "4": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 8,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 2
+     },
+     "ourSlots": {
+      "2": 2,
+      "3": 2,
+      "4": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 9,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 2,
+      "5": 1
+     },
+     "ourSlots": {
+      "2": 2,
+      "4": 2,
+      "5": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 10,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 2,
+      "5": 2
+     },
+     "ourSlots": {
+      "2": 2,
+      "4": 2,
+      "5": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 11,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 2,
+      "5": 2,
+      "6": 1
+     },
+     "ourSlots": {
+      "3": 2,
+      "5": 2,
+      "6": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 12,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 2,
+      "5": 2,
+      "6": 2
+     },
+     "ourSlots": {
+      "3": 2,
+      "5": 2,
+      "6": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 13,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 2,
+      "5": 2,
+      "6": 2,
+      "7": 1
+     },
+     "ourSlots": {
+      "4": 2,
+      "6": 2,
+      "7": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 14,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 2,
+      "5": 2,
+      "6": 2,
+      "7": 2
+     },
+     "ourSlots": {
+      "4": 2,
+      "6": 2,
+      "7": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 15,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 2,
+      "5": 2,
+      "6": 2,
+      "7": 2,
+      "8": 1
+     },
+     "ourSlots": {
+      "4": 2,
+      "7": 2,
+      "8": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 16,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 2,
+      "5": 2,
+      "6": 2,
+      "7": 2,
+      "8": 2
+     },
+     "ourSlots": {
+      "4": 2,
+      "7": 2,
+      "8": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 17,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 2,
+      "5": 2,
+      "6": 2,
+      "7": 2,
+      "8": 2,
+      "9": 1
+     },
+     "ourSlots": {
+      "4": 2,
+      "8": 2,
+      "9": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 18,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 2,
+      "5": 2,
+      "6": 2,
+      "7": 2,
+      "8": 2,
+      "9": 2
+     },
+     "ourSlots": {
+      "4": 2,
+      "8": 2,
+      "9": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 19,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 2,
+      "5": 2,
+      "6": 2,
+      "7": 2,
+      "8": 2,
+      "9": 2
+     },
+     "ourSlots": {
+      "4": 2,
+      "8": 2,
+      "9": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 20,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 2,
+      "5": 2,
+      "6": 2,
+      "7": 2,
+      "8": 2,
+      "9": 2
+     },
+     "ourSlots": {
+      "4": 2,
+      "8": 2,
+      "9": 2
+     },
+     "cantripsPrepared": true
+    }
+   ],
+   "subclass": {
+    "ours": "Aloof Firmament",
+    "wgRow": null,
+    "wgSlotOps": 0
+   }
+  },
+  {
+   "classId": "necromancer",
+   "source": "NECROMANCER",
+   "rows": [
+    "Necromancer Spellcasting"
+   ],
+   "slotRows": [
+    "Necromancer Spellcasting"
+   ],
+   "wg": {
+    "type": "prepared",
+    "traditions": [
+     "occult"
+    ],
+    "attributes": [
+     "int"
+    ]
+   },
+   "ours": {
+    "type": "prepared",
+    "tradition": "occult",
+    "attribute": "int",
+    "progression": "psychic"
+   },
+   "mismatches": [],
+   "levels": [
+    {
+     "level": 1,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 1
+     },
+     "ourSlots": {
+      "1": 1
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 2,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 2,
+      "2": 0
+     },
+     "ourSlots": {
+      "1": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 3,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 2,
+      "2": 1
+     },
+     "ourSlots": {
+      "1": 2,
+      "2": 1
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 4,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 2,
+      "2": 2
+     },
+     "ourSlots": {
+      "1": 2,
+      "2": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 5,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 1
+     },
+     "ourSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 1
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 6,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2
+     },
+     "ourSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 7,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 1
+     },
+     "ourSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 1
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 8,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 2
+     },
+     "ourSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 9,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 2,
+      "5": 1
+     },
+     "ourSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 2,
+      "5": 1
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 10,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 2,
+      "5": 2
+     },
+     "ourSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 2,
+      "5": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 11,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 2,
+      "5": 2,
+      "6": 1
+     },
+     "ourSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 2,
+      "5": 2,
+      "6": 1
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 12,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 2,
+      "5": 2,
+      "6": 2
+     },
+     "ourSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 2,
+      "5": 2,
+      "6": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 13,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 2,
+      "5": 2,
+      "6": 2,
+      "7": 1
+     },
+     "ourSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 2,
+      "5": 2,
+      "6": 2,
+      "7": 1
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 14,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 2,
+      "5": 2,
+      "6": 2,
+      "7": 2
+     },
+     "ourSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 2,
+      "5": 2,
+      "6": 2,
+      "7": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 15,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 2,
+      "5": 2,
+      "6": 2,
+      "7": 2,
+      "8": 1
+     },
+     "ourSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 2,
+      "5": 2,
+      "6": 2,
+      "7": 2,
+      "8": 1
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 16,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 2,
+      "5": 2,
+      "6": 2,
+      "7": 2,
+      "8": 2
+     },
+     "ourSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 2,
+      "5": 2,
+      "6": 2,
+      "7": 2,
+      "8": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 17,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 2,
+      "5": 2,
+      "6": 2,
+      "7": 2,
+      "8": 2,
+      "9": 1
+     },
+     "ourSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 2,
+      "5": 2,
+      "6": 2,
+      "7": 2,
+      "8": 2,
+      "9": 1
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 18,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 2,
+      "5": 2,
+      "6": 2,
+      "7": 2,
+      "8": 2,
+      "9": 2
+     },
+     "ourSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 2,
+      "5": 2,
+      "6": 2,
+      "7": 2,
+      "8": 2,
+      "9": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 19,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 2,
+      "5": 2,
+      "6": 2,
+      "7": 2,
+      "8": 2,
+      "9": 2,
+      "10": 1
+     },
+     "ourSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 2,
+      "5": 2,
+      "6": 2,
+      "7": 2,
+      "8": 2,
+      "9": 2,
+      "10": 1
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 20,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 2,
+      "5": 2,
+      "6": 2,
+      "7": 2,
+      "8": 2,
+      "9": 2,
+      "10": 1
+     },
+     "ourSlots": {
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 2,
+      "5": 2,
+      "6": 2,
+      "7": 2,
+      "8": 2,
+      "9": 2,
+      "10": 1
+     },
+     "cantripsPrepared": true
+    }
+   ],
+   "subclass": {
+    "ours": "Puppeteer",
+    "wgRow": null,
+    "wgSlotOps": 0
+   }
+  },
+  {
+   "classId": "oracle",
+   "source": "ORACLE",
+   "rows": [
+    "Oracle Spellcasting"
+   ],
+   "slotRows": [
+    "Oracle Spellcasting"
+   ],
+   "wg": {
+    "type": "spontaneous",
+    "traditions": [
+     "divine"
+    ],
+    "attributes": [
+     "cha"
+    ]
+   },
+   "ours": {
+    "type": "spontaneous",
+    "tradition": "divine",
+    "attribute": "cha",
+    "progression": "full-plus"
+   },
+   "mismatches": [],
+   "levels": [
+    {
+     "level": 1,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 3
+     },
+     "ourSlots": {
+      "1": 3
+     },
+     "cantripsPrepared": false
+    },
+    {
+     "level": 2,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 4
+     },
+     "ourSlots": {
+      "1": 4
+     },
+     "cantripsPrepared": false
+    },
+    {
+     "level": 3,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 4,
+      "2": 3
+     },
+     "ourSlots": {
+      "1": 4,
+      "2": 3
+     },
+     "cantripsPrepared": false
+    },
+    {
+     "level": 4,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 4,
+      "2": 4
+     },
+     "ourSlots": {
+      "1": 4,
+      "2": 4
+     },
+     "cantripsPrepared": false
+    },
+    {
+     "level": 5,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 3
+     },
+     "ourSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 3
+     },
+     "cantripsPrepared": false
+    },
+    {
+     "level": 6,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4
+     },
+     "ourSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4
+     },
+     "cantripsPrepared": false
+    },
+    {
+     "level": 7,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 3
+     },
+     "ourSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 3
+     },
+     "cantripsPrepared": false
+    },
+    {
+     "level": 8,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4
+     },
+     "ourSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4
+     },
+     "cantripsPrepared": false
+    },
+    {
+     "level": 9,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 3
+     },
+     "ourSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 3
+     },
+     "cantripsPrepared": false
+    },
+    {
+     "level": 10,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4
+     },
+     "ourSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4
+     },
+     "cantripsPrepared": false
+    },
+    {
+     "level": 11,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 3
+     },
+     "ourSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 3
+     },
+     "cantripsPrepared": false
+    },
+    {
+     "level": 12,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 4
+     },
+     "ourSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 4
+     },
+     "cantripsPrepared": false
+    },
+    {
+     "level": 13,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 4,
+      "7": 3
+     },
+     "ourSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 4,
+      "7": 3
+     },
+     "cantripsPrepared": false
+    },
+    {
+     "level": 14,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 4,
+      "7": 4
+     },
+     "ourSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 4,
+      "7": 4
+     },
+     "cantripsPrepared": false
+    },
+    {
+     "level": 15,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 4,
+      "7": 4,
+      "8": 3
+     },
+     "ourSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 4,
+      "7": 4,
+      "8": 3
+     },
+     "cantripsPrepared": false
+    },
+    {
+     "level": 16,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 4,
+      "7": 4,
+      "8": 4
+     },
+     "ourSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 4,
+      "7": 4,
+      "8": 4
+     },
+     "cantripsPrepared": false
+    },
+    {
+     "level": 17,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 4,
+      "7": 4,
+      "8": 4,
+      "9": 3
+     },
+     "ourSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 4,
+      "7": 4,
+      "8": 4,
+      "9": 3
+     },
+     "cantripsPrepared": false
+    },
+    {
+     "level": 18,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 4,
+      "7": 4,
+      "8": 4,
+      "9": 4
+     },
+     "ourSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 4,
+      "7": 4,
+      "8": 4,
+      "9": 4
+     },
+     "cantripsPrepared": false
+    },
+    {
+     "level": 19,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 4,
+      "7": 4,
+      "8": 4,
+      "9": 4,
+      "10": 1
+     },
+     "ourSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 4,
+      "7": 4,
+      "8": 4,
+      "9": 4,
+      "10": 1
+     },
+     "cantripsPrepared": false
+    },
+    {
+     "level": 20,
+     "wgCantrips": 5,
+     "ourCantrips": 5,
+     "wgSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 4,
+      "7": 4,
+      "8": 4,
+      "9": 4,
+      "10": 1
+     },
+     "ourSlots": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 4,
+      "7": 4,
+      "8": 4,
+      "9": 4,
+      "10": 1
+     },
+     "cantripsPrepared": false
+    }
+   ],
+   "subclass": {
+    "ours": "Ancestors",
+    "wgRow": null,
+    "wgSlotOps": 0
+   }
+  },
+  {
+   "classId": "wizard",
+   "source": "WIZARD",
+   "rows": [
+    "Wizard Spellcasting"
+   ],
+   "slotRows": [
+    "Wizard Spellcasting"
+   ],
+   "wg": {
+    "type": "prepared",
+    "traditions": [
+     "arcane"
+    ],
+    "attributes": [
+     "int"
+    ]
+   },
+   "ours": {
+    "type": "prepared",
+    "tradition": "arcane",
+    "attribute": "int",
+    "progression": "full"
+   },
+   "mismatches": [
+    {
+     "kind": "cantrips",
+     "level": 1,
+     "detail": "WG 5 cantrips, ours 6"
+    },
+    {
+     "kind": "cantrips",
+     "level": 2,
+     "detail": "WG 5 cantrips, ours 6"
+    },
+    {
+     "kind": "cantrips",
+     "level": 3,
+     "detail": "WG 5 cantrips, ours 6"
+    },
+    {
+     "kind": "cantrips",
+     "level": 4,
+     "detail": "WG 5 cantrips, ours 6"
+    },
+    {
+     "kind": "cantrips",
+     "level": 5,
+     "detail": "WG 5 cantrips, ours 6"
+    },
+    {
+     "kind": "cantrips",
+     "level": 6,
+     "detail": "WG 5 cantrips, ours 6"
+    },
+    {
+     "kind": "cantrips",
+     "level": 7,
+     "detail": "WG 5 cantrips, ours 6"
+    },
+    {
+     "kind": "cantrips",
+     "level": 8,
+     "detail": "WG 5 cantrips, ours 6"
+    },
+    {
+     "kind": "cantrips",
+     "level": 9,
+     "detail": "WG 5 cantrips, ours 6"
+    },
+    {
+     "kind": "cantrips",
+     "level": 10,
+     "detail": "WG 5 cantrips, ours 6"
+    },
+    {
+     "kind": "cantrips",
+     "level": 11,
+     "detail": "WG 5 cantrips, ours 6"
+    },
+    {
+     "kind": "cantrips",
+     "level": 12,
+     "detail": "WG 5 cantrips, ours 6"
+    },
+    {
+     "kind": "cantrips",
+     "level": 13,
+     "detail": "WG 5 cantrips, ours 6"
+    },
+    {
+     "kind": "cantrips",
+     "level": 14,
+     "detail": "WG 5 cantrips, ours 6"
+    },
+    {
+     "kind": "cantrips",
+     "level": 15,
+     "detail": "WG 5 cantrips, ours 6"
+    },
+    {
+     "kind": "cantrips",
+     "level": 16,
+     "detail": "WG 5 cantrips, ours 6"
+    },
+    {
+     "kind": "cantrips",
+     "level": 17,
+     "detail": "WG 5 cantrips, ours 6"
+    },
+    {
+     "kind": "cantrips",
+     "level": 18,
+     "detail": "WG 5 cantrips, ours 6"
+    },
+    {
+     "kind": "cantrips",
+     "level": 19,
+     "detail": "WG 5 cantrips, ours 6"
+    },
+    {
+     "kind": "cantrips",
+     "level": 20,
+     "detail": "WG 5 cantrips, ours 6"
+    }
+   ],
+   "levels": [
+    {
+     "level": 1,
+     "wgCantrips": 5,
+     "ourCantrips": 6,
+     "wgSlots": {
+      "1": 2
+     },
+     "ourSlots": {
+      "1": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 2,
+     "wgCantrips": 5,
+     "ourCantrips": 6,
+     "wgSlots": {
+      "1": 3
+     },
+     "ourSlots": {
+      "1": 3
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 3,
+     "wgCantrips": 5,
+     "ourCantrips": 6,
+     "wgSlots": {
+      "1": 3,
+      "2": 2
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 4,
+     "wgCantrips": 5,
+     "ourCantrips": 6,
+     "wgSlots": {
+      "1": 3,
+      "2": 3
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 5,
+     "wgCantrips": 5,
+     "ourCantrips": 6,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 2
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 6,
+     "wgCantrips": 5,
+     "ourCantrips": 6,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 7,
+     "wgCantrips": 5,
+     "ourCantrips": 6,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 2
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 8,
+     "wgCantrips": 5,
+     "ourCantrips": 6,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 9,
+     "wgCantrips": 5,
+     "ourCantrips": 6,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 2
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 10,
+     "wgCantrips": 5,
+     "ourCantrips": 6,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 11,
+     "wgCantrips": 5,
+     "ourCantrips": 6,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 2
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 12,
+     "wgCantrips": 5,
+     "ourCantrips": 6,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 13,
+     "wgCantrips": 5,
+     "ourCantrips": 6,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 2
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 14,
+     "wgCantrips": 5,
+     "ourCantrips": 6,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 0
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 15,
+     "wgCantrips": 5,
+     "ourCantrips": 6,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 2
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 16,
+     "wgCantrips": 5,
+     "ourCantrips": 6,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 3
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 3
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 17,
+     "wgCantrips": 5,
+     "ourCantrips": 6,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 3,
+      "9": 2
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 3,
+      "9": 2
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 18,
+     "wgCantrips": 5,
+     "ourCantrips": 6,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 3,
+      "9": 3
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 3,
+      "9": 3
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 19,
+     "wgCantrips": 5,
+     "ourCantrips": 6,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 3,
+      "9": 3,
+      "10": 1
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 3,
+      "9": 3,
+      "10": 1
+     },
+     "cantripsPrepared": true
+    },
+    {
+     "level": 20,
+     "wgCantrips": 5,
+     "ourCantrips": 6,
+     "wgSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 3,
+      "9": 3,
+      "10": 1
+     },
+     "ourSlots": {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 3,
+      "6": 3,
+      "7": 3,
+      "8": 3,
+      "9": 3,
+      "10": 1
+     },
+     "cantripsPrepared": true
+    }
+   ],
+   "subclass": {
+    "ours": "Red Mantis Magic School",
+    "wgRow": "Red Mantis Magic School",
+    "wgSlotOps": 0
+   }
+  }
+ ],
+ "skippedSources": [
+  "ANIMIST_APPARITION",
+  "CLERIC_DIVINE_FONT",
+  "TECHNOMANCER"
+ ]
+}

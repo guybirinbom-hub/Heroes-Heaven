@@ -25,7 +25,7 @@ import { AlchemyPanel } from './AlchemyPanel';
 import { critSpec } from '../rules/critSpec';
 import { ACTIVITIES, type ActivityDef } from '../rules/actions';
 import { traitDesc } from '../rules/glossary';
-import { markTooltip, recordMarkersFor, statHasSituational, statMarkClass, type StatRef } from '../rules/explain';
+import { markTooltip, recordMarkersFor, sheetLoreKeys, statHasSituational, statMarkClass, type StatRef } from '../rules/explain';
 import { stanceRequirementIssue, modeGateIds } from '../rules/derive';
 import { ActionGlyph, RankPill, SituationalStar } from './widgets';
 import { DescriptionModal } from './DescriptionModal';
@@ -181,9 +181,10 @@ export function MainTab({
   // The action shown in the compact-mode detail popup (chip click).
   const [detailAction, setDetailAction] = useState<DetailAction | null>(null);
 
-  const loreKeys = Object.keys(character.proficiencies.skills).filter((k) =>
-    k.startsWith('lore:'),
-  ) as ProficiencyKey[];
+  // Trained Lores, plus an UNTRAINED Lore row for a Lore one of the character's things gives a bonus
+  // to (Loaded Dice / Marked Playing Cards → Games Lore): the star has to have a row to sit on, and
+  // Wanderer's Guide shows that row too (its `createValue SKILL_LORE_GAMES = U`).
+  const loreKeys = sheetLoreKeys(character, content);
   const skillKeys: ProficiencyKey[] = [...SKILLS, ...loreKeys];
   // These derivations are unchanged by the sheet's transient header state (XP draft, etc.); memoize
   // on [character, content] so a keystroke in the header doesn't re-run the whole strike/crit pipeline.

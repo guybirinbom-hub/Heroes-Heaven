@@ -10928,28 +10928,6 @@
  },
  {
   "category": "feats",
-  "id": "nantambu-chime-ringer-dedication",
-  "field": "effectChoices",
-  "value": [
-   {
-    "id": "chime-cantrip",
-    "prompt": "Nantambu Chime-Ringer: choose an arcane or occult cantrip",
-    "spellFilter": {
-     "traditions": [
-      "arcane",
-      "occult"
-     ],
-     "cantripsOnly": true,
-     "grantAs": "innate",
-     "innate": {
-      "atWill": true
-     }
-    }
-   }
-  ]
- },
- {
-  "category": "feats",
   "id": "crimson-oath-devotion",
   "field": "spellcastingGrant",
   "value": {
@@ -18248,37 +18226,6 @@
       "grant": {
        "speeds": {
         "swim": 20
-       }
-      }
-     }
-    ]
-   }
-  ]
- },
- {
-  "category": "feats",
-  "id": "molten-wit",
-  "field": "effectChoices",
-  "value": [
-   {
-    "id": "molten-wit-skill",
-    "prompt": "Choose the social skill your elemental soul trains you in",
-    "options": [
-     {
-      "value": "deception",
-      "label": "Deception (paired with Charming Liar)",
-      "grant": {
-       "skills": {
-        "deception": "trained"
-       }
-      }
-     },
-     {
-      "value": "diplomacy",
-      "label": "Diplomacy (paired with Group Impression)",
-      "grant": {
-       "skills": {
-        "diplomacy": "trained"
        }
       }
      }
@@ -35331,28 +35278,6 @@
     }
    ]
   }
- },
- {
-  "category": "feats",
-  "id": "eldritch-researcher-dedication",
-  "field": "effectChoices",
-  "value": [
-   {
-    "id": "cantrip",
-    "prompt": "Eldritch Researcher: choose an arcane or occult cantrip (cast at will, heightened to half your level rounded up)",
-    "spellFilter": {
-     "traditions": [
-      "arcane",
-      "occult"
-     ],
-     "cantripsOnly": true,
-     "grantAs": "innate",
-     "innate": {
-      "atWill": true
-     }
-    }
-   }
-  ]
  },
  {
   "category": "feats",
@@ -129710,16 +129635,6 @@
  {
   "category": "feats",
   "id": "dragon-disciple-dedication",
-  "field": "spellcastingGrant",
-  "value": {
-   "tradition": "arcane",
-   "keyAbility": "cha",
-   "proficiency": "trained"
-  }
- },
- {
-  "category": "feats",
-  "id": "dragon-disciple-dedication",
   "field": "situational",
   "value": [
    {
@@ -157059,6 +156974,17 @@
      }
     },
     {
+     "value": "commune-with-nature",
+     "label": "Commune with Nature",
+     "grant": {
+      "grantsRituals": [
+       {
+        "spellId": "commune-with-nature"
+       }
+      ]
+     }
+    },
+    {
      "value": "collective-memories",
      "label": "Collective Memories",
      "grant": {
@@ -166164,5 +166090,309 @@
   "id": "violent-unleash",
   "field": "description",
   "value": "**Requirement** Your previous action was to Unleash your Psyche.\n\n---\n\nThe force of your mind unleashing itself wracks your enemies with a violent shockwave that batters your enemies. You deal 2d6 force damage to all creatures in a , with a basic Reflex save.\n\nAt 5th level and every 2 levels thereafter, the damage increases by 1d6."
+ },
+ {
+  "category": "feats",
+  "id": "dragon-disciple-dedication",
+  "field": "spellcastingGrant",
+  "value": {
+   "tradition": "arcane",
+   "keyAbility": "cha",
+   "proficiency": "trained",
+   "focusOnly": true
+  }
+ },
+ {
+  "category": "feats",
+  "id": "eldritch-researcher-dedication",
+  "field": "choice",
+  "value": {
+   "flag": "eldritchResearcherTradition",
+   "prompt": "Tradition",
+   "kind": "array",
+   "options": [
+    {
+     "value": "arcane",
+     "label": "Arcane"
+    },
+    {
+     "value": "occult",
+     "label": "Occult"
+    }
+   ]
+  }
+ },
+ {
+  "category": "feats",
+  "id": "eldritch-researcher-dedication",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "cantrip",
+    "prompt": "Eldritch Researcher: choose an arcane or occult cantrip (cast at will, heightened to half your level rounded up)",
+    "spellFilter": {
+     "traditions": [
+      "arcane",
+      "occult"
+     ],
+     "cantripsOnly": true,
+     "grantAs": "innate",
+     "innate": {
+      "atWill": true
+     },
+     "traditionFromChoiceFlag": "eldritchResearcherTradition"
+    }
+   }
+  ]
+ },
+ {
+  "category": "feats",
+  "id": "nantambu-chime-ringer-dedication",
+  "field": "choice",
+  "value": {
+   "flag": "nantambuTradition",
+   "prompt": "Tradition",
+   "kind": "array",
+   "options": [
+    {
+     "value": "arcane",
+     "label": "Arcane"
+    },
+    {
+     "value": "occult",
+     "label": "Occult"
+    }
+   ]
+  }
+ },
+ {
+  "category": "feats",
+  "id": "nantambu-chime-ringer-dedication",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "chime-cantrip",
+    "prompt": "Nantambu Chime-Ringer: choose an arcane or occult cantrip",
+    "spellFilter": {
+     "traditions": [
+      "arcane",
+      "occult"
+     ],
+     "cantripsOnly": true,
+     "grantAs": "innate",
+     "innate": {
+      "atWill": true
+     },
+     "traditionFromChoiceFlag": "nantambuTradition"
+    }
+   }
+  ]
+ },
+ {
+  "category": "backgrounds",
+  "id": "harrow-chosen",
+  "field": "choice",
+  "value": {
+   "flag": "harrowSuit",
+   "prompt": "Card suit",
+   "kind": "array",
+   "options": [
+    {
+     "value": "hammers",
+     "label": "Hammers (Strength)"
+    },
+    {
+     "value": "keys",
+     "label": "Keys (Dexterity)"
+    },
+    {
+     "value": "shields",
+     "label": "Shields (Constitution)"
+    },
+    {
+     "value": "books",
+     "label": "Books (Intelligence)"
+    },
+    {
+     "value": "stars",
+     "label": "Stars (Wisdom)"
+    },
+    {
+     "value": "crowns",
+     "label": "Crowns (Charisma)"
+    }
+   ]
+  }
+ },
+ {
+  "category": "backgrounds",
+  "id": "harrow-chosen",
+  "field": "abilityBoostsByChoice",
+  "value": {
+   "hammers": [
+    {
+     "kind": "fixed",
+     "ability": "str"
+    },
+    {
+     "kind": "free"
+    }
+   ],
+   "keys": [
+    {
+     "kind": "fixed",
+     "ability": "dex"
+    },
+    {
+     "kind": "free"
+    }
+   ],
+   "shields": [
+    {
+     "kind": "fixed",
+     "ability": "con"
+    },
+    {
+     "kind": "free"
+    }
+   ],
+   "books": [
+    {
+     "kind": "fixed",
+     "ability": "int"
+    },
+    {
+     "kind": "free"
+    }
+   ],
+   "stars": [
+    {
+     "kind": "fixed",
+     "ability": "wis"
+    },
+    {
+     "kind": "free"
+    }
+   ],
+   "crowns": [
+    {
+     "kind": "fixed",
+     "ability": "cha"
+    },
+    {
+     "kind": "free"
+    }
+   ]
+  }
+ },
+ {
+  "category": "backgrounds",
+  "id": "harrow-chosen",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "harrowAlignment",
+    "prompt": "Card alignment (for the empower table)",
+    "options": [
+     {
+      "value": "lg",
+      "label": "Lawful Good"
+     },
+     {
+      "value": "ng",
+      "label": "Neutral Good"
+     },
+     {
+      "value": "cg",
+      "label": "Chaotic Good"
+     },
+     {
+      "value": "ln",
+      "label": "Lawful Neutral"
+     },
+     {
+      "value": "n",
+      "label": "True Neutral"
+     },
+     {
+      "value": "cn",
+      "label": "Chaotic Neutral"
+     },
+     {
+      "value": "le",
+      "label": "Lawful Evil"
+     },
+     {
+      "value": "ne",
+      "label": "Neutral Evil"
+     },
+     {
+      "value": "ce",
+      "label": "Chaotic Evil"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "_": "REFUTER ROUND 2026-09-02 (experience gate). Grim Fascination was asked TWICE: classes.necromancer.extraChoices carried a second 'grim-fascination' group whose options granted the same four grave spells as classFeatures['grim-fascination'].effectChoices, through a different accumulator — a necromancer who answered the two differently got two grave spells and a pool counting both. WG asks 'Select a Grim Fascination' once, on the class feature. The feature's own picker is the richer carrier (it holds the thrall-enhancement text WG injects), so the chassis group goes.",
+  "category": "classes",
+  "id": "necromancer",
+  "field": "extraChoices",
+  "value": []
+ },
+ {
+  "_": "WG feat 30202 gates Advanced Red Mantis Magic on Basic Red Mantis Magic; ours carried no prerequisites and no archetype, so featSlots offered it in any class slot at 6+ to any character. The legacy record itself stays inert (its WG op points at an undefined casting source — owner question, batch 16).",
+  "category": "feats",
+  "id": "advanced-red-mantis-magic",
+  "field": "prerequisites",
+  "value": ["Basic Red Mantis Magic"]
+ },
+ {
+  "category": "feats",
+  "id": "advanced-red-mantis-magic",
+  "field": "archetype",
+  "value": "red-mantis-assassin"
+ },
+ {
+  "_": "Molten Wit asked its skill three times (record `choice`, this effectChoices carrier, FEAT_LANE_GRANTS skillChoices). The record `choice` is what CHOICE_FEAT_GRANTS reads for the paired feat, so the skill now comes off that one answer via FEAT_LANE_GRANTS.choiceGrants; this carrier is removed. The WG-vs-print pairing question (owner queue, batch 6) is unaffected.",
+  "category": "feats",
+  "id": "molten-wit",
+  "field": "effectChoices",
+  "value": null
+ },
+ {
+  "_": "Harrow Ritualist (Lost Omens Rival Academies) lists six rituals: astral projection, call spirit, commune, COMMUNE WITH NATURE, collective memories, binding circle. Commune with Nature (Core Rulebook, legacy) was absent from the whole spell table, so the feat offered five. Text from the OGL Core Rulebook via the WG dump; secondary casters / checks in the description, as the other rituals carry them.",
+  "category": "spells",
+  "id": "commune-with-nature",
+  "create": true,
+  "value": {
+   "id": "commune-with-nature",
+   "name": "Commune with Nature",
+   "rank": 6,
+   "traditions": [],
+   "traits": ["prediction"],
+   "rarity": "uncommon",
+   "source": { "book": "Pathfinder Core Rulebook", "license": "OGL" },
+   "cast": { "type": "duration", "text": "1 day" },
+   "duration": "up to 10 minutes",
+   "ritual": true,
+   "ritualPrimary": "Nature (master)",
+   "level": 6,
+   "edition": "legacy"
+  }
+ },
+ {
+  "category": "spells",
+  "id": "commune-with-nature",
+  "field": "description",
+  "value": "**Cost** rare incense worth a total value of 60 gp\n\n**Secondary Casters** 1\n\n**Primary Check** Nature (master); **Secondary Checks** Nature\n\nAs *commune*, except you contact the primal spirits of nature, which know about animals, beasts, fey, fungi, plants, topography, and natural resources within a 3-mile radius of the ritual's location."
+ },
+ {
+  "_": "Assisting (armor property rune): \"You can carry Bulk equal to 6 + your Strength modifier before becoming encumbered … up to 11 + your Strength modifier\" — one more than the 5/10 baseline; WG: adjValue BULK_LIMIT_BONUS 1. derive.ts reads passiveEffects.bulkLimitBonus off property runes (lifting-belt precedent).",
+  "category": "items",
+  "id": "assisting",
+  "field": "passiveEffects",
+  "value": { "bulkLimitBonus": 1 }
  }
 ]

@@ -1,0 +1,194 @@
+{
+ "_": "EXPERIENCE GATE — INSTRUMENT LIMITS. Records the player-experience harness (test/wg-experience.harness.test.tsx + scripts/wg-experience.mjs) cannot observe correctly, each VERIFIED BY HAND against the running builder by the Opus triage reader and its adversarial refuter (2026-09-02): the control exists on the class chassis and cannot be switched off by removing the feature, the bonus lives in play state the host never enters, WG's variable is bookkeeping with no sheet value, or the host cannot satisfy a prose prerequisite. The gate PARKS these in the EXPERIENCE gate only and PRINTS them on every run. This is NOT a place for defects: a real gap is fixed or goes to work/owner-questions.json. Remove an entry the moment the instrument can see the record (the gate then judges it again).",
+ "records": {
+  "acute-scent": {
+   "batch": 9,
+   "verdict": "NO-SHEET-EFFECT",
+   "lane": "harness-state-toggle-off",
+   "class": "INSTRUMENT",
+   "verified": "Print: \"While you're raging, you gain imprecise scent with a range of 30 feet.\" Our record carries exactly that as whileActive [{state:'rage', senses:[{name:'scent', range:30, acuity:'imprecise'}]}], and derive.ts resolves it two ways — activeStateGrants puts the sense on the Senses list the moment the rage toggle is on, and stateGrantSummary names it on the Rage card BEFORE raging so the player can see what raging w",
+   "refuter": "Verified end to end. The record carries whileActive [{state:'rage', senses:[{name:'scent',range:30,acuity:'imprecise'}]}] — exactly the printed sentence. derive.ts:1114 activeStateGrants gates on `(c.classResources?.[state] ?? 0) > 0`, and the harness host is a freshly built barbarian whose rage res",
+   "verifiedOn": "2026-09-02"
+  },
+  "apprentice-sea-witch": {
+   "batch": 14,
+   "verdict": "UNVERIFIED-EFFECT",
+   "lane": "control-lane-marker",
+   "class": "INSTRUMENT",
+   "verified": "WG asks \"Select a Spell\" (optionType SPELL → lane 'spell', which accepts only ['spell','cantrip']). We render exactly the same pick — a PopupSelect with the two printed options, create water and hydraulic push — but `laneOfControl` guesses the lane from our PROMPT TEXT, and our prompt names the two spells instead of using the word \"spell\", so it falls through every CONTROL_TITLE_LANE regex and lands on the default 'o",
+   "refuter": "Verified end to end. WG's encoding for this record is literally `select from:SPELL \"Select a Spell\"` with exactly TWO predefined options; our FEAT_CANTRIP_GRANTS['apprentice-sea-witch'] is the same two spells (create-water, hydraulic-push) and Builder.tsx:2399-2417 renders it as a PopupSelect in the",
+   "verifiedOn": "2026-09-02"
+  },
+  "aura-enhancement": {
+   "batch": 14,
+   "verdict": "NO-SHEET-EFFECT",
+   "lane": "harness-minimal-host-missing-feature",
+   "class": "INSTRUMENT",
+   "verified": "Print: \"Add Benediction and Malediction to the spells you can prepare with your additional slots from your divine font.\" Our record carries spellListAdditions {spells:['benediction','malediction'], as:'font'}, and build.ts:5902-5907 writes those ids onto entry.font.allowed. That branch does nothing without a font: `const entry = ... spellcasting.find((e) => e.font); if (!entry?.font) continue;`. The harness host is a",
+   "refuter": "Upheld, and I could not break any leg of it. The record carries spellListAdditions {spells:['benediction','malediction'], as:'font'}; build.ts:5679 routes it to fontAdds and build.ts:5902-5906 bails with `if (!entry?.font) continue;`. The harness host is fighter/human (the feat's traits are only ['a",
+   "verifiedOn": "2026-09-02"
+  },
+  "awakened-jewel": {
+   "batch": 6,
+   "verdict": "UNVERIFIED-EFFECT",
+   "lane": "harness-unanswered-pick",
+   "class": "INSTRUMENT",
+   "verified": "The four unverified ops are not feat-specific: `SPELL_DC`/`SPELL_ATTACK` = trained, expert above a level threshold, is the generic Player Core innate-spell rule WG stamps on every innate grant. Our pooled `innate-casting` entry carries exactly that at build.ts:7099-7105 (`proficiency: maxRank(maxRank(caster, profile), level >= 12 ? 'expert' : 'trained')`, with a comment saying the threshold came from this very WG par",
+   "refuter": "INSTRUMENT stands, and this one is still live — the fix has NOT landed. I re-read answerOwnPicks in the current harness (test/wg-experience.harness.test.tsx): it answers `rec.choice` and `rec.effectChoices` with an explicit options array, and nothing else. It never writes `pickCantripChoices`, so bu",
+   "verifiedOn": "2026-09-02"
+  },
+  "awakened-magic": {
+   "batch": 5,
+   "verdict": "UNVERIFIED-EFFECT",
+   "lane": "experience-play-the-pick",
+   "class": "ALREADY-OK",
+   "verified": "WG's two unchecked ops are the innate-spellcasting proficiency ladder (SPELL_ATTACK/SPELL_DC trained, expert past a level threshold). Our engine already implements exactly that, and its comment says it was found by this very WG parity pass: the pooled innate entry's proficiency is maxRank(class caster, feat profile, level >= 12 ? 'expert' : 'trained'), quoting Player Core p.298. The cantrip pick itself is authored in",
+   "refuter": "ALREADY-OK upheld, and the WG side is a tighter match than the reader claimed. Their batch row shows BOTH proficiency pairs wrapped in `conditional IF [... LEVEL ...]` — the T pair and the E pair — so the E pair appearing in openEffects is the flattener resolving the level-20 host's condition, i.e. ",
+   "verifiedOn": "2026-09-02"
+  },
+  "composition-spells": {
+   "batch": 8,
+   "verdict": "NO-SHEET-EFFECT",
+   "lane": "harness-class-owned-grant",
+   "class": "INSTRUMENT",
+   "verified": "WG's three ops are giveSpell Counter Performance, giveSpell Courageous Anthem, giveAbilityBlock \"Courageous Anthem\". Their own delivery counter already says delivered 2 / undelivered 1 — both spells ARE on our built bard; only the ability-block duplicate of Courageous Anthem was unmatched, and that block is WG's second representation of the very cantrip already delivered. The differential read 0 because the grant is ",
+   "refuter": "Every leg checks out. work/.experience-findings.json records delivery {delivered:2, undelivered:1} — both giveSpell ops ARE matched and only the giveAbilityBlock duplicate of the already-delivered Courageous Anthem is unmatched. The 0-differential is fully explained: public/core.json classes.bard.fo",
+   "verifiedOn": "2026-09-02"
+  },
+  "dongun-education": {
+   "batch": 5,
+   "verdict": "MISSING-CONTROL",
+   "lane": "one-control-answers-n-selects",
+   "class": "INSTRUMENT",
+   "verified": "They ask 'Select a Lore' twice over three options; we ask once over the three PAIRS. The player makes the identical decision — the three pairs are exactly the three ways to choose two of Engineering/Explosive/Firearm — and the answer is consumed: featGrantsAuto keys choiceGrants on the paired value and carries the printed expert-at-2 / master-at-7 / legendary-at-15 ladder. matchSelects is greedy and strictly one-to-o",
+   "refuter": "Verified. Print reads 'Pick two of the following Lore skills: Engineering Lore, Explosive Lore, or Firearm Lore' — one decision with three legal outcomes, which is exactly our choice {flag:'dongunLores', 3 paired options} rendered as one live 3-option popup on page 1. featGrantsAuto:264-271 keys cho",
+   "verifiedOn": "2026-09-02"
+  },
+  "echolocation": {
+   "batch": 18,
+   "verdict": "NO-SHEET-EFFECT",
+   "lane": "wg-homonym-mispair",
+   "class": "INSTRUMENT",
+   "verified": "The finding compares our Werecreature-archetype Echolocation against the WRONG WG record. WG holds two rows named \"Echolocation\": id 40543 (level 1, an ANIMAL COMPANION feat — \"Your pet can use hearing as a precise sense within 20 feet\") whose single op is giveAbilityBlock 21083 = the 20 ft sense block, and id 27799 (level 6, prerequisites {Werecreature Dedication, werebat}), which is the feat we actually ship — and ",
+   "refuter": "INSTRUMENT confirmed on every point, independently. WG really does hold two rows named \"Echolocation\": 40543 (level 1, type feat, desc \"Your pet can use hearing as a precise sense within 20 feet\", single op giveAbilityBlock abilityBlockId 21083) and 27799 (level 6, prerequisites {\"Werecreature Dedic",
+   "verifiedOn": "2026-09-02"
+  },
+  "fast-movement": {
+   "batch": 13,
+   "verdict": "MISSING-CONTROL",
+   "lane": "harness-slug-collision-bucket",
+   "class": "INSTRUMENT",
+   "verified": "Slug collision across buckets: WG's row is the FAMILIAR ability (\"Increase one of your familiar's Speeds from 25 feet to 40 feet\" — their five options each set a 25-ft speed to 40), while our feats/fast-movement is the barbarian rage feat (whileActive rage, land +10), so the harness placed a class feat in a class slot and looked for a familiar control there. Our matching control exists and offers the same five option",
+   "refuter": "INSTRUMENT confirmed on both halves. The batch row proves the cross-bucket collision in one place: `printed` is the barbarian rage feat (\"+10-foot status bonus to your Speed\" while raging) while `theirEncoding` is the FAMILIAR ability — five options each setValue SPEED/SPEED_SWIM/SPEED_FLY/SPEED_CLI",
+   "verifiedOn": "2026-09-02"
+  },
+  "free-heart": {
+   "batch": 8,
+   "verdict": "MISSING-CONTROL",
+   "lane": "harness-one-control-serves-many-selects",
+   "class": "INSTRUMENT",
+   "verified": "WG asks three questions (the background's skill, its Lore, its skill feat) because WG does not model backgrounds; ours asks ONE — pick a real common background — and then applies that background's whole package. passionBackground resolves the answer and build.ts trains the background's skill and every one of its Lores, and folds its granted skill feat (with the feat's own bound sub-choice) into the granted-feat loop.",
+   "refuter": "Upheld. The batch snapshot's 'inert' note is indeed stale: the live record carries choice {flag:'freeHeartBackground', prompt:'Background your Free Heart passion draws on', kind:'open', from:{type:'background', rarity:'common', excludeOwn:true}, note:\"You gain that background's trained skills and it",
+   "verifiedOn": "2026-09-02"
+  },
+  "ghost-hunter-dedication": {
+   "batch": 9,
+   "verdict": "MISSING-CONTROL",
+   "lane": "harness-lane-title-regex",
+   "class": "INSTRUMENT",
+   "verified": "WG's \"Select a Lore\" is answered by a control we really render: a PopupSelect titled \"Trained skill\" on page 2 under the picked feat, offering exactly Spirit Lore and Haunt Lore (the printed pair), driven by FEAT_GRANTS.skillChoices from featGrantsLane.ts:23 and rendered at Builder.tsx:2116-2118. The harness's own sheetDiff proves it lands (stored.proficiencies.skills.lore:spirit -> trained). The verdict is the named",
+   "refuter": "Verified. We DO render a control that answers WG's \"Select a Lore\": FEAT_GRANTS['ghost-hunter-dedication'].skillChoices = [{options:['lore:spirit','lore:haunt'],rank:'trained'}] (featGrantsLane.ts:23) drives a SubCard/PopupSelect titled \"Trained skill\" (Builder.tsx ~2116) whose options are the two L",
+   "verifiedOn": "2026-09-02"
+  },
+  "gnome-polyglot": {
+   "batch": 6,
+   "verdict": "UNVERIFIED-EFFECT",
+   "lane": "experience-surface-predicates",
+   "class": "ALREADY-OK",
+   "verified": "WG's three language selects and our three language popups already match (extraControls empty, all three on Setup under the Languages card). The unchecked op, `adjValue IMPROVED_MULTILINGUAL = true`, is WG's flag for the feat's last sentence — \"When you select the [Multilingual] feat, you learn three new languages instead of two\" — and we express it as languageChoicesBonus [{featId:'multilingual', extra:1}], applied i",
+   "refuter": "ALREADY-OK upheld, every citation checked out. The probe shows languageChoices 3 and languageChoicesBonus [{featId:'multilingual', extra:1}] on the record; build.ts resolves the three own slots and then runs the cross-record loop `for (const { g: other } of sources) for (const b of other.languageCho",
+   "verifiedOn": "2026-09-02"
+  },
+  "master-summoner": {
+   "batch": 17,
+   "verdict": "MISSING-CONTROL",
+   "lane": "builder-only-scope",
+   "class": "INSTRUMENT",
+   "verified": "WG asks \"Select a Spell Rank\" in their builder. Print says the designation happens \"During daily preparations\", and Q23 rules that daily choices must NOT render in the builder — they appear at daily preparations and default to the last answer. Ours obeys that: the record carries `spellSlotBonus.restricted.rankChoice {count:2, belowHighest:0}`, `resolveRestrictedSlots` emits `rankOptions`, and the Spells tab renders a",
+   "refuter": "Confirmed against print, the ruling, and the code. WG's own captured text is \"During daily preparations, you can designate one of your spell slots to become two summoning slots of the same spell rank\", and docs/gold-set-answers.md Q23 is verbatim \"They must not render in the builder. They appear whe",
+   "verifiedOn": "2026-09-02"
+  },
+  "powerful-tail": {
+   "batch": 6,
+   "verdict": "MISSING-CONTROL",
+   "lane": "harness-control-outside-record-differential",
+   "class": "INSTRUMENT",
+   "verified": "The Enhancement IS offered and IS applied in our app — just not on this record. Per print, an automaton ancestry feat's Enhancement tier is gained only through Lesser Augmentation (9th) or Greater Augmentation (17th) — \"You gain the enhancement benefits of one of your 1st- or 5th-level automaton ancestry feats\" — so the control is those feats' `enhancementPicker` popup, whose option list includes powerful-tail, and p",
+   "refuter": "Tried hard to break this and could not. The control genuinely lives on the ENABLING record and the harness host never places it. Verified: feats.powerful-tail carries enhancement {grant:{speeds:{climb:10}}} and the free-hands clause in `note`; feats.lesser-augmentation (level 9) and feats.greater-au",
+   "verifiedOn": "2026-09-02"
+  },
+  "qi-spells": {
+   "batch": 4,
+   "verdict": "NO-SHEET-EFFECT",
+   "lane": "choice-not-played",
+   "class": "INSTRUMENT",
+   "verified": "WG's `defineCastingSource \"BULLET_DANCER:::-:::DIVINE:::ATTRIBUTE_WIS\"` plus SPELL_ATTACK/DC = T is the qi profile. Ours delivers it once the SearchSelect the harness found is answered: monk + Qi Spells answered `inner-upheaval` builds a focus entry with key `wis` and the tradition the player chose. The harness leaves the control empty, so no focus spell exists, `spellcasting` is `[]` and the `:::-:::` predicate (\"an",
+   "refuter": "Verified. The record's only picker is an effectChoice with a spellFilter and no options array, so answerOwnPicks (which needs ch.options[0].value) cannot answer it and leaves it empty - unlike the choice-bearing records it does answer. Measured: monk + Bullet Dancer Dedication + Qi Spells with no an",
+   "verifiedOn": "2026-09-02"
+  },
+  "reanimator-dedication": {
+   "batch": 7,
+   "verdict": "NO-SHEET-EFFECT",
+   "lane": "prose-prerequisite-host",
+   "class": "INSTRUMENT",
+   "verified": "The harness forced this dedication onto a FIGHTER. Its printed prerequisite is \"able to cast animate dead with a spell slot\" — prose that names no feat, so `withPrerequisiteFeats` placed nothing, and the documented host limitation (\"prerequisite FEATS are placed but attribute/skill prerequisites are not\") produced a host that can never legally take it and has zero spellcasting entries. The `defineCastingSource` predi",
+   "refuter": "Verified as a host artefact. The printed prerequisite is a capability sentence ('able to cast animate dead with a spell slot'), so withPrerequisiteFeats matched no feat name and the host stayed a fighter with zero spellcasting entries; the ':::-:::' predicate is literally 'does the built character h",
+   "verifiedOn": "2026-09-02"
+  },
+  "snowcaster": {
+   "batch": 14,
+   "verdict": "NO-SHEET-EFFECT",
+   "lane": "harness-minimal-host-missing-feature",
+   "class": "INSTRUMENT",
+   "verified": "WG's op is giveSpellSlot for the Gelid Shard pool. Ours delivers it through the registry: casterArchetypes.ts registers 'first-frost' as the Gelid Shard entry point with basicId 'snowcaster', and archetypeSlots grants ranks 1/2/3 at levels 4/6/8 once the basic tier is held. activeCasterArchetype returns null unless the DEDICATION id ('first-frost') is in the taken set — and the harness placed no prerequisite because ",
+   "refuter": "Upheld as INSTRUMENT, but the reader's account of WHY the harness misses it is incomplete and the correction matters for the fix. The harness ALREADY tries to place an archetype's dedication independently of the record's prerequisites — test/wg-experience.harness.test.tsx:309-314 looks up a feat wit",
+   "verifiedOn": "2026-09-02"
+  },
+  "stone-blood": {
+   "batch": 17,
+   "verdict": "UNVERIFIED-EFFECT",
+   "lane": "experience-nonscalar-vars",
+   "class": "INSTRUMENT",
+   "verified": "OURS HAS MORE THAN WG — note it for the owner, build nothing. WG's single op is `adjValue MONOLITH_FEAT_COUNT = 1`, a private counter that `living-monolith-dedication` creates (`createValue MONOLITH_FEAT_COUNT = 1`) and that NOTHING in their 900-record pool ever reads; none of Stone Blood's printed rule reaches their sheet — not the bleed flat-check DC 15 -> 10, not the single concentrate action for an early flat che",
+   "refuter": "REFUTED on its load-bearing evidence, and the proposed fix is actively dangerous. The reader's premise — MONOLITH_FEAT_COUNT is 'a private counter … that NOTHING in their 900-record pool ever reads', 'no consumer anywhere' — is FALSE. They scanned only work/wg-pool.json (which happens to contain the",
+   "verifiedOn": "2026-09-02"
+  },
+  "unassuming-dedication": {
+   "batch": 4,
+   "verdict": "NO-SHEET-EFFECT",
+   "lane": "wg-skill-vocabulary",
+   "class": "ALREADY-OK",
+   "verified": "WG stars 19 skills with \"+1 to downtime activity\"; the harness reports 16 delivered, 1 unchecked (SKILL_LORE_ENGINEERING) and 2 undelivered — SKILL_COMPUTERS and SKILL_PILOTING, which are Starfinder skills that do not exist in Pathfinder and are not in our `SKILLS` list. Ours carries the printed bonus as one entry targeting `{kind:'skill', detail:'all'}`, so every skill our app has is starred, which is 16 of 16. Ther",
+   "refuter": "The classification holds - the app needs no change - but the evidence behind it is stale and inverted, and the record will still trip this gate. Verified app side: src/rules/situationalBonuses.ts:603 targets {kind:'skill', detail:'all'}; targetMatches (situationalBonuses.ts:3288-3305) returns true f",
+   "verifiedOn": "2026-09-02"
+  },
+  "unburdened-iron": {
+   "batch": 6,
+   "verdict": "UNVERIFIED-EFFECT",
+   "lane": "harness-host-has-no-equipment",
+   "class": "INSTRUMENT",
+   "verified": "Ours implements BOTH printed clauses as `speedAdjust { key:'all', ignoreArmorPenalty:true, reduceOtherPenalty:5 }`, and derive.ts reads it by name: line 4838 `if (ignoreArmor) armorPenalty = 0; // Unburdened Iron: \"Ignore the reduction to your Speed from any armor you wear.\"`, and lines 4841-4853 cut the LARGEST non-armour penalty (worn item, stance, raging state, encumbered) by 5, which is the printed \"pick only one",
+   "refuter": "INSTRUMENT stands. Both printed clauses are implemented and named in the code: derive.ts:4833 `const ignoreArmor = adjusts.some(a=>a.ignoreArmorPenalty)`, :4838 `if (ignoreArmor) armorPenalty = 0; // Unburdened Iron: \"Ignore the reduction...\"`, and :4843-4853 keep the non-armour penalties in a separ",
+   "verifiedOn": "2026-09-02"
+  },
+  "undead-hunter": {
+   "batch": 4,
+   "verdict": "MISSING-CONTROL",
+   "lane": "control-on-another-record",
+   "class": "INSTRUMENT",
+   "verified": "Their 'Enhancement? Yes/No' is WG's manual bookkeeping toggle for a benefit print says you only have when another record names you; ours puts the same decision on that other record, where the printed gate lives. Our record carries `enhancement.grant.innateSpells[infuse-vitality, arcane, rank 3, 1/day]`, applied at build.ts:5345-5371 only when a feat holding `enhancementPicker` (Lesser/Greater Augmentation — the only ",
+   "refuter": "Verified. The record carries enhancement.grant.innateSpells [infuse-vitality, arcane, rank 3, 1/day], and build.ts:5342-5372 applies it only when a feat holding `enhancementPicker` answers with this feat's id. The only two such feats are lesser-augmentation and greater-augmentation (measured over co",
+   "verifiedOn": "2026-09-02"
+  }
+ }
+}

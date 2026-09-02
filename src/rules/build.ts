@@ -2005,6 +2005,10 @@ export function buildNeedsDeity(build: BuildState, content: ContentDatabase): bo
  */
 export function buildUsesDeity(build: BuildState, content: ContentDatabase): boolean {
   if (buildNeedsDeity(build, content)) return true;
+  // A BACKGROUND can read the deity too: Raised by Belief trains "your deity's associated skill"
+  // (`trainedSkillFromDeity`, applied below at the background step). Without this the Deity card never
+  // rendered for a non-divine class and the derived skill was unreachable (experience gate, 2026-09-02).
+  if (resolveBackground(build, content)?.trainedSkillFromDeity) return true;
   const reads = (f: Feat | undefined) => {
     if (!f) return false;
     if (f.choice?.kind === 'domains' || f.choice?.from?.type === 'own-deity-spell') return true;
@@ -2474,6 +2478,10 @@ export function collectChosenIds(build: BuildState, content: ContentDatabase): S
   if (build.backgroundId && build.backgroundId !== CUSTOM_BACKGROUND_ID) add(build.backgroundId);
   for (const v of Object.values(build.featPicks)) add(v);
   for (const v of Object.values(build.featChoices)) add(v);
+  // A feat taken THROUGH another feat's pick (Order Training → Devil Allies) is as chosen as a slot
+  // pick. Left out, a source/edition filter dropped it from the builder's content while the built
+  // character still had it — so its own question (Devil Allies' Tradition) rendered nowhere.
+  for (const v of Object.values(build.pickFeatChoices ?? {})) add(v);
   for (const arr of Object.values(build.extraChoices)) for (const v of arr) add(v);
   for (const id of backgroundGrantedFeats(resolveBackground(build, content), build.backgroundSkillChoice)) add(id);
   add(build.heritageFeatId);

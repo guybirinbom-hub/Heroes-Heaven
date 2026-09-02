@@ -103,6 +103,16 @@
   "sponsored-by-a-stranger": 100,
   "total-power": 101,
   "flexible-spellcaster-collection-shape": 102,
-  "divine-font": 103
+  "divine-font": 103,
+  "magus": 104,
+  "animist": 105,
+  "wizard": 106,
+  "bone-magic": 107,
+  "acute-vision": 108,
+  "guardians-armor": 109,
+  "spellmaster-dedication": 110,
+  "empathic-calm": 111,
+  "colugos-traversal": 112,
+  "oatia-skysage-dedication": 113
  }
 }

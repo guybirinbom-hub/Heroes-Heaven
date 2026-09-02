@@ -21,13 +21,19 @@
  *                   purpose: a settle silences a difference in EVERY batch, so "probably equivalent"
  *                   written into a registry is an open question that can never come back. Batch 10
  *                   found five of them by hand. If this fails, no batch is really finished.
+ *   7. EXPERIENCE — every `select` Wanderer's Guide puts in front of the player is a control OUR
+ *                   builder actually RENDERS, and every value-bearing effect they encode MOVES our
+ *                   derived sheet. Observed on the real Builder in jsdom (scripts/wg-experience.mjs →
+ *                   work/wg-batch-0NN-experience.json). Exists because Domain Initiate shipped with
+ *                   matching DATA and no picker, and gates 1–6 passed it: the kind gate is satisfied
+ *                   by a field EXISTING, never by the player seeing it (owner, 2026-09-02).
  *
  * Anything it prints is work, not information. Exit code 0 means the batch is finished.
  *
  *   node scripts/wg-batch-gate.mjs --batch work/wg-batch-008.json
  *   node scripts/wg-batch-gate.mjs --batch work/wg-batch-008.json --verbose
  */
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -73,6 +79,19 @@ const _oq = read('work/owner-questions.json') ?? {};
 // deferred = parked until after the whole batching process by the owner's 2026-08-27 ruling — honored
 // exactly like open, so a deferred record never fails a gate and never gets re-asked.
 const ownerQueued = new Set([...(_oq.open ?? []), ...(_oq.deferred ?? [])].map((q) => q.id));
+/* RULED records park only in the EXPERIENCE gate: a ruling can keep OURS where WG differs (Circle of
+ * Spirits: the printed formula, not their flat +1), and the player-experience judge then rightly sees
+ * their op undelivered. The data comparers are not parked for ruled ids — a ruling is implemented
+ * there, and a mismatch would be a regression. */
+const ownerRuled = new Set((_oq.ruled ?? []).map((q) => q.id));
+/* INSTRUMENT LIMITS (experience gate only). A record whose control or effect the harness cannot observe
+ * — a control that lives on the class chassis and cannot be switched off, a bonus that only exists in
+ * play state the host does not enter, a Wanderer's Guide bookkeeping variable with no sheet value — and
+ * that a reader has VERIFIED by hand against the running builder. Each entry names the lane and what
+ * was verified; the gate parks it and PRINTS it, so the list stays visible and never silently grows.
+ * Not an allowlist for defects: a real gap goes to the owner queue or gets fixed. */
+const _limits = read('work/experience-instrument-limits.json') ?? {};
+const instrumentLimited = new Map(Object.entries(_limits.records ?? {}));
 const queuedFlagged = new Map(); // id -> [gate labels that would have flagged it]
 const parkQueued = (id, gate) => { (queuedFlagged.get(id) ?? queuedFlagged.set(id, []).get(id)).push(gate); };
 
@@ -442,6 +461,83 @@ const valuesOut = run('wg-values.mjs', ['--verbose']);
   }
 }
 
+/* ---- 8. EXPERIENCE: does the PLAYER get what Wanderer's Guide gives them? ---------------------- */
+{
+  /*
+   * EVERY GATE ABOVE PROVES OUR DATA MATCHES THEIRS. Not one of them opens the builder.
+   *
+   * Batch 24 closed with cleric-spellcasting FIXED and doctrine MATCHES, and the owner opened his own
+   * cleric and found: no place to prepare cantrips, a Domain Initiate spell WG lets him pick and we
+   * auto-picked, a doctrine grant that looked missing because it merged into a slot take. All three
+   * lived in the one place no comparer looks — what the player is shown and what actually moves.
+   *
+   * The artefact is `work/wg-batch-0NN-experience.json`, written by `node scripts/wg-experience.mjs
+   * --batch …`, which renders the REAL Builder for a host that owns each record and one that does not
+   * (test/wg-experience.harness.test.tsx), lists the controls the record ADDS, diffs the derived sheet,
+   * and compares both against their `select` ops and value-bearing effects. Verdicts:
+   *   OK · MISSING-CONTROL (they ask, we don't) · NO-SHEET-EFFECT (they encode a value, ours moves
+   *   nothing) · UNSUPPORTED (the harness cannot play this bucket yet — items live on the sheet) ·
+   *   HARNESS-ERROR. Only OK and a queued id pass. UNSUPPORTED is PRINTED, never counted as a pass.
+   *
+   * Staleness is a lie with a timestamp: the evidence must be newer than src/builder, src/rules, the
+   * data and the batch file, or the gate asks for a re-run rather than trusting it.
+   */
+  const newestMtime = (p) => {
+    let newest = 0;
+    const walk = (f) => {
+      let st;
+      try { st = statSync(f); } catch { return; }
+      if (st.isDirectory()) { for (const c of readdirSync(f)) walk(join(f, c)); } else if (st.mtimeMs > newest) newest = st.mtimeMs;
+    };
+    walk(p);
+    return newest;
+  };
+  const expPath = batchPath.replace(/\.json$/, '-experience.json');
+  if (!existsSync(join(ROOT, expPath))) {
+    fail(
+      'EXPERIENCE: the batch has not been PLAYED — nothing has checked what the player sees',
+      `no ${expPath}\n      node scripts/wg-experience.mjs --batch ${batchPath}`,
+    );
+  } else {
+    const x = read(expPath);
+    const gen = Date.parse(x?.generated ?? '') || 0;
+    const newest = Math.max(...['src/builder', 'src/rules', 'public/core.json', batchPath].map((p) => newestMtime(join(ROOT, p))));
+    if (gen < newest) {
+      fail('EXPERIENCE: the evidence is older than the code or data it describes',
+        `re-run: node scripts/wg-experience.mjs --batch ${batchPath}`);
+    }
+    const rows = new Map((x?.records ?? []).map((r) => [r.id, r]));
+    const missing = [...ids].filter((id) => !rows.has(id));
+    if (missing.length) fail(`EXPERIENCE: ${missing.length} record(s) were never played`, missing.slice(0, 12).join(', '));
+    const bad = [];
+    const unsupported = [];
+    const limited = [];
+    for (const r of rows.values()) {
+      if (!ids.has(r.id)) continue;
+      if (r.verdict === 'UNSUPPORTED') { unsupported.push(r.id); continue; }
+      if (r.verdict === 'OK') continue;
+      if (ownerQueued.has(r.id)) { parkQueued(r.id, `EXPERIENCE ${r.verdict}`); continue; }
+      if (ownerRuled.has(r.id)) { parkQueued(r.id, `EXPERIENCE ${r.verdict} (ruled — ours kept by ruling)`); continue; }
+      if (instrumentLimited.has(r.id)) { limited.push(r); parkQueued(r.id, `EXPERIENCE ${r.verdict} (instrument limit: ${instrumentLimited.get(r.id)?.lane ?? '?'})`); continue; }
+      bad.push(r);
+    }
+    if (bad.length) {
+      fail(
+        `EXPERIENCE: ${bad.length} record(s) do not give the player what Wanderer's Guide gives them`,
+        bad.map((r) => `${r.id}: ${r.verdict}${r.detail ? ` — ${String(r.detail).slice(0, 140)}` : ''}`).join('\n      '),
+      );
+    } else ok('EXPERIENCE', `${rows.size - unsupported.length} played, 0 differences`);
+    if (unsupported.length) {
+      console.log(`\n  EXPERIENCE — ${unsupported.length} record(s) the harness cannot play yet (recorded, NOT passed):`);
+      console.log(`      ${unsupported.slice(0, 10).join(', ')}${unsupported.length > 10 ? ` … +${unsupported.length - 10}` : ''}`);
+    }
+    if (limited.length) {
+      console.log(`\n  EXPERIENCE — ${limited.length} record(s) verified by hand where the harness cannot see (work/experience-instrument-limits.json):`);
+      for (const r of limited) console.log(`      ${r.id}: ${r.verdict} — ${instrumentLimited.get(r.id)?.lane ?? '?'}: ${String(instrumentLimited.get(r.id)?.verified ?? '').slice(0, 120)}`);
+    }
+  }
+}
+
 /* ---- owner-queued announcement ---------------------------------------------------------------- */
 if (queuedFlagged.size) {
   console.log(`\n  OWNER-QUEUED — ${queuedFlagged.size} flagged record(s) in this batch await his ruling`);
@@ -451,7 +547,7 @@ if (queuedFlagged.size) {
 
 /* ---- verdict ---------------------------------------------------------------------------------- */
 if (!failures.length) {
-  console.log(`\nBATCH DONE — all eight gates pass for ${batchPath}.`);
+  console.log(`\nBATCH DONE — all nine gates pass for ${batchPath}.`);
   process.exit(0);
 }
 console.log(`\n${failures.length} GATE(S) FAILED — this batch is not finished:\n`);

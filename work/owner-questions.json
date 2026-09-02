@@ -88,7 +88,7 @@
    "printed": "You either become trained in Deception and gain the Charming Liar skill feat, or you become trained in Diplomacy and gain the Group Impression skill feat. If you're already trained in one of these skills, you must take the other and can choose from either skill feat. If you're trained in both skills, you become trained in a different skill of your choice instead and can choose from either skill feat. (feat-3930)",
    "theirs": "`node scripts/wg-show.mjs molten-wit --raw` (their feat 30145): exactly TWO selects. (1) \"Select a Skill\", optionType ADJ_VALUE, two predefined options - adjValue SKILL_DECEPTION=T or adjValue SKILL_DIPLOMACY=T. (2) \"Select a Skill Feat\", optionType ABILITY_BLOCK, two predefined options - giveAbilityBlock feat 19995 (Charming Liar) or 20195 (Group Impression). One question for the skill, one for the feat.",
    "ours": "The same sentence is asked THREE times on our side, and the three answers are stored under three different keys and can disagree: (1) public/core.json feats.molten-wit.`choice` {flag:'skill', kind:'array', options deception/diplomacy} - this is the one CHOICE_FEAT_GRANTS reads; (2) feats.molten-wit.`effectChoices` [{id:'molten-wit-skill', options carry grant.skills}] (authored scripts/data/effect-backfill.json:18329-18359); (3) FEAT_LANE_GRANTS['molten-wit'] = {\"skillChoices\":[{\"options\":[\"dece…",
-   "question": "A fix was proposed and REFUSED on review because it picks a side in a WG-vs-print disagreement. The reviewer's reasoning: MISMATCH IS REAL, FIX MUST NOT BE APPLIED — verdict is ASK-OWNER. 1. THE PREMISE CHECKS OUT (verified, not taken on trust). public/core.json feats.molten-wit still carries BOTH `effectChoices` [{id:'molten-wit-skill', options carry grant.skills}] AND `choice` {flag:'skill', prompt:'Skill', options deception/diplomacy, NO grants}; src/rules/featGrantsLane.ts:26 still holds the third slot (grep -c on the finder's exact `find` string = 1). Three separate answer keys, confirmed by reading the readers: featSkillChoices['molten-wit:0'] (build.ts:4415 via featSkillChoiceValue), effectChoices['molten-wit:molten-wit-skill'] (build.ts:4752 resolvePick), and fc.choice.value (build.ts:4203 featFeatGrantsFor). LEGACY_SKILL_SLOT_KEYS (build.ts:1375) holds ONLY 'gildedsoul:0', so t…"
+   "question": "A fix was proposed and REFUSED on review because it picks a side in a WG-vs-print disagreement. The reviewer's reasoning: MISMATCH IS REAL, FIX MUST NOT BE APPLIED — verdict is ASK-OWNER. 1. THE PREMISE CHECKS OUT (verified, not taken on trust). public/core.json feats.molten-wit still carries BOTH `effectChoices` [{id:'molten-wit-skill', options carry grant.skills}] AND `choice` {flag:'skill', prompt:'Skill', options deception/diplomacy, NO grants}; src/rules/featGrantsLane.ts:26 still holds the third slot (grep -c on the finder's exact `find` string = 1). Three separate answer keys, confirmed by reading the readers: featSkillChoices['molten-wit:0'] (build.ts:4415 via featSkillChoiceValue), effectChoices['molten-wit:molten-wit-skill'] (build.ts:4752 resolvePick), and fc.choice.value (build.ts:4203 featFeatGrantsFor). LEGACY_SKILL_SLOT_KEYS (build.ts:1375) holds ONLY 'gildedsoul:0', so t…\n\nADDENDUM 2026-09-02 (experience gate refuter): the THREE skill carriers were collapsed to ONE without touching the pairing question — the record `choice` (flag 'skill') now grants the skill through FEAT_LANE_GRANTS.choiceGrants, the effectChoices carrier and the skillChoices lane slot are gone, and an unanswered pick trains nothing (it used to default to Deception silently). The ruling still decides whether the skill feat is derived from that answer (print) or asked as an independent second select (WG)."
   },
   {
    "id": "firework-technician-dedication",
@@ -344,7 +344,7 @@
    "printed": "\"Add two 2nd-level spells to your Red Mantis assassin spellbook. You gain a 2nd-level spell slot… At 8th level… a 3rd-level spell slot… At 10th level… a 4th-level spell slot.\" (AoN feat-897, World Guide pg. 71)",
    "theirs": "WG feat 30202 (the LEGACY printing): one `giveSpellSlot` whose table is the printed sentence exactly — cumulative r2×1 from level 6, +r3×1 from level 8, +r4×1 from level 10, held flat to 20. BUT its `castingSource` is the string \"RED_MANTIS\", and their dump never defines that source: the only `defineCastingSource` values anywhere are RED_MANTIS_ASSASSIN (2 occurrences, on legacy Basic 30201 and remaster Basic 40164). Exactly two ops reference the bare \"RED_MANTIS\" and both sit on legacy records…",
    "ours": "Nothing. public/core.json feats.advanced-red-mantis-magic carries no spellSlotBonus (and no archetype field, category 'archetype', edition 'legacy'). Our Red Mantis slots come entirely from src/rules/casterArchetypes.ts:253 'red-mantis-assassin-dedication' running the standard RANK_UNLOCKS ladder (casterArchetypes.ts:406-415), where BASIC already grants rank 1 at level 4, rank 2 at 6 and rank 3 at 8 — two of the three slots this legacy feat prints.",
-   "question": "Their encoding and the printed text disagree. RAN `node scripts/wg-show.mjs \"Advanced Red Mantis Magic\" --raw` and summarised the table (r2@6, +r3@8, +r4@10). RAN `grep -o 'RED_MANTIS[A-Z_]*:::' work/wg/wg-data.sql | sort | uniq -c` → only `RED_MANTIS_ASSASSIN:::` ×2 (the defineCastingSource side). RAN `grep -o '\\\"castingSource\\\":\\\"RED_MANTIS[A-Z_]*\\\"' …` → RED_MANTIS ×2, RED_MANTIS_ASSASSIN ×4. RAN `grep -n 'castingSource…RED_MANTIS\\\"' work/wg/wg-data.sql` → lines 7888 (id 30202, this feat) and 11112 (id 30324, Mantis Form legacy). Verified their legacy Basic 30201 already grants rank 2 at level 6 and rank 3 at level 8 to RED_MANTIS_ASSASSIN. On our side: dumped all seven red-mantis feats from core.json (only vernai-training carries a spellSlotBonus, entryId 'red-mantis-assassin-dedication-casting'); read casterArchetypes.ts:253-260 and the RANK_UNLOCKS table at :406."
+   "question": "Their encoding and the printed text disagree. RAN `node scripts/wg-show.mjs \"Advanced Red Mantis Magic\" --raw` and summarised the table (r2@6, +r3@8, +r4@10). RAN `grep -o 'RED_MANTIS[A-Z_]*:::' work/wg/wg-data.sql | sort | uniq -c` → only `RED_MANTIS_ASSASSIN:::` ×2 (the defineCastingSource side). RAN `grep -o '\\\"castingSource\\\":\\\"RED_MANTIS[A-Z_]*\\\"' …` → RED_MANTIS ×2, RED_MANTIS_ASSASSIN ×4. RAN `grep -n 'castingSource…RED_MANTIS\\\"' work/wg/wg-data.sql` → lines 7888 (id 30202, this feat) and 11112 (id 30324, Mantis Form legacy). Verified their legacy Basic 30201 already grants rank 2 at level 6 and rank 3 at level 8 to RED_MANTIS_ASSASSIN. On our side: dumped all seven red-mantis feats from core.json (only vernai-training carries a spellSlotBonus, entryId 'red-mantis-assassin-dedication-casting'); read casterArchetypes.ts:253-260 and the RANK_UNLOCKS table at :406.\n\nADDENDUM 2026-09-02 (experience gate refuter): two facts fixed regardless of the ruling — (1) WG gates this feat on Basic Red Mantis Magic and ours had no prerequisites and no archetype, so it was offered in any class slot at 6+ to anyone; it now carries prerequisites ['Basic Red Mantis Magic'] and archetype 'red-mantis-assassin'. (2) The claim that our standard ladder 'already delivers the same ranks' was wrong for rank 4: print gives the 4th-rank slot at 10th, our expert tier gives it at 12th. Their op fires into an undefined casting source (RED_MANTIS, never defined), so WG delivers nothing here — the question stands as written."
   },
   {
    "id": "aeon-stone-agate-ellipsoid",
@@ -416,7 +416,7 @@
    "printed": "feat-8480 (Dark Archive Remastered p.184): \"you gain the delay consequence domain spell… You also gain time sense as an innate cantrip usable at will. This innate spell and your focus spells from the time mage archetype are OF THE SAME TRADITION AS THE SPELLS YOU USED TO MEET THE ARCHETYPE'S PREREQUISITES.\" (Prerequisite: \"You have a spellcasting class feature.\") The tradition is DERIVED from your class — not chosen.",
    "theirs": "wg 22839: a free \"Select a Tradition\" with all FOUR options (arcane/divine/occult/primal) — the player picks any tradition regardless of class. AND their focus/innate assignment is INVERTED from print: their giveSpell hands Delay Consequence out as an INNATE rank-1 spell and Time Sense as the FOCUS spell (their Arcane option also omits the tradition field entirely — their own bug).",
    "ours": "Print-faithful on the assignment: focusSpells:[\"delay-consequence\"], innateSpells:[time-sense atWill]. The FOCUS tradition already derives correctly from the prerequisite class (build.ts focusTradition falls through to the class's own tradition). The one gap: the INNATE cantrip carries no tradition, so it falls back to the spell's first listed tradition and a divine or primal time mage casts Time Sense as ARCANE.",
-   "question": "Their encoding contradicts the printed text TWICE: (1) a free 4-way tradition pick where print derives the tradition from your class (\"the same tradition as the spells you used to meet the archetype's prerequisites\"); (2) focus and innate swapped (Delay Consequence innate / Time Sense focus, where print says the opposite). Ours matches print except that the innate cantrip's tradition is underived. OPTIONS: (a) adopt theirs in full — the 4-option select and the inversion; (b) keep our print-faithful shape and DERIVE the innate cantrip's tradition from the prerequisite class the same way the focus side already does (a small src fix, no new lane needed). The parity rule's own exception clause (\"if their encoding is not according to the text, ask\") is why this is queued rather than built."
+   "question": "Their encoding contradicts the printed text TWICE: (1) a free 4-way tradition pick where print derives the tradition from your class (\"the same tradition as the spells you used to meet the archetype's prerequisites\"); (2) focus and innate swapped (Delay Consequence innate / Time Sense focus, where print says the opposite). Ours matches print except that the innate cantrip's tradition is underived. OPTIONS: (a) adopt theirs in full — the 4-option select and the inversion; (b) keep our print-faithful shape and DERIVE the innate cantrip's tradition from the prerequisite class the same way the focus side already does (a small src fix, no new lane needed). The parity rule's own exception clause (\"if their encoding is not according to the text, ask\") is why this is queued rather than built.\n\nADDED 2026-09-02 (experience gate, WG-vs-print): WG-vs-PRINT (experience gate, batch 17) - WG shows a four-way tradition picker (and pins the attribute to Wisdom) where print determines the tradition from the prerequisite class. Add the same picker to match WG, even though three of the four answers are traditions print forbids for that character - or keep deriving it with no control?\n  theirs: WG: an ungated CUSTOM select 'Select a Tradition' with four options (Arcane/Divine/Occult/Primal); each defines a TIME_MAGE casting source at that tradition with Wisdom as the key attribute.\n  ours: No control: build.ts:4042 derives the tradition (subclass tradition, else the class's spellcasting tradition) and uses the class's own key attribute, not Wisdom."
   },
   {
    "id": "pistol-wand",
@@ -721,6 +721,78 @@
    "printed": "Divine Font — Healing Font: \"You gain 4 additional spell slots each day at your highest rank of cleric spell slots… at 15th level, the total number of additional slots increases to 6.\"",
    "theirs": "work/wg/wg-data.sql record 21194 \"Divine Font\", giveSpellSlot castingSource CLERIC_DIVINE_FONT, tail of the ladder: {lvl:17,rank:9,amt:6},{lvl:18,rank:9,amt:6},{lvl:19,rank:10,amt:6},{lvl:20,rank:10,amt:6}. Every other level in WG's ladder matches ours exactly (4 through L4, 5 from L5, 6 from L15; rank = ceil(level/2)).",
    "ours": "src/rules/build.ts:3690 — `const ranks = Object.keys(entry.prepared ?? {}).map(Number).filter((r) => r <= 9);` with topRank = max(ranks); mirrored for a dual-class second cleric at src/rules/build.ts:3781. Font rank at level 19-20 = 9."
+  },
+  {
+   "id": "magus",
+   "batch": 0,
+   "printed": "Magus (Secrets of Magic, AoN class-17 in our mirror): 'you have no more than two spell slots of your highest level and, if you can cast 2nd-level spells or higher, two spell slots of 1 level lower than your highest spell level.' The remastered class page in the mirror carries the same table reference but AoN strips the table itself.",
+   "theirs": "work/wg/wg-data.sql ability_block 'Magus Spellcasting' (class-feature): giveSpellSlot castingSource MAGUS keeps {rank 1, amt 2} at EVERY level 5-20 beside the two highest ranks - a level-5 magus has 2 rank-1 + 2 rank-2 + 2 rank-3 slots (found by scripts/wg-casting.mjs).",
+   "ours": "src/rules/spellcasting.ts twoRankCasterSlots via ClassDef magus spellcasting.progression 'two-rank': only the two highest ranks - a level-5 magus has 2 rank-2 + 2 rank-3 and no rank-1 slots.",
+   "question": "WG-vs-PRINT (class casting, not a batch record) - WG's magus keeps two 1st-rank slots from level 5 on; the printed rule gives slots only at the two highest ranks. Do you want WG's table (add 2 rank-1 slots at levels 5-20) or the printed one (keep ours)?"
+  },
+  {
+   "id": "animist",
+   "batch": 0,
+   "printed": "War of Immortals animist. The text I can read says 'a 2nd-level animist has 2+1 1st-rank spell slots' (both sides match that). The Animist Spells per Day and Apparition Spells per Day TABLES are stripped from our AoN mirror, so the 7th-rank row could not be checked here.",
+   "theirs": "work/wg/wg-data.sql 'Animist & Apparition Spellcasting' giveSpellSlot (ANIMIST + ANIMIST_APPARITION sources together): ONE 7th-rank slot in total at levels 13-18 (found by scripts/wg-casting.mjs; every other level and rank matches ours once the host attunes 2/3/4 apparitions).",
+   "ours": "src/rules/spellcasting.ts animistPreparedSlots + apparitionSlots: TWO 7th-rank slots at levels 13-18 (one prepared animist slot + one spontaneous apparition slot).",
+   "question": "WG-vs-PRINT? (class casting) - at levels 13-18 WG gives an animist one 7th-rank slot across both pools, ours gives two. Please check the printed Animist / Apparition Spells per Day tables: which is right?"
+  },
+  {
+   "id": "bone-magic",
+   "batch": 6,
+   "printed": "Bone Magic: 'Choose one cantrip from either the occult spell list or the primal spell list. You can cast this cantrip as an innate spell at will... Special: Choose when you gain this feat whether your innate spells are primal or occult; this choice applies to all innate spells you gain from lizardfolk ancestry feats that have Bone Magic as a prerequisite.'",
+   "theirs": "WG: select 'Select a Tradition' (Occult/Primal); each option then opens its own 'Select a Cantrip' filtered to THAT tradition only - the cantrip list is narrowed by the tradition you answered.",
+   "ours": "featCantripGrants.ts:57 offers the UNION of the occult and primal cantrip lists (56 ids) in one picker and stamps the tradition from the boneMagicTradition answer (traditionFromChoiceFlag) - so a 'primal' answer may still pick an occult-only cantrip.",
+   "question": "WG-vs-PRINT (experience gate, batch 6) - WG narrows Bone Magic's cantrip list to the tradition you answered; print offers the union of both lists and lets the Special clause decide only the casting tradition. Keep the printed union, or match WG and restrict the cantrip list to the answered tradition?"
+  },
+  {
+   "id": "acute-vision",
+   "batch": 3,
+   "printed": "Acute Vision (barbarian): 'When you are raging, your visual senses improve, granting you darkvision.'",
+   "theirs": "WG: giveAbilityBlock 'Darkvision', ungated - the sense is on the sheet whether or not the barbarian is raging.",
+   "ours": "whileActive {state:'rage', senses:[darkvision]} - darkvision appears in Senses only while the Rage toggle is on, and the Rage card lists it (stateGrantSummary).",
+   "question": "WG-vs-PRINT (experience gate, batch 3) - WG grants darkvision always; print grants it only while raging, which is what we built. Keep the printed condition (darkvision only while Rage is on, shown on the Rage card) or match WG and grant it always?"
+  },
+  {
+   "id": "guardians-armor",
+   "batch": 2,
+   "printed": "Guardian's Armor: 'While wearing medium or heavy armor, you gain resistance to physical damage equal to 1 + half your level. In addition, you can rest normally while wearing medium and heavy armor.'",
+   "theirs": "WG: adjValue RESISTANCES = physical, 1+(level/2) - unconditional; the only operation on their record.",
+   "ours": "core.modes['guardians-armor'] - a player-toggled mode ('while wearing medium or heavy armor', resistance physical 1+floor(level/2)); nothing on the sheet until it is switched on.",
+   "question": "WG-vs-PRINT (experience gate, batch 2) - WG applies the physical resistance always; print gates it on medium/heavy armour and we ship it as a toggle. Match WG (always on, no toggle), keep the toggle, or derive it automatically from the equipped armour category (which the app already knows)?"
+  },
+  {
+   "id": "spellmaster-dedication",
+   "batch": 17,
+   "printed": "Spellmaster Dedication: '+2 circumstance bonus when you Identify Magic with a skill in which you are trained or better.' Prerequisite 'ability to cast focus spells'; the feat names no tradition or attribute.",
+   "theirs": "WG: defineCastingSource SPELLMASTER:::-:::ARCANE:::ATTRIBUTE_INT (a focus-only source at Arcane / Intelligence) plus PRIMARY_SHEET_TABS spells; Spellmaster's Ward and Familiar Form giveSpell onto that source.",
+   "ours": "No spellcastingGrant on the dedication; Familiar Form and Spellmaster's Ward carry focusSpells that join the character's OWN focus entry, so a cleric Spellmaster casts them as divine off Wisdom and a wizard as arcane off Intelligence.",
+   "question": "WG-vs-PRINT (experience gate, batch 17) - print says nothing about a tradition or attribute for Spellmaster; WG gives the archetype its own Arcane/Intelligence focus source and hangs both focus spells on it. Which should the sheet show: WG's fixed Arcane/Int source, or the character's own focus tradition/attribute (ours)?"
+  },
+  {
+   "id": "empathic-calm",
+   "batch": 14,
+   "printed": "Empathic Calm: 'Once per day, you can cast either calm or sanctuary as an innate occult spell, heightened to a rank equal to half your level rounded up.'",
+   "theirs": "WG: two unconditional giveSpell ops - calm AND sanctuary, each INNATE OCCULT, 1/day - and no select: the WG player is never asked and gets both.",
+   "ours": "One effectChoices picker (Calm / Sanctuary); the chosen one becomes a single occult innate spell, 1/day, heightened to half level.",
+   "question": "WG-vs-PRINT (experience gate, batch 14; same shape as Colugo's Traversal) - print says 'either calm or sanctuary' (one pick); WG grants BOTH and shows no choice. Follow WG (grant both, remove the picker) or keep print (one pick)? One answer should settle every 'cast your choice of X or Y' feat."
+  },
+  {
+   "id": "colugos-traversal",
+   "batch": 14,
+   "printed": "Colugo's Traversal: 'You can cast your choice of gentle landing or jump as a primal innate spell once per day. At 9th level, these spells are heightened to 3rd rank.'",
+   "theirs": "WG: three LEVEL bands (<9, 9-11, >=12); each grants BOTH gentle landing and jump as INNATE PRIMAL (1 cast each) plus a spell attack/DC proficiency step; no select op.",
+   "ours": "One popup 'Choose Gentle Landing or Jump (primal innate, 1/day; 3rd rank from 9th level)'; the chosen spell is granted 1/day at rank 1, heightened to 3 at level 9.",
+   "question": "WG-vs-PRINT (experience gate, batch 14; same question as Empathic Calm) - print says 'your choice of gentle landing or jump'; WG grants both with no choice. Follow WG or keep print?"
+  },
+  {
+   "id": "oatia-skysage-dedication",
+   "batch": 7,
+   "printed": "\"You gain a spell repertoire with two of the following cantrips of your choice: Detect Magic, Guidance, Know the Way, or Read Aura. You cast these spells as occult spells.\" (Oatia Skysage Dedication, Lost Omens Rival Academies)",
+   "theirs": "WG feat: defineCastingSource OATIA_SKYSAGE (spontaneous repertoire, occult, Int) and TWO 'Select a Cantrip' selects, each FILTERED on traits [Prediction, Cantrip] + castingSource OATIA_SKYSAGE. Checked their spell table (work/wg/wg-data.sql): none of the four printed cantrips carries the Prediction trait there (they carry Cantrip/Concentrate/Detection/Manipulate) and NO cantrip at all carries Prediction — so their filter either shows an empty list (all-of) or every occult cantrip (any-of). Either way their picker does not offer the four names print gives.",
+   "ours": "src/rules/casterArchetypes.ts 'oatia-skysage-dedication': a repertoire of 2 cantrips drawn from EVERY occult cantrip (38 in public/core.json) — no restriction, like WG's any-of reading.",
+   "question": "Print names exactly four cantrips; WG's encoding cannot produce that list (its trait filter matches no cantrip in their own data). Do we (a) restrict the two cantrip picks to Detect Magic / Guidance / Know the Way / Read Aura as printed, or (b) stay as we are (any occult cantrip), which is the most WG's picker can be doing? A restriction would be a small code change: a cantrip allow-list on the caster archetype honoured by the archetype cantrip picker."
   }
  ],
  "deferred": [
@@ -823,6 +895,36 @@
    "question": "Covered by the grouped relic-gift ruling — Monarch is the seventh member. Two secondary notes: (1) print's extra 1d6 vs aberrations and the once-per-day dream message activation are encoded by NEITHER side, so our freq counter fronts nothing (the unifying-emblem pattern); (2) descriptions for every relic in this family strip the printed Minor/Major/Grand gift trailer, so the gifts are invisible in prose as well as in mechanics.",
    "deferredWhy": "relic-gifts (deferred until after batching)",
    "deferredOn": "2026-08-27"
+  },
+  {
+   "id": "wizard",
+   "batch": 0,
+   "printed": "Player Core wizard (AoN class-39 in our mirror): 'At 1st level, you can prepare up to two 1st-rank spells and five cantrips each morning from the spells in your spellbook, as well as one extra curriculum cantrip and one extra curriculum spell of each rank you can cast from your arcane school.'",
+   "theirs": "work/wg/wg-data.sql 'Wizard Spellcasting' giveSpellSlot: 5 cantrips and the plain slot table; no school row in the dump adds a curriculum cantrip or slot (scripts/wg-casting.mjs).",
+   "ours": "src/rules/build.ts wizard entry: cantripCap 6 (the sixth is the curriculum cantrip) and a restricted curriculum slot per rank (restrictedSlots), per the printed text.",
+   "question": "WG UNDER-implements the arcane school's extra curriculum cantrip and per-rank slot; ours follows the printed text and so has MORE than WG. Per your ruling R10 this is parity for now - deferred: after batching, decide whether to keep the curriculum extras or match WG exactly.",
+   "deferredWhy": "WG under-implementation (R10) - ours has more than WG; revisit after batching",
+   "deferredOn": "2026-09-02"
+  },
+  {
+   "id": "sign-bound",
+   "batch": 21,
+   "printed": "\"Your associated constellation determines one of the ability boosts you gain and an innate spell… One must be to the ability tied to your sign, and one is a free attribute boost.\" (Sign Bound background)",
+   "theirs": "WG's 'Select a Constellation' options carry giveSpell only; nothing ties the sign to an attribute, so they add a second, wholly unconstrained 'Select Your Sign's Attribute' select the player must answer correctly by hand.",
+   "ours": "abilityBoostsByChoice binds each of the 13 signs to its printed attribute plus one free boost (backgroundEffectiveBoosts), so one Attribute boost popup renders instead of two; the 13 innate spells are gated on the sign with their printed frequencies.",
+   "question": "R10 — WG under-implements print (a free pick where print binds the value). Nothing to change; recorded so that if the owner ever wants control-for-control mirroring he knows this is one where mirroring would loosen a printed rule. Experience gate refuter, 2026-09-02.",
+   "deferredOn": "2026-09-02",
+   "rule": "R10"
+  },
+  {
+   "id": "raised-by-belief",
+   "batch": 20,
+   "printed": "\"You're trained in the deity's listed Divine Skill and gain the Assurance feat with that skill. You gain a Lore skill related to your deity.\" (Raised by Belief background)",
+   "theirs": "Four selects: 'Select a Deity Lore' (ADJ_VALUE), 'Select a Skill' (ADJ_VALUE, unconstrained — nothing ties it to the deity), Assurance as a giveAbilityBlock, and two 'Select an Attribute'. The skill is the player's free pick.",
+   "ours": "trainedSkillFromDeity derives the trained skill from the chosen deity's Divine Skill (the Deity card now renders for this background — experience gate fix, 2026-09-02); Assurance is bound to that skill; the deity Lore is the Background Lore text box.",
+   "question": "R10 — WG under-implements print (a free skill pick where print binds it to the deity). Nothing to change; recorded so the experience gate's 'Select a Skill' mismatch is on file with its reason.",
+   "deferredOn": "2026-09-02",
+   "rule": "R10"
   }
  ],
  "_deferred": "DEFERRED UNTIL AFTER THE ENTIRE BATCHING PROCESS — the owner's ruling (2026-08-27): (1) RELIC GIFTS: 'this is not urgent … it will need to be done but only after finishing the entire batching process; for now skip these if they appear in the future, keep them in a list somewhere accessible.' New relic-gift records found in later batches get appended HERE, not fixed and not re-asked. (2) 'GAIN THE EFFECTS OF A SPELL' ITEMS: ruled for parity NOW — 'following WG is what I want even if they under-implement; the important thing is to find if they implement WRONGLY, not if they under-implement.' The family stays prose-only exactly like WG; revisit the whole ~69-item family here after batching. This section is still honored by the gates/checks exactly like `open` — a deferred id never fails a gate.",

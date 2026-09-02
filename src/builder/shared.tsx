@@ -61,6 +61,7 @@ import { snareAllowance, snareFormulaOptions, isBaseSnareSlot, SNARE_FORMULA_KEY
 import { formulaOptions, formulaSlots, type FormulaSlot } from '../rules/formulaBook';
 import { snareAllowanceFor } from '../rules/counterMods';
 import {
+  askedAtDailyPrep,
   bodyRuneExcluded,
   abilityMod,
   deriveAc,
@@ -716,11 +717,19 @@ export function SearchSelect({
   const filtered = needle ? options.filter((o) => o.name.toLowerCase().includes(needle)) : options;
   const readFirst = !!descBucket || filtered.some((o) => o.description || o.descRefs?.length);
   const currentNode = current ? mkNode(current) : null;
+  // Harness markers — see PopupSelect's ctlAttrs.
+  const ctlAttrs = {
+    'data-ctl': 'search',
+    'data-ctl-title': label,
+    'data-ctl-options': options.length,
+    'data-ctl-live': options.filter((o) => !o.disabled).length,
+    'data-ctl-state': current ? 'picked' : 'empty',
+  };
   const control = (
     <>
       {current && currentNode ? (
         // Filled + describable: the value opens its description; a separate Replace button re-opens the picker.
-        <div className="popsel is-picked ss-filled">
+        <div {...ctlAttrs} className="popsel is-picked ss-filled">
           <button type="button" className="ss-filled-body" title="View description" onClick={() => setDescNode(currentNode)}>
             <span className="popsel-val">{current.name}</span>
           </button>
@@ -731,6 +740,7 @@ export function SearchSelect({
       ) : (
         <button
           type="button"
+          {...ctlAttrs}
           className={'popsel' + (current ? ' is-picked' : ' is-empty')}
           onClick={() => {
             setQ('');
@@ -925,11 +935,22 @@ export function PopupSelect({
     setCustomText('');
     setOpen(true);
   };
+  // Machine-readable markers for the WG experience harness (test/wg-experience.harness.test.tsx): what
+  // this control asks, how many options it offers, whether it is answered. Invisible to the player;
+  // pinned by test/builder-control-attrs.test.tsx because a lost marker makes the harness read "asks nothing".
+  const ctlAttrs = {
+    'data-ctl': 'popup',
+    'data-ctl-title': title,
+    'data-ctl-options': options.length,
+    'data-ctl-live': options.filter((o) => !o.disabled && o.value !== '').length,
+    'data-ctl-state': current ? 'picked' : 'empty',
+  };
   return (
     <>
       {variant === 'card' ? (
         <button
           type="button"
+          {...ctlAttrs}
           className={'lvl-card' + (current ? '' : ' empty') + (className ? ' ' + className : '')}
           onClick={openPicker}
         >
@@ -944,7 +965,7 @@ export function PopupSelect({
         </button>
       ) : variant === 'slot' && current && currentNode ? (
         // Read-first filled slot: press the value to read its description; Replace re-opens the picker.
-        <div className={'popsel is-picked ss-filled' + (className ? ' ' + className : '')}>
+        <div {...ctlAttrs} className={'popsel is-picked ss-filled' + (className ? ' ' + className : '')}>
           <button type="button" className="ss-filled-body" title="View description" onClick={() => setDescNode(currentNode)}>
             {icon && <span className="popsel-tile"><i className={'ti ' + icon} aria-hidden="true" /></span>}
             <span className="popsel-val">{current.label}</span>
@@ -956,6 +977,7 @@ export function PopupSelect({
       ) : (
         <button
           type="button"
+          {...ctlAttrs}
           className={'popsel' + (variant === 'pill' ? ' pill' : '') + (current ? ' is-picked' : ' is-empty') + (className ? ' ' + className : '')}
           onClick={openPicker}
         >
@@ -1133,6 +1155,17 @@ export function MultiPickRows({
   const [descNode, setDescNode] = useState<DescNode | null>(null);
   return (
     <>
+      {/* Harness marker for the WG experience gate — one control per multi-pick group, with its capacity.
+          `display: contents` keeps the rows direct children of their card row for layout purposes. */}
+      <div
+        style={{ display: 'contents' }}
+        data-ctl="multi"
+        data-ctl-title={keyName}
+        data-ctl-options={options.length}
+        data-ctl-live={options.filter((o) => selected.includes(o.id) || selected.length < max).length}
+        data-ctl-capacity={max}
+        data-ctl-state={selected.length ? 'picked' : 'empty'}
+      >
       {options.map((o) => {
         const on = selected.includes(o.id);
         const node = descNodeOf({ name: o.name, description: o.description, descRefs: o.descRefs }, keyName);
@@ -1150,6 +1183,7 @@ export function MultiPickRows({
           />
         );
       })}
+      </div>
       {descNode && <DescriptionModal root={descNode} onClose={() => setDescNode(null)} />}
     </>
   );
@@ -2447,7 +2481,7 @@ export function SetupCard({
   children: ReactNode;
 }) {
   return (
-    <div className="lvl-card lvl-card-setup">
+    <div className="lvl-card lvl-card-setup" data-setupcard={label}>
       <span className="lvl-card-icon">
         <i className={'ti ' + icon} aria-hidden="true" />
       </span>
@@ -2466,7 +2500,7 @@ export function SetupCard({
  *  for, …) rendered as a small card indented + connected under the card that triggered it. */
 export function SubCard({ icon, label, count, children }: { icon: string; label: string; count?: ReactNode; children: ReactNode }) {
   return (
-    <div className="lvl-subcard">
+    <div className="lvl-subcard" data-subcard={label}>
       <i className="ti ti-corner-down-right lvl-subcard-conn" aria-hidden="true" />
       <div className="lvl-card lvl-card-setup lvl-card-child">
         <span className="lvl-card-icon">
@@ -2977,7 +3011,9 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           or Heraldry Lore", "a skill of your choice". 71 backgrounds carry one and `choice` was not
           declared on the Background type at all, so every one of them asked a question no player was
           ever shown. What the answer does is decided by backgroundChoiceKind, in the rules layer. */}
-      {background && build.backgroundId !== CUSTOM_BACKGROUND_ID && background.choice && (
+      {/* A DAILY background choice (Professional Letter Writer's extra language) is asked at Daily
+          preparations, not here — the same Q23 guard the feat and class-feature sites carry. */}
+      {background && build.backgroundId !== CUSTOM_BACKGROUND_ID && background.choice && !askedAtDailyPrep(background.choice) && (
         <SubCard icon="ti-adjustments" label={featChoicePrompt(background.choice.prompt, background.choice.flag)}>
           <PopupSelect
             title={featChoicePrompt(background.choice.prompt, background.choice.flag)}
@@ -3168,6 +3204,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                 selected={selected}
                 max={max}
                 onToggle={(id) => actions.toggleExtraChoice(g.id, id, max)}
+                keyName={g.name}
               />
             )}
             {/* A selected option may grant a feat with a restricted sub-choice (Dominion Epithet →
@@ -3334,6 +3371,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                 selected={selected}
                 max={max}
                 onToggle={toggle}
+                keyName="Runic repertoire"
               />
             </SubCard>
           );

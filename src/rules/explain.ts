@@ -59,6 +59,7 @@ import { mpArmorRefine } from './monsterParts';
 import { traitLabel } from './glossary';
 import { KINETIC_ELEMENTS } from './kineticElements';
 import {
+  FEAT_SITUATIONAL,
   choiceSituationalFor,
   featSituationalFor,
   hasFeatSituational,
@@ -233,6 +234,29 @@ function impulseJunctionIds(c: Character): string[] {
   const isGate = (id?: string) => !!id && (KINETIC_ELEMENTS as readonly string[]).includes(String(id).replace(/-gate$/, ''));
   const gates = (c.classChoices ?? []).filter((cc) => isGate(cc.id));
   return gates.length === 1 ? [`junction:${gates[0].id}`] : [];
+}
+
+/**
+ * The Lore rows the sheet shows: every Lore the character is trained in, plus an UNTRAINED row for a
+ * Lore that one of the character's things gives a situational bonus to — Loaded Dice and Marked
+ * Playing Cards star Games Lore, and a star needs a row to sit on. Wanderer's Guide shows the same row
+ * (its `createValue SKILL_LORE_GAMES = U`). One reader for MainTab, the sheet snapshot and the
+ * experience harness, so the three cannot disagree about which rows exist.
+ */
+export function sheetLoreKeys(c: Character, db?: ContentDatabase): ProficiencyKey[] {
+  const keys = Object.keys(c.proficiencies?.skills ?? {}).filter((k) => k.startsWith('lore:'));
+  const seen = new Set(keys);
+  let ids: string[];
+  try { ids = characterSituationalIds(c, db); } catch { ids = (c.feats ?? []).map((f) => f.featId); }
+  for (const id of ids) {
+    for (const b of FEAT_SITUATIONAL[id] ?? []) {
+      for (const t of b.targets ?? []) {
+        const d = (t as { kind?: string; detail?: string }).detail;
+        if ((t as { kind?: string }).kind === 'skill' && d && d.startsWith('lore:') && !seen.has(d)) { seen.add(d); keys.push(d); }
+      }
+    }
+  }
+  return keys as ProficiencyKey[];
 }
 
 /** Exported so a guard can assert WHICH ids an inventory contributes — the item's own id follows the

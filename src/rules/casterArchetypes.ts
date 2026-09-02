@@ -39,6 +39,14 @@ export interface CasterArchetype {
   /** Summoner: the tradition is set by the chosen eidolon TYPE (build.archetypeEidolonType), not free. */
   eidolonTradition?: boolean;
   /**
+   * The DEDICATION grants no casting at all — the Basic Spellcasting feat is what brings the casting
+   * source, the repertoire and the cantrips. Summoner Dedication's printed text says nothing about
+   * spells and Wanderer's Guide defines no casting source on it; *"You gain a spell repertoire and two
+   * cantrips"* is Basic Summoner Spellcasting's own sentence. Until that feat is taken the archetype
+   * is not an active caster, so no spellcasting entry, no cantrip rail, no spell proficiency.
+   */
+  castsFromBasic?: boolean;
+  /**
    * Hedge Mage: the tradition is set by the SKILL the dedication asked for, not picked directly —
    * *"hedge mage spells of a tradition associated with the skill chosen for this dedication (arcane for
    * Arcana, primal for Nature, occult for Occultism, and divine for Religion)"*. Keyed by the skill
@@ -192,7 +200,7 @@ export const CASTER_ARCHETYPES: Record<string, CasterArchetype> = {
   'psychic-dedication': { ...mk('occult', 'int', 1, 'psychic'), choiceKeyAbility: ['int', 'cha'] },
   // Summoner: a spontaneous repertoire whose tradition follows the chosen eidolon TYPE; caps at Expert
   // (no master-summoner-spellcasting feat exists). Cha key.
-  'summoner-dedication': { ...mk('arcane', 'cha', 2, 'summoner'), eidolonTradition: true },
+  'summoner-dedication': { ...mk('arcane', 'cha', 2, 'summoner'), eidolonTradition: true, castsFromBasic: true },
   // Magaambyan Attendant: a single INNATE cantrip from a chosen tradition (arcane → Int, primal → Wis).
   // No spell slots — the slot progression comes from the follow-on Halcyon Speaker archetype.
   'magaambyan-attendant-dedication': {
@@ -438,6 +446,8 @@ export function activeCasterArchetype(takenFeatIds: string[], _content?: Content
   }
   for (const [dedicationId, config] of Object.entries(CASTER_ARCHETYPES)) {
     if (!taken.has(dedicationId)) continue;
+    // Bounded casters whose dedication carries no casting: not a caster until the Basic feat is taken.
+    if (config.castsFromBasic && !(config.basicId && taken.has(config.basicId))) continue;
     return {
       dedicationId,
       config,
