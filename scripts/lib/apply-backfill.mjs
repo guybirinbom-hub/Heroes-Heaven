@@ -53,6 +53,15 @@ export function applyBackfill(db, file = 'scripts/data/effect-backfill.json', { 
       }
       continue;
     }
+    // `delete` removes a WHOLE RECORD — the mirror of `create`. A `value: null` row with no `field` was a
+    // silent no-op (the `!fix.field` guard below), so a dead twin such as classFeatures/nudging-whisper
+    // (the same Nudging Whisper that actions/nudging-whisper carries and the heritage grants) could
+    // only ever be hidden, never retired. Idempotent: an already-absent record counts as applied.
+    if (fix.delete) {
+      if (db[fix.category]?.[fix.id]) delete db[fix.category][fix.id];
+      applied++;
+      continue;
+    }
     const entry = db[fix.category]?.[fix.id];
     if (!entry || !fix.field) continue;
     const target = fix.path?.length ? backfillTarget(entry, fix.path) : entry;

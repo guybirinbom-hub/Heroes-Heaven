@@ -4,7 +4,7 @@ import { content } from './_content';
 import { backgroundGrantedFeats } from '../src/rules/build';
 
 const c = content();
-type Patch = { category: string; id: string; field?: string; value: unknown; path?: string[]; create?: boolean };
+type Patch = { category: string; id: string; field?: string; value: unknown; path?: string[]; create?: boolean; delete?: boolean };
 const overlay = JSON.parse(readFileSync('scripts/data/effect-backfill.json', 'utf8')) as Patch[];
 
 /**
@@ -45,7 +45,9 @@ describe('mechanical data survives a re-import', () => {
 
   it('every overlay patch points at a record that exists', () => {
     const db = c as unknown as Record<string, Record<string, unknown>>;
-    const dead = overlay.filter((p) => !db[p.category]?.[p.id]).map((p) => `${p.category}/${p.id}`);
+    // A `delete` row RETIRES a record (the dead classFeatures/nudging-whisper twin), so its target is
+    // meant to be absent — checked by the drift test below, not here.
+    const dead = overlay.filter((p) => !p.delete && !db[p.category]?.[p.id]).map((p) => `${p.category}/${p.id}`);
     expect(dead).toEqual([]);
   });
 
@@ -59,6 +61,8 @@ describe('mechanical data survives a re-import', () => {
         // A `create` entry carries a whole record rather than one field; it matches when the record
         // ships at all. (It never overwrites, so a differing shipped record is upstream's, not drift.)
         if (p.create) return !db[p.category]?.[p.id];
+        // A `delete` entry matches when the record is GONE; a record that came back is drift.
+        if (p.delete) return !!db[p.category]?.[p.id];
         const target = p.path?.length ? resolvePath(db[p.category][p.id], p.path) : db[p.category][p.id];
         if (!target || !p.field) return true; // an unresolved path is drift of the worst kind: it patches nothing
         const live = target[p.field];

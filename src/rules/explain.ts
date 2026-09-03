@@ -9,6 +9,7 @@ import type {
   Character,
   ContentDatabase,
   DefenseGrants,
+  EffectChoice,
   ProficiencyKey,
   ProficiencyRank,
   SaveId,
@@ -265,6 +266,10 @@ export function characterSituationalIds(c: Character, db?: ContentDatabase): str
   const ids: string[] = c.feats.map((f) => f.featId);
   if (c.ancestryId) ids.push(c.ancestryId);
   if (c.heritageId) ids.push(c.heritageId);
+  // …and the SECOND heritage (a versatile heritage's "choose a dragonet heritage"), which
+  // `degreeShiftRecords` below already walks: 22 versatile heritages taken second got their degree
+  // shifts but none of their FEAT_SITUATIONAL stars or RECORD_MARKERS marks.
+  if (c.secondHeritageId) ids.push(c.secondHeritageId);
   if (c.backgroundId) ids.push(c.backgroundId);
   if (db) for (const id of ownedFeatureIds(c, db)) ids.push(id);
   /*
@@ -338,6 +343,41 @@ export function characterSituationalIds(c: Character, db?: ContentDatabase): str
  * Keyed by the RECORD's id because both consumers below look entries up by the ids the character
  * actually owns — an entry filed under a synthetic key is never read.
  */
+/**
+ * A degree shift that only ONE BRANCH of the record's own `effectChoices` pick grants.
+ *
+ * Kijimuna Gnome prints *"You gain your choice of the following benefits. Once made, this choice
+ * can't be changed. — You can climb any banyan. You gain the Combat Climber feat, and if you roll a
+ * success on the Athletics check to Climb, you get a critical success instead. — You can catch any
+ * fish. You gain a swim Speed of 15 feet."* The record carried the shift UNCONDITIONALLY, so a player
+ * who chose the fish was told their Climb successes crit.
+ *
+ * The exact twin of `DegreeShift.savesFromChoice`, and for the same reason: the entry's target is not
+ * in the record, it is the player's answer. Unanswered ⇒ the shift is dropped, which is what
+ * `resolveChoiceSaves` does with an unanswered pick and what `resolvePick` does with an either/or
+ * branch nobody chose — a benefit nobody picked is never handed over.
+ *
+ * ⚠ Declared HERE rather than on `DegreeShift` (situationalBonuses.ts) because this lane may not edit
+ * that file; the reader is structural either way, exactly as `degreeShiftRecords` reads the field
+ * itself structurally. Moving the two lines onto the interface changes nothing at runtime.
+ */
+/**
+ * Is the branch that grants this shift the one the player actually took?
+ *
+ * ponytail: matched through the option's LABEL, because `Character.effectPicks` — the only carrier of
+ * an `effectChoices` answer that survives onto the finished character — records the label and not the
+ * value. Labels are unique inside one choice (two options sharing one would be an authoring bug the
+ * picker also could not render), so the record's own option list turns the label back into the value.
+ * Upgrade path if that ever bites: give `effectPicks` a `value` and read it directly.
+ */
+function choiceGateOpen(c: Character, recordId: string, choices: EffectChoice[] | undefined, sh: DegreeShift): boolean {
+  const gate = sh.fromChoice;
+  if (!gate) return true;
+  const label = c.effectPicks?.find((p) => p.recordId === recordId && p.choiceId === gate.choiceId)?.label;
+  const opt = (choices ?? []).find((ch) => ch.id === gate.choiceId)?.options?.find((o) => o.value === gate.value);
+  return !!label && !!opt && opt.label === label;
+}
+
 function degreeShiftRecords(c: Character, db?: ContentDatabase): [string, DegreeShift[]][] {
   if (!db) return [];
   const out: [string, DegreeShift[]][] = [];
@@ -345,11 +385,20 @@ function degreeShiftRecords(c: Character, db?: ContentDatabase): [string, Degree
   // this walk also passes ancestries and backgrounds, which are separate shapes that simply never
   // carry one. A structural read keeps every source in the one collector instead of splitting it.
   const push = (id: string | null | undefined, rec?: unknown) => {
-    const shifts = (rec as { degreeShifts?: DegreeShift[] } | undefined)?.degreeShifts;
-    if (id && shifts?.length) out.push([id, shifts]);
+    const r = rec as { degreeShifts?: DegreeShift[]; effectChoices?: EffectChoice[] } | undefined;
+    if (!id || !r?.degreeShifts?.length) return;
+    // …and a shift that only ONE BRANCH of the record's own pick grants is dropped for every other
+    // answer. Filtered HERE, in the collector both consumers go through, so the skill/save stars and
+    // the action-row markers cannot disagree about whether the player took that branch.
+    const shifts = r.degreeShifts.filter((sh) => choiceGateOpen(c, id, r.effectChoices, sh));
+    if (shifts.length) out.push([id, shifts]);
   };
   for (const f of c.feats) push(f.featId, db.feats[f.featId]);
   push(c.heritageId, c.heritageId ? db.heritages[c.heritageId] : undefined);
+  // The SECOND heritage, which this walk had never read — `dragonblood` is a VERSATILE heritage that
+  // ships a `degreeShifts` entry, so a character who took it as their second heritage got no star and
+  // no action mark for a rule they own. buildCharacter resolves both heritages; so does this.
+  push(c.secondHeritageId, c.secondHeritageId ? db.heritages[c.secondHeritageId] : undefined);
   push(c.ancestryId, c.ancestryId ? db.ancestries[c.ancestryId] : undefined);
   push(c.backgroundId, c.backgroundId ? db.backgrounds[c.backgroundId] : undefined);
   for (const id of ownedFeatureIds(c, db)) push(id, db.classFeatures[id]);

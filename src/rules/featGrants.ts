@@ -473,6 +473,23 @@ const HAND_AUTHORED_GRANTS: Record<string, FeatGrant> = {
    * player to apply it by hand. Reachable since `grantSourcesForProficiency` (build.ts) was widened
    * to the character's heritages. */
   'warrior-android': { weapon: { simple: 'trained', martial: 'trained' } },
+  /*
+   * The three JOTUNBORN heritages, same lane and the same history: each prints a skill it trains, each
+   * had no carrier, and each shipped the *"apply it manually (FEAT_GRANTS: id not in
+   * feats/classFeatures)"* dataWarning — a rejection recorded by scripts/audit/apply-patches.ts BEFORE
+   * `grantSourcesForProficiency` was widened to heritages, so the reason no longer holds.
+   *
+   * ⚠ Authored here rather than in featGrantsAuto.ts, which five scripts re-serialise whole.
+   */
+  // "You are trained in Society. You also gain the Additional Lore general feat…" — the Additional
+  // Lore half is already delivered by EXTRA_FEAT_TAKINGS['sage-jotunborn'] (featFeatGrants.ts).
+  'sage-jotunborn': { skills: { society: 'trained' } },
+  // "You are trained in Crafting. You gain a +1 circumstance bonus to Perception checks to Seek when
+  // searching for hidden details…" — the star is already in situationalBonuses.ts.
+  'weaver-jotunborn': { skills: { crafting: 'trained' } },
+  // "You are trained in Survival, and you gain the Survey Wildlife skill feat." — the granted feat
+  // (featFeatGrants.ts) prints "trained in Survival" as its own prerequisite, which nothing met.
+  'keeper-jotunborn': { skills: { survival: 'trained' } },
   'rogue-dedication': {
     armor: { light: 'trained' },
     /* The fallback belongs to the Stealth/Thievery slot ONLY — the second slot is the *"plus one skill

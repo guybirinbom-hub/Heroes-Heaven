@@ -1596,13 +1596,27 @@ export function narrowChoiceOptions(
   // Resolved once: `ownedFeatureIds` walks the class table, the subclass, every class choice and the
   // inventor's modifications, and a picker calls this per render.
   const owned = def.disableIfOwned || options.some((o) => o.requiresAnyFeature?.length) ? ownedFeatureIds(c, db) : null;
+  /*
+   * …and the HERITAGES, for `requiresAnyFeature` only.
+   *
+   * Foxfire prints *"**Special** If you are a frozen wind kitsune, your foxfire deals cold damage
+   * instead of electricity or fire"* — a per-option gate whose feature is a HERITAGE. `ownedFeatureIds`
+   * walks the class table, the subclass, the class choices and the inventor's modifications, so a
+   * heritage id in `requiresAnyFeature` matched nothing and the gated option was silently offered to
+   * every kitsune.
+   *
+   * Kept OUT of `owned` itself rather than merged into it, because `disableIfOwned` reads that same set
+   * against option VALUES — which are classFeature ids — and widening it there would grey an option
+   * whose value happened to collide with a heritage id.
+   */
+  const hasFeature = (id: string): boolean => owned!.has(id) || heritageRecords(c, db).some((h) => h.id === id);
   const out: NarrowedOption[] = [];
   for (const o of options) {
     // A per-option gate on the record's OWN list. `requiresSkillRank` has existed since Haunting
     // Memories but was read only on the daily-preparations path, so the same field on a BUILD-time
     // choice was inert — this is the first place it applies to both.
     if (!qualifiesForOption(c, o.requiresSkillRank)) continue;
-    if (o.requiresAnyFeature?.length && !o.requiresAnyFeature.some((id) => owned!.has(id))) continue;
+    if (o.requiresAnyFeature?.length && !o.requiresAnyFeature.some(hasFeature)) continue;
     if (limits.length) {
       // Intersection: the value has to be allowed by EVERY limit in force, and by an entry whose own
       // condition currently holds.
@@ -2795,6 +2809,9 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
  *     covering both a trait on one branch of a choice and a choice whose answer IS the trait;
  *  4. an ACTIVE MODE's `creatureTraits` — "while in this form, you gain the animal trait".
  *
+ * …and then one SUBTRACTION, `removesCreatureTraits`, applied to the finished set — *"You lose the
+ * plant trait and gain the fungus trait"* (Fungus Leshy).
+ *
  * Sources 3 and 4 exist because authoring them as (2) said things that were flatly false: every
  * Swimming Animal breathed water, every champion was holy, and an untransformed worm caller standing
  * in a tavern was an animal.
@@ -2820,7 +2837,7 @@ export function creatureTraitsOf(
 
   for (const t of (c.ancestryId ? db.ancestries[c.ancestryId]?.traits : undefined) ?? []) add(t, 'ancestry');
 
-  const grantors: ({ name?: string; grantsCreatureTraits?: string[] } | undefined)[] = [
+  const grantors: ({ name?: string; grantsCreatureTraits?: string[]; removesCreatureTraits?: string[] } | undefined)[] = [
     ...heritageRecords(c, db),
     ...c.feats.map((f) => db.feats[f.featId]),
     ...[...ownedFeatureIds(c, db)].map((id) => db.classFeatures[id]),
@@ -2837,7 +2854,17 @@ export function creatureTraitsOf(
   for (const m of c.activeModes ?? []) {
     for (const t of m.creatureTraits ?? []) add(t, 'granted', m.name ?? m.id);
   }
-  return out;
+  /*
+   * FIFTH source, and the only SUBTRACTIVE one: Fungus Leshy prints *"You lose the plant trait and
+   * gain the fungus trait."* Run LAST, after every additive source, because the removal is a
+   * statement about the finished set — the record that loses `plant` does not know whether the
+   * ancestry chassis, another record's `grantsCreatureTraits`, an answer or a mode put it there.
+   * Without it, the fungus grant makes the Details tab read "leshy, plant, fungus", which is what
+   * the printed sentence denies, and leaves plant-bane weapons still keyed on this character.
+   */
+  const lost = new Set<string>();
+  for (const rec of grantors) for (const t of rec?.removesCreatureTraits ?? []) lost.add(String(t ?? '').toLowerCase());
+  return lost.size ? out.filter((t) => !lost.has(String(t.trait).toLowerCase())) : out;
 }
 
 const DAMAGE_ABBR: Record<string, string> = {

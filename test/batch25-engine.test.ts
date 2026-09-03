@@ -61,7 +61,12 @@ describe('batch 25 — heritage carriers the engine could not reach', () => {
         hero({ ancestryId: 'kobold', heritageId: 'mightyfall-kobold', ...(choice ? { featChoices: { 'heritage:mightyfall-kobold': choice } } : {}) } as Partial<BuildState>),
         db,
       );
-    expect(kobold('kaiju') - kobold('normal')).toBe(5);
+    /* Batch 26 moved the HP off the package: *"You gain 10 Hit Points from your ancestry instead of
+     * 6"* is a printed sentence of its own, separate from *"Instead of the normal attribute boosts
+     * and flaws, YOU CAN CHOOSE to…"* (heritage-374), so it rides `Heritage.ancestryHp` and reaches
+     * both branches. What is left between them is the kaiju package lifting the normal kobold's Con
+     * FLAW (Con 8 → 10) — +1/level — which is the thing this test is actually about. */
+    expect(kobold('kaiju') - kobold('normal')).toBe(1);
   });
 
   /* "You're trained in all simple and martial weapons" — Warrior Android. `grantSourcesForProficiency`

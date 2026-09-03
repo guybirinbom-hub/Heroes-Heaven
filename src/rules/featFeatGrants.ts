@@ -277,6 +277,18 @@ export const FEAT_GRANT_BOUND_CHOICE: Record<string, Record<string, BoundGrantAn
   'web-weaver': { 'specialty-crafting': { kind: 'fixed', skill: 'weaving' } },
   // "You gain the Canny Acumen skill feat as a bonus feat, BUT YOU MUST CHOOSE PERCEPTION."
   'shiny-button-eyes': { 'canny-acumen': { kind: 'fixed', skill: 'perception' } },
+  /*
+   * A HERITAGE key, not a feat's — the table is addressed by GRANTER id and the grant queue has been
+   * seeded with the character's heritages since batch 25, so the id reaches `boundGrantChoice` exactly
+   * like a feat's.
+   *
+   * Woodstalker Lizardfolk: *"You gain the Terrain Stalker feat, even if you're not trained in Stealth,
+   * and YOU MUST CHOOSE UNDERBRUSH as your chosen terrain."* Unbound, the builder offered rubble, snow
+   * and a typed-in terrain, and both of Terrain Stalker's stars read "your chosen difficult terrain" —
+   * so a wrong pick was a player-visible benefit print does not grant. Same binding backgrounds/
+   * nirmathi-guerrilla already carries for this exact feat.
+   */
+  'woodstalker-lizardfolk': { 'terrain-stalker': { kind: 'fixed', skill: 'underbrush' } },
   // "You gain the Specialty Crafting skill feat FOR BOTH Stonemasonry AND Blacksmithing." — the two-
   // answer case the `skill` array exists for.
   'elemental-trade': { 'specialty-crafting': { kind: 'fixed', skill: ['stonemasonry', 'blacksmithing'] } },

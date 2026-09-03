@@ -84,8 +84,15 @@ describe("Mightyfall Kobold's optional package", () => {
     expect(eff.abilityBoosts.map((b) => (b as { ability?: string }).ability).sort()).toEqual(['cha', 'str']);
     expect(eff.abilityFlaws).toEqual(['int']);
     expect(kobold('kaiju').ancestryHp, 'the resolved ancestry HP rides the Character').toBe(10);
-    /* +4 ancestry HP, +1 more because the kaiju package also lifts the normal Con FLAW (Con 8 → 10). */
-    expect(deriveMaxHp(kobold('kaiju'), db) - deriveMaxHp(kobold('normal'), db)).toBe(5);
+    /*
+     * The gap between the two branches is the Con FLAW alone (+1/level), NOT the ancestry HP: batch 26
+     * separated the two printed sentences — *"You gain 10 Hit Points from your ancestry instead of 6"*
+     * is unconditional, and only *"Instead of the normal attribute boosts and flaws, YOU CAN CHOOSE
+     * to…"* hangs on the answer (heritage-374). The 10 now lives on `Heritage.ancestryHp` and reaches
+     * BOTH branches, so a kobold who kept the normal boosts is no longer 4 HP short at every level.
+     */
+    expect(kobold('normal').ancestryHp, 'the normal branch gets the 10 too').toBe(10);
+    expect(deriveMaxHp(kobold('kaiju'), db) - deriveMaxHp(kobold('normal'), db)).toBe(1);
   });
 
   it('unanswered or normal: the ordinary kobold array stands', () => {

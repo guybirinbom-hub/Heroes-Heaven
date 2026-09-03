@@ -317,3 +317,115 @@ describe('batch 25 — the comparers read the carriers we actually ship', () => 
     expect(raw).not.toContain('--- deep-fetchling');
   }, 60_000);
 });
+
+describe('batch 26 — the instruments read the carriers we actually ship', () => {
+  const eff = (type: string, data: Record<string, unknown>, variable: string | null = null) =>
+    ({ type, variable, valueBearing: true, gate: 'open', inOption: false, data });
+  /* A host with NOTHING on it — which is what the harness builds for a record whose pick is unanswered. */
+  const bare = { stars: {}, proficiencies: {}, spellcasting: [] as { proficiency: string }[], featNames: [], featureNames: [], spellNames: [], languages: [], traits: [] };
+  const names = { block: new Map(), spell: new Map(), trait: new Map() };
+
+  it('credits the innate spell attack/DC pair to a record that GRANTS an innate spell', () => {
+    /*
+     * Spellhorn Kobold: *"…You can Cast this Spell as an arcane innate spell at will … You are trained
+     * in the spell attack modifier and spell DC statistics"*, which their side writes as
+     * `adjValue SPELL_ATTACK/SPELL_DC = T`. Ours never writes it per record — the innate entry the
+     * cantrip creates carries the proficiency centrally (Player Core p.298, trained, expert at 12th;
+     * src/rules/build.ts:7219-7244) — so the entry exists only once the pick is ANSWERED, and the
+     * harness builds every host with its controls empty. The GRANT is the predicate, not the host.
+     */
+    const attackT = eff('adjValue', { variable: 'SPELL_ATTACK', value: { value: 'T' } }, 'SPELL_ATTACK');
+    expect(effectDelivery(attackT, bare, names)).toBe('unchecked');
+    expect(effectDelivery(attackT, { ...bare, grantsInnateSpell: true }, names)).toBe('delivered');
+    // …and a rank ABOVE the engine-wide innate floor is not evidence — that floor only reaches trained.
+    const dcE = eff('adjValue', { variable: 'SPELL_DC', value: { value: 'E' } }, 'SPELL_DC');
+    expect(effectDelivery(dcE, { ...bare, grantsInnateSpell: true }, names)).toBe('unchecked');
+    // …and a host that DOES have a casting entry is still judged on that entry's real proficiency, so a
+    // record granting an innate spell to an untrained caster keeps reporting.
+    const untrained = { ...bare, grantsInnateSpell: true, spellcasting: [{ proficiency: 'untrained' }] };
+    expect(effectDelivery(attackT, untrained, names)).toBe('undelivered');
+  });
+
+  it('wg-diff credits an alternate-attribute package and a general-feat slot', () => {
+    const out = 'work/.wg-diff-b026-test.json';
+    runScript('wg-diff.mjs', ['--out', out]);
+    const diff = JSON.parse(readFileSync(join(CLI_ROOT, out), 'utf8')) as Record<string, { id: string; missing?: string[]; ourKinds: string[] }[]>;
+    rmSync(join(CLI_ROOT, out), { force: true });
+    const rowOf = (id: string) => [...diff.theyOnly, ...diff.weOnly, ...diff.agree].find((r) => r.id === id);
+    /*
+     * MIGHTYFALL KOBOLD — *"You gain 10 Hit Points from your ancestry instead of 6. Instead of the
+     * normal attribute boosts and flaws, you can choose to gain a boost to Strength, a boost to
+     * Charisma, and a flaw in Intelligence."* Both halves live inside `alternateAttributes`, one level
+     * below the top-level field names the kind map reads, so the record reported missing=[hp,attribute]
+     * while heritageAdjustedAncestryAttributes (build.ts:663) and resolvedAncestryHp (build.ts:685)
+     * both read it. (WHETHER the 10 is unconditional is a values question, adjudicated on the record.)
+     */
+    expect(diff.theyOnly.find((r) => r.id === 'mightyfall-kobold')).toBeUndefined();
+    expect(rowOf('mightyfall-kobold')?.ourKinds).toEqual(expect.arrayContaining(['attribute', 'hp']));
+    /*
+     * VERSATILE HUMAN — *"Select a general feat of your choice for which you meet the prerequisites."*
+     * A slot is a selection: `grantsGeneralFeat` opens the picker at src/builder/shared.tsx:2694-2707
+     * and injects the answer as a level-1 general feat at src/rules/build.ts:4411-4420, but only
+     * `choice`/`effectChoices` counted as asking.
+     */
+    expect(diff.theyOnly.find((r) => r.id === 'versatile-human')).toBeUndefined();
+    expect(rowOf('versatile-human')?.ourKinds).toContain('choice');
+  }, 120_000);
+
+  it('wg-values keeps the SIGN of a Speed adjustment on both sides', () => {
+    /*
+     * Seaweed Leshy: *"However, your land Speed is reduced by 5 feet (to 20 feet for most seaweed
+     * leshies)"* — their `adjValue SPEED = -5`. Stripping the sign rendered the penalty as a bonus
+     * ("theirs=5"), so the record was adjudicated against the opposite mechanic. The disagreement row
+     * itself clears once our penalty is authored, so what is pinned here is the SIGN, not the row.
+     */
+    const seaweed = runScript('wg-values.mjs', ['--ids', 'seaweed-leshy', '--verbose']);
+    expect(seaweed).not.toMatch(/speed\|land\s+theirs=5\b/);
+    if (/speed\|land/.test(seaweed)) expect(seaweed).toMatch(/speed\|land\s+theirs=-5\b/);
+    /*
+     * …and the mirror `Math.abs` on OUR side went with it, so the corpus's other negative Speed still
+     * agrees: Zombie Dedication's *"reduce all your Speeds by 5"* is `speedAdjust: {key:'all', add:-5}`
+     * against their -5. A one-sided re-abs on either side turns this record red.
+     */
+    const zombie = runScript('wg-values.mjs', ['--ids', 'zombie-dedication', '--verbose']);
+    expect(zombie).toContain('ok    zombie-dedication');
+    expect(zombie).toMatch(/^0 records with at least one value to adjudicate/m);
+  }, 60_000);
+
+  it('wg-values resolves a conditional Speed STAR through the ancestry chassis', () => {
+    /*
+     * Dog Kholo: *"If you have both hands free, you can increase your Speed to 30 feet as you run on
+     * all fours"* — theirs is `addBonusToValue SPEED = 5` with the trigger parked in the op's text;
+     * ours is a situationalBonuses star whose `bonus` states the printed TOTAL ("Speed becomes 30
+     * feet") against the kholo 25-foot chassis. With only the total asserted the record read
+     * `DIFFERENT theirs=5 ours=30` the moment its star was authored — the instrument turning red
+     * BECAUSE the gap had been fixed. Same both-forms rule the unconditional `landSpeedBonus` chassis
+     * lane already follows, and bounded to a magnitude at or above the chassis so a star that states a
+     * delta ("+10 feet circumstance", 129 of the registry's 130 speed stars) is compared as itself.
+     */
+    const dog = runScript('wg-values.mjs', ['--ids', 'dog-kholo', '--verbose']);
+    expect(dog).toContain('ok    dog-kholo');
+    expect(dog).toMatch(/^0 records with at least one value to adjudicate/m);
+  }, 60_000);
+
+  it('wg-identity reads an unarmedTraits rider as their pre-modified unarmed item', () => {
+    const ids = 'warrior-jotunborn,mightyfall-kobold,dragonscaled-kobold';
+    const out = runScript('wg-identity.mjs', ['--ids', ids]);
+    expect(out).not.toContain('--- warrior-jotunborn');
+    expect(out).not.toContain('--- mightyfall-kobold');
+    expect(out).not.toContain('--- dragonscaled-kobold');
+    expect(out).toMatch(/^0 records where a named thing/m);
+    /*
+     * With the registry bypassed only the two SETTLED records come back, so warrior-jotunborn passes on
+     * its own carrier: their `giveItem` names item 18256 "Warrior Jotunborn Fist" for *"The damage die
+     * for your fist increases to 1d6"*; ours is the `unarmedTraits` rider on the fist the character
+     * already has (derive.ts:4503 folds heritage records into the rider sources). Handing over a second
+     * fist would give the character two — and the same shape had been hand-settled eight times before
+     * it was taught.
+     */
+    const raw = runScript('wg-identity.mjs', ['--ids', ids, '--raw']);
+    expect(raw).not.toContain('--- warrior-jotunborn');
+    expect(raw).toContain('--- mightyfall-kobold');       // option LABELS only; see SETTLED_IDENTITIES
+    expect(raw).toContain('--- dragonscaled-kobold');
+  }, 60_000);
+});

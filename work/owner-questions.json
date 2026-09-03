@@ -801,6 +801,14 @@
    "theirs": "WG heritage Undine: conditional IF SPEED_SWIM <= 10 THEN (nothing) ELSE setValue SPEED_SWIM = 10. Read literally: a character with no swim Speed (0) satisfies the condition and gets NO swim Speed; a character whose ancestry already swims faster than 10 is CUT DOWN to 10. The branches look inverted relative to the printed sentence.",
    "ours": "heritages/undine speeds.swim = 10, unconditional — a heritage speed replaces the same-type ancestry speed. Print-exact.",
    "question": "WG's encoding contradicts the printed text (the conditional grants nothing to the very character who needs it and lowers a faster swimmer). Keep ours (print) or adopt their inverted conditional? Recommendation: keep ours; if you agree, this closes as OWNER-RULED with no change."
+  },
+  {
+   "id": "mightyfall-kobold",
+   "batch": 26,
+   "printed": "Instead of the normal attribute boosts and flaws, you can choose to gain a boost to Strength, a boost to Charisma, and a flaw in Intelligence.",
+   "theirs": "Their \"Mightyfall Kobold Boosts\" option (id 7d0e01a3-9950-4bc3-9609-42cb076f38b3) is four deltas on the kobold chassis (Cha fixed, Dex fixed, free; flaw Con): adjValue ATTRIBUTE_STR {\"value\":1}, adjValue ATTRIBUTE_DEX {\"value\":-1}, adjValue ATTRIBUTE_CON {\"value\":1}, adjValue ATTRIBUTE_INT {\"value\":-1}. Net = Str boost + Cha boost + the untouched ancestry FREE boost, flaw Int — three boosts.",
+   "ours": "heritages/mightyfall-kobold.alternateAttributes replaces the whole array — `abilityBoosts: [{fixed str},{fixed cha}], abilityFlaws: ['int']` — two boosts, no free boost, matching print literally (heritageAdjustedAncestryAttributes, src/rules/build.ts:663-680, returns alt.abilityBoosts wholesale).",
+   "question": "WG-vs-PRINT (batch 26, heritage) - WG's 'Mightyfall Kobold Boosts' option only adjusts four attributes (+Str, -Dex, +Con, -Int on top of the kobold chassis), which leaves the ancestry's FREE boost in place: three boosts and an Int flaw. Print says 'Instead of the normal attribute boosts and flaws, you can choose to gain a boost to Strength, a boost to Charisma, and a flaw in Intelligence' - exactly two boosts, no free boost, which is what we ship (the whole array is replaced). Keep ours (print) or adopt WG's three-boost package? Recommendation: keep ours."
   }
  ],
  "deferred": [

@@ -213,6 +213,14 @@
    "class": "INSTRUMENT",
    "verified": "their only op is adjValue IMPROVED_MULTILINGUAL — WG's counter for 'extra languages, and extra languages FROM ANOTHER FEAT', a number the harness surface does not carry (the sheet snapshot has no language-slot count, so the differential moved 0 values). Ours delivers the same two clauses of heritage-116 as languageChoices: 2 + languageChoicesBonus [{featId:'multilingual', extra:1}], read by recordLanguageSlots/bonusLanguageSlots (build.ts). Measured on built level-1 android wizards (Int +0), 2026-09-03: plain android 2 bonus language slots; polyglot 4 (+2, the printed 'two additional languages'); plain + Multilingual 4; polyglot + Multilingual 7 (+3 over polyglot: Multilingual's 2 plus the printed extra one). LanguageEditor renders the count as 'Languages n/N'.",
    "verifiedOn": "2026-09-03"
+  },
+  "nomadic-halfling": {
+   "batch": 26,
+   "verdict": "UNVERIFIED-EFFECT",
+   "lane": "language-slot-count-has-no-surface-predicate",
+   "class": "INSTRUMENT",
+   "verified": "their only unmatched op is adjValue IMPROVED_MULTILINGUAL — WG's counter for 'extra languages, and extra languages FROM ANOTHER FEAT', a number the harness surface does not carry (no language-slot count in the sheet snapshot; the differential moved 0 values). Same blind spot as polyglot-android (batch 25). Ours delivers both clauses of heritage-258 ('You gain two additional languages of your choice … every time you take the Multilingual feat, you gain another new language') as languageChoices: 2 + languageChoicesBonus [{featId:'multilingual', extra:1}] — batch-26 rows read by recordLanguageSlots/bonusLanguageSlots (build.ts). Measured on built level-1 halfling wizards (Int +0), 2026-09-03: plain halfling 1 bonus language slot; nomadic 3 (+2); plain + Multilingual 3; nomadic + Multilingual 6 (+3 over nomadic: Multilingual's 2 plus the printed extra one).",
+   "verifiedOn": "2026-09-03"
   }
  }
 }

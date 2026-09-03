@@ -297,8 +297,19 @@ function theirAssertions(row) {
     if (val === null || val === undefined || val === '') continue;   // a prose-only bonus asserts no value
     /* A PENALTY is the same rule as its magnitude: theirs writes -2, ours writes the string
      * '-2 circumstance' whose number the reader takes as an absolute. Comparing signed to unsigned
-     * reported every penalty in the corpus as a disagreement. */
-    const scalar = typeof val === 'number' ? Math.abs(val) : val;
+     * reported every penalty in the corpus as a disagreement.
+     *
+     * ⚠ EXCEPT ON THE SPEED TRACK, WHERE THE SIGN IS THE MECHANIC. Seaweed Leshy prints *"However,
+     * your land Speed is reduced by 5 feet (to 20 feet for most seaweed leshies)"* and their side
+     * writes `adjValue SPEED = -5`; stripping the sign rendered it as "theirs=5", i.e. a Speed BONUS,
+     * so a record that must lose 5 feet was being adjudicated against a record that gains 5 — and a
+     * correctly authored `landSpeedBonus: -5` would have read as a disagreement. Every speed number on
+     * our side is a signed NUMBER field (`speeds`, `landSpeedBonus`, `landSpeedMin`, `speedAdjust.add`),
+     * never one of the '-2 circumstance' bonus strings the absolute above exists for, so the two sides
+     * can be compared signed. Adversarially confirmed on the corpus's only other negative speed op,
+     * Zombie Dedication's *"reduce all your Speeds by 5"* — theirs -5 against our `speedAdjust.add: -5`,
+     * which is why the matching `Math.abs` on our side of that field is dropped too. */
+    const scalar = typeof val === 'number' && spec[0] !== 'speed' ? Math.abs(val) : val;
     out.set(`${spec[0]}|${spec[1] ?? ''}`, scalar);
   }
   out.__sets = sets;
@@ -518,7 +529,24 @@ function situationalMagnitudes(id, rec, put) {
       else if (kind === 'save') put(`save|${t.detail ?? ''}`, n, /* anyDetail */ true);
       else if (kind === 'skill') put(`skill|${t.detail ?? ''}`, n, true);
       else if (kind === 'ac') put('ac|', n);
-      else if (kind === 'speed') put('speed|land', n);
+      /*
+       * A SPEED STAR STATES THE TOTAL; THEIR SIDE STATES THE DELTA. Both are asserted, exactly as the
+       * `landSpeedBonus` chassis lane below (:592-606) already does for the unconditional form.
+       *
+       * Dog Kholo prints *"If you have both hands free, you can increase your Speed to 30 feet as you
+       * run on all fours"* and theirs is `addBonusToValue SPEED = 5` with the trigger parked in the
+       * op's text; ours is a star whose `bonus` spells the printed sentence's TOTAL ("Speed becomes 30
+       * feet") against the kholo 25-foot chassis. Same mechanic, two spellings — and with only the
+       * total asserted the record read `DIFFERENT theirs=5 ours=30` the moment its star was authored,
+       * i.e. the instrument turned red BECAUSE the gap had been fixed. Only a magnitude at or above the
+       * chassis can be a total, so a star that really does write the delta ("+5 circumstance to Speed")
+       * is untouched and still compared as itself.
+       */
+      else if (kind === 'speed') {
+        put('speed|land', n);
+        const chassis = Number(core.ancestries?.[rec?.ancestryId]?.speeds?.land);
+        if (Number.isFinite(chassis) && n >= chassis) put('speed|land', n - chassis);
+      }
       /* An attack-roll star answers their ATTACK_ROLLS_BONUS the same way an AC star answers
        * AC_BONUS: their side writes the flat number and parks the trigger in the op's text, ours
        * writes the number in a star with the trigger in `when`. Hunter's Arrowhead's "+1 item …
@@ -630,7 +658,11 @@ function ourAssertions(id, rec) {
     const sa = rec.speedAdjust;
     if (sa?.add) {
       const keys = sa.key === 'all' ? ['land','fly','swim','climb','burrow'] : sa.key === 'non-land' ? ['fly','swim','climb','burrow'] : [sa.key];
-      for (const k of keys) put(`speed|${k}`, Math.abs(Number(sa.add)));
+      /* SIGNED, matching their side — the `Math.abs` that used to sit here was the mirror of the one
+       * on their reader, and both are gone for the speed track: a Speed penalty and a Speed bonus of
+       * the same size are not the same mechanic (Zombie Dedication's -5 against Winged Warrior's +5).
+       * See the note beside `scalar` in theirValues. */
+      for (const k of keys) put(`speed|${k}`, Number(sa.add));
     }
   }
   if (rec.acBonus) put('ac|', Number(rec.acBonus));

@@ -325,7 +325,17 @@ const OUR_KINDS = {
    * walks) because a container must not decide whether a grant counts — the same rule the
    * `effectChoices` / `choice` option walks below already follow. */
   spellcasting: ['spellcasting', 'spellcastingGrant', 'proficiencies', 'focusPoolBonus', 'innateSpells', 'resonant.innateSpells'],
-  attribute: ['abilityBoosts', 'abilityFlaws', 'apexAttribute', 'keyAbility'],
+  /* `alternateAttributes` is A HERITAGE'S ATTRIBUTE PACKAGE, held one level down — *"Instead of the
+   * normal attribute boosts and flaws, you can choose to gain a boost to Strength, a boost to Charisma,
+   * and a flaw in Intelligence"* (Mightyfall Kobold). The boosts and flaws sit inside it
+   * (`alternateAttributes.abilityBoosts` / `.abilityFlaws`), read by heritageAdjustedAncestryAttributes
+   * (src/rules/build.ts:663-680) and rendered by the heritage picker (src/builder/shared.tsx:2556), so
+   * the mechanic is live — but a map keyed by top-level field NAME credited the package to no kind at
+   * all and Mightyfall Kobold reported `missing=[hp,attribute]` on a record that carries both.
+   * Adversarially confirmed: the only two records in core.json with the field are
+   * heritages/mightyfall-kobold and backgrounds/song-of-the-deep, and each holds its boosts there. The
+   * `hp` half is credited by the nested read in `ourKindsOf`, since only one of the two carries `hp`. */
+  attribute: ['abilityBoosts', 'abilityFlaws', 'apexAttribute', 'keyAbility', 'alternateAttributes'],
   /* `unarmedTraits` was absent: Iron Fists ("your fist unarmed attacks no longer have the nonlethal
    * trait and gain the shove trait") ships exactly that, and their side expresses it by handing over a
    * pre-modified Unarmed item — so ours read as a missing weapon. */
@@ -361,7 +371,18 @@ const OUR_KINDS = {
    * `choiceResistance.options` (rendered at src/builder/shared.tsx:2729, answered into
    * `build.heritageResistanceChoice`, applied at src/rules/derive.ts:2681) — the same two-branch
    * `select` their side writes — so the record modelled the question and reported `choice` missing. */
-  choice: ['choice', 'effectChoices', 'choiceResistance', 'languageChoices', 'languageChoicesAtRank', 'languageChoicesBonus', 'loreChoices', 'skillChoices', 'runesKnown', 'abilityBoosts', 'trainedSkillChoice', 'trainedLoreChoice', 'trainedLoreOptions'],
+  /* `grantsGeneralFeat` IS A SLOT, and a slot is a selection — Versatile Human: *"Select a general feat
+   * of your choice for which you meet the prerequisites"*. Their side asks it as a FILTERED select over
+   * level-1 General ability blocks; ours opens the same picker from the boolean (SearchSelect over
+   * `heritageFeatOpts`, src/builder/shared.tsx:2694-2707, answered into `build.heritageFeatId` and
+   * injected as a level-1 'general' feat at src/rules/build.ts:4411-4420, with an unfinished-build
+   * warning at build.ts:1118). Only `choice`/`effectChoices` counted as asking, so the one record with
+   * the field reported `missing=[choice]` while its picker has always been there. Filed under `choice`
+   * only, not `grantsRecord`: the record hands over nothing until the player answers. */
+  /* `choiceOptionLimits` — a record that NARROWS another record's pick (Frozen Wind Kitsune: foxfire
+   * *"deals cold damage instead of electricity or fire"*), read by effectiveChoiceLimits. Their side
+   * writes the same thing as a select with one option; the answer is fixed, but the kind is theirs. */
+  choice: ['choice', 'effectChoices', 'choiceResistance', 'languageChoices', 'languageChoicesAtRank', 'languageChoicesBonus', 'loreChoices', 'skillChoices', 'runesKnown', 'abilityBoosts', 'trainedSkillChoice', 'trainedLoreChoice', 'trainedLoreOptions', 'grantsGeneralFeat', 'choiceOptionLimits'],
   /* `derivedGrant` is how a record hands over a class feature the character ALREADY chose on another
    * record — the barbarian instinct ability, the thaumaturge implement benefit, the gunslinger way's
    * initial deed. Their side spells it as a conditional wrapping a giveAbilityBlock, so it answers both
@@ -371,7 +392,9 @@ const OUR_KINDS = {
    * second "(Ranged)" item row plus one `giveItem`, ours names the `-melee` record. The same mechanic —
    * and without this all 18 read as granting nothing the moment they were correctly linked. */
   grantsItem: ['grantsItems', 'combinationMeleeForm'],
-  trait: ['grantsCreatureTraits', 'grantsCreatureTraitFromChoice', 'extraAncestryFeatTraits'],
+  /* `removesCreatureTraits` — the subtractive half (Fungus Leshy: *"you lose the plant trait and gain
+   * the fungus trait"*), read in creatureTraitsOf after every additive source. */
+  trait: ['grantsCreatureTraits', 'grantsCreatureTraitFromChoice', 'extraAncestryFeatTraits', 'removesCreatureTraits'],
   /* ⚠ `grantsLanguages` — the record NAMING a language, as opposed to offering a choice — was absent
    * here, and only its `passiveEffects` twin was listed. Angelkin's *"You know the Empyrean language"*
    * read as missing on the day it was authored. */
@@ -733,6 +756,14 @@ function ourKindsOf(rec, id, bucket) {
    * wrapping the option's `giveItem` (Modular Dynamo gates nine configurations on whether the dynamo
    * is automatic or manual). Counted as `weapon` and never as `conditional`, so every record that
    * gates a strike on a pick reported `conditional` missing. Measured: 15 records, 95 strikes. */
+  /* …and the HP an attribute package carries. `alternateAttributes.hp` is the *"You gain 10 Hit Points
+   * from your ancestry instead of 6"* half of Mightyfall Kobold, read at the top of `resolvedAncestryHp`
+   * (src/rules/build.ts:685-703) — a real HP carrier, and the only reason the kind read as missing is
+   * that it sits one level down. WHETHER the 10 is unconditional (print) or gated behind the package
+   * (ours today) is a VALUES question, adjudicated on the record, not a kinds one: the kind map asks
+   * only "does this record model HP at all", and it does. Nested rather than in the `hp` field list
+   * because backgrounds/song-of-the-deep carries the same package with no `hp` in it. */
+  if (rec.alternateAttributes?.hp != null) kinds.add('hp');
   if ((rec.grantedStrikes ?? []).some((s) => s?.choiceValue)) kinds.add('conditional');
   for (const ch of Array.isArray(rec.effectChoices) ? rec.effectChoices : []) {
     for (const o of ch?.options ?? []) {
@@ -996,6 +1027,20 @@ const VERIFIED_EQUIVALENT = {
   'flying-animal': ['grantsRecord'],
   'running-animal': ['grantsRecord'],
   'swimming-animal': ['grantsRecord'],
+
+  /*
+   * DRAGONSCALED KOBOLD (batch 26) — their heritage hands over a "Draconic Exemplar" select (a
+   * `specialStat` + `choice` on their side): WHICH dragon the scales come from, stored once and read
+   * by their kobold feats. Print (AoN heritage-334) names no exemplar on the heritage — *"the shine
+   * of your scales, a lean and reptilian build … You gain 10 Hit Points from your ancestry instead
+   * of 6"* — and every feat that needs the dragon asks for what IT needs on its own record: Kobold
+   * Breath's shape/damage/save picks, Benefactor's Resistance's breath-type pick, Dracomancer's two
+   * "your draconic benefactor's dragon-spellcaster list" spell picks. Same information, asked where
+   * the printed text asks it; a heritage-level exemplar select would be a second control print does
+   * not state. Adversarially confirmed by the batch-26 refuter (the reading that this was a gap was
+   * REFUTED on exactly this evidence). The `hp` leg is real and carried by `ancestryHp: 10`.
+   */
+  'dragonscaled-kobold': ['specialStat', 'choice'],
 
   /*
    * ---- BATCH 1 ----------------------------------------------------------------------------------

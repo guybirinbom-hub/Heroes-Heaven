@@ -34,7 +34,7 @@ const srcText = (() => {
   return out.join('\n');
 })();
 
-type Row = { category: string; id: string; field: string; path?: string; value: unknown; create?: boolean };
+type Row = { category: string; id: string; field: string; path?: string; value: unknown; create?: boolean; delete?: boolean };
 const overlay: Row[] = JSON.parse(read('scripts/data/effect-backfill.json'));
 
 describe('every field authored into the overlay has a reader in src/', () => {
@@ -347,7 +347,9 @@ describe('the overlay is the only thing that survives a regen', () => {
 
   it('and every row names a real record', () => {
     const core = JSON.parse(read('public/core.json')) as Record<string, Record<string, unknown>>;
-    const missing = overlay.filter((r) => !core[r.category]?.[r.id]).map((r) => `${r.category}/${r.id}`);
+    // A `delete` row RETIRES a record (batch 26: the dead classFeatures/nudging-whisper twin), so its
+    // target is meant to be gone; overlay-durability checks that it stays gone.
+    const missing = overlay.filter((r) => !r.delete && !core[r.category]?.[r.id]).map((r) => `${r.category}/${r.id}`);
     expect([...new Set(missing)]).toEqual([]);
   });
 });

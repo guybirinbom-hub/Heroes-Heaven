@@ -124,8 +124,24 @@ for (const row of batch) {
   }
   const controls = (ev?.controlsAdded ?? []).map((c) => ({ ...c, lane: laneOfControl(c) }));
   const openEffects = effects.filter((e) => e.valueBearing && e.gate === 'open' && !e.inOption);
+  /* Does this record hand over an INNATE SPELL, anywhere in its shape? Their side writes the
+   * *"trained in the spell attack modifier and spell DC"* clause beside every innate grant as an
+   * `adjValue SPELL_ATTACK/SPELL_DC` pair; ours delivers it centrally on the innate entry the spell
+   * creates, so the pair exists on our side only once the player has ANSWERED the pick — and the
+   * harness builds every host with its controls empty. The record's grant is the honest predicate, and
+   * it is computed here because this script owns core.json (the lane lib is given only a surface).
+   * A deep key scan rather than a list of paths, because the carriers are five and counting:
+   * record-level `innateSpells`, `resonant.innateSpells`, `enhancement.grant.innateSpells`, and
+   * `choice`/`effectChoices` option `grant.innateSpells` (spellhorn-kobold's 45 arcane cantrips). */
+  const grantsInnateSpell = (function scan(v, depth = 0) {
+    if (!v || typeof v !== 'object' || depth > 6) return false;
+    if (Array.isArray(v)) return v.some((x) => scan(x, depth + 1));
+    if (Array.isArray(v.innateSpells) && v.innateSpells.length) return true;
+    return Object.values(v).some((x) => scan(x, depth + 1));
+  })(core[row.bucket]?.[row.id]);
   // The chassis fallback: only consulted when the differential moved nothing.
-  const delivery = openEffects.length && (ev?.sheetDiffCount ?? 0) === 0 ? judgeDelivery(openEffects, ev?.surface, names) : null;
+  const surface = ev?.surface ? { ...ev.surface, grantsInnateSpell } : ev?.surface;
+  const delivery = openEffects.length && (ev?.sheetDiffCount ?? 0) === 0 ? judgeDelivery(openEffects, surface, names) : null;
   const v = verdictFor({
     supported: ev ? ev.supported !== false : false,
     error: ev ? (ev.error ?? null) : 'no harness record for this id',

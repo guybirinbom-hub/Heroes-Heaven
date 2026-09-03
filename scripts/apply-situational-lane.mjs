@@ -25,6 +25,19 @@ const contentCorrections = JSON.parse(readFileSync(`${LANE}/corrections-content.
 const correctedIds = new Set(contentCorrections.map((c) => c.id).filter(Boolean));
 const escalatedIds = new Set(spec.filter((r) => r.needsHumanDecision).map((r) => r.id));
 
+/*
+ * Rows in the generated block that have since been HAND-EDITED against the printed text. `existingIds`
+ * below already excludes any id still spelled in the registry, but that check dies the moment such a
+ * row is deleted or re-keyed — and then the lane's original wording comes back and silently overwrites
+ * a verified correction. Naming them is the durable exclusion.
+ *   strong-oak  (WG parity b26): the two save `when` strings were widened to carry the printed second
+ *     sentence, *"This bonus also applies to saving throws against effects that would grab you,
+ *     restrain you, or knock you prone."* The lane's wording stopped at "…Grapple you…".
+ *   lethoci     (WG parity b26): the degree clause was cut out of the `when` string — the record's own
+ *     `degreeShifts` field already renders it, so the lane's wording duplicated it on Athletics.
+ */
+const handEdited = new Set(['strong-oak', 'lethoci']);
+
 const src = readFileSync(REGISTRY, 'utf8');
 const existingIds = new Set([...src.matchAll(/^ {2}"([a-z0-9-]+)":\s\[/gm)].map((m) => m[1]));
 
@@ -38,7 +51,7 @@ const spellDetail = (when, bonus) => {
 
 const esc = (s) => String(s).replace(/\\/g, '\\\\').replace(/"/g, '\\"');
 
-const skipped = { escalated: 0, corrected: 0, alreadyAuthored: 0, spellNoRow: 0 };
+const skipped = { escalated: 0, corrected: 0, alreadyAuthored: 0, handEdited: 0, spellNoRow: 0 };
 const entries = [];
 let bonusCount = 0;
 
@@ -46,6 +59,7 @@ for (const r of spec) {
   if (!r.situational || !(r.bonuses ?? []).length) continue;
   if (escalatedIds.has(r.id)) { skipped.escalated++; continue; }
   if (correctedIds.has(r.id)) { skipped.corrected++; continue; }
+  if (handEdited.has(r.id)) { skipped.handEdited++; continue; }
   if (existingIds.has(r.id)) { skipped.alreadyAuthored++; continue; }
 
   const out = [];
@@ -82,7 +96,7 @@ const banner =
 const next = src.slice(0, close) + banner + entries.join('\n') + src.slice(close);
 
 console.log(`applying   : ${entries.length} records, ${bonusCount} bonuses`);
-console.log(`skipped    : escalated ${skipped.escalated} · content-corrected ${skipped.corrected} · already authored ${skipped.alreadyAuthored} · spell-with-no-row ${skipped.spellNoRow}`);
+console.log(`skipped    : escalated ${skipped.escalated} · content-corrected ${skipped.corrected} · already authored ${skipped.alreadyAuthored} · hand-edited ${skipped.handEdited} · spell-with-no-row ${skipped.spellNoRow}`);
 console.log(`registry   : ${existingIds.size} -> ${existingIds.size + entries.length} entries`);
 if (DRY) { console.log('\n--dry: nothing written'); process.exit(0); }
 writeFileSync(REGISTRY, next);

@@ -250,6 +250,32 @@ function ourIdentities(id, rec) {
   for (const it of rec.grantsItems ?? []) out.items.add(key(anyName(it.itemId ?? it)));
   for (const st of rec.grantedStrikes ?? []) out.items.add(key(st.name));
   /*
+   * AN `unarmedTraits` RIDER IS THE COUNTERPART OF THEIR PRE-MODIFIED UNARMED ITEM.
+   *
+   * Their vocabulary has no verb for "change the attack you already have", so every such clause ships
+   * as a `giveItem` naming a new weapon: "Warrior Jotunborn Fist" (heritage 44562 → item 18256) for
+   * *"The damage die for your fist increases to 1d6"*, "Iron Fist", "Powerful Fist", "Ratfolk Jaws",
+   * "Iruxi Claws". Ours modifies the base attack in place — `unarmedTraits: [{match: ['fist'],
+   * setDie: 'd6'}]`, folded into the rider sources for heritages at src/rules/derive.ts:4503 (whose
+   * comment names Warrior Jotunborn as the reason) and applied to FIST_PROFILE at derive.ts:4530 — so
+   * the Strike row on the sheet carries the printed die. Granting a second fist item instead would give
+   * the character two.
+   *
+   * The rider's `match` names the base attack, which is the word their item name is built around, and
+   * `contains` already matches a substring in either direction — so adding the base name is enough for
+   * "warriorjotunbornfist" and for the plural "iruxiclaws". TAUGHT rather than settled because the shape
+   * had already been hand-settled EIGHT times for exactly this reason (iron-fists, deadly-aspect,
+   * iruxi-armaments, vicious-incisors, spirit-warrior-dedication, martial-artist-dedication and their
+   * neighbours below); a ninth entry would have been the lane asking to be built. Adversarially
+   * confirmed on warrior-jotunborn, whose `items` row was the batch's only remaining fist mismatch.
+   */
+  /* ⚠ TWO SHAPES. `unarmedTraits` is an ARRAY of riders on a record that changes two attacks
+   * (fearsome-fangs: jaws to d12 AND claws to d8) and a BARE OBJECT on the 25 that change one
+   * (iron-fists, warrior-jotunborn). derive.ts:4503 normalises both; a reader that assumed the array
+   * threw on the first single-rider record it reached. */
+  const riders = Array.isArray(rec.unarmedTraits) ? rec.unarmedTraits : rec.unarmedTraits ? [rec.unarmedTraits] : [];
+  for (const r of riders) for (const m of r?.match ?? []) out.items.add(key(m));
+  /*
    * A COMBINATION weapon's second usage. Their side makes the MELEE form the buyable record and hands
    * the "(Ranged)" one over with a `giveItem`; the printed table does it the other way round ("lists
    * the ranged weapon statistics first and the melee weapon statistics indented beneath"), which is
@@ -1243,6 +1269,44 @@ const SETTLED_IDENTITIES = {
    * reads the record grants an option carries (`o.grant.grantsFeats` / `grantsActions` /
    * `grantsClassFeatures`), which is the carrier the branch lands on.
    */
+
+  /* ---------------------------------------------------------------- batch 026 (heritages 88-... ) */
+  /*
+   * MIGHTYFALL KOBOLD — one option list, two labels for the same two branches.
+   *
+   * Printed (heritage-374): *"Instead of the normal attribute boosts and flaws, you can choose to gain
+   * a boost to Strength, a boost to Charisma, and a flaw in Intelligence."* Two branches: keep the
+   * kobold chassis, or take the package. Theirs titles them "Normal or Alternate Ancestry Boosts" and
+   * "Mightyfall Kobold Boosts"; ours titles them by what they DO — "Normal kobold boosts (Dex, Cha,
+   * free; flaw Con)" / "Mightyfall package (Str + Cha, flaw Int, 10 ancestry HP)", values `normal` and
+   * `kaiju`. Both strings are offered to the comparer (`addOption` reads label AND value) and neither
+   * is a substring or a word-subset of "mightyfallkoboldboosts", because our label spells the package
+   * out where theirs names the heritage — a wording difference in the PLAYER-FACING text, which the
+   * owner's rule leaves to us. Adversarially confirmed: `heritageAdjustedAncestryAttributes`
+   * (src/rules/build.ts:663-680) answers the same question with the same two outcomes, and the picker
+   * renders both (src/builder/shared.tsx:2556).
+   *
+   * ⚠ Settles the LABELS only. Whether their package hands back the kobold's untouched FREE boost —
+   * three boosts against the two print grants — is a values question this comparer never sees, and it
+   * is open with the owner (work/owner-questions.json, b026 mightyfall-kobold). Nothing here quiets it.
+   */
+  'mightyfall-kobold': ['options'],
+  /*
+   * DRAGONSCALED KOBOLD — their `giveAbilityBlock` hands over "Draconic Exemplar" (block 30853), a
+   * physical-feature whose whole content is the "which dragon?" select. The heritage's own printed text
+   * (heritage-334) names no exemplar at all: *"Thanks to your warren's association with a dragon, your
+   * scales are sturdier than other kobolds'…"* — the benefactor surfaces only in the feats this heritage
+   * gates, and each of those carries its own pick on our side: feats/kobold-breath has `effectChoices`
+   * for breath shape, damage type and save; feats/benefactors-resistance has a breath-type pick with
+   * per-type resistance grants; feats/dracomancer has two `spellFilter` picks off the benefactor's
+   * spell list. So the question IS asked of the player, on the record that needs the answer.
+   *
+   * Settled rather than taught: batch 25's `choice.flag` reader (above) credits a record that ASKS the
+   * question, and this record deliberately does not — dragonblood does, under the flag `draconicExemplar`,
+   * and that is the record the flag reader was built for. Adversarially confirmed by reading all three
+   * gated feats in core.json; the finding was adjudicated REFUTED on that evidence (work/.b026-read.json).
+   */
+  'dragonscaled-kobold': ['grants'],
 };
 
 /* ---------------------------------------------------------------- compare */

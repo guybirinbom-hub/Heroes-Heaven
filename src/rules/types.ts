@@ -1083,6 +1083,10 @@ export interface DefenseGrants {
    * Jungle Lore"* is not a fixed subset but a per-terrain test against the Lore you actually hold.
    */
   choiceOptionLimits?: ChoiceOptionLimit[];
+  /** "The doomed condition affects you as if its value were 1 lower" (Vivacious Gnome). Subtracted from
+   *  the character's Doomed value before it steps the death threshold down: doomed 1 does nothing,
+   *  doomed 2 kills at dying 3. Summed onto Character.doomedReduction from both heritages and the feats. */
+  doomedValueReduction?: number;
   /** Feats this heritage/feat grants outright (Cataphract Fleshwarp → Armor Proficiency,
    *  Battle-Trained Human → Diehard). Added as bonus feats with their own effects. */
   grantsFeats?: string[];
@@ -1302,6 +1306,21 @@ export interface DefenseGrants {
    *    or the event, so the trait arrives when the player says it did and not a moment earlier.
    */
   grantsCreatureTraits?: string[];
+  /**
+   * CREATURE TRAITS the record TAKES AWAY — Fungus Leshy prints *"You lose the plant trait and gain
+   * the fungus trait."*
+   *
+   * The additive fields could not say it, and the omission is not cosmetic: the leshy chassis is
+   * `traits: ["leshy","plant"]`, so shipping `grantsCreatureTraits: ["fungus"]` alone makes the
+   * Details tab read "leshy, plant, fungus" — which the printed sentence flatly denies — and leaves
+   * every plant-bane weapon and plant-targeting spell still keyed on this character.
+   *
+   * Subtracted in `creatureTraitsOf` AFTER every additive source (ancestry, `grantsCreatureTraits`,
+   * the character's answers, an active mode), because a removal is a statement about the FINISHED
+   * set: the record that removes `plant` does not know, and must not care, which of the four sources
+   * put it there.
+   */
+  removesCreatureTraits?: string[];
   /**
    * The creature trait this record grants is WHATEVER THE PLAYER ANSWERED in its own `choice` — named
    * here by that choice's `flag`.
@@ -2399,6 +2418,32 @@ export interface Heritage extends ContentBase, DefenseGrants {
    * nowhere. Read by `LanguageEditor` (builder/shared.tsx) beside `ancestry.languages.options`.
    */
   addsLanguageOptions?: string[];
+  /**
+   * Feats this heritage FORBIDS OUTRIGHT — Jinxed Halfling: *"You can never take the Halfling Luck
+   * feat, and you gain the Jinx action."*
+   *
+   * A prohibition, not a prerequisite: the forbidden feat's own `prerequisites` is `[]` and print puts
+   * the sentence on the heritage, so there was nowhere to say it and the ancestry-feat picker offered
+   * an illegal feat to every jinxed halfling. Read by `forbiddenFeatReason` (build.ts), which
+   * `checkPrerequisites` folds into `unmet` — so the one reader reaches the picker's row, its
+   * hide-ineligible filter and every other prerequisite consumer at once.
+   */
+  forbidsFeats?: string[];
+  /**
+   * A level-stepped upgrade to the skill THE PLAYER PICKED on this heritage's own `effectChoices` —
+   * Ancient Ash: *"You become trained in one skill of your choice. At 5th level, you become an expert
+   * in that skill."*
+   *
+   * The twin of `ClassFeature.skillProgression`, which names a FIXED skill; here the skill is the
+   * answer to `choiceId`, because print says *"that skill"* — the upgrade must read the SAME answer
+   * and never ask a second question. `EffectGrant.skills` carries no level term, so the option's
+   * `trained` was the character's rank from 1st to 20th.
+   *
+   * Read in buildCharacter beside the heritage `resolvePick` loop, resolving the answer exactly as
+   * that loop does (including the skill-only `effectChoiceDefault`), and applied with `maxRank` so a
+   * skill increase the player already spent is never undone.
+   */
+  skillProgressionFromChoice?: { choiceId: string; at: { level: number; rank: ProficiencyRank }[] };
 }
 
 export interface Background extends ContentBase {
@@ -5503,6 +5548,9 @@ export interface Character {
   /** The Dying value at which this character dies before Doomed is applied — 4, or 5 with Diehard.
    *  Pass to dyingDeathThreshold(doomed, base); omitted means the default 4. */
   dyingThreshold?: number;
+  /** How much less the Doomed condition counts for this character (Vivacious Gnome: 1). Pass to
+   *  dyingDeathThreshold(doomed, base, doomedReduction); omitted means 0. */
+  doomedReduction?: number;
   /** How much this character reduces the DC of recovery checks (normally 10 + dying value). Summed from
    *  feats and invested items; omitted means no reduction. See Feat.recoveryDcReduction. */
   recoveryDcReduction?: number;

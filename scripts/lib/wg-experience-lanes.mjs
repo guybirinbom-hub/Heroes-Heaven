@@ -374,7 +374,35 @@ export function effectDelivery(effect, surface, names = {}) {
     const want = RANK_LETTER[letter];
     if (variable === 'SPELL_ATTACK' || variable === 'SPELL_DC') {
       const best = Math.max(-1, ...sc.map((e) => RANK_WORD[e.proficiency] ?? -1));
-      return best < 0 ? 'unchecked' : best >= want ? 'delivered' : 'undelivered';
+      if (best >= 0) return best >= want ? 'delivered' : 'undelivered';
+      /*
+       * NO CASTING ENTRY ON THE HOST YET — AND FOR AN INNATE GRANT THAT IS THE UNANSWERED PICK, NOT A GAP.
+       *
+       * Spellhorn Kobold prints *"Choose one common cantrip from the arcane spell list. You can Cast this
+       * Spell as an arcane innate spell at will … You are trained in the spell attack modifier and spell
+       * DC statistics, and your spellcasting ability is Charisma"*, and their side writes the second
+       * sentence as this `adjValue SPELL_ATTACK/SPELL_DC = T` pair. Ours never writes it per record: the
+       * innate entry the cantrip creates carries the proficiency centrally — Player Core p.298,
+       * *"trained in spell attack rolls and spell DCs … expert at 12th level"* — combined by maxRank with
+       * the record's own `spellcastingGrant` at src/rules/build.ts:7219-7244. The entry therefore exists
+       * only once the player has ANSWERED the pick, and the harness builds every host with its controls
+       * empty, so the surface showed no spellcasting at all and both ops read 'unchecked'.
+       *
+       * So the predicate for the pair is the GRANT, not the host: a record that hands over an innate
+       * spell hands over the trained pair with it, by construction. `surface.grantsInnateSpell` is that
+       * fact, computed from the record in scripts/wg-experience.mjs (every carrier: record-level,
+       * `resonant`, `enhancement.grant` and any `choice`/`effectChoices` option). Adversarially confirmed
+       * on spellhorn-kobold: all 45 options of its `arcaneCantrip` picker carry
+       * `grant.innateSpells [{tradition:'arcane', atWill:true, heightenHalfLevel:true}]`, the picker
+       * renders (the harness reports it, 45 live options), and answering any one of them builds the
+       * innate entry at trained — which is `want` for a 'T'.
+       *
+       * Bounded deliberately: only when the host shows NO casting entry (an entry that exists is judged
+       * on its real proficiency above), and only for a record that actually grants an innate spell, so a
+       * record asserting the pair while granting no spell still reports.
+       */
+      if (surface.grantsInnateSpell && want <= RANK_WORD.trained) return 'delivered';
+      return 'unchecked';
     }
     let path = VAR_TRACK[variable];
     if (!path && /^SKILL_[A-Z]+$/.test(variable ?? '') && !variable.startsWith('SKILL_LORE')) {

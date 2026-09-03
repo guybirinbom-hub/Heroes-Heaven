@@ -679,6 +679,59 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
    * registry-wide guard in test/held-back-registry-fixes.test.ts. Both printed exceptions survive. */
   "reflection": [{ targets: [{ kind: 'skill', detail: 'deception' }], when: "to Impersonate your progenitor, unless the audience knows them personally or you act out of character", bonus: "no check needed" }],
 
+  /* ---- WG parity batch 26: more heritage clauses with no carrier on either side ----------------
+   * Same lane, same reason, same region as batch 25 above: new ids sit HAND-AUTHORED, above the
+   * generator's banner, so `existingIds` (apply-situational-lane.mjs:30) keeps the generator off them. */
+
+  /* charhide-goblin — heritage-250: *"Your flat check to remove persistent fire damage is DC 10
+   * instead of DC 15, which is reduced to DC 5 if another creature uses a particularly appropriate
+   * action to help."* The record carries only the fire resistance. Verbatim the row `fire-savvy`
+   * and `fire-lung` already carry for the identical sentence. */
+  "charhide-goblin": [{ targets: [{ kind: 'hp' }], when: "on the flat check to remove persistent fire damage", bonus: "DC 10 instead of 15 (DC 5 with appropriate assistance)" }],
+
+  /* dog-kholo — heritage-328: *"If you have both hands free, you can increase your Speed to 30 feet
+   * as you run on all fours."* A STAR, not a number: `speedsIf` has no "both hands free" gate, and
+   * the owner's ruling (derive.ts:4790) is that a Speed is a real number only while it is always on.
+   * Verbatim the `hunter-automaton` row (:2523), which prints this sentence against the same
+   * 25-foot chassis. */
+  "dog-kholo": [{ targets: [{ kind: 'speed' }], when: "to your land Speed while both hands are free and you run on all fours", bonus: "Speed becomes 30 feet" }],
+
+  /* warrenbred-hobgoblin — heritage-325: *"While you're underground, when you target an opponent
+   * that is concealed from you or hidden from you, reduce the DC of the flat check to 3 for a
+   * concealed target or 9 for a hidden one."* The record carries only the Squeeze degreeShift (the
+   * print's other half). Same shape as `whisper-elf` (:2530) and `supernatural-senses` (:2967). */
+  "warrenbred-hobgoblin": [{ targets: [{ kind: 'strikeAttack' }], when: "while you're underground, targeting a concealed or hidden creature", bonus: "flat check DC is 3 (concealed) or 9 (hidden) instead of 5 or 11" }],
+
+  /* smokeworker-hobgoblin — heritage-323: *"You automatically succeed at the DC 5 flat check to
+   * target a concealed creature if that creature is concealed only by smoke."* The record carries
+   * only the fire resistance; this is verbatim the `smoke-sight` row (:561). */
+  "smokeworker-hobgoblin": [{ targets: [{ kind: 'strikeAttack' }], when: "targeting a creature concealed only by smoke", bonus: "automatically succeed at the DC 5 flat check" }],
+
+  /* Three more heritages printing the environmental-temperature sentence the block at :654 already
+   * carries for naari / winter-catfolk / desert-elf. Same sentence, same lane, same wording — the
+   * b25 sweep simply did not reach them. Each record's resistance is already print-exact. */
+  /* snow-goblin — heritage-253 and frozen-wind-kitsune — heritage-139, word for word:
+   * *"You treat environmental cold effects as if they were one step less extreme (incredible cold
+   * becomes extreme, extreme cold becomes severe, and so on)."* */
+  "snow-goblin": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against environmental cold effects", bonus: "treat the cold as one step less extreme" }],
+  "frozen-wind-kitsune": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against environmental cold effects", bonus: "treat the cold as one step less extreme" }],
+  /* wintertouched-human — heritage-30: the same sentence again. */
+  "wintertouched-human": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against environmental cold effects", bonus: "treat the cold as one step less extreme" }],
+
+  /* sandstrider-lizardfolk — heritage-343: *"Environmental heat effects are one step less extreme
+   * for you, and you can go 10 times as long as normal before you are affected by starvation or
+   * thirst. However, unless you wear protective gear or take shelter, environmental cold effects are
+   * one step more extreme for you."* All three clauses had no carrier; the fire resistance on the
+   * record is already right. The third is a PENALTY and says so — print's "However" is not optional. */
+  "sandstrider-lizardfolk": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against environmental heat effects", bonus: "treat the heat as one step less extreme" }, { targets: [{ kind: 'save', detail: 'all' }], when: "against starvation or thirst", bonus: "you can go 10 times as long as normal before being affected" }, { targets: [{ kind: 'save', detail: 'all' }], when: "against environmental cold effects, unless you wear protective gear or take shelter", bonus: "treat the cold as one step MORE extreme (a penalty)" }],
+
+  /* warrior-jotunborn — heritage-420: *"You don't take a penalty when making a lethal attack with
+   * your fist."* Print WAIVES the penalty; it does not strip the fist's `nonlethal` trait, and WG's
+   * own Warrior Jotunborn Fist (item 18256) keeps Nonlethal. The waiver rides a star so the Strike
+   * row can go on printing the trait the fist actually has. The `remove: ["nonlethal"]` rider on the
+   * record is the data half of this finding and is removed by an overlay row. */
+  "warrior-jotunborn": [{ targets: [{ kind: 'strikeAttack' }], when: "making a lethal attack with your fist", bonus: "no -2 penalty despite the nonlethal trait" }],
+
   // ---- generated by scripts/apply-situational-lane.mjs — do not hand-edit below this line ----
   // 1758 records / 2620 bonuses from the adversarially verified pass.
   // Escalated, content-corrected and hand-authored ids are excluded by the script on purpose.
@@ -2242,7 +2295,13 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "insightful-goloma": [{ targets: [{ kind: 'perception' }], when: "to Sense Motive, and to your Perception DC against attempts to Lie to you", bonus: "+1 circumstance" }],
   "pine-leshy": [{ targets: [{ kind: 'save', detail: 'reflex' }], when: "to your Reflex DC when a creature tries to Disarm you — NOT to your Reflex saving throws", bonus: "+2 circumstance (to your Reflex DC only)" }],
   "enchanting-lily": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "to Make an Impression, if the target can smell your fragrance", bonus: "+1 circumstance" }],
-  "lethoci": [{ targets: [{ kind: 'skill', detail: 'athletics' }], when: "to Athletics checks to Swim (and a critical failure to Swim becomes a failure)", bonus: "+2 circumstance" }],
+  /* b26 lethoci-1. The parenthetical said what the record's own `degreeShifts` row already says —
+   * *"If you critically fail an Athletics check to Swim, you get a failure instead"* renders as an
+   * Athletics star (explain.ts:543) AND a Swim action marker — so Athletics carried the same rule
+   * from two registries that can drift apart. Same EDIT scripts/dedupe-degree-prose.mjs applied to
+   * the sibling records (its table holds 'cliffscale-lizardfolk#0' and missed lethoci); that script
+   * is one-shot, so this is by hand, and the id is in apply-situational-lane.mjs's HAND_EDITED set. */
+  "lethoci": [{ targets: [{ kind: 'skill', detail: 'athletics' }], when: "to Athletics checks to Swim", bonus: "+2 circumstance" }],
   "venomshield-nagaji": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against poison", bonus: "+1 circumstance" }],
   "wajaghand-vanara": [{ targets: [{ kind: "save", detail: "all" }], when: "against emotion effects", bonus: "+1 circumstance" }],
   "elusive-vishkanya": [{ targets: [{ kind: 'skill', detail: 'acrobatics' }], when: "to Escape", bonus: "+1 circumstance" }, { targets: [{ kind: 'skill', detail: 'athletics' }], when: "to Escape", bonus: "+1 circumstance" }],
@@ -2412,7 +2471,12 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "elixir-of-the-peaks": [{ targets: [{ kind: 'skill', detail: 'athletics' }], when: "for the elixir's duration after drinking it in mountainous terrain…", bonus: "+1 to +3 item (lesser +1 / moderate +2 / greater +3 / major +3)" }, { targets: [{ kind: 'save', detail: 'all' }], when: "for the elixir's duration after drinking it in mountainous terrain, against the effects of high altitude", bonus: "+1 to +3 item (lesser +1 / moderate +2 / greater +3 / major +3)" }],
   "monks-attire": [{ targets: [{ kind: 'save', detail: 'will' }], when: "for 10 minutes after dominant emotion or emotion conduit counteracts an effect - while…", bonus: "+2 status" }],
   "scavenger-strix": [{ targets: [{ kind: 'skill', detail: 'survival' }], when: "Survival checks to Subsist", bonus: "+1 circumstance" }],
-  "strong-oak": [{ targets: [{ kind: 'save', detail: 'fortitude' }], when: "your Fortitude DC against attempts to Grapple you…", bonus: "+2 circumstance" }, { targets: [{ kind: 'save', detail: 'reflex' }], when: "your Reflex DC against attempts to Trip you…", bonus: "+2 circumstance" }, { targets: [{ kind: 'skill', detail: 'acrobatics' }], when: "Acrobatics checks to Balance", bonus: "+2 circumstance" }],
+  /* b26 strong-oak. Both save rows ended at "…Grapple you…" / "…Trip you…", eliding the printed
+   * second sentence — *"This bonus also applies to saving throws against effects that would grab
+   * you, restrain you, or knock you prone."* (heritage-209). WG carries that sentence on both of its
+   * save ops. Widened to state it, inside ruling H's 120-char cap; the Acrobatics row already
+   * matched print and is untouched. Id is in apply-situational-lane.mjs's HAND_EDITED set. */
+  "strong-oak": [{ targets: [{ kind: 'save', detail: 'fortitude' }], when: "your Fortitude DC vs Grapple, and saves vs effects that would grab, restrain, or knock you prone", bonus: "+2 circumstance" }, { targets: [{ kind: 'save', detail: 'reflex' }], when: "your Reflex DC vs Trip, and saves vs effects that would grab, restrain, or knock you prone", bonus: "+2 circumstance" }, { targets: [{ kind: 'skill', detail: 'acrobatics' }], when: "Acrobatics checks to Balance", bonus: "+2 circumstance" }],
   "sacred-nagaji": [{ targets: [{ kind: 'save', detail: 'fortitude' }], when: "your Fortitude DC against attempts to Grapple you…", bonus: "+2 circumstance" }, { targets: [{ kind: 'save', detail: 'reflex' }], when: "your Reflex DC against attempts to Trip you…", bonus: "+2 circumstance" }],
   /* b25 rock-dwarf-defense-split + rock-dwarf-halved-forced-movement. Print (heritage-237) gives the
    * +2 to *"your Fortitude OR Reflex DC against attempts to Reposition, Shove, or Trip you"* — both
@@ -3492,6 +3556,14 @@ export interface DegreeShift {
    * cannot hold an answer that differs per character.
    */
   savesFromChoice?: string;
+  /**
+   * The shift belongs to ONE BRANCH of the record's own `effectChoices` pick. Kijimuna Gnome: *"you
+   * can climb any banyan"* (Climb successes crit, plus Combat Climber) OR *"you can catch any fish"*
+   * (swim Speed) — the climb shift must not fire for the fish-eater. `choiceId` is the effectChoices
+   * id, `value` the option value; resolved by `choiceGateOpen` in explain.ts, in the one collector
+   * both the skill stars and the action-row markers read, so they cannot disagree.
+   */
+  fromChoice?: { choiceId: string; value: string };
   /** Action ids to mark. Matched against the SLUGIFIED action name, as `RecordMarker.id` is. */
   actions?: string[];
   /**
@@ -3925,6 +3997,33 @@ export const RECORD_MARKERS: Record<string, RecordMarker[]> = {
   // misread as Channel Draconic Essence itself costing a free action.
   "draconic-familiar": [{ on: 'action', id: 'channel-draconic-essence', note: 'You can also Command your familiar as a free action when you Channel Draconic Essence.' }],
 
+  /* ---- WG parity batch 26: heritage clauses that change an ACTION or a CONDITION ----------------
+   * ⚠ Deliberately ABOVE the `// ---- full feature audit …` sentinel: apply-feature-audit.mjs strips
+   * everything from that line to this table's close and regenerates it, and builds its dedupe set
+   * from the already-stripped source — a row down there is deleted on the next run AND invisible to
+   * the duplicate check. Same placement reasoning as 'shore-step' above.
+   * ⚠ Notes do NOT open with the record's own name: all three renderers prefix it themselves. */
+
+  /* tailed-goblin — heritage-37: *"…and you reduce the number of free hands required to Climb or
+   * Trip by one."* The record carries grantsFeats:['combat-climber'] and the +2 Athletics star
+   * (:2225) — the first two clauses. The third changes no number the sheet holds, so it rides the
+   * two actions it names. */
+  "tailed-goblin": [{ on: 'action', id: 'climb', note: "Your tail means you need one fewer free hand than normal to Climb." }, { on: 'action', id: 'trip', note: "Your tail means you need one fewer free hand than normal to Trip." }],
+
+  /* shortshanks-hobgoblin — heritage-322: *"Additionally, you are not off-guard while you Climb."*
+   * Only the Ride grant was carried (featFeatGrants.ts:702). WG injects this same sentence onto the
+   * Climb action row (their 31697 injectText on action 19612), which is the carrier the repo already
+   * mirrors — 'athamasi', 'caveclimber-kobold' and 'cliffscale-lizardfolk' all mark Climb this way. */
+  "shortshanks-hobgoblin": [{ on: 'action', id: 'climb', value: "not off-guard", note: "You are not off-guard while you Climb." }],
+
+  /* vivacious-gnome — heritage-92: *"When you have the doomed condition, the condition affects you
+   * as if its value was 1 lower than it actually is (doomed 1 has no effect, doomed 2 causes you to
+   * die at dying 3, and so on)."* The entire second half of the heritage, with no carrier: nothing
+   * steps the doomed value down at the dyingDeathThreshold call (play.ts:675). Marks the condition,
+   * as 'evade-doom' and 'jinxed-tengu' do for their own doomed riders.
+   * ⚠ Trimmed from 125 to 111 chars: ruling H caps a one-line note at 120 ("the full text staying in
+   * the description a click away"), and the heritage's own description carries the printed sentence. */
+  "vivacious-gnome": [{ on: 'condition', id: 'doomed', value: "-1", note: "Doomed affects you as if its value were 1 lower: doomed 1 has no effect, and doomed 2 means you die at dying 3." }],
 
   // ---- full feature audit — action/condition marks ----
   // 36 records that change an ACTION or a CONDITION rather than a stat.

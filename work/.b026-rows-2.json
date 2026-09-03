@@ -1,0 +1,79 @@
+{
+ "findings": [
+  {
+   "id": "frozen-wind-kitsune-1#foxfire",
+   "backfillRows": [
+    {
+     "category": "feats",
+     "id": "foxfire",
+     "field": "choice",
+     "value": {
+      "flag": "damage",
+      "prompt": "Prompt",
+      "kind": "array",
+      "options": [
+       {
+        "value": "electricity",
+        "label": "Electricity"
+       },
+       {
+        "value": "fire",
+        "label": "Fire"
+       },
+       {
+        "value": "cold",
+        "label": "Cold",
+        "requiresAnyFeature": [
+         "frozen-wind-kitsune"
+        ]
+       }
+      ]
+     },
+     "why": "wg-batch-026: heritage-370 prints \"your foxfire deals cold damage instead of electricity or fire\" — Cold is offered ONLY to a frozen wind kitsune (option gate requiresAnyFeature now resolves heritage ids in derive.ts narrowChoiceOptions, engine agent 1); the heritage's choiceOptionLimits row forces cold on its side."
+    }
+   ],
+   "note": "half 2 of frozen-wind-kitsune-1; reader landed in batch 26."
+  },
+  {
+   "id": "b26-kijimuna-gnome-choice#degreeShifts",
+   "backfillRows": [
+    {
+     "category": "heritages",
+     "id": "kijimuna-gnome",
+     "field": "degreeShifts",
+     "value": [
+      {
+       "shift": "successToCrit",
+       "when": "on the Athletics check to Climb",
+       "skills": [
+        "athletics"
+       ],
+       "actions": [
+        "climb"
+       ],
+       "fromChoice": {
+        "choiceId": "benefit",
+        "value": "banyan"
+       }
+      }
+     ],
+     "why": "wg-batch-026: heritage-354: the Climb success-to-crit belongs to the \"you can climb any banyan\" branch only; DegreeShift.fromChoice (engine agent 2, explain.ts choiceGateOpen) gates it on the effectChoices answer."
+    }
+   ],
+   "note": "the third kijimuna row; choiceId matches the effectChoices id in spec 1."
+  },
+  {
+   "id": "vivacious-gnome-1#doomed",
+   "backfillRows": [
+    {
+     "category": "heritages",
+     "id": "vivacious-gnome",
+     "field": "doomedValueReduction",
+     "value": 1,
+     "why": "wg-batch-026: heritage-352 prints \"The doomed condition affects you as if its value were 1 lower\" — a NUMBER the death threshold reads (DefenseGrants.doomedValueReduction → Character.doomedReduction → dyingDeathThreshold), beside the stars agent's condition mark."
+    }
+   ],
+   "note": "the numeric half the stars agent could not carry (conditions.ts/play.ts)."
+  }
+ ]
+}

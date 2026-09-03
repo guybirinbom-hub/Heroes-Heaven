@@ -158,7 +158,12 @@ export function conditionsWithDrainedReduction(c: Character): ActiveCondition[] 
  * `base` is 4 unless a feat says otherwise — Diehard's entire content is "you die from the dying
  * condition at dying 5, rather than dying 4", and this function ignoring it made the feat inert.
  * Pass `character.dyingThreshold`.
+ *
+ * `doomedReduction` is how much less Doomed counts for this character — Vivacious Gnome: *"The doomed
+ * condition affects you as if its value were 1 lower"*, so doomed 1 does nothing and doomed 2 kills
+ * at dying 3. Pass `character.doomedReduction`. It cannot push the threshold ABOVE the base: a doomed
+ * value below the reduction counts as 0, not as a negative number.
  */
-export function dyingDeathThreshold(doomed: number, base = 4): number {
-  return Math.max(1, base - Math.max(0, Math.round(doomed)));
+export function dyingDeathThreshold(doomed: number, base = 4, doomedReduction = 0): number {
+  return Math.max(1, base - Math.max(0, Math.round(doomed) - Math.max(0, doomedReduction)));
 }

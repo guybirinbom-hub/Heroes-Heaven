@@ -129,6 +129,14 @@ describe('§13.7 Warrior Automaton/Jotunborn heritages upgrade the fist die to 1
      */
     const fist = fistOf('warrior-jotunborn');
     expect(fist.damage).toMatch(/^1d6/);
-    expect(fist.traits).not.toContain('nonlethal');
+    /*
+     * …but the trait STAYS. Batch 26 read the printed sentence again: *"The damage die for your fist
+     * increases to 1d6. You don't take a penalty when making a lethal attack with your fist."*
+     * (heritage-420) waives a PENALTY; it never removes the nonlethal trait — and WG's own Warrior
+     * Jotunborn Fist item keeps Nonlethal. The waiver is carried as a situational star
+     * (situationalBonuses.ts "warrior-jotunborn"), so the Strike row no longer states a trait line
+     * print does not grant. The automaton above is a separate record and keeps its own `remove` row.
+     */
+    expect(fist.traits).toContain('nonlethal');
   });
 });

@@ -1526,15 +1526,18 @@
     "spellId": "invisibility",
     "tradition": "primal",
     "rank": 2,
-    "usesPerDay": 1
+    "usesPerDay": 1,
+    "traditionFromChoiceFlag": "wellspringTradition"
    },
    {
     "spellId": "revealing-light",
     "tradition": "primal",
     "rank": 2,
-    "usesPerDay": 1
+    "usesPerDay": 1,
+    "traditionFromChoiceFlag": "wellspringTradition"
    }
-  ]
+  ],
+  "why": "Print (heritage-249): 'Whenever you gain a primal innate spell from a gnome ancestry feat, change its tradition from primal to your chosen tradition.' SUPERSEDES the existing row."
  },
  {
   "category": "feats",
@@ -8682,9 +8685,11 @@
     "spellId": "web",
     "tradition": "primal",
     "rank": 4,
-    "usesPerDay": 1
+    "usesPerDay": 1,
+    "traditionFromChoiceFlag": "wellspringTradition"
    }
-  ]
+  ],
+  "why": "Same clause (heritage-249). SUPERSEDES the existing row."
  },
  {
   "category": "feats",
@@ -8695,9 +8700,11 @@
     "spellId": "speak-with-plants",
     "tradition": "primal",
     "rank": 4,
-    "usesPerDay": 2
+    "usesPerDay": 2,
+    "traditionFromChoiceFlag": "wellspringTradition"
    }
-  ]
+  ],
+  "why": "Same clause (heritage-249). SUPERSEDES the existing row."
  },
  {
   "category": "feats",
@@ -9985,9 +9992,11 @@
     "spellId": "interplanar-teleport",
     "tradition": "primal",
     "usesPerDay": 2,
-    "usesPer": "week"
+    "usesPer": "week",
+    "traditionFromChoiceFlag": "wellspringTradition"
    }
-  ]
+  ],
+  "why": "Same clause (heritage-249). SUPERSEDES the existing row."
  },
  {
   "category": "feats",
@@ -10254,10 +10263,12 @@
      "grantAs": "innate",
      "innate": {
       "atWill": true
-     }
+     },
+     "traditionFromChoiceFlag": "wellspringTradition"
     }
    }
-  ]
+  ],
+  "why": "SUPERSEDES the existing row. Adds traditionFromChoiceFlag so narrowSpellFilter (build.ts:1728) cuts the 64-spell pool down to the answered tradition and spellChoice.ts:54's single-tradition stamp fires — print says the cantrip is cast 'as a spell of your chosen tradition'."
  },
  {
   "category": "feats",
@@ -30846,19 +30857,22 @@
   "category": "heritages",
   "id": "keeper-jotunborn",
   "field": "dataWarning",
-  "value": "Part of this effect references content missing from the current data — apply it manually. (FEAT_GRANTS: id not in feats/classFeatures)"
+  "value": null,
+  "why": "Print (heritage-417): 'You are trained in Survival, and you gain the Survey Wildlife skill feat.' feats/survey-wildlife's prerequisite is exactly ['trained in Survival'], so the granted feat sat on an unmet prerequisite while the record told the player to fix it by hand."
  },
  {
   "category": "heritages",
   "id": "sage-jotunborn",
   "field": "dataWarning",
-  "value": "Part of this effect references content missing from the current data — apply it manually. (FEAT_GRANTS: id not in feats/classFeatures)"
+  "value": null,
+  "why": "Print (heritage-419): 'You are trained in Society.' Once the FEAT_GRANTS row lands, a player-facing 'apply it manually' warning is false. The warning's own reason is stale — heritage ids reach the proficiency pass at build.ts:4950."
  },
  {
   "category": "heritages",
   "id": "weaver-jotunborn",
   "field": "dataWarning",
-  "value": "Part of this effect references content missing from the current data — apply it manually. (FEAT_GRANTS: id not in feats/classFeatures)"
+  "value": null,
+  "why": "Print (heritage-421): 'You are trained in Crafting.' Same stale apply-patches rejection as sage-jotunborn; the heritage arm of the proficiency pass exists (build.ts:4949-4955)."
  },
  {
   "category": "feats",
@@ -77647,9 +77661,8 @@
   "category": "heritages",
   "id": "kijimuna-gnome",
   "field": "grantsFeats",
-  "value": [
-   "combat-climber"
-  ]
+  "value": null,
+  "why": "SUPERSEDES the existing row. Print makes Combat Climber one BRANCH of a two-way choice; an unconditional record-level grant hands it to a player who chose the fish branch. The grant now lives on the banyan option."
  },
  {
   "category": "heritages",
@@ -105567,9 +105580,14 @@
     ],
     "actions": [
      "climb"
-    ]
+    ],
+    "fromChoice": {
+     "choiceId": "benefit",
+     "value": "banyan"
+    }
    }
-  ]
+  ],
+  "why": "wg-batch-026: heritage-354: the Climb success-to-crit belongs to the \"you can climb any banyan\" branch only; DegreeShift.fromChoice (engine agent 2, explain.ts choiceGateOpen) gates it on the effectChoices answer."
  },
  {
   "category": "heritages",
@@ -106165,7 +106183,7 @@
   "value": [
    {
     "shift": "successToCrit",
-    "when": "on the Athletics check to Climb (your hands stay free)",
+    "when": "on the Athletics check to Climb",
     "skills": [
      "athletics"
     ],
@@ -106173,7 +106191,8 @@
      "climb"
     ]
    }
-  ]
+  ],
+  "why": "Print (heritage-97) makes hands-free a SEPARATE sentence from the crit upgrade: 'You can use your clawed feet and tail to Climb, leaving your hands free. Additionally, if you succeed at an Athletics check to Climb, you critically succeed instead.' The parenthetical both duplicated the marker and mis-conditioned the permission on the check."
  },
  {
   "category": "heritages",
@@ -138813,7 +138832,8 @@
   "category": "actions",
   "id": "wicked-thorns",
   "field": "description",
-  "value": "**Trigger** You're hit with an unarmed Strike or a Strike with a non-reach melee weapon.\n\n**Frequency** once per day\n\n---\n\nSeveral of your thorns break off and hook into your attacker's body. You deal damage to the triggering creature. It attempts a basic Reflex save against the higher of your class DC or spell DC. On a critical failure, the creature also takes 1d4 persistent bleed damage as your thorns embed in its flesh.\n\nAt 3rd level, and every 2 levels thereafter, this damage increases by 1d8, and the persistent bleed damage increases by 1."
+  "value": "**Trigger** You're hit with an unarmed Strike or a Strike with a non-reach melee weapon.\n\n**Frequency** once per day\n\n---\n\nSeveral of your thorns break off and hook into your attacker's body. You deal 1d8 piercing damage to the triggering creature. It attempts a basic Reflex save against the higher of your class DC or spell DC. On a critical failure, the creature also takes 1d4 persistent bleed damage as your thorns embed in its flesh.\n\nAt 3rd level, and every 2 levels thereafter, this damage increases by 1d8, and the persistent piercing damage increases by 1.",
+  "why": "Print (action-1449): 'You deal 1d8 piercing damage to the triggering creature' and '…the persistent piercing damage increases by 1.' The shipped fallback read 'You deal damage' (die and type deleted by the importer) and 'persistent bleed damage increases by 1'."
  },
  {
   "category": "actions",
@@ -141287,9 +141307,11 @@
    {
     "spellId": "summon-plant-or-fungus",
     "tradition": "primal",
-    "usesPerDay": 1
+    "usesPerDay": 1,
+    "traditionFromChoiceFlag": "wellspringTradition"
    }
-  ]
+  ],
+  "why": "Same clause (heritage-249). SUPERSEDES the existing row."
  },
  {
   "category": "feats",
@@ -143951,12 +143973,10 @@
     "match": [
      "fist"
     ],
-    "setDie": "d6",
-    "remove": [
-     "nonlethal"
-    ]
+    "setDie": "d6"
    }
-  ]
+  ],
+  "why": "Print (heritage-420): 'The damage die for your fist increases to 1d6. You don't take a penalty when making a lethal attack with your fist.' Print waives a PENALTY; it never removes the trait. derive.ts:4530 filtered 'nonlethal' out of FIST_PROFILE.traits, so the Strike row's trait line contradicted print — and WG's own item 18256 keeps Nonlethal."
  },
  {
   "category": "feats",
@@ -163509,11 +163529,11 @@
     },
     {
      "value": "kaiju",
-     "label": "Mightyfall package (Str, Cha; flaw Int; 10 ancestry HP)"
+     "label": "Mightyfall package (Str, Cha; flaw Int)"
     }
    ]
   },
-  "why": "wg-batch-019: Mightyfall Kobold prints an OPTIONAL package — 10 ancestry HP instead of 6, and Str+Cha boosts with an Int flaw instead of the normal array. Their kobold row asks the same select. New alternateAttributes lane in build.ts (heritage choice answer drives it)."
+  "why": "SUPERSEDES the existing row. The kaiju label advertised '10 ancestry HP' as a property of that branch; once the HP is unconditional the label would be a lie about which branch pays for it."
  },
  {
   "category": "heritages",
@@ -163533,10 +163553,9 @@
    ],
    "abilityFlaws": [
     "int"
-   ],
-   "hp": 10
+   ]
   },
-  "why": "wg-batch-019: Mightyfall Kobold prints an OPTIONAL package — 10 ancestry HP instead of 6, and Str+Cha boosts with an Int flaw instead of the normal array. Their kobold row asks the same select. New alternateAttributes lane in build.ts (heritage choice answer drives it)."
+  "why": "SUPERSEDES the existing row. `hp` is dropped because print does not gate the 10 HP on the attribute package, and leaving it beside an unconditional ancestryHp:10 makes the decode at build.ts:8098 stamp every character's answer as 'kaiju'."
  },
  {
   "category": "actions",
@@ -167848,5 +167867,468 @@
   "field": "description",
   "value": "Plates of living coral cover patches of your body. They are medium armor in the plate group: a +4 item bonus to AC, a Dex cap of +1, a check penalty of -2, a Speed penalty of -5 feet and a Strength value of +3, with the aquadynamic and comfort traits. You can never wear other armor or remove the coral, and you can etch armor runes onto it as normal.",
   "why": "wg-batch-025: the created record's prose, split out to core-descriptions.json like every other record (the create row carries only fields; commune-with-nature is the precedent)."
+ },
+ {
+  "category": "classFeatures",
+  "id": "nudging-whisper",
+  "delete": true,
+  "why": "wg-batch-026: a dead twin of actions/nudging-whisper (the record heritages/palace-echoes-kitsune grants via grantsActions); nothing referenced the class-feature copy (grep of src/ and every class feature table), and two carriers for one printed action is the duplicate class the batch removes."
+ },
+ {
+  "category": "heritages",
+  "id": "nomadic-halfling",
+  "field": "languageChoices",
+  "value": 2,
+  "why": "Print (heritage-258): 'You gain two additional languages of your choice, chosen from among the common and uncommon languages available to you.' Reader build.ts:1976; precedent polyglot-android."
+ },
+ {
+  "category": "heritages",
+  "id": "nomadic-halfling",
+  "field": "languageChoicesBonus",
+  "value": [
+   {
+    "featId": "multilingual",
+    "extra": 1
+   }
+  ],
+  "why": "Print (heritage-258): '…and every time you take the Multilingual feat, you gain another new language.' Reader build.ts:1987; polyglot-android ships this exact shape."
+ },
+ {
+  "category": "heritages",
+  "id": "ant-kholo",
+  "field": "sizeSet",
+  "value": "small",
+  "why": "Print (heritage-326): 'Your size is Small instead of Medium.' ancestries.kholo.size is 'medium', so without this the chassis wins. Reader build.ts:7818."
+ },
+ {
+  "category": "heritages",
+  "id": "ant-kholo",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "trained-skill",
+    "prompt": "Ant Kholo makes you trained in Deception — choose Deception, or a different skill if you were already trained in Deception.",
+    "options": [
+     {
+      "value": "deception",
+      "label": "Deception",
+      "grant": {
+       "skills": {
+        "deception": "trained"
+       }
+      }
+     },
+     {
+      "value": "acrobatics",
+      "label": "Acrobatics (already trained in Deception)",
+      "grant": {
+       "skills": {
+        "acrobatics": "trained"
+       }
+      }
+     },
+     {
+      "value": "arcana",
+      "label": "Arcana (already trained in Deception)",
+      "grant": {
+       "skills": {
+        "arcana": "trained"
+       }
+      }
+     },
+     {
+      "value": "athletics",
+      "label": "Athletics (already trained in Deception)",
+      "grant": {
+       "skills": {
+        "athletics": "trained"
+       }
+      }
+     },
+     {
+      "value": "crafting",
+      "label": "Crafting (already trained in Deception)",
+      "grant": {
+       "skills": {
+        "crafting": "trained"
+       }
+      }
+     },
+     {
+      "value": "diplomacy",
+      "label": "Diplomacy (already trained in Deception)",
+      "grant": {
+       "skills": {
+        "diplomacy": "trained"
+       }
+      }
+     },
+     {
+      "value": "intimidation",
+      "label": "Intimidation (already trained in Deception)",
+      "grant": {
+       "skills": {
+        "intimidation": "trained"
+       }
+      }
+     },
+     {
+      "value": "medicine",
+      "label": "Medicine (already trained in Deception)",
+      "grant": {
+       "skills": {
+        "medicine": "trained"
+       }
+      }
+     },
+     {
+      "value": "nature",
+      "label": "Nature (already trained in Deception)",
+      "grant": {
+       "skills": {
+        "nature": "trained"
+       }
+      }
+     },
+     {
+      "value": "occultism",
+      "label": "Occultism (already trained in Deception)",
+      "grant": {
+       "skills": {
+        "occultism": "trained"
+       }
+      }
+     },
+     {
+      "value": "performance",
+      "label": "Performance (already trained in Deception)",
+      "grant": {
+       "skills": {
+        "performance": "trained"
+       }
+      }
+     },
+     {
+      "value": "religion",
+      "label": "Religion (already trained in Deception)",
+      "grant": {
+       "skills": {
+        "religion": "trained"
+       }
+      }
+     },
+     {
+      "value": "society",
+      "label": "Society (already trained in Deception)",
+      "grant": {
+       "skills": {
+        "society": "trained"
+       }
+      }
+     },
+     {
+      "value": "stealth",
+      "label": "Stealth (already trained in Deception)",
+      "grant": {
+       "skills": {
+        "stealth": "trained"
+       }
+      }
+     },
+     {
+      "value": "survival",
+      "label": "Survival (already trained in Deception)",
+      "grant": {
+       "skills": {
+        "survival": "trained"
+       }
+      }
+     },
+     {
+      "value": "thievery",
+      "label": "Thievery (already trained in Deception)",
+      "grant": {
+       "skills": {
+        "thievery": "trained"
+       }
+      }
+     }
+    ]
+   }
+  ],
+  "why": "Print (heritage-326): 'You are trained in Deception (or another skill if you were already trained in Deception).' Nothing delivered the training — the only ant-kholo carrier in src/ is the separate +1 Lie star. Shape copied from heritages/wisp-fetchling; reader build.ts:5452."
+ },
+ {
+  "category": "heritages",
+  "id": "dragonscaled-kobold",
+  "field": "ancestryHp",
+  "value": 10,
+  "why": "Print (heritage-334): 'You gain 10 Hit Points from your ancestry instead of 6.' ancestries.kobold.hp is 6. Reader build.ts:696."
+ },
+ {
+  "category": "heritages",
+  "id": "charhide-goblin",
+  "field": "description",
+  "value": "Your ancestors have always had a connection to fire and a thicker skin, which allows you to resist burning. You gain fire resistance equal to half your level (minimum 1). You can also recover from being on fire more easily. Your flat check to remove persistent fire damage is DC 10 instead of DC 15, which is reduced to DC 5 if another creature uses a particularly appropriate action to help.",
+  "why": "Print (heritage-250): '…which is reduced to DC 5 if another creature uses a particularly appropriate action to help.' The shipped 'd' fallback reads '…reduced to if another creature…' — the number was deleted by the importer. Restores it to match the AST carrier."
+ },
+ {
+  "category": "heritages",
+  "id": "mightyfall-kobold",
+  "field": "ancestryHp",
+  "value": 10,
+  "why": "Print (heritage-374): 'You gain 10 Hit Points from your ancestry instead of 6.' — an unconditional clause, separate from the 'you can choose to' attribute sentence. Reader build.ts:696; stoutheart-centaur precedent."
+ },
+ {
+  "category": "heritages",
+  "id": "bakuwa-lizardfolk",
+  "field": "grantsItems",
+  "value": [
+   {
+    "itemId": "bakuwa-lizardfolk-bony-plates",
+    "quantity": 1,
+    "worn": true
+   }
+  ],
+  "why": "Print (heritage-377): 'Your body is covered in bony plates… You can never wear other armor or remove your plates.' The item shipped as an orphan nothing granted, so a bakuwa lizardfolk had 0 AC bonus. `worn:true` because print forbids removing them — the hardshell-surki case the flag was added for."
+ },
+ {
+  "category": "heritages",
+  "id": "unbreakable-goblin",
+  "field": "ancestryHp",
+  "value": 10,
+  "why": "Print (heritage-254): 'You gain 10 Hit Points from your ancestry instead of 6.' ancestries.goblin.hp is 6."
+ },
+ {
+  "category": "heritages",
+  "id": "great-kholo",
+  "field": "ancestryHp",
+  "value": 10,
+  "why": "Print (heritage-329): 'You gain 10 Hit Points from your ancestry instead of 8.' ancestries.kholo.hp is 8."
+ },
+ {
+  "category": "heritages",
+  "id": "root-leshy",
+  "field": "ancestryHp",
+  "value": 10,
+  "why": "Print (heritage-269): 'You gain 10 Hit Points from your ancestry instead of 8.' ancestries.leshy.hp is 8."
+ },
+ {
+  "category": "heritages",
+  "id": "kijimuna-gnome",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "benefit",
+    "prompt": "Choose your kijimuna benefit — once made, this choice can't be changed.",
+    "options": [
+     {
+      "value": "banyan",
+      "label": "You can climb any banyan (Combat Climber; a success to Climb is a critical success)",
+      "grant": {
+       "grantsFeats": [
+        "combat-climber"
+       ]
+      }
+     },
+     {
+      "value": "fish",
+      "label": "You can catch any fish (swim Speed 15 feet)",
+      "grant": {
+       "speeds": {
+        "swim": 15
+       }
+      }
+     }
+    ]
+   }
+  ],
+  "why": "Print (heritage-372): 'You gain your choice of the following benefits. Once made, this choice can't be changed.' Branch two (swim Speed 15) was unreachable and branch one was handed to everyone. Option-level grantsFeats is the cataphract-fleshwarp lane (build.ts:4647); option-level speeds reaches deriveSpeeds through chosenEffects (build.ts:5288 → derive.ts:4746)."
+ },
+ {
+  "category": "heritages",
+  "id": "seaweed-leshy",
+  "field": "landSpeedBonus",
+  "value": -5,
+  "why": "Print (heritage-270): 'However, your land Speed is reduced by 5 feet (to 20 feet for most seaweed leshies).' Nothing carried it: ancestries.leshy.speeds.land is 25, so the sheet printed 25. Reader derive.ts:4761."
+ },
+ {
+  "category": "heritages",
+  "id": "seaweed-leshy",
+  "field": "speeds",
+  "value": {
+   "swim": 20
+  },
+  "why": "Drops the `land: 0` placeholder that derive.ts:4726 discards anyway (`v > 0`), so the record no longer looks as if it states a land Speed. Swim 20 is print and is kept."
+ },
+ {
+  "category": "heritages",
+  "id": "wellspring-gnome",
+  "field": "choice",
+  "value": {
+   "flag": "wellspringTradition",
+   "prompt": "Choose arcane, divine, or occult — this choice can't be changed",
+   "kind": "array",
+   "options": [
+    {
+     "value": "arcane",
+     "label": "Arcane"
+    },
+    {
+     "value": "divine",
+     "label": "Divine"
+    },
+    {
+     "value": "occult",
+     "label": "Occult"
+    }
+   ]
+  },
+  "why": "Print (heritage-249): 'Choose arcane, divine, or occult. You gain one cantrip from that magical tradition's spell list… as a spell of your chosen tradition.' The tradition was never asked, so the innate spell fell back to the SPELL's own first tradition. Reader choiceFlagAnswer build.ts:1749 (`heritage:` key); precedent budding-speaker-centaur."
+ },
+ {
+  "category": "heritages",
+  "id": "makari-lizardfolk",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "divine-lance",
+    "note": "Cast from Makari Lizardfolk, this cantrip loses the manipulate trait — you cast purely by roaring and flaring your trunk."
+   },
+   {
+    "spellId": "forbidding-ward",
+    "note": "Cast from Makari Lizardfolk, this cantrip loses the manipulate trait — you cast purely by roaring and flaring your trunk."
+   },
+   {
+    "fromAncestrySpells": true,
+    "note": "Makari Lizardfolk: the tradition of this spell is divine instead of its normal tradition (usually primal)."
+   }
+  ],
+  "why": "Print (heritage-378): 'When you cast this cantrip, it loses the manipulate trait, as you cast purely by roaring and flaring your trunk' AND 'The tradition of any spells or magical abilities you gain from a lizardfolk heritage or ancestry feat is divine instead of its normal tradition.' Neither reached anything. Static reader build.ts:5945 for the two spellId rows; fromAncestrySpells reader build.ts:6005."
+ },
+ {
+  "category": "actions",
+  "id": "tail-toxin",
+  "field": "traits",
+  "value": [
+   "kobold",
+   "poison",
+   "manipulate"
+  ],
+  "why": "Print (the PC2 block Venomtail Kobold grants, heritage-339): '**Tail Toxin** ⬻ (manipulate)'. Our record is the legacy APG printing with traits [kobold, poison] and no manipulate, so the trait line contradicts the text the heritage hands over."
+ },
+ {
+  "category": "heritages",
+  "id": "palace-echoes-kitsune",
+  "field": "grantsActions",
+  "value": [
+   "nudging-whisper"
+  ],
+  "why": "Print (heritage-384): 'You gain the Nudging Whisper action.' actions/nudging-whisper shipped as an orphan — a full core.json scan found no owner anywhere."
+ },
+ {
+  "category": "actions",
+  "id": "nudging-whisper",
+  "field": "actionCost",
+  "value": {
+   "type": "actions",
+   "value": 1
+  },
+  "why": "Print (heritage-384): '**Activate—Nudging Whisper** ⬻'. Typed 'passive', so MainTab's action filter would drop it off the sheet even once the grant lands."
+ },
+ {
+  "category": "heritages",
+  "id": "fungus-leshy",
+  "field": "grantsCreatureTraits",
+  "value": [
+   "fungus"
+  ],
+  "why": "Print (heritage-265): 'You lose the plant trait and gain the fungus trait.' A sweep of every collection in core.json found ZERO records granting a fungus creature trait. Reader derive.ts:2831."
+ },
+ {
+  "category": "heritages",
+  "id": "fungus-leshy",
+  "field": "removesCreatureTraits",
+  "value": [
+   "plant"
+  ],
+  "why": "Same printed clause, the losing half: ancestries.leshy.traits is ['leshy','plant'] and creatureTraitsOf is add-only, so shipping the fungus grant alone makes the Details tab read 'leshy, plant, fungus'. Field has no reader yet (engine agent 2)."
+ },
+ {
+  "category": "heritages",
+  "id": "frozen-wind-kitsune",
+  "field": "choiceOptionLimits",
+  "value": [
+   {
+    "target": "foxfire",
+    "flag": "damage",
+    "allow": [
+     {
+      "value": "cold"
+     }
+    ],
+    "reason": "A frozen wind kitsune's foxfire deals cold damage instead of electricity or fire."
+   }
+  ],
+  "why": "Print (feat-2617 Special): 'If you are a frozen wind kitsune, your foxfire deals cold damage instead of electricity or fire.' Cold was offered to every kitsune and forced on none. Reader derive.ts:1557; precedent adaptive-anadi."
+ },
+ {
+  "category": "heritages",
+  "id": "jinxed-halfling",
+  "field": "forbidsFeats",
+  "value": [
+   "halfling-luck"
+  ],
+  "why": "Print (heritage-257): 'You can never take the Halfling Luck feat, and you gain the Jinx action.' Nothing on either side stopped the picker offering an illegal feat; a repo-wide grep for forbidsFeats/excludesFeats/cannotTake returns zero hits, so this is a new field awaiting its reader."
+ },
+ {
+  "category": "heritages",
+  "id": "ancient-ash",
+  "field": "skillProgressionFromChoice",
+  "value": {
+   "choiceId": "skill",
+   "at": [
+    {
+     "level": 5,
+     "rank": "expert"
+    }
+   ]
+  },
+  "why": "Print (heritage-207): 'You become trained in one skill of your choice. At 5th level, you become an expert in that skill.' The effectChoices grant is a flat 'trained' forever — applyAlwaysOn (build.ts:5452) has no level term, and the only level-stepped skill lane reads content.classFeatures only. maxRank semantics so a spent skill increase is never undone."
+ },
+ {
+  "category": "feats",
+  "id": "foxfire",
+  "field": "choice",
+  "value": {
+   "flag": "damage",
+   "prompt": "Prompt",
+   "kind": "array",
+   "options": [
+    {
+     "value": "electricity",
+     "label": "Electricity"
+    },
+    {
+     "value": "fire",
+     "label": "Fire"
+    },
+    {
+     "value": "cold",
+     "label": "Cold",
+     "requiresAnyFeature": [
+      "frozen-wind-kitsune"
+     ]
+    }
+   ]
+  },
+  "why": "wg-batch-026: heritage-370 prints \"your foxfire deals cold damage instead of electricity or fire\" — Cold is offered ONLY to a frozen wind kitsune (option gate requiresAnyFeature now resolves heritage ids in derive.ts narrowChoiceOptions, engine agent 1); the heritage's choiceOptionLimits row forces cold on its side."
+ },
+ {
+  "category": "heritages",
+  "id": "vivacious-gnome",
+  "field": "doomedValueReduction",
+  "value": 1,
+  "why": "wg-batch-026: heritage-352 prints \"The doomed condition affects you as if its value were 1 lower\" — a NUMBER the death threshold reads (DefenseGrants.doomedValueReduction → Character.doomedReduction → dyingDeathThreshold), beside the stars agent's condition mark."
  }
 ]

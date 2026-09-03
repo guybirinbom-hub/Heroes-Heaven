@@ -113,7 +113,11 @@ describe('audit fixes — derive (strikes / AC / speed)', () => {
       inventory: [{ itemId: 'full-plate', quantity: 1, worn: true, equipped: false }],
     });
     const sp = deriveSpeeds(ch, content());
-    expect(sp.land).toBe(15); // 25 − 10
+    /* 20 − 10, not 25 − 10: batch 26 authored the rest of the same printed sentence — *"However, your
+     * land Speed is reduced by 5 feet (to 20 feet for most seaweed leshies)"* (heritage-270) — as
+     * `landSpeedBonus: -5`, so this leshy's land Speed is 20 BEFORE the armour penalty. What this
+     * test pins is that the armour penalty reaches every movement type, which it still does. */
+    expect(sp.land).toBe(10); // 25 − 5 (heritage) − 10 (armour)
     expect(sp.swim).toBe(10); // 20 − 10  (previously stayed 20)
   });
 });

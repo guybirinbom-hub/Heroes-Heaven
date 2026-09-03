@@ -658,7 +658,7 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
 /** Apply N damage: temp HP soaks first, the remainder becomes real damage.
  *  `deathBase` is the dying value at which this character dies before Doomed is applied — 5 with
  *  Diehard, else 4. Pass `character.dyingThreshold`. */
-export function applyDamage(play: PlayState, amount: number, max: number, deathBase = 4): PlayState {
+export function applyDamage(play: PlayState, amount: number, max: number, deathBase = 4, doomedReduction = 0): PlayState {
   const n = Math.max(0, Math.round(amount));
   const soaked = Math.min(play.tempHp, n);
   const toHp = n - soaked;
@@ -672,7 +672,7 @@ export function applyDamage(play: PlayState, amount: number, max: number, deathB
   // 1 + your Wounded value (or +1 if already Dying); a single blow ≥ 2× max HP is
   // instant death. The Dying tracker / Heal then drive recovery.
   if (n > 0 && max > 0 && max - damage <= 0) {
-    const deathAt = dyingDeathThreshold(condVal(next.conditions, 'doomed'), deathBase);
+    const deathAt = dyingDeathThreshold(condVal(next.conditions, 'doomed'), deathBase, doomedReduction);
     const dying = condVal(next.conditions, 'dying');
     const value =
       n >= 2 * max ? deathAt : dying > 0 ? Math.min(deathAt, dying + 1) : Math.min(deathAt, 1 + condVal(next.conditions, 'wounded'));

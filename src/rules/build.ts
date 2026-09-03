@@ -5514,6 +5514,30 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   for (const hid of [build.heritageId, secondHeritageId]) {
     if (hid) resolvePick(hid, content.heritages[hid]?.effectChoices, applyAlwaysOn, content.heritages[hid]?.name ?? hid, true);
   }
+  /*
+   * …and the LEVEL STEP on the skill that pick trained — Ancient Ash: *"You become trained in one
+   * skill of your choice. AT 5TH LEVEL, YOU BECOME AN EXPERT IN THAT SKILL."*
+   *
+   * The options above grant `skills: { <skill>: 'trained' }` and `EffectGrant.skills` has no level
+   * term, so the pick stayed trained to 20th. *"That skill"* is the point: the upgrade resolves the
+   * heritage's OWN answer (the same key, the same skill-only `effectChoiceDefault` an unanswered pick
+   * takes) rather than asking a second question the way a second `select` would. `maxRank`, so a skill
+   * increase the player already spent on it is never undone.
+   */
+  for (const hid of [build.heritageId, secondHeritageId]) {
+    const prog = hid ? content.heritages[hid]?.skillProgressionFromChoice : undefined;
+    if (!hid || !prog) continue;
+    const ch = (content.heritages[hid]?.effectChoices ?? []).find((c) => c.id === prog.choiceId);
+    if (!ch) continue;
+    const val = build.effectChoices?.[`${hid}:${prog.choiceId}`] ?? effectChoiceDefault(ch);
+    const opt = effectChoiceOptions(ch, build, content).find((o) => o.value === val);
+    for (const key of Object.keys(opt?.grant?.skills ?? {}) as ProficiencyKey[]) {
+      for (const step of prog.at) {
+        if (level < step.level) continue;
+        proficiencies.skills[key] = maxRank(proficiencies.skills[key] ?? 'untrained', step.rank);
+      }
+    }
+  }
   // The DEITY and the BACKGROUND can carry a pick too (Lurlup's optional Unholy sanctification;
   // Magical Experiment). Neither was resolved, so both were questions with no answer and no effect.
   if (build.deityId) resolvePick(build.deityId, content.deities[build.deityId]?.effectChoices, applyAlwaysOn, content.deities[build.deityId]?.name ?? build.deityId);
@@ -6000,13 +6024,24 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
    * reason the static loop above honours it — a grant the character cannot use yet is not a spell
    * they have gained.
    */
-  const wantsAncestrySpellNote = feats
-    .map((fc) => content.feats[fc.featId])
-    .filter((rec) => (rec?.spellNotes ?? []).some((n) => n.fromAncestrySpells));
+  const wantsAncestrySpellNote: ({ name: string; spellNotes?: SpellNote[] } | undefined)[] = [
+    ...feats.map((fc) => content.feats[fc.featId]),
+    /* …and the HERITAGE writing the note, not just a feat. Makari Lizardfolk prints *"The tradition of
+     * any spells or magical abilities you gain from A LIZARDFOLK HERITAGE OR ANCESTRY FEAT is divine
+     * instead of its normal tradition (usually primal)"* — a blanket retune of OTHER records' grants
+     * (bone-caller, primal-rampage, mooneater, …), which no per-grant field on those records can carry
+     * and `InnateSpellGrant` has no override for. This pass is the open-set lane that already resolves
+     * "gained from a heritage or an ancestry feat" against the character; it read the note off feats
+     * only, so a heritage printing the same sentence reached nobody. The set it scans (`ancestrySources`
+     * below) already includes the heritage — the sentence is symmetrical about which record writes it. */
+    ...[build.heritageId, secondHeritageId].map((hid) => (hid ? content.heritages[hid] : undefined)),
+  ].filter((rec) => (rec?.spellNotes ?? []).some((n) => n.fromAncestrySpells));
   if (wantsAncestrySpellNote.length) {
     const ancestrySources: ({ innateSpells?: InnateSpellGrant[]; focusSpells?: string[] } | undefined)[] = [
       ...feats.filter((fc) => content.feats[fc.featId]?.category === 'ancestry').map((fc) => content.feats[fc.featId]),
-      build.heritageId ? content.heritages[build.heritageId] : undefined,
+      // BOTH heritages, for the same reason the note scan above takes both — a second-heritage feat's
+      // grant is as much "from a heritage" as the first one's.
+      ...[build.heritageId, secondHeritageId].map((hid) => (hid ? content.heritages[hid] : undefined)),
     ];
     const qualifying = new Set<string>();
     for (const src of ancestrySources) {
@@ -6051,6 +6086,12 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     const bonus = feats.reduce((n, fc) => n + (content.feats[fc.featId]?.dyingThresholdBonus ?? 0), 0);
     if (bonus) dyingThreshold = 4 + bonus;
   }
+  // Vivacious Gnome: "The doomed condition affects you as if its value were 1 lower" — the other
+  // knob on the same threshold, summed from both heritages and the feats. Read by dyingDeathThreshold
+  // through Character.doomedReduction; a mark on the condition alone told the player and moved nothing.
+  const doomedReduction =
+    [build.heritageId, secondHeritageId].reduce((n, hid) => n + ((hid && content.heritages[hid]?.doomedValueReduction) || 0), 0) +
+    feats.reduce((n, fc) => n + (content.feats[fc.featId]?.doomedValueReduction ?? 0), 0);
 
   /*
    * "You reduce the DC of recovery checks by 1" — the flat check a dying character makes at the start of
@@ -7011,7 +7052,11 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
      *  own words it governs Bone Investiture's grant as well as Bone Magic's own cantrip. */
     const traditionFromFlag = (flag: string): string | undefined => {
       for (const fc of feats) if (content.feats[fc.featId]?.choice?.flag === flag) return fc.choice?.value || undefined;
-      return undefined;
+      // …and a flag a HERITAGE (or ancestry / class feature) asked. Wellspring Gnome: *"Choose arcane,
+      // divine, or occult … any primal innate spells you gain from gnome ancestry feats become the
+      // tradition you chose"* — the five gnome feats' rows carry `traditionFromChoiceFlag:
+      // 'wellspringTradition'`, and this loop, reading placed feats only, resolved it to nothing.
+      return choiceFlagAnswer(flag, build, content);
     };
     /** A record's grant as THIS character receives it — see ContentBase.voidHealingSpellSwap. The
      *  grant is copied rather than mutated: `content` is shared by every character on the roster. */
@@ -7665,6 +7710,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     ...(advancedAlchemy ? { advancedAlchemy } : {}),
     ...(resourceFloors ? { resourceFloors } : {}),
     ...(dyingThreshold ? { dyingThreshold } : {}),
+    ...(doomedReduction ? { doomedReduction } : {}),
     ...(recoveryDcReduction ? { recoveryDcReduction } : {}),
     ...(recoveryDcOnlyAtDying ? { recoveryDcOnlyAtDying } : {}),
     ...(recoveryDcIgnoresDyingValue ? { recoveryDcIgnoresDyingValue } : {}),
@@ -8091,11 +8137,34 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
     for (const hid of [c.heritageId, c.secondHeritageId]) {
       const h = hid ? content.heritages[hid] : undefined;
       if (!h?.choice || takeCarried(h.choice, `heritage:${hid}`)) continue;
-      // An alternate-attributes package that moved the ancestry HP is self-evidencing: buildCharacter
-      // emits `ancestryHp` only when an answer moved it off the record scalar, so its value matching
-      // the package's HP can only mean the package was the answer.
+      /*
+       * An alternate-attributes package leaves a trace on the finished character; this recovers the
+       * answer from it. It used to read `ancestryHp` — but Mightyfall Kobold's *"You gain 10 Hit
+       * Points from your ancestry instead of 6"* is a SEPARATE printed clause from *"Instead of the
+       * normal attribute boosts and flaws, YOU CAN CHOOSE to gain a boost to Strength, a boost to
+       * Charisma, and a flaw in Intelligence"*, so the 10 is unconditional (`Heritage.ancestryHp`)
+       * and witnesses NOTHING: read from HP, every mightyfall kobold decoded as having taken the
+       * package, including the ones who kept the normal kobold boosts.
+       *
+       * The ATTRIBUTES are what the answer actually moves. A score of 8 is reachable only with a flaw
+       * and no boost, so an ability the PACKAGE flaws and the ancestry does not (Int here, against the
+       * normal kobold's Con) can only be 8 because the package was taken. Silent when the player
+       * boosted that attribute back up — a miss leaves the pick unanswered, which is the normal
+       * package (and every character saved by this app carries `ancestryHeritageChoices` above).
+       *
+       * ponytail: the flaw trace is erased when the character boosted that attribute back up (a
+       * mightyfall WIZARD's Int key boost), so a pre-carrier save of one decodes as 'normal'. Upgrade
+       * path if that ever matters: solve the abilities reconstruction below for BOTH branches and keep
+       * the feasible one — not worth it for saves older than the carrier.
+       */
       const alt = h.alternateAttributes;
-      if (alt?.hp != null && c.ancestryHp === alt.hp) b.featChoices[`heritage:${hid}`] = alt.whenChoice;
+      if (
+        alt &&
+        (alt.abilityFlaws ?? []).some(
+          (a) => c.abilities[a] === 8 && !(ancestry?.abilityFlaws ?? []).includes(a) && c.options?.voluntaryFlawAbility !== a,
+        )
+      )
+        b.featChoices[`heritage:${hid}`] = alt.whenChoice;
     }
   }
 
@@ -8871,6 +8940,24 @@ function declaredTokens(content: ContentDatabase): Set<string> {
   return tokens;
 }
 
+/**
+ * The sentence a HERITAGE prints FORBIDDING this feat outright, or undefined when nothing forbids it.
+ *
+ * Jinxed Halfling: *"You can NEVER take the Halfling Luck feat, and you gain the Jinx action."* This is
+ * not a prerequisite — `feats/halfling-luck` carries `prerequisites: []` and the prohibition is printed
+ * on the OTHER record — so no existing lane could say it and the ancestry-feat picker offered an
+ * illegal feat. Folded into `checkPrerequisites`' `unmet` rather than checked at each picker, because
+ * that function is the one funnel the row, the "hide ineligible" filter and every other eligibility
+ * consumer already share.
+ */
+export function forbiddenFeatReason(featId: string, character: Character, content: ContentDatabase): string | undefined {
+  for (const hid of [character.heritageId, character.secondHeritageId]) {
+    const h = hid ? content.heritages[hid] : undefined;
+    if (h?.forbidsFeats?.includes(featId)) return `${h.name}: you can never take this feat.`;
+  }
+  return undefined;
+}
+
 export function checkPrerequisites(
   feat: Feat,
   character: Character,
@@ -8878,6 +8965,12 @@ export function checkPrerequisites(
 ): { met: boolean; unmet: string[] } {
   const unmet: string[] = [];
   const abilityResults: { line: string; met: boolean }[] = [];
+
+  /* A heritage's outright prohibition is checked FIRST, ahead of the background waiver below: *"you
+   * can never take the Halfling Luck feat"* is not a prerequisite, so nothing that waives
+   * prerequisites may waive it. */
+  const forbidden = forbiddenFeatReason(feat.id, character, content);
+  if (forbidden) return { met: false, unmet: [forbidden] };
 
   // A BACKGROUND can waive a feat's prerequisites outright — Tall Tale: "you meet the prerequisites
   // for the Connections and Leverage Connections skill feats, even if you don't fulfill them."

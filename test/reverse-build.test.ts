@@ -326,7 +326,12 @@ describe('deriveBuildFromCharacter — ancestry/heritage own-choice answers (the
       minimal({ ancestryId: 'kobold', heritageId: 'mightyfall-kobold', featChoices: { 'heritage:mightyfall-kobold': 'normal' } }),
       C,
     );
-    expect(ch0.ancestryHp, 'normal kobold HP stays on the record scalar').toBeUndefined();
+    /* The normal branch carries the 10 too — *"You gain 10 Hit Points from your ancestry instead of
+     * 6"* is unconditional (heritage-374, batch 26), so `ancestryHp` is on the Character for BOTH
+     * answers and therefore witnesses NEITHER. That is exactly why the decode above stopped reading
+     * it and reads the flawed ATTRIBUTE instead; this pins that the trace it abandoned really is
+     * ambiguous, so nobody restores the old shortcut. */
+    expect(ch0.ancestryHp, 'present on both branches ⇒ it cannot decode the answer').toBe(10);
     expect(deriveBuildFromCharacter(ch0, C).featChoices['heritage:mightyfall-kobold']).toBe('normal');
     expectSameBuild(ch0, roundTrip(ch0));
   });

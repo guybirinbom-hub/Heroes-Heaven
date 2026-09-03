@@ -13,6 +13,7 @@ import {
   collectChosenIds,
   dedicationBlock,
   checkPrerequisites,
+  forbiddenFeatReason,
   emptyBuild,
   featChoiceLabel,
   featChoicePrompt,
@@ -687,7 +688,9 @@ export function Builder({
       // Obsession's bound Assurance reads blank and the card says "answer that and this fills in"
       // forever, even though the player already typed the Lore.
       const bound = boundGrantChoice(build, content, granter, grantedId, featPrereqChar.feats.find((f) => f.featId === granter)?.slotKey);
-      const granterName = content.feats[granter]?.name ?? granter;
+      // …or a HERITAGE's name: a granter id is not always a feat's (Woodstalker Lizardfolk names the
+      // terrain on the Terrain Stalker it hands over), and the raw slug read as broken content.
+      const granterName = content.feats[granter]?.name ?? content.heritages[granter]?.name ?? granter;
       return (
         <SubCard
           key={`gfc-${grantedId}`}
@@ -2879,7 +2882,13 @@ export function Builder({
               // SENTENCE is the value, not a boolean: each clause names its own count, its own
               // archetypes and its own exceptions (ruling Q25), so one fixed "two feats" line was
               // wrong for Juggler (which asks for one) and for every clause counting a sibling too.
-              const dedBlockedWhyRow = dedBlockedWhy(f);
+              /* …and a feat a HERITAGE forbids outright — Jinxed Halfling's *"You can never take the
+               * Halfling Luck feat"*. `checkPrerequisites` already greys the row for it, but Halfling
+               * Luck prints NO prerequisites, so the "Requires (unmet)" line has nothing to render and
+               * the reason fell back to a bare "Prerequisites not met." — which is the wrong sentence
+               * (ruling Q27: a wrong reason is worse than a vague one). Routed through this lane, which
+               * already prints its sentence both beside the row and as the disabled reason. */
+              const dedBlockedWhyRow = dedBlockedWhy(f) ?? forbiddenFeatReason(f.id, featPrereqChar, content);
               const dedBlocked = !!dedBlockedWhyRow;
               // …and a feat whose grant is already used up (see noOpWhy). Same treatment as a blocked
               // dedication: dimmed, with the sentence, and still takeable through Overrides — a player
