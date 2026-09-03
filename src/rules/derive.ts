@@ -204,6 +204,32 @@ export function resilientSaveBonus(c: Character, db: ContentDatabase): number {
   return r ? RESILIENT_BONUS[r] ?? 0 : 0;
 }
 
+/**
+ * Every UNCONDITIONAL save bonus an owned RECORD states, named — *"You gain a +1 circumstance bonus to
+ * Reflex saving throws"* (Ponygait Centaur), *"you gain a +2 status bonus to Fortitude and Will saving
+ * throws"* (Peerless Form).
+ *
+ * Neither clause names a trigger, so neither is situational; but no numeric carrier existed on a
+ * heritage or a passive feat, so both were parked on `situationalBonuses.ts` — a file whose header
+ * says "It is DISPLAY-ONLY: nothing here changes a computed number". The sheet drew a star and the
+ * total stood still.
+ *
+ * Heritages + feats + owned class features, the three record kinds that extend `DefenseGrants`.
+ * Exported with the source NAME so the save breakdown can list the part instead of leaving the shown
+ * parts short of the total.
+ */
+export function recordSaveBonuses(c: Character, db: ContentDatabase | undefined, save: SaveId): (TypedMod & { name: string })[] {
+  if (!db) return [];
+  const out: (TypedMod & { name: string })[] = [];
+  const read = (rec?: { name?: string; saveBonuses?: DefenseGrants['saveBonuses'] }) => {
+    for (const sb of rec?.saveBonuses ?? []) if (sb.save === save) out.push({ type: sb.type, value: sb.value, name: rec?.name ?? '' });
+  };
+  for (const h of heritageRecords(c, db)) read(h);
+  for (const f of c.feats) read(db.feats[f.featId]);
+  for (const id of ownedFeatureIds(c, db)) read(db.classFeatures[id]);
+  return out;
+}
+
 export function deriveSave(c: Character, save: SaveId, db?: ContentDatabase): StatLine {
   const rank = c.proficiencies.saves[save];
   const ability = SAVE_ABILITY[save];
@@ -225,6 +251,8 @@ export function deriveSave(c: Character, save: SaveId, db?: ContentDatabase): St
        * says the rule in one place. */
       ...conditionTypedMods(save === 'fortitude' ? conditionsWithDrainedReduction(c) : c.conditions, ability, 'save'),
       ...modeTypedMods(c.activeModes, { kind: 'save', detail: save }),
+      // A record's own unconditional save bonus, pooled by type with everything above it.
+      ...recordSaveBonuses(c, db, save),
     ]);
   return { rank, modifier };
 }
@@ -2728,6 +2756,14 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
     // existing field — not a sense, not a speed, not a resistance — and every record saying it did
     // nothing at all. Aggregated exactly like negativeHealing beside it, invested-only rule included.
     breathesWater:
+      /* THE AMPHIBIOUS TRAIT IS ITSELF THE STATEMENT — Undine: *"You gain a swim Speed of 10 feet and
+       * the amphibious trait. Like all creatures with the amphibious trait, you can breathe both water
+       * and air."* Asked of the DERIVED trait set rather than stamped on each record, because the
+       * trait arrives four different ways (ancestry chassis, a record's grantsCreatureTraits, a
+       * player's answer, an active mode) and a per-record flag can only say one of them. One guard
+       * covers undine, aquatic-elf and tidepool-dragonet plus the azarketi/merfolk/athamaru chassis,
+       * all of which reported no water breathing. */
+      hasCreatureTrait(c, db, 'amphibious') ||
       heritageRecords(c, db).some((h) => h.breathesWater) ||
       c.feats.some((f) => db.feats[f.featId]?.breathesWater) ||
       [...ownedFeatureIds(c, db)].some((id) => db.classFeatures[id]?.breathesWater) ||
@@ -4652,13 +4688,20 @@ export function deriveStrikes(c: Character, db: ContentDatabase): Strike[] {
       asWeapon ? undefined : mpHw,
     );
   });
-  // Always offer the baseline Fist (PF2e gives every character an unarmed Strike), listed after naturals.
+  // Always offer the baseline Fist (PF2e gives every character an unarmed Strike), listed after naturals —
+  // unless the ANCESTRY says its heritage attack stands in for it. Howl of the Wild's Animal Attacks
+  // sidebar (sidebar-2749): *"Your heritage gives you a special unarmed attack INSTEAD OF the fist unarmed
+  // attack humanoids typically gain"* — so an awakened animal who chose Jaws has Jaws, not Jaws and a
+  // Fist. Gated on the ancestry flag AND a heritage-sourced natural actually being present: an awakened
+  // animal who has not answered the picker yet still has a Fist to Strike with, and a Razortooth
+  // Goblin's jaws (no such flag on goblin) keep the Fist beside them, as printed.
+  const fistReplaced = !!(c.ancestryId && db.ancestries[c.ancestryId]?.heritageAttackReplacesFist) && (c.naturalAttacks ?? []).some((n) => n.source === c.heritageId);
   return [
     ...stanceStrikes,
     ...weapons,
     ...deriveBlastStrikes(c, db),
     ...naturals,
-    deriveUnarmedStrike(c, db, applyUnarmedRiders(c, db, fistProfile), hwRunes, dsFist, mpHw),
+    ...(fistReplaced ? [] : [deriveUnarmedStrike(c, db, applyUnarmedRiders(c, db, fistProfile), hwRunes, dsFist, mpHw)]),
   ];
 }
 
@@ -4735,6 +4778,12 @@ export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {
   for (const f of c.feats) landFloor = Math.max(landFloor, db.feats[f.featId]?.landSpeedMin ?? 0);
   for (const fid of ownedFeatureIds(c, db)) landFloor = Math.max(landFloor, db.classFeatures[fid]?.landSpeedMin ?? 0);
   for (const h of heritageRecords(c, db)) landFloor = Math.max(landFloor, h.landSpeedMin ?? 0);
+  /* …and what the player's ANSWER floored it at — Swimming Animal's water-dwelling branch: *"You have
+   * a swim Speed of 20 feet, and if you can move on land, you have base Speed of 20 feet."* It cannot
+   * be `grant.speeds.land`, which is additive below (`speeds.land = (speeds.land ?? 0) + v`) and would
+   * make the awakened animal's chassis 5 into 25; and it cannot sit at RECORD level, because the
+   * record's other branch (aquatic) prints no land Speed and must keep the chassis 5. */
+  landFloor = Math.max(landFloor, c.chosenEffects?.landSpeedMin ?? 0);
   if (landFloor) speeds.land = Math.max(speeds.land ?? 0, landFloor);
   if (passiveLandBonus || featLandBonus) speeds.land = (speeds.land ?? 0) + passiveLandBonus + featLandBonus;
   // A proficiency-gated speed (Quick Climb/Swim: climb/swim = land Speed only if legendary Athletics).

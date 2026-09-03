@@ -632,6 +632,53 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "youre-so-cute": [{ targets: [{ kind: 'skill', detail: 'performance' }], when: "to Make an Impression with Performance on humanoids", bonus: "+1 circumstance" }],
   "zephyr-guard-dedication": [{ targets: [{ kind: 'perception' }], when: "against Palm an Object, Steal, or Conceal an Object (and Seeking concealed objects)", bonus: "+1 circumstance" }],
 
+  /* ---- WG parity batch 25: heritage clauses with no carrier on either side ---------------------
+   * These ids are new to the registry, so they sit in the HAND-AUTHORED region: the generator skips
+   * any id already spelled `  "id": [` here (`existingIds`, apply-situational-lane.mjs:30), which is
+   * the file's only exclusion mechanism. Each records the printed half our record dropped. */
+
+  /* strong-blooded-dwarf-stage-reduction. The record carries the poison resistance and nothing else;
+   * print (heritage-238) also says *"each of your successful saving throws against a poison
+   * affliction reduces its stage by 2, or by 1 for a virulent poison. Each critical success against
+   * an ongoing poison reduces its stage by 3, or by 2 for a virulent poison."* `degreeShifts` is the
+   * wrong shape — it shifts a CHECK's degree, not an affliction stage — so a star is the only route,
+   * and `inured-to-alchemy` already carries this exact wording. */
+  "strong-blooded-dwarf": [{ targets: [{ kind: 'save', detail: 'fortitude' }], when: "against a poison affliction", bonus: "each success reduces the stage by 2 (1 if virulent); each critical success by 3 (2 if virulent)" }],
+
+  /* thalassic-azarketi. Print (heritage-197): *"You gain the Underwater Marauder skill feat, and your
+   * piercing ranged attacks don't have their range increments halved when fighting underwater
+   * targets."* The feat half is featFeatGrants.ts; the range half had no carrier, so it goes on the
+   * same strikeAttack range lane as far-shot / far-lobber / far-throw. */
+  "thalassic-azarketi": [{ targets: [{ kind: 'strikeAttack' }], when: "with piercing ranged attacks against underwater targets", bonus: "range increments are not halved" }],
+
+  /* The environmental-temperature clause. Three heritages print the same sentence and no side models
+   * any of them; there is no environment lane in the app and three records do not warrant building
+   * one, so each rides its own save row as a prose star. The resistances stay where they are — those
+   * are already print-exact on the records. */
+  /* naari — heritage-130: *"you treat environmental heat effects as if they were one step less severe
+   * (incredible heat becomes extreme, extreme heat becomes severe, and so on)."* */
+  "naari": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against environmental heat effects", bonus: "treat the heat as one step less severe" }],
+  /* winter-catfolk — heritage-319: *"You treat environmental cold effects as if they were one step
+   * less extreme (incredible cold becomes extreme, extreme cold becomes severe, and so on)."* */
+  "winter-catfolk": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against environmental cold effects", bonus: "treat the cold as one step less extreme" }],
+  /* desert-elf — heritage-35: *"environmental heat effects are one step less extreme for you."* */
+  "desert-elf": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against environmental heat effects", bonus: "treat the heat as one step less extreme" }],
+
+  /* benthic-azarketi — heritage-194: *"you don't treat environmental cold as one degree more severe
+   * when you are wet. You adapt to pressure changes from being deep underwater automatically without
+   * ill effect."* Both non-resistance clauses had no carrier; the cold resistance (no minimum, as
+   * printed) is already right on the record and is untouched. */
+  "benthic-azarketi": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against environmental cold while you are wet", bonus: "the cold is not treated as one degree more severe" }, { targets: [{ kind: 'save', detail: 'all' }], when: "against pressure changes from being deep underwater", bonus: "you adapt automatically, without ill effect" }],
+
+  /* reflection — heritage-428: *"You don't need to attempt Deception checks to Impersonate your
+   * progenitor unless you're interacting with people who know them personally or you do something
+   * known to be out of character for them."* The heritage's only active benefit beyond its trait, and
+   * it reached no row. Non-numeric bonus string, as `brilliant-vision` above.
+   * ⚠ The `when` is trimmed to ruling H's 120-char cap ("cap the note at about one line… the full
+   * text staying in the description a click away") — the first draft ran to 123 and tripped the
+   * registry-wide guard in test/held-back-registry-fixes.test.ts. Both printed exceptions survive. */
+  "reflection": [{ targets: [{ kind: 'skill', detail: 'deception' }], when: "to Impersonate your progenitor, unless the audience knows them personally or you act out of character", bonus: "no check needed" }],
+
   // ---- generated by scripts/apply-situational-lane.mjs — do not hand-edit below this line ----
   // 1758 records / 2620 bonuses from the adversarially verified pass.
   // Escalated, content-corrected and hand-authored ids are excluded by the script on purpose.
@@ -2182,7 +2229,11 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "tactile-azarketi": [{ targets: [{ kind: 'skill', detail: 'survival' }], when: "to Sense Direction in aquatic environments", bonus: "+1 circumstance" }],
   "flexible-catfolk": [{ targets: [{ kind: 'skill', detail: 'acrobatics' }], when: "to Escape", bonus: "+1 circumstance" }, { targets: [{ kind: 'skill', detail: 'athletics' }], when: "to Escape", bonus: "+1 circumstance" }],
   "impersonator-android": [{ targets: [{ kind: 'skill', detail: 'deception' }], when: "to Impersonate a human version of YOURSELF (not any other human)", bonus: "+4 circumstance" }],
-  "liminal-fetchling": [{ targets: [{ kind: 'perception' }], when: "when you Seek to locate undetected creatures within 60 feet", bonus: "+1 circumstance" }],
+  /* b25 liminal-fetchling. Only the Seek half shipped; print (heritage-122) also says *"Your flat
+   * check to target concealed creatures is DC 3 instead of DC 5, and your flat check to target
+   * undetected creatures is DC 9 instead of DC 11."* Shape copied from `smoke-sight` /
+   * `ash-piercing-gaze` above — flat-check changes ride the strikeAttack row. */
+  "liminal-fetchling": [{ targets: [{ kind: 'perception' }], when: "when you Seek to locate undetected creatures within 60 feet", bonus: "+1 circumstance" }, { targets: [{ kind: 'strikeAttack' }], when: "targeting a concealed creature", bonus: "DC 3 flat check instead of DC 5" }, { targets: [{ kind: 'strikeAttack' }], when: "targeting an undetected creature", bonus: "DC 9 flat check instead of DC 11" }],
   "wisp-fetchling": [{ targets: [{ kind: 'skill', detail: 'acrobatics' }], when: "to Tumble Through", bonus: "+1 circumstance" }],
   "created-fleshwarp": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against diseases", bonus: "+2 circumstance" }],
   "grig": [{ targets: [{ kind: 'skill', detail: 'athletics' }], when: "to High Jump or Long Jump", bonus: "+2 circumstance" }],
@@ -2302,7 +2353,12 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "keeper-jotunborn": [{ targets: [{ kind: 'skill', detail: 'survival' }], when: "to Track animals", bonus: "+1 circumstance" }],
   "weaver-jotunborn": [{ targets: [{ kind: 'perception' }], when: "to Seek for hidden details such as secret doors or traps", bonus: "+1 circumstance" }],
   "fey-dragonet": [{ targets: [{ kind: 'skill', detail: 'stealth' }], when: "after spending 1 action to match your wings to the environment, until your surroundings shift in colour or pattern", bonus: "+2 circumstance" }],
-  "house-drake": [{ targets: [{ kind: 'strikeDamage' }], when: "on damage rolls against fiends", bonus: "+1 circumstance" }],
+  /* b25 house-drake. Print (heritage-424) is one sentence — *"Your jaws count as silver and you gain
+   * a +1 circumstance bonus to damage rolls against fiends"* — and only the second half shipped, so a
+   * house drake's Jaws Strike never read as bypassing silver weakness/resistance. Text-valued
+   * material clause on the strike rows, exactly as the shipped `moonsilver-necklace` item situational
+   * writes it. JAWS ONLY: WG also injects the same text on the claws item, which print does not say. */
+  "house-drake": [{ targets: [{ kind: 'strikeDamage' }], when: "on damage rolls against fiends", bonus: "+1 circumstance" }, { targets: [{ kind: 'strikeAttack' }, { kind: 'strikeDamage' }], when: "with your jaws Strike", bonus: "counts as silver" }],
   "aon-ganzi": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against effects that would make you controlled", bonus: "+1 circumstance" }],
   "aon-three-kobolds-in-a-trench-coat": [{ targets: [{ kind: 'skill', detail: 'deception' }], when: "to Impersonate not being three kobolds in a trench coat", bonus: "+10 circumstance" }],
   "ex-con-token-guard": [{ targets: [{ kind: 'skill', detail: 'deception' }], when: "when interacting with Token Guards and convicted criminals such as prison inmates", bonus: "+1 circumstance" }, { targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "when interacting with Token Guards and convicted criminals such as prison inmates", bonus: "+1 circumstance" }, { targets: [{ kind: 'skill', detail: 'intimidation' }], when: "when interacting with Token Guards and convicted criminals such as prison inmates", bonus: "+1 circumstance" }],
@@ -2358,7 +2414,16 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "scavenger-strix": [{ targets: [{ kind: 'skill', detail: 'survival' }], when: "Survival checks to Subsist", bonus: "+1 circumstance" }],
   "strong-oak": [{ targets: [{ kind: 'save', detail: 'fortitude' }], when: "your Fortitude DC against attempts to Grapple you…", bonus: "+2 circumstance" }, { targets: [{ kind: 'save', detail: 'reflex' }], when: "your Reflex DC against attempts to Trip you…", bonus: "+2 circumstance" }, { targets: [{ kind: 'skill', detail: 'acrobatics' }], when: "Acrobatics checks to Balance", bonus: "+2 circumstance" }],
   "sacred-nagaji": [{ targets: [{ kind: 'save', detail: 'fortitude' }], when: "your Fortitude DC against attempts to Grapple you…", bonus: "+2 circumstance" }, { targets: [{ kind: 'save', detail: 'reflex' }], when: "your Reflex DC against attempts to Trip you…", bonus: "+2 circumstance" }],
-  "rock-dwarf": [{ targets: [{ kind: 'save', detail: 'fortitude' }], when: "your Fortitude DC against attempts to Reposition or Shove you…", bonus: "+2 circumstance" }, { targets: [{ kind: 'save', detail: 'reflex' }], when: "your Reflex DC against attempts to Trip you…", bonus: "+2 circumstance" }],
+  /* b25 rock-dwarf-defense-split + rock-dwarf-halved-forced-movement. Print (heritage-237) gives the
+   * +2 to *"your Fortitude OR Reflex DC against attempts to Reposition, Shove, or Trip you"* — both
+   * defenses against all three maneuvers, not our old Fort=Reposition/Shove, Reflex=Trip split — and
+   * adds *"This bonus also applies to saving throws against spells or effects that attempt to force
+   * you to move or knock you prone"*, which had no carrier at all. Rewritten to the three-entry
+   * `root-leshy` shape above, which already encodes this identical printed clause in the house style.
+   * The fourth entry is print's last sentence — *"if any effect would force you to move 10 feet or
+   * more, you are moved only half the distance"* — which lived only in the description prose; it is a
+   * statement about how far you get MOVED, so the Speed row (VitalsRail) is where a player reads it. */
+  "rock-dwarf": [{ targets: [{ kind: 'save', detail: 'fortitude' }], when: "to your Fortitude DC against attempts to Reposition, Shove, or Trip you", bonus: "+2 circumstance" }, { targets: [{ kind: 'save', detail: 'reflex' }], when: "to your Reflex DC against attempts to Reposition, Shove, or Trip you", bonus: "+2 circumstance" }, { targets: [{ kind: 'save', detail: 'all' }], when: "on saves against spells or effects that try to move you or knock you prone", bonus: "+2 circumstance" }, { targets: [{ kind: 'speed' }], when: "when any effect would force you to move 10 feet or more", bonus: "you are moved only half the distance" }],
   "enhanced-hearing-aids": [{ targets: [{ kind: 'perception' }], when: "hearing-based Perception checks, for 10 minutes after you Activate the aids…", bonus: "+1 item" }],
   "dawnfire-beacon-major": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against unholy effects, while within the banner's 30-foot aura and holding it (or wielding the weapon it's affixed to)", bonus: "+1 status" }],
   "ghast-stiletto": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against Paralysis, while wielding the ghast stiletto", bonus: "+1 status" }, { targets: [{ kind: 'save', detail: 'all' }], when: "penalty - saves against disease and to recover from sickened…", bonus: "-2 circumstance" }],
@@ -2453,8 +2518,16 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "the-kardosian-fragments": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "you reference the book as part of a Recall Knowledge attempt on a subject associated with its contents", bonus: "+3 item" }],
   "root-leshy": [{ targets: [{ kind: 'save', detail: 'fortitude' }], when: "to your Fortitude DC against attempts to Reposition, Shove, or Trip you", bonus: "+2 circumstance" }, { targets: [{ kind: 'save', detail: 'reflex' }], when: "to your Reflex DC against attempts to Reposition, Shove, or Trip you", bonus: "+2 circumstance" }, { targets: [{ kind: 'save', detail: 'all' }], when: "on saves against spells or effects that try to move you or knock you prone", bonus: "+2 circumstance" }],
   "courageous-tanuki": [{ targets: [{ kind: 'speed' }], when: "to all your Speeds while you have the fleeing condition", bonus: "+10 feet circumstance" }],
+  // Hunter Automaton (heritage-184): "if you have both hands free, you can increase your Speed to 30 feet as you
+  // run on all fours" — a conditional, so a star on the Speed row rather than a number (the chassis is 25).
+  "hunter-automaton": [{ targets: [{ kind: 'speed' }], when: "to your land Speed while both hands are free and you run on all fours", bonus: "Speed becomes 30 feet" }],
   "tsukumogami-poppet": [{ targets: [{ kind: 'skill', detail: 'lore' }], when: "to Aid using the tool Lore you chose for this heritage", bonus: "+2 circumstance (+3 with Helpful Poppet)" }],
-  "whisper-elf": [{ targets: [{ kind: 'perception' }], when: "you Seek to find a hidden or undetected creature within 30 feet (only if you can hear it and it can make sound)", bonus: "+2 circumstance" }],
+  /* b25 whisper-elf-flat-check. The record shipped only the Seek half. Print (heritage-243) also
+   * says *"When you target an opponent that is concealed from you or hidden from you, reduce the DC
+   * of the flat check to 3 for a concealed target or 9 for a hidden one. This benefit doesn't apply
+   * if you can't hear or if the creature is incapable of making sound"* — a live combat number that
+   * reached no row. Same shape as `supernatural-senses` below, which already carries this clause. */
+  "whisper-elf": [{ targets: [{ kind: 'perception' }], when: "you Seek to find a hidden or undetected creature within 30 feet (only if you can hear it and it can make sound)", bonus: "+2 circumstance" }, { targets: [{ kind: 'strikeAttack' }], when: "targeting a concealed or hidden creature you can hear that is capable of making sound", bonus: "flat check DC is 3 (concealed) or 9 (hidden) instead of 5 or 11" }],
   "hunting-catfolk": [{ targets: [{ kind: 'skill', detail: 'survival' }], when: "to Track a creature or object you have smelled before", bonus: "+2 circumstance" }],
   "heros-plate-greater": [{ targets: [{ kind: 'save', detail: 'all' }], when: "on saves against fear effects, while wearing the hero's plate", bonus: "+2 status" }],
   "plate-armor-of-the-deep": [{ targets: [{ kind: 'skill', detail: 'athletics' }], when: "on Athletics checks to Swim", bonus: "+2 item" }],
@@ -2784,7 +2857,6 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "net": [{ targets: [{ kind: 'skill', detail: 'athletics' }], when: "to Grapple with the net before it has been refolded", bonus: "-2 untyped" }],
   "one-hundred-victories": [{ targets: [{ kind: 'hp' }], when: "the first time each day you use Ferocity", bonus: "Hit Points set to your ancestry Hit Points instead of 1" }],
   "orc-warmask": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "to your warmask's associated skill, while wearing a warmask you attuned with the 1-hour…", bonus: "+1 item" }],
-  "peerless-form": [{ targets: [{ kind: 'save', detail: 'fortitude' }, { kind: 'save', detail: 'will' }], when: "at all times once you have Peerless Form — the feat states no trigger", bonus: "+2 status" }],
   "pernicious-spore-bomb-greater": [{ targets: [{ kind: 'strikeAttack' }], when: "on attack rolls with this bomb", bonus: "+2 item" }],
   "pernicious-spore-bomb-major": [{ targets: [{ kind: 'strikeAttack' }], when: "on attack rolls with this bomb", bonus: "+3 item" }],
   "pernicious-spore-bomb-moderate": [{ targets: [{ kind: 'strikeAttack' }], when: "on attack rolls with this bomb", bonus: "+1 item" }],
@@ -3908,7 +3980,13 @@ export const RECORD_MARKERS: Record<string, RecordMarker[]> = {
   'keen-venom-vishkanya': [{"on":"action","id":"envenom","value":"no manipulate triggers","note":"Your Envenom doesn't trigger reactions that normally trigger on a manipulate action."}],
   'multisensory-mask': [{"on":"condition","id":"concealed","value":"while wearing your subterfuge suit","note":"Multisensory Mask: you're concealed from all creatures, even those using a nonvisual precise sense. Your location stays obvious, so you can't Hide or Sneak with it; it ends if you use a hostile action until you restore it (1 action, manipulate)."}],
   'mutated-fleshwarp': [{"on":"condition","id":"persistent-damage","value":"bleed flat check DC 10","note":"Your flat check to recover from persistent bleed damage is DC 10 instead of 15, and DC 5 instead of 10 with particularly effective assistance."}],
-  'nine-lives-catfolk': [{"on":"condition","id":"dying","value":"recovery DC 10","note":"While dying you don't add your dying value to the DC of your recovery checks, so the DC is typically 10."}],
+  /* b25 nine-lives-catfolk-dup-note — REMOVED. Its whole content restated the structured
+   * `recoveryDcIgnoresDyingValue` field, which build.ts already folds into the dying pill this marker
+   * rendered next to (VitalsRail.tsx: `10 + (recoveryDcIgnoresDyingValue ? 0 : dying) - cut`). Worse,
+   * the hard-coded "recovery DC 10" was stale by construction — it cannot track `recoveryDcReduction`
+   * (Toughness) the way the computed pill does. Same call this file already made at 'fluid-
+   * contortionist' and the MAP restatement: the structured field is the single source. Diehard, the
+   * other printed half, stays on featFeatGrants.ts. */
   'paragon-benefit-amulet': [{"on":"action","id":"amulets-abeyance","value":"you and all allies within 15 feet","note":"Paragon Benefit (Amulet): Amulet's Abeyance targets you and every ally within 15 feet. Each target gains the initial resistance and the adept lingering resistance (allies get the lingering resistance even if they took none of the triggering damage), and each chooses its own damage type when the attack deals several."}],
   'paragon-benefit-mirror': [{"on":"action","id":"mirrors-reflection","value":"one self may immediately Interact, Seek, or Strike","note":"Paragon Benefit (Mirror): when you use Mirror's Reflection, one of your selves can immediately Interact, Seek, or Strike."}],
   'paragon-benefit-wand': [{"on":"action","id":"fling-magic","value":"range 180 feet; choose cold, electricity or fire; single target or area","note":"Paragon Benefit (Wand): Fling Magic's range increases to 180 feet, you choose among cold, electricity and fire each time, and you can affect an area instead of a single creature."}],

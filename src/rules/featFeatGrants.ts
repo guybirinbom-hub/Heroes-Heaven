@@ -154,6 +154,13 @@ export const FEAT_RANK_FEAT_GRANTS: Record<
 export const EXTRA_FEAT_TAKINGS: Record<string, { feat: string; heritages?: string[]; variant: string }[]> = {
   'jotunborn-lore': [{ feat: 'additional-lore', heritages: ['sage-jotunborn'], variant: 'sage' }],
   'sage-jotunborn': [{ feat: 'additional-lore', variant: 'heritage' }],
+  /* *"…gain the Specialty Crafting skill feat, BUT YOU CAN PICK TWO DIFFERENT SPECIALTIES INSTEAD OF
+   * ONE."* (Anvil Dwarf.) WG encodes it as the same feat granted twice; here the flat
+   * FEAT_FEAT_GRANTS row above is the first taking and this is the second, with its own `variant` so
+   * its specialty is answered separately — without that both rows read one
+   * `grantedFeatChoices['specialty-crafting']` and print the same specialty twice, which is the
+   * failure the Jotunborn comment above documents for Lore. */
+  'anvil-dwarf': [{ feat: 'specialty-crafting', variant: 'heritage' }],
 };
 
 /**

@@ -1,0 +1,269 @@
+{
+ "findings": [
+  {
+   "id": "stoutheart-centaur#hp",
+   "backfillRows": [
+    {
+     "category": "heritages",
+     "id": "stoutheart-centaur",
+     "field": "ancestryHp",
+     "value": 10,
+     "why": "wg-batch-025: heritage-282 prints \"Your ancestry Hit Points are 10 instead of 8\". Reader: Heritage.ancestryHp in resolvedAncestryHp (build.ts), landed by engine agent 1."
+    }
+   ],
+   "note": "engine half landed (Heritage.ancestryHp); this is the data half."
+  },
+  {
+   "id": "warrior-android#dataWarning",
+   "backfillRows": [
+    {
+     "category": "heritages",
+     "id": "warrior-android",
+     "field": "dataWarning",
+     "value": null,
+     "why": "wg-batch-025: the warning said the martial-weapon training was not delivered; FEAT_GRANTS[\"warrior-android\"] now reaches grantSourcesForProficiency, so the warning is false."
+    }
+   ],
+   "note": "engine half landed; the stale warning must go."
+  },
+  {
+   "id": "dragonblood#languages",
+   "backfillRows": [
+    {
+     "category": "heritages",
+     "id": "dragonblood",
+     "field": "addsLanguageOptions",
+     "value": [
+      "draconic"
+     ],
+     "why": "wg-batch-025: heritage-289 prints \"you can choose Draconic as one of your additional languages\". Reader: LanguageEditor widens the ancestry list by Heritage.addsLanguageOptions (engine agent 2)."
+    }
+   ],
+   "note": "engine half landed; data half."
+  },
+  {
+   "id": "ponygait-centaur#saves",
+   "backfillRows": [
+    {
+     "category": "heritages",
+     "id": "ponygait-centaur",
+     "field": "saveBonuses",
+     "value": [
+      {
+       "save": "reflex",
+       "value": 1,
+       "type": "circumstance"
+      }
+     ],
+     "why": "wg-batch-025: heritage-283 prints \"+1 circumstance bonus to Reflex saves\". Reader: recordSaveBonuses in deriveSave (engine agent 2) — a real number pooled by type, not a star."
+    }
+   ],
+   "note": "engine half landed; data half. sizeSet medium is in the first spec."
+  },
+  {
+   "id": "peerless-form#saveBonuses",
+   "backfillRows": [
+    {
+     "category": "feats",
+     "id": "peerless-form",
+     "field": "saveBonuses",
+     "value": [
+      {
+       "save": "fortitude",
+       "value": 2,
+       "type": "status"
+      },
+      {
+       "save": "will",
+       "value": 2,
+       "type": "status"
+      }
+     ],
+     "why": "wg-batch-025: feat-495 prints \"+2 status bonus to Fortitude and Will saving throws\" with no trigger — an unrestricted number, so it moves off the display-only star (situationalBonuses.ts entry removed) onto the saveBonuses lane recordSaveBonuses reads."
+    }
+   ],
+   "note": "migrated with ponygait: same shape, verified by engine agent 2."
+  },
+  {
+   "id": "speakers-defense#flag",
+   "backfillRows": [
+    {
+     "category": "feats",
+     "id": "speakers-defense",
+     "field": "effectChoices",
+     "value": [
+      {
+       "id": "speaker-kind",
+       "prompt": "Faithspeaker (divine) or Greenspeaker (primal)? — answered by your Budding Speaker heritage when you have it",
+       "options": [
+        {
+         "value": "divine",
+         "label": "Faithspeaker (divine)",
+         "grant": {
+          "innateSpells": [
+           {
+            "spellId": "share-life",
+            "tradition": "divine"
+           },
+           {
+            "spellId": "status",
+            "tradition": "divine"
+           }
+          ]
+         }
+        },
+        {
+         "value": "primal",
+         "label": "Greenspeaker (primal)",
+         "grant": {
+          "innateSpells": [
+           {
+            "spellId": "entangling-flora",
+            "tradition": "primal"
+           },
+           {
+            "spellId": "environmental-endurance",
+            "tradition": "primal"
+           }
+          ]
+         }
+        }
+       ],
+       "answerFromChoiceFlag": "speakerTradition"
+      }
+     ],
+     "why": "wg-batch-025: feat-5331: the Faithspeaker/Greenspeaker identity is the speakerTradition flag Budding Speaker Centaur records (\"you must select the same Speaker you previously chose\"); option values become the flag values and answerFromChoiceFlag resolves the pick, so the question is asked once, as in WG."
+    }
+   ],
+   "note": "duplicate identity question removed via EffectChoice.answerFromChoiceFlag (built in batch 25)."
+  },
+  {
+   "id": "merge-with-the-source#flag",
+   "backfillRows": [
+    {
+     "category": "feats",
+     "id": "merge-with-the-source",
+     "field": "effectChoices",
+     "value": [
+      {
+       "id": "form",
+       "prompt": "Choose a form spell to cast once per day as a 7th-rank innate spell (Faithspeaker: Angel/Daemon/Demon/Devil Form as divine; Greenspeaker: Elemental/Plant Form as primal)",
+       "options": [
+        {
+         "value": "angel-form",
+         "label": "Angel Form (divine)",
+         "grant": {
+          "innateSpells": [
+           {
+            "spellId": "angel-form",
+            "tradition": "divine",
+            "rank": 7,
+            "usesPerDay": 1
+           }
+          ]
+         },
+         "onlyWhenFlag": {
+          "flag": "speakerTradition",
+          "value": "divine"
+         }
+        },
+        {
+         "value": "daemon-form",
+         "label": "Daemon Form (divine)",
+         "grant": {
+          "innateSpells": [
+           {
+            "spellId": "daemon-form",
+            "tradition": "divine",
+            "rank": 7,
+            "usesPerDay": 1
+           }
+          ]
+         },
+         "onlyWhenFlag": {
+          "flag": "speakerTradition",
+          "value": "divine"
+         }
+        },
+        {
+         "value": "demon-form",
+         "label": "Demon Form (divine)",
+         "grant": {
+          "innateSpells": [
+           {
+            "spellId": "demon-form",
+            "tradition": "divine",
+            "rank": 7,
+            "usesPerDay": 1
+           }
+          ]
+         },
+         "onlyWhenFlag": {
+          "flag": "speakerTradition",
+          "value": "divine"
+         }
+        },
+        {
+         "value": "devil-form",
+         "label": "Devil Form (divine)",
+         "grant": {
+          "innateSpells": [
+           {
+            "spellId": "devil-form",
+            "tradition": "divine",
+            "rank": 7,
+            "usesPerDay": 1
+           }
+          ]
+         },
+         "onlyWhenFlag": {
+          "flag": "speakerTradition",
+          "value": "divine"
+         }
+        },
+        {
+         "value": "elemental-form",
+         "label": "Elemental Form (primal)",
+         "grant": {
+          "innateSpells": [
+           {
+            "spellId": "elemental-form",
+            "tradition": "primal",
+            "rank": 7,
+            "usesPerDay": 1
+           }
+          ]
+         },
+         "onlyWhenFlag": {
+          "flag": "speakerTradition",
+          "value": "primal"
+         }
+        },
+        {
+         "value": "plant-form",
+         "label": "Plant Form (primal)",
+         "grant": {
+          "innateSpells": [
+           {
+            "spellId": "plant-form",
+            "tradition": "primal",
+            "rank": 7,
+            "usesPerDay": 1
+           }
+          ]
+         },
+         "onlyWhenFlag": {
+          "flag": "speakerTradition",
+          "value": "primal"
+         }
+        }
+       ]
+      }
+     ],
+     "why": "wg-batch-025: feat-5333: a Faithspeaker chooses among the divine forms and a Greenspeaker among the primal ones; each option is gated on the speakerTradition flag (onlyWhenFlag) so the list a player sees is their own list, as in WG."
+    }
+   ],
+   "note": "option gating via onlyWhenFlag (built in batch 25)."
+  }
+ ]
+}

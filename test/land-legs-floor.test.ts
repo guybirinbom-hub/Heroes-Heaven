@@ -52,10 +52,13 @@ describe('Land Legs', () => {
 describe('Swimming Animal’s water-dwelling branch', () => {
   const branch = () => c().heritages['swimming-animal'].effectChoices![0].options.find((o) => o.value === 'water-dwelling')!;
 
-  it('no longer advertises a land Speed its grant cannot set', () => {
+  it('advertises the printed land Speed only because its grant can now set it (landSpeedMin, batch 25)', () => {
     const o = branch();
-    expect(o.label).not.toMatch(/land Speed/i);
+    // Print: "if you can move on land, you have base Speed of 20 feet" — a FLOOR, never `speeds.land`,
+    // which deriveSpeeds ADDS to the chassis (5 + 20 = 25).
+    expect(o.label).toMatch(/land Speed 20/i);
     expect(o.grant?.speeds?.land).toBeUndefined();
+    expect(o.grant?.landSpeedMin).toBe(20);
     expect(o.grant?.speeds?.swim).toBe(20);
   });
 

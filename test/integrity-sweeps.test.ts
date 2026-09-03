@@ -356,6 +356,8 @@ describe('a warning that outlived the thing it warns about', () => {
       'backgrounds/child-of-the-twin-village': 'the skill is granted; the warning is about the nightly dream-message link the GM plays',
       // Batch 21: the same warnings-about-OTHER-clauses shape.
       'backgrounds/tech-reliant': 'both skills are granted; the warning is about the blanket healing-magic immunity no field can express',
+      // Batch 25.
+      'heritages/bright-fetchling': 'Light IS granted (innateSpells); the warning is about DANCING LIGHTS, the second printed cantrip, which the remaster folded into Light and which the spell data does not contain',
       'backgrounds/otherworldly-mission': 'the skill is granted; the warning is about the once-per-adventure ask, which prints no action economy to pip',
       'backgrounds/reborn-soul': 'the Lores are granted; the warning is about the restricted EXTRA skill increases at 3/7/15, which have no lane',
     };

@@ -689,6 +689,11 @@ export function resolvedAncestryHp(
   sizePick: Size | undefined,
 ): number {
   if (!ancestry) return 0;
+  /* An UNCONDITIONAL override first — Stoutheart Centaur: *"You gain 10 Hit Points from your
+   * ancestry instead of 8"*. It asks no question, so it cannot ride the optional package below
+   * (whose gate is `heritageChoiceAnswer === alt.whenChoice`) and had no carrier at all. Above the
+   * package because a heritage would never print both. */
+  if (heritage?.ancestryHp != null) return heritage.ancestryHp;
   const alt = heritage?.alternateAttributes;
   if (alt?.hp != null && heritageChoiceAnswer === alt.whenChoice) return alt.hp;
   return ancestry.hpBySize?.[sizePick ?? ancestry.size] ?? ancestry.hp;
@@ -1491,6 +1496,39 @@ export function effectChoiceOffered(ch: EffectChoice, build: BuildState, content
 }
 
 /**
+ * The value an UNANSWERED pick falls back to, or undefined if the player must answer it.
+ *
+ * Laborer Android prints *"You become trained in Athletics (or another skill if you're already trained
+ * in Athletics)"* — the printed skill IS the answer and the 16-option list is only the escape hatch, so
+ * an unanswered pick must still train Athletics. The skill-only test is the printed distinction: a
+ * branch that grants a trait, a Speed or an attack is a REAL either/or (Swimming Animal's *"Choose if
+ * you are aquatic or water-dwelling"*) and defaulting one would hand over a benefit nobody chose.
+ *
+ * Exported because the ENGINE and the PICKER must not disagree: resolvePick grants options[0] while
+ * `EffectChoicesPicker` showed a blank control, so the sheet trained Athletics and the builder said
+ * nothing was chosen. Both read this.
+ */
+/**
+ * The options of an effect choice this character may actually pick from. An option gated with
+ * `onlyWhenFlag` is offered while that `choice.flag` is unanswered or agrees with it (Merge with the
+ * Source's divine forms for a Faithspeaker). Shared by the builder control and `resolvePick`, so a
+ * stored answer the flag now excludes grants nothing rather than lingering out of sight.
+ */
+export function effectChoiceOptions(ch: EffectChoice, build: Partial<BuildState>, content: ContentDatabase): NonNullable<EffectChoice['options']> {
+  return (ch.options ?? []).filter((o) => {
+    if (!o.onlyWhenFlag) return true;
+    const answer = choiceFlagAnswer(o.onlyWhenFlag.flag, build, content);
+    return !answer || answer === o.onlyWhenFlag.value;
+  });
+}
+
+export function effectChoiceDefault(ch: EffectChoice): string | undefined {
+  const opts = ch.options ?? [];
+  const skillOnly = (o: { grant?: EffectGrant }) => !!o.grant?.skills && Object.keys(o.grant).length === 1;
+  return opts.length > 1 && opts.every(skillOnly) ? opts[0].value : undefined;
+}
+
+/**
  * The options a `skillChoices` slot actually offers this character.
  *
  * Wide by default, and narrowed to ONE where the printed sentence derives the skill from an answer
@@ -1825,6 +1863,20 @@ export function buildChoiceOptions(
  * different feats storing `athletics` are unrelated. `#i` suffixes are included because a multi-pick
  * choice fans out to `<slotKey>#0`, `<slotKey>#1`.
  */
+/**
+ * Where a GRANTED feat's sub-choice answer lives.
+ *
+ * The bare feat id, except when the row is a SECOND taking from the same granter
+ * (`EXTRA_FEAT_TAKINGS`), which owes its own answer: Anvil Dwarf's *"you can pick two different
+ * specialties instead of one"* is two takings of Specialty Crafting, and on one key they would both
+ * print the same specialty. Same `<id>#<variant>` shape the granted Lore lane already uses
+ * (`${grantedBy}#${grantVariant}:${featId}:${idx}`), and the bare key is untouched — every saved
+ * character keeps the answer it has.
+ */
+export function grantedChoiceKey(featId: string, grantVariant?: string): string {
+  return grantVariant ? `${featId}#${grantVariant}` : featId;
+}
+
 function answersInOtherTakes(recordId: string, build: BuildState, slotKey?: string): Set<string> {
   const out = new Set<string>();
   for (const [k, id] of Object.entries(build.featPicks ?? {})) {
@@ -2379,6 +2431,11 @@ function collectGrantedNaturals(
   /** Feats whose ENHANCEMENT tier is running, so a record that says its granted Strike steps up one
    *  die size while enhanced can actually do it. Absent for the callers that only want the NAMES. */
   enhancedFeatIds?: Set<string>,
+  /** `build.effectChoices` — a HERITAGE's Strike can hang on one of its own `effectChoices` answers
+   *  (the four awakened-animal heritages: *"choose your animal attack"*), tagged `choiceValue` like a
+   *  feat's. Without the answers every tagged row was dropped by `push`'s guard, so a climbing animal
+   *  who chose Jaws got only the baseline Fist. Absent for the caller that only wants the NAMES. */
+  effectChoices?: Record<string, string>,
 ): NaturalAttack[] {
   const out: NaturalAttack[] = [];
   /* `sourceId` is the record handing the Strike over. It rides onto the attack so a rider can gate on
@@ -2429,7 +2486,12 @@ function collectGrantedNaturals(
       out.push({ ...curated, source: f.featId });
     }
   }
-  if (heritageId) push(content.heritages[heritageId]?.grantedStrikes, heritageId);
+  if (heritageId) {
+    const gs = content.heritages[heritageId]?.grantedStrikes;
+    // The heritage's own answer that names one of its tagged Strikes (`<heritageId>:<choiceId>` → value).
+    const pick = Object.entries(effectChoices ?? {}).find(([k, v]) => k.startsWith(`${heritageId}:`) && gs?.some((g) => g.choiceValue === v))?.[1];
+    push(gs, heritageId, pick);
+  }
   if (ancestryId) push(content.ancestries[ancestryId]?.grantedStrikes, ancestryId);
   const cls = classId ? content.classes[classId] : undefined;
   for (const cf of cls?.features ?? []) if (cf.level <= level) push(content.classFeatures[cf.featureId]?.grantedStrikes, cf.featureId);
@@ -4571,7 +4633,19 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
      * `pushFocusBonus` loop among them. This lane read only the first, so a second heritage's printed
      * "you gain the X feat" was delivered to nobody. */
     for (const hid of [build.heritageId, secondHeritageId]) {
-      if (hid) grantSources.push({ id: hid, grants: content.heritages[hid]?.grantsFeats });
+      if (!hid) continue;
+      grantSources.push({ id: hid, grants: content.heritages[hid]?.grantsFeats });
+      /* …and the feat ONE BRANCH of the heritage's own pick grants (`EffectGrant.grantsFeats`).
+       * Cataphract Fleshwarp: *"you gain the Armor Proficiency feat … If your class already makes you
+       * trained in every type of armor, you instead become trained in Athletics … and gain the Armor
+       * Assist feat"* — two different feats behind one answer, so a record-level `grantsFeats` could
+       * only ever hand out one of them to everybody. Heritage options only; `applyAlwaysOn` has no
+       * feat arm because feats are placed here, before it runs. */
+      for (const ch of content.heritages[hid]?.effectChoices ?? []) {
+        const val = build.effectChoices?.[`${hid}:${ch.id}`];
+        const opt = ch.options?.find((o) => o.value === val);
+        if (opt?.grant?.grantsFeats?.length) grantSources.push({ id: hid, grants: opt.grant.grantsFeats });
+      }
     }
     // …and the ANCESTRY (lizardfolk's Aquatic Adaptation grants Breath Control).
     if (build.ancestryId) grantSources.push({ id: build.ancestryId, grants: content.ancestries[build.ancestryId]?.grantsFeats });
@@ -4813,7 +4887,20 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
           category: content.feats[ex.feat].category as FeatCategory,
           grantedBy: srcId,
           grantVariant: ex.variant,
-          choice: grantedChoiceById[ex.feat],
+          /* THIS taking's own answer, read under its variant key — the whole point of the variant.
+           * `grantedChoiceById` holds only focus-spell resolutions, so a second taking of a
+           * non-focus feat (Anvil Dwarf's second Specialty Crafting) carried no answer at all and
+           * both rows printed the bare feat name. Deliberately does NOT fall back to the bare key:
+           * that one belongs to the FIRST taking and is untouched, which is how saved characters
+           * keep the specialty they already typed. */
+          choice:
+            grantedChoiceById[ex.feat] ??
+            (() => {
+              const def = content.feats[ex.feat].choice;
+              const v = build.grantedFeatChoices?.[grantedChoiceKey(ex.feat, ex.variant)];
+              if (!def || !v) return undefined;
+              return { value: v, label: (def.options ?? []).find((o) => o.value === v)?.label ?? v };
+            })(),
         });
         if (wasNew) queue.push(ex.feat);
       }
@@ -4859,6 +4946,13 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       content,
     )]
       .filter((id) => FEAT_GRANTS[id])
+      .map((id) => ({ featId: id, choice: undefined })),
+    /* …and the HERITAGES, for exactly the reason the featFeatGrants queue above was widened to them.
+     * Warrior Android prints *"You're trained in all simple and martial weapons"* and nothing on the
+     * proficiency side could carry it: this list was `feats + owned class features`, so a FEAT_GRANTS
+     * row keyed to a heritage id was authored, committed and delivered to nobody. */
+    ...[build.heritageId, secondHeritageId]
+      .filter((id): id is string => !!id && !!FEAT_GRANTS[id])
       .map((id) => ({ featId: id, choice: undefined })),
   ];
   /** Which armour ITEMS each feat's familiarity halves actually granted — the set the
@@ -5192,6 +5286,11 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     if (g.weaknesses) (into.weaknesses ??= []).push(...g.weaknesses);
     if (g.immunities) (into.immunities ??= []).push(...g.immunities);
     if (g.speeds) into.speeds = { ...into.speeds, ...g.speeds };
+    // Swimming Animal (water-dwelling): *"if you can move on land, you have base Speed of 20 feet"* —
+    // a FLOOR, not an addend, and it belongs to the OPTION (the aquatic branch keeps the chassis 5).
+    // Without this line an authored `landSpeedMin` is computed here and dropped before it reaches
+    // `chosenEffects`, which is the only thing deriveSpeeds consults. Max, so two floors don't fight.
+    if (g.landSpeedMin != null) into.landSpeedMin = Math.max(into.landSpeedMin ?? 0, g.landSpeedMin);
     // A pick whose benefit is STATE-GATED ("bludgeoning and your choice of cold, electricity, or
     // fire" — but only while raging, and only from 9th). Everything else here lands unconditionally,
     // so without this branch the pick would grant a permanent resistance to a barbarian standing still.
@@ -5199,20 +5298,47 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     if (g.strikeDamage?.length) (into.strikeDamage ??= []).push(...g.strikeDamage);
     if (g.staffSpells?.length) grantedStaffSpells.push(...g.staffSpells);
   };
-  const resolvePick = (recordId: string, choices: EffectChoice[] | undefined, sink: (g: EffectGrant, srcName: string, recordId: string) => void, srcName: string) => {
+  /**
+   * `defaultFirst` — an UNANSWERED pick whose every option grants NOTHING BUT A SKILL resolves to
+   * `options[0]` instead of granting nothing.
+   *
+   * Laborer Android prints *"You become trained in Athletics (OR ANOTHER SKILL if you're already
+   * trained in Athletics)"* and Impersonator Android the same for Deception: the printed skill IS the
+   * answer and the 16-option list is only the "or another skill" escape hatch — but with no stored
+   * answer the pick resolved to `undefined`, so the default sheet trained nothing, silently, with no
+   * completeness flag to clear (WG writes `adjValue SKILL_ATHLETICS T` unconditionally). Every such
+   * list in the data is authored with the printed skill first, which is what makes `options[0]` the
+   * right default and not a guess.
+   *
+   * The skill-only test is what keeps it honest, and it is the printed distinction: a branch that
+   * grants a trait, a resistance, a Speed or an attack is a REAL either/or the player must answer —
+   * Swimming Animal's *"Choose if you are aquatic or water-dwelling"* — and defaulting one would hand
+   * over a benefit nobody chose. Passed by the HERITAGE call sites only, which is where the
+   * "or another skill" sentence lives.
+   */
+  const resolvePick = (recordId: string, choices: EffectChoice[] | undefined, sink: (g: EffectGrant, srcName: string, recordId: string) => void, srcName: string, defaultFirst = false) => {
     for (const ch of choices ?? []) {
       /* A DOCTRINE-gated branch applies only to the doctrine that earns it. Checked here as well as in
        * the builder, so a character who switches doctrine stops receiving the old branch's grant
        * rather than keeping a stale answer nobody can see or clear. */
       if (!effectChoiceOffered(ch, build, content, recordId)) continue;
-      const val = build.effectChoices?.[`${recordId}:${ch.id}`];
+      /* A question ANOTHER record already asked answers this one. Speaker's Defense's "Faithspeaker or
+       * Greenspeaker?" is the tradition the Budding Speaker heritage's `choice.flag` recorded — *"you
+       * must select the same Speaker you previously chose"* — so the flag wins over a stored answer,
+       * and the builder hides the duplicate control. Unanswered flag → the pick is asked as before. */
+      const flagVal = ch.answerFromChoiceFlag ? choiceFlagAnswer(ch.answerFromChoiceFlag, build, content) : undefined;
+      const val = flagVal ?? build.effectChoices?.[`${recordId}:${ch.id}`];
       let g: EffectGrant | undefined;
       if (ch.spellFilter) {
         // Open-ended pick ("any 1st-rank arcane spell"): the stored value IS the chosen spell id.
-        g = (val ? grantForSpellPick(ch.spellFilter, val, content, level) : null) ?? undefined;
+        // Narrowed the same way the builder narrows the list, so a cantrip on both traditions' lists
+        // is tagged with the tradition the player declared, not the spell's own first one.
+        g = (val ? grantForSpellPick(narrowSpellFilter(ch.spellFilter, build, content), val, content, level) : null) ?? undefined;
       } else {
-        const opts = ch.options ?? [];
-        const opt = opts.find((o) => o.value === val) ?? (opts.length === 1 ? opts[0] : undefined);
+        const opts = effectChoiceOptions(ch, build, content);
+        // An ANSWER always wins; the default only fills the gap where there is none.
+        const defaulted = defaultFirst && !val && effectChoiceDefault(ch) !== undefined;
+        const opt = opts.find((o) => o.value === val) ?? (opts.length === 1 || defaulted ? opts[0] : undefined);
         // Record the pick even when the option carries no grant (a kineticist gate junction: only
         // Elemental Resistance moves a stat) so the sheet still shows which one was taken.
         // ONE row per (record, choice). This loop runs once per TAKING, and a repeatable feat's takes
@@ -5386,7 +5512,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   // Both heritages: four of the nine a second-heritage feat can hand over carry their whole
   // mechanical content in `effectChoices`, so resolving only the first would grant nothing.
   for (const hid of [build.heritageId, secondHeritageId]) {
-    if (hid) resolvePick(hid, content.heritages[hid]?.effectChoices, applyAlwaysOn, content.heritages[hid]?.name ?? hid);
+    if (hid) resolvePick(hid, content.heritages[hid]?.effectChoices, applyAlwaysOn, content.heritages[hid]?.name ?? hid, true);
   }
   // The DEITY and the BACKGROUND can carry a pick too (Lurlup's optional Unholy sanctification;
   // Magical Experiment). Neither was resolved, so both were questions with no answer and no effect.
@@ -6405,6 +6531,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     build.inventory.filter((inv) => inv.invested).map((inv) => inv.itemId),
     build.subclassId,
     enhancedFeatIds,
+    build.effectChoices,
   );
   const naturalAttacks = [...(build.naturalAttacks ?? []), ...grantedNaturals];
 
@@ -8276,7 +8403,9 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
     // re-derived by buildCharacter — never reconstruct them as an editable slot or a granted chip. Their
     // resolved sub-choice (Seeker of Truths' Domain Initiate domain) DOES round-trip, keyed by feat id.
     if (f.grantedBy) {
-      if (f.choice) (b.grantedFeatChoices ??= {})[f.featId] = f.choice.value;
+      // Keyed by variant where the row is a granter's SECOND taking, so two takings of one feat
+      // (Anvil Dwarf's two Specialty Crafting specialties) don't collapse onto one answer here.
+      if (f.choice) (b.grantedFeatChoices ??= {})[grantedChoiceKey(f.featId, f.grantVariant)] = f.choice.value;
       // buildCharacter re-derives a pick-granted feat FROM `pickFeatChoices` — so rebuilding from the
       // character alone (an import, a campaign copy) has to put the answer back, or every bonus feat
       // a pick grant handed over silently disappears. Keyed by the granting TAKING, remapped to that

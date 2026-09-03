@@ -575,7 +575,25 @@ function ourAssertions(id, rec) {
       put(`speed|${k}`, base ?? v);
     }
   }
-  if (rec.landSpeedBonus) put('speed|land', Number(rec.landSpeedBonus));
+  if (rec.landSpeedBonus) {
+    put('speed|land', Number(rec.landSpeedBonus));
+    /*
+     * …AND THE SAME BONUS RESOLVED THROUGH THE ANCESTRY CHASSIS.
+     *
+     * Their side states a heritage's Speed as an ABSOLUTE (`setValue SPEED = 30`); ours states the
+     * DELTA and lets the ancestry supply the base, which is what the printed sentence describes —
+     * Spindly Anadi: *"Your Speed increases from 25 to 30 feet."* Comparing their absolute against our
+     * raw `landSpeedBonus` reported "theirs 30, ours 5" on a heritage whose derived land Speed is
+     * exactly 30 (anadi `speeds.land` 25 + 5, summed at src/rules/derive.ts:4718 and broken out at
+     * src/rules/explain.ts:1369). BOTH numbers are asserted, because `put` is multi-assertion: a their
+     * side that writes the delta still matches, and one that writes the total now matches too.
+     *
+     * Skipped when the record carries its own `speeds.land`, which REPLACES the chassis rather than
+     * adding to it — that number is already asserted above.
+     */
+    const chassis = Number(core.ancestries?.[rec.ancestryId]?.speeds?.land);
+    if (rec.speeds?.land === undefined && Number.isFinite(chassis)) put('speed|land', chassis + Number(rec.landSpeedBonus));
+  }
   /* …and an ITEM's speeds, which live under `passiveEffects` and were not read: Boots of Bounding
    * carries `passiveEffects.speeds.land = 5` and read as granting no Speed at all. Same shape as the
    * `passiveEffects.bulkLimitBonus` hole below, and the same lesson — an item's mechanics are a level
@@ -596,6 +614,13 @@ function ourAssertions(id, rec) {
    * settles the lane instead of the record.
    */
   if (rec.landSpeedMin) put('speed|land', Number(rec.landSpeedMin));
+  /* …and the floor ONE BRANCH of the record's pick sets (`effectChoices[].options[].grant.landSpeedMin`,
+   * read through mergeEffect → chosenEffects → deriveSpeeds). Swimming Animal's water-dwelling branch:
+   * *"if you can move on land, you have base Speed of 20 feet"*, while its aquatic branch keeps the
+   * chassis 5 — so the number belongs to the option, and a record-level reader saw "(nothing)". */
+  for (const ch of rec.effectChoices ?? []) {
+    for (const o of ch?.options ?? []) if (o?.grant?.landSpeedMin) put('speed|land', Number(o.grant.landSpeedMin));
+  }
   /*
    * `speedAdjust` — the field for "reduce ALL your Speeds by 5" (Zombie Dedication) and "any fly Speed
    * you have increases by 5" (Winged Warrior). Neither is a `speeds` map nor a land bonus, so both

@@ -1,0 +1,1694 @@
+{
+ "findings": [
+  {
+   "id": "hopeful-athamaru-size",
+   "backfillRows": [
+    {
+     "category": "heritages",
+     "id": "hopeful-athamaru",
+     "field": "sizeOverride",
+     "value": "large",
+     "why": "wg-batch-025: heritage-285 prints \"Instead of Medium, your size is Large\". The athamaru chassis is medium and the record carried no size field at all, so the sheet said Medium."
+    }
+   ],
+   "note": "READER: src/rules/build.ts:7696 `else if (g?.sizeOverride && SIZE_ORDER.indexOf(g.sizeOverride) > SIZE_ORDER.indexOf(size)) size = g.sizeOverride;`, fed the heritage record at build.ts:7700. sizeOverride (largest-wins) not sizeSet, because medium->large is a RAISE — build.ts:7693's own comment reserves sizeSet for lowering."
+  },
+  {
+   "id": "wisp-fetchling-size",
+   "backfillRows": [
+    {
+     "category": "heritages",
+     "id": "wisp-fetchling",
+     "field": "sizeSet",
+     "value": "small",
+     "why": "wg-batch-025: heritage-124 prints \"You're Small instead of Medium\". The fetchling chassis is medium; sizeOverride is strictly largest-wins and could never lower it."
+    }
+   ],
+   "note": "READER: src/rules/build.ts:7695 `if (g?.sizeSet) size = g.sizeSet;`. sizeSet is the ONLY lowering operator (build.ts:7693-7694). Precedent record: plane-hopper-jotunborn sizeSet 'medium'. Different FIELD from the wisp-fetchling-acrobatics row below, so no collision."
+  },
+  {
+   "id": "wisp-fetchling-acrobatics",
+   "backfillRows": [
+    {
+     "category": "heritages",
+     "id": "wisp-fetchling",
+     "field": "effectChoices",
+     "value": [
+      {
+       "id": "trained-skill",
+       "prompt": "Wisp Fetchling makes you trained in Acrobatics — choose Acrobatics, or a different skill if something else already trains you in Acrobatics.",
+       "options": [
+        {
+         "value": "acrobatics",
+         "label": "Acrobatics",
+         "grant": {
+          "skills": {
+           "acrobatics": "trained"
+          }
+         }
+        },
+        {
+         "value": "arcana",
+         "label": "Arcana (already trained in Acrobatics)",
+         "grant": {
+          "skills": {
+           "arcana": "trained"
+          }
+         }
+        },
+        {
+         "value": "athletics",
+         "label": "Athletics (already trained in Acrobatics)",
+         "grant": {
+          "skills": {
+           "athletics": "trained"
+          }
+         }
+        },
+        {
+         "value": "crafting",
+         "label": "Crafting (already trained in Acrobatics)",
+         "grant": {
+          "skills": {
+           "crafting": "trained"
+          }
+         }
+        },
+        {
+         "value": "deception",
+         "label": "Deception (already trained in Acrobatics)",
+         "grant": {
+          "skills": {
+           "deception": "trained"
+          }
+         }
+        },
+        {
+         "value": "diplomacy",
+         "label": "Diplomacy (already trained in Acrobatics)",
+         "grant": {
+          "skills": {
+           "diplomacy": "trained"
+          }
+         }
+        },
+        {
+         "value": "intimidation",
+         "label": "Intimidation (already trained in Acrobatics)",
+         "grant": {
+          "skills": {
+           "intimidation": "trained"
+          }
+         }
+        },
+        {
+         "value": "medicine",
+         "label": "Medicine (already trained in Acrobatics)",
+         "grant": {
+          "skills": {
+           "medicine": "trained"
+          }
+         }
+        },
+        {
+         "value": "nature",
+         "label": "Nature (already trained in Acrobatics)",
+         "grant": {
+          "skills": {
+           "nature": "trained"
+          }
+         }
+        },
+        {
+         "value": "occultism",
+         "label": "Occultism (already trained in Acrobatics)",
+         "grant": {
+          "skills": {
+           "occultism": "trained"
+          }
+         }
+        },
+        {
+         "value": "performance",
+         "label": "Performance (already trained in Acrobatics)",
+         "grant": {
+          "skills": {
+           "performance": "trained"
+          }
+         }
+        },
+        {
+         "value": "religion",
+         "label": "Religion (already trained in Acrobatics)",
+         "grant": {
+          "skills": {
+           "religion": "trained"
+          }
+         }
+        },
+        {
+         "value": "society",
+         "label": "Society (already trained in Acrobatics)",
+         "grant": {
+          "skills": {
+           "society": "trained"
+          }
+         }
+        },
+        {
+         "value": "stealth",
+         "label": "Stealth (already trained in Acrobatics)",
+         "grant": {
+          "skills": {
+           "stealth": "trained"
+          }
+         }
+        },
+        {
+         "value": "survival",
+         "label": "Survival (already trained in Acrobatics)",
+         "grant": {
+          "skills": {
+           "survival": "trained"
+          }
+         }
+        },
+        {
+         "value": "thievery",
+         "label": "Thievery (already trained in Acrobatics)",
+         "grant": {
+          "skills": {
+           "thievery": "trained"
+          }
+         }
+        }
+       ]
+      }
+     ],
+     "why": "wg-batch-025: heritage-124 prints \"You gain the trained proficiency rank in Acrobatics … If you would automatically become trained in Acrobatics (from your background or class, for example), you instead become trained in a skill of your choice.\" One picker covers both the base grant and the redirect; the redundantFallback reader at build.ts:4933 is keyed to FEATS and a heritage cannot reach it."
+    }
+   ],
+   "note": "READER: build.ts:5389 resolvePick(hid, content.heritages[hid]?.effectChoices, applyAlwaysOn) -> applyAlwaysOn (build.ts:5327) `for (const [k, r] of Object.entries(g.skills ?? {})) … maxRank(...)`. Rendered by EffectChoicesPicker, mounted for heritages at src/builder/shared.tsx:2848. Shape copied field-for-field from heritages/artisan-android (same printed idiom, Crafting)."
+  },
+  {
+   "id": "forge-blessed-dwarf-double-picker",
+   "backfillRows": [
+    {
+     "category": "heritages",
+     "id": "forge-blessed-dwarf",
+     "field": "choice",
+     "value": null,
+     "why": "wg-batch-025: the record carried the same nine-deity patron question TWICE — an effectChoices block (live, options carry grant.innateSpells) and a `choice` block with the identical prompt and options and no grants. shared.tsx renders both, so the player saw two identical dropdowns and only one did anything. Nothing reads featChoices['heritage:forge-blessed-dwarf'] for this record (no grantsToken, no traditionFromChoiceFlag, no alternateAttributes), so deleting the inert one loses nothing. scripts/drop-inert-effect-choices.mjs:34-39 excluded this record from the corpus sweep \"pending its own probe\"; this is that probe."
+    }
+   ],
+   "note": "value:null deletes the field. The surviving carrier is the existing effectChoices (READER build.ts:5389 -> applyAlwaysOn's innateSpells lane); it is untouched by this row."
+  },
+  {
+   "id": "aon-ganzi",
+   "backfillRows": [
+    {
+     "category": "heritages",
+     "id": "aon-ganzi",
+     "field": "grantsCreatureTraits",
+     "value": [
+      "ganzi"
+     ],
+     "why": "wg-batch-025: heritage-129 prints \"You gain the ganzi trait in addition to the traits from your ancestry.\" The record's own `traits:['ganzi']` is the FEAT-ELIGIBILITY key (featSlots.ts:224 / featPickGrants.ts:340) and never reaches the character's creature-trait list."
+    }
+   ],
+   "note": "READER: src/rules/derive.ts:2795 creatureTraitsOf — heritage records enter only through `rec?.grantsCreatureTraits`. Consumers: hasCreatureTrait (every trait gate) and DetailsTab.tsx:76/421. Same one-key shape as heritages/changeling. Different FIELD from the aon-ganzi#aonid row below, so no collision. Sibling cohort aon-aasimar / aon-tiefling / aon-ifrit have the identical gap and are NOT in this batch."
+  },
+  {
+   "id": "aon-ganzi#aonid",
+   "backfillRows": [
+    {
+     "category": "heritages",
+     "id": "aon-ganzi",
+     "field": "aonId",
+     "value": "heritage-129",
+     "why": "wg-batch-025: the record pointed at the Ganzi TRAIT page (trait-339), so the AST render carrier served a one-sentence flavour stub and the player never read a single printed mechanic. heritage-129 is the real heritage page (Ancestry Guide pg. 96) and its text matches print word for word."
+    }
+   ],
+   "note": "READER: the AST render carrier public/ast/heritages.json.gz is keyed off this aonId; DescBody.tsx:63/75 prefers the AST over core-descriptions, which already holds the correct full text. ORCHESTRATOR: public/ast/heritages.json.gz must be re-derived after this row lands or the stub stays. Sibling `naari` (aonId trait-870) has the identical defect and is NOT in this batch."
+  },
+  {
+   "id": "aon-aphorite",
+   "backfillRows": [
+    {
+     "category": "heritages",
+     "id": "aon-aphorite",
+     "field": "grantsCreatureTraits",
+     "value": [
+      "aphorite"
+     ],
+     "why": "wg-batch-025: ancestry-28 prints \"You gain the aphorite trait, in addition to the traits from your ancestry.\" `traits:['aphorite']` on the record is the separate feat-eligibility key and is kept."
+    }
+   ],
+   "note": "READER: derive.ts:2795 creatureTraitsOf off heritageRecords. Same shape as suli/dhampir/duskwalker/nephilim/ardande."
+  },
+  {
+   "id": "fey-dragonet",
+   "backfillRows": [
+    {
+     "category": "heritages",
+     "id": "fey-dragonet",
+     "field": "grantsLanguages",
+     "value": [
+      "fey"
+     ],
+     "why": "wg-batch-025: heritage-422 prints \"You gain the fey trait and add Fey to your list of known languages.\" We carried the fey creature trait and the Stealth star but nothing granting the language; the dragonet chassis grants only Common and Draconic with additional:0."
+    }
+   ],
+   "note": "READER: src/rules/build.ts:7616 `id ? content.heritages[id]?.grantsLanguages ?? [] : []` over [heritageId, secondHeritageId]. languages['fey'] exists in core.json. Precedent: tidepool-dragonet ['thalassic'], heavenscribe-kobold ['draconic']."
+  },
+  {
+   "id": "house-drake",
+   "backfillRows": [
+    {
+     "category": "heritages",
+     "id": "house-drake",
+     "field": "grantsLanguages",
+     "value": [
+      "diabolic"
+     ],
+     "why": "wg-batch-025: heritage-424 prints \"You add Diabolic to your list of known languages.\" The dragonet chassis is {granted:['common','draconic'], additional:0} with no options, so no bonus slot could absorb it either — a live build returned LANGUAGES ['common','draconic']."
+    }
+   ],
+   "note": "READER: build.ts:7616 (heritage grantsLanguages). languages['diabolic'] exists in core.json. NOT MINE: the second house-drake finding (\"your jaws count as silver\") is a situationalBonuses.ts entry — code, not a data row."
+  },
+  {
+   "id": "climbing-animal-land-speed",
+   "backfillRows": [
+    {
+     "category": "heritages",
+     "id": "climbing-animal",
+     "field": "landSpeedMin",
+     "value": 20,
+     "why": "wg-batch-025: heritage-288 prints \"You have a land Speed of 20 feet, a climb Speed of 20 feet\". The record stated only speeds.climb:20, so the awakened-animal chassis land 5 stood and a Climbing Animal walked at 5 feet."
+    }
+   ],
+   "note": "READER: src/rules/derive.ts:4737 `for (const h of heritageRecords(c, db)) landFloor = Math.max(landFloor, h.landSpeedMin ?? 0)`. landSpeedMin (a FLOOR) not speeds.land, because derive.ts:4775 makes a granted land speed ADDITIVE (5+20=25). Sibling precedent on the same chassis: running-animal 30, flying-animal 20. Different FIELD from the climbing-animal-animal-attack rows, so no collision."
+  },
+  {
+   "id": "climbing-animal-animal-attack",
+   "backfillRows": [
+    {
+     "category": "heritages",
+     "id": "climbing-animal",
+     "field": "effectChoices",
+     "value": [
+      {
+       "id": "climbing-animal-attack",
+       "prompt": "Choose your animal attack (it replaces the fist an unarmed humanoid would have)",
+       "options": [
+        {
+         "value": "claw",
+         "label": "Claw (1d4 slashing; agile, finesse) — typical"
+        },
+        {
+         "value": "fist",
+         "label": "Fist (1d4 bludgeoning; agile, finesse, nonlethal) — typical"
+        },
+        {
+         "value": "jaws",
+         "label": "Jaws (1d6 piercing; finesse) — typical"
+        },
+        {
+         "value": "antler",
+         "label": "Antler (1d6 piercing; finesse)"
+        },
+        {
+         "value": "beak",
+         "label": "Beak (1d6 piercing; finesse)"
+        },
+        {
+         "value": "fangs",
+         "label": "Fangs (1d6 piercing; finesse)"
+        },
+        {
+         "value": "horn",
+         "label": "Horn (1d6 piercing; finesse)"
+        },
+        {
+         "value": "tail",
+         "label": "Tail (1d6 bludgeoning; finesse, trip)"
+        },
+        {
+         "value": "talon",
+         "label": "Talon (1d4 piercing; agile, finesse)"
+        },
+        {
+         "value": "tongue",
+         "label": "Tongue (1d6 bludgeoning; finesse)"
+        },
+        {
+         "value": "wing",
+         "label": "Wing (1d4 bludgeoning; agile, finesse)"
+        }
+       ]
+      }
+     ],
+     "why": "wg-batch-025: heritage-288 prints \"one animal attack of your choice (typically claw, fist, or jaws; see the sidebar)\". \"Typically\" does not restrict: sidebar-2749 (Howl of the Wild pg. 22) prints the full eleven-row table and says to work with the GM, and WG's feat 27916 offers all eleven — so all eleven are offered with the heritage's printed three marked typical."
+    },
+    {
+     "category": "heritages",
+     "id": "climbing-animal",
+     "field": "grantedStrikes",
+     "value": [
+      {
+       "name": "Claw",
+       "die": "d4",
+       "damageType": "slashing",
+       "traits": [
+        "unarmed",
+        "agile",
+        "finesse"
+       ],
+       "group": "brawling",
+       "choiceValue": "claw"
+      },
+      {
+       "name": "Fist",
+       "die": "d4",
+       "damageType": "bludgeoning",
+       "traits": [
+        "unarmed",
+        "agile",
+        "finesse",
+        "nonlethal"
+       ],
+       "group": "brawling",
+       "choiceValue": "fist"
+      },
+      {
+       "name": "Jaws",
+       "die": "d6",
+       "damageType": "piercing",
+       "traits": [
+        "unarmed",
+        "finesse"
+       ],
+       "group": "brawling",
+       "choiceValue": "jaws"
+      },
+      {
+       "name": "Antler",
+       "die": "d6",
+       "damageType": "piercing",
+       "traits": [
+        "unarmed",
+        "finesse"
+       ],
+       "group": "brawling",
+       "choiceValue": "antler"
+      },
+      {
+       "name": "Beak",
+       "die": "d6",
+       "damageType": "piercing",
+       "traits": [
+        "unarmed",
+        "finesse"
+       ],
+       "group": "brawling",
+       "choiceValue": "beak"
+      },
+      {
+       "name": "Fangs",
+       "die": "d6",
+       "damageType": "piercing",
+       "traits": [
+        "unarmed",
+        "finesse"
+       ],
+       "group": "brawling",
+       "choiceValue": "fangs"
+      },
+      {
+       "name": "Horn",
+       "die": "d6",
+       "damageType": "piercing",
+       "traits": [
+        "unarmed",
+        "finesse"
+       ],
+       "group": "brawling",
+       "choiceValue": "horn"
+      },
+      {
+       "name": "Tail",
+       "die": "d6",
+       "damageType": "bludgeoning",
+       "traits": [
+        "unarmed",
+        "finesse",
+        "trip"
+       ],
+       "group": "brawling",
+       "choiceValue": "tail"
+      },
+      {
+       "name": "Talon",
+       "die": "d4",
+       "damageType": "piercing",
+       "traits": [
+        "unarmed",
+        "agile",
+        "finesse"
+       ],
+       "group": "brawling",
+       "choiceValue": "talon"
+      },
+      {
+       "name": "Tongue",
+       "die": "d6",
+       "damageType": "bludgeoning",
+       "traits": [
+        "unarmed",
+        "finesse"
+       ],
+       "group": "brawling",
+       "choiceValue": "tongue"
+      },
+      {
+       "name": "Wing",
+       "die": "d4",
+       "damageType": "bludgeoning",
+       "traits": [
+        "unarmed",
+        "agile",
+        "finesse"
+       ],
+       "group": "brawling",
+       "choiceValue": "wing"
+      }
+     ],
+     "why": "wg-batch-025: the picker alone delivers no Strike — EffectGrant (types.ts:1758-1818) has no strike-creating lane; a Strike can only arrive through `grantedStrikes`. Every row's die/damage/traits is copied from sidebar-2749's table verbatim."
+    }
+   ],
+   "note": "READER for grantedStrikes: src/rules/build.ts:2432 `push(content.heritages[heritageId]?.grantedStrikes, heritageId)` -> push() (build.ts:2388) `if (g.choiceValue && g.choiceValue !== pick) continue`. ⚠ ENGINE HALF REQUIRED: that call passes NO `pick`, so every choiceValue-gated heritage Strike is dropped today (the same defect that leaves monstrous-skeleton's four Strikes dead). The engine agent must thread the answer in as the third argument, read from `build.effectChoices['<heritageId>:<heritageId>-attack']` — I used exactly that id convention on all four awakened-animal heritages (climbing-animal-attack / flying-animal-attack / running-animal-attack / swimming-animal-attack) so one derivation covers them. READER for effectChoices: build.ts:5389 resolvePick; options carry no `grant`, they are answer-holders only (the shape running-animal already ships)."
+  },
+  {
+   "id": "flying-animal-animal-attack",
+   "backfillRows": [
+    {
+     "category": "heritages",
+     "id": "flying-animal",
+     "field": "effectChoices",
+     "value": [
+      {
+       "id": "flying-animal-attack",
+       "prompt": "Choose your animal attack (it replaces the fist an unarmed humanoid would have)",
+       "options": [
+        {
+         "value": "beak",
+         "label": "Beak (1d6 piercing; finesse) — typical"
+        },
+        {
+         "value": "claw",
+         "label": "Claw (1d4 slashing; agile, finesse) — typical"
+        },
+        {
+         "value": "jaws",
+         "label": "Jaws (1d6 piercing; finesse) — typical"
+        },
+        {
+         "value": "talon",
+         "label": "Talon (1d4 piercing; agile, finesse) — typical"
+        },
+        {
+         "value": "wing",
+         "label": "Wing (1d4 bludgeoning; agile, finesse) — typical"
+        },
+        {
+         "value": "antler",
+         "label": "Antler (1d6 piercing; finesse)"
+        },
+        {
+         "value": "fangs",
+         "label": "Fangs (1d6 piercing; finesse)"
+        },
+        {
+         "value": "fist",
+         "label": "Fist (1d4 bludgeoning; agile, finesse, nonlethal)"
+        },
+        {
+         "value": "horn",
+         "label": "Horn (1d6 piercing; finesse)"
+        },
+        {
+         "value": "tail",
+         "label": "Tail (1d6 bludgeoning; finesse, trip)"
+        },
+        {
+         "value": "tongue",
+         "label": "Tongue (1d6 bludgeoning; finesse)"
+        }
+       ]
+      }
+     ],
+     "why": "wg-batch-025: heritage-289 prints \"one animal attack of your choice (typically beak, claw, jaws, talon, or wing; see the sidebar)\" and the record carried no attack carrier of any kind. Full sidebar-2749 list offered, print's five marked typical, matching WG's eleven-option select."
+    },
+    {
+     "category": "heritages",
+     "id": "flying-animal",
+     "field": "grantedStrikes",
+     "value": [
+      {
+       "name": "Beak",
+       "die": "d6",
+       "damageType": "piercing",
+       "traits": [
+        "unarmed",
+        "finesse"
+       ],
+       "group": "brawling",
+       "choiceValue": "beak"
+      },
+      {
+       "name": "Claw",
+       "die": "d4",
+       "damageType": "slashing",
+       "traits": [
+        "unarmed",
+        "agile",
+        "finesse"
+       ],
+       "group": "brawling",
+       "choiceValue": "claw"
+      },
+      {
+       "name": "Jaws",
+       "die": "d6",
+       "damageType": "piercing",
+       "traits": [
+        "unarmed",
+        "finesse"
+       ],
+       "group": "brawling",
+       "choiceValue": "jaws"
+      },
+      {
+       "name": "Talon",
+       "die": "d4",
+       "damageType": "piercing",
+       "traits": [
+        "unarmed",
+        "agile",
+        "finesse"
+       ],
+       "group": "brawling",
+       "choiceValue": "talon"
+      },
+      {
+       "name": "Wing",
+       "die": "d4",
+       "damageType": "bludgeoning",
+       "traits": [
+        "unarmed",
+        "agile",
+        "finesse"
+       ],
+       "group": "brawling",
+       "choiceValue": "wing"
+      },
+      {
+       "name": "Antler",
+       "die": "d6",
+       "damageType": "piercing",
+       "traits": [
+        "unarmed",
+        "finesse"
+       ],
+       "group": "brawling",
+       "choiceValue": "antler"
+      },
+      {
+       "name": "Fangs",
+       "die": "d6",
+       "damageType": "piercing",
+       "traits": [
+        "unarmed",
+        "finesse"
+       ],
+       "group": "brawling",
+       "choiceValue": "fangs"
+      },
+      {
+       "name": "Fist",
+       "die": "d4",
+       "damageType": "bludgeoning",
+       "traits": [
+        "unarmed",
+        "agile",
+        "finesse",
+        "nonlethal"
+       ],
+       "group": "brawling",
+       "choiceValue": "fist"
+      },
+      {
+       "name": "Horn",
+       "die": "d6",
+       "damageType": "piercing",
+       "traits": [
+        "unarmed",
+        "finesse"
+       ],
+       "group": "brawling",
+       "choiceValue": "horn"
+      },
+      {
+       "name": "Tail",
+       "die": "d6",
+       "damageType": "bludgeoning",
+       "traits": [
+        "unarmed",
+        "finesse",
+        "trip"
+       ],
+       "group": "brawling",
+       "choiceValue": "tail"
+      },
+      {
+       "name": "Tongue",
+       "die": "d6",
+       "damageType": "bludgeoning",
+       "traits": [
+        "unarmed",
+        "finesse"
+       ],
+       "group": "brawling",
+       "choiceValue": "tongue"
+      }
+     ],
+     "why": "wg-batch-025: the picker records the answer but only `grantedStrikes` can create a Strike (EffectGrant has no strike lane). Stats verbatim from sidebar-2749."
+    }
+   ],
+   "note": "Same readers and the same ENGINE HALF as climbing-animal-animal-attack (build.ts:2432 must pass build.effectChoices['flying-animal:flying-animal-attack'] as `pick`). The record's existing immunities/landSpeedMin fields are untouched — different fields, no collision."
+  },
+  {
+   "id": "running-animal",
+   "backfillRows": [
+    {
+     "category": "heritages",
+     "id": "running-animal",
+     "field": "effectChoices",
+     "value": [
+      {
+       "id": "running-animal-attack",
+       "prompt": "Choose your animal attack (it replaces the fist an unarmed humanoid would have)",
+       "options": [
+        {
+         "value": "claw",
+         "label": "Claw (1d4 slashing; agile, finesse) — typical"
+        },
+        {
+         "value": "jaws",
+         "label": "Jaws (1d6 piercing; finesse) — typical"
+        },
+        {
+         "value": "tail",
+         "label": "Tail (1d6 bludgeoning; finesse, trip) — typical"
+        },
+        {
+         "value": "antler",
+         "label": "Antler (1d6 piercing; finesse)"
+        },
+        {
+         "value": "beak",
+         "label": "Beak (1d6 piercing; finesse)"
+        },
+        {
+         "value": "fangs",
+         "label": "Fangs (1d6 piercing; finesse)"
+        },
+        {
+         "value": "fist",
+         "label": "Fist (1d4 bludgeoning; agile, finesse, nonlethal)"
+        },
+        {
+         "value": "horn",
+         "label": "Horn (1d6 piercing; finesse)"
+        },
+        {
+         "value": "talon",
+         "label": "Talon (1d4 piercing; agile, finesse)"
+        },
+        {
+         "value": "tongue",
+         "label": "Tongue (1d6 bludgeoning; finesse)"
+        },
+        {
+         "value": "wing",
+         "label": "Wing (1d4 bludgeoning; agile, finesse)"
+        }
+       ]
+      }
+     ],
+     "why": "wg-batch-025: the choice id and the printed three are kept; the other eight sidebar-2749 rows are added because heritage-290 says \"typically\", not \"choose one of these three\", and the sidebar prints all eleven. The Tail label also gains the `trip` trait the old label had dropped."
+    },
+    {
+     "category": "heritages",
+     "id": "running-animal",
+     "field": "grantedStrikes",
+     "value": [
+      {
+       "name": "Claw",
+       "die": "d4",
+       "damageType": "slashing",
+       "traits": [
+        "unarmed",
+        "agile",
+        "finesse"
+       ],
+       "group": "brawling",
+       "choiceValue": "claw"
+      },
+      {
+       "name": "Jaws",
+       "die": "d6",
+       "damageType": "piercing",
+       "traits": [
+        "unarmed",
+        "finesse"
+       ],
+       "group": "brawling",
+       "choiceValue": "jaws"
+      },
+      {
+       "name": "Tail",
+       "die": "d6",
+       "damageType": "bludgeoning",
+       "traits": [
+        "unarmed",
+        "finesse",
+        "trip"
+       ],
+       "group": "brawling",
+       "choiceValue": "tail"
+      },
+      {
+       "name": "Antler",
+       "die": "d6",
+       "damageType": "piercing",
+       "traits": [
+        "unarmed",
+        "finesse"
+       ],
+       "group": "brawling",
+       "choiceValue": "antler"
+      },
+      {
+       "name": "Beak",
+       "die": "d6",
+       "damageType": "piercing",
+       "traits": [
+        "unarmed",
+        "finesse"
+       ],
+       "group": "brawling",
+       "choiceValue": "beak"
+      },
+      {
+       "name": "Fangs",
+       "die": "d6",
+       "damageType": "piercing",
+       "traits": [
+        "unarmed",
+        "finesse"
+       ],
+       "group": "brawling",
+       "choiceValue": "fangs"
+      },
+      {
+       "name": "Fist",
+       "die": "d4",
+       "damageType": "bludgeoning",
+       "traits": [
+        "unarmed",
+        "agile",
+        "finesse",
+        "nonlethal"
+       ],
+       "group": "brawling",
+       "choiceValue": "fist"
+      },
+      {
+       "name": "Horn",
+       "die": "d6",
+       "damageType": "piercing",
+       "traits": [
+        "unarmed",
+        "finesse"
+       ],
+       "group": "brawling",
+       "choiceValue": "horn"
+      },
+      {
+       "name": "Talon",
+       "die": "d4",
+       "damageType": "piercing",
+       "traits": [
+        "unarmed",
+        "agile",
+        "finesse"
+       ],
+       "group": "brawling",
+       "choiceValue": "talon"
+      },
+      {
+       "name": "Tongue",
+       "die": "d6",
+       "damageType": "bludgeoning",
+       "traits": [
+        "unarmed",
+        "finesse"
+       ],
+       "group": "brawling",
+       "choiceValue": "tongue"
+      },
+      {
+       "name": "Wing",
+       "die": "d4",
+       "damageType": "bludgeoning",
+       "traits": [
+        "unarmed",
+        "agile",
+        "finesse"
+       ],
+       "group": "brawling",
+       "choiceValue": "wing"
+      }
+     ],
+     "why": "wg-batch-025: heritage-290 prints \"one animal attack of your choice\" and the existing picker's options carried no `grant` — EffectGrant has no strike lane, so the answer produced nothing. Stats verbatim from sidebar-2749."
+    }
+   ],
+   "note": "landSpeedMin:30 on this record is already correct and untouched. Same ENGINE HALF as the other three (build.ts:2432 `pick`)."
+  },
+  {
+   "id": "swimming-animal",
+   "backfillRows": [
+    {
+     "category": "heritages",
+     "id": "swimming-animal",
+     "field": "effectChoices",
+     "value": [
+      {
+       "id": "aquatic-or-water-dwelling",
+       "prompt": "Choose whether you are aquatic or water-dwelling",
+       "options": [
+        {
+         "value": "aquatic",
+         "label": "Aquatic (gain the aquatic trait; swim Speed 30 ft)",
+         "note": "The aquatic trait means you breathe water but not air, and your bludgeoning and slashing unarmed Strikes don’t take the usual –2 penalty for being underwater.",
+         "grant": {
+          "speeds": {
+           "swim": 30
+          },
+          "grantsCreatureTraits": [
+           "aquatic"
+          ]
+         }
+        },
+        {
+         "value": "water-dwelling",
+         "label": "Water-dwelling (hold breath 10 min; swim Speed 20 ft, land Speed 20 ft)",
+         "note": "You can hold your breath underwater for 10 minutes before needing air, and if you can move on land you have a base Speed of 20 feet.",
+         "grant": {
+          "speeds": {
+           "swim": 20
+          },
+          "landSpeedMin": 20
+         }
+        }
+       ]
+      },
+      {
+       "id": "swimming-animal-attack",
+       "prompt": "Choose your animal attack (it replaces the fist an unarmed humanoid would have)",
+       "options": [
+        {
+         "value": "claw",
+         "label": "Claw (1d4 slashing; agile, finesse) — typical"
+        },
+        {
+         "value": "jaws",
+         "label": "Jaws (1d6 piercing; finesse) — typical"
+        },
+        {
+         "value": "tail",
+         "label": "Tail (1d6 bludgeoning; finesse, trip) — typical"
+        },
+        {
+         "value": "antler",
+         "label": "Antler (1d6 piercing; finesse)"
+        },
+        {
+         "value": "beak",
+         "label": "Beak (1d6 piercing; finesse)"
+        },
+        {
+         "value": "fangs",
+         "label": "Fangs (1d6 piercing; finesse)"
+        },
+        {
+         "value": "fist",
+         "label": "Fist (1d4 bludgeoning; agile, finesse, nonlethal)"
+        },
+        {
+         "value": "horn",
+         "label": "Horn (1d6 piercing; finesse)"
+        },
+        {
+         "value": "talon",
+         "label": "Talon (1d4 piercing; agile, finesse)"
+        },
+        {
+         "value": "tongue",
+         "label": "Tongue (1d6 bludgeoning; finesse)"
+        },
+        {
+         "value": "wing",
+         "label": "Wing (1d4 bludgeoning; agile, finesse)"
+        }
+       ]
+      }
+     ],
+     "why": "wg-batch-025, TWO findings merged into ONE row because both target heritages/swimming-animal `effectChoices` and the applier refuses a collision. (a) heritage-291's water-dwelling branch prints \"if you can move on land, you have base Speed of 20 feet\" and our option granted only swim 20, leaving the chassis land 5 — `landSpeedMin:20` is authored on the OPTION, never at record level, because the aquatic branch prints no land Speed and must keep the chassis 5. (b) heritage-291 also prints \"one animal attack of your choice (typically claw, jaws, or tail; see the sidebar)\" and the record had no attack carrier at all."
+    },
+    {
+     "category": "heritages",
+     "id": "swimming-animal",
+     "field": "grantedStrikes",
+     "value": [
+      {
+       "name": "Claw",
+       "die": "d4",
+       "damageType": "slashing",
+       "traits": [
+        "unarmed",
+        "agile",
+        "finesse"
+       ],
+       "group": "brawling",
+       "choiceValue": "claw"
+      },
+      {
+       "name": "Jaws",
+       "die": "d6",
+       "damageType": "piercing",
+       "traits": [
+        "unarmed",
+        "finesse"
+       ],
+       "group": "brawling",
+       "choiceValue": "jaws"
+      },
+      {
+       "name": "Tail",
+       "die": "d6",
+       "damageType": "bludgeoning",
+       "traits": [
+        "unarmed",
+        "finesse",
+        "trip"
+       ],
+       "group": "brawling",
+       "choiceValue": "tail"
+      },
+      {
+       "name": "Antler",
+       "die": "d6",
+       "damageType": "piercing",
+       "traits": [
+        "unarmed",
+        "finesse"
+       ],
+       "group": "brawling",
+       "choiceValue": "antler"
+      },
+      {
+       "name": "Beak",
+       "die": "d6",
+       "damageType": "piercing",
+       "traits": [
+        "unarmed",
+        "finesse"
+       ],
+       "group": "brawling",
+       "choiceValue": "beak"
+      },
+      {
+       "name": "Fangs",
+       "die": "d6",
+       "damageType": "piercing",
+       "traits": [
+        "unarmed",
+        "finesse"
+       ],
+       "group": "brawling",
+       "choiceValue": "fangs"
+      },
+      {
+       "name": "Fist",
+       "die": "d4",
+       "damageType": "bludgeoning",
+       "traits": [
+        "unarmed",
+        "agile",
+        "finesse",
+        "nonlethal"
+       ],
+       "group": "brawling",
+       "choiceValue": "fist"
+      },
+      {
+       "name": "Horn",
+       "die": "d6",
+       "damageType": "piercing",
+       "traits": [
+        "unarmed",
+        "finesse"
+       ],
+       "group": "brawling",
+       "choiceValue": "horn"
+      },
+      {
+       "name": "Talon",
+       "die": "d4",
+       "damageType": "piercing",
+       "traits": [
+        "unarmed",
+        "agile",
+        "finesse"
+       ],
+       "group": "brawling",
+       "choiceValue": "talon"
+      },
+      {
+       "name": "Tongue",
+       "die": "d6",
+       "damageType": "bludgeoning",
+       "traits": [
+        "unarmed",
+        "finesse"
+       ],
+       "group": "brawling",
+       "choiceValue": "tongue"
+      },
+      {
+       "name": "Wing",
+       "die": "d4",
+       "damageType": "bludgeoning",
+       "traits": [
+        "unarmed",
+        "agile",
+        "finesse"
+       ],
+       "group": "brawling",
+       "choiceValue": "wing"
+      }
+     ],
+     "why": "wg-batch-025: only `grantedStrikes` can create a Strike; stats verbatim from sidebar-2749."
+    }
+   ],
+   "note": "⚠ TWO ENGINE HALVES, both named by the read agent and both outside my files. (1) `landSpeedMin` is not on EffectGrant (types.ts:1758-1818) and derive.ts:4735-4737 reads landSpeedMin off feats / class features / heritage RECORDS only — the engine agent adds `landSpeedMin?: number` to EffectGrant and folds `c.chosenEffects?.landSpeedMin` into landFloor. Authoring it now per instruction. Do NOT author speeds.land instead: derive.ts:4775 is additive (5+20=25). (2) build.ts:2432 must pass build.effectChoices['swimming-animal:swimming-animal-attack'] as `pick`. The aquatic option is reproduced byte-for-byte from the shipped record so the merge changes nothing there."
+  },
+  {
+   "id": "rite-of-reinforcement",
+   "backfillRows": [
+    {
+     "category": "heritages",
+     "id": "rite-of-reinforcement",
+     "field": "grantsItems",
+     "value": [
+      {
+       "itemId": "rite-of-reinforcement-exoskeleton",
+       "quantity": 1,
+       "worn": true
+      }
+     ],
+     "why": "wg-batch-025: heritage-164 prints \"Your exoskeleton is medium armor in the plate armor group that grants a +4 item bonus to AC …\" and \"You can never wear other armor or remove your exoskeleton.\" The item already exists and matches print field for field; only the link from heritage to item was missing, so the character wore nothing and got no AC."
+    }
+   ],
+   "note": "READER: src/rules/build.ts:6717 `for (const g of h?.grantsItems ?? [])`. Target items['rite-of-reinforcement-exoskeleton'] already exists (medium/plate/+4/+1/-2/-5/strength 3/comfort). Exact precedent: heritages/hardshell-surki grantsItems [{itemId:'hardshell-surki-carapace', quantity:1, worn:true}]."
+  },
+  {
+   "id": "snaring-anadi",
+   "backfillRows": [
+    {
+     "category": "heritages",
+     "id": "snaring-anadi",
+     "field": "unarmedTraits",
+     "value": [
+      {
+       "match": [
+        "fang"
+       ],
+       "add": [
+        "grapple",
+        "trip"
+       ]
+      }
+     ],
+     "why": "wg-batch-025: heritage-158 prints \"Your fangs attack gains the grapple and trip traits.\" The record had no mechanical field at all and the anadi chassis Fangs strike ships traits ['unarmed','finesse'] only, so the heritage's entire printed content reached nobody. WG models it as display prose (injectText) and does not change the item's traits either — this is a residual-read lane neither side had."
+    }
+   ],
+   "note": "READER: src/rules/derive.ts:4453-4474 applyUnarmedRiders — its `sources` list includes `heritageRecords(c, db)` (derive.ts:4467) and the `add` array is merged at ~4489 via mergeTraits. `match:['fang']` is a substring test against the strike name (derive.ts:4476), and the chassis strike is named \"Fangs\". Three heritages already ship unarmedTraits (warrior-automaton, xyloshi, warrior-jotunborn); they use setDie/remove, so `add` is the unexercised-but-read arm."
+  },
+  {
+   "id": "created-fleshwarp",
+   "backfillRows": [
+    {
+     "category": "heritages",
+     "id": "created-fleshwarp",
+     "field": "immunities",
+     "value": [
+      "starvation (you don't need to eat)"
+     ],
+     "why": "wg-batch-025: heritage-125 prints \"Your manufactured body is durable; you don't need to eat and can't starve.\" The disease half is already carried (situationalBonuses.ts:2187); this half was modelled by neither side. WG emits only the three save ops and nothing for eating."
+    }
+   ],
+   "note": "READER: `Heritage extends ContentBase, DefenseGrants` (types.ts:2266) and derive.ts:2356 `push(h.name ?? 'Heritage', h)` gives heritage `immunities` a live reader in deriveDefenses. The vocabulary is already free-form prose in the shipped corpus — \"aging effects\", \"pressure (oceanic depths)\", \"soul-imprisonment effects\", \"falling damage\" — so no new lane or reader is needed."
+  },
+  {
+   "id": "polyglot-android",
+   "backfillRows": [
+    {
+     "category": "heritages",
+     "id": "polyglot-android",
+     "field": "languageChoices",
+     "value": 2,
+     "why": "wg-batch-025: heritage-116 prints \"You learn two new languages, chosen from common languages and any uncommon languages you have access to.\" The record carried no language field at all, so the player got zero extra languages and zero pickers."
+    },
+    {
+     "category": "heritages",
+     "id": "polyglot-android",
+     "field": "languageChoicesBonus",
+     "value": [
+      {
+       "featId": "multilingual",
+       "extra": 1
+      }
+     ],
+     "why": "wg-batch-025: the same clause continues \"If you select the Multilingual feat, you learn three new languages instead of two.\" WG models it as adjValue IMPROVED_MULTILINGUAL."
+    }
+   ],
+   "note": "READERS: src/rules/build.ts:1895 recordLanguageSlots already takes heritageId and pushes content.heritages[heritageId] as a language source; `languageChoices` is consumed at build.ts:1924-1926 and `languageChoicesBonus` at build.ts:1935 `for (const b of other.languageChoicesBonus ?? []) if (b.featId === id) own += b.extra`. feats['multilingual'] exists. ⚠ zero heritages carry languageChoices today, so this is the first record to feed a reader that has always existed."
+  },
+  {
+   "id": "ponygait-centaur",
+   "backfillRows": [
+    {
+     "category": "heritages",
+     "id": "ponygait-centaur",
+     "field": "sizeSet",
+     "value": "medium",
+     "why": "wg-batch-025: heritage-296 prints \"Instead of Large, your size is Medium.\" The centaur chassis is large and the record carried no size field, so the sheet reported Large — wrong reach, wrong Bulk, wrong space."
+    }
+   ],
+   "note": "READER: build.ts:7695 `if (g?.sizeSet) size = g.sizeSet;` — build.ts:7693's comment quotes this exact printed sentence as the reason sizeSet exists. Precedent: plane-hopper-jotunborn. NOT MINE: the second ponygait-centaur finding (+1 circumstance to Reflex as a real number) needs a numeric save-bonus lane on DefenseGrants — engine, not data."
+  },
+  {
+   "id": "mistbreath-azarketi",
+   "backfillRows": [
+    {
+     "category": "heritages",
+     "id": "mistbreath-azarketi",
+     "field": "landSpeedMin",
+     "value": 25,
+     "why": "wg-batch-025: heritage-195 prints \"Your land Speed is 25 feet, but your swim Speed is only 15 feet.\" The record stated only swim 15, so the azarketi chassis land 20 stood and the sheet walked 20 ft. The shipped `speeds:{swim:15}` is already correct and is left untouched."
+    }
+   ],
+   "note": "READER: src/rules/derive.ts:4773 `for (const h of heritageRecords(c, db)) landFloor = Math.max(landFloor, h.landSpeedMin ?? 0)`, then `speeds.land = Math.max(speeds.land ?? 0, landFloor)`. ⚠ CORRECTED BY THE VERIFIER: the first draft of this row authored `speeds: {land:25, swim:15}` on the reasoning that heritage `speeds` REPLACE the chassis at derive.ts:4720 (`baseSpeeds = {...ancestry.speeds, ...heritageBase}`). They do — and then derive.ts:4730 `grantSources.push(...heritageRecords(c, db))` puts the SAME record on the additive land path at derive.ts:4817 (`if (key === 'land') speeds.land = (speeds.land ?? 0) + v`), so the value is counted twice. Measured on a built azarketi/mistbreath: land 50. `landSpeedMin` is read once, is the operator every land statement in the corpus already uses (fodder-skeleton 30, flying-animal 20, running-animal 30, cecaelia-merfolk 10), and NO heritage in core.json carries a positive `speeds.land` — this row would have been the first."
+  },
+  {
+   "id": "venomous-anadi",
+   "backfillRows": [
+    {
+     "category": "heritages",
+     "id": "venomous-anadi",
+     "field": "grantsActions",
+     "value": [
+      "anadi-venom"
+     ],
+     "why": "wg-batch-025: heritage-160 prints \"You gain the Anadi Venom ability\" and the record had no mechanical field at all, so actions/anadi-venom sat orphaned in core.json and reached no character. The only trace was a description LINK, which renders as text and carries nothing."
+    }
+   ],
+   "note": "READER: src/sheet/MainTab.tsx:288-293 walks `content.heritages[character.heritageId]?.grantsActions` into the encounter action list. actions['anadi-venom'] already exists (aonId action-729, 1 action). Sibling precedent on the same batch's chassis: heritages/kaleidoscopic-athamaru grantsActions ['dazzle-seeker']."
+  },
+  {
+   "id": "adaptive-anadi",
+   "backfillRows": [
+    {
+     "category": "heritages",
+     "id": "adaptive-anadi",
+     "field": "choice",
+     "value": null,
+     "why": "wg-batch-025: the record asked the Adopted Ancestry question twice. This copy is the DEAD one — its answer under featChoices['heritage:adaptive-anadi'] is read by nobody (build.ts:7460 needs grantsToken, build.ts:7480 only round-trips it for saving) — and its `inert` line stated the opposite of what the app does: featFeatGrants.ts:610 grants adopted-ancestry, whose own picker IS read by featSlots.ts:78 and does unlock the chosen ancestry's feats. WG asks once, on the granted feat."
+    },
+    {
+     "category": "heritages",
+     "id": "adaptive-anadi",
+     "field": "choiceOptionLimits",
+     "value": [
+      {
+       "target": "adopted-ancestry",
+       "flag": "adoptedAncestry",
+       "allow": [
+        {
+         "value": "dwarf"
+        },
+        {
+         "value": "elf"
+        },
+        {
+         "value": "human"
+        },
+        {
+         "value": "orc"
+        }
+       ],
+       "reason": "Adaptive Anadi narrows the choice to a common, Medium humanoid ancestry."
+      }
+     ],
+     "why": "wg-batch-025: heritage-156 prints \"Choose a common, Medium humanoid ancestry.\" The live picker on the granted feat is `kind:'open'` over every ancestry, so Goblin or Leshy (both Small) was selectable. The four values are computed, not curated: filtering core.json ancestries on rarity 'common' AND size 'medium' AND traits containing 'humanoid' returns exactly dwarf, elf, human, orc."
+    }
+   ],
+   "note": "READER: src/rules/derive.ts:1557 `for (const h of heritageRecords(c, db)) consider(h.choiceOptionLimits)` inside effectiveChoiceLimits. Field shape copied from backgrounds/toymaker and backgrounds/isgeri-reclaimer. Heritage extends DefenseGrants (types.ts:2266), which declares choiceOptionLimits. ⚠⚠ VERIFIER CORRECTION — THE `choice: null` ROW IS SAFE AND LANDS TODAY, BUT THE `choiceOptionLimits` ROW IS INERT AS AUTHORED. feats/adopted-ancestry's choice is `kind: 'open'` (from: {type:'ancestry', excludeOwn:true}), and BOTH open-choice render paths bypass the narrowing entirely: the granted-feat path (Builder.tsx:717-728) calls `openChoiceOptions(...)` in the `def.kind === 'open'` arm and only the ELSE arm calls `narrowChoiceOptions`, and the picked-feat path (Builder.tsx:515-538) builds its SearchSelect straight from `openChoiceOptions` with no limits at all. `effectiveChoiceLimits` is therefore never consulted for this feat, so the printed \"common, Medium humanoid\" narrowing still does not reach the player. No regression either way — the deleted heritage `choice` was inert too — but the finding is NOT closed by data alone. ENGINE/UI AGENT: run the `open` option list through the same limit intersection `narrowChoiceOptions` applies (filter `openChoiceOptions(...)` by `effectiveChoiceLimits(recordId, def, character, content)` when any limit is in force) in BOTH Builder.tsx arms, and surface limitReasons the same way."
+  },
+  {
+   "id": "cataphract-fleshwarp",
+   "backfillRows": [
+    {
+     "category": "heritages",
+     "id": "cataphract-fleshwarp",
+     "field": "effectChoices",
+     "value": [
+      {
+       "id": "armor-branch",
+       "prompt": "Cataphract Fleshwarp grants Armor Proficiency — unless your class already makes you trained in every type of armor, in which case you instead become trained in Athletics (or another skill if you are already trained in Athletics) and gain Armor Assist.",
+       "options": [
+        {
+         "value": "armor-proficiency",
+         "label": "Armor Proficiency (my class does not train me in all armor)",
+         "grant": {
+          "grantsFeats": [
+           "armor-proficiency"
+          ]
+         }
+        },
+        {
+         "value": "athletics",
+         "label": "Athletics + Armor Assist (my class trains me in all armor)",
+         "grant": {
+          "skills": {
+           "athletics": "trained"
+          },
+          "grantsFeats": [
+           "armor-assist"
+          ]
+         }
+        },
+        {
+         "value": "acrobatics",
+         "label": "Acrobatics + Armor Assist (all armor, already trained in Athletics)",
+         "grant": {
+          "skills": {
+           "acrobatics": "trained"
+          },
+          "grantsFeats": [
+           "armor-assist"
+          ]
+         }
+        },
+        {
+         "value": "arcana",
+         "label": "Arcana + Armor Assist (all armor, already trained in Athletics)",
+         "grant": {
+          "skills": {
+           "arcana": "trained"
+          },
+          "grantsFeats": [
+           "armor-assist"
+          ]
+         }
+        },
+        {
+         "value": "crafting",
+         "label": "Crafting + Armor Assist (all armor, already trained in Athletics)",
+         "grant": {
+          "skills": {
+           "crafting": "trained"
+          },
+          "grantsFeats": [
+           "armor-assist"
+          ]
+         }
+        },
+        {
+         "value": "deception",
+         "label": "Deception + Armor Assist (all armor, already trained in Athletics)",
+         "grant": {
+          "skills": {
+           "deception": "trained"
+          },
+          "grantsFeats": [
+           "armor-assist"
+          ]
+         }
+        },
+        {
+         "value": "diplomacy",
+         "label": "Diplomacy + Armor Assist (all armor, already trained in Athletics)",
+         "grant": {
+          "skills": {
+           "diplomacy": "trained"
+          },
+          "grantsFeats": [
+           "armor-assist"
+          ]
+         }
+        },
+        {
+         "value": "intimidation",
+         "label": "Intimidation + Armor Assist (all armor, already trained in Athletics)",
+         "grant": {
+          "skills": {
+           "intimidation": "trained"
+          },
+          "grantsFeats": [
+           "armor-assist"
+          ]
+         }
+        },
+        {
+         "value": "medicine",
+         "label": "Medicine + Armor Assist (all armor, already trained in Athletics)",
+         "grant": {
+          "skills": {
+           "medicine": "trained"
+          },
+          "grantsFeats": [
+           "armor-assist"
+          ]
+         }
+        },
+        {
+         "value": "nature",
+         "label": "Nature + Armor Assist (all armor, already trained in Athletics)",
+         "grant": {
+          "skills": {
+           "nature": "trained"
+          },
+          "grantsFeats": [
+           "armor-assist"
+          ]
+         }
+        },
+        {
+         "value": "occultism",
+         "label": "Occultism + Armor Assist (all armor, already trained in Athletics)",
+         "grant": {
+          "skills": {
+           "occultism": "trained"
+          },
+          "grantsFeats": [
+           "armor-assist"
+          ]
+         }
+        },
+        {
+         "value": "performance",
+         "label": "Performance + Armor Assist (all armor, already trained in Athletics)",
+         "grant": {
+          "skills": {
+           "performance": "trained"
+          },
+          "grantsFeats": [
+           "armor-assist"
+          ]
+         }
+        },
+        {
+         "value": "religion",
+         "label": "Religion + Armor Assist (all armor, already trained in Athletics)",
+         "grant": {
+          "skills": {
+           "religion": "trained"
+          },
+          "grantsFeats": [
+           "armor-assist"
+          ]
+         }
+        },
+        {
+         "value": "society",
+         "label": "Society + Armor Assist (all armor, already trained in Athletics)",
+         "grant": {
+          "skills": {
+           "society": "trained"
+          },
+          "grantsFeats": [
+           "armor-assist"
+          ]
+         }
+        },
+        {
+         "value": "stealth",
+         "label": "Stealth + Armor Assist (all armor, already trained in Athletics)",
+         "grant": {
+          "skills": {
+           "stealth": "trained"
+          },
+          "grantsFeats": [
+           "armor-assist"
+          ]
+         }
+        },
+        {
+         "value": "survival",
+         "label": "Survival + Armor Assist (all armor, already trained in Athletics)",
+         "grant": {
+          "skills": {
+           "survival": "trained"
+          },
+          "grantsFeats": [
+           "armor-assist"
+          ]
+         }
+        },
+        {
+         "value": "thievery",
+         "label": "Thievery + Armor Assist (all armor, already trained in Athletics)",
+         "grant": {
+          "skills": {
+           "thievery": "trained"
+          },
+          "grantsFeats": [
+           "armor-assist"
+          ]
+         }
+        }
+       ]
+      }
+     ],
+     "why": "wg-batch-025: heritage-204 prints \"You gain the Armor Proficiency feat. If your class makes you trained in all types of armor, you instead become trained in Athletics (or a skill of your choice if you're already trained in Athletics) and gain the Armor Assist skill feat.\" We granted Armor Proficiency unconditionally, so a fighter or champion received a feat print explicitly denies them and lost both Athletics and Armor Assist. WG models it as one conditional on LIGHT/MEDIUM/HEAVY_ARMOR >= T."
+    },
+    {
+     "category": "heritages",
+     "id": "cataphract-fleshwarp",
+     "field": "grantsFeats",
+     "value": null,
+     "why": "wg-batch-025: the unconditional record-level grant is what makes the all-armor branch wrong; the branch above replaces it."
+    }
+   ],
+   "note": "⚠⚠ BLOCKED ON AN ENGINE HALF — DO NOT APPLY THESE TWO ROWS UNTIL IT LANDS, or the record loses Armor Proficiency and gains nothing. I checked the reader as instructed and it does NOT exist: `EffectGrant` (src/rules/types.ts:1758-1818) has resistances/weaknesses/immunities/senses/speeds/skills/grantsLanguages/innateSpells/grantsRituals/focusSpells/focusPoolBonus/passive/staffSpells/strikeDamage/whileActive/grantsCreatureTraits and NO grantsFeats, and applyAlwaysOn (build.ts:5324-5341) has no feat arm — the read agent's proposal assumed one. The `skills` half of every option DOES work today (build.ts:5327). ENGINE AGENT: add `grantsFeats?: string[]` to EffectGrant and feed resolved picks into the granted-feat source list at build.ts:4574 (where `grantSources.push({ id: hid, grants: content.heritages[hid]?.grantsFeats })` already runs for the record-level field). Exact-parity form would be a build-time gate on computed armor proficiency; this picker is the printed question made visible instead, which the WG-parity choice-experience rule wants anyway. Both target feats exist in core.json. UNBLOCKED 2026-09-03: EffectGrant.grantsFeats + the heritage-option reader in the granted-feat pass (build.ts grantSources) landed."
+  },
+  {
+   "id": "budding-speaker-centaur",
+   "backfillRows": [
+    {
+     "category": "heritages",
+     "id": "budding-speaker-centaur",
+     "field": "choice",
+     "value": {
+      "flag": "speakerTradition",
+      "prompt": "Select divine or primal — this choice can't be changed",
+      "kind": "array",
+      "options": [
+       {
+        "value": "divine",
+        "label": "Divine — you are a Faithspeaker"
+       },
+       {
+        "value": "primal",
+        "label": "Primal — you are a Greenspeaker"
+       }
+      ]
+     },
+     "why": "wg-batch-025: heritage-292 prints \"Select divine or primal. If you selected divine, you're a Faithspeaker. If you selected primal, you're a Greenspeaker. This choice can't be changed.\" We recorded the identity nowhere — it was implied inside a cantrip spellFilter — so two downstream feats re-asked a question print says cannot be changed and their answers could contradict the level-1 cantrip. WG creates a FAITHSPEAKER/GREENSPEAKER bool for exactly this."
+    },
+    {
+     "category": "heritages",
+     "id": "budding-speaker-centaur",
+     "field": "effectChoices",
+     "value": [
+      {
+       "id": "speaker-cantrip",
+       "prompt": "Choose a cantrip from your declared list — cast at will as an innate spell",
+       "spellFilter": {
+        "traditions": [
+         "divine",
+         "primal"
+        ],
+        "cantripsOnly": true,
+        "grantAs": "innate",
+        "innate": {
+         "atWill": true
+        },
+        "traditionFromChoiceFlag": "speakerTradition"
+       }
+      }
+     ],
+     "why": "wg-batch-025: the same clause continues \"You gain one cantrip from the chosen spell list\" — singular, from the ONE declared tradition. Without the narrowing the picker offered both lists at once. WG's divine branch runs a select filtered to DIVINE and the primal branch one filtered to PRIMAL."
+    }
+   ],
+   "note": "WHICH HALF IS DATA: both of these rows are pure data and fire today. READERS — `choice.flag` is stored under featChoices['heritage:budding-speaker-centaur'] and found by choiceFlagAnswer (src/rules/build.ts:1720 `if (!answer && build.heritageId) answer = answerFor(content.heritages[build.heritageId], \\`heritage:${build.heritageId}\\`)`); `spellFilter.traditionFromChoiceFlag` is consumed by narrowSpellFilter (build.ts:1685-1694), which returns the filter UNCHANGED while unanswered so a half-built character still sees a full picker. The heritage `choice` block renders at src/builder/shared.tsx:2783-2820. Precedent: the surki's `magiphageTradition`. WHICH HALF IS NOT DATA (engine agent, NOT authored here): deleting feats/speakers-defense's duplicate 'speaker-kind' picker and feats/merge-with-the-source's identity re-ask requires a GATE first — a reader that resolves those grants from choiceFlagAnswer('speakerTradition'). Deleting the pickers before that gate exists would delete the spell grants outright, which is worse than asking twice, so I authored neither."
+  },
+  {
+   "id": "beastkin",
+   "backfillRows": [
+    {
+     "category": "actions",
+     "id": "change-shape-beastkin",
+     "create": true,
+     "value": {
+      "id": "change-shape-beastkin",
+      "name": "Change Shape",
+      "traits": [
+       "beastkin",
+       "concentrate",
+       "polymorph",
+       "primal",
+       "transmutation"
+      ],
+      "rarity": "common",
+      "actionCost": {
+       "type": "actions",
+       "value": 1
+      },
+      "source": {
+       "book": "Pathfinder Lost Omens Ancestry Guide",
+       "license": "OGL"
+      },
+      "edition": "legacy-era",
+      "aonId": "action-700",
+      "description": "You shift between your humanoid shape and your hybrid shape. Each shape has its own fixed, persistent appearance, and most beastkin stay in hybrid shape by default — in it you look like a blend of your ancestry and your inherent animal. While in hybrid shape you have a jaws unarmed Strike drawn from that animal's features: fangs for a bat, a beak for an eagle, mandibles for a wasp, and so on. Those jaws deal 1d4 piercing damage, have the agile, finesse and unarmed traits, and are in the brawling weapon group. In humanoid shape you keep the appearance of your original ancestry."
+     },
+     "why": "wg-batch-025: heritage-119 prints \"You gain the Change Shape ability\" and no beastkin Change Shape existed in our data — core.json had only change-shape (the ANADI one, its traits include 'anadi'), -kitsune, -tanuki and -yaoguai. Modelled on actions/change-shape-kitsune; traits, action cost and aonId taken from AoN action-700 (Concentrate, Polymorph, Primal, Transmutation, Single Action) with the 'beastkin' trait added the way the kitsune/tanuki/yaoguai variants each carry their own ancestry trait. Description written from the printed text in our own words, not copied from Wanderer's Guide."
+    },
+    {
+     "category": "heritages",
+     "id": "beastkin",
+     "field": "grantsActions",
+     "value": [
+      "change-shape-beastkin"
+     ],
+     "why": "wg-batch-025: the record carried the hybrid-form jaws (grantedStrikes) but no grantsActions and no grantsFeats, so the printed ability itself reached the sheet from nowhere. WG hands over their \"Change Shape (Beastkin)\" record."
+    }
+   ],
+   "note": "READER: src/sheet/MainTab.tsx:288-309 walks `content.heritages[character.heritageId]?.grantsActions` into the encounter action list. Beastkin is ancestry-less (ancestryId null), so unlike kitsune/tanuki/yaoguai/anadi — where the ANCESTRY carries the variant — the heritage is the only available carrier. The existing grantedStrikes Jaws (1d4 piercing; agile, finesse, unarmed; brawling) already matches the action text and is untouched."
+  },
+  {
+   "id": "coral-athamaru",
+   "backfillRows": [
+    {
+     "category": "items",
+     "id": "coral-athamaru-armor",
+     "create": true,
+     "value": {
+      "id": "coral-athamaru-armor",
+      "name": "Coral Athamaru Armor",
+      "level": 1,
+      "price": {},
+      "bulk": 0,
+      "traits": [
+       "aquadynamic",
+       "comfort"
+      ],
+      "rarity": "common",
+      "source": {
+       "book": "Pathfinder Howl of the Wild",
+       "license": "ORC"
+      },
+      "itemType": "armor",
+      "category": "medium",
+      "group": "plate",
+      "acBonus": 4,
+      "dexCap": 1,
+      "checkPenalty": -2,
+      "speedPenalty": -5,
+      "strength": 3,
+      "description": "Plates of living coral cover patches of your body. They are medium armor in the plate group: a +4 item bonus to AC, a Dex cap of +1, a check penalty of -2, a Speed penalty of -5 feet and a Strength value of +3, with the aquadynamic and comfort traits. You can never wear other armor or remove the coral, and you can etch armor runes onto it as normal."
+     },
+     "why": "wg-batch-025: heritage-284 prints the plates field for field and no such item existed — items['coral-armor'] is the unrelated Treasure Vault item (acBonus 3, dexCap 2, group 'skeletal'). Modelled on items/hardshell-surki-carapace, which is the identical shape (medium/plate/+4/+1/-2/-5/strength 3/comfort) plus the printed aquadynamic trait. Description written from the printed text in our own words."
+    },
+    {
+     "category": "heritages",
+     "id": "coral-athamaru",
+     "field": "grantsItems",
+     "value": [
+      {
+       "itemId": "coral-athamaru-armor",
+       "quantity": 1,
+       "worn": true
+      }
+     ],
+     "why": "wg-batch-025: the record was identity fields only, so an athamaru with coral plates started with no armor at all. WG's single op is giveItem 13914."
+    }
+   ],
+   "note": "READER: src/rules/build.ts:6717 `for (const g of h?.grantsItems ?? [])` — the heritage arm added for exactly this shape (its comment cites the Hardshell Surki carapace). Both traits 'aquadynamic' and 'comfort' exist in core.json trait; 'aquadynamic' is already used by items/coral-armor and items/reef-heart."
+  },
+  {
+   "id": "bright-fetchling",
+   "backfillRows": [
+    {
+     "category": "heritages",
+     "id": "bright-fetchling",
+     "field": "dataWarning",
+     "value": "Print grants two occult innate cantrips, dancing lights and light. The remaster folded dancing lights into light and it is not in this app's spell data, so only Light is granted here — the same single cantrip Wanderer's Guide grants. The legacy printing a player finds on Archives of Nethys still names both.",
+     "why": "wg-batch-025: heritage-120 prints \"cast dancing lights and light as occult innate cantrips\" while our curated description was rewritten to name only Light. There is no spell grant to add — spells['dancing-lights'] does not exist — so the deliberate divergence is recorded instead of hidden, making the rewritten description traceable against the page the player will read."
+    }
+   ],
+   "note": "READER: src/rules/build.ts:6355 `if (build.heritageId && content.heritages[build.heritageId]?.dataWarning) effectWarnings.push(...)`, surfaced on the sheet from Character.effectWarnings. types.ts:1443 defines dataWarning as exactly this case — \"this record's effect references content missing from the shipped data (usually a legacy spell/feat not yet reprinted)\". The existing innateSpells:[{spellId:'light', tradition:'occult'}] is correct and untouched."
+  },
+  {
+   "id": "liminal-fetchling#description",
+   "backfillRows": [
+    {
+     "category": "heritages",
+     "id": "liminal-fetchling",
+     "field": "description",
+     "value": "You come from a line of fetchlings with a closer connection to the Ethereal and Shadow Planes, and you share those realms' affinity with the in-between and unseen. You gain a +1 circumstance bonus to locate undetected creatures within 60 feet when using the Seek action. Your flat check to target concealed creatures is DC 3 instead of DC 5, and your flat check to target undetected creatures is DC 9 instead of DC 11.",
+     "why": "wg-batch-025: the curated fallback string had both replacement DCs deleted — it read \"…is instead of DC 5 … is instead of DC 11\", two ungrammatical fragments naming only the DCs being replaced and never the ones the heritage grants. Restored verbatim from heritage-122; the rest of the sentence is byte-for-byte the shipped string."
+    }
+   ],
+   "note": "Routes to public/core-descriptions.json heritages/liminal-fetchling 'd'. This is the FALLBACK path only — public/ast/heritages.json.gz already carries the sentence intact and DescBody.tsx:63/75 prefers the AST — which is why the finding is marked playerVisible:false. The record's `r` link array is untouched."
+  },
+  {
+   "id": "elemental-heart-dwarf",
+   "backfillRows": [
+    {
+     "category": "actions",
+     "id": "energy-emanation",
+     "field": "description",
+     "value": "**Frequency** once per day\n\n---\n\nEnergy bursts forth from your body. You deal 1d6 damage of your chosen type to all adjacent creatures (basic Reflex save using your class DC or spell DC, whichever is higher). At 3rd level, and every 2 levels thereafter, this damage increases by 1d6.",
+     "why": "wg-batch-025: the shipped string had lost its damage dice, its damage-type clause and its save type, leaving the orphan fragment \"You deal damage to all adjacent creatures ( save using your class DC…)\" — a player reading the granted activity could not tell how much damage it deals or which save resists it. Restored verbatim from AoN action-315, keeping the existing Frequency block."
+    }
+   ],
+   "note": "Routes to public/core-descriptions.json actions/energy-emanation 'd'. The heritage record itself is already at parity (choice.flag energyType + grantsActions ['energy-emanation']) and is untouched. NOTE FOR THE ENGINE AGENT (not authored here): src/sheet/MainTab.tsx:812 renders this action's detail with DescBody and NO astKey/astId, so the legacy string is what a player sees even though public/ast/actions.json.gz already holds the correct sentence — passing astKey=\"actions\" there is the durable fix and would have prevented this class of defect."
+  }
+ ]
+}

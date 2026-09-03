@@ -423,6 +423,27 @@ const RAW_MODES: ModeDef[] = [
       { name: 'Flame-hair', dice: 1, die: 'd4', damageType: 'fire', group: 'brawling', traits: ['agile', 'finesse', 'unarmed'] },
     ],
   },
+  /*
+   * *"In addition, you instill your allies with a feeling of hopefulness. You have a 10-foot aura that
+   * grants any ally in it a +1 circumstance bonus to saving throws against fear; this is an emotion and
+   * mental effect."* — Hopeful Athamaru.
+   *
+   * `modifiers: []` on purpose: the bonus is ALLY-FACING, and a self modifier would claim a number the
+   * athamaru never gets. Carried as an ally `note`, the shape `cat-bless` established for an aura that
+   * benefits everyone but you. The heritage's own top-level `note` field was not an option — nothing in
+   * src/ reads one, so the sentence would have shipped inert again.
+   *
+   * Gated through `feats`, which `modeRelevant` matches against `modeGateIds` — and that set already
+   * carries the character's HERITAGE ids, so a heritage id is a valid gate here.
+   */
+  {
+    id: 'cat-hope-aura',
+    name: 'Hope Aura',
+    category: 'Ancestry',
+    feats: ['hopeful-athamaru'],
+    modifiers: [],
+    note: 'Allies within your 10-foot hope aura gain a +1 circumstance bonus to saving throws against fear (emotion, mental).',
+  },
 ];
 
 /** All predefined modes (every catalog entry is directly toggleable + usable as a template). */

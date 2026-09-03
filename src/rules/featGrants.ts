@@ -468,6 +468,11 @@ const HAND_AUTHORED_GRANTS: Record<string, FeatGrant> = {
     weapon: { martial: 'trained' },
     skillChoices: [{ options: ['acrobatics', 'athletics'], rank: 'trained', redundantFallback: true }]
   },
+  /* A HERITAGE key, not a feat's — *"You're trained in all simple and martial weapons"* (Warrior
+   * Android) is the heritage's whole printed content, and it shipped as a dataWarning telling the
+   * player to apply it by hand. Reachable since `grantSourcesForProficiency` (build.ts) was widened
+   * to the character's heritages. */
+  'warrior-android': { weapon: { simple: 'trained', martial: 'trained' } },
   'rogue-dedication': {
     armor: { light: 'trained' },
     /* The fallback belongs to the Stealth/Thievery slot ONLY — the second slot is the *"plus one skill

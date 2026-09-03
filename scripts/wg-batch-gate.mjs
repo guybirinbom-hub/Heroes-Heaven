@@ -540,9 +540,21 @@ const valuesOut = run('wg-values.mjs', ['--verbose']);
 
 /* ---- owner-queued announcement ---------------------------------------------------------------- */
 if (queuedFlagged.size) {
-  console.log(`\n  OWNER-QUEUED — ${queuedFlagged.size} flagged record(s) in this batch await his ruling`);
-  console.log('  (work/owner-questions.json). Their diffs are recorded there, not counted above:');
-  for (const [id, gates] of queuedFlagged) console.log(`      ${id.padEnd(34)} ${gates.join(', ')}`);
+  // Two different parking lots share `parkQueued`: a record whose divergence AWAITS his ruling, and one
+  // already settled (ruled, or verified by hand where the harness is blind). Only the first heading
+  // may say "await his ruling" — a `reflection` under it sent a reader to owner-questions.json for
+  // an entry that does not exist.
+  const awaiting = [...queuedFlagged].filter(([id]) => ownerQueued.has(id));
+  const settled = [...queuedFlagged].filter(([id]) => !ownerQueued.has(id));
+  if (awaiting.length) {
+    console.log(`\n  OWNER-QUEUED — ${awaiting.length} flagged record(s) in this batch await his ruling`);
+    console.log('  (work/owner-questions.json). Their diffs are recorded there, not counted above:');
+    for (const [id, gates] of awaiting) console.log(`      ${id.padEnd(34)} ${gates.join(', ')}`);
+  }
+  if (settled.length) {
+    console.log(`\n  PARKED BY RULING / INSTRUMENT LIMIT — ${settled.length} record(s), settled, not counted above:`);
+    for (const [id, gates] of settled) console.log(`      ${id.padEnd(34)} ${gates.join(', ')}`);
+  }
 }
 
 /* ---- verdict ---------------------------------------------------------------------------------- */

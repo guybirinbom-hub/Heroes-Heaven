@@ -145,6 +145,14 @@
    "refuter": "Verified as a host artefact. The printed prerequisite is a capability sentence ('able to cast animate dead with a spell slot'), so withPrerequisiteFeats matched no feat name and the host stayed a fighter with zero spellcasting entries; the ':::-:::' predicate is literally 'does the built character h",
    "verifiedOn": "2026-09-02"
   },
+  "reflection": {
+   "batch": 25,
+   "verdict": "UNVERIFIED-EFFECT",
+   "lane": "wg-dangling-trait-id",
+   "class": "INSTRUMENT",
+   "verified": "their giveTrait 3407 resolves to no trait in their own table; our reflection creature trait is delivered. Heritage 22869's only op is {type:'giveTrait',data:{traitId:3407}}, and parsing the COPY public.trait block out of work/wg/wg-data.sql shows no row with id 3407 (3406 = 'Dhampir (legacy)', 3412 = 'Fatal Aim'); their own Reflection versatile-heritage trait is id 2912. The flag therefore points at a mechanic that cannot be resolved on their side, so nothing can be adopted from it. Print — 'You gain the reflection trait, in addition to the traits from your ancestry' — is delivered: core.json heritages/reflection carries traits:['reflection'] + grantsCreatureTraits:['reflection'] + versatile:true, and src/rules/featSlots.ts:224 and src/rules/featPickGrants.ts:340-343 widen the ancestry feat list on it. Per R10 a dangling id is WG encoding less, not a print contradiction, so it raises no owner question.",
+   "verifiedOn": "2026-09-03"
+  },
   "snowcaster": {
    "batch": 14,
    "verdict": "NO-SHEET-EFFECT",
@@ -189,6 +197,22 @@
    "verified": "Their 'Enhancement? Yes/No' is WG's manual bookkeeping toggle for a benefit print says you only have when another record names you; ours puts the same decision on that other record, where the printed gate lives. Our record carries `enhancement.grant.innateSpells[infuse-vitality, arcane, rank 3, 1/day]`, applied at build.ts:5345-5371 only when a feat holding `enhancementPicker` (Lesser/Greater Augmentation — the only ",
    "refuter": "Verified. The record carries enhancement.grant.innateSpells [infuse-vitality, arcane, rank 3, 1/day], and build.ts:5342-5372 applies it only when a feat holding `enhancementPicker` answers with this feat's id. The only two such feats are lesser-augmentation and greater-augmentation (measured over co",
    "verifiedOn": "2026-09-02"
+  },
+  "swimming-animal": {
+   "batch": 25,
+   "verdict": "UNVERIFIED-EFFECT",
+   "lane": "wg-internal-variable",
+   "class": "INSTRUMENT",
+   "verified": "their only unmatched op is adjValue AWAKENED_ANIMAL_HERITAGE — WG's private bookkeeping variable recording WHICH awakened-animal heritage was taken, read by their own feat prerequisites; it moves no stat and renders nothing for the player, so the harness has no surface to see it on and nothing can be adopted from it. Every printed clause of heritage-263 is delivered on our side and pinned by built characters: the aquatic/water-dwelling either-or (effectChoices, test/batch25-engine.test.ts: aquatic keeps the chassis 5 and gains the aquatic trait; water-dwelling floors land Speed at the printed 20 via EffectGrant.landSpeedMin and swims at 20), and the animal attack (effectChoices + grantedStrikes rows tagged choiceValue, threaded through collectGrantedNaturals). Our heritage identity is the record id itself, which our feats gate on directly.",
+   "verifiedOn": "2026-09-03"
+  },
+  "polyglot-android": {
+   "batch": 25,
+   "verdict": "UNVERIFIED-EFFECT",
+   "lane": "language-slot-count-has-no-surface-predicate",
+   "class": "INSTRUMENT",
+   "verified": "their only op is adjValue IMPROVED_MULTILINGUAL — WG's counter for 'extra languages, and extra languages FROM ANOTHER FEAT', a number the harness surface does not carry (the sheet snapshot has no language-slot count, so the differential moved 0 values). Ours delivers the same two clauses of heritage-116 as languageChoices: 2 + languageChoicesBonus [{featId:'multilingual', extra:1}], read by recordLanguageSlots/bonusLanguageSlots (build.ts). Measured on built level-1 android wizards (Int +0), 2026-09-03: plain android 2 bonus language slots; polyglot 4 (+2, the printed 'two additional languages'); plain + Multilingual 4; polyglot + Multilingual 7 (+3 over polyglot: Multilingual's 2 plus the printed extra one). LanguageEditor renders the count as 'Languages n/N'.",
+   "verifiedOn": "2026-09-03"
   }
  }
 }

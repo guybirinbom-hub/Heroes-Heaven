@@ -1,0 +1,17 @@
+{
+ "findings": [
+  {
+   "id": "awakened-animal#fist",
+   "backfillRows": [
+    {
+     "category": "ancestries",
+     "id": "awakened-animal",
+     "field": "heritageAttackReplacesFist",
+     "value": true,
+     "why": "wg-batch-025: Howl of the Wild sidebar-2749 (Animal Attacks): \"Your heritage gives you a special unarmed attack instead of the fist unarmed attack humanoids typically gain.\" Read by deriveStrikes (derive.ts): the baseline Fist is omitted once a heritage-sourced natural attack is present. Residue confirmed by verifier 1 of the batch-25 apply workflow."
+    }
+   ],
+   "note": "ancestry-level rule; the four awakened-animal heritages carry the attacks themselves."
+  }
+ ]
+}

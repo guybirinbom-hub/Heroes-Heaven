@@ -113,6 +113,10 @@ interface Act {
    *  activities): the full rules description + its cross-references from content.actions. */
   fullDesc?: string;
   fullRefs?: DescRef[];
+  /** The AST bucket + id of the record `fullDesc` came from, so the detail popup renders the printed
+   *  formatting (tables, headings) like every other description popup instead of the flat fallback. */
+  astKey?: string;
+  astId?: string;
   /** The record whose `limitedUses` governs this action. Eight BACKGROUNDS grant a once-per-day
    *  action (Genie-Blessed → Wish for Luck); the pip lookup only ever took a feat or a class feature,
    *  and a background has neither id, so every one of them showed an untracked action. */
@@ -246,6 +250,8 @@ export function MainTab({
       desc: a.desc,
       fullDesc: full?.description ?? rec?.description,
       fullRefs: full?.descRefs ?? rec?.descRefs,
+      astKey: full ? 'actions' : rec ? 'feats' : undefined,
+      astId: full ? full.id : a.featId,
     };
   };
   /* …and a feat-activity is shown only to a character who OWNS the feat: Battle Medicine sat in
@@ -809,7 +815,7 @@ export function MainTab({
                 ))}
               </div>
             )}
-            <DescBody description={a.fullDesc ?? a.desc} descRefs={a.fullRefs ?? a.descRefs} className="action-detail-desc" onExit={onClose} />
+            <DescBody description={a.fullDesc ?? a.desc} descRefs={a.fullRefs ?? a.descRefs} className="action-detail-desc" onExit={onClose} astKey={a.astKey} astId={a.astId} />
           </div>
         </div>
       </div>

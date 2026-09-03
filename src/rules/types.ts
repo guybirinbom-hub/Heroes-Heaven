@@ -1180,6 +1180,22 @@ export interface DefenseGrants {
      */
     cumulative?: boolean;
   };
+  /**
+   * An UNCONDITIONAL numeric bonus to a saving throw — Ponygait Centaur: *"You gain a +1 circumstance
+   * bonus to Reflex saving throws"*, Peerless Form: *"you gain a +2 status bonus to Fortitude and Will
+   * saving throws"*. Neither clause names a trigger, so neither is situational.
+   *
+   * There was no numeric carrier at all: the only save NUMBERS in the codebase were
+   * `ItemPassiveEffects.saves` (worn gear) and `StanceEntry.saves` (only while a stance runs), and a
+   * heritage or a passive feat can reach neither. Both records were parked on `situationalBonuses.ts`,
+   * whose own header says "It is DISPLAY-ONLY: nothing here changes a computed number" — so the sheet
+   * printed a star and the total never moved.
+   *
+   * One entry per save (no 'all'): the records that print this name their saves explicitly. Read in
+   * `deriveSave` and pooled through `poolTypedMods`, so it competes by TYPE with the item bonus,
+   * conditions and modes exactly like every other typed source on that line.
+   */
+  saveBonuses?: { save: SaveId; value: number; type: ModifierType }[];
   /** This feat/heritage raises the character to at least this SIZE (Jotun's Heart → Large). */
   sizeOverride?: Size;
   /**
@@ -1762,6 +1778,18 @@ export interface EffectGrant {
   senses?: SenseEntry[];
   /** Feet, or a formula relative to the character ("@actor.speed.land"). */
   speeds?: SpeedGrants;
+  /**
+   * A FLOOR on land Speed this option alone sets — Swimming Animal's *"**Water-dwelling:** … if you
+   * can move on land, you have base Speed of 20 feet"*, against an awakened animal chassis of 5.
+   *
+   * `speeds.land` cannot say it: deriveSpeeds ADDS a granted land Speed (`speeds.land = (speeds.land
+   * ?? 0) + v`), so authoring 20 there yields 25. The record-level `Heritage.landSpeedMin` is the
+   * right semantics but the wrong scope — Swimming Animal's OTHER branch (aquatic) prints no land
+   * Speed and must keep the chassis 5, so the floor has to belong to the branch.
+   *
+   * ⚠ The reader lives in deriveSpeeds (derive.ts), beside the record-level `landSpeedMin` fold.
+   */
+  landSpeedMin?: number;
   /** Skill (or `lore:<subject>`) → minimum rank trained. */
   skills?: Partial<Record<ProficiencyKey, ProficiencyRank>>;
   /**
@@ -1816,6 +1844,16 @@ export interface EffectGrant {
    * dropped in silence. No item authors one, and `creature-traits-lanes.test.ts` keeps it that way.
    */
   grantsCreatureTraits?: string[];
+  /**
+   * A FEAT this option alone grants — the branch half of `DefenseGrants.grantsFeats`. Cataphract
+   * Fleshwarp: *"you gain the Armor Proficiency feat … If your class already makes you trained in every
+   * type of armor, you instead become trained in Athletics … and gain the Armor Assist feat"*.
+   *
+   * ⚠ Read for HERITAGE options only, in the granted-feat pass of build.ts (the block that collects
+   * `grantSources`) — feats are placed there, long before `applyAlwaysOn` runs, so this cannot go
+   * through the pick sink. A feat's or item's option authoring it would be resolved and dropped.
+   */
+  grantsFeats?: string[];
 }
 
 /** A "choose one of N" the player resolves in the builder. Either an explicit `options` list, or a
@@ -1869,7 +1907,24 @@ export interface EffectChoice {
    * effect-choice picker in Builder.tsx, which GREYS the option with the reason (ruling Q27) rather
    * than hiding it.
    */
-  options?: { value: string; label: string; grant?: EffectGrant; note?: string; requiresAnySense?: string[] }[];
+  options?: {
+    value: string;
+    label: string;
+    grant?: EffectGrant;
+    note?: string;
+    requiresAnySense?: string[];
+    /** Offered only while a `choice.flag` elsewhere on the character is unanswered or equals `value`
+     *  (Merge with the Source: the divine forms for a Faithspeaker, the primal ones for a Greenspeaker). */
+    onlyWhenFlag?: { flag: string; value: string };
+  }[];
+  /**
+   * The `choice.flag` (asked by another record — a heritage, an ancestry, a feat) whose answer IS this
+   * pick's value; the option values must be the flag's values. Speaker's Defense asks "Faithspeaker or
+   * Greenspeaker?", which Budding Speaker Centaur already recorded as `speakerTradition`, and print
+   * says *"you must select the same Speaker you previously chose"*. Resolved in `resolvePick` (the
+   * flag wins over a stored answer) and hidden by EffectChoicesPicker; asked as usual while unanswered.
+   */
+  answerFromChoiceFlag?: string;
   /** Open-ended spell pick. The chosen spell id becomes the value; `grantTemplate` says how it is
    *  granted (as an innate spell at some cadence, or as a focus spell). */
   spellFilter?: SpellChoiceFilter;
@@ -2108,6 +2163,14 @@ export interface Ancestry extends ContentBase {
   hp: number;
   size: Size;
   /**
+   * The heritage's natural attack STANDS IN FOR the baseline Fist. Howl of the Wild's Animal Attacks
+   * sidebar (sidebar-2749): *"Your heritage gives you a special unarmed attack instead of the fist
+   * unarmed attack humanoids typically gain."* Awakened Animal only; every other ancestry keeps the
+   * Fist beside its heritage jaws/claws, as printed. Read by deriveStrikes, and only once a
+   * heritage-sourced natural attack is actually present (an unanswered picker leaves the Fist).
+   */
+  heritageAttackReplacesFist?: boolean;
+  /**
    * Ancestry HP that varies with the printed SIZE CHOICE — the awakened animal's block prints no
    * single scalar: Tiny/Small are 6 HP, Medium 8, Large 10. Read wherever `hp` is (build's hpMax fold
    * and deriveMaxHp), keyed by the size the `bodySize` choice resolved; `hp` stays the fallback.
@@ -2281,6 +2344,17 @@ export interface Heritage extends ContentBase, DefenseGrants {
    */
   alternateAttributes?: { whenChoice: string; abilityBoosts: AbilityBoost[]; abilityFlaws: AbilityId[]; hp?: number };
   /**
+   * The ancestry HP this heritage sets OUTRIGHT — Stoutheart Centaur: *"You gain 10 Hit Points from
+   * your ancestry instead of 8"* — with no attribute trade and no question attached.
+   *
+   * `alternateAttributes.hp` cannot carry it: that lane is an OPTIONAL package gated on
+   * `heritageChoiceAnswer === alt.whenChoice`, and its whenChoice/abilityBoosts/abilityFlaws are all
+   * required — so a choiceless heritage that only moves HP had no field at all and shipped the
+   * ancestry's number (a stoutheart centaur was 2 HP short at every level). Read at the top of
+   * `resolvedAncestryHp` (build.ts), which is where every HP consumer already goes.
+   */
+  ancestryHp?: number;
+  /**
    * Extra traits an ANCESTRY FEAT SLOT will accept because of this heritage — "you can select elf,
    * half-elf, and human feats whenever you gain an ancestry feat".
    *
@@ -2315,6 +2389,16 @@ export interface Heritage extends ContentBase, DefenseGrants {
    * that nothing rendered. Answered on the heritage step, stored under `heritage:<id>`.
    */
   choice?: FeatChoiceDef;
+  /**
+   * Languages this heritage ADDS TO THE ANCESTRY'S "additional languages" LIST — Dragonblood: *"Add
+   * Draconic to your ancestry's list of additional languages (allowing you to choose it as a language
+   * if your Intelligence modifier is positive)."*
+   *
+   * Deliberately NOT `grantsLanguages`: that lane hands the language over free, and print only widens
+   * the menu. `languages.options` is an ANCESTRY field with no widening hook, so the sentence landed
+   * nowhere. Read by `LanguageEditor` (builder/shared.tsx) beside `ancestry.languages.options`.
+   */
+  addsLanguageOptions?: string[];
 }
 
 export interface Background extends ContentBase {

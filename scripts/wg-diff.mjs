@@ -307,11 +307,24 @@ const OUR_KINDS = {
    * weakness are both authored, correctly, and both read as gaps. A cost the record imposes is part of
    * its defensive profile exactly as a resistance is. */
   defense: ['resistances', 'weaknesses', 'immunities', 'passiveEffects.resistances', 'passiveEffects.immunities', 'passiveEffects.weaknesses', 'removesWeaknesses', 'choiceResistance', 'resistanceLevelUpgrade'],
-  hp: ['maxHpBonus', 'hp', 'hpPerLevel'],
+  /* `ancestryHp` — a heritage that REPLACES the ancestry's Hit Points outright (Stoutheart Centaur:
+   * *"Your ancestry Hit Points are 10 instead of 8"*), read first in resolvedAncestryHp (build.ts).
+   * Their side writes the delta as adjValue MAX_HEALTH; ours writes the printed total. */
+  hp: ['maxHpBonus', 'hp', 'hpPerLevel', 'ancestryHp'],
   /* `spellcastingGrant` is THE field an archetype dedication uses to hand over a casting entry
    * ("you gain the ability to cast divine spells; your spellcasting attribute is Charisma") — 36
    * records carry it, and it was not listed, so every one read as granting no spellcasting. */
-  spellcasting: ['spellcasting', 'spellcastingGrant', 'proficiencies', 'focusPoolBonus'],
+  /* `innateSpells` IS a spellcasting grant, not only a spell grant. An innate spell arrives with a
+   * spell attack roll and a spell DC — Player Core p.298, *"trained in spell attack rolls and spell
+   * DCs … expert at 12th level"* — and their side writes exactly that as an `adjValue SPELL_ATTACK` /
+   * `SPELL_DC` pair beside every innate grant. Ours delivers it centrally instead, on the pooled
+   * innate entry at src/rules/build.ts:7113
+   * (`level >= 12 ? 'expert' : 'trained'`), so no record carries a per-record field and every record
+   * granting an innate spell read as modelling no spellcasting at all — Forge-Blessed Dwarf, whose
+   * nine `effectChoices` options each grant one, was the case. Listed here (not only in the container
+   * walks) because a container must not decide whether a grant counts — the same rule the
+   * `effectChoices` / `choice` option walks below already follow. */
+  spellcasting: ['spellcasting', 'spellcastingGrant', 'proficiencies', 'focusPoolBonus', 'innateSpells', 'resonant.innateSpells'],
   attribute: ['abilityBoosts', 'abilityFlaws', 'apexAttribute', 'keyAbility'],
   /* `unarmedTraits` was absent: Iron Fists ("your fist unarmed attacks no longer have the nonlethal
    * trait and gain the shove trait") ships exactly that, and their side expresses it by handing over a
@@ -319,7 +332,9 @@ const OUR_KINDS = {
   /* `attackItemBonus` — a weapon's OWN printed item bonus to attack (the alchemical bomb grades). */
   weapon: ['grantedStrikes', 'critSpec', 'critSpecWeapons', 'weaponFamiliarity', 'strikeRiders', 'strikeReach', 'mapReduction', 'precisionDice', 'unarmedTraits', 'attackItemBonus', 'attacks', 'attackGroups'],
   sense: ['senses', 'vision', 'conditionalSenses', 'darkvisionIfAncestryLowLight', 'passiveEffects.senses'],
-  size: ['size', 'sizeOverride'],
+  /* `sizeSet` is the unconditional form (Wisp Fetchling *"You're Small instead of Medium"*, Ponygait
+   * Centaur Medium), read at build.ts beside `sizeOverride`; both were shipped, only one was listed. */
+  size: ['size', 'sizeOverride', 'sizeSet'],
   /* `spellListAdditions` was absent, so Tupilaq Carver's *"Add the Summon Construct spell to your
    * spell list"* — which we ship as exactly that — read as a missing `giveSpell`. Their vocabulary
    * has no verb for "add to the list" and uses `giveSpell` for both. */
@@ -341,7 +356,12 @@ const OUR_KINDS = {
    * player picks (`abilityBoosts` carries `kind: 'choice' | 'free'`) and a "trained in your choice of
    * X or Y" skill or Lore. Their side encodes each as a `select`, which is why nine backgrounds read as
    * offering no choice at all while every one of them opens a picker in the builder. */
-  choice: ['choice', 'effectChoices', 'languageChoices', 'languageChoicesAtRank', 'languageChoicesBonus', 'loreChoices', 'skillChoices', 'runesKnown', 'abilityBoosts', 'trainedSkillChoice', 'trainedLoreChoice', 'trainedLoreOptions'],
+  /* `choiceResistance` is a PICKER, and it was filed under `defense` alone. Deep Fetchling's
+   * *"You gain cold or negative resistance … chosen when you gain this heritage"* is asked as
+   * `choiceResistance.options` (rendered at src/builder/shared.tsx:2729, answered into
+   * `build.heritageResistanceChoice`, applied at src/rules/derive.ts:2681) — the same two-branch
+   * `select` their side writes — so the record modelled the question and reported `choice` missing. */
+  choice: ['choice', 'effectChoices', 'choiceResistance', 'languageChoices', 'languageChoicesAtRank', 'languageChoicesBonus', 'loreChoices', 'skillChoices', 'runesKnown', 'abilityBoosts', 'trainedSkillChoice', 'trainedLoreChoice', 'trainedLoreOptions'],
   /* `derivedGrant` is how a record hands over a class feature the character ALREADY chose on another
    * record — the barbarian instinct ability, the thaumaturge implement benefit, the gunslinger way's
    * initial deed. Their side spells it as a conditional wrapping a giveAbilityBlock, so it answers both
@@ -355,7 +375,10 @@ const OUR_KINDS = {
   /* ⚠ `grantsLanguages` — the record NAMING a language, as opposed to offering a choice — was absent
    * here, and only its `passiveEffects` twin was listed. Angelkin's *"You know the Empyrean language"*
    * read as missing on the day it was authored. */
-  language: ['languages', 'languageChoices', 'grantsLanguages', 'passiveEffects.grantsLanguages', 'languageChoicesAtRank', 'languageChoicesBonus'],
+  /* `addsLanguageOptions` — a heritage WIDENING the ancestry's additional-languages menu without
+   * granting anything (Dragonblood: *"Add Draconic to your ancestry's list of additional languages"*),
+   * read by LanguageEditor (builder/shared.tsx). Their side spells it as adjValue CORE_LANGUAGES. */
+  language: ['languages', 'languageChoices', 'grantsLanguages', 'passiveEffects.grantsLanguages', 'languageChoicesAtRank', 'languageChoicesBonus', 'addsLanguageOptions'],
   /*
    * Their `specialStat` is almost always a `createValue` — an engine variable their side invents to
    * remember an answer or count something. Ours are named fields, and there are two of them:
@@ -956,6 +979,23 @@ const VERIFIED_EQUIVALENT = {
    * why its three feats also needed their archetype and prerequisite gates authored by hand.
    */
   'spellshifter-dedication': ['grantsRecord'],
+
+  /*
+   * THE FOUR AWAKENED-ANIMAL HERITAGES (batch 25) — their `giveAbilityBlock` hands over "Awakened Animal
+   * Attacks", a block that exists only to hold the "which animal attack?" select and the Strike table
+   * of the Howl of the Wild sidebar (sidebar-2749: *"Your heritage gives you a special unarmed attack
+   * instead of the fist"*). Ours ships the same content on the record itself — an `effectChoices`
+   * picker plus one `grantedStrikes` row per option tagged `choiceValue`, read by collectGrantedNaturals
+   * with the heritage's answer threaded through — so the KINDS reader credits `choice` and `weapon`
+   * and sees no granted RECORD, because there is none to grant: a feature record for the block would
+   * hand the character a feature they do not have. Adversarially confirmed on a built climbing animal
+   * who chose Jaws and got Jaws (test/batch25-engine.test.ts). Paired with the same four ids in
+   * wg-identity's SETTLED_IDENTITIES.
+   */
+  'climbing-animal': ['grantsRecord'],
+  'flying-animal': ['grantsRecord'],
+  'running-animal': ['grantsRecord'],
+  'swimming-animal': ['grantsRecord'],
 
   /*
    * ---- BATCH 1 ----------------------------------------------------------------------------------

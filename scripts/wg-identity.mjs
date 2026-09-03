@@ -199,9 +199,25 @@ function ourIdentities(id, rec) {
    * alternative — authoring `grantsClassFeatures: ['advanced-alchemy']` — would hand an archetype
    * character the alchemist's class feature itself, which is not what the feat says. */
   if (rec.advancedAlchemy) addGrant('Advanced Alchemy Benefits');
+  /* VOID HEALING is the same shape one field over: their side hands it across as a named
+   * physical-feature block ("Void Healing", ability block 27438 on Dhampir), ours is the BOOLEAN
+   * `negativeHealing` — *"you are harmed by vitality damage and healed by void effects as if you were
+   * undead"* — read at src/rules/derive.ts:2720 and src/rules/build.ts:5765, and shown to the player as
+   * a Defenses pill (src/sheet/DefensesPills.tsx:81) and a vitals-rail row (src/sheet/VitalsRail.tsx:749).
+   * With no alias the comparer looked only at the grant-id carriers and called the ability missing on
+   * every record that ships it. Both spellings are added because their legacy rows say "Negative
+   * Healing" where the remaster ones say "Void Healing" — the same ability, renamed. */
+  if (rec.negativeHealing) { addGrant('Void Healing'); addGrant('Negative Healing'); }
   addGrant(rec.grantedFeatId);
   addGrant(rec.grantsFeat);
   for (const v of Object.values(rec.grantedFeatByChoice ?? {})) addGrant(v);
+  /* A NAMED QUESTION is a granted thing on their side. Dragonblood: their `giveAbilityBlock` hands over
+   * "Draconic Exemplar", a block whose whole content is the select ("which kind of dragon?"); ours asks
+   * the same question as the record's own `choice` under the flag `draconicExemplar`, which is what
+   * the dragonblood feats read (`traditionFromChoiceFlag` / prerequisite gates). Same question, present
+   * on both sides, so the flag's name is offered as the counterpart. A flag whose name matches nothing
+   * of theirs adds nothing — this reader only ever ADDS to our side. */
+  if (rec.choice?.flag) addGrant(rec.choice.flag);
   for (const s of rec.innateSpells ?? []) addSpell(s.spellId ?? s);
   /* …and an aeon stone's RESONANT power, one level down. wg-diff already descends into `resonant`;
    * this reader stopped at the top level, so 14 stones whose spell lives at resonant.innateSpells
@@ -266,8 +282,21 @@ function ourIdentities(id, rec) {
     const legacyEnergy = { vitality: 'positive', void: 'negative' };
     if (legacyEnergy[o?.value]) out.options.add(key(legacyEnergy[o.value]));
   };
+  /*
+   * …and the RECORDS an option's `grant` hands over. The spell half of this was already read below;
+   * the feat/feature/action half was not, so a branch authored as a picker option ("if your class makes
+   * you trained in all types of armor … you gain the Armor Assist skill feat" — Cataphract Fleshwarp,
+   * whose fix lands as an `effectChoices` option granting `armor-assist`) would keep reporting its feat
+   * as missing after it was delivered. A container must not decide whether a grant counts — the same
+   * rule wg-diff states for its kind map. */
+  const addOptionGrants = (o) => {
+    for (const g of o?.grant?.grantsFeats ?? []) addGrant(g);
+    for (const g of o?.grant?.grantsClassFeatures ?? []) addGrant(g);
+    for (const g of o?.grant?.grantsActions ?? []) addGrant(g);
+  };
   for (const o of rec.choice?.options ?? []) {
     addOption(o);
+    addOptionGrants(o);
     /* A feat-valued option IS a grant of the picked feat — buildCharacter's backgroundChoiceKind
      * 'feat' lane grants it — and their side writes the same clause as giveAbilityBlock ops inside
      * the select's branches, which this comparer files under GRANTS. Before this, retiring a
@@ -285,10 +314,18 @@ function ourIdentities(id, rec) {
   for (const ch of rec.effectChoices ?? []) {
     for (const o of ch.options ?? []) {
       addOption(o);
+      addOptionGrants(o);
       for (const s of o.grant?.focusSpells ?? []) addSpell(s);
       for (const s of o.grant?.innateSpells ?? []) addSpell(s.spellId ?? s);
     }
   }
+  /* …and `choiceResistance`, the dedicated picker for *"You gain cold or negative resistance … chosen
+   * when you gain this heritage"* (Deep Fetchling). It is a real control — rendered at
+   * src/builder/shared.tsx:2729, answered into `build.heritageResistanceChoice`, applied at
+   * src/rules/derive.ts:2681 — but it is neither `choice` nor `effectChoices`, so their two-branch
+   * `select` (cold / void) read as offering options we offer nothing against. `addOption` also carries
+   * the remaster rename, so our `void` answers their legacy `negative` spelling. */
+  for (const o of rec.choiceResistance?.options ?? []) addOption(o);
   /*
    * …and an ABILITY-BOOST choice, which is an option list with no `choice` field to hold it.
    *
@@ -474,6 +511,22 @@ const SETTLED_IDENTITIES = {
    * KINDS settle in wg-diff's VERIFIED_EQUIVALENT.
    */
   'spellshifter-dedication': ['grants'],
+
+  /*
+   * THE FOUR AWAKENED-ANIMAL HERITAGES — their `giveAbilityBlock` hands over "Awakened Animal Attacks",
+   * a block that exists only to hold the "which animal attack?" select and its Strike statistics (Howl
+   * of the Wild, sidebar-2749). Ours ships the same thing as the record's own carriers: an
+   * `effectChoices` picker ("Choose your animal attack") and one `grantedStrikes` row per option,
+   * tagged `choiceValue`, read by collectGrantedNaturals (build.ts) with the heritage's answer threaded
+   * through — batch 25, adversarially confirmed on a built climbing animal who chose Jaws and got Jaws.
+   * There is no named record on our side to match the block's title against, and inventing one would
+   * hand a character a feature they do not have; the Strike names themselves are asserted in the
+   * `items` bucket. Settled on the `grants` bucket only.
+   */
+  'climbing-animal': ['grants'],
+  'flying-animal': ['grants'],
+  'running-animal': ['grants'],
+  'swimming-animal': ['grants'],
 
   /*
    * PISTOL WAND — their one op is {"type":"giveItem","data":{"itemId":13707}}: the BARE Reinforced
@@ -1154,6 +1207,42 @@ const SETTLED_IDENTITIES = {
    * shape): the second printed branch is by nature free text.
    */
   'library-dweller': ['options'],
+
+  /*
+   * ---- BATCH 25 ----------------------------------------------------------------------------------
+   *
+   * RITE OF INVOCATION — their two options are a GATE, not the pick.
+   *
+   * Printed: *"You gain one cantrip from the arcane or occult spell list. You can cast this spell as an
+   * innate spell at will."* Their encoding is a PREDEFINED/CUSTOM select titled "Select a Tradition"
+   * whose only two options — "Arcane" and "Occult" — each nest a second, FILTERED SPELL select titled
+   * "Select a Cantrip" (level 0-0, that tradition, spellData INNATE). So the strings this comparer
+   * reports as missing are their tradition branch labels; the cantrip pick is one level down inside
+   * them. Ours collapses the two steps into ONE picker — `effectChoices` 'arcaneOccultCantrip', 52
+   * options each granting `innateSpells [{ spellId, tradition, atWill: true, heightenHalfLevel: true }]`
+   * — which is the same decision with one fewer click, and the list was checked against core.json
+   * option by option: 0 declared traditions that the spell does not actually have, 0 non-cantrips, and
+   * the only 11 arcane/occult rank-0 spells absent are 8 uncommon/rare and 3 superseded legacy spells
+   * whose remaster successors ARE offered (acid-splash → caustic-blast, ghost-sound → figment,
+   * ray-of-frost → frostbite). Adversarially confirmed against their raw row and ours in batch 25.
+   */
+  'rite-of-invocation': ['options'],
+  /*
+   * ⚠ CATAPHRACT FLESHWARP WAS SETTLED HERE IN BATCH 25 AND THE SETTLE IS WITHDRAWN.
+   *
+   * The reading behind it was right — their `falseOperations` grants ability block 19917 = Armor
+   * Proficiency (our `grantsFeats: ['armor-proficiency']`), block 21820 "Armor Assist (legacy)" is in
+   * `trueOperations` only, and `flattenOps` (scripts/lib/wg-parse.mjs:54) folds both branches into one
+   * list, so the else-branch feat reads as a rival name for the if-branch one. But settling is
+   * BUCKET-WIDE, and the single string in this record's `grants` bucket is `armorassistlegacy` — a feat
+   * print says the character gets (*"…you instead become trained in Athletics … and gain the Armor
+   * Assist skill feat"*) and ours grants nowhere. Silencing the bucket therefore quiets a REAL gap,
+   * which this registry's own rule above forbids. The presentation was misleading; the miss was true.
+   *
+   * It reports again, and clears on its own the moment the if-branch is authored: `ourIdentities` now
+   * reads the record grants an option carries (`o.grant.grantsFeats` / `grantsActions` /
+   * `grantsClassFeatures`), which is the carrier the branch lands on.
+   */
 };
 
 /* ---------------------------------------------------------------- compare */

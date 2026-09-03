@@ -50,7 +50,7 @@ import {
   removeChosenIds,
   withCustomAnswer,
 } from '../rules/build';
-import { effectChoiceOffered, narrowSpellFilter } from '../rules/build';
+import { choiceFlagAnswer, effectChoiceDefault, effectChoiceOffered, effectChoiceOptions, narrowSpellFilter } from '../rules/build';
 import { BACKGROUND_CANTRIP_GRANTS } from '../rules/backgroundGrants';
 import { openChoiceOptions } from '../rules/openChoice';
 import { cantripsKnown } from '../rules/spellcasting';
@@ -4055,11 +4055,22 @@ export function LanguageEditor({ build, actions, content }: EditorProps) {
    * enforced, because print keeps the escape clause "and any other languages to which you have
    * access (such as the languages prevalent in your region)" — a hard filter would delete a printed
    * permission. Every batch-19 ancestry ships the list; older records without one change nothing. */
-  const listed = new Set(ancestry?.languages.options ?? []);
+  /* …widened by any HERITAGE that adds to that list — Dragonblood: *"Add Draconic to your ancestry's
+   * list of additional languages (allowing you to choose it as a language if your Intelligence modifier
+   * is positive)."* This was the sentence's only possible carrier: `grantsLanguages` hands the language
+   * over free, which print does not say, and `languages.options` is an ancestry field with no widening
+   * hook — so the clause landed nowhere. The entry is labelled after the HERITAGE, because it is the
+   * heritage's statement: a dragonblood human's Draconic is not on the human list. */
+  const listedFrom = new Map<string, string>();
+  for (const id of ancestry?.languages.options ?? []) listedFrom.set(id, ancestry?.name ?? 'ancestry');
+  for (const hid of [build.heritageId, secondHeritageIdOf(build, content)]) {
+    const h = hid ? content.heritages[hid] : undefined;
+    for (const id of h?.addsLanguageOptions ?? []) listedFrom.set(id, h?.name ?? 'heritage');
+  }
   const available = Object.values(content.languages)
     .filter((l) => !granted.includes(l.id) && !chosen.includes(l.id))
-    .sort((a, b) => (listed.has(b.id) ? 1 : 0) - (listed.has(a.id) ? 1 : 0) || a.name.localeCompare(b.name))
-    .map((l) => (listed.has(l.id) ? { ...l, name: `${l.name} · ${ancestry?.name ?? 'ancestry'} list` } : l));
+    .sort((a, b) => (listedFrom.has(b.id) ? 1 : 0) - (listedFrom.has(a.id) ? 1 : 0) || a.name.localeCompare(b.name))
+    .map((l) => (listedFrom.has(l.id) ? { ...l, name: `${l.name} · ${listedFrom.get(l.id)} list` } : l));
   return (
     <SetupCard icon="ti-language" label="Languages" count={`${chosen.length}/${slots} bonus`}>
       {chosen.map((id) => (
@@ -4349,6 +4360,10 @@ export function EffectChoicesPicker({
           apply, and one they answered cannot vanish while its grant stays. */}
       {choices.filter((ch) => effectChoiceOffered(ch, build, content, recordId)).map((ch) => {
         const ecKey = `${recordId}:${ch.id}`;
+        // Already answered by another record's `choice.flag` (Speaker's Defense ← Budding Speaker):
+        // the engine resolves it from the flag, so a second control here would be the same question
+        // asked twice — and could disagree with the first answer.
+        if (ch.answerFromChoiceFlag && choiceFlagAnswer(ch.answerFromChoiceFlag, build, content)) return null;
         const set = (v: string) => actions.patch({ effectChoices: { ...(build.effectChoices ?? {}), [ecKey]: v } });
         /* An OPEN pick from content that is NOT a spell — Syncretism's second favored weapon. Resolved
          * by the same `openChoiceOptions` the `choice.kind: 'open'` lane uses, so the two cannot
@@ -4381,11 +4396,14 @@ export function EffectChoicesPicker({
             <PopupSelect
               title={ch.prompt}
               placeholder={`${ch.prompt}…`}
-              value={build.effectChoices?.[ecKey] ?? ''}
+              // Show what the engine is ACTUALLY granting. A heritage's "or another skill" pick trains
+              // options[0] when unanswered (Laborer Android → Athletics), so a blank control here made
+              // the builder deny a training the sheet already had. Same predicate on both sides.
+              value={build.effectChoices?.[ecKey] ?? (content.heritages[recordId] ? effectChoiceDefault(ch) ?? '' : '')}
               onChange={set}
               // An option may carry a note instead of a grant (a kineticist gate junction: only
               // Elemental Resistance moves a stat), so the note is shown as the description.
-              options={(ch.options ?? []).map((o) => ({ value: o.value, label: o.label, description: o.note }))}
+              options={effectChoiceOptions(ch, build, content).map((o) => ({ value: o.value, label: o.label, description: o.note }))}
             />
           </SubCard>
         );

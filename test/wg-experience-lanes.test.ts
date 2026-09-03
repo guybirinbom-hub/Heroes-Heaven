@@ -239,3 +239,81 @@ describe('the chassis fallback — delivery judged on the built character', () =
     expect(verdictFor({ supported: true, error: null, selects: [], controls: [], effects, sheetDiffCount: 4, delivery: bad }).verdict).toBe('OK');
   });
 });
+
+import { execFileSync } from 'node:child_process';
+import { readFileSync, rmSync } from 'node:fs';
+import { join } from 'node:path';
+
+/**
+ * BATCH 25 — WHAT THE COMPARERS WERE TAUGHT, AND WHAT THEY WERE TOLD TO STOP ASKING.
+ *
+ * Four batch-25 findings were instrument defects, not data gaps: the comparer could not see a carrier
+ * we ship. Each is a WIDENING, and a widening is exactly the change that silently narrows again when
+ * someone tidies a field list — so the four are pinned here by RUNNING the comparers, not by reading
+ * their source. The two remaining rows are SETTLES, and `--raw` proves the settle is what quiets them:
+ * without it the comparer still finds the difference, so the registry is doing the silencing and the
+ * comparer is not broken.
+ */
+const CLI_ROOT = join(__dirname, '..');
+const runScript = (script: string, args: string[]) =>
+  execFileSync(process.execPath, [join(CLI_ROOT, 'scripts', script), ...args], { cwd: CLI_ROOT, encoding: 'utf8', maxBuffer: 1 << 28 });
+
+describe('batch 25 — the comparers read the carriers we actually ship', () => {
+  it('wg-diff credits a choiceResistance picker and an innate-spell grant', () => {
+    // `--out` is ROOT-relative; its own scratch file, so a test run cannot clobber the gate's.
+    const out = 'work/.wg-diff-lanes-test.json';
+    runScript('wg-diff.mjs', ['--out', out]);
+    const diff = JSON.parse(readFileSync(join(CLI_ROOT, out), 'utf8'));
+    rmSync(join(CLI_ROOT, out), { force: true });
+    const theyOnly = new Map<string, string[]>(diff.theyOnly.map((r: { id: string; missing: string[] }) => [r.id, r.missing]));
+    // Deep Fetchling: "You gain cold or negative resistance … chosen when you gain this heritage" is
+    // asked through `choiceResistance`, which was filed under `defense` alone.
+    expect(theyOnly.get('deep-fetchling')).toBeUndefined();
+    // Forge-Blessed Dwarf: the innate divine spell rides inside an effectChoices option's
+    // `grant.innateSpells`, and the spell attack / DC that comes with it is delivered centrally at
+    // src/rules/build.ts:7113 rather than per record.
+    expect(theyOnly.get('forge-blessed-dwarf')).toBeUndefined();
+    // …and the differ still reports: a widening that silenced the whole list would pass every check
+    // above while hiding every real gap.
+    expect(diff.theyOnly.length).toBeGreaterThan(100);
+  }, 120_000);
+
+  it('wg-values resolves a heritage land Speed through the ancestry chassis', () => {
+    // Spindly Anadi prints "Your Speed increases from 25 to 30 feet"; ours is `landSpeedBonus: 5` on
+    // the anadi chassis's 25, theirs is an absolute `setValue SPEED = 30`.
+    const out = runScript('wg-values.mjs', ['--ids', 'spindly-anadi', '--verbose']);
+    expect(out).toMatch(/compared 1 records with at least one comparable value; 1 agree/);
+    expect(out).toMatch(/^0 records with at least one value to adjudicate/m);
+  }, 60_000);
+
+  it('wg-identity reads void healing and the resistance picker, and settles only the tradition gate', () => {
+    const ids = 'dhampir,deep-fetchling,rite-of-invocation,cataphract-fleshwarp';
+    const out = runScript('wg-identity.mjs', ['--ids', ids]);
+    // dhampir: their named "Void Healing" block against our boolean `negativeHealing`.
+    // deep-fetchling: their cold/void select against our `choiceResistance.options`.
+    expect(out).not.toContain('--- dhampir');
+    expect(out).not.toContain('--- deep-fetchling');
+    // rite-of-invocation: their two option titles are a TRADITION GATE and the cantrip pick is the
+    // nested FILTERED SPELL select — settled in SETTLED_IDENTITIES.
+    expect(out).not.toContain('--- rite-of-invocation');
+    /*
+     * …and cataphract-fleshwarp is quiet BECAUSE OF DATA, not a settle. Its `grants` bucket was once
+     * settled on the reading that their two feats are opposite branches of one conditional — true, but
+     * the Armor Assist string in that bucket is a feat print says the character gets (*"…you instead
+     * become trained in Athletics … and gain the Armor Assist skill feat"*) and ours granted nowhere,
+     * so the settle was withdrawn. Batch 25 then moved both feats onto the branch itself
+     * (`effectChoices[].options[].grant.grantsFeats`, read by `addOptionGrants` here and by the
+     * granted-feat pass in build.ts), which is why the record no longer reports — and must not.
+     */
+    expect(out).not.toContain('--- cataphract-fleshwarp');
+    expect(out).toMatch(/^0 records where a named thing/m);
+    // …and with the registry bypassed only the SETTLED record comes back (rite-of-invocation), so the
+    // three taught carriers pass on their own merits and the settle quiets exactly one.
+    const raw = runScript('wg-identity.mjs', ['--ids', ids, '--raw']);
+    expect(raw).toContain('--- rite-of-invocation');
+    expect(raw).toMatch(/^1 records where a named thing/m);
+    expect(raw).toContain('--- rite-of-invocation');
+    expect(raw).not.toContain('--- dhampir');
+    expect(raw).not.toContain('--- deep-fetchling');
+  }, 60_000);
+});

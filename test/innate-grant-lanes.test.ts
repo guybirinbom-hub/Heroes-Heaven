@@ -58,7 +58,9 @@ describe('innate spell grants', () => {
 
   it('a BRANCH grants only the spells of the branch you pick', () => {
     const opts = c.feats['speakers-defense'].effectChoices?.[0].options ?? [];
-    expect(opts.map((o) => o.value)).toEqual(['faithspeaker', 'greenspeaker']);
+    // The values are the `speakerTradition` flag's values: the heritage's answer resolves this pick.
+    expect(opts.map((o) => o.value)).toEqual(['divine', 'primal']);
+    expect(c.feats['speakers-defense'].effectChoices?.[0].answerFromChoiceFlag).toBe('speakerTradition');
     expect(opts[0].grant?.innateSpells?.map((s) => s.spellId)).toEqual(['share-life', 'status']);
     expect(opts[1].grant?.innateSpells?.map((s) => s.spellId)).toEqual(['entangling-flora', 'environmental-endurance']);
   });

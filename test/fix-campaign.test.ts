@@ -753,11 +753,19 @@ describe('companion mod lanes: skill grants + gear speed', () => {
 });
 
 describe('heritage grant lanes', () => {
-  it('a heritage grants a feat outright (Cataphract Fleshwarp → Armor Proficiency)', () => {
-    const ch = build('wizard', 3, { ancestryId: 'fleshwarp', heritageId: 'cataphract-fleshwarp' });
+  it('a heritage grants a feat through its own branch (Cataphract Fleshwarp → Armor Proficiency)', () => {
+    // Batch 25: print is a conditional — Armor Proficiency, "unless your class already makes you trained in
+    // every type of armor", in which case Athletics + Armor Assist. The feat rides on the answered branch
+    // (`effectChoices[].options[].grant.grantsFeats`), read by the granted-feat pass in build.ts.
+    const ch = build('wizard', 3, { ancestryId: 'fleshwarp', heritageId: 'cataphract-fleshwarp', effectChoices: { 'cataphract-fleshwarp:armor-branch': 'armor-proficiency' } });
     const ap = ch.feats.find((f) => f.featId === 'armor-proficiency');
     expect(ap?.grantedBy).toBe('cataphract-fleshwarp');
     expect(ch.proficiencies.defenses.light).toBe('trained'); // wizard is otherwise untrained
+    // The other branch: no Armor Proficiency, Athletics trained, Armor Assist granted.
+    const fighter = build('fighter', 3, { ancestryId: 'fleshwarp', heritageId: 'cataphract-fleshwarp', effectChoices: { 'cataphract-fleshwarp:armor-branch': 'athletics' } });
+    expect(fighter.feats.some((f) => f.featId === 'armor-proficiency')).toBe(false);
+    expect(fighter.feats.find((f) => f.featId === 'armor-assist')?.grantedBy).toBe('cataphract-fleshwarp');
+    expect(fighter.proficiencies.skills.athletics).toBe('trained');
   });
   it('a heritage grants N chosen Lores (Half Moon Sarangay → 2)', () => {
     const ch = build('fighter', 3, { ancestryId: 'sarangay', heritageId: 'half-moon-sarangay', heritageLore: ['Cooking', 'Sailing'] });

@@ -793,6 +793,14 @@
    "theirs": "WG feat: defineCastingSource OATIA_SKYSAGE (spontaneous repertoire, occult, Int) and TWO 'Select a Cantrip' selects, each FILTERED on traits [Prediction, Cantrip] + castingSource OATIA_SKYSAGE. Checked their spell table (work/wg/wg-data.sql): none of the four printed cantrips carries the Prediction trait there (they carry Cantrip/Concentrate/Detection/Manipulate) and NO cantrip at all carries Prediction — so their filter either shows an empty list (all-of) or every occult cantrip (any-of). Either way their picker does not offer the four names print gives.",
    "ours": "src/rules/casterArchetypes.ts 'oatia-skysage-dedication': a repertoire of 2 cantrips drawn from EVERY occult cantrip (38 in public/core.json) — no restriction, like WG's any-of reading.",
    "question": "Print names exactly four cantrips; WG's encoding cannot produce that list (its trait filter matches no cantrip in their own data). Do we (a) restrict the two cantrip picks to Detect Magic / Guidance / Know the Way / Read Aura as printed, or (b) stay as we are (any occult cantrip), which is the most WG's picker can be doing? A restriction would be a small code change: a cantrip allow-list on the caster archetype honoured by the archetype cantrip picker."
+  },
+  {
+   "id": "undine",
+   "batch": 25,
+   "printed": "\"You gain a swim Speed of 10 feet and the amphibious trait.\" (Undine heritage, unconditional)",
+   "theirs": "WG heritage Undine: conditional IF SPEED_SWIM <= 10 THEN (nothing) ELSE setValue SPEED_SWIM = 10. Read literally: a character with no swim Speed (0) satisfies the condition and gets NO swim Speed; a character whose ancestry already swims faster than 10 is CUT DOWN to 10. The branches look inverted relative to the printed sentence.",
+   "ours": "heritages/undine speeds.swim = 10, unconditional — a heritage speed replaces the same-type ancestry speed. Print-exact.",
+   "question": "WG's encoding contradicts the printed text (the conditional grants nothing to the very character who needs it and lowers a faster swimmer). Keep ours (print) or adopt their inverted conditional? Recommendation: keep ours; if you agree, this closes as OWNER-RULED with no change."
   }
  ],
  "deferred": [

@@ -50,7 +50,7 @@ import {
   senseGateReason,
   type NarrowedOption,
 } from '../rules/derive';
-import { narrowSpellFilter, skillSlotOptions } from '../rules/build';
+import { grantedChoiceKey, narrowSpellFilter, skillSlotOptions } from '../rules/build';
 import { signaturesAt } from '../rules/build';
 import { activeCasterArchetype, archetypeEntryIds, archetypeSlots, archetypeTraditionOptions } from '../rules/casterArchetypes';
 import { choiceGrantFor, exhaustedGrantReason, FEAT_GRANTS, featUpgradesAtLevel, LOCKED_SKILL_KEYS, maxTakes } from '../rules/featGrants';
@@ -631,8 +631,13 @@ export function Builder({
    *
    * Storage is `build.grantedFeatChoices[featId]`, keyed by the GRANTED feat, which is what
    * build.ts already reads — so wiring the picker in is all that was missing.
+   *
+   * `grantVariant` is set when this row is a granter's SECOND taking of the same feat — Anvil Dwarf's
+   * *"you can pick two different specialties instead of one"*. It moves the answer to
+   * `grantedChoiceKey(featId, variant)` so the two takings are answered separately instead of sharing
+   * one key and printing the same specialty twice; the bare key stays the first taking's.
    */
-  const grantedChoicePicker = (grantedId: string) => {
+  const grantedChoicePicker = (grantedId: string, grantVariant?: string) => {
     const def = content.feats[grantedId]?.choice;
     if (!def) return null;
     /*
@@ -728,15 +733,18 @@ export function Builder({
             // so a limit applied only on the picked-feat path would never have reached them.
             narrowChoiceOptions(grantedId, def, effectiveChoiceOptions(grantedId, def, featPrereqChar, content), featPrereqChar, content);
     if (!opts.length) return null;
-    const label = `${content.feats[grantedId]!.name}: ${featChoicePrompt(def.prompt, def.flag)}`;
-    const answer = build.grantedFeatChoices?.[grantedId] ?? '';
+    const answerKey = grantedChoiceKey(grantedId, grantVariant);
+    // The second taking says so on the card, or the player sees the same question twice with no way
+    // to tell which is which — Q27's "never leave them wondering whether they missed a pick".
+    const label = `${content.feats[grantedId]!.name}${grantVariant ? ' (second)' : ''}: ${featChoicePrompt(def.prompt, def.flag)}`;
+    const answer = build.grantedFeatChoices?.[answerKey] ?? '';
     const setAnswer = (v: string) =>
-      actions.patch({ grantedFeatChoices: { ...(build.grantedFeatChoices ?? {}), [grantedId]: v } });
+      actions.patch({ grantedFeatChoices: { ...(build.grantedFeatChoices ?? {}), [answerKey]: v } });
     // Why the list is short, in the narrowing record's own words. A menu silently cut from 12 entries
     // to 6 reads as missing content, which is the failure Q27 names from the other direction.
     const limitReasons = effectiveChoiceLimits(grantedId, def, featPrereqChar, content).map((l) => l.reason);
     return (
-      <SubCard key={`gfc-${grantedId}`} icon="ti-adjustments" label={label}>
+      <SubCard key={`gfc-${answerKey}`} icon="ti-adjustments" label={label}>
         <PopupSelect
           title={featChoicePrompt(def.prompt, def.flag)}
           placeholder={`${featChoicePrompt(def.prompt, def.flag)}…`}
@@ -1903,9 +1911,20 @@ export function Builder({
                                 ...[...slotPicked].flatMap((id) => FEAT_FEAT_GRANTS[id as string] ?? []),
                                 ...backgroundGrantedFeats(bg, build.backgroundSkillChoice),
                               ]);
-                              return [...new Set(featPrereqChar.feats.filter((f) => f.grantedBy).map((f) => f.featId))]
-                                .filter((gid) => !handled.has(gid) && content.feats[gid]?.choice)
-                                .map((gid) => grantedChoicePicker(gid));
+                              /* Deduped by (feat, VARIANT), not by feat id: a granter that owes two
+                                 takings of one feat — Anvil Dwarf's two Specialty Crafting
+                                 specialties — got one picker and so one specialty. Same reason the
+                                 Lore lane below iterates rows. */
+                              const seenKeys = new Set<string>();
+                              return featPrereqChar.feats
+                                .filter((f) => f.grantedBy && !handled.has(f.featId) && content.feats[f.featId]?.choice)
+                                .filter((f) => {
+                                  const k = grantedChoiceKey(f.featId, f.grantVariant);
+                                  if (seenKeys.has(k)) return false;
+                                  seenKeys.add(k);
+                                  return true;
+                                })
+                                .map((f) => grantedChoicePicker(f.featId, f.grantVariant));
                             })()}
                           {/* …and the same lane's "trained in a Lore of your choice".
                               A GRANTED feat has no slot, and the Lore input was mounted only under a
