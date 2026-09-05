@@ -501,7 +501,13 @@ export const FEAT_SKILL_GRANTS: Record<string, FeatGrant> = {
    * which you were already trained."* — the lion-blade shape exactly, and the upgrade half was
    * missing: a druid taking this got nothing from the clause at all. */
   'magaambyan-attendant-dedication': { skillChoices: [{ options: ['arcana', 'nature'], rank: 'trained', conditionalRank: { base: 'trained', upgraded: 'expert' } }] },
-  'magic-warrior-dedication': { conditionalSkills: { 'lore:magic-warrior': { base: 'trained', upgraded: 'expert' } }, skillChoices: [{ options: ['arcana', 'nature'], rank: 'trained' }] },
+  /* *"You become trained in your choice of Arcana or Nature AND in Magic Warrior Lore; IF YOU WERE
+   * ALREADY TRAINED IN THE SKILL, YOU BECOME AN EXPERT INSTEAD."* (AoN feat-903.) The upgrade reached
+   * the Lore only — the choice slot kept a flat rank — so a wizard already trained in Arcana was handed
+   * a rank they had and the second half of the sentence was dropped. The same defect and the same fix
+   * as `student-of-perfection-dedication` (:670) and `magaambyan-attendant-dedication` (:503), whose
+   * printed sentence is built the same way. */
+  'magic-warrior-dedication': { conditionalSkills: { 'lore:magic-warrior': { base: 'trained', upgraded: 'expert' } }, skillChoices: [{ options: ['arcana', 'nature'], rank: 'trained', conditionalRank: { base: 'trained', upgraded: 'expert' } }] },
   'magus-dedication': { skills: { arcana: 'trained' }, redundantFallback: true, weapon: { simple: 'trained' } },
   /* *"You become trained in that skill OR BECOME AN EXPERT IF YOU WERE ALREADY TRAINED in it."* The
    * flat rank left an already-trained marshal at trained; `conditionalRank` is the slot-level carrier

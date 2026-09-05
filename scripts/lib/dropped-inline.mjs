@@ -61,6 +61,14 @@ const HOLES = [
    * into the previous clause and aligned against the wrong AoN sentence. heal/harm themselves were
    * repaired as backfill rows; the ~183 remaining records of this shape are an open work item. */
   /\b(?:in|within|into)\s+an?\s+[.,;]/i,
+  /* THE "<N>-foot" STRIP — *"in a centered on you"* for *"in a 20-foot burst centered on you"*, where
+   * the cleaner took BOTH the size and the noun it qualified, so the sentence keeps a grammatical
+   * article with nothing after it and every shape above walks past ("centered" is a following WORD, so
+   * the terminal-hole row misses it too). 502 descriptions carry the class (items 302, feats 136,
+   * spells 45, classFeatures 12, actions 4, familiarAbilities 2 — batch 29 measurement); the ratchet in
+   * scripts/dropped-inline-check.mjs counts them and scripts/repair-stripped-skill-links.mjs restores
+   * the ones whose mirror context anchors uniquely. */
+  /\b(?:in|within|into)\s+an?\s+(?:centered|surrounding|emanating|originating)\b/i,
 ];
 
 const SAFE_WORD = /^(?:\d|basic|reflex|fortitude|will|save|cone|burst|emanation|line|radius|cube|foot|feet|-?f(?:oo|ee)t|persistent|damage|hit|points)/i;
@@ -86,7 +94,15 @@ export const plain = (s) => String(s ?? '').replace(/<[^>]+>/g, ' ').replace(/\[
  * by 8.\n\n⟨3⟩ (concentrate) You disperse…"), and without it in the lookahead the whole glyph block
  * merged into the previous clause — so a hole there aligned against the wrong AoN sentence and the
  * repair scored below trust (measured on heal/harm, batch 24). */
-const sentences = (s) => s.split(/(?<=[.!?])\s+(?=[A-Z“"(*⟨])|(?<=;)\s+/g).filter(Boolean);
+/* `---` OPENS A SENTENCE TOO, and it is the one the lookahead above could never see: an item
+ * description separates its rungs and its degrees-of-success block with a `---` rule, and AoN's own
+ * documents separate the stat header from the body the same way — *"Master in Acrobatics --- Mass and
+ * muscle are meaningless…"*, where there is no `.!?` before it at all, so no `(?<=[.!?])` alternative
+ * can fire and adding `-` to the character class alone is not enough. Without this alternative the hole
+ * sentence SWALLOWS the whole block that follows and aligns against the wrong counterpart: measured on
+ * Unmemorable Mantle (equipment-513, batch 29), the merged clause scored 0.75 against "Critical Success
+ * …" and 0.31 against its real counterpart, so a repairable save DC was silently walked past. */
+export const sentences = (s) => s.split(/(?<=[.!?])\s+(?=[A-Z“"(*⟨])|(?<=;)\s+|\s+(?=---)/g).filter(Boolean);
 const MAX_CELLS = 250_000; // an alignment bigger than this is not a sentence pair worth trusting
 
 const tok = (s) => plain(s).split(/\s+/).filter(Boolean);

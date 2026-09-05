@@ -1,0 +1,24 @@
+{
+  "findings": [
+    {
+      "id": "stripped-save-dc",
+      "backfillRows": [
+        {
+          "category": "items",
+          "id": "the-eye-of-the-slumberer",
+          "field": "description",
+          "value": "The *Eye of the Slumberer* is an alghollthu relic resembling a tangle of barnacle-encrusted tentacles. Though the orb is too large to move easily, the artifact's owner (referred to as the bearer) can activate its powers by wearing the *Amulet of the Slumberer*, a companion item shaped like a barnacle-encrusted cephalopod eye; this is a worn item that has the invested and occult traits. Only one such amulet can exist at any given time, and the artifact can grow a new one in 10 minutes if the original is destroyed. The Eye's abilities that require a saving throw use the higher of the amulet wearer's spell DC or class DC.\n\nAs one of the alghollthus' ancient contingencies to control their servitors, the *Eye* absorbs thoughts—especially those of pain and anguish—storing them like a battery. On command, it can unleash the stored energy, potentially stunning whole ecosystems. Each time a creature with the aquatic, amphibious, or water trait falls asleep or otherwise passes the night within 1 mile of the *Eye of the Slumberer*, it dreams fitfully of the artifact; creatures that don't dream are immune to this effect. When it awakens, the creature must succeed at a DC 45 Will save or become friendly toward the bearer (or helpful on a critical failure) until the next time it rests; this is an emotion and mental effect. The *Amulet*'s bearer isn't automatically aware of creatures influenced in this fashion, but they can identify such creatures on sight.\n\n---\n\n**Activate—Open the Eye** ⟨2⟩ (manipulate, occult)\n\n**Frequency** once per day\n\n**Requirements** You are wearing the *Amulet of the Slumberer* and are within 100 feet of the *Eye of the Slumberer*\n\n---\n\n**Effect** The amulet's eye opens and absorbs fears from creatures within a , subjecting them to nightmare as if they'd spent a night under the influence of the spell. Additionally, each creature with the dream or incorporeal trait within 500 feet of the *Eye of the Slumberer* takes 20d6 force damage ( DC 45 basic Reflex save).\n\n---\n\n**Activate—Vortex** ⟨1⟩ (occult, water)\n\n**Requirements** You're wearing the *Amulet of the Slumberer*, you're within 100 feet of the *Eye of the Slumberer*, and the *Eye* is within water\n\n---\n\n**Effect** The water around the *Eye* churns violently in a , becoming difficult terrain for swimming creatures that don't have the water trait. You can use this action again to Dismiss this effect.\n\n---\n\n**Destruction** The *Eye of the Slumberer* is destroyed if it's brought to the Dreamlands and either fed to a Great Old One or encircled by joyful celebrants for 101 days, during which time none of the dancers can experiences despair.",
+          "why": "AoN prints \"DC 45 basic Reflex save\" here and our import dropped it, so the player had no DC to roll against (finding unmemorable-mantle#save-dc; restored by scripts/repair-stripped-save-dc.mjs, insertions only)."
+        },
+        {
+          "category": "items",
+          "id": "howler-pistol",
+          "field": "description",
+          "value": "Designed by a gunsmith as a personal challenge, a *howler pistol* strikes a miniature version of the *sonic horn* siege weapon's resonating orb with its hammer to generate beams of sonic energy. A *howler pistol* is a *+1 striking dragon mouth pistol* that deals sonic damage instead of piercing damage and doesn't have the concussive trait.\n\n---\n\n**Activate—Resonant Shatter** ⟨2⟩ (manipulate)\n\n**Frequency** once per day\n\n**Requirements** The *howler pistol* is loaded\n\n**Effect** You over-torque the *howler pistol*'s hammer to strike the resonating orb harder than normal. The gun fires a concentrated burst of sonic energy that shatters a nearby stone or rock surface, creating a at a point of impact within the gun's first range increment. Creatures in the area take 5d6 piercing damage ( DC 27 basic Reflex save).\n\n---\n\n**Craft Requirements** The initial raw materials must include the powdered horn from a soniphak, processed into a resonating orb.",
+          "why": "AoN prints \"DC 27 basic Reflex save\" here and our import dropped it, so the player had no DC to roll against (finding unmemorable-mantle#save-dc; restored by scripts/repair-stripped-save-dc.mjs, insertions only)."
+        }
+      ],
+      "note": "2 description(s) repaired by insertion of the printed DC/save type; 600 site(s) refused (see the script's report). The three Unmemorable Mantle rungs are hand-authored by the data agent."
+    }
+  ]
+}

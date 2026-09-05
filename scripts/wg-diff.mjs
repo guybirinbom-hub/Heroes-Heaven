@@ -291,7 +291,21 @@ const kindOfTheirOp = (op) => {
      * `skills` map as any other, so three of batch 3's rows reported a missing `specialStat` for a
      * `lore:axis` we already train. */
     case 'createValue': return /^SKILL_|^LORE_/.test(v) ? 'skill' : 'specialStat';
-    case 'bindValue': return 'modifiesGrant';
+    /*
+     * `bindValue` POINTS ONE VARIABLE AT ANOTHER — and on a SPEED variable that is a Speed GRANT, not
+     * a modification of some other record's grant.
+     *
+     * Quick Swim: *"If you're legendary in Athletics, you gain a swim Speed equal to your Speed"* is
+     * `conditional (SKILL_ATHLETICS EQUALS L) THEN bindValue SPEED_SWIM <- CHARACTER.SPEED`. Ours is
+     * `speedsIf: [{skill:'athletics', rank:'legendary', speeds:{swim:'@actor.speed.land'}}]` — the same
+     * sentence, gate and formula, read in derive.ts after the land bonuses are folded in — which scores
+     * `speed` + `conditional`. Filed as `modifiesGrant`, the record reported a permanent gap for a kind
+     * (`recordMarks` — "on the High Jump action, DC -10") that has nothing to do with a Speed.
+     *
+     * ⚠ Only the SPEED_* variables. A bindValue on anything else really is their verb for "make this
+     * follow that", which is the `modifiesGrant` lane, and widening it would launder those.
+     */
+    case 'bindValue': return /^SPEED/.test(v) ? 'speed' : 'modifiesGrant';
     case 'injectText': return 'note';
     /*
      * `injectSelectOption` IS A CROSS-RECORD OPTION INJECTION — THE CHOICE BELONGS TO THE RECORD THAT
@@ -360,7 +374,8 @@ const OUR_KINDS = {
    * Dedication's *"a weakness to silver equal to half your level"* and the Mummy Dedication's fire
    * weakness are both authored, correctly, and both read as gaps. A cost the record imposes is part of
    * its defensive profile exactly as a resistance is. */
-  defense: ['resistances', 'weaknesses', 'immunities', 'passiveEffects.resistances', 'passiveEffects.immunities', 'passiveEffects.weaknesses', 'removesWeaknesses', 'choiceResistance', 'resistanceLevelUpgrade'],
+  // `resonant.resistances` — an aeon stone's resonant power (batch 29, Vital Amplification), read by derive.ts behind the wayfinder-slotted gate.
+  defense: ['resistances', 'weaknesses', 'immunities', 'passiveEffects.resistances', 'passiveEffects.immunities', 'passiveEffects.weaknesses', 'resonant.resistances', 'removesWeaknesses', 'choiceResistance', 'resistanceLevelUpgrade'],
   /* `ancestryHp` — a heritage that REPLACES the ancestry's Hit Points outright (Stoutheart Centaur:
    * *"Your ancestry Hit Points are 10 instead of 8"*), read first in resolvedAncestryHp (build.ts).
    * Their side writes the delta as adjValue MAX_HEALTH; ours writes the printed total. */
@@ -743,6 +758,94 @@ for (const path of ['src/rules/featGrantsAuto.ts', 'src/rules/featGrants.ts', 's
 }
 
 /*
+ * CARRIERS THAT LIVE OFF THE RECORD AND OUTSIDE EVERY REGISTRY — NAMED ONE BY ONE, WITH THE READER.
+ *
+ * The scans above find a carrier by finding the record's id as a KEY in a registry, and the walks in
+ * `ourKindsOf` find one by reading the record's own fields. A handful of class features are delivered
+ * by neither: the pick is a field on BuildState with its own picker and its own grant site in
+ * src/rules/build.ts, or the mechanic is a level ladder in another module keyed by CLASS rather than by
+ * record. Nothing in those files carries the feature's id as a key, so the differ reported the whole
+ * mechanic as missing on features that are built, offered in the builder and covered by tests.
+ *
+ * ⚠ An EXPLICIT MAP, not a blanket settle, and deliberately not a heuristic: each entry names the
+ * file:symbol that delivers each kind, so a reader can check it, and a carrier that is later deleted
+ * leaves an entry that scripts/wg-settle-stale.mjs can find. Only the kinds actually delivered are
+ * listed — anything else on these records still reports.
+ */
+const OFF_RECORD_CARRIERS = {
+  /* Third Apparition — *"you choose three apparitions to attune to"* plus *"The number of Focus Points
+   * in your focus pool increases by 1 (maximum 3)."* The pick is the OWNING CLASS's extra-choice group
+   * widening: core.json classes.animist.extraChoices[apparition].pickByLevel."7" = 3, resolved by
+   * extraPickCount/extraPickLevel and pushed as an owned classChoice in src/rules/build.ts. The class
+   * declares `featureId` on the level-1 selector, not on this feature, so the extraChoices walk in
+   * ourKindsOf (which credits only a DECLARED carrier, by design) cannot reach it. */
+  'third-apparition': ['choice'],
+  /* Implement Adept — *"Choose one of your implements and gain the adept benefit for that implement."*
+   * BuildState.implementAdept (src/rules/build.ts), picker src/builder/shared.tsx (`actions.patch({
+   * implementAdept: v })`), outstanding-choice prompt in build.ts once two implements are held at level
+   * 7, and the grant in build.ts `pushBenefit('adept', adept7, 7)` — which pushes the level-7
+   * `adept-benefit-<implement>` classFeature as an owned feature. */
+  'implement-adept': ['choice'],
+  /* Path to Perfection — *"Choose your Fortitude, Reflex, or Will saving throw. Your proficiency rank
+   * for the chosen saving throw increases to master."* BuildState.pathToPerfection (src/rules/build.ts),
+   * picker src/builder/Builder.tsx keyed on the feature id with options fortitude/reflex/will and an
+   * `allowed()` gate so a later tier cannot repeat a save; the master rank is applied in build.ts as
+   * `proficiencies.saves[picks[0]] = maxRank(…, 'master')` — a PLAYER-CHOSEN rank, which is why it is
+   * not in advancement.ts (the monk block carries no save row at all, so there is no double lane).
+   * `specialStat` answers their `createValue MONK_SAVES_*` bookkeeping, which records which save was
+   * taken so the 11th/15th tiers can exclude it — ours is the pathToPerfection array that `allowed()`
+   * reads. The success-to-crit half is on the record (`degreeShifts.savesFromChoice`). */
+  'path-to-perfection': ['choice', 'save', 'specialStat'],
+  /* Studious Spells — *"You gain two special 2nd-rank studious spell slots… At 11th level, the extra
+   * slots increase to 3rd-rank… At 13th level, 4th-rank."* The level ladder is
+   * magusStudiousSpells(level) in src/rules/spellcasting.ts (`conditional`: rank 2 at 7-10, 3 at 11-12,
+   * 4 at 13+), consumed in src/rules/build.ts, which appends the extra auto-prepared slots and their
+   * spells onto `entry.prepared[studious.rank]` for a magus and again for a dual-class magus. Keyed by
+   * CLASS, so nothing in either file carries this feature's id. ⚠ WHICH spells fill the slots, and the
+   * spellbook clause, are live findings on the record (studious-spells#gecko-grip / #spellbook) — this
+   * entry credits the slot/rank/ladder mechanic only, and the identity comparer still checks the spells. */
+  'studious-spells': ['spell', 'conditional'],
+};
+for (const [id, kinds] of Object.entries(OFF_RECORD_CARRIERS)) addKinds(id, kinds);
+
+/*
+ * THE PER-CLASS ADVANCEMENT TABLE IS A CARRIER, AND IT IS KEYED BY THE FEATURE.
+ *
+ * A proficiency RANK may be raised in exactly one place on our side — the class ladder in
+ * src/rules/advancement.ts — and every row names the feature it belongs to:
+ * `{ level: 7, track: 'reflex', rank: 'master', source: 'natural-reflexes' }`, applied through
+ * advancementRows -> applyAdvancement, which only ever raises. So a class feature whose whole printed
+ * mechanic is *"your proficiency rank for Reflex saves increases to master"* carries NOTHING on its own
+ * record, by design: reading the record alone reported `missing=[save]` on 25 features whose rank is
+ * delivered, and the same reading for weapons on Alchemical Weapon Expertise (`WEAPON_GROUP_BOMB`) and
+ * for perception on the four Perception Mastery/Legend/Expertise features.
+ *
+ * Read from the source text, exactly as modes.ts, casterArchetypes.ts and build.ts's FOCUS_CASTING are
+ * read below — these scripts are plain .mjs and cannot import the TypeScript engine. A parenthetical
+ * qualifier in `source` ('second-doctrine (cloistered)', 'weapon-legend (general)') names the doctrine
+ * or the clause rather than a record, so it is stripped.
+ *
+ * ⚠ This credits the KIND, never the rank. Whether the table reaches the printed rank is a VALUES
+ * question, and wg-values.mjs reads the same table for exactly that comparison — so a feature whose
+ * ladder stops at expert against a printed master still reports there.
+ */
+const ADVANCEMENT_TRACK_KINDS = {
+  fortitude: 'save', reflex: 'save', will: 'save',
+  perception: 'perception',
+  unarmed: 'weapon', simple: 'weapon', martial: 'weapon', advanced: 'weapon', bomb: 'weapon',
+  unarmored: 'ac', light: 'ac', medium: 'ac', heavy: 'ac',
+  classDc: 'classDc', spellcasting: 'spellcasting',
+};
+{
+  let text = '';
+  try { text = readFileSync(join(ROOT, 'src/rules/advancement.ts'), 'utf8'); } catch { /* absent */ }
+  for (const m of text.matchAll(/\{\s*level:\s*\d+,\s*track:\s*'([a-zA-Z]+)',\s*rank:\s*'[a-z]+',\s*source:\s*'([^']+)'\s*\}/g)) {
+    const kind = ADVANCEMENT_TRACK_KINDS[m[1]];
+    if (kind) addKinds(m[2].replace(/\s*\([^)]*\)\s*$/, ''), [kind]);
+  }
+}
+
+/*
  * The FOCUS-ONLY casting classes, read from the table that actually decides them: `FOCUS_CASTING` in
  * src/rules/build.ts (champion devotion, monk qi, ranger warden). These classes have no `spellcasting`
  * block on the ClassDef — their focus entry's tradition and key attribute come from this table — so a
@@ -798,6 +901,7 @@ function ourKindsOf(rec, id, bucket) {
     ...(rec.weaknesses ?? []),
     ...(rec.passiveEffects?.resistances ?? []),
     ...(rec.passiveEffects?.weaknesses ?? []),
+    ...(rec.resonant?.resistances ?? []),
   ]) {
     if (e?.whenCreatureTrait || e?.unlessCreatureTrait) kinds.add('conditional');
   }
@@ -1152,6 +1256,25 @@ const VERIFIED_EQUIVALENT = {
   'swimming-animal': ['grantsRecord'],
 
   /*
+   * AEON STONE (VITAL AMPLIFICATION) (batch 29) — their `hp` kind is a VALUE-LESS ANNOTATION, not a
+   * mechanic. Both halves of their select ("Is this granting the resonant power?" No / Yes) carry
+   * `addBonusToValue MAX_HEALTH_BONUS` with a `text` field holding the item's own prose and NO value
+   * at all — the shape wg-values already refuses to compare as "a prose-only bonus asserts no value".
+   *
+   * Print (AoN equipment-3055): *"A vital amplification aeon stone improves the flow of vital energy
+   * through your body, speeding the healing process… Whenever you regain Hit Points, you regain an
+   * additional 1 Hit Point for each 10 Hit Points regained (minimum 1 additional Hit Point)."* That is
+   * a percentage on HEALING RECEIVED, not a number on the maximum-HP track: the stone raises nobody's
+   * Hit Point total by so much as 1. Adopting their carrier would hand the wearer a max-HP bonus the
+   * book does not print, which is the defect and not the fix — so the kind is settled rather than
+   * modelled, and if a healing-multiplier lane is ever built this record is its first customer.
+   *
+   * The `defense` leg is REAL and is answered separately by the record's `resonant.resistances`
+   * (*"The resonant power grants you resistance 5 to void damage"*), so only `hp` is settled here.
+   */
+  'aeon-stone-vital-amplification': ['hp'],
+
+  /*
    * DRAGONSCALED KOBOLD (batch 26) — their heritage hands over a "Draconic Exemplar" select (a
    * `specialStat` + `choice` on their side): WHICH dragon the scales come from, stored once and read
    * by their kobold feats. Print (AoN heritage-334) names no exemplar on the heritage — *"the shine
@@ -1195,14 +1318,10 @@ const VERIFIED_EQUIVALENT = {
    */
   'haft-striker-stance': ['grantsItem'],
 
-  /*
-   * MONK EXPERTISE — *"your proficiency rank for your monk class DC increases to expert. If you have qi
-   * spells, your proficiency rank for spell attacks and spell DCs increases to expert."* Both are steps
-   * on the per-class table (`{ level: 9, track: 'classDc' }` and `track: 'spellcasting'`, both sourced
-   * to this feature), not fields on the record. Their `conditional` is the "if you have qi spells"
-   * gate, which the spellcasting track carries by only existing for a character who has one.
-   */
-  'monk-expertise': ['classDc', 'conditional', 'spellcasting'],
+  /* MONK EXPERTISE — settle DELETED in batch 29, along with twelve more of its shape: the per-class
+   * table in src/rules/advancement.ts is now READ (see ADVANCEMENT_TRACK_KINDS above), so the carrier
+   * answers these records and a settle that matches nothing would only silence the next real
+   * difference on them. `wg-settle-stale.mjs` is what found them. */
 
   /*
    * UNTRAINED IMPROVISATION — their `UNTRAINED_IMPROVISATION` marker plus the level conditional around
@@ -1261,21 +1380,10 @@ const VERIFIED_EQUIVALENT = {
    */
   'uncanny-awareness': ['perception'],
 
-  /*
-   * MAGICAL FORTITUDE / PRECOGNITIVE REFLEXES / UNBREAKABLE EXPERTISE — a different CARRIER.
-   *
-   * Their side writes each as a bare `adjValue` on the record (SAVE_FORT=E, SAVE_REFLEX=E,
-   * MEDIUM_ARMOR=E + HEAVY_ARMOR=E). Ours live in `src/rules/advancement.ts`, the per-class table, so
-   * the record itself carries no field and the comparer — which reads fields — sees nothing.
-   *
-   * Measured before settling, because "authored in a registry" and "reaching the sheet" are different
-   * claims: `test/batch15-parity.test.ts` builds each owning class either side of the level and asserts
-   * the rank actually steps (witch/sorcerer 5th, wizard/oracle 9th, psychic 5th, guardian 5th — and
-   * BOTH armour tracks, since half of that sentence landing looks identical on a guardian in medium).
-   */
-  'magical-fortitude': ['save'],
-  'precognitive-reflexes': ['save'],
-  'unbreakable-expertise': ['ac'],
+  /* MAGICAL FORTITUDE / PRECOGNITIVE REFLEXES / UNBREAKABLE EXPERTISE — settles DELETED in batch 29;
+   * the advancement table that carries all three is read now. `test/batch15-parity.test.ts` still
+   * builds each owning class either side of the level and asserts the rank actually steps, which is the
+   * check that mattered. */
   /* ARMOR POTENCY (+1) — the mechanic is in the RUNES bucket, which no comparer reads.
    * Printed (GM Core p.226): "Increase the armor's item bonus to AC by 1. The armor can be etched
    * with one property rune." Their item 6719 encodes only the first clause, as addBonusToValue
@@ -1634,38 +1742,20 @@ const VERIFIED_EQUIVALENT = {
   'aeon-stone-nourishing': ['hp'],
 
   /*
-   * BATCH 18 — THE ADVANCEMENT-TABLE FAMILY (the magical-fortitude / precognitive-reflexes carrier
-   * above, adversarially confirmed per record, evidence archived in work/b018-adversarial.json record set). Their side writes each
-   * class-feature proficiency bump as bare adjValues on the record; ours live as rows in
-   * src/rules/advancement.ts keyed `source: '<id>'` (advancementRows -> applyAdvancement -> derive),
-   * which a field-reading comparer cannot see.
-   *  - expert-spellcaster: SPELL_ATTACK=E + SPELL_DC=E on every PF2e row (their 20986 bard/druid/
-   *    witch/wizard L7, 31220 oracle/sorcerer L7, 38652 animist L7, 25013 psychic L7, 25617
-   *    magus/summoner L9) — ours: the per-class spellcasting-track expert rows at those same levels,
-   *    and derive.ts feeds BOTH attack and DC from the one rank. The `classDc` kind is credited too:
-   *    that op exists ONLY on their 35051, the Starfinder Playtest Mystic/Witchwarper printing of the
-   *    same feature name — a class we do not model; AoN's PF2e printings print spell attack + DC only.
-   *  - expert-necromancy: SPELL_ATTACK/SPELL_DC=E (their 57677/39093) — ours advancement.ts
-   *    necromancer spellcasting expert@7.
-   *  - expert-runes: CLASS_DC=E (their 57709; their stale playtest row 39319 says M — print says
-   *    expert, so the shipped E row is the one that matters) — ours runesmith classDc expert@7.
-   *  - kinetic-expertise: CLASS_DC=E (their 21761) — ours kineticist classDc expert@7.
-   *  - reflex-expertise: SAVE_REFLEX=E per class — ours per-class reflex expert rows.
-   *  - reaction-time: PERCEPTION=E (their 45044) — ours guardian perception expert@7; the extra
-   *    reaction is the record's extraReaction overlay row (batch-18 fix), read at build.ts and
-   *    rendered on the VitalsRail.
-   *  - expert-tactician: CLASS_DC=E — ours commander classDc expert@7; the `choice` kind is their
-   *    two "Select a Tactic" ABILITY_BLOCK selects (traits Tactic, level max 7), which ours delivers
-   *    as the folio lanes commanderFolioMax (5+2@7) and commanderMaxTier ('expert'@7) in build.ts —
-   *    the same +2-tactics-at-expert-tier the selects encode. Warfare Lore master is the record's
-   *    skillProgression overlay row (batch-18 fix).
+   * BATCH 18 — THE ADVANCEMENT-TABLE FAMILY. Their side writes each class-feature proficiency bump as
+   * bare adjValues on the record; ours live as rows in src/rules/advancement.ts keyed `source: '<id>'`
+   * (advancementRows -> applyAdvancement -> derive).
+   *
+   * ⚠ SIX SETTLES DELETED HERE IN BATCH 29 — expert-spellcaster, expert-necromancy, expert-runes,
+   * kinetic-expertise, reflex-expertise, reaction-time. That table is now READ (ADVANCEMENT_TRACK_KINDS
+   * above), so the carrier answers them and the settles matched nothing; `wg-settle-stale.mjs` found
+   * them. Only the record below survives, and only for the half the table does NOT carry:
+   *  - expert-tactician: the `classDc` half is the commander table (expert@7) and is taught now; the
+   *    `choice` kind is their two "Select a Tactic" ABILITY_BLOCK selects (traits Tactic, level max 7),
+   *    which ours delivers as the folio lanes commanderFolioMax (5+2@7) and commanderMaxTier
+   *    ('expert'@7) in build.ts — the same +2-tactics-at-expert-tier the selects encode. Warfare Lore
+   *    master is the record's skillProgression overlay row (batch-18 fix).
    */
-  'expert-spellcaster': ['spellcasting', 'classDc'],
-  'expert-necromancy': ['spellcasting'],
-  'expert-runes': ['classDc'],
-  'kinetic-expertise': ['classDc'],
-  'reflex-expertise': ['save'],
-  'reaction-time': ['perception'],
   'expert-tactician': ['classDc', 'choice'],
 
   /*
@@ -1745,14 +1835,10 @@ const VERIFIED_EQUIVALENT = {
    */
   'stonebound-magic': ['conditional', 'spellcasting'],
 
-  /*
-   * QUICK CLIMB — their `conditional IF SKILL_ATHLETICS EQUALS L THEN bindValue SPEED_CLIMB =
-   * (land Speed)` is ours as feats['quick-climb'].speedsIf
-   * [{skill:'athletics', rank:'legendary', speeds:{climb:'@actor.speed.land'}}] (overlay row). The
-   * modifiesGrant kind is their conditional-on-proficiency wrapper; the +5/+10-foot success rider is
-   * prose on BOTH sides (their injectText, our description).
-   */
-  'quick-climb': ['modifiesGrant'],
+  /* QUICK CLIMB — settle DELETED in batch 29. Its twin Quick Swim arrived with the same reading, and a
+   * second copy is the lane asking to be built: a `bindValue` on a SPEED_* variable is now laned as a
+   * Speed GRANT rather than a `modifiesGrant` (see kindOfTheirOp), which our `speedsIf` answers on both
+   * feats — plus seven more records that were reporting the same false gap. */
 
   /*
    * AEON STONE (SMOOTHING) — their MAX_HEALTH_BONUS is a PROSE SLOT, not Hit Points.
@@ -2336,15 +2422,8 @@ const VERIFIED_EQUIVALENT = {
    * ours is `choice: { kind: 'domains' }` resolved by `applyFeatFocus` in build.ts against
    * `DOMAIN_SPELLS` in domains.ts — all 64 domains mapped. The same picker under another name. */
   'domain-acumen': ['grantsRecord'],
-  /*
-   * *"Your proficiency rank in Perception and your eidolon's … increase to expert"* — a level-3
-   * summoner feature, held as the level-gated advancement row (advancement.ts, summoner: level 3,
-   * track perception, source 'shared-vigilance'). Their `adjValue PERCEPTION → E` carries no level
-   * of its own, but it sits on a class-feature row that IS `level: 3` and carries the Summoner class
-   * trait, which is how their engine gates class features — so the difference is only WHERE the
-   * level is recorded, not whether one exists.
-   */
-  'shared-vigilance': ['perception'],
+  /* SHARED VIGILANCE — settle DELETED in batch 29; the summoner table's perception row (source
+   * 'shared-vigilance') is read now. */
 
   /* ---------------------------------------------------------------- batch 010 */
 
@@ -2397,15 +2476,9 @@ const VERIFIED_EQUIVALENT = {
   'skillful-lessons': ['choice'],
 
   /* ---------------------------------------------------------------- batch 011 */
-  /*
-   * *"Your proficiency rank for Will saves increases to expert"* is a proficiency BUMP, and those live
-   * in CLASS_ADVANCEMENT — the gunslinger's table carries it at level 3 attributed to this very feature
-   * (advancement.ts:435), because that is the one place a rank may be raised; no record-level field can.
-   * Their op carries no level of its own but sits on a class-feature row that IS level 3, so only WHERE
-   * the level is recorded differs. Their second op is prose-only: the controlled-condition re-save,
-   * which we hold as a RECORD_MARKER on the `controlled` condition. Precedent: 'bravery'.
-   */
-  'stubborn': ['save'],
+  /* STUBBORN — settle DELETED in batch 29; the gunslinger table's Will-expert row (source 'stubborn')
+   * is read now. Their second op is prose-only (the controlled-condition re-save), which we hold as a
+   * RECORD_MARKER on the `controlled` condition and which the proseOnlyKinds allowance answers. */
   /*
    * Their only `hp` op is a conditional gated on FEAT_NAMES including "exemplar resiliency" — it is
    * Exemplar Resiliency's Hit Points parked on each exemplar archetype feat, which is how their model
@@ -2487,6 +2560,31 @@ const VERIFIED_EQUIVALENT = {
    * source is the pooled innate entry both sides resolve to; the conditional IS the whenChoice gate.
    */
   'zodiac-bound': ['spellcasting', 'conditional'],
+
+  /*
+   * ---- BATCH 29 ----------------------------------------------------------------------------------
+   *
+   * WEAPON SPECIALIZATION / GREATER WEAPON SPECIALIZATION — a DERIVED damage step, computed from the
+   * owning class's feature table rather than declared anywhere a key scan can find.
+   *
+   * Printed: *"You deal 2 additional damage with weapons and unarmed attacks in which you are an
+   * expert. This damage increases to 3 if you're a master, and 4 if you're legendary."* Their side
+   * writes a bare boolean marker (`adjValue WEAPON_SPECIALIZATION = true`, and its Greater twin) and
+   * lets their engine supply the table — the MARTIAL_EXPERIENCE / INVENTOR_ARMOR shape.
+   *
+   * Ours computes it: `weaponSpecialization(c, db)` in src/rules/derive.ts detects the feature by
+   * walking the OWNING CLASS's own feature table (`cls.features.filter(f => f.level <= c.level)`), so it
+   * fires for all 27 class tables that grant it at each class's own level (most @7, guardian @11, the
+   * rest @13; psychic through 'psychic-weapon-specialization'; the summoner's
+   * 'eidolon-weapon-specialization' deliberately excluded by exact match), and `weaponSpecDamage(rank,
+   * ws)` returns expert 2 / master 3 / legendary 4 (4/6/8 with Greater) keyed to the STRIKE's own
+   * effective rank, folded into every Strike. Nothing on either record names it, which is why neither
+   * the field walk nor a registry key scan can see it, and why this is not the advancement-table teach:
+   * a damage step is not a proficiency rank and has no row in src/rules/advancement.ts. Paired with the
+   * same two variables in wg-values' NOT_A_SCALAR.
+   */
+  'weapon-specialization': ['weapon'],
+  'greater-weapon-specialization': ['weapon'],
 };
 
 const out = { theyOnly: [], disagree: [], weOnly: [], agree: [], noMatch: [], theirsUnencoded: [] };
@@ -2522,6 +2620,18 @@ for (const [id, rec, bucket] of wgAllRecords(core)) {
    * Gated on `ours.has('conditional')`, which is the whole point: Fishseeker Shoony's `degreeShifts`
    * answer it and its `missing=[skill]` clears, while Murksight, Greenwatcher, Insistent Command and
    * Assured Runic Crafter model nothing at all and keep reporting the gap they really have.
+   *
+   * ⚠ BATCH 29 TRIED TO WIDEN THIS TO "ours models SOMETHING" AND REVERTED IT. The case for widening
+   * was Aeon Stone (Vital Amplification), whose `addBonusToValue MAX_HEALTH_BONUS` carries no `value`
+   * in either branch, so `missing=[hp]` looks like a demand for a mechanic their op does not grant.
+   * Measured over the corpus it also silenced Icy Apotheosis (*"You automatically succeed against
+   * effects that have the cold trait"*, written as value-less notes on all three saves — a printed rule
+   * we do NOT carry on saves) and Crushing Bough Bracers (*"your Strikes deal damage … as though their
+   * resistances were 5 lower"*). Both are REAL gaps, and the batch-27 test above pins Icy Apotheosis
+   * for exactly this reason. A value-less note names a printed rule; whether it is a false positive
+   * depends on whether WE carry that rule, and `has('conditional')` is the question that asks it. The
+   * stone's hp half is a real gap too, filed separately as aeon-stone-vital-amplification#healing-amplification
+   * — it clears when that lands, not by being settled here.
    */
   if (ours.has('conditional') && t.proseOnlyKinds?.size) missing = missing.filter((k) => !t.proseOnlyKinds.has(k));
   /* Kinds read, verified and settled for this record — see VERIFIED_EQUIVALENT above. */

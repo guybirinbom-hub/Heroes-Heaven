@@ -111,6 +111,27 @@ for (const [cid, cls] of Object.entries(core.classes ?? {})) {
   for (const f of cls.features ?? []) if (!classOfFeature.has(f.featureId)) classOfFeature.set(f.featureId, cid);
 }
 
+/*
+ * OPTIONS OFFERED BY A PICKER THAT IS NOT ON THE RECORD — NAMED ONE BY ONE, WITH THE PICKER.
+ *
+ * Every other option reader here starts from a field (`choice.options`, `effectChoices`, a subclass or
+ * extra-choice list the class DECLARES). A pick whose whole state is a BuildState field with a bespoke
+ * picker has no such field, so their `select`'s option titles read as offered by nobody.
+ *
+ * ⚠ An explicit map naming the picker, never a heuristic: a record not listed here still reports.
+ */
+const OFF_RECORD_OPTIONS = {
+  /* Path to Perfection — *"Choose your Fortitude, Reflex, or Will saving throw."* Their `select`
+   * ("Select a Save") offers exactly Fortitude / Reflex / Will; ours is BuildState.pathToPerfection,
+   * whose picker in src/builder/Builder.tsx is keyed on this feature id with the option list
+   * [['fortitude','Fortitude'], ['reflex','Reflex'], ['will','Will']] and an `allowed()` gate so the
+   * 11th- and 15th-level tiers cannot repeat a save. Written by src/builder/shared.tsx, applied as the
+   * master/legendary rank in src/rules/build.ts and resolved for the record's own success-to-crit
+   * clause by CHOICE_SAVE_ANSWERS.pathToPerfection in src/rules/explain.ts. Same question, same three
+   * answers; only the storage differs. Paired with the same id in wg-diff's OFF_RECORD_CARRIERS. */
+  'path-to-perfection': ['Fortitude', 'Reflex', 'Will'],
+};
+
 const featFeatText = readFileSync(join(ROOT, 'src/rules/featFeatGrants.ts'), 'utf8');
 const cantripText = readFileSync(join(ROOT, 'src/rules/featCantripGrants.ts'), 'utf8');
 const pickText = readFileSync(join(ROOT, 'src/rules/featPickGrants.ts'), 'utf8');
@@ -184,6 +205,8 @@ function ourIdentities(id, rec) {
   const out = { grants: new Set(), spells: new Set(), items: new Set(), options: new Set() };
   const addGrant = (x) => x && out.grants.add(key(anyName(x)));
   const addSpell = (x) => x && out.spells.add(key(anyName(x)));
+  /* A picker that lives on BuildState rather than on the record — see OFF_RECORD_OPTIONS. */
+  for (const o of OFF_RECORD_OPTIONS[id] ?? []) out.options.add(key(o));
 
   for (const g of rec.grantsFeats ?? []) addGrant(g);
   for (const g of rec.grantsClassFeatures ?? []) addGrant(g);
@@ -241,6 +264,22 @@ function ourIdentities(id, rec) {
   if (rec.resonant) { out.options.add(key('yes')); out.options.add(key('no')); }
   for (const s of rec.focusSpells ?? []) addSpell(s);
   for (const s of rec.spellListAdditions?.spells ?? []) addSpell(s);
+  /*
+   * …and the spells a RESTRICTED SLOT GRANT allows into its own slots.
+   *
+   * `spellSlotBonus.restricted` is the lane for "extra slots that may only hold these spells" — Divine
+   * Evolution's heal/harm, Creed Magic's per-tier ladder, and the magus's studious spells. Their side
+   * has no restricted-slot verb, so it writes the same sentence as one `giveSpell` per spell (Studious
+   * Spells: Gecko Grip, then Haste behind LEVEL >= 11, then Fly behind LEVEL >= 13) — which is a NAMED
+   * thing, and this reader looked at none of the three homes it can live in, so every restricted-slot
+   * record read as granting no spell at all.
+   *
+   * Both shapes: `spells` is the flat allowed list, and each `ladder` entry carries the spells that tier
+   * ADDS (the slot count moves with level while the allowed list accumulates — see RestrictedSlotGrant
+   * in src/rules/types.ts). `byRankAt` carries no spell list, so there is nothing to read there.
+   */
+  for (const s of rec.spellSlotBonus?.restricted?.spells ?? []) addSpell(s);
+  for (const l of rec.spellSlotBonus?.restricted?.ladder ?? []) for (const s of l?.addSpells ?? []) addSpell(s);
   /* `grantsRituals` holds OBJECTS (`{ spellId }`), not bare ids — passing the object straight to
    * addSpell stringified it to "[object Object]", so every record granting a ritual reported its
    * ritual as missing. The Harrower's *"you learn the harrowing ritual"* is the case. */
@@ -1099,8 +1138,12 @@ const SETTLED_IDENTITIES = {
    * parallel-breakthrough: their six conscious-mind options are the BRANCHES of their conditional;
    * ours is the flat 18-cantrip FEAT_CANTRIP_GRANTS picker, and narrowing it to minds other than
    * your own is the menu-filtering that is ours.
-   * conjurer-of-corpses: their giveSpell summon-undead = the necromancer's occult prepare picker
-   * already lists it (useTraditionSpells); the restricted slot is authored separately.
+   * conjurer-of-corpses: SETTLE DELETED IN BATCH 29 — the lane it stood in for is now read. Their
+   * giveSpell summon-undead is answered by the record's own
+   * `spellSlotBonus.restricted.spells: ['summon-undead']`, which `ourIdentities` reads above; a settle
+   * that matches nothing is a trap (it would silence the NEXT difference of that kind on this record
+   * unread), so it goes rather than sitting here duplicated. `--raw` confirms the record is clean
+   * without any settle at all.
    */
   'master-summoner': ['options'],
   'grave-strength': ['grants'],
@@ -1109,7 +1152,6 @@ const SETTLED_IDENTITIES = {
   'psi-development': ['spells', 'options'],
   'beast-gunner-dedication': ['options'],
   'parallel-breakthrough': ['options'],
-  'conjurer-of-corpses': ['spells'],
 
   /*
    * BATCH 18's REMAINING IDENTITY SETTLES — same rule: the mechanic is delivered by a carrier this

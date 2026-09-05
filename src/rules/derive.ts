@@ -2514,6 +2514,19 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
         });
       }
     }
+    /*
+     * …and an aeon stone's RESONANT defence — *"The resonant power grants you resistance 5 to void
+     * damage"* (Aeon Stone of Vital Amplification), which the parent page grants only *"when slotted
+     * into a special magical item called a wayfinder"*. It shipped as prose in `resonant.note`, so the
+     * number reached no total: 5 void resistance was delivered by nothing.
+     *
+     * Gated exactly as the resonant INNATE SPELLS already are in build.ts — invested AND marked slotted
+     * — rather than through passiveEffects, whose fold is unconditional for anything worn or invested
+     * and would hand the resistance to a stone that is not in a wayfinder at all.
+     */
+    const resonant = db.items[inv.itemId]?.resonant;
+    if (resonant?.resistances?.length && inv.invested && inv.designations?.includes('wayfinder-slotted'))
+      push(db.items[inv.itemId]?.name ?? inv.itemId, { resistances: resonant.resistances }, 'while slotted in a wayfinder');
   }
   // The ACTIVE stance / form: its typed resistances (Rain of Embers: fire = half level) and senses (an
   // ursine form's low-light + scent) apply only while it's the active one.

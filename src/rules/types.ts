@@ -1679,6 +1679,17 @@ export interface SpellSlotBonus {
   createRank?: boolean;
   /** Restrict to a specific entry id (defaults to the character's main slot caster). */
   entryId?: string;
+  /**
+   * The slots are of ONE TRADITION, and the record does nothing for a caster of any other.
+   *
+   * *"It does nothing unless you have a spellcasting class feature with the arcane tradition… you have
+   * two additional 1st-rank ARCANE spell slots each day"* (Ring of Wizardry). The entry pick in the
+   * applier was "the first spontaneous or prepared entry", tradition ignored, so a cleric or druid who
+   * invested the ring took its two slots as DIVINE or PRIMAL ones. When a bonus names a tradition and
+   * the character has no entry of it, the record grants NOTHING — print gates the whole item, not just
+   * the slots.
+   */
+  tradition?: Tradition;
   /** Extra spells KNOWN (repertoire rows) at specific ranks WITHOUT a slot — Shattered Sacrament's
    *  "you learn shattered sacrament, a 1st-rank halcyon spell" adds a known spell, not a cast. Only
    *  read for entryId-targeted bonuses on a spontaneous ARCHETYPE entry. */
@@ -1736,6 +1747,12 @@ export interface RestrictedSlotGrant {
    * outright, while its `addSpells` accumulate: the slot count stays at two but the allowed list
    * grows. Kept apart from `byRankAt` because getting the two confused is exactly how a record ends
    * up granting three times the slots it prints.
+   *
+   * A step that adds only SPELLS writes `byRank: {}` — a magus's hybrid study prints *"an additional
+   * spell depending on your hybrid study"* into the Studious Spells slots at 7th, 11th and 13th and
+   * adds no slot of its own. Such a grant is never resolved alone: it is folded into the feature's by
+   * matching `restricted.label` (build.ts, `mergeRestrictedGrants`), and the empty step picks up the
+   * ranks the feature's own step of that level states.
    */
   ladder?: { level: number; byRank: Record<string, number>; addSpells?: string[] }[];
   /** N slots at HALF the caster's highest rank, rounded down — a Candle of Invocation ("4th-rank
@@ -3466,6 +3483,18 @@ export interface SubclassOption {
    * joins `grantedSpells` in the repertoire/spellbook pass.
    */
   grantedSpellChoice?: { id: string; prompt: string; options: string[] };
+  /**
+   * The OPTION's own extra spell slots / restricted-slot spells.
+   *
+   * A magus's Studious Spells slots take *"Gecko Grip, Sure Strike, Water Breathing, and an additional
+   * spell depending on your hybrid study"* — the fourth spell is named by the SUBCLASS, one per tier
+   * (Inexorable Iron: Enlarge at 7th, Earthbind at 11th, Planar Tether at 13th). The slot-bonus
+   * collector read feats, class features, heritages and invested items and never the option the player
+   * picked, so that spell had nowhere to live. A grant here sharing a `restricted.label` with a class
+   * feature's is FOLDED INTO IT rather than making a second group — the study adds a spell to the
+   * feature's two slots, it does not conjure two more.
+   */
+  spellSlotBonus?: SpellSlotBonus;
   /** Cross-references in `description` (for in-text linking). */
   descRefs?: DescRef[];
   /**
@@ -3816,8 +3845,14 @@ interface ItemBase extends ContentBase {
    * `note` is always present and carries the printed clause: half the resonant powers modify the base
    * power in prose (*"increases the damage prevented from 5 to 10"*, *"grants a separate activation"*)
    * and have no mechanical carrier at all. Stating those IS the fix for them.
+   *
+   * `resistances` is the second mechanical carrier: *"The resonant power grants you resistance 5 to
+   * void damage"* (Aeon Stone of Vital Amplification) is a real number on the sheet, not prose, but it
+   * could only be written as `note` and so reached no total. Deliberately NOT `passiveEffects.resistances`
+   * — that fold is unconditional for a worn or invested item and would hand the resistance to a stone
+   * sitting loose in a pocket, which print does not grant.
    */
-  resonant?: { note: string; innateSpells?: InnateSpellGrant[] };
+  resonant?: { note: string; innateSpells?: InnateSpellGrant[]; resistances?: IwrEntry[] };
   /**
    * A relic GIFT's aspects (Air, Beast, Fire, Mind…) — the key that says which relics may ever take it.
    *

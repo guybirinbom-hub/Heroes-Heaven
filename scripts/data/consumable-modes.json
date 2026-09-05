@@ -4967,5 +4967,19 @@
     "appliesWhen": "on checks to find secret doors and traps (this replaces the +3, it does not stack)"
    }
   ]
+ },
+ {
+  "id": "item-resolute-mind-wrap",
+  "name": "Shield Thoughts",
+  "fromItemId": "resolute-mind-wrap",
+  "duration": "1 minute",
+  "modifiers": [],
+  "resistances": [
+   {
+    "type": "mental",
+    "value": 10
+   }
+  ],
+  "note": "Once per day, as a reaction when you attempt a Will save against a mental effect. Turn this on only if you SUCCEED at that save: 'If you succeed at this saving throw, the resistance to mental damage granted by the resolute mind wrap increases to 10 for 1 minute.'"
  }
 ]

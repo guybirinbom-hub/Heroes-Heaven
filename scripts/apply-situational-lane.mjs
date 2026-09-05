@@ -53,10 +53,30 @@ const escalatedIds = new Set(spec.filter((r) => r.needsHumanDecision).map((r) =>
  *     "gate-junction" entry already carries it for all five junction skills; these element-keyed copies
  *     pooled as a second identical star on the same skill and fired from level 1, before any junction
  *     could be taken. `existingIds` cannot exclude a row that no longer exists, so name them here.
+ *   disciplined-mind (WG parity b029, disciplined-mind#duplicate): DELETED from the registry. Print
+ *     states it once — *"When you roll a success on a Will save, you get a critical success
+ *     instead."* — and the record's own `degreeShifts` already stars the Will row, so the lane's copy
+ *     rendered the same rule twice under the same source name. Same call as fluid-contortionist and
+ *     combination-finisher; `existingIds` cannot exclude a deleted row, so name it here.
+ *   chemical-hardiness / churning-mind / commanding-will / confident-evasion (WG parity b029,
+ *     disciplined-mind#duplicate applied to its siblings): DELETED for the same reason. Each prints
+ *     the upgrade once — *"When you roll a success on a Fortitude save, you get a critical success
+ *     instead."* (class-feature-832; the others say the same of Will, Will and Reflex) — and each
+ *     record's own `degreeShifts` successToCrit already stars that save. The generic guard in
+ *     test/batch29-situational-siblings.test.ts fails if the lane ever re-emits this shape for ANY
+ *     successToCrit record, not just these four.
+ *   emotionless / hardened-harrow-deck (WG parity b029, same guard): TRIMMED, not deleted. Each
+ *     prints a real bonus the registry must keep (*"a +1 circumstance bonus to saving throws against
+ *     emotion and fear effects"*, feat-2461; the deck's *"you instead gain a +1 circumstance bonus"*
+ *     fallback, equipment-837) PLUS the successToCrit sentence their own `degreeShifts` already
+ *     carries. The lane's wording folds the upgrade back into the clause, so re-emitting it would
+ *     restore the doubled star while looking like a harmless refresh. The lethoci edit exactly.
  */
 const handEdited = new Set([
   'strong-oak', 'lethoci', 'sacred-nagaji', 'kanchil', 'respite-of-cloudless-paths',
-  'fire-gate', 'metal-gate', 'earth-gate',
+  'fire-gate', 'metal-gate', 'earth-gate', 'disciplined-mind',
+  'chemical-hardiness', 'churning-mind', 'commanding-will', 'confident-evasion',
+  'emotionless', 'hardened-harrow-deck',
 ]);
 
 const src = readFileSync(REGISTRY, 'utf8');

@@ -1,0 +1,1138 @@
+{
+ "findings": [
+  {
+   "id": "spined-shield#granted-spikes",
+   "note": "Three rows, three DIFFERENT fields, so no merge is needed. (1) A CREATED weapon record for the spikes, cloned field-for-field from items/shield-spikes (martial, group shield, 1d6 piercing, attached-to-shield, held-in-one-hand, hands 1) with the printed fundamentals as builtInRunes {potency:1, striking:'striking'} — the exact shape 263 items already ship and the shape items/eclipse uses for '+1 striking'. price {} + formOf 'spined-shield' because the spikes are not separately buyable: formOf's ONLY effect is findCombinationFormIds (src/data/index.ts:424) hiding the record from pickers while leaving it resolvable by id — the same treatment the 36 combination-weapon usages get. Precedent for a created secondary weapon record with builtInRunes and no aonId: items/pistol-wand-stock (already an effect-backfill create row). No aonId: the spikes have no AoN page of their own; weapon-397 belongs to plain Shield Spikes and reusing it would send the AoN link to the wrong document. Prose is in work/.b029-created-desc.json, not in the create value. (2) grantsItems on the shield in the vengeful-arm shape — read by the ungated item arm at build.ts:7196, so it fires for a held, uninvested shield today. (3) grantedStrikes for the Fire Spine activation, in the shape of the 13 existing item grantedStrikes with GrantedStrike.range = 120 (types.ts:5078, the field heritages/spined-azarketi and 12 feats already use). ⚠ INERT UNTIL THE ENGINE ROW LANDS: build.ts:2608 feeds the item arm of the strike collector from invested items only (`for (const itemId of investedItemIds)`) and a spined shield is held, never invested — the ENGINE agent is widening that walk to held/equipped items. ⚠ RESIDUE, not fixed by any row here: GrantedStrike has no proficiency/category field, so the Fire Spine resolves as a natural attack while print calls it a martial ranged weapon, and it cannot carry the spikes' +1 striking; the inventory copy of spined-shield-spikes does carry the runes. ORCHESTRATOR: the grantedStrikes row was replaced by a second created weapon record (spined-shield-fire-spine) granted through grantsItems — a grantedStrikes entry has no proficiency category or rune carrier.",
+   "backfillRows": [
+    {
+     "category": "items",
+     "id": "spined-shield-spikes",
+     "create": true,
+     "value": {
+      "id": "spined-shield-spikes",
+      "name": "Spined Shield Spikes",
+      "level": 7,
+      "price": {},
+      "bulk": 0,
+      "traits": [
+       "attached-to-shield",
+       "magical"
+      ],
+      "rarity": "common",
+      "source": {
+       "book": "Pathfinder GM Core",
+       "license": "ORC"
+      },
+      "usage": "held-in-one-hand",
+      "itemType": "weapon",
+      "hands": 1,
+      "category": "martial",
+      "group": "shield",
+      "damage": {
+       "dice": 1,
+       "die": "d6",
+       "type": "piercing"
+      },
+      "edition": "remaster",
+      "builtInRunes": {
+       "potency": 1,
+       "striking": "striking"
+      },
+      "formOf": "spined-shield"
+     },
+     "why": "equipment-2827: 'Five jagged spines project from the surface of this steel shield… The spines are +1 striking shield spikes.' Cloned from items/shield-spikes (the record print names) with the printed fundamental runes; formOf keeps it out of the shop because it is granted with the shield, never bought."
+    },
+    {
+     "category": "items",
+     "id": "spined-shield",
+     "field": "grantsItems",
+     "value": [
+      {
+       "itemId": "spined-shield-spikes"
+      },
+      {
+       "itemId": "spined-shield-fire-spine"
+      }
+     ],
+     "why": "equipment-2827: 'The spines are +1 striking shield spikes' — the shield hands the wearer a weapon. Same shape as items/vengeful-arm → retribution-axe; the reader (build.ts:7196) is ungated by investment, which a held shield needs. Also grants the Fire Spine ranged weapon record (see the second create row) — both reach the inventory through the investment-ungated grantsItems walk (build.ts ~7196)."
+    },
+    {
+     "category": "items",
+     "id": "spined-shield-fire-spine",
+     "create": true,
+     "value": {
+      "id": "spined-shield-fire-spine",
+      "name": "Fire Spine (Spined Shield)",
+      "level": 7,
+      "price": {},
+      "bulk": 0,
+      "traits": [
+       "magical"
+      ],
+      "rarity": "common",
+      "source": {
+       "book": "Pathfinder GM Core",
+       "license": "ORC"
+      },
+      "usage": "held-in-one-hand",
+      "itemType": "weapon",
+      "hands": 1,
+      "category": "martial",
+      "group": "shield",
+      "damage": {
+       "dice": 1,
+       "die": "d6",
+       "type": "piercing"
+      },
+      "edition": "remaster",
+      "builtInRunes": {
+       "potency": 1,
+       "striking": "striking"
+      },
+      "formOf": "spined-shield",
+      "range": 120,
+      "reload": null
+     },
+     "why": "GM Core Spined Shield: 'A fired spine uses the spikes' statistics, but it's a martial ranged weapon with a range increment of 120 feet.' A granted weapon record (not a grantedStrikes entry) is the only carrier that rolls at MARTIAL proficiency, carries the spikes' +1 striking, and is not buffed by Handwraps of Mighty Blows — the engine verifier measured all three on the grantedStrikes route. formOf keeps it out of pickers; it reaches the sheet only through grantsItems."
+    }
+   ]
+  },
+  {
+   "id": "spined-shield#spines-counter",
+   "note": "counters is a FOURTH field on the same record — a separate row from the three above, per the field rule. Exact shape copied from items/clockwork-shield's counters entry (id/label/max/per/resetsOnRest), with the id and label naming the resource instead of a frequency. Reader: src/rules/itemUses.ts counterDefs() returns item.counters whenever non-empty and ItemDetail.tsx renders them as pips — live today, no engine work. Safe on this record specifically: spined-shield carries NO frequency, so the counters array shadows nothing (the exact failure mode of the helmsmans-recourse finding below).",
+   "backfillRows": [
+    {
+     "category": "items",
+     "id": "spined-shield",
+     "field": "counters",
+     "value": [
+      {
+       "id": "spines",
+       "label": "spines",
+       "max": 5,
+       "per": "day",
+       "resetsOnRest": true
+      }
+     ],
+     "why": "equipment-2827: 'one spine snaps off per 6 damage, reducing the damage by 6… When all the spines are gone, you lose the ability to attack with them until the spines regenerate the next day.' Five spines, spent one at a time, back the next day — a per-day counter, not prose."
+    }
+   ]
+  },
+  {
+   "id": "ring-of-wizardry-type-i#arcane-gate",
+   "note": "Four rows, each SUPERSEDING the existing effect-backfill spellSlotBonus row for that ring and carrying its full value (byRank re-emitted verbatim) plus the new gate. Reader: SpellSlotBonus.tradition is already declared (src/rules/types.ts:1692) and slotEntryFor in src/rules/build.ts (~6810, the comment quoting this very ring) is the ENGINE agent's gate — 'A bonus that names a tradition and finds no entry of it grants NOTHING.' The passiveEffects +1/+2 Arcana half of the same printed gate is NOT touched here: it is a different field and a different (unbuilt) lane — listed in the report as data still needed.",
+   "backfillRows": [
+    {
+     "category": "items",
+     "id": "ring-of-wizardry-type-i",
+     "field": "spellSlotBonus",
+     "value": {
+      "byRank": {
+       "1": 2
+      },
+      "tradition": "arcane"
+     },
+     "why": "equipment-462: 'It does nothing unless you have a spellcasting class feature with the arcane tradition… two additional 1st-rank arcane spell slots each day.' SUPERSEDES the existing row {byRank:{1:2}}, whose value is carried whole."
+    },
+    {
+     "category": "items",
+     "id": "ring-of-wizardry-type-ii",
+     "field": "spellSlotBonus",
+     "value": {
+      "byRank": {
+       "1": 1,
+       "2": 2
+      },
+      "tradition": "arcane"
+     },
+     "why": "Same printed gate, Type II. SUPERSEDES the existing row {byRank:{1:1,2:2}}, value carried whole."
+    },
+    {
+     "category": "items",
+     "id": "ring-of-wizardry-type-iii",
+     "field": "spellSlotBonus",
+     "value": {
+      "byRank": {
+       "2": 1,
+       "3": 2
+      },
+      "tradition": "arcane"
+     },
+     "why": "Same printed gate, Type III. SUPERSEDES the existing row {byRank:{2:1,3:2}}, value carried whole."
+    },
+    {
+     "category": "items",
+     "id": "ring-of-wizardry-type-iv",
+     "field": "spellSlotBonus",
+     "value": {
+      "byRank": {
+       "3": 1,
+       "4": 2
+      },
+      "tradition": "arcane"
+     },
+     "why": "Same printed gate, Type IV. SUPERSEDES the existing row {byRank:{3:1,4:2}}, value carried whole."
+    }
+   ]
+  },
+  {
+   "id": "resolute-mind-wrap#resistance-upgrade",
+   "note": "A CREATE row in the modes bucket, in the exact shape of core.json modes/item-potion-of-acid-resistance-greater (id, name, fromItemId, duration, modifiers [], resistances, note) — checked against modes/item-force-shield too, same six keys. The applier takes `category: 'modes'` (scripts/lib/apply-backfill.mjs does `db[fix.category] ??= {}` for a create, and the overlay already carries a non-create row with category 'modes' for dampening-harmonics, so the bucket name is right). No description field: ModeDef has none, the printed clause lives in `note`. Reader: ModeDef.fromItemId is offered on the sheet through src/rules/play.ts and src/sheet/ItemDetail.tsx — live today, no engine work. Resistances do not stack, so mental 10 replaces the record's passive mental 5 while the mode is on. The +1 item Will bonus half already ships at src/rules/situationalBonuses.ts:2374 and is untouched.",
+   "backfillRows": [
+    {
+     "category": "modes",
+     "id": "item-resolute-mind-wrap",
+     "create": true,
+     "value": {
+      "id": "item-resolute-mind-wrap",
+      "name": "Shield Thoughts",
+      "fromItemId": "resolute-mind-wrap",
+      "duration": "1 minute",
+      "modifiers": [],
+      "resistances": [
+       {
+        "type": "mental",
+        "value": 10
+       }
+      ],
+      "note": "Once per day, as a reaction when you attempt a Will save against a mental effect. Turn this on only if you SUCCEED at that save: 'If you succeed at this saving throw, the resistance to mental damage granted by the resolute mind wrap increases to 10 for 1 minute.'"
+     },
+     "why": "equipment-4107: 'If you succeed at this saving throw, the resistance to mental damage granted by the resolute mind wrap increases to 10 for 1 minute.' The record ships only the passive mental 5, so the minute at 10 reached nothing."
+    }
+   ]
+  },
+  {
+   "id": "hairpin-of-blooming-flowers#burst-text",
+   "note": "One description row, SUPERSEDING the existing effect-backfill description row for this record (whose value is byte-identical to the shipped core-descriptions text). The value below is that whole string with the single missing clause put back — '10-foot burst' — and nothing else changed, per the instruction to keep the record's current wording. Mirror authority: C:/wonderers guide/aon-2e-archive/data/by-category/equipment/equipment-4105.json reads 'creating a flurry of color in a 10-foot [burst](/Rules.aspx?ID=2385) centered on you'; the linked token was eaten by the markdown link-stripper while the second, unlinked '10-foot burst' in the same paragraph survived.",
+   "backfillRows": [
+    {
+     "category": "items",
+     "id": "hairpin-of-blooming-flowers",
+     "field": "description",
+     "value": "The flower that adorns this hairpin is a blooming lotus flower that varies in color; it regrows in a day after the item is activated. Whether or not the hairpin's flower is in bloom, as long as you wear it and it's invested, it grants a +1 item bonus to Diplomacy checks.\n\n**Activate—Scatter Petals** ⟨2⟩ (concentrate, manipulate)\n\n**Frequency** once per day\n\n---\n\n**Effect** You pluck the flower from the hairpin and scatter the petals, creating a flurry of color in a 10-foot burst centered on you. You become concealed for 1 minute or until you move from your current location. Any creature within the 10-foot burst when you Activate the Item must succeed at a DC 23 Reflex save or become dazzled until the end of its next turn (or blinded until the end of its next turn on a critical failure). The flower blooms again the next day.",
+     "why": "equipment-4105: 'creating a flurry of color in a 10-foot burst centered on you.' The shipped text reads 'in a centered on you' — an area with no area. SUPERSEDES the existing identical description row."
+    }
+   ]
+  },
+  {
+   "id": "helmsmans-recourse-greater#frequency-counter",
+   "note": "counters:null on all three rungs. Confirmed on the live records first: helmsmans-recourse, -greater and -major each carry frequency {max:1, per:'hour'} (correct) AND counters [{id:'freq', label:'per day', max:1, per:'day', resetsOnRest:true}] (wrong), and src/rules/itemUses.ts counterDefs() returns item.counters whenever non-empty, synthesizing from item.frequency only in the else branch — so the per-day pip is what the player sees. Deleting the array lets the frequency synthesize the identical shape with the printed period. No effect-backfill row exists for this field on any of the three, so `value: null` deletes the field the base import wrote; nothing else reads item.counters (play.ts reads inv.counters).",
+   "backfillRows": [
+    {
+     "category": "items",
+     "id": "helmsmans-recourse",
+     "field": "counters",
+     "value": null,
+     "why": "equipment-1858: '**Frequency** once per hour'. The hand-written per-day counters array shadows the record's own correct frequency {max:1, per:'hour'} in itemUses.ts counterDefs(); deleting it lets the frequency synthesize the same pip with the printed period."
+    },
+    {
+     "category": "items",
+     "id": "helmsmans-recourse-greater",
+     "field": "counters",
+     "value": null,
+     "why": "equipment-1858-1614: '**Frequency** once per hour'. Same shadowed-frequency defect; record already carries frequency {max:1, per:'hour'}."
+    },
+    {
+     "category": "items",
+     "id": "helmsmans-recourse-major",
+     "field": "counters",
+     "value": null,
+     "why": "equipment-1858-1615: '**Frequency** once per hour'. Same shadowed-frequency defect; record already carries frequency {max:1, per:'hour'}."
+    }
+   ]
+  },
+  {
+   "id": "helmsmans-recourse-greater#description-frequency",
+   "note": "Three description rows — a different field from the counters rows above, so no merge. Each value is the record's CURRENT shipped prose with the one legacy line '**Frequency** once per day' changed to 'once per hour'; nothing else touched. Mirror authority: equipment-1858 / -1614 / -1615 all print 'once per hour' (the pre-remaster twin equipment-4391 is the one that says once per day, and our records are edition 'remaster', source Treasure Vault (Remastered)). No existing description row for these three. ⚠ VERIFIER FIX inside this same row: the major rung's shipped sentence read 'it casts Water Walk on you. and you can breathe underwater for 10 minutes.' — the rung's own AoN sentence ('when you Activate the shield, you can breathe underwater for 10 minutes', equipment-1858 Major block) was bolted onto the base rung's sentence with the full stop left in. One character, '. and' -> ', and', in a row already being superseded; the reading is unambiguous from the two AoN sentences.",
+   "backfillRows": [
+    {
+     "category": "items",
+     "id": "helmsmans-recourse",
+     "field": "description",
+     "value": "This standard-grade duskwood meteor shield (Hardness 7, HP 28, BT 14) is a wheel from a ship. While wielding the shield, you gain a +1 item bonus to Sailing Lore and to Athletics checks to Swim.\n\n**Activate** ⟨2⟩ (concentrate)\n\n**Frequency** once per hour\n\n**Requirements** You're in a body of water\n\n---\n\n**Effect** For 10 minutes, you don't sink if you haven't succeeded at a Swim action on a turn, and if you're submerged, you automatically ascend 10 feet at the end of your turn.",
+     "why": "equipment-1858: '**Frequency** once per hour'. Shipped prose carried the pre-remaster 'once per day' on a remaster record whose own frequency field already reads per hour."
+    },
+    {
+     "category": "items",
+     "id": "helmsmans-recourse-greater",
+     "field": "description",
+     "value": "Shield throw 30 ft.\n\nThis standard-grade duskwood meteor shield (Hardness 8, HP 60, BT 30) is a wheel from a ship. While wielding the shield, you gain a +1 item bonus to Sailing Lore and to Athletics checks to Swim.\n\n**Activate** ⟨2⟩ (concentrate)\n\n**Frequency** once per hour\n\n**Requirements** You're in a body of water\n\n---\n\n**Effect** For 10 minutes, you don't sink if you haven't succeeded at a Swim action on a turn, and if you're submerged, you automatically ascend 10 feet at the end of your turn. When you Activate the shield, it casts Water Walk on you.",
+     "why": "equipment-1858-1614: '**Frequency** once per hour'. Same legacy line on the Greater rung."
+    },
+    {
+     "category": "items",
+     "id": "helmsmans-recourse-major",
+     "field": "description",
+     "value": "Shield throw 30 ft.\n\nThis standard-grade duskwood meteor shield (Hardness 11, HP 80, BT 40) is a wheel from a ship. While wielding the shield, you gain a +2 item bonus to Sailing Lore and to Athletics checks to Swim.\n\n**Activate** ⟨2⟩ command\n\n**Frequency** once per hour\n\n**Requirements** You're in a body of water\n\n---\n\n**Effect** For 10 minutes, you don't sink if you haven't succeeded at a Swim action on a turn, and if you're submerged, you automatically ascend 10 feet at the end of your turn. When you Activate the shield, it casts Water Walk on you, and you can breathe underwater for 10 minutes.",
+     "why": "equipment-1858-1615: '**Frequency** once per hour'. Same legacy line on the Major rung."
+    }
+   ]
+  },
+  {
+   "id": "constricting-whip-tail#grab-an-edge",
+   "note": "ONE recordMarks row on items/constricting-whip-tail carrying BOTH marks (this finding's grab-an-edge and the grapple mark of constricting-whip-tail#grapple-free-hand), because recordMarks is one field and two rows would collide. A second row gives items/whip-tail the grab-an-edge mark only — the level-3 rung prints the same Grab an Edge clause (WG's identical injectText on their item 14058) but not the Grapple bonus. Both target ids verified present in the core.json actions bucket: actions/grab-an-edge ('Grab an Edge') and actions/grapple ('Grapple'). READER EXISTS FOR ITEMS: src/rules/explain.ts:477 recordMarksFor walks c.inventory at line 496-498 and takes db.items[inv.itemId].recordMarks for anything worn, invested or equipped — both records carry the 'invested' trait and usage 'implanted', so they qualify; 10 item records already ship this field (knights-maintenance-kit, shootist-bandolier, mariners-splint…). Notes are written WITHOUT a leading record name, per the RECORD_MARKERS contract note at situationalBonuses.ts:3960 ('all three renderers prefix it themselves'). The +2 item bonus to Grapple is NOT re-stated here — it already ships at situationalBonuses.ts:2029 and is at parity.",
+   "backfillRows": [
+    {
+     "category": "items",
+     "id": "constricting-whip-tail",
+     "field": "recordMarks",
+     "value": [
+      {
+       "on": "action",
+       "id": "grab-an-edge",
+       "note": "you can use your tail for this action, even if your hands are otherwise occupied."
+      },
+      {
+       "on": "action",
+       "id": "grapple",
+       "note": "you can use your tail unarmed attack to Grapple even if you don't have a free hand."
+      }
+     ],
+     "why": "equipment-3195-3088: 'You can also use your tail for the Grab an Edge action, even if your hands are otherwise occupied.' and 'You can use your tail unarmed attack to Grapple even if you don't have a free hand.' One field, so both printed exemptions ride in one row."
+    },
+    {
+     "category": "items",
+     "id": "whip-tail",
+     "field": "recordMarks",
+     "value": [
+      {
+       "on": "action",
+       "id": "grab-an-edge",
+       "note": "you can use your tail for this action, even if your hands are otherwise occupied."
+      }
+     ],
+     "why": "equipment-3195-3087 (the level-3 rung) prints the same Grab an Edge clause and no Grapple bonus; WG's item 14058 carries the identical injectText."
+    }
+   ]
+  },
+  {
+   "id": "constricting-whip-tail#grapple-free-hand",
+   "note": "No rows of its own — the grapple mark is merged into the single items/constricting-whip-tail recordMarks row authored under constricting-whip-tail#grab-an-edge, because two rows on the same category/id/field would collide.",
+   "backfillRows": []
+  },
+  {
+   "id": "constricting-whip-tail#trait-graft",
+   "note": "The family sweep: 28 items carry the truncated trait id 'gra' and each gets its WHOLE traits array re-emitted with 'graft' in the same position (traits is one field — a member cannot be patched). Confirmed 'graft' is a real record in the core.json trait bucket: {id:'graft', name:'Graft', edition:'neutral', traits:['graft'], aonId:'trait-790'} — the exact trait AoN links from equipment-3195-3088 — and there is no 'gra' record, which is why glossary.ts traitLabel() renders a meaningless 'Gra' chip with the generic fallback tooltip. Four items already carry the correct 'graft'. No existing effect-backfill traits row for any of the 28, so nothing is superseded. MEASUREMENT for the orchestrator (not fixed here): 55 distinct item trait ids resolve to no trait record, over 553 item-trait occurrences — see the report.",
+   "backfillRows": [
+    {
+     "category": "items",
+     "id": "constricting-whip-tail",
+     "field": "traits",
+     "value": [
+      "graft",
+      "invested",
+      "magical"
+     ],
+     "why": "equipment-3195-3088 lists <trait label=\"Graft\" url=\"/Traits.aspx?ID=790\"> — core.json trait 'graft' (aonId trait-790). 'gra' resolves to no trait record."
+    },
+    {
+     "category": "items",
+     "id": "whip-tail",
+     "field": "traits",
+     "value": [
+      "graft",
+      "invested",
+      "magical"
+     ],
+     "why": "Graft trait, truncated id 'gra' → 'graft' (trait-790)."
+    },
+    {
+     "category": "items",
+     "id": "alluring-lantern",
+     "field": "traits",
+     "value": [
+      "graft",
+      "invested",
+      "magical"
+     ],
+     "why": "Graft trait, truncated id 'gra' → 'graft' (trait-790)."
+    },
+    {
+     "category": "items",
+     "id": "bioluminescent-stripes",
+     "field": "traits",
+     "value": [
+      "graft",
+      "invested",
+      "light",
+      "magical"
+     ],
+     "why": "Graft trait, truncated id 'gra' → 'graft' (trait-790)."
+    },
+    {
+     "category": "items",
+     "id": "bristling-spines-lesser",
+     "field": "traits",
+     "value": [
+      "graft",
+      "invested",
+      "magical"
+     ],
+     "why": "Graft trait, truncated id 'gra' → 'graft' (trait-790)."
+    },
+    {
+     "category": "items",
+     "id": "bristling-spines-moderate",
+     "field": "traits",
+     "value": [
+      "graft",
+      "invested",
+      "magical"
+     ],
+     "why": "Graft trait, truncated id 'gra' → 'graft' (trait-790)."
+    },
+    {
+     "category": "items",
+     "id": "bristling-spines-greater",
+     "field": "traits",
+     "value": [
+      "graft",
+      "invested",
+      "magical"
+     ],
+     "why": "Graft trait, truncated id 'gra' → 'graft' (trait-790)."
+    },
+    {
+     "category": "items",
+     "id": "camouflaging-chromatophores-lesser",
+     "field": "traits",
+     "value": [
+      "graft",
+      "invested",
+      "magical"
+     ],
+     "why": "Graft trait, truncated id 'gra' → 'graft' (trait-790)."
+    },
+    {
+     "category": "items",
+     "id": "camouflaging-chromatophores-greater",
+     "field": "traits",
+     "value": [
+      "graft",
+      "invested",
+      "magical"
+     ],
+     "why": "Graft trait, truncated id 'gra' → 'graft' (trait-790)."
+    },
+    {
+     "category": "items",
+     "id": "compound-eyes",
+     "field": "traits",
+     "value": [
+      "fortune",
+      "graft",
+      "invested",
+      "magical"
+     ],
+     "why": "Graft trait, truncated id 'gra' → 'graft' (trait-790)."
+    },
+    {
+     "category": "items",
+     "id": "distracting-carapace",
+     "field": "traits",
+     "value": [
+      "graft",
+      "invested",
+      "magical"
+     ],
+     "why": "Graft trait, truncated id 'gra' → 'graft' (trait-790)."
+    },
+    {
+     "category": "items",
+     "id": "echo-receptors",
+     "field": "traits",
+     "value": [
+      "graft",
+      "invested",
+      "magical"
+     ],
+     "why": "Graft trait, truncated id 'gra' → 'graft' (trait-790)."
+    },
+    {
+     "category": "items",
+     "id": "gills",
+     "field": "traits",
+     "value": [
+      "graft",
+      "invested",
+      "magical"
+     ],
+     "why": "Graft trait, truncated id 'gra' → 'graft' (trait-790)."
+    },
+    {
+     "category": "items",
+     "id": "gliding-membranes-lesser",
+     "field": "traits",
+     "value": [
+      "graft",
+      "invested",
+      "magical"
+     ],
+     "why": "Graft trait, truncated id 'gra' → 'graft' (trait-790)."
+    },
+    {
+     "category": "items",
+     "id": "gliding-membranes-greater",
+     "field": "traits",
+     "value": [
+      "graft",
+      "invested",
+      "magical"
+     ],
+     "why": "Graft trait, truncated id 'gra' → 'graft' (trait-790)."
+    },
+    {
+     "category": "items",
+     "id": "piercing-horn",
+     "field": "traits",
+     "value": [
+      "graft",
+      "invested",
+      "magical"
+     ],
+     "why": "Graft trait, truncated id 'gra' → 'graft' (trait-790)."
+    },
+    {
+     "category": "items",
+     "id": "goring-horn",
+     "field": "traits",
+     "value": [
+      "graft",
+      "invested",
+      "magical"
+     ],
+     "why": "Graft trait, truncated id 'gra' → 'graft' (trait-790)."
+    },
+    {
+     "category": "items",
+     "id": "sharpened-canines",
+     "field": "traits",
+     "value": [
+      "graft",
+      "invested",
+      "magical"
+     ],
+     "why": "Graft trait, truncated id 'gra' → 'graft' (trait-790)."
+    },
+    {
+     "category": "items",
+     "id": "bleeding-canines",
+     "field": "traits",
+     "value": [
+      "graft",
+      "invested",
+      "magical"
+     ],
+     "why": "Graft trait, truncated id 'gra' → 'graft' (trait-790)."
+    },
+    {
+     "category": "items",
+     "id": "slashing-claws",
+     "field": "traits",
+     "value": [
+      "graft",
+      "invested",
+      "magical"
+     ],
+     "why": "Graft trait, truncated id 'gra' → 'graft' (trait-790)."
+    },
+    {
+     "category": "items",
+     "id": "deadly-slashing-claws",
+     "field": "traits",
+     "value": [
+      "graft",
+      "invested",
+      "magical"
+     ],
+     "why": "Graft trait, truncated id 'gra' → 'graft' (trait-790)."
+    },
+    {
+     "category": "items",
+     "id": "spry-sinews-lesser",
+     "field": "traits",
+     "value": [
+      "graft",
+      "invested",
+      "magical"
+     ],
+     "why": "Graft trait, truncated id 'gra' → 'graft' (trait-790)."
+    },
+    {
+     "category": "items",
+     "id": "spry-sinews-greater",
+     "field": "traits",
+     "value": [
+      "graft",
+      "invested",
+      "magical"
+     ],
+     "why": "Graft trait, truncated id 'gra' → 'graft' (trait-790)."
+    },
+    {
+     "category": "items",
+     "id": "squid-ink-sac",
+     "field": "traits",
+     "value": [
+      "graft",
+      "invested",
+      "magical"
+     ],
+     "why": "Graft trait, truncated id 'gra' → 'graft' (trait-790)."
+    },
+    {
+     "category": "items",
+     "id": "swooping-wings",
+     "field": "traits",
+     "value": [
+      "graft",
+      "invested",
+      "magical"
+     ],
+     "why": "Graft trait, truncated id 'gra' → 'graft' (trait-790)."
+    },
+    {
+     "category": "items",
+     "id": "toxic-blood",
+     "field": "traits",
+     "value": [
+      "graft",
+      "invested",
+      "magical",
+      "poison"
+     ],
+     "why": "Graft trait, truncated id 'gra' → 'graft' (trait-790)."
+    },
+    {
+     "category": "items",
+     "id": "tubeworm-gland",
+     "field": "traits",
+     "value": [
+      "graft",
+      "invested",
+      "magical"
+     ],
+     "why": "Graft trait, truncated id 'gra' → 'graft' (trait-790)."
+    },
+    {
+     "category": "items",
+     "id": "venom-glands",
+     "field": "traits",
+     "value": [
+      "graft",
+      "invested",
+      "magical",
+      "poison"
+     ],
+     "why": "Graft trait, truncated id 'gra' → 'graft' (trait-790)."
+    }
+   ]
+  },
+  {
+   "id": "energy-robe-fire#activation-cost",
+   "note": "Four rows, one per robe. activationCost is a new field on all four (verified: each carries frequency {max:1,per:'day'} and passiveEffects.resistances and no activationCost), so nothing is superseded. Readers are live: src/sheet/MainTab.tsx:426 filters the item-actions list on !!item?.activationCost and InventoryTab.tsx:284 gates the cost glyph on it — with the field absent the robe's printed two-action Activate had no row anywhere on the sheet, while situationalBonuses.ts:1505 already promises the player a +30-foot status Speed 'for 1 minute after activating the robe'.",
+   "backfillRows": [
+    {
+     "category": "items",
+     "id": "energy-robe-fire",
+     "field": "activationCost",
+     "value": {
+      "type": "actions",
+      "value": 2
+     },
+     "why": "equipment-1317 (parent of aonId equipment-1317-1216): '**Activate** <actions string=\"Two Actions\" /> command, Interact; **Frequency** once per day'."
+    },
+    {
+     "category": "items",
+     "id": "energy-robe-cold",
+     "field": "activationCost",
+     "value": {
+      "type": "actions",
+      "value": 2
+     },
+     "why": "equipment-1317: same two-action Activate line, shared by every energy robe type."
+    },
+    {
+     "category": "items",
+     "id": "energy-robe-acid",
+     "field": "activationCost",
+     "value": {
+      "type": "actions",
+      "value": 2
+     },
+     "why": "equipment-1317: same two-action Activate line, shared by every energy robe type."
+    },
+    {
+     "category": "items",
+     "id": "energy-robe-electricity",
+     "field": "activationCost",
+     "value": {
+      "type": "actions",
+      "value": 2
+     },
+     "why": "equipment-1317: same two-action Activate line, shared by every energy robe type."
+    }
+   ]
+  },
+  {
+   "id": "aeon-stone-vital-amplification#resonant-void-resistance",
+   "note": "One row SUPERSEDING the existing effect-backfill resonant row, carrying its full value (the printed note, verbatim) plus the mechanical half. resonant.resistances is already declared on the type (src/rules/types.ts:3855, resonant?: {note; innateSpells?; resistances?: IwrEntry[]}) — the ENGINE agent owns the fold that reads it, in the item-defence fold at src/rules/derive.ts (~2497) behind inv.designations?.includes('wayfinder-slotted'), the same gate build.ts:7395 uses for resonant innate spells. Deliberately NOT passiveEffects.resistances: that fold is unconditional for a worn/invested item and would hand the resistance to an unslotted stone, which print does not grant.",
+   "backfillRows": [
+    {
+     "category": "items",
+     "id": "aeon-stone-vital-amplification",
+     "field": "resonant",
+     "value": {
+      "note": "The resonant power grants you resistance 5 to void damage.",
+      "resistances": [
+       {
+        "type": "void",
+        "value": 5
+       }
+      ]
+     },
+     "why": "equipment-3055-3589: 'The resonant power grants you resistance 5 to void damage.' SUPERSEDES the existing row {note:…}, whose note is carried whole; the resistance was prose-only and reached no total."
+    }
+   ]
+  },
+  {
+   "id": "aeon-stone-vital-amplification#healing-amplification",
+   "note": "NO ROW. Residual read: the printed rider 'Whenever you regain Hit Points, you regain an additional 1 Hit Point for each 10 Hit Points regained (minimum 1 additional Hit Point)' has no carrier — src/rules/types.ts has no healing-received field at all (healingBonus / healingReceived / healingModifier / extraHealing all return zero hits) and no reader to read one. The clause already stands in the record's description. WG's shape is explicitly refused: their MAX_HEALTH_BONUS op is the wrong stat (the stone grants no maximum HP) and carries no `value` anyway, so copying it would author a print contradiction that grants nothing.",
+   "backfillRows": []
+  },
+  {
+   "id": "unmemorable-mantle#save-dc",
+   "note": "Three description rows, each the record's CURRENT shipped prose with the bare 'Each creature must attempt a save.' restored to the printed DC and save type; nothing else changed. Mirror authority, read per aonId: equipment-513 (base, aonId equipment-513) prints 'Each creature must attempt a DC 25 Will save'; equipment-513-599 (Greater) 'the Will save DC is 28'; equipment-513-600 (Major) 'the Will save DC is 38, and you can activate the mantle once every 10 minutes'. No existing description row for any of the three. The item records carry no DC field and there is no item save-DC lane, so the description is the only carrier. The wider 84-record 'attempt a save' truncation is the REPAIR agent's, not authored here.",
+   "backfillRows": [
+    {
+     "category": "items",
+     "id": "unmemorable-mantle",
+     "field": "description",
+     "value": "This long, shoddy cloak bears a hood and a simple brass clasp. While wearing the cloak, you gain a +1 item bonus to Deception checks to Impersonate an individual and to Lie while in character as that individual.\n\n---\n\n**Activate** 1 minute (envision, Interact)\n\n**Frequency** once per day\n\n**Requirements** You are Impersonating someone else\n\n---\n\n**Effect** While conversing or otherwise casually interacting with other creatures, you can adjust the mantle's clasp to modify those creatures' recollections of the last 5 minutes of their interaction with you. Each creature must attempt a DC 25 Will save.\n\n---\n\n**Critical Success** The creature recalls the interaction clearly and realizes you were trying to alter their memory.\n\n**Success** The creature recalls the interaction clearly.\n\n**Failure** You decide whether or not the creature recalls the interaction. You can also alter minor details the creature recalls about the interaction, such as the time, place, and whether the interaction was favorable, as determined by the GM.\n\n**Critical Failure** You decide whether or not the creature recalls the interaction. You can also alter major details the creature recalls about the interaction, such as believing you to be another individual or that the creature agreed to a favor, as determined by the GM.",
+     "why": "equipment-513: 'Each creature must attempt a DC 25 Will save.' Shipped prose read 'must attempt a save.' — no DC and no save type anywhere in our data."
+    },
+    {
+     "category": "items",
+     "id": "unmemorable-mantle-greater",
+     "field": "description",
+     "value": "This long, shoddy cloak bears a hood and a simple brass clasp. While wearing the cloak, you gain a +2 item bonus to Deception checks to Impersonate an individual and to Lie while in character as that individual.\n\n---\n\n**Activate** 1 minute (envision, Interact)\n\n**Frequency** once per day\n\n**Requirements** You are Impersonating someone else\n\n---\n\n**Effect** While conversing or otherwise casually interacting with other creatures, you can adjust the mantle's clasp to modify those creatures' recollections of the last 5 minutes of their interaction with you. Each creature must attempt a DC 28 Will save.\n\n---\n\n**Critical Success** The creature recalls the interaction clearly and realizes you were trying to alter their memory.\n\n**Success** The creature recalls the interaction clearly.\n\n**Failure** You decide whether or not the creature recalls the interaction. You can also alter minor details the creature recalls about the interaction, such as the time, place, and whether the interaction was favorable, as determined by the GM.\n\n**Critical Failure** You decide whether or not the creature recalls the interaction. You can also alter major details the creature recalls about the interaction, such as believing you to be another individual or that the creature agreed to a favor, as determined by the GM.",
+     "why": "equipment-513-599: 'the Will save DC is 28'. Shipped prose read 'must attempt a save.'"
+    },
+    {
+     "category": "items",
+     "id": "unmemorable-mantle-major",
+     "field": "description",
+     "value": "This long, shoddy cloak bears a hood and a simple brass clasp. While wearing the cloak, you gain a +3 item bonus to Deception checks to Impersonate an individual and to Lie while in character as that individual.\n\n---\n\n**Activate** 1 minute (envision, Interact)\n\n**Frequency** once every 10 minutes\n\n**Requirements** You are Impersonating someone else\n\n---\n\n**Effect** While conversing or otherwise casually interacting with other creatures, you can adjust the mantle's clasp to modify those creatures' recollections of the last 5 minutes of their interaction with you. Each creature must attempt a DC 38 Will save.\n\n---\n\n**Critical Success** The creature recalls the interaction clearly and realizes you were trying to alter their memory.\n\n**Success** The creature recalls the interaction clearly.\n\n**Failure** You decide whether or not the creature recalls the interaction. You can also alter minor details the creature recalls about the interaction, such as the time, place, and whether the interaction was favorable, as determined by the GM.\n\n**Critical Failure** You decide whether or not the creature recalls the interaction. You can also alter major details the creature recalls about the interaction, such as believing you to be another individual or that the creature agreed to a favor, as determined by the GM.",
+     "why": "equipment-513-600: 'the Will save DC is 38, and you can activate the mantle once every 10 minutes'. Shipped prose read 'must attempt a save.'; the once-every-10-minutes line is already correct on this rung."
+    }
+   ]
+  },
+  {
+   "id": "graceful-leaper",
+   "note": "One row, the exact key names of feats/sly-disarm's shipped skillSubstitutions ({use, forSkill, when}). Reader is live and needs no engine work: src/rules/derive.ts (~497) walks c.feats for skillSubstitutions, and because `when` is set, src/rules/explain.ts:644 renders it as a star on the Athletics row without moving the displayed Athletics number. No existing effect-backfill row for this record.",
+   "backfillRows": [
+    {
+     "category": "feats",
+     "id": "graceful-leaper",
+     "field": "skillSubstitutions",
+     "value": [
+      {
+       "use": "acrobatics",
+       "forSkill": "athletics",
+       "when": "when making a High Jump or Long Jump"
+      }
+     ],
+     "why": "feat-6243: 'You can roll an Acrobatics check instead of an Athletics check when making a High Jump or Long Jump.' The feat shipped with actionCost only — its entire printed mechanic reached no carrier."
+    },
+    {
+     "category": "feats",
+     "id": "graceful-leaper",
+     "field": "description",
+     "value": "Mass and muscle are meaningless when you propel yourself through the air; only grace and balance matter.\n\nYou can roll an Acrobatics check instead of an Athletics check when making a High Jump or Long Jump.",
+     "why": "VERIFIER-AUTHORED. feat-6243 prints 'You can roll an Acrobatics check instead of an Athletics check when making a High Jump or Long Jump.' Shipped prose is the raw importer annotation '…when making a high-jump skill=acrobatics or long-jump skill=acrobatics' — nothing in src/ parses 'skill=', so it is inert AND player-visible garbled text. The finding's own evidence names it; the print is known verbatim, so it is repaired here rather than deferred. 18 descriptions carry the same 'skill=' artefact (feats 15, items 1, classFeatures 1, actions 1) — the other 17 are a measured lane, not this batch."
+    }
+   ]
+  },
+  {
+   "id": "studious-spells#gecko-grip",
+   "note": "The studious slots as a restricted-slot grant on classFeatures/studious-spells (which shipped with NO spellSlotBonus at all). Shape copied from the one shipped ladder user, feats/creed-magic (label / note / ladder[{level,byRank,addSpells}] under spellSlotBonus, with entryId naming the class's own entry) — resolveRestrictedSlots (src/rules/restrictedSlots.ts:44-53) makes the ladder REPLACE the rank while addSpells accumulate, which is exactly what print says: 'At 11th level, the extra slots increase to 3rd level and you add haste.' Two slots at every rung, never six. entryId 'magus-casting' is the id buildCharacter stamps on the primary caster (build.ts:3857, `${cls.id}-casting`), so a magus/cleric multiclass cannot take the slots on the wrong entry. Every spell id verified present in the core.json spells bucket: gecko-grip (rank 2), sure-strike (1), water-breathing (2), haste (3), fly (4) — no remaster rename needed; the AoN page class-feature-431 already prints the remastered names ('gecko grip, sure strike, water breathing'). ⚠ The `label` and `entryId` here are a CONTRACT with the eight subclass-option rows below: build.ts (~6790) folds grants that share a label and an entryId into ONE group via mergeRestrictedGrants, which is what keeps the study's spell in the SAME two slots instead of opening an empty second group. Do not change one without the other. The magus slot TABLE is untouched — this authors only the two restricted studious slots print states, nothing about ordinary magus slots (owner question #104).",
+   "backfillRows": [
+    {
+     "category": "classFeatures",
+     "id": "studious-spells",
+     "field": "spellSlotBonus",
+     "value": {
+      "entryId": "magus-casting",
+      "restricted": {
+       "label": "Studious spells",
+       "note": "Studious spell slots: gecko grip, sure strike, water breathing, and an additional spell depending on your hybrid study. You add any spells from this class feature to your spellbook.",
+       "ladder": [
+        {
+         "level": 7,
+         "byRank": {
+          "2": 2
+         },
+         "addSpells": [
+          "gecko-grip",
+          "sure-strike",
+          "water-breathing"
+         ]
+        },
+        {
+         "level": 11,
+         "byRank": {
+          "3": 2
+         },
+         "addSpells": [
+          "haste"
+         ]
+        },
+        {
+         "level": 13,
+         "byRank": {
+          "4": 2
+         },
+         "addSpells": [
+          "fly"
+         ]
+        }
+       ]
+      }
+     },
+     "why": "class-feature-431: 'You gain two special 2nd-level studious spell slots, which can be used to prepare gecko grip, sure strike, water breathing, and an additional spell depending on your hybrid study… At 11th level, the extra slots increase to 3rd level and you add haste… At 13th level, the extra slots increase to 4th level and you add fly.' The spells were hardcoded as a fixed pair in src/rules/spellcasting.ts with no gecko-grip and no player choice; the record itself carried nothing."
+    }
+   ]
+  },
+  {
+   "id": "studious-spells#hybrid-study-spell",
+   "note": "Eight rows, one per magus hybrid study, each hung on the OPTION record inside classes.magus.subclass.options with a `path` step. Path rows addressing an options array by id are the established shape here (58 such rows already, e.g. classes/animist path ['extraChoices','id=apparition','options','id=…']), and they are strictly better than re-emitting the whole options array: the array already has its own effect-backfill row (the grantedFeats one, ~10.8 KB of prose) and a second copy of it would go stale the moment either is edited. ⚠ ORDERING: these rows must sit AFTER that existing `{classes/magus, path:['subclass'], field:'options'}` row in effect-backfill.json (it is at index 13327 of 13342, so appending is enough) — the applier runs rows in file order and a whole-array assignment after them would wipe the nested fields. Each step uses `byRank: {}`, the shape types.ts:1751 specifies for a spells-only rung: 'A step that adds only SPELLS writes byRank: {} … it is folded into the feature's by matching restricted.label, and the empty step picks up the ranks the feature's own step of that level states.' label and entryId therefore match the studious-spells grant exactly. Collector + merge are the ENGINE agent's (build.ts ~6695 `if (subOption?.spellSlotBonus)` and mergeRestrictedGrants, which is referenced but not yet defined in build.ts as I write this). PRINTING CHOSEN — a deliberate divergence from the finding's `printed` field, which lists 'Laughing Shadow 11th: Time Jump': no AoN page prints Time Jump. Two printings exist per study, and I follow the one OUR records ship: hybridStudy/laughing-shadow is aonId hybrid-study-2 edition legacy-era (Secrets of Magic → Blur / Shift Blame / Translocate), and the option's own description text is the Secrets of Magic one (conflux spell Dimensional Assault); the Impossible Magic reprint hybrid-study-11 prints Ghostly Weapon instead. Same rule for starlit-span (hybrid-study-4, Darkvision — the reprint says Telekinetic Maneuver) and twisting-tree (hybrid-study-5, Embed Message — the reprint says Oaken Resilience); aloof-firmament, unfurling-brocade and resurgent-maelstrom have one printing each. All 24 spell ids exist in the core.json spells bucket, shift-blame included. All EIGHT studies are authored (the task named five; the proposal and the AoN pages list eight and every id resolves, so leaving three studies short would be a known gap).",
+   "backfillRows": [
+    {
+     "category": "classes",
+     "id": "magus",
+     "path": [
+      "subclass",
+      "options",
+      "id=aloof-firmament"
+     ],
+     "field": "spellSlotBonus",
+     "value": {
+      "entryId": "magus-casting",
+      "restricted": {
+       "label": "Studious spells",
+       "ladder": [
+        {
+         "level": 7,
+         "byRank": {},
+         "addSpells": [
+          "water-walk"
+         ]
+        },
+        {
+         "level": 11,
+         "byRank": {},
+         "addSpells": [
+          "wall-of-wind"
+         ]
+        },
+        {
+         "level": 13,
+         "byRank": {},
+         "addSpells": [
+          "variable-gravity"
+         ]
+        }
+       ]
+      }
+     },
+     "why": "hybrid-study-7 (Tian Xia Character Guide): 'Studious Spell (7th) Water Walk … (11th) Wall of Wind … (13th) Variable Gravity'. Slotless rung shape per types.ts:1751; folded into the Studious spells group by matching label + entryId."
+    },
+    {
+     "category": "classes",
+     "id": "magus",
+     "path": [
+      "subclass",
+      "options",
+      "id=inexorable-iron"
+     ],
+     "field": "spellSlotBonus",
+     "value": {
+      "entryId": "magus-casting",
+      "restricted": {
+       "label": "Studious spells",
+       "ladder": [
+        {
+         "level": 7,
+         "byRank": {},
+         "addSpells": [
+          "enlarge"
+         ]
+        },
+        {
+         "level": 11,
+         "byRank": {},
+         "addSpells": [
+          "earthbind"
+         ]
+        },
+        {
+         "level": 13,
+         "byRank": {},
+         "addSpells": [
+          "planar-tether"
+         ]
+        }
+       ]
+      }
+     },
+     "why": "hybrid-study-1 (Secrets of Magic, the printing our record ships): 'Studious Spell (7th) Enlarge … (11th) Earthbind … (13th) Planar Tether'."
+    },
+    {
+     "category": "classes",
+     "id": "magus",
+     "path": [
+      "subclass",
+      "options",
+      "id=laughing-shadow"
+     ],
+     "field": "spellSlotBonus",
+     "value": {
+      "entryId": "magus-casting",
+      "restricted": {
+       "label": "Studious spells",
+       "ladder": [
+        {
+         "level": 7,
+         "byRank": {},
+         "addSpells": [
+          "blur"
+         ]
+        },
+        {
+         "level": 11,
+         "byRank": {},
+         "addSpells": [
+          "shift-blame"
+         ]
+        },
+        {
+         "level": 13,
+         "byRank": {},
+         "addSpells": [
+          "translocate"
+         ]
+        }
+       ]
+      }
+     },
+     "why": "hybrid-study-2 (Secrets of Magic): 'Studious Spell (7th) Blur … (11th) Shift Blame … (13th) Translocate'. Our hybridStudy/laughing-shadow is aonId hybrid-study-2, edition legacy-era, and the option's description is the Secrets of Magic text — the Impossible Magic reprint (hybrid-study-11) prints Ghostly Weapon at 11th."
+    },
+    {
+     "category": "classes",
+     "id": "magus",
+     "path": [
+      "subclass",
+      "options",
+      "id=resurgent-maelstrom"
+     ],
+     "field": "spellSlotBonus",
+     "value": {
+      "entryId": "magus-casting",
+      "restricted": {
+       "label": "Studious spells",
+       "ladder": [
+        {
+         "level": 7,
+         "byRank": {},
+         "addSpells": [
+          "water-walk"
+         ]
+        },
+        {
+         "level": 11,
+         "byRank": {},
+         "addSpells": [
+          "aqueous-orb"
+         ]
+        },
+        {
+         "level": 13,
+         "byRank": {},
+         "addSpells": [
+          "unfettered-movement"
+         ]
+        }
+       ]
+      }
+     },
+     "why": "hybrid-study-9 (Rival Academies): 'Studious Spell (7th) Water Walk … (11th) Aqueous Orb … (13th) Unfettered Movement'."
+    },
+    {
+     "category": "classes",
+     "id": "magus",
+     "path": [
+      "subclass",
+      "options",
+      "id=sparkling-targe"
+     ],
+     "field": "spellSlotBonus",
+     "value": {
+      "entryId": "magus-casting",
+      "restricted": {
+       "label": "Studious spells",
+       "ladder": [
+        {
+         "level": 7,
+         "byRank": {},
+         "addSpells": [
+          "resist-energy"
+         ]
+        },
+        {
+         "level": 11,
+         "byRank": {},
+         "addSpells": [
+          "warding-aggression"
+         ]
+        },
+        {
+         "level": 13,
+         "byRank": {},
+         "addSpells": [
+          "mountain-resilience"
+         ]
+        }
+       ]
+      }
+     },
+     "why": "hybrid-study-3 (Secrets of Magic): 'Studious Spell (7th) Resist Energy … (11th) Warding Aggression … (13th) Mountain Resilience' — identical in the Impossible Magic reprint."
+    },
+    {
+     "category": "classes",
+     "id": "magus",
+     "path": [
+      "subclass",
+      "options",
+      "id=starlit-span"
+     ],
+     "field": "spellSlotBonus",
+     "value": {
+      "entryId": "magus-casting",
+      "restricted": {
+       "label": "Studious spells",
+       "ladder": [
+        {
+         "level": 7,
+         "byRank": {},
+         "addSpells": [
+          "darkvision"
+         ]
+        },
+        {
+         "level": 11,
+         "byRank": {},
+         "addSpells": [
+          "wall-of-wind"
+         ]
+        },
+        {
+         "level": 13,
+         "byRank": {},
+         "addSpells": [
+          "unfettered-movement"
+         ]
+        }
+       ]
+      }
+     },
+     "why": "hybrid-study-4 (Secrets of Magic, the printing our record ships): 'Studious Spell (7th) Darkvision … (11th) Wall of Wind … (13th) Unfettered Movement'. The Impossible Magic reprint prints Telekinetic Maneuver at 7th."
+    },
+    {
+     "category": "classes",
+     "id": "magus",
+     "path": [
+      "subclass",
+      "options",
+      "id=twisting-tree"
+     ],
+     "field": "spellSlotBonus",
+     "value": {
+      "entryId": "magus-casting",
+      "restricted": {
+       "label": "Studious spells",
+       "ladder": [
+        {
+         "level": 7,
+         "byRank": {},
+         "addSpells": [
+          "embed-message"
+         ]
+        },
+        {
+         "level": 11,
+         "byRank": {},
+         "addSpells": [
+          "slow"
+         ]
+        },
+        {
+         "level": 13,
+         "byRank": {},
+         "addSpells": [
+          "flicker"
+         ]
+        }
+       ]
+      }
+     },
+     "why": "hybrid-study-5 (Secrets of Magic, the printing our record ships): 'Studious Spell (7th) Embed Message … (11th) Slow … (13th) Flicker'. The Impossible Magic reprint prints Oaken Resilience at 7th."
+    },
+    {
+     "category": "classes",
+     "id": "magus",
+     "path": [
+      "subclass",
+      "options",
+      "id=unfurling-brocade"
+     ],
+     "field": "spellSlotBonus",
+     "value": {
+      "entryId": "magus-casting",
+      "restricted": {
+       "label": "Studious spells",
+       "ladder": [
+        {
+         "level": 7,
+         "byRank": {},
+         "addSpells": [
+          "web"
+         ]
+        },
+        {
+         "level": 11,
+         "byRank": {},
+         "addSpells": [
+          "whirling-scarves"
+         ]
+        },
+        {
+         "level": 13,
+         "byRank": {},
+         "addSpells": [
+          "planar-tether"
+         ]
+        }
+       ]
+      }
+     },
+     "why": "hybrid-study-8 (Tian Xia Character Guide): 'Studious Spell (7th) Web … (11th) Whirling Scarves … (13th) Planar Tether'."
+    }
+   ]
+  },
+  {
+   "id": "studious-spells#spellbook",
+   "note": "NO ROWS OF ITS OWN — the data is the ladder authored under studious-spells#gecko-grip and the eight option rows. 'You add any spells from this class feature to your spellbook' is a READER change: the magus falls into the generic prepared branch at src/rules/build.ts:3931 (the grantedByRank spellbook merge is gated `cls.id === 'wizard' || cls.id === 'witch'`), and build.ts:9021-9025 actively filters the studious ids back OUT of b.spells on recovery. The ENGINE agent sources the ids from classFeatures/studious-spells.spellSlotBonus.restricted.ladder[].addSpells (plus the chosen option's) — which is why they are authored as data rather than left in spellcasting.ts. The magus slot table is untouched (owner question #104).",
+   "backfillRows": []
+  }
+ ]
+}

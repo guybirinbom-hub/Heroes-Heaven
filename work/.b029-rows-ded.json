@@ -1,0 +1,75 @@
+{
+  "_note": "Batch 29 instrument-fallout agent. NO core.json overlay rows are needed: every one of the 13 records the accumulate fix surfaced was either a comparer blind spot (scripts/wg-values.mjs) or a grant-registry entry (src/rules/featGrantsAuto.ts), neither of which is a core.json field. backfillRows is deliberately empty on every finding — the orchestrator has nothing to apply here. Guarded by test/batch29-dedication-upgrade.test.ts (11 assertions on built characters).",
+  "findings": [
+    {
+      "id": "magic-warrior-dedication#skill-choice-upgrade",
+      "backfillRows": [],
+      "note": "REAL GAP, fixed in code. Print (AoN feat-903): \"You become trained in your choice of Arcana or Nature and in Magic Warrior Lore; if you were already trained in the skill, you become an expert instead.\" The upgrade reached the Lore only (conditionalSkills['lore:magic-warrior']); the choice slot kept a flat rank, so a wizard already trained in Arcana was handed a rank they had. Added conditionalRank { base: 'trained', upgraded: 'expert' } to the skillChoices slot in src/rules/featGrantsAuto.ts (the shape build.ts:5478 already reads). Not a core.json row: the record carries no skill field at all."
+    },
+    {
+      "id": "student-of-perfection-dedication#skill-choice-upgrade",
+      "backfillRows": [],
+      "note": "NO GAP — comparer blind spot. The slot already carries conditionalRank (featGrantsAuto.ts:670). wg-values read only the slot's flat `rank`, so it asserted `trained` alone; taught to scan the whole slot tail for rank words."
+    },
+    {
+      "id": "magaambyan-attendant-dedication#skill-choice-upgrade",
+      "backfillRows": [],
+      "note": "NO GAP — same comparer blind spot. conditionalRank present at featGrantsAuto.ts:503. Print (feat-1102): \"you also either become trained in Arcana or Nature, or an expert in one of those skills in which you were already trained.\""
+    },
+    {
+      "id": "captivator-dedication#skill-choice-upgrade",
+      "backfillRows": [],
+      "note": "NO GAP — conditionalRank present at featGrantsAuto.ts:150. Print (feat-3358): \"Choose Deception or Diplomacy. You become trained in that skill, or become an expert if you were already trained.\""
+    },
+    {
+      "id": "marshal-dedication#skill-choice-upgrade",
+      "backfillRows": [],
+      "note": "NO GAP — conditionalRank present at featGrantsAuto.ts:509. Print (feat-6351): \"Choose Diplomacy or Intimidation. You become trained in that skill or become an expert if you were already trained in it.\""
+    },
+    {
+      "id": "lion-blade-dedication#skill-choice-upgrade",
+      "backfillRows": [],
+      "note": "NO GAP — conditionalRank present at featGrantsAuto.ts:477. Print (feat-7724): \"You become trained in your choice of Deception or Stealth; if you were already trained in that skill, you become an expert instead.\""
+    },
+    {
+      "id": "aldori-duelist-dedication#skill-choice-upgrade",
+      "backfillRows": [],
+      "note": "NO GAP — conditionalRank present at featGrantsLane.ts:220, which WINS the FEAT_GRANTS merge (featGrants.ts:719 spreads FEAT_LANE_GRANTS after FEAT_SKILL_GRANTS, whole-entry replacement). featGrantsAuto.ts:37 still holds the older flat-rank copy of the same id; it is dead under the merge and was left alone. Print (feat-7899): \"You become trained in your choice of Acrobatics or Athletics; if you were already trained in that skill, you become an expert instead.\""
+    },
+    {
+      "id": "hedge-mage-dedication#skill-choice-upgrade",
+      "backfillRows": [],
+      "note": "NO GAP — conditionalRank present at featGrantsAuto.ts:428. Print (feat-9326): \"choose Arcana, Nature, Occultism, or Religion. You become trained in that skill, or you become expert if you were already trained.\""
+    },
+    {
+      "id": "undead-lore#skill-progression-rungs",
+      "backfillRows": [],
+      "note": "PAIRING ARTEFACT — comparer fixed. Our skillProgression carries every rung (3 expert / 7 master / 15 legendary) and matches their three level-gated ops exactly; wg-values asserted only the TOP of the ladder, so with their side now accumulating it reported theirs=expert and theirs=master against ours=legendary. Every rung is asserted now, and a ladder that stops short of a rung they assert still reports."
+    },
+    {
+      "id": "esoteric-lore#skill-progression-rungs",
+      "backfillRows": [],
+      "note": "PAIRING ARTEFACT — identical shape and identical fix to undead-lore. Our lore:esoteric ladder is 3/7/15 expert/master/legendary."
+    },
+    {
+      "id": "aqueous-dragonblood#swim-speed-delta",
+      "backfillRows": [],
+      "note": "PAIRING ARTEFACT — comparer fixed. Print (feat-8076): \"You gain a swim Speed of 15 feet; if you already have a base swim Speed, it increases by 5 feet.\" Ours is one formula holding both branches (speeds.swim = min(@actor.speed.swim,1)*(@actor.speed.swim-10)+15); theirs is IF SPEED_SWIM > 0 THEN adjValue +5 ELSE setValue 15. wg-values evaluated the formula only at zero, so the base (15) matched and the delta (+5) read as granted by nobody. The formula is now evaluated at a nonzero probe too and the delta asserted, only when it actually reads the character's own Speed."
+    },
+    {
+      "id": "razmiri-mask#graded-family",
+      "backfillRows": [],
+      "note": "PAIRING ARTEFACT — comparer fixed generically. One printed entry (equipment-3593) is FOUR records on our side and ONE row on theirs: their single row states all four grades as FEAT_NAMES-gated conditionals (+1/+2/+3/+4) and ours carries razmiri-mask +1, -silver +2, -gold +3, -porcelain +4 (situationalBonuses.ts:2191/2337-2339) — the same numbers, grade for grade. wg-values now credits the situational magnitudes of every record sharing this record's aonId, which is the printed entry's own identity (not a name prefix)."
+    },
+    {
+      "id": "vivacious-speed#ladder-rungs",
+      "backfillRows": [],
+      "note": "PAIRING ARTEFACT — comparer fixed generically. Print (class-feature-1017): \"Increase the status bonus to your Speeds from stylish combatant to a +10-foot status bonus; this bonus increases by 5 feet at 7th, 11th, 15th, and 19th levels. When you don't have panache, you still get half this status bonus.\" Their row enumerates every rung (panache 10/15/20/25/30, half 5/10/15); ours states the base and the step in the star's prose plus the always-on half as landSpeedBonus = 5+5*min(2,floor((@actor.level-3)/8)). Two comparer holes closed: (1) ordinals in a bonus string were scanned as MAGNITUDES, so 7/11/15/19 were filed as bonuses we grant — an assertion we do not make, which can only launder a difference, corpus-wide across 98 stars; (2) a ladder spelled as base + step now has its rungs computed. A formula-valued landSpeedBonus also no longer asserts NaN."
+    },
+    {
+      "id": "aeon-stone-vital-amplification#hp",
+      "backfillRows": [],
+      "note": "KINDS SETTLE — VERIFIED_EQUIVALENT entry added in scripts/wg-diff.mjs for kind 'hp'. Their two MAX_HEALTH_BONUS ops carry only a `text` field holding the item's prose and NO value (the shape wg-values already refuses as \"a prose-only bonus asserts no value\"). Print (equipment-3055): \"Whenever you regain Hit Points, you regain an additional 1 Hit Point for each 10 Hit Points regained (minimum 1 additional Hit Point)\" — a percentage on healing RECEIVED, not a number on the maximum-HP track. Copying their carrier would grant a max-HP bonus the book does not print. The 'defense' leg is answered by the record's resonant.resistances row and was left alone."
+    }
+  ]
+}

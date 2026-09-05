@@ -480,6 +480,16 @@ export function effectDelivery(effect, surface, names = {}) {
     return has(surface.featNames, name) || has(surface.featureNames, name) ? 'delivered' : 'undelivered';
   }
   if (type === 'giveSpell') {
+    /*
+     * `surface.spellNames` is EVERY spell the built character can reach through its spellcasting
+     * entries, however it got there — the harness walks `c.spellcasting` in full. That includes a
+     * RESTRICTED SLOT GRANT's allowed list (`spellSlotBonus.restricted.spells` / `.ladder[].addSpells`
+     * → `resolveRestrictedSlots` → `entry.restrictedSlots[].allowed`, build.ts), which is the carrier
+     * the magus's studious spells and Creed Magic's per-tier list use, and a plain auto-prepared slot
+     * (`entry.prepared[rank][].spellId`). So this one predicate already covers the restricted-ladder
+     * route: a `undelivered` here means the character genuinely cannot reach that spell, not that the
+     * harness cannot see the lane. Checked on Studious Spells, batch 29.
+     */
     const name = names.spell?.get(String(data.spellId));
     if (!name) return 'unchecked';
     return has(surface.spellNames, name) ? 'delivered' : 'undelivered';

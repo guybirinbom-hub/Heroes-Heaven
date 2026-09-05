@@ -292,7 +292,14 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "elysiums-cadence": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "Make an Impression", bonus: "+1 circumstance (+2 if the target is holy)" }],
   "emberkin": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against fire effects", bonus: "+1 circumstance" }],
   "emotional-partitions": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against emotion effects", bonus: "+1 circumstance" }],
-  "emotionless": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against emotion or fear effects (success becomes crit success)", bonus: "+1 circumstance" }],
+  /* WG parity b029, found by the successToCrit guard, not by hand. Print (feat-2461) is two
+   * sentences: *"You gain a +1 circumstance bonus to saving throws against emotion and fear
+   * effects. If you roll a success on a saving throw against an emotion or fear effect, you get a
+   * critical success instead."* The second is already carried by the record's own `degreeShifts`, so
+   * the parenthetical "(success becomes crit success)" that used to sit in this `when` drew the
+   * upgrade a second time on the same row. TRIMMED, not deleted — the +1 is the registry's own
+   * sentence and has no other carrier. Exactly the lethoci edit (see apply-situational-lane.mjs). */
+  "emotionless": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against emotion and fear effects", bonus: "+1 circumstance" }],
   /* *"…and you gain a +1 circumstance bonus to Perception and saving throws against such creatures."*
    * Perception was the one target missing from this list. It stays CONDITIONAL — their side flattens it
    * to a bare +1 Perception, which would apply to initiative and every other check. */
@@ -669,6 +676,14 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
    * ill effect."* Both non-resistance clauses had no carrier; the cold resistance (no minimum, as
    * printed) is already right on the record and is untouched. */
   "benthic-azarketi": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against environmental cold while you are wet", bonus: "the cold is not treated as one degree more severe" }, { targets: [{ kind: 'save', detail: 'all' }], when: "against pressure changes from being deep underwater", bonus: "you adapt automatically, without ill effect" }],
+
+  /* temperature-adjustment — feat-7069, WG parity b029. The feat's ONLY mechanical clause, carried
+   * nowhere: *"If you created hot elemental medicine, the recipient ignores the effects of severe
+   * cold while the medicine lasts. If you created cold elemental medicine, the recipient ignores the
+   * effects of severe heat while the medicine lasts."* Same environmental-severity shape as the four
+   * heritages above, and the parent activity is already starred here ("prepare-elemental-medicine"),
+   * so the you-as-recipient framing has precedent on this same row. */
+  "temperature-adjustment": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against severe cold, while hot elemental medicine you prepared is affecting you", bonus: "you ignore the effects of severe cold" }, { targets: [{ kind: 'save', detail: 'all' }], when: "against severe heat, while cold elemental medicine you prepared is affecting you", bonus: "you ignore the effects of severe heat" }],
 
   /* reflection — heritage-428: *"You don't need to attempt Deception checks to Impersonate your
    * progenitor unless you're interacting with people who know them personally or you do something
@@ -1286,6 +1301,30 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "initiate-benefit-shield": [{ targets: [{ kind: 'ac' }], when: "while your shield implement is at 1 Hit Point: its Raise a Shield bonus to AC is 1 lower until it's repaired", bonus: "-1 circumstance (a penalty)" }],
   "initiate-benefit-tome": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "to Recall Knowledge, while you hold your tome implement", bonus: "+1 circumstance" }],
   "laughing-shadow": [{ targets: [{ kind: 'speed' }], when: "while in Arcane Cascade stance", bonus: "+5 status (+10 if unarmored)" }, { targets: [{ kind: 'strikeDamage' }], when: "while in Arcane Cascade with your other hand completely free, attacking an off-guard creature", bonus: "extra damage becomes 3 (5 with weapon specialization, 7 with greater weapon specialization)" }],
+  /* WG parity b029. Print (class-feature-493): *"on a successful Overdrive, you increase the
+   * additional damage by a total of 2, replacing the increase from expert overdrive."* The number
+   * lived nowhere on our side — the cat-overdrive mode ships `modifiers: []` with a numberless note,
+   * and the record itself carries only actionCost — so the player met the rule only in the feature's
+   * description. Same lane and shape as the four Overdrive siblings above/below (hyper-boosters,
+   * muscular-exoskeleton, speed-boosters, subtle-dampeners). The +1 (Expert) and +3 (Legendary)
+   * rungs are their own records — Expert at 3rd, this at 7th, Legendary at 15th (core.json), which is
+   * where the level gate in `when` comes from and what WG's `IF LEVEL < 15` encodes.
+   * ⚠ `when` says only what print says. An earlier draft added *"(not a critical success)"*; print
+   * says "on a successful Overdrive" and nothing more, and a critical Overdrive deals additional
+   * damage too (actions/overdrive), so excluding it is a ruling the printed text does not make. */
+  "master-overdrive": [{ targets: [{ kind: 'strikeDamage' }], when: "on a successful Overdrive, before 15th level (Legendary Overdrive replaces it)", bonus: "+2 to Overdrive's additional damage, replacing Expert Overdrive's +1" }],
+  /* WG parity b029, the two SIBLING rungs of master-overdrive above — the same missing damage step,
+   * found by that finding's verifier. Print:
+   *   class-feature-484 (3rd): *"on a successful use of Overdrive, you increase the additional
+   *     damage by 1."*
+   *   class-feature-503 (15th): *"on a successful Overdrive, you increase the additional damage by a
+   *     total of 3, replacing the increase from master overdrive."*
+   * The gates are the three records' own levels (3 / 7 / 15, core.json) read together with each
+   * rung's "replacing the increase from …": expert is live at 3rd-6th, master 7th-14th, legendary
+   * 15th+. `when` states no more than print does — in particular NO "not a critical success" gate,
+   * which print never writes and which a critical Overdrive would falsify (actions/overdrive). */
+  "expert-overdrive": [{ targets: [{ kind: 'strikeDamage' }], when: "on a successful Overdrive, before 7th level (Master Overdrive replaces it)", bonus: "+1 to Overdrive's additional damage" }],
+  "legendary-overdrive": [{ targets: [{ kind: 'strikeDamage' }], when: "on a successful Overdrive", bonus: "+3 to Overdrive's additional damage, replacing Master Overdrive's +2" }],
   "masterful-hunter-outwit": [{ targets: [{ kind: 'skill', detail: 'deception' }], when: "against your hunted prey, if you are master in Deception", bonus: "+4 circumstance (up from +2)" }, { targets: [{ kind: 'skill', detail: 'intimidation' }], when: "against your hunted prey, if you are master in Intimidation", bonus: "+4 circumstance (up from +2)" }, { targets: [{ kind: 'skill', detail: 'stealth' }], when: "against your hunted prey, if you are master in Stealth", bonus: "+4 circumstance (up from +2)" }, { targets: [{ kind: 'skill', detail: 'all' }], when: "to Recall Knowledge about your hunted prey, if you are master in the skill used", bonus: "+4 circumstance (up from +2)" }, { targets: [{ kind: 'ac' }], when: "against your prey's attacks, if you have master proficiency in the armor you're wearing", bonus: "+2 circumstance (up from +1)" }],
   "mirrored-aegis": [{ targets: [{ kind: 'ac' }], when: "while your divine spark is in this ikon (immanence active) — you and allies in the aura", bonus: "+1 status" }],
   "muscular-exoskeleton": [{ targets: [{ kind: 'skill', detail: 'athletics' }], when: "while under the effects of Overdrive", bonus: "+1 circumstance (+2 if master in Crafting)" }],
@@ -1305,7 +1344,15 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "oily-button": [{ targets: [{ kind: 'skill', detail: 'athletics' }], when: "on Athletics checks to Disarm that opponent before the start of its next turn…", bonus: "+4 circumstance (replacing the usual +2)" }],
   "grolna": [{ targets: [{ kind: 'skill', detail: 'survival' }], when: "to Survival checks to follow tracks, while Stage 1 of grolna lasts (1 hour, starting after a 1-minute onset)", bonus: "+3 item" }],
   "blade-of-the-rabbit-prince": [{ targets: [{ kind: 'skill', detail: 'thievery' }], when: "when you Activate the blade to Trip or Disarm using Thievery instead of Athletics…", bonus: "+2 item (the blade's own item bonus)" }],
-  "hardened-harrow-deck": [{ targets: [{ kind: 'save', detail: 'all' }], when: "on saving throws against fear effects, as long as you carry more than half the cards in the deck", bonus: "success upgrades to critical success — or +1 circumstance instead, if you already upgrade fear saves" }],
+  /* WG parity b029, found by the successToCrit guard. Print (equipment-837): *"As long as you carry
+   * more than half the cards …, when you roll a success on a saving throw against a fear effect, you
+   * get a critical success instead; if you already have an ability that would make a successful
+   * saving throw against a fear effect a critical success, you instead gain a +1 circumstance bonus
+   * to saving throws against fear effects."* The first half is the record's own `degreeShifts` (which
+   * already carries the carry-half-the-deck gate), so this entry was restating it. TRIMMED to the
+   * FALLBACK half, which no field can express — it is the one thing the deck says that the shift
+   * does not, and deleting the row outright would have lost it. */
+  "hardened-harrow-deck": [{ targets: [{ kind: 'save', detail: 'all' }], when: "on saves vs fear, carrying more than half the deck, if another ability already upgrades your fear saves", bonus: "+1 circumstance instead of the deck's upgrade" }],
   "writ-of-authenticity": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "when you Make a Request about the business the writ covers…", bonus: "+2 item" }],
   "boulderhead-bock": [{ targets: [{ kind: 'save', detail: 'all' }], when: "on saving throws against effects that would make you stunned or stupefied, for 1 hour after drinking", bonus: "+1 item" }],
   "psychic-warding-bracelet": [{ targets: [{ kind: 'save', detail: 'all' }], when: "on your NEXT saving throw against a mental effect after the 10-minute tie-on — the bracelet then tarnishes and falls off", bonus: "+2 item" }],
@@ -2257,7 +2304,15 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "injigos-loving-embrace": [{ targets: [{ kind: 'skill', detail: 'athletics' }], when: "to Athletics checks to Grapple while wielding this net", bonus: "+1 item" }, { targets: [{ kind: 'save', detail: 'all' }], when: "for 8 hours after sleeping wrapped in the net (A Night of Melancholic Dreams, once per week), against mental effects", bonus: "+1 item" }],
   "kinburis-sandals-of-bounding": [{ targets: [{ kind: 'skill', detail: 'athletics' }], when: "while wearing and investing the sandals, to Athletics checks to High Jump or Long Jump", bonus: "+1 item (+2 during the Light-Footed Bound activation)" }],
   "vashus-ninth-life": [{ targets: [{ kind: 'ac' }], when: "until the start of your next turn, after the Whisker's Sense free action triggers at the…", bonus: "+1 circumstance" }],
-  "ghost-scarf": [{ targets: [{ kind: 'initiative' }], when: "while worn and invested, to discover a haunt, and on initiative when a haunt triggers", bonus: "+1 item" }, { targets: [{ kind: 'save', detail: 'fortitude' }], when: "for 5 minutes after Ghost Slayer's Caress…", bonus: "+1 item" }],
+  /* WG parity b029. Print (equipment-4104) files the haunt bonus on PERCEPTION, not on initiative:
+   * *"granting the wearer a +1 item bonus to all Perception checks and Perception DCs to resolve
+   * discovering a haunt or rolling initiative when a haunt triggers."* Filed under `initiative` it
+   * never reached the Perception row (targetMatches' `initiative` case matches only an initiative
+   * ref); the Initiative breakdown delegates to Perception, so retargeting keeps both halves visible
+   * and double-counts neither. The Fortitude clause carries print's TWO gates, which the ellipsis
+   * had swallowed: *"If the weapon already bears a ghost touch rune, you INSTEAD gain a +1 item bonus
+   * to Fortitude saves AGAINST EFFECTS FROM INCORPOREAL UNDEAD for 5 minutes."* */
+  "ghost-scarf": [{ targets: [{ kind: 'perception' }], when: "to discover a haunt (Perception checks and DCs) and on initiative when a haunt triggers, while worn and invested", bonus: "+1 item" }, { targets: [{ kind: 'save', detail: 'fortitude' }], when: "for 5 min after Ghost Slayer's Caress, only if the weapon already bears a ghost touch rune, against incorporeal undead", bonus: "+1 item" }],
   "clay-sphere-greater": [{ targets: [{ kind: 'save', detail: 'all' }], when: "while the clay sphere is affixed to ARMOR, against effects with the morph or polymorph trait", bonus: "+2 item" }, { targets: [{ kind: 'strikeDamage' }], when: "while affixed to a WEAPON, until the end of your next turn after you Activate the sphere…", bonus: "damage dice increase by one step (untyped)" }],
   "clay-sphere-major": [{ targets: [{ kind: 'save', detail: 'all' }], when: "while the clay sphere is affixed to ARMOR, against effects with the morph or polymorph trait", bonus: "+3 item" }, { targets: [{ kind: 'strikeDamage' }], when: "while affixed to a WEAPON, until the end of your next turn after you Activate the sphere…", bonus: "damage dice increase by one step (untyped)" }],
   "cleft-head-marking-greater": [{ targets: [{ kind: 'skill', detail: 'deception' }], when: "to Feint (Deception checks only for that action)", bonus: "+2 item" }],
@@ -2711,7 +2766,13 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "keep-stone-shield": [{ targets: [{ kind: 'save', detail: 'all' }], when: "on saving throws against spells that target you, while the keep stone shield is Raised", bonus: "equal to the raised shield's circumstance bonus to AC (+1 buckler, +2 most shields, +4 tower shield with Take Cover)" }],
   "retribution-axe": [{ targets: [{ kind: 'strikeDamage' }], when: "on your next damage roll against the creature that most recently damaged you with an…", bonus: "+2 circumstance" }],
   "iron-medallion": [{ targets: [{ kind: 'save', detail: 'will' }], when: "on the triggering Will save against fear and on other saves against fear for 1 minute…", bonus: "+2 status" }],
-  "alacritous-horseshoes": [{ targets: [{ kind: 'skill', detail: 'athletics' }], when: "on the animal companion's Athletics checks to High Jump and Long Jump, while it has the horseshoes invested", bonus: "+2 circumstance" }],
+  /* WG parity b029, second clause. Print (equipment-3013-2868): *"In addition, when it Leaps, it can
+   * move 5 feet farther if jumping horizontally or 3 feet higher if jumping vertically."* Only the
+   * +5-foot Speed (passiveEffects.speedBonus) and the Athletics clause were carried, so the Leap
+   * distance reached no surface of the companion's block. `bonus` is a short effect phrase here, not
+   * a modifier — CompanionsTab's CompanionSituational words every clause on an invested companion
+   * item through targetPhrase whatever its target kind, so a non-numeric string renders. */
+  "alacritous-horseshoes": [{ targets: [{ kind: 'skill', detail: 'athletics' }], when: "on the animal companion's Athletics checks to High Jump and Long Jump, while it has the horseshoes invested", bonus: "+2 circumstance" }, { targets: [{ kind: 'speed' }], when: "when the animal Leaps, while it has the horseshoes invested", bonus: "move 5 feet farther jumping horizontally, or 3 feet higher jumping vertically" }],
   "clandestine-cloak": [{ targets: [{ kind: 'skill', detail: 'stealth' }], when: "while the cloak's hood is up (Interact to raise it)", bonus: "+1 item" }, { targets: [{ kind: 'skill', detail: 'deception' }], when: "while the hood is up, to Impersonate a forgettable background character such as a servant", bonus: "+1 item" }, { targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "while the cloak's hood is up", bonus: "-1 item" }, { targets: [{ kind: 'skill', detail: 'intimidation' }], when: "while the cloak's hood is up", bonus: "-1 item" }],
   "kraken-figurehead": [{ targets: [{ kind: 'skill', detail: 'athletics' }], when: "on Athletics checks to Swim while you are in the water inside your ship's Lash Out!…", bonus: "-2 circumstance" }],
   "kraken-figurehead-wracking": [{ targets: [{ kind: 'skill', detail: 'athletics' }], when: "on Athletics checks to Swim while you are in the water inside your ship's Lash Out!…", bonus: "-2 circumstance" }],
@@ -3319,14 +3380,29 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "blunt-shot": [{ targets: [{ kind: 'strikeAttack' }], when: "with your ranged weapon innovation", bonus: "it gains the concussive trait and the ranged trip trait" }],
   "bookkeepers-calling": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "to Recall Knowledge or Earn Income with a trained Lore, spending a Mythic Point", bonus: "attempt the check at mythic proficiency" }, { targets: [{ kind: 'skill', detail: 'all' }], when: "first daily crit success Recalling Knowledge researching in a library", bonus: "regain 1 Mythic Point" }],
   "caretakers-calling": [{ targets: [{ kind: 'skill', detail: 'medicine' }], when: "to Treat Disease, Poison, or Wounds or use Battle Medicine, spending a Mythic Point", bonus: "attempt the check at mythic proficiency" }, { targets: [{ kind: 'skill', detail: 'medicine' }], when: "first critical success each day on a check to Treat Wounds", bonus: "regain 1 Mythic Point" }],
-  "chemical-hardiness": [{ targets: [{ kind: 'save', detail: 'fortitude' }], when: "whenever you roll a success on a Fortitude save", bonus: "the success upgrades to a critical success" }],
-  "churning-mind": [{ targets: [{ kind: 'save', detail: 'will' }], when: "whenever you roll a success on a Will save", bonus: "the success upgrades to a critical success" }],
-  "commanding-will": [{ targets: [{ kind: 'save', detail: 'will' }], when: "whenever you roll a success on a Will save", bonus: "the success upgrades to a critical success" }],
+  /* WG parity b029, disciplined-mind#duplicate applied to its SIBLINGS. "chemical-hardiness"
+   * (class-feature-832), "churning-mind" (inventor 11th, no aonId) and "commanding-will"
+   * (class-feature-1103) DELETED, with "confident-evasion" (class-feature-1020) below. Each prints
+   * the rule once — *"When you roll a success on a Fortitude save, you get a critical success
+   * instead."* (chemical-hardiness; the other three say the same of Will, Will and Reflex) — and each
+   * record's own `degreeShifts` successToCrit already fans that onto the save row (explain.ts:591).
+   * The registry copy rendered a second, identically-sourced star on the same row. Same call as
+   * fluid-contortionist, combination-finisher and disciplined-mind; all four ids are named in
+   * apply-situational-lane.mjs so the lane cannot re-emit them, and the generic guard in
+   * test/batch29-situational-siblings.test.ts holds the whole shape at zero. */
   "complex-simplicity": [{ targets: [{ kind: 'strikeDamage' }], when: "with your simple weapon innovation", bonus: "its weapon damage die increases one step, and it gains two traits of your choice from versatile B, versatile P, versatile S or razing" }],
-  "confident-evasion": [{ targets: [{ kind: 'save', detail: 'reflex' }], when: "whenever you roll a success on a Reflex save", bonus: "the success upgrades to a critical success" }],
+  /* WG parity b029: "confident-evasion" (class-feature-1020) DELETED — *"When you roll a success on
+   * a Reflex save, you get a critical success instead."* is already carried by the record's own
+   * degreeShifts. See the three-sibling note above. */
   "deadly-strike": [{ targets: [{ kind: 'strikeDamage' }], when: "with your weapon innovation", bonus: "it gains deadly d8 - or, if it was already deadly, its deadly die steps up by up to two sizes, to a maximum of deadly d12" }],
   "demagogues-calling": [{ targets: [{ kind: 'skill', detail: 'intimidation' }, { kind: 'skill', detail: 'diplomacy' }], when: "to Coerce or Make an Impression, spending a Mythic Point", bonus: "attempt the check at mythic proficiency" }, { targets: [{ kind: 'skill', detail: 'intimidation' }, { kind: 'skill', detail: 'diplomacy' }, { kind: 'skill', detail: 'deception' }], when: "first daily crit success: Coerce a foe, verbal Diversion, or Impression", bonus: "regain 1 Mythic Point" }],
-  "disciplined-mind": [{ targets: [{ kind: 'save', detail: 'will' }], when: "whenever you roll a success on a Will save", bonus: "the success upgrades to a critical success" }],
+  /* WG parity b029: "disciplined-mind" DELETED. Print states the rule once — *"When you roll a
+   * success on a Will save, you get a critical success instead."* — and the record's own
+   * `degreeShifts` successToCrit already fans that into the Will save star list (explain.ts:591),
+   * so this entry rendered a second, identically-sourced line on the same row (`entriesFor` returns
+   * shipped ⧺ authored, and neither text pools). Same deletion already taken for fluid-contortionist
+   * and combination-finisher; the id is named in apply-situational-lane.mjs so the lane cannot
+   * re-emit it. */
   "doomsayers-calling": [{ targets: [{ kind: 'skill', detail: 'crafting' }, { kind: 'skill', detail: 'medicine' }], when: "to Repair, Administer First Aid, or Treat Wounds, spending a Mythic Point", bonus: "attempt the check at mythic proficiency (never Battle Medicine)" }, { targets: [{ kind: 'skill', detail: 'crafting' }, { kind: 'skill', detail: 'medicine' }], when: "first daily critical success to Repair or Administer First Aid", bonus: "regain 1 Mythic Point" }],
   "dreamers-calling": [{ targets: [{ kind: 'skill', detail: 'arcana' }, { kind: 'skill', detail: 'nature' }, { kind: 'skill', detail: 'religion' }, { kind: 'skill', detail: 'occultism' }], when: "to Recall Knowledge, spending a Mythic Point", bonus: "attempt the check at mythic proficiency" }, { targets: [{ kind: 'skill', detail: 'crafting' }], when: "to Craft any work of art, spending a Mythic Point", bonus: "attempt the check at mythic proficiency" }, { targets: [{ kind: 'skill', detail: 'all' }], when: "first daily crit success to Craft, or Recalling Knowledge about dreams", bonus: "regain 1 Mythic Point" }],
   "dynamic-weighting": [{ targets: [{ kind: 'strikeDamage' }], when: "with your weapon innovation", bonus: "gains two-hand with a damage die one size higher, plus versatile B (and tethered if it was thrown)" }],
@@ -4297,6 +4373,28 @@ export const RECORD_MARKERS: Record<string, RecordMarker[]> = {
   'curse-of-the-skys-call': [{ on: 'condition', id: 'cursebound', value: "enfeebled = cursebound", note: "You are enfeebled with a value equal to your cursebound value, and take that as a status penalty to saves and DCs against all forms of forced movement." }],
   'curse-of-torrential-knowledge': [{ on: 'condition', id: 'cursebound', value: "−cursebound to Perception + Will", note: "Status penalty to Perception checks and Will saves equal to your cursebound value. At cursebound 4 you also cannot speak, use linguistic effects, or otherwise communicate with allies." }],
   'curse-of-turbulent-moments': [{ on: 'condition', id: 'cursebound', value: "−cursebound vs reactions", note: "Status penalty equal to your cursebound value to AC against attacks from reactions or free actions, and to saves against effects that would make you fatigued or slowed." }],
+
+  // ---- WG parity b029: printed clauses that CHANGE AN ACTION and had no carrier ----
+  /* quick-swim — feat-5200: *"You Swim 5 feet farther on a success and 10 feet farther on a critical
+   * success, to a maximum of your Speed."* The record carried only its legendary `speedsIf` clause,
+   * so the feat's first and always-on half reached nothing; the Swim row said the unmodified
+   * distance. Same on:'action' id:'swim' shape as 'armbands-of-athleticism-greater' above. */
+  'quick-swim': [{ on: 'action', id: 'swim', value: "+5 feet (+10 on a critical success)", note: "You Swim 5 feet farther on a success and 10 feet farther on a critical success, to a maximum of your Speed." }],
+
+  /* quick-climb — feat-5192, the SIBLING of quick-swim above, found by that finding's verifier and
+   * identical in shape: *"When Climbing, you move 5 more feet on a success and 10 more feet on a
+   * critical success, up to your Speed. If you're legendary in Athletics, you gain a climb Speed
+   * equal to your Speed."* Only the legendary half had a carrier (the record's `speedsIf`), so the
+   * Climb row printed the unmodified distance. */
+  'quick-climb': [{ on: 'action', id: 'climb', value: "+5 feet (+10 on a critical success)", note: "When Climbing you move 5 more feet on a success and 10 more feet on a critical success, up to your Speed." }],
+
+  /* aerobatics-mastery — feat-6459. Only the +2 half shipped (the Acrobatics star at the top of
+   * FEAT_SITUATIONAL, which matches WG exactly and is untouched). The rest had no carrier: *"[you]
+   * can combine two maneuvers into a single action… The DC of the Acrobatics check is equal to the DC
+   * of the most difficult maneuver + 5. If you're legendary in Acrobatics, you can combine three such
+   * maneuvers into a single action; the DC … is equal to the DC of the most difficult maneuver +
+   * 10."* Marks the action it modifies, the 'water-dancer' / 'shortshanks-hobgoblin' lane. */
+  'aerobatics-mastery': [{ on: 'action', id: 'maneuver-in-flight', value: "2 maneuvers per action (3 if legendary)", note: "You can combine two maneuvers into a single action; the DC equals the DC of the most difficult maneuver + 5. If you're legendary in Acrobatics you can combine three, at the most difficult maneuver's DC + 10." }],
 };
 
 /**
@@ -4346,6 +4444,15 @@ export const SITUATIONAL_SUPERSEDES: Record<string, string[]> = {
   "grave-strength": ['ghoul-dedication'],
   "daywalker": ['vampire-dedication'],
   "grave-mummification": ['mummy-dedication'],
+  /* WG parity b029, the Overdrive damage ladder. Print makes each rung REPLACE the one below —
+   * class-feature-493: *"you increase the additional damage by a total of 2, replacing the increase
+   * from expert overdrive"*; class-feature-503: *"by a total of 3, replacing the increase from master
+   * overdrive"* — but an inventor keeps all three class features, so the three stars would have
+   * stacked on one Strike-damage row reading +1, +2 and +3 at once. That is the very defect this
+   * batch deleted four registry lines for. One hop each: at 15th, legendary drops master and master
+   * (still owned) drops expert, so `supersededIds` cascades without a second list. */
+  "master-overdrive": ['expert-overdrive'],
+  "legendary-overdrive": ['master-overdrive'],
 };
 
 /** The ids to drop from a lookup because a record the character ALSO has supersedes them. */

@@ -849,6 +849,14 @@
    "theirs": "WG keeps every lower rank at 2 slots (L5 {1:2,2:2,3:1}; L20 {1..9: 2}) - 77 slot rows differ from ours (scripts/wg-casting.mjs, first compared in batch 28).",
    "ours": "two-rank progression: only the two highest ranks hold 2 slots each (L5 {2:2,3:2}; L20 {8:2,9:2}); levels 1-3 agree exactly.",
    "question": "WG-vs-PRINT (batch 28, class casting) - the SAME question as #104 (magus): WG's summoner keeps two spell slots at every lower rank; print gives slots only at the two highest ranks. Keep ours (print) or adopt WG's table? Recommendation: keep ours, and rule #104 and #120 together."
+  },
+  {
+   "id": "studious-spells",
+   "batch": 29,
+   "printed": "Studious Spells (class-feature-431) prints no Arcane Cascade clause at all: 'Your hybrid study grants you additional spells that can enhance your power in combat. You gain two special 2nd-level studious spell slots... See specific hybrid studies for more information.' Arcane Cascade (action-756) is a single-action stance: 'Requirements You used your most recent action this turn to Cast a Spell or make a Spellstrike.'",
+   "theirs": "WG injects onto every studious spell (all three tiers, 2nd/3rd/4th rank): 'When you cast a studious spell, you can use Arcane Cascade as a free action as your next action this turn.'",
+   "ours": "Nothing - actions/arcane-cascade costs 1 action and classFeatures/arcane-cascade only grants the action; no free-action variant exists for any spell.",
+   "question": "WG-vs-PRINT (batch 29, magus Studious Spells): WG lets a magus enter Arcane Cascade as a FREE action right after casting a studious spell; print never says so (the closest printed clause of that shape belongs to Conflux Spells, not Studious Spells). Adopt WG's free-action rider or keep ours (print)? Recommendation: keep ours - nothing in print grants it."
   }
  ],
  "deferred": [

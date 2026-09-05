@@ -48,7 +48,7 @@ import type {
   WeaponRunes,
   PinnedDesc,
 } from './types';
-import type { Ancestry, ClassArchetype, DefenseGrants, EffectChoice, EffectGrant, FeatChoiceDef, FocusPool, GrantModification, Heritage, InnateSpellGrant, ItemDesignation, ItemPassiveEffects, RecordMarker, Size, SourceInfo, SpellChoiceFilter, SpellNote, SpellSlotBonus, SpellcastingGrant } from './types';
+import type { Ancestry, ClassArchetype, DefenseGrants, EffectChoice, EffectGrant, FeatChoiceDef, FocusPool, GrantModification, Heritage, InnateSpellGrant, ItemDesignation, ItemPassiveEffects, RecordMarker, RestrictedSlotGrant, Size, SourceInfo, SpellChoiceFilter, SpellNote, SpellSlotBonus, SpellcastingGrant } from './types';
 import { CHARACTER_SCHEMA_VERSION, PROFICIENCY_RANKS, SKILLS } from './types';
 import { CHOOSABLE_SOURCE_MAPS } from './sources';
 import { abilityMod, askedAtDailyPrep, belongsToArchetype, choiceOwnedFeatureIds, classFeatureIdsOwned, domainPoolForChoice, effectiveChoiceOptions, narrowChoiceOptions, profBonus, resolveFormula, splinterDomainsOf, stepDie, type NarrowedOption } from './derive';
@@ -2520,7 +2520,8 @@ function collectGrantedNaturals(
   classId: string | null | undefined,
   level: number,
   seen: Set<string> = new Set(),
-  investedItemIds: string[] = [],
+  /** Items whose grant is LIVE — see the caller, which decides invested vs merely wielded. */
+  strikeItemIds: string[] = [],
   /** The chosen subclass. Appended rather than placed beside classId so the positional callers below
    *  keep working; a subclass that grants a Strike (Unfurling Brocade) granted none without it. */
   subclassId?: string | null,
@@ -2604,8 +2605,8 @@ function collectGrantedNaturals(
   // The chosen SUBCLASS's own record. `cls.features` lists the class's features, never the option the
   // player picked, so a subclass that grants a Strike (Unfurling Brocade) granted none.
   if (subclassId) push(content.classFeatures[subclassId]?.grantedStrikes, subclassId);
-  // Invested items that grant a Strike (Phantom Shroud → ghostly touch).
-  for (const itemId of investedItemIds) push(content.items[itemId]?.grantedStrikes, itemId);
+  // Items that grant a Strike (Phantom Shroud → ghostly touch; a Spined Shield's shield spikes).
+  for (const itemId of strikeItemIds) push(content.items[itemId]?.grantedStrikes, itemId);
   return out;
 }
 
@@ -2914,6 +2915,69 @@ export function applyContentToggles(
     }
   }
   return changed ? next : content;
+}
+
+/**
+ * Fold a second restricted-slot grant into the first, so both print into ONE group of slots.
+ *
+ * Studious Spells states the magus's two slots and the three spells they always take; the chosen
+ * hybrid study adds *"an additional spell depending on your hybrid study"* to those same slots and
+ * grants none of its own (its ladder steps carry `byRank: {}`). Steps are matched BY LEVEL so the
+ * study's 7th/11th/13th spell joins the tier already there — a step pushed at a level the first grant
+ * never states inherits the ranks in force at that level, because a `ladder` REPLACES rather than
+ * accumulates and an empty `byRank` at the top of the ladder would resolve to no slots at all.
+ */
+function mergeRestrictedGrants(a: RestrictedSlotGrant, b: RestrictedSlotGrant): RestrictedSlotGrant {
+  const ladder = (a.ladder ?? []).map((s) => ({ ...s, byRank: { ...s.byRank }, addSpells: [...(s.addSpells ?? [])] }));
+  for (const s of (b.ladder ?? []).slice().sort((x, y) => x.level - y.level)) {
+    let at = ladder.find((x) => x.level === s.level);
+    if (!at) {
+      const inForce = ladder.filter((x) => x.level <= s.level).sort((x, y) => x.level - y.level).pop();
+      at = { level: s.level, byRank: { ...(inForce?.byRank ?? {}) }, addSpells: [] };
+      ladder.push(at);
+    }
+    Object.assign(at.byRank, s.byRank);
+    for (const id of s.addSpells ?? []) if (!at.addSpells!.includes(id)) at.addSpells!.push(id);
+  }
+  ladder.sort((x, y) => x.level - y.level);
+  return {
+    ...a,
+    ...(a.spells || b.spells ? { spells: [...new Set([...(a.spells ?? []), ...(b.spells ?? [])])] } : {}),
+    ...(ladder.length ? { ladder } : {}),
+  };
+}
+
+/**
+ * Every spell a restricted grant lets its slots hold at this level — the fixed list plus the
+ * `addSpells` of every ladder step reached, the same accumulation resolveRestrictedSlots performs.
+ */
+function restrictedGrantSpells(grant: RestrictedSlotGrant | undefined, level: number): string[] {
+  if (!grant) return [];
+  const out = [...(grant.spells ?? [])];
+  for (const s of grant.ladder ?? []) if (level >= s.level) for (const id of s.addSpells ?? []) if (!out.includes(id)) out.push(id);
+  return out;
+}
+
+/**
+ * The spells a BOOK caster's own class records write into the spellbook for free.
+ *
+ * *"You add any spells from this class feature to your spellbook"* (Studious Spells, class-feature-431):
+ * the magus's studious spells are not only usable in the two restricted slots, they go into the book,
+ * so they can be prepared in an ordinary slot too. Sourced from the very `restricted` ladder that
+ * builds those slots — never a second hard-coded list — so the book and the slots cannot disagree.
+ *
+ * Gated on the class actually declaring a `spellbook`, which is exactly the class print says this of;
+ * a class feature's restricted grant on a bookless caster stays walled off in its slots as before.
+ */
+function bookGrantedSpellIds(content: ContentDatabase, cls: ClassDef | undefined, subclassId: string | null | undefined, level: number): string[] {
+  if (!cls?.spellcasting?.spellbook) return [];
+  const grants = [
+    ...(cls.features ?? []).filter((f) => f.level <= level).map((f) => content.classFeatures[f.featureId]?.spellSlotBonus?.restricted),
+    cls.subclass?.options.find((o) => o.id === subclassId)?.spellSlotBonus?.restricted,
+  ];
+  const out: string[] = [];
+  for (const g of grants) for (const id of restrictedGrantSpells(g, level)) if (content.spells[id] && !out.includes(id)) out.push(id);
+  return out;
 }
 
 export function buildCharacter(build: BuildState, content: ContentDatabase): Character {
@@ -3849,6 +3913,14 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     ];
     for (const id of optionSpells)
       if (!notYetGranted.has(id)) (grantedByRank[content.spells[id]?.rank ?? 1] ??= []).push(id);
+    /* *"You add any spells from this class feature to your spellbook."* (Studious Spells) — the magus's
+     * studious spells and the hybrid study's own spell are not only usable in the two restricted slots,
+     * they are IN THE BOOK, so an ordinary slot can hold them too. Ours put them solely into two
+     * walled-off slots and the round-trip then stripped them out of the book again. */
+    for (const id of bookGrantedSpellIds(content, cls, build.subclassId, level)) {
+      const rank = content.spells[id]?.rank ?? 1;
+      if (!(grantedByRank[rank] ??= []).includes(id)) grantedByRank[rank].push(id);
+    }
     // The ALLOWANCE, not just the picks: the sheet needs it to draw empty cantrip openings — with
     // zero picked, the whole Cantrips section used to vanish, and a new caster had no hint that
     // cantrips exist or where to choose them (measured on a fresh cloistered cleric).
@@ -3928,7 +4000,14 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         // the same reason `cantripBonus` above reads them directly.
         Object.values(build.featPicks ?? {}).includes('ultimate-polymath');
       if (unlimitedSig) entry.signature = [...new Set(Object.values(entry.repertoire).flat())];
-    } else if (cls.id === 'wizard' || cls.id === 'witch') {
+      /* …or any prepared class whose own record declares a BOOK. The class-id test was the only
+       * spellbook lane in the engine, so the magus — *"The spellbook contains your choice of eight
+       * arcane cantrips and four 1st-level arcane spells"* (class-17), budgeted by the Builder off
+       * `spellcasting.spellbook` since batch 28 — prepared straight off the whole arcane list here and
+       * had no book for Studious Spells to add to. Same test the Builder already uses, so the two
+       * surfaces agree; the class-id half stays as the fallback for a wizard or witch record without
+       * the field. */
+    } else if (sp.spellbook || cls.id === 'wizard' || cls.id === 'witch') {
       // LEARNED prepared casters — build.spells is a SPELLBOOK of known spells (the wizard's
       // physical spellbook; the witch's familiar, "the source and repository of the spells your
       // patron has bestowed"). They can prepare only spells they've learned, so the daily
@@ -3959,7 +4038,12 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
          * de-duplicated against what the player learned by hand. */
         const learned = [...new Set([...(grantedByRank[rank] ?? []), ...(build.spells[rank] ?? [])])];
         entry.spellbook[rank] = [...learned];
-        entry.prepared[rank] = Array.from({ length: count }, (_, i) => ({ spellId: learned[i] ?? null, expended: false }));
+        /* The standing preparation fills with the player's OWN learned spells first. A granted book
+         * entry (a witch's patron spell, a magus's studious spells) is an addition to the BOOK — print
+         * never says it stands prepared — and filling from the granted head pushed the player's own
+         * picks out of their own slots the moment a grant arrived. */
+        const fill = [...new Set([...(build.spells[rank] ?? []), ...learned])];
+        entry.prepared[rank] = Array.from({ length: count }, (_, i) => ({ spellId: fill[i] ?? null, expended: false }));
         if (hasSchool && rank > 0) {
           const allowed: string[] = [];
           for (let r = 1; r <= rank; r++) for (const id of curriculum?.[String(r)] ?? []) if (content.spells[id]) allowed.push(id);
@@ -3973,6 +4057,14 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
             expended: false,
           });
         }
+      }
+      /* A granted book entry can sit at a rank the caster's SLOT TABLE never lists. A magus is a
+       * two-rank caster — at 13th its slots are 6th and 7th — while Studious Spells writes 2nd-, 3rd-
+       * and 4th-rank spells into the same book, and the loop above only walks the slot table, so those
+       * ranks had no key at all and the gift fell straight out of the book print put it in. */
+      for (const [rankStr, ids] of Object.entries(grantedByRank)) {
+        const rank = Number(rankStr);
+        if (rank > 0 && !entry.spellbook[rank]) entry.spellbook[rank] = [...ids];
       }
     } else if (archSpellMods.spellCollection) {
       // FLEXIBLE SPELLCASTER: "you prepare a spell collection rather than preparing spells into
@@ -4009,9 +4101,18 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         }));
       }
     }
-    // Magus Studious Spells: bonus prepared slots at the tier rank, auto-prepared
-    // from the curated utility list (these are restricted, so not player-chosen).
-    const studious = cls.id === 'magus' ? magusStudiousSpells(level) : null;
+    /*
+     * Magus Studious Spells: bonus prepared slots at the tier rank, auto-prepared from a curated pair.
+     *
+     * A FALLBACK now. The feature prints a list the player chooses from — *"which can be used to
+     * prepare Gecko Grip, Sure Strike, Water Breathing, and an additional spell depending on your
+     * hybrid study"* — which is a RESTRICTED grant, not two pre-filled slots, and the hard-coded pair
+     * never offered Gecko Grip at all. Once the record carries `spellSlotBonus.restricted` the two
+     * slots come from that lane instead (same rank, same count, player-chosen), so this branch stands
+     * down rather than granting them twice.
+     */
+    const studiousGrant = content.classFeatures['studious-spells']?.spellSlotBonus?.restricted;
+    const studious = cls.id === 'magus' && !studiousGrant ? magusStudiousSpells(level) : null;
     if (studious && entry.prepared) {
       entry.prepared[studious.rank] = [
         ...(entry.prepared[studious.rank] ?? []),
@@ -4146,8 +4247,9 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         entry2.prepared[rank] = Array.from({ length: count + (hasSchool2 ? 1 : 0) }, (_, i) => ({ spellId: chosen[i] ?? null, expended: false }));
       }
     }
-    // Magus Studious Spells: bonus auto-prepared slots at the tier rank (curated, not player-chosen).
-    if (cls2.id === 'magus' && entry2.prepared) {
+    // Magus Studious Spells on the SECOND class — same fallback as the primary above: it stands down
+    // once the record carries the restricted grant, so the slots are never granted twice.
+    if (cls2.id === 'magus' && entry2.prepared && !content.classFeatures['studious-spells']?.spellSlotBonus?.restricted) {
       const studious2 = magusStudiousSpells(level);
       if (studious2) entry2.prepared[studious2.rank] = [...(entry2.prepared[studious2.rank] ?? []), ...studious2.spells.map((id) => ({ spellId: content.spells[id] ? id : null, expended: false }))];
     }
@@ -6669,10 +6771,23 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     if (f?.spellcastingGrant) spellcastingGrants.push(...[f.spellcastingGrant].flat());
     if (f?.spellSlotBonus) spellSlotBonuses.push(f.spellSlotBonus);
   }
+  /*
+   * DUAL CLASS: `ownedFeatureIds` is a FLAT set over both classes, while slotEntryFor's default pick is
+   * "the first spontaneous or prepared entry" — the PRIMARY class's. A feature belonging only to the
+   * second class must name that class's own entry (`${cls2.id}-casting`, the id entry2 is built with),
+   * or a dual-class magus's *"two special 2nd-rank studious spell slots"* land on the wizard half. The
+   * hard-coded studious fallback this batch stood down did place them on entry2, so without this the
+   * restricted grant would be a regression for that build the moment its data row lands.
+   */
+  const secondClassOnly = (fid: string) =>
+    !!cls2 && !(cls?.features ?? []).some((f) => f.featureId === fid) && (cls2.features ?? []).some((f) => f.featureId === fid);
   for (const fid of ownedFeatureIds) {
     const cf = content.classFeatures[fid];
     if (cf?.spellcastingGrant) spellcastingGrants.push(...[cf.spellcastingGrant].flat());
-    if (cf?.spellSlotBonus) spellSlotBonuses.push(cf.spellSlotBonus);
+    if (cf?.spellSlotBonus)
+      spellSlotBonuses.push(
+        !cf.spellSlotBonus.entryId && secondClassOnly(fid) ? { ...cf.spellSlotBonus, entryId: `${cls2!.id}-casting` } : cf.spellSlotBonus,
+      );
   }
   // A HERITAGE can grant a casting profile too (Spellhorn Kobold: trained arcane, Charisma). Only
   // feats and class features were scanned, so the one heritage carrying it granted nothing.
@@ -6687,6 +6802,19 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     const it = content.items[inv.itemId];
     if (it?.spellSlotBonus) spellSlotBonuses.push(it.spellSlotBonus);
   }
+  /*
+   * …and the chosen SUBCLASS OPTION. *"…and an additional spell depending on your hybrid study"* — a
+   * magus's studious slots hold one more spell per tier, named by the study, and `cls.features` never
+   * lists the option the player picked, so this collector could not see it. Same omission the granted-
+   * Strike collector had for Unfurling Brocade.
+   */
+  if (subOption?.spellSlotBonus) spellSlotBonuses.push(subOption.spellSlotBonus);
+  // …and the SECOND class's chosen option under Dual Class, aimed at that class's entry for the same
+  // reason as its features above — and with the same entryId, so the two fold into one group.
+  if (subOption2?.spellSlotBonus)
+    spellSlotBonuses.push(
+      subOption2.spellSlotBonus.entryId ? subOption2.spellSlotBonus : { ...subOption2.spellSlotBonus, entryId: `${cls2!.id}-casting` },
+    );
   // Best rank per tradition wins (two feats granting the same tradition don't stack).
   spellcastingGrants.sort((a, b) => PROFICIENCY_RANKS.indexOf(b.proficiency) - PROFICIENCY_RANKS.indexOf(a.proficiency));
   // Extra spell slots ("+1 slot of each rank except your highest"). Applied to the already-built slot
@@ -6702,11 +6830,20 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
    * `restrictedGroup` still increments only on restricted bonuses in unchanged relative order, so
    * every stored `${entry.id}:rs:${group}:${i}` play-state id is byte-identical to before.
    */
+  /*
+   * Which entry a bonus lands on. *"It does nothing unless you have a spellcasting class feature with
+   * the arcane tradition… you have two additional 1st-rank ARCANE spell slots each day"* (Ring of
+   * Wizardry) — the pick was "the first spontaneous or prepared entry" with the tradition ignored, so
+   * a cleric or druid who invested the ring took the two slots as divine or primal ones. A bonus that
+   * names a tradition and finds no entry of it grants NOTHING: print gates the whole item.
+   */
+  const slotEntryFor = (bonus: SpellSlotBonus) =>
+    bonus.entryId
+      ? spellcasting.find((e) => e.id === bonus.entryId)
+      : spellcasting.find((e) => (e.type === 'spontaneous' || e.type === 'prepared') && (!bonus.tradition || e.tradition === bonus.tradition));
   for (const bonus of spellSlotBonuses) {
     if (bonus.restricted) continue;
-    const entry = bonus.entryId
-      ? spellcasting.find((e) => e.id === bonus.entryId)
-      : spellcasting.find((e) => e.type === 'spontaneous' || e.type === 'prepared');
+    const entry = slotEntryFor(bonus);
     if (!entry) continue;
     const add = (r: number, n: number) => {
       if (entry.slots?.[r]) entry.slots[r].max += n;
@@ -6758,16 +6895,29 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     const eligible = bonus.exceptHighest ? ranks.slice(0, Math.max(0, ranks.length - bonus.exceptHighest)) : ranks;
     for (const r of eligible) add(r, perRank);
   }
-  // Pass 2 — RESTRICTED slots, resolved only now so a rank the pass above CREATED counts as the
-  // entry's highest. They live in their own list, never in `prepared`/`slots` — see RestrictedSlotGrant.
+  /*
+   * Pass 2 — RESTRICTED slots, resolved only now so a rank the pass above CREATED counts as the
+   * entry's highest. They live in their own list, never in `prepared`/`slots` — see RestrictedSlotGrant.
+   *
+   * Two records can print into ONE group. Studious Spells states the magus's two slots and the spells
+   * they always take; the chosen hybrid study adds *"an additional spell depending on your hybrid
+   * study"* TO THOSE SAME SLOTS. Grants sharing a `label` (and an entry) are therefore folded together
+   * before resolving — otherwise the study's slotless grant becomes a second, empty group and its
+   * spell reaches no slot at all. No shipped record shares a label with another, so `restrictedGroup`
+   * numbering — and with it every stored `…:rs:<group>:<i>` play-state id — is unchanged for them.
+   */
+  const restrictedBonuses: { bonus: SpellSlotBonus; grant: RestrictedSlotGrant }[] = [];
   for (const bonus of spellSlotBonuses) {
     if (!bonus.restricted) continue;
-    const entry = bonus.entryId
-      ? spellcasting.find((e) => e.id === bonus.entryId)
-      : spellcasting.find((e) => e.type === 'spontaneous' || e.type === 'prepared');
+    const prior = restrictedBonuses.find((r) => r.grant.label === bonus.restricted!.label && r.bonus.entryId === bonus.entryId);
+    if (prior) prior.grant = mergeRestrictedGrants(prior.grant, bonus.restricted);
+    else restrictedBonuses.push({ bonus, grant: bonus.restricted });
+  }
+  for (const { bonus, grant } of restrictedBonuses) {
+    const entry = slotEntryFor(bonus);
     if (!entry) continue;
     (entry.restrictedSlots ??= []).push(
-      ...resolveRestrictedSlots(bonus.restricted, entry, level, String(restrictedGroup++), wizardCurriculum, content),
+      ...resolveRestrictedSlots(grant, entry, level, String(restrictedGroup++), wizardCurriculum, content),
     );
   }
 
@@ -6852,7 +7002,19 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     build.classId,
     level,
     new Set((build.naturalAttacks ?? []).map((n) => n.name.toLowerCase())),
-    build.inventory.filter((inv) => inv.invested).map((inv) => inv.itemId),
+    /*
+     * An item's granted Strike is live while the item is INVESTED — or, for an item that is not an
+     * invested one at all, while it is simply WORN OR HELD. *"Five jagged spines project from the
+     * surface of this steel shield… The spines are +1 striking shield spikes"* (Spined Shield): the
+     * shield is held in one hand and carries no `invested` trait, so an invested-only gate made its
+     * grant unreachable — the shield could never be in the state the gate asks for. Investment is
+     * still required of anything that prints the trait, so all 13 shipped `grantedStrikes` items
+     * (every one of which IS invested: the fleshgem, the phantom shroud, the ten grafts, the mask)
+     * behave exactly as before.
+     */
+    build.inventory
+      .filter((inv) => (content.items[inv.itemId]?.traits ?? []).includes('invested') ? inv.invested : inv.invested || inv.worn || inv.equipped)
+      .map((inv) => inv.itemId),
     build.subclassId,
     enhancedFeatIds,
     build.effectChoices,
@@ -9016,7 +9178,11 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
           if (r != null) b.signatures[r] = [...signaturesAt(b.signatures, r), sigId];
         }
       } else if (classEntry.spellbook) {
-        for (const [rank, ids] of Object.entries(classEntry.spellbook)) b.spells[Number(rank)] = [...ids];
+        /* The book MINUS what the class put in it for free. *"You add any spells from this class
+         * feature to your spellbook"* is a gift, so writing those ids back as player picks would charge
+         * them against the magus's 4 + 2 budget and push a real pick out of the book on every rebuild. */
+        const free = new Set(bookGrantedSpellIds(content, cls, c.subclassId, c.level));
+        for (const [rank, ids] of Object.entries(classEntry.spellbook)) b.spells[Number(rank)] = ids.filter((id) => !free.has(id));
       } else if (classEntry.prepared) {
         const studious = new Set(magusStudiousSpells(c.level)?.spells ?? []);
         for (const [rank, slots] of Object.entries(classEntry.prepared)) {

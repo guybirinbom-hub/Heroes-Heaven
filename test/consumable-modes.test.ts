@@ -53,7 +53,9 @@ describe('consumable modes: the data', () => {
     // Camouflaging Chromatophores grades, Underbrush Cloak, Obsidian Goggles' activation, and the
     // Darkvision Scope — each a stated-span activation that had no mode.
     // +2 from batch 18: the Arachnid Harness grades' Spider Limbs climb Speed (1 minute).
-    expect(itemModes().length).toBe(374);
+    // +1 from batch 29: the Resolute Mind Wrap's Shield Thoughts — *"you instead gain resistance 10 to
+    // mental damage for 1 minute"* on a successful triggered Will save; the sheet showed 5 all minute.
+    expect(itemModes().length).toBe(375);
   });
 
   it('every item mode points at an item that actually exists', () => {

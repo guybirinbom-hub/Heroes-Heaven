@@ -55,6 +55,46 @@ const SKILL_KEYS = new Set(['acrobatics', 'arcana', 'athletics', 'crafting', 'de
   'survival', 'thievery']);
 
 /**
+ * THE PROFICIENCY RANKS A CLASS FEATURE DELIVERS FROM ITS OWNING CLASS'S TABLE.
+ *
+ * *"Your proficiency rank for Reflex saves increases to master"* is not a field on
+ * `classFeatures/natural-reflexes` and never can be: a rank may only be raised on the per-class
+ * ladder in src/rules/advancement.ts, whose rows carry the feature they belong to in `source`
+ * (`{ level: 7, track: 'reflex', rank: 'master', source: 'natural-reflexes' }`), and buildCharacter
+ * applies them through advancementRows -> applyAdvancement. A comparer that reads only the record's
+ * own fields therefore sees the OTHER sentence of the same feature (the `degreeShifts` success-to-crit
+ * clause) and reports the rank as absent or different.
+ *
+ * That reading had already been hand-settled three times — 'bravery', 'stubborn', 'mental-wards', all
+ * below in SETTLED_VALUES with the identical paragraph — and batch 29 arrived with six more of the
+ * same shape (natural-reflexes, unassailable-soul, kinetic-durability, mysterious-resolve,
+ * disciplined-mind, will-expertise). A fourth copy of the paragraph is the lane asking to be built, so
+ * the table is READ instead: the rank the class really grants is asserted as ours, and a feature whose
+ * table does NOT reach the printed rank still reports a DIFFERENT row, which is the case worth reading.
+ *
+ * Read from the source text (the same technique wg-diff uses for modes.ts and casterArchetypes.ts) —
+ * these scripts are plain .mjs and cannot import the TypeScript engine. A parenthetical qualifier in
+ * `source` ('second-doctrine (cloistered)', 'weapon-legend (general)') names the doctrine or the clause,
+ * not the record, so it is stripped. Only the SAVE and PERCEPTION tracks are asserted here: every other
+ * track this table carries (weapons, armour, class DC, spellcasting) is a rank in a currency this
+ * comparer deliberately does not hold — see NOT_A_SCALAR.
+ */
+const advancementBySource = new Map();
+{
+  let text = '';
+  /* `--advancement <path>` swaps the table for a stunted copy, so a test can prove that a ladder which
+   * stops SHORT of the printed rank still reports DIFFERENT — the one property that separates "read the
+   * carrier" from "launder the finding". Nothing but a test passes it. */
+  try { text = readFileSync(join(ROOT, arg('--advancement', 'src/rules/advancement.ts')), 'utf8'); } catch { /* absent */ }
+  for (const m of text.matchAll(/\{\s*level:\s*(\d+),\s*track:\s*'([a-zA-Z]+)',\s*rank:\s*'([a-z]+)',\s*source:\s*'([^']+)'\s*\}/g)) {
+    const src = m[4].replace(/\s*\([^)]*\)\s*$/, '');
+    if (!advancementBySource.has(src)) advancementBySource.set(src, []);
+    advancementBySource.get(src).push({ level: Number(m[1]), track: m[2], rank: m[3] });
+  }
+}
+const SAVE_TRACKS = new Set(['fortitude', 'reflex', 'will']);
+
+/**
  * Their variable -> the assertion in OUR terms. Only variables with an unambiguous counterpart are
  * listed: a variable we cannot express has nothing to disagree with, and printing it as a disagreement
  * would recreate the false-positive problem the kind-differ just spent a day shedding.
@@ -148,6 +188,21 @@ const NOT_A_SCALAR = {
   UNTRAINED_IMPROVISATION: 'their marker for "your level as your proficiency bonus" on untrained SKILLS — covered by `untrainedProficiency` (a floor, not a rank)',
   WEAPON_GROUP_CROSSBOW: 'weapon proficiency by GROUP — covered by featGrants.weapon / weaponFamiliarity',
   WEAPON_GROUP_FIREARM: 'weapon proficiency by GROUP — covered by featGrants.weapon / weaponFamiliarity',
+  /* Batch 29, Alchemical Weapon Expertise. `adjValue WEAPON_GROUP_BOMB = "E"` is the middle clause of
+   * *"Your proficiency ranks for simple weapons, alchemical bombs, and unarmed attacks increase to
+   * expert"* — a RANK by weapon group, the same currency as its two settled siblings SIMPLE_WEAPONS
+   * and UNARMED_ATTACKS above, and not a number this comparer holds. (As `addBonusToValue` the same
+   * variable IS a scalar — a moderate alchemical bomb's +1 item bonus to attack — which is why
+   * VAR_BY_VERB maps that verb, and only that verb.) */
+  WEAPON_GROUP_BOMB: "weapon proficiency by GROUP — covered by the advancement.ts track 'bomb' -> proficiencies.weaponGroups.bomb, read in derive.ts as a better-rank candidate against the weapon's category; the archetype half is featGrantsAuto alchemist-dedication weaponFamiliarity.groups",
+  /* Batch 29, Weapon Specialization / Greater Weapon Specialization. Their side writes a bare boolean
+   * marker (`adjValue WEAPON_SPECIALIZATION = true`) and lets their engine supply the printed *"2
+   * additional damage … 3 if you're a master, and 4 if you're legendary"* step. Ours computes the same
+   * table: weaponSpecialization() in derive.ts detects the feature from the OWNING CLASS's feature
+   * table and weaponSpecDamage() returns 2/3/4 (4/6/8 greater) keyed to the STRIKE's own effective
+   * rank, folded into every Strike. Neither record carries a number for this comparer to hold. */
+  WEAPON_SPECIALIZATION: 'a boolean marker for the printed damage step, not a number on the record — covered by weaponSpecialization() + weaponSpecDamage() in derive.ts, keyed off the owning class feature table',
+  WEAPON_SPECIALIZATION_GREATER: 'a boolean marker for the printed damage step, not a number on the record — covered by weaponSpecialization() + weaponSpecDamage() in derive.ts, keyed off the owning class feature table',
   SIZE: 'a SIZE, not a value on a track — covered by `sizeOverride` (Mighty Dragonet: "instead of Tiny, your size is Small")',
   IMPROVED_MULTILINGUAL: 'extra languages, and extra languages FROM ANOTHER FEAT — covered by `languageChoices` + `languageChoicesBonus`',
   SENSES_IMPRECISE: 'a sense, not a value — covered by `senses` / `conditionalSenses`',
@@ -273,7 +328,17 @@ const setMember = (raw, key) => {
   return s.replace(/\s+/g, '-');
 };
 
-/** Everything their row asserts, as `track|detail -> value`, plus `set|<key> -> Set`. */
+/**
+ * Everything their row asserts, as `track|detail -> [value, …]`, plus `set|<key> -> Set`.
+ *
+ * ⚠ EVERY assertion per key, not the last one written — the same rule `ourAssertions`' `put` already
+ * follows, and for the same reason. One of their rows legitimately asserts two different things about
+ * one track: Battlefield Surveyor is `adjValue PERCEPTION = "M"` FOLLOWED BY `addBonusToValue
+ * PERCEPTION = 2 "for initiative"`, and both key to `perception|`. With a plain `set` the +2
+ * overwrote the master rank, and the record printed `ok battlefield-surveyor (1 values … agree)`
+ * having compared only half of what they assert — a silent cap of exactly the kind this script's
+ * header refuses. Any of their rows with two valued ops on one track was half-unchecked.
+ */
 function theirAssertions(row) {
   const out = new Map();
   const sets = new Map();
@@ -310,7 +375,10 @@ function theirAssertions(row) {
      * Zombie Dedication's *"reduce all your Speeds by 5"* — theirs -5 against our `speedAdjust.add: -5`,
      * which is why the matching `Math.abs` on our side of that field is dropped too. */
     const scalar = typeof val === 'number' && spec[0] !== 'speed' ? Math.abs(val) : val;
-    out.set(`${spec[0]}|${spec[1] ?? ''}`, scalar);
+    const k = `${spec[0]}|${spec[1] ?? ''}`;
+    if (!out.has(k)) out.set(k, []);
+    /* Two ops asserting the SAME number on the same track are one assertion, not two rows to print. */
+    if (!out.get(k).some((v) => String(v) === String(scalar))) out.get(k).push(scalar);
   }
   out.__sets = sets;
   return out;
@@ -353,6 +421,9 @@ function ourSets(rec, id) {
   for (const g of cs.groups ?? []) add('critspec', g);
   for (const r of rec.resistances ?? []) add('resistances', r.type);
   for (const r of rec.passiveEffects?.resistances ?? []) add('resistances', r.type);
+  /* An aeon stone's RESONANT power (batch 29, Vital Amplification: "resistance 5 to void" while slotted in
+   * a wayfinder) lives on `resonant.resistances` — derive.ts folds it behind the wayfinder-slotted gate. */
+  for (const r of rec.resonant?.resistances ?? []) add('resistances', r.type);
   /* A CHOICE-resistance record resists whichever type the player picks, so the comparable set is the
    * option list itself. Two homes: a Heritage carries its own options; a Background (Energy Scarred,
    * batch 23) reuses its `choice` options and declares only the formula. Their legacy energy names
@@ -444,7 +515,27 @@ function ourSets(rec, id) {
 }
 
 /* ---------------------------------------------------------------- our side */
-const laneText = (p) => { try { return readFileSync(join(ROOT, p), 'utf8'); } catch { return ''; } };
+const _laneCache = new Map();
+const laneText = (p) => {
+  if (!_laneCache.has(p)) {
+    let t = '';
+    try { t = readFileSync(join(ROOT, p), 'utf8'); } catch { /* absent */ }
+    _laneCache.set(p, t);
+  }
+  return _laneCache.get(p);
+};
+
+/** Every record of a printed entry, keyed by the `aonId` they share — see the graded-family note in
+ *  `ourAssertions`. Built once: it is walked per record and the corpus has ~44,000 of them. */
+const familyByAonId = new Map();
+for (const bucket of Object.values(core)) {
+  if (!bucket || typeof bucket !== 'object' || Array.isArray(bucket)) continue;
+  for (const [rid, r] of Object.entries(bucket)) {
+    if (!r?.aonId) continue;
+    if (!familyByAonId.has(r.aonId)) familyByAonId.set(r.aonId, []);
+    familyByAonId.get(r.aonId).push([rid, r]);
+  }
+}
 
 /**
  * A `speeds` formula evaluated with the character having NO such speed — which recovers the base number
@@ -456,10 +547,17 @@ const laneText = (p) => { try { return readFileSync(join(ROOT, p), 'utf8'); } ca
  *
  * Deliberately narrow: only `min`, `@actor.speed.*`, digits and arithmetic are accepted, and anything
  * else returns null and is printed as an unevaluated string rather than guessed at.
+ *
+ * `existing` is the Speed the character already has, and it exists because the OTHER half of that same
+ * printed sentence is a DELTA. Their side writes the two branches as two operations — Aqueous
+ * Dragonblood is `IF SPEED_SWIM > 0 THEN adjValue +5 ELSE setValue 15` — so with only the zero
+ * evaluation in hand the record agreed on 15 and reported the +5 as granted by nobody, on a formula
+ * that grants exactly +5. Evaluated at a nonzero probe the same formula yields probe + 5, and the
+ * delta is the number their `adjValue` states.
  */
-function evalSpeedFormula(s) {
+function evalSpeedFormula(s, existing = 0) {
   if (!/^[-+*/(),.\s\d]|@actor|min/.test(s)) return null;
-  const expr = String(s).replace(/@actor\.speed\.[a-z]+/g, '0');
+  const expr = String(s).replace(/@actor\.speed\.[a-z]+/g, String(existing));
   if (!/^[-+*/(),.\s\d]|min/.test(expr)) return null;
   if (/[a-z]/i.test(expr.replace(/min/g, ''))) return null;   // an identifier we do not model
   try {
@@ -533,8 +631,31 @@ function situationalMagnitudes(id, rec, put) {
      * +2 if master, +3 if legendary"* — and their side asserts the top of the ladder. Taking only the
      * first number reported "they grant 3, we grant 1" on a record that grants all three.
      */
-    const mags = [...String(e.bonus ?? '').matchAll(/([+-]?\d+)/g)].map((m) => Math.abs(Number(m[1])));
+    /*
+     * ⚠ A LEVEL IS NOT A MAGNITUDE. 98 of these strings spell a ladder's rungs with the level each one
+     * arrives at — *"+2 circumstance (+3 at 10th, +4 at 17th)"* — and a bare-number scan filed 10 and
+     * 17 as bonuses WE GRANT. An assertion we do not really make can only ever LAUNDER a difference:
+     * their +10 on that record would have matched a star that grants +2. Ordinals are dropped before
+     * the scan, on every entry, so that string asserts 2/3/4 and nothing else.
+     */
+    const bonusText = String(e.bonus ?? '').replace(/\b\d+(?:st|nd|rd|th)\b/g, ' ');
+    const mags = [...bonusText.matchAll(/([+-]?\d+)/g)].map((m) => Math.abs(Number(m[1])));
     if (!mags.length) continue;                // "you take no circumstance penalty" — no number to compare
+    /*
+     * …and the RUNGS OF A LADDER SPELLED AS A STEP rather than enumerated. Vivacious Speed prints
+     * *"Increase the status bonus to your Speeds from stylish combatant to a +10-foot status bonus;
+     * this bonus increases by 5 feet at 7th, 11th, 15th, and 19th levels"* and their side writes one
+     * operation per rung (10/15/20/25/30). With only the base and the step in hand the record agreed
+     * on 10 and disagreed on 20, 25 and 30 — one printed sentence, enumerated on their side and
+     * summarised on ours. The rungs are computed instead: base + step × (1 … however many levels the
+     * sentence names). Adversarially confirmed against the whole registry: it is the only star that
+     * carries both a step and the levels it steps at, so no other entry gains a magnitude from this.
+     */
+    const step = /increas(?:es|ing) by (\d+)/i.exec(String(e.bonus ?? ''));
+    if (step) {
+      const rungs = (String(e.bonus).match(/\b\d+(?:st|nd|rd|th)\b/g) ?? []).length;
+      for (let k = 1; k <= rungs; k++) mags.push(mags[0] + Number(step[1]) * k);
+    }
     for (const n of mags) for (const t of e.targets ?? []) {
       const kind = t?.kind;
       if (kind === 'perception' || kind === 'initiative') put('perception|', n);
@@ -596,27 +717,42 @@ function ourAssertions(id, rec) {
   out.__wildcards = wildcards;
 
   /* Record fields. */
-  for (const [k, v] of Object.entries(rec.speeds ?? {})) {
-    /* A formula encodes "N if you have none, else existing + M" — evaluate it at zero to recover the
-     * base, which is the number their `setValue` states. Comparing a formula to a literal as strings
-     * reported both dragonblood speed feats as disagreements when both are correct. */
-    if (typeof v === 'string') {
-      const base = evalSpeedFormula(v);
-      put(`speed|${k}`, base ?? v);
-    } else put(`speed|${k}`, Number(v));
-  }
+  /*
+   * A formula encodes "N if you have none, else existing + M" — evaluate it at zero to recover the
+   * BASE, which is the number their `setValue` states. Comparing a formula to a literal as strings
+   * reported both dragonblood speed feats as disagreements when both are correct.
+   *
+   * …and at a nonzero probe to recover the DELTA, which is the number their `adjValue` states, because
+   * the printed sentence has two branches and so does their encoding: Aqueous Dragonblood's *"You gain
+   * a swim Speed of 15 feet; if you already have a base swim Speed, it increases by 5 feet"* is
+   * `IF SPEED_SWIM > 0 THEN adjValue +5 ELSE setValue 15`. With only the base asserted the record
+   * agreed on 15 and reported the +5 as granted by nobody, on a formula that grants exactly +5.
+   *
+   * The delta is asserted ONLY when the formula reads the character's own Speed, so a constant cannot
+   * manufacture one; the probe is a Speed no formula in the corpus special-cases.
+   */
+  const SPEED_PROBE = 25;
+  const putSpeed = (k, v) => {
+    if (typeof v !== 'string') { put(`speed|${k}`, Number(v)); return; }
+    const base = evalSpeedFormula(v);
+    put(`speed|${k}`, base ?? v);
+    if (base === null || !/@actor\.speed\./.test(v)) return;
+    const raised = evalSpeedFormula(v, SPEED_PROBE);
+    if (raised !== null && raised !== base) put(`speed|${k}`, raised - SPEED_PROBE);
+  };
+  for (const [k, v] of Object.entries(rec.speeds ?? {})) putSpeed(k, v);
   /* …and the HERITAGE-GATED form. Gecko's Grip prints a climb Speed only for a cliffscale lizardfolk,
    * which `speedsIf` carries (read at src/rules/derive.ts:4468) — reading only the plain `speeds` map
    * reported a Speed the character really gets as missing. The gate is not a number, so only the value
    * is compared, exactly as with the unconditional form. */
   for (const g of Array.isArray(rec.speedsIf) ? rec.speedsIf : []) {
-    for (const [k, v] of Object.entries(g?.speeds ?? {})) {
-      const base = typeof v === 'string' ? evalSpeedFormula(v) : Number(v);
-      put(`speed|${k}`, base ?? v);
-    }
+    for (const [k, v] of Object.entries(g?.speeds ?? {})) putSpeed(k, v);
   }
   if (rec.landSpeedBonus) {
-    put('speed|land', Number(rec.landSpeedBonus));
+    /* Through `putSpeed` for the same reason: a land bonus may itself be a FORMULA (Vivacious Speed's
+     * `5+5*min(2,floor((@actor.level-3)/8))`), and `Number()` turned that into a NaN assertion that
+     * could match nothing and read in the report as a value we hold. */
+    putSpeed('land', rec.landSpeedBonus);
     /*
      * …AND THE SAME BONUS RESOLVED THROUGH THE ANCESTRY CHASSIS.
      *
@@ -740,14 +876,19 @@ function ourAssertions(id, rec) {
   for (const w of Array.isArray(rec.whileActive) ? rec.whileActive : []) {
     if (w?.bulkLimitBonus) put('bulk|', Number(w.bulkLimitBonus));
   }
-  /* A skill that climbs on its own schedule — *"At 3rd level, you become an expert in Undead Lore; at
-   * 7th level, you become a master…; and at 15th level, you become legendary"*. Their side asserts the
-   * TOP of the ladder as one number, so the top is what has to be compared; the intermediate steps are
-   * a progression, not a disagreement. */
+  /*
+   * A skill that climbs on its own schedule — *"At 3rd level, you become an expert in Undead Lore; at
+   * 7th level, you become a master…; and at 15th level, you become legendary"*.
+   *
+   * ⚠ EVERY RUNG, not just the top. Their side writes one level-gated operation per rung, and while
+   * `theirAssertions` kept only the last write that read as a single claim which the top answered.
+   * Now that it accumulates, Undead Lore and Esoteric Lore reported `theirs=expert ours=legendary` and
+   * `theirs=master ours=legendary` — two halves of the same ladder ours climbs exactly, called a
+   * disagreement because only its last rung was asserted. `put` is multi-assertion, so either end
+   * matches and a ladder that stops SHORT of a rung they assert still reports.
+   */
   for (const prog of rec.skillProgression ?? []) {
-    const order = ['untrained', 'trained', 'expert', 'master', 'legendary'];
-    const top = (prog.at ?? []).reduce((best, s) => (order.indexOf(s.rank) > order.indexOf(best) ? s.rank : best), 'untrained');
-    if (top !== 'untrained') put(`skill|${prog.skill}`, top);
+    for (const s of prog.at ?? []) if (s?.rank && s.rank !== 'untrained') put(`skill|${prog.skill}`, s.rank);
   }
   /* …and the skills granted by the OPTIONS of a choice group this class declares this record as the
    * carrier of. The Root Epithet feature prints "choose one" and the six epithets each train a
@@ -848,10 +989,22 @@ function ourAssertions(id, rec) {
         for (const r of rungs) put(k, r);
       }
     }
-    /* A skillChoices slot asserts its rank for whichever option is picked — record the OPTIONS so a
-     * choice can be compared against a fixed grant on their side without claiming a specific skill. */
-    for (const m of entry.matchAll(/options\s*:\s*\[([^\]]*)\]\s*,\s*rank\s*:\s*['"]([a-z]+)['"]/g)) {
-      for (const o of m[1].matchAll(/['"]([a-z:][a-z:_-]*)['"]/g)) put(`choice-skill|${o[1]}`, m[2]);
+    /*
+     * A skillChoices slot asserts its rank for whichever option is picked — record the OPTIONS so a
+     * choice can be compared against a fixed grant on their side without claiming a specific skill.
+     *
+     * ⚠ EVERY RANK ON THE SLOT, not just `rank`. *"You become trained in that skill, or become an
+     * EXPERT IF YOU WERE ALREADY TRAINED"* is the second half of eight dedications' printed sentence,
+     * and our engine carries it as `conditionalRank: { base, upgraded }` beside the flat rank (read at
+     * src/rules/build.ts:5478). Reading only `rank` asserted `trained` alone, so once their two ops
+     * per option stopped overwriting each other every one of the eight reported `theirs=expert
+     * ours=trained` — on records that deliver the expert. The slot's whole tail up to its closing
+     * brace is scanned and every rank word in it is asserted, so `base`/`upgraded` are picked up
+     * however the slot is spelled, and a slot that really does carry only `trained` still reports.
+     */
+    for (const m of entry.matchAll(/options\s*:\s*\[([^\]]*)\]([^}]*)/g)) {
+      const ranks = [...m[2].matchAll(/['"]([a-z]+)['"]/g)].map((r) => r[1]).filter((r) => RANKS.includes(r));
+      for (const o of m[1].matchAll(/['"]([a-z:][a-z:_-]*)['"]/g)) for (const r of ranks) put(`choice-skill|${o[1]}`, r);
     }
   }
   /* …and the conditional bonuses, whose magnitude is what their flat number is really asserting. */
@@ -890,12 +1043,37 @@ function ourAssertions(id, rec) {
     for (const [k, v] of Object.entries(m.speeds ?? {})) put(`speed|${k}`, typeof v === 'string' ? v : Number(v));
   }
   situationalMagnitudes(id, rec, put);
+  /*
+   * …AND THE OTHER GRADES OF THE SAME PRINTED ENTRY.
+   *
+   * A graded item family is ONE page in the book and one row on their side, and several records on
+   * ours. Razmiri Mask prints *"The wearer of this mask gains a +1 item bonus to Deception checks to
+   * Lie or Feint"* on a page (equipment-3593) that also carries the silver, gold and porcelain masks;
+   * their single row states all four grades as four `FEAT_NAMES`-gated conditionals (+1/+2/+3/+4) and
+   * ours states each on its own record — `razmiri-mask` +1, `-silver` +2, `-gold` +3, `-porcelain` +4,
+   * situationalBonuses.ts:2191/2337-2339. Compared record-to-row that read as three disagreements on a
+   * family that matches their numbers exactly, grade for grade: a pairing artefact, not a gap.
+   *
+   * Keyed on the shared `aonId`, which is the printed entry's own identity — not a name prefix, which
+   * would sweep in records that merely start alike. A grade whose number is really wrong still reports,
+   * because their row asserts every grade and each still has to be found somewhere in the family.
+   */
+  for (const [sid, sib] of familyByAonId.get(rec.aonId) ?? []) {
+    if (sid !== id) situationalMagnitudes(sid, sib, put);
+  }
   /* A `degreeShifts` entry asserts a shift, not a number — recorded so a numeric claim on their side
    * lands against SOMETHING rather than reading as absent. */
   for (const d of Array.isArray(rec.degreeShifts) ? rec.degreeShifts : []) {
     for (const s of d.saves ?? []) put(`save|${s}`, 'degree-shift');
     for (const s of d.skills ?? []) put(`skill|${s}`, 'degree-shift');
     if (d.perception) put('perception|', 'degree-shift');
+  }
+  /* …and the RANK the owning class's advancement table raises for this feature — see the long note
+   * beside `advancementBySource`. The rank is asserted as it stands: a table that reaches only expert
+   * against a printed master still reports DIFFERENT. */
+  for (const r of advancementBySource.get(id) ?? []) {
+    if (SAVE_TRACKS.has(r.track)) put(`save|${r.track}`, r.rank);
+    else if (r.track === 'perception') put('perception|', r.rank);
   }
   return out;
 }
@@ -965,36 +1143,16 @@ const SETTLED_VALUES = {
   'armor-potency-1': ['ac|'],
 
   /*
-   * MAGICAL FORTITUDE / PRECOGNITIVE REFLEXES — a different CARRIER, not a different rank. The advance
-   * lives in `src/rules/advancement.ts` (the per-class table) rather than on the record, so a comparer
-   * that reads record fields sees nothing. Measured on built characters before settling — see
-   * test/batch15-parity.test.ts, which steps each owning class either side of the level.
+   * ⚠ SEVEN SETTLES DELETED HERE IN BATCH 29 — magical-fortitude, precognitive-reflexes,
+   * reflex-expertise, reaction-time, juggernaut, evasive-reflexes, confident-evasion. All seven were
+   * the same paragraph: "the rank lives on the per-class table in src/rules/advancement.ts, not on the
+   * record". That table is now READ by `ourAssertions` (see `advancementBySource` at the top of this
+   * file), so the CARRIER answers them and each settle matched nothing — which
+   * `scripts/wg-settle-stale.mjs` reports and which the file's own rule says to delete rather than keep.
+   * The rank is compared as it stands, so a table that stops short of the printed rank still reports.
+   * test/batch15-parity.test.ts still builds each owning class either side of the level and asserts the
+   * rank actually steps; that is the check that mattered.
    */
-  'magical-fortitude': ['save|fortitude'],
-  'precognitive-reflexes': ['save|reflex'],
-
-  /*
-   * BATCH 18 — five more of the SAME advancement-table carrier as magical-fortitude above, each
-   * adversarially confirmed with the reader chain (archived in the b018 adversarial record set): advancement.ts rows keyed
-   * `source: '<id>'` -> advancementRows -> applyAdvancement (build.ts) -> derive. Their side writes
-   * the rank as a bare adjValue on the record (SAVE_REFLEX=E / SAVE_FORT=M / PERCEPTION=E); ours
-   * lives on the per-class table, so a field-reading comparer sees nothing.
-   *  - reflex-expertise: SAVE_REFLEX=E on every per-class row (their 45047/26086/31221/24639/39320/
-   *    39092…) — ours: the per-class reflex expert rows (guardian 7, thaumaturge 3, necromancer 5…).
-   *  - reaction-time: PERCEPTION=E (their 45044 guardian L7) — ours advancement.ts guardian
-   *    perception expert@7; the extra-reaction half is the record's extraReaction row (batch-18 fix).
-   *  - juggernaut: SAVE_FORT=M + the success-to-crit text op (their 31234) — ours barbarian
-   *    fortitude master@7 (+ magus master@15, print's other half) + the record's degreeShifts.
-   *  - evasive-reflexes: SAVE_REFLEX=M + text op (their 21320) — ours rogue reflex master@7 +
-   *    degreeShifts.
-   *  - confident-evasion: SAVE_REFLEX=M + text op (their 33060) — ours swashbuckler reflex master@7
-   *    + degreeShifts.
-   */
-  'reflex-expertise': ['save|reflex'],
-  'reaction-time': ['perception|'],
-  'juggernaut': ['save|fortitude'],
-  'evasive-reflexes': ['save|reflex'],
-  'confident-evasion': ['save|reflex'],
 
   /*
    * DEVOUT BLESSING — the champion half of the resiliency family (advanced-fury above, batch-17's
@@ -1272,15 +1430,8 @@ const SETTLED_VALUES = {
    * `.maxHpBonus = { perArchetypeFeat: 3 }`. */
   'monk-dedication': ['hp|'],
   'exemplar-dedication': ['hp|'],
-  /*
-   * *"Your proficiency rank in Perception and your eidolon's … increase to expert"* — a level-3
-   * summoner feature, held as the level-gated advancement row (advancement.ts, summoner: level 3,
-   * track perception, source 'shared-vigilance'). Their `adjValue PERCEPTION → E` carries no level
-   * of its own, but it sits on a class-feature row that IS `level: 3` and carries the Summoner class
-   * trait, which is how their engine gates class features — so the difference is only WHERE the
-   * level is recorded, not whether one exists.
-   */
-  'shared-vigilance': ['perception|'],
+  /* SHARED VIGILANCE — settle DELETED in batch 29; the summoner table's perception-expert row (source
+   * 'shared-vigilance') is read by `ourAssertions` now. */
   /*
    * Their row asserts four WEAPON_FAMILIARITY members — bayonet, reinforced stock, martial firearms
    * and martial combination weapons — and only 'martial combination weapons' fails to match ours. We
@@ -1345,25 +1496,14 @@ const SETTLED_VALUES = {
    * initiate benefit. Ours carries those numbers on the implement records, where the benefit is.
    */
   'thaumaturge-dedication': ['perception|', 'skill|deception', 'skill|diplomacy', 'skill|intimidation', 'save|fortitude', 'save|reflex', 'save|will'],
-  /*
-   * *"Your proficiency rank for Will saves increases to expert"* is a proficiency bump, and those live
-   * in `CLASS_ADVANCEMENT` — the fighter's table carries it at level 3 attributed to this very feature,
-   * because that is the one place a rank may be raised. What this comparer sees on our record is the
-   * degree-shift clause, which is a different sentence of the same feat. Precedent: 'shared-vigilance'.
-   */
-  'bravery': ['save|will'],
+  /* BRAVERY — settle DELETED in batch 29; the fighter table's Will-expert row (source 'bravery') is
+   * read now, and this entry was the paragraph the whole teach was built from. */
 
   /* ---------------------------------------------------------------- batch 011 */
-  /* Same record and same reason as the KINDS settle in wg-diff.mjs: the Will expert rank is the
-   * level-gated advancement row (advancement.ts:435 — gunslinger, level 3, source 'stubborn'), because
-   * CLASS_ADVANCEMENT is the one place a proficiency rank may be raised. Their `adjValue` asserts the
-   * bare scalar "E", so this comparer reports it as a missing number. Precedent: 'bravery'. */
-  'stubborn': ['save|will'],
-  /* *"Your proficiency rank for Will saves increases to expert"* is likewise the advancement row
-   * (advancement.ts:222 — necromancer, level 3, source 'mental-wards'). What this comparer sees on our
-   * record is the `degreeShifts` clause — the OTHER sentence of the same feature, which we structure
-   * and they leave as free text. Precedent: 'bravery'. */
-  'mental-wards': ['save|will'],
+  /* STUBBORN / MENTAL-WARDS — settles DELETED in batch 29 for the same reason (gunslinger and
+   * necromancer Will-expert rows). Batch 29 arrived with six MORE records of this exact shape, which is
+   * a lane asking to be built rather than a fourth copy of the paragraph — so `ourAssertions` reads the
+   * table (`advancementBySource`) and every one of them is answered by its carrier. */
   /* Their +3 is Exemplar Resiliency's HP parked on this feat by their engine (see the KINDS settle in
    * wg-diff.mjs). Printed Basic Glory grants no Hit Points — its whole text is "You gain a 1st- or
    * 2nd-level exemplar feat." Ours sit once, on the feat that prints them, and count basic-glory among
@@ -1386,6 +1526,23 @@ const SETTLED_VALUES = {
    * dedupe-hidden and the triage-lane guard forbids filing stars on records no character can own.
    */
   'aon-post-guard-of-all-trade': ['skill|deception', 'skill|diplomacy', 'skill|intimidation'],
+
+  /*
+   * ---- BATCH 29 ----------------------------------------------------------------------------------
+   *
+   * PATH TO PERFECTION — a rank the PLAYER'S PICK raises, which is the one rank shape the
+   * advancement-table teach above cannot express. Printed: *"Choose your Fortitude, Reflex, or Will
+   * saving throw. Your proficiency rank for the chosen saving throw increases to master."* Their side
+   * flattens all three branches of their `select` onto the record, so it asserts master on all three
+   * saves at once; ours raises exactly the one the player chose — BuildState.pathToPerfection, applied
+   * in src/rules/build.ts as `proficiencies.saves[picks[0]] = maxRank(…, 'master')` at level 7 (and the
+   * 11th/15th tiers above it), with Builder.tsx's `allowed()` gate keeping each tier off an already
+   * mastered save. The monk block of src/rules/advancement.ts carries NO save row at all, so the pick
+   * is the only lane and there is no double application. Adopting their flattening would master all
+   * three saves on every monk. The record's own success-to-crit clause is `degreeShifts` with
+   * `savesFromChoice: 'pathToPerfection:0'`, resolved to the picked save by explain.ts.
+   */
+  'path-to-perfection': ['save|fortitude', 'save|reflex', 'save|will'],
 };
 
 /* ---------------------------------------------------------------- compare */
@@ -1488,7 +1645,7 @@ for (const id of ids) {
   compared++;
   const ours = ourAssertions(id, rec);
   const rowsOut = [];
-  for (const [key, tv] of theirs) {
+  for (const [key, tvList] of theirs) {
     if (!RAW_SETTLES && (SETTLED_VALUES[id] ?? []).includes(key)) continue;   // read and settled — see above
     const [track] = key.split('|');
     const candidates = [
@@ -1497,9 +1654,12 @@ for (const id of ids) {
       /* …and the whole-track conditional, when one is present. */
       ...(ours.__wildcards?.has(track) ? [...(ours.get(`${track}|`) ?? []), ...(ours.get(`${track}|all`) ?? [])] : []),
     ];
-    if (!candidates.length) rowsOut.push({ key, tv, ov: '(nothing)', kind: 'MISSING' });
-    else if (!candidates.some((v) => String(v) === String(tv))) {
-      rowsOut.push({ key, tv, ov: candidates.join(' / '), kind: 'DIFFERENT' });
+    /* One row per assertion of THEIRS, matched against ANY of ours — see theirAssertions. */
+    for (const tv of tvList) {
+      if (!candidates.length) rowsOut.push({ key, tv, ov: '(nothing)', kind: 'MISSING' });
+      else if (!candidates.some((v) => String(v) === String(tv))) {
+        rowsOut.push({ key, tv, ov: candidates.join(' / '), kind: 'DIFFERENT' });
+      }
     }
   }
   for (const s of setRows) {

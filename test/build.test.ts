@@ -92,10 +92,14 @@ describe('limited casters', () => {
     expect(mainCasting(build('magus', 5))?.keyAbility).toBe('int');
     expect(mainCasting(build('magus', 5))?.tradition).toBe('arcane');
   });
-  it('magus gains studious bonus slots at the tier rank (L7 -> rank 2)', () => {
+  it('magus gains two studious slots at the tier rank (L7 -> rank 2), restricted to the studious list', () => {
+    // Batch 29: the studious slots are RESTRICTED slots fed by classFeatures/studious-spells'
+    // spellSlotBonus.restricted ladder (gecko grip, sure strike, water breathing at 7th), no longer an
+    // auto-prepared hard-coded pair in the ordinary rank-2 list.
     const e = mainCasting(build('magus', 7));
-    const r2 = e?.prepared?.[2]?.map((s) => s.spellId) ?? [];
-    expect(r2).toContain('sure-strike');
+    const studious = (e?.restrictedSlots ?? []).filter((s) => s.rank === 2);
+    expect(studious).toHaveLength(2);
+    expect(studious[0]?.allowed).toEqual(expect.arrayContaining(['sure-strike', 'gecko-grip', 'water-breathing']));
   });
   it('summoner has the link spells as focus spells with a pool of 1', () => {
     const ch = build('summoner', 5);

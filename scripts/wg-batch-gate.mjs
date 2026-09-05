@@ -431,8 +431,13 @@ const valuesOut = run('wg-values.mjs', ['--verbose']);
     let note = '';
     for (const m of body.matchAll(/\/\*([\s\S]*?)\*\/|^\s{2}(?:['"]([a-z0-9|:-]+)['"]|([a-z][a-zA-Z0-9-]*))\s*:\s*\[([^\]]*)\]/gm)) {
       if (m[1] !== undefined) {
-        const text = m[1].replace(/^[\s*]+/gm, ' ').replace(/\s+/g, ' ').trim();
-        if (!text.startsWith('---')) note = text; // "---- batch NNN ----" section headers are not evidence
+        const raw = m[1].replace(/^[\s*]+/gm, ' ').replace(/\s+/g, ' ').trim();
+        /* "---- batch NNN ----" section headers are not evidence — but batch 29 wrote the header INSIDE
+         * the same comment block as a settle's evidence, and discarding the whole block made the gate
+         * print the PREVIOUS entry's evidence under weapon-specialization and path-to-perfection.
+         * Strip the header and keep whatever follows it; a header-only block still changes nothing. */
+        const text = raw.replace(/^-{3,}[^-]*?-{3,}\s*/, '').trim();
+        if (text) note = text;
         continue;
       }
       const id = m[2] ?? m[3];

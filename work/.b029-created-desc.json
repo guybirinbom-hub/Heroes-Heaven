@@ -1,0 +1,14 @@
+[
+ {
+  "category": "items",
+  "id": "spined-shield-spikes",
+  "field": "description",
+  "value": "The five jagged spines that project from the surface of a spined shield. They are +1 striking shield spikes, and they come with the shield rather than being bought separately.\n\nWhen the shield's wielder Activates Fire Spine, one spine is shot at a target: the fired spine uses these statistics, but it is a martial ranged weapon with a range increment of 120 feet. A spine also snaps off for every 6 damage the shield would take after Hardness when its wielder uses Shield Block, reducing that damage by 6; when all five spines are gone you lose the ability to attack with them until they regenerate the next day."
+ },
+ {
+  "category": "items",
+  "id": "spined-shield-fire-spine",
+  "field": "description",
+  "value": "One of the five spines of a spined shield, shot at a target with the shield's Fire Spine activation (one action, manipulate). The fired spine uses the shield spikes' statistics (+1 striking, 1d6 piercing) but is a martial ranged weapon with a range increment of 120 feet. Each spine fired is spent until the shield regrows them the next day, and a shield with no spines left cannot use its spike attacks."
+ }
+]

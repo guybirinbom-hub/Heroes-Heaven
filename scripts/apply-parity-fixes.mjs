@@ -85,7 +85,10 @@ for (const f of findings) {
 
 const seen = new Map();
 for (const { from, row } of plannedRows) {
-  const key = `${row.category}/${row.id}/${row.field ?? '(create)'}`;
+  // The collision key carries the row's `path` (the overlay applier honours it — scripts/lib/apply-backfill.mjs
+  // backfillTarget): eight batch-29 rows each set `spellSlotBonus` on a DIFFERENT magus subclass option via
+  // path ["subclass","options","id=…"] and were refused as one collision when the key ignored the path.
+  const key = `${row.category}/${row.id}/${row.path?.length ? row.path.join('.') + '.' : ''}${row.field ?? '(create)'}`;
   if (seen.has(key)) problems.push(`${from} and ${seen.get(key)} both write ${key} — resolve by hand`);
   else seen.set(key, from);
 }
@@ -113,7 +116,10 @@ if (plannedRows.length) {
   let added = 0;
   let replaced = 0;
   for (const { row } of plannedRows) {
-    const at = all.findIndex((r) => r.category === row.category && r.id === row.id && r.field === row.field);
+    // Path-aware, like the collision key above: eight rows setting the same field on different magus
+    // subclass options (path ["subclass","options","id=…"]) used to REPLACE each other here, leaving one.
+    const samePath = (a, b) => JSON.stringify(a ?? []) === JSON.stringify(b ?? []);
+    const at = all.findIndex((r) => r.category === row.category && r.id === row.id && r.field === row.field && samePath(r.path, row.path));
     if (at >= 0) { all[at] = row; replaced++; } else { all.push(row); added++; }
   }
   writeBackfill(ROOT, all);

@@ -241,7 +241,7 @@ describe('the chassis fallback — delivery judged on the built character', () =
 });
 
 import { execFileSync } from 'node:child_process';
-import { readFileSync, rmSync } from 'node:fs';
+import { readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 /**
@@ -648,3 +648,160 @@ describe('batch 28 — the comparers read a class chassis question', () => {
     rmSync(join(CLI_ROOT, outFile), { force: true });
   }, 120_000);
 });
+
+/*
+ * BATCH 29 — the comparers read the carriers that are NOT on the record.
+ *
+ * Twelve of the batch's findings were one instrument bug wearing different hats: a comparer read a
+ * record's own fields and reported the mechanic as missing while the carrier sat one file over. Three
+ * teaches answer them, and each is pinned here by RUNNING the comparer, because a teach is exactly the
+ * kind of change that silently narrows again:
+ *
+ *   1. The per-class ladder in src/rules/advancement.ts is the ONE place a proficiency rank may be
+ *      raised, and every row names the feature it belongs to. Both wg-diff (the kind) and wg-values
+ *      (the rank) read it now.
+ *   2. `theirAssertions` keeps EVERY value their row asserts about a track, not the last one written.
+ *   3. A pick whose state is a BuildState field, and a mechanic keyed by class rather than by record,
+ *      are named one by one in OFF_RECORD_CARRIERS / OFF_RECORD_OPTIONS with their reader.
+ *
+ * `--raw` is the discriminator throughout: it bypasses the settle registries, so a record that stays
+ * quiet under it is quiet because of a CARRIER, and one that comes back is quiet because of a settle.
+ */
+describe('batch 29 — the comparers read the carriers that live off the record', () => {
+  it('wg-diff credits the class advancement table, the off-record pickers and a bindValue on a Speed', () => {
+    const out = 'work/.wg-diff-b029-test.json';
+    const load = (args: string[]) => {
+      runScript('wg-diff.mjs', [...args, '--out', out]);
+      const diff = JSON.parse(readFileSync(join(CLI_ROOT, out), 'utf8')) as { theyOnly: { id: string; missing: string[] }[] };
+      rmSync(join(CLI_ROOT, out), { force: true });
+      return new Map(diff.theyOnly.map((r) => [r.id, r.missing]));
+    };
+    const theyOnly = load([]);
+    /*
+     * The advancement table. Natural Reflexes prints *"Your proficiency rank for Reflex saves increases
+     * to master"* and carries only the success-to-crit half on its record; the rank is
+     * `{ level: 7, track: 'reflex', rank: 'master', source: 'natural-reflexes' }` in the ranger table.
+     * Alchemical Weapon Expertise is the weapon-track twin (alchemist L7 unarmed/simple/BOMB expert),
+     * and Perception Mastery the perception one.
+     */
+    for (const id of ['natural-reflexes', 'will-expertise', 'alchemical-weapon-expertise', 'perception-mastery', 'battle-hardened']) {
+      expect(theyOnly.get(id)).toBeUndefined();
+    }
+    /* The off-record pickers: an extraChoices widening the class does not declare on this feature, a
+     * BuildState pick with its own picker, and a level ladder keyed by class. */
+    for (const id of ['third-apparition', 'implement-adept', 'path-to-perfection', 'studious-spells']) {
+      expect(theyOnly.get(id)).toBeUndefined();
+    }
+    /* Quick Swim: their `conditional … bindValue SPEED_SWIM <- CHARACTER.SPEED` is a Speed GRANT, which
+     * our `speedsIf` carries — it used to read as a `modifiesGrant` we were missing. */
+    expect(theyOnly.get('quick-swim')).toBeUndefined();
+    /*
+     * ⚠ NOTHING LAUNDERED. Celestial Form's bindValue is re-laned, not excused: the record still
+     * reports, now naming the kind it really lacks.
+     */
+    expect(theyOnly.get('celestial-form')).toEqual(['speed']);
+    /*
+     * ⚠ AND THE PROSE-NOTE GATE IS UNCHANGED. Widening it so Aeon Stone (Vital Amplification) could
+     * drop its value-less `hp` half was measured and reverted in the same batch: it also silenced Icy
+     * Apotheosis and Crushing Bough Bracers, both of which carry a printed rule we do not model. The
+     * stone's two halves then closed on their own terms: the void resistance is DATA now
+     * (`resonant.resistances`, read as kind 'defense'), and the `hp` half is a SETTLE with evidence —
+     * their MAX_HEALTH_BONUS ops carry no value, and print's healing amplification is a percentage on
+     * healing received, not a max-HP stat. Under --raw the settle lifts and exactly the hp half is back.
+     */
+    expect(theyOnly.get('aeon-stone-vital-amplification')).toBeUndefined();
+    expect(load(['--raw']).get('aeon-stone-vital-amplification')).toEqual(['hp']);
+
+    /*
+     * THE DISCRIMINATOR. None of the eight taught ids is in VERIFIED_EQUIVALENT, so bypassing the settle
+     * registry must leave every one of them quiet — the carriers are what answer them. Weapon
+     * Specialization IS a settle (a damage step derived in derive.ts, which no key scan can find), so it
+     * must come straight back, which is what proves the comparer still reports at all.
+     */
+    const raw = load(['--raw']);
+    for (const id of ['natural-reflexes', 'will-expertise', 'alchemical-weapon-expertise', 'quick-swim',
+      'third-apparition', 'implement-adept', 'path-to-perfection', 'studious-spells']) {
+      expect(raw.get(id)).toBeUndefined();
+    }
+    expect(raw.get('weapon-specialization')).toEqual(['weapon']);
+    expect(raw.get('greater-weapon-specialization')).toEqual(['weapon']);
+  }, 180_000);
+
+  it('wg-values reads the advancement rank and every assertion their row makes about one track', () => {
+    /*
+     * Their row asserts `adjValue SAVE_REFLEX = "M"` and ours used to answer only with the record's
+     * `degreeShifts`, printing `DIFFERENT save|reflex theirs=master ours=degree-shift`. `--raw` proves
+     * the advancement table is what answers it now and not a SETTLED_VALUES entry.
+     */
+    expect(runScript('wg-values.mjs', ['--ids', 'natural-reflexes,will-expertise,battlefield-surveyor', '--raw']))
+      .toMatch(/compared 3 records with at least one comparable value; 3 agree on every one/);
+    /*
+     * …and Path to Perfection is the shape the table CANNOT express — a rank the player's pick raises,
+     * applied in build.ts rather than on any ladder — so it is a settle, and without the registry the
+     * comparer finds all three saves again. Their `select` flattens every branch onto the record; ours
+     * masters exactly the one save that was chosen.
+     */
+    const p2p = runScript('wg-values.mjs', ['--ids', 'path-to-perfection', '--raw']);
+    for (const save of ['fortitude', 'reflex', 'will']) {
+      expect(p2p).toMatch(new RegExp(`MISSING\\s+save\\|${save}\\s+theirs=master`));
+    }
+    expect(runScript('wg-values.mjs', ['--ids', 'path-to-perfection'])).toMatch(/0 records with at least one value to adjudicate/);
+    /*
+     * EVERY assertion, not the last one written. The Razmiri Mask's three grades collapse onto one of
+     * their rows, so it asserts +2, +3 AND +4 to Deception on the same track; `theirAssertions` used to
+     * keep whichever was written last and the record read as clean against a single number. All three
+     * are compared now — and answered, because ours splits the printed page (one aonId) across four
+     * graded records carrying exactly +1/+2/+3/+4, and wg-values credits every record sharing the
+     * aonId (a reader, so it holds under --raw too). Battlefield Surveyor above is the same
+     * every-assertion shape (their PERCEPTION master rank AND their +2 for initiative are both answered).
+     */
+    const mask = runScript('wg-values.mjs', ['--ids', 'razmiri-mask', '--raw']);
+    expect(mask).toMatch(/compared 1 records with at least one comparable value; 1 agree on every one/);
+  }, 180_000);
+
+  it('a class ladder that stops SHORT of the printed rank is still reported', () => {
+    /*
+     * ⚠ THE ANTI-LAUNDERING CHECK for the advancement teach above. Reading the table is only legitimate
+     * because the rank is asserted AS IT STANDS: if wg-values ever credited the presence of a row rather
+     * than its rank, every one of the ~60 records the teach quieted would go unread. Proved by running
+     * the comparer against a STUNTED copy of the ladder — Natural Reflexes prints *"increases to
+     * master"*, Battle Hardened *"Fortitude … master"*, Will Expertise *"Will … expert"* — each demoted
+     * one rung. All three must report DIFFERENT against WG's row, under `--raw` so no settle is involved.
+     */
+    const stunted = 'work/.wg-advancement-stunted-test.txt';
+    const real = readFileSync(join(CLI_ROOT, 'src/rules/advancement.ts'), 'utf8');
+    writeFileSync(join(CLI_ROOT, stunted), real
+      .replace(/rank: 'master', source: 'natural-reflexes'/g, "rank: 'expert', source: 'natural-reflexes'")
+      .replace(/rank: 'master', source: 'battle-hardened'/g, "rank: 'expert', source: 'battle-hardened'")
+      .replace(/rank: 'expert', source: 'will-expertise'/g, "rank: 'trained', source: 'will-expertise'"));
+    try {
+      const out = runScript('wg-values.mjs',
+        ['--ids', 'natural-reflexes,battle-hardened,will-expertise', '--raw', '--advancement', stunted]);
+      expect(out).toMatch(/DIFFERENT\s+save\|reflex\s+theirs=master/);
+      expect(out).toMatch(/DIFFERENT\s+save\|fortitude\s+theirs=master/);
+      expect(out).toMatch(/DIFFERENT\s+save\|will\s+theirs=expert/);
+      expect(out).toMatch(/3 records with at least one value to adjudicate/);
+    } finally {
+      rmSync(join(CLI_ROOT, stunted), { force: true });
+    }
+  }, 120_000);
+
+  it('wg-identity reads a restricted-slot spell list and a save pick held on BuildState', () => {
+    /*
+     * `spellSlotBonus.restricted` is the carrier for "extra slots that may only hold these spells", and
+     * their side has no verb for it — they write one `giveSpell` per spell. Conjurer of Corpses is the
+     * shipped case (`restricted.spells: ['summon-undead']` against their giveSpell), and it had been
+     * hand-settled for exactly that reason; the settle is deleted, so `--raw` is now the whole proof.
+     */
+    expect(runScript('wg-identity.mjs', ['--ids', 'conjurer-of-corpses', '--raw', '--verbose']))
+      .toMatch(/^ok\s+conjurer-of-corpses\s+\(1 identities agree\)/m);
+    /*
+     * …and Path to Perfection's three option titles (Fortitude / Reflex / Will), which no field on the
+     * record offers — the picker is keyed on the feature id in Builder.tsx and its answer lives on
+     * BuildState. Also under `--raw`: OFF_RECORD_OPTIONS is a carrier, not a settle.
+     */
+    expect(runScript('wg-identity.mjs', ['--ids', 'path-to-perfection', '--raw', '--verbose']))
+      .toMatch(/^ok\s+path-to-perfection\s+\(3 identities agree\)/m);
+  }, 120_000);
+});
+
