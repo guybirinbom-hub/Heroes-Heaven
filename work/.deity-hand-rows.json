@@ -1,0 +1,42 @@
+{
+ "findings": [
+  {
+   "id": "alocer#aonId",
+   "backfillRows": [
+    { "category": "deities", "id": "alocer", "field": "aonId", "value": "deity-732", "why": "AoN deity-732 is Alocer (One-Shot 2: Dinner at Lionlodge) — the record shipped without a page link, so no mirror check could reach it" }
+   ],
+   "note": "deity sweep: page link"
+  },
+  {
+   "id": "atheists-and-free-agents#aonId",
+   "backfillRows": [
+    { "category": "deities", "id": "atheists-and-free-agents", "field": "aonId", "value": "deity-297", "why": "AoN deity-297 'Atheism' (Divine Mysteries pg. 251, legacy twin deity-21 Core Rulebook pg. 440) is the printed entry this record carries under the section's Foundry title" }
+   ],
+   "note": "deity sweep: page link; the name stays the book's section title"
+  },
+  {
+   "id": "chinostes#split",
+   "backfillRows": [
+    { "category": "deities", "id": "chinostes", "field": "name", "value": "Chinostes (Redeemer)", "why": "AoN prints TWO Chinostes entries (Pathfinder #216 pg. 76): deity-700 'Chinostes (Redeemer)' — heal font, can choose holy — and deity-701 'Chinostes (Nightwarden)' — harm font, can choose unholy. Ours merged them into one record with both fonts; this record keeps the Redeemer page it links (deity-700), the Nightwarden becomes its own record" },
+    { "category": "deities", "id": "chinostes-nightwarden", "create": true, "value": {
+      "id": "chinostes-nightwarden",
+      "name": "Chinostes (Nightwarden)",
+      "traits": [],
+      "rarity": "common",
+      "source": { "book": "Pathfinder #216: The Acropolis Pyre", "license": "ORC" },
+      "domains": ["cities", "death", "luck", "sorrow"],
+      "divineFont": ["harm"],
+      "favoredWeapons": ["dagger"],
+      "skill": "acrobatics",
+      "edition": "remaster",
+      "spells": ["jump", "gecko-grip", "true-target"],
+      "aonId": "deity-701",
+      "effectChoices": [
+       { "id": "sanctification", "prompt": "Sanctification", "options": [ { "value": "unholy", "label": "Unholy" }, { "value": "none", "label": "None", "note": "You take no sanctification." } ] }
+      ]
+     }, "why": "AoN deity-701 'Chinostes (Nightwarden)' (Pathfinder #216: The Acropolis Pyre pg. 76): Divine Font Harm, Divine Skill Acrobatics, Favored Weapon Dagger, Domains Cities/Death/Luck/Sorrow, Sanctification can choose unholy, Cleric Spells Jump / Gecko Grip / True Target — a separate printed deity entry ours had folded into the Redeemer record" }
+   ],
+   "note": "deity sweep: the two printed aspects of Chinostes are two records; prose for the created one is in work/.deity-hand-desc.json"
+  }
+ ]
+}

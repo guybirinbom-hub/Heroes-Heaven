@@ -59,7 +59,7 @@ describe('Blessed Blood (Sorcerer)', () => {
     });
 
     it('adds exactly the three the player picked', () => {
-      const three = ['force-barrage', 'levitate', 'disjunction'];
+      const three = ['force-barrage', 'levitate', 'detonate-magic'];
       expect(withPicks(picks(...three)).spellListAdditions?.['*']).toEqual(three);
     });
 

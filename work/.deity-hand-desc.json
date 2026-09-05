@@ -1,0 +1,11 @@
+{
+ "findings": [
+  {
+   "id": "chinostes-nightwarden#prose",
+   "backfillRows": [
+    { "category": "deities", "id": "chinostes-nightwarden", "field": "description", "value": "Chinostes was a saddle-maker of Pol-Reanphoros who never sought divinity: it found him when he took up his tack knife against a raiding warlord and won. As a hero-god he kept protecting Reanpharos until a vampire bested him and dragged him into undeath. He remains a folk hero at heart, hunting the other terrors of the night from the rooftops — and now and then feeding on an unwary citizen. His cult has split: the Nightwardens worship him as a pragmatically violent folk hero who does what must be done; the Redeemers mourn what he became and hope to restore him.\n\n**Areas of Concern** tragedy and sacrifice\n\n**Edicts** aid your neighbors, sacrifice others for the greater good, leave cryptic calling cards of your actions\n\n**Anathema** disparage others for seeking terrible power to achieve laudable goals\n\n**Religious Symbol** heart pierced by two swords\n\n**Sacred Animal** horse\n\n**Sacred Colors** black, white\n\n**Divine Font** harm\n\n**Divine Skill** Acrobatics\n\n**Favored Weapon** dagger\n\n**Domains** cities, death, luck, sorrow\n\n**Sanctification** can choose unholy\n\n**Cleric Spells** 1st: jump, 2nd: gecko grip, 7th: true target", "why": "prose for the created Nightwarden record, in our words from AoN deity-701 (Pathfinder #216 pg. 76), with the same stat-block labels every deity description carries" }
+   ],
+   "note": "applied AFTER the create row has been replayed into core.json (the applier checks the target exists)"
+  }
+ ]
+}

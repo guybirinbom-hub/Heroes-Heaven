@@ -41719,13 +41719,18 @@
       "label": "Holy"
      },
      {
+      "value": "unholy",
+      "label": "Unholy"
+     },
+     {
       "value": "none",
       "label": "None",
       "note": "You take no sanctification."
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-198 (The Godclaw) prints sanctification \"can choose holy or unholy\""
  },
  {
   "category": "deities",
@@ -41741,13 +41746,18 @@
       "label": "Holy"
      },
      {
+      "value": "unholy",
+      "label": "Unholy"
+     },
+     {
       "value": "none",
       "label": "None",
       "note": "You take no sanctification."
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-202 (Sangpotshi) prints sanctification \"can choose holy or unholy\""
  },
  {
   "category": "deities",
@@ -42225,13 +42235,18 @@
       "label": "Holy"
      },
      {
+      "value": "unholy",
+      "label": "Unholy"
+     },
+     {
       "value": "none",
       "label": "None",
       "note": "You take no sanctification."
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-271 (The Perplexing Jest) prints sanctification \"can choose holy or unholy\""
  },
  {
   "category": "deities",
@@ -42269,13 +42284,18 @@
       "label": "Holy"
      },
      {
+      "value": "unholy",
+      "label": "Unholy"
+     },
+     {
       "value": "none",
       "label": "None",
       "note": "You take no sanctification."
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-277 (Abadar) prints sanctification \"can choose holy or unholy\""
  },
  {
   "category": "deities",
@@ -42291,13 +42311,18 @@
       "label": "Holy"
      },
      {
+      "value": "unholy",
+      "label": "Unholy"
+     },
+     {
       "value": "none",
       "label": "None",
       "note": "You take no sanctification."
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-279 (Calistria) prints sanctification \"can choose holy or unholy\""
  },
  {
   "category": "deities",
@@ -42379,13 +42404,18 @@
       "label": "Holy"
      },
      {
+      "value": "unholy",
+      "label": "Unholy"
+     },
+     {
       "value": "none",
       "label": "None",
       "note": "You take no sanctification."
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-283 (Gorum) prints sanctification \"can choose holy or unholy\""
  },
  {
   "category": "deities",
@@ -42401,13 +42431,18 @@
       "label": "Holy"
      },
      {
+      "value": "unholy",
+      "label": "Unholy"
+     },
+     {
       "value": "none",
       "label": "None",
       "note": "You take no sanctification."
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-286 (Irori) prints sanctification \"can choose holy or unholy\""
  },
  {
   "category": "deities",
@@ -42445,13 +42480,18 @@
       "label": "Holy"
      },
      {
+      "value": "unholy",
+      "label": "Unholy"
+     },
+     {
       "value": "none",
       "label": "None",
       "note": "You take no sanctification."
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-288 (Nethys) prints sanctification \"can choose holy or unholy\""
  },
  {
   "category": "deities",
@@ -42621,13 +42661,18 @@
       "label": "Holy"
      },
      {
+      "value": "unholy",
+      "label": "Unholy"
+     },
+     {
       "value": "none",
       "label": "None",
       "note": "You take no sanctification."
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-300 (Mugura and Nrithu) prints sanctification \"can choose holy or unholy\""
  },
  {
   "category": "deities",
@@ -42665,13 +42710,18 @@
       "label": "Holy"
      },
      {
+      "value": "unholy",
+      "label": "Unholy"
+     },
+     {
       "value": "none",
       "label": "None",
       "note": "You take no sanctification."
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-302 (Srikalis, Sritaming, and Sribaril) prints sanctification \"can choose holy or unholy\""
  },
  {
   "category": "deities",
@@ -42749,8 +42799,8 @@
     "prompt": "Sanctification",
     "options": [
      {
-      "value": "holy",
-      "label": "Holy"
+      "value": "unholy",
+      "label": "Unholy"
      },
      {
       "value": "none",
@@ -42759,7 +42809,8 @@
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-307 (Hei Feng) prints sanctification \"can choose unholycan choose holy if you are a tengu\""
  },
  {
   "category": "deities",
@@ -42841,13 +42892,18 @@
       "label": "Holy"
      },
      {
+      "value": "unholy",
+      "label": "Unholy"
+     },
+     {
       "value": "none",
       "label": "None",
       "note": "You take no sanctification."
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-313 (Nalinivati) prints sanctification \"can choose holy or unholy\""
  },
  {
   "category": "deities",
@@ -42907,13 +42963,18 @@
       "label": "Holy"
      },
      {
+      "value": "unholy",
+      "label": "Unholy"
+     },
+     {
       "value": "none",
       "label": "None",
       "note": "You take no sanctification."
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-316 (Sun Wukong) prints sanctification \"can choose holy or unholy\""
  },
  {
   "category": "deities",
@@ -42951,13 +43012,18 @@
       "label": "Holy"
      },
      {
+      "value": "unholy",
+      "label": "Unholy"
+     },
+     {
       "value": "none",
       "label": "None",
       "note": "You take no sanctification."
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-318 (Yaezhing) prints sanctification \"can choose holy or unholy\""
  },
  {
   "category": "deities",
@@ -42971,15 +43037,11 @@
      {
       "value": "holy",
       "label": "Holy"
-     },
-     {
-      "value": "none",
-      "label": "None",
-      "note": "You take no sanctification."
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-319 (Yamatsumi) prints sanctification \"must choose holy\""
  },
  {
   "category": "deities",
@@ -43017,13 +43079,18 @@
       "label": "Holy"
      },
      {
+      "value": "unholy",
+      "label": "Unholy"
+     },
+     {
       "value": "none",
       "label": "None",
       "note": "You take no sanctification."
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-326 (Arazni) prints sanctification \"can choose holy or unholy\""
  },
  {
   "category": "deities",
@@ -43083,13 +43150,18 @@
       "label": "Holy"
      },
      {
+      "value": "unholy",
+      "label": "Unholy"
+     },
+     {
       "value": "none",
       "label": "None",
       "note": "You take no sanctification."
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-332 (Besmara) prints sanctification \"can choose holy or unholy\""
  },
  {
   "category": "deities",
@@ -43105,13 +43177,18 @@
       "label": "Holy"
      },
      {
+      "value": "unholy",
+      "label": "Unholy"
+     },
+     {
       "value": "none",
       "label": "None",
       "note": "You take no sanctification."
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-333 (Brigh) prints sanctification \"can choose holy or unholy\""
  },
  {
   "category": "deities",
@@ -43127,13 +43204,18 @@
       "label": "Holy"
      },
      {
+      "value": "unholy",
+      "label": "Unholy"
+     },
+     {
       "value": "none",
       "label": "None",
       "note": "You take no sanctification."
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-335 (Casandalee) prints sanctification \"can choose holy or unholy\""
  },
  {
   "category": "deities",
@@ -43215,13 +43297,18 @@
       "label": "Holy"
      },
      {
+      "value": "unholy",
+      "label": "Unholy"
+     },
+     {
       "value": "none",
       "label": "None",
       "note": "You take no sanctification."
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-342 (Genzaeri) prints sanctification \"can choose holy or unholy\""
  },
  {
   "category": "deities",
@@ -43479,13 +43566,18 @@
       "label": "Holy"
      },
      {
+      "value": "unholy",
+      "label": "Unholy"
+     },
+     {
       "value": "none",
       "label": "None",
       "note": "You take no sanctification."
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-360 (Zjar-Tovan) prints sanctification \"can choose holy or unholy\""
  },
  {
   "category": "deities",
@@ -43523,13 +43615,18 @@
       "label": "Holy"
      },
      {
+      "value": "unholy",
+      "label": "Unholy"
+     },
+     {
       "value": "none",
       "label": "None",
       "note": "You take no sanctification."
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-371 (The Readied Strike) prints sanctification \"can choose holy or unholy\""
  },
  {
   "category": "deities",
@@ -43699,13 +43796,18 @@
       "label": "Holy"
      },
      {
+      "value": "unholy",
+      "label": "Unholy"
+     },
+     {
       "value": "none",
       "label": "None",
       "note": "You take no sanctification."
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-383 (Talons of the Godclaw) prints sanctification \"can choose holy or unholy\""
  },
  {
   "category": "deities",
@@ -43939,15 +44041,11 @@
      {
       "value": "unholy",
       "label": "Unholy"
-     },
-     {
-      "value": "none",
-      "label": "None",
-      "note": "You take no sanctification."
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-417 (Cixyron) prints sanctification \"must choose unholy\""
  },
  {
   "category": "deities",
@@ -44821,13 +44919,18 @@
       "label": "Holy"
      },
      {
+      "value": "unholy",
+      "label": "Unholy"
+     },
+     {
       "value": "none",
       "label": "None",
       "note": "You take no sanctification."
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-492 (Fandarra) prints sanctification \"can choose holy or unholy\""
  },
  {
   "category": "deities",
@@ -44905,8 +45008,8 @@
     "prompt": "Sanctification",
     "options": [
      {
-      "value": "holy",
-      "label": "Holy"
+      "value": "unholy",
+      "label": "Unholy"
      },
      {
       "value": "none",
@@ -44915,7 +45018,8 @@
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-497 (Thremyr) prints sanctification \"can choose unholy\""
  },
  {
   "category": "deities",
@@ -45367,8 +45471,8 @@
     "prompt": "Sanctification",
     "options": [
      {
-      "value": "holy",
-      "label": "Holy"
+      "value": "unholy",
+      "label": "Unholy"
      },
      {
       "value": "none",
@@ -45377,7 +45481,8 @@
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-582 (Chavazvug) prints sanctification \"can choose unholy\""
  },
  {
   "category": "deities",
@@ -45587,8 +45692,8 @@
     "prompt": "Sanctification",
     "options": [
      {
-      "value": "holy",
-      "label": "Holy"
+      "value": "unholy",
+      "label": "Unholy"
      },
      {
       "value": "none",
@@ -45597,7 +45702,8 @@
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-594 (Charg) prints sanctification \"can choose unholy\""
  },
  {
   "category": "deities",
@@ -45833,13 +45939,18 @@
       "label": "Holy"
      },
      {
+      "value": "unholy",
+      "label": "Unholy"
+     },
+     {
       "value": "none",
       "label": "None",
       "note": "You take no sanctification."
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-612 (Chamidu) prints sanctification \"can choose holy or unholy\""
  },
  {
   "category": "deities",
@@ -45851,8 +45962,8 @@
     "prompt": "Sanctification",
     "options": [
      {
-      "value": "holy",
-      "label": "Holy"
+      "value": "unholy",
+      "label": "Unholy"
      },
      {
       "value": "none",
@@ -45861,7 +45972,8 @@
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-614 (Diomazul) prints sanctification \"can choose unholy\""
  },
  {
   "category": "deities",
@@ -45943,13 +46055,18 @@
       "label": "Holy"
      },
      {
+      "value": "unholy",
+      "label": "Unholy"
+     },
+     {
       "value": "none",
       "label": "None",
       "note": "You take no sanctification."
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-619 (Raumya) prints sanctification \"can choose holy or unholy\""
  },
  {
   "category": "deities",
@@ -45965,13 +46082,18 @@
       "label": "Holy"
      },
      {
+      "value": "unholy",
+      "label": "Unholy"
+     },
+     {
       "value": "none",
       "label": "None",
       "note": "You take no sanctification."
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-620 (Ravithra) prints sanctification \"can choose holy or unholy\""
  },
  {
   "category": "deities",
@@ -45987,13 +46109,18 @@
       "label": "Holy"
      },
      {
+      "value": "unholy",
+      "label": "Unholy"
+     },
+     {
       "value": "none",
       "label": "None",
       "note": "You take no sanctification."
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-621 (Suyuddha) prints sanctification \"can choose holy or unholy\""
  },
  {
   "category": "deities",
@@ -46031,13 +46158,18 @@
       "label": "Holy"
      },
      {
+      "value": "unholy",
+      "label": "Unholy"
+     },
+     {
       "value": "none",
       "label": "None",
       "note": "You take no sanctification."
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-624 (Etaris) prints sanctification \"can choose holy or unholy\""
  },
  {
   "category": "deities",
@@ -46065,23 +46197,8 @@
   "category": "deities",
   "id": "rokoga-gin",
   "field": "effectChoices",
-  "value": [
-   {
-    "id": "sanctification",
-    "prompt": "Sanctification",
-    "options": [
-     {
-      "value": "holy",
-      "label": "Holy"
-     },
-     {
-      "value": "none",
-      "label": "None",
-      "note": "You take no sanctification."
-     }
-    ]
-   }
-  ]
+  "value": null,
+  "why": "AoN deity-629 (Rokoga Gin) prints sanctification \"none\""
  },
  {
   "category": "deities",
@@ -46295,13 +46412,18 @@
       "label": "Holy"
      },
      {
+      "value": "unholy",
+      "label": "Unholy"
+     },
+     {
       "value": "none",
       "label": "None",
       "note": "You take no sanctification."
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-641 (Set) prints sanctification \"can choose holy or unholy\""
  },
  {
   "category": "deities",
@@ -46317,13 +46439,18 @@
       "label": "Holy"
      },
      {
+      "value": "unholy",
+      "label": "Unholy"
+     },
+     {
       "value": "none",
       "label": "None",
       "note": "You take no sanctification."
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-642 (Sobek) prints sanctification \"can choose holy or unholy\""
  },
  {
   "category": "deities",
@@ -46535,15 +46662,11 @@
      {
       "value": "unholy",
       "label": "Unholy"
-     },
-     {
-      "value": "none",
-      "label": "None",
-      "note": "You take no sanctification."
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-660 (Husk) prints sanctification \"must choose unholy\""
  },
  {
   "category": "deities",
@@ -46647,13 +46770,18 @@
       "label": "Holy"
      },
      {
+      "value": "unholy",
+      "label": "Unholy"
+     },
+     {
       "value": "none",
       "label": "None",
       "note": "You take no sanctification."
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-676 (Kalekot) prints sanctification \"can choose holy or unholy\""
  },
  {
   "category": "deities",
@@ -46669,13 +46797,18 @@
       "label": "Holy"
      },
      {
+      "value": "unholy",
+      "label": "Unholy"
+     },
+     {
       "value": "none",
       "label": "None",
       "note": "You take no sanctification."
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-678 (Lubaiko) prints sanctification \"can choose holy or unholy\""
  },
  {
   "category": "deities",
@@ -46691,13 +46824,18 @@
       "label": "Holy"
      },
      {
+      "value": "unholy",
+      "label": "Unholy"
+     },
+     {
       "value": "none",
       "label": "None",
       "note": "You take no sanctification."
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-679 (Luhar) prints sanctification \"can choose holy or unholy\""
  },
  {
   "category": "deities",
@@ -46973,8 +47111,8 @@
     "prompt": "Sanctification",
     "options": [
      {
-      "value": "holy",
-      "label": "Holy"
+      "value": "unholy",
+      "label": "Unholy"
      },
      {
       "value": "none",
@@ -46983,7 +47121,8 @@
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-706 (Ytildos) prints sanctification \"can choose unholy\""
  },
  {
   "category": "deities",
@@ -47065,13 +47204,18 @@
       "label": "Holy"
      },
      {
+      "value": "unholy",
+      "label": "Unholy"
+     },
+     {
       "value": "none",
       "label": "None",
       "note": "You take no sanctification."
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-711 (Deshto) prints sanctification \"can choose holy or unholy\""
  },
  {
   "category": "deities",
@@ -47153,13 +47297,18 @@
       "label": "Holy"
      },
      {
+      "value": "unholy",
+      "label": "Unholy"
+     },
+     {
       "value": "none",
       "label": "None",
       "note": "You take no sanctification."
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-718 (Otilaz) prints sanctification \"can choose holy or unholy\""
  },
  {
   "category": "deities",
@@ -47175,13 +47324,18 @@
       "label": "Holy"
      },
      {
+      "value": "unholy",
+      "label": "Unholy"
+     },
+     {
       "value": "none",
       "label": "None",
       "note": "You take no sanctification."
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-719 (Sarshallatu) prints sanctification \"can choose holy or unholy\""
  },
  {
   "category": "deities",
@@ -47197,13 +47351,18 @@
       "label": "Holy"
      },
      {
+      "value": "unholy",
+      "label": "Unholy"
+     },
+     {
       "value": "none",
       "label": "None",
       "note": "You take no sanctification."
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-720 (Turvu) prints sanctification \"can choose holy or unholy\""
  },
  {
   "category": "deities",
@@ -47241,46 +47400,6 @@
       "label": "Holy"
      },
      {
-      "value": "none",
-      "label": "None",
-      "note": "You take no sanctification."
-     }
-    ]
-   }
-  ]
- },
- {
-  "category": "deities",
-  "id": "essence-dancers",
-  "field": "effectChoices",
-  "value": [
-   {
-    "id": "sanctification",
-    "prompt": "Sanctification",
-    "options": [
-     {
-      "value": "holy",
-      "label": "Holy"
-     },
-     {
-      "value": "none",
-      "label": "None",
-      "note": "You take no sanctification."
-     }
-    ]
-   }
-  ]
- },
- {
-  "category": "deities",
-  "id": "alocer",
-  "field": "effectChoices",
-  "value": [
-   {
-    "id": "sanctification",
-    "prompt": "Sanctification",
-    "options": [
-     {
       "value": "unholy",
       "label": "Unholy"
      },
@@ -47291,7 +47410,22 @@
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-722 (The Anointing of Kings) prints sanctification \"can choose holy or unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "essence-dancers",
+  "field": "effectChoices",
+  "value": null,
+  "why": "AoN deity-723 (Essence Dancers) prints sanctification \"none\""
+ },
+ {
+  "category": "deities",
+  "id": "alocer",
+  "field": "effectChoices",
+  "value": null,
+  "why": "AoN deity-732 (Alocer) prints sanctification \"none\""
  },
  {
   "category": "deities",
@@ -47307,13 +47441,18 @@
       "label": "Holy"
      },
      {
+      "value": "unholy",
+      "label": "Unholy"
+     },
+     {
       "value": "none",
       "label": "None",
       "note": "You take no sanctification."
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-407 (Lissala) prints sanctification \"can choose holy or unholy\""
  },
  {
   "category": "deities",
@@ -47351,13 +47490,18 @@
       "label": "Holy"
      },
      {
+      "value": "unholy",
+      "label": "Unholy"
+     },
+     {
       "value": "none",
       "label": "None",
       "note": "You take no sanctification."
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN deity-322 (Followers of Fate) prints sanctification \"can choose holy or unholy\""
  },
  {
   "category": "feats",
@@ -57808,8 +57952,9 @@
   "id": "the-path-of-the-heavens",
   "field": "alternateDomains",
   "value": [
-   "void"
-  ]
+   "nothingness"
+  ],
+  "why": "AoN deity-213 (The Path of the Heavens) prints alternate domains nothingness"
  },
  {
   "category": "deities",
@@ -57976,9 +58121,11 @@
   "id": "desna",
   "field": "alternateDomains",
   "value": [
-   "star",
-   "void"
-  ]
+   "nothingness",
+   "repose",
+   "star"
+  ],
+  "why": "AoN deity-281 (Desna) prints alternate domains nothingness, repose, star"
  },
  {
   "category": "deities",
@@ -58242,8 +58389,10 @@
   "id": "shizuru",
   "field": "alternateDomains",
   "value": [
+   "dragon",
    "sorrow"
-  ]
+  ],
+  "why": "AoN deity-315 (Shizuru) prints alternate domains dragon, sorrow"
  },
  {
   "category": "deities",
@@ -58374,8 +58523,10 @@
   "field": "alternateDomains",
   "value": [
    "ambition",
-   "lightning"
-  ]
+   "lightning",
+   "perfection"
+  ],
+  "why": "AoN deity-335 (Casandalee) prints alternate domains ambition, lightning, perfection"
  },
  {
   "category": "deities",
@@ -58462,9 +58613,11 @@
   "id": "gruhastha",
   "field": "alternateDomains",
   "value": [
+   "introspection",
    "nature",
    "travel"
-  ]
+  ],
+  "why": "AoN deity-346 (Gruhastha) prints alternate domains introspection, nature, travel"
  },
  {
   "category": "deities",
@@ -58497,8 +58650,10 @@
   "id": "kazutal",
   "field": "alternateDomains",
   "value": [
-   "cities"
-  ]
+   "cities",
+   "vigil"
+  ],
+  "why": "AoN deity-350 (Kazutal) prints alternate domains cities, vigil"
  },
  {
   "category": "deities",
@@ -58541,8 +58696,10 @@
   "id": "nocticula",
   "field": "alternateDomains",
   "value": [
+   "change",
    "vigil"
-  ]
+  ],
+  "why": "AoN deity-724 (Nocticula) prints alternate domains change, vigil"
  },
  {
   "category": "deities",
@@ -89687,10 +89844,11 @@
   "id": "lamashtu",
   "field": "spells",
   "value": [
-   "runic-body",
+   "spider-sting",
    "animal-form",
    "nightmare"
-  ]
+  ],
+  "why": "AoN deity-287 (Lamashtu) prints cleric spells Spider Sting, Animal Form, Nightmare"
  },
  {
   "category": "deities",
@@ -89701,12 +89859,13 @@
    "embed-message",
    "levitate",
    "flicker",
-   "scouting-eye",
+   "telekinetic-haul",
    "wall-of-force",
    "warp-mind",
    "quandary",
-   "disjunction"
-  ]
+   "detonate-magic"
+  ],
+  "why": "AoN deity-288 (Nethys) prints cleric spells Force Barrage, Embed Message, Levitate, Flicker, Telekinetic Haul, Wall of Force, Warp Mind, Quandary, Detonate Magic"
  },
  {
   "category": "deities",
@@ -89876,9 +90035,10 @@
   "field": "spells",
   "value": [
    "sure-strike",
-   "marvelous-mount",
-   "wall-of-wind"
-  ]
+   "wall-of-wind",
+   "weapon-storm"
+  ],
+  "why": "AoN deity-306 (General Susumu) prints cleric spells Sure Strike, Wall of Wind, Weapon Storm"
  },
  {
   "category": "deities",
@@ -89929,8 +90089,9 @@
   "value": [
    "breathe-fire",
    "control-water",
-   "dragon-form"
-  ]
+   "phantasmal-calamity"
+  ],
+  "why": "AoN deity-311 (Lady Nanbyo) prints cleric spells Breathe Fire, Control Water, Phantasmal Calamity"
  },
  {
   "category": "deities",
@@ -89955,8 +90116,9 @@
    "mislead",
    "contingency",
    "confusing-colors",
-   "storm-of-vengeance"
-  ]
+   "wrathful-storm"
+  ],
+  "why": "AoN deity-313 (Nalinivati) prints cleric spells Charm, Invisibility, Lightning Bolt, Reflective Scales, Subconscious Suggestion, Mislead, Contingency, Confusing Colors, Wrathful Storm"
  },
  {
   "category": "deities",
@@ -90034,10 +90196,11 @@
   "id": "ydersius",
   "field": "spells",
   "value": [
-   "runic-body",
+   "pest-form",
    "toxic-cloud",
-   "purple-worm-sting"
-  ]
+   "mask-of-terror"
+  ],
+  "why": "AoN deity-323 (Ydersius) prints cleric spells Pest Form, Toxic Cloud, Mask of Terror"
  },
  {
   "category": "deities",
@@ -90056,8 +90219,9 @@
   "value": [
    "sure-strike",
    "invisibility",
-   "phantasmal-killer"
-  ]
+   "vision-of-death"
+  ],
+  "why": "AoN deity-325 (Achaekek) prints cleric spells Sure Strike, Invisibility, Vision of Death"
  },
  {
   "category": "deities",
@@ -90104,10 +90268,12 @@
   "id": "apsu",
   "field": "spells",
   "value": [
-   "runic-body",
+   "anticipate-peril",
    "creation",
-   "dragon-form"
-  ]
+   "summon-dragon",
+   "falling-stars"
+  ],
+  "why": "AoN deity-330 (Apsu) prints cleric spells Anticipate Peril, Creation, Summon Dragon, Falling Stars"
  },
  {
   "category": "deities",
@@ -90174,10 +90340,12 @@
   "id": "dahak",
   "field": "spells",
   "value": [
-   "runic-body",
+   "breathe-fire",
    "fireball",
-   "dragon-form"
-  ]
+   "summon-dragon",
+   "implosion"
+  ],
+  "why": "AoN deity-337 (Dahak) prints cleric spells Breathe Fire, Fireball, Summon Dragon, Implosion"
  },
  {
   "category": "deities",
@@ -90576,10 +90744,11 @@
   "id": "cosmic-caravan",
   "field": "spells",
   "value": [
-   "object-reading",
-   "revealing-light",
-   "blanket-of-stars"
-  ]
+   "penumbral-shroud",
+   "translocate",
+   "falling-stars"
+  ],
+  "why": "AoN deity-377 (Cosmic Caravan) prints cleric spells Penumbral Shroud, Translocate, Falling Stars"
  },
  {
   "category": "deities",
@@ -90688,8 +90857,9 @@
   "value": [
    "grim-tendrils",
    "wave-of-despair",
-   "weird"
-  ]
+   "phantasmagoria"
+  ],
+  "why": "AoN deity-391 (Charon) prints cleric spells Grim Tendrils, Wave of Despair, Phantasmagoria"
  },
  {
   "category": "deities",
@@ -91395,10 +91565,11 @@
   "id": "findeladlara",
   "field": "spells",
   "value": [
-   "illusory-object",
-   "creation",
+   "temporary-tool",
+   "shape-stone",
    "planar-palace"
-  ]
+  ],
+  "why": "AoN deity-461 (Findeladlara) prints cleric spells Temporary Tool, Shape Stone, Planar Palace"
  },
  {
   "category": "deities",
@@ -91418,13 +91589,14 @@
    "shattering-gem",
    "shape-wood",
    "one-with-stone",
-   "speak-with-plants",
+   "shape-stone",
    "natures-pathway",
    "tangling-creepers",
    "unfettered-pack",
-   "prismatic-wall",
+   "burning-blossoms",
    "natures-enmity"
-  ]
+  ],
+  "why": "AoN deity-463 (Yuelral) prints cleric spells Shattering Gem, Shape Wood, One with Stone, Shape Stone, Nature's Pathway, Tangling Creepers, Unfettered Pack, Burning Blossoms, Nature’s Enmity"
  },
  {
   "category": "deities",
@@ -91442,10 +91614,11 @@
   "id": "arshea",
   "field": "spells",
   "value": [
-   "mystic-armor",
+   "jump",
    "humanoid-form",
    "dreaming-potential"
-  ]
+  ],
+  "why": "AoN deity-465 (Arshea) prints cleric spells Jump, Humanoid Form, Dreaming Potential"
  },
  {
   "category": "deities",
@@ -91453,9 +91626,10 @@
   "field": "spells",
   "value": [
    "soothe",
-   "revealing-light",
+   "vapor-form",
    "uncontrollable-dance"
-  ]
+  ],
+  "why": "AoN deity-466 (Ashava) prints cleric spells Soothe, Vapor Form, Uncontrollable Dance"
  },
  {
   "category": "deities",
@@ -91493,9 +91667,10 @@
   "field": "spells",
   "value": [
    "mindlink",
-   "translate",
+   "embed-message",
    "enthrall"
-  ]
+  ],
+  "why": "AoN deity-470 (Eritrice) prints cleric spells Mindlink, Embed Message, Enthrall"
  },
  {
   "category": "deities",
@@ -91594,9 +91769,10 @@
   "field": "spells",
   "value": [
    "dizzying-colors",
-   "chromatic-wall",
+   "cloak-of-colors",
    "teleport"
-  ]
+  ],
+  "why": "AoN deity-480 (Pulura) prints cleric spells Dizzying Colors, Cloak of Colors, Teleport"
  },
  {
   "category": "deities",
@@ -91675,8 +91851,9 @@
   "value": [
    "gentle-landing",
    "feet-to-fins",
-   "fly"
-  ]
+   "aerial-form"
+  ],
+  "why": "AoN deity-488 (Ylimancha) prints cleric spells Gentle Landing, Feet to Fins, Aerial Form"
  },
  {
   "category": "deities",
@@ -92412,9 +92589,10 @@
   "field": "spells",
   "value": [
    "ill-omen",
-   "veil-of-privacy",
+   "shatter",
    "wave-of-despair"
-  ]
+  ],
+  "why": "AoN deity-563 (Ahriman) prints cleric spells Ill Omen, Shatter, Wave of Despair"
  },
  {
   "category": "deities",
@@ -92422,9 +92600,10 @@
   "field": "spells",
   "value": [
    "anticipate-peril",
-   "misdirection",
-   "veil-of-privacy"
-  ]
+   "invisibility",
+   "subconscious-suggestion"
+  ],
+  "why": "AoN deity-564 (Erecura) prints cleric spells Anticipate Peril, Invisibility, Subconscious Suggestion"
  },
  {
   "category": "deities",
@@ -93016,10 +93195,11 @@
   "id": "vineshvakhi",
   "field": "spells",
   "value": [
-   "mystic-armor",
+   "leaden-steps",
    "enlarge",
    "chain-lightning"
-  ]
+  ],
+  "why": "AoN deity-622 (Vineshvakhi) prints cleric spells Leaden Steps, Enlarge, Chain Lightning"
  },
  {
   "category": "deities",
@@ -93067,9 +93247,10 @@
   "field": "spells",
   "value": [
    "soothe",
-   "wave-of-despair",
-   "drop-dead"
-  ]
+   "veil-of-privacy",
+   "dream-council"
+  ],
+  "why": "AoN deity-627 (Naderi) prints cleric spells Soothe, Veil of Privacy, Dream Council"
  },
  {
   "category": "deities",
@@ -93218,10 +93399,11 @@
   "id": "wadjet",
   "field": "spells",
   "value": [
-   "mystic-armor",
+   "hydraulic-push",
    "animal-form",
-   "fly"
-  ]
+   "reflective-scales"
+  ],
+  "why": "AoN deity-643 (Wadjet) prints cleric spells Hydraulic Push, Animal Form, Reflective Scales"
  },
  {
   "category": "deities",
@@ -93260,8 +93442,9 @@
   "value": [
    "summon-plant-or-fungus",
    "stupefy",
-   "speak-with-plants"
-  ]
+   "plant-form"
+  ],
+  "why": "AoN deity-647 (Halcamora) prints cleric spells Summon Plant or Fungus, Stupefy, Plant Form"
  },
  {
   "category": "deities",
@@ -93278,10 +93461,11 @@
   "id": "lymnieris",
   "field": "spells",
   "value": [
-   "mystic-armor",
+   "leaden-steps",
    "threefold-aspect",
    "containment"
-  ]
+  ],
+  "why": "AoN deity-649 (Lymnieris) prints cleric spells Leaden Steps, Threefold Aspect, Containment"
  },
  {
   "category": "deities",
@@ -93308,10 +93492,11 @@
   "id": "rowdrosh",
   "field": "spells",
   "value": [
-   "runic-body",
+   "summon-animal",
    "speak-with-animals",
    "animal-form"
-  ]
+  ],
+  "why": "AoN deity-652 (Rowdrosh) prints cleric spells Summon Animal, Speak with Animals, Animal Form"
  },
  {
   "category": "deities",
@@ -93349,9 +93534,10 @@
   "field": "spells",
   "value": [
    "share-lore",
-   "translate",
-   "illusory-disguise"
-  ]
+   "veil-of-privacy",
+   "infectious-melody"
+  ],
+  "why": "AoN deity-656 (Winlas) prints cleric spells Share Lore, Veil of Privacy, Infectious Melody"
  },
  {
   "category": "deities",
@@ -93519,9 +93705,10 @@
   "field": "spells",
   "value": [
    "gentle-landing",
-   "misdirection",
+   "disguise-magic",
    "planar-palace"
-  ]
+  ],
+  "why": "AoN deity-673 (Adanye) prints cleric spells Gentle Landing, Disguise Magic, Planar Palace"
  },
  {
   "category": "deities",
@@ -93550,8 +93737,9 @@
   "value": [
    "vanishing-tracks",
    "paralyze",
-   "phantasmal-killer"
-  ]
+   "vision-of-death"
+  ],
+  "why": "AoN deity-676 (Kalekot) prints cleric spells Vanishing Tracks, Paralyze, Vision of Death"
  },
  {
   "category": "deities",
@@ -94059,9 +94247,10 @@
   "field": "spells",
   "value": [
    "mindlink",
-   "threefold-aspect",
-   "scouting-eye"
-  ]
+   "web",
+   "clairvoyance"
+  ],
+  "why": "AoN deity-322 (Followers of Fate) prints cleric spells Mindlink, Web, Clairvoyance"
  },
  {
   "category": "deities",
@@ -109497,11 +109686,11 @@
   "id": "alocer",
   "field": "domains",
   "value": [
-   "might",
    "nature",
    "pain",
    "zeal"
-  ]
+  ],
+  "why": "AoN deity-732 (Alocer) prints domains nature, pain, zeal"
  },
  {
   "category": "items",
@@ -177236,5 +177425,2266 @@
   "id": "opportunistic-accusation",
   "field": "description",
   "value": "**Trigger** A demon you're aware of within 30 feet of you suffers from its sin vulnerability or critical fails at a saving throw against a mental effect\n\n---\n\nYou make a quick cutting remark against the demon that takes advantage of the fiend's momentary disadvantage. The demon must attempt a Will save against your class DC.\n\n---\n\n**Critical Success** The demon is unaffected and likely to focus its attention on you in combat from this point forward.\n\n**Success** The demon takes 2d6 damage.\n\n**Failure** The demon takes 4d6 damage and is off-guard until the start of its next turn.\n\n**Critical Failure** As failure, but the off-guard condition lasts until the end of the next round. The demon also takes 2d6 damage."
+ },
+ {
+  "category": "deities",
+  "id": "kerkamoth",
+  "field": "domains",
+  "value": [
+   "darkness",
+   "decay",
+   "destruction",
+   "nothingness"
+  ],
+  "why": "AoN deity-140 (Kerkamoth) prints domains darkness, decay, destruction, nothingness"
+ },
+ {
+  "category": "deities",
+  "id": "sky-keepers",
+  "field": "domains",
+  "value": [
+   "air",
+   "change",
+   "protection",
+   "dragon"
+  ],
+  "why": "AoN deity-232 (Sky Keepers) prints domains air, change, protection, dragon"
+ },
+ {
+  "category": "deities",
+  "id": "the-perplexing-jest",
+  "field": "domains",
+  "value": [
+   "change",
+   "disorientation",
+   "freedom",
+   "trickery"
+  ],
+  "why": "AoN deity-271 (The Perplexing Jest) prints domains change, disorientation, freedom, trickery"
+ },
+ {
+  "category": "deities",
+  "id": "asmodeus",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-278 (Asmodeus) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "iomedae",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "holy",
+      "label": "Holy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-285 (Iomedae) prints sanctification \"must choose holy\""
+ },
+ {
+  "category": "deities",
+  "id": "rovagug",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-291 (Rovagug) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "urgathoa",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-295 (Urgathoa) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "fumeiyoshi",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-305 (Fumeiyoshi) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "lady-nanbyo",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-311 (Lady Nanbyo) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "gogunta",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-321 (Gogunta) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "ydersius",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-323 (Ydersius) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "treerazer",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-324 (Treerazer) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "ah-pook",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-327 (Ah Pook) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "apsu",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "holy",
+      "label": "Holy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-330 (Apsu) prints sanctification \"must choose holy\""
+ },
+ {
+  "category": "deities",
+  "id": "camazotz",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-334 (Camazotz) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "dahak",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-337 (Dahak) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "the-devourer",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-339 (The Devourer) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "emmeton-galardaria",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "holy",
+      "label": "Holy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-341 (Emmeton Galardaria) prints sanctification \"must choose holy\""
+ },
+ {
+  "category": "deities",
+  "id": "ghlaunder",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-343 (Ghlaunder) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "gruhastha",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "holy",
+      "label": "Holy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-346 (Gruhastha) prints sanctification \"must choose holy\""
+ },
+ {
+  "category": "deities",
+  "id": "nin",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-353 (Nin) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "zyphus",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-361 (Zyphus) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "immaculate-growth",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "holy",
+      "label": "Holy"
+     },
+     {
+      "value": "none",
+      "label": "None",
+      "note": "You take no sanctification."
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-364 (Immaculate Growth) prints sanctification \"can choose holy\""
+ },
+ {
+  "category": "deities",
+  "id": "children-of-the-night",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-376 (Children of the Night) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "apollyon",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-390 (Apollyon) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "charon",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-391 (Charon) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "szuriel",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-392 (Szuriel) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "trelmarixian",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-393 (Trelmarixian) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "baalzebul",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-394 (Baalzebul) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "barbatos",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-395 (Barbatos) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "belial",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-396 (Belial) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "geryon",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-398 (Geryon) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "mammon",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-399 (Mammon) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "mephistopheles",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-400 (Mephistopheles) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "moloch",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-401 (Moloch) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "aesocar",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "holy",
+      "label": "Holy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-403 (Aesocar) prints sanctification \"must choose holy\""
+ },
+ {
+  "category": "deities",
+  "id": "lissala",
+  "field": "domains",
+  "value": [
+   "fate",
+   "magic",
+   "toil"
+  ],
+  "why": "AoN deity-565 (Lissala) prints domains fate, magic, toil"
+ },
+ {
+  "category": "deities",
+  "id": "lissala",
+  "field": "alternateDomains",
+  "value": [
+   "glyph"
+  ],
+  "why": "AoN deity-565 (Lissala) prints alternate domains glyph"
+ },
+ {
+  "category": "deities",
+  "id": "myr",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "holy",
+      "label": "Holy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-408 (Myr) prints sanctification \"must choose holy\""
+ },
+ {
+  "category": "deities",
+  "id": "scal",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-410 (Scal) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "corosbel",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-418 (Corosbel) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "pavnuri",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-420 (Pavnuri) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "vorasha",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-422 (Vorasha) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "xsistaid",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-423 (Xsistaid) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "abraxas",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-425 (Abraxas) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "areshkagal",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-426 (Areshkagal) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "cyth-vsug",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-428 (Cyth-V’sug) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "kabriri",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-432 (Kabriri) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "nurgal",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-433 (Nurgal) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "pazuzu",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-434 (Pazuzu) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "shax",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-435 (Shax) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "shivaska",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-436 (Shivaska) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "sifkesh",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-437 (Sifkesh) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "sithhud",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-438 (Sithhud) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "yhidothrus",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-441 (Yhidothrus) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "zevgavizeb",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-442 (Zevgavizeb) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "zura",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-443 (Zura) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "droskar",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     },
+     {
+      "value": "none",
+      "label": "None",
+      "note": "You take no sanctification."
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-447 (Droskar) prints sanctification \"can choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "trudd",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "holy",
+      "label": "Holy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-451 (Trudd) prints sanctification \"must choose holy\""
+ },
+ {
+  "category": "deities",
+  "id": "bharnarol",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "holy",
+      "label": "Holy"
+     },
+     {
+      "value": "none",
+      "label": "None",
+      "note": "You take no sanctification."
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-467 (Bharnarol) prints sanctification \"can choose holy\""
+ },
+ {
+  "category": "deities",
+  "id": "dalenydra",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "holy",
+      "label": "Holy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-469 (Dalenydra) prints sanctification \"must choose holy\""
+ },
+ {
+  "category": "deities",
+  "id": "olheon",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "holy",
+      "label": "Holy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-479 (Olheon) prints sanctification \"must choose holy\""
+ },
+ {
+  "category": "deities",
+  "id": "ragathiel",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "holy",
+      "label": "Holy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-481 (Ragathiel) prints sanctification \"must choose holy\""
+ },
+ {
+  "category": "deities",
+  "id": "vildeis",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "holy",
+      "label": "Holy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-487 (Vildeis) prints sanctification \"must choose holy\""
+ },
+ {
+  "category": "deities",
+  "id": "haggakal",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-493 (Haggakal) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "hadregash",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-503 (Hadregash) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "venkelvore",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-506 (Venkelvore) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "zarongel",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-507 (Zarongel) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "alazhra",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-510 (Alazhra) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "gyronna",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-515 (Gyronna) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "isis",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "holy",
+      "label": "Holy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-517 (Isis) prints sanctification \"must choose holy\""
+ },
+ {
+  "category": "deities",
+  "id": "mestama",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-519 (Mestama) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "osiris",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "holy",
+      "label": "Holy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-520 (Osiris) prints sanctification \"must choose holy\""
+ },
+ {
+  "category": "deities",
+  "id": "smiad",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "holy",
+      "label": "Holy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-522 (Smiad) prints sanctification \"must choose holy\""
+ },
+ {
+  "category": "deities",
+  "id": "bifrons",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-525 (Bifrons) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "furcas",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-526 (Furcas) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "haborym",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-527 (Haborym) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "malthus",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-528 (Malthus) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "nergal",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-529 (Nergal) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "titivilus",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-530 (Titivilus) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "ussharassim",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-531 (Ussharassim) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "vapula",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-532 (Vapula) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "nulgreth",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-558 (Nulgreth) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "ahriman",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-563 (Ahriman) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "eiseth",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-590 (Eiseth) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "chamiaholom",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-593 (Chamiaholom) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "iggeret",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-597 (Iggeret) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "ozranvial",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-599 (Ozranvial) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "velgaas",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-601 (Velgaas) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "xiquiripat",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-603 (Xiquiripat) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "dhalavei",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-613 (Dhalavei) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "lahkgya",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-615 (Lahkgya) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "apep",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-631 (Apep) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "khepri",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "holy",
+      "label": "Holy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-635 (Khepri) prints sanctification \"must choose holy\""
+ },
+ {
+  "category": "deities",
+  "id": "wadjet",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "holy",
+      "label": "Holy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-643 (Wadjet) prints sanctification \"must choose holy\""
+ },
+ {
+  "category": "deities",
+  "id": "arqueros",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "holy",
+      "label": "Holy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-645 (Arqueros) prints sanctification \"must choose holy\""
+ },
+ {
+  "category": "deities",
+  "id": "lymnieris",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "holy",
+      "label": "Holy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-649 (Lymnieris) prints sanctification \"must choose holy\""
+ },
+ {
+  "category": "deities",
+  "id": "winlas",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "holy",
+      "label": "Holy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-656 (Winlas) prints sanctification \"must choose holy\""
+ },
+ {
+  "category": "deities",
+  "id": "enkaar",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-657 (Enkaar) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "eyes-that-watch",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-658 (Eyes That Watch) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "grasping-iovett",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-659 (Grasping Iovett) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "lady-razor",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-661 (Lady Razor) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "reshmit-of-the-heavy-voice",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-662 (Reshmit of the Heavy Voice) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "thalaphyrr",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-663 (Thalaphyrr) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "lorthact",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     },
+     {
+      "value": "none",
+      "label": "None",
+      "note": "You take no sanctification."
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-670 (Lorthact) prints sanctification \"can choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "kitumu",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     },
+     {
+      "value": "none",
+      "label": "None",
+      "note": "You take no sanctification."
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-677 (Kitumu) prints sanctification \"can choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "tlehar",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "holy",
+      "label": "Holy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-681 (Tlehar) prints sanctification \"must choose holy\""
+ },
+ {
+  "category": "deities",
+  "id": "atreia",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "holy",
+      "label": "Holy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-686 (Atreia) prints sanctification \"must choose holy\""
+ },
+ {
+  "category": "deities",
+  "id": "ayrzul",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-687 (Ayrzul) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "kelizandri",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-690 (Kelizandri) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "oathos",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "holy",
+      "label": "Holy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-712 (Oathos) prints sanctification \"must choose holy\""
+ },
+ {
+  "category": "deities",
+  "id": "umarik",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     },
+     {
+      "value": "none",
+      "label": "None",
+      "note": "You take no sanctification."
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-713 (Umarik) prints sanctification \"can choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "abrogail",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-730 (Abrogail) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "lissala-the-order-of-virtue",
+  "field": "alternateDomains",
+  "value": [
+   "glyph"
+  ],
+  "why": "AoN deity-407 (Lissala) prints alternate domains glyph"
+ },
+ {
+  "category": "deities",
+  "id": "lissala-the-order-of-virtue",
+  "field": "spells",
+  "value": [
+   "mindlink",
+   "animus-mine",
+   "never-mind"
+  ],
+  "why": "AoN deity-407 (Lissala) prints cleric spells Mindlink, Animus Mine, Never Mind"
+ },
+ {
+  "category": "deities",
+  "id": "chinostes",
+  "field": "divineFont",
+  "value": [
+   "heal"
+  ],
+  "why": "AoN deity-700 (Chinostes (Redeemer)) prints divine font heal"
+ },
+ {
+  "category": "deities",
+  "id": "chinostes",
+  "field": "spells",
+  "value": [
+   "jump",
+   "gecko-grip",
+   "true-target"
+  ],
+  "why": "AoN deity-700 (Chinostes (Redeemer)) prints cleric spells Jump, Gecko Grip, True Target"
+ },
+ {
+  "category": "deities",
+  "id": "chinostes",
+  "field": "description",
+  "value": "In a Sylirican raid on Pol-Reanphoros, the saddle-maker Chinostes took up his tack knife in a desperate attempt to defend his neighbors. His efforts killed the raid's leader and scattered the other warriors, awakening the first spark of his mythic power. Chinostes never abandoned his role as a humble, folk-hero vigilante, even as a hero-god. One day, he tracked and confronted a murderer, only to find this was no mortal foe, but a vampire, who overpowered Chinostes and turned him into one of their kind.\n\nEven so, Chinostes retained his mythic abilities. He still stalks Reanphoros, most often fighting whatever threatens his city-state. However, the occasional citizen vanishes, only to reappear later, drained of blood—a grim price most citizens accept due to the worse evils he keeps at bay.\n\nTwo diametrically opposed cults venerate Chinostes. Those calling themselves Nightwardens celebrate his undead majesty and necessary evils. In contrast, the Redeemers keep the older faith, condemning the monster Chinostes has become. To the Redeemers, the greatest service they can ever perform for their hero-god is to drive a stake through his heart. Bizarrely, Chinostes grants spells to both groups, suggesting his tacit approval of both agendas.\n\n**Title** The Fallen Blade\n\n**Areas of Concern** tragedy and sacrifice\n\n**Edicts (Redeemer)** aid your neighbors, wield humble weapons, destroy Chinostes\n\n**Anathema (Redeemer)** hog credit, create undead\n\n**Edicts (Nightwarden)** aid your neighbors, sacrifice others for the greater good, leave cryptic calling cards of your actions\n\n**Anathema (Nightwarden)** disparage others for seeking terrible power to achieve laudable goals\n\n**Religious Symbol** heart pierced by two swords\n\n**Sacred Animal** horse\n\n**Sacred Colors** black and white\n\n---\n\n## Divine details\n\n**Divine Font** Harm or Heal\n\n**Divine Skill** Acrobatics\n\n**Favored Weapon** Dagger\n\n**Domains** Cities, Death, Luck, Sorrow\n\n**Sanctification** Can be Holy or Unholy\n\n**Cleric Spells** 1st: Jump, 2nd: Gecko Grip, 7th: True Target\n\n**Edicts** Aid your neighbors, wield humble weapons, destroy Chinostes\n\n**Anathema** Hog credit, create undead",
+  "why": "AoN deity-700 (Chinostes (Redeemer)) prints Edicts + Anathema the description lacked"
+ },
+ {
+  "category": "deities",
+  "id": "norns",
+  "field": "spells",
+  "value": [
+   "mindlink",
+   "web",
+   "clairvoyance"
+  ],
+  "why": "AoN deity-322 (Followers of Fate) prints cleric spells Mindlink, Web, Clairvoyance"
+ },
+ {
+  "category": "deities",
+  "id": "aon-kugaptee",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-725 (Kugaptee) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "aon-musagani",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-726 (Musagani) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "aon-sigek",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-729 (Sigek) prints sanctification \"must choose unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "aon-followers-of-fate",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "sanctification",
+    "prompt": "Sanctification",
+    "options": [
+     {
+      "value": "holy",
+      "label": "Holy"
+     },
+     {
+      "value": "unholy",
+      "label": "Unholy"
+     },
+     {
+      "value": "none",
+      "label": "None",
+      "note": "You take no sanctification."
+     }
+    ]
+   }
+  ],
+  "why": "AoN deity-322 (Followers of Fate) prints sanctification \"can choose holy or unholy\""
+ },
+ {
+  "category": "deities",
+  "id": "alocer",
+  "field": "aonId",
+  "value": "deity-732",
+  "why": "AoN deity-732 is Alocer (One-Shot 2: Dinner at Lionlodge) — the record shipped without a page link, so no mirror check could reach it"
+ },
+ {
+  "category": "deities",
+  "id": "atheists-and-free-agents",
+  "field": "aonId",
+  "value": "deity-297",
+  "why": "AoN deity-297 'Atheism' (Divine Mysteries pg. 251, legacy twin deity-21 Core Rulebook pg. 440) is the printed entry this record carries under the section's Foundry title"
+ },
+ {
+  "category": "deities",
+  "id": "chinostes",
+  "field": "name",
+  "value": "Chinostes (Redeemer)",
+  "why": "AoN prints TWO Chinostes entries (Pathfinder #216 pg. 76): deity-700 'Chinostes (Redeemer)' — heal font, can choose holy — and deity-701 'Chinostes (Nightwarden)' — harm font, can choose unholy. Ours merged them into one record with both fonts; this record keeps the Redeemer page it links (deity-700), the Nightwarden becomes its own record"
+ },
+ {
+  "category": "deities",
+  "id": "chinostes-nightwarden",
+  "create": true,
+  "value": {
+   "id": "chinostes-nightwarden",
+   "name": "Chinostes (Nightwarden)",
+   "traits": [],
+   "rarity": "common",
+   "source": {
+    "book": "Pathfinder #216: The Acropolis Pyre",
+    "license": "ORC"
+   },
+   "domains": [
+    "cities",
+    "death",
+    "luck",
+    "sorrow"
+   ],
+   "divineFont": [
+    "harm"
+   ],
+   "favoredWeapons": [
+    "dagger"
+   ],
+   "skill": "acrobatics",
+   "edition": "remaster",
+   "spells": [
+    "jump",
+    "gecko-grip",
+    "true-target"
+   ],
+   "aonId": "deity-701",
+   "effectChoices": [
+    {
+     "id": "sanctification",
+     "prompt": "Sanctification",
+     "options": [
+      {
+       "value": "unholy",
+       "label": "Unholy"
+      },
+      {
+       "value": "none",
+       "label": "None",
+       "note": "You take no sanctification."
+      }
+     ]
+    }
+   ]
+  },
+  "why": "AoN deity-701 'Chinostes (Nightwarden)' (Pathfinder #216: The Acropolis Pyre pg. 76): Divine Font Harm, Divine Skill Acrobatics, Favored Weapon Dagger, Domains Cities/Death/Luck/Sorrow, Sanctification can choose unholy, Cleric Spells Jump / Gecko Grip / True Target — a separate printed deity entry ours had folded into the Redeemer record"
+ },
+ {
+  "category": "deities",
+  "id": "chinostes-nightwarden",
+  "field": "description",
+  "value": "Chinostes was a saddle-maker of Pol-Reanphoros who never sought divinity: it found him when he took up his tack knife against a raiding warlord and won. As a hero-god he kept protecting Reanpharos until a vampire bested him and dragged him into undeath. He remains a folk hero at heart, hunting the other terrors of the night from the rooftops — and now and then feeding on an unwary citizen. His cult has split: the Nightwardens worship him as a pragmatically violent folk hero who does what must be done; the Redeemers mourn what he became and hope to restore him.\n\n**Areas of Concern** tragedy and sacrifice\n\n**Edicts** aid your neighbors, sacrifice others for the greater good, leave cryptic calling cards of your actions\n\n**Anathema** disparage others for seeking terrible power to achieve laudable goals\n\n**Religious Symbol** heart pierced by two swords\n\n**Sacred Animal** horse\n\n**Sacred Colors** black, white\n\n**Divine Font** harm\n\n**Divine Skill** Acrobatics\n\n**Favored Weapon** dagger\n\n**Domains** cities, death, luck, sorrow\n\n**Sanctification** can choose unholy\n\n**Cleric Spells** 1st: jump, 2nd: gecko grip, 7th: true target",
+  "why": "prose for the created Nightwarden record, in our words from AoN deity-701 (Pathfinder #216 pg. 76), with the same stat-block labels every deity description carries"
+ },
+ {
+  "category": "deities",
+  "id": "alocer",
+  "field": "spells",
+  "value": [
+   "sure-strike",
+   "summon-animal",
+   "unfettered-pack"
+  ],
+  "why": "AoN deity-732 (Alocer) prints cleric spells True Strike, Summon Animal, Unfettered Pack"
  }
 ]

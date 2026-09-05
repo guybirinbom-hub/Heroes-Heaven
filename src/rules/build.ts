@@ -5928,7 +5928,13 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
    * in the list: the champion answers through their own feature's choice, and reading the deity
    * answer too could sanctify a champion against their explicit 'none'. */
   if (build.deityId && ownedFeatureIds.has('deity-cleric')) {
-    const sanct = build.effectChoices?.[`${build.deityId}:sanctification`];
+    /* "Sanctification: must choose holy" (Iomedae, Sarenrae …) ships as a ONE-option deity choice —
+     * deity sweep 2026-09-05, 162 deities re-shaped from the Archives' own sanctification line. resolvePick
+     * already treats a single option as taken; this raw read has to as well, or a cleric of Iomedae stays
+     * unsanctified until they click the only answer there is. */
+    const sanctChoice = content.deities[build.deityId]?.effectChoices?.find((e) => e.id === 'sanctification');
+    const sanctOpts = sanctChoice ? effectChoiceOptions(sanctChoice, build, content) : [];
+    const sanct = build.effectChoices?.[`${build.deityId}:sanctification`] ?? (sanctOpts.length === 1 ? sanctOpts[0].value : undefined);
     if (sanct === 'holy' || sanct === 'unholy')
       chosenCreatureTraits.push({ trait: sanct, source: content.deities[build.deityId]?.name ?? build.deityId });
   }

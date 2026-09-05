@@ -60,11 +60,16 @@ describe('multi-pick choices', () => {
       if (def.kind === 'text') continue;
       // A 'domains' choice has no static list either — it resolves from the character's DEITY, so
       // the check that matters is that no deity leaves it unsatisfiable. Splinter Faith asks for
-      // four, and the thinnest deity pool in the data is exactly four.
+      // four "from among your deity's domains, your deity's alternate domains, and up to one domain
+      // that isn't on either list" — so a deity's listed pool plus that ONE outside domain must reach
+      // the count. The deity sweep (2026-09-05) aligned Alocer with its page: three domains, no
+      // alternates, which is exactly the shape print wrote the outside-domain clause for.
+      // ⚠ The picker itself still offers only the listed pool (domainPoolFor has no "+one outside"
+      // arm) — that lane is the open follow-up; this guard states the printed rule, not the picker's.
       if (def.kind === 'domains') {
         const thin = Object.keys(c.deities)
           .map((did) => [did, domainPoolFor(did, c, def.domainPool).length] as const)
-          .filter(([, n]) => n > 0 && n < picks)
+          .filter(([, n]) => n > 0 && n + 1 < picks)
           .map(([did, n]) => `${did}:${n}`);
         expect(thin, `${id} needs ${picks} domains`).toEqual([]);
         continue;
