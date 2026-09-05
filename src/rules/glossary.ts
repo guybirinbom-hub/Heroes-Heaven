@@ -42,7 +42,14 @@ export const SENSE_GLOSSARY: Record<string, string> = {
   lifesense: 'Lifesense: a sense that detects the vital essence of living and undead creatures within range.',
   echolocation: 'Echolocation: you use sound to precisely sense your surroundings within the listed range.',
   bloodsense: 'Bloodsense: an imprecise sense that detects the blood of living creatures within range, letting you notice them even without sight.',
-  magicsense: 'Magicsense: an imprecise sense that detects active spells and magic items within range, alerting you to nearby magic.',
+  /* VAGUE, not imprecise — Shimmertongue Nagaji: *"You gain magicsense as a VAGUE sense that has a
+   * range of 30 feet — like all vague senses, it's only about as precise as an average human's sense of
+   * smell, meaning you generally can predict only if magic is present; however, each tradition of magic
+   * has a unique taste to you"* (Vestigial Magicsense prints the same). Both magicsense grants in the
+   * corpus are authored `acuity: 'vague'`, so the sheet label read "Magicsense (vague 30 ft)" over a
+   * tooltip calling it imprecise — the record contradicting itself on one line. */
+  magicsense:
+    'Magicsense: a vague sense that detects active spells and magic items within range — enough to tell that magic is present, and which tradition it is, but not where it is.',
   /* Distinct from magicsense above, which finds active spells and magic ITEMS: spellsense finds the
    * CASTER — *"detects only creatures capable of casting spells (including creatures with innate
    * spells)"*. Without an entry here the sense renders as a bare unexplained word. */

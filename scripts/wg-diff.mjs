@@ -171,6 +171,38 @@ const kindOfTheirOp = (op) => {
     case 'adjValue':
     case 'setValue':
     case 'addBonusToValue': {
+      /*
+       * AN `addBonusToValue` WITH NO `value` IS A NOTE PINNED TO A STAT ROW, NOT A GRANT ON THAT TRACK.
+       *
+       * Fishseeker Shoony prints *"If you roll a success on an attempt to Grab an Edge, you get a
+       * critical success instead; if you roll a critical failure, you get a failure instead"* — and
+       * trains no skill at all. Their row writes that sentence twice, as `addBonusToValue
+       * SKILL_ACROBATICS` and `addBonusToValue SAVE_REFLEX`, each `data` carrying only `variable` and
+       * `text`: no `value` key on either, so nothing is trained and no number is added. The variable
+       * names the DISPLAY SURFACE the sentence hangs on, and reading it as a skill carrier reported
+       * `missing=[skill]` against a record whose two printed clauses are both authored as `degreeShifts`
+       * on saves:['reflex'] + actions:['grab-an-edge'].
+       *
+       * A text-only situational rule attached to a stat is our `situational` / `degreeShifts` /
+       * `whileActive` lane. wg-values.mjs already refuses to compare these ("a prose-only bonus asserts
+       * no value" — the `val === null || val === undefined || val === ''` skip in theirAssertions), so
+       * both comparers read the shape the same way.
+       *
+       * ⚠ THE KIND IS NOT REWRITTEN HERE, AND `return 'conditional'` WAS TRIED AND REVERTED. Measured
+       * over the whole dump it LAUNDERED FOUR REAL GAPS: `missing` drops `conditional` whenever
+       * `gatesOnlyWhatWeHave`, and that predicate is VACUOUSLY TRUE on a record with no `conditional`
+       * op at all (`[].every()` is true), so Murksight, Greenwatcher, Insistent Command and Assured
+       * Runic Crafter — each a bare feat carrying no mechanical field on our side — moved from
+       * THEY-ONLY straight into AGREE with `ourKinds: []`. It opened FALSE gaps the other way too:
+       * Half-Truths answers its prose op with `skillSubstitutions` and Officer's Medical Training with
+       * `skillAbilitySwap`, both in the SKILL lane, which a `conditional` kind cannot see. The op names
+       * a real display surface, and the surface IS the kind.
+       *
+       * What the shape means is a SATISFACTION rule, not a kind: a stat kind asserted ONLY by
+       * value-less notes is answered by our `conditional` lane as well as by that stat's own fields.
+       * Applied once, at the comparison site, from `proseOnlyKinds` — so "ours models nothing" still
+       * reports.
+       */
       if (/^SKILL_|^LORE_/.test(v)) return 'skill';
       if (/^SAVE_/.test(v)) return 'save';
       if (/^PERCEPTION/.test(v)) return 'perception';
@@ -261,7 +293,29 @@ const kindOfTheirOp = (op) => {
     case 'createValue': return /^SKILL_|^LORE_/.test(v) ? 'skill' : 'specialStat';
     case 'bindValue': return 'modifiesGrant';
     case 'injectText': return 'note';
-    case 'injectSelectOption': return 'choice';
+    /*
+     * `injectSelectOption` IS A CROSS-RECORD OPTION INJECTION — THE CHOICE BELONGS TO THE RECORD THAT
+     * OWNS THE SELECT, AND IS SCORED THERE.
+     *
+     * Their four surki heritages carry no `select` of their own. Each emits `injectSelectOption
+     * variable=INJECT_SELECT_OPTIONS` whose payload is `{"opId":"39f5996f-2f7c-4b52-b7a3-e52b2dc9c6ca",
+     * "option":{…}}` — and 39f5996f-… is the `id` of the `select` op ("Select an Evolution") on their
+     * ability block 28165, «Grand Metamorphosis». Print agrees: the evolution is not a 1st-level
+     * heritage question at all, it is Grand Metamorphosis (feat-5393, Feat 9) — *"One of your nodes has
+     * adapted into a new magic-emitting organ. You gain one of the evolutions from your surki
+     * heritage."* Ours asks it in the same place, `feats['grand-metamorphosis'].choice` (flag
+     * 'surkiEvolution'), whose options carry all eight surki evolutions. Scoring the injection as a
+     * heritage-level `choice` therefore reported `missing=[choice]` on lantern/hardshell/elytron/breaker
+     * surki, and taken literally would have us add a picker to the heritage that print does not ask for.
+     *
+     * Dropped rather than re-keyed onto the owner, because the owner already scores `choice` from the
+     * `select` op itself — re-keying would double-count. Blast radius MEASURED over the whole dump:
+     * 11 injectSelectOption ops on 7 rows (the four surki, Frozen Wind Kitsune, Specialized Spirit
+     * Companion, Peerless Mascot Companion), and ZERO of the 11 name an opId that belongs to their own
+     * row — the verb is always cross-record, which is why it exists. Only the four surki were in
+     * THEY-ONLY; the other three can only move toward WE-ONLY, never open a new gap.
+     */
+    case 'injectSelectOption': return null;
     default: return 'value';
   }
 };
@@ -977,8 +1031,26 @@ for (const [bucket, rowMap] of Object.entries(wgRowsByBucket(sql))) {
     .flatMap((o) => flatten(o))
     .filter((o) => o?.type === 'conditional')
     .map((o) => new Set(flatten(o).slice(1).flatMap((x) => { const k = kindOfTheirOp(x); return Array.isArray(k) ? k : k ? [k] : []; })));
+  /*
+   * KINDS ASSERTED ONLY BY A VALUE-LESS `addBonusToValue` — the prose note pinned to a stat row (see
+   * the long note in `kindOfTheirOp`). Fishseeker Shoony's *"If you roll a success on an attempt to
+   * Grab an Edge, you get a critical success instead"* is written twice, on SKILL_ACROBATICS and on
+   * SAVE_REFLEX, neither carrying a `value`; ours delivers both printed clauses as `degreeShifts`,
+   * which scores `conditional`, so `missing=[skill]` was the differ demanding a second home for a rule
+   * we already state. Recorded per record as a SATISFACTION allowance, not as a rewritten kind:
+   * `kinds` still carries `skill`, so Half-Truths' `skillSubstitutions` and Officer's Medical
+   * Training's `skillAbilitySwap` keep answering it in their own lane.
+   *
+   * `proseOnly` — a kind is listed only when NO other op on the row asserts it, so a record that both
+   * trains a skill and annotates it (Officer's Medical Training: `adjValue SKILL_MEDICINE value T`
+   * beside the note) still has to model the training.
+   */
+  const isProseNote = (o) => o?.type === 'addBonusToValue' && (o.data?.value === undefined || o.data?.value === null || o.data?.value === '');
+  const kindsOfOps = (list) => new Set(list.flatMap((o) => { const k = kindOfTheirOp(o); return Array.isArray(k) ? k : k ? [k] : []; }));
+  const valuedKinds = kindsOfOps(ops.filter((o) => !isProseNote(o)));
+  const proseOnlyKinds = new Set([...kindsOfOps(ops.filter(isProseNote))].filter((k) => !valuedKinds.has(k)));
     /* `wgRowsByBucket` already kept the richest row per name, so there is no contest to resolve here. */
-    m.set(key, { name, kinds, ops, condGroups, opCount: ops.length });
+    m.set(key, { name, kinds, ops, condGroups, proseOnlyKinds, opCount: ops.length });
   }
   theirByBucket[bucket] = m;
 }
@@ -1109,16 +1181,16 @@ const VERIFIED_EQUIVALENT = {
   'respite-of-loam-and-leaf': ['spellcasting', 'conditional'],
 
   /*
-   * ONE WITH THE WILD — where the note hangs, not whether it exists.
-   *
-   * *"In natural terrain, you can Hide and Sneak even without cover or being concealed."* Their row is
-   * `addBonusToValue SKILL_STEALTH` carrying TEXT AND NO VALUE — an annotation on the skill — plus two
-   * `injectText` ops naming Hide and Sneak. Ours is two RECORD_MARKERS, one on each of those actions,
-   * which is where the permission is actually used and is what their own injectText says.
-   *
-   * The record held nothing at all before this: the prose gate found it asserting nothing on our side.
+   * ONE WITH THE WILD — RETIRED (batch 27), and it is the record that showed the hand-settle was a
+   * whole SHAPE. *"In natural terrain, you can Hide and Sneak even without cover or being
+   * concealed."* Their row is `addBonusToValue SKILL_STEALTH` carrying TEXT AND NO VALUE — an
+   * annotation on the skill — plus two `injectText` ops naming Hide and Sneak; ours is two
+   * RECORD_MARKERS, one on each of those actions. Fishseeker Shoony arrived with the identical shape
+   * on SKILL_ACROBATICS, so the value-less `addBonusToValue` is now classified as `conditional` in
+   * kindOfTheirOp rather than settled per record, and this entry answered nothing once it was.
+   * Deleted rather than left: a settle that matches nothing silences the NEXT difference on the
+   * record, unread.
    */
-  'one-with-the-wild': ['skill'],
 
   /*
    * ---- BATCH 15 ---------------------------------------------------------------------------------
@@ -2394,6 +2466,13 @@ for (const [id, rec, bucket] of wgAllRecords(core)) {
   /* A conditional whose every branch holds kinds we already model is a wrapper, not a gap. */
   const gatesOnlyWhatWeHave = (t.condGroups ?? []).every((g) => [...g].every((k) => k === 'note' || ours.has(k)));
   if (missing.includes('conditional') && gatesOnlyWhatWeHave) missing = missing.filter((k) => k !== 'conditional');
+  /*
+   * A STAT KIND ASSERTED ONLY BY A PROSE NOTE IS ANSWERED BY OUR CONDITIONAL LANE — see `proseOnlyKinds`.
+   * Gated on `ours.has('conditional')`, which is the whole point: Fishseeker Shoony's `degreeShifts`
+   * answer it and its `missing=[skill]` clears, while Murksight, Greenwatcher, Insistent Command and
+   * Assured Runic Crafter model nothing at all and keep reporting the gap they really have.
+   */
+  if (ours.has('conditional') && t.proseOnlyKinds?.size) missing = missing.filter((k) => !t.proseOnlyKinds.has(k));
   /* Kinds read, verified and settled for this record — see VERIFIED_EQUIVALENT above. */
   const settled = RAW_SETTLES ? undefined : VERIFIED_EQUIVALENT[id];
   if (settled) missing = missing.filter((k) => !settled.includes(k));

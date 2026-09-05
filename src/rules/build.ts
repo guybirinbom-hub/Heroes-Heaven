@@ -2491,6 +2491,16 @@ function collectGrantedNaturals(
     // The heritage's own answer that names one of its tagged Strikes (`<heritageId>:<choiceId>` → value).
     const pick = Object.entries(effectChoices ?? {}).find(([k, v]) => k.startsWith(`${heritageId}:`) && gs?.some((g) => g.choiceValue === v))?.[1];
     push(gs, heritageId, pick);
+    /*
+     * "INSTEAD OF a fangs unarmed attack, you have a tail attack…" (Sacred Nagaji) — a heritage Strike
+     * that REPLACES one of the ancestry's rather than joining it. `push` dedupes on the lowercased
+     * name and nothing else, so both survived and a sacred nagaji carried Fangs AND Tail.
+     *
+     * Seeded into `seen` between the two pushes, which is the whole fix: the heritage's own Strike is
+     * already placed, and the ancestry push below now skips the named ones. A heritage with no
+     * `replacesStrikes` (hooded nagaji, taloned tengu — additive by print) is untouched.
+     */
+    for (const n of content.heritages[heritageId]?.replacesStrikes ?? []) seen.add(n.toLowerCase());
   }
   if (ancestryId) push(content.ancestries[ancestryId]?.grantedStrikes, ancestryId);
   const cls = classId ? content.classes[classId] : undefined;
@@ -3079,9 +3089,26 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     0,
   );
   if (heritageLoreN > 0) {
+    /*
+     * …and the LEVEL STEP on that Lore — Lorekeeper Shisk: *"You become trained in one Intelligence- or
+     * Wisdom-based skill of your choice and a Lore skill of your choice… At 5th level, you become
+     * expert in the CHOSEN SKILLS"* (plural: the Lore too). `skillProgressionFromChoice` handles the
+     * first half only, because it reads the rank off an effectChoices option's grant and a TYPED Lore
+     * has no option — so the Lore half sat at trained from 1st to 20th.
+     *
+     * The ladder is taken from whichever owned heritage carries one: `heritageLore` is a flat list with
+     * no per-heritage attribution, and exactly one record prints the clause today.
+     */
+    const loreStep = [build.heritageId, secondHeritageId]
+      .flatMap((id) => (id ? (content.heritages[id]?.loreProgression ?? []) : []))
+      .filter((s) => level >= s.level)
+      .reduce<ProficiencyRank | undefined>((best, s) => (best ? maxRank(best, s.rank) : s.rank), undefined);
     for (const raw of (build.heritageLore ?? []).slice(0, heritageLoreN)) {
       const subj = raw?.trim().toLowerCase().replace(/\s*lore$/, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
-      if (subj) skills[`lore:${subj}` as ProficiencyKey] = 'trained';
+      if (subj) {
+        const key = `lore:${subj}` as ProficiencyKey;
+        skills[key] = maxRank(skills[key] ?? 'untrained', loreStep ?? 'trained');
+      }
     }
   }
   if (build.heritageSkill) (skills[build.heritageSkill] = 'trained'), lock(build.heritageSkill, 'your heritage');
@@ -5269,6 +5296,10 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   /** Creature traits a chosen OPTION granted, each keeping the name of the record that asked. Not
    *  merged into `chosenEffects`: the Details tab has to say which feat made you an azata. */
   const chosenCreatureTraits: NonNullable<Character['chosenCreatureTraits']> = [];
+  /** Actions a chosen OPTION granted — Grand Metamorphosis: *"You gain one of the evolutions from your
+   *  surki heritage."* Reported on the character (Character.grantedActionIds) because the ANSWER is the
+   *  only thing that says which evolution; nothing on a record could be walked for it. */
+  const chosenActionIds: string[] = [];
   /** Spells the player loaded into a staff a record hands them (Staff Nexus). Applied to the granted
    *  instance below rather than to the shared item, which every wizard would otherwise share. */
   const grantedStaffSpells: string[] = [];
@@ -5464,6 +5495,10 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     for (const t of g.grantsCreatureTraits ?? []) chosenCreatureTraits.push({ trait: t, ...(srcName ? { source: srcName } : {}) });
     // A ritual one option teaches (Harrow Ritualist) — not via mergeEffect, which fills DefenseGrants.
     for (const r of g.grantsRituals ?? []) chosenRitualGrants.push({ ...r, from: srcName ?? 'Choice' });
+    // …and an ACTION one option hands over: *"You gain one of the evolutions from your surki heritage"*
+    // (Grand Metamorphosis, Feat 9). Every surki Evolution used to be an unconditional record-level
+    // `grantsActions` on the heritage, so a 1st-level surki had it and the 9th-level pick was inert.
+    for (const a of g.grantsActions ?? []) if (content.actions[a] && !chosenActionIds.includes(a)) chosenActionIds.push(a);
   };
   /*
    * THE ENHANCEMENT TIER — a benefit a record prints but only HAS while another record names it.
@@ -5594,8 +5629,15 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     // find() on the raw string applies at most the first option's grant — split and apply each.
     const answers = String(fc.choice?.value ?? '').split(',').filter(Boolean);
     for (const answer of answers) {
-      const g = (def.options ?? []).find((o) => o.value === answer)?.grant;
-      if (g) applyAlwaysOn(g, content.feats[fc.featId]?.name ?? fc.featId);
+      const opt = (def.options ?? []).find((o) => o.value === answer);
+      /* An option gated on a record the character does not own grants nothing — the same guard the
+       * builder applies when it OFFERS the option (derive.ts narrowChoiceOptions). Grand Metamorphosis:
+       * *"You gain one of the evolutions from your surki heritage"* — each option is gated on its
+       * heritage, and without this a breaker surki carrying a stale `lantern-lens` answer still built
+       * with Lantern Beam on the sheet (measured by the batch-27 verifier). */
+      const owned = (id: string) => id === build.heritageId || id === secondHeritageId || ownedFeatureIds.has(id);
+      if (opt?.requiresAnyFeature?.length && !opt.requiresAnyFeature.some(owned)) continue;
+      if (opt?.grant) applyAlwaysOn(opt.grant, content.feats[fc.featId]?.name ?? fc.featId);
     }
   }
   /*
@@ -7122,9 +7164,17 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         innateGrants.push(asGranted(rec, g));
         noteSrc(voidSwapped(rec, g.spellId), rec?.name, f.featId);
       }
-    // Innate spells from a resolved effect-choice (e.g. Fey Influence's chosen 1/day spell).
+    /*
+     * Innate spells from a resolved effect-choice (e.g. Fey Influence's chosen 1/day spell).
+     *
+     * Through `asGranted`, like every other arm above: pushed BARE, an option-level grant's
+     * `traditionFromChoiceFlag` was computed nowhere and the spell fell back to the SPELL's first
+     * tradition. The surki case is the point — the ancestry's magiphage tradition *"changes the
+     * tradition of all surki spells and magical actions to that tradition"*, so an elytron surki's
+     * Fly must follow the player's answer and was resolving arcane for all four.
+     */
     for (const g of chosenInnateGrants) {
-      innateGrants.push(g);
+      innateGrants.push(asGranted(undefined, g));
       noteSrc(g.spellId, chosenInnateSource[g.spellId], chosenInnateRecord[g.spellId]);
     }
     // Pick-a-cantrip grants (Dragon Spit, Hag Magic, …): the player chose an innate spell from a list.
@@ -7837,6 +7887,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       : {}),
     ...(Object.keys(chosenEffects).length ? { chosenEffects } : {}),
     ...(chosenCreatureTraits.length ? { chosenCreatureTraits } : {}),
+    ...(chosenActionIds.length ? { grantedActionIds: chosenActionIds } : {}),
     ...(Object.keys(resolvedItemPassives).length ? { resolvedItemPassives } : {}),
     ...(effectWarnings.length ? { effectWarnings } : {}),
     ...(effectPicks.length ? { effectPicks } : {}),

@@ -456,6 +456,18 @@ export interface SenseEntry {
    */
   rangeAt?: { level: number; range: number }[];
   acuity?: 'precise' | 'imprecise' | 'vague';
+  /**
+   * A STIMULUS-SPECIFIC extension of this sense, printed in the same breath as the range — Carcharodon
+   * Merfolk: *"You gain scent as an imprecise sense with a range of 30 feet. However, you can smell
+   * spilled blood at a range of 120 feet in the air and 500 feet in the water."*
+   *
+   * Neither `range` nor `rangeAt` can hold it (both are the sense's ONE number, and this one applies
+   * only to blood), and `RecordMarker.on` is typed 'action' | 'condition' | 'feature' — there is no
+   * sense target — so the second sentence survived only as description prose while the derived Senses
+   * row read "scent 30 ft (imprecise)". Rendered inline on that row; the entry already reaches the
+   * sheet per-object (deriveDefenses writes `superseded` onto the same object).
+   */
+  note?: string;
   /** DISPLAY ONLY, set by `deriveDefenses` when a stronger rung of the same vision ladder is present
    *  (Q13: "Show only darkvision when it supersedes low-light"). The sense is still HELD — it stays in
    *  `defenses.senses` so rules consults and the Wanderer's Guide export keep seeing it, which matters
@@ -763,6 +775,17 @@ export interface SpecialStatGrant {
 }
 
 export interface DefenseGrants {
+  /**
+   * Weakness types this record REMOVES ("you no longer gain silver weakness from Werecreature
+   * Dedication"). Every other field adds; there was no way to take one away, so a record whose whole
+   * point is undoing an earlier drawback left the drawback on the sheet.
+   *
+   * On DefenseGrants rather than Feat because a HERITAGE removes one too — Tsukumogami Poppet:
+   * *"If your body is primarily metal, you're INSTEAD weak to electricity; if it's primarily ceramic,
+   * you're INSTEAD weak to cold"* — "instead of" the poppet chassis' fire weakness, which nothing
+   * could drop, so a metal tsukumogami carried fire AND electricity.
+   */
+  removesWeaknesses?: string[];
   /**
    * *"While you're dying, you DON'T ADD YOUR DYING VALUE to the DC of your recovery checks (this means
    * the DC is typically 10)"* — Nine Lives Catfolk, a HERITAGE, which is why this sits on the shared
@@ -1793,6 +1816,19 @@ export interface RestrictedSlot {
 export interface EffectGrant {
   resistances?: IwrEntry[];
   weaknesses?: IwrEntry[];
+  /**
+   * Weakness types THIS ANSWER removes — the option-scoped twin of `DefenseGrants.removesWeaknesses`.
+   *
+   * Tsukumogami Poppet: *"If your body is primarily wood or cloth, you have the normal poppet weakness
+   * to fire. If your body is primarily metal, you're INSTEAD weak to electricity; if it's primarily
+   * ceramic, you're INSTEAD weak to cold."* The removal belongs to two of the three branches, so the
+   * record-level field cannot say it — authored there, a wooden poppet would lose its fire weakness.
+   *
+   * ⚠ The reader is the weakness-remover fold in deriveDefenses, which walks each owned heritage's own
+   * `effectChoices` answer directly. It deliberately does NOT go through `chosenEffects`: mergeEffect
+   * is field-by-field and does not carry this one.
+   */
+  removesWeaknesses?: string[];
   immunities?: string[];
   senses?: SenseEntry[];
   /** Feet, or a formula relative to the character ("@actor.speed.land"). */
@@ -1873,6 +1909,20 @@ export interface EffectGrant {
    * through the pick sink. A feat's or item's option authoring it would be resolved and dropped.
    */
   grantsFeats?: string[];
+  /**
+   * An ACTION this option alone hands over — the branch half of `ContentBase.grantsActions`.
+   *
+   * Grand Metamorphosis (Feat 9): *"One of your nodes has adapted into a new magic-emitting organ. You
+   * gain one of the evolutions from your surki heritage."* Every surki Evolution is behind that feat,
+   * yet all four heritages carried a record-level `grantsActions`, so a 1st-level lantern surki had
+   * Lantern Beam and the 9th-level pick that is supposed to grant it did nothing (`surkiEvolution` had
+   * no reader anywhere in src/). An EffectGrant could carry senses, spells, skills and feats but no
+   * action, so there was nowhere to move it to.
+   *
+   * Read by `applyAlwaysOn` (build.ts) into `Character.grantedActionIds`, which the sheet's granted-
+   * action walk consumes exactly as it consumes a record's own `grantsActions`.
+   */
+  grantsActions?: string[];
 }
 
 /** A "choose one of N" the player resolves in the builder. Either an explicit `options` list, or a
@@ -2444,6 +2494,40 @@ export interface Heritage extends ContentBase, DefenseGrants {
    * skill increase the player already spent is never undone.
    */
   skillProgressionFromChoice?: { choiceId: string; at: { level: number; rank: ProficiencyRank }[] };
+  /**
+   * The same ladder for the Lore(s) this heritage's `loreChoices` let the player type — Lorekeeper
+   * Shisk: *"You become trained in one Intelligence- or Wisdom-based skill of your choice and a Lore
+   * skill of your choice… At 5th level, you become expert in the chosen skills."*
+   *
+   * `skillProgressionFromChoice` cannot carry it: that lane reads the rank off an `effectChoices`
+   * OPTION's `grant.skills`, and a typed Lore has no option to hang on — so the Lore half of the
+   * sentence stayed trained to 20th while the skill half stepped. Applied with `maxRank` beside the
+   * heritage-Lore training in buildCharacter.
+   */
+  loreProgression?: { level: number; rank: ProficiencyRank }[];
+  /**
+   * Strikes from the ANCESTRY that this heritage REPLACES rather than adds to — Sacred Nagaji:
+   * *"INSTEAD OF a fangs unarmed attack, you have a tail attack that deals 1d6 bludgeoning damage…"*
+   *
+   * `collectGrantedNaturals` dedupes on the Strike's own name only, so the heritage's Tail and the
+   * nagaji chassis's Fangs both survived and a sacred nagaji had two unarmed attacks where print gives
+   * one. Names, because that is what the printed sentence names and what the dedupe key already is.
+   * (`Ancestry.heritageAttackReplacesFist` is the neighbouring case — the FIST, not a named chassis
+   * Strike — and cannot say "Fangs".)
+   */
+  replacesStrikes?: string[];
+  /**
+   * Deny Lady Nanbyo's Charity: *"Your vow grants you the strength to carry 1 MORE BULK than normal
+   * before becoming encumbered and up to a MAXIMUM OF 2 more Bulk"* — the same pair `Feat` carries
+   * (see the doc there): `bulkLimitBonus` moves BOTH thresholds, `bulkMaxBonus` the maximum only, so
+   * 1 + 1 prints +1 encumbered / +2 maximum. Nothing on a heritage could hold either number, so the
+   * clause was undelivered while its Athletics half (situationalBonuses.ts) shipped.
+   *
+   * ⚠ NOT Wanderer's Guide's flat BULK_LIMIT_BONUS 2, which would print +2 encumbered — that reading
+   * is on the Rulings Desk.
+   */
+  bulkLimitBonus?: number;
+  bulkMaxBonus?: number;
 }
 
 export interface Background extends ContentBase {
@@ -3083,12 +3167,7 @@ export interface Feat extends ContentBase, DefenseGrants {
    *
    * Every field on `match` must hold; `anyTrait` is the one OR ("agile OR finesse").
    */
-  /**
-   * Weakness types this feat REMOVES ("you no longer gain silver weakness from Werecreature
-   * Dedication"). Every other field adds; there was no way to take one away, so a feat whose whole
-   * point is undoing an earlier drawback left the drawback on the sheet.
-   */
-  removesWeaknesses?: string[];
+  /* `removesWeaknesses` moved to DefenseGrants (which Feat extends) — a HERITAGE removes one too. */
   /**
    * A bonus to the MAXIMUM Bulk limit only, leaving the encumbered limit where it was.
    *
@@ -5408,6 +5487,15 @@ export interface Character {
   /** Resolved always-on effect-choice grants (feat/heritage/feature "choose one of N"): senses / IWR /
    *  speeds the sheet applies. deriveDefenses + deriveSpeeds include these as sources. */
   chosenEffects?: DefenseGrants;
+  /**
+   * Actions the character's ANSWERS granted — an `EffectGrant.grantsActions` on the option they picked
+   * (Grand Metamorphosis: *"You gain one of the evolutions from your surki heritage"*).
+   *
+   * Kept apart from `chosenEffects` (a merged `DefenseGrants` bag with no action lane) and reported by
+   * the engine rather than re-derived, because the answer is the only thing that says WHICH evolution.
+   * Consumed by the sheet's granted-action walk beside each record's own `grantsActions`.
+   */
+  grantedActionIds?: string[];
   /**
    * CREATURE TRAITS the character's ANSWERS granted — an `EffectGrant.grantsCreatureTraits` on the
    * option they picked, or a `grantsCreatureTraitFromChoice` record whose answer IS the trait.

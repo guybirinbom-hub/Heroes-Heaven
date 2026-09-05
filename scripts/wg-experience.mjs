@@ -23,7 +23,7 @@
  *
  * Exit 0 once the artefact is written, whatever the verdicts say — deciding pass/fail is the gate's job.
  */
-import { readFileSync, writeFileSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, statSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -55,11 +55,22 @@ const norm = (s) => String(s ?? '').toLowerCase().replace(/[^a-z0-9]+/g, '');
 /* ---- 1. play the batch on the real builder ------------------------------------------------------- */
 if (!process.argv.includes('--skip-harness')) {
   console.log(`experience: playing ${batchPath ?? characterPath} on the real builder (jsdom) …`);
+  const startedAt = Date.now();
   const r = spawnSync('npx', ['vitest', 'run', 'test/wg-experience.harness.test.tsx', '--reporter=dot'], {
     cwd: ROOT, stdio: 'inherit', shell: true,
     env: { ...process.env, ...(batchPath ? { WG_EXPERIENCE_BATCH: batchPath } : { WG_EXPERIENCE_CHARACTER: join(ROOT, characterPath) }), WG_EXPERIENCE_OUT: RAW },
   });
   if (r.status !== 0) { console.error(`experience: the harness failed (exit ${r.status}); no verdicts written`); process.exit(1); }
+  /* ⚠ A harness that never ran still exits 0: under load vitest can fail to start its forks worker
+   * ("[vitest-pool]: Failed to start forks worker"), report zero tests, and leave the PREVIOUS raw file
+   * in place — which this script then judged as if it were fresh. Batch 27's re-sweep returned the
+   * baseline verdicts verbatim that way, with every data row already applied. The raw file must be
+   * newer than this run, or there is nothing honest to judge. */
+  const rawStat = existsSync(join(ROOT, RAW)) ? statSync(join(ROOT, RAW)) : null;
+  if (!rawStat || rawStat.mtimeMs < startedAt) {
+    console.error(`experience: the harness wrote no fresh output at ${RAW} (worker failed to start?); refusing to judge a stale file — re-run when the machine is idle`);
+    process.exit(1);
+  }
 }
 if (!existsSync(join(ROOT, RAW))) { console.error(`experience: no harness output at ${RAW}`); process.exit(1); }
 

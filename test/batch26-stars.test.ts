@@ -121,14 +121,18 @@ describe('two generated rows corrected against print', () => {
   it('Strong Oak states the grab/restrain/prone extension (heritage-209)', () => {
     /* Printed second sentence: "This bonus also applies to saving throws against effects that would
      * grab you, restrain you, or knock you prone." Both save rows used to stop at "…Grapple you…". */
+    /* Batch 27 aligned this entry to the house shape (the b25 rock-dwarf three-row shape, shared with
+     * sacred-nagaji): one row per DC naming BOTH maneuvers, and the printed second sentence on its own
+     * save:'all' row — so a Will save against a prone-knocking effect shows the star too. */
     const fort = text('strong-oak', 'ghoran', { kind: 'save', save: 'fortitude' });
     const reflex = text('strong-oak', 'ghoran', { kind: 'save', save: 'reflex' });
-    for (const t of [fort, reflex]) {
-      expect(t).toContain('grab, restrain, or knock you prone');
+    const will = text('strong-oak', 'ghoran', { kind: 'save', save: 'will' });
+    for (const t of [fort, reflex, will]) {
+      expect(t).toContain('grab you, restrain you, or knock you prone');
       expect(t).toContain('+2 circumstance');
     }
-    expect(fort).toContain('Fortitude DC vs Grapple');
-    expect(reflex).toContain('Reflex DC vs Trip');
+    expect(fort).toContain('to your Fortitude DC against attempts to Grapple or Trip you');
+    expect(reflex).toContain('to your Reflex DC against attempts to Grapple or Trip you');
     // the elided wording is gone from both
     expect(fort).not.toContain('against attempts to Grapple you…');
     expect(reflex).not.toContain('against attempts to Trip you…');

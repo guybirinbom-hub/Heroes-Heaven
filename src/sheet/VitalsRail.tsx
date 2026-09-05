@@ -737,6 +737,13 @@ export function VitalsRail({
                 <InfoTerm title={senseLabel(s)} description={senseDesc(s.name)}>
                   {senseLabel(s)}
                 </InfoTerm>
+                {/* A range that belongs to ONE stimulus, not to the sense — Carcharodon Merfolk:
+                    *"You gain scent as an imprecise sense with a range of 30 feet. However, you can
+                    smell spilled blood at a range of 120 feet in the air and 500 feet in the water."*
+                    The label can only print the sense's own range, so the second sentence lived
+                    nowhere but the description prose. Rendered on the row, which is where WG binds
+                    it (injectText onto the scent sense itself). */}
+                {s.note && <span className="sh-sub"> — {s.note}</span>}
               </span>
             ))}
           </span>

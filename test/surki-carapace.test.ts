@@ -72,17 +72,23 @@ describe('Dampening Harmonics', () => {
     expect(CATALOG_MODES.some((m) => m.name === 'Dampening Harmonics'), 'a second copy in modes.ts').toBe(false);
   });
 
-  it('is offered to a hardshell surki and to nobody else', () => {
-    const gate = new Set(['hardshell-surki']);
-    expect(modeRelevant(mode, 'fighter', 'surki', gate)).toBe(true);
-    expect(modeRelevant(mode, 'fighter', 'surki', new Set(['lantern-surki']))).toBe(false);
+  it('is offered to a hardshell surki who took the Dampening Harmonics evolution, and to nobody else', () => {
+    /* Batch 27: print (heritage-311) lists the force field under **Evolution**, gained only through
+     * Grand Metamorphosis's pick, so the gate is the `<feat>:<answer>` key `modeGateIds` emits for that
+     * answer — a 1st-level hardshell surki (heritage id alone) is no longer offered a mode for an action
+     * they do not have. */
+    expect(modeRelevant(mode, 'fighter', 'surki', new Set(['grand-metamorphosis:hardshell-field']))).toBe(true);
+    expect(modeRelevant(mode, 'fighter', 'surki', new Set(['hardshell-surki']))).toBe(false);
+    expect(modeRelevant(mode, 'fighter', 'surki', new Set(['grand-metamorphosis:lantern-lens']))).toBe(false);
     expect(modeRelevant(mode, 'fighter', 'surki', new Set())).toBe(false);
   });
 
-  it('the heritage it is gated on is a real record the gate resolver can see', () => {
-    // `modeGateIds()` unions feats + owned class features + heritages; a gate naming something none of
-    // those can hold is a mode no character is ever offered.
-    expect(db.heritages['hardshell-surki']).toBeTruthy();
+  it('the answer it is gated on is a real option of a real feat the gate resolver can see', () => {
+    // `modeGateIds()` unions feats + owned class features + heritages + `<record>:<answer>` for every
+    // answered pick; a gate naming an option no record offers is a mode no character is ever offered.
+    const opt = db.feats['grand-metamorphosis'].choice?.options?.find((o) => o.value === 'hardshell-field');
+    expect(opt).toBeTruthy();
+    expect(opt?.grant?.grantsActions).toContain('dampening-harmonics');
   });
 
   it('carries the resistance as a QUALIFIED entry, so it never inflates the total', () => {
@@ -92,8 +98,11 @@ describe('Dampening Harmonics', () => {
     expect(r!.against).toMatch(/force/i);
   });
 
-  it('the action that turns it on is granted by the heritage', () => {
-    expect(db.heritages['hardshell-surki'].grantsActions).toContain('dampening-harmonics');
+  it('the action that turns it on is granted by the Grand Metamorphosis evolution, not the heritage (batch 27)', () => {
+    // Print gates every surki Evolution behind the 9th-level feat; the heritage itself grants only the carapace.
+    expect(db.heritages['hardshell-surki'].grantsActions ?? []).not.toContain('dampening-harmonics');
+    const opt = db.feats['grand-metamorphosis'].choice?.options?.find((o) => o.value === 'hardshell-field');
+    expect(opt?.grant?.grantsActions).toContain('dampening-harmonics');
     expect(db.actions['dampening-harmonics']).toBeTruthy();
   });
 });

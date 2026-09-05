@@ -312,7 +312,21 @@ export function MainTab({
       .map((inv) => content.items[inv.itemId])
       .filter((it): it is NonNullable<typeof it> => !!it?.grantsActions?.length),
   ]
-    .flatMap((f) => (f?.grantsActions ?? []).map((id) => ({ id, from: f! })))
+    .flatMap((f): { id: string; from: { id: string; name: string; limitedUses?: LimitedUses } }[] =>
+      (f?.grantsActions ?? []).map((id) => ({ id, from: f! })),
+    )
+    /*
+     * …and an action an ANSWER granted rather than a record. Grand Metamorphosis (Feat 9): *"You gain
+     * ONE of the evolutions from your surki heritage"* — the option's `grantsActions` is resolved into
+     * `Character.grantedActionIds` by buildCharacter, and this walk reads records only, so the
+     * evolution the player picked reached the character and never the action list.
+     */
+    .concat(
+      (character.grantedActionIds ?? []).flatMap((id) => {
+        const act = content.actions[id];
+        return act ? [{ id, from: act }] : [];
+      }),
+    )
     .map(({ id, from }) => {
       const act = content.actions[id];
       // The ACTION's own limit wins when it carries one (Raise the Horde prints once per 10 minutes

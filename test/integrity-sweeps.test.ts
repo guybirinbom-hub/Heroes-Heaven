@@ -109,6 +109,24 @@ describe('a grant that points at nothing', () => {
     expect(dead).toEqual([]);
   });
 
+  /**
+   * Does the record `base` actually offer `answer`?
+   *
+   * BOTH shapes of question, because a record asks its "choose one of N" either way and a gate cannot
+   * know which: Grand Metamorphosis's evolution pick moved from `choice` to `effectChoices` (its
+   * options carry grants), and reading only `choice` would have called the Digging Wedge's live gate
+   * dead. Shared by the two mode sweeps below, which must agree about what a real gate is.
+   */
+  const offersAnswer = (base: string, answer: string): boolean => {
+    const rec = (db.feats[base] ?? db.classFeatures[base] ?? db.heritages[base]) as
+      | { choice?: { options?: { value: string }[] }; effectChoices?: { options?: { value: string }[] }[] }
+      | undefined;
+    return [
+      ...(rec?.choice?.options ?? []),
+      ...(rec?.effectChoices ?? []).flatMap((ch) => ch.options ?? []),
+    ].some((o) => o.value === answer);
+  };
+
   it('every mode names a real item and a real gate', () => {
     const dead: string[] = [];
     for (const [id, m] of Object.entries(db.modes ?? {})) {
@@ -127,10 +145,8 @@ describe('a grant that points at nothing', () => {
           dead.push(`modes/${id} gate ${f}`);
           continue;
         }
-        if (answer) {
-          const rec = (db.feats[base] ?? db.classFeatures[base] ?? db.heritages[base]) as { choice?: { options?: { value: string }[] } };
-          const offered = (rec?.choice?.options ?? []).map((o) => o.value);
-          if (!offered.includes(answer)) dead.push(`modes/${id} gate ${f} — "${answer}" is not one of its choice options`);
+        if (answer && !offersAnswer(base, answer)) {
+          dead.push(`modes/${id} gate ${f} — "${answer}" is not one of its choice options`);
         }
       }
     }
@@ -165,7 +181,16 @@ describe('a grant that points at nothing', () => {
     for (const m of CATALOG_MODES) {
       if (AWAITING_CONTENT.has(m.id)) continue;
       for (const f of m.feats ?? []) {
-        if (!has('feats', f) && !has('classFeatures', f) && !has('heritages', f)) dead.push(`${m.id} feat gate ${f}`);
+        /* `<recordId>:<answer>`, the same shape the db.modes sweep above accepts — this one split on
+         * nothing, so the first ANSWER-gated catalogue mode (the breaker surki's Digging Wedge, which
+         * belongs only to the player who picked that evolution) read as a gate on a record that does
+         * not exist. */
+        const [base, answer] = String(f).split(':');
+        if (!has('feats', base) && !has('classFeatures', base) && !has('heritages', base)) {
+          dead.push(`${m.id} feat gate ${f}`);
+          continue;
+        }
+        if (answer && !offersAnswer(base, answer)) dead.push(`${m.id} feat gate ${f} — "${answer}" is not one of its choice options`);
       }
       for (const a of m.ancestries ?? []) {
         if (!has('ancestries', a) && !has('heritages', a)) dead.push(`${m.id} ancestry gate ${a}`);
@@ -216,7 +241,8 @@ describe('a grant that points at nothing', () => {
 });
 
 describe('a data field nothing reads', () => {
-  it('every field the overlay writes has a reader in src', () => {
+  // Scans every src file for every overlay field — well over 5 s when the whole suite runs in parallel.
+  it('every field the overlay writes has a reader in src', { timeout: 60_000 }, () => {
     // "Authored but dead" is this codebase's most common way for a fix to be wrong: the record looks
     // fixed, the audit records it fixed, and the engine never looks.
     let src = '';
@@ -278,7 +304,7 @@ describe('a cantrip grant that quietly grants slots', () => {
 });
 
 describe('a field that only LOOKS read', () => {
-  it('every backfilled field is read in a file that knows its collection', () => {
+  it('every backfilled field is read in a file that knows its collection', { timeout: 60_000 }, () => {
     /*
      * The dead-field sweep further down matches a field NAME anywhere in src, which lets a field pass
      * by matching a DIFFERENT type's use of the same word. `note` did exactly that: it is a real field

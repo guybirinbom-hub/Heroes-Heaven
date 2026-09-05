@@ -463,6 +463,10 @@ export function DetailsTab({
               {senses.map((s) => (
                 <InfoTerm className="lang-pill" key={s.name} title={senseLabel(s)} description={senseDesc(s.name)}>
                   {senseLabel(s)}
+                  {/* A record's own clause on the sense (Carcharodon Merfolk: "You can smell spilled blood
+                      at 120 feet in the air and 500 feet in the water") — the vitals rail shows it, and
+                      the Details page must not disagree with it. */}
+                  {s.note ? <span className="sh-sub"> — {s.note}</span> : null}
                 </InfoTerm>
               ))}
             </div>

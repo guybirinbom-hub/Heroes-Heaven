@@ -1,0 +1,46 @@
+{
+ "findings": [
+  {
+   "id": "hardshell-surki#reinforcing-network",
+   "backfillRows": [
+    {
+     "category": "actions",
+     "id": "reinforcing-network",
+     "create": true,
+     "value": {
+      "id": "reinforcing-network",
+      "name": "Reinforcing Network",
+      "traits": [
+       "magical"
+      ],
+      "rarity": "common",
+      "actionCost": {
+       "type": "reaction"
+      },
+      "source": {
+       "book": "Pathfinder Howl of the Wild",
+       "license": "ORC"
+      },
+      "aonParentId": "heritage-311",
+      "aonSection": "Reinforcing Network"
+     },
+     "why": "wg-batch-027: heritage-311's first Evolution (\"If you're struck by a critical hit that deals physical damage, you can use your reaction to attempt a DC 17 flat check. If successful, the attack becomes a normal hit\") had no action record, so Grand Metamorphosis's hardshell-network option granted nothing. Shape mirrors actions/dampening-harmonics (the same heritage's other Evolution)."
+    }
+   ],
+   "note": "granted by feats/grand-metamorphosis option hardshell-network (grant.grantsActions) — the option grant is in spec 1."
+  },
+  {
+   "id": "directed-channel#desc",
+   "backfillRows": [
+    {
+     "category": "feats",
+     "id": "directed-channel",
+     "field": "description",
+     "value": "You can shape the energy you channel in a single direction. When you cast a version of harm or heal that has an area, you can make its area a 60-foot cone instead of a 30-foot emanation.",
+     "why": "wg-batch-027: the shipped fallback read \"make its area a instead of a .\" — the de-linkifier ate the two measurements beside stripped auto-links (the same mangle as nyktera#desc). Text from public/ast/feats.json.gz, which renders correctly. Out of batch, one row, found by the batch-27 data verifier."
+    }
+   ],
+   "note": "same defect class as nyktera#desc; the corpus-wide sweep (263 records) is a separate task guarded by the dropped-inline ratchet."
+  }
+ ]
+}

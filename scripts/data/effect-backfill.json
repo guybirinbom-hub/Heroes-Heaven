@@ -9065,9 +9065,11 @@
    {
     "name": "scent",
     "range": 30,
-    "acuity": "imprecise"
+    "acuity": "imprecise",
+    "note": "You can smell spilled blood at a range of 120 feet in the air and 500 feet in the water."
    }
-  ]
+  ],
+  "why": "wg-batch-027 carcharodon-merfolk#blood-range. SUPERSEDES the shipped senses row. Print 'you can smell spilled blood at a range of 120 feet in the air and 500 feet in the water' had no carrier at all, so the Senses row read 'scent 30 ft (imprecise)' and the sentence survived only as description prose. READER PENDING: engine agent 1 adds SenseEntry.note."
  },
  {
   "category": "heritages",
@@ -18813,47 +18815,54 @@
   "value": [
    {
     "id": "poppet-material",
-    "prompt": "Choose your body's primary material (sets your poppet weakness)",
+    "prompt": "Choose your body's primary material (it changes which damage type your poppet weakness applies to)",
     "options": [
      {
       "value": "wood-cloth",
-      "label": "Wood or cloth (normal poppet weakness 5 to fire)",
+      "label": "Wood or cloth (the normal poppet weakness to fire)",
       "grant": {
        "weaknesses": [
         {
          "type": "fire",
-         "value": 5
+         "value": "max(1,floor(@actor.level/3))"
         }
        ]
       }
      },
      {
       "value": "metal",
-      "label": "Metal (weakness 5 to electricity instead)",
+      "label": "Metal (weak to electricity instead of fire)",
       "grant": {
        "weaknesses": [
         {
          "type": "electricity",
-         "value": 5
+         "value": "max(1,floor(@actor.level/3))"
         }
+       ],
+       "removesWeaknesses": [
+        "fire"
        ]
       }
      },
      {
       "value": "ceramic",
-      "label": "Ceramic (weakness 5 to cold instead)",
+      "label": "Ceramic (weak to cold instead of fire)",
       "grant": {
        "weaknesses": [
         {
          "type": "cold",
-         "value": 5
+         "value": "max(1,floor(@actor.level/3))"
         }
+       ],
+       "removesWeaknesses": [
+        "fire"
        ]
       }
      }
     ]
    }
-  ]
+  ],
+  "why": "wg-batch-027 tsukumogami-poppet#weakness-value + #fire-not-removed. SUPERSEDES the shipped effectChoices row. Value: heritage-383 changes only the TYPE ('you're instead weak to electricity'), so the number is the poppet chassis' Flammable — 'weakness to fire damage equal to one-third your level (minimum 1)' — mirroring ancestries/poppet.weaknesses exactly instead of a flat 5. Removal: 'INSTEAD' means the fire weakness goes; nothing on our side could drop it, so metal picked up electricity ON TOP of fire. READER PENDING for removesWeaknesses on a heritage option (engine agent 2)."
  },
  {
   "category": "feats",
@@ -23282,7 +23291,7 @@
   "value": [
    {
     "id": "skill",
-    "prompt": "Trained skill — Performance (pick another only if you're already trained in Performance); also grants Summon Instrument as a divine innate cantrip",
+    "prompt": "Trained skill — Performance (pick another only if you're already trained in Performance)",
     "options": [
      {
       "value": "performance",
@@ -23290,14 +23299,7 @@
       "grant": {
        "skills": {
         "performance": "trained"
-       },
-       "innateSpells": [
-        {
-         "spellId": "summon-instrument",
-         "tradition": "divine",
-         "atWill": true
-        }
-       ]
+       }
       }
      },
      {
@@ -23306,14 +23308,7 @@
       "grant": {
        "skills": {
         "acrobatics": "trained"
-       },
-       "innateSpells": [
-        {
-         "spellId": "summon-instrument",
-         "tradition": "divine",
-         "atWill": true
-        }
-       ]
+       }
       }
      },
      {
@@ -23322,14 +23317,7 @@
       "grant": {
        "skills": {
         "arcana": "trained"
-       },
-       "innateSpells": [
-        {
-         "spellId": "summon-instrument",
-         "tradition": "divine",
-         "atWill": true
-        }
-       ]
+       }
       }
      },
      {
@@ -23338,14 +23326,7 @@
       "grant": {
        "skills": {
         "athletics": "trained"
-       },
-       "innateSpells": [
-        {
-         "spellId": "summon-instrument",
-         "tradition": "divine",
-         "atWill": true
-        }
-       ]
+       }
       }
      },
      {
@@ -23354,14 +23335,7 @@
       "grant": {
        "skills": {
         "crafting": "trained"
-       },
-       "innateSpells": [
-        {
-         "spellId": "summon-instrument",
-         "tradition": "divine",
-         "atWill": true
-        }
-       ]
+       }
       }
      },
      {
@@ -23370,14 +23344,7 @@
       "grant": {
        "skills": {
         "deception": "trained"
-       },
-       "innateSpells": [
-        {
-         "spellId": "summon-instrument",
-         "tradition": "divine",
-         "atWill": true
-        }
-       ]
+       }
       }
      },
      {
@@ -23386,14 +23353,7 @@
       "grant": {
        "skills": {
         "diplomacy": "trained"
-       },
-       "innateSpells": [
-        {
-         "spellId": "summon-instrument",
-         "tradition": "divine",
-         "atWill": true
-        }
-       ]
+       }
       }
      },
      {
@@ -23402,14 +23362,7 @@
       "grant": {
        "skills": {
         "intimidation": "trained"
-       },
-       "innateSpells": [
-        {
-         "spellId": "summon-instrument",
-         "tradition": "divine",
-         "atWill": true
-        }
-       ]
+       }
       }
      },
      {
@@ -23418,14 +23371,7 @@
       "grant": {
        "skills": {
         "medicine": "trained"
-       },
-       "innateSpells": [
-        {
-         "spellId": "summon-instrument",
-         "tradition": "divine",
-         "atWill": true
-        }
-       ]
+       }
       }
      },
      {
@@ -23434,14 +23380,7 @@
       "grant": {
        "skills": {
         "nature": "trained"
-       },
-       "innateSpells": [
-        {
-         "spellId": "summon-instrument",
-         "tradition": "divine",
-         "atWill": true
-        }
-       ]
+       }
       }
      },
      {
@@ -23450,14 +23389,7 @@
       "grant": {
        "skills": {
         "occultism": "trained"
-       },
-       "innateSpells": [
-        {
-         "spellId": "summon-instrument",
-         "tradition": "divine",
-         "atWill": true
-        }
-       ]
+       }
       }
      },
      {
@@ -23466,14 +23398,7 @@
       "grant": {
        "skills": {
         "religion": "trained"
-       },
-       "innateSpells": [
-        {
-         "spellId": "summon-instrument",
-         "tradition": "divine",
-         "atWill": true
-        }
-       ]
+       }
       }
      },
      {
@@ -23482,14 +23407,7 @@
       "grant": {
        "skills": {
         "society": "trained"
-       },
-       "innateSpells": [
-        {
-         "spellId": "summon-instrument",
-         "tradition": "divine",
-         "atWill": true
-        }
-       ]
+       }
       }
      },
      {
@@ -23498,14 +23416,7 @@
       "grant": {
        "skills": {
         "stealth": "trained"
-       },
-       "innateSpells": [
-        {
-         "spellId": "summon-instrument",
-         "tradition": "divine",
-         "atWill": true
-        }
-       ]
+       }
       }
      },
      {
@@ -23514,14 +23425,7 @@
       "grant": {
        "skills": {
         "survival": "trained"
-       },
-       "innateSpells": [
-        {
-         "spellId": "summon-instrument",
-         "tradition": "divine",
-         "atWill": true
-        }
-       ]
+       }
       }
      },
      {
@@ -23530,19 +23434,13 @@
       "grant": {
        "skills": {
         "thievery": "trained"
-       },
-       "innateSpells": [
-        {
-         "spellId": "summon-instrument",
-         "tradition": "divine",
-         "atWill": true
-        }
-       ]
+       }
       }
      }
     ]
    }
-  ]
+  ],
+  "why": "wg-batch-027 gandharva#dup-innate. SUPERSEDES the shipped effectChoices row. Print grants Summon Instrument unconditionally, so the record-level innateSpells is the carrier; the 16 duplicate option copies were dropped by the seenInnate dedupe (build.ts:7159) and the doubled prompt was the only player-visible half."
  },
  {
   "category": "heritages",
@@ -24803,795 +24701,23 @@
   "value": [
    {
     "id": "occultPrimalCantrip",
-    "prompt": "Choose occult or primal, then one cantrip from that tradition (cast at will as an innate spell of that tradition, heightened to half your level rounded up)",
-    "options": [
-     {
-      "value": "caustic-blast",
-      "label": "Caustic Blast",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "caustic-blast",
-         "tradition": "primal",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "approximate",
-      "label": "Approximate",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "approximate",
-         "tradition": "occult",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "bullhorn",
-      "label": "Bullhorn",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "bullhorn",
-         "tradition": "occult",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "daze",
-      "label": "Daze",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "daze",
-         "tradition": "occult",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "deep-breath",
-      "label": "Deep Breath",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "deep-breath",
-         "tradition": "primal",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "detect-magic",
-      "label": "Detect Magic",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "detect-magic",
-         "tradition": "occult",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "detect-metal",
-      "label": "Detect Metal",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "detect-metal",
-         "tradition": "occult",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "draw-moisture",
-      "label": "Draw Moisture",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "draw-moisture",
-         "tradition": "primal",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "eat-fire",
-      "label": "Eat Fire",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "eat-fire",
-         "tradition": "occult",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "electric-arc",
-      "label": "Electric Arc",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "electric-arc",
-         "tradition": "primal",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "figment",
-      "label": "Figment",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "figment",
-         "tradition": "occult",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "forbidding-ward",
-      "label": "Forbidding Ward",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "forbidding-ward",
-         "tradition": "occult",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "frostbite",
-      "label": "Frostbite",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "frostbite",
-         "tradition": "primal",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "gale-blast",
-      "label": "Gale Blast",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "gale-blast",
-         "tradition": "primal",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "glamorize",
-      "label": "Glamorize",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "glamorize",
-         "tradition": "occult",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "glass-shield",
-      "label": "Glass Shield",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "glass-shield",
-         "tradition": "primal",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "gouging-claw",
-      "label": "Gouging Claw",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "gouging-claw",
-         "tradition": "primal",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "guidance",
-      "label": "Guidance",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "guidance",
-         "tradition": "occult",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "haunting-hymn",
-      "label": "Haunting Hymn",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "haunting-hymn",
-         "tradition": "occult",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "healing-plaster",
-      "label": "Healing Plaster",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "healing-plaster",
-         "tradition": "primal",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "ignition",
-      "label": "Ignition",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "ignition",
-         "tradition": "primal",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "illuminate",
-      "label": "Illuminate",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "illuminate",
-         "tradition": "occult",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "infectious-enthusiasm",
-      "label": "Infectious Enthusiasm",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "infectious-enthusiasm",
-         "tradition": "occult",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "know-the-way",
-      "label": "Know the Way",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "know-the-way",
-         "tradition": "occult",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "light",
-      "label": "Light",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "light",
-         "tradition": "occult",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "live-wire",
-      "label": "Live Wire",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "live-wire",
-         "tradition": "primal",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "message",
-      "label": "Message",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "message",
-         "tradition": "occult",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "musical-accompaniment",
-      "label": "Musical Accompaniment",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "musical-accompaniment",
-         "tradition": "occult",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "needle-darts",
-      "label": "Needle Darts",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "needle-darts",
-         "tradition": "occult",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "phase-bolt",
-      "label": "Phase Bolt",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "phase-bolt",
-         "tradition": "occult",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "prestidigitation",
-      "label": "Prestidigitation",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "prestidigitation",
-         "tradition": "occult",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "protect-companion",
-      "label": "Protect Companion",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "protect-companion",
-         "tradition": "occult",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "puff-of-poison",
-      "label": "Puff of Poison",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "puff-of-poison",
-         "tradition": "primal",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "read-aura",
-      "label": "Read Aura",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "read-aura",
-         "tradition": "occult",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "read-the-air",
-      "label": "Read the Air",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "read-the-air",
-         "tradition": "occult",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "root-reading",
-      "label": "Root Reading",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "root-reading",
-         "tradition": "primal",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "rousing-splash",
-      "label": "Rousing Splash",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "rousing-splash",
-         "tradition": "primal",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "scatter-scree",
-      "label": "Scatter Scree",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "scatter-scree",
-         "tradition": "primal",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "shield",
-      "label": "Shield",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "shield",
-         "tradition": "occult",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "sigil",
-      "label": "Sigil",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "sigil",
-         "tradition": "occult",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "slashing-gust",
-      "label": "Slashing Gust",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "slashing-gust",
-         "tradition": "primal",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "spout",
-      "label": "Spout",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "spout",
-         "tradition": "primal",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "stabilize",
-      "label": "Stabilize",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "stabilize",
-         "tradition": "primal",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "summon-instrument",
-      "label": "Summon Instrument",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "summon-instrument",
-         "tradition": "occult",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "take-root",
-      "label": "Take Root",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "take-root",
-         "tradition": "primal",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "tame",
-      "label": "Tame",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "tame",
-         "tradition": "occult",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "tangle-vine",
-      "label": "Tangle Vine",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "tangle-vine",
-         "tradition": "primal",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "telekinetic-hand",
-      "label": "Telekinetic Hand",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "telekinetic-hand",
-         "tradition": "occult",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "telekinetic-projectile",
-      "label": "Telekinetic Projectile",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "telekinetic-projectile",
-         "tradition": "occult",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "timber",
-      "label": "Timber",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "timber",
-         "tradition": "primal",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "time-sense",
-      "label": "Time Sense",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "time-sense",
-         "tradition": "occult",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "tremor-signs",
-      "label": "Tremor Signs",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "tremor-signs",
-         "tradition": "occult",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "vitality-lash",
-      "label": "Vitality Lash",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "vitality-lash",
-         "tradition": "primal",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "void-warp",
-      "label": "Void Warp",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "void-warp",
-         "tradition": "occult",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "warp-step",
-      "label": "Warp Step",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "warp-step",
-         "tradition": "occult",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
-     },
-     {
-      "value": "wash-your-luck",
-      "label": "Wash Your Luck",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "wash-your-luck",
-         "tradition": "occult",
-         "atWill": true,
-         "heightenHalfLevel": true
-        }
-       ]
-      }
+    "prompt": "A cantrip from your chosen tradition's spell list (cast at will as an innate spell of that tradition, heightened to a rank equal to half your level rounded up)",
+    "spellFilter": {
+     "traditions": [
+      "occult",
+      "primal"
+     ],
+     "traditionFromChoiceFlag": "spellkeeperTradition",
+     "cantripsOnly": true,
+     "grantAs": "innate",
+     "innate": {
+      "atWill": true,
+      "heightenHalfLevel": true
      }
-    ]
+    }
    }
-  ]
+  ],
+  "why": "wg-batch-027 spellkeeper-shisk#tradition-gate. SUPERSEDES the shipped 56-option effectChoices row. Print: 'You gain one cantrip from THAT magical tradition's spell list... as a spell of your chosen tradition' — the flat list hard-coded a tradition per option and pinned all 16 dual-list cantrips to occult. Same spellFilter shape as feats/sequestered-spell (traditionFromChoiceFlag 'magiphageTradition') and heritages/wellspring-gnome. ⚠ THE CHOICE ID IS DELIBERATELY UNCHANGED ('occultPrimalCantrip'): an effectChoices answer is stored under `<heritageId>:<choiceId>`, so renaming the id would orphan the cantrip every existing spellkeeper shisk already picked. The old and new answer spaces are both a spellId, so keeping the id migrates every saved character for free — and an answer that is now the wrong tradition is dropped by the filter, which is the fix working."
  },
  {
   "category": "heritages",
@@ -30851,7 +29977,8 @@
   "category": "heritages",
   "id": "respite-of-a-thousand-roofs",
   "field": "dataWarning",
-  "value": "Part of this effect references content missing from the current data — apply it manually. (FEAT_GRANTS: id not in feats/classFeatures)"
+  "value": null,
+  "why": "wg-batch-027 respite-of-a-thousand-roofs#crafting: the warning told the player to apply the Crafting/Cooking Lore training by hand because the FEAT_GRANTS lane rejected heritage ids. grantSourcesForProficiency now walks heritages (build.ts:4954-4956), so the warning is stale once engine agent 1's featGrants.ts row lands. ⚠ apply together with that row."
  },
  {
   "category": "heritages",
@@ -67959,41 +67086,106 @@
    "flag": "surkiEvolution",
    "prompt": "Evolution",
    "kind": "array",
+   "note": "Print: 'You gain one of the evolutions from your surki heritage.' Only your own heritage's evolutions are offered.",
    "options": [
     {
      "value": "breaker-wedge",
-     "label": "Breaker — Digging Wedge (claw becomes 1d6, magical/razing/versatile force)"
+     "label": "Breaker — Digging Wedge (claw becomes 1d6, magical/razing/versatile force, loses agile)",
+     "requiresAnyFeature": [
+      "breaker-surki"
+     ]
     },
     {
      "value": "breaker-spikes",
-     "label": "Breaker — Grounding Claw Spikes (halve forced movement, Trench Digging)"
+     "label": "Breaker — Grounding Claw Spikes (halve forced movement, Trench Digging)",
+     "requiresAnyFeature": [
+      "breaker-surki"
+     ],
+     "grant": {
+      "grantsActions": [
+       "trench-digging"
+      ]
+     }
     },
     {
      "value": "elytron-wings",
-     "label": "Elytron — Energized Wings (Fly 1/day, sheds light)"
+     "label": "Elytron — Energized Wings (Fly 1/day, sheds light)",
+     "requiresAnyFeature": [
+      "elytron-surki"
+     ],
+     "grant": {
+      "innateSpells": [
+       {
+        "spellId": "fly",
+        "usesPerDay": 1,
+        "traditionFromChoiceFlag": "magiphageTradition"
+       }
+      ]
+     }
     },
     {
      "value": "elytron-membranes",
-     "label": "Elytron — Resonating Membranes (Stridulating Song)"
+     "label": "Elytron — Resonating Membranes (Stridulating Song)",
+     "requiresAnyFeature": [
+      "elytron-surki"
+     ],
+     "grant": {
+      "grantsActions": [
+       "stridulating-song"
+      ]
+     }
     },
     {
      "value": "hardshell-network",
-     "label": "Hardshell — Reinforcing Network (reaction to downgrade a crit)"
+     "label": "Hardshell — Reinforcing Network (reaction: DC 17 flat check to downgrade a critical hit)",
+     "requiresAnyFeature": [
+      "hardshell-surki"
+     ],
+     "grant": {
+      "grantsActions": [
+       "reinforcing-network"
+      ]
+     }
     },
     {
      "value": "hardshell-field",
-     "label": "Hardshell — Dampening Harmonics"
+     "label": "Hardshell — Dampening Harmonics",
+     "requiresAnyFeature": [
+      "hardshell-surki"
+     ],
+     "grant": {
+      "grantsActions": [
+       "dampening-harmonics"
+      ]
+     }
     },
     {
      "value": "lantern-lens",
-     "label": "Lantern — Focusing Lens (Lantern Beam)"
+     "label": "Lantern — Focusing Lens (Lantern Beam)",
+     "requiresAnyFeature": [
+      "lantern-surki"
+     ],
+     "grant": {
+      "grantsActions": [
+       "lantern-beam"
+      ]
+     }
     },
     {
      "value": "lantern-strobe",
-     "label": "Lantern — Secondary Emitters (Lantern Strobe)"
+     "label": "Lantern — Secondary Emitters (Lantern Strobe)",
+     "requiresAnyFeature": [
+      "lantern-surki"
+     ],
+     "grant": {
+      "grantsActions": [
+       "lantern-strobe"
+      ]
+     }
     }
    ]
-  }
+  },
+  "why": "wg-batch-027 surki cluster. SUPERSEDES the shipped grand-metamorphosis choice row. Print (feat-5393, Feat 9): 'One of your nodes has adapted into a new magic-emitting organ. You gain one of the evolutions from your surki heritage' — the pick existed and granted NOTHING (grep of src/ for 'surkiEvolution' returns zero readers), while all four heritages handed their evolution over at 1st level for free. Each option now carries its printed grant (reader: applyAlwaysOn, build.ts:5484-5501), and requiresAnyFeature pins each to its own heritage — 'from YOUR surki heritage' — through the heritage-resolving narrowChoiceOptions built in batch 26. breaker-wedge's payload is the mode engine agent 2 builds; hardshell-network has no action record to grant (WG ships it as prose too)."
  },
  {
   "category": "feats",
@@ -89601,33 +88793,29 @@
   "category": "heritages",
   "id": "breaker-surki",
   "field": "grantsActions",
-  "value": [
-   "trench-digging"
-  ]
+  "value": null,
+  "why": "wg-batch-027 breaker-surki#trench-digging-ungated. SUPERSEDES the shipped grantsActions row. Trench Digging is printed inside an **Evolution** block, and heritage-309 grants no evolution — Grand Metamorphosis (Feat 9) is the only route. It now hangs on that feat's 'breaker-spikes' option."
  },
  {
   "category": "heritages",
   "id": "elytron-surki",
   "field": "grantsActions",
-  "value": [
-   "stridulating-song"
-  ]
+  "value": null,
+  "why": "wg-batch-027 elytron-surki#evolutions. SUPERSEDES the shipped grantsActions row. Stridulating Song is heritage-310's second **Evolution**; elytron was the only heritage shipping BOTH evolutions free at level 1. Now on grand-metamorphosis' 'elytron-membranes' option."
  },
  {
   "category": "heritages",
   "id": "hardshell-surki",
   "field": "grantsActions",
-  "value": [
-   "dampening-harmonics"
-  ]
+  "value": null,
+  "why": "wg-batch-027 hardshell-surki#evolution-overgrant. SUPERSEDES the shipped grantsActions row. heritage-311's base paragraph is the carapace alone; Dampening Harmonics is an **Evolution** bullet, so a once-per-hour resistance-10 field reached every 1st-level hardshell surki. Now on grand-metamorphosis' 'hardshell-field' option. (grantsItems for the carapace is untouched — that IS the base benefit.)"
  },
  {
   "category": "heritages",
   "id": "lantern-surki",
   "field": "grantsActions",
-  "value": [
-   "lantern-beam"
-  ]
+  "value": null,
+  "why": "wg-batch-027 lantern-surki#evolution-overgrant. SUPERSEDES the shipped grantsActions row. heritage-312's base paragraph is only the Interact-action lantern light; Lantern Beam is an **Evolution** bullet, so every 1st-level lantern surki was handed a 5d4-fire 30-foot line eight levels early. Now on grand-metamorphosis' 'lantern-lens' option."
  },
  {
   "category": "heritages",
@@ -141467,12 +140655,8 @@
   "category": "heritages",
   "id": "elytron-surki",
   "field": "innateSpells",
-  "value": [
-   {
-    "spellId": "fly",
-    "usesPerDay": 1
-   }
-  ]
+  "value": null,
+  "why": "wg-batch-027 elytron-surki#evolutions + #fly-tradition. SUPERSEDES the shipped innateSpells row. Fly 1/day is heritage-310's first **Evolution**, not a 1st-level benefit; it moves to grand-metamorphosis' 'elytron-wings' option, where it also gains traditionFromChoiceFlag:'magiphageTradition' — the surki ancestry's Magiphage clause 'changes the tradition of all surki spells and magical actions to that tradition', while the bare grant fell back to the spell's first tradition (arcane) at build.ts:7255. immunities:['falling damage'] stays on the record: that is the printed 1st-level benefit."
  },
  {
   "category": "feats",
@@ -168330,5 +167514,410 @@
   "field": "doomedValueReduction",
   "value": 1,
   "why": "wg-batch-026: heritage-352 prints \"The doomed condition affects you as if its value were 1 lower\" — a NUMBER the death threshold reads (DefenseGrants.doomedValueReduction → Character.doomedReduction → dyingDeathThreshold), beside the stars agent's condition mark."
+ },
+ {
+  "category": "heritages",
+  "id": "titan-nagaji",
+  "field": "grantsItems",
+  "value": [
+   {
+    "itemId": "titan-nagaji-scales",
+    "quantity": 1,
+    "worn": true
+   }
+  ],
+  "why": "wg-batch-027 titan-nagaji: print 'Your scales are medium armor in the plate armor group that grant a +4 item bonus to AC... You can never wear other armor or remove your scales.' — the item existed unowned and nothing handed it over, so the +4 AC, Dex cap, check and Speed penalties reached no sheet. worn:true is the same 'never removable' flag hardshell-surki-carapace uses."
+ },
+ {
+  "category": "heritages",
+  "id": "draxie",
+  "field": "senses",
+  "value": [
+   {
+    "name": "touch-telepathy",
+    "range": 0
+   }
+  ],
+  "why": "wg-batch-027 draxie: print 'You gain touch telepathy... communicate silently and purely mentally with any creature you're touching' was the heritage's ONLY benefit and the record was bare. Mirrors feats/arcane-communication's {name:'touch-telepathy',range:0}."
+ },
+ {
+  "category": "heritages",
+  "id": "sacred-nagaji",
+  "field": "replacesStrikes",
+  "value": [
+   "Fangs"
+  ],
+  "why": "wg-batch-027 sacred-nagaji#fangs: print reads 'INSTEAD OF a fangs unarmed attack, you have a tail attack' — ours kept both. READER PENDING: engine agent 1 adds Heritage.replacesStrikes + the seed in build.ts collectGrantedNaturals."
+ },
+ {
+  "category": "heritages",
+  "id": "leungli",
+  "field": "grantsCreatureTraits",
+  "value": [
+   "amphibious"
+  ],
+  "why": "wg-batch-027 leungli#amphibious: print 'you gain... the amphibious trait... you can breathe both water and air' — the record had the swim Speed but no creature trait, so a Leungli drowned on our sheet. Same carrier as aquatic-elf/tidepool-dragonet."
+ },
+ {
+  "category": "heritages",
+  "id": "lorekeeper-shisk",
+  "field": "loreChoices",
+  "value": 1,
+  "why": "wg-batch-027 lorekeeper-shisk#lore: print 'You become trained in ONE LORE SKILL and one other Intelligence- or Wisdom-based skill' — the Lore was never picked and never trained."
+ },
+ {
+  "category": "heritages",
+  "id": "lorekeeper-shisk",
+  "field": "skillProgressionFromChoice",
+  "value": {
+   "choiceId": "int-wis-skill",
+   "at": [
+    {
+     "level": 5,
+     "rank": "expert"
+    }
+   ]
+  },
+  "why": "wg-batch-027 lorekeeper-shisk#expert: print 'At 5th level, you become expert in the chosen skills' — the option grants were flat 'trained' with no level term, so a 5th-level Lorekeeper Shisk was a rank short. Mirrors heritages/ancient-ash."
+ },
+ {
+  "category": "heritages",
+  "id": "lorekeeper-shisk",
+  "field": "loreProgression",
+  "value": [
+   {
+    "level": 5,
+    "rank": "expert"
+   }
+  ],
+  "why": "wg-batch-027 lorekeeper-shisk#expert, the LORE half of the same plural sentence. A typed Lore carries no effectChoices option, so skillProgressionFromChoice (which reads opt.grant.skills) can never reach it; Heritage.loreProgression is the reader engine agent 1 added for exactly this clause (build.ts:3102-3111) and it had no row to read."
+ },
+ {
+  "category": "heritages",
+  "id": "nyktera",
+  "field": "description",
+  "value": "You have batlike features, an affinity for batkind, and hearing that is second to none. As long as you can hear normally, you can use the Seek action to sense undetected creatures in a 60-foot cone instead of a 30-foot cone. You also gain a +2 circumstance bonus to locate undetected creatures that you could hear within 30 feet with a Seek action.",
+  "why": "wg-batch-027 nyktera#desc: print 'sense undetected creatures in a 60-foot cone instead of a 30-foot cone'; the shipped 'd' read 'in a instead of a .' — both measurements lost with the stripped cone link."
+ },
+ {
+  "category": "heritages",
+  "id": "deny-lady-nanbyos-charity",
+  "field": "bulkLimitBonus",
+  "value": 1,
+  "why": "wg-batch-027 deny-lady-nanbyos-charity#bulk: print 'carry 1 more Bulk than normal before becoming encumbered' — no carrier existed on the heritage at all. READER PENDING (engine agent 1: Heritage.bulkLimitBonus + deriveBulk heritage arm)."
+ },
+ {
+  "category": "heritages",
+  "id": "deny-lady-nanbyos-charity",
+  "field": "bulkMaxBonus",
+  "value": 1,
+  "why": "wg-batch-027 deny-lady-nanbyos-charity#bulk: print '...and up to a maximum of 2 more Bulk' — bulkLimitBonus supplies the first point to both thresholds, this supplies the second to the MAXIMUM only, the split types.ts:3095-3102 documents. READER PENDING (engine agent 1)."
+ },
+ {
+  "category": "heritages",
+  "id": "mountainkeeper-tengu",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "vitality-lash",
+    "note": "Mountainkeeper Tengu: each time you cast this, you decide whether it is a divine or a primal spell."
+   },
+   {
+    "fromAncestrySpells": true,
+    "note": "Mountainkeeper Tengu: each time you cast a spell you gained from a tengu heritage or ancestry feat, you decide whether it is a divine or a primal spell."
+   }
+  ],
+  "why": "wg-batch-027 mountainkeeper-tengu#tradition-choice: print 'Each time you cast a spell from a tengu heritage or ancestry feat, you can decide whether it's a divine or primal spell' — our grant hard-coded primal and said nothing. Two entries because build.ts:6055 excludes cantrips from the fromAncestrySpells pass and the heritage's own vitality-lash is a cantrip."
+ },
+ {
+  "category": "heritages",
+  "id": "courageous-tanuki",
+  "field": "grantsActions",
+  "value": [
+   "tactical-retreat"
+  ],
+  "why": "wg-batch-027 courageous-tanuki#tactical-retreat: print 'You also gain the Tactical Retreat ability' — the action record and its description existed but no record owned it, so the reaction never reached the sheet."
+ },
+ {
+  "category": "heritages",
+  "id": "monstrous-skeleton",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "attack",
+    "prompt": "Choose your skeletal unarmed attack (1d6, brawling group, finesse and unarmed traits)",
+    "options": [
+     {
+      "value": "claw",
+      "label": "Claw (1d6 slashing)"
+     },
+     {
+      "value": "horn",
+      "label": "Horn (1d6 piercing)"
+     },
+     {
+      "value": "tail",
+      "label": "Tail (1d6 bludgeoning)"
+     },
+     {
+      "value": "wing",
+      "label": "Wing (1d6 bludgeoning)"
+     }
+    ]
+   }
+  ],
+  "why": "wg-batch-027 monstrous-skeleton: print 'You gain a claw, horn, tail, or wing unarmed attack that deals 1d6 damage' — the four choiceValue-tagged strikes had no question to answer them, so the pick was always undefined and every row was dropped. Values equal the shipped choiceValue tags so build.ts:2492 resolves; shape mirrors swimming-animal."
+ },
+ {
+  "category": "heritages",
+  "id": "compact-skeleton",
+  "field": "sizeSet",
+  "value": "small",
+  "why": "wg-batch-027 compact-skeleton: print 'Your size is Small instead of Medium' — the record carried no size field, so the character kept the skeleton chassis Medium (wrong space, reach and Bulk, not just a label)."
+ },
+ {
+  "category": "heritages",
+  "id": "littlehorn-minotaur",
+  "field": "sizeSet",
+  "value": "medium",
+  "why": "wg-batch-027 littlehorn-minotaur#size: print 'Instead of Large, your size is Medium' — the record set no size, so the character stayed Large."
+ },
+ {
+  "category": "heritages",
+  "id": "littlehorn-minotaur",
+  "field": "unarmedTraits",
+  "value": [
+   {
+    "match": [
+     "horn"
+    ],
+    "setDie": "d6",
+    "add": [
+     "agile"
+    ]
+   }
+  ],
+  "why": "wg-batch-027 littlehorn-minotaur#horns: print 'Your horns unarmed attack deals 1d6 piercing damage instead of 1d8, but it has the agile trait' — the ancestry's 1d8 non-agile Horns was passed through unchanged."
+ },
+ {
+  "category": "heritages",
+  "id": "hold-scarred-orc",
+  "field": "ancestryHp",
+  "value": 12,
+  "why": "wg-batch-027 hold-scarred-orc: print 'You gain 12 Hit Points from your ancestry instead of 10' — the record had no ancestryHp, so the orc chassis 10 was used."
+ },
+ {
+  "category": "actions",
+  "id": "raise-slabs",
+  "field": "description",
+  "value": "**Frequency** once per day\n\n---\n\n**Effect** Thick slabs of stone rise around you before tilting over. You deal 1d6 bludgeoning damage to all adjacent creatures (basic Reflex against your class DC or spell DC, whichever is higher). On a critical failure, the creature is also knocked prone. At 3rd level, and every 2 levels thereafter, this damage increases by 1d6.",
+  "why": "wg-batch-027 slabsoul-minotaur: print 'You deal 1d6 bludgeoning damage to all adjacent creatures (basic Reflex against your class DC or spell DC, whichever is higher)'; the shipped card read 'You deal damage to all adjacent creatures ( against your class DC...)' — the damage die and the save type both deleted, with no AST to fall back on."
+ },
+ {
+  "category": "heritages",
+  "id": "spellkeeper-shisk",
+  "field": "choice",
+  "value": {
+   "flag": "spellkeeperTradition",
+   "prompt": "Choose occult or primal — this choice can't be changed",
+   "kind": "array",
+   "options": [
+    {
+     "value": "occult",
+     "label": "Occult"
+    },
+    {
+     "value": "primal",
+     "label": "Primal"
+    }
+   ]
+  },
+  "why": "wg-batch-027 spellkeeper-shisk#tradition-gate: print 'Choose occult or primal' is a question our record never asked. Mirrors heritages/wellspring-gnome's choice.flag 'wellspringTradition'."
+ },
+ {
+  "category": "heritages",
+  "id": "born-of-celestial",
+  "field": "spellNotes",
+  "value": [
+   {
+    "fromAncestrySpells": true,
+    "note": "Born of Celestial: the tradition of this spell is divine instead of its normal tradition (usually occult)."
+   }
+  ],
+  "why": "wg-batch-027 born-of-celestial#tradition-override: print 'the tradition of any spells or magical abilities you gain from a yaoguai heritage or ancestry feat is divine instead of its normal tradition' — nothing carried it, so a Born of Celestial's Brilliant Vision still cast See the Unseen as occult. Exact shape of heritages/makari-lizardfolk's fromAncestrySpells note."
+ },
+ {
+  "category": "heritages",
+  "id": "born-of-elements",
+  "field": "spellNotes",
+  "value": [
+   {
+    "fromAncestrySpells": true,
+    "note": "Born of Elements: the tradition of this spell is primal instead of its normal tradition (usually occult)."
+   }
+  ],
+  "why": "wg-batch-027 born-of-elements#tradition: print's blanket 'any spells or magical abilities you gain from a yaoguai heritage or ancestry feat is primal' was unmodelled, so Brilliant Vision's See the Unseen still read occult."
+ },
+ {
+  "category": "heritages",
+  "id": "gandharva",
+  "field": "spellNotes",
+  "value": [
+   {
+    "fromAncestrySpells": true,
+    "note": "Gandharva: the tradition of this spell is divine instead of its normal tradition."
+   }
+  ],
+  "why": "wg-batch-027 gandharva#tradition: print 'the tradition of any spells or magical abilities you gain from a sprite heritage or ancestry feat is divine' — heritages/gandharva.spellNotes was undefined while makari-lizardfolk carries the identical sentence."
+ },
+ {
+  "category": "heritages",
+  "id": "new-moon-sarangay",
+  "field": "sizeSet",
+  "value": "small",
+  "why": "wg-batch-027 new-moon-sarangay#size: print 'Your size is Small instead of Medium' — no size field on the record, so the sheet resolved to the sarangay chassis Medium."
+ },
+ {
+  "category": "heritages",
+  "id": "new-moon-sarangay",
+  "field": "ancestryHp",
+  "value": 10,
+  "why": "wg-batch-027 new-moon-sarangay#hp: print 'You gain 10 Hit Points from your ancestry instead of 8' — no ancestryHp on the record."
+ },
+ {
+  "category": "heritages",
+  "id": "toy-poppet",
+  "field": "sizeSet",
+  "value": "tiny",
+  "why": "wg-batch-027 toy-poppet#size: print 'Instead of Small, your size is Tiny' — the record carried no size field and the id appears nowhere in src/, so the sheet reported Small."
+ },
+ {
+  "category": "heritages",
+  "id": "born-of-vegetation",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "form-trait",
+    "prompt": "Choose the plant or the fungus trait",
+    "options": [
+     {
+      "value": "plant",
+      "label": "Plant",
+      "grant": {
+       "grantsCreatureTraits": [
+        "plant"
+       ]
+      }
+     },
+     {
+      "value": "fungus",
+      "label": "Fungus",
+      "grant": {
+       "grantsCreatureTraits": [
+        "fungus"
+       ]
+      }
+     }
+    ]
+   }
+  ],
+  "why": "wg-batch-027 born-of-vegetation#trait-choice: print 'You gain your choice of the plant or fungus trait' — no trait, no control, and the record's own Yaoguai Form clause depends on which one you hold."
+ },
+ {
+  "category": "heritages",
+  "id": "pixie",
+  "field": "sizeSet",
+  "value": "small",
+  "why": "wg-batch-027 pixie: print 'Instead of Tiny, your size is Small' — the record had no size carrier at all."
+ },
+ {
+  "category": "heritages",
+  "id": "sturdy-skeleton",
+  "field": "ancestryHp",
+  "value": 10,
+  "why": "wg-batch-027 sturdy-skeleton#hp: print 'You have 10 Hit Points instead of 6' — no ancestryHp on the record, so build.ts:696 fell through to the skeleton chassis 6."
+ },
+ {
+  "category": "heritages",
+  "id": "thickskin-tripkee",
+  "field": "ancestryHp",
+  "value": 8,
+  "why": "wg-batch-027 thickskin-tripkee#hp: print 'You gain 8 Hit Points from your ancestry instead of 6' — no ancestryHp on the record."
+ },
+ {
+  "category": "actions",
+  "id": "stridulating-song",
+  "field": "description",
+  "value": "**Frequency** once per day\n\n---\n\n**Effect** You circulate magic through your wings, causing them to vibrate at high speeds such that their scraping produces disruptive sounds. You focus the sound at one creature within 30 feet who must succeed at a Fortitude save against your class DC or spell DC (whichever is higher) or become Sickened 1, or Sickened 2 on a critical failure, as the vibrations disrupt its inner equilibrium. You can Sustain the effect for up to 1 minute; the creature can't recover from the sickened condition as long as you continue your song and it can hear you.",
+  "why": "wg-batch-027 elytron-surki#stridulating-save: print 'must succeed at a FORTITUDE save against your class DC or spell DC' — the shipped card said only 'a save', and there is no AST for this action to fall back on."
+ },
+ {
+  "category": "heritages",
+  "id": "hardshell-surki",
+  "field": "description",
+  "value": "Your carapace is much denser than that of other surkis, offering you a suit of your very own armor. Your carapace is medium armor in the plate armor group that grants a +4 item bonus to AC, a Dex cap of +1, a check penalty of –2, a Speed penalty of –5 feet, a Strength value of +3, and has the comfort trait. You can never wear other armor or remove your carapace. You can etch armor runes onto your carapace.\n\n- **Evolution** The magical circulatory system that runs between your nodes has become a reinforcing network that strengthens your carapace with magical energy. If you're struck by a critical hit that deals physical damage, you can use your reaction to attempt a DC 17 flat check. If successful, the attack becomes a normal hit.\n- **Evolution** Your abdominal nodes can project a field around you that guards you against the type of magic you're most familiar with. You gain the Dampening Harmonics action.",
+  "why": "wg-batch-027 hardshell-surki#desc-hole: print 'you can use your reaction to attempt a DC 17 flat check'; the shipped 'd' read 'attempt a .' — the number and the check type lost with the stripped link."
+ },
+ {
+  "category": "heritages",
+  "id": "dogtooth-tengu",
+  "field": "unarmedTraits",
+  "value": [
+   {
+    "match": [
+     "beak"
+    ],
+    "add": [
+     "deadly-d8"
+    ]
+   }
+  ],
+  "why": "wg-batch-027 dogtooth-tengu#deadly-d8: print 'Your beak unarmed attack gains the deadly d8 trait' — the record was identity-fields only, so the heritage delivered nothing at any level."
+ },
+ {
+  "category": "actions",
+  "id": "reinforcing-network",
+  "create": true,
+  "value": {
+   "id": "reinforcing-network",
+   "name": "Reinforcing Network",
+   "traits": [
+    "magical"
+   ],
+   "rarity": "common",
+   "actionCost": {
+    "type": "reaction"
+   },
+   "source": {
+    "book": "Pathfinder Howl of the Wild",
+    "license": "ORC"
+   },
+   "aonParentId": "heritage-311",
+   "aonSection": "Reinforcing Network"
+  },
+  "why": "wg-batch-027: heritage-311's first Evolution (\"If you're struck by a critical hit that deals physical damage, you can use your reaction to attempt a DC 17 flat check. If successful, the attack becomes a normal hit\") had no action record, so Grand Metamorphosis's hardshell-network option granted nothing. Shape mirrors actions/dampening-harmonics (the same heritage's other Evolution)."
+ },
+ {
+  "category": "feats",
+  "id": "directed-channel",
+  "field": "description",
+  "value": "You can shape the energy you channel in a single direction. When you cast a version of harm or heal that has an area, you can make its area a 60-foot cone instead of a 30-foot emanation.",
+  "why": "wg-batch-027: the shipped fallback read \"make its area a instead of a .\" — the de-linkifier ate the two measurements beside stripped auto-links (the same mangle as nyktera#desc). Text from public/ast/feats.json.gz, which renders correctly. Out of batch, one row, found by the batch-27 data verifier."
+ },
+ {
+  "category": "actions",
+  "id": "reinforcing-network",
+  "field": "description",
+  "value": "**Trigger** You're struck by a critical hit that deals physical damage.\n\n---\n\n**Effect** Attempt a DC 17 flat check. If you succeed, the critical hit becomes a normal hit.",
+  "why": "wg-batch-027: the created record's prose, in our own words from heritage-311; split out to core-descriptions.json like every other record."
+ },
+ {
+  "category": "modes",
+  "id": "dampening-harmonics",
+  "field": "feats",
+  "value": [
+   "grand-metamorphosis:hardshell-field"
+  ],
+  "why": "wg-batch-027: the force-field mode was gated on the heritage id, but print (heritage-311) lists Dampening Harmonics under **Evolution** — gained only through Grand Metamorphosis's pick — so a 1st-level hardshell surki was offered a mode for an action they do not have. Gated on the same <feat>:<answer> key modeGateIds emits for the breaker wedge."
  }
 ]

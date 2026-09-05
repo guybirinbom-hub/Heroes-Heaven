@@ -136,14 +136,18 @@ describe('the other records whose choice names a skill they then act on', () => 
   it('every entry names a real record whose answer it can actually use', () => {
     const bad: string[] = [];
     for (const [id, entries] of Object.entries(CHOICE_SITUATIONAL)) {
-      const rec = db.feats[id];
+      /* A HERITAGE can carry an entry too (batch 27: Waning Moon Sarangay's reroll on the skill it
+       * trained) — its question is an `effectChoices` pick whose option values are skill keys, reached
+       * through `answeredEffectOptions` in explain.ts rather than `feats[].choice`. */
+      const rec = db.feats[id] ?? db.heritages[id];
       if (!rec) {
-        bad.push(`${id}: no such feat`);
+        bad.push(`${id}: no such feat or heritage`);
         continue;
       }
-      if (!rec.choice) bad.push(`${id}: the record asks no question, so nothing can answer it`);
+      const skillPick = (rec.effectChoices ?? []).find((ch) => (ch.options ?? []).length > 0 && (ch.options ?? []).every((o) => SKILLS.includes(o.value as ProficiencyKey)));
+      if (!rec.choice && !skillPick) bad.push(`${id}: the record asks no question, so nothing can answer it`);
       for (const e of entries) {
-        if (!e.skill && rec.choice?.kind !== 'skills') bad.push(`${id}: answer-targeted, but choice kind is ${rec.choice?.kind ?? 'none'}`);
+        if (!e.skill && rec.choice?.kind !== 'skills' && !skillPick) bad.push(`${id}: answer-targeted, but choice kind is ${rec.choice?.kind ?? 'none'}`);
         if (e.skill && !SKILLS.includes(e.skill)) bad.push(`${id}: "${e.skill}" is not a skill`);
         if (e.when.includes('{answer}') && !e.skill) bad.push(`${id}: quotes the answer into a star aimed AT the answer`);
       }

@@ -169,9 +169,11 @@ describe('Dampening Harmonics — the last magiphage dependent', () => {
    */
   const mode = () => db.modes['dampening-harmonics'];
 
-  it('exists, gated on the heritage, with the printed duration', () => {
+  it('exists, gated on the Grand Metamorphosis evolution answer (batch 27), with the printed duration', () => {
     expect(mode()).toBeTruthy();
-    expect(mode().feats).toContain('hardshell-surki');
+    // Print lists the force field under **Evolution**; the gate is the feat's answer, not the heritage id.
+    expect(mode().feats).toContain('grand-metamorphosis:hardshell-field');
+    expect(mode().feats).not.toContain('hardshell-surki');
     expect(mode().duration).toMatch(/10 minutes/);
   });
 
@@ -190,8 +192,14 @@ describe('Dampening Harmonics — the last magiphage dependent', () => {
     expect(total).toBeUndefined();
   });
 
-  it('and the action it belongs to is granted by the heritage', () => {
-    expect(db.heritages['hardshell-surki'].grantsActions).toContain('dampening-harmonics');
+  it('and the action it belongs to is granted by the Grand Metamorphosis evolution, not the heritage (batch 27)', () => {
+    /* Print (heritage-311) lists Dampening Harmonics under **Evolution** — *"You gain one of the
+     * evolutions from your surki heritage"* is the 9th-level feat's sentence — so the heritage grants
+     * nothing at 1st level and the feat's `hardshell-field` option hands the action over. */
+    expect(db.heritages['hardshell-surki'].grantsActions ?? []).not.toContain('dampening-harmonics');
+    const opt = db.feats['grand-metamorphosis'].choice?.options?.find((o) => o.value === 'hardshell-field');
+    expect(opt?.grant?.grantsActions).toContain('dampening-harmonics');
+    expect(opt?.requiresAnyFeature).toContain('hardshell-surki');
     expect(db.actions['dampening-harmonics']).toBeTruthy();
   });
 });

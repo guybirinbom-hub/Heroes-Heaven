@@ -424,6 +424,35 @@ const RAW_MODES: ModeDef[] = [
     ],
   },
   /*
+   * *"**Evolution** Your wrist nodes project magic into a durable digging wedge. You can spend an
+   * Interact action to increase your claw unarmed attack's damage to 1d6; grant it the magical, razing,
+   * and versatile force traits; and remove the agile trait. You can spend another action to deactivate
+   * the wedge and return your claw to its normal statistics."* — Breaker Surki.
+   *
+   * A MODE and not an `unarmedTraits` rider on the record, because the print is a two-way toggle: the
+   * wedge is off until Interacted on, and while it is on the claw LOSES agile. An always-on rider would
+   * take that penalty from a breaker surki who never extended the wedge.
+   *
+   * The gate is `<recordId>:<answer>`, not the bare feat: Grand Metamorphosis (Feat 9) grants *"ONE of
+   * the evolutions from your surki heritage"*, so the wedge belongs only to the player who answered
+   * `breaker-wedge` — `modeGateIds` now emits that key for an `effectChoices` answer as well as for a
+   * `choice` one. Nothing gated on the 9th-level answer existed, so the pick changed no number at all.
+   *
+   * ⚠ The mode ADDS the wedge Strike beside the ordinary claw rather than replacing it (no mode field
+   * can restate an existing Strike), which is why it is named for the form and carries the note.
+   */
+  {
+    id: 'cat-breaker-wedge',
+    name: 'Digging Wedge',
+    category: 'Ancestry',
+    feats: ['grand-metamorphosis:breaker-wedge'],
+    modifiers: [],
+    note: "While the wedge is extended your claw uses these statistics instead of its normal 1d4 agile ones; spend an Interact action to extend it and another to retract it.",
+    grantedStrikes: [
+      { name: 'Claw (wedge)', dice: 1, die: 'd6', damageType: 'slashing', group: 'brawling', traits: ['finesse', 'magical', 'razing', 'unarmed', 'versatile-force'] },
+    ],
+  },
+  /*
    * *"In addition, you instill your allies with a feeling of hopefulness. You have a 10-foot aura that
    * grants any ally in it a +1 circumstance bonus to saving throws against fear; this is an emotion and
    * mental effect."* — Hopeful Athamaru.

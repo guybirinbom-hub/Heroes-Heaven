@@ -35,8 +35,20 @@ const escalatedIds = new Set(spec.filter((r) => r.needsHumanDecision).map((r) =>
  *     restrain you, or knock you prone."* The lane's wording stopped at "…Grapple you…".
  *   lethoci     (WG parity b26): the degree clause was cut out of the `when` string — the record's own
  *     `degreeShifts` field already renders it, so the lane's wording duplicated it on Athletics.
+ *   sacred-nagaji (WG parity b27): both save rows narrowed one defence to one maneuver and elided the
+ *     printed second sentence. Print (heritage-183) gives *"your Fortitude or Reflex DC against
+ *     attempts to Grapple or Trip you"* and adds *"This bonus also applies to saving throws against
+ *     effects that would grab you, restrain you, or knock you prone."* — the same edit as strong-oak.
+ *   kanchil     (WG parity b27): the `when` ended in an ellipsis where print's second target (*"to
+ *     Deception DCs against Sense Motive checks to uncover such lies"*) belonged, and print's third
+ *     (*"to initiative rolls when you roll Deception for initiative"*) had no row at all. The lane's
+ *     wording would drop both again.
+ *   respite-of-cloudless-paths (WG parity b27): the lane wrote only the +1-vs-environmental-hazards
+ *     row; print (heritage-409) opens with *"Both environmental heat effects and environmental cold
+ *     effects are one step less extreme for you"*, which is two further hand-authored stars on the
+ *     same entry.
  */
-const handEdited = new Set(['strong-oak', 'lethoci']);
+const handEdited = new Set(['strong-oak', 'lethoci', 'sacred-nagaji', 'kanchil', 'respite-of-cloudless-paths']);
 
 const src = readFileSync(REGISTRY, 'utf8');
 const existingIds = new Set([...src.matchAll(/^ {2}"([a-z0-9-]+)":\s\[/gm)].map((m) => m[1]));

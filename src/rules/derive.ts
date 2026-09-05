@@ -29,6 +29,7 @@ import type {
   Size,
   Item,
   WeaponItem,
+  EffectChoice,
   EffectGrant,
   FeatChoiceDef,
   Heritage,
@@ -1384,6 +1385,36 @@ export function heritageRecords(c: Character, db: ContentDatabase): Heritage[] {
     .filter((id): id is string => !!id)
     .map((id) => db.heritages[id])
     .filter((h): h is Heritage => !!h);
+}
+
+/**
+ * Every "choose one of N" pick the character ANSWERED, resolved back to the option object.
+ *
+ * `Character.effectPicks` keeps only the option's LABEL — it exists to print "Wormskin (Cold)" on the
+ * Feats tab — and no raw answer map reaches the character at all, so a derive-side reader that needs
+ * an option's own `value` or its `grant` had nowhere to look and every such clause was unreachable
+ * from here. Resolved against the granting record's own `effectChoices`, so what comes back is the
+ * same option buildCharacter applied.
+ *
+ * All five collections that can ask a question, because the answer's carrier is not always the record
+ * whose mechanic reads it: Grand Metamorphosis is a FEAT and the evolution it grants belongs to a
+ * HERITAGE.
+ */
+export function answeredEffectOptions(
+  c: Character,
+  db: ContentDatabase,
+): { recordId: string; choiceId: string; value: string; option: NonNullable<EffectChoice['options']>[number] }[] {
+  const out: { recordId: string; choiceId: string; value: string; option: NonNullable<EffectChoice['options']>[number] }[] = [];
+  for (const p of c.effectPicks ?? []) {
+    const rec = (db.feats[p.recordId] ??
+      db.heritages[p.recordId] ??
+      db.classFeatures[p.recordId] ??
+      db.ancestries[p.recordId] ??
+      db.backgrounds[p.recordId]) as { effectChoices?: EffectChoice[] } | undefined;
+    const opt = rec?.effectChoices?.find((ch) => ch.id === p.choiceId)?.options?.find((o) => o.label === p.label);
+    if (opt) out.push({ recordId: p.recordId, choiceId: p.choiceId, value: opt.value, option: opt });
+  }
+  return out;
 }
 
 /** Does the character have this heritage — either the one they picked, or a granted second? */
@@ -2751,8 +2782,19 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
   for (const fc of c.feats ?? []) {
     for (const t of db.feats[fc.featId]?.removesWeaknesses ?? []) weak.delete(t);
   }
+  /*
+   * …and a HERITAGE, including one whose own ANSWER decides it. Tsukumogami Poppet: *"If your body is
+   * primarily metal, you're INSTEAD weak to electricity; if it's primarily ceramic, you're INSTEAD weak
+   * to cold"* — "instead of" the poppet chassis' fire weakness (Flammable), which neither a heritage
+   * record nor an option grant could drop, so a metal tsukumogami was weak to fire AND electricity.
+   *
+   * The answered option is read straight off the record rather than through `c.chosenEffects`: that bag
+   * is filled by build.ts's field-by-field mergeEffect, which does not carry this field.
+   */
+  for (const h of heritageRecords(c, db)) for (const t of h.removesWeaknesses ?? []) weak.delete(t);
+  for (const p of answeredEffectOptions(c, db)) for (const t of p.option.grant?.removesWeaknesses ?? []) weak.delete(t);
 
-  const sortByType = (a: { type: string }, b: { type: string }) => a.type.localeCompare(b.type);
+  const sortByType =(a: { type: string }, b: { type: string }) => a.type.localeCompare(b.type);
   return {
     senses: [...senses.values()],
     resistances: [...res].map(([type, value]) => ({ type, value })).sort(sortByType),
@@ -3228,6 +3270,13 @@ export function modeGateIds(c: Character, db: ContentDatabase): Set<string> {
    * the werewolf's, and a gate naming only the feat cannot tell them apart. Plain ids still match
    * exactly as before — this only adds keys. */
   for (const f of c.feats) if (f.choice?.value) out.add(`${f.featId}:${f.choice.value}`);
+  /* …and the same key for an `effectChoices` answer, the OTHER shape a record's question takes.
+   * Grand Metamorphosis (Feat 9) — *"You gain ONE of the evolutions from your surki heritage"* — asks
+   * it that way, and the breaker surki's wedge evolution (*"you can spend an Interact action to
+   * increase your claw unarmed attack's damage to 1d6…"*) is a toggle only the player who picked that
+   * evolution may have — and nothing gated on that answer could exist, so the 9th-level pick moved no
+   * number at all. Same `<record>:<answer>` key shape as the feat-choice lane above. */
+  for (const p of answeredEffectOptions(c, db)) out.add(`${p.recordId}:${p.value}`);
   return out;
 }
 
@@ -5025,6 +5074,14 @@ export function deriveBulk(c: Character, db: ContentDatabase): BulkResult {
   {
     const anc = c.ancestryId ? db.ancestries[c.ancestryId] : undefined;
     if (anc?.bulkLimitBonus) limitBonus += anc.bulkLimitBonus;
+  }
+  /* …and the HERITAGE, which prints the split pair rather than one number: Deny Lady Nanbyo's Charity
+   * — *"you can carry 1 more Bulk before becoming encumbered and 2 more before reaching your maximum"*
+   * — so the encumbered threshold and the maximum move by DIFFERENT amounts. Both fields were declared
+   * (Heritage.bulkLimitBonus / bulkMaxBonus) with no reader, so the heritage moved no number at all. */
+  for (const h of heritageRecords(c, db)) {
+    if (h.bulkLimitBonus) limitBonus += h.bulkLimitBonus;
+    if (h.bulkMaxBonus) maxOnlyBonus += h.bulkMaxBonus;
   }
   // …and a STATE-GATED one. Adrenaline Rush raises both Bulk limits by 2 "while you are Raging", which
   // the standing field above could only express as always-on. Read through the same `activeStateGrants`

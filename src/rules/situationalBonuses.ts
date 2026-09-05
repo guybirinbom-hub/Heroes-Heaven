@@ -732,6 +732,71 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
    * record is the data half of this finding and is removed by an overlay row. */
   "warrior-jotunborn": [{ targets: [{ kind: 'strikeAttack' }], when: "making a lethal attack with your fist", bonus: "no -2 penalty despite the nonlethal trait" }],
 
+  /* ---- WG parity batch 27: still more heritage clauses with no carrier on either side ----------
+   * Same lane, same reason, same region as batches 25 and 26 above: new ids sit HAND-AUTHORED, above
+   * the generator's banner, so `existingIds` (apply-situational-lane.mjs:30) keeps the generator off
+   * them. Every `when` stays inside ruling H's 120-char cap. */
+
+  /* stormtossed-tengu — heritage-358: *"You automatically succeed at the flat check to target a
+   * concealed creature if that creature is concealed only by rain or fog."* The record carries only
+   * the electricity resistance, and WG encodes only that too. Verbatim the shape of `smoke-sight`
+   * (:561) and `ash-piercing-gaze` (:182) — flat-check changes ride the strikeAttack row. */
+  "stormtossed-tengu": [{ targets: [{ kind: 'strikeAttack' }], when: "targeting a creature concealed only by rain or fog", bonus: "automatically succeed at the flat check" }],
+
+  /* Four more heritages printing the environmental-temperature sentence the blocks at :654 and :716
+   * already carry for naari / winter-catfolk / desert-elf / snow-goblin / frozen-wind-kitsune /
+   * wintertouched-human. Same sentence, same lane, same wording — the b25 and b26 sweeps did not
+   * reach these records. Each record's own resistance (where it has one) is already print-exact.
+   * mountaineer-samsaran — heritage-387, glacier-cavern-minotaur — heritage-304, snow-rat —
+   * heritage-352, winter-orc — heritage-278: *"You treat environmental cold effects as if they were
+   * one step less extreme (incredible cold becomes extreme, extreme cold becomes severe, and so
+   * on)."* (Winter Orc prints it after the trained-Survival clause its `effectChoices` carries.) */
+  "mountaineer-samsaran": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against environmental cold effects", bonus: "treat the cold as one step less extreme" }],
+  "glacier-cavern-minotaur": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against environmental cold effects", bonus: "treat the cold as one step less extreme" }],
+  "snow-rat": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against environmental cold effects", bonus: "treat the cold as one step less extreme" }],
+  "winter-orc": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against environmental cold effects", bonus: "treat the cold as one step less extreme" }],
+
+  /* thickcoat-shoony — heritage-57: three clauses past the cold resistance, none of them carried by
+   * either side. *"…you treat environmental cold effects as if they were one step less extreme…
+   * You don't need to succeed at a flat check to target a concealed creature if that creature is
+   * concealed only by snow. Unless you wear protective gear or take shelter, environmental heat
+   * effects are one step more extreme for you."* Split three ways, exactly as `sandstrider-
+   * lizardfolk` (:726) splits the mirror-image sentence — the last one is a PENALTY and says so,
+   * because print's "Unless…" is not optional. The snow clause is the `smokeworker-hobgoblin` /
+   * `smoke-sight` shape. */
+  "thickcoat-shoony": [{ targets: [{ kind: 'strikeAttack' }], when: "targeting a creature concealed only by snow", bonus: "automatically succeed at the flat check" }, { targets: [{ kind: 'save', detail: 'all' }], when: "against environmental cold effects", bonus: "treat the cold as one step less extreme" }, { targets: [{ kind: 'save', detail: 'all' }], when: "against environmental heat effects, unless you wear protective gear or take shelter", bonus: "treat the heat as one step MORE extreme (a penalty)" }],
+
+  /* reef-merfolk — heritage-301 and venom-resistant-vishkanya — heritage-230 print, word for word,
+   * the poison-affliction clause `strong-blooded-dwarf` (:646) already carries: *"each of your
+   * successful saving throws against a poison affliction reduces its stage by 2, or by 1 for a
+   * virulent poison. Each critical success against an ongoing poison reduces its stage by 3, or by 2
+   * for a virulent poison."* Both records carry only the poison resistance, and so does WG. The
+   * comment at :641 already rules out `degreeShifts` — it shifts a CHECK's degree, not a stage. */
+  "reef-merfolk": [{ targets: [{ kind: 'save', detail: 'fortitude' }], when: "against a poison affliction", bonus: "each success reduces the stage by 2 (1 if virulent); each critical success by 3 (2 if virulent)" }],
+  "venom-resistant-vishkanya": [{ targets: [{ kind: 'save', detail: 'fortitude' }], when: "against a poison affliction", bonus: "each success reduces the stage by 2 (1 if virulent); each critical success by 3 (2 if virulent)" }],
+
+  /* healer-samsaran — heritage-386: *"When you use Medicine to Treat Wounds on yourself, you can use
+   * your special techniques to add your level to the Hit Points you regain from the treatment."* The
+   * record carries only its skill picker; WG carries only the Medicine training. A Hit-Points-
+   * recovered rider is the `godless-healing` (:3021) / `medic-dedication` (:3375) shape. */
+  "healer-samsaran": [{ targets: [{ kind: 'hp' }], when: "when you Treat Wounds on yourself", bonus: "add your level to the Hit Points you regain" }],
+
+  /* shifting-skeleton's Rearrange Bones (action-2261) prints its own bonus: *"…this counts as setting
+   * up a disguise for the Impersonate use of Deception, and grants a +1 status bonus to those
+   * Deception checks."* Keyed by the GRANTED ACTION rather than the heritage, which is how a bonus
+   * printed inside an action's text reaches the sheet — `characterSituationalIds` follows a
+   * heritage's `grantsActions` (explain.ts:292), the same route `harrow-the-fiend` uses. */
+  "rearrange-bones": [{ targets: [{ kind: 'skill', detail: 'deception' }], when: "to Impersonate after you Rearrange Bones, wearing heavy clothing or impersonating a skeleton", bonus: "+1 status" }],
+
+  /* waning-moon-sarangay — heritage-394: *"Once per day, when you roll a critical failure with the
+   * chosen skill, you can reroll the check, taking the new result, even if it's worse. Rerolling in
+   * this way is a fortune effect."* The record has the 1/day pips and the skill picker and nothing
+   * else, so no skill row mentioned the reroll. A fortune reroll as a skill star is the
+   * `acrobats-staff` (:3052) / `blessed-medicine` (:3117) shape.
+   * ⚠ The star names all THREE skills print offers, and the `when` says which one it means. It cannot
+   * be narrowed to the player's actual answer here: `CHOICE_SITUATIONAL` (:3715) is read only off
+   * `c.feats[].choice` (explain.ts:522), and a heritage's `effectChoices` answer has no such route. */
+
   // ---- generated by scripts/apply-situational-lane.mjs — do not hand-edit below this line ----
   // 1758 records / 2620 bonuses from the adversarially verified pass.
   // Escalated, content-corrected and hand-authored ids are excluded by the script on purpose.
@@ -2399,7 +2464,15 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "thickskin-tripkee": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against diseases and poisons", bonus: "+1 circumstance" }],
   "dokkaebi-goblin": [{ targets: [{ kind: 'save', detail: 'will' }], when: "against illusions", bonus: "+1 circumstance" }],
   "chrysanthemum-leshy": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against poison", bonus: "+1 circumstance" }],
-  "kanchil": [{ targets: [{ kind: 'skill', detail: 'deception' }], when: "to Lie specifically to avoid danger or punishment…", bonus: "+1 circumstance" }],
+  /* b27 kanchil. Print (heritage-381) names THREE targets: *"…a +1 circumstance bonus to Deception
+   * checks to Lie when specifically attempting to avoid danger or punishment…, to Deception DCs
+   * against Sense Motive checks to uncover such lies, and to initiative rolls when you roll Deception
+   * for initiative."* The row carried only the first, and its ellipsis was where the DC clause should
+   * have been; WG's own op text carries the initiative clause explicitly. The DC rides the same star
+   * because the `kind` union has no skill-DC member and the DC is the flip side of the same check;
+   * the initiative half gets its own row, the `swaggering-initiative` (:583) shape. Id is in
+   * apply-situational-lane.mjs's HAND_EDITED set. */
+  "kanchil": [{ targets: [{ kind: 'skill', detail: 'deception' }], when: "to Lie specifically to avoid danger or punishment, and to your Deception DC vs Sense Motive to uncover it", bonus: "+1 circumstance" }, { targets: [{ kind: 'initiative' }], when: "when you roll Deception for initiative", bonus: "+1 circumstance" }],
   "half-moon-sarangay": [{ targets: [{ kind: 'skill', detail: 'lore' }], when: "to Recall Knowledge using either of the two Lore skills this heritage made you trained in", bonus: "+1 circumstance" }],
   "new-moon-sarangay": [{ targets: [{ kind: 'skill', detail: 'athletics' }], when: "to Athletics checks to Shove", bonus: "+2 circumstance" }],
   "waxing-moon-sarangay": [{ targets: [{ kind: 'skill', detail: 'athletics' }], when: "to Athletics checks to Long Jump or Swim", bonus: "+2 circumstance" }],
@@ -2408,7 +2481,12 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "deny-the-firstborn-pursuit": [{ targets: [{ kind: 'skill', detail: 'nature' }], when: "to Recall Knowledge about fey", bonus: "+2 circumstance" }],
   "deny-lady-nanbyos-charity": [{ targets: [{ kind: 'skill', detail: 'athletics' }], when: "to Force Open or Escape", bonus: "+1 circumstance" }],
   "deny-the-traitors-rebirth": [{ targets: [{ kind: 'perception' }], when: "to Seek or Sense the Motives of rakshasas and asuras", bonus: "+1 circumstance" }],
-  "respite-of-cloudless-paths": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against environmental features or hazards (floods, rockslides, sandstorms, etc.)", bonus: "+1 circumstance" }],
+  /* b27 respite-of-cloudless-paths. Only the +1 half shipped. Print (heritage-409) opens with the
+   * other one: *"Both environmental heat effects and environmental cold effects are one step less
+   * extreme for you (incredible heat becomes extreme, extreme cold becomes severe, and so on)"* — two
+   * more stars, in the `sandstrider-lizardfolk` (:726) wording. WG carries only the +1 on its three
+   * save ops. Id is in apply-situational-lane.mjs's HAND_EDITED set. */
+  "respite-of-cloudless-paths": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against environmental features or hazards (floods, rockslides, sandstorms, etc.)", bonus: "+1 circumstance" }, { targets: [{ kind: 'save', detail: 'all' }], when: "against environmental heat effects", bonus: "treat the heat as one step less extreme" }, { targets: [{ kind: 'save', detail: 'all' }], when: "against environmental cold effects", bonus: "treat the cold as one step less extreme" }],
   "keeper-jotunborn": [{ targets: [{ kind: 'skill', detail: 'survival' }], when: "to Track animals", bonus: "+1 circumstance" }],
   "weaver-jotunborn": [{ targets: [{ kind: 'perception' }], when: "to Seek for hidden details such as secret doors or traps", bonus: "+1 circumstance" }],
   "fey-dragonet": [{ targets: [{ kind: 'skill', detail: 'stealth' }], when: "after spending 1 action to match your wings to the environment, until your surroundings shift in colour or pattern", bonus: "+2 circumstance" }],
@@ -2476,8 +2554,17 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
    * you, restrain you, or knock you prone."* (heritage-209). WG carries that sentence on both of its
    * save ops. Widened to state it, inside ruling H's 120-char cap; the Acrobatics row already
    * matched print and is untouched. Id is in apply-situational-lane.mjs's HAND_EDITED set. */
-  "strong-oak": [{ targets: [{ kind: 'save', detail: 'fortitude' }], when: "your Fortitude DC vs Grapple, and saves vs effects that would grab, restrain, or knock you prone", bonus: "+2 circumstance" }, { targets: [{ kind: 'save', detail: 'reflex' }], when: "your Reflex DC vs Trip, and saves vs effects that would grab, restrain, or knock you prone", bonus: "+2 circumstance" }, { targets: [{ kind: 'skill', detail: 'acrobatics' }], when: "Acrobatics checks to Balance", bonus: "+2 circumstance" }],
-  "sacred-nagaji": [{ targets: [{ kind: 'save', detail: 'fortitude' }], when: "your Fortitude DC against attempts to Grapple you…", bonus: "+2 circumstance" }, { targets: [{ kind: 'save', detail: 'reflex' }], when: "your Reflex DC against attempts to Trip you…", bonus: "+2 circumstance" }],
+  /* HOUSE SHAPE for the printed sentence *"+2 circumstance bonus on your Fortitude or Reflex DC against
+   * attempts to X or Y you. This bonus also applies to saving throws against effects that would grab,
+   * restrain, or knock you prone"* — three rows, the b25 `rock-dwarf` shape below: one per DC naming
+   * BOTH maneuvers (print gives both defenses against both), plus a `save:'all'` row for the second
+   * sentence (a save against such an effect can be any of the three). strong-oak (b26) and sacred-nagaji
+   * (b27) had each folded the saves clause into their two DC rows in different wordings; the batch-27
+   * verifier flagged the three as inconsistent, so they now share one shape. Ids are in
+   * apply-situational-lane.mjs's HAND_EDITED set. */
+  "strong-oak": [{ targets: [{ kind: 'save', detail: 'fortitude' }], when: "to your Fortitude DC against attempts to Grapple or Trip you", bonus: "+2 circumstance" }, { targets: [{ kind: 'save', detail: 'reflex' }], when: "to your Reflex DC against attempts to Grapple or Trip you", bonus: "+2 circumstance" }, { targets: [{ kind: 'save', detail: 'all' }], when: "on saves against effects that would grab you, restrain you, or knock you prone", bonus: "+2 circumstance" }, { targets: [{ kind: 'skill', detail: 'acrobatics' }], when: "Acrobatics checks to Balance", bonus: "+2 circumstance" }],
+  /* b27 sacred-nagaji — print (heritage-183) is the same sentence as strong-oak's: Grapple or Trip. */
+  "sacred-nagaji": [{ targets: [{ kind: 'save', detail: 'fortitude' }], when: "to your Fortitude DC against attempts to Grapple or Trip you", bonus: "+2 circumstance" }, { targets: [{ kind: 'save', detail: 'reflex' }], when: "to your Reflex DC against attempts to Grapple or Trip you", bonus: "+2 circumstance" }, { targets: [{ kind: 'save', detail: 'all' }], when: "on saves against effects that would grab you, restrain you, or knock you prone", bonus: "+2 circumstance" }],
   /* b25 rock-dwarf-defense-split + rock-dwarf-halved-forced-movement. Print (heritage-237) gives the
    * +2 to *"your Fortitude OR Reflex DC against attempts to Reposition, Shove, or Trip you"* — both
    * defenses against all three maneuvers, not our old Fort=Reposition/Shove, Reflex=Trip split — and
@@ -3717,6 +3804,12 @@ export const CHOICE_SITUATIONAL: Record<string, ChoiceSituational[]> = {
   // Reached by a granted Assurance too (Eidetic Ear, Weight of Experience, Quah Bond, Gnome
   // Obsession) — the granted feat carries its own answer on the character, so one entry covers all.
   "assurance": [{ when: "you forgo the roll; no other bonus, penalty or modifier applies", bonus: "take 10 + your proficiency bonus instead of rolling" }],
+  /* Waning Moon Sarangay (heritage-266): *"once per day, when you critically fail a check with the
+   * chosen skill, you can reroll it"* — the star belongs on the ONE skill the player picked, not on all
+   * three candidates (the b27 stars lane had it on Acrobatics, Crafting and Performance at once). The
+   * heritage's `effectChoices` answer IS the skill key, so this is the Assurance shape; reached through
+   * `answeredEffectOptions` in explain.ts, the same way a feat's `choice` answer reaches this table. */
+  "waning-moon-sarangay": [{ when: "once per day, when you critically fail a check with this skill", bonus: "fortune: reroll and take the new result, even if it's worse" }],
   // Prerequisite is "Assurance in that skill", so this star sits beside Assurance's own on the same
   // skill — two different things the player does with it, and both belong where they look it up.
   "automatic-knowledge": [{ when: "to Recall Knowledge with this skill, once per round", bonus: "a free action, and you must use Assurance" }],
@@ -4024,6 +4117,87 @@ export const RECORD_MARKERS: Record<string, RecordMarker[]> = {
    * ⚠ Trimmed from 125 to 111 chars: ruling H caps a one-line note at 120 ("the full text staying in
    * the description a click away"), and the heritage's own description carries the printed sentence. */
   "vivacious-gnome": [{ on: 'condition', id: 'doomed', value: "-1", note: "Doomed affects you as if its value were 1 lower: doomed 1 has no effect, and doomed 2 means you die at dying 3." }],
+
+  /* ---- WG parity batch 27: heritage clauses that change an ACTION or a CONDITION ----------------
+   * Same placement reasoning as the batch-26 block above: deliberately ABOVE the `// ---- full
+   * feature audit …` sentinel, which apply-feature-audit.mjs strips and regenerates from an already-
+   * stripped source — a row below it is deleted on the next run AND invisible to that script's
+   * duplicate check.
+   * ⚠ Notes do NOT open with the record's own name: all three renderers prefix it themselves, and a
+   * note that repeats it prints it twice. Every note stays inside ruling H's 120-char cap. */
+
+  /* shadow-of-the-courtier — heritage-401: *"Once per day, if you fail, but not critically fail, a
+   * check to Make an Impression, you can play it off as part of a performance, allowing you to
+   * reroll the check; this is a fortune effect."* The record carried the 1/day pips and the
+   * Impressive Performance grant, so the reroll reached no row the player presses; WG injects this
+   * same sentence onto Make an Impression. Same action and same shape as 'glad-hand' below. */
+  "shadow-of-the-courtier": [{ on: 'action', id: 'make-an-impression', value: "1/day reroll on a failure", note: "Once per day, on a failure that isn't a critical failure, you can play it off as a performance and reroll (fortune)." }],
+
+  /* sailfish-merfolk — heritage-302: *"…and you can Swim instead of Striding before attempting the
+   * jump."* Only the +1 Athletics star (:2386) shipped, and WG encodes only that too. Both jump
+   * actions are marked, as 'quick-jump' below marks both for the same reason. */
+  "sailfish-merfolk": [
+    { on: 'action', id: 'high-jump', value: "Swim instead of Stride", note: "You can Swim instead of Striding before attempting the jump." },
+    { on: 'action', id: 'long-jump', value: "Swim instead of Stride", note: "You can Swim instead of Striding before attempting the jump." },
+  ],
+
+  /* paddler-shoony — heritage-56: *"You ignore difficult terrain and greater difficult terrain from
+   * bogs."* A separate sentence from the Swim clause the record's own `degreeShifts` carries, and
+   * neither side modelled it. The two-action shape of 'shore-step' and 'rock-runner' above. */
+  "paddler-shoony": [
+    { on: 'action', id: 'stride', note: "You ignore difficult terrain and greater difficult terrain from bogs." },
+    { on: 'action', id: 'step', note: "You ignore difficult terrain and greater difficult terrain from bogs." },
+  ],
+
+  /* wilderness-samsaran — heritage-390: *"You can ignore difficult terrain from trees, foliage, and
+   * undergrowth."* The record carries only its skill picker. Verbatim the 'wildwood-halfling' /
+   * 'rite-of-passage' shape below, which prints the near-identical sentence. */
+  "wilderness-samsaran": [{ on: 'action', id: 'stride', note: "You ignore difficult terrain from trees, foliage, and undergrowth." }],
+
+  /* nyktera — heritage-144: *"As long as you can hear normally, you can use the Seek action to sense
+   * undetected creatures in a 60-foot cone instead of a 30-foot cone."* The heritage's headline
+   * mechanic, and only its SECOND sentence (the +2, :2293) had a carrier on either side. There is no
+   * cone field for it to be a number in, so it marks the action it changes. */
+  "nyktera": [{ on: 'action', id: 'seek', value: "60-foot cone", note: "As long as you can hear normally, you sense undetected creatures in a 60-foot cone instead of a 30-foot cone." }],
+
+  /* born-of-vegetation — heritage-416, the Yaoguai Form half: *"When anyone uses the Medicine skill
+   * to Treat your Wounds, add your level to the Hit Points you regain from that treatment.
+   * Additionally, the creature attempting the check gains a +1 circumstance bonus if you have the
+   * plant trait and are in bright light, or the fungus trait and are in darkness."* The +1 is on
+   * ANOTHER creature's check, so it can be no star of this character's; the Treat Wounds row is where
+   * both halves are read. Only the Humanoid Form star (:2581) had ever shipped. Same action as
+   * 'magic-hands' above. */
+  "born-of-vegetation": [{ on: 'action', id: 'treat-wounds', value: "+ your level (yaoguai form)", note: "Yaoguai form: add your level to the HP you regain; the healer gets +1 if you're plant in bright light or fungus in dark." }],
+
+  /* virtuous-tanuki — heritage-400, the two clauses past its poison resistance: *"You can eat and
+   * drink things when you're sickened."* and *"You can't become incapacitated by conventional alcohol
+   * if you don't wish to be."* The first is a carve-out from the sickened condition's own printed ban
+   * on willingly ingesting anything, so it marks that condition — the 'gravel-guts' lane. The second
+   * marks unconscious, the condition the drunk track ends at. */
+  "virtuous-tanuki": [
+    { on: 'condition', id: 'sickened', value: "you can still eat and drink", note: "The condition's ban on willingly ingesting anything does not apply to you: you can eat and drink while sickened." },
+    { on: 'condition', id: 'unconscious', note: "Conventional alcohol can never leave you incapacitated unless you wish it to." },
+  ],
+
+  /* courageous-tanuki — heritage-398: *"When you have the fleeing condition, instead of having to
+   * spend all your actions trying to escape, you can act normally for one action but must still spend
+   * the remainder of your actions fleeing."* Print REWRITES the condition, and the sheet's fleeing
+   * entry stated the unmodified rule; the +10-foot Speed star (:2584) is the record's other half and
+   * stays. A mark and a star coexist by design (see this table's header). */
+  "courageous-tanuki": [{ on: 'condition', id: 'fleeing', value: "1 action free", note: "You can act normally for one action instead of spending all of them escaping; the rest must still be spent fleeing." }],
+
+  /* shadow-rat — heritage-351. Two Intimidation riders WG injects onto the two action rows and we
+   * carried nowhere: *"You gain the trained proficiency rank in Intimidation and can use Intimidation
+   * to Coerce animals. When you Demoralize an animal, you don't take a penalty for not sharing a
+   * language with it."* Both rows also surface in the Intimidation popup, because SKILL_ACTIONS lists
+   * them (skillActions.ts). The third row is the printed DRAWBACK — *"Animals' attitudes toward you
+   * begin one degree worse than normal…"* — which neither side modelled and which a player is most
+   * likely to forget; it marks the attitude a shifted animal lands on. */
+  "shadow-rat": [
+    { on: 'action', id: 'coerce', note: "You can use Intimidation to Coerce animals." },
+    { on: 'action', id: 'demoralize', note: "When you Demoralize an animal you take no penalty for not sharing a language with it." },
+    { on: 'condition', id: 'unfriendly', note: "Animals start one degree worse toward you: unfriendly not indifferent if domesticated, hostile not unfriendly if wild." },
+  ],
 
   // ---- full feature audit — action/condition marks ----
   // 36 records that change an ACTION or a CONDITION rather than a stat.

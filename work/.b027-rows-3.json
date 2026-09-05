@@ -1,0 +1,19 @@
+{
+ "findings": [
+  {
+   "id": "hardshell-surki#evolution-overgrant#mode",
+   "backfillRows": [
+    {
+     "category": "modes",
+     "id": "dampening-harmonics",
+     "field": "feats",
+     "value": [
+      "grand-metamorphosis:hardshell-field"
+     ],
+     "why": "wg-batch-027: the force-field mode was gated on the heritage id, but print (heritage-311) lists Dampening Harmonics under **Evolution** — gained only through Grand Metamorphosis's pick — so a 1st-level hardshell surki was offered a mode for an action they do not have. Gated on the same <feat>:<answer> key modeGateIds emits for the breaker wedge."
+    }
+   ],
+   "note": "the mode half of the surki evolution move; the action grant moved in spec 1."
+  }
+ ]
+}

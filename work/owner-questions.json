@@ -809,6 +809,38 @@
    "theirs": "Their \"Mightyfall Kobold Boosts\" option (id 7d0e01a3-9950-4bc3-9609-42cb076f38b3) is four deltas on the kobold chassis (Cha fixed, Dex fixed, free; flaw Con): adjValue ATTRIBUTE_STR {\"value\":1}, adjValue ATTRIBUTE_DEX {\"value\":-1}, adjValue ATTRIBUTE_CON {\"value\":1}, adjValue ATTRIBUTE_INT {\"value\":-1}. Net = Str boost + Cha boost + the untouched ancestry FREE boost, flaw Int — three boosts.",
    "ours": "heritages/mightyfall-kobold.alternateAttributes replaces the whole array — `abilityBoosts: [{fixed str},{fixed cha}], abilityFlaws: ['int']` — two boosts, no free boost, matching print literally (heritageAdjustedAncestryAttributes, src/rules/build.ts:663-680, returns alt.abilityBoosts wholesale).",
    "question": "WG-vs-PRINT (batch 26, heritage) - WG's 'Mightyfall Kobold Boosts' option only adjusts four attributes (+Str, -Dex, +Con, -Int on top of the kobold chassis), which leaves the ancestry's FREE boost in place: three boosts and an Int flaw. Print says 'Instead of the normal attribute boosts and flaws, you can choose to gain a boost to Strength, a boost to Charisma, and a flaw in Intelligence' - exactly two boosts, no free boost, which is what we ship (the whole array is replaced). Keep ours (print) or adopt WG's three-boost package? Recommendation: keep ours."
+  },
+  {
+   "id": "born-of-animal",
+   "batch": 27,
+   "printed": "**Yaoguai Form** You can dash like an animal. If you have both hands free, you can increase your Speed to 30 feet as you run on all fours.",
+   "theirs": "Born of Animal (their id 34444, type=heritage): {\"type\":\"addBonusToValue\",\"data\":{\"variable\":\"SPEED\",\"value\":\"5\",\"text\":\"If you have both hands free, you can increase your Speed to 30 feet as you run on all fours.\"}} — no `type` field, no condition wrapper, so it applies unconditionally on top of yaoguai's 25 ft chassis Speed. (Their Intimidation op is a matching +1 circumstance and is fine.)",
+   "ours": "src/rules/situationalBonuses.ts:2579 — \"born-of-animal\": [{ targets: [{ kind: 'skill', detail: 'intimidation' }], when: \"in Humanoid Form, to Intimidate animals and beasts (and you take no penalty for lacking a shared language)\", bonus: \"+1 circumstance\" }, { targets: [{ kind: 'speed' }], when: \"in Yaoguai Form, while both hands are free and you run on all fours\", bonus: \"Speed becomes 30 feet\" }] — a conditional star, correct per the restricted-bonus rule (speedsIf is not usable here: its gates are `feat`/`wearingDesignated`, not hands-free, per src/rules/types.ts:882 and its five core usages).",
+   "question": "WG-vs-PRINT (batch 27, heritage) - WG adds a flat, always-on +5 Speed for Born of Animal; print gates the 30-foot Speed on being in Yaoguai Form with both hands free while running on all fours (a conditional, which we carry as a star on the Speed row). Keep ours (print) or adopt WG's always-on +5? Recommendation: keep ours."
+  },
+  {
+   "id": "grave-orc",
+   "batch": 27,
+   "printed": "You gain resistance to void damage equal to half your level (minimum 1).",
+   "theirs": "Their id 20739 carries exactly one resistance op: adjValue { \"variable\": \"RESISTANCES\", \"value\": \"void, {{level/2}}\" }. Compare their Stormtossed Tengu (31730), whose identical printed clause gets TWO ops — adjValue { \"variable\": \"RESISTANCES\", \"value\": \"electricity, 1\" } AND adjValue { \"variable\": \"RESISTANCES\", \"value\": \"electricity, {{level/2}}\" } — the flat 1 being their idiom for the printed \"(minimum 1)\".",
+   "ours": "heritages['grave-orc'] `resistances: [{ type: 'void', value: 'max(1,floor(@actor.level/2))' }]` — the floor is present and matches print. The +1 circumstance save half is carried at src/rules/situationalBonuses.ts:2381 `\"grave-orc\": [{ targets: [{ kind: 'save', detail: 'all' }], when: \"against effects with the death or void trait\", bonus: \"+1 circumstance\" }]`, matching their three SAVE_FORT/SAVE_REFLEX/SAVE_WILL ops.",
+   "question": "WG-vs-PRINT (batch 27, heritage) - WG's void resistance for Grave Orc has no minimum-1 floor, so their grave orc has 0 void resistance at levels 1-3 where print says 'equal to half your level (minimum 1)'; WG's own Stormtossed Tengu row encodes exactly that floor with an extra op, so this is an omission on their side. Keep ours (print, minimum 1) or adopt WG's floorless value? Recommendation: keep ours."
+  },
+  {
+   "id": "deny-lady-nanbyos-charity",
+   "batch": 27,
+   "printed": "Your vow grants you the strength to carry 1 more Bulk than normal before becoming encumbered and up to a maximum of 2 more Bulk",
+   "theirs": "{\"type\":\"adjValue\",\"data\":{\"variable\":\"BULK_LIMIT_BONUS\",\"value\":2}} — the identical op WG uses for Hefty Hauler (their id 20217), whose print is \"2 more Bulk than normal before becoming encumbered and up to a maximum of 2 more Bulk\", so their BULK_LIMIT_BONUS demonstrably moves BOTH thresholds by its value.",
+   "ours": "(nothing authored yet — see deny-lady-nanbyos-charity#bulk. The intended authoring is bulkLimitBonus 1 + bulkMaxBonus 1, i.e. encumbered +1 / max +2, matching print.)",
+   "question": "WG-vs-PRINT (batch 27, heritage) - WG's single BULK_LIMIT_BONUS = 2 moves the ENCUMBERED threshold by 2; print says you can carry 1 more Bulk before becoming encumbered and 2 more before reaching your maximum. We ship +1 encumbered / +2 maximum (the same pair Feat-side Hefty Hauler uses). Keep ours (print) or adopt WG's +2 on both? Recommendation: keep ours."
+  },
+  {
+   "id": "waning-moon-sarangay",
+   "batch": 27,
+   "printed": "Once per day, when you roll a critical failure with the chosen skill, you can reroll the check, taking the new result, even if it's worse.",
+   "theirs": "{\"type\":\"addBonusToValue\",\"data\":{\"variable\":\"SKILL_CRAFTING\",\"text\":\"Once per day, when you roll a critical failure on an Acrobatics check, …\"}} and {\"type\":\"addBonusToValue\",\"data\":{\"variable\":\"SKILL_PERFORMANCE\",\"text\":\"Once per day, when you roll a critical failure on an Acrobatics check, …\"}} — while the same options' own `description` fields correctly say \"on a Crafting check\" / \"on a Performance check\".",
+   "ours": "No star yet (see waning-moon-sarangay#fortune); our effectChoices prompt is skill-neutral, so nothing on our side names the wrong skill.",
+   "question": "WG-vs-PRINT (batch 27, heritage) - WG's Crafting and Performance options both describe the once-per-day reroll as firing on an ACROBATICS check (copy-paste in their option text); print says 'with the chosen skill'. Ours applies the reroll to the chosen skill. Keep ours (print) or copy WG's Acrobatics-only wording? Recommendation: keep ours."
   }
  ],
  "deferred": [

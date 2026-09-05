@@ -429,3 +429,114 @@ describe('batch 26 — the instruments read the carriers we actually ship', () =
     expect(raw).toContain('--- dragonscaled-kobold');
   }, 60_000);
 });
+
+describe('batch 27 — the instruments read the carriers we actually ship', () => {
+  /*
+   * LOREKEEPER SHISK. Print: *"You become trained in one Lore skill and one other Intelligence- or
+   * Wisdom-based skill of your choice."* Ours renders ONE control, a skill picker over the eight
+   * Int/Wis skills — an exact set-match with their eight predefined SKILL_* options. It laned [lore]
+   * because the prompt says "lorekeeping" and names a Lore inside a parenthetical, so the matcher spent
+   * it on their "Select a Lore" and the report blamed the wrong control. The absent LORE control is the
+   * real gap and is settled under lorekeeper-shisk#lore.
+   */
+  const lorekeeperPicker = {
+    ctl: 'popup',
+    title: 'Choose the Intelligence- or Wisdom-based skill your lorekeeping trains (you also gain a Lore skill of your choice, tracked separately; both become expert at 5th level)',
+    options: 8,
+  };
+  it('lanes a skill picker by its primary subject, not by a parenthetical or a substring', () => {
+    expect(laneOfControl(lorekeeperPicker)).toBe('skill');
+    expect(lanesOfControl(lorekeeperPicker)).not.toContain('lore');
+    // A parenthetical is not the subject…
+    expect(laneOfControl({ ctl: 'popup', title: 'Trained skill (a Lore counts)' })).toBe('skill');
+    // …and "lore" inside a longer word is not a Lore pick, while the bare word still is.
+    expect(laneOfControl({ ctl: 'popup', title: 'Your lorekeeping skill' })).toBe('skill');
+    expect(laneOfControl({ ctl: 'popup', title: 'Heritage Lore' })).toBe('lore');
+    expect(laneOfControl({ ctl: 'text', title: 'Lore subject' })).toBe('lore');
+    // …and the two documented exceptions still hold: a feat slot beats "skill", and "Initial domain
+    // spell" picks the SPELL though it names the domain first (why ordering by first mention is wrong).
+    expect(laneOfControl({ ctl: 'popup', title: 'Bonus skill feat' })).toBe('feat');
+    expect(laneOfControl({ ctl: 'popup', title: 'Initial domain spell' })).toBe('spell');
+  });
+  it('their Lore select is the one left unanswered, and it names the Lore', () => {
+    const selects = [
+      { lane: 'lore', title: 'Select a Lore', gate: 'open', inOption: false },
+      { lane: 'skill', title: 'Select a Skill', gate: 'open', inOption: false },
+    ];
+    const { matched, unmatched } = matchSelects(selects, [{ ...lorekeeperPicker, lane: laneOfControl(lorekeeperPicker) }]);
+    expect(matched.map((m) => m.select.title)).toEqual(['Select a Skill']);
+    expect(unmatched.map((s) => s.title)).toEqual(['Select a Lore']);
+  });
+
+  it('wg-diff resolves injectSelectOption to the owning record and ignores a value-less annotation', () => {
+    const out = 'work/.wg-diff-b027-test.json';
+    runScript('wg-diff.mjs', ['--out', out]);
+    const diff = JSON.parse(readFileSync(join(CLI_ROOT, out), 'utf8')) as Record<string, { id: string; missing?: string[] }[]>;
+    rmSync(join(CLI_ROOT, out), { force: true });
+    const theyOnly = new Map(diff.theyOnly.map((r) => [r.id, r.missing ?? []]));
+    /*
+     * THE FOUR SURKI — their heritage rows own no `select` at all. Each emits `injectSelectOption`
+     * whose payload names opId 39f5996f-…, the id of the "Select an Evolution" select on their ability
+     * block 28165 «Grand Metamorphosis». Print puts the question there too (feat-5393, Feat 9: *"You
+     * gain one of the evolutions from your surki heritage"*), and so do we —
+     * feats['grand-metamorphosis'].choice, flag 'surkiEvolution'. Scoring the injection as a
+     * heritage-level `choice` demanded a picker print does not ask the heritage for.
+     */
+    for (const id of ['lantern-surki', 'hardshell-surki', 'elytron-surki', 'breaker-surki']) {
+      expect(theyOnly.get(id) ?? []).not.toContain('choice');
+    }
+    /*
+     * FISHSEEKER SHOONY — their two ops are `addBonusToValue SKILL_ACROBATICS` and
+     * `addBonusToValue SAVE_REFLEX` carrying only `variable` and `text`, NO `value`: the Grab an Edge
+     * sentence pinned to two display surfaces. Print trains no skill; ours carries both printed clauses
+     * as `degreeShifts` on saves:['reflex'] + actions:['grab-an-edge'], which is kind `conditional`.
+     */
+    expect(theyOnly.get('fishseeker-shoony')).toBeUndefined();
+    /*
+     * …AND THE ALLOWANCE IS GATED ON US ACTUALLY MODELLING THE RULE. Rewriting the value-less
+     * `addBonusToValue` to kind `conditional` inside `kindOfTheirOp` was tried and reverted: `missing`
+     * drops `conditional` whenever `gatesOnlyWhatWeHave`, and that predicate is VACUOUSLY TRUE on a row
+     * carrying no `conditional` op at all, so these four bare feats — not one of which holds a single
+     * mechanical field on our side — went straight from THEY-ONLY into AGREE with `ourKinds: []`. Each
+     * keeps the display surface its note is pinned to, because that gap is real.
+     */
+    expect(theyOnly.get('murksight')).toContain('perception');
+    expect(theyOnly.get('greenwatcher')).toContain('save');
+    expect(theyOnly.get('insistent-command')).toContain('skill');
+    expect(theyOnly.get('assured-runic-crafter')).toContain('skill');
+    /* Icy Apotheosis writes *"You automatically succeed against effects that have the cold trait"* on
+     * all three saves as value-less notes; we model only the cold immunity, so `save` still reports. */
+    expect(theyOnly.get('icy-apotheosis')).toContain('save');
+    /* …and a kind our SKILL lane already answers is not stolen by the allowance: Half-Truths' prose op
+     * (*"attempt to make a Request … using Deception instead of Diplomacy"*) is `skillSubstitutions`,
+     * and Officer's Medical Training's is `skillAbilitySwap` — both SKILL, not conditional. */
+    expect(theyOnly.get('half-truths')).toBeUndefined();
+    expect(theyOnly.get('officers-medical-training')).toBeUndefined();
+    // …and the differ still reports: a widening that silenced the list would pass every check above.
+    expect(diff.theyOnly.length).toBeGreaterThan(100);
+  }, 120_000);
+
+  it('wg-values reads a weakness carried by an effectChoices option', () => {
+    /*
+     * TSUKUMOGAMI POPPET — *"If your body is primarily metal, you're instead weak to electricity; if
+     * it's primarily ceramic, you're instead weak to cold."* Both live on
+     * `effectChoices[0].options[].grant.weaknesses` and reach the sheet through chosenEffects. The set
+     * comparison read `weaknesses` / `passiveEffects.weaknesses` / `grant.passive.weaknesses` but not
+     * `grant.weaknesses`, and reported "theirs=electricity,cold ours=(nothing)".
+     */
+    const out = runScript('wg-values.mjs', ['--ids', 'tsukumogami-poppet', '--verbose']);
+    expect(out).not.toMatch(/SET-GAP\s+set\|weaknesses/);
+  }, 60_000);
+
+  it('wg-identity sweeps the pinned feat-pick table keyed by a heritage id', () => {
+    /*
+     * STEADFAST TANUKI — *"You gain your choice of Everyday Form or Teakettle Form as a bonus ancestry
+     * feat."* Ours is `featPickGrants.ts: 'steadfast-tanuki'` with ids ['everyday-form','teakettle-form'],
+     * read as FEAT_PICK_GRANTS[build.heritageId]; theirs is a two-option select whose labels are those
+     * feats' names. The registry fed our `grants` bucket only, so the options bucket read "ours=(nothing)".
+     */
+    const out = runScript('wg-identity.mjs', ['--ids', 'steadfast-tanuki']);
+    expect(out).not.toContain('--- steadfast-tanuki');
+    expect(out).toMatch(/^0 records where a named thing/m);
+  }, 60_000);
+});

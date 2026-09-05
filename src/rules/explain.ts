@@ -55,6 +55,7 @@ import {
   skillAbilitySwapFor,
   itemInUse,
   resolveFormula,
+  answeredEffectOptions,
 } from './derive';
 import { mpArmorRefine } from './monsterParts';
 import { traitLabel } from './glossary';
@@ -291,6 +292,11 @@ export function characterSituationalIds(c: Character, db?: ContentDatabase): str
     ]) {
       for (const a of (rec as { grantsActions?: string[] } | undefined)?.grantsActions ?? []) ids.push(a);
     }
+    /* …and an action an ANSWER granted, which no record carries. Grand Metamorphosis: *"You gain ONE
+     * of the evolutions from your surki heritage"* — the option's `grantsActions` is resolved into
+     * `Character.grantedActionIds` by buildCharacter, so walking records alone misses it and a star
+     * authored under that action's id would not apply to the player who picked it. */
+    for (const a of c.grantedActionIds ?? []) ids.push(a);
   }
   // The property rune etched on the character's own body (Living Rune). It sits on no item, so the
   // inventory walk below cannot reach it and its situational bonuses would silently not apply.
@@ -522,6 +528,17 @@ function authoredSituational(c: Character, db?: ContentDatabase): ExtraSituation
     for (const b of choiceSituationalFor(f.featId, answer, f.choice?.label ?? answer)) ((out ??= {})[f.featId] ??= []).push(b);
   }
   if (!db) return out;
+  /*
+   * …and an answer given on a record's `effectChoices` — the OTHER shape a question takes, and the only
+   * one a HERITAGE has. Waning Moon Sarangay: *"once per day, when you critically fail a check with the
+   * chosen skill, you can reroll it"* — the star belongs on the skill the player picked, and this table
+   * was fed from `c.feats[].choice` alone, so a heritage answer could never aim it (the b27 stars lane
+   * had to star all three candidate skills instead). Resolved through the record's own option list, the
+   * way the degree-shift gate and the mode gate already do.
+   */
+  for (const p of answeredEffectOptions(c, db)) {
+    for (const b of choiceSituationalFor(p.recordId, p.value, p.option.label ?? p.value)) ((out ??= {})[p.recordId] ??= []).push(b);
+  }
   /*
    * An item's authored clauses. In use by default — a charm in your pack does nothing — except for a
    * clause whose printed trigger is CARRYING (see `whileCarried`), which is filtered in rather than

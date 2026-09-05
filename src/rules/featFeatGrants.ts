@@ -289,6 +289,15 @@ export const FEAT_GRANT_BOUND_CHOICE: Record<string, Record<string, BoundGrantAn
    * nirmathi-guerrilla already carries for this exact feat.
    */
   'woodstalker-lizardfolk': { 'terrain-stalker': { kind: 'fixed', skill: 'underbrush' } },
+  /*
+   * Deep Orc, the same shape one feat over: *"You gain the Terrain Expertise skill feat FOR UNDERGROUND
+   * TERRAIN and the Combat Climber skill feat."* Unbound, the granted feat's ten-option terrain question
+   * is never asked (the builder renders a granted feat's choice box only for a feat PICKED into a slot),
+   * so situationalBonuses.ts's *"Survival in your chosen terrain type +1 circumstance"* star hung off an
+   * empty answer. 'underground' is a value in terrain-expertise's own option list, and the identical pin
+   * already sits on backgrounds 'miner' / 'dedicated-delver' for this very feat.
+   */
+  'deep-orc': { 'terrain-expertise': { kind: 'fixed', skill: 'underground' } },
   // "You gain the Specialty Crafting skill feat FOR BOTH Stonemasonry AND Blacksmithing." — the two-
   // answer case the `skill` array exists for.
   'elemental-trade': { 'specialty-crafting': { kind: 'fixed', skill: ['stonemasonry', 'blacksmithing'] } },

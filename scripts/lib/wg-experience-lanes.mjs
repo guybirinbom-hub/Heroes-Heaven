@@ -143,7 +143,11 @@ const CONTROL_TITLE_LANE = [
   // A title that says "feat" is a feat pick even when it also says "skill" ("Bonus skill feat").
   [/\bfeats?\b|dedication/i, 'feat'],
   [/attribute|ability boost|boost/i, 'attribute'],
-  [/lore/i, 'lore'],
+  /* ⚠ `lore` IS WORD-BOUNDED, and it is the only lane here that has to be: unbounded, it fires on
+   * "lorekeeping" (and would on "folklore"), and because it is tested before `skill` a SKILL picker
+   * whose prompt merely uses the word was laned [lore]. See the primary-subject note on
+   * lanesOfControl. Every other lane word here is already its own noun in our prompts. */
+  [/\blores?\b/i, 'lore'],
   [/skill/i, 'skill'],
   [/cantrip/i, 'cantrip'],
   [/spell/i, 'spell'],
@@ -163,14 +167,36 @@ const CONTROL_TITLE_LANE = [
  * spell, "Initial domain spell" is a SPELL pick that also mentions the domain — so a control carries
  * all the lanes its title names and the matcher accepts any of them. 'option' is always last: any
  * popup can answer a CUSTOM select.
+ *
+ * ⚠ THE LANE IS THE PROMPT'S PRIMARY SUBJECT — what the control actually picks, not every game word
+ * the sentence happens to contain. Two rules keep the two apart, and both were written for one case:
+ *
+ * Lorekeeper Shisk. Print: *"You become trained in one Lore skill and one other Intelligence- or
+ * Wisdom-based skill of your choice."* Ours renders exactly ONE control, a SKILL picker over the eight
+ * Int/Wis skills — an exact set-match with their eight predefined SKILL_* options — prompted *"Choose
+ * the Intelligence- or Wisdom-based skill your lorekeeping trains (you also gain a Lore skill of your
+ * choice, tracked separately; both become expert at 5th level)"*. It laned [lore] twice over: the
+ * substring inside "lorekeeping", and the word "Lore" inside a PARENTHETICAL ASIDE. The matcher then
+ * spent our one control on their "Select a Lore" and the report read *WG asks "Select a Skill"; we
+ * render … [lore]* — naming the wrong shortfall. The genuine gap is the ABSENT Lore control, which is
+ * lorekeeper-shisk#lore.
+ *
+ *   1. A PARENTHETICAL IS NOT THE SUBJECT. Our prompts are sentences: the aside explains what else the
+ *      answer does, the main clause says what is being picked. Stripped before laning.
+ *   2. `lore` is word-bounded in the list above, so "lorekeeping" is not a Lore pick.
+ *
+ * Ordering by first mention was tried instead and is WRONG: "Initial domain spell" names the domain
+ * first and picks the spell. (Prompt text only — the harness reports a control's option COUNT, not its
+ * option contents, so the option list cannot break a tie here.)
  */
 export function lanesOfControl(ctl) {
   const kind = ctl?.ctl ?? '';
-  const title = String(ctl?.title ?? '');
+  // Rule 1: the parenthetical aside is dropped before any lane word is looked for.
+  const title = String(ctl?.title ?? '').replace(/\([^)]*\)?/g, ' ');
   if (kind === 'slot') return ['feat'];
   if (kind === 'spell') return /cantrip/i.test(title) ? ['cantrip', 'spell'] : ['spell'];
   const out = [];
-  if (kind === 'text') out.push(/lore/i.test(title) ? 'lore' : 'text');
+  if (kind === 'text') out.push(/\blores?\b/i.test(title) ? 'lore' : 'text');
   for (const [re, l] of CONTROL_TITLE_LANE) if (re.test(title) && !out.includes(l)) out.push(l);
   if (!out.includes('option')) out.push('option');
   return out;

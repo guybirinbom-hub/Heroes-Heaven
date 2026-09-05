@@ -72,12 +72,21 @@ describe('every choice picker can be filled', () => {
          * an arbitrary one is correct rather than a skip. Skipping them silently was the first
          * sweep's other flaw: 214 records went uncounted and the run still read as complete. */
         const classId = (r.traits ?? []).find((t) => c.classes[t]) ?? Object.keys(c.classes)[0];
-        for (const def of defs as { kind?: string; from?: unknown; domainPool?: unknown }[]) {
+        for (const def of defs as { kind?: string; from?: unknown; domainPool?: unknown; options?: { requiresAnyFeature?: string[] }[] }[]) {
           if (def.kind === 'text') continue; // free text: no list to be empty
+          /* A menu whose every option is gated on a HERITAGE (Grand Metamorphosis: *"one of the
+           * evolutions from your surki heritage"*) is empty on a host with no such heritage — correctly.
+           * The satisfying host carries the first gate's heritage (and its ancestry), so the sweep asks
+           * the real question: can a character the record is FOR fill it? */
+          const gate = (def.options ?? []).flatMap((o) => o.requiresAnyFeature ?? []).find((g) => c.heritages[g]);
+          const heritageHost = gate && (def.options ?? []).every((o) => o.requiresAnyFeature?.length)
+            ? { heritageId: gate, ancestryId: c.heritages[gate].ancestryId }
+            : {};
           const b = host(classId, r.level ?? 1, {
             featPicks: { [SLOT]: id },
             deityId: anyDeity,
             archetypeTradition: 'divine',
+            ...heritageHost,
           });
           const n =
             def.kind === 'open'

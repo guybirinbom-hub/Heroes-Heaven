@@ -400,6 +400,18 @@ function ourSets(rec, id) {
   for (const ch of [{ options: rec.choice?.options ?? [] }, ...(rec.effectChoices ?? [])]) {
     for (const o of ch.options ?? []) {
       for (const r of o.grant?.resistances ?? []) add('resistances', r.type);
+      /* ⚠ AND THE WEAKNESS AT THE SAME LEVEL. `grant.resistances` and `grant.passive.weaknesses` were
+       * both read here and `grant.weaknesses` was not, so a weakness the player CHOOSES read as no
+       * weakness at all. Tsukumogami Poppet prints *"If your body is primarily metal, you're instead
+       * weak to electricity; if it's primarily ceramic, you're instead weak to cold"*, and both live on
+       * `effectChoices[0].options[].grant.weaknesses` — folded into `chosenEffects` by build.ts
+       * mergeEffect (`if (g.weaknesses) (into.weaknesses ??= []).push(...)`) and pushed as a real
+       * defence source by derive.ts (`push('Your chosen effect', c.chosenEffects)`). The set comparison
+       * read only `weaknesses` / `passiveEffects.weaknesses` and reported
+       * "theirs=electricity,cold ours=(nothing)" on a record that delivers both. Adversarially confirmed:
+       * this is the same carrier the `landSpeedMin` read below already follows into an option's `grant`,
+       * and the record's real defects are the amount and the missing fire removal, not the types. */
+      for (const w of o.grant?.weaknesses ?? []) add('weaknesses', w.type);
       /* …and the same lists one level deeper, under the branch's own `passive` block — which is where an
        * ITEM's per-branch resistance lives (the clay sphere's armour-or-weapon choice, the jolt coil's).
        * Reading only `grant.resistances` meant that moving a resistance INTO a branch made the record

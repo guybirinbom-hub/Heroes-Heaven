@@ -218,6 +218,12 @@ function ourIdentities(id, rec) {
    * on both sides, so the flag's name is offered as the counterpart. A flag whose name matches nothing
    * of theirs adds nothing — this reader only ever ADDS to our side. */
   if (rec.choice?.flag) addGrant(rec.choice.flag);
+  /* A NAMED SENSE is a granted thing on their side too. Draxie: their `giveAbilityBlock` hands over
+   * "Touch Telepathy" as a physical-feature block; ours is `senses: [{ name: 'touch-telepathy' }]`, the
+   * same encoding feats/arcane-communication uses for the same printed sentence, read by deriveDefenses
+   * and glossed on the Senses row. The sense name is offered as the counterpart; a sense whose name
+   * matches nothing of theirs adds nothing. */
+  for (const s of rec.senses ?? []) addGrant(s?.name ?? s);
   for (const s of rec.innateSpells ?? []) addSpell(s.spellId ?? s);
   /* …and an aeon stone's RESONANT power, one level down. wg-diff already descends into `resonant`;
    * this reader stopped at the top level, so 14 stones whose spell lives at resonant.innateSpells
@@ -405,7 +411,23 @@ function ourIdentities(id, rec) {
   /* The registries, which is where most feat→feat grants actually live. */
   for (const gid of registryIds(featFeatText, id)) addGrant(gid);
   for (const sid of registryIds(cantripText, id)) addSpell(sid);
-  for (const fid of registryIds(pickText, id)) addGrant(fid);
+  /*
+   * A FEAT_PICK_GRANTS ROW IS AN OPTIONS LIST, NOT ONLY A GRANT LIST — and it is keyed by HERITAGE id
+   * as often as by feat id.
+   *
+   * Steadfast Tanuki prints *"You gain your choice of Everyday Form or Teakettle Form as a bonus
+   * ancestry feat"*, and ours is `featPickGrants.ts: 'steadfast-tanuki': { prompt: 'Choose Everyday
+   * Form or Teakettle Form', maxLevel: 1, ids: ['everyday-form','teakettle-form'] }` — read as
+   * `FEAT_PICK_GRANTS[build.heritageId]` in build.ts and rendered as a picker in the heritage block
+   * (shared.tsx). Their side asks it as a two-option `select` ("Everyday Form" / "Teakettle Form"), so
+   * the labels land in THEIR `options` bucket while ours only ever fed `grants` — and the record
+   * reported "options theirs-not-ours=[everydayform, teakettleform], ours=(nothing)" with both options
+   * offered, in the right place, by the right control. Adversarially confirmed: both feats ship in
+   * core.json at level 1 with the tanuki trait, so `maxLevel: 1` filters neither, and the heritage
+   * record itself carries no `choice`/`effectChoices` — which is precisely all this reader looked at.
+   * Ids AND names are credited because their labels are the feats' printed names.
+   */
+  for (const fid of registryIds(pickText, id)) { addGrant(fid); out.options.add(key(anyName(fid))); out.options.add(key(fid)); }
   /*
    * …and a `skillChoices` slot IS an options list. Gildedsoul's Diplomacy-or-Society and Nagaji Lore's
    * Nagaji-or-Naga-Lore both live in a grant table rather than on the record, so reading only the record
@@ -553,6 +575,18 @@ const SETTLED_IDENTITIES = {
   'flying-animal': ['grants'],
   'running-animal': ['grants'],
   'swimming-animal': ['grants'],
+
+  /*
+   * TSUKUMOGAMI POPPET (batch 27) — their metal and ceramic options each hand over a "Nonflammable"
+   * ability block: the printed *"you have weakness to electricity (or cold) INSTEAD OF fire"*. Ours says
+   * the same thing as data on the option itself — `effectChoices[].options[].grant.removesWeaknesses:
+   * ['fire']` beside the new weakness — read by deriveDefenses' weakness remover (widened to option
+   * grants in batch 27) and pinned on a built metal poppet with no fire weakness. There is no record
+   * named Nonflammable on our side to match the block's title against, and a feature record for a
+   * removal would hand the character a feature they do not have. Settled on the `grants` bucket only;
+   * the weakness VALUES are asserted by wg-values.
+   */
+  'tsukumogami-poppet': ['grants'],
 
   /*
    * PISTOL WAND — their one op is {"type":"giveItem","data":{"itemId":13707}}: the BARE Reinforced
@@ -1215,12 +1249,14 @@ const SETTLED_IDENTITIES = {
    */
   'child-of-notoriety': ['options'],
   /*
-   * PROFESSIONAL LETTER WRITER — their select enumerates the two feats; ours asks through the
-   * FEAT_PICK_GRANTS registry (featPickGrants.ts:222, "Choose Specialty Crafting or Multilingual"),
-   * which this comparer does not read. Batch 20 made that registry the SINGLE carrier by retiring
-   * the record's duplicate grantedFeatId + choice pair.
+   * PROFESSIONAL LETTER WRITER — RETIRED IN BATCH 27, and by the fix that made it unnecessary. Its
+   * whole reason was *"ours asks through the FEAT_PICK_GRANTS registry (featPickGrants.ts:222, 'Choose
+   * Specialty Crafting or Multilingual'), which this comparer does not read"* — and `ourIdentities`
+   * now reads it: a `FEAT_PICK_GRANTS` row credits `out.options` as well as `out.grants` (see the note
+   * at the `registryIds(pickText, id)` line, taught for Steadfast Tanuki). `wg-identity --ids
+   * professional-letter-writer --raw` matches on every named thing with the settle bypassed, so the
+   * entry answered nothing and would have silenced the NEXT options difference on this record, unread.
    */
-  'professional-letter-writer': ['options'],
   /*
    * REVENANT — their named "Void Healing" block is ours as the `negativeHealing` field, aggregated
    * by deriveDefenses and build's hasVoidHealing (background arm built this batch; guarded on a

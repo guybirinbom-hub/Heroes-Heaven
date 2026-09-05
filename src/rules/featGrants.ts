@@ -490,6 +490,18 @@ const HAND_AUTHORED_GRANTS: Record<string, FeatGrant> = {
   // "You are trained in Survival, and you gain the Survey Wildlife skill feat." — the granted feat
   // (featFeatGrants.ts) prints "trained in Survival" as its own prerequisite, which nothing met.
   'keeper-jotunborn': { skills: { survival: 'trained' } },
+  /*
+   * Respite of a Thousand Roofs (yaksha heritage) — the same lane and the same stale rejection: *"you
+   * become trained in Crafting and Cooking Lore, and you gain the Improvise Tool skill feat"*, and the
+   * record shipped the *"apply it manually (FEAT_GRANTS: id not in feats/classFeatures)"* dataWarning
+   * with no skills carrier at all (heritage records carry no `skills` field — this table is the
+   * heritage-keyed proficiency lane). The Improvise Tool half was already covered by
+   * EXTRA_FEAT_TAKINGS (featFeatGrants.ts); both trainings were simply undelivered.
+   *
+   * Cooking Lore is a FIXED subject, not a `loreChoices` slot, so it rides the static map's `lore:*`
+   * key exactly as ghost-hunter-dedication's 'lore:spirit' / 'lore:haunt' do.
+   */
+  'respite-of-a-thousand-roofs': { skills: { crafting: 'trained', 'lore:cooking': 'trained' } },
   'rogue-dedication': {
     armor: { light: 'trained' },
     /* The fallback belongs to the Stealth/Thievery slot ONLY — the second slot is the *"plus one skill
