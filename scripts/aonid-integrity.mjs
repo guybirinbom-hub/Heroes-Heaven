@@ -124,5 +124,9 @@ if (hard) {
   console.log(`\n${hard} record(s) link to the wrong kind of page. Either the link is wrong (drop it — see`);
   console.log('scripts/fix-aonid-collisions.mjs) or the bucket is an accepted quirk (add it to');
   console.log('BUCKET_QUIRK in scripts/lib/aonid-categories.mjs, with the evidence).');
+  if (findings.noDoc.length) {
+    console.log('A NO DOCUMENT link to a page the PRISTINE mirror has means the export snapshot is stale —');
+    console.log('run `node scripts/export-sync-from-mirror.mjs` (it copies exactly those documents in).');
+  }
 }
 process.exit(hard ? 1 : 0);

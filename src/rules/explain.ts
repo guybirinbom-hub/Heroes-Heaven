@@ -1261,7 +1261,8 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
     }
     case 'classDc': {
       const d = deriveClassDc(c);
-      const key = c.keyAbility ?? 'str';
+      // The same attribute deriveClassDc used — Way of the Spellshot's Int class DC (batch 28).
+      const key = c.classDcKeyAbility ?? c.keyAbility ?? 'str';
       const cls = c.classId ? db.classes[c.classId] : undefined;
       const parts: CalcPart[] = [
         { label: 'Base', value: 10 },
@@ -1540,7 +1541,9 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
           value: strike.dmgAbMod,
         });
       }
-      if (strike.specDamage) parts.push({ label: 'Weapon specialization', value: strike.specDamage });
+      // A runesmith's extra damage is Runic Optimization (class-73), keyed on the striking rune, not on
+      // proficiency — same slot in the breakdown, its own name (batch 28).
+      if (strike.specDamage) parts.push({ label: c.classId === 'runesmith' ? 'Runic Optimization' : 'Weapon specialization', value: strike.specDamage });
       // Enfeebled/etc. hits the actual damage ability (Str, or Dex under the thief racket); blasts add none.
       if (strike.dmgAbility === 'str' || strike.dmgAbility === 'dex') {
         const cond = conditionPart(c, strike.dmgAbility, 'damage');

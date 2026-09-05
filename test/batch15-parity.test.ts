@@ -87,9 +87,11 @@ describe("batch 15 — Gate's Threshold really has both branches", () => {
       gateForks: { '5': 'air-gate' },
     } as never);
 
-    /* Mechanically: Air Gate trains Stealth, and a fire/water kineticist has no other route to it (both of those train Intimidation and Athletics). */
-    expect(plain.proficiencies.skills.stealth ?? 'untrained').toBe('untrained');
-    expect(forked.proficiencies.skills.stealth, "the forked element's grants must apply").toBe('trained');
+    /* Mechanically: the new element joins the kinetic elements (impulse access). It does NOT hand out
+     * Stealth — print puts each element's skill on its SKILL JUNCTION, not on the gate (batch 28). */
+    expect(plain.kineticist?.elements ?? []).not.toContain('air');
+    expect(forked.kineticist?.elements ?? [], 'the forked element must be active').toContain('air');
+    expect(forked.proficiencies.skills.stealth ?? 'untrained', 'no free skill from the gate').toBe('untrained');
 
     /*
      * …and ON THE SHEET. The fork was folded into `grantOptions`, which is what carries the skill above,

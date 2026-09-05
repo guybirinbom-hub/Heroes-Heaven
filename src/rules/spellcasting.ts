@@ -168,11 +168,57 @@ export function casterSlots(
 }
 
 /**
+ * Known spells per rank for a SPONTANEOUS caster: the slot count, plus any `extraRepertoire` the class
+ * prints beyond it.
+ *
+ * Two classes print a repertoire larger than their slot table and had no carrier for it at all — the
+ * summoner (*"your spell repertoire reaches its maximum size of five spells"* against a stated maximum
+ * of four slots) and the oracle's Oracular Clarity (*"Add two common 10th-rank divine spells to your
+ * repertoire. You gain a single 10th-rank spell slot"*).
+ *
+ * A rank the caster cannot actually cast yet is DROPPED (`rank <= topRank`): without that guard the
+ * oracle's `{10: 1}` would offer a 10th-rank repertoire pick to a 1st-level character, since rank 10
+ * simply isn't in the slot table before 19th. The summoner's `{1: 1}` survives the guard at every
+ * level, including those where the two-rank table has moved off 1st-rank slots entirely — which is
+ * right: the repertoire keeps its five spells while the slots move up.
+ *
+ * ONE function, called by buildCharacter (which slices the repertoire) and by the builder (which caps
+ * the picker), because two implementations of a pick cap are how a picker comes to offer a spell the
+ * sheet then throws away.
+ */
+export function repertoireCounts(
+  slots: Record<number, number>,
+  extra?: Record<number, number>,
+): Record<number, number> {
+  if (!extra) return slots;
+  const ranks = Object.keys(slots).map(Number);
+  if (!ranks.length) return slots;
+  const topRank = Math.max(...ranks);
+  const out: Record<number, number> = { ...slots };
+  for (const [rankStr, n] of Object.entries(extra)) {
+    const rank = Number(rankStr);
+    if (rank > topRank) continue;
+    out[rank] = (out[rank] ?? 0) + n;
+  }
+  return out;
+}
+
+/**
+ * Leveled spells in a LEARNED prepared caster's spellbook at a level: the 1st-level book plus
+ * `perLevel` more each level after. The magus's book is *"four 1st-level arcane spells… Each time you
+ * gain a level, you add two more arcane spells"* — not the wizard's 5 + 2 — so the numbers come off
+ * the class record instead of a hardcoded class-id test.
+ */
+export function spellbookBudget(spec: { spells: number; perLevel: number }, level: number): number {
+  return spec.spells + spec.perLevel * (Math.max(1, level) - 1);
+}
+
+/**
  * Free leveled spells in a wizard's spellbook: 5 at level 1, +2 each level after.
  * (The 10 starting cantrips and the school-curriculum additions are not counted here.)
  */
 export function wizardSpellbookSize(level: number): number {
-  return 5 + 2 * (Math.max(1, level) - 1);
+  return spellbookBudget({ spells: 5, perLevel: 2 }, level);
 }
 
 /**

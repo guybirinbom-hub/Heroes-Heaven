@@ -760,9 +760,41 @@ function descWithBlock(html, blockMd, extraRefs) {
   return merged.length ? { description, descRefs: merged } : { description };
 }
 
-function classStatBlock(s) {
+/*
+ * A class whose STARTING SKILLS come from its subclass, which no field on the Foundry class record
+ * states. Print, gunslinger (class-20) Skills: *"Trained in one or more skills determined by your
+ * gunslinger's way"* — the ways carry it as SUBCLASS_SKILL_CHOICE / an option's `grants.skills`, both
+ * attached in a LATER post-pass than the classes loop that calls this, so the sentence is stated here
+ * by class id. Without it the page said only "Trained in 3 + Intelligence modifier skills of your
+ * choice", dropping the printed half (batch 28, gunslinger#class-page-attacks).
+ */
+const SUBCLASS_SKILL_SENTENCE = { gunslinger: "one or more skills determined by your gunslinger's way" };
+
+function classStatBlock(s, id) {
   const key = s.keyAbility?.value || [];
   const sk = s.trainedSkills || {};
+  /*
+   * THE "OTHER" ATTACK ENTRY IS A PRINTED PROFICIENCY LINE, and dropping it hid the gunslinger's
+   * signature proficiency. Print (class-20) Attacks: *"Expert in simple firearms and crossbows /
+   * Expert in martial firearms and crossbows / Trained in advanced firearms and crossbows"*; the
+   * alchemist's is *"Trained in alchemical bombs"* and the cleric's *"Trained in your deity's favored
+   * weapon"*. Foundry holds all three in `attacks.other` ({ name, rank }) — the very field this
+   * importer turns into the record's `attackGroups` — and this block rendered only the four weapon
+   * CATEGORIES, so the class page claimed the gunslinger was merely trained in simple and martial
+   * weapons while the engine gave it the firearm ladder (batch 28, gunslinger#class-page-attacks).
+   *
+   * The firearms entry is spelled out BY CATEGORY because its three tracks advance separately and the
+   * entry names only two of them: src/rules/build.ts:3215-3220 gives simple and martial firearms and
+   * crossbows expert at 1st (→ master at 5th, legendary at 13th) and advanced trained — the printed
+   * ladder. The other two classes render as the single line their `other` entry states.
+   */
+  const other = s.attacks?.other;
+  const otherAttacks = !(other?.name && other.rank > 0)
+    ? ''
+    : /firearm/i.test(other.name)
+      ? `Simple firearms and crossbows (${rankName(other.rank)}), Martial firearms and crossbows (${rankName(other.rank)}), Advanced firearms and crossbows (Trained)`
+      : `${other.name} (${rankName(other.rank)})`;
+  const skillSentence = SUBCLASS_SKILL_SENTENCE[id];
   const head = [
     '## Class details',
     `**Key Attribute** ${key.length ? key.map(abilName).join(' or ') : '—'}`,
@@ -771,8 +803,10 @@ function classStatBlock(s) {
     `**Saving Throws** Fortitude ${rankName(s.savingThrows?.fortitude || 0)}, Reflex ${rankName(s.savingThrows?.reflex || 0)}, Will ${rankName(s.savingThrows?.will || 0)}`,
     (sk.value || []).length
       ? `**Skills** Trained in ${sk.value.map(titleCase).join(', ')}${sk.additional ? `, plus ${sk.additional} + Intelligence modifier additional skills` : ''}`
-      : `**Skills** Trained in ${sk.additional || 0} + Intelligence modifier skills of your choice`,
-    `**Attacks** ${profCats(s.attacks, [['unarmed', 'Unarmed attacks'], ['simple', 'Simple weapons'], ['martial', 'Martial weapons'], ['advanced', 'Advanced weapons']])}`,
+      : skillSentence
+        ? `**Skills** Trained in ${skillSentence}${sk.additional ? `, plus ${sk.additional} + Intelligence modifier additional skills` : ''}`
+        : `**Skills** Trained in ${sk.additional || 0} + Intelligence modifier skills of your choice`,
+    `**Attacks** ${[otherAttacks, profCats(s.attacks, [['unarmed', 'Unarmed attacks'], ['simple', 'Simple weapons'], ['martial', 'Martial weapons'], ['advanced', 'Advanced weapons']])].filter(Boolean).join(', ')}`,
     `**Defenses** ${profCats(s.defenses, [['unarmored', 'Unarmored'], ['light', 'Light armor'], ['medium', 'Medium armor'], ['heavy', 'Heavy armor']])}`,
     '**Class DC** Trained',
   ].join('\n\n');
@@ -1380,7 +1414,8 @@ for (const e of readPack('classes')) {
     name: e.name,
     traits: traitsOf(s),
     rarity: rarityOf(s),
-    ...descWithBlock(s.description?.value, classStatBlock(s)),
+    // `id` so the stat block can state a printed clause that is true of one class (see classStatBlock).
+    ...descWithBlock(s.description?.value, classStatBlock(s, id)),
     source: sourceOf(e),
     keyAbility: key,
     hpPerLevel: s.hp,

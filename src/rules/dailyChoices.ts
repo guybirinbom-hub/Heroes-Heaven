@@ -49,6 +49,9 @@ export function dailyChoicesFor(c: Character, db: ContentDatabase): DailyChoice[
     // askedAtDailyPrep spells that out, and is the SAME predicate the builder uses to decide what to
     // stop asking, so the two can never disagree and strand a choice between them.
     if (!def || !askedAtDailyPrep(def)) continue;
+    // A question that starts at a printed level — Experimental Spellshaping's daily spellshape pick:
+    // *"Starting at 4th level, during your daily preparations…"* — is not asked before it.
+    if (def.minLevel != null && c.level < def.minLevel) continue;
     const options =
       def.kind === 'array'
         ? // Plus whatever another owned record adds to this menu — Radiant Armament's astral and

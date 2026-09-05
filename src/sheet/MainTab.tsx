@@ -600,7 +600,7 @@ export function MainTab({
             {s.ranged && s.range != null && <span>Range {s.range} ft</span>}
             {!!s.reaches?.length && <StrikeReachValue reaches={s.reaches} />}
             {s.reload != null && s.reload > 0 && <span>Reload {s.reload}</span>}
-            {s.specDamage ? <span title="Weapon specialization (included in the damage above)">Spec +{s.specDamage}</span> : null}
+            {s.specDamage ? <span title={`${character.classId === 'runesmith' ? 'Runic Optimization' : 'Weapon specialization'} (included in the damage above)`}>Spec +{s.specDamage}</span> : null}
             {s.group && <span className="strike-group">{s.group.charAt(0).toUpperCase() + s.group.slice(1)}</span>}
           </div>
         )}

@@ -608,6 +608,17 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
     alchemyPrep: play.alchemyPrep ?? ch.alchemyPrep,
     dailyChoices: play.dailyChoices ?? ch.dailyChoices,
     ...(dailyLanguages.length ? { languages: [...(ch.languages ?? []), ...dailyLanguages], dailyLanguages } : {}),
+    /* A FEAT gained for the day (Experimental Spellshaping's daily spellshape pick, class-39) — appended
+     * here, like the borrowed spell and the recalled language, because the answer is re-made every
+     * morning and cannot come from the build. Its actions reach the Actions tab through `ch.feats`;
+     * a feat the character already owns is not doubled. */
+    ...(() => {
+      const owned = new Set(ch.feats.map((f) => f.featId));
+      const daily = dailyChoiceGrants({ ...ch, dailyChoices: play.dailyChoices }, content)
+        .flatMap((g) => g.grantsFeats ?? [])
+        .filter((id) => content.feats[id] && !owned.has(id));
+      return daily.length ? { feats: [...ch.feats, ...daily.map((id) => ({ featId: id, level: ch.level, category: content.feats[id].category, grantedBy: 'daily-preparations' }))] } : {};
+    })(),
     dailyItems: play.dailyItems ?? ch.dailyItems,
     featUses: play.featUses ?? ch.featUses,
     formulaPicks: play.formulaPicks ?? ch.formulaPicks,

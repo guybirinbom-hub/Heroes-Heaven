@@ -647,6 +647,23 @@ export interface FamiliarBlock extends Defenses {
   offer?: CreatureOffer;
 }
 
+/**
+ * How many familiar abilities the PLAYER chooses for this familiar — the grant's own budget, grown by
+ * level where the record says it grows.
+ *
+ * b028 witch#familiar-abilities. Print (AoN class-38, Familiar): *"Your familiar gains another extra
+ * ability at 6th, 12th, and 18th levels"*, and the class-features table repeats "Familiar ability" on
+ * rows 6, 12 and 18. `CompanionGrant.abilityBudget` is a bare number with no level lane, so a 20th-level
+ * witch's familiar showed the same 4 as a 1st-level one where print gives 7 (3 chosen + the patron's
+ * free ability at 1st, rising to 6 + 1).
+ */
+export function familiarAbilityBudget(cfg: CompanionConfig, character: Character): number | undefined {
+  const grant = cfg.grantSlug ? FEAT_COMPANION_GRANTS[cfg.grantSlug] : undefined;
+  if (grant?.abilityBudget == null) return undefined;
+  const witchGrowth = cfg.grantSlug === 'familiar-witch' ? [6, 12, 18].filter((l) => character.level >= l).length : 0;
+  return grant.abilityBudget + witchGrowth;
+}
+
 /** A familiar is a Tiny minion: 5 HP per level, the master's AC/saves/Perception, plus its
  *  chosen abilities. A specific familiar adds its locked required abilities + special abilities.
  *  A creature added from a record's OFFER borrows this shape with the offer's own overrides. */
@@ -691,6 +708,16 @@ export function deriveFamiliar(
     // block prints them "from a feat", the budget line does not count them, and `has()` below still
     // sees them — a granted Flier still flies, and a granted Tough would still raise HP.
     if (cfg.grantSlug) for (const id of locked) if (!grantedAbilityIds.has(id)) grantedAbilityIds.set(id, cfg.grantSlug);
+    // b028 witch#patron-familiar-ability — Familiar (AoN class-38): "Your familiar gains two additional
+    // familiar abilities: ONE OF THESE IS A UNIQUE ABILITY BASED ON YOUR PATRON AND IS ALWAYS SELECTED".
+    // classFeatures.patron.familiarAbilities maps all 16 patrons to their ability and had no reader at
+    // all, so the patron's ability was simply absent. Same free/`fromFeat` channel as an owner feat's
+    // grant: always on, not toggleable, and it costs none of the chosen budget.
+    if (cfg.grantSlug === 'familiar-witch' && character.subclassId) {
+      for (const id of content.classFeatures?.patron?.familiarAbilities?.[character.subclassId] ?? []) {
+        if (!grantedAbilityIds.has(id)) grantedAbilityIds.set(id, 'patron');
+      }
+    }
   }
   const chosen = new Set(own);
   const abilities = [

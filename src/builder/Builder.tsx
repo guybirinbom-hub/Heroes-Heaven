@@ -38,9 +38,10 @@ import { eligibleFeatsForSlot, findHiddenFeatMatches } from '../rules/featSlots'
 import { classFeatureDescription } from '../rules/featureText';
 import {
   resolveBackground,
+  restrictedSkillIncreaseAllowed,
   skillIncreaseCap,
 } from '../rules/build';
-import { casterSlots, wizardSpellbookBudget, cantripsKnown } from '../rules/spellcasting';
+import { casterSlots, repertoireCounts, spellbookBudget, wizardSpellbookBudget, cantripsKnown } from '../rules/spellcasting';
 import {
   askedAtDailyPrep,
   characterSenseKeys,
@@ -384,13 +385,27 @@ export function Builder({
     // A spell collection heightens EVERY collected spell once 2nd-rank spells arrive — the stars
     // are fixed on (signatureFixed), so the builder shows them rather than offering a budget.
     (archMods.spellCollection && !!casting && build.level >= 3);
-  // Wizards and witches are LEARNED prepared casters: they learn a SPELLBOOK (a single budget across
-  // ranks — the wizard's book, the witch's familiar) and can prepare only from it.
-  const isWizardBook = !!casting && isPrepared && (casterCls?.id === 'wizard' || casterCls?.id === 'witch');
+  /*
+   * Wizards and witches are LEARNED prepared casters: they learn a SPELLBOOK (a single budget across
+   * ranks — the wizard's book, the witch's familiar) and can prepare only from it.
+   *
+   * The MAGUS is one too and was not: *"You start with a spellbook worth 10 sp or less, which you
+   * receive for free and must study to prepare your spells each day. The spellbook contains your choice
+   * of eight arcane cantrips and four 1st-level arcane spells… Each time you gain a level, you add two
+   * more arcane spells to your spellbook"* (class-17) — and it prepared straight off the arcane list
+   * with no book and no budget, because the only book lane in the app was this class-id test. WG marks
+   * the same distinction with its PREPARED-LIST casting token against PREPARED-TRADITION.
+   *
+   * `ClassSpellcasting.spellbook` carries the numbers now (the magus's 4 + 2 is NOT the wizard's 5 + 2,
+   * so reusing wizardSpellbookBudget for it would be wrong). The class-id test stays as the fallback so
+   * a wizard or witch record without the field keeps the book it has always had.
+   */
+  const bookSpec = casting?.spellbook;
+  const isWizardBook = !!casting && isPrepared && (!!bookSpec || casterCls?.id === 'wizard' || casterCls?.id === 'witch');
   // Wizard School of Unified Magical Theory (Player Core): "you add one 1st-rank spell of your choice
   // to your spellbook" — a larger initial spellbook. Applies as a flat +1 to the across-rank budget.
   const isUmtBook = casterCls?.id === 'wizard' && subOption?.id === 'school-of-unified-magical-theory';
-  const spellbookSize = wizardSpellbookBudget(build.level, isUmtBook);
+  const spellbookSize = bookSpec ? spellbookBudget(bookSpec, build.level) : wizardSpellbookBudget(build.level, isUmtBook);
   const learnedTotal = Object.values(build.spells).reduce((n, arr) => n + arr.length, 0);
   /* Known-beyond-slots for an archetype pool (the halcyon "2 common 1st-rank spells" over one slot,
    * Shattered Sacrament's extra known). The BUILDER's per-rank counts are pick caps, not the slot
@@ -421,8 +436,15 @@ export function Builder({
    * silently dropped the excess picks. */
   const capArch = (counts: Record<number, number>): Record<number, number> =>
     archMods.slotCap == null ? counts : Object.fromEntries(Object.entries(counts).map(([r, n]) => [r, Math.min(n, archMods.slotCap!)]));
+  /* How many spells the CLASS lets the player pick at each rank: the (archetype-capped) slot table,
+   * plus any repertoire the class prints beyond its slots — the summoner's *"maximum size of five
+   * spells"* over four slots, the oracle's Oracular Clarity *"Add two common 10th-rank divine spells to
+   * your repertoire. You gain a single 10th-rank spell slot"*. buildCharacter sizes the repertoire the
+   * same way through the same helper, so the picker and the sheet cannot disagree about the cap. */
+  const classPickCounts = (L: number): Record<number, number> =>
+    repertoireCounts(capArch(casterSlots(L, castProgression)), casting?.extraRepertoire);
   const slotCounts = casting
-    ? capArch(casterSlots(build.level, castProgression))
+    ? classPickCounts(build.level)
     : archCaster
       ? archExtraKnownAt(archetypeSlots(build.level, archCaster))
       : {};
@@ -950,10 +972,12 @@ export function Builder({
   const sigAvailable2 =
     casting2?.type === 'spontaneous' &&
     !!cls2?.features?.some((f) => f.featureId === 'signature-spells' && f.level <= build.level);
-  const isWizardBook2 = !!casting2 && isPrepared2 && (cls2?.id === 'wizard' || cls2?.id === 'witch');
+  // Same spellbook lane as the primary class above (dual class), so a magus/wizard pair agrees with itself.
+  const bookSpec2 = casting2?.spellbook;
+  const isWizardBook2 = !!casting2 && isPrepared2 && (!!bookSpec2 || cls2?.id === 'wizard' || cls2?.id === 'witch');
   const isUmtBook2 = cls2?.id === 'wizard' && subOption2?.id === 'school-of-unified-magical-theory';
-  const spellbookSize2 = wizardSpellbookBudget(build.level, isUmtBook2);
-  const slotCounts2 = casting2 ? casterSlots(build.level, castProgression2) : {};
+  const spellbookSize2 = bookSpec2 ? spellbookBudget(bookSpec2, build.level) : wizardSpellbookBudget(build.level, isUmtBook2);
+  const slotCounts2 = casting2 ? repertoireCounts(casterSlots(build.level, castProgression2), casting2.extraRepertoire) : {};
   const cantripCap2 = casting2 && build.classId2 ? cantripsKnown(build.classId2) : 0;
   const learnedTotal2 = Object.values(build.spells2 ?? {}).reduce((n, arr) => n + arr.length, 0);
   const eligibleSpells2 = (rank: number) => {
@@ -987,9 +1011,10 @@ export function Builder({
   // --- per-level spell progression (spells are chosen on the level where they're gained) ---
   // Spell slots per rank at a given character level (0 = before play).
   const slotsAt = (L: number): Record<number, number> =>
-    L < 1 ? {} : casting ? capArch(casterSlots(L, castProgression)) : archCaster ? archExtraKnownAt(archetypeSlots(L, archCaster)) : {};
-  // Wizard spellbook budget (a single across-rank total) at a given level — includes the UMT +1.
-  const bookAt = (L: number) => (L < 1 ? 0 : wizardSpellbookBudget(L, isUmtBook));
+    L < 1 ? {} : casting ? classPickCounts(L) : archCaster ? archExtraKnownAt(archetypeSlots(L, archCaster)) : {};
+  // Spellbook budget (a single across-rank total) at a given level — the class's own `spellbook` numbers
+  // (magus 4 + 2) when it carries them, else the wizard ladder including the UMT +1.
+  const bookAt = (L: number) => (L < 1 ? 0 : bookSpec ? spellbookBudget(bookSpec, L) : wizardSpellbookBudget(L, isUmtBook));
   // The first level this character can cast — cantrips, tradition, and divine font live here.
   const firstCasterLevel = (() => {
     if (!showSpells) return 0;
@@ -2003,6 +2028,29 @@ export function Builder({
                                   content={content}
                                 />
                               ))}
+                          {/* …and an extra-choice pick can hand over a FEAT to choose, not just an
+                              effect. Wizard Experimental Spellshaping: *"You gain one 1st-level
+                              spellshape wizard feat of your choice."* The FEAT_PICK_GRANTS picker was
+                              mounted for granted class FEATURES and for the subclass, and a thesis is
+                              neither — so the spec had nowhere on screen to be answered. */}
+                          {subAnchorId &&
+                            Object.values(build.extraChoices ?? {})
+                              .flat()
+                              .filter((oid) => FEAT_PICK_GRANTS[oid])
+                              .flatMap((oid) => {
+                                const spec = FEAT_PICK_GRANTS[oid];
+                                const opts = pickableFeats(spec, build, content).map((o) => ({ value: o.id, label: o.name, description: o.description }));
+                                return pickKeysFor(oid, spec.picks).map((key, i) => (
+                                  <PopupSelect
+                                    key={`ecp-${key}`}
+                                    title={pickPrompt(spec.prompt, i, spec.picks)}
+                                    placeholder={`${pickPrompt(spec.prompt, i, spec.picks)}…`}
+                                    value={build.pickFeatChoices?.[key] ?? ''}
+                                    onChange={(v) => actions.patch({ pickFeatChoices: { ...(build.pickFeatChoices ?? {}), [key]: v } })}
+                                    options={opts}
+                                  />
+                                ));
+                              })}
                           {/* School of Unified Magical Theory (Player Core): grants a BONUS 1st-level
                               wizard class feat (an extra class-feat slot) — pick it here. */}
                           {isUmtSchool && subAnchorId && lvl === 1 && (
@@ -2538,6 +2586,15 @@ export function Builder({
                     {g.bonusSkillIncrease &&
                       (() => {
                         const chosenBonus = build.bonusSkillIncreases?.[lvl] ?? null;
+                        /* The feature that grants this increase may NARROW it. Swashbuckler Stylish
+                         * Tricks: *"you gain an additional skill increase you can apply only to
+                         * Acrobatics or the skill from your swashbuckler's style"*; thaumaturge
+                         * Thaumaturgic Expertise/Mastery: *"which you can apply only to Arcana, Nature,
+                         * Occultism, or Religion"*. The list was unfiltered, so a level-3 Braggart could
+                         * raise Medicine — buildCharacter now drops such a pick, and greying it here is
+                         * what stops the player making it. Same helper both sides. */
+                        const bonusRestrict = restrictedSkillIncreaseAllowed(build, content);
+                        const narrowed = bonusRestrict?.levels.includes(lvl) ? bonusRestrict : null;
                         return (
                           <div className="lvl-group">
                             <div className="lvl-group-h">
@@ -2570,12 +2627,12 @@ export function Builder({
                                         return {
                                           value: k,
                                           label: `${skillLabel(k)} (${atAbsoluteMax ? `${RANK_ABBR[cur]} — max` : `${RANK_ABBR[cur]} → ${RANK_ABBR[next]}`})`,
-                                          disabled: atAbsoluteMax || !allowedByLevel || !!LOCKED_SKILL_KEYS[k],
+                                          disabled: atAbsoluteMax || !allowedByLevel || !!LOCKED_SKILL_KEYS[k] || (!!narrowed && !narrowed.skills.has(k)),
                                           disabledReason: atAbsoluteMax
                                             ? 'Already legendary — nothing left to increase.'
                                             : !allowedByLevel
                                               ? `This level's increases cap at ${skillIncreaseCap(lvl)}.`
-                                              : LOCKED_SKILL_KEYS[k],
+                                              : LOCKED_SKILL_KEYS[k] ?? (narrowed && !narrowed.skills.has(k) ? narrowed.reason : undefined),
                                         };
                                       })}
                                     />

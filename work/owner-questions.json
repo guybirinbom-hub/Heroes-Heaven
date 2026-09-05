@@ -841,6 +841,14 @@
    "theirs": "{\"type\":\"addBonusToValue\",\"data\":{\"variable\":\"SKILL_CRAFTING\",\"text\":\"Once per day, when you roll a critical failure on an Acrobatics check, …\"}} and {\"type\":\"addBonusToValue\",\"data\":{\"variable\":\"SKILL_PERFORMANCE\",\"text\":\"Once per day, when you roll a critical failure on an Acrobatics check, …\"}} — while the same options' own `description` fields correctly say \"on a Crafting check\" / \"on a Performance check\".",
    "ours": "No star yet (see waning-moon-sarangay#fortune); our effectChoices prompt is skill-neutral, so nothing on our side names the wrong skill.",
    "question": "WG-vs-PRINT (batch 27, heritage) - WG's Crafting and Performance options both describe the once-per-day reroll as firing on an ACROBATICS check (copy-paste in their option text); print says 'with the chosen skill'. Ours applies the reroll to the chosen skill. Keep ours (print) or copy WG's Acrobatics-only wording? Recommendation: keep ours."
+  },
+  {
+   "id": "summoner",
+   "batch": 28,
+   "printed": "Summoner Spellcasting (class-20): 'you have two spell slots each of your two highest spell ranks' - lower ranks lose their slots as you level ('as you level up, you lose your lower-rank spell slots').",
+   "theirs": "WG keeps every lower rank at 2 slots (L5 {1:2,2:2,3:1}; L20 {1..9: 2}) - 77 slot rows differ from ours (scripts/wg-casting.mjs, first compared in batch 28).",
+   "ours": "two-rank progression: only the two highest ranks hold 2 slots each (L5 {2:2,3:2}; L20 {8:2,9:2}); levels 1-3 agree exactly.",
+   "question": "WG-vs-PRINT (batch 28, class casting) - the SAME question as #104 (magus): WG's summoner keeps two spell slots at every lower rank; print gives slots only at the two highest ranks. Keep ours (print) or adopt WG's table? Recommendation: keep ours, and rule #104 and #120 together."
   }
  ],
  "deferred": [

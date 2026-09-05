@@ -131,7 +131,8 @@ describe('rogue racket key attribute', () => {
     expect(opts.ruffian).toEqual(['str', 'dex']);
     expect(opts.mastermind).toEqual(['int', 'dex']);
     expect(opts.scoundrel).toEqual(['cha', 'dex']);
-    expect(opts['eldritch-trickster']).toBeUndefined(); // KEY_ABILITY_IGNORE
+    // batch 28: the print racket offers Dex or the key attribute of its spellcasting tradition's class.
+    expect(opts['eldritch-trickster']).toEqual(['dex', 'int', 'wis', 'cha']);
     expect(opts.thief).toBeUndefined(); // no keyOptions at all — class default (dex) applies
   });
 

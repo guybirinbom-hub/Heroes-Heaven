@@ -9,7 +9,7 @@
  * OUTPUT, class by class, level by level: casting type, tradition, key attribute, cantrips per level,
  * slots per rank per level, and whether a prepared caster prepares cantrips daily (owner, 2026-09-02).
  *
- *   npx jiti scripts/wg-casting.mjs              # every class both sides encode → work/wg-casting-parity.json
+ *   npx jiti scripts/wg-casting.mjs              # every class both sides encode → work/wg-casting-parity.json (--out <path> to write elsewhere)
  *   npx jiti scripts/wg-casting.mjs --class cleric
  *   npx jiti scripts/wg-casting.mjs --verbose    # print the level table for every class, not just mismatches
  *
@@ -19,7 +19,7 @@
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { parseCopyBlock, parseOps, untsv } from './lib/wg-parse.mjs';
+import { parseCopyBlock, parseOps, untsv, flattenOps } from './lib/wg-parse.mjs';
 import { seedContent } from '../src/rules/seed';
 import { buildCharacter, emptyBuild } from '../src/rules/build';
 
@@ -43,10 +43,11 @@ const norm = (s) => String(s ?? '').toLowerCase().replace(/[^a-z0-9]+/g, '');
 const classByNorm = new Map(Object.keys(db.classes).map((id) => [norm(id), id]));
 
 /**
- * source name -> { tokens, traditions, attributes, slots[], rows } from the class's OWN class-feature
- * rows. ⚠ Only class-feature rows, never feats: the archetype dedications ("Basic Cleric Spellcasting",
- * "Cantrip Expansion", "Divine Breadth") add slots INTO the same casting source, and summing them
- * reported the cleric as having 10 cantrips. Legacy duplicates ("Oracle Spellcasting (legacy)") are
+ * source name -> { tokens, traditions, attributes, slots[], rows }. The SLOT table comes from the
+ * class's OWN class-feature rows and nowhere else: the archetype dedications ("Basic Cleric
+ * Spellcasting", "Cantrip Expansion", "Divine Breadth") add slots INTO the same casting source, and
+ * summing them reported the cleric as having 10 cantrips. The source DEFINITION is read more widely —
+ * see the sourceDefRows note below. Legacy duplicates ("Oracle Spellcasting (legacy)") are
  * skipped so a remastered class is not counted twice. A sorcerer's bloodlines each define the source
  * with their own tradition, so tradition is a SET, not a value.
  */
@@ -64,8 +65,41 @@ for (const r of rows) {
   if (!richest.has(key) || richest.get(key).n < n) richest.set(key, { r, n });
 }
 const classFeatureRows = [...richest.values()].map((x) => x.r);
-for (const r of classFeatureRows) {
-  const ops = parseOps(r.operations);
+/*
+ * ⚠ THE SOURCE DEFINITION IS NOT ALWAYS ON A CLASS-FEATURE ROW — AND READING ONLY THOSE MADE THIS
+ * COMPARER SKIP FOUR OF OUR TWELVE CASTING CLASSES IN SILENCE.
+ *
+ * A sorcerer's tradition comes from its BLOODLINE, a psychic's key attribute from its SUBCONSCIOUS
+ * MIND — and WG ships those as `feat` rows, one `defineCastingSource` each ("Draconic Bloodline" 33779
+ * = `SORCERER:::SPONTANEOUS-REPERTOIRE:::ARCANE:::ATTRIBUTE_CHA`; "Gathered Lore" 34344 =
+ * `PSYCHIC:::SPONTANEOUS-REPERTOIRE:::OCCULT:::ATTRIBUTE_INT`). The only class-feature row defining
+ * SORCERER is "Bloodline (legacy)", which isLegacy() drops. So SORCERER / PSYCHIC / WITCH / SUMMONER
+ * never entered `theirs`, the second loop's `if (!theirs.has(src)) continue` then threw away the 130
+ * giveSpellSlot rows on "Sorcerer Spellcasting", and the run reported "9 class source(s) compared"
+ * with no hint that four were missing — which is why the sorcerer's slot shortfall sat unreported
+ * (batch 28, sorcerer#instrument-casting / psychic#instrument-casting).
+ *
+ * DEFINITIONS ONLY. The giveSpellSlot pass below stays on class-feature rows, because that is what
+ * stops "Basic Cleric Spellcasting" and "Cantrip Expansion" adding their archetype slots into the
+ * class's table (the note above) — a feat may say WHAT the source is, never how many slots it has.
+ *
+ * ⚠ CEILING (measured on the whole dump, batch-28 verification): a DEDICATION is a feat row too, so an
+ * archetype can widen a source's tradition/attribute SET, and the tradition/attribute checks below are
+ * membership tests — a widened set can only make ours pass. Measured: of the nine sources that have a
+ * class-feature definer, not one feat row contributes a token/tradition/attribute triple the
+ * class-feature row did not already carry, so nothing is excused today. The sets a feat actually
+ * builds belong to the classes whose SUBCLASS is the definer (sorcerer bloodlines, witch patrons,
+ * summoner eidolons, psychic minds) and to the three focus-only chassis. Upgrade path if that ever
+ * stops holding: ignore feat definers for a source a class-feature row already defines.
+ */
+const sourceDefRows = [...classFeatureRows, ...rows.filter((r) => r.type === 'feat' && !isLegacy(untsv(r.name)))];
+for (const r of sourceDefRows) {
+  /* …and FLATTENED, because a definition can sit one level down: every witch patron wraps its
+   * `defineCastingSource` (WITCH:::PREPARED-LIST:::<tradition>:::ATTRIBUTE_INT) inside a nested op,
+   * which a top-level scan cannot see — the witch was the fourth silently-skipped class. Flattening
+   * is safe for DEFINITIONS (a source is what it is on any branch) and is deliberately NOT used for
+   * the slot pass below, where a conditional's branches would be double-counted. */
+  const ops = parseOps(r.operations).flatMap((o) => flattenOps(o));
   if (!ops.length) continue;
   for (const op of ops) {
     if (op.type === 'defineCastingSource') {
@@ -75,7 +109,10 @@ for (const r of classFeatureRows) {
       if (token) cur.tokens.add(token);
       if (tradition) cur.traditions.add(tradition.toLowerCase());
       if (attribute) cur.attributes.add(attribute);
-      cur.rows.add(untsv(r.name));
+      /* A class-feature definer is named in the report; the 41 sorcerer bloodlines that define the
+       * same source are counted instead, so the row list stays readable. */
+      if (r.type === 'class-feature') cur.rows.add(untsv(r.name));
+      else cur.featDefiners = (cur.featDefiners ?? 0) + 1;
       theirs.set(source, cur);
     }
   }
@@ -182,7 +219,16 @@ for (const t of sources.sort((a, b) => a.source.localeCompare(b.source))) {
     mismatches: [], levels: [],
   };
   if (wgType === 'focus-only') {
-    // A focus-only source (champion devotion spells, monk qi spells) has no ClassDef block on our side:
+    /*
+     * ⚠ A FOCUS SOURCE DEFINED ONLY ON FEAT ROWS IS OPTIONAL, AND A HOST WHO TOOK NO FEATS IS RIGHT
+     * NOT TO HAVE IT. The monk's qi spells arrive with a Qi feat, the ranger's with Warden's Boon, the
+     * exemplar's with an ikon feat — every one a `feat` row, now that definitions are read from those
+     * too. Assert the built entry only where a CLASS-FEATURE row defines the source (the champion's
+     * "Devotion Spells", ability_block 31209), which is the case where every character of the class
+     * has it from level 1. `rows` holds class-feature definers only, by construction above.
+     */
+    if (!rec.rows.length) { rec.optionalSource = `defined only on ${t.featDefiners ?? 0} feat row(s) — arrives with a feat, not with the class`; report.push(rec); continue; }
+    // A focus-only source (champion devotion spells) has no ClassDef block on our side:
     // the focus entry is built from the granting feature. So the check is on the BUILT character.
     let c = null;
     try { c = buildCharacter(hostAt(classId, 20), db); } catch (e) { rec.mismatches.push({ kind: 'build-error', level: 20, detail: String(e?.message ?? e).slice(0, 120) }); }
@@ -250,7 +296,10 @@ for (const t of sources.sort((a, b) => a.source.localeCompare(b.source))) {
 
 /* ---- output -------------------------------------------------------------------------------------- */
 const out = { generated: new Date().toISOString(), classes: report.map((r) => ({ ...r, levels: VERBOSE ? r.levels : undefined })), skippedSources: skipped.sort() };
-writeFileSync(join(ROOT, 'work/wg-casting-parity.json'), JSON.stringify({ ...out, classes: report }, null, 1));
+/* `--out` so a single-class run (a test, a spot check) writes its own scratch file instead of
+ * replacing the gate's full report with a one-class one — the same guard wg-diff's `--out` gives. */
+const dest = arg('--out', 'work/wg-casting-parity.json');
+writeFileSync(join(ROOT, dest), JSON.stringify({ ...out, classes: report }, null, 1));
 let bad = 0;
 for (const r of report) {
   const m = r.mismatches;
@@ -267,5 +316,5 @@ for (const r of report) {
   if (VERBOSE) for (const l of r.levels) console.log(`     L${String(l.level).padStart(2)}  cantrips WG ${l.wgCantrips} / ours ${l.ourCantrips}${l.cantripsPrepared ? ' (prepared daily)' : ''}   slots WG ${JSON.stringify(l.wgSlots)} / ours ${JSON.stringify(l.ourSlots)}`);
 }
 console.log(`\ncasting parity: ${report.length} class source(s) compared, ${report.filter((r) => r.mismatches.length).length} with mismatches (${bad} row(s)); ${skipped.length} non-class source(s) skipped (${skipped.slice(0, 8).join(', ')}${skipped.length > 8 ? ' …' : ''})`);
-console.log('written: work/wg-casting-parity.json');
+console.log(`written: ${dest}`);
 process.exit(bad ? 1 : 0);

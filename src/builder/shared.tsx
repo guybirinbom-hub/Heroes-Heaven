@@ -50,7 +50,7 @@ import {
   removeChosenIds,
   withCustomAnswer,
 } from '../rules/build';
-import { choiceFlagAnswer, effectChoiceDefault, effectChoiceOffered, effectChoiceOptions, narrowSpellFilter } from '../rules/build';
+import { choiceFlagAnswer, effectChoiceDefault, effectChoiceOffered, effectChoiceOptions, narrowSpellFilter, subclassOptionAllowed } from '../rules/build';
 import { BACKGROUND_CANTRIP_GRANTS } from '../rules/backgroundGrants';
 import { openChoiceOptions } from '../rules/openChoice';
 import { cantripsKnown } from '../rules/spellcasting';
@@ -2571,6 +2571,22 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
   const subKeyOptions = cls?.subclass?.options.find((o) => o.id === build.subclassId)?.keyAbilityOptions;
   const keyOptions = subKeyOptions?.length ? subKeyOptions : !subKey && cls ? cls.keyAbility : [];
   const keyChoice = keyOptions.length > 1;
+  /*
+   * b028 psychic#key-attribute-blank — the attributes the CLASS ADVERTISES, for display only.
+   * The psychic is the only class shipping `keyAbility: []` (print: *"Key Attribute: Intelligence or
+   * Charisma … as determined by your choice of subconscious mind"*), so the class card printed a bare
+   * "Key:" and the Key attribute card "—" until a subconscious mind was picked. The pair it offers is
+   * carried by the extraChoices options that SET the attribute, so read them.
+   * Deliberately NOT `classes.psychic.keyAbility = ['int','cha']`: build.ts's setup-completeness branch
+   * would then push a second "Key attribute" prompt that the subconscious mind pick already answers —
+   * and for the same reason this list is never fed to `keyOptions`, only shown.
+   */
+  const classKeyAbilities: AbilityId[] = cls?.keyAbility.length
+    ? cls.keyAbility
+    : [...new Set((cls?.extraChoices ?? []).flatMap((g) => g.options.map((o) => o.keyAbility)).filter((a): a is AbilityId => !!a))]
+        // Canonical attribute order, so the psychic reads "Int/Cha" as printed rather than in
+        // whatever order its subconscious minds happen to be listed.
+        .sort((a, b) => Object.keys(ABILITY_LABEL).indexOf(a) - Object.keys(ABILITY_LABEL).indexOf(b));
   const keyAbility = subKey ?? build.keyAbility ?? cls?.keyAbility[0] ?? null;
   const heritage = build.heritageId ? content.heritages[build.heritageId] : undefined;
   /*
@@ -3109,7 +3125,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           <ChoiceGrants
             grants={
               <div className="cc-grants">
-                <span className="cc-g"><i className="ti ti-rosette" aria-hidden="true" /> Key: {cls.keyAbility.map((a) => ABILITY_LABEL[a]).join('/')}</span>
+                <span className="cc-g"><i className="ti ti-rosette" aria-hidden="true" /> Key: {classKeyAbilities.map((a) => ABILITY_LABEL[a]).join('/')}</span>
                 <span className="cc-g"><i className="ti ti-heart" aria-hidden="true" /> HP {cls.hpPerLevel}/level</span>
                 {cls.trainedSkills?.fixed?.length > 0 && (
                   <span className="cc-g"><i className="ti ti-bulb" aria-hidden="true" /> {cls.trainedSkills.fixed.map(cap).join(', ')}</span>
@@ -3123,13 +3139,30 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
       {cls && (
         <SubCard icon="ti-rosette" label="Key attribute">
           {keyChoice ? (
-            <AbilitySelect
-              value={build.keyAbility && keyOptions.includes(build.keyAbility) ? build.keyAbility : null}
-              options={keyOptions}
-              onChange={(v) => actions.patch({ keyAbility: v })}
-            />
+            // The `data-ctl` marker the experience harness catalogues controls by — without it the
+            // key-attribute pick was invisible to the gate and their "Select a Key Attribute" was
+            // matched against our free Attribute-boost popup instead (batch 28).
+            <span
+              data-ctl="popup"
+              data-ctl-title="Key attribute"
+              data-ctl-options={keyOptions.length}
+              data-ctl-live={keyOptions.length}
+              data-ctl-state={build.keyAbility && keyOptions.includes(build.keyAbility) ? 'picked' : 'empty'}
+            >
+              <AbilitySelect
+                value={build.keyAbility && keyOptions.includes(build.keyAbility) ? build.keyAbility : null}
+                options={keyOptions}
+                onChange={(v) => actions.patch({ keyAbility: v })}
+              />
+            </span>
           ) : (
-            <span className="fixed-val">{keyAbility ? ABILITY_LABEL[keyAbility] : '—'}</span>
+            <span className="fixed-val">
+              {keyAbility
+                ? ABILITY_LABEL[keyAbility]
+                : classKeyAbilities.length
+                  ? classKeyAbilities.map((a) => ABILITY_LABEL[a]).join(' or ')
+                  : '—'}
+            </span>
           )}
         </SubCard>
       )}
@@ -3139,7 +3172,23 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
             title={cls.subclass.name}
             value={build.subclassId ?? ''}
             onChange={(v) => actions.changeSubclass(v)}
-            options={cls.subclass.options.map((o) => ({ value: o.id, label: o.name, description: o.description, descRefs: o.descRefs }))}
+            /* …and grey the options the character's SANCTIFICATION forbids. Champion class-58: *"Whether
+             * you become holy, unholy, or neither will limit your choice of causes"* / *"Some causes are
+             * limited to certain sanctifications"* — Desecration and Iniquity are Unholy, Grandeur and
+             * Redemption Holy. `subclassOptionAllowed` is the same predicate `originMissing` uses to
+             * report an illegal cause, so the picker and Setup completeness cannot disagree; it returns
+             * true while sanctification is unanswered, leaving the list wide for a half-built champion. */
+            options={cls.subclass.options.map((o) => {
+              const need = o.traits?.find((t) => t === 'holy' || t === 'unholy');
+              const allowed = subclassOptionAllowed(o, build, content);
+              return {
+                value: o.id,
+                label: o.name,
+                description: o.description,
+                descRefs: o.descRefs,
+                ...(allowed ? {} : { disabled: true, disabledReason: `Needs a ${need} sanctification.` }),
+              };
+            })}
           />
         </SetupCard>
       )}
@@ -3153,13 +3202,55 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
         // character is legal, but the builder must not SHOW a skill the player never chose — that is
         // how a choice gets skipped. setupMissing lists it instead.
         const current = choice.includes(build.subclassSkill as SkillId) ? (build.subclassSkill as SkillId) : '';
+        /* …and the LORE branch, where the option opens one. Empiricism (methodology-2/6): *"You are
+         * trained in one Intelligence-based skill of your choice"* — Lores are Intelligence-based, and
+         * WG's own select carries a nested "Select a Lore" beside Arcana/Crafting/Occultism. The subject
+         * is free text (there is no Lore list), so it rides `addCustom` — the same "type your own"
+         * branch the background and skill-increase Lore pickers use — and is stored in
+         * `build.subclassLore`, which buildCharacter prefers over the named-skill default. */
+        const lore = subOpt?.skillChoiceLore ? (build.subclassLore ?? '').trim() : '';
         return (
           <SubCard icon="ti-school" label="Trained skill">
             <PopupSelect
               title="Trained skill"
-              value={current}
-              onChange={(v) => actions.patch({ subclassSkill: v as SkillId })}
-              options={choice.map((s) => ({ value: s, label: s.charAt(0).toUpperCase() + s.slice(1) }))}
+              value={lore || current}
+              onChange={(v) =>
+                choice.includes(v as SkillId)
+                  ? actions.patch({ subclassSkill: v as SkillId, subclassLore: null })
+                  : actions.patch({ subclassLore: v })
+              }
+              options={[
+                ...choice.map((s) => ({ value: s, label: s.charAt(0).toUpperCase() + s.slice(1) })),
+                ...(lore ? [{ value: lore, label: `${cap(lore)} Lore` }] : []),
+              ]}
+              addCustom={
+                subOpt?.skillChoiceLore
+                  ? {
+                      label: 'Choose a Lore',
+                      placeholder: 'Lore subject (e.g. Engineering)…',
+                      onAdd: (text) => actions.patch({ subclassLore: text.trim(), subclassSkill: null }),
+                    }
+                  : undefined
+              }
+            />
+          </SubCard>
+        );
+      })()}
+      {(() => {
+        // A spell the subclass option lets the player CHOOSE — witch patrons that teach the familiar
+        // "dizzying colors or grease" (Ripple in the Deep) / "summon animal or summon plant or fungus"
+        // (Wilding Steward). `grantedSpells` is a flat list, so the "or" rides `grantedSpellChoice`.
+        const subOpt = cls?.subclass?.options.find((o) => o.id === build.subclassId);
+        const gsc = subOpt?.grantedSpellChoice;
+        if (!gsc || !subOpt) return null;
+        const cur = build.subclassSpellChoice?.[subOpt.id] ?? '';
+        return (
+          <SubCard icon="ti-sparkles" label={gsc.prompt}>
+            <PopupSelect
+              title={gsc.prompt}
+              value={gsc.options.includes(cur) ? cur : ''}
+              onChange={(v) => actions.patch({ subclassSpellChoice: { ...(build.subclassSpellChoice ?? {}), [subOpt.id]: v } })}
+              options={gsc.options.map((id) => ({ value: id, label: content.spells[id]?.name ?? id, description: content.spells[id]?.description }))}
             />
           </SubCard>
         );
@@ -3836,15 +3927,36 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
       {(build.classId === 'fighter' || (build.variantRules?.dualClass && build.classId2 === 'fighter')) && build.level >= 5 && (
         <SetupCard icon="ti-sword" label="Weapon group mastery">
           <div className="bsec-note">
-            Fighter Weapon Mastery (5th) — and Weapon Legend (13th) — raise your proficiency with the
-            simple, martial, and unarmed weapons of one weapon group. Choose that group.
+            Fighter Weapon Mastery (5th) raises you to master with the simple, martial and unarmed
+            weapons of one weapon group (expert with its advanced weapons).
           </div>
           <PopupSelect
-            title="Weapon group"
+            title="Weapon group (5th)"
             value={build.fighterWeaponGroup ?? ''}
             onChange={(v) => actions.patch({ fighterWeaponGroup: v || null })}
             options={fighterWeaponGroupOptions(content).map((g) => ({ value: g.id, label: g.label }))}
           />
+          {/* Weapon Legend (13th): *"You CAN SELECT ONE WEAPON GROUP and increase your proficiency ranks
+              to legendary… and to master for all advanced weapons in that weapon group"* (class-35) — a
+              SECOND, independent selection, which had no control at all: both levels read the one field,
+              so naming a different group at 13th was impossible. Left empty it falls back to the 5th-level
+              group, which is what every character saved before this field existed meant. */}
+          {build.level >= 13 && (
+            <>
+              <div className="bsec-note">
+                Weapon Legend (13th) raises one group to legendary (master with its advanced weapons) —
+                the same group, or a different one. Leave empty to keep the group above.
+              </div>
+              <PopupSelect
+                title="Weapon group (13th)"
+                placeholder="Same group as 5th…"
+                value={build.fighterWeaponGroup2 ?? ''}
+                onChange={(v) => actions.patch({ fighterWeaponGroup2: v || null })}
+                clearLabel="Use the 5th-level group"
+                options={fighterWeaponGroupOptions(content).map((g) => ({ value: g.id, label: g.label }))}
+              />
+            </>
+          )}
         </SetupCard>
       )}
       {pendingClass != null && (

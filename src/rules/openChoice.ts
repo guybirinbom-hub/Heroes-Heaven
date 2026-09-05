@@ -111,13 +111,20 @@ export function openChoiceOptions(
         description: s.description,
       }));
     }
-    case 'feat':
-      return featsMatching(from, content, opts?.character?.level).map((f) => ({
-        id: f.id,
-        name: f.name,
-        note: `Level ${f.level}`,
-        description: f.description,
-      }));
+    case 'feat': {
+      // `excludeOwn` drops feats the character already has — Experimental Spellshaping's daily pick:
+      // *"a spellshape wizard feat of your choice that you don't already have"*. Same flag the
+      // ancestry/background branches below honour for their own record (batch 28).
+      const owned = from.excludeOwn ? new Set((opts?.character?.feats ?? []).map((f) => f.featId)) : null;
+      return featsMatching(from, content, opts?.character?.level)
+        .filter((f) => !owned?.has(f.id))
+        .map((f) => ({
+          id: f.id,
+          name: f.name,
+          note: `Level ${f.level}`,
+          description: f.description,
+        }));
+    }
     case 'weapon':
       // Category alone left "choose a level 0 weapon" and "an uncommon simple or martial weapon"
       // resolving to all 1,039 weapons — a searchable list, but not the one the rules describe.

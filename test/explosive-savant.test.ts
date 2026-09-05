@@ -46,9 +46,11 @@ describe('Explosive Savant', () => {
 
   it('is stored as group rules, not as one override per weapon', () => {
     const ch = withFeat(true);
+    // 'expert', not 'trained': the feat treats bombs and martial firearms as SIMPLE weapons, and the
+    // wizard's Weapon Expertise (11th) raises simple weapons to expert (batch 28 added that row).
     expect(ch.proficiencies.weaponGroupRanks).toEqual([
-      { group: 'bomb', rank: 'trained' },
-      { group: 'firearm', category: 'martial', rank: 'trained' },
+      { group: 'bomb', rank: 'expert' },
+      { group: 'firearm', category: 'martial', rank: 'expert' },
     ]);
     // The 292 weapons it covers are NOT written out — that list would flood the Details tab with a
     // proficiency row each. (The wizard's own five named weapons stay where they were.)
@@ -58,8 +60,9 @@ describe('Explosive Savant', () => {
 
   it('raises bombs and martial firearms to the SIMPLE rank', () => {
     expect(rankOf(bomb.name, false)).toBe('untrained');
-    expect(rankOf(bomb.name, true)).toBe('trained');
-    expect(rankOf(martialFirearm.name, true)).toBe('trained');
+    // The wizard's simple rank at 11 is expert (Weapon Expertise), so the feat's weapons follow it there.
+    expect(rankOf(bomb.name, true)).toBe('expert');
+    expect(rankOf(martialFirearm.name, true)).toBe('expert');
   });
 
   it('raises advanced firearms only to the MARTIAL rank', () => {

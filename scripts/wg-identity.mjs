@@ -100,6 +100,9 @@ function theirIdentities(row) {
 const SKILL_NAMES = ['acrobatics', 'arcana', 'athletics', 'crafting', 'deception', 'diplomacy',
   'intimidation', 'medicine', 'nature', 'occultism', 'performance', 'religion', 'society', 'stealth',
   'survival', 'thievery', 'lore'];
+/* Module scope, not inside `ourIdentities`: both the ability-boost reader and the class key-attribute
+ * reader above it need the long spellings their options are titled with ("Strength", not "str"). */
+const ABILITY_NAMES = { str: 'Strength', dex: 'Dexterity', con: 'Constitution', int: 'Intelligence', wis: 'Wisdom', cha: 'Charisma' };
 
 /* ---------------------------------------------------------------- our side */
 /** Which class lists each feature — the key to crediting a class-chassis mechanic to its carrier. */
@@ -373,6 +376,34 @@ function ourIdentities(id, rec) {
     out.options.add(key(`skill ${s}`));
     out.options.add(key(s));
   }
+  /*
+   * …and A CLASS'S OWN TWO QUESTIONS, whose options are the SHAPE of a field rather than a list of
+   * labelled options.
+   *
+   * Print: *"Key Attribute: Strength or Dexterity"* (fighter, monk, ranger, champion, magus, exemplar)
+   * and *"Trained in your choice of Arcana, Nature, Occultism, or Religion"* (runesmith, thaumaturge).
+   * Their class rows enumerate each as a `select` whose CUSTOM options are titled "Strength" /
+   * "Dexterity", or whose ADJ_VALUE options name SKILL_ARCANA / SKILL_NATURE / …. Ours holds the same
+   * two questions as `keyAbility` (an array of length > 1 IS the choice — src/rules/types.ts:3527) and
+   * `trainedSkills.choice` / a `SubclassOption.skillChoice`, each with a live picker
+   * (src/builder/shared.tsx:3127 and :3150) and an unanswered-choice report (src/rules/build.ts:1111
+   * and :1136). This reader enumerated neither, so eight class rows reported every option of theirs as
+   * having no counterpart while ours read `(nothing)` (batch 28).
+   *
+   * ⚠ LENGTH, NOT PRESENCE, on `keyAbility` — a one-entry array is a FIXED attribute and offers no
+   * option at all; crediting it would answer a select we do not render.
+   */
+  if ((rec.keyAbility ?? []).length > 1) {
+    for (const a of rec.keyAbility) {
+      out.options.add(key(a));
+      out.options.add(key(ABILITY_NAMES[a] ?? a));
+      out.options.add(key(`attribute ${ABILITY_NAMES[a] ?? a}`));
+    }
+  }
+  for (const s of [...(rec.trainedSkills?.choice ?? []), ...(rec.subclass?.options ?? []).flatMap((o) => o?.skillChoice ?? [])]) {
+    out.options.add(key(`skill ${s}`));
+    out.options.add(key(s));
+  }
   /* …and the named-subject Lore list (`trainedLoreOptions: ['art', …]` — the dedicated background
    * lane batch 19 made the SINGLE carrier by retiring its duplicate `choice` blocks). Their side
    * enumerates the same list as `Art Lore` / `SKILL_LORE_SAILING` options, so all three spellings
@@ -383,7 +414,6 @@ function ourIdentities(id, rec) {
     out.options.add(key(`skill ${s} lore`));
   }
 
-  const ABILITY_NAMES = { str: 'Strength', dex: 'Dexterity', con: 'Constitution', int: 'Intelligence', wis: 'Wisdom', cha: 'Charisma' };
   for (const b of rec.abilityBoosts ?? []) {
     const list = b?.kind === 'free' ? Object.keys(ABILITY_NAMES) : (b?.options ?? []);
     for (const a of list) {

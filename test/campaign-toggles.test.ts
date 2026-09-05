@@ -62,10 +62,10 @@ describe('campaign content toggles + new content', () => {
     expect(ch.mythicCalling).toBe(callingId);
   });
 
-  it('Investigator carries the Esoterica methodology', () => {
+  it('Investigator carries the Dark Archive methodology as Palatine Detective — its AoN twin "Esoterica" is gone (batch 28)', () => {
     const opts = c.classes.investigator.subclass!.options;
-    expect(opts.some((o) => /esoterica/i.test(o.name))).toBe(true);
-    expect(opts.find((o) => /esoterica/i.test(o.name))?.description).toBeTruthy();
+    expect(opts.some((o) => /esoterica/i.test(o.name))).toBe(false);
+    expect(opts.find((o) => o.id === 'palatine-detective')?.description).toBeTruthy();
   });
 
   it('Basic/Greater/Major Lesson feats offer a tiered lesson sub-choice with descriptions', () => {

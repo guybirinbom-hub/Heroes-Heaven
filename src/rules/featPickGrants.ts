@@ -68,6 +68,24 @@ export interface FeatPickSpec {
 export const FEAT_PICK_GRANTS: Record<string, FeatPickSpec> = {
   'advanced-general-training': { prompt: "Choose a general feat", category: 'general', maxLevel: 7 },
   /*
+   * Wizard arcane thesis — *"Experimental Spellshaping … You gain one 1st-level spellshape wizard feat
+   * of your choice."* (arcane-thesis-6.) It was the only one of the five theses whose printed mechanic
+   * reached nothing: the option carried a description and no grant, and `grep experimental-spellshaping
+   * src/` returned zero hits, while its siblings (Improved Familiar Attunement → the Familiar feat,
+   * Staff Nexus → the makeshift staff) were both modelled. Their side is the same filtered select
+   * (level max 1, traits Wizard + Spellshape).
+   *
+   * The SECOND clause — *"Starting at 4th level, during your daily preparations, you can gain a
+   * spellshape wizard feat … that has a level requirement of no more than half your level"* — is a
+   * daily-preparations choice, not a build-time one, and belongs in dailyChoices.ts.
+   */
+  'experimental-spellshaping': {
+    prompt: 'Choose a 1st-level spellshape wizard feat',
+    category: 'class',
+    maxLevel: 1,
+    traits: ['wizard', 'spellshape'],
+  },
+  /*
    * *"You gain the Quick Repair skill feat. IF YOU ALREADY HAVE THAT FEAT, you gain a different
    * 1st-level skill feat you qualify for instead."*
    *

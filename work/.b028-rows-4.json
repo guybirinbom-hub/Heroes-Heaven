@@ -1,0 +1,329 @@
+{
+ "findings": [
+  {
+   "id": "inventor#light-mortar#modifications",
+   "backfillRows": [
+    {
+     "category": "classFeatures",
+     "id": "contained-shrapnel",
+     "create": true,
+     "value": {
+      "id": "contained-shrapnel",
+      "name": "Contained Shrapnel",
+      "traits": [
+       "inventor"
+      ],
+      "rarity": "common",
+      "source": {
+       "book": "Pathfinder Guns & Gears",
+       "license": "ORC"
+      },
+      "level": 1,
+      "actionCost": {
+       "type": "passive"
+      },
+      "otherTags": [
+       "light-mortar-innovation-modification"
+      ],
+      "aonParentId": "archetype-329",
+      "aonSection": "Contained Shrapnel",
+      "edition": "remaster"
+     },
+     "why": "wg-batch-028: the Light Mortar Innovation's initial modification (archetype-329, Munitions Master); the mortar's pickers offered nothing because no record carried the light-mortar-innovation-modification tag. Shape mirrors classFeatures/advanced-design (a weapon modification)."
+    },
+    {
+     "category": "classFeatures",
+     "id": "enhanced-shrapnel",
+     "create": true,
+     "value": {
+      "id": "enhanced-shrapnel",
+      "name": "Enhanced Shrapnel",
+      "traits": [
+       "inventor"
+      ],
+      "rarity": "common",
+      "source": {
+       "book": "Pathfinder Guns & Gears",
+       "license": "ORC"
+      },
+      "level": 1,
+      "actionCost": {
+       "type": "passive"
+      },
+      "otherTags": [
+       "light-mortar-innovation-modification"
+      ],
+      "aonParentId": "archetype-329",
+      "aonSection": "Enhanced Shrapnel",
+      "edition": "remaster"
+     },
+     "why": "wg-batch-028: the Light Mortar Innovation's initial modification (archetype-329, Munitions Master); the mortar's pickers offered nothing because no record carried the light-mortar-innovation-modification tag. Shape mirrors classFeatures/advanced-design (a weapon modification)."
+    },
+    {
+     "category": "classFeatures",
+     "id": "spring-loaded",
+     "create": true,
+     "value": {
+      "id": "spring-loaded",
+      "name": "Spring-Loaded",
+      "traits": [
+       "inventor"
+      ],
+      "rarity": "common",
+      "source": {
+       "book": "Pathfinder Guns & Gears",
+       "license": "ORC"
+      },
+      "level": 1,
+      "actionCost": {
+       "type": "passive"
+      },
+      "otherTags": [
+       "light-mortar-innovation-modification"
+      ],
+      "aonParentId": "archetype-329",
+      "aonSection": "Spring-Loaded",
+      "edition": "remaster"
+     },
+     "why": "wg-batch-028: the Light Mortar Innovation's initial modification (archetype-329, Munitions Master); the mortar's pickers offered nothing because no record carried the light-mortar-innovation-modification tag. Shape mirrors classFeatures/advanced-design (a weapon modification)."
+    },
+    {
+     "category": "classFeatures",
+     "id": "blanching-chamber",
+     "create": true,
+     "value": {
+      "id": "blanching-chamber",
+      "name": "Blanching Chamber",
+      "traits": [
+       "inventor"
+      ],
+      "rarity": "common",
+      "source": {
+       "book": "Pathfinder Guns & Gears",
+       "license": "ORC"
+      },
+      "level": 7,
+      "actionCost": {
+       "type": "passive"
+      },
+      "otherTags": [
+       "light-mortar-innovation-modification"
+      ],
+      "aonParentId": "archetype-329",
+      "aonSection": "Blanching Chamber",
+      "edition": "remaster"
+     },
+     "why": "wg-batch-028: the Light Mortar Innovation's breakthrough modification (archetype-329, Munitions Master); the mortar's pickers offered nothing because no record carried the light-mortar-innovation-modification tag. Shape mirrors classFeatures/advanced-design (a weapon modification)."
+    },
+    {
+     "category": "classFeatures",
+     "id": "earthbreaker",
+     "create": true,
+     "value": {
+      "id": "earthbreaker",
+      "name": "Earthbreaker",
+      "traits": [
+       "inventor"
+      ],
+      "rarity": "common",
+      "source": {
+       "book": "Pathfinder Guns & Gears",
+       "license": "ORC"
+      },
+      "level": 7,
+      "actionCost": {
+       "type": "passive"
+      },
+      "otherTags": [
+       "light-mortar-innovation-modification"
+      ],
+      "aonParentId": "archetype-329",
+      "aonSection": "Earthbreaker",
+      "edition": "remaster"
+     },
+     "why": "wg-batch-028: the Light Mortar Innovation's breakthrough modification (archetype-329, Munitions Master); the mortar's pickers offered nothing because no record carried the light-mortar-innovation-modification tag. Shape mirrors classFeatures/advanced-design (a weapon modification)."
+    },
+    {
+     "category": "classFeatures",
+     "id": "narrow-blast",
+     "create": true,
+     "value": {
+      "id": "narrow-blast",
+      "name": "Narrow Blast",
+      "traits": [
+       "inventor"
+      ],
+      "rarity": "common",
+      "source": {
+       "book": "Pathfinder Guns & Gears",
+       "license": "ORC"
+      },
+      "level": 7,
+      "actionCost": {
+       "type": "passive"
+      },
+      "otherTags": [
+       "light-mortar-innovation-modification"
+      ],
+      "aonParentId": "archetype-329",
+      "aonSection": "Narrow Blast",
+      "edition": "remaster"
+     },
+     "why": "wg-batch-028: the Light Mortar Innovation's breakthrough modification (archetype-329, Munitions Master); the mortar's pickers offered nothing because no record carried the light-mortar-innovation-modification tag. Shape mirrors classFeatures/advanced-design (a weapon modification)."
+    },
+    {
+     "category": "classFeatures",
+     "id": "enhanced-damage-mortar",
+     "create": true,
+     "value": {
+      "id": "enhanced-damage-mortar",
+      "name": "Enhanced Damage",
+      "traits": [
+       "inventor"
+      ],
+      "rarity": "common",
+      "source": {
+       "book": "Pathfinder Guns & Gears",
+       "license": "ORC"
+      },
+      "level": 15,
+      "actionCost": {
+       "type": "passive"
+      },
+      "otherTags": [
+       "light-mortar-innovation-modification"
+      ],
+      "aonParentId": "archetype-329",
+      "aonSection": "Enhanced Damage",
+      "edition": "remaster"
+     },
+     "why": "wg-batch-028: the Light Mortar Innovation's revolutionary modification (archetype-329, Munitions Master); the mortar's pickers offered nothing because no record carried the light-mortar-innovation-modification tag. Shape mirrors classFeatures/advanced-design (a weapon modification)."
+    },
+    {
+     "category": "classFeatures",
+     "id": "impossible-alloy-mortar",
+     "create": true,
+     "value": {
+      "id": "impossible-alloy-mortar",
+      "name": "Impossible Alloy",
+      "traits": [
+       "inventor"
+      ],
+      "rarity": "common",
+      "source": {
+       "book": "Pathfinder Guns & Gears",
+       "license": "ORC"
+      },
+      "level": 15,
+      "actionCost": {
+       "type": "passive"
+      },
+      "otherTags": [
+       "light-mortar-innovation-modification"
+      ],
+      "aonParentId": "archetype-329",
+      "aonSection": "Impossible Alloy",
+      "edition": "remaster"
+     },
+     "why": "wg-batch-028: the Light Mortar Innovation's revolutionary modification (archetype-329, Munitions Master); the mortar's pickers offered nothing because no record carried the light-mortar-innovation-modification tag. Shape mirrors classFeatures/advanced-design (a weapon modification)."
+    },
+    {
+     "category": "classFeatures",
+     "id": "precise-blast",
+     "create": true,
+     "value": {
+      "id": "precise-blast",
+      "name": "Precise Blast",
+      "traits": [
+       "inventor"
+      ],
+      "rarity": "common",
+      "source": {
+       "book": "Pathfinder Guns & Gears",
+       "license": "ORC"
+      },
+      "level": 15,
+      "actionCost": {
+       "type": "passive"
+      },
+      "otherTags": [
+       "light-mortar-innovation-modification"
+      ],
+      "aonParentId": "archetype-329",
+      "aonSection": "Precise Blast",
+      "edition": "remaster"
+     },
+     "why": "wg-batch-028: the Light Mortar Innovation's revolutionary modification (archetype-329, Munitions Master); the mortar's pickers offered nothing because no record carried the light-mortar-innovation-modification tag. Shape mirrors classFeatures/advanced-design (a weapon modification)."
+    }
+   ],
+   "note": "innovationType(\"light-mortar-innovation\") now returns \"light-mortar\" (build.ts) so inventorModificationOptions offers these by tier; the nine prose rows are appended straight into effect-backfill.json by the orchestrator."
+  },
+  {
+   "id": "wizard#experimental-spellshaping#daily",
+   "backfillRows": [
+    {
+     "category": "classFeatures",
+     "id": "experimental-spellshaping",
+     "field": "choice",
+     "value": {
+      "daily": true,
+      "flag": "dailySpellshape",
+      "kind": "open",
+      "prompt": "Daily spellshape wizard feat (level no more than half your level)",
+      "from": {
+       "type": "feat",
+       "traits": [
+        "wizard",
+        "spellshape"
+       ],
+       "grantFeat": true,
+       "maxLevel": 2,
+       "maxLevelByLevel": [
+        {
+         "level": 4,
+         "maxLevel": 2
+        },
+        {
+         "level": 6,
+         "maxLevel": 3
+        },
+        {
+         "level": 8,
+         "maxLevel": 4
+        },
+        {
+         "level": 10,
+         "maxLevel": 5
+        },
+        {
+         "level": 12,
+         "maxLevel": 6
+        },
+        {
+         "level": 14,
+         "maxLevel": 7
+        },
+        {
+         "level": 16,
+         "maxLevel": 8
+        },
+        {
+         "level": 18,
+         "maxLevel": 9
+        },
+        {
+         "level": 20,
+         "maxLevel": 10
+        }
+       ],
+       "excludeOwn": true
+      },
+      "minLevel": 4
+     },
+     "why": "wg-batch-028: class-39 Experimental Spellshaping: 'Starting at 4th level, during your daily preparations, you can gain a spellshape wizard feat of your choice that you don't already have. ... its level must be no more than half your level.' A DAILY open feat pick; OpenChoiceFrom.grantFeat (new) makes dailyChoiceGrants grant it and applyPlayState append it for the day; the half-level cap is the maxLevelByLevel ladder. minLevel 4: the clause starts at 4th level. excludeOwn: 'a spellshape wizard feat of your choice that you don't already have'."
+    }
+   ],
+   "note": "the 1st-level spellshape pick is FEAT_PICK_GRANTS (engine agent 1); this is the second clause."
+  }
+ ]
+}

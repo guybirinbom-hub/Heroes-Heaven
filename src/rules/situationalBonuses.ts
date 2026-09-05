@@ -2599,8 +2599,12 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   ],
   "masterful-hunter": [{ targets: [{ kind: 'perception' }], when: "you Seek your hunted prey, if you are a master in Perception (replaces the usual +2)", bonus: "+4 circumstance" }, { targets: [{ kind: 'skill', detail: 'survival' }], when: "you Track your hunted prey, if you are a master in Survival (replaces the usual +2)", bonus: "+4 circumstance" }, { targets: [{ kind: 'skill', detail: 'deception' }], when: "against your hunted prey, with the Outwit edge, if you are a master in Deception (replaces the usual +2)", bonus: "+4 circumstance" }, { targets: [{ kind: 'skill', detail: 'intimidation' }], when: "against your hunted prey, with the Outwit edge, if you are a master in Intimidation (replaces the usual +2)", bonus: "+4 circumstance" }, { targets: [{ kind: 'skill', detail: 'stealth' }], when: "against your hunted prey, with the Outwit edge, if you are a master in Stealth (replaces the usual +2)", bonus: "+4 circumstance" }, { targets: [{ kind: 'ac' }], when: "against your hunted prey's attacks, with the Outwit edge…", bonus: "+2 circumstance" }, { targets: [{ kind: 'strikeAttack' }], when: "attacking your hunted prey within your ranged weapon's second or third range increment…", bonus: "ignore the range increment penalty" }],
   "the-infinite-eye": [{ targets: [{ kind: 'save', detail: 'all' }], when: "for 3 rounds, on saves against magic from an enemy or hazard whose magic you detected with an amped detect magic", bonus: "+1 status (+2 when the amp is heightened to 7th)" }, { targets: [{ kind: 'strikeAttack' }], when: "against the creature you scanned with an amped omnidirectional scan, until the scan ends", bonus: "+1 circumstance" }, { targets: [{ kind: 'strikeDamage' }], when: "against the creature you scanned with an amped omnidirectional scan, until the scan ends", bonus: "+1 circumstance" }],
-  "fire-gate": [{ targets: [{ kind: 'skill', detail: 'intimidation' }], when: "while your kinetic aura is active, if you took the fire gate's Intimidation skill junction", bonus: "+1 status (+2 at 10th, +3 at 17th)" }],
-  "metal-gate": [{ targets: [{ kind: 'skill', detail: 'crafting' }], when: "while your kinetic aura is active, if you took the metal gate's Crafting skill junction", bonus: "+1 status (+2 at 10th, +3 at 17th)" }],
+  // b028 kineticist#duplicate-junction-star: "fire-gate" and "metal-gate" deleted — print states the
+  // junction bonus once ("you gain a +1 status bonus to the listed skill; … +2 at 10th … +3 at 17th"),
+  // and "gate-junction" below already carries it for all five junction skills. The element-keyed copies
+  // pooled as a SECOND identical star (different `when` text) and fired from level 1, before any
+  // junction could be taken. Their ids are in apply-situational-lane.mjs's handEdited set so the
+  // generator cannot restore them.
   "fulu-of-the-drunken-monkey": [{ targets: [{ kind: 'save', detail: 'fortitude' }], when: "on the triggering Fortitude save against an ingested poison…", bonus: "+2 status" }, { targets: [{ kind: 'save', detail: 'all' }], when: "instead, if the triggering poison was ordinary alcohol…", bonus: "+4 status" }],
   "restful-sleep-fulu": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against mental effects that occur in your dreams (e.g. Nightmare), during the fulu's 1-hour duration", bonus: "+2 status" }],
   "oath-of-the-devoted": [{ targets: [{ kind: 'save', detail: 'will' }], when: "after Activating the oath (1 action, command, once per day) — the printed text states no duration for the Will bonus", bonus: "+1 status" }, { targets: [{ kind: 'strikeDamage' }], when: "for 1 minute after Activating the oath, on the one weapon or unarmed Strike you chose", bonus: "+1d6 damage (untyped)" }],
@@ -2633,8 +2637,9 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
    * junction moved to `junction:earth-gate` below. Kinetic Gate grants an impulse junction under
    * SINGLE GATE alone ("Choose one element … In addition, you gain an impulse junction"); the Dual
    * Gate paragraph grants none. Keyed on the ELEMENT record, this handed every dual-gate earth
-   * kineticist a +1 circumstance AC from 1st level that the printed text does not give them. */
-  "earth-gate": [{ targets: [{ kind: 'skill', detail: 'athletics' }], when: "if you took the earth skill junction: while your kinetic aura is active", bonus: "+1 status (+2 at 10th, +3 at 17th)" }],
+   * kineticist a +1 circumstance AC from 1st level that the printed text does not give them.
+   * b028 kineticist#duplicate-junction-star: the surviving Athletics half is deleted too — the
+   * "gate-junction" entry already covers Athletics, so this was the same star twice. */
   /* The earth impulse junction, reachable ONLY through the synthetic `junction:` id that
    * `characterSituationalIds` derives from the character's element COUNT — never by owning the gate.
    * Earth's is the only one of the six impulse junctions that moves a number (air Strides, fire changes

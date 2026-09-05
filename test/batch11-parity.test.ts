@@ -102,9 +102,11 @@ describe('the Lifting Belt raises the Bulk limits it prints', () => {
 describe('Stylish Tricks — a SECOND skill increase at a level that already grants one', () => {
   it('the swashbuckler declares the levels and both increases land', () => {
     expect(db.classes.swashbuckler?.bonusSkillIncreaseLevels).toEqual([3, 7, 15]);
+    // batch 28: the Stylish Tricks increase is restricted to Acrobatics or the style's skill, so the
+    // BONUS increase takes Acrobatics and the ordinary one takes Thievery.
     const ch = build('swashbuckler', 7, {
-      skillIncreases: { 3: 'acrobatics' },
-      bonusSkillIncreases: { 3: 'thievery' },
+      skillIncreases: { 3: 'thievery' },
+      bonusSkillIncreases: { 3: 'acrobatics' },
     } as never);
     const atThree = (ch.skillIncreases ?? []).filter((s) => s.level === 3).map((s) => s.skill).sort();
     expect(atThree, 'two increases at one level').toEqual(['acrobatics', 'thievery']);
@@ -115,14 +117,14 @@ describe('Stylish Tricks — a SECOND skill increase at a level that already gra
     // Both live in one array on the character and in two maps on the build; without the split the
     // second entry at level 3 clobbered the first every time a character was reopened.
     const ch = build('swashbuckler', 7, {
-      skillIncreases: { 3: 'acrobatics' },
-      bonusSkillIncreases: { 3: 'thievery' },
+      skillIncreases: { 3: 'thievery' },
+      bonusSkillIncreases: { 3: 'acrobatics' },
     } as never);
     const back = deriveBuildFromCharacter(ch, db) as unknown as {
       skillIncreases: Record<number, string>;
       bonusSkillIncreases: Record<number, string>;
     };
-    expect(back.skillIncreases[3]).toBe('acrobatics');
-    expect(back.bonusSkillIncreases[3]).toBe('thievery');
+    expect(back.skillIncreases[3]).toBe('thievery');
+    expect(back.bonusSkillIncreases[3]).toBe('acrobatics');
   });
 });

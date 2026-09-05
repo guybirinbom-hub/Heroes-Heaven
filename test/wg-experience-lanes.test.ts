@@ -540,3 +540,111 @@ describe('batch 27 — the instruments read the carriers we actually ship', () =
     expect(out).toMatch(/^0 records where a named thing/m);
   }, 60_000);
 });
+
+/**
+ * BATCH 28 — THE CLASS ROWS, WHERE OUR QUESTION IS THE SHAPE OF A FIELD.
+ *
+ * Eight class records reported `missing=[choice]` and every option of theirs as uncountered, on two
+ * questions we have always asked: *"Key Attribute: Strength or Dexterity"* (`keyAbility` with more than
+ * one entry) and *"Trained in your choice of Arcana, Nature, Occultism, or Religion"*
+ * (`trainedSkills.choice`). Their side writes each as a `select`; ours writes it as the SHAPE of a
+ * plain field, which no field-name map can see. Each widening is pinned by RUNNING the comparer against
+ * the SHIPPED data, and each test carries its own guard against a widening that silences instead of
+ * answering — the LENGTH-not-presence rule on `keyAbility`, the `choice` kind still reported elsewhere,
+ * and the settle registry bypassed — because a one-sided "nothing reports" check would pass either way.
+ */
+describe('batch 28 — the comparers read a class chassis question', () => {
+  it('wg-diff credits keyAbility, trainedSkills.choice and the focus-only casting chassis', () => {
+    const out = 'work/.wg-diff-b028-test.json';
+    runScript('wg-diff.mjs', ['--out', out]);
+    const diff = JSON.parse(readFileSync(join(CLI_ROOT, out), 'utf8')) as Record<string, { id: string; missing?: string[]; ourKinds: string[] }[]>;
+    rmSync(join(CLI_ROOT, out), { force: true });
+    const theyOnly = new Map(diff.theyOnly.map((r) => [r.id, r.missing ?? []]));
+    const rowOf = (id: string) => [...diff.theyOnly, ...diff.weOnly, ...diff.agree].find((r) => r.id === id);
+    // The six Str-or-Dex classes: `keyAbility` length > 1 IS the question (types.ts:3527), asked at
+    // shared.tsx:3127 and reported unanswered at build.ts:1111.
+    for (const id of ['fighter', 'monk', 'ranger', 'champion', 'magus', 'exemplar']) expect(theyOnly.get(id)).toBeUndefined();
+    // …and the four-way skill pick, which is `trainedSkills.choice` (shared.tsx:3150, build.ts:1136).
+    expect(theyOnly.get('runesmith')).toBeUndefined();
+    /*
+     * The champion's second leg: their class row carries `adjValue SPELL_ATTACK/SPELL_DC T` and their
+     * devotion source (`CHAMPION:::-:::DIVINE:::ATTRIBUTE_CHA`) — ours is FOCUS_CASTING in build.ts
+     * plus the class's `spellcasting` advancement track, so the record itself carries no block.
+     */
+    expect(theyOnly.get('champion')).toBeUndefined();
+    /*
+     * The animist's *"trained in Nature or Occultism"* (animist#skill-choice) and the fighter's
+     * *"your choice of Acrobatics or Athletics"* (fighter#trained-skill-choice) were the batch's own
+     * data rows, and both are now authored — so each is credited through `trainedSkills.choice`, the
+     * same carrier the widening was taught, rather than through the comparer being lenient.
+     */
+    expect(theyOnly.get('animist')).toBeUndefined();
+    for (const id of ['animist', 'fighter', 'runesmith']) expect(rowOf(id)?.ourKinds).toContain('choice');
+    /*
+     * ⚠ THE GUARD, both halves. LENGTH, NOT PRESENCE: the thaumaturge's `keyAbility` is the one-entry
+     * ["cha"] and its four skills are `trainedSkills.fixed` (thaumaturge#skills — print trains all
+     * four), so it offers no chassis choice at all and must not be credited with one; a widening
+     * written on the PRESENCE of either field would hand `choice` to every class in the corpus.
+     */
+    expect(rowOf('thaumaturge')?.ourKinds).not.toContain('choice');
+    // …and `choice` is still reported wherever we really do not ask — a widening that silenced the
+    // kind outright would pass every check above.
+    expect(diff.theyOnly.filter((r) => (r.missing ?? []).includes('choice')).length).toBeGreaterThan(10);
+    expect(diff.theyOnly.length).toBeGreaterThan(100);
+  }, 120_000);
+
+  it('wg-identity counts the attribute names and skill names those two fields offer', () => {
+    const ids = 'champion,monk,ranger,runesmith,fighter,exemplar,magus,animist';
+    const out = runScript('wg-identity.mjs', ['--ids', ids, '--verbose']);
+    // Every one of the eight was really COMPARED — a widening that skipped them instead of answering
+    // them would print "checked 0" and still report no misses.
+    expect(out).toMatch(/^checked 8 records that grant a NAMED thing; 8 match on every one/m);
+    // Their CUSTOM options are titled "Strength"/"Dexterity" (ours: the two entries of `keyAbility`),
+    // and their ADJ_VALUE options name SKILL_ARCANA/… (ours: `trainedSkills.choice`).
+    for (const id of ['champion', 'monk', 'ranger', 'exemplar', 'magus', 'runesmith', 'fighter', 'animist']) {
+      expect(out).not.toContain(`--- ${id}`);
+    }
+    expect(out).toMatch(/^0 records where a named thing/m);
+    /*
+     * …and the COUNTS say which field answered which record, so a lane that stopped enumerating one of
+     * the two would go quiet here rather than silently. The fighter offers BOTH questions — Str/Dex and
+     * Acrobatics/Athletics (fighter#trained-skill-choice, authored this batch) — so four of their option
+     * titles are countered; the runesmith's four are all skills; and the animist's are its two skills
+     * alone, because its one-entry `keyAbility` ["wis"] is a FIXED attribute and offers nothing.
+     */
+    expect(out).toMatch(/^ok\s+fighter\s+\(4 identities agree\)/m);
+    expect(out).toMatch(/^ok\s+runesmith\s+\(4 identities agree\)/m);
+    expect(out).toMatch(/^ok\s+animist\s+\(2 identities agree\)/m);
+    expect(out).toMatch(/^ok\s+champion\s+\(2 identities agree\)/m);
+    /*
+     * ⚠ THE GUARD. None of the eight is in SETTLED_IDENTITIES, so bypassing the settle registry must
+     * change nothing about them — the CARRIERS are what quiets them. A settled record run alongside
+     * comes straight back, which is what proves the instrument still reports at all.
+     */
+    const raw = runScript('wg-identity.mjs', ['--ids', `${ids},mightyfall-kobold`, '--raw']);
+    for (const id of ['champion', 'monk', 'ranger', 'exemplar', 'magus', 'runesmith', 'fighter', 'animist']) {
+      expect(raw).not.toContain(`--- ${id}`);
+    }
+    expect(raw).toContain('--- mightyfall-kobold');
+  }, 120_000);
+
+  it('wg-casting compares a class whose casting source is defined on feat rows', () => {
+    /*
+     * The psychic's source is defined only on its four subconscious-mind FEAT rows and the witch's only
+     * inside a nested op on each patron, so both were skipped in silence — "9 class source(s) compared"
+     * with no hint that four of our twelve casting classes were never looked at. Run through jiti: the
+     * comparer imports the TypeScript engine to build a real character at every level.
+     */
+    const outFile = 'work/.wg-casting-b028-test.json';
+    const run = (cls: string) => execFileSync(
+      process.execPath,
+      [join(CLI_ROOT, 'node_modules/jiti/lib/jiti-cli.mjs'), join(CLI_ROOT, 'scripts/wg-casting.mjs'), '--class', cls, '--out', outFile],
+      { cwd: CLI_ROOT, encoding: 'utf8', maxBuffer: 1 << 28 },
+    );
+    for (const cls of ['psychic', 'witch']) {
+      // exit 0 = compared AND clean; before the fix this printed "0 class source(s) compared".
+      expect(run(cls)).toMatch(/casting parity: 1 class source\(s\) compared, 0 with mismatches/);
+    }
+    rmSync(join(CLI_ROOT, outFile), { force: true });
+  }, 120_000);
+});

@@ -1,0 +1,2472 @@
+{
+ "findings": [
+  {
+   "id": "investigator#empiricism-lore",
+   "backfillRows": [
+    {
+     "category": "classes",
+     "id": "investigator",
+     "field": "options",
+     "value": [
+      {
+       "id": "alchemical-sciences-methodology",
+       "name": "Alchemical Sciences Methodology",
+       "description": "Your methodology emphasizes chemical and alchemical analysis, collecting information from unusual particles and fluids found on the scene. You possess enough alchemical know-how to whip up a few tinctures to help you with your cases.\n\nYou're trained in Crafting and gain the Alchemical Crafting skill feat. You start with a standard formula book, which contains the formulas for two common 1st-level alchemical items of your choice (these must be elixirs or tools), in addition to the formulas gained from Alchemical Crafting. Each time you gain a level, you learn the formula for one common alchemical elixir or alchemical tool of any level of item you can create.\n\nDuring your daily preparations, you can create a number of versatile vials equal to your Intelligence modifier. Statistics for versatile vials appear in the alchemist class.\n\nYou gain the Quick Tincture action, which you can use to turn one of these vials into an elixir or alchemical tool for which you know the formula. If you have the ability to create versatile vials from more than one source (such as the alchemist multiclass archetype), you can use any of your versatile vials for any ability you have that requires them.",
+       "descRefs": [
+        {
+         "label": "Alchemical Crafting",
+         "key": "feats"
+        },
+        {
+         "label": "Quick Tincture",
+         "key": "actions"
+        }
+       ],
+       "grants": {
+        "skills": [
+         "crafting"
+        ]
+       }
+      },
+      {
+       "id": "empiricism-methodology",
+       "name": "Empiricism Methodology",
+       "description": "Everything comes down to data. Calculating statistics, running numbers, and using inductive reasoning allows you to determine the most likely outcome of any scenario, and anything out of place draws your keen attention.\n\nYou are trained in one Intelligence-based skill of your choice. You gain the That's Odd investigator feat, and you gain the Expeditious Inspection free action.",
+       "descRefs": [
+        {
+         "label": "That's Odd",
+         "key": "feats"
+        },
+        {
+         "label": "Expeditious Inspection",
+         "key": "actions"
+        }
+       ],
+       "skillChoice": [
+        "arcana",
+        "crafting",
+        "occultism",
+        "society"
+       ],
+       "skillChoiceLore": true
+      },
+      {
+       "id": "forensic-medicine-methodology",
+       "name": "Forensic Medicine Methodology",
+       "description": "You've learned that in most cases, especially murders, criminals tend to leave more evidence of the crime on the body than they'd like to believe. Information from bruising, bone fractures, blood spatters, and even the life cycle of carrion insects can provide valuable clues that help reconstruct the scene.\n\nYou're trained in Medicine and gain the Forensic Acumen and Battle Medicine skill feats. When you use Battle Medicine, on a success the target recovers additional Hit Points equal to your level, and the target becomes temporarily immune for only 1 hour, not 1 day",
+       "descRefs": [
+        {
+         "label": "Forensic Acumen",
+         "key": "feats"
+        },
+        {
+         "label": "Battle Medicine",
+         "key": "feats"
+        }
+       ],
+       "grants": {
+        "skills": [
+         "medicine"
+        ]
+       }
+      },
+      {
+       "id": "interrogation-methodology",
+       "name": "Interrogation Methodology",
+       "description": "People can't help but trust you, whether through your inherent likableness or your firm insistence on sticking to the truth. You have a way about you that gets others talking, and you've developed interrogative techniques to help you get to the truth of your investigations.\n\nYou are trained in Diplomacy. You gain the No Cause for Alarm skill feat. You can also Pursue a Lead at the same time you Make an Impression, as long as you ask a question related to the creature with which you're conversing or a topic of your conversation. You also gain the Pointed Question action.",
+       "descRefs": [
+        {
+         "label": "Make an Impression",
+         "key": "actions"
+        }
+       ],
+       "grants": {
+        "skills": [
+         "diplomacy"
+        ]
+       }
+      },
+      {
+       "id": "palatine-detective",
+       "name": "Palatine Detective",
+       "description": "Whether at the invitation of a senior member of the Esoteric Order of the Palatine Eye, after going through a rigorous sorting process, or by a twist of fate, you recently underwent a secret ritual involving *The Lost Gospels of Tabris* that granted you a greater understanding of both the divine and the occult. Not even you are certain of the origin or purpose of the forces that have granted you these abilities, but you know the key to answering that question and expanding your power lies hidden behind the cryptic words of the many ancient texts still waiting to be discovered and examined. If you choose this class archetype, you must select Palatine Detective Dedication as your 2nd-level class feat.\n\n**Prerequisites:** You must be an investigator. You are affiliated with the Esoteric Order of the Palatine Eye.\n\n**Palatine Detective Adjustments:** Instead of choosing a methodology from others available to the investigator class, you have the esoterica methodology (see below).\n\n## Esoterica Methodology\n\nYou become trained in Occultism or Religion, and you gain the Quick Identification skill feat. In addition, choose one common cantrip from the divine spell list and one common cantrip from the occult spell list. You can cast those spells as innate spells at will. You become trained in the spell attack modifier and spell DCs statistics. Intelligence is your spellcasting attribute.",
+       "descRefs": [
+        {
+         "label": "Quick Identification",
+         "key": "feats"
+        }
+       ],
+       "skillChoice": [
+        "occultism",
+        "religion"
+       ]
+      }
+     ],
+     "why": "wg-batch-028: methodology-2 prints 'trained in one Intelligence-based skill of your choice' - Lores are Int-based, so the Empiricism skill pick gains a Lore leg (skillChoiceLore, engine agent 1's reader in build.ts beside skillChoice). Whole array re-emitted from spec 1 (which drops the inert aon-esoterica twin) so the two rows cannot fight.",
+     "path": [
+      "subclass"
+     ]
+    }
+   ],
+   "note": "supersedes the spec-1 row on the same field with its content preserved plus one flag."
+  },
+  {
+   "id": "sorcerer#repertoire-gift-spells",
+   "backfillRows": [
+    {
+     "category": "classes",
+     "id": "sorcerer",
+     "field": "spellcasting",
+     "value": {
+      "type": "spontaneous",
+      "tradition": "arcane",
+      "keyAbility": "cha",
+      "repertoire": true,
+      "progression": "full-plus",
+      "grantedCountsAgainstRepertoire": true
+     },
+     "why": "wg-batch-028: class-7 prints the bloodline's granted spells as part of the repertoire (ours knew one cantrip and one spell per gifted rank too many); engine agent 1's grantedCountsAgainstRepertoire (build.ts ~3828/3865) counts them inside. Whole object re-emitted from spec 1 (progression full-plus kept)."
+    }
+   ],
+   "note": "supersedes the spec-1 row; carries both changes."
+  },
+  {
+   "id": "animist#apparition-lore-ranks",
+   "backfillRows": [
+    {
+     "category": "classes",
+     "id": "animist",
+     "field": "options",
+     "value": [
+      {
+       "id": "crafter-in-the-vault",
+       "name": "Crafter in the Vault",
+       "description": "Crafters in the vault are found in dungeons, forges, or other places where creation and injury occur concurrently. They enjoy partnering with animists who compliment them on their creations, but often become jealous when anyone else intrudes on their expertise, including casting any of the spells that appear on their apparition list.\n\n---\n\n**Apparition Skills** Architecture Lore, Engineering Lore\n\n**Apparition Spells**\n\n- **Cantrip** Sigil\n- **1st** Mending\n- **2nd** Knock\n- **3rd** Ghostly Weapon\n- **4th** Creation\n- **5th** Impaling Spike\n- **6th** Wall of Metal\n- **7th** Beheading Buzz Saw\n- **8th** Ferrous Form\n- **9th** Resplendent Mansion\n\n**Vessel Spell** Traveling Workshop\n\n**Avatar** *Incarnate Dungeon* Speed 50 feet, either burrow Speed 50 feet or fly Speed 50 feet\n\n**Melee** ⟨1⟩ dungeon trap (reach 10 feet, versatile B or P), **Damage** 6d6+6 plus Grab\n\n**Ranged** ⟨1⟩ deadly darts (range 120 feet, versatile poison), **Damage** 6d6+6",
+       "descRefs": [
+        {
+         "label": "Sigil",
+         "key": "spells"
+        },
+        {
+         "label": "Mending",
+         "key": "spells"
+        },
+        {
+         "label": "Knock",
+         "key": "spells"
+        },
+        {
+         "label": "Ghostly Weapon",
+         "key": "spells"
+        },
+        {
+         "label": "Creation",
+         "key": "spells"
+        },
+        {
+         "label": "Impaling Spike",
+         "key": "spells"
+        },
+        {
+         "label": "Wall of Metal",
+         "key": "spells"
+        },
+        {
+         "label": "Beheading Buzz Saw",
+         "key": "spells"
+        },
+        {
+         "label": "Ferrous Form",
+         "key": "spells"
+        },
+        {
+         "label": "Resplendent Mansion",
+         "key": "spells"
+        },
+        {
+         "label": "Traveling Workshop",
+         "key": "spells"
+        }
+       ],
+       "grantedSpells": [
+        "sigil",
+        "mending",
+        "knock",
+        "ghostly-weapon",
+        "creation",
+        "impaling-spike",
+        "wall-of-metal",
+        "beheading-buzz-saw",
+        "ferrous-form",
+        "resplendent-mansion"
+       ],
+       "focusSpells": [
+        "traveling-workshop"
+       ],
+       "grants": {
+        "lores": [
+         "architecture",
+         "engineering"
+        ]
+       },
+       "loreProgression": [
+        {
+         "level": 8,
+         "rank": "expert"
+        },
+        {
+         "level": 16,
+         "rank": "master"
+        }
+       ]
+      },
+      {
+       "id": "custodian-of-groves-and-gardens",
+       "name": "Custodian of Groves and Gardens",
+       "description": "Custodians of groves and gardens frequent tended greenery and farmlands cared for by loving stewards, and other places of reflection and restoration where green things grow. Some of these apparitions linger in the mortal realms not because they have lost their way, but because they believe they have already found Elysium. Others are the cultivated spiritual essence of the location itself. Custodians of groves and gardens are peaceful, quiet, and averse to conflict.\n\n---\n\n**Apparition Skills** Farming Lore, Herbalism Lore\n\n**Apparition Spells**\n\n- **Cantrip** Tangle Vine\n- **1st** Protector Tree\n- **2nd** Gentle Breeze\n- **3rd** Safe Passage\n- **4th** Peaceful Bubble\n- **5th** Truespeech\n- **6th** Field of Life\n- **7th** Lifewood Cage\n- **8th** Moment of Renewal\n- **9th** Nature's Enmity\n\n**Vessel Spell** Garden of Healing\n\n**Avatar** *Peaceful Reaches* Speed 60 feet, ignore difficult terrain and greater difficult terrain\n\n**Melee** ⟨1⟩ garden's cradle (agile, nonlethal, reach 10 feet, trip), **Damage** 6d6+6 plus Grab\n\n**Ranged** ⟨1⟩ impose peace (nonlethal, range 120 feet), **Damage** 6d6+6",
+       "descRefs": [
+        {
+         "label": "Tangle Vine",
+         "key": "spells"
+        },
+        {
+         "label": "Protector Tree",
+         "key": "spells"
+        },
+        {
+         "label": "Gentle Breeze",
+         "key": "spells"
+        },
+        {
+         "label": "Safe Passage",
+         "key": "spells"
+        },
+        {
+         "label": "Peaceful Bubble",
+         "key": "spells"
+        },
+        {
+         "label": "Truespeech",
+         "key": "spells"
+        },
+        {
+         "label": "Field of Life",
+         "key": "spells"
+        },
+        {
+         "label": "Lifewood Cage",
+         "key": "spells"
+        },
+        {
+         "label": "Moment of Renewal",
+         "key": "spells"
+        },
+        {
+         "label": "Nature's Enmity",
+         "key": "spells"
+        },
+        {
+         "label": "Garden of Healing",
+         "key": "spells"
+        }
+       ],
+       "grantedSpells": [
+        "tangle-vine",
+        "protector-tree",
+        "gentle-breeze",
+        "safe-passage",
+        "peaceful-bubble",
+        "truespeech",
+        "field-of-life",
+        "lifewood-cage",
+        "moment-of-renewal",
+        "natures-enmity"
+       ],
+       "focusSpells": [
+        "garden-of-healing"
+       ],
+       "grants": {
+        "lores": [
+         "farming",
+         "herbalism"
+        ]
+       },
+       "loreProgression": [
+        {
+         "level": 8,
+         "rank": "expert"
+        },
+        {
+         "level": 16,
+         "rank": "master"
+        }
+       ]
+      },
+      {
+       "id": "echo-of-lost-moments",
+       "name": "Echo of Lost Moments",
+       "description": "Echoes of lost moments are apparitions born from memories that everyone has forgotten, often arising from fragmented pieces of magic and memory left behind by time-altering magic. They may even occur in response to significant temporal tampering, cleaning up fragments of time damaged by irresponsible magic. These apparitions are drawn to animists who are orderly and responsible, and they can give such hosts access to spells that alter a target's timeline or removes them from the current timeline, reveal visions of past or future events, or even accelerate magical effects to a point in time where they have already ended.\n\n---\n\n**Apparition Skills** Fortune-Telling Lore, Genealogy Lore\n\n**Apparition Spells**\n\n- **Cantrip** Figment\n- **1st** Déjà Vu\n- **2nd** Dispel Magic\n- **3rd** Curse of Lost Time\n- **4th** Vision of Death\n- **5th** Illusory Scene\n- **6th** Phantasmal Calamity\n- **7th** Retrocognition\n- **8th** Quandary\n- **9th** Foresight\n\n**Vessel Spell** Store Time\n\n**Avatar** *Devourer of Lost Time* Speed 30 feet, fly Speed 50 feet\n\n**Melee** ⟨1⟩ devour potential (reach 15 feet, void), **Damage** 6d10+6\n\n**Ranged** ⟨1⟩ scream of loss (range 120 feet, void), **Damage** 6d6+6",
+       "descRefs": [
+        {
+         "label": "Figment",
+         "key": "spells"
+        },
+        {
+         "label": "Déjà Vu",
+         "key": "spells"
+        },
+        {
+         "label": "Dispel Magic",
+         "key": "spells"
+        },
+        {
+         "label": "Curse of Lost Time",
+         "key": "spells"
+        },
+        {
+         "label": "Vision of Death",
+         "key": "spells"
+        },
+        {
+         "label": "Illusory Scene",
+         "key": "spells"
+        },
+        {
+         "label": "Phantasmal Calamity",
+         "key": "spells"
+        },
+        {
+         "label": "Retrocognition",
+         "key": "spells"
+        },
+        {
+         "label": "Quandary",
+         "key": "spells"
+        },
+        {
+         "label": "Foresight",
+         "key": "spells"
+        },
+        {
+         "label": "Store Time",
+         "key": "spells"
+        }
+       ],
+       "grantedSpells": [
+        "figment",
+        "de-ja-vu",
+        "dispel-magic",
+        "curse-of-lost-time",
+        "vision-of-death",
+        "illusory-scene",
+        "phantasmal-calamity",
+        "retrocognition",
+        "quandary",
+        "foresight"
+       ],
+       "focusSpells": [
+        "store-time"
+       ],
+       "grants": {
+        "lores": [
+         "fortune-telling",
+         "genealogy"
+        ]
+       },
+       "loreProgression": [
+        {
+         "level": 8,
+         "rank": "expert"
+        },
+        {
+         "level": 16,
+         "rank": "master"
+        }
+       ]
+      },
+      {
+       "id": "impostor-in-hidden-places",
+       "name": "Impostor in Hidden Places",
+       "description": "Impostors in hidden places whisper in quiet corners where mortal voices rarely resound, hoarding secrets and pondering unknowable truths. They often bring misfortune to those who disturb them, though an animist who earns their trust will find that they make effective allies.\n\n---\n\n**Apparition Skills** Fortune-Telling Lore, Underworld Lore\n\n**Apparition Spells**\n\n- **Cantrip** Telekinetic Hand\n- **1st** Ill Omen\n- **2nd** Invisibility\n- **3rd** Veil of Privacy\n- **4th** Liminal Doorway\n- **5th** Strange Geometry\n- **6th** Mislead\n- **7th** Planar Palace\n- **8th** Disappearance\n- **9th** Phantasmagoria\n\n**Vessel Spell** Discomfiting Whispers\n\n**Avatar** *Whisper Hiding in Shadows* Speed 50 feet, fly Speed 50 feet\n\n**Melee** ⟨1⟩ shadowed touch (reach 15 feet, versatile cold), **Damage** 6d10+6\n\n**Ranged** ⟨1⟩ whisper of despair (range 120 feet), **Damage** 6d6+6",
+       "descRefs": [
+        {
+         "label": "Telekinetic Hand",
+         "key": "spells"
+        },
+        {
+         "label": "Ill Omen",
+         "key": "spells"
+        },
+        {
+         "label": "Invisibility",
+         "key": "spells"
+        },
+        {
+         "label": "Veil of Privacy",
+         "key": "spells"
+        },
+        {
+         "label": "Liminal Doorway",
+         "key": "spells"
+        },
+        {
+         "label": "Strange Geometry",
+         "key": "spells"
+        },
+        {
+         "label": "Mislead",
+         "key": "spells"
+        },
+        {
+         "label": "Planar Palace",
+         "key": "spells"
+        },
+        {
+         "label": "Disappearance",
+         "key": "spells"
+        },
+        {
+         "label": "Phantasmagoria",
+         "key": "spells"
+        },
+        {
+         "label": "Discomfiting Whispers",
+         "key": "spells"
+        }
+       ],
+       "grantedSpells": [
+        "telekinetic-hand",
+        "ill-omen",
+        "invisibility",
+        "veil-of-privacy",
+        "liminal-doorway",
+        "strange-geometry",
+        "mislead",
+        "planar-palace",
+        "disappearance",
+        "phantasmagoria"
+       ],
+       "focusSpells": [
+        "discomfiting-whispers"
+       ],
+       "grants": {
+        "lores": [
+         "fortune-telling",
+         "underworld"
+        ]
+       },
+       "loreProgression": [
+        {
+         "level": 8,
+         "rank": "expert"
+        },
+        {
+         "level": 16,
+         "rank": "master"
+        }
+       ]
+      },
+      {
+       "id": "lamentation-of-sinister-deals",
+       "name": "Lamentation of Sinister Deals",
+       "description": "Lamentations of sinister deals gather wherever someone traded away their integrity, their loyalty or their very soul for a short-term gain — beside corrupt courthouses, in fey markets, and above all in the Whisperwood of Cheliax. Such an apparition will happily coach an animist in the art of the bargain, though it usually nurses a private terror of one particular kind of contract, and it pays out small wishes to whoever is willing to sign.\n\n---\n\n**Apparition Skills** Legal Lore, Scribing Lore\n\n**Apparition Spells**\n\n- **Cantrip** Message\n- **1st** Sure Strike\n- **2nd** Blistering Invective\n- **3rd** Hypercognition\n- **4th** Honeyed Words\n- **5th** Breath of Life\n- **6th** Sacred Form\n- **7th** Contingency\n- **8th** Moment of Renewal\n- **9th** Resplendent Mansion\n\n**Vessel Spell** Wish Market\n\n**Avatar** *Cosmic Notary* Speed 30 feet, fly Speed 50 feet\n\n**Melee** ⟨1⟩ burning pen (agile, reach 15 feet, versatile fire), **Damage** 6d6+6 piercing\n\n**Ranged** ⟨1⟩ exacting language (fatal d10, mental, range 60 feet), **Damage** 6d6+6 mental",
+       "descRefs": [
+        {
+         "label": "Message",
+         "key": "spells"
+        },
+        {
+         "label": "Sure Strike",
+         "key": "spells"
+        },
+        {
+         "label": "Blistering Invective",
+         "key": "spells"
+        },
+        {
+         "label": "Hypercognition",
+         "key": "spells"
+        },
+        {
+         "label": "Honeyed Words",
+         "key": "spells"
+        },
+        {
+         "label": "Breath of Life",
+         "key": "spells"
+        },
+        {
+         "label": "Sacred Form",
+         "key": "spells"
+        },
+        {
+         "label": "Contingency",
+         "key": "spells"
+        },
+        {
+         "label": "Moment of Renewal",
+         "key": "spells"
+        },
+        {
+         "label": "Resplendent Mansion",
+         "key": "spells"
+        },
+        {
+         "label": "Wish Market",
+         "key": "spells"
+        }
+       ],
+       "grantedSpells": [
+        "message",
+        "sure-strike",
+        "blistering-invective",
+        "hypercognition",
+        "honeyed-words",
+        "breath-of-life",
+        "sacred-form",
+        "contingency",
+        "moment-of-renewal",
+        "resplendent-mansion"
+       ],
+       "focusSpells": [
+        "wish-market"
+       ],
+       "grants": {
+        "lores": [
+         "legal",
+         "scribing"
+        ]
+       },
+       "loreProgression": [
+        {
+         "level": 8,
+         "rank": "expert"
+        },
+        {
+         "level": 16,
+         "rank": "master"
+        }
+       ]
+      },
+      {
+       "id": "lurker-in-devouring-dark",
+       "name": "Lurker in Devouring Dark",
+       "description": "Lurkers in devouring dark are most often near old shipwrecks, deadly icebergs, and other places where ice and deep water are most prevalent. In places where the Dark Tapestry intrudes upon the world, there can be found variant lurkers in devouring dark who offer Dark Tapestry Lore in place of Sailing Lore and whose spells of water and ice instead deal void damage.\n\n---\n\n**Apparition Skills** Ocean Lore, Sailing Lore\n\n**Apparition Spells**\n\n- **Cantrip** Caustic Blast\n- **1st** Grim Tendrils\n- **2nd** Acid Grip\n- **3rd** Aqueous Orb\n- **4th** Grasp of the Deep\n- **5th** Wall of Ice\n- **6th** Frost Pillar\n- **7th** Hungry Depths\n- **8th** Arctic Rift\n- **9th** Implosion\n\n**Vessel Spell** Devouring Dark Form\n\n**Avatar** *Tentacles from the Dark* Speed 70 feet, swim Speed 70 feet\n\n**Melee** ⟨1⟩ grasping tentacles (reach 30 feet), **Damage** 6d10+6 plus Grab",
+       "descRefs": [
+        {
+         "label": "Caustic Blast",
+         "key": "spells"
+        },
+        {
+         "label": "Grim Tendrils",
+         "key": "spells"
+        },
+        {
+         "label": "Acid Grip",
+         "key": "spells"
+        },
+        {
+         "label": "Aqueous Orb",
+         "key": "spells"
+        },
+        {
+         "label": "Grasp of the Deep",
+         "key": "spells"
+        },
+        {
+         "label": "Wall of Ice",
+         "key": "spells"
+        },
+        {
+         "label": "Frost Pillar",
+         "key": "spells"
+        },
+        {
+         "label": "Hungry Depths",
+         "key": "spells"
+        },
+        {
+         "label": "Arctic Rift",
+         "key": "spells"
+        },
+        {
+         "label": "Implosion",
+         "key": "spells"
+        },
+        {
+         "label": "Devouring Dark Form",
+         "key": "spells"
+        }
+       ],
+       "grantedSpells": [
+        "caustic-blast",
+        "grim-tendrils",
+        "acid-grip",
+        "aqueous-orb",
+        "grasp-of-the-deep",
+        "wall-of-ice",
+        "frost-pillar",
+        "hungry-depths",
+        "arctic-rift",
+        "implosion"
+       ],
+       "focusSpells": [
+        "devouring-dark-form"
+       ],
+       "grants": {
+        "lores": [
+         "ocean",
+         "sailing"
+        ]
+       },
+       "loreProgression": [
+        {
+         "level": 8,
+         "rank": "expert"
+        },
+        {
+         "level": 16,
+         "rank": "master"
+        }
+       ]
+      },
+      {
+       "id": "monarch-of-the-fey-courts",
+       "name": "Monarch of the Fey Courts",
+       "description": "Monarchs of the fey courts make their homes near places with strong ties to the First World, or in places where nymphs once held sway. They are drawn to animists who blend an appreciation for art and nature's beauty with a ruler's ambition. Monarchs of fey courts are vain, capricious, and do not easily forgive slights or poor manners.\n\n---\n\n**Apparition Skills** Art Lore, Fey Lore\n\n**Apparition Spells**\n\n- **Cantrip** Tangle Vine\n- **1st** Charm\n- **2nd** Create Food\n- **3rd** Enthrall\n- **4th** Suggestion\n- **5th** Hallucination\n- **6th** Dominate\n- **7th** Mask of Terror\n- **8th** Uncontrollable Dance\n- **9th** Unfathomable Song\n\n**Vessel Spell** Nymph's Grace\n\n**Avatar** *Queen of the Winter Court* Speed 50 feet, fly Speed 50 feet, swim Speed 50 feet\n\n**Melee** ⟨1⟩ queen's caress (reach 15 feet, agile), **Damage** 6d10+6\n\n**Ranged** ⟨1⟩ monarch's spite (mental, range 120 feet, versatile cold), **Damage** 6d6+6",
+       "descRefs": [
+        {
+         "label": "Tangle Vine",
+         "key": "spells"
+        },
+        {
+         "label": "Charm",
+         "key": "spells"
+        },
+        {
+         "label": "Create Food",
+         "key": "spells"
+        },
+        {
+         "label": "Enthrall",
+         "key": "spells"
+        },
+        {
+         "label": "Suggestion",
+         "key": "spells"
+        },
+        {
+         "label": "Hallucination",
+         "key": "spells"
+        },
+        {
+         "label": "Dominate",
+         "key": "spells"
+        },
+        {
+         "label": "Mask of Terror",
+         "key": "spells"
+        },
+        {
+         "label": "Uncontrollable Dance",
+         "key": "spells"
+        },
+        {
+         "label": "Unfathomable Song",
+         "key": "spells"
+        },
+        {
+         "label": "Nymph's Grace",
+         "key": "spells"
+        }
+       ],
+       "grantedSpells": [
+        "tangle-vine",
+        "charm",
+        "create-food",
+        "enthrall",
+        "suggestion",
+        "hallucination",
+        "dominate",
+        "mask-of-terror",
+        "uncontrollable-dance",
+        "unfathomable-song"
+       ],
+       "focusSpells": [
+        "nymphs-grace"
+       ],
+       "grants": {
+        "lores": [
+         "art",
+         "fey"
+        ]
+       },
+       "loreProgression": [
+        {
+         "level": 8,
+         "rank": "expert"
+        },
+        {
+         "level": 16,
+         "rank": "master"
+        }
+       ]
+      },
+      {
+       "id": "reveler-in-lost-glee",
+       "name": "Reveler in Lost Glee",
+       "description": "Revelers in lost glee are twisted apparitions that arise in desolate and abandoned places where people once found great joy. They take immense mirth in causing harm or discomfort to others and do not enjoy being attuned to animists who fail to laugh at their antics.\n\n---\n\n**Apparition Skills** Circus Lore, Fortune-Telling Lore\n\n**Apparition Spells**\n\n- **Cantrip** Prestidigitation\n- **1st** Dizzying Colors\n- **2nd** Laughing Fit\n- **3rd** Hypnotize\n- **4th** Confusion\n- **5th** Illusory Scene\n- **6th** Vibrant Pattern\n- **7th** Warp Mind\n- **8th** Quandary\n- **9th** Wails of the Damned\n\n**Vessel Spell** Trickster's Mirrors\n\n**Avatar** *Ringmaster of the Dark Celebration* Speed 50 feet, ignore difficult terrain and greater difficult terrain\n\n**Melee** ⟨1⟩ ringmaster's whip (reach 15 feet, trip), **Damage** 6d10+6\n\n**Ranged** ⟨1⟩ feast of the lost (acid, range 120 feet, versatile void), **Damage** 6d6+6",
+       "descRefs": [
+        {
+         "label": "Prestidigitation",
+         "key": "spells"
+        },
+        {
+         "label": "Dizzying Colors",
+         "key": "spells"
+        },
+        {
+         "label": "Laughing Fit",
+         "key": "spells"
+        },
+        {
+         "label": "Hypnotize",
+         "key": "spells"
+        },
+        {
+         "label": "Confusion",
+         "key": "spells"
+        },
+        {
+         "label": "Illusory Scene",
+         "key": "spells"
+        },
+        {
+         "label": "Vibrant Pattern",
+         "key": "spells"
+        },
+        {
+         "label": "Warp Mind",
+         "key": "spells"
+        },
+        {
+         "label": "Quandary",
+         "key": "spells"
+        },
+        {
+         "label": "Wails of the Damned",
+         "key": "spells"
+        },
+        {
+         "label": "Trickster's Mirrors",
+         "key": "spells"
+        }
+       ],
+       "grantedSpells": [
+        "prestidigitation",
+        "dizzying-colors",
+        "laughing-fit",
+        "hypnotize",
+        "confusion",
+        "illusory-scene",
+        "vibrant-pattern",
+        "warp-mind",
+        "quandary",
+        "wails-of-the-damned"
+       ],
+       "focusSpells": [
+        "tricksters-mirrors"
+       ],
+       "grants": {
+        "lores": [
+         "circus",
+         "fortune-telling"
+        ]
+       },
+       "loreProgression": [
+        {
+         "level": 8,
+         "rank": "expert"
+        },
+        {
+         "level": 16,
+         "rank": "master"
+        }
+       ]
+      },
+      {
+       "id": "shepherd-of-errant-winds",
+       "name": "Shepherd of Errant Winds",
+       "description": "Often spun from eddies in the wake of air elementals, a shepherd of errant winds delights in movement and freedom. They might seek animists in breezy canyons or aboard ships cruising the trade winds, after which the apparition follows an animist to less airy locales. However, a shepherd of errant winds chafes at idleness and stirs up trouble if its surroundings seem too still.\n\n---\n\n**Apparition Skill** Sailing Lore, Scouting Lore\n\n**Apparition Spells**\n\n- **Cantrip** Slashing Gust\n- **1st** Tailwind\n- **2nd** Propulsive Breeze\n- **3rd** Wall of Wind\n- **4th** Vapor Form\n- **5th** Scouting Eye\n- **6th** Mislead\n- **7th** Vacuum\n- **8th** Punishing Winds\n- **9th** Wrathful Storm\n\n**Vessel Spell** Gift of the Anemos\n\n**Avatar** *Avatar Will of the Winds* Speed 40 feet, fly 70 feet, ignore difficult terrain and greater difficult terrain\n\n**Melee** ⟨1⟩ air blast (air, reach 20 feet), **Damage** 6d8+6 bludgeoning\n\n**Ranged** ⟨1⟩ thunderclap (electricity, range 120 feet, versatile sonic), **Damage** 6d6+3 electricity",
+       "descRefs": [
+        {
+         "label": "Slashing Gust",
+         "key": "spells"
+        },
+        {
+         "label": "Tailwind",
+         "key": "spells"
+        },
+        {
+         "label": "Propulsive Breeze",
+         "key": "spells"
+        },
+        {
+         "label": "Wall of Wind",
+         "key": "spells"
+        },
+        {
+         "label": "Vapor Form",
+         "key": "spells"
+        },
+        {
+         "label": "Scouting Eye",
+         "key": "spells"
+        },
+        {
+         "label": "Mislead",
+         "key": "spells"
+        },
+        {
+         "label": "Vacuum",
+         "key": "spells"
+        },
+        {
+         "label": "Punishing Winds",
+         "key": "spells"
+        },
+        {
+         "label": "Wrathful Storm",
+         "key": "spells"
+        },
+        {
+         "label": "Gift of the Anemos",
+         "key": "spells"
+        }
+       ],
+       "grantedSpells": [
+        "slashing-gust",
+        "tailwind",
+        "propulsive-breeze",
+        "wall-of-wind",
+        "vapor-form",
+        "scouting-eye",
+        "mislead",
+        "vacuum",
+        "punishing-winds",
+        "wrathful-storm"
+       ],
+       "focusSpells": [
+        "gift-of-the-anemos"
+       ],
+       "grants": {
+        "lores": [
+         "sailing",
+         "scouting"
+        ]
+       },
+       "loreProgression": [
+        {
+         "level": 8,
+         "rank": "expert"
+        },
+        {
+         "level": 16,
+         "rank": "master"
+        }
+       ]
+      },
+      {
+       "id": "speaker-in-sibilance",
+       "name": "Speaker in Sibilance",
+       "description": "Whether witnessed in hissing serpents or the whisper of pungent fumes wafting up from a forlorn cave, a speaker in sibilance offers forbidden knowledge and revels in the anguish of an unprepared mind. These apparitions often take medusa-like forms, each serpent providing different (and often contradictory) advice.\n\n---\n\n**Apparition Skill** Fortune-Telling Lore, Mountain Lore\n\n**Apparition Spells**\n\n- **Cantrip** Puff of Poison\n- **1st** Ill Omen\n- **2nd** Stupefy\n- **3rd** Hypercognition\n- **4th** Snake Fangs\n- **5th** Slither\n- **6th** Petrify\n- **7th** Mask of Terror\n- **8th** Unrelenting Observation\n- **9th** Unfathomable Song\n\n**Vessel Spell** Crown of Prophets\n\n**Avatar** *Medusa of Merciless Mysteries* Speed 60 feet, climb 60 feet\n\n**Melee** ⟨1⟩ biting hair (poison, reach 15 feet), **Damage** 6d6+6 piercing plus 2d6 persistent poison\n\n**Ranged** ⟨1⟩ jarring prophecy (mental, range 120 feet, versatile sonic), **Damage** 6d6+3 mental",
+       "descRefs": [
+        {
+         "label": "Puff of Poison",
+         "key": "spells"
+        },
+        {
+         "label": "Ill Omen",
+         "key": "spells"
+        },
+        {
+         "label": "Stupefy",
+         "key": "spells"
+        },
+        {
+         "label": "Hypercognition",
+         "key": "spells"
+        },
+        {
+         "label": "Snake Fangs",
+         "key": "spells"
+        },
+        {
+         "label": "Slither",
+         "key": "spells"
+        },
+        {
+         "label": "Petrify",
+         "key": "spells"
+        },
+        {
+         "label": "Mask of Terror",
+         "key": "spells"
+        },
+        {
+         "label": "Unrelenting Observation",
+         "key": "spells"
+        },
+        {
+         "label": "Unfathomable Song",
+         "key": "spells"
+        },
+        {
+         "label": "Crown of Prophets",
+         "key": "spells"
+        }
+       ],
+       "grantedSpells": [
+        "puff-of-poison",
+        "ill-omen",
+        "stupefy",
+        "hypercognition",
+        "snake-fangs",
+        "slither",
+        "petrify",
+        "mask-of-terror",
+        "unrelenting-observation",
+        "unfathomable-song"
+       ],
+       "focusSpells": [
+        "crown-of-prophets"
+       ],
+       "grants": {
+        "lores": [
+         "fortune-telling",
+         "mountain"
+        ]
+       },
+       "loreProgression": [
+        {
+         "level": 8,
+         "rank": "expert"
+        },
+        {
+         "level": 16,
+         "rank": "master"
+        }
+       ]
+      },
+      {
+       "id": "stalker-in-darkened-boughs",
+       "name": "Stalker in Darkened Boughs",
+       "description": "Stalkers in darkened boughs make their homes in ancient forests and jungles unfriendly to humanoids and others who would exert control or influence over nature's designs. These apparitions are drawn to animists who harbor violent thoughts or impulses but are more likely to linger with animists who can quell their hatred. Stalkers in darkened boughs are moody, impulsive, and prone to seeing things from the least charitable perspective.\n\n---\n\n**Apparition Skills** Forest Lore, Hunting Lore\n\n**Apparition Spells**\n\n- **Cantrip** Gouging Claw\n- **1st** Runic Body\n- **2nd** Vomit Swarm\n- **3rd** Wall of Thorns\n- **4th** Bestial Curse\n- **5th** Moon Frenzy\n- **6th** Tangling Creepers\n- **7th** Unfettered Pack\n- **8th** Monstrosity Form\n- **9th** Wrathful Storm\n\n**Vessel Spell** Darkened Forest Form\n\n**Avatar** *Beast of the Boughs* Speed 70 feet, fly Speed 70 feet\n\n**Melee** ⟨1⟩ devouring jaws (deadly 3d10, reach 15 feet), **Damage** 6d10+6",
+       "descRefs": [
+        {
+         "label": "Gouging Claw",
+         "key": "spells"
+        },
+        {
+         "label": "Runic Body",
+         "key": "spells"
+        },
+        {
+         "label": "Vomit Swarm",
+         "key": "spells"
+        },
+        {
+         "label": "Wall of Thorns",
+         "key": "spells"
+        },
+        {
+         "label": "Bestial Curse",
+         "key": "spells"
+        },
+        {
+         "label": "Moon Frenzy",
+         "key": "spells"
+        },
+        {
+         "label": "Tangling Creepers",
+         "key": "spells"
+        },
+        {
+         "label": "Unfettered Pack",
+         "key": "spells"
+        },
+        {
+         "label": "Monstrosity Form",
+         "key": "spells"
+        },
+        {
+         "label": "Wrathful Storm",
+         "key": "spells"
+        },
+        {
+         "label": "Darkened Forest Form",
+         "key": "spells"
+        }
+       ],
+       "grantedSpells": [
+        "gouging-claw",
+        "runic-body",
+        "vomit-swarm",
+        "wall-of-thorns",
+        "bestial-curse",
+        "moon-frenzy",
+        "tangling-creepers",
+        "unfettered-pack",
+        "monstrosity-form",
+        "wrathful-storm"
+       ],
+       "focusSpells": [
+        "darkened-forest-form"
+       ],
+       "grants": {
+        "lores": [
+         "forest",
+         "hunting"
+        ]
+       },
+       "loreProgression": [
+        {
+         "level": 8,
+         "rank": "expert"
+        },
+        {
+         "level": 16,
+         "rank": "master"
+        }
+       ]
+      },
+      {
+       "id": "steward-of-stone-and-fire",
+       "name": "Steward of Stone and Fire",
+       "description": "Stewards of stone and fire linger near volcanoes and deep places near the heart of the earth, hot springs where the water is too scorchingly hot to allow casual enjoyment, and other places where the barrier between fire and earth is thin or nonexistent, though particularly old rock formations, canyons, and other natural features of earth may also spawn or attract them. Stewards of stone and fire are quick to anger and slow to forget.\n\n---\n\n**Apparition Skills** Mountain Lore, Volcano Lore\n\n**Apparition Spells**\n\n- **Cantrip** Ignition\n- **1st** Interposing Earth\n- **2nd** Exploding Earth\n- **3rd** Fireball\n- **4th** Wall of Fire\n- **5th** Wall of Stone\n- **6th** Petrify\n- **7th** Volcanic Eruption\n- **8th** Earthquake\n- **9th** Falling Stars\n\n**Vessel Spell** Earth's Bile\n\n**Avatar** *Blood of Planets* Speed 50 feet, burrow Speed 50 feet, ignore difficult terrain and greater difficult terrain\n\n**Melee** ⟨1⟩ avalanche of molten stone (reach 15 feet, versatile B), **Damage** 6d10+6\n\n**Ranged** ⟨1⟩ cleansing eruption (fire, range 120 feet), **Damage** 6d6+6",
+       "descRefs": [
+        {
+         "label": "Ignition",
+         "key": "spells"
+        },
+        {
+         "label": "Interposing Earth",
+         "key": "spells"
+        },
+        {
+         "label": "Exploding Earth",
+         "key": "spells"
+        },
+        {
+         "label": "Fireball",
+         "key": "spells"
+        },
+        {
+         "label": "Wall of Fire",
+         "key": "spells"
+        },
+        {
+         "label": "Wall of Stone",
+         "key": "spells"
+        },
+        {
+         "label": "Petrify",
+         "key": "spells"
+        },
+        {
+         "label": "Volcanic Eruption",
+         "key": "spells"
+        },
+        {
+         "label": "Earthquake",
+         "key": "spells"
+        },
+        {
+         "label": "Falling Stars",
+         "key": "spells"
+        },
+        {
+         "label": "Earth's Bile",
+         "key": "spells"
+        }
+       ],
+       "grantedSpells": [
+        "ignition",
+        "interposing-earth",
+        "exploding-earth",
+        "fireball",
+        "wall-of-fire",
+        "wall-of-stone",
+        "petrify",
+        "volcanic-eruption",
+        "earthquake",
+        "falling-stars"
+       ],
+       "focusSpells": [
+        "earths-bile"
+       ],
+       "grants": {
+        "lores": [
+         "mountain",
+         "volcano"
+        ]
+       },
+       "loreProgression": [
+        {
+         "level": 8,
+         "rank": "expert"
+        },
+        {
+         "level": 16,
+         "rank": "master"
+        }
+       ]
+      },
+      {
+       "id": "vanguard-of-roaring-waters",
+       "name": "Vanguard of Roaring Waters",
+       "description": "Vanguards of roaring waters are found where rivers carve their way through mountains, creating fearsome rapids. They can also be found near bays where rivers meet the sea and create turbulent breakers and unpredictable undertows, coastal reefs that tear the bottoms from unwary ships and isolate islands, or anywhere else where water becomes violent and difficult to navigate safely. Vanguards of roaring waters encourage chaos and are easily bored.\n\n---\n\n**Apparition Skills** Mountain Lore, River Lore\n\n**Apparition Spells**\n\n- **Cantrip** Rousing Splash\n- **1st** Hydraulic Push\n- **2nd** Mist\n- **3rd** Crashing Wave\n- **4th** Hydraulic Torrent\n- **5th** Control Water\n- **6th** Personal Ocean\n- **7th** Dancing Fountain\n- **8th** Whirlpool\n- **9th** Wrathful Storm\n\n**Vessel Spell** River Carving Mountains\n\n**Avatar** *River that Splits the World* Speed 50 feet, swim Speed 70 feet\n\n**Melee** ⟨1⟩ parting mountains (reach 15 feet, versatile S, water), **Damage** 6d10+6\n\n**Ranged** ⟨1⟩ crash into the sea (range 120 feet, versatile P, water), **Damage** 6d6+6",
+       "descRefs": [
+        {
+         "label": "Rousing Splash",
+         "key": "spells"
+        },
+        {
+         "label": "Hydraulic Push",
+         "key": "spells"
+        },
+        {
+         "label": "Mist",
+         "key": "spells"
+        },
+        {
+         "label": "Crashing Wave",
+         "key": "spells"
+        },
+        {
+         "label": "Hydraulic Torrent",
+         "key": "spells"
+        },
+        {
+         "label": "Control Water",
+         "key": "spells"
+        },
+        {
+         "label": "Personal Ocean",
+         "key": "spells"
+        },
+        {
+         "label": "Dancing Fountain",
+         "key": "spells"
+        },
+        {
+         "label": "Whirlpool",
+         "key": "spells"
+        },
+        {
+         "label": "Wrathful Storm",
+         "key": "spells"
+        },
+        {
+         "label": "River Carving Mountains",
+         "key": "spells"
+        }
+       ],
+       "grantedSpells": [
+        "rousing-splash",
+        "hydraulic-push",
+        "mist",
+        "crashing-wave",
+        "hydraulic-torrent",
+        "control-water",
+        "personal-ocean",
+        "dancing-fountain",
+        "whirlpool",
+        "wrathful-storm"
+       ],
+       "focusSpells": [
+        "river-carving-mountains"
+       ],
+       "grants": {
+        "lores": [
+         "mountain",
+         "river"
+        ]
+       },
+       "loreProgression": [
+        {
+         "level": 8,
+         "rank": "expert"
+        },
+        {
+         "level": 16,
+         "rank": "master"
+        }
+       ]
+      },
+      {
+       "id": "witness-to-ancient-battles",
+       "name": "Witness to Ancient Battles",
+       "description": "Witnesses to ancient battles may be the lingering remnants of soldiers who never returned from their last deployment or the restless souls of warriors whose final contest left them unfulfilled. Or the apparitions may be valkyries and other beings from beyond, naturally drawn to sites of death and battle, or even the unquiet entity formed from a battlefield that saw so much death and blood it gained a spiritual essence of its own. Witnesses to ancient battles are often somber and grim.\n\n---\n\n**Apparition Skills** Battlegrounds Lore, Heraldry Lore\n\n**Apparition Spells**\n\n- **Cantrip** Shield\n- **1st** Sure Strike\n- **2nd** Enlarge\n- **3rd** Ghostly Weapon\n- **4th** Weapon Storm\n- **5th** Invoke Spirits\n- **6th** Phantasmal Calamity\n- **7th** True Target\n- **8th** Canticle of Everlasting Grief\n- **9th** Weapon of Judgment\n\n**Vessel Spell** Embodiment of Battle\n\n**Avatar** *General of Endless Battle* Speed 70 feet, immune to immobilized\n\n**Melee** ⟨1⟩ final strike (agile, fatal d12, reach 15 feet), Damage 6d8+6",
+       "descRefs": [
+        {
+         "label": "Shield",
+         "key": "spells"
+        },
+        {
+         "label": "Sure Strike",
+         "key": "spells"
+        },
+        {
+         "label": "Enlarge",
+         "key": "spells"
+        },
+        {
+         "label": "Ghostly Weapon",
+         "key": "spells"
+        },
+        {
+         "label": "Weapon Storm",
+         "key": "spells"
+        },
+        {
+         "label": "Invoke Spirits",
+         "key": "spells"
+        },
+        {
+         "label": "Phantasmal Calamity",
+         "key": "spells"
+        },
+        {
+         "label": "True Target",
+         "key": "spells"
+        },
+        {
+         "label": "Canticle of Everlasting Grief",
+         "key": "spells"
+        },
+        {
+         "label": "Weapon of Judgment",
+         "key": "spells"
+        },
+        {
+         "label": "Embodiment of Battle",
+         "key": "spells"
+        },
+        {
+         "label": "immobilized",
+         "key": "conditions"
+        }
+       ],
+       "grantedSpells": [
+        "shield",
+        "sure-strike",
+        "enlarge",
+        "ghostly-weapon",
+        "weapon-storm",
+        "invoke-spirits",
+        "phantasmal-calamity",
+        "true-target",
+        "canticle-of-everlasting-grief",
+        "weapon-of-judgment"
+       ],
+       "focusSpells": [
+        "embodiment-of-battle"
+       ],
+       "grants": {
+        "lores": [
+         "battlegrounds",
+         "heraldry"
+        ]
+       },
+       "loreProgression": [
+        {
+         "level": 8,
+         "rank": "expert"
+        },
+        {
+         "level": 16,
+         "rank": "master"
+        }
+       ]
+      }
+     ],
+     "why": "wg-batch-028: class-71 Apparition Skills: 'at 8th level these Lore skills become expert, and at 16th level master' - loreProgression on every apparition option (engine agent 1's reader at build.ts ~3206). Whole array re-emitted from spec 1 (the new lamentation option + filled rank lines kept).",
+     "path": [
+      "extraChoices",
+      "id=apparition"
+     ]
+    }
+   ],
+   "note": "supersedes the spec-1 row; carries both changes."
+  },
+  {
+   "id": "witch#familiar-abilities",
+   "backfillRows": [
+    {
+     "category": "classFeatures",
+     "id": "witch-familiar-ability",
+     "create": true,
+     "value": {
+      "id": "witch-familiar-ability",
+      "name": "Familiar Ability",
+      "traits": [
+       "witch"
+      ],
+      "rarity": "common",
+      "source": {
+       "book": "Pathfinder Player Core",
+       "license": "ORC"
+      },
+      "level": 6,
+      "edition": "remaster"
+     },
+     "why": "wg-batch-028: class-9's level table repeats 'familiar ability' at 6th, 12th and 18th ('Your familiar gains another extra ability'); ours had no row at those levels. Shape mirrors classFeatures/patrons-gift."
+    },
+    {
+     "category": "classes",
+     "id": "witch",
+     "field": "features",
+     "value": [
+      {
+       "level": 11,
+       "featureId": "weapon-expertise"
+      },
+      {
+       "level": 15,
+       "featureId": "master-spellcaster"
+      },
+      {
+       "level": 19,
+       "featureId": "legendary-spellcaster"
+      },
+      {
+       "level": 11,
+       "featureId": "perception-expertise"
+      },
+      {
+       "level": 17,
+       "featureId": "will-of-the-pupil"
+      },
+      {
+       "level": 13,
+       "featureId": "defensive-robes"
+      },
+      {
+       "level": 13,
+       "featureId": "weapon-specialization"
+      },
+      {
+       "level": 9,
+       "featureId": "reflex-expertise"
+      },
+      {
+       "level": 1,
+       "featureId": "witch-spellcasting"
+      },
+      {
+       "level": 1,
+       "featureId": "familiar-witch"
+      },
+      {
+       "level": 1,
+       "featureId": "hex-spells"
+      },
+      {
+       "level": 1,
+       "featureId": "patron"
+      },
+      {
+       "level": 5,
+       "featureId": "magical-fortitude"
+      },
+      {
+       "level": 7,
+       "featureId": "expert-spellcaster"
+      },
+      {
+       "level": 19,
+       "featureId": "patrons-gift"
+      },
+      {
+       "level": 6,
+       "featureId": "witch-familiar-ability"
+      },
+      {
+       "level": 12,
+       "featureId": "witch-familiar-ability"
+      },
+      {
+       "level": 18,
+       "featureId": "witch-familiar-ability"
+      }
+     ],
+     "why": "wg-batch-028: the three printed 'familiar ability' rows; the budget growth itself is engine agent 2's familiarAbilityBudget (companions.ts)."
+    }
+   ],
+   "note": "the prose row for the created feature is appended straight into effect-backfill.json by the orchestrator (the applier refuses a description row for a record its own spec creates)."
+  },
+  {
+   "id": "gunslinger#spellshot-class-dc",
+   "backfillRows": [
+    {
+     "category": "classes",
+     "id": "gunslinger",
+     "field": "subclass",
+     "value": {
+      "name": "Way",
+      "options": [
+       {
+        "id": "way-of-the-drifter",
+        "name": "Way of the Drifter",
+        "description": "You're a wanderer traveling from land to land with your gun and a melee weapon as company. Maybe you learned to fight with blade and pistol as a Shackles pirate, mastered the hand cannon and katana in Minkai, or practiced with a hatchet and clan pistol in Dongun Hold. You win battles by relying on mobility and flexible use of your weapons.\n\n**Slinger's Reload** Reloading Strike\n\n**Deeds** *Initial* Into the Fray; *Advanced* Finish The Job; *Greater* Drifter's Wake\n\n**Way Skill** Acrobatics",
+        "descRefs": [
+         {
+          "label": "Reloading Strike",
+          "key": "actions"
+         },
+         {
+          "label": "Into the Fray",
+          "key": "actions"
+         },
+         {
+          "label": "Finish The Job",
+          "key": "actions"
+         },
+         {
+          "label": "Drifter's Wake",
+          "key": "actions"
+         }
+        ],
+        "grants": {
+         "skills": [
+          "acrobatics"
+         ]
+        },
+        "featureIds": [
+         {
+          "id": "into-the-fray",
+          "level": 1
+         },
+         {
+          "id": "finish-the-job",
+          "level": 9
+         },
+         {
+          "id": "drifters-wake",
+          "level": 15
+         }
+        ]
+       },
+       {
+        "id": "way-of-the-pistolero",
+        "name": "Way of the Pistolero",
+        "description": "Whether you're a professional duelist or a pistol-twirling entertainer, you have quick feet and quicker hands that never seem to let you down, and an equally sharp wit and tongue that jab your foes. You might leave a hand free or cultivate the ambidexterity for twin weapons. Either way, you stay close enough to your enemies to leverage your superior reflexes while leaving enough space to safely fire.\n\n**Slinger's Reload** Raconteur's Reload\n\n**Deeds** *Initial* Ten Paces; *Advanced* Pistolero's Retort; *Greater* Grim Swagger\n\n**Way Skill** choose Deception or Intimidation",
+        "descRefs": [
+         {
+          "label": "Raconteur's Reload",
+          "key": "actions"
+         },
+         {
+          "label": "Ten Paces",
+          "key": "actions"
+         },
+         {
+          "label": "Pistolero's Retort",
+          "key": "actions"
+         },
+         {
+          "label": "Grim Swagger",
+          "key": "actions"
+         }
+        ],
+        "skillChoice": [
+         "deception",
+         "intimidation"
+        ],
+        "featureIds": [
+         {
+          "id": "ten-paces",
+          "level": 1
+         },
+         {
+          "id": "pistoleros-retort",
+          "level": 9
+         },
+         {
+          "id": "grim-swagger",
+          "level": 15
+         }
+        ]
+       },
+       {
+        "id": "way-of-the-sniper",
+        "name": "Way of the Sniper",
+        "description": "You practice a style of shooting that relies on unerring accuracy and perfect placement of your first shot. You keep hidden or at a distance, staying out of the fray and bringing unseen death to your foes.\n\n**Slinger's Reload** Covered Reload\n\n**Deeds** *Initial* One Shot, One Kill; *Advanced* Vital Shot; *Greater* Ghost Shot\n\n**Way Skill** Stealth",
+        "descRefs": [
+         {
+          "label": "Covered Reload",
+          "key": "actions"
+         },
+         {
+          "label": "One Shot, One Kill",
+          "key": "actions"
+         },
+         {
+          "label": "Vital Shot",
+          "key": "actions"
+         },
+         {
+          "label": "Ghost Shot",
+          "key": "actions"
+         }
+        ],
+        "grants": {
+         "skills": [
+          "stealth"
+         ]
+        },
+        "featureIds": [
+         {
+          "id": "one-shot-one-kill",
+          "level": 1
+         },
+         {
+          "id": "vital-shot",
+          "level": 9
+         },
+         {
+          "id": "ghost-shot",
+          "level": 15
+         }
+        ]
+       },
+       {
+        "id": "way-of-the-spellshot",
+        "name": "Way of the Spellshot",
+        "description": "You've learned the intricacies of magic and technology, blending the two together with deadly results. You combine a knowledge of arcane theories with a strong connection to your chosen weapon that allows you to manifest unique effects, combining deadly skill with a firearm alongside an array of moderate spellcasting. You can imbue energy into your weapon and conjure bullets from thin air. As you progress, you eventually learn to phase bullets through walls or even to teleport yourself along the path of your bullets. You must select Spellshot Dedication as your 2nd-level class feat.\n\n**Prerequisites** You must be a gunslinger.\n\n**Spellshot Adjustments** Instead of choosing a way from the options listed in the gunslinger class, you have the way of the spellshot. It has the following way skill, slinger's reload, and deeds. You gain these abilities at the same levels as normal for the class. You use Intelligence for your class DC.\n\n**Way Skill** Arcana\n\n**Slinger's Reload** Thoughtful Reload\n\n**Deeds** *Initial* Energy Shot; *Advanced* Recall Ammunition; *Greater* Dispelling Bullet",
+        "descRefs": [
+         {
+          "label": "Spellshot Dedication",
+          "key": "feats"
+         },
+         {
+          "label": "Thoughtful Reload",
+          "key": "actions"
+         },
+         {
+          "label": "Energy Shot",
+          "key": "actions"
+         },
+         {
+          "label": "Recall Ammunition",
+          "key": "actions"
+         },
+         {
+          "label": "Dispelling Bullet",
+          "key": "actions"
+         }
+        ],
+        "grants": {
+         "skills": [
+          "arcana"
+         ]
+        },
+        "featureIds": [
+         {
+          "id": "energy-shot",
+          "level": 1
+         },
+         {
+          "id": "recall-ammunition",
+          "level": 9
+         },
+         {
+          "id": "dispelling-bullet",
+          "level": 15
+         }
+        ],
+        "classDcKeyAbility": "int"
+       },
+       {
+        "id": "way-of-the-triggerbrand",
+        "name": "Way of the Triggerbrand",
+        "description": "You prefer firearms that work well as weapons in both melee and ranged combat, particularly those that allow you to exercise a bit of style and flair. You might be a survivor who cobbled your weapon together from the City of Smog's street scrap or a noble wielder of a master smith's bespoke commission for duels among Alkenstar's elite. You gain access to combination weapons.\n\n**Slinger's Reload** Touch and Go\n\n**Deeds** *Initial Spring the Trap*; *Advanced Wind Them Up*; *Greater Break Them Down*\n\n**Way Skill** Thievery",
+        "descRefs": [
+         {
+          "label": "Touch and Go",
+          "key": "actions"
+         },
+         {
+          "label": "Spring the Trap",
+          "key": "actions"
+         },
+         {
+          "label": "Wind Them Up",
+          "key": "actions"
+         },
+         {
+          "label": "Break Them Down",
+          "key": "actions"
+         }
+        ],
+        "grants": {
+         "skills": [
+          "thievery"
+         ]
+        },
+        "featureIds": [
+         {
+          "id": "spring-the-trap",
+          "level": 1
+         },
+         {
+          "id": "wind-them-up",
+          "level": 9
+         },
+         {
+          "id": "break-them-down",
+          "level": 15
+         }
+        ]
+       },
+       {
+        "id": "way-of-the-vanguard",
+        "name": "Way of the Vanguard",
+        "description": "You practice a unique combat style originated by dwarven siege engineers, using heavy weapons with wide attack areas to blast holes through enemy lines, clear an opening for your allies, and defend the conquered territory.\n\n**Slinger's Reload** Clear a Path\n\n**Deeds** *Initial* Living Fortification; *Advanced* Spinning Crush; *Greater*\n\n**Way Skill** Athletics",
+        "descRefs": [
+         {
+          "label": "Clear a Path",
+          "key": "actions"
+         },
+         {
+          "label": "Living Fortification",
+          "key": "actions"
+         },
+         {
+          "label": "Spinning Crush",
+          "key": "actions"
+         }
+        ],
+        "grants": {
+         "skills": [
+          "athletics"
+         ]
+        },
+        "featureIds": [
+         {
+          "id": "living-fortification",
+          "level": 1
+         },
+         {
+          "id": "spinning-crush",
+          "level": 9
+         },
+         {
+          "id": "siegebreaker",
+          "level": 15
+         }
+        ]
+       }
+      ],
+      "featureId": "gunslingers-way"
+     },
+     "why": "wg-batch-028: archetype-122 (Spellshot): 'You use Intelligence for your class DC' - the key attribute stays the gunslinger's (spec 1 deleted the option-level keyAbility that made the whole character Int); classDcKeyAbility is the orchestrator's new SubclassOption field read in build.ts -> Character.classDcKeyAbility -> deriveClassDc. Whole object re-emitted from spec 1."
+    }
+   ],
+   "note": "supersedes the spec-1 row with its content preserved."
+  },
+  {
+   "id": "witch#patron-familiar-spell#or",
+   "backfillRows": [
+    {
+     "category": "classes",
+     "id": "witch",
+     "field": "options",
+     "value": [
+      {
+       "id": "baba-yaga",
+       "name": "Baba Yaga",
+       "description": "Your patron is Baba Yaga, the Queen of Witches. You are most likely a young woman who has been thrown into events far above your head, though you might also be a young man or a brave knight who has sworn your loyalty to the old witch. You may have demanded Baba Yaga's aid, and somehow escaped unscathed for your audacity. She may have reached out to you by sending a messenger in the form of an animated object, such as a mortar that had grown legs. She may have instead appeared before you herself, demanding you aid her with some nigh-impossible chore. While many fail these tasks and end up becoming a meal for Baba Yaga or meet even worse fates, you prevailed and earned her respect. Her gift to you is her patronage (and your life).\n\n**Spell List** occult\n\n**Patron Skill** Occultism\n\n**Lesson of Baba's Understanding** Baba Yaga teaches you to be more like her, allowing you to transfer spirits into objects and freeze your foes. You gain the Spirit Object hex cantrip and your familiar learns Chilling Spray.\n\n**Familiar of Obscuring Snowfall** Your familiar is always covered in a thin layer of snow, which it sheds as needed. When you Cast or Sustain a hex, you can cause clinging snow to fall in a centered on a square of your familiar's space. This snowfall remains until the start of your next turn, and enemies that enter these squares during that period are dazzled until the start of your next turn.",
+       "descRefs": [
+        {
+         "label": "Spirit Object",
+         "key": "spells"
+        },
+        {
+         "label": "Chilling Spray",
+         "key": "spells"
+        },
+        {
+         "label": "dazzled",
+         "key": "conditions"
+        }
+       ],
+       "tradition": "occult",
+       "grants": {
+        "skills": [
+         "occultism"
+        ]
+       },
+       "focusSpells": [
+        "spirit-object"
+       ],
+       "grantedSpells": [
+        "chilling-spray"
+       ]
+      },
+      {
+       "id": "choir-politic",
+       "name": "Choir Politic",
+       "description": "When your patron speaks, it is a chorus of voices sounding as one. They first appeared to you in the faces of your neighbors in the middle of a town festival or council meeting, when the success of an endeavor hinged on everyone working together. With the strength of your patron behind you, you then rallied the community together for a common goal. Your patron might be a single entity gathering a coterie of subjects together for an unknown cause or a like-minded covenant of deities and spirits. Whatever the case, your patron—and by extension, you—understands that mortals are stronger together.\n\n**Spell List** divine\n\n**Patron Skill** Society\n\n**Lesson of Community Knowledge** Your patron taught you the importance of pooling information to help a group with a common cause. You gain the Share Vision hex cantrip and your familiar learns Share Lore.\n\n**Familiar of Bolstering Aid** Your familiar knows all manner of tricks that can help! When you Cast or Sustain a hex, and your familiar is adjacent to an ally, that ally gains a +2 status bonus to the next non-attack skill check that ally attempts before the start of your next turn.",
+       "descRefs": [
+        {
+         "label": "Share Vision",
+         "key": "spells"
+        },
+        {
+         "label": "Share Lore",
+         "key": "spells"
+        }
+       ],
+       "tradition": "divine",
+       "grants": {
+        "skills": [
+         "society"
+        ]
+       },
+       "focusSpells": [
+        "share-vision"
+       ],
+       "grantedSpells": [
+        "share-lore"
+       ]
+      },
+      {
+       "id": "cobyslarni",
+       "name": "Cobyslarni",
+       "description": "Though Cobyslarni doesn't often interact directly with mortals these days, your quest for wisdom has drawn his attention. You studied at his academy, encountered him on his travels throughout the planes, or responded to his strange psychic call. However your meeting occurred, Cobyslarni empowered your studies. Though Cobyslarni rarely demands anything directly from his witches, you may receive visions of danger to the academy or its students in times of dire need.\n\nMost witches chosen by Cobyslarni, if they're not already students at the academy, make their way there at some point. Some who follow these nudges remain at the academy indefinitely, but most eventually move on to experience their own journeys or even establish their own schools.\n\n**Spell List** occult;\n\n**Patron Skill** Occultism\n\n**Lesson of Wandering Mind** Cobyslarni has taught you to keep an open mind and seek knowledge in all things, sifting through an array of facts that others would find bewildering. You gain the Information Overload hex cantrip and your familiar learns Déjà Vu.\n\n**Familiar of Insightful Observation** Your familiar boasts a third eye upon their head or body, resembling the one set in Cobyslarni's forehead. When you Cast or Sustain a hex, your familiar can attempt a check to Recall Knowledge as a free action with any skill in which you are trained or better, using your bonus, and psychically transmit the information to you.",
+       "descRefs": [
+        {
+         "label": "Information Overload",
+         "key": "spells"
+        },
+        {
+         "label": "Déjà Vu",
+         "key": "spells"
+        }
+       ],
+       "tradition": "occult",
+       "grants": {
+        "skills": [
+         "occultism"
+        ]
+       },
+       "focusSpells": [
+        "information-overload"
+       ],
+       "grantedSpells": [
+        "de-ja-vu"
+       ]
+      },
+      {
+       "id": "devourer-of-decay",
+       "name": "Devourer of Decay",
+       "description": "Your patron appeared at the end or near the end of a life, flickering in feverish visions or glinting mysteriously in the eyes of waiting scavengers. Although horrifying to many, decay creates the resources needed for new life. This fate awaits you and possibly even your patron, whether they're a towering arboreal, a subterranean fungus creature, or one of the psychopomps that shepherds the entire process along.\n\n**Spell List** primal\n\n**Patron Skill** Nature\n\n**Lesson of the Hungry Scavenger** Your patron teaches ways to convert death into new life. You gain the Scrounger's Glee hex cantrip, and your familiar learns Enfeeble.\n\n**Familiar of Parasitic Might** Your familiar appears gaunt and malnourished or otherwise on the brink of death, even though it's quite healthy. When you Cast or Sustain a hex, your familiar can draw on the waning strength of another to sustain itself. One creature within 15 feet of your familiar with less than half of its maximum Hit Points becomes Sickened 1 unless it succeeds at a Fortitude saving throw against your spell DC.",
+       "descRefs": [
+        {
+         "label": "Sickened 1",
+         "key": "conditions"
+        },
+        {
+         "label": "Scrounger's Glee",
+         "key": "spells"
+        },
+        {
+         "label": "Enfeeble",
+         "key": "spells"
+        }
+       ],
+       "tradition": "primal",
+       "grants": {
+        "skills": [
+         "nature"
+        ]
+       },
+       "focusSpells": [
+        "scroungers-glee"
+       ],
+       "grantedSpells": [
+        "enfeeble"
+       ]
+      },
+      {
+       "id": "faiths-flamekeeper",
+       "name": "Faith's Flamekeeper",
+       "description": "Your patron contacted you in a moment your willpower was close to sputtering out. Their reassuring presence was like breath and kindling bringing an ember back aflame, their magic giving you the strength to carry on and bring others to your cause. Your patron is likely a divine being like an angel or aeon acting covertly, though the possibility exists they might be a more sinister entity, using you to unknown ends.\n\n**Spell List** divine\n\n**Patron Skill** Religion\n\n**Lesson of Fervor's Grasp** Your patron has taught you that nothing can seize the heart like faith, whether used to inspire or direct. You gain the Stoke the Heart hex cantrip and your familiar learns Command.\n\n**Familiar of Restored Spirit** Your familiar is pleasantly warm and soft, seeming to wash away worries with its mere presence. When you Cast or Sustain a hex, one willing creature within 15 feet of your familiar gains temporary Hit Points equal to 2 + half your level, which last until the start of your next turn.",
+       "descRefs": [
+        {
+         "label": "Stoke the Heart",
+         "key": "spells"
+        },
+        {
+         "label": "Command",
+         "key": "spells"
+        }
+       ],
+       "tradition": "divine",
+       "grants": {
+        "skills": [
+         "religion"
+        ]
+       },
+       "focusSpells": [
+        "stoke-the-heart"
+       ],
+       "grantedSpells": [
+        "command"
+       ]
+      },
+      {
+       "id": "mosquito-witch",
+       "name": "Mosquito Witch",
+       "description": "Your patron is a mysterious being known as the Mosquito Witch. You do not know why you were chosen, and in many cases, you wish that you hadn't been. She may have made herself known to you through terrifying prophetic visions and nightmares, or you might have instead received her patronage in the form of swarming insects, their buzzing opening your ears to magic and their bites filling your body with power. Frightening events plague your wake: strange accidents, dead animals, and glowing red eyes in the darkness. Whether or not you're aware of the Mosquito Witch's influence, you have an affinity with insects, and typically draw their attention wherever you go.\n\n**Spell List** primal\n\n**Patron Skill** Nature\n\n**Lesson of the Unbridled Hive** The Mosquito Witch grants you control over insects. You gain the Buzzing Bites hex cantrip and your familiar learns Pest Form.\n\n**Familiar of Swarm's Heart** Your familiar is surrounded by a cloud of harmless insects. When you Cast or Sustain a hex, the insects swarm to protect you and your allies. Until the start of your next turn, your familiar grants Concealment to you or any ally while sharing the same space.*.*",
+       "descRefs": [
+        {
+         "label": "Concealment",
+         "key": "conditions"
+        },
+        {
+         "label": "Buzzing Bites",
+         "key": "spells"
+        },
+        {
+         "label": "Pest Form",
+         "key": "spells"
+        }
+       ],
+       "tradition": "primal",
+       "grants": {
+        "skills": [
+         "nature"
+        ]
+       },
+       "focusSpells": [
+        "buzzing-bites"
+       ],
+       "grantedSpells": [
+        "pest-form"
+       ]
+      },
+      {
+       "id": "paradox-of-opposites",
+       "name": "Paradox of Opposites",
+       "description": "Life and death, good and evil, light and shadow, vitality and void energy—these diametrically opposed concepts exist everywhere, and your patron walks the line between them. You first encountered your patron in a place or situation of such duality, such as witnessing a baby being born in a cemetery or feeling the natural light of a sunbeam in an otherwise dark cavern. There is power to be derived from the interplay between seemingly antithetical ideas and striking a balance between the two. Your patron could be a monitor demigod interested in cultivating a cosmic balance or an entity that plays fast and loose with morality. They are the difference between the two sides of the same coin while also being the entirety of the coin.\n\n**Spell List** divine\n\n**Patron Skill** Religion\n\n**Lesson of the Twilit Soul** For your patron, life and death and sleeping and waking have the same meaning. You gain the Trade Death for Life hex cantrip and your familiar learns Sleep.\n\n**Familiar of Paired Perplexity** Your familiar has twice as many of a small feature than a normal creature would have, such a second tail or an extra pair of whiskers. When you Cast or Sustain a hex, your familiar seems to double and be in two places at once. One creature you choose within 20 feet of it is Stupefied 1 until the start of your next turn; this is a visual effect.",
+       "descRefs": [
+        {
+         "label": "Stupefied 1",
+         "key": "conditions"
+        },
+        {
+         "label": "Trade Death for Life",
+         "key": "spells"
+        },
+        {
+         "label": "Sleep",
+         "key": "spells"
+        }
+       ],
+       "tradition": "divine",
+       "grants": {
+        "skills": [
+         "religion"
+        ]
+       },
+       "focusSpells": [
+        "trade-death-for-life"
+       ],
+       "grantedSpells": [
+        "sleep"
+       ]
+      },
+      {
+       "id": "ripple-in-the-deep",
+       "name": "Ripple in the Deep",
+       "description": "When your patron appeared, it was as an unfathomably large shadow beneath the waves, possibly as an ancient denizen of the vast waters like a kraken. Whether channeling the lethal terror of an oceanic predator or singing the ancestral wisdom of its gentle giants, your leviathan patron brings you lessons from the unplumbed depths of the world.\n\n**Spell List** primal\n\n**Patron Skill** Nature\n\n**Lesson of Surface and Seas** Your patron teaches of the dangers and wonders of its domain, even at the very edges of the water. You gain the Sting of the Sea hex cantrip, and your familiar learns Dizzying Colors or Grease.\n\n**Familiar of Overwhelming Tides** Your familiar constantly drips with ocean water. When you Cast or Sustain a hex, you can cause a small wave to surge forth from your familiar. One creature within 10 feet of your familiar is pushed 5 feet away from your familiar.",
+       "descRefs": [
+        {
+         "label": "Sting of the Sea",
+         "key": "spells"
+        },
+        {
+         "label": "Dizzying Colors",
+         "key": "spells"
+        },
+        {
+         "label": "Grease",
+         "key": "spells"
+        }
+       ],
+       "tradition": "primal",
+       "grants": {
+        "skills": [
+         "nature"
+        ]
+       },
+       "focusSpells": [
+        "sting-of-the-sea"
+       ],
+       "grantedSpellChoice": {
+        "id": "familiar-spell",
+        "prompt": "Your familiar learns dizzying colors or grease - choose one",
+        "options": [
+         "dizzying-colors",
+         "grease"
+        ]
+       }
+      },
+      {
+       "id": "silence-in-snow",
+       "name": "Silence in Snow",
+       "description": "Bitter cold heralded your patron's appearance, in the depths of the winter solstice or on a frozen peak at the end of the world. Your patron might be a winter hag, ice yai, or other spirit of the cold, but one thing is clear as ice—their power is not to be underestimated.\n\n**Spell List** primal\n\n**Patron Skill** Nature\n\n**Lesson of Winter's Chill** Your patron taught you the power of winter firsthand by subjecting you to frost and snow. You learn the Clinging Ice hex cantrip and your familiar learns Gust of Wind.\n\n**Familiar of Freezing Rime** Your familiar is cold to the touch, its breath always visible. When you Cast or Sustain a hex, you can cause ice to form in a centered on a square of your familiar's space. Those squares are difficult terrain until the start of your next turn.",
+       "descRefs": [
+        {
+         "label": "Clinging Ice",
+         "key": "spells"
+        },
+        {
+         "label": "Gust of Wind",
+         "key": "spells"
+        }
+       ],
+       "tradition": "primal",
+       "grants": {
+        "skills": [
+         "nature"
+        ]
+       },
+       "focusSpells": [
+        "clinging-ice"
+       ],
+       "grantedSpells": [
+        "gust-of-wind"
+       ]
+      },
+      {
+       "id": "spinner-of-threads",
+       "name": "Spinner of Threads",
+       "description": "You met your patron in a memory of an encounter yet to come or a premonition of something long since passed, as they untangled and re-spun the tapestry of time and fate. Was your patron a norn? A herald of a deity like Pharasma, Alseta, or Grandmother Spider? Could it even be a single individual appearing at three or more points in its timeline—multiple versions of the same being, parallel threads converging on a single moment?\n\n**Spell List** occult\n\n**Patron Skill** Occultism\n\n**Lesson of Fate's Vicissitudes** Your patron's harsh lesson is that fate spares no one, rising and falling in turn for all. You gain the Nudge Fate hex cantrip and your familiar learns Sure Strike.\n\n**Familiar of Balanced Luck** Your familiar has a spot on its body that looks like a good luck charm or a bad omen, depending on the angle. When you Cast or Sustain a hex, one creature within 15 feet of your familiar gets your choice of either a +1 status bonus to its AC or a –1 status penalty to its AC until the start of your next turn.",
+       "descRefs": [
+        {
+         "label": "Nudge Fate",
+         "key": "spells"
+        },
+        {
+         "label": "Sure Strike",
+         "key": "spells"
+        }
+       ],
+       "tradition": "occult",
+       "grants": {
+        "skills": [
+         "occultism"
+        ]
+       },
+       "focusSpells": [
+        "nudge-fate"
+       ],
+       "grantedSpells": [
+        "sure-strike"
+       ]
+      },
+      {
+       "id": "starless-shadow",
+       "name": "Starless Shadow",
+       "description": "Your patron first contacted you at the witching hour, as your body lay paralyzed by sleep while your mind had yet to escape the waking world. Your patron might be a creature of the Netherworld or a long-forgotten spirit of twilight—all you remember of them are haunting eyes of moonlight, offering you power from the darkness.\n\n**Spell List** occult\n\n**Patron Skill** Occultism\n\n**Lesson of Night's Terrors** Your patron taught you that the darkness can hide all manner of things best left unseen. You gain the Shroud of Night hex cantrip, and your familiar learns Fear.\n\n**Familiar of Stalking Night** Your familiar is dark of fur or feather, and light seems to disappear into it. When you Cast or Sustain a hex, and your familiar is adjacent to an enemy to which it's concealed, hidden, or undetected, the enemy becomes Frightened 1.",
+       "descRefs": [
+        {
+         "label": "Frightened 1",
+         "key": "conditions"
+        },
+        {
+         "label": "Shroud of Night",
+         "key": "spells"
+        },
+        {
+         "label": "Fear",
+         "key": "spells"
+        },
+        {
+         "label": "concealed",
+         "key": "conditions"
+        },
+        {
+         "label": "hidden",
+         "key": "conditions"
+        }
+       ],
+       "tradition": "occult",
+       "grants": {
+        "skills": [
+         "occultism"
+        ]
+       },
+       "focusSpells": [
+        "shroud-of-night"
+       ],
+       "grantedSpells": [
+        "fear"
+       ]
+      },
+      {
+       "id": "the-inscribed-one",
+       "name": "The Inscribed One",
+       "description": "No words passed your patron's lips in the moment you met; instead, words and glyphs danced across their skin while symbols and numbers swam in the depths of their eyes, spelling out their will in a torrent of words and wisdom. Your patron might be a powerful archmage, or even one of their abandoned artifacts, searching for a successor.\n\n**Spell List** arcane\n\n**Patron Skill** Arcana\n\n**Lesson of Glyph's Supremacy** Your patron teaches that the written word can accomplish so much more than it seems. You gain the Discern Secrets hex and your familiar learns Runic Weapon.\n\n**Familiar of Flowing Script** Your familiar is covered in a pattern that looks similar to letters in an unknown language, one that seems to draw attention even as it eludes understanding. When you Cast or Sustain a hex, the letters begin to rapidly change, causing a distraction. Until the start of your next turn, your familiar can provide flanking for you and your allies as though it were able to attack and had a reach of 5 feet; this is a visual effect.",
+       "descRefs": [
+        {
+         "label": "Discern Secrets",
+         "key": "spells"
+        },
+        {
+         "label": "Runic Weapon",
+         "key": "spells"
+        }
+       ],
+       "tradition": "arcane",
+       "grants": {
+        "skills": [
+         "arcana"
+        ]
+       },
+       "focusSpells": [
+        "discern-secrets"
+       ],
+       "grantedSpells": [
+        "runic-weapon"
+       ]
+      },
+      {
+       "id": "the-resentment",
+       "name": "The Resentment",
+       "description": "A single feeling radiated from your patron in the moment you met them, as palpable as heat from a fire: the desire to see every tall poppy felled and every proud nail hammered down, whether to righteously bring justice for small folk or the base urge to see the powerful defeated. Your patron is likely far from the upper echelons of its kind, such as a hag ousted from its coven or a quasi-divinity or a lower-rank demon. This leaves it only subtler and weaker tools to see its ends met: curses, hexes, and you.\n\n**Spell List** occult\n\n**Patron Skill** Occultism\n\n**Lesson of Strength's Impermanence** Your patron has taught you that power can be taken much more easily that it can be built. You gain the Evil Eye hex cantrip and your familiar learns Enfeeble.\n\n**Familiar of Ongoing Misery** Your familiar seems hostile to all creatures other than you, hissing at them if they get too near. When you Cast or Sustain a hex, your familiar can curse a creature within 15 feet of it, prolonging the duration of any negative conditions affecting it by 1 round. This is a curse effect. This prolongs only conditions with a timed duration (such as \"1 round\" or \"until the end of your next turn\") and doesn't prevent conditions from being removed by other means.",
+       "descRefs": [
+        {
+         "label": "Evil Eye",
+         "key": "spells"
+        },
+        {
+         "label": "Enfeeble",
+         "key": "spells"
+        }
+       ],
+       "tradition": "occult",
+       "grants": {
+        "skills": [
+         "occultism"
+        ]
+       },
+       "focusSpells": [
+        "evil-eye"
+       ],
+       "grantedSpells": [
+        "enfeeble"
+       ]
+      },
+      {
+       "id": "the-unseen-broker",
+       "name": "The Unseen Broker",
+       "description": "Whether in a dream, answering a feeling in your heart, or enacting a mysterious ritual, you have agreed to act as a mediator between your patron and the rest of the world. Of course, you understand the power of deals and receive further knowledge in exchange for your service. Your patron might be a god, an enigmatic figure like a planar being, or even an alien entity. Regardless of their origin, it is clear that through the bargains you make with others, you advance your patron's agenda.\n\n**Spell List** occult\n\n**Patron Skill** Occultism\n\n**Lesson of the Bound Words** Your patron teaches you about bargains and how they can hold power over others. You gain the Pact Broker hex cantrip and your familiar learns Command.\n\n**Familiar of Enticing Negotiation** Your familiar constantly whispers distracting offers of power, wealth, and other temptations to your enemies, even if your familiar normally doesn't have the means of speaking. When you Cast or Sustain a hex and your familiar is within 10 feet of an enemy, the enemy becomes off-guard until the start of your next turn. Your familiar can only distract a single enemy per round in this way.",
+       "descRefs": [
+        {
+         "label": "Pact Broker",
+         "key": "spells"
+        },
+        {
+         "label": "Command",
+         "key": "spells"
+        },
+        {
+         "label": "off-guard",
+         "key": "conditions"
+        }
+       ],
+       "tradition": "occult",
+       "grants": {
+        "skills": [
+         "occultism"
+        ]
+       },
+       "focusSpells": [
+        "pact-broker"
+       ],
+       "grantedSpells": [
+        "command"
+       ]
+      },
+      {
+       "id": "whisper-of-wings",
+       "name": "Whisper of Wings",
+       "description": "Wings and swirling winds announced the approach of your patron. The wings might have been radiantly feathered, jeweled like a dragonfly's, strangely mechanical, or leathery with the scent of sulfur, but the controlled chaos of their movements contained countless teachings.\n\n**Spell List** primal\n\n**Patron Skill** Nature\n\n**Lesson of the Observed Sky** Your patron teaches that the sky can guide you anywhere you let it. You gain the Murmuration hex cantrip, and your familiar learns Gentle Landing.\n\n**Familiar of Nimble Flight** Even if your familiar doesn't have wings, it can sometimes move as if carried aloft by the wind. When you Cast or Sustain a hex, your familiar can Fly up to 15 feet; this movement doesn't trigger reactions.",
+       "descRefs": [
+        {
+         "label": "Murmuration",
+         "key": "spells"
+        },
+        {
+         "label": "Gentle Landing",
+         "key": "spells"
+        }
+       ],
+       "tradition": "primal",
+       "grants": {
+        "skills": [
+         "nature"
+        ]
+       },
+       "focusSpells": [
+        "murmuration"
+       ],
+       "grantedSpells": [
+        "gentle-landing"
+       ]
+      },
+      {
+       "id": "wilding-steward",
+       "name": "Wilding Steward",
+       "description": "When your patron appeared before you, they moved with the grace and ferocity of the wilderness, their voice the creaking of trees and the sound of hoof against unspoiled earth. They might have been a dryad queen or a primeval beast, but it seemed all of nature was theirs to defend.\n\n**Spell List** primal\n\n**Patron Skill** Nature\n\n**Lesson of Wild Speech** Your patron has taught you the complexities of nonverbal speech, letting you influence and call animals and plants to you. You gain the Wilding Word hex cantrip and your familiar learns your choice of Summon Animal or Summon Plant or Fungus.\n\n**Familiar of Keen Senses** Your familiar has glinting eyes, twitching ears, or some other sign of a beast's powerful senses. When you Cast or Sustain a hex, your familiar gains your choice of an imprecise scent, tremorsense, or wavesense, with a range of 60 feet until the start of your next turn, and it can immediately Point Out as a free action.",
+       "descRefs": [
+        {
+         "label": "Wilding Word",
+         "key": "spells"
+        },
+        {
+         "label": "Summon Animal",
+         "key": "spells"
+        },
+        {
+         "label": "Summon Plant or Fungus",
+         "key": "spells"
+        }
+       ],
+       "tradition": "primal",
+       "grants": {
+        "skills": [
+         "nature"
+        ]
+       },
+       "focusSpells": [
+        "wilding-word"
+       ],
+       "grantedSpellChoice": {
+        "id": "familiar-spell",
+        "prompt": "Your familiar learns summon animal or summon plant or fungus - choose one",
+        "options": [
+         "summon-animal",
+         "summon-plant-or-fungus"
+        ]
+       }
+      }
+     ],
+     "why": "wg-batch-028: patron-N prints a CHOICE for two patrons ('dizzying colors or grease'; 'your choice of summon animal or summon plant or fungus'); grantedSpells is a flat list, so the orchestrator's new SubclassOption.grantedSpellChoice carries the pick (read beside grantedSpells in build.ts, asked in the class card). Whole array re-emitted from spec 1 (the 14 flat grantedSpells kept).",
+     "path": [
+      "subclass"
+     ]
+    }
+   ],
+   "note": "supersedes the spec-1 row with its content preserved."
+  },
+  {
+   "id": "barbarian#bloodrager-instinct#residue",
+   "backfillRows": [
+    {
+     "category": "classes",
+     "id": "barbarian",
+     "field": "subclass",
+     "value": {
+      "name": "Instinct",
+      "options": [
+       {
+        "id": "animal-instinct",
+        "name": "Animal Instinct",
+        "description": "The fury of a wild predator fills you when you Rage, granting you ferocious unarmed attacks. Cultures that revere vicious animals (such as apes or bears) give rise to barbarians with this instinct. You might also be at war with an uncontrollable, animalistic side of your personality, or you might be a descendant of a werewolf or another werecreature. Select an animal from the Animal Instincts table that best matches your chosen animal.\n\n**Instinct Ability—Bestial Rage** While raging, you gain your chosen animal's unarmed attack (or attacks), but you're unable to use weapons. The specific attack gained, the damage it deals, and its traits are listed in the Animal Instincts table. These attacks are in the brawling group. Your Rage action gains the morph and primal traits.\n\n**Specialization Ability (7th)** Increase the damage die size for the unarmed attacks granted by your chosen animal by one step, and increase the additional damage from Rage from 2 to 5 for your chosen animal's unarmed attacks. If you have greater weapon specialization, increase the damage from Rage from 5 to 12 for your chosen animal's unarmed attacks.\n\n**Raging Resistance (9th)** You resist piercing and slashing damage.\n\n## Animal Instincts\n\n| Animal | Attack | Damage | Traits |\n| --- | --- | --- | --- |\n| Ankylosaurus | Tail | 1d10 B | Razing, unarmed |\n| Ant | Mandibles | 1d10 P | Grapple, unarmed |\n| Ape | Fist | 1d10 B | Grapple, unarmed |\n| Bat | Fangs | 1d10 P | Unarmed |\n| Wings | 1d4 P | Parry, unarmed | |\n| Bear | Jaws | 1d10 P | Unarmed |\n| Claw | 1d6 S | Agile, unarmed | |\n| Bird | Beak | 1d10 P | Unarmed |\n| Talon | 1d6 S | Agile, unarmed | |\n| Brontosaurus | Tail | 1d10 B | Trip, unarmed |\n| Bull | Horn | 1d10 P | Shove, unarmed |\n| Cat | Jaws | 1d10 P | Unarmed |\n| Claw | 1d6 S | Agile, unarmed | |\n| Crab | Claw | 1d10 B | Razing, unarmed |\n| Claw | 1d4 S | Parry, unarmed | |\n| Crocodile | Jaws | 1d10 P | Unarmed |\n| Tail | 1d6 B | Agile, unarmed | |\n| Deer | Antler | 1d10 P | Grapple, unarmed |\n| Frog | Jaws | 1d10 B | Unarmed |\n| Tongue | 1d6 B | Agile, unarmed | |\n| Orca | Jaws | 1d8 P | Forceful, unarmed |\n| Scorpion | Stinger | 1d6 P | Reach, unarmed, venomous |\n| Pincer | 1d4 S | Parry, unarmed | |\n| Seal | Jaws | 1d10 P | Grapple, unarmed |\n| Shark | Jaws | 1d10 P | Grapple, unarmed |\n| Snake | Fangs | 1d10 P | Grapple, unarmed |\n| Spider | Fangs | 1d8 P | Grapple, unarmed, venomous |\n| Web | Special* | Range increment 15 feet | |\n| Tyrannosaurus | Jaws | 1d8 P | Deadly d12, unarmed |\n| Tail | 1d6 B | Agile, unarmed | |\n| Wasp | Stinger | 1d4 P | Backstabber, deadly d8, unarmed, venomous |\n| Wolf | Jaws | 1d10 P | Trip, unarmed |\n\n*The spider's web attack deals no damage, but the target takes a –10-foot circumstance penalty to its Speeds for 1 round on a hit. If a target is hit a second time by the same character's web attack while they have this penalty, they're instead immobilized until they succeed at a check to Escape against your class DC.",
+        "descRefs": [
+         {
+          "label": "immobilized",
+          "key": "conditions"
+         },
+         {
+          "label": "Escape",
+          "key": "actions"
+         }
+        ]
+       },
+       {
+        "id": "bloodrager",
+        "name": "Bloodrager",
+        "description": "You use the power of ingested blood to generate magical power and fuel you in combat, transforming you into a horrifyingly fearsome opponent. You must select Bloodrager Dedication as your 2nd-level class feat.\n\n**Prerequisites:** You must be a barbarian.\n\n**Bloodrager Adjustments:** You are trained in Athletics, Medicine, and a number of additional skills equal to 2 plus your Intelligence modifier, instead of your normal starting skill proficiencies. You must choose the bloodrager instinct for your barbarian instinct.\n\n## Bloodrager Instinct\n\nDrinking the potent magical blood of supernatural creatures has changed you and awakened magical power within you, along with a grim thirst.\n\n**Blood Rage (Instinct Ability):** When raging, your physical attacks deal extra persistent bleed damage equal to half your additional damage from Rage. When you Cast a Spell that requires a spell attack roll while raging, apply the additional damage from Rage to that spell, even on a failure.\n\n**Specialization Ability:** When using blood rage, increase the additional damage from Rage from 2 to 4. If you have greater weapon specialization, instead increase the damage from 4 to 8.\n\n**Raging Resistance:** You resist slashing damage and persistent bleed damage, as well as damage dealt by the creature whose blood you last drank using Harvest Blood (see below), regardless of the damage type.",
+        "additionalSkills": 2,
+        "requiresFeat": {
+         "featId": "bloodrager-dedication",
+         "level": 2
+        }
+       },
+       {
+        "id": "decay-instinct",
+        "name": "Decay Instinct",
+        "description": "Your rage is intrinsically tied to the decomposition of organic beings, and the new growth that decay allows. You may have meddled with ancient relics created by Ghorus, been infected by exposure to Ayrzul's Blight or the Tanglebriar, or been blessed by the green man Zibik. As you unleash your rage, you rot, becoming riddled with mold and flesh-eating fungi. Though this rot recedes when you let your emotions settle, it doesn't go away completely, and the scars left behind spread bit by bit throughout your lifetime, multiplying with every rage.\n\n## Anathema\n\nPreventing the decomposition of dead creatures or plants is anathema to your instinct, as is destroying or interfering with the growth of molds or fungi in a natural setting. This doesn't prevent you from defending yourself against fungus creatures or hazards or harvesting fungi or molds solely for sustenance.\n\n## Rotting Rage (Instinct Ability)\n\nWhen you rage, you can choose to increase the additional damage from Rage from 2 to 6 and change its damage type to poison, instead of the damage type for your weapon or unarmed attack. If you do this, your Rage action gains the primal and poison traits, and you take 1 damage at the end of each of your turns as your flesh decays. This damage can't be reduced or avoided by any means. You may make this choice only when your rage begins, and it remains in effect until your rage ends.\n\n## Specialization Ability Level 7\n\nWhen you use rotting rage, increase the additional damage from Rage from 6 to 10, but the damage you take at the end of your turn increases to 5. If you have greater weapon specialization, instead increase the damage from Rage when using rotting rage from 10 to 18, but the damage you take increases to 10.\n\n## Raging Resistance Level 9\n\nYou resist poison damage, as well as damage dealt by the attacks and abilities of creatures with the fungus trait, regardless of the damage type."
+       },
+       {
+        "id": "dragon-instinct",
+        "name": "Dragon Instinct",
+        "description": "You summon the fury of a mighty dragon and manifest incredible abilities. Perhaps your culture reveres draconic majesty, or you gained insights by drinking or bathing in dragon's blood or watching a marauding wyrm burn your village. Select a type of dragon from the Dragon Instincts table as your instinct's dragon type. These are the dragons from Monster Core, but your GM might allow you to choose dragons from other sources and determine their tradition and dragon breath type.\n\n**Instinct Ability—Draconic Rage** When you rage, you can increase the additional damage from Rage from 2 to 4 and change its damage type to match that of your instinct's dragon breath instead of the damage type for your weapon or unarmed attack. If you do this, your Rage action gains the trait matching your dragon instinct's tradition, as well as the trait matching the damage type where applicable.\n\n**Specialization Ability (7th)** When you use draconic rage, you increase the additional damage from Rage from 4 to 8. If you have greater weapon specialization, instead increase the damage from Rage when using draconic rage from 8 to 16.\n\n**Raging Resistance (9th)** You resist piercing damage and the damage type of your instinct's dragon breath.\n\n## Dragon Instincts\n\n| Dragon | Tradition | Dragon Breath |\n| --- | --- | --- |\n| Adamantine | Primal | Bludgeoning |\n| Barrage | Arcane | Force |\n| Bog | Primal | Acid |\n| Brine | Primal | Bludgeoning |\n| Cinder | Primal | Fire |\n| Cloud | Primal | Electricity |\n| Conspirator | Occult | Poison |\n| Coral | Primal | Bludgeoning |\n| Crystal | Primal | Piercing |\n| Delight | Divine | Spirit |\n| Despair | Occult | Sonic |\n| Diabolic | Divine | Fire |\n| Empyreal | Divine | Spirit |\n| Executor | Divine | Sonic |\n| Forest | Primal | Piercing |\n| Fortune | Arcane | Force |\n| Horned | Primal | Poison |\n| Magma | Primal | Fire |\n| Mirage | Arcane | Mental |\n| Mocking | Occult | Bludgeoning |\n| Oath | Divine | Spirit |\n| Omen | Occult | Mental |\n| Phase | Arcane | Force |\n| Requiem | Divine | Spirit |\n| Resurrection | Divine | Void |\n| Rime | Primal | Cold |\n| Rune | Arcane | Fire |\n| Sage | Occult | Mental |\n| Sea | Primal | Bludgeoning |\n| Sky | Divine | Electricity |\n| Sovereign | Occult | Mental |\n| Stormcrown | Primal | Electricity |\n| Time | Arcane | Force |\n| Umbral | Occult | Void |\n| Underworld | Arcane | Fire |\n| Vizier | Occult | Fire |\n| Vorpal | Arcane | Void |\n| Wailing | Arcane | Sonic |\n| Whisper | Occult | Mental |\n| Wish | Arcane | Mental |\n| Black | Arcane | Line of Acid |\n| Blue | Arcane | Line of Electricity |\n| Green | Arcane | Cone of Poison |\n| Red | Arcane | Cone of Fire |\n| White | Arcane | Cone of Cold |\n| Brass | Arcane | Line of Fire |\n| Bronze | Arcane | Line of Electricity |\n| Copper | Arcane | Line of Acid |\n| Gold | Arcane | Cone of Fire |\n| Silver | Arcane | Cone of Cold |"
+       },
+       {
+        "id": "elemental-instinct",
+        "name": "Elemental Instinct",
+        "description": "This instinct option for barbarians allows you to channel elemental forces, bonding with a single element and its associated plane. Perhaps your ancestors were elemental conjurers or blessed by an elemental lord. Select an element from the Elemental Instincts table to be your instinct's element. If your element offers multiple damage types, choose one of those type when you select your element.\n\n| Element | Trait | Damage |\n| --- | --- | --- |\n| Air | Air | Electricity or slashing |\n| Earth | Earth | Bludgeoning or piercing |\n| Fire | Fire | Fire |\n| Metal | Metal | Piercing or slashing |\n| Water | Water | Bludgeoning or cold |\n| Wood | Wood | Bludgeoning or piercing |\n\n## Anathema\n\nDisrespecting an elemental creature is anathema to your instinct; defending yourself against one is not. Purposefully despoiling the elemental plane associated with your element is anathema to your instinct, though this doesn't prevent you from responsibly altering that plane.\n\n## Elemental Rage\n\nWhile raging, you're cloaked in a vortex of elemental matter; you become concealed against ranged attacks. You can't use this concealment to Hide or Sneak. While raging, you increase the additional damage from Rage from 2 to 4 and change its damage type to the one you selected for your element.\n\nIf you have any kineticist impulses with the same element type as the one you chose for your instinct, such as ones gained by taking the Kineticist Dedication multiclass feat, you can use them while raging even if they have the concentrate trait.\n\n## Specialization Ability\n\nWhen you use elemental rage, you increase the damage from Rage from 4 to 6. If you have greater weapon specialization, instead increase the damage from Rage when using elemental rage from 6 to 12.\n\n## Raging Resistance\n\nYou resist the damage dealt by attacks and abilities of elemental creatures of your chosen element, as well as creatures made of your element, regardless of the damage type. You also resist damage dealt by attacks, spells, and abilities with your elemental trait.",
+        "descRefs": [
+         {
+          "label": "concealed",
+          "key": "conditions"
+         },
+         {
+          "label": "Hide",
+          "key": "actions"
+         },
+         {
+          "label": "Sneak",
+          "key": "actions"
+         },
+         {
+          "label": "Kineticist Dedication",
+          "key": "feats"
+         }
+        ]
+       },
+       {
+        "id": "fury-instinct",
+        "name": "Fury Instinct",
+        "description": "Your rage comes from a deep and purely personal well within you. You use your rage as you choose.\n\n**Instinct Ability—Unstoppable Frenzy** Increase the additional damage from Rage from 2 to 3. You gain a bonus 1st-level barbarian feat.\n\n**Specialization Ability (7th)** Increase the additional damage from Rage from 3 to 7. If you have greater weapon specialization, instead increase the additional damage from Rage to 13.\n\n**Raging Resistance (9th)** You resist physical weapon damage, but not physical damage from other sources (such as unarmed attacks)."
+       },
+       {
+        "id": "giant-instinct",
+        "name": "Giant Instinct",
+        "description": "Your rage gives you the raw power and size of a giant. This doesn't necessarily mean you revere giants—you might scoff at them or even aspire to slay them! You could instead seem like a giant to other people due to your exceptional strength or larger-than-life emotions and ego.\n\n**Instinct Ability—Titan Mauler** You can use a weapon built for a Large creature if you are Small or Medium (both normally and when raging). If you're not Small or Medium, you can use a weapon built for a creature one size larger than you. You start with one such weapon, which you receive for free. It must be a common melee or ranged weapon, it must have a Price of 9 gp or less (not including the Price adjustment for being a larger weapon), and it must be common or you must otherwise have access to it. It is your personal weapon and has no value if sold unless you later add runes to it, and it has the normal Bulk for a weapon of its size. When wielding a larger weapon in combat, increase your additional damage from Rage from 2 to 6, but you have the Clumsy 1 condition because of the weapon's unwieldy size. You can't remove this clumsy condition or ignore its penalties by any means while wielding the weapon.\n\n**Specialization Ability (7th)** Increase the damage from Rage when using a larger weapon from 6 to 10; if you have greater weapon specialization, increase it from 10 to 18.\n\n**Raging Resistance (9th)** You resist bludgeoning damage and your choice of cold, electricity, or fire, chosen when you gain raging resistance.",
+        "descRefs": [
+         {
+          "label": "Clumsy 1",
+          "key": "conditions"
+         }
+        ]
+       },
+       {
+        "id": "ligneous-instinct",
+        "name": "Ligneous Instinct",
+        "description": "Your rage is powered by the steady growth of the natural world, from the blossoming of flowers to the cultivation of vegetables and the towering, imposing might of the grandest trees. You might be descended from powerful druids or dryads, been exposed to powerful primal magic, or been transformed by the resurgence of the Plane of Wood. As you unleash your rage, your flesh becomes covered in woody growths, which spread like bark across your body.\n\n## Anathema\n\nDespoiling nature and killing plants unnecessarily is anathema to your instinct. Defending yourself against plant creatures or hazards is not.\n\n## Wooden Rage (Instinct Ability)\n\nWhile raging, you can increase the additional damage from Rage from 2 to 6. If you do this, reduce your Speed by 10 feet, as the bark plates covering your body are a hinderance to mobility. This speed reduction can't be overcome by any means, though it can be offset by speed increases.\n\n## Specialization Ability Level 7\n\nWhen you use wooden rage, increase the additional damage from Rage from 6 to 10. If you have greater weapon specialization, instead increase the damage from Rage when using wooden rage from 10 to 18.\n\n## Raging Resistance Level 9\n\nYou resist piercing and slashing damage, but you gain weakness to fire equal to 3 + your Constitution modifier, as your bark-like flesh is highly flammable."
+       },
+       {
+        "id": "spirit-instinct",
+        "name": "Spirit Instinct",
+        "description": "Whether you are emotionally sensitive to the spirits around you; worship ancestors or apparitions; or are haunted by the specter of an ancestor, relative, friend, or foe, your rage takes the form of a spiritual possession.\n\n**Instinct Ability—Spirit Rage** When you rage, you can increase the additional damage from Rage from 2 to 3 and change its damage type to spirit, instead of the damage type for your weapon or unarmed attack (choose each time you Rage). If you choose to deal spirit damage, your weapon or unarmed attack gains the effects of the Ghost Touch property rune, which makes it more effective against incorporeal creatures, and your Rage action gains the divine and spirit traits.\n\n**Specialization Ability (7th)** When using spirit rage, increase the damage from Rage from 3 to 7. If you have greater weapon specialization, instead increase the damage when using spirit rage to 13.\n\n**Raging Resistance (9th)** You resist void damage, as well as damage dealt by the attacks and abilities of undead creatures, regardless of the damage type.",
+        "descRefs": [
+         {
+          "label": "Ghost Touch",
+          "key": "items"
+         },
+         {
+          "label": "Rage",
+          "key": "actions"
+         }
+        ]
+       },
+       {
+        "id": "superstition-instinct",
+        "name": "Superstition Instinct",
+        "description": "A deep distrust of magic drives you to forgo and counter the metaphysical nonsense of spellcasters. Whether you're a member of a superstitious family or culture that distrusts magic, a warrior in constant battle against wizards and witches, a survivor of a magical accident that instilled an intense aversion in your mind and body, or a scion of a bloodline known for its magic resistance, your rage is inimical to magic. This makes you an excellent mage hunter but slow to trust practitioners of magical arts.\n\n**Instinct Ability—Superstitious Resilience** Your deep superstition means it's anathema for you to learn or Cast a Spell, or to wield or use an item that can be activated to Cast a Spell. If you violate this anathema, you lose the instinct's abilities and any feats that list the instinct as a prerequisite until you spend 1 day of downtime re-centering yourself, though you keep all your other barbarian abilities. While raging, you gain a +2 status bonus to all saves against magic. Increase your damage from Rage from 2 to 3, or 4 against creatures you have witnessed Casting a Spell within the last hour. When you Rage, you regain Hit Point equal to the temporary HP you gained from the Rage action; you then can't regain HP in this way again for 10 minutes. While raging, if you willingly accept the effects of a magic spell or effect, you are Frightened 1. You cannot reduce your frightened condition below 1 as long as you are affected by the spell or effect.\n\n**Specialization Ability (7th)** Increase the damage from Rage from 3 to 7, or 8 against creatures you have witnessed Casting a Spell within the last hour. If you have greater weapon specialization, instead increase the damage from Rage to 13, or 16 against creatures you have witnessed Casting a Spell within the last hour.\n\n**Raging Resistance (9th)** Choose two associated magical traditions: arcane and occult, arcane and primal, divine and occult, or divine and primal. The resistance from your raging resistance class feature applies against all damage you take from spells cast with these two traditions of magic, regardless of the type of damage dealt by the spell.",
+        "descRefs": [
+         {
+          "label": "Frightened 1",
+          "key": "conditions"
+         },
+         {
+          "label": "Cast a Spell",
+          "key": "actions"
+         }
+        ]
+       }
+      ],
+      "featureId": "instinct"
+     },
+     "why": "wg-batch-028: archetype-283 Bloodrager Adjustments: 'trained in Athletics, Medicine, and a number of additional skills equal to 2 plus your Intelligence modifier, instead of your normal starting skill proficiencies ... You must select Bloodrager Dedication as your 2nd-level class feat.' Athletics + Medicine already land (featGrantsAuto); additionalSkills (the orchestrator's new SubclassOption field, read in additionalClassSkills) fixes the 3 -> 2, and requiresFeat is the completeness warning for the dedication. Whole object re-emitted from the shipped record."
+    }
+   ],
+   "note": "the residue the batch-28 refuter confirmed while refuting the wider claim."
+  },
+  {
+   "id": "inventor#light-mortar#prerequisite",
+   "backfillRows": [
+    {
+     "category": "classes",
+     "id": "inventor",
+     "field": "subclass",
+     "value": {
+      "name": "Innovation",
+      "options": [
+       {
+        "id": "armor-innovation",
+        "name": "Armor Innovation",
+        "description": "Your innovation is a cutting-edge suit of medium armor with a variety of attached gizmos and devices. Choose one of the sets of statistics on Innovation Armor Statistics table for your innovation armor (or choose another set of innovation armor statistics to which you have access). Your innovation armor can have fundamental and property runes added to it in the same way as ordinary armor. Because of the unique features of your innovation, everyone except you is untrained in it, even if they would normally be trained (or better) in medium armor. Choose one initial armor modification to apply to your innovation, either from the following or from other initial armor modifications to which you have access.\n\n- **Harmonic Oscillator:** You designed your armor to inaudibly thrum at just the right frequency to create interference against force and sound waves. You gain resistance equal to 3 + half your level to force and sonic damage. When under the effects of Overdrive, the resistance increases by 2.\n- **Metallic Reactance:** The metals in your armor are carefully alloyed to ground electricity and protect from acidic chemical reactions. You gain resistance equal to 3 + half your level to acid and electricity damage. When under the effects of Overdrive, the resistance increases by 2.\n- **Muscular Exoskeleton (Power Suit only):** Your armor supports your muscles with a carefully crafted exoskeleton. When you send your armor into overdrive, the exoskeleton supplements your feats of athletics as well. When under the effects of Overdrive, you gain a +1 circumstance bonus to Athletics checks; if you're a master in Crafting, this increases to a +2 circumstance bonus.\n- **Otherworldly Protection:** Just because you prefer science doesn't mean you can't build your armor with materials and gizmos designed to protect against otherworldly attacks. You gain resistance equal to 3 + half your level to void damage, or to vitality damage if you have void healing (such as if you're a dhampir). You gain the same amount of resistance to spirit damage. If you are sanctified (such as by also being a champion or cleric dedicated to a deity who allows or enforces sanctification) this resistance applies to unholy damage (if you are sanctified holy) or holy damage (if you are sanctified unholy), regardless of what other traits the damage has.\n- **Phlogistonic Regulator:** A layer of insulation within your armor protects you from rapid temperature fluctuations. You gain resistance equal to half your level to cold and fire damage. When under the effects of Overdrive, the resistance increases by 2.\n- **Speed Boosters:** You have boosters in your armor that increase your Speed. You gain a +5-foot status bonus to your Speed, which increases to a +10-foot status bonus when under the effects of Overdrive.\n- **Subtle Dampeners(Subterfuge Suit only)**: You've designed your armor to help you blend in and dampen noise slightly. When you send your armor into overdrive, the dampeners increase their effect, improving your Stealth. When under the effects of Overdrive, you gain a +1 circumstance bonus to Stealth checks. If you're a master in Crafting, this increases to a +2 circumstance bonus.",
+        "descRefs": [
+         {
+          "label": "Harmonic Oscillator",
+          "key": "classFeatures"
+         },
+         {
+          "label": "Metallic Reactance",
+          "key": "classFeatures"
+         },
+         {
+          "label": "Muscular Exoskeleton",
+          "key": "classFeatures"
+         },
+         {
+          "label": "Otherworldly Protection",
+          "key": "classFeatures"
+         },
+         {
+          "label": "Phlogistonic Regulator",
+          "key": "classFeatures"
+         },
+         {
+          "label": "Speed Boosters",
+          "key": "classFeatures"
+         },
+         {
+          "label": "Subtle Dampeners",
+          "key": "classFeatures"
+         }
+        ]
+       },
+       {
+        "id": "construct-innovation",
+        "name": "Construct Innovation",
+        "description": "Your innovation is a mechanical creature, such as a clockwork construct made of cogs and gears. It's a prototype construct companion, and you can adjust most of its base statistics by taking feats at higher levels, such as Advanced Companion. If you use the Overdrive action, your construct gains the same Overdrive benefits you do, and it also takes the same amount of fire damage on a critical failure.\n\nYou know how to spend additional time directing, controlling, or programming your construct innovation for a more complex plan of action. You can spend 2 actions to Command instead of 1 when commanding your construct companion; your construct companion can then use an additional action (normally 3 actions, rather than 2).\n\nChoose one initial construct modification to apply to your innovation, either from the following or from other initial construct modifications to which you have access. These modifications alter the construct's abilities or form.\n\n- **Accelerated Mobility** Actuated legs, efficient gears in the wheels or treads, or add-on boosters make your construct faster. Your innovation's Speed increases to 40 feet.\n- **Amphibious Construction** Increased buoyancy, rudders, and a means of propulsion like a fluked tail or powerful propeller make your construct able to travel in water. Your innovation gains a swim Speed of 25 feet.\n- **Increased Size** You built your construct innovation bigger than most. Your construct is Large. If you have this modification and your construct innovation becomes an advanced construct companion or otherwise gains the ability to become Large, you can immediately change increased size to a different initial construct modification.\n- **Manual Dexterity** Your construct innovation has articulated hands or similar appendages with significant manual dexterity. It can perform manipulate actions with up to two of its limbs. As normal for a companion, it still can't wield weapons or held items that don't have the companion trait, and it can't activate items.\n- **Projectile Launcher** Your construct has a mounted dart launcher, embedded cannon, or similar armament. Your innovation gains a ranged unarmed attack that deals 1d4 bludgeoning or piercing damage (you choose when you pick this modification). The attack has the propulsive trait and a range increment of 30 feet.\n- **Sensory Array** Additional sensory devices give your innovation low-light vision and darkvision, as well as imprecise tremorsense out to a range of 30 feet.\n- **Wonder Gears** You map specialized skills into your construct's crude intelligence. Your innovation becomes trained in Intimidation, Stealth, and Survival."
+       },
+       {
+        "id": "light-mortar-innovation",
+        "name": "Light Mortar Innovation",
+        "description": "Through years of experience and countless hours of experimentation, you've developed a siege weapon compact enough to operate by yourself while still packing a deadly punch.\n\n**Prerequisites:** You must be an inventor.\n\n**Munitions Master Adjustments:** Instead of choosing an innovation from the options listed in the inventor class, you have the light mortar innovation, as well as the following changes to the class features listed on the following pages. You gain these abilities at the same levels as normal for the class unless otherwise specified. You must select Munitions Master Dedication as your 2nd-level class feat.\n\n### Innovation\n\nYour innovation is a mounted siege weapon called a light mortar that weighs 2 Bulk. Whether it propels its payload via an elaborate mechanism or explosive reagents, it's capable of dealing immense damage. Your light mortar requires an Interact action to deploy it before you can Aim, Load, or Launch it, and it includes its own wheeled platform that it is mounted on as part of the deployment. It can be packed back up for easy transport as a 2-action activity with the manipulate trait and either worn as a backpack or carried in one hand while packed. Because of the light mortar's smaller size, the Move Siege Engine activity takes only 1 action when it is deployed.\n\nYour light mortar begins as a 1st-level siege weapon with the statistics shown below. It deals an additional die of damage at 5th level and every 4 levels thereafter. When you Launch your light mortar, the Reflex save is equal to your class DC. Its AC is equal to your inventor class DC and it has Hardness 5. It has trained proficiency in Reflex and Fortitude saves, using your Intelligence modifier to calculate these bonuses. It has 10 Hit Points, plus a number of Hit Points equal to 2 plus your Intelligence modifier for each level you have. Its Broken Threshold is equal to half its total Hit Points (rounded down).\n\nAt 5th level, your light mortar's Hardness increases to 10. At 10th level it increases to 15 and its proficiency rank in Reflex and Fortitude saves increases to expert. At 15th level, its Hardness increases to 20, and its proficiency rank in Reflex and Fortitude saves increases to master.\n\nYour innovation fires small cannonballs called carry shot. A group of 10 carry shot, which weighs 1 Bulk, can be purchased for 5 sp from most shops that sell ammunition.\n\nChoose one initial light mortar modification to apply to your innovation, either from the following or from other initial light mortar modifications to which you have access. These modifications alter the abilities or form of your light mortar.\n\n- **Contained Shrapnel** You alter your light mortar's ammunition to prevent fragments of it from flying outward on impact. Your innovation gains the nonlethal trait. You can choose whether to apply the nonlethal trait on each Launch.\n- **Enhanced Shrapnel** You alter your light mortar's ammunition to change the way it shatters on impact, spraying nearby creatures with a hail of razor-sharp pieces. Your innovation gains the versatile P and versatile S traits. You can choose whether to apply one of these traits on each Launch with your innovation.\n- **Spring-Loaded** You've designed your innovation with springs to quickly unfold and extend components, optimizing it for quick deployment. You can deploy your light mortar as a free action.\n\n### Overdrive\n\nThe additional damage you deal from Overdrive applies to Launches made with your light mortar, as if they were Strikes.\n\n### Explode\n\nWhen you use this ability, the emanation is centered on your innovation, and you can choose to exclude the square you are in from the emanation.\n\n### Breakthrough Innovation (7th)\n\nWhen choosing a breakthrough innovation, choose from the following breakthrough light mortar modifications. As usual, you can choose an initial light mortar modification instead if you prefer.\n\n- **Blanching Chamber** You embed tiny metal filings into ammunition in the firing chamber of your light mortar. These filings remain embedded in the fragments of the ammunition after it shatters on impact. Your ammunition counts as cold iron and silver.\n- **Earthbreaker** Each time you Launch, you can choose to alter the ammunition to direct the brunt of the explosion downward, dealing half damage but creating difficult terrain in the blast area.\n- **Narrow Blast** You alter your ammunition so that the force of the impact is directed in a narrow band. Each time you Launch you can choose to have the explosion form a 20-foot cone instead of a 10-foot burst. This cone must originate at the point of impact and can be directed either directly away from you or 45 degrees to either side of that.\n\n### Inventive Expertise (7th)\n\nYou gain this class feature at 7th level instead of 9th.\n\n### Offensive Boost (9th)\n\nThe offensive boost you choose applies to Launches made with your light mortar, as if they were Strikes.\n\n### Inventive Mastery (15th)\n\nYou gain this class feature at 15th level instead of 17th.\n\n### Revolutionary Innovation (15th)\n\nWhen choosing a revolutionary innovation, choose from the following revolutionary light mortar modifications. As usual, you can choose an initial or breakthrough light mortar modification instead if you prefer.\n\n- **Enhanced Damage** As the revolutionary weapon modification of the same name.\n- **Impossible Alloy** As the revolutionary weapon modification of the same name, except that the alloy is embedded in your ammunition on launch.\n- **Precise Blast** You have such precise control over your light mortar that you can wrap the blast of impact around your allies without harming them. When you Launch, you can select a number of squares up to your Intelligence modifier to exclude from the blast area.",
+        "descRefs": [
+         {
+          "label": "Munitions Master Dedication",
+          "key": "feats"
+         },
+         {
+          "label": "Overdrive",
+          "key": "classFeatures"
+         },
+         {
+          "label": "Explode",
+          "key": "classFeatures"
+         },
+         {
+          "label": "Breakthrough Innovation",
+          "key": "classFeatures"
+         },
+         {
+          "label": "Inventive Expertise",
+          "key": "classFeatures"
+         },
+         {
+          "label": "Offensive Boost",
+          "key": "classFeatures"
+         },
+         {
+          "label": "Inventive Mastery",
+          "key": "classFeatures"
+         },
+         {
+          "label": "Revolutionary Innovation",
+          "key": "classFeatures"
+         }
+        ],
+        "featureIds": [
+         {
+          "id": "inventive-expertise",
+          "level": 7
+         },
+         {
+          "id": "inventive-mastery",
+          "level": 15
+         }
+        ],
+        "suppressedFeatures": [
+         "inventive-expertise",
+         "inventive-mastery"
+        ],
+        "requiresFeat": {
+         "featId": "munitions-master-dedication",
+         "level": 2
+        }
+       },
+       {
+        "id": "weapon-innovation",
+        "name": "Weapon Innovation",
+        "description": "Your innovation is a complex and impossible-looking weapon augmented by numerous mechanisms. It begins with the same statistics as a level 0 simple or martial weapon of your choice. The chosen weapon must be common or you must otherwise have access to it.\n\nAn innovation weapon can have fundamental and property runes added to it in the same way as an ordinary weapon. Because of the unique features of your innovation, everyone except you is untrained in it, even if they would normally be trained (or better) in simple or martial weapons.\n\nIf you use the Overdrive action, you can choose to change the additional damage from Overdrive to fire damage.\n\nChoose one initial weapon modification to apply to your innovation, either from the following or from other initial weapon modifications to which you have access. These modifications grant additional weapon traits, sometimes with extra abilities.\n\nA modification might give your weapon the versatile trait with a damage type that the weapon could already deal, either from its base damage type or from an existing versatile trait. In that case, if you select that modification, you can instead choose to give the weapon the versatile trait for a different damage type: bludgeoning, piercing, or slashing.\n\n- **Advanced Design:** Your weapon innovation uses the statistics of a level 0 advanced weapon of your choice. It must be common or you must have access to it. You treat this as a martial weapon for the purposes of proficiency.\n- **Blunt Shot (ranged only):** Your weapon innovation can file the edges off your ammunition and adjust the blunt force of the shot to deliver an attack that can batter as much as pierce, or even knock an opponent right off their feet. Your innovation gains the concussive and ranged trip traits.\n- **Complex Simplicity (simple weapon only):** Increase your innovation's weapon damage die by one step (d4 to d6, d6 to d8, d8 to d10, d10 to d12). In addition, it gains two of the following traits of your choice: versatile B, versatile P, versatile S, or razing.\n- **Dynamic Weighting (one-handed melee weapon only; can't have the agile, attached, or free-hand trait):** Your weapon is modified to be heavier and easier to manipulate or retrieve. Your innovation gains the two-hand trait, with a damage die one size higher than the weapon's normal weapon damage die size (for instance, a longsword would gain the two-hand d10 trait). Your innovation also gains the versatile B trait. If it was a thrown weapon, it gains the tethered trait.\n- **Entangling Form (melee only):** You've altered your weapon to including tangling wires or straps, or to have a flexible construction. Your innovation gains the disarm, grapple, and trip traits.\n- **Hampering Spikes (melee only):** You've added long, snagging spikes to your weapon, which you can use to impede your foes' movement. Your innovation gains the hampering, trip, and versatile P traits.\n- **Hefty Composition (melee only):** Blunt surfaces and sturdy construction make your weapon hefty and mace-like. Your innovation gains the shove, razing, and versatile B traits.\n- **Modular Head:** You've constructed a multi-purpose, adjustable striking surface for your weapon, or you've made special ammunition you can swiftly alter. Your innovation gains the modular trait for bludgeoning, piercing, and slashing. When you Interact to use the modular trait, you can also choose to give the weapon the nonlethal trait if it doesn't currently have it, or to remove that trait if it's currently nonlethal.\n- **Pacification Tools (melee only):** Softer materials make your weapon suited to knock out instead of kill, and special protrusions let you catch weapons and disarm your foes. Your innovation gains the disarm, hampering, and nonlethal traits. You can choose whether to apply the nonlethal trait on each attack with your innovation.\n- **Razor Prongs (melee only):** You can knock down and slash your foes with sharp, curved blades. Your innovation gains the tearing, trip, and versatile S traits.\n- **Segmented Frame:** Hinges, clamps, and telescoping parts make your innovation collapsible and adjustable. It gains the modular trait for bludgeoning, piercing, and slashing. You can Interact to collapse the item down to light Bulk or to return it to your normal form. When it's collapsed to light Bulk, it has the concealable trait, which grants you a +2 circumstance bonus to Stealth checks and DCs to hide or conceal the weapon.",
+        "descRefs": [
+         {
+          "label": "Advanced Design",
+          "key": "classFeatures"
+         },
+         {
+          "label": "Blunt Shot",
+          "key": "classFeatures"
+         },
+         {
+          "label": "Complex Simplicity",
+          "key": "classFeatures"
+         },
+         {
+          "label": "Dynamic Weighting",
+          "key": "classFeatures"
+         },
+         {
+          "label": "Entangling Form",
+          "key": "classFeatures"
+         },
+         {
+          "label": "Hampering Spikes",
+          "key": "classFeatures"
+         },
+         {
+          "label": "Hefty Composition",
+          "key": "classFeatures"
+         },
+         {
+          "label": "Modular Head",
+          "key": "classFeatures"
+         },
+         {
+          "label": "Pacification Tools",
+          "key": "classFeatures"
+         },
+         {
+          "label": "Razor Prongs",
+          "key": "classFeatures"
+         },
+         {
+          "label": "Segmented Frame",
+          "key": "classFeatures"
+         }
+        ]
+       }
+      ],
+      "featureId": "innovation"
+     },
+     "why": "wg-batch-028: Munitions Master's Light Mortar Innovation: 'You must select Munitions Master Dedication as your 2nd-level class feat' - requiresFeat is the completeness warning. Whole object re-emitted from spec 1 (the light-mortar featureIds level overrides kept)."
+    }
+   ],
+   "note": "supersedes the spec-1 row with its content preserved."
+  }
+ ]
+}

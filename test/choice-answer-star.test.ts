@@ -245,9 +245,16 @@ describe('a granted choice the granting feat already answered', () => {
         /* Every lane a binding can hang off. FEAT_RANK_FEAT_GRANTS was the third and this knew two,
          * so binding Stonemason's Eye's Specialty Crafting to stonemasonry read as a broken binding
          * rather than the conditional grant it answers. */
+        /* …and the FOURTH lane (batch 28): a class feature's or heritage's `effectChoices` option can
+         * grant the feat (`grant.grantsFeats`) — the kineticist's Gate's Threshold wood junction grants
+         * Terrain Expertise and the binding pins its terrain to forest. */
+        const optionGrantsIt = ((db.classFeatures[granter] ?? db.heritages[granter]) as { effectChoices?: { options?: { grant?: { grantsFeats?: string[] } }[] }[] } | undefined)?.effectChoices?.some(
+          (ch) => (ch.options ?? []).some((o) => (o.grant?.grantsFeats ?? []).includes(granted)),
+        );
         const grantsIt =
           (FEAT_FEAT_GRANTS[granter] ?? []).includes(granted) ||
-          (FEAT_RANK_FEAT_GRANTS[granter] ?? []).some((r) => r.feat === granted);
+          (FEAT_RANK_FEAT_GRANTS[granter] ?? []).some((r) => r.feat === granted) ||
+          !!optionGrantsIt;
         if (!grantsIt) bad.push(`${granter} does not grant ${granted}`);
         /*
          * The granted feat must have a QUESTION for the binding to answer — but a record asks one of

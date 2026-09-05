@@ -637,7 +637,9 @@ export function deriveSkill(c: Character, key: ProficiencyKey, db?: ContentDatab
 
 export function deriveClassDc(c: Character): StatLine & { dc: number } {
   const rank = c.proficiencies.classDc;
-  const key = c.keyAbility ?? 'str';
+  // Way of the Spellshot: "You use Intelligence for your class DC" — the class DC's attribute can
+  // differ from the key attribute (batch 28); absent, it is the key attribute as always.
+  const key = c.classDcKeyAbility ?? c.keyAbility ?? 'str';
   const modifier =
     abilityModOf(c, key) +
     profBonus(rank, c.level, pwl(c)) +
@@ -1724,6 +1726,14 @@ export function dailyChoiceGrants(c: Character, db: ContentDatabase): EffectGran
     // non-granting language picker in the data (Settlement Scholastics) cannot start granting.
     if (def.kind === 'open' && def.from?.type === 'language' && def.from.grantLanguage && answer && db.languages?.[answer]) {
       out.push({ grantsLanguages: [answer] });
+      continue;
+    }
+    // A FEAT gained for the day — Experimental Spellshaping's 4th-level clause (class-39): *"during
+    // your daily preparations, you can gain a spellshape wizard feat of your choice"*. Same shape as
+    // the borrowed spell above: the morning's answer becomes a real (day-long) grant, applied by
+    // applyPlayState, which appends it to the character's feats.
+    if (def.kind === 'open' && def.from?.type === 'feat' && def.from.grantFeat && answer && db.feats[answer]) {
+      out.push({ grantsFeats: [answer] });
       continue;
     }
     const opt = (def.options ?? []).find((o) => o.value === answer);
@@ -3202,6 +3212,24 @@ export function weaponSpecialization(c: Character, db: ContentDatabase): { spec:
   return { spec, greater };
 }
 
+/** b028 runesmith#runic-optimization — the runesmith's stand-in for weapon specialization, keyed to the
+ *  weapon's STRIKING RUNE rather than to proficiency: *"You deal 2 additional damage with weapons bearing
+ *  a striking rune. This damage increases to 3 … greater striking rune and 4 … major striking rune"*
+ *  (Runic Optimization, L7), raised by Greater Runic Optimization (L15) to *"4 … 6 … 8"*.
+ *  It rides the same specDamage carrier because classes.runesmith.features grants NO
+ *  (greater-)weapon-specialization at all — there is nothing here to stack with.
+ *  `strikingTier` is the strike's effective striking-dice count (rune, ABP, or Monster Parts). */
+export function runicOptimizationDamage(c: Character, db: ContentDatabase, strikingTier: number): number {
+  const cls = c.classId ? db.classes[c.classId] : undefined;
+  if (!cls || strikingTier < 1) return 0;
+  const owned = cls.features.filter((f) => f.level <= c.level).map((f) => f.featureId);
+  // Print stops at major striking; a 4th die (mythic) is treated as major rather than extrapolated.
+  const tier = Math.min(strikingTier, 3);
+  if (owned.includes('greater-runic-optimization')) return [0, 4, 6, 8][tier];
+  if (owned.includes('runic-optimization')) return [0, 2, 3, 4][tier];
+  return 0;
+}
+
 /** The class-feature ids the character owns at their current level (auto-granted class features only —
  *  not feats or subclass options). Lets strike math key off level-1 features like Powerful Fist,
  *  Sneak Attack, or Hunt Prey by exact id. */
@@ -4174,8 +4202,9 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
   // (Irori's fist) are handled on the Fist Strike in deriveUnarmedStrike.
   const dsFavored = hasDeadlySimplicity(c) && deitySimpleFavoredWeaponIds(c, db).has(w.id);
   const effDie = deadlySimplicityDie(w.damage.die, dsFavored, false);
-  // Weapon specialization adds flat damage to weapons you're expert+ in (melee and ranged).
-  const specDamage = weaponSpecDamage(rank, weaponSpecialization(c, db));
+  // Weapon specialization adds flat damage to weapons you're expert+ in (melee and ranged); a runesmith
+  // instead gets Runic Optimization off the weapon's striking rune (b028 runesmith#runic-optimization).
+  const specDamage = weaponSpecDamage(rank, weaponSpecialization(c, db)) + runicOptimizationDamage(c, db, strikingExtra);
   // Thief racket (rogue): on a MELEE Strike with a finesse weapon/unarmed attack, add Dexterity to
   // damage instead of Strength. RAW it's a choice ("you can"), so use it only when it helps (Dex>Str).
   // (class-features/thief.json: FlatModifier ability=dex, selector melee-strike-damage, item:trait:finesse.)
@@ -4467,7 +4496,17 @@ function deriveUnarmedStrike(
   const step = mapStepFor(c, db, p.traits);
   const mapSources = mapNotesFor(c, db, p.traits);
   const attack = [base, base - step, base - step * 2];
-  const specDamage = weaponSpecDamage(rank, weaponSpecialization(c, db));
+  // ABP devastating attacks OR a handwraps striking rune (or MP refinement) add dice to THIS attack's
+  // own die. Computed before the damage flat because Runic Optimization is keyed to this tier —
+  // handwraps carry their runes onto the unarmed attack itself.
+  const strikingExtra = Math.max(
+    abpOn(c) ? abpStrikingDice(c.level) : hwRunes?.striking ? STRIKING_DICE[hwRunes.striking] : 0,
+    mpRef?.extraDice ?? 0,
+    // A granted attack that scales on its own ("at 5th level it gains the benefits of a striking
+    // rune"). A floor, not an override: a character with better handwraps keeps them.
+    p.strikingFloor ?? 0,
+  );
+  const specDamage = weaponSpecDamage(rank, weaponSpecialization(c, db)) + runicOptimizationDamage(c, db, strikingExtra);
   // Thief racket also applies to a finesse UNARMED attack (thief.json selector melee-strike-damage) —
   // add Dex to damage instead of Str when it helps.
   const thiefDexDamage = !isRanged && c.subclassId === 'thief' && p.traits.includes('finesse') && dexMod > strMod;
@@ -4478,15 +4517,6 @@ function deriveUnarmedStrike(
     (isRanged ? 0 : conditionPenalty(c.conditions, thiefDexDamage ? 'dex' : 'str', 'damage')) +
     specDamage +
     modeNumberBonus(c.activeModes, { kind: 'damage' });
-  // ABP devastating attacks OR a handwraps striking rune (or MP refinement) add dice to THIS attack's
-  // own die.
-  const strikingExtra = Math.max(
-    abpOn(c) ? abpStrikingDice(c.level) : hwRunes?.striking ? STRIKING_DICE[hwRunes.striking] : 0,
-    mpRef?.extraDice ?? 0,
-    // A granted attack that scales on its own ("at 5th level it gains the benefits of a striking
-    // rune"). A floor, not an override: a character with better handwraps keeps them.
-    p.strikingFloor ?? 0,
-  );
   const dice = 1 + strikingExtra;
   // Property runes on the handwraps apply to unarmed attacks (no weapon-type restriction exists in
   // the data to gate on — see the property-applicability rule; gate here if a restriction is added).

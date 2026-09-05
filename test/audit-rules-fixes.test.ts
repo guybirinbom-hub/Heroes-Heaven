@@ -85,15 +85,30 @@ describe('§2.2 Class Resiliency feats grant +3 HP per archetype feat', () => {
   });
 });
 
-describe('§6c.2 Wizard Weapon Expertise (L11) grants only the 5 wizard weapons, not all simple', () => {
+/*
+ * §6c.2 REVISED — batch 28, finding wizard#weapon-expertise.
+ *
+ * This block used to assert the FIVE-WEAPON reading ("an off-list simple weapon (spear) stays
+ * trained"). That is the LEGACY Core Rulebook text, and it entered the app from our own legacy record
+ * `classFeatures['wizard-weapon-expertise']` (aonId class-feature-298) — which nothing can reach
+ * (classFeatureIdsOwned builds '<featureId>-<classId>' = 'weapon-expertise-wizard'). What
+ * `classes.wizard.features[]` actually names at level 11 is the REMASTER record, and it prints:
+ *
+ *   "Through sheer experience, you've improved your technique with your weapons. Your proficiency
+ *    ranks for simple weapons and unarmed attacks increase to expert."  (class-39, Level 11)
+ *
+ * Wanderer's Guide encodes the same (id 21188: adjValue SIMPLE_WEAPONS = E, UNARMED_ATTACKS = E), so
+ * the original audit item was wrong about the edition and the assertion is inverted here.
+ */
+describe('§6c.2 Wizard Weapon Expertise (L11) grants expert in ALL simple weapons (remaster)', () => {
   const rankOf = (level: number, itemId: string) => {
     const w = build('wizard', level, { keyAbility: 'int' });
     const ch: Character = { ...w, inventory: [...w.inventory, { instanceId: 'w', itemId, quantity: 1, equipped: true }] };
     return deriveStrikes(ch, c).find((s) => s.instanceId === 'w')?.rank;
   };
-  it('a wizard weapon (dagger) is expert@11 but an off-list simple weapon (spear) stays trained', () => {
+  it('both a named wizard weapon (dagger) and an off-list simple weapon (spear) are expert@11', () => {
     expect(rankOf(11, 'dagger')).toBe('expert');
-    expect(rankOf(11, 'spear')).toBe('trained'); // was wrongly 'expert' before the fix
+    expect(rankOf(11, 'spear'), 'the whole simple CATEGORY, not five named weapons').toBe('expert');
   });
 });
 

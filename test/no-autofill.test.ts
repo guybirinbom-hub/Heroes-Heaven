@@ -26,23 +26,25 @@ const withClass = (classId: string, extra: Partial<BuildState> = {}): BuildState
 });
 
 describe('a class trained-skill choice is reported, not silently taken', () => {
-  // The thaumaturge is the one class whose OWN trainedSkills carry a choice (its esoteric skill).
+  // The fighter's OWN trainedSkills carry a choice (Acrobatics or Athletics) — batch 28 moved the choice
+  // here from the thaumaturge, whose print entry trains all four esoteric skills outright.
   it('is listed while unchosen', () => {
-    expect(setupMissing(withClass('thaumaturge'), c)).toContain('Class trained skill');
+    expect(setupMissing(withClass('fighter'), c)).toContain('Class trained skill');
   });
 
   it('goes away once the player picks one', () => {
-    const b = withClass('thaumaturge', { subclassSkill: 'occultism' });
+    const b = withClass('fighter', { subclassSkill: 'acrobatics' });
     expect(setupMissing(b, c)).not.toContain('Class trained skill');
   });
 
   it('a stored pick outside the allowed list still counts as unchosen', () => {
-    const b = withClass('thaumaturge', { subclassSkill: 'athletics' });
+    const b = withClass('fighter', { subclassSkill: 'occultism' });
     expect(setupMissing(b, c)).toContain('Class trained skill');
   });
 
   it('is not asked of a class whose trained skills are all fixed', () => {
-    expect(setupMissing(withClass('fighter'), c)).not.toContain('Class trained skill');
+    expect(setupMissing(withClass('barbarian'), c)).not.toContain('Class trained skill');
+    expect(setupMissing(withClass('thaumaturge'), c)).not.toContain('Class trained skill');
   });
 });
 

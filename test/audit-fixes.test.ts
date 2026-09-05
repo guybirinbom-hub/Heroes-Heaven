@@ -19,15 +19,16 @@ describe('audit fixes — advancement & proficiency', () => {
     expect(build('magus', 5, { keyAbility: 'int' }).proficiencies.saves.reflex).toBe('expert');
   });
 
-  it('Thaumaturge trains ONE esoteric skill (not all four) + Esoteric Lore', () => {
+  it('Thaumaturge trains ALL FOUR esoteric skills + Esoteric Lore (batch 28: the print class entry trains Arcana, Nature, Occultism and Religion)', () => {
     // Clear the background so only the CLASS grants are measured (a background could also train one of these).
     const ch = build('thaumaturge', 1, { keyAbility: 'cha', backgroundId: null });
     const eso = ['arcana', 'nature', 'occultism', 'religion'].filter((s) => (ch.proficiencies.skills[s] ?? 'untrained') !== 'untrained');
-    expect(eso.length).toBe(1); // exactly one (default arcana), not four
+    expect(eso.length).toBe(4);
     expect(ch.proficiencies.skills['lore:esoteric']).toBe('trained');
+    // The old "pick one" slot is gone — a stray stored pick changes nothing.
     const pick = build('thaumaturge', 1, { keyAbility: 'cha', backgroundId: null, subclassSkill: 'religion' });
     expect(pick.proficiencies.skills.religion).toBe('trained');
-    expect(pick.proficiencies.skills.arcana ?? 'untrained').toBe('untrained');
+    expect(pick.proficiencies.skills.arcana).toBe('trained');
   });
 
   it('Bard still has its two genuinely-fixed trained skills (Occultism + Performance)', () => {

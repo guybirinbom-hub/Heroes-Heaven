@@ -12,6 +12,57 @@
  {
   "gate": "KINDS",
   "registry": "VERIFIED_EQUIVALENT",
+  "id": "climbing-animal",
+  "kinds": [
+   "grantsRecord"
+  ],
+  "why": "THE FOUR AWAKENED-ANIMAL HERITAGES (batch 25) — their `giveAbilityBlock` hands over \"Awakened Animal Attacks\", a block that exists only to hold the \"which animal attack?\" select and the Strike table of the Howl of the Wild sidebar (sidebar-2749: *\"Your heritage gives you a special unarmed attack instead of the fist\"*). Ours ships the same content on the record itself — an `effectChoices` picker plus one `grantedStrikes` row per option tagged `choiceValue`, read by collectGrantedNaturals with the heritage's answer threaded through — so the KINDS reader credits `choice` and `weapon` and sees no granted RECORD, because there is none to grant: a feature record for the block would hand the character a feature they do not have. Adversarially confirmed on a built climbing animal who chose Jaws and got Jaws (test/batch25-engine.test.ts). Paired with the same four ids in wg-identity's SETTLED_IDENTITIES.",
+  "bucket": "CARRIER"
+ },
+ {
+  "gate": "KINDS",
+  "registry": "VERIFIED_EQUIVALENT",
+  "id": "flying-animal",
+  "kinds": [
+   "grantsRecord"
+  ],
+  "why": "THE FOUR AWAKENED-ANIMAL HERITAGES (batch 25) — their `giveAbilityBlock` hands over \"Awakened Animal Attacks\", a block that exists only to hold the \"which animal attack?\" select and the Strike table of the Howl of the Wild sidebar (sidebar-2749: *\"Your heritage gives you a special unarmed attack instead of the fist\"*). Ours ships the same content on the record itself — an `effectChoices` picker plus one `grantedStrikes` row per option tagged `choiceValue`, read by collectGrantedNaturals with the heritage's answer threaded through — so the KINDS reader credits `choice` and `weapon` and sees no granted RECORD, because there is none to grant: a feature record for the block would hand the character a feature they do not have. Adversarially confirmed on a built climbing animal who chose Jaws and got Jaws (test/batch25-engine.test.ts). Paired with the same four ids in wg-identity's SETTLED_IDENTITIES.",
+  "bucket": "CARRIER"
+ },
+ {
+  "gate": "KINDS",
+  "registry": "VERIFIED_EQUIVALENT",
+  "id": "running-animal",
+  "kinds": [
+   "grantsRecord"
+  ],
+  "why": "THE FOUR AWAKENED-ANIMAL HERITAGES (batch 25) — their `giveAbilityBlock` hands over \"Awakened Animal Attacks\", a block that exists only to hold the \"which animal attack?\" select and the Strike table of the Howl of the Wild sidebar (sidebar-2749: *\"Your heritage gives you a special unarmed attack instead of the fist\"*). Ours ships the same content on the record itself — an `effectChoices` picker plus one `grantedStrikes` row per option tagged `choiceValue`, read by collectGrantedNaturals with the heritage's answer threaded through — so the KINDS reader credits `choice` and `weapon` and sees no granted RECORD, because there is none to grant: a feature record for the block would hand the character a feature they do not have. Adversarially confirmed on a built climbing animal who chose Jaws and got Jaws (test/batch25-engine.test.ts). Paired with the same four ids in wg-identity's SETTLED_IDENTITIES.",
+  "bucket": "CARRIER"
+ },
+ {
+  "gate": "KINDS",
+  "registry": "VERIFIED_EQUIVALENT",
+  "id": "swimming-animal",
+  "kinds": [
+   "grantsRecord"
+  ],
+  "why": "THE FOUR AWAKENED-ANIMAL HERITAGES (batch 25) — their `giveAbilityBlock` hands over \"Awakened Animal Attacks\", a block that exists only to hold the \"which animal attack?\" select and the Strike table of the Howl of the Wild sidebar (sidebar-2749: *\"Your heritage gives you a special unarmed attack instead of the fist\"*). Ours ships the same content on the record itself — an `effectChoices` picker plus one `grantedStrikes` row per option tagged `choiceValue`, read by collectGrantedNaturals with the heritage's answer threaded through — so the KINDS reader credits `choice` and `weapon` and sees no granted RECORD, because there is none to grant: a feature record for the block would hand the character a feature they do not have. Adversarially confirmed on a built climbing animal who chose Jaws and got Jaws (test/batch25-engine.test.ts). Paired with the same four ids in wg-identity's SETTLED_IDENTITIES.",
+  "bucket": "CARRIER"
+ },
+ {
+  "gate": "KINDS",
+  "registry": "VERIFIED_EQUIVALENT",
+  "id": "dragonscaled-kobold",
+  "kinds": [
+   "specialStat",
+   "choice"
+  ],
+  "why": "DRAGONSCALED KOBOLD (batch 26) — their heritage hands over a \"Draconic Exemplar\" select (a `specialStat` + `choice` on their side): WHICH dragon the scales come from, stored once and read by their kobold feats. Print (AoN heritage-334) names no exemplar on the heritage — *\"the shine of your scales, a lean and reptilian build … You gain 10 Hit Points from your ancestry instead of 6\"* — and every feat that needs the dragon asks for what IT needs on its own record: Kobold Breath's shape/damage/save picks, Benefactor's Resistance's breath-type pick, Dracomancer's two \"your draconic benefactor's dragon-spellcaster list\" spell picks. Same information, asked where the printed text asks it; a heritage-level exemplar select would be a second control print does not state. Adversarially confirmed by the batch-26 refuter (the reading that this was a gap was REFUTED on exactly this evidence). The `hp` leg is real and carried by `ancestryHp: 10`.",
+  "bucket": "UNCLASSIFIED"
+ },
+ {
+  "gate": "KINDS",
+  "registry": "VERIFIED_EQUIVALENT",
   "id": "power-suit",
   "kinds": [
    "specialStat"
@@ -82,16 +133,6 @@
    "conditional"
   ],
   "why": "RESPITE OF LOAM AND LEAF — the cantrip pick is an `effectChoices`, and the `spellcasting` half is Player Core p.298 applied to every innate entry rather than authored per record (the identical settle to Labyrinthine Echoes). Their `conditional` is the level gate on the cantrip's heightening, which a cantrip gets by being a cantrip.",
-  "bucket": "UNCLASSIFIED"
- },
- {
-  "gate": "KINDS",
-  "registry": "VERIFIED_EQUIVALENT",
-  "id": "one-with-the-wild",
-  "kinds": [
-   "skill"
-  ],
-  "why": "ONE WITH THE WILD — where the note hangs, not whether it exists. *\"In natural terrain, you can Hide and Sneak even without cover or being concealed.\"* Their row is `addBonusToValue SKILL_STEALTH` carrying TEXT AND NO VALUE — an annotation on the skill — plus two `injectText` ops naming Hide and Sneak. Ours is two RECORD_MARKERS, one on each of those actions, which is where the permission is actually used and is what their own injectText says. The record held nothing at all before this: the prose gate found it asserting nothing on our side.",
   "bucket": "UNCLASSIFIED"
  },
  {
@@ -2172,6 +2213,56 @@
  {
   "gate": "IDENTITY",
   "registry": "SETTLED_IDENTITIES",
+  "id": "climbing-animal",
+  "kinds": [
+   "grants"
+  ],
+  "why": "THE FOUR AWAKENED-ANIMAL HERITAGES — their `giveAbilityBlock` hands over \"Awakened Animal Attacks\", a block that exists only to hold the \"which animal attack?\" select and its Strike statistics (Howl of the Wild, sidebar-2749). Ours ships the same thing as the record's own carriers: an `effectChoices` picker (\"Choose your animal attack\") and one `grantedStrikes` row per option, tagged `choiceValue`, read by collectGrantedNaturals (build.ts) with the heritage's answer threaded through — batch 25, adversarially confirmed on a built climbing animal who chose Jaws and got Jaws. There is no named record on our side to match the block's title against, and inventing one would hand a character a feature they do not have; the Strike names themselves are asserted in the `items` bucket. Settled on the `grants` bucket only.",
+  "bucket": "CARRIER"
+ },
+ {
+  "gate": "IDENTITY",
+  "registry": "SETTLED_IDENTITIES",
+  "id": "flying-animal",
+  "kinds": [
+   "grants"
+  ],
+  "why": "THE FOUR AWAKENED-ANIMAL HERITAGES — their `giveAbilityBlock` hands over \"Awakened Animal Attacks\", a block that exists only to hold the \"which animal attack?\" select and its Strike statistics (Howl of the Wild, sidebar-2749). Ours ships the same thing as the record's own carriers: an `effectChoices` picker (\"Choose your animal attack\") and one `grantedStrikes` row per option, tagged `choiceValue`, read by collectGrantedNaturals (build.ts) with the heritage's answer threaded through — batch 25, adversarially confirmed on a built climbing animal who chose Jaws and got Jaws. There is no named record on our side to match the block's title against, and inventing one would hand a character a feature they do not have; the Strike names themselves are asserted in the `items` bucket. Settled on the `grants` bucket only.",
+  "bucket": "CARRIER"
+ },
+ {
+  "gate": "IDENTITY",
+  "registry": "SETTLED_IDENTITIES",
+  "id": "running-animal",
+  "kinds": [
+   "grants"
+  ],
+  "why": "THE FOUR AWAKENED-ANIMAL HERITAGES — their `giveAbilityBlock` hands over \"Awakened Animal Attacks\", a block that exists only to hold the \"which animal attack?\" select and its Strike statistics (Howl of the Wild, sidebar-2749). Ours ships the same thing as the record's own carriers: an `effectChoices` picker (\"Choose your animal attack\") and one `grantedStrikes` row per option, tagged `choiceValue`, read by collectGrantedNaturals (build.ts) with the heritage's answer threaded through — batch 25, adversarially confirmed on a built climbing animal who chose Jaws and got Jaws. There is no named record on our side to match the block's title against, and inventing one would hand a character a feature they do not have; the Strike names themselves are asserted in the `items` bucket. Settled on the `grants` bucket only.",
+  "bucket": "CARRIER"
+ },
+ {
+  "gate": "IDENTITY",
+  "registry": "SETTLED_IDENTITIES",
+  "id": "swimming-animal",
+  "kinds": [
+   "grants"
+  ],
+  "why": "THE FOUR AWAKENED-ANIMAL HERITAGES — their `giveAbilityBlock` hands over \"Awakened Animal Attacks\", a block that exists only to hold the \"which animal attack?\" select and its Strike statistics (Howl of the Wild, sidebar-2749). Ours ships the same thing as the record's own carriers: an `effectChoices` picker (\"Choose your animal attack\") and one `grantedStrikes` row per option, tagged `choiceValue`, read by collectGrantedNaturals (build.ts) with the heritage's answer threaded through — batch 25, adversarially confirmed on a built climbing animal who chose Jaws and got Jaws. There is no named record on our side to match the block's title against, and inventing one would hand a character a feature they do not have; the Strike names themselves are asserted in the `items` bucket. Settled on the `grants` bucket only.",
+  "bucket": "CARRIER"
+ },
+ {
+  "gate": "IDENTITY",
+  "registry": "SETTLED_IDENTITIES",
+  "id": "tsukumogami-poppet",
+  "kinds": [
+   "grants"
+  ],
+  "why": "TSUKUMOGAMI POPPET (batch 27) — their metal and ceramic options each hand over a \"Nonflammable\" ability block: the printed *\"you have weakness to electricity (or cold) INSTEAD OF fire\"*. Ours says the same thing as data on the option itself — `effectChoices[].options[].grant.removesWeaknesses: ['fire']` beside the new weakness — read by deriveDefenses' weakness remover (widened to option grants in batch 27) and pinned on a built metal poppet with no fire weakness. There is no record named Nonflammable on our side to match the block's title against, and a feature record for a removal would hand the character a feature they do not have. Settled on the `grants` bucket only; the weakness VALUES are asserted by wg-values.",
+  "bucket": "UNCLASSIFIED"
+ },
+ {
+  "gate": "IDENTITY",
+  "registry": "SETTLED_IDENTITIES",
   "id": "pistol-wand",
   "kinds": [
    "items"
@@ -3433,21 +3524,11 @@
  {
   "gate": "IDENTITY",
   "registry": "SETTLED_IDENTITIES",
-  "id": "professional-letter-writer",
-  "kinds": [
-   "options"
-  ],
-  "why": "PROFESSIONAL LETTER WRITER — their select enumerates the two feats; ours asks through the FEAT_PICK_GRANTS registry (featPickGrants.ts:222, \"Choose Specialty Crafting or Multilingual\"), which this comparer does not read. Batch 20 made that registry the SINGLE carrier by retiring the record's duplicate grantedFeatId + choice pair.",
-  "bucket": "UNCLASSIFIED"
- },
- {
-  "gate": "IDENTITY",
-  "registry": "SETTLED_IDENTITIES",
   "id": "revenant",
   "kinds": [
    "grants"
   ],
-  "why": "REVENANT — their named \"Void Healing\" block is ours as the `negativeHealing` field, aggregated by deriveDefenses and build's hasVoidHealing (background arm built this batch; guarded on a built character in test/batch21-parity.test.ts).",
+  "why": "PROFESSIONAL LETTER WRITER — RETIRED IN BATCH 27, and by the fix that made it unnecessary. Its whole reason was *\"ours asks through the FEAT_PICK_GRANTS registry (featPickGrants.ts:222, 'Choose Specialty Crafting or Multilingual'), which this comparer does not read\"* — and `ourIdentities` now reads it: a `FEAT_PICK_GRANTS` row credits `out.options` as well as `out.grants` (see the note at the `registryIds(pickText, id)` line, taught for Steadfast Tanuki). `wg-identity --ids professional-letter-writer --raw` matches on every named thing with the settle bypassed, so the entry answered nothing and would have silenced the NEXT options difference on this record, unread. REVENANT — their named \"Void Healing\" block is ours as the `negativeHealing` field, aggregated by deriveDefenses and build's hasVoidHealing (background arm built this batch; guarded on a built character in test/batch21-parity.test.ts).",
   "bucket": "UNCLASSIFIED"
  },
  {
@@ -3458,6 +3539,36 @@
    "options"
   ],
   "why": "LIBRARY DWELLER — their select enumerates \"Library Lore\" / \"Lore associated with your school\"; ours is the free-text Lore box with `trainedLoreChoiceDefault: 'library'` (the Night Watch shape): the second printed branch is by nature free text.",
+  "bucket": "UNCLASSIFIED"
+ },
+ {
+  "gate": "IDENTITY",
+  "registry": "SETTLED_IDENTITIES",
+  "id": "rite-of-invocation",
+  "kinds": [
+   "options"
+  ],
+  "why": "---- BATCH 25 ---------------------------------------------------------------------------------- RITE OF INVOCATION — their two options are a GATE, not the pick. Printed: *\"You gain one cantrip from the arcane or occult spell list. You can cast this spell as an innate spell at will.\"* Their encoding is a PREDEFINED/CUSTOM select titled \"Select a Tradition\" whose only two options — \"Arcane\" and \"Occult\" — each nest a second, FILTERED SPELL select titled \"Select a Cantrip\" (level 0-0, that tradition, spellData INNATE). So the strings this comparer reports as missing are their tradition branch labels; the cantrip pick is one level down inside them. Ours collapses the two steps into ONE picker — `effectChoices` 'arcaneOccultCantrip', 52 options each granting `innateSpells [{ spellId, tradition, atWill: true, heightenHalfLevel: true }]` — which is the same decision with one fewer click, and the list was checked against core.json option by option: 0 declared traditions that the spell does not actually have, 0 non-cantrips, and the only 11 arcane/occult rank-0 spells absent are 8 uncommon/rare and 3 superseded legacy spells whose remaster successors ARE offered (acid-splash → caustic-blast, ghost-sound → figment, ray-of-frost → frostbite). Adversarially confirmed against their raw row and ours in batch 25.",
+  "bucket": "UNCLASSIFIED"
+ },
+ {
+  "gate": "IDENTITY",
+  "registry": "SETTLED_IDENTITIES",
+  "id": "mightyfall-kobold",
+  "kinds": [
+   "options"
+  ],
+  "why": "---------------------------------------------------------------- batch 026 (heritages 88-... ) */ MIGHTYFALL KOBOLD — one option list, two labels for the same two branches. Printed (heritage-374): *\"Instead of the normal attribute boosts and flaws, you can choose to gain a boost to Strength, a boost to Charisma, and a flaw in Intelligence.\"* Two branches: keep the kobold chassis, or take the package. Theirs titles them \"Normal or Alternate Ancestry Boosts\" and \"Mightyfall Kobold Boosts\"; ours titles them by what they DO — \"Normal kobold boosts (Dex, Cha, free; flaw Con)\" / \"Mightyfall package (Str + Cha, flaw Int, 10 ancestry HP)\", values `normal` and `kaiju`. Both strings are offered to the comparer (`addOption` reads label AND value) and neither is a substring or a word-subset of \"mightyfallkoboldboosts\", because our label spells the package out where theirs names the heritage — a wording difference in the PLAYER-FACING text, which the owner's rule leaves to us. Adversarially confirmed: `heritageAdjustedAncestryAttributes` (src/rules/build.ts:663-680) answers the same question with the same two outcomes, and the picker renders both (src/builder/shared.tsx:2556). ⚠ Settles the LABELS only. Whether their package hands back the kobold's untouched FREE boost — three boosts against the two print grants — is a values question this comparer never sees, and it is open with the owner (work/owner-questions.json, b026 mightyfall-kobold). Nothing here quiets it.",
+  "bucket": "UNCLASSIFIED"
+ },
+ {
+  "gate": "IDENTITY",
+  "registry": "SETTLED_IDENTITIES",
+  "id": "dragonscaled-kobold",
+  "kinds": [
+   "grants"
+  ],
+  "why": "DRAGONSCALED KOBOLD — their `giveAbilityBlock` hands over \"Draconic Exemplar\" (block 30853), a physical-feature whose whole content is the \"which dragon?\" select. The heritage's own printed text (heritage-334) names no exemplar at all: *\"Thanks to your warren's association with a dragon, your scales are sturdier than other kobolds'…\"* — the benefactor surfaces only in the feats this heritage gates, and each of those carries its own pick on our side: feats/kobold-breath has `effectChoices` for breath shape, damage type and save; feats/benefactors-resistance has a breath-type pick with per-type resistance grants; feats/dracomancer has two `spellFilter` picks off the benefactor's spell list. So the question IS asked of the player, on the record that needs the answer. Settled rather than taught: batch 25's `choice.flag` reader (above) credits a record that ASKS the question, and this record deliberately does not — dragonblood does, under the flag `draconicExemplar`, and that is the record the flag reader was built for. Adversarially confirmed by reading all three gated feats in core.json; the finding was adjudicated REFUTED on that evidence (work/.b026-read.json).",
   "bucket": "UNCLASSIFIED"
  }
 ]

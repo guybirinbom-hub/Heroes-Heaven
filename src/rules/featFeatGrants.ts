@@ -290,6 +290,16 @@ export const FEAT_GRANT_BOUND_CHOICE: Record<string, Record<string, BoundGrantAn
    */
   'woodstalker-lizardfolk': { 'terrain-stalker': { kind: 'fixed', skill: 'underbrush' } },
   /*
+   * The kineticist's WOOD skill junction (class-63, Gate's Threshold): *"you gain Terrain Expertise
+   * for forest terrain"* — the feat rides the junction option's `grant.grantsFeats` (batch 28), and the
+   * granter recorded on that grant is the class feature that asked, so the binding is keyed by each of
+   * the four threshold features. Unbound, the granted feat's ten-option terrain question was open.
+   */
+  'gates-threshold': { 'terrain-expertise': { kind: 'fixed', skill: 'forest' } },
+  'second-gates-threshold': { 'terrain-expertise': { kind: 'fixed', skill: 'forest' } },
+  'third-gates-threshold': { 'terrain-expertise': { kind: 'fixed', skill: 'forest' } },
+  'fourth-gates-threshold': { 'terrain-expertise': { kind: 'fixed', skill: 'forest' } },
+  /*
    * Deep Orc, the same shape one feat over: *"You gain the Terrain Expertise skill feat FOR UNDERGROUND
    * TERRAIN and the Combat Climber skill feat."* Unbound, the granted feat's ten-option terrain question
    * is never asked (the builder renders a granted feat's choice box only for a feat PICKED into a slot),

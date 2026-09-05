@@ -11,6 +11,7 @@ import {
   EIDOLON_PRIMARY_OPTIONS,
   eidolonCantripSlots,
   huntersEdgeName,
+  familiarAbilityBudget,
   type AnimalCompanionBlock,
   type EidolonBlock,
   type FamiliarBlock,
@@ -1281,7 +1282,9 @@ function EditChoices({ cfg, character, content, onPlay, onAbilities, onSpecializ
   // ones it hands over free. `abilityBudget` shipped with NO reader anywhere in src/, so the card said
   // nothing about a budget and the count had nothing to count against.
   const famGrant = cfg.grantSlug ? FEAT_COMPANION_GRANTS[cfg.grantSlug] : undefined;
-  const famBudget = famGrant?.abilityBudget;
+  // Level-aware: the witch's budget grows at 6/12/18 (class-9), which the flat `abilityBudget` cannot
+  // say — this line is the ONLY reader of the budget, so a flat read kept the card at "of 4" for life.
+  const famBudget = familiarAbilityBudget(cfg, character);
   const famFree = new Set(famGrant?.lockedFree ? famGrant.lockedAbilities ?? [] : []);
   const type = cfg.kind === 'animal' && cfg.typeId ? content.animalCompanions[cfg.typeId] : undefined;
   const isConstruct = type?.category === 'construct';

@@ -742,6 +742,21 @@ for (const path of ['src/rules/featGrantsAuto.ts', 'src/rules/featGrants.ts', 's
   }
 }
 
+/*
+ * The FOCUS-ONLY casting classes, read from the table that actually decides them: `FOCUS_CASTING` in
+ * src/rules/build.ts (champion devotion, monk qi, ranger warden). These classes have no `spellcasting`
+ * block on the ClassDef — their focus entry's tradition and key attribute come from this table — so a
+ * reader that looks only at the record sees no casting where a built character has one. Read from the
+ * source text, the same way modes.ts and casterArchetypes.ts are.
+ */
+const FOCUS_CASTING_CLASSES = new Set();
+{
+  let text = '';
+  try { text = readFileSync(join(ROOT, 'src/rules/build.ts'), 'utf8'); } catch { /* absent */ }
+  const m = /const FOCUS_CASTING[^=]*=\s*\{([\s\S]*?)\n\s*\};/.exec(text);
+  for (const e of (m?.[1] ?? '').matchAll(/^\s*'?([a-z][a-z0-9-]*)'?\s*:\s*\{/gm)) FOCUS_CASTING_CLASSES.add(e[1]);
+}
+
 /* Recursive for ONE level: a subclass selector folds in its options kinds.  rather than a
  * const arrow so the recursive call below is hoisted. */
 function ourKindsOf(rec, id, bucket) {
@@ -923,6 +938,42 @@ function ourKindsOf(rec, id, bucket) {
     kinds.add('conditional');
     if ((stance.strikes ?? []).length) kinds.add('weapon');
     if ((stance.resistances ?? []).length || (stance.immunities ?? []).length) kinds.add('defense');
+  }
+  /*
+   * A CLASS RECORD'S OWN QUESTIONS ARE FIELDS, NOT A `choice` BLOCK.
+   *
+   * Print, on six class rows: *"Key Attribute: Strength or Dexterity — At 1st level, your class gives
+   * you an attribute boost to your choice of Strength or Dexterity"* (fighter/monk/ranger/champion/
+   * magus/exemplar), and on two more *"Trained in your choice of Arcana, Nature, Occultism, or
+   * Religion"* (runesmith, thaumaturge). Their side writes each as a `select` — kind `choice` — while
+   * ours holds the same question as the SHAPE of a plain field: `keyAbility` is documented at
+   * src/rules/types.ts:3527 as "One entry = fixed key attribute; multiple = player chooses one", and
+   * `trainedSkills.choice` / a `SubclassOption.skillChoice` are the skill twin. All three are asked:
+   * build.ts:1103-1111 pushes 'Key attribute' onto setupMissing while `opts.length > 1`, build.ts:1136
+   * reports 'Class trained skill' while unanswered, and shared.tsx:2572/3127 and :3150 render the two
+   * pickers. `keyAbility` was listed under OUR_KINDS.attribute alone, so eight class rows reported
+   * `missing=[choice]` on a question their builder and ours both ask (batch 28).
+   *
+   * ⚠ LENGTH, NOT PRESENCE. A single-entry `keyAbility` (runesmith's ["int"]) is a FIXED attribute and
+   * must keep reading as no choice, or the eleven classes that really do offer none would be excused.
+   */
+  if (bucket === 'classes') {
+    if ((rec.keyAbility ?? []).length > 1) kinds.add('choice');
+    if ((rec.trainedSkills?.choice ?? []).length) kinds.add('choice');
+    for (const o of rec.subclass?.options ?? []) {
+      if ((o?.skillChoice ?? []).length || (o?.keyAbilityOptions ?? []).length) kinds.add('choice');
+    }
+    /*
+     * …and a FOCUS-ONLY casting chassis, which no class record carries a `spellcasting` block for.
+     * Print (champion): *"Your devotion spells are divine spells. Your spellcasting attribute is
+     * Charisma"* plus Initial Proficiencies → Spells *"Trained in spell attack modifier / Trained in
+     * spell DC"*; their class row 109 says the same with `adjValue SPELL_ATTACK/SPELL_DC T`, and their
+     * casting SOURCE sits on ability_block 31209 (`CHAMPION:::-:::DIVINE:::ATTRIBUTE_CHA`). Ours is the
+     * class-keyed FOCUS_CASTING table in src/rules/build.ts (champion/monk/ranger) plus the class's
+     * `spellcasting` advancement track, which build a real focus entry at trained → expert (9th) →
+     * master (17th) — so the champion class row read as modelling no spellcasting at all.
+     */
+    if (FOCUS_CASTING_CLASSES.has(id)) kinds.add('spellcasting');
   }
   /*
    * A CLASS-CHASSIS FEATURE'S MECHANIC LIVES ON THE CLASS RECORD.

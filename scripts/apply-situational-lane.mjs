@@ -47,8 +47,17 @@ const escalatedIds = new Set(spec.filter((r) => r.needsHumanDecision).map((r) =>
  *     row; print (heritage-409) opens with *"Both environmental heat effects and environmental cold
  *     effects are one step less extreme for you"*, which is two further hand-authored stars on the
  *     same entry.
+ *   fire-gate / metal-gate / earth-gate (WG parity b028, kineticist#duplicate-junction-star): DELETED
+ *     from the registry. Print states the Gate Junction bonus once (*"you gain a +1 status bonus to the
+ *     listed skill; the bonus increases to +2 at 10th level and +3 at 17th level"*) and the hand-authored
+ *     "gate-junction" entry already carries it for all five junction skills; these element-keyed copies
+ *     pooled as a second identical star on the same skill and fired from level 1, before any junction
+ *     could be taken. `existingIds` cannot exclude a row that no longer exists, so name them here.
  */
-const handEdited = new Set(['strong-oak', 'lethoci', 'sacred-nagaji', 'kanchil', 'respite-of-cloudless-paths']);
+const handEdited = new Set([
+  'strong-oak', 'lethoci', 'sacred-nagaji', 'kanchil', 'respite-of-cloudless-paths',
+  'fire-gate', 'metal-gate', 'earth-gate',
+]);
 
 const src = readFileSync(REGISTRY, 'utf8');
 const existingIds = new Set([...src.matchAll(/^ {2}"([a-z0-9-]+)":\s\[/gm)].map((m) => m[1]));

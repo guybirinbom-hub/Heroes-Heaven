@@ -319,6 +319,12 @@ export const FEAT_SKILL_GRANTS: Record<string, FeatGrant> = {
   'executioner-weapon-training': { weaponFamiliarity: { 'weapons': ['battle-axe', 'falchion', 'greataxe', 'scimitar'], 'mirrorBestCategory': true } },
   'exemplar-dedication': { weapon: { martial: 'trained' } },
   'expert-overdrive': { skills: { crafting: 'expert' } },
+  /* Inventor (class-19) L7 Master Overdrive: *"You become a master in Crafting"*. The ladder shipped
+   * with its middle rung missing — 'expert-overdrive' (directly above) and 'legendary-overdrive' were
+   * both here — so an inventor's Crafting sat at expert from 7th all the way to 14th. Nothing else
+   * supplies it: CLASS_ADVANCEMENT.inventor has no skill track and classFeatures['master-overdrive']
+   * carries no skillProgression. */
+  'master-overdrive': { skills: { crafting: 'master' } },
   'extra-squishy': { skills: { acrobatics: 'trained' }, redundantFallback: true },
   'eye-for-treasure': { skills: { crafting: 'trained' }, redundantFallback: true },
   /* *"At 7th level you become a master in Performance, and at 15th level, you become legendary in

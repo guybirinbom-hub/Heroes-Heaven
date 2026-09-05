@@ -129,7 +129,12 @@ export const FEAT_COMPANION_GRANTS: Record<string, CompanionGrant> = {
   'faithful-steed': { kind: 'animal', label: 'Faithful Steed', note: 'Grants an animal companion — choose its type and advance it in the Edit tab.' },
   'familiar': { kind: 'familiar', label: 'Familiar', abilityBudget: 2, note: 'Grants a familiar you configure here. Choose 2 familiar abilities.' },
   'familiar-master-dedication': { kind: 'familiar', label: 'Familiar Master Dedication', abilityBudget: 2, suppressedByChoice: ['yes'], note: 'Grants a familiar you configure here. Choose 2 familiar abilities. If you already had a familiar you gain the Enhanced Familiar feat instead, and no second familiar.' },
-  'familiar-witch': { kind: 'familiar', label: 'Familiar (Witch)', abilityBudget: 4, note: 'Grants a familiar you configure here. Choose 4 familiar abilities.' },
+  // Witch (class-9): *"your familiar gains an extra ability at 6th, 12th and 18th level"* and the
+  // patron's unique ability is *"in addition"* — so the player's OWN picks are 3 at 1st (4 with the
+  // patron's free one), growing by one at 6/12/18 (`familiarAbilityBudget` in companions.ts adds the
+  // steps on top of this number). Batch 28: it was a flat 4 for all twenty levels, and once the
+  // patron ability rode the free channel a 1st-level familiar could hold 5 where print gives 4.
+  'familiar-witch': { kind: 'familiar', label: 'Familiar (Witch)', abilityBudget: 3, note: "Grants a familiar you configure here. Choose 3 familiar abilities — 4 at 6th, 5 at 12th, 6 at 18th; your patron's unique ability is always selected on top of them." },
   // "it gains the darkvision and tough abilities IN ADDITION TO the two abilities you normally choose".
   'friend-of-the-sea': { kind: 'familiar', label: 'Friend of the Sea', abilityBudget: 2, lockedAbilities: ['darkvision', 'tough'], lockedFree: true, supersedes: ['pet'], note: 'Your pet must be an aquatic creature. It has Darkvision and Tough in addition to the two familiar abilities you choose.' },
   // "You gain a familiar. You choose one familiar or master ability per day instead of two, but your

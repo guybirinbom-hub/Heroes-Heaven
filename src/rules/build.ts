@@ -69,7 +69,7 @@ import { initialClassResources } from './classResources';
 import { activeCasterArchetype, archetypeEntryIds, archetypeProficiency, archetypeSlots, archetypeTraditionOptions } from './casterArchetypes';
 import { resolveRestrictedSlots } from './restrictedSlots';
 import { coinsToCp, cpToCoins, startingWealthGp } from './wealth';
-import { apparitionSlots, cantripsKnown, casterSlots, magusStudiousSpells } from './spellcasting';
+import { apparitionSlots, cantripsKnown, casterSlots, magusStudiousSpells, repertoireCounts } from './spellcasting';
 
 /** The player's in-progress choices. The builder UI owns one of these. */
 export interface BuildState {
@@ -140,9 +140,26 @@ export interface BuildState {
    *  qi spells alone — it must not flip the tradition of the character's other focus spells — and only
    *  asked when `qiSpellsPossible`, since every archetype that grants qi spells states its own answer. */
   qiTradition?: 'divine' | 'occult' | null;
-  /** Fighter Weapon Mastery / Weapon Legend chosen weapon GROUP (e.g. 'sword'). That group's
-   *  simple/martial/unarmed weapons reach master@5 → legendary@13 (advanced expert@5 → master@13). */
+  /** Fighter Weapon Mastery (5th) chosen weapon GROUP (e.g. 'sword'): that group's simple/martial/
+   *  unarmed weapons reach master, its advanced weapons expert. */
   fighterWeaponGroup?: string | null;
+  /**
+   * …and Weapon Legend's (13th) group, which is a SECOND, INDEPENDENT selection.
+   *
+   * Fighter Weapon Mastery: *"Choose one weapon group. Your proficiency rank increases to master…"*
+   * Weapon Legend: *"You CAN SELECT ONE WEAPON GROUP and increase your proficiency ranks to legendary
+   * for all simple weapons, martial weapons, and unarmed attacks in that weapon group, and to master
+   * for all advanced weapons in that weapon group."* Both levels read one field, so naming a different
+   * group at 13th was impossible; their side has two separate selects (ids 20764 value M, 19270 value
+   * L). Falls back to the 5th-level group when unanswered, so an existing character is unchanged.
+   */
+  fighterWeaponGroup2?: string | null;
+  /** A subclass skill choice answered with a LORE instead of a named skill (investigator Empiricism —
+   *  *"one Intelligence-based skill of your choice"*). Holds the SUBJECT ('engineering'), not a key. */
+  subclassLore?: string | null;
+  /** The answer to a subclass option's `grantedSpellChoice`, keyed by option id (witch patrons that
+   *  teach the familiar one of two spells). */
+  subclassSpellChoice?: Record<string, string>;
   /** Animist primary apparition (option id); only the primary grants its vessel focus spell. */
   primaryApparition?: string | null;
   /** A subclass's restricted skill-choice pick (gunslinger Pistolero way, investigator Empiricism). */
@@ -389,8 +406,10 @@ export function emptyBuild(): BuildState {
     voiceOfNature: null,
     qiTradition: null,
     fighterWeaponGroup: null,
+    fighterWeaponGroup2: null,
     primaryApparition: null,
     subclassSkill: null,
+    subclassLore: null,
     dragonExemplar: null,
     commanderTactics: [],
     runesmithRunes: [],
@@ -727,7 +746,11 @@ export function additionalClassSkills(build: BuildState, content: ContentDatabas
   const abilities = computeAbilities(build, content);
   // Dual Class: use the LARGER of the two classes' base free-skill counts (not the sum).
   const cls2 = build.variantRules?.dualClass && build.classId2 ? content.classes[build.classId2] : undefined;
-  const base = Math.max(cls.trainedSkills.additional, cls2?.trainedSkills.additional ?? 0);
+  // A subclass option can REPLACE the count — Bloodrager (archetype-283): "a number of additional
+  // skills equal to 2 plus your Intelligence modifier, instead of your normal starting skill
+  // proficiencies" — so a bloodrager barbarian gets 2 + Int, not the barbarian's 3 + Int.
+  const own = cls.subclass?.options.find((o) => o.id === build.subclassId)?.additionalSkills ?? cls.trainedSkills.additional;
+  const base = Math.max(own, cls2?.trainedSkills.additional ?? 0);
   return Math.max(0, base + abilityMod(abilities.int));
 }
 
@@ -1069,6 +1092,61 @@ export function subclassAnchorLevel(build: BuildState, content: ContentDatabase)
 }
 
 /** The origin-page (level 0) choices still unmade. The label list drives Setup completeness. */
+/**
+ * Which skills a class's BONUS skill increase may be spent on, or null when the class narrows none.
+ *
+ * The increase-half twin of the `restrictedSkillFeatLevels` resolution in featSlots.ts, and written
+ * beside it deliberately: swashbuckler Stylish Tricks narrows BOTH halves with one sentence each
+ * (*"…you can apply only to Acrobatics or the skill from your swashbuckler's style"* / *"This feat
+ * must be for Acrobatics or the trained skill from your swashbuckler's style"*), and only the feat
+ * half was ever enforced. `includeSubclassGrantedSkills` resolves through the chosen subclass option's
+ * `grants.skills`, because *"the skill from your style"* names a pick, not a fixed skill.
+ *
+ * Exported so buildCharacter (which drops an illegal pick) and the builder's bonus-increase picker
+ * (which greys it) answer from one place.
+ */
+export function restrictedSkillIncreaseAllowed(
+  build: Partial<BuildState>,
+  content: ContentDatabase,
+): { levels: number[]; skills: Set<string>; reason: string } | null {
+  const cls = build.classId ? content.classes[build.classId] : undefined;
+  const r = cls?.restrictedSkillIncreaseLevels;
+  if (!r) return null;
+  const skills = new Set<string>(r.skills ?? []);
+  if (r.includeSubclassGrantedSkills) {
+    const sub = cls?.subclass?.options.find((o) => o.id === build.subclassId);
+    for (const s of sub?.grants?.skills ?? []) skills.add(s);
+    // …and the class skill the option takes AWAY (Vindicator: Religion INSTEAD OF Nature).
+    for (const s of sub?.grants?.removesSkills ?? []) skills.delete(s);
+    for (const s of sub?.skillChoice ?? []) if (build.subclassSkill === s) skills.add(s);
+  }
+  return { levels: r.levels, skills, reason: r.reason };
+}
+
+/**
+ * Is this subclass option legal for the character as built? Today the only gate is SANCTIFICATION.
+ *
+ * Champion class-58: *"Whether you become holy, unholy, or neither will limit your choice of causes,
+ * devotion spells, and feats"* and *"Some causes are limited to certain sanctifications"* — carried on
+ * the cause pages as a trait (Desecration and Iniquity are Unholy; Grandeur and Redemption are Holy).
+ * Neither our data nor Wanderer's Guide encoded the gate, so a champion who answered "none" was still
+ * offered all seven causes with nothing on screen saying which were illegal.
+ *
+ * Returns TRUE while the sanctification question is unanswered — the same convention
+ * `choiceFlagAnswer`'s callers keep, so a half-built champion sees the whole list rather than none.
+ */
+export function subclassOptionAllowed(
+  option: { traits?: string[] },
+  build: Partial<BuildState>,
+  content: ContentDatabase,
+): boolean {
+  const need = option.traits?.find((t) => t === 'holy' || t === 'unholy');
+  if (!need) return true;
+  const sanct = choiceFlagAnswer('sanctification', build, content);
+  if (!sanct) return true;
+  return sanct === need;
+}
+
 export function setupMissing(build: BuildState, content: ContentDatabase): string[] {
   return originMissing(build, content);
 }
@@ -1109,6 +1187,20 @@ function originMissing(build: BuildState, content: ContentDatabase): string[] {
         ? []
         : cls.keyAbility;
     if (opts.length > 1 && !(build.keyAbility && opts.includes(build.keyAbility))) out.push('Key attribute');
+    /* …and a subclass option the character's SANCTIFICATION forbids. *"Some causes are limited to
+     * certain sanctifications"* (class-58): a champion who answered "none" and holds Desecration is
+     * carrying an illegal cause, and nothing said so — the picker offered all seven unfiltered. Named
+     * as outstanding setup rather than silently swapped, because which legal cause they meant is the
+     * player's call. (The picker's own filter is the other half — see shared.tsx.) */
+    if (sub && cls.subclass && !subclassOptionAllowed(sub, build, content)) out.push(cls.subclass.name);
+    /* …and a class archetype's REQUIRED dedication. Bloodrager: *"You must select Bloodrager Dedication
+     * as your 2nd-level class feat"*; Light Mortar: the same for Munitions Master Dedication. Reported
+     * as outstanding setup once the level is reached without it — the sentence tells the player what to
+     * take, so it is never granted for them. */
+    const req = sub?.requiresFeat;
+    if (req && build.level >= req.level && !Object.values(build.featPicks ?? {}).includes(req.featId)) {
+      out.push(`${content.feats[req.featId]?.name ?? req.featId} (${sub.name} requires it as your level-${req.level} class feat)`);
+    }
   }
   // A deity is a level-0 choice for classes that require one (cleric, champion) or for a subclass that
   // demands it (e.g. rogue Avenger) — and for anyone who PICKED a record that reads the deity, since
@@ -2354,7 +2446,7 @@ export function extraPickLevel(g: ChoiceGroup, index: number): number {
 /** Inventor modification tiers → the class level each is gained. */
 export const INVENTOR_TIER_LEVEL = { initial: 1, breakthrough: 7, revolutionary: 15 } as const;
 export type InventorTier = keyof typeof INVENTOR_TIER_LEVEL;
-export type InnovationType = 'armor' | 'weapon' | 'construct';
+export type InnovationType = 'armor' | 'weapon' | 'construct' | 'light-mortar';
 
 /** Kineticist Gate's Threshold levels (each lets you Expand the Portal or Fork the Path for a new element). */
 export const GATE_THRESHOLD_LEVELS = [5, 9, 13, 17] as const;
@@ -2364,11 +2456,15 @@ export const GATE_THRESHOLD_LEVELS = [5, 9, 13, 17] as const;
 // rule without a runtime import cycle. See src/rules/kineticElements.ts.
 export { kineticistElements };
 
-/** Maps an innovation subclass id to its modification type (light-mortar is archetype-only → none). */
+/** Maps an innovation subclass id to its modification type. The Munitions Master's light mortar has
+ *  its own three tiers of modifications (Contained Shrapnel … Precise Blast), shipped as classFeatures
+ *  tagged `light-mortar-innovation-modification` (batch 28) — before that it was "archetype-only → none"
+ *  and its pickers offered nothing. */
 export function innovationType(subclassId: string | null | undefined): InnovationType | undefined {
   if (subclassId === 'armor-innovation') return 'armor';
   if (subclassId === 'weapon-innovation') return 'weapon';
   if (subclassId === 'construct-innovation') return 'construct';
+  if (subclassId === 'light-mortar-innovation') return 'light-mortar';
   return undefined;
 }
 
@@ -2915,6 +3011,9 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   // mind) overrides the class default — but not a deliberate multi-key pick (no class
   // has both, so this is safe). Then the player's pick, then the class's first key.
   const keyAbility = choiceKeyAbility ?? build.keyAbility ?? cls?.keyAbility[0] ?? null;
+  // Way of the Spellshot: "You use Intelligence for your class DC" — the CLASS DC's attribute alone;
+  // the key attribute above stays the class's (batch 28). Read by deriveClassDc.
+  const classDcKeyAbility = grantOptions.find((o) => o.classDcKeyAbility)?.classDcKeyAbility;
   const level = build.level;
 
   /**
@@ -3119,19 +3218,49 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   // Subclass-/choice-granted skills (druid order, rogue racket, witch patron, eidolon) — also free.
   for (const o of grantOptions) {
     for (const sk of o.grants?.skills ?? []) (skills[sk] = 'trained'), lock(sk, 'a class choice');
+    // …and the class skill the option takes AWAY — the ranger's Vindicator: *"trained in Religion
+    // INSTEAD OF Nature"*. The class's fixed skill was set and locked above; unset both, so the row
+    // reads untrained and the player may spend a free skill on it like any other.
+    for (const sk of o.grants?.removesSkills ?? []) {
+      delete skills[sk];
+      locked.delete(sk);
+      delete lockedFrom[sk];
+    }
     // Named Lores (animist apparitions grant two apiece). A Lore is not a SkillId, so these could
     // not ride in `grants.skills` and every apparition's "Apparition Skills" Lore line was inert.
+    /* …and the LEVEL LADDER on those Lores. Apparitions print one (War of Immortals pg. 17, "Reading
+     * An Apparition Entry"): *"When you are attuned to an apparition, you are trained in these Lore
+     * skills… At 8th level and beyond… expert proficiency in their apparition skills; at 16th level
+     * and beyond… master proficiency in their apparition skills."* This loop wrote a flat 'trained'
+     * with no level branch, so every apparition Lore sat at trained from 1st to 20th. Same
+     * `loreProgression` shape the heritage Lore ladder above already uses; `maxRank` still guards a
+     * Lore the player trained higher elsewhere. */
+    const optLoreStep = (o.loreProgression ?? [])
+      .filter((s) => level >= s.level)
+      .reduce<ProficiencyRank | undefined>((best, s) => (best ? maxRank(best, s.rank) : s.rank), undefined);
     for (const subj of o.grants?.lores ?? []) {
       const key = loreKey(subj);
-      (skills[key] = maxRank(skills[key] ?? 'untrained', 'trained')), lock(key, 'a class choice');
+      (skills[key] = maxRank(skills[key] ?? 'untrained', optLoreStep ?? 'trained')), lock(key, 'a class choice');
     }
     // A restricted skill choice (Pistolero way, Empiricism methodology): train the picked skill,
     // defaulting to the first allowed option so the build is always legal.
     if (o.skillChoice?.length) {
-      const pick =
-        build.subclassSkill && o.skillChoice.includes(build.subclassSkill) ? build.subclassSkill : o.skillChoice[0];
-      skills[pick] = 'trained';
-      lock(pick, 'a class choice');
+      /* …unless the player answered it with a LORE. Empiricism (methodology-2/6): *"You are trained in
+       * one Intelligence-based skill of your choice"* — Lores are Intelligence-based, and WG's own
+       * select carries a nested "Select a Lore" branch beside Arcana/Crafting/Occultism. `skillChoice`
+       * is a SkillId[] and cannot hold a Lore, so the subject rides in `build.subclassLore` and only
+       * an option that opts in (`skillChoiceLore`) may answer that way. The named-skill default is
+       * SKIPPED when a Lore is given, or the character would be trained in two skills for one choice. */
+      const loreSubj = o.skillChoiceLore ? build.subclassLore?.trim() : undefined;
+      if (loreSubj) {
+        const key = loreKey(loreSubj);
+        (skills[key] = maxRank(skills[key] ?? 'untrained', 'trained')), lock(key, 'a class choice');
+      } else {
+        const pick =
+          build.subclassSkill && o.skillChoice.includes(build.subclassSkill) ? build.subclassSkill : o.skillChoice[0];
+        skills[pick] = 'trained';
+        lock(pick, 'a class choice');
+      }
     }
   }
   // Sorcerer Draconic: the chosen dragon trains a second bloodline skill (Arcana/Religion/Occultism/Nature).
@@ -3167,18 +3296,27 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
    * 3rd, 7th and 15th. It needs its own store because the build keeps one pick per level, and two
    * increases at level 3 are two separate answers. */
   const bonusSiLevels = cls?.bonusSkillIncreaseLevels ?? [];
+  /* …and the RESTRICTION on that second increase, resolved once (it walks the subclass). */
+  const bonusSiRestrict = restrictedSkillIncreaseAllowed(build, content);
   const skillIncreases: SkillIncrease[] = [];
   for (let lvl = 1; lvl <= level; lvl++) {
-    for (const key of [
-      siLevels.includes(lvl) ? build.skillIncreases[lvl] : undefined,
-      bonusSiLevels.includes(lvl) ? build.bonusSkillIncreases?.[lvl] : undefined,
-    ]) {
+    for (const [key, isBonus] of [
+      [siLevels.includes(lvl) ? build.skillIncreases[lvl] : undefined, false],
+      [bonusSiLevels.includes(lvl) ? build.bonusSkillIncreases?.[lvl] : undefined, true],
+    ] as const) {
       if (!key) continue;
       /* A record can forbid its own skill being increased — Bardic Lore: "you can't increase your
        * proficiency rank in Bardic Lore by any other means". DROPPED rather than applied, so a
        * character saved before the builder greyed the option does not keep an illegal rank; the level
        * then reads as an unspent increase, which is the true state and prompts a re-pick. */
       if (LOCKED_SKILL_KEYS[key]) continue;
+      /* …and so can the FEATURE that granted the bonus increase. Swashbuckler Stylish Tricks: *"you
+       * gain an additional skill increase you can apply only to Acrobatics or the skill from your
+       * swashbuckler's style"*; thaumaturge Thaumaturgic Expertise/Mastery: *"which you can apply only
+       * to Arcana, Nature, Occultism, or Religion"*. Dropped, not applied — same reason as above: a
+       * character saved while the picker was unguarded must not keep a rank print forbids. Only the
+       * BONUS increase is narrowed; the level's ordinary increase stays free. */
+      if (isBonus && bonusSiRestrict?.levels.includes(lvl) && !bonusSiRestrict.skills.has(key)) continue;
       skills[key] = stepRank(skills[key] ?? 'untrained', skillIncreaseCap(lvl));
       skillIncreases.push({ level: lvl, skill: key });
     }
@@ -3224,14 +3362,21 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     }
   }
 
-  // Wizard Weapon Expertise (L11): expert in the five wizard weapons only (club/crossbow/dagger/
-  // heavy-crossbow/staff) — a per-weapon override, NOT a whole-category bump (which would over-grant).
-  if ((build.classId === 'wizard' || (build.variantRules?.dualClass && build.classId2 === 'wizard')) && level >= 11) {
-    proficiencies.weaponOverrides = { ...(proficiencies.weaponOverrides ?? {}) };
-    for (const w of ['club', 'crossbow', 'dagger', 'heavy-crossbow', 'staff']) {
-      if (content.items[w]) proficiencies.weaponOverrides[w] = maxRank(proficiencies.weaponOverrides[w], 'expert');
-    }
-  }
+  /*
+   * Wizard Weapon Expertise (L11) used to be five named weapons here (club/crossbow/dagger/
+   * heavy-crossbow/staff) — that is the LEGACY Core Rulebook text, and our own legacy record
+   * `classFeatures['wizard-weapon-expertise']` (aonId class-feature-298) is where it came from. The
+   * remaster print says the category: *"Your proficiency ranks for simple weapons and unarmed attacks
+   * increase to expert"* (class-39, level 11), and `classes.wizard.features[]` names the REMASTER
+   * record `weapon-expertise` at 11, so the five-weapon override left a wizard trained in every simple
+   * weapon outside that list (dart, sling, spear, sickle, shortbow…) forever.
+   *
+   * Deleted rather than widened: the whole clause now rides the class advancement table as
+   * `ADVANCEMENT.wizard { level: 11, track: 'simple', rank: 'expert', source: 'weapon-expertise' }`
+   * (src/rules/advancement.ts, added in this batch beside the existing 'unarmed' row). All five
+   * weapons are simple, so the category row fully subsumes the override and keeping both would be a
+   * duplicate carrier.
+   */
 
   // Subclass weapon/armor keystones (ruffian medium armor, warrior-muse martial).
   for (const o of grantOptions) {
@@ -3247,12 +3392,23 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
    * of that deity as a SECOND favored weapon"* needs the same ladder, and computing it a second way
    * there is how the two would come to disagree at 7th level. */
   const clericDoctrine = build.classId === 'cleric' ? build.subclassId : build.classId2 === 'cleric' ? build.subclassId2 : null;
+  /* The rogue's AVENGER racket has a ladder of its own, and rode the cleric default instead. *"You are
+   * trained in your deity's favored weapon. Whenever you gain a class feature that grants you expert or
+   * greater proficiency with simple or martial weapons, you also gain that proficiency rank with your
+   * deity's favored weapon"* (racket-10) — and the rogue's Weapon Tricks grants expert at 5th and
+   * Master Tricks master at 13th. On the cloistered default an avenger's favored weapon sat at trained
+   * until 11th and never reached master; only ADVANCED favored weapons actually diverge (Achaekek's
+   * sawtooth saber, The Pandemonia's gnome flickmace, Wulgren's barricade buster, Aerekostes' falcata),
+   * since deriveStrike already takes max(category rank, override) for simple and martial ones. */
+  const isAvenger = build.subclassId === 'avenger' || build.subclassId2 === 'avenger';
   const favoredWeaponRank: ProficiencyRank =
     clericDoctrine === 'warpriest'
       ? level >= 19 ? 'master' : level >= 7 ? 'expert' : 'trained'
       : clericDoctrine === 'battle-creed'
         ? level >= 13 ? 'master' : level >= 5 ? 'expert' : 'trained'
-        : level >= 11 ? 'expert' : 'trained'; // cloistered-cleric (default)
+        : isAvenger
+          ? level >= 13 ? 'master' : level >= 5 ? 'expert' : 'trained'
+          : level >= 11 ? 'expert' : 'trained'; // cloistered-cleric (default)
   {
     // Only real weapon items get an override; "fist"/unarmed favored weapons (e.g. Irori)
     // are already covered by the class's unarmed proficiency.
@@ -3684,7 +3840,14 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       ]?.grantedSpells?.[subOption?.id ?? ''] ?? [];
     const notYetGranted = new Set(grantLadder.filter((g) => level < g.level).map((g) => g.id));
     const grantedByRank: Record<number, string[]> = {};
-    for (const id of subOption?.grantedSpells ?? [])
+    /* …plus the spell the option let the player CHOOSE ("dizzying colors or grease") — the answer to
+     * `grantedSpellChoice`, honoured only while it names one of that option's own choices. */
+    const chosenGrant = subOption?.grantedSpellChoice && build.subclassSpellChoice?.[subOption.id];
+    const optionSpells = [
+      ...(subOption?.grantedSpells ?? []),
+      ...(chosenGrant && subOption?.grantedSpellChoice?.options.includes(chosenGrant) ? [chosenGrant] : []),
+    ];
+    for (const id of optionSpells)
       if (!notYetGranted.has(id)) (grantedByRank[content.spells[id]?.rank ?? 1] ??= []).push(id);
     // The ALLOWANCE, not just the picks: the sheet needs it to draw empty cantrip openings — with
     // zero picked, the whole Cantrips section used to vanish, and a new caster had no hint that
@@ -3698,8 +3861,12 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       keyAbility: choiceKeyAbility ?? sp.keyAbility,
       proficiency: 'trained',
       // Dedup so a subclass-granted cantrip (psychic conscious mind) doesn't duplicate a
-      // player-picked one.
-      cantrips: [...new Set([...build.cantrips.slice(0, cantripAllowance), ...(grantedByRank[0] ?? [])])],
+      // player-picked one — and, for a class whose grants count INSIDE the allowance (the sorcerer's
+      // sorcerous gift cantrip: *"four cantrips of your choice, as well as an additional… cantrip from
+      // your bloodline"* against a Cantrips column of 5), cap the pair rather than appending.
+      cantrips: sp.grantedCountsAgainstRepertoire
+        ? [...new Set([...(grantedByRank[0] ?? []), ...build.cantrips])].slice(0, cantripAllowance)
+        : [...new Set([...build.cantrips.slice(0, cantripAllowance), ...(grantedByRank[0] ?? [])])],
       cantripCap: cantripAllowance,
       // A prepared CLASS prepares its cantrips each morning (kept under the flexible collection:
       // "this archetype doesn't change the way you prepare cantrips"), so the sheet may re-prepare
@@ -3712,15 +3879,32 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       // Spontaneous: a repertoire of known spells per rank + a slot pool.
       entry.repertoire = {};
       entry.slots = {};
-      for (const [rankStr, count] of Object.entries(slotCounts)) {
+      /* The repertoire is sized from the SLOT table plus whatever the class prints beyond it — the
+       * summoner's *"maximum size of five spells"* over four slots, the oracle's Oracular Clarity
+       * *"Add two common 10th-rank divine spells to your repertoire. You gain a single 10th-rank spell
+       * slot"*. Slots stay on `slotCounts`; only what the character KNOWS grows. */
+      const knownCounts = repertoireCounts(slotCounts, sp.extraRepertoire);
+      for (const [rankStr, count] of Object.entries(knownCounts)) {
         const rank = Number(rankStr);
-        entry.slots[rank] = { max: count, used: 0 };
-        // Player-chosen repertoire (sliced to slot count) plus any granted spells
-        // of this rank (the psychic conscious mind expands the repertoire).
-        entry.repertoire[rank] = [
-          ...new Set([...(build.spells[rank] ?? []).slice(0, count), ...(grantedByRank[rank] ?? [])]),
-        ];
-        if (grantedByRank[rank]?.length) (entry.grantedRepertoire ??= {})[rank] = [...grantedByRank[rank]];
+        // `in`, not truthiness: an archetype slotCap can legitimately zero a rank, and that row still
+        // has to exist (it did before extraRepertoire arrived). Only a rank the SLOT table never
+        // mentions — one reached solely through extraRepertoire — is skipped here.
+        if (rank in slotCounts) entry.slots[rank] = { max: slotCounts[rank], used: 0 };
+        const granted = grantedByRank[rank] ?? [];
+        /* Player-chosen repertoire plus any granted spells of this rank. Granted spells normally ride
+         * ON TOP — the psychic's conscious mind is *additional* by its own print ("3*" plus "Your
+         * conscious mind gives you three additional cantrips with amps") — but the sorcerer's
+         * sorcerous gift is not: *"you learn two 1st-rank spells of your choice and four cantrips of
+         * your choice, AS WELL AS an additional spell and cantrip from your bloodline"* against a
+         * Cantrips column of 5, and *"your first new spell is always the sorcerous gift spell for that
+         * rank"* — the gift IS the first of the allowance, so an appended gift made a 1st-level
+         * sorcerer know six cantrips where print says five. `grantedCountsAgainstRepertoire` opts a
+         * class into counting them inside; the gift is placed FIRST so it is never the entry the cap
+         * discards. */
+        entry.repertoire[rank] = sp.grantedCountsAgainstRepertoire
+          ? [...new Set([...granted, ...(build.spells[rank] ?? [])])].slice(0, count)
+          : [...new Set([...(build.spells[rank] ?? []).slice(0, count), ...granted])];
+        if (granted.length) (entry.grantedRepertoire ??= {})[rank] = [...granted];
       }
       // Signature spells (one per rank) — only once the class grants the feature
       // (e.g. bard at level 3); each must be a spell actually in the repertoire.
@@ -3768,7 +3952,12 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       const curriculum = wizardCurriculum;
       for (const [rankStr, count] of Object.entries(slotCounts)) {
         const rank = Number(rankStr);
-        const learned = build.spells[rank] ?? [];
+        /* The witch's PATRON teaches the familiar a spell (patron-N: *"your familiar learns …"*) — those
+         * ride `grantedSpells` on the subclass option and reached only the cantrip line and the
+         * spontaneous branch, so a built witch's spellbook held none of the 14 patron spells (measured
+         * by the batch-28 data verifier: Baba Yaga's chilling spray appeared nowhere). Merged in first,
+         * de-duplicated against what the player learned by hand. */
+        const learned = [...new Set([...(grantedByRank[rank] ?? []), ...(build.spells[rank] ?? [])])];
         entry.spellbook[rank] = [...learned];
         entry.prepared[rank] = Array.from({ length: count }, (_, i) => ({ spellId: learned[i] ?? null, expended: false }));
         if (hasSchool && rank > 0) {
@@ -4317,10 +4506,18 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       proficiencies.defenses.medium = maxRank(proficiencies.defenses.medium, proficiencies.defenses.light);
     }
     /*
-     * Fighter Weapon Mastery (L5) / Weapon Legend (L13): the chosen weapon GROUP is elevated above the
-     * general fighter progression — *"master with the simple weapons, martial weapons, and unarmed
-     * attacks in that group, and to EXPERT with the advanced weapons in that group"*, then one rank
-     * higher again at 13th.
+     * Fighter Weapon Mastery (L5) and Weapon Legend (L13): the chosen weapon GROUP is elevated above
+     * the general fighter progression — *"Choose one weapon group. Your proficiency rank increases to
+     * master with the simple weapons, martial weapons, and unarmed attacks in that group, and to
+     * EXPERT with the advanced weapons in that group"*, then at 13th *"You CAN SELECT ONE WEAPON GROUP
+     * and increase your proficiency ranks to legendary… and to master for all advanced weapons in that
+     * weapon group."*
+     *
+     * ⚠ TWO INDEPENDENT SELECTIONS, not one group that steps up. Both levels used to read the single
+     * `fighterWeaponGroup`, so naming a different group at 13th was impossible; their side has two
+     * separate selects (ids 20764 and 19270). Written as two pushes so a fighter who legends a second
+     * group KEEPS the first at master/expert — `weaponGroupRanks` is consulted with `betterRank`, so
+     * the higher row wins wherever the two groups are the same.
      *
      * ⚠ The advanced clause used to be skipped: a flat `weaponGroups[group] = master` covers the whole
      * group, so a 5th-level fighter wielding an advanced weapon of their group rolled at MASTER when
@@ -4328,13 +4525,21 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
      * the category axis that says this, and both maps are consulted with `betterRank`, so the flat one
      * must not also be written or it would win right back.
      */
-    if ((build.classId === 'fighter' || build.classId2 === 'fighter') && build.fighterWeaponGroup && level >= 5) {
-      const group = build.fighterWeaponGroup;
-      const core: ProficiencyRank = level >= 13 ? 'legendary' : 'master';
-      const advanced: ProficiencyRank = level >= 13 ? 'master' : 'expert';
-      const wgr = (proficiencies.weaponGroupRanks ??= []);
-      for (const category of ['simple', 'martial', 'unarmed'] as const) wgr.push({ group, category, rank: core });
-      wgr.push({ group, category: 'advanced', rank: advanced });
+    if (build.classId === 'fighter' || build.classId2 === 'fighter') {
+      const push = (group: string, core: ProficiencyRank, advanced: ProficiencyRank) => {
+        const wgr = (proficiencies.weaponGroupRanks ??= []);
+        for (const category of ['simple', 'martial', 'unarmed'] as const) wgr.push({ group, category, rank: core });
+        wgr.push({ group, category: 'advanced', rank: advanced });
+      };
+      /* Unanswered, Weapon Legend falls back to the 5th-level group: that is what every character
+       * saved before this field existed meant, and the level's own picker is where a different group
+       * gets named. When the two ARE the same group, only the higher pair is written — two rows for
+       * one group+category would leave every reader that takes the first row one rank short. */
+      const legendGroup = level >= 13 ? build.fighterWeaponGroup2 || build.fighterWeaponGroup : null;
+      if (build.fighterWeaponGroup && level >= 5 && build.fighterWeaponGroup !== legendGroup) {
+        push(build.fighterWeaponGroup, 'master', 'expert');
+      }
+      if (legendGroup) push(legendGroup, 'legendary', 'master');
     }
   }
 
@@ -4642,7 +4847,15 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     });
   };
   if (build.backgroundId) pickFrom(build.backgroundId, 1);
-  for (const fid of classFeatureIdsOwned(build, content)) {
+  /* `classChoices` so an EXTRA-CHOICE pick can carry a picker of its own. `classFeatureIdsOwned` adds
+   * ids from `opts.classChoices`, and a bare BuildState has no such key — so a wizard's arcane thesis,
+   * a thaumaturge's implements and an animist's apparitions could never reach this walk however their
+   * spec was written. The wizard's Experimental Spellshaping is the case: *"You gain one 1st-level
+   * spellshape wizard feat of your choice."* Same spread lines 4890 / 5111 / 5971 / 6075 already use. */
+  for (const fid of classFeatureIdsOwned(
+    { classId: build.classId, subclassId: build.subclassId, level, classChoices: grantOptions.map((o) => ({ id: o.id, level: 1 })) },
+    content,
+  )) {
     pickFrom(fid, Math.max(1, Math.min(level, content.classFeatures[fid]?.level ?? 1)));
   }
   // Feats that GRANT another feat (Bastion-style dedications → a bonus feat, e.g. Lastwall Sentry →
@@ -4705,6 +4918,26 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     for (const o of grantOptions) {
       grantSources.push({ id: o.id, grants: content.classFeatures[o.id]?.grantsFeats });
     }
+    /*
+     * …and the feat one BRANCH of a class feature's own `effectChoices` grants — the same
+     * `EffectGrant.grantsFeats` lane the heritage loop above uses, which was documented and read for
+     * HERITAGE options only.
+     *
+     * Kineticist gate junctions (class-23): *"A skill junction makes you trained in the listed skill
+     * AND GRANTS YOU THE LISTED SKILL FEAT"* — Air/Experienced Smuggler, Earth/Hefty Hauler,
+     * Fire/Intimidating Glare, Metal/Quick Repair, Water/Underwater Marauder, Wood/Terrain Expertise.
+     * Each junction is one option of a class feature's effectChoice, so a record-level `grantsFeats`
+     * could only ever hand out one of the six to everybody; on their side each junction feat pairs the
+     * skill with its own `giveAbilityBlock`. The grant was unreachable however it was authored, which
+     * is why our junction options carry the skill and name the feat in prose only.
+     */
+    for (const fid of new Set([...classFeatureIdsOwned(build, content), ...grantOptions.map((o) => o.id)])) {
+      for (const ch of content.classFeatures[fid]?.effectChoices ?? []) {
+        const val = build.effectChoices?.[`${fid}:${ch.id}`];
+        const opt = ch.options?.find((o) => o.value === val);
+        if (opt?.grant?.grantsFeats?.length) grantSources.push({ id: fid, grants: opt.grant.grantsFeats });
+      }
+    }
     for (const src of grantSources) {
       for (const gid of src.grants ?? []) {
         if (!content.feats[gid]) continue;
@@ -4723,9 +4956,17 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
          * lion-blade, orc-lore, wylderheart.
          *
          * The bound lane knows the subject, so it owns the grant. */
-        if (FEAT_GRANT_BOUND_CHOICE[src.id]?.[gid]) continue;
+        /* …but ONLY when the bound lane will actually grant it: that loop walks FEAT_FEAT_GRANTS by
+         * granter id, so a granter with a bound ANSWER and no FEAT_FEAT_GRANTS row (the kineticist's
+         * Gate's Threshold, whose wood junction grants Terrain Expertise "for forest terrain" through an
+         * effectChoices option) had its feat skipped here and granted nowhere (batch 28, measured: a
+         * wood-junction kineticist built with no Terrain Expertise at all). Such a granter resolves the
+         * bound answer right here instead. */
+        const bound = FEAT_GRANT_BOUND_CHOICE[src.id]?.[gid];
+        if (bound && (FEAT_FEAT_GRANTS[src.id] ?? []).includes(gid)) continue;
         takenFeats.add(gid);
-        feats.push({ featId: gid, level: 1, category: content.feats[gid].category as FeatCategory, grantedBy: src.id, choice: grantedChoiceById[gid] });
+        const boundChoice = bound ? boundGrantChoice(build, content, src.id, gid) : undefined;
+        feats.push({ featId: gid, level: 1, category: content.feats[gid].category as FeatCategory, grantedBy: src.id, choice: boundChoice ?? grantedChoiceById[gid] });
       }
     }
   }
@@ -7742,6 +7983,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     ...(build.variantRules?.abp && build.abpSkills && Object.keys(build.abpSkills).length ? { abpSkills: build.abpSkills } : {}),
     ...(build.variantRules?.abp && build.abpApex ? { abpApex: build.abpApex } : {}),
     keyAbility,
+    ...(classDcKeyAbility ? { classDcKeyAbility } : {}),
     abilities,
     partialBoosts,
     proficiencies,
@@ -8412,12 +8654,20 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
         : null;
   }
 
-  // Fighter Weapon Mastery group — recover the chosen group from the elevated weaponGroups rank
-  // (fighters only elevate a group via this pick, so any weaponGroups entry ≥ master is it).
+  /* Fighter Weapon Mastery (5th) and Weapon Legend (13th) groups — recovered from the elevated rows.
+   *
+   * Read off `weaponGroupRanks`, which is where the fighter lane actually writes: the flat
+   * `weaponGroups` map it used to search has not carried these since the advanced-weapon clause was
+   * split out, so this recovery had quietly stopped recovering anything. The legendary row is Weapon
+   * Legend's group and the master row is Weapon Mastery's; when the fighter named ONE group only the
+   * legendary row exists, and the 5th-level field takes it back so a re-build reproduces the same
+   * character. */
   if (dcOwns('fighter')) {
-    const wg = c.proficiencies.weaponGroups ?? {};
-    b.fighterWeaponGroup =
-      Object.keys(wg).find((g) => wg[g] === 'legendary') ?? Object.keys(wg).find((g) => wg[g] === 'master') ?? null;
+    const rows = c.proficiencies.weaponGroupRanks ?? [];
+    const at = (r: string) => rows.find((x) => x.category !== 'advanced' && x.rank === r)?.group ?? null;
+    const legend = at('legendary');
+    b.fighterWeaponGroup = at('master') ?? legend;
+    b.fighterWeaponGroup2 = legend && legend !== b.fighterWeaponGroup ? legend : null;
   }
 
   // Subclass restricted skill choice (Pistolero way, Empiricism methodology) — recover the trained pick.

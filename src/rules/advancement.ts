@@ -270,10 +270,12 @@ export const CLASS_ADVANCEMENT: Record<string, AdvancementEntry[]> = {
     { level: 7, track: 'spellcasting', rank: 'expert', source: 'expert-spellcaster' },
     { level: 9, track: 'fortitude', rank: 'expert', source: 'magical-fortitude' },
     { level: 11, track: 'perception', rank: 'expert', source: 'perception-expertise' },
+    // b028 wizard#weapon-expertise — remaster print (AoN class-39, L11): "Your proficiency ranks for simple
+    // weapons and unarmed attacks increase to expert." The old five-weapon reading (club/crossbow/dagger/
+    // heavy crossbow/staff) is our LEGACY record classFeatures['wizard-weapon-expertise'], which nothing
+    // reaches; the build.ts weaponOverrides block that implemented it is gone.
     { level: 11, track: 'unarmed', rank: 'expert', source: 'weapon-expertise' },
-    // Wizard Weapon Expertise (L11) grants expert in unarmed + the FIVE wizard weapons only (club, crossbow,
-    // dagger, heavy crossbow, staff) — NOT all simple weapons. The per-weapon grant is applied in build.ts
-    // (weaponOverrides), since a category track would over-grant every other simple weapon.
+    { level: 11, track: 'simple', rank: 'expert', source: 'weapon-expertise' },
     { level: 13, track: 'unarmored', rank: 'expert', source: 'defensive-robes' },
     { level: 15, track: 'spellcasting', rank: 'master', source: 'master-spellcaster' },
     { level: 17, track: 'will', rank: 'master', source: 'prodigious-will' },
@@ -466,6 +468,32 @@ export const CLASS_ADVANCEMENT: Record<string, AdvancementEntry[]> = {
     { level: 19, track: 'light', rank: 'master', source: 'medium-armor-mastery' },
     { level: 19, track: 'medium', rank: 'master', source: 'medium-armor-mastery' },
   ],
+  /*
+   * LIGHT MORTAR INNOVATION (Munitions Master class archetype, batch 28) — the inventor table with two
+   * rows moved: *"Inventive Expertise (7th): You gain this class feature at 7th level instead of 9th"*,
+   * *"Inventive Mastery (15th): … at 15th level instead of 17th"*. A subclass-keyed table REPLACES the
+   * class table (advancementRows), so every other row is repeated verbatim.
+   */
+  'light-mortar-innovation': [
+    { level: 5, track: 'unarmed', rank: 'expert', source: 'inventor-weapon-expertise' },
+    { level: 5, track: 'simple', rank: 'expert', source: 'inventor-weapon-expertise' },
+    { level: 5, track: 'martial', rank: 'expert', source: 'inventor-weapon-expertise' },
+    { level: 7, track: 'reflex', rank: 'expert', source: 'reflex-expertise' },
+    { level: 7, track: 'classDc', rank: 'expert', source: 'inventive-expertise' },
+    { level: 11, track: 'will', rank: 'master', source: 'churning-mind' },
+    { level: 11, track: 'unarmored', rank: 'expert', source: 'medium-armor-expertise-inventor' },
+    { level: 11, track: 'light', rank: 'expert', source: 'medium-armor-expertise-inventor' },
+    { level: 11, track: 'medium', rank: 'expert', source: 'medium-armor-expertise-inventor' },
+    { level: 13, track: 'perception', rank: 'expert', source: 'perception-expertise' },
+    { level: 13, track: 'unarmed', rank: 'master', source: 'inventor-weapon-mastery' },
+    { level: 13, track: 'simple', rank: 'master', source: 'inventor-weapon-mastery' },
+    { level: 13, track: 'martial', rank: 'master', source: 'inventor-weapon-mastery' },
+    { level: 15, track: 'classDc', rank: 'master', source: 'inventive-mastery' },
+    { level: 17, track: 'fortitude', rank: 'master', source: 'anvils-hardness' },
+    { level: 19, track: 'unarmored', rank: 'master', source: 'medium-armor-mastery' },
+    { level: 19, track: 'light', rank: 'master', source: 'medium-armor-mastery' },
+    { level: 19, track: 'medium', rank: 'master', source: 'medium-armor-mastery' },
+  ],
   inventor: [
     { level: 5, track: 'unarmed', rank: 'expert', source: 'inventor-weapon-expertise' },
     { level: 5, track: 'simple', rank: 'expert', source: 'inventor-weapon-expertise' },
@@ -614,7 +642,11 @@ export const CLASS_ADVANCEMENT: Record<string, AdvancementEntry[]> = {
     { level: 5, track: 'martial', rank: 'expert', source: 'weapon-expertise' },
     { level: 7, track: 'reflex', rank: 'master', source: 'confident-evasion' },
     { level: 9, track: 'classDc', rank: 'expert', source: 'swashbuckler-expertise' },
-    { level: 11, track: 'perception', rank: 'master', source: 'vigilant-senses' },
+    // b028 swashbuckler#perception-mastery-source — print names the L11 feature "Perception Mastery"
+    // (AoN class-63 table row 11), and classes.swashbuckler.features carries featureId 'perception-mastery';
+    // 'vigilant-senses' is the pre-remaster name and exists nowhere else in the app, but explain.ts renders
+    // humanize(source) straight into the Perception breakdown.
+    { level: 11, track: 'perception', rank: 'master', source: 'perception-mastery' },
     { level: 13, track: 'reflex', rank: 'legendary', source: 'assured-evasion' },
     { level: 13, track: 'unarmed', rank: 'master', source: 'weapon-mastery' },
     { level: 13, track: 'simple', rank: 'master', source: 'weapon-mastery' },

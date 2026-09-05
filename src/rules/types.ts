@@ -2106,6 +2106,14 @@ export interface OpenChoiceFrom {
    */
   grantInnate?: { usesPerDay?: number; note?: string };
   /**
+   * A DAILY open `feat` pick that GRANTS the chosen feat until the next daily preparations —
+   * Experimental Spellshaping (class-39): *"Starting at 4th level, during your daily preparations, you
+   * can gain a spellshape wizard feat of your choice that you don't already have … its level must be
+   * no more than half your level"*. Read by dailyChoiceGrants (→ grantsFeats) and applied in
+   * applyPlayState, which appends the feat for the day; the half-level cap is `maxLevelByLevel`.
+   */
+  grantFeat?: boolean;
+  /**
    * language + `daily`: the morning's pick becomes a language you actually have, not a recorded note.
    * The exact counterpart of `grantInnate` above, and OPT-IN for the same reason: `type: 'language'`
    * is also used by a BUILD choice that grants nothing by itself (Settlement Scholastics), and keying
@@ -2732,6 +2740,12 @@ export interface ChoiceOptionLimit {
 
 /** An embedded sub-choice a feat prompts when taken (a Foundry ChoiceSet). */
 export interface FeatChoiceDef {
+  /**
+   * The character level from which this question is asked at all. Experimental Spellshaping's DAILY
+   * spellshape pick: *"Starting at 4th level, during your daily preparations…"* — below it the morning
+   * has no such question. Read by dailyChoicesFor; a build-time choice with no level gate stays unset.
+   */
+  minLevel?: number;
   flag: string;
   prompt: string;
   /**
@@ -3272,6 +3286,13 @@ export interface ClassFeature extends ContentBase, DefenseGrants {
    *  feature). The importer has been writing this; only `Feat.focusPoolBonus` was ever read, so it
    *  was undeclared, unread, and every psychic from 5th on was one Focus Point short. */
   focusPoolBonus?: number;
+  /** Familiar abilities the feature hands the character's familiar, keyed by SUBCLASS id — the witch's
+   *  `patron` feature maps all 16 patrons to their unique ability. Print (AoN class-38, Familiar):
+   *  *"one of these is a unique ability based on your patron and is always selected"*, so it rides the
+   *  granted (free) channel in `deriveFamiliar` and costs none of the player's picks. The field has
+   *  shipped in core.json since the migration with no declaration and no reader (b028
+   *  witch#patron-familiar-ability). */
+  familiarAbilities?: Record<string, string[]>;
   /** Foundry classification tags (e.g. `armor-innovation-modification`) used to filter selectable options. */
   otherTags?: string[];
   /**
@@ -3354,7 +3375,7 @@ export interface Action extends ContentBase {
 
 /** An inventor's resolved innovation + chosen tiered modifications (initial@1, breakthrough@7, revolutionary@15). */
 export interface InventorBuild {
-  innovationType: 'armor' | 'weapon' | 'construct';
+  innovationType: 'armor' | 'weapon' | 'construct' | 'light-mortar';
   /** Armor innovation's base statistics set (gates several armor modifications). */
   armorStats?: 'power-suit' | 'subterfuge-suit';
   /** Chosen modification ids by tier (construct modifications are prose-only, so unselectable). */
@@ -3417,8 +3438,47 @@ export interface SubclassOption {
   id: string;
   name: string;
   description: string;
+  /**
+   * Replaces the class's "additional skills" count for this option. Bloodrager (archetype-283):
+   * *"a number of additional skills equal to 2 plus your Intelligence modifier, instead of your normal
+   * starting skill proficiencies"* — the barbarian's 3 becomes 2. Read in additionalClassSkills.
+   */
+  additionalSkills?: number;
+  /**
+   * A feat the option REQUIRES the character to take at a given level — a class archetype's
+   * dedication: Bloodrager *"You must select Bloodrager Dedication as your 2nd-level class feat"*,
+   * Light Mortar *"You must select Munitions Master Dedication as your 2nd-level class feat"*. Reported
+   * by setupMissing once the character has reached that level without it; never auto-granted, because
+   * the printed sentence is an instruction to the player, not a grant.
+   */
+  requiresFeat?: { featId: string; level: number };
+  /**
+   * The attribute the CLASS DC uses instead of the key attribute — Way of the Spellshot: *"You use
+   * Intelligence for your class DC"*. Deliberately NOT `keyAbility`: that field makes the whole
+   * character's key attribute Int (attacks, class-DC-based abilities and all), which the archetype does
+   * not say. Lands on Character.classDcKeyAbility, read by deriveClassDc.
+   */
+  classDcKeyAbility?: AbilityId;
+  /**
+   * A spell the option lets the player CHOOSE (the flat `grantedSpells` cannot say "or") — witch
+   * patrons Ripple in the Deep (*"dizzying colors or grease"*) and Wilding Steward (*"summon animal or
+   * summon plant or fungus"*). The answer is stored in BuildState.subclassSpellChoice[optionId] and
+   * joins `grantedSpells` in the repertoire/spellbook pass.
+   */
+  grantedSpellChoice?: { id: string; prompt: string; options: string[] };
   /** Cross-references in `description` (for in-text linking). */
   descRefs?: DescRef[];
+  /**
+   * The option's own printed TRAITS. Only `holy` / `unholy` are read today, and they are a GATE:
+   * champion class-58 prints *"Whether you become holy, unholy, or neither will limit your choice of
+   * causes, devotion spells, and feats"* and *"Some causes are limited to certain sanctifications"*,
+   * with the limit carried on the cause page as a trait (cause-8 Desecration and cause-10 Iniquity
+   * carry Unholy; cause-9 Grandeur and cause-14 Redemption carry Holy; Justice / Liberation /
+   * Obedience carry none). Neither our data nor Wanderer's Guide encoded the gate, so a champion who
+   * answered sanctification "none" was still offered all seven causes with nothing on screen saying
+   * which were illegal. Read by `subclassOptionAllowed` (build.ts).
+   */
+  traits?: string[];
   /** Overrides the class's spell tradition (e.g. a witch patron picks the tradition). */
   tradition?: Tradition;
   /** Overrides the spellcasting key ability (e.g. psychic subconscious mind = Int or Cha). */
@@ -3463,14 +3523,35 @@ export interface SubclassOption {
   /** Mechanical proficiencies granted by the subclass (order/racket skill, ruffian armor, …). */
   grants?: {
     skills?: SkillId[];
+    /** Class skills this option TAKES AWAY — the ranger's Vindicator hunter's edge: *"trained in
+     *  Religion INSTEAD OF Nature"*. Without it the option added Religion beside Nature. */
+    removesSkills?: SkillId[];
     weapons?: WeaponCategory[];
     armor?: ArmorCategory[];
     /** Lore SUBJECTS the option trains ('farming', 'herbalism'). An animist apparition grants two
      *  named Lores, and `skills` — a SkillId list — cannot express a Lore at all. Kept `lore:<subject>`. */
     lores?: string[];
   };
+  /**
+   * The LEVEL LADDER on the Lores `grants.lores` trains — the same shape `Heritage.loreProgression`
+   * already uses, deliberately, rather than a second spelling of one idea.
+   *
+   * Animist apparitions print it (War of Immortals pg. 17, "Reading An Apparition Entry"): *"When you
+   * are attuned to an apparition, you are trained in these Lore skills… At 8th level and beyond… expert
+   * proficiency in their apparition skills; at 16th level and beyond… master proficiency"*. Our grant
+   * loop wrote a flat `trained` with no level branch, so every apparition Lore sat at trained to 20th.
+   */
+  loreProgression?: { level: number; rank: ProficiencyRank }[];
   /** A restricted skill choice the subclass grants (gunslinger Pistolero way, investigator Empiricism). */
   skillChoice?: SkillId[];
+  /**
+   * …and a LORE is also a legal answer to that choice. Investigator methodology-2/6 (Empiricism):
+   * *"You are trained in one Intelligence-based skill of your choice"* — and a Lore is
+   * Intelligence-based, which is why Wanderer's Guide's own select carries a nested "Select a Lore"
+   * branch beside Arcana/Crafting/Occultism. `skillChoice` is a `SkillId[]` and cannot express a Lore
+   * at all, so the branch had no carrier; the player's subject lands in `BuildState.subclassLore`.
+   */
+  skillChoiceLore?: boolean;
   /** Sorcerer Draconic: the dragon exemplar options (each sets the spell tradition + 2nd bloodline skill). */
   dragonChoice?: { slug: string; label: string; tradition: Tradition; skill: SkillId; damageType: string }[];
   /** This subclass requires choosing a deity even when the class normally doesn't (rogue Avenger). */
@@ -3521,6 +3602,46 @@ export interface ClassSpellcasting {
   progression?: SpellProgression;
   /** Slot progression; absent for non-slot casters. */
   slots?: SpellSlotTable;
+  /**
+   * KNOWN SPELLS BEYOND THE SLOT COUNT, per rank. A spontaneous repertoire is sized from the slot
+   * table everywhere in this app, and two classes print a repertoire that is deliberately LARGER:
+   *
+   * - Summoner (class-18): *"At 1st level, you learn two 1st-level spells of your choice"* and *"your
+   *   spell repertoire reaches its maximum size of five spells"*, against a table whose *"maximum
+   *   number of spell slots you get from the summoner class is four"* — repertoire = slots + 1 at
+   *   every level, so `{1: 1}`.
+   * - Oracle (class-61) Oracular Clarity: *"Add TWO common 10th-rank divine spells to your repertoire.
+   *   You gain a SINGLE 10th-rank spell slot"* — so `{10: 1}`.
+   *
+   * A rank ABOVE the highest the caster can actually cast is ignored (see `repertoireCounts`), which
+   * is what keeps the oracle's second 10th-rank pick from appearing before 19th level. One field for
+   * both because the same shape covers bard Magnum Opus and sorcerer Bloodline Paragon next.
+   */
+  extraRepertoire?: Record<number, number>;
+  /**
+   * The class's granted (non-picked) spells count INSIDE the repertoire allowance instead of on top.
+   *
+   * Sorcerer (class-62): *"you learn two 1st-rank spells of your choice and four cantrips of your
+   * choice, as well as an additional spell and cantrip from your bloodline"* and *"your first new spell
+   * is always the sorcerous gift spell for that rank"* — the gift IS one of the five cantrips the
+   * table's Cantrips column allows, not a sixth. The default (append) is right for the PSYCHIC, whose
+   * own print footnotes the conscious mind's cantrips as *additional* ("3*"), so this is opt-in.
+   */
+  grantedCountsAgainstRepertoire?: boolean;
+  /**
+   * A LEARNED prepared caster's spellbook budget: leveled spells in the book at 1st level, plus
+   * `perLevel` more each level after. Replaces a hardcoded class-id test in the builder.
+   *
+   * Magus (class-17): *"The spellbook contains your choice of eight arcane cantrips and four 1st-level
+   * arcane spells… Each time you gain a level, you add two more arcane spells to your spellbook"* —
+   * `{ spells: 4, perLevel: 2 }`, NOT the wizard's 5 + 2. Wanderer's Guide marks the same distinction
+   * with its PREPARED-LIST casting token (wizard, witch, magus, necromancer, technomancer) against
+   * PREPARED-TRADITION (cleric, druid, animist).
+   *
+   * Cantrips are deliberately not carried: the book's cantrip count is not modelled for the wizard
+   * either (see `wizardSpellbookSize`), so a field for it would have no reader.
+   */
+  spellbook?: { spells: number; perLevel: number };
 }
 
 export interface ClassDef extends ContentBase {
@@ -3568,6 +3689,29 @@ export interface ClassDef extends ContentBase {
    * array and already round-trips two entries at one level.
    */
   bonusSkillIncreaseLevels?: number[];
+  /**
+   * …and the RESTRICTION on those bonus increases, the increase-half twin of
+   * `restrictedSkillFeatLevels` (which only ever governed the feat half).
+   *
+   * Swashbuckler Stylish Tricks (class-63): *"you gain an additional skill increase you can apply only
+   * to Acrobatics or the skill from your swashbuckler's style"* — our picker offered every skill and a
+   * level-3 Braggart could raise Medicine to expert, which print forbids.
+   * Thaumaturge Thaumaturgic Expertise (9) / Mastery (17) (class-69): *"You also gain an additional
+   * skill increase, which you can apply only to Arcana, Nature, Occultism, or Religion."*
+   *
+   * `includeSubclassGrantedSkills` means the same thing it means for the feat half — *"or the skill
+   * from your swashbuckler's style"* names a pick, not a fixed skill — and resolves through the
+   * subclass option's `grants.skills`. Read by `restrictedSkillIncreaseAllowed` (build.ts), which both
+   * buildCharacter and the builder's bonus-increase picker consult, so the two cannot drift apart.
+   */
+  restrictedSkillIncreaseLevels?: {
+    levels: number[];
+    skills?: SkillId[];
+    includeSubclassGrantedSkills?: boolean;
+    /** The feature whose text imposes it, so the picker can say why an option is greyed. */
+    featureId?: string;
+    reason: string;
+  };
   /**
    * Skill-feat slots a class feature NARROWS rather than grants — the investigator's Skillful Lessons
    * (*"the feat must be one for an Intelligence-, Wisdom-, or Charisma-based skill, or for the skill
@@ -5639,6 +5783,10 @@ export interface Character {
   /** How much less the Doomed condition counts for this character (Vivacious Gnome: 1). Pass to
    *  dyingDeathThreshold(doomed, base, doomedReduction); omitted means 0. */
   doomedReduction?: number;
+  /** The attribute the CLASS DC uses when it is not the key attribute — Way of the Spellshot: *"You use
+   *  Intelligence for your class DC"* while the gunslinger's key attribute stays Dexterity. Read by
+   *  deriveClassDc; absent means the key attribute. */
+  classDcKeyAbility?: AbilityId;
   /** How much this character reduces the DC of recovery checks (normally 10 + dying value). Summed from
    *  feats and invested items; omitted means no reduction. See Feat.recoveryDcReduction. */
   recoveryDcReduction?: number;

@@ -261,10 +261,10 @@ describe('feature-gap fixes (granted spells/feats, deity, champion devotion)', (
       gateForks: { '5': 'fire-gate' },
       keyAbility: 'con',
     });
-    // Fire's skill grant (Intimidation) now applies alongside air (Stealth) + earth (Athletics).
-    expect(ch.proficiencies.skills.intimidation).toBe('trained');
-    expect(ch.proficiencies.skills.stealth).toBe('trained');
-    expect(ch.proficiencies.skills.athletics).toBe('trained');
+    // Fire joins the kinetic elements (impulse access). No skill comes with it — print puts each
+    // element's skill on its SKILL JUNCTION, not on the gate (batch 28).
+    expect(ch.kineticist?.elements ?? []).toContain('fire');
+    expect(ch.proficiencies.skills.intimidation ?? 'untrained').toBe('untrained');
 
     // A fork keyed to a threshold the character hasn't reached yet does nothing.
     const low = build('kineticist', 3, {
@@ -272,7 +272,7 @@ describe('feature-gap fixes (granted spells/feats, deity, champion devotion)', (
       gateForks: { '5': 'fire-gate' },
       keyAbility: 'con',
     });
-    expect(low.proficiencies.skills.intimidation ?? 'untrained').toBe('untrained');
+    expect(low.kineticist?.elements ?? []).not.toContain('fire');
   });
 
   it('Inventor resolves tiered modifications, gated by innovation type, armor base, and level', () => {
