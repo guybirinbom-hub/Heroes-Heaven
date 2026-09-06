@@ -51,7 +51,7 @@ import type {
 import type { Ancestry, ClassArchetype, DefenseGrants, EffectChoice, EffectGrant, FeatChoiceDef, FocusPool, GrantModification, Heritage, InnateSpellGrant, ItemDesignation, ItemPassiveEffects, RecordMarker, RestrictedSlotGrant, Size, SourceInfo, SpellChoiceFilter, SpellNote, SpellSlotBonus, SpellcastingGrant } from './types';
 import { CHARACTER_SCHEMA_VERSION, PROFICIENCY_RANKS, SKILLS } from './types';
 import { CHOOSABLE_SOURCE_MAPS } from './sources';
-import { abilityMod, askedAtDailyPrep, belongsToArchetype, choiceOwnedFeatureIds, classFeatureIdsOwned, domainPoolForChoice, effectiveChoiceOptions, narrowChoiceOptions, profBonus, resolveFormula, splinterDomainsOf, stepDie, type NarrowedOption } from './derive';
+import { abilityMod, askedAtDailyPrep, belongsToArchetype, choiceOwnedFeatureIds, classFeatureIdsOwned, domainPoolForChoice, effectiveChoiceOptions, narrowChoiceOptions, outsideDomains, profBonus, resolveFormula, splinterDomainsOf, stepDie, type NarrowedOption } from './derive';
 import { advancementRows } from './advancement';
 import { applyCounterMods } from './counterMods';
 import { choiceGrantFor, FEAT_GRANTS, LOCKED_SKILL_KEYS, maxTakes, upgradeRankAt } from './featGrants';
@@ -1939,7 +1939,39 @@ export function buildChoiceOptions(
    * applies unchanged: greyed with the reason, never removed, and never this slot's own answer. */
   if (def.kind === 'domains') {
     const featId = slotKey ? build.featPicks?.[slotKey] : undefined;
-    return limited(markClaimed(domainPoolForChoice(build, content, featId, def.domainPool).map((d) => ({ value: d, label: cap(d) }))));
+    let opts: NarrowedOption[] = domainPoolForChoice(build, content, featId, def.domainPool).map((d) => ({ value: d, label: cap(d) }));
+    /*
+     * "…and UP TO ONE domain that isn't on either list and isn't anathematic to your deity. Any
+     * domain spell you cast from a domain that isn't on either of your deity's lists is always
+     * heightened to 1 rank lower than usual for a focus spell" (Splinter Faith).
+     *
+     * The pool now carries every other domain, so the player has to be able to SEE which rows are
+     * the outside ones — and "up to one" has to hold. Q27: greyed with the reason once another pick
+     * holds an outside domain, never removed. Never this pick's own answer, which is what keeps the
+     * holder's own picker from greying out the row it is displaying.
+     */
+    if (def.domainPool === 'deity+alternate+one-any') {
+      const answers = choiceKeys(slotKey ?? '', def).map((k) => build.featChoices?.[k]).filter((v): v is string => !!v);
+      const outside = outsideDomains(opts.map((o) => o.value), build.deityId, content, def.domainPool);
+      /* Exempt the FIRST outside answer only — the one `splinterDomainsOf` keeps. Exempting every
+       * answer meant a stored SECOND outside domain (a deity change, an import) sat in its picker
+       * looking accepted while deityDomains had already dropped it: "nature, pain, knowledge, death"
+       * showed four live rows and granted three. Greying the second one is where the player is told
+       * why, and it makes the picker say exactly what the build does. */
+      const kept = answers.find((a) => outside.has(a));
+      opts = opts.map((o) =>
+        outside.has(o.value)
+          ? {
+              ...o,
+              label: `${o.label} (outside your deity's lists — heightened 1 rank lower)`,
+              ...(kept && o.value !== kept
+                ? { disabled: "Only one of the four may come from outside your deity's domains and alternate domains." }
+                : {}),
+            }
+          : o,
+      );
+    }
+    return limited(markClaimed(opts));
   }
   if (def.kind === 'skills') return limited(markClaimed(trainedSkillOptions(character, def.minRank ?? 'trained')));
   const narrowed = limited(markClaimed(narrowChoiceOptions(recordId, def, effectiveChoiceOptions(recordId, def, character, content), character, content)));

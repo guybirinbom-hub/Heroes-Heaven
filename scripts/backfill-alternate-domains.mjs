@@ -145,14 +145,15 @@ const SPLINTER = {
   flag: 'splinterDomains',
   prompt: 'Splinter faith domains',
   kind: 'domains',
-  domainPool: 'deity+alternate',
+  // "…and up to one domain that isn't on either list and isn't anathematic to your deity" (feat-7596).
+  // This pool offers that one: every other domain is listed after the deity's two lists, labelled, and
+  // withheld once one outside pick is held. Only "isn't anathematic" is left to the player — nothing in
+  // the data marks a domain anathematic to a deity — and the heightening is stated in the note.
+  domainPool: 'deity+alternate+one-any',
   picks: 4,
   distinct: true,
-  // The third source the feat allows cannot be offered safely: nothing in the data marks a domain
-  // anathematic to a deity, and the heightening penalty for an off-list domain is not modelled.
-  // Stated rather than silently ignored — this is what `note` is for.
   note:
-    'You may also take up to ONE domain from outside both lists, so long as it is not anathematic to your deity — pick it here only if your GM agrees. A domain spell from a domain on neither list is always heightened to 1 rank lower than usual.',
+    "One of the four may come from outside both lists, as long as it isn't anathematic to your deity; a domain spell from a domain on neither list is always heightened to 1 rank lower than usual for a focus spell.",
 };
 if (!core.feats['splinter-faith']) {
   console.error('splinter-faith is not a feat in core.json — its choice was not written.');

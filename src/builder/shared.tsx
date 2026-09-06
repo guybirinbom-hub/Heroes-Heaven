@@ -76,6 +76,7 @@ import {
   domainPoolForChoice,
   formatMod,
   narrowChoiceOptions,
+  outsideDomains,
   effectiveChoiceLimits,
 } from '../rules/derive';
 import { explainStat, statHasSituational, type StatRef } from '../rules/explain';
@@ -379,14 +380,30 @@ export function useBuilderActions(
         // swapping in the new deity's first domain, which was answering the question on the player's
         // behalf while looking like their own pick.
         const featChoices = { ...b.featChoices };
-        for (const [slotKey, val] of Object.entries(featChoices)) {
+        /** Slots that have already kept one domain from outside the NEW deity's two lists. */
+        const outsideKept = new Set<string>();
+        for (const [key, val] of Object.entries(featChoices)) {
+          // A multi-pick choice fans its answers out to `<slot>#<n>` (choiceKeys), so the SLOT has to
+          // be recovered before featPicks can name the feat. Read raw, the four Splinter Faith
+          // answers matched no featPick at all and changing deity validated nothing on the one feat
+          // with the widest pool.
+          const slotKey = key.replace(/#\d+$/, '');
           const featId = b.featPicks[slotKey];
           const def = featId ? content.feats[featId]?.choice : undefined;
           // A domain choice may draw from a WIDER pool than the deity's own list (Splinter Faith
           // adds the alternate domains), so validate against the pool that choice actually offers.
-          if (def?.kind === 'domains') {
-            const pool = domainPoolForChoice({ ...b, deityId: id || null }, content, featId, def.domainPool);
-            if (!pool.includes(val)) delete featChoices[slotKey];
+          if (def?.kind !== 'domains') continue;
+          const build = { ...b, deityId: id || null };
+          if (!domainPoolForChoice(build, content, featId, def.domainPool).includes(val)) {
+            delete featChoices[key];
+            continue;
+          }
+          // "…and up to ONE domain that isn't on either list" — the new deity's lists are different,
+          // so two surviving answers can both be outside them. The later one goes, exactly as the
+          // picker withholds it.
+          if (outsideDomains([val], build.deityId, content, def.domainPool).size) {
+            if (outsideKept.has(slotKey)) delete featChoices[key];
+            else outsideKept.add(slotKey);
           }
         }
         return { ...b, deityId: id || null, divineFont: font, featChoices };
@@ -465,7 +482,16 @@ export function useBuilderActions(
       setBuild((b) => {
         const featPicks = { ...b.featPicks };
         const featChoices = { ...b.featChoices };
-        delete featChoices[slotKey]; // a new feat invalidates the old slot's sub-choice
+        // A new feat invalidates the old slot's sub-choice — INCLUDING a multi-pick one, whose
+        // answers live at `<slot>#0..#n`, not at the bare slot key. Deleting only the bare key left
+        // Splinter Faith's four answers behind: swap it out of a slot and back in and the player got
+        // "nature, pain, zeal, death" — four domains they never picked for this feat, one of them the
+        // *"up to one domain that isn't on either list"* (feat-7596) — which is exactly the surprise
+        // the comment below says was removed. Same `#n` blindness as the changeDeity loop, fixed at
+        // the one place every feat swap goes through, so every multi-pick choice is covered.
+        for (const k of Object.keys(featChoices)) {
+          if (k === slotKey || k.startsWith(`${slotKey}#`)) delete featChoices[k];
+        }
         if (featId) {
           featPicks[slotKey] = featId;
           // The feat's embedded choice ("choose a domain", "choose an energy type") is left UNSET.

@@ -320,7 +320,9 @@ entry or gap line. Writes `work/.bNNN-verify-gaps.txt`.
    `wg-batch-close.mjs` derives `MATCHES` from that line, and a record-only line turns every sibling
    finding on that record into MATCHES too. Fix an inherited record-only line and say so in the notes.
 7. Own edits are listed: `closerEdits[] = {file, why (the printed clause or the refusal), test}`. An
-   edit with no test does not ship.
+   edit with no test does not ship — and every file the closer creates or edits is appended to the
+   `stage[]` of the family whose finding it was closing in `work/.bNNN-specs.json`, or the commit
+   script never stages it (batch 030's closer test file was left out of the batch commit this way).
 8. `regate` is blocking: a newly failing earlier-batch record gets a disposition line (fixed here /
    queued with its owner-question `n` / next batch), and no id outside batch NNN may be settled.
 9. `close` **derives** `wg-batch-NNN-parity.json` / `-residual.json` — never hand-written, never

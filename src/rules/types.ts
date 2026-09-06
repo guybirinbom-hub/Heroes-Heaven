@@ -2844,11 +2844,16 @@ export interface FeatChoiceDef {
   allowCustom?: { label: string; placeholder: string };
   /** For 'open': what the player is choosing from. */
   from?: OpenChoiceFrom;
-  /** For 'domains': which domains are offered. Default 'deity' (the deity's own list). Splinter
-   *  Faith draws from "your deity's domains, your deity's alternate domains, and up to one domain
-   *  that isn't on either list" — the last clause is the player's to honour and is stated in `note`,
-   *  because nothing in the data marks a domain anathematic to a deity. */
-  domainPool?: 'deity' | 'deity+alternate' | 'all';
+  /** For 'domains': which domains are offered. Default 'deity' (the deity's own list).
+   *
+   *  'deity+alternate+one-any' is Splinter Faith's pool: *"These domains must be chosen from among
+   *  your deity's domains, your deity's alternate domains, and up to one domain that isn't on either
+   *  list and isn't anathematic to your deity."* Every other domain is offered too, labelled as
+   *  outside, and withheld once one outside pick is held — the count ("up to one") is enforced; only
+   *  "isn't anathematic" stays the player's, since nothing in the data marks a domain anathematic.
+   *  A deity with three printed domains and no alternates (Alocer) cannot reach four picks without
+   *  it. */
+  domainPool?: 'deity' | 'deity+alternate' | 'deity+alternate+one-any' | 'all';
   /**
    * `grant` is what the answer DOES. Without it a daily choice was recorded and nothing more: 67
    * records collected an answer at rest and the sheet never changed, so "habituate your skin against

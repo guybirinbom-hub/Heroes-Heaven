@@ -71,29 +71,38 @@ describe('Draconic Paragon — additional effects for a feat you already have', 
 });
 
 describe('Splinter Faith — the four you chose ARE your deity’s domains', () => {
-  // Sarenrae prints fire, light, sun, truth. A splinter faith takes four different ones.
-  const PICKED = ['cities', 'family', 'freedom', 'nature'];
+  /*
+   * Abadar prints cities, earth, travel, wealth and lists creation, duty, metal, toil as ALTERNATES,
+   * so its four alternates are four legal picks that displace all four printed ones — which is what
+   * these assertions are about.
+   *
+   * It used to be Sarenrae with four domains from neither of its lists. That was never a legal
+   * splinter faith: *"up to ONE domain that isn't on either list"* (feat-7596), and now that the
+   * picker offers that one outside domain, `splinterDomainsOf` enforces the count and dropped three
+   * of the four. A fixture that only worked because a rule was unenforced.
+   */
+  const PICKED = ['creation', 'duty', 'metal', 'toil'];
   const slot = '1:class:0';
   const splinter = (picks = PICKED) =>
     build('cleric', 8, {
       subclassId: 'cloistered-cleric',
-      deityId: 'sarenrae',
+      deityId: 'abadar',
       featPicks: { [slot]: 'splinter-faith' },
       featChoices: Object.fromEntries(picks.map((d, i) => [`${slot}#${i}`, d])),
     });
 
   it('replaces the deity domains the sheet reads', () => {
-    const printed = c().deities.sarenrae.domains;
+    const printed = c().deities.abadar.domains;
     const ch = splinter();
     expect(deityDomainsOf(ch, c()).domains).toEqual(PICKED);
     expect(deityDomainsOf(ch, c()).from).toBe('Splinter Faith');
     // …and a cleric of the same deity WITHOUT the feat still gets the printed four.
-    const plain = build('cleric', 8, { subclassId: 'cloistered-cleric', deityId: 'sarenrae' });
+    const plain = build('cleric', 8, { subclassId: 'cloistered-cleric', deityId: 'abadar' });
     expect(deityDomainsOf(plain, c()).domains).toEqual(printed);
   });
 
   it('moves the displaced printed domains into the ALTERNATE list, as the feat says', () => {
-    const printed = c().deities.sarenrae.domains;
+    const printed = c().deities.abadar.domains;
     const alt = deityDomainsOf(splinter(), c()).alternateDomains;
     for (const d of printed) expect(alt, d).toContain(d);
     for (const d of PICKED) expect(alt, d).not.toContain(d);
@@ -101,7 +110,7 @@ describe('Splinter Faith — the four you chose ARE your deity’s domains', () 
 
   it('feeds every OTHER domain picker the splinter list', () => {
     const ch = splinter();
-    const b = { featPicks: { [slot]: 'splinter-faith' }, featChoices: Object.fromEntries(PICKED.map((d, i) => [`${slot}#${i}`, d])), deityId: 'sarenrae' };
+    const b = { featPicks: { [slot]: 'splinter-faith' }, featChoices: Object.fromEntries(PICKED.map((d, i) => [`${slot}#${i}`, d])), deityId: 'abadar' };
     // Domain Initiate draws from `deity` — with the feat it must offer the four chosen ones.
     expect(domainPoolForChoice(b, c(), 'domain-initiate', 'deity')).toEqual(PICKED);
     expect(ch.deityDomains?.domains).toEqual(PICKED);
@@ -111,18 +120,18 @@ describe('Splinter Faith — the four you chose ARE your deity’s domains', () 
     // It draws from "your deity's domains, your deity's alternate domains" — the PRINTED lists. Fed
     // its own output it would offer the four already chosen and nothing else, and a player could
     // never change their mind.
-    const b = { featPicks: { [slot]: 'splinter-faith' }, featChoices: Object.fromEntries(PICKED.map((d, i) => [`${slot}#${i}`, d])), deityId: 'sarenrae' };
+    const b = { featPicks: { [slot]: 'splinter-faith' }, featChoices: Object.fromEntries(PICKED.map((d, i) => [`${slot}#${i}`, d])), deityId: 'abadar' };
     const pool = domainPoolForChoice(b, c(), 'splinter-faith', 'deity+alternate');
-    expect(pool).toEqual(domainPoolFor('sarenrae', c(), 'deity+alternate'));
-    for (const d of c().deities.sarenrae.domains) expect(pool, d).toContain(d);
+    expect(pool).toEqual(domainPoolFor('abadar', c(), 'deity+alternate'));
+    for (const d of c().deities.abadar.domains) expect(pool, d).toContain(d);
   });
 
   it('does nothing until the four picks are answered', () => {
-    const b = { featPicks: { [slot]: 'splinter-faith' }, featChoices: {}, deityId: 'sarenrae' };
+    const b = { featPicks: { [slot]: 'splinter-faith' }, featChoices: {}, deityId: 'abadar' };
     expect(splinterDomainsOf(b, c())).toBeNull();
-    const ch = build('cleric', 8, { subclassId: 'cloistered-cleric', deityId: 'sarenrae', featPicks: { [slot]: 'splinter-faith' } });
+    const ch = build('cleric', 8, { subclassId: 'cloistered-cleric', deityId: 'abadar', featPicks: { [slot]: 'splinter-faith' } });
     expect(ch.deityDomains).toBeUndefined();
-    expect(deityDomainsOf(ch, c()).domains).toEqual(c().deities.sarenrae.domains);
+    expect(deityDomainsOf(ch, c()).domains).toEqual(c().deities.abadar.domains);
   });
 
   it('no longer carries a note saying the swap is not enforced', () => {

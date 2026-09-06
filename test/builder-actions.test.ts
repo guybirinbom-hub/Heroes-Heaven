@@ -89,4 +89,19 @@ describe('builder: stale picks pruned on origin change', () => {
     expect(h.get().featPicks['1:class:0']).toBe(domainFeat!.id);
     expect(h.get().featChoices['1:class:0']).toBeUndefined();
   });
+
+  it('setFeat clears a MULTI-pick choice’s answers too, not just the bare slot key', () => {
+    // A multi-pick choice fans out to `<slot>#0..#n`, so deleting only the bare key orphaned them.
+    // Splinter Faith made it concrete: swap it out of a slot and back in and the build carried four
+    // domains the player never picked for this feat — including the *"up to one domain that isn't on
+    // either list"* (feat-7596) — which is the surprise `setFeat` exists to prevent.
+    const slot = '1:class:0';
+    const h = harness({
+      deityId: 'alocer',
+      featPicks: { [slot]: 'splinter-faith' },
+      featChoices: Object.fromEntries(['nature', 'pain', 'zeal', 'death'].map((d, i) => [`${slot}#${i}`, d])),
+    });
+    h.actions.setFeat(slot, 'domain-initiate');
+    expect(Object.keys(h.get().featChoices)).toEqual([]);
+  });
 });

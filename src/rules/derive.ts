@@ -1307,9 +1307,39 @@ export function domainPoolFor(
   const deity = deityId ? db.deities[deityId] : undefined;
   if (pool === 'all') return Object.keys(DOMAIN_SPELLS).sort();
   const own = override?.domains ?? deity?.domains ?? [];
-  if (pool !== 'deity+alternate') return own;
+  if (pool !== 'deity+alternate' && pool !== 'deity+alternate+one-any') return own;
   const alt = override?.alternateDomains ?? deity?.alternateDomains ?? [];
-  return [...new Set([...own, ...alt])];
+  const listed = [...new Set([...own, ...alt])];
+  if (pool !== 'deity+alternate+one-any') return listed;
+  /* "…and up to one domain that isn't on either list and isn't anathematic to your deity" (Splinter
+   * Faith). The outside domains go on the END of the listed ones, so the picker still reads as the
+   * deity's own lists first; `outsideDomains` decides which rows are labelled and how many survive.
+   * Without this arm a cleric of Alocer — three printed domains, no alternates — could not answer
+   * four picks at all. */
+  return [...listed, ...Object.keys(DOMAIN_SPELLS).filter((d) => !listed.includes(d)).sort()];
+}
+
+/**
+ * Which of `values` are OUTSIDE the deity's two lists, for a `'deity+alternate+one-any'` choice.
+ *
+ * One helper because three places need the same split and each would otherwise re-derive it: the
+ * picker (label + withhold), `splinterDomainsOf` (drop a second outside answer) and the builder's
+ * deity-change validation. Returns an empty set for every other pool, so callers need no branch.
+ */
+export function outsideDomains(
+  values: string[],
+  deityId: string | null | undefined,
+  db: ContentDatabase,
+  pool: FeatChoiceDef['domainPool'],
+): Set<string> {
+  if (pool !== 'deity+alternate+one-any') return new Set();
+  // "…a domain that isn't on either of your deity's LISTS" (feat-7596) — with no deity there are no
+  // lists, so nothing is outside them. Without this, a deity-less build had every domain labelled as
+  // outside and all but one greyed: the four picks could not be answered at all, and the derived
+  // deityDomains collapsed to a single domain.
+  if (!deityId) return new Set();
+  const listed = new Set(domainPoolFor(deityId, db, 'deity+alternate'));
+  return new Set(values.filter((v) => v && !listed.has(v)));
 }
 
 /**
@@ -1355,7 +1385,19 @@ export function splinterDomainsOf(
     const keys = n === 1 ? [slotKey] : Array.from({ length: n }, (_, i) => `${slotKey}#${i}`);
     const picked = keys.map((k) => build.featChoices?.[k]).filter((v): v is string => !!v);
     if (!picked.length) continue;
-    return applySplinter(picked, build.deityId ? db.deities[build.deityId] : undefined, feat.name);
+    /* "…and UP TO ONE domain that isn't on either list" — the picker withholds the outside rows once
+     * one is held, but a stored second one can still arrive (a deity change, an import, a hand-edited
+     * file), and it would silently become a second off-list domain. The later answer is dropped here,
+     * where every reader of deityDomains funnels through, rather than at each picker. */
+    const outside = outsideDomains(picked, build.deityId, db, feat.choice?.domainPool);
+    let usedOutside = false;
+    const kept = picked.filter((d) => {
+      if (!outside.has(d)) return true;
+      if (usedOutside) return false;
+      usedOutside = true;
+      return true;
+    });
+    return applySplinter(kept, build.deityId ? db.deities[build.deityId] : undefined, feat.name);
   }
   return null;
 }

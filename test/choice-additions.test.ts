@@ -169,7 +169,8 @@ describe('alternate domains', () => {
   it('the feat asks for four distinct domains and says what it cannot enforce', () => {
     const def = db.feats['splinter-faith'].choice!;
     expect(def.kind).toBe('domains');
-    expect(def.domainPool).toBe('deity+alternate');
+    // "…and up to one domain that isn't on either list" (feat-7596) — the pool that offers that one.
+    expect(def.domainPool).toBe('deity+alternate+one-any');
     expect(def.picks).toBe(4);
     expect(def.distinct).toBe(true);
     expect(def.note).toMatch(/anathematic|1 rank lower/i);
