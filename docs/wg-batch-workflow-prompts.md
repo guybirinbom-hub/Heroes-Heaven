@@ -296,6 +296,11 @@ entry or gap line. Writes `work/.bNNN-verify-gaps.txt`.
    forks-worker failure in `experience`, and nothing else.
 3. A refusal names its ids: fix the **cause** (the row, the missing `supersedes`, the unauthored gap
    line, the uncited flip) and re-run that stage.
+3b. **Evidence follows edits.** Any `src/` or `public/core.json` edit made AFTER the experience stage
+   (a suite-triage fix, a trimmed registry string) invalidates the EXPERIENCE evidence — gate 9
+   compares `observed` against the newest source mtime and goes red (batch 030 ended that way). After
+   such an edit re-run `--stage experience` then `--stage gate` before suite / verify; never leave a
+   red gate as the batch's final state.
 4. [prohibitions]
 5. Anything that stops with "needs the orchestrator" (create-row correction, row removal, `npm run
    data`, owner-question wording, engine-shape decision, ruling conflict) **stops there** and goes into
