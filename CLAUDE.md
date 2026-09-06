@@ -10,7 +10,9 @@ plan is `docs/wg-batch-pipeline.md` (three-judge reviewed); the prompts are
 `docs/wg-batch-workflow-prompts.md`. The main loop does three things per batch and nothing else:
 
 1. `Workflow({ name: 'wg-batch', args: { batch: 'NNN', count?: N, maxLevel?: L, ids?: 'a,b', print?: true } })`
-   — the saved workflow in `.claude/workflows/wg-batch.js`. Every agent in it is Opus; every
+   — the saved workflow in `.claude/workflows/wg-batch.js`. `name` resolves only when the session's
+   cwd is this repo; from any other cwd pass
+   `scriptPath: 'C:\\trying ai 2\\pf2e codex\\.claude\\workflows\\wg-batch.js'` instead. Every agent in it is Opus; every
    mechanical step is the deterministic driver `scripts/wg-batch-run.mjs --batch NNN --stage <stage>`.
 2. Read ONLY `work/.bNNN-run.json` (the per-stage table IS the digest) and the closer's notes. Never
    read raw logs or a report file; never `head -c 60000` anything.
