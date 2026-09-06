@@ -1,7 +1,7 @@
 import { type ReactNode, useId, useMemo, useState } from 'react';
 import { partyHasFeat } from '../data/partyCapabilities';
 import { attachItem, detachItem, removeInventoryItem, setItemQuantity, updateInventoryItem, addInventoryItem, setItemMonsterPart, type PlayUpdater } from '../rules/play';
-import { canAttachTo } from '../rules/attachments';
+import { affixHostType, canAttachTo } from '../rules/attachments';
 import { propertyRuneCapacity } from '../rules/derive';
 import { FilterableSelect, PickerRow, descNodeOf } from './FilterableSelect';
 import { DescriptionModal } from './DescriptionModal';
@@ -1430,12 +1430,15 @@ function AttachmentsSection({
 }) {
   const [picking, setPicking] = useState(false);
   const [descNode, setDescNode] = useState<DescNode | null>(null);
-  if (!['weapon', 'armor', 'shield'].includes(hostItem.itemType)) return null;
+  // …or an item that prints it counts as one for affixing (Bands of Force → light armor). Without
+  // this the panel is hidden and the affix is unreachable outside a drag.
+  const hostAs = affixHostType(hostItem);
+  if (!hostAs) return null;
   const attached = inventory.filter((i) => i.attachedTo === host.instanceId);
   const candidates = inventory.filter((i) => {
     if (i.instanceId === host.instanceId || i.attachedTo) return false;
     const def = content.items[i.itemId];
-    return !!def && canAttachTo(def, hostItem.itemType);
+    return !!def && canAttachTo(def, hostAs);
   });
 
   return (

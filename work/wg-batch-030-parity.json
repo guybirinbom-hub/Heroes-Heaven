@@ -1,0 +1,205 @@
+{
+ "batch": 30,
+ "records": [
+  {
+   "id": "physical-training",
+   "verdict": "MATCHES",
+   "evidence": "[batch 30 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "anthemic-performance",
+   "verdict": "MATCHES",
+   "evidence": "[batch 30 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "additional-ikon",
+   "verdict": "FIXED",
+   "evidence": "[batch 30 read, adversarially confirmed] additional-ikon: Additional Ikon grants nothing: its only carrier is a COUNTER_MODS entry on the 'ikon-picks' counter, and 'ikon-picks' h — cited by row spec work/.b030-rows-engine.json finding additional-ikon (0 row(s)), test test/batch030-engine.test.ts (in what this batch added)"
+  },
+  {
+   "id": "rusting-carapace",
+   "verdict": "FIXED",
+   "evidence": "[batch 30 read, adversarially confirmed] rusting-carapace#potency: The carapace is printed as +1 armor and neither side delivers the +1 item bonus to AC, so the wearer's AC is 1 short of  — cited by row spec work/.b030-rows-engine.json finding rusting-carapace#potency (1 row(s)), row items/rusting-carapace field:builtInRunes in work/.b030-rows-engine.json, row spec work/.b030-rows-gap-engine.json finding rusting-carapace#potency (108 row(s)), test test/batch030-engine.test.ts (in what this batch added), test test/batch030-gap-engine.test.ts (in what this batch added)"
+  },
+  {
+   "id": "smoldering-explosion",
+   "verdict": "MATCHES",
+   "evidence": "[batch 30 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "shielding-formation",
+   "verdict": "MATCHES",
+   "evidence": "[batch 30 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "lingering-flames",
+   "verdict": "MATCHES",
+   "evidence": "[batch 30 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "grasping-corpses",
+   "verdict": "FIXED",
+   "evidence": "[batch 30 read, adversarially confirmed] grasping-corpses: Grasping Corpses delivers nothing: the record carries only actionCost passive and appears in no registry, so the off-gua — cited by row spec work/.b030-rows-data.json finding grasping-corpses (1 row(s)), row feats/grasping-corpses field:recordMarks in work/.b030-rows-data.json, test test/batch030-data.test.ts (in what this batch added)"
+  },
+  {
+   "id": "bands-of-force",
+   "verdict": "FIXED",
+   "evidence": "[batch 30 read, adversarially confirmed] bands-of-force: The digest's \"MISSING save|fortitude/reflex/will theirs=1 ours=(nothing)\" is an instrument misread: we already carry pas — cited by row items/bands-of-force field:passiveEffects in work/.b030-rows-engine.json, row spec work/.b030-rows-instruments.json finding bands-of-force (0 row(s)), row items/bands-of-force field:affixHostAs in work/.b030-rows-gap-engine.json, test test/batch030-engine.test.ts (in what this batch added), test test/batch030-instruments.test.ts (in what this batch added), test test/batch030-gap-engine.test.ts (in what this batch added); bands-of-force#dexcap: Neither side models the Dexterity cap the bands impose, so a character with a Dex modifier above +5 gets more Dex-to-AC  — cited by row spec work/.b030-rows-engine.json finding bands-of-force#dexcap (1 row(s)), row items/bands-of-force field:passiveEffects in work/.b030-rows-engine.json, row items/bands-of-force field:affixHostAs in work/.b030-rows-gap-engine.json, test test/batch030-engine.test.ts (in what this batch added), test test/batch030-instruments.test.ts (in what this batch added), test test/batch030-gap-engine.test.ts (in what this batch added); bands-of-force#talismans: Neither side models the bands as a talisman host, so the app refuses an affix the printed text explicitly permits. — cited by row items/bands-of-force field:passiveEffects in work/.b030-rows-engine.json, row spec work/.b030-rows-engine.json finding bands-of-force#talismans (0 row(s)), row spec work/.b030-rows-gap-engine.json finding bands-of-force#talismans (1 row(s)), row items/bands-of-force field:affixHostAs in work/.b030-rows-gap-engine.json, test test/batch030-engine.test.ts (in what this batch added), test test/batch030-instruments.test.ts (in what this batch added), test test/batch030-gap-engine.test.ts (in what this batch added)"
+  },
+  {
+   "id": "defensive-stratagem",
+   "verdict": "FIXED",
+   "evidence": "[batch 30 read, adversarially confirmed] defensive-stratagem: The Devise a Stratagem action row never mentions that this feat adds a third stratagem choice (or its Strike restriction — cited by row spec work/.b030-rows-data.json finding defensive-stratagem (1 row(s)), row feats/defensive-stratagem field:recordMarks in work/.b030-rows-data.json, test test/batch030-data.test.ts (in what this batch added)"
+  },
+  {
+   "id": "viking-vindicator",
+   "verdict": "FIXED",
+   "evidence": "[batch 30 read, adversarially confirmed] viking-vindicator#weapon-familiarity: The bastard sword and rapier are never added to Viking Weapon Familiarity's weapon list: viking-vindicator's only carrie — cited by row spec work/.b030-rows-engine.json finding viking-vindicator#weapon-familiarity (0 row(s)), row feats/viking-vindicator field:critSpec in work/.b030-rows-engine.json, row feats/viking-vindicator field:critSpecWeapons in work/.b030-rows-engine.json, row feats/viking-vindicator field:critSpecRequiresFeat in work/.b030-rows-engine.json, row feats/viking-vindicator field:recordMarks in work/.b030-rows-engine.json, test test/batch030-engine.test.ts (in what this batch added), test test/batch030-gap-engine.test.ts (in what this batch added), code src/rules/featGrantsLane.ts (in what this batch added); viking-vindicator#critspec: The crit-specialization half of the same sentence has no carrier either: neither viking-vindicator nor viking-weapon-spe — cited by row spec work/.b030-rows-engine.json finding viking-vindicator#critspec (3 row(s)), row feats/viking-vindicator field:critSpec in work/.b030-rows-engine.json, row feats/viking-vindicator field:critSpecWeapons in work/.b030-rows-engine.json, row feats/viking-vindicator field:critSpecRequiresFeat in work/.b030-rows-engine.json, row feats/viking-vindicator field:recordMarks in work/.b030-rows-engine.json, test test/batch030-engine.test.ts (in what this batch added), test test/batch030-gap-engine.test.ts (in what this batch added), code src/rules/featGrantsLane.ts (in what this batch added); viking-vindicator#shallow-water: The shallow-water rider on the granted Sudden Charge reaches the player on WG's Sudden Charge entry and on nothing of ou — cited by row feats/viking-vindicator field:critSpec in work/.b030-rows-engine.json, row feats/viking-vindicator field:critSpecWeapons in work/.b030-rows-engine.json, row feats/viking-vindicator field:critSpecRequiresFeat in work/.b030-rows-engine.json, row spec work/.b030-rows-engine.json finding viking-vindicator#shallow-water (1 row(s)), row feats/viking-vindicator field:recordMarks in work/.b030-rows-engine.json, test test/batch030-engine.test.ts (in what this batch added), test test/batch030-gap-engine.test.ts (in what this batch added), code src/rules/featGrantsLane.ts (in what this batch added)"
+  },
+  {
+   "id": "instinctive-maneuvers",
+   "verdict": "FIXED",
+   "evidence": "[batch 30 read, adversarially confirmed] instinctive-maneuvers: The action-list half of the feat is carried by neither side as a mechanic and by ours not even as reach: we hold the +2  — cited by row spec work/.b030-rows-data.json finding instinctive-maneuvers (1 row(s)), row feats/instinctive-maneuvers field:recordMarks in work/.b030-rows-data.json, test test/batch030-data.test.ts (in what this batch added)"
+  },
+  {
+   "id": "transcribe-moment",
+   "verdict": "FIXED",
+   "evidence": "[batch 30 read, adversarially confirmed] transcribe-moment: The granted focus spell has no casting profile on our side, so a Scrollmaster whose class is not an arcane/Intelligence  — cited by row spec work/.b030-rows-data.json finding transcribe-moment (1 row(s)), row feats/transcribe-moment field:spellcastingGrant in work/.b030-rows-data.json, test test/batch030-data.test.ts (in what this batch added)"
+  },
+  {
+   "id": "bagpipes-of-turmoil-greater",
+   "verdict": "MATCHES",
+   "evidence": "[batch 30 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "improved-command-corpse",
+   "verdict": "FIXED",
+   "evidence": "[batch 30 read, adversarially confirmed] improved-command-corpse: The feat replaces Command Undead's save-outcome durations, but our Command Undead entry still prints the base durations  — cited by row spec work/.b030-rows-situational.json finding improved-command-corpse (0 row(s)), test test/batch030-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added)"
+  },
+  {
+   "id": "eclectic-skill",
+   "verdict": "FIXED",
+   "evidence": "[batch 30 read, adversarially confirmed] eclectic-skill#instrument: The baseline digest flags this record 'unmapped', but our carrier is an exact match for WG's op - the comparer has no ma — cited by row spec work/.b030-rows-instruments.json finding eclectic-skill#instrument (0 row(s)), test test/batch030-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added), test test/batch030-instruments.test.ts (in what this batch added); eclectic-skill#untrained-gate: The two permission clauses - attempting trained-only skill checks while untrained, and expert-only checks at legendary O — cited by row spec work/.b030-rows-situational.json finding eclectic-skill#untrained-gate (0 row(s)), test test/batch030-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added), test test/batch030-instruments.test.ts (in what this batch added)"
+  },
+  {
+   "id": "deadly-butterfly",
+   "verdict": "FIXED",
+   "evidence": "[batch 30 read, adversarially confirmed] deadly-butterfly: The feat's second sentence - the knife critical specialization effect on a butterfly sword crit once you already have cr — cited by row spec work/.b030-rows-situational.json finding deadly-butterfly (0 row(s)), test test/batch030-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added)"
+  },
+  {
+   "id": "arcane-breadth",
+   "verdict": "FIXED",
+   "evidence": "[batch 30 read, adversarially confirmed] arcane-breadth: Our slot bonus names no entry, so it is added to the character's OWN class spellcasting instead of the wizard-archetype  — cited by row spec work/.b030-rows-data.json finding arcane-breadth (1 row(s)), row feats/arcane-breadth field:spellSlotBonus in work/.b030-rows-data.json, test test/batch030-data.test.ts (in what this batch added)"
+  },
+  {
+   "id": "greater-security",
+   "verdict": "MATCHES",
+   "evidence": "[batch 30 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "frozen-breadth",
+   "verdict": "FIXED",
+   "evidence": "[batch 30 read, adversarially confirmed] frozen-breadth: Frozen Breadth carries no spellSlotBonus at all, so a gelid shard gains none of the extra spell slots the feat prints, w — cited by row spec work/.b030-rows-engine.json finding frozen-breadth (1 row(s)), row feats/frozen-breadth field:spellSlotBonus in work/.b030-rows-engine.json, test test/batch030-engine.test.ts (in what this batch added)"
+  },
+  {
+   "id": "bloodline-breadth",
+   "verdict": "FIXED",
+   "evidence": "[batch 30 read, adversarially confirmed] bloodline-breadth: Bloodline Breadth's spellSlotBonus has no entryId, so the extra slots are applied to the character's own CLASS spellcast — cited by row spec work/.b030-rows-engine.json finding bloodline-breadth (1 row(s)), row feats/bloodline-breadth field:spellSlotBonus in work/.b030-rows-engine.json, test test/batch030-engine.test.ts (in what this batch added)"
+  },
+  {
+   "id": "furious-bully",
+   "verdict": "MATCHES",
+   "evidence": "[batch 30 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "watchers-armband",
+   "verdict": "FIXED",
+   "evidence": "[batch 30 read, adversarially confirmed] watchers-armband#innate-spell: Their encoding grants the armband's once-per-day innate Ring of Truth and ours grants nothing, so the spell never reache — cited by row spec work/.b030-rows-data.json finding watchers-armband#innate-spell (1 row(s)), row items/watchers-armband field:innateSpells in work/.b030-rows-data.json, test test/batch030-data.test.ts (in what this batch added)"
+  },
+  {
+   "id": "mysterious-breadth",
+   "verdict": "MATCHES",
+   "evidence": "[batch 30 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "selfless-parry",
+   "verdict": "FIXED",
+   "evidence": "[batch 30 read, adversarially confirmed] selfless-parry: Selfless Parry rewrites Dueling Parry and Dueling Riposte, and we attach nothing to either record — a player looking at  — cited by row spec work/.b030-rows-data.json finding selfless-parry (1 row(s)), row feats/selfless-parry field:recordMarks in work/.b030-rows-data.json, test test/batch030-data.test.ts (in what this batch added)"
+  },
+  {
+   "id": "cantrip-supremacy",
+   "verdict": "FIXED",
+   "evidence": "[batch 30 read, adversarially confirmed] cantrip-supremacy: Cantrip Supremacy grants 10 extra cantrips and we carry no field at all for it, so the Hedge Mage archetype entry still  — cited by row spec work/.b030-rows-data.json finding cantrip-supremacy (1 row(s)), row feats/cantrip-supremacy field:spellSlotBonus in work/.b030-rows-data.json, test test/batch030-data.test.ts (in what this batch added)"
+  },
+  {
+   "id": "resilient",
+   "verdict": "MATCHES",
+   "evidence": "[batch 30 read, adversarially confirmed] resilient: The digest's \"MISSING save|fortitude/reflex/will theirs=1 ours=(nothing)\" is an instrument misread: the resilient rune i — cited by row spec work/.b030-rows-instruments.json finding resilient (0 row(s)), test test/batch030-engine.test.ts (in what this batch added), code src/rules/types.ts (in what this batch added), code src/rules/derive.ts (in what this batch added), test test/batch030-instruments.test.ts (in what this batch added), test test/batch030-gap-engine.test.ts (in what this batch added) [orchestrator ruling: instruments teach RUNE_KINDS (wg-diff.mjs:932) answers the KIND; the zero-row spec entry was miscounted as a row citation (close-script defect fixed in the same pass)]"
+  },
+  {
+   "id": "kaiju-stance",
+   "verdict": "FIXED",
+   "evidence": "[batch 30 read, adversarially confirmed] kaiju-stance#fatal: Our Shattering Earth strike stores its fatal trait as \"fatal d12\" with a space, which no reader matches, so the stance's — cited by row spec work/.b030-rows-data.json finding kaiju-stance#fatal (1 row(s)), row stances/kaiju-stance field:strikes in work/.b030-rows-data.json, test test/batch030-data.test.ts (in what this batch added)"
+  },
+  {
+   "id": "unshaken-in-iron",
+   "verdict": "FIXED",
+   "evidence": "[batch 30 read, adversarially confirmed] unshaken-in-iron#stance: The Tenacious Stance half of Unshaken in Iron can never fire: `tenacious-stance` has no feat record, and the sheet's sta — cited by row spec work/.b030-rows-data.json finding unshaken-in-iron#stance (0 row(s)), row spec work/.b030-rows-gap-data-rows.json finding unshaken-in-iron#stance (0 row(s)), test test/batch030-instruments.test.ts (in what this batch added), test test/batch030-gap-stance-toggle.test.tsx (in what this batch added); unshaken-in-iron#instrument: The baseline digest's flags for Unshaken in Iron ('conditional | ac | experience UNVERIFIED-EFFECT') misread the carrier — cited by row spec work/.b030-rows-instruments.json finding unshaken-in-iron#instrument (0 row(s)), test test/batch030-instruments.test.ts (in what this batch added), test test/batch030-gap-stance-toggle.test.tsx (in what this batch added)"
+  },
+  {
+   "id": "siphoning-touch",
+   "verdict": "MATCHES",
+   "evidence": "[batch 30 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "thoughtsense",
+   "verdict": "FIXED",
+   "evidence": "[batch 30 read, adversarially confirmed] thoughtsense: Our record carries only the standing vague thoughtsense; the printed upgrade to an imprecise sense while the psyche is U — cited by row spec work/.b030-rows-data.json finding thoughtsense (1 row(s)), row feats/thoughtsense field:whileActive in work/.b030-rows-data.json, test test/batch030-data.test.ts (in what this batch added)"
+  },
+  {
+   "id": "tricksters-mandolin-greater",
+   "verdict": "MATCHES",
+   "evidence": "[batch 30 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "apparition-magic",
+   "verdict": "FIXED",
+   "evidence": "[batch 30 read, adversarially confirmed] apparition-magic: Our spellSlotBonus names no entryId, so the extra slots land on the character's own class spellcasting entry (or, for a  — cited by row spec work/.b030-rows-data.json finding apparition-magic (1 row(s)), row feats/apparition-magic field:spellSlotBonus in work/.b030-rows-data.json, test test/batch030-data.test.ts (in what this batch added)"
+  },
+  {
+   "id": "staff-of-earth-greater",
+   "verdict": "MATCHES",
+   "evidence": "[batch 30 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "wayfinder-resonance-infiltrator",
+   "verdict": "MATCHES",
+   "evidence": "[batch 30 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "sanguine-transference",
+   "verdict": "FIXED",
+   "evidence": "[batch 30 read, adversarially confirmed] sanguine-transference: The feat teaches a grave (focus) spell and our record grants no spell at all, so a necromancer who takes it gets neither — cited by row spec work/.b030-rows-data.json finding sanguine-transference (1 row(s)), row feats/sanguine-transference field:focusSpells in work/.b030-rows-data.json, test test/batch030-data.test.ts (in what this batch added)"
+  },
+  {
+   "id": "boost-summons",
+   "verdict": "FIXED",
+   "evidence": "[batch 30 read, adversarially confirmed] boost-summons: The feat's whole effect — Boost Eidolon also targeting your summoned creatures within 60 feet — reaches nothing on our s — cited by row spec work/.b030-rows-data.json finding boost-summons (1 row(s)), row feats/boost-summons field:spellNotes in work/.b030-rows-data.json, test test/batch030-data.test.ts (in what this batch added)"
+  },
+  {
+   "id": "dweomerveil",
+   "verdict": "FIXED",
+   "evidence": "[batch 30 read, adversarially confirmed] dweomerveil#daily-choice: The tradition pick is printed as a daily-preparations choice re-made every morning, but our choice def omits `daily: tru — cited by row spec work/.b030-rows-data.json finding dweomerveil#daily-choice (1 row(s)), row items/dweomerveil field:choice in work/.b030-rows-data.json, test test/batch030-data.test.ts (in what this batch added)"
+  },
+  {
+   "id": "peer-beyond",
+   "verdict": "FIXED",
+   "evidence": "[batch 30 read, adversarially confirmed] peer-beyond#initiative: Peer Beyond's permission to roll Spirit Lore or Haunt Lore for initiative is carried by neither side: our only carrier f — cited by row spec work/.b030-rows-situational.json finding peer-beyond#initiative (0 row(s)), test test/batch030-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added)"
+  },
+  {
+   "id": "ilverani-purist",
+   "verdict": "FIXED",
+   "evidence": "[batch 30 read, adversarially confirmed] ilverani-purist: The feat's entire mechanic - a crit-failure-to-failure degree shift on Sense Motive against non-elf humanoids - is model — cited by row spec work/.b030-rows-data.json finding ilverani-purist (1 row(s)), row feats/ilverani-purist field:degreeShifts in work/.b030-rows-data.json, test test/batch030-data.test.ts (in what this batch added)"
+  }
+ ]
+}

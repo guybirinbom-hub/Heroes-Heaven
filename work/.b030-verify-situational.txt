@@ -1,0 +1,133 @@
+batch 030 — SITUATIONAL family, ADVERSARIAL VERIFY
+findings: improved-command-corpse, eclectic-skill#untrained-gate, deadly-butterfly, peer-beyond#initiative
+verdict: all four reach a really built character. Two of the four shipped with a test that proved the
+registry entry rather than the player's route; I added the missing built-character proof for both.
+
+npx tsc --noEmit — clean.
+node scripts/vt.mjs test/batch030-situational.test.ts — 10 passed (8 the builder wrote + my 2).
+node scripts/vt.mjs test/batch030-situational.test.ts test/authoring-guards.test.ts
+  test/situational-bonuses.test.ts test/initiative.test.ts test/field-catalogue.test.ts
+  test/batch26-stars.test.ts test/batch27-stars.test.ts test/strike-explain.test.ts
+  test/class-feature-feat-grants.test.ts — 100 passed (9 files).
+node scripts/test-flip-audit.mjs --batch 030 — clean, every flip cited (re-run after my two its).
+
+PER FINDING
+
+improved-command-corpse — DONE (strengthened)
+  RECORD_MARKERS["improved-command-corpse"] sits at situationalBonuses.ts:4128, ABOVE both generated
+  sentinels (:4136 apply-feat-audit marks, :4325 apply-feature-audit marks) and inside the range
+  apply-feature-audit.mjs:55 builds `existingMarkers` from, so it is neither stripped nor duplicated.
+  Reader confirmed end-to-end: explain.ts:690 recordMarkersFor accepts on:'feature'; FeatsTab.tsx:99
+  calls it with the granted feat's own recordId and appends the note AFTER the description, so the
+  note's "replacing the durations printed above" is literally true on screen.
+  ⚠ The shipped pair of its handed the character `command-undead` directly and pinned the grant lane
+  only as a registry call (featFeatGrantsFor). That proves the mark, not the player's route. I built a
+  cleric through overrides.addedFeats(['command-corpse','improved-command-corpse']) and confirmed the
+  build really delivers command-undead into c.feats AND that the mark lands on that granted row — new
+  it "a really built cleric taking Command Corpse receives Command Undead…".
+  Print check: AoN feat-3886 quoted verbatim in the comment and the test; all three outcomes match.
+  ACCURACY CORRECTION to the spec note (not a defect): work/.b030-rows-situational.json says "no
+  core.json field on either record can say" this. That is wrong — `recordMarks` (types.ts:265) is the
+  DATA route into the same channel, walked over the character's feats by recordMarksFor
+  (explain.ts:477-484), and an overlay row {feats, improved-command-corpse, recordMarks, [...]} would
+  have carried it durably. The code entry is still correct (the finding's own proposal named
+  RECORD_MARKERS, and the hand-authored zone is regeneration-safe), but the note must not be re-quoted
+  as evidence that no data lane exists.
+
+eclectic-skill#untrained-gate — DONE
+  FEAT_SITUATIONAL["eclectic-skill"] at :831, above the :844 generated sentinel; apply-situational-lane
+  .mjs:83 builds existingIds over the WHOLE file with /^ {2}"([a-z0-9-]+)":\s\[/gm, which this line
+  matches, so the next lane run skips it as alreadyAuthored.
+  Reach verified on a REALLY built bard (build('bard',9,{overrides:{addedFeats:[eclectic-skill]}})):
+  statHasSituational(c,{kind:'skill',skill:'thievery'}) is true (the star VitalsRail/StatDetailModal
+  render) and explainStat(...).situational carries the line; the same bard without the feat is false.
+  targetMatches :3623 returns true for detail 'all' against any skill ref, so every skill row stars.
+  Print check: AoN feat-4605 has THREE clauses — the numeric one (untrainedProficiency {levelMinus:0},
+  still on the record and still the thing moving the number) plus the two permissions now carried. The
+  star's text quotes both. Nothing printed is left uncarried.
+
+deadly-butterfly — DONE (strengthened)
+  FEAT_SITUATIONAL["deadly-butterfly"] at :842. Print re-read: feat-2708's first sentence is the
+  critSpec access the record already carries; the second and third are the star, and the star repeats
+  print's "only one critical specialization effect at a time" so the player cannot stack both.
+  CRIT_SPEC.knife is "The target takes 1d6 persistent bleed damage." (critSpec.ts:24) — the star's
+  value is print-accurate, and items/butterfly-sword really is group 'sword', so the claim that no
+  existing field can substitute the effect holds.
+  ⚠ The shipped it read the star off a bare {kind:'strikeDamage'} ref, which the sheet NEVER builds:
+  MainTab.tsx:593 and StrikeDetailModal.tsx:77 both pass an instanceId, and explainStat's strikeDamage
+  arm (explain.ts:1525) resolves the strike from it — a character with no strike gets an empty
+  breakdown, so the shipped test would have stayed green with the damage panel showing nothing. I added
+  an it that equips a real butterfly sword, confirms deriveStrikes yields the instance, and reads the
+  line off explainStat({kind:'strikeDamage',instanceId:'bs'}).situational.
+  Noted, not a defect: targetMatches :3655 matches strikeDamage on kind alone, so the star also appears
+  on a longsword's damage row. The `when` clause names the butterfly sword, and this is exactly the
+  shipped shape of 'artery-map' (:3195) and 'chain-of-command' (:3197), so it is the lane's convention
+  rather than this record's error.
+
+peer-beyond#initiative — DONE
+  Second entry appended to the existing :509 row; the +2-save entry is byte-identical to what shipped
+  (git diff shows the line re-emitted whole with only the append), and the builder's own it pins the
+  save half at exactly one line with no 'initiative' leakage.
+  Reach verified on a really built fighter: statHasSituational(c,{kind:'initiative'}) is true, which is
+  the exact call VitalsRail.tsx:652 makes to draw the star, and explainStat({kind:'initiative'})
+  .situational carries the permission text.
+  The "no carrier but prose" justification is confirmed, not assumed: BuildState.initiativeSkill exists
+  (build.ts:115) and deriveInitiative reads it (initiative.ts:39), but INITIATIVE_SKILLS (:66) lists no
+  Lore and shared.tsx:4535-4547 documents that the builder picker was deliberately removed — so there
+  is no control a Lore option could be added to.
+  Observation, outside the finding: feat-2282's THIRD clause (the post-defeat Spirit/Haunt Lore check
+  for a hint about laying the spirit to rest) also has no carrier. It names no stat and no action the
+  player presses, and it is already readable in the feat's own description, so I did not author for it
+  — flagging it so a later batch does not read this record as fully carried.
+
+SPEC ROWS (work/.b030-rows-situational.json) — checked as rows, not applied
+  4 findings, every one backfillRows: []. Nothing to collide, nothing to create, no field needing a
+  reader, no record/spell/action/trait/item id named by any row. Verified independently rather than
+  taken on trust:
+   - improved-command-corpse: a row WAS possible (recordMarks — see the accuracy correction above);
+     the note's stated reason is wrong but its conclusion is defensible and matches the finding's
+     proposal. No row means no collision risk either way.
+   - eclectic-skill: the numeric half is already on the record (untrainedProficiency {levelMinus:0},
+     confirmed in core.json), and the two remaining clauses are permissions with no numeric field.
+   - deadly-butterfly: critSpecWeapons (types.ts:1438-1470) is groups/traits/bases/names/melee/
+     designated/minRank — re-read, and there is genuinely no substitution field. Correct as no-row.
+   - peer-beyond: no initiative-skill field a row could set (see above). Correct as no-row.
+  All four target records exist in core.json (feats/improved-command-corpse, feats/eclectic-skill,
+  feats/deadly-butterfly, feats/peer-beyond), as do the ids the entries name: feats/command-undead
+  (the mark's target, and a real feat row, not a spell-bucket id) and items/butterfly-sword.
+
+MANIFEST (work/.b030-specs.json)
+  Contains all three families at the time of writing — situational, data, engine — and no entry was
+  clobbered. situational's stage[] lists every path the family touched; I appended
+  work/.b030-verify-situational.txt to it. No row in this family's spec supersedes anything, so no
+  supersedes: true is owed. src/rules/types.ts, build.ts and derive.ts are the ENGINE family's staged
+  files, not this family's — correctly absent from situational's stage[].
+
+DATA STILL NEEDED
+  (none — all four findings are code-only registry entries and the spec carries four backfillRows: []
+   entries, each with a reason I re-derived independently above.)
+
+CROSS-FILE GAPS
+- src/rules/types.ts + src/rules/derive.ts (deadly-butterfly): critSpecWeapons has no field that
+  substitutes another weapon group's critical specialization effect, so print's second sentence can
+  only ship as prose. An `asGroup?: string` plus a lookup at the three CRIT_SPEC call sites
+  (MainTab.tsx:607, StrikeDetailModal.tsx:46, ItemDetail.tsx:607) is the durable fix. ⚠ Corrected
+  from the builder's line: those two files are STAGED BY THE ENGINE FAMILY in this same batch, so this
+  is a live cross-family handoff, not merely "outside my files".
+- src/rules/skillActions.ts (eclectic-skill#untrained-gate): skillActions.ts:1046
+  `rankAtLeast(rank, a.minRank)` still hides every trained-only action from an untrained skill's detail
+  panel. The star tells the player they may attempt those actions; it cannot make the panel list them.
+  A permission-aware relaxation of that filter belongs to whoever owns skillActions.ts. Stands as
+  written — verified the filter and the derive.ts:599-600 rank behaviour are both unchanged.
+- scripts/wg-diff.mjs + scripts/wg-values.mjs (NEW, found by me): the working tree carries comparer
+  edits on both (UNTRAINED_IMPROVISATION -> 'skill', ARMOR_SPECIALIZATION -> 'defense', plus
+  `untrainedProficiency` and `armorSpec` added to OUR_KINDS), and at the time of writing NEITHER path
+  appears in any stage[] in work/.b030-specs.json — a fourth family (test/batch030-instruments.test.ts
+  exists on disk) is evidently mid-flight and has not registered its entry yet. TO CONFIRM AT CLOSE:
+  that family must stage both paths and carry the mutation-proof test the citation conventions require,
+  or the edits ship unstaged and uncited. Not mine to edit — the first of them concerns eclectic-skill's
+  own untrainedProficiency, which is how I found it.
+
+MY MANIFEST stage[] ADDITIONS (files I touched as verifier)
+  test/batch030-situational.test.ts   (two its added, both cited "// batch 030: <finding id>")
+  work/.b030-verify-situational.txt   (this file; appended to situational's stage[])

@@ -1,0 +1,329 @@
+{
+ "batch": "work/wg-batch-030.json",
+ "examined": 40,
+ "method": "Opus readers (print + WG raw ops + every carrier) each followed by an adversarial verifier; findings applied by 6 family spec(s), verdicts derived by scripts/wg-batch-close.mjs from the cited rows, edits, tests and teaches",
+ "confirmed": [
+  {
+   "id": "additional-ikon",
+   "finding": "additional-ikon",
+   "severity": "player-visible",
+   "summary": "Additional Ikon grants nothing: its only carrier is a COUNTER_MODS entry on the 'ikon-picks' counter, and 'ikon-picks' has no reader anywhere in src/ — the builder still offers exactly the 3 ikons from the exemplar class's extraChoices pick",
+   "fixed": true
+  },
+  {
+   "id": "viking-vindicator",
+   "finding": "viking-vindicator#weapon-familiarity",
+   "severity": "player-visible",
+   "summary": "The bastard sword and rapier are never added to Viking Weapon Familiarity's weapon list: viking-vindicator's only carrier is featFeatGrants.ts (Sudden Charge), so a viking with both feats still treats the bastard sword and rapier at their u",
+   "fixed": true
+  },
+  {
+   "id": "viking-vindicator",
+   "finding": "viking-vindicator#critspec",
+   "severity": "player-visible",
+   "summary": "The crit-specialization half of the same sentence has no carrier either: neither viking-vindicator nor viking-weapon-specialist ever lists the bastard sword or rapier, so a viking who crits with one gets no critical specialization effect wh",
+   "fixed": true
+  },
+  {
+   "id": "viking-vindicator",
+   "finding": "viking-vindicator#shallow-water",
+   "severity": "player-visible",
+   "summary": "The shallow-water rider on the granted Sudden Charge reaches the player on WG's Sudden Charge entry and on nothing of ours: our Sudden Charge record is the shared fighter/barbarian one and carries no mark from viking-vindicator, so a viking",
+   "fixed": true
+  },
+  {
+   "id": "grasping-corpses",
+   "finding": "grasping-corpses",
+   "severity": "player-visible",
+   "summary": "Grasping Corpses delivers nothing: the record carries only actionCost passive and appears in no registry, so the off-guard rider never reaches the Mobbing Assault action row the necrologist actually uses — WG puts it there.",
+   "fixed": true
+  },
+  {
+   "id": "defensive-stratagem",
+   "finding": "defensive-stratagem",
+   "severity": "player-visible",
+   "summary": "The Devise a Stratagem action row never mentions that this feat adds a third stratagem choice (or its Strike restriction): our only carrier is the situationalBonuses defence entry, which surfaces the +1 on the AC/save breakdowns but says no",
+   "fixed": true
+  },
+  {
+   "id": "instinctive-maneuvers",
+   "finding": "instinctive-maneuvers",
+   "severity": "player-visible",
+   "summary": "The action-list half of the feat is carried by neither side as a mechanic and by ours not even as reach: we hold the +2 Athletics bonus but nothing tells the player that Relinquish Control's permitted-action list now includes Grapple, Repos",
+   "fixed": true
+  },
+  {
+   "id": "transcribe-moment",
+   "finding": "transcribe-moment",
+   "severity": "player-visible",
+   "summary": "The granted focus spell has no casting profile on our side, so a Scrollmaster whose class is not an arcane/Intelligence caster casts it as an OCCULT spell keyed off the class's first key attribute, while WG defines a Scrollmaster casting so",
+   "fixed": true
+  },
+  {
+   "id": "improved-command-corpse",
+   "finding": "improved-command-corpse",
+   "severity": "player-visible",
+   "summary": "The feat replaces Command Undead's save-outcome durations, but our Command Undead entry still prints the base durations to the player, with no mark saying they changed; WG injects the replacement text onto the Command Undead record itself.",
+   "fixed": true
+  },
+  {
+   "id": "eclectic-skill",
+   "finding": "eclectic-skill#instrument",
+   "severity": "internal",
+   "summary": "The baseline digest flags this record 'unmapped', but our carrier is an exact match for WG's op - the comparer has no mapping for their UNTRAINED_IMPROVISATION variable and read our field as absent.",
+   "fixed": true
+  },
+  {
+   "id": "eclectic-skill",
+   "finding": "eclectic-skill#untrained-gate",
+   "severity": "player-visible",
+   "summary": "The two permission clauses - attempting trained-only skill checks while untrained, and expert-only checks at legendary Occultism - reach the sheet in no form on either side, and the per-skill panel actively hides those actions from an untra",
+   "fixed": true
+  },
+  {
+   "id": "deadly-butterfly",
+   "finding": "deadly-butterfly",
+   "severity": "player-visible",
+   "summary": "The feat's second sentence - the knife critical specialization effect on a butterfly sword crit once you already have crit spec - has no carrier on either side, so the strike card only ever shows the sword effect.",
+   "fixed": true
+  },
+  {
+   "id": "arcane-breadth",
+   "finding": "arcane-breadth",
+   "severity": "player-visible",
+   "summary": "Our slot bonus names no entry, so it is added to the character's OWN class spellcasting instead of the wizard-archetype pool the feat prints - a caster gets illegal class slots at every rank but its top two, and the archetype pool the feat ",
+   "fixed": true
+  },
+  {
+   "id": "frozen-breadth",
+   "finding": "frozen-breadth",
+   "severity": "player-visible",
+   "summary": "Frozen Breadth carries no spellSlotBonus at all, so a gelid shard gains none of the extra spell slots the feat prints, while WG grants them at every rank below its top two.",
+   "fixed": true
+  },
+  {
+   "id": "bloodline-breadth",
+   "finding": "bloodline-breadth",
+   "severity": "player-visible",
+   "summary": "Bloodline Breadth's spellSlotBonus has no entryId, so the extra slots are applied to the character's own CLASS spellcasting entry (or to nothing at all for a non-caster) instead of to the sorcerer-archetype pool the feat prints.",
+   "fixed": true
+  },
+  {
+   "id": "cantrip-supremacy",
+   "finding": "cantrip-supremacy",
+   "severity": "player-visible",
+   "summary": "Cantrip Supremacy grants 10 extra cantrips and we carry no field at all for it, so the Hedge Mage archetype entry still offers only its base 2 cantrip picks.",
+   "fixed": true
+  },
+  {
+   "id": "selfless-parry",
+   "finding": "selfless-parry",
+   "severity": "player-visible",
+   "summary": "Selfless Parry rewrites Dueling Parry and Dueling Riposte, and we attach nothing to either record — a player looking at those two feat entries is never told the feat changed them.",
+   "fixed": true
+  },
+  {
+   "id": "kaiju-stance",
+   "finding": "kaiju-stance#fatal",
+   "severity": "player-visible",
+   "summary": "Our Shattering Earth strike stores its fatal trait as \"fatal d12\" with a space, which no reader matches, so the stance's Strike shows no fatal crit effect at all.",
+   "fixed": true
+  },
+  {
+   "id": "unshaken-in-iron",
+   "finding": "unshaken-in-iron#stance",
+   "severity": "player-visible",
+   "summary": "The Tenacious Stance half of Unshaken in Iron can never fire: `tenacious-stance` has no feat record, and the sheet's stance toggle is built only from feats, so `Character.activeStance` can never hold that id.",
+   "fixed": true
+  },
+  {
+   "id": "unshaken-in-iron",
+   "finding": "unshaken-in-iron#instrument",
+   "severity": "internal",
+   "summary": "The baseline digest's flags for Unshaken in Iron ('conditional | ac | experience UNVERIFIED-EFFECT') misread the carrier: the armor-specialization grant is fully modelled and it moves RESISTANCE, not AC.",
+   "fixed": true
+  },
+  {
+   "id": "thoughtsense",
+   "finding": "thoughtsense",
+   "severity": "player-visible",
+   "summary": "Our record carries only the standing vague thoughtsense; the printed upgrade to an imprecise sense while the psyche is Unleashed reaches nothing, while WG delivers it.",
+   "fixed": true
+  },
+  {
+   "id": "apparition-magic",
+   "finding": "apparition-magic",
+   "severity": "player-visible",
+   "summary": "Our spellSlotBonus names no entryId, so the extra slots land on the character's own class spellcasting entry (or, for a non-caster, on nothing at all) instead of the animist archetype pool the feat prints.",
+   "fixed": true
+  },
+  {
+   "id": "sanguine-transference",
+   "finding": "sanguine-transference",
+   "severity": "player-visible",
+   "summary": "The feat teaches a grave (focus) spell and our record grants no spell at all, so a necromancer who takes it gets neither the spell nor the Focus Point.",
+   "fixed": true
+  },
+  {
+   "id": "boost-summons",
+   "finding": "boost-summons",
+   "severity": "player-visible",
+   "summary": "The feat's whole effect — Boost Eidolon also targeting your summoned creatures within 60 feet — reaches nothing on our side; WG writes it onto the Boost Eidolon spell itself.",
+   "fixed": true
+  },
+  {
+   "id": "peer-beyond",
+   "finding": "peer-beyond#initiative",
+   "severity": "player-visible",
+   "summary": "Peer Beyond's permission to roll Spirit Lore or Haunt Lore for initiative is carried by neither side: our only carrier for the feat is the +2 save entry in situationalBonuses.ts, and WG encodes only the three save bonuses.",
+   "fixed": true
+  },
+  {
+   "id": "ilverani-purist",
+   "finding": "ilverani-purist",
+   "severity": "player-visible",
+   "summary": "The feat's entire mechanic - a crit-failure-to-failure degree shift on Sense Motive against non-elf humanoids - is modelled by neither side: our record carries only actionCost passive, and WG carries only an injectText of the same sentence.",
+   "fixed": true
+  },
+  {
+   "id": "resilient",
+   "finding": "resilient",
+   "severity": "internal",
+   "summary": "The digest's \"MISSING save|fortitude/reflex/will theirs=1 ours=(nothing)\" is an instrument misread: the resilient rune is delivered end-to-end by our rune system, not by a field on the items record.",
+   "fixed": true
+  },
+  {
+   "id": "bands-of-force",
+   "finding": "bands-of-force",
+   "severity": "internal",
+   "summary": "The digest's \"MISSING save|fortitude/reflex/will theirs=1 ours=(nothing)\" is an instrument misread: we already carry passiveEffects.saves = 1 and it is read.",
+   "fixed": true
+  },
+  {
+   "id": "bands-of-force",
+   "finding": "bands-of-force#dexcap",
+   "severity": "player-visible",
+   "summary": "Neither side models the Dexterity cap the bands impose, so a character with a Dex modifier above +5 gets more Dex-to-AC than print allows.",
+   "fixed": true
+  },
+  {
+   "id": "bands-of-force",
+   "finding": "bands-of-force#talismans",
+   "severity": "player-visible",
+   "summary": "Neither side models the bands as a talisman host, so the app refuses an affix the printed text explicitly permits.",
+   "fixed": true
+  },
+  {
+   "id": "rusting-carapace",
+   "finding": "rusting-carapace#potency",
+   "severity": "player-visible",
+   "summary": "The carapace is printed as +1 armor and neither side delivers the +1 item bonus to AC, so the wearer's AC is 1 short of the book value until they buy and etch a potency rune they already own.",
+   "fixed": true
+  },
+  {
+   "id": "watchers-armband",
+   "finding": "watchers-armband#innate-spell",
+   "severity": "player-visible",
+   "summary": "Their encoding grants the armband's once-per-day innate Ring of Truth and ours grants nothing, so the spell never reaches the player's Spells page.",
+   "fixed": true
+  },
+  {
+   "id": "dweomerveil",
+   "finding": "dweomerveil#daily-choice",
+   "severity": "player-visible",
+   "summary": "The tradition pick is printed as a daily-preparations choice re-made every morning, but our choice def omits `daily: true`, so it is never asked at Rest and is instead a permanent, freely-editable select in ItemDetail.",
+   "fixed": true
+  }
+ ],
+ "refuted": [
+  {
+   "id": "apparition-magic",
+   "finding": "apparition-magic#restriction",
+   "summary": "The printed restriction on what may be prepared in the bonus slots is modelled by neither side, so the player is shown ordinary animist archetype slots they may fill with any divine spell.",
+   "evidence": "wg-show 'Apparition Magic' --raw shows three bare giveSpellSlot operations with no restriction of any kind, i.e. WG encodes strictly LESS than print here - the named false-positive class for this lane, not a parity gap. The printed sentence also already reaches the player verbatim: core-descriptions"
+  },
+  {
+   "id": "wayfinder-resonance-infiltrator",
+   "finding": "wayfinder-resonance-infiltrator#badge",
+   "summary": "The feat's SECOND once-per-day ability — the single-action envision activation that disguises the wayfinder as another badge for 1 hour — is modelled by neither side, and our unlabelled limitedUses pi",
+   "evidence": "wg-show 'Wayfinder Resonance Infiltrator' --raw carries a single giveSpell INNATE (spell 4677, rank 2, casts 1) and nothing for the badge clause, so WG encodes less than print - not a WG-parity finding. On our side the badge use is in fact tracked: the innate spell draws its own usesPerDay on the Sp"
+  }
+ ],
+ "flaggedResidues": [
+  {
+   "id": "flaggedResidue: not a gap — work/.b030-rows-data.json already carries feats/arcane-breadth spellSlotBonus {perRank:1,exceptHighest:2,entryId:\"wizard-dedication-casting\"} with supersedes:true, the same shape bloodline-breadth gets in the engine spec, so the two entry-less Breadth feats did not diverge and there is nothing left to author.",
+   "finding": "flaggedResidue: not a gap — work/.b030-rows-data.json already carries feats/arcane-breadth spellSlotBonus {perRank:1,exceptHighest:2,entryId:\"wizard-dedication-casting\"} with supersedes:true, the same shape bloodline-breadth gets in the engine spec, so the two entry-less Breadth feats did not diverge and there is nothing left to author.",
+   "severity": "internal",
+   "summary": "feats/arcane-breadth/spellSlotBonus: carries the same entry-less {perRank:1,exceptHighest:2} defect as bloodline-breadth (slots land on the character's first CLASS entry). Routed to the data-rows family as its own finding — flagged here only because the two share one root cause and must not diverge.",
+   "fixed": false,
+   "family": "engine",
+   "kind": "DATA STILL NEEDED"
+  },
+  {
+   "id": "flaggedResidue: not a duplicate grant — the second carrier is a PERMISSION star (bonus \"you can attempt it\", no magnitude) beside the numeric untrainedProficiency {levelMinus:0}, so nothing stacks; both carriers are already pinned on built characters by test/untrained-proficiency.test.ts:42 (investigator 15) and test/batch030-situational.test.ts:99-115 (bard 9), 17 tests green, so the guard the line asks for exists and no edit is owed. Editing situationalBonuses.ts is out of family anyway.",
+   "finding": "flaggedResidue: not a duplicate grant — the second carrier is a PERMISSION star (bonus \"you can attempt it\", no magnitude) beside the numeric untrainedProficiency {levelMinus:0}, so nothing stacks; both carriers are already pinned on built characters by test/untrained-proficiency.test.ts:42 (investigator 15) and test/batch030-situational.test.ts:99-115 (bard 9), 17 tests green, so the guard the line asks for exists and no edit is owed. Editing situationalBonuses.ts is out of family anyway.",
+   "severity": "internal",
+   "summary": "src/rules/situationalBonuses.ts — feats/eclectic-skill gained a FEAT_SITUATIONAL entry from another",
+   "fixed": false,
+   "family": "instruments",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: the player-facing half already ships — FEAT_SITUATIONAL[\"deadly-butterfly\"] (src/rules/situationalBonuses.ts:842) prints the knife effect and print's \"only one at a time\", pinned by test/batch030-situational.test.ts:119-160. What is left is a SHARED-SHAPE change in another family's live files: an `asGroup`/`alsoGroups` field on critSpecWeapons (src/rules/types.ts:1449) plus a reader in src/rules/derive.ts and lookups at MainTab.tsx:607, StrikeDetailModal.tsx:46, ItemDetail.tsx:607 — all three rules files are the ENGINE family's stage[] in work/.b030-specs.json and carry no `batch 030` marker yet, so that agent's edits are still in flight and mine would collide. It is also a mis-shape as proposed: print grants ACCESS to a second effect the player CHOOSES between at crit time, which our per-group `critSpec(group)` string cannot express — substituting the group would silently take off-guard away. One record in the game needs it (feat-2708); it wants its own measured lane with the choice model decided, not a one-consumer field bolted on mid-batch.",
+   "finding": "flaggedResidue: the player-facing half already ships — FEAT_SITUATIONAL[\"deadly-butterfly\"] (src/rules/situationalBonuses.ts:842) prints the knife effect and print's \"only one at a time\", pinned by test/batch030-situational.test.ts:119-160. What is left is a SHARED-SHAPE change in another family's live files: an `asGroup`/`alsoGroups` field on critSpecWeapons (src/rules/types.ts:1449) plus a reader in src/rules/derive.ts and lookups at MainTab.tsx:607, StrikeDetailModal.tsx:46, ItemDetail.tsx:607 — all three rules files are the ENGINE family's stage[] in work/.b030-specs.json and carry no `batch 030` marker yet, so that agent's edits are still in flight and mine would collide. It is also a mis-shape as proposed: print grants ACCESS to a second effect the player CHOOSES between at crit time, which our per-group `critSpec(group)` string cannot express — substituting the group would silently take off-guard away. One record in the game needs it (feat-2708); it wants its own measured lane with the choice model decided, not a one-consumer field bolted on mid-batch.",
+   "severity": "internal",
+   "summary": "src/rules/types.ts + src/rules/derive.ts (crit-spec plumbing, deadly-butterfly): critSpecWeapons has no",
+   "fixed": false,
+   "family": "situational",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: not a gap — this is the ASCII rule under the \"DATA STILL NEEDED\" heading of work/.b030-verify-data-rows.txt (line 138), swept up as a line by the apply-digest collator because it sits inside the section it harvests. The section's actual body, line 139-140, reads \"(none - every row the 16 findings need is authored in work/.b030-rows-data.json; nothing is left for the driver to invent)\", so there is no data owed and nothing to author against it.",
+   "finding": "flaggedResidue: not a gap — this is the ASCII rule under the \"DATA STILL NEEDED\" heading of work/.b030-verify-data-rows.txt (line 138), swept up as a line by the apply-digest collator because it sits inside the section it harvests. The section's actual body, line 139-140, reads \"(none - every row the 16 findings need is authored in work/.b030-rows-data.json; nothing is left for the driver to invent)\", so there is no data owed and nothing to author against it.",
+   "severity": "internal",
+   "summary": "-------------------------------------------------------------------------------",
+   "fixed": false,
+   "family": "data-rows",
+   "kind": "DATA STILL NEEDED"
+  },
+  {
+   "id": "flaggedResidue: not a gap — the ASCII rule under the \"CROSS-FILE GAPS\" heading of work/.b030-verify-data-rows.txt (line 144), the same collator artefact as the line above. The real content of that section is its numbered items 1-6 beginning on line 145; item 1 is the only one the collator turned into a gap line and it is dispositioned separately below.",
+   "finding": "flaggedResidue: not a gap — the ASCII rule under the \"CROSS-FILE GAPS\" heading of work/.b030-verify-data-rows.txt (line 144), the same collator artefact as the line above. The real content of that section is its numbered items 1-6 beginning on line 145; item 1 is the only one the collator turned into a gap line and it is dispositioned separately below.",
+   "severity": "internal",
+   "summary": "-------------------------------------------------------------------------------",
+   "fixed": false,
+   "family": "data-rows",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: no caller is broken — the script's only launcher is wg-batch-run.mjs, which invokes it through `npx jiti`, and its own header documents that invocation; the ERR_MODULE_NOT_FOUND is identical before and after batch 030, so nothing flipped. Making it node-runnable is not a one-liner: an ESM static import resolves before any in-file guard can run, so it means converting the two TS imports to dynamic import with top-level await (or compiling seed.ts/build.ts), and changing how the driver launches its comparers — a launcher decision, out of scope for a gap agent, and YAGNI while jiti is the only entry point.",
+   "finding": "flaggedResidue: no caller is broken — the script's only launcher is wg-batch-run.mjs, which invokes it through `npx jiti`, and its own header documents that invocation; the ERR_MODULE_NOT_FOUND is identical before and after batch 030, so nothing flipped. Making it node-runnable is not a one-liner: an ESM static import resolves before any in-file guard can run, so it means converting the two TS imports to dynamic import with top-level await (or compiling seed.ts/build.ts), and changing how the driver launches its comparers — a launcher decision, out of scope for a gap agent, and YAGNI while jiti is the only entry point.",
+   "severity": "internal",
+   "summary": "scripts/wg-casting.mjs cannot run under plain `node` — line 23 imports '../src/rules/seed'",
+   "fixed": false,
+   "family": "instruments",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: the same deadly-butterfly crit-spec plumbing gap as the report line above (verify restated it) — parked for the same reason and against the same evidence: FEAT_SITUATIONAL[\"deadly-butterfly\"] (src/rules/situationalBonuses.ts:842) already carries print's second sentence to the player, and the durable `asGroup` field would have to land in src/rules/types.ts + src/rules/derive.ts, which are the ENGINE family's staged files in this batch and show no `batch 030` marker yet, so they are still live for another agent. Verify's own note calls it a shared-shape cross-family handoff, not a one-record fix; no owner question is owed because print settles the mechanic and WG encodes strictly less (adjValue WEAPON_CRITICAL_SPECIALIZATIONS = \"butterfly sword\", the first sentence only) — only our engine's crit-spec model is short.",
+   "finding": "flaggedResidue: the same deadly-butterfly crit-spec plumbing gap as the report line above (verify restated it) — parked for the same reason and against the same evidence: FEAT_SITUATIONAL[\"deadly-butterfly\"] (src/rules/situationalBonuses.ts:842) already carries print's second sentence to the player, and the durable `asGroup` field would have to land in src/rules/types.ts + src/rules/derive.ts, which are the ENGINE family's staged files in this batch and show no `batch 030` marker yet, so they are still live for another agent. Verify's own note calls it a shared-shape cross-family handoff, not a one-record fix; no owner question is owed because print settles the mechanic and WG encodes strictly less (adjValue WEAPON_CRITICAL_SPECIALIZATIONS = \"butterfly sword\", the first sentence only) — only our engine's crit-spec model is short.",
+   "severity": "internal",
+   "summary": "src/rules/types.ts + src/rules/derive.ts (deadly-butterfly): critSpecWeapons has no field that",
+   "fixed": false,
+   "family": "situational",
+   "kind": "CROSS-FILE GAPS"
+  }
+ ],
+ "rejected": 2,
+ "askOwner": [],
+ "complete": true,
+ "reverdicts": [
+  {
+   "id": "resilient",
+   "from": "FIXED",
+   "to": "MATCHES",
+   "derived": "MATCHES",
+   "reason": "instruments teach RUNE_KINDS (wg-diff.mjs:932) answers the KIND; the zero-row spec entry was miscounted as a row citation (close-script defect fixed in the same pass)"
+  }
+ ]
+}

@@ -936,6 +936,16 @@ export function extraPickCount(g: { pickByLevel: Record<string, number>; id?: st
   let n = 0;
   for (const [lvl, count] of Object.entries(g.pickByLevel)) if (Number(lvl) <= level && count > n) n = count;
   if (g.id === 'element' && build) n = Math.min(n, gateElementLimit(build));
+  /*
+   * …and the exemplar's IKON count, the one group whose size a FEAT changes: Additional Ikon prints
+   * *"You gain a fourth ikon, which can be of any type"* and Second Ikon the same shape. Both were
+   * already authored as `ikon-picks` COUNTER_MODS rows and nothing ever passed that counter to
+   * `applyCounterMods`, so the builder kept offering exactly the three the class table grants and
+   * both resolvers clamped a fourth answer away. This is the counter's only reader, and it is here
+   * rather than at the picker because the picker and the two resolvers all go through this one cap —
+   * teaching only the picker would have offered a fourth ikon that the sheet then dropped.
+   */
+  if (g.id === 'ikon' && build) n = applyCounterMods('ikon-picks', n, Object.values(build.featPicks ?? {}).filter(Boolean) as string[]);
   return n;
 }
 
@@ -6629,6 +6639,11 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       // ("bombs and martial firearms as simple weapons, and advanced firearms as martial weapons").
       const clauses = [g?.weaponFamiliarity, chosen].flatMap((x) => (Array.isArray(x) ? x : x ? [x] : []));
       for (const wf of clauses) {
+        /* A clause that is a RIDER on a sibling feat's list rather than a grant of its own. Viking
+         * Vindicator: "If you have Viking Weapon Familiarity or Viking Weapon Specialist, add the
+         * bastard sword and rapier to the list of weapons in those feats." — so the vindicator alone
+         * grants nothing. `feats` is the character's taken feats, already in scope for this loop. */
+        if (wf.requiresAnyFeat && !wf.requiresAnyFeat.some((id) => feats.some((f) => f.featId === id))) continue;
         // The weapon may be one the player CHOSE on this feat or on another one (Unconventional
         // Weaponry records it; Unconventional Expertise advances "the weapon you chose" for it).
         let weapons = wf.weapons;

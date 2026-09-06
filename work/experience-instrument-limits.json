@@ -221,6 +221,33 @@
    "class": "INSTRUMENT",
    "verified": "their only unmatched op is adjValue IMPROVED_MULTILINGUAL — WG's counter for 'extra languages, and extra languages FROM ANOTHER FEAT', a number the harness surface does not carry (no language-slot count in the sheet snapshot; the differential moved 0 values). Same blind spot as polyglot-android (batch 25). Ours delivers both clauses of heritage-258 ('You gain two additional languages of your choice … every time you take the Multilingual feat, you gain another new language') as languageChoices: 2 + languageChoicesBonus [{featId:'multilingual', extra:1}] — batch-26 rows read by recordLanguageSlots/bonusLanguageSlots (build.ts). Measured on built level-1 halfling wizards (Int +0), 2026-09-03: plain halfling 1 bonus language slot; nomadic 3 (+2); plain + Multilingual 3; nomadic + Multilingual 6 (+3 over nomadic: Multilingual's 2 plus the printed extra one).",
    "verifiedOn": "2026-09-03"
+  },
+  "frozen-breadth": {
+   "batch": 30,
+   "verdict": "NO-SHEET-EFFECT",
+   "lane": "harness-minimal-host-missing-feature",
+   "class": "INSTRUMENT",
+   "_cite": "// batch 030: frozen-breadth",
+   "verified": "The same host blindness as snowcaster (batch 14), on the same archetype. WG's op is giveSpellSlot for the Gelid Shard pool; ours is the batch-030 row feats/frozen-breadth spellSlotBonus {perRank:1, exceptHighest:2, entryId:'first-frost-casting'}, read by build.ts:7061, which widens the archetype pool for any feat whose spellSlotBonus.entryId is in archetypeEntryIds(arch) — casterArchetypes.ts:282 registers 'first-frost' as the gelid shard entry point. The harness cannot build a host that has the pool: our record's prerequisites array is empty, and withPrerequisiteFeats' archetype fallback (test/wg-experience.harness.test.tsx:345-348) looks for a feat whose name ENDS IN 'Dedication', while the gelid shard entry point is named 'First Frost' — so nothing was placed and the played host is a bare fighter (meta records prerequisites [], placed []). Even with the dedication the pool is empty until Basic/Expert/Master Snowcasting are held, which is four feats the harness never places. Delivery is pinned instead on a fully built level-20 fighter carrying first-frost + snowcaster + expert-snowcasting + master-snowcasting: test/batch030-engine.test.ts, describe('frozen-breadth widens the gelid shard pool (feats/frozen-breadth)'), asserts every gelid shard rank but the top two gains exactly one slot against the same host without the feat.",
+   "verifiedOn": "2026-09-06"
+  },
+  "cantrip-supremacy": {
+   "batch": 30,
+   "verdict": "NO-SHEET-EFFECT",
+   "lane": "harness-minimal-host-missing-feature",
+   "class": "INSTRUMENT",
+   "_cite": "// batch 030: cantrip-supremacy",
+   "verified": "The aura-enhancement (batch 14) shape: the effect is scoped to an archetype entry the minimal host does not have. Print (AoN feat-9332): 'Add 10 additional cantrips to your keepsake. You can also prepare 10 additional cantrips from your keepsake each day.' The batch-030 row is feats/cantrip-supremacy spellSlotBonus {entryId:'hedge-mage-dedication-casting', cantrips:10} — deliberately the ARCHETYPE entry id, so cantripBonusFor (build.ts:2225) skips it and the CLASS cantrip cap is untouched, which is what print says. The harness played it on a level-20 fighter with no Hedge Mage Dedication: our record's prerequisites array is empty and it carries no `archetype` field (123 of our 130 category:'archetype' feats carry none), so neither withPrerequisiteFeats' prerequisite walk nor its archetype fallback had a name to place, and the host has no keepsake entry for the 10 cantrips to land on. WG's two giveSpellSlot ops deliver nothing on that host either. The row itself is pinned by test/batch030-data.test.ts, describe('cantrip-supremacy gives the Hedge Mage keepsake 10 more cantrips').",
+   "verifiedOn": "2026-09-06"
+  },
+  "unshaken-in-iron": {
+   "batch": 30,
+   "verdict": "UNVERIFIED-EFFECT",
+   "lane": "harness-host-has-no-equipment",
+   "class": "INSTRUMENT",
+   "_cite": "// batch 030: unshaken-in-iron#instrument",
+   "verified": "WG's unchecked op is adjValue ARMOR_SPECIALIZATION_LIGHT = true. Our carrier is the record's own armorSpec {categories:['light'], ifTrained:['medium','heavy'], bonusWhileStance:{stanceId:'tenacious-stance', source:'armorCheckPenalty'}} — an armour-specialization ACCESS grant, and the exact twin of their variable. Its reader is gated on WORN ARMOUR: derive.ts:2718 calls armorSpecAccess(c, db) inside the `worn` branch and only then computes armorSpecValue(worn.armor.group, ...), so a character wearing nothing gets no value to move — the same blind spot as unburdened-iron (batch 6), whose lane this is. The harness host is a level-20 fighter with an empty inventory, so the differential moved 0 values and the sheet snapshot carries no armour-specialization surface for the harness to read. Delivery is pinned on a built, ARMOURED character instead: test/armor-specialization.test.ts:98-101 reads db.feats['unshaken-in-iron'].armorSpec.categories === ['light'] and applies it to a level-20 champion carrying the feat, and test/batch030-gap-stance-toggle.test.tsx pins the bonusWhileStance half by putting a Tenacious Stance chip on a built Stalwart Defender. wg-diff's own kind teach for the same carrier is pinned mutation-proof at test/batch030-instruments.test.ts:101.",
+   "verifiedOn": "2026-09-06"
   }
  }
 }

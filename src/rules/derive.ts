@@ -202,7 +202,10 @@ export function resilientSaveBonus(c: Character, db: ContentDatabase): number {
   if (!worn) return 0;
   if (mpActive(c, worn)) return mpArmorRefine(worn.monsterPart, c.level).saves;
   const r = (worn.runes as ArmorRunes | undefined)?.resilient;
-  return r ? RESILIENT_BONUS[r] ?? 0 : 0;
+  // …and the resilient rune a specific magic armour prints in its own NAME (see deriveAc's
+  // `builtInRunes` comment) — a FLOOR under the etched tier, never a replacement for it.
+  const builtIn = (db.items[worn.itemId] as { builtInRunes?: ArmorRunes } | undefined)?.builtInRunes?.resilient;
+  return Math.max(r ? RESILIENT_BONUS[r] ?? 0 : 0, builtIn ? RESILIENT_BONUS[builtIn] ?? 0 : 0);
 }
 
 /**
@@ -347,6 +350,30 @@ export function passiveItemPenalty(c: Character, db: ContentDatabase | undefined
     read(c.resolvedItemPassives?.[inv.itemId]);
   }
   return worst;
+}
+
+/**
+ * The LOWEST Dex-to-AC cap any in-use item passive imposes, or null when none does.
+ *
+ * The twin of `passiveItemBonus` on the other sign: that helper starts at 0 and takes the max, so a
+ * cap could never travel through it. Bands of Force print *"a maximum Dexterity modifier of +5 as
+ * armor"* on an `equipment` record — there is no armour block to hold it — and a Dex +6 wearer was
+ * getting the item's +1 to AC and none of its cost. Lowest wins, the same rule the armour and stance
+ * caps already follow.
+ */
+export function passiveItemDexCap(c: Character, db: ContentDatabase | undefined): number | null {
+  if (!db) return null;
+  let cap: number | null = null;
+  const read = (pe?: ItemPassiveEffects) => {
+    if (pe?.dexCap == null) return;
+    cap = cap == null ? pe.dexCap : Math.min(cap, pe.dexCap);
+  };
+  for (const inv of c.inventory) {
+    if (!itemInUse(inv)) continue;
+    read(db.items[inv.itemId]?.passiveEffects);
+    read(c.resolvedItemPassives?.[inv.itemId]);
+  }
+  return cap;
 }
 
 /**
@@ -1866,7 +1893,18 @@ export function deriveAc(c: Character, db: ContentDatabase): AcResult {
         .filter((r) => r.actsAs?.kind === 'potency')
         .map((r) => r.actsAs!.value),
     );
-    acItem = abpOn(c) ? 0 : Math.max((worn.inv.runes as ArmorRunes | undefined)?.potency ?? 0, refAc, bfAc, actsAsPotency);
+    /*
+     * …and the FUNDAMENTAL runes a specific magic armour carries in its own NAME — Rusting Carapace
+     * is *"This +1 leather lamellar armor"* and copies the base suit's block verbatim, so its wearer
+     * sat 1 AC below the book value until they bought and etched a potency rune they already owned.
+     *
+     * `builtInRunes` is the field the WEAPON side has used for this since batch 001 (Cooperative
+     * Blade, Luck Blade); it was typed `WeaponRunes` and read only by `effectiveWeaponRunes`, so 0 of
+     * its 265 records were armour while 112 specific magic armours print a rune in their name. Same
+     * FLOOR semantics as the weapon lane: a player who etches higher keeps it.
+     */
+    const builtIn = (db.items[worn.inv.itemId] as { builtInRunes?: ArmorRunes } | undefined)?.builtInRunes;
+    acItem = abpOn(c) ? 0 : Math.max((worn.inv.runes as ArmorRunes | undefined)?.potency ?? 0, builtIn?.potency ?? 0, refAc, bfAc, actsAsPotency);
   }
   // A passive AC item (Bracers of Armor), Monster Parts, and ABP defense potency are all ITEM bonuses to
   // AC — they don't stack with each other or the armor potency rune, so take the highest.
@@ -1926,6 +1964,11 @@ export function deriveAc(c: Character, db: ContentDatabase): AcResult {
     acItem += natCumulative;
     if ((natAc || natCumulative) && natCap != null) dexCap = dexCap == null ? natCap : Math.min(dexCap, natCap);
   }
+
+  // An item passive may cap Dex-to-AC "as armor" (Bands of Force +5) whether or not the wearer has
+  // armour on — lowest cap in play, like every other cap here.
+  const itemDexCap = passiveItemDexCap(c, db);
+  if (itemDexCap != null) dexCap = dexCap == null ? itemDexCap : Math.min(dexCap, itemDexCap);
 
   // A character can wear an item whose category isn't one of the four PC defense tracks (e.g. animal
   // "light-barding"/"heavy-barding"); fall back to the unarmored rank so AC never computes to NaN.
@@ -3607,6 +3650,11 @@ export function critSpecSources(c: Character, db: ContentDatabase): CritSpecSour
      * `cat-rotting-rage`); before this, the two records carrying the clause granted it unconditionally. */
     const group = e.critSpecRequiresModeGroup;
     if (group && !(c.activeModes ?? []).some((m) => m.exclusiveGroup === group)) return;
+    /* *"If you have Viking Weapon Familiarity or Viking Weapon Specialist, add the bastard sword and
+     * rapier to the list of weapons in those feats"* — a record whose crit-spec block EXTENDS another
+     * feat's list, and is worth nothing without it. Same shape as the mode gate above, on the other
+     * axis: a taken feat rather than an active state. */
+    if (e.critSpecRequiresFeat && !e.critSpecRequiresFeat.some((id) => c.feats.some((f) => f.featId === id))) return;
     const entry: CritSpecSource = { level: Math.max(gainLevel, e.critSpecLevel ?? 0), weapons: e.critSpecWeapons, condition: e.critSpecCondition };
     out.push(entry);
     ownAnswer.set(entry, choiceValue);

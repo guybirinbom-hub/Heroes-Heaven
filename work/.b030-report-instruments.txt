@@ -1,0 +1,184 @@
+BATCH 030 — INSTRUMENTS FAMILY (WG-COMPARISON lane)
+findings: eclectic-skill#instrument, unshaken-in-iron#instrument, resilient, bands-of-force
+spec: work/.b030-rows-instruments.json (4 findings, 0 backfill rows — every one is a code-only
+      comparer teach; a data row on any of them would duplicate a bonus the engine already delivers)
+
+DATA STILL NEEDED
+  (none — all four findings are instrument misreads; no overlay row is correct for any of them)
+
+CROSS-FILE GAPS
+  1. src/rules/situationalBonuses.ts — feats/eclectic-skill gained a FEAT_SITUATIONAL entry from another
+     batch-030 family while this work was in flight. It reaches the SKILL lane, so eclectic-skill now
+     answers 'skill' by two roads and the untrainedProficiency stunt cannot be proved on that record;
+     the carrier is pinned on its untrained-improvisation twin instead. Nothing to fix, recorded so the
+     next reader does not mistake the doubled carrier for a duplicate grant.
+  2. scripts/wg-casting.mjs is UNRUNNABLE under plain `node` — line 23 `import { seedContent } from
+     '../src/rules/seed'` is an extensionless TS import, so `node scripts/wg-casting.mjs` dies with
+     ERR_MODULE_NOT_FOUND. It only runs through `npx jiti`, which is how wg-batch-run.mjs invokes it.
+     Identical before and after my changes, so no batch flipped; left alone because "make it run under
+     node" means changing how the driver launches it, which is outside my files.
+  3. work/wg-casting-parity.json is DIRTY in the working tree — wg-casting.mjs writes it on every run
+     with no --out, and the before/after run this brief mandates therefore rewrote it. Its content is
+     driven by src/rules/build.ts + derive.ts, which two other batch-030 families are editing, not by
+     anything I touched. It is deliberately NOT in my stage list; do not attribute it to this family.
+  4. wg-settle-stale.mjs reports 66 settles across the three registries that already answered nothing
+     before this batch (untouched — they belong to a settle-hygiene pass, not to these four findings).
+     My two teaches added no new stale settles: the two they DID make stale are deleted below.
+
+----------------------------------------------------------------------------- per finding
+
+eclectic-skill#instrument   TEACH (wg-diff.mjs)
+  Print: "Your proficiency bonus to untrained skill checks is equal to your level." (AoN feat-4605)
+  What I did:
+    · scripts/wg-diff.mjs, kindOfTheirOp() — new mapping `/^UNTRAINED_IMPROVISATION/ -> 'skill'`,
+      placed above the SAVE_/PERCEPTION tests. Their variable used to reach the named `unmapped`
+      fallback, so the record reported missing=[unmapped] against a carrier that matches their number
+      exactly ({{level}} vs c.level - levelMinus, levelMinus 0).
+    · scripts/wg-diff.mjs, OUR_KINDS.skill — added the field `untrainedProficiency`.
+    · scripts/wg-diff.mjs, VERIFIED_EQUIVALENT — DELETED the 'untrained-improvisation' settle
+      (['conditional','unmapped']). Adversarially confirmed stale: under --raw that record reported
+      missing=[conditional,unmapped] before the teach and reports nothing after it, so keeping the settle
+      would only silence the next real difference on it. Removal cited in-file per the audit's removal
+      form ("// batch 030: eclectic-skill#instrument — the 'untrained-improvisation' settle is DELETED").
+  Blast radius (measured over the whole dump, not the packet): exactly TWO rows write
+    UNTRAINED_IMPROVISATION (Eclectic Skill, Untrained Improvisation) and both are answered by
+    untrainedProficiency; feats/pathfinder-agent-dedication carries the field on our side only and is
+    unaffected. eclectic-skill moved THEY-ONLY -> WE-ONLY, untrained-improvisation stayed in AGREE.
+  Tests (test/batch030-instruments.test.ts):
+    · "eclectic-skill: their UNTRAINED_IMPROVISATION is a skill fact, not an unmapped marker" —
+      asserts theirKinds === ['skill'] and that the record is out of THEY-ONLY under --raw.
+    · "eclectic-skill: the untrainedProficiency carrier is load-bearing — proved on its Untrained
+      Improvisation twin" — mutation-proof, stunts `untrainedProficiency` on feats/untrained-improvisation
+      through the new `--core` hook and asserts 'skill' comes back in missing.
+  Not done: nothing.
+
+unshaken-in-iron#instrument   TEACH (wg-diff.mjs)
+  Print: "You gain the armor specialization effect of light armor. If you are trained in medium or heavy
+         armor, you gain the respective armor specialization effect for those armors as well."
+  What I did:
+    · scripts/wg-diff.mjs, kindOfTheirOp() — new mapping `/^ARMOR_SPECIALIZATION/ -> 'defense'`, placed
+      ABOVE the unanchored `/^AC|ARMOR/ -> 'ac'` test that was swallowing it. Armor specialization is a
+      typed RESISTANCE on our side (armorSpecEffect / armorSpecValue -> res.set(type, ...) in derive.ts),
+      never AC, which is exactly what the digest's 'ac' flag misread.
+    · scripts/wg-diff.mjs, OUR_KINDS.defense — added the field `armorSpec`.
+    · The 'conditional' flag clears as a consequence, not by a second teach: gatesOnlyWhatWeHave now sees
+      two branches naming a kind the record holds. That predicate is only satisfiable through a real
+      carrier, which is why the stunt below brings 'conditional' back with 'defense'.
+    · scripts/wg-diff.mjs, VERIFIED_EQUIVALENT — DELETED the 'armor-specialist' settle
+      (['conditional','ac']), which existed only because of the /ARMOR/ -> 'ac' misread. Adversarially
+      confirmed stale the same way (reported under --raw before, silent after). Removal cited in-file.
+  Blast radius: 13 rows in the dump write ARMOR_SPECIALIZATION_*; four are answered by an `armorSpec`
+    field on our side (classFeatures/armor-expertise, feats/unshaken-in-iron, feats/armor-specialist,
+    feats/hellknight-preferment). The kind mapping alone credits nothing — the carrier does.
+  Tests:
+    · "unshaken-in-iron is quiet with its carrier, and reports missing=[conditional,defense] on a
+      stunted copy" — mutation-proof, stunts `armorSpec` on feats/unshaken-in-iron.
+    · "the ARMOR_SPECIALIZATION teach is carrier-gated, not a blanket — armor-expertise reopens beside
+      unshaken-in-iron" — mutation-proof on a SECOND record, so the result cannot be specific to the
+      first; stunts `armorSpec` on classFeatures/armor-expertise.
+  Not done: unshaken-in-iron#stance is the record's genuine gap and is another family's finding; I did
+    not touch it.
+
+resilient   TEACH (wg-diff.mjs + wg-values.mjs)
+  Print: "Resilient runes imbue armor with additional protective magic. This grants the wearer a +1 item
+         bonus to saving throws." (AoN equipment-2786)
+  What I did:
+    · scripts/wg-diff.mjs — new `RUNE_KINDS` table beside OUR_KINDS ({ resilient: ['save'] }) and a
+      runes-bucket read at the top of ourKindsOf(): an items-bucket record whose id also names a RuneDef
+      is credited with the kinds that RuneDef delivers.
+    · scripts/wg-values.mjs — new `RUNE_ASSERTIONS` table at the top of ourAssertions()
+      ({ resilient: def => save|fortitude/reflex/will = def.value }), so the RuneDef's NUMBER is asserted
+      and compared rather than the key being suppressed.
+    Both are KIND MAPS on purpose: all 159 runes have an items-row twin, so "it has a rune twin, believe
+    it" would silence the whole bucket in one line.
+  Blast radius: across all 159 runes, wg-values went from 8 rows to adjudicate to 5. The three that
+    cleared are resilient / resilient-greater / resilient-major, and they cleared by AGREEING on the
+    magnitudes (1 / 2 / 3 against WG's 1 / 2 / 3). armor-potency-2/3 (ac), weapon-potency-2/3 (attack)
+    and soaring (fly speed) are still reported — they are open rune lanes for whoever reads their
+    readers, and the teach deliberately does not cover them.
+  Tests:
+    · "resilient agrees on all three saves, and reports MISSING again on a stunted copy" — mutation-proof,
+      stunts runes/resilient.
+    · "resilient is COMPARED, not credited: a RuneDef holding the wrong magnitude reports DIFFERENT" —
+      mutation-proof by VALUE (sets runes/resilient.value = 5 and asserts DIFFERENT ours=5).
+    · "the runes fallback is a kind map, not a blanket — armor-potency and soaring still report beside
+      resilient" — pins the three lanes the teach must NOT have silenced.
+  Not done: no backfill row. The rune system already delivers the bonus; a row on items/resilient would
+    stack a second one.
+
+bands-of-force   TEACH (wg-values.mjs)
+  Print: "The force grants you a +1 item bonus to AC and saving throws, and a maximum Dexterity modifier
+         of +5 as armor." (AoN equipment-2455)
+  What I did:
+    · scripts/wg-values.mjs, ourAssertions() — after the existing per-save MAP reader, an expansion of
+      the ITEM shape: `if (typeof pe.saves === 'number')` puts the magnitude on all three save tracks.
+      The comment beside the old line already recorded that the item shape "yields nothing"; this turns
+      that known blind spot into a reader. Their side writes the same rule as three per-save ops.
+  Blast radius: 18 records carry a numeric passiveEffects.saves; 5 of them are compared by wg-values and
+    all 5 now AGREE on the magnitude (bands-of-force 1, -greater 2, -major 3, skarjas-heartstone 2,
+    arachnid-harness-greater via its set). Nothing was suppressed — a wrong magnitude still reports
+    DIFFERENT, which is what the graded siblings demonstrate.
+  Tests:
+    · "bands-of-force agrees on all three saves, and reports MISSING again on a stunted copy" —
+      mutation-proof, stunts items/bands-of-force.passiveEffects.saves and additionally asserts the `ac`
+      half SURVIVES the stunt, so the expansion is provably scoped to the save scalar.
+    · "bands-of-force graded siblings prove the scalar is compared: greater asserts 2 and major 3".
+  Not done: nothing.
+
+----------------------------------------------------------------------------- instrument plumbing
+
+  scripts/wg-diff.mjs and scripts/wg-values.mjs both gained `--core <path>`, defaulting to
+  public/core.json. It is the anti-laundering hook every teach above owes: a test writes a copy of the
+  content with ONE carrier deleted or damaged and re-runs the real comparer against it. wg-values already
+  had the same shape as `--advancement`; this is that hook generalised to the content file. A normal run
+  is byte-identical.
+
+----------------------------------------------------------------------------- before / after
+
+wg-diff.mjs (whole corpus — it takes no --batch; the packet argument is ignored, so the corpus IS the
+measurement, and it is the strictest one available):
+                       BEFORE      AFTER
+  THEY-ONLY              314        309
+  WE-ONLY               2819       2822
+  AGREE                 1035       1037
+  numeric-both          1923       1929
+  Bucket membership diffed by ID against a HEAD copy of the script, not by counts:
+    left THEY-ONLY : unshaken-in-iron, eclectic-skill, resilient, resilient-greater, resilient-major
+    joined THEY-ONLY: (none)
+    no other record's `missing` vector changed in either direction.
+  Under --raw (settles bypassed), untrained-improvisation and armor-specialist reported before the teach
+  and report nothing after it — the evidence for the two settle deletions.
+
+wg-values.mjs                         BEFORE                    AFTER
+  --batch wg-batch-028.json    29 compared / 29 agree / 0   29 / 29 / 0     unchanged
+  --batch wg-batch-029.json    25 compared / 25 agree / 0   25 / 25 / 0     unchanged
+  --batch wg-batch-030.json    12 compared /  9 agree / 3   12 / 11 / 1     resilient + bands-of-force
+                                                                            cleared; the remaining row is
+                                                                            viking-vindicator (set|critspec,
+                                                                            set|weapons) — another family's
+  all 159 runes                24 compared / 16 agree / 8   24 / 19 / 5     3 resilient rows cleared;
+                                                                            armor-potency-2/3,
+                                                                            weapon-potency-2/3, soaring
+                                                                            still reported
+
+wg-identity.mjs (untouched)           BEFORE                    AFTER
+  --batch wg-batch-028.json     8 checked / 8 match        8 / 8            unchanged
+  --batch wg-batch-029.json     4 checked / 4 match        4 / 4            unchanged
+  --batch wg-batch-030.json     9 checked / 7 match        9 / 7            unchanged (watchers-armband,
+                                                                            sanguine-transference — another
+                                                                            family's)
+
+wg-casting.mjs (untouched): must be run as `npx jiti scripts/wg-casting.mjs` (see CROSS-FILE GAPS 2).
+  BEFORE and AFTER identical: "casting parity: 16 class source(s) compared, 4 with mismatches
+  (180 row(s)); 52 non-class source(s) skipped". Under plain `node` it fails with the same
+  ERR_MODULE_NOT_FOUND before and after.
+
+No earlier batch flipped: 028 and 029 are byte-identical on every comparer that runs, and the only
+records that moved anywhere are the five named above.
+
+----------------------------------------------------------------------------- gates
+
+  node scripts/vt.mjs run test/batch030-instruments.test.ts   -> 9 passed
+  npx tsc --noEmit                                            -> clean
+  node scripts/test-flip-audit.mjs --batch 030                -> clean (0 new settle keys, every flip
+                                                                 cited, both settle removals cited)

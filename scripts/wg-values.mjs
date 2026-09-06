@@ -42,7 +42,10 @@ if (!existsSync(DUMP)) {
   console.error('No dump at work/wg/wg-data.sql — it is gitignored on purpose (GPL-3.0; differ only).');
   process.exit(2);
 }
-const core = JSON.parse(readFileSync(join(ROOT, 'public/core.json'), 'utf8'));
+/* `--core <path>` points the comparer at a STUNTED copy of the content, so a test can delete a carrier
+ * and prove the record it answers goes back to reporting — the same anti-laundering hook as
+ * `--advancement` below. Defaults to the shipped content, so a normal run is unchanged. */
+const core = JSON.parse(readFileSync(join(ROOT, arg('--core', 'public/core.json')), 'utf8'));
 const sql = readFileSync(DUMP, 'utf8');
 const rows = parseCopyBlock(sql, 'ability_block').rows;
 
@@ -716,6 +719,30 @@ function ourAssertions(id, rec) {
   };
   out.__wildcards = wildcards;
 
+  /*
+   * A RUNE'S NUMBERS LIVE ON ITS RuneDef, NOT ON THE ITEM ROW.
+   *
+   * All 159 runes ship twice: a shop row in `items` (name, level, price — no passiveEffects, by
+   * design) and the mechanical definition in the `runes` bucket, which is what planRune() etches and
+   * what derive.ts reads. A comparer that stops at the item row calls every rune mechanically empty —
+   * Resilient (AoN equipment-2786, *"a +1 item bonus to saving throws"*) is
+   * `runes['resilient'] = {kind:'resilient', value:1}`, turned into deriveSave's item bonus by
+   * resilientSaveBonus(), and it read as `MISSING save|fortitude theirs=1 ours=(nothing)`.
+   *
+   * DELIBERATELY A KIND MAP, NOT A BLANKET "it has a rune twin, believe it": a blanket credit would
+   * silence every rune lane at once. Only kinds whose reader has been read end-to-end are listed, so
+   * armor-potency / weapon-potency / soaring keep reporting. And it ASSERTS THE VALUE rather than
+   * suppressing the key, so a rune whose RuneDef holds the wrong magnitude reports DIFFERENT: the
+   * graded siblings are the proof, Resilient (Greater) asserting 2 and (Major) 3 against their 2 and 3.
+   */
+  const RUNE_ASSERTIONS = {
+    resilient: (def) => SAVE_TRACKS.forEach((t) => put(`save|${t}`, Math.abs(Number(def.value)))),
+  };
+  const runeDef = core.runes?.[id];
+  if (runeDef && RUNE_ASSERTIONS[runeDef.kind] && Number.isFinite(Number(runeDef.value))) {
+    RUNE_ASSERTIONS[runeDef.kind](runeDef);
+  }
+
   /* Record fields. */
   /*
    * A formula encodes "N if you have none, else existing + M" — evaluate it at zero to recover the
@@ -916,6 +943,22 @@ function ourAssertions(id, rec) {
    * nothing for them — it exists for the classFeatures shape that stores a map. */
   for (const [k, v] of Object.entries(pe.skills ?? {})) put(`skill|${k}`, typeof v === 'number' ? Math.abs(v) : v);
   for (const [k, v] of Object.entries(pe.saves ?? {})) put(`save|${k}`, typeof v === 'number' ? Math.abs(v) : v);
+  /*
+   * …AND THE ITEM SHAPE, WHERE `pe.saves` IS ONE NUMBER COVERING ALL THREE.
+   *
+   * The line above is the classFeatures MAP shape, and the comment beside it already said the item
+   * shape "yields nothing" — which was left as a known blind spot rather than a teach. It cost every
+   * item whose printed clause is *"a +N item bonus to saving throws"*: Bands of Force (AoN
+   * equipment-3058, the record's own aonId — *"The force grants you a +1 item bonus to AC and saving
+   * throws"*; `passiveEffects {ac:1, saves:1}`) reported ours(all) as `ac|=1,1` and three MISSING
+   * saves, on a record whose save half is authored and read — passiveItemBonus(c, db, 'saves') is
+   * Math.max'd into deriveSave's item bonus exactly as pe.ac is pooled into deriveAc.
+   *
+   * A single scalar IS an assertion about all three tracks, so it is expanded into all three; their
+   * side says the same thing as three per-save operations. Not a suppression — the NUMBER is still
+   * compared, so an item carrying the wrong magnitude reports DIFFERENT.
+   */
+  if (typeof pe.saves === 'number') for (const t of SAVE_TRACKS) put(`save|${t}`, Math.abs(pe.saves));
   if (pe.perception !== undefined) put('perception|', typeof pe.perception === 'number' ? Math.abs(pe.perception) : pe.perception);
   if (pe.ac !== undefined) put('ac|', Number(pe.ac));
   if (pe.speedBonus !== undefined) put('speed|land', Number(pe.speedBonus));

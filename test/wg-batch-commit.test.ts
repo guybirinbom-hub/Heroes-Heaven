@@ -11,7 +11,8 @@
  *
  *   1. The staged set is exactly the manifest's `stage: []` ∪ the known batch set, by explicit path.
  *   2. A modified tracked path the batch does not account for REFUSES and names it.
- *   3. The three data artefacts move together or not at all.
+ *   3. The overlay and core.json move together or not at all; core-descriptions.json only has to move
+ *      when the manifest actually carries prose (ruling 2026-09-06, pinned at the two prose tests).
  *   4. No commit message file, or one under 200 chars, REFUSES.
  *   5. The commit that lands contains exactly the printed list — nothing else in the tree comes with it.
  */
@@ -52,6 +53,9 @@ const TRACKED_AT_HEAD = [
    * every batch commit after a `--stage gate` run refuse. It is on the ignore list now, but a clone
    * that still has it tracked must not be able to wedge a commit, so the allowlist covers it. */
   'work/.gate-prose.json',
+  // the two batch-evidence dumps of the 2026-09-06 ruling; unmodified in the default fixture
+  'work/experience-instrument-limits.json',
+  'work/wg-casting-parity.json',
 ];
 
 /** A throwaway repo with one commit, then the working-tree state a finished batch 900 leaves behind. */
@@ -179,6 +183,73 @@ describe('wg-batch-commit stages by explicit path or refuses', { timeout: 60_000
     // the scratch file was left in the working tree, not swept into history
     expect(git(root, 'status', '--porcelain')).toContain('work/.b900-run.json');
     expect(git(root, 'log', '-1', '--pretty=%s').trim()).toContain('WG parity batch 900');
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  /*
+   * ORCHESTRATOR RULING (2026-09-06, batch 030): "work/experience-instrument-limits.json is a batch
+   * artefact (a parked EXPERIENCE verdict is batch evidence; batches 25/26 committed it inside their
+   * batch commits): add it to the commit script's always-staged-when-changed set beside the three data
+   * files, parity and residual. Same for work/wg-casting-parity.json (the casting comparer's dump moves
+   * when a batch's rows move slot counts; it is evidence of the comparison state, as batch 28 committed
+   * it) — staged when changed, never refused over."
+   *
+   * `resilient` is the finding that exposed it: its parked EXPERIENCE verdict moved the limits file and
+   * the batch's slot rows moved the casting dump, and batch 030's commit refused over both.
+   */
+  // batch 030: resilient
+  it('stages the experience-limits and casting dumps (resilient) as batch evidence, never refuses over them', () => {
+    const root = repo({
+      'work/experience-instrument-limits.json': '{"parked":["a lv8 instrument verdict this batch parked"]}\n',
+      'work/wg-casting-parity.json': '{"rows":["slot counts this batch moved"]}\n',
+    });
+    // batch 030: resilient
+    const r = commit(root, '--batch', '900', '--dry-run');
+    expect(r.code).toBe(0);
+    expect(r.out).not.toContain('does not account for');
+    // batch 030: resilient — both dumps land in the plan, as batch evidence rather than an unaccounted path
+    expect(r.out).toContain('work/experience-instrument-limits.json');
+    expect(r.out).toContain('work/wg-casting-parity.json');
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  /*
+   * ORCHESTRATOR RULING (2026-09-06, batch 030): "The data-triple refusal ('the three data artefacts move
+   * together') is relaxed to the real invariant: refuse only when the manifest's specs carry at least one
+   * row with field 'description' or 'descRefs' (or a created-prose spec) AND public/core-descriptions.json
+   * did not change; a rows-only batch with no prose rows may legitimately leave core-descriptions.json
+   * untouched — say so in the printed plan. Keep refusing when core.json changed but the overlay did not,
+   * or vice versa."
+   *
+   * The pair half of that invariant is the test above ('do not move together'), which now trips on the
+   * overlay/core.json pair alone. These two pin the prose half in both directions. `resilient` again:
+   * batch 030 is rows-only, and the old triple rule refused it for a file it had no reason to touch.
+   */
+  // batch 030: resilient
+  it('does NOT refuse a rows-only batch (resilient) that leaves core-descriptions.json untouched', () => {
+    const root = repo({ 'public/core-descriptions.json': '{"at":"HEAD"}\n' });
+    // batch 030: resilient
+    const r = commit(root, '--batch', '900', '--dry-run');
+    expect(r.code).toBe(0);
+    expect(r.out).toContain('no prose rows in this batch; public/core-descriptions.json unchanged is expected');
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  // batch 030: resilient — the other direction: prose in the manifest still demands the overlay artefact
+  it('REFUSES a description row (resilient lane) while core-descriptions.json is untouched', () => {
+    const root = repo({
+      'public/core-descriptions.json': '{"at":"HEAD"}\n',
+      'work/.b900-rows-items.json': JSON.stringify({
+        findings: [{ id: 'alpha', backfillRows: [{ category: 'feats', id: 'alpha', field: 'description', value: 'the printed text' }] }],
+      }),
+    });
+    // batch 030: resilient
+    const r = commit(root, '--batch', '900');
+    expect(r.code).toBe(1);
+    expect(r.out).toContain('carry prose');
+    // batch 030: resilient
+    expect(r.out).toContain('public/core-descriptions.json did not change');
+    expect(git(root, 'rev-list', '--count', 'HEAD').trim()).toBe('1');
     rmSync(root, { recursive: true, force: true });
   });
 

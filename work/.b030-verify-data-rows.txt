@@ -1,0 +1,169 @@
+BATCH 030 — WG-COMPARISON LANE — FAMILY: data-rows (manifest family "data") — ADVERSARIAL VERIFY
+Verified: work/.b030-rows-data.json (15 rows / 16 findings), work/.b030-report-data.txt,
+          test/batch030-data.test.ts, work/.b030-specs.json.
+Ran: npx tsc --noEmit — clean (exit 0).
+     node scripts/vt.mjs run test/batch030-data.test.ts — 15 failed / 2 passed, and every failure is the
+       one assertion on the field the driver has not applied yet; the 2 passes are the in-memory-patched
+       behaviour tests. No assertion fails for any other reason.
+     node scripts/test-flip-audit.mjs --batch 030 — clean, 4 test files touched, 0 new settle keys.
+Method beyond the reports: a throwaway in-memory harness (test/_b030harness.test.ts, applied all 15 rows
+     as absolute field assignments onto a content() copy, built real characters through buildCharacter and
+     read deriveStrikes / deriveDefenses / recordMarkersFor / dailyChoicesFor, then DELETED). Every row
+     below whose evidence line quotes a built value was measured that way, not read off the proposal.
+
+--------------------------------------------------------------------------------
+PER FINDING
+--------------------------------------------------------------------------------
+grasping-corpses — DONE
+  recordMarkersFor(char,'action','mobbing-assault') on a built L12 necrologist-dedication + grasping-corpses
+  returns [{sourceId:'grasping-corpses', note:"…off-guard until the beginning of your next turn."}] — the
+  row's note is print verbatim (AoN feat-7966) and actions/mobbing-assault exists in core.json.
+
+defensive-stratagem — DONE
+  Built L10 investigator: recordMarkersFor(…,'action','devise-a-stratagem') returns the mark. The +1 half at
+  situationalBonuses.ts:1117 is untouched (diffed: no situational edit in this family's stage).
+
+instinctive-maneuvers — DONE
+  Built L12 animist: recordMarkersFor(…,'feature','relinquish-control') returns the mark naming all four
+  maneuvers. situationalBonuses.ts:379 (+2 Athletics) untouched.
+
+transcribe-moment — DONE
+  Built L8 fighter + scrollmaster-dedication + transcribe-moment with the row applied: the focus entry comes
+  out tradition 'arcane', keyAbility 'int', repertoire {4:['transcribe-moment']}. Without the row build.ts:4407
+  never collects a featFocusGrant for it and the chains fall to occult/dex. Shape is crystal-ward-spells'.
+
+arcane-breadth — DONE (supersedes verified)
+  Shipped value {perRank:1,exceptHighest:2} and the ONE existing effect-backfill row for the same
+  category/id/field carry exactly those two keys; the new value is that object plus entryId — nothing lost.
+  Built L12 fighter + wizard-dedication + basic-wizard-spellcasting + arcane-breadth: entry
+  'wizard-dedication-casting' prepared goes {1:[x1],2:[x1],3:[x1]} → {1:[x2],2:[x1],3:[x1]} with the row and is
+  unchanged without it (exceptHighest:2 of ranks 1-3 = rank 1 only, which is what print says). casterArchetypes.ts:107
+  + archetypeEntryIds() confirm 'wizard-dedication-casting' is the real id.
+
+cantrip-supremacy — DONE
+  Built L12 fighter + hedge-mage-dedication + basic-hedge-mage-spellcasting + cantrip-supremacy with 14 arcane
+  cantrips picked: entry 'hedge-mage-dedication-casting'.cantrips goes 2 → 12 with the row, and its `prepared`
+  slots are IDENTICAL before and after — i.e. the cantrips-only branch at build.ts:7088 correctly grants no
+  slots. Builder.tsx:463-469 mirrors the same sum for the picker cap, so the builder offers the 12 too.
+
+selfless-parry — DONE
+  Built L12 fighter + dueling-parry + selfless-parry: recordMarkersFor(…,'feature','dueling-parry') returns the
+  allies-adjacent note. No situationalBonuses kind:'ac' entry was authored, which is right — the +1 lands on
+  allies, and the holder's own +2 at situationalBonuses.ts:837/:1465 is untouched.
+
+kaiju-stance#fatal — DONE
+  Built L8 monk with activeStance 'kaiju-stance': deriveStrikes' Shattering Earth damage line reads
+  "1d8+2 B" on shipped data and "1d8+2 B (fatal d12)" with the row. Route proof re-checked independently:
+  scripts/data/stances.json's kaiju-stance carries NO `requires`, core.json's does, and that `requires` is an
+  effect-backfill row — so a stances-bucket overlay lands after the stances source merge. The re-emitted
+  strikes array is byte-identical to the shipped one except "fatal d12" → "fatal-d12".
+
+unshaken-in-iron#stance — NOT-DONE (correctly out of family, but see the closer risk below)
+  Confirmed the defect is untouched and real: core.json has tenacious-stance in `actions` and `stances` and NOT
+  in `feats`; MainTab.tsx:392-394 filters `character.feats` through `content.feats[...]`, and setActiveStance
+  (play.ts:1805) has exactly one caller, MainTab.tsx:1092 inside that loop — so derive.ts:3711's
+  `c.activeStance === 'tenacious-stance'` can never be true. The data (armorSpec.bonusWhileStance) is already
+  correct and already read. Nothing was authored and nothing should have been; the fix is in src/sheet.
+  ⚠ It will NOT close as an open gap on its own — see CROSS-FILE GAPS line 5.
+
+thoughtsense — DONE
+  Built L8 psychic + thoughtsense: deriveDefenses().senses is ["normal","thoughtsense/vague/30"] with the
+  toggle off and ["normal","thoughtsense/imprecise/30"] with classResources['unleash-psyche']=1. Both halves
+  pinned, so a row that had replaced the standing vague entry would have shown up here.
+
+apparition-magic — DONE (supersedes verified)
+  Shipped value and the single existing backfill row are both {perRank:1,exceptHighest:2}; the new value is
+  that plus entryId. Built L12 fighter + animist-dedication + basic-animist-spellcasting + apparition-magic:
+  entry 'animist-dedication-casting' prepared rank 1 goes 1 → 2 with the row, unchanged without it.
+
+sanguine-transference — DONE
+  Built L8 necromancer: focus entry repertoire is {0:[create-thrall,thrall-charge],1:[necrotic-bomb],
+  4:[sanguine-transference]} with the row. The Focus Point follows: build.ts:4574 sets poolMax =
+  pointCostingKnown.length for a non-animist and spells/sanguine-transference carries the `focus` trait.
+
+boost-summons — DONE
+  Reader confirmed on the record type actually used: build.ts:6293 puts every owned FEAT into `ownedRecords`
+  and the loop at 6370-6381 pushes any spellNotes entry with a spellId and no fromChoice; spells/boost-eidolon
+  exists, so pushSpellNote's ship-guard passes. RecordMarker genuinely cannot carry it (its `on` union has no
+  'spell'), so spellNotes is the only lane.
+
+ilverani-purist — DONE
+  Built L8 rogue + ilverani-purist: recordMarkersFor(…,'action','sense-motive') returns
+  {value:"crit fail → fail", note:"a critical failure is a failure instead when you Sense the Motive of a
+  non-elf humanoid creature"}. `perception:true` is converted at explain.ts:606 into a situational star that
+  CARRIES sh.when — it does not change Perception's math, which is the correct reading of print.
+
+watchers-armband#innate-spell — DONE
+  Built L10 fighter wearing + investing the armband: the innate entry comes out {3:["ring-of-truth"]} with no
+  effectWarnings. spells/ring-of-truth is rank 3 with the occult tradition. build.ts:7557 requires `invested`,
+  which the item's `invested` trait makes the normal state. The Find-the-Plant counter is untouched.
+
+dweomerveil#daily-choice — DONE (supersedes verified)
+  Shipped choice and the single existing backfill row carry flag/prompt/kind/options; the new value is those
+  four plus daily:true — nothing lost. Built L10 fighter wearing + investing the veil: dailyChoicesFor returns
+  [] on shipped data and ["dweomerveil"] with the row. kind is 'array', so askedAtDailyPrep's renderable gate
+  passes and the record cannot land in the "askable nowhere" state derive.ts:1240 warns about.
+
+--------------------------------------------------------------------------------
+SPEC-AS-ROWS AUDIT (checked without applying)
+--------------------------------------------------------------------------------
+- 15 rows, 15 distinct category/id/field keys; the situational spec contributes 0 backfill rows, so no
+  collision is possible across the two spec files. No row uses `path`.
+- Every target record exists in public/core.json; no row carries create:true or delete:true, so there is no
+  created-prose spec and none is needed.
+- Every id a row names exists: actions/mobbing-assault, actions/devise-a-stratagem, actions/sense-motive,
+  feats/relinquish-control, feats/dueling-parry, feats/dueling-riposte, spells/boost-eidolon,
+  spells/sanguine-transference (focus trait present), spells/ring-of-truth (rank 3, occult), stances/kaiju-stance,
+  items/watchers-armband, items/dweomerveil. The three entryIds resolve through casterArchetypes.ts:107/127/137
+  + archetypeEntryIds().
+- The 3 supersedes rows each declare supersedes:true, each has EXACTLY ONE existing effect-backfill row for the
+  same category+id+field, and each new value diffed against that row is the old object plus the single intended
+  key (node -e diff, per finding above).
+- A reader exists for every field authored, and every one was exercised on a built character above. No field in
+  this spec belongs to another family's reader.
+- No existing test names any of the 15 records (grep over test/), so no shipped assertion flips when the rows land.
+- The 15 red tests in test/batch030-data.test.ts each fail on exactly the field their row writes; the 2 green ones
+  patch the field IN MEMORY. Nothing asserts a patched-vs-shipped delta.
+
+MANIFEST
+- work/.b030-specs.json holds situational, data and engine entries at verify time (the instruments family had not
+  written its entry yet; its test file exists and its vitest run held the heavy lock during this verify).
+  Nothing was dropped by this family.
+- The data entry's stage[] lists work/.b030-rows-data.json, work/.b030-report-data.txt and
+  test/batch030-data.test.ts — every path this family touched. I appended this verify file to it and touched
+  nothing else. I fixed no code and authored no row, so there is nothing else to stage.
+
+--------------------------------------------------------------------------------
+DATA STILL NEEDED
+--------------------------------------------------------------------------------
+(none — every row the 16 findings need is authored in work/.b030-rows-data.json; nothing is left for the driver
+to invent. Confirmed by re-reading all 16 findings against the spec.)
+
+--------------------------------------------------------------------------------
+CROSS-FILE GAPS
+--------------------------------------------------------------------------------
+1. src/sheet/MainTab.tsx:392-394 — stanceFeats is built from character.feats only, so the 5 stances with no feat
+   record (arcane-cascade, bullet-dancer-stance, claw-stance, talon-stance, tenacious-stance) never get a toggle;
+   that is the whole of unshaken-in-iron#stance, whose data is already correct and already read at
+   derive.ts:3711-3714. Widen the source to stance ids reached through the grantsActions walk
+   (MainTab.tsx:313-320 / explain.ts:293), keyed on content.stances[id]. Owner: the src/sheet family. VERIFIED.
+2. scripts/data/stances.json cobra-stance.strikes[].traits — "deadly d10" is the same space-form defect as
+   kaiju-stance#fatal and matches derive.ts:4602's /^deadly-(d\d+)$/ on neither side. VERIFIED (core.json holds
+   the space form). Outside this finding slice; fixable as a stances-bucket overlay row, same route as kaiju.
+3. scripts/data/stances.json claw-stance.strikes[].traits — "versatile piercing", same defect. VERIFIED.
+4. scripts/data/stances.json vitality-manipulating-stance.strikes[].traits — "versatile vitality", same. VERIFIED.
+   (Those four are the only space-separated stance strike traits in the corpus — re-measured over core.json.)
+5. scripts/wg-batch-close.mjs:162-163 — citations() adds a `row` citation for ANY finding id present in a spec
+   doc, whether or not it carries backfillRows. work/.b030-rows-data.json carries unshaken-in-iron#stance with
+   backfillRows:[] (the honest record of a NO-ROW decision), so `rowed.length` is non-zero and the record
+   unshaken-in-iron will derive FIXED even though the player-visible half is untouched — the row-citation twin of
+   the teach-line hazard the batch rules warn about. Deleting the entry does not help: the instruments family's
+   test file names the record, which gives the same finding a `weak` citation and the same FIXED. Fix in the
+   closer (require a non-empty backfillRows, or an explicit `noRow: true` that routes to the gaps file), or park
+   unshaken-in-iron#stance in the gaps file so it reaches flaggedResidues. Owner: the driver.
+6. work/.b030-specs.json — this family's manifest entry is family "data" while FAMILY_RULES (scripts/wg-batch-run.mjs:452)
+   names the family "data-rows", and wg-batch-close.mjs:95 builds reportPaths as work/.b030-verify-<family>.txt.
+   This verify file was written to the path the task named, work/.b030-verify-data-rows.txt, so the closer (looking
+   for .b030-verify-data.txt) will not read it. Harmless for verdicts here — this family produced no settle or
+   comparer teach, so no citation depends on it — but rename one side before a family whose verdicts DO depend on
+   a verify-file teach line hits it. Owner: the driver.

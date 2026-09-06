@@ -1,0 +1,71 @@
+batch 030 — ENGINE lane (WG-comparison), 9 findings
+spec: work/.b030-rows-engine.json    test: test/batch030-engine.test.ts (19 tests, all green)
+tsc --noEmit clean; scripts/test-flip-audit.mjs --batch 030 clean.
+
+== DATA STILL NEEDED (rows the driver must author beyond my spec)
+- items/<111 remaining specific magic armours>/builtInRunes: the armour builtInRunes reader now exists but only items/rusting-carapace has a row; 112 armour records print a fundamental rune in their own name and 111 still deliver none (measured: 265 records carry builtInRunes, 0 of them armour). Needs its own measured lane, not this batch.
+- feats/arcane-breadth/spellSlotBonus: carries the same entry-less {perRank:1,exceptHighest:2} defect as bloodline-breadth (slots land on the character's first CLASS entry). Routed to the data-rows family as its own finding — flagged here only because the two share one root cause and must not diverge.
+
+== CROSS-FILE GAPS (outside src/rules/{types,build,derive,spellcasting,advancement}.ts + src/builder/*)
+- viking-vindicator#weapon-familiarity: needs `requiresAnyFeat?: string[]` on the WeaponFamiliarity interface in src/rules/featGrants.ts (~line 138) + a 'viking-vindicator' entry in src/rules/featGrantsLane.ts { weaponFamiliarity: { weapons: ['bastard-sword','rapier'], treatAsLowerCategory: true, requiresAnyFeat: ['viking-weapon-familiarity'] } }. The build.ts:6631 guard is mine and is one line, but it is dead without both. Owner: the feat-grants family.
+- bands-of-force#talismans: needs isHost()/planAffix() in src/rules/attachments.ts to accept a non-armour talisman host (an `affixHostAs?: 'armor'|'weapon'|'shield'` flag), plus the items/bands-of-force row that feeds it. Owner: whoever holds attachments.ts.
+
+== PER FINDING
+
+--- additional-ikon — DONE (code only)
+src/rules/build.ts `extraPickCount`: one clause beside the existing `g.id === 'element'` one —
+  if (g.id === 'ikon' && build) n = applyCounterMods('ikon-picks', n, Object.values(build.featPicks ?? {}).filter(Boolean) as string[]);
+This is the FIRST reader `ikon-picks` has ever had; its two COUNTER_MODS rows (additional-ikon, second-ikon, counterMods.ts:48-49) were authored and dead. Placed on the shared cap rather than on the picker because the builder picker (shared.tsx:3277) and both resolvers (build.ts:3040, 7854) all clamp through it — teaching only the picker would have offered a fourth ikon the sheet then dropped.
+BLAST RADIUS: exactly the characters holding additional-ikon or second-ikon; `applyCounterMods` returns `base` unchanged when the character owns no matching mod, and no other choice group has id 'ikon'. Pinned by the "an unrelated feat does not move the cap" test.
+TEST: 4 its in describe('additional-ikon gives the exemplar a fourth ikon') — a level-9 exemplar with four stored ikons keeps three without the feat and four with it, second-ikon behaves the same, an unrelated feat does not.
+NOTE: reads featPicks unfiltered by level, which is what every other counter-mod caller does (commanderFolioCapacity, build.ts:1048, 2167, 2230). Not widened here.
+
+--- viking-vindicator#weapon-familiarity — NOT DONE (cross-file, see above)
+Half the fix (the build.ts guard) is inside my files; the interface and the lane row are not, and a guard on a field no interface declares does not compile. Deliberately NOT worked around by adding a second, data-side weaponFamiliarity carrier: FEAT_GRANTS is the existing lane and the rule is to reuse it.
+
+--- viking-vindicator#critspec — DONE (reader + 3 rows)
+src/rules/types.ts DefenseGrants: new `critSpecRequiresFeat?: string[]`, beside `critSpecRequiresModeGroup` — the same gate on the other axis (a taken feat rather than an active state).
+src/rules/derive.ts `critSpecSources`, inside `add`: one early return when none of the named feats is held.
+ROWS (spec): feats/viking-vindicator critSpec=true, critSpecWeapons={bases:['bastard-sword','rapier']}, critSpecRequiresFeat=['viking-weapon-specialist','viking-weapon-familiarity'] — three distinct top-level fields on one record, so no merge.
+BLAST RADIUS: zero for existing records — `critSpecRequiresFeat` is absent everywhere today, and an absent gate is a no-op. Once the rows land, only characters holding viking-vindicator change.
+TEST: 4 its in describe('viking-vindicator extends the viking weapon lists (feats/viking-vindicator)'), on a patched content copy: specialist+vindicator reaches bastard sword AND rapier and lights strikeShowsCritSpec on an equipped bastard sword; familiarity alone also satisfies the gate; vindicator ALONE grants nothing (same patched copy — the gate is the mechanic, so this does not flip when the row ships); the two viking feats keep their own printed lists. Built on a WIZARD deliberately: a level-8 fighter's Weapon Mastery is an unrestricted grant that would mask the signal.
+
+--- viking-vindicator#shallow-water — DONE (data row only, live reader)
+No code. `recordMarks` on ContentBase (types.ts:265) is already the data route into recordMarkersFor (explain.ts:711), rendered on the granted feat's entry by FeatsTab.tsx:99.
+ROW (spec): feats/viking-vindicator recordMarks=[{on:'feature',id:'sudden-charge',note:'…shallow water… off-guard…'}].
+TEST: 2 its — the mark reaches the sudden-charge entry attributed to viking-vindicator, and an ordinary fighter who took Sudden Charge without the vindicator sees no rider (same patched copy).
+
+--- frozen-breadth — DONE (data row only, live reader)
+No code: build.ts:7061 already widens the archetype pool for any feat whose spellSlotBonus.entryId is in archetypeEntryIds(arch), and casterArchetypes.ts:282 defines 'first-frost' as the gelid shard dedication.
+ROW (spec): feats/frozen-breadth spellSlotBonus={perRank:1,exceptHighest:2,entryId:'first-frost-casting'}.
+TEST: a level-20 fighter with first-frost + snowcaster + expert/master snowcasting gains exactly one slot at every gelid shard rank but the top two, and no rank appears or disappears.
+
+--- bloodline-breadth — DONE (data row only, SUPERSEDES)
+No code. The shipped row has no entryId, so slotEntryFor (build.ts:6846) resolved it to the first CLASS entry, running at build.ts:6850 before the archetype entry is pushed at 7129.
+ROW (spec, supersedes: true, superseded value {perRank:1,exceptHighest:2} carried whole): feats/bloodline-breadth spellSlotBonus={perRank:1,exceptHighest:2,entryId:'sorcerer-dedication-casting'}.
+TEST: 2 its — a fighter with Sorcerer Dedication gains the slots on the archetype pool; a WIZARD's own class pool is byte-identical with and without the feat while the archetype pool still gains them (that second assertion is the whole defect).
+
+--- bands-of-force#dexcap — DONE (reader + 1 row, SUPERSEDES)
+src/rules/types.ts ItemPassiveEffects: new `dexCap?: number`.
+src/rules/derive.ts: new exported `passiveItemDexCap(c, db)` (the min-taking twin of passiveItemBonus, which starts at 0 and takes max so a cap could never travel through it), folded into deriveAc's `dexCap` with Math.min just before the proficiency read, so it composes with the armour cap, the natural-armour cap and the stance cap.
+ROW (spec, supersedes: true, superseded value {ac:1,saves:1} carried whole): items/bands-of-force passiveEffects={ac:1,saves:1,dexCap:5}.
+BLAST RADIUS: zero today — no record in public/core.json carries passiveEffects.dexCap, and the helper returns null when none does, leaving `dexCap` untouched. Once the row lands only Bands of Force wearers change, and only those with Dex above +5.
+TEST: 3 its — a Dex +6 unarmored wearer nets zero AC from the bands (the +1 and the −1 of capped Dex), a Dex +5 wearer keeps the full +1, and bands sitting uninvested in the pack cap nothing (the itemInUse gate).
+
+--- bands-of-force#talismans — NOT DONE (cross-file, see above)
+
+--- rusting-carapace#potency — DONE (reader + 1 row)
+src/rules/types.ts ArmorItem: new `builtInRunes?: ArmorRunes`, the armour twin of WeaponItem.builtInRunes.
+src/rules/derive.ts deriveAc: the worn item's builtInRunes.potency joins the existing Math.max of etched potency / Monster-Parts refine / battleforged / actsAs-potency — a FLOOR, so an etched higher rune still wins.
+src/rules/derive.ts resilientSaveBonus: same floor for builtInRunes.resilient, so a named "+2 resilient …" armour is not one row of AC without its saves.
+ROW (spec): items/rusting-carapace builtInRunes={potency:1}.
+BLAST RADIUS: zero today — 0 of the 265 records carrying builtInRunes are armour, so every existing armour reads `undefined` and the Math.max is unchanged; pinned by the "ordinary armour is untouched" test, which compares the patched db against the shipped one for leather-lamellar. ABP still zeroes acItem before this, unchanged.
+TEST: 3 its — the carapace is exactly +1 AC over the leather lamellar it copies; etching +2 onto it gives +2 and not +3; plain armour is identical on the patched and shipped databases.
+
+== FILES TOUCHED
+src/rules/types.ts        (DefenseGrants.critSpecRequiresFeat, ItemPassiveEffects.dexCap, ArmorItem.builtInRunes)
+src/rules/build.ts        (extraPickCount ikon clause)
+src/rules/derive.ts       (critSpecSources feat gate, passiveItemDexCap + deriveAc fold, deriveAc/resilientSaveBonus armour builtInRunes floor)
+test/batch030-engine.test.ts (new)
+work/.b030-rows-engine.json  (new)
+No src/rules/spellcasting.ts, advancement.ts, Builder.tsx or shared.tsx change was needed: both breadth findings are data on a live reader, and the ikon cap is shared with the builder rather than duplicated in it.

@@ -1,0 +1,120 @@
+BATCH 030 — GAP AGENT, family "data-rows"
+================================================================================
+Three lines of my family were open in work/.b030-gaps.json. All three are now disposed of; 0 remain open.
+
+--------------------------------------------------------------------------------
+PER LINE
+--------------------------------------------------------------------------------
+1. PARKED — ref "flaggedResidue: not a gap — this is the ASCII rule under the \"DATA STILL NEEDED\" heading …"
+   (gaps line: "-------------------------------------------------------------------------------",
+    kind DATA STILL NEEDED, from work/.b030-verify-data-rows.txt:138)
+   Line 138 of the verify file is the ASCII rule UNDER the "DATA STILL NEEDED" heading, not a gap: the
+   apply-digest collator harvests everything inside the section and swept the rule up with it. The
+   section's body (lines 139-140) says "(none — every row the 16 findings need is authored in
+   work/.b030-rows-data.json; nothing is left for the driver to invent.)", so no data is owed and there
+   is nothing to author against it.
+
+2. PARKED — ref "flaggedResidue: not a gap — the ASCII rule under the \"CROSS-FILE GAPS\" heading …"
+   (gaps line: "-------------------------------------------------------------------------------",
+    kind CROSS-FILE GAPS, from work/.b030-verify-data-rows.txt:144)
+   The same collator artefact one section down. The real content of that section is its numbered items
+   1-6 starting at line 145; only item 1 became a gap line, and it is line 3 below.
+
+3. AUTHORED — ref src/sheet/MainTab.tsx:409  (finding id: unshaken-in-iron#stance)
+   (gaps line: "src/sheet/MainTab.tsx:392-394 — stanceFeats is built from character.feats only, so the
+    5 stances with no feat …", from work/.b030-verify-data-rows.txt:145)
+   A code fix, not a row. Widened the Encounter tab's stance-toggle source from `character.feats` to
+   the `grantedActions` walk the same component already computes ten lines above it, deduped by id, so
+   a stance that exists only in content.actions gets a chip.
+
+--------------------------------------------------------------------------------
+LINE 3 IN FULL
+--------------------------------------------------------------------------------
+WHAT WAS WRONG
+  Five of the 129 stances carry no feat record at all — arcane-cascade, bullet-dancer-stance,
+  claw-stance, talon-stance, tenacious-stance. Each lives in core.json `actions` and `stances`, and
+  reaches a character through `grantsActions` on its granter (measured over core.json):
+      feats/stalwart-defender-dedication  -> tenacious-stance
+      feats/clawdancer-dedication         -> claw-stance, talon-stance
+      feats/bullet-dancer-dedication      -> bullet-dancer-stance
+      classFeatures/arcane-cascade        -> arcane-cascade
+  MainTab.tsx built `stanceFeats` from `character.feats` alone, and `setActiveStance` has exactly one
+  caller in the app — the chip inside that render loop. So no code path could put any of those five
+  ids into `Character.activeStance`.
+
+  The record that shows the cost: feats/unshaken-in-iron prints *"While in Tenacious Stance, you
+  increase the value of your armor specialization effects by an amount equal to the value of your
+  armor check penalty (adding +3 to the resistance while wearing plate armors, for example)."* The
+  data (`armorSpec.bonusWhileStance = {stanceId:'tenacious-stance', source:'armorCheckPenalty'}`) and
+  its reader in derive.ts (`c.activeStance === a.bonusWhileStance.stanceId`) were BOTH already
+  correct — the guard was simply unreachable. Confirmed against print; WG delivers the same clause as
+  an injectText on feat 26570, so there is no WG-vs-print conflict and no owner question is owed.
+
+THE FIX  (src/sheet/MainTab.tsx, the `stanceFeats` const, now line 409)
+  `stanceFeats` is now built from [...character.feats mapped to feats, ...grantedActions], put through
+  the SAME predicate as before (a `content.stances[id]` entry plus either the `stance` trait or
+  `form: true`), deduped by id, and narrowed to `{ id, name }` — the only two properties the three
+  consumers (the chip label, `content.stances[f.id]` lookups, `formModesFor(f.id)`) ever read.
+  `grantedActions` is the walk already computed at MainTab.tsx:313-336 for the Feat-actions list, so
+  no new resolution logic was added and all five stances light up from the one widening. The dedupe
+  matters because a stance feat that also grants a like-named action would otherwise render two chips.
+  The comment above the const quotes the printed clause and names the five ids.
+
+  A DATA row was rejected: minting feats/tenacious-stance would duplicate the action record its
+  granter already points at, and would need the same duplicate four more times. The gap was the
+  control, not the content.
+
+TEST  test/batch030-gap-stance-toggle.test.tsx (4 tests, green)
+  - the data shape: unshaken-in-iron.armorSpec.bonusWhileStance.stanceId === 'tenacious-stance',
+    content.feats['tenacious-stance'] is undefined, content.stances['tenacious-stance'] exists, and
+    stalwart-defender-dedication.grantsActions contains it. This is the assertion that makes the other
+    three honest: it pins that the OLD source (feats only) could not have produced the chip, so the
+    test proves the widening rather than a shipped-vs-patched delta.
+  - a built fighter 8 with Stalwart Defender Dedication renders a chip labelled "Tenacious Stance";
+    asserted on the `.stance-chip` ELEMENTS, never on the tab's text (the granted action's own
+    description contains the phrase, so a text assertion would pass either way — the trap
+    test/battle-form-chip.test.tsx documents).
+  - clicking that chip puts 'tenacious-stance' into play.activeStance, which is the exact value the
+    armorSpec guard compares.
+  - the class check: every stance with no feat record is exactly those five, and every one of them is
+    named by some feats/classFeatures record's grantsActions — so the widened source reaches all five.
+  Each `it` carries `// batch 030: unshaken-in-iron#stance` and the record id in its title.
+  No mutation-proof marker: this family added no settle key and no comparer teach.
+
+REGRESSION CHECK
+  test/battle-form-chip.test.tsx (5), test/display-reach.test.tsx, test/batch001-surfaces.test.tsx,
+  test/strike-reach.test.tsx, test/actions-subtab-memory.test.tsx, test/granted-actions.test.ts —
+  84 tests green, the whole set of files that render MainTab and could see the shape change.
+  `npx tsc --noEmit` clean. `node scripts/test-flip-audit.mjs --batch 030` clean.
+
+MANIFEST
+  Appended ONE entry to work/.b030-specs.json, keeping the four existing entries byte-identical:
+      { file: "work/.b030-rows-gap-data-rows.json", kind: "rows", family: "gap-data-rows",
+        stage: ["work/.b030-rows-gap-data-rows.json", "work/.b030-report-gap-data-rows.txt",
+                "test/batch030-gap-stance-toggle.test.tsx", "src/sheet/MainTab.tsx"] }
+  The spec carries `backfillRows: []` — the honest record of a NO-ROW decision, the same shape the
+  situational family used for its four code-only findings. The entry exists because
+  scripts/wg-batch-commit.mjs builds its stage set from the manifest: src/sheet/MainTab.tsx is a
+  TRACKED modified path, and without a stage[] naming it the commit refuses the batch as an
+  unaccounted change.
+
+  ⚠ NOTE FOR THE DRIVER, on cross-file gap 5 of work/.b030-verify-data-rows.txt: that gap warned that
+  a spec doc naming a finding with an EMPTY backfillRows makes wg-batch-close.mjs:162 derive a `row`
+  citation and hence FIXED for unshaken-in-iron. That warning was written when nothing had been fixed.
+  It is now correct on the facts — the player-visible half of unshaken-in-iron#stance really is fixed,
+  by the MainTab.tsx edit staged in this entry and pinned by four tests. The closer hazard itself is
+  unchanged and still belongs to the driver.
+
+--------------------------------------------------------------------------------
+DATA STILL NEEDED
+--------------------------------------------------------------------------------
+(none — this family authored no overlay rows and needs none.)
+
+--------------------------------------------------------------------------------
+CROSS-FILE GAPS
+--------------------------------------------------------------------------------
+(none from my own work — the MainTab.tsx edit is inside the file the gap line named, and no other file
+was touched. Items 2-6 of work/.b030-verify-data-rows.txt were NOT collated into gap lines and so are
+not mine to dispose of; items 2-4 in particular — the space-form strike traits on cobra-stance,
+claw-stance and vitality-manipulating-stance — are three straightforward stances-bucket overlay rows
+of the same shape as kaiju-stance#fatal, and are the obvious next slice for whoever opens that lane.)

@@ -204,8 +204,36 @@ const kindOfTheirOp = (op) => {
        * reports.
        */
       if (/^SKILL_|^LORE_/.test(v)) return 'skill';
+      /*
+       * UNTRAINED_IMPROVISATION is a SKILL fact, not an unmapped marker. *"Your proficiency bonus to
+       * untrained skill checks is equal to your level"* (Eclectic Skill) is a floor under the
+       * proficiency contribution of an UNTRAINED skill — a skill rule with no rank to raise, which is
+       * why it needs its own variable on their side and its own field (`untrainedProficiency`, listed
+       * under OUR_KINDS.skill below) on ours. Left in the `unmapped` fallback it reported both records
+       * that carry it as modelling nothing at all.
+       *
+       * Blast radius adversarially confirmed: exactly TWO rows in the whole dump write this variable
+       * (Eclectic Skill, Untrained Improvisation) and both are answered by `untrainedProficiency`;
+       * `pathfinder-agent-dedication` carries the field on our side only and stays WE-ONLY.
+       */
+      if (/^UNTRAINED_IMPROVISATION/.test(v)) return 'skill';
       if (/^SAVE_/.test(v)) return 'save';
       if (/^PERCEPTION/.test(v)) return 'perception';
+      /*
+       * ARMOR SPECIALIZATION IS A RESISTANCE, NOT AC. *"You gain the armor specialization effect of
+       * light armor"* (Unshaken in Iron) grants the armour's specialization effect, and every one of
+       * those effects is a typed resistance — our `armorSpec` is applied inside the computed-resistances
+       * block in derive.ts (armorSpecEffect / armorSpecValue -> res.set(type, …)), never on AC. The
+       * unanchored `/ARMOR/` test below swallowed ARMOR_SPECIALIZATION_LIGHT/MEDIUM/HEAVY into `ac`, so
+       * the grant was compared against an AC field that neither side has, and the two trained-gated
+       * conditionals around it then reported as an unanswered `conditional` too.
+       *
+       * Blast radius adversarially confirmed over the whole dump: 13 rows write this variable, 4 of
+       * which we answer with `armorSpec`. Guardian Armor, Comfortable In Your Own Chitin and Medium
+       * Armor Expertise carry no `armorSpec` on our side and are STILL flagged after the teach — the
+       * teach compares the carrier, it does not assume one.
+       */
+      if (/^ARMOR_SPECIALIZATION/.test(v)) return 'defense';
       if (/^AC|ARMOR/.test(v)) return 'ac';
       if (/^SPEED/.test(v)) return 'speed';
       if (/^RESIST|^IMMUNITIES|^WEAKNESS/.test(v)) return 'defense';
@@ -359,7 +387,10 @@ const OUR_KINDS = {
    * animalCompanions' `skills` ARRAYS are outside WG_PAIRING and never reach ourKinds. */
   /* `trainedLoreOptions` — a background's "one of the following Lore skills" list, the dedicated
    * named-subject lane (batch 19 retired the duplicate `choice` blocks that used to shadow it). */
-  skill: ['skills', 'trainedSkill', 'trainedSkillChoice', 'trainedLore', 'trainedLoreChoice', 'trainedLoreOptions', 'trainedSkills', 'skillSubstitutions', 'skillProgression', 'skillAbilitySwap', 'passiveEffects.skills', 'passiveEffects.loreBonus'],
+  /* `untrainedProficiency` — the floor an UNTRAINED skill check gets ("equal to your level", or level-2
+   * for Untrained Improvisation), read by untrainedSkillBonus in derive.ts. The twin of their
+   * UNTRAINED_IMPROVISATION variable, taught above. */
+  skill: ['skills', 'trainedSkill', 'trainedSkillChoice', 'trainedLore', 'trainedLoreChoice', 'trainedLoreOptions', 'trainedSkills', 'skillSubstitutions', 'skillProgression', 'skillAbilitySwap', 'untrainedProficiency', 'passiveEffects.skills', 'passiveEffects.loreBonus'],
   save: ['passiveEffects.saves', 'saves'],
   perception: ['passiveEffects.perception', 'perception'],
   /* `unarmoredAc` is natural armour (Scales of Steel and its three peers) — an AC item bonus while
@@ -375,7 +406,10 @@ const OUR_KINDS = {
    * weakness are both authored, correctly, and both read as gaps. A cost the record imposes is part of
    * its defensive profile exactly as a resistance is. */
   // `resonant.resistances` — an aeon stone's resonant power (batch 29, Vital Amplification), read by derive.ts behind the wayfinder-slotted gate.
-  defense: ['resistances', 'weaknesses', 'immunities', 'passiveEffects.resistances', 'passiveEffects.immunities', 'passiveEffects.weaknesses', 'resonant.resistances', 'removesWeaknesses', 'choiceResistance', 'resistanceLevelUpgrade'],
+  /* `armorSpec` — an armour-specialization ACCESS grant, applied by armorSpecAccess in derive.ts as a
+   * typed resistance while the character wears armour of a granted category. Their ARMOR_SPECIALIZATION_*
+   * twin is taught above. */
+  defense: ['resistances', 'weaknesses', 'immunities', 'passiveEffects.resistances', 'passiveEffects.immunities', 'passiveEffects.weaknesses', 'resonant.resistances', 'removesWeaknesses', 'choiceResistance', 'resistanceLevelUpgrade', 'armorSpec'],
   /* `ancestryHp` — a heritage that REPLACES the ancestry's Hit Points outright (Stoutheart Centaur:
    * *"Your ancestry Hit Points are 10 instead of 8"*), read first in resolvedAncestryHp (build.ts).
    * Their side writes the delta as adjValue MAX_HEALTH; ours writes the printed total. */
@@ -516,6 +550,18 @@ const OUR_KINDS = {
    * vocabulary that cannot express something has not omitted it, it simply cannot say it. */
   _noCounterpart: ['degreeShifts', 'limitedUses', 'uses', 'companions', 'dailyChoice', 'temporaryProficiency', 'redundantFallback', 'actionCost'],
 };
+/**
+ * WHAT A RuneDef DELIVERS, by its `kind` — the runes-bucket half of `ourKindsOf`.
+ *
+ * Kept a KIND MAP rather than "the id has a rune twin, so believe it": all 159 runes have an items-row
+ * twin, and a blanket credit would silence every rune lane at once. Only kinds whose reader has been
+ * read end-to-end are listed. `resilient` is here because AoN equipment-2786 prints *"a +1 item bonus
+ * to saving throws"* and the chain is complete — planRune (attachments.ts) -> ArmorRunes.resilient ->
+ * resilientSaveBonus (derive.ts) -> deriveSave's item bonus.
+ */
+const RUNE_KINDS = {
+  resilient: ['save'],
+};
 const fieldToKinds = new Map();
 for (const [kind, fields] of Object.entries(OUR_KINDS)) {
   if (kind.startsWith('_')) continue;
@@ -523,7 +569,11 @@ for (const [kind, fields] of Object.entries(OUR_KINDS)) {
 }
 
 /* ---------------------------------------------------------------- our side */
-const core = JSON.parse(readFileSync(join(ROOT, 'public/core.json'), 'utf8'));
+/* `--core <path>` points the comparer at a STUNTED copy of the content, so a test can delete a carrier
+ * and prove the record it answers goes back to reporting — the anti-laundering check every teach owes
+ * (the `--advancement` flag on wg-values.mjs is the same hook one file over). Defaults to the shipped
+ * content, so nothing changes for a normal run. */
+const core = JSON.parse(readFileSync(join(ROOT, arg('--core', 'public/core.json')), 'utf8'));
 const norm = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '');
 
 /**
@@ -864,6 +914,22 @@ const FOCUS_CASTING_CLASSES = new Set();
  * const arrow so the recursive call below is hoisted. */
 function ourKindsOf(rec, id, bucket) {
   const kinds = new Set();
+  /*
+   * A RUNE'S NUMBERS LIVE ON ITS RuneDef, NOT ON THE ITEM ROW.
+   *
+   * Every one of the 159 runes ships TWICE: a shop row in `items` (name, level, price — no
+   * passiveEffects, by design) and the mechanical definition in the `runes` bucket, which is what
+   * planRune() etches and what derive.ts reads. A comparer that stops at the item row therefore calls
+   * every rune mechanically empty: Resilient (*"a +1 item bonus to saving throws"*, AoN equipment-2786)
+   * is `runes['resilient'] = {kind:'resilient', value:1}`, turned into the item bonus deriveSave pools
+   * by resilientSaveBonus() — and it read as `missing=[save] ours=[]`.
+   *
+   * DELIBERATELY A KIND MAP, NOT A BLANKET "it has a rune twin, believe it": only rune kinds whose
+   * reader has been read end-to-end are listed, so armor-potency / weapon-potency / soaring keep
+   * reporting until someone reads them. Adversarially confirmed by stunting: with `resilient` removed
+   * from RUNE_KINDS the three Resilient rows go straight back to THEY-ONLY missing=[save].
+   */
+  if (bucket === 'items') for (const k of RUNE_KINDS[core.runes?.[id]?.kind] ?? []) kinds.add(k);
   /* An ANCESTRY's own `traits` are DELIVERED, not decoration: creatureTraitsOf (src/rules/derive.ts)
    * reads them onto the character, which is what their per-row `giveTrait` ops do. Ancestries only —
    * a feat's or heritage's `traits` are record tags and grant nothing by themselves. */
@@ -1323,12 +1389,11 @@ const VERIFIED_EQUIVALENT = {
    * answers these records and a settle that matches nothing would only silence the next real
    * difference on them. `wg-settle-stale.mjs` is what found them. */
 
-  /*
-   * UNTRAINED IMPROVISATION — their `UNTRAINED_IMPROVISATION` marker plus the level conditional around
-   * it. Ours is `untrainedProficiency: { levelMinus: 2 }`, a FLOOR under the proficiency contribution of
-   * an untrained skill rather than a rank — the skill-side twin of the weapon lane batch 15 built.
-   */
-  'untrained-improvisation': ['conditional', 'unmapped'],
+  // batch 030: eclectic-skill#instrument — the 'untrained-improvisation' settle is DELETED. Their
+  // UNTRAINED_IMPROVISATION variable now maps to 'skill' and our `untrainedProficiency` field is listed
+  // under OUR_KINDS.skill, so the carrier answers the record and the conditional around it gates only
+  // what we have. Under --raw the settle matches nothing, and a settle that answers nothing silences the
+  // next difference on that record, unread.
 
   /*
    * SKILLED HERITAGE — *"You become trained in one skill of your choice. At 5th level, you become an
@@ -1409,6 +1474,29 @@ const VERIFIED_EQUIVALENT = {
    * category axis; pinned in `test/batch15-parity.test.ts`.
    */
   'fighter-weapon-mastery': ['choice'],
+
+  /*
+   * ADDITIONAL IKON (batch 030) — SAME THING, DIFFERENT FIELD: the fourth ikon pick is real, and it
+   * lives in two code paths rather than on the record.
+   *
+   * Printed (AoN feat-7167): *"You gain a fourth ikon, which can be of any type."* Their side asks it
+   * as `select "Select an Ikon"` (FILTERED, ABILITY_BLOCK, trait Exemplar Ikon), so the kind is
+   * `choice`. Ours raises the CAP on the exemplar's own ikon group instead of adding a second picker:
+   * src/rules/counterMods.ts:48 holds `'additional-ikon': [{ counter: 'ikon-picks', op: 'add', value: 1 }]`
+   * and src/rules/build.ts `extraPickCount` runs it through applyCounterMods, which is the single gate
+   * the builder's ikon picker (src/builder/shared.tsx:3277) and both resolvers (build.ts:3040, 7854)
+   * clamp through — so the player is offered a fourth ikon out of the same 21 options and the sheet
+   * keeps it. Pinned on a built level-9 exemplar in test/batch030-engine.test.ts
+   * ('additional-ikon gives the exemplar a fourth ikon'), and the experience harness records the live
+   * control ("Ikons", 21 options) on the built character.
+   *
+   * The kind scan DOES read counterMods.ts, but REGISTRY_KINDS credits a registry FILE's kinds to every
+   * id in it, and only two of that file's six entries move a pick count — crediting `choice` there
+   * would hand it to Pack Rat's bulk multiplier as well. So the mismatch is the carrier's shape, not a
+   * missing mechanic, and it is named here per the fighter-weapon-mastery precedent above.
+   */
+  // batch 030: additional-ikon
+  'additional-ikon': ['choice'],
 
   /*
    * SEALED POPPET — *"You no longer have the weakness to fire from the flammable ability."* Their side
@@ -2390,7 +2478,11 @@ const VERIFIED_EQUIVALENT = {
   'grave-strength': ['grantsRecord'],
   'ghostly-grasp-ghost': ['grantsRecord'],
   'numb': ['grantsRecord'],
-  'armor-specialist': ['conditional', 'ac'],
+  // batch 030: unshaken-in-iron#instrument — the 'armor-specialist' settle is DELETED. It existed only
+  // because ARMOR_SPECIALIZATION_* fell into the unanchored /ARMOR/ -> 'ac' test; now that the variable
+  // maps to 'defense' and `armorSpec` is listed under OUR_KINDS.defense, the record's carrier answers it
+  // and the settle matches nothing under --raw. A settle that answers nothing silences the NEXT
+  // difference on that record, unread.
   'additional-servings': ['specialStat', 'unmapped'],
   'sound-mirror': ['spellcasting'],
   'psi-development': ['choice'],

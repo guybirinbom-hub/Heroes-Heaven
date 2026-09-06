@@ -1,0 +1,11 @@
+{
+  "findings": [
+    {
+      "id": "unshaken-in-iron#stance",
+      "backfillRows": [],
+      "note": "Code-only, and deliberately NOT a data row. The record's data was already right — feats/unshaken-in-iron.armorSpec.bonusWhileStance = {stanceId:'tenacious-stance', source:'armorCheckPenalty'} — and its reader in derive.ts was already right. What was missing was the CONTROL: src/sheet/MainTab.tsx built the Encounter tab's stance bar from character.feats alone, and five of the 129 stances (arcane-cascade, bullet-dancer-stance, claw-stance, talon-stance, tenacious-stance) carry no feat record at all. They live in content.actions and reach the character through grantsActions on their granter (Stalwart Defender Dedication -> tenacious-stance, Clawdancer Dedication -> claw-stance + talon-stance, Bullet Dancer Dedication -> bullet-dancer-stance, the magus class feature -> arcane-cascade). With no toggle, nothing could ever put those ids into Character.activeStance, so derive's `c.activeStance === a.bonusWhileStance.stanceId` guard was permanently false and Unshaken in Iron's printed 'While in Tenacious Stance, you increase the value of your armor specialization effects by an amount equal to the value of your armor check penalty' was unreachable. Fixed by widening the stanceFeats source to the grantedActions walk the same component already computes (MainTab.tsx:313-336), deduped by id; all five stances light up from the one change. A data row was rejected: minting a feats/tenacious-stance record would duplicate the action record the granter already points at and would need the same duplicate for four more stances.",
+      "codeEdits": [],
+      "test": "test/batch030-gap-stance-toggle.test.tsx"
+    }
+  ]
+}

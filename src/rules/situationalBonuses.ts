@@ -499,7 +499,14 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "pain-tolerance": [{ targets: [{ kind: 'save', detail: 'all' }], when: "vs effects that would make you clumsy, drained, or enfeebled", bonus: "+1 circumstance" }],
   "parthenogenic-hatchling": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against diseases", bonus: "+1 circumstance" }],
   "peculiar-anatomy": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against disease or poison", bonus: "+2 circumstance" }],
-  "peer-beyond": [{ targets: [{ kind: 'save', detail: 'all' }], when: "vs mental effects from incorporeal undead or haunts", bonus: "+2 circumstance" }],
+  /* batch 030, peer-beyond#initiative. AoN feat-2282 prints the save bonus AND a second permission:
+   * *"…and you can roll a Spirit Lore or Haunt Lore check for initiative if you know that an
+   * incorporeal undead or a haunt is present."* Only the save half had a carrier; INITIATIVE_SKILLS
+   * (initiative.ts:66) deliberately lists no Lore and there is no initiative-skill picker, so a
+   * permission-only star on the initiative row is the carrier — the shape `escaped-from-time` (:2578)
+   * and `paragon-benefit-tome`'s lore:esoteric row (:2690) already use. Ghost Hunter Dedication grants
+   * both Lores (featGrants.ts:536), so the character really has the skill to roll. */
+  "peer-beyond": [{ targets: [{ kind: 'save', detail: 'all' }], when: "vs mental effects from incorporeal undead or haunts", bonus: "+2 circumstance" }, { targets: [{ kind: 'initiative' }], when: "if you know that an incorporeal undead or a haunt is present", bonus: "you may roll Spirit Lore or Haunt Lore for initiative" }],
   "pennant-of-victory": [{ targets: [{ kind: 'strikeAttack' }, { kind: 'spell', detail: 'attack' }], when: "until the start of your next turn after Pennant of Victory (you and allies in your banner's aura)", bonus: "+4 status" }, { targets: [{ kind: 'strikeDamage' }, { kind: 'spellDamage' }], when: "until the start of your next turn after Pennant of Victory (you and allies in your banner's aura)", bonus: "+4 status" }, { targets: [{ kind: 'speed' }], when: "until the start of your next turn after Pennant of Victory…", bonus: "+10 feet status" }],
   "perfect-clarity": [{ targets: [{ kind: 'save', detail: 'will' }, { kind: 'attack' }], when: "reroll a failed attack roll or Will save (then stop raging)", bonus: "+2 circumstance (reroll)" }],
   "petal-step": [{ targets: [{ kind: 'skill', detail: 'stealth' }], when: "when you Sneak", bonus: "+1 circumstance" }],
@@ -811,6 +818,34 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
    * ⚠ The star names all THREE skills print offers, and the `when` says which one it means. It cannot
    * be narrowed to the player's actual answer here: `CHOICE_SITUATIONAL` (:3715) is read only off
    * `c.feats[].choice` (explain.ts:522), and a heritage's `effectChoices` answer has no such route. */
+
+  /* batch 030, eclectic-skill. AoN feat-4605 prints two PERMISSION clauses past the numeric one:
+   * *"You can attempt any skill check that normally requires you to be trained, even if you are
+   * untrained. If you have legendary proficiency in Occultism, you can attempt any skill check that
+   * normally requires you to have expert proficiency, even if untrained or trained."* Our record
+   * carries only the numeric half (`untrainedProficiency {levelMinus:0}`), and derive.ts leaves the
+   * rank at `untrained`, so skillActions.ts's `rankAtLeast(rank, a.minRank)` filter withholds every
+   * trained-only action from the untrained skill's panel with nothing telling the player they may
+   * still attempt it. Same permission-star shape as `innate-understanding` (:378) and
+   * `keen-recollection` (:3201). WG encodes less than print here; print is the authority.
+   * The `when` is trimmed to its essential trigger under owner ruling H — *"cap the note at about one
+   * line; anything longer gets trimmed to its essential trigger, with the full text staying in the
+   * item's own description a click away"* — which test/rulings-dfgh.test.ts enforces at 120 chars. */
+  // batch 030: eclectic-skill#untrained-gate
+  "eclectic-skill": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "a skill action that requires trained proficiency while untrained (or expert, if legendary in Occultism)", bonus: "you can attempt it" }],
+
+  /* batch 030, deadly-butterfly. AoN feat-2708's SECOND sentence: *"If you already had access to the
+   * critical specialization effect or you gain the effect at a later time, you also gain the critical
+   * specialization effect for knives when you critically hit with a butterfly sword. You can benefit
+   * from only one critical specialization effect at a time."* The record's `critSpec` +
+   * `critSpecWeapons {bases:['butterfly-sword']}` cover the FIRST sentence only; items/butterfly-sword
+   * has group `sword`, so every display path resolves CRIT_SPEC.sword (off-guard) and nothing can
+   * offer CRIT_SPEC.knife (1d6 persistent bleed) — `critSpecWeapons` (types.ts:1438-1470) has no field
+   * that substitutes another group's effect. A prose star on the damage row is the carrier, and it
+   * says print's "only one at a time" so the player does not add both. The `when` is trimmed to its
+   * essential trigger under owner ruling H (the 120-char cap in test/rulings-dfgh.test.ts). */
+  // batch 030: deadly-butterfly
+  "deadly-butterfly": [{ targets: [{ kind: 'strikeDamage' }], when: "on a critical hit with a butterfly sword, if you have (or later gain) access to a critical specialization effect", bonus: "you also gain the KNIFE critical specialization (1d6 persistent bleed) — you can benefit from only one critical specialization effect at a time" }],
 
   // ---- generated by scripts/apply-situational-lane.mjs — do not hand-edit below this line ----
   // 1758 records / 2620 bonuses from the adversarially verified pass.
@@ -4084,6 +4119,19 @@ export const RECORD_MARKERS: Record<string, RecordMarker[]> = {
   "bamboo-and-silt-repose": [{ on: 'action', id: 'stride', note: "You ignore non-magical difficult terrain due to light undergrowth and shallow bogs, mud, and water, and treat non-magical greater difficult terrain due to these features as difficult terrain instead." }],
   "bargain-hunter": [{ on: 'action', id: 'earn-income', note: "You can Earn Income using Diplomacy. Spent hunting a bargain instead, the income becomes a discount on one item — free if it equals or exceeds the item's Price." }],
   "bodyguard": [{ on: 'action', id: 'taunt', value: "-2 vs your charge", note: "The penalty your taunted enemy takes increases to -2 against the charge you chose during your daily preparations." }],
+
+  /* batch 030, improved-command-corpse. AoN feat-3886: *"When you use Command Undead on a mindless
+   * undead, if the undead succeeds at its save but doesn't critically succeed, it becomes your minion
+   * for 1 round. If the undead fails its save, it becomes your minion for 1 hour. If it critically
+   * fails, it becomes your minion for 24 hours."* All three outcomes REPLACE the ones Command Undead
+   * prints ("Failure … a duration of 1 minute", "Critical Failure As failure, but 1 hour", Success
+   * nothing) — and `command-corpse` grants Command Undead as a FEAT entry (featFeatGrants.ts:476), so
+   * the record the player reads still printed the superseded durations with nothing saying so.
+   * Principle C's shape: mark the thing this feat modifies. `on: 'feature'` reaches a granted FEAT
+   * row through FeatsTab.tsx:99 `recordMarkersFor(character, content, 'feature', recordId)`, where
+   * recordId is the granted feat's own id.
+   * ⚠ Above the generated-marks sentinel at :4094 on purpose (see the shore-step comment). */
+  "improved-command-corpse": [{ on: 'feature', id: 'command-undead', note: "when you use it on a mindless undead, a save that succeeds without critically succeeding makes the undead your minion for 1 round, a failure for 1 hour, and a critical failure for 24 hours — replacing the durations printed above." }],
 
 
 

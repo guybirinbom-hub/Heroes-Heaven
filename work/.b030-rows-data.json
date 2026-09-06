@@ -1,0 +1,273 @@
+{
+  "findings": [
+    {
+      "id": "grasping-corpses",
+      "note": "Point-of-use only. The feat is passive text with no number to compute: the whole clause is a rider on ANOTHER record's action row, which is exactly what recordMarks (on:'action') carries — MainTab.tsx:697 calls recordMarkersFor(character, content, 'action', actionId(a.name)) for every action row, and actions/mobbing-assault is on the sheet via feats/necrologist-dedication.grantsActions. No situationalBonuses entry: the off-guard lands on the FOE, so a star on the holder's own statistic would promise a bonus they never get.",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "grasping-corpses",
+          "field": "recordMarks",
+          "value": [
+            {
+              "on": "action",
+              "id": "mobbing-assault",
+              "note": "A creature that is damaged by your horde's Mobbing Assault is off-guard until the beginning of your next turn."
+            }
+          ],
+          "why": "AoN feat-7966 Grasping Corpses: \"A creature that is damaged by your horde's Mobbing Assault is off-guard until the beginning of your next turn.\" The rider is printed about Mobbing Assault, so it belongs on that action's row."
+        }
+      ]
+    },
+    {
+      "id": "defensive-stratagem",
+      "note": "The BONUS half already ships (situationalBonuses.ts:1117, +1 circumstance to AC and to all saves) and is left untouched. This row carries only the half that has no home: the third stratagem option and its Strike restriction, marked onto actions/devise-a-stratagem where the player actually chooses. The restriction is a COST, not a bonus, so it cannot go through situationalBonuses.",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "defensive-stratagem",
+          "field": "recordMarks",
+          "value": [
+            {
+              "on": "action",
+              "id": "devise-a-stratagem",
+              "note": "After you roll the d20 you can choose a defensive stratagem instead of an attack or skill stratagem: you can't attempt to Strike the target until the start of your next turn, and you gain a +1 circumstance bonus to all your defenses against effects caused by the target until then."
+            }
+          ],
+          "why": "AoN feat-5956 Defensive Stratagem: \"When you use Devise a Stratagem, you can choose a defensive stratagem instead of an attack or skill stratagem after you roll a d20\" and \"You can't attempt to Strike the target until the start of your next turn.\" Both clauses are printed about Devise a Stratagem and reach no surface today."
+        }
+      ]
+    },
+    {
+      "id": "instinctive-maneuvers",
+      "note": "The +2 Athletics half already ships (situationalBonuses.ts:379) and is untouched. Relinquish Control prints a CLOSED permitted-action list (AoN feat-7122); the feat extends it, and an extended list is not a modifier, so recordMarks on:'feature' is the only carrier — FeatsTab.tsx:99 renders 'feature' marks on the Relinquish Control feat entry, gated on owning this feat.",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "instinctive-maneuvers",
+          "field": "recordMarks",
+          "value": [
+            {
+              "on": "feature",
+              "id": "relinquish-control",
+              "note": "Grapple, Reposition, Shove and Trip join the list of actions you can take when you Relinquish Control, with a +2 status bonus to the Athletics check to attempt them."
+            }
+          ],
+          "why": "AoN feat-7136 Instinctive Maneuvers: \"When you Relinquish Control, you add Grapple, Reposition, Shove, and Trip to the list of actions you can take.\" AoN feat-7122 Relinquish Control prints the closed list this extends."
+        }
+      ]
+    },
+    {
+      "id": "transcribe-moment",
+      "note": "Exactly the shape feats/crystal-ward-spells already ships. build.ts:4392 collects featFocusGrant ONLY from feats carrying spellcastingGrant, and the feat already has focusSpells:[\"transcribe-moment\"], so it passes the filter's first branch; focusTradition/focusKey (build.ts:4437-4438) then read 'arcane'/'int' instead of falling through to 'occult' and focusCls.keyAbility[0]. A Scrollmaster whose class IS a caster keeps its own tradition, which is the pre-existing shared-focus-entry rule and not this row's business.",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "transcribe-moment",
+          "field": "spellcastingGrant",
+          "value": { "tradition": "arcane", "keyAbility": "int", "proficiency": "trained" },
+          "why": "AoN feat-2235 Transcribe Moment grants the focus spell with no tradition of its own, and AoN feat-1130 Scrollmaster Dedication is the Intelligence/arcane scroll archetype; without a profile a non-caster Scrollmaster casts it occult off the class's first key attribute."
+        }
+      ]
+    },
+    {
+      "id": "arcane-breadth",
+      "note": "SUPERSEDES the existing effect-backfill row for feats/arcane-breadth.spellSlotBonus ({perRank:1,exceptHighest:2}); its whole value is merged into mine and only entryId is added. spellSlotBonus is ONE field, so the whole object is re-emitted. entryId 'wizard-dedication-casting' is built by casterArchetypes.ts:410 as `${arch.dedicationId}-casting` off the 'wizard-dedication' key at :107, and is the exact shape all five siblings ship (occult/divine/primal/patrons/mysterious-breadth).",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "arcane-breadth",
+          "field": "spellSlotBonus",
+          "value": { "perRank": 1, "exceptHighest": 2, "entryId": "wizard-dedication-casting" },
+          "supersedes": true,
+          "why": "AoN feat-5111 Arcane Breadth: \"Increase the spell slots you gain from wizard archetype feats by 1 for each spell rank other than your two highest wizard spell slots.\" Untargeted, build.ts:6847 slotEntryFor lands it on the character's own class caster instead."
+        }
+      ]
+    },
+    {
+      "id": "cantrip-supremacy",
+      "note": "The record carries no mechanical field at all today. spellSlotBonus.cantrips with an archetype entryId is the live lane: build.ts:7056-7063 archCantripBonus sums cantrips only from bonuses whose entryId is in archetypeEntryIds, and Builder.tsx:463-469 mirrors it for the picker cap. Exactly psi-development's shape. Deliberately NOT `<classId>-casting`, so cantripBonusFor (build.ts:2243) skips it and the character's CLASS cantrip cap is untouched.",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "cantrip-supremacy",
+          "field": "spellSlotBonus",
+          "value": { "entryId": "hedge-mage-dedication-casting", "cantrips": 10 },
+          "why": "AoN feat-9332 Cantrip Supremacy: \"Add 10 additional cantrips to your keepsake. You can also prepare 10 additional cantrips from your keepsake each day.\" The Hedge Mage entry is capped at casterArchetypes.ts:132's config.cantrips = 2 with nothing contributing."
+        }
+      ]
+    },
+    {
+      "id": "selfless-parry",
+      "note": "Both riders are rewrites of OTHER feat entries, so they go on:'feature' onto dueling-parry and dueling-riposte (FeatsTab.tsx:99). Deliberately NOT a situationalBonuses kind:'ac' entry: the +1 lands on ADJACENT ALLIES, and an AC star would promise the holder a bonus they never get. The holder's own +2 circumstance AC from Dueling Parry (situationalBonuses.ts:837/:1465) is untouched.",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "selfless-parry",
+          "field": "recordMarks",
+          "value": [
+            {
+              "on": "feature",
+              "id": "dueling-parry",
+              "note": "While you're benefiting from Dueling Parry, allies adjacent to you gain a +1 circumstance bonus to AC."
+            },
+            {
+              "on": "feature",
+              "id": "dueling-riposte",
+              "note": "You can also use Dueling Riposte when an enemy within your reach critically fails a Strike against an ally adjacent to you, not just against yourself."
+            }
+          ],
+          "why": "AoN feat-6315 Selfless Parry: \"When you're benefiting from Dueling Parry, allies adjacent to you gain a +1 circumstance bonus to AC. If you have Dueling Riposte, you can use it when an enemy within your reach critically fails a Strike against an ally adjacent to you, not just against yourself.\""
+        }
+      ]
+    },
+    {
+      "id": "kaiju-stance#fatal",
+      "note": "The proposal names scripts/data/stances.json, which this agent may not write, so the fix is authored as a durable overlay on the stances bucket instead — the same route effect-backfill already uses for stances/kaiju-stance.requires (a field that is NOT in stances.json yet ships in core.json, proving the overlay lands after the stance source is merged). strikes is ONE field, so the whole array is re-emitted with only the trait string corrected from the space form to the hyphen form every fatal reader anchors on (derive.ts:4555 /^fatal-(d\\d+)$/). The three sibling space-form stance traits (cobra-stance \"deadly d10\", claw-stance \"versatile piercing\", vitality-manipulating-stance \"versatile vitality\") are outside this slice and are listed in the report's CROSS-FILE GAPS.",
+      "backfillRows": [
+        {
+          "category": "stances",
+          "id": "kaiju-stance",
+          "field": "strikes",
+          "value": [
+            {
+              "name": "Shattering Earth",
+              "dice": 1,
+              "die": "d8",
+              "damageType": "bludgeoning",
+              "group": "brawling",
+              "traits": ["backswing", "fatal-d12", "reach", "unarmed"]
+            }
+          ],
+          "why": "AoN feat-7110 Kaiju Stance: \"These strikes deal 1d8 bludgeoning damage, are in the brawling group, and have the backswing, fatal d12, reach, and unarmed traits.\" Stored as \"fatal d12\" the trait matches no reader, so the Strike shows no fatal crit die."
+        }
+      ]
+    },
+    {
+      "id": "unshaken-in-iron#stance",
+      "backfillRows": [],
+      "note": "NO ROW — the data is already correct. feats/unshaken-in-iron.armorSpec.bonusWhileStance {stanceId:'tenacious-stance', source:'armorCheckPenalty'} exists and has a live reader at derive.ts:3711-3714. The defect is code-only: MainTab.tsx:391-394 builds the stance toggles from character.feats, and tenacious-stance lives in the actions bucket (granted by stalwart-defender-dedication.grantsActions), so activeStance can never hold it. Filed in CROSS-FILE GAPS for src/sheet/MainTab.tsx."
+    },
+    {
+      "id": "thoughtsense",
+      "note": "The standing vague entry stays; this ADDS the state-gated upgrade. whileActive is the existing lane (types.ts:1152 state union already includes 'unleash-psyche'; read at derive.ts:1120-1160 and pushed with wa.senses at derive.ts:2544), classResources.ts:156 already ships the toggle, and addSense (derive.ts:2579) keeps the better acuity, so imprecise supersedes vague only while the toggle is on. Same shape as acute-vision / acute-scent.",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "thoughtsense",
+          "field": "whileActive",
+          "value": [
+            {
+              "state": "unleash-psyche",
+              "senses": [{ "name": "thoughtsense", "range": 30, "acuity": "imprecise" }]
+            }
+          ],
+          "why": "AoN feat-8330 Thoughtsense: \"While your Psyche is Unleashed, your thoughtsense upgrades to an imprecise sense, letting you use it to Seek out creatures.\""
+        }
+      ]
+    },
+    {
+      "id": "apparition-magic",
+      "note": "SUPERSEDES the existing effect-backfill row for feats/apparition-magic.spellSlotBonus ({perRank:1,exceptHighest:2}); its whole value is merged into mine and only entryId is added. 'animist-dedication-casting' is `${arch.dedicationId}-casting` off casterArchetypes.ts:137's 'animist-dedication'. With the entryId the archetype-local pass (build.ts:7078-7082) applies the per-tier ladder; without it the main loop (build.ts:6847) lands the slots on the character's own class entry.",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "apparition-magic",
+          "field": "spellSlotBonus",
+          "value": { "perRank": 1, "exceptHighest": 2, "entryId": "animist-dedication-casting" },
+          "supersedes": true,
+          "why": "AoN feat-7223 Apparition Magic: \"You gain 1 additional spell slot from animist archetype feats for each spell rank other than your two highest animist spell slots.\""
+        }
+      ]
+    },
+    {
+      "id": "sanguine-transference",
+      "note": "focusSpells is the lane all seven sibling necromancer grave-spell feats use (deathly-scream, muscle-barrier, song-of-the-soul, bony-barrage, bind-heroic-spirit, bloody-tendrils, perfected-thrall). Read by build.ts:3603, which places the spell in the class focus entry; the Focus Point follows from the spell's own `focus` trait (spells/sanguine-transference already carries it), so no focusPoolBonus is authored.",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "sanguine-transference",
+          "field": "focusSpells",
+          "value": ["sanguine-transference"],
+          "why": "AoN feat-9128 Sanguine Transference: \"You learn the sanguine transference grave spell.\" The spell record (spell-2907, rank 4, focus trait) already exists and was reachable from nothing."
+        }
+      ]
+    },
+    {
+      "id": "boost-summons",
+      "note": "spellNotes is our exact twin of WG's injectText onto the spell: types.ts:381 SpellNote, collected at build.ts:6352-6449, rendered via explain.ts:784, already used by 106 feats. RecordMarker cannot carry it — its `on` union is 'action' | 'condition' | 'feature' (situationalBonuses.ts:3981), with no 'spell'.",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "boost-summons",
+          "field": "spellNotes",
+          "value": [
+            {
+              "spellId": "boost-eidolon",
+              "note": "When you cast Boost Eidolon, in addition to your eidolon, it also targets your summoned creatures within 60 feet."
+            }
+          ],
+          "why": "AoN feat-2916 Boost Summons: \"When you cast Boost Eidolon, in addition to your eidolon, it also targets your summoned creatures within 60 feet.\""
+        }
+      ]
+    },
+    {
+      "id": "ilverani-purist",
+      "note": "degreeShifts already models exactly this shape — feats/thorough-search and feats/disillusionment ship shift + actions[] + perception:true. Sense Motive is a Perception action (actions/sense-motive, aonId action-2302, the Actions ID the printed feat links), so `perception: true` stars the Perception row and `actions:['sense-motive']` marks the action row. WG models nothing here, so print is the only authority.",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "ilverani-purist",
+          "field": "degreeShifts",
+          "value": [
+            {
+              "shift": "critFailToFail",
+              "when": "when you Sense the Motive of a non-elf humanoid creature",
+              "actions": ["sense-motive"],
+              "perception": true
+            }
+          ],
+          "why": "AoN feat-8136 Ilverani Purist: \"When you attempt to Sense the Motive of a non-elf humanoid creature and you roll a critical failure, you fail instead.\""
+        }
+      ]
+    },
+    {
+      "id": "watchers-armband#innate-spell",
+      "note": "The item innate lane is live (build.ts:7550 walks item?.innateSpells for every in-use item; 65 items already use it) and spells/ring-of-truth exists at rank 3 with the occult tradition. Same shape as items/cloak-of-social-graces. The existing counters/frequency on the record belong to the Find the Plant activation, a SEPARATE once-per-day use, so usesPerDay:1 on the spell is authored here rather than reusing that counter.",
+      "backfillRows": [
+        {
+          "category": "items",
+          "id": "watchers-armband",
+          "field": "innateSpells",
+          "value": [{ "spellId": "ring-of-truth", "tradition": "occult", "rank": 3, "usesPerDay": 1 }],
+          "why": "AoN equipment-3986 Watcher's Armband: \"In addition, you can cast Ring of Truth once per day as an innate 3rd-rank occult spell.\""
+        }
+      ]
+    },
+    {
+      "id": "dweomerveil#daily-choice",
+      "note": "SUPERSEDES the existing effect-backfill row for items/dweomerveil.choice; the whole shipped value (flag/prompt/kind/options) is merged into mine and only `daily: true` is added — choice is ONE field. askedAtDailyPrep (derive.ts:1231) returns false without it, so the tradition is currently a permanent per-instance select instead of a morning question. The veil is worn+invested, so ownedDailyChoiceRecords (derive.ts:1257) already reaches it; same lane as items/library-robes-true and items/the-queen-mother. The display-only situationalBonuses.ts:2080 entry is untouched.",
+      "backfillRows": [
+        {
+          "category": "items",
+          "id": "dweomerveil",
+          "field": "choice",
+          "value": {
+            "flag": "veilTradition",
+            "prompt": "Tradition",
+            "kind": "array",
+            "options": [
+              { "value": "arcane", "label": "Arcane" },
+              { "value": "divine", "label": "Divine" },
+              { "value": "occult", "label": "Occult" },
+              { "value": "primal", "label": "Primal" }
+            ],
+            "daily": true
+          },
+          "supersedes": true,
+          "why": "AoN equipment-3225 Dweomerveil: \"Each day during daily preparations, you must brush and oil the veil. At the conclusion of the activity, select one tradition of magic (arcane, divine, occult, or primal). You gain a +1 item bonus to all saves against magic from that tradition until your next daily preparations.\""
+        }
+      ]
+    }
+  ]
+}

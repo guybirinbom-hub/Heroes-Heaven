@@ -1,0 +1,24 @@
+{
+  "findings": [
+    {
+      "id": "eclectic-skill#instrument",
+      "backfillRows": [],
+      "note": "Code-only instrument fix. feats/eclectic-skill already carries untrainedProficiency {levelMinus:0} (also in effect-backfill.json, so it survives regeneration) and derive.ts:untrainedSkillBonus reads it as c.level - levelMinus = the character's level, numerically identical to WG's adjValue UNTRAINED_IMPROVISATION = {{level}}. The gap was in wg-diff.mjs, which had no mapping for their variable and reported missing=[unmapped]. Taught, not settled; no data row is correct here."
+    },
+    {
+      "id": "unshaken-in-iron#instrument",
+      "backfillRows": [],
+      "note": "Code-only instrument fix. feats/unshaken-in-iron already carries armorSpec {categories:['light'], ifTrained:['medium','heavy'], bonusWhileStance:{...}}, read by armorSpecAccess (derive.ts) and applied as a typed RESISTANCE inside the computed-resistances block. wg-diff.mjs was swallowing their ARMOR_SPECIALIZATION_* variables into the unanchored /ARMOR/ -> 'ac' test, which is where the digest's 'ac' flag came from, and the two trained-gated conditionals around them then read as unanswered. Taught, not settled; no data row is correct here. The record's genuine gap is unshaken-in-iron#stance, which belongs to another family."
+    },
+    {
+      "id": "resilient",
+      "backfillRows": [],
+      "note": "Code-only instrument fix. The +1 item bonus to saves (AoN equipment-2786) is delivered by the rune system, not by a field on the items row: core.json runes['resilient'] = {kind:'resilient', value:1} -> planRune (attachments.ts) -> ArmorRunes.resilient -> resilientSaveBonus (derive.ts) -> deriveSave's item bonus. Both comparers stopped at the items row, which carries no passiveEffects by design. A backfill row would DUPLICATE the bonus on a record the rune system already answers, so no row is authored."
+    },
+    {
+      "id": "bands-of-force",
+      "backfillRows": [],
+      "note": "Code-only instrument fix. core.json items['bands-of-force'].passiveEffects = {ac:1, saves:1} is already authored (effect-backfill.json, with greater/major siblings at 2 and 3) and passiveItemBonus(c, db, 'saves') is pooled into deriveSave's item bonus. wg-values.mjs only read the classFeatures MAP shape of passiveEffects.saves and never the item SCALAR shape, so a single number covering all three saves expanded into nothing. No data row: the field is present and read."
+    }
+  ]
+}

@@ -96,6 +96,21 @@ function isHost(host: Item): host is Extract<Item, { itemType: HostType }> {
   return host.itemType === 'weapon' || host.itemType === 'armor' || host.itemType === 'shield';
 }
 
+/**
+ * The host type an item counts as for AFFIXING — its own itemType for a weapon/armor/shield, or the
+ * `affixHostAs` an item prints instead. Bands of Force: *"You can affix talismans to the bands as
+ * though they were light armor."* (AoN equipment-3058) — equipment, so `isHost` rejects it and the
+ * talisman was refused outright.
+ *
+ * Exported because the two UI gates that decide whether an item is a drop target at all
+ * (InventoryTab's `isHostType`, ItemEditorModal's Attached panel) each hard-coded the same triple:
+ * a fix only in `planAffix` would have made the affix legal on an item the sheet never offers.
+ * NOT used by `planRune` — the printed permission is for talismans, not for etching.
+ */
+export function affixHostType(host: Item): HostType | undefined {
+  return isHost(host) ? host.itemType : host.affixHostAs;
+}
+
 function planRune(
   rune: RuneDef,
   attachment: Item,
@@ -153,11 +168,14 @@ function planAffix(
   content: ContentDatabase,
   character?: Character,
 ): AttachPlan {
-  if (!isHost(host)) return { ok: false, reason: `You can only affix attachments to a weapon, armor, or shield — not ${host.name}.` };
+  // …or the type the host PRINTS that it counts as ("affix talismans to the bands as though they
+  // were light armor"), which is the whole of the permission — see affixHostType.
+  const hostAs = affixHostType(host);
+  if (!hostAs) return { ok: false, reason: `You can only affix attachments to a weapon, armor, or shield — not ${host.name}.` };
   if (attachmentInv.attachedTo) return { ok: false, reason: `${attachment.name} is already affixed to another item — peel it off first.` };
   if (hostInv.attachedTo) return { ok: false, reason: `${host.name} is itself affixed to something — you can’t stack attachments.` };
   const hosts = attachHostTypes(attachment);
-  if (!hosts.includes(host.itemType)) return { ok: false, reason: `${attachment.name} can only be affixed to ${hosts.join(' or ')} — not ${host.name}.` };
+  if (!hosts.includes(hostAs)) return { ok: false, reason: `${attachment.name} can only be affixed to ${hosts.join(' or ')} — not ${host.name}.` };
   const kind = attachKind(attachment);
   if (kind !== 'other') {
     const affixedTo = (hostId: string) =>

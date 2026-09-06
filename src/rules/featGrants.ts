@@ -145,6 +145,16 @@ export interface WeaponFamiliarity {
    * so the best-of rule would make their advanced bows expert when the feat says martial.
    */
   mirrorCategory?: WeaponCategory;
+  /**
+   * The clause only fires when the character holds one of these OTHER feats.
+   *
+   * Viking Vindicator: *"If you have Viking Weapon Familiarity or Viking Weapon Specialist, add the
+   * bastard sword and rapier to the list of weapons in those feats."* The grant is a rider on a
+   * sibling feat's list, not a grant of its own — a viking who took the Vindicator without either
+   * familiarity feat gets nothing. Nothing else in this interface could say that: `skillsIfFeature`
+   * gates on a class FEATURE, and the record's own prerequisites do not include either feat.
+   */
+  requiresAnyFeat?: string[];
 }
 
 export interface FeatGrant {

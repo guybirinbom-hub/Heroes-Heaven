@@ -58,6 +58,7 @@ function fixture(over: Record<string, unknown> = {}): string {
   };
   for (const [rel, body] of Object.entries(files)) {
     if (body === null) continue; // an explicit null in `over` means "this file is absent"
+    mkdirSync(join(root, rel, '..'), { recursive: true }); // a fixture may name src/rules/... too
     writeFileSync(join(root, rel), typeof body === 'string' ? body : JSON.stringify(body, null, 1));
   }
   return root;
@@ -173,6 +174,61 @@ describe('wg-batch-close derives verdicts from evidence', () => {
     rmSync(root, { recursive: true, force: true });
   });
 
+  /*
+   * Measured on batch 030: `resilient`'s spec entry authored NO rows (its own note says a row would
+   * duplicate the bonus the rune system already delivers) and the closer still cited it — "row spec
+   * work/.b030-rows-instruments.json finding resilient (0 row(s))" — deriving FIXED for a record the
+   * batch only taught two comparers about. The entry is not the citation; the ROWS are.
+   */
+  // batch 030: resilient
+  it('a rowless spec entry cites nothing (resilient), unless its family changed src (additional-ikon)', () => {
+    const rowless = fixture({
+      'work/.b900-rows-items.json': { findings: [{ id: 'alpha#one', backfillRows: [], note: 'No row authored: the value is delivered elsewhere.' }] },
+      'work/.b900-report-items.txt': 'beta#two — settled: comparer taught\n',
+    });
+    // batch 030: resilient
+    const bad = close(rowless, '--batch', '900');
+    expect(bad.code).toBe(1);
+    expect(bad.out).toContain('uncited NEW verdict');
+    expect(bad.out).toContain('alpha#one');
+    expect(bad.out).not.toContain('0 row(s)');
+    rmSync(rowless, { recursive: true, force: true });
+
+    // batch 030: resilient — the same rowless entry, but its note names the instrument teach: MATCHES
+    const taught = fixture({
+      'work/.b900-rows-items.json': { findings: [{ id: 'alpha#one', backfillRows: [], note: 'Code-only instrument fix: both comparers stopped at the items row, so no row is authored.' }] },
+      'work/.b900-report-items.txt': 'beta#two — settled: comparer taught\n',
+    });
+    // batch 030: resilient
+    const ok = close(taught, '--batch', '900', '--write');
+    expect(ok.code).toBe(0);
+    const parity = JSON.parse(readFileSync(join(taught, 'work/wg-batch-900-parity.json'), 'utf8'));
+    const alpha = parity.records.find((v: { id: string }) => v.id === 'alpha');
+    expect(alpha.verdict).toBe('MATCHES');
+    expect(alpha.evidence).toContain('note:');
+    rmSync(taught, { recursive: true, force: true });
+
+    /* batch 030: additional-ikon — the other half of the rule: a rowless entry IS a citation when the
+     * family made the code edit its note claims instead of a row. The additional-ikon fix (build.ts
+     * extraPickCount) names no record anywhere in the file, so nothing else can cite that record. */
+    const codeOnly = fixture({
+      'work/.b900-specs.json': [{ file: 'work/.b900-rows-items.json', kind: 'rows', family: 'items', stage: ['work/.b900-rows-items.json', 'src/rules/cap.ts'] }],
+      'work/.b900-rows-items.json': { findings: [{ id: 'alpha#one', backfillRows: [], note: 'Code-only. Fixed on the shared cap in src/rules/cap.ts; no data field carries the number.' }] },
+      'src/rules/cap.ts': 'export const extraPickCount = (n: number) => n + 1;\n',
+      'work/.b900-report-items.txt': 'beta#two — settled: comparer taught\n1. alpha#one — TAUGHT (finding id: alpha#one)\n',
+    });
+    // batch 030: additional-ikon
+    const fixed = close(codeOnly, '--batch', '900', '--write');
+    expect(fixed.code).toBe(0);
+    const p2 = JSON.parse(readFileSync(join(codeOnly, 'work/wg-batch-900-parity.json'), 'utf8'));
+    const a2 = p2.records.find((v: { id: string }) => v.id === 'alpha');
+    expect(a2.verdict).toBe('FIXED');
+    expect(a2.evidence).toContain('src/rules/cap.ts');
+    rmSync(codeOnly, { recursive: true, force: true });
+    // 20 s, not the 5 s default: three closes = three node spawns, which is over 5 s on this machine
+    // whenever the suite (or the virus scanner) is busy — the same allowance the git case takes below.
+  }, 20_000);
+
   it('OWNER-QUEUED carries the desk n, and an askOwner finding with no desk REFUSES', () => {
     const queued = fixture({
       'work/owner-questions.json': { open: [{ id: 'gamma', batch: 900, n: 77 }], deferred: [] },
@@ -232,6 +288,67 @@ describe('wg-batch-close derives verdicts from evidence', () => {
     expect(parity.records.find((v: { id: string }) => v.id === 'alpha').verdict).toBe('MATCHES');
     rmSync(root, { recursive: true, force: true });
   });
+
+  /*
+   * The one-way merge has no way to correct a verdict that is ALREADY WRONG on disk — batch 030's
+   * `resilient` was written FIXED off a rowless spec entry, and fixing the derivation only turns that
+   * into a refusal. `--reverdict` is that door: reasoned, stamped into the evidence, logged in the
+   * residual. Without a reason it is just an unexplained overwrite, so it refuses.
+   */
+  // batch 030: resilient
+  it('--reverdict rewrites one written verdict (resilient), stamps the reason and logs the change', () => {
+    const written = {
+      batch: 900,
+      records: [
+        { id: 'alpha', verdict: 'FIXED', evidence: 'cited by row spec (0 row(s))' },
+        { id: 'beta', verdict: 'MATCHES', evidence: 'taught' },
+        { id: 'gamma', verdict: 'MATCHES', evidence: 'no finding' },
+      ],
+    };
+    // the batch-030 resilient shape: the entry authored no row, so the fixed closer derives MATCHES
+    // while FIXED stands on disk — the disagreement the ruling settles, and the reason a plain re-close
+    // refuses instead of correcting itself.
+    const over = {
+      'work/wg-batch-900-parity.json': written,
+      'work/.b900-rows-items.json': { findings: [{ id: 'alpha#one', backfillRows: [], note: 'Code-only instrument fix: the comparers stopped at the items row, so no row is authored.' }] },
+      'work/.b900-report-items.txt': 'beta#two — settled: comparer taught\n',
+    };
+
+    // batch 030: resilient
+    const noReason = fixture(over);
+    const bad = close(noReason, '--batch', '900', '--write', '--reverdict', 'alpha=MATCHES');
+    expect(bad.code).toBe(1);
+    expect(bad.out).toContain('no --reason');
+    rmSync(noReason, { recursive: true, force: true });
+
+    // batch 030: resilient
+    const unknown = fixture(over);
+    const nosuch = close(unknown, '--batch', '900', '--write', '--reverdict', 'delta=MATCHES', '--reason', 'x');
+    expect(nosuch.code).toBe(1);
+    expect(nosuch.out).toContain('no such record');
+    rmSync(unknown, { recursive: true, force: true });
+
+    // batch 030: resilient
+    const root = fixture(over);
+    const ok = close(root, '--batch', '900', '--write', '--reverdict', 'alpha=MATCHES', '--reason', 'the zero-row spec entry was miscounted');
+    expect(ok.code).toBe(0);
+    const parity = JSON.parse(readFileSync(join(root, 'work/wg-batch-900-parity.json'), 'utf8'));
+    // batch 030: resilient
+    const by = Object.fromEntries(parity.records.map((v: { id: string; verdict: string; evidence: string }) => [v.id, v]));
+    expect(by.alpha.verdict).toBe('MATCHES');
+    expect(by.alpha.evidence).toContain('[orchestrator ruling: the zero-row spec entry was miscounted]');
+    expect(by.beta.verdict).toBe('MATCHES'); // untouched
+    expect(by.gamma.verdict).toBe('MATCHES');
+    // batch 030: resilient
+    const residual = JSON.parse(readFileSync(join(root, 'work/wg-batch-900-residual.json'), 'utf8'));
+    expect(residual.reverdicts).toMatchObject([{ id: 'alpha', from: 'FIXED', to: 'MATCHES' }]);
+
+    // batch 030: resilient — a later close passes no --reverdict; the ruling log must survive it
+    const again = close(root, '--batch', '900', '--write');
+    expect(again.code).toBe(0);
+    expect(JSON.parse(readFileSync(join(root, 'work/wg-batch-900-residual.json'), 'utf8')).reverdicts).toHaveLength(1);
+    rmSync(root, { recursive: true, force: true });
+  }, 20_000); // three closes = three node spawns; the 5 s default is marginal on this machine
 
   it('parks gap lines into flaggedResidues and REFUSES while any gap is still open', () => {
     const withOpen = fixture({

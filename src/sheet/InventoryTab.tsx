@@ -3,7 +3,7 @@ import type { Character, CompanionConfig, ContentDatabase, InventoryItem, Item, 
 import { useIsMobile } from './useIsMobile';
 import { deriveBulk, containerLoads, effectiveItemBulk, mpActive, doublingRingsAvailable,
   handwrapsRuneSharing, isHandwraps } from '../rules/derive';
-import { isAttachable, planAttach } from '../rules/attachments';
+import { affixHostType, isAttachable, planAttach } from '../rules/attachments';
 import {
   addInventoryItem,
   addPlayCompanion,
@@ -1122,7 +1122,10 @@ export function InventoryTab({
               if (!item) return <UnknownItemCard key={inv.instanceId} inv={inv} onPlay={onPlay} />;
               // While dragging a rune/attachment, weapon/armor/shield cards become attach targets;
               // run the planner so only valid hosts light up and the drop knows the exact reason.
-              const isHostType = item.itemType === 'weapon' || item.itemType === 'armor' || item.itemType === 'shield';
+              // …plus an item that PRINTS it counts as one for affixing (Bands of Force: "you can
+              // affix talismans to the bands as though they were light armor") — the card has to be a
+              // drop target at all before planAttach is ever consulted.
+              const isHostType = !!affixHostType(item);
               // A Monster-Parts-mode item ignores runes/attachments entirely, so it must NOT be an attach
               // target — dropping a rune on it would consume the rune for zero effect (the editor already
               // hides its rune section for the same reason).

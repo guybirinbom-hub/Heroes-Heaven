@@ -1,0 +1,119 @@
+{
+  "findings": [
+    {
+      "id": "additional-ikon",
+      "backfillRows": [],
+      "note": "Code-only. The record already carried an `ikon-picks` COUNTER_MODS row (src/rules/counterMods.ts:48-49, shared with second-ikon) and nothing ever passed that counter to applyCounterMods. Fixed in src/rules/build.ts extraPickCount, the one cap the builder picker (shared.tsx:3277) and both resolvers (build.ts:3040, 7854) share. No data field would have helped: pickByLevel is a flat level->count map with no way to name a feat."
+    },
+    {
+      "id": "viking-vindicator#weapon-familiarity",
+      "backfillRows": [],
+      "note": "NOT DONE — cross-file. The proficiency half needs `requiresAnyFeat?: string[]` on the WeaponFamiliarity interface in src/rules/featGrants.ts and a 'viking-vindicator' row in src/rules/featGrantsLane.ts, neither of which is in the engine family's editable set. FEAT_GRANTS is a code registry with no data route (build.ts:6626 reads FEAT_GRANTS[fc.featId] only; the record-level `weaponFamiliarity` field in types.ts is BACKGROUND-only, types.ts:2626), so a backfill row has nothing to read it. Building a second, data-side weaponFamiliarity carrier would rebuild a lane that already exists. Listed in CROSS-FILE GAPS."
+    },
+    {
+      "id": "viking-vindicator#critspec",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "viking-vindicator",
+          "field": "critSpec",
+          "value": true,
+          "why": "AoN feat-3619 prints \"If you have Viking Weapon Familiarity or Viking Weapon Specialist, add the bastard sword and rapier to the list of weapons in those feats.\" critSpecSources (src/rules/derive.ts) reads each owned record's OWN crit-spec block and has no cross-record extension route, so the extension is carried on the extending record and gated by critSpecRequiresFeat (new this batch)."
+        },
+        {
+          "category": "feats",
+          "id": "viking-vindicator",
+          "field": "critSpecWeapons",
+          "value": { "bases": ["bastard-sword", "rapier"] },
+          "why": "AoN feat-3619 names exactly these two weapons; both ids exist in public/core.json items. The two viking feats' own lists (battle-axe/hatchet/longsword/shortsword and the six-weapon familiarity list) are untouched — this ADDS, it does not replace."
+        },
+        {
+          "category": "feats",
+          "id": "viking-vindicator",
+          "field": "critSpecRequiresFeat",
+          "value": ["viking-weapon-specialist", "viking-weapon-familiarity"],
+          "why": "AoN feat-3619's clause is conditional on owning one of the two feats it extends. BOTH are listed where WG gates on viking-weapon-specialist alone, because AoN feat-6437 (the remastered Viking Weapon Familiarity) itself prints \"At 5th level, whenever you get a critical hit with one of these weapons, you get its critical specialization effect\" — adding a weapon to ITS list adds it to a crit-spec list too. WG's Viking Weapon Familiarity row encodes no WEAPON_CRITICAL_SPECIALIZATIONS at all, i.e. WG encodes less than print rather than contradicting it."
+        }
+      ],
+      "note": "Three rows on ONE record but three DIFFERENT top-level fields, so no merge is required. The reader (critSpecRequiresFeat on DefenseGrants + the gate in critSpecSources) shipped in this batch; without the gate these rows would hand a vindicator with neither viking feat a crit-spec grant print does not give them."
+    },
+    {
+      "id": "viking-vindicator#shallow-water",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "viking-vindicator",
+          "field": "recordMarks",
+          "value": [
+            {
+              "on": "feature",
+              "id": "sudden-charge",
+              "note": "when you use Sudden Charge to Strike a target in shallow water, the target is off-guard against your Strike."
+            }
+          ],
+          "why": "AoN feat-3619 prints \"When you use Sudden Charge to Strike a target in shallow water, the target is off-guard against your Strike, as you use the water kicked up by your passage to camouflage your angle of attack.\" viking-vindicator grants Sudden Charge through featFeatGrants.ts:632, which copies the base feat's own text, so the granted entry printed nothing about shallow water. recordMarks is the live DATA route into recordMarkersFor (src/rules/explain.ts:711); FeatsTab.tsx:99 renders 'feature' marks on the granted feat's entry, and the mark is gated on owning viking-vindicator so an ordinary fighter's Sudden Charge is untouched."
+        }
+      ],
+      "note": "Reach, not a hidden mechanic — core-descriptions.json already carries the clause on the vindicator's own description. The gap is that the entry the player actually uses (Sudden Charge) carried no sign of it."
+    },
+    {
+      "id": "frozen-breadth",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "frozen-breadth",
+          "field": "spellSlotBonus",
+          "value": { "perRank": 1, "exceptHighest": 2, "entryId": "first-frost-casting" },
+          "why": "AoN feat-4099 prints \"Increase the number of spells in your repertoire and number of spell slots you gain from gelid shard archetype feats by 1 for each spell rank other than your two highest gelid shard spell slots.\" The record carried only actionCost, so a gelid shard gained none of them. 'first-frost' is the gelid shard dedicationId (src/rules/casterArchetypes.ts:282), so archetypeEntryIds() yields 'first-frost-casting' and the live reader at build.ts:7061 widens the archetype pool. Identical shape to the shipped occult/divine/primal/patrons/mysterious-breadth rows."
+        }
+      ],
+      "note": "Data-only: the reader for this exact shape already exists and is exercised by the new test. The repertoire half of the printed sentence needs no separate field — a spontaneous archetype's repertoire is sliced from `slots`, so widening the slots widens both."
+    },
+    {
+      "id": "bloodline-breadth",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "bloodline-breadth",
+          "field": "spellSlotBonus",
+          "value": { "perRank": 1, "exceptHighest": 2, "entryId": "sorcerer-dedication-casting" },
+          "supersedes": true,
+          "why": "AoN feat-6230 prints \"…number of spell slots you gain from SORCERER ARCHETYPE FEATS by 1 for each spell rank other than your two highest sorcerer spell slots.\" The shipped row carried {perRank:1,exceptHighest:2} with no entryId, so slotEntryFor (build.ts:6846) resolved it to the character's FIRST spontaneous/prepared CLASS entry — a wizard dipping sorcerer took the slots on their wizard pool and a fighter got none at all, since the archetype entry is not pushed until build.ts:7129 and the archetype widener at 7061 skips any bonus without an entryId in archetypeEntryIds(arch). 'sorcerer-dedication' is the key in CASTER_ARCHETYPES (casterArchetypes.ts:191)."
+        }
+      ],
+      "note": "SUPERSEDES the existing scripts/data/effect-backfill.json row {category:'feats',id:'bloodline-breadth',field:'spellSlotBonus',value:{perRank:1,exceptHighest:2}} — the superseded value is carried whole and only entryId is added. arcane-breadth carries the same entry-less shape and is the data-rows family's finding, not this one."
+    },
+    {
+      "id": "bands-of-force#dexcap",
+      "backfillRows": [
+        {
+          "category": "items",
+          "id": "bands-of-force",
+          "field": "passiveEffects",
+          "value": { "ac": 1, "saves": 1, "dexCap": 5 },
+          "supersedes": true,
+          "why": "AoN equipment-3058 prints \"The force grants you a +1 item bonus to AC and saving throws, and a maximum Dexterity modifier of +5 as armor.\" Only the half that PAYS the wearer was modelled: the bands are itemType 'equipment', so there is no armour block to hold the cap and a Dex +6 wearer added the full +6. Reader added this batch (ItemPassiveEffects.dexCap + passiveItemDexCap folded into deriveAc's dexCap as the lowest cap in play)."
+        }
+      ],
+      "note": "SUPERSEDES the existing effect-backfill.json row {category:'items',id:'bands-of-force',field:'passiveEffects',value:{ac:1,saves:1}} — passiveEffects is ONE field, so the whole value is re-emitted with dexCap added. WG models no cap either, so this is print over both sides."
+    },
+    {
+      "id": "bands-of-force#talismans",
+      "backfillRows": [],
+      "note": "NOT DONE — cross-file. AoN equipment-3058: \"You can affix talismans to the bands as though they were light armor.\" planAffix()/isHost() live in src/rules/attachments.ts, which is not in the engine family's editable set, and a `affixHostAs` field on ItemBase with no reader there is a dead field and a dead row. Listed in CROSS-FILE GAPS."
+    },
+    {
+      "id": "rusting-carapace#potency",
+      "backfillRows": [
+        {
+          "category": "items",
+          "id": "rusting-carapace",
+          "field": "builtInRunes",
+          "value": { "potency": 1 },
+          "why": "AoN equipment-1853 prints \"This +1 leather lamellar armor incorporates the plates of an ore louse's hide…\" The record copies the base Leather Lamellar block verbatim (acBonus 1, dexCap 4, checkPenalty -1) and carried no runes, so the wearer's AC was 1 below the book value until they etched a potency rune they already owned. builtInRunes was weapon-only (typed WeaponRunes, read only by effectiveWeaponRunes); this batch typed it on ArmorItem and gave deriveAc/resilientSaveBonus the same FLOOR read the weapon lane has used since batch 001."
+        }
+      ],
+      "note": "One row of a lane of 112. The other 111 specific magic armours that print a fundamental rune in their name are listed in DATA STILL NEEDED — the reader now exists for all of them and grants nothing until each row lands."
+    }
+  ]
+}

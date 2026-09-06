@@ -1426,6 +1426,17 @@ export interface DefenseGrants {
    */
   critSpecRequiresModeGroup?: string;
   /**
+   * The crit-spec grant applies only if the character also has one of these FEATS — *"If you have
+   * Viking Weapon Familiarity or Viking Weapon Specialist, add the bastard sword and rapier to the
+   * list of weapons in those feats"* (Viking Vindicator).
+   *
+   * A record that EXTENDS another record's weapon list has nowhere else to go: `critSpecSources`
+   * only ever reads each owned record's OWN crit-spec block, so the extension has to live on the
+   * extending record and carry the gate that makes it conditional. Feat-gated rather than
+   * mode-gated because the printed condition is a taken feat, not a state.
+   */
+  critSpecRequiresFeat?: string[];
+  /**
    * A per-TARGET condition on the crit-spec grant, printed beside the effect — *"…when attacking your
    * HUNTED PREY"* (Ranger Weapon Expertise), *"…and the target has the off-guard condition"* (Avenger).
    *
@@ -2204,6 +2215,15 @@ export interface ItemPassiveEffects {
   perception?: number;
   saves?: number;
   ac?: number;
+  /**
+   * A maximum Dexterity modifier the item imposes *"as armor"* — Bands of Force: *"The force grants
+   * you a +1 item bonus to AC and saving throws, and a maximum Dexterity modifier of +5 as armor."*
+   *
+   * The bands are `equipment`, not armour, so `worn.armor.dexCap` could never carry this and the
+   * half of the printed sentence that COSTS the wearer something was silently dropped while the +1
+   * was paid out. Folded into AC as the LOWEST cap in play, exactly like the armour and stance caps.
+   */
+  dexCap?: number;
   attack?: number;
   /** Bonus language SLOTS the worn item grants (Choker of Elocution's "you learn a language" —
    *  chosen, not named, so it must not be grantsLanguages). Read where invested items' passives
@@ -3872,6 +3892,17 @@ interface ItemBase extends ContentBase {
    */
   investmentGroup?: string;
   /**
+   * An item that is not a weapon, armour or shield, but that TALISMANS may be affixed to anyway —
+   * naming the host type it is treated as. Bands of Force: *"You can affix talismans to the bands as
+   * though they were light armor."*
+   *
+   * Only the affix path reads it: a rune still cannot be etched onto the bands, because print grants
+   * talismans and nothing else. Absent on every other item, which is why the flag rather than a
+   * widened `itemType` — the bands are equipment for every other purpose (bulk, investment, the AC
+   * they grant is a passive, not an armour block).
+   */
+  affixHostAs?: 'weapon' | 'armor' | 'shield';
+  /**
    * An item worn WITH armour that restates it. Exactly two items in the game do this: an Armored
    * Skirt and a Plated Duster, both of which make their host one step heavier and change which
    * proficiency you read. Distinct from `armorRestat`, which lives on a CLASS FEATURE and restates a
@@ -4167,6 +4198,16 @@ export interface ArmorItem extends ItemBase {
   /** "If you have armor specialization with heavy armor, your resistance applies to both slashing and
    *  piercing damage" (Highhelm Stronghold Plate) — extra IWR types the specialization also covers. */
   armorSpecExtraTypes?: string[];
+  /**
+   * The FUNDAMENTAL runes a specific magic armour carries in its own NAME — *"This +1 leather
+   * lamellar armor…"* (Rusting Carapace), *"+2 resilient…"*.
+   *
+   * The armour twin of `WeaponItem.builtInRunes`, and for the same reason: these are not etched, so
+   * nothing writes them onto the inventory row and `deriveAc`/`resilientSaveBonus` read the row
+   * alone — a Rusting Carapace wearer sat 1 AC below the printed value. A FLOOR under whatever the
+   * row carries, so a player who etches higher keeps it.
+   */
+  builtInRunes?: ArmorRunes;
 }
 
 export interface ShieldItem extends ItemBase {

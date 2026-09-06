@@ -1,0 +1,59 @@
+batch 030 — GAP agent, family "situational" (WG-comparison lane)
+3 lines of my family were open; 3 are disposed of: 1 AUTHORED, 2 PARKED. 0 open. No spec file was
+written (no durable data row is owed by any of the three) and no owner question was queued.
+
+- AUTHORED — work/.b030-gaps.json line "deadly-butterfly — TAUGHT (finding id: deadly-butterfly)"
+  ref: src/rules/situationalBonuses.ts:842
+  why: this line is an extraction artefact, not a gap — the gaps extractor pulled the heading of item 3
+  of the builder's WHAT I DID, PER FINDING section (work/.b030-report-situational.txt:60) as if it sat
+  under CROSS-FILE GAPS. The thing it names exists and is pinned: FEAT_SITUATIONAL["deadly-butterfly"]
+  at situationalBonuses.ts:842 carries print's second sentence (feat-2708: the KNIFE critical
+  specialization on a butterfly-sword crit, plus "you can benefit from only one critical specialization
+  effect at a time"), and test/batch030-situational.test.ts:119-160 reads the star off a BUILT fighter
+  through featSituationalFor, with a negative for a fighter without the feat. Nothing left to produce,
+  so the line is authored against the symbol rather than parked.
+
+- PARKED — work/.b030-gaps.json line "src/rules/types.ts + src/rules/derive.ts (crit-spec plumbing,
+  deadly-butterfly): critSpecWeapons has no…" (from work/.b030-report-situational.txt:10)
+  ref: flaggedResidue (reason in full in work/.b030-gaps.json)
+  why: two independent reasons, either one sufficient. (1) OWNERSHIP: the durable fix is an
+  `asGroup`/`alsoGroups` field on the critSpecWeapons interface (src/rules/types.ts:1449) plus a reader
+  in src/rules/derive.ts (the CritSpecSource plumbing at 3627-3658 / weaponMatches at 3770) and lookups
+  at the three call sites that hand a bare group string to critSpec() — MainTab.tsx:607,
+  StrikeDetailModal.tsx:46, ItemDetail.tsx:607. types.ts, build.ts and derive.ts are the ENGINE family's
+  stage[] in work/.b030-specs.json and carry no "batch 030" citation marker yet, so that agent's edits
+  are still in flight; editing them from this family is the collision the stage[] lists exist to
+  prevent. (2) SHAPE: the proposed field is a mis-model of the print. Deadly Butterfly grants ACCESS to
+  a second effect the player chooses between at crit time ("only one at a time"); our display model is a
+  single per-group string (src/rules/critSpec.ts:35, CRIT_SPEC[group]), so an `asGroup` substitution
+  would silently take the sword effect (off-guard) AWAY instead of offering both. Exactly one record in
+  the game wants it, so the correct home is its own measured lane with the choice model decided first —
+  not a one-consumer shared shape bolted on mid-batch. Meanwhile the player is not left short: the
+  situational star quotes the knife effect and the exclusivity clause verbatim on the damage row.
+  Not an owner question: print settles the mechanic (Guy's standing rule is that a ruling is for a
+  conflict between his rulings or a mechanic print does not settle), and WG encodes strictly LESS than
+  print here — wg-show's only op for Deadly Butterfly is adjValue WEAPON_CRITICAL_SPECIALIZATIONS =
+  "butterfly sword", the first sentence alone — so there is no WG-vs-print contradiction to escalate.
+
+- PARKED — work/.b030-gaps.json line "src/rules/types.ts + src/rules/derive.ts (deadly-butterfly):
+  critSpecWeapons has no field that…" (from work/.b030-verify-situational.txt:111)
+  ref: flaggedResidue (reason in full in work/.b030-gaps.json)
+  why: the verifier's restatement of the line above — same gap, same record, same files. Parked on the
+  same two grounds. Its one addition (that types.ts/derive.ts are the engine family's staged files in
+  THIS batch, i.e. a live cross-family handoff rather than merely "outside my files") is what makes the
+  park correct rather than optional, and is carried in both refs.
+
+NOT MINE, LEFT ALONE
+  The eclectic-skill#untrained-gate cross-file gap (src/rules/skillActions.ts:1046 `rankAtLeast(rank,
+  a.minRank)` still hiding trained-only actions from an untrained skill's panel) is named in both
+  situational reports but the extractor did NOT raise a gaps.json line for it, so there is nothing of
+  mine to dispose of. Recording it here so it is not read as an omission: it stands as written in
+  work/.b030-report-situational.txt and work/.b030-verify-situational.txt, and belongs to whoever owns
+  skillActions.ts. Every other family's line in work/.b030-gaps.json was left byte-identical.
+
+DATA STILL NEEDED
+  (none — no line of mine needs an effect-backfill row; the one live carrier is code, already shipped.)
+
+CROSS-FILE GAPS
+  (none new. The two I parked ARE the cross-file gaps, and are recorded as flagged residue so
+  wg-batch-close.mjs carries them into the batch's residual artefact rather than losing them.)

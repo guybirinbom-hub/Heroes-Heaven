@@ -1,0 +1,85 @@
+[
+  {
+    "file": "work/.b030-rows-situational.json",
+    "kind": "rows",
+    "family": "situational",
+    "stage": [
+      "work/.b030-rows-situational.json",
+      "work/.b030-report-situational.txt",
+      "work/.b030-verify-situational.txt",
+      "test/batch030-situational.test.ts",
+      "src/rules/situationalBonuses.ts"
+    ]
+  },
+  {
+    "file": "work/.b030-rows-data.json",
+    "kind": "rows",
+    "family": "data",
+    "stage": [
+      "work/.b030-rows-data.json",
+      "work/.b030-report-data.txt",
+      "work/.b030-verify-data-rows.txt",
+      "test/batch030-data.test.ts"
+    ]
+  },
+  {
+    "file": "work/.b030-rows-engine.json",
+    "kind": "rows",
+    "family": "engine",
+    "stage": [
+      "work/.b030-rows-engine.json",
+      "work/.b030-report-engine.txt",
+      "test/batch030-engine.test.ts",
+      "src/rules/types.ts",
+      "src/rules/build.ts",
+      "src/rules/derive.ts"
+    ]
+  },
+  {
+    "file": "work/.b030-rows-instruments.json",
+    "kind": "rows",
+    "family": "instruments",
+    "stage": [
+      "work/.b030-rows-instruments.json",
+      "work/.b030-report-instruments.txt",
+      "work/.b030-verify-instruments.txt",
+      "test/batch030-instruments.test.ts",
+      "scripts/wg-diff.mjs",
+      "scripts/wg-values.mjs",
+      "scripts/wg-batch-close.mjs",
+      "test/wg-batch-close.test.ts",
+      "scripts/wg-batch-commit.mjs",
+      "test/wg-batch-commit.test.ts"
+    ],
+    "note": "The last four paths are not builder output: they are the orchestrator's fixes to the CLOSE and COMMIT SCRIPTS, appended here because this family's rowless `resilient` entry is what exposed both defects. Close: a spec entry with 0 backfillRows was counted as a row citation, deriving FIXED for a record only taught; the fix adds the --reverdict door used for the resilient=MATCHES ruling, pinned in test/wg-batch-close.test.ts. Commit: the same entry's parked EXPERIENCE verdict moved work/experience-instrument-limits.json and the batch's slot rows moved work/wg-casting-parity.json, and the script refused over both; three orchestrator rulings (2026-09-06) make the two dumps batch evidence staged when changed, and relax the data-triple refusal to 'prose rows require core-descriptions.json to move' so a rows-only batch like this one may leave it untouched. Both pinned in test/wg-batch-commit.test.ts."
+  },
+  {
+    "file": "work/.b030-rows-gap-data-rows.json",
+    "kind": "rows",
+    "family": "gap-data-rows",
+    "stage": [
+      "work/.b030-rows-gap-data-rows.json",
+      "work/.b030-report-gap-data-rows.txt",
+      "test/batch030-gap-stance-toggle.test.tsx",
+      "src/sheet/MainTab.tsx"
+    ]
+  },
+  {
+    "file": "work/.b030-rows-gap-engine.json",
+    "kind": "rows",
+    "family": "gap-engine",
+    "stage": [
+      "work/.b030-rows-gap-engine.json",
+      "work/.b030-gap-armor-runes.mjs",
+      "work/.b030-report-gap-engine.txt",
+      "test/batch030-gap-engine.test.ts",
+      "src/rules/types.ts",
+      "src/rules/build.ts",
+      "src/rules/featGrants.ts",
+      "src/rules/featGrantsLane.ts",
+      "src/rules/attachments.ts",
+      "src/sheet/InventoryTab.tsx",
+      "src/sheet/ItemEditorModal.tsx"
+    ]
+  }
+]

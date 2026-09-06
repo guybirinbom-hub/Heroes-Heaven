@@ -389,9 +389,30 @@ export function MainTab({
   // A feat surfaces as a stance/form toggle when it has a stance/form data entry — either a real
   // `stance`-trait footwork stance, or an alternate FORM (Ursine Avenger, Bat Form) flagged `form:true`
   // in the data even though it carries the morph trait instead of stance.
-  const stanceFeats = character.feats
-    .map((f) => content.feats[f.featId])
-    .filter((f): f is NonNullable<typeof f> => !!f && !!content.stances?.[f.id] && ((f.traits ?? []).includes('stance') || !!content.stances[f.id]!.form));
+  /*
+   * …and a stance that is NOT a feat.
+   *
+   * Five of the 129 stances have no feat record at all — arcane-cascade, bullet-dancer-stance,
+   * claw-stance, talon-stance, tenacious-stance. They live in `content.actions` and reach the
+   * character through `grantsActions` on the granter (Stalwart Defender Dedication grants Tenacious
+   * Stance, Clawdancer Dedication grants both Claw and Talon Stance, the magus's Arcane Cascade is a
+   * class feature). Sourcing the toggles from `character.feats` alone meant no code path could ever
+   * put those ids into `Character.activeStance`, so every effect keyed on them was dead — Unshaken in
+   * Iron prints *"While in Tenacious Stance, you increase the value of your armor specialization
+   * effects by an amount equal to the value of your armor check penalty"*, and derive's
+   * `c.activeStance === a.bonusWhileStance.stanceId` guard was permanently false.
+   *
+   * `grantedActions` is the walk that already resolves those ids to records, so one source widening
+   * lights all five up. Deduped by id: a stance feat that also grants a like-named action would
+   * otherwise render two chips.
+   */
+  const stanceFeats: { id: string; name: string }[] = [
+    ...character.feats.map((f) => content.feats[f.featId]),
+    ...grantedActions,
+  ]
+    .filter((f): f is NonNullable<typeof f> => !!f && !!content.stances?.[f.id] && ((f.traits ?? []).includes('stance') || !!content.stances[f.id]!.form))
+    .filter((f, i, all) => all.findIndex((o) => o.id === f.id) === i)
+    .map((f) => ({ id: f.id, name: f.name }));
 
   /*
    * A battle form has TWO carriers, and only one of them works.

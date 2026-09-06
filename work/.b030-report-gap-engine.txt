@@ -1,0 +1,138 @@
+batch 030 — GAP lane of the ENGINE family (WG-comparison), 6 gap lines, 0 left open
+spec: work/.b030-rows-gap-engine.json (109 rows)   test: test/batch030-gap-engine.test.ts (9 tests, green)
+tsc --noEmit clean; scripts/test-flip-audit.mjs --batch 030 clean.
+
+== ONE LINE PER GAP LINE
+
+AUTHORED  work/.b030-rows-gap-engine.json
+  DATA STILL NEEDED "items/<111 remaining specific magic armours>/builtInRunes" (report-engine.txt:6) and its
+  corrected twin at verify-engine.txt:103 are ONE lane and are closed by one spec: 108 measured
+  builtInRunes rows for finding rusting-carapace#potency, every value read from the record's own
+  printed sentence.
+
+PARKED    flaggedResidue: not a gap — work/.b030-rows-data.json already carries feats/arcane-breadth
+          spellSlotBonus {perRank:1,exceptHighest:2,entryId:"wizard-dedication-casting"} with
+          supersedes:true, which is the shape bloodline-breadth gets in the engine spec, so the two
+          entry-less Breadth feats did not diverge and nothing is left to author.
+  DATA STILL NEEDED "feats/arcane-breadth/spellSlotBonus" (report-engine.txt:7). The engine verifier
+  had already corrected the builder's line to "NOT a gap"; the gaps file kept the builder's wording.
+
+AUTHORED  src/rules/featGrantsLane.ts
+  CROSS-FILE GAPS "viking-vindicator#weapon-familiarity" (report-engine.txt:10) and its corrected twin
+  at verify-engine.txt:114 are the same three edits, all now made: the `requiresAnyFeat?: string[]`
+  gate on WeaponFamiliarity, the one-line guard in build.ts's clause loop, and the lane entry.
+
+AUTHORED  src/rules/attachments.ts
+  CROSS-FILE GAPS "bands-of-force#talismans" (report-engine.txt:11): affixHostType() in attachments.ts,
+  `affixHostAs` on ItemBase, the two UI host gates routed through the same predicate, and the
+  items/bands-of-force row in my spec.
+
+== PER FINDING
+
+--- viking-vindicator#weapon-familiarity — AUTHORED (3 code edits, no row)
+Finding id: viking-vindicator#weapon-familiarity (CONFIRMED). AoN feat-3619: "If you have Viking Weapon
+Familiarity or Viking Weapon Specialist, add the bastard sword and rapier to the list of weapons in
+those feats."
+  1. src/rules/featGrants.ts — `requiresAnyFeat?: string[]` on the WeaponFamiliarity interface. The
+     clause is a RIDER on a sibling feat's list; `skillsIfFeature` gates on a class FEATURE and the
+     record's prerequisites name only Viking Dedication, so nothing existing could say it.
+  2. src/rules/build.ts — one line at the head of the `for (const wf of clauses)` loop (the loop the
+     verifier found the builder had NOT actually guarded). `feats` was already in scope.
+  3. src/rules/featGrantsLane.ts — 'viking-vindicator' beside the frozen six-weapon
+     'viking-weapon-familiarity' list, requiresAnyFeat ['viking-weapon-familiarity'].
+GATE NARROWER THAN PRINT, deliberately and stated here: print names both viking feats, but Viking
+Weapon Specialist carries no weaponFamiliarity of its own (it is a crit-spec feat, and FEAT_GRANTS has
+no entry for it), so gating the PROFICIENCY half on it would grant a proficiency that feat never had a
+list to extend. The crit-spec half of the same sentence is the engine spec's critSpecRequiresFeat row,
+which does name both feats. This matches WG's own encoding of the proficiency half.
+BLAST RADIUS: zero for every existing record — `requiresAnyFeat` is absent everywhere else and an
+absent gate is a no-op; the background clause loop (build.ts:6728) is untouched because no background
+carries the field. Pinned by the "a viking-less wizard gets nothing" assertion.
+TEST: 3 its in describe('viking-vindicator adds the bastard sword and rapier … (feats/viking-vindicator)')
+on a WIZARD (trained simple / untrained martial, so the demotion is visible): with Familiarity held both
+weapons land at the simple rank; the vindicator ALONE grants neither; the six-weapon list and a
+viking-less wizard are unchanged.
+
+--- bands-of-force#talismans — AUTHORED (reader + 1 row, and the two UI gates)
+Finding id: bands-of-force#talismans (CONFIRMED). AoN equipment-3058: "You can affix talismans to the
+bands as though they were light armor."
+  src/rules/types.ts   — `affixHostAs?: 'weapon'|'armor'|'shield'` on ItemBase.
+  src/rules/attachments.ts — exported affixHostType(host), and planAffix gates and matches on it
+                             instead of on isHost()/host.itemType.
+  ROW (spec): items/bands-of-force affixHostAs='armor'. No supersedes — the engine spec's row on this
+  record is `passiveEffects`, a different field.
+ROOT CAUSE, not the ticket's symptom: the same weapon|armor|shield triple was hard-coded in THREE more
+places, and two of them decide whether the item is a drop target at all — InventoryTab.tsx:1125
+(`isHostType`, which gates the card before planAttach is ever called) and ItemEditorModal.tsx:1433
+(the Attached panel returns null). Fixing only planAffix would have made the affix legal on an item the
+sheet never offers, so all three now route through affixHostType(). Those two UI lines are outside the
+engine family's file list; they are named here because they are the same one-line predicate swap and
+leaving them would have shipped a dead permission.
+NOT widened: planRune still uses isHost(), so a rune cannot be etched onto the bands — print permits
+talismans and nothing else.
+TEST: 4 its in describe('bands-of-force hosts talismans as light armor (items/bands-of-force)') on a
+patched content copy — an armor talisman is accepted, a weapon-only talisman is still refused (the bands
+count as ARMOR, not as any host), a potency rune is still refused with the weapon/armor/shield reason,
+and flagless equipment still refuses a talisman.
+
+--- rusting-carapace#potency — AUTHORED (the lane: 108 rows)
+Finding id: rusting-carapace#potency (CONFIRMED); its proposal ends "and the same for the other 111
+specific magic armors as a lane", and both engine files filed that lane as DATA STILL NEEDED. No code:
+the engine builder's readers (deriveAc's acItem floor and resilientSaveBonus's) are live and read
+nothing today, because 0 armour records carry the field.
+MEASURED by work/.b030-gap-armor-runes.mjs (in the spec's stage list), not guessed:
+  - the lane is exactly the AoN mirror's `item_subcategory === "Specific Magic Armor"` — 182 docs;
+  - `base_item` ("Leather Lamellar") is the ANCHOR the "+N …" phrase must reach, because a bare
+    /\+[1-4]/ scan also matches "you gain a +1 circumstance bonus to AC", which is rusting-carapace's
+    own second sentence;
+  - the TEXT is each of our records' own description, never the mirror's: AoN files a whole variant
+    family in ONE document and its opening sentence names the base variant's runes, so reading it gave
+    victory-plate-greater a +1 where it prints +2, and the same for the four Wisp Chains, the five
+    Plates of Yled, the three Library Robes and the Blade Byrnies. This is the family-head trap;
+  - a description that is a raw AoN PAGE DUMP (the "Source … Usage … Base Armor" header) is skipped for
+    the same reason — two duplicate records ship one (greater-mitigation-mail, greater-reactive-mail;
+    the live twins mitigation-mail-greater / reactive-mail-greater are measured normally);
+  - FUNDAMENTAL runes only. Property runes named in the same phrase (fortification, glamered,
+    invisibility, deathless, antimagic…) are left out on purpose: ArmorRunes.property has no builtIn
+    reader, so those would be dead rows.
+CROSS-CHECK, run before authoring: for 104 of the rows the record's acBonus/dexCap are byte-identical to
+the base armour's, i.e. our data never bakes the potency into the armour block, so no row double-counts.
+The two that differ are a pre-existing defect of their own and are NOT rune-related, reported below.
+COLLISIONS: items/rusting-carapace is deliberately absent — it is work/.b030-rows-engine.json's row, and
+this measurement independently derives the same {potency:1} for it, which is the check that the parser
+reads what a human read.
+HAND-AUTHORED, 1 of the 109: items/slithermaws-bane {potency:2, resilient:'greater'} — AoN equipment-3700
+prints "+2 greater resilient elven chain", naming Elven Chain rather than its base_item "Chain Shirt",
+so no anchor reaches it (and items/elven-chain ships as itemType "equipment", so no armour-name anchor
+would either).
+TEST: 2 its in describe('the specific magic armour builtInRunes lane, the rest of rusting-carapace#potency').
+The first re-derives every row's potency and resilient tier from the record's description INDEPENDENTLY
+of the script (first "+N", then the 45 characters after it) and asserts no record already carries the
+field; the second builds a fighter wearing blade-byrnie-major and pins both halves of the reader — +3 AC
+over the chain shirt it copies and a greater-resilient save of 2 — with the "without" side taken on a
+copy with the field STRIPPED, never against the shipped database.
+
+== NOT AUTHORED HERE (measured, reported, no row)
+- items/grisly-brigandine ships the LEATHER armour block (acBonus 1, dexCap 4) while its description and
+  AoN base_item both say studded leather (acBonus 2, dexCap 3): 1 AC short before any rune. Found by this
+  lane's double-count cross-check, unrelated to builtInRunes, and outside every batch-030 finding — it is
+  an armour-block defect, not a rune one. Its builtInRunes row is authored regardless and is correct.
+- items/elven-chain ships as itemType "equipment" though it is a specific magic armour; that is why
+  slithermaws-bane needed a hand row. Same category of defect, same reason it is not fixed here.
+- 13 lane members print no fundamental rune at all and correctly get no row (lions-pelt-leather,
+  lions-pelt-chain, crafting-leathers, parachute-mail, reactive-mail, wilderness-weave), or are duplicate
+  records whose only description is a page dump of the family head (greater-mitigation-mail,
+  greater-reactive-mail, the four plate-of-yled-*-graveknight-plate variant ids), or are a stat block
+  rather than an item description (slithermaws-bane-heroic).
+
+== FILES TOUCHED
+src/rules/types.ts            (ItemBase.affixHostAs)
+src/rules/featGrants.ts       (WeaponFamiliarity.requiresAnyFeat)
+src/rules/featGrantsLane.ts   ('viking-vindicator')
+src/rules/build.ts            (requiresAnyFeat guard in the weapon-familiarity clause loop)
+src/rules/attachments.ts      (affixHostType + planAffix)
+src/sheet/InventoryTab.tsx    (isHostType → affixHostType)
+src/sheet/ItemEditorModal.tsx (Attached panel gate → affixHostType)
+test/batch030-gap-engine.test.ts    (new)
+work/.b030-rows-gap-engine.json     (new, 109 rows)
+work/.b030-gap-armor-runes.mjs      (new, the lane's measurement)

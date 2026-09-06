@@ -1,0 +1,93 @@
+parity batch 030 (WG-comparison lane): 40 records read, 33 findings fixed, 132 overlay rows, 5 code lanes
+
+Cut 40 records at level <= 8 and read each one three ways (printed text, Wanderer's Guide's raw ops,
+every carrier on our side), each read followed by an adversarial verifier: 33 findings CONFIRMED
+(29 of them player-visible), 2 REFUTED, 0 for the owner. Six family specs applied 132 overlay rows
+through scripts/data/effect-backfill.json — 127 new, 5 superseding — and every row was read back from
+the shipped artefacts, with no earlier overlay row lost or narrowed against the batch-start commit
+f0a6cb90. Verdicts derived by scripts/wg-batch-close.mjs: 27 FIXED, 13 MATCHES, 7 flagged residues.
+
+WHAT THE ROWS FIXED. Four archetype "Breadth" feats aimed their extra spell slots at nothing or at the
+wrong pool: arcane-breadth, apparition-magic and bloodline-breadth carried a spellSlotBonus with no
+entryId, so slotEntryFor put the slots on the character's first CLASS entry (a fighter dipping the
+archetype got none at all), and frozen-breadth carried no spellSlotBonus whatsoever. Each now names
+its own archetype entry (wizard-dedication-casting, animist-dedication-casting,
+sorcerer-dedication-casting, first-frost-casting). cantrip-supremacy gained the keepsake's 10 cantrips
+on the ARCHETYPE entry, so the class cantrip cap stays where print leaves it. kaiju-stance's
+Shattering Earth stored "fatal d12" in the space form that matches neither fatal reader, so the strike
+showed no fatal die at all; it is now fatal-d12. Also: grasping-corpses, defensive-stratagem,
+instinctive-maneuvers, transcribe-moment, selfless-parry, thoughtsense, sanguine-transference,
+boost-summons, ilverani-purist, watchers-armband and dweomerveil, plus 109 specific-magic-armour rows
+in the builtInRunes lane (each carrying {potency[, resilient]} re-derived from the record's own
+printed name, so the armour delivers the fundamental runes it is named for).
+
+WHAT THE CODE LANES ADDED. build.ts extraPickCount now runs the ikon group through applyCounterMods,
+which is the first reader 'ikon-picks' has ever had — additional-ikon and second-ikon were authored
+and dead, and the exemplar is now offered the fourth ikon that print grants. types.ts gained
+critSpecRequiresFeat (a feat-held gate beside the existing mode-group one) and derive.ts honours it,
+so viking-vindicator extends the viking weapon lists only for a character who holds the familiarity or
+specialist feat. derive.ts deriveAc and resilientSaveBonus now floor on an armour's builtInRunes, so a
+named "+2 resilient" armour is not one row of AC without its saves. attachments.ts accepts a
+non-armour talisman host (affixHostAs) for bands-of-force. situationalBonuses.ts carries the four
+permission-shaped clauses print states and no number expresses (improved-command-corpse,
+eclectic-skill's untrained gate, deadly-butterfly, peer-beyond's initiative). MainTab.tsx widens the
+stance-toggle source past character.feats, so the five stances with no feat record — arcane-cascade,
+bullet-dancer, claw, talon and tenacious — finally get a chip; that is the whole of
+unshaken-in-iron#stance, whose data was already right.
+
+WHAT IT SETTLED AND WHY. Four findings were the comparer misreading a carrier we already had, not a
+missing mechanic, and each was answered by teaching the instrument and pinning the teach mutation-
+proof (the comparer must still report the record once the carrier is stunted): wg-diff now reads
+untrainedProficiency and armorSpec, and reads the runes bucket through a kind map — {resilient:
+['save']}, deliberately per-kind and not a blanket, so armor-potency and soaring keep reporting. That
+teach also quiets resilient-greater and resilient-major, which are the same rune at higher tiers and
+are dispositioned in work/.b030-gaps.json. wg-values compares the RuneDef's NUMBER rather than
+crediting it. Two now-stale settles ('untrained-improvisation', 'armor-specialist') were deleted.
+The closer added one settle: VERIFIED_EQUIVALENT['additional-ikon'] = ['choice'], because the fourth
+ikon is a real pick whose carrier is two code paths (a COUNTER_MODS row and extraPickCount) rather
+than a field on the record — the fighter-weapon-mastery precedent — pinned mutation-proof under
+--raw in test/batch030-closer.test.ts. Three records were parked as EXPERIENCE instrument limits with
+their hand verification recorded in work/experience-instrument-limits.json: frozen-breadth and
+cantrip-supremacy deliver onto an archetype pool the harness's bare level-20 fighter host does not
+have (both are pinned instead on fully built characters), and unshaken-in-iron's armour
+specialization has no surface on a host that wears no armour.
+
+FOR THE OWNER: nothing. No finding contradicted print, and no WG-vs-print conflict arose, so
+work/.b030-queue.json is empty and no Rulings Desk entry is owed.
+
+CLOSER TRIAGE (three things the stages refused, each fixed at the cause). The gate's KINDS check and
+the two ruling-H wording guards and one lane test all failed on their first run. src/rules/
+situationalBonuses.ts: the eclectic-skill and deadly-butterfly `when` strings ran 140 and 123
+characters against owner ruling H's one-line cap, so both are trimmed to their essential trigger with
+every clause kept and the full sentence still a click away in the record's description
+(test/rulings-dfgh.test.ts 'no note runs longer than about one line', and the same guard in
+test/held-back-registry-fixes.test.ts). test/batch030-gap-engine.test.ts: the armour lane's per-row
+guard asserted `builtInRunes` was UNDEFINED — a pre-application state that flipped the instant the 109
+rows landed, the one test shape this batch's contract forbids — so it now asserts the shipped record
+carries exactly its row, which also catches a regeneration that drops the lane; the anti-double-count
+half it was reaching for was already proved on a built character in the it( below it, where
+blade-byrnie-major with the field stripped derives exactly a plain chain shirt's AC.
+
+⚠ ONE VERDICT TO RULE BY HAND. work/wg-batch-030-parity.json records items/resilient as FIXED where
+the truth is MATCHES: the record's only finding is the wg-values/wg-diff teach and it authored no row,
+but scripts/wg-batch-close.mjs's citations() counts a manifest spec that merely NAMES a finding as a
+row citation even when its backfillRows array is empty, and the row tier outranks the teach tier. Its
+own docstring says the row tier means "a batch that both authored a row and taught the comparer really
+did change the record", so a zero-row spec entry should fall through to the teach tier. Every other
+FIXED verdict in this batch stands on a real row or on real code plus a test. The file is not edited
+here: the closer never overwrites a derived verdict, and a corrected derivation would make the next
+close run stop with "verdict changed — rule it by hand", which is the orchestrator's call.
+
+DEFERRED. The 111 remaining specific magic armours whose printed names promise a fundamental rune need
+their own measured lane (the reader is live; only rusting-carapace and the 109 authored here have
+rows). deadly-butterfly's second clause reaches the player as a printed permission, but the durable
+shape — crit-spec ACCESS to a second group the player chooses between at crit time — needs a decided
+choice model rather than a one-consumer field, and is parked. scripts/wg-casting.mjs still runs only
+under jiti. src/sheet/MainTab.tsx's stance source is widened but three more stance strike trait rows
+(cobra-stance "deadly d10", claw-stance and vitality-manipulating-stance "versatile …") carry the same
+space-form defect kaiju-stance had and sit outside this batch's slice.
+
+All nine gates pass on work/wg-batch-030.json; the 29 earlier batches were re-swept and re-gated green
+with no newly failing record; the full suite is 5272 passed / 1 skipped; npm run verify is clean and
+npx tsc --noEmit is clean. scripts/test-flip-audit.mjs --batch 030 reports every flip cited, one new
+settle key, and a mutation-proof test for it.

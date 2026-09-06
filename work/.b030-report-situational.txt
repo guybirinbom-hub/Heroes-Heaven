@@ -1,0 +1,104 @@
+batch 030 — SITUATIONAL family (WG-comparison lane)
+findings assigned: improved-command-corpse, eclectic-skill#untrained-gate, deadly-butterfly, peer-beyond#initiative
+all four taught; none dropped; none escalated to the owner.
+
+DATA STILL NEEDED
+(none — all four findings are code-only registry entries; work/.b030-rows-situational.json carries four
+ entries with backfillRows: [] and the reason each needs no row.)
+
+CROSS-FILE GAPS
+- src/rules/types.ts + src/rules/derive.ts (crit-spec plumbing, deadly-butterfly): critSpecWeapons has no
+  field that substitutes ANOTHER weapon group's critical specialization effect, so print's second sentence
+  can only ship as prose. An `asGroup?: string` on critSpecWeapons plus a lookup in the three CRIT_SPEC
+  call sites (MainTab.tsx:607, StrikeDetailModal.tsx:46, ItemDetail.tsx:607) would make it a real value —
+  outside my files, and it is a shared-shape change, not a one-record fix.
+- src/rules/skillActions.ts (eclectic-skill#untrained-gate): skillActions.ts:1046
+  `rankAtLeast(rank, a.minRank)` still HIDES every trained-only action from an untrained skill's detail
+  panel. My star tells the player they may attempt those actions; it cannot make the panel list them. A
+  permission-aware relaxation of that filter (keyed off the same owned-id set) belongs to whoever owns
+  skillActions.ts.
+
+WHAT I DID, PER FINDING
+
+1. improved-command-corpse  — TAUGHT (finding id: improved-command-corpse)
+   file/symbol: src/rules/situationalBonuses.ts, RECORD_MARKERS["improved-command-corpse"]
+     [{ on: 'feature', id: 'command-undead', note: "when you use it on a mindless undead, a save that
+        succeeds without critically succeeding makes the undead your minion for 1 round, a failure for
+        1 hour, and a critical failure for 24 hours — replacing the durations printed above." }]
+   why: AoN feat-3886 replaces all three of Command Undead's printed save outcomes, and
+     featFeatGrants.ts:476 ('command-corpse': ['command-undead']) puts Command Undead on the Feats tab
+     still printing the superseded durations. `on: 'feature'` reaches a granted FEAT row through
+     FeatsTab.tsx:99 recordMarkersFor(character, content, 'feature', recordId).
+   placement: deliberately ABOVE the generated-marks sentinel at :4094 (apply-feature-audit.mjs strips
+     and regenerates everything below it, and its dedupe set is built from the already-stripped source).
+   rejected alternative: editing core-descriptions feats/command-undead — that would change printed text
+     for every character, including ones without the feat.
+   test: test/batch030-situational.test.ts, describe "improved-command-corpse marks the command-undead
+     entry it rewrites" — two its. One goes through recordMarkersFor (the reader FeatsTab calls) and
+     asserts 1 round / 1 hour / 24 hours / mindless undead, plus a negative for a cleric without the feat.
+     The second goes through featEntries() — the function FeatsTab builds its rows from — and asserts the
+     note lands in the rendered Command Undead description, attributed to "Improved Command Corpse", with
+     the superseded "Failure" text still visible so the player can see what changed; it also pins
+     featFeatGrantsFor('command-corpse') so the grant lane the mark depends on cannot silently vanish.
+
+2. eclectic-skill#untrained-gate — TAUGHT (finding id: eclectic-skill#untrained-gate)
+   file/symbol: src/rules/situationalBonuses.ts, FEAT_SITUATIONAL["eclectic-skill"]
+     [{ targets: [{ kind: 'skill', detail: 'all' }],
+        when: "attempting a skill action that requires trained proficiency while untrained (or one that
+               requires expert, if you are legendary in Occultism)",
+        bonus: "you can attempt it" }]
+   why: AoN feat-4605 prints two permission clauses past the numeric one; our record carried only
+     untrainedProficiency {levelMinus:0}, and derive.ts:599-600 leaves rank === 'untrained'. Same
+     permission-star shape as innate-understanding (:378) and keen-recollection (:3201). Print is the
+     authority here — WG encodes less than print (its whole record is the one adjValue).
+   test: describe "eclectic-skill stars the skills its permission clauses open up" — the star is read off
+     a BUILT bard through featSituationalFor(characterSituationalIds(...)), asserts both clauses and the
+     permission wording, with a negative for a bard without the feat; a second it pins that the record's
+     own untrainedProficiency (the numeric half) is still the thing moving the number.
+   NOT done: the skillActions.ts minRank filter still hides those actions — see CROSS-FILE GAPS.
+
+3. deadly-butterfly — TAUGHT (finding id: deadly-butterfly)
+   file/symbol: src/rules/situationalBonuses.ts, FEAT_SITUATIONAL["deadly-butterfly"]
+     [{ targets: [{ kind: 'strikeDamage' }],
+        when: "on a critical hit with a butterfly sword, if you already had access to a critical
+               specialization effect (or gain one later)",
+        bonus: "you also gain the KNIFE critical specialization (1d6 persistent bleed) — you can benefit
+                from only one critical specialization effect at a time" }]
+   why: AoN feat-2708's second sentence. The record's critSpec + critSpecWeapons {bases:
+     ['butterfly-sword']} cover the FIRST sentence only; items/butterfly-sword is group 'sword' so every
+     display path resolves CRIT_SPEC.sword (off-guard) and nothing can offer CRIT_SPEC.knife. Print's
+     "only one at a time" is carried in the bonus string so the player does not add both.
+   test: describe "deadly-butterfly's knife critical specialization reaches the damage row" — the star is
+     read off a built fighter through the sheet's reader and asserts the knife effect and the
+     one-at-a-time limit, with a negative; a second it pins the two facts that make prose the only
+     carrier (butterfly-sword's group is 'sword'; critSpecWeapons.bases names the base weapon), so if a
+     substitution field is ever added that test is where the change surfaces.
+
+4. peer-beyond#initiative — TAUGHT (finding id: peer-beyond#initiative)
+   file/symbol: src/rules/situationalBonuses.ts, FEAT_SITUATIONAL["peer-beyond"] — SECOND entry appended
+     to the existing row (the +2-save entry is unchanged):
+     { targets: [{ kind: 'initiative' }],
+       when: "if you know that an incorporeal undead or a haunt is present",
+       bonus: "you may roll Spirit Lore or Haunt Lore for initiative" }
+   why: AoN feat-2282 prints the permission in the same sentence as the save bonus. INITIATIVE_SKILLS
+     (src/rules/initiative.ts:66) deliberately lists no Lore and there is no initiative-skill picker
+     (shared.tsx:4544), so a permission-only star is the carrier — the escaped-from-time (:2578) /
+     paragon-benefit-tome lore:esoteric (:2690) shape. Ghost Hunter Dedication grants both Lores
+     (featGrants.ts:536), so the character really has the skill.
+   test: describe "peer-beyond carries the Lore-for-initiative permission as well as the save bonus" — the
+     initiative half is read through explainStat(c, db, { kind: 'initiative' }).situational (the sheet's
+     own breakdown, with a negative), and the second it pins that the +2 save half is still EXACTLY one
+     line and that the permission has not leaked onto the save row.
+
+REGENERATION SAFETY
+- scripts/apply-situational-lane.mjs needed NO edit: its `existingIds` set (:83) is built from the whole
+  registry with /^ {2}"([a-z0-9-]+)":\s\[/gm, so "eclectic-skill", "deadly-butterfly" and "peer-beyond"
+  are now skipped as `alreadyAuthored`. The exclusion list is only for DELETED rows, and I deleted none.
+- The RECORD_MARKERS entry sits above the apply-feature-audit.mjs sentinel at :4094, per the shore-step
+  precedent.
+
+VERIFICATION
+- node scripts/vt.mjs test/batch030-situational.test.ts — 8 passed.
+- node scripts/vt.mjs test/authoring-guards.test.ts test/initiative.test.ts test/situational-bonuses.test.ts
+  test/field-catalogue.test.ts — 43 passed (the registry-shape guards nearest these tables).
+- npx tsc --noEmit — clean.

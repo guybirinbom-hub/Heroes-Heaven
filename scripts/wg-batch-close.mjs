@@ -23,6 +23,11 @@
  *   node scripts/wg-batch-close.mjs --batch 030            # dry run: prints the merge, writes nothing
  *   node scripts/wg-batch-close.mjs --batch 030 --write
  *   node scripts/wg-batch-close.mjs --batch 030 --root <dir>   # (tests) run against a fixture tree
+ *   node scripts/wg-batch-close.mjs --batch 030 --write --reverdict resilient=MATCHES --reason "..."
+ *
+ * That last form is the one hand-held exception to the one-way merge: an orchestrator CORRECTING a
+ * verdict already on disk. It is repeatable (each --reverdict takes the --reason at its own position),
+ * refuses without a reason, and logs the change to `residual.reverdicts`.
  */
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
@@ -35,8 +40,10 @@ const arg = (k) => { const i = argv.indexOf(k); return i >= 0 ? argv[i + 1] ?? n
 
 const WRITE = flag('--write');
 const ROOT = arg('--root') ?? join(dirname(fileURLToPath(import.meta.url)), '..');
+/** every occurrence of a repeatable flag, in order — `--reverdict a=X --reason "..." --reverdict b=Y --reason "..."`. */
+const args = (k) => argv.flatMap((v, i) => (v === k ? [argv[i + 1] ?? ''] : []));
 const rawBatch = arg('--batch');
-if (!rawBatch) { console.error('usage: node scripts/wg-batch-close.mjs --batch NNN [--write] [--root dir]'); process.exit(2); }
+if (!rawBatch) { console.error('usage: node scripts/wg-batch-close.mjs --batch NNN [--write] [--root dir] [--reverdict id=VERDICT --reason "..."]'); process.exit(2); }
 
 /** Numeric batches are zero-padded to three digits (029); print batches keep their P01-style id. */
 const TAG = /^\d+$/.test(rawBatch) ? String(Number(rawBatch)).padStart(3, '0') : rawBatch.toUpperCase();
@@ -133,9 +140,12 @@ function rec(fid) {
  * unchanged, which errs toward refusing rather than toward a false FIXED.
  */
 const addedCache = new Map();
+/** WHY: one spawn instead of one per path — a --root fixture tree is not a repo, so every `git show`
+ *  in it fails after a slow Windows spawn and pushed the close tests past their 5 s timeout. */
+const isRepo = gitQuiet(['rev-parse', '--git-dir']).trim() !== '';
 function addedText(rel) {
   if (!addedCache.has(rel)) {
-    const head = gitQuiet(['show', `HEAD:${rel}`]);
+    const head = isRepo ? gitQuiet(['show', `HEAD:${rel}`]) : '';
     const old = new Set(head.split(/\r?\n/));
     addedCache.set(rel, (text(rel) ?? '').split(/\r?\n/).filter((l) => l.trim() && !old.has(l)).join('\n'));
   }
@@ -159,7 +169,22 @@ function citations(fid, rid) {
   const teach = new Set();
   for (const s of specDocs) {
     for (const f of s.doc.findings ?? []) {
-      if (f.id === fid) row.add(`row spec ${s.file} finding ${fid} (${(f.backfillRows ?? []).length} row(s))`);
+      /* WHY: a spec entry with ZERO backfillRows authored NOTHING, so the ENTRY is not a row citation
+       * — the ROWS are. Batch 30's `resilient` entry says so in its own note ("no row is authored ...
+       * both comparers stopped at the items row") and still derived FIXED off "finding resilient
+       * (0 row(s))". A rowless entry is a citation only when the batch made the CODE EDIT it claims
+       * instead of a row: the family that authored the entry staged src/ paths and this batch really
+       * changed them (batch 30's situational/engine/gap families — four FEAT_SITUATIONAL stars, the
+       * ikon cap, the stance bar — all fixed in code a data row could not express). A family that
+       * staged only comparers changed no behaviour, so its rowless entry is at most a TEACH: that is
+       * exactly `resilient`, whose family staged wg-diff.mjs + wg-values.mjs and no src/ at all. */
+      if (f.id === fid) {
+        const rows = f.backfillRows ?? [];
+        const codeOnly = rows.length ? [] : (s.stage ?? []).filter((path) => path.startsWith('src/') && addedText(path));
+        if (rows.length) row.add(`row spec ${s.file} finding ${fid} (${rows.length} row(s))`);
+        else if (codeOnly.length) row.add(`code-only spec ${s.file} finding ${fid} (0 rows; family ${s.family} changed ${codeOnly.join(', ')} in this batch)`);
+        else if (TEACH_RE.test(f.note ?? '')) teach.add(`${s.file} finding ${fid} note: ${String(f.note).trim().slice(0, 160)}`);
+      }
       for (const r of f.backfillRows ?? []) {
         if (r?.id === rid) row.add(`row ${r.category}/${r.id} field:${r.field} in ${s.file}`);
       }
@@ -249,6 +274,33 @@ const existingParity = existsSync(p(PARITY_PATH)) ? readJson(PARITY_PATH) : null
 const existingResidual = existsSync(p(RESIDUAL_PATH)) ? readJson(RESIDUAL_PATH) : null;
 const existingByIdList = new Map((existingParity?.records ?? []).map((r) => [r.id, r]));
 
+/*
+ * `--reverdict id=VERDICT --reason "..."` — the ONE door through the one-way merge.
+ *
+ * WHY it exists: a written verdict is never overwritten by a derivation, so when the WRITTEN one is
+ * the wrong one there is no way back through the script. Batch 30's `resilient` was written FIXED off
+ * a rowless spec entry; fixing the derivation only turns that into a "verdict changed" refusal, since
+ * the script (correctly) will not decide by itself which of the two to believe. So the correction is
+ * hand-held and leaves a trail: it names the record, the new verdict and a REASON (refused without
+ * one), stamps the reason into the evidence, and lands in `residual.reverdicts` so the diff shows it.
+ */
+const VERDICTS = ['MATCHES', 'FIXED', 'OWNER-RULED', 'OWNER-QUEUED', 'THEY-ENCODE-NOTHING-USEFUL'];
+const reasons = args('--reason');
+const reverdicts = new Map();
+args('--reverdict').forEach((spec, i) => {
+  const at = spec.indexOf('=');
+  const rid = at > 0 ? spec.slice(0, at) : '';
+  const verdict = at > 0 ? spec.slice(at + 1).toUpperCase() : '';
+  const reason = (reasons[i] ?? '').trim();
+  if (!rid || !verdict) return refuse(`--reverdict "${spec}" is not id=VERDICT`);
+  if (!VERDICTS.includes(verdict)) return refuse(`--reverdict ${rid}: "${verdict}" is not one of ${VERDICTS.join(', ')}`);
+  if (!reason) return refuse(`--reverdict ${rid}=${verdict} has no --reason; a verdict rewritten without a stated reason is indistinguishable from a bug`);
+  if (!idSet.has(rid)) return refuse(`--reverdict ${rid}: no such record in ${BATCH_PATH}`);
+  if (!existingByIdList.has(rid)) return refuse(`--reverdict ${rid}: no verdict written yet — --reverdict CORRECTS a written verdict, it does not author one`);
+  reverdicts.set(rid, { verdict, reason });
+});
+
+const reverdicted = [];
 const records = [...(existingParity?.records ?? [])];
 let kept = 0, added = 0;
 for (const rid of ids) {
@@ -256,6 +308,15 @@ for (const rid of ids) {
   const old = existingByIdList.get(rid);
   if (old) {
     kept++;
+    const rv = reverdicts.get(rid);
+    if (rv) {
+      const stamp = `[orchestrator ruling: ${rv.reason}]`;
+      reverdicted.push({ id: rid, from: old.verdict, to: rv.verdict, derived: d?.verdict ?? null, reason: rv.reason });
+      old.verdict = rv.verdict;
+      if (!String(old.evidence ?? '').includes(stamp)) old.evidence = `${old.evidence ?? ''} ${stamp}`.trim();
+      notes.push(`${rid}: REVERDICT ${reverdicted.at(-1).from} -> ${rv.verdict} (derived this run: ${d?.verdict ?? 'uncited'}) — ${rv.reason}`);
+      continue;
+    }
     if (d && d.verdict !== old.verdict) {
       // With no manifest this run has no rows to cite, so a derived MATCHES is an absence of evidence,
       // not a disagreement — the plan-E replay of a closed batch runs exactly that way. Say so and keep
@@ -293,6 +354,9 @@ const derivedResidual = {
   askOwner: (read.askOwner ?? []).map((f) => ({ id: rec(f.id), desk: desk.get(rec(f.id))?.n ?? null, summary: trim(f.claim, 200) })),
   complete: true,
 };
+/* WHY only when non-empty: an always-present `reverdicts: []` would rewrite every batch's residual,
+ * and the plan-E acceptance is that re-closing a closed batch is a byte-identical no-op. */
+if (reverdicted.length) derivedResidual.reverdicts = reverdicted;
 for (const a of derivedResidual.askOwner) if (a.desk === null) refuse(`askOwner row ${a.id} has no desk number in ${QUESTIONS_PATH} / ${NUMBERING_PATH}`);
 
 /** Merge an array by key: existing entries keep their place and their content, new ones are appended. */
@@ -300,7 +364,7 @@ function mergeArray(existing, fresh, keyOf) {
   const out = [...(existing ?? [])];
   const seen = new Set(out.map(keyOf));
   let n = 0;
-  for (const e of fresh) if (!seen.has(keyOf(e))) { out.push(e); seen.add(keyOf(e)); n++; }
+  for (const e of fresh ?? []) if (!seen.has(keyOf(e))) { out.push(e); seen.add(keyOf(e)); n++; }
   return { out, added: n };
 }
 const pairKey = (e) => `${e.id}|${e.finding ?? ''}`;
@@ -312,7 +376,11 @@ if (existingResidual) {
       residual[k] = existingResidual[k];
     }
   }
-  for (const [k, keyOf] of [['confirmed', pairKey], ['refuted', pairKey], ['flaggedResidues', pairKey], ['askOwner', (e) => e.id]]) {
+  const mergeKeys = [['confirmed', pairKey], ['refuted', pairKey], ['flaggedResidues', pairKey], ['askOwner', (e) => e.id]];
+  /* WHY the `existing` half: a later close of the same batch passes no --reverdict, so without this the
+   * merge would silently DROP the ruling log a previous run wrote — the one thing the residual keeps. */
+  if (derivedResidual.reverdicts || existingResidual.reverdicts) mergeKeys.push(['reverdicts', (e) => `${e.id}|${e.to}`]);
+  for (const [k, keyOf] of mergeKeys) {
     const m = mergeArray(existingResidual[k], derivedResidual[k], keyOf);
     residual[k] = m.out;
     if (m.added) notes.push(`residual.${k}: ${m.added} new entr(y/ies) appended, ${(existingResidual[k] ?? []).length} kept`);

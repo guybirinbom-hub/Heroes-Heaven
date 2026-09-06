@@ -1,0 +1,24 @@
+{
+  "findings": [
+    {
+      "id": "improved-command-corpse",
+      "backfillRows": [],
+      "note": "Code-only. The clause changes ANOTHER record's printed save outcomes, which no core.json field on either record can say — this is exactly what RECORD_MARKERS `on: 'feature'` exists for (Principle C). Authored as RECORD_MARKERS['improved-command-corpse'] in src/rules/situationalBonuses.ts, above the generated-marks sentinel so apply-feature-audit.mjs cannot strip it. Rewriting core-descriptions feats/command-undead instead was rejected: it would change PRINTED text for every character, including ones without the feat."
+    },
+    {
+      "id": "eclectic-skill#untrained-gate",
+      "backfillRows": [],
+      "note": "Code-only. Two PERMISSION clauses, not numbers — no core.json field carries 'you may attempt this check anyway'. Authored as FEAT_SITUATIONAL['eclectic-skill'] with targets [{kind:'skill',detail:'all'}], the shape innate-understanding (:378) and keen-recollection (:3201) already use for the same printed sentence. The record's own untrainedProficiency (the numeric half) is untouched."
+    },
+    {
+      "id": "deadly-butterfly",
+      "backfillRows": [],
+      "note": "Code-only. critSpecWeapons (types.ts:1438-1470) has groups/traits/bases/names/melee/designated/minRank and NO field that substitutes another weapon group's critical specialization effect, so no backfill row can express print's second sentence; items/butterfly-sword is group 'sword' and every display path resolves CRIT_SPEC.sword. Authored as a prose star on FEAT_SITUATIONAL['deadly-butterfly'] targets [{kind:'strikeDamage'}]. A new critSpecWeapons field (e.g. `asGroup`) would be the durable fix and is listed under CROSS-FILE GAPS."
+    },
+    {
+      "id": "peer-beyond#initiative",
+      "backfillRows": [],
+      "note": "Code-only. A permission to roll a Lore for initiative, with no number and no picker to hold it: INITIATIVE_SKILLS (src/rules/initiative.ts:66) deliberately lists no Lore and shared.tsx:4544 documents the absence of an initiative-skill picker. Appended as a second entry on the existing FEAT_SITUATIONAL['peer-beyond'] row, targets [{kind:'initiative'}] — the permission-only shape escaped-from-time (:2578) and paragon-benefit-tome's lore:esoteric row (:2690) already use."
+    }
+  ]
+}

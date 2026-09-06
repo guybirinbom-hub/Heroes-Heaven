@@ -1,0 +1,127 @@
+batch 030 — ENGINE lane, ADVERSARIAL VERIFY
+verified: work/.b030-rows-engine.json (8 rows / 9 findings), work/.b030-report-engine.txt,
+          src/rules/{types,build,derive}.ts, test/batch030-engine.test.ts, work/.b030-specs.json
+gates: npx tsc --noEmit clean · node scripts/vt.mjs run test/batch030-engine.test.ts → 20/20 green
+       (19 the builder wrote + 1 I added) · scripts/test-flip-audit.mjs --batch 030 clean
+regression sweep (not the builder's files, run because the ikon cap is the one change with a live
+blast radius today): ikon-imbue, kinetic-gate, armor-runes, armor, armor-adjust, armor-specialization,
+chosen-options-owned, answered-pickers → 79/79 green.
+
+ROWS AS ROWS — checked without applying, then applied ALL AT ONCE in a throwaway harness
+(test/zz-b030-engine-harness.test.ts, 3 its, green, deleted) that read the spec FILE rather than
+retyping it, overlaid every row on a content copy and built real characters:
+- every target record exists in public/core.json (feats/viking-vindicator, feats/frozen-breadth,
+  feats/bloodline-breadth, items/bands-of-force, items/rusting-carapace); no row carries create:true
+  and none needed to; no created records, so no created-prose spec is owed.
+- every id a row NAMES exists: items/bastard-sword, items/rapier, feats/sudden-charge,
+  feats/viking-weapon-specialist, feats/viking-weapon-familiarity; entryIds 'first-frost-casting' and
+  'sorcerer-dedication-casting' both resolve on a BUILT character (the harness read slots off them).
+- re-emitted values diffed against the shipped ones with node -e: bloodline-breadth shipped
+  {perRank:1,exceptHighest:2} → new value holds both plus entryId, nothing dropped; bands-of-force
+  shipped {ac:1,saves:1} → new value holds both plus dexCap, nothing dropped. Both rows carry
+  supersedes:true and both superseded rows really are present in scripts/data/effect-backfill.json.
+- no record+field collision inside the engine spec (4 rows on feats/viking-vindicator, but on 4
+  DIFFERENT top-level fields) and none ACROSS the three spec files: engine's 8 keys are disjoint from
+  work/.b030-rows-data.json (15 rows) and work/.b030-rows-situational.json (0 rows). The pre-existing
+  effect-backfill row on items/rusting-carapace is `description`, not `builtInRunes` — no collision.
+- a reader exists for every field: critSpec/critSpecWeapons → critSpecSources (derive.ts:3645 region),
+  critSpecRequiresFeat → new this batch, recordMarks → recordMarkersFor (explain.ts:711),
+  spellSlotBonus+entryId → build.ts:7061 archetype widener, passiveEffects.dexCap → new
+  passiveItemDexCap, builtInRunes on armour → deriveAc/resilientSaveBonus, new this batch.
+- blast radius of all three new readers re-measured myself, not taken from the report: 0 records carry
+  critSpecRequiresFeat, 0 items carry passiveEffects.dexCap, and 0 of the 265 builtInRunes records are
+  armour. Every new branch is a no-op on shipped data until its row lands.
+
+MANIFEST — work/.b030-specs.json holds all three families (situational, data, engine); engine's
+stage[] lists exactly the six paths this family touched, and it already contains the only file I
+changed (test/batch030-engine.test.ts), so nothing to append. Both superseding rows declare
+supersedes:true.
+
+== PER FINDING
+
+additional-ikon — DONE
+  build.ts:948 is the first reader `ikon-picks` has ever had, and it sits on extraPickCount, the one
+  cap shared by the builder picker (shared.tsx:3277) and both resolvers (build.ts:3050, 7864) — I
+  confirmed all three call sites pass `build`. featPicks is Record<string,string> (build.ts:275), so
+  Object.values() really is the feat-id multiset applyCounterMods expects. Mutation-sensitive: the
+  "raises the cap to four" test fails if the line is removed, the "unrelated feat" test fails if the
+  clause is unconditional. No other test in the repo asserts on additional-ikon/second-ikon.
+
+viking-vindicator#weapon-familiarity — NOT-DONE (correctly declared; report line overstated)
+  Genuinely cross-file and correctly left alone. CORRECTION to the builder's report: it says "the
+  build.ts:6631 guard is mine and is one line" — that guard is NOT in the tree. `grep -rn
+  requiresAnyFeat src/` returns only the unrelated `requiresAnyFeature` option gate, and the build.ts
+  diff contains the ikon clause and nothing else. The cross-file gap is THREE edits, not two.
+
+viking-vindicator#critspec — DONE
+  The gate in critSpecSources returns early only when the field is present and unmatched, so it is
+  inert on every shipped record. Harness (rows as written, all four vindicator rows at once): a wizard
+  with specialist+vindicator reaches bastard-sword AND rapier AND keeps battle-axe; familiarity alone
+  also satisfies the gate; vindicator alone reaches neither. The row lists BOTH viking feats where WG
+  gates on the specialist only — I re-read AoN feat-6437, which prints the 5th-level crit-spec clause
+  on Viking Weapon Familiarity itself, so this is print over a WG under-encoding, not a contradiction,
+  and correctly not an owner question.
+
+viking-vindicator#shallow-water — DONE
+  Data row on a live reader. Harness: recordMarkersFor(c, db, 'feature', 'sudden-charge') returns
+  exactly one mark with sourceId 'viking-vindicator' for a viking and none for a plain fighter, so the
+  ownership gate in explain.ts holds and an ordinary Sudden Charge is untouched.
+
+frozen-breadth — DONE
+  Row only, reader already live. Harness on a level-20 fighter with first-frost + snowcaster + expert
+  + master snowcasting: the first-frost-casting pool has >2 ranks and every rank but the top two gains
+  exactly 1, with no rank appearing or disappearing.
+
+bloodline-breadth — DONE
+  Supersede is well formed (see ROWS above). Harness: a level-20 wizard's OWN 'wizard-casting' pool is
+  identical with and without the feat while sorcerer-dedication-casting gains all-but-top-two — which
+  is the defect itself, so the assertion is the mechanic and not a delta that flips when the row lands.
+
+bands-of-force#dexcap — DONE
+  I checked the fold's PLACEMENT rather than trusting it: passiveItemDexCap is folded into `dexCap`
+  after the armour and natural-armour caps and before `effDexCap`/`dexContribution` are computed
+  (derive.ts ~1968 vs ~1985), so it composes with the armour, natural-armour and stance caps and is
+  not dead code. itemInUse gates it, so uninvested bands in the pack cap nothing. Dex +6 wearer nets
+  0 AC, Dex +5 wearer nets +1 — both re-run from the spec row itself in the harness.
+
+bands-of-force#talismans — NOT-DONE (correctly declared)
+  attachments.ts isHost is at :95 and planAffix at :147 (the report's :96/:156 are off by one/nine but
+  point at the right functions); no affixHostAs/hostAs/talismanHost carrier exists anywhere in src/.
+  A field with no reader would have been a dead row — leaving it out was right.
+
+rusting-carapace#potency — DONE, plus FIXED-BY-ME on the saves half
+  AC half verified: +1 over the leather-lamellar block it copies, a FLOOR (etching +2 gives +2, not
+  +3), and plain armour byte-identical on the patched and shipped databases.
+  FIXED-BY-ME: the builder also extended resilientSaveBonus to read builtInRunes.resilient and shipped
+  that branch with ZERO coverage — a live code path no test touched. I added one `it` to
+  test/batch030-engine.test.ts pinning it on an in-memory armour carrying builtInRunes.resilient:
+  shipped armour still 0, built-in greater = 2, etching major still wins (3), etching lower cannot
+  lower it (2). Without the branch the second assertion fails. This is not cosmetic: 81 of the
+  remaining armours in this lane name a resilient rune as well as a potency one (measured below).
+
+== DATA STILL NEEDED (corrected)
+- items/<the rest of the specific magic armour lane>/builtInRunes: I re-measured rather than quote the
+  report's 112 — 116 armour records open their description with a fundamental rune ("This *+1 leather
+  lamellar armor*"), 0 of them carry builtInRunes, and rusting-carapace is the only one this batch
+  gives a row. CORRECTION to the builder's line: 81 of those 116 name a RESILIENT rune too, so the
+  lane's rows must carry {potency, resilient}, not potency alone — the reader for both halves now
+  exists and grants nothing until each row lands. Needs its own measured lane, not this batch.
+- (NOT a gap, contrary to the builder's second line) feats/arcane-breadth/spellSlotBonus: the
+  data-rows family's spec, work/.b030-rows-data.json, already carries it with supersedes:true. Kept
+  here only as the cross-check that the two entry-less breadth feats did not diverge — they did not.
+
+== CROSS-FILE GAPS (corrected)
+- viking-vindicator#weapon-familiarity: THREE edits, all outside this family. (1) `requiresAnyFeat?:
+  string[]` on the WeaponFamiliarity interface, src/rules/featGrants.ts:102-147. (2) the guard in the
+  clause loop of src/rules/build.ts (the `for (const wf of clauses)` loop below :6640) — NOT present
+  in the tree, the report implied it was. (3) 'viking-vindicator': { weaponFamiliarity: { weapons:
+  ['bastard-sword','rapier'], treatAsLowerCategory: true, requiresAnyFeat: ['viking-weapon-
+  familiarity'] } } in src/rules/featGrantsLane.ts, beside the frozen six-weapon list at :183. Owner:
+  the feat-grants family. Both weapon ids exist in core.json.
+- bands-of-force#talismans: `affixHostAs?: 'armor'|'weapon'|'shield'` on ItemBase plus isHost
+  (src/rules/attachments.ts:95) and planAffix (:147) honouring it for attachHostTypes matching, plus
+  the items/bands-of-force row that feeds it. Owner: whoever holds attachments.ts.
+
+== MANIFEST STAGE ADDITIONS (files I touched)
+test/batch030-engine.test.ts   — already listed in the engine entry of work/.b030-specs.json; no
+                                 change to the manifest is required.

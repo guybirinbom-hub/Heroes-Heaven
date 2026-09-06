@@ -5269,8 +5269,10 @@
   "field": "passiveEffects",
   "value": {
    "ac": 1,
-   "saves": 1
-  }
+   "saves": 1,
+   "dexCap": 5
+  },
+  "why": "AoN equipment-3058 prints \"The force grants you a +1 item bonus to AC and saving throws, and a maximum Dexterity modifier of +5 as armor.\" Only the half that PAYS the wearer was modelled: the bands are itemType 'equipment', so there is no armour block to hold the cap and a Dex +6 wearer added the full +6. Reader added this batch (ItemPassiveEffects.dexCap + passiveItemDexCap folded into deriveAc's dexCap as the lowest cap in play)."
  },
  {
   "category": "items",
@@ -11048,8 +11050,10 @@
   "field": "spellSlotBonus",
   "value": {
    "perRank": 1,
-   "exceptHighest": 2
-  }
+   "exceptHighest": 2,
+   "entryId": "sorcerer-dedication-casting"
+  },
+  "why": "AoN feat-6230 prints \"…number of spell slots you gain from SORCERER ARCHETYPE FEATS by 1 for each spell rank other than your two highest sorcerer spell slots.\" The shipped row carried {perRank:1,exceptHighest:2} with no entryId, so slotEntryFor (build.ts:6846) resolved it to the character's FIRST spontaneous/prepared CLASS entry — a wizard dipping sorcerer took the slots on their wizard pool and a fighter got none at all, since the archetype entry is not pushed until build.ts:7129 and the archetype widener at 7061 skips any bonus without an entryId in archetypeEntryIds(arch). 'sorcerer-dedication' is the key in CASTER_ARCHETYPES (casterArchetypes.ts:191)."
  },
  {
   "category": "feats",
@@ -11073,8 +11077,10 @@
   "field": "spellSlotBonus",
   "value": {
    "perRank": 1,
-   "exceptHighest": 2
-  }
+   "exceptHighest": 2,
+   "entryId": "animist-dedication-casting"
+  },
+  "why": "AoN feat-7223 Apparition Magic: \"You gain 1 additional spell slot from animist archetype feats for each spell rank other than your two highest animist spell slots.\""
  },
  {
   "category": "feats",
@@ -47701,8 +47707,10 @@
   "field": "spellSlotBonus",
   "value": {
    "perRank": 1,
-   "exceptHighest": 2
-  }
+   "exceptHighest": 2,
+   "entryId": "wizard-dedication-casting"
+  },
+  "why": "AoN feat-5111 Arcane Breadth: \"Increase the spell slots you gain from wizard archetype feats by 1 for each spell rank other than your two highest wizard spell slots.\" Untargeted, build.ts:6847 slotEntryFor lands it on the character's own class caster instead."
  },
  {
   "category": "feats",
@@ -74606,8 +74614,10 @@
      "value": "primal",
      "label": "Primal"
     }
-   ]
-  }
+   ],
+   "daily": true
+  },
+  "why": "AoN equipment-3225 Dweomerveil: \"Each day during daily preparations, you must brush and oil the veil. At the conclusion of the activity, select one tradition of magic (arcane, divine, occult, or primal). You gain a +1 item bonus to all saves against magic from that tradition until your next daily preparations.\""
  },
  {
   "category": "items",
@@ -179686,5 +179696,1299 @@
    "unfettered-pack"
   ],
   "why": "AoN deity-732 (Alocer) prints cleric spells True Strike, Summon Animal, Unfettered Pack"
+ },
+ {
+  "category": "feats",
+  "id": "grasping-corpses",
+  "field": "recordMarks",
+  "value": [
+   {
+    "on": "action",
+    "id": "mobbing-assault",
+    "note": "A creature that is damaged by your horde's Mobbing Assault is off-guard until the beginning of your next turn."
+   }
+  ],
+  "why": "AoN feat-7966 Grasping Corpses: \"A creature that is damaged by your horde's Mobbing Assault is off-guard until the beginning of your next turn.\" The rider is printed about Mobbing Assault, so it belongs on that action's row."
+ },
+ {
+  "category": "feats",
+  "id": "defensive-stratagem",
+  "field": "recordMarks",
+  "value": [
+   {
+    "on": "action",
+    "id": "devise-a-stratagem",
+    "note": "After you roll the d20 you can choose a defensive stratagem instead of an attack or skill stratagem: you can't attempt to Strike the target until the start of your next turn, and you gain a +1 circumstance bonus to all your defenses against effects caused by the target until then."
+   }
+  ],
+  "why": "AoN feat-5956 Defensive Stratagem: \"When you use Devise a Stratagem, you can choose a defensive stratagem instead of an attack or skill stratagem after you roll a d20\" and \"You can't attempt to Strike the target until the start of your next turn.\" Both clauses are printed about Devise a Stratagem and reach no surface today."
+ },
+ {
+  "category": "feats",
+  "id": "instinctive-maneuvers",
+  "field": "recordMarks",
+  "value": [
+   {
+    "on": "feature",
+    "id": "relinquish-control",
+    "note": "Grapple, Reposition, Shove and Trip join the list of actions you can take when you Relinquish Control, with a +2 status bonus to the Athletics check to attempt them."
+   }
+  ],
+  "why": "AoN feat-7136 Instinctive Maneuvers: \"When you Relinquish Control, you add Grapple, Reposition, Shove, and Trip to the list of actions you can take.\" AoN feat-7122 Relinquish Control prints the closed list this extends."
+ },
+ {
+  "category": "feats",
+  "id": "transcribe-moment",
+  "field": "spellcastingGrant",
+  "value": {
+   "tradition": "arcane",
+   "keyAbility": "int",
+   "proficiency": "trained"
+  },
+  "why": "AoN feat-2235 Transcribe Moment grants the focus spell with no tradition of its own, and AoN feat-1130 Scrollmaster Dedication is the Intelligence/arcane scroll archetype; without a profile a non-caster Scrollmaster casts it occult off the class's first key attribute."
+ },
+ {
+  "category": "feats",
+  "id": "cantrip-supremacy",
+  "field": "spellSlotBonus",
+  "value": {
+   "entryId": "hedge-mage-dedication-casting",
+   "cantrips": 10
+  },
+  "why": "AoN feat-9332 Cantrip Supremacy: \"Add 10 additional cantrips to your keepsake. You can also prepare 10 additional cantrips from your keepsake each day.\" The Hedge Mage entry is capped at casterArchetypes.ts:132's config.cantrips = 2 with nothing contributing."
+ },
+ {
+  "category": "feats",
+  "id": "selfless-parry",
+  "field": "recordMarks",
+  "value": [
+   {
+    "on": "feature",
+    "id": "dueling-parry",
+    "note": "While you're benefiting from Dueling Parry, allies adjacent to you gain a +1 circumstance bonus to AC."
+   },
+   {
+    "on": "feature",
+    "id": "dueling-riposte",
+    "note": "You can also use Dueling Riposte when an enemy within your reach critically fails a Strike against an ally adjacent to you, not just against yourself."
+   }
+  ],
+  "why": "AoN feat-6315 Selfless Parry: \"When you're benefiting from Dueling Parry, allies adjacent to you gain a +1 circumstance bonus to AC. If you have Dueling Riposte, you can use it when an enemy within your reach critically fails a Strike against an ally adjacent to you, not just against yourself.\""
+ },
+ {
+  "category": "stances",
+  "id": "kaiju-stance",
+  "field": "strikes",
+  "value": [
+   {
+    "name": "Shattering Earth",
+    "dice": 1,
+    "die": "d8",
+    "damageType": "bludgeoning",
+    "group": "brawling",
+    "traits": [
+     "backswing",
+     "fatal-d12",
+     "reach",
+     "unarmed"
+    ]
+   }
+  ],
+  "why": "AoN feat-7110 Kaiju Stance: \"These strikes deal 1d8 bludgeoning damage, are in the brawling group, and have the backswing, fatal d12, reach, and unarmed traits.\" Stored as \"fatal d12\" the trait matches no reader, so the Strike shows no fatal crit die."
+ },
+ {
+  "category": "feats",
+  "id": "thoughtsense",
+  "field": "whileActive",
+  "value": [
+   {
+    "state": "unleash-psyche",
+    "senses": [
+     {
+      "name": "thoughtsense",
+      "range": 30,
+      "acuity": "imprecise"
+     }
+    ]
+   }
+  ],
+  "why": "AoN feat-8330 Thoughtsense: \"While your Psyche is Unleashed, your thoughtsense upgrades to an imprecise sense, letting you use it to Seek out creatures.\""
+ },
+ {
+  "category": "feats",
+  "id": "sanguine-transference",
+  "field": "focusSpells",
+  "value": [
+   "sanguine-transference"
+  ],
+  "why": "AoN feat-9128 Sanguine Transference: \"You learn the sanguine transference grave spell.\" The spell record (spell-2907, rank 4, focus trait) already exists and was reachable from nothing."
+ },
+ {
+  "category": "feats",
+  "id": "boost-summons",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "boost-eidolon",
+    "note": "When you cast Boost Eidolon, in addition to your eidolon, it also targets your summoned creatures within 60 feet."
+   }
+  ],
+  "why": "AoN feat-2916 Boost Summons: \"When you cast Boost Eidolon, in addition to your eidolon, it also targets your summoned creatures within 60 feet.\""
+ },
+ {
+  "category": "feats",
+  "id": "ilverani-purist",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "critFailToFail",
+    "when": "when you Sense the Motive of a non-elf humanoid creature",
+    "actions": [
+     "sense-motive"
+    ],
+    "perception": true
+   }
+  ],
+  "why": "AoN feat-8136 Ilverani Purist: \"When you attempt to Sense the Motive of a non-elf humanoid creature and you roll a critical failure, you fail instead.\""
+ },
+ {
+  "category": "items",
+  "id": "watchers-armband",
+  "field": "innateSpells",
+  "value": [
+   {
+    "spellId": "ring-of-truth",
+    "tradition": "occult",
+    "rank": 3,
+    "usesPerDay": 1
+   }
+  ],
+  "why": "AoN equipment-3986 Watcher's Armband: \"In addition, you can cast Ring of Truth once per day as an innate 3rd-rank occult spell.\""
+ },
+ {
+  "category": "feats",
+  "id": "viking-vindicator",
+  "field": "critSpec",
+  "value": true,
+  "why": "AoN feat-3619 prints \"If you have Viking Weapon Familiarity or Viking Weapon Specialist, add the bastard sword and rapier to the list of weapons in those feats.\" critSpecSources (src/rules/derive.ts) reads each owned record's OWN crit-spec block and has no cross-record extension route, so the extension is carried on the extending record and gated by critSpecRequiresFeat (new this batch)."
+ },
+ {
+  "category": "feats",
+  "id": "viking-vindicator",
+  "field": "critSpecWeapons",
+  "value": {
+   "bases": [
+    "bastard-sword",
+    "rapier"
+   ]
+  },
+  "why": "AoN feat-3619 names exactly these two weapons; both ids exist in public/core.json items. The two viking feats' own lists (battle-axe/hatchet/longsword/shortsword and the six-weapon familiarity list) are untouched — this ADDS, it does not replace."
+ },
+ {
+  "category": "feats",
+  "id": "viking-vindicator",
+  "field": "critSpecRequiresFeat",
+  "value": [
+   "viking-weapon-specialist",
+   "viking-weapon-familiarity"
+  ],
+  "why": "AoN feat-3619's clause is conditional on owning one of the two feats it extends. BOTH are listed where WG gates on viking-weapon-specialist alone, because AoN feat-6437 (the remastered Viking Weapon Familiarity) itself prints \"At 5th level, whenever you get a critical hit with one of these weapons, you get its critical specialization effect\" — adding a weapon to ITS list adds it to a crit-spec list too. WG's Viking Weapon Familiarity row encodes no WEAPON_CRITICAL_SPECIALIZATIONS at all, i.e. WG encodes less than print rather than contradicting it."
+ },
+ {
+  "category": "feats",
+  "id": "viking-vindicator",
+  "field": "recordMarks",
+  "value": [
+   {
+    "on": "feature",
+    "id": "sudden-charge",
+    "note": "when you use Sudden Charge to Strike a target in shallow water, the target is off-guard against your Strike."
+   }
+  ],
+  "why": "AoN feat-3619 prints \"When you use Sudden Charge to Strike a target in shallow water, the target is off-guard against your Strike, as you use the water kicked up by your passage to camouflage your angle of attack.\" viking-vindicator grants Sudden Charge through featFeatGrants.ts:632, which copies the base feat's own text, so the granted entry printed nothing about shallow water. recordMarks is the live DATA route into recordMarkersFor (src/rules/explain.ts:711); FeatsTab.tsx:99 renders 'feature' marks on the granted feat's entry, and the mark is gated on owning viking-vindicator so an ordinary fighter's Sudden Charge is untouched."
+ },
+ {
+  "category": "feats",
+  "id": "frozen-breadth",
+  "field": "spellSlotBonus",
+  "value": {
+   "perRank": 1,
+   "exceptHighest": 2,
+   "entryId": "first-frost-casting"
+  },
+  "why": "AoN feat-4099 prints \"Increase the number of spells in your repertoire and number of spell slots you gain from gelid shard archetype feats by 1 for each spell rank other than your two highest gelid shard spell slots.\" The record carried only actionCost, so a gelid shard gained none of them. 'first-frost' is the gelid shard dedicationId (src/rules/casterArchetypes.ts:282), so archetypeEntryIds() yields 'first-frost-casting' and the live reader at build.ts:7061 widens the archetype pool. Identical shape to the shipped occult/divine/primal/patrons/mysterious-breadth rows."
+ },
+ {
+  "category": "items",
+  "id": "rusting-carapace",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1
+  },
+  "why": "AoN equipment-1853 prints \"This +1 leather lamellar armor incorporates the plates of an ore louse's hide…\" The record copies the base Leather Lamellar block verbatim (acBonus 1, dexCap 4, checkPenalty -1) and carried no runes, so the wearer's AC was 1 below the book value until they etched a potency rune they already owned. builtInRunes was weapon-only (typed WeaponRunes, read only by effectiveWeaponRunes); this batch typed it on ArmorItem and gave deriveAc/resilientSaveBonus the same FLOOR read the weapon lane has used since batch 001."
+ },
+ {
+  "category": "items",
+  "id": "mail-of-luck",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-155 (Specific Magic Armor, base Splint Mail) prints the fundamental rune in the entry's own name: \"This suit of +2 resilient splint mail has a large, green gemstone inset in a prominent location. **Act\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "glorious-plate",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-520 (Specific Magic Armor, base Full Plate) prints the fundamental rune in the entry's own name: \"r loses its shine. *Glorious plate* is *+2 resilient full plate*. In battle, *glorious plate* sheds bright light in a 10-foot rad\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "spangled-riders-suit",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-591 (Specific Magic Armor, base Studded Leather Armor) prints the fundamental rune in the entry's own name: \"This *+1 resilient* studded leather is adorned with colorful sequins that sparkle in even the fa\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "noxious-jerkin",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-646 (Specific Magic Armor, base Padded Armor) prints the fundamental rune in the entry's own name: \"This +2 resilient padded armor is woven from many strands of gut cord strung with dried organs\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "jerkin-of-liberation",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "greater"
+  },
+  "why": "AoN equipment-663 (Specific Magic Armor, base Studded Leather Armor) prints the fundamental rune in the entry's own name: \"This +2 greater resilient studded leather is traditionally inscribed with a symbol of either No\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "victory-plate",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-752-743 (Specific Magic Armor, base Full Plate) prints the fundamental rune in the entry's own name: \"The metal plates of this *+1 resilient full plate* are covered by a bright tabard featuring a distinctive coat of ar\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "victory-plate-greater",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "greater"
+  },
+  "why": "AoN equipment-752-744 (Specific Magic Armor, base Full Plate) prints the fundamental rune in the entry's own name: \"The metal plates of this *+2 greater resilient full plate* are covered by a bright tabard featuring a distinctive co\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "numerian-steel-breastplate",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-811 (Specific Magic Armor, base Breastplate) prints the fundamental rune in the entry's own name: \"This +1 resilient breastplate is constructed from the salvaged armor plating of one of Numeria'\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "fungal-armor",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "greater"
+  },
+  "why": "AoN equipment-887 (Specific Magic Armor, base Studded Leather Armor) prints the fundamental rune in the entry's own name: \"This *+2 greater resilient Studded Leather Armor* is made of hardened fungus. Every day the armo\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "forgotten-shell",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-892 (Specific Magic Armor, base Full Plate) prints the fundamental rune in the entry's own name: \"This *+2 resilient Full Plate*, crafted from grim plates of iron, covers the entire body except\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "invisible-chain-shirt",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-1063 (Specific Magic Armor, base Chain Shirt) prints the fundamental rune in the entry's own name: \"This *+2 resilient Invisibility chain shirt* is itself invisible. Other creatures can't see it a\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "rebounding-breastplate",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 3,
+   "resilient": "greater"
+  },
+  "why": "AoN equipment-1070 (Specific Magic Armor, base Breastplate) prints the fundamental rune in the entry's own name: \"This *+3 greater resilient greater fortification breastplate* absorbs impacts for later release.\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "leopards-armor",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-1089 (Specific Magic Armor, base Chain Mail) prints the fundamental rune in the entry's own name: \"the entire length of the garment, this *+1 resilient chain mail* includes an armored face covering. The armor is said to be based\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "scarab-cuirass",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-1243 (Specific Magic Armor, base Leather Armor) prints the fundamental rune in the entry's own name: \"The cuirass of this *+1 deathless resilient leather armor*, stitched to resemble an Osiriani scarab beetle, fee\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "psychic-brigandine",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2
+  },
+  "why": "AoN equipment-1301 (Specific Magic Armor, base Splint Mail) prints the fundamental rune in the entry's own name: \"e place of metal plates on this suit of +2 greater invisibility splint mail. Also known as a coat of a thousand thoughts in Vudra\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "sarkorian-god-caller-garb",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1
+  },
+  "why": "AoN equipment-1375 (Specific Magic Armor, base Explorer's Clothing) prints the fundamental rune in the entry's own name: \"d religious leaders of Sarkoris. These *+1 explorer's clothing* outfits look as if they were stitched together from multiple types\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "harmonic-hauberk",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-1380 (Specific Magic Armor, base Chain Shirt) prints the fundamental rune in the entry's own name: \"Rose gold and copper rings in this *+2 resilient chain shirt* form a vague bird shape. The jingling links tinkle musically, al\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "prismatic-plate",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-1383 (Specific Magic Armor, base Breastplate) prints the fundamental rune in the entry's own name: \"r polished to a mirrorlike sheen, this *+2 resilient glamered dawnsilver breastplate* features the religious symbols of the goddes\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "armor-of-the-holy-warrior",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "greater"
+  },
+  "why": "AoN equipment-1562 (Specific Magic Armor, base Half Plate) prints the fundamental rune in the entry's own name: \"he Shining Crusade, this well-polished *+2 greater resilient half plate* is decorated with religious motifs and carved with sacred\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "containment-contraption",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1
+  },
+  "why": "AoN equipment-1594 (Specific Magic Armor, base Full Plate) prints the fundamental rune in the entry's own name: \"glass porthole. The suit is a suit of *+1 full plate*. While worn, it completely encloses you, providing protection against inhal\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "blast-suit",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-1601 (Specific Magic Armor, base Full Plate) prints the fundamental rune in the entry's own name: \"er with cunning precision, this suit of +1 resilient Full Plate is specifically designed to protect against sudden explosions. Thi\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "arachnid-harness",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1
+  },
+  "why": "AoN equipment-1839-1600 (Specific Magic Armor, base Leather Armor) prints the fundamental rune in the entry's own name: \"This *+1 leather armor* has four knobbed ribs that wrap around the torso. The armor grants you r\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "arachnid-harness-greater",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-1839-1601 (Specific Magic Armor, base Leather Armor) prints the fundamental rune in the entry's own name: \"This *+1 resilient leather armor* has four knobbed ribs that wrap around the torso. The armor gr\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "autumns-embrace",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-1840 (Specific Magic Armor, base Leaf Weave) prints the fundamental rune in the entry's own name: \"comprise *autumn's embrace*, a suit of *+2 invisibility resilient leaf weave*. Leaves shed from the armor as they might fall in au\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "bastion-of-the-inheritor",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-1841 (Specific Magic Armor, base Bastion Plate) prints the fundamental rune in the entry's own name: \"by Iomedae's prestigious knights, this *+2 resilient bastion plate* is emblazoned with the Inheritor's religious symbol and sports\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "black-hole-armor",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "greater"
+  },
+  "why": "AoN equipment-1842 (Specific Magic Armor, base Fortress Plate) prints the fundamental rune in the entry's own name: \"The joints of this black *+2 greater resilient fortification fortress plate* look like swirling vortices of silver.\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "blade-byrnie",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1
+  },
+  "why": "AoN equipment-1843 (Specific Magic Armor, base Chain Shirt) prints the fundamental rune in the entry's own name: \"Instead of chain links, this *+1 chain shirt* is assembled from metal \"leaves\" that each resemble a small blade. **Acti\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "blade-byrnie-greater",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-1843-1603 (Specific Magic Armor, base Chain Shirt) prints the fundamental rune in the entry's own name: \"Instead of chain links, this *+2 resilient chain shirt* is assembled from metal \"leaves\" that each resemble a small blad\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "blade-byrnie-major",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 3,
+   "resilient": "greater"
+  },
+  "why": "AoN equipment-1843-1604 (Specific Magic Armor, base Chain Shirt) prints the fundamental rune in the entry's own name: \"Instead of chain links, this *+3 greater resilient chain shirt* is assembled from metal \"leaves\" that each resemble a sm\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "devils-bargain",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1
+  },
+  "why": "AoN equipment-1844 (Specific Magic Armor, base Studded Leather Armor) prints the fundamental rune in the entry's own name: \"by Asmodeus can be found wearing this *+1 studded leather*, which is lacquered in red and black. --- **Activate** ⟨5⟩ (concentr\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "dragon-turtle-plate",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-1845 (Specific Magic Armor, base Half Plate) prints the fundamental rune in the entry's own name: \"This harness of *+1 resilient half plate* is made from the shell plates of a dragon turtle and has the aqua\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "energizing-lattice",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-1846 (Specific Magic Armor, base Lattice Armor) prints the fundamental rune in the entry's own name: \"This suit of *+2 resilient fortification lattice armor* has latticework of fine golden wire. After negat\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "immortal-bastion",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 3,
+   "resilient": "greater"
+  },
+  "why": "AoN equipment-1847 (Specific Magic Armor, base Bastion Plate) prints the fundamental rune in the entry's own name: \"This impressive *+3 greater resilient greater fortification bastion plate* is built like an impregnable cas\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "library-robes",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-1848 (Specific Magic Armor, base Scroll Robes) prints the fundamental rune in the entry's own name: \"These *+1 resilient scroll robes* magically store a spell for you. During your daily preparations\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "library-robes-greater",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-1848-1606 (Specific Magic Armor, base Scroll Robes) prints the fundamental rune in the entry's own name: \"These *+2 resilient scroll robes* magically store a spell for you. During your daily preparations\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "library-robes-major",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "greater"
+  },
+  "why": "AoN equipment-1848-1607 (Specific Magic Armor, base Scroll Robes) prints the fundamental rune in the entry's own name: \"These *+2 greater resilient scroll robes* magically store a spell for you. During your daily prep\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "library-robes-true",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 3,
+   "resilient": "greater"
+  },
+  "why": "AoN equipment-1848-1608 (Specific Magic Armor, base Scroll Robes) prints the fundamental rune in the entry's own name: \"These *+3 greater resilient scroll robes* magically store a spell for you. During your daily prep\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "linnorms-sankeit",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 3,
+   "resilient": "greater"
+  },
+  "why": "AoN equipment-1849 (Specific Magic Armor, base Sankeit) prints the fundamental rune in the entry's own name: \"The first suit of *+3 greater resilient antimagic sankeit* made in this fashion was crafted for the Varki lin\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "ouroboros-buckles",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 3,
+   "resilient": "greater"
+  },
+  "why": "AoN equipment-1850 (Specific Magic Armor, base Buckle Armor) prints the fundamental rune in the entry's own name: \"This ominous-looking *+3 greater resilient greater acid-resistant buckle armor* is deep red in color, favored by\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "reef-heart",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-1851-1609 (Specific Magic Armor, base Coral Armor) prints the fundamental rune in the entry's own name: \"This *+2 resilient coral armor*, often favored by allies of merfolk and aquatic elves, is made o\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "reef-heart-greater",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "greater"
+  },
+  "why": "AoN equipment-1851-1610 (Specific Magic Armor, base Coral Armor) prints the fundamental rune in the entry's own name: \"This *+2 greater resilient coral armor*, often favored by allies of merfolk and aquatic elves, i\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "smoldering-armor",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-1852 (Specific Magic Armor, base Niyaháat) prints the fundamental rune in the entry's own name: \"This *+1 resilient fire-resistant niyaháat* is often created to mark the passage of an Erutaki w\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "trollhound-vest",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1
+  },
+  "why": "AoN equipment-1854 (Specific Magic Armor, base Hide Armor) prints the fundamental rune in the entry's own name: \"This suit of *+1 hide armor* is sickly green and covered in thick warts and nodules, fashioned from the\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "wasp-guard",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1
+  },
+  "why": "AoN equipment-1855 (Specific Magic Armor, base Studded Leather Armor) prints the fundamental rune in the entry's own name: \"s into a chaotic mass. *Wasp guard* is *+1 studded leather* studded with the carapaces of wasps, subtly diverting swarms away and\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "wolfjaw-armor",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1
+  },
+  "why": "AoN equipment-1856 (Specific Magic Armor, base Hide Armor) prints the fundamental rune in the entry's own name: \"reaches, the fearsome witchwarg. This *+1 hide armor* is assembled from the hide and fur of a trio of witchwargs, and it conveys\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "breastplate-of-the-mountain",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 3,
+   "resilient": "greater"
+  },
+  "why": "AoN equipment-2137 (Specific Magic Armor, base Breastplate) prints the fundamental rune in the entry's own name: \"intop. This breastplate functions as a *+3 greater resilient breastplate*. When you're Shoved or otherwise forced to move, you can\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "highhelm-stronghold-plate",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-2567 (Specific Magic Armor, base Bastion Plate) prints the fundamental rune in the entry's own name: \"This *+2 resilient fortification bastion plate* is made almost entirely of stone plates. It look\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "wisp-chain",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-2587 (Specific Magic Armor, base Chain Shirt) prints the fundamental rune in the entry's own name: \"This *+1 resilient chain shirt* is made of small, interlocking currents of wind carefully woven\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "wisp-chain-greater",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-2587-2341 (Specific Magic Armor, base Chain Shirt) prints the fundamental rune in the entry's own name: \"This *+2 resilient chain shirt* is made of small, interlocking currents of wind carefully woven\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "wisp-chain-major",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "greater"
+  },
+  "why": "AoN equipment-2587-2342 (Specific Magic Armor, base Chain Shirt) prints the fundamental rune in the entry's own name: \"This *+2 greater resilient chain shirt* is made of small, interlocking currents of wind carefull\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "wisp-chain-true",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 3,
+   "resilient": "greater"
+  },
+  "why": "AoN equipment-2587-2343 (Specific Magic Armor, base Chain Shirt) prints the fundamental rune in the entry's own name: \"This *+3 greater resilient chain shirt* is made of small, interlocking currents of wind carefull\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "tales-in-timber",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-2648 (Specific Magic Armor, base Wooden Breastplate) prints the fundamental rune in the entry's own name: \"aphy—adorn every outer surface of this *+1 resilient wooden breastplate*. All are old, and many truly ancient, depicting tales set\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "tales-in-timber-greater",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-2648-2438 (Specific Magic Armor, base Wooden Breastplate) prints the fundamental rune in the entry's own name: \"aphy—adorn every outer surface of this *+2 resilient wooden breastplate*. All are old, and many truly ancient, depicting tales set\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "tales-in-timber-major",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "greater"
+  },
+  "why": "AoN equipment-2648-2439 (Specific Magic Armor, base Wooden Breastplate) prints the fundamental rune in the entry's own name: \"aphy—adorn every outer surface of this *+2 greater resilient wooden breastplate*. All are old, and many truly ancient, depicting t\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "plate-of-yled",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1
+  },
+  "why": "AoN equipment-2781 (Specific Magic Armor, base Full Plate) prints the fundamental rune in the entry's own name: \"This sinister suit of jet-black *+1 full plate* was designed to bolster the graveknights of Yled's undead armies, creating\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "electric-eelskin",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-2805 (Specific Magic Armor, base Leather Armor) prints the fundamental rune in the entry's own name: \"ppery eelskin covers the plates of this +1 *resilient greater slick leather armor*. The armor gives you the ability to breathe wat\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "impenetrable-scale",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "greater"
+  },
+  "why": "AoN equipment-2806 (Specific Magic Armor, base Scale Mail) prints the fundamental rune in the entry's own name: \"ales of standard-grade adamantine, this +2 *greater resilient Fortification adamantine scale mail* seems to momentarily thicken at\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "lions-armor",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-2807-2613 (Specific Magic Armor, base Half Plate) prints the fundamental rune in the entry's own name: \"Various parts of this +2 *resilient half plate* are forged into the shape of a lion's head. The golden lion head\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "lions-armor-greater",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 3,
+   "resilient": "greater"
+  },
+  "why": "AoN equipment-2807-2614 (Specific Magic Armor, base Half Plate) prints the fundamental rune in the entry's own name: \"Various parts of this +3 *greater resilient half plate* are forged into the shape of a lion's head. The golden l\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "life-saver-mail",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-2808-2615 (Specific Magic Armor, base Splint Mail) prints the fundamental rune in the entry's own name: \"This suit of *+2 resilient fortification splint mail* has a large, green gemstone inset in a prominent l\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "life-saver-mail-greater",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 3,
+   "resilient": "greater"
+  },
+  "why": "AoN equipment-2808-2616 (Specific Magic Armor, base Splint Mail) prints the fundamental rune in the entry's own name: \"This suit of *+3 greater resilient greater fortification splint mail* has a large, green gemstone inset\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "moonlit-chain",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1
+  },
+  "why": "AoN equipment-2809 (Specific Magic Armor, base Chain Shirt) prints the fundamental rune in the entry's own name: \"This *+1 silver chain shirt* has a collar adorned with stitched images of the phases of the moon\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "tideplate",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-2810 (Specific Magic Armor, base Full Plate) prints the fundamental rune in the entry's own name: \"ter motifs decorate this simple suit of +1 *resilient full plate*. The plate has been altered for underwater use, so it's check pe\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "hodag-leather",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1
+  },
+  "why": "AoN equipment-3196 (Specific Magic Armor, base Studded Leather Armor) prints the fundamental rune in the entry's own name: \"th the natural spines of a hodag, this *+1 Deathless studded leather armor* is an imposing sight, especially when its wearer is ba\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "mamlambo-scale",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-3197 (Specific Magic Armor, base Scale Mail) prints the fundamental rune in the entry's own name: \"ck, algae-green scales of this suit of *+1 resilient scale mail* hints at the armor's source. --- **Activate—Luminous Lure** ⟨1⟩\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "mantis-plate",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-3198 (Specific Magic Armor, base Full Plate) prints the fundamental rune in the entry's own name: \"The beautiful plates of this *+2 resilient Greater Ready full plate* armor are shaped from the carapace of a deadly mant\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "dragonplate",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "greater"
+  },
+  "why": "AoN equipment-3271 (Specific Magic Armor, base Full Plate) prints the fundamental rune in the entry's own name: \"This suit of +2 *greater resilient dragonhide full plate* makes you look like a fearsome dragon. The ar\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "onslaught-hide",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-3275 (Specific Magic Armor, base Hide Armor) prints the fundamental rune in the entry's own name: \"This *+1 resilient hide armor* is decorated with the horns of many slain beasts. It has an armor\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "assassins-skin",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "greater"
+  },
+  "why": "AoN equipment-3483 (Specific Magic Armor, base Leather Armor) prints the fundamental rune in the entry's own name: \"This *+2 greater resilient leather armor* was made from the flayed hide of an Elysian pegasus, t\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "vernai-shell",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "greater"
+  },
+  "why": "AoN equipment-3484 (Specific Magic Armor, base Mantis Shell) prints the fundamental rune in the entry's own name: \"lates of monstrous insect chitin, this *+2 greater resilient mantis shell* offers superior protection from Mediogalti's hot weathe\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "canopy-bulwark",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1
+  },
+  "why": "AoN equipment-3595 (Specific Magic Armor, base Leaf Weave) prints the fundamental rune in the entry's own name: \"This suit of *+1 assisting leaf weave* is composed entirely of primal-infused leaves bestowed by a dying\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "scene-stealers-tunic",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-3628 (Specific Magic Armor, base Padded Armor) prints the fundamental rune in the entry's own name: \"meant to signal wealth and status. This +2 resilient raiment padded armor was custom designed for Alessandro Domenesso, an actor a\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "aurochs-hide-armor",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-3682 (Specific Magic Armor, base Hide Armor) prints the fundamental rune in the entry's own name: \"to be both flexible and durable, this *+1 resilient hide armor* is imbued with the aurochs' natural defenses against venomous pre\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "heros-plate",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-3720-3465 (Specific Magic Armor, base Full Plate) prints the fundamental rune in the entry's own name: \"eeds decorate the black plates of this *+1 resilient full plate*. You gain resistance 5 to mental damage and a +1 status bonus to\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "alkenstar-phalanx",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-3801 (Specific Magic Armor, base Full Plate) prints the fundamental rune in the entry's own name: \"This rugged suit of *+2 resilient fortification full plate* has a large red gemstone inset into the overlapping\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "ankhrav-carapace",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1
+  },
+  "why": "AoN equipment-3802 (Specific Magic Armor, base Leather Armor) prints the fundamental rune in the entry's own name: \"This *+1 leather armor* has interlocking panels and short bristles along the outer edges of the\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "autoload-leathers",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-3803 (Specific Magic Armor, base Leather Armor) prints the fundamental rune in the entry's own name: \"This *+1 resilient studded leather armor* has a built in ammunition bandolier that, once set up,\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "balloon-padding",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1
+  },
+  "why": "AoN equipment-3804 (Specific Magic Armor, base Padded Armor) prints the fundamental rune in the entry's own name: \"This *+1 padded armor* enables you to hover above the ground and either drift with the wind or b\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "bismuth-armor",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-3805 (Specific Magic Armor, base Full Plate) prints the fundamental rune in the entry's own name: \"This silvery, pink-tinged *+2 resilient full plate* is polished to the point that its surface is completely reflectiv\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "buoyant-buckle",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1
+  },
+  "why": "AoN equipment-3806 (Specific Magic Armor, base Leather Armor) prints the fundamental rune in the entry's own name: \"This *+1 leather armor* has several large pouches along the sides of the torso as well as the fr\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "command-cuirass",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1
+  },
+  "why": "AoN equipment-3807 (Specific Magic Armor, base Half Plate) prints the fundamental rune in the entry's own name: \"This *+1 half plate* is imbued with a series of runes designed to amplify your voice on the batt\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "deep-pockets",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1
+  },
+  "why": "AoN equipment-3809 (Specific Magic Armor, base Leather Armor) prints the fundamental rune in the entry's own name: \"This *+1 leather armor* has two medium-sized pockets just above the waist where you might normal\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "deep-sea-plate",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1
+  },
+  "why": "AoN equipment-3810 (Specific Magic Armor, base Full Plate) prints the fundamental rune in the entry's own name: \"The interior of this heavy, brass *+1 full plate* is lined with waterproof fabric, especially covering the seams between plat\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "eagle-wing",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-3811 (Specific Magic Armor, base Leather Armor) prints the fundamental rune in the entry's own name: \"thers cover the leather pieces of this *+1 resilient leather armor*. The armor gives you the ability to glide safely to earth from\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "frost-furs",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "greater"
+  },
+  "why": "AoN equipment-3812 (Specific Magic Armor, base Hide Armor) prints the fundamental rune in the entry's own name: \"This fur-lined *+2 greater resilient cold-resistant hide armor* is favored by warriors in the Crown of the\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "grisly-brigandine",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-3813 (Specific Magic Armor, base Studded Leather Armor) prints the fundamental rune in the entry's own name: \"This *+1 resilient studded leather armor* is a gruesome amalgamation of skulls and bones from va\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "incendiary-plate",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 3,
+   "resilient": "greater"
+  },
+  "why": "AoN equipment-3814 (Specific Magic Armor, base Full Plate) prints the fundamental rune in the entry's own name: \"This bright-red *+3 greater resilient full plate* is adorned with eerily beautiful, angry flames that flow\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "juggernaut-plate",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 3,
+   "resilient": "greater"
+  },
+  "why": "AoN equipment-3815 (Specific Magic Armor, base Full Plate) prints the fundamental rune in the entry's own name: \"you're a veritable battering ram. This *+3 greater resilient fortification full plate* is topped with a reinforced helmet shaped l\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "lifting-leather",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1
+  },
+  "why": "AoN equipment-3816 (Specific Magic Armor, base Leather Armor) prints the fundamental rune in the entry's own name: \"This *+1 leather armor* has a metal exoskeleton that runs along your back and limbs and grants y\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "locust-leather",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1
+  },
+  "why": "AoN equipment-3817 (Specific Magic Armor, base Studded Leather Armor) prints the fundamental rune in the entry's own name: \"This *+1 studded leather* armor was specially designed for removing locusts and similar vermin t\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "message-mail",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1
+  },
+  "why": "AoN equipment-3818 (Specific Magic Armor, base Chain Mail) prints the fundamental rune in the entry's own name: \"This *+1 chain mail* is most commonly worn by mid-level leaders in charge of squads or platoons\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "mitigation-mail",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-3819 (Specific Magic Armor, base Chain Mail) prints the fundamental rune in the entry's own name: \"This *+1 resilient chain mail* helps bind up your wounds when you're injured in battle, enabling\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "shadow-shroud",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-3822 (Specific Magic Armor, base Leather Armor) prints the fundamental rune in the entry's own name: \"o envelop you when you wear this dusky *+1 resilient shadow leather armor*, muffling your steps and concealing your movement. Whil\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "thunder-mail",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "greater"
+  },
+  "why": "AoN equipment-3823 (Specific Magic Armor, base Chain Mail) prints the fundamental rune in the entry's own name: \"This *+2 greater resilient greater electricity-resistant chain mail* is adorned with two golden\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "umbral-armor",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-3824 (Specific Magic Armor, base Studded Leather Armor) prints the fundamental rune in the entry's own name: \"This dark *+1 resilient shadow studded leather armor* is frequently used to bypass enemy positions or\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "dragonauts-wingsuit",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-4013 (Specific Magic Armor, base Leather Armor) prints the fundamental rune in the entry's own name: \"This *+1 resilient leather armor* is made from drake hide, and includes wing-like membranes that\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "dragon-turtle-armor",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-4059 (Specific Magic Armor, base Full Plate) prints the fundamental rune in the entry's own name: \"This *+1 resilient full plate* is crafted from the most colorful fragments chipped from scales o\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "heros-plate-greater",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "greater"
+  },
+  "why": "AoN equipment-3720 (Specific Magic Armor, base Full Plate) prints the fundamental rune in the entry's own name: \"eeds decorate the black plates of this *+2 greater resilient full plate*. You gain resistance 10 to mental damage and a +2 status\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "mitigation-mail-greater",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-3819 (Specific Magic Armor, base Chain Mail) prints the fundamental rune in the entry's own name: \"This *+2 resilient chain mail* helps bind up your wounds when you're injured in battle, enabling\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "mitigation-mail-major",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "greater"
+  },
+  "why": "AoN equipment-3819 (Specific Magic Armor, base Chain Mail) prints the fundamental rune in the entry's own name: \"This *+2 greater resilient chain mail* helps bind up your wounds when you're injured in battle,\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "plate-armor-of-the-deep",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "greater"
+  },
+  "why": "AoN equipment-157 (Specific Magic Armor, base Full Plate) prints the fundamental rune in the entry's own name: \"This suit of +2 greater resilient full plate is decorated with swirling, ornate motifs of waves and fis\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "plate-of-yled-greater",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-2781 (Specific Magic Armor, base Full Plate) prints the fundamental rune in the entry's own name: \"This sinister suit of jet-black *+1 resilient full plate* was designed to bolster the graveknights of Yled's undead armies,\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "plate-of-yled-major",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-2781 (Specific Magic Armor, base Full Plate) prints the fundamental rune in the entry's own name: \"This sinister suit of jet-black *+2 resilient full plate* was designed to bolster the graveknights of Yled's undead armies,\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "plate-of-yled-true",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "greater"
+  },
+  "why": "AoN equipment-2781 (Specific Magic Armor, base Full Plate) prints the fundamental rune in the entry's own name: \"This sinister suit of jet-black *+2 greater resilient full plate* was designed to bolster the graveknights of Yled's undead\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "reactive-mail-greater",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1,
+   "resilient": "resilient"
+  },
+  "why": "AoN equipment-3821 (Specific Magic Armor, base Chain Mail) prints the fundamental rune in the entry's own name: \"n heavily battle scared from use, this *+1 resilient chain mail* is commonly issued to frontline soldiers who are tasked with batt\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "reactive-mail-major",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "greater"
+  },
+  "why": "AoN equipment-3821 (Specific Magic Armor, base Chain Mail) prints the fundamental rune in the entry's own name: \"n heavily battle scared from use, this *+2 greater resilient chain mail* is commonly issued to frontline soldiers who are tasked w\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "zetogeki-hide-armor",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 1
+  },
+  "why": "AoN equipment-3667 (Specific Magic Armor, base Hide Armor) prints the fundamental rune in the entry's own name: \"This *+1 fire-resistant hide armor* is adorned with the shale-like scales of the zetogeki, a gia\". deriveAc's acItem and resilientSaveBonus (src/rules/derive.ts) floor the etched runes with builtInRunes, so without this row the wearer is a full potency step short of the book value."
+ },
+ {
+  "category": "items",
+  "id": "slithermaws-bane",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 2,
+   "resilient": "greater"
+  },
+  "why": "AoN equipment-3700: \"This suit of +2 greater resilient elven chain was worn by the elven hero Kyloss Syndar.\" Hand-authored rather than measured: the sentence names Elven Chain, not the base_item \"Chain Shirt\", and items/elven-chain ships as itemType \"equipment\" so no armour-name anchor reaches it either."
+ },
+ {
+  "category": "items",
+  "id": "bands-of-force",
+  "field": "affixHostAs",
+  "value": "armor",
+  "why": "AoN equipment-3058: \"You can affix talismans to the bands as though they were light armor.\" The bands ship as itemType \"equipment\", so planAffix rejected every talisman outright."
  }
 ]

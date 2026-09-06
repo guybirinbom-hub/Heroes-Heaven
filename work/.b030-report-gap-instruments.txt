@@ -1,0 +1,42 @@
+BATCH 030 — GAP AGENT, family "instruments"
+open lines at start: 2   open lines at end: 0   specs written: 0   queue entries: 0
+
+PARKED  flaggedResidue (gaps.json line 5: "src/rules/situationalBonuses.ts — feats/eclectic-skill gained
+        a FEAT_SITUATIONAL entry from another…", ref work/.b030-report-instruments.txt:10)
+        Not a duplicate grant and not an owner question: the second carrier is a PERMISSION star
+        (FEAT_SITUATIONAL["eclectic-skill"], situationalBonuses.ts:831, bonus "you can attempt it" — a
+        string, no magnitude) sitting beside the numeric untrainedProficiency {levelMinus:0} that
+        derive.ts:485 reads, so the two answer different halves of AoN feat-4605 and nothing stacks.
+        The guard the line asks for already exists rather than being owed: test/untrained-proficiency
+        .test.ts:42 pins the numeric half on a BUILT investigator 15 holding eclectic-skill, and
+        test/batch030-situational.test.ts:99-115 pins the permission star on a BUILT bard 9 and
+        re-asserts the numeric carrier is still present. Ran both files together
+        (node scripts/vt.mjs run test/untrained-proficiency.test.ts test/batch030-situational.test.ts):
+        2 files / 17 tests passed, i.e. the doubled carrier is measured, not assumed. Wrote no new test —
+        a third assertion of the same two facts is duplication, and situationalBonuses.ts is the
+        situational family's staged file, so an edit there would be out of family.
+
+PARKED  flaggedResidue (gaps.json line 13: "scripts/wg-casting.mjs cannot run under plain `node` — line 23
+        imports '../src/rules/seed'", ref work/.b030-verify-instruments.txt:97)
+        No caller is broken. The script's only launcher is wg-batch-run.mjs and it invokes it as
+        `npx jiti scripts/wg-casting.mjs`; the file's own header (lines 12-14) documents exactly that
+        invocation. The instruments family measured it identical before and after its changes
+        ("16 class source(s) compared, 4 with mismatches (180 row(s))"), so no batch flipped and nothing
+        regressed here. Not authored because the fix is not the one-liner it looks like: an ESM static
+        import resolves before any code in the module runs, so no in-file guard can catch it — closing it
+        means converting the two TS imports (../src/rules/seed, ../src/rules/build) to dynamic import with
+        top-level await, or compiling them, AND deciding how the driver launches its comparers. That is a
+        launcher decision outside this family's files, and speculative while jiti is the only entry point.
+
+CROSS-FILE GAPS
+  (none — neither line needed an edit outside my scope, because neither needed an edit at all.)
+
+DATA STILL NEEDED
+  (none — no overlay row is correct for either line; both are instrument/plumbing observations.)
+
+work/.b030-gaps.json rewritten: only the two "instruments" lines changed (open -> parked, each with a
+flaggedResidue ref carrying its reason). The other 12 lines are byte-identical; 12 remain open, all other
+families'. work/.b030-specs.json untouched — no spec file was written, so no manifest entry is owed.
+work/.b030-queue.json untouched — neither line is an owner question (no WG-vs-print contradiction, no
+ruling conflict, no engine-shape decision). No source file, test file or data file was modified by this
+agent; the only write outside this report is the two status/ref fields above.

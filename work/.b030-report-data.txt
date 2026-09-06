@@ -1,0 +1,168 @@
+BATCH 030 — WG-COMPARISON LANE — FAMILY: data (data-rows builder)
+Spec:   work/.b030-rows-data.json   (15 backfill rows across 15 of my 16 findings)
+Tests:  test/batch030-data.test.ts  (17 tests; 15 fail today on the exact missing field, 2 pass on an in-memory patch)
+tsc --noEmit clean; scripts/test-flip-audit.mjs --batch 030 clean.
+
+DATA STILL NEEDED
+(none — every row my findings need is authored in work/.b030-rows-data.json; nothing is left for the driver to invent.)
+
+CROSS-FILE GAPS
+src/sheet/MainTab.tsx:391-394 — stanceFeats is built from character.feats only, so the 5 stances with no feat record (arcane-cascade, bullet-dancer-stance, claw-stance, talon-stance, tenacious-stance) never get a toggle; that is the whole of unshaken-in-iron#stance, whose data is already correct. Widen the source to stance ids reached through the grantsActions walk (MainTab.tsx:313-320 / explain.ts:293), keyed on content.stances[id]. Owner: the src/sheet family.
+scripts/data/stances.json cobra-stance.strikes[].traits — "deadly d10" is the same space-form defect as kaiju-stance#fatal and matches no deadly reader; outside my finding slice.
+scripts/data/stances.json claw-stance.strikes[].traits — "versatile piercing" space form, same defect; outside my finding slice.
+scripts/data/stances.json vitality-manipulating-stance.strikes[].traits — "versatile vitality" space form, same defect; outside my finding slice.
+
+--------------------------------------------------------------------------------
+PER FINDING
+--------------------------------------------------------------------------------
+
+grasping-corpses — TAUGHT (finding grasping-corpses)
+  Row: feats/grasping-corpses.recordMarks = [{on:'action', id:'mobbing-assault', note:"A creature that is
+  damaged by your horde's Mobbing Assault is off-guard until the beginning of your next turn."}].
+  The clause is printed about ANOTHER record's action row and computes no number the holder owns, so
+  recordMarks (rendered by MainTab.tsx:697 recordMarkersFor(...,'action',...)) is the only carrier; a
+  situationalBonuses star would promise the holder a bonus that lands on the foe.
+  Test: test/batch030-data.test.ts "grasping-corpses marks Mobbing Assault > carries the off-guard rider…"
+  — asserts the mark's on:id pair and that actions/mobbing-assault exists.
+
+defensive-stratagem — TAUGHT (finding defensive-stratagem)
+  Row: feats/defensive-stratagem.recordMarks = [{on:'action', id:'devise-a-stratagem', note:…}].
+  The +1 half already ships at situationalBonuses.ts:1117 and is untouched. This row carries only the
+  half that had no home: the third stratagem option and its Strike restriction, which is a COST and so
+  cannot travel as a situational bonus.
+  Test: "defensive-stratagem marks Devise a Stratagem > names the third stratagem option and its Strike
+  restriction at the point of choice".
+
+instinctive-maneuvers — TAUGHT (finding instinctive-maneuvers)
+  Row: feats/instinctive-maneuvers.recordMarks = [{on:'feature', id:'relinquish-control', note:…}].
+  The +2 Athletics half already ships (situationalBonuses.ts:379) and is untouched. Relinquish Control
+  prints a CLOSED permitted-action list (AoN feat-7122); an extended list is not a modifier, so a
+  'feature' mark on that feat's entry (FeatsTab.tsx:99) is the only surface.
+  Test: "instinctive-maneuvers marks Relinquish Control > adds the four maneuvers to the Relinquish
+  Control entry" — asserts all four action names are in the note.
+
+transcribe-moment — TAUGHT (finding transcribe-moment)
+  Row: feats/transcribe-moment.spellcastingGrant = {tradition:'arcane', keyAbility:'int',
+  proficiency:'trained'} — the shape feats/crystal-ward-spells already ships. The feat already has
+  focusSpells, so it passes build.ts:4392's featFocusGrant filter and the focusTradition/focusKey chains
+  (build.ts:4437-4438) stop falling through to 'occult' + focusCls.keyAbility[0].
+  Tests: two. The field assertion, plus a BEHAVIOUR test on a content copy with the field patched in
+  memory ("makes the fighter Scrollmaster focus entry arcane/int rather than occult/dex") that already
+  passes, proving the reader delivers what the row is for.
+
+arcane-breadth — TAUGHT (finding arcane-breadth)
+  Row: feats/arcane-breadth.spellSlotBonus = {perRank:1, exceptHighest:2, entryId:'wizard-dedication-casting'},
+  supersedes: true. It REPLACES the existing scripts/data/effect-backfill.json row for the same
+  category/id/field ({perRank:1, exceptHighest:2}); that whole value is merged into mine and only entryId
+  is added, because spellSlotBonus is ONE field.
+  Test: "arcane-breadth targets the wizard archetype pool > names the wizard-dedication-casting entry, as
+  its five siblings do" — also pins occult-breadth's untouched entryId so the sibling shape stays proof.
+
+cantrip-supremacy — TAUGHT (finding cantrip-supremacy)
+  Row: feats/cantrip-supremacy.spellSlotBonus = {entryId:'hedge-mage-dedication-casting', cantrips:10}
+  — psi-development's exact shape. Read by build.ts:7056-7063 (archCantripBonus) and mirrored by
+  Builder.tsx:463-469 for the picker cap. Deliberately NOT `<classId>-casting`, so cantripBonusFor
+  (build.ts:2243) skips it and the character's CLASS cantrip cap is untouched.
+  Test: "cantrip-supremacy gives the Hedge Mage keepsake 10 more cantrips > carries the archetype-scoped
+  cantrip bonus the record shipped without".
+
+selfless-parry — TAUGHT (finding selfless-parry)
+  Row: feats/selfless-parry.recordMarks = [{on:'feature', id:'dueling-parry', …},{on:'feature',
+  id:'dueling-riposte', …}]. Deliberately NOT a situationalBonuses kind:'ac' entry: the +1 lands on
+  ADJACENT ALLIES, and an AC star would promise the holder a bonus they never get. The holder's own +2
+  from Dueling Parry (situationalBonuses.ts:837/:1465) is untouched.
+  Test: "selfless-parry rewrites Dueling Parry and Dueling Riposte > marks both target feats and promises
+  the holder no AC bonus of their own".
+
+kaiju-stance#fatal — TAUGHT (finding kaiju-stance#fatal)
+  The finding's proposal names scripts/data/stances.json, which this agent may not write, so the fix is
+  authored as a durable overlay on the stances bucket instead:
+  Row: stances/kaiju-stance.strikes = [{name:'Shattering Earth', dice:1, die:'d8',
+  damageType:'bludgeoning', group:'brawling', traits:['backswing','fatal-d12','reach','unarmed']}].
+  strikes is ONE field, so the whole array is re-emitted with only the trait string corrected.
+  Route proof: the shipped stances/kaiju-stance carries `requires`, which is NOT in stances.json and IS
+  an effect-backfill row — so a stances-category overlay lands after the stance source is merged.
+  Test: "kaiju-stance Shattering Earth keeps its fatal die > stores the trait in the hyphen form every
+  fatal reader anchors on" — asserts the array AND that the trait matches /^fatal-(d\d+)$/, the reader
+  at derive.ts:4555 that the space form missed. (The finding's tooltip sub-claim was already refuted by
+  the reader: glossary.ts:229 norm() slugifies, so the chip tooltip worked. Only the damage line is fixed.)
+
+unshaken-in-iron#stance — NO ROW (finding unshaken-in-iron#stance)
+  Nothing to author: feats/unshaken-in-iron.armorSpec.bonusWhileStance {stanceId:'tenacious-stance',
+  source:'armorCheckPenalty'} already ships (effect-backfill row) and already has a live reader at
+  derive.ts:3711-3714. The defect is code-only and lives in src/sheet/MainTab.tsx, outside my files —
+  filed in CROSS-FILE GAPS above. No test written: an assertion on the shipped data would pass today and
+  prove nothing about the dead code path.
+
+thoughtsense — TAUGHT (finding thoughtsense)
+  Row: feats/thoughtsense.whileActive = [{state:'unleash-psyche', senses:[{name:'thoughtsense', range:30,
+  acuity:'imprecise'}]}]. The standing vague `senses` entry stays. Existing lane, no new plumbing:
+  types.ts:1152's state union already includes 'unleash-psyche', derive.ts:1120-1160 reads it and
+  derive.ts:2544 pushes wa.senses, classResources.ts:156 already ships the toggle, and addSense
+  (derive.ts:2579) keeps the better acuity so imprecise supersedes vague only while the toggle is on.
+  Test: "thoughtsense upgrades while the psyche is Unleashed > keeps the standing vague sense and adds an
+  imprecise one behind the toggle" — pins BOTH entries, so a row that replaced the vague one would fail.
+
+apparition-magic — TAUGHT (finding apparition-magic)
+  Row: feats/apparition-magic.spellSlotBonus = {perRank:1, exceptHighest:2,
+  entryId:'animist-dedication-casting'}, supersedes: true. REPLACES the existing effect-backfill row for
+  the same category/id/field; its whole value is merged into mine.
+  Test: "apparition-magic targets the animist archetype pool > names the animist-dedication-casting entry
+  so a non-caster gets the slots at all".
+
+sanguine-transference — TAUGHT (finding sanguine-transference)
+  Row: feats/sanguine-transference.focusSpells = ['sanguine-transference'] — the lane all seven sibling
+  necromancer grave-spell feats already use, read at build.ts:3603. No focusPoolBonus authored: the Focus
+  Point follows from the spell's own `focus` trait, which spells/sanguine-transference already carries.
+  Tests: two. The field assertion (which also pins the spell's `focus` trait, the half that supplies the
+  point), plus a BEHAVIOUR test on an in-memory-patched content copy ("puts the spell in the necromancer
+  focus entry once the grant exists") that already passes.
+
+boost-summons — TAUGHT (finding boost-summons)
+  Row: feats/boost-summons.spellNotes = [{spellId:'boost-eidolon', note:"When you cast Boost Eidolon, in
+  addition to your eidolon, it also targets your summoned creatures within 60 feet."}]. spellNotes is our
+  exact twin of WG's injectText-onto-a-spell (types.ts:381, collected build.ts:6352-6449, rendered
+  explain.ts:784, 106 feats already on it). RecordMarker cannot carry it: its `on` union is
+  'action'|'condition'|'feature' (situationalBonuses.ts:3981), with no 'spell'.
+  Test: "boost-summons rewrites the Boost Eidolon spell > writes the extra target onto the spell the
+  summoner reads".
+
+ilverani-purist — TAUGHT (finding ilverani-purist)
+  Row: feats/ilverani-purist.degreeShifts = [{shift:'critFailToFail', when:'when you Sense the Motive of a
+  non-elf humanoid creature', actions:['sense-motive'], perception:true}] — the shape feats/thorough-search
+  and feats/disillusionment already ship. Sense Motive is a Perception action (actions/sense-motive,
+  aonId action-2302, the Actions ID the printed feat links), so `perception` stars the Perception row and
+  `actions` marks the action row. WG models nothing here, so print is the sole authority.
+  Test: "ilverani-purist shifts the Sense Motive degree > models the crit-failure-to-failure shift on the
+  Perception action".
+
+watchers-armband#innate-spell — TAUGHT (finding watchers-armband#innate-spell)
+  Row: items/watchers-armband.innateSpells = [{spellId:'ring-of-truth', tradition:'occult', rank:3,
+  usesPerDay:1}] — items/cloak-of-social-graces' shape, read at build.ts:7550. The item's existing
+  counters/frequency belong to the Find the Plant activation, a SEPARATE once-per-day use, so the spell
+  carries its own usesPerDay rather than sharing that counter.
+  Test: "watchers-armband grants its innate Ring of Truth > carries the once-per-day 3rd-rank occult
+  innate spell".
+
+dweomerveil#daily-choice — TAUGHT (finding dweomerveil#daily-choice)
+  Row: items/dweomerveil.choice = {flag:'veilTradition', prompt:'Tradition', kind:'array', options:[4],
+  daily:true}, supersedes: true. REPLACES the existing effect-backfill row for the same category/id/field;
+  the whole shipped value is merged into mine and only `daily` is added, because choice is ONE field.
+  askedAtDailyPrep (derive.ts:1231) returns false without it, so the tradition was a permanent
+  per-instance select instead of a morning question; the veil is worn+invested, so
+  ownedDailyChoiceRecords (derive.ts:1257) already reaches it. Same lane as items/library-robes-true.
+  The display-only situationalBonuses.ts:2080 entry is untouched.
+  Test: "dweomerveil asks its tradition at daily preparations > flags the tradition choice as daily so
+  Rest asks it again each morning" — also pins flag and option count, so a row that dropped the rest of
+  the field while adding `daily` would fail.
+
+--------------------------------------------------------------------------------
+NOTES ON THE SPEC
+--------------------------------------------------------------------------------
+- 3 rows carry supersedes: true (arcane-breadth, apparition-magic, dweomerveil). Each merges the whole
+  superseded value into its own; no row uses `path`, so none can collide with a path-keyed row.
+- No row creates or deletes a record, so there is no created-prose spec file for this family.
+- Every field authored has a confirmed reader: recordMarks (explain.ts:477), spellcastingGrant
+  (build.ts:4397), spellSlotBonus (build.ts:6772/7061), whileActive (derive.ts:1131), focusSpells
+  (build.ts:3603), spellNotes (build.ts:6361), degreeShifts (explain.ts:395), item innateSpells
+  (build.ts:7550), choice.daily (derive.ts:1231). No "no reader" findings in this slice.

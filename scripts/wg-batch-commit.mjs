@@ -40,7 +40,8 @@ const git = (...a) => execFileSync('git', a, { cwd: ROOT, encoding: 'utf8' });
 const refusals = [];
 const refuse = (m) => refusals.push(m);
 
-/** The three artefacts that must move together: the overlay and the two files it regenerates. */
+/** The overlay and the two files it regenerates. The overlay + core.json move together unconditionally;
+ *  core-descriptions.json only when the batch authored prose (ruling below, at the refusal). */
 const DATA_FILES = ['scripts/data/effect-backfill.json', 'public/core.json', 'public/core-descriptions.json'];
 const MSG_PATH = `work/.b${TAG}-commit.txt`;
 const SPECS_PATH = `work/.b${TAG}-specs.json`;
@@ -100,8 +101,19 @@ const KEEP = [
 if (!existsSync(p(SPECS_PATH))) { console.error(`missing ${SPECS_PATH} — the commit stages what the manifest declares; without it there is no batch to commit.`); process.exit(2); }
 const manifest = JSON.parse(readFileSync(p(SPECS_PATH), 'utf8'));
 
+/*
+ * ORCHESTRATOR RULING (batch 030): "work/experience-instrument-limits.json is a batch artefact (a parked
+ * EXPERIENCE verdict is batch evidence; batches 25/26 committed it inside their batch commits): add it to
+ * the commit script's always-staged-when-changed set beside the three data files, parity and residual.
+ * Same for work/wg-casting-parity.json (the casting comparer's dump moves when a batch's rows move slot
+ * counts; it is evidence of the comparison state, as batch 28 committed it) — staged when changed, never
+ * refused over."
+ */
+const BATCH_EVIDENCE = ['work/experience-instrument-limits.json', 'work/wg-casting-parity.json'];
+
 const staged = new Set([
   ...DATA_FILES,
+  ...BATCH_EVIDENCE,
   `work/wg-batch-${TAG}-parity.json`,
   `work/wg-batch-${TAG}-residual.json`,
   `work/.b${TAG}-read.json`,
@@ -137,9 +149,33 @@ for (const extra of ['work/owner-questions.json', 'work/rulings-numbering.json']
 const unaccounted = status.filter(isTracked).filter((s) => !staged.has(s.path) && !SCRATCH.some((re) => re.test(s.path)));
 if (unaccounted.length) refuse(`${unaccounted.length} modified tracked path(s) this batch does not account for:\n      ${unaccounted.map((s) => `${s.xy} ${s.path}`).join('\n      ')}`);
 
-const dataChanged = DATA_FILES.filter((f) => changed.has(f));
-if (dataChanged.length && dataChanged.length !== DATA_FILES.length) {
-  refuse(`the three data artefacts move together: ${dataChanged.join(', ')} changed but ${DATA_FILES.filter((f) => !changed.has(f)).join(', ')} did not. Replay the overlay (apply-backfill-now.mjs) before committing, or explain the split.`);
+/*
+ * ORCHESTRATOR RULING (batch 030): "The data-triple refusal ('the three data artefacts move together') is
+ * relaxed to the real invariant: refuse only when the manifest's specs carry at least one row with field
+ * 'description' or 'descRefs' (or a created-prose spec) AND public/core-descriptions.json did not change;
+ * a rows-only batch with no prose rows may legitimately leave core-descriptions.json untouched — say so in
+ * the printed plan. Keep refusing when core.json changed but the overlay did not, or vice versa."
+ *
+ * Row shape is apply-parity-fixes.mjs's: findings at the top level or under `applicable` / `findings`,
+ * rows under `backfillRows` unless a verifier corrected them.
+ */
+const DESC_FILE = 'public/core-descriptions.json';
+const OVERLAY_PAIR = DATA_FILES.filter((f) => f !== DESC_FILE);
+const pairChanged = OVERLAY_PAIR.filter((f) => changed.has(f));
+if (pairChanged.length === 1) {
+  refuse(`the overlay and its artefact move together: ${pairChanged[0]} changed but ${OVERLAY_PAIR.find((f) => !changed.has(f))} did not. Replay the overlay (apply-backfill-now.mjs) before committing, or explain the split.`);
+}
+
+const proseSpecs = manifest.filter((m) => {
+  if (m.kind === 'created-prose') return true;
+  if (!m.file || !existsSync(p(m.file))) return false;
+  const raw = JSON.parse(readFileSync(p(m.file), 'utf8'));
+  const findings = Array.isArray(raw) ? raw : (raw.applicable ?? raw.findings ?? []);
+  return findings.some((f) => ((f.verification?.correctedBackfillRows?.length ? f.verification.correctedBackfillRows : f.backfillRows) ?? [])
+    .some((r) => r.field === 'description' || r.field === 'descRefs'));
+});
+if (proseSpecs.length && !changed.has(DESC_FILE)) {
+  refuse(`${proseSpecs.length} manifest spec(s) carry prose (${proseSpecs.map((m) => m.file ?? m.family).join(', ')}) but ${DESC_FILE} did not change. Replay the overlay (apply-backfill-now.mjs) before committing, or explain the split.`);
 }
 for (const f of DATA_FILES) if (changed.has(f) && !toAdd.includes(f)) refuse(`${f} is modified and not in the stage set`);
 
@@ -166,6 +202,9 @@ for (const f of toAdd) console.log(`  ${changed.get(f)} ${f}`);
 // print the very paths the refusal below names as if they had been dispositioned
 const skipped = status.filter(isTracked).filter((s) => !staged.has(s.path) && SCRATCH.some((re) => re.test(s.path)));
 if (skipped.length) console.log(`skipped as driver scratch: ${skipped.map((s) => s.path).join(', ')}`);
+// ruling (batch 030): a rows-only batch may legitimately leave core-descriptions.json alone — say so,
+// so the absent third data file reads as expected rather than as something the plan failed to notice.
+if (!proseSpecs.length && !changed.has(DESC_FILE)) console.log(`no prose rows in this batch; ${DESC_FILE} unchanged is expected`);
 if (msg) console.log(`message (${msg.trim().length} chars): ${msg.trim().split('\n')[0]}`);
 
 if (refusals.length) {

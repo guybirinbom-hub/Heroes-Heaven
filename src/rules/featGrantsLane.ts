@@ -181,6 +181,14 @@ export const FEAT_LANE_GRANTS: Record<string, FeatGrant> = {
   'mauler-dedication': { weaponFamiliarity: { weapons: [], traits: ['two-hand', 'two-hand-d4', 'two-hand-d6', 'two-hand-d8', 'two-hand-d10', 'two-hand-d12'], treatAsLowerCategory: true } },
   'pirate-combat-training': { weaponFamiliarity: { weapons: ['hatchet', 'rapier', 'scimitar', 'whip'], treatAsLowerCategory: true } },
   'viking-weapon-familiarity': { weaponFamiliarity: { weapons: ['battle-axe', 'hatchet', 'longsword', 'shield-boss', 'shield-spikes', 'shortsword'], treatAsLowerCategory: true } },
+  /* *"If you have Viking Weapon Familiarity or Viking Weapon Specialist, add the bastard sword and
+   * rapier to the list of weapons in those feats."* (AoN feat-3619). A rider on the list above, so it
+   * is gated with `requiresAnyFeat` rather than granted outright — the six-weapon list itself stays
+   * frozen, because the two feats print two different lists and only one of them is extended by the
+   * Vindicator's own prerequisite chain. Viking Weapon Specialist carries no proficiency grant of its
+   * own (it is a crit-spec feat), so the proficiency half hangs on the Familiarity feat alone; the
+   * crit-spec half of the same sentence is the record's `critSpecRequiresFeat` row, which names both. */
+  'viking-vindicator': { weaponFamiliarity: { weapons: ['bastard-sword', 'rapier'], treatAsLowerCategory: true, requiresAnyFeat: ['viking-weapon-familiarity'] } },
   'oni-weapon-familiarity': { weaponFamiliarity: { weapons: ['khakkhara', 'nodachi', 'ogre-hook', 'tetsubo'], treatAsLowerCategory: true } },
   /*
    * ⚠ Both entries are PLACEHOLDERS for the record's own two-pick choice (`choice.flag`

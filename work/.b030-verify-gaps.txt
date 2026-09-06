@@ -1,0 +1,196 @@
+family: gaps (GAP VERIFIER, batch 030)
+report: work/.b030-verify-gaps.txt
+input: work/.b030-gaps.json (14 lines), work/.b030-specs.json (6 manifest entries)
+default: REFUTE. A line is CLOSED only where an artefact is named, opened, and checked.
+
+================================================================================
+INTEGRITY CHECKS (run first)
+================================================================================
+owner-questions.json — CLEAN. `git diff HEAD -- work/owner-questions.json` is empty and the file is
+  absent from `git status --porcelain`; no agent touched it.
+manifest — INTACT. work/.b030-specs.json carries 6 entries: situational, data, engine, instruments,
+  gap-data-rows, gap-engine. The four primary families of work/.b030-apply.json all still have theirs,
+  and the two gap families that produced artefacts have theirs. gap-instruments and gap-situational
+  authored no row and no new file (both reports say so explicitly), so they owe no manifest entry.
+  No entry was removed by another family.
+spec rows — 0 bad targets across ALL six spec files (109 gap-engine rows, 8 engine, 15 data, 0 in the
+  three no-row specs); every {category,id} resolves in public/core.json. 0 collisions on
+  category+id+field across families, so the applier has nothing to hard-refuse.
+flip audit — `node scripts/test-flip-audit.mjs --batch 030`: clean, 6 test files touched, 0 new settle
+  keys, every flip cited.
+tests — `node scripts/vt.mjs run test/batch030-gap-engine.test.ts test/batch030-gap-stance-toggle.test.tsx
+  test/batch030-situational.test.ts` → 3 files / 23 tests passed. `npx tsc --noEmit` clean.
+work/.b030-queue.json — DOES NOT EXIST. No parked line refs it (all six park on flaggedResidue), so
+  nothing in this ledger depends on it; noted so the driver does not read its absence as a lost file.
+
+================================================================================
+THE 14 LEDGER LINES
+================================================================================
+
+1. CLOSED — engine / DATA STILL NEEDED — "items/<111 remaining specific magic armours>/builtInRunes"
+   ref work/.b030-rows-gap-engine.json. Valid JSON, findings[0] = rusting-carapace#potency with 108
+   backfillRows {category:items, id, field:builtInRunes, value:{potency[,resilient]}}, each carrying an
+   AoN doc id and a verbatim quote; every id exists in core.json and none already carries builtInRunes.
+   Manifest entry family "gap-engine" stages the spec, the measuring script and the test. Reader proven
+   live: test/batch030-gap-engine.test.ts:162 builds a L12 fighter wearing blade-byrnie-major with the
+   row patched in memory and reads +3 off deriveAc and 2 off resilientSaveBonus, against a STRIPPED
+   copy — not a patched-vs-shipped delta. ⚠ closes 108 of the lane, not all of it: see OPEN A below.
+
+2. CLOSED (parked, artefact confirmed) — engine / DATA STILL NEEDED — feats/arcane-breadth/spellSlotBonus
+   ref flaggedResidue "already in work/.b030-rows-data.json". Verified by dumping both specs: the data
+   spec carries feats/arcane-breadth spellSlotBonus = {perRank:1, exceptHighest:2, entryId:
+   "wizard-dedication-casting"} with supersedes:true, and the engine spec carries bloodline-breadth with
+   the identical shape (entryId "sorcerer-dedication-casting", supersedes:true). The two entry-less
+   Breadth feats did not diverge; the superseded value {perRank,exceptHighest} is merged whole into both.
+   Nothing is owed.
+
+3. CLOSED — engine / CROSS-FILE — viking-vindicator#weapon-familiarity (ref src/rules/featGrantsLane.ts)
+   All three edits exist: `requiresAnyFeat?: string[]` on WeaponFamiliarity at src/rules/featGrants.ts:157,
+   the honouring clause at src/rules/build.ts:6646, and the lane entry at src/rules/featGrantsLane.ts:191
+   ('viking-vindicator': weapons ['bastard-sword','rapier'], treatAsLowerCategory, requiresAnyFeat
+   ['viking-weapon-familiarity']). Revert-sensitive test: batch030-gap-engine.test.ts:62/70/77 — both
+   weapons at simple rank only when the Familiarity feat is also held, untrained with viking-vindicator
+   alone, and the Familiarity feat's own six-weapon list unchanged. Finding id is in confirmed[]; the
+   record id is in the describe title; citation form is correct.
+
+4. CLOSED — engine / CROSS-FILE — bands-of-force#talismans (ref src/rules/attachments.ts)
+   affixHostType() exists at src/rules/attachments.ts:110-111 and is the single predicate planAffix
+   (line 173) and both UI host gates (InventoryTab.tsx:1128, ItemEditorModal.tsx:1435) route through;
+   `affixHostAs?: 'weapon'|'armor'|'shield'` is on ItemBase at src/rules/types.ts:3904; the data half is
+   the gap-engine spec's second finding (items/bands-of-force affixHostAs "armor", quoting AoN
+   equipment-3058). Test batch030-gap-engine.test.ts:101-119 patches the row in memory and pins all four
+   arms — armour talisman accepted, weapon-only talisman refused, rune still refused, and plain
+   equipment without the flag still refused, which proves the flag is the whole gate.
+
+5. CLOSED (parked, artefact confirmed) — instruments / CROSS-FILE — eclectic-skill double carrier
+   ref flaggedResidue "both carriers already pinned". Verified: the numeric carrier is
+   feats/eclectic-skill.untrainedProficiency, pinned on a built investigator 15 by
+   test/untrained-proficiency.test.ts:41-44 ("Eclectic Skill makes it your full level" → 15); the second
+   carrier is a PERMISSION star with no magnitude, pinned on a built bard 9 by
+   test/batch030-situational.test.ts:100-114, which also re-asserts the numeric carrier is untouched.
+   Nothing stacks, no edit owed, and situationalBonuses.ts is the situational family's staged file.
+
+6. CLOSED (parked, artefact confirmed) — situational / CROSS-FILE — crit-spec plumbing, deadly-butterfly
+   ref flaggedResidue. The player-facing half ships: FEAT_SITUATIONAL["deadly-butterfly"] at
+   src/rules/situationalBonuses.ts:842 carries the knife effect and print's "only one at a time", pinned
+   at batch030-situational.test.ts:119-160 including a test on a REALLY WIELDED butterfly sword through
+   explainStat({kind:'strikeDamage', instanceId}). The durable `asGroup` field would land in
+   src/rules/types.ts + src/rules/derive.ts, which are the engine family's stage[] in this batch — a live
+   cross-family collision — and the proposal is a mis-shape (print grants a CHOICE between two crit-spec
+   effects; a per-group string cannot express it). One record needs it. Parked with evidence, not "out
+   of scope".
+
+7. CLOSED — situational / CROSS-FILE — "deadly-butterfly — TAUGHT (finding id: deadly-butterfly)"
+   ref src/rules/situationalBonuses.ts:842. Entry present with the batch-030 citation at line 833 quoting
+   AoN feat-2708's second sentence; three revert-sensitive its at batch030-situational.test.ts:119-160,
+   each with `// batch 030: deadly-butterfly` and the record id in the describe title. The finding id is
+   in confirmed[] and appears on the teach line of work/.b030-report-situational.txt:60, so the closer
+   will derive MATCHES from the finding, not from the record.
+
+8. CLOSED (parked, collator artefact) — data-rows / DATA STILL NEEDED — the bare "-----" rule
+   Verified at work/.b030-verify-data-rows.txt:137-140: the heading's body reads "(none — every row the
+   16 findings need is authored in work/.b030-rows-data.json…)". The gap line is the ASCII rule the
+   apply-digest collator swept up. Nothing is owed against it.
+
+9. CLOSED (parked, collator artefact) — data-rows / CROSS-FILE — the bare "-----" rule
+   Same collator artefact at work/.b030-verify-data-rows.txt:143-144. ⚠ but the section's real items 2-6
+   never became gap lines at all — see OPEN B below.
+
+10. CLOSED — data-rows / CROSS-FILE — MainTab.tsx stanceFeats (ref src/sheet/MainTab.tsx:409)
+    The widening is in place: stanceFeats now reads `[...character.feats.map(...), ...grantedActions]`
+    deduped by id (src/sheet/MainTab.tsx:411-417), under a comment quoting Unshaken in Iron's printed
+    clause. Manifest family "gap-data-rows" stages MainTab.tsx and test/batch030-gap-stance-toggle.test.tsx.
+    Four revert-sensitive its (renders the chip for a Stalwart Defender, pressing it sets activeStance,
+    and all five featless stances are reachable through grantsActions), each cited
+    `// batch 030: unshaken-in-iron#stance`; the finding id is on the AUTHORED line of
+    work/.b030-report-gap-data-rows.txt:23. The spec work/.b030-rows-gap-data-rows.json is valid with
+    backfillRows:[] and states why no row is correct.
+
+11. CLOSED — engine / DATA STILL NEEDED — the verify-corrected restatement of line 1
+    Same ref work/.b030-rows-gap-engine.json, same evidence as line 1. The verify agent's correction
+    (rows must carry {potency, resilient}, not potency alone) is honoured: 81 of the 108 rows carry a
+    resilient tier and the reader for both halves is exercised on a built character. ⚠ verify counted
+    116 qualifying records; the spec rows 108 — the shortfall is OPEN A.
+
+12. CLOSED — engine / CROSS-FILE — the verify-corrected restatement of line 3. Same artefacts, same
+    tests; nothing extra owed.
+
+13. CLOSED (parked, artefact confirmed) — instruments / CROSS-FILE — wg-casting.mjs cannot run under node
+    ref flaggedResidue "no caller is broken". Verified: the only launchers are
+    scripts/wg-batch-run.mjs:345 and :1033, both `npx jiti scripts/wg-casting.mjs`, and the script's own
+    header (lines 12-14) documents that invocation; the static imports at wg-casting.mjs:23-24 are
+    unchanged by this batch, so nothing flipped. Not a one-liner (an ESM static import resolves before
+    any guard) and the fix is a launcher decision. Parked with an artefact, not on scope alone.
+
+14. CLOSED (parked, artefact confirmed) — situational / CROSS-FILE — verify's restatement of line 6.
+    Same artefacts, same grounds. No owner question is owed: print settles the mechanic and WG encodes
+    strictly less, so there is nothing for the owner to rule between.
+
+LEDGER RESULT: 14 lines — 14 CLOSED, 0 REOPENED, 0 STILL-OPEN.
+
+================================================================================
+STILL-OPEN — found by this pass, NOT in work/.b030-gaps.json (7 lines)
+================================================================================
+These are open after my pass. The ledger does not carry them, so the driver would not see them.
+
+A. STILL-OPEN — the specific magic armour builtInRunes lane is 108 rows, not the whole lane.
+   I re-measured independently of the gap agent's AoN-subcategory anchor (scan of core.json armour
+   records whose core-descriptions.json text prints a fundamental rune, minus the 108 rowed):
+   at least TWELVE armour records print the rune in their own name and still get nothing —
+     ancestral-embrace "+4 major resilient leather armor"      {potency:4, resilient:'major'}
+     robes-of-xin-edasseril "+3 greater resilient … explorer's clothing" {potency:3, resilient:'greater'}
+     holy-chain "+2 resilient chain mail"                      {potency:2, resilient:'resilient'}
+     unholy-plate "+2 resilient full plate"                    {potency:2, resilient:'resilient'}
+     hollow-robes "+2 resilient explorer's clothing"           {potency:2, resilient:'resilient'}
+     shared-pain-sankeit "+2 resilient fortification … sankeit" {potency:2, resilient:'resilient'}
+     warleaders-bulwark-greater "+2 resilient breastplate"     {potency:2, resilient:'resilient'}
+     medusa-armor "+2 adamantine scale mail"                   {potency:2}
+     warleaders-bulwark "+1 resilient breastplate"             {potency:1, resilient:'resilient'}
+     mariners-splint "+1 splint mail"                          {potency:1}
+     ghoul-hide "+1 hide armor"                                {potency:1}
+     crushing-coils "+1 leather armor"                         {potency:1}
+   plus five duplicate-shaped ids that need a decision rather than a value —
+   greater-mitigation-mail (a second copy of the rowed mitigation-mail-greater) and
+   plate-of-yled{,-greater,-major,-true}-graveknight-plate (second copies of the rowed plate-of-yled
+   family). Values above are read from each record's own description; they are a starting list, not a
+   measured lane — the residue exists because the script anchored on the mirror's "Specific Magic Armor"
+   subcategory + base_item, and these records sit outside that anchor. This is why line 1/11 closes the
+   ARTEFACT but not the lane: the gap agent's own line said 111 remained and verify said 115.
+
+B. STILL-OPEN ×5 — work/.b030-verify-data-rows.txt CROSS-FILE GAPS items 2-6 were never collated into
+   work/.b030-gaps.json. The collator captured item 1 (line 10 above) and turned the two ASCII rules into
+   lines 8 and 9; items 2-6 have no ledger line, no disposition and no owner. They are, verbatim in
+   substance and re-verified by me:
+   B2. scripts/data/stances.json cobra-stance.strikes[].traits — "deadly d10" space form; matches
+       derive.ts:4602 /^deadly-(d\d+)$/ on neither side. Same defect as kaiju-stance#fatal.
+   B3. scripts/data/stances.json claw-stance.strikes[].traits — "versatile piercing", same defect.
+   B4. scripts/data/stances.json vitality-manipulating-stance.strikes[].traits — "versatile vitality",
+       same defect. (B2-B4 are also in work/.b030-report-data.txt's CROSS-FILE GAPS and are the only
+       space-separated stance strike traits in the corpus.)
+   B5. scripts/wg-batch-close.mjs:162-163 — CONFIRMED by reading the code: citations() adds
+       `row spec … (N row(s))` for ANY finding id present in a spec doc, N=0 included. Three specs carry
+       findings with backfillRows:[] as the honest record of a NO-ROW decision (gap-data-rows,
+       situational, instruments), so those findings gain a row citation and will derive FIXED without a
+       row ever existing. Fix in the closer (require non-empty backfillRows, or an explicit noRow:true).
+       Owner: the driver.
+   B6. work/.b030-specs.json — CONFIRMED: the data family's manifest entry is family "data", but
+       FAMILY_RULES (scripts/wg-batch-run.mjs:452) names that family "data-rows" and wg-batch-close.mjs:95
+       builds reportPaths as work/.b030-report-<family>.txt / -verify-<family>.txt. So the closer will
+       look for work/.b030-verify-data.txt, which does not exist, and will never read
+       work/.b030-verify-data-rows.txt. Harmless for THIS batch's verdicts (that family produced no
+       settle or comparer teach) and it is why B2-B6 were invisible to the collator in the first place.
+       Rename one side. Owner: the driver.
+
+C. STILL-OPEN (BLOCKER, another family's file — I did not edit it) —
+   test/batch030-gap-engine.test.ts:157 asserts
+     expect((db.items[r.id] as {builtInRunes?: unknown}).builtInRunes).toBeUndefined()
+   against the SHIPPED content database, inside a loop over all 108 rows. It is the exact
+   patched-vs-shipped delta the batch rules forbid: it passes today and goes RED for all 108 records the
+   moment the driver applies the spec and regenerates core.json. The rest of that file is correct
+   (the sibling test at :162 patches and strips in memory). One-line fix in the gap-engine family's own
+   file: drop that assertion, or invert it to read the row set rather than the database (the
+   double-count guard it intends is already given by the 0-collision check the applier does).
+
+gapsOpen after this pass: 7 (A, B2, B3, B4, B5, B6, C). None of them is a ledger line the driver can
+find in work/.b030-gaps.json — all seven need adding before the driver runs, and C fails the batch's own
+test run if it is not fixed first.

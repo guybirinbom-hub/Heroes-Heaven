@@ -1,0 +1,120 @@
+BATCH 030 — ADVERSARIAL VERIFY, INSTRUMENTS FAMILY (WG-COMPARISON lane)
+verifier default: NOT DONE until proved. Everything below was re-measured, not taken from the report.
+
+WHAT I RE-RAN (nothing here is quoted from work/.b030-report-instruments.txt)
+  · extracted HEAD copies of both comparers (git show HEAD:scripts/wg-diff.mjs / wg-values.mjs into
+    scripts/, so ROOT still resolves) and ran BEFORE/AFTER pairs, diffing by RECORD not by count.
+  · node scripts/vt.mjs run test/batch030-instruments.test.ts   -> 9 passed
+  · npx tsc --noEmit                                            -> clean
+  · node scripts/test-flip-audit.mjs --batch 030                -> clean, 0 new settle keys
+  · node scripts/wg-settle-stale.mjs                            -> 64 answer nothing (was 66)
+  · a throwaway vitest harness on BUILT characters for all four mechanics — written, run, deleted.
+  All scratch (scripts/.b030v-*.mjs, work/.b030v-*) deleted; test/ and work/ carry no stunt leftovers.
+
+MEASURED BLAST RADIUS, wg-diff.mjs, HEAD vs working tree, --raw (settles bypassed), whole corpus:
+  EXACTLY 8 records changed their (bucket, missing, theirKinds, ourKinds) vector. Every other record
+  in 4168 is byte-identical. THEY-ONLY 429 -> 422, WE-ONLY 2739 -> 2740, AGREE 1000 -> 1006.
+    unshaken-in-iron        THEY-ONLY missing=[conditional,ac]      -> AGREE   ourKinds=[defense]
+    eclectic-skill          THEY-ONLY missing=[unmapped]            -> WE-ONLY theirKinds=[skill]
+    untrained-improvisation THEY-ONLY missing=[conditional,unmapped]-> AGREE   (the deleted settle)
+    armor-specialist        THEY-ONLY missing=[conditional,ac]      -> AGREE   (the deleted settle)
+    resilient / -greater / -major   THEY-ONLY missing=[save]        -> AGREE   ourKinds=[save]
+    armor-expertise         WE-ONLY -> WE-ONLY (kind vector only; still WE-ONLY, no gap silenced)
+  Non-raw (the shipped measurement) reproduced independently: THEY-ONLY 309, WE-ONLY 2822, AGREE 1037
+  — the report's AFTER numbers are correct.
+MEASURED BLAST RADIUS, wg-values.mjs, HEAD vs working tree:
+  batch 028 log byte-identical. batch 029 log byte-identical. batch 030: 9 agree -> 11 agree, and the
+  ONLY lines removed are the six MISSING save rows on bands-of-force and resilient.
+  Wide probe (all 159 runes + all 18 records carrying a numeric passiveEffects.saves): 16 agree -> 23.
+  The 7 that cleared are exactly resilient/-greater/-major and bands-of-force/-greater/-major plus
+  skarjas-heartstone. Still reporting afterwards, unchanged: armor-potency-1/2/3, soaring,
+  weapon-potency-2/3 — the kind map is provably not a blanket.
+
+------------------------------------------------------------------------------- per finding
+
+eclectic-skill#instrument — DONE (taught, wg-diff.mjs; instrument misread, correctly no data row)
+  Evidence: their UNTRAINED_IMPROVISATION now maps to 'skill' and OUR_KINDS.skill lists
+  untrainedProficiency; feats/eclectic-skill really carries {levelMinus:0} and derive.ts:485 reads
+  db.feats[...].untrainedProficiency as c.level - minus. On a BUILT bard 8 my harness measured
+  untrainedSkillBonus = null without the feat and 8 with it — the printed *"equal to your level"*.
+  Record left THEY-ONLY. The deleted 'untrained-improvisation' settle is genuinely replaced by a
+  carrier: under --raw that record moved THEY-ONLY -> AGREE, and wg-settle-stale went 66 -> 64.
+
+unshaken-in-iron#instrument — DONE (taught, wg-diff.mjs; instrument misread, correctly no data row)
+  Evidence: /^ARMOR_SPECIALIZATION/ -> 'defense' is placed ABOVE the unanchored /^AC|ARMOR/ -> 'ac'
+  test that was swallowing it, and armorSpec is listed under OUR_KINDS.defense. armorSpecAccess
+  (derive.ts:3743-3767) reads categories unconditionally and ifTrained behind
+  proficiencies.defenses[cat] !== 'untrained', applied as a typed resistance at derive.ts:2718 —
+  never AC, so the old 'ac' flag was the misclassification the finding claims. On a BUILT fighter 8
+  my harness measured armorSpecAccess().categories containing 'light' only with the feat.
+  Carrier-gated, adversarially: stunting armorSpec on classFeatures/armor-expertise (a SECOND record)
+  reopens 'defense'. The deleted 'armor-specialist' settle answers nothing now (THEY-ONLY -> AGREE).
+
+resilient — DONE (taught, wg-diff.mjs + wg-values.mjs; instrument misread, correctly no data row)
+  Evidence: runes['resilient'|'-greater'|'-major'] = kind 'resilient', value 1/2/3; planRune
+  (attachments.ts:125-129) turns value into RESILIENT_TIER, and resilientSaveBonus (derive.ts:200-206,
+  RESILIENT_BONUS 1/2/3/4) feeds deriveSave's item bonus at derive.ts:239 — so the asserted NUMBER is
+  the same number the engine uses. On a BUILT fighter 8 wearing leather armor my harness measured
+  Fortitude +1 with the rune etched and +0 without: AoN equipment-2786 *"a +1 item bonus to saving
+  throws"* reaches the sheet, so a backfill row would have DOUBLED it. Correctly no row.
+  Adversarially: the value IS compared, not suppressed — setting runes/resilient.value = 5 on a
+  stunted content copy reports DIFFERENT ours=5, and only kind 'resilient' is listed, so the other
+  rune lanes still report (verified in the wide probe above).
+  One asymmetry I checked and found INERT: wg-diff gates the runes read on bucket === 'items',
+  wg-values does not. I enumerated every id shared between the runes bucket and another bucket —
+  all 159 runes have an items twin, and the three ids with kind 'resilient' exist ONLY in runes and
+  items — then patched a content copy to give a rune id that also names a spell (bane) the kind
+  'resilient' and re-ran: wgRecord resolves it to items, so nothing crosses. No change made; the
+  gate would be speculative today.
+
+bands-of-force — DONE (taught, wg-values.mjs; instrument misread, correctly no data row)
+  Evidence: items['bands-of-force'].passiveEffects = {ac:1, saves:1} is present, and passiveItemBonus
+  (derive.ts:294-321) reads pe['saves'] as a SCALAR and Math.max'es it into deriveSave's item bonus at
+  derive.ts:239 — one number that genuinely covers all three tracks, which is exactly what the new
+  expansion asserts. On a BUILT fighter 8 with the bands worn+invested my harness measured +1 on
+  Fortitude, Reflex AND Will. Graded siblings hold the magnitude (2 and 3) and agree only because the
+  numbers match. The `ac` half provably survives the save-scalar stunt.
+
+FIXED-BY-ME
+  scripts/wg-values.mjs — the new save-scalar comment cited *AoN equipment-2455* for Bands of Force.
+  equipment-2455 is BLINK BLADE. Bands of Force is equipment-3058 (the record's own aonId, and the
+  id the finding cites). Corrected in place, with the printed clause quoted verbatim from that doc.
+  The same wrong id stands in work/.b030-report-instruments.txt, which is the builder's file and not
+  mine to rewrite — read equipment-3058 there. Gates re-run after the edit: 9 tests pass, tsc clean,
+  flip-audit clean.
+
+NOT-DONE
+  (none of the four.)
+
+------------------------------------------------------------------------------- corrected lists
+
+DATA STILL NEEDED
+  (none) — verified, not accepted. All four are misreads of a carrier that exists and is read; I
+  built each mechanic on a real character and measured the printed number reaching the sheet, so an
+  overlay row on any of them would add a SECOND copy of a bonus already delivered.
+
+CROSS-FILE GAPS
+  1. scripts/wg-casting.mjs cannot run under plain `node` — line 23 imports '../src/rules/seed'
+     extensionless, so it dies with ERR_MODULE_NOT_FOUND; only `npx jiti` runs it, which is how
+     wg-batch-run.mjs invokes it. Reproduced by me, identical before and after this family's work.
+     Owner: whoever owns how the driver launches it.
+  2. work/wg-casting-parity.json is dirty in the working tree. scripts/wg-casting.mjs is the only
+     writer, it writes on every run with no --out, and its content is driven by src/rules/build.ts +
+     derive.ts, which two OTHER families edited this batch. Deliberately not in this family's stage;
+     do not attribute it here.
+  3. scripts/wg-settle-stale.mjs reports 64 registry entries that answer nothing today (was 66 — this
+     family deleted exactly the two it made stale, and made no new ones: none of the 64 names any
+     record on these lanes). Pre-existing hygiene lane, owner: a settle-hygiene pass, not batch 030.
+
+  (Dropped from the builder's list, verified as non-gaps: the doubled skill-lane carrier on
+  feats/eclectic-skill is correct and the mutation proof is correctly pinned on the twin record
+  instead, so nothing is missing anywhere.)
+
+MANIFEST
+  work/.b030-specs.json still carries all four family entries (situational, data, engine, this one).
+  I appended work/.b030-verify-instruments.txt to this family's stage[]; every other path it lists is
+  a file this family really touched, and no other family's entry was altered. No spec row exists in
+  work/.b030-rows-instruments.json (backfillRows is [] on all four), so there is no record+field
+  collision, no supersedes to declare and no created record to give prose to.
+  stage[] paths I touched myself: scripts/wg-values.mjs, work/.b030-verify-instruments.txt,
+  work/.b030-specs.json.
