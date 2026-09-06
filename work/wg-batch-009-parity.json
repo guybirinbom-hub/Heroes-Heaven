@@ -1,0 +1,505 @@
+{
+ "batch": 9,
+ "records": [
+  {
+   "id": "mobility",
+   "verdict": "THEY-ENCODE-NOTHING-USEFUL",
+   "evidence": "Their seven operations are four prose insertions plus three movement-type gates that only decide which of those sentences to print (climb/fly/swim speed present). Nothing computes a number, grants an action, or changes a proficiency. Our record (public/core.json feats.mobility) carries only actionCost passive and the printed text, which delivers the same thing to the player."
+  },
+  {
+   "id": "splinter-of-finality",
+   "verdict": "MATCHES",
+   "evidence": "Three clauses, all three present on our side. (1) Spirit resistance equal to level: public/core.json items.splinter-of-finality passiveEffects.resistances = [{type:'spirit', value:'@actor.level'}]; theirs sets a level-scaled spirit resistance. (2) The +2 status bonus vs spirits/haunts/confused/controlled/doomed/stupefied: src/rules/situationalBonuses.ts:1983, first entry, targets save/all. (3) The -1 status penalty (-2 from 10th) vs clumsy/drained/enfeebled: same line, second entry, spelled '-1 status (-2 at 10th level and above)'. They split the same three-save bonus across three separate row"
+  },
+  {
+   "id": "living-nexus-dedication",
+   "verdict": "MATCHES",
+   "evidence": "Their two granted ability blocks are the two actions the feat prints. public/core.json feats.living-nexus-dedication carries grantsActions:['absorb-magic','overflowing-blade'] and both action records exist in core.json actions. We additionally model the overflowing +1 status save bonus vs arcane/divine/occult/primal effects at src/rules/situationalBonuses.ts:434, which they leave in prose. NOTE: the packet's ourFields showed {} and ourRegistries showed [] for this record — that is stale; the live core.json record carries the grants."
+  },
+  {
+   "id": "snare-hopping",
+   "verdict": "MATCHES",
+   "evidence": "They grant the spell and nothing else. public/core.json feats.snare-hopping has focusSpells:['snare-hopping']; the spell record carries the focus trait, and src/rules/build.ts:3690 (costsAFocusPoint) plus :3740 (poolMax = pointCostingKnown.length + featPoolBonus) turn each focus-trait spell into one pool point. So the player gets the warden spell and the +1 Focus Point the printed sentence names, same as theirs."
+  },
+  {
+   "id": "rogue-dedication",
+   "verdict": "MATCHES",
+   "evidence": "Clause by clause: light armor trained — src/rules/featGrants.ts:421 armor:{light:'trained'}; Stealth-or-Thievery plus one free skill, with the already-trained-in-both redirect on the first slot only — same entry, skillChoices [{options:['stealth','thievery'],redundantFallback:true},{options:'any'}]; the bonus skill feat — bonusSkillFeat:true there, consumed at src/rules/build.ts:3997 and :7307; Surprise Attack — core.json grantsClassFeatures:['surprise-attack'] (classFeature record exists); rogue class DC — core.json classDcGrant:{classId:'rogue'}. Their side encodes the same set: a skill pick"
+  },
+  {
+   "id": "bard-dedication",
+   "verdict": "MATCHES",
+   "evidence": "Their occult spontaneous repertoire keyed to Charisma with two cantrips is src/rules/casterArchetypes.ts:84 (occult, cha, 2 cantrips, bard slug; bard is in SPONTANEOUS_DEDICATIONS at :327 so repertoire=true). Their Occultism+Performance training with the already-trained redirect is src/rules/featGrantsAuto.ts:105 (skills occultism/performance trained, redundantFallback). Trained spell attack/DC comes from the archetype entry's proficiency rather than a separate row. The muse pick is core.json feats.bard-dedication choice.flag 'archetypeMuse' with the five muses, matching their muse selection."
+  },
+  {
+   "id": "lepidstadt-surgeon-dedication",
+   "verdict": "MATCHES",
+   "evidence": "Their only mechanical operation is Medicine to expert; that is src/rules/featGrantsAuto.ts:436 'lepidstadt-surgeon-dedication': { skills: { medicine: 'expert' } }. Their remaining operation is a prose insertion of the First Aid clauses, which we carry as the record's printed description. Same result."
+  },
+  {
+   "id": "necromancer-dedication",
+   "verdict": "MATCHES",
+   "evidence": "Their prepared occult list keyed to Intelligence is src/rules/casterArchetypes.ts:93 mk('occult','int',4,'necromancer') — four known cantrips, prepare two, the wizard-dedication shape the printed dirge describes. Occultism trained with the already-trained redirect: src/rules/featGrantsAuto.ts:392. Trained spell attack/DC: the archetype entry's proficiency. Their granted ability block (the thrall action) is public/core.json feats.necromancer-dedication grantsActions:['command-a-thrall'] plus focusSpells:['create-thrall']; create-thrall is a rank-0 cantrip with no focus trait, and src/rules/buil"
+  },
+  {
+   "id": "stalwart-defender-dedication",
+   "verdict": "MATCHES",
+   "evidence": "Their single granted ability block is the one action the feat prints. public/core.json feats.stalwart-defender-dedication grantsActions:['tenacious-stance'], and core.json actions['tenacious-stance'] exists. Nothing else on either side."
+  },
+  {
+   "id": "shield-your-eyes",
+   "verdict": "THEY-ENCODE-NOTHING-USEFUL",
+   "evidence": "Their single operation is a prose insertion of the feat's own sentence — no computed bonus, no degree-of-success handling. For the record, we model more than they do: src/rules/situationalBonuses.ts:542 flags AC and all three saves with '+2 circumstance while shield raised, against light or visual effects', and public/core.json feats.shield-your-eyes carries degreeShifts critFailToFail for saves against light/visual effects while the shield is raised."
+  },
+  {
+   "id": "living-monolith-dedication",
+   "verdict": "MATCHES",
+   "evidence": "Their mechanical content is Ancient Osirion Lore at trained, upgraded to expert if already trained (plus a private counter of archetype feats taken). Ours is src/rules/featGrantsAuto.ts:440 conditionalSkills {'lore:ancient-osirion': {base:'trained', upgraded:'expert'}}. Their counter is bookkeeping for later feats in the archetype; our equivalent is core.json dedicationGate {archetypes:['living-monolith'],count:2}. The dying-recovery clause is prose on their side and a recordMarks note pinned to the dying condition on ours."
+  },
+  {
+   "id": "day-goggles",
+   "verdict": "MATCHES",
+   "evidence": "Both clauses agree. The -2 Perception is applied as a flat number on both sides: public/core.json items.day-goggles passiveEffects.perception = -2, and they likewise attach a flat -2 to Perception with the visual-only restriction carried in the annotation. The +1 item bonus to saves against visual light effects is src/rules/situationalBonuses.ts:1274 (save/all, '+1 item'); they encode the same bonus as three per-save annotated rows. situationalBonuses is display-only (file header), so the -2 is not counted twice on our side."
+  },
+  {
+   "id": "blessed-one-dedication",
+   "verdict": "MATCHES",
+   "evidence": "Their three operations are trained spell attack, trained spell DC, a divine Charisma casting profile, and the granted spell. public/core.json feats.blessed-one-dedication carries spellcastingGrant {tradition:'divine', keyAbility:'cha', proficiency:'trained'} and focusSpells:['lay-on-hands']; lay-on-hands has the focus trait, so build.ts:3740 gives the 1-point focus pool the feat implies. Same result."
+  },
+  {
+   "id": "triangular-teeth",
+   "verdict": "MATCHES",
+   "evidence": "Their only operation is the +1 item bonus to Survival to navigate bodies of water; that is the first entry at src/rules/situationalBonuses.ts:1636. We additionally model the once-per-day activation they leave in prose: public/core.json items.triangular-teeth counters [{id:'freq',max:1,per:'day',resetsOnRest:true}] and activationCost reaction, plus the +1/+2 circumstance AC and +2 status damage entries on the same situationalBonuses line."
+  },
+  {
+   "id": "summoner-dedication",
+   "verdict": "MATCHES",
+   "evidence": "Their three operations are a granted ability block, an eidolon selection, and surfacing the companions tab. Ours: public/core.json feats.summoner-dedication grantsActions:['manifest-eidolon']; the eidolon type picker is src/builder/shared.tsx:3517 writing build.archetypeEidolonType; src/rules/build.ts:6905-6918 injects the chosen eidolon as a companion so the stat block renders (their companions-tab equivalent); and src/rules/casterArchetypes.ts:172 marks the archetype's tradition as following the eidolon type."
+  },
+  {
+   "id": "scroll-trickster-dedication",
+   "verdict": "MATCHES",
+   "evidence": "Their granted ability block is the Trick Magic Item feat — src/rules/featFeatGrants.ts:450 'scroll-trickster-dedication': ['trick-magic-item'] (the feat record exists in core.json). Their four +2 rows on Arcana/Nature/Occultism/Religion are src/rules/situationalBonuses.ts:531, expressed once as skill/all with the condition 'Trick Magic Item on scrolls'. The crit-fail-to-fail clause they carry only in the annotation text we model properly: public/core.json degreeShifts critFailToFail across those same four skills."
+  },
+  {
+   "id": "demolitionist-dedication",
+   "verdict": "MATCHES",
+   "evidence": "Their mechanical content is Engineering Lore at trained, upgraded to expert if already trained, plus one granted ability block. Ours: src/rules/featGrantsAuto.ts:225 conditionalSkills {'lore:engineering': {base:'trained', upgraded:'expert'}}, and public/core.json feats.demolitionist-dedication grantsActions:['set-explosives'] with the action record present and a 2-action cost."
+  },
+  {
+   "id": "hedge-mage-dedication",
+   "verdict": "MATCHES",
+   "evidence": "Their whole structure is reproduced across two registries even though the core.json record is bare. The skill pick (Arcana/Nature/Occultism/Religion, trained or expert if already trained): src/rules/featGrantsAuto.ts:400. The same answer selecting the tradition (Arcana→arcane, Nature→primal, Occultism→occult, Religion→divine) and the Intelligence-or-Wisdom key: src/rules/casterArchetypes.ts:102-110, traditionBySkill plus choiceKeyAbility ['int','wis'], with a comment recording that a free tradition picker was deliberately NOT added because it would override the skill answer — which is precisel"
+  },
+  {
+   "id": "cultivator-dedication",
+   "verdict": "MATCHES",
+   "evidence": "All five of their operations are present. Occult/Wisdom casting profile with trained spell attack and DC: public/core.json feats.cultivator-dedication spellcastingGrant {tradition:'occult', keyAbility:'wis', proficiency:'trained'} (the live record carries this; the packet's ourFields omitted it). The granted spell: focusSpells:['adapt-self'], which has the focus trait and therefore yields the 1-point pool at src/rules/build.ts:3740. Occultism to expert: src/rules/featGrantsAuto.ts:223. We also carry the qi-spell prerequisite note as a spellNotes entry, which they leave in prose."
+  },
+  {
+   "id": "loremasters-etude",
+   "verdict": "MATCHES",
+   "evidence": "They grant the composition spell and add one Focus Point explicitly. We reach the same state by a different route: public/core.json feats.loremasters-etude focusSpells:['loremasters-etude'], and because that spell carries the focus trait, src/rules/build.ts:3690/3740 counts it as one pool point ('the maximum Focus Points your focus pool can hold is equal to the number of focus spells you have'). Net for the player: the spell plus one point, on both sides. The record deliberately carries no focusPoolBonus — build.ts:2925-2932 documents that a feat contributing a spell must not also pay a bonus,"
+  },
+  {
+   "id": "mummy-dedication",
+   "verdict": "MATCHES",
+   "evidence": "Every one of their operations has a home. The two creature traits: public/core.json feats.mummy-dedication grantsCreatureTraits ['mummy','undead']. Basic undead benefits (their first granted ability block): immunities ['death effects'], negativeHealing:true, conditionalSenses upgrading low-light vision to darkvision, grantsLanguages ['necril'], and a situational +1 vs disease and poison, all on the record. Fire weakness equal to half level: weaknesses [{type:'fire', value:'floor(@actor.level/2)'}] — identical formula. Toughness (their second granted ability block): src/rules/featFeatGrants.ts:"
+  },
+  {
+   "id": "starlit-sentinel-dedication",
+   "verdict": "MATCHES",
+   "evidence": "Their two operations are the granted seal item and the granted transformation ability block. public/core.json feats.starlit-sentinel-dedication carries grantsItems [{itemId:'transformation-seal', quantity:1}] (the item record exists) and grantsActions ['starlit-transformation'] (the action record exists), plus a +1 status damage modifier scoped to the transformed weapon and a sentinel-form toggle at src/rules/modes.ts:363. NOTE: the packet's ourFields showed neither grant; the live record has both."
+  },
+  {
+   "id": "fresh-ingredients",
+   "verdict": "MATCHES",
+   "evidence": "Their two rows are +2 Nature for Treat Wounds outside the wilderness and +4 inside it. src/rules/situationalBonuses.ts:337 carries the same pair on one row: skill/nature, '+2/+4 circumstance', condition 'to Treat Wounds with Natural Medicine (+2 anywhere, +4 in wilderness)'. Both sides present it as a conditional annotation rather than a flat number."
+  },
+  {
+   "id": "cleric-dedication",
+   "verdict": "MATCHES",
+   "evidence": "Their divine prepared-tradition profile keyed to Wisdom with two cantrips and trained spell attack/DC is src/rules/casterArchetypes.ts:85 mk('divine','wis',2,'cleric'). Religion trained plus a second skill slot for the deity's associated skill, both with the already-trained redirect: src/rules/featGrantsAuto.ts:195 (skills religion trained, skillChoices [{options:'any', rank:'trained'}], redundantFallback). Their holy/unholy/neither sanctification pick is public/core.json feats.cleric-dedication choice.flag 'sanctification', whose holy and unholy options each carry grant.grantsCreatureTraits, "
+  },
+  {
+   "id": "kineticist-dedication",
+   "verdict": "MATCHES",
+   "evidence": "Their element selection is public/core.json feats.kineticist-dedication choice.flag 'kineticElement' with the six gates, read by src/rules/kineticElements.ts:26. Their two granted ability blocks are grantsClassFeatures ['channel-elements','elemental-blast'] (both classFeature records exist). Nature trained with the already-trained redirect: src/rules/featGrantsAuto.ts:425. We additionally model the impulse attack roll statistic (specialStatistic keyed to the kineticist class DC) and the kineticist class DC grant, which the printed text names and their rows leave to their class-DC chassis."
+  },
+  {
+   "id": "lion-blade-dedication",
+   "verdict": "MATCHES",
+   "evidence": "Their Deception-or-Stealth pick with the trained/expert upgrade is src/rules/featGrantsAuto.ts:439 skillChoices [{options:['deception','stealth'], rank:'trained', conditionalRank:{base:'trained', upgraded:'expert'}}]. Their Espionage Lore creation, its trained rank, and the level-scaled expert/master/legendary ladder are all the Additional Lore feat: public/core.json grantsFeats ['additional-lore'] with src/rules/featFeatGrants.ts:260 pinning it to Espionage Lore ({kind:'fixedLore', lore:'espionage'}) and :327 listing the grant — Additional Lore's own record carries the level ladder. Their gat"
+  },
+  {
+   "id": "gladiator-dedication",
+   "verdict": "MATCHES",
+   "evidence": "Their granted ability block is the Additional Lore feat pinned to Gladiatorial Lore — src/rules/featFeatGrants.ts:236 ({kind:'fixedLore', lore:'gladiatorial'}) and :552 (the grant), backed by src/rules/featGrantsLane.ts:24 for the lore itself. Their gated extra Lore pick when Gladiatorial Lore was already trained is the same conditional. The spectators clause (temporary HP equal to level, Performance for initiative) is prose on their side; we carry it as a situational hp entry on public/core.json feats.gladiator-dedication, so if anything we surface more."
+  },
+  {
+   "id": "red-mantis-assassin-dedication",
+   "verdict": "MATCHES",
+   "evidence": "Their two skill rows are Stealth trained and Assassin Lore created-and-trained. Ours is src/rules/featGrantsAuto.ts:560-563, which is strictly stronger and matches the printed text better: conditionalSkills {stealth:{base:'trained',upgraded:'expert'}, 'lore:assassin':{base:'trained',upgraded:'expert'}} — it implements the 'if you were already trained, you become an expert instead' clause that their encoding drops — plus weaponFamiliarity {weapons:['sawtooth-saber'], mirrorBestCategory:true} for the printed sabre-proficiency mirror, which they do not encode at all. The Achaekek sanctification c"
+  },
+  {
+   "id": "sorcerer-dedication",
+   "verdict": "MATCHES",
+   "evidence": "Their bloodline selection is public/core.json feats.sorcerer-dedication choice.flag 'sorcererBloodline' with all eighteen bloodlines. Their spontaneous repertoire with two cantrips, Charisma key and trained spell attack/DC is src/rules/casterArchetypes.ts:163 mk('arcane','cha',2,'sorcerer',true) — the trailing flag is choiceTradition, which is how the bloodline's tradition reaches the entry, and :326 puts it in SPONTANEOUS_DEDICATIONS. Their two-skill grant is src/rules/featGrantsAuto.ts:593, two open trained slots with redundantFallback. Confidence is medium on one point only: the printed tex"
+  },
+  {
+   "id": "wild-mimic-dedication",
+   "verdict": "MATCHES",
+   "evidence": "Their two operations are creating Wild Mimic Lore at trained and raising it to expert when Nature is legendary. Ours is src/rules/featGrantsAuto.ts:681-684: skills {'lore:wild-mimic':'trained'} plus crossConditionalSkills {'lore:wild-mimic': {whenSkill:'nature', whenRank:'legendary', rank:'expert'}} — the same cross-skill gate. The +1 circumstance bonus to saves against a creature you Recalled Knowledge about is prose on their side and modelled on ours at src/rules/situationalBonuses.ts:899."
+  },
+  {
+   "id": "exhort-the-faithful",
+   "verdict": "MATCHES",
+   "evidence": "Their mechanical row is a +2 bonus on Religion when Requesting or Coercing coreligionists; their other two operations are prose restating the skill substitution. src/rules/situationalBonuses.ts:301 carries '+2 circumstance' on Religion, Diplomacy and Intimidation with the condition 'Request or Coerce members of your own faith (may use Religion for the check)' — the same bonus, flagged on all three statistics the substitution can touch rather than on Religion alone. The crit-fail attitude clause is prose on both sides."
+  },
+  {
+   "id": "cantrip-casting",
+   "verdict": "MATCHES",
+   "evidence": "Their single operation grants cantrip capacity. public/core.json feats.cantrip-casting spellSlotBonus {cantrips:2, entryId:'cantrip-casting-casting'}, applied to the archetype entry registered at src/rules/casterArchetypes.ts:309-319 (cantrips:0 on the base entry precisely so the record's own bonus is the whole grant, with a free tradition and a free key attribute since the ladder is shared by several trait-gated archetypes). Two additional cantrips either way."
+  },
+  {
+   "id": "harrower-dedication",
+   "verdict": "MATCHES",
+   "evidence": "Their five operations map one to one: Occultism trained and Fortune-Telling Lore trained — src/rules/featGrantsAuto.ts:388 (with redundantFallback for the already-trained redirect); the granted ability block (the reaction) — public/core.json feats.harrower-dedication grantsActions ['avoid-dire-fate'], action record present; the occult casting source plus granted spell (the ritual) — grantsRituals [{spellId:'harrowing'}]. We additionally carry the daily harrow-omen suit as a rest-time choice (choice.flag 'harrowOmen', daily:true) and the two-more-feats dedication gate, which they leave in prose"
+  },
+  {
+   "id": "undead-master-dedication",
+   "verdict": "MATCHES",
+   "evidence": "Their two operations are surfacing the companions tab and one granted ability block. Ours: src/rules/companionGrants.ts:190 registers the companion (kind 'animal' — the printed text itself says undead companions use the animal companion rules), and public/core.json feats.undead-master-dedication grantsActions ['call-companion'], the action the feat names once you have more than one. Same reachable state."
+  },
+  {
+   "id": "staff-acrobat-dedication",
+   "verdict": "MATCHES",
+   "evidence": "Their two rows are +2 Athletics on High Jump/Leap/Long Jump while wielding a staff, and an Acrobatics row with no value carrying the Balance success-to-critical-success clause as text. Ours: src/rules/situationalBonuses.ts:2479 carries the +2 circumstance Athletics entry with the same condition, and public/core.json feats.staff-acrobat-dedication models the Balance clause properly as degreeShifts successToCrit on Acrobatics/balance rather than as prose. We also pin the +5 feet Leap distance to the Leap, High Jump and Long Jump action records via recordMarks; neither side computes it as a numbe"
+  },
+  {
+   "id": "battle-harbinger-dedication",
+   "verdict": "MATCHES",
+   "evidence": "Their skill pick is Athletics-or-Acrobatics and their conditional is 'already have Toughness → pick another feat, otherwise grant Toughness'. Ours: src/rules/featGrants.ts:505-509 choiceGrants keyed on the record's own two options (acrobatics/athletics), which the surrounding comment records as the deliberate fix for the record previously shipping two pickers; Toughness at src/rules/featFeatGrants.ts:341. The one difference is presentational: we grant Toughness unconditionally and route the 'if you already have it, take another general feat' substitution through the record's note to Setup → Ov"
+  },
+  {
+   "id": "sterling-dynamo-dedication",
+   "verdict": "MATCHES",
+   "evidence": "Their nested selection is prosthesis type (power driver / percussive striker) crossed with operation method (automatic / manual), each combination granting an item. Ours is public/core.json feats.sterling-dynamo-dedication choice.flag 'dynamo' with exactly those four combinations, each wired to a grantedStrikes entry: automatic power driver d6 bludgeoning shove, manual power driver d8, automatic percussive striker d4 agile finesse, manual percussive striker d6 — matching the printed 'increases the damage die by one size' for manual control. All four are brawling-group unarmed. We also carry ch"
+  },
+  {
+   "id": "pathfinder-agent-dedication",
+   "verdict": "MATCHES",
+   "evidence": "Their operations are one skill increase pick and Pathfinder Lore at trained, upgraded to expert if already trained. Ours: src/rules/featGrantsAuto.ts:531, conditionalSkills {'lore:pathfinder': {base:'trained', upgraded:'expert'}} plus skillChoices [{options:'any', rank:'trained'}]. We additionally model the clause they omit entirely — 'when using a skill untrained, your proficiency bonus is equal to your level instead of 0' — as public/core.json feats.pathfinder-agent-dedication untrainedProficiency {levelMinus:0}, the same field Untrained Improvisation uses. Nothing we give is less than their"
+  },
+  {
+   "id": "poison-resistance",
+   "verdict": "MATCHES",
+   "evidence": "Both clauses agree. Poison resistance equal to half level: public/core.json feats.poison-resistance resistances [{type:'poison', value:'floor(@actor.level/2)'}], the same halved-level formula they use. The +1 status bonus to saves against poisons: src/rules/situationalBonuses.ts:495 (save/all, '+1 status', 'against poisons'); they encode it as three per-save annotated rows."
+  },
+  {
+   "id": "force-fang",
+   "verdict": "MATCHES",
+   "evidence": "They grant the spell and nothing else. public/core.json feats.force-fang focusSpells:['force-fang']; the spell record carries the focus trait, so src/rules/build.ts:3690/3740 also supplies the +1 Focus Point the printed sentence names. Same result."
+  },
+  {
+   "id": "stunning-blows",
+   "verdict": "THEY-ENCODE-NOTHING-USEFUL",
+   "evidence": "Their single operation is a prose insertion of the feat's own sentence. There is no save DC row, no condition application, no computed value — the whole mechanic (Fortitude save against your class DC, stunned 1 or 3) is left to the player and GM. public/core.json feats.stunning-blows likewise carries only actionCost passive and the printed text, so both sides deliver the same thing."
+  },
+  {
+   "id": "muscle-barrier",
+   "verdict": "MATCHES",
+   "evidence": "They grant the spell. public/core.json feats.muscle-barrier focusSpells:['muscle-barrier'], and the spell record carries the focus trait, so it also contributes its Focus Point at src/rules/build.ts:3740. NOTE: the packet's ourFields was {} for this record — that is stale; the live core.json record carries the grant."
+  },
+  {
+   "id": "domain-acumen",
+   "verdict": "MATCHES",
+   "evidence": "Their two operations are a granted ability block and a pick of an initial domain spell. Ours: public/core.json feats.domain-acumen choice {flag:'domainAcumen', kind:'domains'} with maxTakable:null for the repeatable clause. src/rules/build.ts:2893-2897 resolves a 'domains' choice through DOMAIN_SPELLS and pushes the chosen initial domain spell into the character's focus spells; the per-taking loop at build.ts:3132-3146 handles the repeat. No double-count of the Focus Point: the record also carries focusPoolBonus:1, but the guard at build.ts:2957 excludes it when def.kind === 'domains', because"
+  },
+  {
+   "id": "poisoner-dedication",
+   "verdict": "MATCHES",
+   "evidence": "Their single granted ability block is the Alchemical Crafting feat: src/rules/featFeatGrants.ts:434 'poisoner-dedication': ['alchemical-crafting'] (the feat record exists). We additionally model the four daily advanced-alchemy poisons they do not encode — public/core.json feats.poisoner-dedication advancedAlchemy {items:4}, with a note that the app's daily-preparation pool is not restricted to poisons. Nothing we give is less than theirs. (Our printed text for this record has a stripped feat link, reading 'You gain the .' — a text-cleaner defect, not a mechanics divergence.)"
+  },
+  {
+   "id": "verduran-shadow-dedication",
+   "verdict": "MATCHES",
+   "evidence": "Their mechanical operation is Survival to expert — src/rules/featGrantsAuto.ts:667 'verduran-shadow-dedication': { skills: { survival: 'expert' } }. Their remaining four operations are an annotated Survival row with no value plus three prose insertions of the forest substitution clause; we model that clause properly as public/core.json feats.verduran-shadow-dedication skillSubstitutions [{use:'survival', forSkill:'stealth', when:'when you Avoid Notice, Hide, Sneak, or would use Stealth to roll initiative'}]."
+  },
+  {
+   "id": "tumbling-teamwork",
+   "verdict": "THEY-ENCODE-NOTHING-USEFUL",
+   "evidence": "Their single operation is a prose insertion of the feat's own sentence, with an internal cross-link to the Tumble Through action. No bonus, no granted reaction, no computed value — the ally's Step is left to play. public/core.json feats.tumbling-teamwork carries only actionCost passive and the printed text, which reaches the player the same way."
+  },
+  {
+   "id": "corpse-tender-dedication",
+   "verdict": "MATCHES",
+   "evidence": "src/rules/featGrantsAuto.ts:215 — `'corpse-tender-dedication': { skills: { diplomacy: 'trained' }, redundantFallback: true }`. Their single op sets Diplomacy trained; ours does the same and additionally carries the printed \"if already trained, instead trained in another skill of your choice\" half via redundantFallback (applied at src/rules/build.ts:4337 as a skillFallbacks entry). Nothing else in their encoding."
+  },
+  {
+   "id": "spellshot-dedication",
+   "verdict": "MATCHES",
+   "evidence": "public/core.json feats.spellshot-dedication carries spellcastingGrant {arcane,int,trained}, two effectChoices (`spellbook-cantrip-1/2`, spellFilter cantripsOnly + grantAs 'innate' at-will), grantsItems spellbook-blank (item record exists), dedicationGate {spellshot,beast-gunner,count 2}; src/rules/featGrantsAuto.ts:594 gives Arcana trained + redundantFallback. Compared clause by clause against their ops: same tradition, same key attribute, same proficiency, same skill, same spellbook item, and two cantrips a player can cast each day. Ours presents them as at-will innate rather than prepared-fr"
+  },
+  {
+   "id": "world-rouser-dedication",
+   "verdict": "MATCHES",
+   "evidence": "public/core.json feats.world-rouser-dedication.grantsActions = ['rouse-the-world'] and core.json actions.rouse-the-world exists; src/rules/situationalBonuses.ts:435-438 carries +1 circumstance to Athletics and Acrobatics while in your waking world and +1 circumstance to Nature to Recall Knowledge about creatures and hazards there. Their one op is the same action; the bonuses live inside their ability block."
+  },
+  {
+   "id": "living-vessel-dedication",
+   "verdict": "MATCHES",
+   "evidence": "public/core.json feats.living-vessel-dedication.grantsActions = ['entitys-resurgence'] (action record exists) plus a note on the hour-a-day/Doomed 1 clause; src/rules/situationalBonuses.ts:463 carries the −1 to Will saves for 24 hours if you did not assuage the entity. Their single op is the same reaction."
+  },
+  {
+   "id": "ghost-dedication",
+   "verdict": "MATCHES",
+   "evidence": "public/core.json feats.ghost-dedication: grantsCreatureTraits ['ghost','spirit','undead','incorporeal'] (their four trait ops, and the four the printed text names), immunities ['death effects'], negativeHealing true, situational +1 circumstance on saves against disease and poison, grantsLanguages ['necril'], conditionalSenses low-light→darkvision, note covering Negative Survival, speeds.fly = @actor.speed.land (the Floating clause), unarmedTraits add magical. Traits are consumed at src/rules/build.ts:4719 and src/rules/derive.ts:2718. Note: the packet's `ourFields` snapshot showed a five-entry"
+  },
+  {
+   "id": "exemplar-dedication",
+   "verdict": "MATCHES",
+   "evidence": "public/core.json feats.exemplar-dedication: choice flag 'ikon' (21 options, ownsFeature true) = their ikon select; grantsClassFeatures ['shift-immanence'] (classFeatures.shift-immanence exists) + the chosen ikon record = their two ability blocks; classDcGrant {exemplar}. src/rules/featGrantsAuto.ts:293 adds martial weapons trained (printed; they omit it). Their remaining op is a conditional +3 max HP when the character also has the exemplar resiliency feat — ours computes exactly that centrally on feats.exemplar-resiliency via maxHpBonus {perArchetypeFeat: 3, archetype: 'exemplar'}, so the pla"
+  },
+  {
+   "id": "exquisite-surprise-doll",
+   "verdict": "MATCHES",
+   "evidence": "src/rules/situationalBonuses.ts:1320 — Stealth target, condition \"on Stealth checks to Conceal an Item, when the object is hidden inside the doll's compartment\", bonus \"+1 item\". Same skill, same value, same bonus type, same trigger as their single op."
+  },
+  {
+   "id": "stone-brawler-dedication",
+   "verdict": "MATCHES",
+   "evidence": "public/core.json feats.stone-brawler-dedication.grantsActions = ['stonestrike-stance'] and core.json actions.stonestrike-stance exists. Their createValue counter is bookkeeping for the archetype's own gate; ours is dedicationGate {archetypes:['stone-brawler'], count:2} on the same record."
+  },
+  {
+   "id": "loremaster-dedication",
+   "verdict": "MATCHES",
+   "evidence": "src/rules/featGrantsAuto.ts:455-460 — `skills: { 'lore:loremaster': 'trained' }` plus `crossConditionalSkills: { 'lore:loremaster': { whenSkill: ['arcana','occultism','religion','society'], whenRank: 'legendary', rank: 'expert' } }`. Their four separate conditionals key on exactly those four skills. src/rules/situationalBonuses.ts:846 additionally carries the printed +1 circumstance to Bardic Lore checks, which they omit. Their loremaster casting source grants no spell, slot or proficiency."
+  },
+  {
+   "id": "energy-fortification",
+   "verdict": "THEY-ENCODE-NOTHING-USEFUL",
+   "evidence": "Their only op is injectText — display-only, so there is no mechanical content to compare against. For the record, ours goes further: public/core.json feats.energy-fortification carries a daily choice (flag elementalMedicineElement) whose six options apply resistance and weakness 2/4/8 to void or vitality, gated on Occultism rank via requiresSkillRank, with the immunity-loss clause in the choice note."
+  },
+  {
+   "id": "beastmaster-dedication",
+   "verdict": "MATCHES",
+   "evidence": "src/rules/companionGrants.ts:100 grants the animal companion; public/core.json feats.beastmaster-dedication.grantsActions = ['call-companion'] (action record exists) matches their ability block; spellcastingGrant {primal, cha, trained, focusOnly} matches their casting source and their two proficiency ops — focusOnly is the marker for a dedication that names the profile while the focus spells arrive from later archetype feats (src/rules/build.ts:3561-3579). Their PRIMARY_SHEET_TABS ops are UI only."
+  },
+  {
+   "id": "razmiran-priest-dedication",
+   "verdict": "MATCHES",
+   "evidence": "public/core.json feats.razmiran-priest-dedication.grantsItems = [{itemId:'razmiri-mask'}] and items.razmiri-mask exists — that is their single op. We additionally carry specialStatistic razmiri-mask-dc (higher of class DC or spell DC) and entryRetune {scope:'cleric-dedication-casting', tradition:'occult', keyAbility:'cha'}, both stated in the printed text, so carrying them is not a divergence."
+  },
+  {
+   "id": "pactbound-dedication",
+   "verdict": "MATCHES",
+   "evidence": "public/core.json feats.pactbound-dedication.resistances = [{type:'cold', value:'floor(@actor.level/2)'}] against their `RESISTANCES = \"cold, {{level/2}}\"`. Same type, same formula. Both sides leave the snow Hide/Sneak clause and the saumen kar attitude clause as prose."
+  },
+  {
+   "id": "juggler-dedication",
+   "verdict": "MATCHES",
+   "evidence": "src/rules/featGrantsAuto.ts:423 — `{ skills: { performance: 'trained' }, redundantFallback: true }`; src/rules/featFeatGrants.ts:404 — `'juggler-dedication': ['juggle']`, and feats.juggle exists. Their ability block is the Juggle feat. The dedication gate is on the record as dedicationGate {juggler, count 1}."
+  },
+  {
+   "id": "turpin-rowe-lumberjack-dedication",
+   "verdict": "MATCHES",
+   "evidence": "src/rules/featGrantsAuto.ts:652 — `conditionalSkills: { 'lore:milling': { base: 'trained', upgraded: 'expert' }, 'lore:forest': { base: 'trained', upgraded: 'expert' } }`, which is exactly the shape of their two create+conditional pairs. Their remaining op is an injectText for the forest-cover clause, which neither side automates."
+  },
+  {
+   "id": "acute-scent",
+   "verdict": "MATCHES",
+   "evidence": "public/core.json feats.acute-scent.whileActive = [{state:'rage', senses:[{name:'scent', range:30, acuity:'imprecise'}]}]; the clause is walked at src/rules/derive.ts:1049 and its senses reach the defenses block at src/rules/derive.ts:2385 only while the rage toggle is on — matching the printed \"While you're raging\" gate."
+  },
+  {
+   "id": "pistol-phenom-dedication",
+   "verdict": "MATCHES",
+   "evidence": "src/rules/featFeatGrants.ts:425 — `'pistol-phenom-dedication': ['pistol-twirl']`, and feats.pistol-twirl exists in public/core.json. Their single op is the same feat. The Performance-instead-of-Deception clause is prose on both sides."
+  },
+  {
+   "id": "rivethun-involutionist-dedication",
+   "verdict": "MATCHES",
+   "evidence": "src/rules/featGrantsAuto.ts:568 — `{ skills: { nature: 'expert', religion: 'expert' } }`; src/rules/casterArchetypes.ts:140 — `{ ...mk('divine','wis',2,'rivethun'), repertoire: true }`, which builds a spontaneous entry at trained with two player-chosen cantrips (src/rules/build.ts:5770). The printed text lets the player choose the two cantrips, so a free pick is correct here."
+  },
+  {
+   "id": "mortal-healing",
+   "verdict": "THEY-ENCODE-NOTHING-USEFUL",
+   "evidence": "Their only op is injectText — display-only. The success-becomes-critical-success upgrade on Treat Wounds is unautomated on both sides; our record carries the same rule as its description."
+  },
+  {
+   "id": "entreat-with-forebears",
+   "verdict": "MATCHES",
+   "evidence": "src/rules/situationalBonuses.ts:299 — one entry with targets [skill:diplomacy, skill:deception, skill:intimidation, perception, save:all], condition \"interacting with (or resisting the tricks of) creatures of your bloodline's trait\", bonus \"+1 circumstance\". Their seven ops enumerate the three saves separately; save:all covers all three. Same value, same bonus type, same trigger."
+  },
+  {
+   "id": "ostilli-host-dedication",
+   "verdict": "MATCHES",
+   "evidence": "src/rules/featGrantsAuto.ts:527 — `conditionalSkills: { 'lore:ostilli': { base: 'trained', upgraded: 'expert' } }`, the same shape as their create+conditional pair. public/core.json feats.ostilli-host-dedication.grantsActions = ['spit-ambient-magic','repel-ambient-magic'] and both action records exist — their two ability blocks."
+  },
+  {
+   "id": "hurl-at-the-horizon",
+   "verdict": "THEY-ENCODE-NOTHING-USEFUL",
+   "evidence": "Every one of their eight ops is a select wrapping seven injectText branches — display-only, so there is no mechanical content to compare. For the record, ours asks the same question and adds a marker: public/core.json feats.hurl-at-the-horizon carries choice {flag:'imbuedIkon', kind:'ikons', ikonType:'weapon'} plus a situational entry describing the thrown 15 feet / +10 feet upgrade while immanence is active. Neither side actually rewrites the weapon's traits."
+  },
+  {
+   "id": "crushing-grab",
+   "verdict": "THEY-ENCODE-NOTHING-USEFUL",
+   "evidence": "Their only op is injectText — display-only. Ours does slightly more: public/core.json feats.crushing-grab.recordMarks pins the rule to the Grapple action itself ({on:'action', id:'grapple', value:'+Str mod bludgeoning'}), so the player sees it where they use it."
+  },
+  {
+   "id": "pei-zing-adept",
+   "verdict": "THEY-ENCODE-NOTHING-USEFUL",
+   "evidence": "Their only op is injectText — display-only, so nothing mechanical to compare. Ours carries the same rule as description text and no field, which is the same outcome for the player."
+  },
+  {
+   "id": "monk-dedication",
+   "verdict": "MATCHES",
+   "evidence": "src/rules/featGrantsAuto.ts:491 — `{ weapon: { unarmed: 'trained' }, skillChoices: [{ options: ['acrobatics','athletics'], rank: 'trained', redundantFallback: true }] }` matches their unarmed op and their conditional select. public/core.json feats.monk-dedication.grantsClassFeatures = ['powerful-fist'] (classFeatures.powerful-fist exists) is their ability block, and classDcGrant {monk} covers the printed class-DC sentence they omit; src/rules/build.ts:7762 lists this feat in ABILITY_OR_FEATS so the Str-or-Dex prerequisite reads as OR. I resolved their truncated predicate in the raw dump: it fi"
+  },
+  {
+   "id": "convergent-tides",
+   "verdict": "THEY-ENCODE-NOTHING-USEFUL",
+   "evidence": "Their only op is injectText — display-only. Ignoring water difficult terrain in Arcane Cascade stance is unautomated on both sides."
+  },
+  {
+   "id": "cavalier-dedication",
+   "verdict": "THEY-ENCODE-NOTHING-USEFUL",
+   "evidence": "Their single op sets PRIMARY_SHEET_TABS to the companions tab — a UI flag, not mechanical content, so there is nothing to compare. Ours goes further and actually grants the mount: src/rules/companionGrants.ts:101 registers 'cavalier-dedication' as an animal companion the player configures in the Edit tab, which is what the printed text says (\"You gain a young animal companion that serves as your mount\")."
+  },
+  {
+   "id": "quick-wig",
+   "verdict": "MATCHES",
+   "evidence": "src/rules/situationalBonuses.ts:1316 — Deception target, condition \"on Deception checks to Impersonate by changing your hair…\", bonus \"+1 item\". Same skill, value, bonus type and trigger as their single op. The disguise-kit and 5-minute clauses are prose on both sides."
+  },
+  {
+   "id": "mind-smith-dedication",
+   "verdict": "MATCHES",
+   "evidence": "public/core.json feats.mind-smith-dedication.grantsItems = [{mind-weapon},{mind-smiths-keepsake}] — both item records exist — matching their two giveItem ops. Neither implementation resolves the four-statline pick: I read their mind weapon entry in the raw dump and it is a level-0 stub whose text tells the player to edit the item to the statistics they choose; ours ships a martial one-handed 1d6 slashing sword and a note listing all four lines. Ours additionally carries the daily damage-type/group rotation as choice flag mindWeaponDamage, which they do not encode. Both require the player to ha"
+  },
+  {
+   "id": "runic-crafter",
+   "verdict": "MATCHES",
+   "evidence": "src/rules/featFeatGrants.ts:399 — `'runic-crafter': ['magical-crafting']`, and feats.magical-crafting exists. The table is seeded with owned CLASS FEATURES as well as feats (src/rules/build.ts:4144), which is how this classFeature-bucket record reaches it. The formula clauses (fundamental runes at level, a property rune every 2 levels from 4th) are unmodelled on both sides."
+  },
+  {
+   "id": "acrobat-dedication",
+   "verdict": "MATCHES",
+   "evidence": "src/rules/featGrantsAuto.ts:24 — `{ skills: { acrobatics: 'expert' }, rankUpgrade: [{ level: 7, rank: 'master' }, { level: 15, rank: 'legendary' }] }`. I resolved their truncated predicates in the raw dump: LEVEL >= 7 and LEVEL >= 15, the same two gates. Their third op is an injectText for the Tumble Through critical-success clause, unautomated on both sides."
+  },
+  {
+   "id": "terrifying-resistance",
+   "verdict": "MATCHES",
+   "evidence": "src/rules/situationalBonuses.ts:582 — targets [save:all], condition \"vs. spells of a creature you Demoralized (24 hrs)\", bonus \"+1 circumstance\". save:all covers their three per-save ops. Ours keeps the printed restriction to that creature's SPELLS, which their condition text drops."
+  },
+  {
+   "id": "fighter-dedication",
+   "verdict": "MATCHES",
+   "evidence": "src/rules/featGrants.ts:417-420 — `{ weapon: { martial: 'trained' }, skillChoices: [{ options: ['acrobatics','athletics'], rank: 'trained', redundantFallback: true }] }`, matching both of their ops including the already-trained-in-both branch. classDcGrant {fighter} on the record covers the class-DC sentence they omit; src/rules/build.ts:7762 lists this feat in ABILITY_OR_FEATS so its two ability prerequisites read as OR."
+  },
+  {
+   "id": "ward-medic",
+   "verdict": "THEY-ENCODE-NOTHING-USEFUL",
+   "evidence": "All their ops resolve to injectText — display-only, so there is no mechanical content to compare. Ours states the same two/four/eight scaling in the feat description with no field, which reaches the player the same way."
+  },
+  {
+   "id": "vindicator-dedication",
+   "verdict": "THEY-ENCODE-NOTHING-USEFUL",
+   "evidence": "All four of their ops are injectText — display-only. Ours actually applies the second half of the printed clause: src/rules/situationalBonuses.ts:600 gives +2 circumstance to Religion when the target worships your deity or is your hunted prey, and the record carries a classArchetype block for the ranger vindicator chassis."
+  },
+  {
+   "id": "performers-treatment",
+   "verdict": "THEY-ENCODE-NOTHING-USEFUL",
+   "evidence": "All four of their ops are injectText — display-only. The critical-failure-to-failure conversion is unautomated on both sides."
+  },
+  {
+   "id": "malleable-movement",
+   "verdict": "THEY-ENCODE-NOTHING-USEFUL",
+   "evidence": "Their only op is injectText — display-only. The +5 feet to a Leap is unautomated on both sides."
+  },
+  {
+   "id": "song-of-strength",
+   "verdict": "MATCHES",
+   "evidence": "public/core.json feats.song-of-strength.focusSpells = ['song-of-strength'] and spells.song-of-strength is a rank-0 composition cantrip with edition 'remaster' — not a superseded printing. src/rules/modes.ts:233 (cat-song-of-strength, exclusiveGroup 'bard-composition') is the toggle for the composition's +1 status bonus while it is up, not a second grant of the spell, so there is no double lane."
+  },
+  {
+   "id": "ursine-avenger-form",
+   "verdict": "MATCHES",
+   "evidence": "src/rules/modes.ts:403-413 — mode cat-ursine-avenger-form, gated on feats ['ursine-avenger-form'], grantedStrikes Jaws {1, d8, piercing, brawling, unarmed} and Claws {1, d6, slashing, brawling, agile, unarmed}. Matches the printed line and their two items. The parallel stance record (core.json stances.ursine-avenger-form, form:true) is not a second lane: src/sheet/MainTab.tsx:328-340 documents that a form chip toggles the MODE rather than the stance record, so the strikes are granted once."
+  },
+  {
+   "id": "wrestler-dedication",
+   "verdict": "MATCHES",
+   "evidence": "src/rules/featGrantsAuto.ts:689 — `{ skills: { athletics: 'expert' } }`; src/rules/featFeatGrants.ts:522 — `'wrestler-dedication': ['titan-wrestler']` (feat record exists); src/rules/situationalBonuses.ts:921 — Fortitude target, \"to your Fortitude DC when a foe tries to Grapple you or Swallow you Whole\", \"+2 circumstance\". Three ops, three matches. The lethal-attack penalty waiver is unmodelled on both sides."
+  },
+  {
+   "id": "astrolabe-mariners",
+   "verdict": "MATCHES",
+   "evidence": "src/rules/situationalBonuses.ts:2359 — targets [skill:all], condition \"on checks to identify celestial bodies…\", bonus \"+1 item\". Same value and bonus type, same trigger. The printed sentence names no skill (\"grants a +1 item bonus on checks to identify celestial bodies\"), so their narrowing to Survival is their own reading; the roll the player actually makes gets +1 item either way."
+  },
+  {
+   "id": "blood-booster-lesser",
+   "verdict": "MATCHES",
+   "evidence": "public/core.json modes['item-blood-booster-lesser'] — fromItemId 'blood-booster-lesser', duration '10 minutes', resistances [{persistent bleed, 5}, {persistent poison, 5}]. Same two damage categories, same value as their two ops; ours is gated behind the activation toggle rather than applied permanently, which matches the printed duration. The flat-check DC reduction is prose in the mode note on our side and absent from theirs."
+  },
+  {
+   "id": "shared-vigilance",
+   "verdict": "MATCHES",
+   "evidence": "src/rules/advancement.ts:600 — summoner track entry `{ level: 3, track: 'perception', rank: 'expert', source: 'shared-vigilance' }`. Their single op raises the same statistic. Neither implementation keeps a separate eidolon Perception rank to raise, so the printed \"and your eidolon's\" half resolves to the same one number on both sides."
+  },
+  {
+   "id": "whip-tail",
+   "verdict": "MATCHES",
+   "evidence": "src/rules/situationalBonuses.ts:2599 — two entries, [skill:acrobatics] \"on Acrobatics checks to Balance\" +1 item and [skill:athletics] \"on Athletics checks to Climb\" +1 item, matching their two addBonusToValue ops exactly. public/core.json items.whip-tail.grantedStrikes adds the printed tail Strike, which they do not encode here. Their third op is display-only and the Grab an Edge clause is unautomated on both sides."
+  },
+  {
+   "id": "first-frost",
+   "verdict": "FIXED",
+   "evidence": "[FIXED, high confidence; adversarially verified] RAN `node scripts/wg-show.mjs first-frost --raw` (their 5 ops above) and resolved spell ids 4636/5829 against their spell table (Frostbite / Frost's Touch). RAN a jiti probe calling buildCharacter on a level-4 fighter holding first-frost: spellcasting = [{id:'first-frost-casting', tradition:'arcane', keyAbility:'cha', proficiency:'trained', type:'spontaneous', cantrips:[]}, {id:'innate-casting', cantrips:['frostbite','frosts-touch'], spellSources:{frostbite:'First Frost','frosts-touch':'First Frost'}}]. The free picker is proven by code, not inferred: src/builder/Builder.tsx:386 `const cantripCap = (casting ? cantripsKnown(build.classId) : archCaster?.config.cantrips ?? 0) + cantripBonus;`, :889 `cantrips: L === firstCasterLevel ? cantripCap : 0`, :981 `{g.cantrips > 0 && (`. Printed text from C:/wonderers guide/aon-2e-archive/data/by-category/feat/feat-4096.json. Cross-checked all 26 CASTER_ARCHETYPES keys against core.json: first-frost is the ONLY one whose record also carries innateSpells (necromancer-dedication carries focusSpells; cathartic-mage and oatia-skysage carry only spellcastingGrant). | THEIRS: ONE casting source. defineCastingSource GELID_SHARD:::SPONTANEOUS-REPERTOIRE:::ARCANE:::ATTRIBUTE_CHA; SPELL_ATTACK=T; SPELL_DC=T; then exactly two giveSpell ops at rank 0 into that source - spell 4636 Frostbite and spell 582"
+  },
+  {
+   "id": "guardian-dedication",
+   "verdict": "FIXED",
+   "evidence": "[FIXED, high confidence; adversarially verified] RAN `node scripts/wg-show.mjs guardian-dedication --raw` (four conditionals above) and `node scripts/wg-show.mjs --wgid 44951 --raw` -> 'Taunt, type=feat, level 1, (no operations)'. PROVED (a) inert by building the same character twice with a jiti probe: a level-2 wizard with featChoices['2:class:0']='heavy' and with ='light-and-medium' produce IDENTICAL output - defenses {unarmored:trained, light:trained, medium:trained, heavy:untrained} in both - and the feat merely echoes the answer as `guardian-dedication(heavy)`. `grep -r 'light-and-medium' src/` returns zero hits and FEAT_GRANTS['guardian-dedication'] has no `choiceGrants`, so choiceGrantFor can never resolve either value. PROVED (b) with the same probe: a level-14 WIZARD holding Guardian Dedication comes out unarmored=expert, light=TRAINED, medium=TRAINED, where WG's 4th conditional (LEVEL>=13, UNARMORED>=E, LIGHT<E) sets both to expert. A level-14 fighter is already light/medium/heavy expert from the class, so the gap only shows on unarmored-track classes. featGrants.ts:369-370 already records the same non-model on sentinel-dedication. | THEIRS: FOUR automatic conditionals and NO question at all. (1) if LIGHT>=T and MEDIUM>=T then HEAVY=T else LIGHT=T + MEDIUM=T. (2) if LIGHT>=E and MEDIUM>=E then HEAVY=E. (3) if LIGHT>=E and MEDIUM<E then MEDIUM=E. (4) if LEVEL>=13 and U"
+  },
+  {
+   "id": "cathartic-mage-dedication",
+   "verdict": "FIXED",
+   "evidence": "[FIXED; adversarially verified by a read-only agent] CONFIRMED, unchanged. (1) Mismatch is live: core.json still holds the single `cathartic-cantrip` effectChoices (spellFilter, grantAs innate, atWill) alongside CASTER_ARCHETYPES['cathartic-mage-dedication'] (casterArchetypes.ts:240-248, cantrips 1). Measured through the real engine via jiti+test/_content.ts: fighter 6 -> TWO entries, `cathartic-mage-dedication-casting` (spontaneous occult, ['light']) AND `innate-casting` (divine, ['guidance'], spellSources.guidance='Cathartic Mage Dedication'); bard 10 -> the same two on top of bard-casting. The innate lane fires unconditionally, for non-casters too, so it is not an implementation of the printed second branch — it is a duplicate. (2) Their encoding (wg-show --raw, id 22493): two giveAbilityBlock (40629/40630) + one \"Select a Tradition\" CUSTOM select whose four options each defineCastingSource CATHARTIC_MAGE:::SPONTANEOUS-REPERTOIRE:::<TRAD>:::ATTRIBUTE_CHA and run EXACTLY ONE nested select optionType=SPELL (level max 0, that tradition, spellData.castingSource CATHARTIC_MAGE), + SPELL_ATTACK T / SPELL_DC T / PRIMARY_SHEET_TABS spells. One cantrip, in the archetype's own casting source. (3) Printed text (feat-2963.json, SoM 194) agrees: \"a spell repertoire with one cantrip of your choice, from a spell list of your choice\" / \"you learn one additional cantrip from your spellcastin"
+  },
+  {
+   "id": "bounty-hunter-dedication",
+   "verdict": "FIXED",
+   "evidence": "[FIXED; adversarially verified by a read-only agent] Verified live, not from the summary. (1) REAL: public/core.json feats['bounty-hunter-dedication'] still has unconditional grantsFeats:['monster-hunter'] alongside grantsActions:['hunt-prey'] and an inert choice {flag:'alreadyHadHuntPrey', options no/yes}; grepping src/ for the id returns ONLY situationalBonuses.ts:741, so no CHOICE_FEAT_GRANTS / FEAT_FEAT_GRANTS / FEAT_FEAT_GRANTS_LEVELED / FEAT_RANK_FEAT_GRANTS entry exists. Not already fixed. (2) THEIR ENCODING: wg-show gives remaster 31972 = IF CLASS_FEATURE_NAMES INCLUDES \"hunt prey\" THEN giveAbilityBlock feat ELSE giveAbilityBlock class-feature, and legacy 21911 the same shape with Survival->E on the true branch — Monster Hunter only on the already-have-it branch, exactly as the finding says. (3) PRINTED TEXT AGREES WITH WG: feat-6281.json reads \"If you already have Hunt Prey, you gain the Monster Hunter feat in addition to the other benefits of this feat.\" There is NO text-vs-WG contradiction here, so this is not an owner call — both authorities say conditional and only our record says unconditional. (4) LANE: the bad grant comes from build.ts:4100 (grantSources.push grants: content.feats[fc.featId]?.grantsFeats) -> 4128-4146, unconditional. The correct reader is featFeatGrantsFor(srcId, srcFc?.choice?.value) at build.ts:4211; build.ts:3999 attaches choice: featChoiceBy"
+  },
+  {
+   "id": "ghost-hunter-dedication",
+   "verdict": "FIXED",
+   "evidence": "[FIXED; adversarially verified by a read-only agent] UPHELD — measured, not paraphrased. Fix applies as written.\n\n1. MISMATCH IS LIVE. public/core.json still carries effectChoices `lore` (2 options, each granting {skills:{lore:X:'trained'}}) AND the bare `choice` {flag:'ghostHunterCantrip', kind:'open', picks:2}. Built via jiti + test/_content.ts at fighter 6 with the dedication:\n  - no answers -> lore:spirit (slot default, featSkillChoiceValue build.ts:1391 returns opts[0])\n  - effectChoices lore='haunt' -> lore:spirit AND lore:haunt. TWO Lores for one printed clause. Reproduced exactly.\n  - featSkillChoices only ='lore:haunt' -> lore:haunt alone (correct shape).\n\n2. THEIR ENCODING (wg-show, id 23272): exactly three selects — one \"Select a Lore\" (ADJ_VALUE / ADD-LORE / T), two \"Select a Cantrip\" (SPELL, level 0-0, Occult, spellData INNATE/OCCULT) — plus adjValue SPELL_ATTACK T and SPELL_DC T. One lore question, two cantrip questions. Post-fix we ask three: the skillChoices slot + cantrip-1 + cantrip-2. Match.\n\n3. PRINTED TEXT (aon-2e-archive feat/feat-2277.json) agrees with WG on the counts: \"Pick Spirit Lore or Haunt Lore… Choose two cantrips from the occult spell list.\" NOTHING IS SETTLED HERE. The two places WG and the text diverge (WG offers any Lore where the text names two; WG filters no traits where the text requires divination/enchantment/necromancy) are BOTH untouched"
+  },
+  {
+   "id": "champion-dedication",
+   "verdict": "FIXED",
+   "evidence": "[FIXED; adversarially verified by a read-only agent] SURVIVES REFUTATION on all seven checks; applying unchanged.\n\n1. MISMATCH IS LIVE. `public/core.json` feats['champion-dedication'] today carries only `choice` (sanctification holy/unholy/none), `classDcGrant`, `note`, `archetype` — NO `effectChoices`, no cause anywhere. `src/rules/featGrantsAuto.ts:158` (finding said 153 — the restore shifted it 5 lines, immaterial) reads exactly `{ skills: { religion: 'trained' }, armor: {light,medium:'trained'}, conditionalArmor:{...}, redundantFallback: true }` — no `skillChoices`. `grep -rl champion-dedication src/` returns featGrantsAuto.ts ONLY, so no override in featGrants.ts / featGrantsLane.ts and no second carrier. Not already fixed.\n\n2. MATCHES THEIR ENCODING (verified with wg-show, not the paraphrase). Their remaster row 32001 runs, in order: `select \"Select a Cause\"` PREDEFINED/ABILITY_BLOCK → 7 giveAbilityBlock ids 32989–32995; `select \"Select a Sanctification\"` (Holy/Unholy/Neither); `adjValue SKILL_RELIGION=T`; `select \"Select your Deity's Skill\"` modeType FILTERED, optionType ADJ_VALUE, optionsFilters `{group:'SKILL', value:{value:'T'}}` — i.e. a free trained skill pick, exactly what `skillChoices:[{options:'any',rank:'trained'}]` is; then the four armour conditionals. I pulled all seven cause blocks with `--wgid`: each is `IF CLASS_FEATURE_NAMES NOT_INCLUDES cause AND FEAT_N"
+  },
+  {
+   "id": "gunslinger-dedication",
+   "verdict": "MATCHES",
+   "evidence": "[ALREADY CORRECT on review — the finding was stale] ALREADY FIXED — the finding's verdict \"STILL-MISMATCH\" is stale; both code edits are already in the tree verbatim, and I proved the corrected behaviour by running the engine.\n\n(1) PREMISE IS GONE. `src/rules/featGrantsAuto.ts` no longer holds a `gunslinger-dedication` entry at all — `grep -c \"'gunslinger-dedication':\"` returns 0 there and 1 in `src/rules/featGrants.ts`. featGrantsAuto.ts:388 now carries exactly the tombstone comment the fix proposed, and featGrants.ts:460-484 carries the proposed `choiceGrants` block (drifter/acrobatics, pistolero/[deception,intimidation] nested skillChoices, sniper/stealth, spellshot/arcana, triggerbrand/thievery, vanguard/athletics) plus the unchanged crossbow+firearm `weaponFamiliarity`, and the \"NOT redundantFallback / stated on the record's note\" rationale comment.\n\n(2) STALE `find` STRINGS — RE-APPLYING WOULD BE A NO-OP OR WORSE. I string-matched both `find` payloads against the current files: edit 1 → 0 occurrences, edit 2 → 0 occurrences (the restore's formatter stripped the trailing commas inside the battle-harbinger block, so even that anchor no longer matches). A mechanical applier gets nothing; a fuzzy one risks inserting a SECOND `'gunslinger-dedication':` key into the same object literal in featGrants.ts, which would be a silent duplicate-key shadow. That is a live hazard, not a "
+  },
+  {
+   "id": "shadowcaster-dedication",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 9) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"Printed sentence: \"Your domain spells from the shadowcaster archetype are of the same tradition as the spells you used to meet the shadowcaster archetype's prerequisites.\" The prer…\""
+  },
+  {
+   "id": "clawdancer-dedication",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 9) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"A fix was proposed and REFUSED on review because it picks a side in a WG-vs-print disagreement. The reviewer: REFUTED — this fix settles a WG-vs-printed-text contradiction by itsel…\""
+  },
+  {
+   "id": "soul-warden-dedication",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 9) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"Printed says only \"You're trained in divine spell attack rolls and spell DCs. Your key spellcasting ability for these spells is Wisdom\" — it never grants a later increase. I resolv…\""
+  }
+ ]
+}

@@ -1,0 +1,408 @@
+{
+ "batch": 18,
+ "examined": 100,
+ "recordsRead": 100,
+ "method": "Batch 18's read-against-print pass: the 65 gate-silent records were read record-by-record by the 5-reader parity workflow (wf_7bd4e88f-346) and the 35 comparer-flagged records by the 7-family investigation in the same run; EVERY proposed finding (87: 22 investigation, 14 parity mismatches, 51 residual print claims) was then adversarially verified one-skeptic-per-finding (wf_214d9534-a8d, work/b018-verify.json: 74 CONFIRMED / 13 REFUTED). All confirmed fixes are applied; per-finding verified specs are archived in work/.b018-apply-plan.txt. Parity with WG was checked per fix; the two genuine WG-vs-print conflicts (tumbling-theft, monarch) are owner-queued, not decided.",
+ "confirmed": [
+  {
+   "id": "predatory-claws",
+   "bucket": "feats",
+   "claim": "The two-consecutive-claw-Strikes free Grapple rider is delivered nowhere.",
+   "fixed": true,
+   "fix": "Add ONE row to scripts/data/effect-backfill.json — note-only, NO `value` key: { \"category\": \"feats\", \"id\": \"predatory-claws\", \"field\": \"recordMarks\", \"value\": [ { \"on\": \"action\", \"id\": \"grapple\", \"note\": \"If you hit the same enemy with two consecutive claw Strikes in the same round, you can attempt "
+  },
+  {
+   "id": "precise-finisher",
+   "bucket": "feats",
+   "claim": "The failure-degree upgrade to Confident Finisher's precise strike damage has no surface at all.",
+   "fixed": true,
+   "fix": "Apply ONLY the recordMark; DROP the proposed `situational` row. Author one overlay row in scripts/data/effect-backfill.json (via readBackfill/writeBackfill, then replay `node scripts/apply-backfill-now.mjs` and `npm run data` — never hand-edit public/core.json): { \"category\": \"feats\", \"id\": \"precise"
+  },
+  {
+   "id": "swordmaster-dedication",
+   "bucket": "feats",
+   "claim": "The Reflex clause is delivered WRONGLY: it moves a DC other creatures roll against, but our entry omits `dcOnly`, so the star lands on the Reflex SAVE row rather than on the Reflex DC.",
+   "fixed": true,
+   "fix": "Edit src/rules/situationalBonuses.ts:2486, FIRST clause of \"swordmaster-dedication\" only: { targets: [{ kind: 'save', detail: 'reflex', dcOnly: true }], when: \"when a foe attempts to Disarm you\", bonus: \"+2 circumstance\" } (was `targets: [{ kind: 'save', detail: 'reflex' }]`, when \"to your Reflex DC"
+  },
+  {
+   "id": "choker-of-elocution",
+   "bucket": "items",
+   "claim": "The language grant — the choker's headline effect — is delivered nowhere.",
+   "fixed": true,
+   "fix": "Edit the two existing rows in scripts/data/effect-backfill.json (whole-field ABSOLUTE assignments, so skills must be restated): :5375-5384 → {\"category\":\"items\",\"id\":\"choker-of-elocution\",\"field\":\"passiveEffects\",\"value\":{\"skills\":{\"society\":1},\"languageChoices\":1}} :5385-5394 → {\"category\":\"items\","
+  },
+  {
+   "id": "volatile-grease",
+   "bucket": "feats",
+   "claim": "The entire spell-modification clause (target change, Reflex save, the three degrees, and the heightening) has no surface.",
+   "fixed": true,
+   "fix": "Append one row to scripts/data/effect-backfill.json (same shape/voice as the shipped confounding-image and disk-rider rows in that file): {\"category\":\"feats\",\"id\":\"volatile-grease\",\"field\":\"spellNotes\",\"value\":[{\"spellId\":\"grease\",\"note\":\"Volatile Grease: when you cast this spell, you can modify its"
+  },
+  {
+   "id": "predictive-purchase",
+   "bucket": "feats",
+   "claim": "The Prescient Planner speed-up rider is delivered nowhere.",
+   "fixed": true,
+   "fix": "Add to scripts/data/effect-backfill.json: {\"category\":\"feats\",\"id\":\"predictive-purchase\",\"field\":\"recordMarks\",\"value\":[{\"on\":\"feature\",\"id\":\"prescient-planner\",\"note\":\"You can pull out the item as a 2-action activity — removing your backpack (or a similar container) and drawing the item — rather th"
+  },
+  {
+   "id": "rapid-affixture",
+   "bucket": "feats",
+   "claim": "Neither the 1-minute reduction nor the legendary 3-action version of Affix a Talisman is delivered.",
+   "fixed": true,
+   "fix": "Three edits, not two. (1) src/rules/skillActions.ts — add the BASE action to the `crafting` array (prerequisite for any mark on it to render; also revives the dead quick-fix mark): {\"name\":\"Affix a Talisman\",\"costText\":\"10 minutes\",\"minRank\":\"untrained\",\"desc\":\"Spend 10 minutes with a repair toolkit"
+  },
+  {
+   "id": "halcyon-speaker-dedication",
+   "bucket": "feats",
+   "claim": "The dedication's entire grant is inert for a legal halcyon speaker: the Magaambyan Attendant entry shadows it, so no halcyon cantrips, no 1st-rank halcyon slot, no spontaneous halcyon repertoire.",
+   "fixed": true,
+   "fix": "Defect confirmed; the finder's fix direction is wrong. Do NOT ASK-OWNER on the entry id and do NOT reorder/priority-skip in activeCasterArchetype — R4 already answers (keep the Magaambyan entry id) and its ⚠ explicitly warns that letting Halcyon win destroys Cascade Bearer's Spellcasting (its divine"
+  },
+  {
+   "id": "halcyon-speaker-dedication",
+   "bucket": "feats",
+   "claim": "Only one 1st-rank halcyon spell is known, not the printed two — the spontaneous archetype lane ties repertoire size to slot count.",
+   "fixed": true,
+   "fix": "Add a known-count lane, not a slot bonus (byRank {1:1} would also grant a 2nd slot). (1) casterArchetypes.ts: add `extraKnown?: Record<number, number>` to CasterArchetype, set `extraKnown: { 1: 1 }` on the halcyon config. (2) build.ts:6151 → `repertoire[rank] = (srcSpells[rank] ?? []).slice(0, count"
+  },
+  {
+   "id": "staff-of-protection",
+   "bucket": "items",
+   "claim": "The +1 is delivered on the Fortitude/Reflex SAVE you roll instead of on the DC an opponent rolls against, because the two rows omit `dcOnly`.",
+   "fixed": true,
+   "fix": "Edit src/rules/situationalBonuses.ts, FEAT_SITUATIONAL lines 1822, 1823, 1824 (\"staff-of-protection\", \"staff-of-protection-greater\", \"staff-of-protection-major\"). Add `dcOnly: true` to ALL SIX save targets (two per line): the Fortitude entry becomes `{ targets: [{ kind: 'save', detail: 'fortitude', "
+  },
+  {
+   "id": "drenching-mist",
+   "bucket": "feats",
+   "claim": "The added Heightened (3rd) entry never reaches the Mist spell — nothing writes it onto the spell the player actually reads.",
+   "fixed": true,
+   "fix": "Add ONE row to scripts/data/effect-backfill.json (and mirror onto public/core.json feats['drenching-mist'].spellNotes so it is live before the next `npm run data`, exactly as scripts/apply-innate-spell-verification.mjs writes both halves): {\"category\":\"feats\",\"id\":\"drenching-mist\",\"field\":\"spellNote"
+  },
+  {
+   "id": "basic-magus-spellcasting",
+   "bucket": "feats",
+   "claim": "The rendered description is a truncated stub that names no benefit at all — the printed clause names WHICH benefits (the basic bounded spellcasting rules block).",
+   "fixed": true,
+   "fix": "Apply ONE row to scripts/data/effect-backfill.json (same shape as existing feats description rows, e.g. feats/reveal-machinations): {\"category\":\"feats\",\"id\":\"basic-magus-spellcasting\",\"field\":\"description\",\"value\":\"You gain the basic bounded spellcasting benefits.\"} — print verbatim, restoring only "
+  },
+  {
+   "id": "paragon-battle-medicine",
+   "bucket": "feats",
+   "claim": "The rider on Battle Medicine — reducing a condition on the target — is not reflected on the Battle Medicine feat entry the player actually reads.",
+   "fixed": true,
+   "fix": "Add ONE row to scripts/data/effect-backfill.json (shape matches the shipped unimpeded-step row at line 150367), carrying BOTH marks — not just 'feature': {\"category\":\"feats\",\"id\":\"paragon-battle-medicine\",\"field\":\"recordMarks\",\"value\":[ {\"on\":\"feature\",\"id\":\"battle-medicine\",\"note\":\"On a success you"
+  },
+  {
+   "id": "paragon-battle-medicine",
+   "bucket": "feats",
+   "claim": "The two upgrade branches (legendary Medicine; Godless Healing; Mortal Healing) are not delivered either — WG encodes all three as separate gated injections.",
+   "fixed": true,
+   "fix": "One backfill row covering BOTH residuals (do not author two overlapping marks, and do not also add a RECORD_MARKERS key — markersFor concatenates both channels and would print twice). Append to scripts/data/effect-backfill.json: {\"category\":\"feats\",\"id\":\"paragon-battle-medicine\",\"field\":\"recordMarks"
+  },
+  {
+   "id": "blakenshipper",
+   "bucket": "items",
+   "claim": "The Be the Band activation's area is missing from the only surface that carries it — the description says 'within a' with the emanation size stripped, twice.",
+   "fixed": true,
+   "fix": "Use the established carrier, not a hand-added backfill row. Add two entries to REPAIRS in scripts/apply-import-damaged-text.mjs (same shape as the existing warpipes/bellows-pipes repairs), then run `node scripts/apply-import-damaged-text.mjs` (verify with --dry first): { /* Both \"60-foot emanation\" "
+  },
+  {
+   "id": "fabricated-connections",
+   "bucket": "feats",
+   "claim": "The Deception-for-another-skill substitution reaches none of the four action rows the player performs.",
+   "fixed": true,
+   "fix": "Add ONE row to scripts/data/effect-backfill.json (leave the existing limitedUses row alone), then run `node scripts/apply-backfill-now.mjs`: {\"category\":\"feats\",\"id\":\"fabricated-connections\",\"field\":\"recordMarks\",\"value\":[ {\"on\":\"action\",\"id\":\"make-an-impression\",\"note\":\"You can roll Deception in pl"
+  },
+  {
+   "id": "primeval-mistletoe",
+   "bucket": "items",
+   "claim": "Anoint's Frequency is once per 10 minutes; our tracker says once per MINUTE — ten times the printed rate.",
+   "fixed": true,
+   "fix": "Label carries the cadence; do NOT invent a multi-word `per`. Rows in scripts/data/effect-backfill.json: 1) {category:\"items\",id:\"primeval-mistletoe\",field:\"counters\",value:[{id:\"freq\",label:\"Anoint (once per 10 minutes)\",max:1,per:\"minute\",resetsOnRest:true},{id:\"freq2\",label:\"Bind (per day)\",max:1,"
+  },
+  {
+   "id": "primeval-mistletoe",
+   "bucket": "items",
+   "claim": "The Anoint activation casts runic weapon or runic body; ours grants neither spell in any castable carrier.",
+   "fixed": true,
+   "fix": "Do NOT use effectChoices (item effectChoices carry only `passive`; an innateSpells grant there is silently dropped — build.ts:5983, play.ts:2035-2040). Use the live invested-item lane read at src/rules/build.ts:6486-6491, i.e. two rows in scripts/data/effect-backfill.json (the carrier all 63 shipped"
+  },
+  {
+   "id": "primeval-mistletoe",
+   "bucket": "items",
+   "claim": "The Bind activation casts one with plants once per day; ours grants it nowhere.",
+   "fixed": true,
+   "fix": "In scripts/data/effect-backfill.json, NOT innateSpells: (1) {category:\"items\", id:\"primeval-mistletoe\", field:\"heldSpells\", value:{\"2\":[\"one-with-plants\"]}} — core.json spells['one-with-plants'] is rank 2, primal-only, so key \"2\" matches print. Reader is live and ungated by investiture: src/rules/bu"
+  },
+  {
+   "id": "propulsive-mutation",
+   "bucket": "feats",
+   "claim": "The feat's entire printed content — Spit Ambient Magic's range going from 30 to 60 feet — is delivered nowhere; the Spit Ambient Magic action row still reads 30 feet.",
+   "fixed": true,
+   "fix": "Deliver a recordMarks entry for propulsive-mutation targeting the Spit Ambient Magic action. Prefer the DATA lane (matches the 46 existing `\"field\":\"recordMarks\"` rows and the sibling Ostilli feat versatile-mutation, which also went through effect-backfill) — add to scripts/data/effect-backfill.json"
+  },
+  {
+   "id": "animal-skin",
+   "bucket": "feats",
+   "claim": "\"Your proficiency in unarmored defense increases to expert\" is delivered by no carrier; a 6th-level barbarian with Animal Skin still computes AC at TRAINED unarmored (the class only reaches expert at 13 via medium-armor-expertise), costing a flat 2 points of A",
+   "fixed": true,
+   "fix": "Add to HAND_AUTHORED_GRANTS in src/rules/featGrants.ts (the block starting line 382, merged last at featGrants.ts:632 so it wins any id conflict with the regenerated auto/lane maps): 'animal-skin': { armor: { unarmored: 'expert' } }, Same shape as the existing 'armored-exercise' row at featGrants.ts"
+  },
+  {
+   "id": "advanced-rune-magic",
+   "bucket": "feats",
+   "claim": "The printed Archetype line is not on the record: feats['advanced-rune-magic'] has no `archetype` field, so the feat never counts as a Runesmith archetype feat — unlike its own prerequisite feat, which does.",
+   "fixed": true,
+   "fix": "Add one overlay row to scripts/data/effect-backfill.json (mirroring the proven basic-rune-magic row): {\"category\":\"feats\",\"id\":\"advanced-rune-magic\",\"field\":\"archetype\",\"value\":\"runesmith\",\"why\":\"Printed header line: **Archetype** Runesmith (feat-9303; AON structured field archetype:[\\\"Runesmith\\\"])"
+  },
+  {
+   "id": "advanced-rune-magic",
+   "bucket": "feats",
+   "claim": "The printed Prerequisites line is missing from the record, so nothing gates or displays the Basic Rune Magic requirement.",
+   "fixed": true,
+   "fix": "Apply ONE overlay row, not two, to scripts/data/effect-backfill.json: {\"category\":\"feats\",\"id\":\"advanced-rune-magic\",\"field\":\"prerequisites\",\"value\":[\"Basic Rune Magic\"]} Readers that pick it up immediately: src/rules/build.ts:8228 checkPrerequisites (has-feat branch — slug(\"Basic Rune Magic\")='basi"
+  },
+  {
+   "id": "cloak-of-illusions",
+   "bucket": "items",
+   "claim": "The Draw Hood activation — 1/day invisibility — is granted by no castable carrier, although the directly analogous item ships the exact row shape.",
+   "fixed": true,
+   "fix": "EDIT the two EXISTING innateSpells rows in scripts/data/effect-backfill.json — do NOT add new rows; backfill rows are absolute assignments (scripts/lib/apply-backfill.mjs via apply-backfill-now.mjs), so a second row with the same category+id+field would collide/last-wins and drop figment. Row at lin"
+  },
+  {
+   "id": "cloak-of-illusions",
+   "bucket": "items",
+   "claim": "The rendered item text has the spell name deleted — the sentence reads \"gain the effects of ,\" with a dangling comma, so the player cannot tell what Draw Hood does.",
+   "fixed": true,
+   "fix": "Use the existing damaged-text lane, not a bare overlay row. Add two REPAIRS entries to scripts/apply-import-damaged-text.mjs and run it — it writes BOTH public/core-descriptions.json (live now) and the durable effect-backfill `description` row; an effect-backfill row alone is invisible until a full "
+  },
+  {
+   "id": "simple-crystal-magic",
+   "bucket": "feats",
+   "claim": "The whole feat's benefit is gated on a daily-preparations ritual with a priced material component; ours grants the two cantrips unconditionally.",
+   "fixed": true,
+   "fix": "Replace \"no data change\" with one effect-backfill row (scripts/data/effect-backfill.json; re-run the backfill apply so public/core.json picks it up): {\"category\":\"feats\",\"id\":\"simple-crystal-magic\",\"field\":\"spellNotes\",\"value\":[ {\"spellId\":\"read-aura\",\"note\":\"You can cast this cantrip as an arcane i"
+  },
+  {
+   "id": "guangu-of-the-steppe",
+   "bucket": "items",
+   "claim": "Our shipped description of the Hammer of Hooves activation has lost the emanation, so the text the player reads states no area at all.",
+   "fixed": true,
+   "fix": "Do NOT use a bare effect-backfill.json row. apply-import-damaged-text.mjs:14-19 documents that an overlay row alone does NOT materialize a description: it sets core.json only, and split-descriptions.mjs then sees a handful of extractable descriptions against ~19k already split and hits its \"REFUSING"
+  },
+  {
+   "id": "crown-of-the-saumen-kar",
+   "bucket": "feats",
+   "claim": "Our Stealth star states the wrong terrain scope: it omits forest (granted) and adds ice (not granted).",
+   "fixed": true,
+   "fix": "Edit src/rules/situationalBonuses.ts:251, `when` only: \"crown-of-the-saumen-kar\": [{ targets: [{ kind: 'skill', detail: 'stealth' }], when: \"to Sneak or Hide in areas of forest and snow\", bonus: \"+1 circumstance\" }], Targets/bonus/type unchanged (skill:stealth, \"+1 circumstance\") — they already matc"
+  },
+  {
+   "id": "ring-of-sigils-greater",
+   "bucket": "items",
+   "claim": "The Track Sigil cooldown is delivered ten times too permissively: print says once per 10 minutes, our tracker says once per minute.",
+   "fixed": true,
+   "fix": "Add ONE absolute row to scripts/data/effect-backfill.json (label-only; restate the whole array since backfill assigns wholesale): {\"category\":\"items\",\"id\":\"ring-of-sigils-greater\",\"field\":\"counters\",\"value\":[{\"id\":\"freq\",\"label\":\"per 10 minutes\",\"max\":1,\"per\":\"minute\",\"resetsOnRest\":true}]} Then `no"
+  },
+  {
+   "id": "five-breath-vanguard-dedication",
+   "bucket": "feats",
+   "claim": "The dedication is encoded as a 1-action feat; the printed feat has no action cost — the single action belongs to the granted Cycle Elemental Stance, which already carries it.",
+   "fixed": true,
+   "fix": "Add ONE row to scripts/data/effect-backfill.json (beside the existing actionCost→passive rows; write via scripts/lib/write-backfill.mjs): {\"category\":\"feats\",\"id\":\"five-breath-vanguard-dedication\",\"field\":\"actionCost\",\"value\":{\"type\":\"passive\"}} Confirmed mechanics: scripts/lib/apply-backfill.mjs do"
+  },
+  {
+   "id": "arachnid-harness",
+   "bucket": "items",
+   "claim": "The armor's built-in +1 potency rune is not delivered — a character wearing the harness gets AC +1 (base leather) instead of the printed +2.",
+   "fixed": true,
+   "fix": "Defect stands; deliver it data-only, matching the shipped mariners-splint precedent. EDIT the two EXISTING rows in scripts/data/effect-backfill.json (do NOT add new passiveEffects rows — applyBackfill assigns the whole field, so a second row erases the resistances): {\"category\":\"items\",\"id\":\"arachni"
+  },
+  {
+   "id": "arachnid-harness",
+   "bucket": "items",
+   "claim": "The activation's climb Speed is not delivered; only the action cost and the daily counter ship.",
+   "fixed": true,
+   "fix": "Add one mode per variant; either source file works (import-core-v2.mjs:636-646 merges consumable-modes.json ARRAY and toggle-modes.json OBJECT into core.modes), but toggle-modes.json is the closer precedent for a worn, non-consumable activation with speeds (item-winged, item-soaring-wings-major, ite"
+  },
+  {
+   "id": "animate-net",
+   "bucket": "feats",
+   "claim": "The feat's entire content — the alternate Animate Rope mode — is delivered nowhere; a character with the feat reads Animate Rope exactly as printed.",
+   "fixed": true,
+   "fix": "Add ONE row to scripts/data/effect-backfill.json (via scripts/lib/write-backfill.mjs), matching confounding-image / disk-rider exactly in shape and in the \"<Feat Name>: …this spell…\" note convention: {\"category\":\"feats\",\"id\":\"animate-net\",\"field\":\"spellNotes\",\"value\":[{\"spellId\":\"animate-rope\",\"note"
+  },
+  {
+   "id": "advanced-first-aid",
+   "bucket": "feats",
+   "claim": "The feat's only clause — a third mode for Administer First Aid — is delivered nowhere on the action it modifies.",
+   "fixed": true,
+   "fix": "Carrier corrected: do NOT edit src/rules/situationalBonuses.ts. Write the DATA twin on the feat record in public/core.json, feats[\"advanced-first-aid\"], matching the sibling precedent feats[\"ward-medic\"].recordMarks: \"recordMarks\": [{ \"on\": \"action\", \"id\": \"administer-first-aid\", \"note\": \"Instead of"
+  },
+  {
+   "id": "grown-of-oak",
+   "bucket": "feats",
+   "claim": "The innate rank ladder stops at 17->8, so at levels 19-20 the spell is cast one rank lower than the printed formula gives.",
+   "fixed": true,
+   "fix": "In scripts/data/effect-backfill.json, row {category:\"feats\", id:\"grown-of-oak\", field:\"innateSpells\"} (opens 9657): append one step to value[0].heightenAt after the existing {\"level\":17,\"rank\":8} (line 9688-9691, array closes 9692): {\"level\":19,\"rank\":9} so the ladder reads 7→3, 9→4, 11→5, 13→6, 15→"
+  },
+  {
+   "id": "advanced-qi-spells",
+   "bucket": "feats",
+   "claim": "The repeatable picker does not exclude the qi spell already chosen on another take, so an illegal duplicate pick is offered.",
+   "fixed": true,
+   "fix": "Two details of the finder's spec are wrong; corrected fix: 1) Builder.tsx ONLY. In the `ch.spellFilter` branch (~2205), when `perTaking`, compute claimed = { build.effectChoices[`${k}:${ch.id}`] } for every k with build.featPicks[k] === picked and k !== key; subtract this slot's own effective value "
+  },
+  {
+   "id": "terrified-retreat",
+   "bucket": "feats",
+   "claim": "The critical-success rider on Demoralize is delivered by nothing.",
+   "fixed": true,
+   "fix": "Add ONE row to scripts/data/effect-backfill.json (then re-run the backfill applier so it lands in public/core.json, as the other 45 recordMarks rows do): {\"category\":\"feats\",\"id\":\"terrified-retreat\",\"field\":\"recordMarks\",\"value\":[{\"on\":\"action\",\"id\":\"demoralize\",\"value\":\"crit vs. lower level: fleein"
+  },
+  {
+   "id": "maestros-chair",
+   "bucket": "items",
+   "claim": "The item's activation frequency is stored as once per MINUTE, ten times more often than printed.",
+   "fixed": true,
+   "fix": "Apply ONE overlay row to scripts/data/effect-backfill.json: {\"category\":\"items\",\"id\":\"maestros-chair\",\"field\":\"counters\",\"value\":[{\"id\":\"freq\",\"label\":\"per 10 minutes\",\"max\":1,\"per\":\"minute\",\"resetsOnRest\":true}]}. That is the load-bearing half — itemUses.ts:26-31 takes item.counters in preference t"
+  },
+  {
+   "id": "maestros-chair",
+   "bucket": "items",
+   "claim": "The Performance bonus is applied unconditionally although print restricts it to checks made with the chair, contrary to Ruling B.",
+   "fixed": true,
+   "fix": "Edit scripts/data/effect-backfill.json, replacing the object at lines 3914-3923 (currently {\"category\":\"items\",\"id\":\"maestros-chair\",\"field\":\"passiveEffects\",\"value\":{\"skills\":{\"performance\":1}}}) with exactly: {\"category\":\"items\",\"id\":\"maestros-chair\",\"field\":\"passiveEffects\",\"value\":null} scripts/"
+  },
+  {
+   "id": "expert-tactician",
+   "bucket": "classFeatures",
+   "claim": "Prepared-tactics cap hardcoded at 3; print gives four at 7th, five at 15th, six at 19th (WG encodes nothing for it).",
+   "fixed": true,
+   "fix": "commanderPreparedMax(level) in build.ts, substituted for the literal 3; tests updated (bulk-limits, play)."
+  },
+  {
+   "id": "arboreals-revenge",
+   "bucket": "items",
+   "claim": "The persistent-fire flat-check DC 17/12 clause reached nothing (WG omits it).",
+   "fixed": true,
+   "fix": "Second FEAT_SITUATIONAL star (hp kind, DC 17 instead of 15), the fire-lung shape."
+  }
+ ],
+ "refuted": [
+  {
+   "id": "performative-weapons-training",
+   "bucket": "feats",
+   "claim": "The dueling cape's share of the familiarity/crit-spec clause reaches nothing, because our item record is not a weapon.",
+   "why": "Observations are accurate but there is no defect and no fix. PRINT (feat/feat-6337.json markdown) links dueling cape to /Equipment.aspx?ID=2721 while the other six go to /Weapons.aspx; equipment-2721 (Player Core p.288) is Price 5 sp / Hands 1 / Bulk L with on"
+  },
+  {
+   "id": "grub-gloves-lesser",
+   "bucket": "items",
+   "claim": "The 2-action activation's effect (regain 3d8+10 HP and lose fatigued) has no mechanical carrier — only description prose and the 1/day counter.",
+   "why": "Every fact checks out, but the item flags no defect — it should not be applied or queued. PRINT (aon-2e-archive equipment-2561-2305.json) does read \"Activate 2 actions ... regain 3d8+10 Hit Points ... losing the fatigued condition\". WG (item 14606, scripts/wg-"
+  },
+  {
+   "id": "fabricated-connections",
+   "bucket": "feats",
+   "claim": "The printed frequency is TWO pools (1/day and 1/week); ours models one 1/day pool, so the Earn Income / Subsist uses are silently governed by the daily pip.",
+   "why": "Read as residualFindings[1] (0-indexed): the \"TWO pools\" claim. Print (aon .../feat/feat-6305.json) does say 1/day for Make an Impression|Request and 1/week for Earn Income|Subsist — that part holds, as does \"LimitedUses is one object\" (types.ts:2116-2126; fea"
+  },
+  {
+   "id": "fabricated-connections",
+   "bucket": "feats",
+   "claim": "The rendered description leaks raw slugs and parser tokens into player-facing prose.",
+   "why": "The claim fails on \"rendered ... player-facing prose\". The string is quoted correctly (public/core-descriptions.json feats['fabricated-connections'].d does end \"...to make-an-impression skill=deception or request skill=deception ... or subsist skill=deception\""
+  },
+  {
+   "id": "hedge-prison",
+   "bucket": "feats",
+   "claim": "Our rendered feat text drops the printed focus-pool sentence entirely, so the player cannot see where their extra Focus Point came from (the point itself IS granted).",
+   "why": "Print quote verified (feat-7623.json markdown ends \"…Increase the number of Focus Points in your focus pool by 1.\"). The core-descriptions.json `d` string is indeed truncated. But the claim that \"our rendered feat text drops the sentence\" is FALSE: feats rende"
+  },
+  {
+   "id": "advanced-rune-magic",
+   "bucket": "feats",
+   "claim": "The rendered feat text is a raw scrape: the title, Source, Archetype and Prerequisites header lines are spliced into the description body, and the paragraph/Special breaks are lost.",
+   "why": "PRINT re-derived (feat-9303.json): body + Special exactly as quoted, so that half holds, and core-descriptions.json feats['advanced-rune-magic'].d IS the raw text scrape described. The CONSEQUENCE claim fails. public/ast/feats.json and .json.gz both ship a nod"
+  },
+  {
+   "id": "read-shibboleths",
+   "bucket": "feats",
+   "claim": "Our prose turns the printed SECRET check into an open one — \"they secretly attempt\" was rewritten to \"they must attempt\", which in PF2e is a real distinction (a secret check is rolled by the GM and its result is withheld).",
+   "why": "Print (feat-6349, our aonId) does read \"they secretly attempt\", and core-descriptions.json feats['read-shibboleths'].d does read \"they must attempt\" — that string is verbatim the LEGACY APG entry feat-1998, whose only word-level difference from remaster is mus"
+  },
+  {
+   "id": "venomed-tongue",
+   "bucket": "items",
+   "claim": "The rendered item text drops \"persistent poison\" from the activation's damage — it reads \"takes 2d6 damage\", which is both a different damage type and a different mechanic (persistent damage recurs each round until removed).",
+   "why": "Print is quoted correctly (aon equipment-1810 markdown: \"that target takes 2d6 [persistent poison damage](/Conditions.aspx?ID=29)\"), and public/core-descriptions.json items['venomed-tongue'].d really does end \"takes 2d6 damage.\" — but the claim \"no other carri"
+  },
+  {
+   "id": "aeon-stone-sprouting",
+   "bucket": "items",
+   "claim": "The Flow of Life activation's temporary Hit Points are not delivered anywhere — only the cost and the once-per-hour counter ship.",
+   "why": "Print quote verifies (equipment-3055-2979.json: reaction, once/hour, 8 temp HP for 1 min). WG (item 6685) encodes ONLY select→giveSpell 4888 — no temp HP. Two claims fail. (1) \"Not delivered anywhere\" is false. The item has activationCost{reaction} + usage wor"
+  },
+  {
+   "id": "battle-cry",
+   "bucket": "feats",
+   "claim": "The free-action Demoralize on initiative is delivered by nothing.",
+   "why": "Print and WG check out (feat-5124 markdown matches the quote verbatim; WG row 19945 is one injectText{type:'action',id:19624}, and 19624 is the Demoralize row). The claim that fails is \"no carrier at all\" — the sweep skipped src/rules/skillActions.ts. SKILL_AC"
+  },
+  {
+   "id": "battle-cry",
+   "bucket": "feats",
+   "claim": "The legendary-Intimidation reaction Demoralize is delivered by nothing.",
+   "why": "PRINT (feat-5124.json markdown) carries both clauses verbatim, incl. the legendary-Intimidation reaction. THEIRS (node scripts/wg-show.mjs battle-cry --raw, row 19945) is ONE op: injectText type=action id=19624 with the whole feat text — no separate encoding f"
+  }
+ ],
+ "refutedPattern": "Six of the eleven residual refutations were the same blind spot: the reader diagnosed damage in core-descriptions.json `.d` without checking the AST carrier (public/ast/*.json), which renders the correct prose and makes the `.d` damage display-invisible. Three more (battle-cry ×3 across both passes) missed the skillActions.ts carrier. A \"no carrier\" claim must sweep BOTH before it counts.",
+ "flaggedResidues": [
+  {
+   "id": "fife-of-the-faithful",
+   "note": "same dropped-emanation corruption as guangu-of-the-steppe — verify its exact damaged string, then add a REPAIRS row."
+  },
+  {
+   "id": "counters-multiplier-family",
+   "note": "scripts/import-core.mjs:672 parseFrequencies discards the \"every N\" multiplier; ~49 shipped items read 10x too fast (anchor-spear, guiding-star, obsidian-edge ×4, flashblade ×3, boreal-staff ×3, …). Fixed by hand for ring-of-sigils-greater, maestros-chair, primeval-mistletoe ×2 via counters labels; structural fix = ItemCounter.every mirroring LimitedUses.every."
+  },
+  {
+   "id": "spell-trickster-family",
+   "note": "~21 spell-trickster feats are the same modify-a-spell shape as volatile-grease/drenching-mist/animate-net and equally uncovered (agile-hand, barrier-shield, forceful-push, …) — a sweep, not one-offs."
+  },
+  {
+   "id": "aeon-stone-frequency-family",
+   "note": "31 of 34 aeon stones carry a synthesized frequency counter their printed entry does not have (incl. aeon-stone-consumed, which has no activation at all) — page-level parse bleed, file separately."
+  },
+  {
+   "id": "flat-passive-instruments",
+   "note": "composer-staff, cauthooj-bagpipes, violin-of-the-waves still carry a flat performance passive alongside a restricted star (the double-stating maestros-chair just lost)."
+  },
+  {
+   "id": "master-tactician",
+   "note": "prints legendary Warfare Lore at 15 and has no skillProgression row — the expert-tactician shape, next batch it appears in."
+  },
+  {
+   "id": "dcOnly-when-strings",
+   "note": "uncanny-suction, reflexive-grip, weapon-harness, zuhras-gloves say 'to your Reflex DC' in `when` yet lack dcOnly — systemic cleanup."
+  },
+  {
+   "id": "basic-magus-spellcasting-schedule",
+   "note": "RANK_UNLOCKS gives the magus archetype rank 3 at level 8 and never drops the rank-1 slot; print (bounded casting) replaces the 1st-rank slot with a 3rd-rank one at 10th — mechanical divergence noted, not fixed here."
+  },
+  {
+   "id": "import-id-heuristic",
+   "note": "scripts/import-core.mjs:162 blanks 12-15-char single-word names as Foundry ids — 254 occurrences across 29 names (the cloak-of-illusions Invisibility drop) — narrow to 16-char alnum and regenerate."
+  },
+  {
+   "id": "ostilli-pulse-costs",
+   "note": "ostilli-host-dedication, soothing-pulse, cloaking-pulse carry grantsActions AND keep the granted activity cost, double-listing on MainTab — the deflecting-pulse defect, unfixed on the siblings."
+  }
+ ],
+ "closed": true,
+ "complete": true
+}

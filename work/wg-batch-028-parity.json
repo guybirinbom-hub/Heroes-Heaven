@@ -1,0 +1,150 @@
+{
+ "batch": 28,
+ "records": [
+  {
+   "id": "alchemist",
+   "verdict": "MATCHES",
+   "evidence": "[batch 28 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "champion",
+   "verdict": "FIXED",
+   "evidence": "[batch 28 read, adversarially confirmed] The printed causes are gated by sanctification — Desecration and Iniquity carry the Unholy trait, Grandeur and Redemptio"
+  },
+  {
+   "id": "investigator",
+   "verdict": "FIXED",
+   "evidence": "[batch 28 read, adversarially confirmed] Our Esoterica methodology subclass option (`classes.investigator.subclass.options[aon-esoterica-methodology]`) is descri; The investigator's Methodology select offers the same Esoterica methodology twice — once as the inert `aon-esoterica-met; The Palatine Detective methodology asks \"Occultism or Religion?\" twice — the subclass option's `skillChoice` (which trai; Our Empiricism methodology skill pick is a fixed four-skill list that cannot pick a Lore, while print allows any Intelli"
+  },
+  {
+   "id": "psychic",
+   "verdict": "FIXED",
+   "evidence": "[batch 28 read, adversarially confirmed] classes.psychic.keyAbility is an empty array — the only class in the data with one — so the builder's class card renders"
+  },
+  {
+   "id": "commander",
+   "verdict": "FIXED",
+   "evidence": "[batch 28 read, adversarially confirmed] Master Tactician must raise Warfare Lore to legendary at 15th level; our record carries only the class-DC step, so a com; classFeatures['tactics'] grants expert-tactician outright, duplicating the class table's own level-7 grant and deliverin"
+  },
+  {
+   "id": "sorcerer",
+   "verdict": "FIXED",
+   "evidence": "[batch 28 read, adversarially confirmed] Our sorcerer uses the ordinary full-caster slot table (2 slots when a rank opens, 3 thereafter); print and WG both give ; The bloodline's sorcerous gift spells are appended on top of the free repertoire picks, so a sorcerer knows one cantrip ; Our sorcerer level table carries a 'Bloodline Spells' feature the printed table does not list; it is an AoN sub-section "
+  },
+  {
+   "id": "monk",
+   "verdict": "MATCHES",
+   "evidence": "[batch 28 read] comparer misread settled/taught: The flags \"KINDS missing [choice]\" and \"IDENTITY options strength/dexterity, ours none\" are a comparer misread — ours models the monk's key-"
+  },
+  {
+   "id": "ranger",
+   "verdict": "FIXED",
+   "evidence": "[batch 28 read, adversarially confirmed] Our ranger class record trains only Survival at 1st level, so a ranger never becomes trained in Nature, which both the p"
+  },
+  {
+   "id": "runesmith",
+   "verdict": "FIXED",
+   "evidence": "[batch 28 read, adversarially confirmed] Neither side delivers the runesmith's Runic Optimization / Greater Runic Optimization extra Strike damage; our damage la"
+  },
+  {
+   "id": "rogue",
+   "verdict": "FIXED",
+   "evidence": "[batch 28 read, adversarially confirmed] The Eldritch Trickster racket's key-attribute option is not delivered — our subclass option carries no keyAbility/keyAbi; The Avenger racket's favored-weapon proficiency rides the cleric default ladder (trained, expert at 11) instead of track"
+  },
+  {
+   "id": "guardian",
+   "verdict": "MATCHES",
+   "evidence": "[batch 28 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "fighter",
+   "verdict": "FIXED",
+   "evidence": "[batch 28 read, adversarially confirmed] The fighter's printed 1st-level trained skill pick (Acrobatics or Athletics) has no carrier anywhere in our data or code; Weapon Legend's 13th-level weapon-group selection is bound to the group chosen at 5th level, because both read the singl"
+  },
+  {
+   "id": "barbarian",
+   "verdict": "MATCHES",
+   "evidence": "[batch 28 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "bard",
+   "verdict": "MATCHES",
+   "evidence": "[batch 28 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "swashbuckler",
+   "verdict": "FIXED",
+   "evidence": "[batch 28 read, adversarially confirmed] Our Stylish Tricks bonus skill increase at 3rd/7th/15th can be spent on any skill, but print reserves it for Acrobatics ; The level-11 Perception bump is attributed in the sheet's own breakdown to the legacy feature name \"Vigilant Senses\", wh"
+  },
+  {
+   "id": "cleric",
+   "verdict": "MATCHES",
+   "evidence": "[batch 28 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "summoner",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — on the Rulings Desk (batch 28)"
+  },
+  {
+   "id": "exemplar",
+   "verdict": "MATCHES",
+   "evidence": "[batch 28 read] comparer misread settled/taught: The comparer flags (\"KINDS missing [choice]\"; \"IDENTITY options strength/dexterity, ours none\") are a misread — our exemplar does ask the St"
+  },
+  {
+   "id": "witch",
+   "verdict": "FIXED",
+   "evidence": "[batch 28 read, adversarially confirmed] The patron's unique familiar ability is never delivered: classFeatures.patron.familiarAbilities maps all 16 patrons to t; The witch familiar's ability count is frozen at 4 for all 20 levels; print grows it at 6th, 12th and 18th, and our class; Each patron's lesson also teaches the familiar a named leveled spell; our subclass options grant only the hex cantrip."
+  },
+  {
+   "id": "thaumaturge",
+   "verdict": "FIXED",
+   "evidence": "[batch 28 read, adversarially confirmed] Our thaumaturge trains in ONE of Arcana/Nature/Occultism/Religion; both the printed class and Wanderer's Guide train all; The two extra restricted skill increases the thaumaturge gains at 9th and 17th level are not delivered — the class recor; Two of our level-1 carriers grant the same action, and one of them is a level-table row print does not have.; The implement options' Initiate/Adept/Paragon sections are bare empty headings on nine of ten implements and a verbatim "
+  },
+  {
+   "id": "druid",
+   "verdict": "MATCHES",
+   "evidence": "[batch 28 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "magus",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — on the Rulings Desk (batch 28)"
+  },
+  {
+   "id": "oracle",
+   "verdict": "FIXED",
+   "evidence": "[batch 28 read, adversarially confirmed] A 19th-level oracle can add only one 10th-rank spell to their repertoire; print gives two for the one 10th-rank slot, an"
+  },
+  {
+   "id": "animist",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — on the Rulings Desk (batch 28)"
+  },
+  {
+   "id": "inventor",
+   "verdict": "FIXED",
+   "evidence": "[batch 28 read, adversarially confirmed] Master Overdrive's Crafting rank increase is missing from FEAT_GRANTS_AUTO, so an inventor's Crafting sits at expert fro; Our light-mortar-innovation subclass option is description-only: the printed level shifts for Inventive Expertise and In"
+  },
+  {
+   "id": "kineticist",
+   "verdict": "FIXED",
+   "evidence": "[batch 28 read, adversarially confirmed] Each kinetic element option grants its skill-junction skill automatically at 1st level, so a dual-gate kineticist gets t; The gate-junction picker offers a skill junction for five of the six elements — metal's is missing entirely, so a metal ; A skill junction grants the listed SKILL FEAT as well as the skill; our five skill-junction options grant the skill only; The fire-gate, metal-gate and earth-gate situational rows repeat the skill-junction status bonus that the generic gate-j"
+  },
+  {
+   "id": "gunslinger",
+   "verdict": "FIXED",
+   "evidence": "[batch 28 read, adversarially confirmed] Our Way of the Spellshot subclass option carries keyAbility \"int\", which build.ts applies as the CHARACTER's key attribu; Our generated gunslinger class page prints only the three trained weapon CATEGORIES and never mentions firearms and cros"
+  },
+  {
+   "id": "necromancer",
+   "verdict": "FIXED",
+   "evidence": "[batch 28 read, adversarially confirmed] Print gives every necromancer the Command a Thrall action at 1st level, but on our side (and on WG's) the action is hand"
+  },
+  {
+   "id": "wizard",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — on the Rulings Desk (batch 28)"
+  }
+ ]
+}

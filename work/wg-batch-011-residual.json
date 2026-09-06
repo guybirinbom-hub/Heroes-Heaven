@@ -1,0 +1,155 @@
+{
+ "batch": 11,
+ "examined": 101,
+ "confirmed": [
+  {
+   "id": "diving-suit",
+   "bucket": "items",
+   "summary": "Nothing applies, computes or even flags the Clumsy 1 — and the app knows both facts it would need (what the character wears and that the suit is equipped). There is no item-imposes-a-condition lane: `",
+   "fixed": true
+  },
+  {
+   "id": "bedroll-of-deep-slumber",
+   "bucket": "items",
+   "summary": "Only the second half of the sentence is delivered. The 5 temporary Hit Points are held by nothing. The carrier exists and is in routine use for exactly this shape — situationalBonuses.ts entries with ",
+   "fixed": true
+  },
+  {
+   "id": "unifying-emblem-shadde-quah",
+   "bucket": "items",
+   "summary": "The spell the tattoo casts is granted by nothing. The record models the ACTIVATION shell only — activationCost {actions:2}, frequency {1/day}, a resetsOnRest counter — so the player gets a once-per-da",
+   "fixed": true
+  },
+  {
+   "id": "unifying-emblem-shriikirri-quah",
+   "bucket": "items",
+   "summary": "Same gap as its sibling: no `innateSpells` (or any spell carrier) on the record, so the modelled 1-action / once-per-day activation grants nothing. `spells/liberating-command` exists in core.json. Not",
+   "fixed": true
+  },
+  {
+   "id": "coyote-cloak",
+   "bucket": "items",
+   "summary": "The +1 item Survival is delivered via passiveEffects.skills.survival; the Subsist rider is held by nothing. It is not a permission no field could hold — this app files exactly this shape as a `situati",
+   "fixed": true
+  },
+  {
+   "id": "medal-of-gorillas-might",
+   "bucket": "items",
+   "summary": "Nothing groups the magical medals for the investment cap, and the cap IS enforced: src/sheet/InventoryTab.tsx:657 computes `investedCount` as one per inventory row carrying the `invested` trait, and l",
+   "fixed": true
+  },
+  {
+   "id": "unifying-emblem-skoan-quah",
+   "bucket": "items",
+   "summary": "No `innateSpells` — the modelled 2-action once-per-day activation grants no spell. The spell is *ventriloquism*: the pristine AoN mirror at C:/wonderers guide/aon-2e-archive/data/by-category/equipment",
+   "fixed": true
+  },
+  {
+   "id": "magnifying-scope",
+   "bucket": "items",
+   "summary": "The activation shell is modelled (activationCost {actions:1}) but its effect is not: nothing anywhere raises the host weapon's range increment by 5 feet, and the app does display and use a weapon's `r",
+   "fixed": true
+  },
+  {
+   "id": "acid-flask-moderate",
+   "bucket": "items",
+   "summary": "Only the 1 acid is on the strike. The record's `damage` is {dice:1, die:\"\", type:\"acid\"}; the 2d6 persistent acid and the 2 acid splash have no carrier at all — the item damage shape has no persistent",
+   "fixed": true
+  },
+  {
+   "id": "sluggish-bracelet",
+   "bucket": "items",
+   "summary": "`stuck` is not set on the record, so the app never warns the player that this item cannot be taken off. This is not a missing lane — `stuck` is the purpose-built field (types.ts:3186, read by isStuckI",
+   "fixed": true
+  },
+  {
+   "id": "sluggish-bracelet",
+   "bucket": "items",
+   "summary": "The post-activation cursed state has no carrier at all. After the curse fires the wearer should permanently lose the +1 Acrobatics and take a –5-foot status Speed penalty; the record's `passiveEffects",
+   "fixed": true
+  },
+  {
+   "id": "ghoul-stiletto",
+   "bucket": "items",
+   "summary": "The built-in +1 weapon potency rune is not modelled, so the sheet renders this weapon's Strike at +0 item bonus — the printed number and the delivered number disagree. No `runes`/`potency`/`striking` ",
+   "fixed": true
+  },
+  {
+   "id": "retribution-axe",
+   "bucket": "items",
+   "summary": "Same as ghoul-stiletto: the built-in +1 potency rune is not modelled, so Strikes with this weapon render one point of item bonus short of the printed value. Nothing on the record, no inventory-seeded ",
+   "fixed": true
+  },
+  {
+   "id": "maestros-instrument-lesser",
+   "bucket": "items",
+   "summary": "The Charm cast is never granted. The item has no heldSpells, no innateSpells, no spellNotes, no grantsActions — nothing puts Charm on the Spells page, and the printed DC 17 is held nowhere. The `heldS",
+   "fixed": true
+  },
+  {
+   "id": "marshals-baton",
+   "bucket": "items",
+   "summary": "The once-per-day Command casting is never granted. The record has activationCost, frequency and counters (so a use chip appears) but no innateSpells and no heldSpells, so `command` never reaches the S",
+   "fixed": true
+  },
+  {
+   "id": "unifying-emblem-lyrune-quah",
+   "bucket": "items",
+   "summary": "The once-per-day Vanishing Tracks casting is never granted. The record carries activationCost, frequency, counters and passiveEffects.grantsLanguages (shoanti), but no innateSpells/heldSpells, so the ",
+   "fixed": true
+  },
+  {
+   "id": "jolt-coil",
+   "bucket": "items",
+   "summary": "The printed fixed DC is not held anywhere, and the engine substitutes a different number. src/rules/build.ts:5895-5958 builds the 'items' spellcasting entry for anything with heldSpells and sets `keyA",
+   "fixed": true
+  },
+  {
+   "id": "unifying-emblem-shundar-quah",
+   "bucket": "items",
+   "summary": "The once-per-day Thoughtful Gift casting is never granted — no innateSpells/heldSpells on the record, so the spell never reaches the Spells page and the daily counter tracks a use with nothing behind ",
+   "fixed": true
+  },
+  {
+   "id": "unifying-emblem-sklar-quah",
+   "bucket": "items",
+   "summary": "The once-per-day Concordant Choir casting is never granted — no innateSpells/heldSpells on the record, so the spell never reaches the Spells page. `concordant-choir` exists in core.json (its only src/",
+   "fixed": true
+  },
+  {
+   "id": "inspired-memory",
+   "bucket": "feats",
+   "summary": "Both stated bonuses are held by nothing. The record is completely inert — the dump reports 'nothing but the header', and core.json confirms only id/name/traits/rarity/source/level/category/edition/aon",
+   "fixed": true
+  },
+  {
+   "id": "unifying-emblem-tamiir-quah",
+   "bucket": "items",
+   "summary": "The activated spell is never granted. The record models `activationCost` (2 actions), `frequency` (1/day) and a `counters` entry, but has no `heldSpells`, so Tailwind never reaches the Spells page — t",
+   "fixed": true
+  },
+  {
+   "id": "bullhook",
+   "bucket": "items",
+   "summary": "The item's activated spell is never granted. The record has no `heldSpells`, so the 1st-rank Command (DC 18, animals only) never reaches the Spells page and can never be cast — the player gets an acti",
+   "fixed": true
+  },
+  {
+   "id": "tools-of-the-trade",
+   "bucket": "feats",
+   "summary": "The precision-damage rider has no carrier. featGrantsLane.ts holds only the weaponFamiliarity clause (bola/sap/whip treated as simple). The record carries no `strikeDamage` field, and there is no situ",
+   "fixed": true
+  },
+  {
+   "id": "starlit-eyes",
+   "bucket": "feats",
+   "summary": "The flat-check DC reduction has no carrier anywhere. The app does model concealment/hidden flat-check riders — situationalBonuses.ts holds 'ash-piercing-gaze' ('automatically succeed at the flat check",
+   "fixed": true
+  }
+ ],
+ "recordsRead": 101,
+ "method": "Every record in this batch was read against its printed text (Archives of Nethys mirror), each finding was put to an adversarial refuter, and the survivors were authored as data rows or registry changes. See work/residual-1-12.json for the findings and work/residual-fixed.json for the ledger of what has been closed.",
+ "findings": 24,
+ "closed": 24,
+ "complete": true
+}

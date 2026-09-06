@@ -1,0 +1,209 @@
+{
+ "batch": 7,
+ "examined": 100,
+ "confirmed": [
+  {
+   "id": "mauler-dedication",
+   "bucket": "feats",
+   "summary": "Only the 'two-hand trait' half is delivered. src/rules/featGrantsLane.ts:135 is `'mauler-dedication': { weaponFamiliarity: { weapons: [], traits: ['two-hand-d6','two-hand-d8','two-hand-d10','two-hand-",
+   "fixed": true
+  },
+  {
+   "id": "mauler-dedication",
+   "bucket": "feats",
+   "summary": "The expert gate is not enforced. The record's `critSpecWeapons` is `{traits:['two-hand','two-hand-d4','two-hand-d6','two-hand-d8','two-hand-d10','two-hand-d12'], melee:true}` with no `minRank`. src/ru",
+   "fixed": true
+  },
+  {
+   "id": "mauler-dedication",
+   "bucket": "feats",
+   "summary": "The \"require two hands to wield\" half. featGrantsLane.ts:135 is `{ weapons: [], traits: ['two-hand-d6','two-hand-d8','two-hand-d10','two-hand-d12'], treatAsLowerCategory: true }` and the record's own ",
+   "fixed": true
+  },
+  {
+   "id": "zombie-dedication",
+   "bucket": "feats",
+   "summary": "The restriction is dropped, so the Jaws strike renders on the sheet as an unrestricted 1d8 piercing attack the player can use on any target. The GrantedStrike interface (src/rules/types.ts) has only n",
+   "fixed": true
+  },
+  {
+   "id": "zombie-dedication",
+   "bucket": "feats",
+   "summary": "The restriction on the granted Jaws strike. `grantedStrikes` holds `{ name: 'Jaws', die: 'd8', damageType: 'piercing', traits: ['unarmed'], group: 'brawling' }` and the `GrantedStrike` interface (type",
+   "fixed": true
+  },
+  {
+   "id": "reanimator-dedication",
+   "bucket": "feats",
+   "summary": "The extra signature spell. The record carries nothing but actionCost + archetype. `entry.signature` is written in exactly three places (build.ts:3122, 3136, 3303): the class's own `signature-spells` f",
+   "fixed": true
+  },
+  {
+   "id": "sentinel-dedication",
+   "bucket": "feats",
+   "summary": "Both scaling clauses. The grant at src/rules/featGrants.ts:399 is only `armor: { light: 'trained', medium: 'trained' }` + `conditionalArmor` for heavy — all three stay TRAINED at every level. There is",
+   "fixed": true
+  },
+  {
+   "id": "swarmkeeper-dedication",
+   "bucket": "feats",
+   "summary": "The swarm entity itself. The record carries only `grantsActions: ['swarm-forth','bite-and-sting']`; the two Actions exist in core.json but nothing anywhere holds the swarm's size, its 15 ft land + 15 ",
+   "fixed": true
+  },
+  {
+   "id": "commander-dedication",
+   "bucket": "feats",
+   "summary": "The whole tactics subsystem. The engine builds `commanderTactics` (folio, folioMax, preparedMax, maxTier) only inside `if (ownsClass('commander'))` at src/rules/build.ts:6306, and `ownsClass` is `cls?",
+   "fixed": true
+  },
+  {
+   "id": "commander-dedication",
+   "bucket": "feats",
+   "summary": "The redundancy clause. featGrantsAuto.ts:163 is a bare `{ skills: { 'lore:warfare': 'trained' } }` with no `redundantFallback`, and the record-wide reader is explicitly guarded against Lore keys — bui",
+   "fixed": true
+  },
+  {
+   "id": "captain-dedication",
+   "bucket": "feats",
+   "summary": "The replacement feat pick. featPickGrants.ts:93 offers exactly ['group-impression','group-coercion'] and FeatPickSpec (featPickGrants.ts:17-40) has no fallback/redundancy field of any kind — a player ",
+   "fixed": true
+  },
+  {
+   "id": "embodiment-of-the-balance",
+   "bucket": "feats",
+   "summary": "The record carries spellListAdditions {\"spells\":[\"heal\",\"harm\"],\"as\":\"repertoire\"} with NO entryId. build.ts:5097 resolves an entry-less repertoire add as `spellcasting.find(e => e.type === 'focus') ?",
+   "fixed": true
+  },
+  {
+   "id": "oozemorph-dedication",
+   "bucket": "feats",
+   "summary": "The scaling Diplomacy penalty. Nothing holds it. The carrier exists in two forms: situationalBonuses.ts entries take a free-text bonus string and already express penalties (e.g. spider-lily-tattoo \"-1",
+   "fixed": true
+  },
+  {
+   "id": "marshal-dedication",
+   "bucket": "feats",
+   "summary": "The expert step on the chosen skill. featGrantsAuto.ts:391 authors `skillChoices: [{ options: ['diplomacy','intimidation'], rank: 'trained' }]` with a flat rank and no `conditionalRank`. The carrier e",
+   "fixed": true
+  },
+  {
+   "id": "trick-driver-dedication",
+   "bucket": "feats",
+   "summary": "Two effects, neither held anywhere. (a) The attribute swap: `skillAbilitySwap?: { skill: ProficiencyKey; use: AbilityId; mandatory?: boolean }` (types.ts:1175, read by derive.ts:475-520 and explain.ts",
+   "fixed": true
+  },
+  {
+   "id": "draconic-acolyte-dedication",
+   "bucket": "feats",
+   "summary": "The second sentence is unreachable by construction, not merely unauthored. The static-skills fallback branch in build.ts:4196 is guarded `!key.startsWith('lore:')` — commented \"Lore grants stay as-is ",
+   "fixed": true
+  },
+  {
+   "id": "eyes-of-the-city",
+   "bucket": "feats",
+   "summary": "Both skill substitutions (diplomacy→survival and society→survival, when Tracking in a settlement). The record carries no fields at all beyond actionCost. `skillSubstitutions` is the carrier and 33 rec",
+   "fixed": true
+  },
+  {
+   "id": "tattoo-artist",
+   "bucket": "feats",
+   "summary": "Eight granted formulas (4 at trained, 4 more at master) are never handed over and never picked. FORMULA_GRANTS in src/rules/formulaBook.ts is the carrier for exactly this clause and has 11 entries; 't",
+   "fixed": true
+  },
+  {
+   "id": "bright-lion-dedication",
+   "bucket": "feats",
+   "summary": "The \"expert instead\" clause is applied to Mzali Lore only. featGrantsAuto.ts:98 has `conditionalSkills: { 'lore:mzali': { base:'trained', upgraded:'expert' } }` for the Lore, but the choice slot is `s",
+   "fixed": true
+  },
+  {
+   "id": "shieldmarshal-dedication",
+   "bucket": "feats",
+   "summary": "The society→survival substitution for Sense Direction. `skillSubstitutions` is the carrier and primal-dragonblood already holds the same action: [{\"use\":\"nature\",\"forSkill\":\"survival\",\"when\":\"to Sense",
+   "fixed": true
+  },
+  {
+   "id": "pirate-dedication",
+   "bucket": "feats",
+   "summary": "The terrain clause reaches no surface. This is a BUILT lane, not a missing subsystem: RECORD_MARKERS in src/rules/situationalBonuses.ts carries the same sentence for peers on the `stride` / `step` act",
+   "fixed": true
+  },
+  {
+   "id": "robust-recovery",
+   "bucket": "feats",
+   "summary": "The degree-of-success upgrade (success -> critical success on the patient's save) is held by nothing. Only the +4 half exists. The app has a live, structured lane for exactly this shape: `DegreeShift`",
+   "fixed": true
+  },
+  {
+   "id": "viking-dedication",
+   "bucket": "feats",
+   "summary": "Same built-lane miss as pirate-dedication: no RECORD_MARKERS row on `stride`. Worth separating from a bare lane gap because this record WAS authored — its other clause ('if you roll a success on an At",
+   "fixed": true
+  },
+  {
+   "id": "rivethun-invoker-dedication",
+   "bucket": "feats",
+   "summary": "The whole numeric content of Enter Spirit Trance. The carrier keyed to THIS record exists and is empty: src/rules/modes.ts:333 `{ id: 'cat-spirit-trance', ... feats: ['rivethun-invoker-dedication'], m",
+   "fixed": true
+  },
+  {
+   "id": "alter-ego-dedication",
+   "bucket": "feats",
+   "summary": "Three things from Assume a Role, the feat's only granted ability: (a) the +1 circumstance bonus to Deception while impersonating; (b) the +1 circumstance bonus to the chosen Lore; (c) the Lore choice ",
+   "fixed": true
+  },
+  {
+   "id": "spirit-warrior-dedication",
+   "bucket": "feats",
+   "summary": "No carrier holds the penalty waiver. unarmedTraits {match:['fist'], add:['parry'], stepDie:true} delivers the 1d6 and parry correctly, but carries no `remove` and the record has no note or situational",
+   "fixed": true
+  },
+  {
+   "id": "spellshifter-dedication",
+   "bucket": "feats",
+   "summary": "grantsFeats:['shift-spell'] points at the WRONG record. core.json feats/shift-spell is a level-14 wizard feat from Pathfinder #167 (\"You move the spell's area to a new location within 120 feet. The sp",
+   "fixed": true
+  },
+  {
+   "id": "wizard-dedication",
+   "bucket": "feats",
+   "summary": "The archetype entry makes all FOUR spellbook cantrips castable; the printed limit of two prepared per day is enforced nowhere. src/rules/casterArchetypes.ts:83 is mk('arcane','int',4,'wizard') and `Ca",
+   "fixed": true
+  },
+  {
+   "id": "medic-dedication",
+   "bucket": "feats",
+   "summary": "The record carries limitedUses {max:1, per:'hour'} — the MASTER-only cadence, applied unconditionally from level 2. Medic Dedication itself only makes you an EXPERT in Medicine, so at acquisition the ",
+   "fixed": true
+  },
+  {
+   "id": "guerrilla-dedication",
+   "bucket": "feats",
+   "summary": "The favored-location pick is never asked, and the benefit it gates is carried nowhere. The record's single `choice` slot is spent on the Deception/Thievery skill pick, and FeatChoiceDef is singular on",
+   "fixed": true
+  },
+  {
+   "id": "vampire-dedication",
+   "bucket": "feats",
+   "summary": "Both named vulnerabilities are absent everywhere. The record models the upside of undeath in detail (immunities, negativeHealing, grantsCreatureTraits, grantsLanguages, conditionalSenses darkvision, t",
+   "fixed": true
+  },
+  {
+   "id": "fan-dancer-dedication",
+   "bucket": "feats",
+   "summary": "The Feint rider — the air trait and the free 10-foot Stride folded into the same action — has no carrier anywhere. Only the Performance proficiency ladder is modelled. The exact carrier pattern is in ",
+   "fixed": true
+  },
+  {
+   "id": "horizon-walker-dedication",
+   "bucket": "feats",
+   "summary": "The ALLY half of the benefit is carried nowhere. situationalBonuses.ts:779 states only \"to your travel Speed while in your favored terrain\" — the clause extending the +10 feet and the difficult-terrai",
+   "fixed": true
+  }
+ ],
+ "recordsRead": 100,
+ "method": "Every record in this batch was read against its printed text (Archives of Nethys mirror), each finding was put to an adversarial refuter, and the survivors were authored as data rows or registry changes. See work/residual-1-12.json for the findings and work/residual-fixed.json for the ledger of what has been closed.",
+ "findings": 33,
+ "closed": 33,
+ "complete": true
+}

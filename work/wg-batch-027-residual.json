@@ -1,0 +1,579 @@
+{
+ "batch": "work/wg-batch-027.json",
+ "examined": 99,
+ "method": "9 Opus Explore readers (print + WG raw ops + every carrier) each followed by an Opus adversarial verifier; findings applied by family agents + verifiers, then the orchestrator closed every cross-file gap",
+ "confirmed": [
+  {
+   "id": "titan-nagaji",
+   "finding": "titan-nagaji",
+   "severity": "player-visible",
+   "summary": "The Titan Nagaji's scales are never handed to the character: WG gives the armor item, our heritage record has no grantsItems, so the +4 AC, Dex cap +1, -2 check penalty and -5 ft Speed penalty never reach the sheet.",
+   "fixed": true
+  },
+  {
+   "id": "draxie",
+   "finding": "draxie",
+   "severity": "player-visible",
+   "summary": "Draxie delivers nothing at all — the printed touch telepathy is on neither our heritage record nor any side carrier, while WG grants it as an ability block.",
+   "fixed": true
+  },
+  {
+   "id": "sacred-nagaji",
+   "finding": "sacred-nagaji#fangs",
+   "severity": "player-visible",
+   "summary": "Sacred Nagaji's Tail is authored as an ADDITIVE grantedStrike, so the character keeps the nagaji chassis Fangs as well — print replaces it.",
+   "fixed": true
+  },
+  {
+   "id": "sacred-nagaji",
+   "finding": "sacred-nagaji#bonus-scope",
+   "severity": "player-visible",
+   "summary": "Our two situational stars omit the printed second sentence entirely (saving throws against effects that would Grab, Restrain, or knock you prone) and additionally narrow Fortitude to Grapple-only and Reflex to Trip-only, where print gives b",
+   "fixed": true
+  },
+  {
+   "id": "leungli",
+   "finding": "leungli#amphibious",
+   "severity": "player-visible",
+   "summary": "Leungli grants no amphibious creature trait, so the printed water-breathing never reaches derive.ts's breathesWater — confirming the comparer's KINDS missing [trait] flag.",
+   "fixed": true
+  },
+  {
+   "id": "shadow-of-the-courtier",
+   "finding": "shadow-of-the-courtier#marker",
+   "severity": "player-visible",
+   "summary": "The once-per-day reroll is attached to nothing the player sees when they Make an Impression — WG injects it onto that action row and we do not.",
+   "fixed": true
+  },
+  {
+   "id": "sailfish-merfolk",
+   "finding": "sailfish-merfolk#swim-before-jump",
+   "severity": "player-visible",
+   "summary": "The printed substitution of Swim for the Stride that precedes a jump is modeled by neither side; only the +1 Athletics half of the sentence survives.",
+   "fixed": true
+  },
+  {
+   "id": "lorekeeper-shisk",
+   "finding": "lorekeeper-shisk#lore",
+   "severity": "player-visible",
+   "summary": "WG renders a dedicated \"Select a Lore\" control that trains a Lore skill; our record has no `loreChoices`, so the printed Lore skill is never picked and never trained.",
+   "fixed": true
+  },
+  {
+   "id": "lorekeeper-shisk",
+   "finding": "lorekeeper-shisk#expert",
+   "severity": "player-visible",
+   "summary": "WG upgrades both chosen skills to expert at 5th level via a LEVEL>=5 conditional; ours grants only trained and never advances, so a 5th-level Lorekeeper Shisk is a rank short on the printed skill.",
+   "fixed": true
+  },
+  {
+   "id": "lorekeeper-shisk",
+   "finding": "lorekeeper-shisk#instrument",
+   "severity": "internal",
+   "summary": "The comparer's EXPERIENCE flag misreads our single control: it is a SKILL picker matching WG's \"Select a Skill\" one-for-one, not a [lore] control — the real gap is that the Lore control does not exist.",
+   "fixed": true
+  },
+  {
+   "id": "stormtossed-tengu",
+   "finding": "stormtossed-tengu#flat-check",
+   "severity": "player-visible",
+   "summary": "The printed automatic success on the flat check to target a creature concealed only by rain or fog is modeled by neither side, and it is exactly the shape our situationalBonuses lane already carries for two other records.",
+   "fixed": true
+  },
+  {
+   "id": "paddler-shoony",
+   "finding": "paddler-shoony#bogs",
+   "severity": "player-visible",
+   "summary": "The printed bog-terrain immunity is modeled by neither side; only the Swim degree shift is carried, so half the heritage is invisible on the sheet.",
+   "fixed": true
+  },
+  {
+   "id": "nyktera",
+   "finding": "nyktera#seek-cone",
+   "severity": "player-visible",
+   "summary": "The printed doubling of the Seek cone from 30 feet to 60 feet is modeled by neither side; only the +2 circumstance bonus is carried, so the heritage's headline mechanic never reaches the sheet.",
+   "fixed": true
+  },
+  {
+   "id": "nyktera",
+   "finding": "nyktera#desc",
+   "severity": "player-visible",
+   "summary": "Our stored description drops both cone measurements from the printed sentence, leaving the ungrammatical fragment \"in a instead of a .\" where print reads \"in a 60-foot cone instead of a 30-foot cone\".",
+   "fixed": true
+  },
+  {
+   "id": "deny-lady-nanbyos-charity",
+   "finding": "deny-lady-nanbyos-charity#bulk",
+   "severity": "player-visible",
+   "summary": "The Bulk-limit increase is delivered by no carrier of ours: the heritage record has no bulk field, `Heritage` in src/rules/types.ts declares none, and `deriveBulk` never looks at the heritage.",
+   "fixed": true
+  },
+  {
+   "id": "steadfast-tanuki",
+   "finding": "steadfast-tanuki#instrument",
+   "severity": "internal",
+   "summary": "The comparer flag \"IDENTITY options everydayform/teakettleform, ours none\" is a misread — we do carry both options, in the pinned-choice table keyed by heritage id, not on the heritage record.",
+   "fixed": true
+  },
+  {
+   "id": "mountainkeeper-tengu",
+   "finding": "mountainkeeper-tengu#tradition-choice",
+   "severity": "player-visible",
+   "summary": "The per-cast divine-or-primal tradition choice for every spell from a tengu heritage or ancestry feat is modelled by neither side; our record hard-codes tradition 'primal' only.",
+   "fixed": true
+  },
+  {
+   "id": "mountaineer-samsaran",
+   "finding": "mountaineer-samsaran#environmental-cold",
+   "severity": "player-visible",
+   "summary": "The environmental-cold step-down is delivered by neither side, though we have a house pattern for exactly this sentence on four other heritages.",
+   "fixed": true
+  },
+  {
+   "id": "glacier-cavern-minotaur",
+   "finding": "glacier-cavern-minotaur#environmental-cold",
+   "severity": "player-visible",
+   "summary": "Same missing environmental-cold step-down: only the cold resistance is delivered, by either side.",
+   "fixed": true
+  },
+  {
+   "id": "virtuous-tanuki",
+   "finding": "virtuous-tanuki#sickened-ingestion",
+   "severity": "player-visible",
+   "summary": "The carve-out from the sickened condition's ban on ingesting anything is modelled by neither side, and the sickened row on the sheet still tells the player they cannot eat or drink.",
+   "fixed": true
+  },
+  {
+   "id": "virtuous-tanuki",
+   "finding": "virtuous-tanuki#alcohol-incapacitation",
+   "severity": "player-visible",
+   "summary": "The opt-out from being incapacitated by conventional alcohol is modelled by neither side and reaches no sheet surface.",
+   "fixed": true
+  },
+  {
+   "id": "tsukumogami-poppet",
+   "finding": "tsukumogami-poppet#weakness-value",
+   "severity": "player-visible",
+   "summary": "Our three material options grant a flat weakness 5, but the printed weakness is the poppet chassis value — one-third level, minimum 1 — which is what our own poppet ancestry and WG both encode.",
+   "fixed": true
+  },
+  {
+   "id": "tsukumogami-poppet",
+   "finding": "tsukumogami-poppet#fire-not-removed",
+   "severity": "player-visible",
+   "summary": "Choosing metal or ceramic must REPLACE the poppet fire weakness, but nothing on our side removes it, so a metal tsukumogami ends up with fire AND electricity weakness.",
+   "fixed": true
+  },
+  {
+   "id": "tsukumogami-poppet",
+   "finding": "tsukumogami-poppet#instrument-weaknesses",
+   "severity": "internal",
+   "summary": "The VALUES flag \"theirs electricity,cold, ours (nothing)\" is a comparer misread — we do set both weaknesses, just through the effectChoices carrier rather than a record-level weaknesses field.",
+   "fixed": true
+  },
+  {
+   "id": "breaker-surki",
+   "finding": "breaker-surki#trench-digging-ungated",
+   "severity": "player-visible",
+   "summary": "We hand Trench Digging to every breaker surki at 1st level, but print places it inside an Evolution that is only obtained by taking Grand Metamorphosis, a 9th-level ancestry feat.",
+   "fixed": true
+  },
+  {
+   "id": "breaker-surki",
+   "finding": "breaker-surki#evolved-claw",
+   "severity": "player-visible",
+   "summary": "Their side delivers the evolved claw statistics (1d6, magical/razing/versatile force, agile dropped); ours models the upgrade nowhere — the grand-metamorphosis option 'breaker-wedge' changes no number on the sheet.",
+   "fixed": true
+  },
+  {
+   "id": "deep-orc",
+   "finding": "deep-orc#terrain-expertise-unbound",
+   "severity": "player-visible",
+   "summary": "Print pins the granted Terrain Expertise to underground terrain, but our grant leaves the feat's terrain question unanswered and unaskable, so the feat's Survival bonus hangs off an empty terrain.",
+   "fixed": true
+  },
+  {
+   "id": "courageous-tanuki",
+   "finding": "courageous-tanuki#tactical-retreat",
+   "severity": "player-visible",
+   "summary": "Print and their encoding both grant the Tactical Retreat reaction; our heritage grants no action at all, so the reaction never reaches the sheet even though we already carry the action record.",
+   "fixed": true
+  },
+  {
+   "id": "courageous-tanuki",
+   "finding": "courageous-tanuki#fleeing-relaxation",
+   "severity": "player-visible",
+   "summary": "Print rewrites how the fleeing condition works for this character — one action may be spent freely — and neither side models it, so the sheet's fleeing entry states the unmodified rule.",
+   "fixed": true
+  },
+  {
+   "id": "healer-samsaran",
+   "finding": "healer-samsaran#treat-wounds-self",
+   "severity": "player-visible",
+   "summary": "The heritage's self-healing clause — add your level to the Hit Points regained from Treat Wounds on yourself — is modelled by neither side and appears nowhere on the sheet.",
+   "fixed": true
+  },
+  {
+   "id": "monstrous-skeleton",
+   "finding": "monstrous-skeleton",
+   "severity": "player-visible",
+   "summary": "Our four grantedStrikes rows are all tagged choiceValue but the record carries no effectChoices (and no choice), so nothing renders a picker and the pick is always undefined — push()'s `if (g.choiceValue && g.choiceValue !== pick) continue;",
+   "fixed": true
+  },
+  {
+   "id": "compact-skeleton",
+   "finding": "compact-skeleton",
+   "severity": "player-visible",
+   "summary": "Our record sets no size, so a Compact Skeleton stays Medium (the skeleton ancestry chassis) instead of Small.",
+   "fixed": true
+  },
+  {
+   "id": "littlehorn-minotaur",
+   "finding": "littlehorn-minotaur#size",
+   "severity": "player-visible",
+   "summary": "Our record sets no size, so a Littlehorn Minotaur stays Large (the minotaur ancestry chassis) instead of Medium.",
+   "fixed": true
+  },
+  {
+   "id": "littlehorn-minotaur",
+   "finding": "littlehorn-minotaur#horns",
+   "severity": "player-visible",
+   "summary": "Our record does not downgrade or retrait the minotaur horns, so the horns Strike still shows 1d8 piercing without agile instead of 1d6 piercing with agile.",
+   "fixed": true
+  },
+  {
+   "id": "hold-scarred-orc",
+   "finding": "hold-scarred-orc",
+   "severity": "player-visible",
+   "summary": "Our record carries no ancestryHp, so the character gets the orc chassis 10 ancestry Hit Points instead of the printed 12.",
+   "fixed": true
+  },
+  {
+   "id": "slabsoul-minotaur",
+   "finding": "slabsoul-minotaur",
+   "severity": "player-visible",
+   "summary": "The granted action record's description text has lost the damage die and the save type, so the sheet's Raise Slabs card reads \"You deal damage to all adjacent creatures ( against your class DC or spell DC…)\".",
+   "fixed": true
+  },
+  {
+   "id": "thickcoat-shoony",
+   "finding": "thickcoat-shoony",
+   "severity": "player-visible",
+   "summary": "Only the cold resistance is modeled by either side; the printed snow-concealment flat-check waiver and the two environmental-severity shifts (cold one step less extreme, heat one step more extreme) exist on no carrier.",
+   "fixed": true
+  },
+  {
+   "id": "spellkeeper-shisk",
+   "finding": "spellkeeper-shisk#tradition-gate",
+   "severity": "player-visible",
+   "summary": "Our flat 56-cantrip picker hard-codes one tradition per option, so 16 cantrips that sit on BOTH the occult and primal lists are pinned to occult — a shisk who chose primal gets them as occult innate spells, contradicting print.",
+   "fixed": true
+  },
+  {
+   "id": "lantern-surki",
+   "finding": "lantern-surki#evolution-overgrant",
+   "severity": "player-visible",
+   "summary": "The heritage grants the Lantern Beam EVOLUTION action unconditionally at 1st level, but print gates every surki evolution behind the 9th-level feat Grand Metamorphosis — and grand-metamorphosis already carries the same pick, so the grant is",
+   "fixed": true
+  },
+  {
+   "id": "hardshell-surki",
+   "finding": "hardshell-surki#evolution-overgrant",
+   "severity": "player-visible",
+   "summary": "Same shape as Lantern Surki: the heritage grants Dampening Harmonics unconditionally at 1st level, though print makes it one of two evolutions reachable only via the 9th-level Grand Metamorphosis, which already lists it as a pick.",
+   "fixed": true
+  },
+  {
+   "id": "born-of-celestial",
+   "finding": "born-of-celestial#tradition-override",
+   "severity": "player-visible",
+   "summary": "The heritage's headline rider — every spell from a yaoguai heritage or ancestry feat becomes divine — is modeled by neither side, and it visibly bites on Brilliant Vision, which we still grant as occult.",
+   "fixed": true
+  },
+  {
+   "id": "shifting-skeleton",
+   "finding": "shifting-skeleton#impersonate-bonus",
+   "severity": "player-visible",
+   "summary": "Rearrange Bones' +1 status bonus to Impersonate Deception checks has no carrier on either side — it never reaches the Deception row.",
+   "fixed": true
+  },
+  {
+   "id": "born-of-celestial",
+   "finding": "born-of-celestial#form-gate",
+   "severity": "player-visible",
+   "summary": "The granted divine cantrip is a Yaoguai Form benefit in print, but we grant it unconditionally with no note, so the Spells page shows it as always castable.",
+   "fixed": true
+  },
+  {
+   "id": "shimmertongue-nagaji",
+   "finding": "shimmertongue-nagaji#magicsense-acuity",
+   "severity": "player-visible",
+   "summary": "Our magicsense glossary blurb calls it an imprecise sense; print grants it here as a VAGUE sense, and both corpus grants are authored vague — so the record's own tooltip contradicts the record.",
+   "fixed": true
+  },
+  {
+   "id": "lantern-surki",
+   "finding": "lantern-surki#instrument",
+   "severity": "internal",
+   "summary": "The comparer flag \"KINDS missing [choice]\" is a misread: the evolution choice is not a heritage-level carrier on either side — WG injects into Grand Metamorphosis's select, and ours lives on feats['grand-metamorphosis'].choice.",
+   "fixed": true
+  },
+  {
+   "id": "hardshell-surki",
+   "finding": "hardshell-surki#instrument",
+   "severity": "internal",
+   "summary": "Same misread as Lantern Surki: \"KINDS missing [choice]\" counts a cross-record option injection as a heritage-level choice; our matching carrier sits on Grand Metamorphosis.",
+   "fixed": true
+  },
+  {
+   "id": "fishseeker-shoony",
+   "finding": "fishseeker-shoony#instrument",
+   "severity": "internal",
+   "summary": "The comparer flag \"KINDS missing [skill]\" is a misread: WG's SKILL_ACROBATICS op has no value — it is a pure text note carrying the same Grab an Edge sentence our degreeShifts already carry, and print trains no skill at all.",
+   "fixed": true
+  },
+  {
+   "id": "hardshell-surki",
+   "finding": "hardshell-surki#desc-hole",
+   "severity": "internal",
+   "summary": "The `d` fallback description has a hole where \"DC 17 flat check\" should be — the sentence reads \"attempt a .\" — though the AST render carrier is intact, so it only shows on the fallback path.",
+   "fixed": true
+  },
+  {
+   "id": "new-moon-sarangay",
+   "finding": "new-moon-sarangay#size",
+   "severity": "player-visible",
+   "summary": "Our New Moon Sarangay record carries no size field, so the character stays Medium (the sarangay chassis size) instead of Small.",
+   "fixed": true
+  },
+  {
+   "id": "new-moon-sarangay",
+   "finding": "new-moon-sarangay#hp",
+   "severity": "player-visible",
+   "summary": "Our New Moon Sarangay record carries no ancestryHp, so the character gets the sarangay chassis 8 ancestry HP instead of the printed 10.",
+   "fixed": true
+  },
+  {
+   "id": "toy-poppet",
+   "finding": "toy-poppet#size",
+   "severity": "player-visible",
+   "summary": "Our Toy Poppet record carries no size field, so the character stays Small (the poppet chassis size) instead of Tiny.",
+   "fixed": true
+  },
+  {
+   "id": "respite-of-a-thousand-roofs",
+   "finding": "respite-of-a-thousand-roofs#crafting",
+   "severity": "player-visible",
+   "summary": "Our Respite of a Thousand Roofs delivers no Crafting training — the record has no skills carrier at all and instead ships a dataWarning telling the player to apply it by hand.",
+   "fixed": true
+  },
+  {
+   "id": "respite-of-a-thousand-roofs",
+   "finding": "respite-of-a-thousand-roofs#cooking-lore",
+   "severity": "player-visible",
+   "summary": "The Cooking Lore half of the same sentence is also undelivered on our side — no Lore training reaches the character.",
+   "fixed": true
+  },
+  {
+   "id": "born-of-vegetation",
+   "finding": "born-of-vegetation#trait-choice",
+   "severity": "player-visible",
+   "summary": "Our Born of Vegetation grants neither the plant nor the fungus creature trait and renders no control to pick one; WG asks the question.",
+   "fixed": true
+  },
+  {
+   "id": "born-of-vegetation",
+   "finding": "born-of-vegetation#yaoguai-form-treat-wounds",
+   "severity": "player-visible",
+   "summary": "The Yaoguai Form half of Born of Vegetation — level added to Treat Wounds healing plus a conditional +1 to the healer's check — is modelled by neither side and reaches no carrier on the sheet.",
+   "fixed": true
+  },
+  {
+   "id": "pixie",
+   "finding": "pixie",
+   "severity": "player-visible",
+   "summary": "Pixie carries no size field at all, so a Pixie sprite stays Tiny (the sprite ancestry chassis size) instead of becoming Small as printed, while WG explicitly sets it.",
+   "fixed": true
+  },
+  {
+   "id": "reef-merfolk",
+   "finding": "reef-merfolk",
+   "severity": "player-visible",
+   "summary": "The poison-affliction stage-reduction half of the printed ability is modeled by neither side — ours carries only the resistance, and WG carries only two RESISTANCES adjValues.",
+   "fixed": true
+  },
+  {
+   "id": "venom-resistant-vishkanya",
+   "finding": "venom-resistant-vishkanya",
+   "severity": "player-visible",
+   "summary": "Same gap as Reef Merfolk: the printed poison-affliction stage-reduction clause is modeled by neither side; ours carries only the resistance.",
+   "fixed": true
+  },
+  {
+   "id": "winter-orc",
+   "finding": "winter-orc",
+   "severity": "player-visible",
+   "summary": "The environmental-cold clause is modeled by neither side — ours carries only the Survival skill picker, and WG carries only SKILL_SURVIVAL.",
+   "fixed": true
+  },
+  {
+   "id": "wilderness-samsaran",
+   "finding": "wilderness-samsaran",
+   "severity": "player-visible",
+   "summary": "The difficult-terrain clause is modeled by neither side — ours carries only the Survival-or-substitute picker, and WG carries only SKILL_SURVIVAL.",
+   "fixed": true
+  },
+  {
+   "id": "sturdy-skeleton",
+   "finding": "sturdy-skeleton#hp",
+   "severity": "player-visible",
+   "summary": "Ours never raises ancestry HP to 10, so a Sturdy Skeleton keeps the skeleton chassis' 6 HP.",
+   "fixed": true
+  },
+  {
+   "id": "thickskin-tripkee",
+   "finding": "thickskin-tripkee#hp",
+   "severity": "player-visible",
+   "summary": "Ours never raises ancestry HP to 8, so a Thickskin Tripkee keeps the tripkee chassis' 6 HP.",
+   "fixed": true
+  },
+  {
+   "id": "elytron-surki",
+   "finding": "elytron-surki#evolutions",
+   "severity": "player-visible",
+   "summary": "Ours hands a 1st-level Elytron Surki BOTH of the heritage's Evolutions for free, when print gates every Evolution behind Grand Metamorphosis (9th).",
+   "fixed": true
+  },
+  {
+   "id": "elytron-surki",
+   "finding": "elytron-surki#fly-tradition",
+   "severity": "player-visible",
+   "summary": "Our Fly innate spell carries no tradition, so it resolves to the spell's first tradition (arcane) instead of the surki's chosen magiphage tradition.",
+   "fixed": true
+  },
+  {
+   "id": "elytron-surki",
+   "finding": "elytron-surki#stridulating-save",
+   "severity": "player-visible",
+   "summary": "Our Stridulating Song description drops the save type printed for the action.",
+   "fixed": true
+  },
+  {
+   "id": "elytron-surki",
+   "finding": "elytron-surki#instrument",
+   "severity": "internal",
+   "summary": "The comparer's \"KINDS missing [choice]\" flag misreads WG's injectSelectOption as a choice belonging to this heritage; the heritage has no select on their side either.",
+   "fixed": true
+  },
+  {
+   "id": "waning-moon-sarangay",
+   "finding": "waning-moon-sarangay#fortune",
+   "severity": "player-visible",
+   "summary": "The once-per-day fortune reroll never lands on the chosen skill's row — ours carries only a use-pip and prose, with no star on Acrobatics/Crafting/Performance.",
+   "fixed": true
+  },
+  {
+   "id": "snow-rat",
+   "finding": "snow-rat#environment",
+   "severity": "player-visible",
+   "summary": "The environmental-cold step reduction is unmodelled on both sides, though our sibling snow/cold heritages all carry it.",
+   "fixed": true
+  },
+  {
+   "id": "respite-of-cloudless-paths",
+   "finding": "respite-of-cloudless-paths#environment",
+   "severity": "player-visible",
+   "summary": "The heat/cold step reduction is unmodelled on both sides; only the +1 save half is carried.",
+   "fixed": true
+  },
+  {
+   "id": "born-of-elements",
+   "finding": "born-of-elements#tradition",
+   "severity": "player-visible",
+   "summary": "The blanket \"everything yaoguai becomes primal\" clause is unmodelled on both sides, so a Born of Elements yaoguai's Brilliant Vision still casts See the Unseen at occult.",
+   "fixed": true
+  },
+  {
+   "id": "dogtooth-tengu",
+   "finding": "dogtooth-tengu#deadly-d8",
+   "severity": "player-visible",
+   "summary": "Our dogtooth-tengu record carries no mechanical field at all, so the heritage's only printed effect — the deadly d8 trait on the tengu beak — is delivered by nothing.",
+   "fixed": true
+  },
+  {
+   "id": "gandharva",
+   "finding": "gandharva#tradition",
+   "severity": "player-visible",
+   "summary": "Gandharva's tradition-override clause (all sprite heritage/ancestry-feat spells become divine) is modeled by neither side, even though our own spellNotes fromAncestrySpells carrier already ships for the identically-worded makari-lizardfolk.",
+   "fixed": true
+  },
+  {
+   "id": "gandharva",
+   "finding": "gandharva#dup-innate",
+   "severity": "player-visible",
+   "summary": "Gandharva grants Summon Instrument twice — once as a record-level innateSpells entry and again in every one of the 16 effectChoices option grants — and the builder prompt advertises the cantrip a second time.",
+   "fixed": true
+  },
+  {
+   "id": "shadow-rat",
+   "finding": "shadow-rat#action-notes",
+   "severity": "player-visible",
+   "summary": "Shadow Rat's two Intimidation riders (Coerce animals, no language penalty when Demoralizing an animal) are attached to the Coerce and Demoralize action rows by WG and to nothing by us.",
+   "fixed": true
+  },
+  {
+   "id": "shadow-rat",
+   "finding": "shadow-rat#attitude",
+   "severity": "player-visible",
+   "summary": "Shadow Rat's printed drawback — every animal's starting attitude toward you is one degree worse — is modeled by neither side and is the clause a player is most likely to forget.",
+   "fixed": true
+  },
+  {
+   "id": "carcharodon-merfolk",
+   "finding": "carcharodon-merfolk#blood-range",
+   "severity": "player-visible",
+   "summary": "The 120 ft air / 500 ft water blood-scent range is bound to the scent sense row by WG and has no carrier at all on our side — SenseEntry has no note field and RecordMarker.on cannot target a sense.",
+   "fixed": true
+  },
+  {
+   "id": "kanchil",
+   "finding": "kanchil#initiative",
+   "severity": "player-visible",
+   "summary": "Kanchil's +1 circumstance bonus to Deception initiative rolls is in WG's op text and absent from our single Deception-only star.",
+   "fixed": true
+  },
+  {
+   "id": "kanchil",
+   "finding": "kanchil#deception-dc",
+   "severity": "player-visible",
+   "summary": "The third printed target of Kanchil's bonus — your Deception DC against Sense Motive to uncover such a lie — is modeled by neither side.",
+   "fixed": true
+  }
+ ],
+ "refuted": [],
+ "flaggedResidues": [],
+ "rejected": 0,
+ "askOwner": [
+  {
+   "id": "born-of-animal",
+   "desk": 116,
+   "summary": "WG adds a flat, untyped, always-on +5 Speed for Born of Animal, but print gates the 30-foot Speed on being in Yaoguai Form with both hands free while running on all fours."
+  },
+  {
+   "id": "grave-orc",
+   "desk": 117,
+   "summary": "WG's void resistance carries no minimum-1 floor, so their Grave Orc has 0 void resistance at levels 1-3 where print guarantees at least 1 — and their own Stormtossed Tengu row shows they encode that f"
+  },
+  {
+   "id": "deny-lady-nanbyos-charity",
+   "desk": 118,
+   "summary": "WG's single `BULK_LIMIT_BONUS=2` moves the ENCUMBERED threshold by 2, where print grants only 1 more Bulk before encumbered (the +2 applies to the maximum only)."
+  },
+  {
+   "id": "waning-moon-sarangay",
+   "desk": 119,
+   "summary": "WG's Crafting and Performance options both describe the reroll as firing on an Acrobatics check, contradicting print's \"with the chosen skill\"."
+  }
+ ],
+ "complete": true
+}

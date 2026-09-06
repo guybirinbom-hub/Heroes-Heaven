@@ -3,6 +3,35 @@
 This file loads automatically. It exists because sessions kept starting work without the context that
 decides whether the work is right, and then had to be undone.
 
+## ▶ HOW A PARITY BATCH RUNS NOW (2026-09-06) — less Fable, fewest mistakes
+
+The owner asked (2026-09-05) that batches use LESS of the main-loop model and make FEWER mistakes. The
+plan is `docs/wg-batch-pipeline.md` (three-judge reviewed); the prompts are
+`docs/wg-batch-workflow-prompts.md`. The main loop does three things per batch and nothing else:
+
+1. `Workflow({ name: 'wg-batch', args: { batch: 'NNN', count?: N, maxLevel?: L, ids?: 'a,b', print?: true } })`
+   — the saved workflow in `.claude/workflows/wg-batch.js`. Every agent in it is Opus; every
+   mechanical step is the deterministic driver `scripts/wg-batch-run.mjs --batch NNN --stage <stage>`.
+2. Read ONLY `work/.bNNN-run.json` (the per-stage table IS the digest) and the closer's notes. Never
+   read raw logs or a report file; never `head -c 60000` anything.
+3. Decide only what is marked "needs the orchestrator" (owner-question wording, an engine-shape
+   decision, a ruling conflict, a create-row correction or row removal that needs `npm run data`),
+   then commit through `scripts/wg-batch-commit.mjs --batch NNN` (stages by explicit path from the
+   manifest; refuses strays; never `-A`) and record the hash in memory.
+
+The guards that replaced the orchestrator's eyes — do not bypass them by hand:
+- `scripts/apply-parity-fixes.mjs` refuses an undeclared `supersedes`, a whole-value row landing on a
+  field that `path:[…,'id=…']` rows already amend (the batch-29 magus case), prose rows with a path, a
+  `why` naming no AoN doc id, restored prose absent from the mirror; `--expect-rows` rolls back.
+- `scripts/test-flip-audit.mjs --batch NNN`: a changed test, registry key, ratchet or instrument limit
+  must cite `// batch NNN: <finding id>` or `// batch NNN premise: <AoN doc id> "<clause>"`; a new
+  settle/teach needs a `mutation-proof` test.
+- `scripts/overlay-shape-check.mjs` (in `npm run verify`), `scripts/vt.mjs` (the heavy-job lock —
+  never `npx vitest` beside the harness), owner questions only through `scripts/add-owner-question.mjs`
+  (persistent `n`, max+1, duplicate refusal), `scripts/wg-batch-close.mjs` (derives verdicts from the
+  read + manifest; refuses a committed batch on `--write`).
+- Scratchpad scripts are never re-typed: everything a batch needs lives under `scripts/`.
+
 ## ▶ IN FLIGHT (2026-08-13, late) — applying the owner's Round 11 rulings
 
 Tree is coherent: `tsc` clean, **3,372 tests / 328 files pass**, everything **UNCOMMITTED** on top of

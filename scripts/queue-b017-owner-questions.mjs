@@ -5,11 +5,21 @@
  * *"if you think that the way wg does things is not according to the text then ask me dont make that
  * desion by yourself."*
  *
- *   node scripts/queue-b017-owner-questions.mjs [--write]
+ * ⛔ HISTORICAL — this ran ONCE, in batch 17, and must not run again. It is kept because the two entries
+ * it filed are only reproducible from the text below, and a question the owner has been shown must stay
+ * traceable to what produced it. It is NOT a writer: it appends with `doc.open.push`, minting no desk
+ * number `n`, which the rulings desk now requires of every entry
+ * (test/owner-questions-numbering.test.ts). The only writer is scripts/add-owner-question.mjs — a new
+ * question goes through `--from work/.bNNN-queue.json`, or through its exported `appendQuestions`.
+ *
+ *   node scripts/queue-b017-owner-questions.mjs   # exits 2 with that message
  */
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+
+console.error('scripts/queue-b017-owner-questions.mjs is HISTORICAL: it ran once in batch 17 and appends entries with NO desk number `n`, which the rulings desk now requires. Use scripts/add-owner-question.mjs (--from work/.bNNN-queue.json) — it is the only writer.');
+process.exit(2);
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const WRITE = process.argv.includes('--write');

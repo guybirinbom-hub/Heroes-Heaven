@@ -1,0 +1,137 @@
+{
+ "batch": 4,
+ "examined": 100,
+ "confirmed": [
+  {
+   "id": "medical-researcher",
+   "bucket": "feats",
+   "summary": "The skill substitution (Medicine in place of Crafting when Crafting non-magical medical/healing items) is never delivered. This is an established, well-populated lane — 33 records carry `skillSubstitu",
+   "fixed": true
+  },
+  {
+   "id": "rimesoul",
+   "bucket": "feats",
+   "summary": "The resistance half is modelled. The second clause — environmental cold effects treated as one step less severe — is not delivered and is not even disclosed on the record. NOTE FOR THE READER: this is",
+   "fixed": true
+  },
+  {
+   "id": "rock-runner",
+   "bucket": "feats",
+   "summary": "Only the third clause (success→critical success) is delivered, via `degreeShifts`. The two earlier clauses — ignoring stone/rubble difficult terrain, and not being off-guard while Balancing on stone o",
+   "fixed": true
+  },
+  {
+   "id": "swift",
+   "bucket": "feats",
+   "summary": "The non-cumulative limit is not enforced and not disclosed. `landSpeedBonus` is summed unconditionally at src/rules/derive.ts:4520-4522 (`for (const f of c.feats) featLandBonus += db.feats[f.featId]?.",
+   "fixed": true
+  },
+  {
+   "id": "tengu-weapon-familiarity",
+   "bucket": "feats",
+   "summary": "The daily sword-practice choice is never asked and no extra weapon ever gains familiarity. The app's familiarity is a fixed set (katana/khakkhara/temple-sword/wakizashi + the tengu trait); a tengu who",
+   "fixed": true
+  },
+  {
+   "id": "mental-buffer",
+   "bucket": "feats",
+   "summary": "The resistance is a flat `max(1,floor(@actor.level/2))` at all times. Nothing doubles it while the Unleash Psyche toggle is on, so a 10th-level psychic reads mental 5 whether unleashed or not instead ",
+   "fixed": true
+  },
+  {
+   "id": "lavasoul",
+   "bucket": "feats",
+   "summary": "The +1 fire damage. The granted Magma Spike strike delivers 1d4 piercing only.",
+   "fixed": true
+  },
+  {
+   "id": "lavasoul",
+   "bucket": "feats",
+   "summary": "Two things at once. (a) The printed replacement effect is nowhere — the strike shows the generic brawling crit spec ('The target must succeed at a Fortitude save or be slowed 1', src/rules/critSpec.ts",
+   "fixed": true
+  },
+  {
+   "id": "veil-may",
+   "bucket": "feats",
+   "summary": "The activity itself. Nothing grants a 'shed your disguise' action, and nothing scales its cost off the character's Deception rank, so the printed action economy never reaches the sheet.",
+   "fixed": true
+  },
+  {
+   "id": "rough-rider",
+   "bucket": "feats",
+   "summary": "The wolf never gains the mount special ability — the whole point of the feat. The wolf companion card shows no Special line, so nothing tells the player (or the app) it can be ridden.",
+   "fixed": true
+  },
+  {
+   "id": "slag-may",
+   "bucket": "feats",
+   "summary": "The cold iron material — nothing records it, so the sheet gives no sign the claws bypass cold-iron resistance or trigger a cold-iron weakness. Secondarily the printed `unarmed` trait is absent: the re",
+   "fixed": true
+  },
+  {
+   "id": "seek-the-hidden-glyphs",
+   "bucket": "feats",
+   "summary": "The skill substitution. The record models only the +1 circumstance Perception bonus, so a runesmith is never offered Crafting in place of Thievery to Disable a Device on a magical trap. (The record's ",
+   "fixed": true
+  },
+  {
+   "id": "commanders-companion",
+   "bucket": "feats",
+   "summary": "Neither this extra reaction nor the banner clause (\"You can affix your banner to your companion's saddle, barding, or a simple harness, determining the effects of your commander's banner ... from your",
+   "fixed": true
+  },
+  {
+   "id": "alchemical-scholar",
+   "bucket": "feats",
+   "summary": "The replacement is never offered. src/rules/featFeatGrants.ts grants alchemical-crafting unconditionally, and the expansion loop in src/rules/build.ts:4057 drops a duplicate silently (`if (takenFeats.",
+   "fixed": true
+  },
+  {
+   "id": "deceptive-tactics",
+   "bucket": "feats",
+   "summary": "The skill substitution is not delivered — only the Lengthy Diversion grant is. The app has the exact lane for this clause (`skillSubstitutions: {use, forSkill, when}`, src/rules/types.ts:895, used by ",
+   "fixed": true
+  },
+  {
+   "id": "sensitive-nose",
+   "bucket": "feats",
+   "summary": "The acuity is dropped. The record stores `senses: [{name:'scent', range:30}]` with no `acuity`, so the sheet renders \"Scent 30 ft\" instead of \"Scent imprecise 30 ft\" (DetailsTab.tsx:30 and VitalsRail.",
+   "fixed": true
+  },
+  {
+   "id": "puncturing-horn",
+   "bucket": "feats",
+   "summary": "The xyloshi upgrade never happens. feats/puncturing-horn.grantedStrikes is a flat {name:'Horn', die:'d6'} and heritages/xyloshi.grantedStrikes is an identical d6 Horn. collectGrantedNaturals in src/ru",
+   "fixed": true
+  },
+  {
+   "id": "weight-of-guilt",
+   "bucket": "feats",
+   "summary": "The feat is entirely inert — grep for `weight-of-guilt` across src/ and scripts/data/ returns ZERO hits (only migration/audit dumps). Its record in core.json holds nothing but `actionCost: passive`. T",
+   "fixed": true
+  },
+  {
+   "id": "embodied-legionary-subjectivity",
+   "bucket": "feats",
+   "summary": "The replacement skill pick is never offered. The only carrier is src/rules/featGrantsAuto.ts:235 — `{ skills: { arcana: 'trained', athletics: 'trained', 'lore:warfare': 'trained' } }` — with NO `redun",
+   "fixed": true
+  },
+  {
+   "id": "creative-prodigy",
+   "bucket": "feats",
+   "summary": "The app grants MORE than the text: src/rules/featGrantsAuto.ts:171 is `'creative-prodigy': { skills: { performance: 'trained', deception: 'trained', 'lore:art': 'trained' }, redundantFallback: true }`",
+   "fixed": true
+  },
+  {
+   "id": "draconic-sycophant",
+   "bucket": "feats",
+   "summary": "The –5 circumstance penalty on the early Make an Impression is held nowhere. src/rules/situationalBonuses.ts:269 carries only the first sentence's `+2 circumstance` to Perception and saves against dra",
+   "fixed": true
+  }
+ ],
+ "recordsRead": 100,
+ "method": "Every record in this batch was read against its printed text (Archives of Nethys mirror), each finding was put to an adversarial refuter, and the survivors were authored as data rows or registry changes. See work/residual-1-12.json for the findings and work/residual-fixed.json for the ledger of what has been closed.",
+ "findings": 21,
+ "closed": 21,
+ "complete": true
+}

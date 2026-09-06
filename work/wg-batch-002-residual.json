@@ -1,0 +1,101 @@
+{
+ "batch": 2,
+ "examined": 100,
+ "confirmed": [
+  {
+   "id": "climbing-tail",
+   "bucket": "feats",
+   "summary": "The first two clauses are delivered (situationalBonuses.ts:232 and featFeatGrants.ts:329). The third — reducing the free hands required to Climb or Trip by one — has no carrier. The granted Combat Cli",
+   "fixed": true
+  },
+  {
+   "id": "climbing-tail",
+   "bucket": "feats",
+   "summary": "The third clause has no carrier. The +2 Athletics-to-Climb is in situationalBonuses.ts:232 and the Combat Climber grant is in featFeatGrants.ts:329, but the free-hands reduction for Climb and Trip is ",
+   "fixed": true
+  },
+  {
+   "id": "learn-by-watching",
+   "bucket": "feats",
+   "summary": "The Follow the Expert improvement is held by nothing. The record models ONLY the trained-skill pick (choice: crafting/medicine/performance). Nothing states or applies the untrained proficiency change,",
+   "fixed": true
+  },
+  {
+   "id": "svetocher",
+   "bucket": "feats",
+   "summary": "Both halves are wrong. (a) Fortitude: conditions.ts:50 maps `drained: [{type:'status', amount:'valued', abilities:['con']}]` and conditionPenalty (conditions.ts:100-111) applies the FULL condition val",
+   "fixed": true
+  },
+  {
+   "id": "woodworker",
+   "bucket": "feats",
+   "summary": "The feat is granted but its named specialty is never bound. featFeatGrants.ts:496 is the bare form `'woodworker': ['specialty-crafting']`, with no entry in FEAT_GRANT_BOUND_CHOICE (featFeatGrants.ts:1",
+   "fixed": true
+  },
+  {
+   "id": "versatile-performance",
+   "bucket": "feats",
+   "summary": "The prerequisite waiver is enforced nowhere, and skill-rank prerequisites ARE enforcing, so the app actively blocks feats the text says the character qualifies for. build.ts:7654-7672 parses `^(traine",
+   "fixed": true
+  },
+  {
+   "id": "whitecape",
+   "bucket": "feats",
+   "summary": "The Step clause has no carrier. Only the feat grant exists (featFeatGrants.ts:493 `'whitecape': ['steady-balance']`), and Steady Balance is about Balance, not Step, so it does not cover the sentence. ",
+   "fixed": true
+  },
+  {
+   "id": "corgi-mount",
+   "bucket": "feats",
+   "summary": "The size override and the mount permission are held nowhere, and the sheet prints the contradicting value. CompanionsTab.tsx:832-846 (FamiliarBlockView) hard-codes `<span className=\"sb-trait\">Tiny</sp",
+   "fixed": true
+  },
+  {
+   "id": "rune-singer",
+   "bucket": "feats",
+   "summary": "The Performance-for-Crafting skill substitution is never delivered. The app has a live lane for exactly this shape — `skillSubstitutions` (33 records use it; read by `skillSubstitutions()` at src/rule",
+   "fixed": true
+  },
+  {
+   "id": "parthenogenic-hatchling",
+   "bucket": "feats",
+   "summary": "The doubled starvation/thirst damage intervals have no carrier of any kind — not a field, not a note. Flagging as cosmetic rather than player-visible because this is a SUBSYSTEM absence, not a per-rec",
+   "fixed": true
+  },
+  {
+   "id": "backup-runic-enhancement",
+   "bucket": "feats",
+   "summary": "The tradition choice is never asked, and the innate entry therefore states a tradition the character may not have qualified for. The feat's prerequisite is trained in Arcana OR Nature OR Occultism OR ",
+   "fixed": true
+  },
+  {
+   "id": "skilled-herbalist",
+   "bucket": "feats",
+   "summary": "The \"except\" is a REPLACEMENT of Alchemical Crafting's four free formulas, and nothing enforces it — the player gets eight formula slots instead of four. `FEAT_FEAT_GRANTS['skilled-herbalist'] = ['alc",
+   "fixed": true
+  },
+  {
+   "id": "mystery",
+   "bucket": "classFeatures",
+   "summary": "9 of the 11 mysteries never hand over the 1st-level oracle feat their own entry names. Each mystery's description ends with an \"Oracle Feat\" line — Ancestors/Ashes/Blight/Lore = Whispers of Weakness, ",
+   "fixed": true
+  },
+  {
+   "id": "draconic-resistance",
+   "bucket": "feats",
+   "summary": "Reverse direction: the app delivers a bonus the printed text does not state. The feat's whole text never mentions AC, but `FEAT_SITUATIONAL[\"draconic-resistance\"]` (src/rules/situationalBonuses.ts:225",
+   "fixed": true
+  },
+  {
+   "id": "overlooked-mastermind",
+   "bucket": "feats",
+   "summary": "The DC half of the bonus. The only carrier is `FEAT_SITUATIONAL[\"overlooked-mastermind\"]` (situationalBonuses.ts:424), whose `when` reads \"you Lie by claiming ignorance\" — nothing anywhere says the +2",
+   "fixed": true
+  }
+ ],
+ "recordsRead": 100,
+ "method": "Every record in this batch was read against its printed text (Archives of Nethys mirror), each finding was put to an adversarial refuter, and the survivors were authored as data rows or registry changes. See work/residual-1-12.json for the findings and work/residual-fixed.json for the ledger of what has been closed.",
+ "findings": 15,
+ "closed": 15,
+ "complete": true
+}

@@ -1,0 +1,420 @@
+{
+ "batch": 23,
+ "records": [
+  {
+   "id": "hunted-by-the-night",
+   "verdict": "FIXED",
+   "evidence": "Confirmed finding(s) applied in batch 23 — data rows in scripts/data/effect-backfill.json and/or code lanes; guarded by test/batch23-parity.test.ts. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "martial-disciple",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "thassilonian-traveler",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "able-carter",
+   "verdict": "FIXED",
+   "evidence": "Confirmed finding(s) applied in batch 23 — data rows in scripts/data/effect-backfill.json and/or code lanes; guarded by test/batch23-parity.test.ts. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "tax-collector",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "kaiju-stalker",
+   "verdict": "FIXED",
+   "evidence": "Confirmed finding(s) applied in batch 23 — data rows in scripts/data/effect-backfill.json and/or code lanes; guarded by test/batch23-parity.test.ts. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "tiffin-box-deliverer",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "anti-tech-activist",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "tide-watcher",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "junk-collector",
+   "verdict": "FIXED",
+   "evidence": "Confirmed finding(s) applied in batch 23 — data rows in scripts/data/effect-backfill.json and/or code lanes; guarded by test/batch23-parity.test.ts. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "anti-magical",
+   "verdict": "FIXED",
+   "evidence": "Confirmed finding(s) applied in batch 23 — data rows in scripts/data/effect-backfill.json and/or code lanes; guarded by test/batch23-parity.test.ts. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "hookclaw-digger",
+   "verdict": "FIXED",
+   "evidence": "Confirmed finding(s) applied in batch 23 — data rows in scripts/data/effect-backfill.json and/or code lanes; guarded by test/batch23-parity.test.ts. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "animal-wrangler",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "concordance-researcher",
+   "verdict": "FIXED",
+   "evidence": "Confirmed finding(s) applied in batch 23 — data rows in scripts/data/effect-backfill.json and/or code lanes; guarded by test/batch23-parity.test.ts. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "amateur-director",
+   "verdict": "FIXED",
+   "evidence": "Confirmed finding(s) applied in batch 23 — data rows in scripts/data/effect-backfill.json and/or code lanes; guarded by test/batch23-parity.test.ts. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "belkzen-anthropologist",
+   "verdict": "MATCHES",
+   "evidence": "A reader claim existed and the adversarial verifier REFUTED it — no change needed. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "osirionologist",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "sarkorian-survivor",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "market-runner",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "false-medium",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "belkzen-slayer",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "energy-scarred",
+   "verdict": "FIXED",
+   "evidence": "Confirmed finding(s) applied in batch 23 — data rows in scripts/data/effect-backfill.json and/or code lanes; guarded by test/batch23-parity.test.ts. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "goldhand-arms-dealer",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "starless-one",
+   "verdict": "FIXED",
+   "evidence": "Confirmed finding(s) applied in batch 23 — data rows in scripts/data/effect-backfill.json and/or code lanes; guarded by test/batch23-parity.test.ts. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "acrobat",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "eldritch-anatomist",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "aon-historical-reeanactor",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "megafauna-hunter",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "droskari-disciple",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "desert-tracker",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "bandit",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "hired-killer",
+   "verdict": "FIXED",
+   "evidence": "Confirmed finding(s) applied in batch 23 — data rows in scripts/data/effect-backfill.json and/or code lanes; guarded by test/batch23-parity.test.ts. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "taldan-schemer",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "alkenstar-tinker",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "empty-hand-loyalist",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "working-student",
+   "verdict": "FIXED",
+   "evidence": "Confirmed finding(s) applied in batch 23 — data rows in scripts/data/effect-backfill.json and/or code lanes; guarded by test/batch23-parity.test.ts. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "wildwood-local",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "free-spirit",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "noble",
+   "verdict": "FIXED",
+   "evidence": "Confirmed finding(s) applied in batch 23 — data rows in scripts/data/effect-backfill.json and/or code lanes; guarded by test/batch23-parity.test.ts. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "returning-descendant",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "dedicated-delver",
+   "verdict": "FIXED",
+   "evidence": "Confirmed finding(s) applied in batch 23 — data rows in scripts/data/effect-backfill.json and/or code lanes; guarded by test/batch23-parity.test.ts. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "warrior",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "acolyte",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "tyrant-witness",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "circuit-judge",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "elementally-infused",
+   "verdict": "FIXED",
+   "evidence": "Confirmed finding(s) applied in batch 23 — data rows in scripts/data/effect-backfill.json and/or code lanes; guarded by test/batch23-parity.test.ts. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "total-power",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print disagreement queued as ruling #101."
+  },
+  {
+   "id": "runaway-noble",
+   "verdict": "FIXED",
+   "evidence": "Confirmed finding(s) applied in batch 23 — data rows in scripts/data/effect-backfill.json and/or code lanes; guarded by test/batch23-parity.test.ts. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "grizzled-muckrucker",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "pathfinder-recruiter",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "fated-rival",
+   "verdict": "FIXED",
+   "evidence": "Confirmed finding(s) applied in batch 23 — data rows in scripts/data/effect-backfill.json and/or code lanes; guarded by test/batch23-parity.test.ts. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "deckhand",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "fortune-teller",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "returned",
+   "verdict": "FIXED",
+   "evidence": "Confirmed finding(s) applied in batch 23 — data rows in scripts/data/effect-backfill.json and/or code lanes; guarded by test/batch23-parity.test.ts. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "plague-doctor",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "sponsored-by-a-stranger",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print disagreement queued as ruling #100; the record’s other confirmed findings are FIXED (see work/.b023-findings.json)."
+  },
+  {
+   "id": "mammoth-speaker",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "ruin-delver",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "atteran-rancher",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "attention-addict",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "close-ties",
+   "verdict": "FIXED",
+   "evidence": "Confirmed finding(s) applied in batch 23 — data rows in scripts/data/effect-backfill.json and/or code lanes; guarded by test/batch23-parity.test.ts. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "beast-blessed",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print disagreement queued as ruling #99; the record’s other confirmed findings are FIXED (see work/.b023-findings.json)."
+  },
+  {
+   "id": "secular-medic",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "undertaker",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "onyx-trader",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "servant",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "academy-dropout",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "medicinal-clocksmith",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "doomcaller",
+   "verdict": "FIXED",
+   "evidence": "Confirmed finding(s) applied in batch 23 — data rows in scripts/data/effect-backfill.json and/or code lanes; guarded by test/batch23-parity.test.ts. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "emancipated",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "eclipseborn",
+   "verdict": "FIXED",
+   "evidence": "Confirmed finding(s) applied in batch 23 — data rows in scripts/data/effect-backfill.json and/or code lanes; guarded by test/batch23-parity.test.ts. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "sleepless-suns-star",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "gladiator",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "archaeologist",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "inexplicably-expelled",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "street-preacher",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "corpse-stitcher",
+   "verdict": "FIXED",
+   "evidence": "Confirmed finding(s) applied in batch 23 — data rows in scripts/data/effect-backfill.json and/or code lanes; guarded by test/batch23-parity.test.ts. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "alkenstar-sojourner",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "barker",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "magaambya-academic",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "militia-member",
+   "verdict": "MATCHES",
+   "evidence": "A reader claim existed and the adversarial verifier REFUTED it — no change needed. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "wandering-preacher",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  },
+  {
+   "id": "lumber-consortium-laborer",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 23; no finding survived adversarial verification. Ledger: work/.b023-findings.json."
+  }
+ ]
+}

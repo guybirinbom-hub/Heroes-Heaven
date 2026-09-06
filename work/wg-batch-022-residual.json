@@ -1,0 +1,399 @@
+{
+ "batch": 22,
+ "examined": 100,
+ "recordsRead": [
+  "printer",
+  "child-of-westcrown",
+  "child-of-the-puddles",
+  "saved-by-clockwork",
+  "hammered-by-fate",
+  "cultist",
+  "varisian-wanderer",
+  "tinker",
+  "shoanti-name-bearer",
+  "lesser-scion",
+  "entertainer",
+  "issian-patriot",
+  "sword-scion",
+  "translator",
+  "osprey-fisher",
+  "eager-scofflaw",
+  "mystic-tutor",
+  "unsponsored",
+  "quick-refugee",
+  "writ-in-the-stars",
+  "lost-coast-local",
+  "dendrologist",
+  "scavenger",
+  "mystic-seer",
+  "artisan",
+  "trailblazer",
+  "touched-by-dahak",
+  "kalistrade-follower",
+  "barkeep",
+  "bachuan-revolutionary",
+  "southbank-traditionalist",
+  "bellflower-agent",
+  "feral-child",
+  "merchant",
+  "wood-warden",
+  "sentinel-reflectance",
+  "blow-in",
+  "battle-mechanic",
+  "aon-post-guard-of-all-trade",
+  "company-agent",
+  "time-traveler",
+  "snubbed-out-stoolie",
+  "chosen-one",
+  "friendly-darkmoon-kobold",
+  "willing-host",
+  "ozem-experience",
+  "sponsored-by-family",
+  "northridge-scholar",
+  "curious-apprentice",
+  "hunter",
+  "badlands-scout",
+  "wanderlust",
+  "magical-merchant",
+  "propaganda-promoter",
+  "ustalavic-academic",
+  "osprey-scout",
+  "fire-warden",
+  "kyonin-emissary",
+  "nirmathi-guerrilla",
+  "shielded-fortune",
+  "acupuncturist",
+  "aeronaut",
+  "mantis-scion",
+  "barrister",
+  "scout",
+  "razmiran-faithful",
+  "sarkorian-reclaimer",
+  "broken-tusk-recruiter",
+  "newcomer",
+  "report-runner",
+  "undercover-lotus-guard",
+  "sponsored-by-teacher-ot",
+  "dreams-of-vengeance",
+  "silk-farmer",
+  "gunsmith",
+  "insurgent",
+  "witch-wary",
+  "undersea-enthusiast",
+  "osprey-spellcaster",
+  "teamster",
+  "lost-loved-one",
+  "aspiring-free-captain",
+  "respected-mentor",
+  "spotter",
+  "aspiring-river-monarch",
+  "saloon-entertainer",
+  "trade-consortium-underling",
+  "outskirt-dweller",
+  "unremarkable",
+  "barber",
+  "gambler",
+  "learned-guard-prodigy",
+  "thuvian-unifier",
+  "sun-dancer",
+  "codebreaker",
+  "self-made",
+  "convocation-scout",
+  "newcomer-in-need",
+  "farmsteader",
+  "nomad"
+ ],
+ "method": "20-agent workflow (wf_b3b798ff-c41): 10 read slices x 10 records then 10 adversarial verifiers. Ledger: work/.b022-findings.json.",
+ "confirmed": [
+  {
+   "id": "hammered-by-fate",
+   "claim": "Harrow the Fiend's +1 status bonus on Strikes/spell attacks against fiends (and its Hammers degree-of-success bump) has no carrier on either side, even though the granted-action id already reaches the situational lane.",
+   "fixed": true,
+   "fix": "Add a key to FEAT_SITUATIONAL in src/rules/situationalBonuses.ts under the ACTION id (the pursue-a-lead / recall-under-pressure precedent already used for background-granted actions at situationalBonuses.ts:871): \"harrow-the-fiend\": [{ targets: [{ kind: 'strikeAttack' }], when: \"for the duration of ",
+   "playerVisible": true
+  },
+  {
+   "id": "tinker",
+   "claim": "Our Tinker background carries its own `choice` with flag `specialtyCrafting` that duplicates the identical `choice` already carried by the Specialty Crafting feat it grants, so the builder asks the same 12-option question twice and the background copy delivers nothing.",
+   "fixed": true,
+   "fix": "Delete the `choice` object from backgrounds.tinker in public/core.json. The granted-feat lane (build.grantedFeatChoices['specialty-crafting'] via Builder.tsx askingGrantedFeats) already asks the question and is the only lane that turns the answer into a sheet number; leaving the background copy in p",
+   "playerVisible": true
+  },
+  {
+   "id": "b22-convocation-scout-lore-choice",
+   "claim": "Convocation Scout's Lore is a printed CHOICE (Politics Lore or a school Lore) that Wanderer's Guide models as a select; ours hard-codes trainedLore:\"politics\" with no picker, so a player who took a school Lore cannot record it and is silently given Politics Lore instead.",
+   "fixed": true,
+   "fix": "In public/core.json, backgrounds.convocation-scout: replace `\"trainedLore\": \"politics\"` with `\"trainedLoreChoice\": true, \"trainedLoreChoiceDefault\": \"politics\"`. This is the existing Night Watch pattern (backgrounds.night-watch already ships `{trainedLoreChoice:true, trainedLoreChoiceDefault:\"legal\"",
+   "playerVisible": true
+  },
+  {
+   "id": "b22-learned-guard-prodigy-duplicate-skill-choice",
+   "claim": "Learned Guard Prodigy carries TWO independent carriers for the same printed Arcana-or-Occultism pick — `trainedSkillChoice` and a `choice` block with flag \"bgSkill\" — which read different answer stores and each train a skill, so the background can train both Arcana AND Occultism.",
+   "fixed": true,
+   "fix": "Delete the `choice` block from backgrounds.learned-guard-prodigy in public/core.json, leaving `trainedSkillChoice: [\"arcana\",\"occultism\"]` as the single carrier. `trainedSkillChoice` is the one the rest of the engine already dereferences (boundBackgroundGrantChoice's `bgSkill` kind, grantedFeatByCho",
+   "playerVisible": true
+  },
+  {
+   "id": "trailblazer-duplicate-terrain-picker",
+   "claim": "OURS asks the terrain question twice: the background record carries its own `choice` (flag `terrain`) that is inert, while the granted feat Terrain Expertise's identical `choice` (flag `terrain`) is separately mounted and is the one that actually labels the feat.",
+   "fixed": true,
+   "fix": "Delete the `choice` block from `backgrounds.trailblazer` in public/core.json (and its authoring source), leaving `grantedFeatId: \"terrain-expertise\"` to carry the single question through `grantedChoicePicker`. This is what src/rules/backgroundGrants.ts:137 already assumes — it lists `trailblazer` un",
+   "playerVisible": true
+  },
+  {
+   "id": "artisan-duplicate-specialty-picker",
+   "claim": "OURS asks the crafting-specialty question twice: `backgrounds.artisan.choice` (flag `specialtyCrafting`) duplicates the granted feat Specialty Crafting's own `choice` (same flag, same twelve options), and the background copy is inert.",
+   "fixed": true,
+   "fix": "Delete the `choice` block from `backgrounds.artisan` in public/core.json (and its authoring source); the specialty is already asked once, correctly, by `feats.specialty-crafting.choice` through `grantedChoicePicker`. src/rules/backgroundGrants.ts:134-136 already lists `artisan` among the Specialty C",
+   "playerVisible": true
+  },
+  {
+   "id": "lost-coast-local-reputation-no-reader",
+   "claim": "The printed reputation clause is modelled by neither side and has no reader anywhere in ours — it survives only as prose in core-descriptions.json, so nothing on the sheet records or tracks the two ±1 reputation shifts.",
+   "fixed": true,
+   "fix": "Residual read, ours-only (nothing to adopt from theirs). Add a `note` on `backgrounds.lost-coast-local` in public/core.json — the field already exists on the Background type and is used by one background — reading: \"Party reputation: +1 with Townsfolk, -1 with the Scarnetti Consortium (Seven Dooms f",
+   "playerVisible": true
+  },
+  {
+   "id": "osprey-spellcaster-thassilonian-language",
+   "claim": "Osprey Spellcaster's printed bonus language Thassilonian is delivered by neither our record nor any other carrier — the background has no `grantsLanguages` field even though that field exists on Background and is read by build.ts, so the player never receives Thassilonian.",
+   "fixed": true,
+   "fix": "Add `\"grantsLanguages\": [\"thassilonian\"]` to public/core.json backgrounds/osprey-spellcaster. Do NOT also add `languageChoicesBonus`: runelord-scholar pairs the two only because its Thassilonian is spent out of the Multilingual feat's own picks, whereas Osprey Spellcaster grants the language outrigh",
+   "playerVisible": true
+  },
+  {
+   "id": "feral-child-survival",
+   "claim": "Feral Child trains only Nature on our side; the printed second trained skill (Survival) has no carrier on the record, so a Feral Child character is untrained in Survival.",
+   "fixed": true,
+   "fix": "Add trainedSkills: [\"survival\"] to backgrounds.feral-child in public/core.json (keeping trainedSkill: \"nature\"). That is the existing reader — src/rules/build.ts:2924 walks background?.trainedSkills and sets each to trained with lock(sk, 'your background') — so no new plumbing is needed, only the fi",
+   "playerVisible": true
+  },
+  {
+   "id": "feral-child-darkvision-upgrade",
+   "claim": "Feral Child's \"or darkvision if you already had low-light vision\" upgrade is not modeled: we grant a flat low-light vision, so an elf/dwarf/orc Feral Child who should end up with darkvision gets nothing beyond the low-light vision they already had.",
+   "fixed": true,
+   "fix": "On backgrounds.feral-child in public/core.json, move the low-light entry out of senses and express it as conditionalSenses: [{ \"ifPresent\": \"low-light-vision\", \"base\": { \"name\": \"low-light-vision\" }, \"upgraded\": { \"name\": \"darkvision\" } }], leaving senses: [{\"name\":\"scent\",\"range\":30,\"acuity\":\"impre",
+   "playerVisible": true
+  },
+  {
+   "id": "southbank-seasonal-boon",
+   "claim": "Southbank Traditionalist's Seasonal Boon free action has no carrier on our side at all — no grantsActions on the background and no matching actions record — so the player gets neither the action card nor even the printed trigger/effect text (our description truncates the boon to the bare header \"Seasonal Boon (Southbank Traditionalist)\").",
+   "fixed": true,
+   "fix": "Add an actions record seasonal-boon-southbank (name \"Seasonal Boon (Southbank Traditionalist)\", actionCost {type:'free'}, rarity rare, source Season of Ghosts Player's Guide, aonId background-397) with the printed Trigger/Effect as its description, and set grantsActions: [\"seasonal-boon-southbank\"] ",
+   "playerVisible": true
+  },
+  {
+   "id": "post-guard-lore-choice",
+   "claim": "Post Guard of All Trade's \"a Lore skill of your choice\" is not modeled — the record grants no Lore at all, so the character ends up one trained Lore short and is never asked to pick one.",
+   "fixed": true,
+   "fix": "Set trainedLoreChoice: true on backgrounds.post-guard-of-all-trades (the visible record players actually pick) AND on the hidden twin backgrounds.aon-post-guard-of-all-trade, so a character saved against either id gets the free-text Lore box. Read by src/rules/build.ts:2912-2921 via BuildState.backg",
+   "playerVisible": true
+  },
+  {
+   "id": "post-guard-bonus-language",
+   "claim": "Post Guard of All Trade's printed bonus language is modeled by neither side — no language slot is added, so a player reading the description sees a benefit the sheet never grants.",
+   "fixed": true,
+   "fix": "Declare languageChoices?: number on the Background interface in src/rules/types.ts (beside the existing grantsLanguages at line 2347 — it is a chosen, not named, language, so grantsLanguages is the wrong field), then set languageChoices: 1 on backgrounds.post-guard-of-all-trades and on the hidden tw",
+   "playerVisible": true
+  },
+  {
+   "id": "newcomer-party-reputation-no-carrier",
+   "claim": "Newcomer's printed party-reputation adjustment is modelled by neither side and has no carrier at all on our record — `reputation` has no reader anywhere in src/rules, and the clause survives only inside the prose blob.",
+   "fixed": true,
+   "fix": "Add the Background `note` field to backgrounds.newcomer in public/core.json (the same carrier backgrounds/sign-bound already uses; declared in src/rules/types.ts ~line 280 as \"This record works; here is the part you apply yourself\", rendered under the record's description), text: \"Your party begins ",
+   "playerVisible": true
+  },
+  {
+   "id": "b22-lost-loved-one-wrong-ghostly-grasp",
+   "claim": "Lost Loved One's wraith branch grants `ghostly-grasp` — the level-6 Book of the Dead GHOST ARCHETYPE feat (aonId feat-3499, prerequisite \"Ghost Dedication\") — instead of the deviant feat the print names, which we already ship as `ghostly-grasp-deviant` (aonId feat-8043).",
+   "fixed": true,
+   "fix": "In public/core.json, backgrounds.lost-loved-one.choice.options[1].value: change 'ghostly-grasp' → 'ghostly-grasp-deviant' (label unchanged). That restores the printed feat and, with it, the `wraith-deviant-classification` class-feature grant the wraith branch is supposed to deliver.",
+   "playerVisible": true
+  },
+  {
+   "id": "b22-outskirt-dweller-seasonal-boon",
+   "claim": "Outskirt Dweller's printed Seasonal Boon (free action, initiative status bonus) has no carrier on our side at all, and our stored description truncates it to a bare heading with no body — even though our own `grantsActions` + `actions` carrier already delivers the sibling Season of Ghosts boons.",
+   "fixed": true,
+   "fix": "Add an action record `seasonal-boon-outskirt` to public/core.json `actions` (actionCost {type:'free'}, source Pathfinder Season of Ghosts Player's Guide, aonId background-396) with the printed Trigger/Effect in public/core-descriptions.json, exactly as `seasonal-boon` (Willowshore Urchin) and `seaso",
+   "playerVisible": true
+  },
+  {
+   "id": "b22-saloon-entertainer-no-lore",
+   "claim": "Saloon Entertainer trains no Lore at all — the record has none of `trainedLore`, `trainedLoreChoice`, `trainedLoreOptions` or `trainedLoreByChoice`, so the printed \"a Lore skill of your choice\" is silently dropped and the builder renders no Lore control.",
+   "fixed": true,
+   "fix": "Set `trainedLoreChoice: true` on public/core.json backgrounds.saloon-entertainer (no default — the print names no first option). That is the shipped free-text Lore shape build.ts:2912 and shared.tsx:2935 already read, and it makes the trained-Lore count match the print.",
+   "playerVisible": true
+  },
+  {
+   "id": "b22-respected-mentor-lore-fixed",
+   "claim": "Respected Mentor hard-codes Academia Lore, removing the printed alternative of a school-associated Lore — and our own shipped description text states the choice, so the description and the mechanics disagree.",
+   "fixed": true,
+   "fix": "On public/core.json backgrounds.respected-mentor, replace `trainedLore: \"academia\"` with `trainedLoreChoice: true` and `trainedLoreChoiceDefault: \"academia\"`. That is exactly the shipped Night Watch shape (build.ts:2912-2920 reads the typed subject and falls back to the named default), so an unanswe",
+   "playerVisible": true
+  },
+  {
+   "id": "b22-spotter-duplicate-terrain-choice",
+   "claim": "Spotter asks the same \"Difficult terrain\" question twice: the background record carries its own inert `choice` for terrain AND the granted Terrain Stalker feat carries an identical `choice` that the builder also renders — only the feat's answer reaches the sheet.",
+   "fixed": true,
+   "fix": "Delete the `choice` object from public/core.json backgrounds.spotter. The terrain answer already lives on the granted feat (`grantedFeatChoices['terrain-stalker']`), which is the one build.ts and the sheet actually read; removing the background-level duplicate leaves exactly one picker and changes n",
+   "playerVisible": true
+  },
+  {
+   "id": "b22-lost-loved-one-wrong-source",
+   "claim": "Lost Loved One is attributed to the wrong book: our record says Dark Archive (Remastered) under OGL, while the print (and WG) put it in the Gatewalkers Player's Guide (Remastered).",
+   "fixed": true,
+   "fix": "Set public/core.json backgrounds.lost-loved-one.source = {book: \"Pathfinder Gatewalkers Player's Guide (Remastered)\", license: \"ORC\"}.",
+   "playerVisible": true
+  },
+  {
+   "id": "unsponsored",
+   "claim": "Two independent carriers deliver the same single printed skill choice — `trainedSkillChoice` (read from `build.backgroundSkillChoice`) and `choice` with flag `backgroundSkill` (read from `featChoices['background:unsponsored']`) — so answering the two pickers differently trains BOTH Diplomacy and Intimidation and leaves the granted feat following only the first answer.",
+   "fixed": true,
+   "fix": "Delete the `choice` block from backgrounds.unsponsored in public/core.json. `trainedSkillChoice` is the carrier the feat grant (`grantedFeatByChoice`) and the completeness check (build.ts:1079) already key off, so it must be the surviving one; the `choice` twin is the removable duplicate.",
+   "playerVisible": true
+  },
+  {
+   "id": "mystic-tutor",
+   "claim": "Same duplicate shape as Unsponsored: `trainedSkillChoice` and `choice` (flag `backgroundSkill`) both train a skill from separate stored answers, so a player who picks Occultism on one card and leaves the other at its Arcana default is trained in both.",
+   "fixed": true,
+   "fix": "Delete the `choice` block from backgrounds.mystic-tutor in public/core.json, keeping `trainedSkillChoice` (the carrier build.ts:1079's completeness check and build.ts:602 `backgroundTrainedSkill` read).",
+   "playerVisible": true
+  },
+  {
+   "id": "writ-in-the-stars",
+   "claim": "The granted free action A Quick Glimpse Beyond prints \"Frequency once per day\" and neither the background record nor the action record carries `limitedUses`, so it reaches the sheet with no per-day use tracker — unlike its sibling background from the same book.",
+   "fixed": true,
+   "fix": "Add `\"limitedUses\": { \"max\": 1, \"per\": \"day\" }` to backgrounds['writ-in-the-stars'] in public/core.json — the identical field and shape already carried by keys-to-destiny and doomcaller, which src/sheet/MainTab.tsx:276 reads as the granted action's `usesFrom`.",
+   "playerVisible": true
+  },
+  {
+   "id": "sword-scion",
+   "claim": "The background's entire mechanical payload beyond boosts and Warfare Lore — access to Aldori dueling swords and treating them as martial rather than advanced for proficiency — has no reader anywhere: the `weaponFamiliarity`/`mirrorCategory` carrier exists but is applied only over FEAT_GRANTS, and no item-access field exists at all.",
+   "fixed": true,
+   "fix": "Add `\"weaponFamiliarity\": { \"weapons\": [\"aldori-dueling-sword\"], \"mirrorCategory\": \"martial\" }` to backgrounds['sword-scion'] and extend the block at src/rules/build.ts:5897-5960 to fold in the resolved background's own clause alongside the FEAT_GRANTS loop (the same `mirrorCategory` branch at build",
+   "playerVisible": true
+  },
+  {
+   "id": "eager-scofflaw",
+   "claim": "The printed party-reputation adjustment is carried by neither side and has no reader anywhere in src/rules — no reputation or faction field exists for any record.",
+   "fixed": true,
+   "fix": "AP-subsystem value with no engine home. Either accept it as description-only and say so explicitly, or add a recorded-only field (e.g. `campaignReputation: [{ faction: \"Bunyip Club\", delta: 1 }, { faction: \"Town Watch\", delta: -1 }]`) rendered as a note the way `backgroundChoiceKind === 'other'` ans",
+   "playerVisible": false
+  },
+  {
+   "id": "entertainer",
+   "claim": "Our generated \"Background details\" block spells the Lore \"Theatre Lore\" where the printed record says \"Theater Lore\" — and the same description's own body text says \"Theater Lore\", so the record contradicts print and itself.",
+   "fixed": true,
+   "fix": "In public/core-descriptions.json, change backgrounds.entertainer.d's details line `**Lore** Theatre Lore` to `**Lore** Theater Lore`.",
+   "playerVisible": true
+  },
+  {
+   "id": "shielded-fortune-fated-not-to-die-grant",
+   "claim": "Shielded Fortune grants the Fated Not to Die free action in print and in WG, but our background record has no carrier for it — the action ships in core.json with nothing that owns it, so it never reaches a sheet.",
+   "fixed": true,
+   "fix": "Add `\"grantsActions\": [\"fated-not-to-die\"]` to backgrounds.shielded-fortune in public/core.json. No new code is needed: `grantsActions` is declared on ContentBase (src/rules/types.ts:290) and src/sheet/MainTab.tsx:252-273 already walks `content.backgrounds[character.backgroundId].grantsActions` — 24",
+   "playerVisible": true
+  },
+  {
+   "id": "propaganda-promoter-duplicate-skill-picker",
+   "claim": "Propaganda Promoter carries BOTH `trainedSkillChoice` and a second, unrestricted `choice` of kind 'skills'; the second picker trains an additional arbitrary skill the printed background never grants.",
+   "fixed": true,
+   "fix": "Delete the `choice` object (`flag: \"promoterSkill\"`) from backgrounds.propaganda-promoter in public/core.json — `trainedSkillChoice` + `grantedFeatByChoice` already deliver the whole printed either/or (backgroundTrainedSkill at src/rules/build.ts:1619 and backgroundGrantedFeats at src/rules/build.ts",
+   "playerVisible": true
+  },
+  {
+   "id": "shielded-fortune-fated-frequency-no-tracker",
+   "claim": "Fated Not to Die's printed \"once per day\" limit is carried nowhere as a mechanic — our action record has no `limitedUses`, so even once the grant lands the player gets no daily-use tracker.",
+   "fixed": true,
+   "fix": "Add `\"limitedUses\": {\"max\": 1, \"per\": \"day\"}` to actions.fated-not-to-die in public/core.json, matching actions.recall-under-pressure ({\"max\":1,\"per\":\"day\"}), the granted action of background bookish-providence. src/sheet/MainTab.tsx:277-279 already prefers the ACTION's own `limitedUses` over the gr",
+   "playerVisible": true
+  },
+  {
+   "id": "wanderlust-wrong-source-book",
+   "claim": "Wanderlust is filed under the wrong book and the wrong licence: ours says Dark Archive (Remastered) / OGL where print (and WG) say Gatewalkers Player's Guide (Remastered), a Remaster/ORC product.",
+   "fixed": true,
+   "fix": "Set backgrounds.wanderlust.source to {\"book\": \"Gatewalkers Player's Guide (Remastered)\", \"license\": \"ORC\"} in public/core.json (the exact string already used by other backgrounds in the same bucket, so source filtering groups them). The same mis-filing sits on the seven sibling Gatewalkers Player's ",
+   "playerVisible": true
+  },
+  {
+   "id": "time-traveler-lore-count",
+   "claim": "Time Traveler trains ONE player-typed Lore where the print (and WG) give three, so a Time Traveler character is short two trained Lore skills.",
+   "fixed": true,
+   "fix": "Set `trainedLoreChoiceCount: 3` on backgrounds.time-traveler in public/core.json, and widen the count lane past two: build.ts's typedSubjects array reads only `build.backgroundLore` and `build.backgroundLore2`, and shared.tsx renders only a second input, so a third slot (`backgroundLore3` on BuildSt",
+   "playerVisible": true
+  },
+  {
+   "id": "chosen-one-prophecys-pawn",
+   "claim": "Chosen One never grants Prophecy's Pawn — the action record exists in our data with no owner, so the free action is unreachable on the sheet.",
+   "fixed": true,
+   "fix": "Add `grantsActions: [\"prophecys-pawn\"]` to backgrounds.chosen-one in public/core.json — the same carrier time-traveler already uses for bend-time.",
+   "playerVisible": true
+  },
+  {
+   "id": "chosen-one-lore-subject",
+   "claim": "Chosen One's Lore subject is `fortune-teller`, which mints a `lore:fortune-teller` key that disagrees with the printed subject and with the `fortune-telling` key our own three other fortune-telling backgrounds use.",
+   "fixed": true,
+   "fix": "Change backgrounds.chosen-one `trainedLore` from \"fortune-teller\" to \"fortune-telling\" in public/core.json, so it lands on the same `lore:fortune-telling` key as false-medium / writ-in-the-stars / fortune-teller.",
+   "playerVisible": true
+  },
+  {
+   "id": "willing-host-host-spirit",
+   "claim": "Willing Host never grants Host Spirit — the whole of the background's non-Lore benefit has no carrier, and the action record sits orphaned.",
+   "fixed": true,
+   "fix": "Add `grantsActions: [\"host-spirit\"]` to backgrounds.willing-host in public/core.json. Note that `actionCost: {type:'passive'}` on actions.host-spirit means MainTab's featActions filter (`isActionCost` in src/sheet/widgets.tsx accepts only actions/reaction/free/variable) will still drop it, so the gr",
+   "playerVisible": true
+  },
+  {
+   "id": "friendly-darkmoon-kobold-ancestry-gate",
+   "claim": "Friendly Darkmoon Kobold's printed kobold-ancestry prerequisite is modelled by nobody, so any ancestry can take it and the player is never shown the gate.",
+   "fixed": true,
+   "fix": "Add `ancestryPrerequisite: [\"kobold\"]` to backgrounds.friendly-darkmoon-kobold in public/core.json (same shape as sewer-dragon), and restore the \"**Prerequisites** Kobold ancestry\" line to its description in public/core-descriptions.json.",
+   "playerVisible": true
+  },
+  {
+   "id": "sponsored-by-family-double-ask",
+   "claim": "Sponsored by Family asks the Diplomacy-or-Society question through two independent carriers stored under two different keys, so answering the second one trains BOTH skills and still grants the first branch's feat.",
+   "fixed": true,
+   "fix": "Delete the `choice` block from backgrounds.sponsored-by-family in public/core.json. `trainedSkillChoice` + `grantedFeatByChoice` already deliver the whole printed sentence through one answer (`build.backgroundSkillChoice`), which is what keeps the trained skill and the granted feat from disagreeing.",
+   "playerVisible": true
+  },
+  {
+   "id": "northridge-scholar-seasonal-boon",
+   "claim": "Northridge Scholar's Seasonal Boon has no carrier and no action record on our side, and our description keeps only the bare heading with the trigger and effect stripped — the player sees a title and nothing else.",
+   "fixed": true,
+   "fix": "Mint an action record `seasonal-boon-northridge` in public/core.json actions (name \"Seasonal Boon (Northridge Scholar)\", `actionCost: {type:'free'}`, aonParentId \"background-395\", source Season of Ghosts Player's Guide) with the printed Trigger/Effect as its description in public/core-descriptions.j",
+   "playerVisible": true
+  },
+  {
+   "id": "northridge-scholar-bickering-star",
+   "claim": "Our situational star grants Northridge Scholar an unconditional +1 status to saves that the printed record does not grant — it belongs to the optional Family/Bickering adjustment, which costs the background's skill feat.",
+   "fixed": true,
+   "fix": "Prefix the `when` on situationalBonuses.ts's `\"northridge-scholar\"` entry with the adjustment gate the file already uses on close-ties — e.g. `when: \"Bickering adjustment only: you witness a sibling PC critically fail a significant skill check or attack roll…\"` — so the star reads as conditional on ",
+   "playerVisible": true
+  }
+ ],
+ "refuted": [
+  {
+   "id": "mystic-tutor",
+   "claim": "The printed \"innate magical trait is arcane or occult\" — the Pervasive Magic subsystem tag the skill choice is said to follow — is recorded by neither side and has no reader in the codebase.",
+   "why": "The narrow half is true (no `innateMagicalTrait` field, no grep hit in src/), but the finding's load-bearing reasoning is false: src/rules/casterArchetypes.ts:335-345 defines a full CASTER_ARCHETYPES entry for `cantrip-casting` — `{tradition:'arcane'"
+  }
+ ],
+ "refutedPattern": "1 of 39 refuted.",
+ "flaggedResidues": [
+  {
+   "id": "sword-scion-uncommon-access",
+   "note": "the Aldori access half (uncommon options requiring Aldori swordlord) has no access-lane carrier; the familiarity clause and a note ship, the access system does not exist."
+  },
+  {
+   "id": "host-spirit-passive-cost",
+   "note": "actions.host-spirit is actionCost passive, so MainTab's isActionCost filter drops it from the action list even when granted — it has an owner for the stars lane but no sheet row; needs either a printed cost or a passive-abilities surface."
+  },
+  {
+   "id": "b21-ghostly-grasp-collision",
+   "note": "batch 21 pinned lost-loved-one's wraith option to the ghost-ARCHETYPE feat sharing the name; corrected to ghostly-grasp-deviant this batch. Name-collision checks on choice option values belong in the deviant-family test."
+  }
+ ],
+ "closed": true,
+ "complete": true
+}

@@ -1,0 +1,510 @@
+{
+ "batch": 11,
+ "records": [
+  {
+   "id": "palatine-detectives-charm",
+   "verdict": "MATCHES",
+   "evidence": "Their 3 ops put +1 on Fort/Ref/Will with the note \"against mental effects\". Ours: core.json items.palatine-detectives-charm carries situational [{targets:[{kind:'save',detail:'all'}], when:'against mental effects, while you wear the charm', bonus:'+1 status'}] — one entry over all three saves, same trigger, and ours additionally types it as a status bonus (printed says status). Restricted bonuses render as conditional stars per the owner's Ruling A/B/C, which is why it is not folded into the total."
+  },
+  {
+   "id": "diving-suit",
+   "verdict": "MATCHES",
+   "evidence": "Their single op: +1 Athletics for underwater Swim. Ours: src/rules/situationalBonuses.ts:1291 \"diving-suit\" → skill athletics, when 'on Athletics checks to Swim while underwater, wearing the diving suit', +1 item. We additionally carry the printed clumsy-1-under-armor clause on the core record's `situational` (they omit it) — printed states it, so not a divergence."
+  },
+  {
+   "id": "bedroll-of-deep-slumber",
+   "verdict": "MATCHES",
+   "evidence": "Their 3 ops: +1 to each save vs mental effects while asleep. Ours: src/rules/situationalBonuses.ts:2193 → save 'all', when 'against mental effects that occur while you are asleep in the bedroll (e.g. nightmare)', +1 status. Same trigger, same size; the 5 temp HP clause is display prose on both sides."
+  },
+  {
+   "id": "unifying-emblem-shadde-quah",
+   "verdict": "MATCHES",
+   "evidence": "Their ops: a language-known conditional that either grants Shoanti or gives +1 Diplomacy while speaking it. Ours: core.json passiveEffects.grantsLanguages:['shoanti'] (live reader at src/rules/build.ts:6765, which pulls item language grants off invested inventory) plus src/rules/situationalBonuses.ts:1640 → diplomacy, +1 item, 'while speaking Shoanti to someone who understands it'. Player ends up with the language and the conditional star. Note: our `when` string is cut off mid-clause (\"- only…\"), so the \"only if you already knew Shoanti\" half of the condition is not visible to the player — co"
+  },
+  {
+   "id": "aeon-stone-pearly-white-spindle",
+   "verdict": "MATCHES",
+   "evidence": "Their select asks whether the resonant power is active; the Yes branch adds void resistance 1, both branches carry the 1 HP/minute as text. Ours: core.json effectChoices id 'resonant' with a yes option granting passive resistances [{void,1}] and a no option granting nothing, plus a `situational` hp entry carrying the 1 HP/minute prose. Item effectChoices are resolved live at src/rules/build.ts:5645 and src/rules/play.ts:2035, and rendered in src/sheet/ItemDetail.tsx:332. Same gate, same resistance."
+  },
+  {
+   "id": "unifying-emblem-shriikirri-quah",
+   "verdict": "MATCHES",
+   "evidence": "Same shape as the Shadde-Quah emblem: their conditional gives Shoanti or +1 Diplomacy. Ours: passiveEffects.grantsLanguages:['shoanti'] on the core record (read at src/rules/build.ts:6765) + src/rules/situationalBonuses.ts:1641 diplomacy +1 item. We also carry the once/day innate liberating-command from the printed activation (edition 'remaster', not superseded); they encode no spell there, and printed states it."
+  },
+  {
+   "id": "scholarly-journal-compendium",
+   "verdict": "MATCHES",
+   "evidence": "Their 7 ops put +1 on each of the Recall-Knowledge skills (Arcana, Crafting, Medicine, Nature, Occultism, Religion, Society) for the compendium's broad topic. Ours: src/rules/situationalBonuses.ts:1620 uses one entry with target skill 'all' and when 'after spending 1 minute referencing the compendium…', +1 item — i.e. every skill, which is what the printed text says (\"a skill check to Recall Knowledge about the subject\"). Ours is a superset that follows the print; the only skills it covers beyond theirs are ones a Recall Knowledge check could legitimately use (Lore, Performance, …)."
+  },
+  {
+   "id": "coyote-cloak",
+   "verdict": "MATCHES",
+   "evidence": "Their ops: flat +1 Survival plus display text for the Subsist crit-success clause. Ours: core.json passiveEffects.skills.survival:1 (a real +1 in the total, same as theirs) plus src/rules/situationalBonuses.ts:443 as a display star noting 'while worn and invested'. The star is display-only by design (situationalBonuses.ts header, lines 10-12: \"It is DISPLAY-ONLY: nothing here changes a computed number\"), so there is no double count. The Subsist clause is prose on both sides."
+  },
+  {
+   "id": "climbing-kit-extreme",
+   "verdict": "MATCHES",
+   "evidence": "Their op: +1 Athletics to Climb with the kit. Ours: src/rules/situationalBonuses.ts:1604 → athletics, 'to Athletics checks to Climb while using the kit (you move at half Speed while attached)', +1 item. Same skill, same trigger, same size."
+  },
+  {
+   "id": "repair-toolkit-superb",
+   "verdict": "MATCHES",
+   "evidence": "Their op: +1 Crafting to Repair. Ours: src/rules/situationalBonuses.ts:1616 → crafting, 'to Repair an item using Crafting, with the kit in hand (or worn, drawn as part of the action)', +1 item."
+  },
+  {
+   "id": "medal-of-gorillas-might",
+   "verdict": "MATCHES",
+   "evidence": "Their single op: +1 Athletics to Climb, Force Open, High Jump, Long Jump. Ours: src/rules/situationalBonuses.ts:2208 → athletics, 'on Athletics checks to Climb, Force Open, High Jump, or Long Jump', +1 item. Identical action list. (The once/day reroll activation is encoded by neither side.)"
+  },
+  {
+   "id": "channel-protection-amulet",
+   "verdict": "MATCHES",
+   "evidence": "Their conditional branches on an undead physical feature: vitality 5 for the undead branch, void 5 otherwise. Ours: core.json items.channel-protection-amulet.passiveEffects.resistances = [{void,5,unlessCreatureTrait:'undead',condition:'against damage from harm spells, while you\\'re living'},{vitality,5,whenCreatureTrait:'undead',condition:'against damage from heal spells, while you\\'re undead'}]. Both gates are live at src/rules/derive.ts:2459-2460. Same split, same damage types (harm→void for the living, heal→vitality for undead), same value."
+  },
+  {
+   "id": "backfire-mantle",
+   "verdict": "MATCHES",
+   "evidence": "Their two ops: +1 Reflex against your own and allies' spells, and splash resistance 3. Ours has both — src/rules/situationalBonuses.ts:1172 gives the +1 circumstance Reflex with the same trigger, and core.json items.backfire-mantle.passiveEffects.resistances carries {type:'splash', value:3, condition:'against splash damage from your own alchemical items and those of your allies'}. The greater grade is present too (situationalBonuses.ts:1173, +2)."
+  },
+  {
+   "id": "trackers-goggles",
+   "verdict": "MATCHES",
+   "evidence": "Their ops: +1 Survival to Sense Direction and Track, plus display text for the retry-after-30-minutes clause. Ours: core.json items.trackers-goggles.situational [{skill survival, when 'to Sense Direction or to Track', '+1 item'}]; the retry clause is prose in the rendered description on our side too."
+  },
+  {
+   "id": "crowbar-levered",
+   "verdict": "MATCHES",
+   "evidence": "Their op: +1 Athletics to Force Open anything pryable. Ours: src/rules/situationalBonuses.ts:1608 → athletics, 'to Athletics checks to Force Open something that can be pried open (holding the crowbar)', +1 item."
+  },
+  {
+   "id": "expert-overdrive",
+   "verdict": "MATCHES",
+   "evidence": "Their mechanical op is Crafting→expert; the +1 Overdrive damage is a level-gated injectText (display). Ours: src/rules/featGrantsAuto.ts:294 'expert-overdrive': {skills:{crafting:'expert'}}, and class features really do feed that table — src/rules/build.ts:4284-4294 builds grantSourcesForProficiency from taken feats PLUS classFeatureIdsOwned, which is the fix the comment at build.ts:4275-4278 describes. The +1 damage is prose on our side too (src/rules/modes.ts:254 carries the Overdrive mode with a note and no numeric modifier), so both sides leave it to the player."
+  },
+  {
+   "id": "unifying-emblem-skoan-quah",
+   "verdict": "MATCHES",
+   "evidence": "Same conditional as the other two emblems. Ours: passiveEffects.grantsLanguages:['shoanti'] (read at src/rules/build.ts:6765) plus src/rules/situationalBonuses.ts:2901 diplomacy +1 item while speaking Shoanti. Same truncated-`when` cosmetic note as the Shadde-Quah entry."
+  },
+  {
+   "id": "mages-hat",
+   "verdict": "MATCHES",
+   "evidence": "Their ops: +1 Arcana and a granted spell. Ours: core.json items.mages-hat.passiveEffects.skills.arcana:1 and innateSpells [{spellId:'prestidigitation', tradition:'arcane', atWill:true}]. The printed sentence has the cantrip name stripped by the scrape (\"cast the cantrip\"), and prestidigitation is the printed grant; core.spells.prestidigitation is edition 'remaster', rank 0 — not a superseded record, and at-will is correct for a cantrip."
+  },
+  {
+   "id": "flowing-water",
+   "verdict": "MATCHES",
+   "evidence": "Their op: +1 Diplomacy against orcs who honour the Flood Truce. Ours: src/rules/situationalBonuses.ts:1916 \"flowing-water\" → diplomacy, 'against orcs who honor the Flood Truce (tattoo must be invested)', +1 item; the lesser/moderate/greater grades carry the same entry at lines 2081-2083."
+  },
+  {
+   "id": "spry-sinews-lesser",
+   "verdict": "THEY-ENCODE-NOTHING-USEFUL",
+   "evidence": "Their only op is an injectText restating the item's own printed sentence — no value, no target, nothing a player's numbers change by. For the record, ours is ahead of it: core.json items.spry-sinews-lesser.situational carries two structured speed entries (+5 feet horizontal Leap, +3 feet vertical), so our sheet stars Speed and lists both."
+  },
+  {
+   "id": "vestige-lenses",
+   "verdict": "MATCHES",
+   "evidence": "Their two ops: +1 Survival to Track an incense-marked creature, +1 Perception to Seek alchemical vapors. Ours: src/rules/situationalBonuses.ts:1093 carries exactly those two entries — skill survival with the sandalwood-incense tracking trigger and kind 'perception' with the alchemical-vapor Seek trigger, both +1 item."
+  },
+  {
+   "id": "unbreakable-heart",
+   "verdict": "MATCHES",
+   "evidence": "Their single op: flat +1 Diplomacy. Ours: core.json items.unbreakable-heart.passiveEffects.skills.diplomacy:1 — a real +1 in the total, unconditional on both sides. The four heartbond gift options are prose on both sides."
+  },
+  {
+   "id": "magnifying-scope",
+   "verdict": "MATCHES",
+   "evidence": "Their op: +1 Perception to visually Seek through the scope. Ours: src/rules/situationalBonuses.ts:1286 → kind 'perception', 'on visual Perception checks to Seek creatures through the scope', +1 item (greater/major at 1287-1288). The Zoom In range-increment activation is encoded by neither."
+  },
+  {
+   "id": "acid-flask-moderate",
+   "verdict": "MATCHES",
+   "evidence": "Their single op puts +1 on the bomb weapon group — the flask's printed \"+1 item bonus to attack rolls\". Ours: core.json items.acid-flask-moderate carries attackItemBonus:1, consumed at src/rules/derive.ts:3939-3943 where it is folded into the potency (item-class) attack bonus with a max() so it does not stack with a rune or ABP. The featGrantsLane.ts hit on this id is incidental — it is only a member of Legion's Aim's weapon-familiarity list."
+  },
+  {
+   "id": "sluggish-bracelet",
+   "verdict": "MATCHES",
+   "evidence": "Their single op: +1 Acrobatics (the bracelet's false Bracelet of Dashing face). Ours: core.json items.sluggish-bracelet.passiveEffects.skills.acrobatics:1 plus disguisedAs:'bracelet-of-dashing' and the cursed-activation handling in src/rules/cursedItems.ts; src/rules/situationalBonuses.ts:446 stars it as 'while worn'. Same +1 either way."
+  },
+  {
+   "id": "disguise-kit-elite",
+   "verdict": "MATCHES",
+   "evidence": "Their op: +1 Deception to Impersonate with a kit. Ours: src/rules/situationalBonuses.ts:1609 → deception, 'to Impersonate someone using a disguise set up with the kit', +1 item."
+  },
+  {
+   "id": "ancestral-paragon",
+   "verdict": "MATCHES",
+   "evidence": "Their single op is a feat selection restricted to ancestry feats. Ours: src/rules/featPickGrants.ts:95 'ancestral-paragon': {prompt:'Choose a ancestry feat', category:'ancestry', maxLevel:1, dynamicTrait:'ancestry', excludeTraits:['lineage']}, surfaced for a taken feat at src/builder/Builder.tsx:2065 and gated as an answerable pick at Builder.tsx:1525. Same pick; ours additionally holds it to 1st level (printed: \"a 1st-level ancestry feat\") and excludes lineage feats, which are character-creation-only by rule."
+  },
+  {
+   "id": "glasses-of-sociability",
+   "verdict": "MATCHES",
+   "evidence": "Their single op: flat +1 Diplomacy. Ours: core.json items.glasses-of-sociability.passiveEffects.skills.diplomacy:1. Identical; the name-recall activation is prose on both sides."
+  },
+  {
+   "id": "pendant-of-the-occult",
+   "verdict": "MATCHES",
+   "evidence": "Their ops: +1 Occultism, a granted spell, and a UI op that reveals the spells tab. Ours: core.json items.pendant-of-the-occult.passiveEffects.skills.occultism:1 and innateSpells [{spellId:'guidance', tradition:'occult', atWill:true}]. core.spells.guidance is edition 'remaster', rank 0 — not superseded. Their spells-tab op is presentation, which our sheet does unconditionally."
+  },
+  {
+   "id": "root-epithet",
+   "verdict": "MATCHES",
+   "evidence": "Their select offers six epithets, each training one skill and injecting its post-Transcendence text. Ours: core.json classes.exemplar.extraChoices has a 'root-epithet' choice, pickByLevel {3:1}, with exactly six options and the same skill on each — the-brave→athletics, the-cunning→deception, the-deft→thievery, the-proud→intimidation, the-mournful→diplomacy, the-radiant→diplomacy, all via option.grants.skills. Extra-choice picks are resolved for proficiency at src/rules/build.ts:4288 and rendered by the shared picker; the transcendence effect is each option's description on our side, matching t"
+  },
+  {
+   "id": "sun-goggles",
+   "verdict": "MATCHES",
+   "evidence": "Their 3 ops: +1 to each save against effects that inflict dazzled. Ours: src/rules/situationalBonuses.ts:1962 → save 'all', 'against effects that could make you dazzled, while wearing the goggles', +1 item. Same three saves in one entry, same trigger, same item type."
+  },
+  {
+   "id": "artisans-toolkit-sterling",
+   "verdict": "MATCHES",
+   "evidence": "Their op: +1 Crafting to Craft. Ours: src/rules/situationalBonuses.ts:1603 → crafting, 'to Craft items from raw materials, when the toolkit matches the type of work', +1 item — same bonus, with the printed \"different sets for different work\" caveat spelled out."
+  },
+  {
+   "id": "ghoul-stiletto",
+   "verdict": "MATCHES",
+   "evidence": "Their 3 ops: +1 to each save against curses and olfactory effects. Ours: src/rules/situationalBonuses.ts:1407 → save 'all', 'against curses and olfactory effects, while wielding the dagger', +1 status (printed says status). The +1 dagger runes and the stench activation are on the core record and encoded by neither side as ops."
+  },
+  {
+   "id": "concealed-holster",
+   "verdict": "MATCHES",
+   "evidence": "Their op: +1 Stealth to hide or conceal a firearm or hand crossbow in the holster. Ours: src/rules/situationalBonuses.ts:1281 → stealth, 'on Stealth checks and Stealth DCs to hide or conceal a one-handed firearm or hand crossbow carried in this holster', +1 item — same trigger, and ours also names the DC side, which printed states."
+  },
+  {
+   "id": "retribution-axe",
+   "verdict": "MATCHES",
+   "evidence": "Their op: +2 damage on your next damage roll against the creature that most recently damaged you, before the end of your next turn. Ours: src/rules/situationalBonuses.ts:2429 → kind 'strikeDamage', same window and same targeting clause, +2 circumstance (printed says circumstance)."
+  },
+  {
+   "id": "healers-toolkit-expanded",
+   "verdict": "MATCHES",
+   "evidence": "Their op: +1 Medicine to Administer First Aid, Treat Disease, Treat Poison, Treat Wounds. Ours: src/rules/situationalBonuses.ts:1611 → medicine with that exact action list, +1 item."
+  },
+  {
+   "id": "aerial-cloak",
+   "verdict": "MATCHES",
+   "evidence": "Their two ops: +1 Athletics to Leap and +1 Acrobatics to Balance or Maneuver in Flight. Ours: src/rules/situationalBonuses.ts:1692 carries both entries with those exact triggers, +1 item each. The once/day Fall Gently reaction is on the core record (activationCost reaction, once/day counter) and is encoded by neither as an op."
+  },
+  {
+   "id": "clay-sphere",
+   "verdict": "MATCHES",
+   "evidence": "Their select splits armor vs weapon: armor gives precision resistance 2 and +1 to all three saves vs morph/polymorph; weapon gives the damage-step/versatile text. Ours: core.json items.clay-sphere.effectChoices id 'affix' with an armor option granting passive resistances [{precision,2}] and a weapon option carrying the versatile/damage-step note, plus src/rules/situationalBonuses.ts:1914 which stars Fort/Ref/Will +1 item vs morph or polymorph 'while the clay sphere is affixed to your armor' and the strikeDamage one-step entry for the weapon case. Item effectChoices are resolved at src/rules/bu"
+  },
+  {
+   "id": "survey-map",
+   "verdict": "MATCHES",
+   "evidence": "Their two ops both land on Survival — one for Survival checks about the mapped location, one (mis-filed) for Recall Knowledge about it. Ours: src/rules/situationalBonuses.ts:1621 has the Survival entry AND a second entry with target skill 'all' for 'any skill check to Recall Knowledge about the location detailed on the map'. Printed says \"+1 item bonus to Survival checks and any skill checks to Recall Knowledge\", so ours follows the print and theirs is narrower on the second clause — a field they under-model rather than a rule we invented. Flagging as medium confidence only because ours is del"
+  },
+  {
+   "id": "mental-wards",
+   "verdict": "MATCHES",
+   "evidence": "Their ops: Will→expert, plus text for the success→critical-success upgrade. Ours: src/rules/advancement.ts:222 {level:3, track:'will', rank:'expert', source:'mental-wards'} for the proficiency, and core.json classFeatures.mental-wards.degreeShifts [{shift:'successToCrit', when:'on a Will save against a mental or possession effect caused by an undead or haunt', saves:['will']}]. degreeShifts has a live reader (src/rules/explain.ts:309-329 collects them off owned class features and renders the star/marker), so ours is structured where theirs is prose — same result for the player."
+  },
+  {
+   "id": "extract-element",
+   "verdict": "MATCHES",
+   "evidence": "Their single op grants an ability block — the Extract Element action. Ours: core.json classFeatures.extract-element.grantsActions:['extract-element'], and core.actions['extract-element'] exists. grantsActions is read at src/rules/explain.ts:255 and surfaced on the sheet's action list at src/sheet/MainTab.tsx:268-270, so the player gets the action either way."
+  },
+  {
+   "id": "persona-mask",
+   "verdict": "MATCHES",
+   "evidence": "Their op: flat +1 Performance carrying the acting/orating/comedy/singing restriction as text. Ours: core.json items.persona-mask.passiveEffects.skills.performance:1 — the same flat +1 — plus src/rules/situationalBonuses.ts:2485 as a display-only star naming the same four performance types (and excluding dance/instruments/Impersonate). situationalBonuses is display-only by construction (its header, lines 10-12), so the +1 is applied once, not twice. Both implementations apply the +1 unconditionally and state the restriction in prose."
+  },
+  {
+   "id": "maestros-instrument-lesser",
+   "verdict": "MATCHES",
+   "evidence": "Their op: +1 Performance while playing the instrument. Ours: src/rules/situationalBonuses.ts:2578 → performance, 'while playing music with the instrument', +1 item. The once/day charm activation is on the core record and encoded by neither as an op."
+  },
+  {
+   "id": "thurible-of-revelation-lesser",
+   "verdict": "MATCHES",
+   "evidence": "Their ops: +1 Religion while the incense burns, plus text for the crit-fail→fail on religious Decipher Writing. Ours has both: src/rules/situationalBonuses.ts:1783 → religion, 'on Religion checks for 1 hour after you Burn Incense (costs 5 gp of incense), while you hold the thurible', +1 item; and core.json degreeShifts [{shift:'critFailToFail', skills:['religion'], actions:['decipher-writing']}], which explain.ts renders as a star on the skill and a marker on the action."
+  },
+  {
+   "id": "enveloping-light",
+   "verdict": "MATCHES",
+   "evidence": "Their ops: a granted spell plus a text-only carrier for the Treat Wounds crit-fail clause. Ours: core.json items.enveloping-light.innateSpells [{spellId:'light', rank:1, usesPerDay:1}] — core.spells.light is edition 'remaster', so not a superseded record, and the rank/frequency match the printed 1st-rank, once-per-day activation — plus spellNotes carrying the 5-round/1d4-HP detail, and degreeShifts [{shift:'critFailToFail', when:'the first time each day someone Treats your Wounds', skills:['medicine'], actions:['treat-wounds']}] where they only have prose."
+  },
+  {
+   "id": "one-hundred-victories",
+   "verdict": "MATCHES",
+   "evidence": "Their ops: flat +1 Intimidation plus the Ferocity clause as injectText (emitted twice on their side — a duplicate). Ours: core.json items.one-hundred-victories.passiveEffects.skills.intimidation:1 for the +1, and src/rules/situationalBonuses.ts:2731 → kind 'hp', 'the first time each day you use Ferocity', 'Hit Points set to your ancestry Hit Points instead of 1'. Same two effects, once each."
+  },
+  {
+   "id": "clothing-high-fashion-fine",
+   "verdict": "MATCHES",
+   "evidence": "Their op: +1 Diplomacy to Make an Impression on upper-class folk while worn. Ours: src/rules/situationalBonuses.ts:1606 → diplomacy, 'to Make an Impression on nobility or other upper-class folk, while wearing the clothing', +1 item."
+  },
+  {
+   "id": "keen-recollection",
+   "verdict": "THEY-ENCODE-NOTHING-USEFUL",
+   "evidence": "Their only op is an injectText restating the printed sentence — no proficiency change, no value. Ours is ahead of it anyway: src/rules/situationalBonuses.ts:2858 \"keen-recollection\" → skill 'all', when 'Recall Knowledge with a skill you're untrained in', bonus 'counts as trained (add your level)', which stars every skill's Recall Knowledge line. Nothing on their side to diverge from."
+  },
+  {
+   "id": "boots-of-quick-marching",
+   "verdict": "THEY-ENCODE-NOTHING-USEFUL",
+   "evidence": "Their only op is an injectText restating the printed Hustle-duration sentence — exploration-mode prose with no sheet number attached. Our core.json items.boots-of-quick-marching carries the once/day counter and the 1-action activation and renders the same sentence in the item description; there is no mechanical row on their side to compare against."
+  },
+  {
+   "id": "wrenchgear",
+   "verdict": "MATCHES",
+   "evidence": "src/rules/situationalBonuses.ts:1436 carries +2 item to Thievery \"to Disable a Device against a clockwork creature (typically to wind it down)\". Their single row is the same skill, same value, same restriction. Star-vs-computed is the owner's Ruling A/B/C convention for restricted bonuses, not a divergence."
+  },
+  {
+   "id": "charlatans-gloves",
+   "verdict": "MATCHES",
+   "evidence": "public/core.json items.charlatans-gloves carries passiveEffects.skills.thievery=1 (computed, not starred) and innateSpells [{spellId:'telekinetic-hand',tradition:'occult',atWill:true}]; durable in scripts/data/effect-backfill.json:5332 and :5342. Checked the grant target: core.json spells['telekinetic-hand'].edition === 'remaster' (rank 0), so it is NOT a superseded record. Their three ops are the same spell grant, the same +1 Thievery, and a UI op that only reveals their spells tab."
+  },
+  {
+   "id": "marshals-baton",
+   "verdict": "MATCHES",
+   "evidence": "src/rules/situationalBonuses.ts:2196 carries two entries — +1 item Diplomacy and +1 item Intimidation, both worded \"against troops, individual soldiers, and military leaders, while holding the baton\". That is exactly their two rows (SKILL_DIPLOMACY 1 and SKILL_INTIMIDATION 1 with the same restriction text). The 2-action once/day Command activation is on the core record (activationCost + counters) and is not encoded on their side at all."
+  },
+  {
+   "id": "bracelet-of-dashing",
+   "verdict": "MATCHES",
+   "evidence": "core.json items.bracelet-of-dashing carries passiveEffects.skills.acrobatics=1 (the same flat +1 item bonus their only row grants), and src/rules/situationalBonuses.ts:3166 additionally stars the +10-foot status Speed bonus from the once/day Jangling Dash activation, which they do not encode. Carrying a printed clause they omit is not a divergence."
+  },
+  {
+   "id": "survey-map-atlas",
+   "verdict": "MATCHES",
+   "evidence": "src/rules/situationalBonuses.ts:1622 carries two entries: +1 item on Survival \"related to a location detailed in the atlas\", and +1 item on {kind:'skill', detail:'all'} for \"any skill check to Recall Knowledge about a location detailed in the atlas\". Printed says \"+1 item bonus to Survival checks AND any skill checks to Recall Knowledge\". Their second row files the Recall Knowledge bonus onto Survival as well, which is narrower than printed — a limit of their model, since ours follows the printed \"any skill\". No player loses anything on our side."
+  },
+  {
+   "id": "warfare-expertise",
+   "verdict": "MATCHES",
+   "evidence": "core.json classFeatures.warfare-expertise carries skillProgression [{skill:'lore:warfare', at:[{level:3, rank:'expert'}]}] (durable at scripts/data/effect-backfill.json:132496), matching their expert bump to the same Lore. Their second op is injectText — display only. The initiative clause needs no lane: our sheet lets a character set initiativeSkill to any ProficiencyKey including 'lore:warfare' (src/rules/types.ts:4947, read at src/rules/initiative.ts:39), so we already reach what their text-only note describes."
+  },
+  {
+   "id": "bracers-of-missile-deflection",
+   "verdict": "MATCHES",
+   "evidence": "src/rules/situationalBonuses.ts:1826 carries +2 circumstance to AC \"against a ranged weapon attack that hits you but doesn't crit — reaction…\", which is the printed trigger. Their single row applies the same +2 flat to their AC value with the trigger written as caveat text — their standard convention for restricted bonuses. Ours is starred rather than added, per the owner's Ruling A/B/C. Note their flat application would leave a once-per-day reaction bonus sitting on AC permanently; ours does not, and that is the direction the printed text supports."
+  },
+  {
+   "id": "aeon-stone-polished-pebble",
+   "verdict": "MATCHES",
+   "evidence": "core.json items.aeon-stone-polished-pebble carries effectChoices id 'resonant' (yes/no), whose \"yes\" option grants innateSpells [{spellId:'grease', tradition:'primal', usesPerDay:1}] — the same gate their select puts on the resonant power. core.json spells.grease.edition === 'remaster', so the grant is not aimed at a superseded record. The save side is src/rules/situationalBonuses.ts:2333: +1 item \"on saves (and on your save DCs) against attempts to Grapple or Swallow you\" — printed says \"saves AND DCs\"; theirs files it on Fortitude only, which is the narrower read. Both branches of their sele"
+  },
+  {
+   "id": "aeon-stone-dusty-rose-prism",
+   "verdict": "MATCHES",
+   "evidence": "core.json items.aeon-stone-dusty-rose-prism carries innateSpells [{spellId:'shield', tradition:'arcane', atWill:true}] unconditionally — matching their giveSpell being present in BOTH select branches — plus effectChoices id 'resonant' whose yes option carries the 5→10 damage-prevented note, matching their resonant-branch injectText. core.json spells.shield.edition === 'remaster' (rank 0 cantrip), so the grant is not a superseded record."
+  },
+  {
+   "id": "jolt-coil",
+   "verdict": "MATCHES",
+   "evidence": "The packet's ourFields showed the electricity resistance as a flat passiveEffect, but the shipped record does not: core.json items.jolt-coil has NO passiveEffects and instead carries effectChoices id 'affix' with options \"Armor\" (grant.passive.resistances electricity 2) and \"Weapon\" (the 1d4 rider as a note). That is their select exactly — armor branch gives the resistance, weapon branch does not. Durable at scripts/data/effect-backfill.json (the jolt-coil effectChoices entry, with passiveEffects explicitly nulled). heldSpells {0:['electric-arc']} covers the activation; their side encodes noth"
+  },
+  {
+   "id": "tough-to-kill",
+   "verdict": "MATCHES",
+   "evidence": "Their single giveAbilityBlock is the Diehard grant; ours is src/rules/featFeatGrants.ts:598 ('tough-to-kill': ['diehard']). We additionally carry the printed dying-2 clause at src/rules/situationalBonuses.ts:3812 as a condition-keyed note, which they do not encode — a printed clause we carry and they omit is not a divergence."
+  },
+  {
+   "id": "musical-instrument-virtuoso-handheld",
+   "verdict": "MATCHES",
+   "evidence": "src/rules/situationalBonuses.ts:1613 carries +1 item Performance \"on Performance checks made by playing this instrument (both hands)\", matching their single SKILL_PERFORMANCE +1 with the same instrument restriction."
+  },
+  {
+   "id": "alchemists-lab-expanded",
+   "verdict": "MATCHES",
+   "evidence": "src/rules/situationalBonuses.ts:1602 carries +1 item Crafting \"to Craft alchemical items, using the lab (downtime crafting)\" — the same skill, value and restriction as their single SKILL_CRAFTING +1 row."
+  },
+  {
+   "id": "emperors-peak-quartz-bracelet",
+   "verdict": "MATCHES",
+   "evidence": "src/rules/situationalBonuses.ts:1978 carries three entries: +1 item on Survival to Sense Direction or Subsist, +3 item for the same in mountainous terrain, and the reduced Subsist penalty after 8 hours or less of exploration. Their side has one Survival row (+1, with the +3 mountain case written into its caveat text) plus an injectText for the penalty clause. Ours splits the same content into separately displayable rows."
+  },
+  {
+   "id": "crafters-eyepiece",
+   "verdict": "MATCHES",
+   "evidence": "core.json items.crafters-eyepiece carries passiveEffects.skills.crafting=1 — computed on the sheet, matching their unrestricted SKILL_CRAFTING +1. The Repair clause is at src/rules/situationalBonuses.ts:3650 as an action-keyed note (\"10 + 10 / 15 + 15 per rank\"), matching their injectText."
+  },
+  {
+   "id": "presentable",
+   "verdict": "MATCHES",
+   "evidence": "src/rules/situationalBonuses.ts:1330 carries +1 item Diplomacy \"to Make an Impression on people who would be impressed by the outfit the rune is on\" — same skill, value and restriction as their single row. Separately noted, not a WG divergence: the description in public/core-descriptions.json has a dropped inline reference (\"as though it had just been affected by .\"), the known @UUID-cleaner damage class."
+  },
+  {
+   "id": "portable-ram",
+   "verdict": "MATCHES",
+   "evidence": "src/rules/situationalBonuses.ts:1332 carries +1 item Athletics \"to Force Open doors, gates and similar obstacles, while wielding the ram in two hands\" — the same skill, value and restriction as their single SKILL_ATHLETICS row."
+  },
+  {
+   "id": "shining-symbol",
+   "verdict": "MATCHES",
+   "evidence": "core.json items.shining-symbol carries passiveEffects.skills.religion=1, computed on the sheet — the same as their single SKILL_RELIGION +1 row, which is their only op. We additionally carry the Spiritual Light activation's −1 status penalty to Deception and Stealth at src/rules/situationalBonuses.ts:2487, plus the once/day counter and 2-action cost on the record."
+  },
+  {
+   "id": "inevitable-return",
+   "verdict": "MATCHES",
+   "evidence": "Their giveAbilityBlock grants the reaction; ours is core.json classFeatures.inevitable-return.grantsActions ['inevitable-return'], and the target exists as a real record — core.json actions['inevitable-return'] with actionCost {type:'reaction'}, traits concentrate/necromancer/thrall, edition 'remaster-era'. So the grant resolves to a live action rather than a dangling id."
+  },
+  {
+   "id": "stubborn",
+   "verdict": "MATCHES",
+   "evidence": "The Will expert bump is computed at src/rules/advancement.ts:435 — { level: 3, track: 'will', rank: 'expert', source: 'stubborn' } — matching their adjValue SAVE_WILL = expert. The second-save clause is at src/rules/situationalBonuses.ts:3810 as a condition-keyed note on 'controlled', matching their text-only SAVE_WILL row (which carries no numeric value, only the sentence)."
+  },
+  {
+   "id": "blessing-of-the-devoted",
+   "verdict": "MATCHES",
+   "evidence": "The packet's ourFields/ourRegistries look empty because the choice does not live on the feature record — it lives on the class. core.json classes.champion.extraChoices contains {id:'blessing', name:'Blessing of the Devoted', pickByLevel:{3:1}, options:['blessed-armament','blessed-shield','blessed-swiftness']} (durable at scripts/data/effect-backfill.json as the champion extraChoices entry), which is their select-one-of-three. Each option is a real classFeature carrying its own mechanics: blessed-armament has a choice flag 'blessedRune' with the five printed runes and daily:true; blessed-shield"
+  },
+  {
+   "id": "dancing-scarf",
+   "verdict": "MATCHES",
+   "evidence": "src/rules/situationalBonuses.ts:1829 carries +1 item Performance \"on Performance checks to dance (not other performances)\" — the same skill, value and restriction as their single row. The 1-action Swirling Scarf activation is on the core record; they encode nothing for it."
+  },
+  {
+   "id": "inspired-memory",
+   "verdict": "THEY-ENCODE-NOTHING-USEFUL",
+   "evidence": "Both of their ops are injectText — pure display text, no mechanical value for a player. For the record, we do carry the mechanics: src/rules/situationalBonuses.ts:439-442 has two entries, +1 circumstance on {skill:'all'} \"to Recall Knowledge about a creature whose magic you have absorbed within the last minute\" and +1 circumstance on {skill:'all'} \"to Learn a Spell you have absorbed within the last week\". (The packet's ourRegistries was empty because its detector misses multi-line entries.)"
+  },
+  {
+   "id": "musical-instrument-virtuoso-heavy",
+   "verdict": "MATCHES",
+   "evidence": "src/rules/situationalBonuses.ts:1614 carries +1 item Performance \"on Performance checks made by playing this instrument (16 Bulk; generally must be stationary)\", matching their single SKILL_PERFORMANCE +1 with the same instrument restriction."
+  },
+  {
+   "id": "ventriloquists-ring",
+   "verdict": "MATCHES",
+   "evidence": "core.json items.ventriloquists-ring carries passiveEffects.skills.deception=1 — computed, matching their single SKILL_DECEPTION +1, which is their only op. We also carry the once/day 2-action activation and heldSpells {1:['ventriloquism']} for the Throw Voice effect, which they omit."
+  },
+  {
+   "id": "magnifying-glass",
+   "verdict": "MATCHES",
+   "evidence": "src/rules/situationalBonuses.ts:1612 targets {kind:'perception'} with +1 item \"to notice minute details of documents, fabric, and the like (holding the lens)\" — the same stat, value and restriction as their PERCEPTION +1 row."
+  },
+  {
+   "id": "staff-of-earth",
+   "verdict": "MATCHES",
+   "evidence": "src/rules/situationalBonuses.ts:1463 carries +1 circumstance targeting {save:'fortitude'} \"while wielding the staff, on Fortitude saves (and your Fortitude DC) against effects that Shove you or knock you prone\" — same save, same bonus type and value, same restriction as their SAVE_FORT +1 row. The staff's charges and spell list live on the core record (counters pool, heldSpells {0:['scatter-scree'],1:['pummeling-rubble']}), which they do not encode."
+  },
+  {
+   "id": "staff-of-water",
+   "verdict": "MATCHES",
+   "evidence": "core.json items.staff-of-water carries passiveEffects.resistances [{type:'fire', value:2}], which derive.ts applies only while the item is in use (src/rules/derive.ts item loop guards on itemInUse) — matching the printed \"while wielding\" and their adjValue RESISTANCES \"fire, 2\". The charge pool and heldSpells {0:['spout'],1:['create-water','hydraulic-push']} are on the record too."
+  },
+  {
+   "id": "concealed-sheath",
+   "verdict": "MATCHES",
+   "evidence": "src/rules/situationalBonuses.ts:1605 carries +1 item \"to Stealth checks (and the Stealth DC) to hide or conceal the one item stored in the sheath\" — same skill, value and restriction as their SKILL_STEALTH +1 row, and ours additionally names the DC half the printed text calls out."
+  },
+  {
+   "id": "detectives-kit",
+   "verdict": "MATCHES",
+   "evidence": "src/rules/situationalBonuses.ts:2563 targets both {kind:'perception'} and {skill:'all'} with +1 item \"to investigate a crime scene, a clue, or similar details, while carrying the kit\". Their single row files the same +1 on Perception only; printed says \"checks\" without naming a stat, so our two targets are the superset, not a divergence."
+  },
+  {
+   "id": "camouflage-suit",
+   "verdict": "MATCHES",
+   "evidence": "src/rules/situationalBonuses.ts:1279 carries +1 item Stealth \"on Stealth checks to Hide or Sneak, in the specific environment the suit was prepared for…\" — the same skill, value and restriction as their single SKILL_STEALTH row. (The trailing ellipsis here is the registry's house convention for \"the rest is in the description\", and unlike the clan emblems it does not cut away a gate that changes whether the bonus exists.)"
+  },
+  {
+   "id": "battle-medics-baton",
+   "verdict": "MATCHES",
+   "evidence": "core.json items.battle-medics-baton carries passiveEffects.skills.medicine=1 — computed on the sheet, matching their single unrestricted SKILL_MEDICINE +1, which is their only op. The once/hour Battle Medicine activation is on the record too (frequency {max:1, per:'hour'} + counters + 2-action cost); they encode nothing for it."
+  },
+  {
+   "id": "skitter",
+   "verdict": "THEY-ENCODE-NOTHING-USEFUL",
+   "evidence": "Their single op is injectText — the printed sentence as display text, with no mechanical payload. Ours matches by having nothing to model: core.json feats.skitter carries only actionCost {type:'passive'} and prerequisites, and the sentence \"You can Crawl up to half your Speed\" reaches the player through the feat's description. Nothing on either side changes a number."
+  },
+  {
+   "id": "weapon-of-false-wounds",
+   "verdict": "MATCHES",
+   "evidence": "src/rules/situationalBonuses.ts:1955 targets {kind:'perception'} with +1 item \"on Perception checks to disbelieve an illusion, while wielding this weapon\" — the same stat, value and restriction as their PERCEPTION +1 row."
+  },
+  {
+   "id": "bullhook",
+   "verdict": "MATCHES",
+   "evidence": "src/rules/situationalBonuses.ts:1070 carries +2 item Nature \"on Nature checks to Command an Animal, while holding the bullhook\" — same skill, same value (+2, not +1), same restriction as their SKILL_NATURE +2 row. The once/day 2-action Command activation is on the core record; they encode nothing for it."
+  },
+  {
+   "id": "cultist-cowl",
+   "verdict": "MATCHES",
+   "evidence": "core.json items.cultist-cowl carries passiveEffects.skills.religion=1 — computed, matching their single SKILL_RELIGION +1, their only op. The second printed clause is at src/rules/situationalBonuses.ts:1867: +1 item on {skill:'all'} \"on any skill check made to aid a ritual as a secondary caster\", which they do not encode."
+  },
+  {
+   "id": "basic-glory",
+   "verdict": "MATCHES",
+   "evidence": "src/rules/featPickGrants.ts:112 gives it { prompt: \"Choose a class feat\", category: 'class', maxLevel: 2, traits: ['exemplar'] } — the same select-a-1st-or-2nd-level-exemplar-feat their ABILITY_BLOCK select offers. I checked the option pool matches the real list: core.json has exactly 4 exemplar-trait feats at level 1 and 4 at level 2, so nothing is missing from the picker. Their second op is a conditional +3 max HP keyed on a feat name that the dump truncates before printing, so I could not resolve which feat it tests; none of the eight exemplar feats at level 1-2 in our data grants Hit Point"
+  },
+  {
+   "id": "basic-shooting",
+   "verdict": "MATCHES",
+   "evidence": "src/rules/featPickGrants.ts:120 gives it { prompt: \"Choose a class feat\", category: 'class', maxLevel: 2, traits: ['gunslinger'] }, which is their single ABILITY_BLOCK feat select. The pool is real — core.json has 14 gunslinger-trait feats at level 1-2 to choose from."
+  },
+  {
+   "id": "viking-weapon-familiarity",
+   "verdict": "MATCHES",
+   "evidence": "Their giveAbilityBlock is the Shield Block grant; ours is src/rules/featFeatGrants.ts:509 ('viking-weapon-familiarity': ['shield-block']). Their six WEAPON_FAMILIARITY rows are ours at src/rules/featGrantsLane.ts:153 — the same six weapons (battle-axe, hatchet, longsword, shield-boss, shield-spikes, shortsword) with treatAsLowerCategory, read at src/rules/build.ts:5380 (advanced→martial, otherwise→simple). All six are martial, so \"one category lower\" resolves to the printed \"treat as simple weapons\". The 5th-level crit-spec clause, which they do not encode, is on the record: critSpec true, cri"
+  },
+  {
+   "id": "tools-of-the-trade",
+   "verdict": "MATCHES",
+   "evidence": "src/rules/featGrantsLane.ts:107 carries weaponFamiliarity {weapons:['bola','sap','whip'], mirrorCategory:'simple'} — the same three weapons treated as simple, read at src/rules/build.ts:5409-5410. Their three adjValue rows are the entire content of their encoding. The nonlethal-penalty clause is carried on our record as a `note` (core.json feats.tools-of-the-trade.note), which they omit; the 1d4 precision rider is unmodelled on BOTH sides, so it is not a divergence."
+  },
+  {
+   "id": "lifting-belt",
+   "verdict": "MATCHES",
+   "evidence": "core.json items.lifting-belt carries passiveEffects {skills:{athletics:1}, bulkLimitBonus:1} — both halves computed. That is their two ops exactly: BULK_LIMIT_BONUS 1 and SKILL_ATHLETICS 1. The +1 is the right value: printed 6 + Str encumbered / 11 + Str maximum is one above the 5 + Str / 10 + Str default. The Assisted Lift activation is on the record (2 actions); neither side gives it a number."
+  },
+  {
+   "id": "butterfly-blade-dedication",
+   "verdict": "MATCHES",
+   "evidence": "src/rules/featGrantsAuto.ts:139-142 carries conditionalSkills {deception:{base:'trained',upgraded:'expert'}, stealth:{base:'trained',upgraded:'expert'}} — the same either/or their two rank conditionals encode (expert if already trained, otherwise trained) — plus weaponFamiliarity {weapons:['butterfly-sword'], mirrorBestCategory:true}, read at src/rules/build.ts:5411. mirrorBestCategory is the closer read of the printed \"whenever your proficiency rank in ANY weapon increases to expert or beyond, you also gain that new rank with butterfly swords\"; their flat familiarity row is the looser one, so"
+  },
+  {
+   "id": "starlit-eyes",
+   "verdict": "THEY-ENCODE-NOTHING-USEFUL",
+   "evidence": "Their single op is injectText — display text only, and it covers just the shooting star half of the printed feat. Ours carries more than their ops do: core.json feats.starlit-eyes has a `situational` array on the record with both printed clauses — the flat-check DC drop (3 instead of 5 concealed, 9 instead of 11 hidden) on a ranged Strike in Arcane Cascade, and the no-flat-check case when Shooting Star targets a hidden creature — both targeting {kind:'strikeAttack'}."
+  },
+  {
+   "id": "keen-recollection",
+   "verdict": "MATCHES",
+   "evidence": "Compared: (1) what the printed text promises — \"You gain the Keen Recollection class feature\" — against (2) their single ability-block grant and (3) our `grantsClassFeatures` route. Both sides hand the player the same class-feature entry and neither computes a numeric proficiency change; the untrained-Recall-Knowledge benefit is delivered as text plus, on our side, an additional situational star on the skill rows. Checked for the known failure modes: grep of `keen-recollection` across src/ returns exactly one registry hit (src/rules/situationalBonuses.ts:2858) — it is not also in featGrants.ts"
+  },
+  {
+   "id": "stylish-tricks",
+   "verdict": "FIXED",
+   "evidence": "[FIXED, high confidence; adversarially verified] RAN `node scripts/wg-show.mjs \"stylish-tricks\" --raw` — six rows (three legacy, three remaster), quoted above.\nRAN the AoN mirror read of .../by-category/class-feature/class-feature-1016.json (our record's aonId) — printed sentence as quoted.\n\nTHE WRITE-ONLY FIELD, verified against the CURRENT tree, not the old note: grep of `includeSubclassGrantedSkills` across the repo returns exactly three hits — src/rules/types.ts:3151 (the declaration), scripts/data/effect-backfill.json:132200 (the authored value), and the built public/core.json. ZERO hits in any reader. The only consumer of `restrictedSkillFeatLevels` is src/rules/featSlots.ts:183-193, and its allowed set is built from `restrict.skills` plus `restrict.abilities` only:\n    const allowed = new Set<string>(restrict.skills ?? []);\n    if (restrict.abilities?.length) { for (const s of SKILLS) if (restrict.abilities.includes(skillAbility(s))) allowed.add(s); }\n    if (!named.some((k) => allowed.has(k))) return false;\nSwashbuckler declares no `abilities`, so allowed = {acrobatics}. This is the write-only-field-with-no-reader shape, and work/settle-divergences.json already recorded it as DIVERGENT / high with the same reading — it was never applied.\n\nTHE SUBCLASS DATA IS PRESENT AND TYPED: public/core.json classes['swashbuckler'].subclass.options[].grants.skills gives battledancer→"
+  },
+  {
+   "id": "unifying-emblem-lyrune-quah",
+   "verdict": "FIXED",
+   "evidence": "[FIXED, high confidence; adversarially verified] RAN `node scripts/wg-item.mjs \"Unifying Emblem (Lyrune-Quah)\"` — their full item row and operations, quoted above (`node scripts/wg-show.mjs` finds nothing: these are items, not ability blocks, which is itself the answer to \"do they carry it\").\nRAN the AoN mirror read of .../by-category/equipment/equipment-2223-1921.json. This is the family page (trap #4), and the per-clan sub-blocks are all on it: Tamiir-Quah→tailwind, Lyrune-Quah→VANISHING TRACKS, Shadde-Quah→cleanse cuisine, Shriikirri-Quah→liberating command, Shundar-Quah→thoughtful gift, Sklar-Quah→concordant choir, Skoan-Quah→ventriloquism.\n\nTHIS WAS FLAGGED, MARKED FIXED, AND NOT FIXED. work/wg-batch-011-residual.json:96-100 carries this id with `\"fixed\": true`; work/residual-1-12.json:2266-2272 carries the full finding. But the overlay tells a different story — a grep of 'unifying-emblem' over scripts/data/effect-backfill.json returns seven `passiveEffects` rows (all seven clans) and only THREE `innateSpells` rows, at lines 151366-151399: shadde-quah, shriikirri-quah, skoan-quah. lyrune-quah, shundar-quah, tamiir-quah and sklar-quah have none. I confirmed this against the BUILT artefact rather than the bookkeeping: a scan of public/core.json prints `unifying-emblem-lyrune-quah: innateSpells=undefined` while `unifying-emblem-shadde-quah: innateSpells=[{\"spellId\":\"cleanse-c"
+  },
+  {
+   "id": "know-the-beat",
+   "verdict": "FIXED",
+   "evidence": "[FIXED, high confidence; adversarially verified] RAN `node scripts/wg-show.mjs \"know-the-beat\" --raw` -> one select, four createValue, one addBonusToValue. RAN a dump of public/core.json -> feats.know-the-beat has effectChoices id 'lore' with four options each carrying grant.skills {lore:X:'trained'}. GREPPED src/rules -> the ONLY other carrier is src/rules/featGrantsLane.ts:15 `'know-the-beat': {\"skillChoices\":[{\"options\":[\"lore:guild\",\"lore:legal\",\"lore:mercantile\",\"lore:underworld\"],\"rank\":\"trained\"}]},`. src/rules/featGrants.ts:578-582 spreads FEAT_LANE_GRANTS into FEAT_GRANTS and nothing in HAND_AUTHORED_GRANTS overrides know-the-beat. BOTH carriers apply, verified at the two application sites rather than assumed: (a) src/rules/build.ts:4414 `(g.skillChoices ?? []).forEach(...)` -> `featSkillChoiceValue(build, fc.featId, idx)` -> src/rules/build.ts:1353-1356 returns `opts[0]` when the slot is UNANSWERED, i.e. an unanswered slot silently trains lore:guild; (b) src/rules/build.ts:4605 `g = opt?.grant` -> :4610 `sink(g,...)` -> `applyAlwaysOn` at src/rules/build.ts:4705-4707 applies `g.skills` into `proficiencies.skills`. Both pickers are also RENDERED: src/builder/Builder.tsx:1930-1975 emits a \"Trained skill\" SubCard per FEAT_GRANTS.skillChoices slot, and src/builder/Builder.tsx:2094+ emits the effectChoices picker - two dropdowns asking the same printed question. src/rules/"
+  },
+  {
+   "id": "furious-footfalls",
+   "verdict": "OWNER-RULED",
+   "evidence": "OWNER-RULED — the divergence is real and is the one he already authorised. Their side computes +5 when not raging and +10 while their rage mode is active; ours carries landSpeedBonus 5 with the raging half as a situational star. The standing ruling (2026-08-22, verbatim): 'we give an actuall speed only when its alwayes, if it is deoendednt on somthing ist in a *'. A Speed that exists only while raging is exactly the conditional case, so the star IS the ruled encoding. The finding's load-bearing claim — that the app already treats a mode-gated Speed as evaluable and this record is the outlier — was checked and is false."
+  },
+  {
+   "id": "vivacious-speed",
+   "verdict": "FIXED",
+   "evidence": "FIXED. 'When you don't have panache, you still get half this status bonus to your Speed, rounded down to the nearest 5-foot increment.' That half is ALWAYS ON, and the owner's standing rule is 'we give an actual speed only when it's always; if it is dependent on something it's in a *' — so the clause splits: the floor becomes a real number and only the panache-dependent remainder stays a star. Before this the record carried no number at all and a 19th-level swashbuckler standing without panache read 25 ft where the book gives 40. The ladder is what blocked it: the floor is 5 ft (L3-10), 10 ft (L11-18), 15 ft (L19+) — the printed full bonus halved and rounded down at every tier — and landSpeedBonus was typed number, so two of the three tiers had no carrier. The field now accepts a FORMULA in the vocabulary every other speed value already uses, resolved through resolveFormula in ONE helper shared by the feat / class-feature / heritage reads, and explain.ts resolves it the same way so the Speed breakdown still sums to the total. Value '5+5*min(2,floor((@actor.level-3)/8))', checked against the printed halving at every level 3-20 by the backfill script itself, which refuses to write if any tier disagrees. That reproduces WG's two unconditional ops ([L>=11 -> +10], [L>=19 -> +15]) plus the ELSE branch (+5) of their panache conditional, read through status bonuses not stacking — their sheet shows the same number ours now does, and their encoding does not contradict print here, so no ruling was needed. The star was reworded in the same change to 'while you have panache … (half of it … is always on and already in your Speed)', in the wording the clarity-goggles-greater / mirror-goggles stars established — two carriers stating the same feet is how a sheet contradicts itself. Its sibling stylish-combatant is deliberately left as a star and tested as the control: +5 only WITH panache, no unconditional half. test/vivacious-speed-floor.test.ts (15)."
+  },
+  {
+   "id": "unifying-emblem-shundar-quah",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 11) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"A fix was proposed and REFUSED on review because it picks a side in a WG-vs-print disagreement. The reviewer's reasoning: REFUTED — this is an ASK-OWNER case, and the finding's own…\""
+  },
+  {
+   "id": "unifying-emblem-sklar-quah",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 11) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"A fix was proposed and REFUSED on review because it picks a side in a WG-vs-print disagreement. The reviewer's reasoning: REFUTED ON PARITY GROUNDS — the fix picks a side in a WG-v…\""
+  },
+  {
+   "id": "unifying-emblem-tamiir-quah",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 11) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"A fix was proposed and REFUSED on review because it picks a side in a WG-vs-print disagreement. The reviewer's reasoning: REFUTED — this is ASK-OWNER, and the row must not be appli…\""
+  }
+ ]
+}

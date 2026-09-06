@@ -1,0 +1,96 @@
+{
+ "batch": 17,
+ "examined": 100,
+ "recordsRead": 100,
+ "method": "Every record's printed text (AoN mirror, by aonId) was read record-by-record: 65 gate-silent records by the 5-reader parity workflow (wf_489b02f0-dbb), 35 gate-flagged records by the 10-family investigation (wf_de082b18-a88), each with adversarial verification of every proposed fix. Print-vs-ours defects that WG's encoding was SILENT on are listed under `confirmed`; clauses neither side can model are under `unmodellable` with the reason.",
+ "confirmed": [
+  {
+   "id": "stoney-deflection",
+   "bucket": "feats",
+   "summary": "WG encodes only an internal feat tally; PRINT grants '+2 circumstance to AC AND to any defenses against being Shoved or Tripped'. The save-DC half was delivered nowhere. Added the second SituationalBonus targeting fortitude+reflex dcOnly (the inexorable shape).",
+   "fixed": true
+  },
+  {
+   "id": "advanced-death-dealing",
+   "bucket": "feats",
+   "summary": "PRINT Special: selectable more than once (WG agrees via meta_data.can_select_multiple_times, invisible to the comparers). Record had no maxTakable, so maxTakes()=1 and it could never be taken twice. Set maxTakable:null via scripts/data/fixes.json (the overlay cannot SET null — value:null deletes). Same fix applied to the siblings advanced-rune-magic and widespread-fascination, whose old overlay row was provably inert and was removed.",
+   "fixed": true
+  },
+  {
+   "id": "gravel-guts",
+   "bucket": "feats",
+   "summary": "PRINT's second clause — 'reduce your sickened value by 2 (3 on a critical success)' — was held by nothing; WG keeps it as prose on the save op. Added the RECORD_MARKERS condition mark on sickened (the face-your-fears shape), and widened the save star from fortitude-only to all three saves, matching their three ops.",
+   "fixed": true
+  },
+  {
+   "id": "sound-mirror",
+   "bucket": "feats",
+   "summary": "Our record granted Silence at rank 1 — an impossible grant of a rank-2 spell — where the page prints Ventriloquism; the prose and its descRefs carried the same corruption. Fixed the innateSpells row, the description, and the descRefs (apply-backfill-now taught to route descRefs → the split file's `r`).",
+   "fixed": true
+  },
+  {
+   "id": "poison-coat",
+   "bucket": "feats",
+   "summary": "The record's actionCost was `reaction`, leaked from the nested Once Bitten glyph by grantedCost() — with the new grantsActions row the sheet would have listed the same reaction twice under two names. Pinned actionCost passive (the worm-caller-dedication remedy).",
+   "fixed": true
+  },
+  {
+   "id": "cloaking-pulse",
+   "bucket": "feats",
+   "summary": "PRINT's 'Frequency once per round' inside the granted Drape Ambient Magic block had no carrier (WG encodes none of it). limitedUses {max:1, per:'round'} on the granter, the soothing-pulse treatment.",
+   "fixed": true
+  },
+  {
+   "id": "guardians-intercept",
+   "bucket": "feats",
+   "summary": "PRINT's 'once per 10 minutes' existed only as their injectText prose. limitedUses {max:1, per:'minute', every:10} beside the Intercept Attack grant.",
+   "fixed": true
+  },
+  {
+   "id": "inscribed-with-elders-deeds",
+   "bucket": "feats",
+   "summary": "PRINT's 'At 13th level, you can instead gain a 5th-level ancestry feat' lived only in a prose note — 9 of the 19 legal picks were unreachable for the whole career. New OpenChoiceFrom.maxLevelByLevel field + row; characterless fallback keeps the base ceiling.",
+   "fixed": true
+  },
+  {
+   "id": "master-summoner",
+   "bucket": "feats",
+   "summary": "The printed 'designate one of your spell slots' was computed (rankOptions) and unanswerable: SpellsTab's spontaneous branch early-returned before the one control that renders the rank select. The pip now carries the same ms-rank-select; source-shape guard added.",
+   "fixed": true
+  },
+  {
+   "id": "clandestine-cloak",
+   "bucket": "items",
+   "summary": "A fifth 'never — placeholder removed' +2 status Deception row shipped live from work/situational-lane/patches.json (apply-corrections.mjs re-emits every bonuses object verbatim and never reads the reason string). Deleted in BOTH the registry and the patch, so a re-run cannot resurrect it.",
+   "fixed": true
+  },
+  {
+   "id": "elysiums-cadence",
+   "bucket": "feats",
+   "summary": "Our star extended the +1 to Gather Information (in neither print nor WG) and dropped the printed +2-if-holy tier. Rescoped to Make an Impression with the (+2 if the target is holy) form.",
+   "fixed": true
+  }
+ ],
+ "unmodellable": [
+  {
+   "id": "staff-of-final-rest",
+   "reason": "PRINT: the staff 'has the versatile P trait and functions as a wooden stake'. No item field can grant a trait to an item (checked across all 7,854 item records' fields); neither side carries it."
+  },
+  {
+   "id": "discerning-gaze",
+   "reason": "The Harsh Judgment fortune effect (roll twice, take higher) — no fortune/reroll lane exists in the vocabulary (docs/mechanic-lanes.md has no fortune entry); both sides keep it as prose."
+  },
+  {
+   "id": "conjurer-of-corpses",
+   "reason": "PRINT: summoned undead 'can be destroyed and targeted by your spells or abilities as if they were thralls' — WG encodes nothing for it; authoring it would be us doing something they do not, so it stays prose per the parity rule."
+  }
+ ],
+ "openFindings": [
+  {
+   "id": "aeon-stone-family-activation",
+   "reason": "20 of the 21 legacy aeon stones carry an identical blanket activationCost {1 action} + frequency {1/day} that per-stone print contradicts (Pale Lavender Ellipsoid: Reaction 1/day; Agate Ellipsoid: Reaction, NO frequency; Rainbow Prism: 2 actions 3/day; Dusty Rose Prism: no Activate at all). An import default, not authored data — needs a family-wide pass by the item-activation lane's owner, not 21 one-off overlay rows. Not a WG delta (their ops encode no activation)."
+  }
+ ],
+ "closed": true,
+ "complete": true
+}

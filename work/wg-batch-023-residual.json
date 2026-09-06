@@ -1,0 +1,306 @@
+{
+ "batch": 23,
+ "examined": 83,
+ "recordsRead": [
+  "hunted-by-the-night",
+  "martial-disciple",
+  "thassilonian-traveler",
+  "able-carter",
+  "tax-collector",
+  "kaiju-stalker",
+  "tiffin-box-deliverer",
+  "anti-tech-activist",
+  "tide-watcher",
+  "junk-collector",
+  "anti-magical",
+  "hookclaw-digger",
+  "animal-wrangler",
+  "concordance-researcher",
+  "amateur-director",
+  "belkzen-anthropologist",
+  "osirionologist",
+  "sarkorian-survivor",
+  "market-runner",
+  "false-medium",
+  "belkzen-slayer",
+  "energy-scarred",
+  "goldhand-arms-dealer",
+  "starless-one",
+  "acrobat",
+  "eldritch-anatomist",
+  "aon-historical-reeanactor",
+  "megafauna-hunter",
+  "droskari-disciple",
+  "desert-tracker",
+  "bandit",
+  "hired-killer",
+  "taldan-schemer",
+  "alkenstar-tinker",
+  "empty-hand-loyalist",
+  "working-student",
+  "wildwood-local",
+  "free-spirit",
+  "noble",
+  "returning-descendant",
+  "dedicated-delver",
+  "warrior",
+  "acolyte",
+  "tyrant-witness",
+  "circuit-judge",
+  "elementally-infused",
+  "total-power",
+  "runaway-noble",
+  "grizzled-muckrucker",
+  "pathfinder-recruiter",
+  "fated-rival",
+  "deckhand",
+  "fortune-teller",
+  "returned",
+  "plague-doctor",
+  "sponsored-by-a-stranger",
+  "mammoth-speaker",
+  "ruin-delver",
+  "atteran-rancher",
+  "attention-addict",
+  "close-ties",
+  "beast-blessed",
+  "secular-medic",
+  "undertaker",
+  "onyx-trader",
+  "servant",
+  "academy-dropout",
+  "medicinal-clocksmith",
+  "doomcaller",
+  "emancipated",
+  "eclipseborn",
+  "sleepless-suns-star",
+  "gladiator",
+  "archaeologist",
+  "inexplicably-expelled",
+  "street-preacher",
+  "corpse-stitcher",
+  "alkenstar-sojourner",
+  "barker",
+  "magaambya-academic",
+  "militia-member",
+  "wandering-preacher",
+  "lumber-consortium-laborer"
+ ],
+ "method": "Two-stage workflow read (run wf_cf93b2c7-458 resumed as task wvga3zmzt): 9 opus reader slices over the 83 records (printed mirror text + WG raw ops + our record and registries), then 9 opus adversarial verifiers (default REFUTED). 31 findings CONFIRMED and applied, 2 refuted, 3 sent to the owner (#99-#101). Hand-read on top: warrior (id lives in two buckets; the comparers examined the class feature until wgRecord grew a bucket hint) and acolyte (WG pairs the name to the richer STARFINDER Xenowardens row until wgRowsByBucket learned to drop starfinder-core sources). All four comparers green after those two instrument fixes plus three teachings (feat-valued choice options count as grants, a choice-trained Lore counts as skill, choiceResistance contributes the resistance set).",
+ "confirmed": [
+  {
+   "id": "corpse-stitcher-double-feat-grant",
+   "claim": "Corpse Stitcher carries BOTH a flat grantedFeatId of \"risky-surgery\" and a feat-kind choice offering risky-surgery/stitch-flesh, and build.ts concatenates the two lanes, so a player who picks Stitch Flesh is handed Risky Surgery as well — two skill feats where print grants one.",
+   "fixed": true,
+   "fix": "Delete the field `grantedFeatId: \"risky-surgery\"` from backgrounds.corpse-stitcher in public/core.json. The `choice` lane already delivers the feat, and backgroundChoiceValue (build.ts:457) defaults an unanswered choice to the first option — \"risky-surgery\" — so the default build is unchanged while the Stitch Flesh branch stops leaking a second feat. This is exactly WG's encoding (select only, no flat grant). Note the same grantedFeatId+feat-choice overlap exists on sponsored-by-a-stranger (dubious-knowledge) and obari-wanderer (cat-fall) — out of slice, but the same lane."
+  },
+  {
+   "id": "eclipseborn-ill-omen-misfortune-rider",
+   "claim": "Eclipseborn's ill omen grant carries a two-part rider — a GM-forced reroll of a successful save/attack/skill check that is a misfortune effect, and a conditional SECOND cast of ill omen that same day if the reroll makes you fail — and neither our record nor WG models any of it; it has no carrier anywhere in our rules (no situationalBonuses entry, no RECORD_MARKERS entry, no mode, no usesPerDay escalation).",
+   "fixed": true,
+   "fix": "Residual-read lane: add a RECORD_MARKERS entry keyed 'eclipseborn' in src/rules/situationalBonuses.ts so the sheet flags the drawback and the conditional recharge next to the Ill Omen innate — a marker reading along the lines of \"after casting Ill Omen the GM can force you to reroll one successful save, attack, or skill check (misfortune); if that reroll fails, you may cast Ill Omen a second time today\". No number changes on the sheet, so a marker (not a bonus or a usesPerDay bump) is the right carrier; nothing should be adopted from WG here since their row is silent too."
+  },
+  {
+   "id": "working-student",
+   "claim": "Our record hard-codes `trainedLore: \"labor\"`, deleting the printed Lore choice — the player is never offered the \"Lore skill associated with your school\" alternative that both print and WG carry.",
+   "fixed": true,
+   "fix": "In public/core.json, on backgrounds.working-student: delete `trainedLore: \"labor\"` and replace it with `trainedLoreChoice: true` plus `trainedLoreChoiceDefault: \"labor\"`. This is the existing Night Watch pattern — src/rules/build.ts:2914-2922 reads `trainedLoreChoice` and falls back to `trainedLoreChoiceDefault` when unanswered (so an untouched build still trains lore:labor, no regression), and src/builder/shared.tsx:2935-2942 renders the free-text Lore box with \"Labor (default)…\" as placeholder so the player can type their school's Lore instead."
+  },
+  {
+   "id": "noble",
+   "claim": "Noble carries TWO Lore carriers for one printed Lore — `choice` (flag backgroundLore: Genealogy/Heraldry) and `trainedLoreChoice: true` — and both fire, so a Noble who types anything in the free-text box ends up trained in two Lore skills instead of one.",
+   "fixed": true,
+   "fix": "In public/core.json, on backgrounds.noble: delete the `trainedLoreChoice: true` field. Keep `choice` (flag backgroundLore, genealogy/heraldry) as the single Lore carrier — it is the one that matches print (a two-way named pick, not free text), it locks the trained Lore to the background via src/rules/build.ts:2896, and removing the duplicate also removes the stray free-text \"Background Lore\" SubCard from the background card."
+  },
+  {
+   "id": "hired-killer",
+   "claim": "Hired Killer asks the Terrain Stalker terrain question twice: once via the background's own `choice` (flag terrain) and once via the granted feat `terrain-stalker`'s identical `choice`, in two unlinked stores that can disagree — and only the feat's answer actually binds anything.",
+   "fixed": true,
+   "fix": "In public/core.json, remove the `choice` block (flag \"terrain\") from backgrounds.hired-killer. The terrain question stays where it binds — on the granted `terrain-stalker` feat, rendered by the `askingGrantedFeats` lane in src/builder/Builder.tsx:1553 — which is exactly how the six sibling Terrain Stalker backgrounds already behave, and matches the deliberate non-binding entry for hired-killer in src/rules/backgroundGrants.ts."
+  },
+  {
+   "id": "hunted-by-the-night",
+   "claim": "WG grants three starting items with the background and we grant none, although `grantsItems` is a live, engine-read field on the background bucket.",
+   "fixed": true,
+   "fix": "Add to public/core.json backgrounds/hunted-by-the-night the field `grantsItems: [{ \"itemId\": \"religious-symbol-wooden\" }, { \"itemId\": \"holy-water\" }]` — the exact shape already shipped on backgrounds/sally-guard-neophyte and read at src/rules/build.ts:6577 (`for (const g of bg?.grantsItems ?? [])`). Both ids exist in public/core.json items. The third item, Wooden Stake and Mallet (their item 18165), has NO row in public/core.json items (grep of /mallet|wooden stake/i over items returns nothing), so it needs an items row minted first or the third grant will be silently dropped by the `if (!content.items[g.itemId]) continue` guard on build.ts:6578."
+  },
+  {
+   "id": "kaiju-stalker",
+   "claim": "Our Athletics-skill-feat menu is unfiltered and offers four archetype feats of level 4, 4, 4 and 7 to a 1st-level character; WG caps the same pick at level 1.",
+   "fixed": true,
+   "fix": "In src/rules/featPickGrants.ts:215-220 cut `ids` to the six level-1 Athletics skill feats — ['combat-climber','hefty-hauler','quick-jump','titan-wrestler','underwater-marauder','armor-assist'] — dropping rope-runner, canopy-predator, mounting-leap and muscle-mimicry, and set `maxLevel: 1` to match the two sibling BACKGROUND rows in the same table (professional-letter-writer:222 and sponsored-by-a-stranger:224 both use `maxLevel: 1`). This reproduces WG's `level:{max:1}` + `traits:['Skill']` filter."
+  },
+  {
+   "id": "junk-collector",
+   "claim": "Our fixed `trainedLore: \"Engineering\"` duplicates the engineering option of our own `choice` carrier, so a player who picks Mining Lore is trained in BOTH Lores where the print grants one.",
+   "fixed": true,
+   "fix": "Delete the `trainedLore: \"Engineering\"` field from public/core.json backgrounds/junk-collector. The `choice` block (flag 'backgroundLore', options engineering/mining) is the correct single carrier — backgroundChoiceValue already defaults an unanswered build to 'engineering', so nothing is lost. (Same double-carrier shape exists on eight sibling backgrounds — faction-opportunist, guest-of-sedeq-lodge, gold-falls-regular, runaway-noble, anti-thrune-saboteur, defiant-noble, embargo-survivor, hell-hunted — worth a separate sweep, but only junk-collector is in this slice.)"
+  },
+  {
+   "id": "able-carter",
+   "claim": "We ask for the background's one Lore TWICE — a free-text Lore box from `trainedLoreChoice: true` and the Geb-city picker from `choice` — and both train, so a player who fills the text box gets two Lores.",
+   "fixed": true,
+   "fix": "Delete `trainedLoreChoice: true` from public/core.json backgrounds/able-carter. The `choice` block (flag 'gebCityLore') is the carrier that matches both the print's closed list of three cities and WG's PREDEFINED select; removing the flag drops the phantom free-text box (shared.tsx:2935 guard) and the extra training at build.ts:2914-2925 in one edit."
+  },
+  {
+   "id": "close-ties-1",
+   "claim": "Close Ties' Seasonal Boon free action is delivered by Wanderer's Guide and by every one of our five sibling Season of Ghosts backgrounds, but Close Ties itself grants nothing for it — the action record does not exist on our side at all.",
+   "fixed": true,
+   "fix": "Add an action record `seasonal-boon-close-ties` to public/core.json actions in the exact shape of its four siblings — `{ id: \"seasonal-boon-close-ties\", name: \"Seasonal Boon (Close Ties)\", traits: [], rarity: \"rare\", actionCost: { type: \"free\" }, source: { book: \"Pathfinder Season of Ghosts Player's Guide\", license: \"OGL\" }, edition: \"remaster-era\", aonId: \"background-393\" }` — with its trigger/effect text in public/core-descriptions.json actions under the same id, and set `grantsActions: [\"seasonal-boon-close-ties\"]` on backgrounds.close-ties. No `limitedUses`: print states no Frequency, matching the siblings."
+  },
+  {
+   "id": "beast-blessed-1",
+   "claim": "Bestial Clarity's printed once-per-day Frequency is carried by neither our background record nor our action record, so the reaction shows on the sheet with no use counter and can be fired without limit.",
+   "fixed": true,
+   "fix": "Add `limitedUses: { max: 1, per: \"day\" }` to backgrounds.beast-blessed in public/core.json — the same field/value the 13 sibling once-per-day action backgrounds already use, so MainTab's `usesFrom` picks the background up as the granter's pool."
+  },
+  {
+   "id": "beast-blessed-2",
+   "claim": "Bestial Clarity is a fortune effect in print and WG tags it with the Fortune trait, but our action record ships an empty trait list, so the fortune-effect interaction (only one fortune effect per roll) is invisible on the trait line.",
+   "fixed": true,
+   "fix": "Set `traits: [\"fortune\"]` on actions.bestial-clarity in public/core.json."
+  },
+  {
+   "id": "doomcaller-1",
+   "claim": "Stellar Misfortune's printed trait line is (divination, misfortune, occult) but our action record carries only misfortune and occult, dropping divination.",
+   "fixed": true,
+   "fix": "Set `traits: [\"divination\", \"misfortune\", \"occult\"]` on actions.stellar-misfortune in public/core.json."
+  },
+  {
+   "id": "hookclaw-digger-engineering-lore",
+   "claim": "Hookclaw Digger trains only Mining Lore in ours; the printed second Lore (Engineering Lore) is delivered by no carrier, while WG creates both Lore proficiencies.",
+   "fixed": true,
+   "fix": "In public/core.json, change backgrounds.hookclaw-digger `trainedLore` from `\"mining\"` to `[\"mining\", \"engineering\"]`. build.ts:2868 already flattens an array (7 backgrounds already use the array form), so no reader change is needed."
+  },
+  {
+   "id": "concordance-researcher-four-plane-lores",
+   "claim": "Concordance Researcher prints a choice of FOUR Plane Lores from a list of six; ours hard-codes a single fixed Plane of Air Lore, so the player gets one Lore instead of four and is never asked.",
+   "fixed": true,
+   "fix": "Replace `trainedLore: \"Plane of Air\"` on backgrounds.concordance-researcher with the printed six-option list plus a four-pick count, e.g. `trainedLoreOptions: [\"plane-of-air\",\"plane-of-earth\",\"plane-of-fire\",\"plane-of-metal\",\"plane-of-water\",\"plane-of-wood\"]` with a new pick count of 4. Reader work is required: build.ts:2905-2910 treats `trainedLoreOptions` as a SINGLE pick (`const picked = loreOptions.includes(build.backgroundLore ?? '') ? ... : loreOptions[0]`), and the free-text lane's `trainedLoreChoiceCount` tops out at 3 (build.ts:2916-2919 reads only backgroundLore/backgroundLore2/backgroundLore3), so neither existing lane can deliver four picks today."
+  },
+  {
+   "id": "amateur-director-scribing-lore",
+   "claim": "Amateur Director's persona clause grants a second Lore (Scribing Lore) that no carrier delivers, even though the record itself carries the persona-leader trait that satisfies the condition.",
+   "fixed": true,
+   "fix": "In public/core.json, change backgrounds.amateur-director `trainedLore` from `\"theater\"` to `[\"theater\", \"scribing\"]`, matching the five sibling Curtain Call persona backgrounds. The record's own `traits: [\"persona-leader\"]` satisfies the printed condition unconditionally, so no new conditional lane is needed."
+  },
+  {
+   "id": "anti-magical-dc3-flat-check",
+   "claim": "Anti-Magical's defining mechanic — a DC 3 flat check the originator of any magic must attempt against you — is modelled by neither side, and our stored description has dropped the DC and the words \"flat check\" outright, so the player cannot even read it.",
+   "fixed": true,
+   "fix": "Two edits. (1) public/core-descriptions.json: restore the dropped words in backgrounds['anti-magical'].d so the sentence reads \"...the originator of the effect must attempt a DC 3 flat check.\" (2) public/core.json backgrounds.anti-magical: author the ContentBase `note` field (types.ts:280, \"this record works; here is the part you apply yourself\", already used by 5 backgrounds) with the flat-check clause, since no flat-check vocabulary exists to model it numerically."
+  },
+  {
+   "id": "hookclaw-digger-kobold-prerequisite",
+   "claim": "Hookclaw Digger's printed hard ancestry gate is not carried, even though our schema has a field for it that is read by the background picker and is set on the two sibling kobold backgrounds.",
+   "fixed": true,
+   "fix": "In public/core.json, add `ancestryPrerequisite: [\"kobold\"]` to backgrounds.hookclaw-digger, matching sewer-dragon and friendly-darkmoon-kobold. No reader change needed — src/builder/shared.tsx:2851 already consumes it."
+  },
+  {
+   "id": "fated-rival-lore-count",
+   "claim": "Fated Rival trains only ONE Lore skill in our build; both the printed text and Wanderer's Guide give two.",
+   "fixed": true,
+   "fix": "Add `\"trainedLoreChoiceCount\": 2` to backgrounds.fated-rival in public/core.json. No engine change needed: build.ts:2914-2919 already reads `build.backgroundLore2` when the count exceeds 1 and shared.tsx:2943 already renders the second box."
+  },
+  {
+   "id": "sponsored-by-a-stranger-triple-feat-carrier",
+   "claim": "Sponsored by a Stranger delivers its either/or skill feat through THREE carriers at once: Dubious Knowledge is granted unconditionally, and the same question is asked twice on the background card, so a player who picks Quick Identification ends up with both feats.",
+   "fixed": true,
+   "fix": "Keep exactly ONE carrier — the record's own `choice.flag: \"bgFeat\"`. Remove `\"grantedFeatId\": \"dubious-knowledge\"` from backgrounds.sponsored-by-a-stranger in public/core.json (matching hermean-heritor / verduran-city-folk, which carry the feat choice and no grantedFeatId), and delete the `'sponsored-by-a-stranger'` row from FEAT_PICK_GRANTS in src/rules/featPickGrants.ts:224 so only one picker mounts on the background card. Same double-carrier shape exists on corpse-stitcher and obari-wanderer and should be swept with it."
+  },
+  {
+   "id": "returned-additional-lore-inert",
+   "claim": "The Additional Lore feat that Returned grants trains nothing and never advances Boneyard Lore, so Boneyard Lore is stuck at trained for the whole career instead of reaching expert at 3rd, master at 7th and legendary at 15th.",
+   "fixed": true,
+   "fix": "Add `returned: { 'additional-lore': { kind: 'fixedLore', subject: 'boneyard' } }` to BACKGROUND_GRANT_BOUND_CHOICE in src/rules/backgroundGrants.ts, and extend the loreChoices lane at src/rules/build.ts:4966-4975 to consult `boundBackgroundGrantChoice(build, content, background, fc.featId)` for feats that came from the background lane (it currently consults only FEAT_GRANT_BOUND_CHOICE via `fcx.grantedBy`), so `lore:boneyard` takes the 3rd/7th/15th `rankUpgrade`. Once bound, `trainedLore: \"boneyard\"` on the record is redundant with the feat and can be dropped."
+  },
+  {
+   "id": "elementally-infused-innate-cantrip",
+   "claim": "Elementally Infused grants no innate cantrip on our side — the record has no `innateSpells` and no entry in BACKGROUND_CANTRIP_GRANTS, featCantripGrants, effectChoices or any other carrier, so the printed at-will primal cantrip is delivered by nothing (no reader for it at all on this record).",
+   "fixed": true,
+   "fix": "Add `innateSpells` to public/core.json backgrounds/elementally-infused with six entries, each `{ spellId, tradition: 'primal', atWill: true, whenChoice: '<element option value>' }` — gale-blast/air, scatter-scree/earth, ignition/fire, needle-darts/metal, spout/water, root-reading/wood. The carrier already exists and is read: src/rules/build.ts:6757 walks `bgForSpells.innateSpells` and honours `g.whenChoice` against `backgroundChoiceValue(build, bgForSpells)`, so no new plumbing is needed. Keep `whenChoice` values identical to the `choice.options[].value` strings."
+  },
+  {
+   "id": "elementally-infused-wrong-lore-subject",
+   "claim": "Elementally Infused trains the wrong Lore: our `choice` options carry the bare element as the value ('air'), and backgroundChoiceKind classifies the choice as 'lore', so build.ts trains `lore:air` (\"Air Lore\") where the print names \"Plane of Air Lore\".",
+   "fixed": true,
+   "fix": "Change `choice.options[].value` on backgrounds/elementally-infused from 'air'…'wood' to 'plane-of-air','plane-of-earth','plane-of-fire','plane-of-metal','plane-of-water','plane-of-wood'. loreKey() then yields `lore:plane-of-air` etc., matching print and WG. Keep the `innateSpells[].whenChoice` values from the previous finding in sync with the new option values."
+  },
+  {
+   "id": "elementally-infused-duplicate-lore-carrier",
+   "claim": "Elementally Infused delivers its single printed Lore twice: the `choice` (classified 'lore') already trains a Lore, and `trainedLoreChoice: true` additionally renders a free-text Lore box that trains a second, unrelated Lore.",
+   "fixed": true,
+   "fix": "Remove `trainedLoreChoice: true` from public/core.json backgrounds/elementally-infused. The `choice` (flag 'element') is the sole Lore carrier for this record once its option values are corrected to `plane-of-*`."
+  },
+  {
+   "id": "runaway-noble-double-lore",
+   "claim": "Runaway Noble trains two Lores: `trainedLore: \"Genealogy\"` unconditionally trains lore:genealogy while the `choice` (flag 'backgroundLoreOption', classified 'lore') trains the picked subject, so choosing Heraldry yields Genealogy Lore AND Heraldry Lore where print grants one.",
+   "fixed": true,
+   "fix": "In public/core.json backgrounds/runaway-noble, delete `trainedLore: \"Genealogy\"` and the `choice` block, and replace them with `trainedLoreOptions: [\"genealogy\", \"heraldry\"]` — the existing OR-carrier for exactly this printing (src/rules/types.ts:2418-2424), already rendered as a picker at src/builder/shared.tsx:2921 and read once at src/rules/build.ts:2906-2911."
+  },
+  {
+   "id": "dedicated-delver-duplicate-skill-choice",
+   "claim": "Dedicated Delver asks the Athletics-or-Survival question twice through two independent carriers that write to different stores, so the two answers can disagree — training both skills and granting the feat for the branch the player did not pick.",
+   "fixed": true,
+   "fix": "Delete the `choice` block (flag 'delverSkill') from public/core.json backgrounds/dedicated-delver. `trainedSkillChoice` + `grantedFeatByChoice` + the Underground binding in src/rules/backgroundGrants.ts:104 already deliver the whole printed clause from the single `build.backgroundSkillChoice` answer, matching WG's single select."
+  },
+  {
+   "id": "energy-scarred-resistance",
+   "claim": "Energy Scarred's resistance to the chosen energy equal to half level (minimum 1) is delivered by no carrier on our side — the record's `choice.flag: \"scarEnergy\"` answer has NO READER anywhere in the repo (grep for `scarEnergy` across src/ and scripts/ returns zero hits), and `backgroundChoiceKind` classifies it as 'other', which only records the pick.",
+   "fixed": true,
+   "fix": "Adopt theirs. Declare `choiceResistance?: { options: { value: string; label: string }[]; halfLevel: boolean }` on `Background` in src/rules/types.ts (copy the Heritage field at types.ts:2305), set it on backgrounds.energy-scarred in public/core.json with the eight energies and `halfLevel: true`, and extend the arm at src/rules/derive.ts:2681 — which today reads only `heritage.choiceResistance` with `Math.max(1, Math.floor(c.level / 2))` — to read the background's too, keyed off the `scarEnergy` answer via `backgroundChoiceValue`. The value expression already exists in our data vocabulary (see feats/necromantic-resistance `{\"type\":\"void\",\"value\":\"floor(@actor.level/2)\"}` and feats/irriseni-ice-witch `\"5+(max(1,floor(@actor.level/2)))\"`)."
+  },
+  {
+   "id": "energy-scarred-lore-unbound",
+   "claim": "Energy Scarred's Lore must be the one associated with the chosen energy, but ours ships `trainedLoreChoice: true`, which renders a free-text Lore box — a player can type any subject (e.g. Warfare) and the trained Lore will not match the energy they picked.",
+   "fixed": true,
+   "fix": "Adopt theirs. Drop `trainedLoreChoice: true` from backgrounds.energy-scarred and make the `scarEnergy` answer train the Lore: the branch at src/rules/build.ts:2894 already does `if (kind === 'lore') skills[loreKey(picked)] = 'trained'` — it just never fires here because `backgroundChoiceKind` (src/rules/build.ts, the loreish test on `def.prompt`/`def.flag`/option labels) returns 'other' for prompt 'Energy type'. Either add a `trainedLoreFromChoice?: boolean` on `Background` read at that same site, or set the choice's option labels to the Lore subjects so the existing 'lore' branch fires; the result must be `lore:acid` … `lore:void` following the one answer, so the resistance and the Lore cannot disagree."
+  },
+  {
+   "id": "energy-scarred-primal-trait",
+   "claim": "Energy Scarred sets the character's innate magical trait to primal, and neither side carries it — no field on our `Background` type names an innate tradition and nothing reads one, so under the Pervasive Magic variant our own Cantrip Casting text (\"the tradition matching your trait\") points at a value that does not exist.",
+   "fixed": true,
+   "fix": "Residual read. Add `innateMagicTradition?: 'primal'` (or the project's existing tradition union) to `Background` in src/rules/types.ts and set it on backgrounds.energy-scarred, then have it feed the `pervasive-magic` ladder — the Cantrip Casting / Basic / Expert / Master Spellcasting feats already unlocked by `build.variantRules.pervasiveMagic` (src/rules/featSlots.ts:255). If the ladder's spell grants are out of scope for this batch, the minimum honest carrier is `dataWarning` on backgrounds.energy-scarred quoting the sentence, since the `Background` type declares that field (src/rules/types.ts, above `abilityBoosts`) precisely for what the app cannot model."
+  },
+  {
+   "id": "starless-one-reclaim-destiny-divination",
+   "claim": "The Reclaim Destiny action our Starless One grants is missing the printed `divination` trait — ours carries occult only.",
+   "fixed": true,
+   "fix": "Add 'divination' to actions['reclaim-destiny'].traits in public/core.json, giving `traits: [\"divination\",\"occult\"]` — matching the existing trait record trait['divination'] and the actions['wish-for-luck'] precedent."
+  },
+  {
+   "id": "starless-one-reclaim-destiny-frequency",
+   "claim": "Reclaim Destiny's printed \"Frequency once per day\" is carried by no structured field on our side — neither actions['reclaim-destiny'].limitedUses nor backgrounds['starless-one'].limitedUses exists, so the player gets an untracked action while the thirteen sibling once-per-day background actions all show use pips.",
+   "fixed": true,
+   "fix": "Add `limitedUses: { max: 1, per: 'day' }` to actions['reclaim-destiny'] in public/core.json (the actions['fated-not-to-die'] / actions['recall-under-pressure'] shape, which MainTab.tsx:278 prefers when the action carries its own limit); equivalently it could go on backgrounds['starless-one'] as the twelve genie-blessed-style siblings do. The action-record placement is correct here because the frequency is printed on the action, not on the background line."
+  }
+ ],
+ "refuted": [
+  {
+   "id": "militia-member-party-reputation",
+   "claim": "The printed party-reputation adjustment on Militia Member has no carrier on either side, and unlike its four Seven Dooms for Sandpoint sibling backgrounds (eager-scofflaw, lost-coast-local, newcomer carry `note`; cathedral-child carries `dataWarning`) the record has neither `note` nor `dataWarning`, so nothing tells the player this clause is applied by hand — a residual read with an in-house precedent and a live reader (`note` renders under the record description; `background.dataWarning` is read at src/rules/build.ts:6174 into effectWarnings).",
+   "why": "The factual body checks out: AoN background-571.json ends with the exact reputation clause; core.json militia-member carries only the five chassis fields with no note/dataWarning; WG background table row 915 has exactly the five described ops and no reputation op; grep of `reputation` across src/ finds only unrelated feat ids, Builder comments and transfer.ts bio text; and effect-backfill.json holds the four sibling entries (cathedral-child dataWarning from batch 020; lost-coast-local, newcomer, eager-scofflaw note from batch 022) with militia-member absent. But the claim's load-bearing mechanism is false: a background's `note` has ZERO readers — src/sheet/FeatsTab.tsx:102 resolves `own` as `(content.feats[recordId] ?? content.classFeatures[recordId])?.note`, never touching content.backgrounds, and the Builder background SearchSelect at src/builder/shared.tsx:2841 maps `note: note(b.rarity)` (the rarity string), so ContentBase.note never reaches the picker; every other content.backgrounds[...] access (build.ts:574/1888/5249/5591/7437/8518, derive.ts:2371, explain.ts:330) reads chassis fields only. The proposal would therefore ship a fourth inert field, and the cited lost-coast-local precedent is itself inert — only `dataWarning` is live for backgrounds (build.ts:6174, the cathedral-child lane). Also, the reputation sentence already reaches the player: it survives in core-descriptions.json backgrounds.militia-member `d`, which the picker passes through as `description: b.description`."
+  },
+  {
+   "id": "belkzen-anthropologist-multilingual-not-in-print",
+   "claim": "We grant Belkzen Anthropologist the Multilingual skill feat, but the printed record in the AoN mirror contains no skill-feat sentence and no `feat` field, and WG grants no feat either.",
+   "why": "The AoN mirror is truncated at source, so \"not in print\" does not follow. The Foundry pf2e pack .import-src/pf2e/packs/pf2e/backgrounds/adventure-paths/triumph-of-the-tusk/belkzen-anthropologist.json — an independent transcription of the same Triumph of the Tusk Player's Guide pg. 10, publication.remaster true, license ORC — carries the full final sentence \"You gain the @UUID[Compendium.pf2e.feats-srd.Item.Multilingual] skill feat.\" and system.items granting Multilingual; that is where our grantedFeatId came from (import-core.mjs:1177 sets it from `Object.values(s.items)[0]`, and public/core.foundry-backup.json already holds grantedFeatId \"multilingual\" and \"**Skill Feat** Multilingual\"). WG is not independent corroboration here: their row 1380's description is truncated at the same word as AoN's (\"...orc gods both current and past.\"), i.e. they inherited the same scrape gap, which also explains the missing giveAbilityBlock. The finding's own counter-evidence points the same way — all five Triumph of the Tusk siblings grant a feat, and 95 of 637 mirror backgrounds lack the feat key. Our record and description are correct; applying the proposal would delete a real printed grant. The actionable defect is the reverse one: AoN mirror background-516 needs re-scraping."
+  }
+ ],
+ "flaggedResidues": [
+  {
+   "id": "energy-scarred-innate-tradition",
+   "note": "the printed \"your innate magical trait is primal\" ships as a dataWarning only — the pervasive-magic feat ladder (Cantrip Casting etc.) is not yet fed a tradition by any record; neither side models it. Revisit if the Pervasive Magic variant grows a tradition carrier."
+  },
+  {
+   "id": "background-note-field-inert",
+   "note": "ContentBase.note has ZERO readers for BACKGROUNDS (proved by the militia-member refutation): FeatsTab resolves note from feats/classFeatures only, and the builder picker’s `note` is the rarity string. Five backgrounds carry one (sign-bound, sword-scion, eager-scofflaw, lost-coast-local, newcomer); their sentences all also live in the description, which is why the militia verdict was \"no carrier needed\". If a background ever needs a LIVE residual carrier, use dataWarning (cathedral-child lane)."
+  },
+  {
+   "id": "choice-option-limit-requires-own-choice",
+   "note": "ChoiceOptionLimit.requiresOwnChoice is DECLARED in types.ts and READ NOWHERE (found while reading total-power). Harmless today — no shipped record depends on it — but a limit authored against it would silently not narrow."
+  }
+ ],
+ "closed": true,
+ "complete": true
+}

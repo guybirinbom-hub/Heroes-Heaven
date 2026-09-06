@@ -1,0 +1,185 @@
+{
+ "batch": 1,
+ "examined": 100,
+ "confirmed": [
+  {
+   "id": "shawl-of-seasons",
+   "bucket": "items",
+   "summary": "The player is never asked which season the shawl is set to: the record has no `choice` (items do support this — ancestral-embrace, viridian-crown and fortune-cord all carry `choice.daily` array/open p",
+   "fixed": true
+  },
+  {
+   "id": "ghoul-hide",
+   "bucket": "items",
+   "summary": "The record carries `speedPenalty: 0`. The base hide-armor record has -5, and every other hide-based specific armor in core.json carries -5 (aurochs-hide-armor, frost-furs, troll-hide, trollhound-vest,",
+   "fixed": true
+  },
+  {
+   "id": "haft-striker-stance",
+   "bucket": "feats",
+   "summary": "scripts/data/stances.json:269 grants the Haft strike (1d4 B, club, agile/finesse/unarmed) but holds the rune-sharing only as prose in `note`. derive.ts:4458-4478 builds every stance strike through der",
+   "fixed": true
+  },
+  {
+   "id": "jyotis-feather-major",
+   "bucket": "items",
+   "summary": "heldSpells stores healing-well under rank key 5, not 6, so the Spells page casts it one rank below the printed rank (Healing Well's base rank is 5; the major feather explicitly heightens it). Confirme",
+   "fixed": true
+  },
+  {
+   "id": "jyotis-feather-greater",
+   "bucket": "items",
+   "summary": "heldSpells stores vital-beacon under rank key 4, not 5. build.ts:5906-5919 copies the heldSpells key straight into `repertoire[rank]`, so the Spells page offers Vital Beacon cast at 4th rank — 4d10/4d",
+   "fixed": true
+  },
+  {
+   "id": "commanders-signet",
+   "bucket": "items",
+   "summary": "The whole Bolster Bravery activation is uncarried: no `frequency`, no `counters`, and no mode. 1,713 of the 1,827 items whose text prints a once-per-day frequency carry a frequency/counter, so this is",
+   "fixed": true
+  },
+  {
+   "id": "greater-mercy",
+   "bucket": "feats",
+   "summary": "The expanded condition lists are held nowhere. The base feats/mercy record carries the base lists as three per-answer spellNotes on lay-on-hands (whenChoice body/grace/mind, each naming its own condit",
+   "fixed": true
+  },
+  {
+   "id": "wayfinder-of-rescue",
+   "bucket": "items",
+   "summary": "The 'as a standard Wayfinder' half. The base items/wayfinder record carries heldSpells { \"0\": [\"light\"] } for its printed 'Activate-Light ⟨1⟩ (concentrate)'. wayfinder-of-rescue carries heldSpells { \"",
+   "fixed": true
+  },
+  {
+   "id": "silhouette-cloak",
+   "bucket": "items",
+   "summary": "The whole first activation ('**Activate** Interact (1 minute)') has no carrier — no resistance and no speed change. The record models only the SECOND activation (activationCost: reaction, frequency 1/",
+   "fixed": true
+  },
+  {
+   "id": "ancient-scale-azarketi",
+   "bucket": "heritages",
+   "summary": "The granted action. Darkvision is delivered (senses: [{name:'darkvision'}]), but the concentrate action that activates/deactivates/rearranges the lights is never granted, so it appears nowhere on the ",
+   "fixed": true
+  },
+  {
+   "id": "untrained-improvisation",
+   "bucket": "feats",
+   "summary": "The level scaling. The record stores a flat untrainedProficiency: { levelMinus: 2 } and src/rules/derive.ts:378 untrainedSkillBonus() computes 'c.level - u.levelMinus' with no level branch, so a 7th+ ",
+   "fixed": true
+  },
+  {
+   "id": "boots-of-free-running-moderate",
+   "bucket": "items",
+   "summary": "The record stores two frequencies that disagree, and the wrong one is the printed number: `frequency: { max: 1, per: \"day\" }` sits beside `counters: [{ id: 'freq', label: 'per hour', per: 'hour', max:",
+   "fixed": true
+  },
+  {
+   "id": "boots-of-bounding",
+   "bucket": "items",
+   "summary": "Nothing holds the Leap rider. core.json items/boots-of-bounding carries `passiveEffects.speeds.land = 5` (the +5-foot Speed) and src/rules/situationalBonuses.ts:1752 carries only the Athletics half (`",
+   "fixed": true
+  },
+  {
+   "id": "holy-prayer-beads-greater",
+   "bucket": "items",
+   "summary": "Nothing anywhere holds the recurring healing. core.json items/holy-prayer-beads-greater models only `heldSpells: {4: [bless, divine-wrath, heal, cleanse-affliction]}` plus the four once-per-day counte",
+   "fixed": true
+  },
+  {
+   "id": "mauler-dedication",
+   "bucket": "feats",
+   "summary": "Only the 'two-hand trait' half is delivered. src/rules/featGrantsLane.ts:135 is `'mauler-dedication': { weaponFamiliarity: { weapons: [], traits: ['two-hand-d6','two-hand-d8','two-hand-d10','two-hand-",
+   "fixed": true
+  },
+  {
+   "id": "mauler-dedication",
+   "bucket": "feats",
+   "summary": "The expert gate is not enforced. The record's `critSpecWeapons` is `{traits:['two-hand','two-hand-d4','two-hand-d6','two-hand-d8','two-hand-d10','two-hand-d12'], melee:true}` with no `minRank`. src/ru",
+   "fixed": true
+  },
+  {
+   "id": "mauler-dedication",
+   "bucket": "feats",
+   "summary": "The \"require two hands to wield\" half. featGrantsLane.ts:135 is `{ weapons: [], traits: ['two-hand-d6','two-hand-d8','two-hand-d10','two-hand-d12'], treatAsLowerCategory: true }` and the record's own ",
+   "fixed": true
+  },
+  {
+   "id": "invulnerable-rager",
+   "bucket": "feats",
+   "summary": "Only the first sentence ('You are trained in heavy armor') is delivered. src/rules/featGrantsAuto.ts:349 is the whole implementation: `'invulnerable-rager': { armor: { heavy: 'trained' } }`. The barba",
+   "fixed": true
+  },
+  {
+   "id": "scrutinizing-gaze",
+   "bucket": "feats",
+   "summary": "Two of the three printed bonuses have no carrier, and the one that exists describes a different check. The whole implementation is src/rules/situationalBonuses.ts:464 — `\"scrutinizing-gaze\": [{ target",
+   "fixed": true
+  },
+  {
+   "id": "zombie-dedication",
+   "bucket": "feats",
+   "summary": "The restriction is dropped, so the Jaws strike renders on the sheet as an unrestricted 1d8 piercing attack the player can use on any target. The GrantedStrike interface (src/rules/types.ts) has only n",
+   "fixed": true
+  },
+  {
+   "id": "zombie-dedication",
+   "bucket": "feats",
+   "summary": "The restriction on the granted Jaws strike. `grantedStrikes` holds `{ name: 'Jaws', die: 'd8', damageType: 'piercing', traits: ['unarmed'], group: 'brawling' }` and the `GrantedStrike` interface (type",
+   "fixed": true
+  },
+  {
+   "id": "universal-versatility",
+   "bucket": "feats",
+   "summary": "The picker is asked (choice.flag 'schoolSpell', daily:true, all 8 options with correct labels) and the +1 Focus Point is applied, but the CHOSEN school spell is never added to the character's focus sp",
+   "fixed": true
+  },
+  {
+   "id": "pact-of-the-herald-and-host",
+   "bucket": "items",
+   "summary": "The Fear innate spell is never granted, and the tradition question is never asked. The record carries counters/activationCost/frequency for the Breath of the Dragon activation but has NO innateSpells,",
+   "fixed": true
+  },
+  {
+   "id": "climbing-tail",
+   "bucket": "feats",
+   "summary": "The first two clauses are delivered (situationalBonuses.ts:232 and featFeatGrants.ts:329). The third — reducing the free hands required to Climb or Trip by one — has no carrier. The granted Combat Cli",
+   "fixed": true
+  },
+  {
+   "id": "climbing-tail",
+   "bucket": "feats",
+   "summary": "The third clause has no carrier. The +2 Athletics-to-Climb is in situationalBonuses.ts:232 and the Combat Climber grant is in featFeatGrants.ts:329, but the free-hands reduction for Climb and Trip is ",
+   "fixed": true
+  },
+  {
+   "id": "hooded-nagaji",
+   "bucket": "heritages",
+   "summary": "The critical-hit persistent poison rider is not modelled and cannot be, in the current shape: the granted strike is `{name:'Venomous Spit', die:'d4', damageType:'poison', traits:['unarmed'], group:'br",
+   "fixed": true
+  },
+  {
+   "id": "hooded-nagaji",
+   "bucket": "heritages",
+   "summary": "The record assigns `group: \"brawling\"`, which the app treats as a real weapon group: src/rules/critSpec.ts:34 `critSpec(group)` returns the brawling effect, and MainTab.tsx:539 / StrikeDetailModal.tsx",
+   "fixed": true
+  },
+  {
+   "id": "beneath-notice",
+   "bucket": "feats",
+   "summary": "The two granted skill feats are delivered, but the clause that turns Impersonate — normally an exploration activity with no encounter action cost (actions.ts:116 lists it as mode:'exploration') — into",
+   "fixed": true
+  },
+  {
+   "id": "cooperative-blade",
+   "bucket": "items",
+   "summary": "The weapon's built-in fundamental runes are not delivered: the record's damage is `{dice:1, die:'d8', type:'slashing'}` with no potency and no striking, so the sheet shows 1d8 and +0 to attack where t",
+   "fixed": true
+  }
+ ],
+ "recordsRead": 100,
+ "method": "Every record in this batch was read against its printed text (Archives of Nethys mirror), each finding was put to an adversarial refuter, and the survivors were authored as data rows or registry changes. See work/residual-1-12.json for the findings and work/residual-fixed.json for the ledger of what has been closed.",
+ "findings": 29,
+ "closed": 29,
+ "complete": true
+}

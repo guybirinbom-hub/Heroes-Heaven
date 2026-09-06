@@ -1,0 +1,161 @@
+{
+ "batch": 10,
+ "examined": 100,
+ "confirmed": [
+  {
+   "id": "lizardfolk-lore",
+   "bucket": "feats",
+   "summary": "The registry trains two proficiencies the text never grants. featGrantsAuto.ts:371 has `skills: { nature: 'trained', survival: 'trained', 'lore:iruxi': 'trained' }` ALONGSIDE `skillChoices: [{ options",
+   "fixed": true
+  },
+  {
+   "id": "jungle-strider",
+   "bucket": "feats",
+   "summary": "The off-guard clause and the degree shift are both delivered (situationalBonuses.ts:2907 + degreeShifts), but the terrain sentence is held by nothing. The carrier shape exists and one record uses it: ",
+   "fixed": true
+  },
+  {
+   "id": "tusks",
+   "bucket": "feats",
+   "summary": "The granted Strike renders as \"11d6 piercing\". The record stores grantedStrikes[0].die = \"1d6\" (the full expression) where every reader expects a bare die face: derive.ts:4253 builds the damage string",
+   "fixed": true
+  },
+  {
+   "id": "marsh-runner",
+   "bucket": "feats",
+   "summary": "Only the success→critical-success shift is delivered. Neither the off-guard suppression (worth 2 AC and the loss of sneak-attack eligibility while Balancing) nor the Step terrain clause is held anywhe",
+   "fixed": true
+  },
+  {
+   "id": "necromancer-spellcasting",
+   "bucket": "classFeatures",
+   "summary": "The dirge — the necromancer's known-spell book — is never built, never chosen and never limited. build.ts:3137-3178 makes only 'wizard' and 'witch' LEARNED prepared casters (entry.spellbook + prepare-",
+   "fixed": true
+  },
+  {
+   "id": "energized-spark",
+   "bucket": "feats",
+   "summary": "The pick is asked and stored (`choice.flag = 'energizedSpark'`) but nothing reads it, so the damage type never changes. The app does model the exemplar's spirit damage — classFeatures/spirit-striking ",
+   "fixed": true
+  },
+  {
+   "id": "dragons-presence",
+   "bucket": "feats",
+   "summary": "The bonus is carried with the WRONG condition: situationalBonuses.ts:272 reads `when: \"Demoralize a foe of your size or larger\"`. Size/larger and level-or-lower are different tests, so the note the sh",
+   "fixed": true
+  },
+  {
+   "id": "guardians-techniques",
+   "bucket": "classFeatures",
+   "summary": "Ever Ready is delivered by nothing — only the Intercept Attack half is (grantsActions: ['intercept-attack']). The app does model restricted extra reactions: `extraReaction {usableFor, count}` on feats",
+   "fixed": true
+  },
+  {
+   "id": "psi-cantrips-and-amps",
+   "bucket": "classFeatures",
+   "summary": "Refocus restores 1 point for every psychic. The carrier for this clause exists (`refocusRestore`, types.ts:2554/4185, rendered by SpellsTab.tsx:1742-1746 as \"Refocus (restore N Focus Points)\"), but th",
+   "fixed": true
+  },
+  {
+   "id": "intimidating-prowess",
+   "bucket": "feats",
+   "summary": "The star prints a flat \"+1 circumstance\" and the doubled value appears nowhere — a qualifying character (Str +5, master in Intimidation) reading the sheet applies +1 instead of the printed +2. The car",
+   "fixed": true
+  },
+  {
+   "id": "oracle-dedication",
+   "bucket": "feats",
+   "summary": "The chosen mystery's oracular curse is never owned. Each oracle mystery subclass option carries `featureIds: ['curse-of-…']` (e.g. `ancestors` → `curse-of-ancestral-meddling`, which does exist in core",
+   "fixed": true
+  },
+  {
+   "id": "magic-warrior-dedication",
+   "bucket": "feats",
+   "summary": "The mask animal is a choice the text asks the player to make and the app never asks. The record's only `choice` is the Arcana/Nature skill pick; `effectChoices` is undefined — that is the field the ap",
+   "fixed": true
+  },
+  {
+   "id": "parade-armor",
+   "bucket": "items",
+   "summary": "The +1 Bulk the adjustment adds to its host armor is held by nothing, so a character wearing parade armor carries 1 less Bulk than printed. The record's own `bulk: 0` is correct for the adjustment its",
+   "fixed": true
+  },
+  {
+   "id": "divine-health",
+   "bucket": "feats",
+   "summary": "The flat-check half of the bonus is held by nothing. The single situationalBonuses entry covers only `{kind:'save'}` and its `when` text stops at \"saves against diseases and poisons\", so a character w",
+   "fixed": true
+  },
+  {
+   "id": "curse-maelstrom-dedication",
+   "bucket": "feats",
+   "summary": "The curse maelstrom STATE itself has no carrier. It is a feat-gated, toggleable state with three printed mechanics and none of them exist anywhere: the 10-foot emanation penalty on other creatures; \"W",
+   "fixed": true
+  },
+  {
+   "id": "alkenstar-agent-dedication",
+   "bucket": "feats",
+   "summary": "The \"become an expert instead\" upgrade on an already-trained Lore is delivered by nothing, so a character who arrives already trained in Underworld/Legal Lore gains nothing at all from that half of th",
+   "fixed": true
+  },
+  {
+   "id": "wilderness-spotter",
+   "bucket": "feats",
+   "summary": "The record's `skillSubstitutions` array carries only the second half of the sentence (survival for thievery, \"to Disable the Device\"). The Survival-for-Perception substitution — which is the clause th",
+   "fixed": true
+  },
+  {
+   "id": "eagle-knight-dedication",
+   "bucket": "feats",
+   "summary": "Nothing carries this. The record has no situationalBonuses entry at all, and the clause is directly expressible in the lane the app already uses — `{ targets: [{ kind: 'initiative' }], when: \"…\", bonu",
+   "fixed": true
+  },
+  {
+   "id": "talisman-dabbler-dedication",
+   "bucket": "feats",
+   "summary": "Two temporary talismans per day are never offered. The lane for exactly this shape exists — `Feat.dailyTemporaryItems` (src/rules/types.ts:2578-2600) feeding `dailyItemSlots()` in src/rules/dailyItems",
+   "fixed": true
+  },
+  {
+   "id": "linguist-dedication",
+   "bucket": "feats",
+   "summary": "Multilingual is granted ONCE. `src/rules/featFeatGrants.ts:384` is `'linguist-dedication': ['multilingual']`, and the grant closure in src/rules/build.ts:4049-4070 dedupes on `grantedPairs` (`${srcId}",
+   "fixed": true
+  },
+  {
+   "id": "ranger-dedication",
+   "bucket": "feats",
+   "summary": "No `spellcastingGrant` on the record, so the warden spell's key attribute and tradition fall through to the character's OWN class. In src/rules/build.ts:3536, `focusKey = ... ?? featFocusGrant?.keyAbi",
+   "fixed": true
+  },
+  {
+   "id": "herbalist-dedication",
+   "bucket": "feats",
+   "summary": "Only the bare count survives. The record's `advancedAlchemy: { items: 4 }` has no way to say \"with the healing trait\" and no way to say \"reduced by 2 outside the wilderness\" — the shape at src/rules/t",
+   "fixed": true
+  },
+  {
+   "id": "runesmith-dedication",
+   "bucket": "feats",
+   "summary": "Neither half of the opening sentence is delivered. The record has no `classDcGrant` (so no runesmith class DC entry is minted for a dedicated character — `src/rules/build.ts:5310` builds `secondaryCla",
+   "fixed": true
+  },
+  {
+   "id": "tattooed-historian-dedication",
+   "bucket": "feats",
+   "summary": "No invested-limit relief at all. src/rules/build.ts:4805 sums `content.feats[..].investedLimitBonus` and this record has none, so `character.investedLimit` stays at the default 10. src/sheet/Inventory",
+   "fixed": true
+  },
+  {
+   "id": "powerful-leap",
+   "bucket": "feats",
+   "summary": "Both printed distances are held by nothing. The record's only field is `actionCost`, and there is no jump-distance carrier anywhere in the app: the Leap entry the sheet shows (src/rules/actions.ts:31)",
+   "fixed": true
+  }
+ ],
+ "recordsRead": 100,
+ "method": "Every record in this batch was read against its printed text (Archives of Nethys mirror), each finding was put to an adversarial refuter, and the survivors were authored as data rows or registry changes. See work/residual-1-12.json for the findings and work/residual-fixed.json for the ledger of what has been closed.",
+ "findings": 25,
+ "closed": 25,
+ "complete": true
+}

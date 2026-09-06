@@ -1,0 +1,440 @@
+{
+ "batch": 25,
+ "records": [
+  {
+   "id": "hopeful-athamaru",
+   "verdict": "FIXED",
+   "evidence": "[batch 25 read, adversarially confirmed] Hopeful Athamaru does not carry its printed size change to Large — the character stays Medium off the athamaru chassis.; Hopeful Athamaru's 10-foot hope aura (+1 circumstance to allies' saves vs fear) has no mechanical carrier on either side"
+  },
+  {
+   "id": "strong-blooded-dwarf",
+   "verdict": "FIXED",
+   "evidence": "[batch 25 read, adversarially confirmed] Strong-Blooded Dwarf's poison-affliction stage reduction on successes and critical successes is modelled by neither side"
+  },
+  {
+   "id": "ancient-blooded-dwarf",
+   "verdict": "MATCHES",
+   "evidence": "[batch 25 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "nine-lives-catfolk",
+   "verdict": "FIXED",
+   "evidence": "[batch 25 read, adversarially confirmed] Our situationalBonuses entry for Nine Lives Catfolk restates, on the very same dying pill, what the structured recoveryD"
+  },
+  {
+   "id": "forge-blessed-dwarf",
+   "verdict": "FIXED",
+   "evidence": "[batch 25 read, adversarially confirmed] Forge-Blessed Dwarf carries the same patron-deity picker twice — an `effectChoices` block and a `choice` block with iden"
+  },
+  {
+   "id": "flying-animal",
+   "verdict": "FIXED",
+   "evidence": "[batch 25 read, adversarially confirmed] Flying Animal never delivers the animal attack the print grants; WG grants it via a record and our own sibling heritage "
+  },
+  {
+   "id": "wisp-fetchling",
+   "verdict": "FIXED",
+   "evidence": "[batch 25 read, adversarially confirmed] Wisp Fetchling does not carry its printed size change to Small — the character stays Medium off the fetchling chassis.; Wisp Fetchling never grants the trained Acrobatics proficiency the print gives (nor its already-trained redirect)."
+  },
+  {
+   "id": "whisper-elf",
+   "verdict": "FIXED",
+   "evidence": "[batch 25 read, adversarially confirmed] Whisper Elf's flat-check DC reduction against concealed and hidden targets is modelled by neither side, and our own regi"
+  },
+  {
+   "id": "artisan-android",
+   "verdict": "MATCHES",
+   "evidence": "[batch 25 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "mottle-coat-centaur",
+   "verdict": "MATCHES",
+   "evidence": "[batch 25 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "ancient-elf",
+   "verdict": "MATCHES",
+   "evidence": "[batch 25 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "snaring-anadi",
+   "verdict": "FIXED",
+   "evidence": "[batch 25 read, adversarially confirmed] Snaring Anadi's entire printed content — the fangs gaining grapple and trip — reaches nobody: the record has no unarmedT"
+  },
+  {
+   "id": "quilled-athamaru",
+   "verdict": "MATCHES",
+   "evidence": "[batch 25 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "budding-speaker-centaur",
+   "verdict": "FIXED",
+   "evidence": "[batch 25 read, adversarially confirmed] The Faithspeaker/Greenspeaker identity is never recorded on our character: the heritage merges the divine-or-primal decl"
+  },
+  {
+   "id": "changeling",
+   "verdict": "MATCHES",
+   "evidence": "[batch 25 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "sharp-eared-catfolk",
+   "verdict": "MATCHES",
+   "evidence": "[batch 25 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "spined-azarketi",
+   "verdict": "MATCHES",
+   "evidence": "[batch 25 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "aon-ganzi",
+   "verdict": "FIXED",
+   "evidence": "[batch 25 read, adversarially confirmed] Ganzi never puts the ganzi creature trait on the built character — it has `traits:['ganzi']` (the record's own tag) but ; Ganzi's aonId points at the Ganzi TRAIT page (trait-339) instead of its heritage page (heritage-129), so the render carr"
+  },
+  {
+   "id": "warrior-android",
+   "verdict": "FIXED",
+   "evidence": "[batch 25 read, adversarially confirmed] Warrior Android's whole printed content — trained in all simple and martial weapons — is delivered by nothing on our sid"
+  },
+  {
+   "id": "stoutheart-centaur",
+   "verdict": "FIXED",
+   "evidence": "[batch 25 read, adversarially confirmed] Stoutheart Centaur's ancestry-HP override (10 instead of 8) is delivered by no carrier on our side — the heritage record"
+  },
+  {
+   "id": "fey-dragonet",
+   "verdict": "FIXED",
+   "evidence": "[batch 25 read, adversarially confirmed] Fey Dragonet never adds Fey to the character's languages — we carry the fey creature trait and the Stealth star but no g"
+  },
+  {
+   "id": "naari",
+   "verdict": "FIXED",
+   "evidence": "[batch 25 read, adversarially confirmed] Naari's \"environmental heat effects one step less severe\" is modelled by neither side — residual read."
+  },
+  {
+   "id": "homing-drake",
+   "verdict": "MATCHES",
+   "evidence": "[batch 25 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "climbing-animal",
+   "verdict": "FIXED",
+   "evidence": "[batch 25 read, adversarially confirmed] Climbing Animal never sets the land Speed of 20 feet, so the sheet keeps the Awakened Animal chassis Speed of 5 feet.; Climbing Animal's mandatory animal attack is delivered by no carrier of ours, so the character has no unarmed Strike at "
+  },
+  {
+   "id": "rite-of-knowing",
+   "verdict": "MATCHES",
+   "evidence": "[batch 25 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "rite-of-reinforcement",
+   "verdict": "FIXED",
+   "evidence": "[batch 25 read, adversarially confirmed] Rite of Reinforcement never gives the character the exoskeleton armor — the item exists in our data but the heritage has"
+  },
+  {
+   "id": "undine",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — on the Rulings Desk (batch 25)"
+  },
+  {
+   "id": "rite-of-invocation",
+   "verdict": "MATCHES",
+   "evidence": "[batch 25 read] comparer misread settled/taught: The IDENTITY flag misreads their encoding: their outer select is a tradition gate, and the cantrip pick is the nested FILTERED SPELL select "
+  },
+  {
+   "id": "oread",
+   "verdict": "MATCHES",
+   "evidence": "[batch 25 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "rock-dwarf",
+   "verdict": "FIXED",
+   "evidence": "[batch 25 read, adversarially confirmed] Our Rock Dwarf stars split the +2 by maneuver (Fortitude vs Reposition/Shove, Reflex vs Trip) when print gives both defe; Rock Dwarf's halved forced movement is carried by no carrier on either side — residual read."
+  },
+  {
+   "id": "deep-fetchling",
+   "verdict": "MATCHES",
+   "evidence": "[batch 25 read] comparer misread settled/taught: The comparer's flags for Deep Fetchling are both false — it reported KINDS missing [choice] and 'their options cold/void, ours none' because"
+  },
+  {
+   "id": "spindly-anadi",
+   "verdict": "MATCHES",
+   "evidence": "[batch 25 read] comparer misread settled/taught: The comparer's VALUES flag for Spindly Anadi ('speed land: theirs 30, ours 5') is a false positive — it compared their absolute setValue aga"
+  },
+  {
+   "id": "anvil-dwarf",
+   "verdict": "FIXED",
+   "evidence": "[batch 25 read, adversarially confirmed] Anvil Dwarf's printed SECOND Specialty Crafting specialty is delivered by Wanderer's Guide (two giveAbilityBlock ops on "
+  },
+  {
+   "id": "cavern-elf",
+   "verdict": "MATCHES",
+   "evidence": "[batch 25 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "resolute-fetchling",
+   "verdict": "MATCHES",
+   "evidence": "[batch 25 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "inured-azarketi",
+   "verdict": "MATCHES",
+   "evidence": "[batch 25 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "created-fleshwarp",
+   "verdict": "FIXED",
+   "evidence": "[batch 25 read, adversarially confirmed] Created Fleshwarp's printed 'you don't need to eat and can't starve' is modelled by neither side, although our heritage "
+  },
+  {
+   "id": "thalassic-azarketi",
+   "verdict": "FIXED",
+   "evidence": "[batch 25 read, adversarially confirmed] Thalassic Azarketi's second printed clause — piercing ranged attacks keep their full range increments against underwater"
+  },
+  {
+   "id": "tactile-azarketi",
+   "verdict": "MATCHES",
+   "evidence": "[batch 25 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "fleetwind-centaur",
+   "verdict": "MATCHES",
+   "evidence": "[batch 25 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "sylph",
+   "verdict": "MATCHES",
+   "evidence": "[batch 25 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "winter-catfolk",
+   "verdict": "FIXED",
+   "evidence": "[batch 25 read, adversarially confirmed] The heritage's second printed benefit — treating environmental cold as one step less extreme — is modelled by neither si"
+  },
+  {
+   "id": "benthic-azarketi",
+   "verdict": "FIXED",
+   "evidence": "[batch 25 read, adversarially confirmed] Both non-resistance clauses of this heritage — the wet-cold exemption and automatic depth-pressure adaptation — are mode"
+  },
+  {
+   "id": "cataphract-fleshwarp",
+   "verdict": "FIXED",
+   "evidence": "[batch 25 read, adversarially confirmed] Ours grants Armor Proficiency unconditionally and models neither half of the printed alternative branch — the Athletics "
+  },
+  {
+   "id": "liminal-fetchling",
+   "verdict": "FIXED",
+   "evidence": "[batch 25 read, adversarially confirmed] The heritage's flat-check reduction (DC 3 concealed / DC 9 undetected) has no mechanical carrier on our side, though sit; Our curated description for Liminal Fetchling drops both replacement DCs, leaving two ungrammatical fragments that state"
+  },
+  {
+   "id": "desert-elf",
+   "verdict": "FIXED",
+   "evidence": "[batch 25 read, adversarially confirmed] The heritage's second printed benefit — environmental heat one step less extreme — is modelled by neither side and has n"
+  },
+  {
+   "id": "reflection",
+   "verdict": "FIXED",
+   "evidence": "[batch 25 read, adversarially confirmed] The printed licence to skip Deception checks when Impersonating your progenitor is modelled by neither side, and it is t"
+  },
+  {
+   "id": "polyglot-android",
+   "verdict": "FIXED",
+   "evidence": "[batch 25 read, adversarially confirmed] Ours delivers no language slots at all for a heritage whose entire printed effect is two chosen languages plus a Multili"
+  },
+  {
+   "id": "discarded-fleshwarp",
+   "verdict": "MATCHES",
+   "evidence": "[batch 25 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "mage-automaton",
+   "verdict": "MATCHES",
+   "evidence": "[batch 25 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "sharpshooter-automaton",
+   "verdict": "MATCHES",
+   "evidence": "[batch 25 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "clawed-catfolk",
+   "verdict": "MATCHES",
+   "evidence": "[batch 25 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "talos",
+   "verdict": "MATCHES",
+   "evidence": "[batch 25 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "dromaar",
+   "verdict": "MATCHES",
+   "evidence": "[batch 25 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "house-drake",
+   "verdict": "FIXED",
+   "evidence": "[batch 25 read, adversarially confirmed] House Drake never grants the Diabolic language: the heritage record carries no grantsLanguages field, and its ancestry (; The 'jaws count as silver' half of House Drake's printed sentence has no carrier on our side — situationalBonuses.ts alr"
+  },
+  {
+   "id": "hunting-catfolk",
+   "verdict": "MATCHES",
+   "evidence": "[batch 25 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "hungerseed",
+   "verdict": "MATCHES",
+   "evidence": "[batch 25 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "polychromatic-anadi",
+   "verdict": "MATCHES",
+   "evidence": "[batch 25 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "forge-dwarf",
+   "verdict": "MATCHES",
+   "evidence": "[batch 25 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "oathkeeper-dwarf",
+   "verdict": "MATCHES",
+   "evidence": "[batch 25 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "arctic-elf",
+   "verdict": "MATCHES",
+   "evidence": "[batch 25 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "hunter-automaton",
+   "verdict": "MATCHES",
+   "evidence": "[batch 25 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "elemental-heart-dwarf",
+   "verdict": "FIXED",
+   "evidence": "[batch 25 read, adversarially confirmed] The description of the activity this heritage grants has lost its damage dice, its damage-type clause and its save type."
+  },
+  {
+   "id": "beastkin",
+   "verdict": "FIXED",
+   "evidence": "[batch 25 read, adversarially confirmed] WG grants the Change Shape ability the print names; we grant only its hybrid-form jaws, and no beastkin Change Shape act"
+  },
+  {
+   "id": "rite-of-passage",
+   "verdict": "MATCHES",
+   "evidence": "[batch 25 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "coral-athamaru",
+   "verdict": "FIXED",
+   "evidence": "[batch 25 read, adversarially confirmed] WG hands the character the coral plate armor the print describes; our record delivers nothing at all and the armor does "
+  },
+  {
+   "id": "laborer-android",
+   "verdict": "FIXED",
+   "evidence": "[batch 25 read, adversarially confirmed] The printed Athletics training never lands on a built character, because our 16-option effectChoices picker has no defau"
+  },
+  {
+   "id": "impersonator-android",
+   "verdict": "FIXED",
+   "evidence": "[batch 25 read, adversarially confirmed] The printed Deception training never lands on a built character — the instrument flag is a real defect, not a comparer m"
+  },
+  {
+   "id": "ponygait-centaur",
+   "verdict": "FIXED",
+   "evidence": "[batch 25 read, adversarially confirmed] Our built character stays Large: the heritage carries no sizeSet even though build.ts's size code was written for exactl; The unconditional +1 circumstance bonus to Reflex is a real number on their sheet and only a display star on ours."
+  },
+  {
+   "id": "bright-fetchling",
+   "verdict": "FIXED",
+   "evidence": "[batch 25 read, adversarially confirmed] Print grants two innate cantrips; both sides grant one, and our description was rewritten to match the single grant rath"
+  },
+  {
+   "id": "seer-elf",
+   "verdict": "MATCHES",
+   "evidence": "[batch 25 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "mistbreath-azarketi",
+   "verdict": "FIXED",
+   "evidence": "[batch 25 read, adversarially confirmed] Mistbreath Azarketi is missing its printed land Speed 25: our record states only `speeds:{swim:15}`, so the azarketi cha"
+  },
+  {
+   "id": "aon-aphorite",
+   "verdict": "FIXED",
+   "evidence": "[batch 25 read, adversarially confirmed] Aphorite never confers the aphorite CREATURE trait: our record carries `traits:[\"aphorite\"]` (feat-eligibility only) and"
+  },
+  {
+   "id": "suli",
+   "verdict": "MATCHES",
+   "evidence": "[batch 25 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "dhampir",
+   "verdict": "MATCHES",
+   "evidence": "[batch 25 read] comparer misread settled/taught: The comparer's IDENTITY flag 'grants voidhealing, ours none' is a misread — we do carry void healing, under the boolean field `negativeHeali"
+  },
+  {
+   "id": "duskwalker",
+   "verdict": "MATCHES",
+   "evidence": "[batch 25 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "death-warden-dwarf",
+   "verdict": "MATCHES",
+   "evidence": "[batch 25 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "nephilim",
+   "verdict": "MATCHES",
+   "evidence": "[batch 25 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "ardande",
+   "verdict": "MATCHES",
+   "evidence": "[batch 25 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "running-animal",
+   "verdict": "FIXED",
+   "evidence": "[batch 25 read, adversarially confirmed] Running Animal's printed animal attack lands nowhere on our side: its `effectChoices` options carry no `grant`, and Effe"
+  },
+  {
+   "id": "venomous-anadi",
+   "verdict": "FIXED",
+   "evidence": "[batch 25 read, adversarially confirmed] The Anadi Venom ability the heritage's whole text grants is delivered by no carrier on our side — the heritage record ha"
+  },
+  {
+   "id": "adaptive-anadi",
+   "verdict": "FIXED",
+   "evidence": "[batch 25 read, adversarially confirmed] Two of our carriers ask the same Adopted Ancestry question, and the live one is the wrong one: the heritage's own `choic"
+  },
+  {
+   "id": "river-azarketi",
+   "verdict": "MATCHES",
+   "evidence": "[batch 25 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "kaleidoscopic-athamaru",
+   "verdict": "MATCHES",
+   "evidence": "[batch 25 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "swimming-animal",
+   "verdict": "FIXED",
+   "evidence": "[batch 25 read, adversarially confirmed] The water-dwelling branch's printed 20-foot land Speed is not delivered: our option grant carries only `speeds:{swim:20}; The animal attack every awakened animal is printed to have is delivered by neither our heritage nor our ancestry, so a S"
+  },
+  {
+   "id": "liminal-catfolk",
+   "verdict": "MATCHES",
+   "evidence": "[batch 25 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "dragonblood",
+   "verdict": "FIXED",
+   "evidence": "[batch 25 read, adversarially confirmed] The heritage's language clause is encoded by no field on our side — nothing lets a heritage widen the owning ancestry's "
+  }
+ ]
+}

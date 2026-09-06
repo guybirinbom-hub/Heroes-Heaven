@@ -22,11 +22,21 @@
  * Monster Core dragons; the remaining exemplars sit behind AoN's DraconicBenefactors page, which the
  * mirror did not fetch, though each dragon's own creature entries carry its Breath Weapon.
  *
- *   node scripts/queue-breath-of-the-dragon.mjs [--write]
+ * ⛔ HISTORICAL — this ran ONCE and must not run again. It is kept because the question it filed
+ * (breath-of-the-dragon) quotes a printed table parsed by the code below, and a question the owner has
+ * been shown must stay traceable to what produced it. It is NOT a writer: it appends with
+ * `doc.open.push`, minting no desk number `n`, which the rulings desk now requires of every entry
+ * (test/owner-questions-numbering.test.ts). The only writer is scripts/add-owner-question.mjs — a new
+ * question goes through `--from work/.bNNN-queue.json`, or through its exported `appendQuestions`.
+ *
+ *   node scripts/queue-breath-of-the-dragon.mjs   # exits 2 with that message
  */
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+
+console.error('scripts/queue-breath-of-the-dragon.mjs is HISTORICAL: it ran once and appends entries with NO desk number `n`, which the rulings desk now requires. Use scripts/add-owner-question.mjs (--from work/.bNNN-queue.json) — it is the only writer.');
+process.exit(2);
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const MIRROR = 'C:/wonderers guide/aon-2e-archive/data/by-category';

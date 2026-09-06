@@ -8,7 +8,14 @@
  *
  * Emits a comma-separated id list for `wg-batch.mjs --ids`.
  *
+ * `--max-level L` honours the owner's level directive ("finish everything a lv1-7 player can get first"):
+ * records above L are dropped from the eligible list BEFORE `--count` slices it, so `--count 40
+ * --max-level 7` is forty level-≤7 records and not "the first forty, of which some happen to qualify".
+ * A record with no level counts as level 0 — an item or a class feature with no level gate is
+ * reachable at level 1, which is exactly what the directive is about.
+ *
  *   node scripts/wg-next-batch-ids.mjs --count 100
+ *   node scripts/wg-next-batch-ids.mjs --count 40 --max-level 7
  */
 import { readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
@@ -18,6 +25,12 @@ import { fileURLToPath } from 'node:url';
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
 const count = Number(arg('--count', 100));
+const rawMax = arg('--max-level', null);
+const maxLevel = rawMax == null ? null : Number(rawMax);
+if (rawMax != null && !Number.isFinite(maxLevel)) { console.error(`--max-level must be a number (got ${JSON.stringify(rawMax)})`); process.exit(2); }
+/** The cut predicate, printed so the driver's cut.json and the digest record WHICH records were eligible. */
+const levelOf = (p) => (Number.isFinite(p.level) ? p.level : 0);
+const withinLevel = (p) => maxLevel == null || levelOf(p) <= maxLevel;
 
 /* Every id already in a batch file — the set we are differencing against. */
 const done = new Set();
@@ -38,10 +51,15 @@ execFileSync(process.execPath, [join(ROOT, 'scripts/wg-batch.mjs'), '--count', '
 });
 const eligible = JSON.parse(readFileSync(probe, 'utf8'));
 
-const remaining = eligible.filter((p) => !done.has(p.id));
+const unbatched = eligible.filter((p) => !done.has(p.id));
+/* ⚠ the cap is applied BEFORE the slice. Slicing first and filtering after would return fewer than
+ * --count records and silently skip the level-≤L records that sat behind the ones it dropped. */
+const remaining = unbatched.filter(withinLevel);
 const next = remaining.slice(0, count);
 
-console.log(`${eligible.length.toLocaleString()} eligible · ${done.size.toLocaleString()} already batched · ${remaining.length.toLocaleString()} remaining`);
+console.log(`predicate: ${JSON.stringify({ count, ...(maxLevel == null ? {} : { maxLevel }) })}`);
+console.log(`${eligible.length.toLocaleString()} eligible · ${done.size.toLocaleString()} already batched · ${remaining.length.toLocaleString()} remaining`
+  + (maxLevel == null ? '' : ` (level ≤ ${maxLevel}; ${(unbatched.length - remaining.length).toLocaleString()} unbatched record(s) skipped as above the cap)`));
 const byBucket = {};
 for (const p of next) byBucket[p.bucket] = (byBucket[p.bucket] ?? 0) + 1;
 console.log(`next ${next.length}: ` + Object.entries(byBucket).map(([k, v]) => `${k}=${v}`).join('  '));

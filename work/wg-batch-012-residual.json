@@ -1,0 +1,173 @@
+{
+ "batch": 12,
+ "examined": 100,
+ "confirmed": [
+  {
+   "id": "versatile-mutation",
+   "bucket": "feats",
+   "summary": "The second take asks for one energy type, not two, so a 16th-level Ostilli Host ends up with 2 of the printed 3. The record's `choice` has no `picks` field, and `picks` defaults to 1 (types.ts:2414, \"",
+   "fixed": true
+  },
+  {
+   "id": "engine-bay",
+   "bucket": "feats",
+   "summary": "The extra Repair healing is held nowhere. The app has a live lane for exactly this shape — the ACTION_NOTES table in situationalBonuses.ts (`on: 'action' | 'condition' | 'feature'`, declared at line 3",
+   "fixed": true
+  },
+  {
+   "id": "basic-animist-spellcasting",
+   "bucket": "feats",
+   "summary": "The archetype's prepared pool is a single fixed-tradition (divine) pool, so apparition spells cannot be prepared in it. The apparition spell ladder is real data (it lives on the animist CLASS record u",
+   "fixed": true
+  },
+  {
+   "id": "cleft-head-marking-lesser",
+   "bucket": "items",
+   "summary": "The Unexpected Strike damage rider has no carrier reachable from this record. The rider IS authored — situationalBonuses.ts:2447 keys it to `cleft-head-marking` with `{ targets: [{ kind: 'strikeDamage",
+   "fixed": true
+  },
+  {
+   "id": "claws-of-the-dragon",
+   "bucket": "feats",
+   "summary": "The Dragon Claws upgrade is held nowhere, so a Draconic sorcerer with Dragon Disciple still casts the base d4 / lower-resistance spell with nothing saying otherwise. `spellNotes` is the exact carrier ",
+   "fixed": true
+  },
+  {
+   "id": "cutting-rebuke",
+   "bucket": "feats",
+   "summary": "Neither the mythic-proficiency reroll nor the level-equal mental damage is held anywhere. This is a populated lane, not an unbuilt one: situationalBonuses.ts carries 32 Mythic-Point riders, including ",
+   "fixed": true
+  },
+  {
+   "id": "sacred-wilds-oath",
+   "bucket": "feats",
+   "summary": "The star's condition names the wrong creatures and drops the action restriction. The registry reads `\"sacred-wilds-oath\": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }], when: \"Diplomacy checks ",
+   "fixed": true
+  },
+  {
+   "id": "aon-spore-shepherd-s-staff",
+   "bucket": "items",
+   "summary": "The staff holds no spells. `heldSpells` is the live carrier for a staff's printed spell list (176 of the app's 210 staves carry it and build.ts reads `item.heldSpells` at build.ts:5892 to create the i",
+   "fixed": true
+  },
+  {
+   "id": "lingering-chill",
+   "bucket": "feats",
+   "summary": "The first half is correct (resistances: [{type:'cold', value:'floor(@actor.level/2)'}]) and the innate Frostbite is carried. The severe-cold protection has no carrier, so it never reaches the sheet's ",
+   "fixed": true
+  },
+  {
+   "id": "ankle-biter",
+   "bucket": "feats",
+   "summary": "Only the +1 Athletics-to-Trip clause is carried. (a) Nothing cancels the prone attack penalty: src/rules/conditions.ts:59 hard-codes `prone: [{ type: 'circumstance', amount: 2, slots: ['attack','spell",
+   "fixed": true
+  },
+  {
+   "id": "symbol-of-conflict",
+   "bucket": "items",
+   "summary": "No spell carrier at all. The record has the frequency counter, the 2-action activationCost, passiveEffects (Religion +1) and the situationalBonuses save row — but nothing that puts Bane or Bless in fr",
+   "fixed": true
+  },
+  {
+   "id": "basic-witchcraft",
+   "bucket": "feats",
+   "summary": "Only the 1st/2nd-level witch feat pick is carried (featPickGrants.ts:126). The familiar's daily ability count is `FEAT_COMPANION_GRANTS[cfg.grantSlug].abilityBudget`, and src/rules/companionGrants.ts:",
+   "fixed": true
+  },
+  {
+   "id": "disturbing-defense",
+   "bucket": "feats",
+   "summary": "The precision resistance is modelled correctly (resistances: [{type:'precision', value:'@actor.archetypeFeats.oozemorph+2'}]), but the bleed flat-check DC clause has no carrier at all. The app's live ",
+   "fixed": true
+  },
+  {
+   "id": "analyze-magic",
+   "bucket": "feats",
+   "summary": "The feat delivers nothing — the record has no fields at all beyond the header (not even an actionCost). The granted spellshift never appears anywhere: core.json's `actions` bucket has no key matching ",
+   "fixed": true
+  },
+  {
+   "id": "twirl-through",
+   "bucket": "feats",
+   "summary": "No `skillSubstitutions` field. The record carries nothing beyond the header (id/name/level/category/traits/rarity/source/prerequisites/actionCost/archetype/edition/aonId). The app has a live, read ski",
+   "fixed": true
+  },
+  {
+   "id": "basic-death-dealing",
+   "bucket": "feats",
+   "summary": "Two printed gates are unenforced because the record carries neither `prerequisites` nor `archetype`. (a) Prerequisites ARE enforced — build.ts:7676 iterates `feat.prerequisites ?? []` and Builder.tsx:",
+   "fixed": true
+  },
+  {
+   "id": "snare-expert",
+   "bucket": "feats",
+   "summary": "The Snare Crafting grant works (featFeatGrants.ts:454, and the id is in SNARE_CRAFTING_SOURCES at snareFormulas.ts:17, so the formula book and daily prep allowance are computed). Neither DC clause is ",
+   "fixed": true
+  },
+  {
+   "id": "eye-of-ozem",
+   "bucket": "feats",
+   "summary": "The Scout half of the feat reaches no surface. The initiative half is modelled (situationalBonuses.ts:689), but nothing tells the player their Scout bonus is upgraded. The carrier for this exists and ",
+   "fixed": true
+  },
+  {
+   "id": "basic-rune-magic",
+   "bucket": "feats",
+   "summary": "Same two unenforced gates as basic-death-dealing. The record has no `prerequisites` array, so the Runesmith Dedication requirement is never checked by build.ts:7676 / Builder.tsx:2654, and no `archety",
+   "fixed": true
+  },
+  {
+   "id": "mountain-skin",
+   "bucket": "feats",
+   "summary": "Only the flat trained grant is delivered; the mirroring clause has no carrier at all. featGrantsAuto.ts:413 is `{ armor: { medium: 'trained', heavy: 'trained' } }` with no upgrade path. The weapon ana",
+   "fixed": true
+  },
+  {
+   "id": "quick-fix",
+   "bucket": "feats",
+   "summary": "Only the feat grant is delivered (featFeatGrants.ts:413 → rapid-affixture, correctly unconditional so the level-7 / master-Crafting requirements are bypassed as printed). Both upgrade clauses are unde",
+   "fixed": true
+  },
+  {
+   "id": "kaiju-defense-oath",
+   "bucket": "feats",
+   "summary": "The damage bonus is delivered nowhere. The record's only carrier is one FEAT_SITUATIONAL entry, and it is a save bonus; nothing gives a strikeDamage star, so a Spirit Warrior with this oath never sees",
+   "fixed": true
+  },
+  {
+   "id": "kaiju-defense-oath",
+   "bucket": "feats",
+   "summary": "The one modelled clause states the WRONG trigger. src/rules/situationalBonuses.ts:362 reads `when: \"against creatures at least 2 sizes larger than you\"` — that condition belongs to the *damage* senten",
+   "fixed": true
+  },
+  {
+   "id": "brilliant-crafter",
+   "bucket": "feats",
+   "summary": "The inventor class DC upgrade is not level-gated. classDcRank is { classId: 'inventor', rank: 'expert' } with no level field, and build.ts applies it the moment the feat is present, so a character who",
+   "fixed": true
+  },
+  {
+   "id": "musket-staff-of-the-void",
+   "bucket": "items",
+   "summary": "The record is not a weapon at all: itemType is \"equipment\" and it carries no damage, category, group, hands, range or reload, so it can never be wielded or Struck with (derive.ts gates strikes on item",
+   "fixed": true
+  },
+  {
+   "id": "rise-my-creature",
+   "bucket": "feats",
+   "summary": "No carrier for the companion's conditional +1 circumstance to Athletics. The situational lane demonstrably supports companion-targeted bonuses (alacritous-horseshoes carries \"+2 circumstance on the an",
+   "fixed": true
+  },
+  {
+   "id": "thats-not-natural",
+   "bucket": "feats",
+   "summary": "The Perception-DC clause has no entry. The feat's registry line carries exactly two of its three bonuses -- the +1/+2 to initiative and the +2 to Survival for the Commune ritual -- and drops the third",
+   "fixed": true
+  }
+ ],
+ "recordsRead": 100,
+ "method": "Every record in this batch was read against its printed text (Archives of Nethys mirror), each finding was put to an adversarial refuter, and the survivors were authored as data rows or registry changes. See work/residual-1-12.json for the findings and work/residual-fixed.json for the ledger of what has been closed.",
+ "findings": 27,
+ "closed": 27,
+ "complete": true
+}

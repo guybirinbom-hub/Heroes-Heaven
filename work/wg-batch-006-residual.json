@@ -1,0 +1,101 @@
+{
+ "batch": 6,
+ "examined": 100,
+ "confirmed": [
+  {
+   "id": "disarming-flair",
+   "bucket": "feats",
+   "summary": "Nothing adds the bravado trait to the Disarm action. The record holds only actionCost:passive, and there is no trait-granting lane at all: the same sentence shape appears on ten records (classFeatures",
+   "fixed": true
+  },
+  {
+   "id": "gunslingers-way",
+   "bucket": "classFeatures",
+   "summary": "The slinger's reload action is never granted. Every one of the six ways in core.classes.gunslinger.subclass.options lists exactly three featureIds — the initial/advanced/greater deeds (e.g. drifter: i",
+   "fixed": true
+  },
+  {
+   "id": "leshy-familiar",
+   "bucket": "feats",
+   "summary": "The free plant-or-fungus ability is not delivered. companionGrants.ts:143 is a plain `{ kind: 'familiar', abilityBudget: 2 }` with no lockedAbilities and no lockedFree, so the player must spend one of",
+   "fixed": true
+  },
+  {
+   "id": "tactics",
+   "bucket": "classFeatures",
+   "summary": "The prepared-tactics cap never rises. src/rules/build.ts:6321 sets `preparedMax: 3 + preparedBonus`, where preparedBonus sums `content.feats[...].preparedTacticsBonus` over FEATS only. The folio half ",
+   "fixed": true
+  },
+  {
+   "id": "tactics",
+   "bucket": "classFeatures",
+   "summary": "The record carries `limitedUses: { max: 1, per: 'day' }`, which reads that example clause as a limit on the Tactics class feature itself. Class features with limitedUses draw use pips (FeatsTab.tsx:15",
+   "fixed": true
+  },
+  {
+   "id": "grave-spells",
+   "bucket": "classFeatures",
+   "summary": "No carrier anywhere for the thrall-fuelled Refocus. The Refocus control restores `character.focus.refocusRestore` and build.ts:4710-4721 populates that field from `content.feats[...].refocusRestore` —",
+   "fixed": true
+  },
+  {
+   "id": "iron-repercussions",
+   "bucket": "feats",
+   "summary": "The choice is never surfaced. The record holds only actionCost:passive — no recordMarks, no modifiesGrant — so the actions/iron-command row a champion actually uses says nothing about the persistent-d",
+   "fixed": true
+  },
+  {
+   "id": "hold-mark",
+   "bucket": "feats",
+   "summary": "The emblem-to-skill linkage is not enforced, and the feat trains TWO skills. The record's effectChoices 'emblem' pick already grants the correct skill per emblem (Burning Sun→Diplomacy, Death's Head→S",
+   "fixed": true
+  },
+  {
+   "id": "dream-may",
+   "bucket": "feats",
+   "summary": "The doubled rest HP and the 2-step drained/doomed reduction are not delivered. The app HAS the exact lane for this: `restRecovery: { hpMultiplier, conditionSteps }` on a feat record, read at src/rules",
+   "fixed": true
+  },
+  {
+   "id": "weapon-proficiency",
+   "bucket": "feats",
+   "summary": "The advanced-weapon branch is never asked and never granted. FEAT_GRANTS only holds `{ weapon: { martial: 'trained' }, rankUpgrade: { level: 11, rank: 'expert' } }`, so (a) any character already train",
+   "fixed": true
+  },
+  {
+   "id": "combat-climber",
+   "bucket": "feats",
+   "summary": "The feat's entire mechanical content has no carrier — nothing negates off-guard while Climbing and nothing records the relaxed hand requirement. The lane exists and holds this exact shape for other re",
+   "fixed": true
+  },
+  {
+   "id": "molten-wit",
+   "bucket": "feats",
+   "summary": "The SKILL FEAT half of the grant is never delivered. Only the skill training is modelled: featGrantsLane.ts holds `{\"skillChoices\":[{\"options\":[\"deception\",\"diplomacy\"],\"rank\":\"trained\"}]}` and the re",
+   "fixed": true
+  },
+  {
+   "id": "conrasu-weapon-familiarity",
+   "bucket": "feats",
+   "summary": "The category-lowering clause is not modelled — the registry entry omits `treatAsLowerCategory: true`. src/rules/featGrantsAuto.ts:168 reads `'conrasu-weapon-familiarity': { weaponFamiliarity: {'weapon",
+   "fixed": true
+  },
+  {
+   "id": "like-a-roach",
+   "bucket": "feats",
+   "summary": "The whole feat is inert — no carrier holds the −2 DC reduction, the proficiency-rank waiver, or the −5-penalty waiver. The lane exists and is well populated for exactly this shape: situationalBonuses.",
+   "fixed": true
+  },
+  {
+   "id": "vanara-weapon-familiarity",
+   "bucket": "feats",
+   "summary": "The category demotion has no carrier. The only entry is src/rules/featGrantsLane.ts:49 — { weapons: ['bo-staff','chakram','katar','panabas','urumi'], traits: ['vanara'], rank: 'trained' } — a FLAT 'tr",
+   "fixed": true
+  }
+ ],
+ "recordsRead": 100,
+ "method": "Every record in this batch was read against its printed text (Archives of Nethys mirror), each finding was put to an adversarial refuter, and the survivors were authored as data rows or registry changes. See work/residual-1-12.json for the findings and work/residual-fixed.json for the ledger of what has been closed.",
+ "findings": 15,
+ "closed": 15,
+ "complete": true
+}

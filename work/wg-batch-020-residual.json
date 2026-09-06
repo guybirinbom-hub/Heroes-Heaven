@@ -1,0 +1,442 @@
+{
+ "batch": 20,
+ "examined": 100,
+ "recordsRead": [
+  "scholar-of-the-ancients",
+  "sally-guard-neophyte",
+  "seer-of-the-dead",
+  "necromancers-apprentice",
+  "streetfood-vendor",
+  "scarnetti-connected",
+  "mechanical-symbiosis",
+  "hounded-thief",
+  "hermean-expatriate",
+  "alkenstar-outlaw",
+  "tall-tale",
+  "tree-friend",
+  "ruby-phoenix-fanatic",
+  "diobel-pearl-diver",
+  "foreign-diplomat",
+  "feybound",
+  "night-watch",
+  "sheriff",
+  "clan-associate",
+  "whispering-way-scion",
+  "brevic-noble",
+  "raised-by-belief",
+  "out-of-towner",
+  "purveyor-of-the-bizarre",
+  "discarded-duplicate",
+  "mortuarium-survivor",
+  "child-of-the-colony",
+  "haunting-vision",
+  "nocturnal-navigator",
+  "conservator",
+  "traveling-gourmand",
+  "ocean-diver",
+  "sideshow-scion",
+  "bully-or-baiter",
+  "courier",
+  "sodden-scavenger",
+  "child-of-the-twin-village",
+  "farmhand",
+  "crystal-healer",
+  "royalty",
+  "song-of-the-deep",
+  "fightbreaker",
+  "union-representative",
+  "sailor",
+  "artist",
+  "pyre-tender",
+  "magical-experiment",
+  "toymaker",
+  "firebrand-follower",
+  "local-brigand",
+  "mammoth-herder",
+  "clown",
+  "bright-lion",
+  "party-scholar",
+  "rostland-partisan",
+  "aiudara-seeker",
+  "always-chosen-last",
+  "cursed",
+  "gossip",
+  "oenopion-ooze-tender",
+  "guard",
+  "remittance-agent",
+  "weaver",
+  "conscript",
+  "scion-of-slayers",
+  "clockwork-researcher",
+  "framed-in-ferrous-quarter",
+  "menagerie-dung-sweeper",
+  "bookkeeper",
+  "ulfen-raider",
+  "rivethun-adherent",
+  "aon-reclaimed-investigator",
+  "cathedral-child",
+  "hermean-heritor",
+  "aon-wishes-for-riches",
+  "issian-partisan",
+  "thrune-loyalist",
+  "shory-seeker",
+  "mechanic",
+  "mana-wastes-refugee",
+  "harrow-led",
+  "osprey-scribe",
+  "wanted-witness",
+  "haunted",
+  "arcane-revolutionary",
+  "laborer",
+  "veteran",
+  "hermit",
+  "black-market-smuggler",
+  "harrow-chosen",
+  "stargazer",
+  "second-chance-champion",
+  "criminal",
+  "perfection-seeker",
+  "squire",
+  "combat-chaplain",
+  "runner",
+  "starwatcher",
+  "charlatan",
+  "missionary"
+ ],
+ "method": "20-agent workflow (wf_368736e8-de1): 10 read slices x 10 records (printed mirror + WG raw ops + every carrier) then 10 adversarial verifiers. Ledger: work/.b020-findings.json.",
+ "confirmed": [
+  {
+   "id": "party-scholar",
+   "claim": "Our record pins the background's Lore to Alcohol Lore with no picker, but both the printed text and Wanderer's Guide offer a choice between Alcohol Lore and a Lore associated with your school — the player is never asked.",
+   "fixed": true,
+   "fix": "In public/core.json, backgrounds/party-scholar: remove `\"trainedLore\": \"alcohol\"` and set `\"trainedLoreChoice\": true`. That is the exact shape sibling record `academic-scion` already uses for the identical printed sentence (\"You're also trained in the Academia Lore skill or a Lore skill associated w",
+   "playerVisible": true
+  },
+  {
+   "id": "always-chosen-last",
+   "claim": "The printed second Lore — Scouting Lore, granted by a condition the record itself satisfies — is delivered by no carrier on either side; our schema has no field and no reader for a trait-conditional background Lore, so the training silently never happens.",
+   "fixed": true,
+   "fix": "In public/core.json, backgrounds/always-chosen-last: change `\"trainedLore\": \"games\"` to `\"trainedLore\": [\"games\", \"scouting\"]`. The array form is already read — src/rules/build.ts:2834 does `for (const subj of [background?.trainedLore ?? []].flat())` — and no new field or conditional machinery is ne",
+   "playerVisible": true
+  },
+  {
+   "id": "second-chance-champion",
+   "claim": "Our shipped description text for Second Chance Champion tells the player the background trains Acrobatics, contradicting both the printed text (Athletics) and our own core.json trainedSkill field, so the record's prose and its mechanic disagree with each other and with print.",
+   "fixed": true,
+   "fix": "Edit only the description lane: in public/core-descriptions.json, backgrounds.second-chance-champion.d, replace both \"Acrobatics\" occurrences with \"Athletics\" — body sentence becomes \"You're trained in Athletics and the Gladiatorial Lore skill. You gain the Cat Fall skill feat.\" and the details line",
+   "playerVisible": true
+  },
+  {
+   "id": "aon-wishes-for-riches-a-deviant-feat",
+   "claim": "Wishes for Riches grants a deviant feat (and with it a deviant classification) in print and in Wanderer's Guide, but our record's only grant is `grantedFeatId: \"subtle-theft\"` — no deviant feat, no classification, no carrier anywhere in src/rules.",
+   "fixed": true,
+   "fix": "In public/core.json backgrounds['aon-wishes-for-riches'], keep `grantedFeatId: 'subtle-theft'` and add the classification pick as a feat-valued background choice, which is the carrier build.ts already reads (`bgChoiceFeat` at src/rules/build.ts:4097 grants the picked option when every option value i",
+   "playerVisible": true
+  },
+  {
+   "id": "hermean-heritor-a-assurance-branch",
+   "claim": "Hermean Heritor's printed either/or skill feat is a live two-way grant in Wanderer's Guide, but on our side the Assurance branch delivers nothing: the choice option value `assurance-society` matches no feat id in core.json (only `assurance` exists), so `backgroundChoiceKind` classifies the choice as 'other' and grants nothing, while `grantedFeatId: 'multilingual'` hands out Multilingual unconditionally.",
+   "fixed": true,
+   "fix": "In public/core.json backgrounds['hermean-heritor']: change the choice option value `assurance-society` → `assurance` (so both options are real feat ids and `backgroundChoiceKind` returns 'feat'), and DELETE `grantedFeatId: 'multilingual'` — build.ts:4115 concatenates `backgroundGrantedFeats(backgrou",
+   "playerVisible": true
+  },
+  {
+   "id": "aon-wishes-for-riches-c-cold-type",
+   "claim": "The print binds the granted dragon deviation's damage type to cold, and that binding has no reader on either side: our `BACKGROUND_GRANT_BOUND_CHOICE` can only answer a granted FEAT's own `choice`, but the damage-type choice lives on the class feature the feat grants, and WG encodes no damage-type operation at all.",
+   "fixed": true,
+   "fix": "Together with the `choice` added for the classification grant, bind the downstream answer: extend src/rules/backgroundGrants.ts so a background can answer a choice on a class feature the granted feat carries (a `featureChoice` answer kind keyed `'aon-wishes-for-riches': { 'consume-energy': { kind: '",
+   "playerVisible": true
+  },
+  {
+   "id": "shory-seeker-b-region",
+   "claim": "Shory Seeker is the only World Guide background in our data whose description drops the printed Region line — the print gives it as Mwangi Expanse, and our four sibling World Guide records in this same slice all carry theirs.",
+   "fixed": true,
+   "fix": "In public/core-descriptions.json backgrounds['shory-seeker'].d, prepend the same header the four sibling World Guide records use: \"**Prerequisite** Region - Mwangi Expanse\" followed by the existing horizontal rule, matching the exact shape in rivethun-adherent / issian-partisan / thrune-loyalist / m",
+   "playerVisible": true
+  },
+  {
+   "id": "cathedral-child-c-reputation",
+   "claim": "Cathedral Child's printed reputation adjustments are modelled by neither side and have no reader anywhere in the engine — the sentence exists only as prose.",
+   "fixed": true,
+   "fix": "Party Reputation is an AP/table-level tracker, not a character-sheet number, so no numeric field should be invented. Concretely: leave the mechanics untouched and register this as an acknowledged residual for cathedral-child (the sentence is already carried verbatim in public/core-descriptions.json,",
+   "playerVisible": true
+  },
+  {
+   "id": "guard",
+   "claim": "Guard carries TWO lore carriers for the one printed Lore — `trainedLoreChoice: true` (a free-text Lore box) AND `choice` (flag `backgroundLore`, options legal/warfare) — so the builder shows two \"Background Lore\" controls and a character can end up trained in two Lores where print grants one.",
+   "fixed": true,
+   "fix": "Delete `\"trainedLoreChoice\": true` from backgrounds.guard in public/core.json, leaving the `choice` (flag `backgroundLore`, legal/warfare) as the single carrier. Equivalent alternative: replace both with `\"trainedLoreOptions\": [\"legal\",\"warfare\"]` and drop the `choice`, which is the field types.ts:2",
+   "playerVisible": true
+  },
+  {
+   "id": "remittance-agent",
+   "claim": "Remittance Agent delivers the Lore twice — a fixed `trainedLore: \"Labor\"` plus a `choice` between labor and mercenary — so picking Mercenary Lore leaves the character trained in Labor Lore as well, and the fixed one is written to an unnormalized key.",
+   "fixed": true,
+   "fix": "Delete `\"trainedLore\": \"Labor\"` from backgrounds.remittance-agent in public/core.json; the `choice` (flag `backgroundLoreOption`, labor/mercenary) already defaults to `labor`, which reproduces the printed default. Separately, the raw-key write at src/rules/build.ts:2835 should go through `loreKey()`",
+   "playerVisible": true
+  },
+  {
+   "id": "weaver",
+   "claim": "Weaver delivers the Lore twice — a fixed `trainedLore: \"Basket Weaving\"` plus a three-way `choice` — so a character who picks Tapestry or Textile Lore is still trained in Basket Weaving Lore, and the fixed one is written to an unnormalized `lore:Basket Weaving` key.",
+   "fixed": true,
+   "fix": "Delete `\"trainedLore\": \"Basket Weaving\"` from backgrounds.weaver in public/core.json, leaving the `choice` (flag `backgroundLoreOption`) as the single carrier; its first option `basket-weaving` is already the printed default.",
+   "playerVisible": true
+  },
+  {
+   "id": "scion-of-slayers",
+   "claim": "\"You can use Intelligence as your spellcasting ability for this innate spell\" has NO READER anywhere on our side: `InnateSpellGrant` (types.ts:2163-2245) has no key-attribute field, and `entryRetune` (types.ts:1003, the only thing that can change a spellcasting entry's key attribute) is read only from `content.feats[...]` at build.ts:6895 — never from a background — so the innate Vitality Lash's spell DC/attack uses the pooled innate entry's default attribute instead of Intelligence.",
+   "fixed": true,
+   "fix": "Add a per-spell key-attribute override, the sibling of the existing per-spell `spellTraditions` (types.ts:4853) that Ancestral Mind's scoped retune already writes: declare `keyAbility?: AbilityId` on `InnateSpellGrant` (src/rules/types.ts:2163) and `spellKeyAbilities?: Record<string, AbilityId>` on ",
+   "playerVisible": true
+  },
+  {
+   "id": "weaver",
+   "claim": "The Weaver record's printed PFS note names the specialty its granted Specialty Crafting takes (Weaving), and neither side binds it — our builder offers the granted feat's free twelve-option `specialtyCrafting` pick, so a Society-legal Weaver can be built with e.g. Alchemy.",
+   "fixed": true,
+   "fix": "Add `weaver: { 'specialty-crafting': { kind: 'fixed', skill: 'weaving' } }` to BACKGROUND_GRANT_BOUND_CHOICE in src/rules/backgroundGrants.ts (quoting the PFS note above it) and remove `weaver` from the DELIBERATELY ABSENT comment at line 128 — the same shape already used for `'web-weaver': { 'speci",
+   "playerVisible": true
+  },
+  {
+   "id": "haunted-additional-skill",
+   "claim": "Haunted's second trained skill (\"an additional skill in which the haunting entity is well-versed, determined by the GM\") has no carrier on our side at all — WG delivers it as a free skill-training select, and our own sibling background Mechanical Symbiosis, which prints the identical sentence, already carries it via the `choice`/kind:'skills' lane.",
+   "fixed": true,
+   "fix": "Add to `backgrounds.haunted` in public/core.json the field `\"choice\": { \"flag\": \"entitySkill\", \"prompt\": \"Entity's skill\", \"kind\": \"skills\" }` — byte-for-byte the shape `backgrounds.mechanical-symbiosis` already carries for the same printed sentence. src/rules/build.ts:2858-2866 (`backgroundChoiceKi",
+   "playerVisible": true
+  },
+  {
+   "id": "haunted-spurious-diehard",
+   "claim": "Ours grants Haunted the Diehard feat, which the printed rules text of the record never mentions and which WG's Player Core 2 Haunted row does not grant either.",
+   "fixed": true,
+   "fix": "Delete `\"grantedFeatId\": \"diehard\"` from `backgrounds.haunted` in public/core.json. ⚠ One caveat the owner should see before the deletion lands: AoN's own sidebar metadata field for background-468 does list `\"feat\": [\"Diehard\"]` even though its printed body omits it — Haunted is one of only 2 of 542",
+   "playerVisible": true
+  },
+  {
+   "id": "hermit-lore-hardcoded-cave",
+   "claim": "Hermit's terrain Lore is a player choice in print and in WG, but ours hardcodes the printed EXAMPLE subject — every Hermit is trained in Cave Lore and the player is never asked, so a desert hermit gets the wrong skill.",
+   "fixed": true,
+   "fix": "In public/core.json `backgrounds.hermit`, remove `\"trainedLore\": \"Cave\"` and add `\"trainedLoreChoice\": true` — the field already declared at src/rules/types.ts:2356 and read at src/rules/build.ts:2876, and the exact encoding `backgrounds.arcane-revolutionary` uses for the same printed shape. This tu",
+   "playerVisible": true
+  },
+  {
+   "id": "harrow-chosen-innate-cantrip",
+   "claim": "Harrow-Chosen's entire spellcasting grant — a common occult innate cantrip castable at will, auto-heightened to half level — is delivered by nothing on our side; WG delivers it as a filtered innate-occult-cantrip select.",
+   "fixed": true,
+   "fix": "Deliver the pick as an at-will occult innate cantrip on the background. Concretely: extend the CantripPickSpec lane in src/rules/featCantripGrants.ts to be readable by background id (or add a background-side twin), keyed `'harrow-chosen': { prompt: \"Choose a common occult cantrip\", tradition: 'occul",
+   "playerVisible": true
+  },
+  {
+   "id": "harrow-chosen-partial-and-unmatched",
+   "claim": "Two of the four Harrow-Chosen empower outcomes — the Partial-match energy resistance and the Unmatched temporary Hit Points — are modeled by neither side; our situationalBonuses entry carries only the other two.",
+   "fixed": true,
+   "fix": "Add two background-sourced entries to the core `modes` table so the sheet can carry them, mirroring the existing item/feat mode shape (`{ id, name, duration, modifiers[] }`): `bg-harrow-chosen-partial-match` — name \"Harrow: Partial Match\", duration \"1 minute\", resistance equal to character level to ",
+   "playerVisible": true
+  },
+  {
+   "id": "feybound",
+   "claim": "Feybound's granted Fey's Fortune free action reaches the character from no carrier at all: the record carries `limitedUses` but no `grantsActions`, and the `feys-fortune` action record in core.json is orphaned — its only inbound link, `aonParentId`, has NO READER anywhere in src.",
+   "fixed": true,
+   "fix": "Add `grantsActions: [\"feys-fortune\"]` to backgrounds.feybound in public/core.json. That is the exact field src/sheet/MainTab.tsx:258/273 walks for backgrounds, and it simultaneously activates the record's already-present `limitedUses: {max:1,per:'day'}` as the pip holder via MainTab.tsx:278 — no new",
+   "playerVisible": true
+  },
+  {
+   "id": "ruby-phoenix-fanatic",
+   "claim": "Ours trains only one of the three Lore skills the printed text grants — Gladiatorial Lore and Goka Lore are delivered by no carrier.",
+   "fixed": true,
+   "fix": "Set `trainedLore: [\"axis\", \"gladiatorial\", \"goka\"]` on backgrounds.ruby-phoenix-fanatic in public/core.json. src/rules/build.ts:2834 and build.ts:8085 already flatten the array, and `gladiatorial` is an existing subject elsewhere in the bucket (sleepless-suns-star).",
+   "playerVisible": true
+  },
+  {
+   "id": "night-watch",
+   "claim": "Night Watch delivers BOTH halves of a printed either/or: `trainedLore: \"legal\"` trains Legal Lore unconditionally AND `trainedLoreChoice: true` trains a second, free-text settlement Lore on top of it — two Lores where print grants one.",
+   "fixed": true,
+   "fix": "Remove `trainedLore: \"legal\"` from backgrounds.night-watch in public/core.json and keep `trainedLoreChoice: true` as the sole Lore carrier, so build.ts:2876 trains exactly the one typed subject and the unconditional grant at build.ts:2834 stops firing; default the builder's free-text box (src/builde",
+   "playerVisible": true
+  },
+  {
+   "id": "tall-tale",
+   "claim": "Neither side models Tall Tale's prerequisite waiver for the Connections/Leverage Connections skill feat, and our builder actively blocks the feat the background promises — the only escape is a manual per-character override no record can set (residual read).",
+   "fixed": true,
+   "fix": "Residual-read lane: build a data-driven waiver carrier, e.g. `prerequisiteWaivers?: { featId: string }[]` on Background, read by meetsPrerequisites (src/rules/build.ts:8420) the same way `build.overrides.allowedFeats` is at build.ts:2426, then set `prerequisiteWaivers: [{ featId: \"leverage-connectio",
+   "playerVisible": true
+  },
+  {
+   "id": "b20-sideshow-scion-wildcard-circus-lore",
+   "claim": "The Wildcard-persona rider that trains Circus Lore is delivered by no carrier on either side, and our `traits: [\"persona-wildcard\"]` field — the only place the persona condition is even hinted at in our data — has no reader anywhere.",
+   "fixed": true,
+   "fix": "Add to public/core.json backgrounds.sideshow-scion: `effectChoices: [{ id: 'wildcard-persona', prompt: 'Do you have the Wildcard persona trait?', options: [ { value: 'no', label: 'No' }, { value: 'yes', label: 'Yes — you also become trained in Circus Lore', grant: { skills: { 'lore:circus': 'trained",
+   "playerVisible": true
+  },
+  {
+   "id": "b20-bully-or-baiter-warrior-warfare-lore",
+   "claim": "The Warrior-persona rider that trains Warfare Lore is delivered by no carrier on either side, and our `traits: [\"persona-warrior\"]` field has no reader anywhere.",
+   "fixed": true,
+   "fix": "Add to public/core.json backgrounds.bully-or-baiter: `effectChoices: [{ id: 'warrior-persona', prompt: 'Do you have the Warrior persona trait?', options: [ { value: 'no', label: 'No' }, { value: 'yes', label: 'Yes — you also become trained in Warfare Lore', grant: { skills: { 'lore:warfare': 'traine",
+   "playerVisible": true
+  },
+  {
+   "id": "b20-child-of-the-twin-village-dream-message",
+   "claim": "The nightly dream message link with your twin is modelled by neither side, so the only benefit this background gives beyond Diplomacy + Dreamlands Lore reaches the sheet nowhere.",
+   "fixed": true,
+   "fix": "Add `dataWarning` to public/core.json backgrounds.child-of-the-twin-village, e.g. \"You and your twin gain the effects of dream message every night, only between the two of you — a natural effect, not a spell (no slot, no casting, not counteractable as a spell). The app does not track it; your GM pla",
+   "playerVisible": true
+  },
+  {
+   "id": "b20-royalty-leverage-connections-rider",
+   "claim": "Royalty's influence clause and its automatic-connections rider on Leverage Connections are modelled by neither side; ours delivers only Society + Courtly Graces.",
+   "fixed": true,
+   "fix": "Add `dataWarning` to public/core.json backgrounds.royalty, e.g. \"Royalty also lets you influence commoners in your family's territory and nobility anywhere. If you gain Leverage Connections, you automatically have common and noble connections in any community in your family's territory, and noble co",
+   "playerVisible": true
+  },
+  {
+   "id": "brevic-noble-lineage-select",
+   "claim": "Our brevic-noble hardcodes only the Garess lineage (Crafting + Architecture Lore + Specialty Crafting); the other five printed Brevic lineages are unreachable, while WG encodes all six as one select with per-branch skill, Lore and feat operations.",
+   "fixed": true,
+   "fix": "In public/core.json backgrounds.brevic-noble: drop trainedSkill / trainedLore / grantedFeatId and author trainedSkillChoice:[\"crafting\",\"society\",\"athletics\",\"survival\",\"diplomacy\",\"deception\"] and grantedFeatByChoice:{\"crafting\":\"specialty-crafting\",\"society\":\"multilingual\",\"athletics\":\"underwater-",
+   "playerVisible": true
+  },
+  {
+   "id": "raised-by-belief-no-trained-skill",
+   "claim": "Raised by Belief trains no skill at all in our engine: the record carries no trainedSkill/trainedSkillChoice, and the deity's skill is trained only for clerics, so a non-cleric gets zero skill training from this background while WG delivers a trained skill.",
+   "fixed": true,
+   "fix": "Add a Background flag trainedSkillFromDeity?: boolean to src/rules/types.ts (beside trainedSkill, ~line 2339), set it true on backgrounds.raised-by-belief in public/core.json, and in the background block of the skills walk in src/rules/build.ts (~line 2833, next to `const bgTrainedSkill = background",
+   "playerVisible": true
+  },
+  {
+   "id": "conservator-accounting-lore-duplicate",
+   "claim": "Conservator delivers two Lore trainings: the unconditional trainedLore \"Accounting\" fires on top of the conservatorLore choice, so picking Underworld Lore still trains Accounting Lore, and picking Accounting Lore trains it twice under two differently-cased proficiency keys.",
+   "fixed": true,
+   "fix": "Delete trainedLore:\"Accounting\" from backgrounds.conservator in public/core.json and leave choice.conservatorLore as the sole Lore carrier. (Equivalent alternative, matching how the other OR-of-two-Lores backgrounds are modelled: replace both with trainedLoreOptions:[\"accounting\",\"underworld\"], whic",
+   "playerVisible": true
+  },
+  {
+   "id": "out-of-towner-double-lore",
+   "claim": "Out-of-Towner grants two Lore trainings and asks two questions where print grants one: trainedLoreChoice:true opens a free-text Lore box on top of the ancestryLore picker, and both readers train a Lore independently.",
+   "fixed": true,
+   "fix": "Delete trainedLoreChoice:true from backgrounds.out-of-towner in public/core.json. The choice.ancestryLore picker is the correct single carrier and already trains the picked Lore through src/rules/build.ts:2858; removing the flag also removes the duplicate free-text SubCard in src/builder/shared.tsx:",
+   "playerVisible": true
+  },
+  {
+   "id": "raised-by-belief-divine-attribute-boost",
+   "claim": "Raised by Belief's first attribute boost must come from the deity's Divine Attribute, and neither side models the constraint — our record and WG both offer two entirely free boosts.",
+   "fixed": true,
+   "fix": "Residual read — no carrier on either side. Concrete option if the owner wants it modelled: extend AbilityBoost in src/rules/types.ts with a kind whose options are resolved at build time from content.deities[build.deityId] (the same deity dereference boundBackgroundGrantChoice already performs at src",
+   "playerVisible": true
+  },
+  {
+   "id": "child-of-the-colony-business-discount",
+   "claim": "Child of the Colony's business-connection 10% discount has no carrier anywhere on our side or theirs — and the paragraph is absent from the AoN mirror entirely, so it is worth confirming it belongs on the record at all.",
+   "fixed": true,
+   "fix": "Two-part: (1) confirm the paragraph against the Shades of Blood Player's Guide — if it is genuine, our description is correct and the AoN mirror is short; if not, trim it from public/core-descriptions.json backgrounds.child-of-the-colony.d. (2) Assuming genuine, leave the discount unmodelled — there",
+   "playerVisible": true
+  },
+  {
+   "id": "song-of-the-deep-breathe-underwater",
+   "claim": "Song of the Deep's printed water-breathing has no carrier anywhere in our engine — the record has no `breathesWater` field, and `derive.ts` never sweeps backgrounds for one, so the field would have no reader even if authored (\"no reader\").",
+   "fixed": true,
+   "fix": "Residual-read lane. (1) Declare `breathesWater?: boolean` on `interface Background` (src/rules/types.ts:2301) — the same field name Heritage/Feat/ClassFeature/Item already use. (2) Add `\"breathesWater\": true` to backgrounds/song-of-the-deep in public/core.json. (3) Extend the `breathesWater` fold in",
+   "playerVisible": true
+  },
+  {
+   "id": "song-of-the-deep-special-second-boost",
+   "claim": "The printed Special — trade air-breathing for a second, free attribute boost — is modelled by neither side; our record has exactly one boost slot and no way to opt into the trade, so the player silently loses a boost they are entitled to.",
+   "fixed": true,
+   "fix": "Residual-read lane, two parts. (1) Author the toggle on the record as the background's own sub-choice (the lane shared.tsx:2932 already renders and build.ts:2858 already classifies): `choice: { flag: 'songOfTheDeepAir', prompt: 'Air breathing', kind: 'array', options: [{value:'keep-air',label:'Keep ",
+   "playerVisible": true
+  },
+  {
+   "id": "magical-experiment-one-ability-only",
+   "claim": "Print grants exactly ONE special ability, and their encoding enforces that with a single select of one ability block, but our four `effectChoices` are ungated siblings — a character can be handed Enhanced Senses' sense, Resistant Skin's two resistances and Touch Telepathy all at once.",
+   "fixed": true,
+   "fix": "Adopt their exclusivity. Add a sibling-answer gate to `interface EffectChoice` (src/rules/types.ts:1847) alongside `requiresFeature`/`requiresNoGateFork` — e.g. `requiresChoice?: { id: string; values: string[] }` — and honour it in `effectChoiceOffered` (src/rules/build.ts:1437) by reading `build.ef",
+   "playerVisible": true
+  },
+  {
+   "id": "firebrand-follower-stray-skill-choice",
+   "claim": "Firebrand Follower carries a second, unrestricted skill picker (`choice` flag 'firebrandSkill', kind 'skills') on top of its correct `trainedSkillChoice`, so the builder asks the Athletics-or-Performance question twice and the second copy trains ANY skill the character is trained in — wider than the printed two.",
+   "fixed": true,
+   "fix": "Delete the `choice` object from backgrounds/firebrand-follower in public/core.json. `trainedSkillChoice: ['athletics','performance']` is the record's only correct carrier for this sentence: it already renders the two-option picker, already trains the pick, and is already the source BACKGROUND_GRANT_",
+   "playerVisible": true
+  },
+  {
+   "id": "artist-duplicate-specialty-picker",
+   "claim": "Artist asks for the Specialty Crafting specialty twice — once through the record's own `choice` (which is inert) and once through the granted feat's picker (which is live) — for a single printed pick.",
+   "fixed": true,
+   "fix": "Delete the `choice` object from backgrounds/artist in public/core.json. The granted feat's own picker (grantedChoicePicker → grantedFeatChoices['specialty-crafting']) is the live carrier — it is the one that lands on feats[].choice, labels the feat on the sheet, and hangs the Specialty Crafting `*` ",
+   "playerVisible": true
+  },
+  {
+   "id": "sally-guard-neophyte",
+   "claim": "The background's starting gear (riding horse, shoddy half-plate, shoddy longsword, shoddy lance) is delivered by no carrier of ours — Background has no `grantsItems` field and buildCharacter's granted-items loop never reads the background, so it is a no-reader gap, while WG hands out three items.",
+   "fixed": true,
+   "fix": "Add `grantsItems?: DefenseGrants['grantsItems']` to `interface Background` (src/rules/types.ts, beside `grantsLanguages`), add a background arm to the grantedItems loop in src/rules/build.ts:6446-6494 (`const bg = resolveBackground(build, content); for (const g of bg?.grantsItems ?? []) …`, source =",
+   "playerVisible": true
+  },
+  {
+   "id": "seer-of-the-dead",
+   "claim": "WG applies Spirit Sense's always-on bonuses permanently (+1 status Perception to Seek and +1 status to all three saves against haunts and spirits); we apply none of them — the record has no `situational` field and situationalBonuses.ts has no `seer-of-the-dead` key, so no stat is ever starred.",
+   "fixed": true,
+   "fix": "Author `situational` on public/core.json backgrounds.seer-of-the-dead (read by src/rules/explain.ts:486-492, no code change needed): entries with when \"regarding haunts or spirits (Spirit Sense, active at all times)\" and bonus \"+1 status\" on targets [{kind:'perception'}] (Seek), [{kind:'save',detail",
+   "playerVisible": true
+  },
+  {
+   "id": "seer-of-the-dead",
+   "claim": "Ours encodes the Spirit Sense grant as `atWill: true` — a 2-action, 10-minute castable the player must spend actions on — where the print says the effects are on at all times.",
+   "fixed": true,
+   "fix": "Keep the innateSpells entry as the pointer to the spell's text, but stop it reading as a casting cost: add a `spellNotes` entry on backgrounds.seer-of-the-dead — {spellId:\"spirit-sense\", note:\"You have the effects of Spirit Sense at all times; you never spend actions to cast it and the 10-minute dur",
+   "playerVisible": true
+  },
+  {
+   "id": "streetfood-vendor",
+   "claim": "Two of our carriers independently deliver this background's trained skill from two separately-stored answers, so a player who answers one picker and leaves the other at its default is trained in BOTH Crafting and Society.",
+   "fixed": true,
+   "fix": "Delete the `choice` block from public/core.json backgrounds.streetfood-vendor (and from backgrounds.pillar, backgrounds.historical-reenactor, backgrounds.aon-historical-reeanactor, the other three carrying flag \"backgroundSkillChoice\"), leaving trainedSkillChoice + BuildState.backgroundSkillChoice a",
+   "playerVisible": true
+  },
+  {
+   "id": "mechanical-symbiosis",
+   "claim": "The printed second trained skill is never granted: our `choice` is kind:'skills', whose option list is built from the skills the character is ALREADY trained in, so the pick can only re-train something they have — WG grants a genuinely new trained skill.",
+   "fixed": true,
+   "fix": "Add \"minRank\": \"untrained\" to backgrounds.mechanical-symbiosis.choice in public/core.json. `FeatChoiceDef.minRank` already exists for exactly this (src/rules/types.ts:2583) and both readers honour it (`def.minRank ?? 'trained'` at src/rules/build.ts:1755 and src/builder/shared.tsx:2946); the profici",
+   "playerVisible": true
+  }
+ ],
+ "refuted": [
+  {
+   "id": "stargazer",
+   "claim": "Stargazer's printed innate sense of time is delivered by no carrier on either side — our record has no situational/senses/grantsActions/degreeShifts field for it and no reader anywhere in src matches ",
+   "why": "The mechanical half of the claim checks out — public/core.json backgrounds.stargazer carries no situational/senses/grantsActions/degreeShifts, src/rules/backgroundGrants.ts:78 binds only Assurance, situationalBonuses.ts's only \"stargazer\" hit is the "
+  },
+  {
+   "id": "haunted-frightened-cost",
+   "claim": "The frightened cost that pays for Haunted's +1 circumstance bonus is stated nowhere on our side — our situationalBonuses entry advertises the upside and cuts off with an ellipsis before the price, so ",
+   "why": "The cost is delivered by a different carrier, the exact false-positive class to check: public/ast/backgrounds.json haunted renders the full printed clause — \"If you accept but fail the check, you are frightened 2 (frightened 4 on a critical failure)."
+  },
+  {
+   "id": "harrow-chosen-empower-lockout",
+   "claim": "The cost of empowering the Harrow-Chosen cantrip — the cantrip is locked out until the next daily preparations — is stated nowhere on our side, so all four empower benefits read as repeatable at will.",
+   "why": "Same different-carrier false positive: public/ast/backgrounds.json harrow-chosen renders \"If you empower your cantrip in this way, you can't cast that cantrip again until your next `rules:daily-preparations`\" as a live link, and core-descriptions.jso"
+  },
+  {
+   "id": "tree-friend",
+   "claim": "The Arboreal language Tree Friend opens up is delivered by no carrier of ours — Arboreal is `rarity: \"uncommon\"` in core.json languages, so without a grant it is unreachable for the character.",
+   "why": "The rarity premise is false: neither language picker filters on rarity — src/builder/shared.tsx:3958 builds `available` from all of content.languages excluding only already-known ones (its own comment says the ancestry list is \"surfaced FIRST rather "
+  }
+ ],
+ "refutedPattern": "Only 4 of 46 refuted (9%) — the background bucket is simpler than ancestries; two refutations were again the AST render carrier already delivering the prose.",
+ "flaggedResidues": [
+  {
+   "id": "per-spell-key-ability",
+   "note": "scion-of-slayers prints \"you can use Intelligence as your spellcasting ability for this innate spell\"; the pooled innate entry holds ONE keyAbility, so the clause ships as a spellNote. A per-spell key-ability override (entry.spellKeyAbilities + per-spell DC display) is the real lane."
+  },
+  {
+   "id": "raised-by-belief-divine-attribute",
+   "note": "the first attribute boost must be the deity's Divine Attribute; deities carry no attribute field in our data, so the restriction is unmodelled on both sides. Needs deity attribute data before a lane can exist."
+  },
+  {
+   "id": "shoddy-items",
+   "note": "sally-guard-neophyte's gear is printed SHODDY (-2 item penalty); no shoddy model exists on either side — carried as a dataWarning on the background."
+  }
+ ],
+ "closed": true,
+ "complete": true
+}

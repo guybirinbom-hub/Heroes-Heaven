@@ -1,0 +1,505 @@
+{
+ "batch": 16,
+ "records": [
+  {
+   "id": "spirit-dwelling",
+   "verdict": "FIXED",
+   "evidence": "[ALREADY-FIXED, confidence high] [regressed-batch re-read, verified] BATCH 16. Prior parity verdict THEY-ENCODE-NOTHING-USEFUL: \"Their only op is an opaque ability-block grant; the flattened encoding carries no numbers, targets or grants.\" RECONCILING THE TWO — THE IDENTITY GATE IS RIGHT AND THE BATCH-16 VERDICT IS WRONG AS WRITTEN. Read on the raw op trees on both sides, which is what a settle or a dismissal requires. The batch-16 reader was right about ONE thing and wrong about the conclusion: the TARGET ability_block 25715 has an empty `operations` column, so when the tree is flattened (parseOps → flattenOps, the path wg-diff and wg-values both take) it yields an op with no variable, no value and no target — nothing to compare a NUMBER against. That is a true statement about the VALUES screen. But the op itself is not opaque: `abilityBlockId: 25715` resolves in the same dump to a named record, \"Collect  FIXED THIS PASS: overlay: Row {category:'items', id:'spirit-dwelling', field:'grantsActions', value:['collect-spirit-remnant']} in scripts/data/effect-backfill.json. This is exact parity with their carrier: WG hangs the grant  | overlay: REQUIRED SECOND ROW — without it the first is write-only. Row {category:'feats', id:'exorcist-dedication', field:'grantsItems', value:[{itemId:'spirit-dwelling', worn:true}]}, replacing the current [{ | src-edit: ALTERNATIVE TO THE SECOND ROW, and the semantically honest one — pick this OR the worn:true row, not both. Widen the item source at src/sheet/MainTab.tsx:265-268 so an item's grantsActions is not gate"
+  },
+  {
+   "id": "camouflaging-chromatophores-lesser",
+   "verdict": "MATCHES",
+   "evidence": "They add +1 to Stealth annotated \"to Sneak and Hide\". Ours is src/rules/situationalBonuses.ts:2565 — targets skill/stealth, when \"on Stealth checks to Sneak and Hide\", bonus \"+1 item\". Same stat, same size, same restriction; ours follows the owner's restricted-bonus-as-star ruling instead of folding a conditional bonus into the flat total. Once-per-day activation is on the record as a `freq` counter + 2-action activation."
+  },
+  {
+   "id": "healers-gloves",
+   "verdict": "MATCHES",
+   "evidence": "They add +1 Medicine unconditionally. Ours is on the record itself: public/core.json items.healers-gloves `passiveEffects.skills.medicine = 1`, read numerically by the item passive walk in src/rules/derive.ts (lines 278/308, gated on `itemInUse`). The printed clause is unconditional, so a flat number is correct on both sides. The 1/day Healer's Touch is a `freq` counter + 1-action activation."
+  },
+  {
+   "id": "wildwood-ink",
+   "verdict": "MATCHES",
+   "evidence": "They add +1 Stealth flat with the forest upgrade only as text. We split it correctly: `passiveEffects.skills.stealth = 1` on the record supplies the unconditional +1, and src/rules/situationalBonuses.ts:1644 carries the conditional half — \"+2 item (in place of the unconditional +1)\" while in a forest, worded so it cannot be read as stacking. Same base number reaches the player; the forest case is stated rather than silently dropped."
+  },
+  {
+   "id": "shining-hackle",
+   "verdict": "MATCHES",
+   "evidence": "[MATCHES-ON-REVIEW, confidence high] [regressed-batch re-read, verified] BATCH 16. WHY IT RE-OPENED — comparer-side, not data-side. The overlay row is byte-identical to HEAD: `git show HEAD:scripts/data/effect-backfill.json` yields {\"category\":\"items\",\"id\":\"shining-hackle\",\"field\":\"passiveEffects\",\"value\":{\"skills\":{\"stealth\":-1},\"perception\":1}} — the same value the working tree holds, so no regeneration dropped anything and no recent fix regressed it. scripts/wg-values.mjs is an UNTRACKED file (`git status --short` → `?? scripts/wg-values.mjs`), i.e. the value comparer itself is new; this row is a comparer taught a new field (item `passiveEffects.skills`, read at :648), and the field it was taught it reads asymmetrically. THE ASYMMETRY, EXACTLY. THEIR side is normalised to magnitude at scripts/wg-values.mjs:257-261, deliberately: \"A PENALTY is the same rule as its magnitude: theirs writes -2, ours writes the"
+  },
+  {
+   "id": "phantom-roll",
+   "verdict": "MATCHES",
+   "evidence": "They add +1 Stealth with the Avoid Notice restriction as text. Ours is src/rules/situationalBonuses.ts:1492 — skill/stealth, \"on Stealth checks made during the Avoid Notice exploration activity (24 hours, or until your next daily preparations)\", \"+1 item\". Same stat, same size, same restriction, plus the duration their text omits."
+  },
+  {
+   "id": "golden-greaves",
+   "verdict": "MATCHES",
+   "evidence": "Both sides carry two +1 item bonuses against forced movement and against being knocked prone. Ours is src/rules/situationalBonuses.ts:2515 — save/fortitude \"+1 item to your Fortitude DC (not to your Fortitude save)\" for Shove/Reposition/forced movement, and save/reflex \"+1 item to your Reflex DC (not to your Reflex save)\" for Trip/prone. Theirs hangs the same two numbers on the save statistics with the DC wording only in text; ours follows the printed sentence (both bonuses are to DCs) per the owner's DC-only ruling."
+  },
+  {
+   "id": "cloak-of-repute",
+   "verdict": "MATCHES",
+   "evidence": "They add +1 Diplomacy restricted to Make an Impression. Ours is src/rules/situationalBonuses.ts:2399 with the same stat, size and restriction (\"while wearing the cloak\"). We additionally carry the activation's success-to-critical-success upgrade as a `degreeShifts` entry on the record (skills: diplomacy, actions: request), which their ops do not encode — a field we carry because the printed text states it, not a divergence."
+  },
+  {
+   "id": "hunters-brooch",
+   "verdict": "MATCHES",
+   "evidence": "Their single op grants a spell; the printed text names Vitality Lash as an innate divine cantrip. Our record carries `innateSpells: [{ spellId: 'vitality-lash', tradition: 'divine', atWill: true }]`. Checked the target record: core.json spells['vitality-lash'] is `edition: 'remaster'`, rank 0, cantrip trait — not a superseded printing. At-will is correct for a cantrip and the engine auto-heightens innate cantrips (InnateSpellGrant docs, src/rules/types.ts)."
+  },
+  {
+   "id": "marvelous-calliope",
+   "verdict": "MATCHES",
+   "evidence": "They add +1 Performance restricted to playing the calliope. Ours is src/rules/situationalBonuses.ts:1072 — skill/performance, \"on Performance checks to play the unfolded calliope (1-minute activation to deploy it)\", \"+1 item\". Same stat, size and restriction; the once-per-hour Charm activation is a `freq` counter (per hour) plus a 2-action activation cost on the record."
+  },
+  {
+   "id": "hunters-arrowhead",
+   "verdict": "MATCHES",
+   "evidence": "They encode +1 Survival and +1 to attack rolls, both restricted to your Hunt Prey target. Ours is src/rules/situationalBonuses.ts:1054 with three entries: skill/survival +1 item vs your prey, strikeAttack +1 item vs your prey, and the once-per-day reaction \"+2 circumstance\" on a would-be miss with a bow, which their ops do not encode. Same two stats, same size, same Hunt Prey restriction."
+  },
+  {
+   "id": "spore-shepherds-staff-major",
+   "verdict": "MATCHES",
+   "evidence": "They add +2 Nature to identify fungus. We carry the same clause: an authored `situational` entry on the record (skill/nature, \"while wielding the staff, on Nature checks to identify fungus\", \"+2 circumstance\") and the identical shipped entry at src/rules/situationalBonuses.ts:2444. Same stat, size, type and restriction reach the player."
+  },
+  {
+   "id": "pipes-of-compulsion",
+   "verdict": "MATCHES",
+   "evidence": "They add +1 Performance and +1 Diplomacy. Ours is src/rules/situationalBonuses.ts:1538 — both skills, \"+1 item\", scoped \"while you are playing the pipes (held in two hands)\", which is the printed restriction their ops carry only implicitly. Held spells (daze; charm/command/fear) and the charge pool are on the record and match the printed list."
+  },
+  {
+   "id": "demon-mask",
+   "verdict": "MATCHES",
+   "evidence": "They add +1 Intimidation, unconditional. We carry it as a number on the record: `passiveEffects.skills.intimidation = 1`, folded into the Intimidation total by the item passive walk in src/rules/derive.ts. The 1/day Fear activation is a `freq` counter plus a 2-action activation cost."
+  },
+  {
+   "id": "pickpockets-tailoring",
+   "verdict": "MATCHES",
+   "evidence": "They add +1 Stealth restricted to Concealing an Object of light Bulk or less in the pockets. Ours is src/rules/situationalBonuses.ts:1315 with the same stat, size and restriction (\"inside the garment's hidden pockets\"). The record's usage is sewn-into-clothing so it is in use whenever worn."
+  },
+  {
+   "id": "aeon-stone-repairing",
+   "verdict": "MATCHES",
+   "evidence": "[MATCHES-ON-REVIEW, confidence high] [regressed-batch re-read, verified] BATCH 16. WHY RE-OPENED: a comparer taught new fields; the gap never existed in our data. `git status` shows `?? scripts/wg-identity.mjs` — the names comparer is UNTRACKED, i.e. the newest of the three, and it never received the two `resonant` descents its committed sibling scripts/wg-diff.mjs already carries. wg-diff.mjs:290 lists 'resonant.innateSpells' in the `spell` kind list with the comment \"a reader that only looks at top-level fields calls 15 stones spell-less\"; wg-diff.mjs:616-627 does `kinds.add('choice')` for any record with `resonant`, commented \"Their side encodes 'is this stone slotted in a wayfinder?' as a `select` with two branches... Ours is a per-item designation the player toggles on the stone itself... Same question asked, same two answers; only the control differs.\" wg-identity.mjs has NEITHER: its ours-side spell col"
+  },
+  {
+   "id": "bagpipes-of-turmoil",
+   "verdict": "MATCHES",
+   "evidence": "They add +1 Performance (while playing) and +1 Intimidation to Demoralize (while playing). We carry the Performance half as a number (`passiveEffects.skills.performance = 1`) and both halves as stars at src/rules/situationalBonuses.ts:1466 with the identical restrictions. Charge pool and held spells (daze; bane) match the printed list."
+  },
+  {
+   "id": "spyglass-fine",
+   "verdict": "MATCHES",
+   "evidence": "They add +1 Perception restricted to noticing details at a distance. Ours is src/rules/situationalBonuses.ts:1617 — kind perception, \"to notice details at a distance while looking through the spyglass (two hands)\", \"+1 item\". Same stat, size and restriction; the two-hands qualifier matches the record's `usage: held-in-two-hands`."
+  },
+  {
+   "id": "aeon-stone-formulating",
+   "verdict": "MATCHES",
+   "evidence": "[MATCHES-ON-REVIEW, confidence high] [regressed-batch re-read, verified] BATCH 16. WHY RE-OPENED: comparer taught new fields — identical cause to aeon-stone-repairing. wg-identity.mjs is untracked (`??` in git status) and lacks both `resonant` descents that wg-diff.mjs:290 and wg-diff.mjs:616-627 already carry. Our data is intact and unregenerated. Rank/casts agree exactly (theirs rank 1 casts 1; ours rank 1 usesPerDay 1); the tradition they omit is not a disagreement — print states \"arcane\" and our note transcribes it, and their giveSpell simply carries no tradition key. Name join checked: key('phantasmal-minion') normalises to 'phantasmalminion', exactly the key wg-identity reports as theirs-not-ours. RAW OP TREE READ ON BOTH SIDES. Corroborated by scripts/verify-aeon-parity.mjs (this stone is in its AGREE set)."
+  },
+  {
+   "id": "composer-staff",
+   "verdict": "MATCHES",
+   "evidence": "They add +1 Performance restricted to playing the staff as an instrument. We carry it as a number (`passiveEffects.skills.performance = 1`) and as a star at src/rules/situationalBonuses.ts:1453 with the same restriction. Charges and held spells (haunting-hymn, summon-instrument; concordant-choir) match the printed list, and all three spell records are remaster-edition, not superseded."
+  },
+  {
+   "id": "spore-shepherds-staff",
+   "verdict": "MATCHES",
+   "evidence": "They add +2 Nature to identify fungus. We carry the same clause twice over: the record's authored `situational` entry (skill/nature, +2 circumstance, while wielding) and the identical shipped entry at src/rules/situationalBonuses.ts:1797. Same stat, size, bonus type and restriction reach the player."
+  },
+  {
+   "id": "banner-of-the-restful",
+   "verdict": "MATCHES",
+   "evidence": "They add +1 Perception annotated \"to DCs\". Ours is src/rules/situationalBonuses.ts:2037 — kind perception, \"to your Perception DC (not your Perception checks) while within the banner's aura\", \"+1 item\", which states the DC scope the printed text gives. The banner is reachable while affixed or held because `itemInUse` (src/rules/derive.ts:240) accepts `attachedTo`."
+  },
+  {
+   "id": "divers-gloves-lesser",
+   "verdict": "MATCHES",
+   "evidence": "They add +1 Athletics restricted to Swim. Ours is src/rules/situationalBonuses.ts:1664 — skill/athletics, \"to Swim, while wearing the gloves\", \"+1 item\". Same stat, size and restriction. The falling-into-water reaction is a `reaction` activation cost on the record."
+  },
+  {
+   "id": "vengeful-arm",
+   "verdict": "MATCHES",
+   "evidence": "Their only mechanical op is +1 Society. We carry the same number on the record (`passiveEffects.skills.society = 1`), plus a `grantedStrikes` entry for the Retribution Axe the activation produces (1d12 slashing, magical/sweep, axe group) which their ops do not encode. The extra is printed text we model, not a divergence."
+  },
+  {
+   "id": "belt-of-good-health",
+   "verdict": "MATCHES",
+   "evidence": "They add +4 max HP. We do the same numerically: core.json items['belt-of-good-health'] `maxHpBonus.flat = 4`, and `featHpBonus` at src/rules/derive.ts:778-795 walks worn/invested/equipped ITEMS as well as feats, so the +4 lands in max HP. The record's `situational` hp entry is the display twin naming the on-removal loss; it changes no number."
+  },
+  {
+   "id": "gas-mask-of-clean-air",
+   "verdict": "MATCHES",
+   "evidence": "They add +1 to each of Fortitude, Reflex and Will against inhaled poisons, inhaled diseases and olfactory effects. Ours is one entry covering all three: src/rules/situationalBonuses.ts:2204 — save with `detail: 'all'` (which `targetMatches` reads as all three saves), same restriction, \"+1 item\". The 1/day immunity activation is a `freq` counter plus a 1-action cost."
+  },
+  {
+   "id": "alchemist-goggles",
+   "verdict": "MATCHES",
+   "evidence": "They encode only +1 Crafting to Craft alchemical items. Ours is src/rules/situationalBonuses.ts:1023 with that same clause, plus a second entry their ops omit: strikeDamage \"+1 item\" on the splash damage of a bomb Strike that fails but does not critically fail. The extra comes from the printed text, so it is not a divergence."
+  },
+  {
+   "id": "killers-belt",
+   "verdict": "MATCHES",
+   "evidence": "They add +1 Intimidation, unconditional. We carry the same number on the record (`passiveEffects.skills.intimidation = 1`), applied by the item passive walk in src/rules/derive.ts. The 1/day Bleeding Rubies activation is a `freq` counter plus a 1-action activation cost."
+  },
+  {
+   "id": "aeon-stone-clear-quartz-octagon",
+   "verdict": "MATCHES",
+   "evidence": "[MATCHES-ON-REVIEW, confidence high] [regressed-batch re-read, verified] BATCH 16. WHY RE-OPENED: comparer taught new fields. This is the cleanest proof that our data was never the problem — the two sides agree on tradition, rank AND casts, and scripts/verify-aeon-parity.mjs prints it verbatim in its AGREE sample: \"aeon-stone-clear-quartz-octagon: theirs divine rank 1 casts 1 | ours mending divine rank 1 casts 1\". wg-identity nonetheless reports \"spells theirs-not-ours=[mending] ours=[(nothing)]\" purely because ourIdentities() stops at top-level `innateSpells` (wg-identity.mjs:200) and our mending lives at `resonant.innateSpells`. Not a regeneration drop and not a regression: the overlay row is present today and dates from commit b673684. RAW OP TREE READ ON BOTH SIDES. OUT-OF-GATE OBSERVATION for the owner, not part of this finding: our record carries activationCost {type:'actions', value:1} while print says"
+  },
+  {
+   "id": "three-pillared-yang-na",
+   "verdict": "MATCHES",
+   "evidence": "They add +1 Diplomacy (the first blessing). We carry the same number on the record: `passiveEffects.skills.diplomacy = 1`. The second and third blessings are activations — the record carries a 1-action activation cost and the printed text; their ops encode neither."
+  },
+  {
+   "id": "warpipes",
+   "verdict": "MATCHES",
+   "evidence": "They encode only +1 Performance while playing. Ours is src/rules/situationalBonuses.ts:606 with that same clause plus two their ops omit: +1 status to damage rolls (strikeDamage and spellDamage) and +1 status to saves against fear, both for 1 minute after the Inspirational Salute activation. The extras come from the printed text. The 1/day activation is a `freq` counter plus a 2-action cost."
+  },
+  {
+   "id": "bolkas-blessing",
+   "verdict": "THEY-ENCODE-NOTHING-USEFUL",
+   "evidence": "[THEY-ENCODE-NOTHING-USEFUL, confidence high] [regressed-batch re-read, verified] BATCH 16. WHY IT IS OPEN NOW: a comparer classification artefact, not a data change. scripts/wg-diff.mjs kindOfTheirOp() routes an addBonusToValue by matching its `data.variable` against a chain of patterns; a variable of \"\" matches none of them and falls to the named fallback at wg-diff.mjs:214, `return 'unmapped'`. The gate then reports `bolkas-blessing missing=[unmapped]` — which reads like a lane we have not built, when in fact there is nothing on their side to build to. work/wg-batch-016-parity.json already holds this record with verdict MATCHES and the correct reasoning (\"Their two ops flatten without targets or values, so only the shape is comparable\"), so the read was done and the gate simply re-raises it. I MEASURED THE BLAST RADIUS before proposing the general fix: across BOTH their tables (ability_block and item), flattening ev"
+  },
+  {
+   "id": "borts-blessing",
+   "verdict": "MATCHES",
+   "evidence": "They add +1 Diplomacy annotated \"To Make an Impression\". We apply the same number: `passiveEffects.skills.diplomacy = 1` on the record, with the restriction stated as a star at src/rules/situationalBonuses.ts:1030. The daily language choice is printed prose on both sides."
+  },
+  {
+   "id": "sinuous-recorder",
+   "verdict": "MATCHES",
+   "evidence": "They add +1 Performance while playing music with the instrument. Ours is src/rules/situationalBonuses.ts:2198 — skill/performance, \"on Performance checks made by playing music with this instrument\", \"+1 item\". Same stat, size, restriction. The 1/day Sooth Serpents activation is a `freq` counter plus a 2-action cost."
+  },
+  {
+   "id": "cooperative-waffles-greater",
+   "verdict": "THEY-ENCODE-NOTHING-USEFUL",
+   "evidence": "Both of their ops are text injections — display-only prose repeating the printed clause, carrying no stat, value or target. For the record, ours does model it: src/rules/situationalBonuses.ts:1475 raises the Follow the Expert circumstance bonus by 1 and the Aid bonus by 1, on skill `detail: 'all'`."
+  },
+  {
+   "id": "slick",
+   "verdict": "MATCHES",
+   "evidence": "They add +1 Acrobatics to Escape and Squeeze. Ours is src/rules/situationalBonuses.ts:1750 — skill/acrobatics, \"on Acrobatics checks to Escape or Squeeze, while wearing the etched armor\", \"+1 item\". Reachability confirmed: `characterSituationalIds` (src/rules/explain.ts:238) pushes every id in `inv.runes.property`, so the clause survives etching rather than dying at the moment the rune goes on the armour."
+  },
+  {
+   "id": "ring-of-minor-arcana",
+   "verdict": "MATCHES",
+   "evidence": "They grant three spells; the printed text names Detect Magic, Telekinetic Hand and Prestidigitation as at-will arcane innate cantrips. Our record carries exactly those three as `innateSpells` with `tradition: 'arcane', atWill: true`. Checked each target record for the superseded trap: core.json spells for all three are `edition: 'remaster'`, rank 0, cantrip trait. At-will with engine auto-heightening is the standard innate-cantrip treatment (src/rules/types.ts, InnateSpellGrant)."
+  },
+  {
+   "id": "arboreal-boots",
+   "verdict": "MATCHES",
+   "evidence": "They add +1 Acrobatics, unconditional. We carry the same number on the record: `passiveEffects.skills.acrobatics = 1`, folded into the Acrobatics total by the item passive walk in src/rules/derive.ts. The difficult-terrain clause is printed prose neither side encodes as a number."
+  },
+  {
+   "id": "boots-of-free-running-lesser",
+   "verdict": "MATCHES",
+   "evidence": "They add +1 Acrobatics to Balance and +1 Athletics to High Jump and Long Jump. Ours is src/rules/situationalBonuses.ts:1660 with two entries carrying exactly those two stats, sizes and restrictions. The 1/day wall-running activation is a `freq` counter plus a 1-action cost on the record."
+  },
+  {
+   "id": "ginger-chew",
+   "verdict": "MATCHES",
+   "evidence": "They add +1 Fortitude against being sickened. We do better than a note: core.json modes `item-ginger-chew` (fromItemId ginger-chew, duration 1 hour) carries `{ value: 1, type: 'item', target: 'save', detail: 'fortitude', appliesWhen: 'against being sickened' }`, so the number actually applies when the player toggles the mode, and src/rules/situationalBonuses.ts:1485 carries the matching star. Same stat, same size, same restriction."
+  },
+  {
+   "id": "crackling-bubble-gum-lesser",
+   "verdict": "MATCHES",
+   "evidence": "They add +1 to each of the three saves against auditory and sonic effects. Ours reaches the same result twice over: core.json modes `item-crackling-bubble-gum-lesser` (duration up to 10 minutes) carries `{ value: 1, type: 'item', target: 'save', appliesWhen: 'against auditory and sonic effects' }` with no `detail`, i.e. all three saves, and src/rules/situationalBonuses.ts:1477 carries the matching star with `detail: 'all'`."
+  },
+  {
+   "id": "sneaky-key",
+   "verdict": "MATCHES",
+   "evidence": "They add +1 Thievery to Pick a Lock. Ours applies the number: core.json modes `item-sneaky-key` (duration 1 minute) carries `{ target: 'skill', detail: 'thievery', type: 'status', value: 1, appliesWhen: 'to Pick a Lock' }`, and src/rules/situationalBonuses.ts:1776 carries the matching star, which also records the trained-in-Thievery requirement and the extra complex-lock success their ops omit. Note the bonus type: the printed text says status, and our mode says status."
+  },
+  {
+   "id": "trudds-strength",
+   "verdict": "MATCHES",
+   "evidence": "They add +1 Athletics and +1 Intimidation to Coerce. We split them by whether the printed clause is conditional: `passiveEffects.skills.athletics = 1` on the record for the unconditional half, and src/rules/situationalBonuses.ts:1982 for the Intimidation star restricted to Coerce. Same two stats, same sizes, same restriction."
+  },
+  {
+   "id": "underbrush-cloak",
+   "verdict": "MATCHES",
+   "evidence": "Same skill (Stealth), same value (+1), same bonus type (item), same restriction. Their row carries a restriction note, which is the same shape as our display-only registry (situationalBonuses.ts header: the registry FLAGS the stat and lists the condition rather than folding a number in). Nothing on the record double-applies it — core.items/underbrush-cloak has no passiveEffects."
+  },
+  {
+   "id": "knights-maintenance-kit",
+   "verdict": "MATCHES",
+   "evidence": "Skill, value, bonus type and restriction all agree. Neither side encodes the printed \"restore an additional 5 Hit Points\" clause, so there is no divergence there either."
+  },
+  {
+   "id": "armor-potency-1",
+   "verdict": "MATCHES",
+   "evidence": "[MATCHES-ON-REVIEW, confidence high] [regressed-batch re-read, verified] BATCH 16. WHY IT IS OPEN NOW — two causes, neither a regression: (1) A COMPARER TAUGHT A NEW FIELD. scripts/wg-values.mjs is UNTRACKED in git (`git ls-files` returns only wg-diff.mjs of the four comparers), i.e. the entire value comparer post-dates the last commit, and its own header note says of the variable it now maps: \"Untaught, every one of their 1,613 AC_BONUS ops read as 'nobody has taught this'\" (wg-values.mjs:77-81, `AC_BONUS: ['ac', null]`). The batch-16 packets were cut 2026-08-25 13:18; wg-values.mjs and wg-diff.mjs were last written 15:33 and 17:36 the same day. So the `VALUES MISSING ac| theirs=1 ours=(nothing)` row is newly visible on a gap that always existed. (2) THE ADJUDICATION WAS NEVER SETTLED. work/wg-batch-016-parity.json already holds this record with verdict MATCHES and the evidence \"the mechanic lives in the rune"
+  },
+  {
+   "id": "uzunjati-storytelling-amulet",
+   "verdict": "MATCHES",
+   "evidence": "Printed says \"While wearing the amulet, you gain a +1 item bonus to Performance checks\" — unconditional, and our engine already gates item passives on itemInUse (derive.ts:240), which is exactly \"while wearing\". Same skill, value and bonus type on both sides. Neither side encodes the once-per-day Enamoring Story activation as a modifier."
+  },
+  {
+   "id": "assisting",
+   "verdict": "MATCHES",
+   "evidence": "[MATCHES-ON-REVIEW, confidence high] [regressed-batch re-read, verified] BATCH 16. WHY IT IS OPEN NOW — same two causes as armor-potency-1, and the same systemic root: (1) The comparer was taught the field but not the bucket. scripts/wg-diff.mjs:350-356 was recently widened and its own comment names THIS RUNE: \"`bulkLimitBonus` has two homes — top-level on a feat (Beast of Burden) and `passiveEffects.bulkLimitBonus` on an item or rune (Lifting Belt, the Assisting rune) — and only the first was listed, so a correctly authored ITEM read as modelling no carrying capacity at all\", giving `carry: ['bulkBonus','bulkLimitBonus','bulkMaxBonus','passiveEffects.bulkLimitBonus']`. The nested PATH was added; the runes BUCKET was not, so the record still resolves to the chassis and still reports missing. wg-values.mjs:76 likewise maps `BULK_LIMIT_BONUS: ['bulk', null]` and reads it at :608/:615 off `rec.bulkLimitBonus` / `"
+  },
+  {
+   "id": "thunder-helm",
+   "verdict": "MATCHES",
+   "evidence": "Stat-for-stat identical: same sign, same magnitude, same bonus type, same restriction wording, and their three separate save rows equal our single {kind:'save', detail:'all'} target. core.items/thunder-helm carries no passiveEffects, so nothing is double-applied."
+  },
+  {
+   "id": "holy-prayer-beads",
+   "verdict": "MATCHES",
+   "evidence": "Both spells resolve in core.spells at rank 1 with edition \"remaster\" — not a superseded/legacy printing, so the grant points at the record a character actually receives. Rank (1), casts (1 each) and the divine framing all agree with the printed \"Cast Bless or Heal, each once per day\". Neither side models the 1 HP recovery on casting a divine spell while holding them."
+  },
+  {
+   "id": "twilight-tattoo",
+   "verdict": "MATCHES",
+   "evidence": "Printed: \"The bearer gains a +1 item bonus to Deception checks\" — unconditional. Same skill, value and type on both sides. The Fade and Inscribe activations carry no modifier on either side."
+  },
+  {
+   "id": "sun-wheel",
+   "verdict": "MATCHES",
+   "evidence": "Printed: \"While wearing this pendant, you gain a +1 item bonus to Religion checks\" — unconditional while worn, which is what itemInUse (derive.ts:240) already gates on. Same skill, value, type. We additionally carry the Shield activation (core.spells/shield, edition \"remaster\"); they encode nothing there, which the owner's rule leaves alone."
+  },
+  {
+   "id": "spectacles-of-understanding",
+   "verdict": "MATCHES",
+   "evidence": "Same value, same bonus type, same restriction. The only delta is breadth: they file it under Society alone, we flag it on every skill. The printed text says \"a +1 item bonus to checks to Decipher Writing\" and names no skill — Decipher Writing is rolled with Society, Arcana, Occultism, Religion, Crafting or a Lore depending on the subject — so our breadth is the printed scope and their narrowing is a simplification, not a mechanic we are missing. A player rolling the common Society case gets the identical bonus and note."
+  },
+  {
+   "id": "eagle-eye-elixir-moderate",
+   "verdict": "MATCHES",
+   "evidence": "Same base value (+2), same bonus type (item), same upgraded value (+3) for the same narrow case. We spell the non-stacking out where they fold it into the note; the number a player applies is identical either way. core.items/eagle-eye-elixir-moderate carries no passiveEffects, so the +2 is not also folded into the total."
+  },
+  {
+   "id": "merchants-guile",
+   "verdict": "MATCHES",
+   "evidence": "Both skills, both values, the bonus type and the restriction agree exactly. core.items/merchants-guile has no passiveEffects, so the restricted bonus is not also in the total. Neither side encodes the 3-action detect-magic activation as a modifier."
+  },
+  {
+   "id": "aeon-stone-preserving",
+   "verdict": "MATCHES",
+   "evidence": "[MATCHES-ON-REVIEW, confidence high] [regressed-batch re-read, verified] BATCH 16. WHY RE-OPENED: comparer taught new fields — same untracked-wg-identity cause. Both sides encode primal, rank 0, no cast cap; scripts/verify-aeon-parity.mjs agrees. Confirmed by `npm run feat -- aeon-stone-preserving --no-evidence`, which lists `resonant` among the AUTHORED FIELDS and reports its overlay rows (passiveEffects, resistances, resonant) as surviving `npm run data` — so no regeneration dropped anything. RAW OP TREE READ ON BOTH SIDES. TWO OUT-OF-GATE OBSERVATIONS for the owner: (1) our record carries frequency {max:1, per:\"hour\"}, which the printed clause does not state anywhere and their row does not encode; (2) feat-doctor reports \"no authoring script names this record\" even though scripts/backfill-aeon-resonance.mjs is demonstrably the lane owner that wrote the `resonant` row — feat-doctor's owner index does not kno"
+  },
+  {
+   "id": "aeon-stone-agate-ellipsoid",
+   "verdict": "FIXED",
+   "evidence": "[ALREADY-FIXED, confidence high] [regressed-batch re-read, verified] BATCH 16. TWO SEPARATE THINGS, and they have different causes. (a) The reported `options theirs-not-ours=[yes, no]` is the same comparer blind spot as the other four — wg-identity.mjs is untracked and lacks the resonant-select equivalence wg-diff.mjs:616-627 already records; our carrier is the `wayfinder-slotted` designation. No `spells` gap is reported here at all, because our augury sits at top level where the collector already reads it. (b) A REAL DEFECT that the gate did not report and that this read found: the only carrier we have for this resonant power is prose, and the prose is broken. This is IMPORT DAMAGE, not a WG-vs-print contradiction — all three sources agree on the content (print says \"the DC 6 flat check\", their injectText says \"the DC 6 flat check\"), and the phrase was a rules link that the importer stripped along with it FIXED THIS PASS: src-edit: Add a row to the REPAIRS table in scripts/apply-import-damaged-text.mjs — the lane that owns import-deleted prose and the only writer that updates BOTH the durable overlay row and public/core-descript | src-edit: THEN re-run `node scripts/backfill-aeon-resonance.mjs --write` so the derived `resonant` overlay row picks the repaired clause back up. Required and order-dependent: that script reads the clause out o | src-edit: scripts/wg-identity.mjs, theirIdentities() lines 88-93: skip the select titled with their resonant-investment question, mirroring wg-diff.mjs:616-627. Suppress on THEIR side only — do not add 'yes'/'n"
+  },
+  {
+   "id": "beastmasters-sigil",
+   "verdict": "FIXED",
+   "evidence": "[ALREADY-FIXED, confidence high] [regressed-batch re-read, verified] BATCH 16, and it is open on TWO gates, not one: `KINDS: beastmasters-sigil missing=[choice]` from wg-diff, and `IDENTITY: options theirs-not-ours=[armor, meleeweapon, rangedweapon] ours=[(nothing)]` from wg-identity (I ran `node scripts/wg-identity.mjs --batch work/wg-batch-016.json` to get the named row; the gate only prints the count). WHY IT IS OPEN NOW: the batch-16 read settled for the situational stars alone. work/wg-batch-016-parity.json holds verdict MATCHES with the reasoning \"they hold the affix state as an answered question, we hold it as the restriction text on the star, and either way the player applies the same +1\". The VALUES half of that is correct and still holds — wg-values reports `ok beastmasters-sigil (4 values, 0 sets agree)`, i.e. every number on both sides agrees. But the IDENTITY comparer, which is untracked in gi FIXED THIS PASS: overlay: THREE rows in scripts/data/effect-backfill.json, one per grade — the sigil, its greater and its major, because situationalBonuses.ts already carries all three and leaving two without the picker would"
+  },
+  {
+   "id": "spirit-singer",
+   "verdict": "MATCHES",
+   "evidence": "Two rows on each side, same stats, same values, same bonus type, same restrictions. core.items/spirit-singer has no passiveEffects, so neither restricted bonus leaks into a total. Neither side models the \"roll to notice a haunt without Searching\" clause as a modifier."
+  },
+  {
+   "id": "pristine-epaulets",
+   "verdict": "MATCHES",
+   "evidence": "Printed: \"these epaulets grant you a +1 item bonus to Society and Warfare Lore checks\" — unconditional, both sides applied to the total, and our Lore key targets the same specific Warfare Lore rather than a blanket loreBonus. The once-per-day reroll activation carries no modifier on either side."
+  },
+  {
+   "id": "diplomats-badge",
+   "verdict": "MATCHES",
+   "evidence": "Printed: \"You gain a +1 item bonus to Diplomacy checks\" — unconditional, applied to the total on both sides, same value and bonus type. We additionally surface the once-per-day +2 upgrade, which their data does not encode; the owner's rule leaves an extra clause we carry from the printed text alone."
+  },
+  {
+   "id": "silent-heart",
+   "verdict": "MATCHES",
+   "evidence": "Printed: \"This tattoo … provides a +1 item bonus to Occultism checks\" — unconditional, same value, same bonus type, in the total on both sides. The activation's +2 status save bonus is extra on our side only, and comes from the printed text."
+  },
+  {
+   "id": "darkvision-scope",
+   "verdict": "MATCHES",
+   "evidence": "Same stat, value, bonus type and restriction. core.items/darkvision-scope carries no passiveEffects, so the restricted bonus is correctly a star only and not in the total — the opposite of the obsidian-goggles/mirror-goggles leak. The darkvision activation is a sense, not a modifier, on both sides."
+  },
+  {
+   "id": "mariners-splint",
+   "verdict": "MATCHES",
+   "evidence": "Same skill, value, bonus type and restriction. Neither side encodes the printed +5 feet of extra distance on a successful Climb or Swim, so there is no divergence there. Their data says nothing about the armour statistics, which the owner's rule leaves as ours."
+  },
+  {
+   "id": "brazier-of-harmony",
+   "verdict": "MATCHES",
+   "evidence": "Printed: \"While holding the lit censer, you gain a +1 item bonus to Diplomacy checks, whether the censer is activated or not.\" Their restriction note is \"while holding\", which our itemInUse gate already IS — an item not held/worn/invested contributes nothing. So the same player in the same state gets the same +1. Same value and bonus type. The once-per-day Calm activation is a spell effect on neither side."
+  },
+  {
+   "id": "skeleton-key",
+   "verdict": "MATCHES",
+   "evidence": "Same skill, value, bonus type and restriction; we additionally state the broken-key clause from the printed text, which their data omits. core.items/skeleton-key carries no passiveEffects, so the restricted bonus stays a star. The once-per-day Knock activation is a spell on neither side's modifier list."
+  },
+  {
+   "id": "aeon-stone-crescent",
+   "verdict": "MATCHES",
+   "evidence": "Same spell (core.spells/forbidding-ward, rank 0, edition \"remaster\" — not a superseded printing), same tradition (divine), same rank, and the same gate — our 'wayfinder-slotted' designation is exactly the state their question asks about. Their no branch is empty and so is ours."
+  },
+  {
+   "id": "insistent-door-knocker",
+   "verdict": "MATCHES",
+   "evidence": "Same skill, value, bonus type and restriction, including the door-specific narrowing both sides carry. core.items/insistent-door-knocker has no passiveEffects, so nothing leaks into the Thievery total."
+  },
+  {
+   "id": "phantasmal-doorknob",
+   "verdict": "MATCHES",
+   "evidence": "Same question, same bonus, same value, same bonus type, same restriction, and their empty weapon branch matches our weapon option (which carries only the dazzled note). Both granted spells resolve in core.spells at edition \"remaster\" (figment rank 0, phantasmal-treasure rank 2), so neither points at a superseded printing."
+  },
+  {
+   "id": "return-fire",
+   "verdict": "THEY-ENCODE-NOTHING-USEFUL",
+   "evidence": "Their single operation is a text-injection op — the same display-only carrier they fall back to for prose they cannot express as a value. Nothing in it changes a number or hands the player a new option, so there is no mechanical claim here to compare against. The printed effect (a bow Strike folded into the Deflect Projectile reaction) is a rider on an existing reaction that neither implementation models as a modifier."
+  },
+  {
+   "id": "spellguard-shield",
+   "verdict": "MATCHES",
+   "evidence": "Same three saves, same value (+2, which is the shield's own circumstance bonus to AC and therefore the right number), same restriction on both halves of the condition. Their rows do not name a bonus type; ours says circumstance, which is what the printed text means by \"its circumstance bonus\". The printed \"you can Shield Block spells\" clause is prose on both sides."
+  },
+  {
+   "id": "necrologist-dedication",
+   "verdict": "MATCHES",
+   "evidence": "Same two abilities reach the player, with the same action costs. They deliver them as feats and we as actions; the difference is which bucket holds the record, not what the player can do. The dedication's other printed clauses (the horde's statistics, the companion exclusion) are prose on both sides."
+  },
+  {
+   "id": "inexorable",
+   "verdict": "THEY-ENCODE-NOTHING-USEFUL",
+   "evidence": "Their only operation is a text-injection op — display-only prose, so there is no mechanical claim to differ from. For the record, we deliver strictly more than they do: the printed +2 circumstance bonus to the Shove/Trip DCs is authored on our side as a dcOnly target, which is the correct shape (it defends against another creature's roll rather than modifying our own save)."
+  },
+  {
+   "id": "pain-tolerance",
+   "verdict": "MATCHES",
+   "evidence": "Both halves agree. The resistance formula is the same half-level, and the minimum-of-1 clamp we add can never differ in play: this is a 6th-level feat, so half level is at least 3 whenever a character can hold it. Their three separate save rows equal our single {kind:'save', detail:'all'} target, and the restriction wording is the same."
+  },
+  {
+   "id": "sly-disarm",
+   "verdict": "THEY-ENCODE-NOTHING-USEFUL",
+   "evidence": "Their only operation is a text-injection op — display-only prose with no mechanical carrier, so there is nothing to differ from. We deliver strictly more: the skill substitution is modelled for real, so the player can roll the Disarm with Thievery on the sheet. The off-guard rider on a success is prose on both sides."
+  },
+  {
+   "id": "disk-rider",
+   "verdict": "THEY-ENCODE-NOTHING-USEFUL",
+   "evidence": "Their only operation is a text-injection op — display-only prose. The printed content is a per-spell rewrite (a new duration mode and an added heightened entry on Floating Disk), which is a spell-modification shape neither implementation carries as data, so there is no mechanical difference between the two."
+  },
+  {
+   "id": "advanced-breakthrough",
+   "verdict": "MATCHES",
+   "evidence": "Both sides deliver the same thing: one inventor class feat chosen by the player. The only delta is the offered list — we cap the offer at half the character's level, they set no cap at all. featPickGrants.ts:22-25 documents our cap as a reading of the printed clause (\"your inventor level is equal to half your character level\", and a feat's own level is a prerequisite), and it is applied identically across every sibling Advanced-archetype row (advanced-arcana:167, advanced-blood-potency:168, advanced-concoction:170, advanced-deduction:171, advanced-death-dealing:175, advanced-defender:176, adva"
+  },
+  {
+   "id": "folding-drums",
+   "verdict": "FIXED",
+   "evidence": "[FIXED, high confidence; adversarially verified] RAN `node scripts/wg-item.mjs \"Folding Drums\"` -> SKILL_PERFORMANCE 1 text:\"while playing the virtuoso instrument.\". RAN the same for both base virtuoso instruments -> identical op, confirming the source of the number. AoN mirror read: equipment-926.json (folding drums, \"this virtuoso percussion instrument\") and equipment-2737.json (Musical Instrument, the virtuoso +1 rule). RAN grep across src/ and effect-backfill.json for 'folding-drums' -> zero. CARRIER CHOICE is settled by this batch's own adjudicated precedents in work/wg-batch-016-parity.json: `warpipes` -> MATCHES (\"They encode only +1 Performance while playing. Ours is src/rules/situationalBonuses.ts:606 with that same clause\") and `sinuous-recorder` -> MATCHES (\"Ours is src/rules/situationalBonuses.ts:2198 ... Same stat, size, restriction\") — both are STAR-ONLY against a WG flat addBonusToValue and were ruled MATCHES. `camouflaging-chromatophores-lesser` -> MATCHES cites it explicitly: \"ours follows the owner's restricted-bonus-as-star ruling instead of folding a conditional bonus into the flat total.\" So a restricted bonus is delivered as a star. Preferring DATA over the code registry: src/rules/explain.ts:450 reads `db.items[inv.itemId].situational` for every inventory item and merges it with FEAT_SITUATIONAL; explain.ts:459-462 states the field was moved onto the reco"
+  },
+  {
+   "id": "graverose-garland",
+   "verdict": "FIXED",
+   "evidence": "[FIXED, high confidence; adversarially verified] RAN `node scripts/wg-item.mjs \"Graverose Garland\"` -> the two addBonusToValue ops above. AoN mirror read: C:/wonderers guide/aon-2e-archive/data/by-category/equipment/equipment-5198.json, whose sentence matches WG exactly — so this is NOT an ASK-OWNER case; WG and the book agree and only we are silent. RAN node against public/core.json -> items.graverose-garland has no mechanical fields. RAN `grep -rn 'graverose-garland' src/ scripts/data/effect-backfill.json` -> zero. Checked the code registries by name as required: not in FEAT_GRANTS (featGrantsAuto.ts/featGrants.ts/featGrantsLane.ts), not in FEAT_FEAT_GRANTS/CHOICE_FEAT_GRANTS (featFeatGrants.ts), not in featCantripGrants.ts/featPickGrants.ts/casterArchetypes.ts, not in FEAT_SITUATIONAL. CARRIER: the bonus is RESTRICTED (\"against undead\"), so the owner's restricted-bonus-as-star ruling applies. The controlling precedent is in this same batch's adjudication, work/wg-batch-016-parity.json: `gas-mask-of-clean-air` -> MATCHES — WG hangs numeric +1 on Fortitude, Reflex AND Will, ours is a single star at situationalBonuses.ts:2204, and that was ruled a MATCH. Same for `camouflaging-chromatophores-lesser` -> MATCHES, whose evidence names \"the owner's restricted-bonus-as-star ruling instead of folding a conditional bonus into the flat total.\" Data carrier preferred over the code regis"
+  },
+  {
+   "id": "musket-staff-of-force",
+   "verdict": "FIXED",
+   "evidence": "[FIXED, high confidence; adversarially verified] RAN `node scripts/wg-item.mjs \"Musket Staff of Force\"` (their item id 17454) and `node scripts/wg-item.mjs 13707` to resolve the grant -> Reinforced Stock. Compared field by field against public/core.json items/musket-staff-of-force: level 4, price 100gp, bulk 1, usage held in 2 hands, damage/range/reload/category/group and the potency-1 rune all agree, and their three traits {Force, Magical, Staff} plus the base item's {Concussive, Fatal d10} are exactly our flattened five. The single divergence is the giveItem. OUR LANE EXISTS AND IS ALREADY USED FOR THE SIBLING: `node` over scripts/data/effect-backfill.json finds one row mentioning reinforced-stock — {category:'items', id:'musket-staff-of-the-void', field:'grantsItems', value:[{itemId:'reinforced-stock'}]} — so the same NPC Core page's other variant already has it and this one was missed. The carrier is live for items (not only feats): src/rules/build.ts:5977-5982 walks build.inventory and reads `content.items[inv.itemId].grantsItems`, and its own comment names this exact family (*\"…and a Musket Staff of the Void with its ammunition\"*). Target item ships: public/core.json items/reinforced-stock (aonId weapon-187, martial, group club, 1d4 bludgeoning, traits attached-to-crossbow-or-firearm/finesse/two-hand-d8). Not touched by any of the three sweeps — its only overlay row is `b"
+  },
+  {
+   "id": "pistol-wand",
+   "verdict": "FIXED",
+   "evidence": "[FIXED, high confidence; adversarially verified] RAN `node scripts/wg-item.mjs \"Pistol Wand\"` (their item id 17456) — operations array holds exactly one op, the giveItem of 13707, resolved by `node scripts/wg-item.mjs 13707` to \"Reinforced Stock\". Field-by-field against public/core.json items/pistol-wand: level 4, 100gp, bulk 1, held in 1 hand, damage/range/reload/category/group and potency 1 all agree; their traits {Magical, Wand} plus the base pistol's {Concussive, Fatal d8} are our flattened four. The giveItem is the only divergence. Same lane and same precedent as musket-staff-of-force: the sibling row {category:'items', id:'musket-staff-of-the-void', field:'grantsItems', value:[{itemId:'reinforced-stock'}]} already exists in scripts/data/effect-backfill.json, the item->grantsItems carrier is live at src/rules/build.ts:5977-5982, and items/reinforced-stock ships. Not touched by any of the three sweeps — its only overlay row is `builtInRunes`. | THEIRS: The same chassis (base_item 'flintlock-pistol', simple, group firearm, 1d4 piercing, range 40, reload 1, runes {potency:1}) plus one operation: `giveItem {itemId: 13707}` = Reinforced Stock. | OURS BEFORE: public/core.json items/pistol-wand carries the firearm side correctly — category simple, group firearm, 1d4 piercing, range 40, reload 1, hands 1, builtInRunes {potency:1}, heldSpells {1:[enfeeble]} and a 1/day frequency co"
+  },
+  {
+   "id": "sea-touch-elixir-lesser",
+   "verdict": "MATCHES",
+   "evidence": "[MATCHES-ON-REVIEW, confidence high] [regressed-batch re-read, verified] BATCH 16. WHY IT RE-OPENED — neither a data regression nor a lost regeneration: the fix landed and the comparer cannot see the carrier it landed in. The mode is NEW in the working tree (`git show HEAD:scripts/data/consumable-modes.json | grep -c sea-touch` → 0; `git diff --stat` shows +397 lines on that file), authored by scripts/add-sea-touch-modes.mjs, whose header records the finding and the lane rule verbatim: \"THE SEA TOUCH ELIXIRS GRANTED NO SWIM SPEED... None of the three had a mode, so drinking one changed nothing on the sheet — their side sets a swim Speed of 20\" and \"A MODE MUST LIVE IN ITS SOURCE FILE, NOT THE OVERLAY. The verified fix added the lesser elixir as a `create` row in effect-backfill.json, and test/integrity-sweeps.test.ts caught it... So the row is removed and the entry authored here instead.\" That is precisely Rul"
+  },
+  {
+   "id": "warriors-training-ring",
+   "verdict": "MATCHES",
+   "evidence": "[MATCHES-ON-REVIEW, confidence high] [regressed-batch re-read, verified] BATCH 16. WHY IT IS OPEN NOW: A NEW GATE ON AN ALREADY-FIXED RECORD. work/wg-batch-016-parity.json records verdict FIXED for this id, marked \"[FIXED, high confidence; adversarially verified]\", and the fix it describes — the FEAT_SITUATIONAL star carrying the always-on level-adds clause — is present in the file today at :2422 with both clauses. So the DATA is done. What re-opened is scripts/wg-batch-gate.mjs's \"VALUES: N variable(s) nothing has ever compared\" gate, which is fed by wg-values.mjs and which is NEW: `git ls-files scripts/wg-values.mjs scripts/wg-identity.mjs scripts/wg-batch-gate.mjs` returns NOTHING (only wg-diff.mjs is tracked), so all three post-date the last commit, and wg-values.mjs was last written 2026-08-25 15:33 — after the batch-16 packets were cut at 13:18. ATTACK_ROLLS_BONUS is in neither VAR (wg-values.mjs:62-82)"
+  },
+  {
+   "id": "bloody-tendrils",
+   "verdict": "FIXED",
+   "evidence": "[FIXED; adversarially verified by a read-only agent] Confirmed by running the instruments, not the summary. (1) REAL NOW: a recursive walk of public/core.json for the exact string \"bloody-tendrils\" yields only .spells.bloody-tendrils.id and .feats.bloody-tendrils.id; feats.bloody-tendrils carries no focusSpells/grantsSpells/innateSpells, and `grep -rni bloody src/ scripts/data/` shows no row or code lane for this id (only unrelated bloody-guillotine/bloody-fang). Not already fixed. (2) THEIR ENCODING: `node scripts/wg-show.mjs \"Bloody Tendrils\" --raw` returns exactly one op — giveSpell {spellId:8777, type:FOCUS, castingSource:NECROMANCER, rank:3} — and dump row 8777 is the Bloody Tendrils spell, rank 3, UNCOMMON, matching our spells.bloody-tendrils (rank 3, uncommon, focus trait, aonId spell-2888). (3) PRINTED TEXT AGREES: aon-2e-archive feat/feat-9115.json reads \"You learn the bloody tendrils grave spell\" with a link to /Spells.aspx?ID=2888. WG and the printed text say the same thing, so this fix settles no owner question — it is a plain missing grant. (4) LANE: src/rules/build.ts:2927 reads feat.focusSpells (`const ffs = (feat.focusSpells ?? []).filter((id) => content.spells[id])`), feeding the focus-pool pass at 3586/3699, so focusSpells is the field the engine actually reads. No duplicate lane: featGrantsAuto.ts names necromancer only for necromancer-dedication skills, feat"
+  },
+  {
+   "id": "shadow",
+   "verdict": "MATCHES",
+   "evidence": "[MATCHES-ON-REVIEW, confidence high] RAN node against public/core.json: items.shadow.passiveEffects = {\"skills\":{\"stealth\":1}}. RAN `grep -n \"'shadow'\" src/rules/situationalBonuses.ts` -> line 2768 with the +1 item star. RAN node against scripts/data/effect-backfill.json -> the shadow passiveEffects row is present and will survive `npm run data`. AoN mirror read: equipment-2793.json. Also verified the WHOLE FAMILY rather than just the flagged record, since the printed page is a variant table (instrument lesson 4): items.shadow-greater = passiveEffects.skills.stealth 2, items.shadow-major = passiveEffects.skills.stealth 3 — both exactly the printed \"+2\"/\"+3\". And the rune side is present: core.json `runes` bucket carries shadow (level 5, 55 gp), shadow-greater (level 9, 650 gp), shadow-major (level 17, 14,000 gp), all slot \"armor\", kind \"property\", matching the printed prices. Same stat, same size, same restriction as WG on all three. No double-count is possible: situationalBonuses.ts:11 states the registry \"is DISPLAY-ONLY: nothing here changes a computed number.\" Reachability of a bonus that lives on an ETCHED rune was already proven in this batch — work/wg-batch-016-parity.json's `slick` entry records that `characterSituationalIds` (src/rules/explain.ts:238) pushes every id in `inv.runes.property`, so the clause survives etching."
+  },
+  {
+   "id": "obsidian-goggles",
+   "verdict": "MATCHES",
+   "evidence": "[MATCHES-ON-REVIEW, confidence high] RAN node against public/core.json -> items.obsidian-goggles.passiveEffects = {\"perception\":1}. RAN `grep -rn 'obsidian-goggles' src/` -> src/rules/situationalBonuses.ts:2445 with the sight restriction. RAN node against scripts/data/effect-backfill.json -> the passiveEffects row is present, so the number survives `npm run data`. AoN mirror read: equipment-3097.json. Same stat, same size, same restriction as WG — we simply say the restriction in a star where WG says it in a text blob. Checked the whole printed VARIANT FAMILY rather than the one flagged id, because the AoN page is a variant table: the greater (+2) and major (+3) variants are both present and correct — src/rules/situationalBonuses.ts:2492 (\"obsidian-goggles-greater\", +2 item) and 2493 (\"obsidian-goggles-major\", +3 item), with matching effect-backfill rows at scripts/data/effect-backfill.json for obsidian-goggles-greater and obsidian-goggles-major. The once-per-day 1-action Darkvision activation is on the record as a `freq` counter plus a 1-action activationCost; WG encodes no operation for it either."
+  },
+  {
+   "id": "mirror-goggles-lesser",
+   "verdict": "MATCHES",
+   "evidence": "[MATCHES-ON-REVIEW, confidence high] RAN `grep -rn 'mirror-goggles-lesser' src/` -> src/rules/situationalBonuses.ts:2521, and read the full line: it contains the save/'all' entry \"against visual effects\" +1 item as well as the perception entry. RAN node against public/core.json -> passiveEffects.perception = 1; RAN node against scripts/data/effect-backfill.json -> both a passiveEffects row and a description row exist for this id. RAN `node scripts/wg-item.mjs \"Mirror Goggles (Lesser)\"` for their four ops and their Foundry predicate. AoN mirror read: equipment-2315-2162.json. THE CONTROLLING PRECEDENT is in this batch's own adjudication file, work/wg-batch-016-parity.json, on a record with an identical shape: `gas-mask-of-clean-air` -> MATCHES, whose evidence reads \"They add +1 to each of Fortitude, Reflex and Will against inhaled poisons... Ours is one entry covering all three: src/rules/situationalBonuses.ts:2204 — save with `detail: 'all'` (which `targetMatches` reads as all three saves), same restriction, '+1 item'.\" Mirror Goggles is the same pattern — WG spends three flat save ops, we spend one predicated star — so it resolves the same way. The reaction activation is on the record as activationCost {type:\"reaction\"}, matching the printed Reaction trigger; WG encodes no op for it either."
+  },
+  {
+   "id": "bellows-pipes",
+   "verdict": "MATCHES",
+   "evidence": "[MATCHES-ON-REVIEW, confidence high] RAN `node scripts/wg-item.mjs \"Bellows Pipes\"` → the single addBonusToValue. RAN a dump of public/core.json → items.bellows-pipes carries passiveEffects.skills.performance = 1, counters (1/day), activationCost 2 actions, frequency 1/day. The passiveEffects came from scripts/data/effect-backfill.json:6923, so it survives `npm run data`. Applier verified at src/rules/derive.ts:277-281 with the gate at derive.ts:241-242 (worn||invested||equipped||attachedTo); this item is held-in-two-hands, so equipping it applies the bonus. NOT one of the three named sweeps — this is a pre-existing backfill row that the read that flagged this record predates."
+  },
+  {
+   "id": "draconic-familiar",
+   "verdict": "THEY-ENCODE-NOTHING-USEFUL",
+   "evidence": "[THEY-ENCODE-NOTHING-USEFUL, confidence high] RAN `node scripts/wg-show.mjs \"Draconic Familiar\" --raw` → the single PRIMARY_SHEET_TABS op. READ src/rules/companionGrants.ts:109 and :151, and featFeatGrants.ts:364. READ src/sheet/CompanionsTab.tsx:1534 — `grantSourceIds` is built from `character.feats.map(f => f.featId)`, which INCLUDES feats granted by other feats, so both 'draconic-familiar' and the granted 'pet' are in the set — and :1542 maps every surviving grant to its own card. Confirmed the house pattern for exactly this Foundry shape: .import-src/pf2e/packs/pf2e/feats/archetype/draconic-acolyte/draconic-familiar.json grants `Compendium.pf2e.feats-srd.Item.Pet` and then upgrades `system.attributes.familiarAbilities.value` to 4 — and every other record that copies that shape pairs the Pet grant with a supersede: elver-pet (featFeatGrants.ts:376 + companionGrants.ts:118 `supersedes: ['pet']`), friend-of-the-sea (:134), pirates-pet (:152). Only draconic-familiar and spirit-familiar-animist (featFeatGrants.ts:485 + companionGrants.ts:160, no supersedes) are missing it."
+  },
+  {
+   "id": "three-clear-breaths",
+   "verdict": "FIXED",
+   "evidence": "FIXED. New engine lane FEAT_SUBSTITUTE_GRANTS (src/rules/featFeatGrants.ts): a REPLACEMENT for each flat grant the character already owned — 'for each of these feats you already have, you can instead gain a different feat from the following list'. Read in the same feat->feat expansion in build.ts, gated on a snapshot of the feats held BEFORE this granter's flat grants ran, which is what 'already have' means (read afterwards the feat is there either way and every substitution would fire for everybody). The answer lives in build.pickFeatChoices under '<granterId>:sub:<ifHave>'; the owed replacements are reported on Character.featSubstitutions so the builder never re-derives 'already have' a second way — the same pattern as skillFallbacks. The picker renders beside the redundant-skill fallback in Builder.tsx and greys a feat already held, since print says 'a DIFFERENT feat' and the engine refuses it. That matches their three conditionals one for one: each tests FEAT_NAMES INCLUDES the base feat, falseOperations = giveAbilityBlock of it, trueOperations = a select over Canny Acumen / Fleet / Toughness. test/feat-substitute-grants.test.ts (9) covers all three branches, two independent replacements, the two ways a replacement could collapse onto a feat already held, an out-of-list answer, and Canny Acumen reaching its own sub-choice when it arrives this way."
+  },
+  {
+   "id": "skysunder",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 16) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"Covered by the grouped entry relic-gift-family-skysunder-sparkwarden-uniter-adamantine — one ruling for the whole relic-gift family. This row exists so the per-record bookkeeping c…\""
+  },
+  {
+   "id": "sparkwarden",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 16) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"Covered by the grouped entry relic-gift-family-skysunder-sparkwarden-uniter-adamantine — one ruling for the whole relic-gift family. This row exists so the per-record bookkeeping c…\""
+  },
+  {
+   "id": "uniter-of-clans",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 16) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"Covered by the grouped entry relic-gift-family-skysunder-sparkwarden-uniter-adamantine — one ruling for the whole relic-gift family. This row exists so the per-record bookkeeping c…\""
+  },
+  {
+   "id": "kalmaugs-journal",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 16) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"A fix was proposed and REFUSED on review because it picks a side in a WG-vs-print disagreement. The reviewer's reasoning: REFUTED on the LANE CHECK, not on the arithmetic. The find…\""
+  },
+  {
+   "id": "adamantine-echo",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 16) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"Covered by the grouped entry relic-gift-family-skysunder-sparkwarden-uniter-adamantine — one ruling for the whole relic-gift family. This row exists so the per-record bookkeeping c…\""
+  },
+  {
+   "id": "avernal-cape",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 16) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"A fix was proposed and REFUSED on review because it picks a side in a WG-vs-print disagreement. The reviewer's reasoning: The mismatch is real (items.avernal-cape in public/core.js…\""
+  },
+  {
+   "id": "astrolabe-of-falling-stars",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 16) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"A fix was proposed and REFUSED on review because it picks a side in a WG-vs-print disagreement. The reviewer's reasoning: REFUSED: the fix settles a WG-vs-printed-text contradictio…\""
+  },
+  {
+   "id": "advanced-red-mantis-magic",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 16) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"Their encoding and the printed text disagree. RAN `node scripts/wg-show.mjs \"Advanced Red Mantis Magic\" --raw` and summarised the table (r2@6, +r3@8, +r4@10). RAN `grep -o 'RED_MAN…\""
+  },
+  {
+   "id": "arcana-of-iron",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 16) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"Their encoding and the printed text disagree. RAN `node scripts/wg-show.mjs \"Arcana of Iron\" --raw` → the LEVEL>=13 conditional and the injectText, in full. RAN `grep -n \"arcana-of…\""
+  },
+  {
+   "id": "instinct-ability",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 16) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"The printed sentence is the whole feat: \"You gain the instinct ability for the instinct you chose for Barbarian Dedication.\" Their encoding delivers a Hit Point bonus the printed t…\""
+  }
+ ]
+}

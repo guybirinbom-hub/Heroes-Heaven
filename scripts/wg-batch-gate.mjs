@@ -505,10 +505,15 @@ const valuesOut = run('wg-values.mjs', ['--verbose']);
     );
   } else {
     const x = read(expPath);
-    const gen = Date.parse(x?.generated ?? '') || 0;
+    /* ⚠ `generated` is when the VERDICTS were written; `observed` is when the builder was actually
+     * PLAYED (the raw harness dump's mtime, written by scripts/wg-experience.mjs). A re-judge over an
+     * old dump (`--skip-harness`) refreshes `generated` and proves nothing, so the staleness check
+     * compares `observed` whenever the artefact carries it — docs/wg-batch-pipeline.md §A. Artefacts
+     * written before that field existed still have only `generated`, and keep the old comparison. */
+    const gen = Date.parse(x?.observed ?? x?.generated ?? '') || 0;
     const newest = Math.max(...['src/builder', 'src/rules', 'public/core.json', batchPath].map((p) => newestMtime(join(ROOT, p))));
     if (gen < newest) {
-      fail('EXPERIENCE: the evidence is older than the code or data it describes',
+      fail(`EXPERIENCE: the evidence is older than the code or data it describes (${x?.observed ? 'observed' : 'generated'} ${new Date(gen).toISOString()} < ${new Date(newest).toISOString()})`,
         `re-run: node scripts/wg-experience.mjs --batch ${batchPath}`);
     }
     const rows = new Map((x?.records ?? []).map((r) => [r.id, r]));

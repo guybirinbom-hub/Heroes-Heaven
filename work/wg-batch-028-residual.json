@@ -1,0 +1,417 @@
+{
+ "batch": "work/wg-batch-028.json",
+ "examined": 29,
+ "method": "9 Opus Explore readers (print + WG raw ops + every carrier) each followed by an Opus adversarial verifier; findings applied by family agents + verifiers, then the orchestrator closed every cross-file gap",
+ "confirmed": [
+  {
+   "id": "investigator",
+   "finding": "investigator#esoterica",
+   "severity": "player-visible",
+   "summary": "Our Esoterica methodology subclass option (`classes.investigator.subclass.options[aon-esoterica-methodology]`) is description-only — it carries no skillChoice, no grants, no feat grant, no innate cantrips and no spell proficiency — while WG",
+   "fixed": true
+  },
+  {
+   "id": "investigator",
+   "finding": "investigator#esoterica-duplicate",
+   "severity": "player-visible",
+   "summary": "The investigator's Methodology select offers the same Esoterica methodology twice — once as the inert `aon-esoterica-methodology` option and once inside the `palatine-detective` option, whose description embeds the identical Esoterica parag",
+   "fixed": true
+  },
+  {
+   "id": "investigator",
+   "finding": "investigator#palatine-skill-question",
+   "severity": "player-visible",
+   "summary": "The Palatine Detective methodology asks \"Occultism or Religion?\" twice — the subclass option's `skillChoice` (which trains the skill) and the class feature's `choice.esotericaSkill` (which trains nothing) — so the builder shows two identica",
+   "fixed": true
+  },
+  {
+   "id": "investigator",
+   "finding": "investigator#empiricism-lore",
+   "severity": "player-visible",
+   "summary": "Our Empiricism methodology skill pick is a fixed four-skill list that cannot pick a Lore, while print allows any Intelligence-based skill (Lores are Intelligence-based) and WG's select carries an explicit Lore branch.",
+   "fixed": true
+  },
+  {
+   "id": "champion",
+   "finding": "champion#cause-sanctification",
+   "severity": "player-visible",
+   "summary": "The printed causes are gated by sanctification — Desecration and Iniquity carry the Unholy trait, Grandeur and Redemption the Holy trait — and neither side models or even displays that gate, so a champion who answered sanctification \"none\" ",
+   "fixed": true
+  },
+  {
+   "id": "champion",
+   "finding": "champion#instrument",
+   "severity": "internal",
+   "summary": "The comparer's champion flags are wrong on both legs: our key-attribute question and our champion devotion-casting chassis both exist, they are just held on the class record plus class-keyed tables rather than as WG-shaped select/adjValue o",
+   "fixed": true
+  },
+  {
+   "id": "sorcerer",
+   "finding": "sorcerer#slots",
+   "severity": "player-visible",
+   "summary": "Our sorcerer uses the ordinary full-caster slot table (2 slots when a rank opens, 3 thereafter); print and WG both give the sorcerer one more at every rank (3 then 4).",
+   "fixed": true
+  },
+  {
+   "id": "commander",
+   "finding": "commander#warfare-lore-legendary",
+   "severity": "player-visible",
+   "summary": "Master Tactician must raise Warfare Lore to legendary at 15th level; our record carries only the class-DC step, so a commander's Warfare Lore is stuck at master from 7th to 20th.",
+   "fixed": true
+  },
+  {
+   "id": "sorcerer",
+   "finding": "sorcerer#repertoire-gift-spells",
+   "severity": "player-visible",
+   "summary": "The bloodline's sorcerous gift spells are appended on top of the free repertoire picks, so a sorcerer knows one cantrip and one spell per gifted rank more than the printed table allows; print says the gift spell IS the first spell you learn",
+   "fixed": true
+  },
+  {
+   "id": "sorcerer",
+   "finding": "sorcerer#instrument-casting",
+   "severity": "internal",
+   "summary": "scripts/wg-casting.mjs never compared the sorcerer at all, so \"no comparer flag\" on this record is silence, not parity — and it is why the one-slot-per-rank shortfall above sat unreported.",
+   "fixed": true
+  },
+  {
+   "id": "psychic",
+   "finding": "psychic#instrument-casting",
+   "severity": "internal",
+   "summary": "scripts/wg-casting.mjs never compared the psychic either; its casting chassis is uncompared, not verified. (Hand-checked here: it agrees with print and with WG.)",
+   "fixed": true
+  },
+  {
+   "id": "sorcerer",
+   "finding": "sorcerer#bloodline-spells-extra-feature",
+   "severity": "player-visible",
+   "summary": "Our sorcerer level table carries a 'Bloodline Spells' feature the printed table does not list; it is an AoN sub-section of the Bloodline page, carries no mechanics, and duplicates the 'bloodline' row beside it.",
+   "fixed": true
+  },
+  {
+   "id": "commander",
+   "finding": "commander#tactics-duplicate-grant",
+   "severity": "internal",
+   "summary": "classFeatures['tactics'] grants expert-tactician outright, duplicating the class table's own level-7 grant and delivering it — through an ungated reader — from level 1.",
+   "fixed": true
+  },
+  {
+   "id": "psychic",
+   "finding": "psychic#key-attribute-blank",
+   "severity": "player-visible",
+   "summary": "classes.psychic.keyAbility is an empty array — the only class in the data with one — so the builder's class card renders an empty \"Key:\" line and the Key attribute card reads \"—\" until a subconscious mind is picked, where print names two at",
+   "fixed": true
+  },
+  {
+   "id": "ranger",
+   "finding": "ranger#nature-skill",
+   "severity": "player-visible",
+   "summary": "Our ranger class record trains only Survival at 1st level, so a ranger never becomes trained in Nature, which both the printed initial-proficiencies block and WG's class row grant.",
+   "fixed": true
+  },
+  {
+   "id": "runesmith",
+   "finding": "runesmith#runic-optimization",
+   "severity": "player-visible",
+   "summary": "Neither side delivers the runesmith's Runic Optimization / Greater Runic Optimization extra Strike damage; our damage lane only recognises the generic weapon-specialization feature ids, so a runesmith's Strikes gain nothing at 7th or 15th l",
+   "fixed": true
+  },
+  {
+   "id": "monk",
+   "finding": "monk#instrument-key-attribute",
+   "severity": "internal",
+   "summary": "The flags \"KINDS missing [choice]\" and \"IDENTITY options strength/dexterity, ours none\" are a comparer misread — ours models the monk's key-attribute choice as a keyAbility array with live readers and a builder picker.",
+   "fixed": true
+  },
+  {
+   "id": "ranger",
+   "finding": "ranger#instrument-key-attribute",
+   "severity": "internal",
+   "summary": "The flags \"KINDS missing [choice]\" and \"IDENTITY options dexterity/strength, ours none\" are the same comparer misread — ours carries the ranger's key-attribute choice as keyAbility [\"dex\",\"str\"] with the same readers.",
+   "fixed": true
+  },
+  {
+   "id": "runesmith",
+   "finding": "runesmith#instrument-skill-choice",
+   "severity": "internal",
+   "summary": "The flags \"KINDS missing [choice]\" and \"IDENTITY options skillarcana/skillnature/skilloccultism/skillreligion, ours none\" are a comparer misread — ours carries that \"trained in one of\" pick as trainedSkills.choice with a reader and a builde",
+   "fixed": true
+  },
+  {
+   "id": "fighter",
+   "finding": "fighter#trained-skill-choice",
+   "severity": "player-visible",
+   "summary": "The fighter's printed 1st-level trained skill pick (Acrobatics or Athletics) has no carrier anywhere in our data or code, so every fighter starts one trained skill short.",
+   "fixed": true
+  },
+  {
+   "id": "fighter",
+   "finding": "fighter#weapon-legend-group",
+   "severity": "player-visible",
+   "summary": "Weapon Legend's 13th-level weapon-group selection is bound to the group chosen at 5th level, because both read the single `build.fighterWeaponGroup`; print states them as two independent selections.",
+   "fixed": true
+  },
+  {
+   "id": "fighter",
+   "finding": "fighter#instrument-key-attribute",
+   "severity": "internal",
+   "summary": "The comparer's IDENTITY flag lists theirs' dexterity/strength key-attribute options as unmatched on our side; ours does model that pick — only the skillathletics/skillacrobatics half of the flag is a real gap.",
+   "fixed": true
+  },
+  {
+   "id": "rogue",
+   "finding": "rogue#eldritch-trickster-key-attribute",
+   "severity": "player-visible",
+   "summary": "The Eldritch Trickster racket's key-attribute option is not delivered — our subclass option carries no keyAbility/keyAbilityOptions, so the rogue is locked to Dexterity, and our own data marks the clause inert.",
+   "fixed": true
+  },
+  {
+   "id": "rogue",
+   "finding": "rogue#avenger-favored-weapon-rank",
+   "severity": "player-visible",
+   "summary": "The Avenger racket's favored-weapon proficiency rides the cleric default ladder (trained, expert at 11) instead of tracking the rogue's simple/martial upgrades, so an avenger with an advanced favored weapon is under-ranked from 5th level an",
+   "fixed": true
+  },
+  {
+   "id": "swashbuckler",
+   "finding": "swashbuckler#stylish-tricks-increase",
+   "severity": "player-visible",
+   "summary": "Our Stylish Tricks bonus skill increase at 3rd/7th/15th can be spent on any skill, but print reserves it for Acrobatics or the skill from the swashbuckler's style — and Wanderer's Guide does not restrict it either.",
+   "fixed": true
+  },
+  {
+   "id": "swashbuckler",
+   "finding": "swashbuckler#perception-mastery-source",
+   "severity": "player-visible",
+   "summary": "The level-11 Perception bump is attributed in the sheet's own breakdown to the legacy feature name \"Vigilant Senses\", while print and our own class record both call the feature Perception Mastery.",
+   "fixed": true
+  },
+  {
+   "id": "summoner",
+   "finding": "summoner#repertoire-size",
+   "severity": "player-visible",
+   "summary": "Our summoner's spell repertoire is sized to the spell-slot count, so it holds one fewer known spell than the printed repertoire at every level — one 1st-rank spell at level 1 instead of two, and a maximum of four instead of five.",
+   "fixed": true
+  },
+  {
+   "id": "exemplar",
+   "finding": "exemplar#instrument-key-attribute",
+   "severity": "internal",
+   "summary": "The comparer flags (\"KINDS missing [choice]\"; \"IDENTITY options strength/dexterity, ours none\") are a misread — our exemplar does ask the Strength-or-Dexterity key-attribute question, with exactly their two options.",
+   "fixed": true
+  },
+  {
+   "id": "thaumaturge",
+   "finding": "thaumaturge#skills",
+   "severity": "player-visible",
+   "summary": "Our thaumaturge trains in ONE of Arcana/Nature/Occultism/Religion; both the printed class and Wanderer's Guide train all four, so a thaumaturge is three trained skills short.",
+   "fixed": true
+  },
+  {
+   "id": "thaumaturge",
+   "finding": "thaumaturge#bonus-skill-increases",
+   "severity": "player-visible",
+   "summary": "The two extra restricted skill increases the thaumaturge gains at 9th and 17th level are not delivered — the class record has no `bonusSkillIncreaseLevels`.",
+   "fixed": true
+  },
+  {
+   "id": "witch",
+   "finding": "witch#patron-familiar-ability",
+   "severity": "player-visible",
+   "summary": "The patron's unique familiar ability is never delivered: classFeatures.patron.familiarAbilities maps all 16 patrons to their ability id, and nothing in src/ reads the field.",
+   "fixed": true
+  },
+  {
+   "id": "witch",
+   "finding": "witch#familiar-abilities",
+   "severity": "player-visible",
+   "summary": "The witch familiar's ability count is frozen at 4 for all 20 levels; print grows it at 6th, 12th and 18th, and our class level table has no entry at those levels.",
+   "fixed": true
+  },
+  {
+   "id": "witch",
+   "finding": "witch#patron-familiar-spell",
+   "severity": "player-visible",
+   "summary": "Each patron's lesson also teaches the familiar a named leveled spell; our subclass options grant only the hex cantrip.",
+   "fixed": true
+  },
+  {
+   "id": "thaumaturge",
+   "finding": "thaumaturge#exploit-vulnerability-dup",
+   "severity": "player-visible",
+   "summary": "Two of our level-1 carriers grant the same action, and one of them is a level-table row print does not have.",
+   "fixed": true
+  },
+  {
+   "id": "thaumaturge",
+   "finding": "thaumaturge#implement-benefit-text",
+   "severity": "player-visible",
+   "summary": "The implement options' Initiate/Adept/Paragon sections are bare empty headings on nine of ten implements and a verbatim duplicate of three separate carriers on the tenth.",
+   "fixed": true
+  },
+  {
+   "id": "thaumaturge",
+   "finding": "thaumaturge#instrument",
+   "severity": "internal",
+   "summary": "The batch flag for this record is wrong on both halves: print does not say \"one of\", and ours is not \"nothing\" — it has a real (but wrong) carrier for the pick.",
+   "fixed": true
+  },
+  {
+   "id": "animist",
+   "finding": "animist#skill-choice",
+   "severity": "player-visible",
+   "summary": "classes.animist.trainedSkills has no `choice`, so the printed \"either Nature or Occultism\" initial training is never offered or granted.",
+   "fixed": true
+  },
+  {
+   "id": "magus",
+   "finding": "magus#spellbook",
+   "severity": "player-visible",
+   "summary": "The magus is encoded as an ordinary prepared-from-the-tradition caster; neither the class record nor the builder gives it the spellbook the printed class prepares from.",
+   "fixed": true
+  },
+  {
+   "id": "animist",
+   "finding": "animist#apparition-lore-ranks",
+   "severity": "player-visible",
+   "summary": "Apparition Lore skills are granted at trained and never advance; print raises them to expert at 8th and master at 16th.",
+   "fixed": true
+  },
+  {
+   "id": "animist",
+   "finding": "animist#missing-apparition",
+   "severity": "player-visible",
+   "summary": "Only 13 of the 14 printed apparitions are selectable — Lamentation of Sinister Deals is missing from the animist's apparition choice group.",
+   "fixed": true
+  },
+  {
+   "id": "magus",
+   "finding": "magus#hybrid-study-feats",
+   "severity": "player-visible",
+   "summary": "Two hybrid studies hand over a general feat in print and our subclass options grant nothing.",
+   "fixed": true
+  },
+  {
+   "id": "animist",
+   "finding": "animist#apparition-spell-list-holes",
+   "severity": "player-visible",
+   "summary": "Seven apparition options print a rank heading with no spell beside it, while print names a spell at that rank (the mechanical grantedSpells array is correct — only the text a player reads is holed).",
+   "fixed": true
+  },
+  {
+   "id": "oracle",
+   "finding": "oracle#tenth-rank-repertoire",
+   "severity": "player-visible",
+   "summary": "A 19th-level oracle can add only one 10th-rank spell to their repertoire; print gives two for the one 10th-rank slot, and neither side models the second pick.",
+   "fixed": true
+  },
+  {
+   "id": "magus",
+   "finding": "magus#key-attribute",
+   "severity": "internal",
+   "summary": "The instrument flag \"IDENTITY options strength/dexterity, ours none\" is a misread — ours does encode and ask the Str/Dex key-attribute choice.",
+   "fixed": true
+  },
+  {
+   "id": "gunslinger",
+   "finding": "gunslinger#spellshot-key-attribute",
+   "severity": "player-visible",
+   "summary": "Our Way of the Spellshot subclass option carries keyAbility \"int\", which build.ts applies as the CHARACTER's key attribute — so a Spellshot gunslinger's 1st-level class boost and class DC run off Intelligence instead of the printed Dexterit",
+   "fixed": true
+  },
+  {
+   "id": "kineticist",
+   "finding": "kineticist#element-skill-grant",
+   "severity": "player-visible",
+   "summary": "Each kinetic element option grants its skill-junction skill automatically at 1st level, so a dual-gate kineticist gets two free trained skills the printed class never gives — and it duplicates the same grant already sitting on the gate-junc",
+   "fixed": true
+  },
+  {
+   "id": "inventor",
+   "finding": "inventor#master-overdrive-crafting",
+   "severity": "player-visible",
+   "summary": "Master Overdrive's Crafting rank increase is missing from FEAT_GRANTS_AUTO, so an inventor's Crafting sits at expert from 7th to 14th level instead of master.",
+   "fixed": true
+  },
+  {
+   "id": "kineticist",
+   "finding": "kineticist#metal-skill-junction",
+   "severity": "player-visible",
+   "summary": "The gate-junction picker offers a skill junction for five of the six elements — metal's is missing entirely, so a metal kineticist can never take the Crafting / Quick Repair junction.",
+   "fixed": true
+  },
+  {
+   "id": "kineticist",
+   "finding": "kineticist#junction-skill-feat",
+   "severity": "player-visible",
+   "summary": "A skill junction grants the listed SKILL FEAT as well as the skill; our five skill-junction options grant the skill only, so Experienced Smuggler / Hefty Hauler / Intimidating Glare / Underwater Marauder / Terrain Expertise / Quick Repair a",
+   "fixed": true
+  },
+  {
+   "id": "gunslinger",
+   "finding": "gunslinger#class-page-attacks",
+   "severity": "player-visible",
+   "summary": "Our generated gunslinger class page prints only the three trained weapon CATEGORIES and never mentions firearms and crossbows, dropping the two expert lines and the advanced line that are the class's signature proficiency.",
+   "fixed": true
+  },
+  {
+   "id": "inventor",
+   "finding": "inventor#light-mortar",
+   "severity": "player-visible",
+   "summary": "Our light-mortar-innovation subclass option is description-only: the printed level shifts for Inventive Expertise and Inventive Mastery never apply, and no light-mortar modification picker is offered at any tier.",
+   "fixed": true
+  },
+  {
+   "id": "kineticist",
+   "finding": "kineticist#duplicate-junction-star",
+   "severity": "player-visible",
+   "summary": "The fire-gate, metal-gate and earth-gate situational rows repeat the skill-junction status bonus that the generic gate-junction row already delivers, so an affected kineticist sees the same \"+1 status\" line twice on the same skill.",
+   "fixed": true
+  },
+  {
+   "id": "wizard",
+   "finding": "wizard#weapon-expertise",
+   "severity": "player-visible",
+   "summary": "Our level-11 wizard Weapon Expertise grants expert in only five named weapons (the LEGACY Core Rulebook text) instead of expert in all simple weapons, which is what the remaster print and WG both encode.",
+   "fixed": true
+  },
+  {
+   "id": "wizard",
+   "finding": "wizard#arcane-school-options",
+   "severity": "player-visible",
+   "summary": "Four printed arcane schools from Impossible Magic are missing entirely from classes.wizard.subclass.options (and from classFeatures), so a wizard cannot choose them, while their initial and advanced school focus spells are already in our sp",
+   "fixed": true
+  },
+  {
+   "id": "wizard",
+   "finding": "wizard#experimental-spellshaping",
+   "severity": "player-visible",
+   "summary": "The Experimental Spellshaping arcane thesis grants no feat on our side — neither the 1st-level spellshape wizard feat nor the 4th-level daily swap — while WG encodes both as selects; it is the only one of our five thesis options whose print",
+   "fixed": true
+  },
+  {
+   "id": "necromancer",
+   "finding": "necromancer#command-a-thrall",
+   "severity": "player-visible",
+   "summary": "Print gives every necromancer the Command a Thrall action at 1st level, but on our side (and on WG's) the action is handed out only by the Necromancer Dedication archetype feat — so a base necromancer never gets it on the sheet while an arc",
+   "fixed": true
+  }
+ ],
+ "refuted": [
+  {
+   "id": "barbarian",
+   "finding": "barbarian#bloodrager-instinct",
+   "summary": "We offer Bloodrager as an ungated 1st-level instinct, but its printed text replaces the barbarian's entire starting skill block (Athletics + Medicine + 2 + Int) and requires Bloodrager Dedication as t",
+   "evidence": "The finding's decisive \"ours\" claim — \"builds with Athletics + 3 + Int and no Medicine\" — is false: src/rules/featGrantsAuto.ts:118 carries `'bloodrager': { skills: { athletics: 'trained', medicine: 'trained' } }`, it reaches a build because derive.ts:3242 adds the subclass id itself to classFeature"
+  },
+  {
+   "id": "witch",
+   "finding": "witch#prepared-list",
+   "summary": "The witch prepares from her FAMILIAR's known spells, not from the whole tradition list; our chassis encodes the identical shape as the cleric and druid, so a witch can prepare any primal/occult/etc. s",
+   "evidence": "The chassis JSON is indeed shaped like the druid's, but the conclusion is false: build.ts has an explicit `} else if (cls.id === 'wizard' || cls.id === 'witch') {` branch (line 3747) — \"LEARNED prepared casters — build.spells is a SPELLBOOK of known spells (the wizard's physical spellbook; the witch"
+  }
+ ],
+ "flaggedResidues": [],
+ "rejected": 2,
+ "askOwner": [],
+ "complete": true
+}

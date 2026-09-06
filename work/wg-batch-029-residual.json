@@ -1,0 +1,348 @@
+{
+ "batch": "work/wg-batch-029.json",
+ "examined": 37,
+ "method": "8 Opus Explore readers (print + WG raw ops + every carrier) each followed by an Opus adversarial verifier; findings applied by family agents + verifiers, then the orchestrator closed every cross-file gap",
+ "confirmed": [
+  {
+   "id": "spined-shield",
+   "finding": "spined-shield#granted-spikes",
+   "severity": "player-visible",
+   "summary": "Their remaster row hands the wearer the shield's +1 striking shield spikes as an inventory weapon; our spined-shield record grants no weapon, no strike and no runes, so the shield's only printed offensive capability is invisible on the shee",
+   "fixed": true
+  },
+  {
+   "id": "ring-of-wizardry-type-i",
+   "finding": "ring-of-wizardry-type-i#arcane-gate",
+   "severity": "player-visible",
+   "summary": "The ring's two extra 1st-rank slots are ARCANE and the whole item is gated on having arcane spellcasting, but our spellSlotBonus has no tradition gate and the applier drops the slots into whatever slot caster comes first, so a cleric or dru",
+   "fixed": true
+  },
+  {
+   "id": "resolute-mind-wrap",
+   "finding": "resolute-mind-wrap#resistance-upgrade",
+   "severity": "player-visible",
+   "summary": "Print doubles the wrap's mental resistance to 10 for 1 minute on a successful triggered Will save; neither side models the upgrade, so the sheet shows mental resistance 5 for the whole minute the wearer should be at 10.",
+   "fixed": true
+  },
+  {
+   "id": "spined-shield",
+   "finding": "spined-shield#spines-counter",
+   "severity": "player-visible",
+   "summary": "The five spines are a consumable defensive resource that absorbs 6 damage each on a Shield Block and, once spent, disables the spike attacks until the next day; neither side tracks them, so the player has no way to know how much the shield ",
+   "fixed": true
+  },
+  {
+   "id": "hairpin-of-blooming-flowers",
+   "finding": "hairpin-of-blooming-flowers#burst-text",
+   "severity": "player-visible",
+   "summary": "Our shipped description drops the printed \"10-foot burst\" from the Scatter Petals effect, leaving an ungrammatical sentence with no area on its first statement of the effect.",
+   "fixed": true
+  },
+  {
+   "id": "helmsmans-recourse-greater",
+   "finding": "helmsmans-recourse-greater#frequency-counter",
+   "severity": "player-visible",
+   "summary": "Our hand-written `counters` entry says \"per day\" and, because itemUses.ts prefers `item.counters` over `item.frequency`, it both shadows our own correct `frequency:{max:1,per:'hour'}` and shows the player a once-per-day pip for an activatio",
+   "fixed": true
+  },
+  {
+   "id": "helmsmans-recourse-greater",
+   "finding": "helmsmans-recourse-greater#description-frequency",
+   "severity": "player-visible",
+   "summary": "Our shipped description text states the pre-remaster \"once per day\" frequency for a record whose aonId, source and edition are all the remastered printing, which says once per hour.",
+   "fixed": true
+  },
+  {
+   "id": "constricting-whip-tail",
+   "finding": "constricting-whip-tail#grab-an-edge",
+   "severity": "player-visible",
+   "summary": "Print's Grab an Edge exemption is delivered by their injectText onto the Grab an Edge action row and by no carrier of ours, even though we ship exactly that lane (`recordMarks` / RECORD_MARKERS, `on:'action'`).",
+   "fixed": true
+  },
+  {
+   "id": "constricting-whip-tail",
+   "finding": "constricting-whip-tail#grapple-free-hand",
+   "severity": "player-visible",
+   "summary": "Print's \"Grapple without a free hand\" exemption rides inside their Grapple bonus text; ours drops it — our registry clause carries the +2 and nothing else.",
+   "fixed": true
+  },
+  {
+   "id": "constricting-whip-tail",
+   "finding": "constricting-whip-tail#trait-graft",
+   "severity": "player-visible",
+   "summary": "The record's first trait is the truncated id \"gra\", which resolves to no record in the core.json trait bucket, so the printed Graft trait renders as a meaningless \"Gra\" chip with the generic fallback tooltip.",
+   "fixed": true
+  },
+  {
+   "id": "energy-robe-fire",
+   "finding": "energy-robe-fire#activation-cost",
+   "severity": "player-visible",
+   "summary": "The robe prints a two-action Activate but the record carries no `activationCost`, so MainTab's item-actions filter drops it and the player has no row for the activation that grants the +30-foot Speed our own registry entry describes.",
+   "fixed": true
+  },
+  {
+   "id": "energy-robe-fire",
+   "finding": "energy-robe-fire#instrument",
+   "severity": "internal",
+   "summary": "The instrument flag attributes the prose-conditioned bonus to THEM, but their row encodes no bonus op at all — the prose-conditioned bonus on this record is ours-only, so there was never a their-side value for the VALUES gate to check.",
+   "fixed": true
+  },
+  {
+   "id": "aeon-stone-vital-amplification",
+   "finding": "aeon-stone-vital-amplification#resonant-void-resistance",
+   "severity": "player-visible",
+   "summary": "WG delivers the resonant power's resistance 5 to void as a real IWR entry; ours carries it only as prose in resonant.note, so nothing reaches the sheet's resistance total.",
+   "fixed": true
+  },
+  {
+   "id": "unmemorable-mantle",
+   "finding": "unmemorable-mantle#save-dc",
+   "severity": "player-visible",
+   "summary": "Our shipped description drops the printed save DC and save type from the activation — \"a DC 25 Will save\" became \"a save\", so the player has no DC to roll against.",
+   "fixed": true
+  },
+  {
+   "id": "aeon-stone-vital-amplification",
+   "finding": "aeon-stone-vital-amplification#healing-amplification",
+   "severity": "player-visible",
+   "summary": "The stone's base power — extra Hit Points on every heal — is modelled by neither side, and WG's carrier for it is a value-less op, so no number on either sheet changes.",
+   "fixed": true
+  },
+  {
+   "id": "aeon-stone-vital-amplification",
+   "finding": "aeon-stone-vital-amplification#instrument-hp",
+   "severity": "internal",
+   "summary": "The instrument's \"KINDS missing [hp]\" flag misreads WG's op: their MAX_HEALTH_BONUS operation carries no value, so there is no hp mechanic on their side to be missing.",
+   "fixed": true
+  },
+  {
+   "id": "ghost-scarf",
+   "finding": "ghost-scarf#perception-target",
+   "severity": "player-visible",
+   "summary": "Our situationalBonuses entry files the haunt bonus under kind 'initiative', so the +1 item bonus never reaches the Perception row that print and WG both name.",
+   "fixed": true
+  },
+  {
+   "id": "ghost-scarf",
+   "finding": "ghost-scarf#fortitude-condition",
+   "severity": "player-visible",
+   "summary": "Our Fortitude entry drops both printed preconditions — it reads as a blanket +1 item to Fortitude for 5 minutes after any activation, when print gates it on the weapon already bearing a ghost touch rune and restricts it to effects from inco",
+   "fixed": true
+  },
+  {
+   "id": "alacritous-horseshoes",
+   "finding": "alacritous-horseshoes#leap",
+   "severity": "player-visible",
+   "summary": "The printed extra Leap distance is carried nowhere on our side while WG carries it as a prose op pinned to SPEED, so the companion's block never mentions it.",
+   "fixed": true
+  },
+  {
+   "id": "natural-reflexes",
+   "finding": "natural-reflexes#instrument",
+   "severity": "internal",
+   "summary": "The instrument flag \"theirs master, ours degree-shift only\" misreads our carrier: the Reflex-master bump is delivered by the ranger table in src/rules/advancement.ts at exactly level 7, so both halves of the printed text are already at pari",
+   "fixed": true
+  },
+  {
+   "id": "unassailable-soul",
+   "finding": "unassailable-soul#instrument",
+   "severity": "internal",
+   "summary": "The instrument flag \"theirs master, ours degree-shift only\" misreads our carrier: the Will-master bump is delivered by the exemplar table in src/rules/advancement.ts at exactly level 7.",
+   "fixed": true
+  },
+  {
+   "id": "kinetic-durability",
+   "finding": "kinetic-durability#instrument",
+   "severity": "internal",
+   "summary": "The instrument flag \"theirs master, ours degree-shift only\" misreads our carrier: the Fortitude-master bump is delivered by the kineticist table in src/rules/advancement.ts at exactly level 7.",
+   "fixed": true
+  },
+  {
+   "id": "mysterious-resolve",
+   "finding": "mysterious-resolve#instrument",
+   "severity": "internal",
+   "summary": "The instrument flag \"theirs master, ours degree-shift only\" misreads our carrier: the Will-master bump is delivered by the oracle table in src/rules/advancement.ts at exactly level 7.",
+   "fixed": true
+  },
+  {
+   "id": "disciplined-mind",
+   "finding": "disciplined-mind#instrument",
+   "severity": "internal",
+   "summary": "The instrument flag \"theirs master, ours degree-shift only\" misreads our carrier: the Will-master bump is delivered by the thaumaturge table in src/rules/advancement.ts at exactly level 7.",
+   "fixed": true
+  },
+  {
+   "id": "disciplined-mind",
+   "finding": "disciplined-mind#duplicate",
+   "severity": "player-visible",
+   "summary": "Two of our carriers deliver the same success-to-critical-success rule for this record, so the Will save row shows the same clause twice, attributed to Disciplined Mind both times.",
+   "fixed": true
+  },
+  {
+   "id": "master-overdrive",
+   "finding": "master-overdrive#damage-step",
+   "severity": "player-visible",
+   "summary": "Their encoding puts the printed \"+2 additional damage on a successful Overdrive\" in front of the player at the point of use; ours carries no number anywhere — not on the Overdrive mode, not as a star, not on a Strike.",
+   "fixed": true
+  },
+  {
+   "id": "battlefield-surveyor",
+   "finding": "battlefield-surveyor",
+   "severity": "internal",
+   "summary": "wg-values reports this record clean having never compared their PERCEPTION master rank: theirAssertions writes into a plain Map keyed by track, so their second PERCEPTION op silently overwrites the first.",
+   "fixed": true
+  },
+  {
+   "id": "will-expertise",
+   "finding": "will-expertise",
+   "severity": "internal",
+   "summary": "The VALUES flag (\"MISSING save|will theirs=expert ours=(nothing)\") and the KINDS flag (missing=[save]) are instrument misreads — the expert rank is carried in CLASS_ADVANCEMENT for all three owning classes at each class's own grant level.",
+   "fixed": true
+  },
+  {
+   "id": "alchemical-weapon-expertise",
+   "finding": "alchemical-weapon-expertise",
+   "severity": "internal",
+   "summary": "KINDS missing=[weapon] and VALUES \"NO VAR MAPPING: WEAPON_GROUP_BOMB\" are instrument gaps — the alchemist table lifts simple weapons, unarmed attacks AND the bomb group to expert at 7, and the bomb rank reaches the sheet.",
+   "fixed": true
+  },
+  {
+   "id": "weapon-specialization",
+   "finding": "weapon-specialization",
+   "severity": "internal",
+   "summary": "KINDS missing=[weapon] and VALUES \"WEAPON_SPECIALIZATION has NO VAR MAPPING\" are instrument gaps — the +2/+3/+4 damage step is computed in derive.ts and folded into every Strike.",
+   "fixed": true
+  },
+  {
+   "id": "master-overdrive",
+   "finding": "master-overdrive#instrument",
+   "severity": "internal",
+   "summary": "The flag's \"conditional (level>=10?)\" misreads their gate: the condition is LEVEL LESS_THAN 15, and the Crafting-master half is already carried by featGrantsAuto.ts.",
+   "fixed": true
+  },
+  {
+   "id": "third-apparition",
+   "finding": "third-apparition#instrument",
+   "severity": "internal",
+   "summary": "The \"KINDS missing [choice]\" flag is a misread — both halves of WG's row (the third apparition pick and the +1 Focus Point) are already carried on our side, just not on the record.",
+   "fixed": true
+  },
+  {
+   "id": "implement-adept",
+   "finding": "implement-adept#instrument",
+   "severity": "internal",
+   "summary": "The \"KINDS missing [choice]\" flag is a misread — the thaumaturge Implement Adept pick exists end to end (state, picker, prompt, and the granted adept benefit).",
+   "fixed": true
+  },
+  {
+   "id": "studious-spells",
+   "finding": "studious-spells#instrument",
+   "severity": "internal",
+   "summary": "The \"KINDS missing [spell, conditional]\" and \"EXPERIENCE NO-SHEET-EFFECT (nothing lands on the built character)\" flags are misreads — the two studious slots and their level ladder are built today.",
+   "fixed": true
+  },
+  {
+   "id": "studious-spells",
+   "finding": "studious-spells#gecko-grip",
+   "severity": "player-visible",
+   "summary": "WG puts Gecko Grip in the 2nd-rank studious slot; ours hardcodes a different fixed pair, so a magus can never have Gecko Grip in a studious slot at any level.",
+   "fixed": true
+  },
+  {
+   "id": "studious-spells",
+   "finding": "studious-spells#hybrid-study-spell",
+   "severity": "player-visible",
+   "summary": "The per-hybrid-study studious spell (one more spell per tier, chosen by subclass) is modelled by neither side, so a magus never gets the fourth spell their study prints.",
+   "fixed": true
+  },
+  {
+   "id": "studious-spells",
+   "finding": "studious-spells#spellbook",
+   "severity": "player-visible",
+   "summary": "Print adds the studious spells to the magus's spellbook; ours puts them only into two auto-filled slots and actively excludes them from the book, so they can never be prepared in an ordinary magus slot.",
+   "fixed": true
+  },
+  {
+   "id": "path-to-perfection",
+   "finding": "path-to-perfection#instrument",
+   "severity": "internal",
+   "summary": "All three flags on this record (KINDS missing [choice, save, specialStat]; VALUES MISSING all three saves at master; IDENTITY options fortitude/reflex/will theirs-not-ours) are misreads — the pick, the master rank and the success-to-crit ru",
+   "fixed": true
+  },
+  {
+   "id": "graceful-leaper",
+   "finding": "graceful-leaper",
+   "severity": "player-visible",
+   "summary": "Graceful Leaper's only mechanic — rolling Acrobatics in place of Athletics for High Jump and Long Jump — reaches no carrier of ours, though the identical shape ships on other feats via skillSubstitutions.",
+   "fixed": true
+  },
+  {
+   "id": "quick-swim",
+   "finding": "quick-swim#instrument",
+   "severity": "internal",
+   "summary": "The comparer's KINDS missing [modifiesGrant] flag on Quick Swim is a misread: our speedsIf block expresses their conditional+bindValue exactly — legendary Athletics sets swim Speed to land Speed — and it has a live reader.",
+   "fixed": true
+  },
+  {
+   "id": "quick-swim",
+   "finding": "quick-swim#swim-distance",
+   "severity": "player-visible",
+   "summary": "The feat's first and always-on clause — extra Swim distance on a success and a critical success — is put on the Swim action row by WG and lands on no surface of ours, though our marker lane already carries the identical shape for another re",
+   "fixed": true
+  },
+  {
+   "id": "aerobatics-mastery",
+   "finding": "aerobatics-mastery#combined-maneuvers",
+   "severity": "player-visible",
+   "summary": "Only the +2 half of Aerobatics Mastery is delivered on our side: the combined-maneuver rule and its DC formulas are injected onto the Maneuver in Flight action by WG and reach no surface of ours.",
+   "fixed": true
+  },
+  {
+   "id": "temperature-adjustment",
+   "finding": "temperature-adjustment#severe-weather",
+   "severity": "player-visible",
+   "summary": "The feat's only mechanical clause — the medicine's recipient ignoring severe cold or severe heat — is modeled by neither side, while our situational lane already carries four records with the same environmental-severity shape and already st",
+   "fixed": true
+  }
+ ],
+ "refuted": [
+  {
+   "id": "medal-of-the-wolf-pack",
+   "finding": "medal-of-the-wolf-pack#instrument",
+   "summary": "The instrument's \"ours shows only investmentGroup\" reading missed the situational carrier — the flanking strike-damage rider exists on our side and matches print and WG exactly.",
+   "evidence": "The record half is true — AoN equipment-3971-3662 prints \"+2 circumstance bonus to damage rolls against enemies you are flanking\", situationalBonuses.ts:2416 carries exactly that, and WG wgid 18342 is ATTACK_DAMAGE_BONUS value \"2\" type \"circumstance\" text \"while flanking\" — but the instrument defect"
+  }
+ ],
+ "flaggedResidues": [
+  {
+   "id": "ring-of-wizardry-type-i",
+   "finding": "ring-of-wizardry-type-i#arcane-gate (Arcana half)",
+   "severity": "internal",
+   "summary": "Print gates the WHOLE ring ('It does nothing unless you have a spellcasting class feature with the arcane tradition'); the spell-slot half is now tradition-gated (SpellSlotBonus.tradition), the +1 Arcana item bonus in passiveEffects is not. WG applies that bonus unconditionally too, so the two sides match; gating it needs a per-item 'requires arcane casting' lane across the ~10 passiveEffects folds in derive.ts — deferred, four records (type i-iv), no player has a reason to wear the ring without arcane casting.",
+   "fixed": false
+  },
+  {
+   "id": "aeon-stone-vital-amplification",
+   "finding": "aeon-stone-vital-amplification#healing-amplification",
+   "severity": "internal",
+   "summary": "The base power (healing you receive is increased by 10%, minimum +1) is modelled by neither side; WG's carrier is a value-less annotation op on the wrong stat. Left to the description lane on purpose — copying their MAX_HEALTH_BONUS shape would contradict print.",
+   "fixed": false
+  },
+  {
+   "id": "studious-spells",
+   "finding": "studious-spells#spellbook (dual-class rider)",
+   "severity": "internal",
+   "summary": "Under the Dual Class variant the second class's magus branch keeps the old bookless prepared entry (its spellbook merge is still gated wizard/witch), so studious spells reach that build's slots but not its book. Single-class magus is complete.",
+   "fixed": false
+  }
+ ],
+ "rejected": 1,
+ "askOwner": [
+  {
+   "id": "studious-spells",
+   "desk": 121,
+   "summary": "WG attaches a free-action Arcane Cascade to every studious spell, a benefit neither Studious Spells nor Arcane Cascade prints."
+  }
+ ],
+ "complete": true
+}

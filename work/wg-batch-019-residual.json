@@ -1,0 +1,679 @@
+{
+ "batch": 19,
+ "examined": 100,
+ "recordsRead": [
+  "trade-representative",
+  "green-faith-pilgrim",
+  "prisoner",
+  "press-ganged-g-g",
+  "keys-to-destiny",
+  "undercover-contender",
+  "strix",
+  "battlefield-scrounger",
+  "harbor-guard-moonlighter",
+  "banished-celestial",
+  "political-scion",
+  "root-worker",
+  "quartermaster",
+  "once-bitten",
+  "reclaimed",
+  "student-of-magic",
+  "money-counter",
+  "genie-blessed",
+  "tengu",
+  "pilgrim",
+  "food-trader",
+  "wonder-taster",
+  "awful-scab",
+  "town-troublemaker",
+  "shadow-haunted",
+  "verduran-city-folk",
+  "borderlands-pioneer",
+  "cursed-family",
+  "winters-child",
+  "rigger",
+  "yaksha",
+  "academic-scion",
+  "bounty-hunter",
+  "haunted-citizen",
+  "dreamer-of-the-verdant-moon",
+  "thrill-seeker",
+  "witchlight-follower",
+  "human",
+  "merfolk",
+  "pathfinder-hopeful",
+  "ratted-out-gun-runner",
+  "rostlander",
+  "wished-alive",
+  "hellknight-historian",
+  "concordance-scout",
+  "osprey-scion",
+  "planar-migrant",
+  "osprey-barnraiser",
+  "teacher",
+  "legendary-parents",
+  "dauntless",
+  "runelord-scholar",
+  "disciple-of-the-gear",
+  "astrologer",
+  "bekyar-restorer",
+  "sarangay",
+  "automaton",
+  "kholo",
+  "goblin",
+  "kashrishi",
+  "shisk",
+  "dwarf",
+  "azarketi",
+  "fleshwarp",
+  "shoony",
+  "vishkanya",
+  "leshy",
+  "hobgoblin",
+  "ratfolk",
+  "poppet",
+  "elf",
+  "fetchling",
+  "vanara",
+  "conrasu",
+  "goloma",
+  "samsaran",
+  "surki",
+  "centaur",
+  "kitsune",
+  "yaoguai",
+  "nagaji",
+  "dragonet",
+  "anadi",
+  "minotaur",
+  "wayang",
+  "jotunborn",
+  "awakened-animal",
+  "orc",
+  "lizardfolk",
+  "tripkee",
+  "catfolk",
+  "athamaru",
+  "tanuki",
+  "ghoran",
+  "skeleton",
+  "kobold",
+  "sprite",
+  "halfling",
+  "gnome",
+  "android"
+ ],
+ "method": "20-agent workflow (wf_e885d7fe-0bf): 10 read slices x 10 records — printed mirror page + WG raw ops + our record and every carrier — then 10 adversarial verifier agents, default REFUTED. Full ledger: work/.b019-findings.json.",
+ "confirmed": [
+  {
+   "id": "banished-celestial-missing-action-grant",
+   "claim": "Banished Celestial does not grant Enlightenment in Adversity: the action record ships in core.json but the background carries no grantsActions, so nothing owns it and it never reaches the sheet's action list — WG grants it outright.",
+   "fixed": true,
+   "fix": "On `backgrounds.banished-celestial` in public/core.json add `\"grantsActions\": [\"enlightenment-in-adversity\"]`, and add `\"limitedUses\": { \"max\": 1, \"per\": \"day\" }` for the printed '**Frequency** once per day' — exactly the pair `doomcaller` (stellar-misfortune) and `dauntless` (indomitable-act) alrea",
+   "playerVisible": true
+  },
+  {
+   "id": "banished-celestial-missing-skill-choice",
+   "claim": "Banished Celestial trains no non-Lore skill at all in ours — the record has neither trainedSkill, trainedSkillChoice nor a `choice` of kind 'skills' — so the printed \"trained in any one skill of your choice\" is silently dropped, while WG asks for it.",
+   "fixed": true,
+   "fix": "On `backgrounds.banished-celestial` in public/core.json add `\"choice\": { \"flag\": \"backgroundSkill\", \"prompt\": \"Skill\", \"kind\": \"skills\" }` — the any-skill shape already used by `chosen-one`, `food-trader`, `money-counter` and four others; `backgroundChoiceKind` (src/rules/build.ts:465) returns 'skil",
+   "playerVisible": true
+  },
+  {
+   "id": "keys-to-destiny-duplicate-lore-carrier",
+   "claim": "Keys to Destiny delivers its profession Lore twice — once through `choice` (flag professionLore) and once through `trainedLoreOptions` — two independently-stored pickers over the same nine subjects, so answering them differently trains two Lore skills from a background that prints one.",
+   "fixed": true,
+   "fix": "Drop the redundant carrier on `backgrounds.keys-to-destiny` in public/core.json: delete the `choice` block (flag professionLore) and keep `trainedLoreOptions`, which is the dedicated named-subject Lore lane and is the one src/rules/backgroundGrants.ts already documents this record against. (Seven si",
+   "playerVisible": true
+  },
+  {
+   "id": "harbor-guard-moonlighter-duplicate-lore-carrier",
+   "claim": "Harbor Guard Moonlighter delivers its Sailing-or-Hunting Lore twice — through `choice` (flag bgLore) and through `trainedLoreOptions` — two pickers over the same two subjects, so a player who answers them differently is trained in both Lores.",
+   "fixed": true,
+   "fix": "Delete the `choice` block (flag bgLore) from `backgrounds.harbor-guard-moonlighter` in public/core.json and keep `trainedLoreOptions: ['sailing','hunting']` as the single carrier, so exactly one picker is rendered and exactly one Lore is trained.",
+   "playerVisible": true
+  },
+  {
+   "id": "keys-to-destiny-lucky-break-frequency-untracked",
+   "claim": "Lucky Break's printed '**Frequency** once per day' is modelled by neither side: Keys to Destiny grants the action but carries no `limitedUses`, and the action record has none either, so the sheet draws no daily use box for it.",
+   "fixed": true,
+   "fix": "Add `\"limitedUses\": { \"max\": 1, \"per\": \"day\" }` to `backgrounds.keys-to-destiny` in public/core.json — the granter-side carrier that `doomcaller` and `dauntless` already use for their once-per-day granted background actions, and which src/sheet/MainTab.tsx:274 picks up as the `usesFrom` holder for `",
+   "playerVisible": true
+  },
+  {
+   "id": "student-of-magic-dup-skill-choice",
+   "claim": "Student of Magic carries its ONE printed skill choice twice — `trainedSkillChoice` and a second `choice` block with the same four options — and buildCharacter trains a skill from each carrier, so a character can end up trained in two skills instead of one.",
+   "fixed": true,
+   "fix": "Delete the `choice` block (flag `backgroundSkill`) from `backgrounds.student-of-magic` in public/core.json, leaving `trainedSkillChoice` as the sole carrier — it is the lane that `backgroundTrainedSkill` (src/rules/build.ts:580) and `backgroundGrantedFeats` (build.ts:476) already read, and the one t",
+   "playerVisible": true
+  },
+  {
+   "id": "money-counter-dup-skill-choice",
+   "claim": "Money Counter carries the same printed Society-or-Thievery choice twice, and the duplicate `choice` block is `kind: \"skills\"`, so its picker offers every skill the character is already trained in — letting the background train and lock a skill it never grants.",
+   "fixed": true,
+   "fix": "Delete the `choice` block (flag `counterSkill`, kind `skills`) from `backgrounds.money-counter` in public/core.json. `trainedSkillChoice` + `grantedFeatByChoice`, both keyed off `build.backgroundSkillChoice`, already deliver the printed skill and the branching feat.",
+   "playerVisible": true
+  },
+  {
+   "id": "genie-blessed-wish-for-luck-divination-trait",
+   "claim": "Our Wish for Luck action omits the printed `divination` trait.",
+   "fixed": true,
+   "fix": "Add \"divination\" to `actions['wish-for-luck'].traits` in public/core.json, giving [\"arcane\",\"auditory\",\"divination\",\"fortune\"] to match the printed trait line.",
+   "playerVisible": true
+  },
+  {
+   "id": "verduran-city-folk-double-feat",
+   "claim": "Verduran City Folk grants Streetwise unconditionally via `grantedFeatId` AND grants the player's pick via the `verduranFeat` choice, so picking Multilingual hands out two level-1 skill feats where print allows exactly one.",
+   "fixed": true,
+   "fix": "Delete the `grantedFeatId: \"streetwise\"` field from backgrounds['verduran-city-folk'] in public/core.json, leaving the `verduranFeat` `choice` block as the single carrier (it already defaults to 'streetwise' via backgroundChoiceValue, so an unanswered build still grants Streetwise). No code change n",
+   "playerVisible": true
+  },
+  {
+   "id": "borderlands-pioneer-double-lore",
+   "claim": "Borderlands Pioneer trains TWO Lore skills — the `wildernessLore` choice trains the picked terrain Lore and `trainedLoreChoice: true` additionally renders a free-text Lore box whose typed subject is also trained — where print grants exactly one Lore from a closed list of six.",
+   "fixed": true,
+   "fix": "Remove `trainedLoreChoice: true` from backgrounds['borderlands-pioneer'] in public/core.json so the `wildernessLore` `choice` (build.ts:2796) is the sole Lore carrier and the free-text branch at build.ts:2810 / shared.tsx:2908 no longer fires for this record.",
+   "playerVisible": true
+  },
+  {
+   "id": "food-trader-double-skill-picker",
+   "claim": "Food Trader asks the background's trained-skill question twice: `trainedSkillChoice` renders the correct Crafting/Society picker, and a second `choice` block (flag `tradeSkill`, kind `skills`) renders a picker over every skill the character is already trained in and locks the answer as \"your background\".",
+   "fixed": true,
+   "fix": "Delete the `choice: {flag:'tradeSkill', prompt:'Skill', kind:'skills'}` block from backgrounds['food-trader'] in public/core.json; `trainedSkillChoice` + `grantedFeatByChoice` already deliver exactly what print and WG deliver, and the second picker only duplicates the question and mis-locks an unrel",
+   "playerVisible": true
+  },
+  {
+   "id": "awful-scab-viscerasuit",
+   "claim": "Awful Scab's sealed-outfit daily preparation — a once-per-day automatic counteract of poison or disease using the Medicine modifier — is modelled by no carrier on either side; ours stops at Medicine + Fleshforged Lore.",
+   "fixed": true,
+   "fix": "Add a daily-preparation mode carrier for this background — a `modes` entry in public/core.json keyed to `awful-scab` (id e.g. `awful-scab-sealed-outfit`, label \"Sealed Outfit\", cadence daily-preparation, no action cost), whose text records: first time each day you are introduced to poison or disease",
+   "playerVisible": true
+  },
+  {
+   "id": "merfolk-swim-speed",
+   "claim": "Our merfolk ancestry record carries `speeds: { land: 5 }` and no swim speed at all, so a merfolk with any heritage other than sailfish is a 5-foot-Speed character who cannot swim; WG encodes the swim Speed as a first-class chassis op.",
+   "fixed": true,
+   "fix": "Adopt theirs: set `speeds` on `ancestries.merfolk` in public/core.json to `{ \"land\": 5, \"swim\": 25 }`. This is the ancestry-chassis lane (`Ancestry.speeds`, types.ts:2092), read by deriveSpeeds; no new plumbing. Sailfish Merfolk's `swim: 30` then correctly reads as the printed increase rather than a",
+   "playerVisible": true
+  },
+  {
+   "id": "merfolk-hydration",
+   "claim": "Merfolk's printed Hydration drawback — a -1 status penalty to Fortitude saves after 24 hours out of water, and suffocation after 48 — is carried by neither side, so our merfolk gets the ancestry's benefits with none of its printed cost.",
+   "fixed": true,
+   "fix": "Add to `ancestries.merfolk` in public/core.json a `situational` entry (the field is on ContentBase and ancestries are already collected — explain.ts:242 `if (c.ancestryId) ids.push(c.ancestryId)` in `characterSituationalIds`): `\"situational\": [{ \"targets\": [{ \"kind\": \"save\", \"detail\": \"fortitude\" }]",
+   "playerVisible": true
+  },
+  {
+   "id": "academic-scion-lore-choice",
+   "claim": "Academic Scion's Lore is a choice in print and a free Lore select in WG, but ours hard-codes `trainedLore: \"academia\"`, so a player from one of the Rival Academies schools is never offered — and cannot get — the school Lore the background entitles them to.",
+   "fixed": true,
+   "fix": "Adopt theirs: on `backgrounds.academic-scion` in public/core.json replace `\"trainedLore\": \"academia\"` with `\"trainedLoreChoice\": true`. That is the existing free-subject Lore carrier (types.ts:2315), read at build.ts:2810 and rendered as the builder's Lore text box; 52 backgrounds already ship it al",
+   "playerVisible": true
+  },
+  {
+   "id": "witchlight-follower-second-terrain",
+   "claim": "Witchlight Follower prints Terrain Expertise with TWO named terrains and neither side delivers the second one, so the +1 circumstance bonus to Survival in subterranean bodies of water reaches no character.",
+   "fixed": true,
+   "fix": "Deliver the second terrain without inventing a duplicate grant: add to `backgrounds.witchlight-follower` in public/core.json `\"situational\": [{ \"targets\": [{ \"kind\": \"skill\", \"detail\": \"survival\" }], \"when\": \"in subterranean bodies of water (the second terrain this background's Terrain Expertise nam",
+   "playerVisible": true
+  },
+  {
+   "id": "planar-migrant-1",
+   "claim": "Planar Migrant grants TWO skill feats in print and in WG, but our record's `grantedFeatId` carries only `hefty-hauler` — Prescient Planner is granted by no carrier anywhere (grep of featGrants.ts, featGrantsAuto.ts, featGrantsLane.ts, featFeatGrants.ts, backgroundGrants.ts, companionGrants.ts returns no `planar-migrant` key; `prescient-planner` appears only as a grant of gear-up / predictive-purchase-rogue / uncanny-cheeks).",
+   "fixed": true,
+   "fix": "In public/core.json, change backgrounds.planar-migrant.grantedFeatId from the string \"hefty-hauler\" to the array [\"hefty-hauler\",\"prescient-planner\"]. The array shape is already supported end-to-end by `backgroundGrantedFeats()` in src/rules/build.ts:476-490 and is the exact idiom used by the only t",
+   "playerVisible": true
+  },
+  {
+   "id": "planar-migrant-2",
+   "claim": "Planar Migrant trains TWO Lore skills on our side — a hard-coded `trainedLore: \"Plane of Air\"` AND the `planarLore` choice — where print grants exactly one; the two carriers double-deliver and the hard-coded one is also written un-slugified into the proficiency map as the key `lore:Plane of Air`.",
+   "fixed": true,
+   "fix": "Delete the \"trainedLore\": \"Plane of Air\" field from backgrounds.planar-migrant in public/core.json, leaving the existing `choice` (flag `planarLore`) as the sole lore carrier — it already trains the picked plane via backgroundChoiceKind()==='lore' and defaults to options[0] (plane-of-air) when unans",
+   "playerVisible": true
+  },
+  {
+   "id": "concordance-scout-1",
+   "claim": "Concordance Scout trains TWO Lore skills on our side — a hard-coded `trainedLore: \"Plane of Air\"` AND the `planarLore` choice — where print grants exactly one; identical double-delivery to planar-migrant, with the same malformed `lore:Plane of Air` proficiency key.",
+   "fixed": true,
+   "fix": "Delete the \"trainedLore\": \"Plane of Air\" field from backgrounds.concordance-scout in public/core.json, leaving the `choice` (flag `planarLore`) as the sole lore carrier. Default-unanswered behaviour is preserved (backgroundChoiceValue falls back to options[0] = plane-of-air) and the spurious second ",
+   "playerVisible": true
+  },
+  {
+   "id": "wished-alive-1",
+   "claim": "Our situational-bonus note for Wished Alive is truncated mid-sentence with an ellipsis, dropping the printed limit that the +2 applies to the FIRST skill check attempted BEFORE THE END OF YOUR TURN — the player sees an incomplete condition and cannot tell what the bonus is limited to.",
+   "fixed": true,
+   "fix": "Replace the truncated `when` on src/rules/situationalBonuses.ts:2299 with the full printed condition, e.g. when: \"once per day, after spending a single concentrate action to fervently wish for something you could work toward — applies only to the first skill check you attempt before the end of that ",
+   "playerVisible": true
+  },
+  {
+   "id": "sarangay-full-moon-attribute-override",
+   "claim": "WG rewrites the Sarangay attribute array when the Full Moon Sarangay heritage is taken (Wis boost instead of Str, Con flaw instead of Wis); ours delivers this nowhere — no heritage record in core.json carries abilityBoosts/abilityFlaws and there is no reader for such a field anywhere (no reader).",
+   "fixed": true,
+   "fix": "Add a heritage-level attribute override carrier and its reader: on public/core.json heritages.full-moon-sarangay add e.g. `replaceAncestryBoost: {from:'str', to:'wis'}` and `replaceAncestryFlaw: {from:'wis', to:'con'}`, declare them on the Heritage type in src/rules/types.ts, and consume them in src",
+   "playerVisible": true
+  },
+  {
+   "id": "kashrishi-missing-kashrishi-language",
+   "claim": "Our Kashrishi ancestry grants only Common; print and WG both grant Common AND Kashrishi.",
+   "fixed": true,
+   "fix": "Set ancestries.kashrishi.languages.granted to [\"common\",\"kashrishi\"] in public/core.json, and correct the \"**Languages** Common\" line in the kashrishi entry of public/core-descriptions.json to \"Common, Kashrishi\".",
+   "playerVisible": true
+  },
+  {
+   "id": "automaton-size-medium-or-small",
+   "claim": "Our Automaton hard-codes size medium; print offers Medium or Small and WG ships that as a player-facing size select.",
+   "fixed": true,
+   "fix": "Give ancestries.automaton a size choice: add `choice: {flag:'automatonSize', prompt:'Size', kind:'array', options:[{value:'medium',label:'Medium'},{value:'small',label:'Small'}]}` and have build.ts apply the answer through the same absolute-size path that already reads `sizeSet` (build.ts:7292-7296)",
+   "playerVisible": true
+  },
+  {
+   "id": "kashrishi-empathic-sense-perception-bonus",
+   "claim": "Empathic Sense's +2 circumstance bonus to Sense Motive is encoded by WG and carried by nothing on our side — situationalBonuses.ts has no `kashrishi` key and the ancestry record has no bonus field.",
+   "fixed": true,
+   "fix": "Add to src/rules/situationalBonuses.ts: \"kashrishi\": [{ targets: [{ kind: 'perception' }], when: \"to Sense Motive against non-mindless creatures within 15 feet (Empathic Sense)\", bonus: \"+2 circumstance\" }].",
+   "playerVisible": true
+  },
+  {
+   "id": "dauntless-indomitable-act-missing-fortune-trait",
+   "claim": "Our `indomitable-act` action ships with an empty traits array, dropping the fortune trait the printed reaction states outright.",
+   "fixed": true,
+   "fix": "Set actions['indomitable-act'].traits to [\"fortune\"] in public/core.json so the reaction's fortune tag renders and interacts correctly with misfortune effects and other fortune sources.",
+   "playerVisible": true
+  },
+  {
+   "id": "kashrishi-empathic-imprecise-sense",
+   "claim": "Empathic Sense is also an imprecise 15-foot sense that detects non-mindless creatures; neither side models it as a sense, so a kashrishi's sense list reads \"normal vision\" only.",
+   "fixed": true,
+   "fix": "Add to public/core.json ancestries.kashrishi: \"senses\": [{\"name\":\"empathic sense\",\"acuity\":\"imprecise\",\"range\":15}] — the same SenseEntry shape derive.ts already aggregates from ancestry `senses`.",
+   "playerVisible": true
+  },
+  {
+   "id": "runelord-scholar-thassilonian-constraint",
+   "claim": "The background forces one of Multilingual's two language picks to be Thassilonian; neither side constrains or pre-fills that pick.",
+   "fixed": true,
+   "fix": "Pre-satisfy one slot on the background: add `grantsLanguages: [\"thassilonian\"]` to backgrounds['runelord-scholar'] in public/core.json (the field already exists and is read for heritages) and reduce the free Multilingual picks by one for this grant, or at minimum add a `note` naming the Thassilonian",
+   "playerVisible": true
+  },
+  {
+   "id": "goblin-senses-duplicates-vision",
+   "claim": "Goblin's `senses: [{name:\"darkvision\",acuity:\"precise\"}]` duplicates its own `vision: \"darkvision\"` — both fields have live readers that push the identical sense.",
+   "fixed": true,
+   "fix": "Drop the redundant \"senses\" array from ancestries.goblin in public/core.json (and from the other 12 ancestries whose single `senses` entry merely restates `vision`: fetchling, shisk, poppet, dwarf, orc, centaur, minotaur, surki, hobgoblin, kobold, wayang, dragonet), leaving `vision` as the single da",
+   "playerVisible": false
+  },
+  {
+   "id": "fleshwarp-size-medium-or-small",
+   "claim": "Our fleshwarp record hardcodes size \"medium\"; the printed ancestry is \"Medium or Small\" and WG ships a player-facing size select, so a Small fleshwarp is unbuildable in our app.",
+   "fixed": true,
+   "fix": "Author the size pick on the ancestry: add an `effectChoices` entry on ancestries.fleshwarp (id `size`, prompt \"Size — Medium or Small\") whose two options grant `sizeSet: 'medium'` / `sizeSet: 'small'` (the Size field already exists at types.ts:1189), and extend the `consider()` walk in src/rules/bui",
+   "playerVisible": true
+  },
+  {
+   "id": "azarketi-swim-speed-30",
+   "claim": "Our azarketi has no swim Speed at all; WG grants SPEED_SWIM 30, and our own Mistbreath Azarketi heritage already reduces a baseline swim Speed that does not exist.",
+   "fixed": true,
+   "fix": "Set `speeds: { land: 20, swim: 30 }` on public/core.json ancestries.azarketi (chassis field, already read by deriveSpeeds — no new reader needed), and add \"swim 30 feet\" to the **Speed** line of ancestries.azarketi in public/core-descriptions.json.",
+   "playerVisible": true
+  },
+  {
+   "id": "dwarf-clan-dagger-grant",
+   "claim": "The dwarf's free clan dagger is delivered by WG as an item grant and by us not at all — and `grantsItems` has no ancestry reader, so the ancestry record could not carry it even if authored.",
+   "fixed": true,
+   "fix": "Add an ancestry arm to the `grantedItems` walk in src/rules/build.ts (beside the heritage arm at line 6391) reading `content.ancestries[build.ancestryId]?.grantsItems`, and author `grantsItems: [{ itemId: 'clan-dagger', quantity: 1 }]` on public/core.json ancestries.dwarf.",
+   "playerVisible": true
+  },
+  {
+   "id": "vishkanya-innate-venom-envenom-grant",
+   "claim": "Vishkanyas never receive the Envenom action in our app — the action record exists but nothing grants it, and the grantsActions walk skips the ancestry entirely.",
+   "fixed": true,
+   "fix": "Add the ancestry to the `grantedActions` source list in src/sheet/MainTab.tsx:252 (`character.ancestryId ? content.ancestries[character.ancestryId] : undefined`, matching the heritage/background arms) and to the `grantsActions` sweep in src/rules/explain.ts:253, then author `grantsActions: ['envenom",
+   "playerVisible": true
+  },
+  {
+   "id": "fleshwarp-unusual-anatomy-save-bonus",
+   "claim": "Fleshwarp's Unusual Anatomy (+1 circumstance to saves vs diseases and poisons) is encoded by WG on all three saves and has no carrier of ours at all.",
+   "fixed": true,
+   "fix": "Author a situational star on the ancestry id — ancestry ids already reach both lanes (src/rules/explain.ts:242 pushes `c.ancestryId` into `characterSituationalIds`, and 'ancestries' is in SITUATIONAL_COLLECTIONS at explain.ts:707): add `situational: [{ targets: [{ kind: 'save', detail: 'all' }], whe",
+   "playerVisible": true
+  },
+  {
+   "id": "poppet-constructed-save-bonus",
+   "claim": "Poppet's Constructed grants a +1 circumstance bonus to a named set of saves that NEITHER side models, and our record does not even carry the text — the player has no way to learn they have it.",
+   "fixed": true,
+   "fix": "Residual lane: author `situational` on public/core.json ancestries.poppet — `[{ targets: [{ kind: 'save', detail: 'all' }], when: 'against death effects, disease and poison, and against effects that would make you drained, paralyzed or sickened', bonus: '+1 circumstance' }]` (ancestry ids are alread",
+   "playerVisible": true
+  },
+  {
+   "id": "shoony-blunt-snout-degree-shift",
+   "claim": "Shoony's Blunt Snout is a one-degree-better shift on saves against inhaled and olfactory effects that neither side models, and our shoony record does not carry the text.",
+   "fixed": true,
+   "fix": "Residual lane: add `degreeShifts: [{ shift: 'oneBetter', when: 'on a save against an inhaled threat (such as an inhaled poison) or an olfactory effect', saves: ['all'] }]` to public/core.json ancestries.shoony — the exact shape already used by heritages.fishseeker-shoony and read by degreeShiftRecor",
+   "playerVisible": true
+  },
+  {
+   "id": "vishkanya-venom-save-dc-and-blank-save",
+   "claim": "The printed rule fixing the vishkanyan venom's save DC (higher of class DC or spell DC) is modelled by neither side, and our Envenom action record prints a \"**Saving Throw**\" heading with no save after it.",
+   "fixed": true,
+   "fix": "Residual lane: (1) fill the blank save in public/core-descriptions.json actions.envenom → \"**Saving Throw** Fortitude\"; (2) add the Innate Venom paragraph, including \"The save DC for your venom is equal to the higher of your class DC or spell DC\", to ancestries.vishkanya in public/core-descriptions.",
+   "playerVisible": true
+  },
+  {
+   "id": "ancestry-darkvision-senses-duplicates-vision",
+   "claim": "Four of this batch's records (dwarf, shisk, hobgoblin, poppet) deliver darkvision twice — once through the `vision` chassis field and again through a `senses` entry that restates it — two carriers for one printed sense.",
+   "fixed": true,
+   "fix": "Pick one carrier and drop the other for the darkvision ancestries: delete the redundant `\"senses\":[{\"name\":\"darkvision\",\"acuity\":\"precise\"}]` from ancestries.dwarf/.shisk/.hobgoblin/.poppet (and the other nine) in public/core.json, leaving `vision` as the single chassis field for baseline vision and",
+   "playerVisible": false
+  },
+  {
+   "id": "ancestry-language-options-no-reader",
+   "claim": "The printed bonus-language pool (\"Choose from …\") is delivered by WG as CORE_LANGUAGES on 9 of these 10 ancestries; on our side the matching field `languages.options` is populated by zero ancestries and read by nothing.",
+   "fixed": true,
+   "fix": "Either give `languages.options` a reader or delete it. If kept: populate `languages.options` on each ancestry from the printed \"Choose from …\" list and have the bonus-language picker in build.ts:7252 surface those first as the printed pool — NOT as a hard filter, since print continues \"and any other",
+   "playerVisible": true
+  },
+  {
+   "id": "conrasu-ancestry-grantedstrikes",
+   "claim": "ancestries.conrasu.grantedStrikes hands EVERY conrasu both a Claw and a Branch unarmed Strike at level 1, unconditionally — the ancestry grants neither in print, and our own feat record ceremony-of-the-evened-hand already delivers exactly one of them, gated on its choice.",
+   "fixed": true,
+   "fix": "Delete the `grantedStrikes` array from ancestries.conrasu in public/core.json. No other change: feats['ceremony-of-the-evened-hand'].grantedStrikes with its choiceValue tags is the correct and sufficient carrier, and build.ts:2258 already passes `f.choice?.value` as the pick for the feat lane.",
+   "playerVisible": true
+  },
+  {
+   "id": "centaur-robust-bulk-limit",
+   "claim": "Centaur's Robust (+2 to maximum and encumbered Bulk limits) moves no number in ours — deriveBulk never reads an ancestry, so there is no carrier at all for an ancestry-granted bulk limit.",
+   "fixed": true,
+   "fix": "Set `bulkLimitBonus: 2` on ancestries.centaur in public/core.json AND add the ancestry to deriveBulk's accumulation in src/rules/derive.ts (beside the c.feats loop at ~4906: `const anc = c.ancestryId ? db.ancestries[c.ancestryId] : undefined; if (anc?.bulkLimitBonus) limitBonus += anc.bulkLimitBonus",
+   "playerVisible": true
+  },
+  {
+   "id": "samsaran-cryptomnesia",
+   "claim": "Samsaran's Cryptomnesia (+1 circumstance bonus to untrained skill checks) has no carrier in ours — no situational star, no bonus, no text — while WG models it as sixteen per-skill conditionals.",
+   "fixed": true,
+   "fix": "Add FEAT_SITUATIONAL['samsaran'] in src/rules/situationalBonuses.ts — keyed on the ancestry id, which characterSituationalIds already contributes (explain.ts:242) — as [{ targets: [{ kind: 'skill', detail: 'all' }], when: \"on skill checks in which you are untrained (Cryptomnesia)\", bonus: \"+1 circum",
+   "playerVisible": true
+  },
+  {
+   "id": "kitsune-change-shape",
+   "claim": "Kitsune's Change Shape action is absent from ours entirely — no action record with aonId action-701, and no ancestry lane that could grant one — so a kitsune's signature single action never reaches the sheet.",
+   "fixed": true,
+   "fix": "Add a kitsune Change Shape action to public/core.json actions (id 'change-shape-kitsune', aonId 'action-701', actionCost one-action, traits concentrate/kitsune/polymorph, description as printed — the existing 'change-shape' id is taken by the anadi action), set ancestries.kitsune.grantsActions = ['c",
+   "playerVisible": true
+  },
+  {
+   "id": "yaoguai-change-shape",
+   "claim": "Yaoguai's Change Shape single action is absent from ours entirely, even though our situationalBonuses entry for unleash-yaoguai-might already refers to it — the feat's star describes an action the character can never be shown.",
+   "fixed": true,
+   "fix": "Add actions['change-shape-yaoguai'] to public/core.json (actionCost one-action, traits concentrate/occult/polymorph/yaoguai, description as printed), set ancestries.yaoguai.grantsActions = ['change-shape-yaoguai'], and give the ancestry lane a reader in src/sheet/MainTab.tsx's grantedActions walk (~",
+   "playerVisible": true
+  },
+  {
+   "id": "fetchling-senses-echoes-vision",
+   "claim": "ancestries.fetchling carries `senses: [{name:'darkvision', acuity:'precise'}]` alongside `vision: 'darkvision'` — two of our carriers delivering the identical sense for one record (the same echo is on surki and centaur in this slice, and on all 13 darkvision ancestries in core.json).",
+   "fixed": true,
+   "fix": "Drop the redundant `senses` array from the 13 ancestries whose only entry restates their own `vision` (fetchling, surki, centaur here; also shisk, poppet, dwarf, goblin, orc, minotaur, hobgoblin, kobold, wayang, dragonet), leaving `vision` as the single carrier for ladder vision and reserving ancest",
+   "playerVisible": false
+  },
+  {
+   "id": "nagaji-fangs-no-strike",
+   "claim": "ancestries.nagaji carries no grantedStrikes, so the printed Fangs unarmed attack is delivered by no carrier at all.",
+   "fixed": true,
+   "fix": "Add to public/core.json ancestries.nagaji: `\"grantedStrikes\": [{ \"name\": \"Fangs\", \"die\": \"d6\", \"damageType\": \"piercing\", \"traits\": [\"unarmed\", \"finesse\"], \"group\": \"brawling\" }]` — same shape as the shipped ancestries.lizardfolk Claw entry. Unconditional (no heritage gate).",
+   "playerVisible": true
+  },
+  {
+   "id": "dragonet-jaws-no-strike",
+   "claim": "ancestries.dragonet carries no grantedStrikes, so the printed Big Sharp Teeth jaws attack is delivered by no carrier at all.",
+   "fixed": true,
+   "fix": "Add to public/core.json ancestries.dragonet: `\"grantedStrikes\": [{ \"name\": \"Jaws\", \"die\": \"d4\", \"damageType\": \"piercing\", \"traits\": [\"unarmed\", \"finesse\"], \"group\": \"brawling\" }]`.",
+   "playerVisible": true
+  },
+  {
+   "id": "anadi-fangs-no-strike",
+   "claim": "ancestries.anadi carries no grantedStrikes, so the printed Fangs unarmed attack is delivered by no carrier at all.",
+   "fixed": true,
+   "fix": "Add to public/core.json ancestries.anadi: `\"grantedStrikes\": [{ \"name\": \"Fangs\", \"die\": \"d6\", \"damageType\": \"piercing\", \"traits\": [\"unarmed\", \"finesse\"], \"group\": \"brawling\" }]`.",
+   "playerVisible": true
+  },
+  {
+   "id": "lizardfolk-aquatic-adaptation-breath-control",
+   "claim": "Lizardfolk's Aquatic Adaptation grants the Breath Control general feat, and nothing on our side grants it — an ancestry `grantsFeats` field has NO READER anywhere.",
+   "fixed": true,
+   "fix": "Two halves: (1) data — add `\"grantsFeats\": [\"breath-control\"]` to public/core.json ancestries.lizardfolk; (2) reader — add the ancestry to build.ts's grantSources list (`if (build.ancestryId) grantSources.push({ id: build.ancestryId, grants: content.ancestries[build.ancestryId]?.grantsFeats })`, alo",
+   "playerVisible": true
+  },
+  {
+   "id": "tripkee-natural-climber-no-star",
+   "claim": "Tripkee's printed +2 circumstance bonus to Athletics to Climb is carried nowhere on our side.",
+   "fixed": true,
+   "fix": "Add to public/core.json ancestries.tripkee: `\"situational\": [{ \"targets\": [{ \"kind\": \"skill\", \"detail\": \"athletics\" }], \"when\": \"to Climb\", \"bonus\": \"+2 circumstance\" }]` — identical to the shipped FEAT_SITUATIONAL[\"climbing-tail\"] entry (situationalBonuses.ts:232). No engine change needed; both the",
+   "playerVisible": true
+  },
+  {
+   "id": "awakened-animal-size-and-hp-pinned",
+   "claim": "ancestries.awakened-animal pins size to \"medium\" and hp to 6, but the printed Size line is a four-way choice and WG ties Hit Points to that choice (6/6/8/10).",
+   "fixed": true,
+   "fix": "Model the printed size choice on ancestries.awakened-animal: a build-time size pick that also sets ancestry HP. Data side needs a new shape (e.g. `sizeChoice: [{ size, hp }]`) plus readers at build.ts:3006 / derive.ts:849 / build.ts:7288 to prefer the chosen values over the scalar fields — no reader",
+   "playerVisible": true
+  },
+  {
+   "id": "dragonet-wings-fall-damage",
+   "claim": "Dragonet's Wings grants total immunity to falling damage and neither side models it, though our data already has the exact field shape for it.",
+   "fixed": true,
+   "fix": "Add to public/core.json ancestries.dragonet: `\"immunities\": [\"falling damage\"]` — the identical spelling used by heritages.flying-animal, already read by derive.ts:2361. Residual-read lane: nothing to adopt from WG.",
+   "playerVisible": true
+  },
+  {
+   "id": "anadi-change-shape-unowned",
+   "claim": "Anadi's printed Change Shape action is not attached to the ancestry by any carrier — the action record exists in core.json but nothing owns it, and an ancestry `grantsActions` field has no reader.",
+   "fixed": true,
+   "fix": "Two halves: (1) data — add `\"grantsActions\": [\"change-shape\"]` to public/core.json ancestries.anadi; (2) reader — add `character.ancestryId ? content.ancestries[character.ancestryId] : undefined` to the grantedActions array in src/sheet/MainTab.tsx (~line 253, beside the heritage and background entr",
+   "playerVisible": true
+  },
+  {
+   "id": "jotunborn-iivlar-weaving-unmodelled",
+   "claim": "Jotunborn's Iivlar Weaving makes the character shed dim light in a 10-foot emanation with a Sustain to toggle it, and neither side models any of it.",
+   "fixed": true,
+   "fix": "Residual-read lane: surface it as a sustainable toggle on the ancestry. Concretely, a mode in src/rules/modes.ts keyed `jotunborn-iivlar-weaving` (sustained, no numeric effect, note \"You shed dim light in a 10-foot emanation; Sustain to extinguish, reactivate, or recolour it\"), or at minimum an acti",
+   "playerVisible": true
+  },
+  {
+   "id": "awakened-mind-diplomacy-with-animals",
+   "claim": "Awakened Mind's printed permission to use Diplomacy on animals of your kind (and to opt into animal-targeting effects) is modelled by neither side.",
+   "fixed": true,
+   "fix": "Residual-read lane: add an action-note entry keyed `awakened-animal` in src/rules/situationalBonuses.ts using the existing `{ on: 'action', id: 'make-an-impression' | 'request', note: … }` shape (same lane as 'cliffscale-lizardfolk' / 'woodstalker-lizardfolk'), noting \"You can ask questions of, rece",
+   "playerVisible": true
+  },
+  {
+   "id": "ancestry-choosable-language-list-no-field",
+   "claim": "Every ancestry in this slice prints a named list of additional languages to choose from; we model no such list at all and the picker offers every language in the database.",
+   "fixed": true,
+   "fix": "Add `languages.options: string[]` to each ancestry record in public/core.json (the printed list, our language ids) and have src/builder/shared.tsx LanguageEditor rank/section `available` by it — surface the ancestry's list first rather than hard-blocking, because print keeps the escape clause \"and a",
+   "playerVisible": true
+  },
+  {
+   "id": "ancestry-senses-duplicates-vision",
+   "claim": "Four records in this slice carry a `senses` array that repeats exactly what their `vision` field already delivers, and the duplicate is discarded by the sense map — a second carrier that contributes nothing.",
+   "fixed": true,
+   "fix": "Delete the redundant `senses` array from ancestries.dragonet, .minotaur, .wayang and .orc in public/core.json, leaving `vision` as the single carrier (the shape nagaji/jotunborn/tripkee already use). Keep `senses` only where it adds a sense `vision` cannot express (scent, tremorsense, wavesense).",
+   "playerVisible": false
+  },
+  {
+   "id": "athamaru-swim-speed",
+   "claim": "Athamaru is missing a swim Speed that Wanderer's Guide sets: our speeds object carries land only, so an amphibious ancestry swims at half its 20 ft land Speed instead of 25 ft.",
+   "fixed": true,
+   "fix": "Adopt theirs: set `speeds` on public/core.json ancestries.athamaru to `{\"land\": 20, \"swim\": 25}`. `speeds` is a chassis field read by deriveSpeeds in src/rules/derive.ts, so no new lane is needed.",
+   "playerVisible": true
+  },
+  {
+   "id": "skeleton-vision-normal",
+   "claim": "Skeleton's `vision` is set to \"normal\", contradicting print: Undeath grants basic undead benefits, which include Undead Vision — a skeleton (no low-light from its ancestry) therefore gains low-light vision, and our Senses row reads \"Normal\".",
+   "fixed": true,
+   "fix": "Set `vision` on public/core.json ancestries.skeleton to \"low-light-vision\" (the resolved value for this ancestry, which has no prior low-light), and fix the '**Senses**' line in core-descriptions.json ancestries.skeleton.d to read 'Low Light Vision'. `vision` is a chassis field already read by deriv",
+   "playerVisible": true
+  },
+  {
+   "id": "skeleton-death-immunity",
+   "claim": "Skeleton has no immunity to death effects; Wanderer's Guide encodes it and print requires it.",
+   "fixed": true,
+   "fix": "Adopt theirs: add `\"immunities\": [\"death\"]` to public/core.json ancestries.skeleton. It needs no new lane — deriveDefenses already reads `immunities` off the ancestry record (src/rules/derive.ts:2359-2362).",
+   "playerVisible": true
+  },
+  {
+   "id": "skeleton-disease-poison-bonus",
+   "claim": "Skeleton is missing the +1 circumstance bonus against disease and poison that basic undead benefits grant; WG encodes it and we carry nothing.",
+   "fixed": true,
+   "fix": "Add to FEAT_SITUATIONAL in src/rules/situationalBonuses.ts, worded to PRINT rather than to their narrower op: `\"skeleton\": [{ targets: [{ kind: 'save', detail: 'all' }], when: \"against disease and poison (and any other defense against them)\", bonus: \"+1 circumstance\" }]`.",
+   "playerVisible": true
+  },
+  {
+   "id": "skeleton-void-healing",
+   "claim": "Neither side models a skeleton's void/negative healing — the single most consequential thing about playing one, since every healing spell the party has stops working on the character.",
+   "fixed": true,
+   "fix": "Residual-read lane. Add to src/rules/situationalBonuses.ts RECORD_MARKERS: `'skeleton': [{ on: 'condition', id: 'dying', note: \"Undeath (basic undead benefits): void healing — vitality damage harms you and vitality healing does not heal you; you take no void damage and are healed by void effects tha",
+   "playerVisible": true
+  },
+  {
+   "id": "kobold-senses-duplicates-vision",
+   "claim": "Kobold carries darkvision twice — once as the chassis `vision` field and once as a `senses` entry — and both are read by deriveDefenses, so two of our carriers deliver the same grant for the same record.",
+   "fixed": true,
+   "fix": "Drop the redundant `senses` array from public/core.json ancestries.kobold — `vision: \"darkvision\"` already delivers it via derive.ts:2485. Currently harmless on the sheet only because derive.ts dedupes into a Map keyed by sense name; the two carriers disagree the moment one is edited.",
+   "playerVisible": false
+  },
+  {
+   "id": "halfling-keen-eyes-seek",
+   "claim": "Halfling's Keen Eyes Seek bonus is missing from our side entirely; Wanderer's Guide encodes it as a Perception circumstance bonus, and the situational lane it belongs in is reachable by ancestry id but has no halfling entry.",
+   "fixed": true,
+   "fix": "Adopt theirs. Add to FEAT_SITUATIONAL in src/rules/situationalBonuses.ts: `\"halfling\": [{ targets: [{ kind: 'perception' }], when: \"when you Seek to find hidden or undetected creatures within 30 feet\", bonus: \"+2 circumstance\" }]`.",
+   "playerVisible": true
+  },
+  {
+   "id": "android-constructed",
+   "claim": "Android's Constructed save bonus is missing on our side; Wanderer's Guide encodes it on all three saves.",
+   "fixed": true,
+   "fix": "Adopt theirs. Add to FEAT_SITUATIONAL in src/rules/situationalBonuses.ts: `\"android\": [{ targets: [{ kind: 'save', detail: 'all' }], when: \"against diseases, poisons, and radiation\", bonus: \"+1 circumstance\" }]` — one all-saves target rather than three, which is how the file already encodes 'dragons",
+   "playerVisible": true
+  }
+ ],
+ "refuted": [
+  {
+   "id": "strix-wings-no-carrier",
+   "claim": "The Strix ancestry's printed Wings feature (jump bonuses and total fall-damage immunity) is delivered by no carrier anywhere in ours — not on the ancestry record, not in recordMarks/RECORD_MARKERS, no",
+   "why": "BROKEN ON THE AST CARRIER. public/ast/ancestries.json → `strix` (24,160 chars) contains the complete Wings section as a level-3 title plus its full paragraph, INCLUDING the clause WG omits: \"...you take no damage from falling, no matter what distance"
+  },
+  {
+   "id": "money-counter-dead-grantedfeatid",
+   "claim": "Money Counter carries `grantedFeatId: \"eye-for-numbers\"` alongside `grantedFeatByChoice.society: \"eye-for-numbers\"` — the same grant written twice, and the flat field can never fire because `backgroun",
+   "why": "The short-circuit half is true (I called `backgroundGrantedFeats` with undefined/null/'society'/'thievery'/'athletics' and with `grantedFeatId` stripped — identical output every time), but the claim's material assertion that the field is \"inert dupli"
+  },
+  {
+   "id": "town-troublemaker-norgorber-lore",
+   "claim": "Town Troublemaker's second trained Lore — Norgorber Lore, granted because the background itself carries the Scoundrel persona trait — is delivered by no carrier on either side, and our `traits: ['pers",
+   "why": "The absence half checks out (a built Town Troublemaker has only lore:underworld; \"Norgorber Lore\" is 0 in core.json; no src reader for background.traits), but the load-bearing premise — that the background itself confers the Scoundrel persona so the "
+  },
+  {
+   "id": "merfolk-aquatic-grace",
+   "claim": "Merfolk's printed Aquatic Grace degree-of-success upgrade on saves against water effects is modelled by neither side and is absent even from our description text, so a merfolk player has no way to lea",
+   "why": "The mechanical half holds (WG ability_block 27983 \"Aquatic Grace\" prints \"(no operations)\"; core.json ancestries.merfolk has no degreeShifts/situational/note, and 0 of our ancestries carry any of the three) — but the load-bearing harm clause is false"
+  },
+  {
+   "id": "automaton-core-and-constructed-body-unmodelled",
+   "claim": "Automaton's two printed ancestry features — Automaton Core and Constructed Body — have no carrier of any kind on our side (not a field, not a mode, not description text), so the whole living-construct",
+   "why": "The sweep skipped public/ast, the render carrier: public/ast/ancestries.json['automaton'] carries the full AoN page with level-3 titles \"Automaton Core\" and \"Constructed Body\" (and \"Size / Medium or Small\"), and ast-index.json maps automaton→ancestri"
+  },
+  {
+   "id": "sarangay-head-gem-unmodelled",
+   "claim": "Sarangay's printed Head Gem feature has no carrier on our side at all — not a field, not description text — so the player never learns their soul-bearing gem substitutes for their body in raise-dead m",
+   "why": "public/ast/ancestries.json['sarangay'] carries the whole printed page including level-3 titles \"Horns\" and \"Head Gem\" with the full substitute-for-your-body text, and ast-index maps sarangay→ancestries. Because the builder's ancestry SearchSelect set"
+  },
+  {
+   "id": "kashrishi-glowing-horn-unmodelled",
+   "claim": "Kashrishi's Glowing Horn emits dim light in a 10-foot emanation on a common trigger; neither side models or displays it, so a player never learns their character stops being able to hide after casting",
+   "why": "public/ast/ancestries.json['kashrishi'] carries level-3 titles \"Empathic Sense\" and \"Glowing Horn\" with the full 10-foot dim-light emanation text (I confirmed the title nodes structurally, not just by substring). The builder's ancestry picker opens t"
+  },
+  {
+   "id": "azarketi-hydration-residual",
+   "claim": "Azarketi Hydration — a −1 status penalty to Fortitude saves after 24 hours out of water, and suffocation after 48 — is modelled by neither side and appears nowhere in our data.",
+   "why": "\"Appears nowhere in our data\" is false: public/ast ancestries.azarketi carries the entire Hydration paragraph verbatim (\"After the first 24 hours outside of water, you take a –1 status penalty to Fortitude saves. After 48 hours…\"), and that AST is wh"
+  },
+  {
+   "id": "leshy-plant-nourishment-residual",
+   "claim": "Leshy Plant Nourishment — the no-food-cost rule and the 1-week-without-sunlight starvation clause — is carried by neither side and is absent from our leshy description.",
+   "why": "Both halves fail: WG ability_block 21339 does carry the full Plant Nourishment prose in its description (the finding's own `theirs` concedes this while the claim says \"carried by neither side\"), and public/ast ancestries.leshy carries the same paragr"
+  },
+  {
+   "id": "conrasu-sunlight-healing",
+   "claim": "Conrasu's Sunlight Healing — a 10-minute activity healing 1d8, +1d8 every 2 levels from 3rd, once per day — is modelled by neither side and appears nowhere in our text, yet our own Rite of Light herit",
+   "why": "The load-bearing clause is false: public/ast/ancestries.json conrasu carries the printed Sunlight Healing paragraph verbatim, ast-index.json maps 'conrasu'→'ancestries', and DescriptionModal prefers the AST node over the plain description (`if (astNo"
+  },
+  {
+   "id": "goloma-eyes-in-back",
+   "claim": "Goloma's Eyes in Back — Seek covers two areas instead of one — is modelled by neither side and is absent from our description text, so the player never learns their basic action behaves differently.",
+   "why": "public/ast/ancestries.json goloma contains the full printed \"Eyes in Back\" section as a level-3 title plus paragraph, with a live link node to actions:seek; ast-index maps 'goloma'→'ancestries' and DescriptionModal renders the AST in preference to th"
+  },
+  {
+   "id": "vanara-prehensile-tail",
+   "claim": "Vanara's Prehensile Tail — Interact actions needing a free hand while both hands are full — is modelled by neither side and is missing from our description text, so a player has no way to know they ha",
+   "why": "public/ast/ancestries.json vanara carries the printed Prehensile Tail paragraph in full (\"…perform Interact actions requiring a free hand, even if both hands are otherwise occupied…can't use it to hold items\"), reachable via ast-index 'vanara'→'ances"
+  },
+  {
+   "id": "centaur-mount",
+   "claim": "Centaur's Mount — allies one size smaller than you can ride you — is modelled by neither side and is absent from our text, so a Large centaur's whole point as a mount is invisible on the sheet.",
+   "why": "public/ast/ancestries.json centaur carries both Mount and Robust as printed (\"A PC can ride you if they are one size category smaller than you (Medium size, for most centaurs)…\"), and ast-index maps 'centaur'→'ancestries', so the Details-tab Ancestry"
+  },
+  {
+   "id": "samsaran-wanderers-soul",
+   "claim": "Samsaran's Wanderer's Soul — the caster of a raise-dead-type ritual on you uses a degree of success one better, and you always return as a samsaran — is modelled by neither side and appears nowhere in",
+   "why": "public/ast/ancestries.json samsaran carries the whole Wanderer's Soul paragraph verbatim, immediately after Cryptomnesia, and ast-index maps 'samsaran'→'ancestries', so it renders in the ancestry description popup on both the sheet and the builder — "
+  },
+  {
+   "id": "surki-magiphage-sustenance",
+   "claim": "The half of Magiphage that removes food and water needs is stated by neither side: we model only the tradition pick, and our surki text never mentions Magiphage at all.",
+   "why": "Both halves of the claim break. public/ast/ancestries.json surki carries the complete Magiphage paragraph including \"You don't need to eat or drink unless you're in an especially magic-poor environment (such as the Mana Wastes)\", reachable via ast-in"
+  },
+  {
+   "id": "catfolk-land-on-your-feet",
+   "claim": "Catfolk's ancestry ability Land on Your Feet has no carrier anywhere on our side — not a field on core.json ancestries.catfolk, not a line in situationalBonuses.ts (FEAT_SITUATIONAL / RECORD_MARKERS),",
+   "why": "The three enumerated sub-claims hold (no field, no bare 'catfolk' key in situationalBonuses.ts, core-descriptions ancestries.catfolk.d stops at '**Senses** Low Light Vision'), but the headline is false: public/ast/ancestries.json carries the section "
+  },
+  {
+   "id": "tanuki-change-shape",
+   "claim": "Tanuki's 1-action Change Shape ancestry ability is carried by nobody on our side — core.json actions['change-shape'] is the ANADI action (traits include 'anadi', aonId action-730), not the tanuki one,",
+   "why": "Every sub-claim checks out (core.json actions['change-shape'] is traits ['anadi','arcane','concentrate','polymorph','transmutation'], aonId action-730, Mwangi Expanse; no tanuki-keyed mode — in fact all 44 battle-form modes in core.modes gate on FEAT"
+  },
+  {
+   "id": "ghoran-photosynthesis",
+   "claim": "Ghoran's Photosynthesis ancestry ability has no carrier on our side — no field, no lane entry, and core-descriptions.json ancestries.ghoran.d (377 chars) ends at '**Senses** Low Light Vision'.",
+   "why": "The record is chassis-only and core-descriptions ancestries.ghoran.d is the 377-char stub the claim describes, but public/ast/ancestries.json ghoran carries the printed paragraph verbatim ('You gain nourishment from photosynthesis… these bottles cost"
+  },
+  {
+   "id": "skeleton-negative-survival",
+   "claim": "Neither side models Negative Survival — that a skeleton PC is knocked out and dying at 0 HP rather than destroyed, and that stabilize and similar rescues don't work on them.",
+   "why": "WG is indeed silent, but the finding's flat 'Nothing.' for our side is wrong twice over: core.json already carries the clause as an authored `note` on all six undead dedications ('Negative Survival: you are knocked out and begin dying at 0 HP like th"
+  },
+  {
+   "id": "sprite-magical-strikes",
+   "claim": "Sprite's Magical Strikes has no carrier anywhere on our side, so a sprite fighting a creature with resistance to non-magical damage gets no indication their attacks bypass it.",
+   "why": "There is genuinely no mechanical lane (grep for magicalStrikes/strikesMagical/strikeTraits across src/rules returns nothing, and the record has no situational/recordMarks/note), but 'no carrier anywhere' and 'no indication' are both false: public/ast"
+  },
+  {
+   "id": "halfling-keen-eyes-flat-check",
+   "claim": "The second half of Keen Eyes — the flat-check DC reduction against concealed and hidden targets — is modeled by neither side, and it is the half that changes whether a halfling's attack lands.",
+   "why": "The load-bearing evidence is false — RECORD_MARKERS carries several flat-check DC entries besides 'majordomo-torc', including 'choker-of-elocution-greater' (deafened, DC 3), 'mutated-fleshwarp' (bleed flat check DC 10), 'jinxed-tengu' (DC 17 flat che"
+  },
+  {
+   "id": "android-emotionally-unaware",
+   "claim": "Android's Emotionally Unaware penalty is modeled by neither side — a −1 circumstance penalty to two skills and to Sense Motive that a player has no way to learn about from our sheet.",
+   "why": "Both modelling halves check out (WG row 323 grants only Constructed 45843 and has no Diplomacy/Performance/Perception operation, and our record has no lane entry), but the stated harm is false: public/ast/ancestries.json android carries the ability v"
+  }
+ ],
+ "refutedPattern": "12 of 22 refutations were carrier-blindness: the claim said a printed paragraph reached nothing while public/ast/ancestries.json (the render carrier DescBody prefers) held it verbatim. The standing lesson: sweep the AST before any no-carrier claim.",
+ "flaggedResidues": [
+  {
+   "id": "ancestry-heritage-choice-recovery",
+   "note": "deriveBuildFromCharacter (the lossy-import fallback) does not recover ancestry:<id>/heritage:<id> featChoices answers (bodySize, magiphageTradition, mightyfallAttributes, draconicExemplar). App keeps the original build so normal play is unaffected; imports/GM-received characters silently lose these picks. bodySize is recoverable from c.size; the rest need a carrier.",
+   "resolved": "2026-09-01: buildCharacter now emits Character.ancestryHeritageChoices (the carrier — every ancestry/heritage own-choice answer, all 12 flags, keyed exactly as featChoices keys them; every persistence path was verified whole-object JSON so it survives roster save, .codex export, campaign sync and GM edit). deriveBuildFromCharacter copies it back validated against the record's options, and for pre-carrier saves falls back to the traces on the character: size (cross-checked against ancestryHp/hpBySize) for bodySize, ancestryHp === alternateAttributes.hp for the Mightyfall package. The abilities reconstruction now also passes the recovered heritage answer to heritageAdjustedAncestryAttributes and takes ancestry boost slots from the ADJUSTED boosts, so a kaiju kobold's scores rebuild against the package's fixed str/cha + int flaw rather than the normal kobold arrays. Guard: 6 round-trip tests in test/reverse-build.test.ts ('ancestry/heritage own-choice answers'). magiphage/exemplar answers on pre-carrier saves are genuinely unrecoverable (no trace on the Character) — the carrier exists so no new save loses them."
+  }
+ ],
+ "closed": true,
+ "complete": true
+}

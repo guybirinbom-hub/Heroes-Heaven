@@ -1,0 +1,439 @@
+{
+ "batch": 21,
+ "examined": 100,
+ "recordsRead": [
+  "freed-slave-of-absalom",
+  "heroic-ancestry",
+  "sense-of-belonging",
+  "goblinblood-orphan",
+  "molthuni-mercenary",
+  "junker",
+  "lastwall-survivor",
+  "street-urchin",
+  "cannoneer",
+  "empty-whispers",
+  "alloysmith",
+  "construction-occultist",
+  "wandering-libertine",
+  "herbalist",
+  "art-tutor",
+  "sponsored-by-a-village",
+  "butcher",
+  "local-scion",
+  "occult-librarian",
+  "tomb-born",
+  "eagle-hunter",
+  "child-of-notoriety",
+  "vidrian-reformer",
+  "deputy",
+  "school-medic",
+  "nexian-mystic",
+  "pillar",
+  "ex-mendevian-crusader",
+  "songsinger-in-training",
+  "grand-council-bureaucrat",
+  "willowshore-urchin",
+  "ghostwriter",
+  "jeweler",
+  "legacy-of-the-hammer",
+  "dragon-scholar",
+  "waste-walker",
+  "war-orphan",
+  "merabite-prodigy",
+  "professional-letter-writer",
+  "inlander",
+  "bibliophile",
+  "spell-seeker",
+  "folklore-enthusiast",
+  "truth-seeker",
+  "scholar",
+  "brevic-outcast",
+  "moot-guard",
+  "clockfighter",
+  "final-blade-survivor",
+  "amnesiac",
+  "detective",
+  "reputation-seeker",
+  "reborn-soul",
+  "fireworks-performer",
+  "back-alley-doctor",
+  "star-athlete",
+  "fey-friend",
+  "zodiac-bound",
+  "chelish-rebel",
+  "outrider",
+  "blessed",
+  "highborn-snoop",
+  "magical-misfit",
+  "ward",
+  "musical-prodigy",
+  "sewer-dragon",
+  "lost-and-alone",
+  "astrological-augur",
+  "banished-brighite",
+  "crown-of-chaos",
+  "favored",
+  "warded-by-kami",
+  "miner",
+  "sky-rider",
+  "student-of-the-ancients",
+  "fogfen-tale-teller",
+  "senghor-sailor",
+  "geb-crusader",
+  "eclectic-scholar",
+  "curandero",
+  "circus-born",
+  "grave-robber",
+  "revenant",
+  "deep-sea-diver",
+  "northland-forager",
+  "field-medic",
+  "otherworldly-mission",
+  "storm-survivor",
+  "relentless-dedication",
+  "combat-carpenter",
+  "surge-investigator",
+  "tech-reliant",
+  "cook",
+  "library-dweller",
+  "driver",
+  "abadars-avenger",
+  "plant-whisperer",
+  "quick",
+  "bookish-providence",
+  "sign-bound"
+ ],
+ "method": "20-agent workflow (wf_f13e38fc-adf): 10 read slices x 10 records then 10 adversarial verifiers. Ledger: work/.b021-findings.json.",
+ "confirmed": [
+  {
+   "id": "revenant-void-healing",
+   "claim": "Revenant's void healing is delivered by neither our record nor any other carrier: WG grants it as an explicit physical-feature ability block, and our `backgrounds.revenant` has no `negativeHealing` field — and even if it did, no aggregator reads `negativeHealing` off a background, so the field has no reader.",
+   "fixed": true,
+   "fix": "Adopt theirs. Two edits: (1) set `negativeHealing: true` on `backgrounds['revenant']` in public/core.json; (2) give that field a reader by adding the background to both void-healing aggregators, exactly as batch 20 did for `breathesWater` — in src/rules/derive.ts:2712-2716 add `|| !!(c.backgroundId ",
+   "playerVisible": true
+  },
+  {
+   "id": "otherworldly-mission-once-per-adventure",
+   "claim": "Otherworldly Mission's once-per-adventure divine-orders ability is modeled by neither side — WG encodes nothing for it and our record has no limitedUses, situational, grantsActions or note carrier, leaving a per-adventure resource with no tracker of any kind.",
+   "fixed": true,
+   "fix": "Residual lane, not a parity adoption (theirs has nothing to copy). Carry it as a trackable resource on the record: add `limitedUses: { max: 1, per: 'adventure' }` to `backgrounds['otherworldly-mission']` in public/core.json, which requires widening the union at src/rules/types.ts:2162 from `per: 'ro",
+   "playerVisible": true
+  },
+  {
+   "id": "astrological-augur",
+   "claim": "Print and WG both attach a rider to the granted Augury innate spell (\"can see up to 1 hour in the future rather than 30 minutes\"); our record grants the spell but carries no `spellNotes`, so the rider never reaches the Spells tab — the carrier exists and is already used for exactly this shape by `blight-survivor`.",
+   "fixed": true,
+   "fix": "Add to public/core.json → backgrounds.astrological-augur: spellNotes: [{ spellId: 'augury', note: \"Cast from this background, Augury's effects can see up to 1 hour in the future rather than 30 minutes.\" }]. Same field and same lane as backgrounds.blight-survivor's existing spellNotes entry on cleans",
+   "playerVisible": true
+  },
+  {
+   "id": "crown-of-chaos",
+   "claim": "The granted Chaotic Destiny free action prints \"Frequency once per day\" and WG carries that frequency on the ability block they hand over, but neither our background record nor our `chaotic-destiny` action carries `limitedUses`, so the sheet renders the action with no use tracker — every other background in the file that grants a once-per-day action does carry it.",
+   "fixed": true,
+   "fix": "Add `limitedUses: { max: 1, per: 'day' }` to public/core.json → backgrounds.crown-of-chaos, matching the shape already on backgrounds.feybound / backgrounds.keys-to-destiny / backgrounds.banished-celestial. MainTab.tsx:277 then picks it up as the granter-side holder and the free action gets its once",
+   "playerVisible": true
+  },
+  {
+   "id": "sewer-dragon",
+   "claim": "The printed Kobold-ancestry prerequisite is a hard build gate that no carrier models on either side — backgrounds have no prerequisite field anywhere in the schema (no reader), so the builder will let any ancestry take Sewer Dragon.",
+   "fixed": true,
+   "fix": "Residual read — needs a new carrier before it can be authored. Either (i) add an optional `ancestryPrerequisite?: string[]` to the Background type in src/rules/types.ts, set it to ['kobold'] on backgrounds.sewer-dragon, and have the builder's background picker warn/filter the way the feat prerequisi",
+   "playerVisible": false
+  },
+  {
+   "id": "star-athlete-lore-choice",
+   "claim": "Star Athlete hard-codes trainedLore:\"games\", so the printed alternative (a Lore skill associated with your school) can never be taken; WG models it as a free Lore select.",
+   "fixed": true,
+   "fix": "In public/core.json, backgrounds.star-athlete: REPLACE `trainedLore: \"games\"` with `trainedLoreChoice: true` plus `trainedLoreChoiceDefault: \"games\"` — the free-text Lore lane at src/rules/build.ts:2901-2906, rendered as the Lore text box at src/builder/shared.tsx:2922. Do NOT keep both fields: buil",
+   "playerVisible": true
+  },
+  {
+   "id": "reborn-soul-one-lore-not-two",
+   "claim": "Reborn Soul trains only ONE Lore skill; the printed text and WG both give two.",
+   "fixed": true,
+   "fix": "Add a count to the background free-text Lore lane: a `trainedLoreChoiceCount?: number` on `Background` (src/rules/types.ts, beside `trainedLoreChoice` at :2386), set to 2 on backgrounds.reborn-soul; have src/rules/build.ts:2901-2906 loop that many subjects (second answer stored as a new `BuildState.",
+   "playerVisible": true
+  },
+  {
+   "id": "zodiac-bound-innate-spell",
+   "claim": "Zodiac Bound grants no innate spell whatsoever — the constellation pick is recorded and displayed and delivers nothing.",
+   "fixed": true,
+   "fix": "Move backgrounds.zodiac-bound's `choice` onto the `Background.effectChoices` lane (types.ts:2311, resolved at build.ts:5158 into chosenInnateGrants and emitted at build.ts:6752), 12 options each carrying `grant.innateSpells` (EffectGrant.innateSpells, types.ts:1774): underworld-dragon→ignition, swor",
+   "playerVisible": true
+  },
+  {
+   "id": "zodiac-bound-sign-attribute-boost",
+   "claim": "Zodiac Bound gives two FREE attribute boosts; print and WG both tie one of the two to the chosen constellation.",
+   "fixed": true,
+   "fix": "Widen `Background.alternateAttributes` (src/rules/types.ts:2359) from a single `{ whenChoice; abilityBoosts }` to an ARRAY (or add `abilityBoostsByChoice?: Record<string, AbilityBoost[]>` keyed by the `choice.flag` answer), then author on backgrounds.zodiac-bound: underworld-dragon & sky-dragon → [{",
+   "playerVisible": true
+  },
+  {
+   "id": "zodiac-bound-annual-free-cast",
+   "claim": "The once-per-year free cast of the sign's spell is modelled by neither side; WG carries it as display text only.",
+   "fixed": true,
+   "fix": "Once the innate grant from zodiac-bound-innate-spell lands, add `spellNotes` on public/core.json backgrounds.zodiac-bound — one entry per granted spellId with note \"Once during the prominent time for your sign (typically once per year), you can cast this spell without expending its normal use.\" — th",
+   "playerVisible": true
+  },
+  {
+   "id": "child-of-notoriety-notoriety-branch",
+   "claim": "Child of Notoriety prints two mutually exclusive branches and ours hardcodes only the kindness one, so a player who navigates their past through notoriety is still trained in Diplomacy and Genealogy Lore and still granted Group Impression instead of Intimidation, Underworld Lore and Intimidating Glare.",
+   "fixed": true,
+   "fix": "On public/core.json backgrounds.child-of-notoriety, replace the flat trio with the Brevic Noble branch shape the engine already reads: trainedSkillChoice: [\"diplomacy\",\"intimidation\"]; trainedLoreByChoice: { \"diplomacy\": \"genealogy\", \"intimidation\": \"underworld\" }; grantedFeatByChoice: { \"diplomacy\"",
+   "playerVisible": true
+  },
+  {
+   "id": "child-of-notoriety-phantom-lore",
+   "claim": "Child of Notoriety's choice block is misclassified as a Lore choice, so the answer string itself is fed to loreKey() and the character is trained in a nonexistent Lore skill — lore:kindness by default, lore:notoriety if the player picks the other option — locked on the sheet as coming from \"your background\".",
+   "fixed": true,
+   "fix": "Delete the `choice` block (flag \"pastApproach\") from public/core.json backgrounds.child-of-notoriety entirely — its job is taken over by trainedSkillChoice/trainedLoreByChoice/grantedFeatByChoice in the sibling finding, and the builder renders trainedSkillChoice as its own picker (src/builder/shared",
+   "playerVisible": true
+  },
+  {
+   "id": "school-medic-lore-choice",
+   "claim": "School Medic prints an OR between Academia Lore and a Lore associated with your school; ours hardcodes Academia Lore and never asks, so a player attending any of the other academies is trained in the wrong Lore with no way to change it.",
+   "fixed": true,
+   "fix": "On public/core.json backgrounds.school-medic, replace trainedLore: \"academia\" with trainedLoreChoice: true and trainedLoreChoiceDefault: \"academia\". That is the Night Watch pattern src/rules/build.ts:2901-2905 already reads (`const typed = build.backgroundLore?.trim() || background.trainedLoreChoice",
+   "playerVisible": true
+  },
+  {
+   "id": "eagle-hunter-eagle-aid",
+   "claim": "Eagle Hunter's eagle-Aid benefit on Nature, Perception and Survival has no carrier anywhere on our side, so nothing flags those three stats and the player gets no reminder that their companion can Aid the check.",
+   "fixed": true,
+   "fix": "Add to public/core.json backgrounds.eagle-hunter: situational: [{ targets: [{ kind: \"skill\", detail: \"nature\" }, { kind: \"skill\", detail: \"survival\" }, { kind: \"perception\" }], when: \"when your trained eagle is present\", bonus: \"your trained eagle can Aid the check\" }]. One entry with three targets ",
+   "playerVisible": true
+  },
+  {
+   "id": "eagle-hunter-only-eagles-rider",
+   "claim": "The printed restriction narrowing the two granted feats to eagles rides on neither of our Pet and Train Animal grants, so both appear on the Feats tab as unqualified general-purpose feats.",
+   "fixed": true,
+   "fix": "Add to public/core.json backgrounds.eagle-hunter: recordMarks: [{ on: \"feature\", id: \"pet\", note: \"you can use this feat only to gain an eagle.\" }, { on: \"feature\", id: \"train-animal\", note: \"you can use this feat only to train eagles.\" }]. `on: 'feature'` is the declared surface for a FEAT/CLASS-FE",
+   "playerVisible": true
+  },
+  {
+   "id": "willowshore-urchin-seasonal-boon",
+   "claim": "Willowshore Urchin's Seasonal Boon free action is delivered by no carrier of ours — no feat, no action, no `grantsActions` on the record — while WG grants it as a second ability block, and our own description text drops the boon's trigger/effect entirely.",
+   "fixed": true,
+   "fix": "Adopt theirs: add an `actions` record `seasonal-boon-willowshore-urchin` (cost: free action, trigger and effect verbatim from the AoN print) to public/core.json, and add `grantsActions: [\"seasonal-boon-willowshore-urchin\"]` to backgrounds['willowshore-urchin'] — the exact carrier backgrounds['genie-",
+   "playerVisible": true
+  },
+  {
+   "id": "professional-letter-writer-triple-feat-carrier",
+   "claim": "Professional Letter Writer's single either/or skill feat is delivered by three of our carriers at once (`grantedFeatId`, the record's own `choice`, and FEAT_PICK_GRANTS), so the record always grants Specialty Crafting AND can grant Multilingual on top of it — two skill feats where the print grants one, behind two duplicate pickers.",
+   "fixed": true,
+   "fix": "Delete BOTH `grantedFeatId: \"specialty-crafting\"` and the `choice` block from backgrounds['professional-letter-writer'] in public/core.json, leaving src/rules/featPickGrants.ts:222 as the single carrier (its pick is granted by pickFrom at src/rules/build.ts:4400 and rendered by the one picker at src",
+   "playerVisible": true
+  },
+  {
+   "id": "professional-letter-writer-daily-language",
+   "claim": "Professional Letter Writer's daily-preparations extra language has no reader anywhere on our side — no field on the record, no entry in any grant lane — while WG encodes it as a LANGUAGE select.",
+   "fixed": true,
+   "fix": "Adopt theirs, using our existing daily lane: give backgrounds['professional-letter-writer'] in public/core.json a `choice: { flag: \"dailyLanguage\", prompt: \"Extra language\", daily: true, kind: \"open\", from: { type: \"language\", grantLanguage: true } }`. src/rules/derive.ts:1224 already pushes `c.back",
+   "playerVisible": true
+  },
+  {
+   "id": "ghostwriter-lore-choice",
+   "claim": "Ghostwriter's Lore is a printed choice between Scribing Lore and a school Lore; WG encodes it as a select and ours hard-fixes Scribing, so the player is never asked.",
+   "fixed": true,
+   "fix": "Adopt theirs: on backgrounds['ghostwriter'] in public/core.json replace `trainedLore: \"scribing\"` with `trainedLoreChoice: true` plus `trainedLoreChoiceDefault: \"scribing\"` — the exact pair backgrounds['night-watch'] already ships (the only current user of trainedLoreChoiceDefault), read by src/rule",
+   "playerVisible": true
+  },
+  {
+   "id": "waste-walker-lore-substitution",
+   "claim": "Waste Walker's printed licence to substitute a different wasteland Lore for Mana Wastes Lore is modelled by neither side — both hard-fix the subject — so a player whose wastes are not the Mana Wastes cannot record the Lore the text gives them.",
+   "fixed": true,
+   "fix": "Residual read, no side to adopt from: on backgrounds['waste-walker'] in public/core.json replace `trainedLore: \"mana-wastes\"` with `trainedLoreChoice: true` plus `trainedLoreChoiceDefault: \"mana-wastes\"` — the same pair proposed for Ghostwriter and already shipped on backgrounds['night-watch'], read",
+   "playerVisible": true
+  },
+  {
+   "id": "b21-warded-by-kami-ward-heal",
+   "claim": "Warded by Kami's once-per-day ward heal has no carrier on either side, and the `limitedUses` our record does carry is a write-only field with no reader because the background names no action for it to govern.",
+   "fixed": true,
+   "fix": "Add an action record `merge-with-ward` to public/core.json `actions` (actionCost 1 action, traits [\"healing\",\"manipulate\"], text \"merge with your ward and heal Hit Points equal to your level\", aonId none), and add `\"grantsActions\": [\"merge-with-ward\"]` to public/core.json backgrounds.warded-by-kami.",
+   "playerVisible": true
+  },
+  {
+   "id": "b21-favored-name-drop-frequency",
+   "claim": "Favored grants the Name Drop reaction, whose printed Frequency is once per day, and neither the action record nor the background carries `limitedUses`, so the granted reaction renders on the sheet with no use pips.",
+   "fixed": true,
+   "fix": "Add `\"limitedUses\": {\"max\":1,\"per\":\"day\"}` to public/core.json backgrounds.favored, matching the seven sibling backgrounds that already pair grantsActions with limitedUses; MainTab.tsx:278 then picks it up as the `usesFrom` holder for the granted `name-drop` action and the reaction gets its once-per",
+   "playerVisible": true
+  },
+  {
+   "id": "b21-student-of-the-ancients-azlanti",
+   "claim": "Student of the Ancients prints that one of the two languages from its granted Multilingual must be Azlanti, and ours leaves both slots free, so a character can finish the background knowing neither Azlanti nor anything the print requires.",
+   "fixed": true,
+   "fix": "Mirror the shipped Runelord Scholar encoding onto public/core.json backgrounds.student-of-the-ancients: add `\"grantsLanguages\": [\"azlanti\"]` and `\"languageChoicesBonus\": [{\"featId\":\"multilingual\",\"extra\":-1}]`. Runelord Scholar carries exactly this pair for the identical printed sentence shape (gran",
+   "playerVisible": true
+  },
+  {
+   "id": "spell-seeker",
+   "claim": "Spell Seeker carries the Arcana-or-Occultism trained-skill decision TWICE — once as `trainedSkillChoice` and once as an embedded `choice` block — and both carriers independently train and lock a skill, so disagreeing answers train both skills.",
+   "fixed": true,
+   "fix": "Delete the `choice` object from backgrounds.spell-seeker in public/core.json, leaving `trainedSkillChoice: [\"arcana\",\"occultism\"]` as the single carrier. trainedSkillChoice is the field declared for exactly this shape (src/rules/types.ts:2370-2372) and is the one src/rules/build.ts:1070, :1613, :814",
+   "playerVisible": true
+  },
+  {
+   "id": "empty-whispers-lore-subject-truncated",
+   "claim": "Empty Whispers' trainedLore subject is the truncated string \"planar-ri\", so we train a Lore called \"Planar Ri Lore\" instead of Planar Rift Lore — the exact skill the record's own sensing clause names.",
+   "fixed": true,
+   "fix": "Change `trainedLore` on backgrounds/empty-whispers in public/core.json from \"planar-ri\" to \"planar-rift\" (yielding key lore:planar-rift, label \"Planar Rift Lore\"). Same lane the other nine backgrounds in this slice use.",
+   "playerVisible": true
+  },
+  {
+   "id": "sense-of-belonging-deviant-feat-not-granted",
+   "claim": "Sense of Belonging records the flicker/wraith answer and grants no deviant feat, because the choice's option VALUES are classification words rather than feat ids, so backgroundChoiceKind classifies the choice as 'other' and the grant path is never entered.",
+   "fixed": true,
+   "fix": "Change the two `choice.options` values on backgrounds/sense-of-belonging from \"flicker\"/\"wraith\" to the feat ids \"sonic-dash\"/\"eerie-flicker\" (keep the existing labels \"Flicker — Sonic Dash\" / \"Wraith — Eerie Flicker\"). backgroundChoiceKind then returns 'feat' and the answer routes through the exist",
+   "playerVisible": true
+  },
+  {
+   "id": "heroic-ancestry-dc-reduction-no-carrier",
+   "claim": "Heroic Ancestry's −2 DC on influence Discover/Influence and Make an Impression is carried by nothing on our side — no situational, no recordMarks, no reader of any kind.",
+   "fixed": true,
+   "fix": "Add `recordMarks` to backgrounds/heroic-ancestry in public/core.json — the ContentBase field read by recordMarkers/recordMarkersFor in src/rules/explain.ts, the data twin of RECORD_MARKERS — with three entries `{on:'action', id:'make-an-impression'}`, `{on:'action', id:'discover'}`, `{on:'action', i",
+   "playerVisible": true
+  },
+  {
+   "id": "sense-of-belonging-wrong-source-book",
+   "claim": "Sense of Belonging is booked under Dark Archive in our data when it is printed in the Gatewalkers Player's Guide (Remastered), so the per-character source-book filter offers and hides it under the wrong book.",
+   "fixed": true,
+   "fix": "Set `source` on backgrounds/sense-of-belonging in public/core.json to { \"book\": \"Gatewalkers Player's Guide (Remastered)\", \"license\": \"ORC\" } — reusing the exact book string already carried by backgrounds/aon-wishes-for-riches so the two land in the same filter bucket.",
+   "playerVisible": true
+  },
+  {
+   "id": "empty-whispers-sense-rifts-residual",
+   "claim": "Empty Whispers' entire non-proficiency mechanic — a free Planar Rift Lore check to sense rifts and memory-erasure sites without Investigating or Searching — is modelled by neither side, and a player reading only the sheet would never know they have it.",
+   "fixed": true,
+   "fix": "Add `recordMarks` to backgrounds/empty-whispers in public/core.json with `{on:'action', id:'seek', note:...}` and `{on:'action', id:'investigate', note:...}` (both ids exist in core.json's actions bucket) stating that you get a Planar Rift Lore check to sense planar rifts and memory-erasure sites ev",
+   "playerVisible": true
+  },
+  {
+   "id": "sign-bound-1",
+   "claim": "Sign Bound's entire constellation mechanic — the sign pick and the occult innate spell it determines — is delivered by nothing on our side: the record has no `choice` block and no `innateSpells`, so a Sign Bound character gets Astrology Lore and nothing else.",
+   "fixed": true,
+   "fix": "On backgrounds.sign-bound add `choice: {flag:\"constellation\", prompt:\"Constellation\", kind:\"array\", options:[…13 signs…]}` mirroring zodiac-bound's shape, and deliver the spell per sign through the existing `Background.innateSpells` carrier gated on that answer (an `InnateSpellGrant.whenChoice` gate",
+   "playerVisible": true
+  },
+  {
+   "id": "bookish-providence-1",
+   "claim": "Bookish Providence does not hand over the Recall Under Pressure free action — the action record ships in content.actions (parented to this very background) but no field on the background points at it, so it never reaches the sheet's action list.",
+   "fixed": true,
+   "fix": "Add `grantsActions: [\"recall-under-pressure\"]` to backgrounds.bookish-providence, and add `limitedUses: {per:\"day\", uses:1}` to actions[\"recall-under-pressure\"] so MainTab's `act?.limitedUses ? act : from.limitedUses ? from : null` holder resolution finds a tracker for the printed \"Frequency once pe",
+   "playerVisible": true
+  },
+  {
+   "id": "tech-reliant-1",
+   "claim": "Tech-Reliant trains only Crafting on our side; the printed second trained skill, Medicine, is delivered by no carrier at all.",
+   "fixed": true,
+   "fix": "Deliver both printed skills: widen `Background.trainedSkill` to `SkillId | SkillId[]` (the shape `trainedLore` already uses for the same reason — Undercover Lotus Guard's printed AND) and set backgrounds.tech-reliant `trainedSkill: [\"crafting\",\"medicine\"]`, training each in build.ts's background-ski",
+   "playerVisible": true
+  },
+  {
+   "id": "driver-1",
+   "claim": "Driver's Lore is modelled as a free-text box rather than the printed two-way pick, so an unanswered Driver is trained in no Lore at all and the granted Assurance binds to nothing.",
+   "fixed": true,
+   "fix": "On backgrounds.driver replace `trainedLoreChoice: true` with `trainedLoreOptions: [\"driving\",\"piloting\"]` — the same field the other nine two-named-subject backgrounds use (ex-con-token-guard, squire…), read at src/rules/build.ts:2895 with a first-option default. Then extend the `bgLore` branch of `",
+   "playerVisible": true
+  },
+  {
+   "id": "library-dweller-1",
+   "claim": "Library Dweller's Lore is hard-coded to Library Lore; the printed alternative (a Lore associated with your school) is offered by nothing on our side, so a player from a school with its own Lore is never asked.",
+   "fixed": true,
+   "fix": "On backgrounds.library-dweller drop the fixed `trainedLore: \"library\"` and set `trainedLoreChoice: true` with `trainedLoreChoiceDefault: \"library\"` — the exact pairing Night Watch already uses for \"either Legal Lore or the Lore skill for your home settlement\" (src/rules/types.ts:2357, read at src/ru",
+   "playerVisible": true
+  },
+  {
+   "id": "surge-investigator-1",
+   "claim": "Surge Investigator carries the Nature-or-Occultism pick TWICE — as `trainedSkillChoice` and again as a `choice` block — and the two answers are stored under different keys and both trained, so answering them differently trains the character in both skills.",
+   "fixed": true,
+   "fix": "Delete the duplicate `choice` block from backgrounds.surge-investigator (keep `trainedSkillChoice`, which is the lane the granted-feat defaulting and the trained-skill lock already read). Failure today: pick Occultism in the Skill picker at src/builder/shared.tsx:2892 and leave the second picker at ",
+   "playerVisible": true
+  },
+  {
+   "id": "tech-reliant-2",
+   "claim": "Tech-Reliant's blanket immunity to healing magic is modelled by neither side and by no carrier in ours, so nothing on the sheet tells the player (or their party's cleric) that Heal, healing potions and every healing-trait effect do nothing to them.",
+   "fixed": true,
+   "fix": "Author `dataWarning` on backgrounds.tech-reliant quoting the sentence — backgrounds are read for it (src/rules/build.ts:6133 `if (background?.dataWarning) effectWarnings.push(…)`) and it surfaces in the \"Missing data\" panel, which is the honest home for a rule the engine cannot enforce. Do not silen",
+   "playerVisible": true
+  },
+  {
+   "id": "bookish-providence-2",
+   "claim": "The conditional save bonus inside Recall Under Pressure is modelled by neither side, so even once the action is attached the +1/+2 status bonus raises no star on the character's saves.",
+   "fixed": true,
+   "fix": "Add to src/rules/situationalBonuses.ts: `\"recall-under-pressure\": [{ targets: [{ kind: 'save', detail: 'all' }], when: \"for the remainder of a combat encounter after the Academia Lore Recall Knowledge you made with Recall Under Pressure proved helpful (+2 if the harrow card drawn was of the suit of ",
+   "playerVisible": true
+  },
+  {
+   "id": "sign-bound-2",
+   "claim": "Sign Bound's first attribute boost is encoded as free on our side, but the print ties it to the constellation chosen, so our builder allows a boost the record does not grant (e.g. the Thrush with a Strength boost).",
+   "fixed": true,
+   "fix": "Once the constellation `choice` from sign-bound-1 exists, bind the first boost to it rather than leaving it free — the same `whenChoice`-keyed swap `Background.alternateAttributes` already performs (`{ whenChoice, abilityBoosts }`, src/rules/types.ts:2361, resolved by backgroundEffectiveBoosts at sr",
+   "playerVisible": true
+  },
+  {
+   "id": "sign-bound-3",
+   "claim": "The bonus cast during the sign's prominent season is modelled by neither side, so a player who takes a once-per-week sign never learns they get a free extra cast in their constellation's window.",
+   "fixed": true,
+   "fix": "Author a `note` on backgrounds.sign-bound quoting the sentence (ContentBase.note is the field for \"a clause the rules leave to the table\", src/rules/types.ts:280), so the free seasonal cast is stated beside the granted innate spell added by sign-bound-1 rather than being buried in the blurb. No use-",
+   "playerVisible": true
+  },
+  {
+   "id": "sponsored-by-a-village",
+   "claim": "OURS carries a `choice` block that duplicates `trainedSkillChoice`, so the record asks the same Crafting-or-Survival question twice and the second, unanswered copy trains and locks Crafting on top of a Survival pick.",
+   "fixed": true,
+   "fix": "Remove the `choice` object from backgrounds.sponsored-by-a-village in public/core.json; `trainedSkillChoice` + `grantedFeatByChoice` already deliver the whole clause through one picker, exactly as construction-occultist does. Failing scenario to reproduce: choose Survival in the Background skill car",
+   "playerVisible": true
+  },
+  {
+   "id": "tomb-born",
+   "claim": "Final Spite's printed once-per-day frequency has no tracker on either side — neither the tomb-born background nor the final-spite action carries `limitedUses`, so the reaction shows on the sheet with no use pips.",
+   "fixed": true,
+   "fix": "Add `limitedUses: { max: 1, per: \"day\" }` to backgrounds.tomb-born in public/core.json, matching the eight sibling action-granting backgrounds; MainTab.tsx:278 picks it up via `from.limitedUses` and the reaction gets its use pip.",
+   "playerVisible": true
+  },
+  {
+   "id": "wandering-libertine",
+   "claim": "The printed conditional grant of Sailing Lore is modelled by neither side, and our own sibling record Always Chosen Last shows the shape that carries it.",
+   "fixed": true,
+   "fix": "Change backgrounds.wandering-libertine `trainedLore` from \"shelyn\" to [\"shelyn\",\"sailing\"] in public/core.json — the background itself carries the persona-flirt trait, so the condition is self-satisfied, and this is the exact treatment already shipped for always-chosen-last. (Six other Curtain Call ",
+   "playerVisible": true
+  },
+  {
+   "id": "art-tutor",
+   "claim": "The printed conditional grant of Academia Lore is modelled by neither side, leaving the character one trained Lore short.",
+   "fixed": true,
+   "fix": "Change backgrounds.art-tutor `trainedLore` from \"art\" to [\"art\",\"academia\"] in public/core.json, matching the shipped treatment of always-chosen-last (`trainedLore: [\"games\",\"scouting\"]`) for the identical Underdog-persona clause.",
+   "playerVisible": true
+  }
+ ],
+ "refuted": [
+  {
+   "id": "folklore-enthusiast",
+   "claim": "Folklore Enthusiast's printed Seasonal Boon free action — a Recall Knowledge degree-of-success increase that also strips the secret trait — is granted by Wanderer's Guide as a second feat and has no c",
+   "why": "The finding skipped the AST sweep the brief mandates: public/ast/backgrounds.json['folklore-enthusiast'] carries the complete free action — an {\"t\":\"actions\",\"string\":\"Free Action\"} badge plus \"Trigger You're about to roll any check to Recall Knowled"
+  },
+  {
+   "id": "alloysmith",
+   "claim": "OURS pins the background-granted Specialty Crafting to the blacksmithing specialty and says so in the description, but the printed text names no specialty at all — the player loses a pick they are owe",
+   "why": "AoN background-376's markdown/text really does end \"You gain the Specialty Crafting skill feat.\" with no specialty, and the AoN mirror preserves such clauses elsewhere (merabite-prodigy \"with alchemy\", miner \"with underground terrain\", toymaker's 6-w"
+  }
+ ],
+ "refutedPattern": "2 of 45 refuted (4%).",
+ "flaggedResidues": [
+  {
+   "id": "reborn-soul-restricted-increases",
+   "note": "print gives EXTRA skill increases at 3/7/15 restricted to the two past-life Lores; no restricted-bonus-increase lane exists — dataWarning until one does. The WG auto-raise version is owner-queued (#85)."
+  },
+  {
+   "id": "otherworldly-mission-no-economy",
+   "note": "the once-per-adventure ask has no printed action cost, so no pip fronts it — dataWarning carries it; a per-adventure pip would need an action record print does not define."
+  },
+  {
+   "id": "eagle-hunter-companion",
+   "note": "print bonds the character to an eagle animal COMPANION since youth; the eagle ships as the Aid star + feat riders, not as a companion record — the companion half needs the companions lane if the owner wants it."
+  }
+ ],
+ "closed": true,
+ "complete": true
+}

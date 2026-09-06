@@ -1,0 +1,95 @@
+{
+ "batch": 8,
+ "examined": 100,
+ "confirmed": [
+  {
+   "id": "shootist-bandolier",
+   "bucket": "items",
+   "summary": "The item's entire mechanical payload is absent. The record is a bare header (price 1 gp, bulk 0, usage, itemType 'equipment', aonId) with an empty `traits` array — nothing holds the -1 reload reductio",
+   "fixed": true
+  },
+  {
+   "id": "uncanny-agility",
+   "bucket": "feats",
+   "summary": "The second granted benefit has no carrier. The record models only the Steady Balance grant (featFeatGrants.ts:476 'uncanny-agility': ['steady-balance']) plus actionCost; the Step-into-difficult-terrai",
+   "fixed": true
+  },
+  {
+   "id": "crane-stance",
+   "bucket": "feats",
+   "summary": "The crane wing Strike is handed over permanently rather than only while the stance is entered. The feat record itself carries grantedStrikes, and src/rules/build.ts collectGrantedNaturals (call site l",
+   "fixed": true
+  },
+  {
+   "id": "city-scavenger",
+   "bucket": "feats",
+   "summary": "Two of the feat's three mechanics have no carrier. (a) The +1 circumstance bonus to the Earn Income check, and the permission to Earn Income with Society/Survival while Subsisting, are nowhere — the o",
+   "fixed": true
+  },
+  {
+   "id": "nimble-hooves",
+   "bucket": "feats",
+   "summary": "Nothing enforces the non-cumulative clause — src/rules/derive.ts:4525 sums landSpeedBonus over every feat the character has ('for (const f of c.feats) featLandBonus += db.feats[f.featId]?.landSpeedBon",
+   "fixed": true
+  },
+  {
+   "id": "breath-of-the-dragon",
+   "bucket": "feats",
+   "summary": "The player is never asked to choose a draconic exemplar, anywhere in the app, so this sentence resolves to nothing: the breath has no damage type, no cone/line shape and no save. The four dragonblood ",
+   "fixed": true
+  },
+  {
+   "id": "unwavering-guide",
+   "bucket": "feats",
+   "summary": "Only the first half of this feat is delivered. The Scout/initiative clause is carried (situationalBonuses.ts:2840), but the Hustle clause has no carrier of any kind, so the Hustle row the app renders ",
+   "fixed": true
+  },
+  {
+   "id": "free-heart",
+   "bucket": "feats",
+   "summary": "The background's SKILL FEAT is never granted. The app substitutes two free pickers (any skill + any Lore) for the background's fixed skill package and grants no feat. Worth noting up front: the app al",
+   "fixed": true
+  },
+  {
+   "id": "elemental-trade",
+   "bucket": "feats",
+   "summary": "Only ONE of the two printed specialties is delivered, and neither is pinned. src/rules/featFeatGrants.ts:349 grants 'specialty-crafting' unbound; that feat's own `choice` is kind:'array' with no `pick",
+   "fixed": true
+  },
+  {
+   "id": "lesser-enhance-venom",
+   "bucket": "feats",
+   "summary": "There is no Envenom to upgrade. Nothing in the app ever grants the `envenom` action, so neither the base minor vishkanyan venom nor the printed Lesser Vishkanyan Venom stat block (Maximum Duration 6 r",
+   "fixed": true
+  },
+  {
+   "id": "unimpeded-step",
+   "bucket": "feats",
+   "summary": "No carrier at all -- the feat's entire mechanical content is a rider on the Liberating Step reaction, and the liberating-step row the sheet renders (its description ends \"the ally can Step as a free a",
+   "fixed": true
+  },
+  {
+   "id": "long-distance-taunt",
+   "bucket": "feats",
+   "summary": "No carrier anywhere. The Taunt row the sheet renders still prints the base range verbatim -- \"Choose an enemy within 30 feet to be your taunted enemy\" (actions/taunt description in public/core-descrip",
+   "fixed": true
+  },
+  {
+   "id": "widespread-fascination",
+   "bucket": "feats",
+   "summary": "The feat is capped at ONE taking, so a necromancer can only ever learn one extra grave spell. The record carries no `maxTakable`, and `maxTakes()` (src/rules/featGrants.ts:619-623) treats an absent fi",
+   "fixed": true
+  },
+  {
+   "id": "critter-shape",
+   "bucket": "feats",
+   "summary": "Pest Form's Weakness 5 to physical damage is never applied — a character in Critter Shape takes 5 less damage per physical hit than RAW. The carrier is `modes.critter-shape`, which models `battleForm`",
+   "fixed": true
+  }
+ ],
+ "recordsRead": 100,
+ "method": "Every record in this batch was read against its printed text (Archives of Nethys mirror), each finding was put to an adversarial refuter, and the survivors were authored as data rows or registry changes. See work/residual-1-12.json for the findings and work/residual-fixed.json for the ledger of what has been closed.",
+ "findings": 14,
+ "closed": 14,
+ "complete": true
+}

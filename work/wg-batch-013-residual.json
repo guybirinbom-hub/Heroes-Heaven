@@ -1,0 +1,133 @@
+{
+ "batch": "work/wg-batch-013.json",
+ "examined": 100,
+ "confirmed": [
+  {
+   "id": "student-of-the-staff",
+   "severity": "player-visible",
+   "summary": "The deadly d6 the staff gains in Arcane Cascade is modelled nowhere, so the staff Strike's critical damage never picks up the extra die.",
+   "fixed": true
+  },
+  {
+   "id": "fast-movement",
+   "severity": "player-visible",
+   "summary": "The barbarian's +10-foot Speed while raging is display-only — the record carries no mechanical field at all, so the Speed shown on the sheet never changes when the rage toggle is on.",
+   "fixed": true
+  },
+  {
+   "id": "blessing-of-the-sun-gods",
+   "severity": "player-visible",
+   "summary": "The feat is repeatable and the app lets you take it again, but the domain pick is stored once per RECORD, so every taking after the first grants no domain spell and no extra focus point.",
+   "fixed": true
+  },
+  {
+   "id": "blessing-of-the-sun-gods",
+   "severity": "player-visible",
+   "summary": "The record's `spellcastingGrant` (divine / Charisma / trained) is never read for the focus entry, so the granted domain spell is cast as an occult spell keyed off the class's first key attribute — a Fighter Bright Lion rolls Dazzling Flash off Dexterity.",
+   "fixed": true
+  },
+  {
+   "id": "peer-past-the-hedge",
+   "severity": "player-visible",
+   "summary": "The granted Detect Magic cantrip is written to a rank-0 `repertoire` slot that nothing renders on a prepared entry, and the write also flips the Hedge Mage archetype entry's Prepare modal into repertoire mode, hiding every prepared spell slot the character has.",
+   "fixed": true
+  },
+  {
+   "id": "worm-sense",
+   "severity": "player-visible",
+   "summary": "Tremorsense is authored at a hard 5 feet with no level ladder, so a level 8+ character's sheet shows 5 feet when the printed text says 10 feet, and a level 12+ character's shows 5 feet instead of 15.",
+   "fixed": true
+  },
+  {
+   "id": "triple-time",
+   "severity": "player-visible",
+   "summary": "The Triple Time mode carries no modifiers at all, so a bard who toggles the composition this feat grants sees no change to their own Speed.",
+   "fixed": true
+  },
+  {
+   "id": "basic-red-mantis-magic",
+   "severity": "player-visible",
+   "summary": "The character receives four divine cantrips instead of two — two from the caster-archetype lane and two more as at-will innate spells from this record's own effectChoices.",
+   "fixed": true
+  },
+  {
+   "id": "walk-the-wilds",
+   "severity": "player-visible",
+   "summary": "Animal Form is granted into the character's Focus-spell entry instead of the animist apparition repertoire, so it reads as a Focus-Point spell rather than something cast with apparition spellcasting.",
+   "fixed": true
+  },
+  {
+   "id": "seeker-of-truths",
+   "severity": "player-visible",
+   "summary": "The feat asks the domain question twice and can hand out two domain focus spells and two Focus Points where the printed text grants one, and the second question is not restricted to the three printed domains.",
+   "fixed": true
+  },
+  {
+   "id": "rising-blood-magic",
+   "severity": "player-visible",
+   "summary": "The feat's second printed sentence — a +1 to the extra Rage damage on repertoire spells while Drained — has no entry anywhere, even though the identical clause on its own level-12 successor does.",
+   "fixed": true
+  },
+  {
+   "id": "sleepwalker-dedication",
+   "severity": "player-visible",
+   "summary": "The Daydream Trance toggle the feat grants is registered in CATALOG_MODES with an empty `modifiers` array and a note that carries none of the printed numbers, so switching it on changes nothing on the sheet.",
+   "fixed": true
+  },
+  {
+   "id": "wormskin",
+   "severity": "player-visible",
+   "summary": "The second and third takes of Wormskin grant no resistance at all — every take reads the same stored answer, so a player who spends three feats gets one damage type instead of three.",
+   "fixed": true
+  },
+  {
+   "id": "finishing-precision",
+   "severity": "player-visible",
+   "summary": "The sheet shows the swashbuckler's SCALING Precise Strike damage to a character whose feat text explicitly freezes that damage, so the strike-damage star list states a number the feat forbids.",
+   "fixed": true
+  },
+  {
+   "id": "wormskin",
+   "severity": "minor",
+   "summary": "The builder asks the same damage-type question twice; the answer to the record's own `choice` (flag \"damage\") changes no number and reaches nothing.",
+   "fixed": true
+  },
+  {
+   "id": "overwhelming-harm",
+   "severity": "minor",
+   "summary": "A necromancer with this feat sees nothing on their Harm spell saying its 3-action area can be extended — the record carries no mechanical field of any kind.",
+   "fixed": true
+  },
+  {
+   "id": "lie-detector",
+   "severity": "minor",
+   "summary": "Only the Perception half of the feat is registered; the +1 circumstance bonus to Deception/Diplomacy/Intimidation/Performance against a creature you caught lying is in no lane, so those four skills carry no star.",
+   "fixed": true
+  },
+  {
+   "id": "folktales-lore",
+   "severity": "minor",
+   "summary": "The printed lock on raising Folktales Lore is not in LOCKED_SKILL_KEYS, so a player can still spend an ordinary skill increase on it — the exact thing the sentence forbids, and the thing the identical Bardic Lore clause is already guarded against.",
+   "fixed": true
+  },
+  {
+   "id": "sacred-spells",
+   "severity": "minor",
+   "summary": "The record asks the player to choose one of two benefits, but neither option carries a grant, so the answer changes nothing — and the spontaneous branch's two extra signature repertoire spells are never delivered.",
+   "fixed": true
+  },
+  {
+   "id": "exorcist-dedication",
+   "severity": "minor",
+   "summary": "The passive dedication carries actionCost {type:'reaction'} inherited from its embedded Spirit's Mercy sub-block, which already ships as its own action record, so the player is offered the same reaction twice — once under the dedication's name with no trigger and no cost line.",
+   "fixed": true
+  },
+  {
+   "id": "magical-trickster",
+   "severity": "minor",
+   "summary": "Nothing on the sheet surfaces that the rogue's sneak attack can ride a damaging spell attack — the record carries no field and appears in no registry, so the clause lives only in the feat's prose.",
+   "fixed": true
+  }
+ ],
+ "rejected": 9
+}

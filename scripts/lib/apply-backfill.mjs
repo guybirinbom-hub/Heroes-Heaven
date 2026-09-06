@@ -12,8 +12,12 @@
 import { existsSync, readFileSync } from 'node:fs';
 
 /** Walk to a nested target. Array steps address by id (`id=apparition`), never by index — a
- *  regeneration reorders options freely and an index would silently land on a different one. */
-function backfillTarget(root, path) {
+ *  regeneration reorders options freely and an index would silently land on a different one.
+ *
+ *  EXPORTED because scripts/wg-batch-run.mjs's shipped-artefact post-check has to resolve a row's path
+ *  exactly the way the applier did. It kept a private copy of this walk, and a copy that has to "stay in
+ *  step with" the original is a copy that eventually does not. */
+export function backfillTarget(root, path) {
   let node = root;
   for (const step of path) {
     if (node == null) return null;

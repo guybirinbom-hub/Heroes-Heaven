@@ -1,0 +1,30 @@
+{
+ "batch": 24,
+ "records": [
+  {
+   "id": "cleric-spellcasting",
+   "verdict": "FIXED",
+   "evidence": "the Flexible Spellcaster COLLECTION is real: under classArchetype.spellCollection the entry becomes a repertoire over the capped table with all-signature heightening, the font rank untouched; the builder’s cantrip cap and slot pickers read the same mods. Ledger: work/.b024-findings.json."
+  },
+  {
+   "id": "doctrine",
+   "verdict": "MATCHES",
+   "evidence": "the container asks and routes correctly; the doctrine-grant fixes live on first-doctrine-cloistered-cleric (out of this cut) and are guarded in test/batch24-parity.test.ts. Ledger: work/.b024-findings.json."
+  },
+  {
+   "id": "divine-font",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "ruling #103 (font rank at 19–20: WG says 10, our Miraculous-Spell reading says 9). The seeded \"font slots missing\" question was REFUTED — they live on entry.font and render; the at-rank popup fix (SpellsTab) shipped besides. Ledger: work/.b024-findings.json."
+  },
+  {
+   "id": "aiuvarin",
+   "verdict": "FIXED",
+   "evidence": "extraAncestryFeatTraits [elf] (+ dromaar [orc], the same-shape sibling) and the Ancestral Paragon menu widened to the heritage set — the printed \"choose from aiuvarin and elf feats\" finally reaches both gates. Ledger: work/.b024-findings.json."
+  },
+  {
+   "id": "cleric",
+   "verdict": "FIXED",
+   "evidence": "WG-import now sets divineFont (every imported cleric arrived fontless); the deity spell-list widening reaches the builder’s book; guarded in test/batch24-parity.test.ts. Ledger: work/.b024-findings.json."
+  }
+ ]
+}

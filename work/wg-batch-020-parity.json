@@ -1,0 +1,505 @@
+{
+ "batch": 20,
+ "records": [
+  {
+   "id": "scholar-of-the-ancients",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "sally-guard-neophyte",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-20 findings applied: The background's starting gear (riding horse, shoddy half-plate, shoddy longsword, shoddy lance) is delivered by no carrier of ours — Backgr"
+  },
+  {
+   "id": "seer-of-the-dead",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "A WG-vs-print question for this record sits in work/owner-questions.json open (batch-20 read); every other confirmed finding on it was applied — see work/.b020-findings.json."
+  },
+  {
+   "id": "necromancers-apprentice",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "streetfood-vendor",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "A WG-vs-print question for this record sits in work/owner-questions.json open (batch-20 read); every other confirmed finding on it was applied — see work/.b020-findings.json."
+  },
+  {
+   "id": "scarnetti-connected",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "mechanical-symbiosis",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-20 findings applied: The printed second trained skill is never granted: our `choice` is kind:'skills', whose option list is built from the skills the character i"
+  },
+  {
+   "id": "hounded-thief",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "hermean-expatriate",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "alkenstar-outlaw",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "tall-tale",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-20 findings applied: Neither side models Tall Tale's prerequisite waiver for the Connections/Leverage Connections skill feat, and our builder actively blocks the"
+  },
+  {
+   "id": "tree-friend",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "A WG-vs-print question for this record sits in work/owner-questions.json open (batch-20 read); every other confirmed finding on it was applied — see work/.b020-findings.json."
+  },
+  {
+   "id": "ruby-phoenix-fanatic",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-20 findings applied: Ours trains only one of the three Lore skills the printed text grants — Gladiatorial Lore and Goka Lore are delivered by no carrier."
+  },
+  {
+   "id": "diobel-pearl-diver",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "foreign-diplomat",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "feybound",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-20 findings applied: Feybound's granted Fey's Fortune free action reaches the character from no carrier at all: the record carries `limitedUses` but no `grantsAc"
+  },
+  {
+   "id": "night-watch",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-20 findings applied: Night Watch delivers BOTH halves of a printed either/or: `trainedLore: \"legal\"` trains Legal Lore unconditionally AND `trainedLoreChoice: tr"
+  },
+  {
+   "id": "sheriff",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "clan-associate",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "whispering-way-scion",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "brevic-noble",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-20 findings applied: Our brevic-noble hardcodes only the Garess lineage (Crafting + Architecture Lore + Specialty Crafting); the other five printed Brevic lineag"
+  },
+  {
+   "id": "raised-by-belief",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-20 findings applied: Raised by Belief trains no skill at all in our engine: the record carries no trainedSkill/trainedSkillChoice, and the deity's skill is train | Raised by Belief's first attribute boost must come from the deity's Divine Attribute, and neither side models the constraint — our record an"
+  },
+  {
+   "id": "out-of-towner",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-20 findings applied: Out-of-Towner grants two Lore trainings and asks two questions where print grants one: trainedLoreChoice:true opens a free-text Lore box on "
+  },
+  {
+   "id": "purveyor-of-the-bizarre",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "discarded-duplicate",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "mortuarium-survivor",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "child-of-the-colony",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-20 findings applied: Child of the Colony's business-connection 10% discount has no carrier anywhere on our side or theirs — and the paragraph is absent from the "
+  },
+  {
+   "id": "haunting-vision",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "nocturnal-navigator",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "conservator",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-20 findings applied: Conservator delivers two Lore trainings: the unconditional trainedLore \"Accounting\" fires on top of the conservatorLore choice, so picking U"
+  },
+  {
+   "id": "traveling-gourmand",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "A WG-vs-print question for this record sits in work/owner-questions.json open (batch-20 read); every other confirmed finding on it was applied — see work/.b020-findings.json."
+  },
+  {
+   "id": "ocean-diver",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "sideshow-scion",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-20 findings applied: The Wildcard-persona rider that trains Circus Lore is delivered by no carrier on either side, and our `traits: [\"persona-wildcard\"]` field —"
+  },
+  {
+   "id": "bully-or-baiter",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-20 findings applied: The Warrior-persona rider that trains Warfare Lore is delivered by no carrier on either side, and our `traits: [\"persona-warrior\"]` field ha"
+  },
+  {
+   "id": "courier",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "sodden-scavenger",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "child-of-the-twin-village",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-20 findings applied: The nightly dream message link with your twin is modelled by neither side, so the only benefit this background gives beyond Diplomacy + Drea"
+  },
+  {
+   "id": "farmhand",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "crystal-healer",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "royalty",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-20 findings applied: Royalty's influence clause and its automatic-connections rider on Leverage Connections are modelled by neither side; ours delivers only Soci"
+  },
+  {
+   "id": "song-of-the-deep",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-20 findings applied: Song of the Deep's printed water-breathing has no carrier anywhere in our engine — the record has no `breathesWater` field, and `derive.ts`  | The printed Special — trade air-breathing for a second, free attribute boost — is modelled by neither side; our record has exactly one boost"
+  },
+  {
+   "id": "fightbreaker",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "union-representative",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "sailor",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "artist",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-20 findings applied: Artist asks for the Specialty Crafting specialty twice — once through the record's own `choice` (which is inert) and once through the grante"
+  },
+  {
+   "id": "pyre-tender",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "magical-experiment",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-20 findings applied: Print grants exactly ONE special ability, and their encoding enforces that with a single select of one ability block, but our four `effectCh"
+  },
+  {
+   "id": "toymaker",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "firebrand-follower",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-20 findings applied: Firebrand Follower carries a second, unrestricted skill picker (`choice` flag 'firebrandSkill', kind 'skills') on top of its correct `traine"
+  },
+  {
+   "id": "local-brigand",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "mammoth-herder",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "clown",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "bright-lion",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "party-scholar",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-20 findings applied: Our record pins the background's Lore to Alcohol Lore with no picker, but both the printed text and Wanderer's Guide offer a choice between "
+  },
+  {
+   "id": "rostland-partisan",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "aiudara-seeker",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "always-chosen-last",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-20 findings applied: The printed second Lore — Scouting Lore, granted by a condition the record itself satisfies — is delivered by no carrier on either side; our"
+  },
+  {
+   "id": "cursed",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "gossip",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "oenopion-ooze-tender",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "guard",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-20 findings applied: Guard carries TWO lore carriers for the one printed Lore — `trainedLoreChoice: true` (a free-text Lore box) AND `choice` (flag `backgroundLo"
+  },
+  {
+   "id": "remittance-agent",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-20 findings applied: Remittance Agent delivers the Lore twice — a fixed `trainedLore: \"Labor\"` plus a `choice` between labor and mercenary — so picking Mercenary"
+  },
+  {
+   "id": "weaver",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-20 findings applied: Weaver delivers the Lore twice — a fixed `trainedLore: \"Basket Weaving\"` plus a three-way `choice` — so a character who picks Tapestry or Te | The Weaver record's printed PFS note names the specialty its granted Specialty Crafting takes (Weaving), and neither side binds it — our bui"
+  },
+  {
+   "id": "conscript",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "scion-of-slayers",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-20 findings applied: \"You can use Intelligence as your spellcasting ability for this innate spell\" has NO READER anywhere on our side: `InnateSpellGrant` (types."
+  },
+  {
+   "id": "clockwork-researcher",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "framed-in-ferrous-quarter",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "menagerie-dung-sweeper",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "bookkeeper",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "ulfen-raider",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "rivethun-adherent",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "aon-reclaimed-investigator",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "cathedral-child",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-20 findings applied: Cathedral Child's printed reputation adjustments are modelled by neither side and have no reader anywhere in the engine — the sentence exist"
+  },
+  {
+   "id": "hermean-heritor",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-20 findings applied: Hermean Heritor's printed either/or skill feat is a live two-way grant in Wanderer's Guide, but on our side the Assurance branch delivers no"
+  },
+  {
+   "id": "aon-wishes-for-riches",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "A WG-vs-print question for this record sits in work/owner-questions.json open (batch-20 read); every other confirmed finding on it was applied — see work/.b020-findings.json."
+  },
+  {
+   "id": "issian-partisan",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "thrune-loyalist",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "shory-seeker",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-20 findings applied: Shory Seeker is the only World Guide background in our data whose description drops the printed Region line — the print gives it as Mwangi E"
+  },
+  {
+   "id": "mechanic",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "mana-wastes-refugee",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "harrow-led",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "osprey-scribe",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "wanted-witness",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "haunted",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "A WG-vs-print question for this record sits in work/owner-questions.json open (batch-20 read); every other confirmed finding on it was applied — see work/.b020-findings.json."
+  },
+  {
+   "id": "arcane-revolutionary",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "laborer",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "veteran",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "hermit",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-20 findings applied: Hermit's terrain Lore is a player choice in print and in WG, but ours hardcodes the printed EXAMPLE subject — every Hermit is trained in Cav"
+  },
+  {
+   "id": "black-market-smuggler",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "harrow-chosen",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-20 findings applied: Harrow-Chosen's entire spellcasting grant — a common occult innate cantrip castable at will, auto-heightened to half level — is delivered by | Two of the four Harrow-Chosen empower outcomes — the Partial-match energy resistance and the Unmatched temporary Hit Points — are modeled by"
+  },
+  {
+   "id": "stargazer",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "second-chance-champion",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-20 findings applied: Our shipped description text for Second Chance Champion tells the player the background trains Acrobatics, contradicting both the printed te"
+  },
+  {
+   "id": "criminal",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "perfection-seeker",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "squire",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "combat-chaplain",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "runner",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "starwatcher",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "charlatan",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  },
+  {
+   "id": "missionary",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 20; no finding survived adversarial verification. Ledger: work/.b020-findings.json."
+  }
+ ]
+}

@@ -1,0 +1,382 @@
+{
+ "batch": "work/wg-batch-026.json",
+ "examined": 81,
+ "method": "9 Opus Explore readers (print + WG raw ops + every carrier) each followed by an Opus adversarial verifier; findings applied by family agents + verifiers, then the orchestrator closed every cross-file gap",
+ "confirmed": [
+  {
+   "id": "nomadic-halfling",
+   "finding": "nomadic-halfling-languageChoices",
+   "severity": "player-visible",
+   "summary": "Our Nomadic Halfling record carries no language field at all, so the two additional languages print grants are never offered or counted.",
+   "fixed": true
+  },
+  {
+   "id": "nomadic-halfling",
+   "finding": "nomadic-halfling-multilingual-bonus",
+   "severity": "player-visible",
+   "summary": "The \"every time you take the Multilingual feat, you gain another new language\" half of Nomadic Halfling has no carrier on our side, so Multilingual yields its normal two languages.",
+   "fixed": true
+  },
+  {
+   "id": "ant-kholo",
+   "finding": "ant-kholo-size",
+   "severity": "player-visible",
+   "summary": "Ant Kholo does not set Small on our side, so the built character stays Medium off the kholo chassis — a direct contradiction of print.",
+   "fixed": true
+  },
+  {
+   "id": "ant-kholo",
+   "finding": "ant-kholo-deception-training",
+   "severity": "player-visible",
+   "summary": "Ant Kholo's Deception training is delivered by neither our record nor any other carrier; only the conditional +1 star is modelled.",
+   "fixed": true
+  },
+  {
+   "id": "dragonscaled-kobold",
+   "finding": "dragonscaled-kobold-ancestryHp",
+   "severity": "player-visible",
+   "summary": "Dragonscaled Kobold gives our character the kobold chassis 6 ancestry HP instead of the printed 10.",
+   "fixed": true
+  },
+  {
+   "id": "tailed-goblin",
+   "finding": "tailed-goblin-free-hands",
+   "severity": "player-visible",
+   "summary": "The free-hands reduction for Climb and Trip is modelled by neither side, and a player reading our Tailed Goblin would never learn Trip costs them one fewer free hand.",
+   "fixed": true
+  },
+  {
+   "id": "charhide-goblin",
+   "finding": "charhide-goblin-persistent-fire-flat-check",
+   "severity": "player-visible",
+   "summary": "Charhide Goblin's persistent-fire flat-check reduction is modelled by neither side, though we already ship the exact star shape for it on two other records.",
+   "fixed": true
+  },
+  {
+   "id": "charhide-goblin",
+   "finding": "charhide-goblin-description-drops-dc5",
+   "severity": "internal",
+   "summary": "Our fallback description for Charhide Goblin drops the \"DC 5\" from the assisted-recovery clause, leaving a dangling \"reduced to if another creature\".",
+   "fixed": true
+  },
+  {
+   "id": "jinxed-halfling",
+   "finding": "jinxed-halfling-halfling-luck-prohibition",
+   "severity": "player-visible",
+   "summary": "Nothing on either side stops a Jinxed Halfling from taking Halfling Luck, which print forbids outright.",
+   "fixed": true
+  },
+  {
+   "id": "mightyfall-kobold",
+   "finding": "mightyfall-kobold",
+   "severity": "player-visible",
+   "summary": "Our 10 ancestry HP is gated behind the optional attribute-package choice, so a Mightyfall Kobold who keeps the normal kobold boosts ships 6 ancestry HP instead of the printed 10.",
+   "fixed": true
+  },
+  {
+   "id": "mightyfall-kobold",
+   "finding": "mightyfall-kobold",
+   "severity": "internal",
+   "summary": "The comparer's KINDS 'attribute' flag and the IDENTITY options mismatch are misreads — our alternateAttributes package IS the attribute carrier, and the option-label difference is cosmetic.",
+   "fixed": true
+  },
+  {
+   "id": "bakuwa-lizardfolk",
+   "finding": "bakuwa-lizardfolk",
+   "severity": "player-visible",
+   "summary": "The heritage grants no item, so the bony plates armour — the entire mechanical content of the heritage — never reaches the character; our own item record for it exists but is an orphan nothing hands over.",
+   "fixed": true
+  },
+  {
+   "id": "sage-jotunborn",
+   "finding": "sage-jotunborn",
+   "severity": "player-visible",
+   "summary": "Trained proficiency in Society is delivered by no carrier — the record instead ships a player-facing dataWarning telling the player to apply it by hand.",
+   "fixed": true
+  },
+  {
+   "id": "unbreakable-goblin",
+   "finding": "unbreakable-goblin",
+   "severity": "player-visible",
+   "summary": "The heritage's 10 ancestry Hit Points are modelled by nothing, so an unbreakable goblin ships the goblin chassis' 6 and is 4 HP short at every level.",
+   "fixed": true
+  },
+  {
+   "id": "great-kholo",
+   "finding": "b26-great-kholo-ancestry-hp",
+   "severity": "player-visible",
+   "summary": "Great Kholo's printed ancestry-HP replacement (10 instead of 8) is not modeled anywhere on our side, so a Great Kholo builds with the kholo chassis 8 HP.",
+   "fixed": true
+  },
+  {
+   "id": "kijimuna-gnome",
+   "finding": "b26-kijimuna-gnome-choice",
+   "severity": "player-visible",
+   "summary": "Kijimuna Gnome prints a two-way choice; ours hard-codes branch one and can never deliver branch two, so the swim Speed 15 is unreachable and Combat Climber is handed to a player who chose the fish branch.",
+   "fixed": true
+  },
+  {
+   "id": "dog-kholo",
+   "finding": "b26-dog-kholo-speed",
+   "severity": "player-visible",
+   "summary": "Dog Kholo's conditional Speed 30 reaches no row on our side — no number, no star — while WG puts +5 SPEED on the sheet.",
+   "fixed": true
+  },
+  {
+   "id": "ancient-ash",
+   "finding": "b26-ancient-ash-expert-at-5",
+   "severity": "player-visible",
+   "summary": "Ancient Ash's 5th-level expert upgrade in the chosen skill is delivered by WG and by nothing on our side — our effectChoices grant is a flat 'trained' forever.",
+   "fixed": true
+  },
+  {
+   "id": "warrenbred-hobgoblin",
+   "finding": "b26-warrenbred-flat-check",
+   "severity": "player-visible",
+   "summary": "Warrenbred Hobgoblin's underground flat-check reduction (DC 3 concealed / 9 hidden) reaches no row on either side, though our sibling record whisper-elf already carries the identical clause as a star.",
+   "fixed": true
+  },
+  {
+   "id": "woodstalker-lizardfolk",
+   "finding": "b26-woodstalker-underbrush",
+   "severity": "player-visible",
+   "summary": "Woodstalker Lizardfolk's granted Terrain Stalker is not pinned to underbrush on either side, so our builder offers rubble, snow, or a custom terrain that print forbids.",
+   "fixed": true
+  },
+  {
+   "id": "seaweed-leshy",
+   "finding": "seaweed-leshy-land-speed-penalty",
+   "severity": "player-visible",
+   "summary": "Seaweed Leshy's printed −5 ft land Speed reaches nothing on our side: the record's speeds.land: 0 is explicitly discarded as a no-statement placeholder, so a seaweed leshy walks at the leshy chassis 25 ft instead of the printed 20 ft.",
+   "fixed": true
+  },
+  {
+   "id": "seaweed-leshy",
+   "finding": "seaweed-leshy-instrument-sign",
+   "severity": "internal",
+   "summary": "The comparer flag for Seaweed Leshy dropped the sign of their op: their SPEED value is −5 (a penalty), not 5, and ours is not \"0\" in any effective sense — the 0 is discarded and the chassis 25 stands.",
+   "fixed": true
+  },
+  {
+   "id": "wellspring-gnome",
+   "finding": "wellspring-gnome-tradition-select",
+   "severity": "player-visible",
+   "summary": "Wellspring Gnome's printed tradition choice is not asked on our side: our single spellFilter merges arcane+divine+occult into one cantrip pool and records no tradition, so grantForSpellPick tags the innate spell with the SPELL's own first t",
+   "fixed": true
+  },
+  {
+   "id": "wellspring-gnome",
+   "finding": "wellspring-gnome-primal-swap",
+   "severity": "player-visible",
+   "summary": "The clause that retunes gnome ancestry-feat primal innate spells to the chosen tradition is modeled by neither side, so a wellspring gnome's later ancestry-feat spells keep printing as primal.",
+   "fixed": true
+  },
+  {
+   "id": "snow-goblin",
+   "finding": "snow-goblin-environmental-cold",
+   "severity": "player-visible",
+   "summary": "Snow Goblin's environmental-cold clause has no carrier on our side even though the repo already carries that exact sentence as a star for three sibling heritages; neither side models it.",
+   "fixed": true
+  },
+  {
+   "id": "sandstrider-lizardfolk",
+   "finding": "sandstrider-lizardfolk-environment-clauses",
+   "severity": "player-visible",
+   "summary": "Sandstrider Lizardfolk's three non-resistance clauses (heat one step less extreme, 10× starvation/thirst endurance, cold one step MORE extreme) have no carrier on our side, although the repo already stars the identical heat sentence for des",
+   "fixed": true
+  },
+  {
+   "id": "makari-lizardfolk",
+   "finding": "makari-lizardfolk-divine-tradition-swap",
+   "severity": "player-visible",
+   "summary": "Makari's blanket tradition swap — every spell from a lizardfolk heritage or ancestry feat becomes divine — is modeled by neither side, so a makari with Primal Rampage, Bone Caller, River Adaptation, etc. still shows those innate spells as p",
+   "fixed": true
+  },
+  {
+   "id": "makari-lizardfolk",
+   "finding": "makari-lizardfolk-manipulate-drop",
+   "severity": "player-visible",
+   "summary": "The printed loss of the manipulate trait on Makari's granted cantrip is carried by neither side, so a player casting it while grabbed or under a manipulate-punishing reaction sees the wrong trait line.",
+   "fixed": true
+  },
+  {
+   "id": "smokeworker-hobgoblin",
+   "finding": "smokeworker-hobgoblin",
+   "severity": "player-visible",
+   "summary": "The printed auto-success on the DC 5 flat check to target a creature concealed only by smoke is modelled by neither side, and our record carries no situational star for it even though the registry already has the exact house shape for this ",
+   "fixed": true
+  },
+  {
+   "id": "strong-oak",
+   "finding": "strong-oak",
+   "severity": "player-visible",
+   "summary": "Our two save stars elide the printed second sentence — that the +2 also applies to saving throws against effects that would grab, restrain, or knock you prone — while WG's op text carries that clause on both save rows.",
+   "fixed": true
+  },
+  {
+   "id": "warrior-jotunborn",
+   "finding": "warrior-jotunborn",
+   "severity": "player-visible",
+   "summary": "Our fist rider strips the printed `nonlethal` trait from the fist, but print only waives the penalty for attacking lethally — WG's item keeps Nonlethal, so ours is the only side that removes a trait the fist printedly has.",
+   "fixed": true
+  },
+  {
+   "id": "warrior-jotunborn",
+   "finding": "warrior-jotunborn",
+   "severity": "internal",
+   "summary": "The comparer flag \"IDENTITY item warriorjotunbornfist, ours none\" misreads our carrier — we do model the fist upgrade, via the `unarmedTraits` rider on the heritage record rather than via a granted item.",
+   "fixed": true
+  },
+  {
+   "id": "venomtail-kobold",
+   "finding": "venomtail-kobold-1",
+   "severity": "player-visible",
+   "summary": "Our tail-toxin action record is the legacy Advanced Player's Guide printing and lacks the manipulate trait the Player Core 2 text that Venomtail Kobold grants carries.",
+   "fixed": true
+  },
+  {
+   "id": "caveclimber-kobold",
+   "finding": "caveclimber-kobold-1",
+   "severity": "player-visible",
+   "summary": "The hands-free clause is delivered twice on the same Climb action row — once by the record's degreeShifts `when` parenthetical and once by its RECORD_MARKERS star.",
+   "fixed": true
+  },
+  {
+   "id": "vivacious-gnome",
+   "finding": "vivacious-gnome-1",
+   "severity": "player-visible",
+   "summary": "The doomed-value reduction — the entire second half of the heritage — reaches the player from neither side; only the void resistance is modelled.",
+   "fixed": true
+  },
+  {
+   "id": "wintertouched-human",
+   "finding": "wintertouched-human-1",
+   "severity": "player-visible",
+   "summary": "The environmental-cold step-down clause is unmodelled on our side even though the identically-worded sibling heritage winter-catfolk already carries it, so the star table is inconsistent and the player loses half the heritage.",
+   "fixed": true
+  },
+  {
+   "id": "shortshanks-hobgoblin",
+   "finding": "shortshanks-hobgoblin",
+   "severity": "player-visible",
+   "summary": "The heritage's second printed clause — you are not off-guard while you Climb — reaches no carrier of ours, while Wanderer's Guide puts it on the Climb action row.",
+   "fixed": true
+  },
+  {
+   "id": "spellhorn-kobold",
+   "finding": "spellhorn-kobold",
+   "severity": "internal",
+   "summary": "The instrument flag is wrong: both halves of the heritage are already delivered — the cantrip is granted through the heritage's own effectChoices and the trained spell attack/DC + Charisma key attribute arrive twice over (spellcastingGrant ",
+   "fixed": true
+  },
+  {
+   "id": "weaver-jotunborn",
+   "finding": "weaver-jotunborn-1",
+   "severity": "player-visible",
+   "summary": "Weaver Jotunborn's printed skill training (trained in Crafting) reaches no carrier on our side — the record has no skills field, no FEAT_GRANTS row, and no featGrantsAuto entry.",
+   "fixed": true
+  },
+  {
+   "id": "keeper-jotunborn",
+   "finding": "keeper-jotunborn-1",
+   "severity": "player-visible",
+   "summary": "Keeper Jotunborn's printed Survival training reaches no carrier — and without it the Survey Wildlife feat we do grant sits on an unmet prerequisite.",
+   "fixed": true
+  },
+  {
+   "id": "frozen-wind-kitsune",
+   "finding": "frozen-wind-kitsune-1",
+   "severity": "player-visible",
+   "summary": "Foxfire's cold damage type is offered to every kitsune and forced on none — our feat record bakes 'cold' into the unconditional option list instead of gating it on the frozen wind heritage, which is where their side puts it.",
+   "fixed": true
+  },
+  {
+   "id": "frozen-wind-kitsune",
+   "finding": "frozen-wind-kitsune-2",
+   "severity": "player-visible",
+   "summary": "The environmental-cold step reduction is printed on the heritage and modelled by neither side, while the three sibling heritages that print the identical sentence each carry a prose star for it.",
+   "fixed": true
+  },
+  {
+   "id": "lethoci",
+   "finding": "lethoci-1",
+   "severity": "player-visible",
+   "summary": "Lethoci states its critical-failure shift twice — the structured degreeShifts field and the hand-authored star's when-string both say it, which is exactly the drift the degree-prose dedupe pass was built to end, and lethoci was missed by it",
+   "fixed": true
+  },
+  {
+   "id": "thorned-rose",
+   "finding": "thorned-rose-1",
+   "severity": "internal",
+   "summary": "The Wicked Thorns action that is Thorned Rose's entire mechanical content ships a description with the damage die deleted — the fallback 'd' text reads \"You deal damage\" where print reads \"You deal 1d8 piercing damage\".",
+   "fixed": true
+  },
+  {
+   "id": "versatile-human",
+   "finding": "versatile-human-1",
+   "severity": "internal",
+   "summary": "The comparer flag \"KINDS missing [choice]\" on Versatile Human is a misread — their general-feat select has a full counterpart on our side, it just does not live in the record's choice field.",
+   "fixed": true
+  },
+  {
+   "id": "root-leshy",
+   "finding": "root-leshy-ancestryhp",
+   "severity": "player-visible",
+   "summary": "Root Leshy does not raise ancestry HP to 10 — the heritage record carries no `ancestryHp`, so a root leshy is built on the leshy chassis's 8.",
+   "fixed": true
+  },
+  {
+   "id": "palace-echoes-kitsune",
+   "finding": "palace-echoes-kitsune-grantsactions",
+   "severity": "player-visible",
+   "summary": "Palace Echoes Kitsune never hands the character the Nudging Whisper action — the heritage record carries no `grantsActions`, unlike every other action-granting kitsune heritage.",
+   "fixed": true
+  },
+  {
+   "id": "palace-echoes-kitsune",
+   "finding": "palace-echoes-kitsune-actioncost",
+   "severity": "player-visible",
+   "summary": "Our Nudging Whisper record is typed `actionCost: {\"type\":\"passive\"}` when print gives it a single action — and MainTab's action filter drops passive costs, so it would stay off the sheet even once the grant is added.",
+   "fixed": true
+  },
+  {
+   "id": "fungus-leshy",
+   "finding": "fungus-leshy-fungus-trait",
+   "severity": "player-visible",
+   "summary": "Fungus Leshy does not confer the fungus creature trait — the heritage carries only `senses` and no `grantsCreatureTraits`.",
+   "fixed": true
+  },
+  {
+   "id": "fungus-leshy",
+   "finding": "fungus-leshy-plant-loss",
+   "severity": "player-visible",
+   "summary": "Neither side models losing the plant trait, so a fungus leshy's Details tab will still show \"plant\" inherited from the leshy chassis — and after the fungus grant lands it will wrongly show both.",
+   "fixed": true
+  },
+  {
+   "id": "palace-echoes-kitsune",
+   "finding": "palace-echoes-kitsune-cf-twin",
+   "severity": "internal",
+   "summary": "A second, dead Nudging Whisper carrier ships as classFeatures['nudging-whisper'], duplicating actions['nudging-whisper'] for the same heritage — and its description still carries the damaged text the repair script only fixed on the actions ",
+   "fixed": true
+  }
+ ],
+ "refuted": [
+  {
+   "id": "dragonscaled-kobold",
+   "finding": "dragonscaled-kobold-draconic-exemplar",
+   "summary": "Their Dragonscaled Kobold hands the character a Draconic Exemplar pick; ours grants no choice, so the feats gated on this heritage that read off \"your draconic benefactor\" have nothing to read.",
+   "evidence": "The load-bearing half is false: every Dragonscaled-Kobold-gated feat in core.json already carries its own exemplar-derived pick — feats/kobold-breath has effectChoices breath-shape (line/cone), breath-damage (12 types) and breath-save, feats/benefactors-resistance has breath-type with per-type resis"
+  }
+ ],
+ "flaggedResidues": [],
+ "rejected": 1,
+ "askOwner": [
+  {
+   "id": "mightyfall-kobold",
+   "desk": 115,
+   "summary": "WG's Mightyfall boosts option only adjusts the four named attributes, so it leaves the kobold ancestry's FREE boost in place and delivers three boosts where print grants exactly two."
+  }
+ ],
+ "complete": true
+}

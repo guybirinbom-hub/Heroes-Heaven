@@ -1,0 +1,233 @@
+{
+ "batch": 9,
+ "examined": 100,
+ "confirmed": [
+  {
+   "id": "living-nexus-dedication",
+   "bucket": "feats",
+   "summary": "The 'overflowing' state and its save bonus have no carrier at all — no toggle to switch on, no situational star, no modifier. This is the shape modes.ts exists for (a feat-gated temporary state with t",
+   "fixed": true
+  },
+  {
+   "id": "necromancer-dedication",
+   "bucket": "feats",
+   "summary": "No thrall-creating ability is ever granted, so a character with this dedication can Command a Thrall but can never make one. grantsActions holds only 'command-a-thrall'. The app's create-thrall abilit",
+   "fixed": true
+  },
+  {
+   "id": "shield-your-eyes",
+   "bucket": "feats",
+   "summary": "The degree-of-success upgrade on YOUR OWN save is not carried. The record has no `degreeShifts` array (the lane exists and holds 308 records, incl. critFailToFail on saves). scripts/apply-degree-shift",
+   "fixed": true
+  },
+  {
+   "id": "living-monolith-dedication",
+   "bucket": "feats",
+   "summary": "Nothing holds the dying-increment suppression. The app has a dedicated lane for recovery-check riders — situationalBonuses.ts entries of shape { on: 'condition', id: 'dying', value, note } (the-surviv",
+   "fixed": true
+  },
+  {
+   "id": "summoner-dedication",
+   "bucket": "feats",
+   "summary": "The PC is never trained in the eidolon type's skills, and the redundancy pick is never offered. The eidolon type option DOES carry the data (e.g. classes.summoner.subclass.options['angel-eidolon'].gra",
+   "fixed": true
+  },
+  {
+   "id": "bounty-hunter-dedication",
+   "bucket": "feats",
+   "summary": "The condition is not enforced — the record's `grantsFeats: ['monster-hunter']` is unconditional, so every character taking this dedication receives a free Monster Hunter feat, including the non-ranger",
+   "fixed": true
+  },
+  {
+   "id": "starlit-sentinel-dedication",
+   "bucket": "feats",
+   "summary": "The dedication's toggle exists but is empty: modes.ts:363 cat-sentinel-form ships `modifiers: []` with the note 'Starlit Sentinel (Tian Xia): assume your sentinel form.' — no numbers, so switching sen",
+   "fixed": true
+  },
+  {
+   "id": "gladiator-dedication",
+   "bucket": "feats",
+   "summary": "The temporary Hit Points have no carrier of any kind — not a field, not a toggle mode, not even a note. The app does hold temp HP from a toggleable source (`ModeDef.tempHp`, src/rules/types.ts:3940, a",
+   "fixed": true
+  },
+  {
+   "id": "red-mantis-assassin-dedication",
+   "bucket": "feats",
+   "summary": "No weapon-proficiency mirroring for sawtooth sabers. The engine has the precise lane for this sentence — `FeatGrant.weaponFamiliarity` with `mirrorBestCategory: true` (src/rules/featGrants.ts:174/276,",
+   "fixed": true
+  },
+  {
+   "id": "wild-mimic-dedication",
+   "bucket": "feats",
+   "summary": "The legendary-Nature-to-expert step is never applied; the Lore stays trained forever. The lane for exactly this shape is `FeatGrant.crossConditionalSkills` (src/rules/featGrants.ts:292), whose own doc",
+   "fixed": true
+  },
+  {
+   "id": "harrower-dedication",
+   "bucket": "feats",
+   "summary": "The daily harrow-omen draw is never asked and the answer is never stored, so nothing downstream can read it. The lane exists: `ChoiceDef.daily` (src/rules/types.ts ~2444) puts a pick into `PlayState.d",
+   "fixed": true
+  },
+  {
+   "id": "staff-acrobat-dedication",
+   "bucket": "feats",
+   "summary": "The +2 Athletics half is delivered (situationalBonuses.ts:2417) and the Balance success-to-crit half is delivered (`degreeShifts`), but the \"+5 feet to the distance you can Leap\" is not — the app mode",
+   "fixed": true
+  },
+  {
+   "id": "pathfinder-agent-dedication",
+   "bucket": "feats",
+   "summary": "The untrained-skill proficiency floor is never applied. The exact carrier exists and is read by the engine: `Feat.untrainedProficiency: { levelMinus: number }` (src/rules/types.ts:2654, consumed at sr",
+   "fixed": true
+  },
+  {
+   "id": "poisoner-dedication",
+   "bucket": "feats",
+   "summary": "The COUNT is modelled (`advancedAlchemy: { items: 4 }`) but the restriction to poisons is not, and the shape has no field that could hold it — `Feat.advancedAlchemy` (types.ts:2561) is `{ items, addIn",
+   "fixed": true
+  },
+  {
+   "id": "verduran-shadow-dedication",
+   "bucket": "feats",
+   "summary": "Only the second half of this feat is modelled. `skillSubstitutions` holds the roll-swap (\"use Survival in place of Stealth when you Avoid Notice, Hide, Sneak, or would use Stealth to roll initiative\")",
+   "fixed": true
+  },
+  {
+   "id": "champion-dedication",
+   "bucket": "feats",
+   "summary": "The armor-proficiency mirroring (and the companion sentence, \"If you have a class feature that grants you expert proficiency in unarmored defense and you're 13th level or higher, you also become an ex",
+   "fixed": true
+  },
+  {
+   "id": "spellshot-dedication",
+   "bucket": "feats",
+   "summary": "Nothing makes the substitution, and the app enforces the prerequisite it is meant to waive. feats/basic-wizard-spellcasting carries `prerequisites: ['Wizard Dedication']`; `checkPrerequisites` (src/ru",
+   "fixed": true
+  },
+  {
+   "id": "spellshot-dedication",
+   "bucket": "feats",
+   "summary": "Only two of the four spellbook cantrips are ever chosen. The record's `effectChoices` asks two questions ('spellbook-cantrip-1' / '-2'), which the wg-diff.mjs waiver at line 1603 describes as the two ",
+   "fixed": true
+  },
+  {
+   "id": "world-rouser-dedication",
+   "bucket": "feats",
+   "summary": "No `specialStatistic` row. This is the exact `{ higherOfClassDcOrSpellDc: true }` shape the engine already has (src/rules/types.ts:749) and that 13 records use — feats/chronoskimmer-dedication carries",
+   "fixed": true
+  },
+  {
+   "id": "world-rouser-dedication",
+   "bucket": "feats",
+   "summary": "The granted action IS granted, but its three bonuses have no carrier. actions/rouse-the-world holds only `actionCost` — no `situational`, no toggle mode. This is the aura shape the app already models ",
+   "fixed": true
+  },
+  {
+   "id": "living-vessel-dedication",
+   "bucket": "feats",
+   "summary": "The drawback has no carrier. The record holds only actionCost, archetype and `grantsActions:['entitys-resurgence']`, and there is no `note` either, so the sentence never reaches the sheet in any form.",
+   "fixed": true
+  },
+  {
+   "id": "ghost-dedication",
+   "bucket": "feats",
+   "summary": "Nothing changes the character's unarmed Strikes. The record carries immunities, speeds, grantsCreatureTraits, situational, grantsLanguages, negativeHealing, conditionalSenses and a note — but no `unar",
+   "fixed": true
+  },
+  {
+   "id": "shadowcaster-dedication",
+   "bucket": "feats",
+   "summary": "Nothing suppresses light-trait spells. This is not a menu-taste question — it is a printed prohibition with a named worked example, and its second clause is a concrete suppression of an automatic gran",
+   "fixed": true
+  },
+  {
+   "id": "energy-fortification",
+   "bucket": "feats",
+   "summary": "The record carries nothing but actionCost. Three separate printed mechanics have no carrier: (a) the resistance 2/4/8 and weakness 2/4/8 — the `resistances` / `weaknesses` fields exist and are used by",
+   "fixed": true
+  },
+  {
+   "id": "razmiran-priest-dedication",
+   "bucket": "feats",
+   "summary": "No `specialStatistic` row, the same `{ higherOfClassDcOrSpellDc: true }` lane world-rouser is missing above. This is a live number, not scaffolding: the upgraded masks cast Sunburst as an 8th-rank occ",
+   "fixed": true
+  },
+  {
+   "id": "pistol-phenom-dedication",
+   "bucket": "feats",
+   "summary": "No `skillSubstitutions` entry. The record holds only actionCost and archetype; the one registry line (featFeatGrants.ts:400) grants the Pistol Twirl feat and nothing else. The lane exists and 33 recor",
+   "fixed": true
+  },
+  {
+   "id": "mortal-healing",
+   "bucket": "feats",
+   "summary": "No `degreeShifts` entry. The record holds nothing but actionCost and archetype. This is the app's own `{shift:'successToCrit', skills:['medicine'], actions:['treat-wounds']}` shape — feats/risky-surge",
+   "fixed": true
+  },
+  {
+   "id": "ostilli-host-dedication",
+   "bucket": "feats",
+   "summary": "The upgrade half is dropped. The registry entry is a flat `{ skills: { 'lore:ostilli': 'trained' } }`, and FEAT_GRANTS \"grants RAISE only\", so a character who already has Ostilli Lore trained gets a n",
+   "fixed": true
+  },
+  {
+   "id": "hurl-at-the-horizon",
+   "bucket": "feats",
+   "summary": "The immanence itself. The record's `choice` records WHICH ikon the feat is imbued into and repeats the sentence in a builder-picker `note`, but no carrier delivers the trait or the range: the imbued w",
+   "fixed": true
+  },
+  {
+   "id": "crushing-grab",
+   "bucket": "feats",
+   "summary": "A damage rider on a named action, with no carrier. The lane exists and is used for the identical shape: `RECORD_MARKERS` holds `'the-harder-they-fall-ranger': [{ on: 'action', id: 'trip', value: '+1d8",
+   "fixed": true
+  },
+  {
+   "id": "pei-zing-adept",
+   "bucket": "feats",
+   "summary": "Same shape as Ward Medic and the same emptiness: the 2/4/8 recipient allowance — the feat's entire content — has no carrier. The app does model the subsystem it modifies (`prepare-elemental-medicine` ",
+   "fixed": true
+  },
+  {
+   "id": "convergent-tides",
+   "bucket": "feats",
+   "summary": "The whole feat. It is passive and its entire printed content is a terrain exemption, and no carrier holds it. The app's lane for this exact sentence is `RECORD_MARKERS` in situationalBonuses.ts — `{ o",
+   "fixed": true
+  },
+  {
+   "id": "mind-smith-dedication",
+   "bucket": "feats",
+   "summary": "The four-statline choice is never asked, and the weapon the feat hands over disagrees with every one of the four printed lines. The record's only `choice` is `flag: 'mindWeaponDamage'` (bludgeoning/pi",
+   "fixed": true
+  },
+  {
+   "id": "acrobat-dedication",
+   "bucket": "feats",
+   "summary": "The 7th-level MASTER step. The only carrier reads `'acrobat-dedication': { skills: { acrobatics: 'expert' }, rankUpgrade: { level: 15, rank: 'legendary' } }` — expert, then legendary at 15, with nothi",
+   "fixed": true
+  },
+  {
+   "id": "ward-medic",
+   "bucket": "feats",
+   "summary": "The scaling target count (2 / 4 at master / 8 at legendary) — the feat's entire content — is held nowhere. The `RECORD_MARKERS` lane already carries Treat Wounds riders of exactly this permission shap",
+   "fixed": true
+  },
+  {
+   "id": "vindicator-dedication",
+   "bucket": "feats",
+   "summary": "The conditional skill SUBSTITUTION. The record carries the +2 circumstance half of the feat (situationalBonuses.ts:538) and the ranger class-archetype block, but nothing says Religion may stand in for",
+   "fixed": true
+  },
+  {
+   "id": "guardian-dedication",
+   "bucket": "feats",
+   "summary": "The proficiency MIRROR. The registry entry carries only the opening half — `armor: { light: 'trained', medium: 'trained' }, conditionalArmor: { ifTrainedIn: ['light','medium'], grant: 'heavy', rank: '",
+   "fixed": true
+  }
+ ],
+ "recordsRead": 100,
+ "method": "Every record in this batch was read against its printed text (Archives of Nethys mirror), each finding was put to an adversarial refuter, and the survivors were authored as data rows or registry changes. See work/residual-1-12.json for the findings and work/residual-fixed.json for the ledger of what has been closed.",
+ "findings": 37,
+ "closed": 37,
+ "complete": true
+}

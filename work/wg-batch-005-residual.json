@@ -1,0 +1,107 @@
+{
+ "batch": 5,
+ "examined": 100,
+ "confirmed": [
+  {
+   "id": "coral-symbiotes",
+   "bucket": "feats",
+   "summary": "Only the first half of the sentence is delivered. The persistent-damage flat-check DC change (DC 10 instead of DC 15, DC 5 with appropriate help) has no carrier anywhere, and the 24-hour submersion up",
+   "fixed": true
+  },
+  {
+   "id": "fey-fellowship",
+   "bucket": "feats",
+   "summary": "Only the first paragraph (+2 circumstance to Perception and saves vs fey) is delivered. The entire second paragraph is unheld: the compressed Make an Impression (no 1-minute conversation), the printed",
+   "fixed": true
+  },
+  {
+   "id": "elemental-familiar-kineticist",
+   "bucket": "feats",
+   "summary": "The Constitution retarget is never applied. src/rules/companions.ts:677 reads `grant?.statAbility` and, when set, overrides the familiar's Perception and adds Acrobatics and Stealth rows at (that abil",
+   "fixed": true
+  },
+  {
+   "id": "jotunborn-weapon-familiarity",
+   "bucket": "feats",
+   "summary": "The advanced→martial half of the remap is dropped, so two weapons get a HIGHER rank than printed. The entry (src/rules/featGrantsLane.ts:84) is `{\"weapons\":[\"bola\",\"greataxe\",\"halberd\",\"maul\",\"longspe",
+   "fixed": true
+  },
+  {
+   "id": "quick-jump",
+   "bucket": "feats",
+   "summary": "The action-cost reduction is not delivered anywhere. actions/high-jump and actions/long-jump both still carry actionCost {type:'actions', value:2} and nothing attached to the character overrides or an",
+   "fixed": true
+  },
+  {
+   "id": "subtle-theft",
+   "bucket": "feats",
+   "summary": "Neither clause reaches the player. The record is bare — actionCost is the only non-header field — so the –2 circumstance penalty and the undetected-preserving rider exist nowhere but the feat's own de",
+   "fixed": true
+  },
+  {
+   "id": "raise-a-tome",
+   "bucket": "feats",
+   "summary": "The tome's shield statistics have no carrier. The record's two bonuses are correctly held in situationalBonuses.ts:2829, but nothing anywhere states Hardness 3 / HP 12 / BT 6 or lets the tome stand in",
+   "fixed": true
+  },
+  {
+   "id": "ghoran-weapon-familiarity",
+   "bucket": "feats",
+   "summary": "The category remap is not delivered. The only carrier is `src/rules/featGrantsAuto.ts:269` — `weaponFamiliarity: { weapons:['glaive','greatclub','hatchet','scythe','sickle','thorn-whip'], rank:'traine",
+   "fixed": true
+  },
+  {
+   "id": "slink",
+   "bucket": "feats",
+   "summary": "Neither clause is delivered. The record carries only `actionCost: {type:'passive'}` — no speed/movement rider on Sneak and no note that a successful Sneak ending in dim light or darkness leaves you un",
+   "fixed": true
+  },
+  {
+   "id": "pilgrims-token",
+   "bucket": "feats",
+   "summary": "The initiative tie-break has no carrier. The record holds only `grantsItems: [{ itemId: 'religious-symbol-wooden' }]` — the free symbol is delivered, the rule that uses it is not. The app has a first-",
+   "fixed": true
+  },
+  {
+   "id": "nephilim-lore",
+   "bucket": "feats",
+   "summary": "The Diplomacy-or-Intimidation restriction is never enforced, and the pick the record asks for is inert. `src/rules/featGrantsAuto.ts:423` holds `skillChoices: [{ options: 'any', rank: 'trained' }]` — ",
+   "fixed": true
+  },
+  {
+   "id": "hex-spells",
+   "bucket": "classFeatures",
+   "summary": "The once-per-turn cap on hexes. The record carries actionCost plus effectChoices (the Patron's Puppet / Phase Familiar starting-hex pick) and nothing else; there is no limitedUses. The focus pool boun",
+   "fixed": true
+  },
+  {
+   "id": "callow-may",
+   "bucket": "feats",
+   "summary": "The initiative-triggered off-guard effect. The only carrier is the Charming Liar feat grant, which covers the preceding sentence. Nothing holds the second sentence. The registry supports exactly this ",
+   "fixed": true
+  },
+  {
+   "id": "conscious-mind",
+   "bucket": "classFeatures",
+   "summary": "The level gate on the two later unique psi cantrips. src/rules/build.ts:3087-3088 buckets every subclass grantedSpell by the spell's own rank, and line 3099 folds ALL rank-0 grants into entry.cantrips",
+   "fixed": true
+  },
+  {
+   "id": "hardwood-armor",
+   "bucket": "feats",
+   "summary": "The shield's level scaling. items/hardwood-armor-shield (the item the feat's grantsItems points at) is fixed at hardness 3 / hp 12 / brokenThreshold 6 with no scaling and no mention of it in its note ",
+   "fixed": true
+  },
+  {
+   "id": "quick-coercion",
+   "bucket": "feats",
+   "summary": "The time reduction on Coerce. The record has nothing beyond the header and actionCost, and the feat id appears nowhere in the codebase — zero hits in src/ and scripts/data/ for either \"quick-coercion\"",
+   "fixed": true
+  }
+ ],
+ "recordsRead": 100,
+ "method": "Every record in this batch was read against its printed text (Archives of Nethys mirror), each finding was put to an adversarial refuter, and the survivors were authored as data rows or registry changes. See work/residual-1-12.json for the findings and work/residual-fixed.json for the ledger of what has been closed.",
+ "findings": 16,
+ "closed": 16,
+ "complete": true
+}

@@ -1,0 +1,190 @@
+{
+ "batch": 29,
+ "records": [
+  {
+   "id": "ring-of-wizardry-type-i",
+   "verdict": "FIXED",
+   "evidence": "[batch 29 read, adversarially confirmed] The ring's two extra 1st-rank slots are ARCANE and the whole item is gated on having arcane spellcasting, but our spellS"
+  },
+  {
+   "id": "natural-reflexes",
+   "verdict": "MATCHES",
+   "evidence": "[batch 29 read] comparer misread settled/taught: The instrument flag \"theirs master, ours degree-shift only\" misreads our carrier: the Reflex-master bump is delivered by the ranger table in"
+  },
+  {
+   "id": "hairpin-of-blooming-flowers",
+   "verdict": "FIXED",
+   "evidence": "[batch 29 read, adversarially confirmed] Our shipped description drops the printed \"10-foot burst\" from the Scatter Petals effect, leaving an ungrammatical sente"
+  },
+  {
+   "id": "unassailable-soul",
+   "verdict": "MATCHES",
+   "evidence": "[batch 29 read] comparer misread settled/taught: The instrument flag \"theirs master, ours degree-shift only\" misreads our carrier: the Will-master bump is delivered by the exemplar table in"
+  },
+  {
+   "id": "flowing-water-moderate",
+   "verdict": "MATCHES",
+   "evidence": "[batch 29 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "resolute-mind-wrap",
+   "verdict": "FIXED",
+   "evidence": "[batch 29 read, adversarially confirmed] Print doubles the wrap's mental resistance to 10 for 1 minute on a successful triggered Will save; neither side models t"
+  },
+  {
+   "id": "kinetic-durability",
+   "verdict": "MATCHES",
+   "evidence": "[batch 29 read] comparer misread settled/taught: The instrument flag \"theirs master, ours degree-shift only\" misreads our carrier: the Fortitude-master bump is delivered by the kineticist t"
+  },
+  {
+   "id": "mysterious-resolve",
+   "verdict": "MATCHES",
+   "evidence": "[batch 29 read] comparer misread settled/taught: The instrument flag \"theirs master, ours degree-shift only\" misreads our carrier: the Will-master bump is delivered by the oracle table in s"
+  },
+  {
+   "id": "alchemical-weapon-expertise",
+   "verdict": "MATCHES",
+   "evidence": "[batch 29 read] comparer misread settled/taught: KINDS missing=[weapon] and VALUES \"NO VAR MAPPING: WEAPON_GROUP_BOMB\" are instrument gaps — the alchemist table lifts simple weapons, unarme"
+  },
+  {
+   "id": "third-apparition",
+   "verdict": "MATCHES",
+   "evidence": "[batch 29 read] comparer misread settled/taught: The \"KINDS missing [choice]\" flag is a misread — both halves of WG's row (the third apparition pick and the +1 Focus Point) are already carr"
+  },
+  {
+   "id": "expert-disassembly",
+   "verdict": "MATCHES",
+   "evidence": "[batch 29 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "spined-shield",
+   "verdict": "FIXED",
+   "evidence": "[batch 29 read, adversarially confirmed] Their remaster row hands the wearer the shield's +1 striking shield spikes as an inventory weapon; our spined-shield rec; The five spines are a consumable defensive resource that absorbs 6 damage each on a Shield Block and, once spent, disabl"
+  },
+  {
+   "id": "beast-staff",
+   "verdict": "MATCHES",
+   "evidence": "[batch 29 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "prescient-consumable",
+   "verdict": "MATCHES",
+   "evidence": "[batch 29 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "constricting-whip-tail",
+   "verdict": "FIXED",
+   "evidence": "[batch 29 read, adversarially confirmed] Print's Grab an Edge exemption is delivered by their injectText onto the Grab an Edge action row and by no carrier of ou; Print's \"Grapple without a free hand\" exemption rides inside their Grapple bonus text; ours drops it — our registry clau; The record's first trait is the truncated id \"gra\", which resolves to no record in the core.json trait bucket, so the pr"
+  },
+  {
+   "id": "disciplined-mind",
+   "verdict": "FIXED",
+   "evidence": "[batch 29 read, adversarially confirmed] Two of our carriers deliver the same success-to-critical-success rule for this record, so the Will save row shows the sa"
+  },
+  {
+   "id": "will-expertise",
+   "verdict": "MATCHES",
+   "evidence": "[batch 29 read] comparer misread settled/taught: The VALUES flag (\"MISSING save|will theirs=expert ours=(nothing)\") and the KINDS flag (missing=[save]) are instrument misreads — the expert "
+  },
+  {
+   "id": "implement-adept",
+   "verdict": "MATCHES",
+   "evidence": "[batch 29 read] comparer misread settled/taught: The \"KINDS missing [choice]\" flag is a misread — the thaumaturge Implement Adept pick exists end to end (state, picker, prompt, and the gran"
+  },
+  {
+   "id": "weapon-specialization",
+   "verdict": "MATCHES",
+   "evidence": "[batch 29 read] comparer misread settled/taught: KINDS missing=[weapon] and VALUES \"WEAPON_SPECIALIZATION has NO VAR MAPPING\" are instrument gaps — the +2/+3/+4 damage step is computed in d"
+  },
+  {
+   "id": "energy-robe-fire",
+   "verdict": "FIXED",
+   "evidence": "[batch 29 read, adversarially confirmed] The robe prints a two-action Activate but the record carries no `activationCost`, so MainTab's item-actions filter drops"
+  },
+  {
+   "id": "battlefield-surveyor",
+   "verdict": "MATCHES",
+   "evidence": "[batch 29 read] comparer misread settled/taught: wg-values reports this record clean having never compared their PERCEPTION master rank: theirAssertions writes into a plain Map keyed by tra"
+  },
+  {
+   "id": "helmsmans-recourse-greater",
+   "verdict": "FIXED",
+   "evidence": "[batch 29 read, adversarially confirmed] Our hand-written `counters` entry says \"per day\" and, because itemUses.ts prefers `item.counters` over `item.frequency`,; Our shipped description text states the pre-remaster \"once per day\" frequency for a record whose aonId, source and editi"
+  },
+  {
+   "id": "swiftmount-saddle",
+   "verdict": "MATCHES",
+   "evidence": "[batch 29 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "unmemorable-mantle",
+   "verdict": "FIXED",
+   "evidence": "[batch 29 read, adversarially confirmed] Our shipped description drops the printed save DC and save type from the activation — \"a DC 25 Will save\" became \"a save"
+  },
+  {
+   "id": "aeon-stone-vital-amplification",
+   "verdict": "FIXED",
+   "evidence": "[batch 29 read, adversarially confirmed] WG delivers the resonant power's resistance 5 to void as a real IWR entry; ours carries it only as prose in resonant.not; The stone's base power — extra Hit Points on every heal — is modelled by neither side, and WG's carrier for it is a valu"
+  },
+  {
+   "id": "aerobatics-mastery",
+   "verdict": "FIXED",
+   "evidence": "[batch 29 read, adversarially confirmed] Only the +2 half of Aerobatics Mastery is delivered on our side: the combined-maneuver rule and its DC formulas are inje"
+  },
+  {
+   "id": "quick-swim",
+   "verdict": "FIXED",
+   "evidence": "[batch 29 read, adversarially confirmed] The feat's first and always-on clause — extra Swim distance on a success and a critical success — is put on the Swim act"
+  },
+  {
+   "id": "studious-spells",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — on the Rulings Desk (batch 29)"
+  },
+  {
+   "id": "medal-of-the-wolf-pack",
+   "verdict": "MATCHES",
+   "evidence": "[batch 29 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "master-overdrive",
+   "verdict": "FIXED",
+   "evidence": "[batch 29 read, adversarially confirmed] Their encoding puts the printed \"+2 additional damage on a successful Overdrive\" in front of the player at the point of "
+  },
+  {
+   "id": "path-to-perfection",
+   "verdict": "MATCHES",
+   "evidence": "[batch 29 read] comparer misread settled/taught: All three flags on this record (KINDS missing [choice, save, specialStat]; VALUES MISSING all three saves at master; IDENTITY options fortit"
+  },
+  {
+   "id": "amulet-of-the-hellcat",
+   "verdict": "MATCHES",
+   "evidence": "[batch 29 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "atlas-arcane",
+   "verdict": "MATCHES",
+   "evidence": "[batch 29 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "temperature-adjustment",
+   "verdict": "FIXED",
+   "evidence": "[batch 29 read, adversarially confirmed] The feat's only mechanical clause — the medicine's recipient ignoring severe cold or severe heat — is modeled by neither"
+  },
+  {
+   "id": "ghost-scarf",
+   "verdict": "FIXED",
+   "evidence": "[batch 29 read, adversarially confirmed] Our situationalBonuses entry files the haunt bonus under kind 'initiative', so the +1 item bonus never reaches the Perce; Our Fortitude entry drops both printed preconditions — it reads as a blanket +1 item to Fortitude for 5 minutes after an"
+  },
+  {
+   "id": "graceful-leaper",
+   "verdict": "FIXED",
+   "evidence": "[batch 29 read, adversarially confirmed] Graceful Leaper's only mechanic — rolling Acrobatics in place of Athletics for High Jump and Long Jump — reaches no carr"
+  },
+  {
+   "id": "alacritous-horseshoes",
+   "verdict": "FIXED",
+   "evidence": "[batch 29 read, adversarially confirmed] The printed extra Leap distance is carried nowhere on our side while WG carries it as a prose op pinned to SPEED, so the"
+  }
+ ]
+}

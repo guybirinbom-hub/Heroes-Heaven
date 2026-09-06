@@ -1,0 +1,89 @@
+{
+ "batch": 3,
+ "examined": 100,
+ "confirmed": [
+  {
+   "id": "seedpod",
+   "bucket": "feats",
+   "summary": "Nothing suppresses critical specialization on the granted strike. `grantedStrikes[0].group` is \"brawling\", and `strikeShowsCritSpec` (src/rules/derive.ts:3462) returns true whenever any crit-spec sour",
+   "fixed": true
+  },
+  {
+   "id": "metal-carapace",
+   "bucket": "feats",
+   "summary": "The granted armour item `metal-carapace-armor` is a plain `category: \"medium\"` armour, so AC is computed against the wearer's MEDIUM rank. Kineticist (the only class that can take this impulse) is `me",
+   "fixed": true
+  },
+  {
+   "id": "metal-carapace",
+   "bucket": "feats",
+   "summary": "The rusty steel shield's Hardness/HP/BT never scale. `items/metal-carapace-shield` ships fixed hardness 5 / hp 20 / brokenThreshold 10 and the scaling lives only in its prose `note`. The shield-block ",
+   "fixed": true
+  },
+  {
+   "id": "focused-fascination",
+   "bucket": "feats",
+   "summary": "The success -> critical-success upgrade on the Performance check to Fascinate is held nowhere. The app has the exact carrier for this shape — `degreeShifts` with `shift: 'successToCrit'` (types.ts:125",
+   "fixed": true
+  },
+  {
+   "id": "patron",
+   "bucket": "classFeatures",
+   "summary": "The unique familiar ability is never granted. Three of the four promised things arrive: tradition (subclass option `tradition`, consumed at build.ts:3073-3076), the patron skill (`grants: {skills: [..",
+   "fixed": true
+  },
+  {
+   "id": "genie-weapon-familiarity",
+   "bucket": "feats",
+   "summary": "The category demotion is not modelled. The only carrier is featGrantsAuto.ts:261 `{ weapons:['falchion','ranseur','scimitar','trident','wish-blade','wish-knife'], rank:'trained' }` — a FLAT trained gr",
+   "fixed": true
+  },
+  {
+   "id": "witchs-armaments",
+   "bucket": "feats",
+   "summary": "The \"different each time\" constraint is not enforced. The record has `maxTakable: 3` and a `choice` with options nails/teeth/hair, but the choice does NOT set `distinctAcrossTakes`, so a player can ta",
+   "fixed": true
+  },
+  {
+   "id": "azarketi-weapon-familiarity",
+   "bucket": "feats",
+   "summary": "Same gap as genie-weapon-familiarity, same file. featGrantsAuto.ts:76 is `{ weapons:['crossbow','hand-crossbow','longspear','spear','trident','boarding-axe','gill-hook'], traits:['azarketi'], rank:'tr",
+   "fixed": true
+  },
+  {
+   "id": "shiny-button-eyes",
+   "bucket": "feats",
+   "summary": "The \"but you must choose Perception\" constraint is enforced nowhere. FEAT_FEAT_GRANTS['shiny-button-eyes'] = ['canny-acumen'] (src/rules/featFeatGrants.ts:446) hands over the feat, but there is no FEA",
+   "fixed": true
+  },
+  {
+   "id": "orc-warmask",
+   "bucket": "feats",
+   "summary": "The one printed trained skill is granted TWICE, by two independent pickers that are never tied together, so a character who picks any source other than The Gods ends up trained in two skills and is as",
+   "fixed": true
+  },
+  {
+   "id": "web-weaver",
+   "bucket": "feats",
+   "summary": "The named specialty is never bound. `FEAT_FEAT_GRANTS['web-weaver'] = ['specialty-crafting']` (src/rules/featFeatGrants.ts:489) hands over the feat, but nothing answers that feat's own `choice` (flag ",
+   "fixed": true
+  },
+  {
+   "id": "dedication-to-the-five",
+   "bucket": "feats",
+   "summary": "The temporary-HP rider on the granted focus spell has no carrier at all. The record's `effectChoices.domain` correctly grants one of swear-oath / athletic-rush / perfected-mind / protectors-sacrifice,",
+   "fixed": true
+  },
+  {
+   "id": "the-unholy-dead",
+   "bucket": "feats",
+   "summary": "Only the PC half of this feat is delivered. `grantsCreatureTraits: ['unholy']` covers \"You ... gain the unholy trait\"; the thrall half is entirely absent — nothing gives the character's thralls the un",
+   "fixed": true
+  }
+ ],
+ "recordsRead": 100,
+ "method": "Every record in this batch was read against its printed text (Archives of Nethys mirror), each finding was put to an adversarial refuter, and the survivors were authored as data rows or registry changes. See work/residual-1-12.json for the findings and work/residual-fixed.json for the ledger of what has been closed.",
+ "findings": 13,
+ "closed": 13,
+ "complete": true
+}

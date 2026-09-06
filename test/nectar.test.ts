@@ -110,5 +110,11 @@ describe('Potent Nectar asks its question exactly once', () => {
       feats: Record<string, { choice?: unknown }>;
     };
     expect(ref.feats['potent-nectar'].choice, 'the reference no longer has it; this row may be stale').toBeTruthy();
-  });
+    /*
+     * 20 s, not the 5 s default: this case parses public/core.foundry-backup.json (~18 MB) from disk,
+     * which takes ~240 ms alone and blew past 5000 ms inside a full `scripts/vt.mjs` run while other
+     * suites held the disk. The timeout is the flake's cause, not a slow assertion — the same case
+     * passes in 239 ms on its own.
+     */
+  }, 20_000);
 });

@@ -1,0 +1,396 @@
+{
+ "batch": 16,
+ "examined": 100,
+ "recordsRead": 100,
+ "method": "Batch 16's residual read (the read-against-print pass its gates never ran): every record's printed text was read from the AoN mirror by aonId, 100 findings written to work/b016-residual-findings.json (65 DEFECT / 30 COMPLETE / 5 UNMODELLABLE-CLAUSE), then EVERY defect adversarially verified (work/b016-residual-verify.json: 46 CONFIRMED / 13 REFUTED / 6 ASK-OWNER). All 46 confirmed fixes are applied; per-record verified specs are archived in work/.b016-apply-plan.txt. Print-vs-ours defects WG's encoding was silent on — parity with WG was checked per fix and never broken without an owner question.",
+ "confirmed": [
+  {
+   "id": "camouflaging-chromatophores-lesser",
+   "bucket": "items",
+   "summary": "Print (equipment-3180-3075.json): (1) \"+1 item bonus to Stealth checks to Sneak and Hide\"; (2) Activate—Background Adaptation 2 actions, once per day: \"For 1 minute, you can Hide without needing cover or concealment\" (and explicitly NOT Sneak); traits Uncommon/Graft/Invested/Magical. DELIVERED: clause 1 = star at src/r…",
+   "fixed": true
+  },
+  {
+   "id": "wildwood-ink",
+   "bucket": "items",
+   "summary": "Print (equipment-2224.json): (1) \"+1 item bonus to Stealth checks, which increases to +2 in forests\"; (2) Activate reaction (concentrate), once per day, trigger a creature would detect you by Seeking, requires forest: \"The tattoo casts one with plants... The duration of this spell is 10 minutes\"; (3) recharge by supply…",
+   "fixed": true
+  },
+  {
+   "id": "phantom-roll",
+   "bucket": "items",
+   "summary": "1501. ---- VERIFY REASON: PRINT re-derived from C:/wonderers guide/aon-2e-archive/data/by-category/equipment/equipment-1925.json (aonId on public/core.json items[\"phantom-roll\"]). All three quoted clauses are verbatim: \"+1 item bonus to Stealth checks you attempt during the Avoid Notice exploration activity\"; \"You can …",
+   "fixed": true
+  },
+  {
+   "id": "golden-greaves",
+   "bucket": "items",
+   "summary": "and stays prose. ---- VERIFY REASON: Print re-derived from the AoN mirror (equipment/equipment-3965.json): \"you gain a +1 item bonus to your Fortitude DC against forced movement effects and to your Reflex DC against effects that would knock you prone.\" Both halves are strictly DC-side — the number an opposing creature …",
+   "fixed": true
+  },
+  {
+   "id": "hunters-brooch",
+   "bucket": "items",
+   "summary": "Print (equipment-923.json): (1) \"you can cast the disrupt undead cantrip as an innate divine spell\" while worn; (2) Activate 3 actions (command, Interact), once per day: touch a wielded weapon to the symbol and \"grant that weapon the deadly d12 trait. Against undead, the weapon instead gains the fatal d12 trait. This b…",
+   "fixed": true
+  },
+  {
+   "id": "marvelous-calliope",
+   "bucket": "items",
+   "summary": "Print (equipment-587.json): (1) Activate 1 minute — the whistle unfolds into a wagon-sized calliope, heavy and anchored; (2) \"+1 item bonus to Performance checks to play the calliope\"; (3) an Interact action collapses it; (4) Activate 2 actions Interact, ONCE PER HOUR: \"You play the calliope, causing it to cast charm o…",
+   "fixed": true
+  },
+  {
+   "id": "spore-shepherds-staff-major",
+   "bucket": "items",
+   "summary": "Print (equipment-2665-2454.json): (1) \"While wielding the staff you gain a +2 circumstance bonus to Nature checks to identify fungus\"; (2) Usage held in 1 hand, Bulk 1; (3) \"Activate — Cast a Spell: You expend a number of charges from the staff to cast a spell from its list\", with the Major list adding 4th protector tr…",
+   "fixed": true
+  },
+  {
+   "id": "demon-mask",
+   "bucket": "items",
+   "summary": "PRINTED (equipment-3076-3015): (a) \"+1 item bonus to Intimidation checks\"; (b) \"Activate—Leering Mask ⟨2⟩ (manipulate), Frequency once per day, Effect The mask casts a fear spell with a DC of 20.\" OURS: (a) DELIVERED — core.json items.demon-mask.passiveEffects.skills.intimidation=1, read by passiveItemBonus (src/rules/…",
+   "fixed": true
+  },
+  {
+   "id": "aeon-stone-repairing",
+   "bucket": "items",
+   "summary": "PRINTED (equipment-3055-3577, Aeon Stone (Repairing) block): (a) \"While you have this stone invested, you gain a +1 item bonus to skill checks made to Craft\"; (b) \"Additionally, when Repairing an item, you restore an additional 5 Hit Points to the item (10 Hit Points on a critical success)\"; (c) \"The resonant power all…",
+   "fixed": true
+  },
+  {
+   "id": "spore-shepherds-staff",
+   "bucket": "items",
+   "summary": "PRINTED (equipment-2665): (a) \"While wielding the staff you gain a +2 circumstance bonus to Nature checks to identify fungus\"; (b) \"Activate — Cast a Spell; You expend a number of charges from the staff to cast a spell from its list\" with Cantrip puff of poison; 1st protector tree (resembles giant mushroom, not a tree)…",
+   "fixed": true
+  },
+  {
+   "id": "vengeful-arm",
+   "bucket": "items",
+   "summary": "applyBackfill only assigns, so deleting the row leaves the field in shipped core.json and the character would get the axe TWICE (a phantom unarmed 1d12 plus the real weapon). ---- CORRECTED",
+   "fixed": true
+  },
+  {
+   "id": "skysunder",
+   "bucket": "items",
+   "summary": "melee). ---- CORRECTED",
+   "fixed": true
+  },
+  {
+   "id": "musket-staff-of-force",
+   "bucket": "items",
+   "summary": "PRINTED (equipment-3587): (a) \"This +1 flintlock musket has a reinforced stock permanently attached to it\"; (b) \"and the musket's weapon potency rune (and any other runes) applies to Strikes with the stock as well\"; (c) \"The musket staff also contains spells and can be prepared following the same rules as a staff\" — Ca…",
+   "fixed": true
+  },
+  {
+   "id": "gas-mask-of-clean-air",
+   "bucket": "items",
+   "summary": "Printed (equipment-3964) clause 2, the ENTIRE Activate—Breathe Clean effect, has no carrier: \"For 1 round, you are immune to inhaled poisons, inhaled diseases, and olfactory effects... If the air around you is unbreathable, you are underwater, or you are in a vacuum, you can breathe normally.\" Delivered today: only the…",
+   "fixed": true
+  },
+  {
+   "id": "killers-belt",
+   "bucket": "items",
+   "summary": "359 passes item.description onto the activation card in the encounter action list, and ItemDetail renders it on the item. ---- VERIFY REASON: PRINT re-derived from the mirror (C:/wonderers guide/aon-2e-archive/data/by-category/equipment/equipment-3968-3658.json, aonId from public/core.json items.killers-belt): markdown…",
+   "fixed": true
+  },
+  {
+   "id": "pistol-wand",
+   "bucket": "items",
+   "summary": "3513. ---- VERIFY REASON: DEFECT IS REAL AND IN SCOPE; THE FIX AS SPECIFIED DOES NOT WORK.",
+   "fixed": true
+  },
+  {
+   "id": "aeon-stone-clear-quartz-octagon",
+   "bucket": "items",
+   "summary": "DERIVED AND REAL; FIX SHAPE IS WRONG, SO CONFIRMED + correctedFix.",
+   "fixed": true
+  },
+  {
+   "id": "warpipes",
+   "bucket": "items",
+   "summary": "359 (description on the activation card) and ItemDetail's description block. ---- VERIFY REASON: Defect re-derived and holds. PRINT (aon-2e-archive/.../equipment/equipment-3951.json, from core.json aonId equipment-3951) reads exactly \"You and all allies within a 60-foot emanation gain a +1 status bonus to damage rolls …",
+   "fixed": true
+  },
+  {
+   "id": "sparkwarden",
+   "bucket": "items",
+   "summary": "Owner-held relic; relic-gift lane (Forming/Advancing the Bond, minor gifts create spark/obscure/shadow smith, major gifts dancing shadow/elements of creation and \"dancing shadow Strikes use the relic's spell attack modifier\") left parked as instructed. NEW defect outside that question: printed Sparkwarden IS a warding …",
+   "fixed": true
+  },
+  {
+   "id": "borts-blessing",
+   "bucket": "items",
+   "summary": "misspecced → CONFIRMED + correctedFix).",
+   "fixed": true
+  },
+  {
+   "id": "ring-of-minor-arcana",
+   "bucket": "items",
+   "summary": "> SpellsTab. ---- VERIFY REASON: Both halves re-derived independently and both hold; only the fix spec is wrong.",
+   "fixed": true
+  },
+  {
+   "id": "arboreal-boots",
+   "bucket": "items",
+   "summary": "Printed (equipment-3056-2980): TWO clauses — \"+1 item bonus to Acrobatics\" AND \"allow you to ignore difficult terrain from plants and fungi\". Clause 1 is delivered: public/core.json items.arboreal-boots.passiveEffects.skills.acrobatics=1, read by passiveItemBonus (src/rules/derive.ts:277-281) and named in the breakdown…",
+   "fixed": true
+  },
+  {
+   "id": "crackling-bubble-gum-lesser",
+   "bucket": "items",
+   "summary": "card description renderer. ---- VERIFY REASON: Defect re-derived and real; fix is right in substance but misspecced in two places, so CONFIRMED + correctedFix.",
+   "fixed": true
+  },
+  {
+   "id": "trudds-strength",
+   "bucket": "items",
+   "summary": "stripper, and that prose is the ONLY surface Ruling F leaves for the ally half. ---- VERIFY REASON: The defect is real and every leg re-derives. PRINT (aon-2e-archive/data/by-category/equipment/equipment-3771-3572.json) says verbatim \"grants you a +1 item bonus to Athletics checks and to Intimidation checks to Coerce\",…",
+   "fixed": true
+  },
+  {
+   "id": "uniter-of-clans",
+   "bucket": "items",
+   "summary": "OWNER-HELD relic; the relic-gift block (Forming/Advancing the Bond, Minor Gifts ancestors' call / linguistic nexus / repository of knowledge, Major Gifts perception filter or Diplomacy to +2) is the parked question and is not reported here — noting only that relicAspects is declared at src/rules/types.ts:3333, is carri…",
+   "fixed": true
+  },
+  {
+   "id": "folding-drums",
+   "bucket": "items",
+   "summary": "action Interact resize are explicitly NOT lanes.) ---- VERIFY REASON: PRINT re-read from C:/wonderers guide/aon-2e-archive/data/by-category/equipment/equipment-926.json (aonId on the record): \"**Activate** Single Action Interact (concentrate) **Frequency** once per hour; **Effect** You play a pounding rhythm on the dru…",
+   "fixed": true
+  },
+  {
+   "id": "underbrush-cloak",
+   "bucket": "items",
+   "summary": "629. ---- VERIFY REASON: Print re-derived from C:/wonderers guide/aon-2e-archive/data/by-category/equipment/equipment-3984.json: \"Activate—One with the Woods Two Actions (manipulate) Frequency once per day; Effect For the next minute, you ignore any difficult terrain caused by plants and fungi, such as bushes, vines, a…",
+   "fixed": true
+  },
+  {
+   "id": "knights-maintenance-kit",
+   "bucket": "items",
+   "summary": "PRINT (equipment-1554.json): (1) \"+1 item bonus to checks to Repair weapons, shields, and armor using the Crafting skill\"; (2) \"you restore an additional 5 Hit Points when you successfully Repair such items using it\". OURS: clause 1 is LIVE — src/rules/situationalBonuses.ts:1380 FEAT_SITUATIONAL star (skill crafting, w…",
+   "fixed": true
+  },
+  {
+   "id": "graverose-garland",
+   "bucket": "items",
+   "summary": "PRINT (equipment-5198.json): (1) \"Usage worn belt\"; (2) \"As long as you have a graverose garland invested, it grants a +1 item bonus to Deception and Intimidation checks against undead.\"; (3) \"Activate—To the Grave with You! [Two Actions] (emotion, fear, manipulation, mental) Frequency once per day; Effect … DC 19 Will…",
+   "fixed": true
+  },
+  {
+   "id": "eagle-eye-elixir-moderate",
+   "bucket": "items",
+   "summary": "PRINT (equipment-3306-3187.json): \"Activate [Single Action] (manipulate) … After you drink this elixir … For the next hour, you gain an item bonus to Perception checks that's greater when attempting to find secret doors and traps\", and for the Moderate grade \"The bonus is +2, or +3 to find secret doors and traps.\" OURS…",
+   "fixed": true
+  },
+  {
+   "id": "obsidian-goggles",
+   "bucket": "items",
+   "summary": "PRINT (equipment-3097.json): (1) \"While wearing the goggles, you gain a +1 item bonus to Perception checks involving sight.\"; (2) \"Activate—Darkvision [Single Action] (manipulate) Frequency once per day; Effect Adjusting your goggles, you gain darkvision for 1 hour.\" OURS, clause 1 is DOUBLE-STATED AND OVER-APPLIED: co…",
+   "fixed": true
+  },
+  {
+   "id": "aeon-stone-preserving",
+   "bucket": "items",
+   "summary": "PRINT (equipment-3055-2977.json, Preserving section): (1) \"You gain resistance 3 to persistent damage\"; (2) \"At the end of any turn where the persistent damage can't overcome this resistance, end that condition\"; (3) resonant → stabilize as a primal innate cantrip. OURS: (1) passiveEffects.resistances [{persistent dama…",
+   "fixed": true
+  },
+  {
+   "id": "beastmasters-sigil",
+   "bucket": "items",
+   "summary": "PRINT (equipment-2226.json): armor → +1 item to saves vs poison; melee → +1 item to Athletics to Trip; ranged → 1d6 persistent bleed on a crit (target-side, out of scope per NOT-lanes \"effects on enemies\"); Activate Cast a Spell → tame; Activate 1/day → \"You cast **2nd-rank** summon animal\"; \"The spell DC of any spell …",
+   "fixed": true
+  },
+  {
+   "id": "spirit-singer",
+   "bucket": "items",
+   "summary": "PRINT (equipment-1138-1099.json): +1 item to Performance near a significant spiritual disturbance; +1 item to checks to detect a haunt or incorporeal undead; \"you can roll a check to notice a haunt even if you aren't actively Searching for it\"; base model is Item 5, 150 gp, **Bulk 16**, played by placing it and using b…",
+   "fixed": true
+  },
+  {
+   "id": "darkvision-scope",
+   "bucket": "items",
+   "summary": "PRINT (equipment-1212-1135.json): (1) +1 item to Perception checks involving sight in dim light seen through the scope, \"as well as in areas of darkness, if the scope has been activated\"; (2) Activate ⟨1⟩ (manipulate) → \"You gain darkvision until the beginning of your next turn, as long as you continue to look through …",
+   "fixed": true
+  },
+  {
+   "id": "mariners-splint",
+   "bucket": "items",
+   "summary": "PRINT (equipment-3274.json): \"This suit of **+1 splint mail**…\", +1 item to Athletics checks to Climb or Swim, and \"increases the distance you move when you successfully Climb or Swim by 5 feet\". OURS: only the Athletics star, situationalBonuses.ts:1869. TWO gaps. (a) The +1 potency is nowhere: core.json acBonus 5 is e…",
+   "fixed": true
+  },
+  {
+   "id": "brazier-of-harmony",
+   "bucket": "items",
+   "summary": "359. (The emanation's ally/positional half stays out of scope per Ruling M as instructed.) ---- VERIFY REASON: Re-derived from print and re-checked delivery; the defect is real, the fix route is wrong.",
+   "fixed": true
+  },
+  {
+   "id": "bellows-pipes",
+   "bucket": "items",
+   "summary": "PRINTED (equipment-3925): \"+1 item bonus to Performance checks WHILE PLAYING MUSIC WITH THE INSTRUMENT\"; \"Activate—Hand Chords ⟨2⟩ … once per day … You and all allies within a 15-FOOT EMANATION gain a +1 status bonus to the next attack roll, Perception check, saving throw, or skill check…\". OURS delivers the activation…",
+   "fixed": true
+  },
+  {
+   "id": "skeleton-key",
+   "bucket": "items",
+   "summary": "PRINTED (equipment-3030-2888): \"+1 item bonus to the Thievery check\" when used in place of a thieves' toolkit to Pick a Lock, lost while broken — DELIVERED by situationalBonuses.ts:1789 (`when` carries both the toolkit substitution and the broken clause; greater twin at :1790). \"Activate—Loosen Lock ⟨free⟩ (manipulate)…",
+   "fixed": true
+  },
+  {
+   "id": "aeon-stone-crescent",
+   "bucket": "items",
+   "summary": "boomerang row \"races away from you in a . Each creature in the area takes damage with a save\".",
+   "fixed": true
+  },
+  {
+   "id": "return-fire",
+   "bucket": "feats",
+   "summary": "PRINTED (feat-6004): \"When you successfully Deflect a Projectile that's an arrow, as part of that reaction you can immediately make a ranged bow Strike from your own bow by firing the arrow you deflected.\" OURS: `npm run feat -- return-fire --no-evidence` reports actionCost:{type:'passive'} as the ONLY authored field a…",
+   "fixed": true
+  },
+  {
+   "id": "bloody-tendrils",
+   "bucket": "feats",
+   "summary": "coverage, not mechanism. ---- CORRECTED",
+   "fixed": true
+  },
+  {
+   "id": "necrologist-dedication",
+   "bucket": "feats",
+   "summary": "12).",
+   "fixed": true
+  },
+  {
+   "id": "inexorable",
+   "bucket": "feats",
+   "summary": "12).",
+   "fixed": true
+  },
+  {
+   "id": "draconic-familiar",
+   "bucket": "feats",
+   "summary": "158).",
+   "fixed": true
+  },
+  {
+   "id": "disk-rider",
+   "bucket": "feats",
+   "summary": "Zero carriers: grepping src/, scripts/data/ and the overlay for 'disk-rider' returns nothing, and `npm run feat -- disk-rider` reports only actionCost and archetype. Both printed clauses — \"When you cast floating disk, you can modify its duration to be sustained, up to 10 minutes\" and the whole Heightened (3rd) block (…",
+   "fixed": true
+  }
+ ],
+ "refuted": [
+  {
+   "id": "healers-gloves",
+   "reason": "Print re-derived and correct (AoN mirror equipment-3087-3027.json / -3028.json: \"restoring 2d6+7 Hit Points to that creature\"; Item 9 stanza \"The gloves provide a +2 bonus and restore 4d6+15 Hit Points\"; legacy equipment-444.json agrees). The scope reasoning i…"
+  },
+  {
+   "id": "shining-hackle",
+   "reason": "PRINT (C:/wonderers guide/aon-2e-archive/data/by-category/equipment/equipment-3978.json, and its two item-bonus children -bonus-1290/-1291) says exactly what the finding quotes: \"+1 item bonus to Perception checks based on sight, but you also take a –1 item pe…"
+  },
+  {
+   "id": "pickpockets-tailoring",
+   "reason": "Print re-derived and the quotes are accurate (aon-2e-archive/.../equipment/equipment-1320.json), and the factual half of the finding is true: clause (b) has no lane carrier — grep of src/ AND scripts/data/ for \"pickpockets-tailoring\" returns exactly two hits, …"
+  },
+  {
+   "id": "alchemist-goggles",
+   "reason": "The observation is factually right but demands a lane for content the owner has explicitly ruled out of scope, so no fix is owed. PRINT VERIFIED: aon-2e-archive/data/by-category/equipment/equipment-3431.json contains the clause verbatim — \"When making Strikes …"
+  },
+  {
+   "id": "three-pillared-yang-na",
+   "reason": "Print re-read and confirmed (aon-2e-archive/.../equipment/equipment-3580.json): \"Activate—Third Blessing Reaction (concentrate) Trigger You take spirit damage; Effect You gain resistance 3 against that spirit damage.\" The finding's factual half is right — grep…"
+  },
+  {
+   "id": "shadow",
+   "reason": "The print is quoted correctly, but the \"no carrier\" premise is false — the reader missed the star. PRINT (C:/wonderers guide/aon-2e-archive/data/by-category/equipment/equipment-2793.json): \"Usage etched onto light or medium armor\" and \"You gain a +1 item bonus…"
+  },
+  {
+   "id": "uzunjati-storytelling-amulet",
+   "reason": "Print verified: equipment-3560.json does carry \"You attempt to Make an Impression or Request, using a Performance check instead of a Diplomacy check.\" The carrier sweep is also accurate (no skillSubstitutions on the record; nothing in src/; the only effect-bac…"
+  },
+  {
+   "id": "holy-prayer-beads",
+   "reason": "The finding's central claim — \"Clause 1 has NO carrier anywhere\" — is false, and the demanded lane is out of DECIDED SCOPE on three independent grounds. 1) IT IS ALREADY DELIVERED. public/core-descriptions.json items['holy-prayer-beads'].d carries the clause V…"
+  },
+  {
+   "id": "twilight-tattoo",
+   "reason": "Print quote is accurate (equipment-3765.json has Fade ⟨1⟩ no-Frequency, Inscribe ⟨2⟩ once/day, +1 item Deception), and the record/passiveEffects half is accurately described. Every other load-bearing claim is false, and the fix is non-functional. (1) \"Inscribe…"
+  },
+  {
+   "id": "sun-wheel",
+   "reason": "PRINT (C:/wonderers guide/aon-2e-archive/data/by-category/equipment/equipment-905.json) confirms all six quoted clauses verbatim. The finding's central assertion — \"(3), (4) and (5) have NO carrier\" — is FALSE. public/core-descriptions.json items[\"sun-wheel\"].…"
+  },
+  {
+   "id": "merchants-guile",
+   "reason": "PRINT re-derived: AoN equipment-477.json carries the +2 clause verbatim (\"+2 item bonus to Deception and Diplomacy checks, but only if the associated checks involve haggling or bargaining over a purchase or trade\") and an Activate/Three Actions/envision, inter…"
+  },
+  {
+   "id": "pristine-epaulets",
+   "reason": "Print verified (equipment-3975.json): \"Activate—I Meant to Say [reaction] (concentrate, fortune), Frequency once per day, Trigger You critically fail a Diplomacy check, Effect ... You can reroll the check, but you must take the new result.\" The clause exists a…"
+  },
+  {
+   "id": "advanced-red-mantis-magic",
+   "reason": "The DATA FACT is true but every CONSEQUENCE the finding names is false, so no lane is owed. PRINT (C:/wonderers guide/aon-2e-archive/data/by-category/feat/feat-897.json): header does read \"**Archetype** [Red Mantis Assassin]\", and public/core.json feats.advanc…"
+  }
+ ],
+ "askOwner": {
+  "ids": [
+   "spectacles-of-understanding",
+   "kalmaugs-journal",
+   "avernal-cape",
+   "astrolabe-of-falling-stars",
+   "arcana-of-iron",
+   "instinct-ability"
+  ],
+  "note": "All six queued in work/owner-questions.json (spectacles-of-understanding + its greater grade were queued last, as the gain-the-effects-of-<spell> family question)."
+ },
+ "unmodellable": [
+  {
+   "id": "spirit-dwelling",
+   "bucket": "items",
+   "reason": "Print (sidebar-1782.json + feat-3454.json): held in 1 hand / L Bulk / no other function; \"has the trait of the magical tradition used to take Exorcist Dedication and the necromancy trait\"; attuned to you; 1-hour re-consecration ritual; houses wisps and remnants; \"You can use the Collect Spirit Remna…"
+  },
+  {
+   "id": "hunters-arrowhead",
+   "bucket": "items",
+   "reason": "Print (equipment-2343.json): (1) \"+1 item bonus to Survival checks and attack rolls against any creature you've currently designated as your prey with Hunt Prey\"; (2) \"A hunter's arrowhead is also a religious symbol of Ketephys\"; (3) Activate reaction (concentrate), once per day, trigger you would m…"
+  },
+  {
+   "id": "aeon-stone-formulating",
+   "bucket": "items",
+   "reason": "PRINTED (equipment-3055-3577, Aeon Stone (Formulating) block): (a) \"The stone contains the knowledge of all formulas found in a basic crafter's book. While you have the stone invested, you have the full knowledge of the stone's formulas. This counts as having the formula for the purposes of Crafting…"
+  },
+  {
+   "id": "banner-of-the-restful",
+   "bucket": "items",
+   "reason": "PRINTED (equipment-3905): \"You and allies within the banner's aura gain a +1 item bonus to Perception DCs and protection from severe cold and heat.\" Three clauses. (1) ALLIES → nothing, correct per Ruling F. (2) The aura's positional nature → Ruling M, and ours states it in the star's 'when' (\"while…"
+  },
+  {
+   "id": "phantasmal-doorknob",
+   "bucket": "items",
+   "reason": "CLAUSE (equipment-2235): \"The spell DC of any spell cast by activating this item is 20\" (27 greater / 34 major). No lane can say it: a full field census of core.json items shows no spell-DC field of any kind, and the item-spell lane hard-codes the WIELDER's statistic — build.ts:6423-6425 builds the …"
+  }
+ ],
+ "flaggedResidues": [
+  {
+   "id": "mariners-splint",
+   "note": "armour-specialization interacts with the item's built-in rune ladder in a way our armorSpec lane does not model for this record — recorded, not fixed."
+  },
+  {
+   "id": "spirit-singer",
+   "note": "the usage note (two-hands vs held) is prose-only; the Bulk fix and haunt-notice marks are applied, the usage nuance is display-only."
+  },
+  {
+   "id": "aon-facets-family",
+   "note": "Pathfinder #224's facet items lack usageOf/activationOf on some aon- records; enumerated in the verify file, display-only."
+  },
+  {
+   "id": "spirit-familiar-animist",
+   "note": "the identical missing supersedes:['pet'] as draconic-familiar — found during verification, fixed in the same edit (companionGrants.ts), recorded here as its own line so the draconic fix is not read as having covered it."
+  }
+ ],
+ "closed": true,
+ "complete": true
+}

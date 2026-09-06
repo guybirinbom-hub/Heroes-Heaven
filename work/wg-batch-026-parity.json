@@ -1,0 +1,410 @@
+{
+ "batch": 26,
+ "records": [
+  {
+   "id": "nomadic-halfling",
+   "verdict": "FIXED",
+   "evidence": "[batch 26 read, adversarially confirmed] Our Nomadic Halfling record carries no language field at all, so the two additional languages print grants are never off; The \"every time you take the Multilingual feat, you gain another new language\" half of Nomadic Halfling has no carrier o"
+  },
+  {
+   "id": "cactus-leshy",
+   "verdict": "MATCHES",
+   "evidence": "[batch 26 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "ant-kholo",
+   "verdict": "FIXED",
+   "evidence": "[batch 26 read, adversarially confirmed] Ant Kholo does not set Small on our side, so the built character stays Medium off the kholo chassis — a direct contradic; Ant Kholo's Deception training is delivered by neither our record nor any other carrier; only the conditional +1 star is"
+  },
+  {
+   "id": "dragonscaled-kobold",
+   "verdict": "FIXED",
+   "evidence": "[batch 26 read, adversarially confirmed] Dragonscaled Kobold gives our character the kobold chassis 6 ancestry HP instead of the printed 10."
+  },
+  {
+   "id": "tailed-goblin",
+   "verdict": "FIXED",
+   "evidence": "[batch 26 read, adversarially confirmed] The free-hands reduction for Climb and Trip is modelled by neither side, and a player reading our Tailed Goblin would ne"
+  },
+  {
+   "id": "gutsy-halfling",
+   "verdict": "MATCHES",
+   "evidence": "[batch 26 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "witch-kholo",
+   "verdict": "MATCHES",
+   "evidence": "[batch 26 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "charhide-goblin",
+   "verdict": "FIXED",
+   "evidence": "[batch 26 read, adversarially confirmed] Charhide Goblin's persistent-fire flat-check reduction is modelled by neither side, though we already ship the exact sta; Our fallback description for Charhide Goblin drops the \"DC 5\" from the assisted-recovery clause, leaving a dangling \"red"
+  },
+  {
+   "id": "jinxed-halfling",
+   "verdict": "FIXED",
+   "evidence": "[batch 26 read, adversarially confirmed] Nothing on either side stops a Jinxed Halfling from taking Halfling Luck, which print forbids outright."
+  },
+  {
+   "id": "insightful-goloma",
+   "verdict": "MATCHES",
+   "evidence": "[batch 26 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "winter-kholo",
+   "verdict": "MATCHES",
+   "evidence": "[batch 26 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "mightyfall-kobold",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — on the Rulings Desk (batch 26)"
+  },
+  {
+   "id": "frilled-lizardfolk",
+   "verdict": "MATCHES",
+   "evidence": "[batch 26 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "cavernstalker-kobold",
+   "verdict": "MATCHES",
+   "evidence": "[batch 26 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "bakuwa-lizardfolk",
+   "verdict": "FIXED",
+   "evidence": "[batch 26 read, adversarially confirmed] The heritage grants no item, so the bony plates armour — the entire mechanical content of the heritage — never reaches t"
+  },
+  {
+   "id": "sage-jotunborn",
+   "verdict": "FIXED",
+   "evidence": "[batch 26 read, adversarially confirmed] Trained proficiency in Society is delivered by no carrier — the record instead ships a player-facing dataWarning telling"
+  },
+  {
+   "id": "unbreakable-goblin",
+   "verdict": "FIXED",
+   "evidence": "[batch 26 read, adversarially confirmed] The heritage's 10 ancestry Hit Points are modelled by nothing, so an unbreakable goblin ships the goblin chassis' 6 and "
+  },
+  {
+   "id": "observant-halfling",
+   "verdict": "MATCHES",
+   "evidence": "[batch 26 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "xyloshi",
+   "verdict": "MATCHES",
+   "evidence": "[batch 26 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "dog-kholo",
+   "verdict": "FIXED",
+   "evidence": "[batch 26 read, adversarially confirmed] Dog Kholo's conditional Speed 30 reaches no row on our side — no number, no star — while WG puts +5 SPEED on the sheet."
+  },
+  {
+   "id": "frightful-goloma",
+   "verdict": "MATCHES",
+   "evidence": "[batch 26 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "ancient-ash",
+   "verdict": "FIXED",
+   "evidence": "[batch 26 read, adversarially confirmed] Ancient Ash's 5th-level expert upgrade in the chosen skill is delivered by WG and by nothing on our side — our effectCho"
+  },
+  {
+   "id": "warrenbred-hobgoblin",
+   "verdict": "FIXED",
+   "evidence": "[batch 26 read, adversarially confirmed] Warrenbred Hobgoblin's underground flat-check reduction (DC 3 concealed / 9 hidden) reaches no row on either side, thoug"
+  },
+  {
+   "id": "great-kholo",
+   "verdict": "FIXED",
+   "evidence": "[batch 26 read, adversarially confirmed] Great Kholo's printed ancestry-HP replacement (10 instead of 8) is not modeled anywhere on our side, so a Great Kholo bu"
+  },
+  {
+   "id": "woodstalker-lizardfolk",
+   "verdict": "FIXED",
+   "evidence": "[batch 26 read, adversarially confirmed] Woodstalker Lizardfolk's granted Terrain Stalker is not pinned to underbrush on either side, so our builder offers rubbl"
+  },
+  {
+   "id": "kijimuna-gnome",
+   "verdict": "FIXED",
+   "evidence": "[batch 26 read, adversarially confirmed] Kijimuna Gnome prints a two-way choice; ours hard-codes branch one and can never deliver branch two, so the swim Speed 1"
+  },
+  {
+   "id": "runtboss-hobgoblin",
+   "verdict": "MATCHES",
+   "evidence": "[batch 26 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "snow-goblin",
+   "verdict": "FIXED",
+   "evidence": "[batch 26 read, adversarially confirmed] Snow Goblin's environmental-cold clause has no carrier on our side even though the repo already carries that exact sente"
+  },
+  {
+   "id": "seaweed-leshy",
+   "verdict": "FIXED",
+   "evidence": "[batch 26 read, adversarially confirmed] Seaweed Leshy's printed −5 ft land Speed reaches nothing on our side: the record's speeds.land: 0 is explicitly discarde"
+  },
+  {
+   "id": "sandstrider-lizardfolk",
+   "verdict": "FIXED",
+   "evidence": "[batch 26 read, adversarially confirmed] Sandstrider Lizardfolk's three non-resistance clauses (heat one step less extreme, 10× starvation/thirst endurance, cold"
+  },
+  {
+   "id": "wellspring-gnome",
+   "verdict": "FIXED",
+   "evidence": "[batch 26 read, adversarially confirmed] Wellspring Gnome's printed tradition choice is not asked on our side: our single spellFilter merges arcane+divine+occult; The clause that retunes gnome ancestry-feat primal innate spells to the chosen tradition is modeled by neither side, so "
+  },
+  {
+   "id": "makari-lizardfolk",
+   "verdict": "FIXED",
+   "evidence": "[batch 26 read, adversarially confirmed] Makari's blanket tradition swap — every spell from a lizardfolk heritage or ancestry feat becomes divine — is modeled by; The printed loss of the manipulate trait on Makari's granted cantrip is carried by neither side, so a player casting it "
+  },
+  {
+   "id": "trogloshi",
+   "verdict": "MATCHES",
+   "evidence": "[batch 26 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "shapewrought-fleshwarp",
+   "verdict": "MATCHES",
+   "evidence": "[batch 26 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "vicious-goloma",
+   "verdict": "MATCHES",
+   "evidence": "[batch 26 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "pine-leshy",
+   "verdict": "MATCHES",
+   "evidence": "[batch 26 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "heavenscribe-kobold",
+   "verdict": "MATCHES",
+   "evidence": "[batch 26 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "celestial-envoy-kitsune",
+   "verdict": "MATCHES",
+   "evidence": "[batch 26 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "strong-oak",
+   "verdict": "FIXED",
+   "evidence": "[batch 26 read, adversarially confirmed] Our two save stars elide the printed second sentence — that the +2 also applies to saving throws against effects that wo"
+  },
+  {
+   "id": "empty-sky-kitsune",
+   "verdict": "MATCHES",
+   "evidence": "[batch 26 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "razortooth-goblin",
+   "verdict": "MATCHES",
+   "evidence": "[batch 26 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "smokeworker-hobgoblin",
+   "verdict": "FIXED",
+   "evidence": "[batch 26 read, adversarially confirmed] The printed auto-success on the DC 5 flat check to target a creature concealed only by smoke is modelled by neither side"
+  },
+  {
+   "id": "elementheart-kobold",
+   "verdict": "MATCHES",
+   "evidence": "[batch 26 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "warrior-jotunborn",
+   "verdict": "FIXED",
+   "evidence": "[batch 26 read, adversarially confirmed] Our fist rider strips the printed `nonlethal` trait from the fist, but print only waives the penalty for attacking letha"
+  },
+  {
+   "id": "enchanting-lily",
+   "verdict": "MATCHES",
+   "evidence": "[batch 26 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "caveclimber-kobold",
+   "verdict": "FIXED",
+   "evidence": "[batch 26 read, adversarially confirmed] The hands-free clause is delivered twice on the same Climb action row — once by the record's degreeShifts `when` parenth"
+  },
+  {
+   "id": "venomtail-kobold",
+   "verdict": "FIXED",
+   "evidence": "[batch 26 read, adversarially confirmed] Our tail-toxin action record is the legacy Advanced Player's Guide printing and lacks the manipulate trait the Player Co"
+  },
+  {
+   "id": "wetlander-lizardfolk",
+   "verdict": "MATCHES",
+   "evidence": "[batch 26 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "umbral-gnome",
+   "verdict": "MATCHES",
+   "evidence": "[batch 26 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "cave-kholo",
+   "verdict": "MATCHES",
+   "evidence": "[batch 26 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "vivacious-gnome",
+   "verdict": "FIXED",
+   "evidence": "[batch 26 read, adversarially confirmed] The doomed-value reduction — the entire second half of the heritage — reaches the player from neither side; only the voi"
+  },
+  {
+   "id": "dokkaebi-goblin",
+   "verdict": "MATCHES",
+   "evidence": "[batch 26 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "nascent",
+   "verdict": "MATCHES",
+   "evidence": "[batch 26 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "wintertouched-human",
+   "verdict": "FIXED",
+   "evidence": "[batch 26 read, adversarially confirmed] The environmental-cold step-down clause is unmodelled on our side even though the identically-worded sibling heritage wi"
+  },
+  {
+   "id": "chameleon-gnome",
+   "verdict": "MATCHES",
+   "evidence": "[batch 26 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "shortshanks-hobgoblin",
+   "verdict": "FIXED",
+   "evidence": "[batch 26 read, adversarially confirmed] The heritage's second printed clause — you are not off-guard while you Climb — reaches no carrier of ours, while Wandere"
+  },
+  {
+   "id": "strongjaw-kobold",
+   "verdict": "MATCHES",
+   "evidence": "[batch 26 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "dark-fields-kitsune",
+   "verdict": "MATCHES",
+   "evidence": "[batch 26 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "irongut-goblin",
+   "verdict": "MATCHES",
+   "evidence": "[batch 26 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "spellhorn-kobold",
+   "verdict": "MATCHES",
+   "evidence": "[batch 26 read] comparer misread settled/taught: The instrument flag is wrong: both halves of the heritage are already delivered — the cantrip is granted through the heritage's own effectCh"
+  },
+  {
+   "id": "technological-fleshwarp",
+   "verdict": "MATCHES",
+   "evidence": "[batch 26 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "surgewise-fleshwarp",
+   "verdict": "MATCHES",
+   "evidence": "[batch 26 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "sweetbreath-kholo",
+   "verdict": "MATCHES",
+   "evidence": "[batch 26 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "versatile-human",
+   "verdict": "MATCHES",
+   "evidence": "[batch 26 read] comparer misread settled/taught: The comparer flag \"KINDS missing [choice]\" on Versatile Human is a misread — their general-feat select has a full counterpart on our side, i"
+  },
+  {
+   "id": "cliffscale-lizardfolk",
+   "verdict": "MATCHES",
+   "evidence": "[batch 26 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "lethoci",
+   "verdict": "FIXED",
+   "evidence": "[batch 26 read, adversarially confirmed] Lethoci states its critical-failure shift twice — the structured degreeShifts field and the hand-authored star's when-st"
+  },
+  {
+   "id": "earthly-wilds-kitsune",
+   "verdict": "MATCHES",
+   "evidence": "[batch 26 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "frozen-wind-kitsune",
+   "verdict": "FIXED",
+   "evidence": "[batch 26 read, adversarially confirmed] Foxfire's cold damage type is offered to every kitsune and forced on none — our feat record bakes 'cold' into the uncond; The environmental-cold step reduction is printed on the heritage and modelled by neither side, while the three sibling h"
+  },
+  {
+   "id": "thorned-rose",
+   "verdict": "FIXED",
+   "evidence": "[batch 26 read, adversarially confirmed] The Wicked Thorns action that is Thorned Rose's entire mechanical content ships a description with the damage die delete"
+  },
+  {
+   "id": "vine-leshy",
+   "verdict": "MATCHES",
+   "evidence": "[batch 26 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "weaver-jotunborn",
+   "verdict": "FIXED",
+   "evidence": "[batch 26 read, adversarially confirmed] Weaver Jotunborn's printed skill training (trained in Crafting) reaches no carrier on our side — the record has no skill"
+  },
+  {
+   "id": "keeper-jotunborn",
+   "verdict": "FIXED",
+   "evidence": "[batch 26 read, adversarially confirmed] Keeper Jotunborn's printed Survival training reaches no carrier — and without it the Survey Wildlife feat we do grant si"
+  },
+  {
+   "id": "fungus-leshy",
+   "verdict": "FIXED",
+   "evidence": "[batch 26 read, adversarially confirmed] Fungus Leshy does not confer the fungus creature trait — the heritage carries only `senses` and no `grantsCreatureTraits; Neither side models losing the plant trait, so a fungus leshy's Details tab will still show \"plant\" inherited from the l"
+  },
+  {
+   "id": "plane-hopper-jotunborn",
+   "verdict": "MATCHES",
+   "evidence": "[batch 26 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "sensate-gnome",
+   "verdict": "MATCHES",
+   "evidence": "[batch 26 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "vigilant-goloma",
+   "verdict": "MATCHES",
+   "evidence": "[batch 26 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "treedweller-goblin",
+   "verdict": "MATCHES",
+   "evidence": "[batch 26 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "root-leshy",
+   "verdict": "FIXED",
+   "evidence": "[batch 26 read, adversarially confirmed] Root Leshy does not raise ancestry HP to 10 — the heritage record carries no `ancestryHp`, so a root leshy is built on t"
+  },
+  {
+   "id": "fey-touched-gnome",
+   "verdict": "MATCHES",
+   "evidence": "[batch 26 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "palace-echoes-kitsune",
+   "verdict": "FIXED",
+   "evidence": "[batch 26 read, adversarially confirmed] Palace Echoes Kitsune never hands the character the Nudging Whisper action — the heritage record carries no `grantsActio; Our Nudging Whisper record is typed `actionCost: {\"type\":\"passive\"}` when print gives it a single action — and MainTab's; A second, dead Nudging Whisper carrier ships as classFeatures['nudging-whisper'], duplicating actions['nudging-whisper']"
+  },
+  {
+   "id": "twilight-halfling",
+   "verdict": "MATCHES",
+   "evidence": "[batch 26 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  }
+ ]
+}

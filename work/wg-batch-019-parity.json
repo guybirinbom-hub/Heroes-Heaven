@@ -1,0 +1,505 @@
+{
+ "batch": 19,
+ "records": [
+  {
+   "id": "trade-representative",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 19; no finding survived adversarial verification (refuted claims were carrier-blindness — the AST render carrier or a registry already delivers). Ledger: work/.b019-findings.json."
+  },
+  {
+   "id": "green-faith-pilgrim",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 19; no finding survived adversarial verification (refuted claims were carrier-blindness — the AST render carrier or a registry already delivers). Ledger: work/.b019-findings.json."
+  },
+  {
+   "id": "prisoner",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 19; no finding survived adversarial verification (refuted claims were carrier-blindness — the AST render carrier or a registry already delivers). Ledger: work/.b019-findings.json."
+  },
+  {
+   "id": "press-ganged-g-g",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 19; no finding survived adversarial verification (refuted claims were carrier-blindness — the AST render carrier or a registry already delivers). Ledger: work/.b019-findings.json."
+  },
+  {
+   "id": "keys-to-destiny",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "A WG-contradicts-print question for this record sits in work/owner-questions.json open (batch-19 read); every other finding on it was applied — see work/.b019-findings.json."
+  },
+  {
+   "id": "undercover-contender",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 19; no finding survived adversarial verification (refuted claims were carrier-blindness — the AST render carrier or a registry already delivers). Ledger: work/.b019-findings.json."
+  },
+  {
+   "id": "strix",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: printed choosable-language list shipped as languages.options (mechanical sweep, all names mapped)"
+  },
+  {
+   "id": "battlefield-scrounger",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 19; no finding survived adversarial verification (refuted claims were carrier-blindness — the AST render carrier or a registry already delivers). Ledger: work/.b019-findings.json."
+  },
+  {
+   "id": "harbor-guard-moonlighter",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: Harbor Guard Moonlighter delivers its Sailing-or-Hunting Lore twice — through `choice` (flag bgLore) and through `trainedLoreOptions` — two "
+  },
+  {
+   "id": "banished-celestial",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: Banished Celestial does not grant Enlightenment in Adversity: the action record ships in core.json but the background carries no grantsActio | Banished Celestial trains no non-Lore skill at all in ours — the record has neither trainedSkill, trainedSkillChoice nor a `choice` of kind "
+  },
+  {
+   "id": "political-scion",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 19; no finding survived adversarial verification (refuted claims were carrier-blindness — the AST render carrier or a registry already delivers). Ledger: work/.b019-findings.json."
+  },
+  {
+   "id": "root-worker",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 19; no finding survived adversarial verification (refuted claims were carrier-blindness — the AST render carrier or a registry already delivers). Ledger: work/.b019-findings.json."
+  },
+  {
+   "id": "quartermaster",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 19; no finding survived adversarial verification (refuted claims were carrier-blindness — the AST render carrier or a registry already delivers). Ledger: work/.b019-findings.json."
+  },
+  {
+   "id": "once-bitten",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 19; no finding survived adversarial verification (refuted claims were carrier-blindness — the AST render carrier or a registry already delivers). Ledger: work/.b019-findings.json."
+  },
+  {
+   "id": "reclaimed",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 19; no finding survived adversarial verification (refuted claims were carrier-blindness — the AST render carrier or a registry already delivers). Ledger: work/.b019-findings.json."
+  },
+  {
+   "id": "student-of-magic",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: Student of Magic carries its ONE printed skill choice twice — `trainedSkillChoice` and a second `choice` block with the same four options — "
+  },
+  {
+   "id": "money-counter",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: Money Counter carries the same printed Society-or-Thievery choice twice, and the duplicate `choice` block is `kind: \"skills\"`, so its picker"
+  },
+  {
+   "id": "genie-blessed",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: Our Wish for Luck action omits the printed `divination` trait."
+  },
+  {
+   "id": "tengu",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: printed choosable-language list shipped as languages.options (mechanical sweep, all names mapped)"
+  },
+  {
+   "id": "pilgrim",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 19; no finding survived adversarial verification (refuted claims were carrier-blindness — the AST render carrier or a registry already delivers). Ledger: work/.b019-findings.json."
+  },
+  {
+   "id": "food-trader",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: Food Trader asks the background's trained-skill question twice: `trainedSkillChoice` renders the correct Crafting/Society picker, and a seco"
+  },
+  {
+   "id": "wonder-taster",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 19; no finding survived adversarial verification (refuted claims were carrier-blindness — the AST render carrier or a registry already delivers). Ledger: work/.b019-findings.json."
+  },
+  {
+   "id": "awful-scab",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: Awful Scab's sealed-outfit daily preparation — a once-per-day automatic counteract of poison or disease using the Medicine modifier — is mod"
+  },
+  {
+   "id": "town-troublemaker",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 19; no finding survived adversarial verification (refuted claims were carrier-blindness — the AST render carrier or a registry already delivers). Ledger: work/.b019-findings.json."
+  },
+  {
+   "id": "shadow-haunted",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 19; no finding survived adversarial verification (refuted claims were carrier-blindness — the AST render carrier or a registry already delivers). Ledger: work/.b019-findings.json."
+  },
+  {
+   "id": "verduran-city-folk",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: Verduran City Folk grants Streetwise unconditionally via `grantedFeatId` AND grants the player's pick via the `verduranFeat` choice, so pick"
+  },
+  {
+   "id": "borderlands-pioneer",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: Borderlands Pioneer trains TWO Lore skills — the `wildernessLore` choice trains the picked terrain Lore and `trainedLoreChoice: true` additi"
+  },
+  {
+   "id": "cursed-family",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 19; no finding survived adversarial verification (refuted claims were carrier-blindness — the AST render carrier or a registry already delivers). Ledger: work/.b019-findings.json."
+  },
+  {
+   "id": "winters-child",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 19; no finding survived adversarial verification (refuted claims were carrier-blindness — the AST render carrier or a registry already delivers). Ledger: work/.b019-findings.json."
+  },
+  {
+   "id": "rigger",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 19; no finding survived adversarial verification (refuted claims were carrier-blindness — the AST render carrier or a registry already delivers). Ledger: work/.b019-findings.json."
+  },
+  {
+   "id": "yaksha",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: printed choosable-language list shipped as languages.options (mechanical sweep, all names mapped)"
+  },
+  {
+   "id": "academic-scion",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: Academic Scion's Lore is a choice in print and a free Lore select in WG, but ours hard-codes `trainedLore: \"academia\"`, so a player from one"
+  },
+  {
+   "id": "bounty-hunter",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 19; no finding survived adversarial verification (refuted claims were carrier-blindness — the AST render carrier or a registry already delivers). Ledger: work/.b019-findings.json."
+  },
+  {
+   "id": "haunted-citizen",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 19; no finding survived adversarial verification (refuted claims were carrier-blindness — the AST render carrier or a registry already delivers). Ledger: work/.b019-findings.json."
+  },
+  {
+   "id": "dreamer-of-the-verdant-moon",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 19; no finding survived adversarial verification (refuted claims were carrier-blindness — the AST render carrier or a registry already delivers). Ledger: work/.b019-findings.json."
+  },
+  {
+   "id": "thrill-seeker",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 19; no finding survived adversarial verification (refuted claims were carrier-blindness — the AST render carrier or a registry already delivers). Ledger: work/.b019-findings.json."
+  },
+  {
+   "id": "witchlight-follower",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: Witchlight Follower prints Terrain Expertise with TWO named terrains and neither side delivers the second one, so the +1 circumstance bonus "
+  },
+  {
+   "id": "human",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 19; no finding survived adversarial verification (refuted claims were carrier-blindness — the AST render carrier or a registry already delivers). Ledger: work/.b019-findings.json."
+  },
+  {
+   "id": "merfolk",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: Our merfolk ancestry record carries `speeds: { land: 5 }` and no swim speed at all, so a merfolk with any heritage other than sailfish is a  | Merfolk's printed Hydration drawback — a -1 status penalty to Fortitude saves after 24 hours out of water, and suffocation after 48 — is car | printed choosable-language list shipped as languages.options (mechanical sweep, all names mapped)"
+  },
+  {
+   "id": "pathfinder-hopeful",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 19; no finding survived adversarial verification (refuted claims were carrier-blindness — the AST render carrier or a registry already delivers). Ledger: work/.b019-findings.json."
+  },
+  {
+   "id": "ratted-out-gun-runner",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 19; no finding survived adversarial verification (refuted claims were carrier-blindness — the AST render carrier or a registry already delivers). Ledger: work/.b019-findings.json."
+  },
+  {
+   "id": "rostlander",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 19; no finding survived adversarial verification (refuted claims were carrier-blindness — the AST render carrier or a registry already delivers). Ledger: work/.b019-findings.json."
+  },
+  {
+   "id": "wished-alive",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: Our situational-bonus note for Wished Alive is truncated mid-sentence with an ellipsis, dropping the printed limit that the +2 applies to th"
+  },
+  {
+   "id": "hellknight-historian",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 19; no finding survived adversarial verification (refuted claims were carrier-blindness — the AST render carrier or a registry already delivers). Ledger: work/.b019-findings.json."
+  },
+  {
+   "id": "concordance-scout",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "A WG-contradicts-print question for this record sits in work/owner-questions.json open (batch-19 read); every other finding on it was applied — see work/.b019-findings.json."
+  },
+  {
+   "id": "osprey-scion",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 19; no finding survived adversarial verification (refuted claims were carrier-blindness — the AST render carrier or a registry already delivers). Ledger: work/.b019-findings.json."
+  },
+  {
+   "id": "planar-migrant",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: Planar Migrant grants TWO skill feats in print and in WG, but our record's `grantedFeatId` carries only `hefty-hauler` — Prescient Planner i | Planar Migrant trains TWO Lore skills on our side — a hard-coded `trainedLore: \"Plane of Air\"` AND the `planarLore` choice — where print gra"
+  },
+  {
+   "id": "osprey-barnraiser",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 19; no finding survived adversarial verification (refuted claims were carrier-blindness — the AST render carrier or a registry already delivers). Ledger: work/.b019-findings.json."
+  },
+  {
+   "id": "teacher",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 19; no finding survived adversarial verification (refuted claims were carrier-blindness — the AST render carrier or a registry already delivers). Ledger: work/.b019-findings.json."
+  },
+  {
+   "id": "legendary-parents",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 19; no finding survived adversarial verification (refuted claims were carrier-blindness — the AST render carrier or a registry already delivers). Ledger: work/.b019-findings.json."
+  },
+  {
+   "id": "dauntless",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: Our `indomitable-act` action ships with an empty traits array, dropping the fortune trait the printed reaction states outright."
+  },
+  {
+   "id": "runelord-scholar",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: The background forces one of Multilingual's two language picks to be Thassilonian; neither side constrains or pre-fills that pick."
+  },
+  {
+   "id": "disciple-of-the-gear",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 19; no finding survived adversarial verification (refuted claims were carrier-blindness — the AST render carrier or a registry already delivers). Ledger: work/.b019-findings.json."
+  },
+  {
+   "id": "astrologer",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 19; no finding survived adversarial verification (refuted claims were carrier-blindness — the AST render carrier or a registry already delivers). Ledger: work/.b019-findings.json."
+  },
+  {
+   "id": "bekyar-restorer",
+   "verdict": "MATCHES",
+   "evidence": "Read against the printed page (mirror), WG raw ops and all four comparers in batch 19; no finding survived adversarial verification (refuted claims were carrier-blindness — the AST render carrier or a registry already delivers). Ledger: work/.b019-findings.json."
+  },
+  {
+   "id": "sarangay",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: WG rewrites the Sarangay attribute array when the Full Moon Sarangay heritage is taken (Wis boost instead of Str, Con flaw instead of Wis);  | printed choosable-language list shipped as languages.options (mechanical sweep, all names mapped)"
+  },
+  {
+   "id": "automaton",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: Our Automaton hard-codes size medium; print offers Medium or Small and WG ships that as a player-facing size select. | printed choosable-language list shipped as languages.options (mechanical sweep, all names mapped)"
+  },
+  {
+   "id": "kholo",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: printed choosable-language list shipped as languages.options (mechanical sweep, all names mapped)"
+  },
+  {
+   "id": "goblin",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: Goblin's `senses: [{name:\"darkvision\",acuity:\"precise\"}]` duplicates its own `vision: \"darkvision\"` — both fields have live readers that pus | printed choosable-language list shipped as languages.options (mechanical sweep, all names mapped)"
+  },
+  {
+   "id": "kashrishi",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: Our Kashrishi ancestry grants only Common; print and WG both grant Common AND Kashrishi. | Empathic Sense's +2 circumstance bonus to Sense Motive is encoded by WG and carried by nothing on our side — situationalBonuses.ts has no `k | Empathic Sense is also an imprecise 15-foot sense that detects non-mindless creatures; neither side models it as a sense, so a kashrishi's s | printed choosable-language list shipped as languages.options (mechanical sweep, all names mapped)"
+  },
+  {
+   "id": "shisk",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: Four of this batch's records (dwarf, shisk, hobgoblin, poppet) deliver darkvision twice — once through the `vision` chassis field and again "
+  },
+  {
+   "id": "dwarf",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: The dwarf's free clan dagger is delivered by WG as an item grant and by us not at all — and `grantsItems` has no ancestry reader, so the anc | Four of this batch's records (dwarf, shisk, hobgoblin, poppet) deliver darkvision twice — once through the `vision` chassis field and again  | printed choosable-language list shipped as languages.options (mechanical sweep, all names mapped)"
+  },
+  {
+   "id": "azarketi",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: Our azarketi has no swim Speed at all; WG grants SPEED_SWIM 30, and our own Mistbreath Azarketi heritage already reduces a baseline swim Spe | printed choosable-language list shipped as languages.options (mechanical sweep, all names mapped)"
+  },
+  {
+   "id": "fleshwarp",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: Our fleshwarp record hardcodes size \"medium\"; the printed ancestry is \"Medium or Small\" and WG ships a player-facing size select, so a Small | Fleshwarp's Unusual Anatomy (+1 circumstance to saves vs diseases and poisons) is encoded by WG on all three saves and has no carrier of our | printed choosable-language list shipped as languages.options (mechanical sweep, all names mapped)"
+  },
+  {
+   "id": "shoony",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: Shoony's Blunt Snout is a one-degree-better shift on saves against inhaled and olfactory effects that neither side models, and our shoony re | printed choosable-language list shipped as languages.options (mechanical sweep, all names mapped)"
+  },
+  {
+   "id": "vishkanya",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: Vishkanyas never receive the Envenom action in our app — the action record exists but nothing grants it, and the grantsActions walk skips th | The printed rule fixing the vishkanyan venom's save DC (higher of class DC or spell DC) is modelled by neither side, and our Envenom action  | printed choosable-language list shipped as languages.options (mechanical sweep, all names mapped)"
+  },
+  {
+   "id": "leshy",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: printed choosable-language list shipped as languages.options (mechanical sweep, all names mapped)"
+  },
+  {
+   "id": "hobgoblin",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: Four of this batch's records (dwarf, shisk, hobgoblin, poppet) deliver darkvision twice — once through the `vision` chassis field and again  | printed choosable-language list shipped as languages.options (mechanical sweep, all names mapped)"
+  },
+  {
+   "id": "ratfolk",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: printed choosable-language list shipped as languages.options (mechanical sweep, all names mapped)"
+  },
+  {
+   "id": "poppet",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "A WG-contradicts-print question for this record sits in work/owner-questions.json open (batch-19 read); every other finding on it was applied — see work/.b019-findings.json."
+  },
+  {
+   "id": "elf",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: printed choosable-language list shipped as languages.options (mechanical sweep, all names mapped)"
+  },
+  {
+   "id": "fetchling",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: ancestries.fetchling carries `senses: [{name:'darkvision', acuity:'precise'}]` alongside `vision: 'darkvision'` — two of our carriers delive | printed choosable-language list shipped as languages.options (mechanical sweep, all names mapped)"
+  },
+  {
+   "id": "vanara",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: printed choosable-language list shipped as languages.options (mechanical sweep, all names mapped)"
+  },
+  {
+   "id": "conrasu",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: ancestries.conrasu.grantedStrikes hands EVERY conrasu both a Claw and a Branch unarmed Strike at level 1, unconditionally — the ancestry gra | printed choosable-language list shipped as languages.options (mechanical sweep, all names mapped)"
+  },
+  {
+   "id": "goloma",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "A WG-contradicts-print question for this record sits in work/owner-questions.json open (batch-19 read); every other finding on it was applied — see work/.b019-findings.json."
+  },
+  {
+   "id": "samsaran",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: Samsaran's Cryptomnesia (+1 circumstance bonus to untrained skill checks) has no carrier in ours — no situational star, no bonus, no text —  | printed choosable-language list shipped as languages.options (mechanical sweep, all names mapped)"
+  },
+  {
+   "id": "surki",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: printed choosable-language list shipped as languages.options (mechanical sweep, all names mapped)"
+  },
+  {
+   "id": "centaur",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: Centaur's Robust (+2 to maximum and encumbered Bulk limits) moves no number in ours — deriveBulk never reads an ancestry, so there is no car | printed choosable-language list shipped as languages.options (mechanical sweep, all names mapped)"
+  },
+  {
+   "id": "kitsune",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: Kitsune's Change Shape action is absent from ours entirely — no action record with aonId action-701, and no ancestry lane that could grant o | printed choosable-language list shipped as languages.options (mechanical sweep, all names mapped)"
+  },
+  {
+   "id": "yaoguai",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: Yaoguai's Change Shape single action is absent from ours entirely, even though our situationalBonuses entry for unleash-yaoguai-might alread | printed choosable-language list shipped as languages.options (mechanical sweep, all names mapped)"
+  },
+  {
+   "id": "nagaji",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: ancestries.nagaji carries no grantedStrikes, so the printed Fangs unarmed attack is delivered by no carrier at all. | printed choosable-language list shipped as languages.options (mechanical sweep, all names mapped)"
+  },
+  {
+   "id": "dragonet",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: ancestries.dragonet carries no grantedStrikes, so the printed Big Sharp Teeth jaws attack is delivered by no carrier at all. | Dragonet's Wings grants total immunity to falling damage and neither side models it, though our data already has the exact field shape for i | Four records in this slice carry a `senses` array that repeats exactly what their `vision` field already delivers, and the duplicate is disc"
+  },
+  {
+   "id": "anadi",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: ancestries.anadi carries no grantedStrikes, so the printed Fangs unarmed attack is delivered by no carrier at all. | Anadi's printed Change Shape action is not attached to the ancestry by any carrier — the action record exists in core.json but nothing owns  | printed choosable-language list shipped as languages.options (mechanical sweep, all names mapped)"
+  },
+  {
+   "id": "minotaur",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: Four records in this slice carry a `senses` array that repeats exactly what their `vision` field already delivers, and the duplicate is disc | printed choosable-language list shipped as languages.options (mechanical sweep, all names mapped)"
+  },
+  {
+   "id": "wayang",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: Four records in this slice carry a `senses` array that repeats exactly what their `vision` field already delivers, and the duplicate is disc | printed choosable-language list shipped as languages.options (mechanical sweep, all names mapped)"
+  },
+  {
+   "id": "jotunborn",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: Jotunborn's Iivlar Weaving makes the character shed dim light in a 10-foot emanation with a Sustain to toggle it, and neither side models an | printed choosable-language list shipped as languages.options (mechanical sweep, all names mapped)"
+  },
+  {
+   "id": "awakened-animal",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: ancestries.awakened-animal pins size to \"medium\" and hp to 6, but the printed Size line is a four-way choice and WG ties Hit Points to that "
+  },
+  {
+   "id": "orc",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: Four records in this slice carry a `senses` array that repeats exactly what their `vision` field already delivers, and the duplicate is disc | printed choosable-language list shipped as languages.options (mechanical sweep, all names mapped)"
+  },
+  {
+   "id": "lizardfolk",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: Lizardfolk's Aquatic Adaptation grants the Breath Control general feat, and nothing on our side grants it — an ancestry `grantsFeats` field  | printed choosable-language list shipped as languages.options (mechanical sweep, all names mapped)"
+  },
+  {
+   "id": "tripkee",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: Tripkee's printed +2 circumstance bonus to Athletics to Climb is carried nowhere on our side. | printed choosable-language list shipped as languages.options (mechanical sweep, all names mapped)"
+  },
+  {
+   "id": "catfolk",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: printed choosable-language list shipped as languages.options (mechanical sweep, all names mapped)"
+  },
+  {
+   "id": "athamaru",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: Athamaru is missing a swim Speed that Wanderer's Guide sets: our speeds object carries land only, so an amphibious ancestry swims at half it | printed choosable-language list shipped as languages.options (mechanical sweep, all names mapped)"
+  },
+  {
+   "id": "tanuki",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: printed choosable-language list shipped as languages.options (mechanical sweep, all names mapped)"
+  },
+  {
+   "id": "ghoran",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: printed choosable-language list shipped as languages.options (mechanical sweep, all names mapped)"
+  },
+  {
+   "id": "skeleton",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: Skeleton's `vision` is set to \"normal\", contradicting print: Undeath grants basic undead benefits, which include Undead Vision — a skeleton  | Skeleton has no immunity to death effects; Wanderer's Guide encodes it and print requires it. | Skeleton is missing the +1 circumstance bonus against disease and poison that basic undead benefits grant; WG encodes it and we carry nothin | Neither side models a skeleton's void/negative healing — the single most consequential thing about playing one, since every healing spell th | printed choosable-language list shipped as languages.options (mechanical sweep, all names mapped)"
+  },
+  {
+   "id": "kobold",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: Kobold carries darkvision twice — once as the chassis `vision` field and once as a `senses` entry — and both are read by deriveDefenses, so  | printed choosable-language list shipped as languages.options (mechanical sweep, all names mapped)"
+  },
+  {
+   "id": "sprite",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: printed choosable-language list shipped as languages.options (mechanical sweep, all names mapped)"
+  },
+  {
+   "id": "halfling",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: Halfling's Keen Eyes Seek bonus is missing from our side entirely; Wanderer's Guide encodes it as a Perception circumstance bonus, and the s | printed choosable-language list shipped as languages.options (mechanical sweep, all names mapped)"
+  },
+  {
+   "id": "gnome",
+   "verdict": "FIXED",
+   "evidence": "Adversarially confirmed batch-19 findings applied: printed choosable-language list shipped as languages.options (mechanical sweep, all names mapped)"
+  },
+  {
+   "id": "android",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "A WG-contradicts-print question for this record sits in work/owner-questions.json open (batch-19 read); every other finding on it was applied — see work/.b019-findings.json."
+  }
+ ]
+}

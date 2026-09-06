@@ -1,0 +1,505 @@
+{
+ "batch": 5,
+ "records": [
+  {
+   "id": "flexible-form",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/featGrantsAuto.ts:304 `'flexible-form': { skills: { acrobatics: 'trained' }, redundantFallback: true }`. `redundantFallback` is exactly their branch (already-trained → pick a different skill): triggered at src/rules/build.ts:4339, picker rendered at src/builder/Builder.tsx:1978-1998, answer read from `featSkillChoices['flexible-form:fallback:acrobatics']`. The Squeeze success→critical-success upgrade they do not encode at all lives on the record as `degreeShifts` (public/core.json feats/flexible-form; authored scripts/data/effect-backfill.json; reader src/rules/explain.ts:309-3"
+  },
+  {
+   "id": "awakened-magic",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/featCantripGrants.ts:55 — prompt 'Choose a primal cantrip', tradition 'primal', 38 options. I checked every option against public/core.json: all 38 exist, all rank 0, all carry the primal tradition, none is edition 'superseded', and the list is exactly the full set of 38 common non-superseded primal cantrips — so the menu is not narrower than their open spell pick. Applied at src/rules/build.ts:6181-6197 as an innate grant carrying the feat's tradition. Their rows setting the innate spell-attack/DC proficiency to trained and then expert are the generic Innate Spells rule, which"
+  },
+  {
+   "id": "centaur-weapon-familiarity",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/featGrantsLane.ts:171 lists the same five weapons (lance, longbow, longspear, shortbow, spear) with `treatAsLowerCategory: true`, which is their familiarity semantics — resolved per-weapon at src/rules/build.ts:5380 and 5421 (martial→simple, advanced→martial). The 5th-level critical-specialization clause they do not encode is on the record itself (public/core.json: critSpec true / critSpecLevel 5 / critSpecWeapons). `critSpecWeapons.traits: ['centaur']` matches zero weapons in core.json today (I enumerated items with the centaur trait — none), so it grants nothing beyond the pr"
+  },
+  {
+   "id": "leshy-lore",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/featGrantsAuto.ts:437 trains Nature, Stealth and Leshy Lore with `redundantFallback: true` (their pair of trainings plus the printed already-trained clause they omit); src/rules/featFeatGrants.ts:564 grants Additional Lore, bound to the Leshy subject by src/rules/featFeatGrants.ts:258 (`kind: 'fixedLore'`), which is their granted ability block. The fixedLore binding also makes it a distinct taking at src/rules/build.ts:4209-4212, so a character who already has Additional Lore from elsewhere still gets this one."
+  },
+  {
+   "id": "nosois-mask",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/featGrantsAuto.ts:511 trains Intimidation with `redundantFallback: true` (their training plus the printed already-trained clause they omit); src/rules/featFeatGrants.ts:417 grants Intimidating Glare, which is their granted ability block. The splendid-mask +1 item bonus to Intimidation — which they do not encode — is at src/rules/situationalBonuses.ts:2453."
+  },
+  {
+   "id": "travelers-counsel",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/featGrantsAuto.ts:646 trains Diplomacy with `redundantFallback: true` (their training plus the printed already-trained clause). Their two injected reminder texts correspond to our `degreeShifts` entry on the record (public/core.json feats/travelers-counsel, `shift: 'critFailToFail'`, actions gather-information and make-an-impression) — read by src/rules/explain.ts:309-320, which stars both the skill and the two action rows. Neither side computes a number for the once-per-day downgrade; both surface it where the player uses it."
+  },
+  {
+   "id": "goloma-lore",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/featGrantsAuto.ts:360 `{ skills: { survival: 'trained', stealth: 'trained', 'lore:goloma': 'trained' }, redundantFallback: true }` — the same two skills plus the new Goloma Lore they create, with the printed already-trained fallback they omit. Lore keys are excluded from the fallback conversion at src/rules/build.ts:4339, so the Lore is granted outright rather than turning into a replacement pick."
+  },
+  {
+   "id": "read-psychometric-resonance",
+   "verdict": "MATCHES",
+   "evidence": "The packet's `ourFields` is stale here. Live public/core.json feats/read-psychometric-resonance carries `grantsActions: ['psychometric-assessment']` (authored in scripts/data/effect-backfill.json), and actions/psychometric-assessment exists with the exploration/emotion/mental/occult traits. That is their granted ability block: the player gets the activity on their actions list."
+  },
+  {
+   "id": "hellspawn",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/featGrantsAuto.ts:407 `{ skills: { deception: 'trained', 'lore:legal': 'trained' }, redundantFallback: true }` — their Deception training and their newly created Legal Lore, plus the printed already-trained fallback they omit. src/rules/featFeatGrants.ts:390 grants Lie to Me, which is their granted ability block."
+  },
+  {
+   "id": "twilight-dweller",
+   "verdict": "MATCHES",
+   "evidence": "Ours: public/core.json feats/twilight-dweller `conditionalSenses: [{ ifPresent: 'low-light-vision', base: low-light-vision (precise), upgraded: darkvision }]`, authored at scripts/data/effect-backfill.json:9548 and read at src/rules/derive.ts:2559. That is their branch on whether the character already has the precise sense: darkvision if so, low-light vision otherwise. `maxTakable: 2` on the record matches their twice-selectable Special clause."
+  },
+  {
+   "id": "seven-changes-performance",
+   "verdict": "MATCHES",
+   "evidence": "Their single granted ability block is the Quick Disguise feat, which we grant at src/rules/featFeatGrants.ts:468. The Performance-for-Deception-when-Impersonating substitution, which they do not encode, is on the record as `skillSubstitutions` (public/core.json feats/seven-changes-performance)."
+  },
+  {
+   "id": "hunt-prey",
+   "verdict": "MATCHES",
+   "evidence": "Ours: public/core.json classFeatures/hunt-prey carries `grantsActions: ['hunt-prey']` and actions/hunt-prey exists (1 action, concentrate/ranger) — their granted ability block. Beyond the grant we also model the state: src/rules/classResources.ts:151 makes it an encounter-refresh toggle, src/rules/actionGates.ts:38 gates prey-dependent actions on it, and src/rules/situationalBonuses.ts:2340-2342 carries the narrow +2 circumstance to Seek/Track the designated prey."
+  },
+  {
+   "id": "charming-liar",
+   "verdict": "THEY-ENCODE-NOTHING-USEFUL",
+   "evidence": "Their sole operation injects a block of text that restates the feat's own printed sentence onto the Lie action; no statistic, proficiency, DC or grant moves on their side. Our app already renders that same sentence as the feat's description on the Feats tab. The only hits for this id in src/ are other feats that GRANT Charming Liar (src/rules/featFeatGrants.ts:49 and :348), which is a different record's business. Nothing mechanical to compare."
+  },
+  {
+   "id": "coral-symbiotes",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/situationalBonuses.ts:243-245 — `{ targets: [{ kind: 'save', detail: 'all' }], when: 'against poisons, while hydrated…', bonus: '+1 status' }`. `detail: 'all'` fans out to all three saves (src/rules/explain.ts targetMatches), which is their three separate save rows, and we carry the bonus TYPE (status) that their rows do not state. We additionally carry the persistent-poison flat-check change (DC 10, DC 5 if helped) as a second entry, which they do not encode."
+  },
+  {
+   "id": "vicious-vengeance",
+   "verdict": "MATCHES",
+   "evidence": "Their injected text is a reminder on the reaction; ours is src/rules/situationalBonuses.ts:3658, an `on: 'action'` row filed against destructive-vengeance saying the enemy's damage gains a circumstance bonus equal to the reaction's number of damage dice, and that it applies only to the enemy's damage. Neither side computes the number (it depends on the reaction's dice at the moment of use); both put the same rule on the same action row."
+  },
+  {
+   "id": "automaton-lore",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/featGrantsAuto.ts:82 trains Arcana and Crafting with `redundantFallback: true` (their two trainings plus the printed already-trained clause), and src/rules/featFeatGrants.ts:338 grants Additional Lore, bound to the Automaton subject at src/rules/featFeatGrants.ts:210 — their granted ability block. The Enhancement clause (Arcana-or-Crafting to expert) they do not encode is on the record as `effectChoices['enhancement-rank']` plus `enhancement.choiceIds`, gated so it only resolves once an augmentation names this feat (src/rules/build.ts:4745-4751; builder gate at src/builder/Buil"
+  },
+  {
+   "id": "wayang-lore",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/featGrantsAuto.ts:675 trains Performance, Stealth and Wayang Lore with `redundantFallback: true`; src/rules/featFeatGrants.ts:512 grants Additional Lore, bound to the Wayang subject at src/rules/featFeatGrants.ts:296. Same two trainings and same granted feat as their rows, plus the printed already-trained fallback they omit."
+  },
+  {
+   "id": "hobgoblin-weapon-familiarity",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/featGrantsLane.ts:137 — the same six named weapons (composite longbow, longbow, composite shortbow, shortbow, glaive, longsword) plus `traits: ['hobgoblin']`, which covers the two uncommon trait-weapons their rows name by numeric id, with `treatAsLowerCategory: true` for the martial→simple / advanced→martial demotion (applied per weapon at src/rules/build.ts:5421-5430). The 5th-level critical-specialization clause they omit is on the record (critSpec / critSpecLevel 5 / critSpecWeapons with the same traits and bases)."
+  },
+  {
+   "id": "fey-fellowship",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/situationalBonuses.ts:313 — `targets: [{ kind: 'perception' }, { kind: 'save', detail: 'all' }], when: 'against fey creatures', bonus: '+2 circumstance'`. `detail: 'all'` is all three saves, so that is their Perception row plus their three save rows, and we state the circumstance type their rows do not. The immediate-Make-an-Impression-at-−5 clause, which they do not encode, is the record's own `situational` entry (public/core.json feats/fey-fellowship)."
+  },
+  {
+   "id": "orc-weapon-familiarity",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/featGrantsLane.ts:124 — falchion and greataxe plus `traits: ['orc']` (their third row is the orc-trait weapon named by numeric id), with `treatAsLowerCategory: true`. The 5th-level critical-specialization clause they omit is on the record (critSpec / critSpecLevel 5 / critSpecWeapons traits ['orc'], bases falchion+greataxe)."
+  },
+  {
+   "id": "faultspawn",
+   "verdict": "MATCHES",
+   "evidence": "Ours: public/core.json feats/faultspawn carries `grantsActions: ['find-fault']` (authored at scripts/data/effect-backfill.json), and actions/find-fault exists as a reaction with the concentrate trait — their granted ability block. Aside: the FEAT's own `actionCost` is recorded as 'reaction' although the feat itself is passive and only the granted reaction has that cost; that is a badge/display matter, not a mechanical divergence."
+  },
+  {
+   "id": "methodology",
+   "verdict": "MATCHES",
+   "evidence": "Their operation is a pick from a list of ability blocks. Ours is the investigator's SUBCLASS rather than a field on the feature record: public/core.json classes/investigator.subclass = { name: 'Methodology', options: [alchemical-sciences-methodology, empiricism-methodology, forensic-medicine-methodology, interrogation-methodology] }, rendered by the subclass picker and resolved through `build.subclassId` (src/rules/build.ts resolvePick for the chosen subclass, line 4779). The feature record classFeatures/methodology is deliberately bare — the choice and every option's grants live on the class."
+  },
+  {
+   "id": "prototype-companion",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/companionGrants.ts:153 `'prototype-companion': { kind: 'animal', label: 'Prototype Companion', note: 'Grants a construct companion — choose its type and advance it in the Edit tab.' }` — the companion itself, which is their granted ability block; their other row only turns on the companions sheet tab, which our companion grant does implicitly. The record additionally carries `grantsActions: ['command-a-construct']` and actions/command-a-construct exists."
+  },
+  {
+   "id": "sanctified-soul",
+   "verdict": "MATCHES",
+   "evidence": "Ours: public/core.json feats/sanctified-soul carries `choice: { flag: 'sanctification', options: holy | unholy }` AND `grantsCreatureTraitFromChoice: { holy: 'holy', unholy: 'unholy' }`. The trait is actually conferred at src/rules/build.ts:4824-4842 (which reads the map form specifically — see the comment at 4835 recording that only the string form used to be read, so no exemplar ever gained the trait), and the character's own sanctification is recovered at src/rules/derive.ts:1394 keyed on that same flag. That is their branch-per-option trait grant. The 'exemplar spirit-damage abilities gain"
+  },
+  {
+   "id": "stumbling-stance",
+   "verdict": "MATCHES",
+   "evidence": "Their single granted item is the stumbling swing weapon. Ours: public/core.json stances/stumbling-stance carries the strike (Stumbling Swing, 1d8 bludgeoning, brawling group, agile/backstabber/finesse/nonlethal/unarmed) — identical to the record's own `grantedStrikes`, which is deliberately skipped for stance feats at src/rules/build.ts:2117 so the Strike is granted once and only while the stance is entered. The +1 circumstance to Feint is at src/rules/situationalBonuses.ts:913, and the enemy-off-guard clause is on the stance's note."
+  },
+  {
+   "id": "lingering-composition",
+   "verdict": "MATCHES",
+   "evidence": "Ours: public/core.json feats/lingering-composition carries `focusSpells: ['lingering-composition']`, and the target spell record is spells/lingering-composition — rank 1, traits bard/concentrate/focus/spellshape, edition 'remaster' (NOT 'superseded', so this is not one of the legacy-printing grants). The focus trait is what makes it cost a Focus Point in our pool (the focus-pool rule), matching their granted focus spell."
+  },
+  {
+   "id": "shield-block",
+   "verdict": "MATCHES",
+   "evidence": "Ours: public/core.json classFeatures/shield-block carries `grantsFeats: ['shield-block']` — the general feat, which is their granted ability block. The same grant is reachable through five other granters at src/rules/featFeatGrants.ts:507, :509, :558, :586, :590, and src/rules/build.ts:4212 dedupes so a character with more than one granter still gets it once."
+  },
+  {
+   "id": "arcane-eye",
+   "verdict": "MATCHES",
+   "evidence": "Ours: public/core.json feats/arcane-eye carries `senses: [{ name: 'darkvision' }]` (their granted ability block) and `enhancement.grant.innateSpells: [{ spellId: 'see-the-unseen', tradition: 'arcane', usesPer: 'hour' }]` (their granted spell). The target record spells/see-the-unseen exists, edition 'remaster', arcane among its traditions — not a superseded printing. The Enhancement payload is applied only once an augmentation names this feat (src/rules/build.ts:4762-4766), which is the printed gating."
+  },
+  {
+   "id": "spelunker",
+   "verdict": "MATCHES",
+   "evidence": "Both of their text-carrying rows are covered as data on ours. public/core.json feats/spelunker carries `degreeShifts` (successToCrit, skills survival+athletics, actions sense-direction+climb) for their Athletics/Survival upgrade rows, read at src/rules/explain.ts:309-320, and a separate `situational` entry `{ targets: [athletics], when: 'when you attempt to Climb', bonus: \"you aren't off-guard\" }` for the off-guard sentence they carry only inside the Athletics row's text. Both authored in scripts/data/effect-backfill.json."
+  },
+  {
+   "id": "arcane-cascade",
+   "verdict": "MATCHES",
+   "evidence": "Ours: public/core.json classFeatures/arcane-cascade carries `grantsActions: ['arcane-cascade']` and actions/arcane-cascade exists (1 action, concentrate/magus/stance) — their two granted ability blocks are the stance action and its damage rider. The stance's live state is src/rules/classResources.ts:133-139 (encounter-refresh toggle whose note states the bonus damage to Strikes and hybrid-study effects)."
+  },
+  {
+   "id": "elemental-familiar-kineticist",
+   "verdict": "THEY-ENCODE-NOTHING-USEFUL",
+   "evidence": "Their only operation turns on the companions sheet tab — sheet plumbing, not a mechanic; the familiar itself is not in their rows for this record. Nothing on their side to compare against. For the record, ours does deliver it: src/rules/companionGrants.ts:114 (`kind: 'familiar'`, `abilityBudget: 2`, `statAbility: 'con'` for the printed Constitution-based Perception/Acrobatics/Stealth) plus the record's daily `familiarElement` choice, which is asked at daily preparations rather than in the builder (src/builder/Builder.tsx:1920 `askedAtDailyPrep` guard)."
+  },
+  {
+   "id": "voice-of-nature",
+   "verdict": "MATCHES",
+   "evidence": "Their operation is a two-option pick from ability blocks. Ours is a hard-coded branch, not a registry: src/rules/build.ts:3948-3954 pushes animal-empathy or plant-empathy from `build.voiceOfNature` (defaulting to animal-empathy when unanswered) whenever the class carries this feature; the control is at src/builder/shared.tsx:3648, and the reverse build subtracts whichever was injected at src/rules/build.ts:7332-7335 so the feat does not consume a slot. Same two options, same single grant."
+  },
+  {
+   "id": "samsaran-lore",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/featGrantsAuto.ts:574 trains Religion, Society and Samsaran Lore with `redundantFallback: true` (their two trainings plus the printed already-trained clause they omit); src/rules/featFeatGrants.ts:447 grants Additional Lore, bound to the Samsaran subject at src/rules/featFeatGrants.ts:272 — their granted ability block."
+  },
+  {
+   "id": "jotunborn-weapon-familiarity",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/featGrantsLane.ts:100 — the same six named weapons (bola, greataxe, halberd, maul, longspear, war flail) plus `traits: ['jotunborn']`, which covers the uncommon trait-weapon their rows name by numeric id, with `treatAsLowerCategory: true` for the martial→simple / advanced→martial demotion. Neither side encodes a critical-specialization clause, correctly — this feat's printed text has none (unlike its orc/hobgoblin siblings)."
+  },
+  {
+   "id": "quick-jump",
+   "verdict": "MATCHES",
+   "evidence": "Their two injected texts change an action's cost, which neither engine computes. Ours states the same thing on the same two action rows: src/rules/situationalBonuses.ts:3774-3776, `{ on: 'action', id: 'high-jump', value: '1 action', note: '…single action instead of 2, and you do not need to Stride 10 feet first' }` and the matching long-jump row. Same two actions, same two clauses (the reduced cost and the dropped initial Stride)."
+  },
+  {
+   "id": "embers-eyes",
+   "verdict": "MATCHES",
+   "evidence": "Ours: public/core.json feats/embers-eyes `conditionalSenses: [{ ifPresent: 'low-light-vision', base: low-light-vision, upgraded: darkvision }]` (authored at scripts/data/effect-backfill.json:9482, read at src/rules/derive.ts:2559) — their branch on whether the character already has the precise sense. `maxTakable: 2` on the record matches their twice-selectable Special clause."
+  },
+  {
+   "id": "wizard-spellcasting",
+   "verdict": "MATCHES",
+   "evidence": "Ours: public/core.json classes/wizard.spellcasting = `{ type: 'prepared', tradition: 'arcane', keyAbility: 'int', repertoire: false }` — their casting-source definition (prepared list, arcane, Intelligence) exactly. Their granted item is the spellbook: classFeatures/wizard-spellcasting carries `grantsItems: [{ itemId: 'spellbook-blank', quantity: 1 }]`, and the prepared entry's spellbook is built at src/rules/build.ts:3247-3259 with daily preparation auto-filled from it. Slots come from the class's own per-day table rather than a row on the feature; their spells-tab row is sheet plumbing our c"
+  },
+  {
+   "id": "dongun-education",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/featGrantsAuto.ts:243-250 — `choiceGrants` keyed by the record's own paired answer (engineering-explosive / engineering-firearm / explosive-firearm), each training the two named Lores, plus `rankUpgrade: [{ level: 2, rank: 'expert' }, { level: 7, rank: 'master' }, { level: 15, rank: 'legendary' }]` applied as a floor at src/rules/build.ts:4309-4310. That is their two Lore picks with the trained-then-expert-at-2 / master-at-7 / legendary-at-15 ladder. Because the grant is keyed by the record's own `choice` value there is exactly one question, not a second inert one."
+  },
+  {
+   "id": "canny-acumen",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/featGrants.ts:463-471 — `choiceGrants` keyed by the record's own `cannyAcumen` answer (fortitude/reflex/will → that save expert; perception → Perception expert) plus `rankUpgrade: { level: 17, rank: 'master' }`, applied as a floor over every rank this feat grants at src/rules/build.ts:4308-4310. That is their four options with expert now and master from 17th. One question on our side, keyed to the grant, so no duplicate picker."
+  },
+  {
+   "id": "ghoran-lore",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/featGrantsAuto.ts:325 `{ skills: { arcana: 'trained', nature: 'trained', 'lore:ghoran': 'trained' }, redundantFallback: true }` — their two trainings and their newly created Ghoran Lore, plus the printed already-trained clause they omit. Lore keys bypass the fallback conversion (src/rules/build.ts:4339) so the Lore is granted outright."
+  },
+  {
+   "id": "rivethun-disciple",
+   "verdict": "MATCHES",
+   "evidence": "Ours: public/core.json feats/rivethun-disciple carries `situational` with both groups — Crafting/Deception/Intimidation/Medicine 'while you have the clumsy, drained or enfeebled condition' +1 circumstance, and Athletics/Stealth/Thievery 'while you have the immobilized, slowed or stupefied condition' +1 circumstance — matching their seven rows and their two condition lists exactly. I checked for the two-lane trap: an older, vaguer entry also exists at src/rules/situationalBonuses.ts:518, but the record sets `situationalReplaces: true`, so src/rules/explain.ts:475-481 replaces the shipped entry "
+  },
+  {
+   "id": "subtle-theft",
+   "verdict": "MATCHES",
+   "evidence": "Their sole injected text is the observers' −2 circumstance penalty to Perception DCs, which neither engine computes (it moves an enemy's DC). Ours states it in both places a player looks: the record's own `note` (public/core.json feats/subtle-theft) and an action row at src/rules/situationalBonuses.ts:3775 filed against the Steal action. The Create a Diversion clause is prose on both sides."
+  },
+  {
+   "id": "multilingual",
+   "verdict": "MATCHES",
+   "evidence": "Ours: public/core.json feats/multilingual carries `languageChoices: 2` and `languageChoicesAtRank: [{ skill: 'society', rank: 'master', extra: 1 }, { skill: 'society', rank: 'legendary', extra: 1 }]`, read at src/rules/build.ts:1710-1711 and 1737. That is their two base language picks plus one more at Society master and one more at legendary. `maxTakable: null` on the record matches their repeatable Special clause; their extra conditional row is their own hook for the improved version of this feat, which is a separate record."
+  },
+  {
+   "id": "mighty-dragonet",
+   "verdict": "MATCHES",
+   "evidence": "Ours: public/core.json feats/mighty-dragonet carries `sizeOverride: 'small'` (authored at scripts/data/effect-backfill.json:49204), read at src/rules/build.ts:6829-6834 where it raises the body size, strictly largest-wins so it can only take a Tiny dragonet to Small and never shrink anyone. Same single result as their size assignment."
+  },
+  {
+   "id": "monastic-weaponry",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/featGrantsAuto.ts:483 — a weaponFamiliarity over ~70 named monk weapons plus `traits: ['monk']` with `mirrorBestCategory: true`, applied at src/rules/build.ts:5405-5412 so monk weapons take the character's best weapon-category rank. That reproduces the printed clause: trained in simple and martial monk weapons, rising to expert/master alongside unarmed attacks (a monk's simple-weapon rank and unarmed rank advance together under Expert/Master Strikes, so the best-category proxy tracks the printed unarmed trigger). Their single row names one weapon by numeric id and cannot cover "
+  },
+  {
+   "id": "beast-trainer",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/featGrantsAuto.ts:115 `{ skills: { nature: 'trained' } }` — deliberately no redundantFallback, matching their bare training and this feat's printed text, which has no already-trained clause. The either/or feat is src/rules/featFeatGrants.ts:37 `CHOICE_FEAT_GRANTS['beast-trainer'] = { pet: ['pet'], 'train-animal': ['train-animal'] }`, resolved from the record's own `choice.flag: 'feat'` answer at src/rules/featFeatGrants.ts:112-115 and src/rules/build.ts:4203. One question, and the answer is the thing that grants — I confirmed the record's choice is not double-rendered here: it "
+  },
+  {
+   "id": "raise-a-tome",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/situationalBonuses.ts:2891 carries both printed bonuses — +2 circumstance to AC \"while you have a book raised\" and +1 circumstance to Recall Knowledge to identify creatures with a skill tied to the raised book's subject. The Shield Block / Raise-a-Shield substitution and the tome's Hardness 3 / HP 12 / BT 6 are in the record's `note` (public/core.json). Theirs adds no operations of its own — two prose injections into the Shield Block and Raise a Shield entries. Same numbers, same triggers."
+  },
+  {
+   "id": "nocturnal-tripkee",
+   "verdict": "MATCHES",
+   "evidence": "Ours: the core.json feat record carries `senses:[{name:'darkvision'}]` plus `onlyAtLevel:1` (the printed Special clause). Theirs grants a single sense block. Printed grants exactly darkvision; both sides deliver it."
+  },
+  {
+   "id": "sociable",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/featGrantsAuto.ts:592 trains Diplomacy with `redundantFallback:true`, and src/rules/featFeatGrants.ts:482 grants Hobnobber. Theirs trains Diplomacy and grants one ability block (the same skill feat). We additionally honour the printed \"or another skill of your choice if you were already trained\" clause, which their row omits — that is us following the printed text, not a divergence."
+  },
+  {
+   "id": "ghoran-weapon-familiarity",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/featGrantsAuto.ts:334-340 uses two clauses — flat `trained` on glaive, greatclub, hatchet, scythe, sickle, then a trait-scoped `treatAsLowerCategory` clause covering every ghoran-trait weapon. Theirs lists the same five plus the ghoran-trait martial weapon as one flat familiarity list. The printed text names five weapons as trained and separately says martial ghoran weapons count as simple; ours splits those clauses, theirs collapses them. Net result for any character trained in simple weapons (i.e. essentially all) is identical, and ours additionally covers advanced ghoran wea"
+  },
+  {
+   "id": "prairie-rider",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/featGrantsAuto.ts:536 trains Nature with `redundantFallback:true`; src/rules/situationalBonuses.ts:499 carries +1 circumstance to Nature \"Command an Animal on a traditional halfling mount\". Theirs trains Nature and adds a +1 bonus qualified with the same mount condition. Same skill, same bonus value and type, same trigger."
+  },
+  {
+   "id": "artisanal-crafter",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/featGrantsAuto.ts:80 trains Crafting with `redundantFallback:true`; src/rules/featFeatGrants.ts:335 grants Specialty Crafting; and the record's `choiceOptionLimits` restricts that granted feat's specialty to blacksmithing / leatherworking / stonemasonry, exactly as printed. Theirs trains Crafting and grants one ability block, with no restriction on the specialty. Ours is the printed text; the extra restriction is not a divergence."
+  },
+  {
+   "id": "changeling-lore",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/featGrantsAuto.ts:154 trains Deception, Occultism and lore:hag (with `redundantFallback:true`, which build.ts:4339 deliberately skips for lore keys); src/rules/featFeatGrants.ts:220 pins the granted Additional Lore to Hag Lore and :536 grants it. Theirs trains Deception and Occultism and grants one ability block (Additional Lore). Same two skills, same fixed Lore subject."
+  },
+  {
+   "id": "explosive-savant",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/featGrants.ts:552 encodes three clauses by weapon GROUP — bombs mirror the simple rank, martial firearms mirror the simple rank, advanced firearms mirror the martial rank — which is the printed text clause for clause. Theirs encodes two group-level familiarities (firearms, bombs). Same two groups reached; ours additionally keeps the advanced-firearm clause weaker, as printed."
+  },
+  {
+   "id": "esoteric-lore",
+   "verdict": "MATCHES",
+   "evidence": "Ours splits the feature across three places, all present: the thaumaturge class record's `trainedSkills.lore:'esoteric'` trains lore:esoteric at level 1 (applied at src/rules/build.ts:2617); the classFeature record carries `skillProgression[{skill:'lore:esoteric', at:[{3,expert},{7,master},{15,legendary}]}]` and `skillAbilitySwap{skill:'lore:esoteric', use:'cha', mandatory:true}`; src/rules/featFeatGrants.ts:546 grants Dubious Knowledge. Theirs creates the same Lore trained on Charisma, raises it E/M/L under three level conditionals, and grants one ability block. Every clause lines up, includi"
+  },
+  {
+   "id": "athamaru-lore",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/featGrantsAuto.ts:81 trains Athletics and Nature with `redundantFallback:true`; src/rules/featFeatGrants.ts:208 pins the granted Additional Lore to Athamaru Lore and :337 grants it. Theirs trains the same two skills and grants one ability block."
+  },
+  {
+   "id": "unleash-psyche",
+   "verdict": "MATCHES",
+   "evidence": "Ours: the classFeature record carries `grantsActions:['unleash-psyche']` (the action exists in core.json as a free action), src/rules/classResources.ts:144 registers the encounter-refresh toggle with the 2-round/2-round-cooldown note, and src/rules/actionGates.ts:31,49 makes the `psyche` trait gate every \"only while your psyche is unleashed\" ability. Theirs grants two ability blocks (the activity and its state). Same activity, same state tracking."
+  },
+  {
+   "id": "ancient-memories",
+   "verdict": "MATCHES",
+   "evidence": "Ours: the record's `choice` has `daily:true` and sixteen options, each with `grant:{skills:{<skill>:'trained'}}`, plus the printed caveat as the choice `note`. Being marked daily, src/builder/Builder.tsx routes it to daily preparations rather than the build (the `askedAtDailyPrep` guard), which is the printed \"lasts until you prepare again\". Theirs is a single temporary-skill selection. Ours narrows the list to skills you are currently untrained in, which changes nothing a player could otherwise gain."
+  },
+  {
+   "id": "slink",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/situationalBonuses.ts:3778 attaches a marker to the Sneak action reading \"+5 feet\" with the printed wording. Theirs injects the same sentence as text. The second printed clause (not becoming observed when a Sneak ends in dim light/darkness with cover or concealment) is prose on both sides."
+  },
+  {
+   "id": "natural-senses",
+   "verdict": "MATCHES",
+   "evidence": "Ours: the record's `choice{flag:'naturalSense', distinctAcrossTakes:true}` offers the five printed senses, each option carrying a real `grant.senses` entry — echolocation at range 10 with `acuity:'precise'` (the printed \"hearing as a precise sense at the listed range\"), scent and tremorsense imprecise at 30. Theirs is a five-option selection each granting an ability block. Same five, same ranges and acuities, and `distinctAcrossTakes` enforces the printed \"a different sense each time\"."
+  },
+  {
+   "id": "pilgrims-token",
+   "verdict": "MATCHES",
+   "evidence": "Ours: the record carries `grantsItems:[{itemId:'religious-symbol-wooden'}]` (the item exists in core.json; feats' grantsItems are read at src/rules/build.ts:5946) and a `situational` entry on initiative reading \"you go first when you tie an adversary's initiative roll\" while the attuned symbol is carried. Theirs grants only the item. Both give the free symbol; we additionally surface the tie-break clause their row omits."
+  },
+  {
+   "id": "eyes-of-night",
+   "verdict": "MATCHES",
+   "evidence": "Ours: the core.json record carries `senses:[{name:'darkvision'}]` and `onlyAtLevel:1` (the printed Special clause). Theirs grants a single sense block. Printed grants darkvision and nothing else."
+  },
+  {
+   "id": "steadying-stone",
+   "verdict": "MATCHES",
+   "evidence": "Ours: the record's `degreeShifts` carries successToCrit on Acrobatics/Balance qualified to uneven ground of earth or rock; src/rules/situationalBonuses.ts:804 carries two entries, Fortitude DC vs Shove/Trip and Reflex DC vs Shove/Trip plus saves against effects that would knock you prone, each \"+2 circumstance (+3 if you're a rock dwarf)\". Theirs encodes the identical pair but selects 3 vs 2 through a heritage condition. Both sides deliver a text-qualified situational bonus the player applies by hand, so the number a rock dwarf uses is the same; the situationalBonuses shape has no heritage pre"
+  },
+  {
+   "id": "dragonet-resistances",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/situationalBonuses.ts:283 gives +2 circumstance to `save:all` \"against sleep effects and effects that would paralyze you\". Theirs writes the same +2 with the same qualifier onto each of the three saves separately. Identical numbers, type and trigger; our `detail:'all'` is the same reach as their three rows."
+  },
+  {
+   "id": "bestial-manifestation",
+   "verdict": "MATCHES",
+   "evidence": "Ours: the record's `choice{flag:'bestialManifestation'}` plus `grantedStrikes` supplies all four attacks with the printed dice, damage types, traits and group — Claw d4 slashing agile/finesse/unarmed/versatile-p, Hoof d6 bludgeoning finesse/unarmed, Jaws d6 piercing finesse/unarmed, Tail d4 bludgeoning agile/finesse/unarmed, all brawling. `grantedStrikes` is read at src/rules/build.ts:2113-2135. Theirs is a four-option selection each granting an item (their unarmed-attack carrier). Every die and trait matches."
+  },
+  {
+   "id": "strix-lore",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/featGrantsAuto.ts:618 trains Acrobatics, Nature and lore:strix, with `redundantFallback:true` for the two non-lore skills. Theirs trains Acrobatics and Nature and creates Strix Lore trained (Int-keyed, which is the default for a Lore on our side too). All three skills line up."
+  },
+  {
+   "id": "waxed-feathers",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/situationalBonuses.ts:610 gives +1 circumstance to `save:all` \"against effects with the water trait\". Theirs writes +1 with the same qualifier onto each of the three saves. The 1-action shake-off-water clause is the record's `actionCost:{actions:1}` plus prose on both sides."
+  },
+  {
+   "id": "haughty-obstinacy",
+   "verdict": "MATCHES",
+   "evidence": "Ours carries BOTH printed clauses on the core.json record: `degreeShifts[{shift:'successToCrit', saves:['all'], when:'on a save against a mental effect that directly controls your actions'}]`, and a `situational` entry on Intimidation stating that a creature Coercing you turns a failure into a critical failure (no retry for a week). Theirs encodes only the first clause, as text on the three saves. We are a superset, and the shared clause matches."
+  },
+  {
+   "id": "animal-companion-ranger",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/companionGrants.ts:96 registers the animal companion itself (type and advancement chosen in the Edit tab), src/rules/companions.ts:557 hard-codes the ranger clause, and src/rules/situationalBonuses.ts:3756 marks the Hunt Prey action with \"your animal companion too — and your hunter's edge benefit\". Theirs only turns on the companions tab. Both give the companion; the second printed sentence is modelled on our side and not on theirs."
+  },
+  {
+   "id": "awakened-animal-lore",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/featGrantsAuto.ts:84 trains Arcana and Nature with `redundantFallback:true`; src/rules/featFeatGrants.ts:212 pins the granted Additional Lore to Awakened Animal Lore and :339 grants it. Theirs trains the same two skills and grants one ability block."
+  },
+  {
+   "id": "goblin-lore",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/featGrantsAuto.ts:357 trains Nature, Stealth and lore:goblin; src/rules/featFeatGrants.ts:238 pins the granted Additional Lore to Goblin Lore and :554 grants it. Theirs trains Nature and Stealth and grants one ability block. Same two skills, same fixed Lore."
+  },
+  {
+   "id": "anadi-lore",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/featGrantsAuto.ts:51 trains Crafting, Survival and lore:anadi, with `redundantFallback:true` (build.ts:4339 exempts lore keys from the fallback, so Anadi Lore is always granted). Theirs trains Crafting and Survival and creates Anadi Lore trained on Int. Identical outcome."
+  },
+  {
+   "id": "hex-spells",
+   "verdict": "MATCHES",
+   "evidence": "Ours: the classFeature record carries `effectChoices[{id:'starting-hex'}]` with exactly the two printed options, each granting the matching focus spell, plus a `note` carrying the one-hex-per-turn restriction and the hex-cantrip clarification. Theirs is a two-option spell selection. The focus pool itself is sized by the app's focus-pool rule (focus-trait spells are the point-costing markers), not by this record, on both sides."
+  },
+  {
+   "id": "animal-elocutionist",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/situationalBonuses.ts:143 carries +1 circumstance to Diplomacy \"to Make an Impression on animals\", plus a second entry covering Diplomacy with animals generally (the printed \"you can use the Diplomacy skill with animals\"). Theirs carries the +1 on Diplomacy with the same Make an Impression qualifier. Same bonus, same value and type."
+  },
+  {
+   "id": "callow-may",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/featFeatGrants.ts:348 grants Charming Liar, and the core.json record carries a `situational` on initiative — \"when you roll Deception for initiative, foes in that encounter that haven't acted yet are off-guard to you\". Theirs grants one ability block (the skill feat) and nothing for the initiative clause. Shared clause matches; we additionally surface the second printed sentence."
+  },
+  {
+   "id": "assurance",
+   "verdict": "MATCHES",
+   "evidence": "Ours: the record carries `maxTakable:null` (unlimited takes) and `choice{flag:'assuredSkill', kind:'skills', distinctAcrossTakes:true}`; kind 'skills' resolves at build time from the skills the character is actually trained in (src/rules/build.ts:1599), which is the printed \"choose a skill you're trained in\" — including Lores. src/rules/situationalBonuses.ts:3517 states the mechanic (take 10 + proficiency bonus, no other modifiers). Theirs enumerates the sixteen skills plus a Lore entry regardless of the character's training. Same result, ours filtered to what the feat allows."
+  },
+  {
+   "id": "meticulous-restorer",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/featFeatGrants.ts:411 grants Quick Repair, and the record carries `degreeShifts[{shift:'critFailToFail', skills:['crafting'], actions:['repair']}]`. Theirs grants one ability block and injects the crit-fail clause as text. Both clauses present on both sides; ours is structured rather than prose."
+  },
+  {
+   "id": "raging-intimidation",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/featFeatGrants.ts:100-103 grants Intimidating Glare gated on trained Intimidation and Scare to Death gated on legendary Intimidation — the printed \"as soon as you meet the prerequisites\" for each, expressed against each feat's real prerequisite. Theirs grants two ability blocks, one behind an Intimidation-rank condition and one behind a level condition, and injects the rage-trait clauses as text. Same two feats, same gating intent; ours keys the second on the actual prerequisite rather than a level proxy."
+  },
+  {
+   "id": "quicksoul",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/featGrantsAuto.ts:563 trains Acrobatics with `redundantFallback:true`; the core.json record carries `grantsActions:['toxic-touch']` (the Toxic Touch action exists in core.json at 1 action) and `limitedUses:{max:1, per:'day'}` for the printed frequency. Theirs encodes only the Acrobatics training. We deliver everything they do plus the granted activity the printed text names."
+  },
+  {
+   "id": "muses",
+   "verdict": "MATCHES",
+   "evidence": "Ours holds the muse in the bard class record's `subclass` (name \"Muse\", five options: enigma, maestro, polymath, warrior, zoophonia), each carrying `grantedFeats` and `grantedSpells` — e.g. enigma grants Bardic Lore and adds Sure Strike to the repertoire, which is the printed \"grants you a specific 1st-level bard feat and adds a spell to your repertoire\". Applied at src/rules/build.ts:3196 (repertoire) and :3911 (subclass bonus feat). Theirs is an ability-block selection over the same set. The classFeature record itself is a container on both sides — that is a storage difference, not a mechani"
+  },
+  {
+   "id": "versatile-blasts",
+   "verdict": "MATCHES",
+   "evidence": "Ours: the record carries `blastTypeAdditions:{air:['cold'], earth:['poison'], fire:['cold'], metal:['electricity'], water:['acid'], wood:['poison']}`, read at src/rules/derive.ts:4120-4121 when building the Elemental Blast damage-type options. Checked entry by entry against the printed list — all six pairs match. Theirs injects the same table as text into the Elemental Blast entry, with no structured effect."
+  },
+  {
+   "id": "ru-shi",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/featGrantsAuto.ts:571 trains Society with `redundantFallback:true`; src/rules/featFeatGrants.ts:444 grants Eye for Numbers. Theirs trains Society and grants one ability block. Same skill, same feat."
+  },
+  {
+   "id": "tangle-of-limbs",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/featGrantsAuto.ts:630 trains Athletics with `redundantFallback:true`; src/rules/featFeatGrants.ts:493 grants Titan Wrestler. Theirs grants one ability block and trains Athletics. Same skill, same feat."
+  },
+  {
+   "id": "hardwood-armor",
+   "verdict": "MATCHES",
+   "evidence": "Ours: the record carries `grantsItems:[{itemId:'hardwood-armor-armor'},{itemId:'hardwood-armor-shield'}]`, read at src/rules/build.ts:5946. Both items exist in core.json and the armour's stats are the printed ones exactly — medium category, AC +3, Dex cap +2, check −2, speed −5, Str +2, Bulk 1, group wood; the shield carries Hardness 3 / HP 12. The Level (+3) shield scaling is on the record as a `note`. Theirs grants two items, the same pair."
+  },
+  {
+   "id": "additional-lore",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/featGrantsAuto.ts:31 gives `loreChoices:1` plus `rankUpgrade:[{3,expert},{7,master},{15,legendary}]`, and the record carries `maxTakable:null` for the repeatable Special clause. That is the printed ladder — the additional skill increase at 3rd raises trained→expert, at 7th expert→master, at 15th master→legendary, applied only to the chosen Lore. Theirs asks for the Lore under four level conditionals. Same subject, same three upgrade levels, same repeatability."
+  },
+  {
+   "id": "pitborn",
+   "verdict": "MATCHES",
+   "evidence": "Ours: src/rules/featGrantsAuto.ts:535 trains Athletics with `redundantFallback:true`; src/rules/featPickGrants.ts:204 offers the six common 1st-level skill feats with a trained-Athletics prerequisite (Armor Assist, Combat Climber, Hefty Hauler, Quick Jump, Titan Wrestler, Underwater Marauder) and actually grants the pick. The record also carries a `choice{flag:'feat'}` with the same six, but src/builder/Builder.tsx:1916 explicitly suppresses a record `choice` whose flag is 'feat' when a FEAT_PICK_GRANTS entry exists — so only one picker renders. Theirs trains Athletics and offers one skill-fea"
+  },
+  {
+   "id": "confident-finisher",
+   "verdict": "MATCHES",
+   "evidence": "Ours: the classFeature record carries `grantsActions:['confident-finisher']`, and the Confident Finisher action exists in core.json at 1 action. Theirs grants one ability block. The finisher trait rules are shared prose on both sides."
+  },
+  {
+   "id": "oceans-bite",
+   "verdict": "MATCHES",
+   "evidence": "Ours: the record carries `grantedStrikes:[{name:'Jaws', die:'d8', damageType:'piercing', traits:['unarmed'], group:'brawling'}]`, read at src/rules/build.ts:2113-2135. Printed grants a jaws unarmed attack dealing 1d8 piercing in the brawling group and lists no other traits. Theirs grants one item (their unarmed-attack carrier). Die, damage type and group all match."
+  },
+  {
+   "id": "quick-coercion",
+   "verdict": "MATCHES",
+   "evidence": "Ours: the record carries `recordMarks:[{on:'action', id:'coerce', value:'1 round', note:<the printed clause verbatim>}]`, surfaced through src/rules/explain.ts:390 as a marker on the Coerce action. Theirs injects the same sentence as text. Same clause, delivered on the action it modifies."
+  },
+  {
+   "id": "nephilim-lore",
+   "verdict": "FIXED",
+   "evidence": "Their side asks for the skill ONCE. Ours asked twice: the record's own bare `choice` block (a {flag,prompt,options} picker whose options carry no grant) rendered alongside the FEAT_GRANTS skillChoices slot that actually trains, so the player answered the same question twice and the record's answer moved nothing. Proven inert before removal by building the character with two different answers and comparing the whole skill block — byte-identical — while bloodrager-dedication, which reads its own choice through choiceGrants, produced different blocks and was left alone. The record's `choice` was dropped (the slot keeps redundantFallback, the conditional clause a bare choice cannot express). One of twelve records with this shape; duplicate-pick-check.mjs now guards the lane and was negative-tested."
+  },
+  {
+   "id": "wisdom-from-another-life",
+   "verdict": "FIXED",
+   "evidence": "Their side asks for the skill ONCE. Ours asked twice: the record's own bare `choice` block (a {flag,prompt,options} picker whose options carry no grant) rendered alongside the FEAT_GRANTS skillChoices slot that actually trains, so the player answered the same question twice and the record's answer moved nothing. Proven inert before removal by building the character with two different answers and comparing the whole skill block — byte-identical — while bloodrager-dedication, which reads its own choice through choiceGrants, produced different blocks and was left alone. The record's `choice` was dropped (the slot keeps redundantFallback, the conditional clause a bare choice cannot express). One of twelve records with this shape; duplicate-pick-check.mjs now guards the lane and was negative-tested."
+  },
+  {
+   "id": "elemental-wrath",
+   "verdict": "FIXED",
+   "evidence": "Their side asks the question ONCE. Ours asked twice: a bare top-level `choice` block (options carrying no grant) rendered beside the record's own `effectChoices`, which is the lane that actually grants — so the player picked their element/damage type/tradition twice and the first answer moved nothing. Proven inert before removal on a BUILT character, comparing proficiencies, defences, speeds, spellcasting and strikes across two different answers. (The first probe compared the whole Character and called all sixteen 'read' — the character echoes the answer back onto the feat entry, which is storage, not use.) The bare `choice` was dropped; `effectChoices` keeps the question. One of fifteen records with this shape, found by measuring the class corpus-wide from four the read named."
+  },
+  {
+   "id": "dualborn",
+   "verdict": "FIXED",
+   "evidence": "Their side asks the question ONCE. Ours asked twice: a bare top-level `choice` block (options carrying no grant) rendered beside the record's own `effectChoices`, which is the lane that actually grants — so the player picked their element/damage type/tradition twice and the first answer moved nothing. Proven inert before removal on a BUILT character, comparing proficiencies, defences, speeds, spellcasting and strikes across two different answers. (The first probe compared the whole Character and called all sixteen 'read' — the character echoes the answer back onto the feat entry, which is storage, not use.) The bare `choice` was dropped; `effectChoices` keeps the question. One of fifteen records with this shape, found by measuring the class corpus-wide from four the read named."
+  },
+  {
+   "id": "arcane-dragonblood",
+   "verdict": "FIXED",
+   "evidence": "[FIXED; adversarially verified by a read-only agent] CONFIRMED by A/B execution, not paraphrase. (1) Mismatch is live: public/core.json feats/arcane-dragonblood still carries choice:{flag:'arcaneDragonbloodFallback',prompt:'Replacement skill',kind:'skills'} from effect-backfill row 3592; siblings aqueous/summiting already had theirs nulled (rows 7252/7253). (2) WG ability_block 30854 raw = exactly two ops (adjValue SKILL_ARCANA {\"value\":\"T\"}, giveAbilityBlock feat 19915 = Arcane Sense); no choice/select op. (3) NOT an owner call: this does not settle a WG-vs-text contradiction, because the printed clause 'you instead become trained in a skill of your choice' keeps its working implementation on a DIFFERENT lane (featGrantsAuto.ts:76 redundantFallback:true), and 'you must choose an arcane dragon' keeps its lane (choiceOptionLimits, backfill row 11635, explicitly kept). Only an inert duplicate surface is removed. (4) LANE: the live reader is build.ts:4350 (g.redundantFallback -> skillFallbacks -> Builder.tsx:1979, key `<featId>:fallback:<skill>`). The bare choice's only appliers are build.ts:4816 ((def.options ?? []).find(...)?.grant — options-less, so no grant) and the flag route at build.ts:1528; `grep arcaneDragonbloodFallback src/` = 0 hits. Worse, buildChoiceOptions:1611 renders kind:'skills' as trainedSkillOptions(minRank 'trained') — skills you are ALREADY trained in — a se"
+  },
+  {
+   "id": "occult-dragonblood",
+   "verdict": "FIXED",
+   "evidence": "[FIXED; adversarially verified by a read-only agent] CONFIRMED, and the fix is exactly right as written — correctedFixKind \"unchanged\".\n\n1. STILL A MISMATCH. public/core.json feats/occult-dragonblood currently carries `choice: {flag:\"occultDragonbloodFallback\", prompt:\"Replacement skill\", kind:\"skills\"}` (set by scripts/data/effect-backfill.json row 3594; no later null row exists). Ran buildCharacter via jiti: fighter L1 + occult-dragonblood yields levelChoices containing the REQUIRED entry \"Occult Dragonblood — choose\" (build.ts:891-912 pushes one for any picked feat with a `choice`) even though the fighter is not already trained in Occultism, so the prompt is unanswerable-by-need and never clears the completeness check.\n\n2. MATCHES THEIR ENCODING. `node scripts/wg-show.mjs \"Occult Dragonblood\" --raw` → their ability_block 30856 has exactly two ops: adjValue SKILL_OCCULTISM {value:\"T\"} and giveAbilityBlock feat 20375. No choice/select op of any kind. Removing our `choice` moves us toward WG, not away.\n\n3. NO OWNER QUESTION IS BEING SETTLED. AoN feat-5728 prints \"...you instead become trained in a skill of your choice.\" That clause is NOT dropped by this fix — it is carried by src/rules/featGrantsAuto.ts:531 `'occult-dragonblood': { skills: { occultism: 'trained' }, redundantFallback: true }`. WG and the printed text do not have to be reconciled here: the row only deletes a sec"
+  },
+  {
+   "id": "conscious-mind",
+   "verdict": "FIXED",
+   "evidence": "[FIXED; adversarially verified by a read-only agent] Survives every refutation attempt.\n\nREAL NOW: ran buildCharacter (jiti, core.json merged over seedContent) for psychic/the-distant-grasp at L1/5/6/9/10 — cantrips are identically [\"telekinetic-hand\",\"telekinetic-projectile\",\"telekinetic-rend\",\"vector-screen\",\"dancing-blade\"] at every level. Not already fixed by the restore.\n\nTHEIR ENCODING: wg-show \"The Distant Grasp\" --raw shows three bare giveSpell FOCUS rank=0 (spellIds 5756/5757/5716) then conditional IF LEVEL >= 6 -> giveSpell 5717 and IF LEVEL >= 10 -> giveSpell 5718. Resolved 5717 = Vector Screen and 5718 = Dancing Blade out of the dump's public.spell COPY block (line 24503+), so the two gated FOCUS grants are exactly the two cantrips the fix withholds. The Silent Whisper has the same shape (>=6, >=10).\n\nPRINTED TEXT: agrees with WG, so this settles no owner question. core-descriptions.json classFeatures/conscious-mind carries \"You automatically gain the surface psi cantrip at 1st level, automatically gain the deeper psi cantrip at 6th level, and automatically gain the deepest psi cantrip at 10th level\", and The Distant Grasp's own prose labels surface: Telekinetic Rend / deeper: Vector Screen / deepest: Dancing Blade. Text and WG point the same way; no side is being picked.\n\nLANE: entry.cantrips at build.ts:3215 is fed only by grantedByRank[0], which the find-block bu"
+  },
+  {
+   "id": "oracle-spellcasting",
+   "verdict": "FIXED",
+   "evidence": "[FIXED; adversarially verified by a read-only agent] UPHELD, with corrected code edits (the finder's multi-line `find` cannot match — line-ending mismatch).\n\n1. MISMATCH IS REAL RIGHT NOW. public/core.json classes/oracle.spellcasting = {\"type\":\"spontaneous\",\"tradition\":\"divine\",\"keyAbility\":\"cha\",\"repertoire\":true,\"progression\":\"full\"}. scripts/data/effect-backfill.json (12185 rows) carries only ONE classes/oracle row — path [\"subclass\"], field featureId — so no overlay already sets progression. src/rules/spellcasting.ts:27-35 fullCasterSlots gives 2 the level a rank opens, 3 after, so oracle L1={1:2}, L3={1:3,2:2}. Not already fixed.\n\n2. THEIR ENCODING — verified directly, not paraphrased. `node scripts/wg-show.mjs --wgid 30997 --raw` (Oracle Spellcasting, type=class-feature, level=1) gives defineCastingSource ORACLE:::SPONTANEOUS-REPERTOIRE:::DIVINE:::ATTRIBUTE_CHA and a giveSpellSlot table I tabulated for all 20 levels: L1 {0:5,1:3}; L2 {0:5,1:4}; L3 {…,2:3}; L5 {…,3:3}; … L19/L20 add {10:1}. Exactly 3-then-4 at every rank. (The name search truncates at six matches and surfaces only the legacy 26325, as the finder warned; --wgid reaches 30997.)\n\n3. PRINTED TEXT AGREES WITH WG — so this is NOT an owner question. Our oracle record is aonId class-61, edition \"remaster\", Player Core 2. I parsed the Oracle Spells per Day table out of C:/wonderers guide/aon-2e-archive/data/by-cate"
+  },
+  {
+   "id": "open-mind",
+   "verdict": "MATCHES",
+   "evidence": "[MATCHES-ON-REVIEW, confidence high] RAN buildCharacter. Kashrishi fighter with featPicks{'1:ancestry:0':'open-mind'} and pickCantripChoices{'open-mind':'daze'} produces spellcasting=[{id:'innate-casting', tradition:'occult', type:'innate', cantrips:['daze']}] at L1 and at L9; with the pick unanswered it produces nothing (the picker IS the question, exactly as their select is). Menu completeness measured, not assumed: our 38 options vs the 35 common non-focus occult cantrips in public/core.json — every one of the 35 is offered except ghost-sound, and we additionally offer join-pasts, invoke-true-name, inside-ropes and glowing-trail. Option-menu filtering is an authorised divergence, so that delta is ours to keep. Also checked the name collision the batch id hides: `open-mind` exists in THREE buckets (feats/feat-3966, items/equipment-1806 the Abraxas tattoo, itemBonus/equipment-1806-bonus-503); the overlay already separates them (feats/open-mind.passiveEffects=null, items/open-mind.passiveEffects={loreBonus:1}), and WG carries only the feat under that name."
+  },
+  {
+   "id": "jotunborn-lore",
+   "verdict": "FIXED",
+   "evidence": "FIXED, and it turned out to be two defects. (1) PLUMBING: the feat->feat expansion queue in build.ts was seeded with the character's FEATS and owned CLASS FEATURES only, so all 34 heritage-keyed entries in featFeatGrants.ts fired for nobody — Anvil Dwarf's Specialty Crafting, Battle-Ready Orc's Intimidating Glare, Sage Jotunborn's Additional Lore. Measured with the new scripts/grant-reach-check.mjs, which is now a guard in npm run verify: a grant-table key in a bucket the engine never seeds is delivered to nobody while every 'is it modelled?' query answers yes. The queue now seeds BOTH heritages, and the grantSources lane beside it now reads the second heritage too (it read only the first, so a versatile heritage's grantsFeats reached nobody either). (2) THE RECORD: new lane EXTRA_FEAT_TAKINGS — a grant that is a taking OF ITS OWN, surviving the dedupe and carrying its own separately-answered sub-choice, optionally gated on a heritage. Two rows: jotunborn-lore's Special ('if you have the sage jotunborn heritage, you gain the Additional Lore feat a second time for a lore of your choice') and sage-jotunborn's own printed Additional Lore. A sage jotunborn who takes the feat now holds THREE takings, which is exactly what their ability_block 44552 + 44563 produce. Deliberately an opt-in table and NOT the general rule 'a repeatable feat from a second granter is a second taking': scripts/probe-repeatable-grant-double.mjs shows a cloistered cleric owns both cloistered-cleric and first-doctrine-cloistered-cleric, one printed Domain Initiate on two ids, so the blanket rule would hand them a domain the book never printed. Also fixed the half that would have made the lane inert: a granted feat has no slot, so every unbound granted Additional Lore shared one bare 'additional-lore:0' key and two takings trained ONE Lore — the subject is now keyed '<grantedBy>#<variant>:<featId>:<idx>' (bare key still read), the Special taking skips the granter's BOUND answer, and Builder.tsx mounts a Lore input for granted feats, which it never did. test/jotunborn-lore-takings.test.ts (9)."
+  },
+  {
+   "id": "steady-balance",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 5) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"Our side matches the printed text: the record carries `degreeShifts[{shift:'successToCrit', skills:['acrobatics'], actions:['balance'], when:'on a check to Balance'}]`, and the not…\""
+  }
+ ]
+}

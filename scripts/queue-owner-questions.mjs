@@ -15,11 +15,19 @@
  * The question text is assembled from what the agents actually recorded — printed text, their
  * encoding, ours — rather than re-summarised, so what he rules on is what was found.
  *
+ * ⚠ THE DESK NUMBER IS NOT MINTED HERE. This script used to `doc.open.push(...)` a bare entry, so a
+ * question queued through it landed with no `n` — and the owner answers by NUMBER, so an unnumbered
+ * entry is one he cannot rule on and test/owner-questions-numbering.test.ts fails on it. The append is
+ * delegated to `appendQuestions` in scripts/add-owner-question.mjs (docs/wg-batch-pipeline.md §B, "the
+ * existing writer — no sixth writer"): n = max over all four arrays ∪ rulings-numbering.json, plus one,
+ * and a duplicate id is refused rather than merged.
+ *
  *   node scripts/queue-owner-questions.mjs <findings.json> [--write]
  */
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { appendQuestions } from './add-owner-question.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const WRITE = process.argv.includes('--write');
@@ -28,7 +36,9 @@ if (!src || src.startsWith('--')) { console.error('usage: node scripts/queue-own
 
 const findings = JSON.parse(readFileSync(src, 'utf8'));
 const PATH = join(ROOT, 'work/owner-questions.json');
+const NUMBERS = join(ROOT, 'work/rulings-numbering.json');
 const doc = JSON.parse(readFileSync(PATH, 'utf8'));
+const num = JSON.parse(readFileSync(NUMBERS, 'utf8'));
 doc.open ??= [];
 
 const clip = (s, n) => { const t = String(s ?? '').replace(/\s+/g, ' ').trim(); return t.length > n ? `${t.slice(0, n - 1)}…` : t; };
@@ -51,12 +61,9 @@ const wanted = findings.filter(
   (f) => f.verdict === 'ASK-OWNER' || (f.verification && !f.verification.upheld && RESERVED.test(String(f.verification.reason))),
 );
 
-let added = 0;
-let already = 0;
-for (const f of wanted) {
-  if (doc.open.some((q) => q.id === f.id)) { already++; continue; }
+const entries = wanted.map((f) => {
   const refutedFor = f.verification && !f.verification.upheld ? f.verification.reason : null;
-  doc.open.push({
+  return {
     id: f.id,
     batch: Number(f.batch),
     printed: clip(f.printedText || f.evidence, 700),
@@ -68,13 +75,19 @@ for (const f of wanted) {
         : `Their encoding and the printed text disagree. ${f.evidence ?? ''}`,
       900,
     ),
-  });
-  added++;
-}
+  };
+});
+
+/* The allocator refuses an id already on the desk — which is this script's old `already++` case, and it
+ * now covers `deferred` / `ruled` / `authorisedExceptions` too, not just `open`. */
+const { added, refused } = appendQuestions(doc, entries, num);
+for (const entry of added) console.log(`#${entry.n}  ${entry.id}  (batch ${entry.batch})`);
+for (const r of refused) console.log(`  skipped — ${r}`);
 
 doc.open.sort((a, b) => Number(a.batch) - Number(b.batch) || String(a.id).localeCompare(String(b.id)));
-console.log(`${wanted.length} finding(s) need a ruling: ${added} added, ${already} already queued.`);
+console.log(`${wanted.length} finding(s) need a ruling: ${added.length} added, ${refused.length} already queued.`);
 console.log(`${doc.open.length} open question(s) total.`);
 if (!WRITE) { console.log('(report only — pass --write)'); process.exit(0); }
 writeFileSync(PATH, JSON.stringify(doc, null, 1) + '\n');
-console.log('written.');
+writeFileSync(NUMBERS, JSON.stringify(num, null, 1) + '\n');
+console.log('written: work/owner-questions.json + work/rulings-numbering.json.');

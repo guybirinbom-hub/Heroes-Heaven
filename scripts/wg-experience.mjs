@@ -27,6 +27,7 @@ import { readFileSync, writeFileSync, existsSync, statSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { withHeavyLock } from './lib/heavy-lock.mjs';
 import { parseCopyBlock, parseOps, untsv, wgRowsByBucket } from './lib/wg-parse.mjs';
 import { LANE_ACCEPTS, OPTION_TYPE_LANES, controlCapacity, effectOf, flattenAll, gateStatus, judgeDelivery, laneOfControl, lanesOfControl, laneOfSelect, verdictFor } from './lib/wg-experience-lanes.mjs';
 
@@ -39,9 +40,13 @@ const batchPath = arg('--batch', null);
 /* REAL-CHARACTER MODE: `--character work/wg/<name>.codex.json` — the rows are everything that exported
  * character owns and every host is the character's own build (see the harness's characterHost). */
 const characterPath = arg('--character', null);
-if (!batchPath && !characterPath) { console.error('usage: node scripts/wg-experience.mjs --batch work/wg-batch-0NN.json | --character work/wg/<name>.codex.json [--skip-harness] [--verbose]'); process.exit(2); }
-const n = batchPath ? (batchPath.match(/wg-batch-(\d+)\.json$/) ?? [])[1] : null;
-if (batchPath && (!n || !existsSync(join(ROOT, batchPath)))) { console.error(`batch file must be an existing work/wg-batch-0NN.json (got ${batchPath})`); process.exit(2); }
+if (!batchPath && !characterPath) { console.error('usage: node scripts/wg-experience.mjs --batch work/wg-batch-<token>.json | --character work/wg/<name>.codex.json [--skip-harness] [--verbose]'); process.exit(2); }
+/* The batch TOKEN, not a number: `P01` is as valid a batch id as `029` (the print lane names its batches
+ * that way). It is used only to name work/.experience-raw-<token>.json, so a digits-only pattern bought
+ * nothing and hard-exited on a print batch. The print lane skips this sweep by design — this just stops
+ * the script refusing to run if it is ever pointed at one deliberately. */
+const n = batchPath ? (batchPath.match(/wg-batch-([0-9A-Za-z]+)\.json$/) ?? [])[1] : null;
+if (batchPath && (!n || !existsSync(join(ROOT, batchPath)))) { console.error(`batch file must be an existing work/wg-batch-<token>.json (got ${batchPath})`); process.exit(2); }
 if (characterPath && !existsSync(join(ROOT, characterPath))) { console.error(`no character export at ${characterPath}`); process.exit(2); }
 const DUMP = join(ROOT, 'work/wg/wg-data.sql');
 if (!existsSync(DUMP)) { console.error("No Wanderer's Guide dump at work/wg/wg-data.sql (gitignored on purpose: GPL-3.0; differ only)."); process.exit(2); }
@@ -53,24 +58,45 @@ const read = (p) => JSON.parse(readFileSync(join(ROOT, p), 'utf8').replace(/^﻿
 const norm = (s) => String(s ?? '').toLowerCase().replace(/[^a-z0-9]+/g, '');
 
 /* ---- 1. play the batch on the real builder ------------------------------------------------------- */
-if (!process.argv.includes('--skip-harness')) {
-  console.log(`experience: playing ${batchPath ?? characterPath} on the real builder (jsdom) …`);
-  const startedAt = Date.now();
-  const r = spawnSync('npx', ['vitest', 'run', 'test/wg-experience.harness.test.tsx', '--reporter=dot'], {
-    cwd: ROOT, stdio: 'inherit', shell: true,
-    env: { ...process.env, ...(batchPath ? { WG_EXPERIENCE_BATCH: batchPath } : { WG_EXPERIENCE_CHARACTER: join(ROOT, characterPath) }), WG_EXPERIENCE_OUT: RAW },
+const SKIP_HARNESS = process.argv.includes('--skip-harness');
+/* ⚠ `--skip-harness` re-judges the PREVIOUS raw dump. That is a legitimate hand tool and a lie inside a
+ * batch run: docs/wg-batch-pipeline.md §A says the driver "never invokes `npm run data` and
+ * `--skip-harness`", because a sweep that did not play the builder cannot answer gate 9. The driver
+ * exports WG_BATCH_RUN=1, so the refusal lives here rather than in a rule nobody can enforce. */
+if (SKIP_HARNESS && process.env.WG_BATCH_RUN === '1') {
+  console.error('experience: --skip-harness is refused inside a batch run (WG_BATCH_RUN=1) — gate 9 may only read a sweep that actually played the builder');
+  process.exit(2);
+}
+if (!SKIP_HARNESS) {
+  /* Under the heavy-job lock: the harness renders the real Builder in jsdom and is exactly the job that
+   * loses its forks worker when something else heavy is running (scripts/lib/heavy-lock.mjs). */
+  await withHeavyLock(`experience ${batchPath ?? characterPath}`, async () => {
+    /* ⚠ A harness that never ran still exits 0: under load vitest can fail to start its forks worker
+     * ("[vitest-pool]: Failed to start forks worker"), report zero tests, and leave the PREVIOUS raw file
+     * in place — which this script then judged as if it were fresh. Batch 27's re-sweep returned the
+     * baseline verdicts verbatim that way, with every data row already applied. The raw file must be
+     * newer than this run, or there is nothing honest to judge.
+     *
+     * ONE bounded retry (docs/wg-batch-pipeline.md §A, the `experience` stage): the worker failure is
+     * transient and a whole batch stage should not die of it — but a second failure is a real one, and
+     * retrying forever would hide a broken harness behind a slow loop. */
+    for (let attempt = 1; attempt <= 2; attempt++) {
+      console.log(`experience: playing ${batchPath ?? characterPath} on the real builder (jsdom)${attempt > 1 ? ' — retry' : ''} …`);
+      const startedAt = Date.now();
+      const r = spawnSync('npx', ['vitest', 'run', 'test/wg-experience.harness.test.tsx', '--reporter=dot'], {
+        cwd: ROOT, stdio: 'inherit', shell: true,
+        env: { ...process.env, ...(batchPath ? { WG_EXPERIENCE_BATCH: batchPath } : { WG_EXPERIENCE_CHARACTER: join(ROOT, characterPath) }), WG_EXPERIENCE_OUT: RAW },
+      });
+      const rawStat = existsSync(join(ROOT, RAW)) ? statSync(join(ROOT, RAW)) : null;
+      if (r.status === 0 && rawStat && rawStat.mtimeMs >= startedAt) return;
+      const why = r.status !== 0
+        ? `the harness failed (exit ${r.status})`
+        : `the harness wrote no fresh output at ${RAW} (worker failed to start?)`;
+      if (attempt === 1) { console.error(`experience: ${why} — retrying once, serialised on the heavy-job lock`); continue; }
+      console.error(`experience: ${why} on both attempts; refusing to judge a stale file — re-run when the machine is idle`);
+      process.exit(1);
+    }
   });
-  if (r.status !== 0) { console.error(`experience: the harness failed (exit ${r.status}); no verdicts written`); process.exit(1); }
-  /* ⚠ A harness that never ran still exits 0: under load vitest can fail to start its forks worker
-   * ("[vitest-pool]: Failed to start forks worker"), report zero tests, and leave the PREVIOUS raw file
-   * in place — which this script then judged as if it were fresh. Batch 27's re-sweep returned the
-   * baseline verdicts verbatim that way, with every data row already applied. The raw file must be
-   * newer than this run, or there is nothing honest to judge. */
-  const rawStat = existsSync(join(ROOT, RAW)) ? statSync(join(ROOT, RAW)) : null;
-  if (!rawStat || rawStat.mtimeMs < startedAt) {
-    console.error(`experience: the harness wrote no fresh output at ${RAW} (worker failed to start?); refusing to judge a stale file — re-run when the machine is idle`);
-    process.exit(1);
-  }
 }
 if (!existsSync(join(ROOT, RAW))) { console.error(`experience: no harness output at ${RAW}`); process.exit(1); }
 
@@ -246,6 +272,12 @@ for (const r of records) counts[r.verdict] = (counts[r.verdict] ?? 0) + 1;
 const out = {
   batch: batchPath,
   generated: new Date().toISOString(),
+  /* WHEN THE BUILDER WAS ACTUALLY PLAYED — the raw dump's mtime, not the moment this file was written.
+   * docs/wg-batch-pipeline.md §A: "the artefact gains `observed` (the raw file's mtime) and gate 9
+   * compares `observed`, not `generated`". `generated` moves every time the verdicts are re-judged
+   * (`--skip-harness`), so a re-judge over a stale dump used to look newer than the code it describes
+   * and the staleness check passed on a timestamp that proved nothing. */
+  observed: statSync(join(ROOT, RAW)).mtime.toISOString(),
   hostLevel: HOST_LEVEL,
   harnessMs: raw.ms ?? null,
   summary: counts,

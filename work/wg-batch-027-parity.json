@@ -1,0 +1,500 @@
+{
+ "batch": 27,
+ "records": [
+  {
+   "id": "songbird-strix",
+   "verdict": "MATCHES",
+   "evidence": "[batch 27 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "venomshield-nagaji",
+   "verdict": "MATCHES",
+   "evidence": "[batch 27 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "tunnel-rat",
+   "verdict": "MATCHES",
+   "evidence": "[batch 27 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "titan-nagaji",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] The Titan Nagaji's scales are never handed to the character: WG gives the armor item, our heritage record has no grantsI"
+  },
+  {
+   "id": "deep-rat",
+   "verdict": "MATCHES",
+   "evidence": "[batch 27 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "born-of-animal",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — on the Rulings Desk (batch 27)"
+  },
+  {
+   "id": "quillcoat-shisk",
+   "verdict": "MATCHES",
+   "evidence": "[batch 27 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "rainfall-orc",
+   "verdict": "MATCHES",
+   "evidence": "[batch 27 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "draxie",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] Draxie delivers nothing at all — the printed touch telepathy is on neither our heritage record nor any side carrier, whi"
+  },
+  {
+   "id": "wavediver-tengu",
+   "verdict": "MATCHES",
+   "evidence": "[batch 27 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "fodder-skeleton",
+   "verdict": "MATCHES",
+   "evidence": "[batch 27 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "sacred-nagaji",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] Sacred Nagaji's Tail is authored as an ADDITIVE grantedStrike, so the character keeps the nagaji chassis Fangs as well —; Our two situational stars omit the printed second sentence entirely (saving throws against effects that would Grab, Rest"
+  },
+  {
+   "id": "riverside-tripkee",
+   "verdict": "MATCHES",
+   "evidence": "[batch 27 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "keen-venom-vishkanya",
+   "verdict": "MATCHES",
+   "evidence": "[batch 27 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "leungli",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] Leungli grants no amphibious creature trait, so the printed water-breathing never reaches derive.ts's breathesWater — co"
+  },
+  {
+   "id": "shadow-of-the-courtier",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] The once-per-day reroll is attached to nothing the player sees when they Make an Impression — WG injects it onto that ac"
+  },
+  {
+   "id": "ascetic-tanuki",
+   "verdict": "MATCHES",
+   "evidence": "[batch 27 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "sailfish-merfolk",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] The printed substitution of Swim for the Stride that precedes a jump is modeled by neither side; only the +1 Athletics h"
+  },
+  {
+   "id": "nyktera",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] The printed doubling of the Seek cone from 30 feet to 60 feet is modeled by neither side; only the +2 circumstance bonus; Our stored description drops both cone measurements from the printed sentence, leaving the ungrammatical fragment \"in a "
+  },
+  {
+   "id": "paddler-shoony",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] The printed bog-terrain immunity is modeled by neither side; only the Swim degree shift is carried, so half the heritage"
+  },
+  {
+   "id": "stormtossed-tengu",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] The printed automatic success on the flat check to target a creature concealed only by rain or fog is modeled by neither"
+  },
+  {
+   "id": "grave-orc",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — on the Rulings Desk (batch 27)"
+  },
+  {
+   "id": "even-tempered-tanuki",
+   "verdict": "MATCHES",
+   "evidence": "[batch 27 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "battle-ready-orc",
+   "verdict": "MATCHES",
+   "evidence": "[batch 27 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "deny-the-traitors-rebirth",
+   "verdict": "MATCHES",
+   "evidence": "[batch 27 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "full-moon-sarangay",
+   "verdict": "MATCHES",
+   "evidence": "[batch 27 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "lorekeeper-shisk",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] WG renders a dedicated \"Select a Lore\" control that trains a Lore skill; our record has no `loreChoices`, so the printed; WG upgrades both chosen skills to expert at 5th level via a LEVEL>=5 conditional; ours grants only trained and never adv"
+  },
+  {
+   "id": "shadow-of-the-smith",
+   "verdict": "MATCHES",
+   "evidence": "[batch 27 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "born-of-item",
+   "verdict": "MATCHES",
+   "evidence": "[batch 27 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "mountainkeeper-tengu",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] The per-cast divine-or-primal tradition choice for every spell from a tengu heritage or ancestry feat is modelled by nei"
+  },
+  {
+   "id": "half-moon-sarangay",
+   "verdict": "MATCHES",
+   "evidence": "[batch 27 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "mountaineer-samsaran",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] The environmental-cold step-down is delivered by neither side, though we have a house pattern for exactly this sentence "
+  },
+  {
+   "id": "steadfast-tanuki",
+   "verdict": "MATCHES",
+   "evidence": "[batch 27 read] comparer misread settled/taught: The comparer flag \"IDENTITY options everydayform/teakettleform, ours none\" is a misread — we do carry both options, in the pinned-choice tab"
+  },
+  {
+   "id": "glacier-cavern-minotaur",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] Same missing environmental-cold step-down: only the cold resistance is delivered, by either side."
+  },
+  {
+   "id": "virtuous-tanuki",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] The carve-out from the sickened condition's ban on ingesting anything is modelled by neither side, and the sickened row ; The opt-out from being incapacitated by conventional alcohol is modelled by neither side and reaches no sheet surface."
+  },
+  {
+   "id": "deny-lady-nanbyos-charity",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — on the Rulings Desk (batch 27)"
+  },
+  {
+   "id": "tsukumogami-poppet",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] Our three material options grant a flat weakness 5, but the printed weakness is the poppet chassis value — one-third lev; Choosing metal or ceramic must REPLACE the poppet fire weakness, but nothing on our side removes it, so a metal tsukumog"
+  },
+  {
+   "id": "breaker-surki",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] We hand Trench Digging to every breaker surki at 1st level, but print places it inside an Evolution that is only obtaine; Their side delivers the evolved claw statistics (1d6, magical/razing/versatile force, agile dropped); ours models the up"
+  },
+  {
+   "id": "deep-orc",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] Print pins the granted Terrain Expertise to underground terrain, but our grant leaves the feat's terrain question unansw"
+  },
+  {
+   "id": "courageous-tanuki",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] Print and their encoding both grant the Tactical Retreat reaction; our heritage grants no action at all, so the reaction; Print rewrites how the fleeing condition works for this character — one action may be spent freely — and neither side mo"
+  },
+  {
+   "id": "sewer-rat",
+   "verdict": "MATCHES",
+   "evidence": "[batch 27 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "whipfang-nagaji",
+   "verdict": "MATCHES",
+   "evidence": "[batch 27 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "shoreline-strix",
+   "verdict": "MATCHES",
+   "evidence": "[batch 27 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "predator-strix",
+   "verdict": "MATCHES",
+   "evidence": "[batch 27 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "healer-samsaran",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] The heritage's self-healing clause — add your level to the Hit Points regained from Treat Wounds on yourself — is modell"
+  },
+  {
+   "id": "ragdyan-vanara",
+   "verdict": "MATCHES",
+   "evidence": "[batch 27 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "shadow-of-the-sailor",
+   "verdict": "MATCHES",
+   "evidence": "[batch 27 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "shadow-of-the-hermit",
+   "verdict": "MATCHES",
+   "evidence": "[batch 27 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "thickcoat-shoony",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] Only the cold resistance is modeled by either side; the printed snow-concealment flat-check waiver and the two environme"
+  },
+  {
+   "id": "compact-skeleton",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] Our record sets no size, so a Compact Skeleton stays Medium (the skeleton ancestry chassis) instead of Small."
+  },
+  {
+   "id": "littlehorn-minotaur",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] Our record sets no size, so a Littlehorn Minotaur stays Large (the minotaur ancestry chassis) instead of Medium.; Our record does not downgrade or retrait the minotaur horns, so the horns Strike still shows 1d8 piercing without agile "
+  },
+  {
+   "id": "hold-scarred-orc",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] Our record carries no ancestryHp, so the character gets the orc chassis 10 ancestry Hit Points instead of the printed 12"
+  },
+  {
+   "id": "slabsoul-minotaur",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] The granted action record's description text has lost the damage die and the save type, so the sheet's Raise Slabs card "
+  },
+  {
+   "id": "monstrous-skeleton",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] Our four grantedStrikes rows are all tagged choiceValue but the record carries no effectChoices (and no choice), so noth"
+  },
+  {
+   "id": "fishseeker-shoony",
+   "verdict": "MATCHES",
+   "evidence": "[batch 27 read] comparer misread settled/taught: The comparer flag \"KINDS missing [skill]\" is a misread: WG's SKILL_ACROBATICS op has no value — it is a pure text note carrying the same Gra"
+  },
+  {
+   "id": "roaming-minotaur",
+   "verdict": "MATCHES",
+   "evidence": "[batch 27 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "shimmertongue-nagaji",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] Our magicsense glossary blurb calls it an imprecise sense; print grants it here as a VAGUE sense, and both corpus grants"
+  },
+  {
+   "id": "shifting-skeleton",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] Rearrange Bones' +1 status bonus to Impersonate Deception checks has no carrier on either side — it never reaches the De"
+  },
+  {
+   "id": "lantern-surki",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] The heritage grants the Lantern Beam EVOLUTION action unconditionally at 1st level, but print gates every surki evolutio"
+  },
+  {
+   "id": "scavenger-strix",
+   "verdict": "MATCHES",
+   "evidence": "[batch 27 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "hardshell-surki",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] Same shape as Lantern Surki: the heritage grants Dampening Harmonics unconditionally at 1st level, though print makes it; The `d` fallback description has a hole where \"DC 17 flat check\" should be — the sentence reads \"attempt a .\" — though t"
+  },
+  {
+   "id": "spellkeeper-shisk",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] Our flat 56-cantrip picker hard-codes one tradition per option, so 16 cantrips that sit on BOTH the occult and primal li"
+  },
+  {
+   "id": "born-of-celestial",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] The heritage's headline rider — every spell from a yaoguai heritage or ancestry feat becomes divine — is modeled by neit; The granted divine cantrip is a Yaoguai Form benefit in print, but we grant it unconditionally with no note, so the Spel"
+  },
+  {
+   "id": "prismatic-vishkanya",
+   "verdict": "MATCHES",
+   "evidence": "[batch 27 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "grig",
+   "verdict": "MATCHES",
+   "evidence": "[batch 27 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "bloodhound-shoony",
+   "verdict": "MATCHES",
+   "evidence": "[batch 27 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "born-of-vegetation",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] Our Born of Vegetation grants neither the plant nor the fungus creature trait and renders no control to pick one; WG ask; The Yaoguai Form half of Born of Vegetation — level added to Treat Wounds healing plus a conditional +1 to the healer's "
+  },
+  {
+   "id": "new-moon-sarangay",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] Our New Moon Sarangay record carries no size field, so the character stays Medium (the sarangay chassis size) instead of; Our New Moon Sarangay record carries no ancestryHp, so the character gets the sarangay chassis 8 ancestry HP instead of "
+  },
+  {
+   "id": "respite-of-a-thousand-roofs",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] Our Respite of a Thousand Roofs delivers no Crafting training — the record has no skills carrier at all and instead ship; The Cooking Lore half of the same sentence is also undelivered on our side — no Lore training reaches the character."
+  },
+  {
+   "id": "pelagic-merfolk",
+   "verdict": "MATCHES",
+   "evidence": "[batch 27 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "toy-poppet",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] Our Toy Poppet record carries no size field, so the character stays Small (the poppet chassis size) instead of Tiny."
+  },
+  {
+   "id": "ghost-bull-minotaur",
+   "verdict": "MATCHES",
+   "evidence": "[batch 27 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "reef-merfolk",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] The poison-affliction stage-reduction half of the printed ability is modeled by neither side — ours carries only the res"
+  },
+  {
+   "id": "pixie",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] Pixie carries no size field at all, so a Pixie sprite stays Tiny (the sprite ancestry chassis size) instead of becoming "
+  },
+  {
+   "id": "venom-resistant-vishkanya",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] Same gap as Reef Merfolk: the printed poison-affliction stage-reduction clause is modeled by neither side; ours carries "
+  },
+  {
+   "id": "nightglider-strix",
+   "verdict": "MATCHES",
+   "evidence": "[batch 27 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "winter-orc",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] The environmental-cold clause is modeled by neither side — ours carries only the Survival skill picker, and WG carries o"
+  },
+  {
+   "id": "wilderness-samsaran",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] The difficult-terrain clause is modeled by neither side — ours carries only the Survival-or-substitute picker, and WG ca"
+  },
+  {
+   "id": "ghost-poppet",
+   "verdict": "MATCHES",
+   "evidence": "[batch 27 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "deny-the-firstborn-pursuit",
+   "verdict": "MATCHES",
+   "evidence": "[batch 27 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "stickytoe-tripkee",
+   "verdict": "MATCHES",
+   "evidence": "[batch 27 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "born-of-elements",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] The blanket \"everything yaoguai becomes primal\" clause is unmodelled on both sides, so a Born of Elements yaoguai's Bril"
+  },
+  {
+   "id": "respite-of-cloudless-paths",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] The heat/cold step reduction is unmodelled on both sides; only the +1 save half is carried."
+  },
+  {
+   "id": "waxing-moon-sarangay",
+   "verdict": "MATCHES",
+   "evidence": "[batch 27 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "sturdy-skeleton",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] Ours never raises ancestry HP to 10, so a Sturdy Skeleton keeps the skeleton chassis' 6 HP."
+  },
+  {
+   "id": "thickskin-tripkee",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] Ours never raises ancestry HP to 8, so a Thickskin Tripkee keeps the tripkee chassis' 6 HP."
+  },
+  {
+   "id": "snow-rat",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] The environmental-cold step reduction is unmodelled on both sides, though our sibling snow/cold heritages all carry it."
+  },
+  {
+   "id": "old-blood-vishkanya",
+   "verdict": "MATCHES",
+   "evidence": "[batch 27 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "elytron-surki",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] Ours hands a 1st-level Elytron Surki BOTH of the heritage's Evolutions for free, when print gates every Evolution behind; Our Fly innate spell carries no tradition, so it resolves to the spell's first tradition (arcane) instead of the surki's; Our Stridulating Song description drops the save type printed for the action."
+  },
+  {
+   "id": "waning-moon-sarangay",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — on the Rulings Desk (batch 27)"
+  },
+  {
+   "id": "poisonhide-tripkee",
+   "verdict": "MATCHES",
+   "evidence": "[batch 27 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "wajaghand-vanara",
+   "verdict": "MATCHES",
+   "evidence": "[batch 27 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "gandharva",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] Gandharva's tradition-override clause (all sprite heritage/ancestry-feat spells become divine) is modeled by neither sid; Gandharva grants Summon Instrument twice — once as a record-level innateSpells entry and again in every one of the 16 ef"
+  },
+  {
+   "id": "shadow-rat",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] Shadow Rat's two Intimidation riders (Coerce animals, no language penalty when Demoralizing an animal) are attached to t; Shadow Rat's printed drawback — every animal's starting attitude toward you is one degree worse — is modeled by neither "
+  },
+  {
+   "id": "carcharodon-merfolk",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] The 120 ft air / 500 ft water blood-scent range is bound to the scent sense row by WG and has no carrier at all on our s"
+  },
+  {
+   "id": "kanchil",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] Kanchil's +1 circumstance bonus to Deception initiative rolls is in WG's op text and absent from our single Deception-on; The third printed target of Kanchil's bonus — your Deception DC against Sense Motive to uncover such a lie — is modeled "
+  },
+  {
+   "id": "dogtooth-tengu",
+   "verdict": "FIXED",
+   "evidence": "[batch 27 read, adversarially confirmed] Our dogtooth-tengu record carries no mechanical field at all, so the heritage's only printed effect — the deadly d8 trai"
+  },
+  {
+   "id": "longsnout-rat",
+   "verdict": "MATCHES",
+   "evidence": "[batch 27 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "shadow-of-the-wanderer",
+   "verdict": "MATCHES",
+   "evidence": "[batch 27 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  }
+ ]
+}

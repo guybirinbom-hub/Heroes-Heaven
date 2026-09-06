@@ -1,0 +1,480 @@
+{
+ "batch": "work/wg-batch-025.json",
+ "examined": 87,
+ "method": "9 Opus Explore readers (print + WG raw ops + every carrier) each followed by an Opus adversarial verifier; findings applied by 4 family agents + 4 verifiers (wf_ad64c344-20d, wf_ce569669-9f5)",
+ "confirmed": [
+  {
+   "id": "hopeful-athamaru",
+   "finding": "hopeful-athamaru-size",
+   "severity": "player-visible",
+   "summary": "Hopeful Athamaru does not carry its printed size change to Large — the character stays Medium off the athamaru chassis.",
+   "fixed": true
+  },
+  {
+   "id": "flying-animal",
+   "finding": "flying-animal-animal-attack",
+   "severity": "player-visible",
+   "summary": "Flying Animal never delivers the animal attack the print grants; WG grants it via a record and our own sibling heritage running-animal already carries the picker.",
+   "fixed": true
+  },
+  {
+   "id": "wisp-fetchling",
+   "finding": "wisp-fetchling-size",
+   "severity": "player-visible",
+   "summary": "Wisp Fetchling does not carry its printed size change to Small — the character stays Medium off the fetchling chassis.",
+   "fixed": true
+  },
+  {
+   "id": "wisp-fetchling",
+   "finding": "wisp-fetchling-acrobatics",
+   "severity": "player-visible",
+   "summary": "Wisp Fetchling never grants the trained Acrobatics proficiency the print gives (nor its already-trained redirect).",
+   "fixed": true
+  },
+  {
+   "id": "forge-blessed-dwarf",
+   "finding": "forge-blessed-dwarf-double-picker",
+   "severity": "player-visible",
+   "summary": "Forge-Blessed Dwarf carries the same patron-deity picker twice — an `effectChoices` block and a `choice` block with identical prompt and identical nine options — and the builder renders both.",
+   "fixed": true
+  },
+  {
+   "id": "nine-lives-catfolk",
+   "finding": "nine-lives-catfolk-dup-note",
+   "severity": "player-visible",
+   "summary": "Our situationalBonuses entry for Nine Lives Catfolk restates, on the very same dying pill, what the structured recoveryDcIgnoresDyingValue field already computes and explains — and hard-codes a DC that other records can change.",
+   "fixed": true
+  },
+  {
+   "id": "whisper-elf",
+   "finding": "whisper-elf-flat-check",
+   "severity": "player-visible",
+   "summary": "Whisper Elf's flat-check DC reduction against concealed and hidden targets is modelled by neither side, and our own registry already carries the identical clause for another record.",
+   "fixed": true
+  },
+  {
+   "id": "strong-blooded-dwarf",
+   "finding": "strong-blooded-dwarf-stage-reduction",
+   "severity": "player-visible",
+   "summary": "Strong-Blooded Dwarf's poison-affliction stage reduction on successes and critical successes is modelled by neither side, though our registry already carries the identical clause verbatim for another record.",
+   "fixed": true
+  },
+  {
+   "id": "hopeful-athamaru",
+   "finding": "hopeful-athamaru-aura",
+   "severity": "player-visible",
+   "summary": "Hopeful Athamaru's 10-foot hope aura (+1 circumstance to allies' saves vs fear) has no mechanical carrier on either side — it survives only as prose in the description.",
+   "fixed": true
+  },
+  {
+   "id": "forge-blessed-dwarf",
+   "finding": "forge-blessed-dwarf-instrument",
+   "severity": "internal",
+   "summary": "The comparer's KINDS flags for Forge-Blessed Dwarf are wrong on both counts — it missed that our spellcasting rides inside an effectChoices option grant, and that the level-12 innate proficiency step is modelled generically rather than per-",
+   "fixed": true
+  },
+  {
+   "id": "stoutheart-centaur",
+   "finding": "stoutheart-centaur",
+   "severity": "player-visible",
+   "summary": "Stoutheart Centaur's ancestry-HP override (10 instead of 8) is delivered by no carrier on our side — the heritage record has no HP field and the only heritage HP lane (alternateAttributes.hp) is unreachable for it.",
+   "fixed": true
+  },
+  {
+   "id": "warrior-android",
+   "finding": "warrior-android",
+   "severity": "player-visible",
+   "summary": "Warrior Android's whole printed content — trained in all simple and martial weapons — is delivered by nothing on our side; it ships a dataWarning telling the player to apply it by hand, while WG encodes both proficiencies.",
+   "fixed": true
+  },
+  {
+   "id": "aon-ganzi",
+   "finding": "aon-ganzi",
+   "severity": "player-visible",
+   "summary": "Ganzi never puts the ganzi creature trait on the built character — it has `traits:['ganzi']` (the record's own tag) but no `grantsCreatureTraits`, the field every one of our other 16 well-formed versatile heritages uses for exactly this pri",
+   "fixed": true
+  },
+  {
+   "id": "aon-ganzi",
+   "finding": "aon-ganzi#aonid",
+   "severity": "player-visible",
+   "summary": "Ganzi's aonId points at the Ganzi TRAIT page (trait-339) instead of its heritage page (heritage-129), so the render carrier serves a one-sentence flavour stub and the player never reads a single printed mechanic of the heritage.",
+   "fixed": true
+  },
+  {
+   "id": "budding-speaker-centaur",
+   "finding": "budding-speaker-centaur",
+   "severity": "player-visible",
+   "summary": "The Faithspeaker/Greenspeaker identity is never recorded on our character: the heritage merges the divine-or-primal declaration into a cantrip spellFilter, so the two downstream feats re-ask a question print says cannot be changed, and thei",
+   "fixed": true
+  },
+  {
+   "id": "snaring-anadi",
+   "finding": "snaring-anadi",
+   "severity": "player-visible",
+   "summary": "Snaring Anadi's entire printed content — the fangs gaining grapple and trip — reaches nobody: the record has no unarmedTraits rider, so the anadi's Fangs strike renders with its ancestry traits only.",
+   "fixed": true
+  },
+  {
+   "id": "fey-dragonet",
+   "finding": "fey-dragonet",
+   "severity": "player-visible",
+   "summary": "Fey Dragonet never adds Fey to the character's languages — we carry the fey creature trait and the Stealth star but no grantsLanguages.",
+   "fixed": true
+  },
+  {
+   "id": "climbing-animal",
+   "finding": "climbing-animal-land-speed",
+   "severity": "player-visible",
+   "summary": "Climbing Animal never sets the land Speed of 20 feet, so the sheet keeps the Awakened Animal chassis Speed of 5 feet.",
+   "fixed": true
+  },
+  {
+   "id": "climbing-animal",
+   "finding": "climbing-animal-animal-attack",
+   "severity": "player-visible",
+   "summary": "Climbing Animal's mandatory animal attack is delivered by no carrier of ours, so the character has no unarmed Strike at all.",
+   "fixed": true
+  },
+  {
+   "id": "rite-of-reinforcement",
+   "finding": "rite-of-reinforcement",
+   "severity": "player-visible",
+   "summary": "Rite of Reinforcement never gives the character the exoskeleton armor — the item exists in our data but the heritage has no grantsItems, so the character wears nothing and gets no AC.",
+   "fixed": true
+  },
+  {
+   "id": "rock-dwarf",
+   "finding": "rock-dwarf-defense-split",
+   "severity": "player-visible",
+   "summary": "Our Rock Dwarf stars split the +2 by maneuver (Fortitude vs Reposition/Shove, Reflex vs Trip) when print gives both defenses against all three, and drop the second sentence entirely.",
+   "fixed": true
+  },
+  {
+   "id": "rock-dwarf",
+   "finding": "rock-dwarf-halved-forced-movement",
+   "severity": "player-visible",
+   "summary": "Rock Dwarf's halved forced movement is carried by no carrier on either side — residual read.",
+   "fixed": true
+  },
+  {
+   "id": "naari",
+   "finding": "naari-environmental-heat",
+   "severity": "player-visible",
+   "summary": "Naari's \"environmental heat effects one step less severe\" is modelled by neither side — residual read.",
+   "fixed": true
+  },
+  {
+   "id": "undine",
+   "finding": "undine-breathes-water",
+   "severity": "player-visible",
+   "summary": "Undine's \"you can breathe both water and air\" reaches the sheet from no carrier: the amphibious creature trait never sets the breathesWater capability.",
+   "fixed": true
+  },
+  {
+   "id": "rite-of-invocation",
+   "finding": "rite-of-invocation-instrument",
+   "severity": "internal",
+   "summary": "The IDENTITY flag misreads their encoding: their outer select is a tradition gate, and the cantrip pick is the nested FILTERED SPELL select — there is no parity gap here.",
+   "fixed": true
+  },
+  {
+   "id": "anvil-dwarf",
+   "finding": "anvil-dwarf",
+   "severity": "player-visible",
+   "summary": "Anvil Dwarf's printed SECOND Specialty Crafting specialty is delivered by Wanderer's Guide (two giveAbilityBlock ops on the same feat) and by nothing on our side — we grant Specialty Crafting once, so the character gets one specialty instea",
+   "fixed": true
+  },
+  {
+   "id": "thalassic-azarketi",
+   "finding": "thalassic-azarketi",
+   "severity": "player-visible",
+   "summary": "Thalassic Azarketi's second printed clause — piercing ranged attacks keep their full range increments against underwater targets — is modelled by neither side, and it is a live combat number.",
+   "fixed": true
+  },
+  {
+   "id": "created-fleshwarp",
+   "finding": "created-fleshwarp",
+   "severity": "player-visible",
+   "summary": "Created Fleshwarp's printed 'you don't need to eat and can't starve' is modelled by neither side, although our heritage `immunities` field has a reader and an already free-form prose vocabulary that fits it exactly.",
+   "fixed": true
+  },
+  {
+   "id": "deep-fetchling",
+   "finding": "deep-fetchling",
+   "severity": "internal",
+   "summary": "The comparer's flags for Deep Fetchling are both false — it reported KINDS missing [choice] and 'their options cold/void, ours none' because it probes only the `choice` field, while our picker is the dedicated `choiceResistance` carrier hol",
+   "fixed": true
+  },
+  {
+   "id": "spindly-anadi",
+   "finding": "spindly-anadi",
+   "severity": "internal",
+   "summary": "The comparer's VALUES flag for Spindly Anadi ('speed land: theirs 30, ours 5') is a false positive — it compared their absolute setValue against our bonus field without adding the anadi chassis, and our derived land Speed is 30, matching pr",
+   "fixed": true
+  },
+  {
+   "id": "cataphract-fleshwarp",
+   "finding": "cataphract-fleshwarp",
+   "severity": "player-visible",
+   "summary": "Ours grants Armor Proficiency unconditionally and models neither half of the printed alternative branch — the Athletics training nor the Armor Assist skill feat — that fires when the class is already trained in all armor.",
+   "fixed": true
+  },
+  {
+   "id": "cataphract-fleshwarp",
+   "finding": "cataphract-fleshwarp#instrument",
+   "severity": "internal",
+   "summary": "The IDENTITY flag 'theirs armorassistlegacy vs ours armorproficiency' is a comparer misread: the two feats are not competing identities for one grant — they sit in opposite branches of a single conditional, and their side grants Armor Profi",
+   "fixed": true
+  },
+  {
+   "id": "polyglot-android",
+   "finding": "polyglot-android",
+   "severity": "player-visible",
+   "summary": "Ours delivers no language slots at all for a heritage whose entire printed effect is two chosen languages plus a Multilingual upgrade — the record carries neither languageChoices nor languageChoicesBonus, both of which already have heritage",
+   "fixed": true
+  },
+  {
+   "id": "liminal-fetchling",
+   "finding": "liminal-fetchling",
+   "severity": "player-visible",
+   "summary": "The heritage's flat-check reduction (DC 3 concealed / DC 9 undetected) has no mechanical carrier on our side, though situationalBonuses already models exactly this clause shape for other records.",
+   "fixed": true
+  },
+  {
+   "id": "liminal-fetchling",
+   "finding": "liminal-fetchling#description",
+   "severity": "internal",
+   "summary": "Our curated description for Liminal Fetchling drops both replacement DCs, leaving two ungrammatical fragments that state no number at all.",
+   "fixed": true
+  },
+  {
+   "id": "reflection",
+   "finding": "reflection#instrument",
+   "severity": "internal",
+   "summary": "The instrument's 'giveTrait (their trait id 3407) unverified' cannot be verified because trait 3407 does not exist in the WG dump — their Reflection trait is 2912 — and our grantsCreatureTraits already delivers what print requires, so there",
+   "fixed": true
+  },
+  {
+   "id": "reflection",
+   "finding": "reflection#impersonate",
+   "severity": "player-visible",
+   "summary": "The printed licence to skip Deception checks when Impersonating your progenitor is modelled by neither side, and it is the heritage's only active benefit beyond the trait.",
+   "fixed": true
+  },
+  {
+   "id": "winter-catfolk",
+   "finding": "winter-catfolk",
+   "severity": "player-visible",
+   "summary": "The heritage's second printed benefit — treating environmental cold as one step less extreme — is modelled by neither side and has no carrier anywhere in the repo.",
+   "fixed": true
+  },
+  {
+   "id": "desert-elf",
+   "finding": "desert-elf",
+   "severity": "player-visible",
+   "summary": "The heritage's second printed benefit — environmental heat one step less extreme — is modelled by neither side and has no carrier anywhere in the repo.",
+   "fixed": true
+  },
+  {
+   "id": "benthic-azarketi",
+   "finding": "benthic-azarketi",
+   "severity": "player-visible",
+   "summary": "Both non-resistance clauses of this heritage — the wet-cold exemption and automatic depth-pressure adaptation — are modelled by neither side.",
+   "fixed": true
+  },
+  {
+   "id": "house-drake",
+   "finding": "house-drake",
+   "severity": "player-visible",
+   "summary": "House Drake never grants the Diabolic language: the heritage record carries no grantsLanguages field, and its ancestry (dragonet) grants only Common and Draconic with additional:0 and no options list, so the printed language grant reaches n",
+   "fixed": true
+  },
+  {
+   "id": "house-drake",
+   "finding": "house-drake",
+   "severity": "player-visible",
+   "summary": "The 'jaws count as silver' half of House Drake's printed sentence has no carrier on our side — situationalBonuses.ts already holds the OTHER half of the same sentence (+1 circumstance damage vs fiends), so the silver marker is a split-sente",
+   "fixed": true
+  },
+  {
+   "id": "elemental-heart-dwarf",
+   "finding": "elemental-heart-dwarf",
+   "severity": "player-visible",
+   "summary": "The description of the activity this heritage grants has lost its damage dice, its damage-type clause and its save type.",
+   "fixed": true
+  },
+  {
+   "id": "beastkin",
+   "finding": "beastkin",
+   "severity": "player-visible",
+   "summary": "WG grants the Change Shape ability the print names; we grant only its hybrid-form jaws, and no beastkin Change Shape action exists in our data at all.",
+   "fixed": true
+  },
+  {
+   "id": "coral-athamaru",
+   "finding": "coral-athamaru",
+   "severity": "player-visible",
+   "summary": "WG hands the character the coral plate armor the print describes; our record delivers nothing at all and the armor does not exist in our data.",
+   "fixed": true
+  },
+  {
+   "id": "laborer-android",
+   "finding": "laborer-android",
+   "severity": "player-visible",
+   "summary": "The printed Athletics training never lands on a built character, because our 16-option effectChoices picker has no default and build.ts only auto-resolves single-option picks.",
+   "fixed": true
+  },
+  {
+   "id": "impersonator-android",
+   "finding": "impersonator-android",
+   "severity": "player-visible",
+   "summary": "The printed Deception training never lands on a built character — the instrument flag is a real defect, not a comparer misread.",
+   "fixed": true
+  },
+  {
+   "id": "ponygait-centaur",
+   "finding": "ponygait-centaur",
+   "severity": "player-visible",
+   "summary": "Our built character stays Large: the heritage carries no sizeSet even though build.ts's size code was written for exactly this sentence.",
+   "fixed": true
+  },
+  {
+   "id": "ponygait-centaur",
+   "finding": "ponygait-centaur",
+   "severity": "player-visible",
+   "summary": "The unconditional +1 circumstance bonus to Reflex is a real number on their sheet and only a display star on ours.",
+   "fixed": true
+  },
+  {
+   "id": "bright-fetchling",
+   "finding": "bright-fetchling",
+   "severity": "player-visible",
+   "summary": "Print grants two innate cantrips; both sides grant one, and our description was rewritten to match the single grant rather than the print.",
+   "fixed": true
+  },
+  {
+   "id": "aon-aphorite",
+   "finding": "aon-aphorite",
+   "severity": "player-visible",
+   "summary": "Aphorite never confers the aphorite CREATURE trait: our record carries `traits:[\"aphorite\"]` (feat-eligibility only) and no `grantsCreatureTraits`, so the trait pill/creature-trait list stays empty where print and WG both grant it.",
+   "fixed": true
+  },
+  {
+   "id": "mistbreath-azarketi",
+   "finding": "mistbreath-azarketi",
+   "severity": "player-visible",
+   "summary": "Mistbreath Azarketi is missing its printed land Speed 25: our record states only `speeds:{swim:15}`, so the azarketi chassis land 20 stands and the sheet walks 20 ft instead of 25 ft.",
+   "fixed": true
+  },
+  {
+   "id": "running-animal",
+   "finding": "running-animal",
+   "severity": "player-visible",
+   "summary": "Running Animal's printed animal attack lands nowhere on our side: its `effectChoices` options carry no `grant`, and EffectGrant has no strike lane, so the picker is inert and the character gets no Claw/Jaws/Tail Strike.",
+   "fixed": true
+  },
+  {
+   "id": "dhampir",
+   "finding": "dhampir",
+   "severity": "internal",
+   "summary": "The comparer's IDENTITY flag 'grants voidhealing, ours none' is a misread — we do carry void healing, under the boolean field `negativeHealing`, with readers and a sheet pill.",
+   "fixed": true
+  },
+  {
+   "id": "venomous-anadi",
+   "finding": "venomous-anadi",
+   "severity": "player-visible",
+   "summary": "The Anadi Venom ability the heritage's whole text grants is delivered by no carrier on our side — the heritage record has no grantsActions, no FEAT_FEAT_GRANTS entry, no mode, no grantsFeats — so the `anadi-venom` action sits orphaned in co",
+   "fixed": true
+  },
+  {
+   "id": "adaptive-anadi",
+   "finding": "adaptive-anadi",
+   "severity": "player-visible",
+   "summary": "Two of our carriers ask the same Adopted Ancestry question, and the live one is the wrong one: the heritage's own `choice` is dead (nothing reads `heritage:adaptive-anadi`) while the granted feat's picker is what actually unlocks feats — an",
+   "fixed": true
+  },
+  {
+   "id": "swimming-animal",
+   "finding": "swimming-animal",
+   "severity": "player-visible",
+   "summary": "The water-dwelling branch's printed 20-foot land Speed is not delivered: our option grant carries only `speeds:{swim:20}`, so a water-dwelling awakened animal walks at the chassis 5 feet instead of 20.",
+   "fixed": true
+  },
+  {
+   "id": "swimming-animal",
+   "finding": "swimming-animal",
+   "severity": "player-visible",
+   "summary": "The animal attack every awakened animal is printed to have is delivered by neither our heritage nor our ancestry, so a Swimming Animal character has no natural attack at all.",
+   "fixed": true
+  },
+  {
+   "id": "dragonblood",
+   "finding": "dragonblood",
+   "severity": "internal",
+   "summary": "The heritage's language clause is encoded by no field on our side — nothing lets a heritage widen the owning ancestry's additional-languages list, so the printed \"Add Draconic\" sentence lands nowhere.",
+   "fixed": true
+  }
+ ],
+ "refuted": [
+  {
+   "id": "sharp-eared-catfolk",
+   "finding": "sharp-eared-catfolk",
+   "summary": "The once-per-round free-action Point Out is delivered by neither side, and our record's `limitedUses: {max:1, per:'round'}` is orphaned — the only reader of a heritage's limitedUses is the granted-act",
+   "evidence": "The load-bearing half is false: heritage limitedUses has a SECOND reader the sweep missed. FeatsTab.tsx:280 pushes `usesRecord: heritage` for both heritages with the comment \"Four heritages print 'once per day'; the pip lookup takes a feat or a class feature and a heritage row has neither id, so all"
+  },
+  {
+   "id": "arctic-elf",
+   "finding": "arctic-elf",
+   "summary": "Print's environmental-cold step-down clause is modelled by neither side and reaches the player nowhere.",
+   "evidence": "core-descriptions.json heritages/arctic-elf carries the printed sentence verbatim (\"You treat environmental cold effects as if they were one step less extreme...\"), and public/ast/heritages.json.gz holds the same AoN page; heritage.description is rendered to the player by DetailsTab.tsx:216/236 (Inf"
+  },
+  {
+   "id": "hunter-automaton",
+   "finding": "hunter-automaton",
+   "summary": "The conditional Speed-30 clause is delivered by no carrier of ours; WG at least attaches it to SPEED.",
+   "evidence": "The record indeed has no speed field (verified in core.json; automaton chassis is speeds:{land:25}), but core-descriptions.json heritages/hunter-automaton carries the whole printed clause word-for-word and reaches the sheet through the same DetailsTab/FeatsTab description path, so a carrier does del"
+  },
+  {
+   "id": "rite-of-passage",
+   "finding": "rite-of-passage",
+   "summary": "The off-guard waiver while Balancing in forests is stated in print and modelled by neither side.",
+   "evidence": "The claim's evidence \"Nothing anywhere states the off-guard waiver\" is false: core-descriptions.json heritages/rite-of-passage reads \"...when you use the Acrobatics skill to Balance on narrow surfaces or uneven ground within forests, you aren't off-guard\", shown on the sheet via the heritage descrip"
+  },
+  {
+   "id": "coral-athamaru",
+   "finding": "coral-athamaru",
+   "summary": "The armor restriction — coral cannot be removed and no other armor can ever be worn — is modelled by neither side.",
+   "evidence": "The claim's \"Nothing\" is false: core-descriptions.json heritages/coral-athamaru ends \"You can never wear other armor or remove the coral. You can etch armor runes onto the coral.\" verbatim, displayed through the heritage description popup, and the same text is in public/ast/heritages.json.gz. Their "
+  },
+  {
+   "id": "impersonator-android",
+   "finding": "impersonator-android",
+   "summary": "The disguise-kit waiver for Impersonating a human is stated in print and modelled by neither side.",
+   "evidence": "core-descriptions.json heritages/impersonator-android states it verbatim — \"You don't require a disguise kit when attempting Deception checks to Impersonate a human.\" — and that description reaches the player through the heritage popup, so the claim's \"Nothing states the waiver\" is wrong. situationa"
+  },
+  {
+   "id": "bright-fetchling",
+   "finding": "bright-fetchling",
+   "summary": "The 5-foot dim-light aura and its activate/suppress action are printed and modelled by neither side.",
+   "evidence": "core-descriptions.json heritages/bright-fetchling reads \"You emit dim light within 5 feet of you. You can activate or suppress this ability as an action, which has the concentrate trait.\" verbatim — the exact sentence the proposal would duplicate as a `note` — and it reaches the player via the herit"
+  },
+  {
+   "id": "venomous-anadi",
+   "finding": "venomous-anadi",
+   "summary": "The comparer's IDENTITY flag \"grants anadivenom\" is a misread of the description reference list — our record grants nothing, so the flag reads as though the two sides agree on the ability when only WG",
+   "evidence": "scripts/wg-identity.mjs loads only work/wg/wg-data.sql and public/core.json (line 44) — a grep for 'core-descriptions|descriptions|refs' in that file returns nothing, so it cannot harvest `r[].label`. Running it confirms the opposite of the claim: `node scripts/wg-identity.mjs --ids venomous-anadi -"
+  }
+ ],
+ "flaggedResidues": [],
+ "rejected": 8,
+ "askOwner": [
+  {
+   "id": "undine",
+   "desk": 114,
+   "summary": "WG's Undine swim-Speed conditional is inverted — a character with no swim Speed gets none, and one with a better swim Speed is cut down to 10."
+  }
+ ],
+ "complete": true
+}
