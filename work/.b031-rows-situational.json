@@ -1,0 +1,32 @@
+{
+  "findings": [
+    {
+      "id": "eerie-environs",
+      "backfillRows": [],
+      "note": "Code-only. Neither printed clause moves a number (one suspends Demoralize's own 'you lose hidden' rider, the other waives its no-shared-language penalty), so the carrier is a FEAT_SITUATIONAL entry in src/rules/situationalBonuses.ts on the Intimidation row - the same shape as the language clause on intimidating-prowess. No data field exists that could say either thing."
+    },
+    {
+      "id": "monk-moves#speed-star",
+      "backfillRows": [],
+      "note": "Code-only DELETION. feats/monk-moves already carries speedsIf [{unarmored:true,speeds:{land:10}}] (itself an effect-backfill row) and derive.ts evaluates it from the character's own armour, so the registry star advertised the identical +10 a second time. The star is removed from src/rules/situationalBonuses.ts and 'monk-moves' added to the handEdited exclusion set in scripts/apply-situational-lane.mjs so the generated lane cannot re-emit it. The DATA is already correct - no row."
+    },
+    {
+      "id": "murksight#perception",
+      "backfillRows": [],
+      "note": "Code-only. A waived circumstance penalty has no numeric carrier (the penalty is never on our sheet to subtract), so it is a display FEAT_SITUATIONAL entry on the perception row, the same shape as brilliant-vision / ash-piercing-gaze. Only the Perception half is authored: murksight#attack was REFUTED, so no strikeAttack target was added."
+    },
+    {
+      "id": "swashbucklers-speed",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "swashbucklers-speed",
+          "field": "landSpeedBonus",
+          "value": 5,
+          "why": "AoN feat-6238 (Player Core 2 p.182): \"You gain a +5-foot status bonus to your Speeds; this increases to a +10-foot status bonus while you have panache.\" The +5 is ALWAYS ON, so per the owner's speed ruling it is a number, not a star; derive.ts reads it via landBonusOf(db.feats[f.featId]?.landSpeedBonus), the same lane classFeatures/vivacious-speed uses for its own always-on half. The panache step stays the star in src/rules/situationalBonuses.ts. New field on this record - no existing effect-backfill row for feats/swashbucklers-speed, so no supersedes."
+        }
+      ],
+      "note": "One row plus a star trim. Before this the whole mechanic was a star that moved nothing, so a swashbuckler-archetype character's Speed never changed with or without panache."
+    }
+  ]
+}

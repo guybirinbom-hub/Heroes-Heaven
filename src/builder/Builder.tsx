@@ -2239,7 +2239,12 @@ export function Builder({
                               .filter((fb) => fb.featId === picked)
                               .map((fb) => {
                                 const fbKey = `${picked}:fallback:${fb.skill}`;
-                                const heading = fb.note ? cap(fb.note) : `Already trained in ${cap(fb.skill)}`;
+                                /* The heading used to say "Already trained in X" whatever the rank was.
+                                   Golden League Xun's clause fires on a character who is already an
+                                   EXPERT, and telling them they are trained misstates why the picker
+                                   appeared — so read the rank they actually hold. */
+                                const held = featPrereqChar.proficiencies.skills[fb.skill] ?? 'trained';
+                                const heading = fb.note ? cap(fb.note) : `Already ${held} in ${cap(fb.skill)}`;
                                 /* Ghost Hunter's replacement is *"a new LORE skill of your choice"*, so the
                                    player types a subject; the sixteen-skill select cannot express one. */
                                 if (fb.lore)
@@ -2264,18 +2269,28 @@ export function Builder({
                                           featSkillChoices: { ...(build.featSkillChoices ?? {}), [fbKey]: v as (typeof SKILLS)[number] },
                                         })
                                       }
-                                      // The replacement grants "trained", through maxRank — so every
-                                      // skill the character already has is a second dead end, and this
-                                      // picker (offered precisely BECAUSE one grant was redundant) used
-                                      // to list all sixteen of them as live.
+                                      // The replacement grants `fb.rank ?? 'trained'`, through maxRank —
+                                      // so every skill the character already has AT THAT RANK is a
+                                      // second dead end, and this picker (offered precisely BECAUSE one
+                                      // grant was redundant) used to list all sixteen of them as live.
+                                      // Above trained the printed clause also NAMES its pool — *"two
+                                      // other skills of your choice in which you're trained"* — so an
+                                      // untrained skill is dead for the opposite reason.
                                       options={SKILLS.map((s) => {
+                                        const want = fb.rank ?? 'trained';
                                         const cur = featPrereqChar.proficiencies.skills[s] ?? 'untrained';
-                                        const dead = s !== build.featSkillChoices?.[fbKey] && cur !== 'untrained';
+                                        const has = PROFICIENCY_RANKS.indexOf(cur) >= PROFICIENCY_RANKS.indexOf(want);
+                                        const untrained = want !== 'trained' && cur === 'untrained';
+                                        const dead = s !== build.featSkillChoices?.[fbKey] && (has || untrained);
                                         return {
                                           value: s,
                                           label: cap(s),
                                           disabled: dead,
-                                          disabledReason: dead ? `Already ${cur} — pick a skill you are untrained in.` : undefined,
+                                          disabledReason: !dead
+                                            ? undefined
+                                            : untrained
+                                              ? `Untrained — this replacement asks for a skill you are already trained in.`
+                                              : `Already ${cur} — pick a skill this would raise to ${want}.`,
                                         };
                                       })}
                                     />

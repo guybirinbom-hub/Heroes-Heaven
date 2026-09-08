@@ -1,0 +1,239 @@
+BATCH 031 — WG-COMPARISON LANE — ADVERSARIAL VERIFY — family: data-rows
+Spec checked:   work/.b031-rows-data-rows.json  (17 findings, 14 with rows, 16 rows)
+Report checked: work/.b031-report-data-rows.txt
+Tests:          test/batch031-data.test.ts  (14 tests, 14 failing, each on exactly its authored field)
+npx tsc --noEmit: clean.  node scripts/test-flip-audit.mjs --batch 031: clean, every flip cited.
+
+HOW THE ROWS WERE EXERCISED
+A throwaway harness (test/_b031v-data-harness.test.ts, deep-cloned content + the 16 rows applied in
+memory, real buildCharacter/applyPlayState/deriveSpeeds/planAttach, since deleted) ran 8 checks and
+passed all 8. Its results are quoted per finding below. The applier's dry run is blocked in this
+sandbox, so its six refusals were re-checked by hand against public/core.json,
+scripts/data/effect-backfill.json and the AoN mirror.
+
+SPEC ROWS AS ROWS — all six refusals re-checked, no problem found
+· targets     — 11 field rows all hit records that exist; all 5 create rows hit ids that do NOT exist
+                in any bucket (stances/clinging-shadows-stance, stances/wild-winds-stance,
+                runes/sinister-knight, modes/item-umbral-wings, modes/item-energy-robe-cold).
+· supersedes  — exactly two overlay keys already exist (feats/soulsight-bard.edition and
+                feats/soulsight-sorcerer.edition, both "remaster", written by edition-drift-check's
+                own row shape); both new rows carry supersedes:true. No other row's key is in the
+                overlay. Stable under re-runs: edition-drift-check only moves HIDDEN→CURRENT and
+                'superseded' is in neither set (scripts/lib/edition.mjs).
+· magus shape — zero rows carry a `path`, and no overlay row on any of these record/field keys carries
+                one either, so no whole-value row can swallow a path row.
+· prose rows  — feats/steal-vitality.description, .descRefs and feats/swashbucklers-speed.description
+                are all pathless. The description edits pass the added-run check: steal-vitality's new
+                text is a token SUBSEQUENCE of the shipped text (only "1" twice removed, tokens() is
+                lower-cased and punctuation-stripped), and swashbucklers-speed's is verbatim
+                feat-6238 ("You move with a swashbuckler's speed and grace. You gain a +5-foot status
+                bonus to your Speeds; this increases to a +10-foot status bonus while you have
+                panache.").
+· why/doc ids — every doc id named across the 16 rows exists in the mirror: feat-4609, feat-7983,
+                action-2260 (= Drain Bonded Item), feat-5903, feat-5896, feat-7448, feat-7444,
+                action-3058 (= Offer Story), feat-8518, spell-2061, feat-6010, feat-3389, feat-6238,
+                feat-1864, spell-2062, equipment-518, equipment-1719, equipment-1317-1217. Each was
+                read and each row's value matches its document.
+· collisions  — 16 distinct category|id|field|path keys, no duplicate. Against the other families:
+                the only shared record is feats/swashbucklers-speed, and situational writes
+                `landSpeedBonus` while this family writes `description` — different fields.
+· created     — no create row carries `description` or `descRefs`, and core-descriptions.json holds
+                ZERO keys for the stances / runes / modes buckets, so no created-prose spec is owed.
+· re-emitted  — no row re-emits an existing array/object value; every field row targets a field the
+                record does not currently carry (checked by dumping each record), except the two
+                scalar `edition` replacements, where replacing the whole value IS the change.
+· ids named   — spells dream-message, sleep, touch-of-the-void; actions drain-bonded-item,
+                offer-story, entreat-pact; items umbral-wings, energy-robe-cold, sinister-knight —
+                all present in core.json. Neither granted spell is edition 'superseded', so
+                superseded-grant-check stays clean.
+
+MANIFEST
+work/.b031-specs.json still carries all three families (situational, instruments, data-rows). The
+data-rows entry's stage[] lists work/.b031-rows-data-rows.json, work/.b031-report-data-rows.txt and
+test/batch031-data.test.ts — which is every path this family touched (git status shows no src/ or
+scripts/ change attributable to it; the modified src files belong to situational/instruments, and the
+only overlap, swashbucklers-speed, is on a different field). Nothing to add: I changed no file.
+
+PER FINDING
+
+1.  soulsight-sorcerer#duplicate — DONE.
+    Harness: applyEditionFilter(patched, {hideLegacy:false}, ∅) leaves exactly ['soulsight'], and with
+    keepIds {'soulsight-sorcerer'} that record survives, so no existing character is broken.
+    feats/soulsight really does match feat-4609 (traits bard+sorcerer, no prerequisite); the two copies
+    carry one trait each and soulsight-sorcerer still carries the dropped APG prerequisite. Neither id
+    is referenced anywhere else in core.json (2 occurrences each = key + id field) or in src/.
+
+2.  spellshield#arcane-bond-listing — NOT-DONE, correctly: no data field is wrong. Confirmed
+    feats/spellshield already carries grantsClassFeatures:['arcane-bond'] and that `grep -rn
+    grantsClassFeatures src/` has no hit in src/sheet. Stays in CROSS-FILE GAPS.
+
+3.  spellshield#infusion — DONE for the half a row can carry.
+    recordMarksFor (explain.ts:479-483) walks c.feats and reads `recordMarks`, so {on:'action',
+    id:'drain-bonded-item'} reaches the Drain Bonded Item row; action-2260 is that action and
+    actions/drain-bonded-item ships. The read's caveat ("the sentence is already visible in the
+    description, so this is duplicate prose") does not stand against this row: the description renders
+    on the FEAT card, the mark renders on the ACTION the player uses. The note's "Spellshield: " prefix
+    is stripped by the renderer, matching the 40 existing entries written that way.
+    The prepared-slot decrement genuinely has no lane — DATA STILL NEEDED.
+
+4.  greater-cruelty — DONE. Harness: a champion built with cruelty + greater-cruelty carries
+    "clumsy or stupefied" in character.spellNotes. feat-5903's text matches the note verbatim in
+    substance, and feats/cruelty already annotates the same spellId through the same lane.
+
+5.  ouroboric-pact#action-cost — DONE. feat-7448's own glyph is empty and the Free Action sits on the
+    granted activity's Activate line; actions/entreat-pact keeps actionCost free. This REMOVES a
+    nested-activate-check finding rather than creating one (that guard fires on a feat that keeps the
+    cost of an activity that ships as its own record).
+
+6.  flickering-stories — DONE. Same live recordMarks lane; actions/offer-story is action-3058 and
+    ships. The note's apostrophes are straight, so the test's /can't use this concealment to Hide/
+    matches (checked byte-wise).
+
+7.  dream-magic#rank — DONE, and PROVEN on a built character.
+    Harness: a level-12 fighter with sleepwalker-dedication + dream-magic and
+    effectChoices['dream-magic:dream-magic-spell']='sleep' gets Sleep in the innate entry at RANK 4;
+    the same build on SHIPPED content gets it at rank 1. The builder's ordering claim is correct —
+    chosenInnateGrants are pushed at build.ts:7672, the FEAT_CANTRIP_GRANTS loop at 7676, and the
+    seenInnate filter (7705-7719) keeps the first — so the rank is right even before the
+    featCantripGrants deletion. InnateSpellGrant carries both `rank` and `usesPerDay` (types.ts:2366,
+    2374) and EffectGrant.innateSpells is read by applyAlwaysOn (build.ts:5911).
+
+8.  dream-magic#attribute — DONE, proven on the same built character: the innate entry resolves
+    keyAbility 'wis' and tradition 'occult' (build.ts:7810-7816). Feat-level spellcastingGrant is
+    collected at build.ts:6864. It adds no spell-slot entry — it only re-keys the innate one.
+    (feat-8518's "if you choose sleep you can cast it only while in a Daydream Trance" is not carried
+    by the option; that clause is finding dream-magic#daydream-trance, REFUTED in the read because the
+    description carries it. An option `note` would be an improvement, not a gap.)
+
+9.  dream-magic#second-taking — NOT-DONE, correctly: no row can fix it. Confirmed effectChoices
+    answers are keyed `${recordId}:${ch.id}` at build.ts:5786, exactly as the builder says. Stays in
+    CROSS-FILE GAPS.
+
+10. clinging-shadows-initiate#shadow-grasp — NOT-DONE as a MECHANIC; the row itself is correct.
+    The def matches spell-2061 exactly (1d4 void, brawling, agile/grapple/reach/unarmed) and the
+    StanceDef/StanceStrike shapes are valid (types.ts:4731, 4760). But nothing reaches a built
+    character: MainTab.tsx:409-415 builds stanceFeats from character.feats + grantedActions filtered by
+    content.stances[f.id], and the carrier here is a SPELL. Blocker is out of family — CROSS-FILE GAPS.
+    Leaving acBonus undefined is right: the +2 is conditional (Grapple / Escape DC) and StanceDef.acBonus
+    is unconditional.
+
+11. steal-vitality#condition-values — DONE for the description; the descRefs half is INERT (correct
+    but unreachable), so I am recording the scope rather than the claim.
+    feat-3389 prints the conditions with no value; the row removes only "1" twice and keeps the
+    remaster renames. WHERE IT LANDS: public/ast/feats.json HAS a node for steal-vitality whose prose
+    is ALREADY the valueless printed text, and DescBody (DescBody.tsx:74-86) discards the description
+    string outright whenever an ast resolves — and it resolves here both from FeatDetail's explicit
+    astKey and from public/ast-index.json ('steal-vitality' → 'feats') in DescriptionModal. So the
+    detail popup was never wrong. The surface the row DOES fix is FeatsTab.tsx:487, which prints
+    toPlainText(e.description) as the list-row preview, and FeatsTab.tsx:311, which searches that same
+    string. descRefs is read only on the non-ast path, so the retarget is a latent-correctness repair
+    with no reader today — harmless, and right to keep.
+
+12. swashbucklers-speed#text — DONE, same scope correction as 11.
+    The row's text is verbatim feat-6238. public/ast/feats.json already carries the correct Player
+    Core 2 prose for this record, so "the player reads 'with or without .'" was true of the FeatsTab
+    list preview and search, not of the detail popup. The row fixes exactly that surface. aonId is
+    feat-6238 and the numbers are unchanged, so no mechanics field moves; no collision with the
+    situational family's landSpeedBonus row on the same record.
+
+13. haunting-memories — NOT-DONE, correctly: a record carries one FeatChoiceDef and it is spent.
+    Verified dailyChoices.ts reads the singular rec.choice and no core.json record has a `choices`
+    array. Stays in CROSS-FILE GAPS with the exact value to author in DATA STILL NEEDED.
+
+14. wild-winds-initiate#stance — NOT-DONE as a MECHANIC, and the gap is BIGGER than the report says.
+    The def matches spell-2062 exactly (1d6 bludgeoning, brawling, agile/nonlethal/propulsive/unarmed)
+    and acBonus is rightly left undefined (the +2 is vs ranged attacks only). Two blockers, not one:
+      (a) MainTab's stance source, as for 10; and
+      (b) StanceStrike has NO range/ranged carrier (types.ts:4731-4760) and deriveStrikes routes every
+          stance strike through deriveUnarmedStrike (derive.ts:4866-4890), which produces a MELEE
+          unarmed Strike. Print says wind crash is a RANGED Strike within 30 feet. Widening MainTab
+          alone would therefore ship wind crash as a Strength-keyed melee attack — a wrong mechanic,
+          worse than today's silence. The range must land in the same commit as the widening.
+    Putting the 30 feet in `note` is the right data choice today; the corrected gap line is below.
+
+15. sinister-knight — DONE, and proven.
+    Harness: planAttach with the shipped content refuses with "isn't a rune or an attachment"; with
+    the row it no longer says that and refuses only with the ordinary "Full Plate needs a potency rune
+    first" — i.e. the id is now recognised as a rune and the etch is on the normal path. equipment-518
+    confirms Item 8, Price 500 gp, Armor Property Rune, "+1 item bonus to Deception checks"; the shape
+    matches runes/trudds-strength and RuneDef (types.ts:4909). No double-count with the existing
+    items/sinister-knight passiveEffects row: passiveItemBonus takes Math.max, not a sum
+    (derive.ts:303-320).
+
+16. umbral-wings#fly-activation — DONE, and proven.
+    Harness: a fighter wearing/investing umbral-wings has NO fly Speed with the mode off, and
+    deriveSpeeds(live).fly === deriveSpeeds(live).land with 'item-umbral-wings' active. ModeDef.speeds
+    is consumed by deriveSpeeds (types.ts:4586) and the bare "@actor.speed.land" formula is the one
+    modes/aura-convocation-of-earth-and-moon already uses. equipment-1719 matches the duration, the
+    frequency and the fall clause; items/umbral-wings.frequency is already {max:1,per:'hour'}.
+
+17. energy-robe-cold#water-walk — DONE. Harness: the mode is offered and active on the worn robe.
+    equipment-1317-1217 prints exactly "you gain the effects of water walk for 1 minute", 2 actions
+    (command, Interact), once per day; items/energy-robe-cold.frequency is already {max:1,per:'day'}.
+    Note-only is the right call — the item-warming-parka shape.
+
+BOOKKEEPING CORRECTIONS TO THE BUILDER'S REPORT (no action needed)
+· Line 2 says "13 carry backfill rows … 4 carry none". It is 14 with rows and 3 without
+  (spellshield#arcane-bond-listing, dream-magic#second-taking, haunting-memories). The row count, 16,
+  is right.
+· All 159 shipped runes and all 129 shipped stances carry `aonOrigin: 'authored'`; the three created
+  stance/rune records omit it (modes do not use the field — 551 of 553 have none). It has no runtime
+  reader, so nothing breaks; it is a provenance-stamp inconsistency only, and I did not edit another
+  agent's spec to add it.
+
+DATA STILL NEEDED (corrected)
+- feats/phoenixs-flight | actionCost | {"type":"passive"} — sibling of ouroboric-pact#action-cost, same
+  unnamed-**Activate** shape: actions/blazing-conflagration ships at 3 actions AND the feat duplicates
+  it (feat-7105). Not this family's finding.
+- feats/campfire-chronicler-dedication | actionCost | {"type":"passive"} — same shape; actions/offer-story
+  is 1 action and the feat duplicates it (feat-7438).
+- feats/pact-of-the-living-pact | actionCost | {"type":"passive"} — same shape; actions/forced-pact is
+  1 action and the feat duplicates it (feat-7454).
+- feats/haunting-memories | <a SECOND choice slot> | {daily:true, minLevel:8, flag:'hauntingMemoryFeat',
+  kind:'open', prompt:"Haunting Memories — this morning's temporary skill feat", from:{type:'feat',
+  traits:['skill'], grantFeat:true, excludeOwn:true, maxLevelByLevel:[{level:8,maxLevel:4},
+  {level:10,maxLevel:5},{level:12,maxLevel:6},{level:14,maxLevel:7},{level:16,maxLevel:8},
+  {level:18,maxLevel:9},{level:20,maxLevel:10}]}} — UNAUTHORABLE TODAY: the record type carries one
+  `choice`, already spent on the skill-rank pick. Drop the feat half of choice.note when it lands.
+- feats/spellshield | <a daily-prep slot-trade carrier> | "prepare one fewer wizard spell, at least
+  1 rank below your highest wizard slot, and record the infused rank" — UNAUTHORABLE TODAY: no lane
+  decrements a prepared-slot count at daily preparations. The auto-heighten half IS delivered by the
+  recordMarks row; only the trade waits.
+
+CROSS-FILE GAPS (corrected — two lines added, one line's scope widened)
+- src/rules/featCantripGrants.ts:75 — delete the 'dream-magic' line. Must land with the
+  feats/dream-magic effectChoices row or the record asks two prompts. (The rank is correct either way:
+  chosenInnateGrants push at build.ts:7672 precedes the cantrip-pick loop at 7676 and seenInnate keeps
+  the first — verified on a built character.)
+- src/rules/build.ts + src/builder/Builder.tsx — NEW (found in verify): deleting that line orphans the
+  answer already stored at build.pickCantripChoices['dream-magic']. effectChoices reads
+  `dream-magic:dream-magic-spell`, so an EXISTING character loses the granted spell entirely until the
+  new prompt is answered. Either migrate the stored answer across the two keys or accept the
+  re-prompt deliberately; no data row can do it.
+- src/rules/build.ts — effectChoices answers are keyed `${recordId}:${ch.id}` (build.ts:5786; the
+  comment at 5800-5803 says a repeatable feat's takes all read the same key). dream-magic#second-taking
+  needs a per-taking key; no data row can supply it.
+- src/sheet/FeatsTab.tsx — no reader for `grantsClassFeatures` anywhere in src/sheet, and
+  FeatsTab.tsx:350-352 prints War Mage's suppressed 'arcane-bond' under "Replaced" on the same
+  character whose Spellshield grants it. Walk ownedFeatureIds and exclude a re-granted feature from
+  `suppressed`. (spellshield#arcane-bond-listing — code-only, no field is wrong.)
+- src/sheet/MainTab.tsx:409-415 — stanceFeats is built from character.feats + grantedActions filtered by
+  content.stances[f.id], so a stance carried by a SPELL can never reach Character.activeStance. Both
+  stance defs authored here (clinging-shadows-stance, wild-winds-stance) are inert until this source is
+  widened to stance-trait spells the character knows. These are the only two records in that shape.
+- src/rules/types.ts (StanceStrike) + src/rules/derive.ts — NEW (found in verify): StanceStrike has no
+  range/ranged field and deriveStrikes sends every stance strike through deriveUnarmedStrike
+  (derive.ts:4866-4890), which builds a melee Strength-keyed unarmed attack. spell-2062 prints wind
+  crash as a RANGED Strike within 30 feet that ignores concealment and all cover. So the MainTab
+  widening above is necessary but NOT sufficient for wild-winds-stance: widening it without a range
+  carrier ships wind crash as a melee attack, which is worse than the present silence. Ship the two
+  together, or gate the widening to stances whose strikes are melee.
+- src/rules/situationalBonuses.ts — optional follow-up: the two conditional bonuses carried in `note`
+  (clinging shadows' +2 circumstance to Grapple / Escape DC, wild winds' +2 circumstance AC vs ranged
+  attacks) would read better as FEAT_SITUATIONAL stars. StanceDef has no conditional-bonus field, so
+  `note` is the only correct data carrier today.
+- src/rules/types.ts + src/sheet/dailyChoices.ts — a record carries one `choice` (dailyChoices.ts:47
+  reads the singular rec.choice; no core.json record has a `choices` array). haunting-memories needs a
+  second daily slot before its printed second half can be data.
+
+Nothing was fixed by me, so there are no manifest stage[] paths to append.

@@ -71,12 +71,34 @@ const escalatedIds = new Set(spec.filter((r) => r.needsHumanDecision).map((r) =>
  *     fallback, equipment-837) PLUS the successToCrit sentence their own `degreeShifts` already
  *     carries. The lane's wording folds the upgrade back into the clause, so re-emitting it would
  *     restore the doubled star while looking like a harmless refresh. The lethoci edit exactly.
+ *   monk-moves (WG parity b031, monk-moves#speed-star): DELETED from the registry. Print gives one
+ *     bonus — *"You gain a +10-foot status bonus to your Speed when you're not wearing armor."* — and
+ *     the record's own speedsIf [{unarmored:true, speeds:{land:10}}] already adds it to the Speed
+ *     NUMBER, which is what types.ts's speedsIf doc names this very record as the reason for. The
+ *     lane's row advertised the same +10 under the same condition as though it were still to be
+ *     applied. `existingIds` cannot exclude a deleted row, so name it here. (The lane spec's own
+ *     engineNote flagged the same record as a data DEFECT; the data half is long fixed.)
+ *   swashbucklers-speed (WG parity b031): TRIMMED, not deleted. Print's +5 floor is always on and now
+ *     rides the record's landSpeedBonus, so the star was narrowed to the panache remainder. The
+ *     lane's wording restates the floor and would re-double it.
+ *   incredible-movement (WG parity b031, gap lane): DELETED from the registry — the monk-moves case
+ *     exactly, one rung up. Monk Moves is the ARCHETYPE COPY of this clause, and the class feature it
+ *     copies had no speed carrier at all, so the star was the only thing that said *"You gain a
+ *     +10-foot status bonus to your Speed whenever you're not wearing armor. The bonus increases by 5
+ *     feet for every 4 levels you have beyond 3rd."* (class-feature-934) and it moved no number: a
+ *     monk walked 10 feet short at 3rd and 25 short at 19th. work/.b031-rows-gap-situational.json puts
+ *     the whole clause in speedsIf [{unarmored:true, speeds:{land:"10+5*floor((@actor.level-3)/4)"}}],
+ *     which derive.ts evaluates from the character's own armour, so the star would now advertise a
+ *     second copy of feet already in the Speed. Nothing is left over to keep — unlike vivacious-speed
+ *     and swashbucklers-speed, print gates this on gear the sheet can see and nothing else. Deleted
+ *     rows cannot be excluded by `existingIds`, so name it here.
  */
 const handEdited = new Set([
   'strong-oak', 'lethoci', 'sacred-nagaji', 'kanchil', 'respite-of-cloudless-paths',
   'fire-gate', 'metal-gate', 'earth-gate', 'disciplined-mind',
   'chemical-hardiness', 'churning-mind', 'commanding-will', 'confident-evasion',
   'emotionless', 'hardened-harrow-deck',
+  'monk-moves', 'swashbucklers-speed', 'incredible-movement',
 ]);
 
 const src = readFileSync(REGISTRY, 'utf8');

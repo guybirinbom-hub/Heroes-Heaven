@@ -1,0 +1,161 @@
+BATCH 031 — GAP AGENT report, family "gap-situational"
+8 open lines in work/.b031-gaps.json, family "situational": 3 AUTHORED, 5 PARKED, 0 still open.
+spec: work/.b031-rows-gap-situational.json (1 row) · queue: work/.b031-queue.json (1 question)
+
+
+PER LINE
+
+1. AUTHORED — ref work/.b031-rows-situational.json
+   "feats/swashbucklers-speed field landSpeedBonus value 5 … new field, no existing overlay row."
+   Nothing to author: the row it asks for is the row the situational family's own spec already
+   carries (finding swashbucklers-speed, work/.b031-rows-situational.json). Their verifier said so
+   itself at work/.b031-verify-situational.txt:118-120 — "that section means rows the driver must
+   author BEYOND the spec, so the line is withdrawn" — but a withdrawal written in prose is not a
+   disposition, which is why it was harvested as an open gap. Re-checked the spec by hand: the row is
+   {category:"feats", id:"swashbucklers-speed", field:"landSpeedBonus", value:5}, exactly the line.
+   Pointing the ref at that spec is the whole close; a second row would be a hard COLLISION.
+
+2. PARKED — ref speed-status-lane-031 (owner question, work/.b031-queue.json)
+   "the landSpeedBonus lane is LAND-ONLY, but feat-6238 says '+5-foot status bonus to your SpeedS'."
+   Merged with lines 6 and 7 into ONE question, because they are one decision about one lane: our
+   Speed-bonus lane stores a bare untyped number attached to land, and print writes these clauses with
+   both a TYPE ("status") and a plural target ("Speeds"). Evidence gathered for the desk: WG's current
+   record 32855 (wg-show.mjs "Swashbuckler's Speed" --raw) is a `conditional` on ACTIVE_MODES INCLUDES
+   panache whose branches are `addBonusToValue` variable=SPEED value=10/5 carrying "type":"status" —
+   so WG DOES record the type we drop (that half is parity work), and does NOT solve the plural half
+   (their model has one SPEED variable), so that half would be going beyond them, which is his call.
+   Not decided here and not bolted on: every existing landSpeedBonus carrier (classFeatures
+   furious-footfalls, vivacious-speed, blessed-swiftness, hyper-boosters, plus this batch's two new
+   rows) would need a type read off its own printed clause — a measured lane, not a gap-agent edit.
+
+3. PARKED — ref "flaggedResidue: …" (nothing owed)
+   "swashbucklers-speed#text is the data-rows family's and does not collide with my star wording."
+   Not a gap: the builder's own non-collision NOTE, swept into gaps.json by the section collator.
+   Re-verified rather than taken on trust — data-rows writes core-descriptions.json
+   feats/swashbucklers-speed on field `description`; situational writes field `landSpeedBonus` plus a
+   FEAT_SITUATIONAL star. The applier keys collisions on category+id+field and sees no pair. There is
+   no row, edit or question this line could produce.
+
+4. AUTHORED — ref work/.b031-rows-gap-situational.json  (+ src/rules/derive.ts, src/rules/situationalBonuses.ts, scripts/apply-situational-lane.mjs)
+   "classFeatures/incredible-movement · speedsIf · [{unarmored:true, speeds:{land:'10+5*floor(…)'}}]."
+   The biggest thing in this lane, and it needed three pieces, not one.
+   · THE ROW. class-feature-934: "You gain a +10-foot status bonus to your Speed whenever you're not
+     wearing armor. The bonus increases by 5 feet for every 4 levels you have beyond 3rd." The record
+     shipped with NO speed carrier of any kind, so a monk walked 10 ft short at 3rd and 25 short at
+     19th. Authored in the shape feats/monk-moves — the ARCHETYPE COPY of this same clause — already
+     uses, with the level step as a formula, the vocabulary classFeatures/vivacious-speed's
+     landSpeedBonus already uses. 10+5*floor((@actor.level-3)/4) = 10/15/20/25/30 at 3rd/7th/11th/15th/19th.
+   · THE READER, which the gap line did not know was missing and which I found by grepping for one
+     before authoring. src/rules/derive.ts built `grantSources` from heritages + feats + chosenEffects
+     + active states and NEVER from class features, so `speeds` AND `speedsIf` on a class feature were
+     dead fields — the row would have been inert data. Measured first: 0 shipped classFeatures carry
+     either field, which is why nobody had noticed and why the fix is safe. Class features now join
+     grantSources; the separate classFeature `speedAdjust` loop that stood below it is deleted in the
+     same edit, because leaving it would apply every class-feature speedAdjust TWICE. That risk is the
+     one the third test pins (patched in, since no shipped record carries the field).
+   · THE STAR. Deleting the number's duplicate is the same move the situational family made for
+     monk-moves one rung down, and skipping it would have shipped, in this same batch, the exact defect
+     the batch just fixed: "incredible-movement" removed from FEAT_SITUATIONAL (it was a generated-lane
+     row, so 'incredible-movement' is added to the handEdited set of scripts/apply-situational-lane.mjs
+     with a paragraph, or the next apply restores it). Nothing is left over to keep — unlike
+     vivacious-speed and swashbucklers-speed, print gates this on gear the sheet can see and nothing else.
+   Tests: test/batch031-gap-situational.test.ts, describe "incredible-movement pays a monk the Speed
+   its printed clause grants" — 4 its. Both sides of every assertion are in-memory copies (PATCHED vs
+   STRIPPED), never a patched-vs-shipped delta, so they read identically before and after the driver
+   applies the row: the level ladder at 3/6/7/11/15/19, the withholding in half plate, the
+   speedAdjust-applied-once guard, and the star's absence from the Speed popup with the +10 in the
+   number instead. Cited "// batch 031 premise: class-feature-934 …" — there is no finding for this
+   record; it was raised by the situational verifier, not by the read.
+
+5. AUTHORED — ref src/rules/explain.ts
+   "explain.ts:1436-1465 — the speed block builds parts from landSpeedBonus/landSpeedMin/speeds.land
+   only; speedsIf is read nowhere outside derive.ts, so a fighter/Monk Moves character reads parts
+   [Ancestry Speed 25] under totalText '35 ft' — 10 feet with no explanation anywhere in the popup."
+   Confirmed exactly as described, and worse than "unnamed": the block's own comment says it exists so
+   "the breakdown still SUMS to the total", and it silently stopped doing that (the surplus fell
+   through the `penalty > 0` guard).
+   Fixed WITHOUT duplicating the gate logic, which was the trap in the obvious fix: deriveSpeeds has
+   already evaluated every gate, so the surplus is reported from the difference (`penalty < 0`) rather
+   than by re-evaluating `unarmored` / `wearingDesignated` / `holdingDesignated` in a second place that
+   could disagree with the first. One source of truth for which gates passed. That also picks up the
+   two other silent land contributors `named` cannot see — a worn item's passiveEffects.speedBonus and
+   an active stance's land grant — so the sum invariant is restored for all of them, not just this
+   record. The part is NAMED after the carrier where it is unambiguous (a record whose speedsIf grants
+   land), and labelled "conditional — see below" rather than dropped when it is not.
+   Tests: same file, describe "monk-moves puts its gated +10 in the Speed breakdown, not only in the
+   total" — the parts sum to totalText and the +10 carries the feat's name; a character without the
+   feat gains no such part and still sums. Cited "// batch 031: monk-moves#speed-star" (CONFIRMED), the
+   record id is in the describe title.
+
+6. PARKED — ref speed-status-lane-031 (owner question, work/.b031-queue.json)
+   "derive.ts:4966-4970 landBonusOf sums every landSpeedBonus additively with no bonus TYPE … barbarian
+   8 (Furious Footfalls) + Swashbuckler Dedication + Swashbuckler's Speed reads 35 where print gives 30."
+   Verified and WIDENED before queuing: my own line-4 row makes a second reachable pair, a monk with
+   Swashbuckler's Speed reading 15 where print's two status bonuses give 10 (class-feature-934 and
+   feat-6238 are both "+…-foot status bonus"). Both rows are still right — the alternative each
+   replaced was a star that moved no number at all — but the lane cannot say "status", so the fix is
+   the lane migration described in line 2's question, not a row. Same question id; see line 2.
+
+7. PARKED — ref speed-status-lane-031 (owner question, work/.b031-queue.json)
+   The builder's plural-Speeds line restated by the verifier. Same gap as line 2, same question.
+
+8. PARKED — ref "flaggedResidue: …" (nothing owed)
+   The builder's non-collision note restated by the verifier. Same as line 3; checked a third time.
+
+
+DATA STILL NEEDED (beyond my spec)
+- none. The one row this lane owes is in work/.b031-rows-gap-situational.json.
+
+
+CROSS-FILE GAPS
+
+- test/wg-experience-lanes.test.ts:503 is RED, and it is not mine — the driver must not read it as my
+  regression. `expect(theyOnly.get('murksight')).toContain('perception')` now gets undefined because
+  the SITUATIONAL family taught FEAT_SITUATIONAL["murksight"] in this batch (git diff on
+  src/rules/situationalBonuses.ts shows the added line), so wg-diff no longer reports murksight as
+  they-only — which is the point of their teach. Their report lists five suites verified and this file
+  is not among them. It needs their citation, or the assertion needs to move to a record they did not
+  teach; either way it is the situational family's line to redraw, in their staged file. My own edits
+  are innocent of it: none of murksight / greenwatcher / insistent-command touches Speed, and
+  incredible-movement appears nowhere in that file. Verified green after my changes: batch031-gap-situational,
+  batch031-situational, situational-bonuses, situational-target-kinds, situational-stacking,
+  situational-detail-rows, batch29-situational-siblings, conditional-speeds, speed-adjust,
+  speed-increases, speed-portrait, vivacious-speed-floor, land-legs-floor, mode-granted-speeds,
+  mode-targets, battle-form, forms, stances, armor, armor-traits, defenses, audit-fixes,
+  audit-rules-fixes, batch15-parity, batch19-parity, batch25-engine, batch25-stars, batch26-engine,
+  batch26-stars, batch27-stars, etched-rune-situational, heavy-construction, implement-and-blessing,
+  second-heritage, creature-trait-lanes, echo-pickers, fix-campaign, options (37 files, 0 failures).
+
+- src/rules/derive.ts + src/rules/types.ts, the whole class-feature speed lane (NEW, found here): a
+  class feature's `speeds` and `speedsIf` had no reader until this batch. The reader is added, but
+  nothing measures whether other class features SHOULD carry those fields — 0 do today, and a field
+  nobody could read is a field nobody would have authored, so the absence proves nothing about print.
+  A read of the class-feature corpus for granted and gated Speeds is owed and is out of scope here.
+
+- src/sheet — explain.ts now emits a "Speed increase" part labelled "conditional — see below" when the
+  surplus has no unambiguous named carrier (a worn item's passiveEffects.speedBonus, an active stance).
+  Naming those properly means widening `named` to walk inventory and the active stance, which is a
+  display change in another family's surface; the sum invariant is restored either way, and an
+  unattributed part is strictly better than the silently dropped feet it replaces.
+
+
+FILES TOUCHED
+  work/.b031-rows-gap-situational.json   (new — 1 row, classFeatures/incredible-movement speedsIf)
+  work/.b031-queue.json                  (new — 1 owner question, speed-status-lane-031)
+  work/.b031-report-gap-situational.txt  (this file)
+  work/.b031-specs.json                  (appended the gap-situational manifest entry; every existing entry kept)
+  work/.b031-gaps.json                   (8 situational lines disposed; no other family's line touched)
+  test/batch031-gap-situational.test.ts  (new — 6 its, 2 describes)
+  src/rules/derive.ts                    (class features into grantSources; duplicate speedAdjust loop removed)
+  src/rules/explain.ts                   (speed breakdown reports the gated surplus instead of dropping it)
+  src/rules/situationalBonuses.ts        (incredible-movement star deleted, replaced by a comment)
+  scripts/apply-situational-lane.mjs     ('incredible-movement' added to handEdited, with its paragraph)
+
+VERIFICATION
+- node scripts/vt.mjs run test/batch031-gap-situational.test.ts — 6 passed.
+- 37 files / 500+ tests across the speed, star, explain and parity suites listed above — 0 failures.
+- npx tsc --noEmit — clean.
+- node scripts/test-flip-audit.mjs --batch 031 — "clean — 7 test file(s) touched, 0 new settle key(s),
+  every flip cited."
+- node scripts/add-owner-question.mjs --from work/.b031-queue.json (report only, no --write) —
+  "#127 speed-status-lane-031 (batch 31) … 1 added", so all four guards pass before the driver files it.

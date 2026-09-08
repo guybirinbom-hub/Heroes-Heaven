@@ -17,7 +17,7 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync
 import { spawnSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { clip, comparerFlags, copyTestbase, dumpBlocks, entryOf, expectRowsFor, familyOf, gapProblems, isFlagged, keyOf, missingGapsRefusal, newRunId, precheck, refusalTail, uncitedQuiet, wentQuiet } from '../scripts/wg-batch-run.mjs';
+import { clip, comparerFlags, copyTestbase, dumpBlocks, entryOf, expectRowsFor, familyOf, gapProblems, isFlagged, keyOf, missingGapsRefusal, newRunId, pendingQuestions, precheck, refusalTail, uncitedQuiet, wentQuiet } from '../scripts/wg-batch-run.mjs';
 
 /* A row that passes every pre-check, so each fixture below differs from the clean case in ONE way. */
 const row = (over: Record<string, unknown> = {}) => ({
@@ -53,6 +53,32 @@ describe('apply pre-checks (docs/wg-batch-pipeline.md §A)', () => {
     expect(problems[0]).toContain('rows-dc.json#f-b');
   });
 
+  /* keyOf ends a create row with '(create)' and a field row with its field name, so check (1) never saw
+   * these two as ONE record: batch 031 created stances/wild-winds-stance in work/.b031-rows-data-rows.json
+   * and set that record's `strikes` from work/.b031-rows-gap-data-rows.json, and apply refused AFTER
+   * writing with "NEEDS npm run data" because a create can never correct an existing record. */
+  // batch 031: wild-winds-initiate#stance
+  it('(1b) refuses a create row and a field row on the same record — wild-winds-initiate#stance', () => {
+    const create = { category: 'stances', id: 'wild-winds-stance', create: true, why: 'spell-2062', value: { id: 'wild-winds-stance', strikes: [{ name: 'wind crash' }] } };
+    const field = { category: 'stances', id: 'wild-winds-stance', field: 'strikes', why: 'spell-2062', value: [{ name: 'wind crash', range: 30 }] };
+    // batch 031: wild-winds-initiate#stance
+    const { problems } = precheck([at('rows-data.json', 'wild-winds-initiate#stance', create), at('rows-gap.json', 'gap#range', field)], [], stubs);
+    expect(problems).toHaveLength(1);
+    expect(problems[0]).toContain('fold the field into the create row');
+    expect(problems[0]).toContain('rows-data.json#wild-winds-initiate#stance');
+    expect(problems[0]).toContain('rows-gap.json#gap#range');
+  });
+
+  // batch 031: wild-winds-initiate#stance
+  it('(1b) allows the folded wild-winds-initiate#stance shape, and still refuses it in the wrong order', () => {
+    const strikes = [{ name: 'wind crash', range: 30 }];
+    const create = { category: 'stances', id: 'wild-winds-stance', create: true, why: 'spell-2062', value: { id: 'wild-winds-stance', strikes } };
+    const field = { category: 'stances', id: 'wild-winds-stance', field: 'strikes', why: 'spell-2062', value: strikes };
+    expect(precheck([at('a.json', 'c', create), at('b.json', 'f', field)], [], stubs).problems).toEqual([]);
+    // batch 031: wild-winds-initiate#stance
+    expect(precheck([at('b.json', 'f', field), at('a.json', 'c', create)], [], stubs).problems).toHaveLength(1);
+  });
+
   it('(2) refuses a row over an existing overlay key unless it declares supersedes, and records old -> new', () => {
     const overlay = [{ category: 'items', id: 'spined-shield', field: 'traits', value: ['magical'] }];
     const undeclared = precheck([at('spec.json', 'f', row())], overlay, stubs);
@@ -62,6 +88,14 @@ describe('apply pre-checks (docs/wg-batch-pipeline.md §A)', () => {
     expect(declared.problems).toEqual([]);
     expect(declared.supersedes[0]).toContain('items/spined-shield/traits');
     expect(declared.supersedes[0]).toContain('->');
+  });
+
+  // batch 031: wild-winds-initiate#stance
+  it('(2) exempts a row already on disk byte-identical — resuming batch 031 after wild-winds-initiate#stance refused mid-write', () => {
+    const overlay = [{ ...row() }];
+    // batch 031: wild-winds-initiate#stance
+    expect(precheck([at('spec.json', 'f', row())], overlay, stubs).problems).toEqual([]);
+    expect(precheck([at('spec.json', 'f', row({ value: ['magical'] }))], overlay, stubs).problems).toHaveLength(1);
   });
 
   it('(3) refuses a pathless whole-value row on a field that already has path:[…,"id=…"] rows (the magus case)', () => {

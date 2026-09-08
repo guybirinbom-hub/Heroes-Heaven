@@ -1,0 +1,112 @@
+[
+  {
+    "file": "work/.b031-rows-situational.json",
+    "kind": "rows",
+    "family": "situational",
+    "stage": [
+      "work/.b031-rows-situational.json",
+      "work/.b031-report-situational.txt",
+      "work/.b031-verify-situational.txt",
+      "test/batch031-situational.test.ts",
+      "src/rules/situationalBonuses.ts",
+      "scripts/apply-situational-lane.mjs"
+    ]
+  },
+  {
+    "file": "work/.b031-rows-instruments.json",
+    "kind": "rows",
+    "family": "instruments",
+    "stage": [
+      "work/.b031-rows-instruments.json",
+      "work/.b031-report-instruments.txt",
+      "test/batch031-instruments.test.ts",
+      "scripts/wg-values.mjs",
+      "work/experience-instrument-limits.json",
+      "work/.b031-report-gap-instruments.txt",
+      "test/wg-experience.harness.test.tsx"
+    ]
+  },
+  {
+    "file": "work/.b031-rows-data-rows.json",
+    "kind": "rows",
+    "family": "data-rows",
+    "stage": [
+      "work/.b031-rows-data-rows.json",
+      "work/.b031-report-data-rows.txt",
+      "test/batch031-data.test.ts",
+      "scripts/wg-batch-run.mjs",
+      "test/wg-batch-run.test.ts",
+      "scripts/apply-parity-fixes.mjs",
+      "test/apply-parity-fixes-refusals.test.ts",
+      "test/batch031-closer-guards.test.ts",
+      "scripts/wg-diff.mjs",
+      "test/batch031-closer.test.ts",
+      "test/consumable-modes.test.ts",
+      "test/integrity-sweeps.test.ts",
+      "test/owner-questions-numbering.test.ts",
+      "test/wg-experience-lanes.test.ts",
+      "work/owner-questions.json",
+      "work/rulings-numbering.json",
+      "work/.b031-queue.json"
+    ]
+  },
+  {
+    "file": "work/.b031-rows-engine.json",
+    "kind": "rows",
+    "family": "engine",
+    "stage": [
+      "work/.b031-rows-engine.json",
+      "work/.b031-report-engine.txt",
+      "work/.b031-verify-engine.txt",
+      "test/batch031-engine.test.ts",
+      "src/rules/build.ts",
+      "src/rules/types.ts",
+      "src/builder/Builder.tsx",
+      "src/builder/shared.tsx"
+    ]
+  },
+  {
+    "file": "work/.b031-rows-gap-engine.json",
+    "kind": "rows",
+    "family": "gap-engine",
+    "stage": [
+      "work/.b031-rows-gap-engine.json",
+      "work/.b031-report-gap-engine.txt",
+      "test/batch031-gap-engine.test.ts",
+      "src/rules/featGrantsAuto.ts",
+      "src/rules/dailyItems.ts"
+    ]
+  },
+  {
+    "file": "work/.b031-rows-gap-situational.json",
+    "kind": "rows",
+    "family": "gap-situational",
+    "stage": [
+      "work/.b031-rows-gap-situational.json",
+      "work/.b031-report-gap-situational.txt",
+      "work/.b031-queue.json",
+      "test/batch031-gap-situational.test.ts",
+      "src/rules/derive.ts",
+      "src/rules/explain.ts",
+      "src/rules/situationalBonuses.ts",
+      "scripts/apply-situational-lane.mjs"
+    ]
+  },
+  {
+    "file": "work/.b031-rows-gap-data-rows.json",
+    "kind": "rows",
+    "family": "gap-data-rows",
+    "stage": [
+      "work/.b031-rows-gap-data-rows.json",
+      "work/.b031-report-gap-data-rows.txt",
+      "work/.b031-queue.json",
+      "test/batch031-gap-data-rows.test.tsx",
+      "test/coverage.test.ts",
+      "src/rules/featCantripGrants.ts",
+      "src/rules/types.ts",
+      "src/rules/derive.ts",
+      "src/sheet/FeatsTab.tsx",
+      "src/sheet/MainTab.tsx"
+    ]
+  }
+]

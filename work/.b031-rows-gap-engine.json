@@ -1,0 +1,14 @@
+{
+  "findings": [
+    {
+      "id": "golden-league-xun-dedication#already-expert",
+      "backfillRows": [],
+      "note": "CROSS-FILE GAP closed in code, no overlay row. The engine lane built the reader half (the replacement landing at the dead slot's own rank, gated on a skill the character already holds) but could not set the record's flags, which live in src/rules/featGrantsAuto.ts. Both skillChoices slots of 'golden-league-xun-dedication' now carry redundantFallback:true (featGrantsAuto.ts:403), per-slot rather than record-wide: the record has no static `skills` map for the record-wide reader to walk, and print replaces EACH dead slot — AoN feat-2734, \"or in two other skills of your choice in which you're trained, if you were already an expert in the listed skills\". Pinned on a built rogue against the SHIPPED registry (no patching) in test/batch031-gap-engine.test.ts."
+    },
+    {
+      "id": "ubiquitous-gadgets",
+      "backfillRows": [],
+      "note": "CROSS-FILE GAP closed in code, no overlay row — the two dailyTemporaryItems rows are authored in work/.b031-rows-engine.json and must not be duplicated here. src/rules/dailyItems.ts `dailyItemSlots` deduped its sources by feat id, so the printed SECOND taking of Ubiquitous Gadgets (AoN feat-3068, \"You can select this feat a second time if you are 14th level or higher\", maxTakable 2) added nothing. Each source now grants its slots once per taking, clamped to maxTakes(), so a non-repeatable feat that reaches c.feats twice still counts once — the case the dedupe was written for. Pinned in test/batch031-gap-engine.test.ts on a built inventor with the (not yet applied) row patched into a content copy in memory."
+    }
+  ]
+}

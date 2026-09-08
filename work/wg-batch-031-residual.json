@@ -1,0 +1,380 @@
+{
+ "batch": "work/wg-batch-031.json",
+ "examined": 40,
+ "method": "Opus readers (print + WG raw ops + every carrier) each followed by an adversarial verifier; findings applied by 7 family spec(s), verdicts derived by scripts/wg-batch-close.mjs from the cited rows, edits, tests and teaches",
+ "confirmed": [
+  {
+   "id": "soulsight-sorcerer",
+   "finding": "soulsight-sorcerer#duplicate",
+   "severity": "player-visible",
+   "summary": "One printed feat (AoN feat-4609, traits Bard and Sorcerer) ships as THREE pickable records — `soulsight`, `soulsight-bard` and `soulsight-sorcerer` — all level 8, all aonId feat-4609, all granting the identical spiritsense entry, so a sorce",
+   "fixed": true
+  },
+  {
+   "id": "spellshield",
+   "finding": "spellshield#arcane-bond-listing",
+   "severity": "player-visible",
+   "summary": "Spellshield's printed grant of the Arcane Bond class feature never reaches the Feats tab: the feature is granted only through `grantsClassFeatures`, which FeatsTab does not walk, and every Spellshield holder is a War Mage (prerequisite), wh",
+   "fixed": true
+  },
+  {
+   "id": "spellshield",
+   "finding": "spellshield#infusion",
+   "severity": "player-visible",
+   "summary": "The feat's actual payload — trading a prepared wizard slot to infuse the shield, and the automatic heightening of the drained spell to the infused rank — is modelled by neither side, so a Spellshield holder gets Arcane Bond and nothing that",
+   "fixed": true
+  },
+  {
+   "id": "golden-league-xun-dedication",
+   "finding": "golden-league-xun-dedication#already-expert",
+   "severity": "player-visible",
+   "summary": "The dedication's parenthetical replacement clause is delivered by neither side: a character already expert in all four listed skills picks a dead option and gains nothing, where print gives them expert in two other skills they are trained i",
+   "fixed": true
+  },
+  {
+   "id": "insistent-command",
+   "finding": "insistent-command",
+   "severity": "player-visible",
+   "summary": "The feat's entire printed effect is unmodelled on our side — the record carries no degreeShifts, no situationalBonuses entry and no recordMarks — so a holder's Nature row and the Command an Animal action row say nothing, while WG delivers t",
+   "fixed": true
+  },
+  {
+   "id": "basic-modification",
+   "finding": "basic-modification",
+   "severity": "player-visible",
+   "summary": "Basic Modification grants an inventor-archetype character a basic modification of their choice, but the app offers no picker at all for an archetype inventor, so the feat delivers nothing.",
+   "fixed": true
+  },
+  {
+   "id": "eerie-environs",
+   "finding": "eerie-environs",
+   "severity": "player-visible",
+   "summary": "Neither of Eerie Environs' two mechanics — Demoralizing without losing hidden, and waiving the no-shared-language penalty — reaches the player anywhere in the app except the feat's own description text.",
+   "fixed": true
+  },
+  {
+   "id": "greater-cruelty",
+   "finding": "greater-cruelty",
+   "severity": "player-visible",
+   "summary": "Greater Cruelty's clause never reaches the Cruelty spell, although the app already has the exact lane for it and the prerequisite feat Cruelty uses that lane on the very same spell.",
+   "fixed": true
+  },
+  {
+   "id": "monk-moves",
+   "finding": "monk-moves#hp",
+   "severity": "internal",
+   "summary": "The digest's \"MISSING hp | theirs=3 | ours=(nothing)\" flag on Monk Moves is an instrument misread: WG's +3 HP op sits inside a conditional gated on owning a DIFFERENT feat (Monk Resiliency), which our feats/monk-resiliency delivers itself, ",
+   "fixed": true
+  },
+  {
+   "id": "monk-moves",
+   "finding": "monk-moves#speed-star",
+   "severity": "player-visible",
+   "summary": "Monk Moves' +10-foot Speed is delivered twice on our side: the evaluated speedsIf already adds it to the Speed number while unarmored, and a situationalBonuses star advertises the same +10 as if it were still to be applied.",
+   "fixed": true
+  },
+  {
+   "id": "advanced-domain",
+   "finding": "advanced-domain#domain-pool",
+   "severity": "player-visible",
+   "summary": "Our Advanced Domain picker offers the advanced spell of ALL 64 domains instead of only the domains the character actually has an initial domain spell for, so a cleric of a Fire/Zeal deity can take Localized Quake or Door to Beyond.",
+   "fixed": true
+  },
+  {
+   "id": "advanced-domain",
+   "finding": "advanced-domain#archetype-listing",
+   "severity": "player-visible",
+   "summary": "Our record tags Advanced Domain as a soul-warden archetype feat at level 8, but print lists it on three archetypes at two different levels — Soul Warden at 16, Vindicator at 8, Campfire Chronicler at 8 — and because the record carries no 'a",
+   "fixed": true
+  },
+  {
+   "id": "ouroboric-pact",
+   "finding": "ouroboric-pact#action-cost",
+   "severity": "player-visible",
+   "summary": "The Free Action cost belongs to the granted Entreat Pact action, not to the feat, and our record carries it in both places — the feat renders with a free-action glyph although it is a passive feat that only grants an action.",
+   "fixed": true
+  },
+  {
+   "id": "murksight",
+   "finding": "murksight#perception",
+   "severity": "player-visible",
+   "summary": "Murksight's Perception clause has no carrier on our side at all — the record is a bare passive feat with no situationalBonuses entry — while Wanderer's Guide attaches the note to the Perception statistic.",
+   "fixed": true
+  },
+  {
+   "id": "flickering-stories",
+   "finding": "flickering-stories",
+   "severity": "player-visible",
+   "summary": "Flickering Stories changes what the Offer Story action can do, and our side attaches nothing to that action row; Wanderer's Guide injects the alternate benefit onto Offer a Story at point of use.",
+   "fixed": true
+  },
+  {
+   "id": "dream-magic",
+   "finding": "dream-magic#rank",
+   "severity": "player-visible",
+   "summary": "Dream Magic grants its chosen spell at the spell's BASE rank instead of the printed 4th rank, so a character who picks Sleep casts a 1st-rank Sleep and one who picks Dream Message casts a 3rd-rank Dream Message.",
+   "fixed": true
+  },
+  {
+   "id": "dream-magic",
+   "finding": "dream-magic#attribute",
+   "severity": "player-visible",
+   "summary": "Dream Magic prints its own spellcasting profile (trained in spell attack/DC, Wisdom) and we carry no spellcastingGrant, so the spell is cast off the innate entry's default Charisma.",
+   "fixed": true
+  },
+  {
+   "id": "dream-magic",
+   "finding": "dream-magic#second-taking",
+   "severity": "player-visible",
+   "summary": "Dream Magic is maxTakable 2 and the second taking grants nothing: the pick lane stores one answer per feat id, so the player cannot end up with both spells.",
+   "fixed": true
+  },
+  {
+   "id": "clinging-shadows-initiate",
+   "finding": "clinging-shadows-initiate#shadow-grasp",
+   "severity": "player-visible",
+   "summary": "The qi spell this feat grants delivers no mechanics at all: the shadow grasp Strike the printed text names is not created by any carrier, and the stance itself has no toggle, because stance defs are keyed by feat/action id and no entry exis",
+   "fixed": true
+  },
+  {
+   "id": "steal-vitality",
+   "finding": "steal-vitality#condition-values",
+   "severity": "player-visible",
+   "summary": "Our sheet description restricts the counteract to Clumsy 1 and Enfeebled 1, while print names the clumsy or enfeebled conditions with no value — a player with clumsy 2 reads ours as ineligible.",
+   "fixed": true
+  },
+  {
+   "id": "swashbucklers-speed",
+   "finding": "swashbucklers-speed",
+   "severity": "player-visible",
+   "summary": "The feat's always-on +5-foot status bonus to Speeds has no numeric carrier on our side — the record's only carrier is a display star in situationalBonuses.ts, so a swashbuckler-archetype character's Speed never changes on the sheet with or ",
+   "fixed": true
+  },
+  {
+   "id": "swashbucklers-speed",
+   "finding": "swashbucklers-speed#text",
+   "severity": "player-visible",
+   "summary": "Our shipped description is the LEGACY Advanced Player's Guide text (feat-1864) with the word \"panache\" deleted, on a record whose own aonId is the remaster feat-6238 — the player reads \"with or without .\" instead of the Player Core 2 senten",
+   "fixed": true
+  },
+  {
+   "id": "haunting-memories",
+   "finding": "haunting-memories",
+   "severity": "player-visible",
+   "summary": "The second half of the feat — the skill feat the morning's pick also grants — is prose only on our side: WG asks for it as a real feat selection, we print it in choice.note and grant nothing.",
+   "fixed": true
+  },
+  {
+   "id": "creed-magic",
+   "finding": "creed-magic",
+   "severity": "internal",
+   "summary": "The NO-SHEET-EFFECT flag is an instrument artefact: the harness built this cleric class-archetype feat on a FIGHTER host, so the entry its spellSlotBonus names ('cleric-casting') did not exist and the two creed slots had nowhere to land; on",
+   "fixed": true
+  },
+  {
+   "id": "ubiquitous-gadgets",
+   "finding": "ubiquitous-gadgets",
+   "severity": "player-visible",
+   "summary": "The feat's whole mechanic — +2 temporary gadgets per day — has no carrier on either side, and neither does the base count it increases, so an inventor who takes it gets nothing and has no gadget-per-day figure anywhere in the app.",
+   "fixed": true
+  },
+  {
+   "id": "wild-winds-initiate",
+   "finding": "wild-winds-initiate#stance",
+   "severity": "player-visible",
+   "summary": "The stance the feat grants delivers nothing but a repertoire line: content.stances has no 'wild-winds-stance' entry, so neither the wind crash ranged Strike nor the +2 circumstance AC against ranged attacks ever reaches the sheet — and beca",
+   "fixed": true
+  },
+  {
+   "id": "sinister-knight",
+   "finding": "sinister-knight",
+   "severity": "player-visible",
+   "summary": "Sinister Knight is an armour property rune with no entry in core.json `runes`, so it can never be etched onto heavy armour and its +1 Deception only fires if the player mislabels the loose rune as worn/equipped.",
+   "fixed": true
+  },
+  {
+   "id": "umbral-wings",
+   "finding": "umbral-wings#fly-activation",
+   "severity": "player-visible",
+   "summary": "The cloak's once-per-hour activation grants a fly Speed and neither side carries it, although the app's modes lane already models the identical clause on comparable items.",
+   "fixed": true
+  },
+  {
+   "id": "energy-robe-cold",
+   "finding": "energy-robe-cold#water-walk",
+   "severity": "player-visible",
+   "summary": "The cold robe's once-per-day activation grants the effects of water walk for 1 minute and neither side carries it, although the fire variant's activation clause does have a carrier.",
+   "fixed": true
+  }
+ ],
+ "refuted": [
+  {
+   "id": "soulsight-sorcerer",
+   "finding": "soulsight-sorcerer#prerequisite",
+   "summary": "Our record gates the feat behind a prerequisite the printed remaster feat it points at does not have, so a sorcerer whose bloodline grants arcane or primal spells is refused a feat print lets them tak",
+   "evidence": "The data half is true (feat-4609 carries no Prerequisites line and is Player Core; the 'bloodline that grants divine or occult spells' line and the APG/OGL source belong to legacy feat-1647), but the stated harm is false: checkPrerequisites (build.ts:9516-9556) matches only declared choice tokens, `"
+  },
+  {
+   "id": "murksight",
+   "finding": "murksight#attack",
+   "summary": "The attack-side half of Murksight (no circumstance penalty to ranged attacks, and no flat check against a target concealed only by precipitation) is modelled by neither side.",
+   "evidence": "The reader's own finding says 'modelled by neither side', and wg-show --raw confirms WG's entire Murksight record is the single PERCEPTION addBonusToValue with no strike/flat-check op — i.e. WG encodes strictly LESS than print for this half, the named false-positive class for this lane (same call as"
+  },
+  {
+   "id": "dream-magic",
+   "finding": "dream-magic#daydream-trance",
+   "summary": "The Sleep option's usage restriction is modelled by neither side: the spell appears as a plain 1/day innate casting with no note that it can only be cast in a Daydream Trance.",
+   "evidence": "`wg-show \"Dream Magic\" --raw` shows WG's sleep option is a bare giveSpell {type:'NORMAL', spellId:4837} with no restriction, condition or note of any kind — WG encodes strictly less than print here, the named false-positive class for this lane, and the reader's own claim says 'modelled by neither si"
+  },
+  {
+   "id": "energy-robe-cold",
+   "finding": "energy-robe-cold#description",
+   "summary": "The description we ship for this Item-8, 450 gp record is the whole four-variant Energy Robe page, including the other variants' prices and an unscrubbed page header, and the activation's action glyph",
+   "evidence": "The finding's evidence is entirely the core-descriptions.json `.d` string, which this record never renders: ast-index.json maps 'energy-robe-cold' to bucket items, public/ast/items.json holds its node, and DescBody (src/sheet/DescBody.tsx:80-86) short-circuits to <AstRenderer … hideMeta> whenever an"
+  },
+  {
+   "id": "locust-leather",
+   "finding": "locust-leather#persistent-poison",
+   "summary": "Our Poison Fumes text drops the damage type and the persistent condition from the swarm rider — we print \"1d6 damage\" where print says 1d6 persistent poison damage.",
+   "evidence": "AoN mirror equipment-3817 prints '…also take 1d6 persistent poison damage', and our shipped ast for the record (public/ast/items.json, key 'locust-leather') carries it verbatim: '…also take 1d6 ' + link ref conditions:persistent-damage to condition-86 with text 'persistent poison damage'. ItemDetail"
+  }
+ ],
+ "flaggedResidues": [
+  {
+   "id": "haunting-memories",
+   "finding": "haunting-memories",
+   "severity": "internal",
+   "summary": "feats/haunting-memories | <a SECOND choice slot> | {daily:true, minLevel:8, flag:'hauntingMemoryFeat', kind:'open', prompt:\"Haunting Memories — this morning's temporary skill feat\", from:{type:'feat', traits:['skill'], grantFeat:true, excludeOwn:true, maxLevelByLevel:[{level:8,maxLevel:4},{level:10,maxLevel:5},{level:12,maxLevel:6},{level:14,maxLevel:7},{level:16,maxLevel:8},{level:18,maxLevel:9}…",
+   "fixed": false,
+   "family": "data-rows",
+   "kind": "DATA STILL NEEDED"
+  },
+  {
+   "id": "flaggedResidue: no lane anywhere decrements a PREPARED-SLOT COUNT at daily preparations — the trade is a whole unmodelled subsystem (one record needs it), and the auto-heighten half of feat-7983 is already delivered by the data-rows recordMarks row. Out of scope for a gap agent; re-raise as a lane when a second record wants it.",
+   "finding": "flaggedResidue: no lane anywhere decrements a PREPARED-SLOT COUNT at daily preparations — the trade is a whole unmodelled subsystem (one record needs it), and the auto-heighten half of feat-7983 is already delivered by the data-rows recordMarks row. Out of scope for a gap agent; re-raise as a lane when a second record wants it.",
+   "severity": "internal",
+   "summary": "feats/spellshield | <a daily-prep slot-trade carrier> | \"prepare one fewer wizard spell, at least 1 rank below your highest wizard slot, and record the infused rank\" — UNAUTHORABLE TODAY: no lane decrements a prepared-slot count at daily preparations. The auto-heighten half IS delivered by my recordMarks row; only the trade waits.",
+   "fixed": false,
+   "family": "data-rows",
+   "kind": "DATA STILL NEEDED"
+  },
+  {
+   "id": "dream-magic-second-taking",
+   "finding": "dream-magic-second-taking",
+   "severity": "internal",
+   "summary": "src/rules/build.ts — effectChoices answers are keyed `${recordId}:${ch.id}` (build.ts:5746; the comment at 5760-5763 says a repeatable feat's takes all read the same key). dream-magic#second-taking needs a per-taking key; no data row can supply it.",
+   "fixed": false,
+   "family": "data-rows",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: explicitly optional, and src/rules/situationalBonuses.ts is staged by families situational and gap-situational in this same batch — a third writer would clobber theirs. The two conditional bonuses are carried verbatim in each stance def note, which is the only correct data carrier while StanceDef has no conditional-bonus field.",
+   "finding": "flaggedResidue: explicitly optional, and src/rules/situationalBonuses.ts is staged by families situational and gap-situational in this same batch — a third writer would clobber theirs. The two conditional bonuses are carried verbatim in each stance def note, which is the only correct data carrier while StanceDef has no conditional-bonus field.",
+   "severity": "internal",
+   "summary": "src/rules/situationalBonuses.ts — optional follow-up: the two conditional bonuses I put in `note` (clinging shadows' +2 circumstance to Grapple / Escape DC, wild winds' +2 circumstance AC vs ranged attacks) would read better as FEAT_SITUATIONAL stars. StanceDef has no conditional-bonus field, so `note` is the only correct data carrier today.",
+   "fixed": false,
+   "family": "data-rows",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "haunting-memories",
+   "finding": "haunting-memories",
+   "severity": "internal",
+   "summary": "src/rules/types.ts + src/sheet/dailyChoices.ts — a record carries one `choice` (dailyChoices.ts:47 reads the singular rec.choice; no core.json record has a `choices` array). haunting-memories needs a second daily slot before its printed second half can be data.",
+   "fixed": false,
+   "family": "data-rows",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: print (AoN feat-7724) gives an already-EXPERT Lion Blade nothing on that slot, so the record-wide redundantFallback is an over-grant and the fix is to delete the flag in featGrantsAuto.ts — but test/batch031-engine.test.ts pins today's replacement as 'unchanged' (its own blast-radius control), and rewriting another family's test file is outside this agent's remit. Next batch: drop the flag and retire that assertion in one change. The verifier found the identical shape untouched at featGrantsAuto.ts:47 alkenstar-agent-dedication (AoN feat-3568) — do both together.",
+   "finding": "flaggedResidue: print (AoN feat-7724) gives an already-EXPERT Lion Blade nothing on that slot, so the record-wide redundantFallback is an over-grant and the fix is to delete the flag in featGrantsAuto.ts — but test/batch031-engine.test.ts pins today's replacement as 'unchanged' (its own blast-radius control), and rewriting another family's test file is outside this agent's remit. Next batch: drop the flag and retire that assertion in one change. The verifier found the identical shape untouched at featGrantsAuto.ts:47 alkenstar-agent-dedication (AoN feat-3568) — do both together.",
+   "severity": "internal",
+   "summary": "src/rules/featGrantsAuto.ts:477 'lion-blade-dedication' — its RECORD-WIDE redundantFallback reaches a skillChoices slot whose print (\"trained in Deception or Stealth; if already trained, an expert instead\") gives no replacement for the already-EXPERT case at all. Pre-existing over-grant, now louder: see BLAST RADIUS below.",
+   "fixed": false,
+   "family": "engine",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: archetypeListings is a LANE, not a record — 236 feats share the cross-listing shape, and a reader needs an eligibility shape first (does a cross-listed feat still require its dedication? does the listing replace or supplement the single `archetype` slug the picker facet already reads?) plus a data pass over all 236 records. A half-built reader with guessed semantics would offer Advanced Domain to every free-archetype character at 8. Out of scope here; advanced-domain#archetype-listing stays NOT-DONE until the lane is cut as its own batch.",
+   "finding": "flaggedResidue: archetypeListings is a LANE, not a record — 236 feats share the cross-listing shape, and a reader needs an eligibility shape first (does a cross-listed feat still require its dedication? does the listing replace or supplement the single `archetype` slug the picker facet already reads?) plus a data pass over all 236 records. A half-built reader with guessed semantics would offer Advanced Domain to every free-archetype character at 8. Out of scope here; advanced-domain#archetype-listing stays NOT-DONE until the lane is cut as its own batch.",
+   "severity": "internal",
+   "summary": "src/rules/featSlots.ts (eligibleFeatsForSlot) — the archetype cross-listing reader (`archetypeListings`) for advanced-domain#archetype-listing. Not built here: a data row for a field with no reader is inert, and the field belongs beside its reader. 236 feats share the shape, so it is a lane.",
+   "fixed": false,
+   "family": "engine",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: the same lane as the featSlots line above — dropping the advanced-domain `archetype` slug alone would break countsForArchetype / dedicationBlock / per-archetype HP without making the feat reachable by anyone, and correcting it to print's Soul Warden 16 / Vindicator 8 / Campfire Chronicler 8 needs the archetypeListings shape that line parks. Parked with it, not separately.",
+   "finding": "flaggedResidue: the same lane as the featSlots line above — dropping the advanced-domain `archetype` slug alone would break countsForArchetype / dedicationBlock / per-archetype HP without making the feat reachable by anyone, and correcting it to print's Soul Warden 16 / Vindicator 8 / Campfire Chronicler 8 needs the archetypeListings shape that line parks. Parked with it, not separately.",
+   "severity": "internal",
+   "summary": "public/core.json feats/advanced-domain `archetype:\"soul-warden\"` asserts level 8 for an archetype print puts at 16 (and drops Vindicator 8 / Campfire Chronicler 8 entirely). Belongs with the featSlots lane above — dropping the slug alone would break countsForArchetype / dedicationBlock / per-archetype HP without gaining anything.",
+   "fixed": false,
+   "family": "engine",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "speed-status-lane-031",
+   "finding": "speed-status-lane-031",
+   "severity": "internal",
+   "summary": "src/rules/derive.ts: the landSpeedBonus lane is LAND-ONLY, but feat-6238 says \"+5-foot status bonus to your SpeedS\" (plural). A swashbuckler-archetype character with a fly or swim Speed gets the +5 on land only. Same ceiling classFeatures/vivacious-speed already lives with, so this is a lane limitation, not a regression — a general \"bonus to all Speeds\" grant would fix both at once.",
+   "fixed": false,
+   "family": "situational",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: nothing is owed — this line is the builder's own non-collision NOTE about swashbucklers-speed#text, not a gap. Re-verified here: work/.b031-rows-data-rows.json writes core-descriptions.json feats/swashbucklers-speed on field `description`, while the situational family's change to that record is field `landSpeedBonus` plus a FEAT_SITUATIONAL star whose wording deliberately does not restate the printed sentence. Different field, different file, different family; the applier's collision check keys on category+id+field and sees no pair. There is no edit, row or question this line could produce.",
+   "finding": "flaggedResidue: nothing is owed — this line is the builder's own non-collision NOTE about swashbucklers-speed#text, not a gap. Re-verified here: work/.b031-rows-data-rows.json writes core-descriptions.json feats/swashbucklers-speed on field `description`, while the situational family's change to that record is field `landSpeedBonus` plus a FEAT_SITUATIONAL star whose wording deliberately does not restate the printed sentence. Different field, different file, different family; the applier's collision check keys on category+id+field and sees no pair. There is no edit, row or question this line could produce.",
+   "severity": "internal",
+   "summary": "work/.b031-report-data-rows (or whichever family owns it): swashbucklers-speed#text is a description re-sync on core-descriptions.json feats/swashbucklers-speed and is NOT mine; my star wording deliberately does not restate the printed sentence, so the two changes do not collide.",
+   "fixed": false,
+   "family": "situational",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "speed-status-lane-031",
+   "finding": "speed-status-lane-031",
+   "severity": "internal",
+   "summary": "src/rules/derive.ts:4966-4970 (swashbucklers-speed, NEW — found by me): landBonusOf sums every landSpeedBonus additively with no bonus TYPE, and this row makes the first reachable status+status pair. Measured: barbarian 8 (Furious Footfalls, \"+5-foot status bonus to your Speed\") + Swashbuckler Dedication + Swashbuckler's Speed reads 35 ft where print's two status bonuses give 30. The row is still…",
+   "fixed": false,
+   "family": "situational",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "speed-status-lane-031",
+   "finding": "speed-status-lane-031",
+   "severity": "internal",
+   "summary": "src/rules/derive.ts (swashbucklers-speed, builder's line, CONFIRMED as written): landSpeedBonus is LAND-ONLY and feat-6238 says \"+5-foot status bonus to your SpeedS\" (plural), so a holder with a fly or swim Speed gets it on land only. classFeatures/vivacious-speed lives with the identical ceiling; one \"bonus to all Speeds\" grant fixes both.",
+   "fixed": false,
+   "family": "situational",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: the same non-collision NOTE as the builder's line above, restated by the verifier — nothing is owed. Checked a third time here: the data-rows row on core-descriptions.json feats/swashbucklers-speed is field `description`; the situational family's is field `landSpeedBonus` on public/core.json plus a FEAT_SITUATIONAL star. The applier keys collisions on category+id+field, so the two cannot fight, and neither text repeats the other's sentence.",
+   "finding": "flaggedResidue: the same non-collision NOTE as the builder's line above, restated by the verifier — nothing is owed. Checked a third time here: the data-rows row on core-descriptions.json feats/swashbucklers-speed is field `description`; the situational family's is field `landSpeedBonus` on public/core.json plus a FEAT_SITUATIONAL star. The applier keys collisions on category+id+field, so the two cannot fight, and neither text repeats the other's sentence.",
+   "severity": "internal",
+   "summary": "core-descriptions.json feats/swashbucklers-speed (builder's line, CONFIRMED as written): swashbucklers-speed#text is the data-rows family's, on field `description`. Re-checked for collision against work/.b031-rows-data-rows.json — different field, and the trimmed star deliberately does not restate the printed sentence, so the two do not fight.",
+   "fixed": false,
+   "family": "situational",
+   "kind": "CROSS-FILE GAPS"
+  }
+ ],
+ "rejected": 5,
+ "askOwner": [
+  {
+   "id": "glyph-expert",
+   "desk": 130,
+   "summary": "WG attaches the success-to-critical-success and critical-failure-to-failure upgrade to saves against ALL magical traps, while print grants it only against traps that feature magical writing — a strict"
+  },
+  {
+   "id": "divine-breadth",
+   "desk": 131,
+   "summary": "WG grants Divine Breadth an extra rank-0 (cantrip) cleric slot at every level on top of the two cantrips Cleric Dedication already gives; the printed feat grants spell slots only and says nothing abou"
+  },
+  {
+   "id": "primal-breadth",
+   "desk": 132,
+   "summary": "WG grants Primal Breadth an extra rank-0 (cantrip) druid slot at every level on top of the two cantrips Druid Dedication already gives; the printed feat grants spell slots only and says nothing about "
+  }
+ ],
+ "complete": true
+}

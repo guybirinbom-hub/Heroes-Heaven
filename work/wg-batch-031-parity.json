@@ -1,0 +1,205 @@
+{
+ "batch": 31,
+ "records": [
+  {
+   "id": "soulsight-sorcerer",
+   "verdict": "FIXED",
+   "evidence": "[batch 31 read, adversarially confirmed] soulsight-sorcerer#duplicate: One printed feat (AoN feat-4609, traits Bard and Sorcerer) ships as THREE pickable records — `soulsight`, `soulsight-bar — cited by row spec work/.b031-rows-data-rows.json finding soulsight-sorcerer#duplicate (2 row(s)), row feats/soulsight-sorcerer field:edition in work/.b031-rows-data-rows.json, test test/batch031-data.test.ts (in what this batch added)"
+  },
+  {
+   "id": "spellshield",
+   "verdict": "FIXED",
+   "evidence": "[batch 31 read, adversarially confirmed] spellshield#arcane-bond-listing: Spellshield's printed grant of the Arcane Bond class feature never reaches the Feats tab: the feature is granted only th — cited by row feats/spellshield field:recordMarks in work/.b031-rows-data-rows.json, test test/batch031-data.test.ts (in what this batch added), test test/batch031-gap-data-rows.test.tsx (in what this batch added); spellshield#infusion: The feat's actual payload — trading a prepared wizard slot to infuse the shield, and the automatic heightening of the dr — cited by row spec work/.b031-rows-data-rows.json finding spellshield#infusion (1 row(s)), row feats/spellshield field:recordMarks in work/.b031-rows-data-rows.json, test test/batch031-data.test.ts (in what this batch added), test test/batch031-gap-data-rows.test.tsx (in what this batch added)"
+  },
+  {
+   "id": "golden-league-xun-dedication",
+   "verdict": "FIXED",
+   "evidence": "[batch 31 read, adversarially confirmed] golden-league-xun-dedication#already-expert: The dedication's parenthetical replacement clause is delivered by neither side: a character already expert in all four l — cited by code-only spec work/.b031-rows-engine.json finding golden-league-xun-dedication#already-expert (0 rows; family engine changed src/rules/build.ts, src/rules/types.ts, src/builder/Builder.tsx, src/builder/shared.tsx in this batch), code-only spec work/.b031-rows-gap-engine.json finding golden-league-xun-dedication#already-expert (0 rows; family gap-engine changed src/rules/featGrantsAuto.ts, src/rules/dailyItems.ts in this batch), test test/batch031-engine.test.ts (in what this batch added), test test/batch031-gap-engine.test.ts (in what this batch added), code src/rules/featGrantsAuto.ts (in what this batch added)"
+  },
+  {
+   "id": "glyph-expert",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #130 (batch 31; n from entry.n)"
+  },
+  {
+   "id": "insistent-command",
+   "verdict": "FIXED",
+   "evidence": "[batch 31 read, adversarially confirmed] insistent-command: The feat's entire printed effect is unmodelled on our side — the record carries no degreeShifts, no situationalBonuses e — cited by row spec work/.b031-rows-engine.json finding insistent-command (1 row(s)), row feats/insistent-command field:degreeShifts in work/.b031-rows-engine.json, test test/batch031-engine.test.ts (in what this batch added)"
+  },
+  {
+   "id": "basic-modification",
+   "verdict": "FIXED",
+   "evidence": "[batch 31 read, adversarially confirmed] basic-modification: Basic Modification grants an inventor-archetype character a basic modification of their choice, but the app offers no pi — cited by code-only spec work/.b031-rows-engine.json finding basic-modification (0 rows; family engine changed src/rules/build.ts, src/rules/types.ts, src/builder/Builder.tsx, src/builder/shared.tsx in this batch), test test/batch031-engine.test.ts (in what this batch added), code src/rules/build.ts (in what this batch added), code src/builder/shared.tsx (in what this batch added)"
+  },
+  {
+   "id": "eerie-environs",
+   "verdict": "FIXED",
+   "evidence": "[batch 31 read, adversarially confirmed] eerie-environs: Neither of Eerie Environs' two mechanics — Demoralizing without losing hidden, and waiving the no-shared-language penalt — cited by code-only spec work/.b031-rows-situational.json finding eerie-environs (0 rows; family situational changed src/rules/situationalBonuses.ts in this batch), test test/batch031-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added)"
+  },
+  {
+   "id": "divine-healing",
+   "verdict": "MATCHES",
+   "evidence": "[batch 31 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "sinister-knight",
+   "verdict": "FIXED",
+   "evidence": "[batch 31 read, adversarially confirmed] sinister-knight: Sinister Knight is an armour property rune with no entry in core.json `runes`, so it can never be etched onto heavy armo — cited by row spec work/.b031-rows-data-rows.json finding sinister-knight (1 row(s)), row runes/sinister-knight field:undefined in work/.b031-rows-data-rows.json, test test/batch031-data.test.ts (in what this batch added)"
+  },
+  {
+   "id": "greater-cruelty",
+   "verdict": "FIXED",
+   "evidence": "[batch 31 read, adversarially confirmed] greater-cruelty: Greater Cruelty's clause never reaches the Cruelty spell, although the app already has the exact lane for it and the pre — cited by row spec work/.b031-rows-data-rows.json finding greater-cruelty (1 row(s)), row feats/greater-cruelty field:spellNotes in work/.b031-rows-data-rows.json, test test/batch031-data.test.ts (in what this batch added)"
+  },
+  {
+   "id": "monk-moves",
+   "verdict": "FIXED",
+   "evidence": "[batch 31 read, adversarially confirmed] monk-moves#speed-star: Monk Moves' +10-foot Speed is delivered twice on our side: the evaluated speedsIf already adds it to the Speed number wh — cited by code-only spec work/.b031-rows-situational.json finding monk-moves#speed-star (0 rows; family situational changed src/rules/situationalBonuses.ts in this batch), test test/batch031-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added), test test/batch031-instruments.test.ts (in what this batch added), test test/batch031-gap-situational.test.ts (in what this batch added)"
+  },
+  {
+   "id": "ouroboric-pact",
+   "verdict": "FIXED",
+   "evidence": "[batch 31 read, adversarially confirmed] ouroboric-pact#action-cost: The Free Action cost belongs to the granted Entreat Pact action, not to the feat, and our record carries it in both plac — cited by row spec work/.b031-rows-data-rows.json finding ouroboric-pact#action-cost (1 row(s)), row feats/ouroboric-pact field:actionCost in work/.b031-rows-data-rows.json, test test/batch031-data.test.ts (in what this batch added), test test/batch031-gap-data-rows.test.tsx (in what this batch added)"
+  },
+  {
+   "id": "chaining-mutation",
+   "verdict": "MATCHES",
+   "evidence": "[batch 31 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "umbral-wings",
+   "verdict": "FIXED",
+   "evidence": "[batch 31 read, adversarially confirmed] umbral-wings#fly-activation: The cloak's once-per-hour activation grants a fly Speed and neither side carries it, although the app's modes lane alrea — cited by row spec work/.b031-rows-data-rows.json finding umbral-wings#fly-activation (1 row(s)), test test/batch031-data.test.ts (in what this batch added)"
+  },
+  {
+   "id": "patrons-breadth",
+   "verdict": "MATCHES",
+   "evidence": "[batch 31 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "advanced-domain",
+   "verdict": "FIXED",
+   "evidence": "[batch 31 read, adversarially confirmed] advanced-domain#domain-pool: Our Advanced Domain picker offers the advanced spell of ALL 64 domains instead of only the domains the character actuall — cited by row spec work/.b031-rows-engine.json finding advanced-domain#domain-pool (1 row(s)), row feats/advanced-domain field:choice in work/.b031-rows-engine.json, test test/batch031-engine.test.ts (in what this batch added); advanced-domain#archetype-listing: Our record tags Advanced Domain as a soul-warden archetype feat at level 8, but print lists it on three archetypes at tw — cited by row feats/advanced-domain field:choice in work/.b031-rows-engine.json, code-only spec work/.b031-rows-engine.json finding advanced-domain#archetype-listing (0 rows; family engine changed src/rules/build.ts, src/rules/types.ts, src/builder/Builder.tsx, src/builder/shared.tsx in this batch), test test/batch031-engine.test.ts (in what this batch added)"
+  },
+  {
+   "id": "moonstone-diadem",
+   "verdict": "MATCHES",
+   "evidence": "[batch 31 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "monumental-maestro",
+   "verdict": "MATCHES",
+   "evidence": "[batch 31 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "lions-magic",
+   "verdict": "MATCHES",
+   "evidence": "[batch 31 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "murksight",
+   "verdict": "FIXED",
+   "evidence": "[batch 31 read, adversarially confirmed] murksight#perception: Murksight's Perception clause has no carrier on our side at all — the record is a bare passive feat with no situationalB — cited by code-only spec work/.b031-rows-situational.json finding murksight#perception (0 rows; family situational changed src/rules/situationalBonuses.ts in this batch), test test/batch031-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added)"
+  },
+  {
+   "id": "flickering-stories",
+   "verdict": "FIXED",
+   "evidence": "[batch 31 read, adversarially confirmed] flickering-stories: Flickering Stories changes what the Offer Story action can do, and our side attaches nothing to that action row; Wandere — cited by row spec work/.b031-rows-data-rows.json finding flickering-stories (1 row(s)), row feats/flickering-stories field:recordMarks in work/.b031-rows-data-rows.json, test test/batch031-data.test.ts (in what this batch added)"
+  },
+  {
+   "id": "energy-robe-cold",
+   "verdict": "FIXED",
+   "evidence": "[batch 31 read, adversarially confirmed] energy-robe-cold#water-walk: The cold robe's once-per-day activation grants the effects of water walk for 1 minute and neither side carries it, altho — cited by row spec work/.b031-rows-data-rows.json finding energy-robe-cold#water-walk (1 row(s)), test test/batch031-data.test.ts (in what this batch added)"
+  },
+  {
+   "id": "dream-magic",
+   "verdict": "FIXED",
+   "evidence": "[batch 31 read, adversarially confirmed] dream-magic#rank: Dream Magic grants its chosen spell at the spell's BASE rank instead of the printed 4th rank, so a character who picks S — cited by row spec work/.b031-rows-data-rows.json finding dream-magic#rank (1 row(s)), row feats/dream-magic field:effectChoices in work/.b031-rows-data-rows.json, row feats/dream-magic field:spellcastingGrant in work/.b031-rows-data-rows.json, test test/batch031-data.test.ts (in what this batch added), test test/batch031-gap-data-rows.test.tsx (in what this batch added), test test/coverage.test.ts (in what this batch added), code src/rules/featCantripGrants.ts (in what this batch added); dream-magic#attribute: Dream Magic prints its own spellcasting profile (trained in spell attack/DC, Wisdom) and we carry no spellcastingGrant,  — cited by row feats/dream-magic field:effectChoices in work/.b031-rows-data-rows.json, row spec work/.b031-rows-data-rows.json finding dream-magic#attribute (1 row(s)), row feats/dream-magic field:spellcastingGrant in work/.b031-rows-data-rows.json, test test/batch031-data.test.ts (in what this batch added), test test/batch031-gap-data-rows.test.tsx (in what this batch added), test test/coverage.test.ts (in what this batch added), code src/rules/featCantripGrants.ts (in what this batch added); dream-magic#second-taking: Dream Magic is maxTakable 2 and the second taking grants nothing: the pick lane stores one answer per feat id, so the pl — cited by row feats/dream-magic field:effectChoices in work/.b031-rows-data-rows.json, row feats/dream-magic field:spellcastingGrant in work/.b031-rows-data-rows.json, test test/batch031-data.test.ts (in what this batch added), test test/batch031-gap-data-rows.test.tsx (in what this batch added), test test/coverage.test.ts (in what this batch added), code src/rules/featCantripGrants.ts (in what this batch added)"
+  },
+  {
+   "id": "locust-leather",
+   "verdict": "MATCHES",
+   "evidence": "[batch 31 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "soulsight",
+   "verdict": "MATCHES",
+   "evidence": "[batch 31 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "shadowdancer-dedication",
+   "verdict": "MATCHES",
+   "evidence": "[batch 31 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "tangled-forest-stance",
+   "verdict": "MATCHES",
+   "evidence": "[batch 31 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "steal-vitality",
+   "verdict": "FIXED",
+   "evidence": "[batch 31 read, adversarially confirmed] steal-vitality#condition-values: Our sheet description restricts the counteract to Clumsy 1 and Enfeebled 1, while print names the clumsy or enfeebled co — cited by row spec work/.b031-rows-data-rows.json finding steal-vitality#condition-values (2 row(s)), row feats/steal-vitality field:description in work/.b031-rows-data-rows.json, row feats/steal-vitality field:descRefs in work/.b031-rows-data-rows.json, test test/batch031-data.test.ts (in what this batch added)"
+  },
+  {
+   "id": "advanced-deitys-domain",
+   "verdict": "MATCHES",
+   "evidence": "[batch 31 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "clinging-shadows-initiate",
+   "verdict": "FIXED",
+   "evidence": "[batch 31 read, adversarially confirmed] clinging-shadows-initiate#shadow-grasp: The qi spell this feat grants delivers no mechanics at all: the shadow grasp Strike the printed text names is not create — cited by row spec work/.b031-rows-data-rows.json finding clinging-shadows-initiate#shadow-grasp (1 row(s)), test test/batch031-data.test.ts (in what this batch added), test test/batch031-gap-data-rows.test.tsx (in what this batch added)"
+  },
+  {
+   "id": "swashbucklers-speed",
+   "verdict": "FIXED",
+   "evidence": "[batch 31 read, adversarially confirmed] swashbucklers-speed: The feat's always-on +5-foot status bonus to Speeds has no numeric carrier on our side — the record's only carrier is a  — cited by row spec work/.b031-rows-situational.json finding swashbucklers-speed (1 row(s)), row feats/swashbucklers-speed field:landSpeedBonus in work/.b031-rows-situational.json, row feats/swashbucklers-speed field:description in work/.b031-rows-data-rows.json, test test/batch031-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added), test test/batch031-data.test.ts (in what this batch added); swashbucklers-speed#text: Our shipped description is the LEGACY Advanced Player's Guide text (feat-1864) with the word \"panache\" deleted, on a rec — cited by row feats/swashbucklers-speed field:landSpeedBonus in work/.b031-rows-situational.json, row spec work/.b031-rows-data-rows.json finding swashbucklers-speed#text (1 row(s)), row feats/swashbucklers-speed field:description in work/.b031-rows-data-rows.json, test test/batch031-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added), test test/batch031-data.test.ts (in what this batch added)"
+  },
+  {
+   "id": "haunting-memories",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #128 (batch 31; n from entry.n)"
+  },
+  {
+   "id": "divine-breadth",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #131 (batch 31; n from entry.n)"
+  },
+  {
+   "id": "survivor-of-desolation",
+   "verdict": "MATCHES",
+   "evidence": "[batch 31 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "primal-breadth",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #132 (batch 31; n from entry.n)"
+  },
+  {
+   "id": "creed-magic",
+   "verdict": "MATCHES",
+   "evidence": "[batch 31 read] comparer misread settled/taught: creed-magic — work/.b031-rows-instruments.json finding creed-magic note: Instrument-only. feats/creed-magic.spellSlotBonus {entryId:'cleric-casting', restricted:{...}} is already right and already pinned on a cleric (test/restricted-"
+  },
+  {
+   "id": "ubiquitous-gadgets",
+   "verdict": "FIXED",
+   "evidence": "[batch 31 read, adversarially confirmed] ubiquitous-gadgets: The feat's whole mechanic — +2 temporary gadgets per day — has no carrier on either side, and neither does the base coun — cited by row spec work/.b031-rows-engine.json finding ubiquitous-gadgets (2 row(s)), row feats/ubiquitous-gadgets field:dailyTemporaryItems in work/.b031-rows-engine.json, code-only spec work/.b031-rows-gap-engine.json finding ubiquitous-gadgets (0 rows; family gap-engine changed src/rules/featGrantsAuto.ts, src/rules/dailyItems.ts in this batch), test test/batch031-engine.test.ts (in what this batch added), test test/batch031-gap-engine.test.ts (in what this batch added)"
+  },
+  {
+   "id": "unrivaled-analysis",
+   "verdict": "MATCHES",
+   "evidence": "[batch 31 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "call-gun",
+   "verdict": "MATCHES",
+   "evidence": "[batch 31 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "wild-winds-initiate",
+   "verdict": "FIXED",
+   "evidence": "[batch 31 read, adversarially confirmed] wild-winds-initiate#stance: The stance the feat grants delivers nothing but a repertoire line: content.stances has no 'wild-winds-stance' entry, so  — cited by row spec work/.b031-rows-data-rows.json finding wild-winds-initiate#stance (1 row(s)), test test/batch031-data.test.ts (in what this batch added), test test/wg-batch-run.test.ts (in what this batch added), test test/batch031-gap-data-rows.test.tsx (in what this batch added)"
+  }
+ ]
+}

@@ -500,9 +500,17 @@ describe('batch 27 — the instruments read the carriers we actually ship', () =
      * mechanical field on our side — went straight from THEY-ONLY into AGREE with `ourKinds: []`. Each
      * keeps the display surface its note is pinned to, because that gap is real.
      */
-    expect(theyOnly.get('murksight')).toContain('perception');
+    // batch 031 premise: feat-5005 "Your vision pierces through non-magical fog, mist, rain, and snow"
+    // (finding murksight#perception; the premise form because this it()'s enclosing title cannot carry
+    // the record id — see the closer's note on IT_RE). Murksight was one of the four bare feats above
+    // until batch 031 gave it its FEAT_SITUATIONAL star for the waived circumstance penalty.
+    expect(theyOnly.get('murksight')).toBeUndefined();
     expect(theyOnly.get('greenwatcher')).toContain('save');
-    expect(theyOnly.get('insistent-command')).toContain('skill');
+    // batch 031 premise: feat-1207 "Command an Animal" (finding insistent-command) — batch 031 authored
+    // its degreeShifts on the Command an Animal action row and its Nature star, so the skill kind it was
+    // THEY-ONLY on is answered. greenwatcher and assured-runic-crafter still report, which is what keeps
+    // this check discriminating.
+    expect(theyOnly.get('insistent-command')).toBeUndefined();
     expect(theyOnly.get('assured-runic-crafter')).toContain('skill');
     /* Icy Apotheosis writes *"You automatically succeed against effects that have the cold trait"* on
      * all three saves as value-less notes; we model only the cold immunity, so `save` still reports. */

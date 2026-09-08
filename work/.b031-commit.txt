@@ -1,0 +1,120 @@
+parity batch 031 (WG-COMPARISON lane): 40 records, 26 overlay rows, 8 code lanes
+
+40 records cut at level <= 8 and read against print with WG's raw ops as evidence only (GPL-3.0: their
+encoding is matched, never copied). Two Opus readers per slice, each followed by an adversarial
+verifier: 29 findings CONFIRMED, 5 REFUTED, 3 sent to the owner. Seven family specs authored 26
+backfill rows; the overlay goes 14085 -> 14108 (23 new keys, the rest superseding declared rows).
+
+WHAT THE ROWS SETTLE
+- data-rows (17 findings, 16 rows; 13 carry rows, 4 say why they carry none): soulsight-sorcerer's
+  duplicate, spellshield's infusion mark, greater-cruelty, ouroboric-pact's passive action cost,
+  flickering-stories, dream-magic's rank and attribute carriers, steal-vitality's condition values,
+  swashbucklers-speed's description re-sync, and five CREATE rows - clinging-shadows-initiate's shadow
+  grasp, wild-winds-initiate's stance, sinister-knight, umbral-wings' fly activation and
+  energy-robe-cold's water walk - so records that had no key at all can carry their printed mechanic.
+- engine (6 findings, 4 rows): advanced-domain's focus pool, golden-league-xun-dedication's
+  already-expert half, insistent-command and ubiquitous-gadgets (readers confirmed live rather than
+  invented), basic-modification.
+  The engine lane also gave StanceStrike a `range` carrier (src/rules/types.ts) passed through the
+  stance-strike profile in src/rules/derive.ts, so a stance Strike print calls RANGED stops deriving as a
+  melee Strength attack, with the Builder's matching display in src/builder/Builder.tsx and
+  src/builder/shared.tsx.
+- situational (4 findings, 1 row): eerie-environs and murksight#perception join FEAT_SITUATIONAL as
+  display stars for clauses that move no number; swashbucklers-speed gets its landSpeedBonus 5 row and
+  its star trimmed to the panache remainder; monk-moves#speed-star is a code-only DELETION - the star
+  moved no number the engine did not already apply through speedsIf, so it was removed from
+  src/rules/situationalBonuses.ts and the speed block in src/rules/explain.ts (and excluded in
+  scripts/apply-situational-lane.mjs so the generated lane cannot restore it).
+- gap lanes (gap-engine, gap-situational, gap-data-rows): 7 rows plus fixes in
+  src/rules/featGrantsAuto.ts, src/rules/dailyItems.ts, src/rules/featCantripGrants.ts,
+  src/sheet/FeatsTab.tsx and src/sheet/MainTab.tsx, closing the lines the builders and verifiers raised.
+- instruments (2 findings, 0 rows): both are INSTRUMENT teaches, not data. wg-values.mjs dropped three
+  SETTLED_VALUES keys that silenced the resiliency-gated Hit Points parked on monk-moves#hp (comparer
+  goes 9/11 agreeing to 11/11 with no earlier batch flipped), and the EXPERIENCE harness
+  (test/wg-experience.harness.test.tsx) learned classArchetypeHost: a class archetype's feats carry only
+  the `archetype` trait, so all 105 of them were being played on a fighter and every class-specific
+  effect read as absent. The class is now taken from the dedication's classArchetype.classId, with the
+  array case (flexible-spellcaster, wellspring-mage, elementalist) resolved by the spellcasting entry the
+  record's own spellSlotBonus names. creed-magic is the pinned case.
+
+40 gap lines: 27 authored, 13 parked. Every flip is cited in a form the test-flip audit parses and
+`node scripts/test-flip-audit.mjs --batch 031` is clean (17 test files touched, 2 new settle keys):
+mostly "// batch 031: <finding id>" with the record id in the enclosing describe/it title, and the
+"// batch 031 premise: <aon doc> "<clause>"" form where the enclosing title could not carry the record
+id (three lines in test/wg-experience-lanes.test.ts and test/owner-questions-numbering.test.ts).
+
+QUEUED FOR THE OWNER (work/.b031-queue.json, six entries, none decided here; filed through
+add-owner-question.mjs as desk n 127-132)
+- speed-status-lane-031: should the Speed-bonus lane carry a bonus TYPE (WG records "type":"status"), and
+  should a clause be able to name ALL Speeds as feat-6238's "your Speeds" prints? Both halves are
+  engine-shape migrations of every existing carrier, not rows.
+- haunting-memories: feat-7701's second half grants a skill feat with a halved level for prerequisites.
+- dream-magic-second-taking: the second-taking clause.
+- glyph-expert (n 130), divine-breadth (n 131), primal-breadth (n 132): the three read-stage askOwner
+  findings, forwarded by the closer because wg-batch-close.mjs refuses an askOwner record with no desk
+  number. In all three OUR side matches print and WG encodes more - their Glyph Expert degree upgrade
+  fires against any magical trap where print says traps that feature magical writing, and their Divine
+  and Primal Breadth each add an unconditional rank-0 slot print never mentions (the same op uuid on
+  both, which reads as a WG data-entry duplication). Nothing was changed on our side either way.
+
+DEFERRED / NOT CLOSED IN THIS BATCH
+- src/rules/derive.ts ownedFeatureIds() does not honour classArchetype.suppressedFeatures, so a class
+  archetype's removed features still read as owned (measured: a War Mage wizard owns arcane-bond although
+  our own record says it never gains it). Reported as a CROSS-FILE GAP by two families; it is the same
+  defect as FeatsTab printing a suppressed feature under Replaced. Next batch.
+
+CLOSED. The create-row correction the batch stalled on came back from the orchestrator and was applied:
+work/.b031-rows-data-rows.json#wild-winds-initiate#stance now creates stances/wild-winds-stance WITH the
+printed `range: 30` on its wind crash Strike (spell-2062: "as ranged Strikes against targets within 30
+feet"), carrying supersedes:true because the earlier half-applied run had already written the old copy.
+The gap row that set the same field is kept and is now byte-identical to it.
+
+Three driver guards came out of that stall, each with a test:
+- scripts/wg-batch-run.mjs precheck (1b): a manifest that CREATES a record in one spec and ASSIGNS a
+  field of that same record in another is refused BEFORE writing, naming both rows and saying to fold
+  the field into the create row. keyOf ends a create row with "(create)" and a field row with the field
+  name, so the collision check never saw these two as one record, and the mistake could only surface as
+  a post-check refusal after everything had been written. A field row byte-identical to what the create
+  row already says, applied after it, is allowed - that is the shape this batch ships.
+- scripts/wg-batch-run.mjs precheck (2) and the same check in scripts/apply-parity-fixes.mjs: a row
+  byte-identical to the one already in the overlay no longer demands supersedes:true. A stage that
+  refuses AFTER writing leaves the batch's own rows on disk, and re-running read all 22 of them as
+  undeclared supersessions.
+- scripts/wg-batch-run.mjs stageGaps: only queue entries no desk array holds yet are handed to
+  add-owner-question.mjs, which refuses an id already on the desk and then writes nothing for the whole
+  run - so gaps can be re-run after a later stage sends work back to it.
+Tests: test/wg-batch-run.test.ts, test/apply-parity-fixes-refusals.test.ts, test/batch031-closer-guards.test.ts.
+
+The suite then failed five tests, all of them expectations this batch's own work had outdated, each
+re-cited in the audited form: batch031-data's stance strike now expects range 30; consumable-modes'
+item-mode count goes 375 -> 377 for the two activation modes created here; integrity-sweeps' "every mode
+in core.json exists in a source file" now counts effect-backfill.json create rows as a source, which
+they are (import-core-v2.mjs applies the overlay as the first step of `npm run data`) - the guard could
+not see the overlay at all and would have called any overlay-authored mode deletable; owner-questions-
+numbering's "max(n)+1 over ALL FOUR arrays" discriminator moved off the live desk onto a fixture, since
+filing n 130-132 into `open` made the live file stop discriminating; and wg-experience-lanes' batch-27
+check now expects murksight and insistent-command to be QUIET, which is this batch fixing them.
+
+The KINDS gate's last two records are closer settles in wg-diff's VERIFIED_EQUIVALENT, each with a
+mutation-proof test in test/batch031-closer.test.ts that re-runs the real comparer under `--raw` and
+shows the record reporting again with the settle bypassed: basic-modification ['conditional','choice'],
+whose pick this batch built into the app's own tiered modification picker rather than onto the record,
+and monk-moves ['hp'], whose +3 is Monk Resiliency's per-archetype-feat rule that we carry once on that
+feat.
+
+FINAL STATE: apply ok (4/7 specs applied, 3 already byte-identical, 26 rows, overlay 14085 -> 14108),
+gaps ok (40 lines: 27 authored, 13 parked; 6 owner questions filed), close ok (40 verdicts: FIXED 21,
+MATCHES 15, OWNER-QUEUED 4; 13 flagged residues), experience ok (40 records played on the real builder,
+40 OK), gate ok (all nine), regate ok (30 earlier batches re-swept green, 0 failed), suite and verify
+green. Nothing in this batch was committed: wg-batch-commit.mjs is the owner's step.
+
+
+Post-close note (2026-09-08): a data regeneration run outside the pipeline on
+2026-09-07 rebuilt public/core.json after this batch closed. The experience
+evidence was replayed on the regenerated data (runId ba0251265356d79d, 40/40
+OK) and all nine gates re-passed (runId 1958e1aabc29be34). npm run verify is
+red only on the bestiary-enrichment guard, from that regeneration's
+un-enriched bestiary files, which are not part of this batch; the batch's own
+verify passed before the regeneration (runId 3cb6c606aed5dd62).
+
+Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>

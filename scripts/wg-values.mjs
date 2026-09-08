@@ -332,6 +332,50 @@ const setMember = (raw, key) => {
 };
 
 /**
+ * THEIR OPS, FLATTENED — minus the Resiliency Hit Points their engine PARKS ON EVERY ARCHETYPE FEAT.
+ *
+ * Every archetype's Resiliency feat prints the same sentence — AoN feat-6212, Monk Resiliency:
+ * *"You gain 3 additional Hit Points for each monk archetype class feat you have."* Their engine has
+ * no "per feat of this archetype" verb, so it expresses the sentence backwards: each qualifying
+ * archetype feat carries its OWN `+3 MAX_HEALTH_BONUS`, wrapped in `conditional IF FEAT_NAMES
+ * INCLUDES "<archetype> resiliency"`. `flattenOps` drops the wrapper, so the +3 read as an
+ * unconditional Hit Point op belonging to the feat itself — and Monk Moves, whose printed text says
+ * only *"You gain a +10-foot status bonus to your Speed when you're not wearing armor"*, reported
+ * `MISSING hp| theirs=3 ours=(nothing)` against a record that correctly holds no Hit Points.
+ *
+ * We hold that sentence ONCE, where it is printed: `feats/monk-resiliency.maxHpBonus =
+ * {perArchetypeFeat: 3, archetype: 'monk'}`, read at derive.ts:895 / build.ts:8111 as
+ * perArchetypeFeat × (feats whose archetype === 'monk'). So their gated copies assert nothing about
+ * the feat they sit on, and the whole shape is dropped here rather than settled record by record.
+ *
+ * BLAST RADIUS, measured over the whole dump (2026-09-06): 59 ops carry this gate, across seven
+ * archetypes (barbarian, monk, champion, exemplar, guardian, and Starfinder's operative / soldier /
+ * solarian), and EVERY op inside a resiliency-gated conditional is a MAX_HEALTH one — nothing else
+ * is hidden by the drop. Adversarially confirmed that the sentence itself stays compared: none of
+ * the 59 sits on a Resiliency feat, and each Resiliency row asserts its own +3 UNGATED, so a
+ * `maxHpBonus` lost from `feats/monk-resiliency` still reports `MISSING hp|` on monk-resiliency
+ * (test/batch031-instruments.test.ts). Scoped to MAX_HEALTH rather than to the whole conditional so
+ * a future sibling op under the same gate is still compared.
+ */
+const RESILIENCY_GATE = (op) =>
+  op?.type === 'conditional'
+  && (op.data?.conditions ?? []).some(
+    (c) => c?.name === 'FEAT_NAMES' && c?.operator === 'INCLUDES' && /resiliency/i.test(String(c?.value ?? '')),
+  );
+function theirValueOps(row) {
+  const out = [];
+  const walk = (op, gated) => {
+    const d = op?.data ?? {};
+    const g = gated || RESILIENCY_GATE(op);
+    if (!(g && String(d.variable ?? '').startsWith('MAX_HEALTH'))) out.push(op);
+    for (const k of ['operations', 'trueOperations', 'falseOperations']) for (const c of d[k] ?? []) walk(c, g);
+    for (const o of d.optionsPredefined ?? []) for (const c of o.operations ?? []) walk(c, g);
+  };
+  for (const op of parseOps(row.operations)) walk(op, false);
+  return out;
+}
+
+/**
  * Everything their row asserts, as `track|detail -> [value, …]`, plus `set|<key> -> Set`.
  *
  * ⚠ EVERY assertion per key, not the last one written — the same rule `ourAssertions`' `put` already
@@ -345,7 +389,7 @@ const setMember = (raw, key) => {
 function theirAssertions(row) {
   const out = new Map();
   const sets = new Map();
-  for (const op of parseOps(row.operations).flatMap((o) => flattenOps(o))) {
+  for (const op of theirValueOps(row)) {
     const varName = String(op.data?.variable ?? '');
     const setKey = SET_VAR[varName];
     if (setKey) {
@@ -1373,14 +1417,9 @@ const SETTLED_VALUES = {
    * which is where the book puts it.
    */
   'war-mage-dedication': ['skill|lore:warfare'],
-  /*
-   * Their only `hp` op sits inside a conditional gated on FEAT_NAMES including "barbarian
-   * resiliency" and adds +3 MAX_HEALTH_BONUS — Barbarian Resiliency's Hit Points parked on the
-   * dedication row, not the dedication's own. The printed Barbarian Dedication grants no HP, and we
-   * carry those Hit Points on `barbarian-resiliency` itself as `maxHpBonus: { perArchetypeFeat: 3,
-   * archetype: 'barbarian' }`.
-   */
-  'barbarian-dedication': ['hp|'],
+  // batch 031: monk-moves#hp — 'barbarian-dedication' hp| settle DELETED, replaced by theirValueOps
+  /* …which drops the resiliency-gated MAX_HEALTH op on all 59 rows that carry it instead of naming
+   * three of them here. Barbarian Dedication now COMPARES its remaining two values and agrees on both. */
 
   /* ---- batch 008, read 2026-08-19 ------------------------------------------------------------ */
   /*
@@ -1467,12 +1506,11 @@ const SETTLED_VALUES = {
    * names Pathfinder Lore; their key says lore:pathfinder-society. Ours holds the conditional under the
    * printed name (featGrantsAuto `conditionalSkills['lore:pathfinder']`). A key-name mismatch. */
   'pathfinder-agent-dedication': ['skill|lore:pathfinder-society'],
-  /* Neither dedication prints a Hit Point. Their `+3 hp` op is wrapped in a conditional gated on the
-   * RESILIENCY feat — it is Monk/Exemplar Resiliency's HP parked on the dedication by their engine, and
-   * we hold it where it is printed: `feats['monk-resiliency']` / `feats['exemplar-resiliency']`
-   * `.maxHpBonus = { perArchetypeFeat: 3 }`. */
-  'monk-dedication': ['hp|'],
-  'exemplar-dedication': ['hp|'],
+  // batch 031: monk-moves#hp — 'monk-dedication' hp| settle DELETED, replaced by theirValueOps
+  // batch 031: monk-moves#hp — 'exemplar-dedication' hp| settle DELETED, replaced by theirValueOps
+  /* …the same shape as barbarian-dedication above: their engine parks Monk/Exemplar Resiliency's
+   * per-archetype-feat Hit Points on every qualifying feat row, and the three settles named here were
+   * the visible third of a 59-row corpus shape. */
   /* SHARED VIGILANCE — settle DELETED in batch 29; the summoner table's perception-expert row (source
    * 'shared-vigilance') is read by `ourAssertions` now. */
   /*

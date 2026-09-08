@@ -1,0 +1,704 @@
+{
+  "findings": [
+    {
+      "id": "golden-league-xun-dedication#already-expert",
+      "backfillRows": [],
+      "note": "Code-only on this side. The record's grant lives in src/rules/featGrantsAuto.ts (not an editable file for this lane), so the two `redundantFallback: true` slot flags are a CROSS-FILE GAP. The half that IS engine — the replacement landing at the dead slot's own rank, and only on a skill the character is already trained in — is built in src/rules/build.ts and pinned by test/batch031-engine.test.ts with the flags patched into FEAT_GRANTS in memory."
+    },
+    {
+      "id": "insistent-command",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "insistent-command",
+          "field": "degreeShifts",
+          "value": [
+            {
+              "shift": "successToCrit",
+              "when": "on a check to Command an Animal",
+              "skills": [
+                "nature"
+              ],
+              "actions": [
+                "command-an-animal"
+              ]
+            },
+            {
+              "shift": "critFailToFail",
+              "when": "on a check to Command an Animal",
+              "skills": [
+                "nature"
+              ],
+              "actions": [
+                "command-an-animal"
+              ]
+            }
+          ],
+          "why": "AoN feat-1207, the feat's whole text: \"When you roll a success to Command an Animal, you get a critical success; if you roll a critical failure, you get a failure.\" Two rungs, one entry each, on the existing degreeShifts lane — which fans them onto the Nature skill row and the Command an Animal action row from one authored row."
+        }
+      ],
+      "note": "Pure data: the reader (explain.ts degreeShiftRecords → degreeShiftMarkers + the skill/save star half) already exists and needed no widening. actions/command-an-animal and the nature skill key both ship."
+    },
+    {
+      "id": "basic-modification",
+      "backfillRows": [],
+      "note": "No row. The proposal's 28-option `choice` block would be a SECOND modification picker beside the tiered one the app already has; instead the existing lane was widened to the archetype in src/rules/build.ts (innovation type read from Inventor Dedication's own answer) and src/builder/shared.tsx (the picker's gate). Nothing on the feat record needs to change."
+    },
+    {
+      "id": "advanced-domain#domain-pool",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "advanced-domain",
+          "field": "choice",
+          "value": {
+            "flag": "advancedDomain",
+            "prompt": "Choose one of your domains - you gain its ADVANCED domain spell",
+            "kind": "array",
+            "distinctAcrossTakes": true,
+            "options": [
+              {
+                "value": "abomination",
+                "label": "Abomination — Fearful Feast",
+                "grant": {
+                  "focusSpells": [
+                    "fearful-feast"
+                  ]
+                }
+              },
+              {
+                "value": "air",
+                "label": "Air — Disperse into Air",
+                "grant": {
+                  "focusSpells": [
+                    "disperse-into-air"
+                  ]
+                }
+              },
+              {
+                "value": "ambition",
+                "label": "Ambition — Competitive Edge",
+                "grant": {
+                  "focusSpells": [
+                    "competitive-edge"
+                  ]
+                }
+              },
+              {
+                "value": "change",
+                "label": "Change — Adaptive Ablation",
+                "grant": {
+                  "focusSpells": [
+                    "adaptive-ablation"
+                  ]
+                }
+              },
+              {
+                "value": "cities",
+                "label": "Cities — Pulse of Civilization",
+                "grant": {
+                  "focusSpells": [
+                    "pulse-of-civilization"
+                  ]
+                }
+              },
+              {
+                "value": "cold",
+                "label": "Cold — Diamond Dust",
+                "grant": {
+                  "focusSpells": [
+                    "diamond-dust"
+                  ]
+                }
+              },
+              {
+                "value": "confidence",
+                "label": "Confidence — Delusional Pride",
+                "grant": {
+                  "focusSpells": [
+                    "delusional-pride"
+                  ]
+                }
+              },
+              {
+                "value": "creation",
+                "label": "Creation — Artistic Flourish",
+                "grant": {
+                  "focusSpells": [
+                    "artistic-flourish"
+                  ]
+                }
+              },
+              {
+                "value": "darkness",
+                "label": "Darkness — Darkened Sight",
+                "grant": {
+                  "focusSpells": [
+                    "darkened-sight"
+                  ]
+                }
+              },
+              {
+                "value": "death",
+                "label": "Death — Eradicate Undeath",
+                "grant": {
+                  "focusSpells": [
+                    "eradicate-undeath"
+                  ]
+                }
+              },
+              {
+                "value": "decay",
+                "label": "Decay — Fallow Field",
+                "grant": {
+                  "focusSpells": [
+                    "fallow-field"
+                  ]
+                }
+              },
+              {
+                "value": "delirium",
+                "label": "Delirium — Ephemeral Hazards",
+                "grant": {
+                  "focusSpells": [
+                    "ephemeral-hazards"
+                  ]
+                }
+              },
+              {
+                "value": "destruction",
+                "label": "Destruction — Destructive Aura",
+                "grant": {
+                  "focusSpells": [
+                    "destructive-aura"
+                  ]
+                }
+              },
+              {
+                "value": "disorientation",
+                "label": "Disorientation — Ephemeral Hazards",
+                "grant": {
+                  "focusSpells": [
+                    "ephemeral-hazards"
+                  ]
+                }
+              },
+              {
+                "value": "dragon",
+                "label": "Dragon — Roar of the Dragon",
+                "grant": {
+                  "focusSpells": [
+                    "roar-of-the-dragon"
+                  ]
+                }
+              },
+              {
+                "value": "dreams",
+                "label": "Dreams — Dreamer's Call",
+                "grant": {
+                  "focusSpells": [
+                    "dreamers-call"
+                  ]
+                }
+              },
+              {
+                "value": "dust",
+                "label": "Dust — Dust Storm",
+                "grant": {
+                  "focusSpells": [
+                    "dust-storm"
+                  ]
+                }
+              },
+              {
+                "value": "duty",
+                "label": "Duty — Dutiful Challenge",
+                "grant": {
+                  "focusSpells": [
+                    "dutiful-challenge"
+                  ]
+                }
+              },
+              {
+                "value": "earth",
+                "label": "Earth — Localized Quake",
+                "grant": {
+                  "focusSpells": [
+                    "localized-quake"
+                  ]
+                }
+              },
+              {
+                "value": "family",
+                "label": "Family — Unity",
+                "grant": {
+                  "focusSpells": [
+                    "unity"
+                  ]
+                }
+              },
+              {
+                "value": "fate",
+                "label": "Fate — Tempt Fate",
+                "grant": {
+                  "focusSpells": [
+                    "tempt-fate"
+                  ]
+                }
+              },
+              {
+                "value": "fire",
+                "label": "Fire — Flame Barrier",
+                "grant": {
+                  "focusSpells": [
+                    "flame-barrier"
+                  ]
+                }
+              },
+              {
+                "value": "freedom",
+                "label": "Freedom — Word of Freedom",
+                "grant": {
+                  "focusSpells": [
+                    "word-of-freedom"
+                  ]
+                }
+              },
+              {
+                "value": "glyph",
+                "label": "Glyph — Ghostly Transcription",
+                "grant": {
+                  "focusSpells": [
+                    "ghostly-transcription"
+                  ]
+                }
+              },
+              {
+                "value": "healing",
+                "label": "Healing — Rebuke Death",
+                "grant": {
+                  "focusSpells": [
+                    "rebuke-death"
+                  ]
+                }
+              },
+              {
+                "value": "indulgence",
+                "label": "Indulgence — Take its Course",
+                "grant": {
+                  "focusSpells": [
+                    "take-its-course"
+                  ]
+                }
+              },
+              {
+                "value": "introspection",
+                "label": "Introspection — Confront Selves",
+                "grant": {
+                  "focusSpells": [
+                    "confront-selves"
+                  ]
+                }
+              },
+              {
+                "value": "knowledge",
+                "label": "Knowledge — Know the Enemy",
+                "grant": {
+                  "focusSpells": [
+                    "know-the-enemy"
+                  ]
+                }
+              },
+              {
+                "value": "lightning",
+                "label": "Lightning — Bottle the Storm",
+                "grant": {
+                  "focusSpells": [
+                    "bottle-the-storm"
+                  ]
+                }
+              },
+              {
+                "value": "luck",
+                "label": "Luck — Lucky Break",
+                "grant": {
+                  "focusSpells": [
+                    "lucky-break"
+                  ]
+                }
+              },
+              {
+                "value": "magic",
+                "label": "Magic — Mystic Beacon",
+                "grant": {
+                  "focusSpells": [
+                    "mystic-beacon"
+                  ]
+                }
+              },
+              {
+                "value": "metal",
+                "label": "Metal — Repel Metal",
+                "grant": {
+                  "focusSpells": [
+                    "repel-metal"
+                  ]
+                }
+              },
+              {
+                "value": "might",
+                "label": "Might — Enduring Might",
+                "grant": {
+                  "focusSpells": [
+                    "enduring-might"
+                  ]
+                }
+              },
+              {
+                "value": "moon",
+                "label": "Moon — Touch of the Moon",
+                "grant": {
+                  "focusSpells": [
+                    "touch-of-the-moon"
+                  ]
+                }
+              },
+              {
+                "value": "naga",
+                "label": "Naga — Show the Path",
+                "grant": {
+                  "focusSpells": [
+                    "show-the-path"
+                  ]
+                }
+              },
+              {
+                "value": "nature",
+                "label": "Nature — Nature's Bounty",
+                "grant": {
+                  "focusSpells": [
+                    "natures-bounty"
+                  ]
+                }
+              },
+              {
+                "value": "nightmares",
+                "label": "Nightmares — Shared Nightmare",
+                "grant": {
+                  "focusSpells": [
+                    "shared-nightmare"
+                  ]
+                }
+              },
+              {
+                "value": "nothingness",
+                "label": "Nothingness — Door to Beyond",
+                "grant": {
+                  "focusSpells": [
+                    "door-to-beyond"
+                  ]
+                }
+              },
+              {
+                "value": "pain",
+                "label": "Pain — Retributive Pain",
+                "grant": {
+                  "focusSpells": [
+                    "retributive-pain"
+                  ]
+                }
+              },
+              {
+                "value": "passion",
+                "label": "Passion — Captivating Adoration",
+                "grant": {
+                  "focusSpells": [
+                    "captivating-adoration"
+                  ]
+                }
+              },
+              {
+                "value": "perfection",
+                "label": "Perfection — Perfected Body",
+                "grant": {
+                  "focusSpells": [
+                    "perfected-body"
+                  ]
+                }
+              },
+              {
+                "value": "plague",
+                "label": "Plague — Foul Miasma",
+                "grant": {
+                  "focusSpells": [
+                    "foul-miasma"
+                  ]
+                }
+              },
+              {
+                "value": "protection",
+                "label": "Protection — Protector's Sphere",
+                "grant": {
+                  "focusSpells": [
+                    "protectors-sphere"
+                  ]
+                }
+              },
+              {
+                "value": "repose",
+                "label": "Repose — Font of Serenity",
+                "grant": {
+                  "focusSpells": [
+                    "font-of-serenity"
+                  ]
+                }
+              },
+              {
+                "value": "secrecy",
+                "label": "Secrecy — Safeguard Secret",
+                "grant": {
+                  "focusSpells": [
+                    "safeguard-secret"
+                  ]
+                }
+              },
+              {
+                "value": "sorrow",
+                "label": "Sorrow — Overflowing Sorrow",
+                "grant": {
+                  "focusSpells": [
+                    "overflowing-sorrow"
+                  ]
+                }
+              },
+              {
+                "value": "soul",
+                "label": "Soul — Ectoplasmic Interstice",
+                "grant": {
+                  "focusSpells": [
+                    "ectoplasmic-interstice"
+                  ]
+                }
+              },
+              {
+                "value": "star",
+                "label": "Star — Asterism",
+                "grant": {
+                  "focusSpells": [
+                    "asterism"
+                  ]
+                }
+              },
+              {
+                "value": "sun",
+                "label": "Sun — Vital Luminance",
+                "grant": {
+                  "focusSpells": [
+                    "vital-luminance"
+                  ]
+                }
+              },
+              {
+                "value": "swarm",
+                "label": "Swarm — Swarm Form",
+                "grant": {
+                  "focusSpells": [
+                    "swarm-form"
+                  ]
+                }
+              },
+              {
+                "value": "time",
+                "label": "Time — Stasis",
+                "grant": {
+                  "focusSpells": [
+                    "stasis"
+                  ]
+                }
+              },
+              {
+                "value": "toil",
+                "label": "Toil — Tireless Worker",
+                "grant": {
+                  "focusSpells": [
+                    "tireless-worker"
+                  ]
+                }
+              },
+              {
+                "value": "travel",
+                "label": "Travel — Traveler's Transit",
+                "grant": {
+                  "focusSpells": [
+                    "travelers-transit"
+                  ]
+                }
+              },
+              {
+                "value": "trickery",
+                "label": "Trickery — Trickster's Twin",
+                "grant": {
+                  "focusSpells": [
+                    "tricksters-twin"
+                  ]
+                }
+              },
+              {
+                "value": "truth",
+                "label": "Truth — Glimpse the Truth",
+                "grant": {
+                  "focusSpells": [
+                    "glimpse-the-truth"
+                  ]
+                }
+              },
+              {
+                "value": "tyranny",
+                "label": "Tyranny — Commanding Lash",
+                "grant": {
+                  "focusSpells": [
+                    "commanding-lash"
+                  ]
+                }
+              },
+              {
+                "value": "undeath",
+                "label": "Undeath — Malignant Sustenance",
+                "grant": {
+                  "focusSpells": [
+                    "malignant-sustenance"
+                  ]
+                }
+              },
+              {
+                "value": "vigil",
+                "label": "Vigil — Remember the Lost",
+                "grant": {
+                  "focusSpells": [
+                    "remember-the-lost"
+                  ]
+                }
+              },
+              {
+                "value": "void",
+                "label": "Void — Door to Beyond",
+                "grant": {
+                  "focusSpells": [
+                    "door-to-beyond"
+                  ]
+                }
+              },
+              {
+                "value": "water",
+                "label": "Water — Downpour",
+                "grant": {
+                  "focusSpells": [
+                    "downpour"
+                  ]
+                }
+              },
+              {
+                "value": "wealth",
+                "label": "Wealth — Precious Metals",
+                "grant": {
+                  "focusSpells": [
+                    "precious-metals"
+                  ]
+                }
+              },
+              {
+                "value": "wood",
+                "label": "Wood — Wood Walk",
+                "grant": {
+                  "focusSpells": [
+                    "wood-walk"
+                  ]
+                }
+              },
+              {
+                "value": "wyrmkin",
+                "label": "Wyrmkin — Roar of the Dragon",
+                "grant": {
+                  "focusSpells": [
+                    "roar-of-the-dragon"
+                  ]
+                }
+              },
+              {
+                "value": "zeal",
+                "label": "Zeal — Zeal for Battle",
+                "grant": {
+                  "focusSpells": [
+                    "zeal-for-battle"
+                  ]
+                }
+              }
+            ],
+            "limitToAnswersOf": "domain-initiate"
+          },
+          "supersedes": true,
+          "why": "AoN feat-4666: \"You gain an advanced domain spell from one of your domains for which you have an initial domain spell.\" All 64 domains were offered. `limitToAnswersOf` is the shipped lane for exactly this shape (Order Magic reads Order Explorer's answers), and Domain Initiate is the only record in our data that grants a cleric an INITIAL domain spell — it is also this feat's printed prerequisite. Supersedes the existing pathless `choice` row, whose value (all 64 options, byte-identical to the shipped record) is carried here whole."
+        }
+      ],
+      "note": "The row is one added property on a whole-value field, so the entire superseded value is re-emitted. The engine half — a GRANTED Domain Initiate (a cloistered cleric gets theirs from the doctrine, not from a slot) counting towards the limit — is a build.ts fix, without which this row would narrow the picker to the wrong set."
+    },
+    {
+      "id": "advanced-domain#archetype-listing",
+      "backfillRows": [],
+      "note": "NOT BUILT — a cross-file lane. The reader for a cross-listing (`archetypeListings`) belongs in src/rules/featSlots.ts (eligibleFeatsForSlot), which is not an editable file for this lane, and a data row for a field with no reader would be inert. 236 feats share the shape. See CROSS-FILE GAPS."
+    },
+    {
+      "id": "ubiquitous-gadgets",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "gadget-specialist",
+          "field": "dailyTemporaryItems",
+          "value": [
+            {
+              "id": "gadget",
+              "label": "Temporary gadget",
+              "countByProficiency": {
+                "key": "crafting",
+                "ranks": {
+                  "expert": 2,
+                  "master": 3,
+                  "legendary": 4
+                }
+              },
+              "filter": {
+                "traits": [
+                  "gadget"
+                ],
+                "fromKnownFormulas": true,
+                "note": "Gadgets prepared this way don't cost you any resources to Craft and don't have any sale value; they fall apart at your next daily preparations if you haven't used them."
+              }
+            }
+          ],
+          "why": "AoN feat-3058: \"Each day during your daily preparations, you can create two temporary gadgets from your formula book … If you're a master in Crafting, you can create three gadgets per day … If you're legendary in Crafting, you can create four gadgets per day.\" The base count Ubiquitous Gadgets increases had no carrier at all. Same `dailyTemporaryItems` shape the seven shipped scroll/talisman/herbal records use; `fromKnownFormulas` is what the printed \"from your formula book\" asks for, and the formulas themselves already come from FORMULA_GRANTS[gadget-specialist]."
+        },
+        {
+          "category": "feats",
+          "id": "ubiquitous-gadgets",
+          "field": "dailyTemporaryItems",
+          "value": [
+            {
+              "id": "ubiquitous",
+              "label": "Temporary gadget",
+              "count": 2,
+              "filter": {
+                "traits": [
+                  "gadget"
+                ],
+                "fromKnownFormulas": true,
+                "note": "Gadgets prepared this way don't cost you any resources to Craft and don't have any sale value; they fall apart at your next daily preparations if you haven't used them."
+              }
+            }
+          ],
+          "why": "AoN feat-3068: \"Increase the number of temporary gadgets you can create each day by 2.\" dailyItemSlots sums the slots of every source a character holds, so a second entry of two IS the printed increase — no new field and no reader change."
+        }
+      ],
+      "note": "Two rows on the existing lane, no code. LIMIT: the feat is `maxTakable: 2` (\"You can select this feat a second time if you are 14th level or higher\") and dailyItemSlots dedupes its sources by feat id, so a SECOND taking adds nothing — that needs a per-taking count in src/rules/dailyItems.ts, which is not an editable file for this lane. See CROSS-FILE GAPS."
+    }
+  ]
+}

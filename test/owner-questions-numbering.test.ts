@@ -1,6 +1,8 @@
 import { describe, it, expect } from 'vitest';
 import { execFileSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
+// @ts-expect-error — plain-ESM script, no type declarations (scripts/ is JS, test/ is TS).
+import { appendQuestions } from '../scripts/add-owner-question.mjs';
 
 /**
  * THE DESK NUMBERS ARE PERMANENT.
@@ -215,8 +217,15 @@ const swap = (flag: string, value: string) => ok.map((a, i) => (ok[i - 1] === fl
 describe('add-owner-question.mjs allocates and refuses', () => {
   it('allocates max(n) + 1 over ALL FOUR arrays, not over open alone', () => {
     const maxAll = Math.max(...all.map((e) => e.n!));
-    const maxOpen = Math.max(...(doc.open ?? []).map((e) => e.n!));
-    expect(maxAll).toBeGreaterThan(maxOpen); // the highest number is NOT in `open` — so this discriminates
+    /* The discriminator used to be `maxAll > maxOpen` on the LIVE desk, which only held while the
+     * highest number sat outside `open`. Batch 031 filed glyph-expert / divine-breadth / primal-breadth
+     * (n 130-132) into `open` and the live file stopped discriminating anything. It is made on a
+     * fixture instead, where the highest number is deliberately in `ruled`, so the property is asserted
+     * rather than borrowed from whatever the desk happens to look like today. */
+    const fixture: Record<string, Entry[]> = { open: [{ id: 'a', n: 5 }], ruled: [{ id: 'b', n: 9 }], deferred: [], authorisedExceptions: [] };
+    const { added } = appendQuestions(fixture, [{ id: 'c', batch: 31, printed: 'p', theirs: 't', ours: 'o', question: 'q' }]);
+    // batch 031 premise: feat-2242 "traps that feature magical writing"
+    expect(added[0].n).toBe(10);
     const r = run(ok);
     expect(r.code).toBe(0);
     expect(r.out).toContain(`#${maxAll + 1}  basic-kata`);

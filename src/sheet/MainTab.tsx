@@ -406,9 +406,33 @@ export function MainTab({
    * lights all five up. Deduped by id: a stance feat that also grants a like-named action would
    * otherwise render two chips.
    */
+  /*
+   * …and a stance that is a SPELL.
+   *
+   * The remaster moved the monk's two initiate stances into spells: Clinging Shadows Stance
+   * (spell-2061) and Wild Winds Stance (spell-2062) are qi focus spells with the `stance` trait, and
+   * the feats that grant them carry only `focusSpells`. Sourcing the toggles from feats + granted
+   * actions meant no code path could put either id into `Character.activeStance`, so their Strikes
+   * and their printed in-stance bonuses reached nobody — the same "one source widening" this file's
+   * comment above describes for grantedActions. These are the only two stance-trait spells in the
+   * corpus, and the same `content.stances[id]` filter below still decides whether one has mechanics.
+   *
+   * The spell ids a character actually HAS: an entry's cantrips plus its per-rank known lists, which
+   * is where focus spells live (build.ts writes a focus entry's spells into `repertoire`).
+   * ponytail: prepared slots and the wizard's spellbook are not walked — no stance spell is
+   * castable from either today; widen here if one ever is.
+   */
+  const knownSpellIds = new Set(
+    character.spellcasting.flatMap((e) => [
+      ...e.cantrips,
+      ...Object.values(e.repertoire ?? {}).flat(),
+      ...Object.values(e.grantedRepertoire ?? {}).flat(),
+    ]),
+  );
   const stanceFeats: { id: string; name: string }[] = [
     ...character.feats.map((f) => content.feats[f.featId]),
     ...grantedActions,
+    ...[...knownSpellIds].map((id) => content.spells[id]),
   ]
     .filter((f): f is NonNullable<typeof f> => !!f && !!content.stances?.[f.id] && ((f.traits ?? []).includes('stance') || !!content.stances[f.id]!.form))
     .filter((f, i, all) => all.findIndex((o) => o.id === f.id) === i)

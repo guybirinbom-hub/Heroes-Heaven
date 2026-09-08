@@ -1,0 +1,250 @@
+BATCH 031 — GAP VERIFIER (family "gaps"), WG-COMPARISON lane
+work/.b031-gaps.json: 40 lines. Verdicts: 38 CLOSED, 2 REOPENED, 0 STILL-OPEN-as-found.
+gapsOpen after this pass: 2 (lines 22 and 35 — one cause, one fix).
+
+Default was REFUTE. Every "authored" line below was closed only against an artefact I opened, and
+every code ref was checked at its exact line number, not at its file.
+
+==================================================================================================
+STANDING CHECKS
+--------------------------------------------------------------------------------------------------
+owner-questions.json  UNTOUCHED. `git status --porcelain work/owner-questions.json` is empty and
+                      `git diff HEAD -- work/owner-questions.json` is empty; the file is tracked
+                      (`git ls-files --error-unmatch` passes), so the empty diff is real and not a
+                      missing path. No gap agent wrote it.
+manifest entries      work/.b031-specs.json holds 7 entries — the 4 read families plus gap-engine,
+                      gap-situational and gap-data-rows. Every family that authored a spec has one,
+                      and both gap agents that appended say in their reports that every existing
+                      entry was kept (report-gap-engine.txt:87, report-gap-situational.txt:146). No
+                      entry was removed. gap-instruments never appended one at all — see REOPENED.
+gap lines             All four read families' lines are present (data-rows 12+6 restatements,
+                      engine 5+4, instruments 1+1, situational 3+5). Nothing was deleted; the
+                      duplicate-looking tail is the collator's restatement pass, and each
+                      restatement carries the same ref as its original.
+queue                 work/.b031-queue.json holds exactly the 3 ids the parked lines cite —
+                      speed-status-lane-031, haunting-memories, dream-magic-second-taking — each
+                      with printed / theirs / ours / question. No fourth entry, no missing one.
+                      ⚠ speed-status-lane-031 carries a `_note` saying the gap-data-rows agent
+                      overwrote the gap-situational agent's entry with a Write and it was rebuilt.
+                      I checked the reconstruction against its source
+                      (work/.b031-report-gap-situational.txt:18-30 and :86-99): substance, the WG
+                      record number (32855), the type/plural split and the carrier list all match.
+                      The entry is sound. The overwrite itself is a real process violation and the
+                      closer should know it happened.
+specs valid           All 7 spec files parse, all use {findings:[{id, backfillRows:[…]}]}, and no
+                      two rows anywhere in the batch share category/id/field — checked against the
+                      applier's own key (apply-parity-fixes.mjs:111, `(create)` for a create row),
+                      so the wild-winds-stance CREATE and its `strikes` field row do not collide.
+                      Every `why` names an AoN doc id that exists in the mirror (feat-7105, -7438,
+                      -7454, -2734, -3068, -8518, -6238, -7510, spell-2062, class-feature-934 all
+                      resolve under C:/wonderers guide/aon-2e-archive/data/by-category), which is
+                      the applier's refusal 5.
+flip audit            `node scripts/test-flip-audit.mjs --batch 031` → clean, 9 test files touched,
+                      0 new settle keys, every flip cited. That validates the citation forms, the
+                      doc ids and the verbatim clauses I would otherwise have had to re-quote.
+tsc                   `npx tsc --noEmit` clean.
+tests I ran           batch031-gap-engine (all pass), batch031-gap-situational (all pass),
+                      batch031-gap-data-rows (22 pass / 3 fail — see the note under lines 1-3),
+                      wg-experience.harness -t featHost (3 pass, 1 skipped, the harness itself).
+unstaged, no owner    work/wg-casting-parity.json is modified and sits in no stage[]. It is comparer
+                      output, not a gap line's artefact, so no line is reopened for it — but it will
+                      not be committed. Closer's call.
+
+==================================================================================================
+LINE-BY-LINE  (numbering = position in work/.b031-gaps.json)
+--------------------------------------------------------------------------------------------------
+ 1 CLOSED     work/.b031-rows-gap-data-rows.json — feats/phoenixs-flight.actionCost
+              Record exists (ships {type:'actions',value:3}); actions/blazing-conflagration exists at
+              3 actions, so the duplicate the row removes is real. No prior overlay row on that
+              category/id/field (checked all 14,085 rows of effect-backfill.json), so no supersedes
+              is owed. Cited "// batch 031 premise: feat-7105 …", clause verified in the mirror.
+              Sibling of the CONFIRMED ouroboric-pact#action-cost. Manifest entry present with a
+              10-path stage[].
+ 2 CLOSED     Same spec — feats/campfire-chronicler-dedication.actionCost. Record exists at 1 action,
+              actions/offer-story exists at 1 action, no prior overlay row, feat-7438 clause verified.
+ 3 CLOSED     Same spec — feats/pact-of-the-living-pact.actionCost. Record exists at 1 action,
+              actions/forced-pact exists at 1 action, no prior overlay row, feat-7454 clause verified.
+              NOTE on 1-3: their three tests in test/batch031-gap-data-rows.test.tsx are RED today,
+              because they assert the post-row value against shipped content. That is this batch's
+              convention, not a defect — test/batch031-data.test.ts (the read family's own file) is
+              14/14 red for the identical reason, and both files say so in their headers. They go
+              green when the driver applies the specs. Not reopened.
+ 4 CLOSED     parked → haunting-memories. Real queue entry with printed (feat-7701, both halves),
+              theirs (their trailing FILTERED select and its flat level.max 10), ours (the single
+              FeatChoiceDef already spent on the proficiency half; dailyChoices.ts:47 reads the
+              singular rec.choice) and a question print cannot answer — it asks whether a RECORD may
+              carry more than one daily choice, which is an engine shape, plus a genuine
+              WG-contradicts-print sub-question on the cap.
+ 5 CLOSED     parked → flaggedResidue, prepared-slot decrement. A real artefact, not "out of scope":
+              it names the missing lane, names the one record that wants it, records that the
+              auto-heighten half IS delivered by the data-rows recordMarks row, and gives the
+              re-raise condition (a second record).
+ 6 CLOSED     src/rules/featCantripGrants.ts:75 — the 'dream-magic' line is gone, replaced by a
+              block comment quoting feat-8518's 4th-rank clause and warning it must stay removed
+              while the record carries effectChoices. Pinned by
+              test/batch031-gap-data-rows.test.tsx:63 (green today, against the shipped registry —
+              restoring the line fails it). The record's own effectChoices row is
+              work/.b031-rows-data-rows.json [dream-magic#rank], so the same-commit requirement the
+              line states is met: featCantripGrants.ts is in the gap-data-rows stage[] and the row
+              is in the data-rows spec, both in this batch.
+ 7 CLOSED     parked → dream-magic-second-taking. Real queue entry; the question (per-record vs
+              per-taking effectChoices keys) reaches every repeatable feat and needs a migration
+              decision, which no print citation settles.
+ 8 CLOSED     src/sheet/FeatsTab.tsx:62 — `export function regrantedFeatureIds` is at exactly :62,
+              and both the row builder (:172) and the "Replaced" note (:328, :386) filter through it.
+              Pinned by four green tests at test/batch031-gap-data-rows.test.tsx:84-125, including
+              the control (a War Mage WITHOUT Spellshield still reads Arcane Bond as replaced), so
+              reverting fails. Staged.
+ 9 CLOSED     src/sheet/MainTab.tsx:425 — `const knownSpellIds` is at exactly :425 and is spread into
+              stanceFeats at :435. Green tests at test/batch031-gap-data-rows.test.tsx:167-176 put
+              both stance chips on a monk and set activeStance. Staged.
+10 CLOSED     parked → flaggedResidue, FEAT_SITUATIONAL stars. The gap line itself says "optional
+              follow-up", and the reason is concrete: situationalBonuses.ts is staged by two other
+              families this batch, and StanceDef has no conditional-bonus field, so `note` is the
+              only correct carrier. I confirmed both bonuses are carried verbatim in the stance defs.
+11 CLOSED     parked → haunting-memories, the same queue entry as line 4. Correctly pointed at it
+              rather than duplicated.
+12 CLOSED     work/.b031-rows-data-rows.json [flickering-stories] — one recordMarks row on
+              feats/flickering-stories; the target and actions/offer-story both exist; manifest entry
+              present. Green in test/batch031-data.test.ts's own describe (red only for the shipped-
+              side convention above, not for this line's shape).
+13 CLOSED     work/.b031-rows-engine.json [insistent-command] — feats/insistent-command.degreeShifts.
+              Record exists, no prior overlay row on that field, degreeShifts is an existing lane
+              (reused, not rebuilt). The gap line's own warning — "driver must not author a second
+              copy" — is satisfied: the row appears exactly once across all 7 specs.
+14 CLOSED     work/.b031-rows-engine.json [advanced-domain#domain-pool] — feats/advanced-domain.choice
+              with supersedes:true. VERIFIED PROPERLY MERGED, which is the trap on this line: the
+              existing overlay row holds 64 options and the new value holds the same 64 in the same
+              order (compared id-by-id), keys flag/prompt/kind/distinctAcrossTakes/options preserved
+              whole with only limitToAnswersOf added. supersedes:true is present and the key really
+              is in the overlay, so the applier's refusal 1 is satisfied in both directions.
+15 CLOSED     work/.b031-rows-engine.json [ubiquitous-gadgets] — feats/gadget-specialist
+              .dailyTemporaryItems. Record exists, no prior row, value matches the gap line verbatim.
+16 CLOSED     Same finding — feats/ubiquitous-gadgets.dailyTemporaryItems. Same checks.
+17 CLOSED     src/rules/featGrantsAuto.ts:403 — 'golden-league-xun-dedication' is at exactly :403
+              with redundantFallback:true on BOTH skillChoices slots and a comment quoting feat-2734's
+              parenthetical. Pinned by two tests at test/batch031-gap-engine.test.ts:67-81 that run
+              against the SHIPPED registry with no patching, on a built level-8 rogue already expert
+              in Athletics — deleting either flag fails them. Both green. Staged (gap-engine).
+18 CLOSED     parked → flaggedResidue, lion-blade-dedication. A real artefact: it cites the print
+              (feat-7724) that makes today's record-wide flag an over-grant, names the exact blocker
+              (test/batch031-engine.test.ts pins the current behaviour as its own blast-radius
+              control, and it is another family's file), states the one-change fix for next batch,
+              and adds a sibling the verifier found untouched at featGrantsAuto.ts:47
+              (alkenstar-agent-dedication, feat-3568). Not "out of scope with no artefact".
+19 CLOSED     parked → flaggedResidue, the featSlots archetypeListings lane. Concrete: 236 records
+              share the shape, the reader needs an eligibility semantics decision first, and the
+              named failure mode of half-building it (Advanced Domain offered to every free-archetype
+              character at 8) is stated. A lane, correctly not attempted by a gap agent.
+20 CLOSED     parked → the same lane as 19, and correctly parked WITH it rather than separately:
+              dropping the advanced-domain `archetype` slug alone would break countsForArchetype /
+              dedicationBlock / per-archetype HP and make the feat reachable by nobody.
+21 CLOSED     src/rules/dailyItems.ts:92 — the dedupe is gone; sources now carry `takings` (:95) and
+              the count is multiplied at :107, clamped by maxTakes(). Pinned by three green tests at
+              test/batch031-gap-engine.test.ts:106-137, including the control the dedupe was written
+              for (non-repeatable gadget-specialist reaching c.feats twice still counts once, and
+              still reads a level-14 inventor's MASTER Crafting as feat-3058's printed three).
+              Staged (gap-engine).
+22 REOPENED   test/wg-experience.harness.test.tsx:414 — the WORK IS DONE AND THE STAGING IS NOT.
+              `function classArchetypeHost` is at exactly :414, featHost consults it only when no
+              class trait matched (:429-435), and the three tests at :758-777 are green (I ran them)
+              with "// batch 031: creed-magic" — a CONFIRMED finding — and the record id in every
+              title. The flip audit passes them.
+              WHY IT REOPENS ANYWAY: work/.b031-specs.json carries NO gap-instruments entry. I
+              grepped the manifest for "harness", "gap-instruments" and every stage[] path: neither
+              test/wg-experience.harness.test.tsx nor work/.b031-report-gap-instruments.txt appears
+              in ANY family's stage[]. This is not another agent clobbering it — the gap-instruments
+              report never mentions the manifest at all (its own "FILES" section lists only the
+              harness test), so the entry was never written. The driver will commit neither the fix
+              nor the report, and the gap reopens on the next batch's harvest with the work already
+              in the tree.
+              CLOSES ON one append to work/.b031-specs.json:
+                {"file":"work/.b031-report-gap-instruments.txt","kind":"code","family":"gap-instruments",
+                 "stage":["work/.b031-report-gap-instruments.txt","test/wg-experience.harness.test.tsx"]}
+              I did not write it myself: the manifest is another agent's file and my remit on a
+              missing artefact is to reopen the line, not to author the missing half.
+              CARRIED WITH IT, for the closer: the gap-instruments report says
+              work/experience-instrument-limits.json's "creed-magic" park is now STALE (the entry's
+              own text says whoever fixes featHost should delete it), and that file IS staged — by
+              the instruments family. A park that no longer describes anything real is a silently
+              widened gate. It also reports a NEW cross-file defect nobody has taken:
+              src/rules/derive.ts:3409 `ownedFeatureIds` never subtracts
+              c.classArchetype.suppressedFeatures, while buildCharacter's local set does
+              (build.ts:5885-5890) — the same defect line 8 fixes from the sheet side.
+23 CLOSED     work/.b031-rows-situational.json [swashbucklers-speed] — feats/swashbucklers-speed
+              .landSpeedBonus = 5. Record exists, landSpeedBonus is an existing lane, no prior
+              overlay row on that field so no supersedes is owed, manifest entry present with
+              stage[]. Does not collide with the data-rows row on the same record (that one is
+              field `description`, on core-descriptions.json).
+24 CLOSED     parked → speed-status-lane-031. Real queue entry: print's "your SpeedS" (feat-6238)
+              against a LAND-ONLY lane, WG's own record 32855 quoted as evidence for the type half
+              and shown NOT to solve the plural half. A lane migration over every existing carrier,
+              which is exactly an owner decision.
+25 CLOSED     parked → flaggedResidue, "nothing is owed". Not a gap at all — the builder's own
+              non-collision note, swept in by the collator. I re-verified it a third time rather
+              than taking it on trust: data-rows writes core-descriptions.json feats/
+              swashbucklers-speed field `description`; situational writes public/core.json field
+              `landSpeedBonus` plus a FEAT_SITUATIONAL star. The applier keys on category+id+field,
+              so no pair exists. Correct to park with no artefact owed.
+26 CLOSED     work/.b031-rows-data-rows.json [spellshield#infusion] — feats/spellshield.recordMarks.
+              Record exists, recordMarks is an existing lane, manifest entry present. The line's own
+              scope ("DONE for the half a row can carry") is honest: the slot-trade half is line 5.
+27 CLOSED     work/.b031-rows-data-rows.json [greater-cruelty] — feats/greater-cruelty.spellNotes,
+              record exists, existing lane, staged.
+28 CLOSED     src/sheet/MainTab.tsx:425 — same artefact as line 9, correctly pointed at it. The
+              clinging-shadows-stance def is created by work/.b031-rows-data-rows.json and its two
+              tests (melee unarmed Strike; activeStance set) are green.
+29 CLOSED     work/.b031-rows-gap-data-rows.json [wild-winds-initiate#stance-range] —
+              stances/wild-winds-stance.strikes, re-emitting the WHOLE array with range:30.
+              THE ORDER TRAP, CHECKED: the record does not exist in core.json today; it is CREATEd by
+              work/.b031-rows-data-rows.json. The manifest lists that spec (position 3) before this
+              one (position 7), the driver replays the overlay after each spec, and the two rows have
+              different applier keys ("(create)" vs "strikes"), so neither the ordering nor the
+              collision check bites. The re-emitted array is the create row's single strike plus
+              range:30 — nothing dropped. spell-2062's ranged/30-feet clause verified in the mirror.
+              Two green tests pin wind crash as a ranged Dex-keyed propulsive Strike.
+30 CLOSED     Restatement of line 1, same spec, same row. Verified once.
+31 CLOSED     Restatement of line 6, same artefact at featCantripGrants.ts:75.
+32 CLOSED     Restatement of line 13.
+33 CLOSED     Restatement of line 14.
+34 CLOSED     Restatement of line 17.
+35 REOPENED   Restatement of line 22 — the verifier's corrected scope of the same gap. Same cause,
+              same single-append fix. Counted as its own open line because the driver reads lines,
+              not causes.
+36 CLOSED     work/.b031-rows-gap-situational.json [incredible-movement#speed] —
+              classFeatures/incredible-movement.speedsIf. Record exists, ships no speed carrier of
+              any kind (I confirmed: no speeds, no speedsIf, no landSpeedBonus), no prior overlay
+              row. speedsIf is an existing lane, and the formula vocabulary matches
+              classFeatures/vivacious-speed's. class-feature-934's "increases by 5 feet for every 4
+              levels" verified in the mirror; the formula reads 10/15/20/25/30 at 3/7/11/15/19, which
+              its test asserts. Manifest entry present with an 8-path stage[]. The tests patch a
+              STRIPPED vs PATCHED in-memory copy — never a shipped-side delta — so nothing flips when
+              the row lands. All green.
+37 CLOSED     src/rules/explain.ts — the ref names no symbol (cosmetic; every other code ref in this
+              file gives a line), but the artefact is unambiguous and real: the `named` type gains
+              `speedsIf` at :1436 and the gated surplus is reported as a "Speed increase" part at
+              :1482, named after the carrying record where it is unambiguous. Pinned by two green
+              tests at test/batch031-gap-situational.test.ts:96-116 that assert the parts SUM to the
+              total for a monk-moves character and that a character without it gains no such part —
+              reverting explain.ts fails both, since they run against shipped code. Staged
+              (gap-situational).
+38 CLOSED     parked → speed-status-lane-031, the untyped-additive half. Same queue entry as 24, and
+              the entry does carry this half explicitly (the barbarian-8 35-vs-30 measurement and
+              this batch's new monk pair are both in it).
+39 CLOSED     parked → speed-status-lane-031, the builder's plural line restated. Same entry.
+40 CLOSED     parked → flaggedResidue, the same "nothing is owed" note as line 25. No artefact owed.
+
+==================================================================================================
+WHAT THE DRIVER SHOULD DO
+--------------------------------------------------------------------------------------------------
+gapsOpen = 2 (lines 22 and 35). Both are one missing manifest entry, not missing work: the harness
+fix is written, green and correctly cited, and the only thing standing between it and the commit is
+a gap-instruments entry in work/.b031-specs.json naming
+["work/.b031-report-gap-instruments.txt", "test/wg-experience.harness.test.tsx"] in stage[]. Append
+it and both lines close with no further verification — I checked the code, the tests and the audit.
+
+Two things the closer inherits that are NOT gap lines and so are not counted above:
+  · work/experience-instrument-limits.json still parks "creed-magic" although featHost now hosts it
+    on the cleric. The park is stale and the file is staged by the instruments family.
+  · work/.b031-queue.json's speed-status-lane-031 is a RECONSTRUCTION of an entry a gap agent
+    overwrote. I checked it against its source report and it is faithful, but the overwrite happened.

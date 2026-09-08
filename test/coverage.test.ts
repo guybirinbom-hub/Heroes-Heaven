@@ -52,8 +52,12 @@ const REGISTRY_FLOOR: Record<string, number> = {
    *     of the archetype's own rank-1 slot — one clause, two castings.
    *
    * A floor is a ratchet against a registry shrinking by NEGLECT; a record that moved to a better lane
-   * is not neglect. Lowered deliberately, with each destination named. */
-  featCantripGrants: 46,
+   * is not neglect. Lowered deliberately, with each destination named.
+   *
+   * 45, down from 46: a SEVENTH record, dream-magic, left for the same destination and the same
+   * reason — the record's own `effectChoices`, which can carry the rank this registry cannot.
+   * batch 031 premise: feat-8518 "you learn this spell as a 4th-rank occult innate spell that you can cast once per day" */
+  featCantripGrants: 45,
   featFeatGrants: 254,
   companionGrants: 78,
   situationalBonuses: 2299,

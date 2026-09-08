@@ -123,6 +123,18 @@ describe('apply-parity-fixes refusals', () => {
     expect(rows[0]).not.toHaveProperty('supersedes'); // spec metadata, never stored
   });
 
+  /* Resume: batch 031's apply refused AFTER writing, so re-running found this spec's own rows on disk
+   * and read all 22 of them as undeclared supersessions. A byte-identical row overwrites nothing. */
+  // batch 031: wild-winds-initiate#stance
+  it('1 — accepts a byte-identical row already on disk (resume after wild-winds-initiate#stance refused mid-write)', () => {
+    const root = fixture([clean(), ...FILLER]);
+    // batch 031: wild-winds-initiate#stance
+    const r = run(root, [{ id: 'f1', backfillRows: [clean()] }], ['--write']);
+    expect(r.code).toBe(0);
+    expect(r.out).toContain('already in the overlay byte-identical (resume)');
+    expect(overlayRows(root)).toHaveLength(21);
+  });
+
   it('1 — refuses supersedes:true on a key no overlay row holds', () => {
     const r = run(fixture([]), [{ id: 'f1', backfillRows: [clean({ supersedes: true })] }]);
     expect(r.code).toBe(1);

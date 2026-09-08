@@ -12,6 +12,7 @@
 import { PROFICIENCY_RANKS, type Character, type ContentDatabase, type Feat, type ProficiencyRank } from './types';
 import { resolveFormula } from './derive';
 import { knownFormulas } from './formulaBook';
+import { maxTakes } from './featGrants';
 
 type Def = NonNullable<Feat['dailyTemporaryItems']>[number];
 
@@ -73,14 +74,27 @@ function rankOf(def: Def, level: number): number | undefined {
  *
  * Deduped by source+definition, so a feat listed twice does not double its scrolls, and ordered by
  * the record that granted them so the Rest sheet reads as a list of feats rather than a flat pile.
+ *
+ * …but a REPEATABLE source grants its slots ONCE PER TAKING. *"Increase the number of temporary
+ * gadgets you can create each day by 2. **Special** You can select this feat a second time if you
+ * are 14th level or higher."* (Ubiquitous Gadgets, AoN feat-3068, `maxTakable: 2`.) A flat dedupe
+ * made the second taking buy nothing at all. The count is clamped to `maxTakes()`, so a
+ * non-repeatable feat that reaches `c.feats` twice — granted AND picked — still counts once, which
+ * is the case the dedupe was written for.
  */
 export function dailyItemSlots(c: Character, db: ContentDatabase): DailyItemSlot[] {
-  const sources: { id: string; name: string; g: Pick<Feat, 'dailyTemporaryItems'> }[] = [];
-  const seen = new Set<string>();
-  const add = (id: string, name: string | undefined, g: Pick<Feat, 'dailyTemporaryItems'> | undefined) => {
-    if (!g?.dailyTemporaryItems?.length || seen.has(id)) return;
-    seen.add(id);
-    sources.push({ id, name: name ?? id, g });
+  const sources: { id: string; name: string; takings: number; g: Pick<Feat, 'dailyTemporaryItems'> }[] = [];
+  const seen = new Map<string, (typeof sources)[number]>();
+  const add = (id: string, name: string | undefined, g: (Pick<Feat, 'dailyTemporaryItems'> & { maxTakable?: number | null }) | undefined) => {
+    if (!g?.dailyTemporaryItems?.length) return;
+    const already = seen.get(id);
+    if (already) {
+      already.takings = Math.min(already.takings + 1, maxTakes(g));
+      return;
+    }
+    const src = { id, name: name ?? id, takings: 1, g };
+    seen.set(id, src);
+    sources.push(src);
   };
   // Feats only, like `advancedAlchemy` beside it: every record of this shape is a feat, and putting
   // the field on ClassFeature as well would create a lane with no users and no test that it works.
@@ -89,7 +103,8 @@ export function dailyItemSlots(c: Character, db: ContentDatabase): DailyItemSlot
   const out: DailyItemSlot[] = [];
   for (const src of sources) {
     for (const def of src.g.dailyTemporaryItems ?? []) {
-      const n = countOf(def, c);
+      // One taking's worth, times the takings the character actually holds (see the note above).
+      const n = countOf(def, c) * src.takings;
       const spellRank = rankOf(def, c.level);
       const maxLevel =
         typeof def.filter.maxLevel === 'string'

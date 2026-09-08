@@ -1,0 +1,243 @@
+BATCH 031 — GAP AGENT report, family "gap-data-rows"
+18 open lines in work/.b031-gaps.json, family "data-rows": 13 AUTHORED, 5 PARKED, 0 still open.
+spec: work/.b031-rows-gap-data-rows.json (4 rows) · queue: work/.b031-queue.json (2 new questions)
+tests: test/batch031-gap-data-rows.test.tsx (14 cases; 11 green, 3 red for exactly the three
+       actionCost rows the driver will apply) · test/coverage.test.ts (one ratchet lowered, cited)
+files edited: src/rules/featCantripGrants.ts, src/rules/types.ts, src/rules/derive.ts,
+       src/sheet/FeatsTab.tsx, src/sheet/MainTab.tsx
+npx tsc --noEmit: clean. node scripts/test-flip-audit.mjs --batch 031: clean, every flip cited.
+
+
+⚠⚠ READ FIRST — I CLOBBERED ANOTHER AGENT'S QUEUE ENTRY AND REBUILT IT
+work/.b031-queue.json did not exist when I checked it (21:41). The gap-situational agent created it
+at ~21:43 with one question, `speed-status-lane-031`, and my Write at 21:45 overwrote the file.
+I reconstructed that entry as the FIRST element of the queue, from
+work/.b031-report-gap-situational.txt (lines 18-30 and 90-99, which state the id, both printed
+clauses, the WG record 32855 encoding and the two halves of the question) plus a fresh
+`node scripts/wg-show.mjs "Swashbuckler's Speed" --raw`. The SUBSTANCE is theirs and is quoted from
+their own report; the WORDING of its `ours` and `question` is my restatement, not their text. The
+entry carries a `_note` field saying so — add-owner-question.mjs drops unknown keys on write, so the
+desk will not see the note, which is why it is stated here in full. Someone should diff it against
+work/.b031-report-gap-situational.txt before the owner is shown question #127.
+`node scripts/add-owner-question.mjs --from work/.b031-queue.json` (report only, no --write) accepts
+all three entries and allocates #127/#128/#129.
+
+
+PER LINE
+
+1. AUTHORED — ref work/.b031-rows-gap-data-rows.json
+   "feats/phoenixs-flight | actionCost | {type:passive}"
+   feat-7105's title glyph is <actions string=""/> and the three actions sit on the granted
+   activity's own line — "While transformed, you gain the Blazing Conflagration action." then
+   "**Activate** <actions string="Three Actions"/> Blazing Conflagration". actions/blazing-conflagration
+   (action-2914) already ships at 3 actions, so the feat duplicates it and MainTab renders two rows.
+
+2. AUTHORED — ref work/.b031-rows-gap-data-rows.json
+   "feats/campfire-chronicler-dedication | actionCost | {type:passive}"
+   Same shape, verified in the mirror: feat-7438 glyph empty, "You gain the Offer Story action." then
+   "**Activate** <actions string="Single Action"/> Offer Story"; actions/offer-story (action-3058)
+   ships at 1 action.
+
+3. AUTHORED — ref work/.b031-rows-gap-data-rows.json
+   "feats/pact-of-the-living-pact | actionCost | {type:passive}"
+   Same shape: feat-7454 glyph empty, "You gain the Forced Pact action." then "**Activate** <actions
+   string="Single Action"/> Forced Pact"; actions/forced-pact (action-3061) ships at 1 action.
+   ⚠ The empty badge alone was NOT treated as evidence (a bare badge is scrape damage, not "no
+   action"). What makes all three safe is the positive pair: a body **Activate** line that accounts
+   for the cost, AND a shipped action record already carrying it. That is the same evidence the
+   CONFIRMED finding ouroboric-pact#action-cost rests on, and its own evidence names these three
+   records as its siblings.
+   No existing overlay row on any of the three `actionCost` keys, so no supersedes.
+
+4. PARKED — ref haunting-memories (owner question, work/.b031-queue.json)
+   "feats/haunting-memories | <a SECOND choice slot>"
+   Unauthorable as data and not mine to decide: a record carries exactly one FeatChoiceDef,
+   src/sheet/dailyChoices.ts:47 reads the singular `rec.choice`, and no core.json record has a
+   `choices` array. Giving the record type a second daily slot is an ENGINE-SHAPE decision, and it
+   comes with a second question print and WG disagree on (print's half-your-level cap vs their flat
+   level.max 10) — which is exactly the shape that must not be settled by an agent. Queued with both
+   halves and with the exact value to author once the shape exists.
+
+5. PARKED — flaggedResidue (see the ref for the full reason)
+   "feats/spellshield | <a daily-prep slot-trade carrier>"
+   No lane anywhere decrements a PREPARED-SLOT COUNT at daily preparations; the printed trade is a
+   whole unmodelled subsystem wanted by one record. The auto-heighten half of feat-7983 is already
+   delivered by the data-rows family's recordMarks row on actions/drain-bonded-item, so what is left
+   is the trade alone. Residue rather than a question: there is nothing contested here, only work
+   nobody has asked for.
+
+6. AUTHORED — ref src/rules/featCantripGrants.ts:75
+   "delete the 'dream-magic' line. MUST land in the same commit as the effectChoices row."
+   Done, in the file's own removal style (the colugos-traversal / empathic-calm / merge-with-the-source
+   comments), quoting feat-8518's "you learn this spell as a 4th-rank occult innate spell that you can
+   cast once per day" as the reason the lane cannot hold it, and warning that it must STAY removed
+   while the record carries an effectChoices pick or the player is asked twice.
+   Ratchet: test/coverage.test.ts REGISTRY_FLOOR.featCantripGrants 46 -> 45, cited with the premise
+   form (a module-scope constant has no enclosing describe/it, so the finding form would be refused by
+   the audit's record-id-in-title rule). The comment names the seventh record and its destination,
+   matching the six already listed there.
+   Test: "dream-magic asks its question on ONE lane" — the key is gone, and so are the three records
+   that left for the same reason, so a revert of any of them is loud.
+
+7. PARKED — ref dream-magic-second-taking (owner question, work/.b031-queue.json)
+   "src/rules/build.ts — effectChoices answers are keyed `${recordId}:${ch.id}`."
+   Re-keying effectChoices answers PER TAKING reaches every repeatable record that asks one, not just
+   Dream Magic, and it changes the storage key on saved characters — an engine-shape decision with a
+   migration attached. src/rules/build.ts is also staged by the engine family this batch, so a third
+   writer there would collide. Queued with the alternative spelled out (cap the record at
+   maxTakable 1 with a note) so the answer can be either.
+
+8. AUTHORED — ref src/sheet/FeatsTab.tsx:62
+   "no reader for `grantsClassFeatures` anywhere in src/sheet … walk ownedFeatureIds and exclude a
+   re-granted feature from `suppressed`."
+   Built as ONE predicate used by both surfaces, because the row list and the "Replaced" note read two
+   different variables today and that is how they came to disagree:
+   · new exported `regrantedFeatureIds(character, content)` — the class features a suppressing class
+     archetype takes away that an OWNED record hands back, walked over the character's feats and owned
+     class features, the same source list derive.ts:3486-3492 uses for the field (66 feats and 34
+     class features carry it; heritages/ancestries/items carry none).
+     ⚠ `ownedFeatureIds` itself CANNOT be the predicate the gap line suggests: it is built from
+     `cls.features` and never subtracts the archetype's suppressions, so it contains every suppressed
+     id already and would have hidden the "Replaced" line entirely. Checked before writing.
+   · featEntries: `suppressed` now filters out regranted ids, which is all it takes for the class
+     feature loop to EMIT the Arcane Bond row (wizard lists it at level 1) — the second half of the
+     finding's proposal falls out of the first, so no separate walk was added.
+   · FeatsTab: the "Replaced" list is `replacedFeatures`, the same subtraction, memoized beside
+     `entries`. The archetype's own printed NOTE still says "you never gain Arcane Bond" — that is
+     Paizo's text for the archetype and is left exactly as printed; only our derived list changed.
+   Tests: 4 cases — the data is as the finding says; the Arcane Bond row is listed; the "Replaced"
+   line names Arcane Thesis and Defensive Robes and NOT Arcane Bond; and a War Mage WITHOUT Spellshield
+   still reads Arcane Bond as replaced and gets no row (the control that stops this becoming a blanket
+   un-suppression).
+
+9. AUTHORED — ref src/sheet/MainTab.tsx:425
+   "stanceFeats is built from character.feats + grantedActions … a stance carried by a SPELL can never
+   reach Character.activeStance."
+   One source widening, in the same shape as the file's own grantedActions widening: a `knownSpellIds`
+   set flattened from every spellcasting entry's cantrips + repertoire + grantedRepertoire (a focus
+   entry's spells live in `repertoire`), mapped through content.spells and fed to the SAME
+   `content.stances[id]` + stance-trait filter. Exactly two stance-trait spells exist in the corpus —
+   clinging-shadows-stance and wild-winds-stance — so the blast radius is those two records, and today
+   (before the data-rows create rows land) it changes nothing at all, because neither has a stance def.
+   ponytail comment left on the ceiling: prepared slots and the wizard's spellbook are not walked, since
+   no stance spell is castable from either.
+   Tests: the monk gets a Wild Winds Stance chip; pressing the Clinging Shadows chip sets
+   `play.activeStance`. Both against an in-memory copy of the content with the two stance defs patched
+   in, so nothing flips when the other family's create rows are applied.
+
+10. PARKED — flaggedResidue (see the ref for the full reason)
+    "src/rules/situationalBonuses.ts — optional follow-up: the two conditional bonuses would read
+    better as FEAT_SITUATIONAL stars."
+    The line says "optional" itself, and situationalBonuses.ts is staged by BOTH the situational and
+    the gap-situational families in this same batch — a third writer would clobber theirs. The two
+    conditional facts (clinging shadows' +2 circumstance to Grapple / Escape DC, wild winds' +2
+    circumstance AC vs ranged attacks) are carried verbatim in each stance def's `note`, which is the
+    only correct data carrier while StanceDef has no conditional-bonus field.
+
+11. PARKED — ref haunting-memories (owner question, work/.b031-queue.json)
+    "src/rules/types.ts + src/sheet/dailyChoices.ts — a record carries one `choice`."
+    The same decision as line 4, restated from the other side; one question covers both, and src/rules/
+    types.ts is staged by the engine family this batch as well.
+
+12. AUTHORED — ref work/.b031-rows-data-rows.json
+    "flickering-stories — DONE (1 row)."
+    Not a gap: a per-finding DONE statement swept out of the report's PER FINDING section by the
+    collator. Re-checked rather than taken on trust — work/.b031-rows-data-rows.json carries
+    feats/flickering-stories.recordMarks [{on:'action', id:'offer-story', …}] and actions/offer-story
+    ships. Nothing to author.
+
+13. AUTHORED — ref work/.b031-rows-data-rows.json
+    "spellshield#infusion — DONE for the half a row can carry."
+    Same: a verify-file per-finding line. The row exists (feats/spellshield.recordMarks on
+    actions/drain-bonded-item); the half that is NOT done is line 5, parked above with its reason.
+
+14. AUTHORED — ref work/.b031-rows-data-rows.json
+    "greater-cruelty — DONE."
+    Same: the verifier's harness sentence, collated as a gap. The row
+    (feats/greater-cruelty.spellNotes on touch-of-the-void) is in that spec. Nothing to author.
+
+15. AUTHORED — ref src/sheet/MainTab.tsx:425
+    "clinging-shadows-initiate#shadow-grasp — NOT-DONE as a MECHANIC; the row itself is correct."
+    Closed by line 9's widening: the def is keyed by the spell id, the spell is a monk qi focus spell,
+    and the widened source now reaches it. Its shadow grasp Strike is MELEE (agile/grapple/reach/
+    unarmed) and derives correctly through the existing deriveUnarmedStrike path with no further
+    change — pinned by a test that asserts ranged === false and range undefined, so nobody later
+    "fixes" it into a ranged one.
+
+16. AUTHORED — ref work/.b031-rows-gap-data-rows.json
+    "wild-winds-initiate#stance — NOT-DONE as a MECHANIC, and the gap is BIGGER than the report says."
+    The verifier is right that widening MainTab alone would ship wind crash as a melee Strength-keyed
+    attack, which is worse than the present silence. So the two land together, in three pieces:
+    · CARRIER — src/rules/types.ts StanceStrike gains `range?: number`. This is a REUSE, not a new
+      lane: `range` already exists on NaturalAttack, GrantedStrike and UnarmedProfile, and
+      deriveUnarmedStrike already does the entire job with it (Dexterity to the attack roll, the
+      ranged flag, the range increment on the row) for the Spined Azarketi's spine and 25 other
+      records. Only StanceStrike could not say it.
+    · PASS-THROUGH — src/rules/derive.ts, the stance-strike profile, forwards `s.range` when present.
+    · PROPULSIVE — src/rules/derive.ts, `dmgAbMod`. A ranged unarmed Strike added NO ability modifier
+      to damage, and spell-2062 gives wind crash the propulsive trait, so it would have shipped
+      short by half Strength. Fixed with the formula the weapon path already uses ("add half your
+      Strength modifier to ranged damage with this weapon (all of it if your Strength is negative)",
+      glossary.ts:111). Blast radius measured first: of the 26 ranged granted Strikes in the corpus,
+      ZERO carry `propulsive` today, so wind crash is the first and nothing else moves.
+    · VALUE — a row in my spec, {category:'stances', id:'wild-winds-stance', field:'strikes'},
+      re-emitting the WHOLE strikes array the data-rows create row authors plus `range: 30`.
+      ⚠ ORDER-DEPENDENT and deliberate: that create row is in ANOTHER agent's spec, which I may not
+      edit, and a second create row on the same id would be refused as a collision. work/.b031-specs.json
+      lists work/.b031-rows-data-rows.json (3rd) before work/.b031-rows-gap-data-rows.json (7th) and
+      the driver replays the overlay after each spec, so stances/wild-winds-stance exists by the time
+      the field row is applied. If the manifest is ever reordered, this row breaks — that is the one
+      thing to keep an eye on when applying.
+    Tests: wind crash is ranged, range 30, atkAbility 'dex'; and its dmgAbMod equals half Strength,
+    compared against the SAME stance with `propulsive` stripped in memory, so the assertion pins the
+    trait rather than the arithmetic.
+
+17. AUTHORED — ref work/.b031-rows-gap-data-rows.json
+    The verify file's restatement of line 1. Same row, same spec.
+
+18. AUTHORED — ref src/rules/featCantripGrants.ts:75
+    The verify file's restatement of line 6. Same deletion.
+
+
+DATA STILL NEEDED (beyond my spec)
+- none. Everything this family owed as data is in work/.b031-rows-gap-data-rows.json (4 rows), except
+  the two engine-shape questions on the desk (lines 4/11 and 7) and the one residue (line 5).
+
+
+CROSS-FILE GAPS (new, found while closing the lines above)
+- src/rules/build.ts + src/builder/Builder.tsx — the data-rows VERIFIER raised this and it is still
+  open: deleting featCantripGrants.ts:75 orphans an answer already stored at
+  build.pickCantripChoices['dream-magic'], while effectChoices reads `dream-magic:dream-magic-spell`.
+  An EXISTING character with the feat loses the granted spell until the new prompt is answered. Both
+  files are staged by the engine family this batch, so I did not touch them; the choice is a one-key
+  migration or a deliberate re-prompt, and it is the same file as the parked question in line 7.
+- src/rules/explain.ts — the Strikes damage breakdown labels a propulsive contribution "half
+  (propulsive)" on the WEAPON path (explain.ts:1549) only. A ranged unarmed Strike that is propulsive
+  (wind crash, from this batch) now carries half Strength in `dmgAbMod` and the breakdown will name it
+  as plain Strength. Cosmetic, and explain.ts is staged by gap-situational this batch, so it is listed
+  rather than edited.
+- src/rules/types.ts (StanceDef) — neither stance def can express its conditional bonus (Grapple /
+  Escape DC; AC vs ranged attacks only), which is why both sit in `note`. See line 10.
+
+
+VERIFICATION RUN
+- node scripts/vt.mjs run test/batch031-gap-data-rows.test.tsx — 14 tests, 11 pass, 3 fail, and the
+  three failures are exactly the three actionCost rows the driver applies (checked failure by failure:
+  each reports {type:'actions'} where the row writes {type:'passive'}).
+- node scripts/vt.mjs run test/coverage.test.ts — 5 passed (the lowered floor).
+- Regression sweep over every test that names FEAT_CANTRIP_GRANTS / dream-magic / pickCantripChoices,
+  featEntries / FeatsTab / suppressedFeatures / "Replaced", or MainTab: batch20-parity,
+  cantrip-grant-reachability, feat-grants, fey-influence-innate-proficiency, innate-grant-lanes,
+  innate-spell-proficiency, innate-tradition, parity-fixes, spell-notes, coverage,
+  batch030-gap-stance-toggle, display-reach, display-and-reach, batch001-surfaces,
+  automaton-enhancement, background-choice, batch28-data, builder-choice-sets, elemental-spell-list,
+  fix-campaign, granted-choice-lanes, wg-import-builder-slots — all green.
+- npx tsc --noEmit — clean.
+- node scripts/test-flip-audit.mjs --batch 031 — clean, 9 test files touched, 0 new settle keys.
+- node scripts/add-owner-question.mjs --from work/.b031-queue.json (report only, NO --write) — all
+  three entries accepted, #127/#128/#129 allocated. The driver's gaps stage does the write.
+- The 4 spec rows re-checked by hand against the applier's refusals: all four targets resolve (three
+  feats that exist; stances/wild-winds-stance exists once the data-rows spec is applied, which the
+  manifest order guarantees), no row carries a path, none is prose, every `why` names a mirror doc
+  that exists (feat-7105, feat-7438, feat-7454, spell-2062), and no key of mine appears in
+  scripts/data/effect-backfill.json or in any other family's spec, so no supersedes and no collision.

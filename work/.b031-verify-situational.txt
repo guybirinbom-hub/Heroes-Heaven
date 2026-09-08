@@ -1,0 +1,131 @@
+batch 031 — SITUATIONAL family, ADVERSARIAL VERIFY
+findings: eerie-environs, monk-moves#speed-star, murksight#perception, swashbucklers-speed
+verdict: all four reach a really built character (swashbucklers-speed once the driver applies its one
+row — proved here on patched/stripped in-memory copies). No finding is WRONG. I added one it() for the
+display half of swashbucklers-speed, corrected the builder's DATA STILL NEEDED (its only line was the
+row the spec already authors, not an open gap), and found three gaps the builder did not report — one
+of them large and outside the batch: every monk's Speed is 10–25 ft short of print.
+
+npx tsc --noEmit — clean (twice: before and after my it()).
+node scripts/vt.mjs run test/batch031-situational.test.ts — 9 passed (8 the builder wrote + my 1).
+node scripts/vt.mjs run test/batch031-situational.test.ts test/conditional-speeds.test.ts
+  test/situational-bonuses.test.ts test/situational-target-kinds.test.ts
+  test/situational-stacking.test.ts test/batch29-situational-siblings.test.ts — 56 passed (6 files).
+node scripts/vt.mjs run test/speed-increases.test.ts — 19 passed (NOT in the builder's list; it scans
+  every record whose description prints "-foot status bonus to your Speed" and is the one test the
+  swashbucklers-speed row could have tripped. It cannot: the row uses landSpeedBonus, the scan reads
+  speeds.land).
+node scripts/test-flip-audit.mjs --batch 031 — clean, 4 test files touched, 0 new settle keys, every
+  flip cited (re-run after my it()).
+Throwaway harness: test/_b031tmp-verify.test.ts — patched a content copy with the row, built monk 5 /
+  fighter 8 + monk-dedication / barbarian 8 / ranger 8 / witch 8 through build(), dumped explainStat
+  and deriveSpeeds. Deleted; every number quoted below came out of it.
+
+SPEC ROWS AS ROWS (work/.b031-rows-situational.json — 1 row, on 1 of the 4 findings)
+  feats/swashbucklers-speed · landSpeedBonus · 5
+  - target exists: core.json feats/swashbucklers-speed is present (level 8, archetype swashbuckler,
+    aonId feat-6238). No create:true needed, none given.
+  - scalar field, not a re-emitted collection, so there is nothing to diff whole: the shipped record
+    has no landSpeedBonus key at all (dumped: id/name/level/category/traits/rarity/source/
+    prerequisites/actionCost/archetype/edition/aonId). Nothing is dropped by the assignment.
+  - supersedes: correctly ABSENT. scripts/data/effect-backfill.json carries exactly two rows touching
+    any of this family's records — feats/monk-moves speedsIf and feats/monk-moves speeds:null — and
+    none for swashbucklers-speed, so there is no overlay row to supersede.
+  - reader exists, in MY family's own files' sibling: derive.ts:4968
+    `for (const f of c.feats) featLandBonus += landBonusOf(db.feats[f.featId]?.landSpeedBonus)`, and
+    the display half at explain.ts:1436-1465. Type matches types.ts:1251 (`number | string`).
+  - no key collision: one row in this family; across all three families' spec files the 17 rows carry
+    17 distinct category/id/field keys. The data-rows family's swashbucklers-speed#text row is on
+    field `description`, not `landSpeedBonus` — different key, no merge owed.
+  - every id the row names exists: it names none beyond its own record (no spell/action/trait/item id).
+  - no create rows, so no created-prose spec is owed.
+
+MANIFEST (work/.b031-specs.json)
+  All three families are registered (situational, instruments, data-rows) — at the time of the b030
+  verify the sibling entries were still missing; here they are present. The situational entry's stage[]
+  lists every path the family touched (rows, report, test, src/rules/situationalBonuses.ts,
+  scripts/apply-situational-lane.mjs); I appended work/.b031-verify-situational.txt for this file, per
+  the b030 convention. No row in any family's spec carries `supersedes` without the flag: the only
+  superseding rows in the batch are the data-rows family's two `edition` rows, and both declare
+  supersedes: true. Nothing else in the manifest was touched.
+
+PER FINDING
+
+eerie-environs — DONE
+  FEAT_SITUATIONAL["eerie-environs"] at situationalBonuses.ts:294, inside the HAND-AUTHORED block
+  (above the :3320-ish generated sentinel), and matched by apply-situational-lane.mjs:94's
+  `existingIds` regex /^ {2}"([a-z0-9-]+)":\s\[/gm — so the next lane run skips it as alreadyAuthored
+  rather than re-emitting it. Key appears exactly once in the file (checked against the file's real
+  duplicate-key set, which has 20 pre-existing entries; none of this family's four is among them).
+  Player route, built: ranger 8 holding the feat, explainStat({kind:'skill',skill:'intimidation'})
+  returns exactly one line for sourceId 'eerie-environs' — "you don't lose the hidden condition, and
+  ignore the not-sharing-a-language penalty from Eerie Environs — you Demoralize a creature you are
+  hidden from" — and statHasSituational is true, so the row is starred and the popup is worth opening.
+  A ranger without the feat gets []. Print check: AoN feat-8419's two clauses are both represented and
+  neither is widened; Demoralize is an Intimidation action, so the target kind is right.
+
+monk-moves#speed-star — DONE (with a gap the deletion exposes; see CROSS-FILE GAPS)
+  The star is gone from situationalBonuses.ts:971 and replaced in place by a rationale comment; the key
+  now appears zero times. 'monk-moves' is in apply-situational-lane.mjs's handEdited set, which is
+  tested BEFORE existingIds (script lines 111-115), so the lane row that still sits in
+  work/situational-lane/spec.json cannot restore it — verified by reading the loop, not the header.
+  The NUMBER survives: fighter 8 + Monk Dedication + Monk Moves reads land 35 against a 25 chassis, and
+  a monk 5 in half plate is identical to a featless monk 5 in half plate. The three sibling
+  equipment-gated speedsIf records (diving-armor, soaring-armor, implements-flight — the complete set,
+  re-derived from core.json rather than taken from the report) carry no star, so the registry is
+  consistent as claimed.
+  ⚠ What the builder did not report: explainStat({kind:'speed'}) never itemises an evaluated speedsIf.
+  On that fighter/monk the popup now reads parts [Ancestry Speed 25] against totalText "35 ft" and
+  situational []. The star was the only thing naming those 10 feet; the breakdown never summed for this
+  record either before or after (the +10 was in deriveSpeeds and never in parts), so this is NOT a
+  regression of the sum invariant — but the last explanation of the discrepancy is gone. Filed below.
+
+murksight#perception — DONE
+  FEAT_SITUATIONAL["murksight"] at situationalBonuses.ts:455, hand-authored block, one key occurrence,
+  inside existingIds' reach. Witch 8 holding the feat: one line on
+  explainStat({kind:'perception'}) — "you ignore the penalty from Murksight — circumstance penalties
+  from non-magical fog, mist, rain, or snow" — star true, and a witch without it gets [].
+  The REFUTED half is genuinely absent: explainStat({kind:'strikeAttack'}) returns nothing for
+  murksight, and the entry has one target only, so nothing can leak onto a strike row. The comment says
+  why in print's own words, which is the right record to leave for the next reader — murksight#attack
+  is refuted only because WG encodes less than print, not because print is silent.
+
+swashbucklers-speed — DONE (row correct as a row; mechanic proved on a built character)
+  Data: verified above. Harness result on a fighter 8 carrying the feat — stripped copy land 25,
+  patched copy land 30, and a character WITHOUT the feat is 25 on both copies, so it is the feat that
+  pays. The breakdown itemises it: parts [Ancestry Speed 25, Speed increase · Swashbuckler's Speed 5],
+  total "30 ft" — the parts sum to the total, which is the property explain.ts's speed block says it
+  exists to preserve.
+  Code: the star at :3306 is trimmed to "while you have panache → +10-foot status instead (the +5-foot
+  floor is always on and already in your Speed)", the exact remainder wording classFeatures/
+  vivacious-speed already uses at :1471-1477 for the identical split. Print gives +10 WITH panache, not
+  +15, and the star says "instead" — correct. 'swashbucklers-speed' is in handEdited, which matters:
+  existingIds alone would have protected it today, but if a later pass ever removes the entry the lane
+  would re-emit the spec's original wording, which restates the floor.
+  No double-payment path: the only panache-keyed mode in core.json is flamboyant-athlete (climb/swim
+  only, modifiers []), and no other carrier on the record or on swashbuckler-dedication touches land.
+  ⚠ ADDED BY ME — test/batch031-situational.test.ts, "the +5 is itemised in the Speed breakdown, not
+  just folded into the total". The builder's numeric it() proved deriveSpeeds only; the popup is the
+  surface the owner's speed ruling is about, and a bonus that moved the total without a named part
+  would break the sum invariant silently. Same patched copy, so it is mutation-safe and does not flip
+  when the driver applies the row. Cited "// batch 031: swashbucklers-speed"; the record id is in the
+  enclosing describe title.
+  ⚠ Not a defect in the row, but new and reachable: two STATUS bonuses now stack additively — see
+  CROSS-FILE GAPS.
+  ⚠ CORRECTION to the builder's report: its DATA STILL NEEDED section's only line was
+  "feats/swashbucklers-speed field landSpeedBonus value 5", i.e. the row the spec already authors.
+  That section means rows the driver must author BEYOND the spec, so the line is withdrawn below —
+  left standing it would be harvested as an open gap and spawn work for a row that already exists.
+
+DATA STILL NEEDED (rows the driver must author beyond my spec)
+- classFeatures/incredible-movement · speedsIf · [{"unarmored":true,"speeds":{"land":"10+5*floor((@actor.level-3)/4)"}}] — found by following THIS finding's own sibling logic: monk-moves is the archetype copy of Incredible Movement, and the class feature it copies is star-only (situationalBonuses.ts:1471), carries no speedsIf and no landSpeedBonus, so it never moves a number. Measured: a monk 5 reads land 25 where print reads 35, and the shortfall grows to +25 by 19th. The sheet CAN see armour — that is precisely why monk-moves' own +10 is evaluated — so the owner's ruling ("a Speed is a real number only while it is always on… where the sheet can SEE the condition it is evaluated", test/conditional-speeds.test.ts header) puts this in the same lane; the star should then be trimmed the way monk-moves' was. Not authored here: it is outside the batch's finding set and needs its own read.
+
+CROSS-FILE GAPS
+- src/rules/explain.ts:1436-1465 (monk-moves#speed-star, NEW — found by me): the speed block builds its parts from `landSpeedBonus`, `landSpeedMin` and `speeds.land` only; `speedsIf` is read nowhere outside derive.ts:5002. So all four equipment-gated records pay a Speed the breakdown never names, and with the duplicate star correctly deleted a fighter/monk-dedication/Monk Moves character now reads parts [Ancestry Speed 25] under totalText "35 ft" with an empty situational list — 10 feet with no explanation anywhere in the popup. Fix belongs with whoever owns explain.ts: evaluate the same gates (or export the gate evaluation from derive.ts) and push a part per qualifying block, which also restores the sum for the other three. Deliberately NOT pinned as a test here — pinning it would ratify it.
+- src/rules/derive.ts:4966-4970 (swashbucklers-speed, NEW — found by me): landBonusOf sums every landSpeedBonus additively with no bonus TYPE, and this row makes the first reachable status+status pair. Measured: barbarian 8 (Furious Footfalls, "+5-foot status bonus to your Speed") + Swashbuckler Dedication + Swashbuckler's Speed reads 35 ft where print's two status bonuses give 30. The row is still right — the alternative is the star that moved nothing — but the lane needs a type on the value (or a status/circumstance/item max) before a second always-on status speed lands. Owner: whoever holds derive.ts's speed block.
+- src/rules/derive.ts (swashbucklers-speed, builder's line, CONFIRMED as written): landSpeedBonus is LAND-ONLY and feat-6238 says "+5-foot status bonus to your SpeedS" (plural), so a holder with a fly or swim Speed gets it on land only. classFeatures/vivacious-speed lives with the identical ceiling; one "bonus to all Speeds" grant fixes both.
+- core-descriptions.json feats/swashbucklers-speed (builder's line, CONFIRMED as written): swashbucklers-speed#text is the data-rows family's, on field `description`. Re-checked for collision against work/.b031-rows-data-rows.json — different field, and the trimmed star deliberately does not restate the printed sentence, so the two do not fight.
+
+MY MANIFEST stage[] ADDITIONS (files I touched as verifier)
+  test/batch031-situational.test.ts   (one it added, cited "// batch 031: swashbucklers-speed")
+  work/.b031-verify-situational.txt   (this file; appended to situational's stage[])

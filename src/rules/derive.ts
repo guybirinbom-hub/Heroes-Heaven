@@ -4614,7 +4614,20 @@ function deriveUnarmedStrike(
   // add Dex to damage instead of Str when it helps.
   const thiefDexDamage = !isRanged && c.subclassId === 'thief' && p.traits.includes('finesse') && dexMod > strMod;
   // Ranged natural attacks add no ability modifier to damage (like a projectile); melee add Str (or Dex via Thief).
-  const dmgAbMod = isRanged ? 0 : thiefDexDamage ? dexMod : strMod;
+  // …unless the attack is PROPULSIVE — *"add half your Strength modifier to ranged damage with this
+  // weapon (all of it if your Strength is negative)"* (glossary.ts:111, the same rule the weapon path
+  // applies at `dmgAbMod` above). Wild Winds Stance's wind crash is the first ranged unarmed Strike in
+  // the corpus to carry the trait, and it was being paid 0.
+  const propulsive = isRanged && p.traits.includes('propulsive');
+  const dmgAbMod = isRanged
+    ? propulsive
+      ? strMod > 0
+        ? Math.floor(strMod / 2)
+        : strMod
+      : 0
+    : thiefDexDamage
+      ? dexMod
+      : strMod;
   const dmgBonus =
     dmgAbMod +
     (isRanged ? 0 : conditionPenalty(c.conditions, thiefDexDamage ? 'dex' : 'str', 'damage')) +
@@ -4886,6 +4899,12 @@ export function deriveStrikes(c: Character, db: ContentDatabase): Strike[] {
         damageType: s.damageType,
         traits: asWeapon ? [...new Set(s.traits ?? [])] : s.traits?.length ? [...new Set([...s.traits, 'unarmed'])] : ['unarmed'],
         group: s.group ?? (asWeapon ? '' : 'brawling'),
+        // A stance Strike may be RANGED — *"You can make wind crash unarmed Strikes as ranged
+        // Strikes against targets within 30 feet"* (Wild Winds Stance, AoN spell-2062). The profile
+        // already carries `range` for the Spined Azarketi's spine and deriveUnarmedStrike does the
+        // rest; passing it through is all that was missing, and without it a printed ranged Strike
+        // was derived as a melee Strength-keyed one.
+        ...(s.range != null ? { range: s.range } : {}),
         ...(asWeapon ? { weaponCategory: asWeapon } : {}),
         strikingFloor: Math.max(
           0,
@@ -4951,6 +4970,18 @@ export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {
   for (const f of c.feats) {
     const feat = db.feats[f.featId];
     if (feat) grantSources.push(feat);
+  }
+  /* CLASS FEATURES were missing from this list, so `speeds` and `speedsIf` on a class feature had no
+   * reader at all — only `landSpeedBonus`/`landSpeedMin`/`speedAdjust`, each read from its own loop.
+   * Incredible Movement (class-feature-934, *"You gain a +10-foot status bonus to your Speed whenever
+   * you're not wearing armor. The bonus increases by 5 feet for every 4 levels you have beyond 3rd."*)
+   * is exactly the equipment-gated shape `speedsIf` exists for — the same clause Monk Moves, the
+   * archetype copy, already pays through it — and it could not be written down. Adding the records here
+   * makes the whole class-feature speed lane live; `speedAdjust` had its own classFeature loop below,
+   * removed with this so it is not applied twice. */
+  for (const fid of ownedFeatureIds(c, db)) {
+    const cf = db.classFeatures[fid];
+    if (cf) grantSources.push(cf);
   }
   if (c.chosenEffects?.speeds) grantSources.push({ speeds: c.chosenEffects.speeds });
   // "While raging you gain a climb/swim Speed…" (Raging Athlete) — active only while the state is on.
@@ -5039,11 +5070,9 @@ export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {
   // penalties are applied because one of them cancels a penalty and another reduces it, and both
   // need to be known while the penalties are still separable.
   const adjusts: NonNullable<DefenseGrants['speedAdjust']>[] = [];
+  // Class features are IN grantSources now (see the speedsIf note above), so their speedAdjust arrives
+  // with everyone else's — the separate loop that used to stand here would double every one of them.
   for (const src of grantSources) if (src.speedAdjust) adjusts.push(src.speedAdjust);
-  for (const fid of ownedFeatureIds(c, db)) {
-    const a = db.classFeatures[fid]?.speedAdjust;
-    if (a) adjusts.push(a);
-  }
   const ADJUST_KEYS: (keyof Speeds)[] = ['land', 'fly', 'swim', 'climb', 'burrow'];
   const adjustTargets = (key: NonNullable<DefenseGrants['speedAdjust']>['key']) =>
     key === 'all' ? ADJUST_KEYS : key === 'non-land' ? ADJUST_KEYS.filter((k) => k !== 'land') : [key as keyof Speeds];

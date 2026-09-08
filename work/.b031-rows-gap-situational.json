@@ -1,0 +1,22 @@
+{
+  "findings": [
+    {
+      "id": "incredible-movement#speed",
+      "note": "GAP-AGENT row, batch 031, family gap-situational. Closes the DATA STILL NEEDED line work/.b031-verify-situational.txt:121, raised by the situational verifier while following monk-moves#speed-star's own sibling logic. Incredible Movement shipped with NO speed carrier of any kind - no `speeds`, no `speedsIf`, no `landSpeedBonus` - so a monk's Speed was short by 10 ft from 3rd level, rising to 25 ft at 19th; the star at src/rules/situationalBonuses.ts:1471 said so in prose and moved no number. Monk Moves (feat-6214), the ARCHETYPE COPY of this same printed clause, already encodes its flat +10 as speedsIf [{unarmored:true,speeds:{land:10}}] (scripts/backfill-conditional-speeds.mjs:40), so the class feature gets the identical shape with the level step written as a formula - the same vocabulary classFeatures/vivacious-speed's landSpeedBonus already uses (\"5+5*min(2,floor((@actor.level-3)/8))\"). READER: the field had none for a classFeature. src/rules/derive.ts built `grantSources` from heritages + feats + chosenEffects + activeStateGrants only, so BOTH `speeds` and `speedsIf` on a class feature were dead fields (measured: 0 shipped classFeatures carry either, which is why nobody noticed). This spec's code half pushes ownedFeatureIds' records into grantSources and deletes the now-duplicate classFeature `speedAdjust` loop that stood below it. NOT DONE here: the star at situationalBonuses.ts:1471 is NOT trimmed - src/rules/situationalBonuses.ts is the situational family's staged file and carries their batch-031 edits, so trimming it from here would collide; the star now duplicates the number the way monk-moves' did before they deleted it, and is flagged in work/.b031-report-gap-situational.txt for the next batch. Also NOT done: the +10 is a STATUS bonus and our landSpeedBonus/speedsIf land lane is untyped and additive, so a monk who also takes Swashbuckler's Speed reads 15 where print gives 10 - the same lane-wide untyped-stacking question queued as owner question `speed-status-lane-031`.",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "incredible-movement",
+          "field": "speedsIf",
+          "value": [
+            {
+              "unarmored": true,
+              "speeds": { "land": "10+5*floor((@actor.level-3)/4)" }
+            }
+          ],
+          "why": "AoN class-feature-934 (Player Core 2 p.114), Incredible Movement: \"You move like the wind. You gain a +10-foot status bonus to your Speed whenever you're not wearing armor. The bonus increases by 5 feet for every 4 levels you have beyond 3rd.\" The gate is on ARMOUR, which the sheet can see, so per the owner's speed ruling (src/rules/types.ts:895, \"we give an actual speed only when it's ALWAYS; if it is dependent on something it's in a star\" - and these equipment gates are evaluated, not starred) it is a speedsIf block rather than a star. The formula 10+5*floor((@actor.level-3)/4) reads 10 at 3rd-6th, 15 at 7th-10th, 20 at 11th-14th, 25 at 15th-18th and 30 at 19th-20th, which is \"+5 feet for every 4 levels beyond 3rd\" exactly. Identical in shape to feats/monk-moves (feat-6214), the archetype copy of this clause, whose flat +10 already ships in this field."
+        }
+      ]
+    }
+  ]
+}

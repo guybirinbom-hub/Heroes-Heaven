@@ -55,7 +55,11 @@ describe('consumable modes: the data', () => {
     // +2 from batch 18: the Arachnid Harness grades' Spider Limbs climb Speed (1 minute).
     // +1 from batch 29: the Resolute Mind Wrap's Shield Thoughts — *"you instead gain resistance 10 to
     // mental damage for 1 minute"* on a successful triggered Will save; the sheet showed 5 all minute.
-    expect(itemModes().length).toBe(375);
+    // batch 031 premise: equipment-1719 "fly Speed equal to your Speed" — +2 for the two activation
+    // modes batch 031 created: Umbral Wings' fly Speed until the end of your next turn, and the Energy
+    // Robe (Cold)'s water walk for 1 minute (equipment-1317-1217). Both items already carried the
+    // activation cost and the frequency counter and nothing for the effect itself.
+    expect(itemModes().length).toBe(377);
   });
 
   it('every item mode points at an item that actually exists', () => {

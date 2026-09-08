@@ -4740,6 +4740,17 @@ export interface StanceStrike {
    *  Highest qualifying entry wins, and it is a FLOOR: real handwraps still beat it if better. */
   strikingByLevel?: { level: number; extraDice: number }[];
   /**
+   * Range increment (ft) when the stance's Strike is a RANGED one; undefined = melee.
+   *
+   * Wild Winds Stance prints *"You can make wind crash unarmed Strikes as ranged Strikes against
+   * targets within 30 feet"* (AoN spell-2062), and every stance Strike went through
+   * `deriveUnarmedStrike` with no range — which builds a MELEE Strength-keyed attack. The same
+   * `range` field already exists on `NaturalAttack`/`GrantedStrike`/`UnarmedProfile` and
+   * deriveUnarmedStrike already does the whole job with it (Dexterity to the attack roll, the
+   * ranged flag, the range increment on the row); only StanceStrike could not say it.
+   */
+  range?: number;
+  /**
    * Set when the stance grants a WEAPON Strike rather than an unarmed one, naming its category.
    *
    * Every other stance Strike in the corpus is unarmed, so deriveStrikes forced the `unarmed` trait
@@ -5690,8 +5701,13 @@ export interface Character {
    *  per entry (stored in BuildState.featSkillChoices `<featId>:fallback:<skill>`).
    *  `note` overrides the picker's heading where the pick is not owed to that one skill:
    *  `conditionalSkillsFallback` is owed to ALL of them at once ("already expert in intimidation and
-   *  religion"), and a heading naming only the first would misstate why the picker appeared. */
-  skillFallbacks?: { featId: string; skill: ProficiencyKey; note?: string; lore?: true }[];
+   *  religion"), and a heading naming only the first would misstate why the picker appeared.
+   *  `rank` is present only when the replacement is worth MORE than training — Golden League Xun's
+   *  *"or in two other skills of your choice in which you're trained, if you were already an expert in
+   *  the listed skills"* (AoN feat-2734). It tells the picker two things the bare entry could not: the
+   *  replacement grants that rank, and the options are the skills the character is ALREADY TRAINED in
+   *  (an untrained skill is not "another skill in which you're trained"). */
+  skillFallbacks?: { featId: string; skill: ProficiencyKey; note?: string; lore?: true; rank?: ProficiencyRank }[];
   /** Replacements the character is OWED because a flat feat grant landed on a feat they already had —
    *  *"for each of these feats you already have, you can instead gain a different feat from the
    *  following list"* (FEAT_SUBSTITUTE_GRANTS). One entry per replaceable feat, present whether or not

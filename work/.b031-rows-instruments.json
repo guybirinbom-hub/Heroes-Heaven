@@ -1,0 +1,14 @@
+{
+ "findings": [
+  {
+   "id": "monk-moves#hp",
+   "backfillRows": [],
+   "note": "Instrument-only. The digest's MISSING hp on feats/monk-moves was wg-values flattening a conditional gated on ANOTHER feat (FEAT_NAMES INCLUDES 'monk resiliency') into an unconditional Hit Point op. AoN feat-6214 prints only the Speed clause; the Hit Points are AoN feat-6212's ('3 additional Hit Points for each monk archetype class feat you have') and we already hold them once, on feats/monk-resiliency.maxHpBonus {perArchetypeFeat:3, archetype:'monk'}. Fixed in the comparer (scripts/wg-values.mjs theirValueOps) rather than by 59 settles; three now-dead SETTLED_VALUES entries deleted with it. No content change is correct here - a row would ADD Hit Points the book does not grant."
+  },
+  {
+   "id": "creed-magic",
+   "backfillRows": [],
+   "note": "Instrument-only. feats/creed-magic.spellSlotBonus {entryId:'cleric-casting', restricted:{...}} is already right and already pinned on a cleric (test/restricted-slots.test.ts). The NO-SHEET-EFFECT flag came from the experience harness hosting a class-archetype feat on a FIGHTER, where slotEntryFor (build.ts:6893) finds no 'cleric-casting' entry and drops the grant. Parked in work/experience-instrument-limits.json with the cause pinned by test/batch031-instruments.test.ts; the durable harness fix (featHost should prefer the archetype dedication's classArchetype.classId) is a CROSS-FILE GAP - test/wg-experience.harness.test.tsx is outside this family's files."
+  }
+ ]
+}

@@ -118945,7 +118945,8 @@
   "category": "feats",
   "id": "soulsight-bard",
   "field": "edition",
-  "value": "remaster"
+  "value": "superseded",
+  "why": "feat-4609 is ONE printed feat — \"Soulsight\", traits Bard and Sorcerer, Player Core pg. 105 — and we ship three pickable records on that same aonId. feats/soulsight already carries both traits and the prerequisite-free remaster text, so this per-class copy is the superseded half. 'superseded' is the value build.ts:2910 always hides from pickers. Supersedes the existing overlay row on this exact key, whose whole value was \"remaster\" — that is what left the duplicate pickable."
  },
  {
   "category": "feats",
@@ -119059,7 +119060,8 @@
   "category": "feats",
   "id": "soulsight-sorcerer",
   "field": "edition",
-  "value": "remaster"
+  "value": "superseded",
+  "why": "Same printed feat, feat-4609: our soulsight-sorcerer is the OGL Advanced Player's Guide half (it still carries the dropped prerequisite \"bloodline that grants divine or occult spells\"), while feat-4609 prints no prerequisite and lists both traits. Hiding it leaves one pickable Soulsight. Supersedes the existing overlay row on this exact key, whose whole value was \"remaster\"."
  },
  {
   "category": "feats",
@@ -134109,8 +134111,10 @@
       ]
      }
     }
-   ]
-  }
+   ],
+   "limitToAnswersOf": "domain-initiate"
+  },
+  "why": "AoN feat-4666: \"You gain an advanced domain spell from one of your domains for which you have an initial domain spell.\" All 64 domains were offered. `limitToAnswersOf` is the shipped lane for exactly this shape (Order Magic reads Order Explorer's answers), and Domain Initiate is the only record in our data that grants a cleric an INITIAL domain spell — it is also this feat's printed prerequisite. Supersedes the existing pathless `choice` row, whose value (all 64 options, byte-identical to the shipped record) is carried here whole."
  },
  {
   "category": "feats",
@@ -180991,5 +180995,397 @@
   "field": "affixHostAs",
   "value": "armor",
   "why": "AoN equipment-3058: \"You can affix talismans to the bands as though they were light armor.\" The bands ship as itemType \"equipment\", so planAffix rejected every talisman outright."
+ },
+ {
+  "category": "feats",
+  "id": "swashbucklers-speed",
+  "field": "landSpeedBonus",
+  "value": 5,
+  "why": "AoN feat-6238 (Player Core 2 p.182): \"You gain a +5-foot status bonus to your Speeds; this increases to a +10-foot status bonus while you have panache.\" The +5 is ALWAYS ON, so per the owner's speed ruling it is a number, not a star; derive.ts reads it via landBonusOf(db.feats[f.featId]?.landSpeedBonus), the same lane classFeatures/vivacious-speed uses for its own always-on half. The panache step stays the star in src/rules/situationalBonuses.ts. New field on this record - no existing effect-backfill row for feats/swashbucklers-speed, so no supersedes."
+ },
+ {
+  "category": "feats",
+  "id": "spellshield",
+  "field": "recordMarks",
+  "value": [
+   {
+    "on": "action",
+    "id": "drain-bonded-item",
+    "note": "Spellshield: when you make your daily preparations you can prepare one fewer wizard spell — one at least 1 rank lower than your highest-rank wizard spell slot — to infuse that magic into your bonded shield. When you Drain your Bonded Item to Cast a Spell, that spell is automatically heightened to the rank you infused, no matter what rank you originally prepared it at."
+   }
+  ],
+  "why": "feat-7983 prints \"When you Drain your Bonded Item to Cast a Spell, that spell is automatically heightened to the rank of spell you infused into your shield, no matter what rank you originally prepared it at.\" The rule fires AT THE ACTION, and action-2260 (Drain Bonded Item) is the row the player reads when using it; the feat's own description is on the Feats tab, not there. recordMarks {on:'action'} is the live lane (66 rows already ship through this file) and is the only carrier that reaches point of use."
+ },
+ {
+  "category": "feats",
+  "id": "greater-cruelty",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "touch-of-the-void",
+    "note": "Greater Cruelty: when you use Cruelty, you can choose to make the target clumsy or stupefied instead, with the same condition value. Make the choice when you Cast the Spell (before you know the result of the target’s save)."
+   }
+  ],
+  "why": "feat-5903 prints \"When you use Cruelty, you can choose to make the target clumsy or stupefied instead, with the same condition value. Make the choice when you Cast the Spell (before you know the result of the target's save).\" Cruelty (feat-5896) already delivers its own clause through spellNotes on the same spellId, so this reuses the existing lane and the existing target rather than inventing one."
+ },
+ {
+  "category": "feats",
+  "id": "ouroboric-pact",
+  "field": "actionCost",
+  "value": {
+   "type": "passive"
+  },
+  "why": "feat-7448's title glyph is empty and its body is grant language — \"You gain the Entreat Pact action\" — with the Free Action sitting on the granted activity's own **Activate** line. We ship actions/entreat-pact with actionCost free already, so the copy on the feat is a duplicate that renders a second free-action row on the sheet."
+ },
+ {
+  "category": "feats",
+  "id": "flickering-stories",
+  "field": "recordMarks",
+  "value": [
+   {
+    "on": "action",
+    "id": "offer-story",
+    "note": "Flickering Stories: when you Offer a Story you can instead become concealed by shifting shadows for the duration; the action then gains the shadow trait. You can't use this concealment to Hide, as normal for concealing effects that leave your location obvious. The creature you share a story with can choose this benefit even if you did not."
+   }
+  ],
+  "why": "feat-7444 prints \"When you Offer a Story, you can become concealed by shifting shadows for the duration instead of the normal benefits. The action then gains the shadow trait.\" The clause changes what an ACTION does, so it belongs on the action row (action-3058, offer-story) — the recordMarks lane, which is the data twin of exactly this at-point-of-use injection."
+ },
+ {
+  "category": "feats",
+  "id": "dream-magic",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "dream-magic-spell",
+    "prompt": "Dream Magic: choose Dream Message or Sleep (4th-rank occult innate spell, once per day)",
+    "options": [
+     {
+      "value": "dream-message",
+      "label": "Dream Message",
+      "grant": {
+       "innateSpells": [
+        {
+         "spellId": "dream-message",
+         "tradition": "occult",
+         "rank": 4,
+         "usesPerDay": 1
+        }
+       ]
+      }
+     },
+     {
+      "value": "sleep",
+      "label": "Sleep",
+      "grant": {
+       "innateSpells": [
+        {
+         "spellId": "sleep",
+         "tradition": "occult",
+         "rank": 4,
+         "usesPerDay": 1
+        }
+       ]
+      }
+     }
+    ]
+   }
+  ],
+  "why": "feat-8518 prints \"Choose dream message or sleep upon taking this feat; you learn this spell as a 4th-rank occult innate spell that you can cast once per day.\" The pick lane it currently runs through (FEAT_CANTRIP_GRANTS) has no rank field at all, so build.ts's castRank fell back to the spell's base rank — Sleep at 1st, Dream Message at 3rd. effectChoices.grant.innateSpells CAN carry the rank; this is the same lane move already made for colugos-traversal and empathic-calm for this exact reason (their comments in featCantripGrants.ts say so)."
+ },
+ {
+  "category": "feats",
+  "id": "dream-magic",
+  "field": "spellcastingGrant",
+  "value": {
+   "tradition": "occult",
+   "keyAbility": "wis",
+   "proficiency": "trained"
+  },
+  "why": "feat-8518 prints \"You become trained in the spell attack modifier and spell DC statistics, and your spellcasting attribute for these spells is Wisdom.\" With no spellcastingGrant the innate profile falls back to 'cha' (build.ts:7770-7773), so a non-caster Sleepwalker cast a Charisma-keyed 4th-rank spell. Same shape as the 50 spellcastingGrant rows already in this file (minor-magic, crystal-ward-spells)."
+ },
+ {
+  "category": "stances",
+  "id": "clinging-shadows-stance",
+  "create": true,
+  "value": {
+   "id": "clinging-shadows-stance",
+   "name": "Clinging Shadows Stance",
+   "strikes": [
+    {
+     "name": "shadow grasp",
+     "dice": 1,
+     "die": "d4",
+     "damageType": "void",
+     "group": "brawling",
+     "traits": [
+      "agile",
+      "grapple",
+      "reach",
+      "unarmed"
+     ]
+    }
+   ],
+   "note": "The shadow grasp Strikes are not qi spells, so you can make them as often as you like while in the stance. While in clinging shadows stance you gain a +2 circumstance bonus to Athletics checks to Grapple, and to the DC for creatures to Escape from you."
+  },
+  "why": "spell-2061 prints \"You can make shadow grasp Strikes. These deal 1d4 void damage; are in the brawling group; and have the agile, grapple, reach, and unarmed traits\" and \"you gain a +2 circumstance bonus to Athletics checks to Grapple, and to the DC for creatures to Escape from you\"; feat-6010 grants the spell. content.stances had no key for it, so derive's activeStanceDef could never inject the Strike. Shape copied from the sibling monk stance defs (crane-stance, tangled-forest-stance)."
+ },
+ {
+  "category": "feats",
+  "id": "steal-vitality",
+  "field": "description",
+  "value": "When you cast Vampiric Feast, you can modify its standard effects as follows: Instead of gaining temporary Hit Points, if your target fails or critically fails its saving throw, you can attempt a counteract check to remove the clumsy or enfeebled conditions on yourself, using the source of that condition to determine the counteract rank and DC. If the condition was caused by an ongoing effect and you don't remove that effect, the condition returns at the end of your next turn.",
+  "why": "feat-3389 prints \"remove the clumsy or enfeebled conditions on yourself\" with no condition value. Ours read \"the Clumsy 1 or Enfeebled 1 conditions\", which tells a player with clumsy 2 they are ineligible. Only the two added values are dropped; the remaster renames already in our text (Vampiric Feast, \"counteract rank\") are left alone, and the mechanical carrier feats/steal-vitality.spellNotes was already correct."
+ },
+ {
+  "category": "feats",
+  "id": "steal-vitality",
+  "field": "descRefs",
+  "value": [
+   {
+    "label": "clumsy",
+    "key": "conditions"
+   },
+   {
+    "label": "enfeebled",
+    "key": "conditions"
+   },
+   {
+    "label": "Vampiric Feast",
+    "key": "spells"
+   }
+  ],
+  "why": "feat-3389: the two condition links must match the corrected wording or RichText's label regex finds nothing to linkify — the old labels were \"Clumsy 1\"/\"Enfeebled 1\". Whole-array field, so the third ref (Vampiric Feast) is restated here unchanged."
+ },
+ {
+  "category": "feats",
+  "id": "swashbucklers-speed",
+  "field": "description",
+  "value": "You move with a swashbuckler’s speed and grace. You gain a +5-foot status bonus to your Speeds; this increases to a +10-foot status bonus while you have panache.",
+  "why": "Our record is source Player Core 2, edition remaster, aonId feat-6238 — whose printed text is \"You move with a swashbuckler's speed and grace. You gain a +5-foot status bonus to your Speeds; this increases to a +10-foot status bonus while you have panache.\" We shipped the legacy feat-1864 sentence with its final word dropped, so the player read \"You move faster, with or without .\" Re-synced from the record's own aonId; the numbers are identical, so no mechanics field moves."
+ },
+ {
+  "category": "stances",
+  "id": "wild-winds-stance",
+  "create": true,
+  "value": {
+   "id": "wild-winds-stance",
+   "name": "Wild Winds Stance",
+   "strikes": [
+    {
+     "name": "wind crash",
+     "dice": 1,
+     "die": "d6",
+     "damageType": "bludgeoning",
+     "group": "brawling",
+     "traits": [
+      "agile",
+      "nonlethal",
+      "propulsive",
+      "unarmed"
+     ],
+     "range": 30
+    }
+   ],
+   "note": "Wind crash Strikes are made as ranged Strikes against targets within 30 feet and ignore concealment and all cover; they are not qi spells, so you can make them as often as you like while in the stance. While in wild winds stance you gain a +2 circumstance bonus to AC against ranged attacks."
+  },
+  "why": "spell-2062 prints \"You can make wind crash unarmed Strikes as ranged Strikes against targets within 30 feet. These deal 1d6 bludgeoning damage; are in the brawling group; and have the agile, nonlethal, propulsive, and unarmed traits\" and \"you gain a +2 circumstance bonus to AC against ranged attacks\". content.stances had no key for the spell, so neither the Strike nor the toggle could exist. Shape copied from the sibling monk stance defs."
+ },
+ {
+  "category": "runes",
+  "id": "sinister-knight",
+  "create": true,
+  "value": {
+   "id": "sinister-knight",
+   "name": "Sinister Knight",
+   "slot": "armor",
+   "kind": "property",
+   "level": 8,
+   "price": {
+    "gp": 500
+   },
+   "passiveEffects": {
+    "skills": {
+     "deception": 1
+    }
+   }
+  },
+  "why": "equipment-518 is an Armor Property Rune, \"Usage etched onto heavy armor\", \"The wearer gains a +1 item bonus to Deception checks.\" We ship the item but core.json.runes had no entry, so planAttach (attachments.ts:88, which looks the id up in content.runes) refused the etch outright. Level and price are the item record's own. Shape copied from runes/trudds-strength, which propertyRuneDefs and planAttach both already read."
+ },
+ {
+  "category": "modes",
+  "id": "item-umbral-wings",
+  "create": true,
+  "value": {
+   "id": "item-umbral-wings",
+   "name": "Umbral Wings",
+   "fromItemId": "umbral-wings",
+   "duration": "until the end of your next turn",
+   "survivesRest": false,
+   "modifiers": [],
+   "speeds": {
+    "fly": "@actor.speed.land"
+   },
+   "note": "Once per hour, 1 action (envision). Fly Speed equal to your Speed. If you aren't standing on solid ground when the effect ends, you fall."
+  },
+  "why": "equipment-1719 prints \"Activate [one action] envision; Frequency once per hour; Effect You gain a fly Speed equal to your Speed until the end of your next turn. If you aren't standing on solid ground when the effect ends, you fall.\" The item carried the activation cost and the frequency counter but no fly Speed anywhere, so the number never reached a sheet. Shape copied from modes/item-soaring-wings-major; the bare \"@actor.speed.land\" formula is the one already used by modes/aura-convocation-of-earth-and-moon."
+ },
+ {
+  "category": "modes",
+  "id": "item-energy-robe-cold",
+  "create": true,
+  "value": {
+   "id": "item-energy-robe-cold",
+   "name": "Flash-Frozen Footing",
+   "fromItemId": "energy-robe-cold",
+   "duration": "1 minute",
+   "survivesRest": false,
+   "modifiers": [],
+   "note": "Once per day, 2 actions (command, Interact): you gain the effects of water walk for 1 minute, as you momentarily flash freeze the surface of water as you walk across it."
+  },
+  "why": "equipment-1317-1217 prints \"When the robe is activated, you gain the effects of water walk for 1 minute, as you momentarily flash freeze the surface of water as you walk across it.\" The record carried the resistance, the frequency and the activation cost but nothing for the activation's actual effect. Water walk changes no derived number, so this is the note-only activation mode — the modes/item-warming-parka shape."
+ },
+ {
+  "category": "feats",
+  "id": "insistent-command",
+  "field": "degreeShifts",
+  "value": [
+   {
+    "shift": "successToCrit",
+    "when": "on a check to Command an Animal",
+    "skills": [
+     "nature"
+    ],
+    "actions": [
+     "command-an-animal"
+    ]
+   },
+   {
+    "shift": "critFailToFail",
+    "when": "on a check to Command an Animal",
+    "skills": [
+     "nature"
+    ],
+    "actions": [
+     "command-an-animal"
+    ]
+   }
+  ],
+  "why": "AoN feat-1207, the feat's whole text: \"When you roll a success to Command an Animal, you get a critical success; if you roll a critical failure, you get a failure.\" Two rungs, one entry each, on the existing degreeShifts lane — which fans them onto the Nature skill row and the Command an Animal action row from one authored row."
+ },
+ {
+  "category": "feats",
+  "id": "gadget-specialist",
+  "field": "dailyTemporaryItems",
+  "value": [
+   {
+    "id": "gadget",
+    "label": "Temporary gadget",
+    "countByProficiency": {
+     "key": "crafting",
+     "ranks": {
+      "expert": 2,
+      "master": 3,
+      "legendary": 4
+     }
+    },
+    "filter": {
+     "traits": [
+      "gadget"
+     ],
+     "fromKnownFormulas": true,
+     "note": "Gadgets prepared this way don't cost you any resources to Craft and don't have any sale value; they fall apart at your next daily preparations if you haven't used them."
+    }
+   }
+  ],
+  "why": "AoN feat-3058: \"Each day during your daily preparations, you can create two temporary gadgets from your formula book … If you're a master in Crafting, you can create three gadgets per day … If you're legendary in Crafting, you can create four gadgets per day.\" The base count Ubiquitous Gadgets increases had no carrier at all. Same `dailyTemporaryItems` shape the seven shipped scroll/talisman/herbal records use; `fromKnownFormulas` is what the printed \"from your formula book\" asks for, and the formulas themselves already come from FORMULA_GRANTS[gadget-specialist]."
+ },
+ {
+  "category": "feats",
+  "id": "ubiquitous-gadgets",
+  "field": "dailyTemporaryItems",
+  "value": [
+   {
+    "id": "ubiquitous",
+    "label": "Temporary gadget",
+    "count": 2,
+    "filter": {
+     "traits": [
+      "gadget"
+     ],
+     "fromKnownFormulas": true,
+     "note": "Gadgets prepared this way don't cost you any resources to Craft and don't have any sale value; they fall apart at your next daily preparations if you haven't used them."
+    }
+   }
+  ],
+  "why": "AoN feat-3068: \"Increase the number of temporary gadgets you can create each day by 2.\" dailyItemSlots sums the slots of every source a character holds, so a second entry of two IS the printed increase — no new field and no reader change."
+ },
+ {
+  "category": "classFeatures",
+  "id": "incredible-movement",
+  "field": "speedsIf",
+  "value": [
+   {
+    "unarmored": true,
+    "speeds": {
+     "land": "10+5*floor((@actor.level-3)/4)"
+    }
+   }
+  ],
+  "why": "AoN class-feature-934 (Player Core 2 p.114), Incredible Movement: \"You move like the wind. You gain a +10-foot status bonus to your Speed whenever you're not wearing armor. The bonus increases by 5 feet for every 4 levels you have beyond 3rd.\" The gate is on ARMOUR, which the sheet can see, so per the owner's speed ruling (src/rules/types.ts:895, \"we give an actual speed only when it's ALWAYS; if it is dependent on something it's in a star\" - and these equipment gates are evaluated, not starred) it is a speedsIf block rather than a star. The formula 10+5*floor((@actor.level-3)/4) reads 10 at 3rd-6th, 15 at 7th-10th, 20 at 11th-14th, 25 at 15th-18th and 30 at 19th-20th, which is \"+5 feet for every 4 levels beyond 3rd\" exactly. Identical in shape to feats/monk-moves (feat-6214), the archetype copy of this clause, whose flat +10 already ships in this field."
+ },
+ {
+  "category": "feats",
+  "id": "phoenixs-flight",
+  "field": "actionCost",
+  "value": {
+   "type": "passive"
+  },
+  "why": "feat-7105's own title glyph is <actions string=\"\"/> and the three-action cost sits on the granted activity's line — \"While transformed, you gain the Blazing Conflagration action.\" then \"**Activate** <actions string=\"Three Actions\"/> Blazing Conflagration\". We ship actions/blazing-conflagration (action-2914) at 3 actions AND feats/phoenixs-flight at 3 actions, so MainTab's featActions renders two three-action rows for one printed activity. Identical shape to the CONFIRMED finding ouroboric-pact#action-cost, whose own evidence names this record as one of its three siblings; the guard scripts/nested-activate-check.mjs misses all four only because it excludes the unnamed **Activate** form."
+ },
+ {
+  "category": "feats",
+  "id": "campfire-chronicler-dedication",
+  "field": "actionCost",
+  "value": {
+   "type": "passive"
+  },
+  "why": "feat-7438's title glyph is <actions string=\"\"/>; the body is grant language — \"You gain the Offer Story action.\" — and the single action sits on the granted activity: \"**Activate** <actions string=\"Single Action\"/> Offer Story\". actions/offer-story (action-3058) already ships at 1 action, so the feat's own actionCost duplicates it. Same shape as the CONFIRMED ouroboric-pact#action-cost, which names this record as a sibling."
+ },
+ {
+  "category": "feats",
+  "id": "pact-of-the-living-pact",
+  "field": "actionCost",
+  "value": {
+   "type": "passive"
+  },
+  "why": "feat-7454's title glyph is <actions string=\"\"/>; the body reads \"You gain the Forced Pact action.\" and the cost is on the granted activity — \"**Activate** <actions string=\"Single Action\"/> Forced Pact; **Frequency** once per hour\". actions/forced-pact (action-3061) already ships at 1 action, so the feat duplicates it. Same shape as the CONFIRMED ouroboric-pact#action-cost, which names this record as a sibling."
+ },
+ {
+  "category": "stances",
+  "id": "wild-winds-stance",
+  "field": "strikes",
+  "value": [
+   {
+    "name": "wind crash",
+    "dice": 1,
+    "die": "d6",
+    "damageType": "bludgeoning",
+    "group": "brawling",
+    "traits": [
+     "agile",
+     "nonlethal",
+     "propulsive",
+     "unarmed"
+    ],
+    "range": 30
+   }
+  ],
+  "why": "spell-2062 prints \"You can make wind crash unarmed Strikes as RANGED Strikes against targets within 30 feet\", and every stance Strike was derived through deriveUnarmedStrike with no range at all — a melee, Strength-keyed attack. StanceStrike gained the `range` carrier in this batch (src/rules/types.ts, passed through at src/rules/derive.ts's stance-strike profile, which already handled `range` for the Spined Azarketi's spine), so the printed 30 feet is now expressible. This re-emits the WHOLE `strikes` array — the same single strike work/.b031-rows-data-rows.json's create row authors, plus `range: 30`."
+ },
+ {
+  "category": "deities",
+  "id": "atheists-and-free-agents",
+  "field": "edition",
+  "value": "remaster"
  }
 ]

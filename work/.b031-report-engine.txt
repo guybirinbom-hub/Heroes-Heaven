@@ -1,0 +1,126 @@
+BATCH 031 — ENGINE lane (WG-comparison), family: engine
+Findings assigned: golden-league-xun-dedication#already-expert, insistent-command, basic-modification,
+advanced-domain#domain-pool, advanced-domain#archetype-listing, ubiquitous-gadgets.
+
+Spec file: work/.b031-rows-engine.json   Test file: test/batch031-engine.test.ts (17 cases, green)
+npx tsc --noEmit: clean.
+
+
+DATA STILL NEEDED
+- feats/insistent-command · degreeShifts · [{successToCrit|critFailToFail, when:"on a check to Command an Animal", skills:["nature"], actions:["command-an-animal"]}] — ALREADY AUTHORED in work/.b031-rows-engine.json (finding insistent-command); driver must not author a second copy.
+- feats/advanced-domain · choice · the shipped 64-option value re-emitted whole with limitToAnswersOf:"domain-initiate" added, supersedes:true over the existing pathless choice row — ALREADY AUTHORED in work/.b031-rows-engine.json (finding advanced-domain#domain-pool).
+- feats/gadget-specialist · dailyTemporaryItems · [{id:"gadget", label:"Temporary gadget", countByProficiency:{key:"crafting",ranks:{expert:2,master:3,legendary:4}}, filter:{traits:["gadget"],fromKnownFormulas:true,note:…}}] — ALREADY AUTHORED in work/.b031-rows-engine.json (finding ubiquitous-gadgets).
+- feats/ubiquitous-gadgets · dailyTemporaryItems · [{id:"ubiquitous", label:"Temporary gadget", count:2, filter:{traits:["gadget"],fromKnownFormulas:true,note:…}}] — ALREADY AUTHORED in work/.b031-rows-engine.json (finding ubiquitous-gadgets).
+
+
+CROSS-FILE GAPS
+- src/rules/featGrantsAuto.ts:391 'golden-league-xun-dedication' — set redundantFallback:true on BOTH skillChoices slots. Without it the engine half below never fires for this record; the test patches the flags into FEAT_GRANTS in memory to prove the outcome.
+- src/rules/featGrantsAuto.ts:477 'lion-blade-dedication' — its RECORD-WIDE redundantFallback reaches a skillChoices slot whose print ("trained in Deception or Stealth; if already trained, an expert instead") gives no replacement for the already-EXPERT case at all. Pre-existing over-grant, now louder: see BLAST RADIUS below.
+- src/rules/featSlots.ts (eligibleFeatsForSlot) — the archetype cross-listing reader (`archetypeListings`) for advanced-domain#archetype-listing. Not built here: a data row for a field with no reader is inert, and the field belongs beside its reader. 236 feats share the shape, so it is a lane.
+- public/core.json feats/advanced-domain `archetype:"soul-warden"` asserts level 8 for an archetype print puts at 16 (and drops Vindicator 8 / Campfire Chronicler 8 entirely). Belongs with the featSlots lane above — dropping the slug alone would break countsForArchetype / dedicationBlock / per-archetype HP without gaining anything.
+- src/rules/dailyItems.ts (`dailyItemSlots` dedupes sources by feat id) — a repeatable dailyTemporaryItems source counts once, so ubiquitous-gadgets' SECOND taking (maxTakable 2, "a second time if you are 14th level or higher") adds nothing. Needs a per-taking multiplier; the first taking is correct today.
+
+
+PER FINDING
+
+1. golden-league-xun-dedication#already-expert — ENGINE HALF BUILT, data half cross-file.
+   Print (AoN feat-2734): "You gain expert proficiency in two of the following skills (or in two other
+   skills of your choice in which you're trained, if you were already an expert in the listed skills)".
+   · src/rules/build.ts, the skillChoices redundancy block (~5580): the replacement now lands at
+     `at(grant)` — the rank the dead slot itself would have given — instead of the hard-coded 'trained',
+     and the fallback entry carries that rank. Above trained the pick is also gated on the character
+     ALREADY BEING TRAINED in it, which is the half of the parenthetical nothing said before.
+   · src/rules/types.ts — Character.skillFallbacks entries gain `rank?: ProficiencyRank`, present only
+     when the replacement is worth more than training.
+   · src/builder/Builder.tsx, the replacement picker: heading reads the rank actually held ("Already
+     expert in Athletics", not "Already trained"), and the dead-option predicate now greys a skill the
+     character is already at the fallback rank in AND (above trained) a skill they are untrained in,
+     each with its own reason.
+   · Tests: 'golden-league-xun-dedication reports its dead slots as expert-rank replacements',
+     '…raises a replacement the character is TRAINED in to expert', '…gives an UNTRAINED replacement
+     nothing', plus the no-regression control '…angelkin, unchanged'.
+   · COULD NOT DO: the two `redundantFallback` flags (featGrantsAuto.ts) — cross-file, listed above.
+   · BLAST RADIUS of the rank-aware replacement, measured over all three grant registries: exactly ONE
+     shipped record has a redundantFallback-reachable skillChoices slot whose grant exceeds 'trained' —
+     lion-blade-dedication (conditionalRank upgraded to expert). A holder already EXPERT in the chosen
+     Deception/Stealth now gets an expert replacement instead of a trained one, and must pick a skill
+     they are already trained in. Print gives that character nothing at all either way, so this is an
+     existing over-grant changing shape, not a new one; the cross-file line above is the real fix.
+     Every other record's slot grants 'trained', where `at(grant)` === 'trained' and nothing moves.
+
+2. insistent-command — DATA ONLY, reader confirmed live.
+   Print (AoN feat-1207, the whole feat): "When you roll a success to Command an Animal, you get a
+   critical success; if you roll a critical failure, you get a failure."
+   · No code change: `degreeShifts` already fans one entry onto the skill row (explain.ts, the
+     situational half) and the action row (degreeShiftMarkers). actions/command-an-animal ships and the
+     nature skill key is real, so the proposal's anchors hold.
+   · Row authored in the spec (see DATA STILL NEEDED).
+   · Tests: 'insistent-command marks the Command an Animal action row with both shifts', '…stars the
+     Nature skill row', 'a character without insistent-command gets neither' — all on a built druid
+     against a content copy with the row patched in memory.
+
+3. basic-modification — ENGINE BUILT, no row needed.
+   Print (AoN feat-3117): "You gain a basic modification of your choice for your innovation."
+   Rather than the proposal's second 28-option `choice` picker (which would duplicate the tiered
+   modification picker the app already has, and needs `ownsFeature` plumbing on the dedication), the
+   EXISTING lane was widened to the archetype:
+   · src/rules/build.ts, the inventor block (~8072): `inventorViaDedication` resolves the innovation
+     type from Inventor Dedication's own answer via `choiceFlagAnswer('innovation', …)` — its values are
+     the same subclass ids `innovationType` already maps — mirroring `runesmithViaDedication` beside it.
+     `validPick` closes the breakthrough/revolutionary tiers to a dedicated character and opens the
+     initial tier only while they hold basic-modification.
+   · src/builder/shared.tsx, the modifications block: same gate, so the control the widening needs
+     actually renders for an archetype inventor (and only the Initial row does).
+   · Tests: 'basic-modification resolves the archetype innovation and keeps the initial pick', 'the
+     modification … becomes an OWNED class feature', 'a dedicated inventor WITHOUT basic-modification
+     keeps no modification', '…the later tiers stay closed to the archetype at 20'.
+   · BLAST RADIUS: `Character.inventor` is now populated for a dedicated inventor. Its four readers were
+     checked — derive.ts fullLevelResistanceTarget (gated on a class-only resistanceLevelUpgrade feature,
+     unaffected), derive.ts ownedFeatureIds (now includes the chosen modification: intended — it is what
+     makes its situational bonuses and modes fire), FeatsTab (lists the modification: intended), and
+     buildFromCharacter's `dcOwns('inventor')` round-trip (restores the pick: intended). A dedicated
+     inventor with no modification picked gets `modifications: {}` and nothing else changes.
+
+4. advanced-domain#domain-pool — ENGINE HALF BUILT + row authored.
+   Print (AoN feat-4666): "You gain an advanced domain spell from one of your domains for which you
+   have an initial domain spell."
+   · The narrowing itself is the shipped `limitToAnswersOf` lane pointed at domain-initiate (the row;
+     Domain Initiate is both this feat's printed prerequisite and the only record in our data that gives
+     a cleric an initial domain spell — deitys-domain is champion, domain-acumen is oracle).
+   · src/rules/build.ts `buildChoiceOptions`: `limitToAnswersOf` now also counts the GRANTED taking's
+     answer. `answersInOtherTakes` adds `grantedFeatChoices` only when a slotKey is passed (an arm that
+     exists for distinctAcrossTakes), and this call site passes none — so a cloistered cleric, whose
+     Domain Initiate comes from the doctrine rather than a slot, would have had the picker narrowed to
+     every domain EXCEPT the one they actually have. Keyed both bare and `<id>#<variant>`.
+   · Tests: 'advanced-domain narrows to the domain a slot-picked Domain Initiate answered', '…counts a
+     GRANTED Domain Initiate', '…stays wide while no Domain Initiate has been answered'.
+   · BLAST RADIUS: one other record carries limitToAnswersOf today (order-magic → order-explorer); a
+     GRANTED Order Explorer's answer now counts there too, which is strictly more correct.
+     test/order-magic-per-taking.test.ts and test/choice-filtering.test.ts stay green.
+
+5. advanced-domain#archetype-listing — NOT BUILT, cross-file (see CROSS-FILE GAPS).
+   Print (AoN feat-4666): "Archetypes Soul Warden (Level 16), Vindicator (Level 8), Campfire Chronicler
+   (Level 8)". The fix is a reader in src/rules/featSlots.ts plus a data field; neither half belongs in
+   this lane's files, and shipping the field alone would be a field with no reader. No row emitted, no
+   test — a test asserting today's behaviour would pin the defect.
+
+6. ubiquitous-gadgets — DATA ONLY, reader confirmed live; no new field needed.
+   Print (AoN feat-3068): "Increase the number of temporary gadgets you can create each day by 2";
+   prerequisite (AoN feat-3058): "you can create two temporary gadgets … three … four."
+   · The proposal's new `dailyTemporaryItemsBonus` field (and its reader in dailyItems.ts) is not
+     needed: `dailyItemSlots` already walks every feat the character holds and emits each source's slots,
+     so a second `dailyTemporaryItems` entry of count 2 IS the printed increase. Two rows, no code.
+   · Tests: 'gadget-specialist alone gives the printed count for the crafter Crafting rank' (asserted
+     against the printed 2/3/4 ladder, so it reads the same at any rank), 'ubiquitous-gadgets increases
+     that count by exactly two', '…without Gadget Specialist still only adds its own two'.
+   · COULD NOT DO: the second taking (see CROSS-FILE GAPS, dailyItems.ts).
+
+
+FILES TOUCHED
+  src/rules/build.ts        — limitToAnswersOf granted answers; skillChoices fallback rank + trained gate;
+                              archetype inventor innovation type + initial-tier gate
+  src/rules/types.ts        — Character.skillFallbacks `rank`
+  src/builder/Builder.tsx   — replacement-skill picker heading + dead-option predicate
+  src/builder/shared.tsx    — inventor modifications block reaches the archetype
+  test/batch031-engine.test.ts (new)
+  work/.b031-rows-engine.json (new)

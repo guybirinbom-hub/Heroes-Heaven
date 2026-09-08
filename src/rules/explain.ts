@@ -1433,7 +1433,7 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
       // 15 feet"), then increased by every additive source. This mirrors deriveSpeeds exactly —
       // it previously used raise-to semantics for `speeds.land` while deriveSpeeds added it, so a
       // +5 from Fleet was in the total but missing from the parts, and the breakdown didn't sum.
-      const named: { name?: string; landSpeedBonus?: number | string; landSpeedMin?: number; speeds?: SpeedGrants }[] = [];
+      const named: { name?: string; landSpeedBonus?: number | string; landSpeedMin?: number; speeds?: SpeedGrants; speedsIf?: DefenseGrants['speedsIf'] }[] = [];
       if (c.heritageId && db.heritages[c.heritageId]) named.push(db.heritages[c.heritageId]);
       for (const f of c.feats) {
         const ft = db.feats[f.featId];
@@ -1468,6 +1468,19 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
       const naturalLand = speeds.land ?? 0;
       const penalty = preArmorLand - naturalLand;
       if (penalty > 0) parts.push({ label: 'Armor Speed penalty', note: 'heavy armor or unmet Strength', value: -penalty });
+      /* …and the other direction. `named` only carries landSpeedBonus / landSpeedMin / speeds.land, so a
+       * GATED grant (`speedsIf` — Monk Moves, class-feature-934 Incredible Movement: *"a +10-foot status
+       * bonus to your Speed whenever you're not wearing armor"*), a worn item's passiveEffects.speedBonus
+       * or an active stance raises the total while contributing no part: an unarmored monk/Monk Moves
+       * character read parts [Ancestry Speed 25] under a total of "35 ft", 10 feet with no explanation
+       * anywhere in the popup, and the breakdown stopped summing. deriveSpeeds has already evaluated
+       * every one of those gates, so the surplus is reported from the difference rather than by
+       * re-evaluating them here — one source of truth for which gates passed. Named where the carrier is
+       * unambiguous (a record whose speedsIf grants land); left unattributed otherwise, never dropped. */
+      if (penalty < 0) {
+        const gated = named.filter((s) => (s.speedsIf ?? []).some((g) => g.speeds?.land != null)).map((s) => s.name).filter(Boolean);
+        parts.push({ label: 'Speed increase', note: gated.length ? gated.join(', ') : 'conditional — see below', value: -penalty });
+      }
 
       // Temporary in-play override (Hasted/Slowed/etc.) — folded into the total so the math reads cleanly.
       const override = c.speedOverride;

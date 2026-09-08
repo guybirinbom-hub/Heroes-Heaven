@@ -388,7 +388,19 @@ export const FEAT_SKILL_GRANTS: Record<string, FeatGrant> = {
   'gildedsoul': { skillChoices: [{ options: ['diplomacy', 'society'], rank: 'trained', redundantFallback: true }] },
   'gnome-obsession': { loreChoices: 1 },
   'goblin-lore': { skills: { nature: 'trained', stealth: 'trained', 'lore:goblin': 'trained' }, redundantFallback: true },
-  'golden-league-xun-dedication': { skillChoices: [{ options: ['athletics', 'deception', 'intimidation', 'stealth'], rank: 'expert' }, { options: ['athletics', 'deception', 'intimidation', 'stealth'], rank: 'expert' }] },
+  /*
+   * *"You gain expert proficiency in two of the following skills (OR IN TWO OTHER SKILLS OF YOUR
+   * CHOICE IN WHICH YOU'RE TRAINED, IF YOU WERE ALREADY AN EXPERT IN THE LISTED SKILLS): Athletics,
+   * Deception, Intimidation, or Stealth."* (AoN feat-2734.)
+   *
+   * The parenthetical is a replacement clause and it had no flag at all, so a xun already expert in
+   * all four listed skills picked a dead option and gained nothing. PER-SLOT rather than record-wide:
+   * the record has no static `skills` map for the record-wide reader to walk, and the clause replaces
+   * EACH dead slot ("in two other skills"), which is exactly what the per-slot flag says. The
+   * replacement's rank and its already-trained pool come from the slot's own `rank: 'expert'` — see
+   * the fallback block in build.ts.
+   */
+  'golden-league-xun-dedication': { skillChoices: [{ options: ['athletics', 'deception', 'intimidation', 'stealth'], rank: 'expert', redundantFallback: true }, { options: ['athletics', 'deception', 'intimidation', 'stealth'], rank: 'expert', redundantFallback: true }] },
   'golden-legionnaire-dedication': { skills: { 'lore:warfare': 'trained' } },
   'goloma-lore': { skills: { survival: 'trained', stealth: 'trained', 'lore:goloma': 'trained' }, redundantFallback: true },
   /* *"If you have legendary proficiency in Society, you gain expert proficiency in Gossip Lore, but

@@ -1,0 +1,135 @@
+BATCH 031 — ADVERSARIAL VERIFY, family: engine
+Verifier default: NOT done. Every verdict below was re-derived from print (AoN mirror), the shipped
+data (node -e over public/core.json + scripts/data/effect-backfill.json) and a BUILT character.
+
+Checked: work/.b031-rows-engine.json (4 rows), work/.b031-report-engine.txt, test/batch031-engine.test.ts,
+src/rules/build.ts, src/rules/types.ts, src/builder/Builder.tsx, src/builder/shared.tsx.
+npx tsc --noEmit: clean. node scripts/vt.mjs run test/batch031-engine.test.ts + 9 sibling files: 230 passed.
+node scripts/test-flip-audit.mjs --batch 031: clean (4 test files touched, 0 new settle keys, every flip cited).
+
+
+PER FINDING
+
+golden-league-xun-dedication#already-expert — NOT-DONE (engine half DONE, data half cross-file)
+  The engine half is real and pinned: on a built rogue already expert in Athletics the dead slot now
+  reports `rank:'expert'`, a TRAINED replacement rises to expert and an UNTRAINED one gets nothing
+  (test/batch031-engine.test.ts, FEAT_GRANTS patched in memory). But the mechanic does NOT reach any
+  shipped character: featGrantsAuto.ts:391 still sets neither slot flag nor a record-wide one, so
+  `slotFallback` is undefined and the block never runs. Blocked on cross-file gap 1.
+  Vacuity probe (throwaway harness, deleted): the same rogue WITHOUT the feat has acrobatics 'trained'
+  and occultism 'untrained', so neither positive assertion passes on its own.
+
+golden-league-xun-dedication#already-expert — FIXED-BY-ME (sibling print contradiction)
+  The report's blast-radius line shipped a KNOWN print contradiction rather than fixing it: lion-blade-
+  dedication's record-wide `redundantFallback` reaches its `conditionalRank` slot, and the rank-aware
+  replacement turned that pre-existing over-grant from a free TRAINED skill into a free EXPERT one —
+  on a record whose print (AoN feat-7724: "you become trained in your choice of Deception or Stealth;
+  if you were already trained in that skill, you become an expert instead") has no replacement clause
+  for that slot at all; its only replacement clause is the Espionage Lore one.
+  Fix, src/rules/build.ts (~5595): `const fbRank = slot.conditionalRank ? 'trained' : at(grant);` — a
+  conditionalRank slot has already spent its "if you were already trained" clause on the upgrade, so a
+  fallback firing there is the record-wide flag bleeding onto it with no printed rank behind it.
+  golden-league-xun's slots carry a FLAT rank:'expert' and are untouched, so the fix holds whichever
+  form the cross-file flag takes (per-slot or record-wide) — which the report's per-slot-only wording
+  would not have.
+  Test added in the same describe (record id in the title, cited "// batch 031: golden-league-xun-
+  dedication#already-expert"): 'a conditionalRank slot never escalates its replacement (lion-blade-
+  dedication, unchanged)' — expert Deception, fallback pick occultism lands at TRAINED, `fb.rank`
+  undefined.
+  Blast radius re-measured independently (all three grant registries, brace-matched scan, not grep):
+  exactly THREE records combine a redundantFallback with a skillChoices slot — alkenstar-agent-
+  dedication (lore-only slot, unreachable: the `loreSlot` guard), lion-blade-dedication (now restored
+  to its pre-batch behaviour) and aldori-duelist-dedication (flat rank 'trained', unchanged). The
+  report named only lion-blade.
+
+insistent-command — DONE
+  Row feats/insistent-command · degreeShifts is well-formed against the live shape: both `shift` values
+  are members of DegreeShift['shift'] (situationalBonuses.ts:3753-3761), `skills:['nature']` and
+  `actions:['command-an-animal']` both resolve (core.json actions/command-an-animal ships). The record
+  carries no degreeShifts today and no effect-backfill row targets it, so no collision and no supersede
+  is owed. Print (AoN feat-1207) is the feat's whole text and both rungs are covered. Built druid with
+  the row patched in memory: two markers on the Command an Animal row, Nature row starred, neither
+  present without the feat.
+
+basic-modification — DONE
+  A built fighter with Inventor Dedication (innovation = weapon-innovation) + Basic Modification now
+  resolves `c.inventor.innovationType === 'weapon'`, keeps the initial pick, and the picked modification
+  appears in `ownedFeatureIds` — so its own situational bonuses and modes fire. Without the feat the
+  modification is dropped; at level 20 breakthrough/revolutionary stay closed. Print check on the tier
+  gate: the inventor archetype ships six feats (inventor-dedication, basic-breakthrough, brilliant-
+  crafter, advanced-breakthrough, explosion, basic-modification) and only basic-modification sells a
+  modification, so closing the later tiers is print-correct.
+  Blast radius re-checked independently: `enhanced-resistance` is the ONLY carrier of
+  resistanceLevelUpgrade:'inventor-initial', it is an inventor CLASS feature at level 7 and no feat in
+  core.json grants it, so derive.ts fullLevelResistanceTarget cannot fire for an archetype character —
+  the report's claim holds. The build-side gate (`takenFeats`) and the UI gate (`build.featPicks`) are
+  not the same predicate, but they cannot disagree in outcome: `choiceFlagAnswer` reads featPicks only,
+  so a GRANTED dedication yields no innovation type and the whole block stays undefined.
+  Correct call to widen the existing lane instead of authoring the proposal's second 28-option picker.
+
+advanced-domain#domain-pool — DONE
+  Row diffed against the shipped value with node -e: the re-emitted 64-option choice is byte-identical
+  to the existing effect-backfill row (and to core.json) except for the added `limitToAnswersOf`, and it
+  carries supersedes:true as it must. All 64 granted focus spell ids exist in core.json. No other row in
+  any family's spec touches feats/advanced-domain.
+  Engine half verified as load-bearing, not decorative: answersInOtherTakes (build.ts:2041) adds
+  `grantedFeatChoices[recordId]` ONLY when a slotKey is passed, and this call site passes none. A
+  throwaway harness confirmed the new loop also handles the `<id>#<variant>` key shape
+  (grantedFeatChoices['domain-initiate#0'] narrows the picker to ['healing']), which the bare-key line
+  at 2041 would miss. test/order-magic-per-taking.test.ts and test/choice-filtering.test.ts stay green.
+
+advanced-domain#archetype-listing — NOT-DONE (correctly escalated)
+  No row, no code, no test — right call: `archetypeListings` has no reader, and its reader belongs in
+  src/rules/featSlots.ts, which is not this family's file. A built Vindicator still cannot reach the
+  feat in any slot. Cross-file gaps 3 and 4 carry it. Print re-read: feat-4666's archetype array is
+  exactly [Soul Warden, Vindicator, Campfire Chronicler] with the levels 16/8/8.
+
+ubiquitous-gadgets — DONE (first taking; second taking still inert — gap 5)
+  Both rows fit the live `dailyTemporaryItems` shape (types.ts:3113) and the reader consumes every key
+  they use; the 'gadget' trait is real (123 items carry it) and `fromKnownFormulas` matches the
+  herbal-forager/talisman-dabbler precedent. Neither record carries the field today and neither appears
+  in effect-backfill.json, so no supersede is owed.
+  The ladder was measured on built inventors rather than trusted: level 4 → crafting expert → 2 slots,
+  level 8 → master → 3, level 15 and 20 → legendary → 4. That is feat-3058's printed 2/3/4 exactly, and
+  it also clears the vacuity risk in 'gadget-specialist alone gives the printed count' (the level-8
+  inventor is a MASTER, so the test asserts 3, not 0). Ubiquitous adds exactly two on top, and two on
+  its own. dailyItemSlots dedupes by feat id and the two rows are on DIFFERENT feats, so the sum is
+  real.
+
+
+DATA STILL NEEDED (4 — all authored in work/.b031-rows-engine.json; the driver applies, no second copy)
+- feats/insistent-command · degreeShifts · the two-entry successToCrit / critFailToFail row.
+- feats/advanced-domain · choice · the shipped 64-option value re-emitted whole with
+  limitToAnswersOf:"domain-initiate"; supersedes:true over the existing pathless choice row (diffed:
+  superset by exactly that one key).
+- feats/gadget-specialist · dailyTemporaryItems · countByProficiency crafting expert:2 / master:3 /
+  legendary:4, filter traits:['gadget'] + fromKnownFormulas.
+- feats/ubiquitous-gadgets · dailyTemporaryItems · count 2, same filter.
+
+CROSS-FILE GAPS (6)
+- src/rules/featGrantsAuto.ts:391 'golden-league-xun-dedication' — redundantFallback on the two
+  skillChoices slots (or record-wide; both now work). Without it the built engine half never fires.
+- src/rules/featGrantsAuto.ts:477 'lion-blade-dedication' — its RECORD-WIDE redundantFallback reaches a
+  skillChoices slot whose print grants no replacement at all, handing an already-expert holder a free
+  trained skill. RESTATED, not closed: my build.ts guard returns the over-grant to its pre-batch size
+  but cannot delete it — the fix is to scope the flag to the record's own static grant in
+  featGrantsAuto.ts.
+- src/rules/featGrantsAuto.ts:47 'alkenstar-agent-dedication' — NEW, found by the blast-radius re-scan
+  and untouched by this batch: it carries a record-wide redundantFallback, but print (AoN feat-3568)
+  reads "You become an expert in Deception and trained in your choice of Underworld Lore or Legal Lore;
+  if you were already trained, you become an expert instead" — no replacement clause anywhere. An
+  already-expert-in-Deception holder is offered a free trained skill print does not give.
+- src/rules/featSlots.ts (eligibleFeatsForSlot) — the `archetypeListings` reader for
+  advanced-domain#archetype-listing. 236 feats share the shape, so it is a lane, not a record.
+- public/core.json feats/advanced-domain `archetype:"soul-warden"` asserts level 8 where print says 16
+  (and drops Vindicator 8 / Campfire Chronicler 8). Belongs with the featSlots lane above; dropping the
+  slug alone would break countsForArchetype / dedicationBlock / per-archetype HP.
+- src/rules/dailyItems.ts — `dailyItemSlots` dedupes sources by feat id, so ubiquitous-gadgets' SECOND
+  taking (maxTakable 2, "a second time if you are 14th level or higher") adds nothing. Needs a
+  per-taking multiplier; the first taking is correct today.
+
+
+MANIFEST
+work/.b031-specs.json still lists all four families (situational, instruments, data-rows, engine). The
+engine entry's stage[] covers every path the family touched; I appended work/.b031-verify-engine.txt.
+Files I touched (already in stage[]): src/rules/build.ts, test/batch031-engine.test.ts.

@@ -1,0 +1,47 @@
+BATCH 031 — SITUATIONAL family report
+findings: eerie-environs, monk-moves#speed-star, murksight#perception, swashbucklers-speed
+
+DATA STILL NEEDED
+- feats/swashbucklers-speed field landSpeedBonus value 5 (spec: work/.b031-rows-situational.json, finding swashbucklers-speed) — new field, no existing overlay row, no supersedes.
+
+CROSS-FILE GAPS
+- src/rules/derive.ts: the landSpeedBonus lane is LAND-ONLY, but feat-6238 says "+5-foot status bonus to your SpeedS" (plural). A swashbuckler-archetype character with a fly or swim Speed gets the +5 on land only. Same ceiling classFeatures/vivacious-speed already lives with, so this is a lane limitation, not a regression — a general "bonus to all Speeds" grant would fix both at once.
+- work/.b031-report-data-rows (or whichever family owns it): swashbucklers-speed#text is a description re-sync on core-descriptions.json feats/swashbucklers-speed and is NOT mine; my star wording deliberately does not restate the printed sentence, so the two changes do not collide.
+
+PER FINDING
+
+1. eerie-environs — CONFIRMED, code-only, no row.
+   Did: added "eerie-environs" to FEAT_SITUATIONAL in src/rules/situationalBonuses.ts (hand-authored block, immediately above "elude-the-divine"), one entry targeting { kind: 'skill', detail: 'intimidation' }:
+     when  "you Demoralize a creature you are hidden from"
+     bonus "you don't lose the hidden condition, and ignore the not-sharing-a-language penalty"
+   Both printed clauses of AoN feat-8419 ride one line because print states them as one act ("When you do so…"). Comment above the entry quotes the printed clause and names the intimidating-prowess precedent. Neither clause moves a number, so a display star is the only possible carrier — before this the mechanic existed only as description text on the Feats tab.
+   Test: test/batch031-situational.test.ts, describe "eerie-environs reaches the Intimidation row" — a ranger 8 holding the feat reads exactly one line through explainStat({kind:'skill',skill:'intimidation'}) (the popup surface) containing "Demoralize", "hidden" and "language", and statHasSituational reports the row starred; a ranger without the feat gets [].
+   Not done: nothing.
+
+2. monk-moves#speed-star — CONFIRMED, code-only DELETION, no row.
+   Did: deleted the "monk-moves" entry from FEAT_SITUATIONAL in src/rules/situationalBonuses.ts (was line 958), replaced in place by a comment quoting feat-6214 and explaining that the record's own speedsIf [{unarmored:true,speeds:{land:10}}] is the single carrier and that types.ts's speedsIf doc names this very record as the reason equipment gates are evaluated rather than starred. Added 'monk-moves' to the handEdited exclusion set in scripts/apply-situational-lane.mjs with a paragraph in that file's header block (the row IS in work/situational-lane/spec.json, so without the exclusion the generated lane restores it on the next apply; existingIds cannot exclude a row that no longer exists).
+   Test: test/batch031-situational.test.ts, describe "monk-moves delivers its +10 exactly once" — one it proves the NUMBER still lands (a really built monk 5 with the feat is base+10 unarmored, and equal to a featless monk in half plate when armoured, since half plate carries its own -10), a second proves explainStat({kind:'speed'}) now returns no monk-moves line at all.
+   Not done: nothing. The three sibling equipment-gated speedsIf records (diving-armor, soaring-armor, implements-flight) were re-checked and carry no star, so the registry is now consistent.
+
+3. murksight#perception — CONFIRMED, code-only, no row.
+   Did: added "murksight" to FEAT_SITUATIONAL in src/rules/situationalBonuses.ts (hand-authored block, immediately after "mutant-physique"), one entry targeting { kind: 'perception' }:
+     when  "circumstance penalties from non-magical fog, mist, rain, or snow"
+     bonus "you ignore the penalty"
+   Comment quotes feat-5005 and records WHY the attack half is absent: murksight#attack is a REFUTED finding (WG encodes strictly less than print there), so no strikeAttack target was authored.
+   Test: test/batch031-situational.test.ts, describe "murksight puts its precipitation clause on Perception" — a witch 8 holding the feat reads exactly one line through explainStat({kind:'perception'}) containing "fog" and "ignore the penalty", the row is starred, a witch without the feat gets []; a second it asserts explainStat({kind:'strikeAttack'}) returns nothing for murksight, pinning the refused half so a later pass cannot quietly widen the entry.
+   Not done: the ranged-attack and flat-check clauses (murksight#attack, refuted) — deliberately not built.
+
+4. swashbucklers-speed — CONFIRMED, one data row plus a star trim.
+   Did (data, driver applies): work/.b031-rows-situational.json emits {category:"feats", id:"swashbucklers-speed", field:"landSpeedBonus", value:5}. derive.ts already reads it — landBonusOf(db.feats[f.featId]?.landSpeedBonus) — so no reader work was needed. No prior overlay row exists for this record, so no supersedes.
+   Did (code): trimmed the "swashbucklers-speed" star in src/rules/situationalBonuses.ts to the panache remainder, worded as vivacious-speed words its own remainder:
+     when  "while you have panache"
+     bonus "+10-foot status instead (the +5-foot floor is always on and already in your Speed)"
+   Added 'swashbucklers-speed' to the handEdited exclusion set in scripts/apply-situational-lane.mjs (with a header paragraph): the lane's original wording restates the floor and would re-double it on the next apply.
+   Test: test/batch031-situational.test.ts, describe "swashbucklers-speed splits its floor from its panache remainder" — the numeric it compares a PATCHED in-memory content copy (landSpeedBonus: 5) against a STRIPPED one (field removed) and asserts exactly +5 on the built character's deriveSpeeds().land, and that a character WITHOUT the feat is unaffected by the field; never a patched-vs-shipped delta, so it holds identically before and after the driver applies the row. The second it pins the trimmed star through explainStat({kind:'speed'}) and asserts the old "without panache you still get" wording is gone.
+   Not done: the plural-Speeds ceiling (see CROSS-FILE GAPS).
+
+VERIFICATION
+- node scripts/vt.mjs run test/batch031-situational.test.ts — 8 passed.
+- node scripts/vt.mjs run test/conditional-speeds.test.ts test/situational-bonuses.test.ts test/situational-target-kinds.test.ts test/situational-stacking.test.ts test/batch29-situational-siblings.test.ts — 48 passed (the existing coverage over the two files I touched).
+- npx tsc --noEmit — clean.
+- node scripts/test-flip-audit.mjs --batch 031 — "clean — 1 test file(s) touched, 0 new settle key(s), every flip cited."

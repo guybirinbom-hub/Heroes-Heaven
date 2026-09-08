@@ -2677,6 +2677,41 @@ const VERIFIED_EQUIVALENT = {
    */
   'weapon-specialization': ['weapon'],
   'greater-weapon-specialization': ['weapon'],
+
+  /*
+   * ---- BATCH 031 ---------------------------------------------------------------------------------
+   *
+   * BASIC MODIFICATION — the mechanic is built, in the EXISTING picker rather than on the record.
+   *
+   * Printed (AoN feat-3117): *"You gain a basic modification of your choice for your innovation."*
+   * Their side asks it on the record: three `conditional`s on INVENTOR_INNOVATION (armor / construct /
+   * weapon), each wrapping a `select "Select a Modification"` — kinds `conditional` and `choice`.
+   * Ours widened the app's own tiered modification picker to the archetype instead: build.ts's
+   * `inventorViaDedication` resolves the innovation from Inventor Dedication's own `innovation` answer,
+   * and `validPick` opens the INITIAL tier (and only that tier) while the character holds this feat,
+   * with the matching gate on the control in src/builder/shared.tsx. The feat record therefore carries
+   * no choice of its own and a comparison that reads record fields structurally cannot see the pick —
+   * the same shape as batch 030's additional-ikon settle. A second 28-option picker on the record would
+   * duplicate the one the app already has. Built and adversarially verified this batch on a fighter with
+   * Inventor Dedication + Basic Modification (test/batch031-engine.test.ts: the innovation resolves, the
+   * initial pick sticks and reaches ownedFeatureIds, the later tiers stay closed at 20).
+   */
+  // batch 031: basic-modification
+  'basic-modification': ['conditional', 'choice'],
+
+  /*
+   * MONK MOVES — their `hp` op belongs to a DIFFERENT feat, and we carry it there.
+   *
+   * Printed (AoN feat-6214) mentions no Hit Points at all. Their row is `conditional IF FEAT_NAMES
+   * INCLUDES "monk resiliency" AND MAX_HEALTH_CLASS_PER_LEVEL <= 8 THEN addBonusToValue
+   * MAX_HEALTH_BONUS = 3` — Monk Resiliency's own per-monk-archetype-feat +3, replicated onto each
+   * qualifying feat row. Ours carries it once, on feats/monk-resiliency as
+   * `maxHpBonus {perArchetypeFeat: 3, archetype: 'monk'}`, which already counts Monk Moves. wg-values
+   * was taught the same gate this batch (SETTLED_VALUES, work/.b031-report-instruments.txt); the kinds
+   * reader flattens the conditional to a bare `hp` on this record, so it needs the settle as well.
+   */
+  // batch 031: monk-moves#hp
+  'monk-moves': ['hp'],
 };
 
 const out = { theyOnly: [], disagree: [], weOnly: [], agree: [], noMatch: [], theirsUnencoded: [] };

@@ -408,7 +408,18 @@ describe('content that a data regen would silently delete', () => {
     const core = JSON.parse(readFileSync('public/core.json', 'utf8')) as { modes?: Record<string, unknown> };
     const consumable = JSON.parse(readFileSync('scripts/data/consumable-modes.json', 'utf8')) as { id: string }[];
     const toggle = JSON.parse(readFileSync('scripts/data/toggle-modes.json', 'utf8')) as Record<string, unknown>;
-    const sourced = new Set([...consumable.map((m) => m.id), ...Object.keys(toggle)]);
+    // batch 031 premise: equipment-1719 "fly Speed equal to your Speed" — the overlay is the THIRD
+    // source of a mode, and the guard could not see it: scripts/import-core-v2.mjs applies
+    // effect-backfill.json (applyBackfill, line ~717) as the first step of `npm run data`, so a mode
+    // authored as a create row there survives a regen exactly as a JSON source file does. Batch 031
+    // created two that way (Umbral Wings' fly activation, the Energy Robe (Cold)'s water walk) and this
+    // check read them as content the next regen would silently delete.
+    const overlay = JSON.parse(readFileSync('scripts/data/effect-backfill.json', 'utf8')) as { category?: string; id?: string; create?: boolean }[];
+    const sourced = new Set([
+      ...consumable.map((m) => m.id),
+      ...Object.keys(toggle),
+      ...overlay.filter((r) => r.category === 'modes' && r.create && r.id).map((r) => r.id as string),
+    ]);
     expect(Object.keys(core.modes ?? {}).filter((id) => !sourced.has(id))).toEqual([]);
   });
 

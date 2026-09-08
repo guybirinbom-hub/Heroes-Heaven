@@ -1,0 +1,88 @@
+BATCH 031 — GAP lane, family: gap-engine (the 12 open lines of family "engine")
+
+Spec file: work/.b031-rows-gap-engine.json (0 backfill rows — both closures are code)
+Test file: test/batch031-gap-engine.test.ts (5 cases, green)
+Also green: test/batch031-engine.test.ts, test/daily-items.test.ts, test/skill-clause-both-trained.test.ts,
+test/rank-gated-feat-grants.test.ts, test/held-back-registry-fixes.test.ts, test/authoring-guards.test.ts,
+test/builder-evidence.test.ts, test/degree-shifts.test.ts, test/surki-tradition-skill.test.ts,
+test/automaton-enhancement.test.ts, test/batch7-parity.test.ts, test/batch8-parity.test.ts,
+test/fix-campaign.test.ts — 283 passed, every file that reads dailyItemSlots, golden-league-xun or
+redundantFallback.
+npx tsc --noEmit: clean. node scripts/test-flip-audit.mjs --batch 031: clean, every flip cited.
+No owner question was needed: nothing here is a WG-vs-print contradiction or a ruling conflict.
+
+
+PER LINE
+
+1. AUTHORED — work/.b031-rows-engine.json
+   feats/insistent-command · degreeShifts (finding insistent-command): the row already exists in the
+   engine family's spec, verified present with node -e. Authoring a second copy would be a hard
+   collision at the applier, so this line is closed by the row that is already on the manifest.
+
+2. AUTHORED — work/.b031-rows-engine.json
+   feats/advanced-domain · choice with limitToAnswersOf, supersedes:true (finding
+   advanced-domain#domain-pool): same — present in the engine spec, diffed by its verifier against the
+   shipped 64-option value. No second copy.
+
+3. AUTHORED — work/.b031-rows-engine.json
+   feats/gadget-specialist · dailyTemporaryItems (finding ubiquitous-gadgets): present in the engine
+   spec, countByProficiency crafting 2/3/4. No second copy.
+
+4. AUTHORED — work/.b031-rows-engine.json
+   feats/ubiquitous-gadgets · dailyTemporaryItems (finding ubiquitous-gadgets): present in the engine
+   spec, count 2. No second copy.
+
+5. AUTHORED — src/rules/featGrantsAuto.ts:403 (finding golden-league-xun-dedication#already-expert)
+   Both skillChoices slots of 'golden-league-xun-dedication' now carry redundantFallback:true, so the
+   engine half the engine lane built finally fires for a shipped character. PER-SLOT rather than
+   record-wide: the record has no static `skills` map for the record-wide reader to walk, and print
+   replaces EACH dead slot — AoN feat-2734, "or in two other skills of your choice in which you're
+   trained, if you were already an expert in the listed skills". Pinned in
+   test/batch031-gap-engine.test.ts on a built level-8 rogue already expert in Athletics, against the
+   SHIPPED registry (no FEAT_GRANTS patching, unlike the engine lane's own tests): the dead slot reports
+   rank 'expert' and a replacement pick raises Acrobatics from trained to expert, where the same rogue
+   without the feat keeps trained.
+
+6. PARKED — flaggedResidue (lion-blade-dedication, featGrantsAuto.ts:477)
+   Print settles it and it is still an over-grant: AoN feat-7724's Deception/Stealth slot has no
+   replacement clause at all (its only one is the Espionage Lore sentence), and the record's static map
+   is Lore-only, which the record-wide reader skips — so the flag can only bleed onto the conditionalRank
+   slot. The fix is to delete the flag. It cannot land here: test/batch031-engine.test.ts's blast-radius
+   control pins today's replacement as "unchanged", and rewriting another family's test file is outside
+   this agent's remit. Next batch: delete the flag and retire that assertion in one change, together with
+   the identical untouched shape the verifier found at featGrantsAuto.ts:47 (alkenstar-agent-dedication,
+   AoN feat-3568, "no replacement clause anywhere").
+
+7. PARKED — flaggedResidue (featSlots.ts archetypeListings, finding advanced-domain#archetype-listing)
+   A LANE, not a record: 236 feats share the cross-listing shape, and the reader needs an eligibility
+   shape decided first — does a cross-listed feat still require its dedication, and does the listing
+   replace or supplement the single `archetype` slug the picker facet reads? Guessing it would offer
+   Advanced Domain to every free-archetype character at level 8. Left NOT-DONE with a reason rather than
+   half-built.
+
+8. PARKED — flaggedResidue (core.json feats/advanced-domain `archetype:"soul-warden"`)
+   The same lane. Dropping the slug alone breaks countsForArchetype / dedicationBlock / per-archetype HP
+   and still leaves the feat unreachable; correcting it to print's Soul Warden 16 / Vindicator 8 /
+   Campfire Chronicler 8 needs the shape line 7 parks. Parked with it, not separately.
+
+9. AUTHORED — src/rules/dailyItems.ts:92 (finding ubiquitous-gadgets)
+   `dailyItemSlots` deduped its sources by feat id, so the printed second taking of Ubiquitous Gadgets
+   bought nothing — AoN feat-3068, "You can select this feat a second time if you are 14th level or
+   higher" (maxTakable 2). Each source now counts its takings and grants countOf() × takings, clamped to
+   maxTakes(), so a NON-repeatable feat that reaches c.feats twice still counts once — exactly the case
+   the dedupe was written for. Pinned in test/batch031-gap-engine.test.ts on a built level-14 inventor
+   with the not-yet-applied row patched into a content copy in memory: one taking → 2 slots, two takings
+   → 4 slots with 4 distinct storage keys, and a doubled gadget-specialist still → 3 (its master rung).
+
+10. AUTHORED — work/.b031-rows-engine.json   (verifier's restatement of line 1, same row)
+11. AUTHORED — work/.b031-rows-engine.json   (verifier's restatement of line 2, same row)
+12. AUTHORED — src/rules/featGrantsAuto.ts:403 (verifier's restatement of line 5, same edit)
+
+
+FILES TOUCHED
+  src/rules/featGrantsAuto.ts  — golden-league-xun-dedication: redundantFallback on both slots
+  src/rules/dailyItems.ts      — dailyItemSlots: slots per TAKING, clamped to maxTakes()
+  test/batch031-gap-engine.test.ts (new)
+  work/.b031-rows-gap-engine.json (new, 0 rows — the notes record why each closure is code)
+  work/.b031-specs.json        — appended the gap-engine manifest entry (every existing entry kept)
+  work/.b031-gaps.json         — the 12 engine lines set to authored/parked (no other family touched)

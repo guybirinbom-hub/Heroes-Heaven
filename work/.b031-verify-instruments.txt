@@ -1,0 +1,85 @@
+BATCH 031 — INSTRUMENTS FAMILY, ADVERSARIAL VERIFY
+verifier run 2026-09-06. findings assigned: monk-moves#hp, creed-magic. Spec: work/.b031-rows-instruments.json
+(0 backfill rows in it — both findings are instrument misreads).
+
+VERDICTS
+- monk-moves#hp — DONE. Print re-read in the mirror, not taken from the report: AoN feat-6214 reads
+  "You gain a +10-foot status bonus to your Speed when you're not wearing armor" and nothing else, while
+  feat-6212 reads "You gain 3 additional Hit Points for each monk archetype class feat you have"
+  (its printed prerequisite "class granting no more Hit Points per level than 8 + your Constitution
+  modifier" is WG's second gate condition MAX_HEALTH_CLASS_PER_LEVEL <= 8, which confirms the two ops are
+  the same sentence). I re-measured the blast radius from the dump myself with an independent walker:
+  exactly 59 value-ops sit inside a `conditional IF FEAT_NAMES INCLUDES "<x> resiliency"`, on 59 distinct
+  rows, EVERY one of them MAX_HEALTH_BONUS = 3, gate values only the eight "<archetype> resiliency"
+  strings (barbarian 9, monk 11, champion 11, exemplar 4, guardian 3, operative 8, soldier 6, solarian 7)
+  — 0 non-MAX_HEALTH ops are dropped, and not one of the 59 rows carries a SECOND, ungated MAX_HEALTH op
+  that the filter could swallow. The 11 Resiliency rows themselves carry their +3 UNGATED, so they stay
+  compared: `wg-values --ids monk-,barbarian-,champion-,exemplar-,guardian-resiliency --raw` compares 5
+  and agrees on 5 against our maxHpBonus {perArchetypeFeat:3, archetype:<x>}, whose reader is real
+  (build.ts:8168-8169 and derive.ts:895-896 multiply by feats with that archetype; report's "build.ts:8111"
+  is stale by line drift only). feats/monk-moves carries archetype 'monk', so it is already counted.
+  theirValueOps' walk is key-for-key the same traversal as flattenOps (operations / trueOperations /
+  falseOperations / optionsPredefined), so nothing but the gated MAX_HEALTH ops changed hands.
+- creed-magic — DONE. AoN feat-7510 re-read verbatim in the mirror; our feats/creed-magic.spellSlotBonus
+  {entryId:'cleric-casting', restricted:{ladder 8→rank2 +4 spells / 10→rank3 +2 / 14→rank4 +2}} matches it
+  clause for clause, all eight spell ids exist in core.json, and feats/battle-harbinger-dedication carries
+  classArchetype.classId 'cleric'. The instrument diagnosis is exact: work/wg-batch-031-experience.json
+  records ours.host.classId 'fighter', sheetDiffCount 0, and featHost (test/wg-experience.harness.test.tsx:
+  398-406) only ever moves the host off 'fighter' for a class TRAIT, which this feat does not carry. The park
+  in work/experience-instrument-limits.json keys on r.id, which is the shape wg-batch-gate.mjs:531 looks up.
+
+SPEC ROWS AS ROWS
+- work/.b031-rows-instruments.json declares zero backfillRows for both findings, and zero is correct: a row
+  on monk-moves would ADD Hit Points feat-6214 does not grant, and creed-magic's carrier already ships and
+  already builds. Nothing to diff against a shipped value, no create rows, no record+field collisions
+  possible, and no spell/action/trait/item id named by any row. No harness needed — the mechanic is
+  exercised directly on built characters by the family's own test.
+
+RE-RUN EVIDENCE (mine, not the builder's)
+- npx tsc --noEmit: clean.
+- node scripts/vt.mjs run test/batch031-instruments.test.ts: 4/4 green. Both wg-values tests are genuine
+  mutation-proofs — I re-ran the same stunt shape by hand and the assertion does move rather than vanish.
+- node scripts/vt.mjs run test/restricted-slots.test.ts: 15/15 green (creed-magic's per-level delivery).
+- node scripts/test-flip-audit.mjs --batch 031: "clean — 4 test file(s) touched, 0 new settle key(s), every
+  flip cited"; the three deleted SETTLED_VALUES keys each carry `// batch 031: monk-moves#hp` on their own line.
+- No comparer packet flipped, checked against the PRE-EDIT comparer (I ran a throwaway copy of
+  work/.b031-testbase/wg-values.mjs and deleted it): batch 029 25 compared / 25 agree before and after,
+  batch 030 12/12 before and after, batch 031 11 compared with 1 to adjudicate before → 11/11 after.
+- Settle removal is honest, not laundering: with the three keys gone, barbarian-dedication now COMPARES its
+  two values and agrees, monk-dedication falls to "not a scalar we hold: UNARMED_ATTACKS" and
+  exemplar-dedication to "prose-only bonus" — no new adjudication anywhere.
+- Ran the neighbours that read the touched files: test/wg-backlog-citations.test.ts, test/test-flip-audit.test.ts,
+  test/batch030-instruments.test.ts all green.
+
+MANIFEST
+- work/.b031-specs.json still holds situational, instruments and data-rows; the instruments entry lists all
+  five paths the family touched (rows json, report, test/batch031-instruments.test.ts, scripts/wg-values.mjs,
+  work/experience-instrument-limits.json), and no row in any family's spec declares supersedes (no spec has
+  rows to supersede). I touched no source file, so I append no stage[] paths.
+- NOT MINE TO FIX, for the driver: the read digest names FOUR families (data-rows 17, engine 6, situational 4,
+  instruments 2) and work/.b031-specs.json has no "engine" entry, though work/.b031-rows-engine.json and
+  work/.b031-report-engine.txt exist. Whoever wrote specs.json last (21:15:28) did not add engine's row.
+- Minor, harmless: the instruments builder re-ran wg-casting for its before/after check, which rewrote the
+  `generated` timestamp in work/wg-casting-parity.json (a BATCH_EVIDENCE artefact, not in any stage[]).
+  Byte-identical otherwise — I diffed it: one line.
+
+DATA STILL NEEDED
+(none — confirmed. Neither finding wants a backfill row; both records already carry, or correctly lack, the
+printed mechanic.)
+
+CROSS-FILE GAPS
+- test/wg-experience.harness.test.tsx, featHost (lines 398-406): the host class comes from the feat's TRAITS,
+  so every CLASS-ARCHETYPE feat is played on a fighter. CORRECTED SCOPE — this is not one record: 105 feats in
+  core.json belong to an archetype whose dedication carries classArchetype.classId and carry no class trait
+  (battle-harbinger, runelord, bloodrager, avenger, vindicator, warrior-of-legend, seneschal, spellshot,
+  palatine-detective, munitions-master, war-mage, flexible-spellcaster, wellspring-mage, elementalist). In THIS
+  batch it bites one record: creed-magic (NO-SHEET-EFFECT); spellshield and call-gun scored OK on the wrong host
+  by luck. CORRECTED FIX — not one line: classArchetype.classId is a STRING for most but an ARRAY for
+  flexible-spellcaster / wellspring-mage / elementalist, so the host picker must take the first entry (or the
+  class that owns the entryId a spellSlotBonus names). (finding: creed-magic)
+- test/wg-experience-lanes.test.ts:503 is RED in the working tree: `expect(theyOnly.get('murksight')).toContain
+  ('perception')` now gets undefined, because src/rules/situationalBonuses.ts gained a "murksight" row this batch
+  and the record left wg-diff's THEY-ONLY list (302 → 301). Not the instruments family's doing — wg-diff does not
+  import wg-values, and no resiliency record moved — and the file is outside this family's assignment, so it is
+  reported, not edited. It is an uncited flip that will fail the batch unless the situational lane updates that
+  expectation with its own citation.

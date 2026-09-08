@@ -287,6 +287,13 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
    * precisely the fights where it does not. A wrong star is worse than no star. */
   "dragons-presence": [{ targets: [{ kind: 'skill', detail: 'intimidation' }], when: "Demoralize a foe of your level or lower", bonus: "+1 circumstance" }],
   "dream-may": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against sleep effects and effects that cause or alter dreams", bonus: "+2 circumstance" }],
+  /* AoN feat-8419, both printed clauses: *"If you're hidden from a creature, you can attempt to
+   * Demoralize it without losing your hidden condition… When you do so, you don't take a penalty to
+   * your check if the target doesn't understand your language."* Neither half changes a number — the
+   * first suspends Demoralize's own "you lose hidden" rider, the second waives its language penalty —
+   * so the Intimidation row is the only place a player can meet them. Same shape and wording pattern
+   * as the language clause on `intimidating-prowess` below. (batch 031) */
+  "eerie-environs": [{ targets: [{ kind: 'skill', detail: 'intimidation' }], when: "you Demoralize a creature you are hidden from", bonus: "you don't lose the hidden condition, and ignore the not-sharing-a-language penalty" }],
   "elude-the-divine": [{ targets: [{ kind: 'skill', detail: 'deception' }], when: "against divination effects trying to discern your deity", bonus: "+2 circumstance" }],
   "elven-verve": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against effects that would immobilize, paralyze, or slow you", bonus: "+1 circumstance" }],
   "elysiums-cadence": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "Make an Impression", bonus: "+1 circumstance (+2 if the target is holy)" }],
@@ -440,6 +447,12 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "multilingual-cipher": [{ targets: [{ kind: 'skill', detail: 'arcana' }, { kind: 'skill', detail: 'occultism' }, { kind: 'skill', detail: 'religion' }, { kind: 'skill', detail: 'society' }], when: "to Decipher Writing", bonus: "+1 circumstance" }],
   "musetouched": [{ targets: [{ kind: 'skill', detail: 'acrobatics' }, { kind: 'skill', detail: 'athletics' }], when: "to Escape", bonus: "+1 circumstance" }],
   "mutant-physique": [{ targets: [{ kind: 'skill', detail: 'intimidation' }], when: "while affected by a Bestial Mutagen", bonus: "mutagen's item bonus" }],
+  /* AoN feat-5005: *"You don't take circumstance penalties to ranged attacks or Perception checks
+   * caused by non-magical precipitation."* Only the PERCEPTION half is authored: the attack half was
+   * read and REFUTED (murksight#attack) because WG encodes strictly less than print there, so the
+   * strikeAttack rows stay as they ship and the printed sentence keeps carrying that clause on the
+   * Feats tab. Display-only, as with `brilliant-vision` and `ash-piercing-gaze`. (batch 031) */
+  "murksight": [{ targets: [{ kind: 'perception' }], when: "circumstance penalties from non-magical fog, mist, rain, or snow", bonus: "you ignore the penalty" }],
 
   /* ---- from the batches 1–12 residual read -------------------------------------------------------
    * Each printed a bonus that reached nothing. Grouped here rather than scattered, so the batch they
@@ -955,7 +968,14 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "elegant-buckler": [{ targets: [{ kind: 'ac' }], when: "while you have a buckler raised (you must be wielding a buckler and have Raised a Shield)", bonus: "+2 circumstance (instead of the buckler's usual +1)" }],
   "extravagant-parry": [{ targets: [{ kind: 'ac' }], when: "after you use Extravagant Parry while wielding one or more one-handed weapons…", bonus: "+1 circumstance (+2 if you have a free hand or wield a parry weapon)" }],
   "incredible-luck": [{ targets: [{ kind: 'save', detail: 'all' }], when: "on a saving throw for which you spend a use of Charmed Life", bonus: "roll twice, keep the better result (fortune); the +2 circumstance from Charmed Life still applies" }],
-  "monk-moves": [{ targets: [{ kind: 'speed' }], when: "while you are not wearing armor", bonus: "+10-foot status" }],
+  /* "monk-moves" DELETED (batch 031, monk-moves#speed-star). Print gives one bonus — *"You gain a
+   * +10-foot status bonus to your Speed when you're not wearing armor."* — and the record's own
+   * speedsIf [{unarmored:true, speeds:{land:10}}] already adds it to the Speed NUMBER (derive.ts
+   * `unarmoredOk = isUnarmored(c, db)`). The star advertised the same +10 under the same condition as
+   * if it were still to be applied. types.ts's speedsIf doc names this very record as the reason
+   * equipment gates are EVALUATED rather than starred, and the three sibling equipment-gated records
+   * (diving-armor, soaring-armor, implements-flight) carry no star. Excluded in
+   * scripts/apply-situational-lane.mjs so the lane cannot re-emit it. */
   "archers-aim": [{ targets: [{ kind: 'strikeAttack' }], when: "on the ranged Strike made with Archer's Aim, using a weapon in the bow or crossbow group", bonus: "+2 circumstance" }],
   "bounty-hunter-dedication": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "to Gather Information about a creature you have identified and designated as your prey with Hunt Prey", bonus: "+2 circumstance" }],
   "posse": [{ targets: [{ kind: 'initiative' }], when: "on initiative rolls when entering combat with your designated prey…", bonus: "+1 circumstance" }],
@@ -1448,7 +1468,18 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "battlefield-surveyor": [{ targets: [{ kind: 'perception' }], when: "when you roll initiative using Perception", bonus: "+2 circumstance" }],
   "furious-footfalls": [{ targets: [{ kind: 'speed' }], when: "while you're raging", bonus: "+10 status (instead of the usual +5)" }],
   "investigator-expertise": [{ targets: [{ kind: 'perception' }], when: "on a Perception check that gets you closer to answering the question at the heart of an…", bonus: "+2 circumstance (up from +1)" }, { targets: [{ kind: 'skill', detail: 'all' }], when: "on any skill check that gets you closer to answering the question at the heart of an…", bonus: "+2 circumstance (up from +1)" }],
-  "incredible-movement": [{ targets: [{ kind: 'speed' }], when: "whenever you're not wearing armor", bonus: "+10 status, +5 more for every 4 levels past 3rd" }],
+  /* incredible-movement DELETED (WG parity b031, gap lane) — the monk-moves case one rung up. Print
+   * (class-feature-934) gives one bonus, *"a +10-foot status bonus to your Speed whenever you're not
+   * wearing armor… increases by 5 feet for every 4 levels you have beyond 3rd"*, gated on gear the
+   * sheet can SEE, which is the lane types.ts's speedsIf doc reserves for exactly this shape. The
+   * record shipped with no speed carrier at all, so this star was the only thing that said it and it
+   * moved no number; work/.b031-rows-gap-situational.json now puts the whole clause in
+   * speedsIf [{unarmored:true, speeds:{land:"10+5*floor((@actor.level-3)/4)"}}] and derive.ts
+   * evaluates it from the character's own armour. Keeping the star would promise the same feet twice,
+   * which is precisely why feats/monk-moves — the ARCHETYPE COPY of this clause — lost its own star in
+   * this batch. Nothing is left over: unlike vivacious-speed there is no second, unseeable condition.
+   * 'incredible-movement' is in the handEdited set of scripts/apply-situational-lane.mjs so the
+   * generated lane does not restore it. */
   "stylish-combatant": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "on skill checks with the bravado trait, while in a combat encounter", bonus: "+1 circumstance" }, { targets: [{ kind: 'speed' }], when: "while you have panache", bonus: "+5 status" }],
   /* Split, per the owner's rule that a Speed is a real number only when it is ALWAYS on. The
    * without-panache half IS always on and is now a real `landSpeedBonus` on the record, so this star
@@ -3277,7 +3308,13 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "sovereign-steel-weapon-standard-grade": [{ targets: [{ kind: 'save', detail: 'all' }], when: "on a save made specifically to protect this sovereign steel item from magic", bonus: "+4 circumstance" }],
   "staff-of-elemental-power-greater": [{ targets: [{ kind: 'skill', detail: 'arcana' }, { kind: 'skill', detail: 'nature' }, { kind: 'skill', detail: 'lore:*' }], when: "to identify elemental creatures, while wielding the staff", bonus: "+2 circumstance" }],
   "staff-of-elemental-power-major": [{ targets: [{ kind: 'skill', detail: 'arcana' }, { kind: 'skill', detail: 'nature' }, { kind: 'skill', detail: 'lore:*' }], when: "to identify elemental creatures, while wielding the staff", bonus: "+2 circumstance" }],
-  "swashbucklers-speed": [{ targets: [{ kind: 'speed' }], when: "while you have panache (without panache you still get a +5-foot status bonus)", bonus: "+10 status" }],
+  /* AoN feat-6238: *"You gain a +5-foot status bonus to your Speeds; this increases to a +10-foot
+   * status bonus while you have panache."* The +5 floor is ALWAYS ON, so it belongs in the Speed
+   * number, not in a star — it now rides feats/swashbucklers-speed.landSpeedBonus (read at derive.ts
+   * `landBonusOf(db.feats[f.featId]?.landSpeedBonus)`), exactly as classFeatures/vivacious-speed
+   * carries its own always-on half. What is left for the star is the panache REMAINDER, worded as
+   * vivacious-speed words it so the player is not told the floor twice. (batch 031) */
+  "swashbucklers-speed": [{ targets: [{ kind: 'speed' }], when: "while you have panache", bonus: "+10-foot status instead (the +5-foot floor is always on and already in your Speed)" }],
   "the-lens-of-the-outreaching-eye": [{ targets: [{ kind: 'spell', detail: 'all' }, { kind: 'skill', detail: 'all' }], when: "on any check made to resolve a divination effect", bonus: "+3 item" }],
   "thieves-tools-concealable": [{ targets: [{ kind: 'skill', detail: 'stealth' }], when: "on Stealth checks to Conceal these tools", bonus: "+1 item" }],
   "unifying-emblem-skoan-quah": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "on Diplomacy checks you make while speaking Shoanti to someone who understands it - only…", bonus: "+1 item" }],

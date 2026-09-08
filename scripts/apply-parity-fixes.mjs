@@ -292,14 +292,23 @@ for (const f of findings) {
     if (prior) {
       const oldV = JSON.stringify(prior.row.value ?? null);
       const newV = JSON.stringify(row.value ?? null);
-      if (!row.supersedes) {
+      /* RESUME, mirroring pre-check (2) in scripts/wg-batch-run.mjs: a stage that refused AFTER writing
+       * (batch 031's apply, on the create-row post-check) leaves this spec's OWN rows in the overlay, and
+       * re-running then read every one of them as an undeclared supersession. Nothing is overwritten when
+       * the row on disk is byte-identical to the one proposed. `supersedes` is spec metadata stripped
+       * before storing, so it is off both sides of the comparison. */
+      const { supersedes: _onDisk, ...stored } = prior.row;
+      const { supersedes: _proposed, ...incoming } = row;
+      const identical = JSON.stringify(stored) === JSON.stringify(incoming);
+      if (!row.supersedes && !identical) {
         problems.push(
           `${f.id}: ${rowKey(row)} already sits in the overlay at row #${prior.index} — add supersedes:true if replacing it is intended.\n` +
             `        old: ${oldV.slice(0, 160)}\n        new: ${newV.slice(0, 160)}`,
         );
         continue;
       }
-      supersessions.push(`${rowKey(row)} (overlay #${prior.index})\n        old: ${oldV.slice(0, 160)}\n        new: ${newV.slice(0, 160)}`);
+      if (row.supersedes) supersessions.push(`${rowKey(row)} (overlay #${prior.index})\n        old: ${oldV.slice(0, 160)}\n        new: ${newV.slice(0, 160)}`);
+      else alreadyApplied.push(`${f.id}: ${rowKey(row)} is already in the overlay byte-identical (resume)`);
     } else if (row.supersedes) {
       problems.push(`${f.id}: ${rowKey(row)} declares supersedes:true but no overlay row holds that key — drop the flag or fix the key`);
       continue;

@@ -3493,10 +3493,17 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
             </SubCard>
           );
         })()}
-      {ownsClass('inventor') &&
-        innovationType(subclassOf('inventor')) &&
-        (() => {
-          const type = innovationType(subclassOf('inventor'))!;
+      {/* The ARCHETYPE inventor reaches the same picker. Basic Modification (AoN feat-3117) prints
+          *"You gain a basic modification of your choice for your innovation"* and this block — gated on
+          the CLASS alone — was the only modification control in the app, so a dedicated inventor got
+          no control at all and the feat delivered nothing. Their innovation is Inventor Dedication's
+          own answer, whose values are the same subclass ids `innovationType` already maps. */}
+      {(() => {
+          const viaDedication = !ownsClass('inventor') && Object.values(build.featPicks ?? {}).includes('inventor-dedication');
+          const type = innovationType(
+            ownsClass('inventor') ? subclassOf('inventor') : viaDedication ? choiceFlagAnswer('innovation', build, content) : null,
+          );
+          if (!type) return null;
           if (type === 'construct')
             return (
               <SubCard icon="ti-robot" label="Modifications">
@@ -3528,6 +3535,9 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                 </SubCard>
               )}
               {tiers.map((t) => {
+                // The archetype buys ONE modification and only through Basic Modification, which is a
+                // BASIC (initial-tier) one — so the two later tiers stay closed however high the level.
+                if (viaDedication && (t.key !== 'initial' || !Object.values(build.featPicks ?? {}).includes('basic-modification'))) return null;
                 if (build.level < INVENTOR_TIER_LEVEL[t.key]) return null;
                 const opts = inventorModificationOptions(content, type, armorStats, INVENTOR_TIER_LEVEL[t.key]);
                 const cur = build.inventorModifications?.[t.key] ?? '';

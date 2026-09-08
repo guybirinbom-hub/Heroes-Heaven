@@ -396,15 +396,43 @@ function answerOwnPicks(db: ContentDatabase, build: BuildState, rec: { id: strin
   return { build: out, answered };
 }
 
+/**
+ * THE CLASS a CLASS-ARCHETYPE feat must be played on.
+ *
+ * A class archetype's feats carry only the `archetype` trait — never a class trait — so trait matching
+ * hosted all of them on the fighter and every class-specific effect read as nothing. Creed Magic's
+ * grant names the entry `cleric-casting`, and slotEntryFor (build.ts:6893) does
+ * `spellcasting.find(e => e.id === bonus.entryId)` then `if (!entry) continue`: on a fighter the bonus
+ * is dropped in silence and the record scores NO-SHEET-EFFECT for a reason that is the instrument's.
+ * The archetype's DEDICATION is where the class is written (`classArchetype.classId`).
+ *
+ * `classId` is a STRING for most but an ARRAY where one archetype restructures several classes
+ * (Flexible Spellcaster is every prepared caster). Prefer the class that OWNS the spellcasting entry
+ * the record's own bonus names — entries are keyed `${classId}-casting` (build.ts:3987) — else the
+ * first that exists, since any member of the list is a legal owner.
+ */
+function classArchetypeHost(db: ContentDatabase, feat: Feat): string | undefined {
+  if (!feat.archetype) return undefined;
+  const ded = Object.values(db.feats).find((f) => f.archetype === feat.archetype && f.classArchetype);
+  if (!ded) return undefined;
+  const ids = [ded.classArchetype!.classId].flat().filter((id) => db.classes[id]);
+  const want = feat.spellSlotBonus?.entryId;
+  return (want ? ids.find((id) => `${id}-casting` === want) : undefined) ?? ids[0];
+}
+
 function featHost(db: ContentDatabase, feat: Feat): Host {
   const classes = byName(db, 'classes');
   const ancestries = byName(db, 'ancestries');
   let classId = db.classes.fighter ? 'fighter' : Object.keys(db.classes)[0];
   let ancestryId = db.ancestries.human ? 'human' : Object.keys(db.ancestries)[0];
+  let classFromTrait = false;
   for (const t of (feat.traits ?? []).map((x) => String(x).toLowerCase())) {
-    if (classes.has(t)) classId = classes.get(t)!;
+    if (classes.has(t)) { classId = classes.get(t)!; classFromTrait = true; }
     if (ancestries.has(t)) ancestryId = ancestries.get(t)!;
   }
+  // A class trait is the record's own word and wins; the archetype's dedication only speaks when the
+  // record itself named no class.
+  if (!classFromTrait) classId = classArchetypeHost(db, feat) ?? classId;
   const { build: base, placed: prerequisites } = withPrerequisiteFeats(db, minimalHost(db, classId, ancestryId, 20), classId, ancestryId, feat);
   const minLevel = feat.level ?? 1;
   let slotKey = renderedSlotFor(db, base, classId, ancestryId, feat.id, minLevel);
@@ -718,6 +746,38 @@ function characterHost(db: ContentDatabase, exp: CharacterExport, row: Row): Hos
   if (row.bucket === 'items') return { supported: true, kind: 'item', itemId: row.id, withBuild: cb, withoutBuild: cb, withDb: db, withoutDb: db, pages: ['item'], meta: { ...meta0, without: 'not-in-inventory', note: 'worn + equipped + invested on the character; controls read off the sheet ItemDetail card' } };
   return { supported: false, reason: `no host strategy for bucket ${row.bucket}`, withBuild: cb, withoutBuild: cb, withDb: db, withoutDb: db, pages: [], meta: meta0 };
 }
+
+/*
+ * THE INSTRUMENT'S OWN HOST CHOICE — this describe always runs (it picks classes, it renders nothing),
+ * because a verdict is only worth what the host is worth: 105 class-archetype feats in core.json carry
+ * no class trait, and hosting them on the fighter made every class-specific effect read as absent.
+ */
+describe('featHost — a class-archetype feat is hosted on the class its dedication names (creed-magic)', () => {
+  const db = content();
+
+  // batch 031: creed-magic
+  it('creed-magic is played on a cleric, not on the fighter its traits alone would default to', () => {
+    expect(db.feats['creed-magic'].traits).toEqual(['archetype']);              // nothing for byName to match
+    expect(db.feats['battle-harbinger-dedication'].classArchetype?.classId).toBe('cleric');
+    expect(featHost(db, db.feats['creed-magic']).meta.classId).toBe('cleric');
+  });
+
+  // batch 031: creed-magic
+  it('creed-magic does not drag ordinary archetype feats off the default host', () => {
+    // pathfinder-agent has no class-archetype dedication, so nothing overrides the trait default.
+    expect(classArchetypeHost(db, db.feats['careful-explorer'])).toBeUndefined();
+    expect(classArchetypeHost(db, db.feats['toughness'])).toBeUndefined();      // no archetype at all
+  });
+
+  // batch 031: creed-magic
+  it('creed-magic-shaped grants pick the class that owns the entry when the dedication names several', () => {
+    const many = db.feats['elementalist-dedication'].classArchetype!.classId as string[];
+    expect(Array.isArray(many)).toBe(true);
+    const feat = (over: Partial<Feat>): Feat => ({ ...db.feats['expanded-elemental-magic'], ...over });
+    expect(classArchetypeHost(db, feat({}))).toBe(many[0]);
+    expect(classArchetypeHost(db, feat({ spellSlotBonus: { entryId: 'druid-casting' } }))).toBe('druid');
+  });
+});
 
 describe('wg experience harness', () => {
   const run = (BATCH || CHARACTER) && OUT ? it : it.skip;

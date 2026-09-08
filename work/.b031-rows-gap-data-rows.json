@@ -1,0 +1,66 @@
+{
+  "findings": [
+    {
+      "id": "gap-data-rows: phoenixs-flight#action-cost",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "phoenixs-flight",
+          "field": "actionCost",
+          "value": { "type": "passive" },
+          "why": "feat-7105's own title glyph is <actions string=\"\"/> and the three-action cost sits on the granted activity's line — \"While transformed, you gain the Blazing Conflagration action.\" then \"**Activate** <actions string=\"Three Actions\"/> Blazing Conflagration\". We ship actions/blazing-conflagration (action-2914) at 3 actions AND feats/phoenixs-flight at 3 actions, so MainTab's featActions renders two three-action rows for one printed activity. Identical shape to the CONFIRMED finding ouroboric-pact#action-cost, whose own evidence names this record as one of its three siblings; the guard scripts/nested-activate-check.mjs misses all four only because it excludes the unnamed **Activate** form."
+        }
+      ],
+      "note": "Sibling 1 of 3 for ouroboric-pact#action-cost. No existing overlay row on feats/phoenixs-flight.actionCost (the record's three overlay rows are innateSpells, grantsActions and spellNotes), so no supersedes."
+    },
+    {
+      "id": "gap-data-rows: campfire-chronicler-dedication#action-cost",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "campfire-chronicler-dedication",
+          "field": "actionCost",
+          "value": { "type": "passive" },
+          "why": "feat-7438's title glyph is <actions string=\"\"/>; the body is grant language — \"You gain the Offer Story action.\" — and the single action sits on the granted activity: \"**Activate** <actions string=\"Single Action\"/> Offer Story\". actions/offer-story (action-3058) already ships at 1 action, so the feat's own actionCost duplicates it. Same shape as the CONFIRMED ouroboric-pact#action-cost, which names this record as a sibling."
+        }
+      ],
+      "note": "Sibling 2 of 3. No existing overlay row on this record's actionCost (only grantsActions), so no supersedes."
+    },
+    {
+      "id": "gap-data-rows: pact-of-the-living-pact#action-cost",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "pact-of-the-living-pact",
+          "field": "actionCost",
+          "value": { "type": "passive" },
+          "why": "feat-7454's title glyph is <actions string=\"\"/>; the body reads \"You gain the Forced Pact action.\" and the cost is on the granted activity — \"**Activate** <actions string=\"Single Action\"/> Forced Pact; **Frequency** once per hour\". actions/forced-pact (action-3061) already ships at 1 action, so the feat duplicates it. Same shape as the CONFIRMED ouroboric-pact#action-cost, which names this record as a sibling."
+        }
+      ],
+      "note": "Sibling 3 of 3. No existing overlay row on this record's actionCost (only grantsActions), so no supersedes."
+    },
+    {
+      "id": "gap-data-rows: wild-winds-initiate#stance-range",
+      "backfillRows": [
+        {
+          "category": "stances",
+          "id": "wild-winds-stance",
+          "field": "strikes",
+          "value": [
+            {
+              "name": "wind crash",
+              "dice": 1,
+              "die": "d6",
+              "damageType": "bludgeoning",
+              "group": "brawling",
+              "traits": ["agile", "nonlethal", "propulsive", "unarmed"],
+              "range": 30
+            }
+          ],
+          "why": "spell-2062 prints \"You can make wind crash unarmed Strikes as RANGED Strikes against targets within 30 feet\", and every stance Strike was derived through deriveUnarmedStrike with no range at all — a melee, Strength-keyed attack. StanceStrike gained the `range` carrier in this batch (src/rules/types.ts, passed through at src/rules/derive.ts's stance-strike profile, which already handled `range` for the Spined Azarketi's spine), so the printed 30 feet is now expressible. This re-emits the WHOLE `strikes` array — the same single strike work/.b031-rows-data-rows.json's create row authors, plus `range: 30`."
+        }
+      ],
+      "note": "ORDER-DEPENDENT, deliberately: this is a FIELD row on stances/wild-winds-stance, which work/.b031-rows-data-rows.json CREATES. The manifest lists that spec before this one and the driver replays the overlay after each spec, so the record exists by the time this row is applied. It is a separate row rather than an edit of the other family's spec because an agent may not rewrite another agent's file, and a second create row on the same id would be refused as a collision. The clinging-shadows-stance def needs no such row — its shadow grasp Strike is melee (agile/grapple/reach/unarmed) and derives correctly as authored."
+    }
+  ]
+}

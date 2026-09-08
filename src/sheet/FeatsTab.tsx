@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import type { Character, ContentDatabase } from '../rules/types';
 import { classFeatureDescription } from '../rules/featureText';
-import { subclassFeatureIds } from '../rules/derive';
+import { ownedFeatureIds, subclassFeatureIds } from '../rules/derive';
 import { markNote, nameOfRecord, recordMarkersFor } from '../rules/explain';
 import { ActionGlyph, isActionCost } from './widgets';
 import { FeatDetail, type FeatEntry } from './FeatDetail';
@@ -43,6 +43,32 @@ function featBucket(category: string): string {
  * TESTED. It was previously inline in the component, which is precisely why 29 owned-and-correct
  * class features could be listed nowhere without a single test noticing.
  */
+/**
+ * Class features a suppressing class archetype takes away and an OWNED record GIVES BACK.
+ *
+ * Spellshield (Feat 8) prints *"You gain the arcane bond class feature and the Drain Bonded Item
+ * action"*, its prerequisite is War Mage Dedication, and that class archetype's
+ * `suppressFeatures` lists `arcane-bond` — so every Spellshield holder is a character whose sheet
+ * both HID the Arcane Bond row and printed "Replaced: Arcane Bond" on the same page as the feat
+ * that grants it. `grantsClassFeatures` is the field that says otherwise (derive.ts:3492 already
+ * re-adds it to ownedFeatureIds, which is why Drain Bonded Item did reach the sheet), and nothing
+ * in src/sheet read it.
+ *
+ * `ownedFeatureIds` itself cannot be the predicate: it is built from `cls.features` and never
+ * subtracts the archetype's suppressions, so it contains every suppressed id already. The question
+ * is only "does a record the character owns hand this feature back", which is this walk — the same
+ * feats + owned-features source list derive.ts uses for the field.
+ */
+export function regrantedFeatureIds(character: Character, content: ContentDatabase): Set<string> {
+  const owned = ownedFeatureIds(character, content);
+  return new Set(
+    [
+      ...character.feats.map((f) => content.feats[f.featId]),
+      ...[...owned].map((id) => content.classFeatures[id]),
+    ].flatMap((rec) => rec?.grantsClassFeatures ?? []),
+  );
+}
+
 export function featEntries(character: Character, content: ContentDatabase): FeatEntry[] {
   const entries: FeatEntry[] = [];
   /** A record's display name from ANY collection a granter can live in. Falling back to the id shows
@@ -143,7 +169,12 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
     // halves are scoped to the class it targets or the substituted features appear under both.
     const arch = character.classArchetype;
     const archHere = arch && (arch.classId ?? clsId) === clsId ? arch : undefined;
-    const suppressed = new Set([...(subOpt?.suppressedFeatures ?? []), ...(archHere?.suppressedFeatures ?? [])]);
+    // …minus anything an owned record grants BACK (Spellshield returns the War Mage's arcane-bond).
+    // See regrantedFeatureIds: without this the feature was owned by derive and listed by nobody.
+    const regranted = regrantedFeatureIds(character, content);
+    const suppressed = new Set(
+      [...(subOpt?.suppressedFeatures ?? []), ...(archHere?.suppressedFeatures ?? [])].filter((id) => !regranted.has(id)),
+    );
     const archAdded = (archHere?.addedFeatures ?? []).filter((a) => a.level <= character.level);
     for (const f of [...cls.features, ...archAdded]) {
       if (f.level > character.level) continue; // only features actually gained yet
@@ -293,6 +324,11 @@ export function FeatsTab({ character, content, onPlay }: { character: Character;
   // Rebuilding this list is independent of the local query/filter state — memoize on
   // [character, content] so typing in the search box doesn't re-derive every feat/feature row.
   const entries = useMemo<FeatEntry[]>(() => featEntries(character, content), [character, content]);
+  /** The archetype's suppressions the character did NOT get back from an owned record. */
+  const replacedFeatures = useMemo<string[]>(() => {
+    const regranted = regrantedFeatureIds(character, content);
+    return (character.classArchetype?.suppressedFeatures ?? []).filter((id) => !regranted.has(id));
+  }, [character, content]);
 
   const q = query.trim().toLowerCase();
   // EMPTY picked = show every type; otherwise only the picked ones.
@@ -347,9 +383,13 @@ export function FeatsTab({ character, content, onPlay }: { character: Character;
               {character.classArchetype.notes.map((n, i) => (
                 <li key={i}>{n}</li>
               ))}
-              {character.classArchetype.suppressedFeatures.length ? (
+              {/* A feature an owned record GIVES BACK is not replaced — Spellshield returns the War
+                  Mage's arcane-bond — and reading the raw list said it was, on the same page as the
+                  feat granting it. Same predicate the row builder uses, so the note and the rows
+                  cannot disagree. */}
+              {replacedFeatures.length ? (
                 <li>
-                  <b>Replaced</b>: {character.classArchetype.suppressedFeatures.map((id) => content.classFeatures[id]?.name ?? id).join(', ')}
+                  <b>Replaced</b>: {replacedFeatures.map((id) => content.classFeatures[id]?.name ?? id).join(', ')}
                 </li>
               ) : null}
             </ul>

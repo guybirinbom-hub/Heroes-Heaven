@@ -1930,7 +1930,23 @@ export function buildChoiceOptions(
    * take of the named record contributes. Left wide while that record is unanswered: an empty picker
    * mid-build reads as broken data where a too-wide one reads as a list.
    */
+  /*
+   * …and the GRANTED taking of the named record counts too.
+   *
+   * `answersInOtherTakes` adds `grantedFeatChoices` only when a `slotKey` is passed, because that arm
+   * exists for `distinctAcrossTakes` and its whole job there is to let a granted picker keep showing
+   * its own answer. Read WITHOUT a slot key — which is how this call site reads it — the granted
+   * answer was dropped, and a cloistered cleric's Domain Initiate comes from the doctrine, not from a
+   * slot: Advanced Domain's *"one of your domains for which you have an initial domain spell"* would
+   * have offered every domain EXCEPT the one the character actually has. Keyed both bare and
+   * `<id>#<variant>`, the two shapes `grantedChoiceKey` produces.
+   */
   const limitTo = def.limitToAnswersOf ? answersInOtherTakes(def.limitToAnswersOf, build) : null;
+  if (limitTo && def.limitToAnswersOf) {
+    for (const [k, v] of Object.entries(build.grantedFeatChoices ?? {})) {
+      if (v && (k === def.limitToAnswersOf || k.startsWith(`${def.limitToAnswersOf}#`))) limitTo.add(v);
+    }
+  }
   const limited = <T extends { value: string }>(opts: T[]): T[] => (limitTo?.size ? opts.filter((o) => limitTo.has(o.value)) : opts);
 
   /* A domains picker used to RETURN AT THE TOP of this function, before the marking existed — so
@@ -5562,17 +5578,53 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
        */
       const loreSlot = skill.startsWith('lore:');
       if (slotFallback && (!loreSlot || slot.loreFallback) && maxRank(cur, at(grant)) === cur) {
-        skillFallbacks.push({ featId: fc.featId, skill, ...(slot.loreFallback ? { lore: true } : {}) });
+        /*
+         * THE REPLACEMENT LANDS AT THE RANK THE DEAD SLOT WOULD HAVE GIVEN, not always at trained.
+         *
+         * Golden League Xun Dedication: *"You gain expert proficiency in two of the following skills
+         * (or in two OTHER skills of your choice IN WHICH YOU'RE TRAINED, if you were already an
+         * expert in the listed skills)"* (AoN feat-2734). Both halves of that parenthetical were
+         * unsayable: the grant was hard-coded to 'trained', so the replacement for a dead EXPERT slot
+         * bought the character nothing at all, and any of the sixteen skills was accepted where print
+         * asks for one they are already trained in.
+         *
+         * `at(grant)` is the slot's own rank, so every trained-granting record — which is all but one
+         * of them — is unchanged. The trained-first gate applies only ABOVE trained: "another skill of
+         * your choice" is a new skill, "another skill in which you're trained" is not.
+         */
+        /*
+         * …but a `conditionalRank` slot NEVER escalates the replacement, however high its grant.
+         *
+         * That shape has already spent its "if you were already trained" clause on the upgrade
+         * itself — Lion Blade Dedication (AoN feat-7724): *"You become trained in your choice of
+         * Deception or Stealth; if you were already trained in that skill, you become an expert
+         * instead"*, and its only replacement clause is the Espionage Lore one ("If you were already
+         * trained in Espionage Lore, you also become trained in a LORE skill of your choice"). A
+         * fallback firing on that slot is the RECORD-WIDE flag bleeding onto it, with no printed
+         * rank behind it; handing that character expert (and demanding an already-trained pick)
+         * would print-contradict a record whose text gives them nothing at all here.
+         */
+        const fbRank = slot.conditionalRank ? 'trained' : at(grant);
+        skillFallbacks.push({
+          featId: fc.featId,
+          skill,
+          ...(fbRank !== 'trained' ? { rank: fbRank } : {}),
+          ...(slot.loreFallback ? { lore: true } : {}),
+        });
         if (slot.loreFallback) {
           const subject = build.featLoreChoices?.[`${fc.featId}:fallback:${skill}`]?.trim();
           if (subject) {
             const key = `lore:${subject.toLowerCase().replace(/\s+lore$/, '').trim()}` as ProficiencyKey;
-            proficiencies.skills[key] = maxRank(proficiencies.skills[key] ?? 'untrained', 'trained');
+            proficiencies.skills[key] = maxRank(proficiencies.skills[key] ?? 'untrained', fbRank);
           }
         } else {
           const picked = build.featSkillChoices?.[`${fc.featId}:fallback:${skill}`];
-          if (picked && SKILLS.includes(picked)) {
-            proficiencies.skills[picked] = maxRank(proficiencies.skills[picked] ?? 'untrained', 'trained');
+          const pickedCur = picked ? (proficiencies.skills[picked] ?? 'untrained') : 'untrained';
+          // "…in which you're trained" — an untrained skill is not an eligible replacement once the
+          // replacement is worth more than training.
+          const eligible = fbRank === 'trained' || pickedCur !== 'untrained';
+          if (picked && SKILLS.includes(picked) && eligible) {
+            proficiencies.skills[picked] = maxRank(pickedCur, fbRank);
           }
         }
       }
@@ -8033,10 +8085,27 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   // options legal for that tier/innovation, and gated by level so breakthrough@7 / revolutionary@15
   // only count once reached). Construct innovation has no modification items, so it resolves empty.
   let inventor: InventorBuild | undefined;
-  const invType = ownsClass('inventor') ? innovationType(subclassOf('inventor')) : undefined;
+  /*
+   * …and the ARCHETYPE inventor, whose innovation is the answer to Inventor Dedication's own question
+   * rather than a subclass id — so `ownsClass('inventor')` alone left them with no innovation type,
+   * which is what made Basic Modification (AoN feat-3117, *"You gain a basic modification of your
+   * choice for your innovation"*) deliver nothing: the only modification picker in the app is gated on
+   * this value. The dedication's `choice` values ARE the subclass ids, so `innovationType` maps them
+   * unchanged. Same shape as `runesmithViaDedication` directly above.
+   */
+  const inventorViaDedication = !ownsClass('inventor') && takenFeats.has('inventor-dedication');
+  const invType = ownsClass('inventor')
+    ? innovationType(subclassOf('inventor'))
+    : inventorViaDedication
+      ? innovationType(choiceFlagAnswer('innovation', build, content))
+      : undefined;
   if (invType) {
     const armorStats = invType === 'armor' ? build.inventorArmorStats ?? 'power-suit' : undefined;
     const validPick = (pick: string | null | undefined, tier: InventorTier): string | undefined => {
+      /* The archetype buys ONE modification, and Basic Modification is the only feat that sells it:
+       * *"You gain a BASIC modification"* — an initial-tier one — so the breakthrough and revolutionary
+       * tiers stay closed to a dedicated character however high their level. */
+      if (inventorViaDedication && (tier !== 'initial' || !takenFeats.has('basic-modification'))) return undefined;
       if (!pick || level < INVENTOR_TIER_LEVEL[tier]) return undefined;
       return inventorModificationOptions(content, invType, armorStats, INVENTOR_TIER_LEVEL[tier]).some((o) => o.id === pick)
         ? pick

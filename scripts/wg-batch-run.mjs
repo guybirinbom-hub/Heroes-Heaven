@@ -578,12 +578,37 @@ export function precheck(rows, overlayBefore, { mirror = mirrorText, currentDesc
     else seen.set(k, r);
   }
 
+  /* ---- (1b) a create row and a field row on the SAME record ----
+   * keyOf ends a create row with '(create)' and a field row with the field name, so check (1) never
+   * collides them. Batch 031 CREATED stances/wild-winds-stance in work/.b031-rows-data-rows.json and
+   * set that record's `strikes` from work/.b031-rows-gap-data-rows.json; applyBackfill never overwrites
+   * an existing record, so the field row alone reached the shipped artefact and the create row's own
+   * post-check ("the shipped record equals the create row") refused AFTER writing, demanding a full
+   * `npm run data`. Refused BEFORE writing unless the field row says exactly what the create row
+   * already says and lands after it — otherwise fold the field into the create row. */
+  const creates = new Map();
+  rows.forEach((r, i) => { if (r.row?.category && r.row?.id && r.row.field === undefined) creates.set(`${r.row.category}/${r.row.id}`, { r, i }); });
+  rows.forEach((r, i) => {
+    if (!r.row?.category || !r.row?.id || r.row.field === undefined) return;
+    const c = creates.get(`${r.row.category}/${r.row.id}`);
+    if (!c) return;
+    const harmless = !r.row.path?.length && c.i < i && eq(c.r.row.value?.[r.row.field], r.row.value);
+    if (!harmless) problems.push(`${r.file}#${r.finding}: ${keyOf(r.row)} assigns a field of ${r.row.category}/${r.row.id}, which ${c.r.file}#${c.r.finding} CREATES in the same manifest — fold the field into the create row (a create row has no \`field\`, so the collision check never sees these two)`);
+  });
+
   /* ---- (2) a row over an existing overlay key must DECLARE supersedes ---- */
   for (const r of rows) {
     if (!r.row?.category || !r.row?.id) continue;
     const k = keyOf(r.row);
     const old = overlayByKey.get(k);
     if (!old) continue;
+    /* RESUME. A stage that refused AFTER writing (batch 031's apply, on the create-row post-check) leaves
+     * the batch's OWN rows on disk, and re-running then read all 22 of them as undeclared supersessions —
+     * a row cannot "silently overwrite a different prior value" when the value on disk is byte-identical
+     * to it. `supersedes` is spec metadata the applier strips before storing, so it is off both sides. */
+    const { supersedes: _wasDeclared, ...onDisk } = old;
+    const { supersedes: _declares, ...proposed } = r.row;
+    if (eq(onDisk, proposed)) continue;
     if (!r.row.supersedes) problems.push(`${r.file}#${r.finding}: ${k} already exists in the overlay and the row does not carry supersedes:true`);
     else supersedes.push(`${k}: ${clip(JSON.stringify(old.value), 90)} -> ${clip(JSON.stringify(r.row.value), 90)}`);
   }
@@ -861,6 +886,12 @@ export function gapProblems({ gaps = [], known = new Set(), manifestFiles = new 
   return bad;
 }
 
+/** Queue entries not already on the owner's desk, in any of its four arrays — see stageGaps's RESUME note. */
+export const pendingQuestions = (queue, desk) => {
+  const onDesk = new Set(['open', 'deferred', 'ruled', 'authorisedExceptions'].flatMap((a) => desk?.[a] ?? []).map((q) => q.id));
+  return (queue ?? []).filter((q) => !onDesk.has(q.id));
+};
+
 async function stageGaps() {
   const missing = missingGapsRefusal(has(P('apply.json')), has(P('gaps.json')), P('apply.json'), P('gaps.json'));
   if (missing) refuse(missing);
@@ -872,9 +903,20 @@ async function stageGaps() {
   if (Array.isArray(queue) && queue.length) {
     const src = readFileSync(abs('scripts/add-owner-question.mjs'), 'utf8');
     if (!src.includes('--from')) refuse(`CROSS-FILE GAP: scripts/add-owner-question.mjs does not accept --from yet (shared contract: "scripts/add-owner-question.mjs --from that file writes work/owner-questions.json"). ${queue.length} queued question(s) cannot be filed: ${queue.map((q) => q.id).join(', ')}`);
-    const r = node_('scripts/add-owner-question.mjs', ['--from', P('queue.json'), '--write']);
-    if (r.status !== 0) refuse(`add-owner-question.mjs refused the queue (exit ${r.status}): ${tail(r.out, 6)}`);
-    queued = queue.length;
+    /* RESUME. add-owner-question.mjs refuses an id already on the desk and writes NOTHING when it does,
+     * so re-running this stage after a later stage refused (batch 031: `close` demanded a desk n for the
+     * three read-stage askOwner findings, which the closer then queued) would refuse on the entries this
+     * stage itself filed a minute earlier. Only the entries not yet on the desk are handed over; the
+     * queue file keeps every entry, so it stays the batch's record of what was asked. */
+    const pending = pendingQuestions(queue, readMaybe('work/owner-questions.json') ?? {});
+    if (pending.length) {
+      const pendingFile = P('queue-pending.json');
+      writeFileSync(abs(pendingFile), JSON.stringify(pending, null, 2));
+      const r = node_('scripts/add-owner-question.mjs', ['--from', pendingFile, '--write']);
+      if (r.status !== 0) refuse(`add-owner-question.mjs refused the queue (exit ${r.status}): ${tail(r.out, 6)}`);
+    }
+    queued = pending.length;
+    if (pending.length !== queue.length) say(`${queue.length - pending.length} queued question(s) were already on the desk — filing only the ${pending.length} new one(s)`);
   }
 
   const gaps = readMaybe(P('gaps.json')) ?? [];

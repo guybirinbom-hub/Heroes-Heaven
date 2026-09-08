@@ -1,0 +1,127 @@
+BATCH 031 — INSTRUMENTS FAMILY (WG-COMPARISON lane)
+findings assigned: monk-moves#hp, creed-magic
+
+DATA STILL NEEDED
+(none — both findings are instrument misreads; neither record needs a backfill row, and authoring one
+would ADD a mechanic the printed text does not grant.)
+
+CROSS-FILE GAPS
+- test/wg-experience.harness.test.tsx, featHost (lines 400-407): the host class is picked from the
+  feat's TRAITS, so every CLASS-ARCHETYPE feat whose traits are only ['archetype'] is played on a
+  fighter. The fix is one line — when the feat carries `archetype` and that archetype's dedication
+  carries `classArchetype.classId`, host on that class — and it would close creed-magic's flag at the
+  instrument instead of parking it. Outside this family's assigned files. (finding: creed-magic)
+
+--------------------------------------------------------------------------------------------------
+monk-moves#hp — CONFIRMED, instrument teach, no data row
+
+WHAT I DID
+- scripts/wg-values.mjs, NEW `theirValueOps(row)` + `RESILIENCY_GATE` (immediately above
+  `theirAssertions`, which now calls it instead of `parseOps(...).flatMap(flattenOps)`).
+  It walks their operation tree carrying gate context and DROPS any MAX_HEALTH_* op that sits inside a
+  `conditional IF FEAT_NAMES INCLUDES "<x> resiliency"`. Scoped to MAX_HEALTH rather than to the whole
+  conditional, so a future sibling op under the same gate is still compared.
+  WHY (in the code comment): AoN feat-6214 (Monk Moves) prints only "You gain a +10-foot status bonus
+  to your Speed when you're not wearing armor" — no Hit Points. AoN feat-6212 (Monk Resiliency) prints
+  "3 additional Hit Points for each monk archetype class feat you have"; WG has no per-archetype-feat
+  verb, so it stamps a gated +3 onto every qualifying feat row. We hold that sentence ONCE, where it is
+  printed: feats/monk-resiliency.maxHpBonus {perArchetypeFeat:3, archetype:'monk'} (read derive.ts:895 /
+  build.ts:8111).
+- scripts/wg-values.mjs, SETTLED_VALUES: THREE now-dead settles DELETED with the citation
+  `// batch 031: monk-moves#hp` on their own lines — 'barbarian-dedication' ['hp|'],
+  'monk-dedication' ['hp|'], 'exemplar-dedication' ['hp|']. They were three named instances of the same
+  59-row corpus shape; the teach replaces them. ONE TEACH, minus three settles — not N settles.
+
+BLAST RADIUS (measured over the whole dump, 2026-09-06)
+- 59 ops carry the resiliency gate, across seven archetypes (barbarian, monk, champion, exemplar,
+  guardian, plus Starfinder's operative / soldier / solarian).
+- EVERY op living inside a resiliency-gated conditional is a MAX_HEALTH one — the drop hides nothing else.
+- NONE of the 59 sits on a Resiliency feat: each Resiliency row states its own +3 UNGATED (Monk,
+  Barbarian, Champion, Exemplar, Guardian, Operative, Soldier, Solarian). The sentence stays compared;
+  only the copies their engine parked elsewhere are dropped. Adversarially confirmed by stunting.
+
+TEST THAT PINS IT — test/batch031-instruments.test.ts,
+describe('batch 031 instruments — wg-values drops the resiliency-gated Hit Points parked on monk-moves')
+- it('monk-moves is quiet, and monk-resiliency still asserts the +3 the sentence really belongs to')
+  — mutation-proof: stunts `maxHpBonus` on feats/monk-resiliency and asserts `MISSING hp| theirs=3
+  ours=(nothing)` comes back on monk-resiliency, i.e. the teach MOVED the assertion, it did not silence it.
+- it('the drop is gate-scoped, not a blanket — barbarian-resiliency reopens beside monk-moves')
+  — mutation-proof on a SECOND archetype: stunts `maxHpBonus` on feats/barbarian-resiliency; the record
+  goes straight back to MISSING hp|. Proves the result is not something specific to the monk.
+Both green (node scripts/vt.mjs run test/batch031-instruments.test.ts: 4/4).
+
+--------------------------------------------------------------------------------------------------
+creed-magic — CONFIRMED, instrument limit, no data row, no comparer teach
+
+WHAT I DID
+- work/experience-instrument-limits.json, new record "creed-magic" (batch 31, verdict NO-SHEET-EFFECT,
+  lane 'harness-class-archetype-hosted-on-the-wrong-class', class INSTRUMENT,
+  `"_cite": "// batch 031: creed-magic"`). The `verified` text carries the whole chain: AoN feat-7510's
+  printed clause; our carrier feats/creed-magic.spellSlotBonus {entryId:'cleric-casting', restricted:
+  {ladder 8→rank2 / 10→rank3 / 14→rank4}}; slotEntryFor (build.ts:6893)
+  `spellcasting.find(e => e.id === bonus.entryId)` + `if (!entry) continue`, which silently drops the
+  grant when the entry is absent; featHost picking the class from TRAITS (creed-magic's are only
+  ['archetype']) so work/wg-batch-031-experience.json records ours.host.classId 'fighter'; and
+  feats/battle-harbinger-dedication.classArchetype.classId 'cleric', which is why 'cleric-casting' is
+  the right entry id.
+- No comparer settle: wg-values already lists creed-magic under "prose-only bonus (no number asserted)"
+  and wg-diff/wg-identity do not flag it. The flag was gate 9's alone.
+
+TEST THAT PINS IT — test/batch031-instruments.test.ts,
+describe('batch 031 instruments — creed-magic is hosted on the wrong class by the experience harness')
+- it('creed-magic delivers two creed slots on a CLERIC and nothing on the fighter the harness used')
+  — builds the harness's exact two hosts (level 20, slot '8:class:0'): the cleric gets two restricted
+  slots at rank 4 (the printed level-14 step, and the harness plays at 20), the fighter has no
+  'cleric-casting' entry at all. This is the CAUSE, asserted rather than described.
+- it('the instrument-limit park is not a free pass — a creed-magic without its carrier grants nothing
+  on the cleric either') — mutation-proof: stunts `spellSlotBonus` on feats/creed-magic in a copied
+  content database; the cleric loses the slots. Proves the pass is the FIELD's doing, not the chassis's.
+Delivery itself was already pinned per level by test/restricted-slots.test.ts, describe('Creed Magic —
+two slots that MOVE rank, and a list that grows') — rank 2 at 8/9, 3 at 10/13, 4 at 14, always exactly
+two, allowed list 4→6→8, none without the feat. Both files green together (19/19).
+
+--------------------------------------------------------------------------------------------------
+COMPARER BEFORE / AFTER — no earlier batch flipped
+
+wg-values (the only comparer I edited)
+  batch 031  before (work/.b031-baseline/values.txt): compared 11, 9 agree, 2 to adjudicate
+                                                      (monk-moves MISSING hp| ; swashbucklers-speed)
+             after: compared 11, 11 agree, 0 to adjudicate. monk-moves#hp closed by this teach;
+                    swashbucklers-speed closed by another family, not by me.
+             [closer, batch 031 rule 6b: this line read "monk-moves closed by this teach" and named
+             only the RECORD. wg-batch-close.mjs keys a teach line on the FINDING id, so a
+             record-only line would have covered the record's other finding as well - the "#speed-star"
+             one, which is a code-only deletion the situational family made in
+             src/rules/situationalBonuses.ts and src/rules/explain.ts and pinned in
+             test/batch031-situational.test.ts. The finding id is written out above so that only the
+             "#hp" half claims this line. Nothing else in the paragraph changed.]
+  batch 030  compared 12, 12 agree, 0 to adjudicate — unchanged.
+  batch 029  compared 25, 25 agree, 0 to adjudicate — unchanged.
+  Overlap check: 0 of the 40 records in batch 030 and 0 of the 37 in batch 029 are among the 47 record
+  NAMES WG parks resiliency Hit Points on, so the teach provably cannot have moved either packet;
+  batch 031's single overlap is monk-moves itself.
+  Spot re-run of the three ex-settled records with the settles gone: barbarian-dedication now COMPARES
+  (2 values, both agree) instead of being partly silenced; monk-dedication and exemplar-dedication fall
+  to the honest "not value-checked" list (UNARMED_ATTACKS / prose-only), not to agreement.
+
+wg-diff / wg-identity / wg-casting (untouched by me)
+  wg-casting: re-run via `npx jiti scripts/wg-casting.mjs` — 16 class sources compared, 4 with
+  mismatches (180 rows), and work/wg-casting-parity.json came back BYTE-IDENTICAL except its
+  `generated` timestamp. (Note: `node scripts/wg-casting.mjs` alone fails with ERR_MODULE_NOT_FOUND on
+  '../src/rules/seed' — it is a TS import and must be run under jiti, as wg-batch-run.mjs does.
+  Pre-existing, not caused by this work.)
+  wg-identity: 029 4/4 match, 030 9/9 match, 031 9/10 (haunting-memories options) — identical to the
+  baseline; that one is another family's record, not mine.
+  wg-diff: corpus THEY-ONLY 302 → 301 (murksight left; nothing new arrived). Not mine — wg-diff reads
+  core.json and src/rules/situationalBonuses.ts, and the situational family has that file open in this
+  batch. wg-diff does not import wg-values, and no resiliency record moved.
+
+scripts/test-flip-audit.mjs --batch 031: "clean — 3 test file(s) touched, 0 new settle key(s), every
+flip cited" (it does see the three removed keys: work/.b031-testbase.json lists all three).
+npx tsc --noEmit: clean.
+
+NOT DONE, AND WHY
+- The harness host fix (see CROSS-FILE GAPS) — outside my files. Until it lands, creed-magic stays
+  parked; the limits entry says so in its own text so whoever fixes featHost knows to delete the entry.
+- No settle was added to VERIFIED_EQUIVALENT / SETTLED_VALUES / NOT_A_SCALAR / SETTLED_IDENTITIES.
+  Net settle count for this family is MINUS THREE.

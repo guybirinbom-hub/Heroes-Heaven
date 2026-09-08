@@ -72,7 +72,13 @@ export const FEAT_CANTRIP_GRANTS: Record<string, CantripPickSpec> = {
   // pushes a bare {spellId, tradition}, so the spell stayed rank 1 from 5th to 20th.
   'cycle-spell': { prompt: "Choose a spell to cast once per day as a divine innate spell", tradition: 'divine', options: ['bless', 'infuse-vitality', 'heal'] },
   'dragon-spit': { prompt: "Choose a cantrip", tradition: 'arcane', options: ['caustic-blast', 'electric-arc', 'ignition', 'frostbite'] },
-  'dream-magic': { prompt: "Choose Dream Message or Sleep", tradition: 'occult', options: ['dream-message', 'sleep'] },
+  /* 'dream-magic' — removed; its own effectChoices carries the pick WITH the printed rank, which this
+   * lane cannot express: *"you learn this spell as a 4th-rank occult innate spell that you can cast
+   * once per day"* (AoN feat-8518). CantripPickSpec has no rank field and build.ts pushes the answer
+   * bare, so Sleep was cast at rank 1 and Dream Message at rank 3. Same lane move already made for
+   * colugos-traversal, empathic-calm and merge-with-the-source, and for the same reason.
+   * ⚠ It must stay removed while the record carries an `effectChoices` pick: two live lanes on one
+   * record ask the player the same question twice. */
   // 'empathic-calm' — removed; its own effectChoices carries the pick WITH heightenHalfLevel, which
   // this lane cannot express. Two live lanes meant two prompts and, on differing answers, two spells.
   'expanded-runelord-magic': { prompt: "Choose a spell", tradition: 'arcane', options: ['darkvision', 'mystic-armor', 'runic-body', 'runic-weapon', 'see-the-unseen', 'sending', 'truesight', 'contingency', 'spell-riposte'] },

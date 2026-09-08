@@ -1,0 +1,129 @@
+BATCH 031 — GAP AGENT, family "gap-instruments" (WG-COMPARISON lane)
+gap lines assigned: 2 (both open at start, both the SAME gap — the builder's line and the verifier's
+corrected restatement of it). 0 open at end.
+
+--------------------------------------------------------------------------------------------------
+THE TWO LINES
+
+1. AUTHORED — ref test/wg-experience.harness.test.tsx:414
+   (line: "featHost (lines 400-407): the host class is picked from the …", from
+   work/.b031-report-instruments.txt:9)
+2. AUTHORED — ref test/wg-experience.harness.test.tsx:414
+   (line: "featHost (lines 398-406): the host class comes from the feat's TRAITS, …", from
+   work/.b031-verify-instruments.txt:71 — the same gap, with the corrected scope and fix shape)
+
+WHY: one fix closes both. featHost picked the host class from the feat's TRAITS alone, and a CLASS
+ARCHETYPE's feats carry only `archetype` — never a class trait — so all 105 of them (measured over
+core.json, not quoted) were played on a fighter. The class each archetype restructures is written on
+its DEDICATION as `classArchetype.classId`, so featHost now asks the dedication when the record itself
+named no class.
+
+--------------------------------------------------------------------------------------------------
+WHAT I DID — test/wg-experience.harness.test.tsx ONLY
+
+- NEW `classArchetypeHost(db, feat)` at :414, immediately above featHost. Given a feat with an
+  `archetype` slug, it finds the archetype's dedication (`f.archetype === feat.archetype &&
+  f.classArchetype`) and returns the class that dedication names.
+  The verifier's CORRECTED FIX is honoured, not the builder's one-liner: `classArchetype.classId` is a
+  STRING for most archetypes but an ARRAY for flexible-spellcaster / wellspring-mage / elementalist
+  (types.ts:1576 — "an ARRAY where one archetype restructures several"), so the array is flattened,
+  filtered to classes that exist, and resolved by preferring the class that OWNS the spellcasting
+  entry the record's own `spellSlotBonus.entryId` names (entries are keyed `${classId}-casting`,
+  build.ts:3987), falling back to the first member.
+- featHost (:429-435) now tracks whether a CLASS TRAIT matched and only consults the dedication when
+  none did — a class trait is the record's own word and keeps winning.
+- WHY, in the code comment: AoN feat-7510 (Creed Magic) is carried by
+  feats/creed-magic.spellSlotBonus{entryId:'cleric-casting'}, and slotEntryFor (build.ts:6893) does
+  `spellcasting.find(e => e.id === bonus.entryId)` then `if (!entry) continue` — on a fighter the
+  grant is dropped in silence, so the record scored NO-SHEET-EFFECT for a reason that was the
+  INSTRUMENT's, not the data's.
+
+TEST THAT PINS IT — same file, describe('featHost — a class-archetype feat is hosted on the class its
+dedication names (creed-magic)'), three it()s, each cited `// batch 031: creed-magic` (CONFIRMED in
+work/.b031-read.json; the record id is in the describe title as the audit requires):
+- 'creed-magic is played on a cleric, not on the fighter its traits alone would default to' — asserts
+  the two premises (traits are exactly ['archetype']; battle-harbinger-dedication names 'cleric') and
+  then the outcome, featHost(...).meta.classId === 'cleric'. End-to-end, through the real function.
+- 'creed-magic does not drag ordinary archetype feats off the default host' — careful-explorer
+  (pathfinder-agent, no class-archetype dedication) and toughness (no archetype at all) both return
+  undefined, so the 1,170 ordinary archetype feats are untouched.
+- 'creed-magic-shaped grants pick the class that owns the entry when the dedication names several' —
+  the ARRAY case on elementalist-dedication: bare feat → first member; the same feat given
+  spellSlotBonus.entryId 'druid-casting' → druid. No shipped record exercises this yet, which is
+  exactly why it is pinned rather than left to be discovered.
+The describe runs ALWAYS (it picks classes and renders nothing; 62 ms), unlike the harness's own
+it() which still skips without WG_EXPERIENCE_BATCH/OUT — the instrument's host choice is the one part
+of this file that must not be able to drift unobserved.
+
+node scripts/vt.mjs run test/wg-experience.harness.test.tsx: 3 passed, 1 skipped (the harness itself).
+node scripts/test-flip-audit.mjs --batch 031: clean — 7 test file(s) touched, 0 new settle key(s),
+every flip cited.  npx tsc --noEmit: clean.
+
+--------------------------------------------------------------------------------------------------
+BLAST RADIUS — MEASURED, not argued (2026-09-06)
+
+105 feats in core.json belong to a class archetype and carry no class trait. 22 of them have been
+played by the harness in a shipped experience artefact (batches 007-031); I re-played all 22 through
+the patched harness and diffed against the numbers stored in work/wg-batch-0NN-experience.json.
+Format: controlsAdded / sheetDiffCount, before (fighter) → after (the archetype's class).
+
+  IMPROVED (13)   seneschal-witch-dedication 0/4→0/8 · war-mage-dedication 1/7→1/19 ·
+                  munitions-master-dedication 0/3→0/6 · battle-harbinger-dedication 1/7→1/14 ·
+                  spellshot-dedication 2/10→2/12 · vindicator-dedication 0/0→0/4 ·
+                  palatine-detective-dedication 0/9→0/15 · bloodrager-dedication 2/13→2/15 ·
+                  avenger-dedication 0/0→0/3 · harbingers-protection 0/0→0/1 · call-gun 0/3→0/5 ·
+                  aura-enhancement 0/0→0/2  ← a NO-SHEET-EFFECT of batch 014 closed for free ·
+                  creed-magic 0/0→0/26      ← THIS gap's own record, closed at the instrument
+  UNCHANGED (7)   tattoo-artist 0/0 · esoteric-spellcasting 4/0 · text-decoder 0/0 ·
+                  patrons-glamour 1/11 · spell-woven-shot 0/2 · rising-blood-magic 3/6 ·
+                  arcana-of-iron 0/1     (all still exactly what they scored on the fighter)
+  DOWN (2)        shielding-formation 0/11→0/5 (a wizard already holds some of what it grants a
+                  fighter — the smaller number is the honest one) ·
+                  spellshield 0/5→0/0    ← see the next section; this one needs a disposition
+
+creed-magic on the fixed harness: host {classId:'cleric', slotKey:'8:class:0', slotRendered:true,
+prerequisites:['battle-harbinger-dedication']}, sheetDiffCount 26 — the two Creed slots arrive at rank
+4 with their allowed lists. The flag gate 9 raised is gone at the instrument, so
+work/experience-instrument-limits.json's "creed-magic" park (the instruments family's entry, whose own
+text says "whoever fixes featHost knows to delete the entry") is now STALE. I did not delete it:
+another agent's file, and it is one of the four registries the flip audit watches. The closer or the
+instruments family should retire it in this batch — a park that no longer describes anything real is
+a silently widened gate.
+
+--------------------------------------------------------------------------------------------------
+CROSS-FILE GAPS
+
+- src/rules/derive.ts:3409 `ownedFeatureIds(c, db)` never consults `c.classArchetype.suppressedFeatures`.
+  It rebuilds the owned set from `cls.features` alone, so a class archetype's REMOVED features still
+  read as owned. buildCharacter's own local set does honour it (build.ts:5885-5890,
+  `for (const id of archSuppressed) ownedFeatureIds.delete(id)`) — the two functions give different
+  answers to the same question, and the exported one is what the sheet snapshot diffs
+  (scripts/lib/sheet-snapshot.mjs:50) and what modeGateIds reads.
+  MEASURED: a level-20 wizard with War Mage Dedication and NO Spellshield already has
+  ownedFeatureIds ∋ 'arcane-bond', although our own record says of the archetype "you never gain
+  Arcane Bond, Arcane Thesis, or Defensive Robes" (feats/war-mage-dedication.classArchetype.note,
+  suppressFeatures ['arcane-bond','arcane-thesis','defensive-robes']). Because the wizard already
+  "owns" it, Spellshield's printed "You gain the Arcane Bond class feature and the Drain Bonded Item
+  action" (AoN feat-7983) adds nothing observable and the record scores 0 on its correct host — where
+  on the fighter it scored 5 by giving a fighter a wizard feature nobody had suppressed.
+  So spellshield's OK was luck, and its new 0 is a TRUE POSITIVE: the harness is now reporting a real
+  engine defect instead of hiding it behind the wrong host. The fix (one line, `for (const id of
+  c.classArchetype?.suppressedFeatures ?? []) out.delete(id)` at the end of ownedFeatureIds) is in
+  src/rules/derive.ts, outside this agent's assigned file, so it is reported and not edited.
+  It is the same defect from the other side as the data-rows family's open line
+  "src/sheet/FeatsTab.tsx … prints War Mage's suppressed 'arcane-bond' under Replaced on the same
+  character whose Spellshield grants it (spellshield#arcane-bond-listing)" — one fix in derive.ts
+  plus that family's re-grant exclusion settles both. Whoever takes it should re-play spellshield
+  through the harness in the same change; it is the only record in the measured 22 that needs it.
+- No owner question. Nothing here is a WG-vs-print conflict or a ruling conflict: print, our data and
+  WG all agree about which class a class archetype restructures, and the derive.ts shape is obvious
+  rather than a decision.
+
+--------------------------------------------------------------------------------------------------
+NOT DONE, AND WHY
+
+- The stale creed-magic entry in work/experience-instrument-limits.json (another agent's file).
+- The ownedFeatureIds suppression fix in src/rules/derive.ts (another family's file) — and with it
+  spellshield's disposition for gate 9 / regate.
+- Nothing else: no spec file, no data row. This gap was an instrument bug and a data row would have
+  invented a mechanic print does not grant.
