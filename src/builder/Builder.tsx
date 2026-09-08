@@ -1636,7 +1636,9 @@ export function Builder({
               // above keeps `sel` inside that range, so a page above the character's level cannot be
               // open. The greyed-out "future level" page and its "Advance to level N" link went with it.
               const pending = pendingCount(lvl);
-              const g = levelGrants(lvl, build.classId, content, build.subclassId, build.variantRules, build.classId2, build.subclassId2, build.mythicEnabled, Object.values(build.featPicks ?? {}).filter(Boolean) as string[]);
+              // `build` last: the level list is archetype-aware only when the resolver can see the
+              // dedication that carries the class archetype (War Mage: no Arcane Bond row, a War Magic one).
+              const g = levelGrants(lvl, build.classId, content, build.subclassId, build.variantRules, build.classId2, build.subclassId2, build.mythicEnabled, Object.values(build.featPicks ?? {}).filter(Boolean) as string[], build);
               const bg = resolveBackground(build, content);
               const bgFeatAtThisLevel = lvl === 1 && bg?.grantedFeatId;
               const anyContent =

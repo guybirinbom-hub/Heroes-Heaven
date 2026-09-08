@@ -983,7 +983,14 @@ export function levelChoices(build: BuildState, content: ContentDatabase): Missi
   const cls2 = build.classId2 ? content.classes[build.classId2] : undefined;
   // Class subsystems: one generic loop rather than a branch per class. A group is outstanding when
   // fewer options are picked than the level entitles you to.
+  /* A class archetype can take the whole question away (a War Mage wizard has no arcane thesis).
+   * Counted here as well as hidden in the Builder: an outstanding choice with no control left to
+   * answer it is a "1 choice left" tag nothing on the page can clear, and levelChoices is what the
+   * Create/Save completeness check reads. */
+  const archSuppressed = resolveClassArchetype(build, content).suppressed;
+  const archSubstituted = substitutedPickFeatures([cls, cls2], content, archSuppressed);
   for (const g of [...(cls?.extraChoices ?? []), ...(cls2?.extraChoices ?? [])]) {
+    if (g.featureId && archSuppressed.has(g.featureId) && !archSubstituted.has(g.featureId)) continue;
     const max = extraPickCount(g, build.level, build);
     if (max === 0) continue; // not unlocked at this level yet
     const picked = (build.extraChoices?.[g.id] ?? []).filter(Boolean).length;
@@ -994,7 +1001,7 @@ export function levelChoices(build: BuildState, content: ContentDatabase): Missi
   for (let lvl = 1; lvl <= build.level; lvl++) {
     const g = levelGrants(
       lvl, build.classId, content, build.subclassId, build.variantRules,
-      build.classId2, build.subclassId2, build.mythicEnabled, picks,
+      build.classId2, build.subclassId2, build.mythicEnabled, picks, build,
     );
     const at = (label: string) => out.push({ page: lvl, label: `Level ${lvl} — ${label}`, required: true });
     for (const [i, cat] of g.featSlots.entries()) {
@@ -1056,6 +1063,7 @@ function subclassAnchorCandidate(build: BuildState, content: ContentDatabase, lv
     lvl, build.classId, content, build.subclassId, build.variantRules,
     build.classId2, build.subclassId2, build.mythicEnabled,
     Object.values(build.featPicks ?? {}).filter(Boolean) as string[],
+    build,
   );
   const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '');
   const sn = norm(cls.subclass.name);
@@ -2292,10 +2300,53 @@ export function classArchetypeSpellMods(
  * choice-gated, which that auto-grant loop deliberately leaves to a manual slot. So a class archetype
  * still starts with the player taking the feat, exactly as it did when this was resolved from `feats`.
  */
-function resolveClassArchetype(
+/**
+ * Is this choice option the class archetype's OWN substitute, rather than one of the options it takes
+ * away?
+ *
+ * The exception exists because one archetype's replacement is authored INSIDE the group it removes:
+ * Palatine Detective — *"Instead of choosing a methodology from others available to the investigator
+ * class, you have the esoterica methodology"* (AoN archetype-306) — ships as the `palatine-detective`
+ * option of the investigator's Methodology group, carrying the whole esoterica feature (its Occultism/
+ * Religion training, Quick Identification, the occult spellcasting grant). Suppressing the group
+ * wholesale would leave that character with no methodology at all — a worse answer than the wrong one
+ * it replaced. The `runelord` arcane school is the same shape (its group is not suppressed today).
+ *
+ * Read off the Foundry `class-archetype` tag rather than a name or an id stem: it is the only field
+ * that says "this option IS an archetype", and it is already on every one of them in the shipped data.
+ */
+export function isArchetypeSubstituteOption(optionId: string, content: ContentDatabase): boolean {
+  return !!content.classFeatures[optionId]?.otherTags?.includes('class-archetype');
+}
+
+/**
+ * The suppressed features whose QUESTION survives, because the archetype's substitute is one of that
+ * question's own options — the Palatine Detective's esoterica, again.
+ *
+ * Removing the feature but keeping the pick is not a contradiction: print takes the class's generic
+ * methodology away and hands you a specific one, and the app stores that specific one as the answer.
+ * So the Builder must still ask (narrowed to the substitute), the level page must still show the row
+ * it anchors, and `levelChoices` must still count it — otherwise a Palatine Detective saves with no
+ * methodology at all, which is a worse answer than the wrong one this whole fix removed.
+ */
+function substitutedPickFeatures(classes: (ClassDef | undefined)[], content: ContentDatabase, suppressed: Set<string>): Set<string> {
+  const out = new Set<string>();
+  for (const c of classes) {
+    for (const grp of [c?.subclass, ...(c?.extraChoices ?? [])]) {
+      if (grp?.featureId && suppressed.has(grp.featureId) && grp.options.some((o) => isArchetypeSubstituteOption(o.id, content)))
+        out.add(grp.featureId);
+    }
+  }
+  return out;
+}
+
+export function resolveClassArchetype(
   build: BuildState,
   content: ContentDatabase,
-  grantOptions: SubclassOption[],
+  /** The chosen subclass/extra-choice options, when the caller already has them. The Builder's own
+   *  readers (`levelGrants`, the pickers) don't, and the option branch below is unused on the shipped
+   *  data anyway — every one of the fifteen archetypes is carried by its dedication FEAT. */
+  grantOptions: SubclassOption[] = [],
 ): {
   carriers: { id: string; name: string; ca: ClassArchetype; classId: string }[];
   suppressed: Set<string>;
@@ -3182,11 +3233,48 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     }
   }
   // Every option that confers grants (both classes' subclasses + any extra-choice picks).
-  const grantOptions = [subOption, subOption2, ...extraOptions].filter(Boolean) as SubclassOption[];
+  const chosenOptions = [subOption, subOption2, ...extraOptions].filter(Boolean) as SubclassOption[];
   // CLASS ARCHETYPES (Runelord, War Magic, …): unlike a normal archetype these RESTRUCTURE the class —
   // suppressing class features and substituting their own. Resolved HERE, before the first consumer,
   // so class advancement, the feat-grant loop and the archetype block below all see one answer.
-  const arch = resolveClassArchetype(build, content, grantOptions);
+  const arch = resolveClassArchetype(build, content, chosenOptions);
+  /*
+   * …and a suppressed feature takes ITS PICK with it. `suppressFeatures` names a class FEATURE, but
+   * the player's answer to that feature lives on an OPTION — the wizard's thesis is
+   * `extraChoices.thesis`, declared by `featureId: 'arcane-thesis'`; a subclass declares its carrier
+   * the same way. A War Mage — *"You do not gain the arcane bond or arcane thesis class features"*
+   * (AoN archetype-331) — and a Runelord — *"Instead of an arcane thesis, you gain a personal rune"*
+   * (archetype-303) — both lost the FEATURE while the stored thesis option kept handing over its
+   * grants, so Improved Familiar Attunement still granted the Familiar feat through the option lane.
+   *
+   * Filtered ONCE, here, where `grantOptions` is formed: every downstream reader (feat grants, granted
+   * spells, skills/lores, situational stars, the class-DC key attribute, the tokens loop) takes this
+   * array, so one filter closes all of them and any archetype authored later inherits it.
+   */
+  const suppressedPickIds = new Set<string>();
+  for (const ec of [cls, cls2] as (ClassDef | undefined)[]) {
+    for (const grp of [ec?.subclass, ...(ec?.extraChoices ?? [])]) {
+      if (grp?.featureId && arch.suppressed.has(grp.featureId))
+        for (const o of grp.options) if (!isArchetypeSubstituteOption(o.id, content)) suppressedPickIds.add(o.id);
+    }
+  }
+  const grantOptions = suppressedPickIds.size ? chosenOptions.filter((o) => !suppressedPickIds.has(o.id)) : chosenOptions;
+  /*
+   * The SECOND door into the same room. `classFeatureIdsOwned` adds `subclassId` to the owned set
+   * straight from the id (derive.ts: *"if (db.classFeatures[opts.subclassId]) out.add(…)"*), so
+   * filtering `grantOptions` alone left a Palatine Detective investigator — *"Instead of choosing a
+   * methodology from others available to the investigator class, you have the esoterica methodology"*
+   * (AoN archetype-306) — still collecting Alchemical Crafting from the methodology they no longer
+   * have. Every owned-feature lane inside buildCharacter reads THIS instead of `build.subclassId`.
+   */
+  const ownedSubclassId = build.subclassId && suppressedPickIds.has(build.subclassId) ? null : build.subclassId;
+  /* …and the DUAL-CLASS twin. `suppressedPickIds` already walks `cls2`'s groups, and `classId`
+   * matching in `resolveClassArchetype` already considers `build.classId2`, so a wizard//investigator
+   * who takes Palatine Detective Dedication — *"Instead of choosing a methodology from others
+   * available to the investigator class, you have the esoterica methodology"* (AoN archetype-306) —
+   * really does lose the second class's methodology. Only the CHARACTER field was still raw, and
+   * `ownedFeatureIds` reads `[c.subclassId, c.subclassId2]` as one pair. */
+  const ownedSubclassId2 = build.subclassId2 && suppressedPickIds.has(build.subclassId2) ? null : build.subclassId2;
   // A chosen option can set the spellcasting key ability (psychic subconscious mind = Int/Cha).
   // A keyAbilityOptions option (rogue racket) resolves through the player's pick instead.
   const keyOption = grantOptions.find((o) => o.keyAbility || o.keyAbilityOptions?.length);
@@ -5092,7 +5180,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
    * spec was written. The wizard's Experimental Spellshaping is the case: *"You gain one 1st-level
    * spellshape wizard feat of your choice."* Same spread lines 4890 / 5111 / 5971 / 6075 already use. */
   for (const fid of classFeatureIdsOwned(
-    { classId: build.classId, subclassId: build.subclassId, level, classChoices: grantOptions.map((o) => ({ id: o.id, level: 1 })) },
+    { classId: build.classId, subclassId: ownedSubclassId, level, classChoices: grantOptions.map((o) => ({ id: o.id, level: 1 })) },
     content,
   )) {
     pickFrom(fid, Math.max(1, Math.min(level, content.classFeatures[fid]?.level ?? 1)));
@@ -5236,7 +5324,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       ...feats.map((f) => f.featId),
       ...[build.heritageId, secondHeritageId].filter((h): h is string => !!h),
       ...classFeatureIdsOwned(
-        { classId: build.classId, subclassId: build.subclassId, level, classChoices: grantOptions.map((o) => ({ id: o.id, level: 1 })) },
+        { classId: build.classId, subclassId: ownedSubclassId, level, classChoices: grantOptions.map((o) => ({ id: o.id, level: 1 })) },
         content,
       ),
     ];
@@ -5457,7 +5545,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     // `grantOptions` is every chosen option — subclass plus the extra-choice picks (thaumaturge
     // implements, exemplar ikons, kineticist elements) — and each option id is also a classFeature.
     ...[...classFeatureIdsOwned(
-      { classId: build.classId, subclassId: build.subclassId, level, classChoices: grantOptions.map((o) => ({ id: o.id, level: 1 })) },
+      { classId: build.classId, subclassId: ownedSubclassId, level, classChoices: grantOptions.map((o) => ({ id: o.id, level: 1 })) },
       content,
     )]
       .filter((id) => FEAT_GRANTS[id])
@@ -6283,7 +6371,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   {
     const ownedIds = new Set<string>([
       ...feats.map((f) => f.featId),
-      ...classFeatureIdsOwned({ classId: build.classId, subclassId: build.subclassId, level }, content),
+      ...classFeatureIdsOwned({ classId: build.classId, subclassId: ownedSubclassId, level }, content),
     ]);
     for (const id of ownedIds) {
       const rec = content.feats[id] ?? content.classFeatures[id];
@@ -6345,7 +6433,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     const sources: ((DefenseGrants & { name?: string; id?: string }) | undefined)[] = [
       ...feats.map((fc) => content.feats[fc.featId]),
       ...[...classFeatureIdsOwned(
-        { classId: build.classId, subclassId: build.subclassId, level, classChoices: grantOptions.map((o) => ({ id: o.id, level: 1 })) },
+        { classId: build.classId, subclassId: ownedSubclassId, level, classChoices: grantOptions.map((o) => ({ id: o.id, level: 1 })) },
         content,
       )].map((id) => content.classFeatures[id]),
     ];
@@ -6449,7 +6537,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   )[] = [
     ...feats.map((fc) => content.feats[fc.featId]),
     ...[...classFeatureIdsOwned(
-      { classId: build.classId, subclassId: build.subclassId, level, classChoices: grantOptions.map((o) => ({ id: o.id, level: 1 })) },
+      { classId: build.classId, subclassId: ownedSubclassId, level, classChoices: grantOptions.map((o) => ({ id: o.id, level: 1 })) },
       content,
     )].map((id) => content.classFeatures[id]),
     build.ancestryId ? content.ancestries[build.ancestryId] : undefined,
@@ -8301,6 +8389,31 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     return Object.keys(out).length ? out : undefined;
   })();
 
+  /*
+   * THE THIRD DOOR — the one the Character itself carries out to every sheet reader.
+   *
+   * `grantOptions` and `ownedSubclassId` above are BUILD-TIME filters: they stop buildCharacter's own
+   * loops. But the Character emitted below hands `subclassId` and `classChoices` to `ownedFeatureIds`
+   * (derive.ts), which is the sheet's single choke point — and that function rebuilds ownership from
+   * exactly those two fields (*"for (const cc of c.classChoices ?? []) … if (subId &&
+   * db.classFeatures[subId]) out.add(subId)"*) while subtracting only `classArchetype.suppressedFeatures`,
+   * the FEATURE ids. The option ids are not in that list, so a War Mage — *"You do not gain the arcane
+   * bond or arcane thesis class features"* (AoN archetype-331) — still OWNED `improved-familiar-attunement`
+   * on the sheet (its actions, limitedUses, situational bonuses and mode gates all live) and the Feats
+   * tab still printed an "Arcane Thesis: Improved Familiar Attunement" row, measured on a level-13
+   * build. A Palatine Detective — *"Instead of choosing a methodology from others available to the
+   * investigator class, you have the esoterica methodology"* (archetype-306) — likewise still owned the
+   * generic methodology stored in `subclassId`, with its Quick Tincture action.
+   *
+   * Filtered at the EMISSION rather than in derive: one place, and every Character-side reader
+   * (ownedFeatureIds, explain.ts, situationalBonuses, FeatsTab, CompanionsTab, SpellsTab) inherits it
+   * without each having to learn what a suppressed pick is. `build.extraChoices` keeps the stored
+   * answer, so dropping the archetype gives the thesis back.
+   */
+  const ownedClassChoices = suppressedPickIds.size
+    ? classChoices.filter((r) => !r.id || !suppressedPickIds.has(r.id))
+    : classChoices;
+
   return {
     id: `char-${slug(build.name)}`,
     schemaVersion: CHARACTER_SCHEMA_VERSION,
@@ -8317,8 +8430,8 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     backgroundResistanceChoice: background?.choiceResistance ? (backgroundChoiceValue(build, background) ?? null) : null,
     backgroundId: build.backgroundId,
     classId: build.classId,
-    subclassId: build.subclassId,
-    ...(classChoices.length ? { classChoices } : {}),
+    subclassId: ownedSubclassId,
+    ...(ownedClassChoices.length ? { classChoices: ownedClassChoices } : {}),
     ...(ancestryHeritageChoices ? { ancestryHeritageChoices } : {}),
     ...(build.variantRules ? { variantRules: build.variantRules } : {}),
     ...(build.options ? { options: build.options } : {}),
@@ -8336,7 +8449,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     ...(build.mythicEnabled && build.mythicDestiny ? { mythicDestiny: build.mythicDestiny } : {}),
     ...(grantedFeatures.length ? { grantedFeatures } : {}),
     ...(naturalAttacks.length ? { naturalAttacks } : {}),
-    ...(build.variantRules?.dualClass && build.classId2 ? { classId2: build.classId2, subclassId2: build.subclassId2 ?? null } : {}),
+    ...(build.variantRules?.dualClass && build.classId2 ? { classId2: build.classId2, subclassId2: ownedSubclassId2 ?? null } : {}),
     ...(build.variantRules?.abp && build.abpSkills && Object.keys(build.abpSkills).length ? { abpSkills: build.abpSkills } : {}),
     ...(build.variantRules?.abp && build.abpApex ? { abpApex: build.abpApex } : {}),
     keyAbility,
@@ -9471,17 +9584,36 @@ export function levelGrants(
   /** The feats the character has TAKEN — only needed for grants a feat itself unlocks
    *  (Ultimate Flexibility adds a third combat-flexibility slot). */
   takenFeatIds?: Iterable<string>,
+  /** The whole build, when the caller has it — the ONLY way to see a CLASS ARCHETYPE. Optional so the
+   *  dozen callers that only want feat slots stay as they are. */
+  build?: BuildState,
 ): LevelGrants {
   const cls = classId ? content.classes[classId] : undefined;
   // Dual Class: the second class contributes its own features and class feats at every level.
   const cls2 = variant?.dualClass && classId2 ? content.classes[classId2] : undefined;
+  /*
+   * A CLASS ARCHETYPE restructures the class the same way a subclass option can, and this list is what
+   * the Builder prints level by level. It only ever knew the subclass lane, so a War Mage wizard —
+   * *"You do not gain the arcane bond or arcane thesis class features"* (AoN archetype-331) — was
+   * still shown Arcane Bond and Arcane Thesis at 1st, and never shown War Magic or Shield Block, the
+   * features the same clause block ADDS (*"You gain the war magic class feature at 1st level"*). Same
+   * resolver as `buildCharacter`, so the page cannot disagree with the sheet.
+   */
+  const arch = build ? resolveClassArchetype(build, content) : undefined;
+  // …minus the ones the archetype replaces from inside their own option list: the row stays, because
+  // it is what anchors the (narrowed) picker on this page.
+  const substituted = arch ? substitutedPickFeatures([cls, cls2], content, arch.suppressed) : new Set<string>();
   // A subclass can remove class features (cleric Battle Creed drops Resolute Faith + Miraculous Spell).
   const suppressed = new Set(cls?.subclass?.options.find((o) => o.id === subclassId)?.suppressedFeatures ?? []);
   const suppressed2 = new Set(cls2?.subclass?.options.find((o) => o.id === subclassId2)?.suppressedFeatures ?? []);
   const features = [
     ...(cls?.features ?? []).filter((f) => f.level === level && !suppressed.has(f.featureId)),
     ...(cls2?.features ?? []).filter((f) => f.level === level && !suppressed2.has(f.featureId)),
-  ].map((f) => ({ id: f.featureId, name: content.classFeatures[f.featureId]?.name ?? f.featureId }));
+    // The archetype's substitutes, at the level its record gives them (`addFeatures[].level`).
+    ...(arch?.added ?? []).filter((a) => a.level === level),
+  ]
+    .filter((f) => !arch?.suppressed.has(f.featureId) || substituted.has(f.featureId))
+    .map((f) => ({ id: f.featureId, name: content.classFeatures[f.featureId]?.name ?? f.featureId }));
   const featSlots: FeatCategory[] = [];
   if (cls) {
     // Ancestry Paragon REPLACES the standard ancestry progression: 2 feats at L1, then 1 at each odd

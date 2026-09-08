@@ -3729,8 +3729,12 @@ export interface ClassDef extends ContentBase {
     /** A fixed Lore subject the class trains (e.g. thaumaturge Esoteric Lore). */
     lore?: string;
   };
-  /** e.g. { name: 'Doctrine', options: [...] }. Absent for feat-defined classes (Fighter). */
-  subclass?: { name: string; options: SubclassOption[] };
+  /** e.g. { name: 'Doctrine', options: [...] }. Absent for feat-defined classes (Fighter).
+   *  `featureId` is the class feature whose printed text says "choose one" — the declared carrier,
+   *  the subclass twin of `ChoiceGroup.featureId`. Written by data (every class that has a subclass
+   *  carries it) and, until a class archetype needed to know which pick a suppressed feature owns
+   *  (Palatine Detective: *"You don't gain a methodology"*), read only by the parity scripts. */
+  subclass?: { name: string; options: SubclassOption[]; featureId?: string };
   /** Multi-pick choices beyond the subclass (subconscious mind, apparitions, ikons, elements). */
   extraChoices?: ChoiceGroup[];
   spellcasting?: ClassSpellcasting;

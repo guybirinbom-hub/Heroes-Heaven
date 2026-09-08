@@ -1,6 +1,6 @@
 import { useMemo, useState, type Dispatch, type ReactNode, type SetStateAction } from 'react';
 import { DESTINY_LEVEL, destinyDedications } from '../rules/mythic';
-import type { AbilityId, BuildOverrides, EffectChoice, Character, CharacterOptions, ClassDef, CompanionConfig, ContentDatabase, CustomBackground, DescRef, MonsterPartsMode, ProficiencyKey, ProficiencyRank, SaveId, SkillId, Tradition } from '../rules/types';
+import type { AbilityId, BuildOverrides, EffectChoice, Character, CharacterOptions, ClassDef, CompanionConfig, ContentDatabase, CustomBackground, DescRef, MonsterPartsMode, ProficiencyKey, ProficiencyRank, SaveId, SkillId, SubclassOption, Tradition } from '../rules/types';
 import { ABILITIES, SKILLS, PROFICIENCY_RANKS } from '../rules/types';
 import { enabledBookSet, sourceCatalog, NICHE_CATEGORIES, type SourceGroup } from '../rules/sources';
 import { usePrefs } from '../data/prefs';
@@ -50,7 +50,7 @@ import {
   removeChosenIds,
   withCustomAnswer,
 } from '../rules/build';
-import { choiceFlagAnswer, effectChoiceDefault, effectChoiceOffered, effectChoiceOptions, narrowSpellFilter, subclassOptionAllowed } from '../rules/build';
+import { choiceFlagAnswer, effectChoiceDefault, effectChoiceOffered, effectChoiceOptions, isArchetypeSubstituteOption, narrowSpellFilter, resolveClassArchetype, subclassOptionAllowed } from '../rules/build';
 import { BACKGROUND_CANTRIP_GRANTS } from '../rules/backgroundGrants';
 import { openChoiceOptions } from '../rules/openChoice';
 import { cantripsKnown } from '../rules/spellcasting';
@@ -2569,6 +2569,26 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
   const ownsClass = (id: string): boolean => cls?.id === id || cls2?.id === id;
   const classDefOf = (id: string): ClassDef | undefined => (cls?.id === id ? cls : cls2?.id === id ? cls2 : undefined);
   const subclassOf = (id: string): string | null => (cls?.id === id ? build.subclassId : cls2?.id === id ? build.subclassId2 ?? null : null);
+  /*
+   * A CLASS ARCHETYPE can take a whole question off this page. *"You do not gain the arcane bond or
+   * arcane thesis class features"* (War Mage, AoN archetype-331) and *"Instead of an arcane thesis,
+   * you gain a personal rune"* (Runelord, archetype-303) both remove `arcane-thesis`, the feature the
+   * wizard's `thesis` choice group declares as its carrier — so the picker must go with it, or the
+   * builder asks a question whose answer buildCharacter now throws away.
+   *
+   * Greyed rather than hidden: the same owner ruling the skill pickers follow (Q27) — an option you
+   * cannot take is shown with the reason, not silently removed.
+   */
+  const arch = resolveClassArchetype(build, content);
+  const suppressedBy = (featureId: string | undefined): string | undefined =>
+    featureId && arch.suppressed.has(featureId)
+      ? (arch.carriers.find((ca) => (ca.ca.suppressFeatures ?? []).includes(featureId))?.name ?? 'your class archetype')
+      : undefined;
+  /** The options still offered for a group: everything, unless the archetype removed the group's
+   *  carrier feature — then only its own substitute survives (see `isArchetypeSubstituteOption`), which
+   *  for the wizard's thesis is nothing at all and for the investigator's methodology is esoterica. */
+  const liveOptions = (featureId: string | undefined, options: SubclassOption[]): SubclassOption[] =>
+    suppressedBy(featureId) ? options.filter((o) => isArchetypeSubstituteOption(o.id, content)) : options;
   // Origin-granted ability boosts + the class key attribute live as child cards under the card
   // that grants them (a background's boost belongs to the background, not a separate section).
   // Alternate Ancestry Boosts: ignore the ancestry's listed boosts/flaws; offer two free boosts.
@@ -3192,7 +3212,20 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           )}
         </SubCard>
       )}
-      {cls?.subclass && (
+      {/* The subclass carrier can be suppressed too — Palatine Detective, AoN archetype-306:
+          *"Instead of choosing a methodology from others available to the investigator class, you
+          have the esoterica methodology."* There the archetype's substitute IS one of the group's own
+          options, so the list narrows to it rather than the card going blank; a suppression with no
+          substitute (there is none on the shipped subclass data) gets the same greyed reason the
+          extra-choice groups above get. */}
+      {cls?.subclass && suppressedBy(cls.subclass.featureId) && !liveOptions(cls.subclass.featureId, cls.subclass.options).length && (
+        <SetupCard icon="ti-versions" label={cls.subclass.name}>
+          <span className="fixed-val" data-suppressed-by={suppressedBy(cls.subclass.featureId)}>
+            Removed by {suppressedBy(cls.subclass.featureId)}
+          </span>
+        </SetupCard>
+      )}
+      {cls?.subclass && !!liveOptions(cls.subclass.featureId, cls.subclass.options).length && (
         <SetupCard icon="ti-versions" label={cls.subclass.name}>
           <PopupSelect
             title={cls.subclass.name}
@@ -3204,7 +3237,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
              * Redemption Holy. `subclassOptionAllowed` is the same predicate `originMissing` uses to
              * report an illegal cause, so the picker and Setup completeness cannot disagree; it returns
              * true while sanctification is unanswered, leaving the list wide for a half-built champion. */
-            options={cls.subclass.options.map((o) => {
+            options={liveOptions(cls.subclass.featureId, cls.subclass.options).map((o) => {
               const need = o.traits?.find((t) => t === 'holy' || t === 'unholy');
               const allowed = subclassOptionAllowed(o, build, content);
               return {
@@ -3300,6 +3333,16 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
         );
       })()}
       {[...(cls?.extraChoices ?? []), ...(cls2?.extraChoices ?? [])].map((g) => {
+        const gone = suppressedBy(g.featureId);
+        const offered = liveOptions(g.featureId, g.options);
+        if (gone && !offered.length)
+          return (
+            <SubCard icon="ti-adjustments" label={g.name} key={g.id}>
+              <span className="fixed-val" data-suppressed-by={gone}>
+                Removed by {gone}
+              </span>
+            </SubCard>
+          );
         const max = extraPickCount(g, build.level, build);
         if (max === 0) return null; // not yet unlocked at this level (e.g. higher-level epithets)
         // Clamped to `max` for the same reason the engine clamps: a Single Gate kineticist who
@@ -3313,11 +3356,11 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                 title={g.name}
                 value={selected[0] ?? ''}
                 onChange={(v) => actions.toggleExtraChoice(g.id, v, 1)}
-                options={g.options.map((o) => ({ value: o.id, label: o.name, description: o.description, descRefs: o.descRefs }))}
+                options={offered.map((o) => ({ value: o.id, label: o.name, description: o.description, descRefs: o.descRefs }))}
               />
             ) : (
               <MultiPickRows
-                options={g.options.map((o) => ({ id: o.id, name: o.name, description: o.description, descRefs: o.descRefs }))}
+                options={offered.map((o) => ({ id: o.id, name: o.name, description: o.description, descRefs: o.descRefs }))}
                 selected={selected}
                 max={max}
                 onToggle={(id) => actions.toggleExtraChoice(g.id, id, max)}
