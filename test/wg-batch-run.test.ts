@@ -22,7 +22,7 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync
 import { spawnSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { clip, comparerFlags, copyTestbase, dumpBlocks, entryOf, expectRowsFor, familyOf, gapProblems, isFlagged, keyOf, missingGapsRefusal, newRunId, pendingQuestions, precheck, refusalTail, uncitedQuiet, wentQuiet } from '../scripts/wg-batch-run.mjs';
+import { clip, comparerFlags, copyTestbase, dumpBlocks, entryOf, expectRowsFor, familyOf, gapProblems, isFlagged, keyOf, missingGapsRefusal, newRunId, pendingQuestions, precheck, refusalTail, uncitedQuiet, verifyChecks, verifyVerdict, wentQuiet } from '../scripts/wg-batch-run.mjs';
 
 /* A row that passes every pre-check, so each fixture below differs from the clean case in ONE way. */
 const row = (over: Record<string, unknown> = {}) => ({
@@ -346,6 +346,79 @@ describe('driver stage guards, on fixture roots', () => {
       .map((q: { id: string }) => q.id)).toEqual(['zealot-staff']);    // an OPEN line cites nothing
     expect(uncitedQuiet(quiet, [{ family: 'instruments', status: 'authored', line: 'taught the comparer zealot-staff', ref: 'work/.b030-rows-instruments.json' }])).toEqual([]);
     expect(uncitedQuiet(quiet, [{ family: 'instruments', status: 'parked', line: 'their grant is prose', ref: 'flaggedResidue: zealot-staff, theirs encodes it as prose' }])).toEqual([]);
+  });
+});
+
+/*
+ * THE VERIFY TOLERANCE (orchestrator ruling 2026-09-08): "a batch is judged ONLY against what changed
+ * since its own start." A separate effort's uncommitted work turned `npm run verify` red before batch 031
+ * was cut, and the verify stage failed every batch over a guard that was never the batch's.
+ *
+ * Two things are pinned here, on a throwaway fixture chain under the temp dir — never this repo's verify:
+ *   · the chain is SPLIT at its `&&` and every check runs, so the red one cannot hide the checks after it
+ *     (tolerating a check that aborts an `&&` chain would tolerate everything downstream of it);
+ *   · red-at-baseline is tolerated and NAMED, red-only-now fails the stage.
+ */
+describe('verify stage tolerance, on a fixture verify chain', () => {
+  const roots: string[] = [];
+  afterAll(() => { for (const r of roots) rmSync(r, { recursive: true, force: true }); });
+
+  /** A check that prints one line and exits with `code` — the shape every verify guard has. */
+  const check = (code: number) => `console.log(${code ? "'FAIL: 945 bestiary records lost their prose'" : "'clean'"});\nprocess.exit(${code});\n`;
+  const fixture = (verify: string, files: Record<string, string>) => {
+    const root = mkdtempSync(join(tmpdir(), 'wg-verify-'));
+    roots.push(root);
+    mkdirSync(join(root, 'scripts'), { recursive: true });
+    writeFileSync(join(root, 'package.json'), JSON.stringify({ scripts: { verify } }));
+    for (const [rel, body] of Object.entries(files)) writeFileSync(join(root, rel), body);
+    return root;
+  };
+  /** What the driver's runVerifyChecks() does, against the fixture root instead of this repo. */
+  const runChain = (root: string) => verifyChecks(JSON.parse(readFileSync(join(root, 'package.json'), 'utf8')))
+    .map((c: { name: string; cmd: string; args: string[] }) => {
+      const r = spawnSync(c.cmd, c.args, { cwd: root, encoding: 'utf8' });
+      return { name: c.name, ok: (r.status ?? 1) === 0, line: String(r.stdout ?? '').split('\n')[0] };
+    });
+
+  it('splits the && chain so one red check cannot hide the checks after it, and maps jiti to npx jiti', () => {
+    const checks = verifyChecks({ scripts: { verify: 'jiti scripts/a-check.mjs && node scripts/b-check.mjs' } });
+    expect(checks.map((c: { name: string }) => c.name)).toEqual(['a-check', 'b-check']);
+    expect(checks[0].key).toBe('npx jiti scripts/a-check.mjs');   // node_modules/.bin is not on a bare spawn's PATH
+    expect(checks[1].key).toBe('node scripts/b-check.mjs');
+    expect(verifyChecks({})).toEqual([]);
+  });
+
+  it('tolerates a check that was ALREADY red at the baseline, and says so in the digest', () => {
+    const root = fixture('node scripts/bestiary-fields-check.mjs && node scripts/render-check.mjs', {
+      'scripts/bestiary-fields-check.mjs': check(1),
+      'scripts/render-check.mjs': check(0),
+    });
+    const atStart = runChain(root);
+    // the second check RAN even though the first was red — the whole point of splitting the chain
+    expect(atStart.map((r) => `${r.name}:${r.ok}`)).toEqual(['bestiary-fields-check:false', 'render-check:true']);
+
+    const startState = { verifyFailingAtStart: atStart.filter((r) => !r.ok).map(({ name, line }) => ({ name, line })) };
+    const v = verifyVerdict(runChain(root), startState);
+    expect(v.ok).toBe(true);
+    expect(v.tolerated).toEqual(['bestiary-fields-check']);
+    expect(v.digest).toContain('pre-existing at start (not this batch): bestiary-fields-check');
+
+    // and with no start-state at all the guard's default is on: nothing is tolerated
+    expect(verifyVerdict(runChain(root), null).ok).toBe(false);
+  });
+
+  it('FAILS the stage on a check that was green at the baseline and is red now', () => {
+    const root = fixture('node scripts/bestiary-fields-check.mjs && node scripts/render-check.mjs', {
+      'scripts/bestiary-fields-check.mjs': check(1),
+      'scripts/render-check.mjs': check(0),
+    });
+    const startState = { verifyFailingAtStart: runChain(root).filter((r) => !r.ok).map(({ name, line }) => ({ name, line })) };
+    writeFileSync(join(root, 'scripts/render-check.mjs'), check(1));   // this batch broke it
+    const v = verifyVerdict(runChain(root), startState);
+    expect(v.ok).toBe(false);
+    expect(v.newly).toEqual(['render-check']);
+    expect(v.tolerated).toEqual(['bestiary-fields-check']);
+    expect(v.digest).toContain('FAILED: render-check');
   });
 });
 

@@ -352,10 +352,16 @@ export function auditBatch({ root = REPO_ROOT, batch, aonRoot = AON_ROOT_DEFAULT
   return { batch: b, violations: V, counts: { violations: V.length, testFiles: testFiles.length, addedRegistryKeys: addedKeys.length } };
 }
 
-/** test/ vs startSha (tracked) and vs the baseline snapshot (untracked-at-baseline). */
+/** test/ vs startSha (tracked and clean at the start) and vs the baseline snapshot (untracked OR dirty). */
 function auditTests({ root, b, base, ctx, snapDir, add }) {
   const startSha = base.startSha;
   const untracked = new Set((base.untrackedTests ?? []).map((p) => p.replace(/\\/g, '/')));
+  /* ORCHESTRATOR RULING (2026-09-08): a batch is judged only against what changed since ITS start. A test
+   * file another effort had already modified has a blob at startSha, but that blob is not what this batch
+   * inherited — diffing against it reports that effort's edits as this batch's uncited flips (this is what
+   * stalled every batch over test/umbrella-items.test.ts). The driver's baseline stage byte-copies these
+   * into .bNNN-testbase/ and lists them here, so they diff against the copy, exactly like an untracked one. */
+  const dirty = new Set((base.dirtyTests ?? []).map((p) => p.replace(/\\/g, '/')));
   const touched = [];
 
   const status = startSha ? git(root, ['diff', '--name-status', startSha, '--', 'test/'], true) : '';
@@ -383,10 +389,15 @@ function auditTests({ root, b, base, ctx, snapDir, add }) {
      * replayed after its commit: 108 phantom violations in test/batch29-data.test.ts alone, burying
      * the three real ones in test/build.test.ts). Still scanned for .skip / .only / .todo. */
     if (st === 'A') { newFileScan({ root, rel, touched, add }); continue; }
-    const oldText = git(root, ['show', `${startSha}:${rel}`], true);
+    // dirty at the batch's start → the byte copy is the baseline; clean at the start → startSha is.
+    const oldText = dirty.has(rel) ? readIf(path.join(snapDir, rel)) : git(root, ['show', `${startSha}:${rel}`], true);
     const newText = readIf(path.join(root, rel));
     if (newText == null) {
       add(rel, 0, 'test file missing on disk', 'restore the file');
+      continue;
+    }
+    if (oldText == null) {
+      add(rel, 0, 'no baseline copy to diff against', `the baseline stage must snapshot it to work/.b${ctx.batch}-testbase/${rel}`);
       continue;
     }
     touched.push(rel);

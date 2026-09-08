@@ -45,6 +45,7 @@ const refuse = (m) => refusals.push(m);
 const DATA_FILES = ['scripts/data/effect-backfill.json', 'public/core.json', 'public/core-descriptions.json'];
 const MSG_PATH = `work/.b${TAG}-commit.txt`;
 const SPECS_PATH = `work/.b${TAG}-specs.json`;
+const START_STATE_PATH = `work/.b${TAG}-baseline/start-state.json`;
 
 /*
  * Per-run scratch — THE SAME SPLIT .gitignore encodes, and it must stay the same split. These are the
@@ -145,9 +146,27 @@ for (const extra of ['work/owner-questions.json', 'work/rulings-numbering.json']
   if (changed.has(extra)) { staged.add(extra); toAdd.push(extra); }
 }
 
+/*
+ * ORCHESTRATOR RULING (2026-09-08): "a batch is judged ONLY against what changed since its own start."
+ * A separate effort left ~208 modified tracked paths in this tree (a data regeneration, the bestiary, the
+ * tracker) and this guard refused every batch over work that was never the batch's. The driver's baseline
+ * stage records the porcelain list at the batch's start; a path already dirty THEN and not in this batch's
+ * stage set is left alone and printed, and only a path that became dirty AFTER the start is a refusal.
+ * With no start-state file (a batch cut before this existed) nothing is subtracted — the guard's default
+ * stays "refuse over anything unaccounted for".
+ */
+const startState = existsSync(p(START_STATE_PATH)) ? JSON.parse(readFileSync(p(START_STATE_PATH), 'utf8')) : null;
+const dirtyAtStart = new Set(startState?.dirtyAtStart ?? []);
+
 // ── refusals ─────────────────────────────────────────────────────────────────────────────────────
 const unaccounted = status.filter(isTracked).filter((s) => !staged.has(s.path) && !SCRATCH.some((re) => re.test(s.path)));
-if (unaccounted.length) refuse(`${unaccounted.length} modified tracked path(s) this batch does not account for:\n      ${unaccounted.map((s) => `${s.xy} ${s.path}`).join('\n      ')}`);
+const preexisting = unaccounted.filter((s) => dirtyAtStart.has(s.path));
+const newlyDirty = unaccounted.filter((s) => !dirtyAtStart.has(s.path));
+/* WHY the message branches: with no start-state the script has NO evidence about when a path became
+ * dirty, and "dirtied since it started" is then a claim it cannot make — on batch 031 (baselined before
+ * the ruling) it named 213 paths that way and sent the reader hunting for edits made during the batch.
+ * Say which of the two situations this is, so the fix ("run --stage baseline") is visible from the refusal. */
+if (newlyDirty.length) refuse(`${newlyDirty.length} modified tracked path(s) this batch does not account for, ${startState ? 'dirtied since it started' : `and no ${START_STATE_PATH} to date them against, so nothing is subtracted — re-run --stage baseline to record the batch's start state`}:\n      ${newlyDirty.map((s) => `${s.xy} ${s.path}`).join('\n      ')}`);
 
 /*
  * ORCHESTRATOR RULING (batch 030): "The data-triple refusal ('the three data artefacts move together') is
@@ -202,6 +221,11 @@ for (const f of toAdd) console.log(`  ${changed.get(f)} ${f}`);
 // print the very paths the refusal below names as if they had been dispositioned
 const skipped = status.filter(isTracked).filter((s) => !staged.has(s.path) && SCRATCH.some((re) => re.test(s.path)));
 if (skipped.length) console.log(`skipped as driver scratch: ${skipped.map((s) => s.path).join(', ')}`);
+// ruling (2026-09-08): what another effort had already dirtied is named, so "left alone" is a visible
+// disposition rather than a silence — and the three data artefacts are the batch's even so.
+if (preexisting.length) console.log(`left alone (dirty before this batch started): ${preexisting.map((s) => s.path).join(', ')}`);
+const dataDirtyAtStart = DATA_FILES.filter((f) => dirtyAtStart.has(f));
+if (dataDirtyAtStart.length) console.log(`staged anyway (the three data artefacts always move together, dirty at start or not): ${dataDirtyAtStart.join(', ')}`);
 // ruling (batch 030): a rows-only batch may legitimately leave core-descriptions.json alone — say so,
 // so the absent third data file reads as expected rather than as something the plan failed to notice.
 if (!proseSpecs.length && !changed.has(DESC_FILE)) console.log(`no prose rows in this batch; ${DESC_FILE} unchanged is expected`);

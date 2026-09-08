@@ -502,6 +502,54 @@ ${extra}  });
   });
 });
 
+/*
+ * ORCHESTRATOR RULING (2026-09-08): "a batch is judged ONLY against what changed since its own start."
+ * A TRACKED test file that a separate effort had already modified when the batch was cut has a blob at
+ * startSha, but that blob is not what the batch inherited — diffing against it reported that effort's
+ * edits as this batch's uncited flips, which is what stalled every batch over test/umbrella-items.test.ts.
+ * The driver's baseline stage now lists such files as `dirtyTests` and byte-copies them, and the audit
+ * diffs them against the copy. Both directions are pinned: the pre-batch edit is not a violation, an edit
+ * made ON TOP of it still is.
+ */
+describe('test-flip-audit — a test file another effort had already modified', () => {
+  /** The uncited edit that was in the working tree BEFORE this batch was cut. */
+  const PRE_BATCH = CLEAN_TEST.replace("expect('a').toBe('a');", "expect('a').toBe('c');");
+  const withDirty = (dirtyTests: string[]) => JSON.stringify({ ...JSON.parse(TESTBASE), dirtyTests }, null, 2);
+
+  it('does not report the pre-batch edit — and does report it when the file is not listed as dirty', () => {
+    write(root, {
+      'test/alpha.test.ts': PRE_BATCH,
+      [`work/.b${B}-testbase/test/alpha.test.ts`]: PRE_BATCH,
+      [`work/.b${B}-testbase.json`]: withDirty(['test/alpha.test.ts']),
+    });
+    expect(changes(run())).toBe('');
+
+    // the control: without dirtyTests the same tree diffs against startSha and the edit IS a violation
+    write(root, { [`work/.b${B}-testbase.json`]: withDirty([]) });
+    expect(changes(run())).toContain('test/alpha.test.ts');
+  });
+
+  it('still reports an uncited edit made on TOP of the pre-batch one', () => {
+    write(root, {
+      'test/alpha.test.ts': PRE_BATCH.replace('expect(5).toBe(5);', 'expect(5).toBe(7);'),
+      [`work/.b${B}-testbase/test/alpha.test.ts`]: PRE_BATCH,
+      [`work/.b${B}-testbase.json`]: withDirty(['test/alpha.test.ts']),
+    });
+    const r = run();
+    expect(r.violations.length).toBeGreaterThan(0);
+    expect(r.violations.every((v) => v.file === 'test/alpha.test.ts')).toBe(true);
+  });
+
+  it('refuses when the dirty file has no byte copy to diff against', () => {
+    write(root, {
+      'test/alpha.test.ts': PRE_BATCH,
+      [`work/.b${B}-testbase.json`]: withDirty(['test/alpha.test.ts']),
+    });
+    rmSync(path.join(root, `work/.b${B}-testbase/test/alpha.test.ts`), { force: true });
+    expect(run().violations[0].expected).toContain('must snapshot it');
+  });
+});
+
 describe('test-flip-audit — the registry parser', () => {
   // mutation-proof for the parser itself: prose, apostrophes and nested braces must not hide a key.
   it('reads top-level keys past comments, strings and nesting', () => {

@@ -23,7 +23,7 @@ import { CHILD_TIMEOUT } from './_timeouts';
 vi.setConfig({ testTimeout: CHILD_TIMEOUT, hookTimeout: CHILD_TIMEOUT });
 import { execFileSync } from 'node:child_process';
 import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from 'node:fs';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
 import { tmpdir } from 'node:os';
 
 const SCRIPT = join(__dirname, '..', 'scripts/wg-batch-commit.mjs');
@@ -99,6 +99,7 @@ function repo(over: Record<string, string | null> = {}): string {
   };
   for (const [rel, body] of Object.entries(after)) {
     if (body === null) { rmSync(join(root, rel), { force: true }); continue; }
+    mkdirSync(dirname(join(root, rel)), { recursive: true });   // the baseline start-state lives in its own dir
     writeFileSync(join(root, rel), body);
   }
   return root;
@@ -141,6 +142,10 @@ describe('wg-batch-commit stages by explicit path or refuses', { timeout: 60_000
     expect(r.code).toBe(1);
     expect(r.out).toContain('does not account for');
     expect(r.out).toContain('work/unrelated-notes.json');
+    // WHY: with no start-state the script cannot date the path, so it must NOT claim the path was
+    // "dirtied since it started" — batch 031 printed that about 213 paths it had no evidence about.
+    expect(r.out).not.toContain('dirtied since it started');
+    expect(r.out).toContain('re-run --stage baseline');
     expect(git(root, 'rev-list', '--count', 'HEAD').trim()).toBe('1');
     rmSync(root, { recursive: true, force: true });
   });
@@ -254,6 +259,52 @@ describe('wg-batch-commit stages by explicit path or refuses', { timeout: 60_000
     // batch 030: resilient
     expect(r.out).toContain('public/core-descriptions.json did not change');
     expect(git(root, 'rev-list', '--count', 'HEAD').trim()).toBe('1');
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  /*
+   * ORCHESTRATOR RULING (2026-09-08): "a batch is judged ONLY against what changed since its own start."
+   * A separate effort left ~208 modified tracked paths in the real tree and this guard refused every batch
+   * over work that was never the batch's. The driver's baseline stage records the porcelain list at the
+   * start; a path already dirty then is LEFT ALONE and printed, a path dirtied since is still a refusal.
+   */
+  const startState = (...paths: string[]) => ({
+    'work/.b900-baseline/start-state.json': JSON.stringify({ batch: '900', dirtyAtStart: paths, verifyFailingAtStart: [] }),
+  });
+
+  it('leaves alone a path another effort had already dirtied before the batch started', () => {
+    const root = repo({
+      'work/unrelated-notes.json': '{"someone else":"was mid-flight when this batch was cut"}\n',
+      ...startState('work/unrelated-notes.json'),
+    });
+    const r = commit(root, '--batch', '900', '--dry-run');
+    expect(r.code).toBe(0);
+    expect(r.out).toContain('left alone (dirty before this batch started): work/unrelated-notes.json');
+    expect(r.out).not.toContain('does not account for');
+    // left alone means LEFT ALONE: the would-stage plan lists paths as "<xy> <path>", and this is not one
+    expect(r.out).not.toContain('M work/unrelated-notes.json');
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  it('still REFUSES a path that became dirty AFTER the batch started', () => {
+    const root = repo({
+      'work/unrelated-notes.json': '{"edited":"during the batch"}\n',
+      ...startState('src/rules/build.ts'),          // a different path was the pre-existing one
+    });
+    const r = commit(root, '--batch', '900');
+    expect(r.code).toBe(1);
+    expect(r.out).toContain('dirtied since it started');
+    expect(r.out).toContain('work/unrelated-notes.json');
+    expect(git(root, 'rev-list', '--count', 'HEAD').trim()).toBe('1');
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  it('stages the three data artefacts even when they were dirty at the start, and says so', () => {
+    const root = repo(startState(...['scripts/data/effect-backfill.json', 'public/core.json', 'public/core-descriptions.json']));
+    const r = commit(root, '--batch', '900', '--dry-run');
+    expect(r.code).toBe(0);
+    expect(r.out).toContain('the three data artefacts always move together, dirty at start or not');
+    for (const f of ['scripts/data/effect-backfill.json', 'public/core.json']) expect(r.out).toMatch(new RegExp(`would stage:[\\s\\S]*${f.replace(/[./]/g, '\\$&')}`));
     rmSync(root, { recursive: true, force: true });
   });
 

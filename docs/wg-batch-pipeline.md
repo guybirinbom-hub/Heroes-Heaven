@@ -45,6 +45,12 @@ A stage that needs a full regen stops with `needs the orchestrator: npm run data
   comparer dumps to `work/.bNNN-baseline/` so the close stage can diff "what went quiet".
   Snapshots `test/`, the four ratchet constants, the three settle registries and
   `work/experience-instrument-limits.json` into `work/.bNNN-testbase/` for the flip audit.
+  RULING (2026-09-08): a batch is judged ONLY against what changed since its own start, so this stage also
+  writes `work/.bNNN-baseline/start-state.json` — the `git status --porcelain` paths already dirty at the
+  start (`dirtyAtStart`, tracked and untracked) and the verify checks already red at the start
+  (`verifyFailingAtStart`, name + first failure line). The testbase gains `dirtyTests`, the tracked test
+  files another effort had already modified, byte-copied like the untracked ones so the flip audit diffs
+  them against the copy rather than against `startSha`.
 - `read-digest` — turns the read workflow's result file into `work/.bNNN-read.json` +
   `work/.bNNN-read-summary.txt` (the batch-29 digest script, ported).
 - `apply` — reads the manifest `work/.bNNN-specs.json`
@@ -85,8 +91,13 @@ A stage that needs a full regen stops with `needs the orchestrator: npm run data
   batch so a restart resumes; blocking — a newly failing earlier-batch record needs a disposition line
   in the digest (fixed here / queued with `n` / next batch) and the closer may not settle an id outside
   the current batch.
-- `suite` — the full vitest run through `scripts/vt.mjs` (below).
-- `verify` — `npm run verify`.
+- `suite` — the full vitest run through `scripts/vt.mjs` (below). Tolerates nothing: the batch's own tests
+  must be green whoever turned one red.
+- `verify` — the `npm run verify` chain, SPLIT at its `&&` and run one check at a time (a single chain
+  stops at the first red check, and tolerating that one would silently tolerate the thirty after it).
+  A check that was already failing in `start-state.json` is reported as
+  `pre-existing at start (not this batch): <name>` and does not fail the stage; a check green at the
+  baseline and red now fails it as before, and with no start-state nothing is tolerated.
 - `all` — the stages from `apply` onward, stopping at the first failure.
 
 ## B. Guards that make agent judgement checkable
@@ -102,7 +113,10 @@ A stage that needs a full regen stops with `needs the orchestrator: npm run data
   the enclosing describe/it text) or `// batch NNN premise: <AoN doc id> "<clause>"`. Fails on any new
   `.skip` / `.only` / `.todo`, a deleted test file or describe block, or a changed numeric literal inside
   an otherwise unchanged `it(`. A settle or comparer teach added without a mutation-proof test (the
-  batch-29 stunted-table pattern) fails the audit.
+  batch-29 stunted-table pattern) fails the audit. RULING (2026-09-08): a test file listed in the
+  testbase's `dirtyTests` is diffed against its byte copy under `.bNNN-testbase/`, never against
+  `startSha`, so another effort's pre-batch edits are not this batch's flips; a file clean at the batch's
+  start still diffs against `startSha` exactly as before.
 - `scripts/overlay-shape-check.mjs` (in `npm run verify`) — no whole-field assignment row may sit at a
   later index than a `path:[…,'id=…']` row into the same category/id/field.
 - Owner questions: a one-time backfill adds a persistent `n` to every entry of `open` / `deferred` /
@@ -117,7 +131,11 @@ A stage that needs a full regen stops with `needs the orchestrator: npm run data
   list ∪ the known batch set (the three data artefacts always together, parity + residual, read.json,
   specs, tests named in the manifest) and REFUSES while any modified tracked path is unaccounted for
   or any of the three data files is modified-but-unstaged; message from `work/.bNNN-commit.txt`;
-  prints the staged list. Never `-A`, never a glob.
+  prints the staged list. Never `-A`, never a glob. RULING (2026-09-08): a modified tracked path that was
+  already in `start-state.json`'s `dirtyAtStart` and is not in this batch's stage set is left alone and
+  printed under `left alone (dirty before this batch started)`, and only a path dirtied SINCE the start is
+  refused; the three data artefacts stay always-staged-together even when they were dirty at the start,
+  and the printed plan says so.
 - `scripts/wg-regate-all.mjs` — the re-gate loop (ported from the scratchpad), resumable.
 
 ## C. One saved workflow — `.claude/workflows/wg-batch.js`

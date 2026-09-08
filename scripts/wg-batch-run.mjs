@@ -85,6 +85,13 @@ const git = (args) => {
   const r = spawnSync('git', args, { cwd: ROOT, encoding: 'utf8', maxBuffer: 1 << 26 });
   return { status: r.status ?? 1, out: String(r.stdout ?? ''), err: String(r.stderr ?? '') };
 };
+/* Every path `git status --porcelain` names, TRACKED OR NOT, rename targets resolved — the same slice
+ * wg-batch-commit.mjs takes, because the commit guard compares its own porcelain against this list.
+ * WHY it includes untracked paths: a separate effort's untracked file is just as much "not this batch's"
+ * as a modified tracked one (orchestrator ruling 2026-09-08: a batch is judged only against what changed
+ * since its own start). */
+const dirtyPaths = () => git(['status', '--porcelain']).out.split(/\r?\n/).filter(Boolean)
+  .map((l) => l.slice(3).split(' -> ').pop().replace(/^"|"$/g, ''));
 const gitSnap = () => {
   const porcelain = git(['status', '--porcelain']).out.split(/\r?\n/).filter(Boolean);
   return {
@@ -389,13 +396,20 @@ async function stageBaseline() {
   /* BOTH halves of the baseline, or the flip audit has nothing to diff: `.bNNN-testbase.json` is the
    * shared contract's metadata, and copyTestbase (above) pins the byte copies. */
   const untrackedTests = git(['ls-files', '--others', '--exclude-standard', 'test']).out.split(/\r?\n/).filter(Boolean);
-  const noCopy = copyTestbase(ROOT, untrackedTests, abs(tb));
-  if (noCopy.length) refuse(`${noCopy.length} untracked test file(s) have no byte copy under ${tb}/ — scripts/test-flip-audit.mjs cannot audit them and would report "no baseline copy to diff against": ${noCopy.join(', ')}`);
+  /* A test file ANOTHER effort left modified at our start has a git blob at startSha, but that blob is
+   * not what the batch inherited — diffing against it reports that effort's edits as this batch's uncited
+   * flips (orchestrator ruling 2026-09-08). So the dirty tracked tests are listed here and the flip audit
+   * diffs them against the byte copy instead; the recursive cpSync of test/ above already took it,
+   * copyTestbase only proves it landed. `--diff-filter=d` drops a deletion, which has nothing to copy. */
+  const dirtyTests = git(['diff', '--name-only', '--diff-filter=d', 'HEAD', '--', 'test']).out.split(/\r?\n/).filter(Boolean);
+  const noCopy = copyTestbase(ROOT, [...untrackedTests, ...dirtyTests], abs(tb));
+  if (noCopy.length) refuse(`${noCopy.length} untracked-or-dirty test file(s) have no byte copy under ${tb}/ — scripts/test-flip-audit.mjs cannot audit them and would report "no baseline copy to diff against": ${noCopy.join(', ')}`);
 
   const testbase = {
     batch: BATCH,
     startSha: cutRecord()?.startSha ?? gitSnap().head,
     untrackedTests,
+    dirtyTests,
     ratchets: {
       'scripts/dropped-inline-check.mjs': {
         HOLE_BASELINE: constNumber(dropped, 'HOLE_BASELINE'),
@@ -418,9 +432,25 @@ async function stageBaseline() {
     + testbase.registries['scripts/wg-values.mjs'].NOT_A_SCALAR.length
     + testbase.registries['scripts/wg-identity.mjs'].SETTLED_IDENTITIES.length;
 
+  /* ---- THE START STATE (orchestrator ruling 2026-09-08) ----
+   * "A batch is judged ONLY against what changed since its own start." Three guards used to read the
+   * WHOLE tree and stall a batch on a separate effort's uncommitted work (a data regeneration, the
+   * bestiary, the tracker): the verify stage, the commit guard and the flip audit. This file is what they
+   * subtract — the dirty paths at our start, and the verify checks that were ALREADY red at our start. */
+  const startState = {
+    batch: BATCH,
+    recordedAt: new Date().toISOString(),
+    startSha: testbase.startSha,
+    dirtyAtStart: dirtyPaths(),
+    verifyFailingAtStart: runVerifyChecks().filter((r) => !r.ok).map(({ name, line }) => ({ name, line })),
+  };
+  write(`${dir}/start-state.json`, startState);
+  counts.dirtyAtStart = startState.dirtyAtStart.length;
+  counts.verifyFailingAtStart = startState.verifyFailingAtStart.length;
+
   return {
     counts,
-    digest: `${note ? note + '. ' : ''}baseline in ${dir} (flags.json: ${counts.flagged} record(s) flagged by a comparer); testbase pinned (${counts.settles} settle keys, 4 ratchets, ${counts.tests} untracked test file(s) with byte copies under ${tb}/, start commit ${testbase.startSha.slice(0, 8)}).${skipped.length ? ` ${PRINT_NOTE}; skipped ${skipped.join(', ')} — THEIRS-dependent, this batch has no Wanderer's Guide side.` : ` gate at start: ${counts.gateGreenAtStart ? 'green' : 'red'}.`}`,
+    digest: `${note ? note + '. ' : ''}baseline in ${dir} (flags.json: ${counts.flagged} record(s) flagged by a comparer); testbase pinned (${counts.settles} settle keys, 4 ratchets, ${counts.tests} untracked + ${dirtyTests.length} dirty test file(s) with byte copies under ${tb}/, start commit ${testbase.startSha.slice(0, 8)}). start-state: ${startState.dirtyAtStart.length} path(s) already dirty, verify red at start for ${startState.verifyFailingAtStart.length} check(s)${startState.verifyFailingAtStart.length ? ` (${startState.verifyFailingAtStart.map((c) => c.name).join(', ')})` : ''}.${skipped.length ? ` ${PRINT_NOTE}; skipped ${skipped.join(', ')} — THEIRS-dependent, this batch has no Wanderer's Guide side.` : ` gate at start: ${counts.gateGreenAtStart ? 'green' : 'red'}.`}`,
     next: 'the read workflow, then --stage read-digest',
   };
 }
@@ -1047,6 +1077,61 @@ async function stageRegate() {
   };
 }
 
+/* ---- the verify chain, ONE CHECK AT A TIME -------------------------------------------------------
+ * `npm run verify` is a single `&&` chain, so the first red check hides every check after it. That is
+ * fatal to the tolerance the orchestrator ruled on 2026-09-08 ("a failing check that was already failing
+ * at baseline … does not fail the stage"): tolerating the check that ABORTS the chain would silently
+ * tolerate the thirty checks that never ran, turning the whole stage into a rubber stamp. So the chain is
+ * split at its `&&` and each check is run on its own — the allowlist is still explicit, derived from
+ * package.json's own `verify` script and nothing else. `jiti x` becomes `npx jiti x`: npm puts
+ * node_modules/.bin on PATH, a bare spawn does not.
+ */
+export function verifyChecks(pkg) {
+  return String(pkg?.scripts?.verify ?? '').split('&&').map((s) => s.trim()).filter(Boolean).map((seg) => {
+    const parts = seg.split(/\s+/);
+    const [cmd, ...args] = parts[0] === 'jiti' ? ['npx', 'jiti', ...parts.slice(1)] : parts;
+    return { name: (seg.match(/scripts\/([\w.-]+)\.mjs/) ?? [])[1] ?? seg, cmd, args, key: [cmd, ...args].join(' ') };
+  });
+}
+const verifyChain = () => verifyChecks(readMaybe('package.json'));
+/** The first line that admits the failure, so the digest names WHAT broke, not just which script. */
+const failLine = (out) => clip(out.split(/\r?\n/).find((l) => /FAIL|✗|✖|refus|Error/i.test(l)) ?? tail(out, 2), 200);
+function runVerifyChecks() {
+  return verifyChain().map((c) => {
+    const r = sh(c.cmd, c.args);
+    return { name: c.name, ok: r.status === 0, line: r.status === 0 ? null : failLine(r.out) };
+  });
+}
+/**
+ * THE TOLERANCE (orchestrator ruling 2026-09-08), pure so test/wg-batch-run.test.ts drives it on a
+ * fixture. A check red at the baseline is another effort's, not this batch's: it is NAMED in the digest
+ * and does not fail the stage. A check green at the baseline and red now is this batch's and fails it.
+ * With no start-state (a batch cut before this existed) nothing is tolerated — the guard's default is on.
+ *
+ * The ruling's second half ("and none of the paths the batch changed belongs to that check's inputs") is
+ * deliberately NOT built: no check declares its inputs, so any mapping would be a guess that could
+ * tolerate a real regression. Simple and honest, as the ruling asks — the digest says what was tolerated.
+ */
+export function verifyVerdict(results, startState) {
+  const known = new Set((startState?.verifyFailingAtStart ?? []).map((c) => c.name));
+  const failed = results.filter((r) => !r.ok);
+  const tolerated = startState ? failed.filter((r) => known.has(r.name)) : [];
+  const newly = failed.filter((r) => !tolerated.includes(r));
+  return {
+    ok: newly.length === 0,
+    checks: results.length,
+    tolerated: tolerated.map((r) => r.name),
+    newly: newly.map((r) => r.name),
+    digest: `${results.length} verify check(s), ${results.length - failed.length} clean`
+      + (tolerated.length ? `; pre-existing at start (not this batch): ${tolerated.map((r) => r.name).join(', ')}` : '')
+      + (newly.length ? `; FAILED: ${newly.map((r) => `${r.name} — ${r.line}`).join(' ; ')}` : '')
+      + (startState ? '' : '; no baseline start-state.json, so nothing is tolerated — run --stage baseline'),
+  };
+}
+
+/* The suite tolerates NOTHING (ruling 2026-09-08): the tests are the batch's own instrument, and a red
+ * test is red for this batch whoever turned it red. Only verify, the commit guard and the flip audit
+ * subtract the start state. */
 async function stageSuite() {
   const r = node_('scripts/vt.mjs', []);
   const line = (r.out.match(/Tests\s+.*$/m) ?? [])[0] ?? tail(r.out, 3);
@@ -1060,19 +1145,25 @@ async function stageSuite() {
 }
 
 async function stageVerify() {
-  const r = sh('npm', ['run', 'verify']);
-  const fails = r.out.split(/\r?\n/).filter((l) => /FAIL|✗|refus/i.test(l)).slice(0, 6);
+  const startState = readMaybe(`${P('baseline')}/start-state.json`);
+  const v = verifyVerdict(runVerifyChecks(), startState);
   return {
-    ok: r.status === 0,
-    counts: { failures: fails.length },
-    digest: r.status === 0 ? 'npm run verify is clean.' : `npm run verify failed: ${clip(fails.join(' ; ') || tail(r.out, 4), 440)}`,
-    next: r.status === 0 ? 'node scripts/wg-batch-commit.mjs --batch ' + BATCH : 'the closer triages the failing guard',
+    ok: v.ok,
+    counts: { checks: v.checks, tolerated: v.tolerated.length, failures: v.newly.length },
+    digest: v.digest,
+    next: v.ok ? 'node scripts/wg-batch-commit.mjs --batch ' + BATCH : 'the closer triages the failing guard',
   };
 }
 
+/* The verify chain's own commands, read out of package.json — the baseline stage runs them to record
+ * which checks were ALREADY red, the verify stage runs them to compare (ruling 2026-09-08). Still an
+ * explicit allowlist: nothing but package.json's `verify` script can put a command on it, and `npm run
+ * data` is on no chain. */
+const VERIFY_ALLOW = verifyChecks(readMaybe('package.json')).map((c) => c.key);
+
 const STAGES = {
   cut: { allow: ['scripts/wg-next-batch-ids.mjs', 'scripts/wg-batch.mjs'], run: stageCut },
-  baseline: { allow: ['scripts/wg-parity-dump.mjs', 'scripts/wg-values.mjs', 'scripts/wg-identity.mjs', 'scripts/wg-diff.mjs', 'scripts/wg-experience.mjs', 'scripts/wg-batch-gate.mjs', 'npx jiti scripts/wg-casting.mjs --out work/.b' + BATCH + '-baseline/casting.json'], run: stageBaseline },
+  baseline: { allow: ['scripts/wg-parity-dump.mjs', 'scripts/wg-values.mjs', 'scripts/wg-identity.mjs', 'scripts/wg-diff.mjs', 'scripts/wg-experience.mjs', 'scripts/wg-batch-gate.mjs', 'npx jiti scripts/wg-casting.mjs --out work/.b' + BATCH + '-baseline/casting.json', ...VERIFY_ALLOW], run: stageBaseline },
   'read-digest': { allow: [], run: stageReadDigest },
   apply: { allow: ['scripts/apply-parity-fixes.mjs', 'scripts/apply-backfill-now.mjs'], run: stageApply },
   'apply-digest': { allow: [], run: stageApplyDigest },
@@ -1085,7 +1176,7 @@ const STAGES = {
   gate: { allow: ['scripts/wg-batch-gate.mjs'], run: stageGate },
   regate: { allow: ['scripts/wg-regate-all.mjs'], run: stageRegate },
   suite: { allow: ['scripts/vt.mjs'], run: stageSuite },
-  verify: { allow: ['npm run verify'], run: stageVerify },
+  verify: { allow: VERIFY_ALLOW, run: stageVerify },
 };
 
 /* ================================================================================================= *
