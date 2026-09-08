@@ -1,0 +1,103 @@
+{
+  "findings": [
+    {
+      "id": "magic-finder#tradition",
+      "note": "GAP LINE (work/.b032-gaps.json, engine, ref work/.b032-verify-engine.txt:177). The engine half shipped in work/.b032-rows-engine.json — InnateSpellGrant.traditionFromCasting is read at src/rules/build.ts (the per-spell tradition vote). These are the two magic-finder LANE SIBLINGS, which print the identical clause and carry the identical hard-coded tradition:'arcane' grants. No engine work; data only. Both rows SUPERSEDE the shipped effect-backfill.json rows of the same record+field, and both carry the whole existing value plus the one new flag per grant.",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "lore-seeker",
+          "field": "innateSpells",
+          "supersedes": true,
+          "value": [
+            {
+              "spellId": "translate",
+              "tradition": "arcane",
+              "rank": 2,
+              "usesPerDay": 1,
+              "traditionFromCasting": true
+            },
+            {
+              "spellId": "sound-body",
+              "tradition": "arcane",
+              "rank": 2,
+              "usesPerDay": 1,
+              "traditionFromCasting": true
+            },
+            {
+              "spellId": "see-the-unseen",
+              "tradition": "arcane",
+              "rank": 2,
+              "usesPerDay": 1,
+              "traditionFromCasting": true
+            }
+          ],
+          "why": "feat-1131 prints \"If you could already cast spells, these spells are of the same tradition. Otherwise, they are arcane spells\". The three grants hard-code tradition 'arcane', and build.ts votes the innate entry's tradition from the grants' own tradition before ever reaching caster?.tradition, so a divine cleric read them as arcane. traditionFromCasting prefers the caster's tradition and keeps the printed 'arcane' as the not-a-caster fallback. Whole value re-emitted from the shipped overlay row (three grants, every field kept)."
+        },
+        {
+          "category": "feats",
+          "id": "cautious-delver",
+          "field": "innateSpells",
+          "supersedes": true,
+          "value": [
+            {
+              "spellId": "dispel-magic",
+              "tradition": "arcane",
+              "rank": 2,
+              "usesPerDay": 1,
+              "traditionFromCasting": true
+            },
+            {
+              "spellId": "knock",
+              "tradition": "arcane",
+              "rank": 2,
+              "usesPerDay": 1,
+              "traditionFromCasting": true
+            },
+            {
+              "spellId": "resist-energy",
+              "tradition": "arcane",
+              "rank": 2,
+              "usesPerDay": 1,
+              "traditionFromCasting": true
+            }
+          ],
+          "why": "feat-2237 prints \"If you can already cast spells, these spells are of the same tradition. Otherwise, they're arcane spells\" — the same clause and the same defect as lore-seeker. Whole value re-emitted from the shipped overlay row."
+        }
+      ]
+    },
+    {
+      "id": "magic-finder#spellcasting-statistic",
+      "note": "The SAME SENTENCE'S second half on the same two lane siblings. The finding's own proposal says \"Same sentence, same missing field, on the two lane siblings lore-seeker and cautious-delver\"; work/.b032-rows-data-rows.json authored the row for feats/magic-finder only. No engine work: build.ts already reads spellcastingGrant into the innate entry's `profile` and resolves keyAbility as `caster?.keyAbility ?? profile?.keyAbility ?? 'cha'`, so a real caster's own attribute still wins, exactly as print says. New field on both records — no existing overlay row, so no supersedes. No collision: the other three b032 specs touch neither record.",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "lore-seeker",
+          "field": "spellcastingGrant",
+          "value": {
+            "tradition": "arcane",
+            "keyAbility": "int",
+            "proficiency": "trained"
+          },
+          "why": "feat-1131 prints \"Otherwise, they are arcane spells, you use Intelligence as your spellcasting ability, and you become trained in spell attack rolls and spell DCs for arcane spells.\" Without a spellcastingGrant the innate entry falls back to Charisma for a non-casting Scrollmaster. Same shape as crystal-ward-spells and as the magic-finder row in work/.b032-rows-data-rows.json."
+        },
+        {
+          "category": "feats",
+          "id": "cautious-delver",
+          "field": "spellcastingGrant",
+          "value": {
+            "tradition": "arcane",
+            "keyAbility": "int",
+            "proficiency": "trained"
+          },
+          "why": "feat-2237 prints \"Otherwise, they're arcane spells, you use Intelligence as your spellcasting ability, and you become trained in spell attack rolls and spell DCs for arcane spells.\" Same clause, same missing field."
+        }
+      ]
+    },
+    {
+      "id": "magical-knowledge#skill-feats",
+      "note": "CODE ONLY, no rows — the whole lane is registry-keyed. src/rules/featGrants.ts: FeatGrant.bonusSkillFeat widened boolean -> boolean | number, plus the exported bonusSkillFeatCount / bonusSkillFeatKey helpers. src/rules/featGrantsLane.ts: 'magical-knowledge' gains bonusSkillFeat: 2. src/rules/build.ts: the injection loop and the reconstruction loop both walk the count and key each pick with bonusSkillFeatKey (index 0 = the bare feat id, so no saved character moves). src/builder/Builder.tsx: one picker per granted feat, each hiding the sibling pickers' answers so a printed grant cannot be spent on a duplicate buildCharacter would drop.",
+      "backfillRows": []
+    }
+  ]
+}

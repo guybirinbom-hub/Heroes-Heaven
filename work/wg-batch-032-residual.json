@@ -1,0 +1,249 @@
+{
+ "batch": "work/wg-batch-032.json",
+ "examined": 40,
+ "method": "Opus readers (print + WG raw ops + every carrier) each followed by an adversarial verifier; findings applied by 8 family spec(s), verdicts derived by scripts/wg-batch-close.mjs from the cited rows, edits, tests and teaches",
+ "confirmed": [
+  {
+   "id": "knowledge-is-power",
+   "finding": "knowledge-is-power",
+   "severity": "player-visible",
+   "summary": "Our record and its situationalBonuses entry carry the LEGACY text and hand the player four +1 circumstance bonuses, while the print at its own aonId (feat-5039, Player Core pg. 203, edition remaster) gives the ENEMY a -1 circumstance penalt",
+   "fixed": true
+  },
+  {
+   "id": "show-off",
+   "finding": "show-off",
+   "severity": "internal",
+   "summary": "The packet's theirEncoding for Show-Off was taken from the wrong Wanderer's Guide row — a level-1 Performance feat — while the row matching our feat (the level 8 Acrobat/Firebrand free action, feat-4144) carries no operations at all; adopti",
+   "fixed": true
+  },
+  {
+   "id": "prolific-prophet-spellcasting",
+   "finding": "prolific-prophet-spellcasting",
+   "severity": "player-visible",
+   "summary": "The extra spells the feat adds to the repertoire reach the sheet's entry but the builder never offers a pick for them: the archetype pick-cap ignores spellSlotBonus.perRank, so at level 8 the character gets a second rank-1 known spell and s",
+   "fixed": true
+  },
+  {
+   "id": "malleable-mental-forge",
+   "finding": "malleable-mental-forge",
+   "severity": "player-visible",
+   "summary": "The two weapon traits chosen each morning are recorded and then reach nothing: the record's choice flag has no reader anywhere in src/, and the mind weapon ships with an empty trait list, so the strike never gains Grapple, Modular, Nonletha",
+   "fixed": true
+  },
+  {
+   "id": "occult-breadth",
+   "finding": "occult-breadth",
+   "severity": "player-visible",
+   "summary": "The extra repertoire spells the feat grants are unreachable: buildCharacter adds the feat's perRank slots to the archetype entry and sizes the repertoire from that count, but the Builder's spell-pick cap for an archetype caster ignores ever",
+   "fixed": true
+  },
+  {
+   "id": "hazard-finder",
+   "finding": "hazard-finder",
+   "severity": "player-visible",
+   "summary": "The feat's second clause — finding hazards without Searching — is modelled by neither side and is not surfaced on the Search action a player actually reads.",
+   "fixed": true
+  },
+  {
+   "id": "magical-knowledge",
+   "finding": "magical-knowledge#skill-feats",
+   "severity": "player-visible",
+   "summary": "The printed skill feat(s) are granted by neither our record nor our registries — WG asks for one and we ask for none, so the feat's whole second sentence reaches the player as nothing.",
+   "fixed": true
+  },
+  {
+   "id": "magical-knowledge",
+   "finding": "magical-knowledge#master-precondition",
+   "severity": "player-visible",
+   "summary": "Our master slot offers all four skills with no requirement that the picked skill is already expert, so a character trained (not expert) in a skill jumps straight to master off this feat.",
+   "fixed": true
+  },
+  {
+   "id": "magical-knowledge",
+   "finding": "magical-knowledge#distinct-skills",
+   "severity": "player-visible",
+   "summary": "Nothing stops both slots resolving to the same skill, and an unanswered pair defaults both to Arcana — so the feat silently delivers one skill's increase instead of the two it prints.",
+   "fixed": true
+  },
+  {
+   "id": "magical-knowledge",
+   "finding": "magical-knowledge#instrument",
+   "severity": "internal",
+   "summary": "The identity flag \"theirs-not-ours=[skillarcana, skillnature, skilloccultism, skillreligion] | ours=[(nothing)]\" is an instrument misread: we do offer those four options, through FEAT_GRANTS.skillChoices, and the comparer's reader for that ",
+   "fixed": true
+  },
+  {
+   "id": "safeguard-soul",
+   "finding": "safeguard-soul#undead",
+   "severity": "player-visible",
+   "summary": "The feat's categorical immunity to being made undead is modelled by neither side, though our feats records already have an `immunities` carrier that would display it.",
+   "fixed": true
+  },
+  {
+   "id": "safeguard-soul",
+   "finding": "safeguard-soul#allies",
+   "severity": "player-visible",
+   "summary": "The printed clause extending the +2 status bonus to allies while the spiral glows is carried by neither side, so a party reading the character's sheet sees a self-only bonus.",
+   "fixed": true
+  },
+  {
+   "id": "heal-mount",
+   "finding": "heal-mount",
+   "severity": "player-visible",
+   "summary": "Heal Mount changes what Lay on Hands restores when cast on your mount, and we carry nothing at all for it — no spellNote, no situational entry, no marker — so the clause reaches the player nowhere.",
+   "fixed": true
+  },
+  {
+   "id": "mighty-bulwark",
+   "finding": "mighty-bulwark#replacement-wording",
+   "severity": "player-visible",
+   "summary": "Our situational entry states Mighty Bulwark as a \"+4 (bulwark)\" bonus on Reflex saves, but the bulwark number is used INSTEAD OF your Dexterity modifier — for a high-Dex character it is a reduction, so the star as written overstates the sav",
+   "fixed": true
+  },
+  {
+   "id": "mighty-bulwark",
+   "finding": "mighty-bulwark#supersedes-trait-bulwark",
+   "severity": "player-visible",
+   "summary": "A character with Mighty Bulwark wearing bulwark armor reads TWO stars on the same Reflex row — the trait's +3 and the feat's +4 — although print says the feat INCREASES the trait's number rather than adding a second one.",
+   "fixed": true
+  },
+  {
+   "id": "magic-finder",
+   "finding": "magic-finder#spellcasting-statistic",
+   "severity": "player-visible",
+   "summary": "Print gives a non-caster who takes Magic Finder an Intelligence-keyed arcane spellcasting statistic; we carry no spellcastingGrant, so the innate entry falls back to Charisma and the feat's three spells roll and set DCs off the wrong attrib",
+   "fixed": true
+  },
+  {
+   "id": "magic-finder",
+   "finding": "magic-finder#tradition",
+   "severity": "player-visible",
+   "summary": "We hard-code tradition \"arcane\" on all three grants, so an existing caster's Magic Finder spells are listed as arcane even though print makes them that caster's own tradition.",
+   "fixed": true
+  },
+  {
+   "id": "projectile-snatching",
+   "finding": "projectile-snatching",
+   "severity": "player-visible",
+   "summary": "Projectile Snatching's return-Strike is not marked on the Deflect Projectile row, although our own recordMarks lane already carries the identical clause for the sibling feat Return Fire.",
+   "fixed": true
+  },
+  {
+   "id": "improved-elemental-blast",
+   "finding": "improved-elemental-blast",
+   "severity": "player-visible",
+   "summary": "The feat's whole content — +1 Elemental Blast damage die per taking — has no carrier anywhere on our side; the blast's die count is a hard-coded class-level table in derive.ts that no record can raise.",
+   "fixed": true
+  },
+  {
+   "id": "improved-elemental-blast",
+   "finding": "improved-elemental-blast#no-archetype-blast",
+   "severity": "player-visible",
+   "summary": "A character who can take this feat (prerequisite: Kineticist Dedication, i.e. never a kineticist by class) has no Elemental Blast strike at all, so the mechanic this feat improves is not on the sheet to begin with.",
+   "fixed": true
+  },
+  {
+   "id": "basic-beast-gunner-spellcasting",
+   "finding": "basic-beast-gunner-spellcasting#dropped-clause",
+   "severity": "player-visible",
+   "summary": "Our shipped rules text drops the linked phrase that names what the feat grants, leaving the sentence 'You gain the .' — the player cannot see that they gain the basic spellcasting benefits.",
+   "fixed": true
+  },
+  {
+   "id": "second-blessing",
+   "finding": "second-blessing",
+   "severity": "player-visible",
+   "summary": "Our blessing picker lets the player re-take the blessing they already chose at level 3, which the printed text forbids — the record omits `disableIfOwned`, the shipped field for exactly this restriction (Manifold Modifications, the sibling ",
+   "fixed": true
+  },
+  {
+   "id": "lifting-leather",
+   "finding": "lifting-leather",
+   "severity": "player-visible",
+   "summary": "Lifting Leather raises no Bulk threshold at all — the armor carries no passiveEffects, so the printed +2 encumbered limit is delivered by nothing, while WG delivers it.",
+   "fixed": true
+  },
+  {
+   "id": "lifting-leather",
+   "finding": "lifting-leather#max",
+   "severity": "player-visible",
+   "summary": "The printed maximum Bulk limit rises by 4 while the encumbered limit rises by 2; neither side models the extra +2 on the maximum, and no item field can express it — ItemPassiveEffects has bulkLimitBonus but no bulkMaxBonus, and deriveBulk's",
+   "fixed": true
+  },
+  {
+   "id": "mantle-of-the-tikbalang",
+   "finding": "mantle-of-the-tikbalang#illusory-thrash",
+   "severity": "player-visible",
+   "summary": "Illusory Thrash's extra 4d6 mental damage on the Strike is modelled by neither side — the record carries the activation cost and the once-per-day counter but nothing that tells the player the Strike hits harder.",
+   "fixed": true
+  },
+  {
+   "id": "sigil-of-the-first-clan",
+   "finding": "sigil-of-the-first-clan#spell-dc",
+   "severity": "player-visible",
+   "summary": "The sigil prints a fixed DC 24 for its Command, but our heldSpells lane casts it at the WIELDER's spell DC (Int/trained when the wielder is not a caster), so the sheet shows a DC the printed text contradicts.",
+   "fixed": true
+  },
+  {
+   "id": "canopy-bulwark",
+   "finding": "canopy-bulwark#assisting-rune",
+   "severity": "player-visible",
+   "summary": "Canopy Bulwark is printed as a +1 ASSISTING leaf weave, but our record carries only builtInRunes.potency:1 — the assisting property rune's bulk-limit grant is dropped, so the wearer's encumbered/maximum Bulk thresholds never move.",
+   "fixed": true
+  },
+  {
+   "id": "canopy-bulwark",
+   "finding": "canopy-bulwark#spell-tradition",
+   "severity": "player-visible",
+   "summary": "Their giveSpell op names the granted Haste's tradition as PRIMAL; ours carries it as heldSpells with no tradition field, so build.ts derives the entry's tradition from haste's tradition list and labels it ARCANE.",
+   "fixed": true
+  },
+  {
+   "id": "crown-of-the-fire-eater",
+   "finding": "crown-of-the-fire-eater#activation-effect",
+   "severity": "player-visible",
+   "summary": "The reaction's whole mechanical payload — fire resistance rising from 5 to 15 for the triggering damage, and the Hit Points regained after it — is modelled by neither side; we carry only the 1/day counter and the reaction action cost, so no",
+   "fixed": true
+  }
+ ],
+ "refuted": [],
+ "flaggedResidues": [
+  {
+   "id": "flaggedResidue: pre-existing, display-only, and in files another family is holding this batch. narrowChoiceOptions greys the option the slot is currently showing because choiceOwnedFeatureIds folds a picker's own ownsFeature answer back into ownedFeatureIds (src/rules/derive.ts:3465); feats/manifold-modifications ships that exact pair today, so second-blessing inherits the shape rather than causing it, and nothing in src/rules/build.ts reads the narrowed list — no built character is wrong, only the Builder's greying. The exemption is one test and already exists on shared.tsx's OTHER picker (`const off = !!o.disabled && o.id !== value`, src/builder/shared.tsx:835), so the fix is to carry it into the PopupSelect branches or into narrowChoiceOptions. src/rules/derive.ts, src/rules/build.ts and src/builder/Builder.tsx are all the ENGINE and GAP-ENGINE families' stage[] in work/.b032-specs.json, so a gap agent editing them would land on top of edits still in flight; and it needs BOTH pickers changed together, which is a lane, not a line. Re-raise with the two disableIfOwned records (manifold-modifications, second-blessing) as its cases.",
+   "finding": "flaggedResidue: pre-existing, display-only, and in files another family is holding this batch. narrowChoiceOptions greys the option the slot is currently showing because choiceOwnedFeatureIds folds a picker's own ownsFeature answer back into ownedFeatureIds (src/rules/derive.ts:3465); feats/manifold-modifications ships that exact pair today, so second-blessing inherits the shape rather than causing it, and nothing in src/rules/build.ts reads the narrowed list — no built character is wrong, only the Builder's greying. The exemption is one test and already exists on shared.tsx's OTHER picker (`const off = !!o.disabled && o.id !== value`, src/builder/shared.tsx:835), so the fix is to carry it into the PopupSelect branches or into narrowChoiceOptions. src/rules/derive.ts, src/rules/build.ts and src/builder/Builder.tsx are all the ENGINE and GAP-ENGINE families' stage[] in work/.b032-specs.json, so a gap agent editing them would land on top of edits still in flight; and it needs BOTH pickers changed together, which is a lane, not a line. Re-raise with the two disableIfOwned records (manifold-modifications, second-blessing) as its cases.",
+   "severity": "internal",
+   "summary": "src/rules/derive.ts narrowChoiceOptions (:1700,:1730): `disableIfOwned` has no \"never this slot's own answer\" exemption (the domains branch at build.ts:1974 has one), so a picker with ownsFeature + disableIfOwned greys the answer it is currently displaying. Pre-existing — feats/manifold-modifications ships that exact pair today — and the second-blessing row inherits it rather than causing it. Not…",
+   "fixed": false,
+   "family": "data-rows",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: unauthorable without a hard refusal, and not established as a defect. Any row would write feats/basic-beast-gunner-spellcasting.description — the exact key work/.b032-rows-data-rows.json#basic-beast-gunner-spellcasting#dropped-clause already writes — and precheck (1) in scripts/wg-batch-run.mjs hard-refuses two specs on one key (\"resolve by hand, the applier will not merge\"); a gap agent may not rewrite another family's spec to fold it in, so the merged row has to be authored by whoever owns that finding. It is also not simply ours-being-wrong: our sentence reads \"a spell slot of a new RANK\" where mirror feat-3230 still reads \"a new LEVEL\", so our prose is the MORE remastered of the two and the differing opener is as likely a later printing as a strip. This wants a read-lane finding that compares both printings and emits ONE row, not a second row bolted onto a finding whose claim was only the dropped link label. Not an owner question: print does not contradict WG here, and nothing about the mechanic is in doubt.",
+   "finding": "flaggedResidue: unauthorable without a hard refusal, and not established as a defect. Any row would write feats/basic-beast-gunner-spellcasting.description — the exact key work/.b032-rows-data-rows.json#basic-beast-gunner-spellcasting#dropped-clause already writes — and precheck (1) in scripts/wg-batch-run.mjs hard-refuses two specs on one key (\"resolve by hand, the applier will not merge\"); a gap agent may not rewrite another family's spec to fold it in, so the merged row has to be authored by whoever owns that finding. It is also not simply ours-being-wrong: our sentence reads \"a spell slot of a new RANK\" where mirror feat-3230 still reads \"a new LEVEL\", so our prose is the MORE remastered of the two and the differing opener is as likely a later printing as a strip. This wants a read-lane finding that compares both printings and emits ONE row, not a second row bolted onto a finding whose claim was only the dropped link label. Not an owner question: print does not contradict WG here, and nothing about the mechanic is in doubt.",
+   "severity": "internal",
+   "summary": "work/.b032-queue.json / read lane: our shipped description for feats/basic-beast-gunner-spellcasting opens \"granting you your own pool of magical might through the amplifying power of their synergistic magic\", where mirror feat-3230 (the record's own aonId) prints \"granting you the power of their synergistic magic.\" Outside this finding's claim (which is only the dropped label), so I left the sen…",
+   "fixed": false,
+   "family": "data-rows",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: a STORAGE-SHAPE decision, which is the orchestrator's half of the protocol, not a line the closer may settle. dailyChoicesFor (src/rules/dailyChoices.ts:43) emits one row per owned record's `choice` and the morning answer is stored under one key per record; fanning it out per pick the way build-time choiceKeys() does changes the key shape of every saved character's daily answers, and a migration for answers already on disk is a ruling, not a refactor. The ENGINE half is built and tested (answersForChoiceFlag reads this morning's answers, replacesFlag supplies the whole answer, and the reader comma-splits), so the second trait is delivered the day the picker fans out — nothing else is owed. Reported in needsOrchestrator; the record's own parity verdict stays FIXED on the built half, which is where the read finding's claim (the answer reaching NOTHING) was.",
+   "finding": "flaggedResidue: a STORAGE-SHAPE decision, which is the orchestrator's half of the protocol, not a line the closer may settle. dailyChoicesFor (src/rules/dailyChoices.ts:43) emits one row per owned record's `choice` and the morning answer is stored under one key per record; fanning it out per pick the way build-time choiceKeys() does changes the key shape of every saved character's daily answers, and a migration for answers already on disk is a ruling, not a refactor. The ENGINE half is built and tested (answersForChoiceFlag reads this morning's answers, replacesFlag supplies the whole answer, and the reader comma-splits), so the second trait is delivered the day the picker fans out — nothing else is owed. Reported in needsOrchestrator; the record's own parity verdict stays FIXED on the built half, which is where the read finding's claim (the answer reaching NOTHING) was.",
+   "severity": "internal",
+   "summary": "malleable-mental-forge, second half — src/sheet/CharacterSheet.tsx + src/rules/dailyChoices.ts store ONE value per daily choice key, so a picks:2 daily choice records one trait and the engine's whole-answer replacement then delivers ONE trait where print gives two. ADDED BY THE CLOSER: the engine report and verify both declare it and no gap line carried it, so it was invisible to --stage gaps.",
+   "fixed": false,
+   "family": "engine",
+   "kind": "CROSS-FILE GAPS"
+  }
+ ],
+ "rejected": 0,
+ "askOwner": [
+  {
+   "id": "necromantic-tenacity",
+   "desk": 133,
+   "summary": "WG re-triggers the degree shift on \"an effect with the death or void trait\" where the printed feat triggers on \"a necromancy effect\" — not a narrower encoding of print but a different trigger set (leg"
+  }
+ ],
+ "complete": true
+}

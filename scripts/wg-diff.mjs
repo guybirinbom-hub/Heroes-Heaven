@@ -1565,6 +1565,26 @@ const VERIFIED_EQUIVALENT = {
   'martial-experience': ['unmapped'],
 
   /*
+   * IMPROVED ELEMENTAL BLAST — their `adjValue KINETICIST_BLAST_DICE = 1` names a variable this
+   * comparer has no kind for, exactly like MARTIAL_EXPERIENCE above, and the mechanic it names is now
+   * modelled: AoN feat-4337 prints *"The damage of your elemental blast increases by one die"*, and
+   * batch 032 authored `feats/improved-elemental-blast.blastDiceBonus = 1` with its reader in
+   * deriveBlastStrikes (src/rules/derive.ts), summed over `c.feats` so the feat's Special — a second
+   * taking at 14th and a third at 18th — falls out of the one field. Pinned on a BUILT character by
+   * test/batch032-engine.test.ts ("improved-elemental-blast: each taking adds one damage die…", a
+   * level-14 archetype kineticist rolling 2dN with one taking and 3dN with two).
+   *
+   * ⚠ SETTLED PER RECORD, NOT BY REMAPPING THE VARIABLE. Mapping KINETICIST_BLAST_DICE to a kind
+   * (`weapon` was the candidate) would have opened two FALSE gaps: their `gates-threshold` and
+   * `elemental-blast` rows write the same variable for the +1-die-every-four-levels table, which is a
+   * LEVEL table in derive.ts and no record field, so both would have started reporting a missing
+   * `weapon` they cannot carry — measured on the dump: 8 of their rows write this variable across
+   * three record names, and exactly one of them (this feat) has a per-record carrier on our side.
+   */
+  // batch 032: improved-elemental-blast
+  'improved-elemental-blast': ['unmapped'],
+
+  /*
    * GATE'S THRESHOLD — the branch lives in the BUILD, not on the record.
    *
    * *"At 5th level and every 4 levels thereafter, you choose to either expand the portal or fork the

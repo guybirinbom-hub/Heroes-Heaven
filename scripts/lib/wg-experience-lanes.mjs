@@ -375,6 +375,22 @@ export function effectDelivery(effect, surface, names = {}) {
     if (surface.critSpec == null) return 'unchecked';
     return surface.critSpec > 0 ? 'delivered' : 'undelivered';
   }
+  if ((type === 'adjValue' || type === 'setValue') && variable === 'KINETICIST_BLAST_DICE') {
+    /*
+     * THE ELEMENTAL BLAST'S DIE COUNT — judged on the RECORD's carrier, not on the host's strikes.
+     *
+     * AoN feat-4337: *"The damage of your elemental blast increases by one die."* The blast strike only
+     * exists once the element pick is ANSWERED, and this harness builds every host with its controls
+     * empty (Improved Elemental Blast's host is a fighter holding Kineticist Dedication, `answered: []`),
+     * so there is no strike on the surface for a die count to be read off and the differential moves
+     * nothing. `surface.blastDiceBonus` is the record's own `blastDiceBonus` — the field deriveBlastStrikes
+     * sums over `c.feats` (src/rules/derive.ts) — computed in scripts/wg-experience.mjs, which owns
+     * core.json. Same construction as `grantsInnateSpell` below: the record's grant IS the predicate.
+     * A record asserting their op while carrying no such field still reports `undelivered`.
+     */
+    if (surface.blastDiceBonus == null) return 'unchecked';
+    return surface.blastDiceBonus > 0 ? 'delivered' : 'undelivered';
+  }
   if ((type === 'adjValue' || type === 'setValue') && variable === 'RESISTANCES') {
     const res = surface.defenses?.resistances;
     if (!Array.isArray(res)) return 'unchecked';

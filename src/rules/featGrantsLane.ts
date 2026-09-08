@@ -67,7 +67,20 @@ export const FEAT_LANE_GRANTS: Record<string, FeatGrant> = {
    * the polearm and spear weapon groups — martial as simple, advanced as martial". Two clauses because
    * a group rule carries one rank, so each step narrows the same groups by `category`. */
   'avenging-runelord-dedication': { skills: { arcana: 'trained' }, rankUpgrade: [{ level: 14, rank: 'expert' }, { level: 16, rank: 'master' }], weaponFamiliarity: [{ weapons: [], groups: ['polearm', 'spear'], category: 'martial', mirrorCategory: 'simple' }, { weapons: [], groups: ['polearm', 'spear'], category: 'advanced', mirrorCategory: 'martial' }] },
-  'magical-knowledge': { "skillChoices": [{ "options": ["arcana", "nature", "occultism", "religion"], "rank": "master" }, { "options": ["arcana", "nature", "occultism", "religion"], "rank": "expert" }] },
+  /* *"You gain a skill feat associated with each of the skills you chose."* — the feat chooses TWO
+   * skills, so it grants TWO skill feats. WG encodes ONE `select` (FILTERED, traits ['Skill']); print
+   * is the authority, so the count is 2. `bonusSkillFeat` was a boolean and could only say "one". */
+  /* …and the FIRST slot is a conditional rank, not a flat master. *"Increase your proficiency rank in
+   * one of Arcana, Nature, Occultism, or Religion FROM EXPERT TO MASTER and in another from trained to
+   * expert"* (feat-8402, the record's own aonId — feat-4720 is Anthropomorphic Shape and was cited here
+   * by mistake) — the master step is written on a skill you are ALREADY EXPERT in, and a flat
+   * `rank: 'master'` handed master to a merely trained character. `conditionalRank` is the existing
+   * carrier for exactly this sentence shape (Lion Blade Dedication, aldori-duelist-dedication) and both
+   * readers already honour it — src/rules/build.ts:5813 and src/builder/Builder.tsx:171 each compute
+   * `maxRank(current, base) === current ? upgraded : base`, so no engine work is owed. `rank` stays at
+   * the BASE, the convention every other conditionalRank slot follows. */
+  // batch 032: magical-knowledge#master-precondition
+  'magical-knowledge': { "skillChoices": [{ "options": ["arcana", "nature", "occultism", "religion"], "rank": "expert", "conditionalRank": { "base": "expert", "upgraded": "master" } }, { "options": ["arcana", "nature", "occultism", "religion"], "rank": "expert" }], "bonusSkillFeat": 2 },
   'resolute': { "save": { "will": "master" } },
   'master-spotter-investigator': { "perception": "master" },
   // Ancestry weapon familiarity: named weapons, not a whole category. All ten ids verified in core.json.

@@ -1018,6 +1018,15 @@
    "theirs": "The same leading unconditional giveSpellSlot, castingSource DRUID, 20 entries all rank 0 amt 1, op id 84a28337-e1d8-4c75-b49e-f5a2533637d7 (identical to Divine Breadth's), while Druid Dedication separately gives rank 0 amt 2 at every level. Arcane Breadth again lacks the op.",
    "ours": "feats/primal-breadth spellSlotBonus { perRank: 1, exceptHighest: 2, entryId: 'druid-dedication-casting' } — matches print and matches WG's conditional ladder; the entry id resolves (build.ts:7176, casterArchetypes.ts:110). We grant no cantrip.",
    "question": "The druid half of the Divine Breadth question, filed separately so it can be ruled on separately: follow WG's extra rank-0 druid slot, or keep print? If you rule once for the Breadth family, say so and we apply it to every feat carrying that op uuid."
+  },
+  {
+   "n": 133,
+   "id": "necromantic-tenacity",
+   "batch": 32,
+   "printed": "AoN feat-886 (Lost Omens World Guide, Feat 8, no remaster_id — this feat has never been remastered, and our record's edition is 'legacy-era'): \"Your training against necromantic effects allows you to escape the worst of their touch. If you roll a success on a saving throw against a necromancy effect, you get a critical success instead; if you roll a critical failure on such a save, you get a failure instead.\"",
+   "theirs": "Three addBonusToValue ops (SAVE_FORT, SAVE_REFLEX, SAVE_WILL), each with text=\"If you roll a success on a saving throw against an effect with the death or void trait, you get a critical success instead; if you roll a critical failure on such a save, you get a failure instead.\" — their ability_block 29024, verified with node scripts/wg-show.mjs \"Necromantic Tenacity\" --raw.",
+   "ours": "feats/necromantic-tenacity degreeShifts [{shift:'successToCrit', when:'on a save against a necromancy effect', saves:['all']}, {shift:'critFailToFail', when:'on a save against a necromancy effect', saves:['all']}] — print's wording verbatim, delivered on all three save rows via degreeShiftRecords in src/rules/explain.ts. Same two shifts and the same three saves as theirs; only the TRIGGER text differs.",
+   "question": "Which trigger set do we ship — print's \"a necromancy effect\" (what we carry today) or Wanderer's Guide's \"an effect with the death or void trait\"? This is not WG encoding print more narrowly: the two sets genuinely differ. Checked against the AoN mirror, four remastered death/void effects were NOT necromancy in legacy (Vision of Death and Phantasmagoria were illusion, Fatal Aria enchantment, Curse of Lost Time transmutation), so their set is not a subset of ours, and legacy necromancy covers effects carrying neither trait (vitality and curse effects). The feat itself has never been remastered, so print still says necromancy; WG appears to have remastered the trigger on its own. Options: (a) keep print (status quo, we differ from WG on the trigger text), (b) adopt WG's death-or-void trigger, or (c) carry both — shift on a necromancy effect OR on an effect with the death or void trait. Batch 032's parity verdict for this record stays OWNER-QUEUED until you rule."
   }
  ],
  "deferred": [

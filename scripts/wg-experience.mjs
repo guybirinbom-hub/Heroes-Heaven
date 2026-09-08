@@ -176,8 +176,17 @@ for (const row of batch) {
     if (Array.isArray(v.innateSpells) && v.innateSpells.length) return true;
     return Object.values(v).some((x) => scan(x, depth + 1));
   })(core[row.bucket]?.[row.id]);
+  /* Does this record raise the ELEMENTAL BLAST's damage dice? Same shape as grantsInnateSpell above,
+   * and for the same reason: their `adjValue KINETICIST_BLAST_DICE = 1` lands on a strike that only
+   * EXISTS once the player has answered the element pick, and the harness builds every host with its
+   * controls empty (Improved Elemental Blast's host is a fighter holding Kineticist Dedication with
+   * `answered: []`), so the with/without differential moves nothing and the sheet surface has no blast
+   * to look at. The record's own carrier is the honest predicate — `blastDiceBonus`, read by
+   * deriveBlastStrikes (src/rules/derive.ts) and summed over `c.feats` — and it is computed here
+   * because this script owns core.json. Pinned on a BUILT character by test/batch032-engine.test.ts. */
+  const blastDiceBonus = Number(core[row.bucket]?.[row.id]?.blastDiceBonus ?? 0) || 0;
   // The chassis fallback: only consulted when the differential moved nothing.
-  const surface = ev?.surface ? { ...ev.surface, grantsInnateSpell } : ev?.surface;
+  const surface = ev?.surface ? { ...ev.surface, grantsInnateSpell, blastDiceBonus } : ev?.surface;
   const delivery = openEffects.length && (ev?.sheetDiffCount ?? 0) === 0 ? judgeDelivery(openEffects, surface, names) : null;
   const v = verdictFor({
     supported: ev ? ev.supported !== false : false,

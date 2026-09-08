@@ -52,10 +52,10 @@ import {
   senseGateReason,
   type NarrowedOption,
 } from '../rules/derive';
-import { grantedChoiceKey, narrowSpellFilter, skillSlotOptions } from '../rules/build';
+import { foldArchSpellSlotBonuses, grantedChoiceKey, narrowSpellFilter, skillSlotOptions } from '../rules/build';
 import { signaturesAt } from '../rules/build';
 import { activeCasterArchetype, archetypeEntryIds, archetypeSlots, archetypeTraditionOptions } from '../rules/casterArchetypes';
-import { choiceGrantFor, exhaustedGrantReason, FEAT_GRANTS, featUpgradesAtLevel, LOCKED_SKILL_KEYS, maxTakes } from '../rules/featGrants';
+import { bonusSkillFeatCount, bonusSkillFeatKey, choiceGrantFor, exhaustedGrantReason, FEAT_GRANTS, featUpgradesAtLevel, LOCKED_SKILL_KEYS, maxTakes } from '../rules/featGrants';
 import { FEAT_PICK_GRANTS, pickKeysFor, pickPrompt, pickableFeats } from '../rules/featPickGrants';
 import { FEAT_FEAT_GRANTS, isBoundGrant } from '../rules/featFeatGrants';
 import { isBoundBackgroundGrant } from '../rules/backgroundGrants';
@@ -411,19 +411,24 @@ export function Builder({
    * Shattered Sacrament's extra known). The BUILDER's per-rank counts are pick caps, not the slot
    * pool, so they must include these or the sheet keeps spells the player was never given a picker
    * for. Applied only to ranks the schedule has opened — the extra known arrives WITH the slot. */
-  const archExtraKnownAt = (base: Record<number, number>): Record<number, number> => {
+  /* ⚠ …AND the SLOT-side bonuses, through buildCharacter's own function. Occult Breadth (feat-5063)
+   * and the ten sibling *-breadth feats print *"Increase the number of spells in your repertoire AND
+   * the number of spell slots you gain from bard archetype feats by 1 for each spell rank other than
+   * your two highest"*; buildCharacter folds those into `slots` BEFORE it slices the repertoire, so
+   * the sheet opened a second rank-1 known spell while this cap — which merged `extraKnown` only —
+   * left the picker at one. Sharing the function is the point: a second copy is what drifted.
+   *
+   * Level-scoped, unlike the old body: a feat taken at 8 must not widen the pick cap the level-4
+   * page draws. `override:` slots belong to the level being edited (build.ts:3886 reads them the
+   * same way). */
+  const archExtraKnownAt = (base: Record<number, number>, L: number = build.level): Record<number, number> => {
     if (!archCaster) return base;
     const extra: Record<number, number> = { ...(archCaster.config.extraKnown ?? {}) };
-    const entryIds = archetypeEntryIds(archCaster);
-    for (const id of Object.values(build.featPicks)) {
-      const b = id ? content.feats[id]?.spellSlotBonus : undefined;
-      if (!b?.entryId || !entryIds.has(b.entryId)) continue;
-      for (const [rankStr, n] of Object.entries(b.extraKnown ?? {})) {
-        const r = Number(rankStr);
-        if (Number.isFinite(r) && r > 0 && n > 0) extra[r] = (extra[r] ?? 0) + n;
-      }
-    }
+    const ids = Object.entries(build.featPicks)
+      .filter(([slotKey]) => (slotKey.startsWith('override:') ? L : Number(slotKey.split(':')[0])) <= L)
+      .map(([, id]) => id);
     const out: Record<number, number> = { ...base };
+    foldArchSpellSlotBonuses(out, extra, ids, archetypeEntryIds(archCaster), content);
     for (const [rankStr, n] of Object.entries(extra)) {
       const r = Number(rankStr);
       if ((out[r] ?? 0) > 0) out[r] += n;
@@ -1011,7 +1016,7 @@ export function Builder({
   // --- per-level spell progression (spells are chosen on the level where they're gained) ---
   // Spell slots per rank at a given character level (0 = before play).
   const slotsAt = (L: number): Record<number, number> =>
-    L < 1 ? {} : casting ? classPickCounts(L) : archCaster ? archExtraKnownAt(archetypeSlots(L, archCaster)) : {};
+    L < 1 ? {} : casting ? classPickCounts(L) : archCaster ? archExtraKnownAt(archetypeSlots(L, archCaster), L) : {};
   // Spellbook budget (a single across-rank total) at a given level — the class's own `spellbook` numbers
   // (magus 4 + 2) when it carries them, else the wizard ladder including the UMT +1.
   const bookAt = (L: number) => (L < 1 ? 0 : bookSpec ? spellbookBudget(bookSpec, L) : wizardSpellbookBudget(L, isUmtBook));
@@ -2186,21 +2191,33 @@ export function Builder({
                               the picked feat, so the player resolves each grant in context. */}
                           {picked &&
                             [
-                              ...(FEAT_GRANTS[picked]?.skillChoices ?? []).map((slot, si) => ({ slot, skKey: `${picked}:${si}` })),
+                              ...(FEAT_GRANTS[picked]?.skillChoices ?? []).map((slot, si) => ({
+                                slot,
+                                skKey: `${picked}:${si}`,
+                                ctx: { featId: picked, index: si, choiceValue: null as string | null },
+                              })),
                               /* …and the slots belonging to the grant the player's OWN answer selected.
                                  Clan Lore's twelve listed clans hand over a named pair of skills; an
                                  unlisted clan's are "determined by your GM", so that one answer — and no
                                  other — asks a further question. Keyed by the answer exactly as
                                  featSkillChoiceValue keys it, so the builder and the engine read one key. */
                               ...(choiceGrantFor(FEAT_GRANTS[picked], build.featChoices?.[key])?.skillChoices ?? []).map(
-                                (slot, si) => ({ slot, skKey: `${picked}:${build.featChoices?.[key]}:${si}` }),
+                                (slot, si) => ({
+                                  slot,
+                                  skKey: `${picked}:${build.featChoices?.[key]}:${si}`,
+                                  ctx: { featId: picked, index: si, choiceValue: build.featChoices?.[key] ?? null },
+                                }),
                               ),
-                            ].map(({ slot, skKey }) => {
+                            ].map(({ slot, skKey, ctx }) => {
                               /* Shared with the engine — a slot whose skill the printed text DERIVES
                                  from an answer already given (Surki Lore's magiphage tradition) offers
                                  that one skill, not four. Computing the list here a second way is how
                                  the builder and the sheet come to disagree about one slot. */
-                              const opts = skillSlotOptions(slot, build, content);
+                              /* `ctx` is what lets a later slot drop the skill an IDENTICAL sibling
+                                 already took — Magical Knowledge's *"…and IN ANOTHER from trained to
+                                 expert"* over two slots listing the same four skills. The engine
+                                 resolves the same way through the same helper. */
+                              const opts = skillSlotOptions(slot, build, content, ctx);
                               // The option this slot is CURRENTLY granting — the player's answer, or the
                               // engine's default when unanswered. Its rank on the built character already
                               // includes this grant, so it can never be judged redundant against itself.
@@ -2354,21 +2371,36 @@ export function Builder({
                                 </SubCard>
                               );
                             })}
-                          {picked && FEAT_GRANTS[picked]?.bonusSkillFeat && (
-                            <SubCard icon="ti-medal" label="Bonus skill feat">
-                              <PopupSelect
-                                title="Bonus skill feat"
-                                placeholder="Choose a skill feat…"
-                                value={build.dedicationSkillFeats?.[picked] ?? ''}
-                                onChange={(v) =>
-                                  actions.patch({
-                                    dedicationSkillFeats: { ...(build.dedicationSkillFeats ?? {}), [picked]: v },
-                                  })
-                                }
-                                options={skillFeatOpts}
-                              />
-                            </SubCard>
-                          )}
+                          {/* One picker PER granted skill feat. Magical Knowledge prints "You gain a
+                              skill feat associated with each of the skills you chose" over a two-skill
+                              choice, so a single control could only ever deliver one of the two. Index
+                              0 keeps the bare feat-id key, so an existing answer never moves. */}
+                          {picked &&
+                            Array.from({ length: bonusSkillFeatCount(FEAT_GRANTS[picked]) }).map((_, bi) => {
+                              const bKey = bonusSkillFeatKey(picked, bi);
+                              const mine = build.dedicationSkillFeats?.[bKey] ?? '';
+                              // A feat a SIBLING picker already took is dropped by buildCharacter as a
+                              // duplicate, so offering it here would spend a printed grant on nothing.
+                              const siblings = new Set(
+                                Array.from({ length: bonusSkillFeatCount(FEAT_GRANTS[picked]) }, (_, j) => build.dedicationSkillFeats?.[bonusSkillFeatKey(picked, j)])
+                                  .filter((v, j) => !!v && j !== bi) as string[],
+                              );
+                              return (
+                                <SubCard key={`bonus-skill-${bKey}`} icon="ti-medal" label="Bonus skill feat">
+                                  <PopupSelect
+                                    title="Bonus skill feat"
+                                    placeholder="Choose a skill feat…"
+                                    value={mine}
+                                    onChange={(v) =>
+                                      actions.patch({
+                                        dedicationSkillFeats: { ...(build.dedicationSkillFeats ?? {}), [bKey]: v },
+                                      })
+                                    }
+                                    options={skillFeatOpts.filter((o) => !siblings.has(o.value))}
+                                  />
+                                </SubCard>
+                              );
+                            })}
                           {/* Pick-a-feat grants (General Training, Basic Maneuver, Natural Ambition, …):
                               the player chooses a bonus feat from the grant's filtered pool. */}
                           {picked &&

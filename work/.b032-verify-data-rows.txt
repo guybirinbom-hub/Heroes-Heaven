@@ -1,0 +1,133 @@
+BATCH 032 — WG-COMPARISON LANE — ADVERSARIAL VERIFY — FAMILY: data-rows
+spec checked: work/.b032-rows-data-rows.json (7 findings, 7 rows)   tests: test/batch032-data.test.ts
+builder report: work/.b032-report-data-rows.txt
+
+HOW THIS WAS CHECKED (not on the builder's word)
+- Every row diffed against the SHIPPED value with node -e: target record exists (or create:true), and each
+  re-emitted whole value holds everything it held minus exactly the intended change.
+- The applier's own refusals replayed read-only (no --write, nothing applied): rowKey uniqueness inside the
+  spec and against scripts/data/effect-backfill.json, supersedes, path/prose rules, and refusal 4 (`why`
+  names a real AoN doc id; for the description row, the LCS added-run "basic spellcasting benefits" is
+  present verbatim in mirror feat-3230). All pass.
+- A THROWAWAY vitest harness (test/_tmp-verify-data-rows.test.ts, deleted) applied all 7 rows to the
+  in-memory content copy and BUILT real characters through buildCharacter/derive. Its output is quoted per
+  finding below. Deleted after the run, with a second throwaway (test/_tmp-verify2.test.ts, deleted) for the
+  Bulk maximum.
+- node scripts/vt.mjs run test/batch032-data.test.ts → 7 failed, each on the authored field alone (every
+  built-character harness half in the same test passes today). node scripts/test-flip-audit.mjs --batch 032
+  → clean. npx tsc --noEmit → clean.
+
+PER FINDING
+
+1. safeguard-soul#undead — DONE.
+   Row feats/safeguard-soul.immunities = ["being transformed into an undead"]; record exists, field absent
+   today, no prior overlay row (no supersedes needed). Harness: deriveDefenses on a built champion carrying
+   the feat returns the string in .immunities — the reader (derive.ts:2743 over pushed feat sources) is live,
+   and 16 feats already ship the same free-text carrier.
+
+2. heal-mount — DONE.
+   Row feats/heal-mount.spellNotes = [{lay-on-hands, …}]. spells/lay-on-hands exists. Harness on a champion
+   built with featPicks {'8:class':'heal-mount'}: c.spellNotes['lay-on-hands'] =
+   [{"from":"Heal Mount","note":"…restores 10 Hit Points, plus 10 for each heightened rank."}] — it reaches
+   the built character, not just the record. The replacement HEAL AMOUNT itself stays uncomputed, which is
+   the finding's own proposal (a note is the carrier WG uses too), not a shortfall of the row.
+
+3. magic-finder#spellcasting-statistic — DONE, and checked for the regression it could have caused.
+   Row feats/magic-finder.spellcastingGrant = {arcane,int,trained}; the record's two existing overlay rows
+   write innateSpells and spellNotes, so no key collision and no supersedes. Harness:
+     · fighter 8 + magic-finder → innate entry keyAbility "int", tradition arcane, proficiency trained,
+       repertoire {3:["locate"]}  (was the 'cha' fallback at build.ts:8078).
+     · cleric 8 + magic-finder → innate keyAbility "wis" = the class caster's own, unchanged. `caster?.…`
+       still wins, so print's "if you could already cast spells" branch is untouched for a SLOT caster.
+   Also verified the grant cannot be misread as a focus profile: featFocusGrant (build.ts:4711) requires
+   focusSpells / focusOnly / an option grant, and magic-finder has none.
+
+4. basic-beast-gunner-spellcasting#dropped-clause — DONE (one record; the lane stays open, see gaps).
+   Byte-diff against the shipped prose: the ONLY change is "You gain the ." → "You gain the basic
+   spellcasting benefits." — first divergence at offset 163, and the whole tail after the inserted label is
+   byte-identical. Pathless description row, record present in core.json and in core-descriptions.json, so
+   apply-backfill-now.mjs routes it to the `d` key (its skipFields keep it out of core.json).
+
+5. second-blessing — DONE for what print forbids; the caveat the read raised is REAL and is now on two
+   records, so it stays a gap rather than a silent inheritance.
+   supersedes:true is correct: the overlay's existing feats/second-blessing.choice row is merged WHOLE — a
+   strict JSON comparison of (new value minus disableIfOwned) against the stored value is identical, key
+   order included. Harness on a champion whose level-3 blessing is blessed-swiftness:
+     opts = [blessed-armament, blessed-shield, blessed-swiftness{disabled:"Already taken — Blessed
+     Swiftness."}] — exactly the Q27 shape, with no code change.
+   AND the caveat, measured rather than assumed: with Second Blessing itself taken and answered
+   ("blessed-armament"), narrowChoiceOptions greys THAT option too ("Already taken — Blessed Armament"),
+   because choiceOwnedFeatureIds folds the picker's own ownsFeature answer into ownedFeatureIds
+   (derive.ts:3465). The answer is not lost — nothing in build.ts consults the narrowed list, only the
+   Builder's picker does — so this is a display defect, and the identical shape already ships on
+   feats/manifold-modifications (the only other disableIfOwned record). Not fixed here: the exemption belongs
+   to derive.ts/shared.tsx, another family's files. See CROSS-FILE GAPS.
+
+6. lifting-leather — DONE, and the half the builder left unasserted is now pinned (FIXED-BY-ME, test only).
+   items/lifting-leather has no passiveEffects today, so the whole-value row loses nothing; the record's other
+   overlay row writes builtInRunes (different field), so no supersedes. The engine family's code half HAS
+   LANDED since the report was written — ItemPassiveEffects.bulkMaxBonus (src/rules/types.ts:2263) and
+   deriveBulk's itemMaxBonus (src/rules/derive.ts:5336) — so the row is no longer half inert. Harness with the
+   row applied: fighter 8 base {encumberedAt 5, max 10} → wearing {encumberedAt 7, max 14}, i.e. the printed
+   "2 more Bulk … before becoming encumbered and up to a maximum of 4 more Bulk" end to end.
+   FIXED-BY-ME: added the maximum assertion to test/batch032-data.test.ts (cited "// batch 032:
+   lifting-leather#max"), which the builder had deliberately omitted while the reader was missing. It fails
+   today with the rest of the test and passes once the row lands. It depends on the engine family's reader
+   staying in the batch — stated here rather than assumed.
+
+7. crown-of-the-fire-eater#activation-effect — DONE.
+   create:true row for modes/item-crown-of-the-fire-eater; the id is free (555 modes, none with that id or
+   that fromItemId), the crown item exists, "fire" is an in-use resistance type, and the created record
+   carries NO description (modes are not a core-descriptions bucket, so no created-prose spec is owed).
+   Harness: a built fighter wearing the crown reads fire 5; with the mode active deriveDefenses returns a
+   single fire entry at 15 — the printed "from 5 to 15", superseded not stacked. The player route exists:
+   ItemDetail.tsx:449 renders the Activate control for a non-consumable with an item mode (the crown is
+   itemType 'equipment'), and play.ts:2054 clears an item mode at rest since survivesRest is absent.
+   The healing has no numeric carrier and lives in the mode's note, as the finding allows.
+
+MANIFEST
+work/.b032-specs.json carries the situational, instruments and (added during this pass, by its own agent)
+engine entries unchanged; the data-rows entry lists every path its builder touched, and every superseding row
+in this family's spec declares supersedes:true (one: feats/second-blessing.choice). I appended
+work/.b032-verify-data-rows.txt to the data-rows stage[] (the b031 manifest sets that precedent) and touched
+nothing else in the file. See the collision line under CROSS-FILE GAPS for the one manifest-level refusal.
+
+DATA STILL NEEDED
+(none — every row this family owes is authored, and each one was exercised on a built character before the
+driver applies it.)
+
+CROSS-FILE GAPS
+- scripts/ (description importer's markdown cleaner) + npm run verify: the link-LABEL strip is systemic —
+  /\b(the|a|an|your)\s+\./ matches 174 records in public/core-descriptions.json. Finding 4's row repairs the
+  one record print names; the cleaner fix and a residue guard belong to the scripts/ lane. STILL OPEN.
+- ⚠ COLLISION, CONFIRMED AND BATCH-BLOCKING (not hypothetical): work/.b032-rows-engine.json appeared during
+  this verify and authors items/lifting-leather.passiveEffects = {bulkLimitBonus:2, bulkMaxBonus:2} — the
+  SAME record+field as this family's row, with a byte-identical value. wg-batch-run.mjs precheck (1) hard
+  refuses a key two specs both write ("resolve by hand, the applier will not merge"), identical values
+  included, so --stage apply refuses the whole manifest as it stands. Resolution: the ENGINE spec drops that
+  row and keeps its code half only (ItemPassiveEffects.bulkMaxBonus at src/rules/types.ts:2263 and
+  deriveBulk's itemMaxBonus at src/rules/derive.ts:5336, both already in the tree — which also CLOSES the
+  builder's second gap line). Nothing is lost: this family's row already carries both numbers, and the
+  merged-row decision is recorded in its `note`. I did not edit another family's spec.
+  (No other cross-spec key overlaps: engine's other magic-finder row writes innateSpells, mine
+  spellcastingGrant.)
+- src/rules/derive.ts narrowChoiceOptions (:1700,:1730) and src/builder/shared.tsx PopupSelect (:1102, and the
+  readFirst branch at :1093): `disableIfOwned` has no "never this slot's own answer" exemption, so a picker
+  with ownsFeature + disableIfOwned greys the answer it is currently displaying. shared.tsx's OTHER picker
+  already has the exemption (`const off = !!o.disabled && o.id !== value`, :819/:835), so the fix is that one
+  test in the two PopupSelect branches or in narrowChoiceOptions. Pre-existing on feats/manifold-modifications;
+  measured above on feats/second-blessing, which this batch makes the second record to show it.
+- src/rules/build.ts:7759 `const caster = spellcasting.find(prepared|spontaneous)` — the "if you could already
+  cast spells" test is SLOT-caster only, so a FOCUS-only caster (a champion with lay on hands, a monk with qi
+  spells) who takes Scrollmaster + Magic Finder now reads the innate entry as Intelligence/arcane where print
+  keeps their own statistic and tradition. Narrow, and it hits the engine family's magic-finder#tradition
+  through the same `caster?.tradition` read, so the exemption wants to be written once, in build.ts.
+- work/.b032-queue.json / read lane: our shipped feats/basic-beast-gunner-spellcasting opens "granting you
+  your own pool of magical might through the amplifying power of their synergistic magic", where mirror
+  feat-3230 (the record's own aonId) prints "granting you the power of their synergistic magic." — verified
+  against the mirror during this pass. Outside finding 4's claim (the dropped label), so the sentence was left
+  byte-identical; it wants its own finding.
+
+STAGE PATHS I TOUCHED
+work/.b032-verify-data-rows.txt
+test/batch032-data.test.ts

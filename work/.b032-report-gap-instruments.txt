@@ -1,0 +1,92 @@
+BATCH 032 — GAP AGENT, family "gap-instruments"
+One open line assigned. It is AUTHORED. Nothing parked, nothing queued to the owner.
+
+----------------------------------------------------------------------------------------------------
+LINE 1  (CROSS-FILE GAPS, from work/.b032-report-instruments.txt:10)
+"scripts/wg-batch.mjs:108-119 (the PACKET builder) pairs their rows by normalised name with no
+content_source filter and skips every row whose operations are empty, so it hands a Pathfinder record
+the STARFINDER namesake's encoding."
+----------------------------------------------------------------------------------------------------
+AUTHORED — ref scripts/wg-batch.mjs:theirs (+ the packet loop's ownership guard), pinned by
+test/batch032-gap-instruments.test.ts. Finding behind it: show-off (CONFIRMED, work/.b032-read.json).
+
+Why: the builder had a PRIVATE pairing — its own parseCopyBlock walk, no content_source filter,
+"richest row wins", and `if (!ops.length) continue` BEFORE the name key was claimed. Both halves are
+the defect: the starfinder row was eligible, and the empty Pathfinder row could not hold its own key
+to block it. Measured on the record the finding names — feats/show-off (aonId feat-4144, Firebrands
+pg. 80, Feat 8, flourish free action off an Acrobatics-or-Athletics trigger, no mention of
+Performance):
+    ability_block 24347  content_source 21  group lost-omens       operations "{}"      <- ours
+    ability_block 55639  content_source 818 group starfinder-core  addBonusToValue SKILL_PERFORMANCE
+work/wg-batch-032.json quoted 55639 as show-off's theirEncoding. That is another game's feat.
+
+Fix, exactly as the instruments report proposed: `theirs` is now built from wgRowsByBucket()
+(scripts/lib/wg-parse.mjs) — the pairing all four comparers already read, which drops group
+'starfinder-core' plus any source whose store URL says starfinder, and lets an empty-operations row
+hold its own name key. The `if (!ops.length) continue` now runs AFTER that pairing, so a record like
+show-off falls into the owner's leave-us-unchanged case ("they encode nothing") instead of arriving
+in a packet quoting another game. Nothing was copied from their data; only which of their rows we
+look at changed. Comment on the block quotes the two row ids and the print clause that settles it.
+
+One extra line in the same file, same defect class, called out here because it was not in the gap
+text: the packet loop now skips a record where `wgOwnsComparison(core, bucket, id)` is false. That is
+the documented `aon-` twin rule (wg-parse.mjs:226-237) — a twin shadowed by the canonical of the same
+name carries nothing by design and every comparer defers it, so a packet cut for one can only produce
+a false finding (batch 12's `aon-spore-shepherd-s-staff missing=[skill]`, while
+`spore-shepherds-staff` ships the +2 Nature bonus in full). 12 such packets were being cut.
+
+BLAST RADIUS — measured, not argued. `node scripts/wg-batch.mjs --count 0`, before vs after:
+    before  4,029 packets   feats 2195  items 746  backgrounds 443  classFeatures 286  heritages 280
+                            ancestries 50  classes 29
+    after   4,161 packets   feats 2177  items 742  backgrounds 443  classFeatures 441  heritages 280
+                            ancestries 49  classes 29
+  Three movements, each identified record by record:
+   -11  starfinder namesakes lose their packet: feats protective-subroutine, offensive-subroutine,
+        consistent-surge, strong-swimmer, show-off, incredible-ferocity, advantageous-assault,
+        close-quarters, big-mouth, bloodsense; ancestries android. Every one was a packet whose
+        theirEncoding came from Starfinder 2e. This is the fix.
+   -12  aon- twins deferred to their canonical (8 feats, 4 items; the canonicals keep their packets).
+  +155  class features gain one. WG_PAIRING.classFeatures accepts their `feat` rows (WG files most
+        class features that way: Advanced Alchemy is ability_block 32027 type=feat, Animal Instinct
+        31310, Champion's Reaction 32178, Beast Eidolon 34411, Armor Innovation 24802 — spot-checked
+        by hand). The old private pairing accepted only type='class-feature', so 155 class features
+        the comparers DO score had no packet at all — the same wrong-counterpart defect pointing the
+        other way. ⚠ FOR THE DRIVER: this is a real composition change. Batches already cut are files
+        on disk and are untouched; the next `--skip N` slice will not contain the same records a
+        pre-fix re-cut would have. That is unavoidable — the whole point is that the packet is built
+        from the counterpart the comparers will score the record against.
+
+Test that pins it: test/batch032-gap-instruments.test.ts, describe "batch 032 gap — wg-batch paired
+show-off with Wanderer's Guide's Starfinder namesake" (3 cases, all cited `// batch 032: show-off`;
+one child run of the real builder, ~10 s, shared across the three):
+  1. "cuts no packet for show-off, because the only Pathfinder row matching feat-4144 encodes nothing"
+     — the run's `⚠ no packet for N:` line names show-off. Fails the day the starfinder row is
+     re-adopted, because a packet would exist again.
+  2. "still cuts the packets the shared pairing sees — a class feature they file as a feat row" —
+     classFeatures=1 for advanced-alchemy, which had NO packet before the fix.
+  3. "defers an aon- twin to its canonical, and cuts the canonical's packet" — the ⚠ line names
+     aon-spore-shepherd-s-staff while items=1 keeps spore-shepherds-staff.
+  No `// mutation-proof` marker: this fix authors no settle and teaches no comparer — it changes which
+  of their rows a packet is built from, and every case above already fails on a stunted builder.
+
+  `node scripts/vt.mjs run test/batch032-gap-instruments.test.ts` -> 3 passed.
+  `node scripts/test-flip-audit.mjs --batch 032` -> "batch 032 clean — 8 test file(s) touched,
+  0 new settle key(s), every flip cited."   `npx tsc --noEmit` -> clean.
+
+DATA STILL NEEDED
+(none — this line needed no overlay row, so no spec file and no manifest entry.)
+
+CROSS-FILE GAPS
+(none — the fix lives entirely in the file the gap line names.)
+
+FLAGGED RESIDUE
+(none.)
+
+OWNER QUESTIONS
+(none — work/.b032-queue.json untouched. The printed rule was never in doubt here: the whole line is
+about which of THEIR rows we quote as evidence, and print (feat-4144) settles it without an owner.)
+
+Files changed: scripts/wg-batch.mjs (import line; the `theirs` block; one guard in the packet loop),
+test/batch032-gap-instruments.test.ts (new), work/.b032-gaps.json (my one line -> authored).
+Not touched: work/owner-questions.json, work/.b032-queue.json, work/.b032-specs.json,
+work/.b032-rows-instruments.json, scripts/lib/wg-parse.mjs, any other family's file.

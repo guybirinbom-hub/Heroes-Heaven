@@ -440,7 +440,18 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "masked-casting": [{ targets: [{ kind: 'save', detail: 'all' }, { kind: 'skill', detail: 'all' }], when: "to disbelieve illusions while Averting your Gaze", bonus: "+2 circumstance" }],
   "mediums-awareness": [{ targets: [{ kind: 'perception' }], when: "on Perception checks to Seek, and when you roll Perception for initiative", bonus: "+2 status (+3 at 12th, +4 at 20th)" }],
   "mercenary-motivation": [{ targets: [{ kind: 'perception' }, { kind: 'skill', detail: 'all' }], when: "toward the planned task (after 1 min planning)", bonus: "+1 circumstance" }],
-  "mighty-bulwark": [{ targets: [{ kind: 'save', detail: 'reflex' }], when: "on all Reflex saves (bulwark now applies to non-damaging too)", bonus: "+4 (bulwark)" }],
+  /* WG parity b032, mighty-bulwark#replacement-wording. The bulwark number REPLACES your Dexterity
+   * modifier (trait-549: *"you add a +3 modifier instead of your Dexterity modifier"*), and feat-6413
+   * only raises it: *"Your bonus from the bulwark armor trait increases from +3 to +4, and it applies
+   * on all Reflex saves, not just damaging Reflex saves."* "+4 (bulwark)" read as a flat +4 — for a
+   * high-Dex character it is a REDUCTION. The `trait:bulwark` sibling below already words it right,
+   * and this entry supersedes that one (SITUATIONAL_SUPERSEDES), so the replacement semantics have to
+   * survive here or they are lost entirely.
+   * VERIFIER (b032): the `when` must keep naming the armour. Print gives the feat NOTHING of its own —
+   * *"Your BONUS FROM THE BULWARK ARMOR TRAIT increases from +3 to +4"* — and this entry fires on the
+   * feat id alone, so a Sentinel who owns the feat and wears non-bulwark armour was being promised a
+   * +4 they do not have. "damaging or not" alone dropped the only mention of the condition. */
+  "mighty-bulwark": [{ targets: [{ kind: 'save', detail: 'reflex' }], when: "on all Reflex saves while wearing bulwark armor, damaging or not", bonus: "+4 instead of your Dexterity modifier" }],
   "monstrous-peacemaker": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }, { kind: 'perception' }], when: "vs non-humanoid intelligent creatures and marginalized humanoids", bonus: "+1 circumstance" }],
   "monumental-maestro": [{ targets: [{ kind: 'skill', detail: 'performance' }], when: "to Perform with a musical instrument or sing", bonus: "+2 circumstance" }],
   "morph-risen": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against forced polymorph/transformation effects", bonus: "+1 circumstance" }],
@@ -555,7 +566,12 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "round-ears": [{ targets: [{ kind: 'skill', detail: 'deception' }], when: "to Impersonate that you aren't a half-elf", bonus: "+4 circumstance" }],
   "sacral-lord": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "Make an Impression on creatures within your claimed territory", bonus: "+1 circumstance" }],
   "sacred-wilds-oath": [{ targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "Diplomacy checks against animals", bonus: "+2 circumstance" }],
-  "safeguard-soul": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against death, possession, or soul-manipulation effects", bonus: "+2 status" }],
+  /* WG parity b032, safeguard-soul#allies. Print (feat-3472) ends *"While your spiral is glowing,
+   * your allies in the light of the spiral gain this benefit as well."* — an EXTENSION of the same
+   * bonus to the party, not an ally-only bonus, so the batch-24 intuitive-cooperation ruling below
+   * does not reach it; the carrier is the parenthetical the fan rows, pennant-of-victory and
+   * world-rouser-dedication already use for "you and your allies". No ally/aura numeric lane exists. */
+  "safeguard-soul": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against death, possession, or soul-manipulation effects (you, and allies in your glowing spiral's light)", bonus: "+2 status" }],
   "scales-of-steel": [{ targets: [{ kind: 'ac' }], when: "while unarmored (Dex cap +3)", bonus: "+1 item (+2 at 5th level)" }],
   "scales-of-the-dragon": [{ targets: [{ kind: 'ac' }], when: "while unarmored (Dex cap +3)", bonus: "+2 item" }],
   "scaly-hide": [{ targets: [{ kind: 'ac' }], when: "while unarmored (Dex cap +3)", bonus: "+1 item (+2 at 5th level)" }],
@@ -2854,7 +2870,14 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "harrow-casting": [{ targets: [{ kind: 'ac' }], when: "until the start of your next turn, if you draw a Key when you Harrow Cast", bonus: "+1 status (+2 if your harrow omen is Keys)" }, { targets: [{ kind: 'save', detail: 'all' }], when: "until the start of your next turn, if you draw a Key when you Harrow Cast", bonus: "+1 status (+2 if your harrow omen is Keys)" }, { targets: [{ kind: 'spell', detail: 'attack' }], when: "on the free Recall Knowledge check (made with your spell attack roll) after drawing a Book, if Books is your harrow omen", bonus: "+2 status" }, { targets: [{ kind: 'save', detail: 'all' }], when: "until the start of your next turn, if you draw a Star with Stars as your harrow omen and…", bonus: "+2 status" }, { targets: [{ kind: 'skill', detail: 'lore:fortune-telling' }], when: "on the Fortune-Telling Lore check to hide your spellcasting after drawing a Crown, if Crowns is your harrow omen", bonus: "+2 status" }],
   "robust-recovery": [{ targets: [{ kind: 'save', detail: 'all' }], when: "on your save against a disease or poison after anyone uses Treat a Disease or Treat a…", bonus: "+4 circumstance (instead of the usual +2)" }],
   "favored-terrain": [{ targets: [{ kind: 'speed' }], when: "while in your chosen favored terrain, if you have unimpeded journey…", bonus: "+10-foot status" }],
-  "knowledge-is-power": [{ targets: [{ kind: 'strikeAttack' }], when: "on your next attack roll against a creature you critically identified with Recall…", bonus: "+1 circumstance" }, { targets: [{ kind: 'spell', detail: 'attack' }], when: "on your next spell attack roll against a creature you critically identified with Recall…", bonus: "+1 circumstance" }, { targets: [{ kind: 'ac' }], when: "to your AC against that creature's next attack roll (ends after 1 minute if unused)", bonus: "+1 circumstance" }, { targets: [{ kind: 'save', detail: 'all' }], when: "on your save against that creature's next effect requiring a save (ends after 1 minute if unused)", bonus: "+1 circumstance" }],
+  /* DELETED (WG parity b032, knowledge-is-power). The record is aonId feat-5039, edition "remaster",
+   * and feat-5039 prints NO bonus to the player at all: *"you can invoke your knowledge to make the
+   * creature take a –1 circumstance penalty to either AC and saves against the next attack you make
+   * against it…"*. The four +1 circumstance rows here were the LEGACY text (feat-2861, Secrets of
+   * Magic pg. 45), so a magus or wizard read four bonuses the remaster feat does not grant. The
+   * penalty lands on the ENEMY's roll — ruling F / OTHERS_ROLL — and gets no star.
+   * `existingIds` cannot exclude a row that no longer exists, so the id is named in
+   * scripts/apply-situational-lane.mjs's `handEdited` set. */
   "pass-vengeful-judgement": [{ targets: [{ kind: 'skill', detail: 'intimidation' }], when: "for 1 month after you spend a Mythic Point on Pass Vengeful Judgement…", bonus: "+2 status" }],
   "bloc-tactics": [{ targets: [{ kind: 'skill', detail: 'deception' }], when: "while wearing the disguise from your daily Bloc Tactics preparation…", bonus: "+4 status" }, { targets: [{ kind: 'save', detail: 'all' }], when: "while wearing your Bloc Tactics disguise, on saves against smoke, fumes, and inhaled substances", bonus: "+3 status" }],
   "swordmaster-dedication": [{ targets: [{ kind: 'save', detail: 'reflex', dcOnly: true }], when: "when a foe attempts to Disarm you", bonus: "+2 circumstance" }, { targets: [{ kind: 'strikeAttack' }], when: "the first attack roll after you critically succeed at Aiding an ally's attack roll (requires Deft Cooperation)", bonus: "+2 circumstance (instead of Deft Cooperation's +1)" }, { targets: [{ kind: 'skill', detail: 'all' }], when: "the first skill check after you critically succeed at Aiding an ally's skill check (requires Deft Cooperation)", bonus: "+2 circumstance (instead of Deft Cooperation's +1)" }],
@@ -3128,7 +3151,12 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "lesson-of-the-broken-wing": [{ targets: [{ kind: 'ac' }], when: "against the chosen creature's Strikes until the beginning of your next turn", bonus: "-1 penalty" }],
   "lodestone-bomb": [{ targets: [{ kind: 'strikeAttack' }], when: "on Strikes made with this bomb", bonus: "+2 item" }],
   "lodestone-bomb-greater": [{ targets: [{ kind: 'strikeAttack' }], when: "on Strikes made with this bomb", bonus: "+3 item" }],
-  "mantle-of-the-tikbalang": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against illusions", bonus: "-2 item" }],
+  /* WG parity b032, mantle-of-the-tikbalang#illusory-thrash. equipment-3226's activation prints
+   * *"Make a melee Strike. This Strike deals an additional 4d6 mental damage."* — the record carried
+   * the 1/day counter and the 2-action cost but nothing that told the player the Strike hits harder,
+   * so the whole point of the activation lived only in the description. Same activation-gated
+   * strikeDamage shape as blackaxe and heartripper-blade. */
+  "mantle-of-the-tikbalang": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against illusions", bonus: "-2 item" }, { targets: [{ kind: 'strikeDamage' }], when: "on the melee Strike you make when you Activate Illusory Thrash (once per day)", bonus: "+4d6 mental" }],
   "memory-of-skill": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "once per day, for 1 minute, on the one skill you chose with Memory of Skill", bonus: "one proficiency rank higher, maximum master (untyped)" }],
   "mud-bomb-greater": [{ targets: [{ kind: 'strikeAttack' }], when: "on Strikes with this bomb", bonus: "+2 item" }],
   "mud-bomb-major": [{ targets: [{ kind: 'strikeAttack' }], when: "on Strikes with this bomb", bonus: "+3 item" }],
@@ -4079,6 +4107,11 @@ export const RECORD_MARKERS: Record<string, RecordMarker[]> = {
    * another action, and the record carried nothing — so the Step row said 5 feet to a character whose
    * Step is 10. Marks the action itself, which is where a player reads it. */
   "smoke-through-bamboo": [{ on: 'action', id: 'step', value: "10 feet", note: "You Step 10 feet instead of 5, and can Step into and within difficult terrain." }],
+  /* WG parity b032, hazard-finder. The feat's SECOND sentence — *"You can find hazards that would
+   * normally require you to Search even if you aren't Searching."* (feat-4884) — changes the Search
+   * action and no number, so FEAT_SITUATIONAL could not hold it and only the +1 half shipped. Marks
+   * Search, which is where the player reads it; the smoke-through-bamboo shape exactly. */
+  "hazard-finder": [{ on: 'action', id: 'search', note: "you find hazards that would normally require you to Search even when you aren't Searching." }],
   "berserkers-cloak": [{ on: 'action', id: 'rage', value: "jaws 1d10 P, claws 1d6 S (agile)", note: "While raging you grow jaws and claws bearing a +1 potency and striking rune…" }],
   "berserkers-cloak-greater": [{ on: 'action', id: 'rage', value: "jaws 1d10 P, claws 1d6 S (agile)", note: "While raging you grow jaws and claws bearing a +2 potency and greater striking rune…" }],
   /* Eclipseborn's Ill Omen innate carries a printed two-part rider neither our record nor WG models
@@ -4538,6 +4571,13 @@ export const SITUATIONAL_SUPERSEDES: Record<string, string[]> = {
    * (still owned) drops expert, so `supersededIds` cascades without a second list. */
   "master-overdrive": ['expert-overdrive'],
   "legendary-overdrive": ['master-overdrive'],
+  /* WG parity b032, mighty-bulwark#supersedes-trait-bulwark. feat-6413: *"Your bonus from the bulwark
+   * armor trait increases from +3 to +4"* — one number that grows, not a second bonus beside it. A
+   * guardian wearing bulwark armour contributes BOTH `trait:bulwark` (from the worn armour) and the
+   * feat id, so the Reflex popup printed "+3 instead of your Dexterity modifier" beside "+4 …", two
+   * lines for one rule. Same shape as master-overdrive / grave-strength: an increase supersedes the
+   * rung below it. WG carry it as ONE injectText on the trait itself, never two. */
+  "mighty-bulwark": ['trait:bulwark'],
 };
 
 /** The ids to drop from a lookup because a record the character ALSO has supersedes them. */

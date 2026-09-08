@@ -43,18 +43,41 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
  * A RATCHET, not a zero-guard: the baseline is the count on the day the detector was written, and the
  * check fails only when a regeneration or an edit makes it GROW. Lower the baseline as the sweep
  * repairs them (regenerate `d` from the AST); never raise it.
+ *
+ * ⚠ THE DETECTOR ONLY EVER SAW ONE OF THE FOUR ARTICLES. It was written against the "a ." shape and so
+ * counted 162 records while the same strip had left 12 more sitting behind "an .", "the ." and "your ."
+ * — *"You gain the ."* for *"You gain the basic spellcasting benefits."* (AoN feat-3230,
+ * basic-beast-gunner-spellcasting), *"Choose an ."* for *"Choose an innovation."* (feat-3112), *"match
+ * those of your ."* for *"…your draconic benefactor."* (equipment-4016). Batch 032's read found the
+ * class by widening the pattern by hand; the guard now carries the wider pattern itself, so the sibling
+ * articles cannot go on being invisible to it.
+ *
+ * HOLE_BASELINE IS UNCHANGED AT 162 DELIBERATELY. Widening the net raises the live count to 174, and
+ * batch 032 repairs all 12 of the newly-visible records in the same batch (one row in
+ * work/.b032-rows-data-rows.json, eleven in work/.b032-rows-gap-data-rows.json), which puts it back at
+ * 162 — every remaining hole is an "a ." one. Until those rows are applied this check FAILS and names
+ * them, which is the point: a ratchet that is widened and slackened in the same edit measures nothing.
  */
 const HOLE_BASELINE = 162;
-const HOLE = /\ba \.(?=\s|$)/;
+const HOLE = /\b(?:a|an|the|your) \.(?=\s|$)/;
 {
   const descs = JSON.parse(readFileSync(join(ROOT, 'public/core-descriptions.json'), 'utf8'));
   const holes = [];
+  /* "New ones:" used to print the first 30 of the WHOLE list, which on a corpus already 162 deep is 30
+   * records that were there yesterday. The ones a reader needs are the ones outside the "a ." shape the
+   * baseline was measured on, so those go first. */
+  const OLD_SHAPE = /\ba \.(?=\s|$)/;
+  const widened = [];
   for (const [cat, recs] of Object.entries(descs)) {
-    for (const [id, e] of Object.entries(recs ?? {})) if (e && typeof e.d === 'string' && HOLE.test(e.d)) holes.push(`${cat}/${id}`);
+    for (const [id, e] of Object.entries(recs ?? {})) {
+      if (!e || typeof e.d !== 'string' || !HOLE.test(e.d)) continue;
+      holes.push(`${cat}/${id}`);
+      if (!OLD_SHAPE.test(e.d)) widened.push(`${cat}/${id}`);
+    }
   }
   if (holes.length > HOLE_BASELINE) {
-    console.log(`dropped-inline: FAIL — ${holes.length} record(s) end a sentence at a stripped link ("… a .") — more than the ${HOLE_BASELINE} the ratchet allows. New ones:`);
-    for (const h of holes.slice(0, 30)) console.log(`   ${h}`);
+    console.log(`dropped-inline: FAIL — ${holes.length} record(s) end a sentence at a stripped link ("… a .", "… the .", "… an .", "… your .") — more than the ${HOLE_BASELINE} the ratchet allows. Outside the "a ." shape the baseline was measured on (${widened.length}), then the rest:`);
+    for (const h of [...widened, ...holes.filter((h) => !widened.includes(h))].slice(0, 30)) console.log(`   ${h}`);
     console.log('\nRepair the fallback `d` from the AST (public/ast/<bucket>.json.gz) via a description overlay row; never raise HOLE_BASELINE.');
     process.exit(1);
   }

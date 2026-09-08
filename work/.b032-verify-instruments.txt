@@ -1,0 +1,139 @@
+BATCH 032 — INSTRUMENTS FAMILY, ADVERSARIAL VERIFICATION
+Findings assigned: show-off, magical-knowledge#instrument (both CONFIRMED, both "internal" — no data row).
+Verified independently: nothing was taken from work/.b032-report-instruments.txt on trust; every count
+below was re-measured here.
+
+====================================================================================================
+PER-FINDING VERDICTS
+====================================================================================================
+
+show-off — DONE
+  Re-measured, not re-read. `wgRowsByBucket(sql).feats.get('showoff')` returns ability_block 24347,
+  level 8, operations `{}`; scripts/lib/wg-parse.mjs:288-292 drops every content_source in group
+  'starfinder-core' or with a starfinder store URL, which is what removes 55639. core.json
+  feats/show-off is level 8, traits [archetype, flourish], archetype acrobat, actionCost free,
+  limitedUses {max:1,per:'minute'}, aonId feat-4144 and the whole record has no substring
+  "performance" anywhere. The mirror holds exactly ONE Show-Off feat doc across all 8,833 files
+  (feat-4144, Firebrands, Feat 8, Archetype/Flourish/Uncommon) and it never says Performance.
+  `grep -rn "show-off" src/ --include=*.ts --include=*.tsx` returns nothing, so no carrier was
+  needed and none was added. Confirmed the right conclusion is NO CHANGE, and confirmed no settle
+  was authored for the record (SETTLED_IDENTITIES has no 'show-off' key) — the correct call, since a
+  settle here would silence the next real difference on the record unread.
+
+magical-knowledge#instrument — DONE (with two verifier fixes on top, below)
+  The teach is real and it works. Ran the real comparer three ways over the WHOLE corpus (17,290
+  (id,bucket) pairs generated from wgAllRecords, matching the builder's population exactly), --raw so
+  the settle registries could not do the silencing:
+      shipped reader                                    1797 checked, 1498 match
+      shipped reader minus the `skill <name>` credit    1797 checked, 1498 match   (identical output
+                                                        but for three cosmetic `ours=[…]` lines)
+      original reader (pre-batch)                       1797 checked, 1496 match
+  So the QUOTE-TOLERANT REGEX is the whole fix, and it takes exactly two records off the flag list:
+  magical-knowledge and hold-mark. Carrier verified present and read: featGrantsLane.ts:70 holds two
+  skillChoices slots of arcana/nature/occultism/religion, and readers exist for the field at
+  build.ts:5461 / :5801 / :5912 and Builder.tsx:2194-2204 (grepped, not assumed).
+  Print re-verified from the mirror at the record's OWN aonId: feat-8402, *"Increase your proficiency
+  rank in one of Arcana, Nature, Occultism, or Religion from expert to master and in another from
+  trained to expert."* — verbatim.
+
+====================================================================================================
+FIXED-BY-ME (both inside this family's own files; no new file touched)
+====================================================================================================
+
+FIXED-BY-ME  the citation "AoN feat-4720" is the WRONG DOCUMENT.
+  feat-4720 in the mirror is "Anthropomorphic Shape". Magical Knowledge is feat-8402 (core.json
+  feats/magical-knowledge.aonId), and the quoted clause is verbatim in that doc. The bad id appeared
+  in the wg-identity.mjs teach comment and in the test's case-1 comment; both now name feat-8402 and
+  say what feat-4720 actually is, so the correction cannot be undone by a re-read. (It was never a
+  formal `// batch 032 premise:` citation, so the flip audit could not catch it — which is exactly
+  why it was worth catching by hand.) The same wrong id still stands in the builder's own
+  work/.b032-report-instruments.txt and in the `note` of work/.b032-rows-instruments.json; those are
+  another agent's files and were left alone — the driver should read feat-8402 for both.
+
+FIXED-BY-ME  the teach left the batch-006 settle `'hold-mark': ['options']` answering NOTHING.
+  hold-mark's own carrier is featGrantsLane.ts:58 — a skillChoices slot offering
+  diplomacy/survival/religion/intimidation, exactly the four ADJ_VALUE options their row names — and
+  the quote-tolerant regex makes the comparer read it. Measured: hold-mark is on the --raw flag list
+  with the old reader and off it with the new one, so from this batch onward the settle matches
+  nothing and would silence the NEXT options difference on that record, unread (wg-identity.mjs:27-30,
+  the file's own doctrine; scripts/wg-settle-stale.mjs now lists it). The entry is DELETED, replaced
+  by the "settle REMOVED" comment form the file already uses for elemental-wrath, carrying
+  `// batch 032: magical-knowledge#instrument — hold-mark settle REMOVED…` so the flip audit's
+  removed-key rule is satisfied by a finding whose own text names hold-mark.
+  Pinned by a new 7th case in test/batch032-instruments.test.ts, "the magical-knowledge teach left
+  hold-mark's settle answering nothing, so it is gone", which runs wg-identity WITHOUT --raw (settles
+  live) and requires 1/1 match on the carrier, plus asserts the registry key is not back.
+  Regression check after the deletion: non-raw --batch 030 = 9/9, 031 = 10 checked/9 match
+  (haunting-memories, batch 031's own open flag, untouched), 032 = 13/13 — identical to the numbers
+  the builder reported for "after".
+
+====================================================================================================
+CORRECTIONS TO THE BUILDER'S REPORT (no code consequence, recorded so the next reader is not misled)
+====================================================================================================
+  · "diff of the flagged lists: exactly one line, magical-knowledge. No other record was silenced."
+    True only with the settle registries LIVE, which is how it was measured. With --raw the fix moves
+    TWO records; the second is hold-mark, and its settle is what hid the movement. That is the whole
+    reason the stale settle above went unnoticed — a blast radius measured through the settles cannot
+    see a settle it has just made dead. Measure the next one with --raw.
+  · Report case 3 says hold-mark "agreed before and must still agree". It did not agree before under
+    --raw, which is the mode that test runs in; the case passes because of the teach, not despite it.
+    The assertion itself is correct and stays.
+  · "TWO BUGS IN THIS READER" overstates the second. With `out.options.add(key('skill ' + o))` reverted
+    and the regex kept, all 17,290 records report identically, because `contains` already matches a
+    bare 'arcana' inside their 'skillarcana' on its substring branch (wg-identity.mjs:604-606). The
+    credit is kept — it costs nothing, it makes the printed `ours=[…]` reading say which spelling was
+    credited, and the report's own case 2 shows it is per-option rather than a wildcard — but the
+    comment now says which half carries the verdict, so nobody defends dead code as load-bearing.
+
+====================================================================================================
+SPEC ROWS — CHECKED AS ROWS, NOT APPLIED
+====================================================================================================
+  work/.b032-rows-instruments.json: two entries, `show-off` and `magical-knowledge#instrument`, both
+  with `backfillRows: []`. Nothing to apply, therefore: no target record to exist or create, no
+  re-emitted whole value to diff, no field needing a reader, no create-row prose, no id to resolve in
+  core.json, and no record+field+path key that can collide with another family's spec. Both ids are
+  CONFIRMED findings in work/.b032-read.json. Both `note` texts are accurate about the mechanics (the
+  Starfinder pairing, and the featGrantsLane carrier) apart from the feat-4720 slip recorded above.
+  No in-memory harness was built: with zero rows there is nothing to apply to a content copy, and the
+  magical-knowledge mechanic reaching a built character is the engine family's three findings
+  (#skill-feats, #master-precondition, #distinct-skills), whose build.ts work is already visible at
+  build.ts:1691.
+
+MANIFEST — work/.b032-specs.json
+  Intact: all four family entries present (situational, data-rows, instruments, engine). The
+  instruments entry lists exactly the paths this family touched —
+  work/.b032-rows-instruments.json, work/.b032-report-instruments.txt,
+  test/batch032-instruments.test.ts, scripts/wg-identity.mjs. No superseding rows exist in this
+  family's spec, so no `supersedes: true` is owed. My own two fixes are inside
+  scripts/wg-identity.mjs and test/batch032-instruments.test.ts, both already in stage[] — nothing to
+  add. (This verify file, work/.b032-verify-instruments.txt, is the only new path; add it to stage[]
+  if the driver stages verify files.)
+
+GATES RE-RUN HERE
+  npx tsc --noEmit                                  clean
+  node scripts/vt.mjs run test/batch032-instruments.test.ts   7 passed (6 the builder wrote + mine)
+  node scripts/test-flip-audit.mjs --batch 032       "batch 032 clean … every flip cited"
+  Throwaway probes (two reader variants under scripts/, the all-ids batch file and its three run
+  logs under work/) were deleted after measuring; git status shows only wg-identity.mjs modified and
+  the test file added for this family.
+
+====================================================================================================
+DATA STILL NEEDED
+====================================================================================================
+(none — confirmed. Both findings are instrument/comparer issues; no effect-backfill.json row is owed
+by this family, and the show-off record is correct exactly as shipped.)
+
+====================================================================================================
+CROSS-FILE GAPS
+====================================================================================================
+- scripts/wg-batch.mjs:107-120 (the PACKET builder) — VERIFIED, the builder's description is exact.
+  The loop keys their rows by `${bucket}|${norm(name)}` with `if (!ops.length) continue;` and no
+  content_source filter at all, so Show-Off's empty Pathfinder row (24347) is dropped and the
+  Starfinder namesake (55639, "Galactic Ancestries", group starfinder-core) wins the key — which is
+  how work/wg-batch-032.json came to quote `addBonusToValue SKILL_PERFORMANCE` as our level-8
+  Firebrands feat's theirEncoding. Fix: build `theirs` from wgRowsByBucket (scripts/lib/wg-parse.mjs),
+  which already excludes group 'starfinder-core' plus any source whose store URL says starfinder, and
+  let an empty-operations row hold its own name key so a packet says "they encode nothing" instead of
+  quoting the other game. Outside this family's files. Note the blast radius is not one record: every
+  packet built since the two games shared these tables has been exposed to this, wherever a
+  Pathfinder record's name is reused in Starfinder 2e and our row encodes less than theirs.

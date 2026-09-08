@@ -1,0 +1,103 @@
+[
+  {
+    "file": "work/.b032-rows-situational.json",
+    "kind": "rows",
+    "family": "situational",
+    "stage": [
+      "work/.b032-rows-situational.json",
+      "work/.b032-report-situational.txt",
+      "test/batch032-situational.test.ts",
+      "src/rules/situationalBonuses.ts",
+      "scripts/apply-situational-lane.mjs"
+    ]
+  },
+  {
+    "file": "work/.b032-rows-data-rows.json",
+    "kind": "rows",
+    "family": "data-rows",
+    "stage": [
+      "work/.b032-rows-data-rows.json",
+      "work/.b032-report-data-rows.txt",
+      "work/.b032-verify-data-rows.txt",
+      "test/batch032-data.test.ts",
+      "test/consumable-modes.test.ts"
+    ]
+  },
+  {
+    "file": "work/.b032-rows-instruments.json",
+    "kind": "rows",
+    "family": "instruments",
+    "stage": [
+      "work/.b032-rows-instruments.json",
+      "work/.b032-report-instruments.txt",
+      "test/batch032-instruments.test.ts",
+      "scripts/wg-identity.mjs"
+    ]
+  },
+  {
+    "file": "work/.b032-rows-engine.json",
+    "kind": "rows",
+    "family": "engine",
+    "stage": [
+      "work/.b032-rows-engine.json",
+      "work/.b032-report-engine.txt",
+      "work/.b032-verify-engine.txt",
+      "test/batch032-engine.test.ts",
+      "src/rules/types.ts",
+      "src/rules/build.ts",
+      "src/rules/derive.ts",
+      "src/builder/Builder.tsx",
+      "test/batch032-closer.test.ts",
+      "scripts/wg-diff.mjs",
+      "scripts/wg-experience.mjs",
+      "scripts/lib/wg-experience-lanes.mjs"
+    ]
+  },
+  {
+    "file": "work/.b032-rows-gap-situational.json",
+    "kind": "rows",
+    "family": "gap-situational",
+    "stage": [
+      "work/.b032-rows-gap-situational.json",
+      "work/.b032-report-gap-situational.txt",
+      "test/batch032-gap-situational.test.ts",
+      "src/data/index.ts"
+    ]
+  },
+  {
+    "file": "work/.b032-rows-gap-engine.json",
+    "kind": "rows",
+    "family": "gap-engine",
+    "stage": [
+      "work/.b032-rows-gap-engine.json",
+      "work/.b032-report-gap-engine.txt",
+      "test/batch032-gap-engine.test.ts",
+      "src/rules/featGrants.ts",
+      "src/rules/featGrantsLane.ts",
+      "src/rules/build.ts",
+      "src/builder/Builder.tsx"
+    ]
+  },
+  {
+    "file": "work/.b032-rows-gap-data-rows.json",
+    "kind": "rows",
+    "family": "gap-data-rows",
+    "stage": [
+      "work/.b032-rows-gap-data-rows.json",
+      "work/.b032-report-gap-data-rows.txt",
+      "test/batch032-gap-data-rows.test.ts",
+      "scripts/dropped-inline-check.mjs"
+    ]
+  },
+  {
+    "file": "work/.b032-rows-gap-instruments.json",
+    "kind": "rows",
+    "family": "gap-instruments",
+    "stage": [
+      "work/.b032-rows-gap-instruments.json",
+      "work/.b032-report-gap-instruments.txt",
+      "test/batch032-gap-instruments.test.ts",
+      "scripts/wg-batch.mjs"
+    ]
+  }
+]

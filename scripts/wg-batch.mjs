@@ -26,7 +26,7 @@ import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { parseCopyBlock, parseOps, flattenOps, untsv } from './lib/wg-parse.mjs';
+import { parseOps, flattenOps, wgRowsByBucket, wgOwnsComparison } from './lib/wg-parse.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
@@ -104,19 +104,34 @@ const describeOp = (op, depth = 0) => {
   return out;
 };
 
-const theirs = new Map(); // "bucket|normname" -> {name, type, ops[]}
-for (const [table, type, bucket] of SOURCES) {
-  let parsed;
-  try { parsed = parseCopyBlock(sql, table); } catch { continue; }
-  for (const r of parsed.rows) {
-    if (type && r.type !== type) continue;
-    const ops = parseOps(r.operations).flatMap((o) => flattenOps(o));
-    if (!ops.length) continue;
-    const key = `${bucket ?? type}|${norm(r.name)}`;
-    const prev = theirs.get(key);
-    if (!prev || ops.length > prev.ops.length) {
-      theirs.set(key, { name: r.name, type: type ?? table, bucket, ops, raw: parseOps(r.operations) });
-    }
+/*
+ * THEIR SIDE — through the SHARED pairing, not a private one.
+ *
+ * This block used to walk parseCopyBlock itself with no content_source filter and "richest row wins",
+ * and it skipped every empty-operations row before the key was claimed. Both halves are how a
+ * Pathfinder record got handed the STARFINDER namesake's encoding: work/wg-batch-032.json quotes
+ * `addBonusToValue SKILL_PERFORMANCE` as show-off's theirEncoding, and that operation belongs to
+ * ability_block 55639 — "Show-Off" from Galactic Ancestries, content_source group 'starfinder-core'.
+ * Our feats/show-off is aonId feat-4144 (Firebrands pg. 80, Feat 8, a flourish free action off an
+ * Acrobatics-or-Athletics trigger) and never mentions Performance. The row that actually matches it
+ * is 24347, whose operations are "{}" — they encode nothing.
+ *
+ * wgRowsByBucket (scripts/lib/wg-parse.mjs) is the pairing all four comparers already read: it drops
+ * group 'starfinder-core' plus any source whose store URL says starfinder, and it lets an
+ * empty-operations row hold its own name key instead of being stepped over by the next namesake. So
+ * a record like show-off now falls into the owner's leave-us-unchanged case ("they encode nothing")
+ * instead of arriving in a packet quoting another game, and the packet a batch cuts is built from
+ * the same counterpart the comparers will score it against.
+ */
+const theirRows = wgRowsByBucket(sql);
+const theirs = new Map(); // "bucket|normname" -> {name, type, ops[], raw[]}
+for (const [table, , bucket] of SOURCES) {
+  if (!bucket) continue;
+  for (const [key, row] of theirRows[bucket] ?? []) {
+    const raw = parseOps(row.operations);
+    const ops = raw.flatMap((o) => flattenOps(o));
+    if (!ops.length) continue; // owner rule: where they encode nothing, we stay as we are
+    theirs.set(`${bucket}|${key}`, { name: row.name, type: row.type ?? table, bucket, ops, raw });
   }
 }
 
@@ -126,6 +141,10 @@ for (const [, bucket] of SOURCES.map((s) => [s[1], s[2]])) {
   if (!bucket || !core[bucket]) continue;
   for (const [id, rec] of Object.entries(core[bucket])) {
     if (!rec?.name) continue;
+    /* An `aon-` twin shadowed by the canonical record of the same name carries nothing by design and
+     * every comparer defers it to that canonical (wgOwnsComparison) — so a packet cut for one can
+     * only ever produce a false finding about a record no player can select. */
+    if (!wgOwnsComparison(core, bucket, id)) continue;
     const t = theirs.get(`${bucket}|${norm(rec.name)}`);
     if (!t) continue; // they encode nothing here — owner rule: leave us unchanged
     if (packets.some((p) => p.id === id && p.bucket === bucket)) continue;

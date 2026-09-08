@@ -1,0 +1,9 @@
+{
+  "findings": [
+    {
+      "id": "show-off",
+      "backfillRows": [],
+      "note": "Instrument fix, no data row — the packet builder, not a carrier. work/.b032-report-gap-instruments.txt authors the CODE half against finding show-off: scripts/wg-batch.mjs:108-119 paired their rows by normalised name with no content_source filter, so feats/show-off (AoN feat-4144, Firebrands pg. 80, a flourish free action with no mention of Performance) was cut with ability_block 55639's addBonusToValue SKILL_PERFORMANCE — content_source 818, group starfinder-core, i.e. Starfinder 2e's namesake. `theirs` is now built from wgRowsByBucket (scripts/lib/wg-parse.mjs), the same pairing all four comparers already use, and the packet loop defers aon- twins through wgOwnsComparison; every comparer therefore reports nothing on this record and our core.json feats/show-off ships unchanged. Pinned by test/batch032-gap-instruments.test.ts (3 cases, all cited `// batch 032: show-off`). This spec exists so the fix is visible to scripts/wg-batch-close.mjs, which derives its evidence set from work/.b032-specs.json stage[] — the gap verifier reopened the line for exactly that omission."
+    }
+  ]
+}

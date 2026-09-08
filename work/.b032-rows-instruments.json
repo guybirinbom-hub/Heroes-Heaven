@@ -1,0 +1,14 @@
+{
+  "findings": [
+    {
+      "id": "show-off",
+      "backfillRows": [],
+      "note": "Instrument misread, no data row. AoN feat-4144 (Firebrands pg. 80, Feat 8, archetype/flourish) never mentions Performance, and Wanderer's Guide's matching row (ability_block 24347, Firebrands backport, level 8) carries NO operations at all. The `addBonusToValue SKILL_PERFORMANCE` the packet quoted comes from ability_block 55639, whose content_source 818 is \"Galactic Ancestries\", group starfinder-core — Starfinder 2e, the other game in the same tables. wgRowsByBucket (scripts/lib/wg-parse.mjs) already drops Starfinder sources, so all four comparers pair the right row and report nothing; only the packet builder scripts/wg-batch.mjs pairs by name with no source filter, and that file is outside this family (CROSS-FILE GAPS). Our core.json feats/show-off is correct as shipped and no Performance carrier is to be added. Pinned by test/batch032-instruments.test.ts, describe 'show-off was paired with Wanderer's Guide's Starfinder namesake'."
+    },
+    {
+      "id": "magical-knowledge#instrument",
+      "backfillRows": [],
+      "note": "Comparer teach, no data row. AoN feat-4720 prints *\"Increase your proficiency rank in one of Arcana, Nature, Occultism, or Religion from expert to master and in another from trained to expert\"*, and src/rules/featGrantsLane.ts:70 already offers exactly those four in two skillChoices slots (rendered at Builder.tsx:2189, applied at build.ts:5706) — the carrier is present and correct, so nothing is owed to effect-backfill.json. The fix is in scripts/wg-identity.mjs's lane-file option reader: the option-list regex is quote-tolerant now (it could not match the machine-written `\"options\": [`) and every lane option is credited under both the bare spelling and the `skill <name>` spelling their untitled ADJ_VALUE options key as (SKILL_ARCANA -> 'skillarcana'), the same pair the trainedSkillChoice reader already adds."
+    }
+  ]
+}

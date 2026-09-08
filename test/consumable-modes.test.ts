@@ -59,7 +59,12 @@ describe('consumable modes: the data', () => {
     // modes batch 031 created: Umbral Wings' fly Speed until the end of your next turn, and the Energy
     // Robe (Cold)'s water walk for 1 minute (equipment-1317-1217). Both items already carried the
     // activation cost and the frequency counter and nothing for the effect itself.
-    expect(itemModes().length).toBe(377);
+    // batch 032 premise: equipment-1435 "Increase your fire resistance from the crown from 5 to 15."
+    // +1 for the Crown of the Fire-Eater's reaction: the crown shipped the once-per-day counter, the
+    // reaction cost and the standing fire 5, so nothing on the sheet moved when it fired. The mode
+    // carries the 15 (same-type resistances take the highest, so it supersedes the passive 5) and its
+    // note carries the healing clause, which has no numeric carrier.
+    expect(itemModes().length).toBe(378);
   });
 
   it('every item mode points at an item that actually exists', () => {

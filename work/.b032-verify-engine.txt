@@ -1,0 +1,216 @@
+BATCH 032 — WG-COMPARISON LANE — ADVERSARIAL VERIFY — FAMILY: engine
+Spec checked: work/.b032-rows-engine.json   Report checked: work/.b032-report-engine.txt
+Test: test/batch032-engine.test.ts (20 tests, green — 19 the builder's + 1 I added)
+Gates re-run by me: npx tsc --noEmit → clean; node scripts/test-flip-audit.mjs --batch 032 → clean
+  (5 test files touched, 0 new settle keys, every flip cited); node scripts/vt.mjs run over
+  test/batch032-engine.test.ts plus 27 sibling suites touching every widened reader (caster
+  archetypes ×2, halcyon, bloodrager, dual-class second caster, bulk limits, bulk nesting,
+  conditional armour/bulk, daily choices ×2, granted strikes, heritage skill, assurance skill
+  choice, surki tradition skill, surki carapace, innate grant lanes, derive, derived grants, item
+  spells ×3, kinetic gate, spellcasting, choice pickers fill, feat choices, granted choice lanes,
+  umbrella items) → 218 tests, all passing.
+Throwaway harness (written, run, DELETED): a vitest file that applied EVERY row of
+  work/.b032-rows-engine.json to a content copy AT ONCE — the driver's semantics, absolute assignment
+  of one top-level field — and built real characters against the result, so the two-rows-on-one-record
+  interaction the per-finding tests cannot see (canopy-bulwark carries both passiveEffects and
+  heldSpellTradition) was exercised. 9 assertions, all passing. File removed.
+
+VERDICT SUMMARY: 11 DONE, 1 FIXED-BY-ME, 2 NOT-DONE (both cross-file by construction), 1 half-DONE.
+
+PER FINDING
+
+prolific-prophet-spellcasting — DONE
+  buildCharacter's archetype fold is now the exported foldArchSpellSlotBonuses (build.ts:1717-1766) and
+  Builder.tsx:414-437 archExtraKnownAt calls the SAME function. Diffed the extracted body against the
+  deleted inline one line by line: byRank / highestOnly / perRank+exceptHighest / extraKnown / cantrips
+  are byte-equivalent, `at` is still recomputed from Object.keys(slots) inside the loop. Test builds an
+  L8 fighter with the three prophet feats and asserts slots[1].max > 1, repertoire length == that, and
+  builderPickCap == that. Level-scoping filter (Builder.tsx:428) mirrors build.ts:3981 exactly,
+  including the NaN case (a non-numeric slot key fails `<= L` there and fails Number.isFinite here).
+
+occult-breadth — DONE
+  Same reader, no record change. Positive and negative twin both green on a built L8 fighter.
+
+magical-knowledge#distinct-skills — DONE, with the report's BLAST RADIUS CORRECTED (I added the pin)
+  skillSlotOptions/distinctSiblingPicks (build.ts:1652-1706) narrows only against a byte-identical,
+  closed sibling list and never empties the list; recursion terminates (siblings are strictly earlier
+  indices). Built L8 fighter: exactly one master and at least one expert across the four skills
+  (was Arcana twice).
+  ⚠ THE REPORT'S MEASUREMENT IS WRONG. It says "exactly two records carry more than one skillChoices
+  slot". Re-measured over FEAT_GRANTS including choiceGrants: ELEVEN do — clan-lore:other-clan,
+  golden-league-xun-dedication, initiate-benefit-tome, natural-skill, officers-education, old-soul,
+  skill-mastery, skill-mastery-rogue, sorcerer-dedication, magical-knowledge, rogue-dedication. Nine
+  are 'any' (never excluded) and rogue-dedication's lists differ, so TWO records change behaviour, not
+  one: magical-knowledge AND golden-league-xun-dedication, whose two slots list the identical closed
+  {athletics, deception, intimidation, stealth}. Print backs the second change — feat-2734: "expert
+  proficiency in two of the following skills" — and measured on a built character it goes from ONE
+  expert (both slots defaulted to athletics) to TWO. That was an unwitnessed side effect, so I added
+  test/batch032-engine.test.ts "golden-league-xun-dedication: the pair of identical slots also
+  resolves to TWO skills" under the premise citation `// batch 032 premise: feat-2734 "expert
+  proficiency in two of the following skills"` (mirror file verified present, clause verbatim).
+
+magical-knowledge#skill-feats — NOT-DONE (cross-file, correctly declared)
+  Confirmed by me that it is undeliverable from this family's four files: the lane is FEAT_GRANTS-keyed
+  and lives in src/rules/featGrantsLane.ts + src/rules/featGrants.ts, neither of which ANY family in
+  this batch staged (work/.b032-specs.json). Reader verified present: featGrants.ts:346 declares
+  bonusSkillFeat, read at build.ts:5169 and :9301 and rendered at Builder.tsx:2374. Gap stands.
+
+magical-knowledge#master-precondition — NOT-DONE (cross-file, correctly declared)
+  I re-derived the report's claim rather than taking it: build.ts:5806-5809 computes
+  `maxRank(cur, base) === cur ? upgraded : base` and Builder.tsx:171-174 the same, so
+  conditionalRank {base:'expert', upgraded:'master'} grants master to an already-expert pick and
+  expert to a trained one — exactly "from expert to master". One-line data edit in featGrantsLane.ts,
+  no engine work. Gap stands.
+
+magic-finder#tradition — DONE
+  types.ts InnateSpellGrant.traditionFromCasting; build.ts:8060 prefers caster?.tradition when set and
+  keeps the printed `tradition` as the not-a-caster fallback. ROW CHECKED AS A ROW: the superseded
+  effect-backfill row was dumped and diffed against the new value — same three grants, same spellId /
+  tradition / atWill / usesPerDay, plus the flag on each; nothing dropped. All three spell ids exist in
+  core.json. Built cleric reads divine, built fighter reads arcane.
+
+projectile-snatching — DONE (row only, existing lane)
+  recordMarks + recordMarkersFor; the row's shape is byte-identical in structure to the shipped sibling
+  feats/return-fire (both `on:'feature'` and `on:'action'` with id 'deflect-projectile'). NOTE for the
+  driver, not a defect: 'deflect-projectile' lives in the FEATS bucket, not classFeatures/actions —
+  the sibling ships the same `on` values, so the row follows the lane's own convention, and the marker
+  reaches a built monk (asserted).
+
+improved-elemental-blast — DONE
+  types.ts Feat.blastDiceBonus, summed over c.feats (one entry per taking) in deriveBlastStrikes.
+  Built L14 archetype kineticist: 1 taking → 2dN, 2 takings → 3dN. maxTakable:3 already on the record.
+
+improved-elemental-blast#no-archetype-blast — DONE, and I verified the withholding against PRINT
+  The report asserts the class +1-die-at-5/9/13/17 table must not apply to an archetype blast. Printed
+  authority found and read: feats/kineticist-dedication — "Your Elemental Blast does not automatically
+  gain additional damage dice every four levels, instead requiring you to take the Improved Elemental
+  Blast feat." classFeatures/elemental-blast carries the "Level (+4) The damage increases by one die"
+  the code's [5,9,13,17] table models. So the archetype flag is right, not merely convenient.
+  Sibling check: the two `c.kineticist` readers outside deriveBlastStrikes (derive.ts:4557 blastTypes,
+  shared.tsx:3612 the per-element rows) both default with `?? []`/optional chaining, so a CLASS
+  kineticist whose gate is unanswered getting `undefined` instead of `{elements: []}` changes nothing;
+  a level-17 class kineticist still rolls 5dN (asserted in the same test).
+
+lifting-leather#max — FIXED-BY-ME (code DONE; a hard-refuse COLLISION removed from the spec)
+  Code half verified: types.ts ItemPassiveEffects.bulkMaxBonus and the itemMaxBonus accumulation into
+  maxOnlyBonus in deriveBulk's item loop (highest wins, matching bulkLimitBonus). Built fighters, worn
+  vs not: +2 encumbered, +4 maximum.
+  ⚠ THE SPEC WOULD HAVE FAILED THE APPLIER. items/lifting-leather field passiveEffects was authored in
+  BOTH work/.b032-rows-engine.json (this family) and work/.b032-rows-data-rows.json (finding
+  lifting-leather), with byte-identical values — and the data-rows spec's own note says it merged both
+  halves there deliberately "because two specs writing items/lifting-leather.passiveEffects would be a
+  hard-refused collision". The engine builder authored it anyway. I removed the duplicate from THIS
+  family's spec (backfillRows now [], with the reason written into the entry's note) and left the
+  single merged row where the two families had agreed it should live. Nothing is lost — the values were
+  identical — and I re-ran the cross-spec collision scan over all four spec files: no collisions remain
+  on any record+field key.
+
+sigil-of-the-first-clan#spell-dc — DONE
+  Item.heldSpellDc → SpellcastingEntry.fixedDc (build.ts, only when the field is present, so no entry
+  gains the key by default) → deriveSpellcasting returns it verbatim. Skipping the conditions/modes
+  pool is right: those adjust the caster's own DC and 24 is the item's. Both halves asserted (with the
+  field: 24; without: not 24). No class or archetype entry sets fixedDc anywhere.
+
+canopy-bulwark#assisting-rune — DONE (row only, existing reader)
+  Different field from the record's existing builtInRunes overlay row, so no supersedes is needed and
+  none is claimed. Built fighter, worn vs not: both thresholds +1, which is the printed 6 + Str /
+  11 + Str.
+
+canopy-bulwark#spell-tradition — DONE; I ACCEPT THE DEVIATION, and here is why it is not an owner question
+  The proposal replaces heldSpells with innateSpells; the builder instead added Item.heldSpellTradition
+  and let it beat the majority vote. I checked the record before accepting: items/canopy-bulwark ships
+  activationCost {actions:2}, frequency {max:1, per:'day'} and a `freq` counter, and print is an
+  ACTIVATION ("Activate 2 actions; Frequency once per day; Effect You cast Haste targeting yourself").
+  The innateSpells carrier would strand the activation cost and the counter, so the deviation is CLOSER
+  to print, not a departure from it — and WG's INNATE encoding is their engine's container, which is
+  evidence, not text. WG and print do not contradict each other on the mechanic (both give a 1/day
+  primal Haste), so nothing here belongs in work/.b032-queue.json. heldSpells is untouched, so no
+  double grant is possible; the harness confirmed the entry still holds haste at rank 3 while reading
+  primal.
+
+malleable-mental-forge — HALF DONE (engine DONE; the daily-prep UI half NOT DONE, cross-file)
+  Engine half verified: FeatChoiceDef.replacesFlag, and answersForChoiceFlag (derive.ts:4157-4190) now
+  reads this morning's daily answers, with a replacing record supplying the WHOLE answer. Both rows
+  check out as rows — feats/mental-forge.weaponTraits is a NEW field on that record (no collision with
+  its existing `choice` row) and points at flag 'mentalForgeTraits', which is exactly the flag on
+  mental-forge's shipped choice; the malleable `choice` row was diffed against the superseded overlay
+  value and carries it whole plus replacesFlag. items/mind-weapon exists and ships traits:[].
+  BLAST RADIUS RE-MEASURED (the report says "addFromChoiceFlag has exactly one reader"): there are TWO
+  readers, derive.ts:4232 (weapon riders) and derive.ts:4805 (unarmed riders). The conclusion survives
+  anyway — I walked every bucket of core.json and there is exactly ONE addFromChoiceFlag carrier today,
+  feats/fighting-horn → 'traitOne', and no daily choice record uses that flag, so the new daily read is
+  inert for everything except the mental-forge row this batch authors.
+  ⚠ SIZE OF THE REMAINING GAP, stated plainly because the report understates it: dailyChoices stores
+  ONE value per `<recordId>:<flag>` key, so a malleable owner who answers today's picker records ONE
+  trait — and because the replacement is whole-answer, they then get ONE trait where print gives two.
+  Still strictly better than before the batch (the mind weapon had NO traits at all, ever), and correct
+  the moment the picker fans out the way choiceKeys() does for build-time picks. Not a regression, but
+  it is a printed shortfall that ships.
+
+SPEC ROWS CHECKED AS ROWS (all of work/.b032-rows-engine.json)
+  - Every target record exists in core.json (feats/magic-finder, projectile-snatching,
+    improved-elemental-blast, mental-forge, malleable-mental-forge; items/canopy-bulwark,
+    sigil-of-the-first-clan). No create:true rows, so no created-prose spec is owed and no row can
+    carry a description.
+  - Every id a row names exists: spells detect-magic / read-aura / locate; items mind-weapon; the
+    recordMarks target deflect-projectile (feats bucket, same as the shipped sibling return-fire).
+  - Both re-emitted values were diffed against the shipped overlay value with node -e and hold
+    everything they held, minus nothing, plus exactly the intended field. Both carry supersedes: true.
+  - Every other row targets a field the record does not currently have (mental-forge.weaponTraits,
+    improved-elemental-blast.blastDiceBonus, projectile-snatching.recordMarks,
+    canopy-bulwark.passiveEffects + heldSpellTradition, sigil.heldSpellDc), so no whole-value carry is
+    owed and no supersedes is needed.
+  - A reader exists in this family's files for every field: traditionFromCasting (build.ts),
+    blastDiceBonus (derive.ts), bulkMaxBonus (derive.ts), heldSpellDc → fixedDc (build.ts + derive.ts),
+    heldSpellTradition (build.ts), replacesFlag (derive.ts). recordMarks (explain.ts),
+    passiveEffects.bulkLimitBonus (derive.ts) and weaponTraits/addFromChoiceFlag (derive.ts) are
+    pre-existing lanes, reused not rebuilt, as claimed.
+  - No two rows in any of the four specs hit the same record+field key (re-scanned after my edit).
+
+MANIFEST
+  work/.b032-specs.json still carries all four family entries (situational, data-rows, instruments,
+  engine). The engine entry lists every path this family touched. I appended
+  work/.b032-verify-engine.txt to the engine stage[] (the convention the b030 manifest uses) and
+  touched no other family's entry.
+
+DATA STILL NEEDED
+1. feats/lore-seeker and feats/cautious-delver — the magic-finder lane siblings carry the same
+   hard-coded tradition:'arcane' innate grants and the same printed clause; no row is authored for
+   them in this batch. traditionFromCasting:true on their grants, the same shape as the magic-finder
+   row, is all they need — the reader is now shipped.
+
+CROSS-FILE GAPS
+1. magical-knowledge#skill-feats — src/rules/featGrantsLane.ts:70 needs `bonusSkillFeat` on the
+   'magical-knowledge' entry (WG parity), and full print parity ("a skill feat associated with EACH of
+   the skills you chose" = two) additionally needs FeatGrant.bonusSkillFeat widened from boolean to
+   `boolean | number` in src/rules/featGrants.ts:346 and counted at build.ts:5169/9301 and
+   Builder.tsx:2374. No family in this batch staged those files.
+2. magical-knowledge#master-precondition — src/rules/featGrantsLane.ts:70 slot 0: replace
+   `"rank": "master"` with `"conditionalRank": { "base": "expert", "upgraded": "master" }`. Zero engine
+   work; both readers verified present (build.ts:5806, Builder.tsx:171).
+3. malleable-mental-forge, second half — src/sheet/CharacterSheet.tsx + src/rules/dailyChoices.ts store
+   ONE value per daily choice key, so a picks:2 daily choice records one trait and the engine's
+   whole-answer replacement then delivers ONE trait where print gives two. Fan the daily picker out per
+   pick the way choiceKeys() does for build-time picks.
+4. work/.b032-rows-data-rows.json owns items/lifting-leather.passiveEffects — after I removed this
+   family's duplicate, the engine's bulkMaxBonus reader has NO data unless the data-rows spec is
+   applied. The two specs must be applied together or lifting-leather#max ships as inert code.
+5. scripts/wg-batch-close.mjs derives the verdict per RECORD, not per finding — the record
+   'magical-knowledge' carries three engine findings of which only #distinct-skills is built, and the
+   rowless-but-code-only citation rule (close.mjs:181-186) will read the record as FIXED while two
+   printed clauses are still unbuilt. Owner: the driver — --reverdict it, or route the two unbuilt
+   findings to the gaps file, so a real gap does not ship as FIXED.
+
+IN-FAMILY RESIDUAL (no finding covers it; reported, deliberately NOT changed — an uncited flip)
+  Builder.tsx:427-429 builds the fold's feat list from build.featPicks only, while buildCharacter folds
+  over `feats`, which also holds override-added feats (build.ts:5178) and granted feats. So a
+  *-breadth feat added through Overrides still opens a slot on the sheet that the builder offers no
+  pick for — the same drift this finding fixed, one door further along, and pre-existing (the old
+  extraKnown-only body read featPicks too). Narrow: it needs an archetype caster who obtained a
+  slot-side spellSlotBonus feat by override or grant rather than by slot.
+
+MANIFEST stage[] PATHS FOR WHAT I TOUCHED
+  work/.b032-verify-engine.txt   (this file)
+  work/.b032-rows-engine.json    (removed the colliding lifting-leather row; note rewritten)
+  work/.b032-specs.json          (appended this verify file to the engine entry's stage[] only)
+  test/batch032-engine.test.ts   (added the golden-league-xun-dedication pin, premise-cited)

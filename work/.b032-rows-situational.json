@@ -1,0 +1,42 @@
+{
+  "findings": [
+    {
+      "id": "knowledge-is-power",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "knowledge-is-power",
+          "field": "description",
+          "value": "Your academic knowledge about a creature allows you to subtly alter your magic to defeat them. When you critically succeed at a Recall Knowledge check about a creature, you can invoke your knowledge to make the creature take a –1 circumstance penalty to either AC and saves against the next attack you make against it, or the next spell you cast that it needs to defend against. The creature takes the same penalty to its attack or DC the next time it attacks against you or causes you to attempt a save against one of its effects.\n\nIf you share this information with your allies, they gain the benefits as well. If not used, the bonuses end after 1 minute.",
+          "why": "AoN feat-5039 (Player Core pg. 203), the aonId this record itself carries at edition \"remaster\". core-descriptions feats/knowledge-is-power still ships the LEGACY feat-2861 wording (\"you gain a +1 circumstance bonus to your next attack roll against the creature, to your AC against its next attack roll, and to your save against its next effect requiring a save\"), which is a different edition of the feat, not a paraphrase. The value is the verbatim feat-5039 prose, character-for-character identical to what feats/knowledge-is-power-wizard (same aonId) already ships, so the two rows a wizard is offered stop contradicting each other. No descRefs row: the record has none today and this row does not add one."
+        }
+      ],
+      "note": "TWO carriers, one in code and one in data. CODE (mine, done): the four \"+1 circumstance\" rows under \"knowledge-is-power\" in src/rules/situationalBonuses.ts are DELETED, and the id is added to the `handEdited` exclusion set in scripts/apply-situational-lane.mjs (work/situational-lane/spec.json still holds the legacy reading with situational:true and 3 bonuses, so without the exclusion the row comes straight back on the next lane run). The remaster feat grants the player nothing at all - the -1 circumstance penalty lands on the ENEMY's AC/saves/attack/DC, which is OTHERS_ROLL under ruling F and earns no star. DATA (the row above): the stale description. The THIRD half - hiding the duplicate record so a level-8 wizard is not offered two \"Knowledge is Power\" rows - is NEAR_DUPLICATE_IDS in src/data/index.ts, outside my files; it is in CROSS-FILE GAPS. Deliberately NOT a {delete:true} row: that file's own ruling is hide-never-delete, because an id that vanishes takes the pick off a saved character's sheet."
+    },
+    {
+      "id": "hazard-finder",
+      "backfillRows": [],
+      "note": "Code-only. \"You can find hazards that would normally require you to Search even if you aren't Searching\" (feat-4884) names no statistic, so SituationalTarget - which mirrors StatRef - can never hold it; RECORD_MARKERS['hazard-finder'] = [{ on: 'action', id: 'search', … }] in src/rules/situationalBonuses.ts is the carrier, the smoke-through-bamboo shape exactly. core.json actions.search exists and skillActionsFor('perception', …) lists Search, so StatDetailModal has a row to draw the mark beside. Chose the CODE table over the record's `recordMarks` data field on purpose: both reach `recordMarkersFor` through the same channel, and the code table is the smaller change with no regeneration dependency. The +1 circumstance half already in FEAT_SITUATIONAL is untouched."
+    },
+    {
+      "id": "safeguard-soul#allies",
+      "backfillRows": [],
+      "note": "Code-only. No ally/aura numeric lane exists anywhere in the app (grep: no auraBonus / allyBonus / partyAura), so the printed sentence \"While your spiral is glowing, your allies in the light of the spiral gain this benefit as well\" (feat-3472) can only be carried as words on the star the player already reads. The `when` in src/rules/situationalBonuses.ts now ends \"(you, and allies in your glowing spiral's light)\" - the parenthetical form fluttering-misdirection, world-rouser-dedication and pennant-of-victory already use. The batch-24 ruling at the intuitive-cooperation entry does not reach this: that one is an ALLY-ONLY bonus on the ally's own roll, this is an extension of the same bonus the character has. Kept under 120 characters so cap-situational-notes.mjs leaves it alone."
+    },
+    {
+      "id": "mighty-bulwark#replacement-wording",
+      "backfillRows": [],
+      "note": "Code-only. The entry's `bonus` in src/rules/situationalBonuses.ts changes from \"+4 (bulwark)\" to \"+4 instead of your Dexterity modifier\", because the bulwark number REPLACES Dex (trait-549) and feat-6413 only raises it - so for a high-Dex character the old string overstated the save. explain.ts's featSituationalLines passes `bonus` through verbatim to the popup, so the string IS what the player reads; there is no number to correct, the app cannot know whether an incoming effect is a damaging one. The `when` was tightened to \"on all Reflex saves, damaging or not\" to carry the feat's second clause plainly. parseBonus reads this as untyped, so it never pools with anything - same as the trait:bulwark sibling it now supersedes."
+    },
+    {
+      "id": "mighty-bulwark#supersedes-trait-bulwark",
+      "backfillRows": [],
+      "note": "Code-only. \"mighty-bulwark\": ['trait:bulwark'] added to SITUATIONAL_SUPERSEDES in src/rules/situationalBonuses.ts. characterSituationalIds pushes the feat id and, separately, `trait:` for every trait of the worn armour, then filters the list through supersededIds - so a guardian in bulwark armour was reading the trait's +3 line and the feat's +4 line as two rules where feat-6413 states one that grows (\"increases from +3 to +4\"). Same shape as master-overdrive / grave-strength, and it fires only when the character has BOTH, so anyone in bulwark armour without the feat still reads the trait's +3."
+    },
+    {
+      "id": "mantle-of-the-tikbalang#illusory-thrash",
+      "backfillRows": [],
+      "note": "Code-only, deliberately NOT a data field. equipment-3226's activation prints \"Make a melee Strike. This Strike deals an additional 4d6 mental damage\", but a top-level `strikeDamage` field on items/mantle-of-the-tikbalang would add the 4d6 to EVERY Strike the wearer makes, for ever - print gates it on a 2-action activation the record's counters already cap at once per day, and nothing in the app knows which Strike is the Illusory Thrash one. So it is a second target on the item's existing src/rules/situationalBonuses.ts entry, { kind: 'strikeDamage' }, the activation-gated shape blackaxe and heartripper-blade already use. The item's existing effect-backfill row (passiveEffects) is untouched and uncollided."
+    }
+  ]
+}

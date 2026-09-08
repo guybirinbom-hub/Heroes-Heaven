@@ -1,0 +1,17 @@
+{
+  "findings": [
+    {
+      "id": "knowledge-is-power",
+      "note": "GAP AGENT, gap-situational. The CROSS-FILE GAP line for this finding is closed in src/data/index.ts by adding 'knowledge-is-power-wizard' to NEAR_DUPLICATE_IDS (the two records are both aonId feat-5039 and both pass featSlots.ts's category-'class'-plus-class-trait test, so a level-8 wizard was offered the printed feat twice). The KEPT id is 'knowledge-is-power' — mirror feat-5039's trait list is [\"Magus\",\"Wizard\"] and only that record carries both, where 'knowledge-is-power-wizard' carries [\"wizard\"] alone and 'knowledge-is-power-magus' is feat-9062 (Impossible Magic pg. 21, Feat 6), a different document. Hiding the two-trait record instead — the direction work/.b032-report-situational.txt named — would take a printed level-8 feat off every magus. The row below is the ONE consequence of the hide that the player would otherwise lose: the hidden twin's descRefs. The kept record's text is fixed by the feats/knowledge-is-power · description row in work/.b032-rows-situational.json (a different field, so no collision and no supersedes is owed here).",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "knowledge-is-power",
+          "field": "descRefs",
+          "value": [{ "label": "Recall Knowledge", "key": "actions" }],
+          "why": "AoN feat-5039 (Player Core pg. 203) reads \"When you critically succeed at a Recall Knowledge check about a creature, you can invoke your knowledge to make the creature take a –1 circumstance penalty…\" — Recall Knowledge is the named action the whole feat hangs on. That ref-link ships TODAY on feats/knowledge-is-power-wizard (core-descriptions feats/knowledge-is-power-wizard.r = [{\"label\":\"Recall Knowledge\",\"key\":\"actions\"}]) and that record is being hidden from the pickers in this batch, so without this row the surviving record loses a working link the player can click now. The value is that shipped array whole — descRefs is ONE field, and the kept record has none today. No effect-backfill.json row exists on feats/knowledge-is-power for any field (the only knowledge-is-power* row is feats/knowledge-is-power-wizard · edition), and no other b032 spec touches this category/id/field, so no supersedes: true is owed. 36 descRefs rows already exist in the overlay, e.g. familiarAbilities/accompanist."
+        }
+      ]
+    }
+  ]
+}

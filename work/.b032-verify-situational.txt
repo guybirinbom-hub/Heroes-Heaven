@@ -1,0 +1,111 @@
+BATCH 032 — SITUATIONAL family, ADVERSARIAL VERIFY
+Verified against work/.b032-read.json (all six findings re-read in full), the builder's report
+work/.b032-report-situational.txt, its spec work/.b032-rows-situational.json, the AoN mirror,
+public/core.json + public/core-descriptions.json, and the shipped readers in
+src/rules/explain.ts / src/rules/situationalBonuses.ts.
+
+PER FINDING
+
+knowledge-is-power .......... DONE
+  The four legacy "+1 circumstance" entries are gone from FEAT_SITUATIONAL (the id now appears once in
+  the file, in the deletion comment quoting feat-5039), the record carries no `situational` data field
+  and no other carrier redirects the key, so nothing else can put those stars back on a sheet; the id
+  is in `handEdited` in scripts/apply-situational-lane.mjs and `--dry` now reports hand-edited 7 with
+  knowledge-is-power outside the 93 applying records. Mirror feat-5039 confirms the enemy-side –1 and
+  no player bonus; feat-2861 is the legacy source of the deleted wording.
+
+hazard-finder .......... DONE
+  RECORD_MARKERS['hazard-finder'] reaches a BUILT ranger through recordMarkersFor(c, db, 'action',
+  'search') — the reader StatDetailModal.tsx:185 and MainTab.tsx:742 both call — and core.json
+  actions.search exists. markTooltip renders "Hazard Finder: <note>", so the note's lower-case opening
+  is right for the surface. Mirror feat-4884 carries the clause verbatim.
+
+safeguard-soul#allies .......... DONE
+  The `when` is 104 characters (cap-situational-notes.mjs trims at 120, so the trimmer leaves it) and
+  carries the allies and the spiral without losing "death" or "+2 status"; explainStat renders it on
+  all three saves. Mirror feat-3472's closing sentence extends the SAME bonus, so the batch-24
+  intuitive-cooperation ruling (an ally-ONLY bonus) genuinely does not reach it.
+
+mighty-bulwark#replacement-wording .......... FIXED-BY-ME
+  The bonus string change is right and print-faithful. The builder ALSO rewrote the `when` to
+  "on all Reflex saves, damaging or not", which deleted the only mention of the armour — and this entry
+  fires on the feat id alone, so a Sentinel who owns the feat and wears NON-bulwark armour was being
+  promised "+4 instead of your Dexterity modifier" they do not have. feat-6413 gives the feat nothing
+  of its own ("Your bonus FROM THE BULWARK ARMOR TRAIT increases from +3 to +4"). `when` is now
+  "on all Reflex saves while wearing bulwark armor, damaging or not" (64 chars, under the trimmer's
+  cap), with the reason in the entry's comment block; new test case in the same describe,
+  "the star still names the armour, because the feat grants nothing without it", cited
+  "// batch 032: mighty-bulwark#replacement-wording".
+
+mighty-bulwark#supersedes-trait-bulwark .......... DONE
+  SITUATIONAL_SUPERSEDES["mighty-bulwark"] = ['trait:bulwark'] fires only when the character owns both
+  (supersededIds intersects with the owned set), and `trait:bulwark` has no other consumer anywhere in
+  src/ — the only two hits outside situationalBonuses.ts are comments in explain.ts, so nothing numeric
+  loses a term. Confirmed on a built fighter in Hellknight Plate (itemType armor, traits [bulwark]):
+  one Reflex line with the feat, the trait's own +3 line still there without it.
+
+mantle-of-the-tikbalang#illusory-thrash .......... DONE
+  The second target reaches a built character through explainStat({kind:'strikeDamage', instanceId})
+  on a really wielded longsword, not just the bare kind. parseBonus cannot parse "+4d6 mental"
+  (the regex needs a word boundary after the digits), so it never pools and never becomes a number —
+  the 4d6 stays an activation-gated star, which is right: nothing in the app knows which Strike is the
+  Illusory Thrash one. Mirror equipment-3226 confirms the clause; the item's existing passiveEffects
+  backfill row is untouched.
+
+SPEC ROWS (work/.b032-rows-situational.json — checked as rows, not applied)
+  One row: feats/knowledge-is-power · description.
+  - Target exists (core.json feats/knowledge-is-power, aonId feat-5039, edition remaster). No create.
+  - `field: "description"` is a proven shape: 1,867 such rows ship today and 400/400 sampled land
+    verbatim as core-descriptions `.d`.
+  - The value is character-for-character identical (657/657) to the shipped
+    feats/knowledge-is-power-wizard description, which is verbatim mirror feat-5039 including its
+    closing "If you share this information with your allies…" paragraph.
+  - No collision: the only knowledge-is-power* row in effect-backfill.json today is
+    feats/knowledge-is-power-wizard · edition, a different record AND a different field, so no
+    `supersedes: true` is owed. No collision with the data-rows or instruments specs either (checked
+    all three files on category/id/field — every key unique).
+  - Throwaway harness (applied the row to an in-memory content copy, then deleted): core.json records
+    unchanged, the two feat-5039 descriptions now agree, the legacy "+1 circumstance bonus" wording is
+    gone, no descRefs invented, and the record still holds exactly what it held.
+
+MANIFEST
+  work/.b032-specs.json holds all three families (situational, data-rows, instruments) — it was
+  momentarily situational-only mid-run at 13:44 and the other two entries have since landed.
+  Situational's stage[] lists all five paths it touched and nothing it did not; git status agrees.
+  No superseding row in this family, so no `supersedes: true` is missing.
+
+CHECKS RUN
+  npx tsc --noEmit .......... clean
+  node scripts/vt.mjs test/batch032-situational.test.ts test/situational-bonuses.test.ts
+    test/batch29-situational.test.ts test/batch29-situational-siblings.test.ts
+    test/authoring-guards.test.ts test/batch26-stars.test.ts .......... 80 passed (14 in this batch's
+    file, one of them mine)
+  node scripts/test-flip-audit.mjs --batch 032 .......... clean, every flip cited
+  node scripts/apply-situational-lane.mjs --dry .......... hand-edited 7, nothing written
+
+DATA STILL NEEDED
+- feats/knowledge-is-power · field description · value = the verbatim feat-5039 prose already authored
+  in work/.b032-rows-situational.json. Stands as written; verified above. No supersedes.
+- feats/knowledge-is-power · field source · value {"book":"Pathfinder Player Core","license":"ORC"}.
+  The record stamps license "OGL" on a Player Core (remaster, ORC) feat while its feat-5039 twin
+  stamps "ORC"; the whole `source` object is re-emitted because it is one field. Only 180 `source`
+  rows exist and none is on this record, so no supersedes. Found while checking the hide direction
+  below — this record is the one that survives it.
+
+CROSS-FILE GAPS
+- src/data/index.ts, NEAR_DUPLICATE_IDS: hide 'knowledge-is-power-wizard' (-> knowledge-is-power).
+  ⚠ THE BUILDER'S REPORT NAMES THE OPPOSITE DIRECTION AND IT IS WRONG. Mirror feat-5039's traits are
+  ["Magus","Wizard"] and our feats/knowledge-is-power carries both, while feats/knowledge-is-power-wizard
+  carries ["wizard"] only and feats/knowledge-is-power-magus is a DIFFERENT feat (feat-9062, level 6,
+  Impossible Magic). Hiding 'knowledge-is-power' therefore takes a printed level-8 feat away from every
+  magus. Hiding the wizard-only twin instead keeps both classes served, and the description row above
+  is what makes the surviving record read correctly — the two halves must land together, or the kept
+  record still ships the legacy +1 text. (Consequence to note when it lands: the twin's descRefs
+  [{"label":"Recall Knowledge","key":"actions"}] goes with it; a feats/knowledge-is-power · descRefs
+  row would restore the ref-link — `descRefs` is a shipped field, 36 rows. Display polish, not a gap.)
+  Belongs to whichever family owns src/data/index.ts; nobody's assignment named it.
+
+MANIFEST STAGE[] — paths I touched
+  src/rules/situationalBonuses.ts      (already in the situational entry's stage[])
+  test/batch032-situational.test.ts    (already in the situational entry's stage[])
+  work/.b032-verify-situational.txt    (this file)

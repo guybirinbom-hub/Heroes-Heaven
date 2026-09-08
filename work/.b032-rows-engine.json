@@ -1,0 +1,170 @@
+{
+  "findings": [
+    {
+      "id": "prolific-prophet-spellcasting",
+      "backfillRows": [],
+      "note": "Code-only. The record's spellSlotBonus {perRank:1, exceptHighest:2, entryId:'prophet-of-kalistrade-dedication-casting'} was already correct; the defect was that the BUILDER's per-rank pick cap folded only spellSlotBonus.extraKnown. buildCharacter's fold is now the exported foldArchSpellSlotBonuses (src/rules/build.ts) and Builder.tsx's archExtraKnownAt calls it, so cap == repertoire size."
+    },
+    {
+      "id": "occult-breadth",
+      "backfillRows": [],
+      "note": "Code-only, same reader as prolific-prophet-spellcasting. No record change: occult-breadth's fields are correct."
+    },
+    {
+      "id": "magical-knowledge#distinct-skills",
+      "backfillRows": [],
+      "note": "Code-only, and deliberately WITHOUT the proposal's per-slot `distinctFromSlot` flag: that flag would live in src/rules/featGrantsLane.ts, which is outside this family's files. skillSlotOptions (src/rules/build.ts) now excludes the picks made by EARLIER slots of the same grant whose option list is byte-identical and closed. Measured: exactly two records carry more than one skillChoices slot and only magical-knowledge's pair is identical, so the widening changes one record."
+    },
+    {
+      "id": "magical-knowledge#skill-feats",
+      "backfillRows": [],
+      "note": "Not deliverable from this family's files: the whole lane (FeatGrant.bonusSkillFeat and the 'magical-knowledge' entry) lives in src/rules/featGrants.ts + src/rules/featGrantsLane.ts. Listed in CROSS-FILE GAPS of work/.b032-report-engine.txt."
+    },
+    {
+      "id": "magical-knowledge#master-precondition",
+      "backfillRows": [],
+      "note": "No engine work needed — the reader already exists. build.ts's skillChoices applier and Builder.tsx's skillSlotGrant both honour `conditionalRank`, and {base:'expert', upgraded:'master'} is exactly the printed 'from expert to master'. The change is a one-line data edit in src/rules/featGrantsLane.ts, outside this family's files; see CROSS-FILE GAPS."
+    },
+    {
+      "id": "magic-finder#tradition",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "magic-finder",
+          "field": "innateSpells",
+          "supersedes": true,
+          "value": [
+            { "spellId": "detect-magic", "tradition": "arcane", "atWill": true, "traditionFromCasting": true },
+            { "spellId": "read-aura", "tradition": "arcane", "atWill": true, "traditionFromCasting": true },
+            { "spellId": "locate", "tradition": "arcane", "usesPerDay": 1, "traditionFromCasting": true }
+          ],
+          "why": "feat-2234 prints \"If you could already cast spells, these spells are of the same tradition. Otherwise, they're arcane spells.\" The three grants hard-coded tradition:'arcane', and dropping it would not help (content.spells traditions[0] is arcane for all three), so the new InnateSpellGrant.traditionFromCasting flag makes an existing caster's tradition win while 'arcane' stays as the printed not-a-caster fallback. Supersedes the existing innateSpells row, whose whole value is carried here unchanged apart from the added flag."
+        }
+      ],
+      "note": "Reader added at src/rules/build.ts (the per-spell tradition loop that fills spellTraditions and votes the entry header)."
+    },
+    {
+      "id": "projectile-snatching",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "projectile-snatching",
+          "field": "recordMarks",
+          "value": [
+            {
+              "on": "feature",
+              "id": "deflect-projectile",
+              "note": "When you successfully deflect an attack with Deflect Projectile, you can immediately make a ranged Strike against the attacker with the deflected projectile as part of that same reaction; it is a thrown weapon with the triggering attack's range increment and effect on a hit."
+            },
+            {
+              "on": "action",
+              "id": "deflect-projectile",
+              "note": "When you successfully deflect an attack with Deflect Projectile, you can immediately make a ranged Strike against the attacker with the deflected projectile as part of that same reaction; it is a thrown weapon with the triggering attack's range increment and effect on a hit."
+            }
+          ],
+          "why": "feat-6014 prints \"When you successfully deflect an attack with Deflect Projectile, as part of that same reaction, you can then immediately make a ranged Strike against the attacker using the projectile you deflected.\" The sibling feats/return-fire, whose clause is the same rule narrowed to bows, already carries this exact recordMarks shape (read by recordMarkersFor in src/rules/explain.ts); this record carried nothing, so a Projectile Snatching monk saw no note on their Deflect Projectile reaction."
+        }
+      ],
+      "note": "Existing lane, no engine work: recordMarks + recordMarkersFor already deliver it."
+    },
+    {
+      "id": "improved-elemental-blast",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "improved-elemental-blast",
+          "field": "blastDiceBonus",
+          "value": 1,
+          "why": "feat-4337 prints \"The damage of your elemental blast increases by one die\" with a Special allowing a second taking at 14th and a third at 18th. The blast's die count was a hard-coded class-level table in derive.ts that no record could raise; the new Feat.blastDiceBonus is summed over Character.feats, which holds one entry per taking, so the Special clause needs no further data."
+        }
+      ],
+      "note": "Reader added in deriveBlastStrikes (src/rules/derive.ts). maxTakable:3 on the record already caps the takings."
+    },
+    {
+      "id": "improved-elemental-blast#no-archetype-blast",
+      "backfillRows": [],
+      "note": "Code-only. src/rules/build.ts built character.kineticist only under ownsClass('kineticist'), so the Elemental Blast the Kineticist Dedication grants was never minted for the only characters who can take Improved Elemental Blast. It is now built whenever kineticistElements() resolves anything, with `archetype: true` when the class is not owned; deriveBlastStrikes reads that flag to withhold the class's +1-die-at-5/9/13/17 table."
+    },
+    {
+      "id": "lifting-leather#max",
+      "backfillRows": [],
+      "note": "VERIFIER EDIT (adversarial pass): the builder authored items/lifting-leather.passiveEffects = {bulkLimitBonus:2, bulkMaxBonus:2} here AND the data-rows family authored the byte-identical value in work/.b032-rows-data-rows.json (finding lifting-leather), whose own note says it merged both halves deliberately because 'two specs writing items/lifting-leather.passiveEffects would be a hard-refused collision'. Two rows on the same record+field is exactly what the applier hard-refuses, so the duplicate is removed HERE and the single merged row in the data-rows spec stands. Nothing is lost: the values were identical. This family's half of the finding is the CODE — ItemPassiveEffects.bulkMaxBonus (src/rules/types.ts) and the maxOnlyBonus accumulation in deriveBulk's item loop (src/rules/derive.ts) — without which that row is inert data. Pinned by test/batch032-engine.test.ts 'lifting-leather: +2 encumbered and +4 maximum'."
+    },
+    {
+      "id": "sigil-of-the-first-clan#spell-dc",
+      "backfillRows": [
+        {
+          "category": "items",
+          "id": "sigil-of-the-first-clan",
+          "field": "heldSpellDc",
+          "value": 24,
+          "why": "equipment-2679 prints \"You cast 1st-level command with a DC of 24.\" The 'items' spellcasting entry casts at the wielder's own DC (keyAbility int / proficiency trained for a non-caster), which the item's own text contradicts — and VitalsRail picks the highest-DC non-focus entry, so that wrong number is what the sheet shows. New Item.heldSpellDc feeds the new SpellcastingEntry.fixedDc, honoured by deriveSpellcasting."
+        }
+      ],
+      "note": "Reader added at src/rules/build.ts (the item spellcasting entry) and src/rules/derive.ts (deriveSpellcasting). fixedDc skips the conditions/modes pool on purpose: those adjust the caster's own DC and this DC is not theirs."
+    },
+    {
+      "id": "canopy-bulwark#assisting-rune",
+      "backfillRows": [
+        {
+          "category": "items",
+          "id": "canopy-bulwark",
+          "field": "passiveEffects",
+          "value": { "bulkLimitBonus": 1 },
+          "why": "equipment-3595 prints \"This suit of +1 assisting leaf weave …\" and \"The armor is constantly drawing in imperceptible amounts of primal energy to help bear its wearer's burdens.\" The record carries builtInRunes {potency:1} only, and builtInRunes.property has NO reader anywhere (0 of the 374 items with builtInRunes carry one), so the assisting rune's own bulkLimitBonus:1 reaches nothing. The item-level passiveEffects.bulkLimitBonus reader already exists (derive.ts, itemInUse-gated, Math.max against the rune bonus), which delivers the printed 6 + Str encumbered / 11 + Str maximum without inventing a builtInRunes.property reader. Does not collide with the existing builtInRunes row: different field."
+        }
+      ],
+      "note": "No engine work — the reader already exists; the row only routes the rune's grant to an existing lane."
+    },
+    {
+      "id": "canopy-bulwark#spell-tradition",
+      "backfillRows": [
+        {
+          "category": "items",
+          "id": "canopy-bulwark",
+          "field": "heldSpellTradition",
+          "value": "primal",
+          "why": "equipment-3595 prints \"You can draw deeply upon the untapped reserves of primal magic within it\" and \"visible primal energy surges over the armor for the duration\". The 'items' entry's tradition is a majority vote over the held spells' own tradition lists; Haste is arcane/occult/primal, one vote each, and the stable sort keeps 'arcane', so the Spells page labelled a primal-infused armour Arcane. New Item.heldSpellTradition states the printed tradition and wins over the vote."
+        }
+      ],
+      "note": "DELIBERATE DEVIATION from the finding's proposal, stated in the report: the proposal replaces heldSpells with innateSpells because innateSpells is the only carrier of ours that holds a tradition. Print makes this an item ACTIVATION (\"Activate 2 actions; Frequency once per day; Effect You cast Haste targeting yourself\"), which is exactly what heldSpells + activationCost + the freq counter model, and WG's INNATE encoding is their engine's shape rather than the printed rule. Adding the tradition to the existing carrier keeps the item entry, its activation cost and its charge sync, is one line of engine, and is reusable by every other heldSpells item whose tradition is misvoted. No heldSpells/innateSpells double-grant is possible because heldSpells is untouched."
+    },
+    {
+      "id": "malleable-mental-forge",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "mental-forge",
+          "field": "weaponTraits",
+          "value": { "match": { "items": ["mind-weapon"] }, "addFromChoiceFlag": "mentalForgeTraits" },
+          "why": "feat-8508 prints \"Choose two weapon traits from the following list … your mind weapon gains the chosen traits\", and feat-8510 (Malleable Mental Forge) prints the daily swap over the same list. The existing WeaponRider lane already does exactly this for Fighting Horn (match.items + addFromChoiceFlag), and answersForChoiceFlag now also reads DAILY answers, so this one row delivers both feats. Without it items/mind-weapon ships traits:[] and neither feat's answer reached the Strike."
+        },
+        {
+          "category": "feats",
+          "id": "malleable-mental-forge",
+          "field": "choice",
+          "supersedes": true,
+          "value": {
+            "flag": "mindWeaponTraits",
+            "replacesFlag": "mentalForgeTraits",
+            "prompt": "Mind weapon traits today",
+            "kind": "array",
+            "daily": true,
+            "picks": 2,
+            "distinct": true,
+            "note": "Options are Mental Forge's list; today's two replace the pair chosen for Mental Forge.",
+            "options": [
+              { "value": "grapple", "label": "Grapple" },
+              { "value": "modular", "label": "Modular (B, P, or S)" },
+              { "value": "nonlethal", "label": "Nonlethal" },
+              { "value": "shove", "label": "Shove" },
+              { "value": "trip", "label": "Trip" }
+            ]
+          },
+          "why": "feat-8510 prints \"…to place on your weapon for 24 hours or until your next daily preparations …, REPLACING THE TRAITS YOU CHOSE FROM THE MENTAL FORGE FEAT.\" Two records, two flags, one effective pair: without the new FeatChoiceDef.replacesFlag the reader would union both answers and hand out four traits for a clause that gives two. Supersedes the existing `choice` row, whose whole value is carried here unchanged apart from the added replacesFlag."
+        }
+      ],
+      "note": "Engine half: answersForChoiceFlag (src/rules/derive.ts) now also reads this morning's daily answers and honours replacesFlag. ⚠ The daily-prep UI stores ONE value per choice key, so a picks:2 DAILY choice can only record one trait today — see CROSS-FILE GAPS (src/sheet/CharacterSheet.tsx + src/rules/dailyChoices.ts). The engine already comma-splits, so it delivers two the moment that UI fans out."
+    }
+  ]
+}

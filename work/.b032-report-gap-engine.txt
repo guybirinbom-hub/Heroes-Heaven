@@ -1,0 +1,119 @@
+BATCH 032 — WG-COMPARISON LANE — GAP AGENT, FAMILY: engine
+Spec: work/.b032-rows-gap-engine.json   Test: test/batch032-gap-engine.test.ts (11 tests, green)
+Files edited: src/rules/featGrants.ts, src/rules/featGrantsLane.ts, src/rules/build.ts, src/builder/Builder.tsx
+
+GAP LINES
+
+1. AUTHORED — "magical-knowledge#skill-feats — src/rules/featGrantsLane.ts: add `bonusSkillFeat` to the…"
+   (work/.b032-gaps.json, engine, ref work/.b032-report-engine.txt:10)
+   ref: src/rules/featGrantsLane.ts:'magical-knowledge' + src/rules/featGrants.ts:bonusSkillFeatCount
+   Finding magical-knowledge#skill-feats (CONFIRMED) — the whole printed second sentence reached the
+   player as nothing, so the lane is now built end to end rather than only to WG parity.
+
+2. AUTHORED — "magical-knowledge#skill-feats — src/rules/featGrantsLane.ts:70 needs `bonusSkillFeat` on the…"
+   (work/.b032-gaps.json, engine, ref work/.b032-verify-engine.txt:183)
+   ref: src/rules/featGrants.ts:bonusSkillFeat + src/rules/build.ts (both bonusSkillFeat loops) +
+        src/builder/Builder.tsx (the bonus-skill-feat SubCard)
+   The verifier's restatement of line 1, including the boolean→count widening and all three counting
+   sites it names; same finding id magical-knowledge#skill-feats, closed by the same change.
+
+3. AUTHORED — "feats/lore-seeker and feats/cautious-delver — the magic-finder lane siblings carry the same…"
+   (work/.b032-gaps.json, engine, ref work/.b032-verify-engine.txt:177)
+   ref: work/.b032-rows-gap-engine.json (4 rows)
+   Findings magic-finder#tradition and magic-finder#spellcasting-statistic (both CONFIRMED) name these
+   two records explicitly as the same-clause siblings; the readers already ship, so this is data only.
+
+WHAT WAS BUILT
+
+magical-knowledge#skill-feats — DONE (code only; the lane is registry-keyed, so no row exists to write)
+  Print: *"You gain a skill feat associated with each of the skills you chose."* The feat chooses TWO
+  skills, so it grants TWO skill feats. WG encodes ONE FILTERED select; print is the authority, so the
+  count is 2 and WG's single select is their engine's shape, not a ruling.
+
+  src/rules/featGrants.ts — `FeatGrant.bonusSkillFeat` widened `boolean` → `boolean | number`, plus two
+  exported helpers beside the other FEAT_GRANTS readers:
+    · `bonusSkillFeatCount(g)` — a number is the count, the legacy `true` is exactly 1, absent is 0.
+    · `bonusSkillFeatKey(featId, i)` — index 0 is the BARE feat id, index 1+ is `<featId>:<i>`. That is
+      the convention the pick-a-feat and loreChoices slots already use for their second and later
+      picks, and it is why no character saved before this batch moves: its one answer is still index 0.
+  src/rules/featGrantsLane.ts — 'magical-knowledge' gains `"bonusSkillFeat": 2` (the printed clause is
+    quoted in the comment above the entry). Its two skillChoices slots are untouched.
+  src/rules/build.ts — the injection loop (the "Dedication BONUS skill feats" block) walks
+    bonusSkillFeatCount and reads bonusSkillFeatKey per index instead of the bare feat id; the
+    reconstruction loop in deriveBuildFromCharacter now looks for the first FREE INDEX on a same-level
+    grant rather than for an untouched feat id, so reopening a Magical Knowledge character keeps both
+    picks instead of dropping the second into a real skill-feat slot. BuildState.dedicationSkillFeats'
+    doc comment records the key shape.
+  src/builder/Builder.tsx — one "Bonus skill feat" SubCard per granted feat, keyed by
+    bonusSkillFeatKey. Each picker hides the answers of its siblings, because buildCharacter drops a
+    duplicate feat and a printed grant must not be spendable on nothing.
+
+  Tests (test/batch032-gap-engine.test.ts, describe title carries the record id):
+    · "the lane asks for TWO bonus skill feats, not one" — and rogue-dedication's boolean is still 1.
+    · "BOTH picked skill feats reach the built character" — built level-8 fighter, both land as skill feats.
+    · "a BOOLEAN grant (rogue-dedication) still takes only the index-0 key" — the `:1` key is ignored,
+      pinning that the legacy carrier did not silently widen.
+    · "both bonus feats are recovered onto their own keys, not one" — deriveBuildFromCharacter round trip.
+
+  BLAST RADIUS — measured: `bonusSkillFeat` has exactly TWO carriers across FEAT_GRANTS +
+  FEAT_LANE_GRANTS after this change: rogue-dedication (`true`, unchanged in every path — count 1, bare
+  key, one picker) and magical-knowledge (the new `2`). Every read site now routes through
+  bonusSkillFeatCount/bonusSkillFeatKey, so a boolean carrier behaves byte-identically. The one
+  behaviour change outside magical-knowledge's own picker is that magical-knowledge now joins
+  `bonusSkillDedications` in deriveBuildFromCharacter, so a same-level skill feat on such a character is
+  recovered as a bonus pick rather than as a slot pick — which is exactly what the grant is, and the
+  same semantics rogue-dedication has had all along.
+
+magic-finder lane siblings — DONE (4 rows, no engine work)
+  feats/lore-seeker (feat-1131) and feats/cautious-delver (feat-2237) print the identical two clauses as
+  feats/magic-finder and carry the identical defects. Both readers already shipped this batch:
+    · innateSpells[].traditionFromCasting — read in src/rules/build.ts's per-spell tradition vote
+      (authored by the engine family, work/.b032-rows-engine.json).
+    · spellcastingGrant → the innate entry's `profile`, resolved as
+      `caster?.keyAbility ?? profile?.keyAbility ?? 'cha'`, so a real caster's own attribute still wins —
+      which is what *"If you could already cast spells…"* says.
+  Rows (work/.b032-rows-gap-engine.json):
+    · feats/lore-seeker      innateSpells       supersedes:true — whole shipped value re-emitted (three
+      grants, every field kept) plus traditionFromCasting:true on each.
+    · feats/cautious-delver  innateSpells       supersedes:true — same.
+    · feats/lore-seeker      spellcastingGrant  {tradition:'arcane', keyAbility:'int', proficiency:'trained'}
+    · feats/cautious-delver  spellcastingGrant  same.
+  The two spellcastingGrant rows are the second half of the SAME printed sentence and are named
+  verbatim by finding magic-finder#spellcasting-statistic's own proposal ("Same sentence, same missing
+  field, on the two lane siblings lore-seeker and cautious-delver"); work/.b032-rows-data-rows.json
+  authored that field for feats/magic-finder only.
+  Collisions: re-scanned all five b032 specs — no other row targets either record on either field, and
+  both innateSpells rows carry supersedes with the whole value merged.
+  Tests: six, all against a content copy with the field patched IN MEMORY (a divine cleric reads the
+  spells as divine; a fighter keeps the printed arcane fallback; a non-casting fighter's innate entry is
+  INT not the Charisma fallback; a wisdom cleric keeps their own attribute). Cited with the premise form
+  — no finding is keyed to these two record ids, and print is the authority.
+
+DATA STILL NEEDED
+(none — the four rows this gap needs are authored in work/.b032-rows-gap-engine.json; the driver applies
+them. Nothing in scripts/data/effect-backfill.json was written by hand.)
+
+CROSS-FILE GAPS
+(none — every file this gap named is staged by this family.)
+
+NOT MINE, NOT TOUCHED (reported, no line assigned to me)
+- magical-knowledge#master-precondition is NOT one of my gap lines (the engine report and verify both
+  list it, but work/.b032-gaps.json carries no line for it). Its one-line data edit — slot 0's
+  `"rank": "master"` → `"conditionalRank": { "base": "expert", "upgraded": "master" }` — is still
+  unbuilt in src/rules/featGrantsLane.ts, which I edited for the skill-feat half. Left alone
+  deliberately: an uncited flip on a finding no open line assigns me.
+- work/.b032-verify-engine.txt:CROSS-FILE GAPS item 5 (close.mjs derives the verdict per RECORD) still
+  stands for magical-knowledge: with this run, two of its three findings are built and
+  #master-precondition is not.
+
+VERIFICATION
+  node scripts/vt.mjs run test/batch032-gap-engine.test.ts → 11 passed.
+  Regression over every suite naming dedicationSkillFeats / bonusSkillFeat / magical-knowledge /
+  rogue-dedication, plus the skill-feat slotting and import/reverse-build suites (batch032-engine,
+  batch032-instruments, builder-evidence, builder-grant-slots, dedication-gate, dedication-grants,
+  feat-grants, granted-choice-prompt, spell-trickster-picks, unpickable-looks-unpickable,
+  feat-slot-visibility, reverse-build, wg-import-builder-slots, wg-import, builder-choice-sets,
+  identity-data, wg-experience-lanes, wg-experience.harness, triage-lane-close, residual-final)
+  → 21 files, 348 tests, all passing.
+  node scripts/test-flip-audit.mjs --batch 032 → clean, every flip cited.
+  npx tsc --noEmit → clean.

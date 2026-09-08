@@ -1,0 +1,120 @@
+{
+  "findings": [
+    {
+      "id": "safeguard-soul#undead",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "safeguard-soul",
+          "field": "immunities",
+          "value": ["being transformed into an undead"],
+          "why": "AoN feat-3472 prints \"You can't be transformed into an undead by any means.\" The record carried only actionCost/archetype metadata, so the categorical immunity reached no surface. `immunities` is the shipped free-text carrier 16 feats already use (explosive-expert, ghost-dedication, the four undead dedications); deriveDefenses pushes the whole feat record as a source (src/rules/derive.ts:2544) and collects `src.immunities` at :2739, so the line renders in the IWR list beside the feat's name."
+        }
+      ],
+      "note": "One field, one row. No existing effect-backfill row for feats/safeguard-soul, so no supersedes. The +2 status save half of the feat stays where it is (situationalBonuses.ts:558, the situational family's safeguard-soul#allies)."
+    },
+    {
+      "id": "heal-mount",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "heal-mount",
+          "field": "spellNotes",
+          "value": [
+            {
+              "spellId": "lay-on-hands",
+              "note": "When you cast Lay on Hands on your mount, instead of the normal amount, the spell restores 10 Hit Points, plus 10 for each heightened rank."
+            }
+          ],
+          "why": "AoN feat-5906 (Player Core 2 pg. 97, the record's own aonId) prints \"When you cast lay on hands on your mount, instead of the normal amount, the spell restores 10 Hit Points, plus 10 for each heightened rank.\" The record held only {actionCost:passive}, so the clause reached the player nowhere. `spellNotes` is the carrier feats/mercy and feats/greater-mercy already use to hang champion clauses on lay-on-hands; the plain {spellId,note} shape is read by the ownedRecords pass at src/rules/build.ts:6616 (no innateSpells gate on this record, so nothing suppresses it) and rendered by spellNotesFor on the Spells page."
+        }
+      ],
+      "note": "Whole-value re-emit of a field the record does not carry yet; no existing row for feats/heal-mount, so no supersedes."
+    },
+    {
+      "id": "magic-finder#spellcasting-statistic",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "magic-finder",
+          "field": "spellcastingGrant",
+          "value": { "tradition": "arcane", "keyAbility": "int", "proficiency": "trained" },
+          "why": "AoN feat-2234 prints \"Otherwise, they're arcane spells, you use Intelligence as your spellcasting ability, and you become trained in spell attack rolls and spell DCs for arcane spells.\" Without a spellcastingGrant the innate entry's key attribute falls through to 'cha' (src/rules/build.ts:7988, `caster?.keyAbility ?? profile?.keyAbility ?? 'cha'`), so a non-casting Scrollmaster rolled and set DCs for Detect Magic, Read Aura and Locate off Charisma. Same field shape as feats/crystal-ward-spells."
+        }
+      ],
+      "note": "Authored unconditionally although print states it in the \"Otherwise\" branch: for a character who already casts, `caster?.keyAbility`/`caster?.proficiency` win at build.ts:7988 and in the maxRank floor below it, so the grant changes nothing for a caster and supplies the statistic only for the non-caster print is talking about. magic-finder's other two effect-backfill rows write innateSpells and spellNotes — different fields, no collision. The tradition half of the same sentence is the engine family's magic-finder#tradition (innateSpells), also a different field."
+    },
+    {
+      "id": "basic-beast-gunner-spellcasting#dropped-clause",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "basic-beast-gunner-spellcasting",
+          "field": "description",
+          "value": "You've unlocked the first secrets of beast guns, granting you your own pool of magical might through the amplifying power of their synergistic magic. You gain the basic spellcasting benefits. Each time you gain a spell slot of a new rank from this archetype, add a spell of the appropriate spell rank to your repertoire, either a common spell of your chosen tradition or another spell of that tradition you've learned or discovered.",
+          "why": "AoN feat-3230 prints \"You gain the [basic spellcasting benefits](/Rules.aspx?ID=170).\" The importer stripped the link and its LABEL, so the shipped text read \"You gain the .\" and the sentence naming what the feat grants was gone. Only the label is restored; the rest of the shipped sentence is left byte-identical, since nothing else in this finding is about wording."
+        }
+      ],
+      "note": "One record, not the lane. The finding's own evidence says the strip is systemic (174 description records match /\\b(the|a|an|your)\\s+\\./), and the real fix is in the description importer's markdown cleaner plus a verify guard — both scripts/ files this family may not write, so they are in CROSS-FILE GAPS. This row is the pathless description form the 1,867 shipped description rows already use, and it keeps the player's page correct until the cleaner lands (an importer fix would then agree with it)."
+    },
+    {
+      "id": "second-blessing",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "second-blessing",
+          "field": "choice",
+          "supersedes": true,
+          "value": {
+            "flag": "blessing",
+            "prompt": "Second Blessing",
+            "kind": "array",
+            "ownsFeature": true,
+            "disableIfOwned": true,
+            "options": [
+              { "value": "blessed-armament", "label": "Blessed Armament" },
+              { "value": "blessed-shield", "label": "Blessed Shield" },
+              { "value": "blessed-swiftness", "label": "Blessed Swiftness" }
+            ]
+          },
+          "why": "AoN feat-5907 prints \"Choose a second blessing of the devoted (different from your first one) and gain its benefits.\" Without `disableIfOwned` narrowChoiceOptions never builds its `owned` set (src/rules/derive.ts:1700), so the picker offered the blessing already taken at level 3 — which is in ownedFeatureIds, since champion's `blessing` extraChoice stores a classFeature id and derive.ts:3443 folds every classChoice in. With the flag the level-3 pick comes back greyed with \"Already taken — Blessed Swiftness.\" (derive.ts:1730), the Q27 shape."
+        }
+      ],
+      "note": "supersedes:true — scripts/data/effect-backfill.json already carries a feats/second-blessing `choice` row; its whole value is merged here unchanged and only `disableIfOwned` is added. Same field pair (ownsFeature + disableIfOwned) as the shipped sibling feats/manifold-modifications, so the own-answer nuance the read flagged is exactly the behaviour that already ships on that record — noted as a UI-lane gap rather than fixed here, since narrowChoiceOptions is not this family's file."
+    },
+    {
+      "id": "lifting-leather",
+      "backfillRows": [
+        {
+          "category": "items",
+          "id": "lifting-leather",
+          "field": "passiveEffects",
+          "value": { "bulkLimitBonus": 2, "bulkMaxBonus": 2 },
+          "why": "AoN equipment-3816 prints \"While wearing this armor, you can carry 2 more Bulk than normal before becoming encumbered and up to a maximum of 4 more Bulk.\" The record had no passiveEffects at all, so deriveBulk's item lane (src/rules/derive.ts:5292-5296, which reads passiveEffects.bulkLimitBonus while the item is in use) moved neither threshold. bulkLimitBonus:2 raises BOTH by 2 — the encumbered half — and bulkMaxBonus:2 raises the maximum only, for the printed 4."
+        }
+      ],
+      "note": "MERGED ROW, deliberately: the maximum-limit half is the engine family's finding lifting-leather#max, and two specs writing items/lifting-leather.passiveEffects would be a hard-refused collision — so the whole field value is authored once, here. bulkMaxBonus is declared on Feat and Heritage but not yet on ItemPassiveEffects, and deriveBulk's item loop does not read it yet: that declaration + reader is the engine family's code half (CROSS-FILE GAPS). Until it lands the field is inert data, and the encumbered half is already correct. The record's other effect-backfill row writes builtInRunes — a different field, no collision — so no supersedes."
+    },
+    {
+      "id": "crown-of-the-fire-eater#activation-effect",
+      "backfillRows": [
+        {
+          "category": "modes",
+          "id": "item-crown-of-the-fire-eater",
+          "create": true,
+          "value": {
+            "id": "item-crown-of-the-fire-eater",
+            "name": "Fire Eater (Activated)",
+            "fromItemId": "crown-of-the-fire-eater",
+            "duration": "the triggering fire damage",
+            "modifiers": [],
+            "resistances": [{ "type": "fire", "value": 15 }],
+            "note": "Reaction, once per day, when you take fire damage: your fire resistance from the crown becomes 15 instead of 5. Just after taking any remaining fire damage, you regain Hit Points equal to 15 or the fire damage dealt by the triggering attack before resistance, whichever is less."
+          },
+          "why": "AoN equipment-1435 prints \"Activate [reaction] command; Frequency once per day; Trigger You take fire damage; Effect … Increase your fire resistance from the crown from 5 to 15. Just after taking any remaining fire damage, you regain a number of Hit Points equal to 15 or the fire damage dealt by the triggering attack before damage resistance, whichever is less.\" We carried the once-per-day counter, the reaction cost and the standing fire 5 only, so no number on the sheet moved when the crown fired. Same carrier shape as modes/item-potion-of-fire-resistance-greater: deriveDefenses reads an active mode's resistances (src/rules/derive.ts:2647-2651) and same-type resistances take the highest (:2724), so the mode's 15 supersedes the passive 5 exactly as \"from 5 to 15\" says, and toggleItemMode (src/rules/play.ts:1502) is the switch for a worn item's mode."
+        }
+      ],
+      "note": "A created record with no description: the mode's own `note` carries the printed reaction, including the healing, which has no numeric carrier (the app has no damage-taken event to compute \"15 or the damage dealt, whichever is less\" from — Principle M2, the app supplies the capability and the player supplies the timing). `survivesRest` is omitted so the mode clears at rest, which is right for an effect that lasts one triggering hit. No created-prose spec file is needed."
+    }
+  ]
+}

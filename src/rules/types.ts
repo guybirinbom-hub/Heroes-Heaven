@@ -1076,6 +1076,15 @@ export interface DefenseGrants {
    *  following damage types to those you can choose for Elemental Blasts of that element" (Versatile
    *  Blasts). The printed lists were not modelled as lists, so there was nothing to add to. */
   blastTypeAdditions?: Record<string, string[]>;
+  /**
+   * Damage dice this record adds to an Elemental Blast — Improved Elemental Blast (feat-4337): *"The
+   * damage of your elemental blast increases by one die."*
+   *
+   * Summed over TAKINGS (`Character.feats` holds one entry per taking), which is what makes the
+   * feat's Special clause — a second taking at 14th and a third at 18th — mean something. The blast's
+   * die count was a hard-coded class-level table, so no record could raise it at all.
+   */
+  blastDiceBonus?: number;
   choiceOptionAdditions?: {
     /** The record id whose choice is widened. */
     target: string;
@@ -2243,6 +2252,15 @@ export interface ItemPassiveEffects {
   /** Raises BOTH Bulk thresholds — the Assisting armour rune sets them to 6 + Str and 11 + Str,
    *  which is the ordinary 5 + Str / 10 + Str plus one. */
   bulkLimitBonus?: number;
+  /**
+   * Raises the MAXIMUM Bulk limit only — the item half of `Feat.bulkMaxBonus`/`Heritage.bulkMaxBonus`.
+   *
+   * Lifting Leather (equipment-3816) prints the asymmetric pair: *"you can carry 2 more Bulk than
+   * normal before becoming encumbered and up to a maximum of 4 more Bulk"*. `bulkLimitBonus` moves
+   * BOTH thresholds equally, so on its own it could only ever print +2/+2; the extra +2 on the
+   * maximum is this field.
+   */
+  bulkMaxBonus?: number;
   /** "If you are dying, the DC of recovery checks is reduced by 1" (Locket of Love Left Behind) —
    *  the item half of Feat.recoveryDcReduction, counted only while worn or invested. */
   recoveryDcReduction?: number;
@@ -2424,6 +2442,17 @@ export interface InnateSpellGrant {
    * the fallback for a character who has not answered yet.
    */
   traditionFromChoiceFlag?: string;
+  /**
+   * The tradition is THE CHARACTER'S OWN CASTING, not a fixed one — Magic Finder (feat-2234):
+   * *"If you could already cast spells, these spells are of the same tradition. Otherwise, they're
+   * arcane spells…"*
+   *
+   * A plain `tradition` cannot say that, and DROPPING it does not help either: the vote then falls to
+   * the spell's own first tradition, which is arcane for all three of Magic Finder's grants. So the
+   * grant keeps `tradition` as the not-a-caster fallback and this flag makes an existing caster's
+   * tradition win.
+   */
+  traditionFromCasting?: boolean;
   /**
    * The character level at which THIS grant arrives, when one record hands out its spells on a
    * ladder — Accursed Magic (a level-8 feat) reads *"You can cast Claim Curse. **At 10th level**, you
@@ -2795,6 +2824,15 @@ export interface FeatChoiceDef {
    */
   minLevel?: number;
   flag: string;
+  /**
+   * This choice's answer REPLACES the answer to another record's choice, named by that flag.
+   *
+   * Malleable Mental Forge (feat-8510): *"you can choose any two weapon traits from the Mental Forge
+   * feat to place on your weapon for 24 hours … REPLACING THE TRAITS YOU CHOSE FROM THE MENTAL FORGE
+   * FEAT."* Two records, two flags, one effective answer — without this the reader that collects
+   * answers for a flag would union both pairs and hand out four traits for a clause that gives two.
+   */
+  replacesFlag?: string;
   prompt: string;
   /**
    * The chosen VALUE names a class feature the character then owns — Basic/Greater/Major Lesson pick
@@ -3960,6 +3998,24 @@ interface ItemBase extends ContentBase {
   activationCost?: ActionCost;
   /** Spells held by a staff/wand/spellheart, by rank (0 = cantrips) — a magic-item spell source. */
   heldSpells?: Record<number, string[]>;
+  /**
+   * The tradition this item's held spells are cast at, when the item PRINTS one.
+   *
+   * Without it the entry's tradition is a majority VOTE over the held spells' own tradition lists,
+   * and a tie is broken by the stable sort — which is how Canopy Bulwark (equipment-3595), an armour
+   * *"composed entirely of primal-infused leaves"* that lets you *"draw deeply upon the untapped
+   * reserves of PRIMAL magic within it"*, came out labelled Arcane: Haste is arcane/occult/primal,
+   * all three counted once, and "arcane" sorts first.
+   */
+  heldSpellTradition?: Tradition;
+  /**
+   * A FIXED spell DC the item prints for its held spells, overriding the wielder's.
+   *
+   * Sigil of the First Clan (equipment-2679): *"You cast 1st-level command with a DC of 24."* The
+   * 'items' spellcasting entry otherwise casts at the wielder's own DC (Int/trained for a
+   * non-caster), which is a number the printed text contradicts in both directions.
+   */
+  heldSpellDc?: number;
   /** A GENERIC scroll/wand ("Scroll of Nth-rank Spell") whose held spell the player chooses: the rank
    *  it can hold and (if the item is tradition-locked, e.g. a Cyrusian wand) the allowed traditions. */
   spellSlot?: { rank: number; traditions?: Tradition[] };
@@ -5343,6 +5399,13 @@ export interface SpellcastingEntry {
   tradition: Tradition;
   keyAbility: AbilityId;
   proficiency: ProficiencyRank;
+  /**
+   * A DC the entry's source PRINTS, used instead of 10 + attribute + proficiency.
+   *
+   * Only a magic item states one (Sigil of the First Clan, *"you cast 1st-level command with a DC of
+   * 24"*). Never set on a class/archetype entry: those DCs are the character's own statistic.
+   */
+  fixedDc?: number;
   /** Always-available cantrips (spell ids, rank 0). */
   cantrips: string[];
   /**
@@ -5987,7 +6050,10 @@ export interface Character {
   /** Kineticist resolved elements (bare ids: air/earth/fire/metal/water/wood) — drives the Elemental Blast strike. */
   /** `blastTypes` is the damage type chosen per element for Elemental Blast ("choose one of your
    *  kinetic elements and a damage type listed for that element"). Absent ⇒ the element's first. */
-  kineticist?: { elements: string[]; blastTypes?: Record<string, string> };
+  /** `archetype` = the elements came from Kineticist Dedication / Add Element rather than the class,
+   *  so the CLASS's +1-die-at-5/9/13/17 blast table does not apply — an archetype blast grows only
+   *  through Improved Elemental Blast. */
+  kineticist?: { elements: string[]; blastTypes?: Record<string, string>; archetype?: boolean };
 
   // --- gear ---
   inventory: InventoryItem[];

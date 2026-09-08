@@ -1,0 +1,80 @@
+parity batch 032 — 40 WG-comparison records read, 32 overlay rows, six code lanes
+
+The cut took 40 records at level <= 8 (the lv1-7 directive's ceiling plus its 8th-level
+archetype feats). An Opus reader plus an adversarial verifier read every one against the
+printed text, their operations and our carriers: 29 findings CONFIRMED, 0 refuted, 1 for
+the owner. Eight families closed them — situational, data-rows, instruments, engine and
+the four gap agents that finished their cross-file lines.
+
+DATA. 32 rows into scripts/data/effect-backfill.json (26 new keys, 6 superseding, overlay
+14,109 -> 14,135), every one read back out of the shipped artefacts after the replay. The
+largest lane is descriptions: 12 records shipped rules text with a link LABEL deleted
+("You gain the .", "Choose an ."), spliced back at the hole from each record's own mirror
+document and compared byte for byte outside the splice. The rest carry mechanics that had
+no carrier at all — lifting-leather's Bulk thresholds, improved-elemental-blast's extra
+damage die, canopy-bulwark's assisting rune, crown-of-the-fire-eater's activation, the
+sigil-of-the-first-clan fixed DC, heal-mount, safeguard-soul, mantle-of-the-tikbalang.
+
+CODE. src/rules/types.ts + derive.ts: Feat.blastDiceBonus (summed over c.feats, so the
+feat's Special — a second taking at 14th, a third at 18th — falls out of one field) and
+ItemPassiveEffects.bulkMaxBonus beside bulkLimitBonus. src/rules/build.ts: the Elemental
+Blast is now built for a character who took Kineticist Dedication rather than only for the
+class, carrying archetype:true so derive.ts withholds the class's +1-die-at-5/9/13/17
+table — print says so on the dedication itself ("does not automatically gain additional
+damage dice every four levels, instead requiring you to take the Improved Elemental Blast
+feat"). src/rules/featGrants.ts + featGrantsLane.ts: bonusSkillFeat widened to a COUNT,
+because Magical Knowledge grants a skill feat per chosen skill (two), where WG asks once.
+src/rules/situationalBonuses.ts, src/data/index.ts (NEAR_DUPLICATE_IDS for the duplicated
+knowledge-is-power) and src/builder/Builder.tsx carry the rest.
+
+INSTRUMENTS. scripts/wg-batch.mjs built its packets from a PRIVATE name pairing with no
+content_source filter, so feats/show-off was cut against Wanderer's Guide's STARFINDER
+namesake; the builder now uses wgRowsByBucket, the pairing all four comparers already
+share, and defers aon- twins to their canonical (measured: 11 starfinder namesakes lose a
+packet they should never have had, 12 twins defer, and 155 class features they file as
+`feat` rows gain the packet they were owed). scripts/wg-identity.mjs's lane-option reader
+became quote-tolerant so a machine-written lane file is read. scripts/dropped-inline-check
+widened its ratchet from one article to four while HOLDING the 162 baseline, which is what
+makes the 12 repairs above measurable. The closer added the last two: a VERIFIED_EQUIVALENT
+settle for improved-elemental-blast (their KINETICIST_BLAST_DICE maps to no kind, and
+remapping the variable would have opened false gaps on gates-threshold and elemental-blast,
+where the same number is a level table) and a surface predicate for that variable in the
+experience harness, since the blast strike exists only once the element pick is answered
+and the harness builds every host with its controls empty. Both are pinned by mutation-proof
+tests in test/batch032-closer.test.ts that stunt the settle (wg-diff --raw) and the carrier.
+
+THE CLOSER'S OWN FOUR. (1) magical-knowledge#master-precondition fell between two
+families — the engine family declared it cross-file, gap-engine had no line for it, and the
+record would have shipped FIXED with a printed clause unbuilt. Built as the one-line data
+edit both agents described: slot 0 becomes `conditionalRank {base:'expert',
+upgraded:'master'}`, since "increase your proficiency rank in one of Arcana, Nature,
+Occultism, or Religion FROM EXPERT TO MASTER" is written on a skill you already have at
+expert, and a flat `rank: 'master'` handed master to a merely trained character. Both
+readers already honour the field. (2)+(3) the two comparer teaches for improved-elemental-
+blast above. (4) two of the engine family's negative twins asserted the DEFECT against
+SHIPPED content — a patched-vs-shipped delta — and flipped the moment --stage apply wrote
+canopy-bulwark.heldSpellTradition and sigil-of-the-first-clan.heldSpellDc; both now strip
+the field in memory, so each keeps asserting the same thing whatever the overlay holds.
+The consumable-mode ratchet moved 377 -> 378 for the Crown of the Fire-Eater's new mode,
+cited to equipment-1435.
+
+VERDICTS. 40 closed: 20 MATCHES, 19 FIXED, 1 OWNER-QUEUED. All nine gates green, the full
+suite green (5,490 tests), the verify chain clean but for three checks that were already
+red before the batch started, and the regate re-swept and re-gated all 31 earlier batches
+green. The whole batch is pinned by nine new test files, plus the consumable-modes ratchet.
+
+FOR THE OWNER. necromantic-tenacity, Rulings Desk #133: print (feat-886, never remastered)
+triggers the degree shift on "a necromancy effect"; their three ops trigger on "an effect
+with the death or void trait". Not a narrower encoding — four remastered death/void spells
+were illusion, enchantment or transmutation in legacy — so the two trigger sets genuinely
+differ and the record stays OPEN until he rules.
+
+DEFERRED, parked with reasons in work/.b032-gaps.json: malleable-mental-forge's second
+half — the engine delivers both daily traits already, but a picks:2 DAILY choice stores one
+value per record key, and fanning that out changes the key shape of answers already on
+saved characters, which is a storage ruling rather than a refactor; narrowChoiceOptions greys the
+answer a picker is currently displaying when a record pairs ownsFeature with disableIfOwned
+(pre-existing, display-only, needs both pickers changed together — second-blessing inherits
+it rather than causing it); and the differing OPENER of the basic-beast-gunner-spellcasting
+description, which wants a read-lane finding comparing both printings and one merged row,
+not a second row on a key this batch already writes.

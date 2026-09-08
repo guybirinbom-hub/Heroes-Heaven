@@ -95,6 +95,25 @@ export function featUpgradesAtLevel(featIds: Iterable<string>, level: number): {
 }
 
 /**
+ * How many bonus skill feats a grant hands over. Magical Knowledge prints *"You gain a skill feat
+ * associated with each of the skills you chose"* over a two-skill choice, so the flag carries a
+ * count; the legacy `true` is exactly one (Rogue Dedication's *"You gain a skill feat"*).
+ */
+export function bonusSkillFeatCount(g: FeatGrant | undefined): number {
+  const v = g?.bonusSkillFeat;
+  return typeof v === 'number' ? Math.max(0, Math.trunc(v)) : v ? 1 : 0;
+}
+
+/**
+ * The BuildState.dedicationSkillFeats key for one bonus skill feat. Index 0 keeps the BARE feat id so
+ * every character saved before the count existed keeps the answer it had — the same convention the
+ * pick-a-feat and loreChoices slots use for their second and later picks.
+ */
+export function bonusSkillFeatKey(featId: string, index: number): string {
+  return index === 0 ? featId : `${featId}:${index}`;
+}
+
+/**
  * One "treat these weapons as if they were <category>" clause. A record may carry SEVERAL, because
  * one printed sentence often maps two sets differently: Explosive Savant treats bombs and MARTIAL
  * firearms as simple weapons and ADVANCED firearms as martial, which a single clause cannot say.
@@ -339,11 +358,16 @@ export interface FeatGrant {
    */
   conditionalSkillsFallback?: { whenAll: ProficiencyRank };
   /**
-   * The feat grants a BONUS skill feat the player picks (Rogue Dedication: "You gain a skill feat").
-   * Injected as an extra level-<feat's level> skill-feat slot; the pick is stored in
-   * BuildState.dedicationSkillFeats keyed by featId. Mirrors the Versatile-Human bonus-feat injection.
+   * The feat grants BONUS skill feat(s) the player picks (Rogue Dedication: "You gain a skill feat").
+   * Injected as extra level-<feat's level> skill-feat slots; the picks are stored in
+   * BuildState.dedicationSkillFeats keyed by `bonusSkillFeatKey`. Mirrors the Versatile-Human
+   * bonus-feat injection.
+   *
+   * A NUMBER when the clause grants more than one: Magical Knowledge prints *"You gain a skill feat
+   * associated with each of the skills you chose"* and it chooses TWO skills, so a boolean delivered
+   * one of the two printed feats. `true` is exactly 1.
    */
-  bonusSkillFeat?: boolean;
+  bonusSkillFeat?: boolean | number;
   /**
    * Grants selected by the player's pick in the feat's own `choice` dropdown ("expert in your choice
    * of Fortitude, Reflex, Will, or Perception"), keyed by the choice VALUE the picker emits

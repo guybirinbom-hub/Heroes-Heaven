@@ -54,7 +54,7 @@ import { CHOOSABLE_SOURCE_MAPS } from './sources';
 import { abilityMod, askedAtDailyPrep, belongsToArchetype, choiceOwnedFeatureIds, classFeatureIdsOwned, domainPoolForChoice, effectiveChoiceOptions, narrowChoiceOptions, outsideDomains, profBonus, resolveFormula, splinterDomainsOf, stepDie, type NarrowedOption } from './derive';
 import { advancementRows } from './advancement';
 import { applyCounterMods } from './counterMods';
-import { choiceGrantFor, FEAT_GRANTS, LOCKED_SKILL_KEYS, maxTakes, upgradeRankAt } from './featGrants';
+import { bonusSkillFeatCount, bonusSkillFeatKey, choiceGrantFor, FEAT_GRANTS, LOCKED_SKILL_KEYS, maxTakes, upgradeRankAt } from './featGrants';
 import { EXTRA_FEAT_TAKINGS, FEAT_FEAT_GRANTS, FEAT_FEAT_GRANTS_LEVELED, FEAT_GRANT_BOUND_CHOICE, FEAT_RANK_FEAT_GRANTS, FEAT_SUBSTITUTE_GRANTS, featFeatGrantsFor } from './featFeatGrants';
 import { BACKGROUND_CANTRIP_GRANTS, BACKGROUND_GRANT_BOUND_CHOICE } from './backgroundGrants';
 import { FEAT_PICK_GRANTS, pickKeysFor, pickableFeats } from './featPickGrants';
@@ -232,8 +232,10 @@ export interface BuildState {
    *  `granted:<featId>` for the granted copy. Absent = the chosen domain's own spell (print). */
   featSpellChoices?: Record<string, string>;
   /**
-   * The bonus skill feat a dedication grants via FEAT_GRANTS.bonusSkillFeat (Rogue Dedication),
-   * keyed by the dedication's feat id → chosen skill-feat id. Injected as an extra skill-feat slot.
+   * The bonus skill feat(s) a grant hands over via FEAT_GRANTS.bonusSkillFeat (Rogue Dedication),
+   * keyed by `bonusSkillFeatKey(featId, i)` → chosen skill-feat id. Injected as extra skill-feat
+   * slots. Index 0 is the BARE feat id, so a character saved before the count existed is unmoved;
+   * a grant with a count (Magical Knowledge's two) adds `<featId>:1`, `<featId>:2`, …
    */
   dedicationSkillFeats?: Record<string, string>;
   /**
@@ -1653,15 +1655,110 @@ export function skillSlotOptions(
   slot: { options: ProficiencyKey[] | 'any'; optionsFromChoiceFlag?: { flag: string; map: Partial<Record<string, ProficiencyKey>> } },
   build: Partial<BuildState>,
   content: ContentDatabase,
+  /** Which slot of which grant this is — supplied by both callers so a later slot can exclude the
+   *  skills its identical siblings already took. See `distinctSiblingPicks` below. */
+  ctx?: { featId: string; index: number; choiceValue?: string | null },
 ): readonly ProficiencyKey[] {
   const wide = slot.options === 'any' ? SKILLS : slot.options;
   const spec = slot.optionsFromChoiceFlag;
-  if (!spec) return wide;
-  const answer = choiceFlagAnswer(spec.flag, build, content);
-  const derived = answer ? spec.map[answer] : undefined;
-  /* …and only an option the slot already listed. A map naming a skill outside `options` would be an
-   * authoring error, and silently honouring it would let this field grant anything at all. */
-  return derived && (wide as readonly string[]).includes(derived) ? [derived] : wide;
+  let out: readonly ProficiencyKey[] = wide;
+  if (spec) {
+    const answer = choiceFlagAnswer(spec.flag, build, content);
+    const derived = answer ? spec.map[answer] : undefined;
+    /* …and only an option the slot already listed. A map naming a skill outside `options` would be an
+     * authoring error, and silently honouring it would let this field grant anything at all. */
+    out = derived && (wide as readonly string[]).includes(derived) ? [derived] : wide;
+  }
+  const taken = ctx ? distinctSiblingPicks(slot, build, content, ctx) : undefined;
+  if (taken?.size) {
+    const trimmed = out.filter((s) => !taken.has(s));
+    // Never empty the list: an authoring accident (three identical two-option slots) must leave a
+    // question the player can still answer rather than a picker with nothing in it.
+    if (trimmed.length) out = trimmed;
+  }
+  return out;
+}
+
+/**
+ * The picks EARLIER slots of the same grant already made, when those slots offer the IDENTICAL list.
+ *
+ * Magical Knowledge (feat-8402): *"Increase your proficiency rank in one of Arcana, Nature, Occultism,
+ * or Religion from expert to master AND IN ANOTHER from trained to expert."* Its two slots list the
+ * same four skills and are keyed independently, and `featSkillChoiceValue` defaults an unanswered slot
+ * to `options[0]` — so an unanswered pair resolved to Arcana twice and the second printed increase
+ * vanished, while an answered pair could collide the same way.
+ *
+ * Narrow on purpose: only a sibling whose option list is BYTE-IDENTICAL and closed ('any' never
+ * excludes and is never excluded). Measured across FEAT_GRANTS + FEAT_LANE_GRANTS, exactly two records
+ * carry more than one `skillChoices` slot, and only Magical Knowledge's pair matches — the other
+ * (`{stealth, thievery}` then `'any'`) is untouched, so this widening changes one record.
+ */
+function distinctSiblingPicks(
+  slot: { options: ProficiencyKey[] | 'any' },
+  build: Partial<BuildState>,
+  content: ContentDatabase,
+  ctx: { featId: string; index: number; choiceValue?: string | null },
+): Set<string> | undefined {
+  if (ctx.index <= 0 || slot.options === 'any') return undefined;
+  const base = FEAT_GRANTS[ctx.featId];
+  const src = ctx.choiceValue == null ? base : choiceGrantFor(base, ctx.choiceValue);
+  const mine = JSON.stringify(slot.options);
+  const taken = new Set<string>();
+  for (let i = 0; i < ctx.index; i++) {
+    const sib = src?.skillChoices?.[i];
+    if (!sib || sib.options === 'any' || JSON.stringify(sib.options) !== mine) continue;
+    const v = featSkillChoiceValue(build, content, ctx.featId, i, ctx.choiceValue);
+    if (v) taken.add(v);
+  }
+  return taken;
+}
+
+/**
+ * Fold every entry-targeted `spellSlotBonus` the taken feats carry into an ARCHETYPE caster's pool.
+ *
+ * ONE function, TWO callers, on purpose. buildCharacter sizes a spontaneous archetype repertoire from
+ * `slots` (`srcSpells[rank].slice(0, count + extraKnown[rank])`), and the Builder's per-rank pick cap
+ * has to be the same number — Occult Breadth (feat-5063) prints *"Increase the number of spells in
+ * your repertoire AND the number of spell slots you gain from bard archetype feats by 1 for each
+ * spell rank other than your two highest bard spell slots"*, and Prolific Prophet Spellcasting
+ * (feat-7684) prints the same sentence for the prophet of Kalistrade. The Builder folded only
+ * `extraKnown`, so the sheet opened a second rank-1 slot the player was never offered a picker for.
+ *
+ * Mutates `slots` and `extraKnown` in place; returns the cantrip bonus.
+ */
+export function foldArchSpellSlotBonuses(
+  slots: Record<number, number>,
+  extraKnown: Record<number, number>,
+  featIds: readonly (string | undefined)[],
+  entryIds: ReadonlySet<string>,
+  content: ContentDatabase,
+): number {
+  let cantrips = 0;
+  for (const featId of featIds) {
+    const b = featId ? content.feats[featId]?.spellSlotBonus : undefined;
+    if (!b?.entryId || !entryIds.has(b.entryId)) continue;
+    cantrips += b.cantrips ?? 0;
+    for (const [rankStr, n] of Object.entries(b.extraKnown ?? {})) {
+      const r = Number(rankStr);
+      if (Number.isFinite(r) && r > 0 && n > 0) extraKnown[r] = (extraKnown[r] ?? 0) + n;
+    }
+    const at = Object.keys(slots).map(Number).filter((r) => r > 0).sort((x, y) => x - y);
+    if (b.byRank) {
+      for (const [rank, n] of Object.entries(b.byRank)) {
+        const r = Number(rank);
+        if (Number.isFinite(r) && r > 0 && n > 0) slots[r] = (slots[r] ?? 0) + n;
+      }
+    } else if (b.highestOnly) {
+      const top = at[at.length - 1];
+      if (top != null) slots[top] += b.perRank ?? 1;
+    } else if (b.perRank !== undefined || (!b.cantrips && !b.extraKnown)) {
+      // …and a cantrips-only or known-only bonus stops here: defaulting either to one slot per
+      // rank is what made Cantrip Expansion silently generous.
+      const eligible = b.exceptHighest ? at.slice(0, Math.max(0, at.length - b.exceptHighest)) : at;
+      for (const r of eligible) slots[r] += b.perRank ?? 1;
+    }
+  }
+  return cantrips;
 }
 
 export function featSkillChoiceValue(
@@ -1686,7 +1783,7 @@ export function featSkillChoiceValue(
   const slot = source?.skillChoices?.[index];
   if (!slot) return undefined;
   const key = choiceValue == null ? `${featId}:${index}` : `${featId}:${choiceValue}:${index}`;
-  const opts = skillSlotOptions(slot, build, content);
+  const opts = skillSlotOptions(slot, build, content, { featId, index, choiceValue });
   const legacy = LEGACY_SKILL_SLOT_KEYS[key];
   // Cast to the OPTION element type, not to ProficiencyKey: the latter also admits `lore:${string}`,
   // which no `skillChoices` slot can offer — and `opts.includes` would then reject the whole read.
@@ -5070,12 +5167,17 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   // Dedication BONUS skill feats (Rogue Dedication: "You gain a skill feat"). Once the dedication is
   // among the taken feats, inject its chosen skill feat as an extra skill-feat slot at the dedication's
   // level — same mechanism as the Versatile-Human bonus feat. Only if the player picked one.
+  /* The grant can hand over MORE THAN ONE: Magical Knowledge prints "You gain a skill feat associated
+   * with each of the skills you chose" over a two-skill choice, so the count comes from
+   * bonusSkillFeatCount and each pick has its own key (index 0 = the bare feat id, unchanged). */
   for (const fc of [...feats]) {
-    if (!FEAT_GRANTS[fc.featId]?.bonusSkillFeat) continue;
-    const chosen = build.dedicationSkillFeats?.[fc.featId];
-    if (chosen && content.feats[chosen] && !takenFeats.has(chosen)) {
-      feats.push({ featId: chosen, level: fc.level, category: 'skill' });
-      takenFeats.add(chosen);
+    const bonusCount = bonusSkillFeatCount(FEAT_GRANTS[fc.featId]);
+    for (let i = 0; i < bonusCount; i++) {
+      const chosen = build.dedicationSkillFeats?.[bonusSkillFeatKey(fc.featId, i)];
+      if (chosen && content.feats[chosen] && !takenFeats.has(chosen)) {
+        feats.push({ featId: chosen, level: fc.level, category: 'skill' });
+        takenFeats.add(chosen);
+      }
     }
   }
   // Overrides — bonus feats force-granted with no slot (deduped against what's already taken), then
@@ -7313,34 +7415,16 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       // the same bonuses in both places double-granted, and that later pass had the cantrips-only
       // fall-through too.
       const archEntryIds = archetypeEntryIds(arch);
-      let archCantripBonus = 0;
       // Known-beyond-slots, per rank: the config's own (merged Halcyon's 2-known-over-1-slot) plus
       // any entry-targeted feat bonus (Shattered Sacrament). Slots are untouched by these.
       const archExtraKnown: Record<number, number> = { ...(arch.config.extraKnown ?? {}) };
-      for (const fc of feats) {
-        const b = content.feats[fc.featId]?.spellSlotBonus;
-        if (!b?.entryId || !archEntryIds.has(b.entryId)) continue;
-        archCantripBonus += b.cantrips ?? 0;
-        for (const [rankStr, n] of Object.entries(b.extraKnown ?? {})) {
-          const r = Number(rankStr);
-          if (Number.isFinite(r) && r > 0 && n > 0) archExtraKnown[r] = (archExtraKnown[r] ?? 0) + n;
-        }
-        const at = Object.keys(slots).map(Number).filter((r) => r > 0).sort((x, y) => x - y);
-        if (b.byRank) {
-          for (const [rank, n] of Object.entries(b.byRank)) {
-            const r = Number(rank);
-            if (Number.isFinite(r) && r > 0 && n > 0) slots[r] = (slots[r] ?? 0) + n;
-          }
-        } else if (b.highestOnly) {
-          const top = at[at.length - 1];
-          if (top != null) slots[top] += b.perRank ?? 1;
-        } else if (b.perRank !== undefined || (!b.cantrips && !b.extraKnown)) {
-          // …and a cantrips-only or known-only bonus stops here: defaulting either to one slot per
-          // rank is what made Cantrip Expansion silently generous.
-          const eligible = b.exceptHighest ? at.slice(0, Math.max(0, at.length - b.exceptHighest)) : at;
-          for (const r of eligible) slots[r] += b.perRank ?? 1;
-        }
-      }
+      const archCantripBonus = foldArchSpellSlotBonuses(
+        slots,
+        archExtraKnown,
+        feats.map((fc) => fc.featId),
+        archEntryIds,
+        content,
+      );
       // Summoner: the tradition follows the chosen eidolon TYPE, not a free pick.
       const eidolonTradition = arch.config.eidolonTradition
         ? content.classes.summoner?.subclass?.options.find((o) => o.id === build.archetypeEidolonType)?.tradition
@@ -7726,7 +7810,12 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       const tradCount: Record<string, number> = {};
       for (const ids of Object.values(held))
         for (const id of ids) for (const t of content.spells[id]?.traditions ?? []) tradCount[t] = (tradCount[t] ?? 0) + 1;
-      const tradition = (Object.entries(tradCount).sort((a, b) => b[1] - a[1])[0]?.[0] as Tradition) ?? caster?.tradition ?? 'arcane';
+      /* The item's OWN printed tradition wins over the vote. The vote counts each held spell's
+       * tradition list and breaks a tie by the stable sort, which is how Canopy Bulwark
+       * (equipment-3595) — *"draw deeply upon the untapped reserves of PRIMAL magic within it"* —
+       * came out Arcane: Haste is arcane/occult/primal, one vote each, and arcane sorts first. */
+      const tradition =
+        item.heldSpellTradition ?? ((Object.entries(tradCount).sort((a, b) => b[1] - a[1])[0]?.[0] as Tradition) ?? caster?.tradition ?? 'arcane');
       const repertoire: Record<number, string[]> = {};
       for (const [rankStr, ids] of Object.entries(held)) if (Number(rankStr) > 0) repertoire[Number(rankStr)] = ids;
       spellcasting.push({
@@ -7739,6 +7828,11 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         tradition,
         keyAbility: caster?.keyAbility ?? 'int',
         proficiency: caster?.proficiency ?? 'trained',
+        /* …unless the item PRINTS its DC. Sigil of the First Clan (equipment-2679): *"You cast
+         * 1st-level command with a DC of 24."* Cast at the wielder's DC this was Int/trained for a
+         * non-caster — a number the item's own text contradicts, and the one the vitals rail picks
+         * as the character's highest spell DC. */
+        ...(item.heldSpellDc != null ? { fixedDc: item.heldSpellDc } : {}),
         cantrips: held[0] ?? [],
         repertoire,
         itemInstanceId: instanceId,
@@ -7971,7 +8065,11 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       // stays (an entry can only have one header) and the per-spell truth is recorded beside it.
       const spellTraditions: Record<string, string> = {};
       for (const g of innate) {
-        const t = g.tradition ?? content.spells[g.spellId]?.traditions?.[0];
+        /* …and a grant whose tradition IS the character's own casting — Magic Finder (feat-2234):
+         * *"If you could already cast spells, these spells are of the same tradition. Otherwise,
+         * they're arcane spells."* The grant's printed `tradition` stays as the not-a-caster
+         * fallback, so a divine cleric reads these as divine and a fighter still reads them arcane. */
+        const t = (g.traditionFromCasting ? caster?.tradition : undefined) ?? g.tradition ?? content.spells[g.spellId]?.traditions?.[0];
         if (t) {
           tc[t] = (tc[t] ?? 0) + 1;
           spellTraditions[g.spellId] = t;
@@ -8282,11 +8380,23 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     inventor = { innovationType: invType, ...(armorStats ? { armorStats } : {}), modifications };
   }
 
-  // Kineticist: resolve the effective elements (gate picks + Fork the Path) for the Elemental Blast strike.
+  /* Kineticist: resolve the effective elements (gate picks + Fork the Path) for the Elemental Blast
+   * strike.
+   *
+   * ⚠ NOT gated on owning the CLASS. Kineticist Dedication (feat-4331) grants the `elemental-blast`
+   * class feature and *"choose one element to be your kinetic element"*, and Improved Elemental Blast
+   * (feat-4337) — whose prerequisite is that dedication, so only a NON-kineticist can take it — reads
+   * *"The power of your elemental blast improves"* over a strike the sheet never minted: this object
+   * is the only writer of `character.kineticist`, and `deriveBlastStrikes` returns [] without it.
+   * `kineticistElements` already resolves the dedication's and Add Element's picks, so the elements
+   * being non-empty IS the test. The class-only half (the +1-die-per-tier table) moves to the
+   * `archetype` flag, which deriveBlastStrikes reads. */
+  const kineticElementIds = kineticistElements(build, level).map((id) => id.replace(/-gate$/, ''));
   const kineticist =
-    ownsClass('kineticist')
+    kineticElementIds.length
       ? {
-          elements: kineticistElements(build, level).map((id) => id.replace(/-gate$/, '')),
+          elements: kineticElementIds,
+          ...(ownsClass('kineticist') ? {} : { archetype: true as const }),
           // "Choose one of your kinetic elements AND A DAMAGE TYPE LISTED FOR THAT ELEMENT" — the
           // player's answer per element. Absent entries fall back to the element's first printed type.
           ...(build.blastTypes && Object.keys(build.blastTypes).length ? { blastTypes: build.blastTypes } : {}),
@@ -9269,16 +9379,19 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
       continue;
     }
     // Match a skill feat to a dedication's bonus grant at the same level (dedication feat itself excluded).
+    /* A grant with a COUNT (Magical Knowledge's two) has one key per pick, so the search is for the
+     * first FREE index on a same-level grant rather than for an untouched feat id. */
     if (
       f.category === 'skill' &&
       !FEAT_GRANTS[f.featId]?.bonusSkillFeat &&
       !claimedBonusSkill.has(f.featId)
     ) {
-      const ded = bonusSkillDedications.find(
-        (d) => d.level === f.level && !(b.dedicationSkillFeats ?? {})[d.featId],
-      );
-      if (ded) {
-        (b.dedicationSkillFeats ??= {})[ded.featId] = f.featId;
+      const freeKey = bonusSkillDedications
+        .filter((d) => d.level === f.level)
+        .flatMap((d) => Array.from({ length: bonusSkillFeatCount(FEAT_GRANTS[d.featId]) }, (_, i) => bonusSkillFeatKey(d.featId, i)))
+        .find((k) => !(b.dedicationSkillFeats ?? {})[k]);
+      if (freeKey) {
+        (b.dedicationSkillFeats ??= {})[freeKey] = f.featId;
         claimedBonusSkill.add(f.featId);
         continue;
       }

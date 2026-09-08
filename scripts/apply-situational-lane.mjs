@@ -92,6 +92,16 @@ const escalatedIds = new Set(spec.filter((r) => r.needsHumanDecision).map((r) =>
  *     second copy of feet already in the Speed. Nothing is left over to keep — unlike vivacious-speed
  *     and swashbucklers-speed, print gates this on gear the sheet can see and nothing else. Deleted
  *     rows cannot be excluded by `existingIds`, so name it here.
+ *   knowledge-is-power (WG parity b032, knowledge-is-power): DELETED from the registry, and this is the
+ *     one entry here whose lane wording is not merely stale but describes a DIFFERENT EDITION of the
+ *     feat. Our record is aonId feat-5039, edition "remaster", and feat-5039 grants the player
+ *     nothing: *"you can invoke your knowledge to make the creature take a –1 circumstance penalty to
+ *     either AC and saves against the next attack you make against it, or the next spell you cast that
+ *     it needs to defend against."* The lane's three bonuses (and the four rows they became) come from
+ *     the LEGACY feat-2861 text — *"you gain a +1 circumstance bonus to your next attack roll…"* —
+ *     which core-descriptions still ships on this record. The remaster penalty lands on the ENEMY's
+ *     roll, so it is OTHERS_ROLL under ruling F and earns no star at all; nothing is left to keep.
+ *     Re-emitting the lane row would restore four bonuses the printed feat does not grant.
  */
 const handEdited = new Set([
   'strong-oak', 'lethoci', 'sacred-nagaji', 'kanchil', 'respite-of-cloudless-paths',
@@ -99,6 +109,7 @@ const handEdited = new Set([
   'chemical-hardiness', 'churning-mind', 'commanding-will', 'confident-evasion',
   'emotionless', 'hardened-harrow-deck',
   'monk-moves', 'swashbucklers-speed', 'incredible-movement',
+  'knowledge-is-power',
 ]);
 
 const src = readFileSync(REGISTRY, 'utf8');

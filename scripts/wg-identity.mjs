@@ -502,7 +502,28 @@ function ourIdentities(id, rec) {
    * Nagaji-or-Naga-Lore both live in a grant table rather than on the record, so reading only the record
    * reported "they offer two options, we offer none" on two records that offer exactly those two.
    */
-  for (const f of ['src/rules/featGrantsAuto.ts', 'src/rules/featGrants.ts', 'src/rules/featGrantsLane.ts']) {
+  /*
+   * ⚠ ONE BUG AND ONE BELT-AND-BRACES in this reader, both found on Magical Knowledge (batch 32).
+   * Only (1) below changes a verdict: with (2) reverted and (1) kept, every one of the 17,290 paired
+   * records reports identically — `contains` already matches a bare 'arcana' inside their
+   * 'skillarcana' on its substring branch. (2) is kept because it makes the printed `ours=[…]`
+   * reading say which spelling was credited, and costs nothing. Printed (AoN feat-8402 —
+   * core.json feats/magical-knowledge.aonId; feat-4720 as first written here is Anthropomorphic Shape):
+   * *"Increase your proficiency rank in one of Arcana, Nature, Occultism, or Religion from expert to
+   * master and in another from trained to expert."* featGrantsLane.ts:70 offers exactly those four in
+   * two `skillChoices` slots, yet the record reported "theirs-not-ours=[skillarcana, skillnature,
+   * skilloccultism, skillreligion] ours=(nothing)".
+   *   1. The option-list regex was `options\s*:\s*\[`, which cannot match the JSON-quoted `"options": [`
+   *      every MACHINE-WRITTEN lane row uses — so a hand-written row was read and a generated one was
+   *      not. The key is optionally quoted now.
+   *   2. Their ADJ_VALUE options have no title, so theirIdentities labels them from
+   *      `operation.data.variable` (line 88) — SKILL_ARCANA keys as 'skillarcana', which key('arcana')
+   *      meets only through `contains`'s substring branch. Both spellings are credited outright,
+   *      exactly as the `trainedSkillChoice` reader above already does for the identical reason.
+   * `--lane-files` exists so a test can re-run this reader against a STUNTED copy of a lane file and
+   * prove the flag comes back when the carrier is gone.
+   */
+  for (const f of String(arg('--lane-files', 'src/rules/featGrantsAuto.ts,src/rules/featGrants.ts,src/rules/featGrantsLane.ts')).split(',')) {
     let text = '';
     try { text = readFileSync(join(ROOT, f), 'utf8'); } catch { continue; }
     const m = new RegExp(`^\\s{2}(?:['"]${id}['"]|${id})\\s*:\\s*\\{`, 'm').exec(text);
@@ -510,8 +531,11 @@ function ourIdentities(id, rec) {
     const rest = text.slice(m.index);
     const end = /\n\s{2}(?:['"][a-z0-9-]+['"]|[a-z][a-zA-Z0-9]*)\s*:/.exec(rest.slice(1));
     const body = rest.slice(0, end ? end.index + 1 : rest.length);
-    for (const om of body.matchAll(/options\s*:\s*\[([^\]]*)\]/g)) {
-      for (const o of om[1].matchAll(/['"]([a-z][a-z0-9:_-]*)['"]/g)) out.options.add(key(o[1]));
+    for (const om of body.matchAll(/['"]?options['"]?\s*:\s*\[([^\]]*)\]/g)) {
+      for (const o of om[1].matchAll(/['"]([a-z][a-z0-9:_-]*)['"]/g)) {
+        out.options.add(key(o[1]));
+        out.options.add(key(`skill ${o[1]}`));
+      }
     }
   }
   /*
@@ -888,8 +912,13 @@ const SETTLED_IDENTITIES = {
 
   /* ---- batch 006, read 2026-08-18 ------------------------------------------------------------ */
   /* They label the four options by the SKILL each trains; we label them by the EMBLEM the feat prints
-   * ("Burning Sun", "Death's Head"). Same four, and our skillChoices grants the same four skills. */
-  'hold-mark': ['options'],
+   * ("Burning Sun", "Death's Head"). Same four, and our skillChoices grants the same four skills — and
+   * as of the lane-reader fix below the comparer READS that skillChoices row, so it now matches on its
+   * own and the settle answers nothing. Measured, not argued: over all 17,290 paired records the fixed
+   * reader took TWO records off the --raw flag list, magical-knowledge and this one. */
+  // batch 032: magical-knowledge#instrument — hold-mark settle REMOVED: featGrantsLane.ts:58 offers
+  // diplomacy/survival/religion/intimidation and the quote-tolerant options regex finally sees them.
+  // Kept out because a settle that matches nothing silences the NEXT options difference here, unread.
   /*
    * Their "Ratfolk Jaws" is a pre-modified ITEM; ours is an `unarmedTraits` rider stepping the jaws
    * die and adding backstabber, which is what the feat prints ("1d6 INSTEAD OF 1d4"). The rider is

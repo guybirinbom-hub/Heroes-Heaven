@@ -1,0 +1,89 @@
+BATCH 032 — GAP AGENT report, family "gap-situational"
+
+Four open lines, all on ONE finding (confirmed[] id `knowledge-is-power`) and all four the same two
+things stated twice — once by the situational builder's report, once by its verifier. Both are closed.
+0 lines left open.
+
+PER LINE
+
+AUTHORED · work/.b032-report-situational.txt:7 (DATA STILL NEEDED — feats/knowledge-is-power ·
+  description) → ref work/.b032-rows-situational.json.
+  The row is already authored there by the situational builder and is character-for-character the
+  verbatim feat-5039 prose. Re-emitting it into my own spec would be a category/id/field COLLISION,
+  which the applier hard-refuses, so nothing new was written for it. Checked against mirror
+  feat-5039 (Player Core pg. 203) and against the value shipped today on the twin.
+
+AUTHORED · work/.b032-verify-situational.txt:87 (the same DATA line, verifier's copy) → same ref.
+
+AUTHORED · work/.b032-report-situational.txt:14 and work/.b032-verify-situational.txt:96
+  (CROSS-FILE GAPS — src/data/index.ts, NEAR_DUPLICATE_IDS) → ref src/data/index.ts:NEAR_DUPLICATE_IDS
+  plus work/.b032-rows-gap-situational.json, pinned by test/batch032-gap-situational.test.ts.
+  The two lines name OPPOSITE members of the same pair. Print settles it, so it is not an owner
+  question: mirror feat-5039's trait list is ["Magus","Wizard"], our `knowledge-is-power` carries
+  both, and `knowledge-is-power-wizard` carries ["wizard"] alone — hiding the two-trait record (the
+  builder's direction) would take a printed level-8 feat off every magus, and
+  `knowledge-is-power-magus` is feat-9062 (Impossible Magic pg. 21, Feat 6), a different document at
+  a different level, so it cannot stand in. I took the VERIFIER's direction and hid
+  `knowledge-is-power-wizard`.
+
+WHAT I CHANGED
+
+src/data/index.ts — added 'knowledge-is-power-wizard' to NEAR_DUPLICATE_IDS, with the trait evidence
+  and the feat-9062 caveat in the comment above it. Hidden, never deleted: findDuplicateIds only
+  suppresses from lists, so a saved character that already picked the twin still resolves it. The
+  three parts must land together — the hide, the description row in work/.b032-rows-situational.json,
+  and the descRefs row below — or the surviving record still ships the LEGACY feat-2861 "+1
+  circumstance bonus" wording.
+
+work/.b032-rows-gap-situational.json — ONE row, feats/knowledge-is-power · descRefs =
+  [{"label":"Recall Knowledge","key":"actions"}]. This is the only thing the hide would otherwise
+  cost the player: that ref-link ships today on the twin and the kept record has none, while
+  feat-5039 hangs its whole effect on that action ("When you critically succeed at a Recall Knowledge
+  check about a creature…"). No effect-backfill.json row exists on feats/knowledge-is-power for any
+  field (the only knowledge-is-power* row is feats/knowledge-is-power-wizard · edition, a different
+  record AND field), and no other b032 spec touches this category/id/field — checked all four —
+  so no `supersedes: true` is owed.
+
+work/.b032-specs.json — appended {file: work/.b032-rows-gap-situational.json, kind: rows,
+  family: gap-situational, stage: [that spec, this report, the test, src/data/index.ts]}. Re-read
+  immediately before writing; the four existing entries are untouched.
+
+TEST
+
+test/batch032-gap-situational.test.ts (new file, 4 cases), describe
+"knowledge-is-power is offered once, and to both printed classes", every case cited
+"// batch 032: knowledge-is-power" with the record id in the describe title:
+  · a level-8 wizard's class slot offers exactly one Knowledge is Power, and it is the kept id
+    (this is the reported symptom: eligibleFeatsForSlot's only test is category 'class' plus the
+    class trait, which both records passed);
+  · a level-8 MAGUS is still offered it — the case that fails under the other hide direction — with
+    the trait lists and the two aonIds asserted beside it;
+  · the twin is hidden, not deleted, and the kept id is not hidden;
+  · the descRefs row's value equals the twin's shipped descRefs. Asserted against the SPEC VALUE and
+    a stripped in-memory copy, never a shipped-vs-patched delta, so the case reads the same before
+    and after the row is applied.
+
+NOT MINE, LEFT ALONE
+
+- work/.b032-verify-situational.txt:91 names a second data row — feats/knowledge-is-power · source ·
+  {"book":"Pathfinder Player Core","license":"ORC"} (the kept record stamps OGL on a Player Core /
+  remaster feat where its twin stamps ORC). The driver did not extract it as a gap line and it is not
+  one of my four, so I did not author it. Flagging it here because the hide makes that record the
+  only surviving copy of feat-5039: the wrong licence is now the only licence a player sees. One row,
+  no collision, whoever picks it up.
+- No line of any other family was touched in work/.b032-gaps.json; the eleven still open are theirs.
+
+CHECKS RUN
+  node scripts/vt.mjs test/batch032-gap-situational.test.ts .......... 4 passed
+  node scripts/vt.mjs test/aon-dedupe.test.ts test/overlay-durability.test.ts test/aon-markers.test.ts
+    test/batch001-surfaces.test.tsx test/triage-lane-close.test.ts test/batch032-situational.test.ts
+    test/batch032-gap-situational.test.ts .......... 87 passed
+    (every test file that reads duplicateIds / NEAR_DUPLICATE_IDS, plus the situational family's own)
+  npx tsc --noEmit .......... clean
+  node scripts/test-flip-audit.mjs --batch 032 .......... clean, every flip cited
+  scripts/actioncost-vs-aon.mjs parses NEAR_DUPLICATE_IDS from this source text with
+    /^\s*'([^']+)',/gm — line-anchored, so the added id is read and the comment lines are not.
+
+QUEUE
+  Nothing added to work/.b032-queue.json. The one contested line was settled by the printed trait
+  list, not by a ruling conflict or a WG-vs-print contradiction.

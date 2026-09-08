@@ -870,10 +870,14 @@ export function deriveSpellcasting(c: Character, entry: SpellcastingEntry): Spel
   const attack =
     base +
     poolTypedMods([...conditionTypedMods(c.conditions, entry.keyAbility, 'spell-attack'), ...modeTypedMods(c.activeModes, { kind: 'spell-attack' })]);
+  /* A DC THE SOURCE PRINTS is a stated number, not a statistic — Sigil of the First Clan
+   * (equipment-2679): *"You cast 1st-level command with a DC of 24."* Nothing modifies it, so the
+   * conditions/modes pool is skipped too: those adjust the caster's own DC, and this DC is not theirs. */
   const dc =
+    entry.fixedDc ??
     10 +
-    base +
-    poolTypedMods([...conditionTypedMods(c.conditions, entry.keyAbility, 'spell-dc'), ...modeTypedMods(c.activeModes, { kind: 'spell-dc' })]);
+      base +
+      poolTypedMods([...conditionTypedMods(c.conditions, entry.keyAbility, 'spell-dc'), ...modeTypedMods(c.activeModes, { kind: 'spell-dc' })]);
   return { rank: entry.proficiency, attack, dc };
 }
 
@@ -4151,12 +4155,35 @@ function strikeReaches(c: Character, db: ContentDatabase, ctx: ReachContext): St
  * single-pick answer `'x'.split(',')` is `['x']`, byte-identical to the old behaviour.
  */
 function answersForChoiceFlag(c: Character, db: ContentDatabase, flag: string): string[] {
+  const split = (raw: unknown, into: string[]) => {
+    for (const v of String(raw ?? '').split(',').map((s) => s.trim())) if (v && !into.includes(v)) into.push(v);
+  };
+  /*
+   * A DAILY answer REPLACES the build-time one when a record says so. Malleable Mental Forge
+   * (feat-8510): *"During your daily preparations, you can choose any two weapon traits from the
+   * Mental Forge feat to place on your weapon for 24 hours … REPLACING THE TRAITS YOU CHOSE FROM THE
+   * MENTAL FORGE FEAT."* Two records, two flags, one effective pair — unioning them would hand out
+   * four traits for a clause that gives two, so this morning's answer, when there is one, is the
+   * whole answer.
+   */
+  const replacement: string[] = [];
+  for (const rec of ownedDailyChoiceRecords(c, db)) {
+    const def = rec.choice;
+    if (!def?.daily || def.replacesFlag !== flag) continue;
+    split(c.dailyChoices?.[dailyChoiceKey(rec.id, def.flag)], replacement);
+  }
+  if (replacement.length) return replacement;
   const out: string[] = [];
   for (const f of c.feats ?? []) {
     if (db.feats[f.featId]?.choice?.flag !== flag) continue;
-    for (const v of String(f.choice?.value ?? '').split(',').map((s) => s.trim())) {
-      if (v && !out.includes(v)) out.push(v);
-    }
+    split(f.choice?.value, out);
+  }
+  // …and a flag whose OWN choice is asked every morning rather than at build time (a daily record
+  // with no `replacesFlag` of its own). The build-time store is empty for those by design.
+  for (const rec of ownedDailyChoiceRecords(c, db)) {
+    const def = rec.choice;
+    if (!def?.daily || def.flag !== flag) continue;
+    split(c.dailyChoices?.[dailyChoiceKey(rec.id, def.flag)], out);
   }
   return out;
 }
@@ -4498,7 +4525,15 @@ export function deriveBlastStrikes(c: Character, db: ContentDatabase): Strike[] 
   const step = mapStepFor(c, db, blastTraits);
   const mapSources = mapNotesFor(c, db, blastTraits);
   const attack = [base, base - step, base - step * 2];
-  const dice = 1 + [5, 9, 13, 17].filter((l) => c.level >= l).length;
+  /* The CLASS table (+1 die at 5/9/13/17) belongs to the kineticist class feature, not to a blast the
+   * Kineticist Dedication handed a fighter — an archetype blast grows only through Improved Elemental
+   * Blast (feat-4337), *"the damage of your elemental blast increases by one die"*, up to three
+   * takings. Summed over `c.feats`, which holds one entry PER TAKING, so the feat's Special clause (a
+   * second taking at 14th, a third at 18th) needs nothing else. The die count was a hard-coded level
+   * table, so this feat's whole content reached the sheet as nothing. */
+  const classDice = c.kineticist?.archetype ? 0 : [5, 9, 13, 17].filter((l) => c.level >= l).length;
+  const featDice = (c.feats ?? []).reduce((n, f) => n + (db.feats[f.featId]?.blastDiceBonus ?? 0), 0);
+  const dice = 1 + classDice + featDice;
   // Unconditional damage-mode bonuses (e.g. Courageous Anthem) apply to blasts too; fold them into
   // dmgBonus so the strike-damage breakdown (which sums these via modeAdjust) reconciles with the total.
   const dmgMode = modeNumberBonus(c.activeModes, { kind: 'damage' });
@@ -5289,12 +5324,19 @@ export function deriveBulk(c: Character, db: ContentDatabase): BulkResult {
    * 11 + your Strength modifier"* — but only a RUNE's `bulkLimitBonus` was ever read, so the identical
    * field on an item was authorable, looked authored, and moved nothing. */
   let itemLimitBonus = 0;
+  /* …and the ASYMMETRIC pair, which the item lane could not express at all. Lifting Leather
+   * (equipment-3816): *"you can carry 2 more Bulk than normal before becoming encumbered and up to a
+   * maximum of 4 MORE Bulk"* — `bulkLimitBonus` moves both thresholds equally, so the extra +2 on the
+   * maximum needs the same split field the feat and heritage lanes already read. */
+  let itemMaxBonus = 0;
   for (const inv of c.inventory ?? []) {
     if (!itemInUse(inv)) continue;
     for (const pe of [db.items[inv.itemId]?.passiveEffects, c.resolvedItemPassives?.[inv.itemId]]) {
       itemLimitBonus = Math.max(itemLimitBonus, pe?.bulkLimitBonus ?? 0);
+      itemMaxBonus = Math.max(itemMaxBonus, pe?.bulkMaxBonus ?? 0);
     }
   }
+  maxOnlyBonus += itemMaxBonus;
   // Rune and item restate the same untyped threshold, so the highest wins rather than summing —
   // exactly as two copies of the rune already do.
   limitBonus += Math.max(runeBonus, itemLimitBonus);

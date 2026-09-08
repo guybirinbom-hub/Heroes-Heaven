@@ -1,0 +1,143 @@
+BATCH 032 — WG-COMPARISON LANE — GAP AGENT — FAMILY: gap-data-rows
+spec: work/.b032-rows-gap-data-rows.json (11 findings, 11 rows)   tests: test/batch032-gap-data-rows.test.ts
+edit: scripts/dropped-inline-check.mjs (the stripped-link ratchet)
+7 open lines, all disposed of: 5 AUTHORED, 2 PARKED, 0 still open.
+
+⚠ READ THIS BEFORE RUNNING --stage gaps: 8 gap lines belonging to the ENGINE, INSTRUMENTS and
+SITUATIONAL families will refuse. gapProblems() accepts a ref that is a manifest spec file, a file in
+the tree, or a `file:line` — and NOTHING ELSE. Those eight put the explanation INSIDE the ref
+("src/data/index.ts:NEAR_DUPLICATE_IDS — same pair, OPPOSITE direction: …"), which matches none of the
+three, so each fails with "names no manifest spec, no file in the tree and no file:line". My own five
+authored refs had the same defect and are now bare pointers, with the reasoning moved into this report,
+where it belongs. I did not touch another family's line. Run it and see for yourself:
+  node -e "import('./scripts/wg-batch-run.mjs').then(m=>console.log(m.gapProblems({gaps:require('./work/.b032-gaps.json'),manifestFiles:new Set(require('./work/.b032-specs.json').map(x=>x.file)),fileExists:require('fs').existsSync}).join('\n')))"
+
+⚠ AND THIS: `node scripts/dropped-inline-check.mjs` FAILS RIGHT NOW, ON PURPOSE, and stays red until
+work/.b032-rows-gap-data-rows.json and work/.b032-rows-data-rows.json are applied. See line 1.
+
+
+PER GAP LINE
+
+1. AUTHORED — report:8 "the link-LABEL strip is systemic … the cleaner fix and a residue guard belong
+   to whoever owns the scripts/ lane"        ref: scripts/dropped-inline-check.mjs:62
+   THE GUARD ALREADY EXISTED AND WAS HALF BLIND, which is the whole finding. scripts/dropped-inline-check.mjs
+   has ratcheted this exact defect since batch 27 — "the de-linkifier that builds the `d` fallback prose
+   eats the numeric span beside a stripped auto-link" — but its pattern was /\ba \.(?=\s|$)/, one of the
+   four articles. It therefore counted 162 records and walked past the 12 the same strip had left behind
+   "an .", "the ." and "your .", INCLUDING feats/basic-beast-gunner-spellcasting, the record whose read
+   raised this line. The finding's own regex was not a new detector; it was the old one with the blind
+   spot removed.
+   HOLE is now /\b(?:a|an|the|your) \.(?=\s|$)/ and HOLE_BASELINE STAYS AT 162. That is deliberate and it
+   is the part worth checking: the wider net sees 174 today, this batch repairs all 12 (one row in
+   work/.b032-rows-data-rows.json, eleven in mine), and 174 − 12 = 162 — every survivor is an "a ." one,
+   measured with the rows applied to an in-memory copy before the constant was left alone. Widening a net
+   and slackening its ratchet in one edit measures nothing, so the check goes red until the rows land and
+   names the 12 while it is red (the FAIL list used to print the first 30 of a 162-deep corpus under the
+   heading "New ones:"; it now leads with the records outside the "a ." shape).
+   NO IMPORTER CLEANER WAS TOUCHED, and the line's first half is answered rather than skipped: the
+   de-linkifier is UPSTREAM OF OUR AoN EXPORT (this guard's own header says so of its sibling class, and
+   scripts/import-core-v2.mjs's plainDesc renders these labels correctly — the shipped `d` for an
+   overlaid record is preserved OLD content, not plainDesc output). There is no in-tree cleaner to fix.
+   The route the tree already has for a hole is a description overlay row rebuilt from the AST, which is
+   what scripts/repair-stripped-save-dc.mjs and scripts/repair-stripped-skill-links.mjs emit for the
+   other three classes and what the 11 rows below are.
+   TEST: test/batch032-gap-data-rows.test.ts "basic-beast-gunner-spellcasting: the stripped-link ratchet
+   sees all four articles" — reads HOLE out of the script and asserts it catches "attempt a ." (batch 27's
+   shape, unregressed), "You gain the .", "Choose an ." and "match those of your .", and does NOT match
+   the repaired sentence. Cited "// batch 032: basic-beast-gunner-spellcasting#dropped-clause".
+
+2. AUTHORED — verify:100, the verifier's restatement of line 1  ref: work/.b032-rows-gap-data-rows.json
+   The other half of the same work: 11 description rows, one per record the widened ratchet newly sees
+   (the twelfth is the data-rows family's own). Each row's label is the run ITS OWN mirror document
+   prints — feat-3112 "Choose an innovation.", feat-6382 "You gain the advanced alchemy benefits.",
+   feat-3232/3234/7589/7591/7593/7681/7686/7688 the basic/expert/master spellcasting benefits, and
+   equipment-4016 "match those of your draconic benefactor" — spliced AT THE HOLE, with the whole text
+   outside the splice reconstructed and compared byte for byte against the shipped string before the row
+   was emitted. Each record was required to have exactly ONE hole site and that site's article had to be
+   the one the row expects; a record failing either would have refused the whole generation.
+   The applier's fifth pre-check was run ahead of it: every token the row introduces is in our current
+   text or in the cited mirror document, for all 11.
+   items/pact-of-the-herald-and-host carries supersedes:true — the overlay already holds a description
+   row for it (scripts/repair-stripped-skill-links.mjs's "30-foot cone" repair), and that value is merged
+   whole because it is byte-identical to the shipped text this splice was built from. The other ten have
+   no prior description row.
+   NO COLLISION: a scan of all 7 manifest specs finds 21 distinct category/id/field keys and zero
+   duplicates, so nothing here races another family.
+   TEST: "the stripped link LABEL is restored on every record it was taken from" — one case per record,
+   asserting the clause is present and no bare article survives. 11 fail today on the missing label alone
+   (the harness half — the record and its prose reaching merged content — passes first); they pass once
+   the driver applies the spec.
+
+3. AUTHORED — report:9 "declare and read `bulkMaxBonus`"        ref: src/rules/derive.ts:5336
+   Both halves are IN THE TREE, landed by the engine family after the data-rows report was written:
+   ItemPassiveEffects.bulkMaxBonus at src/rules/types.ts:2263 and deriveBulk's item loop
+   `itemMaxBonus = Math.max(itemMaxBonus, pe?.bulkMaxBonus ?? 0)` at src/rules/derive.ts:5336. The
+   collision the line warns about is gone too — the cross-spec scan above shows items/lifting-leather
+   .passiveEffects written exactly once, by work/.b032-rows-data-rows.json. Nothing was owed and nothing
+   was added; verified rather than assumed.
+
+4. AUTHORED — report:40 "lifting-leather — ROW: {…}"           ref: work/.b032-rows-data-rows.json
+   A collator artefact: the apply-digest harvester lifted a PER FINDING bullet out of the report body.
+   The row it quotes is already that spec's `lifting-leather` finding, `why` citing AoN equipment-3816.
+   Pinned on a built fighter at test/batch032-data.test.ts:103-113.
+
+5. AUTHORED — verify:66 "lifting-leather — DONE … (FIXED-BY-ME, test only)"
+                                                              ref: test/batch032-data.test.ts:113
+   Same kind of artefact, on the verify side. The verifier's added assertion
+   `expect(deriveBulk(wearing, db()).max).toBe(deriveBulk(base, db()).max + 4)` is in the file, cited
+   "// batch 032: lifting-leather#max", and the reader it depends on has landed (item 3), so it is a real
+   pin rather than a promise. node scripts/test-flip-audit.mjs --batch 032 → clean.
+
+6. PARKED — report:10 "`disableIfOwned` has no 'never this slot's own answer' exemption"
+                                                              ref: flaggedResidue (see work/.b032-gaps.json)
+   Pre-existing, display-only, and in files two other families are holding this batch. The greying comes
+   from choiceOwnedFeatureIds folding a picker's own ownsFeature answer back into ownedFeatureIds
+   (src/rules/derive.ts:3465); feats/manifold-modifications ships that pair today, so the second-blessing
+   row inherits the shape rather than causing it, and nothing in src/rules/build.ts consults the narrowed
+   list — no built character is wrong, only the Builder's greying. The exemption is one test and already
+   exists on shared.tsx's OTHER picker (`const off = !!o.disabled && o.id !== value`,
+   src/builder/shared.tsx:835), so the fix is to carry it into the two PopupSelect branches or into
+   narrowChoiceOptions. src/rules/derive.ts, src/rules/build.ts and src/builder/Builder.tsx are all in
+   the ENGINE and GAP-ENGINE families' stage[] in work/.b032-specs.json — a gap agent editing them would
+   land on top of work still in flight — and it wants BOTH pickers changed together, which is a lane, not
+   a line. Re-raise with its two cases named: manifold-modifications and second-blessing.
+   NOT an owner question: nothing about it is a ruling or a WG contradiction, only sequencing.
+
+7. PARKED — report:11 / verify tail "our shipped basic-beast-gunner-spellcasting opener vs mirror
+   feat-3230"                                                 ref: flaggedResidue (see work/.b032-gaps.json)
+   Unauthorable here without a hard refusal, AND not established as a defect — two independent reasons.
+   (a) Any row writes feats/basic-beast-gunner-spellcasting.description, the exact key
+   work/.b032-rows-data-rows.json#basic-beast-gunner-spellcasting#dropped-clause already writes, and
+   precheck (1) hard-refuses two specs on one key ("resolve by hand, the applier will not merge"). The
+   merged row has to come from whoever owns that finding; a gap agent may not rewrite another family's
+   spec.
+   (b) It is not simply ours-being-wrong. Our sentence reads "a spell slot of a new RANK" where mirror
+   feat-3230 still reads "a new LEVEL" — our prose is the MORE remastered of the two, so the differing
+   opener is as likely a later printing as a strip. That needs a read-lane finding comparing both
+   printings and emitting ONE row, not a second row bolted onto a finding whose claim was only the
+   dropped link label.
+
+DATA STILL NEEDED
+(none — the 11 rows are authored, each checked against its own mirror document and against the applier's
+own pre-checks before it was written.)
+
+CROSS-FILE GAPS
+(none of my own. The two parked lines above are the cross-file work, and they are parked, not handed on.
+The eight refusing lines in the ⚠ note at the top are other families' refs, not gaps.)
+
+VERIFICATION RUN
+  node scripts/vt.mjs run test/batch032-gap-data-rows.test.ts → 11 failed (each on the missing label
+    alone, harness half green), 1 passed (the ratchet test). Exactly the "fails today, passes on apply"
+    shape; nothing here is a patched-vs-shipped delta.
+  npx tsc --noEmit → clean.
+  node scripts/test-flip-audit.mjs --batch 032 → clean, 9 test file(s) touched, every flip cited.
+  node scripts/dropped-inline-check.mjs → FAIL 174 > 162, naming the 12 records this batch repairs
+    first. Expected, and green once the rows are applied (measured on an in-memory copy: 162, all "a .").
+
+STAGE PATHS I TOUCHED
+work/.b032-rows-gap-data-rows.json
+work/.b032-report-gap-data-rows.txt
+test/batch032-gap-data-rows.test.ts
+scripts/dropped-inline-check.mjs
+work/.b032-specs.json  (one appended entry, every existing entry byte-identical)
+work/.b032-gaps.json   (my family's 7 lines only)

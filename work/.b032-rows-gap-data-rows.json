@@ -1,0 +1,148 @@
+{
+  "findings": [
+    {
+      "id": "pact-of-the-herald-and-host#stripped-link-label",
+      "backfillRows": [
+        {
+          "category": "items",
+          "id": "pact-of-the-herald-and-host",
+          "field": "description",
+          "value": "You have exchanged your voice for the authority and breath of your bound dragon. Your voice echoes with the dragon's idiosyncrasies. You can cast fear as an innate spell once per day, with the spell's tradition matching that of your bound dragon.\n\nOnce per day, from any distance, your bound dragon can choose to take control of your voice. They dictate everything you say (or don't say) for up to 10 minutes. They can choose to speak in any language you or they know, though they can't use your voice to cast spells or activate items.\n\n**Activate—Breath of the Dragon** ⟨1⟩ (concentrate)\n\n**Frequency** once per day\n\n---\n\n**Effect** You exhale a torrent of energy in a 30-foot cone or a 60-foot line, dealing 1d6 damage per level. Each creature in the area must attempt a basic saving throw against the higher of your class DC or spell DC. You can't use this ability again for 1d4 rounds. The area, damage type, and type of saving throw match those of your draconic benefactor. This ability has the trait associated with the type of damage it deals.\n\n---\n\n**Oathbreaker's Calamity** Should either party break the oath, your throat and mouth become swollen and elongated, preventing you from speaking any language but Draconic and causing any use of the Dragon Breath ability granted by this pact to also damage you. The dragon becomes deafened, but call still hear your voice.",
+          "supersedes": true,
+          "why": "AoN equipment-4016 prints \"your draconic benefactor\" where the importer's de-linkifier deleted the link and its LABEL, leaving the sentence as \"your .\" — the rule ends at an article with nothing after it. Only the label is restored; every byte outside the hole is copied unchanged."
+        }
+      ],
+      "note": "Sibling of basic-beast-gunner-spellcasting#dropped-clause (work/.b032-rows-data-rows.json), which repaired the one record that finding's claim named. This row is one of the other 11 the same strip left behind, so scripts/dropped-inline-check.mjs can widen its stripped-link ratchet from \"a .\" to every article and hold at the pre-existing 162."
+    },
+    {
+      "id": "inventor-dedication#stripped-link-label",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "inventor-dedication",
+          "field": "description",
+          "value": "You become trained in Crafting and inventor class DC. You gain the Inventor skill feat, even if you don't meet the skill feat's requirements. Choose an innovation. You gain that innovation, though you don't gain any other abilities that modify or use that innovation, such as modifications or Explode.",
+          "why": "AoN feat-3112 prints \"an innovation\" where the importer's de-linkifier deleted the link and its LABEL, leaving the sentence as \"an .\" — the rule ends at an article with nothing after it. Only the label is restored; every byte outside the hole is copied unchanged."
+        }
+      ],
+      "note": "Sibling of basic-beast-gunner-spellcasting#dropped-clause (work/.b032-rows-data-rows.json), which repaired the one record that finding's claim named. This row is one of the other 11 the same strip left behind, so scripts/dropped-inline-check.mjs can widen its stripped-link ratchet from \"a .\" to every article and hold at the pre-existing 162."
+    },
+    {
+      "id": "poisoner-dedication#stripped-link-label",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "poisoner-dedication",
+          "field": "description",
+          "value": "You make a point of always having a few toxins near at hand—you never know when some arsenic or the like might prove useful. You gain the advanced alchemy benefits. You can use advanced alchemy to create four alchemical poison consumables each day. You remember alchemical poison formulas and don't need a formula book for them.",
+          "why": "AoN feat-6382 prints \"the advanced alchemy benefits\" where the importer's de-linkifier deleted the link and its LABEL, leaving the sentence as \"the .\" — the rule ends at an article with nothing after it. Only the label is restored; every byte outside the hole is copied unchanged."
+        }
+      ],
+      "note": "Sibling of basic-beast-gunner-spellcasting#dropped-clause (work/.b032-rows-data-rows.json), which repaired the one record that finding's claim named. This row is one of the other 11 the same strip left behind, so scripts/dropped-inline-check.mjs can widen its stripped-link ratchet from \"a .\" to every article and hold at the pre-existing 162."
+    },
+    {
+      "id": "expert-beast-gunner-spellcasting#stripped-link-label",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "expert-beast-gunner-spellcasting",
+          "field": "description",
+          "value": "You've learned the deeper secrets of beast guns, making you an expert in the magic they grant you. You gain the expert spellcasting benefits.",
+          "why": "AoN feat-3232 prints \"the expert spellcasting benefits\" where the importer's de-linkifier deleted the link and its LABEL, leaving the sentence as \"the .\" — the rule ends at an article with nothing after it. Only the label is restored; every byte outside the hole is copied unchanged."
+        }
+      ],
+      "note": "Sibling of basic-beast-gunner-spellcasting#dropped-clause (work/.b032-rows-data-rows.json), which repaired the one record that finding's claim named. This row is one of the other 11 the same strip left behind, so scripts/dropped-inline-check.mjs can widen its stripped-link ratchet from \"a .\" to every article and hold at the pre-existing 162."
+    },
+    {
+      "id": "master-beast-gunner-spellcasting#stripped-link-label",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "master-beast-gunner-spellcasting",
+          "field": "description",
+          "value": "You've learned the final truth of beast guns, making you a master in the magic they grant you. You gain the master spellcasting benefits.",
+          "why": "AoN feat-3234 prints \"the master spellcasting benefits\" where the importer's de-linkifier deleted the link and its LABEL, leaving the sentence as \"the .\" — the rule ends at an article with nothing after it. Only the label is restored; every byte outside the hole is copied unchanged."
+        }
+      ],
+      "note": "Sibling of basic-beast-gunner-spellcasting#dropped-clause (work/.b032-rows-data-rows.json), which repaired the one record that finding's claim named. This row is one of the other 11 the same strip left behind, so scripts/dropped-inline-check.mjs can widen its stripped-link ratchet from \"a .\" to every article and hold at the pre-existing 162."
+    },
+    {
+      "id": "basic-rivethun-spellcasting#stripped-link-label",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "basic-rivethun-spellcasting",
+          "field": "description",
+          "value": "You gain the basic spellcasting benefits. Each time you gain a spell slot of a new rank from the Rivethun involutionist archetype, add a common divine spell of the appropriate rank, another appropriate divine spell you learned or discovered, or any other divine spell to which you have access, to your repertoire.",
+          "why": "AoN feat-7589 prints \"the basic spellcasting benefits\" where the importer's de-linkifier deleted the link and its LABEL, leaving the sentence as \"the .\" — the rule ends at an article with nothing after it. Only the label is restored; every byte outside the hole is copied unchanged."
+        }
+      ],
+      "note": "Sibling of basic-beast-gunner-spellcasting#dropped-clause (work/.b032-rows-data-rows.json), which repaired the one record that finding's claim named. This row is one of the other 11 the same strip left behind, so scripts/dropped-inline-check.mjs can widen its stripped-link ratchet from \"a .\" to every article and hold at the pre-existing 162."
+    },
+    {
+      "id": "expert-rivethun-spellcasting#stripped-link-label",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "expert-rivethun-spellcasting",
+          "field": "description",
+          "value": "You gain the expert spellcasting benefits.",
+          "why": "AoN feat-7591 prints \"the expert spellcasting benefits\" where the importer's de-linkifier deleted the link and its LABEL, leaving the sentence as \"the .\" — the rule ends at an article with nothing after it. Only the label is restored; every byte outside the hole is copied unchanged."
+        }
+      ],
+      "note": "Sibling of basic-beast-gunner-spellcasting#dropped-clause (work/.b032-rows-data-rows.json), which repaired the one record that finding's claim named. This row is one of the other 11 the same strip left behind, so scripts/dropped-inline-check.mjs can widen its stripped-link ratchet from \"a .\" to every article and hold at the pre-existing 162."
+    },
+    {
+      "id": "master-rivethun-spellcasting#stripped-link-label",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "master-rivethun-spellcasting",
+          "field": "description",
+          "value": "You gain the master spellcasting benefits.",
+          "why": "AoN feat-7593 prints \"the master spellcasting benefits\" where the importer's de-linkifier deleted the link and its LABEL, leaving the sentence as \"the .\" — the rule ends at an article with nothing after it. Only the label is restored; every byte outside the hole is copied unchanged."
+        }
+      ],
+      "note": "Sibling of basic-beast-gunner-spellcasting#dropped-clause (work/.b032-rows-data-rows.json), which repaired the one record that finding's claim named. This row is one of the other 11 the same strip left behind, so scripts/dropped-inline-check.mjs can widen its stripped-link ratchet from \"a .\" to every article and hold at the pre-existing 162."
+    },
+    {
+      "id": "basic-prophet-spellcasting#stripped-link-label",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "basic-prophet-spellcasting",
+          "field": "description",
+          "value": "You gain the basic spellcasting benefits. Each time you gain a spell slot of a new rank from the prophet of Kalistrade archetype, add a common occult spell of the appropriate rank, or another appropriate occult spell you've learned or discovered, to your repertoire.",
+          "why": "AoN feat-7681 prints \"the basic spellcasting benefits\" where the importer's de-linkifier deleted the link and its LABEL, leaving the sentence as \"the .\" — the rule ends at an article with nothing after it. Only the label is restored; every byte outside the hole is copied unchanged."
+        }
+      ],
+      "note": "Sibling of basic-beast-gunner-spellcasting#dropped-clause (work/.b032-rows-data-rows.json), which repaired the one record that finding's claim named. This row is one of the other 11 the same strip left behind, so scripts/dropped-inline-check.mjs can widen its stripped-link ratchet from \"a .\" to every article and hold at the pre-existing 162."
+    },
+    {
+      "id": "expert-prophet-spellcasting#stripped-link-label",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "expert-prophet-spellcasting",
+          "field": "description",
+          "value": "You gain the expert spellcasting benefits.",
+          "why": "AoN feat-7686 prints \"the expert spellcasting benefits\" where the importer's de-linkifier deleted the link and its LABEL, leaving the sentence as \"the .\" — the rule ends at an article with nothing after it. Only the label is restored; every byte outside the hole is copied unchanged."
+        }
+      ],
+      "note": "Sibling of basic-beast-gunner-spellcasting#dropped-clause (work/.b032-rows-data-rows.json), which repaired the one record that finding's claim named. This row is one of the other 11 the same strip left behind, so scripts/dropped-inline-check.mjs can widen its stripped-link ratchet from \"a .\" to every article and hold at the pre-existing 162."
+    },
+    {
+      "id": "master-prophet-spellcasting#stripped-link-label",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "master-prophet-spellcasting",
+          "field": "description",
+          "value": "You gain the master spellcasting benefits.",
+          "why": "AoN feat-7688 prints \"the master spellcasting benefits\" where the importer's de-linkifier deleted the link and its LABEL, leaving the sentence as \"the .\" — the rule ends at an article with nothing after it. Only the label is restored; every byte outside the hole is copied unchanged."
+        }
+      ],
+      "note": "Sibling of basic-beast-gunner-spellcasting#dropped-clause (work/.b032-rows-data-rows.json), which repaired the one record that finding's claim named. This row is one of the other 11 the same strip left behind, so scripts/dropped-inline-check.mjs can widen its stripped-link ratchet from \"a .\" to every article and hold at the pre-existing 162."
+    }
+  ]
+}

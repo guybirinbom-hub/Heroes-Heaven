@@ -1,0 +1,116 @@
+BATCH 032 — SITUATIONAL family report
+Findings assigned: knowledge-is-power, hazard-finder, safeguard-soul#allies,
+mighty-bulwark#replacement-wording, mighty-bulwark#supersedes-trait-bulwark,
+mantle-of-the-tikbalang#illusory-thrash. All six handled; none dropped, none taken from another family.
+
+DATA STILL NEEDED
+- feats/knowledge-is-power · field description · value = the verbatim AoN feat-5039 prose (the exact
+  string already shipped on feats/knowledge-is-power-wizard, same aonId). Authored in full in
+  work/.b032-rows-situational.json; the record still ships the LEGACY feat-2861 wording. No supersedes:
+  no effect-backfill row exists for feats/knowledge-is-power today (the only knowledge-is-power* row is
+  feats/knowledge-is-power-wizard · edition, which this does not touch).
+
+CROSS-FILE GAPS
+- src/data/index.ts, NEAR_DUPLICATE_IDS: add 'knowledge-is-power' (-> knowledge-is-power-wizard).
+  feats/knowledge-is-power and feats/knowledge-is-power-wizard are BOTH aonId feat-5039 and both pass
+  featSlots.ts's category-'class'-plus-class-trait test, so a level-8 wizard is offered the same feat
+  twice. The kept id is knowledge-is-power-wizard: it carries the correct remaster text and the ORC
+  licence, where the duplicate carries the legacy text and an OGL licence. HIDE, never delete — that
+  file's own ruling, because an id that vanishes takes the pick off a saved character's sheet.
+  (Belongs to whichever family owns src/data/index.ts this batch; nobody's assignment named it.)
+
+WHAT I DID, PER FINDING
+
+knowledge-is-power — DELETED the four legacy "+1 circumstance" rows (strikeAttack, spell/attack, ac,
+  save/all) from FEAT_SITUATIONAL in src/rules/situationalBonuses.ts, replacing them with a comment
+  quoting feat-5039. Our record is aonId feat-5039, edition "remaster", and feat-5039 grants the player
+  nothing: the -1 circumstance penalty lands on the ENEMY's AC/saves and on its attack/DC, which is
+  OTHERS_ROLL under ruling F and earns no star. The four rows were the legacy feat-2861 (Secrets of
+  Magic pg. 45) text. Also added 'knowledge-is-power' to the `handEdited` exclusion set in
+  scripts/apply-situational-lane.mjs with the reason in that script's header block —
+  work/situational-lane/spec.json still holds the legacy reading (situational:true, 3 bonuses) and
+  `existingIds` cannot exclude a row that no longer exists, so without the exclusion the four bonuses
+  come straight back on the next lane run. Verified: `node scripts/apply-situational-lane.mjs --dry`
+  now counts it under hand-edited (7) rather than already-authored.
+  TEST: test/batch032-situational.test.ts, describe "knowledge-is-power grants the player no bonus at
+  all" — a level-8 wizard holding the feat reads no star on any of the four old rows, through
+  featSituationalFor(characterSituationalIds(...)); a second case pins the correctly-worded twin
+  knowledge-is-power-wizard as starless too.
+  DATA half in DATA STILL NEEDED above; record-hiding half in CROSS-FILE GAPS above.
+
+hazard-finder — ADDED RECORD_MARKERS['hazard-finder'] = [{ on: 'action', id: 'search', note: "you find
+  hazards that would normally require you to Search even when you aren't Searching." }] in
+  src/rules/situationalBonuses.ts. Print's second sentence (feat-4884) names no statistic, so
+  SituationalTarget — which mirrors StatRef — could never hold it and only the +1 circumstance half had
+  shipped. The smoke-through-bamboo shape exactly; core.json actions.search exists and
+  skillActionsFor('perception', …) lists Search, so StatDetailModal has a row to draw the mark beside.
+  Chose the code table over the record's `recordMarks` data field: both reach recordMarkersFor through
+  the same channel, and the code table needs no data row.
+  TEST: describe "hazard-finder's find-without-Searching clause reaches the Search row" — the mark
+  arrives through recordMarkersFor(c, db, 'action', 'search'), a ranger without the feat gets none,
+  Search is asserted to really be a row skillActionsFor('perception') returns, and the +1 half is
+  pinned untouched.
+
+safeguard-soul#allies — WIDENED the entry's `when` in FEAT_SITUATIONAL to
+  "against death, possession, or soul-manipulation effects (you, and allies in your glowing spiral's
+  light)". feat-3472's closing sentence extends the SAME bonus to the party, so the batch-24
+  intuitive-cooperation ruling (an ally-ONLY bonus stays in the printed description) does not reach it;
+  the carrier is the parenthetical fluttering-misdirection, world-rouser-dedication and
+  pennant-of-victory already use. 104 characters, under cap-situational-notes.mjs's 120-character
+  threshold, so the trimmer will not eat it. No numeric ally/aura lane exists to build into.
+  TEST: describe "safeguard-soul says the bonus reaches allies in the spiral" — the star names the
+  allies and the spiral without losing the death/+2-status half, and explainStat renders it on all
+  three saves.
+
+mighty-bulwark#replacement-wording — CHANGED the entry's bonus from "+4 (bulwark)" to
+  "+4 instead of your Dexterity modifier" and its `when` to "on all Reflex saves, damaging or not".
+  The bulwark number REPLACES Dex (trait-549: "you add a +3 modifier instead of your Dexterity
+  modifier") and feat-6413 only raises it, so the old string read as a flat +4 — for a high-Dex
+  character an overstatement. explain.ts's featSituationalLines passes `bonus` verbatim into the
+  popup, so the string is what the player reads; there is no number to correct because the app cannot
+  know whether an incoming effect is a damaging one.
+  TEST: describe "mighty-bulwark reads as a replacement for Dexterity, once", first case — a fighter
+  in Hellknight Plate reads "instead of your Dexterity modifier" and never "+4 (bulwark)".
+
+mighty-bulwark#supersedes-trait-bulwark — ADDED "mighty-bulwark": ['trait:bulwark'] to
+  SITUATIONAL_SUPERSEDES in src/rules/situationalBonuses.ts. characterSituationalIds pushes the feat id
+  and, separately, `trait:<t>` for every trait of the worn armour, then filters through supersededIds —
+  so a character in bulwark armour holding the feat read the trait's +3 line beside the feat's +4 line,
+  two rules where feat-6413 states one that grows. Same shape as master-overdrive / grave-strength, and
+  conditional on owning both.
+  TEST: same describe, second and third cases — with the feat, characterSituationalIds no longer
+  contains 'trait:bulwark' and the Reflex row carries exactly one of the two entries; WITHOUT the feat,
+  the same armour still reads "+3 instead of your Dexterity modifier".
+
+mantle-of-the-tikbalang#illusory-thrash — ADDED a second target to the item's existing FEAT_SITUATIONAL
+  entry: { kind: 'strikeDamage' }, when "on the melee Strike you make when you Activate Illusory Thrash
+  (once per day)", bonus "+4d6 mental". equipment-3226's activation prints "Make a melee Strike. This
+  Strike deals an additional 4d6 mental damage" and the record carried only the counter and the
+  2-action cost, so the whole point of the activation lived in prose. Deliberately NOT a top-level
+  `strikeDamage` data field: that would add 4d6 to every Strike the wearer ever makes, and nothing in
+  the app knows which Strike is the Illusory Thrash one. The activation-gated star is the shape
+  blackaxe and heartripper-blade already use.
+  TEST: describe "mantle-of-the-tikbalang tells the player Illusory Thrash's Strike hits harder" — the
+  star names the 4d6 mental, the activation and the once-per-day gate; a second case reads the same
+  line off explainStat({ kind: 'strikeDamage', instanceId }) for a really wielded longsword (the ref
+  the sheet actually builds, not the bare kind); a third pins the -2 save half untouched.
+
+NOTES ON THE AUDIT CONVENTIONS
+- No settle, no comparer teach, no ratchet constant and no experience-limit entry was touched by this
+  family, so no "// mutation-proof" test is owed; every citation in test/batch032-situational.test.ts
+  is the plain "// batch 032: <finding id>" form, with the finding's record id in the enclosing
+  describe title.
+- No existing test was changed or removed. test/batch032-situational.test.ts is a wholly new file.
+
+VERIFICATION RUN
+- node scripts/vt.mjs test/batch032-situational.test.ts .......... 13 passed
+- node scripts/vt.mjs test/authoring-guards.test.ts test/batch26-stars.test.ts
+  test/batch29-situational-siblings.test.ts test/batch29-situational.test.ts test/degree-shifts.test.ts
+  test/situational-bonuses.test.ts test/triage-lane-close.test.ts .......... 98 passed
+- node scripts/vt.mjs test/batch001-surfaces.test.tsx test/batch23-parity.test.ts
+  test/field-catalogue.test.ts test/rulings-dfgh.test.ts test/oracle-curses.test.ts
+  test/companion-cluster-batch1.test.ts .......... 123 passed
+  (the two extra sets are every test file that names one of my ids, trait:bulwark,
+  SITUATIONAL_SUPERSEDES or RECORD_MARKERS)
+- npx tsc --noEmit .......... clean
+- node scripts/apply-situational-lane.mjs --dry .......... hand-edited 6 -> 7, no write

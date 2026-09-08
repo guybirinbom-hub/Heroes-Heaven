@@ -1,0 +1,144 @@
+BATCH 032 — INSTRUMENTS FAMILY (WG-COMPARISON lane)
+Assigned findings: show-off, magical-knowledge#instrument. Both are instrument misreads; neither
+record needs a data row and neither carrier was missing.
+
+DATA STILL NEEDED
+(none — both findings are code/instrument fixes; work/.b032-rows-instruments.json carries two
+entries with backfillRows: [] and the reason on each.)
+
+CROSS-FILE GAPS
+- scripts/wg-batch.mjs:108-119 (the PACKET builder) pairs their rows by normalised name with no
+  content_source filter and skips every row whose operations are empty, so it hands a Pathfinder
+  record the STARFINDER namesake's encoding. That is exactly how work/wg-batch-032.json came to quote
+  `addBonusToValue SKILL_PERFORMANCE` as show-off's theirEncoding. Fix: build `theirs` from
+  wgRowsByBucket (scripts/lib/wg-parse.mjs), which already excludes group 'starfinder-core' plus any
+  source whose store URL says starfinder, and let an empty-operations row win its own name key so the
+  packet says "they encode nothing" instead of quoting another game. Outside this family's files.
+
+----------------------------------------------------------------------------------------------------
+FINDING: show-off  (CONFIRMED, internal)
+----------------------------------------------------------------------------------------------------
+What I did: nothing to our data and nothing to any settle registry — adversarially confirmed that no
+change is wanted, and pinned the conclusion so it cannot silently rot.
+
+  · Root cause located: their dump holds two Show-Off rows in ability_block —
+      24347  type=feat  level=8  content_source 21  ("Firebrands (backport)", group lost-omens)
+             operations = "{}"  — NO operations at all
+      55639  type=feat  level=1  content_source 818 ("Galactic Ancestries", group starfinder-core)
+             operations = one addBonusToValue SKILL_PERFORMANCE, text-only
+    Our feats/show-off is aonId feat-4144 (Firebrands pg. 80, Feat 8, archetype/flourish, free action,
+    once per minute, Acrobatics-or-Athletics trigger) and never mentions Performance. So 24347 is the
+    row that matches us and it encodes nothing; 55639 is Starfinder 2e content sharing a name.
+  · All four comparers are already correct: wgRowsByBucket drops starfinder-core sources (the batch-23
+    "their dump holds two games" fix), so it pairs showoff -> 24347. Measured directly, not assumed.
+      wg-diff        show-off lands in `theirsUnencoded` ("they have the feat, encode NOTHING")
+      wg-values      --ids show-off --raw -> "compared 0 records with at least one comparable value"
+      wg-identity    --ids show-off --raw -> "checked 0 records that grant a NAMED thing"
+      wg-casting     record-level lane, does not read feats
+    NO settle was authored for this record. A settle would have been wrong: there is no live
+    difference to quiet, and an entry that matches nothing silences the NEXT difference on the record,
+    unread (the batch-15 deleted-settle lesson).
+  · The remaining defect is in the packet builder, which is not one of my files — see CROSS-FILE GAPS.
+
+Test that pins it: test/batch032-instruments.test.ts, describe
+"batch 032 instruments — show-off was paired with Wanderer's Guide's Starfinder namesake" (3 cases,
+all cited `// batch 032: show-off`):
+  1. "show-off pairs with the Firebrands feat, which encodes nothing at all" — asserts
+     wgRowsByBucket(sql).feats.get('showoff') is id 24347, level 8, operations '{}'.
+  2. "the Performance op the packet quoted for show-off belongs to a starfinder-core source" — asserts
+     ability_block 55639 is named Show-Off, carries SKILL_PERFORMANCE, and its content_source group is
+     'starfinder-core'. This is the case that fails the day a pairing change re-adopts the wrong row.
+  3. "show-off is silent in every comparer that reads a paired row" — runs wg-values and wg-identity
+     with --raw (settles bypassed) and asserts both compare zero.
+
+Could not do: the pairing fix itself (scripts/wg-batch.mjs is outside my file list).
+
+----------------------------------------------------------------------------------------------------
+FINDING: magical-knowledge#instrument  (CONFIRMED, internal)
+----------------------------------------------------------------------------------------------------
+What I did: one comparer TEACH in scripts/wg-identity.mjs — the lane-file option reader inside
+`ourIdentities` (the `for (const f of ... featGrantsAuto/featGrants/featGrantsLane)` block, now at
+:505-535). Two bugs, both confirmed by replaying the reader's own extraction:
+
+  1. `/options\s*:\s*\[/` cannot match the JSON-quoted `"options": [` that every MACHINE-WRITTEN lane
+     row uses — including featGrantsLane.ts:70, the magical-knowledge row. The key is optionally
+     quoted now: `/['"]?options['"]?\s*:\s*\[([^\]]*)\]/g`.
+  2. Their side labels an untitled ADJ_VALUE option from `operation.data.variable` (wg-identity.mjs:88),
+     so SKILL_ARCANA keys as 'skillarcana' and could never meet a bare key('arcana'). Each lane option
+     is now added under both spellings — `out.options.add(key(o))` and `out.options.add(key('skill '+o))`
+     — exactly as the trainedSkillChoice reader at :415-416 already does for the identical reason.
+
+  A third, smaller change in the same block: the lane-file list is read through
+  `arg('--lane-files', <the same three paths>)` so a test can re-run the real comparer against a
+  STUNTED copy of a lane file. Default behaviour is byte-identical.
+
+  Print authority: AoN feat-4720 — *"Increase your proficiency rank in one of Arcana, Nature,
+  Occultism, or Religion from expert to master and in another from trained to expert."* Our carrier
+  (featGrantsLane.ts:70 skillChoices, two slots, four options each) already says exactly that, is
+  rendered as two PopupSelects (Builder.tsx:2189-2230) and applied at build.ts:5706. Nothing about the
+  RULE changed; only the comparer's ability to see it.
+
+BLAST RADIUS — measured over the whole corpus, not argued. Ran wg-identity across all 17,290 paired
+records with the reader before and after, and diffed the flagged-record lists:
+    before  checked 1797 records that grant a NAMED thing; 1607 match — 190 flagged
+    after   checked 1797 records that grant a NAMED thing; 1608 match — 189 flagged
+    diff of the flagged lists: exactly one line, `--- magical-knowledge  (Magical Knowledge)`.
+No other record was silenced. Across the 45 records that carry an `options` list in the three lane
+files, before = 37/38 match with magical-knowledge flagged, after = 38/38.
+
+Test that pins it: test/batch032-instruments.test.ts, describe
+"batch 032 instruments — wg-identity cannot see magical-knowledge's skillChoices options" (3 cases,
+all cited `// batch 032: magical-knowledge#instrument`). `stuntedLane()` rewrites ONE record's row in
+a copy of featGrantsLane.ts and re-runs the real comparer through --lane-files:
+  1. "magical-knowledge matches once the reader accepts a quoted key and the SKILL_ prefix" —
+     // mutation-proof, stunts the taught carrier `skillChoices` (replaced by `{"perception":"master"}`).
+     Shipped content: 1/1 match. Stunted: the flag comes straight back, verbatim
+     `options theirs-not-ours=[skillarcana, skillnature, skilloccultism, skillreligion]`.
+  2. "the credit is per-option: magical-knowledge with the WRONG four skills is still reported" —
+     // mutation-proof, stunts `skillChoices` by swapping its options to diplomacy/society rather than
+     deleting them. This is the stunt a BLANKET teach would survive, and it does not: the record is
+     reported again. Proves `skill <name>` is credited per option, not as a wildcard.
+  3. "gildedsoul and hold-mark ... still agree after the magical-knowledge teach" — the neighbours the
+     finding named (plus dragonscaled-lore and nagaji-lore) still match on their own identities, 4/4.
+All six cases pass: `node scripts/vt.mjs run test/batch032-instruments.test.ts` -> 6 passed.
+
+Could not do: nothing on this finding.
+
+----------------------------------------------------------------------------------------------------
+COMPARER COUNTS, BEFORE AND AFTER (my change touches wg-identity only)
+----------------------------------------------------------------------------------------------------
+wg-identity  --batch work/wg-batch-030.json    before  9 checked, 9 match, 0 flagged
+                                                after  9 checked, 9 match, 0 flagged
+             --batch work/wg-batch-031.json    before 10 checked, 9 match, 1 flagged (haunting-memories)
+                                                after 10 checked, 9 match, 1 flagged (haunting-memories)
+             --batch work/wg-batch-032.json    before 13 checked, 12 match, 1 flagged (magical-knowledge)
+                                                after 13 checked, 13 match, 0 flagged
+             full corpus (17,290 records)      before 1797 checked, 1607 match, 190 flagged
+                                                after 1797 checked, 1608 match, 189 flagged
+             -> no earlier batch flipped; batch 031's own open flag is untouched.
+
+wg-values    --batch 030   before/after  12 compared, 12 agree, 0 to adjudicate, 28 not value-checked
+             --batch 031   before/after  11 compared, 11 agree, 0 to adjudicate, 29 not value-checked
+             --batch 032   before/after  10 compared,  9 agree, 1 to adjudicate (lifting-leather bulk,
+                                          the data-rows family's finding), 30 not value-checked
+
+wg-casting   before/after  16 class sources compared, 4 with mismatches (180 rows), 52 skipped
+
+wg-diff (global; it has no --batch mode)
+             before  298 THEY-ONLY / 1034 AGREE / 4168 matched by name
+             after   298 THEY-ONLY / 1035 AGREE / 4168 matched by name
+             ⚠ The single AGREE row is NOT mine — wg-diff imports only lib/wg-parse.mjs and never
+             touches wg-identity. It moved because src/rules/situationalBonuses.ts, build.ts and
+             derive.ts are being edited concurrently by the situational and engine families in this
+             same batch (confirmed with `git status --porcelain`), and wg-diff reads those registries
+             for our-side kinds. show-off stayed in `theirsUnencoded` throughout.
+
+Audit + typecheck: `node scripts/test-flip-audit.mjs --batch 032` -> "batch 032 clean — 4 test file(s)
+touched, 0 new settle key(s), every flip cited". `npx tsc --noEmit` -> clean.
+
+Files changed by this family: scripts/wg-identity.mjs, test/batch032-instruments.test.ts (new),
+work/.b032-rows-instruments.json (spec, both findings backfillRows: []).
+Not touched: scripts/wg-diff.mjs, scripts/wg-values.mjs, scripts/wg-casting.mjs,
+scripts/lib/wg-experience-lanes.mjs, work/experience-instrument-limits.json,
+test/wg-experience-lanes.test.ts — no finding of mine needed a settle in any registry, and no
+experience-lane limit changed.

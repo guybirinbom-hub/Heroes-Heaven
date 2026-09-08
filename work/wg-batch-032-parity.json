@@ -1,0 +1,205 @@
+{
+ "batch": 32,
+ "records": [
+  {
+   "id": "bloodline-resistance",
+   "verdict": "MATCHES",
+   "evidence": "[batch 32 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "show-off",
+   "verdict": "MATCHES",
+   "evidence": "[batch 32 read] comparer misread settled/taught: show-off — work/.b032-rows-instruments.json finding show-off note: Instrument misread, no data row. AoN feat-4144 (Firebrands pg. 80, Feat 8, archetype/flourish) never mentions Performance, and Wanderer's Guide's matching row ("
+  },
+  {
+   "id": "knowledge-is-power",
+   "verdict": "FIXED",
+   "evidence": "[batch 32 read, adversarially confirmed] knowledge-is-power: Our record and its situationalBonuses entry carry the LEGACY text and hand the player four +1 circumstance bonuses, whil — cited by row spec work/.b032-rows-situational.json finding knowledge-is-power (1 row(s)), row feats/knowledge-is-power field:description in work/.b032-rows-situational.json, row spec work/.b032-rows-gap-situational.json finding knowledge-is-power (1 row(s)), row feats/knowledge-is-power field:descRefs in work/.b032-rows-gap-situational.json, test test/batch032-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added), test test/batch032-gap-situational.test.ts (in what this batch added), code src/data/index.ts (in what this batch added)"
+  },
+  {
+   "id": "surreptitious-spellcaster",
+   "verdict": "MATCHES",
+   "evidence": "[batch 32 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "waking-dream",
+   "verdict": "MATCHES",
+   "evidence": "[batch 32 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "backfire-mantle-greater",
+   "verdict": "MATCHES",
+   "evidence": "[batch 32 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "you-dont-smell-right",
+   "verdict": "MATCHES",
+   "evidence": "[batch 32 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "prolific-prophet-spellcasting",
+   "verdict": "FIXED",
+   "evidence": "[batch 32 read, adversarially confirmed] prolific-prophet-spellcasting: The extra spells the feat adds to the repertoire reach the sheet's entry but the builder never offers a pick for them: t — cited by code-only spec work/.b032-rows-engine.json finding prolific-prophet-spellcasting (0 rows; family engine changed src/rules/types.ts, src/rules/build.ts, src/rules/derive.ts, src/builder/Builder.tsx in this batch), test test/batch032-engine.test.ts (in what this batch added)"
+  },
+  {
+   "id": "officers-education",
+   "verdict": "MATCHES",
+   "evidence": "[batch 32 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "aeon-stone-envisioning",
+   "verdict": "MATCHES",
+   "evidence": "[batch 32 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "sigil-of-the-first-clan",
+   "verdict": "FIXED",
+   "evidence": "[batch 32 read, adversarially confirmed] sigil-of-the-first-clan#spell-dc: The sigil prints a fixed DC 24 for its Command, but our heldSpells lane casts it at the WIELDER's spell DC (Int/trained  — cited by row spec work/.b032-rows-engine.json finding sigil-of-the-first-clan#spell-dc (1 row(s)), row items/sigil-of-the-first-clan field:heldSpellDc in work/.b032-rows-engine.json, test test/batch032-engine.test.ts (in what this batch added)"
+  },
+  {
+   "id": "jumping-jenny-display",
+   "verdict": "MATCHES",
+   "evidence": "[batch 32 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "malleable-mental-forge",
+   "verdict": "FIXED",
+   "evidence": "[batch 32 read, adversarially confirmed] malleable-mental-forge: The two weapon traits chosen each morning are recorded and then reach nothing: the record's choice flag has no reader an — cited by row spec work/.b032-rows-engine.json finding malleable-mental-forge (2 row(s)), row feats/malleable-mental-forge field:choice in work/.b032-rows-engine.json, test test/batch032-engine.test.ts (in what this batch added)"
+  },
+  {
+   "id": "occult-breadth",
+   "verdict": "FIXED",
+   "evidence": "[batch 32 read, adversarially confirmed] occult-breadth: The extra repertoire spells the feat grants are unreachable: buildCharacter adds the feat's perRank slots to the archety — cited by code-only spec work/.b032-rows-engine.json finding occult-breadth (0 rows; family engine changed src/rules/types.ts, src/rules/build.ts, src/rules/derive.ts, src/builder/Builder.tsx in this batch), test test/batch032-engine.test.ts (in what this batch added)"
+  },
+  {
+   "id": "hazard-finder",
+   "verdict": "FIXED",
+   "evidence": "[batch 32 read, adversarially confirmed] hazard-finder: The feat's second clause — finding hazards without Searching — is modelled by neither side and is not surfaced on the Se — cited by code-only spec work/.b032-rows-situational.json finding hazard-finder (0 rows; family situational changed src/rules/situationalBonuses.ts in this batch), test test/batch032-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added)"
+  },
+  {
+   "id": "magical-knowledge",
+   "verdict": "FIXED",
+   "evidence": "[batch 32 read, adversarially confirmed] magical-knowledge#skill-feats: The printed skill feat(s) are granted by neither our record nor our registries — WG asks for one and we ask for none, so — cited by code-only spec work/.b032-rows-engine.json finding magical-knowledge#skill-feats (0 rows; family engine changed src/rules/types.ts, src/rules/build.ts, src/rules/derive.ts, src/builder/Builder.tsx in this batch), code-only spec work/.b032-rows-gap-engine.json finding magical-knowledge#skill-feats (0 rows; family gap-engine changed src/rules/featGrants.ts, src/rules/featGrantsLane.ts, src/rules/build.ts, src/builder/Builder.tsx in this batch), test test/batch032-instruments.test.ts (in what this batch added), test test/batch032-engine.test.ts (in what this batch added), test test/batch032-gap-engine.test.ts (in what this batch added), code src/rules/featGrantsLane.ts (in what this batch added); magical-knowledge#master-precondition: Our master slot offers all four skills with no requirement that the picked skill is already expert, so a character train — cited by code-only spec work/.b032-rows-engine.json finding magical-knowledge#master-precondition (0 rows; family engine changed src/rules/types.ts, src/rules/build.ts, src/rules/derive.ts, src/builder/Builder.tsx in this batch), test test/batch032-instruments.test.ts (in what this batch added), test test/batch032-engine.test.ts (in what this batch added), test test/batch032-gap-engine.test.ts (in what this batch added), code src/rules/featGrantsLane.ts (in what this batch added); magical-knowledge#distinct-skills: Nothing stops both slots resolving to the same skill, and an unanswered pair defaults both to Arcana — so the feat silen — cited by code-only spec work/.b032-rows-engine.json finding magical-knowledge#distinct-skills (0 rows; family engine changed src/rules/types.ts, src/rules/build.ts, src/rules/derive.ts, src/builder/Builder.tsx in this batch), test test/batch032-instruments.test.ts (in what this batch added), test test/batch032-engine.test.ts (in what this batch added), test test/batch032-gap-engine.test.ts (in what this batch added), code src/rules/featGrantsLane.ts (in what this batch added)"
+  },
+  {
+   "id": "mantle-of-the-tikbalang",
+   "verdict": "FIXED",
+   "evidence": "[batch 32 read, adversarially confirmed] mantle-of-the-tikbalang#illusory-thrash: Illusory Thrash's extra 4d6 mental damage on the Strike is modelled by neither side — the record carries the activation  — cited by code-only spec work/.b032-rows-situational.json finding mantle-of-the-tikbalang#illusory-thrash (0 rows; family situational changed src/rules/situationalBonuses.ts in this batch), test test/batch032-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added)"
+  },
+  {
+   "id": "safeguard-soul",
+   "verdict": "FIXED",
+   "evidence": "[batch 32 read, adversarially confirmed] safeguard-soul#undead: The feat's categorical immunity to being made undead is modelled by neither side, though our feats records already have  — cited by row spec work/.b032-rows-data-rows.json finding safeguard-soul#undead (1 row(s)), row feats/safeguard-soul field:immunities in work/.b032-rows-data-rows.json, test test/batch032-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added), test test/batch032-data.test.ts (in what this batch added); safeguard-soul#allies: The printed clause extending the +2 status bonus to allies while the spiral glows is carried by neither side, so a party — cited by code-only spec work/.b032-rows-situational.json finding safeguard-soul#allies (0 rows; family situational changed src/rules/situationalBonuses.ts in this batch), row feats/safeguard-soul field:immunities in work/.b032-rows-data-rows.json, test test/batch032-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added), test test/batch032-data.test.ts (in what this batch added)"
+  },
+  {
+   "id": "fortissimo-composition",
+   "verdict": "MATCHES",
+   "evidence": "[batch 32 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "ironblood-stance",
+   "verdict": "MATCHES",
+   "evidence": "[batch 32 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "lifting-leather",
+   "verdict": "FIXED",
+   "evidence": "[batch 32 read, adversarially confirmed] lifting-leather: Lifting Leather raises no Bulk threshold at all — the armor carries no passiveEffects, so the printed +2 encumbered limi — cited by row spec work/.b032-rows-data-rows.json finding lifting-leather (1 row(s)), row items/lifting-leather field:passiveEffects in work/.b032-rows-data-rows.json, test test/batch032-data.test.ts (in what this batch added), test test/batch032-engine.test.ts (in what this batch added); lifting-leather#max: The printed maximum Bulk limit rises by 4 while the encumbered limit rises by 2; neither side models the extra +2 on the — cited by row items/lifting-leather field:passiveEffects in work/.b032-rows-data-rows.json, code-only spec work/.b032-rows-engine.json finding lifting-leather#max (0 rows; family engine changed src/rules/types.ts, src/rules/build.ts, src/rules/derive.ts, src/builder/Builder.tsx in this batch), test test/batch032-data.test.ts (in what this batch added), test test/batch032-engine.test.ts (in what this batch added)"
+  },
+  {
+   "id": "songbirds-call",
+   "verdict": "MATCHES",
+   "evidence": "[batch 32 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "magic-finder",
+   "verdict": "FIXED",
+   "evidence": "[batch 32 read, adversarially confirmed] magic-finder#spellcasting-statistic: Print gives a non-caster who takes Magic Finder an Intelligence-keyed arcane spellcasting statistic; we carry no spellca — cited by row spec work/.b032-rows-data-rows.json finding magic-finder#spellcasting-statistic (1 row(s)), row feats/magic-finder field:spellcastingGrant in work/.b032-rows-data-rows.json, row feats/magic-finder field:innateSpells in work/.b032-rows-engine.json, row spec work/.b032-rows-gap-engine.json finding magic-finder#spellcasting-statistic (2 row(s)), test test/batch032-data.test.ts (in what this batch added), test test/batch032-engine.test.ts (in what this batch added), test test/batch032-gap-engine.test.ts (in what this batch added); magic-finder#tradition: We hard-code tradition \"arcane\" on all three grants, so an existing caster's Magic Finder spells are listed as arcane ev — cited by row feats/magic-finder field:spellcastingGrant in work/.b032-rows-data-rows.json, row spec work/.b032-rows-engine.json finding magic-finder#tradition (1 row(s)), row feats/magic-finder field:innateSpells in work/.b032-rows-engine.json, row spec work/.b032-rows-gap-engine.json finding magic-finder#tradition (2 row(s)), test test/batch032-data.test.ts (in what this batch added), test test/batch032-engine.test.ts (in what this batch added), test test/batch032-gap-engine.test.ts (in what this batch added)"
+  },
+  {
+   "id": "mighty-bulwark",
+   "verdict": "FIXED",
+   "evidence": "[batch 32 read, adversarially confirmed] mighty-bulwark#replacement-wording: Our situational entry states Mighty Bulwark as a \"+4 (bulwark)\" bonus on Reflex saves, but the bulwark number is used IN — cited by code-only spec work/.b032-rows-situational.json finding mighty-bulwark#replacement-wording (0 rows; family situational changed src/rules/situationalBonuses.ts in this batch), test test/batch032-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added); mighty-bulwark#supersedes-trait-bulwark: A character with Mighty Bulwark wearing bulwark armor reads TWO stars on the same Reflex row — the trait's +3 and the fe — cited by code-only spec work/.b032-rows-situational.json finding mighty-bulwark#supersedes-trait-bulwark (0 rows; family situational changed src/rules/situationalBonuses.ts in this batch), test test/batch032-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added)"
+  },
+  {
+   "id": "heal-mount",
+   "verdict": "FIXED",
+   "evidence": "[batch 32 read, adversarially confirmed] heal-mount: Heal Mount changes what Lay on Hands restores when cast on your mount, and we carry nothing at all for it — no spellNote — cited by row spec work/.b032-rows-data-rows.json finding heal-mount (1 row(s)), row feats/heal-mount field:spellNotes in work/.b032-rows-data-rows.json, test test/batch032-data.test.ts (in what this batch added)"
+  },
+  {
+   "id": "larcenous-hand",
+   "verdict": "MATCHES",
+   "evidence": "[batch 32 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "projectile-snatching",
+   "verdict": "FIXED",
+   "evidence": "[batch 32 read, adversarially confirmed] projectile-snatching: Projectile Snatching's return-Strike is not marked on the Deflect Projectile row, although our own recordMarks lane alre — cited by row spec work/.b032-rows-engine.json finding projectile-snatching (1 row(s)), row feats/projectile-snatching field:recordMarks in work/.b032-rows-engine.json, test test/batch032-engine.test.ts (in what this batch added)"
+  },
+  {
+   "id": "necromantic-tenacity",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #133 (batch 32; n from entry.n)"
+  },
+  {
+   "id": "familiar-form",
+   "verdict": "MATCHES",
+   "evidence": "[batch 32 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "crown-of-the-fire-eater",
+   "verdict": "FIXED",
+   "evidence": "[batch 32 read, adversarially confirmed] crown-of-the-fire-eater#activation-effect: The reaction's whole mechanical payload — fire resistance rising from 5 to 15 for the triggering damage, and the Hit Poi — cited by row spec work/.b032-rows-data-rows.json finding crown-of-the-fire-eater#activation-effect (1 row(s)), test test/batch032-data.test.ts (in what this batch added)"
+  },
+  {
+   "id": "magic-ammunition",
+   "verdict": "MATCHES",
+   "evidence": "[batch 32 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "advanced-hallowed-spell",
+   "verdict": "MATCHES",
+   "evidence": "[batch 32 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "basic-beast-gunner-spellcasting",
+   "verdict": "FIXED",
+   "evidence": "[batch 32 read, adversarially confirmed] basic-beast-gunner-spellcasting#dropped-clause: Our shipped rules text drops the linked phrase that names what the feat grants, leaving the sentence 'You gain the .' —  — cited by row spec work/.b032-rows-data-rows.json finding basic-beast-gunner-spellcasting#dropped-clause (1 row(s)), row feats/basic-beast-gunner-spellcasting field:description in work/.b032-rows-data-rows.json, test test/batch032-data.test.ts (in what this batch added), test test/batch032-gap-data-rows.test.ts (in what this batch added)"
+  },
+  {
+   "id": "improved-elemental-blast",
+   "verdict": "FIXED",
+   "evidence": "[batch 32 read, adversarially confirmed] improved-elemental-blast: The feat's whole content — +1 Elemental Blast damage die per taking — has no carrier anywhere on our side; the blast's d — cited by row spec work/.b032-rows-engine.json finding improved-elemental-blast (1 row(s)), row feats/improved-elemental-blast field:blastDiceBonus in work/.b032-rows-engine.json, test test/batch032-engine.test.ts (in what this batch added); improved-elemental-blast#no-archetype-blast: A character who can take this feat (prerequisite: Kineticist Dedication, i.e. never a kineticist by class) has no Elemen — cited by row feats/improved-elemental-blast field:blastDiceBonus in work/.b032-rows-engine.json, code-only spec work/.b032-rows-engine.json finding improved-elemental-blast#no-archetype-blast (0 rows; family engine changed src/rules/types.ts, src/rules/build.ts, src/rules/derive.ts, src/builder/Builder.tsx in this batch), test test/batch032-engine.test.ts (in what this batch added)"
+  },
+  {
+   "id": "unshakable-idealism",
+   "verdict": "MATCHES",
+   "evidence": "[batch 32 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "out-of-hand",
+   "verdict": "MATCHES",
+   "evidence": "[batch 32 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "manifold-modifications",
+   "verdict": "MATCHES",
+   "evidence": "[batch 32 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "canopy-bulwark",
+   "verdict": "FIXED",
+   "evidence": "[batch 32 read, adversarially confirmed] canopy-bulwark#assisting-rune: Canopy Bulwark is printed as a +1 ASSISTING leaf weave, but our record carries only builtInRunes.potency:1 — the assisti — cited by row spec work/.b032-rows-engine.json finding canopy-bulwark#assisting-rune (1 row(s)), row items/canopy-bulwark field:passiveEffects in work/.b032-rows-engine.json, row items/canopy-bulwark field:heldSpellTradition in work/.b032-rows-engine.json, test test/batch032-engine.test.ts (in what this batch added); canopy-bulwark#spell-tradition: Their giveSpell op names the granted Haste's tradition as PRIMAL; ours carries it as heldSpells with no tradition field, — cited by row items/canopy-bulwark field:passiveEffects in work/.b032-rows-engine.json, row spec work/.b032-rows-engine.json finding canopy-bulwark#spell-tradition (1 row(s)), row items/canopy-bulwark field:heldSpellTradition in work/.b032-rows-engine.json, test test/batch032-engine.test.ts (in what this batch added)"
+  },
+  {
+   "id": "second-blessing",
+   "verdict": "FIXED",
+   "evidence": "[batch 32 read, adversarially confirmed] second-blessing: Our blessing picker lets the player re-take the blessing they already chose at level 3, which the printed text forbids — — cited by row spec work/.b032-rows-data-rows.json finding second-blessing (1 row(s)), row feats/second-blessing field:choice in work/.b032-rows-data-rows.json, test test/batch032-data.test.ts (in what this batch added)"
+  },
+  {
+   "id": "invoke-the-crimson-oath",
+   "verdict": "MATCHES",
+   "evidence": "[batch 32 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  }
+ ]
+}

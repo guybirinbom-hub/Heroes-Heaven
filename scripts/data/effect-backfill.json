@@ -191,21 +191,25 @@
     "spellId": "translate",
     "tradition": "arcane",
     "rank": 2,
-    "usesPerDay": 1
+    "usesPerDay": 1,
+    "traditionFromCasting": true
    },
    {
     "spellId": "sound-body",
     "tradition": "arcane",
     "rank": 2,
-    "usesPerDay": 1
+    "usesPerDay": 1,
+    "traditionFromCasting": true
    },
    {
     "spellId": "see-the-unseen",
     "tradition": "arcane",
     "rank": 2,
-    "usesPerDay": 1
+    "usesPerDay": 1,
+    "traditionFromCasting": true
    }
-  ]
+  ],
+  "why": "feat-1131 prints \"If you could already cast spells, these spells are of the same tradition. Otherwise, they are arcane spells\". The three grants hard-code tradition 'arcane', and build.ts votes the innate entry's tradition from the grants' own tradition before ever reaching caster?.tradition, so a divine cleric read them as arcane. traditionFromCasting prefers the caster's tradition and keeps the printed 'arcane' as the not-a-caster fallback. Whole value re-emitted from the shipped overlay row (three grants, every field kept)."
  },
  {
   "category": "feats",
@@ -371,19 +375,23 @@
    {
     "spellId": "detect-magic",
     "tradition": "arcane",
-    "atWill": true
+    "atWill": true,
+    "traditionFromCasting": true
    },
    {
     "spellId": "read-aura",
     "tradition": "arcane",
-    "atWill": true
+    "atWill": true,
+    "traditionFromCasting": true
    },
    {
     "spellId": "locate",
     "tradition": "arcane",
-    "usesPerDay": 1
+    "usesPerDay": 1,
+    "traditionFromCasting": true
    }
-  ]
+  ],
+  "why": "feat-2234 prints \"If you could already cast spells, these spells are of the same tradition. Otherwise, they're arcane spells.\" The three grants hard-coded tradition:'arcane', and dropping it would not help (content.spells traditions[0] is arcane for all three), so the new InnateSpellGrant.traditionFromCasting flag makes an existing caster's tradition win while 'arcane' stays as the printed not-a-caster fallback. Supersedes the existing innateSpells row, whose whole value is carried here unchanged apart from the added flag."
  },
  {
   "category": "feats",
@@ -394,21 +402,25 @@
     "spellId": "dispel-magic",
     "tradition": "arcane",
     "rank": 2,
-    "usesPerDay": 1
+    "usesPerDay": 1,
+    "traditionFromCasting": true
    },
    {
     "spellId": "knock",
     "tradition": "arcane",
     "rank": 2,
-    "usesPerDay": 1
+    "usesPerDay": 1,
+    "traditionFromCasting": true
    },
    {
     "spellId": "resist-energy",
     "tradition": "arcane",
     "rank": 2,
-    "usesPerDay": 1
+    "usesPerDay": 1,
+    "traditionFromCasting": true
    }
-  ]
+  ],
+  "why": "feat-2237 prints \"If you can already cast spells, these spells are of the same tradition. Otherwise, they're arcane spells\" — the same clause and the same defect as lore-seeker. Whole value re-emitted from the shipped overlay row."
  },
  {
   "category": "feats",
@@ -32627,6 +32639,7 @@
   "field": "choice",
   "value": {
    "flag": "mindWeaponTraits",
+   "replacesFlag": "mentalForgeTraits",
    "prompt": "Mind weapon traits today",
    "kind": "array",
    "daily": true,
@@ -32655,7 +32668,8 @@
      "label": "Trip"
     }
    ]
-  }
+  },
+  "why": "feat-8510 prints \"…to place on your weapon for 24 hours or until your next daily preparations …, REPLACING THE TRAITS YOU CHOSE FROM THE MENTAL FORGE FEAT.\" Two records, two flags, one effective pair: without the new FeatChoiceDef.replacesFlag the reader would union both answers and hand out four traits for a clause that gives two. Supersedes the existing `choice` row, whose whole value is carried here unchanged apart from the added replacesFlag."
  },
  {
   "category": "feats",
@@ -33411,6 +33425,7 @@
    "prompt": "Second Blessing",
    "kind": "array",
    "ownsFeature": true,
+   "disableIfOwned": true,
    "options": [
     {
      "value": "blessed-armament",
@@ -33425,7 +33440,8 @@
      "label": "Blessed Swiftness"
     }
    ]
-  }
+  },
+  "why": "AoN feat-5907 prints \"Choose a second blessing of the devoted (different from your first one) and gain its benefits.\" Without `disableIfOwned` narrowChoiceOptions never builds its `owned` set (src/rules/derive.ts:1700), so the picker offered the blessing already taken at level 3 — which is in ownedFeatureIds, since champion's `blessing` extraChoice stores a classFeature id and derive.ts:3443 folds every classChoice in. With the flag the level-3 pick comes back greyed with \"Already taken — Blessed Swiftness.\" (derive.ts:1730), the Q27 shape."
  },
  {
   "category": "feats",
@@ -176508,8 +176524,8 @@
   "category": "items",
   "id": "pact-of-the-herald-and-host",
   "field": "description",
-  "value": "You have exchanged your voice for the authority and breath of your bound dragon. Your voice echoes with the dragon's idiosyncrasies. You can cast fear as an innate spell once per day, with the spell's tradition matching that of your bound dragon.\n\nOnce per day, from any distance, your bound dragon can choose to take control of your voice. They dictate everything you say (or don't say) for up to 10 minutes. They can choose to speak in any language you or they know, though they can't use your voice to cast spells or activate items.\n\n**Activate—Breath of the Dragon** ⟨1⟩ (concentrate)\n\n**Frequency** once per day\n\n---\n\n**Effect** You exhale a torrent of energy in a 30-foot cone or a 60-foot line, dealing 1d6 damage per level. Each creature in the area must attempt a basic saving throw against the higher of your class DC or spell DC. You can't use this ability again for 1d4 rounds. The area, damage type, and type of saving throw match those of your . This ability has the trait associated with the type of damage it deals.\n\n---\n\n**Oathbreaker's Calamity** Should either party break the oath, your throat and mouth become swollen and elongated, preventing you from speaking any language but Draconic and causing any use of the Dragon Breath ability granted by this pact to also damage you. The dragon becomes deafened, but call still hear your voice.",
-  "why": "The import deleted the area size and its noun, so the rule read \"energy in a …\" with nothing after the article; AoN prints \"energy in a 30-foot cone\" (restored by scripts/repair-stripped-skill-links.mjs, insertion only)."
+  "value": "You have exchanged your voice for the authority and breath of your bound dragon. Your voice echoes with the dragon's idiosyncrasies. You can cast fear as an innate spell once per day, with the spell's tradition matching that of your bound dragon.\n\nOnce per day, from any distance, your bound dragon can choose to take control of your voice. They dictate everything you say (or don't say) for up to 10 minutes. They can choose to speak in any language you or they know, though they can't use your voice to cast spells or activate items.\n\n**Activate—Breath of the Dragon** ⟨1⟩ (concentrate)\n\n**Frequency** once per day\n\n---\n\n**Effect** You exhale a torrent of energy in a 30-foot cone or a 60-foot line, dealing 1d6 damage per level. Each creature in the area must attempt a basic saving throw against the higher of your class DC or spell DC. You can't use this ability again for 1d4 rounds. The area, damage type, and type of saving throw match those of your draconic benefactor. This ability has the trait associated with the type of damage it deals.\n\n---\n\n**Oathbreaker's Calamity** Should either party break the oath, your throat and mouth become swollen and elongated, preventing you from speaking any language but Draconic and causing any use of the Dragon Breath ability granted by this pact to also damage you. The dragon becomes deafened, but call still hear your voice.",
+  "why": "AoN equipment-4016 prints \"your draconic benefactor\" where the importer's de-linkifier deleted the link and its LABEL, leaving the sentence as \"your .\" — the rule ends at an article with nothing after it. Only the label is restored; every byte outside the hole is copied unchanged."
  },
  {
   "category": "items",
@@ -181398,5 +181414,247 @@
   "id": "atheists-and-free-agents",
   "field": "edition",
   "value": "remaster"
+ },
+ {
+  "category": "feats",
+  "id": "knowledge-is-power",
+  "field": "description",
+  "value": "Your academic knowledge about a creature allows you to subtly alter your magic to defeat them. When you critically succeed at a Recall Knowledge check about a creature, you can invoke your knowledge to make the creature take a –1 circumstance penalty to either AC and saves against the next attack you make against it, or the next spell you cast that it needs to defend against. The creature takes the same penalty to its attack or DC the next time it attacks against you or causes you to attempt a save against one of its effects.\n\nIf you share this information with your allies, they gain the benefits as well. If not used, the bonuses end after 1 minute.",
+  "why": "AoN feat-5039 (Player Core pg. 203), the aonId this record itself carries at edition \"remaster\". core-descriptions feats/knowledge-is-power still ships the LEGACY feat-2861 wording (\"you gain a +1 circumstance bonus to your next attack roll against the creature, to your AC against its next attack roll, and to your save against its next effect requiring a save\"), which is a different edition of the feat, not a paraphrase. The value is the verbatim feat-5039 prose, character-for-character identical to what feats/knowledge-is-power-wizard (same aonId) already ships, so the two rows a wizard is offered stop contradicting each other. No descRefs row: the record has none today and this row does not add one."
+ },
+ {
+  "category": "feats",
+  "id": "safeguard-soul",
+  "field": "immunities",
+  "value": [
+   "being transformed into an undead"
+  ],
+  "why": "AoN feat-3472 prints \"You can't be transformed into an undead by any means.\" The record carried only actionCost/archetype metadata, so the categorical immunity reached no surface. `immunities` is the shipped free-text carrier 16 feats already use (explosive-expert, ghost-dedication, the four undead dedications); deriveDefenses pushes the whole feat record as a source (src/rules/derive.ts:2544) and collects `src.immunities` at :2739, so the line renders in the IWR list beside the feat's name."
+ },
+ {
+  "category": "feats",
+  "id": "heal-mount",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "lay-on-hands",
+    "note": "When you cast Lay on Hands on your mount, instead of the normal amount, the spell restores 10 Hit Points, plus 10 for each heightened rank."
+   }
+  ],
+  "why": "AoN feat-5906 (Player Core 2 pg. 97, the record's own aonId) prints \"When you cast lay on hands on your mount, instead of the normal amount, the spell restores 10 Hit Points, plus 10 for each heightened rank.\" The record held only {actionCost:passive}, so the clause reached the player nowhere. `spellNotes` is the carrier feats/mercy and feats/greater-mercy already use to hang champion clauses on lay-on-hands; the plain {spellId,note} shape is read by the ownedRecords pass at src/rules/build.ts:6616 (no innateSpells gate on this record, so nothing suppresses it) and rendered by spellNotesFor on the Spells page."
+ },
+ {
+  "category": "feats",
+  "id": "magic-finder",
+  "field": "spellcastingGrant",
+  "value": {
+   "tradition": "arcane",
+   "keyAbility": "int",
+   "proficiency": "trained"
+  },
+  "why": "AoN feat-2234 prints \"Otherwise, they're arcane spells, you use Intelligence as your spellcasting ability, and you become trained in spell attack rolls and spell DCs for arcane spells.\" Without a spellcastingGrant the innate entry's key attribute falls through to 'cha' (src/rules/build.ts:7988, `caster?.keyAbility ?? profile?.keyAbility ?? 'cha'`), so a non-casting Scrollmaster rolled and set DCs for Detect Magic, Read Aura and Locate off Charisma. Same field shape as feats/crystal-ward-spells."
+ },
+ {
+  "category": "feats",
+  "id": "basic-beast-gunner-spellcasting",
+  "field": "description",
+  "value": "You've unlocked the first secrets of beast guns, granting you your own pool of magical might through the amplifying power of their synergistic magic. You gain the basic spellcasting benefits. Each time you gain a spell slot of a new rank from this archetype, add a spell of the appropriate spell rank to your repertoire, either a common spell of your chosen tradition or another spell of that tradition you've learned or discovered.",
+  "why": "AoN feat-3230 prints \"You gain the [basic spellcasting benefits](/Rules.aspx?ID=170).\" The importer stripped the link and its LABEL, so the shipped text read \"You gain the .\" and the sentence naming what the feat grants was gone. Only the label is restored; the rest of the shipped sentence is left byte-identical, since nothing else in this finding is about wording."
+ },
+ {
+  "category": "items",
+  "id": "lifting-leather",
+  "field": "passiveEffects",
+  "value": {
+   "bulkLimitBonus": 2,
+   "bulkMaxBonus": 2
+  },
+  "why": "AoN equipment-3816 prints \"While wearing this armor, you can carry 2 more Bulk than normal before becoming encumbered and up to a maximum of 4 more Bulk.\" The record had no passiveEffects at all, so deriveBulk's item lane (src/rules/derive.ts:5292-5296, which reads passiveEffects.bulkLimitBonus while the item is in use) moved neither threshold. bulkLimitBonus:2 raises BOTH by 2 — the encumbered half — and bulkMaxBonus:2 raises the maximum only, for the printed 4."
+ },
+ {
+  "category": "modes",
+  "id": "item-crown-of-the-fire-eater",
+  "create": true,
+  "value": {
+   "id": "item-crown-of-the-fire-eater",
+   "name": "Fire Eater (Activated)",
+   "fromItemId": "crown-of-the-fire-eater",
+   "duration": "the triggering fire damage",
+   "modifiers": [],
+   "resistances": [
+    {
+     "type": "fire",
+     "value": 15
+    }
+   ],
+   "note": "Reaction, once per day, when you take fire damage: your fire resistance from the crown becomes 15 instead of 5. Just after taking any remaining fire damage, you regain Hit Points equal to 15 or the fire damage dealt by the triggering attack before resistance, whichever is less."
+  },
+  "why": "AoN equipment-1435 prints \"Activate [reaction] command; Frequency once per day; Trigger You take fire damage; Effect … Increase your fire resistance from the crown from 5 to 15. Just after taking any remaining fire damage, you regain a number of Hit Points equal to 15 or the fire damage dealt by the triggering attack before damage resistance, whichever is less.\" We carried the once-per-day counter, the reaction cost and the standing fire 5 only, so no number on the sheet moved when the crown fired. Same carrier shape as modes/item-potion-of-fire-resistance-greater: deriveDefenses reads an active mode's resistances (src/rules/derive.ts:2647-2651) and same-type resistances take the highest (:2724), so the mode's 15 supersedes the passive 5 exactly as \"from 5 to 15\" says, and toggleItemMode (src/rules/play.ts:1502) is the switch for a worn item's mode."
+ },
+ {
+  "category": "feats",
+  "id": "projectile-snatching",
+  "field": "recordMarks",
+  "value": [
+   {
+    "on": "feature",
+    "id": "deflect-projectile",
+    "note": "When you successfully deflect an attack with Deflect Projectile, you can immediately make a ranged Strike against the attacker with the deflected projectile as part of that same reaction; it is a thrown weapon with the triggering attack's range increment and effect on a hit."
+   },
+   {
+    "on": "action",
+    "id": "deflect-projectile",
+    "note": "When you successfully deflect an attack with Deflect Projectile, you can immediately make a ranged Strike against the attacker with the deflected projectile as part of that same reaction; it is a thrown weapon with the triggering attack's range increment and effect on a hit."
+   }
+  ],
+  "why": "feat-6014 prints \"When you successfully deflect an attack with Deflect Projectile, as part of that same reaction, you can then immediately make a ranged Strike against the attacker using the projectile you deflected.\" The sibling feats/return-fire, whose clause is the same rule narrowed to bows, already carries this exact recordMarks shape (read by recordMarkersFor in src/rules/explain.ts); this record carried nothing, so a Projectile Snatching monk saw no note on their Deflect Projectile reaction."
+ },
+ {
+  "category": "feats",
+  "id": "improved-elemental-blast",
+  "field": "blastDiceBonus",
+  "value": 1,
+  "why": "feat-4337 prints \"The damage of your elemental blast increases by one die\" with a Special allowing a second taking at 14th and a third at 18th. The blast's die count was a hard-coded class-level table in derive.ts that no record could raise; the new Feat.blastDiceBonus is summed over Character.feats, which holds one entry per taking, so the Special clause needs no further data."
+ },
+ {
+  "category": "items",
+  "id": "sigil-of-the-first-clan",
+  "field": "heldSpellDc",
+  "value": 24,
+  "why": "equipment-2679 prints \"You cast 1st-level command with a DC of 24.\" The 'items' spellcasting entry casts at the wielder's own DC (keyAbility int / proficiency trained for a non-caster), which the item's own text contradicts — and VitalsRail picks the highest-DC non-focus entry, so that wrong number is what the sheet shows. New Item.heldSpellDc feeds the new SpellcastingEntry.fixedDc, honoured by deriveSpellcasting."
+ },
+ {
+  "category": "items",
+  "id": "canopy-bulwark",
+  "field": "passiveEffects",
+  "value": {
+   "bulkLimitBonus": 1
+  },
+  "why": "equipment-3595 prints \"This suit of +1 assisting leaf weave …\" and \"The armor is constantly drawing in imperceptible amounts of primal energy to help bear its wearer's burdens.\" The record carries builtInRunes {potency:1} only, and builtInRunes.property has NO reader anywhere (0 of the 374 items with builtInRunes carry one), so the assisting rune's own bulkLimitBonus:1 reaches nothing. The item-level passiveEffects.bulkLimitBonus reader already exists (derive.ts, itemInUse-gated, Math.max against the rune bonus), which delivers the printed 6 + Str encumbered / 11 + Str maximum without inventing a builtInRunes.property reader. Does not collide with the existing builtInRunes row: different field."
+ },
+ {
+  "category": "items",
+  "id": "canopy-bulwark",
+  "field": "heldSpellTradition",
+  "value": "primal",
+  "why": "equipment-3595 prints \"You can draw deeply upon the untapped reserves of primal magic within it\" and \"visible primal energy surges over the armor for the duration\". The 'items' entry's tradition is a majority vote over the held spells' own tradition lists; Haste is arcane/occult/primal, one vote each, and the stable sort keeps 'arcane', so the Spells page labelled a primal-infused armour Arcane. New Item.heldSpellTradition states the printed tradition and wins over the vote."
+ },
+ {
+  "category": "feats",
+  "id": "mental-forge",
+  "field": "weaponTraits",
+  "value": {
+   "match": {
+    "items": [
+     "mind-weapon"
+    ]
+   },
+   "addFromChoiceFlag": "mentalForgeTraits"
+  },
+  "why": "feat-8508 prints \"Choose two weapon traits from the following list … your mind weapon gains the chosen traits\", and feat-8510 (Malleable Mental Forge) prints the daily swap over the same list. The existing WeaponRider lane already does exactly this for Fighting Horn (match.items + addFromChoiceFlag), and answersForChoiceFlag now also reads DAILY answers, so this one row delivers both feats. Without it items/mind-weapon ships traits:[] and neither feat's answer reached the Strike."
+ },
+ {
+  "category": "feats",
+  "id": "knowledge-is-power",
+  "field": "descRefs",
+  "value": [
+   {
+    "label": "Recall Knowledge",
+    "key": "actions"
+   }
+  ],
+  "why": "AoN feat-5039 (Player Core pg. 203) reads \"When you critically succeed at a Recall Knowledge check about a creature, you can invoke your knowledge to make the creature take a –1 circumstance penalty…\" — Recall Knowledge is the named action the whole feat hangs on. That ref-link ships TODAY on feats/knowledge-is-power-wizard (core-descriptions feats/knowledge-is-power-wizard.r = [{\"label\":\"Recall Knowledge\",\"key\":\"actions\"}]) and that record is being hidden from the pickers in this batch, so without this row the surviving record loses a working link the player can click now. The value is that shipped array whole — descRefs is ONE field, and the kept record has none today. No effect-backfill.json row exists on feats/knowledge-is-power for any field (the only knowledge-is-power* row is feats/knowledge-is-power-wizard · edition), and no other b032 spec touches this category/id/field, so no supersedes: true is owed. 36 descRefs rows already exist in the overlay, e.g. familiarAbilities/accompanist."
+ },
+ {
+  "category": "feats",
+  "id": "lore-seeker",
+  "field": "spellcastingGrant",
+  "value": {
+   "tradition": "arcane",
+   "keyAbility": "int",
+   "proficiency": "trained"
+  },
+  "why": "feat-1131 prints \"Otherwise, they are arcane spells, you use Intelligence as your spellcasting ability, and you become trained in spell attack rolls and spell DCs for arcane spells.\" Without a spellcastingGrant the innate entry falls back to Charisma for a non-casting Scrollmaster. Same shape as crystal-ward-spells and as the magic-finder row in work/.b032-rows-data-rows.json."
+ },
+ {
+  "category": "feats",
+  "id": "cautious-delver",
+  "field": "spellcastingGrant",
+  "value": {
+   "tradition": "arcane",
+   "keyAbility": "int",
+   "proficiency": "trained"
+  },
+  "why": "feat-2237 prints \"Otherwise, they're arcane spells, you use Intelligence as your spellcasting ability, and you become trained in spell attack rolls and spell DCs for arcane spells.\" Same clause, same missing field."
+ },
+ {
+  "category": "feats",
+  "id": "inventor-dedication",
+  "field": "description",
+  "value": "You become trained in Crafting and inventor class DC. You gain the Inventor skill feat, even if you don't meet the skill feat's requirements. Choose an innovation. You gain that innovation, though you don't gain any other abilities that modify or use that innovation, such as modifications or Explode.",
+  "why": "AoN feat-3112 prints \"an innovation\" where the importer's de-linkifier deleted the link and its LABEL, leaving the sentence as \"an .\" — the rule ends at an article with nothing after it. Only the label is restored; every byte outside the hole is copied unchanged."
+ },
+ {
+  "category": "feats",
+  "id": "poisoner-dedication",
+  "field": "description",
+  "value": "You make a point of always having a few toxins near at hand—you never know when some arsenic or the like might prove useful. You gain the advanced alchemy benefits. You can use advanced alchemy to create four alchemical poison consumables each day. You remember alchemical poison formulas and don't need a formula book for them.",
+  "why": "AoN feat-6382 prints \"the advanced alchemy benefits\" where the importer's de-linkifier deleted the link and its LABEL, leaving the sentence as \"the .\" — the rule ends at an article with nothing after it. Only the label is restored; every byte outside the hole is copied unchanged."
+ },
+ {
+  "category": "feats",
+  "id": "expert-beast-gunner-spellcasting",
+  "field": "description",
+  "value": "You've learned the deeper secrets of beast guns, making you an expert in the magic they grant you. You gain the expert spellcasting benefits.",
+  "why": "AoN feat-3232 prints \"the expert spellcasting benefits\" where the importer's de-linkifier deleted the link and its LABEL, leaving the sentence as \"the .\" — the rule ends at an article with nothing after it. Only the label is restored; every byte outside the hole is copied unchanged."
+ },
+ {
+  "category": "feats",
+  "id": "master-beast-gunner-spellcasting",
+  "field": "description",
+  "value": "You've learned the final truth of beast guns, making you a master in the magic they grant you. You gain the master spellcasting benefits.",
+  "why": "AoN feat-3234 prints \"the master spellcasting benefits\" where the importer's de-linkifier deleted the link and its LABEL, leaving the sentence as \"the .\" — the rule ends at an article with nothing after it. Only the label is restored; every byte outside the hole is copied unchanged."
+ },
+ {
+  "category": "feats",
+  "id": "basic-rivethun-spellcasting",
+  "field": "description",
+  "value": "You gain the basic spellcasting benefits. Each time you gain a spell slot of a new rank from the Rivethun involutionist archetype, add a common divine spell of the appropriate rank, another appropriate divine spell you learned or discovered, or any other divine spell to which you have access, to your repertoire.",
+  "why": "AoN feat-7589 prints \"the basic spellcasting benefits\" where the importer's de-linkifier deleted the link and its LABEL, leaving the sentence as \"the .\" — the rule ends at an article with nothing after it. Only the label is restored; every byte outside the hole is copied unchanged."
+ },
+ {
+  "category": "feats",
+  "id": "expert-rivethun-spellcasting",
+  "field": "description",
+  "value": "You gain the expert spellcasting benefits.",
+  "why": "AoN feat-7591 prints \"the expert spellcasting benefits\" where the importer's de-linkifier deleted the link and its LABEL, leaving the sentence as \"the .\" — the rule ends at an article with nothing after it. Only the label is restored; every byte outside the hole is copied unchanged."
+ },
+ {
+  "category": "feats",
+  "id": "master-rivethun-spellcasting",
+  "field": "description",
+  "value": "You gain the master spellcasting benefits.",
+  "why": "AoN feat-7593 prints \"the master spellcasting benefits\" where the importer's de-linkifier deleted the link and its LABEL, leaving the sentence as \"the .\" — the rule ends at an article with nothing after it. Only the label is restored; every byte outside the hole is copied unchanged."
+ },
+ {
+  "category": "feats",
+  "id": "basic-prophet-spellcasting",
+  "field": "description",
+  "value": "You gain the basic spellcasting benefits. Each time you gain a spell slot of a new rank from the prophet of Kalistrade archetype, add a common occult spell of the appropriate rank, or another appropriate occult spell you've learned or discovered, to your repertoire.",
+  "why": "AoN feat-7681 prints \"the basic spellcasting benefits\" where the importer's de-linkifier deleted the link and its LABEL, leaving the sentence as \"the .\" — the rule ends at an article with nothing after it. Only the label is restored; every byte outside the hole is copied unchanged."
+ },
+ {
+  "category": "feats",
+  "id": "expert-prophet-spellcasting",
+  "field": "description",
+  "value": "You gain the expert spellcasting benefits.",
+  "why": "AoN feat-7686 prints \"the expert spellcasting benefits\" where the importer's de-linkifier deleted the link and its LABEL, leaving the sentence as \"the .\" — the rule ends at an article with nothing after it. Only the label is restored; every byte outside the hole is copied unchanged."
+ },
+ {
+  "category": "feats",
+  "id": "master-prophet-spellcasting",
+  "field": "description",
+  "value": "You gain the master spellcasting benefits.",
+  "why": "AoN feat-7688 prints \"the master spellcasting benefits\" where the importer's de-linkifier deleted the link and its LABEL, leaving the sentence as \"the .\" — the rule ends at an article with nothing after it. Only the label is restored; every byte outside the hole is copied unchanged."
  }
 ]

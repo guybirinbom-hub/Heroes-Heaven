@@ -1,0 +1,196 @@
+BATCH 032 — WG-COMPARISON LANE — FAMILY: engine
+Spec: work/.b032-rows-engine.json   Test: test/batch032-engine.test.ts (19 tests, green)
+Files edited: src/rules/types.ts, src/rules/build.ts, src/rules/derive.ts, src/builder/Builder.tsx
+
+DATA STILL NEEDED
+(none — every row this family's findings need is authored in work/.b032-rows-engine.json; the driver
+applies it. Nothing in scripts/data/effect-backfill.json was written by hand.)
+
+CROSS-FILE GAPS
+- magical-knowledge#skill-feats — src/rules/featGrantsLane.ts: add `bonusSkillFeat` to the
+  'magical-knowledge' entry (line 70). That reaches WG parity (their one FILTERED skill-feat select).
+  Print gives one skill feat PER CHOSEN SKILL (two), which the boolean cannot express, so full print
+  parity also needs FeatGrant.bonusSkillFeat widened to `boolean | number` in src/rules/featGrants.ts
+  (:346) and counted at build.ts:5074/9198 and Builder.tsx:2357. Both files are outside this family.
+- magical-knowledge#master-precondition — src/rules/featGrantsLane.ts:70, slot 0: replace
+  `"rank": "master"` with `"conditionalRank": { "base": "expert", "upgraded": "master" }`. NO engine
+  work is needed — build.ts's skillChoices applier and Builder.tsx's skillSlotGrant already read that
+  field, and its semantics ("already meets base ⇒ upgraded, else base") are exactly the printed
+  "from expert to master". Data-only edit in a file outside this family.
+- malleable-mental-forge (second half) — src/sheet/CharacterSheet.tsx + src/rules/dailyChoices.ts: a
+  DAILY choice with picks:2 renders as ONE select and stores one value per key (dailyChoicesFor
+  builds a single-option row; dailyChoiceLabel looks up a single option), so the morning can record
+  only one of the two traits. The engine half comma-splits already, so it delivers both the moment
+  the daily-prep UI fans the picker out the way choiceKeys() does for build-time picks.
+- magic-finder lane siblings — feats/lore-seeker and feats/cautious-delver carry the same
+  hard-coded tradition:'arcane' innate grants and the same printed clause; they are not findings in
+  this batch, so no row is authored for them. Whoever owns them should add traditionFromCasting:true
+  the same way.
+
+PER FINDING
+
+prolific-prophet-spellcasting — DONE (code)
+  src/rules/build.ts: the archetype slot-bonus fold at the archetype-entry construction is extracted
+  as the exported `foldArchSpellSlotBonuses` (byRank / highestOnly / perRank+exceptHighest, plus the
+  extraKnown and cantrip accumulation). src/builder/Builder.tsx `archExtraKnownAt` now calls the SAME
+  function instead of merging spellSlotBonus.extraKnown alone, so the builder's per-rank pick cap
+  equals the repertoire buildCharacter slices.
+  Test: "prolific-prophet-spellcasting: the prophet-of-kalistrade pool and the builder cap move
+  together" — a level-8 fighter with prophet-of-kalistrade-dedication + basic-prophet-spellcasting +
+  prolific-prophet-spellcasting; asserts rank-1 slots > 1, repertoire length == slot max, and the
+  builder cap == the same number.
+  BLAST RADIUS of the widening: the builder pick cap now rises for an ARCHETYPE caster holding any
+  feat whose spellSlotBonus targets an archetype entry with a SLOT-side bonus — measured, that is
+  14 records: the eleven *-breadth feats (frozen/occult/divine/primal/patrons/arcane/mysterious/
+  bloodline-breadth, vernai-training, apparition-magic, prolific-prophet-spellcasting),
+  flexible-halcyon-spellcasting, exultant-blood-magic and vellumis-excision (byRank). The four
+  `restricted` carriers (sin-reservoir, creed-magic, conscious-spell-specialization,
+  conjurer-of-corpses) name CLASS entry ids, which archetypeEntryIds never contains, so they are
+  untouched. A SECOND, smaller widening rides along: archExtraKnownAt is now level-scoped (a feat
+  slotted at level 8 no longer widens the level-4 page's cap), where it used to read every featPick
+  regardless of level — that affects the same 14 records plus shattered-sacrament/psi-development/
+  cascade-bearers-spellcasting, and only on the per-level pages, never on the current-level cap.
+
+occult-breadth — DONE (code)
+  Same reader, no record change (its fields were already correct).
+  Tests: "occult-breadth: the bard-archetype rank-1 repertoire AND the builder pick cap are both 2"
+  and its negative twin "…without the feat both … stay at 1", both on a built level-8 fighter with
+  bard-dedication + basic-bard-spellcasting.
+
+magical-knowledge#distinct-skills — DONE (code)
+  src/rules/build.ts: `skillSlotOptions` takes an optional {featId, index, choiceValue} context and,
+  through the new `distinctSiblingPicks`, drops the skills EARLIER slots of the same grant already
+  resolved — only when the sibling's option list is byte-identical and closed ('any' never excludes
+  and is never excluded, and the list is never emptied). featSkillChoiceValue passes the context, and
+  src/builder/Builder.tsx passes it at both skill-slot picker sites, so engine and picker narrow the
+  same way. Deliberately NOT the proposal's `distinctFromSlot` flag: that flag would live in
+  src/rules/featGrantsLane.ts, outside this family's files, and the generic rule needs no data.
+  Tests: "magical-knowledge: an unanswered pair grants master in one skill and expert in ANOTHER"
+  (built fighter, ≥2 of the four skills gain a rank — it used to be Arcana twice) and
+  "the second slot's options drop the skill the first slot took" (and the first slot keeps all four).
+  BLAST RADIUS: measured across FEAT_GRANTS + FEAT_LANE_GRANTS, exactly two records carry more than
+  one skillChoices slot — magical-knowledge (identical four-skill lists, changed) and the
+  {stealth,thievery} + 'any' pair at featGrants.ts:519 (lists differ and the second is 'any', so it
+  is untouched). One record changes behaviour.
+
+magical-knowledge#skill-feats — NOT DONE, cross-file (see CROSS-FILE GAPS). No engine change is
+  possible from this family's files: the whole lane is FEAT_GRANTS-keyed.
+
+magical-knowledge#master-precondition — NOT DONE, cross-file (see CROSS-FILE GAPS). Verified the
+  reader already exists on BOTH sides (build.ts's skillChoices applier and Builder.tsx's
+  skillSlotGrant), so this needs no engine work at all — only the one-line data edit in
+  src/rules/featGrantsLane.ts.
+
+magic-finder#tradition — DONE (code + row)
+  src/rules/types.ts: new `InnateSpellGrant.traditionFromCasting`. src/rules/build.ts: the per-spell
+  tradition loop that fills `spellTraditions` and votes the innate entry header now prefers
+  `caster?.tradition` when the flag is set, keeping the grant's printed `tradition` as the
+  not-a-caster fallback. Row: feats/magic-finder innateSpells (supersedes the existing row, whole
+  value carried).
+  Tests: "magic-finder: a divine cleric reads the granted spells as divine, not arcane" and
+  "a fighter (no casting) keeps the printed arcane fallback" — both on built characters against a
+  content copy with the flag patched in memory.
+  BLAST RADIUS: zero until a record carries the flag; only feats/magic-finder does.
+
+projectile-snatching — DONE (row only)
+  Existing lane, no engine work: recordMarks + recordMarkersFor (src/rules/explain.ts) already
+  deliver it — feats/return-fire, the same rule narrowed to bows, is already wired this way.
+  Test: "projectile-snatching: the return-Strike note reaches the Deflect Projectile feature row" —
+  built monk, recordMarkersFor(..., 'feature', 'deflect-projectile') names projectile-snatching.
+
+improved-elemental-blast — DONE (code + row)
+  src/rules/types.ts: new `Feat.blastDiceBonus`. src/rules/derive.ts `deriveBlastStrikes`: the die
+  count is now 1 + class table + the sum of blastDiceBonus over c.feats (one entry PER TAKING, so
+  the feat's Special — a second taking at 14th, a third at 18th — falls out for free).
+  Row: feats/improved-elemental-blast blastDiceBonus 1.
+  Test: "improved-elemental-blast: each taking adds one damage die to the Elemental Blast" — a
+  level-14 archetype kineticist with one taking rolls 2dN and with two takings 3dN.
+  BLAST RADIUS: zero until a record carries the field; only this feat does.
+
+improved-elemental-blast#no-archetype-blast — DONE (code)
+  src/rules/build.ts: `character.kineticist` is built whenever kineticistElements() resolves any
+  element, not only under ownsClass('kineticist'), and carries `archetype: true` when the class is
+  not owned. src/rules/types.ts declares that flag; src/rules/derive.ts withholds the CLASS
+  +1-die-at-5/9/13/17 table from an archetype blast (print grows an archetype blast only through
+  Improved Elemental Blast).
+  Tests: "kineticist-dedication: the Elemental Blast strike exists for a non-kineticist" and
+  "…does NOT take the class's die-scaling table" (a level-17 archetype blast is 1dN while a level-17
+  class kineticist is 5dN, which also pins that the class table is unchanged).
+  BLAST RADIUS: (a) any character holding kineticist-dedication or add-element WITH an answered
+  element now has c.kineticist, hence Elemental Blast strikes and the per-element blast-damage-type
+  rows shared.tsx already renders from c.kineticist.elements; (b) a CLASS kineticist whose gate is
+  unanswered now gets `undefined` instead of `{elements: []}` — both readers (derive.ts,
+  shared.tsx) already default with `?? []`, and deriveBlastStrikes returned [] for either. No class
+  kineticist's blast dice change (verified by the level-17 assertion above).
+
+lifting-leather#max — DONE (code + row)
+  src/rules/types.ts: `bulkMaxBonus` on an item's passiveEffects, beside bulkLimitBonus.
+  src/rules/derive.ts `deriveBulk`: the item loop accumulates it into maxOnlyBonus (highest wins,
+  matching the existing bulkLimitBonus treatment of the same untyped threshold).
+  Row: items/lifting-leather passiveEffects {bulkLimitBonus:2, bulkMaxBonus:2}.
+  Test: "lifting-leather: +2 encumbered and +4 maximum" — two built fighters, worn vs not.
+  BLAST RADIUS: zero until an item carries the field; only lifting-leather does.
+
+sigil-of-the-first-clan#spell-dc — DONE (code + row)
+  src/rules/types.ts: `Item.heldSpellDc` and `SpellcastingEntry.fixedDc`. src/rules/build.ts sets
+  fixedDc on the 'items' entry from the item's field; src/rules/derive.ts `deriveSpellcasting`
+  returns it verbatim (the conditions/modes pool is skipped on purpose — those adjust the caster's
+  own DC and a printed DC is not theirs).
+  Row: items/sigil-of-the-first-clan heldSpellDc 24.
+  Tests: "the entry casts Command at the printed DC 24" and "an entry with no printed DC still uses
+  the wielder's statistic".
+  BLAST RADIUS: zero until an item carries heldSpellDc; only this item does. No class or archetype
+  entry ever sets fixedDc.
+
+canopy-bulwark#assisting-rune — DONE (row only)
+  No engine work: the item-level passiveEffects.bulkLimitBonus reader already exists in deriveBulk.
+  builtInRunes.property has no reader anywhere (0 of the 374 items with builtInRunes carry one), so
+  routing the assisting rune's grant through the item's own passiveEffects is the existing lane.
+  Row: items/canopy-bulwark passiveEffects {bulkLimitBonus:1} (different field from the record's
+  existing builtInRunes row — no collision, no supersedes).
+  Test: "canopy-bulwark: a +1 ASSISTING leaf weave raises both Bulk thresholds by 1".
+
+canopy-bulwark#spell-tradition — DONE (code + row), WITH A DELIBERATE DEVIATION
+  src/rules/types.ts: `Item.heldSpellTradition`. src/rules/build.ts: the item entry's tradition VOTE
+  yields to the item's printed tradition when it carries one.
+  Row: items/canopy-bulwark heldSpellTradition "primal".
+  DEVIATION from the proposal, which replaces heldSpells with innateSpells: print makes this an item
+  ACTIVATION ("Activate 2 actions; Frequency once per day; Effect You cast Haste targeting
+  yourself"), which is exactly what heldSpells + activationCost + the freq counter model, and WG's
+  INNATE encoding is their engine's shape rather than the printed rule (print is the authority; WG
+  is evidence). Keeping the existing carrier preserves the item entry, its activation cost and its
+  charge sync, costs one line of engine, and is reusable by every other heldSpells item whose
+  tradition is misvoted. heldSpells is untouched, so no heldSpells/innateSpells double-grant exists.
+  Tests: "canopy-bulwark: the item entry is PRIMAL once the armour names its tradition" and the
+  stunted twin "WITHOUT the field the tradition vote still returns arcane (the defect this fixes)".
+  BLAST RADIUS: zero until an item carries heldSpellTradition; only canopy-bulwark does.
+
+malleable-mental-forge — DONE (code + 2 rows), one half blocked by a file outside this family
+  src/rules/types.ts: `FeatChoiceDef.replacesFlag`. src/rules/derive.ts `answersForChoiceFlag` (the
+  helper behind WeaponRider.addFromChoiceFlag) now also reads THIS MORNING'S daily answers, and a
+  daily record declaring `replacesFlag` supplies the WHOLE answer for that flag rather than adding to
+  it — print says today's two traits replace the Mental Forge pair, so unioning would hand out four.
+  Rows: feats/mental-forge weaponTraits {match:{items:['mind-weapon']}, addFromChoiceFlag:
+  'mentalForgeTraits'} (the existing Fighting Horn lane, reused not rebuilt) and
+  feats/malleable-mental-forge choice (supersedes; whole value carried, replacesFlag added).
+  Tests: "mental-forge: the two chosen traits reach the mind-weapon Strike" and
+  "malleable-mental-forge: today's pair REPLACES the Mental Forge pair rather than joining it".
+  NOT DONE: the daily-prep UI records only ONE value for a picks:2 daily choice (src/sheet/
+  CharacterSheet.tsx + src/rules/dailyChoices.ts, outside this family) — see CROSS-FILE GAPS. The
+  engine comma-splits already, so it delivers both traits as soon as that picker fans out.
+  BLAST RADIUS of the answersForChoiceFlag widening: addFromChoiceFlag has exactly one reader
+  (applyWeaponRiders) and, before this batch, no record pointed it at a DAILY flag — so the new daily
+  read changes nothing that ships today beyond the mental-forge row above; replacesFlag likewise has
+  one carrier.
+
+VERIFICATION
+  node scripts/vt.mjs run test/batch032-engine.test.ts → 19 passed.
+  Regression sweep over every suite touching the widened readers (caster archetypes, halcyon,
+  bloodrager, kinetic gate, bulk limits + nesting, conditional armour/bulk, spellcasting, item
+  spells + charges + slots, innate tradition/grants/proficiency/verification, strike riders,
+  granted strikes, strike explain, assurance + surki + heritage skill choices, both-trained skill
+  clause, dual-class second caster, builder grant slots, rank-gated feat grants, echo pickers,
+  choice-answer star, derive, audit-rules-fixes, armor runes, entry retune, unpickable-looks-
+  unpickable, batch027/029/030/031, batch13 parity, choice-pickers-fill, feature-gaps) →
+  42 files, 446 tests, all passing.
+  npx tsc --noEmit → clean.

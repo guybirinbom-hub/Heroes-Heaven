@@ -1,0 +1,52 @@
+BATCH 032 — WG-COMPARISON LANE — FAMILY: data-rows
+spec: work/.b032-rows-data-rows.json   tests: test/batch032-data.test.ts   (7 findings, 7 rows, 7 tests)
+
+DATA STILL NEEDED
+(none — every row this family owes is authored in work/.b032-rows-data-rows.json; no row is waiting on another agent's measurement.)
+
+CROSS-FILE GAPS
+- scripts/ (description importer's markdown cleaner) + npm run verify: the link-LABEL strip behind basic-beast-gunner-spellcasting#dropped-clause is systemic — /\b(the|a|an|your)\s+\./ matches 174 records in public/core-descriptions.json (spells/commune-with-corazal, spells/infectious-melody, …). My row fixes the one record print names; the cleaner fix and a residue guard belong to whoever owns the scripts/ lane this batch.
+- src/rules/types.ts (ItemPassiveEffects, beside bulkLimitBonus at :2245) + src/rules/derive.ts deriveBulk item loop (:5292-5296): declare and read `bulkMaxBonus` — the ENGINE family's finding lifting-leather#max. The DATA half is already in my row (items/lifting-leather.passiveEffects = {bulkLimitBonus:2, bulkMaxBonus:2}); engine must NOT author a second row on that field or the driver refuses the collision.
+- src/rules/derive.ts narrowChoiceOptions (:1700,:1730): `disableIfOwned` has no "never this slot's own answer" exemption (the domains branch at build.ts:1974 has one), so a picker with ownsFeature + disableIfOwned greys the answer it is currently displaying. Pre-existing — feats/manifold-modifications ships that exact pair today — and the second-blessing row inherits it rather than causing it. Not this family's file.
+- work/.b032-queue.json / read lane: our shipped description for feats/basic-beast-gunner-spellcasting opens "granting you your own pool of magical might through the amplifying power of their synergistic magic", where mirror feat-3230 (the record's own aonId) prints "granting you the power of their synergistic magic." Outside this finding's claim (which is only the dropped label), so I left the sentence byte-identical; it wants its own finding.
+
+PER FINDING
+
+1. safeguard-soul#undead — ROW: {feats, safeguard-soul, immunities, ["being transformed into an undead"]}.
+   Carrier verified live end to end: deriveDefenses pushes the whole feat record as a source (src/rules/derive.ts:2544) and collects `src.immunities` at :2739, and 16 feats already ship the same free-text field.
+   TEST: test/batch032-data.test.ts "safeguard-soul cannot be made undead" — pins the field AND deriveDefenses().immunities on a built champion carrying the feat. Fails today on the absent field only (the IWR harness half asserts first).
+   Not done: nothing. The +2 status save half is the situational family's safeguard-soul#allies, untouched here.
+
+2. heal-mount — ROW: {feats, heal-mount, spellNotes, [{spellId:'lay-on-hands', note:"When you cast Lay on Hands on your mount, …restores 10 Hit Points, plus 10 for each heightened rank."}]}.
+   Same carrier feats/mercy and feats/greater-mercy use; read by the ownedRecords pass at src/rules/build.ts:6616 (no innateSpells on this record, so the minLevel gate cannot suppress it) and rendered by spellNotesFor on the Spells page.
+   TEST: "heal-mount changes what Lay on Hands restores" — builds a champion with featPicks {'8:class':'heal-mount'} (harness half asserted first: the feat is on the built character) and pins c.spellNotes['lay-on-hands'].
+   Not done: the 10-per-rank number is a NOTE, not a computed heal — Lay on Hands' own healing formula stays as printed for every other target, and nothing in our spell lane can express "different amount when the target is your mount".
+
+3. magic-finder#spellcasting-statistic — ROW: {feats, magic-finder, spellcastingGrant, {tradition:'arcane', keyAbility:'int', proficiency:'trained'}}.
+   Same shape as feats/crystal-ward-spells; collected at src/rules/build.ts:7037 and applied to the innate entry at :7983-:8006. Authored unconditionally is safe: for a character who already casts, `caster?.keyAbility` and the maxRank proficiency floor win, so the grant only supplies the statistic in print's "Otherwise" branch. magic-finder is excluded from featFocusGrant (build.ts:4611 requires focusSpells/focusOnly/an option grant), so it cannot be mistaken for a focus profile.
+   TEST: "magic-finder gives a non-caster an Intelligence spellcasting statistic" — a level-8 FIGHTER with the feat; the harness half pins Locate in the innate repertoire, then the field, then innate.keyAbility === 'int'.
+   Not done: the tradition half of the same sentence ("of the same tradition" for an existing caster) is the engine family's magic-finder#tradition, a different field (innateSpells) — no collision with this row.
+
+4. basic-beast-gunner-spellcasting#dropped-clause — ROW: {feats, basic-beast-gunner-spellcasting, description, <shipped text with the label restored>}.
+   Pathless description row, the form the 1,867 shipped description rows use. Only "You gain the ." becomes "You gain the basic spellcasting benefits." — the rest of the sentence is byte-identical, so an importer fix later agrees with it rather than fighting it.
+   TEST: "basic-beast-gunner-spellcasting says what it grants" — reads the description through content() (which merges core-descriptions.json) and asserts both the restored label and the absence of the "the ." residue.
+   Not done: the systemic cleaner + verify guard (CROSS-FILE GAPS line 1) — scripts/ is not this family's file. No descRefs row: the link target is an AoN rules page (/Rules.aspx?ID=170) with no record of ours to point at, and the finding's defect is the missing WORDS.
+
+5. second-blessing — ROW: {feats, second-blessing, choice, <existing value + disableIfOwned:true>, supersedes:true}.
+   supersedes declared: scripts/data/effect-backfill.json already carries a feats/second-blessing `choice` row, whose whole value is merged in unchanged. Q27 path fires with no code change (derive.ts:1730 → "Already taken — Blessed Swiftness."), because the level-3 pick is a classFeature id in c.classChoices and derive.ts:3443 folds it into ownedFeatureIds.
+   TEST: "second-blessing must differ from the level-3 blessing" — builds a champion with extraChoices {blessing:['blessed-swiftness']} (harness half: the pick is in classChoices), then pins choice.disableIfOwned and runs narrowChoiceOptions, asserting the owned option is greyed with a reason and the two others stay live.
+   Not done: the own-answer exemption (CROSS-FILE GAPS line 3).
+
+6. lifting-leather — ROW: {items, lifting-leather, passiveEffects, {bulkLimitBonus:2, bulkMaxBonus:2}}.
+   MERGED DELIBERATELY with the engine family's lifting-leather#max: one field is one row, and two specs writing items/lifting-leather.passiveEffects would be a hard-refused collision. bulkLimitBonus:2 is live today (deriveBulk item lane, derive.ts:5292-5296, itemInUse-gated, highest-wins against the rune bonus) and delivers the printed encumbered +2; bulkMaxBonus:2 is inert data until the engine family declares and reads it, which is the only reason the printed maximum is +4 rather than +2. No supersedes: the record's existing row writes builtInRunes, a different field.
+   TEST: "lifting-leather raises the wearer Bulk limits" — pins both authored numbers and deriveBulk().encumberedAt on a built fighter wearing the armour (base + 2), harness half asserted first.
+   Not done: an assertion on the MAXIMUM threshold — it would fail until the engine reader lands, and a test that fails for another family's reason is a test that gets disabled.
+
+7. crown-of-the-fire-eater#activation-effect — ROW: create modes/item-crown-of-the-fire-eater {fromItemId:'crown-of-the-fire-eater', duration:'the triggering fire damage', modifiers:[], resistances:[{fire,15}], note:<the printed reaction, healing included>}.
+   Same carrier as modes/item-potion-of-fire-resistance-greater: an active mode's resistances are read at derive.ts:2647-2651 and same-type resistances take the highest (:2724), so the mode's 15 SUPERSEDES the crown's standing 5 exactly as "from 5 to 15" says; toggleItemMode (play.ts:1502) is the switch for a worn item's mode, and ItemDetail.tsx:192 finds it by fromItemId. survivesRest omitted so it clears at rest.
+   TEST: "crown-of-the-fire-eater has an activated mode" — a built fighter wearing the crown reads fire 5 (harness + the standing half), then the mode's fields, then fire 15 with the mode active.
+   Not done: the HEALING has no numeric carrier — "15 or the fire damage dealt before resistance, whichever is less" needs a damage-taken event the app does not have (Principle M2), so it lives in the mode's note where the player applies it. No created-prose spec file: a mode carries `note`, not a description.
+
+NOTES
+- No src/ or scripts/ file was touched, and scripts/data/effect-backfill.json was not written — the driver applies work/.b032-rows-data-rows.json.
+- node scripts/vt.mjs run test/batch032-data.test.ts: 7 failed, each on the authored field alone (every built-character precondition in the same test passes today). npx tsc --noEmit: clean. node scripts/test-flip-audit.mjs --batch 032: clean, every flip cited.

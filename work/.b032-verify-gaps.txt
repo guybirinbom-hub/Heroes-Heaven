@@ -1,0 +1,232 @@
+BATCH 032 — WG-COMPARISON LANE — GAP VERIFIER (family: gaps)
+Subject: every line of work/.b032-gaps.json, whatever its status. Default verdict: REFUTE.
+Instruments used: scripts/wg-batch-run.mjs's own gapProblems()/gapLines() (imported, not re-implemented),
+scripts/test-flip-audit.mjs --batch 032, node scripts/vt.mjs on the four gap test files, npx tsc --noEmit.
+
+RESULT: 15 gap lines — 12 CLOSED, 2 CLOSED (parked, artefact checked), 1 REOPENED. 1 line open after this pass.
+
+====================================================================================================
+FIRST, THE TWO THINGS THAT ARE NOT PER-LINE
+====================================================================================================
+
+(a) work/owner-questions.json — UNTOUCHED. `git diff HEAD -- work/owner-questions.json` is empty. No
+    gap agent wrote it. Consistent with work/.b032-queue.json not existing at all: no line in the batch
+    parks against a queue entry, and stageGaps's queue branch is a no-op, so nothing was owed there.
+
+(b) NOBODY REMOVED ANOTHER FAMILY'S GAP LINE OR MANIFEST ENTRY. I re-ran the driver's own collator —
+    gapLines() from scripts/wg-batch-run.mjs over every work/.b032-(report|verify)-*.txt, family keyed
+    the way stageApplyDigest keys it — and diffed the result against work/.b032-gaps.json: 15 out, 15
+    in, zero lines regenerated-but-absent and zero present-but-unregenerated. The four gap families'
+    own reports contribute no new lines (each writes "(none)" under both headings), so the file is
+    exactly what the reports say it is. The manifest carries all four builder families plus
+    gap-situational, gap-engine and gap-data-rows; the only absentee is gap-instruments, and its own
+    report says it chose not to add one — an omission, not a deletion (see line 6).
+
+(c) ⚠ SHAPE DEFECT THAT WOULD HAVE REFUSED THE BATCH — FOUND AND REPAIRED IN 7 LINES.
+    gapProblems() accepts an `authored` ref only if it is EXACTLY a manifest spec path, EXACTLY a path
+    that exists, or ends in `:<digits>`. Seven lines (5, 7, 8, 11, 12, 13, 14) opened with a real
+    reference and then appended explanatory prose, so all three tests failed and the driver's refusal
+    text ("names no manifest spec, no file in the tree and no file:line") would have fired on every one
+    of them at --stage gaps. The artefacts behind all seven are real (evidence per line below), so this
+    is a formatting defect, not a missing artefact, and reopening them would have been wrong. I appended
+    a valid `file:line` tail to each ref and changed NOTHING else — every original word is still in the
+    ref, because uncitedQuiet() cites records out of `line + ref` text and trimming would have broken
+    that. Before: 8 driver problems. After: 1 (the genuinely open line 6). The `line` keys are untouched,
+    so stageApplyDigest's prior-disposition merge still matches on the next regeneration.
+
+====================================================================================================
+LINE BY LINE
+====================================================================================================
+
+[0] CLOSED   data-rows / CROSS-FILE — systemic link-LABEL strip
+    ref scripts/dropped-inline-check.mjs:62  (driver-valid as written)
+    EVIDENCE: line 62 is `const HOLE = /\b(?:a|an|the|your) \.(?=\s|$)/` — the widened net the line asks
+    for; it was `a` only. HOLE_BASELINE stays 162 on purpose and the header comment says why: widening
+    lifts the live count to 174 and this batch's 12 rows (1 in rows-data-rows, 11 in rows-gap-data-rows)
+    put it back at 162. The file is in gap-data-rows' stage[]. Ran it: it FAILS today naming the 12, which
+    is the declared state — a ratchet widened and slackened in one edit measures nothing.
+
+[1] CLOSED   data-rows / CROSS-FILE — declare and read `bulkMaxBonus` on ItemPassiveEffects
+    ref src/rules/derive.ts:5336  (driver-valid as written)
+    EVIDENCE: derive.ts:5336 `itemMaxBonus = Math.max(itemMaxBonus, pe?.bulkMaxBonus ?? 0);` — the item
+    loop the line names; types.ts:2263 declares it on ItemPassiveEffects beside bulkLimitBonus.
+    Both files are in the ENGINE family's stage[], as the line predicted. The reader is exercised end to
+    end by test/batch032-data.test.ts:113 (line 9 below) and by test/batch032-engine.test.ts:238, which
+    patches passiveEffects IN MEMORY rather than diffing patched-vs-shipped. No second row on the field:
+    the whole-batch collision scan below found none.
+
+[2] CLOSED (parked)   data-rows / CROSS-FILE — narrowChoiceOptions disableIfOwned own-answer exemption
+    ref flaggedResidue: <long reason>  (driver-valid: residue + 1,000-char reason)
+    EVIDENCE — every anchor the reason cites is real, so this is a substantiated park, not "out of scope":
+      · src/rules/derive.ts:3465 `for (const id of choiceOwnedFeatureIds(c.feats ?? [], db)) out.add(id);`
+        — the fold-back the reason blames.
+      · src/builder/shared.tsx:835 `const off = !!o.disabled && o.id !== value;` — the exemption really
+        does already exist on the other picker.
+      · PRE-EXISTING confirmed against the shipped data, not taken on trust: core.json
+        feats/manifold-modifications ships `disableIfOwned: true` AND `ownsFeature: true` in the same
+        `choice` today, so second-blessing inherits the shape.
+      · The conflict claim holds: src/rules/derive.ts, src/rules/build.ts and src/builder/Builder.tsx are
+        all in the engine and gap-engine stage[] arrays in work/.b032-specs.json.
+    Display-only and pre-existing, with two named cases to re-raise on. Park stands.
+
+[3] CLOSED (parked)   data-rows / CROSS-FILE — basic-beast-gunner-spellcasting opening sentence
+    ref flaggedResidue: <long reason>  (driver-valid: residue + long reason)
+    EVIDENCE: the hard refusal it cites is real — scripts/wg-batch-run.mjs:607, `COLLISION ${k}: … both
+    write it — resolve by hand, the applier will not merge`. And the key really is taken: my whole-batch
+    key scan (below) shows feats/basic-beast-gunner-spellcasting.description written by
+    work/.b032-rows-data-rows.json#basic-beast-gunner-spellcasting#dropped-clause, so a second row on it
+    would have refused the apply stage. Correctly NOT an owner question (print does not contradict WG on
+    this record). Park stands.
+
+[4] CLOSED   data-rows / CROSS-FILE — lifting-leather ROW
+    ref work/.b032-rows-data-rows.json  (driver-valid: a manifest file)
+    EVIDENCE: the row is there and reads {items, lifting-leather, passiveEffects,
+    {bulkLimitBonus:2, bulkMaxBonus:2}} — one field, one row, whole value. items/lifting-leather exists in
+    public/core.json. The spec is in the manifest with a stage[] of four paths.
+
+[5] CLOSED (ref repaired)   engine / CROSS-FILE — magical-knowledge#skill-feats, the lane entry
+    ref was: "src/rules/featGrantsLane.ts:'magical-knowledge' (…) + src/rules/featGrants.ts:bonusSkillFeatCount — …"
+    ref now: same text + " — src/rules/featGrantsLane.ts:73"
+    EVIDENCE: featGrantsLane.ts:73 carries `"bonusSkillFeat": 2` on the 'magical-knowledge' entry, above a
+    comment quoting the printed clause *"You gain a skill feat associated with each of the skills you
+    chose."* and saying in as many words that WG's single FILTERED select is not the authority. featGrants.ts
+    exports bonusSkillFeatCount() (typeof number → the count, legacy `true` → 1). Both files are in
+    gap-engine's stage[]. Pinned by test/batch032-gap-engine.test.ts — 4 tests under a describe naming
+    magical-knowledge, each cited "// batch 032: magical-knowledge#skill-feats"; ran green.
+    WHY THE REF NEEDED REPAIR, not the artefact: see (c).
+
+[6] ⚠ REOPENED   instruments / CROSS-FILE — wg-batch.mjs packet builder pairs by name, no source filter
+    was: authored, ref "scripts/wg-batch.mjs:theirs — …"
+    now: open, with the fix written into the ref.
+    THE CODE HALF IS REAL AND PROVEN, and I want that on the record so nobody redoes it: scripts/wg-batch.mjs
+    is modified (47 lines), the private name pairing is replaced by wgRowsByBucket, the packet loop defers
+    aon- twins via wgOwnsComparison, test/batch032-gap-instruments.test.ts has 3 tests (all cited
+    "// batch 032: show-off") and all three pass, and scripts/test-flip-audit.mjs --batch 032 is clean.
+    WHAT IS MISSING IS THE MANIFEST. work/.b032-specs.json carries no gap-instruments entry, so
+    scripts/wg-batch.mjs, test/batch032-gap-instruments.test.ts and work/.b032-report-gap-instruments.txt
+    appear in NO stage[] array. That is not cosmetic: scripts/wg-batch-close.mjs:101 builds its entire
+    evidence set as `manifest.flatMap((m) => m.stage ?? [])`, and :183 decides a rowless entry is a TEACH
+    only from the src/ paths that family staged. Unstaged, this teach is invisible to the close verdicts —
+    the exact shape the MATCHES-verdict rule exists to stop.
+    work/.b032-report-gap-instruments.txt states the omission on purpose: "no spec file and no manifest
+    entry." The premise is wrong — a rowless family already has a shape in this very batch:
+    work/.b032-rows-instruments.json is a manifest spec whose two findings carry `backfillRows: []` and a
+    reason each.
+    FIX (also written into the ref so the closer has it): gap-instruments writes
+    work/.b032-rows-gap-instruments.json with one rowless finding for show-off, adds
+    {file, kind:"rows", family:"gap-instruments", stage:[that file, work/.b032-report-gap-instruments.txt,
+    test/batch032-gap-instruments.test.ts, scripts/wg-batch.mjs]} to work/.b032-specs.json, and names the
+    FINDING id `show-off` on its teach line (not just the record).
+    ⚠ SECOND-ORDER, for the closer: while this line is `open`, uncitedQuiet() no longer counts it as a
+    citation (it only reads authored/parked lines). If any record went quiet on the wg-batch.mjs teach it
+    will now read as an uncited flip at --stage close. Low risk — wentQuiet is computed from wg-diff.mjs,
+    which is corpus-wide and not the packet builder — but it is the second thing that fixes itself the
+    moment the manifest entry lands.
+
+[7] CLOSED (ref repaired)   situational / DATA STILL NEEDED — knowledge-is-power description
+    ref now ends " — work/.b032-rows-situational.json:4"
+    EVIDENCE: the row exists at work/.b032-rows-situational.json (finding knowledge-is-power, field
+    description) and feats/knowledge-is-power exists in core.json. The claim that re-emitting it would
+    collide is CORRECT and I checked it the applier's way: my scan of all 7 spec files found 32 distinct
+    category/id/field keys and ZERO collisions — the field is written once, by the situational builder.
+
+[8] CLOSED (ref repaired), WITH A NOTED REVERSAL   situational / CROSS-FILE — NEAR_DUPLICATE_IDS
+    ref now ends " — src/data/index.ts:112"
+    EVIDENCE: src/data/index.ts:112 adds `'knowledge-is-power-wizard', // -> knowledge-is-power`, cited
+    "// batch 032: knowledge-is-power", under a 16-line comment that gives the printed reason.
+    ⚠ THE LINE AND THE ARTEFACT POINT OPPOSITE WAYS, DELIBERATELY. The gap LINE asks to hide
+    'knowledge-is-power' (-> …-wizard); the code hides the WIZARD twin instead. The ref says so and the
+    reason survives checking: mirror feat-5039's trait list is Magus+Wizard, and it is 'knowledge-is-power'
+    that carries both, so hiding it would take a printed level-8 feat off every magus. The reversal is
+    argued from print, tested (test/batch032-gap-situational.test.ts has a case whose whole point is that
+    a level-8 magus is still offered the feat, "which the other hide direction would not"), and hide-never-
+    delete is honoured. Closed as executed, not as written — flagging it so the closer reads the ref, not
+    just the line.
+
+[9] CLOSED   data-rows / CROSS-FILE — lifting-leather, the unasserted half now pinned
+    ref test/batch032-data.test.ts:113  (driver-valid as written)
+    EVIDENCE: line 113 is `expect(deriveBulk(wearing, db()).max).toBe(deriveBulk(base, db()).max + 4);`
+    with "// batch 032: lifting-leather#max" directly above it and the printed clause *"and up to a maximum
+    of 4 more Bulk"* quoted in the comment. Both halves of the printed 2/4 split are now pinned, and the
+    reader that makes it true is line [1]'s.
+
+[10] CLOSED   data-rows / CROSS-FILE — the 11 systemic stripped-label repairs
+    ref work/.b032-rows-gap-data-rows.json  (driver-valid: a manifest file)
+    EVIDENCE: 11 rows, each a whole `description` value; every target record exists in core.json; the one
+    that supersedes (items/pact-of-the-herald-and-host) has a real prior overlay row in
+    scripts/data/effect-backfill.json and carries the whole superseded text (1,358 → 1,377 chars, same
+    opening). Every value grows by exactly the restored link label. Spec is in the manifest with a 4-path
+    stage[] that includes scripts/dropped-inline-check.mjs.
+    STATE, so it is not read as a regression: `node scripts/vt.mjs run test/batch032-gap-data-rows.test.ts`
+    is 11 failed / 1 passed TODAY, every failure of the form expected "You gain the master spellcasting
+    benefits." / received "You gain the .". That is the declared "fails today, passes on apply" — the rows
+    are not applied yet, and the report says so before the fact.
+
+[11] CLOSED (ref repaired)   engine / DATA STILL NEEDED — lore-seeker + cautious-delver
+    ref now ends " — work/.b032-rows-gap-engine.json:4"
+    EVIDENCE, checked against the shipped values rather than the note: 4 rows on 2 records that exist.
+    The two `innateSpells` rows carry supersedes:true, and both records DO have a prior overlay row in
+    scripts/data/effect-backfill.json, so the flag is right and not decorative; each re-emits all THREE
+    spell grants whole (translate/sound-body/see-the-unseen; dispel-magic/knock/resist-energy) with
+    traditionFromCasting added to every member — the whole-field rule honoured. The two `spellcastingGrant`
+    rows are new ({arcane, int, trained}; the field is undefined on both records today), so no supersedes,
+    correctly. Pinned by test/batch032-gap-engine.test.ts, which builds against a content copy PATCHED IN
+    MEMORY (`patched()` / `withTraditionFlag` / `withIntProfile`) — not a patched-vs-shipped delta, so the
+    cases cannot flip meaning when the rows land. 8 tests, green, each cited
+    "// batch 032 premise: feat-1131 …" / "feat-2237 …" with verbatim clauses.
+
+[12] CLOSED (ref repaired)   engine / CROSS-FILE — bonusSkillFeat widened at all three counting sites
+    ref now ends " — src/rules/featGrants.ts:370"
+    EVIDENCE: featGrants.ts:370 `bonusSkillFeat?: boolean | number;` with the printed clause in its doc
+    comment and `true` pinned as exactly 1; featGrants.ts also gains bonusSkillFeatCount() and
+    bonusSkillFeatKey() (index 0 keeps the BARE feat id, so characters saved before the count keep their
+    pick). src/rules/build.ts (+213/-…) and src/builder/Builder.tsx (+96/-…) are both modified and both in
+    gap-engine's stage[]. The regression case is explicitly tested: "a BOOLEAN grant (rogue-dedication)
+    still takes only the index-0 key". Green.
+
+[13] CLOSED (ref repaired)   situational / DATA STILL NEEDED — same row as [7], verify-side
+    ref now ends " — work/.b032-rows-situational.json:4"
+    EVIDENCE: same artefact as [7]; the row's `why` cites AoN feat-5039 (Player Core pg. 203) as the
+    record's own aonId and states that what ships today is the LEGACY feat-2861 wording — a different
+    edition, not a paraphrase. Nothing further owed.
+
+[14] CLOSED (ref repaired)   situational / CROSS-FILE — hide the twin + carry its descRefs
+    ref now ends " — src/data/index.ts:112"
+    EVIDENCE: the hide is [8]'s artefact. The descRefs half is a real row in
+    work/.b032-rows-gap-situational.json (feats/knowledge-is-power · descRefs) targeting an existing
+    record, in the manifest with src/data/index.ts staged. Its test asserts against the SPEC VALUE and
+    against a copy with the field stripped — the correct before-the-row shape — and additionally checks
+    the value equals what the twin ships. Green.
+
+====================================================================================================
+CROSS-CHECKS RUN OVER THE WHOLE BATCH (not per line)
+====================================================================================================
+· COLLISIONS: all 7 spec files, all backfillRows → 32 distinct category/id/field keys, ZERO collisions.
+  The applier's precheck (1) will not fire.
+· RECORD EXISTENCE: every targeted record resolves in public/core.json. The one `create:true` row
+  (modes/item-crown-of-the-fire-eater, data-rows) correctly has no `field`.
+· SUPERSEDES: all 3 superseding rows have a real prior row in scripts/data/effect-backfill.json and
+  re-emit the whole field value.
+· scripts/test-flip-audit.mjs --batch 032 → "clean — 9 test file(s) touched, 0 new settle key(s), every
+  flip cited."
+· node scripts/vt.mjs run <the 4 gap test files> → 3 files pass (19 tests); test/batch032-gap-data-rows.test.ts
+  is 11 failed by design until the rows apply. One vitest process, through vt.mjs.
+· npx tsc --noEmit → clean, exit 0.
+· No agent wrote scripts/data/effect-backfill.json by hand: it is unmodified against HEAD.
+
+====================================================================================================
+DATA STILL NEEDED
+(none — every row this pass depends on is authored in a manifest spec; I authored no rows and needed none.)
+
+CROSS-FILE GAPS
+(none of my own. The one unfinished item is gap line [6], which is now `open` with its fix written into
+the line itself — it belongs to gap-instruments, not to me: authoring work/.b032-rows-gap-instruments.json
+or editing work/.b032-specs.json would be writing another family's spec.)
+
+FLAGGED RESIDUE
+(none.)
+
+OWNER QUESTIONS
+(none. work/.b032-queue.json does not exist and work/owner-questions.json is byte-identical to HEAD.)
+
+GAPS OPEN AFTER THIS PASS: 1  (line [6], instruments — gap-instruments' missing manifest entry)

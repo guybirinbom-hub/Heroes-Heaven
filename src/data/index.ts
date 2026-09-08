@@ -93,6 +93,23 @@ export const NEAR_DUPLICATE_IDS = new Set([
   // The kept id is `no-hands-no-problems`: it carries the aonId and the arcane/occult `effectChoices`,
   // where this copy has no aonId and an occult-only `innateSpells` that offers no choice at all.
   'no-hands-no-problem', // -> no-hands-no-problems
+  // TWO imports of AoN feat-5039 ("Knowledge is Power", Player Core pg. 203, Feat 8). The exact-name
+  // pass cannot pair them — one is named "Knowledge is Power" and the other "Knowledge is Power
+  // (Wizard)" — so `featSlots.ts` offered a level-8 wizard the same printed feat twice (its only
+  // eligibility test is category 'class' plus the class trait, and both records pass it).
+  // THE KEPT ID IS `knowledge-is-power`, the one that carries BOTH classes. The mirror document's
+  // trait list is ["Magus","Wizard"] and ours matches it; `knowledge-is-power-wizard` carries
+  // ["wizard"] only, so hiding the two-trait record instead would take a printed level-8 feat off
+  // every magus — `knowledge-is-power-magus` cannot cover that, being feat-9062 (Impossible Magic
+  // pg. 21, Feat 6), a different document at a different level.
+  // The kept record's LEGACY text (the feat-2861 "+1 circumstance bonus to your next attack roll")
+  // is replaced in this same batch by the verbatim feat-5039 prose — "you can invoke your knowledge
+  // to make the creature take a –1 circumstance penalty" — through
+  // work/.b032-rows-situational.json, and the hidden twin's `descRefs` moves across through
+  // work/.b032-rows-gap-situational.json. The three land together or the survivor reads wrong.
+  // Hidden, never deleted: a saved character that already picked the twin keeps resolving it.
+  // batch 032: knowledge-is-power
+  'knowledge-is-power-wizard', // -> knowledge-is-power
 ]);
 
 /**
