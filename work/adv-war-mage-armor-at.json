@@ -1,0 +1,27 @@
+[
+  {
+    "id": "war-mage-dedication#armorAt",
+    "backfillRows": [
+      {
+        "category": "feats",
+        "id": "war-mage-dedication",
+        "field": "classArchetype",
+        "supersedes": true,
+        "value": {
+          "classId": "wizard",
+          "suppressFeatures": ["arcane-bond", "arcane-thesis", "defensive-robes"],
+          "addFeatures": [
+            { "level": 1, "featureId": "war-magic" },
+            { "level": 1, "featureId": "shield-block" }
+          ],
+          "armor": { "light": "trained", "medium": "trained" },
+          "armorAt": [{ "level": 11, "ranks": { "light": "expert", "medium": "expert", "unarmored": "expert" } }],
+          "weapon": { "martial": "trained" },
+          "note": "As a War Mage you gain the War Magic feature and the Shield Block feat at 1st level, become trained in light and medium armor (expert in light armor, medium armor and unarmored defense at 11th), treat martial weapons as simple weapons for proficiency, and must choose the School of Battle Magic as your arcane school; you never gain Arcane Bond, Arcane Thesis, or Defensive Robes, and you must take War Mage Dedication as your 2nd-level class feat."
+        },
+        "why": "archetype-331 prints \"At 11th level, you gain expert proficiency with light and medium armor, as well as unarmored defense\" — the one War Magic adjustment with no machine field; the note already said it in prose. Adds classArchetype.armorAt (unchanged fields copied verbatim from the superseded row), read by the class-archetype block in build.ts. Without it, suppressing defensive-robes (also archetype-331: \"You do not gain the defensive robes feature at 13th level\") left a level-11+ War Mage trained in light/medium/unarmoured with nothing to raise them."
+      }
+    ],
+    "note": "engine half landed (ClassArchetype.armorAt in src/rules/types.ts + build.ts); this is the data half."
+  }
+]

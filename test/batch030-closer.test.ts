@@ -11,7 +11,11 @@
  * otherwise it has stopped comparing and started asserting. wg-diff's own `--raw` is that hook
  * (RAW_SETTLES skips VERIFIED_EQUIVALENT), so the test below runs the real comparer twice.
  */
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
+import { CHILD_TIMEOUT } from './_timeouts';
+/* Every case runs a comparer as a real node child — fine alone, several times slower under the full
+ * suite, where the 5 s default turned it into a timeout. See test/_timeouts.ts. */
+vi.setConfig({ testTimeout: CHILD_TIMEOUT, hookTimeout: CHILD_TIMEOUT });
 import { execFileSync } from 'node:child_process';
 import { readFileSync, rmSync } from 'node:fs';
 import { join } from 'node:path';

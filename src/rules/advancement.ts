@@ -701,9 +701,23 @@ export const CLASS_ADVANCEMENT: Record<string, AdvancementEntry[]> = {
  * expert spellcasting. `test/advancement.test.ts` now fails any bare subclass key that advances
  * fewer tracks than its class table — that is the shape of the mistake, caught mechanically.
  */
-export function advancementRows(classId: string, subclassId?: string | null): AdvancementEntry[] {
+export function advancementRows(
+  classId: string,
+  subclassId?: string | null,
+  /**
+   * Class features a CLASS ARCHETYPE removes. A row is that feature's proficiency step, so a removed
+   * feature must not still take it: a Battle Harbinger cleric — *"You don't gain the Resolute Faith
+   * class feature"* (archetype-304) — reached master Will at 9th from `resolute-faith`, and a War
+   * Mage — *"You do not gain the defensive robes feature at 13th level"* (archetype-331) — took
+   * `defensive-robes`' unarmoured step. Matched on the feature id only: a source may carry a
+   * qualifier the archetype never names ("second-doctrine (cloistered)"), and every other source
+   * (`perception-expertise`, a creed rung) is untouched because it is not a suppressed id.
+   */
+  suppressedFeatures?: Iterable<string>,
+): AdvancementEntry[] {
+  const gone = new Set(suppressedFeatures ?? []);
   return [
     ...((subclassId ? CLASS_ADVANCEMENT[subclassId] : undefined) ?? CLASS_ADVANCEMENT[classId] ?? []),
     ...((subclassId ? CLASS_ADVANCEMENT[`${classId}-${subclassId}`] : undefined) ?? []),
-  ];
+  ].filter((e) => !gone.has((e.source ?? '').replace(/\s*\(.*$/, '')));
 }

@@ -16,7 +16,11 @@
  *   4. No commit message file, or one under 200 chars, REFUSES.
  *   5. The commit that lands contains exactly the printed list — nothing else in the tree comes with it.
  */
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
+import { CHILD_TIMEOUT } from './_timeouts';
+/* Every case runs the commit guard as a real node child against a throwaway git repo — fine alone,
+ * several times slower under the full suite. See test/_timeouts.ts. */
+vi.setConfig({ testTimeout: CHILD_TIMEOUT, hookTimeout: CHILD_TIMEOUT });
 import { execFileSync } from 'node:child_process';
 import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from 'node:fs';
 import { join } from 'node:path';

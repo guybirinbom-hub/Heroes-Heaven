@@ -1,4 +1,9 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
+import { CHILD_TIMEOUT } from './_timeouts';
+/* These cases walk EVERY record in the merged content database, several of them pairwise by name.
+ * That is seconds of CPU on an idle machine and many times that when the full suite has every core
+ * busy, so the file passed alone and failed as a timeout in the suite. See test/_timeouts.ts. */
+vi.setConfig({ testTimeout: CHILD_TIMEOUT, hookTimeout: CHILD_TIMEOUT });
 import { content } from './_content';
 import { listValues, isDuplicateId, NEAR_DUPLICATE_IDS, REMASTER_REPRINT_IDS } from '../src/data';
 import { eligibleFeatsForSlot } from '../src/rules/featSlots';

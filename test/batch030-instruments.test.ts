@@ -11,7 +11,11 @@
  * exact gap again). The stunted copy reaches the comparer through `--core`, the same hook wg-values
  * already had as `--advancement`.
  */
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
+import { CHILD_TIMEOUT } from './_timeouts';
+/* Every case runs an instrument as a real node child — fine alone, several times slower under the
+ * full suite, where the 5 s default turned it into a timeout. See test/_timeouts.ts. */
+vi.setConfig({ testTimeout: CHILD_TIMEOUT, hookTimeout: CHILD_TIMEOUT });
 import { execFileSync } from 'node:child_process';
 import { readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';

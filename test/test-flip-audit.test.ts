@@ -2,7 +2,11 @@ import { execFileSync } from 'node:child_process';
 import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
-import { afterAll, beforeEach, describe, expect, it } from 'vitest';
+import { afterAll, beforeEach, describe, expect, it, vi } from 'vitest';
+import { CHILD_TIMEOUT } from './_timeouts';
+/* Every case builds a throwaway git repo and runs the audit as a real node child — git plus a cold
+ * node boot per case, several times slower under the full suite. See test/_timeouts.ts. */
+vi.setConfig({ testTimeout: CHILD_TIMEOUT, hookTimeout: CHILD_TIMEOUT });
 // @ts-expect-error — plain-ESM script, no type declarations (scripts/ is JS, test/ is TS).
 import { auditBatch, registryKeys } from '../scripts/test-flip-audit.mjs';
 

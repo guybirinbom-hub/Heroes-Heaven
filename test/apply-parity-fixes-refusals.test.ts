@@ -2,7 +2,11 @@ import { execFileSync } from 'node:child_process';
 import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
-import { afterAll, describe, expect, it } from 'vitest';
+import { afterAll, describe, expect, it, vi } from 'vitest';
+import { CHILD_TIMEOUT } from './_timeouts';
+/* Every case runs the applier as a real node child, which boots a runtime and reads the shipped data
+ * from cold — fine alone, several times slower under the full suite. See test/_timeouts.ts. */
+vi.setConfig({ testTimeout: CHILD_TIMEOUT, hookTimeout: CHILD_TIMEOUT });
 // @ts-expect-error — plain-ESM script, no type declarations (scripts/ is JS, test/ is TS).
 import { formatBackfill, writeBackfill } from '../scripts/lib/write-backfill.mjs';
 

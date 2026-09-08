@@ -988,7 +988,10 @@ function modeAdjust(c: Character, target: ModeTarget, parts: CalcPart[]): Situat
  */
 function advancementFor(c: Character) {
   if (!c.classId) return [];
-  return advancementRows(c.classId, c.subclassId).filter((e) => e.level <= c.level);
+  /* The archetype's suppressed features travel on the built character, so the timeline drops exactly
+   * the rows buildCharacter dropped — a War Mage's Will/armour timeline showing a step the sheet did
+   * not apply is the same silent drift the reaper supplement caused above. */
+  return advancementRows(c.classId, c.subclassId, c.classArchetype?.suppressedFeatures).filter((e) => e.level <= c.level);
 }
 
 /** Timeline for a class-advancement track (saves / perception / classDc / spellcasting / armor),

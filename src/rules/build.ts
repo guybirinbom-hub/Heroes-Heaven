@@ -2270,6 +2270,75 @@ export function classArchetypeSpellMods(
   return { slotCap, cantripDelta, spellCollection };
 }
 
+/**
+ * The CLASS ARCHETYPE a character is running, resolved ONCE from the build — which class features it
+ * removes, which it adds, and the carriers that said so.
+ *
+ * ⚠ Resolved here, at the top of `buildCharacter`, because three consumers need the answer and they
+ * sit hundreds of lines apart: class advancement rows (a row whose source feature is gone must not
+ * fire), the feat-grant loop (a suppressed feature must not still hand out its feat, an ADDED one
+ * must), and the archetype block that applies the caps/spell-list/notes. Only the last one used to
+ * resolve it, so the two earlier readers were blind: War Mage — *"You gain the Shield Block general
+ * feat at 1st level"*, *"You do not gain the arcane bond or arcane thesis class features"*
+ * (archetype-331) — never got the Shield Block feat its added `war-magic` feature grants, and a
+ * Warrior of Legend — *"You don't gain Shield Block as a class feature"* (archetype-286) — kept the
+ * feat granted by the very feature the archetype removes.
+ *
+ * Carriers come from the BUILD rather than the resolved `feats` array (which does not exist yet at
+ * the advancement reader): every dedication the character holds is a slot pick, an override, or a
+ * chosen option that carries the archetype itself. The two ways a dedication could arrive WITHOUT a
+ * pick are both closed on the shipped data — nothing carries a class archetype in `grantsFeats`, and
+ * the one subclass that lists one in `grantedFeats` (Battle Creed → Battle Harbinger Dedication) is
+ * choice-gated, which that auto-grant loop deliberately leaves to a manual slot. So a class archetype
+ * still starts with the player taking the feat, exactly as it did when this was resolved from `feats`.
+ */
+function resolveClassArchetype(
+  build: BuildState,
+  content: ContentDatabase,
+  grantOptions: SubclassOption[],
+): {
+  carriers: { id: string; name: string; ca: ClassArchetype; classId: string }[];
+  suppressed: Set<string>;
+  added: { level: number; featureId: string }[];
+} {
+  const carriers: { id: string; name: string; ca: ClassArchetype; classId: string }[] = [];
+  const seen = new Set<string>();
+  const consider = (id: string | undefined, ca: ClassArchetype | undefined, name: string | undefined) => {
+    if (!id || !ca || seen.has(id)) return;
+    // Only applies to a character OF that class (either class when dual-classed). `classId` may name
+    // SEVERAL — Flexible Spellcaster restructures every prepared caster — so match against the list
+    // and record which of the character's own classes it landed on; storing the array would file the
+    // substituted features under a class named "wizard,cleric".
+    const classes = Array.isArray(ca.classId) ? ca.classId : [ca.classId];
+    const hit = [build.classId, build.classId2].find((c) => c && classes.includes(c));
+    if (!hit) return;
+    seen.add(id);
+    carriers.push({ id, name: name ?? id, ca, classId: hit });
+  };
+  for (const id of [
+    ...Object.entries(build.featPicks ?? {})
+      .filter(([slotKey]) => Number(slotKey.split(':')[0]) <= build.level)
+      .map(([, featId]) => featId),
+    ...(build.overrides?.addedFeats ?? []).filter((a) => a.level <= build.level).map((a) => a.featId),
+  ]) {
+    consider(id, content.feats[id]?.classArchetype, content.feats[id]?.name);
+  }
+  // An archetype may also be carried by a chosen subclass/extra-choice option, so scan those too.
+  // Every one of the fifteen we ship is on its dedication today — including Runelord, whose
+  // `runelord` entry is BOTH a wizard arcane school and a class archetype but keeps its restructuring
+  // on `runelord-dedication`, because print requires that feat at 2nd level. The option branch is
+  // therefore unused right now; it is kept because the two carriers are one shared shape, and an
+  // archetype authored onto a subclass option would otherwise be silently ignored.
+  for (const o of grantOptions) consider(o.id, content.classFeatures[o.id]?.classArchetype, content.classFeatures[o.id]?.name);
+  const suppressed = new Set<string>();
+  const added: { level: number; featureId: string }[] = [];
+  for (const { ca } of carriers) {
+    for (const id of ca.suppressFeatures ?? []) suppressed.add(id);
+    for (const af of ca.addFeatures ?? []) if (af.level <= build.level && content.classFeatures[af.featureId]) added.push(af);
+  }
+  return { carriers, suppressed, added };
+}
+
 export function cantripBonusFor(build: BuildState, content: ContentDatabase): number {
   /*
    * A record whose cantrip budget is NEGATIVE because it swaps a cantrip in — Adapted Cantrip's `-1`
@@ -3114,6 +3183,10 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   }
   // Every option that confers grants (both classes' subclasses + any extra-choice picks).
   const grantOptions = [subOption, subOption2, ...extraOptions].filter(Boolean) as SubclassOption[];
+  // CLASS ARCHETYPES (Runelord, War Magic, …): unlike a normal archetype these RESTRUCTURE the class —
+  // suppressing class features and substituting their own. Resolved HERE, before the first consumer,
+  // so class advancement, the feat-grant loop and the archetype block below all see one answer.
+  const arch = resolveClassArchetype(build, content, grantOptions);
   // A chosen option can set the spellcasting key ability (psychic subconscious mind = Int/Cha).
   // A keyAbilityOptions option (rogue racket) resolves through the player's pick instead.
   const keyOption = grantOptions.find((o) => o.keyAbility || o.keyAbilityOptions?.length);
@@ -4651,13 +4724,19 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   if (build.classId) {
     // Bare-`<subclassId>` tables replace the class default, `<classId>-<subclassId>` tables supplement
     // it; `advancementRows` owns that convention so this and explain.ts cannot answer it differently.
-    for (const e of advancementRows(build.classId, build.subclassId)) {
+    /* A CLASS ARCHETYPE that removes the feature a row comes FROM removes the row with it: a Battle
+     * Harbinger cleric — *"You don't gain the Resolute Faith class feature"* (archetype-304) — was
+     * still handed `resolute-faith`'s master Will at 9th, and a War Mage — *"You do not gain the
+     * defensive robes feature at 13th level"* (archetype-331) — its unarmoured step at 13th. The
+     * suppression test lives in `advancementRows` so this reader and explain.ts's timeline cannot
+     * answer it differently. */
+    for (const e of advancementRows(build.classId, build.subclassId, arch.suppressed)) {
       if (e.level <= level) applyAdvancement(proficiencies, spellcasting, e, build.classId);
     }
     // Dual Class: also apply the second class's advancement (applyAdvancement only ever raises a
     // track via maxRank, so the better-rank-of-two result falls out automatically).
     if (cls2 && build.classId2) {
-      for (const e of advancementRows(build.classId2, build.subclassId2)) if (e.level <= level) applyAdvancement(proficiencies, spellcasting, e, build.classId2);
+      for (const e of advancementRows(build.classId2, build.subclassId2, arch.suppressed)) if (e.level <= level) applyAdvancement(proficiencies, spellcasting, e, build.classId2);
     }
     // Rogue Ruffian/Avenger rackets: "when you gain light armor expertise/mastery, you also gain expert/
     // master proficiency in medium armor." The rogue table only advances light, so mirror the resolved
@@ -5064,13 +5143,21 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     for (const [c, subId] of [[cls, build.subclassId], [cls2, build.subclassId2]] as const) {
       if (!c) continue;
       // A subclass can REMOVE a feature (cleric Battle Creed drops Resolute Faith); a removed feature
-      // must not still hand out its feat.
-      const dropped = new Set(c.subclass?.options.find((o) => o.id === subId)?.suppressedFeatures ?? []);
+      // must not still hand out its feat. A CLASS ARCHETYPE removes features the same way — *"You
+      // don't gain Shield Block as a class feature"* (Warrior of Legend, archetype-286) — and this
+      // lane honoured the subclass half only, so a Warrior of Legend fighter still held the Shield
+      // Block feat granted by the very feature the archetype takes away.
+      const dropped = new Set([...(c.subclass?.options.find((o) => o.id === subId)?.suppressedFeatures ?? []), ...arch.suppressed]);
       for (const f of c.features) {
         if (f.level > level || dropped.has(f.featureId)) continue;
         grantSources.push({ id: f.featureId, grants: content.classFeatures[f.featureId]?.grantsFeats });
       }
     }
+    /* …and the features a class archetype ADDS in their place — *"You gain the war magic class
+     * feature at 1st level"*, whose record grants the Shield Block feat print gives a War Mage at 1st
+     * (archetype-331). `addFeatures` reached the owned-feature set 800 lines below but never this
+     * loop, so every feat an added feature grants was written to nobody. */
+    for (const af of arch.added) grantSources.push({ id: af.featureId, grants: content.classFeatures[af.featureId]?.grantsFeats });
     // …and the chosen OPTIONS, which is where several of these actually live: a wizard's thesis
     // (Improved Familiar Attunement → the Familiar feat) and a cleric's doctrine (Cloistered Cleric →
     // Domain Initiate) are picks, not entries in the class's level-by-level feature list. Their option
@@ -5824,44 +5911,30 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     }
   };
   // CLASS ARCHETYPES (Runelord, War Magic, …): unlike a normal archetype these RESTRUCTURE the class —
-  // suppressing class features and substituting their own. Resolved before the owned-feature set so
-  // every downstream consumer (effect choices, focus, derive) sees the archetype's version of the class.
-  const archSuppressed = new Set<string>();
-  const archAddedFeatures: { level: number; featureId: string }[] = [];
+  // suppressing class features and substituting their own. The suppressed/added sets come from
+  // `resolveClassArchetype` at the top of this function, because the advancement reader and the
+  // feat-grant loop both need them long before this point; what is left here is the part that needs
+  // the assembled proficiencies (caps, ranks, the substituted spell list, the sheet notes).
+  const archSuppressed = arch.suppressed;
+  const archAddedFeatures = arch.added;
   const archNotes: string[] = [];
   /** Which class the archetype restructures — a per-class list needs it, or Dual Class shows the
    *  substituted features under both classes. */
   let archClassId: string | undefined;
   const archCaps: { armor?: ClassArchetype['armorCap']; weapon?: ClassArchetype['weaponCap'] }[] = [];
-  // An archetype may be carried by the dedication FEAT or by a chosen subclass/extra-choice option,
-  // so scan both. Every one of the fourteen we ship is on its dedication today — including Runelord,
-  // whose `runelord` entry is BOTH a wizard arcane school and a class archetype but keeps its
-  // restructuring on `runelord-dedication`, because print requires that feat at 2nd level ("you must
-  // select Runelord Dedication as your 2nd-level class feat"). The option branch is therefore unused
-  // right now; it is kept because the two carriers are one shared shape, and an archetype authored
-  // onto a subclass option would otherwise be silently ignored.
-  const archCarriers: { id: string; name: string; ca: ClassArchetype }[] = [];
   let archSpellList: Character['spellListReplacement'];
-  for (const fc of feats) {
-    const ca = content.feats[fc.featId]?.classArchetype;
-    if (ca) archCarriers.push({ id: fc.featId, name: content.feats[fc.featId].name, ca });
-  }
-  for (const o of grantOptions) {
-    const ca = content.classFeatures[o.id]?.classArchetype;
-    if (ca) archCarriers.push({ id: o.id, name: content.classFeatures[o.id].name, ca });
-  }
-  for (const { id: carrierId, name, ca } of archCarriers) {
-    // Only applies to a character OF that class (either class when dual-classed). `classId` may name
-    // SEVERAL — Flexible Spellcaster restructures every prepared caster — so match against the list
-    // and record which of the character's own classes it landed on; storing the array here would file
-    // the substituted features under a class named "wizard,cleric".
-    const archClasses = Array.isArray(ca.classId) ? ca.classId : [ca.classId];
-    const hit = [build.classId, build.classId2].find((c) => c && archClasses.includes(c));
-    if (!hit) continue;
+  for (const { id: carrierId, name, ca, classId: hit } of arch.carriers) {
     archClassId = hit;
-    for (const id of ca.suppressFeatures ?? []) archSuppressed.add(id);
-    for (const af of ca.addFeatures ?? []) if (af.level <= level && content.classFeatures[af.featureId]) archAddedFeatures.push(af);
     for (const [c, r] of Object.entries(ca.armor ?? {})) if (r) proficiencies.defenses[c as ArmorCategory] = maxRank(proficiencies.defenses[c as ArmorCategory], r);
+    /* …and the LEVELLED half — *"At 11th level, you gain expert proficiency with light and medium
+     * armor, as well as unarmored defense"* (War Magic, archetype-331). Suppressing `defensive-robes`
+     * takes the wizard table's 13th-level unarmoured step away (correctly: the War Mage never gains
+     * that feature), so without this a level-11+ War Mage was left a rank short on all three — the
+     * archetype's own step is the only thing that grants them. */
+    for (const step of ca.armorAt ?? []) {
+      if (step.level > level) continue;
+      for (const [c, r] of Object.entries(step.ranks)) if (r) proficiencies.defenses[c as ArmorCategory] = maxRank(proficiencies.defenses[c as ArmorCategory], r);
+    }
     for (const [c, r] of Object.entries(ca.weapon ?? {})) if (r) proficiencies.attacks[c as WeaponCategory] = maxRank(proficiencies.attacks[c as WeaponCategory], r);
     if (ca.armorCap || ca.weaponCap) archCaps.push({ armor: ca.armorCap, weapon: ca.weaponCap });
     // The substituted spell list. It replaces the tradition in the PICKER only, so it is resolved

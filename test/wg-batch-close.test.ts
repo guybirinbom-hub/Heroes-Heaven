@@ -14,7 +14,12 @@
  *   3. Re-closing the CLOSED batch 029 changes nothing. That is the plan's own rollout acceptance
  *      (docs/wg-batch-pipeline.md section E.1) pinned as a test rather than performed by hand once.
  */
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
+import { CHILD_TIMEOUT } from './_timeouts';
+/* Every case runs the closer as a real node child against a throwaway repo — fine alone, several
+ * times slower under the full suite (one child was killed outright at the 5 s default: exit
+ * 3221226505). See test/_timeouts.ts. */
+vi.setConfig({ testTimeout: CHILD_TIMEOUT, hookTimeout: CHILD_TIMEOUT });
 import { execFileSync } from 'node:child_process';
 import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, existsSync, rmSync } from 'node:fs';
 import { join } from 'node:path';

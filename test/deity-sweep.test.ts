@@ -1,4 +1,9 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
+import { CHILD_TIMEOUT, INSTRUMENT_TIMEOUT } from './_timeouts';
+/* The sweep's own cases read the whole deity catalogue in-process and its last case runs the
+ * field-check instrument as a node child; both outgrew the 5 s default under the full suite. The
+ * instrument keeps its own, longer clock below. See test/_timeouts.ts. */
+vi.setConfig({ testTimeout: CHILD_TIMEOUT, hookTimeout: CHILD_TIMEOUT });
 import { execFileSync } from 'node:child_process';
 import { content, build } from './_content';
 
@@ -77,5 +82,7 @@ describe('deity sweep — records aligned with their own page', () => {
     for (const f of ['domains', 'alternateDomains', 'divineFont', 'favoredWeapons', 'skill', 'spells', 'rarity', 'sanctification']) {
       expect(out, f).toMatch(new RegExp(`${f}\\s+differs on\\s+0 record`));
     }
-  }, 120_000);
+    // The instrument re-reads every deity page in the Archives mirror; 120 s was enough alone and was
+    // exceeded under the full suite. See test/_timeouts.ts.
+  }, INSTRUMENT_TIMEOUT);
 });

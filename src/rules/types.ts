@@ -1581,6 +1581,17 @@ export interface ClassArchetype {
   /** Proficiency ranks the archetype confers directly (War Magic's light/medium armor). */
   armor?: Partial<Record<ArmorCategory, ProficiencyRank>>;
   weapon?: Partial<Record<WeaponCategory, ProficiencyRank>>;
+  /**
+   * Armour ranks the archetype confers AT A LEVEL — *"At 11th level, you gain expert proficiency with
+   * light and medium armor, as well as unarmored defense"* (War Magic, AoN archetype-331). `armor`
+   * above is the flat 1st-level grant and cannot say "at 11th".
+   *
+   * A class-advancement row cannot carry this: `CLASS_ADVANCEMENT` is keyed by class/subclass, and
+   * this archetype's required arcane school (School of Battle Magic) is selectable WITHOUT the
+   * archetype, so a `wizard-school-of-battle-magic` table would hand the step to plain wizards. The
+   * step belongs to the carrier, so it lives on the carrier.
+   */
+  armorAt?: { level: number; ranks: Partial<Record<ArmorCategory, ProficiencyRank>> }[];
   /** Proficiency CEILINGS the archetype imposes — a class archetype can take training AWAY ("as a
    *  Warrior of Legend you aren't trained in heavy armor"). armor/weapon above only ever raise a rank,
    *  so a removal needs its own lane. Applied after all class advancement. */
