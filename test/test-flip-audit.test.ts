@@ -421,6 +421,83 @@ describe('test-flip-audit — an alphanumeric batch token (the print-read lane)'
   });
 });
 
+/*
+ * An it( / test( / describe( opener is the FIRST token of a statement, never text inside a quote.
+ * The old matcher was `/(^|[^\w.])(it|test)\s*[(.]/` — anywhere on the line — so a perfectly ordinary
+ * assignment inside a test body, `const out = 'work/.wg-diff-b027-test.json';`, read as an it()
+ * header on the strength of the "-test." in a FILENAME. Both halves of that broke:
+ *   • enclosingTitles() returned the string literal as the enclosing title, so the
+ *     record-id-in-title half of the citation rule could not be satisfied at all near such a line
+ *     (batch 031's closer had to fall back to the premise form);
+ *   • and a fake "title" nearer than the real one that happens to name a record SATISFIES the check
+ *     for a flip whose real it( never names it — the gate opening for an uncited flip.
+ */
+describe('test-flip-audit — an opener is a statement, not a substring of a string literal', () => {
+  /**
+   * Drive test/beta.test.ts and its BASELINE SNAPSHOT together, so each case is exactly the one-line
+   * flip it describes and the surrounding shape is the fixture's own.
+   */
+  const beta = (base: string, changed: string) => {
+    write(root, { [`work/.b${B}-testbase/test/beta.test.ts`]: base, 'test/beta.test.ts': changed });
+  };
+  /* The record id lives in the it( TITLE only — never in the describe, or the nearest-describe half
+   * of enclosingTitles would satisfy the check whichever line it mistook for the it(. */
+  const IT_TITLED = (body: string) => `import { describe, expect, it } from 'vitest';
+
+describe('outer', () => {
+  it('ring-of-wizardry-type-i opens the arcane gate', () => {
+${body}  });
+});
+`;
+
+  it('does not take a filename string literal for the enclosing it() title', () => {
+    // `const out = 'work/.wg-diff-b027-test.json';` — an ordinary assignment whose FILENAME contains
+    // "-test.", which the old matcher read as an it( header. It is the nearest candidate above the
+    // flip, and it does not name the record, so the citation passes only if it was skipped.
+    const lit = "    const out = 'work/.wg-diff-b027-test.json';\n";
+    beta(
+      IT_TITLED(`${lit}    expect(out).toBe('a');\n`),
+      IT_TITLED(`${lit}    // batch ${B}: ring-of-wizardry-type-i#arcane-gate\n    expect(out).toBe('b');\n`),
+    );
+    expect(changes(run())).toBe('');
+  });
+
+  it('still recognises test(, describe.each( and it.skip( as openers', () => {
+    // A `test(` opener under `describe.each(` — the citation names a record that appears ONLY in that
+    // test( title, so it passes only while both are still read as openers.
+    const each = (line: string) => `import { describe, expect, test } from 'vitest';
+
+describe.each([1])('outer', () => {
+  test('ring-of-wizardry-type-i opens the arcane gate', () => {
+${line}  });
+});
+`;
+    beta(each('    expect(3).toBe(3);\n'), each(`    // batch ${B}: ring-of-wizardry-type-i#arcane-gate\n    expect(3).toBe(4);\n`));
+    expect(changes(run())).toBe('');
+    // …and `it.skip(` is still the hard fail it always was.
+    write(root, { 'test/gamma.test.ts': "import { expect, it } from 'vitest';\nit.skip('x', () => { expect(1).toBe(1); });\n" });
+    expect(run().violations.some((v) => v.change.includes('disabled test'))).toBe(true);
+  });
+
+  it('reports a flip whose only nearby "title" is a string literal containing "test("', () => {
+    // The hole, in the direction that matters: the fake carries BOTH the record id and a `test(`
+    // substring, and sits nearer the flip than the real it(, which never names the record. The old
+    // matcher took it for the enclosing title and let the uncited flip through.
+    const fake = "    const fake = 'ring-of-wizardry-type-i test(';\n";
+    const body = (extra: string) => `import { describe, expect, it } from 'vitest';
+
+describe('outer', () => {
+  it('opens the gate', () => {
+${extra}  });
+});
+`;
+    beta(body('    expect(1).toBe(1);\n'), body(`${fake}    // batch ${B}: ring-of-wizardry-type-i#arcane-gate\n    expect(1).toBe(2);\n`));
+    const r = run();
+    expect(r.violations).toHaveLength(1);
+    expect(r.violations[0].expected).toContain('appears in no enclosing describe/it title');
+  });
+});
+
 describe('test-flip-audit — the registry parser', () => {
   // mutation-proof for the parser itself: prose, apostrophes and nested braces must not hide a key.
   it('reads top-level keys past comments, strings and nesting', () => {

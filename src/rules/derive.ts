@@ -2546,22 +2546,23 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
   }
   const cls = c.classId ? db.classes[c.classId] : undefined;
   // A class archetype can REMOVE class features and substitute its own — honor both here so the
-  // sheet's defenses match the class as the archetype rebuilt it.
-  const suppressed = new Set(c.classArchetype?.suppressedFeatures ?? []);
+  // sheet's defenses match the class as the archetype rebuilt it. The REMOVE half now lives in
+  // ownedFeatureIds (see "A CLASS ARCHETYPE takes class features AWAY"), so the local copy that used
+  // to sit here is gone. It was not merely redundant: it re-suppressed AFTER the grantsClassFeatures
+  // pass, so Spellshield — *"You gain the arcane bond class feature"*, prerequisite War Mage
+  // Dedication — handed arcane-bond back and this loop dropped its defenses again. The `addedFeatures`
+  // half is still applied below, where it always was.
   if (cls) {
     // Via ownedFeatureIds, not cls.features, so subclass VARIANTS come too — the toxicologist's
     // poison resistance lives on `field-discovery-toxicologist` while the class only lists the
     // generic `field-discovery`. Suppression is keyed by the generic id, so a suppressed feature
-    // takes its variant with it.
-    const sub = c.subclassId ? `-${c.subclassId}` : null;
+    // takes its variant with it — ownedFeatureIds applies that same rule.
     const owned = ownedFeatureIds(c, db);
     // Enhanced Resistance improves the INITIAL modification's formula, so the upgrade is applied to
     // that record as it is pushed — keeping its own name in the breakdown, where the player expects
     // to read "Phlogistonic Regulator", not "Enhanced Resistance".
     const fullLevelRes = fullLevelResistanceTarget(c, db, owned);
     for (const id of owned) {
-      const base = sub && id.endsWith(sub) ? id.slice(0, -sub.length) : id;
-      if (suppressed.has(id) || suppressed.has(base)) continue;
       const rec = db.classFeatures[id];
       /*
        * EQUIPMENT-GATED DEFENCES. *"WHILE WEARING YOUR ARMOR, you gain resistance to slashing damage
@@ -3469,6 +3470,29 @@ export function ownedFeatureIds(c: Character, db: ContentDatabase): Set<string> 
     // reachable by nothing at all.
     const opt = klass?.subclass?.options.find((o) => o.id === subId);
     for (const id of subclassFeatureIds(opt?.featureIds, c.level)) if (db.classFeatures[id]) out.add(id);
+  }
+  /*
+   * A CLASS ARCHETYPE takes class features AWAY. War Mage (AoN archetype-331): *"You do not gain the
+   * arcane bond or arcane thesis class features. You do not gain the defensive robes feature at 13th
+   * level."* buildCharacter subtracts the same list from its own owned set (build.ts:5891), but this
+   * reader rebuilt ownership from `cls.features` and never subtracted — so a War Mage wizard OWNED
+   * arcane-bond here, its `grantsActions` put Drain Bonded Item on the sheet and its `limitedUses`
+   * drew a once-per-day pip for a feature the character does not have. Subtracted at this ONE choke
+   * point, which every sheet reader goes through, rather than in each of the ~30 call sites (only
+   * deriveDefenses had its own copy).
+   *
+   * Placed immediately BEFORE the grantsClassFeatures pass on purpose: a record that hands the
+   * feature back — Spellshield, *"You gain the arcane bond class feature"*, whose prerequisite IS War
+   * Mage Dedication — re-adds it there for free. Suppression is keyed by the GENERIC id, so a
+   * `<featureId>-<subclassId>` variant added above goes with it (same rule as deriveDefenses).
+   */
+  const archSuppressed = new Set(c.classArchetype?.suppressedFeatures ?? []);
+  if (archSuppressed.size) {
+    const sub = c.subclassId ? `-${c.subclassId}` : null;
+    for (const id of out) {
+      const base = sub && id.endsWith(sub) ? id.slice(0, -sub.length) : id;
+      if (archSuppressed.has(id) || archSuppressed.has(base)) out.delete(id);
+    }
   }
   // "You gain the Sneak Attack class feature." A record handing over a CLASS FEATURE rather than a
   // feat — the archetype route into another class's signature ability. `grantsFeats` could not say it

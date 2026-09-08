@@ -47,10 +47,65 @@ const PREMISE_RE = /\/\/\s*batch\s+([0-9A-Za-z]+)\s+premise\s*:\s*([a-z0-9]+(?:-
 /* The id stops at whitespace or a quote so the JSON form (`"_cite": "// batch 030: a#b"`) parses. */
 const CITE_RE = /\/\/\s*batch\s+([0-9A-Za-z]+)\s*:\s*([^\s"'`,;]+)/i;
 
-const BLOCK_RE = /(^|[^\w.])(it|test|describe)\s*[(.]/;      // an it( / test( / describe( line
-const IT_RE = /(^|[^\w.])(it|test)\s*[(.]/;
-const DESCRIBE_RE = /(^|[^\w.])describe\s*[(.]/;
+/*
+ * A test-block OPENER is the first token of a statement — never text inside a quote.
+ *
+ * The old shape was `/(^|[^\w.])(it|test)\s*[(.]/`, which matched anywhere on the line, including
+ * inside a string literal: `const out = 'work/.wg-diff-b027-test.json';` contains "-test." and so
+ * read as an it() header. Two failures came out of that, in both directions. enclosingTitles()
+ * returned that literal as the enclosing it( title, so the record-id-in-title half of the citation
+ * rule became UNSATISFIABLE for any flip sitting under such a line (batch 031's closer had to fall
+ * back to the premise form); and, worse, a nearer fake "title" that happens to contain a record id
+ * SATISFIES the check for a flip whose real it( never names the record — a hole in the gate.
+ *
+ * So: blank the line's string and comment bodies first, then require the opener at the start of the
+ * statement, with any chain in between (`it.skip(`, `describe.each(`, `it.each\``).
+ */
+const OPENER = String.raw`^\s*(?:%s)(?:\.[A-Za-z_$][\w$]*)*\s*[(\`]`;
+const BLOCK_RE = new RegExp(OPENER.replace('%s', 'it|test|describe'));
+const IT_RE = new RegExp(OPENER.replace('%s', 'it|test'));
+const DESCRIBE_RE = new RegExp(OPENER.replace('%s', 'describe'));
 const EXPECT_RE = /\bexpect\s*\(/;
+
+/**
+ * One line with the BODY of every string literal and comment blanked to spaces, same length.
+ *
+ * Deliberately single-line, with ONE residual hole, measured rather than assumed. An unterminated
+ * `'`/`"` blanks the rest of the line — safe, it can only hide an opener. A MULTI-LINE template
+ * literal is not safe in that direction: this function starts each of its inner lines outside any
+ * quote, so a line of literal data reading `it('<record id>…` at column 0 is still taken for an
+ * opener, and can still be handed to enclosingTitles as the nearest title. Proven by fixture: real
+ * it( "opens the gate", a template literal below it carrying `it('ring-of-wizardry-type-i fake'…`,
+ * a cited flip under both — reported as a violation when the fake is a single-line string, NOT
+ * reported when it spans lines.
+ *
+ * Left open because the incidence is zero and closing it costs more than it buys: carrying quote
+ * state across lines needs block-comment handling too (`/* … `it(` … *\/` spans lines and this
+ * function only blanks a comment to end-of-line), and an odd backtick in one of those prose comments
+ * would then blank the rest of the FILE — a failure mode with real incidence, traded for one with
+ * none. Scan of test/ at the time of writing: 0 non-self-test files contain a multi-line template
+ * literal whose inner line starts with it( / test( / describe(. Re-measure before relying on that.
+ */
+export function codeOnly(line) {
+  let out = '';
+  let quote = null;
+  for (let i = 0; i < line.length; ) {
+    const ch = line[i];
+    if (quote) {
+      if (ch === '\\') { const n = Math.min(2, line.length - i); out += ' '.repeat(n); i += n; continue; }
+      if (ch === quote) { quote = null; out += ch; i++; continue; }
+      out += ' '; i++; continue;
+    }
+    if (ch === "'" || ch === '"' || ch === '`') { quote = ch; out += ch; i++; continue; }
+    if (ch === '/' && (line[i + 1] === '/' || line[i + 1] === '*')) { out += ' '.repeat(line.length - i); break; }
+    out += ch; i++;
+  }
+  return out;
+}
+
+const isIt = (t) => IT_RE.test(codeOnly(t ?? ''));
+const isDescribe = (t) => DESCRIBE_RE.test(codeOnly(t ?? ''));
+const isBlock = (t) => BLOCK_RE.test(codeOnly(t ?? ''));
 const DISABLED_RE = /\b(?:it|test|describe)\s*\.\s*(skip|only|todo|fails|concurrent\.skip)\b|\b(?:it|test|describe)\.(skip|only|todo)\b/;
 
 /*
@@ -212,8 +267,8 @@ function enclosingTitles(ls, line) {
   let sawDescribe = false;
   for (let n = Math.min(line, ls.length) - 1; n >= 0; n--) {
     const t = ls[n];
-    if (!sawIt && IT_RE.test(t)) { sawIt = true; titles.push(t); }
-    if (!sawDescribe && DESCRIBE_RE.test(t)) { sawDescribe = true; titles.push(t); }
+    if (!sawIt && isIt(t)) { sawIt = true; titles.push(t); }
+    if (!sawDescribe && isDescribe(t)) { sawDescribe = true; titles.push(t); }
     if (sawIt && sawDescribe) break;
   }
   return titles.join(' \u2014 ');
@@ -397,7 +452,7 @@ function scanTestFile({ rel, oldText, newText, ctx, add }) {
       }
     }
     for (const r of h.removed) {
-      if (DESCRIBE_RE.test(r.text)) {
+      if (isDescribe(r.text)) {
         add(rel, r.line, `describe block removed: ${r.text.trim().slice(0, 80)}`, 'a batch never deletes a describe block');
       }
     }
@@ -409,7 +464,7 @@ function scanTestFile({ rel, oldText, newText, ctx, add }) {
       const r = h.removed[i];
       if (a.text === r.text) continue;
       if (stripNums(a.text) !== stripNums(r.text)) continue;
-      if (BLOCK_RE.test(a.text)) continue;
+      if (isBlock(a.text)) continue;
       const [from, to] = itBlockRange(ls, a.line);
       const otherChanges = [...changedNew].filter((n) => n >= from && n <= to && n !== a.line);
       if (otherChanges.length === 0) {
@@ -421,13 +476,13 @@ function scanTestFile({ rel, oldText, newText, ctx, add }) {
     for (const a of h.added) {
       if (DISABLED_RE.test(a.text)) continue;
       if (EXPECT_RE.test(a.text)) cite(a.line, `expect() changed/added: ${a.text.trim().slice(0, 80)}`, 'a changed assertion');
-      else if (IT_RE.test(a.text)) cite(a.line, `it()/test() changed/added: ${a.text.trim().slice(0, 80)}`, 'a changed test block');
+      else if (isIt(a.text)) cite(a.line, `it()/test() changed/added: ${a.text.trim().slice(0, 80)}`, 'a changed test block');
     }
     for (const r of h.removed) {
-      if (DESCRIBE_RE.test(r.text)) continue;                       // already a hard fail
+      if (isDescribe(r.text)) continue;                             // already a hard fail
       // A rewritten line is reported once, on its added half (which is what must carry the citation);
       // only an assertion the batch DROPPED outright is reported from the removed side.
-      if (IT_RE.test(r.text) && !h.added.some((a) => IT_RE.test(a.text))) {
+      if (isIt(r.text) && !h.added.some((a) => isIt(a.text))) {
         cite(r.line, `it()/test() removed: ${r.text.trim().slice(0, 80)}`, 'a removed test block');
       } else if (EXPECT_RE.test(r.text) && !h.added.some((a) => EXPECT_RE.test(a.text))) {
         cite(r.line, `expect() removed: ${r.text.trim().slice(0, 80)}`, 'a removed assertion');
@@ -440,11 +495,11 @@ function scanTestFile({ rel, oldText, newText, ctx, add }) {
 function itBlockRange(ls, line) {
   let from = 1;
   for (let n = Math.min(line, ls.length) - 1; n >= 0; n--) {
-    if (IT_RE.test(ls[n])) { from = n + 1; break; }
+    if (isIt(ls[n])) { from = n + 1; break; }
   }
   let to = ls.length;
   for (let n = from; n < ls.length; n++) {
-    if (BLOCK_RE.test(ls[n])) { to = n; break; }
+    if (isBlock(ls[n])) { to = n; break; }
   }
   return [from, to];
 }

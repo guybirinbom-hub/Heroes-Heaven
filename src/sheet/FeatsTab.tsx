@@ -50,14 +50,16 @@ function featBucket(category: string): string {
  * action"*, its prerequisite is War Mage Dedication, and that class archetype's
  * `suppressFeatures` lists `arcane-bond` — so every Spellshield holder is a character whose sheet
  * both HID the Arcane Bond row and printed "Replaced: Arcane Bond" on the same page as the feat
- * that grants it. `grantsClassFeatures` is the field that says otherwise (derive.ts:3492 already
- * re-adds it to ownedFeatureIds, which is why Drain Bonded Item did reach the sheet), and nothing
- * in src/sheet read it.
+ * that grants it. `grantsClassFeatures` is the field that says otherwise (ownedFeatureIds' last
+ * pass re-adds it, which is why Drain Bonded Item does reach the sheet), and nothing in src/sheet
+ * read it.
  *
- * `ownedFeatureIds` itself cannot be the predicate: it is built from `cls.features` and never
- * subtracts the archetype's suppressions, so it contains every suppressed id already. The question
- * is only "does a record the character owns hand this feature back", which is this walk — the same
- * feats + owned-features source list derive.ts uses for the field.
+ * `ownedFeatureIds` now DOES subtract the archetype's suppressions (derive.ts, "A CLASS ARCHETYPE
+ * takes class features AWAY"), so membership in it would be a workable predicate — but it is not the
+ * question this note asks. "Replaced: …" must name the features the player LOST, and a feature the
+ * archetype suppresses at 1st level and no record hands back is absent from both sets; only
+ * `grantsClassFeatures` distinguishes "given back" from "never there". Hence this walk, over the
+ * same feats + owned-features source list derive.ts uses for the field.
  */
 export function regrantedFeatureIds(character: Character, content: ContentDatabase): Set<string> {
   const owned = ownedFeatureIds(character, content);
