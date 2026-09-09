@@ -11,6 +11,7 @@ export const meta = {
     { title: 'Apply digest', detail: 'driver apply-digest; produces the gaps file', model: 'opus' },
     { title: 'Gaps', detail: 'one agent per gap family resolves or parks each open line, then a gap-verifier', model: 'opus' },
     { title: 'Close', detail: 'the closer runs the driver stage by stage and writes the commit message', model: 'opus' },
+    { title: 'Gate reds', detail: 'only when the closer ends red: triage the red items into lanes, one builder + verifier each, then a second closer pass', model: 'opus' },
     { title: 'Verify close', detail: 'close-verifier, default REFUTE, re-runs flip-audit / gate / verify', model: 'opus' },
     { title: 'Final', detail: 'driver final run.json tail back to Fable', model: 'opus' },
   ],
@@ -26,7 +27,7 @@ export const meta = {
 
 const RAW_BATCH = String((args && args.batch) != null ? (args && args.batch) : '')
 // Padded to three digits when numeric, UPPERCASED otherwise - exactly what scripts/wg-batch-run.mjs does
-// (`rawBatch.padStart(3,'0')` / `rawBatch.toUpperCase()`). A lowercase "p01" here would have the readers
+// (rawBatch.padStart(3,'0') / rawBatch.toUpperCase()). A lowercase "p01" here would have the readers
 // write work/.bp01-read-slice-1.json while the driver looked for .bP01- with a case-sensitive regex.
 const BATCH = /^[0-9]+$/.test(RAW_BATCH) ? (RAW_BATCH.length >= 3 ? RAW_BATCH : ('000' + RAW_BATCH).slice(-3)) : RAW_BATCH.toUpperCase()
 if (!BATCH) throw new Error('wg-batch: args.batch is required, e.g. { batch: "030" } or { batch: "P01", print: true }')
@@ -41,11 +42,17 @@ const PRINT_FLAG = PRINT ? ' --print' : ''
 const OPUS = { model: 'opus', effort: 'high' }
 const RUNNER = { model: 'opus', effort: 'low' }
 const DEFAULT_FAMILIES = ['data-rows', 'instruments', 'situational', 'engine', 'repair']
+// Batch 033 cut 50 records and produced 78 findings; one family got 41 of them and could not finish,
+// and the closer ended with unassigned gate reds. 40 is the default size from that batch on.
+const DEFAULT_COUNT = 40
+// Above this, a family is split into chunks - see chunkFamilies().
+const CHUNK_MAX = 12
 
 const cutFlags = () => {
   let f = ''
   if (args && args.ids) f += ' --ids ' + String(args.ids)
   if (args && args.count) f += ' --count ' + String(args.count)
+  else if (!(args && args.ids)) f += ' --count ' + DEFAULT_COUNT
   if (args && args.maxLevel) f += ' --max-level ' + String(args.maxLevel)
   return f
 }
@@ -111,9 +118,13 @@ const FAMILY_OUT = {
   },
 }
 const CLOSER_OUT = {
-  type: 'object', additionalProperties: false, required: ['notes', 'closerEdits', 'needsOrchestrator', 'commitChars'],
+  type: 'object', additionalProperties: false, required: ['notes', 'closerEdits', 'needsOrchestrator', 'commitChars', 'gateRed'],
   properties: {
     notes: { type: 'string', description: 'non-load-bearing prose, under 3000 chars' },
+    gateRed: {
+      type: 'array', items: { type: 'string' },
+      description: 'EMPTY only if your final --stage gate run was green. Otherwise one line per still-red item: record id, which gate (KINDS / VALUES / IDENTITY / EXPERIENCE / suite / verify), what the comparer says, what print says. An item you could not assign to any family goes here too - do not omit it, do not soften it.',
+    },
     closerEdits: {
       type: 'array',
       items: {
@@ -172,6 +183,7 @@ const cut = await agent([
   NEVER,
   'Do exactly this, in order, from the repo root:',
   '1. node scripts/wg-batch-run.mjs --batch ' + BATCH + ' --stage cut' + cutFlags() + PRINT_FLAG,
+  (args && (args.count || args.ids)) ? '' : 'The --count ' + DEFAULT_COUNT + ' above is the workflow default, not a guess: batch 033 cut 50 records, produced 78 findings, overloaded one family and ended with a red gate. Run the command exactly as written.',
   '2. node scripts/wg-batch-run.mjs --batch ' + BATCH + ' --stage baseline' + PRINT_FLAG,
   'The driver takes the heavy-job lock itself and waits - do not kill it because it is quiet. If a stage exits non-zero, do NOT retry it more than once and do not work around it: report ok:false and put the driver\'s own "next" line into stopped.',
   'Then read work/' + B + '-run.json and return, verbatim, the entries these two stages appended (the whole JSON objects, not a summary) as runJson.',
@@ -308,7 +320,28 @@ if (!readDigest || !readDigest.ok) {
 }
 
 const families = (readDigest.families || []).filter((f) => f && f.family)
-const FAMILIES = families.length ? families : DEFAULT_FAMILIES.map((f) => ({ family: f, findingIds: [] }))
+const routed = families.length ? families : DEFAULT_FAMILIES.map((f) => ({ family: f, findingIds: [] }))
+
+// Batch 033: one family drew 41 of the batch's 78 findings and could not finish - one agent, one context,
+// one report. Split anything over CHUNK_MAX into equal chunks named <family>-1, <family>-2 ... Each chunk
+// is a full family to the rest of the pipeline: its own builder, verifier, spec, report and manifest entry.
+// The driver finds them: stageApplyDigest globs ^\.bNNN-(report|verify)-(.+)\.txt$ and (.+) matches
+// "data-rows-1"; scripts/wg-batch-close.mjs derives its report paths from the manifest "family" field,
+// which is why a chunk's manifest entry must carry the CHUNK name, not the base family.
+const chunkFamilies = (list) => {
+  const out = []
+  for (const f of list) {
+    const ids = (f.findingIds || []).filter(Boolean)
+    if (ids.length <= CHUNK_MAX) { out.push({ family: f.family, base: f.family, findingIds: ids, chunks: 1 }); continue }
+    const n = Math.ceil(ids.length / CHUNK_MAX)
+    const size = Math.ceil(ids.length / n)
+    for (let k = 0; k < n; k++) {
+      out.push({ family: f.family + '-' + (k + 1), base: f.family, findingIds: ids.slice(k * size, (k + 1) * size), chunks: n })
+    }
+  }
+  return out
+}
+const FAMILIES = chunkFamilies(routed)
 log('families: ' + FAMILIES.map((f) => f.family + '(' + (f.findingIds || []).length + ')').join(', '))
 
 // ---------------------------------------------------------------- 4. builders by family -> build-verifiers
@@ -330,19 +363,33 @@ const MANIFEST_RULE = [
   'Then return, through the structured output tool, your family name, your report path, your spec file paths, and how many DATA STILL NEEDED + CROSS-FILE GAPS lines your report carries.',
 ].join('\n')
 
+// A chunk owns only its own ids, and its siblings are editing the same family files AT THE SAME TIME.
+// Whole-file rewrites and stale reads are how two chunks silently delete each other's work, so the rule
+// is: re-read immediately before every Edit, edit surgically, never Write over a file a sibling may hold.
+const chunkNote = (fam) => (fam.chunks > 1 ? [
+  'YOU ARE CHUNK ' + fam.family + ' OF ' + fam.chunks + ' FOR THE "' + fam.base + '" FAMILY. The family\'s findings were split because a single agent could not finish them; you own ONLY the ids listed above and nothing else in the family.',
+  'YOUR SIBLING CHUNKS ARE EDITING THE SAME FAMILY FILES CONCURRENTLY. Therefore: re-read a file with the Read tool IMMEDIATELY before every Edit to that file, make surgical Edits only, and NEVER rewrite or Write over a whole shared file (src/rules/*.ts, a comparer script, work/' + B + '-specs.json) - a whole-file write over a sibling\'s in-flight change destroys it, and the prohibition on rewriting another agent\'s file applies to a file you share as much as to one you do not.',
+  'YOUR OWN FILES CARRY THE CHUNK NAME, and they override every filename the family grant above gives you: spec work/' + B + '-rows-' + fam.family + '.json (plus work/' + B + '-created-desc-' + fam.family + '.json if you need created prose), report work/' + B + '-report-' + fam.family + '.txt, test file test/batch' + BATCH + '-' + fam.family + '.test.ts. In your manifest entry work/' + B + '-specs.json the "family" value is "' + fam.family + '" - the CHUNK name, not "' + fam.base + '" - because scripts/wg-batch-close.mjs finds your report by that field.',
+  'A finding of yours that collides with a sibling chunk\'s row (same record + field) is a CROSS-FILE GAPS line naming the sibling chunk, not a row you write anyway: the driver hard-refuses cross-spec collisions.',
+].join('\n') : '')
+
 const buildStage = (fam) => agent([
   RULES,
-  'YOU ARE THE ' + fam.family.toUpperCase() + ' BUILDER for parity batch ' + BATCH + ' (' + LANE + ').',
+  'YOU ARE THE ' + (fam.base || fam.family).toUpperCase() + ' BUILDER for parity batch ' + BATCH + ' (' + LANE + ').',
   ((fam.findingIds || []).length
     ? 'YOUR FINDINGS ARE EXACTLY THESE IDS, and this list is the assignment: ' + fam.findingIds.join(', ') + '. Read each one IN FULL in work/' + B + '-read.json (the confirmed[] entries; work/' + B + '-read-summary.txt prints the same claims with their proposals) before you touch anything. Do not take a finding assigned to another family, and do not silently drop one of yours - a finding you believe belongs elsewhere goes in CROSS-FILE GAPS naming the family you think owns it.'
     : 'No finding ids were routed to "' + fam.family + '". Read work/' + B + '-read.json and work/' + B + '-read-summary.txt in full and take ONLY the confirmed findings whose proposal targets this family\'s files (below); if none do, write your report with both lists empty and an explicit "no findings routed to this family" line, and author nothing.'),
-  FAMILY_FILES[fam.family] || 'Files you may edit: exactly the files work/' + B + '-read-summary.txt names for your family, plus your own spec work/' + B + '-rows-' + fam.family + '.json and a new test file test/batch' + BATCH + '-' + fam.family + '.test.ts. Nothing else.',
+  FAMILY_FILES[fam.base || fam.family] || 'Files you may edit: exactly the files work/' + B + '-read-summary.txt names for your family, plus your own spec work/' + B + '-rows-' + fam.family + '.json and a new test file test/batch' + BATCH + '-' + fam.family + '.test.ts. Nothing else.',
+  chunkNote(fam),
   MANIFEST_RULE,
 ].join('\n\n'), { label: 'build:' + fam.family, phase: 'Build', model: 'opus', effort: 'high', schema: FAMILY_OUT })
 
 const verifyBuildStage = (built, fam) => agent([
   RULES,
   'You are an ADVERSARIAL VERIFIER for parity batch ' + BATCH + ' (' + LANE + '), family "' + fam.family + '". Do not take the builder\'s report on trust: your default is that the work is NOT done.',
+  ((fam.chunks > 1)
+    ? 'This is CHUNK ' + fam.family + ' of ' + fam.chunks + ' of the "' + fam.base + '" family: judge ONLY these finding ids - ' + (fam.findingIds || []).join(', ') + ' - and do not rule on a sibling chunk\'s ids. Sibling chunks edit the same family files concurrently, so re-read a file immediately before any Edit you make, edit surgically, and never rewrite a whole shared file. A row of this chunk that collides with a sibling\'s row (same record+field+path key) is a finding of YOURS to report, because the driver hard-refuses cross-spec collisions.'
+    : ''),
   'Re-read each of the family\'s findings in work/' + B + '-read.json and work/' + B + '-read-summary.txt, open every changed file, run npx tsc --noEmit and the family\'s test files through node scripts/vt.mjs (one vitest process at a time), and for EACH finding decide: DONE (the printed mechanic now reaches a BUILT character, or the comparer now reads the carrier), WRONG (the change contradicts print or breaks a sibling - fix it directly under the same rules and add a test), or NOT DONE (say exactly what is missing).',
   'Verify the SPEC ROWS as rows, without applying them: every target record exists or the row carries create:true; every re-emitted value still holds everything it held before minus exactly the intended change (diff each against the shipped value with node -e); a reader exists for every field or is named as another family\'s; no two rows in any spec hit the same record+field+path key; created records carry no description in the create row and have their prose in the created-prose spec; every spell / action / trait / item id a row names exists in core.json. Where a mechanic can be exercised, build a throwaway in-memory harness that applies the rows to a content copy and builds a real character - then delete the harness.',
   'Check the manifest: work/' + B + '-specs.json still contains every other family\'s entry, this family\'s entry lists every path it touched in stage[], and every superseding row declares supersedes: true.',
@@ -413,7 +460,7 @@ if (gapFamilies.length) {
 // ---------------------------------------------------------------- 7. closer
 
 phase('Close')
-const closer = await agent([
+const CLOSER_PROMPT = [
   RULES,
   'YOU ARE THE CLOSER for parity batch ' + BATCH + ' (' + LANE + '). Everything the families built is on disk; your job is to drive it home and to leave Fable nothing to do but read work/' + B + '-run.json and approve the commit. These rules are numbered because each one is a thing that went wrong in an earlier batch:',
   '1. Run the driver ONE STAGE AT A TIME, in this order, and read work/' + B + '-run.json after each: apply, gaps, close, experience, gate, regate, suite, verify. Command: ' + DRIVER + ' --stage <stage>' + PRINT_FLAG + '. Never run --stage all, never run two stages at once, never run anything in the background and never work around a refusal.',
@@ -429,8 +476,100 @@ const closer = await agent([
   '9. The close stage derives work/wg-batch-' + BATCH + '-parity.json and -residual.json from work/' + B + '-read.json plus the manifest - never hand-write them, never overwrite an existing verdict.',
   '10. Write work/' + B + '-commit.txt: the commit message, at least 200 characters, saying what the batch changed (families, row count, code lanes), what it settled and why, what is queued for the owner, and what is deferred. It is read by scripts/wg-batch-commit.mjs, which you do NOT run - the verify stage\'s "next" line names that script because it is the NEXT step in the protocol, and that step is Fable\'s: she approves the commit. Running it would stage and commit this batch unapproved. You run no git write command and no commit script.',
   '11. Your notes are displayed but never load-bearing: keep them under 3000 characters and put every fact that matters into the run.json digest, the reports and the commit file instead.',
-  'Return, through the structured output tool: notes, closerEdits[], needsOrchestrator[] and commitChars (the length of work/' + B + '-commit.txt).',
-].join('\n\n'), Object.assign({ label: 'closer', phase: 'Close', schema: CLOSER_OUT }, OPUS))
+  '12. A RED GATE AT THE END IS NEVER ACCEPTABLE, and neither is a red item you describe as "not assigned to any family". Every red item ends this run BUILT (a lane that reaches a built character, a data row, or a comparer teach/settle with a mutation-proof test) or PARKED with an artefact - an entry in work/' + B + '-queue.json or a flaggedResidue line with a reason - and then --stage gate re-run. Batch 033 ended with the gate red and its reds called unassigned; that is the failure this rule exists to stop.',
+  '12b. If, after doing all of that, reds still stand: do NOT stop silently and do NOT pretend the gate is green. Report every remaining red item, one line each, in gateRed[] - record id, which gate (KINDS / VALUES / IDENTITY / EXPERIENCE / suite / verify), what the comparer says, what print says. An unassigned item belongs in gateRed[] above all: a triage agent and a builder per lane run next on exactly that list, which is why an omitted or softened line is worse than a red one. gateRed[] is EMPTY only when your own last --stage gate run came back green.',
+  'Return, through the structured output tool: notes, closerEdits[], needsOrchestrator[], commitChars (the length of work/' + B + '-commit.txt) and gateRed[].',
+]
+const closer = await agent(CLOSER_PROMPT.join('\n\n'), Object.assign({ label: 'closer', phase: 'Close', schema: CLOSER_OUT }, OPUS))
+
+// ---------------------------------------------------------------- 7b. gate-red round (at most one)
+
+// Batch 033 ended with the gate red and the closer calling the reds "unassigned"; a separate resume run
+// - a triage agent that grouped every red by lane, a builder + adversarial verifier per group, then a
+// second closer pass - closed them. That run is this block. It fires at most ONCE: reds that survive it
+// are not a third round, they are needsOrchestrator.
+const RED_GROUPS = {
+  type: 'object', additionalProperties: false, required: ['groups'],
+  properties: {
+    groups: {
+      type: 'array',
+      items: {
+        type: 'object', additionalProperties: false, required: ['name', 'family', 'files', 'items'],
+        properties: {
+          name: { type: 'string', description: 'a short lane name, letters digits and dashes' },
+          family: { type: 'string', description: 'data-rows | instruments | situational | engine | repair | prose' },
+          files: { type: 'array', items: { type: 'string' }, description: 'the files this group may edit - DISJOINT from every other group' },
+          items: { type: 'array', items: { type: 'string' }, description: 'one line per red item: record id, which gate, what the comparer says, what print says, the proposed carrier or fix' },
+        },
+      },
+    },
+  },
+}
+const slug = (s) => String(s).replace(/[^a-z0-9]+/gi, '-').toLowerCase()
+const closerRedLines = ((closer && closer.gateRed) || []).filter(Boolean)
+// A backstop for a closer that says it in prose but leaves gateRed[] empty. Deliberately narrow: a false
+// positive costs a whole extra round, so the bare word "unassigned" is not a trigger, the phrase is.
+const closerSaysRed = /red gate|gate .{0,24}\bred\b|\bstill red\b|not assigned to any family/i.test(
+  ((closer && closer.notes) || '') + ' ' + JSON.stringify((closer && closer.needsOrchestrator) || []))
+let closerFinal = closer
+
+if (closerRedLines.length || closerSaysRed) {
+  phase('Gate reds')
+  log('gate-red round: ' + (closerRedLines.length ? closerRedLines.length + ' red line(s) reported by the closer' : 'the closer\'s prose reports a red gate'))
+
+  const triage = await agent([
+    RULES,
+    'YOU ARE THE TRIAGE AGENT for the gate-red round of parity batch ' + BATCH + ' (' + LANE + '). The closer finished and the gate is still red. Nothing here is a report: every red item leaves this round BUILT or PARKED WITH AN ARTEFACT, and your groups are what makes that possible.',
+    'Run ' + DRIVER + ' --stage gate' + PRINT_FLAG + ' yourself (it re-runs the comparers and writes nothing but its own run entry) and read work/' + B + '-run.log for the full gate output, plus work/' + B + '-run.json, every family report work/' + B + '-report-*.txt and verify file work/' + B + '-verify-*.txt, work/' + B + '-gaps.json and work/' + B + '-verify-gaps.txt, and work/' + B + '-read.json for the findings behind each record.',
+    'The closer reported these red items (a claim to check, not a boundary - a red the gate shows and the closer omitted is still yours):\n' + (closerRedLines.length ? closerRedLines.map((l, i) => (i + 1) + '. ' + l).join('\n') : '(the closer listed none in gateRed[]; take the gate output as the list)'),
+    'The closer\'s notes:\n---\n' + ((closer && closer.notes) || '(none)') + '\n---',
+    'Produce builder GROUPS covering EVERY red item the gate shows - every KINDS, VALUES, IDENTITY and EXPERIENCE record, every suite failure (name the failing test), every verify red (a created record with no description needs a created-prose spec {category,id,field:"description",value} written in OUR words from its AoN page), and every item the closer could not assign to a family. AN ITEM THE CLOSER CALLED "not assigned to any family" IS EXACTLY WHAT THIS ROUND EXISTS FOR: it goes in a group, never back into a report.',
+    'For each item say which it is: a REAL LANE (build the carrier so the mechanic reaches a built character) or an INSTRUMENT MISREAD (a teach or settle, which needs a mutation-proof test). Check the argument against print yourself - the AoN mirror ' + MIRROR + '\\<category>\\<aonId>.json' + (PRINT ? ' (this is the print lane: there is no their-side to consult).' : ' - and against the raw WG ops, node scripts/wg-show.mjs "<name>" --raw.'),
+    'GROUP BY LANE SO THE FILES ARE DISJOINT. Every red item appears in EXACTLY ONE group, and no two groups list the same file: scripts/wg-diff.mjs / wg-values.mjs / wg-identity.mjs / wg-casting.mjs all go to ONE instruments group; src/rules/build.ts to at most one group; src/rules/situationalBonuses.ts to one; src/rules/advancement.ts to one. Prefer few groups of related items over one group per item.',
+    'Return the groups through the structured output tool. Write no repo file.',
+  ].join('\n\n'), { label: 'triage:gate-reds', phase: 'Gate reds', model: 'opus', effort: 'high', schema: RED_GROUPS })
+
+  const redGroups = ((triage && triage.groups) || []).filter((g) => g && g.items && g.items.length)
+  log('gate-red triage: ' + redGroups.length + ' group(s): ' + redGroups.map((g) => g.name + '(' + g.items.length + ')').join(', '))
+
+  const redBuild = (g) => agent([
+    RULES,
+    'YOU ARE THE BUILDER for group "' + g.name + '" (family ' + g.family + ') of the GATE-RED round of parity batch ' + BATCH + ' (' + LANE + ').',
+    'Files you may edit: ' + (g.files || []).join(', ') + ' - plus your spec work/' + B + '-rows-red-' + slug(g.name) + '.json (standard spec format {"findings":[{"id","backfillRows":[...],"note"}]}; a created record\'s prose is a SEPARATE spec of kind created-prose) and a new test file test/batch' + BATCH + '-red-' + slug(g.name) + '.test.ts. Nothing else - another group owns the files you were not given, and it is editing them now.',
+    'YOUR ITEMS. Each one ends BUILT (a lane that reaches a built character, a data row in your spec, or a comparer teach/settle with a mutation-proof test) or PARKED with an artefact (an entry in work/' + B + '-queue.json, or a flaggedResidue line in your report with a reason). Prose is not a disposition:\n' + g.items.map((s, i) => (i + 1) + '. ' + s).join('\n'),
+    'WHEN YOU ARE DONE: write work/' + B + '-report-red-' + slug(g.name) + '.txt (per item what you did - file + symbol, or the row - and the test that pins it; the DATA STILL NEEDED and CROSS-FILE GAPS headers even when empty; a teach line names the FINDING id, not just the record id); append your manifest entry to work/' + B + '-specs.json ({file, kind, family: "red-' + slug(g.name) + '", stage: [every path you touched]} - re-read the manifest immediately before writing it and keep every entry, the other groups are appending to it too); run your test file through node scripts/vt.mjs and finish npx tsc --noEmit clean.',
+    'Then return, through the structured output tool: family = "red-' + slug(g.name) + '", report = that path, specFiles = the spec files you wrote, gapsOpen = how many DATA STILL NEEDED + CROSS-FILE GAPS lines stand.',
+  ].join('\n\n'), { label: 'build:red-' + slug(g.name), phase: 'Gate reds', model: 'opus', effort: 'high', schema: FAMILY_OUT })
+
+  const redVerify = (built, g) => agent([
+    RULES,
+    'You are the ADVERSARIAL VERIFIER for group "' + g.name + '" of the GATE-RED round of parity batch ' + BATCH + ' (' + LANE + '). Default: NOT DONE.',
+    'The builder\'s report path was: ' + ((built && built.report) || 'work/' + B + '-report-red-' + slug(g.name) + '.txt') + ' - read it and its spec files: ' + (((built && built.specFiles) || []).join(', ') || '(none returned - check the manifest)') + '.',
+    'The items:\n' + g.items.map((s, i) => (i + 1) + '. ' + s).join('\n'),
+    'Re-read each item against print (the AoN mirror)' + (PRINT ? '' : ' and the raw WG ops (node scripts/wg-show.mjs "<name>" --raw)') + ', open every changed file, run the group\'s test through node scripts/vt.mjs and npx tsc --noEmit. Check every spec row targets a record that exists (or carries create:true), carries supersedes: true where it replaces an overlay row, names an AoN doc id in why, and collides with no other spec on record+field+path. Check the manifest entry lists every path the group touched and that no other entry was dropped. Check every new settle or teach has a mutation-proof test and every flip its citation in the exact audited form.',
+    'A RED ITEM THAT IS NEITHER BUILT NOR PARKED WITH AN ARTEFACT IS NOT DONE - say so plainly rather than accepting an explanation. Fix what is wrong yourself under the same rules (FIXED-BY-ME, with its own test) and append your paths to the manifest stage[].',
+    'Write work/' + B + '-verify-red-' + slug(g.name) + '.txt: per item DONE / FIXED-BY-ME / NOT-DONE with one line of evidence, ending with the DATA STILL NEEDED and CROSS-FILE GAPS headers corrected by what you found. Then return, through the structured output tool: family = "red-' + slug(g.name) + '", report = that path, specFiles = the spec files you checked, gapsOpen = how many lines stand in the two lists.',
+  ].join('\n\n'), { label: 'verify:red-' + slug(g.name), phase: 'Gate reds', model: 'opus', effort: 'high', schema: FAMILY_OUT })
+
+  // No groups means triage's own gate run found nothing red: there is nothing to build and nothing to
+  // re-close, and the close-verifier re-runs the gate anyway. Do not spend a second closer pass on it.
+  if (!redGroups.length) log('gate-red triage found no red items - skipping the builders and the second closer pass')
+  else {
+    const redResults = await pipeline(redGroups, redBuild, redVerify)
+    log('gate-red groups built+verified: ' + redResults.filter(Boolean).length + '/' + redGroups.length)
+
+    const closer2 = await agent(CLOSER_PROMPT.concat([
+    'THIS IS THE SECOND CLOSER PASS OF BATCH ' + BATCH + ', after the gate-red round. Everything above still binds you. What is new: the gate-red groups have written new specs work/' + B + '-rows-red-*.json, new reports work/' + B + '-report-red-*.txt and verify files work/' + B + '-verify-red-*.txt, new tests, and manifest entries under family "red-<group>".',
+    'Run the driver ONE STAGE AT A TIME again, in this order: apply (it skips specs already byte-identical in the overlay), gaps, close, experience, gate, regate, suite, verify - reading work/' + B + '-run.json after each, fixing causes and never working around a refusal. Rule 3b still applies to any src/ edit you make: re-run experience then gate before suite and verify.',
+    'The gate-red groups reported these dispositions per item (a claim to check, not evidence): read every work/' + B + '-report-red-*.txt and work/' + B + '-verify-red-*.txt before you start, and treat any NOT-DONE line as a red you still own. Their DATA STILL NEEDED and CROSS-FILE GAPS lines are yours as well: --stage apply-digest does NOT run again in this pass, so nothing collates those lines into work/' + B + '-gaps.json and --stage gaps will pass straight over them. Dispose of every one yourself under rule 12 - built, or parked with an artefact - and say in your notes which you closed and how.',
+    'Update work/' + B + '-commit.txt so every count traces and its last paragraph states the FINAL state truthfully, including this gate-red round and anything still parked.',
+      'THIS IS THE LAST BUILDING ROUND OF THE BATCH: there is no third one. Any red that still stands after this pass goes into needsOrchestrator[] AND into gateRed[], named item by item, for Fable to decide. Do not settle it, do not describe it as unassigned, and do not leave it out.',
+    ]).join('\n\n'), Object.assign({ label: 'closer:gate-reds', phase: 'Gate reds', schema: CLOSER_OUT }, OPUS))
+
+    if (closer2) closerFinal = closer2
+    log('gate-red round done; closer pass 2 reds remaining: ' + (((closer2 && closer2.gateRed) || []).length))
+  }
+}
 
 // ---------------------------------------------------------------- 8. close-verifier
 
@@ -446,8 +585,9 @@ const closeVerifier = await agent([
   '5. Every new settle, teach or comparer exemption has a MUTATION-PROOF test: remove the taught carrier from a content copy in memory (or point the comparer at a mutated packet) and prove the test fails. A settle whose test passes with the carrier gone is not a test.',
   '6. Spot-check the closer\'s closerEdits[]: each file, each cited test, each printed clause. An edit that is not listed, or listed with a test that does not exist or does not fail when the edit is reverted, is REFUTED.',
   '7. Read work/' + B + '-commit.txt: at least 200 characters, and every claim in it traceable to the reports and the digest.',
+  '8. THE GATE. Your own --stage gate run from check 1 is the authority on the batch\'s final state, not the closer\'s account of it. If it is red, the verdict is REFUTED and every red item goes into needsOrchestrator[] one line each (record id, which gate, what the comparer says, what print says) - a red gate is never a CONFIRMED batch, and "not assigned to any family" is not a disposition. If the closer\'s gateRed[] and your gate run disagree in either direction, say which and quote your runId.',
   NEVER,
-  'The closer returned these notes (a claim to be tested, not a source):\n---\n' + ((closer && closer.notes) || '(none)') + '\n---\nand these closerEdits: ' + JSON.stringify((closer && closer.closerEdits) || []) + '\nand flagged as needing the orchestrator: ' + JSON.stringify((closer && closer.needsOrchestrator) || []) + '.',
+  'The closer returned these notes (a claim to be tested, not a source):\n---\n' + ((closerFinal && closerFinal.notes) || '(none)') + '\n---\nand these closerEdits: ' + JSON.stringify((closerFinal && closerFinal.closerEdits) || []) + '\nand flagged as needing the orchestrator: ' + JSON.stringify((closerFinal && closerFinal.needsOrchestrator) || []) + '\nand reported these gate items as STILL RED: ' + JSON.stringify((closerFinal && closerFinal.gateRed) || []) + '.',
   'Return, through the structured output tool: verdict (CONFIRMED only if every check above passed with your own evidence), report (the evidence per numbered check, with the runIds you quoted, under 6000 characters), and needsOrchestrator[] - everything Fable must decide: owner-question wording, engine-shape decisions, ruling conflicts, npm run data decisions, and anything you could not close.',
 ].join('\n\n'), Object.assign({ label: 'close-verifier', phase: 'Verify close', schema: CLOSE_VERIFY_OUT }, OPUS))
 
@@ -461,12 +601,14 @@ const final = await agent([
   'Set ok true only if the last entry of every stage that ran has ok:true, and put into stopped every "next" line that says the orchestrator is needed.',
 ].join('\n\n'), Object.assign({ label: 'runner:final', phase: 'Final', schema: RUN_TAIL }, RUNNER))
 
-log('batch ' + BATCH + ' finished: close-verifier ' + ((closeVerifier && closeVerifier.verdict) || 'MISSING'))
+log('batch ' + BATCH + ' finished: close-verifier ' + ((closeVerifier && closeVerifier.verdict) || 'MISSING') +
+  (((closerFinal && closerFinal.gateRed) || []).length ? ' - GATE STILL RED on ' + closerFinal.gateRed.length + ' item(s)' : ''))
 
 return {
   batch: BATCH,
   runJsonTail: (final && final.runJson) || '',
-  closerNotes: (closer && closer.notes) || '',
+  closerNotes: (closerFinal && closerFinal.notes) || '',
   verifierReport: ((closeVerifier && closeVerifier.verdict) || 'MISSING') + '\n' + ((closeVerifier && closeVerifier.report) || '') +
-    '\nNEEDS THE ORCHESTRATOR: ' + JSON.stringify(((closeVerifier && closeVerifier.needsOrchestrator) || []).concat((closer && closer.needsOrchestrator) || [])),
+    '\nNEEDS THE ORCHESTRATOR: ' + JSON.stringify(((closeVerifier && closeVerifier.needsOrchestrator) || []).concat((closerFinal && closerFinal.needsOrchestrator) || [])) +
+    '\nSTILL-RED GATE ITEMS: ' + JSON.stringify((closerFinal && closerFinal.gateRed) || []),
 }

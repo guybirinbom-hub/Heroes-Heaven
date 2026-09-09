@@ -150,14 +150,21 @@ All agents Opus; effort high except the runner (low). Stages:
 3. runner: `read-digest`.
 4. builders by family → build-verifiers — the batch-29 prompts, plus: builders write their spec files
    and manifest entries (with `supersedes` declared and `stage` paths listed) instead of telling the
-   orchestrator; RULES say `node scripts/vt.mjs`.
+   orchestrator; RULES say `node scripts/vt.mjs`. A family holding more than 12 finding ids is split
+   into equal chunks `<family>-1`, `<family>-2` … each with its own builder, verifier, spec, report and
+   manifest entry (batch 033 gave one family 41 findings and it could not finish), and `count` now
+   defaults to 40 records because 50 overloaded that batch.
 5. runner: `apply-digest` (produces the gaps file).
 6. gap agents: one Opus agent per gap family resolves or parks each open line (rows into a new manifest
    spec, or a queue entry / flaggedResidue with a reason); a gap-verifier refutes.
 7. CLOSER (Opus, high): runs the driver stage by stage (`apply` → `gaps` → `close` → `experience` →
    `gate` → `regate` → `suite` → `verify`); triages failures with citations (flip audit); its own
    src edits are listed as `closerEdits[]` with a test each; writes `work/.bNNN-commit.txt`; returns
-   notes (non-load-bearing).
+   notes (non-load-bearing); a red gate is never the batch's final state, so it returns every still-red
+   item in `gateRed[]`.
+7b. gate-red round, at most once per batch and only when the closer ends red: a triage agent groups every
+   red item into disjoint-file lanes, one builder + adversarial verifier per lane, then a second closer
+   pass re-runs `apply` → … → `verify`. Reds surviving it are `needsOrchestrator`, not a third round.
 8. close-verifier (Opus, high): default REFUTE. Must re-run `flip-audit`, `gate`, `verify` and quote
    each stage's `runId` from its own run.json entries; diff `work/owner-questions.json` against the
    batch start; check every gap line is authored or parked; check the git snapshots (HEAD unmoved, no

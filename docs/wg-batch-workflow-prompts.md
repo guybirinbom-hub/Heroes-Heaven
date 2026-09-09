@@ -13,6 +13,10 @@ Workflow({ name: 'wg-batch', args: { batch: '030', count?: 40, maxLevel?: 8, ids
 `batch` is padded to three digits when numeric (`30` → `030`); a print batch keeps its own id (`P01`).
 Everything below writes `NNN` for that id and `.bNNN` for the run-file prefix.
 
+**`count` defaults to 40** when neither `count` nor `ids` is given (`DEFAULT_COUNT`), and the runner prompt
+says why in the prompt itself: batch 033 cut 50, produced 78 findings, overloaded one family and ended
+with a red gate.
+
 ## Shape
 
 | # | Phase | Agents | Model / effort | Writes |
@@ -21,11 +25,12 @@ Everything below writes `NNN` for that id and `.bNNN` for the run-file prefix.
 | 2 | Read | one per slice of 5 records, grouped by bucket, `agentType: general-purpose` | opus / high | `work/.bNNN-read-slice-<i>.json` |
 | 3 | Verify read | one per slice, adversarial | opus / high | `work/.bNNN-verify-slice-<i>.json` |
 | 4 | Read digest | runner | opus / low | — (runs `read-digest`) |
-| 5 | Build | one per family | opus / high | spec files, manifest entry, `work/.bNNN-report-<family>.txt` |
-| 6 | Verify build | one per family | opus / high | `work/.bNNN-verify-<family>.txt` |
+| 5 | Build | one per family **or family chunk** (see below) | opus / high | spec files, manifest entry, `work/.bNNN-report-<family>.txt` |
+| 6 | Verify build | one per family/chunk | opus / high | `work/.bNNN-verify-<family>.txt` |
 | 7 | Apply digest | runner | opus / low | — (runs `apply-digest`, produces the gaps file) |
 | 8 | Gaps | one per family with open lines + one gap-verifier | opus / high | `work/.bNNN-rows-gap-<family>.json`, `work/.bNNN-queue.json`, gap status |
 | 9 | Close | closer | opus / high | `work/.bNNN-commit.txt` |
+| 9b | Gate reds | **only when the closer ends red**: triage + one builder & verifier per lane + a second closer pass | opus / high | `work/.bNNN-rows-red-<group>.json`, `-report-red-<group>.txt`, `-verify-red-<group>.txt` |
 | 10 | Verify close | close-verifier | opus / high | its own run.json entries |
 | 11 | Final | runner | opus / low | — (returns the run.json tail) |
 
@@ -206,7 +211,25 @@ wg-experience-lanes / experience-instrument-limits → `instruments`; `scripts/r
 `data-rows`. A missing block is `ok:false`, not an invitation to route by hand — hand routing is the step
 this block removed.
 
-## 5. Builders (one per family)
+## 5. Builders (one per family, or per family **chunk**)
+
+**Chunking (`CHUNK_MAX = 12`).** Batch 033 routed 41 of its 78 findings to one family; one agent, one
+context, one report, and it could not finish. So after the read-digest returns the families, any family
+holding more than 12 finding ids is split into equal chunks named `<family>-1`, `<family>-2` … (`n =
+ceil(ids/12)`, each chunk `ceil(ids/n)` ids, so 41 → 11/11/11/8). A chunk is a full family to the rest of
+the pipeline: **its own builder and verifier, its own spec `work/.bNNN-rows-<family>-<k>.json`, report
+`work/.bNNN-report-<family>-<k>.txt`, verify file `work/.bNNN-verify-<family>-<k>.txt`, test file
+`test/batchNNN-<family>-<k>.test.ts`, and its own manifest entry** — whose `family` value is the **chunk**
+name, because `wg-batch-close.mjs` derives its report paths from that field. The driver needs no change:
+`stageApplyDigest` globs `^\.bNNN-(report|verify)-(.+)\.txt$` and `(.+)` matches `data-rows-1`.
+
+The chunk prompt adds, on top of the family's file grant: *you own ONLY your ids*; *your sibling chunks
+are editing the same family files right now, so re-read a file immediately before every Edit, edit
+surgically, and never rewrite or `Write` over a whole shared file* (a shared `src/rules/*.ts`, a comparer
+script, `work/.bNNN-specs.json`); *a row that would collide with a sibling's on record+field is a
+CROSS-FILE GAPS line naming that sibling, not a row you write anyway* — the driver hard-refuses
+cross-spec collisions. The build-verifier of a chunk judges **only that chunk's ids** and never rules on
+a sibling's.
 
 Each builder is told: **your findings are exactly the ids routed to you**, read in full from
 `work/.bNNN-read.json` (the summary prints the same claims and proposals). A finding you believe belongs
@@ -287,7 +310,7 @@ cannot already answer), sets anything unproven back to `open`, names every still
 nobody edited `owner-questions.json` (`git diff`) and that no agent dropped another family's manifest
 entry or gap line. Writes `work/.bNNN-verify-gaps.txt`.
 
-## 9. Closer (opus, high) — the eleven rules
+## 9. Closer (opus, high) — the twelve rules
 
 1. Run the driver **one stage at a time**, reading `work/.bNNN-run.json` after each:
    `apply → gaps → close → experience → gate → regate → suite → verify`. Never `--stage all`, never two
@@ -334,6 +357,56 @@ entry or gap line. Writes `work/.bNNN-verify-gaps.txt`.
     Running it would stage and commit the batch unapproved. No git write command, no commit script.
 11. Notes are displayed but never load-bearing: under 3000 characters, with every fact that matters in
     the digest, the reports and the commit file instead.
+12. **A red gate at the end is never acceptable** — and neither is a red item the closer calls "not
+    assigned to any family". Every red item ends the run BUILT (a lane reaching a built character, a data
+    row, or a teach/settle with a mutation-proof test) or PARKED with an artefact (a `work/.bNNN-queue.json`
+    entry, or a `flaggedResidue` line with a reason), and then `--stage gate` re-run. Batch 033 ended red
+    with its reds called unassigned; that is the failure this rule exists to stop.
+12b. If reds still stand, the closer neither stops silently nor calls the gate green: every remaining item
+    goes into **`gateRed[]`** (a new required field of the closer's structured output), one line each —
+    record id, which gate (KINDS / VALUES / IDENTITY / EXPERIENCE / suite / verify), what the comparer
+    says, what print says. `gateRed[]` is empty **only** when the closer's own last `--stage gate` was
+    green. An unassigned item belongs there above all: phase 9b runs on exactly that list.
+
+## 9b. Gate-red round — **at most once per batch**, only when the closer ends red
+
+Trigger: the closer's `gateRed[]` is non-empty, or its notes / `needsOrchestrator` say the gate is red
+(a deliberately narrow backstop regex — the bare word "unassigned" does not fire it, "not assigned to any
+family" does). This is the batch-033 resume run, generalised and folded in.
+
+1. **Triage agent** — runs `--stage gate` itself and reads `work/.bNNN-run.log`, `run.json`, every family
+   report and verify file, `gaps.json`, `verify-gaps.txt` and `read.json`; is given the closer's
+   `gateRed[]` lines and notes **as a claim, not a boundary** (a red the gate shows and the closer omitted
+   is still in scope). It returns `groups: [{name, family, files, items}]` covering **every** red item —
+   each KINDS / VALUES / IDENTITY / EXPERIENCE record, each suite failure (naming the test), each verify
+   red (a created record with no description needs a created-prose spec in OUR words from its AoN page),
+   and every item the closer could not assign. For each item it says whether it is a **real lane** (build
+   the carrier) or an **instrument misread** (a teach/settle, which needs a mutation-proof test), checked
+   against print in the AoN mirror and against the raw WG ops. **Files must be disjoint across groups**:
+   the four comparer scripts to one instruments group, `build.ts` to at most one, `situationalBonuses.ts`
+   to one, `advancement.ts` to one; every item in exactly one group. It writes no repo file.
+2. **`pipeline(groups, builder, verifier)`** — the resume prompts. Each builder may edit its group's files
+   plus `work/.bNNN-rows-red-<slug>.json` and `test/batchNNN-red-<slug>.test.ts`; every item ends BUILT or
+   PARKED with an artefact (*prose is not a disposition*); it writes `work/.bNNN-report-red-<slug>.txt`
+   and a manifest entry under `family: "red-<slug>"` with every touched path in `stage[]`. The adversarial
+   verifier defaults to NOT DONE, re-reads each item against print, runs the test and `tsc`, checks rows
+   as rows (targets exist, `supersedes`, an AoN doc id in `why`, no cross-spec collision), checks every
+   settle/teach has its mutation-proof test and every flip its citation, fixes what is wrong itself
+   (FIXED-BY-ME), and writes `work/.bNNN-verify-red-<slug>.txt`. **A red item that is neither built nor
+   parked with an artefact is NOT DONE, whatever the explanation.**
+3. **Second closer pass** — the same twelve rules, plus: read every `report-red-*.txt` and
+   `verify-red-*.txt` first and treat any NOT-DONE line as a red it still owns. Their `DATA STILL NEEDED`
+   / `CROSS-FILE GAPS` lines are its own too: `apply-digest` does **not** re-run in this pass, so nothing
+   collates them into `gaps.json` and `--stage gaps` passes over them — the closer disposes of each under
+   rule 12 (built, or parked with an artefact) and says so in its notes. Then re-run `apply` (specs already byte-identical are
+   skipped) → `gaps` → `close` → `experience` → `gate` → `regate` → `suite` → `verify`; update
+   `work/.bNNN-commit.txt` so every count traces and the last paragraph states the final state truthfully.
+   **This is the last building round of the batch — there is no third.** Anything still red goes into both
+   `needsOrchestrator[]` and `gateRed[]`, item by item, for Fable.
+
+If triage finds no red items at all, the builders and the second closer pass are skipped (the
+close-verifier re-runs the gate regardless). The close-verifier then runs against whichever closer pass
+came last.
 
 ## 10. Close-verifier (opus, high) — plan step 8
 
@@ -353,8 +426,13 @@ Default: **REFUTE**. The closer's notes are a claim, not evidence.
 6. Spot-check `closerEdits[]`: file, cited test, printed clause. Unlisted, or a test that does not fail
    when the edit is reverted → REFUTED.
 7. `work/.bNNN-commit.txt` ≥ 200 chars and every claim traceable.
+8. **The gate.** Its own `--stage gate` run from check 1 — not the closer's account of it — is the
+   authority on the batch's final state. Red means the verdict is REFUTED and every red item goes into
+   `needsOrchestrator[]`, one line each; "not assigned to any family" is not a disposition. Where its gate
+   run and the closer's `gateRed[]` disagree in either direction, it says which and quotes its runId.
 
 Returns `verdict`, `report` (evidence per numbered check, with the runIds), and `needsOrchestrator[]`.
+It is handed the notes, `closerEdits[]`, `needsOrchestrator[]` and `gateRed[]` of the **last** closer pass.
 
 ## 11. Runner — final
 
@@ -363,4 +441,5 @@ close, experience, gate, regate, suite, verify`) **verbatim**, whole objects inc
 `digest`, `next`, `git`, `hashes`, `refusals` — "this is the only thing Fable reads, so drop nothing and
 summarise nothing".
 
-The workflow returns `{ batch, runJsonTail, closerNotes, verifierReport }`.
+The workflow returns `{ batch, runJsonTail, closerNotes, verifierReport }`; `closerNotes` is the last
+closer pass's, and `verifierReport` ends with `NEEDS THE ORCHESTRATOR:` and `STILL-RED GATE ITEMS:`.
