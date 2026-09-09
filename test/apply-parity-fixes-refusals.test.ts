@@ -31,6 +31,8 @@ const MIRROR_DOCS: Record<string, Record<string, string>> = {
   equipment: {
     'equipment-1026': 'The flask erupts, dealing 8d6 fire damage to every creature in a 20-foot burst.',
     'equipment-2827': 'The bearer gains a +2 item bonus to Stealth checks.',
+    /* AoN's own HTML entity, un-decoded, exactly as the real way-6 stores "Guns &amp; Gears". */
+    'equipment-2200': 'You gain access to the combination weapons presented in Pathfinder Guns &amp; Gears.',
   },
   'class-feature': {
     'class-feature-431': 'Your spellstriking blade holds one extra spell slot of your highest rank.',
@@ -154,6 +156,48 @@ describe('apply-parity-fixes refusals', () => {
     expect(r.out).toContain('id=sparkling-targe');
   });
 
+  /*
+   * The other half of refusal 2, which the message always promised ("restate its value inside this
+   * one") and the guard never implemented — it refused EVERY whole-value row over a field that id=
+   * rows amend, restated or not. Batch 034's way-of-the-triggerbrand row is exactly the restated
+   * shape: classes/gunslinger.subclass carried whole, byte-identical to the shipped value except one
+   * option description, with all six featureIds path rows still inside it. The check is the value, not
+   * the prose: the row above still refuses because its options array drops the option entirely.
+   */
+  // batch 034: way-of-the-triggerbrand#combination-weapon-access
+  it('2 — accepts a whole-value row that restates the id= rows it covers (way-of-the-triggerbrand shape)', () => {
+    const root = fixture([{ category: 'classes', id: 'magus', path: ['subclass', 'options', 'id=sparkling-targe'], field: 'spellSlotBonus', value: 1 }, ...FILLER]);
+    const row = clean({
+      category: 'classes',
+      id: 'magus',
+      field: 'subclass',
+      value: { name: 'Hybrid Study', options: [{ id: 'sparkling-targe', spellSlotBonus: 1, description: 'restated' }] },
+      why: 'class-feature-431',
+    });
+    const r = run(root, [{ id: 'f2d', backfillRows: [row] }], ['--write']);
+    // batch 034: way-of-the-triggerbrand#combination-weapon-access
+    expect(r.code).toBe(0);
+    // batch 034: way-of-the-triggerbrand#combination-weapon-access
+    expect(r.out).not.toContain('would swallow');
+  });
+
+  // batch 034: way-of-the-triggerbrand#combination-weapon-access
+  it('2 — still refuses when the whole value keeps the option but CHANGES the shadowed field (way-of-the-triggerbrand shape)', () => {
+    const root = fixture([{ category: 'classes', id: 'magus', path: ['subclass', 'options', 'id=sparkling-targe'], field: 'spellSlotBonus', value: 1 }]);
+    const row = clean({
+      category: 'classes',
+      id: 'magus',
+      field: 'subclass',
+      value: { name: 'Hybrid Study', options: [{ id: 'sparkling-targe', spellSlotBonus: 0 }] },
+      why: 'class-feature-431',
+    });
+    const r = run(root, [{ id: 'f2e', backfillRows: [row] }]);
+    // batch 034: way-of-the-triggerbrand#combination-weapon-access
+    expect(r.code).toBe(1);
+    // batch 034: way-of-the-triggerbrand#combination-weapon-access
+    expect(r.out).toContain('would swallow overlay row #0');
+  });
+
   it('2 — refuses a path row with no ancestor to amend, naming the failing step', () => {
     const row = clean({ category: 'classes', id: 'magus', path: ['subclass', 'options', 'id=starlit-span'], field: 'spellSlotBonus', value: 1, why: 'class-feature-431' });
     const r = run(fixture([]), [{ id: 'f2b', backfillRows: [row] }]);
@@ -219,6 +263,28 @@ describe('apply-parity-fixes refusals', () => {
     expect(r.code).toBe(1);
     expect(r.out).toContain('words no named doc');
     expect(r.out).toContain('permanently blinded');
+  });
+
+  /*
+   * The mirror stores AoN's HTML source, so a printed "&" arrives as "&amp;" and the guard's tokenizer
+   * turned it into the word "amp" — which made a row quoting print VERBATIM read as adding words the
+   * doc does not print, and refused it. This is not a loosening: mirrorText now decodes the named
+   * entities so the guard compares print to print. equipment-2200 below carries the same defect the
+   * real way-6 does.
+   */
+  // batch 034 premise: way-6 "In addition to the combination weapons presented in Pathfinder Guns &amp; Gears , you gain access to the triggerbrand combination weapon."
+  it('4 — accepts a clause whose ampersand the mirror stores as &amp;', () => {
+    const row = clean({
+      id: 'phoenix-flask',
+      field: 'description',
+      value: 'The flask erupts, dealing to every creature in a . You gain access to the combination weapons presented in Pathfinder Guns & Gears.',
+      why: 'AoN equipment-2200 prints the access clause and our text dropped it.',
+    });
+    const r = run(fixture([]), [{ id: 'f4g', backfillRows: [row] }]);
+    // batch 034 premise: way-6 "In addition to the combination weapons presented in Pathfinder Guns &amp; Gears , you gain access to the triggerbrand combination weapon."
+    expect(r.code).toBe(0);
+    // batch 034 premise: way-6 "In addition to the combination weapons presented in Pathfinder Guns &amp; Gears , you gain access to the triggerbrand combination weapon."
+    expect(r.out).not.toContain('words no named doc');
   });
 
   it('4 — refuses when the named doc is not in the mirror at all', () => {

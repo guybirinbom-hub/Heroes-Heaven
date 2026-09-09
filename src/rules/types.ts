@@ -5747,6 +5747,16 @@ export interface Character {
    * (`size` for a bodySize choice, `ancestryHp` for an alternate-attributes package).
    */
   ancestryHeritageChoices?: Record<string, string>;
+  /**
+   * A CLASS FEATURE's own choice answers, keyed exactly as `BuildState.featChoices` keys them:
+   * `feature:<id>`. The barbarian's elemental instinct element+damage type, and every other class
+   * feature question whose answer a derive has to read.
+   *
+   * DERIVED: `buildCharacter` recomputes it from `BuildState` on every build (only for features the
+   * character actually owns, and only where the record really asks the question), so a saved
+   * character needs no migration.
+   */
+  featureChoices?: Record<string, string>;
   backgroundId: string | null;
   classId: string | null;
   /** Chosen subclass option id (instinct, doctrine, bloodline, ...). */

@@ -1,0 +1,84 @@
+{
+  "findings": [
+    {
+      "id": "the-silent-whisper#sending-rank",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "conscious-mind",
+          "field": "grantedSpells",
+          "why": "The conscious mind's Granted Spells ladder prints exactly one spell per rank 1-9, with Sending on the 6th rung: our own text (core-descriptions.json/classFeatures/the-silent-whisper, imported from the book) carries \"- 6th: Sending\". The AoN mirror doc conscious-mind-10 mis-transcribes that rung as a second \"**5th** Sending\" (leaving no 6th), which is why our flat-id lane files Sending under spells/sending.rank = 5 and a Silent Whisper psychic gets two 5th-rank granted spells and none at 6th. The ladder now carries the granted rank so the rung, not the spell's own rank, decides the slot. Superseded row: the shipped classFeatures/conscious-mind.grantedSpells value dumped whole, with only {\"id\":\"sending\",\"level\":11,\"rank\":6} added to the-silent-whisper.",
+          "supersedes": true,
+          "value": {
+            "the-distant-grasp": [{ "id": "vector-screen", "level": 6 }, { "id": "dancing-blade", "level": 10 }],
+            "the-infinite-eye": [{ "id": "omnidirectional-scan", "level": 6 }, { "id": "foresee-the-path", "level": 10 }],
+            "the-oscillating-wave": [{ "id": "entropic-wheel", "level": 6 }, { "id": "redistribute-potential", "level": 10 }],
+            "the-silent-whisper": [
+              { "id": "shatter-mind", "level": 6 },
+              { "id": "contagious-idea", "level": 10 },
+              { "id": "sending", "level": 11, "rank": 6 }
+            ],
+            "the-tangible-dream": [{ "id": "astral-rain", "level": 6 }, { "id": "hologram-cage", "level": 10 }],
+            "the-unbound-step": [{ "id": "ghostly-shift", "level": 6 }, { "id": "tesseract-tunnel", "level": 10 }]
+          }
+        }
+      ],
+      "note": "VERIFIER (batch 034, engine): the builder shipped the READER and left the row that feeds it in DATA STILL NEEDED, so the finding would have closed with an unfed reader. The row is emitted here instead. src/rules/build.ts now files a granted spell under the ladder entry's `rank` when it carries one (`ladderRank`), falling back to the spell's own rank exactly as before; this row is the only thing in the dataset that sets one. It SUPERSEDES the existing effect-backfill row for classFeatures/conscious-mind/grantedSpells — the value above is that row's value dumped whole with the single rung {id:sending, level:11, rank:6} added to the-silent-whisper and nothing else changed (diffed against the shipped overlay row). Print (Player Core psychic, and our own core-descriptions.json/classFeatures/the-silent-whisper) reads \"- 6th: Sending\"; sending's own rank is 5, so without it rung 5 held two grants and rung 6 none. level 11 is the level a psychic gains 6th-rank slots, so the ladder gate withholds nothing it should give. DO NOT author this row a second time from the report's DATA STILL NEEDED list."
+    },
+    {
+      "id": "spirit-instinct#ghost-touch",
+      "backfillRows": [],
+      "note": "Code-only: RAGE_DAMAGE['spirit-instinct'] in src/rules/derive.ts gains `ghostTouch: true` and rageStrikeRider() appends the rider to the Rage note. No record field is involved — the instinct table is the carrier for every other Rage clause too."
+    },
+    {
+      "id": "spirit-instinct#damage-type-choice",
+      "backfillRows": [],
+      "note": "Code-only: `typeOptional: true` on RAGE_DAMAGE['spirit-instinct'] makes rageStrikeRider() print both branches of a per-Rage choice ('3 spirit or 2 bludgeoning (choose each Rage)'). Deliberately the label, not a mode: an exclusive-group mode would need a modes-bucket row and would make the player toggle something print says is chosen at the table each Rage."
+    },
+    {
+      "id": "construct-innovation#modification-effects",
+      "backfillRows": [],
+      "note": "Not closable from the engine files alone. The 18 modification records are DATA STILL NEEDED, and the applier that carries the picked one onto the construct COMPANION lives in src/rules/companions.ts / companionGrants.ts (CROSS-FILE GAPS). What is closed here: the pick now reaches c.inventor.modifications for a construct innovation, which is what every downstream reader needs. ⚠ the records must stay label-only — a chosen inventor modification is an ownedFeatureId, so a `landSpeedBonus`/`senses`/`grants.skills` on one applies to the INVENTOR, not to the construct."
+    },
+    {
+      "id": "construct-innovation#higher-tier-picks",
+      "backfillRows": [],
+      "note": "Code-only: the `type === 'construct'` early return in src/builder/shared.tsx is gone, so construct innovations render the same initial/breakthrough/revolutionary tier pickers (and the archetype's Basic Modification gate) as armour, weapon and light-mortar. Fed by the existing `construct-innovation-modification` tag filter in inventorModificationOptions — the records are DATA STILL NEEDED; a tier with no options renders nothing rather than an empty picker."
+    },
+    {
+      "id": "construct-innovation#duplicate-picker",
+      "backfillRows": [],
+      "note": "Half code, half row. The placeholder SubCard (carrier 2) is deleted here. Carrier 1 — classFeatures/construct-innovation.choice, the label-only 7-option picker Builder.tsx renders for the subclass — is retired by the row in DATA STILL NEEDED (field `choice`, value null), which is what leaves exactly one carrier and matches the three sibling innovations, none of which carries a `choice`. That row SUPERSEDES the existing effect-backfill row for classFeatures/construct-innovation/choice."
+    },
+    {
+      "id": "construct-innovation#overdrive",
+      "backfillRows": [],
+      "note": "Entirely outside the engine files: the note lives on COMPANION_MODS/FEAT_COMPANION_GRANTS in src/rules/companionGrants.ts. See CROSS-FILE GAPS."
+    },
+    {
+      "id": "elemental-blast#damage-type-trait",
+      "backfillRows": [],
+      "note": "Code-only: deriveBlastStrikes in src/rules/derive.ts builds the trait list per element and appends the chosen damage type when it is not bludgeoning/piercing/slashing; the same list is handed to mapStepFor/mapNotesFor so a trait-gated MAP reduction sees it too."
+    },
+    {
+      "id": "elemental-instinct#rage-damage-type",
+      "backfillRows": [],
+      "note": "Code-only: the answer already exists in the data (classFeatures/elemental-instinct.choice, flag instinctElement) and had no reader. Character.featureChoices (new, derived) carries every owned class feature's own choice answer, and rageStrikeRider() reads `<element>-<damageType>` from it; 'energy' stays as the unanswered fallback."
+    },
+    {
+      "id": "psychopomp-eidolon#language",
+      "backfillRows": [],
+      "note": "Entirely outside the engine files: COMPANION_MODS['psychopomp-eidolon'] in src/rules/companionGrants.ts. The reader (deriveEidolon's `mod.languages` loop) already exists and already fires for three sibling eidolons. See CROSS-FILE GAPS."
+    },
+    {
+      "id": "beast-eidolon#language-sylvan",
+      "backfillRows": [],
+      "note": "Entirely outside the engine files: COMPANION_MODS['beast-eidolon'] in src/rules/companionGrants.ts, same one-key shape as the fey-eidolon row two entries below it. See CROSS-FILE GAPS."
+    },
+    {
+      "id": "improved-familiar-attunement#ability-budget",
+      "backfillRows": [],
+      "note": "Entirely outside the engine files: FEAT_COMPANION_GRANTS in src/rules/companionGrants.ts plus familiarAbilityBudget in src/rules/companions.ts. See CROSS-FILE GAPS."
+    }
+  ]
+}

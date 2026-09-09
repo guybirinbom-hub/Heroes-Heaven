@@ -1,0 +1,173 @@
+BATCH 034 — ADVERSARIAL VERIFY, INSTRUMENTS CHUNK 2 OF 2 (family value: instruments-2)
+Verifier default: NOT done. Every claim below was re-measured against core.json, the AoN mirror and
+the running comparers; nothing was taken from the builder's report.
+
+Checks I ran myself
+  npx tsc --noEmit                                            clean
+  node scripts/vt.mjs run test/batch034-instruments-2.test.ts 4 passed (waited on the chunk-1 lock)
+  node scripts/test-flip-audit.mjs --batch 034                5 violations, ALL chunk 1's keys
+      (elemental-instinct ×3, spirit-instinct, way-of-the-pistolero — sibling chunk still in flight);
+      NONE on any file or key of this chunk. inspired-stratagem's registry key and the-infinite-eye's
+      park both satisfy the mutation-proof rule (audit matcher: scripts/test-flip-audit.mjs:622 —
+      a test body containing both 'mutation-proof' and the key).
+  node scripts/wg-values.mjs --ids giant-instinct,dragon-instinct,superstition-instinct,elemental-instinct --verbose --raw
+      giant / dragon / superstition ALL "1 sets agree" — no new SET-GAP in either direction; only
+      elemental-instinct still reports, and that one is chunk 1's settle.
+
+SPEC ROWS AS ROWS — work/.b034-rows-instruments-2.json
+  8 findings, backfillRows: [] on every one. So the row checks are vacuous BY CONSTRUCTION, and the
+  claim actually under test is "no data row is needed". I tested that claim per record instead of
+  accepting it, and it holds on all eight:
+    giant-instinct               classFeatures['giant-instinct'].choice.options[].grant.whileActive
+                                 [{state:'rage',minLevel:9,resistances:[bludgeoning, cold|electricity|fire
+                                 @ 3+@actor.con.mod]}] — present, reader confirmed at src/rules/build.ts
+                                 :6320-6330 (the `new Set([...ownedFeatureIds, ...grantOptions])` walk of
+                                 `content.classFeatures[fid].choice` -> answered option's grant ->
+                                 applyAlwaysOn). Authoring a resistance row would double-count.
+    the-infinite-eye             classes.psychic.subclass.options['the-infinite-eye'].grantedSpells
+                                 contains 'locate', not 'organsight'; classFeatures['the-infinite-eye']
+                                 is aonId conscious-mind-8 / edition 'remaster'.
+    victors-wreath               classFeatures.grantsClassFeatures ['one-moment-till-glory'] (record
+                                 exists in BOTH classFeatures and actions) + situationalBonuses.ts:1472.
+    scar-of-the-survivor         grantsFeats ['diehard'] + grantsClassFeatures ['no-scar-but-this'].
+    echo-of-lost-moments         the APPARITION OPTION (not the classFeatures record) carries
+                                 grants.lores ['fortune-telling','genealogy'], loreProgression
+                                 [{8,expert},{16,master}], focusSpells ['store-time'], 10 grantedSpells.
+    experimental-spellshaping    choice {daily,flag:'dailySpellshape',from.maxLevelByLevel …} on the
+                                 record + FEAT_PICK_GRANTS entry at featPickGrants.ts:82.
+    improved-familiar-attunement grantsFeats ['familiar'] + companionGrants.ts:149.
+    inspired-stratagem           feats/inspired-stratagem.grantsActions ['inspired-stratagem'].
+  No create:true row, no supersedes row, no delete row anywhere in this spec, so no collision with any
+  sibling spec is possible from this file. No two rows share a record+field key (there are no rows).
+
+MANIFEST — work/.b034-specs.json
+  All other families still present: situational:rows, data-rows:rows, data-rows:created-prose,
+  engine:rows. instruments-2:rows lists all six paths the chunk touched. I appended
+  work/.b034-verify-instruments-2.txt to its stage[] (the only file I touched).
+  OBSERVATION, not a defect of this chunk: chunk 1's entry (instruments-1) landed while I was
+  verifying, and it declares scripts/wg-diff.mjs, scripts/wg-values.mjs and
+  work/experience-instrument-limits.json in its stage[] too — the shared-file overlap is expected and
+  the two chunks' keys do not collide (checked: 0 duplicate keys in VERIFIED_EQUIVALENT, 0 duplicate
+  record keys in the park file). What is still open on chunk 1 is the flip audit: its five settle keys
+  (elemental-instinct ×3, spirit-instinct, way-of-the-pistolero) had no mutation-proof test when I ran
+  scripts/test-flip-audit.mjs --batch 034. The driver must not close 034 until those five land.
+
+================================================================================
+PER FINDING
+================================================================================
+
+giant-instinct#instrument — DONE
+  Teach lands and is provably narrow. I did not take the builder's blast radius on trust; I re-derived
+  it from the corpus: EXACTLY 4 records carry an option-level `grant.whileActive` (classFeatures/
+  giant-, dragon-, elemental-, superstition-instinct), 68 clauses, and the ONLY keys inside those
+  clauses are `state`, `minLevel`, `resistances`. In wg-diff's OUR_KINDS map `state` and `minLevel`
+  appear zero times and `resistances` maps to `defense` alone — so the new descent in `ourKindsOf`
+  (scripts/wg-diff.mjs:1250-1257) can add exactly one kind on exactly four records and nothing else in
+  the corpus can move. Same bound for the wg-values walk (scripts/wg-values.mjs:612-629): the only
+  members it can add are the resistance/weakness TYPES of those four records. Re-ran the four live:
+  giant/dragon/superstition all agree in both directions, no new ours-not-theirs member appears.
+  Both halves are pinned mutation-proof in test/batch034-instruments-2.test.ts and the stunted runs
+  bring `SET-GAP … ours=(nothing)` and `missing=[defense]` straight back. Print checked: AoN instinct-3
+  "You resist bludgeoning damage and your choice of cold, electricity, or fire" = our option set
+  {bludgeoning, cold, electricity, fire}, WG's set exactly.
+
+inspired-stratagem#instrument — DONE (with the blanket recorded, not hidden)
+  VERIFIED_EQUIVALENT['inspired-stratagem'] = ['grantsRecord'] at scripts/wg-diff.mjs:3157, cited
+  "// batch 034: inspired-stratagem#instrument", scoped to one kind. I confirmed the pairing root
+  cause at its source rather than from the report: scripts/lib/wg-parse.mjs:199 declares
+  `classFeatures: { table:'ability_block', types:['class-feature','feat'] }` and :299-305 keeps the row
+  with the LONGEST operations string per normalised NAME, with no preference for the earlier type —
+  so WG's level-8 feat row genuinely displaces their empty level-1 class-feature row.
+  I scanned VERIFIED_EQUIVALENT for a duplicate key (155 keys, 0 duplicates) and for any level- or
+  bucket-qualified key that would have let the settle be scoped to the level-1 row only: there is no
+  such key anywhere in the registry, so the blanket is the registry's shape, not a shortcut the builder
+  took. The blanket is measured in the test, and the surviving guard (wg-identity's `grants` lane
+  printing `theirs-not-ours=[inspiredstratagem]` on a stunted core) is asserted, both halves.
+  Residual, accepted and recorded: while this entry stands, wg-diff alone cannot catch the level-8
+  grant being deleted. Cross-file gap 3 is the fix and the entry says to delete itself when it lands.
+  The declined optional hygiene (retiring one of the five feat-aonId class-feature stubs) is the
+  finding's own "optional", playerVisible:false, and retiring one of five would be the inconsistent
+  half-measure — not counted against the finding.
+
+the-infinite-eye#organsight — DONE
+  Park verified against PRINT, not against the finding. In the AoN mirror
+  (C:/wonderers guide/aon-2e-archive/data/by-category/conscious-mind/): conscious-mind-2 (source
+  "Dark Archive") reads "- 3rd Organsight"; conscious-mind-8 (source "Dark Archives (Remastered)")
+  reads "- 3rd Locate". Our classFeatures['the-infinite-eye'] is aonId conscious-mind-8, edition
+  'remaster', and the carrier holds 'locate'. Adopting theirs would move us away from print.
+  The park is EFFECTIVE, which I checked in the gate rather than assuming: the record's verdict in
+  work/wg-batch-034-experience.json is NO-SHEET-EFFECT (not UNSUPPORTED), and scripts/wg-batch-gate.mjs
+  :531 consults instrumentLimited for exactly that class of verdict; instrumentLimited is keyed on the
+  bare record id (:94) with no batch or verdict filter, so the entry is picked up as written.
+  Park file re-parsed: 34 records, 0 duplicate record keys, my chunk's entry and chunk 1's
+  way-of-the-pistolero entry both intact and non-colliding.
+
+scar-of-the-survivor#instrument-unsupported — NOT-DONE (cross-file gap 1; correctly filed, not fixed here)
+victors-wreath#instrument                   — NOT-DONE (cross-file gap 1)
+echo-of-lost-moments#instrument             — NOT-DONE (cross-file gap 1)
+experimental-spellshaping#instrument        — NOT-DONE (cross-file gap 1)
+improved-familiar-attunement#instrument     — NOT-DONE (cross-file gap 1)
+  What is missing, exactly: test/wg-experience.harness.test.tsx `classFeatureHost` (:494-501) loops
+  `Object.keys(db.classes)` and `db.classes[classId].subclass?.options` ONLY, and `classFeatureIdsOwned`
+  (src/rules/derive.ts:3361-3393) reaches an extraChoices pick solely through `opts.classChoices`, which
+  the harness never passes — so :508 returns 'no class or subclass grants this feature at level 20'.
+  I verified the membership by hand rather than replaying the builder's count: `classes[…].extraChoices`
+  is an ARRAY of groups, and scar-of-the-survivor + victors-wreath are options of exemplar's `ikon`
+  group (21 options; exemplar has NO subclass at all), echo-of-lost-moments of animist's `apparition`
+  group (14; animist's 4 subclass options are Practices), experimental-spellshaping and
+  improved-familiar-attunement of wizard's `thesis` group (5; wizard's 18 subclass options are the
+  schools). None of the five appears in its class's `features` array. All five read UNSUPPORTED in
+  work/wg-batch-034-experience.json with that exact reason string.
+  I did NOT make the harness edit, and I judge the builder right not to have: the file is outside this
+  chunk's grant, chunk 1 needs the same edit for vanguard-of-roaring-waters#instrument and
+  monarch-of-the-fey-courts#instrument and was still running, and seating an extraChoices host would
+  flip ~48 exemplar/animist/wizard options plus every implement/element/mind group from silent to
+  judged in ONE step — including improved-familiar-attunement, whose two real defects (#ability-budget,
+  #drain-familiar) are being authored by the engine and data-rows families right now, and
+  experimental-spellshaping, whose daily half must be REPORTED (ruling Q23) rather than failed. That is
+  a batch-wide flip, not a chunk-2 edit.
+  I also confirmed the builder's negative claim, which is the part that would have been convenient to
+  fake: parking these records CANNOT substitute for the fix. scripts/wg-batch-gate.mjs:527 is literally
+  `if (r.verdict === 'UNSUPPORTED') { unsupported.push(r.id); continue; }`, four lines BEFORE the
+  instrumentLimited lookup at :531 — a park on an UNSUPPORTED record is dead code, and the gate already
+  prints them separately as "recorded, NOT passed". No park was written for any of the five. Correct.
+
+================================================================================
+DATA STILL NEEDED  (corrected: 0 lines)
+================================================================================
+(none — confirmed per record above, not inherited. Every printed clause in all eight records already
+has a carrier in core.json or a src/rules registry; what was wrong was the instrument, not the data.)
+
+================================================================================
+CROSS-FILE GAPS  (corrected: 3 lines — the builder's 5 with 2 retired)
+================================================================================
+1. test/wg-experience.harness.test.tsx:494-501 — `classFeatureHost` has no host for an extraChoices
+   option. Fix: walk `db.classes[classId].extraChoices[].options` and seat the pick in
+   `build.extraChoices` (derive.ts:3361-3393 already reaches it through `opts.classChoices`). Closes
+   five findings of this chunk and chunk 1's vanguard-of-roaring-waters#instrument and
+   monarch-of-the-fey-courts#instrument. ⚠ Whoever lands it must expect experimental-spellshaping's
+   daily half to REPORT (ruling Q23) and improved-familiar-attunement to read NO-SHEET-EFFECT on Drain
+   Familiar until the data-rows/engine specs land.
+2. scripts/wg-batch-gate.mjs:527 — the UNSUPPORTED short-circuit runs before the instrumentLimited
+   lookup at :531. Recorded so nobody "closes" gap 1 by parking instead: a park on an UNSUPPORTED
+   record changes nothing at the gate. This is a documented constraint, NOT an invitation to reorder
+   the two branches — reordering would let an unplayed record be parked as verified.
+3. scripts/lib/wg-parse.mjs:199 + :299-305 — the `classFeatures` bucket accepts types
+   ['class-feature','feat'] and `wgRowsByBucket` then keeps the longest-operations row per NAME with no
+   type preference, so a feat row displaces the class-feature row of the same name. Fix: within a
+   bucket whose `types` list is ordered by preference, a row of an EARLIER type is never displaced by a
+   LATER one. This is the root fix for inspired-stratagem#instrument; delete
+   VERIFIED_EQUIVALENT['inspired-stratagem'] (scripts/wg-diff.mjs:3157) the day it lands.
+
+RETIRED from the builder's list (verified as already owned and specced elsewhere, not open gaps):
+  · improved-familiar-attunement#ability-budget is in work/.b034-rows-engine.json and
+    #drain-familiar in work/.b034-rows-data-rows.json.
+  · scar-of-the-survivor#diehard-ungated and victors-wreath#spell-attack are both in
+    work/.b034-rows-situational.json, and victors-wreath#spell-attack has already landed at
+    src/rules/situationalBonuses.ts:1472.
+
+================================================================================
+MANIFEST stage[] APPENDED BY ME
+================================================================================
+  work/.b034-verify-instruments-2.txt   (added to the instruments-2 entry in work/.b034-specs.json;
+  the only file I touched — I fixed nothing, because nothing in this chunk was WRONG.)

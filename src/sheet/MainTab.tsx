@@ -291,7 +291,7 @@ export function MainTab({
   // Heritage and background are walked only for this: neither is ever an action itself (no record in
   // either collection carries a non-passive cost), but 43 of them GRANT one — a Venomtail Kobold's
   // Tail Toxin, a Jinxed Halfling's Jinx, a Doomcaller's Stellar Misfortune.
-  const grantedActions = [
+  const actionGranters = [
     ...actionRecords,
     // The ANCESTRY too — a vishkanya's Envenom, a kitsune's or yaoguai's Change Shape are printed on
     // the ancestry's own mechanics block, and this walk was the only reader that never looked there.
@@ -311,7 +311,24 @@ export function MainTab({
       .filter((inv) => inv.equipped || inv.worn)
       .map((inv) => content.items[inv.itemId])
       .filter((it): it is NonNullable<typeof it> => !!it?.grantsActions?.length),
-  ]
+  ];
+  /*
+   * …and the other half of a grant: an action a record you own REPLACES.
+   *
+   * Improved Familiar Attunement (AoN arcane-thesis-7): *"you also gain the Drain Familiar free
+   * action instead of Drain Bonded Item"*. The thesis does not take arcane bond away — it retargets
+   * it — so classFeatures/arcane-bond keeps `grantsActions: ['drain-bonded-item']` and the wizard
+   * showed BOTH free actions, one of which the character cannot use. `grantsActions` had no opposite
+   * number anywhere, so "instead of" was expressible only as prose.
+   *
+   * `replacesActions` names the ids a record retires, and is read from the SAME walk as the grants —
+   * so it only fires for a record the character actually owns, and a replacer that is itself gated
+   * (an item you are not wielding) suppresses nothing, exactly like its grant.
+   */
+  const replacedActionIds = new Set(
+    actionGranters.flatMap((f) => (f as { replacesActions?: string[] } | undefined)?.replacesActions ?? []),
+  );
+  const grantedActions = actionGranters
     .flatMap((f): { id: string; from: { id: string; name: string; limitedUses?: LimitedUses } }[] =>
       (f?.grantsActions ?? []).map((id) => ({ id, from: f! })),
     )
@@ -327,6 +344,7 @@ export function MainTab({
         return act ? [{ id, from: act }] : [];
       }),
     )
+    .filter(({ id }) => !replacedActionIds.has(id))
     .map(({ id, from }) => {
       const act = content.actions[id];
       // The ACTION's own limit wins when it carries one (Raise the Horde prints once per 10 minutes

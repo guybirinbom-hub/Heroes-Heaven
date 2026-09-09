@@ -1,0 +1,139 @@
+BATCH 034 — WG-COMPARISON LANE — ADVERSARIAL VERIFY — FAMILY: data-rows
+Verified: work/.b034-rows-data-rows.json (13 rows over 6 findings — 12 the builder's, 1 mine),
+          work/.b034-created-desc-data-rows.json (1 created-prose row),
+          test/batch034-data.test.ts (7 tests).
+Method:   every row diffed field-by-field against the SHIPPED value (public/core.json +
+          public/core-descriptions.json) with node; a throwaway in-memory harness applied all 13 rows
+          to a content copy, built real characters (inventor 8 / kineticist 3 / wizard 5 / summoner 5)
+          and rendered MainTab; harness deleted. npx tsc --noEmit clean.
+          node scripts/test-flip-audit.mjs --batch 034 → "clean — 6 test file(s) touched, 6 new settle
+          key(s), every flip cited."
+          test/batch034-data.test.ts run against the UNAPPLIED overlay: 7 failures, each on the
+          authored assertion only — every harness half ran and passed first.
+
+PER FINDING
+
+speed-boosters — DONE
+  Both rows land. classFeatures/speed-boosters.landSpeedBonus was ABSENT and is now 5;
+  classFeatures/hyper-boosters 10 -> 5 carries supersedes:true over the existing overlay row (the only
+  overlay row on that record+field). On the patched copy, deriveSpeeds on a BUILT armour inventor
+  (level 8) reads base+5 with speed-boosters and base+10 with both — the printed totals. The delta
+  shape is forced: derive.ts:5114 SUMS landSpeedBonus over ownedFeatureIds. Two things I tried to
+  break and could not: the illegal hyper-only build reads +0, not +5 (choice filtering never offers
+  hyper-boosters as the initial modification — measured, delta 0), and conditional-speed-check.mjs
+  only scans `rec.speeds`, so the "when under the effects of Overdrive" clause raises no new guard red.
+
+elemental-blast#action-cost — DONE
+  actionCost {actions,1} -> {variable,min:1,max:2}; the shape is a real ActionCost member
+  (types.ts:132) and widgets.tsx:66/89 renders it. On the patched copy a built kineticist's Main tab
+  renders "Feat actions 1–2 Elemental Blast (2 actions: +Con to damage)" — badge and strike line agree
+  for the first time. Fixed on the class feature, which is correct: MainTab.tsx:339-341 dedupes by
+  NAME and the class feature wins, so a second record would still be dropped.
+
+way-of-the-triggerbrand#combination-weapon-access — DONE
+  Line-diffed both carriers: exactly ONE line changes in each, and the new sentence is way-6 verbatim
+  with the entity decoded ("Pathfinder Guns & Gears"). The classes/gunslinger.subclass row is
+  supersedes:true and diffs against the SUPERSEDED overlay row (wg-batch-028 Spellshot) in exactly one
+  place — the Spellshot Intelligence clause is carried whole, confirmed by diff, not by assertion.
+
+beast-eidolon#stat-array-names — DONE
+  Line-diffed: 2 lines change in each carrier, the two headings only; every stat under them is
+  untouched, and eidolon-3 prints "Brutal Beast"/"Fleet Beast" as quoted. The whole `options` row
+  (path ["subclass"]) diffs against the shipped array in ONE place ([2].description) — so the 13
+  per-option `eidolonAbilities` overlay rows (which target the same record at a deeper path) are
+  carried byte-identical inside it and either application order converges. Confirmed on the patched
+  copy: beast-eidolon still has its 3 eidolonAbilities.
+
+the-infinite-eye#clairvoyance-description — DONE
+  Builder copy: one line ("- 4th:" -> "- 4th: Clairvoyance") plus one descRefs entry inserted after
+  Locate; class-feature copy: the descRefs row only, whole-field re-emission of the shipped 14 with
+  Clairvoyance making 15. Nothing else on either option changed (key sets identical). The descRefs row
+  routes correctly: apply-backfill-now.mjs:72 sends a `descRefs` row to core-descriptions.json key `r`
+  only when the record already has a descriptions entry, and classFeatures/the-infinite-eye does.
+  RichText matches refs BY LABEL (case-insensitive map), so the insertion position is cosmetic and the
+  link works. spells/clairvoyance exists.
+
+improved-familiar-attunement#drain-familiar — FIXED-BY-ME (the builder's three rows are DONE; the
+  printed replacement clause was NOT DONE and is now covered by a fourth row I authored)
+  DONE half: the create row for actions/drain-familiar mirrors actions/drain-bonded-item field for
+  field (free action, traits arcane+wizard, Player Core, remaster) and carries no description, with
+  its prose in the created-prose spec; grantsActions and limitedUses are both ABSENT today, so neither
+  is a collision. On the patched copy a built level-5 wizard with the thesis shows "Drain Familiar 1/1"
+  in the Main tab action list, with the granter's daily pip carried by MainTab.tsx:334 — the whole
+  route, rendered, not asserted.
+  WHAT WAS MISSING: arcane-thesis-7 says the free action is gained "INSTEAD OF Drain Bonded Item", and
+  the same rendered wizard shows BOTH free actions with nothing saying one replaces the other. The
+  builder filed all of that as an engine gap. Half of it is — actually hiding the action needs a
+  suppression reader — but the player-visible half had an EXISTING DATA LANE the report missed:
+  `recordMarks` (src/rules/types.ts:255-265, "the DATA twin of the hand-authored RECORD_MARKERS…for a
+  clause that changes an ACTION rather than a stat"), read by explain.ts:477 recordMarksFor over
+  ownedFeatureIds and rendered on the action row at MainTab.tsx:742. feats/spellshield already marks
+  this very action that way.
+  MY ROW: classFeatures/improved-familiar-attunement.recordMarks = one {on:'action',
+  id:'drain-bonded-item'} note naming the replacement. The record carries no recordMarks and
+  RECORD_MARKERS has no entry for it, so it collides with nothing. Verified on the patched copy: the
+  Drain Bonded Item row renders with its mark star for a wizard with this thesis, and
+  recordMarkersFor returns nothing for a Spell Substitution wizard.
+  MY TEST: test/batch034-data.test.ts, second it() under "improved-familiar-attunement hands over
+  Drain Familiar", cited "// batch 034: improved-familiar-attunement#drain-familiar"; it asserts the
+  note through the real reader on a BUILT wizard and asserts the gate (a different thesis sees no
+  mark). Fails today on the authored assertion only; flip-audit clean.
+
+SPEC ROWS AS ROWS (checked without applying)
+  - 13 rows, 0 duplicate (category,id,field,path) keys inside the family and 0 against the three other
+    families' spec files (situational, engine, created-desc as they stand now).
+  - Every target record exists except actions/drain-familiar, which carries create:true; the
+    created-prose row for it is the one row naming a record core.json lacks, which is the shape
+    apply-backfill-now.mjs expects (the create row runs in the same pass, before the prose loop).
+  - The created record carries NO description in the create row; its prose is in the created-prose spec
+    and is arcane-thesis-7's own wording.
+  - Every id a row names resolves: items/triggerbrand, spells/clairvoyance, traits arcane + wizard,
+    actions/drain-bonded-item (my mark target), classFeatures/arcane-bond (the limitedUses precedent).
+  - Every re-emitted whole value diffs against the shipped value in EXACTLY the intended place: 1 line
+    (gunslinger way description), 2 lines (beast headings, both carriers), 1 line + 1 descRef (psychic
+    option), 1 entry (the-infinite-eye descRefs). Nothing else moved.
+  - Readers exist for every field: landSpeedBonus (derive.ts:5114, explain.ts:1439), actionCost
+    (MainTab.tsx:276, widgets.tsx:66), grantsActions (MainTab.tsx:315), limitedUses (MainTab.tsx:334,
+    FeatsTab.tsx:195), recordMarks (explain.ts:477 -> MainTab.tsx:742), description/descRefs (RichText).
+    No row rides a field another family is building.
+  - Both superseding rows declare supersedes:true and carry the superseded value merged whole.
+
+MANIFEST
+  Read twice. At 14:10 it held only situational + data-rows; by the time I finished it holds SIX
+  entries over five families — situational, data-rows (rows + created-prose), instruments-2, engine,
+  instruments-1 — so nothing was clobbered, the other families simply registered later. Both data-rows
+  entries are intact and list every path the family touched. The one thing missing was the verify file
+  every other family's stage[] carries, so I appended work/.b034-verify-data-rows.txt to both data-rows
+  entries and rewrote the file with all six entries preserved byte-for-byte otherwise. Both superseding
+  rows in this family declare supersedes:true.
+
+DATA STILL NEEDED
+  (none — every row of all six findings is authored in the two spec files, including the recordMarks
+  row I added. No owner question arises: nothing here contradicts print or WG.)
+
+CROSS-FILE GAPS
+- src/rules/build.ts + src/rules/derive.ts (or MainTab's action walk): still no lane that SUPPRESSES a
+  granted action another record replaces. arcane-thesis-7 prints "instead of Drain Bonded Item" and
+  classFeatures/arcane-bond keeps grantsActions ['drain-bonded-item'] unconditionally, so both free
+  actions render. Downgraded from the builder's version, not closed: the player is now TOLD (my
+  recordMarks row), but hiding the replaced action still needs a suppression field + reader.
+- src/sheet/MainTab.tsx:339-341 dedupes actionRecords against grantedActions BY NAME with no rule about
+  which record kind wins. This batch fixes the elemental-blast instance on the class feature; the
+  precedence rule is still unwritten and the next name-twin with two costs lands the same way.
+- `access` has no reader in src/rules, src/builder or src/sheet, and items/triggerbrand is uncommon.
+  way-6's triggerbrand access is READABLE prose and nothing more; gating uncommon items on a granted
+  access is an unbuilt lane (engine family).
+- scripts/import-core-v2.mjs ships class-feature prose TWICE — core-descriptions.json and, byte-
+  identical, classes.<id>.subclass.options[].description, which is the copy the Builder renders
+  (Builder.tsx:1872, shared.tsx:1382 pass `o.description` through with no fallback). Both prose defects
+  in this family needed TWO rows for one sentence, and the-infinite-eye proves the halves can already
+  disagree. One carrier, or a build-time reconciliation, retires the class.
+- src/rules/explain.ts:1466 (NEW — mine): landSpeedBonus has no "replaces" semantics, only a sum, so
+  the delta this batch stores makes the Speed popup label Hyper Boosters "+5" where innovation-5 prints
+  "+10". The TOTAL is right (+10) and no other shape is expressible today; a `replacesLandSpeedBonus`
+  (or a typed status-bonus max) plus a reader would let both the number and the label be printed truth.
+
+MANIFEST STAGE PATHS I TOUCHED
+  work/.b034-rows-data-rows.json      (added the recordMarks row)
+  test/batch034-data.test.ts          (added the test that pins it)
+  work/.b034-verify-data-rows.txt     (this file)

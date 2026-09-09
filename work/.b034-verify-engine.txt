@@ -1,0 +1,190 @@
+BATCH 034 — ADVERSARIAL VERIFY — family: engine (WG-comparison lane)
+Builder report: work/.b034-report-engine.txt   Spec checked: work/.b034-rows-engine.json
+Re-ran: npx tsc --noEmit (clean) · node scripts/vt.mjs test/batch034-engine.test.ts (14 passed)
+        + 16 sibling files the builder did NOT run — audit-rules-fixes, batch032-closer,
+        batch033-engine, batch033-resume-light-mortar…, batch033-resume-modes-engine-rage…,
+        batch12-parity, choice-filtering, companionGrants, hunt-prey, precision-dice,
+        raging-resistance, reverse-build, batch26-engine, rage-damage, map-reduction,
+        inventor-innovation → 179 passed, 0 red.
+        node scripts/test-flip-audit.mjs --batch 034 → clean, 0 violations.
+
+PER FINDING
+
+the-silent-whisper#sending-rank — FIXED-BY-ME
+  The builder shipped the READER (build.ts `ladderRank`, keyed off a ladder entry's `rank`) and left
+  the row that feeds it in DATA STILL NEEDED prose with backfillRows:[] — i.e. the finding would have
+  closed with a dead reader and Sending still on rung 5 of every Silent Whisper psychic. The row is
+  now emitted in work/.b034-rows-engine.json: classFeatures/conscious-mind/grantedSpells,
+  supersedes:true, whole value. Diffed field-by-field against the shipped overlay row with node -e —
+  the ONLY difference is `{"id":"sending","level":11,"rank":6}` appended to the-silent-whisper; the
+  other five conscious minds are byte-identical. Target record exists; `sending` exists in
+  core.json/spells (rank 5); level 11 is the level a psychic gains 6th-rank slots, so the ladder gate
+  withholds nothing print gives. Proven, not argued: a THROWAWAY harness (test/_tmp-b034-verify-
+  engine.test.ts, applied the spec rows generically to a content copy, built a real level-11 psychic,
+  deleted after the run) showed grantedRepertoire[6] gaining 'sending' and [5] losing it while
+  synaptic-pulse stayed on 5.
+  ⚠ The report's DATA STILL NEEDED line for this row is now SUPERSEDED — do not author it twice, the
+  applier hard-refuses the collision.
+
+  ALSO FIXED-BY-ME (rule violation in the test, all three instances): the batch's own citation rules
+  forbid "a patched-vs-shipped delta that flips once the row is applied", and three assertions were
+  exactly that — they stated the defect against shipped `db`:
+    · 'files a granted spell under the ladder rank' asserted shipped[5] contains sending / [6] does
+      not → now built from ladderWithSending(false), a copy with every `sending` rung STRIPPED.
+    · 'offers its tagged modifications at each tier' asserted inventorModificationOptions(db,
+      'construct',…) === [] and counted 7/9 against a copy layered over shipped content → now
+      withoutConstructMods() / withConstructMods(), both built off a stripped base, so the counts stay
+      7 and 9 the day the 18 real records land instead of becoming 7 and 13.
+    · 'renders no empty tier card while the records are still missing' rendered against `db` → now
+      against withoutConstructMods().
+  All 14 tests still green; flip-audit still clean; every citation comment left intact.
+
+spirit-instinct#ghost-touch — DONE
+  RAGE_DAMAGE['spirit-instinct'].ghostTouch reaches a BUILT barbarian: the greatclub's Rage rider note
+  on a level-5 spirit barbarian reads "…, ghost touch vs incorporeal while dealing spirit". Shape
+  matches the two existing carriers (companionGrants strikeRider 'ghost touch'), so no new lane.
+  Checked the one ordering hazard: `largerWeapon` REPLACES the note, so an instinct carrying both
+  flags would lose the rider — giant-instinct is the only largerWeapon entry and has no ghostTouch, so
+  it cannot bite today. Left as-is rather than reordering (no printed instinct pairs them).
+
+spirit-instinct#damage-type-choice — DONE
+  Verified against print, not against the builder's word: mirror instinct-12 (Player Core 2 p.75) says
+  the specialization increase applies "when using spirit rage" only, so the declined branch stays at
+  Rage's own 2 at EVERY level — which is exactly what `alt = { value: 2, type: weaponType }` emits.
+  A level-15 spirit barbarian therefore reads "13 spirit or 2 bludgeoning (choose each Rage)", which
+  is right; the agile halving floors both branches. Blast radius re-measured: dragon '4 energy' and
+  fury '3 bludgeoning' still print one branch.
+
+construct-innovation#modification-effects — NOT-DONE (correctly declared PARTIAL)
+  Nothing of the seven modifications' mechanics reaches a construct today: the 18 records do not
+  exist (verified — 0 records carry `construct-innovation-modification`), so validPick rejects every
+  pick and c.inventor.modifications stays empty on a real build. The builder's test proves only that
+  the pick is RECORDED once the records exist (patched copy). Both halves stand as gaps below.
+  Independent check of the builder's own HAZARD note: confirmed — ownedFeatureIds treats a chosen
+  inventor modification as a feature of the INVENTOR, so any mechanical field on these records would
+  land on the wrong creature. The records must be label-only until the companion applier exists.
+
+construct-innovation#higher-tier-picks — DONE (code half; reach is still 0 until the records land)
+  The `type === 'construct'` early return is gone and the tiers loop runs for constructs. Blast radius
+  of the new empty-tier guard re-measured myself from core.json rather than taken on trust:
+  weapon 11/18/26, armor 7/15/22, light-mortar 3/6/9, construct 0/0/0 at initial/breakthrough/
+  revolutionary — so `if (!opts.length) return null` can only ever hide a construct tier. Proposal in
+  the finding implemented exactly ("once the records exist, delete the early return").
+
+construct-innovation#duplicate-picker — DONE
+  The contradiction is gone in the SHIPPED state: the placeholder SubCard is deleted, and the record's
+  own `choice` (rendered by Builder.tsx:1891 under the same `feature:<id>` key) is now the single
+  carrier. Rendered a level-7 construct inventor to confirm the placeholder line is absent.
+  ⚠ ORDERING HAZARD the builder's report does not state: the `choice:null` row in DATA STILL NEEDED
+  must NOT be applied on its own. With the 18 records absent, the tier pickers render nothing (the new
+  guard) — so retiring the record's choice first would leave a construct inventor with NO initial-
+  modification control at all, a strict regression on today's behaviour. That row and the 18 creates
+  are one atomic change; the list below says so.
+
+construct-innovation#overdrive — NOT-DONE (outside the family's files — CROSS-FILE GAPS, verified accurate)
+
+elemental-blast#damage-type-trait — DONE
+  Verified the added traits are REAL trait ids, which the builder did not check: core.json/trait has
+  electricity, fire, cold, vitality (and air/earth/…); 'bludgeoning' is not a trait, which is exactly
+  what PHYSICAL_DAMAGE excludes — so no blast can grow a fake trait chip. Per-element construction is
+  right (traits, mapStepFor and mapNotesFor all take the same list). Swept the strike-trait readers
+  for a sibling break: strikeShowsCritSpec (derive.ts:3908) is the only trait-matching reader and no
+  crit-spec source narrows on a damage trait; modeNumberBonus is called for blasts without traits, so
+  nothing double-counts. map-reduction, batch032-closer and batch032-engine (all of which assert on
+  blast strikes) stay green.
+
+elemental-instinct#rage-damage-type — DONE
+  Checked the carrier the builder relies on rather than the test: core.json classFeatures/
+  elemental-instinct.choice is kind 'array' with values `air-electricity … wood-piercing` (no element
+  name contains a hyphen, so the suffix split is safe for all 11 options), and Builder.tsx:1891 stores
+  the subclass follow-up under the PLAIN `feature:<id>` key — the same key buildCharacter reads — so a
+  real player's answer reaches featureChoices, not just a hand-set BuildState.
+  The new Character.featureChoices needs no other registration: the sibling ancestryHeritageChoices has
+  no serializer/whitelist consumer anywhere in src/ or scripts/, and reverse-build + batch26-engine
+  (the two files that pin that sibling) stay green.
+  ponytail note, not a defect: the recovery loop reads only the plain key, while the ancestry twin also
+  falls back to `<key>:0`. No class-feature choice with count>1 is read today; add the fallback when one is.
+
+psychopomp-eidolon#language — NOT-DONE (cross-file; claim re-verified: COMPANION_MODS['psychopomp-eidolon']
+  has kinds/senses/strikeRider/note and no `languages`, content.languages['requian'] exists, and
+  companions.ts:1047 `for (const l of mod.languages ?? [])` is the live reader)
+beast-eidolon#language-sylvan — NOT-DONE (cross-file; re-verified: 'beast-eidolon' line 471 has no
+  `languages`, sibling 'fey-eidolon' line 497 carries languages:["Sylvan"] in the printed-name shape)
+improved-familiar-attunement#ability-budget — NOT-DONE (cross-file; re-verified: abilityBudget 4 with
+  supersedes ['familiar'], and familiarAbilityBudget (companions.ts:663) still hard-codes
+  `cfg.grantSlug === 'familiar-witch'` as the only growth path)
+  All three are src/rules/companionGrants.ts / companions.ts, which is in NO family's stage[] in
+  work/.b034-specs.json — so they are genuinely unclaimed, not silently dropped.
+
+SPEC ROWS (work/.b034-rows-engine.json) — 1 row, the one I added
+  · target classFeatures/conscious-mind EXISTS (no create:true needed) ✓
+  · whole value re-emitted; diffed against the shipped overlay row — one addition, nothing lost ✓
+  · supersedes:true present, and it is the only row in any batch-034 spec touching that record+field
+    (swept all five spec files: 15 distinct record|field keys, zero duplicates) ✓
+  · reader exists and ships in THIS batch (build.ts ladderRank) ✓
+  · every id the row names resolves in core.json (sending, shatter-mind, contagious-idea, …) ✓
+  · no create rows, so no created-prose file is owed by this family ✓
+  Swept every other family's spec for the same guarantees: no row that lands on an existing
+  effect-backfill category/id/field is missing supersedes:true, and no row declares supersedes without
+  an existing row to supersede.
+
+MANIFEST (work/.b034-specs.json)
+  All six entries present (situational, data-rows rows + created-prose, instruments-2, engine,
+  instruments-1). Engine's stage[] listed 7 paths and was missing this verify file; appended
+  "work/.b034-verify-engine.txt". Every other family's entry left untouched. The two files I changed
+  (test/batch034-engine.test.ts, work/.b034-rows-engine.json) were already in engine's stage[].
+
+DATA STILL NEEDED (corrected — the conscious-mind row is REMOVED, it is in the spec now)
+- ⚠ THESE FOUR ARE ONE ATOMIC CHANGE. Applying the `choice:null` row without the 18 records leaves a
+  construct inventor with no modification control at all (the tier pickers render nothing while the
+  records are missing) — strictly worse than today. Land them together or not at all.
+- classFeatures / construct-innovation / choice / null — supersedes:true (retires the existing
+  effect-backfill row that authored this label-only picker; armor-, weapon- and light-mortar-innovation
+  all carry no `choice`, and the tier pickers become the single carrier). innovation-2 "Choose one
+  initial construct modification to apply to your innovation". [construct-innovation#duplicate-picker]
+- classFeatures create x7 (initial, level 1): accelerated-mobility, amphibious-construction,
+  increased-size, manual-dexterity, projectile-launcher, sensory-array, wonder-gears — each
+  {"id":"<id>","name":"<Printed Name>","traits":["inventor"],"rarity":"common","source":{"book":
+  "Pathfinder Guns & Gears","license":"ORC"},"level":1,"actionCost":{"type":"passive"},"otherTags":
+  ["construct-innovation-modification"],"edition":"remaster","aonOrigin":"authored"}. Verified: none of
+  the 18 ids collides with an existing classFeatures record. [construct-innovation#higher-tier-picks,
+  construct-innovation#modification-effects]
+- classFeatures create x6 (breakthrough, level 7): advanced-weaponry-construct, antimagic-construction,
+  climbing-limbs, durable-construction, marvelous-gears, turret-configuration — same template, level 7.
+  [construct-innovation#higher-tier-picks]
+- classFeatures create x5 (revolutionary, level 15): flight-chassis, miracle-gears, resistant-coating,
+  runic-keystone, wall-configuration — same template, level 15. [construct-innovation#higher-tier-picks]
+- core-descriptions (created-prose) for all 18 ids above, key classFeatures/<id>, verbatim from AoN
+  innovation-2's modification list. [construct-innovation#modification-effects]
+  (NOTE, not a gap: keep all 18 LABEL-ONLY. A chosen inventor modification is an ownedFeatureId, so a
+  landSpeedBonus / senses / grants.skills / resistances on one would apply to the INVENTOR, not to the
+  construct — until the companion applier below exists.)
+
+CROSS-FILE GAPS (all re-verified against the live files; none is in any family's stage[])
+- src/rules/companionGrants.ts COMPANION_MODS['psychopomp-eidolon'] (line 504): add
+  `languages: ['requian']`. Reader companions.ts:1047 already fires for dragon/fey eidolons;
+  content.languages['requian'] resolves to "Requian". AoN eidolon-10 "**Language** Requian".
+  [psychopomp-eidolon#language]
+- src/rules/companionGrants.ts COMPANION_MODS['beast-eidolon'] (line 471): add `languages: ['Sylvan']`,
+  the printed-name shape 'fey-eidolon' (line 497) already uses. AoN eidolon-3 "**Language** Sylvan".
+  [beast-eidolon#language-sylvan]
+- src/rules/companionGrants.ts FEAT_COMPANION_GRANTS['improved-familiar-attunement'] (line 149):
+  abilityBudget 4 -> 3, add `growthLevels: [6, 12, 18]`, note -> "Choose 3 familiar abilities — 4 at
+  6th, 5 at 12th, 6 at 18th."; AND src/rules/companions.ts familiarAbilityBudget (line 663): replace
+  the hard-coded `cfg.grantSlug === 'familiar-witch'` test with the grant's `growthLevels`, setting
+  [6,12,18] on familiar-witch too so its behaviour is unchanged. Base 'familiar' is 2, so print's
+  "an extra ability … and an additional extra ability at 6th, 12th, and 18th" is 3/4/5/6.
+  [improved-familiar-attunement#ability-budget]
+- src/rules/companionGrants.ts 'construct-innovation' (line 104): extend the note with the Overdrive
+  rider — "While you are Overdriven your construct gains the same Overdrive benefit, and takes the same
+  fire damage on a critical failure." AoN innovation-2. [construct-innovation#overdrive]
+- src/rules/companions.ts (+ companionGrants.ts): an applier that carries c.inventor.modifications onto
+  the CONSTRUCT companion (Accelerated Mobility Speed 40, Amphibious swim 25, Increased Size Large,
+  Projectile Launcher's 1d4 ranged unarmed attack, Sensory Array's senses, Wonder Gears' three trained
+  skills). The pick reaches c.inventor.modifications; nothing companion-side reads it.
+  [construct-innovation#modification-effects]
+
+MANIFEST stage[] paths for the files I touched (already appended to the engine entry)
+  work/.b034-rows-engine.json
+  work/.b034-verify-engine.txt
+  test/batch034-engine.test.ts

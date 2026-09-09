@@ -1,0 +1,121 @@
+batch 034 — SITUATIONAL family (WG-COMPARISON lane)
+7 assigned findings, 7 handled, 0 dropped.
+
+DATA STILL NEEDED
+- classFeatures/scar-of-the-survivor field grantsFeats value null (delete the field) — supersedes the existing effect-backfill row {classFeatures, scar-of-the-survivor, grantsFeats, ["diehard"]}; authored in work/.b034-rows-situational.json under scar-of-the-survivor#diehard-ungated.
+
+CROSS-FILE GAPS
+(none — every fix landed inside src/rules/situationalBonuses.ts, the exclusion list of scripts/apply-situational-lane.mjs, and test/batch034-situational.test.ts.)
+
+
+PER FINDING
+
+the-silent-whisper#daze-range
+  DID: src/rules/situationalBonuses.ts — SPELL_MARKERS gained the key "daze" with one entry
+       { source: 'the-silent-whisper', when: "while you have The Silent Whisper conscious mind",
+         bonus: "range 120 feet (instead of the spell's usual 60)" }, the lane batch 033 built for
+       the-distant-grasp's telekinetic-projectile. No data row: spells/daze.range must stay "60 feet"
+       for every caster who is not a Silent Whisper psychic, so the override can only be per-character.
+       WHY comment quotes conscious-mind-10 verbatim.
+  TEST: test/batch034-situational.test.ts, describe "the-silent-whisper modifies daze and message,
+       and only for its own psychic" — "a Silent Whisper psychic reads the 120-foot range on the daze
+       row" (built psychic level 5, subclassId the-silent-whisper, read through spellSituationalFor,
+       the reader SpellsTab uses; asserts the conscious mind reaches characterSituationalIds and that
+       the spell record itself still says 60 feet) and the negative "a psychic with a different
+       conscious mind, and a wizard, read neither rider".
+  NOT DONE: nothing.
+
+the-silent-whisper#message-reach
+  DID: src/rules/situationalBonuses.ts — SPELL_MARKERS gained the key "message" with one entry
+       sourced to 'the-silent-whisper', bonus "no line of effect or line of sight needed — any
+       unblocked path of 120 feet or less reaches the target; you can also cast it purely
+       telepathically, losing the auditory trait". No data row: the printed range is already 120 feet
+       and the `auditory` trait is correct on the shared record; what changes is reach and an option.
+  TEST: same describe — "a Silent Whisper psychic reads the walls-and-telepathy rider on the message
+       row" (asserts all four printed elements on the rendered rider, and that spells/message keeps
+       `auditory` and its 120-foot range), plus the shared negative test.
+  NOT DONE: nothing.
+
+curse-of-turbulent-moments
+  DID: src/rules/situationalBonuses.ts — new FEAT_SITUATIONAL["curse-of-turbulent-moments"] with two
+       rows: { kind: 'ac' } "against attacks made against you from reactions or free actions, while
+       cursebound" and { kind: 'save', detail: 'all' } "against effects that would make you fatigued
+       or slowed, while cursebound", both "−(your cursebound value) status". The value rides the prose
+       because it scales with the player's own cursebound value, which no entry can read. The existing
+       RECORD_MARKERS note on the `cursebound` condition is KEPT — the file's own Q2 comment allows a
+       star and a mark on the same record. WHY comment quotes mystery-23 verbatim.
+  TEST: describe "curse-of-turbulent-moments penalises the AC and the saves it names" — four its:
+       the AC row (statHasSituational + the StatDetailModal row text), all three saves, the coexisting
+       condition mark, and an oracle of another mystery getting none of it. Built oracle level 5 with
+       subclassId 'time', whose subclass option's featureIds carry the curse.
+  NOT DONE: the star is not mode-gated to cat-cursebound-1..4. Print states one rule with a scaling
+       value; a mode-gated variant would need four entries saying the same thing, and the four oracle
+       cursebound modes ship modifiers: [] so nothing reads them numerically today. Flagged, not built.
+
+elemental-instinct#concealment
+  DID: src/rules/situationalBonuses.ts — new FEAT_SITUATIONAL["elemental-instinct"], one
+       { kind: 'ac' } row, when "while raging, against ranged attacks", bonus "you are concealed (the
+       attacker must succeed at a DC 5 flat check); this concealment can't be used to Hide or Sneak".
+       AC is the row because concealment is what an attack roll has to beat; print's carve-out travels
+       with the bonus so the player cannot read it as a Stealth licence. Same shape as the sibling
+       superstition-instinct entry. The record's element-choice resistances are untouched.
+  TEST: describe "elemental-instinct shows the Elemental Rage concealment on the AC row" — a built
+       barbarian level 5 with subclassId elemental-instinct reads the row and the `*` through
+       statHasSituational; a fury-instinct barbarian reads nothing, and Stealth gets nothing either
+       (the carve-out is not a Stealth bonus).
+  NOT DONE: nothing.
+
+weapon-innovation#segmented-frame-duplicate
+  DID: src/rules/situationalBonuses.ts — the FEAT_SITUATIONAL["weapon-innovation"] entry is DELETED,
+       replaced by a comment saying why. scripts/apply-situational-lane.mjs — 'weapon-innovation'
+       added to the `handEdited` exclusion set with a header paragraph in the file's own convention;
+       the lane row is `needsHumanDecision` today and so already skipped, but that flag lives in a
+       regenerable spec.json and `existingIds` cannot exclude a deleted row. FEAT_SITUATIONAL
+       ["segmented-frame"], keyed to the actual modification pick, is unchanged.
+  TEST: describe "weapon-innovation no longer doubles the Segmented Frame Stealth bonus" — two built
+       inventors, one with inventorModifications { initial: 'segmented-frame' } (exactly one Stealth
+       star, from segmented-frame, none from weapon-innovation) and one with 'hampering-spikes'
+       (no Stealth star at all). Both assert 'weapon-innovation' still reaches
+       characterSituationalIds, so the absence of the star is the entry being gone and not the id
+       being unreachable.
+  NOT DONE: nothing.
+
+scar-of-the-survivor#diehard-ungated
+  DID: DATA — work/.b034-rows-situational.json carries the one row above: classFeatures/
+       scar-of-the-survivor field grantsFeats value null, supersedes: true. The superseded value is
+       ["diehard"] and it goes entirely, because the whole of it is the ungated half; nothing is left
+       to merge. CODE — src/rules/situationalBonuses.ts, FEAT_SITUATIONAL["scar-of-the-survivor"]
+       gained a SECOND Fortitude row, "while your divine spark is in this ikon (immanence active)" /
+       "you also gain the benefits of the Diehard feat", the shape leap-the-falls (:3431) already uses
+       for a feat granted only under immanence. WHY comment quotes ikon-13's Immanence sentence.
+  TEST: describe "scar-of-the-survivor gates its whole Immanence sentence, Diehard included" — three
+       its. The grant half is proved on a content copy with grantsFeats STRIPPED IN MEMORY (an
+       exemplar built through buildCharacter against the patched db grants no Diehard), and a twin
+       test with the field PATCHED BACK IN pins the behaviour the row retires; neither is a
+       patched-vs-shipped delta, so neither flips when the driver applies the row. The third builds a
+       normal exemplar and reads BOTH Fortitude rows through featSituationalFor, asserting both carry
+       "immanence active".
+  NOT DONE: nothing. (Diehard has no stat row of its own — it changes the dying value — so Fortitude,
+       the stat the same printed sentence moves, is the only honest home for the clause.)
+
+victors-wreath#spell-attack
+  DID: src/rules/situationalBonuses.ts — FEAT_SITUATIONAL["victors-wreath"] gained
+       { kind: 'spell', detail: 'attack' } beside { kind: 'strikeAttack' } on the SAME entry, so it is
+       one bonus reaching two rows and not a second bonus. Precedent named in the WHY comment:
+       pennant-of-victory (:534) carries both kinds for the identical printed phrase, and ikon-21
+       prints "attack rolls" unqualified.
+  TEST: describe "victors-wreath stars the spell attack row too, not only Strikes" — an exemplar at
+       level 8 holding the ikon with a wizard-dedication override, so the character has a REAL
+       spellcasting entry: the row is read through featSituationalFor and the `*` through
+       statHasSituational with a StatRef { kind: 'spell', entryId, which: 'attack' }; the Strike rows
+       are asserted to be the same entry, and the spell DC row is asserted empty (print says attack
+       rolls, not DCs).
+  NOT DONE: nothing.
+
+
+CHECKS RUN
+  node scripts/vt.mjs run test/batch034-situational.test.ts   -> 17 passed
+  npx tsc --noEmit                                            -> clean
+  node scripts/test-flip-audit.mjs --batch 034                -> no violation in any file of mine
+    (its one FAIL is scripts/wg-diff.mjs:3107, VERIFIED_EQUIVALENT gaining "inspired-stratagem"
+     without a mutation-proof test — another family's settle, not touched here.)

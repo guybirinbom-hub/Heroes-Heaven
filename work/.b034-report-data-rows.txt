@@ -1,0 +1,133 @@
+BATCH 034 — WG-COMPARISON LANE — FAMILY: data-rows
+Spec:          work/.b034-rows-data-rows.json          (kind: rows, 12 rows over 6 findings)
+Created prose: work/.b034-created-desc-data-rows.json  (kind: created-prose, 1 row)
+Test:          test/batch034-data.test.ts              (6 tests, one per finding; all 6 fail today on
+               the authored assertion only — every harness half runs and passes BEFORE it)
+
+DATA STILL NEEDED
+(none — every row of every one of my six findings is authored in the two spec files above. The driver's
+five pre-checks were dry-run over both files against the current overlay: 0 problems, 2 declared
+supersessions — classFeatures/hyper-boosters/landSpeedBonus 10 -> 5 and classes/gunslinger/subclass.)
+
+CROSS-FILE GAPS
+- src/rules/build.ts + src/rules/derive.ts: no lane suppresses a granted action that another record
+  REPLACES. arcane-thesis-7 prints "you also gain the Drain Familiar free action INSTEAD OF Drain
+  Bonded Item", but classFeatures/arcane-bond keeps grantsActions ['drain-bonded-item'] unconditionally,
+  so a wizard with Improved Familiar Attunement will now show both actions. Needs a reader (a
+  `replacesActions` / suppression field on the granting record) — engine family, not a data row.
+- src/sheet/MainTab.tsx:339-341 dedupes actionRecords against grantedActions BY NAME, with no rule
+  about which record kind wins. That is why classFeatures/elemental-blast's 1-action badge beat the
+  correct actions/elemental-blast variable cost; the data row fixes this instance, the precedence rule
+  is still unwritten and the next name-twin with two costs will land the same way.
+- `access` has no reader anywhere in src/rules, src/builder or src/sheet, and items/triggerbrand is
+  rarity uncommon. way-6's triggerbrand access is now READABLE prose and nothing more; gating uncommon
+  items on a granted access is an unbuilt lane (engine family).
+- scripts/import-core-v2.mjs ships class-feature prose TWICE — once in core-descriptions.json and once,
+  byte-identical, inside classes.<id>.subclass.options[].description, which is the copy the Builder
+  renders (src/builder/Builder.tsx:1872, src/builder/shared.tsx:1382 pass `o.description` straight
+  through with no fallback to the class feature). Both of this batch's prose defects (beast-eidolon,
+  the-infinite-eye) needed TWO overlay rows for one sentence, and the-infinite-eye shows the halves can
+  already disagree: the class-feature copy was right and the option copy blank. A build-time
+  reconciliation (or a single carrier) would retire a whole class of defect.
+
+────────────────────────────────────────────────────────────────────────────────────────────────────
+PER FINDING
+
+speed-boosters
+  DID: two rows. classFeatures/speed-boosters landSpeedBonus = 5 (the record carried NOTHING for its
+       always-on half — no landSpeedBonus, no speeds/speedsIf, no passiveEffects — so the +5 moved no
+       number), and classFeatures/hyper-boosters landSpeedBonus 10 -> 5, supersedes:true.
+       The second row is the finding's own stacking caveat: src/rules/derive.ts:5071 SUMS
+       landSpeedBonus across ownedFeatureIds, and innovation-5 prints BOTH numbers as totals
+       (+5 / +10) with "You must have the speed boosters modification to select this modification",
+       so the stored second number has to be the DELTA. Legal builds now read +5 (speed only) and +10
+       (both). Hyper Boosters alone is not a legal build and reads +5 there — no prerequisite is
+       enforced in the data, and a summing reader cannot express "replaces" without a new field.
+       The Overdrive riders in src/rules/situationalBonuses.ts:1408/1392 are untouched and stay true:
+       "+10 status (replacing the base +5)" now names a base the sheet actually adds.
+  TEST: test/batch034-data.test.ts "speed-boosters moves the Speed it prints" — pins both fields and
+       runs deriveSpeeds on a BUILT armour inventor (level 8, inventorModifications) three times:
+       base, +5 with speed-boosters, +10 with both. The +5/+10 arithmetic was verified ahead of the
+       row with a throwaway in-memory probe (both values patched onto the content copy) so the
+       assertion is known to be reachable, not just authored.
+  NOT DONE: nothing.
+
+elemental-blast#action-cost
+  DID: one row — classFeatures/elemental-blast actionCost = {type:'variable',min:1,max:2}
+       (action-2125 "Single Action or Two Actions"). Fixed on the CLASS FEATURE, not by adding a
+       record: actions/elemental-blast already holds the right shape and MainTab.tsx:339-341 drops it
+       as a name duplicate, so a second record would be dropped again.
+  TEST: "elemental-blast badges the 2-action blast it prints" — asserts the class feature's cost and,
+       as the harness half, that the action record it is deduped against already agrees.
+  NOT DONE: the dedupe precedence itself — CROSS-FILE GAPS.
+
+way-of-the-triggerbrand#combination-weapon-access
+  DID: two rows for one sentence. classFeatures/way-of-the-triggerbrand description (pathless prose
+       row) and classes/gunslinger subclass (whole value, supersedes:true) both replace the paraphrase
+       "You gain access to combination weapons." with way-6's "In addition to the combination weapons
+       presented in Pathfinder Guns & Gears, you gain access to the triggerbrand combination weapon."
+       The second carrier is the copy the Builder renders at class selection; a prose row may not
+       carry a path (driver pre-check 4), so the existing whole-value classes/gunslinger/subclass row
+       is superseded instead — its value is byte-identical to the shipped subclass, is carried whole,
+       and only this one string differs. No engine change: `access` has no reader.
+  TEST: "way-of-the-triggerbrand prints the access it grants" — the clause in both carriers, with the
+       existence of items/triggerbrand as the harness half.
+  NOT DONE: modelling access as a mechanic — CROSS-FILE GAPS.
+
+beast-eidolon#stat-array-names
+  DID: two rows. classFeatures/beast-eidolon description, and classes/summoner options with
+       path ["subclass"] (the existing lane — investigator, witch, champion, magus and wizard all ride
+       it). Both now read "**Brutal Beast**" and "**Fleet Beast**" (eidolon-3) in place of
+       eidolon-2's "Wrathful Berserker" / "Enraged Assassin"; the numbers underneath were already the
+       Beast's own and are untouched. The dumped array is the SHIPPED one, so the 13 per-option
+       eidolonAbilities overlay rows are carried whole inside it and either application order gives
+       the same result.
+  TEST: "beast-eidolon labels its own ability arrays" — both carriers, both headings with their full
+       stat lines, plus not.toContain on both Anger Phantom labels; the harness half asserts the
+       whole-array row did not lose eidolonAbilities.
+  NOT DONE: nothing.
+
+the-infinite-eye#clairvoyance-description
+  DID: two rows. classes/psychic options with path ["subclass"] — "- 4th:" becomes "- 4th:
+       Clairvoyance" and the {label:'Clairvoyance',key:'spells'} descRef is inserted after Locate, in
+       ladder order (conscious-mind-8). And classFeatures/the-infinite-eye descRefs, re-emitted WHOLE
+       with the same insertion: that copy already carried the right sentence from an earlier overlay
+       row but had no link for the spell, so Clairvoyance was the one granted spell in the list with
+       no description popup. Mechanics untouched — grantedSpells already listed clairvoyance, which is
+       what makes this display-only.
+  TEST: "the-infinite-eye shows its 4th-rank granted spell" — the ladder line and the descRef in the
+       Builder copy, the descRef in the class-feature copy, with grantedSpells containing
+       'clairvoyance' as the harness half.
+  NOT DONE: nothing.
+
+improved-familiar-attunement#drain-familiar
+  DID: three rows plus its prose. A create row for actions/drain-familiar (free action, traits
+       arcane+wizard, Player Core, edition remaster, aonParentId 'arcane-thesis-7' +
+       aonSection 'Drain Familiar' because the action has no page of its own — the shape
+       classFeatures/speed-boosters uses for the same reason), field-for-field the sibling
+       actions/drain-bonded-item; and classFeatures/improved-familiar-attunement
+       grantsActions ['drain-familiar'], the lane classFeatures/arcane-bond already uses. The prose is
+       a separate created-prose row (work/.b034-created-desc-data-rows.json) because a create row
+       never carries a description — batch 033's created record shipped blank for exactly that reason;
+       every sentence is verbatim arcane-thesis-7, which is what pre-check (5) demands.
+       The once-per-day frequency is deliberately NOT on the new record — the sibling
+       actions/drain-bonded-item carries none either, its limit lives on the GRANTER
+       (classFeatures/arcane-bond limitedUses 1/day) and MainTab.tsx:333 carries a granter's limit onto
+       the granted action. So the third row puts the same {max:1,per:'day'} on
+       classFeatures/improved-familiar-attunement, which is the granter here; without it the free
+       action would have shown no daily limit at all ("functions identically", arcane-thesis-7, and
+       action-2260 prints "Frequency once per day").
+  TEST: "improved-familiar-attunement hands over Drain Familiar" — the action record's cost, traits
+       and prose, the grant on the thesis and its 1/day limit; the harness half builds a wizard with
+       the thesis and asserts ownedFeatureIds contains it, which is the route MainTab.tsx:316 walks
+       for grantsActions.
+  NOT DONE: suppressing Drain Bonded Item for this thesis — CROSS-FILE GAPS (no suppression reader
+       exists; print says "instead of", so both will show until one is built).
+
+────────────────────────────────────────────────────────────────────────────────────────────────────
+NOTES
+- No src/ or scripts/ file was modified by this family. No settle, teach, ratchet or registry entry
+  was touched, so no "// mutation-proof" test is owed here; the 5 mutation-proof violations
+  scripts/test-flip-audit.mjs --batch 034 currently reports are all in scripts/wg-diff.mjs,
+  scripts/wg-values.mjs and scripts/wg-identity.mjs and belong to the instrument family.
+- npx tsc --noEmit is clean.

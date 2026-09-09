@@ -1,0 +1,210 @@
+{
+ "batch": 34,
+ "records": [
+  {
+   "id": "the-silent-whisper",
+   "verdict": "FIXED",
+   "evidence": "[batch 34 read, adversarially confirmed] the-silent-whisper#sending-rank: Sending is granted at the wrong rank: the conscious mind's ladder prints it as the 6th-rank granted spell, but our lane  — cited by row spec work/.b034-rows-engine.json finding the-silent-whisper#sending-rank (1 row(s)), test test/batch034-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added), test test/batch034-engine.test.ts (in what this batch added); the-silent-whisper#daze-range: The conscious mind doubles daze's range and neither side carries it, so a Silent Whisper psychic reads 60 feet on the ve — cited by code-only spec work/.b034-rows-situational.json finding the-silent-whisper#daze-range (0 rows; family situational changed src/rules/situationalBonuses.ts in this batch), test test/batch034-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added), test test/batch034-engine.test.ts (in what this batch added); the-silent-whisper#message-reach: The conscious mind's message modification (no line of effect or line of sight needed, and it can be cast purely telepath — cited by code-only spec work/.b034-rows-situational.json finding the-silent-whisper#message-reach (0 rows; family situational changed src/rules/situationalBonuses.ts in this batch), test test/batch034-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added), test test/batch034-engine.test.ts (in what this batch added)"
+  },
+  {
+   "id": "empiricism-methodology",
+   "verdict": "MATCHES",
+   "evidence": "[batch 34 read] comparer misread settled/taught: empiricism-methodology — work/.b034-rows-instruments-1.json finding empiricism-methodology note: No row. The trained-skill choice is carried by classes.investigator.subclass.options['empiricism-methodology'].skillChoice ['arcana','crafting','occultism','soc"
+  },
+  {
+   "id": "precise-discipline",
+   "verdict": "MATCHES",
+   "evidence": "[batch 34 read] comparer misread settled/taught: precise-discipline — work/.b034-rows-instruments-1.json finding precise-discipline note: No row. classes.psychic.extraChoices['subconscious-mind'].options['precise-discipline'].keyAbility = 'int' carries all three flagged kinds: subclassKeyAbility ("
+  },
+  {
+   "id": "speed-boosters",
+   "verdict": "FIXED",
+   "evidence": "[batch 34 read, adversarially confirmed] speed-boosters: The always-on +5-foot status bonus to Speed is delivered by nothing on our side — only the Overdrive rider is carried, a — cited by row spec work/.b034-rows-data-rows.json finding speed-boosters (2 row(s)), row classFeatures/speed-boosters field:landSpeedBonus in work/.b034-rows-data-rows.json, test test/batch034-data.test.ts (in what this batch added)"
+  },
+  {
+   "id": "choir-politic",
+   "verdict": "MATCHES",
+   "evidence": "[batch 34 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "curse-of-turbulent-moments",
+   "verdict": "FIXED",
+   "evidence": "[batch 34 read, adversarially confirmed] curse-of-turbulent-moments: The curse's status penalty to AC and to saves is carried only as a prose mark on the cursebound condition row; no AC or  — cited by code-only spec work/.b034-rows-situational.json finding curse-of-turbulent-moments (0 rows; family situational changed src/rules/situationalBonuses.ts in this batch), test test/batch034-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added)"
+  },
+  {
+   "id": "spirit-instinct",
+   "verdict": "FIXED",
+   "evidence": "[batch 34 read, adversarially confirmed] spirit-instinct#ghost-touch: Neither side models the Ghost Touch effect Spirit Rage gives the weapon, so a spirit barbarian striking an incorporeal c — cited by code-only spec work/.b034-rows-engine.json finding spirit-instinct#ghost-touch (0 rows; family engine changed src/rules/types.ts, src/rules/build.ts, src/rules/derive.ts, src/builder/shared.tsx in this batch), test test/batch034-engine.test.ts (in what this batch added), code src/rules/derive.ts (in what this batch added), test test/batch034-instruments-1.test.ts (in what this batch added); spirit-instinct#damage-type-choice: Spirit Rage is a per-Rage choice; ours applies 3 spirit damage unconditionally, so a spirit barbarian who rages without  — cited by code-only spec work/.b034-rows-engine.json finding spirit-instinct#damage-type-choice (0 rows; family engine changed src/rules/types.ts, src/rules/build.ts, src/rules/derive.ts, src/builder/shared.tsx in this batch), test test/batch034-engine.test.ts (in what this batch added), code src/rules/derive.ts (in what this batch added), test test/batch034-instruments-1.test.ts (in what this batch added)"
+  },
+  {
+   "id": "construct-innovation",
+   "verdict": "FIXED",
+   "evidence": "[batch 34 read, adversarially confirmed] construct-innovation#modification-effects: The chosen initial construct modification is a label only — none of the seven modifications' mechanics (Speed, swim Spee — cited by code-only spec work/.b034-rows-engine.json finding construct-innovation#modification-effects (0 rows; family engine changed src/rules/types.ts, src/rules/build.ts, src/rules/derive.ts, src/builder/shared.tsx in this batch), row classFeatures/construct-innovation field:choice in work/.b034-rows-gap-engine.json, row spec work/.b034-created-desc-gap-engine.json finding construct-innovation#modification-effects (18 row(s)), test test/batch034-engine.test.ts (in what this batch added), code src/builder/shared.tsx (in what this batch added), test test/batch034-gap-engine.test.ts (in what this batch added), code src/rules/companionGrants.ts (in what this batch added); construct-innovation#higher-tier-picks: A construct inventor never gets a modification picker at 7th or 15th level (nor the archetype's Basic Modification pick) — cited by code-only spec work/.b034-rows-engine.json finding construct-innovation#higher-tier-picks (0 rows; family engine changed src/rules/types.ts, src/rules/build.ts, src/rules/derive.ts, src/builder/shared.tsx in this batch), row classFeatures/construct-innovation field:choice in work/.b034-rows-gap-engine.json, row spec work/.b034-rows-gap-engine.json finding construct-innovation#higher-tier-picks (18 row(s)), test test/batch034-engine.test.ts (in what this batch added), code src/builder/shared.tsx (in what this batch added), test test/batch034-gap-engine.test.ts (in what this batch added), code src/rules/companionGrants.ts (in what this batch added); construct-innovation#duplicate-picker: Two of our carriers speak for the same initial-modification pick and contradict each other: the record's own choice rend — cited by code-only spec work/.b034-rows-engine.json finding construct-innovation#duplicate-picker (0 rows; family engine changed src/rules/types.ts, src/rules/build.ts, src/rules/derive.ts, src/builder/shared.tsx in this batch), row spec work/.b034-rows-gap-engine.json finding construct-innovation#duplicate-picker (1 row(s)), row classFeatures/construct-innovation field:choice in work/.b034-rows-gap-engine.json, test test/batch034-engine.test.ts (in what this batch added), code src/builder/shared.tsx (in what this batch added), test test/batch034-gap-engine.test.ts (in what this batch added), code src/rules/companionGrants.ts (in what this batch added); construct-innovation#overdrive: The construct companion's share of Overdrive is modelled by neither side, so an Overdriven inventor's construct shows no — cited by code-only spec work/.b034-rows-engine.json finding construct-innovation#overdrive (0 rows; family engine changed src/rules/types.ts, src/rules/build.ts, src/rules/derive.ts, src/builder/shared.tsx in this batch), row classFeatures/construct-innovation field:choice in work/.b034-rows-gap-engine.json, test test/batch034-engine.test.ts (in what this batch added), code src/builder/shared.tsx (in what this batch added), test test/batch034-gap-engine.test.ts (in what this batch added), code src/rules/companionGrants.ts (in what this batch added)"
+  },
+  {
+   "id": "cobyslarni",
+   "verdict": "MATCHES",
+   "evidence": "[batch 34 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "vanguard-of-roaring-waters",
+   "verdict": "MATCHES",
+   "evidence": "[batch 34 read] comparer misread settled/taught: vanguard-of-roaring-waters#instrument — work/.b034-rows-instruments-1.json finding vanguard-of-roaring-waters#instrument note: No row and no comparer change owed. classes.animist.extraChoices['apparition'].options['vanguard-of-roaring-waters'] already carries grants.lores ['mountain','r"
+  },
+  {
+   "id": "school-of-gates",
+   "verdict": "MATCHES",
+   "evidence": "[batch 34 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "elemental-blast",
+   "verdict": "FIXED",
+   "evidence": "[batch 34 read, adversarially confirmed] elemental-blast#action-cost: Elemental Blast prints as a 1- OR 2-action activity, but our record fixes its action cost at 1 action, so the 2-action b — cited by row spec work/.b034-rows-data-rows.json finding elemental-blast#action-cost (1 row(s)), row classFeatures/elemental-blast field:actionCost in work/.b034-rows-data-rows.json, test test/batch034-data.test.ts (in what this batch added), test test/batch034-engine.test.ts (in what this batch added), test test/batch034-instruments-1.test.ts (in what this batch added); elemental-blast#damage-type-trait: The printed rule that a non-physical damage type adds its trait to the blast is not applied: our blast strike's trait li — cited by row classFeatures/elemental-blast field:actionCost in work/.b034-rows-data-rows.json, code-only spec work/.b034-rows-engine.json finding elemental-blast#damage-type-trait (0 rows; family engine changed src/rules/types.ts, src/rules/build.ts, src/rules/derive.ts, src/builder/shared.tsx in this batch), test test/batch034-data.test.ts (in what this batch added), test test/batch034-engine.test.ts (in what this batch added), test test/batch034-instruments-1.test.ts (in what this batch added); elemental-blast#instrument: The 'specialStat' flag on Elemental Blast is a comparer misread: WG's KINETICIST_BLAST_DICE variable has an exact carrie — cited by row classFeatures/elemental-blast field:actionCost in work/.b034-rows-data-rows.json, test test/batch034-data.test.ts (in what this batch added), test test/batch034-engine.test.ts (in what this batch added), test test/batch034-instruments-1.test.ts (in what this batch added)"
+  },
+  {
+   "id": "skybearers-belt",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #141 (batch 34; n from entry.n)"
+  },
+  {
+   "id": "way-of-the-triggerbrand",
+   "verdict": "FIXED",
+   "evidence": "[batch 34 read, adversarially confirmed] way-of-the-triggerbrand#combination-weapon-access: Our stored text for the way replaces the printed access clause with a paraphrase, so the printed grant of triggerbrand a — cited by row spec work/.b034-rows-data-rows.json finding way-of-the-triggerbrand#combination-weapon-access (2 row(s)), row classFeatures/way-of-the-triggerbrand field:description in work/.b034-rows-data-rows.json, test test/batch034-data.test.ts (in what this batch added)"
+  },
+  {
+   "id": "emotional-acceptance",
+   "verdict": "MATCHES",
+   "evidence": "[batch 34 read] comparer misread settled/taught: emotional-acceptance#instrument — work/.b034-rows-instruments-1.json finding emotional-acceptance#instrument note: No row. Same carrier and same teach as precise-discipline, one option along: classes.psychic.extraChoices['subconscious-mind'].options['emotional-acceptance'].k"
+  },
+  {
+   "id": "silence-in-snow",
+   "verdict": "MATCHES",
+   "evidence": "[batch 34 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "the-inscribed-one",
+   "verdict": "MATCHES",
+   "evidence": "[batch 34 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "way-of-the-pistolero",
+   "verdict": "FIXED",
+   "evidence": "[batch 34 read, adversarially confirmed] way-of-the-pistolero: All three instrument flags on this record are comparer misreads: the way's deeds and its Deception-or-Intimidation choic — cited by row spec work/.b034-rows-instruments-1.json finding way-of-the-pistolero (3 row(s)), test test/batch034-instruments-1.test.ts (in what this batch added)"
+  },
+  {
+   "id": "animal-order",
+   "verdict": "MATCHES",
+   "evidence": "[batch 34 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "eye-catching-spot",
+   "verdict": "MATCHES",
+   "evidence": "[batch 34 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "storm-order",
+   "verdict": "MATCHES",
+   "evidence": "[batch 34 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "the-unseen-broker",
+   "verdict": "MATCHES",
+   "evidence": "[batch 34 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "inspired-stratagem",
+   "verdict": "MATCHES",
+   "evidence": "[batch 34 read] comparer misread settled/taught: inspired-stratagem#instrument — work/.b034-rows-instruments-2.json finding inspired-stratagem#instrument note: Instrument settle, no data. WG's level-1 row 19732 is empty and their level-8 row 20263 holds the grant; WG_PAIRING's classFeatures bucket accepts ['class-featu"
+  },
+  {
+   "id": "elemental-instinct",
+   "verdict": "FIXED",
+   "evidence": "[batch 34 read, adversarially confirmed] elemental-instinct#rage-damage-type: The chosen element's damage type never reaches the Strike: our Rage rider hard-codes the literal string 'energy' for ele — cited by code-only spec work/.b034-rows-engine.json finding elemental-instinct#rage-damage-type (0 rows; family engine changed src/rules/types.ts, src/rules/build.ts, src/rules/derive.ts, src/builder/shared.tsx in this batch), test test/batch034-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added), test test/batch034-engine.test.ts (in what this batch added), code src/rules/derive.ts (in what this batch added), test test/batch034-instruments-1.test.ts (in what this batch added); elemental-instinct#concealment: Elemental Rage's concealment against ranged attacks is prose on both sides — no carrier puts it on the sheet while the R — cited by code-only spec work/.b034-rows-situational.json finding elemental-instinct#concealment (0 rows; family situational changed src/rules/situationalBonuses.ts in this batch), test test/batch034-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added), test test/batch034-engine.test.ts (in what this batch added), code src/rules/derive.ts (in what this batch added), test test/batch034-instruments-1.test.ts (in what this batch added)"
+  },
+  {
+   "id": "monarch-of-the-fey-courts",
+   "verdict": "MATCHES",
+   "evidence": "[batch 34 read] comparer misread settled/taught: monarch-of-the-fey-courts#instrument — work/.b034-rows-instruments-1.json finding monarch-of-the-fey-courts#instrument note: No row and no comparer change owed, exactly as vanguard-of-roaring-waters. classes.animist.extraChoices['apparition'].options['monarch-of-the-fey-courts'] carri"
+  },
+  {
+   "id": "wave-order",
+   "verdict": "MATCHES",
+   "evidence": "[batch 34 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "leaf-order",
+   "verdict": "MATCHES",
+   "evidence": "[batch 34 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "psychopomp-eidolon",
+   "verdict": "FIXED",
+   "evidence": "[batch 34 read, adversarially confirmed] psychopomp-eidolon#language: The psychopomp eidolon's fixed Language line (Requian) is delivered by neither the summoner subclass option nor its COMP — cited by code-only spec work/.b034-rows-engine.json finding psychopomp-eidolon#language (0 rows; family engine changed src/rules/types.ts, src/rules/build.ts, src/rules/derive.ts, src/builder/shared.tsx in this batch), test test/batch034-gap-engine.test.ts (in what this batch added), code src/rules/companionGrants.ts (in what this batch added)"
+  },
+  {
+   "id": "weapon-innovation",
+   "verdict": "FIXED",
+   "evidence": "[batch 34 read, adversarially confirmed] weapon-innovation#segmented-frame-duplicate: FEAT_SITUATIONAL['weapon-innovation'] restates Segmented Frame's +2 circumstance Stealth bonus that FEAT_SITUATIONAL['se — cited by code-only spec work/.b034-rows-situational.json finding weapon-innovation#segmented-frame-duplicate (0 rows; family situational changed src/rules/situationalBonuses.ts in this batch), test test/batch034-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added), test test/batch034-gap-engine.test.ts (in what this batch added)"
+  },
+  {
+   "id": "giant-instinct",
+   "verdict": "MATCHES",
+   "evidence": "[batch 34 read] comparer misread settled/taught: giant-instinct#instrument — work/.b034-rows-instruments-2.json finding giant-instinct#instrument note: Instrument teach, no data. The record already carries every printed clause: choice.options[].grant.whileActive[{state:'rage', minLevel:9, resistances:[bludgeoni"
+  },
+  {
+   "id": "scar-of-the-survivor",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #140 (batch 34; n from entry.n)"
+  },
+  {
+   "id": "untamed-order",
+   "verdict": "MATCHES",
+   "evidence": "[batch 34 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "beast-eidolon",
+   "verdict": "FIXED",
+   "evidence": "[batch 34 read, adversarially confirmed] beast-eidolon#language-sylvan: The eidolon's printed fixed Language line is not delivered — our companion mod for beast-eidolon carries no `languages`, — cited by row classFeatures/beast-eidolon field:description in work/.b034-rows-data-rows.json, code-only spec work/.b034-rows-engine.json finding beast-eidolon#language-sylvan (0 rows; family engine changed src/rules/types.ts, src/rules/build.ts, src/rules/derive.ts, src/builder/shared.tsx in this batch), test test/batch034-data.test.ts (in what this batch added), test test/batch034-gap-engine.test.ts (in what this batch added), test test/batch033-resume-eidolon-languages-and-traits-angel-fey-fixed-language-the-fey-spell-list-trait-narrowing.test.ts (in what this batch added), code src/rules/companionGrants.ts (in what this batch added); beast-eidolon#stat-array-names: Our shipped description labels the Beast eidolon's two ability arrays with the Anger Phantom eidolon's names — a player  — cited by row spec work/.b034-rows-data-rows.json finding beast-eidolon#stat-array-names (2 row(s)), row classFeatures/beast-eidolon field:description in work/.b034-rows-data-rows.json, test test/batch034-data.test.ts (in what this batch added), test test/batch034-gap-engine.test.ts (in what this batch added), test test/batch033-resume-eidolon-languages-and-traits-angel-fey-fixed-language-the-fey-spell-list-trait-narrowing.test.ts (in what this batch added), code src/rules/companionGrants.ts (in what this batch added)"
+  },
+  {
+   "id": "mosquito-witch",
+   "verdict": "MATCHES",
+   "evidence": "[batch 34 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "school-of-breathtaking-influence",
+   "verdict": "MATCHES",
+   "evidence": "[batch 34 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "victors-wreath",
+   "verdict": "FIXED",
+   "evidence": "[batch 34 read, adversarially confirmed] victors-wreath#spell-attack: The immanence aura is written as a bonus to Strike attack rolls only, so a spellcasting exemplar (or a spellcasting ally — cited by code-only spec work/.b034-rows-situational.json finding victors-wreath#spell-attack (0 rows; family situational changed src/rules/situationalBonuses.ts in this batch), test test/batch034-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added)"
+  },
+  {
+   "id": "the-infinite-eye",
+   "verdict": "FIXED",
+   "evidence": "[batch 34 read, adversarially confirmed] the-infinite-eye#clairvoyance-description: The conscious-mind option the player reads in the Builder lists its granted-spell ladder with the 4th-rank spell name mi — cited by row spec work/.b034-rows-data-rows.json finding the-infinite-eye#clairvoyance-description (2 row(s)), row classFeatures/the-infinite-eye field:descRefs in work/.b034-rows-data-rows.json, test test/batch034-data.test.ts (in what this batch added), test test/batch034-instruments-2.test.ts (in what this batch added); the-infinite-eye#organsight: The batch's NO-SHEET-EFFECT verdict rests on a single undelivered op — WG's 3rd-rank grant of the LEGACY spell Organsigh — cited by row classFeatures/the-infinite-eye field:descRefs in work/.b034-rows-data-rows.json, test test/batch034-data.test.ts (in what this batch added), test test/batch034-instruments-2.test.ts (in what this batch added)"
+  },
+  {
+   "id": "echo-of-lost-moments",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #142 (batch 34; n from entry.n)"
+  },
+  {
+   "id": "experimental-spellshaping",
+   "verdict": "MATCHES",
+   "evidence": "[batch 34 read] comparer misread settled/taught: experimental-spellshaping#instrument — work/.b034-report-instruments-2.txt: echo-of-lost-moments#instrument, experimental-spellshaping#instrument,"
+  },
+  {
+   "id": "improved-familiar-attunement",
+   "verdict": "FIXED",
+   "evidence": "[batch 34 read, adversarially confirmed] improved-familiar-attunement#ability-budget: The familiar's ability budget is a flat 4 at every level, so a 1st-level wizard gets one ability more than print allows  — cited by row classFeatures/improved-familiar-attunement field:grantsActions in work/.b034-rows-data-rows.json, row classFeatures/improved-familiar-attunement field:limitedUses in work/.b034-rows-data-rows.json, row classFeatures/improved-familiar-attunement field:recordMarks in work/.b034-rows-data-rows.json, code-only spec work/.b034-rows-engine.json finding improved-familiar-attunement#ability-budget (0 rows; family engine changed src/rules/types.ts, src/rules/build.ts, src/rules/derive.ts, src/builder/shared.tsx in this batch), row classFeatures/improved-familiar-attunement field:replacesActions in work/.b034-rows-gap-data-rows.json, test test/batch034-data.test.ts (in what this batch added), test test/batch034-gap-data-rows.test.tsx (in what this batch added), test test/batch034-gap-engine.test.ts (in what this batch added), code src/rules/companionGrants.ts (in what this batch added), code src/rules/companions.ts (in what this batch added); improved-familiar-attunement#drain-familiar: The thesis replaces Drain Bonded Item with the Drain Familiar free action; WG hands the action over and we hand over not — cited by row spec work/.b034-rows-data-rows.json finding improved-familiar-attunement#drain-familiar (4 row(s)), row classFeatures/improved-familiar-attunement field:grantsActions in work/.b034-rows-data-rows.json, row classFeatures/improved-familiar-attunement field:limitedUses in work/.b034-rows-data-rows.json, row classFeatures/improved-familiar-attunement field:recordMarks in work/.b034-rows-data-rows.json, row spec work/.b034-created-desc-data-rows.json finding improved-familiar-attunement#drain-familiar (1 row(s)), row spec work/.b034-rows-gap-data-rows.json finding improved-familiar-attunement#drain-familiar (1 row(s)), row classFeatures/improved-familiar-attunement field:replacesActions in work/.b034-rows-gap-data-rows.json, test test/batch034-data.test.ts (in what this batch added), test test/batch034-gap-data-rows.test.tsx (in what this batch added), test test/batch034-gap-engine.test.ts (in what this batch added), code src/rules/companionGrants.ts (in what this batch added), code src/rules/companions.ts (in what this batch added); improved-familiar-attunement#instrument: The UNSUPPORTED flag is the same harness blind spot (classes.wizard.extraChoices.thesis), so this record's two real defe — cited by row classFeatures/improved-familiar-attunement field:grantsActions in work/.b034-rows-data-rows.json, row classFeatures/improved-familiar-attunement field:limitedUses in work/.b034-rows-data-rows.json, row classFeatures/improved-familiar-attunement field:recordMarks in work/.b034-rows-data-rows.json, row classFeatures/improved-familiar-attunement field:replacesActions in work/.b034-rows-gap-data-rows.json, test test/batch034-data.test.ts (in what this batch added), test test/batch034-gap-data-rows.test.tsx (in what this batch added), test test/batch034-gap-engine.test.ts (in what this batch added), code src/rules/companionGrants.ts (in what this batch added), code src/rules/companions.ts (in what this batch added)"
+  },
+  {
+   "id": "inspired-stratagem",
+   "verdict": "MATCHES",
+   "evidence": "[batch 34 read] comparer misread settled/taught: inspired-stratagem#instrument — work/.b034-rows-instruments-2.json finding inspired-stratagem#instrument note: Instrument settle, no data. WG's level-1 row 19732 is empty and their level-8 row 20263 holds the grant; WG_PAIRING's classFeatures bucket accepts ['class-featu"
+  }
+ ]
+}

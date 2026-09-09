@@ -1,0 +1,17 @@
+{
+  "findings": [
+    {
+      "id": "improved-familiar-attunement#drain-familiar",
+      "note": "The GAP half of the data-rows family's finding. The builder authored the replacement action (actions/drain-familiar create + classFeatures/improved-familiar-attunement grantsActions/limitedUses/recordMarks); this row authors the word INSTEAD OF. The thesis does not remove arcane bond — it retargets it — so classFeatures/arcane-bond keeps grantsActions ['drain-bonded-item'] and, once the builder's row lands, the wizard renders BOTH free actions. `replacesActions` is a NEW field with a NEW reader authored in the same run (src/sheet/MainTab.tsx, the granted-action walk): the walk that resolves grantsActions now also collects replacesActions off the SAME owned records and drops those ids, so the suppression is gated on owning the replacer for free. No collision: the builder's four rows on this record touch grantsActions, limitedUses, recordMarks and the created action, never replacesActions, and nothing in scripts/data/effect-backfill.json carries replacesActions on any record (this is its first row).",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "improved-familiar-attunement",
+          "field": "replacesActions",
+          "value": ["drain-bonded-item"],
+          "why": "AoN arcane-thesis-7 §Improved Familiar Attunement: \"you also gain the Drain Familiar free action instead of Drain Bonded Item. Drain Familiar can be used any time an ability would allow you to use Drain Bonded Item and functions identically, except that you draw magic from your familiar instead of an item.\" `instead of` was expressible by nothing: grantsActions had no opposite number anywhere in src/, so a wizard with this thesis showed the action they gained AND the action it replaced. Reader: src/sheet/MainTab.tsx `replacedActionIds` (the granted-action walk), authored with this row."
+        }
+      ]
+    }
+  ]
+}

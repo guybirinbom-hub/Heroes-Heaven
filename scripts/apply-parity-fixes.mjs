@@ -110,13 +110,14 @@ const readOnce = (rel) => {
 /* ---------- the overlay index (refusals 1 and 2) ---------- */
 const rowKey = (r) => `${r.category}/${r.id}/${r.path?.length ? r.path.join('.') + '.' : ''}${r.field ?? '(create)'}`;
 const overlayByKey = new Map();
-/** category/id/<field the path descends into> → the first overlay path row with an `id=` step. */
+/** category/id/<field the path descends into> → EVERY overlay path row with an `id=` step. */
 const overlayIdPaths = new Map();
 overlay.forEach((r, i) => {
   overlayByKey.set(rowKey(r), { row: r, index: i });
   if (r.path?.length && r.path.some((s) => String(s).startsWith('id='))) {
     const k = `${r.category}/${r.id}/${r.path[0]}`;
-    if (!overlayIdPaths.has(k)) overlayIdPaths.set(k, { row: r, index: i });
+    if (!overlayIdPaths.has(k)) overlayIdPaths.set(k, []);
+    overlayIdPaths.get(k).push({ row: r, index: i });
   }
 });
 
@@ -129,6 +130,12 @@ const docIdRe = mirrorCats.length
   : /\b([a-z][a-z]*(?:-[a-z]+)*)-(\d+(?:-\d+)*)\b/g;
 const docIdsIn = (why) => [...String(why ?? '').matchAll(docIdRe)].map((m) => m[0]);
 
+const ENTITIES = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ', mdash: '—', ndash: '–', rsquo: '’', lsquo: '‘', ldquo: '“', rdquo: '”', hellip: '…', times: '×', deg: '°' };
+const decodeEntities = (s) => String(s ?? '')
+  .replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(Number(n)))
+  .replace(/&#x([0-9a-f]+);/gi, (_, n) => String.fromCodePoint(parseInt(n, 16)))
+  .replace(/&([a-z]+);/gi, (m, name) => ENTITIES[name.toLowerCase()] ?? m);
+
 const mirrorCache = new Map();
 function mirrorText(docId) {
   if (mirrorCache.has(docId)) return mirrorCache.get(docId);
@@ -137,7 +144,13 @@ function mirrorText(docId) {
     const p = join(MIRROR, cat, `${docId}.json`);
     if (!existsSync(p)) continue;
     const doc = JSON.parse(readFileSync(p, 'utf8'));
-    text = `${doc.text ?? ''} ${doc.markdown ?? ''}`;
+    /* The mirror stores AoN's HTML source, so a printed "&" arrives as "&amp;" and `tokens` below turns
+     * it into the word "amp". A row that quotes print verbatim then reads as adding words the doc does
+     * not print: way-6 prints "In addition to the combination weapons presented in Pathfinder Guns &
+     * Gears, you gain access to the triggerbrand combination weapon", and its un-decoded copy made that
+     * whole clause unbacked. Decode the named entities before tokenising so print, not HTML, is what
+     * the guard compares against. */
+    text = decodeEntities(`${doc.text ?? ''} ${doc.markdown ?? ''}`);
     break;
   }
   mirrorCache.set(docId, text);
@@ -226,6 +239,42 @@ function firstUnresolvedStep(record, path) {
   return typeof node === 'object' ? null : path[path.length - 1];
 }
 
+/**
+ * Follow `path` inside an in-hand VALUE (not a shipped record), returning `undefined` when any step is
+ * absent. Used to check that a whole-value row really did restate the per-option rows it covers.
+ */
+function valueAt(value, path) {
+  let node = value;
+  for (const step of path) {
+    if (node == null) return undefined;
+    if (Array.isArray(node)) {
+      const [k, v] = String(step).split('=');
+      node = k === 'id' ? node.find((x) => x?.id === v) : undefined;
+    } else node = node[step];
+  }
+  return node;
+}
+
+/**
+ * The magus case, checked rather than trusted. A pathless whole value written over a field that overlay
+ * `id=` rows also amend discards those rows unless it restates them — so instead of refusing every such
+ * row, resolve each shadowed row's own path INSIDE the proposed value and compare. A row that carries
+ * the per-option values through is safe; one that drops or changes one silently is the bug the refusal
+ * exists to catch, and it still refuses, now naming exactly which option it would lose.
+ */
+function swallowed(row, shadowedRows) {
+  const lost = [];
+  for (const s of shadowedRows) {
+    const rest = s.row.path.slice(1);                       // path[0] is the field this row writes whole
+    const holder = valueAt(row.value, rest);
+    const mine = holder == null ? undefined : holder[s.row.field];
+    if (mine === undefined || JSON.stringify(mine) !== JSON.stringify(s.row.value)) {
+      lost.push(`#${s.index} (path [${s.row.path.join(', ')}] field ${s.row.field})`);
+    }
+  }
+  return lost;
+}
+
 /* ---------- check everything first ---------- */
 for (const f of findings) {
   for (const row of rowsOf(f)) {
@@ -246,10 +295,11 @@ for (const f of findings) {
     /* 2 — the magus shape, both directions. */
     if (!row.path?.length && row.field) {
       const shadowed = overlayIdPaths.get(`${where}/${row.field}`);
-      if (shadowed) {
+      const lost = shadowed ? swallowed(row, shadowed) : [];
+      if (lost.length) {
         problems.push(
-          `${f.id}: whole-value row ${where}.${row.field} would swallow overlay row #${shadowed.index} ` +
-            `(path [${shadowed.row.path.join(', ')}] field ${shadowed.row.field}) — amend the path row, or restate its value inside this one and say so`,
+          `${f.id}: whole-value row ${where}.${row.field} would swallow overlay row ${lost.join(', ')} ` +
+            '— amend the path row, or restate its value inside this one',
         );
         continue;
       }

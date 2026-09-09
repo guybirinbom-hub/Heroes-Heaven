@@ -1,0 +1,140 @@
+BATCH 034 — family: engine (WG-comparison lane)
+Spec: work/.b034-rows-engine.json   Tests: test/batch034-engine.test.ts (14 tests, green)
+Touched: src/rules/types.ts, src/rules/build.ts, src/rules/derive.ts, src/builder/shared.tsx
+
+DATA STILL NEEDED
+- classFeatures / conscious-mind / grantedSpells / {"the-distant-grasp":[{"id":"vector-screen","level":6},{"id":"dancing-blade","level":10}],"the-infinite-eye":[{"id":"omnidirectional-scan","level":6},{"id":"foresee-the-path","level":10}],"the-oscillating-wave":[{"id":"entropic-wheel","level":6},{"id":"redistribute-potential","level":10}],"the-silent-whisper":[{"id":"shatter-mind","level":6},{"id":"contagious-idea","level":10},{"id":"sending","level":11,"rank":6}],"the-tangible-dream":[{"id":"astral-rain","level":6},{"id":"hologram-cage","level":10}],"the-unbound-step":[{"id":"ghostly-shift","level":6},{"id":"tesseract-tunnel","level":10}]}  — supersedes:true (an effect-backfill row for this exact category/id/field already exists; the value above IS that row's value with the one new rung merged in, so nothing is lost). why: innovation-free, AoN conscious-mind-10 + the book text our own description carries, "- 6th: Sending". [the-silent-whisper#sending-rank]
+- classFeatures / construct-innovation / choice / null  — supersedes:true (retires the existing effect-backfill row that authored this label-only picker; armor-innovation, weapon-innovation and light-mortar-innovation all carry no `choice`, and the tier pickers are now the single carrier). why: innovation-2 "Choose one initial construct modification to apply to your innovation". [construct-innovation#duplicate-picker]
+- classFeatures create x7 (initial, level 1): accelerated-mobility, amphibious-construction, increased-size, manual-dexterity, projectile-launcher, sensory-array, wonder-gears — each {"id":"<id>","name":"<Printed Name>","traits":["inventor"],"rarity":"common","source":{"book":"Pathfinder Guns & Gears","license":"ORC"},"level":1,"actionCost":{"type":"passive"},"otherTags":["construct-innovation-modification"],"edition":"remaster","aonOrigin":"authored"} — the shipped light-mortar modification records (contained-shrapnel …) are the precedent shape. why: innovation-2 "Initial Modifications". [construct-innovation#higher-tier-picks, construct-innovation#modification-effects]
+- classFeatures create x6 (breakthrough, level 7): advanced-weaponry-construct, antimagic-construction, climbing-limbs, durable-construction, marvelous-gears, turret-configuration — same template with "level":7. (⚠ `advanced-weaponry` is already taken by a feats-bucket record; a distinct classFeatures id is still free, but if the driver prefers the bare slug it is not a collision — different bucket.) why: innovation-2 "Breakthrough Modifications". [construct-innovation#higher-tier-picks]
+- classFeatures create x5 (revolutionary, level 15): flight-chassis, miracle-gears, resistant-coating, runic-keystone, wall-configuration — same template with "level":15. why: innovation-2 "Revolutionary Modifications". [construct-innovation#higher-tier-picks]
+- core-descriptions (created-prose) for all 18 ids above, key classFeatures/<id>, text verbatim from AoN innovation-2's modification list — without them the picker shows names with no description, which is the one thing the placeholder card it replaces did do. [construct-innovation#modification-effects]
+⚠ HAZARD for whoever authors those 18: a chosen inventor modification is an ownedFeatureId (src/rules/derive.ts ownedFeatureIds, "The inventor's chosen INNOVATION MODIFICATIONS are class features too"), so a `landSpeedBonus` / `senses` / `grants.skills` / `resistances` on a CONSTRUCT modification would apply to the INVENTOR, not to the construct. Keep them label-only until the companion applier below exists.
+
+CROSS-FILE GAPS
+- src/rules/companionGrants.ts COMPANION_MODS['psychopomp-eidolon'] (~line 504): add `languages: ['requian']`. The reader (deriveEidolon's `for (const l of mod.languages ?? [])`, src/rules/companions.ts:1047) already exists and already fires for angel/dragon/fey eidolons; content.languages['requian'] exists. AoN eidolon-10 "**Language** Requian". [psychopomp-eidolon#language]
+- src/rules/companionGrants.ts COMPANION_MODS['beast-eidolon'] (~line 471): add `languages: ['Sylvan']`, the same printed-name shape as 'fey-eidolon' (~line 497). AoN eidolon-3 "**Language** Sylvan". [beast-eidolon#language-sylvan]
+- src/rules/companionGrants.ts FEAT_COMPANION_GRANTS['improved-familiar-attunement'] (~line 149): abilityBudget 4 -> 3, add `growthLevels: [6, 12, 18]`, note -> "Choose 3 familiar abilities — 4 at 6th, 5 at 12th, 6 at 18th."; AND src/rules/companions.ts familiarAbilityBudget (~line 660-665): replace the hard-coded `cfg.grantSlug === 'familiar-witch'` test with the grant's `growthLevels`, setting [6,12,18] on familiar-witch too so its behaviour is unchanged. Base 'familiar' is abilityBudget 2, so print's "an extra ability … and an additional extra ability when you reach 6th, 12th, and 18th" is 3/4/5/6. [improved-familiar-attunement#ability-budget]
+- src/rules/companionGrants.ts FEAT_COMPANION_GRANTS/COMPANION_MODS 'construct-innovation' (~line 104): extend the note to carry the Overdrive rider — "While you are Overdriven your construct gains the same Overdrive benefit, and takes the same fire damage on a critical failure." AoN innovation-2. [construct-innovation#overdrive]
+- src/rules/companions.ts (+ companionGrants.ts): an applier that carries c.inventor.modifications onto the CONSTRUCT companion (Accelerated Mobility Speed 40, Amphibious swim 25, Increased Size Large, Projectile Launcher's 1d4 ranged unarmed attack, Sensory Array's senses, Wonder Gears' three trained skills). The pick now reaches c.inventor.modifications for constructs; nothing on the companion side reads it. [construct-innovation#modification-effects]
+
+PER FINDING
+
+the-silent-whisper#sending-rank — DONE (code half; the row above is the other half)
+  src/rules/build.ts, buildCharacter's spellcasting pass: the conscious-mind ladder type gains an
+  optional `rank`, and a new `ladderRank` map keys the grant off it —
+  `(grantedByRank[ladderRank.get(id) ?? content.spells[id]?.rank ?? 1] ??= []).push(id)`.
+  BLAST RADIUS: zero today — no ladder entry in core.json carries `rank`, so every existing grant
+  still files under the spell's own rank. Only a ladder entry that SAYS `rank` moves, and the only
+  one asked for is Sending.
+  Test: "the-silent-whisper files a granted spell under the ladder rank, not the spell rank" builds a
+  level-11 Silent Whisper psychic twice — once on shipped content (asserting the defect: sending sits
+  on rung 5 beside synaptic-pulse and rung 6 is empty) and once on a content copy with the rung
+  PATCHED IN MEMORY (sending on rung 6, synaptic-pulse still on 5). A second test pins that a ladder
+  entry without `rank` (shatter-mind, mindlink) is untouched.
+
+spirit-instinct#ghost-touch — DONE
+  src/rules/derive.ts: `ghostTouch?: boolean` on the RAGE_DAMAGE entry shape, set on
+  'spirit-instinct'; rageStrikeRider() appends ", ghost touch vs incorporeal while dealing spirit" to
+  the Rage note (the "while dealing <type>" half only when the type override is optional, which is
+  what makes the rider honest about the branch it belongs to).
+  BLAST RADIUS: spirit-instinct barbarians only — no other RAGE_DAMAGE entry sets the flag.
+  Test: "spirit-instinct says the spirit branch carries ghost touch against incorporeal creatures".
+
+spirit-instinct#damage-type-choice — DONE (label, not a mode)
+  src/rules/derive.ts: `typeOptional: true` on RAGE_DAMAGE['spirit-instinct']; rageStrikeRider() now
+  returns "3 spirit or 2 bludgeoning (choose each Rage)" — both branches, because *"choose each time
+  you Rage"* is a table decision, and the agile halving is applied to BOTH numbers.
+  Deliberately NOT an exclusive-group mode: that needs a modes-bucket row (not my family's file) and
+  would make the player toggle a choice print says is made every Rage. If the owner wants the mode,
+  it is a one-row follow-up and the label is already correct without it.
+  BLAST RADIUS: spirit-instinct only. Pinned in the same test file that an instinct without
+  `typeOptional` (dragon '4 energy', fury '3 bludgeoning') still prints exactly one branch.
+  Test: "spirit-instinct shows both branches of the choice made each time you Rage" +
+  "spirit-instinct halves BOTH branches on an agile attack, and no other instinct grows a choice".
+
+construct-innovation#modification-effects — PARTIAL (records + companion applier are not mine)
+  Closed here: the pick now reaches the character. With the tier pickers rendering (below),
+  build.ts's existing validPick/inventor block records the choice on c.inventor.modifications for a
+  construct exactly as it does for armour and weapon.
+  Not closed: the 18 records (DATA STILL NEEDED) and the companion applier (CROSS-FILE GAPS). WG
+  models none of these mechanics either — their Accelerated Mobility / Wonder Gears / Projectile
+  Launcher ability blocks carry no operations — so the residue is a print lane, not a parity gap.
+  Test: "construct-innovation carries the chosen modification onto the built character" builds a
+  level-7 construct inventor on a content copy with the records PATCHED IN MEMORY and asserts
+  c.inventor.modifications.initial / .breakthrough.
+
+construct-innovation#higher-tier-picks — DONE
+  src/builder/shared.tsx: the `if (type === 'construct')` early return (and its fixed "Construct
+  modifications are described in the innovation text." SubCard) is gone, so the initial /
+  breakthrough / revolutionary tiers loop — and its existing viaDedication + basic-modification gate,
+  which is the fourth select WG shows — renders for constructs like every other innovation. One
+  guard added in the same loop: a tier whose `inventorModificationOptions` is empty renders nothing
+  rather than an empty PopupSelect, so the control degrades honestly until the records land.
+  BLAST RADIUS: armour / weapon / light-mortar are unaffected — measured, every one of them has
+  options at every tier it can reach (weapon 11/18/26, armor 7/15/22, light-mortar 3/6/9 at
+  level<=1/7/15), so the empty-tier guard can only ever hide a construct tier.
+  Test: "construct-innovation offers its tagged modifications at each tier once the records exist"
+  (shipped content: [] — the missing half named in DATA STILL NEEDED; patched copy: 7 at the initial
+  tier, 9 by the breakthrough tier) and the rendered "construct-innovation renders no empty tier card
+  while the records are still missing".
+
+construct-innovation#duplicate-picker — DONE (code half; the `choice: null` row is the other half)
+  The placeholder SubCard is deleted (above). The record's own 7-label choice, rendered by
+  Builder.tsx:1890 as the subclass follow-up, is retired by the DATA STILL NEEDED row — I did not
+  suppress it in Builder.tsx, because that generic renderer is right for every other subclass and the
+  three sibling innovations answer this by carrying no `choice` at all.
+  Test: "construct-innovation no longer prints the placeholder that contradicted the picker" renders
+  OriginPickers for a level-7 construct inventor and asserts the placeholder line is gone and the
+  Initial/Breakthrough cards are there.
+
+construct-innovation#overdrive — NOT DONE (outside my files; see CROSS-FILE GAPS, one-line note edit)
+
+elemental-blast#damage-type-trait — DONE
+  src/rules/derive.ts deriveBlastStrikes: the trait list is built per element —
+  `[...blastTraits, el, ...(PHYSICAL_DAMAGE.has(type) ? [] : [type])]` — and is what the strike
+  carries AND what mapStepFor / mapNotesFor are handed (both moved inside the per-element map, with
+  the attack array, since the traits are now per-element).
+  BLAST RADIUS: every kineticist blast whose chosen damage type is not bludgeoning/piercing/slashing
+  gains one trait: fire (Fire), electricity (Air, default), cold (Water, when chosen), vitality
+  (Wood, when chosen). That trait is now visible to IWR, to trait-keyed modes and to trait-gated MAP
+  reductions — which is the point — so a fire-keyed bonus that previously missed the blast now
+  applies to it. Earth and Metal blasts are unchanged (both printed types are physical).
+  Tests: "elemental-blast carries the chosen damage type as a trait when it is not physical" and
+  "elemental-blast adds no trait for a physical damage type, and follows the player pick" (air picked
+  as slashing gains neither electricity nor slashing).
+
+elemental-instinct#rage-damage-type — DONE
+  Three files, one lane:
+  - src/rules/types.ts: `Character.featureChoices?: Record<string, string>` — a class feature's own
+    choice answers, keyed `feature:<id>` exactly as BuildState keys them (the twin of the existing
+    ancestryHeritageChoices carrier). DERIVED; no migration.
+  - src/rules/build.ts: emits it for every owned class feature that actually asks a question, and
+    deriveBuildFromCharacter reads it back (validated against the record's own options), so the
+    answer survives an import / GM-received copy the way the ancestry+heritage answers do.
+  - src/rules/derive.ts: `typeFromChoice: 'elemental-instinct'` on the RAGE_DAMAGE entry;
+    rageStrikeRider() takes the damage type from the answer's `<element>-<damageType>` suffix, with
+    'energy' left as the unanswered fallback.
+  BLAST RADIUS: elemental-instinct barbarians who have answered the element choice — nothing else
+  reads `typeFromChoice`, and an unanswered build prints exactly what it printed before ('12
+  energy'), which is what keeps test/rage-damage.test.ts green unchanged. `featureChoices` is a new
+  field on Character read by exactly one place today.
+  Tests: "elemental-instinct takes its Rage damage type from the answered element choice" (air →
+  slashing at 15, water → cold at 5), "…keeps the 'energy' placeholder only while the element is
+  unanswered", "…survives an import that lost the build (the lossy round trip)".
+
+psychopomp-eidolon#language — NOT DONE (outside my files; see CROSS-FILE GAPS, one-key edit)
+beast-eidolon#language-sylvan — NOT DONE (outside my files; see CROSS-FILE GAPS, one-key edit)
+improved-familiar-attunement#ability-budget — NOT DONE (outside my files; see CROSS-FILE GAPS)
+  All three are src/rules/companionGrants.ts (+ companions.ts for the familiar budget), which is not
+  in this family's file list and is claimed by no other family in this batch's routing. Each is
+  spelled out above as an exact edit; none of them needs a data row.
+
+VERIFICATION
+  node scripts/vt.mjs test/batch034-engine.test.ts                      → 14 passed
+  node scripts/vt.mjs test/rage-damage.test.ts test/feature-gaps.test.ts test/map-reduction.test.ts
+    test/strike-precision-riders.test.ts test/batch032-engine.test.ts
+    test/bare-feat-lanes.test.ts                                        → 98 passed
+  node scripts/vt.mjs test/inventor-innovation.test.ts test/build.test.ts test/edit-rebuild.test.ts
+    test/character-verification.test.ts                                 → 158 passed
+  npx tsc --noEmit                                                      → clean

@@ -102,6 +102,16 @@ const escalatedIds = new Set(spec.filter((r) => r.needsHumanDecision).map((r) =>
  *     which core-descriptions still ships on this record. The remaster penalty lands on the ENEMY's
  *     roll, so it is OTHERS_ROLL under ruling F and earns no star at all; nothing is left to keep.
  *     Re-emitting the lane row would restore four bonuses the printed feat does not grant.
+ *   weapon-innovation (WG parity b034, weapon-innovation#segmented-frame-duplicate): DELETED from the
+ *     registry. Print states the bonus once and on the MODIFICATION — *"When it's collapsed to light
+ *     Bulk, it has the concealable trait, which grants you a +2 circumstance bonus to Stealth checks
+ *     and DCs to hide or conceal the weapon."* — and the 'segmented-frame' entry, keyed to the actual
+ *     pick, already delivers it. The subclass-keyed copy was a stopgap from before innovation
+ *     modifications reached ownedFeatureIds (derive.ts:3466), so it fired for EVERY weapon inventor:
+ *     a doubled star for one who took Segmented Frame, and a star for a bonus one who took another
+ *     modification does not have. The lane row is `needsHumanDecision` today and so already skipped,
+ *     but that flag lives in a regenerable spec.json; `existingIds` cannot exclude a deleted row, so
+ *     name it here — the fire-gate / monk-moves call exactly.
  */
 const handEdited = new Set([
   'strong-oak', 'lethoci', 'sacred-nagaji', 'kanchil', 'respite-of-cloudless-paths',
@@ -110,6 +120,7 @@ const handEdited = new Set([
   'emotionless', 'hardened-harrow-deck',
   'monk-moves', 'swashbucklers-speed', 'incredible-movement',
   'knowledge-is-power',
+  'weapon-innovation',
 ]);
 
 const src = readFileSync(REGISTRY, 'utf8');

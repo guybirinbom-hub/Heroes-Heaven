@@ -4215,10 +4215,21 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
      * rank has no slots until the right level - so this only ever withholds cantrips.
      */
     const grantLadder =
-      (content.classFeatures as unknown as Record<string, { grantedSpells?: Record<string, { id: string; level: number }[]> } | undefined>)[
-        (cls.subclass as unknown as { featureId?: string } | undefined)?.featureId ?? ''
-      ]?.grantedSpells?.[subOption?.id ?? ''] ?? [];
+      (
+        content.classFeatures as unknown as Record<
+          string,
+          { grantedSpells?: Record<string, { id: string; level: number; rank?: number }[]> } | undefined
+        >
+      )[(cls.subclass as unknown as { featureId?: string } | undefined)?.featureId ?? '']?.grantedSpells?.[subOption?.id ?? ''] ?? [];
     const notYetGranted = new Set(grantLadder.filter((g) => level < g.level).map((g) => g.id));
+    /*
+     * …and the RANK the ladder grants it at, when that is not the spell's own rank. The Silent Whisper
+     * prints "- 6th: Sending", but sending is a 5th-rank spell, so filing every grant under the
+     * spell's own rank gave that psychic two 5th-rank granted spells and an empty 6th — the one rung
+     * of the ladder print names explicitly. Only a ladder entry that says `rank` overrides; every
+     * other grant still files under the spell's rank exactly as before.
+     */
+    const ladderRank = new Map(grantLadder.filter((g) => typeof g.rank === 'number').map((g) => [g.id, g.rank!]));
     const grantedByRank: Record<number, string[]> = {};
     /* …plus the spell the option let the player CHOOSE ("dizzying colors or grease") — the answer to
      * `grantedSpellChoice`, honoured only while it names one of that option's own choices. */
@@ -4228,7 +4239,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       ...(chosenGrant && subOption?.grantedSpellChoice?.options.includes(chosenGrant) ? [chosenGrant] : []),
     ];
     for (const id of optionSpells)
-      if (!notYetGranted.has(id)) (grantedByRank[content.spells[id]?.rank ?? 1] ??= []).push(id);
+      if (!notYetGranted.has(id)) (grantedByRank[ladderRank.get(id) ?? content.spells[id]?.rank ?? 1] ??= []).push(id);
     /* *"You add any spells from this class feature to your spellbook."* (Studious Spells) — the magus's
      * studious spells and the hybrid study's own spell are not only usable in the two restricted slots,
      * they are IN THE BOOK, so an ordinary slot can hold them too. Ours put them solely into two
@@ -8530,6 +8541,25 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     return Object.keys(out).length ? out : undefined;
   })();
 
+  /**
+   * The same carrier for a CLASS FEATURE's own choice answer (`feature:<id>`), for every feature the
+   * character owns — the twin of `ancestryHeritageChoices` above.
+   *
+   * It exists because these answers were readable only from the BuildState, so a derive that needs one
+   * could not have it: Elemental Rage prints *"change its damage type to the one you selected for your
+   * element"* and the answer (`air-slashing`, `earth-bludgeoning`, …) had zero readers anywhere, so
+   * every element's barbarian read the placeholder "energy" on every Strike.
+   */
+  const featureChoices = (() => {
+    const out: Record<string, string> = {};
+    for (const fid of classFeatureIdsOwned(build, content)) {
+      if (!content.classFeatures[fid]?.choice) continue;
+      const v = build.featChoices?.[`feature:${fid}`];
+      if (v) out[`feature:${fid}`] = v;
+    }
+    return Object.keys(out).length ? out : undefined;
+  })();
+
   /*
    * THE THIRD DOOR — the one the Character itself carries out to every sheet reader.
    *
@@ -8574,6 +8604,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     subclassId: ownedSubclassId,
     ...(ownedClassChoices.length ? { classChoices: ownedClassChoices } : {}),
     ...(ancestryHeritageChoices ? { ancestryHeritageChoices } : {}),
+    ...(featureChoices ? { featureChoices } : {}),
     ...(build.variantRules ? { variantRules: build.variantRules } : {}),
     ...(build.options ? { options: build.options } : {}),
     ...(build.pinnedDescs && build.pinnedDescs.length ? { pinnedDescs: build.pinnedDescs } : {}),
@@ -9069,6 +9100,15 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
         )
       )
         b.featChoices[`heritage:${hid}`] = alt.whenChoice;
+    }
+    /* …and the CLASS FEATURE's own answers (`Character.featureChoices`), the same recovery for the
+     * same reason: an imported or GM-received barbarian whose elemental instinct answer lived only in
+     * the BuildState reset to unanswered, and their Rage went back to reading the "energy"
+     * placeholder. Validated against the record's own options, so a save from different data cannot
+     * smuggle in an answer the record never offered. */
+    for (const [key, v] of Object.entries(c.featureChoices ?? {})) {
+      const def = content.classFeatures[key.slice('feature:'.length)]?.choice;
+      if (legalAnswer(def, v)) b.featChoices[key] = v;
     }
   }
 

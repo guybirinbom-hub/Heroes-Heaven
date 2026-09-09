@@ -1,0 +1,131 @@
+BATCH 034 — family: gap-engine (the GAP lane of family "engine")
+Specs: work/.b034-rows-gap-engine.json (rows) + work/.b034-created-desc-gap-engine.json (created-prose)
+Tests: test/batch034-gap-engine.test.ts (8 tests, green)
+Touched: src/rules/companionGrants.ts, src/rules/companions.ts,
+         test/batch033-resume-eidolon-languages-and-traits-angel-fey-fixed-language-the-fey-spell-list-trait-narrowing.test.ts
+13 gap lines of family "engine": 12 AUTHORED, 1 PARKED, 0 open.
+
+GAP LINES
+
+1. AUTHORED — work/.b034-rows-engine.json
+   classFeatures / conscious-mind / grantedSpells (the Sending rung). Already a row in the engine
+   family's own spec: work/.b034-verify-engine.txt says so in its own words ("the conscious-mind row is
+   REMOVED, it is in the spec now"), and I confirmed it — .b034-rows-engine.json's first finding,
+   the-silent-whisper#sending-rank, carries exactly that category/id/field with supersedes:true. The
+   gaps file was generated from the report BEFORE that verify pass moved it, so the line is stale, not
+   open. Nothing re-authored here — a second row on the same record+field would be a collision the
+   applier hard-refuses.
+
+2. AUTHORED — work/.b034-rows-gap-engine.json   [construct-innovation#duplicate-picker]
+   classFeatures / construct-innovation / choice / null, supersedes:true. Retires the label-only
+   picker the existing effect-backfill row authored (flag 'constructModification', 7 label strings).
+   Safe: grep for that flag across src/ and test/ returns ZERO hits, so it had no reader — it was a
+   second control asking innovation-2's single question, storing a second answer, and unable to reach
+   the 7th- and 15th-level tiers at all. The three sibling innovations carry no `choice`.
+
+3-5. AUTHORED — work/.b034-rows-gap-engine.json   [construct-innovation#higher-tier-picks]
+   The 18 create rows: 7 initial (level 1), 6 breakthrough (level 7), 5 revolutionary (level 15), each
+   tagged otherTags ['construct-innovation-modification']. No new reader and no new field — this is the
+   lane armour (22 records), weapon (26) and light mortar (9) already use: inventorModificationOptions
+   (src/rules/build.ts:2753) filters classFeatures by that tag and `level <= tier level`, and
+   src/builder/shared.tsx renders one PopupSelect per tier from it. The construct tag census was the
+   only empty one, which is the whole defect. Record shape copied field-for-field from
+   classFeatures/advanced-design — aonParentId 'innovation-2' + aonSection, not aonOrigin 'authored',
+   because innovation-2 really does carry all 18 as named sections. `advanced-weaponry-construct` is
+   deliberately not the bare slug (feats/advanced-weaponry holds it — a different bucket, so not a hard
+   collision, but the disambiguated id keeps them apart in every id-keyed table). Verified all 18 ids
+   free in classFeatures; `manual-dexterity` exists only in familiarAbilities, a separate id space.
+   LABEL-ONLY on purpose, per the engine family's hazard note: a chosen inventor modification is an
+   ownedFeatureId, so a landSpeedBonus / senses / grants.skills authored here would land on the
+   INVENTOR, not on the construct.
+
+6. AUTHORED — work/.b034-created-desc-gap-engine.json   [construct-innovation#modification-effects]
+   All 18 descriptions, key classFeatures/<id>, verbatim from innovation-2's modification list with the
+   mirror's markdown links flattened to plain names (the shipped sibling shape — advanced-design,
+   contained-shrapnel). A create row never carries a description (apply-backfill strips it), so without
+   this file the picker shows 18 names with no text, which is the one thing the placeholder it replaces
+   did do, and readable-record-check goes red 18 times.
+
+14. AUTHORED — work/.b034-rows-gap-engine.json
+   The "⚠ THESE FOUR ARE ONE ATOMIC CHANGE" line. Satisfied by construction: the choice:null row and
+   all 18 create rows are in ONE spec file, with their prose in that spec's declared created-prose
+   companion, both staged together in the same manifest entry. The end state is strictly better than
+   today in both directions — the player keeps a modification control, gains the two tiers print gives
+   them, and gains the descriptions.
+
+7 + 15. AUTHORED — src/rules/companionGrants.ts:539   [psychopomp-eidolon#language]
+   (Two gap lines, the report's and the verify's, are the same one-key fix.) COMPANION_MODS
+   ['psychopomp-eidolon'] gains languages ['requian'] — the ID, not the printed name, because
+   content.languages['requian'] resolves (the dragon-eidolon shape). The reader has existed all along
+   (deriveEidolon's `for (const l of mod.languages ?? [])`); this row was simply not in it, so AoN
+   eidolon-10's "**Language** Requian" reached the player as description prose only. Pinned on a built
+   5th-level summoner.
+
+8. AUTHORED — src/rules/companionGrants.ts:502   [beast-eidolon#language-sylvan]
+   COMPANION_MODS['beast-eidolon'] gains languages ['Sylvan'] — the printed NAME, the fey-eidolon
+   shape, because our language table is remaster-only ('fey') while this record cites its legacy page
+   eidolon-3. Pinned on a built summoner.
+   ⚠ This flipped an assertion in another batch's test file. test/batch033-resume-…-narrowing.test.ts
+   used beast-eidolon as its "neither asks nor is given" control (`languages` toBeUndefined) — that
+   undefined WAS the defect, not a baseline. I updated the leg and cited it (batch 034:
+   beast-eidolon#language-sylvan, record id added to the it() title); flip-audit is clean. The control
+   is dropped rather than moved, because all 25 eidolon pages in the mirror print a Language line, so
+   no eidolon type is an honest "shows no row" case. See CROSS-FILE GAPS below — that is a lane.
+
+9. AUTHORED — src/rules/companions.ts:666   [improved-familiar-attunement#ability-budget]
+   Two halves, one lane. companionGrants.ts: a new `growthLevels?: number[]` on CompanionGrant;
+   'improved-familiar-attunement' goes abilityBudget 4 → 3 with growthLevels [6,12,18] and a note that
+   says so; 'familiar-witch' declares the same [6,12,18] it already had. companions.ts
+   familiarAbilityBudget: the hard-coded `cfg.grantSlug === 'familiar-witch'` test becomes
+   `(grant.growthLevels ?? []).filter((l) => character.level >= l).length`. arcane-thesis-7's sentence
+   is the SAME sentence class-38 prints for the witch, and a name in the reader could only ever serve
+   one record. BLAST RADIUS: grants that declare a ladder — today exactly those two. The witch's
+   numbers are unchanged (pinned 3 at 1st, 6 at 20th); every other budget-bearing grant is asserted
+   level-independent in a loop over the table, so a third record can only join by declaring one.
+
+10. AUTHORED — src/rules/companionGrants.ts:122   [construct-innovation#overdrive]
+   FEAT_COMPANION_GRANTS['construct-innovation'].note gains the Overdrive rider. The clause is a rider
+   on a degree of success the PLAYER rolls (Overdrive's own crit-fail), so the honest carrier is the
+   card's note rather than a number whose timing the engine would have to guess. Pinned, with the two
+   sibling construct-granting feats asserted NOT to grow one.
+
+11. PARKED — flaggedResidue (reason in work/.b034-gaps.json)   [construct-innovation#modification-effects]
+   The applier that would carry c.inventor.modifications onto the construct companion. Genuinely out of
+   scope, for two independent reasons. (a) SHAPE: only 2 of the 6 mechanical modifications have a
+   CompanionMod field to land in (speeds, senses). Increased Size (Large), Durable Construction (+level
+   max HP — a formula, not the flat maxHpBonus), Antimagic Construction (+2 circumstance to saves AND
+   AC vs spells), Resistant Coating (resistance 5 all except adamantine), Miracle Gears (Int +2 plus two
+   legendary skills of the player's choice) and the Turret/Wall configurations (an activity that swaps
+   the whole stat block) each need a new field AND a new reader. (b) REACH: no key channel gets there.
+   COMPANION_MODS is looked up through companionModKeys(character.feats), which sees only feat ids and
+   feat CHOICE answers, while an inventor modification lives on c.inventor.modifications; the construct
+   is derived by deriveAnimalCompanion, whose only caller (src/sheet/CompanionsTab.tsx:1731) passes no
+   character at all. Widening that channel means editing a file no family in this batch owns. WG models
+   none of it either — their Accelerated Mobility / Wonder Gears / Projectile Launcher ability blocks
+   emit no operations — so this is a print lane, not a parity gap. Until it is built the mechanics reach
+   the player as the verbatim description prose authored in line 6.
+
+CROSS-FILE GAPS (found while closing the above; none is in any family's stage[])
+- src/rules/companionGrants.ts COMPANION_MODS — the fixed-eidolon-language lane is wider than the two
+  findings this batch raised. Every one of the 25 eidolon pages in the AoN mirror prints a Language
+  line, and after this batch only five rows carry `languages` (angel Celestial, dragon draconic, fey
+  Sylvan, beast Sylvan, psychopomp requian) with three carrying `languageChoices`. The remainder —
+  plant-eidolon (eidolon-9 "Language Sylvan", remaster twin eidolon-24 "Muan") among them — still show
+  no Languages row. Same one-key shape each, no reader work; a measured sweep, not a guess.
+- src/rules/build.ts:2750, the docstring on inventorModificationOptions still ends "Construct mods are
+  prose-only in the dataset (no items) → returns []." The moment the 18 create rows land that sentence
+  is false. build.ts belongs to family "engine"'s stage[], not mine; one-line comment edit.
+- src/sheet/CompanionsTab.tsx:1731 — see the PARKED line above: deriveAnimalCompanion is handed
+  companionModKeys(character.feats) and no character, which is what makes any non-feat-keyed companion
+  modification (inventor modifications today, anything similar later) unreachable.
+
+VERIFICATION
+  node scripts/vt.mjs test/batch034-gap-engine.test.ts                              → 8 passed
+  node scripts/vt.mjs test/batch033-resume-…-narrowing.test.ts test/batch28-engine.test.ts
+    test/companions.test.ts test/batch034-engine.test.ts                            → 57 passed
+  node scripts/vt.mjs test/companion-cluster-batch1 companion-feat-grants companion-fixes
+    companionGrants companion-maturity companion-modes companion-overhaul companions-play
+    eidolon-abilities feat-audit-companion-mods specific-familiars inventor-innovation
+                                                                                    → 112 passed
+  node scripts/test-flip-audit.mjs --batch 034                                       → clean
+  npx tsc --noEmit                                                                   → clean

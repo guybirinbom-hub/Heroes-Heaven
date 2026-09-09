@@ -1,0 +1,361 @@
+{
+ "batch": "work/wg-batch-034.json",
+ "examined": 41,
+ "method": "Opus readers (print + WG raw ops + every carrier) each followed by an adversarial verifier; findings applied by 9 family spec(s), verdicts derived by scripts/wg-batch-close.mjs from the cited rows, edits, tests and teaches",
+ "confirmed": [
+  {
+   "id": "the-silent-whisper",
+   "finding": "the-silent-whisper#sending-rank",
+   "severity": "player-visible",
+   "summary": "Sending is granted at the wrong rank: the conscious mind's ladder prints it as the 6th-rank granted spell, but our lane files every granted spell under the spell's OWN rank, so a Silent Whisper psychic gets two 5th-rank granted spells (Syna",
+   "fixed": true
+  },
+  {
+   "id": "the-silent-whisper",
+   "finding": "the-silent-whisper#daze-range",
+   "severity": "player-visible",
+   "summary": "The conscious mind doubles daze's range and neither side carries it, so a Silent Whisper psychic reads 60 feet on the very row they cast from.",
+   "fixed": true
+  },
+  {
+   "id": "the-silent-whisper",
+   "finding": "the-silent-whisper#message-reach",
+   "severity": "player-visible",
+   "summary": "The conscious mind's message modification (no line of effect or line of sight needed, and it can be cast purely telepathically, losing the auditory trait) is modelled by neither side, so the player never learns their message ignores walls a",
+   "fixed": true
+  },
+  {
+   "id": "empiricism-methodology",
+   "finding": "empiricism-methodology",
+   "severity": "internal",
+   "summary": "The baseline digest's MISSING skill|arcana / skill|crafting / skill|occultism rows are an instrument misread — the trained-skill choice is carried by the investigator CLASS's subclass option, not by the class-feature record the comparer rea",
+   "fixed": true
+  },
+  {
+   "id": "precise-discipline",
+   "finding": "precise-discipline",
+   "severity": "internal",
+   "summary": "The classDc / attribute / spellcasting / UNSUPPORTED flags are an instrument misread — every one of those is carried by the psychic CLASS record plus its subconscious-mind choice option, not by the class-feature record.",
+   "fixed": true
+  },
+  {
+   "id": "speed-boosters",
+   "finding": "speed-boosters",
+   "severity": "player-visible",
+   "summary": "The always-on +5-foot status bonus to Speed is delivered by nothing on our side — only the Overdrive rider is carried, as a star — so an inventor with Speed Boosters shows their unmodified Speed.",
+   "fixed": true
+  },
+  {
+   "id": "curse-of-turbulent-moments",
+   "finding": "curse-of-turbulent-moments",
+   "severity": "player-visible",
+   "summary": "The curse's status penalty to AC and to saves is carried only as a prose mark on the cursebound condition row; no AC or save carrier applies it, so an oracle at cursebound 1-4 shows an unpenalised AC and unpenalised Fortitude/Reflex/Will.",
+   "fixed": true
+  },
+  {
+   "id": "spirit-instinct",
+   "finding": "spirit-instinct#ghost-touch",
+   "severity": "player-visible",
+   "summary": "Neither side models the Ghost Touch effect Spirit Rage gives the weapon, so a spirit barbarian striking an incorporeal creature sees no sign that the resistance to all damage does not apply.",
+   "fixed": true
+  },
+  {
+   "id": "spirit-instinct",
+   "finding": "spirit-instinct#damage-type-choice",
+   "severity": "player-visible",
+   "summary": "Spirit Rage is a per-Rage choice; ours applies 3 spirit damage unconditionally, so a spirit barbarian who rages without taking the spirit option still sees 3 spirit instead of 2 of the weapon's own damage type.",
+   "fixed": true
+  },
+  {
+   "id": "spirit-instinct",
+   "finding": "spirit-instinct#instrument",
+   "severity": "internal",
+   "summary": "The SET-GAP resistances flag is an instrument misread — both sides carry the same two Raging Resistance entries at the same value; only the label string differs.",
+   "fixed": true
+  },
+  {
+   "id": "construct-innovation",
+   "finding": "construct-innovation#modification-effects",
+   "severity": "player-visible",
+   "summary": "The chosen initial construct modification is a label only — none of the seven modifications' mechanics (Speed, swim Speed, size, senses, the ranged unarmed attack, the three trained skills) reach the construct companion on either side.",
+   "fixed": true
+  },
+  {
+   "id": "construct-innovation",
+   "finding": "construct-innovation#higher-tier-picks",
+   "severity": "player-visible",
+   "summary": "A construct inventor never gets a modification picker at 7th or 15th level (nor the archetype's Basic Modification pick), while WG offers a modification select at each of those gates.",
+   "fixed": true
+  },
+  {
+   "id": "construct-innovation",
+   "finding": "construct-innovation#duplicate-picker",
+   "severity": "player-visible",
+   "summary": "Two of our carriers speak for the same initial-modification pick and contradict each other: the record's own choice renders a 7-option picker while the Builder's innovation card tells the same player the modifications are text only.",
+   "fixed": true
+  },
+  {
+   "id": "construct-innovation",
+   "finding": "construct-innovation#overdrive",
+   "severity": "player-visible",
+   "summary": "The construct companion's share of Overdrive is modelled by neither side, so an Overdriven inventor's construct shows none of the extra damage it is owed (and none of the fire damage it risks).",
+   "fixed": true
+  },
+  {
+   "id": "vanguard-of-roaring-waters",
+   "finding": "vanguard-of-roaring-waters#instrument",
+   "severity": "internal",
+   "summary": "The UNSUPPORTED flag is an instrument misread — every operation WG carries for this apparition is already delivered by our animist apparition option of the same id, exactly.",
+   "fixed": true
+  },
+  {
+   "id": "elemental-blast",
+   "finding": "elemental-blast#action-cost",
+   "severity": "player-visible",
+   "summary": "Elemental Blast prints as a 1- OR 2-action activity, but our record fixes its action cost at 1 action, so the 2-action blast (the one the sheet's own strike line actually renders, Con status bonus included) has no badge anywhere.",
+   "fixed": true
+  },
+  {
+   "id": "elemental-blast",
+   "finding": "elemental-blast#damage-type-trait",
+   "severity": "player-visible",
+   "summary": "The printed rule that a non-physical damage type adds its trait to the blast is not applied: our blast strike's trait list never gains electricity/fire/cold/vitality.",
+   "fixed": true
+  },
+  {
+   "id": "elemental-blast",
+   "finding": "elemental-blast#instrument",
+   "severity": "internal",
+   "summary": "The 'specialStat' flag on Elemental Blast is a comparer misread: WG's KINETICIST_BLAST_DICE variable has an exact carrier on our side, so it is not an unmodelled special stat.",
+   "fixed": true
+  },
+  {
+   "id": "way-of-the-triggerbrand",
+   "finding": "way-of-the-triggerbrand#combination-weapon-access",
+   "severity": "player-visible",
+   "summary": "Our stored text for the way replaces the printed access clause with a paraphrase, so the printed grant of triggerbrand access disappears — a mechanic neither side models and the player can no longer read.",
+   "fixed": true
+  },
+  {
+   "id": "emotional-acceptance",
+   "finding": "emotional-acceptance#instrument",
+   "severity": "internal",
+   "summary": "The classDc / attribute / spellcasting flags on Emotional Acceptance are comparer misreads: all three of WG's ops have carriers on our side, on the psychic class record rather than on the class-feature record.",
+   "fixed": true
+  },
+  {
+   "id": "way-of-the-pistolero",
+   "finding": "way-of-the-pistolero",
+   "severity": "internal",
+   "summary": "All three instrument flags on this record are comparer misreads: the way's deeds and its Deception-or-Intimidation choice are carried on the CLASS subclass option, not on the classFeatures record the comparer read.",
+   "fixed": true
+  },
+  {
+   "id": "elemental-instinct",
+   "finding": "elemental-instinct#rage-damage-type",
+   "severity": "player-visible",
+   "summary": "The chosen element's damage type never reaches the Strike: our Rage rider hard-codes the literal string 'energy' for elemental-instinct, so a barbarian who chose Air (slashing) or Earth (bludgeoning) sees \"4 energy\" instead of the physical ",
+   "fixed": true
+  },
+  {
+   "id": "elemental-instinct",
+   "finding": "elemental-instinct#concealment",
+   "severity": "player-visible",
+   "summary": "Elemental Rage's concealment against ranged attacks is prose on both sides — no carrier puts it on the sheet while the Rage toggle is on, so the player never sees that ranged attackers owe a DC 5 flat check.",
+   "fixed": true
+  },
+  {
+   "id": "elemental-instinct",
+   "finding": "elemental-instinct#instrument",
+   "severity": "internal",
+   "summary": "The baseline digest's SET-GAP for this record is a comparer misread on both halves: it read ours=(nothing) for resistances and read WG's kinetic-element ability blocks as grants we lack.",
+   "fixed": true
+  },
+  {
+   "id": "monarch-of-the-fey-courts",
+   "finding": "monarch-of-the-fey-courts#instrument",
+   "severity": "internal",
+   "summary": "The record's UNSUPPORTED flag is a carrier misread — our mechanics for this apparition are on the animist class record, not on the classFeatures row the comparer read.",
+   "fixed": true
+  },
+  {
+   "id": "inspired-stratagem",
+   "finding": "inspired-stratagem#instrument",
+   "severity": "internal",
+   "summary": "The grantsRecord flag on classFeatures/inspired-stratagem is a pairing misread: our level-1 record IS the granted reaction (WG's own level-1 row 19732 carries no operations), and the giveAbilityBlock the comparer matched belongs to the leve",
+   "fixed": true
+  },
+  {
+   "id": "psychopomp-eidolon",
+   "finding": "psychopomp-eidolon#language",
+   "severity": "player-visible",
+   "summary": "The psychopomp eidolon's fixed Language line (Requian) is delivered by neither the summoner subclass option nor its COMPANION_MODS row, so the eidolon block shows no Languages entry at all — while WG grants the language.",
+   "fixed": true
+  },
+  {
+   "id": "weapon-innovation",
+   "finding": "weapon-innovation#segmented-frame-duplicate",
+   "severity": "player-visible",
+   "summary": "FEAT_SITUATIONAL['weapon-innovation'] restates Segmented Frame's +2 circumstance Stealth bonus that FEAT_SITUATIONAL['segmented-frame'] already delivers, so a weapon inventor who picks Segmented Frame sees the same star twice — and one who ",
+   "fixed": true
+  },
+  {
+   "id": "giant-instinct",
+   "finding": "giant-instinct#instrument",
+   "severity": "internal",
+   "summary": "The baseline digest's SET-GAP 'set|resistances theirs=bludgeoning,cold,electricity,fire ours=(nothing); ours(all): (none)' is wrong — our Raging Resistance is carried, and at the same value as WG's.",
+   "fixed": true
+  },
+  {
+   "id": "scar-of-the-survivor",
+   "finding": "scar-of-the-survivor#diehard-ungated",
+   "severity": "player-visible",
+   "summary": "The Diehard half of the Immanence sentence is granted permanently while print gives it only while the divine spark is in this ikon — the +1 Fortitude half of the SAME sentence is correctly gated, so the record delivers one clause conditiona",
+   "fixed": true
+  },
+  {
+   "id": "scar-of-the-survivor",
+   "finding": "scar-of-the-survivor#instrument-unsupported",
+   "severity": "internal",
+   "summary": "The UNSUPPORTED flag is a harness host limitation, not a delivery gap: the ikon is reachable in the app and its carriers fire on a real exemplar build.",
+   "fixed": true
+  },
+  {
+   "id": "beast-eidolon",
+   "finding": "beast-eidolon#language-sylvan",
+   "severity": "player-visible",
+   "summary": "The eidolon's printed fixed Language line is not delivered — our companion mod for beast-eidolon carries no `languages`, so the eidolon block shows no language, while WG grants it.",
+   "fixed": true
+  },
+  {
+   "id": "beast-eidolon",
+   "finding": "beast-eidolon#stat-array-names",
+   "severity": "player-visible",
+   "summary": "Our shipped description labels the Beast eidolon's two ability arrays with the Anger Phantom eidolon's names — a player picking an array sees two headings that do not exist on the Beast's page.",
+   "fixed": true
+  },
+  {
+   "id": "victors-wreath",
+   "finding": "victors-wreath#spell-attack",
+   "severity": "player-visible",
+   "summary": "The immanence aura is written as a bonus to Strike attack rolls only, so a spellcasting exemplar (or a spellcasting ally in the emanation) never sees the +1 status bonus on their spell attack row, although print says \"attack rolls\" without ",
+   "fixed": true
+  },
+  {
+   "id": "victors-wreath",
+   "finding": "victors-wreath#instrument",
+   "severity": "internal",
+   "summary": "The UNSUPPORTED flag is a harness blind spot, not a data gap: the harness's classFeatureHost only searches class.features and class.subclass.options, and exemplar ikons are options of classes.exemplar.extraChoices.ikon, so no host is ever f",
+   "fixed": true
+  },
+  {
+   "id": "the-infinite-eye",
+   "finding": "the-infinite-eye#clairvoyance-description",
+   "severity": "player-visible",
+   "summary": "The conscious-mind option the player reads in the Builder lists its granted-spell ladder with the 4th-rank spell name missing (\"- 4th:\" with nothing after it), so a psychic choosing The Infinite Eye is shown a blank 4th rank; only this one ",
+   "fixed": true
+  },
+  {
+   "id": "the-infinite-eye",
+   "finding": "the-infinite-eye#organsight",
+   "severity": "internal",
+   "summary": "The batch's NO-SHEET-EFFECT verdict rests on a single undelivered op — WG's 3rd-rank grant of the LEGACY spell Organsight — where the remastered print grants Locate, which we do carry; there is nothing missing on our side.",
+   "fixed": true
+  },
+  {
+   "id": "echo-of-lost-moments",
+   "finding": "echo-of-lost-moments#instrument",
+   "severity": "internal",
+   "summary": "The UNSUPPORTED flag is the same harness blind spot: animist apparitions are options of classes.animist.extraChoices.apparition, which classFeatureHost never searches, so all 14 apparitions are skipped rather than judged; the record's print",
+   "fixed": true
+  },
+  {
+   "id": "experimental-spellshaping",
+   "finding": "experimental-spellshaping#instrument",
+   "severity": "internal",
+   "summary": "The UNSUPPORTED flag is the same harness blind spot: wizard arcane theses are options of classes.wizard.extraChoices.thesis (5 options), which classFeatureHost never searches; both printed clauses of this thesis are in fact carried, so ther",
+   "fixed": true
+  },
+  {
+   "id": "improved-familiar-attunement",
+   "finding": "improved-familiar-attunement#ability-budget",
+   "severity": "player-visible",
+   "summary": "The familiar's ability budget is a flat 4 at every level, so a 1st-level wizard gets one ability more than print allows and an 18th-level wizard gets two fewer.",
+   "fixed": true
+  },
+  {
+   "id": "improved-familiar-attunement",
+   "finding": "improved-familiar-attunement#drain-familiar",
+   "severity": "player-visible",
+   "summary": "The thesis replaces Drain Bonded Item with the Drain Familiar free action; WG hands the action over and we hand over nothing, so the sheet still shows only Drain Bonded Item on a wizard who by this thesis has no bonded item.",
+   "fixed": true
+  },
+  {
+   "id": "improved-familiar-attunement",
+   "finding": "improved-familiar-attunement#instrument",
+   "severity": "internal",
+   "summary": "The UNSUPPORTED flag is the same harness blind spot (classes.wizard.extraChoices.thesis), so this record's two real defects above were never surfaced by the gate at all.",
+   "fixed": true
+  }
+ ],
+ "refuted": [
+  {
+   "id": "silence-in-snow",
+   "finding": "silence-in-snow",
+   "summary": "The Builder-facing copy of the patron's description in classes.witch.subclass.options has the burst size deleted — it reads \"ice to form in a centered on a square\", losing the 5-foot area the print st",
+   "evidence": "The stale string is real in the static file (core.json classes.witch.subclass.options[silence-in-snow] reads \"ice to form in a centered\", while core-descriptions.classFeatures['silence-in-snow'].d and the mirror doc C:\\wonderers guide\\aon-2e-archive\\data\\by-category\\patron\\patron-15.json both read \""
+  },
+  {
+   "id": "monarch-of-the-fey-courts",
+   "finding": "monarch-of-the-fey-courts#avatar",
+   "summary": "The apparition's Avatar form (Queen of the Winter Court) is prose only for us — WG hands it over as a mode with real Speeds and two Strikes, and no apparition in our data has an avatar mode at all.",
+   "evidence": "The reader read `giveAbilityBlock type=mode abilityBlockId=39041` without opening the block. `node scripts/wg-show.mjs \"Monarch of the Fey Courts - Primary\" --raw` shows mode 39041 contains exactly three ops — giveSpell type=FOCUS (nymph's grace, which our option already carries as focusSpells:['nym"
+  },
+  {
+   "id": "giant-instinct",
+   "finding": "giant-instinct#free-larger-weapon",
+   "summary": "Titan Mauler's free personal larger weapon — a per-character pick constrained to a common melee or ranged weapon of 9 gp or less — is asked and granted by neither side, so the barbarian never receives",
+   "evidence": "The factual half checks out — the app really does show the remaster clause (the barbarian subclass option and the packet's `printed` both carry PC2/instinct-11 wording, though classFeatures['giant-instinct'] still stamps edition 'legacy'/aonId instinct-4, whose CRB text has no free weapon) and carri"
+  },
+  {
+   "id": "beast-eidolon",
+   "finding": "beast-eidolon#instrument-language",
+   "summary": "The digest's \"language; OK\" for beast-eidolon is a misread — the language lane is NOT delivered (see beast-eidolon#language-sylvan); the OK came from the differential moving on other ops.",
+   "evidence": "The stated mechanism is contradicted by the actual run: work/wg-batch-034-experience.json shows beast-eidolon with sheetDiffCount 0 (not >0), deliveredBy \"surface\", delivery {delivered:3, undelivered:0, unchecked:1} and detail \"… · 1 unchecked\", so verdictFor (scripts/lib/wg-experience-lanes.mjs:591"
+  }
+ ],
+ "flaggedResidues": [
+  {
+   "id": "flaggedResidue: the construct-companion applier for c.inventor.modifications is an unmodelled mechanic out of scope here. Six of the eighteen modifications carry companion mechanics and only two of the six have a CompanionMod field to land in (speeds, senses); Increased Size (Large), Durable Construction (+level max HP is a formula, not the flat maxHpBonus), Antimagic Construction (+2 circumstance to saves AND AC vs spells), Resistant Coating (resistance 5 all except adamantine), Miracle Gears (Int +2 plus two legendary skills of choice) and the Turret/Wall configurations (an activity that swaps the whole stat block) each need a new field plus a reader. Worse, no key channel reaches them: COMPANION_MODS is looked up through companionModKeys(character.feats), which only sees feat ids and feat choice answers, while an inventor modification lives on c.inventor.modifications and the construct is derived by deriveAnimalCompanion, whose only caller (src/sheet/CompanionsTab.tsx:1731) passes no character. Closing it means widening that key channel through a file no family in this batch owns. WG models none of it either (their Accelerated Mobility / Wonder Gears / Projectile Launcher ability blocks emit no operations), so this is a print lane, not a parity gap; until it is built the mechanics reach the player as the verbatim description prose in work/.b034-created-desc-gap-engine.json.",
+   "finding": "flaggedResidue: the construct-companion applier for c.inventor.modifications is an unmodelled mechanic out of scope here. Six of the eighteen modifications carry companion mechanics and only two of the six have a CompanionMod field to land in (speeds, senses); Increased Size (Large), Durable Construction (+level max HP is a formula, not the flat maxHpBonus), Antimagic Construction (+2 circumstance to saves AND AC vs spells), Resistant Coating (resistance 5 all except adamantine), Miracle Gears (Int +2 plus two legendary skills of choice) and the Turret/Wall configurations (an activity that swaps the whole stat block) each need a new field plus a reader. Worse, no key channel reaches them: COMPANION_MODS is looked up through companionModKeys(character.feats), which only sees feat ids and feat choice answers, while an inventor modification lives on c.inventor.modifications and the construct is derived by deriveAnimalCompanion, whose only caller (src/sheet/CompanionsTab.tsx:1731) passes no character. Closing it means widening that key channel through a file no family in this batch owns. WG models none of it either (their Accelerated Mobility / Wonder Gears / Projectile Launcher ability blocks emit no operations), so this is a print lane, not a parity gap; until it is built the mechanics reach the player as the verbatim description prose in work/.b034-created-desc-gap-engine.json.",
+   "severity": "internal",
+   "summary": "src/rules/companions.ts (+ companionGrants.ts): an applier that carries c.inventor.modifications onto the CONSTRUCT companion (Accelerated Mobility Speed 40, Amphibious swim 25, Increased Size Large, Projectile Launcher's 1d4 ranged unarmed attack, Sensory Array's senses, Wonder Gears' three trained skills). The pick now reaches c.inventor.modifications for constructs; nothing on the companion si…",
+   "fixed": false,
+   "family": "engine",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: retiring the ungated grantsFeats [\"diehard\"] on classFeatures/scar-of-the-survivor is what ikon-13 prints (one Immanence sentence, one condition), but it also drops the exemplar's dying threshold from 5 to 4 even while the spark IS in this ikon, because the only numeric carrier is feats[].dyingThresholdBonus (src/rules/build.ts:6849 -> src/rules/conditions.ts:167 dyingDeathThreshold) and nothing gates it on immanence. The complete fix needs an immanence toggle-mode for this ikon in scripts/data/toggle-modes.json PLUS a mode field that can move a dying threshold — the mode schema has no such key today, so it is an engine-shape decision for the orchestrator, not a closer edit. Until then the clause reaches the player as the second Fortitude row of FEAT_SITUATIONAL['scar-of-the-survivor'], which states \"you also gain the benefits of the Diehard feat\" under \"while your divine spark is in this ikon (immanence active)\".",
+   "finding": "flaggedResidue: retiring the ungated grantsFeats [\"diehard\"] on classFeatures/scar-of-the-survivor is what ikon-13 prints (one Immanence sentence, one condition), but it also drops the exemplar's dying threshold from 5 to 4 even while the spark IS in this ikon, because the only numeric carrier is feats[].dyingThresholdBonus (src/rules/build.ts:6849 -> src/rules/conditions.ts:167 dyingDeathThreshold) and nothing gates it on immanence. The complete fix needs an immanence toggle-mode for this ikon in scripts/data/toggle-modes.json PLUS a mode field that can move a dying threshold — the mode schema has no such key today, so it is an engine-shape decision for the orchestrator, not a closer edit. Until then the clause reaches the player as the second Fortitude row of FEAT_SITUATIONAL['scar-of-the-survivor'], which states \"you also gain the benefits of the Diehard feat\" under \"while your divine spark is in this ikon (immanence active)\".",
+   "severity": "internal",
+   "summary": "scar-of-the-survivor#diehard-ungated leaves the Diehard MECHANIC unreachable, and the builder's",
+   "fixed": false,
+   "family": "situational",
+   "kind": "CROSS-FILE GAPS"
+  }
+ ],
+ "rejected": 4,
+ "askOwner": [
+  {
+   "id": "skybearers-belt",
+   "desk": 141,
+   "summary": "WG's injected text replaces the ikon's printed Immanence with a different mechanic — a 15-foot ally Bulk aura — and drops the printed +1 circumstance bonus entirely, contradicting print."
+  },
+  {
+   "id": "echo-of-lost-moments",
+   "desk": 142,
+   "summary": "WG's 5th-rank apparition spell for this apparition is Illusory Disguise (encoded with rank 1, between the rank-4 and rank-6 grants), where print gives Illusory Scene at 5th; ours matches print."
+  }
+ ],
+ "complete": true
+}

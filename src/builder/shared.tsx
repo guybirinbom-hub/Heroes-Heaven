@@ -3547,12 +3547,14 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
             ownsClass('inventor') ? subclassOf('inventor') : viaDedication ? choiceFlagAnswer('innovation', build, content) : null,
           );
           if (!type) return null;
-          if (type === 'construct')
-            return (
-              <SubCard icon="ti-robot" label="Modifications">
-                <span className="fixed-val">Construct modifications are described in the innovation text.</span>
-              </SubCard>
-            );
+          /* The construct innovation used to stop here with a fixed "Construct modifications are
+           * described in the innovation text." card — which was a second, contradicting answer to a
+           * pick the record's OWN choice was already rendering, and which closed the 7th- and
+           * 15th-level tiers to construct alone: *"Choose one initial construct modification to apply
+           * to your innovation"*, and Breakthrough/Revolutionary Innovation say the same for their
+           * tiers with no exception for constructs. Constructs now use the same three tier pickers as
+           * armour, weapon and light-mortar innovations, fed by the same
+           * `construct-innovation-modification` tag. */
           // Undefined until picked. That also does the right thing downstream: with no suit chosen,
           // inventorModificationOptions filters out BOTH suits' exclusive modifications and offers only
           // the ones any armour innovation can take.
@@ -3583,6 +3585,10 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                 if (viaDedication && (t.key !== 'initial' || !Object.values(build.featPicks ?? {}).includes('basic-modification'))) return null;
                 if (build.level < INVENTOR_TIER_LEVEL[t.key]) return null;
                 const opts = inventorModificationOptions(content, type, armorStats, INVENTOR_TIER_LEVEL[t.key]);
+                // An empty picker is a worse answer than none: every innovation type that ships
+                // modification records has options at every tier it can reach, so this only ever
+                // hides a tier whose records the dataset does not carry yet.
+                if (!opts.length) return null;
                 const cur = build.inventorModifications?.[t.key] ?? '';
                 return (
                   <SubCard icon="ti-tool" label={t.label} key={t.key}>

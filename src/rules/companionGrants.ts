@@ -24,6 +24,17 @@ export interface CompanionGrant {
    *  "N of B chosen" (CompanionsTab), and still not hard-capped — a class or feat can raise the count. */
   abilityBudget?: number;
   /**
+   * Levels at which `abilityBudget` grows by ONE — the record's own ladder.
+   *
+   * batch 034, improved-familiar-attunement#ability-budget. AoN arcane-thesis-7: *"Your familiar gains
+   * an extra ability, and it gains an additional extra ability when you reach 6th, 12th, and 18th
+   * levels."* That is the SAME sentence the witch's Familiar prints, and `familiarAbilityBudget` in
+   * companions.ts held the witch's ladder as a hard-coded `grantSlug === 'familiar-witch'` test — so a
+   * second record printing it had nowhere to say so and shipped a flat number for all twenty levels.
+   * The ladder is data on the grant, not a name in the reader; the witch entry now carries its own.
+   */
+  growthLevels?: number[];
+  /**
    * Familiar-ability ids that are ALWAYS present — the record names them rather than the player.
    *
    * By DEFAULT they still COST one of `abilityBudget`, because that is what most records that name
@@ -101,7 +112,14 @@ export const FEAT_COMPANION_GRANTS: Record<string, CompanionGrant> = {
   'cavalier-dedication': { kind: 'animal', label: 'Cavalier Dedication', note: 'Grants an animal companion — choose its type and advance it in the Edit tab.' },
   'clockwork-reanimator-dedication': { kind: 'animal', label: 'Clockwork Reanimator Dedication', note: 'Grants a construct companion — choose its type and advance it in the Edit tab.' },
   'commanders-companion': { kind: 'animal', label: "Commander's Companion", note: 'Grants an animal companion — choose its type and advance it in the Edit tab.' },
-  'construct-innovation': { kind: 'animal', label: 'Construct Innovation', note: 'Grants a construct companion — choose its type and advance it in the Edit tab.' },
+  /* batch 034, construct-innovation#overdrive. AoN innovation-2, verbatim: *"If you use the Overdrive
+   * action, your construct gains the same Overdrive benefits you do, and it also takes the same amount
+   * of fire damage on a critical failure."* The note carried only the generic "choose its type" line,
+   * so the one clause that ties the construct to the inventor's signature action reached the player
+   * nowhere — no strike rider, no resource, not even prose on the card. It is a rider on an action the
+   * PLAYER rolls (Overdrive's own degrees of success), so the honest carrier is the card's note rather
+   * than a number the engine would have to guess the timing of. */
+  'construct-innovation': { kind: 'animal', label: 'Construct Innovation', note: 'Grants a construct companion — choose its type and advance it in the Edit tab. While you are Overdriven your construct gains the same Overdrive benefit you do, and it takes the same fire damage you do on a critical failure.' },
   'corgi-mount': { kind: 'familiar', label: 'Corgi Mount', abilityBudget: 2, lockedAbilities: ['scent'], note: 'Grants a familiar you configure here. Choose 2 familiar abilities. It always has Scent.' },
   'crocodiles-twin': { kind: 'familiar', label: "Crocodile's Twin", abilityBudget: 2, note: 'Grants a familiar you configure here. Choose 2 familiar abilities.' },
   'cultivation-order': { kind: 'familiar', label: 'Cultivation Order', abilityBudget: 2, supersedes: ['leshy-familiar'], note: 'Grants a familiar you configure here. Choose 2 familiar abilities.' },
@@ -134,7 +152,10 @@ export const FEAT_COMPANION_GRANTS: Record<string, CompanionGrant> = {
   // patron's free one), growing by one at 6/12/18 (`familiarAbilityBudget` in companions.ts adds the
   // steps on top of this number). Batch 28: it was a flat 4 for all twenty levels, and once the
   // patron ability rode the free channel a 1st-level familiar could hold 5 where print gives 4.
-  'familiar-witch': { kind: 'familiar', label: 'Familiar (Witch)', abilityBudget: 3, note: "Grants a familiar you configure here. Choose 3 familiar abilities — 4 at 6th, 5 at 12th, 6 at 18th; your patron's unique ability is always selected on top of them." },
+  // batch 034: the 6/12/18 ladder moves off the hard-coded slug test in companions.ts onto the record
+  // that prints it. Same numbers as before — class-38 "Your familiar gains another extra ability at
+  // 6th, 12th, and 18th levels" — so this entry's behaviour is unchanged.
+  'familiar-witch': { kind: 'familiar', label: 'Familiar (Witch)', abilityBudget: 3, growthLevels: [6, 12, 18], note: "Grants a familiar you configure here. Choose 3 familiar abilities — 4 at 6th, 5 at 12th, 6 at 18th; your patron's unique ability is always selected on top of them." },
   // "it gains the darkvision and tough abilities IN ADDITION TO the two abilities you normally choose".
   'friend-of-the-sea': { kind: 'familiar', label: 'Friend of the Sea', abilityBudget: 2, lockedAbilities: ['darkvision', 'tough'], lockedFree: true, supersedes: ['pet'], note: 'Your pet must be an aquatic creature. It has Darkvision and Tough in addition to the two familiar abilities you choose.' },
   // "You gain a familiar. You choose one familiar or master ability per day instead of two, but your
@@ -146,7 +167,12 @@ export const FEAT_COMPANION_GRANTS: Record<string, CompanionGrant> = {
   // Not in batch 003; found by the guard below, which cannot go green while it is missing.
   'glyph-familiar': { kind: 'familiar', label: 'Glyph Familiar', abilityBudget: 1, lockedAbilities: ['construct', 'flier', 'tough'], lockedFree: true, note: 'A living rune taken as a familiar. Choose ONE familiar or master ability per day; it always has Construct, Flier and Tough in addition, and those do not count against that one.' },
   'hyena-familiar': { kind: 'familiar', label: 'Hyena Familiar', abilityBudget: 2, note: 'Grants a familiar you configure here. Choose 2 familiar abilities.' },
-  'improved-familiar-attunement': { kind: 'familiar', label: 'Improved Familiar Attunement', abilityBudget: 4, supersedes: ['familiar'], note: 'Grants a familiar you configure here. Choose 4 familiar abilities.' },
+  /* batch 034, improved-familiar-attunement#ability-budget. AoN arcane-thesis-7: *"You gain the
+   * Familiar wizard feat. Your familiar gains an EXTRA ability, and it gains an ADDITIONAL extra
+   * ability when you reach 6th, 12th, and 18th levels."* "Extra" is one on top of base Familiar's 2
+   * (companionGrants 'familiar'), so print is 3 at 1st, 4 at 6th, 5 at 12th, 6 at 18th. The flat 4
+   * gave a 1st-level wizard one ability too many and an 18th-level wizard two too few. */
+  'improved-familiar-attunement': { kind: 'familiar', label: 'Improved Familiar Attunement', abilityBudget: 3, growthLevels: [6, 12, 18], supersedes: ['familiar'], note: 'Grants a familiar you configure here. Choose 3 familiar abilities — 4 at 6th, 5 at 12th, 6 at 18th.' },
   'leaf-order': { kind: 'familiar', label: 'Leaf Order', abilityBudget: 2, supersedes: ['leshy-familiar'], note: 'Grants a familiar you configure here. Choose 2 familiar abilities.' },
   'leshy-familiar': { kind: 'familiar', label: 'Leshy Familiar', abilityBudget: 2, note: 'Grants a familiar you configure here. Choose 2 familiar abilities.' },
   'mammoth-lord-dedication': { kind: 'animal', label: 'Mammoth Lord Dedication', note: 'Grants an animal companion — choose its type and advance it in the Edit tab.' },
@@ -468,7 +494,12 @@ export const COMPANION_MODS: Record<string, CompanionMod> = {
   'aon-celestial-mount': {"kinds":["animal"],"senses":["darkvision"],"maxHpBonus":40,"flyEqualsLand":true,"iwr":["weakness 10 unholy"],"note":"Celestial Mount"},
   'aon-fiendish-mount': {"kinds":["animal"],"senses":["darkvision"],"maxHpBonus":40,"flyEqualsLand":true,"iwr":["weakness 10 holy"],"note":"Fiendish Mount"},
   'auspicious-mount': {"kinds":["animal"],"maturityFloor":"specialized","abilityBoosts":{"int":2,"wis":1},"skillGrants":[{"skill":"religion","rank":"expert"}],"maxHpBonus":20,"speeds":{"fly":"land"},"note":"Auspice specialization (Auspicious Mount): your faithful steed becomes a specialized animal companion. If you take the AUSPICE specialization it gains ALL of the following: the celestial, fiend, or monitor trait to match your deity's servitors (plus the holy trait if celestial, or the unholy trait if fiend; a monitor gains neither); Int modifier +2 and Wis modifier +1; expert proficiency in Religion; it can speak your deity's servitor language (e.g. Empyrean for celestials, Chthonian for demons, Requian for psychopomps); its maximum HP increase by 20, rising to +25 at 18th level and +30 at 20th; and a fly Speed equal to its land Speed. A celestial steed's extra HP increase by a further 5 and it gains weakness 5 to unholy; a fiend steed's extra HP increase by a further 5 and it gains weakness 5 to holy. These are ALL auspice-only benefits: if you instead choose one of the usual companion specializations, this feat grants none of the above (no ability boosts, Religion, bonus HP, fly Speed, trait, language, or weakness) — use that specialization's normal benefits instead. The app applies the auspice grants unconditionally, so edit the companion if you took a usual specialization."},
-  'beast-eidolon': {"kinds":["eidolon"],"senses":["low-light vision"]},
+  /* batch 034, beast-eidolon#language-sylvan. AoN eidolon-3 (the page this record cites) prints
+   * *"**Language** Sylvan"* — a fixed ANSWER, not a pick — and this row had no `languages`, so the
+   * block showed no Languages line at all. Printed NAME rather than an id, exactly as the sibling
+   * 'fey-eidolon' below: the app's language table is remaster-only ('fey'), while this record cites
+   * its legacy page, and re-pointing the record is a separate decision. */
+  'beast-eidolon': {"kinds":["eidolon"],"senses":["low-light vision"],"languages":["Sylvan"]},
   'burrowing-form': {"kinds":["eidolon"],"speeds":{"burrow":15},"note":"Burrowing Form: your eidolon can burrow through loose dirt."},
   'celestial-mount': {"kinds":["animal"],"senses":["darkvision"],"maxHpBonus":40,"flyEqualsLand":true,"iwr":["weakness 10 unholy"],"note":"Celestial Mount"},
   'chorus-companion': {"kinds":["animal"],"skillGrants":[{"skill":"performance","rank":"trained"}],"note":"Chorus Companion: your animal companion is trained in Performance (expert if it was already trained)."},
@@ -501,7 +532,11 @@ export const COMPANION_MODS: Record<string, CompanionMod> = {
   'paragon-companion': {"kinds":["animal"],"maturityFloor":"specialized","note":"Paragon Companion: your construct companion is at least a paragon (specialized) companion."},
   'peerless-mascot-companion': {"kinds":["animal"],"abilityBoosts":{"int":2,"wis":1},"maxHpBonus":20,"speeds":{"climb":"land","swim":"land"},"note":"Peerless Mascot specialization: expert in Warfare Lore; can speak one language you also speak (chosen when you gain this feat); gains the beast trait and a 30-foot banner aura acting as a second banner. Max HP increases by 20 (the app applies this flat +20; it rises to +25 at 18th level and +30 at 20th in the rules)."},
   'plant-eidolon': {"kinds":["eidolon"],"senses":["low-light vision"],"note":"Growing Vines (7th): all its melee unarmed Strikes gain the reach trait."},
-  'psychopomp-eidolon': {"kinds":["eidolon"],"senses":["darkvision"],"strikeRider":"ghost touch","note":"Spirit Touch: its unarmed Strikes deal an extra 1 void damage to living creatures and an extra 1 vitality damage to undead."},
+  /* batch 034, psychopomp-eidolon#language. AoN eidolon-10 prints *"**Language** Requian"*, and this
+   * row carried senses/strikeRider/note but no `languages`, so the printed line reached the player as
+   * description prose only. The ID, not the printed name — content.languages['requian'] exists, so
+   * deriveEidolon resolves it (the 'dragon-eidolon' shape, not the legacy-page 'fey'/'beast' shape). */
+  'psychopomp-eidolon': {"kinds":["eidolon"],"senses":["darkvision"],"languages":["requian"],"strikeRider":"ghost touch","note":"Spirit Touch: its unarmed Strikes deal an extra 1 void damage to living creatures and an extra 1 vitality damage to undead."},
   'specialized-companion-animal-trainer': {"kinds":["animal"],"maturityFloor":"specialized","note":"Animal Trainer companion: gains one specialization of your choice, and its Performance proficiency is legendary in place of one of the specialization's skill increases."},
   'specialized-spirit-companion': {"kinds":["animal"],"strikeRider":"ghost touch","note":"Spirit-blessed: Strikes gain ghost touch."},
   'vibration-sense': {"kinds":["eidolon"],"senses":["tremorsense (imprecise 30 ft)"],"note":"Vibration Sense: tremorsense as an imprecise sense, range 30 feet. An aquatic eidolon gains wavesense (imprecise 30 ft) instead; an amphibious eidolon gains both."},

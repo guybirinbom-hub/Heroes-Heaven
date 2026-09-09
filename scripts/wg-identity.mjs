@@ -645,6 +645,22 @@ function ourIdentities(id, rec) {
     for (const g of o.grantedFeats ?? []) addGrant(g);
     for (const f of o.featureIds ?? []) addGrant(f?.id ?? f);
     if (o.tradition) out.options.add(key(o.tradition));
+    /*
+     * …and the OPTION'S OWN SKILL PICK, which their side spells out as a `select` whose every branch is
+     * one named skill — so it lands in the `options` bucket, and with no reader here it read as a
+     * question we offer no answers to.
+     *
+     * Print (AoN methodology-6, Empiricism): *"You are trained in one Intelligence-based skill of your
+     * choice."* Print (AoN way-2, Way of the Pistolero): *"Way Skill Deception or Intimidation"*. Ours
+     * is `classes.<cls>.subclass.options[<id>].skillChoice` (+ `skillChoiceLore` where a Lore subject is
+     * an accepted answer) — the visible select at src/builder/shared.tsx:3255-3290, trained at
+     * build.ts:3627-3643, counted at build.ts:1141 and prompted at build.ts:1248.
+     *
+     * `contains()` is a two-way substring match, which is what pairs our bare `deception` with their
+     * variable-shaped `SKILL_DECEPTION`. An option that carries no `skillChoice` still credits nothing.
+     */
+    for (const s of o.skillChoice ?? []) out.options.add(key(s));
+    if (o.skillChoiceLore) out.options.add(key('lore'));
     const decl = core.classFeatures[optionDeclarer.get(id) ?? ''];
     const ladder = decl?.grantedSpells;
     if (ladder && !Array.isArray(ladder)) for (const e of ladder[id] ?? []) addSpell(e?.id ?? e);
@@ -728,6 +744,47 @@ const contains = (set, name) => {
  * ⚠ Only for a difference verified against the printed text. Never a place to quiet a real gap.
  */
 const SETTLED_IDENTITIES = {
+  /* ---- BATCH 34 (instruments-1) ------------------------------------------------------------------
+   *
+   * WAY OF THE PISTOLERO — NOT SETTLED, and the entry that was here in this batch's first pass has been
+   * removed by the chunk's verifier. It read their `pistolersretort` as a MISSPELLING of ours. It is not:
+   * the REMASTERED printing renames the deed. AoN way-2 (Guns & Gears **Remastered**, the doc our own
+   * record claims as its aonId) embeds the advanced deed as `<document id="action-912" />`, and
+   * action-912 is titled *"Pistoler's Retort"* with `legacy_id: ["action-3681"]`; action-3681
+   * ("Pistolero's Retort", Guns & Gears) carries the matching `remaster_id: ["action-912"]`. WG encodes
+   * the remaster name; OURS is the side that differs — classFeatures/pistoleros-retort is the LEGACY
+   * record (aonId action-3681, edition 'legacy') while the way's two other deeds, ten-paces (action-911)
+   * and grim-swagger (action-913), are both the remaster ones. scripts/backfill-gunslinger-deeds.mjs:38-40
+   * already knew ("the app… prints the legacy \"Pistolero's Retort\" where the remaster says
+   * \"Pistoler's\"") and bridged it with a de-typo in its own matcher instead of fixing the record.
+   * Settling it here would have silenced a real, print-backed difference, so the fix was a DATA row
+   * instead — classFeatures/pistoleros-retort name/aonId/edition retagged to the remaster deed
+   * (Pistoler's Retort, action-912, edition 'remaster'), applied in this batch. There is no entry for
+   * this record in this registry and there must not be one: the two sides now print the same name
+   * because the record changed, not because a settle stopped looking.
+   */
+  /*
+   * ELEMENTAL INSTINCT — their six "Kinetic Element" blocks are the SAME PICK we ask as a choice.
+   *
+   * Print (AoN instinct-7, Elemental): *"Select an element from the Elemental Instincts table to be
+   * your instinct's element. If your element offers multiple damage types, choose one of those type
+   * when you select your element."* WG has no per-record choice flag, so it models the answer as six
+   * ability blocks ("Kinetic Element (Air)" … "(Wood)") handed over inside the select's branches. Ours
+   * is `classFeatures/elemental-instinct.choice {flag:'instinctElement', kind:'array', options:[
+   * 'air-electricity' … 'wood-slashing']}`, each option carrying the element's own
+   * `grant.whileActive` resistances — which is why `ours=[instinctelement]` on the report line and why
+   * the `defense` half of this record already agrees. There is no RECORD on our side for their six
+   * blocks to pair with, because the element is a stored answer, not a granted feature.
+   *
+   * Adversarially confirmed: with `choice` deleted from a content copy `ours=[(nothing)]` and the
+   * record's remaining grants report — the flag is real and read, not an excuse.
+   *
+   * ⚠ Their six names ONLY, never the `grants` bucket: a real feature this instinct ought to hand over
+   * would still report.
+   */
+  // batch 034: elemental-instinct#instrument
+  'elemental-instinct': ['kineticelementair', 'kineticelementearth', 'kineticelementfire', 'kineticelementmetal', 'kineticelementwater', 'kineticelementwood'],
+
   /* ---- BATCH 33 (resume) ------------------------------------------------------------------------
    *
    * ARMOR INNOVATION — the suits ARE handed over, by a hard-coded branch instead of `grantsItems`.

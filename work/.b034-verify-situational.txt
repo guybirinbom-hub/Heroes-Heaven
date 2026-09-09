@@ -1,0 +1,154 @@
+batch 034 — SITUATIONAL family, ADVERSARIAL VERIFY
+7 findings re-read in full from work/.b034-read.json; every changed file opened; nothing taken on the
+builder's word. Verdicts: 7 DONE, 0 FIXED-BY-ME, 0 NOT-DONE. Two gaps the builder's lists did not
+carry are added below.
+
+CHECKS I RAN MYSELF
+  node scripts/vt.mjs run test/batch034-situational.test.ts   -> 17 passed (6 describes / 17 its —
+      the file's own count, so no `it` is silently skipped)
+  npx tsc --noEmit                                            -> clean
+  node scripts/test-flip-audit.mjs --batch 034                -> FAIL with 5 uncited flips, and all 5
+      are in scripts/wg-diff.mjs / wg-values.mjs / wg-identity.mjs (inspired-stratagem,
+      spirit-instinct, elemental-instinct, way-of-the-pistolero) — other families' settle registries.
+      NOT ONE lands in src/rules/situationalBonuses.ts, scripts/apply-situational-lane.mjs or
+      test/batch034-situational.test.ts. This family adds no settle and no comparer teach, so rule (3)
+      raises no mutation-proof obligation on it.
+  Citation form checked by hand: all 17 its carry "// batch 034: <finding id>" within 6 lines above,
+      each id is a CONFIRMED id in work/.b034-read.json, and each enclosing describe title contains
+      that finding's RECORD id (the-silent-whisper / curse-of-turbulent-moments / elemental-instinct /
+      weapon-innovation / scar-of-the-survivor / victors-wreath). Both halves of rule (1) hold.
+
+
+PER FINDING
+
+the-silent-whisper#daze-range — DONE
+  SPELL_MARKERS["daze"] exists in src/rules/situationalBonuses.ts sourced to 'the-silent-whisper'; I
+  traced the reader end to end — explain.ts:769 spellSituationalFor -> spellMarkersFor(spellId,
+  characterSituationalIds(c, db)), so the rider is gated on OWNING the conscious mind, not on the
+  spell. The test reads through that same function on a BUILT psychic 5 and the negative arm (a
+  the-distant-grasp psychic and a wizard) returns []. public/core.json spells/daze.range is still
+  "60 feet", verified directly — correct for every other caster, which is why no data row is right.
+
+the-silent-whisper#message-reach — DONE
+  SPELL_MARKERS["message"] present, same gate, same reader. All four printed elements (no line of
+  effect, no line of sight, 120 feet, telepathic/loses auditory) are asserted on the rendered rider.
+  Confirmed against core.json myself: spells/message.range = "120 feet" and traits still carry
+  "auditory" — so this genuinely is a reach-and-option rider, not a field that should have moved.
+
+curse-of-turbulent-moments — DONE
+  FEAT_SITUATIONAL["curse-of-turbulent-moments"] has the { kind: 'ac' } row and the
+  { kind: 'save', detail: 'all' } row. targetMatches (:3767) returns true for detail 'all' against any
+  save ref, so one entry legitimately covers Fortitude/Reflex/Will — the test proves all three
+  individually on a BUILT Time oracle 5, and a Battle oracle reads none of it. The RECORD_MARKERS note
+  on the `cursebound` condition still fires (asserted through recordMarkersFor), which is what Q2
+  allows. The mode-gated numeric variant stays NOT built — see CROSS-FILE GAPS; the reason is stronger
+  than the builder's: cat-cursebound-1..4 are keyed `classes: ['oracle']` with no mystery field, so a
+  −N modifier hung on them would penalise EVERY oracle. Prose is the only correct home today.
+
+elemental-instinct#concealment — DONE
+  FEAT_SITUATIONAL["elemental-instinct"] present, one { kind: 'ac' } row, the sibling
+  superstition-instinct shape. Built barbarian 5 with subclassId elemental-instinct reads it and
+  statHasSituational puts the `*` on AC; a fury-instinct barbarian reads nothing and Stealth stays
+  bare, so print's "can't be used to Hide or Sneak" is not leaking out as a Stealth bonus. No
+  collision with the other two elemental-instinct findings this batch — those are settle-registry
+  entries in wg-values.mjs / wg-identity.mjs (other families), not FEAT_SITUATIONAL keys.
+
+weapon-innovation#segmented-frame-duplicate — DONE
+  The "weapon-innovation" entry is gone from FEAT_SITUATIONAL and 'weapon-innovation' is in the
+  `handEdited` set of scripts/apply-situational-lane.mjs. I verified the exclusion is actually
+  NECESSARY and not decoration: existingIds is built by regex over the registry SOURCE
+  (apply-situational-lane.mjs:127), so a deleted key cannot appear in it, and
+  work/situational-lane/spec.json really does still hold a weapon-innovation row (situational: true,
+  needsHumanDecision: true, one +2 circumstance Stealth bonus) that would come back the moment that
+  flag is regenerated. `node --check` on the script parses; the splice logic appends before the
+  object-literal close, so the hand-authored block above the banner is untouched. Both built
+  inventors behave: the Segmented Frame one reads exactly one Stealth star (from the pick) while
+  'weapon-innovation' is still IN characterSituationalIds — so the star's absence is the entry being
+  deleted, not the id being unreachable — and the hampering-spikes one reads none.
+
+scar-of-the-survivor#diehard-ungated — DONE (row verified as a row; one consequence logged below)
+  ROW: work/.b034-rows-situational.json, {classFeatures, scar-of-the-survivor, grantsFeats, value
+  null, supersedes true}. Target record exists in public/core.json (verified) and its shipped value is
+  exactly ["diehard"], so the delete is a real change and there is nothing to merge whole. The
+  superseded overlay row exists in scripts/data/effect-backfill.json (I read it: the same key, value
+  ["diehard"]) — apply-parity-fixes.mjs:303/312 refuses a superseding row whose key is absent AND an
+  un-flagged row whose key is present, so this row is on the right side of both gates. `value: null`
+  is the documented removal idiom (apply-parity-fixes.mjs:20). The record's three sibling overlay rows
+  (grantsClassFeatures ["no-scar-but-this"], edition, ikonType) are on OTHER fields and untouched. A
+  reader exists: build.ts:5355 grantSources reads grantsFeats. No other row in any .b034-rows-*.json
+  hits category+id+field+path 'classFeatures|scar-of-the-survivor|grantsFeats' — I keyed all 12 rows
+  across every rows file this batch and found 0 collisions.
+  HARNESS: the test file already IS the in-memory harness the brief asks for — exemplarWithScar()
+  clones db.classFeatures['scar-of-the-survivor'], applies the row (delete rec.grantsFeats) and runs
+  the real buildCharacter with extraChoices { ikon: [...] }. I confirmed both arms are in-memory
+  patches and neither is a patched-vs-shipped delta, so nothing flips when the driver applies the row.
+  CODE: the second immanence-gated Fortitude row is present; the built exemplar reads BOTH rows and
+  both carry "immanence active".
+
+victors-wreath#spell-attack — DONE
+  ONE entry, two targets: [{ kind: 'strikeAttack' }, { kind: 'spell', detail: 'attack' }].
+  targetMatches (:3792) is `ref.kind === 'spell' && (!t.detail || t.detail === 'all' || t.detail ===
+  ref.which)`, so detail 'attack' hits the attack row and cannot reach the DC row — the test's DC
+  assertion is a real negative, not a vacuous one (the same `which` key returns the row for 'attack'
+  in the test above it). The exemplar 8 carries a real spellcasting entry via the wizard-dedication
+  override and statHasSituational puts the `*` on { kind: 'spell', entryId, which: 'attack' }. The
+  Strike rows are asserted to be the identical object, so this is one bonus reaching two rows.
+
+
+SPEC ROWS, CHECKED AS ROWS (work/.b034-rows-situational.json)
+  1 backfill row in the whole file; six of the seven findings are code-only and say so.
+  · target exists (or create:true): PASS — classFeatures/scar-of-the-survivor is in core.json.
+  · re-emitted values hold everything they held: N/A — the only row is a whole-field deletion, and the
+    superseded value (["diehard"]) is removed in full on purpose.
+  · reader exists for every field: PASS — grantsFeats is read at src/rules/build.ts:5355.
+  · no two rows share record+field+path: PASS — 12 row keys across every .b034-rows-*.json present at
+    verify time, 0 collisions.
+  · created records / created prose: N/A — no create rows, so no created-prose spec is owed.
+  · every spell / action / trait / item id a row names exists: N/A — the row names no ids.
+  · ids the CODE names all resolve in core.json: verified daze, message, curse-of-turbulent-moments,
+    elemental-instinct, segmented-frame, weapon-innovation, the-silent-whisper, scar-of-the-survivor,
+    victors-wreath.
+
+MANIFEST (work/.b034-specs.json)
+  The situational entry is present and its stage[] lists every path the family touched — the rows
+  file, the report, test/batch034-situational.test.ts, src/rules/situationalBonuses.ts and
+  scripts/apply-situational-lane.mjs, which is exactly the set `git diff` attributes to this family. I
+  appended work/.b034-verify-situational.txt to that same stage[] and changed nothing else.
+  Other families' entries are intact: at the moment I appended, the array also held data-rows (rows +
+  created-prose) and instruments-2, each with its own stage[]. The situational entry clobbered
+  nothing — it was simply the first written. (It DID sit alone for a few minutes mid-verify, which is
+  worth knowing only because the array is append-only and a whole-file rewrite by any family would be
+  silent; the driver should re-count entries after the last family closes.)
+
+
+DATA STILL NEEDED
+- classFeatures/scar-of-the-survivor, field grantsFeats, value null (delete the field), supersedes the
+  existing effect-backfill row {classFeatures, scar-of-the-survivor, grantsFeats, ["diehard"]}.
+  Authored in work/.b034-rows-situational.json under scar-of-the-survivor#diehard-ungated; verified
+  above as a row. The driver applies it.
+
+CROSS-FILE GAPS
+- scar-of-the-survivor#diehard-ungated leaves the Diehard MECHANIC unreachable, and the builder's
+  report did not say so. Diehard is not prose in this app: src/rules/build.ts:6849 sums
+  feats[].dyingThresholdBonus into character.dyingThreshold, which conditions.ts:167
+  dyingDeathThreshold reads. Retiring the ungated grant is right (print gates the whole sentence on
+  immanence) but it drops the exemplar from "dies at dying 5 always" to "dies at dying 4 always",
+  where print says dying 5 while the spark is in this ikon. The complete fix needs a NEW carrier: an
+  immanence toggle-mode for this ikon in scripts/data/toggle-modes.json (the warped-by-rage shape,
+  which already exists for exactly this trigger) plus a mode field that can move the dying threshold —
+  the schema has none today (its keys are ancestries, aonOrigin, backgrounds, battleForm, category,
+  classes, creatureTraits, duration, exclusiveGroup, feats, fromItemId, grantedStrikes, id,
+  immunities, modifiers, name, note, predefined, resistances, senses, speeds, survivesRest, weaknesses,
+  weaponTraits). Both files are outside this family.
+- curse-of-turbulent-moments is prose ("−(your cursebound value) status") where WG carries four
+  numeric ladders (−1/−2/−3/−4 to AC and all three saves, one set per cursebound mode). The numeric
+  route is blocked in src/rules/modes.ts, not in the situational registry: cat-cursebound-1..4
+  (modes.ts:272-275) ship modifiers: [] and are scoped `classes: ['oracle']` with no mystery
+  discriminator, so a penalty hung on them would hit every oracle, not only a Time oracle. Closing it
+  needs a per-mystery gate on the mode (or four mystery-scoped modes) in src/rules/modes.ts — outside
+  this family. The star is correct and complete as printed prose in the meantime.
+
+MANIFEST STAGE[] — FILES I TOUCHED
+  work/.b034-verify-situational.txt
+  work/.b034-specs.json   (appended the line above to the situational entry's stage[]; no other entry
+                           read, moved or removed)

@@ -1,0 +1,17 @@
+{
+ "findings": [
+  {
+   "id": "improved-familiar-attunement#drain-familiar",
+   "note": "The prose half of the create row above — a create row never carries a description (apply-backfill.mjs strips description/descRefs out of a create value), so the record would ship blank and red in readable-record-check.mjs. Every sentence is lifted verbatim from arcane-thesis-7, which is also what pre-check (5) demands of a description row: Drain Familiar has no page of its own, so the thesis IS its printed text.",
+   "backfillRows": [
+    {
+     "category": "actions",
+     "id": "drain-familiar",
+     "field": "description",
+     "value": "Your connection with your familiar alters your arcane bond class feature so that you store your magical energy in your familiar, rather than an item you own; you also gain the Drain Familiar free action instead of Drain Bonded Item. Drain Familiar can be used any time an ability would allow you to use Drain Bonded Item and functions identically, except that you draw magic from your familiar instead of an item.",
+     "why": "AoN arcane-thesis-7 (Improved Familiar Attunement) — the two printed sentences that define the action, verbatim."
+    }
+   ]
+  }
+ ]
+}

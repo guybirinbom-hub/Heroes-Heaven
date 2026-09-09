@@ -55,10 +55,16 @@ describe('batch 033 closer — devotion-phantom-eidolon language', () => {
     expect(blockFor('devotion-phantom-eidolon').senses).toContain('darkvision');
   });
 
-  // batch 033: devotion-phantom-eidolon#language
-  // An eidolon whose printed Language line is a fixed list asks nothing, so no slot is shown.
-  it('an eidolon type with no language question (beast-eidolon) shows no languages row', () => {
-    expect(blockFor('beast-eidolon').languages).toBeUndefined();
+  /* An eidolon whose printed Language line is a fixed list asks nothing, so no PICKER is shown — but
+   * batch 033 wrote that as "no languages row at all", which was only true while the row was missing.
+   * AoN eidolon-3 prints *"**Language** Sylvan"*, and batch 034's engine family put it on
+   * COMPANION_MODS['beast-eidolon'].languages, so the fixed line now renders exactly as its angel and
+   * fey siblings' do. The claim the test was making — a fixed line asks no question — is asserted
+   * where it actually lives: languageChoices, which gates the picker at CompanionsTab.tsx:1287. */
+  // batch 034: beast-eidolon#language-sylvan
+  it('beast-eidolon renders its fixed printed language and still asks no language question', () => {
+    expect(blockFor('beast-eidolon').languages).toEqual(['Sylvan']);
+    expect(COMPANION_MODS['beast-eidolon'].languageChoices ?? 0).toBe(0);
   });
 });
 
@@ -107,16 +113,22 @@ const diffIndex = () => {
 };
 
 describe('batch 033 closer — angel-eidolon, fey-eidolon and light-mortar-innovation credit their off-record carriers', () => {
-  // batch 033: angel-eidolon#language
-  it('angel-eidolon and fey-eidolon no longer report the language kind, and the uncredited types still do', () => {
+  // batch 034: beast-eidolon#language-sylvan
+  // batch 034: psychopomp-eidolon#language
+  it('angel-eidolon, fey-eidolon, beast-eidolon and psychopomp-eidolon no longer report the language kind, and the still-uncredited types do', () => {
     const idx = diffIndex();
     // batch 033: fey-eidolon#language
     for (const id of ['angel-eidolon', 'fey-eidolon']) expect(idx.get(id)?.missing).toEqual([]);
-    /* The control group: same printed Language line, no COMPANION_MODS.languages row, still red. If a
-     * later hand moves the credit onto the companionGrants.ts file row, these five go quiet and this
-     * test fails — which is the whole reason they are asserted. */
-    // batch 033: angel-eidolon#language
-    for (const id of ['beast-eidolon', 'demon-eidolon', 'plant-eidolon', 'psychopomp-eidolon', 'undead-eidolon']) {
+    /* Two of the five moved out of the control group this batch: the engine family gave beast and
+     * psychopomp the same COMPANION_MODS.languages carrier (AoN eidolon-3 "Language Sylvan",
+     * eidolon-10 "Language Requian"), and the closer added the matching per-id credit in wg-diff. */
+    // batch 034: psychopomp-eidolon#language
+    for (const id of ['beast-eidolon', 'psychopomp-eidolon']) expect(idx.get(id)?.missing).not.toContain('language');
+    /* The control group that REMAINS: same printed Language line, no COMPANION_MODS.languages row,
+     * still red. If a later hand moves the credit onto the companionGrants.ts file row, these three go
+     * quiet and this test fails — which is the whole reason they are asserted. */
+    // batch 034: beast-eidolon#language-sylvan
+    for (const id of ['demon-eidolon', 'plant-eidolon', 'undead-eidolon']) {
       expect(idx.get(id)?.missing).toContain('language');
     }
   });

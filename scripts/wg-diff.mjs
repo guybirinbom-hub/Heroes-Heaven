@@ -974,6 +974,26 @@ const OFF_RECORD_CARRIERS = {
    * still do, so a later hand moving this credit onto the file row fails there rather than silently. */
   'angel-eidolon': ['language'],
   'fey-eidolon': ['language'],
+  /*
+   * CLOSER, batch 034 — findings beast-eidolon#language-sylvan and psychopomp-eidolon#language. Two of
+   * the five the batch-033 note above listed as still bare are bare no longer: the engine family put
+   * the printed Language line on the same carrier its angel/fey siblings use, so the same credit is
+   * now earned rather than assumed.
+   *   beast-eidolon      — AoN eidolon-3  *"**Language** Sylvan"*; COMPANION_MODS['beast-eidolon']
+   *                        .languages = ['Sylvan'] (src/rules/companionGrants.ts:502), the printed NAME
+   *                        because `sylvan` is not a key of the remaster-only content.languages bucket.
+   *   psychopomp-eidolon — AoN eidolon-10 *"**Language** Requian"*; COMPANION_MODS['psychopomp-eidolon']
+   *                        .languages = ['requian'] (:539), the ID this time — content.languages
+   *                        ['requian'] exists.
+   * Both are read by the same `for (const l of mod.languages ?? [])` loop in deriveEidolon
+   * (src/rules/companions.ts:1047) onto EidolonBlock.languages, rendered at
+   * src/sheet/CompanionsTab.tsx:950.
+   * ⚠ STILL PER ID, for the reason the 033 note gives: demon, plant and undead eidolons have no
+   * Language row at all and must keep reporting. test/batch033-closer.test.ts pins exactly that — its
+   * five-id assertion is narrowed to those three here, so the day a hand moves this credit onto the
+   * companionGrants.ts FILE row (which would credit all ~112 ids) that test fails rather than passing. */
+  'beast-eidolon': ['language'],
+  'psychopomp-eidolon': ['language'],
   /* CLOSER, batch 033 — finding light-mortar-innovation#duplicate-modification-choice.
    * *"Choose one of the sets of statistics on the Innovation Siege Weapon Statistics table"* plus the
    * tiered modification picks (AoN innovation-9 / archetype-329). The record's own `choice` field was
@@ -985,6 +1005,49 @@ const OFF_RECORD_CARRIERS = {
    * ⚠ `choice` ONLY. Their `conditional` is already answered off the record (ourKinds carries it on
    * every run, shipped and stunted), and settling it here would launder a kind we do answer. */
   'light-mortar-innovation': ['choice'],
+  /*
+   * CLOSER, batch 034 — WEAPON INNOVATION, the same shape one innovation type over, and the record
+   * that gap-engine's construct-innovation row cites as the correct precedent ("armor-innovation,
+   * weapon-innovation and light-mortar-innovation all carry no `choice`, and the tier pickers are now
+   * the single carrier"). Its core.json record carries no field at all beyond identity, so ourKinds
+   * was EMPTY and both their kinds read as missing.
+   *
+   * `node scripts/wg-show.mjs "Weapon Innovation"` is four `conditional`s, each wrapping one `select
+   * optionType=ABILITY_BLOCK`: IF CLASS_NAMES INCLUDES inventor, IF CLASS_FEATURE_NAMES INCLUDES
+   * breakthrough innovation, IF … revolutionary innovation, and IF FEAT_NAMES INCLUDES basic
+   * modification. Four gates, four pickers — the gate and the picker are one mechanism, which is why
+   * BOTH kinds are credited here and not just `choice`.
+   *   `choice`      — `inventorModificationOptions(content, 'weapon', undefined, maxTierLevel)`
+   *                   (src/rules/build.ts:2753-2771) selects the 26 core.json classFeatures tagged
+   *                   `weapon-innovation-modification` (levels 1 / 7 / 15), and the builder draws one
+   *                   PopupSelect per tier at src/builder/shared.tsx:3582-3600. The answer is stored on
+   *                   `build.inventorModifications` and re-validated against the same options at
+   *                   build.ts:8410-8421.
+   *   `conditional` — the same lines ARE their four gates: `build.level < INVENTOR_TIER_LEVEL[t.key]`
+   *                   closes the breakthrough (7th) and revolutionary (15th) tiers, and `viaDedication`
+   *                   opens only the initial tier and only when `basic-modification` is among the
+   *                   character's feat picks — their fourth conditional, one for one.
+   * ⚠ Per id, like its two siblings above: armor-innovation is NOT listed here and still reports.
+   * Mutation-proof test: test/batch034-closer.test.ts. */
+  // batch 034 premise: innovation-3 "Choose one initial weapon modification to apply to your innovation, either from the following or from other initial weapon modifications to which you have access."
+  'weapon-innovation': ['conditional', 'choice'],
+  /* BATCH 034 — finding elemental-blast#instrument.
+   * Elemental Blast — *"The element determines the damage die, damage type, and range"* (AoN
+   * action-2125), and the die COUNT is the kineticist's class table: 2 dice at 5th, 3 at 9th,
+   * 4 at 13th, 5 at 17th. Their `createValue KINETICIST_BLAST_DICE = 1` (plus `adjValue … = 1` on
+   * Improved Elemental Blast) is that tally, and this record carries no field for it, so `specialStat`
+   * read as missing on a die count that ships.
+   *   `specialStat` — src/rules/derive.ts `deriveBlastStrikes`: `dice = 1 + classDice + featDice`, with
+   *                   `classDice = [5,9,13,17].filter((l) => c.level >= l).length` (zero when
+   *                   `c.kineticist.archetype`, since an archetype blast never climbs) and `featDice`
+   *                   summing `db.feats[…].blastDiceBonus` once per taking — the second half of their
+   *                   pair, carried by feats/improved-elemental-blast (aonId feat-4337,
+   *                   `blastDiceBonus: 1`). A level ladder keyed by CLASS plus a field on ANOTHER
+   *                   record: nothing on this one for either walk to find.
+   * ⚠ `specialStat` ONLY. Everything else this record asserts still reports; the experience harness
+   * judges the same variable independently through `surface.blastDiceBonus`
+   * (scripts/lib/wg-experience-lanes.mjs), so the die count is not settled in both instruments at once. */
+  'elemental-blast': ['specialStat'],
 };
 for (const [id, kinds] of Object.entries(OFF_RECORD_CARRIERS)) addKinds(id, kinds);
 
@@ -1219,6 +1282,27 @@ function ourKindsOf(rec, id, bucket) {
     if (o?.note) kinds.add('note');
   }
   /*
+   * …AND ONE LEVEL DEEPER STILL: AN OPTION'S `grant.whileActive`.
+   *
+   * `fieldToKinds` maps the bare key `whileActive` to `conditional` and stops there, so an option whose
+   * grant is state-gated contributed the gating and nothing gated. That is the whole of Raging
+   * Resistance wherever the second damage type is a PICK — Giant Instinct prints *"You resist
+   * bludgeoning damage and your choice of cold, electricity, or fire"* (AoN instinct-3) and ours is
+   * `choice.options[].grant.whileActive[{state:'rage', minLevel:9, resistances:[…]}]`, delivered by
+   * src/rules/build.ts:6312-6320 — so `defense` read as missing on four instincts that carry it
+   * (giant, dragon, elemental, superstition). This is the SAME descent the top-level `rec.whileActive`
+   * loop above already does; only the container was different, and a container must not decide whether
+   * a grant counts. Adversarially confirmed by stunting the clause: `defense` comes straight back
+   * (test/batch034-instruments-2.test.ts).
+   */
+  for (const ch of [{ options: rec.choice?.options ?? [] }, ...(Array.isArray(rec.effectChoices) ? rec.effectChoices : [])]) {
+    for (const o of ch?.options ?? []) {
+      for (const w of Array.isArray(o?.grant?.whileActive) ? o.grant.whileActive : []) {
+        for (const sub of Object.keys(w ?? {})) for (const kind of fieldToKinds.get(sub) ?? []) kinds.add(kind);
+      }
+    }
+  }
+  /*
    * AN INLINE `situational` NAMES ITS TARGETS TOO.
    *
    * The registry copy in situationalBonuses.ts is read target-by-target (above), but a record can carry
@@ -1445,6 +1529,30 @@ function ourKindsOf(rec, id, bucket) {
       if (o.grantedSpellChoice) { kinds.add('spell'); kinds.add('choice'); }
       if ((o.skillChoice ?? []).length) { kinds.add('choice'); kinds.add('skill'); }
       if (o.tradition) kinds.add('spellcasting');
+      /*
+       * …and the option that SETS THE CHARACTER'S KEY ATTRIBUTE. Print (AoN subconscious-mind-5,
+       * Emotional Acceptance): *"Key Attribute Your key attribute is Charisma."* — the psychic's key
+       * attribute is chosen with the subconscious mind, so `classes.psychic.keyAbility` is [] and the
+       * answer lives on `extraChoices['subconscious-mind'].options[<id>].keyAbility` ('cha' / 'int').
+       * One field, three of their operations, none of them on the class-feature record:
+       *   `attribute`    — subclassKeyAbility() (build.ts:889-901, which walks cls.extraChoices) is
+       *                    pushed as the level-1 key-attribute boost at build.ts:1327, their
+       *                    `adjValue ATTRIBUTE_INT/CHA = 1`.
+       *   `classDc`      — it becomes the character's keyAbility (build.ts:3378/3393) and deriveClassDc
+       *                    reads it at derive.ts:669 (`c.classDcKeyAbility ?? c.keyAbility`), their
+       *                    `setValue CLASS_DC = {value:'T', attribute:ATTRIBUTE_*}`.
+       *   `spellcasting` — ONLY when the owning class has a casting block for the pick to key, which is
+       *                    their `defineCastingSource PSYCHIC:::SPONTANEOUS-REPERTOIRE:::OCCULT:::
+       *                    ATTRIBUTE_*` — the entry keyAbility at build.ts:4249. The rogue's four
+       *                    rackets carry the same `keyAbility` field and no casting, and correctly
+       *                    credit nothing here.
+       * Eight options in core.json carry the field; an option without it still credits nothing.
+       */
+      if (o.keyAbility) {
+        kinds.add('attribute');
+        kinds.add('classDc');
+        if (cls?.spellcasting) kinds.add('spellcasting');
+      }
       if ((o.grantedFeats ?? []).length || (o.featureIds ?? []).length) kinds.add('grantsRecord');
     }
   }
@@ -1555,6 +1663,38 @@ const VERIFIED_EQUIVALENT = {
    * type=class-feature` that maps to `note` and is compared on its own, so this entry cannot hide it. */
   // batch 033: stone-order#instrument
   'stone-order': ['specialStat'],
+
+  /* ---- BATCH 34 — the other five orders this batch cut, same shape, one entry each ---------------
+   *
+   * The three above were batch 033's; batch 034 cut five more order records and every one reports the
+   * SAME single unmatched operation. `node scripts/wg-show.mjs "Animal Order" --raw` (and Leaf, Storm,
+   * Untamed, Wave in turn) shows `createValue MAIN_DRUID_ORDER = animal | leaf | storm | untamed |
+   * wild` (type=str) and nothing else unaccounted for — their own conditionals then read it straight
+   * back (`IF MAIN_DRUID_ORDER EQUALS animal THEN adjValue SKILL_ATHLETICS {"value":"T"}`,
+   * `… THEN giveSpell FOCUS`). Print makes the pick a subclass, not a statistic: class-feature-668
+   * says a druid ALIGNS WITH an order which grants a class feat, an order spell and a trained skill —
+   * there is no number on the character called "my order".
+   *
+   * Ours IS that pick: classes.druid.subclass.options['animal-order' | 'leaf-order' | 'storm-order' |
+   * 'untamed-order' | 'wave-order'], selected into `build.subclassId`, and every grant their variable
+   * gates (the order skill, the order focus spell, the order feat) already AGREES on these records —
+   * `missing` is `['specialStat']` alone on all five.
+   *
+   * ⚠ ONE ENTRY PER ORDER, deliberately, exactly as the 033 note above says: cultivation-order is NOT
+   * listed and still reports, which is what keeps this from becoming a rule that swallows an order
+   * whose grants were never checked. ⚠ AND the anathema is not this — each row states it as an
+   * `injectText type=class-feature`, which maps to `note` and is compared separately, so a
+   * `specialStat` settle cannot hide it. Mutation-proof test: test/batch034-closer.test.ts. */
+  // batch 034 premise: class-feature-668 "Upon becoming a druid, you align yourself with a druidic order, which grants you a class feat, an order spell (see below), and an additional trained skill tied to your order."
+  'animal-order': ['specialStat'],
+  // batch 034 premise: class-feature-668 "Upon becoming a druid, you align yourself with a druidic order, which grants you a class feat, an order spell (see below), and an additional trained skill tied to your order."
+  'leaf-order': ['specialStat'],
+  // batch 034 premise: class-feature-668 "Upon becoming a druid, you align yourself with a druidic order, which grants you a class feat, an order spell (see below), and an additional trained skill tied to your order."
+  'storm-order': ['specialStat'],
+  // batch 034 premise: class-feature-668 "Upon becoming a druid, you align yourself with a druidic order, which grants you a class feat, an order spell (see below), and an additional trained skill tied to your order."
+  'untamed-order': ['specialStat'],
+  // batch 034 premise: class-feature-668 "Upon becoming a druid, you align yourself with a druidic order, which grants you a class feat, an order spell (see below), and an additional trained skill tied to your order."
+  'wave-order': ['specialStat'],
 
   /*
    * SCHOOL OF THASSILONIAN RUNE MAGIC — the two sides put the sin pick on DIFFERENT RECORDS.
@@ -3059,6 +3199,63 @@ const VERIFIED_EQUIVALENT = {
    */
   // batch 031: monk-moves#hp
   'monk-moves': ['hp'],
+
+  /*
+   * INSPIRED STRATAGEM — A HOMONYM MISPAIR ACROSS BUCKETS, not a missing grant.
+   *
+   * `wg-show.mjs "Inspired Stratagem"` returns three rows: 19732 (level 1) with NO operations, and
+   * 20263 (level 8) and 58198 (level 10), each a single `giveAbilityBlock -> 19732`. Their level-1 row
+   * is the REACTION ITSELF and hands over nothing; the grant is on the level-8 feat. The bucket split
+   * pairs their richest same-named row against `classFeatures/inspired-stratagem` — our level-1 copy of
+   * the same aonId (feat-4952), which no class table references and which carries nothing but
+   * `actionCost: 'reaction'` — so `missing=[grantsRecord]` is a demand made of the wrong record.
+   *
+   * The grant IS modelled, and this comparer already says so on its own row: `feats/inspired-stratagem`
+   * (level 8, rogue) carries `grantsActions: ['inspired-stratagem']`, resolved into `chosenActionIds` by
+   * src/rules/build.ts:6201 and rendered by the grantsActions walk in MainTab.tsx:310-316 against
+   * `actions/inspired-stratagem` (reaction, traits fortune + linguistic) — the level-8 row is in the
+   * AGREE bucket with `ourKinds:['grantsRecord']`.
+   *
+   * ⚠ BLAST RADIUS, MEASURED, NOT ASSUMED. `VERIFIED_EQUIVALENT` is keyed by record ID, and both rows
+   * carry the id `inspired-stratagem`, so this entry blankets the level-8 feat row too: stunting
+   * `feats/inspired-stratagem.grantsActions` leaves BOTH rows in wg-diff's AGREE bucket. What still
+   * reports it is wg-identity's `grants` lane — the stunted run prints
+   * `grants theirs-not-ours=[inspiredstratagem] ours=[(nothing)]` — so the grant is guarded, by the
+   * comparer that names things rather than the one that names kinds. Pinned exactly that way in
+   * test/batch034-instruments-2.test.ts. THE ROOT FIX IS THE PAIRING, not this settle: WG_PAIRING's
+   * `classFeatures` bucket accepts `['class-feature','feat']` and wgRowsByBucket then keeps the richest
+   * row per NAME regardless of type, so a feat row displaces the class-feature row of the same name
+   * (scripts/lib/wg-parse.mjs:293-306, outside this batch's instrument grant — filed as a cross-file
+   * gap). Delete this entry the day an earlier-typed row stops being displaced.
+   *
+   * Print (AoN feat-4952): *"Later, you can quickly advise them on your schemes using the below
+   * reaction."*
+   */
+  // batch 034: inspired-stratagem#instrument
+  'inspired-stratagem': ['grantsRecord'],
+  /*
+   * ELEMENTAL INSTINCT — their six ability blocks are our stored ANSWER, not a granted record.
+   *
+   * Print (AoN instinct-7, Elemental): *"Select an element from the Elemental Instincts table to be
+   * your instinct's element. If your element offers multiple damage types, choose one of those type
+   * when you select your element."* WG has no per-record choice flag in its vocabulary, so it hands
+   * the answer over as six `giveAbilityBlock` blocks — "Kinetic Element (Air)" … "(Wood)" — one inside
+   * each branch of its select, which is what `grantsRecord` counts. Ours is
+   * `classFeatures/elemental-instinct.choice {flag:'instinctElement', kind:'array', options:['air-
+   * electricity' … 'wood-slashing']}`, each option carrying that element's own `grant.whileActive`
+   * resistances (merged at build.ts:6042, read by derive.ts ownedWhileActive). There is no record on
+   * our side for their blocks to pair with because the element is a stored pick, and `choice` — the
+   * kind that IS the pick — already agrees on both sides.
+   *
+   * Adversarially confirmed: with `choice` deleted from a content copy the record loses `choice` from
+   * our kinds and `missing` grows rather than shrinking, so this entry cannot stand in for the carrier.
+   *
+   * ⚠ `grantsRecord` ONLY. Paired with the six member-scoped names in wg-identity's
+   * SETTLED_IDENTITIES; every other kind on this record still reports, and the `defense` half is
+   * carried for real by the `grant.whileActive` descent in `ourKindsOf`.
+   */
+  // batch 034: elemental-instinct#instrument
+  'elemental-instinct': ['grantsRecord'],
 };
 
 const out = { theyOnly: [], disagree: [], weOnly: [], agree: [], noMatch: [], theirsUnencoded: [] };

@@ -48,10 +48,18 @@ describe('batch 033 resume — fey-eidolon speaks the language print names', () 
 
   // batch 033: fey-eidolon#language
   // The fixed lane must not turn into a prompt: a type that DOES ask (devotion-phantom-eidolon, one
-  // common mortal language) still asks, and a type that neither asks nor is given shows no row.
-  it('the fixed lane leaves the fey-eidolon sibling lanes alone', () => {
+  // common mortal language) still asks.
+  // batch 034: beast-eidolon#language-sylvan
+  // The title gained "beast-eidolon" because this block's beast leg stopped being a control and
+  // became an assertion about that record — see the citation on the line itself.
+  it('the fixed lane leaves the fey-eidolon and beast-eidolon sibling lanes alone', () => {
     expect(eidolonBlock('devotion-phantom-eidolon').languages).toEqual([LANGUAGE_UNCHOSEN]);
-    expect(eidolonBlock('beast-eidolon').languages).toBeUndefined();
+    // batch 034: beast-eidolon#language-sylvan
+    // This leg USED to assert `languages` was undefined — beast-eidolon stood here as the "neither
+    // asks nor is given" control. AoN eidolon-3 prints "**Language** Sylvan", so that undefined WAS
+    // the defect. The control is dropped rather than moved: every eidolon page in the mirror prints
+    // a Language line, so no eidolon type is an honest "shows no row" case.
+    expect(eidolonBlock('beast-eidolon').languages).toEqual(['Sylvan']);
   });
 });
 

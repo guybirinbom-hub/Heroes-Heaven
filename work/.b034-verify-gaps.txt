@@ -1,0 +1,276 @@
+BATCH 034 — GAP VERIFICATION (WG-COMPARISON lane)
+Verifier default: REFUTE. A line is CLOSED only where an artefact was opened and read.
+18 gap line(s) in work/.b034-gaps.json (matches apply-digest's count of 18 — none removed).
+
+PRE-CHECKS
+  owner-questions.json      UNTOUCHED. `git diff --stat HEAD -- work/owner-questions.json` empty;
+                            `git status --porcelain work/owner-questions.json` empty.
+  gap lines                 18 present, = the 18 apply-digest collated (work/.b034-run.json,
+                            stage apply-digest, counts.gaps 18). None removed.
+  manifest                  work/.b034-specs.json carries 9 entries, every one with a stage[]:
+                            the 5 build families collated at apply-digest (situational, data-rows
+                            +created-desc, instruments-1, instruments-2, engine) are all still
+                            there, plus the 2 gap families added after (gap-data-rows, gap-engine
+                            +created-desc). No family's entry was removed.
+  spec JSON                 all 7 work/.b034-rows-*.json parse; 38 backfill rows total.
+  row collisions            ZERO. Every (category/id/field) key across all 7 spec files is unique,
+                            so the applier's hard refusal cannot fire.
+  create collisions         ZERO. All 18 created classFeatures ids are absent from public/core.json
+                            (1054 classFeatures records checked).
+  flip audit                `node scripts/test-flip-audit.mjs --batch 034` → clean (8 test files
+                            touched, 5 new settle keys, every flip cited).
+  tests                     `node scripts/vt.mjs test/batch034-gap-data-rows.test.tsx
+                            test/batch034-gap-engine.test.ts` → 2 files, 12 tests passed.
+  types                     `npx tsc --noEmit` → clean.
+
+────────────────────────────────────────────────────────────────────────────────────────────────
+PER-LINE VERDICTS
+────────────────────────────────────────────────────────────────────────────────────────────────
+
+1. CLOSED — data-rows / CROSS-FILE GAPS — "no lane suppresses a granted action that another record…"
+   ref: src/sheet/MainTab.tsx:replacedActionIds + work/.b034-rows-gap-data-rows.json
+        (classFeatures/improved-familiar-attunement.replacesActions) + test/batch034-gap-data-rows.test.tsx
+   evidence:
+     · spec valid JSON, 1 row, targets classFeatures/improved-familiar-attunement — EXISTS in
+       core.json. Field `replacesActions` is new: 0 rows in scripts/data/effect-backfill.json carry
+       it on any record, so no supersedes is owed and no collision with the data-rows family's four
+       rows on the same record (grantsActions / limitedUses / recordMarks / the created action).
+     · manifest entry present, family gap-data-rows, stage[] = the spec, the report, the test and
+       src/sheet/MainTab.tsx.
+     · READER EXISTS: src/sheet/MainTab.tsx:328-329 `const replacedActionIds = new Set(
+       actionGranters.flatMap((f) => …?.replacesActions ?? []))`, consumed at :347
+       `.filter(({ id }) => !replacedActionIds.has(id))` — the same walk that resolves grantsActions,
+       so it is gated on owning the replacer, exactly as the spec's note claims.
+     · TEST FAILS ON REVERT: the test patches content IN MEMORY and runs a CONTROL pair —
+       withDrainFamiliar(false) asserts BOTH free actions render, withDrainFamiliar(true) asserts
+       only Drain Familiar does. Delete `replacedActionIds` and case 3 ("WITH it only Drain Familiar
+       renders") and case 4 (the other-thesis wizard) both fail. 4 its, each cited
+       "// batch 034: improved-familiar-attunement#drain-familiar" — a CONFIRMED finding id — and the
+       record id is in the describe title.
+     · print: AoN arcane-thesis-7 contains "instead of Drain Bonded Item" verbatim (mirror checked).
+
+2. CLOSED — engine / DATA STILL NEEDED — classFeatures/conscious-mind grantedSpells (the sending rung)
+   ref: work/.b034-rows-engine.json
+   evidence:
+     · finding the-silent-whisper#sending-rank, CONFIRMED in work/.b034-read.json.
+     · row targets classFeatures/conscious-mind — EXISTS; carries supersedes:true against the
+       existing effect-backfill row {classFeatures, conscious-mind, grantedSpells}.
+     · SUPERSEDED VALUE MERGED WHOLE — diffed key by key against the shipped overlay row: all six
+       conscious-mind keys present in the same order, five byte-identical, and the-silent-whisper is
+       the old array plus one rung {"id":"sending","level":11,"rank":6}. Nothing else moved.
+     · manifest entry present (family engine, stage[] includes src/rules/build.ts, where the
+       `ladderRank` reader the builder shipped lives).
+
+3. CLOSED — engine / DATA STILL NEEDED — classFeatures/construct-innovation choice → null
+   ref: work/.b034-rows-gap-engine.json
+   evidence:
+     · finding construct-innovation#duplicate-picker, CONFIRMED.
+     · row targets an EXISTING record whose `choice` is today the 7-option label-only picker
+       (verified in core.json and in effect-backfill.json, options length 7); value null with
+       supersedes:true is the documented delete-a-field shape, and the whole of the superseded value
+       is what is being retired, so there is nothing to merge.
+     · code half landed: the `type === 'construct'` early return is gone from src/builder/shared.tsx
+       (the tag filter at :3557 is the construct one), so the tier pickers are the single carrier.
+     · pinned by test/batch034-gap-engine.test.ts:186, cited
+       "// batch 034: construct-innovation#duplicate-picker".
+
+4. CLOSED — engine / DATA STILL NEEDED — classFeatures create x7 (initial, level 1)
+5. CLOSED — engine / DATA STILL NEEDED — classFeatures create x6 (breakthrough, level 7)
+6. CLOSED — engine / DATA STILL NEEDED — classFeatures create x5 (revolutionary, level 15)
+   ref (all three): work/.b034-rows-gap-engine.json
+   evidence:
+     · finding construct-innovation#higher-tier-picks, CONFIRMED. 18 create rows, exactly the
+       7/6/5 split the lines name, levels 1/7/15.
+     · none of the 18 ids exists in core.json's classFeatures (no create collision). The flagged
+       `advanced-weaponry` clash is avoided outright — the row uses the distinct id
+       `advanced-weaponry-construct`.
+     · every row carries otherTags:["construct-innovation-modification"], which is precisely what
+       inventorModificationOptions filters on (src/rules/build.ts:2759,
+       `const typeTag = \`${type}-innovation-modification\``), so the records feed an EXISTING reader
+       rather than a new one.
+     · no create row carries a description (checked: 0 of 18) — correct, the applier strips it and
+       the prose is line 7's separate spec.
+     · print: AoN mirror doc by-category/innovation/innovation-2.json exists and contains every one
+       of the 18 section names plus the quoted Speed clause verbatim.
+     · pinned by test/batch034-gap-engine.test.ts:149 (no records today) and :165 (7 / 13 / 18 offers
+       once they exist — the "level ≤ tier level" ladder), both cited
+       "// batch 034: construct-innovation#higher-tier-picks".
+
+7. CLOSED — engine / DATA STILL NEEDED — core-descriptions for all 18 created ids
+   ref: work/.b034-created-desc-gap-engine.json
+   evidence:
+     · valid JSON, 18 description rows, keys EXACTLY the 18 create ids — none missing, none extra.
+     · same shape as the sibling created-prose spec work/.b034-created-desc-data-rows.json
+       (category / id / field:"description" / value / why).
+     · manifest entry present, kind "created-prose", family gap-engine, sharing gap-engine's stage[]
+       — so it is applied in the same step as the creates. ATOMICITY (line 15) HOLDS.
+     · finding construct-innovation#modification-effects, CONFIRMED.
+
+8. CLOSED — engine / CROSS-FILE GAPS — COMPANION_MODS['psychopomp-eidolon'] languages:['requian']
+   ref: src/rules/companionGrants.ts:539
+   evidence:
+     · LINE EXACT. companionGrants.ts:539 now reads
+       'psychopomp-eidolon': {…,"languages":["requian"],"strikeRider":"ghost touch",…} — the id shape
+       (the dragon-eidolon route), with a WHY comment quoting eidolon-10.
+     · reader pre-exists (deriveEidolon's mod.languages loop) — unchanged, already firing for
+       dragon/angel/fey.
+     · print: mirror doc eidolon-10 contains "Requian".
+     · test/batch034-gap-engine.test.ts:84 asserts Requian on a built summoner AND that the record's
+       other clauses survive; cited "// batch 034: psychopomp-eidolon#language" (CONFIRMED).
+
+9. CLOSED — engine / CROSS-FILE GAPS — COMPANION_MODS['beast-eidolon'] languages:['Sylvan']
+   ref: src/rules/companionGrants.ts:502
+   evidence:
+     · LINE EXACT: 'beast-eidolon': {"kinds":["eidolon"],"senses":["low-light vision"],
+       "languages":["Sylvan"]} — the printed-NAME shape of its sibling 'fey-eidolon' (:526), as the
+       line specifies, with a WHY comment explaining why the name and not an id.
+     · print: mirror doc eidolon-3 contains "Sylvan".
+     · test/batch034-gap-engine.test.ts:71, cited "// batch 034: beast-eidolon#language-sylvan"
+       (CONFIRMED), asserting it shows and asks nothing.
+
+10. CLOSED — engine / CROSS-FILE GAPS — improved-familiar-attunement ability budget 4→3 + growthLevels
+    ref: src/rules/companions.ts:666
+    evidence:
+      · BOTH halves landed. companionGrants.ts:175 — abilityBudget: 3, growthLevels: [6,12,18], note
+        rewritten to "Choose 3 familiar abilities — 4 at 6th, 5 at 12th, 6 at 18th."; the
+        `growthLevels?: number[]` field declared at :36.
+      · the hard-coded test is GONE: companions.ts:666 `familiarAbilityBudget` now reads
+        `const growth = (grant.growthLevels ?? []).filter((l) => character.level >= l).length;` —
+        no `grantSlug === 'familiar-witch'` anywhere in the file, and :158 shows familiar-witch
+        carrying [6,12,18] itself, so its numbers are unchanged (root-cause fix, not a second branch).
+      · test/batch034-gap-engine.test.ts:34 pins 3/4/5/6 at levels 1/6/12/18 and :50 pins the witch
+        ladder unmoved with no other grant growing; both cited
+        "// batch 034: improved-familiar-attunement#ability-budget" (CONFIRMED). Reverting either
+        half fails them.
+
+11. CLOSED — engine / CROSS-FILE GAPS — construct-innovation Overdrive rider on the note
+    ref: src/rules/companionGrants.ts:122
+    evidence:
+      · LINE EXACT: FEAT_COMPANION_GRANTS['construct-innovation'].note at :122 now ends "While you
+        are Overdriven your construct gains the same Overdrive benefit you do, and it takes the same
+        fire damage you do on a critical failure.", above it a comment quoting innovation-2 verbatim.
+      · print: mirror innovation-2 contains "same amount of fire damage on a critical failure".
+      · test/batch034-gap-engine.test.ts:98, cited "// batch 034: construct-innovation#overdrive"
+        (CONFIRMED), and it also asserts the two sibling construct-granting feats did NOT grow one —
+        so the assertion is on this note, not on any note.
+
+12. CLOSED (PARKED, artefact real) — engine / CROSS-FILE GAPS — the construct-companion applier for
+    c.inventor.modifications
+    ref: flaggedResidue
+    evidence:
+      · the residue is a real reported line, not a bare "out of scope": work/.b034-report-gap-engine.txt:92
+        "11. PARKED — flaggedResidue (reason in work/.b034-gaps.json) [construct-innovation#modification-effects]"
+        followed by 19 lines of reason, and the gaps.json ref carries the same reason in full.
+      · the reason is CHECKABLE and checks out: (a) SHAPE — CompanionMod has fields for speeds and
+        senses only, so 4 of the 6 mechanical modifications need a new field AND a new reader;
+        (b) REACH — COMPANION_MODS is keyed through companionModKeys(character.feats), which sees
+        feat ids and feat choice answers, while an inventor modification lives on
+        c.inventor.modifications, and deriveAnimalCompanion's only caller
+        (src/sheet/CompanionsTab.tsx:1731) passes no character. Widening that channel means editing a
+        file in no family's stage[]; the report also lists it under CROSS-FILE GAPS, so the closer
+        sees it twice.
+      · not a silent drop: the mechanics still reach the player as the verbatim prose of line 7's 18
+        descriptions, which I verified are present and complete.
+
+13. CLOSED — situational / DATA STILL NEEDED — classFeatures/scar-of-the-survivor grantsFeats → null
+    ref: work/.b034-rows-situational.json#scar-of-the-survivor#diehard-ungated
+    evidence:
+      · finding CONFIRMED; the anchor resolves — that finding id is present in the spec and carries
+        the row.
+      · targets an EXISTING record; today core.json AND effect-backfill.json both carry
+        grantsFeats:["diehard"] on it, so supersedes:true is owed and present, and the whole of the
+        superseded value is what is deleted (nothing to merge back).
+      · manifest entry present (family situational, stage[] includes src/rules/situationalBonuses.ts
+        and test/batch034-situational.test.ts).
+      · the clause is not lost: situationalBonuses.ts:1434 now carries TWO immanence-gated rows on
+        "scar-of-the-survivor" — the +1 status Fortitude and "you also gain the benefits of the
+        Diehard feat" — under the same `when`, the leap-the-falls shape.
+      · test/batch034-situational.test.ts:225 builds the exemplar against a content copy with
+        grantsFeats STRIPPED IN MEMORY (structuredClone at :202), so it does not flip when the row
+        lands; cited "// batch 034: scar-of-the-survivor#diehard-ungated" with the record id in the
+        describe title.
+      · print: mirror ikon-13 contains "benefits of the Diehard feat".
+
+14. CLOSED — data-rows / CROSS-FILE GAPS — duplicate harvest of line 1 (same ref, truncated text).
+    ref: as line 1. Verdict inherited from line 1's evidence.
+
+15. CLOSED — engine / DATA STILL NEEDED — "⚠ THESE FOUR ARE ONE ATOMIC CHANGE"
+    ref: work/.b034-rows-gap-engine.json
+    evidence: the atomicity claim is SATISFIED by the manifest, not merely asserted. The choice:null
+    row and the 18 creates are in one file (.b034-rows-gap-engine.json) and the 18 descriptions in
+    .b034-created-desc-gap-engine.json; BOTH are manifest entries of family gap-engine with the same
+    stage[], so the driver applies them together. There is no ordering in which the picker is retired
+    while its replacement records are absent.
+
+16. CLOSED — engine / CROSS-FILE GAPS — duplicate harvest of line 8 (same ref :539, truncated text).
+    ref: as line 8. Verdict inherited from line 8's evidence.
+
+17. CLOSED — situational / DATA STILL NEEDED — duplicate harvest of line 13 (same anchor, truncated).
+    ref: as line 13. Verdict inherited from line 13's evidence. work/.b034-report-gap-situational.txt
+    :13 and :18 name it as the same row harvested twice, which matches what I read.
+
+18. CLOSED (PARKED, artefact real) — situational / CROSS-FILE GAPS — Diehard's MECHANIC is
+    unreachable once the ungated grant is retired
+    ref: work/.b034-queue.json#scar-of-the-survivor
+    evidence:
+      · a REAL entry in work/.b034-queue.json (2 entries; this is one), carrying all four required
+        keys — printed, theirs, ours, question.
+      · `printed` is a verbatim ikon-13 Immanence quote with the page cite; `theirs` is a measured WG
+        result (one injectText op on id 28790, a second record 38674 with no operations) and says so
+        — WG is no evidence either way; `ours` traces the live wiring
+        (feats['diehard'].dyingThresholdBonus → build.ts:6849 → Character.dyingThreshold →
+        VitalsRail.tsx:179 / play.ts:671) and names the exact bad end-state after the row lands
+        ("dies at dying 4 always").
+      · the question is NOT answerable by a print citation, so parking is correct rather than lazy:
+        print settles the mechanic (gated on immanence) and is silent on the CARRIER. It offers
+        (a) teach ModeDef a dyingThresholdBonus + an immanence toggle-mode, (b) accept dying 4 with
+        the clause as prose, (c) other — an engine-shape ruling that needs src/rules/types.ts and
+        src/rules/build.ts (both already owned by family "engine" this batch) plus a UI file no
+        family owns.
+      · owner-questions.json was NOT touched to raise it, which is the required route.
+
+────────────────────────────────────────────────────────────────────────────────────────────────
+TOTAL: 18 CLOSED (16 authored + 2 parked with real artefacts), 0 REOPENED, 0 STILL-OPEN.
+────────────────────────────────────────────────────────────────────────────────────────────────
+
+WARNINGS FOR THE CLOSER (not gap lines — none of these reopens a line, and none is mine to edit)
+
+W1. LIVE IN-BATCH COUPLING — a recordMarks row goes inert the moment the line-1 row lands.
+    work/.b034-rows-data-rows.json (finding improved-familiar-attunement#drain-familiar) emits
+      {classFeatures, improved-familiar-attunement, recordMarks,
+       [{"on":"action","id":"drain-bonded-item","note":"Improved Familiar Attunement: … you gain the
+         Drain Familiar free action instead of Drain Bonded Item."}]}
+    and line 1's row suppresses action id 'drain-bonded-item' from the sheet for exactly the
+    character that mark targets — so the note renders on nothing. Both rows are CONFIRMED-finding
+    rows of the same batch and are individually correct; applied together the mark is dead prose.
+    The gap-data-rows agent could not fix it (same record+field in a sibling spec — the applier
+    hard-refuses a collision) and flagged it in its CROSS-FILE GAPS. The one-row fix is for the
+    DRIVER to re-point that recordMarks row's `id` to 'drain-familiar' before applying, or to retire
+    it. Same lane, second victim: situationalBonuses.ts:4309 'superior-bond' is also keyed
+    'drain-bonded-item', and arcane-thesis-7 says it applies to Drain Familiar ("can be used any time
+    an ability would allow you to use Drain Bonded Item and functions identically") — the general
+    answer is an action-alias lane in the itemAliases.ts shape.
+
+W2. ORPHAN SPEC — work/.b034-created-desc.json exists (2,610 bytes, written BEFORE this batch's cut
+    stage) and is a valid created-prose spec finishing batch 033's owed description for
+    classFeatures/arcane-bond-school-of-unified-magical-theory. It is NOT in work/.b034-specs.json,
+    so the driver will not stage or apply it. Its own note says the missing description is one of the
+    readable-record-check reds this batch inherited (work/.b034-run.json baseline records
+    readable-record-check red at start). No 034 family authored it and no gap line refers to it — I
+    am reporting it rather than adding it to a manifest I do not own.
+
+W3. NEW CROSS-FILE GAPS raised by the gap agents AFTER apply-digest, so they are in the reports but
+    not in work/.b034-gaps.json — the closer must harvest them, they will not appear in a gaps pass:
+      · src/rules/build.ts:2750 — the inventorModificationOptions docstring still ends "Construct mods
+        are prose-only in the dataset (no items) → returns []", which the 18 creates falsify.
+        build.ts is family "engine"'s stage[], a one-line comment edit.
+      · src/rules/companionGrants.ts COMPANION_MODS — the fixed-eidolon-language lane is wider than
+        the two findings this batch raised: 25 eidolon pages print a Language line, only 5 rows carry
+        `languages` after this batch (plant-eidolon among the misses). Same one-key shape, no reader
+        work.
+      · src/sheet/CompanionsTab.tsx:1731 — deriveAnimalCompanion is handed companionModKeys(feats)
+        and no character; this is what makes any non-feat-keyed companion modification unreachable
+        (line 12's REACH half).
+      · src/sheet/MainTab.tsx:357 — featActions still dedupes actionRecords against grantedActions BY
+        NAME with no rule about which record kind wins; `replacesActions` suppresses by ID, so the
+        name-twin precedence rule is still unwritten.

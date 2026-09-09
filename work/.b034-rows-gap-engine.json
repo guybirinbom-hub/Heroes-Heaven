@@ -1,0 +1,348 @@
+{
+  "findings": [
+    {
+      "id": "construct-innovation#duplicate-picker",
+      "note": "Retires the label-only `choice` picker the effect-backfill overlay authored on classFeatures/construct-innovation. supersedes:true — an overlay row for this exact category/id/field already exists (scripts/data/effect-backfill.json, flag 'constructModification', 7 label strings) and this row REPLACES it whole with null, which apply-backfill treats as 'delete the field'. Safe to delete because nothing reads it: grepping 'constructModification' across src/ and test/ returns zero hits, so the picker was a label with no reader. The three sibling innovations (armor-, weapon-, light-mortar-innovation) carry no `choice` at all — the tier pickers in src/builder/shared.tsx are the single carrier for all four, and batch 034's engine family already removed the `if (type === 'construct')` early return that hid them. ATOMIC with the 18 create rows below: applying this row alone would leave a construct inventor with no modification control at all.",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "construct-innovation",
+          "field": "choice",
+          "value": null,
+          "supersedes": true,
+          "why": "AoN innovation-2: \"Choose one initial construct modification to apply to your innovation, either from the following or from other initial construct modifications to which you have access.\" One choice, and print then names three TIERS of them (Initial, Breakthrough at 7th, Revolutionary at 15th). The record's own 7-label `choice` answered only the first tier, could never grow the other two, and rendered a SECOND control beside the tier pickers that now offer the real records — the same question asked twice, with two different answers stored in two places."
+        }
+      ]
+    },
+    {
+      "id": "construct-innovation#higher-tier-picks",
+      "note": "The 18 modification records innovation-2 prints, tagged `construct-innovation-modification` so the existing generic reader picks them up: inventorModificationOptions (src/rules/build.ts:2753) filters classFeatures by `otherTags.includes('<type>-innovation-modification')` and `level <= tier level`, and src/builder/shared.tsx renders one PopupSelect per tier from it. No new reader, no new field — the lane is the one armour (22 records), weapon (26) and light mortar (9) already use, and the construct tag census was the only empty one. Record shape copied field-for-field from classFeatures/advanced-design (the weapon-innovation precedent, which is likewise a modification SECTION of an innovation page): aonParentId/aonSection rather than an aonId, because innovation-2 carries all 18 as sections and none has a page of its own. Ids: `advanced-weaponry-construct` is deliberately not the bare slug — feats/advanced-weaponry already holds it (a different bucket, so not a hard collision, but the disambiguated id keeps the two apart in every id-keyed table). `manual-dexterity` exists only in familiarAbilities, a different bucket with no shared id space. The other 16 are free everywhere. LABEL-ONLY on purpose: a chosen inventor modification is an ownedFeatureId (src/rules/derive.ts ownedFeatureIds — \"The inventor's chosen INNOVATION MODIFICATIONS are class features too\"), so a landSpeedBonus / senses / grants.skills / resistances authored here would apply to the INVENTOR, not to the construct. Their prose is a create row's companion and lives in work/.b034-created-desc-gap-engine.json.",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "accelerated-mobility",
+          "create": true,
+          "value": {
+            "id": "accelerated-mobility",
+            "name": "Accelerated Mobility",
+            "traits": ["inventor"],
+            "rarity": "common",
+            "source": { "book": "Pathfinder Guns & Gears", "license": "ORC" },
+            "level": 1,
+            "actionCost": { "type": "passive" },
+            "otherTags": ["construct-innovation-modification"],
+            "aonParentId": "innovation-2",
+            "aonSection": "Accelerated Mobility"
+          },
+          "why": "AoN innovation-2, Initial Modifications: \"Accelerated Mobility — Actuated legs, efficient gears in the wheels or treads, or add-on boosters make your construct faster. Your innovation's Speed increases to 40 feet.\""
+        },
+        {
+          "category": "classFeatures",
+          "id": "amphibious-construction",
+          "create": true,
+          "value": {
+            "id": "amphibious-construction",
+            "name": "Amphibious Construction",
+            "traits": ["inventor"],
+            "rarity": "common",
+            "source": { "book": "Pathfinder Guns & Gears", "license": "ORC" },
+            "level": 1,
+            "actionCost": { "type": "passive" },
+            "otherTags": ["construct-innovation-modification"],
+            "aonParentId": "innovation-2",
+            "aonSection": "Amphibious Construction"
+          },
+          "why": "AoN innovation-2, Initial Modifications: \"Amphibious Construction — ... Your innovation gains a swim Speed of 25 feet.\""
+        },
+        {
+          "category": "classFeatures",
+          "id": "increased-size",
+          "create": true,
+          "value": {
+            "id": "increased-size",
+            "name": "Increased Size",
+            "traits": ["inventor"],
+            "rarity": "common",
+            "source": { "book": "Pathfinder Guns & Gears", "license": "ORC" },
+            "level": 1,
+            "actionCost": { "type": "passive" },
+            "otherTags": ["construct-innovation-modification"],
+            "aonParentId": "innovation-2",
+            "aonSection": "Increased Size"
+          },
+          "why": "AoN innovation-2, Initial Modifications: \"Increased Size — You built your construct innovation bigger than most. Your construct is Large.\""
+        },
+        {
+          "category": "classFeatures",
+          "id": "manual-dexterity",
+          "create": true,
+          "value": {
+            "id": "manual-dexterity",
+            "name": "Manual Dexterity",
+            "traits": ["inventor"],
+            "rarity": "common",
+            "source": { "book": "Pathfinder Guns & Gears", "license": "ORC" },
+            "level": 1,
+            "actionCost": { "type": "passive" },
+            "otherTags": ["construct-innovation-modification"],
+            "aonParentId": "innovation-2",
+            "aonSection": "Manual Dexterity"
+          },
+          "why": "AoN innovation-2, Initial Modifications: \"Manual Dexterity — Your construct innovation has articulated hands or similar appendages with significant manual dexterity. It can perform manipulate actions with up to two of its limbs.\""
+        },
+        {
+          "category": "classFeatures",
+          "id": "projectile-launcher",
+          "create": true,
+          "value": {
+            "id": "projectile-launcher",
+            "name": "Projectile Launcher",
+            "traits": ["inventor"],
+            "rarity": "common",
+            "source": { "book": "Pathfinder Guns & Gears", "license": "ORC" },
+            "level": 1,
+            "actionCost": { "type": "passive" },
+            "otherTags": ["construct-innovation-modification"],
+            "aonParentId": "innovation-2",
+            "aonSection": "Projectile Launcher"
+          },
+          "why": "AoN innovation-2, Initial Modifications: \"Projectile Launcher — ... Your innovation gains a ranged unarmed attack that deals 1d4 bludgeoning or piercing damage (you choose when you pick this modification). The attack has the propulsive trait and a range increment of 30 feet.\""
+        },
+        {
+          "category": "classFeatures",
+          "id": "sensory-array",
+          "create": true,
+          "value": {
+            "id": "sensory-array",
+            "name": "Sensory Array",
+            "traits": ["inventor"],
+            "rarity": "common",
+            "source": { "book": "Pathfinder Guns & Gears", "license": "ORC" },
+            "level": 1,
+            "actionCost": { "type": "passive" },
+            "otherTags": ["construct-innovation-modification"],
+            "aonParentId": "innovation-2",
+            "aonSection": "Sensory Array"
+          },
+          "why": "AoN innovation-2, Initial Modifications: \"Sensory Array — Additional sensory devices give your innovation low-light vision and darkvision, as well as imprecise tremorsense out to a range of 30 feet.\""
+        },
+        {
+          "category": "classFeatures",
+          "id": "wonder-gears",
+          "create": true,
+          "value": {
+            "id": "wonder-gears",
+            "name": "Wonder Gears",
+            "traits": ["inventor"],
+            "rarity": "common",
+            "source": { "book": "Pathfinder Guns & Gears", "license": "ORC" },
+            "level": 1,
+            "actionCost": { "type": "passive" },
+            "otherTags": ["construct-innovation-modification"],
+            "aonParentId": "innovation-2",
+            "aonSection": "Wonder Gears"
+          },
+          "why": "AoN innovation-2, Initial Modifications: \"Wonder Gears — You map specialized skills into your construct's crude intelligence. Your innovation becomes trained in Intimidation, Stealth, and Survival.\""
+        },
+        {
+          "category": "classFeatures",
+          "id": "advanced-weaponry-construct",
+          "create": true,
+          "value": {
+            "id": "advanced-weaponry-construct",
+            "name": "Advanced Weaponry",
+            "traits": ["inventor"],
+            "rarity": "common",
+            "source": { "book": "Pathfinder Guns & Gears", "license": "ORC" },
+            "level": 7,
+            "actionCost": { "type": "passive" },
+            "otherTags": ["construct-innovation-modification"],
+            "aonParentId": "innovation-2",
+            "aonSection": "Advanced Weaponry"
+          },
+          "why": "AoN innovation-2, Breakthrough Modifications (Level 7): \"Advanced Weaponry — You've powered up your construct's weaponry. Choose one of your construct's unarmed attacks to gain your choice of one initial weapon modification.\" Id disambiguated from the existing feats/advanced-weaponry record, which is a different record in a different bucket."
+        },
+        {
+          "category": "classFeatures",
+          "id": "antimagic-construction",
+          "create": true,
+          "value": {
+            "id": "antimagic-construction",
+            "name": "Antimagic Construction",
+            "traits": ["inventor"],
+            "rarity": "common",
+            "source": { "book": "Pathfinder Guns & Gears", "license": "ORC" },
+            "level": 7,
+            "actionCost": { "type": "passive" },
+            "otherTags": ["construct-innovation-modification"],
+            "aonParentId": "innovation-2",
+            "aonSection": "Antimagic Construction"
+          },
+          "why": "AoN innovation-2, Breakthrough Modifications (Level 7): \"Antimagic Construction — ... Your construct innovation gains a +2 circumstance bonus to all saving throws and AC against spells.\""
+        },
+        {
+          "category": "classFeatures",
+          "id": "climbing-limbs",
+          "create": true,
+          "value": {
+            "id": "climbing-limbs",
+            "name": "Climbing Limbs",
+            "traits": ["inventor"],
+            "rarity": "common",
+            "source": { "book": "Pathfinder Guns & Gears", "license": "ORC" },
+            "level": 7,
+            "actionCost": { "type": "passive" },
+            "otherTags": ["construct-innovation-modification"],
+            "aonParentId": "innovation-2",
+            "aonSection": "Climbing Limbs"
+          },
+          "why": "AoN innovation-2, Breakthrough Modifications (Level 7): \"Climbing Limbs — With appendages that can claw or create suction, your construct becomes a capable climber. Your innovation gains a climb Speed equal to half its land Speed.\""
+        },
+        {
+          "category": "classFeatures",
+          "id": "durable-construction",
+          "create": true,
+          "value": {
+            "id": "durable-construction",
+            "name": "Durable Construction",
+            "traits": ["inventor"],
+            "rarity": "common",
+            "source": { "book": "Pathfinder Guns & Gears", "license": "ORC" },
+            "level": 7,
+            "actionCost": { "type": "passive" },
+            "otherTags": ["construct-innovation-modification"],
+            "aonParentId": "innovation-2",
+            "aonSection": "Durable Construction"
+          },
+          "why": "AoN innovation-2, Breakthrough Modifications (Level 7): \"Durable Construction — Your innovation is solidly built; it can take significant punishment before being destroyed. Increase its maximum HP by your level.\""
+        },
+        {
+          "category": "classFeatures",
+          "id": "marvelous-gears",
+          "create": true,
+          "value": {
+            "id": "marvelous-gears",
+            "name": "Marvelous Gears",
+            "traits": ["inventor"],
+            "rarity": "common",
+            "source": { "book": "Pathfinder Guns & Gears", "license": "ORC" },
+            "level": 7,
+            "actionCost": { "type": "passive" },
+            "otherTags": ["construct-innovation-modification"],
+            "aonParentId": "innovation-2",
+            "aonSection": "Marvelous Gears"
+          },
+          "why": "AoN innovation-2, Breakthrough Modifications (Level 7): \"Marvelous Gears — Your innovation gains expert proficiency in Intimidation, Stealth, and Survival. ... You must have the wonder gears modification to select this modification.\""
+        },
+        {
+          "category": "classFeatures",
+          "id": "turret-configuration",
+          "create": true,
+          "value": {
+            "id": "turret-configuration",
+            "name": "Turret Configuration",
+            "traits": ["inventor"],
+            "rarity": "common",
+            "source": { "book": "Pathfinder Guns & Gears", "license": "ORC" },
+            "level": 7,
+            "actionCost": { "type": "passive" },
+            "otherTags": ["construct-innovation-modification"],
+            "aonParentId": "innovation-2",
+            "aonSection": "Turret Configuration"
+          },
+          "why": "AoN innovation-2, Breakthrough Modifications (Level 7): \"Turret Configuration — Your innovation can transform from a mobile construct to a stationary turret. ... You must have the projectile launcher modification to select this modification.\""
+        },
+        {
+          "category": "classFeatures",
+          "id": "flight-chassis",
+          "create": true,
+          "value": {
+            "id": "flight-chassis",
+            "name": "Flight Chassis",
+            "traits": ["inventor"],
+            "rarity": "common",
+            "source": { "book": "Pathfinder Guns & Gears", "license": "ORC" },
+            "level": 15,
+            "actionCost": { "type": "passive" },
+            "otherTags": ["construct-innovation-modification"],
+            "aonParentId": "innovation-2",
+            "aonSection": "Flight Chassis"
+          },
+          "why": "AoN innovation-2, Revolutionary Modifications (Level 15): \"Flight Chassis — ... Your innovation gains a fly Speed of 25 feet.\""
+        },
+        {
+          "category": "classFeatures",
+          "id": "miracle-gears",
+          "create": true,
+          "value": {
+            "id": "miracle-gears",
+            "name": "Miracle Gears",
+            "traits": ["inventor"],
+            "rarity": "common",
+            "source": { "book": "Pathfinder Guns & Gears", "license": "ORC" },
+            "level": 15,
+            "actionCost": { "type": "passive" },
+            "otherTags": ["construct-innovation-modification"],
+            "aonParentId": "innovation-2",
+            "aonSection": "Miracle Gears"
+          },
+          "why": "AoN innovation-2, Revolutionary Modifications (Level 15): \"Miracle Gears — As you perfect your innovation's cortex, it becomes much more intelligent. Its Intelligence modifier increases by 2 ... You must have the marvelous gears modification to select this modification.\""
+        },
+        {
+          "category": "classFeatures",
+          "id": "resistant-coating",
+          "create": true,
+          "value": {
+            "id": "resistant-coating",
+            "name": "Resistant Coating",
+            "traits": ["inventor"],
+            "rarity": "common",
+            "source": { "book": "Pathfinder Guns & Gears", "license": "ORC" },
+            "level": 15,
+            "actionCost": { "type": "passive" },
+            "otherTags": ["construct-innovation-modification"],
+            "aonParentId": "innovation-2",
+            "aonSection": "Resistant Coating"
+          },
+          "why": "AoN innovation-2, Revolutionary Modifications (Level 15): \"Resistant Coating — Your innovation is hard to damage by any means. It gains resistance 5 to all damage (except adamantine).\""
+        },
+        {
+          "category": "classFeatures",
+          "id": "runic-keystone",
+          "create": true,
+          "value": {
+            "id": "runic-keystone",
+            "name": "Runic Keystone",
+            "traits": ["inventor"],
+            "rarity": "common",
+            "source": { "book": "Pathfinder Guns & Gears", "license": "ORC" },
+            "level": 15,
+            "actionCost": { "type": "passive" },
+            "otherTags": ["construct-innovation-modification"],
+            "aonParentId": "innovation-2",
+            "aonSection": "Runic Keystone"
+          },
+          "why": "AoN innovation-2, Revolutionary Modifications (Level 15): \"Runic Keystone — You've incorporated a device similar to a runestone into your innovation, allowing it to hold a property rune, even though it isn't a weapon or suit of armor.\""
+        },
+        {
+          "category": "classFeatures",
+          "id": "wall-configuration",
+          "create": true,
+          "value": {
+            "id": "wall-configuration",
+            "name": "Wall Configuration",
+            "traits": ["inventor"],
+            "rarity": "common",
+            "source": { "book": "Pathfinder Guns & Gears", "license": "ORC" },
+            "level": 15,
+            "actionCost": { "type": "passive" },
+            "otherTags": ["construct-innovation-modification"],
+            "aonParentId": "innovation-2",
+            "aonSection": "Wall Configuration"
+          },
+          "why": "AoN innovation-2, Revolutionary Modifications (Level 15): \"Wall Configuration — Your innovation can transform from a mobile construct to a stationary battlefield emplacement.\""
+        }
+      ]
+    }
+  ]
+}

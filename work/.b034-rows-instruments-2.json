@@ -1,0 +1,44 @@
+{
+ "findings": [
+  {
+   "id": "giant-instinct#instrument",
+   "backfillRows": [],
+   "note": "Instrument teach, no data. The record already carries every printed clause: choice.options[].grant.whileActive[{state:'rage', minLevel:9, resistances:[bludgeoning, <picked>]}] for cold/electricity/fire, read by src/rules/build.ts:6312-6320. Two comparers stopped one level short of that container and are taught here: scripts/wg-values.mjs (the resistance/weakness set collector now walks an option's grant.whileActive) and scripts/wg-diff.mjs (the kinds walk now descends an option's grant.whileActive through fieldToKinds, the same descent the top-level rec.whileActive loop already does). Authoring a resistance row would double-count what the player already gets."
+  },
+  {
+   "id": "inspired-stratagem#instrument",
+   "backfillRows": [],
+   "note": "Instrument settle, no data. WG's level-1 row 19732 is empty and their level-8 row 20263 holds the grant; WG_PAIRING's classFeatures bucket accepts ['class-feature','feat'] and wgRowsByBucket keeps the richest row per NAME, so the level-8 feat row is demanded of our level-1 classFeatures stub. The grant is modelled on feats/inspired-stratagem (grantsActions ['inspired-stratagem']) and wg-diff already puts that row in AGREE. Settled as VERIFIED_EQUIVALENT['inspired-stratagem'] = ['grantsRecord']. The finding's optional hygiene half (retire the classFeatures stub, one of five feat-aonId class-feature stubs) is deliberately NOT authored as a delete row: retiring one of five is inconsistent, the stub is player-reachable prose today, and the mispair it causes is fixed at the pairing, not by deleting a record."
+  },
+  {
+   "id": "the-infinite-eye#organsight",
+   "backfillRows": [],
+   "note": "Instrument park, no data. WG's lone undelivered op is giveSpell \"Organsight\", the PRE-REMASTER ladder entry: AoN conscious-mind-2 (Dark Archive) prints '- 3rd Organsight', conscious-mind-8 (Dark Archives Remastered, our aonId) prints '- 3rd Locate', and our carrier classes.psychic.subclass.options['the-infinite-eye'].grantedSpells holds locate. Adopting theirs would move us away from print. Parked per record in work/experience-instrument-limits.json (lane wg-legacy-spell-name), the same shape batch 33 parked for the-distant-grasp; NOT taught as a rule, because Organsight exists in our spell corpus and any 'spell we do not grant' rule would launder every genuinely undelivered giveSpell."
+  },
+  {
+   "id": "scar-of-the-survivor#instrument-unsupported",
+   "backfillRows": [],
+   "note": "Code-only fix outside this chunk's files, and NOT parkable. The UNSUPPORTED verdict comes from classFeatureHost in test/wg-experience.harness.test.tsx, which walks only class.features and class.subclass.options; exemplar ikons are options of classes.exemplar.extraChoices.ikon. Measured: work/experience-instrument-limits.json cannot help here — scripts/wg-batch-gate.mjs:527 short-circuits `if (r.verdict === 'UNSUPPORTED') continue;` BEFORE it consults instrumentLimited, so a park would be a no-op. Filed as a cross-file gap. ⚠ This record also carries scar-of-the-survivor#diehard-ungated (another chunk), which the missing host is why the gate never surfaced."
+  },
+  {
+   "id": "victors-wreath#instrument",
+   "backfillRows": [],
+   "note": "Same root cause as scar-of-the-survivor#instrument-unsupported: 0 of the exemplar's 21 ikons resolve to a host. The record delivers (FEAT_SITUATIONAL['victors-wreath'] + grantsClassFeatures ['one-moment-till-glory']). Cross-file gap on test/wg-experience.harness.test.tsx. ⚠ victors-wreath#spell-attack (another chunk) is the real defect the missing host hid."
+  },
+  {
+   "id": "echo-of-lost-moments#instrument",
+   "backfillRows": [],
+   "note": "Same root cause, animist side: 0 of 14 apparitions (classes.animist.extraChoices.apparition) resolve to a host. Every printed clause has a carrier — grants.lores ['fortune-telling','genealogy'] + loreProgression [{8,expert},{16,master}] read at build.ts:3618, the spell ladder, focusSpells ['store-time']. Cross-file gap on test/wg-experience.harness.test.tsx. The record's open question echo-of-lost-moments#illusory-disguise stays with the owner queue."
+  },
+  {
+   "id": "experimental-spellshaping#instrument",
+   "backfillRows": [],
+   "note": "Same root cause, wizard side: 0 of the 5 theses (classes.wizard.extraChoices.thesis) resolve to a host. Both printed clauses are carried — FEAT_PICK_GRANTS['experimental-spellshaping'] (featPickGrants.ts:82) and the record's choice { daily:true, flag:'dailySpellshape', minLevel:4, maxLevelByLevel 4->2 … 20->10 }. Cross-file gap on test/wg-experience.harness.test.tsx, with the note that the daily half is a ruling-Q23 daily choice and must be REPORTED, not failed, once the host exists."
+  },
+  {
+   "id": "improved-familiar-attunement#instrument",
+   "backfillRows": [],
+   "note": "Same root cause, and the one where the missing host hid REAL gaps: with a host present this record would have read NO-SHEET-EFFECT on the Drain Familiar grant. The two defects are improved-familiar-attunement#ability-budget and #drain-familiar, owned by another chunk — no row is authored here, and the record is deliberately NOT parked. Cross-file gap on test/wg-experience.harness.test.tsx."
+  }
+ ]
+}

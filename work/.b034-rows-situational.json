@@ -1,0 +1,48 @@
+{
+  "findings": [
+    {
+      "id": "the-silent-whisper#daze-range",
+      "backfillRows": [],
+      "note": "Code-only. The clause is a per-character override of a SHARED spell record: daze.range must stay \"60 feet\" for every caster who is not a Silent Whisper psychic, so no overlay row on spells/daze can carry it. It is a SPELL_MARKERS entry in src/rules/situationalBonuses.ts keyed \"daze\" -> source 'the-silent-whisper', the lane batch 033 built for the-distant-grasp's telekinetic-projectile."
+    },
+    {
+      "id": "the-silent-whisper#message-reach",
+      "backfillRows": [],
+      "note": "Code-only, same lane and same reason as the daze rider. The spell's own range is already 120 feet and its traits must keep `auditory` for every other caster; what this conscious mind changes is line of effect/sight and the OPTION to drop the trait, neither of which is a field on the spell record. SPELL_MARKERS \"message\" -> source 'the-silent-whisper'."
+    },
+    {
+      "id": "curse-of-turbulent-moments",
+      "backfillRows": [],
+      "note": "Code-only. The penalty scales with the player's own cursebound value, so it is prose on a star, not a number: FEAT_SITUATIONAL['curse-of-turbulent-moments'] in src/rules/situationalBonuses.ts gains an { kind: 'ac' } row and a { kind: 'save', detail: 'all' } row. The existing RECORD_MARKERS note on the cursebound condition is KEPT (Q2 lets a star and a mark coexist), so nothing in core.json changes."
+    },
+    {
+      "id": "elemental-instinct#concealment",
+      "backfillRows": [],
+      "note": "Code-only. Concealment against ranged attacks is a flat-check rule with no numeric field in the schema; the record's structured payload (its element choice's whileActive resistances) is correct and untouched. FEAT_SITUATIONAL['elemental-instinct'] gains one { kind: 'ac' } row, the sibling superstition-instinct shape."
+    },
+    {
+      "id": "weapon-innovation#segmented-frame-duplicate",
+      "backfillRows": [],
+      "note": "Code-only DELETION, no data involved. The FEAT_SITUATIONAL['weapon-innovation'] entry was removed from src/rules/situationalBonuses.ts and the id added to the handEdited exclusion set of scripts/apply-situational-lane.mjs so the lane cannot re-emit it. FEAT_SITUATIONAL['segmented-frame'], keyed to the actual modification pick, is unchanged and still delivers the +2."
+    },
+    {
+      "id": "scar-of-the-survivor#diehard-ungated",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "scar-of-the-survivor",
+          "field": "grantsFeats",
+          "value": null,
+          "supersedes": true,
+          "why": "AoN ikon-13 prints ONE Immanence sentence: \"You gain the benefits of the Diehard feat and a +1 status bonus to Fortitude saving throws.\" One sentence, one condition — the divine spark being in this ikon. The existing effect-backfill row {classFeatures, scar-of-the-survivor, grantsFeats, [\"diehard\"]} carries no immanence gate, and buildCharacter's grantOptions loop (build.ts:5355) hands the feat over permanently to any exemplar who merely PICKS the ikon, while the same sentence's other half is correctly gated in src/rules/situationalBonuses.ts. This row SUPERSEDES that one: the superseded value is [\"diehard\"] and it is removed in full, because the whole of it is the ungated half — there is nothing left to merge. The clause is not lost: the situational entry for scar-of-the-survivor now carries \"you also gain the benefits of the Diehard feat\" under the same immanence condition as the +1, the shape leap-the-falls already uses for a feat granted only under immanence. It is the only one of the 21 exemplar ikons that used grantsFeats."
+        }
+      ],
+      "note": "One deletion row plus a code change. The row retires the ungated permanent grant; src/rules/situationalBonuses.ts gains the second, immanence-gated Fortitude row that carries the Diehard half of the same printed sentence. The test builds the exemplar against a content copy with grantsFeats STRIPPED IN MEMORY, so it does not flip when the row lands."
+    },
+    {
+      "id": "victors-wreath#spell-attack",
+      "backfillRows": [],
+      "note": "Code-only. One target added to the existing FEAT_SITUATIONAL['victors-wreath'] entry — { kind: 'spell', detail: 'attack' } beside { kind: 'strikeAttack' } — so the unqualified \"attack rolls\" of ikon-21's Immanence reaches the spell attack row. Same entry, not a second bonus; matches pennant-of-victory, which already carries both kinds for the identical printed phrase."
+    }
+  ]
+}

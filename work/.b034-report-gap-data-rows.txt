@@ -1,0 +1,72 @@
+BATCH 034 — WG-COMPARISON LANE — FAMILY: gap-data-rows
+Spec:   work/.b034-rows-gap-data-rows.json   (kind: rows, 1 row over 1 finding)
+Code:   src/sheet/MainTab.tsx                 (the granted-action walk — `actionGranters` /
+                                               `replacedActionIds`, ~line 294-345)
+Test:   test/batch034-gap-data-rows.test.tsx  (4 tests, all green; the fixture patches BOTH specs'
+                                               fields into a deep copy of content(), so nothing here
+                                               flips when either spec is applied)
+Manifest: appended as {file: work/.b034-rows-gap-data-rows.json, kind: rows, family: gap-data-rows},
+          re-read immediately before writing — it held six entries and now holds seven, all six
+          preserved byte-for-byte.
+Checks:   node scripts/vt.mjs run test/batch034-gap-data-rows.test.tsx -> 4 passed.
+          Regression on the other MainTab renderers: actions-subtab-memory, batch031-gap-data-rows,
+          action-costs -> 72 passed. npx tsc --noEmit -> clean.
+
+GAP LINES
+
+- AUTHORED — gaps[0] "src/rules/build.ts + src/rules/derive.ts: no lane suppresses a granted action
+  that another record REPLACES" (work/.b034-report-data-rows.txt:13)
+  ref: src/sheet/MainTab.tsx:replacedActionIds + work/.b034-rows-gap-data-rows.json
+       (classFeatures/improved-familiar-attunement.replacesActions); test/batch034-gap-data-rows.test.tsx
+  why: `replacesActions` is now a real field with a real reader, cited to finding
+       improved-familiar-attunement#drain-familiar — AoN arcane-thesis-7 "you also gain the Drain
+       Familiar free action instead of Drain Bonded Item".
+
+- AUTHORED — gaps[13], the verifier's restatement of the same line
+  (work/.b034-verify-data-rows.txt:115). Same ref, same change: one gap, raised twice.
+
+WHERE THE READER WENT, AND WHY NOT build.ts / derive.ts
+  The line names build.ts + derive.ts; the verifier's restatement adds "(or MainTab's action walk)",
+  and that is where it landed, for one measured reason: buildCharacter never sees the whole action
+  list. `Character.grantedActionIds` (build.ts:6212, applyAlwaysOn) carries only actions an ANSWER
+  granted; a record's own `grantsActions` — arcane-bond's ['drain-bonded-item'] — is never resolved in
+  build.ts at all. The single walk that unions record grants, ancestry/heritage/background grants,
+  wielded-item grants and the answer-granted ids is MainTab.tsx:294. A suppression computed anywhere
+  else would have had to be re-applied there anyway, and a second copy of the ownership rule is how
+  the archSuppressed lane grew its duplicates.
+  Shape: the array literal that fed `grantedActions` is now named `actionGranters`, read twice — once
+  for `grantsActions` and once for `replacesActions` — then one `.filter(({id}) => !replaced.has(id))`
+  before the limitedUses map. So the suppression is gated on OWNING the replacer for free, and a
+  replacer that is itself gated (an item you are not wielding) suppresses nothing, exactly like its
+  grant. Read through an inline cast, the same way explain.ts:293 reads `grantsActions`, so
+  src/rules/types.ts is untouched — the engine family stages that file this batch.
+
+NOT REBUILT (checked first)
+  `replacesActions` / `suppressActions` / `suppressedActions` return zero hits across src/ and
+  scripts/, and scripts/data/effect-backfill.json carries no such field on any record, so this row is
+  the first on the lane and collides with nothing. The nearest existing lanes were both wrong shapes:
+  classArchetype.suppressFeatures (derive.ts:3500) removes a FEATURE, and this thesis keeps arcane
+  bond — print says it "alters" it; and recordMarks (the data-rows verifier's own row) annotates an
+  action rather than removing it.
+
+DATA STILL NEEDED
+  (none — the single row is authored in work/.b034-rows-gap-data-rows.json. No owner question arises:
+  print, WG and our encoding all agree that the thesis replaces the action.)
+
+CROSS-FILE GAPS
+- src/rules/explain.ts recordMarksFor / RECORD_MARKERS keys a mark by the ACTION id it annotates, so
+  a mark on an id this batch now suppresses renders on nothing. Two carriers go dark for a wizard with
+  this thesis, both keyed 'drain-bonded-item': the data-rows verifier's own recordMarks row on
+  classFeatures/improved-familiar-attunement (work/.b034-rows-data-rows.json), which becomes inert the
+  moment my row lands, and situationalBonuses.ts:4309 'superior-bond' ("you can use Drain Bonded Item
+  one additional time per day"), which arcane-thesis-7 says applies to Drain Familiar — "Drain
+  Familiar can be used any time an ability would allow you to use Drain Bonded Item and functions
+  identically". I could not re-emit the verifier's row: it is the same record+field in a sibling spec
+  of this same batch, and the applier hard-refuses a collision. The general answer is an ACTION-ALIAS
+  lane (the itemAliases.ts shape, for actions) so a mark or a star keyed on the replaced id follows
+  the replacement; the narrow one is for the driver to retire or re-point that recordMarks row to
+  'drain-familiar'. Flagged rather than fixed — both files are outside this family.
+- src/sheet/MainTab.tsx:357 (unchanged, restated from the data-rows report because my change does not
+  touch it): featActions still dedupes actionRecords against grantedActions BY NAME with no rule about
+  which record kind wins. `replacesActions` suppresses by ID, which is the honest key; the name-twin
+  precedence rule is still unwritten.

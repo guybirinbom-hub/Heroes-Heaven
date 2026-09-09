@@ -1,0 +1,175 @@
+BATCH 034 — ADVERSARIAL VERIFY, chunk instruments-1 (WG-COMPARISON / "instruments" family, chunk 1 of 2)
+========================================================================================================
+Nine finding ids judged. Everything below was re-run on this working tree, not read off the builder's
+report: npx tsc --noEmit (clean), node scripts/vt.mjs run test/batch034-instruments-1.test.ts (13/13),
+node scripts/test-flip-audit.mjs --batch 034 (clean — 5 settle keys after my removal, every flip cited),
+wg-values/wg-identity --batch on 032/033/034, a whole-corpus wg-diff --out, wg-settle-stale.mjs, and a
+throwaway jiti harness that BUILT characters and derived them (deleted after the run).
+
+PER FINDING
+===========
+empiricism-methodology                                                                          DONE
+  Carriers real and read: classes.investigator.subclass.options[…].skillChoice ['arcana','crafting',
+  'occultism','society'] + skillChoiceLore. The wg-values teach puts them in `choice-skill|` (never
+  `skill|`, so the fold cannot mask a rank DIFFERENT) and wg-identity puts them in `options`. Blast
+  radius re-measured myself: exactly THREE options in core.json carry skillChoice (way-of-the-pistolero,
+  empiricism-methodology, palatine-detective) and palatine-detective is compared by neither comparer
+  ("compared 0 records"), so the teach silences nothing else. Both tests stunt the carrier and the flags
+  come straight back.
+
+precise-discipline                                                                              DONE
+  classes.psychic.extraChoices['subconscious-mind'].options['precise-discipline'].keyAbility = 'int'.
+  Built and derived it myself: build('psychic',5,{extraChoices:{'subconscious-mind':['precise-discipline']}})
+  gives keyAbility 'int' and a psychic-casting entry keyed 'int' (emotional-acceptance gives 'cha'), so
+  attribute + classDc + spellcasting all have live carriers. wg-diff no longer lists the record in
+  THEY-ONLY; stunting the option's keyAbility returns exactly [classDc, attribute, spellcasting].
+  Blast radius: EIGHT options carry keyAbility (4 rogue rackets, 4 psychic minds) — all eight genuinely
+  set the character's key attribute, and only the psychic four credit spellcasting (rogue has no
+  casting block). gathered-lore and wandering-reverie clear as a side effect and neither carries a
+  finding of its own in work/.b034-read.json, so nothing reads as taught that was not.
+
+emotional-acceptance#instrument                                                                 DONE
+  The `cls?.spellcasting` guard is proved on its own: stunting classes.psychic.spellcasting returns
+  `spellcasting` ALONE with classDc/attribute still credited, and the rogue rackets are the control.
+
+spirit-instinct#instrument                                                                      DONE
+  Verified on a BUILT character, not just in the comparer: build('barbarian',9,{subclassId:
+  'spirit-instinct'}) with classResources.rage = 1 derives resistances
+  [{all damage from undead,3},{void,3}] through deriveDefenses — so a data row would double-count, and
+  "no row" is right. The SETTLED_VALUES entry is one MEMBER (their unnameable clause), not `set|`:
+  deleting our named `void` from a content copy brings the SET-GAP straight back. Not in
+  wg-settle-stale.mjs's 77 dead settles, so it answers a live difference.
+
+elemental-blast#instrument                                                                      DONE
+  Adversarial check the builder did not do: I dumped WG's own row. Their ENTIRE encoding for Elemental
+  Blast is one op — `createValue KINETICIST_BLAST_DICE = 1` — in all three buckets it appears in, so the
+  OFF_RECORD_CARRIERS entry ['specialStat'] can silence nothing but that die tally. It therefore does
+  NOT touch this record's two other confirmed findings (elemental-blast#action-cost, which the data-rows
+  family authors as classFeatures/elemental-blast.actionCost — a different field, no collision — and
+  elemental-blast#damage-type-trait). Both named carriers are real: derive.ts's [5,9,13,17].filter ladder
+  and feats/improved-elemental-blast.blastDiceBonus = 1.
+
+elemental-instinct#instrument                                                                   DONE
+  Verified on a BUILT character: build('barbarian',9,{subclassId:'elemental-instinct',featChoices:
+  {'feature:elemental-instinct':'air-electricity'}}) + rage derives [{air damage,3},{damage from air
+  creatures,3}] — both printed rows, per element, so a resistance row would double-count. The two
+  settles are scoped (grantsRecord in wg-diff, their six kineticelement* names in wg-identity, their one
+  clause in wg-values) and all return under --raw. The builder's stated LIMIT is real and I confirm it:
+  their resistance set has ONE member, so the wg-values settle does silence this record's whole
+  `set|resistances` row — the carrier is guarded only by wg-diff, which reports `defense` when
+  grant.whileActive is stripped, and that `defense` credit is instruments-2's ourKindsOf descent. If
+  instruments-2's descent is ever reverted, this settle becomes unguarded.
+
+vanguard-of-roaring-waters#instrument                                                           DONE
+  No comparer change owed and none made; the record is quiet on all three today (re-run, not assumed).
+  Built it: build('animist',8,{extraChoices:{apparition:['vanguard-of-roaring-waters']}}) trains
+  lore:mountain / lore:river at EXPERT at 8 and carries hydraulic-push and river-carving-mountains, so
+  the credit is a real delivery. Stunting grantedSpells returns all ten spells. What remains is the
+  harness UNSUPPORTED verdict — cross-file, corrected below.
+
+monarch-of-the-fey-courts#instrument                                                            DONE
+  Same shape. build('animist',16,…) gives lore:art and lore:fey at MASTER (the 8/16 ladder), and
+  stunting grants.lores returns both Lores at both rungs. The finding's closing clause ("only the Avatar
+  mode is a genuine gap") does not hold, as the builder said and refuted[] agrees.
+
+way-of-the-pistolero                                              FIXED-BY-ME  (was WRONG, twice over)
+  The skillChoice half was right and stands. The other two halves rested on a premise the AoN mirror
+  contradicts, and I removed both:
+    · WG's `pistolersretort` is NOT a misspelling. The REMASTERED printing renames the deed. AoN way-2
+      (Guns & Gears **Remastered** — the doc our own way record claims as its aonId) does not spell the
+      deed at all: it embeds `<document level="3" id="action-912" />`, and action-912 is titled
+      "Pistoler's Retort" with legacy_id ["action-3681"]. action-3681 ("Pistolero's Retort", the
+      un-remastered Guns & Gears, embedded by the LEGACY way page way-8) carries remaster_id
+      ["action-912"]. OURS is the side that differs: classFeatures/pistoleros-retort is the legacy record
+      (aonId action-3681, edition 'legacy' — itself an existing overlay row), while the way's two other
+      deeds are the remaster records (ten-paces action-911, grim-swagger action-913) and the record's own
+      description body is already the remaster text. scripts/backfill-gunslinger-deeds.mjs:38-40 knew —
+      "the app… prints the legacy \"Pistolero's Retort\" where the remaster says \"Pistoler's\"" — and
+      bridged it with a de-typo inside its own matcher instead of fixing the record. It is also the ONLY
+      subclass featureIds entry in the whole corpus pointing at a legacy/superseded class feature
+      (scanned every class).
+    · REMOVED scripts/wg-identity.mjs SETTLED_IDENTITIES 'way-of-the-pistolero': ['pistolersretort'] —
+      it silenced a real, print-backed difference. A comment stands in its place with this evidence so
+      nobody re-adds it. wg-identity --batch now reports the record honestly (25 checked, 23 match).
+    · REMOVED the work/experience-instrument-limits.json entry 'way-of-the-pistolero' (lane
+      wg-misspelled-ability-block). Its NO-SHEET-EFFECT is a genuinely undelivered grant, not an
+      instrument limit; parking it would have shipped the gap as a pass.
+    · AUTHORED the rows the record actually needs, in work/.b034-rows-instruments-1.json under this
+      finding (were `backfillRows: []`): classFeatures/pistoleros-retort name → "Pistoler's Retort",
+      aonId → "action-912", edition → "remaster" with supersedes: true (it replaces the existing overlay
+      row {classFeatures/pistoleros-retort, edition, 'legacy'} — scalar field, whole value re-emitted).
+      Row checks: target record exists; no other row in ANY b034 spec touches this record+field; the ids
+      the rows name resolve (actions/pistolers-retort is already action-912 on our side).
+    · TESTS rewritten, not deleted, and asserted on a PATCHED copy so nothing flips when the row lands:
+      a new `patchedCore` helper (no "the stunt must bite" assertion, which would fail once the patch is
+      a no-op) runs wg-identity against a copy whose classFeature name is the remaster one and expects
+      "1 match on every one"; the carrier scope is still proved by stripping featureIds on that same
+      copy (all three deeds return); the second test pins the limits entry ABSENT and pins the two
+      catalogue records that prove which name belongs to which printing.
+  ⚠ FOR THE DRIVER: the experience gate must be re-run AFTER these rows are applied. Until they land,
+  way-of-the-pistolero legitimately shows one wg-identity grants gap and one NO-SHEET-EFFECT.
+
+SPEC ROWS, CHECKED AS ROWS
+==========================
+  work/.b034-rows-instruments-1.json — 9 findings. Eight carry backfillRows: [] and I agree with every
+  one: each mechanic was verified reaching a BUILT character (above), so a row would double-count.
+  The ninth (way-of-the-pistolero) now carries the three rows described above — target exists, one field
+  each, the one that collides with a shipped overlay carries supersedes: true, no create rows and so no
+  created-prose owed, and no cross-spec collision (checked every other family's spec by record+field).
+  Manifest work/.b034-specs.json still holds all six entries (situational, data-rows rows +
+  created-prose, instruments-2, engine, instruments-1); instruments-1's stage[] now also lists
+  work/.b034-verify-instruments-1.txt. No superseding row anywhere else in this chunk.
+
+WHAT I CHECKED AND FOUND SOUND (so the next reader does not redo it)
+====================================================================
+  · The wg-values `choice-skill|` fold is PRE-EXISTING (git diff shows it untouched), so the teach did
+    not widen the comparison's semantics, only fed the lane.
+  · wg-values --batch: 032 10/10, 033 32/32, 034 22/23 (curse-of-turbulent-moments, another family).
+    wg-identity --batch: 032 13/13, 033 28/30 (spore-order, dragon-eidolon — pre-existing; a teach can
+    only make a record quieter, so neither can be this chunk's), 034 now 23/25.
+  · wg-diff whole corpus: THEY-ONLY 203; none of the sixteen records this chunk can move appears in it.
+  · wg-settle-stale.mjs: 77 dead settles corpus-wide, none of them this chunk's.
+
+DATA STILL NEEDED
+=================
+  1. The way option's PROSE still prints the legacy deed name: classes.gunslinger.subclass.options
+     ['way-of-the-pistolero'].description reads "*Advanced* Pistolero's Retort" and its descRefs carries
+     the label "Pistolero's Retort" → actions. Once the rows above land, the granted feature reads
+     "Pistoler's Retort" while the way's own text still says "Pistolero's". A prose row (created/updated
+     description + descRefs label) is owed; description prose is outside a backfill field row and was not
+     authored here.
+  2. The actions bucket ships BOTH halves of the same rename — actions/pistolers-retort (action-912,
+     remaster) and actions/pistoleros-retort (action-3681, edition 'superseded'). Nothing is broken, but
+     the way's description link resolves to the superseded half. A display-bucket decision, not this
+     chunk's grant.
+
+CROSS-FILE GAPS
+===============
+  3. test/wg-experience.harness.test.tsx:495-509 (`classFeatureHost` / `ownedAt20`) — the host resolver
+     walks `Object.keys(db.classes)` and each class's `subclass.options`, and NEVER `extraChoices[].
+     options`, so four records of this chunk report EXPERIENCE UNSUPPORTED "no class or subclass grants
+     this feature at level 20": precise-discipline and emotional-acceptance (psychic subconscious-mind)
+     and vanguard-of-roaring-waters and monarch-of-the-fey-courts (animist apparition). CORRECTION to
+     the builder's report, which named scripts/wg-experience.mjs — that script only consumes the
+     harness's `ev.supported`/`ev.reason`; the walk that produces them is the test file above, and the
+     same file already knows about extraChoices for CONTROLS (line 517-521), just not for ownership.
+     Confirmed harmless to the gate: scripts/wg-batch-gate.mjs:527 collects UNSUPPORTED separately and
+     never counts it as a pass.
+  4. scripts/wg-casting.mjs cannot be run as `node scripts/wg-casting.mjs` — it imports ../src/rules/seed
+     and dies with ERR_MODULE_NOT_FOUND (reproduced). `npx jiti scripts/wg-casting.mjs` is the pipeline's
+     own invocation (scripts/wg-batch-run.mjs:352). Pre-existing, not this batch's.
+  5. scripts/lib/wg-parse.mjs — the builder's third gap line ("WG's row for block 26359 is misspelt at
+     source; nothing to fix on our side") is WITHDRAWN: WG is right and we are the side that differs, so
+     no de-typo normalisation must ever be added there. What DOES stand on that file is instruments-2's
+     own note: WG_PAIRING lets a `feat` row displace a same-named `class-feature` row (wg-parse.mjs:
+     293-306), which is why inspired-stratagem needed a VERIFIED_EQUIVALENT entry at all.
+
+MANIFEST STAGE[] — FILES I TOUCHED AS VERIFIER
+==============================================
+  scripts/wg-identity.mjs                  (removed the false SETTLED_IDENTITIES entry; comment left)
+  work/experience-instrument-limits.json   (removed the false way-of-the-pistolero park)
+  work/.b034-rows-instruments-1.json       (authored the three pistolero rows; rewrote that note)
+  test/batch034-instruments-1.test.ts      (patchedCore helper + the two rewritten way-of-the-pistolero
+                                            tests; 13/13 still pass)
+  work/.b034-specs.json                    (added work/.b034-verify-instruments-1.txt to stage[])
+  work/.b034-verify-instruments-1.txt      (this file)

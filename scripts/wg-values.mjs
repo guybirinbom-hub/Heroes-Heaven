@@ -609,6 +609,25 @@ function ourSets(rec, id) {
        * regress from "has this resistance" to "has none" — the same blind spot the KINDS scan had. */
       for (const r of o.grant?.passive?.resistances ?? []) add('resistances', r.type);
       for (const w of o.grant?.passive?.weaknesses ?? []) add('weaknesses', w.type);
+      /* …AND UNDER THE OPTION'S OWN `whileActive` CLAUSE — the last storey of the same container.
+       *
+       * Raging Resistance is state-gated by construction, so an instinct that also lets you CHOOSE the
+       * second damage type has to put the clause inside the option: Giant Instinct prints *"You resist
+       * bludgeoning damage and your choice of cold, electricity, or fire, chosen when you gain raging
+       * resistance"* (AoN instinct-3), and ours is
+       * `choice.options[].grant.whileActive[{state:'rage', minLevel:9, resistances:[bludgeoning, <picked>]}]`
+       * — resolved by src/rules/build.ts:6312-6320, which looks the answered option up on
+       * `content.classFeatures[fid].choice` and hands its `grant` to applyAlwaysOn, for a chosen SUBCLASS
+       * as well as an owned feature. The flat `rec.whileActive` walk above and the `grant`/`grant.passive`
+       * reads here both stopped one level short of it, so all four instincts whose energy type is a PICK
+       * (giant, dragon, elemental, superstition) reported `SET-GAP … ours=(nothing)` against resistances
+       * they deliver at the right value. Adversarially confirmed: an instinct that resists the WRONG type
+       * still reports, because the type is what is compared, and stunting the clause puts the SET-GAP
+       * straight back (test/batch034-instruments-2.test.ts). */
+      for (const w of Array.isArray(o.grant?.whileActive) ? o.grant.whileActive : []) {
+        for (const r of w?.resistances ?? []) add('resistances', r.type);
+        for (const x of w?.weaknesses ?? []) add('weaknesses', x.type);
+      }
     }
   }
   /* …and the grant tables, read as text: `weaponFamiliarity` may be one object or a LIST of them
@@ -1255,6 +1274,20 @@ function ourAssertions(id, rec) {
       put(`skill|lore:${l}`, 'trained');
       for (const step of o.loreProgression ?? []) if (step?.rank) put(`skill|lore:${l}`, step.rank);
     }
+    /*
+     * …and the option's SKILL PICK, which is the same printed clause asked as a QUESTION rather than
+     * stated. Print (AoN methodology-6, Empiricism): *"You are trained in one Intelligence-based skill
+     * of your choice."* Print (AoN way-2, Way of the Pistolero): *"Way Skill Deception or
+     * Intimidation"*. Ours is the option's `skillChoice` — build.ts:3627-3642 trains the picked skill,
+     * build.ts:1141/1248 count and gate it, and src/builder/shared.tsx:3255-3258 draws the select — so
+     * a fixed `grants.skills` sibling reads and a CHOICE read as training nothing at all.
+     *
+     * ⚠ `choice-skill|`, never `skill|`. The comparison folds `choice-skill|<s>` into a `skill|<s>` key
+     * of theirs (see the candidates list at the bottom of this file), which is exactly "one of these,
+     * and their fixed grant is one of them"; asserting `skill|` would claim we train all four Int
+     * skills at once and would then hide a real DIFFERENT on the rank.
+     */
+    for (const s of o.skillChoice ?? []) put(`choice-skill|${s}`, 'trained');
   }
   /*
    * …and A SAVE PENALTY CARRIED BY A MODE GATED ON THIS RECORD.
@@ -1515,6 +1548,55 @@ const SETTLED_VALUES = {
    */
   // batch 033: decay-instinct#instrument-resistances
   'decay-instinct': ['damage dealt by the attacks and abilities of creatures with the fungus trait regardless of the damage type'],
+  /*
+   * SPIRIT INSTINCT — the identical shape as decay-instinct above, one instinct along.
+   *
+   * Printed (AoN instinct-12, Spirit — Raging Resistance): *"You resist void damage, as well as damage dealt by
+   * the attacks and abilities of undead creatures, regardless of the damage type."* Ours is
+   * classFeatures/spirit-instinct.whileActive [{state:'rage', minLevel:9, resistances:[{type:'void',
+   * value:'3+@actor.con.mod'}, {type:'all damage from undead', value:'3+@actor.con.mod',
+   * condition:'attacks and abilities of undead creatures, regardless of damage type'}]}] — both
+   * entries, the same rage gate, the same 3+Con value, and derive.ts:1162/1175 puts both on the sheet
+   * behind the minLevel gate. `void` already matches. What is left is that a DAMAGE-SOURCE clause has
+   * no type NAME, so each side invents a phrase: theirs the whole printed sentence, ours a short label
+   * with that sentence carried verbatim in the sibling `condition` (which is what the IWR breakdown
+   * prints to the player). The set comparison is a name match and there is no name to match.
+   *
+   * Adversarially confirmed: with the second entry stripped from a content copy the record still
+   * reports the same SET-GAP with `ours=void` alone, so this settle answers the WORDING and not the
+   * carrier.
+   *
+   * ⚠ Settled on THAT ONE MEMBER — their unnameable clause — not on `set|resistances`, so `void` and
+   * any resistance added to this record later keep reporting. Same scope and same reason as
+   * decay-instinct.
+   */
+  // batch 034: spirit-instinct#instrument
+  'spirit-instinct': ['damage dealt by the attacks and abilities of undead creatures'],
+  /*
+   * ELEMENTAL INSTINCT — the third of the same shape, and the one where the clause is unnameable on
+   * BOTH halves of the printed sentence.
+   *
+   * Printed (AoN instinct-7, Elemental — Raging Resistance): *"You resist the damage dealt by attacks and abilities
+   * of elemental creatures of your chosen element, as well as creatures made of your element,
+   * regardless of the damage type. You also resist damage dealt by attacks, spells, and abilities with
+   * your elemental trait."* Ours carries BOTH rows per element on
+   * `classFeatures/elemental-instinct.choice.options[].grant.whileActive[{state:'rage', minLevel:9,
+   * resistances:[{type:'<element> damage', …}, {type:'damage from <element> creatures', …}]}]` — twelve
+   * entries, six elements, both halves, and the `ours=` list above prints every one of them since the
+   * option-grant descent landed (instruments-2, this batch). WG writes the whole first sentence as ONE
+   * unnamed RESISTANCES string and emits it twice identically; there is no type name in it to match.
+   *
+   * ⚠ Nothing may be ADDED here. Both rows are already delivered per element, so authoring a resistance
+   * for their sentence would double-count the two the player already gets.
+   *
+   * Adversarially confirmed: with `grant.whileActive` stripped from a content copy the record reports
+   * the SET-GAP with `ours=(nothing)` — the carrier, not the wording — so this member settle cannot
+   * stand in for the carrier being gone.
+   *
+   * ⚠ Member scope: every named element row above stays under comparison.
+   */
+  // batch 034: elemental-instinct#instrument
+  'elemental-instinct': ['damage dealt by attacks and abilities of elemental creatures of your chosen element as well as creatures made of your element regardless of the damage type'],
   'basic-fury': ['hp|'],
   'basic-devotion': ['hp|'],
   'devout-magic': ['hp|'],

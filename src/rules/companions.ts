@@ -656,12 +656,18 @@ export interface FamiliarBlock extends Defenses {
  * rows 6, 12 and 18. `CompanionGrant.abilityBudget` is a bare number with no level lane, so a 20th-level
  * witch's familiar showed the same 4 as a 1st-level one where print gives 7 (3 chosen + the patron's
  * free ability at 1st, rising to 6 + 1).
+ *
+ * batch 034, improved-familiar-attunement#ability-budget. The ladder used to be a hard-coded
+ * `grantSlug === 'familiar-witch'` test here, so the SECOND record printing the same sentence — AoN
+ * arcane-thesis-7, *"it gains an additional extra ability when you reach 6th, 12th, and 18th levels"* —
+ * had nowhere to say so and shipped a flat 4 for all twenty levels. The ladder now lives on the grant
+ * (`growthLevels`), and 'familiar-witch' carries [6,12,18] itself, so its numbers are unchanged.
  */
 export function familiarAbilityBudget(cfg: CompanionConfig, character: Character): number | undefined {
   const grant = cfg.grantSlug ? FEAT_COMPANION_GRANTS[cfg.grantSlug] : undefined;
   if (grant?.abilityBudget == null) return undefined;
-  const witchGrowth = cfg.grantSlug === 'familiar-witch' ? [6, 12, 18].filter((l) => character.level >= l).length : 0;
-  return grant.abilityBudget + witchGrowth;
+  const growth = (grant.growthLevels ?? []).filter((l) => character.level >= l).length;
+  return grant.abilityBudget + growth;
 }
 
 /** A familiar is a Tiny minion: 5 HP per level, the master's AC/saves/Perception, plus its

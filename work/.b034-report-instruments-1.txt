@@ -1,0 +1,203 @@
+BATCH 034 — REPORT, chunk instruments-1 (WG-COMPARISON / "instruments" family, chunk 1 of 2)
+=============================================================================================
+
+DATA STILL NEEDED
+  (none — every finding in this chunk is a comparer misread; all nine spec entries carry
+   backfillRows: [] and authoring a row for two of them would double-count a resistance the
+   player already gets)
+
+CROSS-FILE GAPS
+  scripts/wg-experience.mjs — the harness host resolver cannot route an EXTRA-CHOICE option, so four
+    of my records report EXPERIENCE UNSUPPORTED "no class or subclass grants this feature at level
+    20" on carriers that ship: precise-discipline and emotional-acceptance (psychic
+    extraChoices['subconscious-mind']) and vanguard-of-roaring-waters and monarch-of-the-fey-courts
+    (animist extraChoices['apparition']). The fix is one route in the host finder — the same walk
+    scripts/wg-diff.mjs, wg-values.mjs and wg-identity.mjs all already do — and the file is outside
+    this chunk's grant. UNSUPPORTED is PRINTED and never counted as a pass by scripts/wg-batch-gate.mjs
+    (line 527), so this does not fail the gate; it is reported so the four are not read as passes.
+  scripts/wg-casting.mjs — cannot be run as `node scripts/wg-casting.mjs`: it imports
+    ../src/rules/seed (a .ts module) and dies with ERR_MODULE_NOT_FOUND. `npx jiti scripts/wg-casting.mjs`
+    is the invocation the pipeline itself uses (scripts/wg-batch-run.mjs:352) and that works. Not a
+    change I made and not in my files; noted so the next reader does not re-diagnose it. It also has
+    no --batch flag — it compares CLASS casting sources, not a packet.
+  scripts/lib/wg-parse.mjs — no change needed for my findings, but flagged by chunk instruments-2 and
+    confirmed here in passing: `way-of-the-pistolero`'s deed names come through the ability_block name
+    table, and WG's own row for block 26359 is misspelt at source. Nothing to fix on our side.
+
+WHAT I DID, PER FINDING
+=======================
+
+empiricism-methodology                                                          [TEACH ×2, no row]
+  wg-values.mjs — `ourAssertions`, the `optionCarriers.get(id)` loop: an option's `skillChoice` is now
+    asserted in the `choice-skill|<skill>` lane (the lane the comparison already folds into a `skill|`
+    key of theirs). Never `skill|`, which would claim we train all four Int skills at once.
+  wg-identity.mjs — `ourIdentities`, the same `optionCarriers` loop: `skillChoice` members and, for
+    `skillChoiceLore`, the key `lore`, are added to `out.options`, which is the bucket their
+    `select "Select a Skill"` branches land in.
+  Blast radius measured on the whole corpus: THREE options in core.json carry `skillChoice`
+    (way-of-the-pistolero, empiricism-methodology, palatine-detective).
+  Tests — test/batch034-instruments-1.test.ts, describe "empiricism-methodology: the methodology skill
+    PICK lives on the class option":
+      it "wg-values credits skillChoice in the choice-skill lane, and reports it MISSING without it"
+        (mutation-proof: stunts `skillChoice` on the investigator subclass option; all three MISSING
+         skill| rows return under --raw)
+      it "wg-identity names the pick's answers, and the Lore branch is its own credit"
+        (mutation-proof: stunts both carriers, then `skillChoiceLore` ALONE, which must return
+         `theirs-not-ours=[lore]` with the three skills still credited)
+
+precise-discipline                                                                 [TEACH, no row]
+  wg-diff.mjs — `ourKindsOf`, the "…AND WHEN THE RECORD *IS* THE OPTION" walk: an option's
+    `keyAbility` now credits `attribute` and `classDc`, and `spellcasting` only when the OWNING class
+    carries a `spellcasting` block. Blast radius measured: EIGHT options carry the field — the
+    psychic's four subconscious minds and the rogue's four rackets; only the psychic four have a
+    casting block, so the rogue four credit no casting.
+  Cleared as a side effect (not findings, same root cause): gathered-lore, wandering-reverie.
+  Test — describe "precise-discipline: a subconscious mind SETS the key attribute",
+    it "the option keyAbility credits classDc, attribute and spellcasting, and none of them without it"
+    (mutation-proof: stunts `keyAbility` on the psychic extra-choice option; missing=[classDc,
+     attribute, spellcasting] returns and the untouched sibling emotional-acceptance does NOT move).
+
+emotional-acceptance#instrument                                          [same TEACH, no row]
+  Same carrier one option along (`keyAbility: 'cha'`). The half that needed its own proof is the
+    `cls?.spellcasting` guard.
+  Test — same describe, it "the spellcasting half needs the class casting block, and only that half
+    moves without it" (mutation-proof: stunts classes.psychic.spellcasting instead of the option;
+    `spellcasting` returns ALONE with classDc/attribute still credited, and the rogue rackets are
+    asserted as the control group — same field, no casting block, credited nothing).
+
+elemental-blast#instrument                                        [OFF_RECORD_CARRIERS, no row]
+  wg-diff.mjs — OFF_RECORD_CARRIERS gains `'elemental-blast': ['specialStat']`, with both halves of the
+    carrier named in the comment: deriveBlastStrikes's class ladder in src/rules/derive.ts
+    (`[5,9,13,17].filter(...)`, zeroed for an archetype blast) and feats/improved-elemental-blast
+    .blastDiceBonus = 1. Print cited: AoN action-2125.
+  OFF_RECORD_CARRIERS is not one of the audited settle registries (`--raw` does not bypass it), so no
+    mutation-proof marker is owed — the reading test/batch033-closer.test.ts already records. What the
+    test pins instead is that the entry is PER ID and that both halves of the named carrier are real.
+  Test — describe "elemental-blast: the die count is a class table, not a record field",
+    it "elemental-blast reports no missing kind, and the off-record carrier the entry names is real".
+
+elemental-instinct#instrument                                           [2 SETTLES + 1 SETTLE, no row]
+  wg-diff.mjs — VERIFIED_EQUIVALENT `'elemental-instinct': ['grantsRecord']`.
+  wg-identity.mjs — SETTLED_IDENTITIES `'elemental-instinct'` scoped to their SIX member names
+    (kineticelementair … kineticelementwood), never the `grants` bucket.
+  wg-values.mjs — SETTLED_VALUES `'elemental-instinct'` scoped to their ONE unnameable resistance
+    clause, never `set|resistances`.
+  ⚠ Limit stated in the code and in the test rather than hidden: their resistance set has exactly ONE
+    member, so that settle does silence this record's whole set|resistances row (unlike decay-instinct
+    and spirit-instinct, whose sets keep a NAMED member reporting). The carrier is guarded by the other
+    instrument — with `grant.whileActive` stripped, wg-diff reports `defense`.
+  ⚠ The `defense` half of this finding was landed by chunk instruments-2 (the `grant.whileActive`
+    descent in wg-diff's ourKindsOf and the matching read in wg-values's ourSets). Not re-authored here.
+  Tests — describe "elemental-instinct: the element is a stored ANSWER, not a granted record":
+      it "the grantsRecord settle names their six element blocks only, and the choice it credits is real"
+        (mutation-proof: --raw on both comparers brings the settled names straight back, then the
+         PREMISE is stunted — delete the record's `choice` and ours=[(nothing)])
+      it "the resistance settle answers the wording, and wg-diff still guards the carrier"
+        (mutation-proof: stunts `grant.whileActive` on every option; wg-values goes quiet — the stated
+         limit — and wg-diff reports `defense` for the same stunt)
+
+spirit-instinct#instrument                                                        [SETTLE, no row]
+  wg-values.mjs — SETTLED_VALUES `'spirit-instinct'` scoped to their one unnameable clause
+    ("damage dealt by the attacks and abilities of undead creatures"), the exact shape and scope batch
+    033 used for decay-instinct. Print cited: AoN instinct-12 (Spirit).
+  Test — describe "spirit-instinct: an undead-damage clause with no type name",
+    it "the settle names their unnameable clause only, and void keeps reporting"
+    (mutation-proof: deletes our NAMED `void` resistance from a content copy — `theirs=void` returns as
+     a SET-GAP, so the settle drops their clause and not the set — then deletes the whole `whileActive`
+     carrier, which also still reports).
+
+way-of-the-pistolero                                       [TEACH (shared) + SETTLE + LIMITS, no row]
+  The options half is fixed by the wg-identity `skillChoice` teach above (their SKILL_DECEPTION /
+    SKILL_INTIMIDATION branches pair with our bare skill names through `contains()`).
+  wg-identity.mjs — SETTLED_IDENTITIES `'way-of-the-pistolero': ['pistolersretort']`, their MISSPELLING
+    only: print (AoN way-2) and the mirror's own action-3681 both read "Pistolero's Retort"; WG's
+    ability_block 26359 is titled "Pistoler's Retort". Ten Paces, Grim Swagger and Raconteur's Reload
+    keep reporting, and no de-typo normalisation was added — that would pair records that differ.
+  work/experience-instrument-limits.json — new entry `way-of-the-pistolero`, lane
+    `wg-misspelled-ability-block`, verdict NO-SHEET-EFFECT, class INSTRUMENT, with the `verified` and
+    `refuter` paragraphs. The same misspelling is the whole of the harness's undelivered op: the two
+    SIBLINGS of the same featureIds array (Ten Paces @1, Grim Swagger @15) are `delivered` on the same
+    level-20 gunslinger host, which is the evidence the array is read.
+  Tests — describe "way-of-the-pistolero: the Way Skill pick and the misspelt deed":
+      it "the Deception-or-Intimidation pick is credited from the option skillChoice" (mutation-proof)
+      it "the settle names WG's misspelt deed only, and the other three keep reporting"
+        (mutation-proof: --raw for the settle, then `featureIds` stunted so all three deeds return)
+      it "the instrument-limits entry names a deed the record really carries" (pins the entry against
+        the DATA — the three featureIds and our two records' printed spelling — not against its prose)
+
+vanguard-of-roaring-waters#instrument                                    [residual read, no row]
+monarch-of-the-fey-courts#instrument                                     [residual read, no row]
+  Nothing owed in wg-diff / wg-values / wg-identity: the batch-033 option-carrier walk already reads
+    grants.lores, loreProgression, grantedSpells and focusSpells on an extraChoices option, and both
+    records are quiet on all three comparers today (confirmed on this working tree, not assumed).
+    Both carriers are pinned mutation-proof so the credit cannot rot: stunting `grantedSpells` on
+    vanguard returns all ten apparition spells with the vessel focus spell still credited, and
+    stunting `grants.lores` on monarch returns both Lores at BOTH rungs (8th expert, 16th master).
+  What is left on both is the harness UNSUPPORTED verdict — see CROSS-FILE GAPS. The finding's own
+    closing clause on monarch ("only the Avatar mode is a genuine gap") does not hold; the batch's
+    refuted[] entry monarch-of-the-fey-courts#avatar says the same.
+  Tests — describe "vanguard-of-roaring-waters and monarch-of-the-fey-courts are apparition options",
+    two its, both mutation-proof.
+
+FILES CHANGED
+=============
+  scripts/wg-diff.mjs                       (teach: option keyAbility; OFF_RECORD_CARRIERS
+                                             elemental-blast; VERIFIED_EQUIVALENT elemental-instinct)
+  scripts/wg-values.mjs                     (teach: option skillChoice → choice-skill|;
+                                             SETTLED_VALUES spirit-instinct, elemental-instinct)
+  scripts/wg-identity.mjs                   (teach: option skillChoice/skillChoiceLore → options;
+                                             SETTLED_IDENTITIES way-of-the-pistolero, elemental-instinct)
+  work/experience-instrument-limits.json    (new entry way-of-the-pistolero)
+  test/batch034-instruments-1.test.ts       (new, 13 tests)
+  work/.b034-rows-instruments-1.json        (spec, 9 findings, all backfillRows: [])
+  NOT touched: scripts/wg-casting.mjs, scripts/lib/wg-experience-lanes.mjs,
+               test/wg-experience-lanes.test.ts — no finding of mine needed them.
+  Shared with chunk instruments-2 (surgical Edits only, re-read immediately before each): wg-diff.mjs,
+  wg-values.mjs, work/experience-instrument-limits.json. No collision: their entries are for
+  giant-instinct / inspired-stratagem / the-infinite-eye, mine for the ids listed above.
+
+VERIFICATION
+============
+  npx tsc --noEmit                                   clean
+  node scripts/vt.mjs run test/batch034-instruments-1.test.ts    13 passed / 13
+  node scripts/test-flip-audit.mjs --batch 034       clean — 6 test file(s) touched, 6 new settle
+                                                     key(s), every flip cited
+
+COMPARER COUNTS, BEFORE AND AFTER
+=================================
+  wg-diff.mjs (whole corpus; the comparer has no --batch, `--out` is its per-record view)
+      BEFORE  THEY-ONLY 209   AGREE 1092   WE-ONLY 2867
+      AFTER   THEY-ONLY 204   AGREE 1096   WE-ONLY 2868
+      cleared: emotional-acceptance, precise-discipline, gathered-lore, wandering-reverie,
+               elemental-blast          newly reporting: NONE (measured id-by-id, not by count)
+      elemental-instinct's remaining grantsRecord is settled in VERIFIED_EQUIVALENT (quiet shipped,
+      returns under --raw).
+
+  wg-values.mjs --batch, AFTER
+      batch 032   compared 10, 10 agree, 0 to adjudicate
+      batch 033   compared 32, 32 agree, 0 to adjudicate
+      batch 034   compared 23, 22 agree, 1 to adjudicate (curse-of-turbulent-moments — another
+                  family's finding, untouched by this chunk)
+      My records: empiricism-methodology, spirit-instinct and elemental-instinct all moved from
+      reporting to agree; nothing else moved.
+
+  wg-identity.mjs --batch, AFTER
+      batch 032   checked 13, 13 match, 0 records reporting
+      batch 033   checked 30, 28 match, 2 reporting (spore-order, dragon-eidolon — both pre-existing,
+                  neither carries skillChoice/keyAbility nor is a settled id of mine)
+      batch 034   checked 25, 24 match, 1 reporting (echo-of-lost-moments — another family)
+      My records: empiricism-methodology, way-of-the-pistolero and elemental-instinct all moved from
+      reporting to match; nothing else moved.
+
+  wg-casting.mjs (via `npx jiti`, see CROSS-FILE GAPS; class-scoped, no --batch)
+      AFTER   16 class sources compared, 4 with mismatches (180 rows): animist, magus, summoner,
+              wizard. Unchanged by this chunk by construction — I authored no data row and touched no
+              class spellcasting table, and none of the four classes owns a record of mine.
+
+  PROOF NO EARLIER BATCH FLIPPED, measured rather than argued: a teach and a settle can only make a
+  record QUIETER, so the only records either can move are the 16 that carry the taught fields or are
+  a settled id — skillChoice (way-of-the-pistolero, empiricism-methodology, palatine-detective),
+  keyAbility (avenger, mastermind, ruffian, scoundrel, emotional-acceptance, gathered-lore,
+  precise-discipline, wandering-reverie) and the settled ids (spirit-instinct, elemental-instinct,
+  elemental-blast, way-of-the-pistolero). NONE of those 16 appears in work/wg-batch-032.json (40
+  records) or work/wg-batch-033.json (50 records); all seven that appear anywhere appear in batch 034.

@@ -1,0 +1,68 @@
+parity batch 034 (WG-comparison lane): 41 records, 51 overlay rows, five code lanes
+
+Forty records cut at level <= 9, read by an Opus reader plus an adversarial verifier: 42
+confirmed findings, 4 refuted, 2 for the owner. Seven family specs applied through the driver
+(situational, data-rows, instruments-1, instruments-2, engine, gap-data-rows, gap-engine): 57
+rows offered, scripts/data/effect-backfill.json 14158 -> 14209, 2 declared supersessions, and 19
+records created that did not exist before (18 construct modifications and the Drain Familiar
+action) with their verbatim printed prose.
+
+WHAT THE PLAYER GETS
+- Construct Innovation is a real picker: the label-only `choice` row is retired and 18 construct
+  modification records (7 initial, 6 breakthrough, 5 revolutionary) are created with the printed
+  text from innovation-2, so the inventor's three tier selects offer them like every other
+  innovation type.
+- A Silent Whisper psychic gets Sending as their 6th-rank granted spell instead of a second 5th:
+  the conscious-mind ladder now carries a `rank` and build.ts files the grant under it.
+- Improved Familiar Attunement grants Drain Familiar (a new action record with arcane-thesis-7's
+  own words) AND retires Drain Bonded Item through a new `replacesActions` lane in MainTab.
+- Elemental Blast shows its variable action cost; Way of the Triggerbrand states its printed
+  triggerbrand access; the Pistolero's advanced deed is retagged to the remastered printing
+  (Pistoler's Retort, action-912, edition remaster), which is what actually delivers it.
+- Beast and Psychopomp eidolons show their printed Language line (Sylvan, Requian); the familiar
+  budget of Improved Familiar Attunement is 3 with growth at 6/12/18.
+- Six new situational riders reach the sheet: The Silent Whisper's daze range and message reach,
+  Elemental Instinct's rage concealment, Victor's Wreath on spell attacks, Scar of the Survivor's
+  whole Immanence sentence (Diehard included, now gated as print gates it), and Curse of Turbulent
+  Moments; the duplicated Segmented Frame Stealth star is gone.
+
+WHAT WAS SETTLED, AND WHY
+Twelve comparer misreads were taught rather than patched: an option's `grant.whileActive` and a
+subclass option's `keyAbility` are now visible to wg-diff (which is why dragon-instinct,
+superstition-instinct, gathered-lore and wandering-reverie went quiet outside the batch - each
+cited in work/.b034-gaps.json with the carrier dumped and verified). Five druid orders
+(animal, leaf, storm, untamed, wave) settle `specialStat` alone: their createValue
+MAIN_DRUID_ORDER is our subclass pick, the same decision batch 033 recorded for flame, spore and
+stone, one entry per order and cultivation-order still reporting as the control. Weapon
+Innovation credits its off-record tier pickers, where the level gate and the choice are one
+mechanism. Every settle carries a mutation-proof test.
+
+QUEUED FOR THE OWNER (work/owner-questions.json)
+#139 spore-order (re-key of #134), #140 scar-of-the-survivor, #141 skybearer's-belt,
+#142 echo-of-lost-moments, #143 curse-of-turbulent-moments. Three are WG-vs-print conflicts where
+we match print; two are engine-shape questions - what carries a Diehard-style dying threshold
+under an immanence toggle, and what carries a mode-gated scaling penalty (WG hangs -1..-4 off the
+four cursebound modes; ours are class-scoped with no mystery discriminator).
+
+DEFERRED
+The construct-companion applier for c.inventor.modifications (six of the eighteen modifications
+carry companion mechanics and only two have a field to land in; WG models none of them either) -
+parked as flagged residue, reaching the player as the printed prose in the meantime. The
+name-collision precedence rule between an action record and a class feature of the same name is
+still unwritten; this batch fixed the one instance.
+
+SUITE TRIAGE
+Three batch-034 tests were written as shipped-vs-patched deltas and flipped the moment the driver
+applied their rows; each is re-anchored on a stunted copy so it cannot flip again (the
+replacesActions control now DELETES the field, and construct-innovation's "no records shipped" leg
+reproduces the defect by stripping the tag). One inherited red: the umbrella ratchet was 440 and
+the shipped items give 441 - measured against the commit that last set the constant, `throneglass`
+(equipment-5212, unpriced, above two priced grade blocks) is the only id that joined and nothing
+left, so it is new content and the ratchet rises by one. All nine gates, the full suite (5680) and
+the verify chain are green; the three checks still red were red before this batch started.
+
+Closer edits: scripts/apply-parity-fixes.mjs (the mirror's HTML entities are decoded before the
+added-prose check, and a whole-value row that restates the id= rows it covers is now verified
+rather than refused outright), scripts/wg-diff.mjs, scripts/wg-identity.mjs, with
+test/apply-parity-fixes-refusals.test.ts, test/batch034-closer.test.ts and the two flipped
+assertions in test/batch033-closer.test.ts.

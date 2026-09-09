@@ -3648,15 +3648,37 @@ function strikePrecisionRiders(
 // raging (never ranged). Values step up at the levels a barbarian gains Weapon Specialization (7) and
 // Greater Weapon Specialization (15). An ARCHETYPE barbarian (Barbarian Dedication) rages for a flat +2:
 // it picks an instinct "but doesn't gain the other abilities it grants", so no instinct/spec increase.
-const RAGE_DAMAGE: Record<string, { tiers: [number, number, number]; type?: string; unarmedOnly?: boolean; largerWeapon?: boolean }> = {
+const RAGE_DAMAGE: Record<
+  string,
+  {
+    tiers: [number, number, number];
+    type?: string;
+    unarmedOnly?: boolean;
+    largerWeapon?: boolean;
+    /** The type override is a PER-RAGE CHOICE, not a standing change — Spirit Rage: *"you CAN increase
+     *  the additional damage from Rage from 2 to 3 and change its damage type to spirit … (choose each
+     *  time you Rage)"*. Printing only the spirit branch told a barbarian who declined it that their
+     *  Strike deals 3 spirit when it deals 2 of the weapon's own type. */
+    typeOptional?: boolean;
+    /** *"If you choose to deal spirit damage, your weapon or unarmed attack gains the effects of the
+     *  Ghost Touch property rune, which makes it more effective against incorporeal creatures"* — the
+     *  half of Spirit Rage that decides whether the Strike lands at all, carried by nothing before. */
+    ghostTouch?: boolean;
+    /** The instinct's damage type is the one the PLAYER chose, read from this `feature:<id>` choice
+     *  answer (value `<element>-<damageType>`); `type` is then only the unanswered fallback. */
+    typeFromChoice?: string;
+  }
+> = {
   'fury-instinct': { tiers: [3, 7, 13] },
-  'spirit-instinct': { tiers: [3, 7, 13], type: 'spirit' },
+  'spirit-instinct': { tiers: [3, 7, 13], type: 'spirit', typeOptional: true, ghostTouch: true },
   'superstition-instinct': { tiers: [3, 7, 13] },
   'dragon-instinct': { tiers: [4, 8, 16], type: 'energy' },
   'giant-instinct': { tiers: [6, 10, 18], largerWeapon: true },
   'animal-instinct': { tiers: [2, 5, 12], unarmedOnly: true },
   // War of Immortals / Rage of Elements / Severed at the Root instincts (were falling through to flat +2):
-  'elemental-instinct': { tiers: [4, 6, 12], type: 'energy' }, // chosen element's damage type
+  // *"change its damage type to the one you selected for your element"* — the element/damage-type pick
+  // is the record's own `instinctElement` choice, so 'energy' is only what an UNANSWERED build shows.
+  'elemental-instinct': { tiers: [4, 6, 12], type: 'energy', typeFromChoice: 'elemental-instinct' },
   'decay-instinct': { tiers: [6, 10, 18], type: 'poison' },
   'ligneous-instinct': { tiers: [6, 10, 18] },
   'bloodrager': { tiers: [2, 4, 8] },
@@ -3681,12 +3703,24 @@ function rageStrikeRider(
   let value = 2;
   let type = opts.weaponType;
   let note = thrownRage ? '* while raging (thrown)' : '* while raging (melee & unarmed)';
+  /* The branch a player who DECLINES an optional type override gets: the plain Rage +2 of the weapon's
+   * own type. Both branches are shown, because the choice is made at the table, every Rage. */
+  let alt: { value: number; type: string } | null = null;
   if (isBarb) {
     const inst = RAGE_DAMAGE[c.subclassId ?? ''];
     if (inst) {
       if (inst.unarmedOnly && !opts.unarmed) return null; // Animal Instinct: only its animal unarmed attack
       value = inst.tiers[c.level >= 15 ? 2 : c.level >= 7 ? 1 : 0];
       if (inst.type) type = inst.type; // spirit / energy / poison override the weapon's own type
+      /* *"change its damage type to the one you selected for your element"* (Elemental Rage) — the
+       * answer is `<element>-<damageType>`, e.g. `air-slashing`, so an Air barbarian who chose slashing
+       * no longer reads the placeholder "energy" on every Strike. */
+      const answer = inst.typeFromChoice ? c.featureChoices?.[`feature:${inst.typeFromChoice}`] : undefined;
+      if (answer?.includes('-')) type = answer.slice(answer.indexOf('-') + 1);
+      // *"(choose each time you Rage)"* — Spirit Rage's 3 spirit is optional; the other branch is Rage's own 2.
+      if (inst.typeOptional) alt = { value: 2, type: opts.weaponType };
+      // *"your weapon or unarmed attack gains the effects of the Ghost Touch property rune"* — only on the branch that deals spirit.
+      if (inst.ghostTouch) note += `, ghost touch vs incorporeal${alt ? ` while dealing ${type}` : ''}`;
       if (inst.largerWeapon) note = '* while raging with a larger weapon (Clumsy 1)';
     }
   }
@@ -3697,9 +3731,10 @@ function rageStrikeRider(
    * their instinct prints. */
   if (opts.agile) {
     value = Math.floor(value / 2);
+    if (alt) alt.value = Math.floor(alt.value / 2);
     note += ', halved: agile';
   }
-  return { text: `${value} ${type}`, note };
+  return { text: alt ? `${value} ${type} or ${alt.value} ${alt.type} (choose each Rage)` : `${value} ${type}`, note };
 }
 
 /** A source that grants weapon critical specialization: the level it activates and the weapon
@@ -4497,6 +4532,9 @@ function conditionalRiderText(riders: { text: string; note: string }[]): string 
  * missing: an earth kineticist could not throw a piercing blast, and Versatile Blasts (whose entire
  * content is adding to these lists) had nothing to add to.
  */
+/** The three physical damage types — the ones Elemental Blast does NOT turn into a trait. */
+const PHYSICAL_DAMAGE = new Set(['bludgeoning', 'piercing', 'slashing']);
+
 export const ELEMENT_BLAST: Record<string, { die: string; types: string[]; range: number }> = {
   air: { die: 'd6', types: ['electricity', 'slashing'], range: 60 },
   earth: { die: 'd8', types: ['bludgeoning', 'piercing'], range: 30 },
@@ -4534,9 +4572,6 @@ export function deriveBlastStrikes(c: Character, db: ContentDatabase): Strike[] 
   // source that ignored a changed progression. A blast has no agile trait, so this is 5 for everyone
   // who owns no reduction, which is what it printed before.
   const blastTraits = ['attack', 'impulse', 'kineticist'];
-  const step = mapStepFor(c, db, blastTraits);
-  const mapSources = mapNotesFor(c, db, blastTraits);
-  const attack = [base, base - step, base - step * 2];
   /* The CLASS table (+1 die at 5/9/13/17) belongs to the kineticist class feature, not to a blast the
    * Kineticist Dedication handed a fighter — an archetype blast grows only through Improved Elemental
    * Blast (feat-4337), *"the damage of your elemental blast increases by one die"*, up to three
@@ -4569,6 +4604,14 @@ export function deriveBlastStrikes(c: Character, db: ContentDatabase): Strike[] 
       const picked = c.kineticist?.blastTypes?.[el];
       const type = picked && types.includes(picked) ? picked : types[0];
       const alt = types.filter((t) => t !== type);
+      /* *"A damage type other than a physical damage type adds its trait to the blast."* (Elemental
+       * Blast) — the blast was built with the ELEMENT trait alone, so an Air blast dealing electricity
+       * was electricity to nothing that reads traits: no IWR match, no fire/cold-keyed mode, no
+       * trait-gated MAP reduction. The traits are per-element because the chosen type is. */
+      const elTraits = [...blastTraits, el, ...(PHYSICAL_DAMAGE.has(type) ? [] : [type])];
+      const step = mapStepFor(c, db, elTraits);
+      const mapSources = mapNotesFor(c, db, elTraits);
+      const attack = [base, base - step, base - step * 2];
       return {
         instanceId: `blast:${el}`,
         name: `Elemental Blast (${el.charAt(0).toUpperCase() + el.slice(1)})`,
@@ -4576,7 +4619,7 @@ export function deriveBlastStrikes(c: Character, db: ContentDatabase): Strike[] 
         damage:
           `${dice}${b.die}${flat ? formatMod(flat) : ''} ${DAMAGE_ABBR[type] ?? type}` +
           ` (2 actions; +Str instead in melee${alt.length ? `; or ${alt.map((t) => DAMAGE_ABBR[t] ?? t).join('/')}` : ''})`,
-        traits: ['attack', 'impulse', 'kineticist', el],
+        traits: elTraits,
         ranged: true,
         range: b.range,
         rank: c.proficiencies.classDc,

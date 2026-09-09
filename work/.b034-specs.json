@@ -1,0 +1,134 @@
+[
+  {
+    "file": "work/.b034-rows-situational.json",
+    "kind": "rows",
+    "family": "situational",
+    "stage": [
+      "work/.b034-rows-situational.json",
+      "work/.b034-report-situational.txt",
+      "work/.b034-verify-situational.txt",
+      "test/batch034-situational.test.ts",
+      "src/rules/situationalBonuses.ts",
+      "scripts/apply-situational-lane.mjs"
+    ]
+  },
+  {
+    "file": "work/.b034-rows-data-rows.json",
+    "kind": "rows",
+    "family": "data-rows",
+    "stage": [
+      "work/.b034-rows-data-rows.json",
+      "work/.b034-created-desc-data-rows.json",
+      "work/.b034-report-data-rows.txt",
+      "work/.b034-verify-data-rows.txt",
+      "test/batch034-data.test.ts",
+      "scripts/apply-parity-fixes.mjs",
+      "test/apply-parity-fixes-refusals.test.ts",
+      "test/umbrella-items.test.ts",
+      "work/.b034-commit.txt"
+    ]
+  },
+  {
+    "file": "work/.b034-created-desc-data-rows.json",
+    "kind": "created-prose",
+    "family": "data-rows",
+    "stage": [
+      "work/.b034-rows-data-rows.json",
+      "work/.b034-created-desc-data-rows.json",
+      "work/.b034-report-data-rows.txt",
+      "work/.b034-verify-data-rows.txt",
+      "test/batch034-data.test.ts",
+      "scripts/apply-parity-fixes.mjs",
+      "test/apply-parity-fixes-refusals.test.ts",
+      "test/umbrella-items.test.ts",
+      "work/.b034-commit.txt"
+    ]
+  },
+  {
+    "file": "work/.b034-rows-instruments-2.json",
+    "kind": "rows",
+    "family": "instruments-2",
+    "stage": [
+      "work/.b034-rows-instruments-2.json",
+      "work/.b034-report-instruments-2.txt",
+      "work/.b034-verify-instruments-2.txt",
+      "test/batch034-instruments-2.test.ts",
+      "scripts/wg-values.mjs",
+      "scripts/wg-diff.mjs",
+      "work/experience-instrument-limits.json"
+    ]
+  },
+  {
+    "file": "work/.b034-rows-engine.json",
+    "kind": "rows",
+    "family": "engine",
+    "stage": [
+      "work/.b034-rows-engine.json",
+      "work/.b034-report-engine.txt",
+      "work/.b034-verify-engine.txt",
+      "test/batch034-engine.test.ts",
+      "src/rules/types.ts",
+      "src/rules/build.ts",
+      "src/rules/derive.ts",
+      "src/builder/shared.tsx"
+    ]
+  },
+  {
+    "file": "work/.b034-rows-instruments-1.json",
+    "kind": "rows",
+    "family": "instruments-1",
+    "stage": [
+      "work/.b034-rows-instruments-1.json",
+      "work/.b034-report-instruments-1.txt",
+      "work/.b034-verify-instruments-1.txt",
+      "test/batch034-instruments-1.test.ts",
+      "scripts/wg-diff.mjs",
+      "scripts/wg-values.mjs",
+      "scripts/wg-identity.mjs",
+      "work/experience-instrument-limits.json"
+    ]
+  },
+  {
+    "file": "work/.b034-rows-gap-data-rows.json",
+    "kind": "rows",
+    "family": "gap-data-rows",
+    "stage": [
+      "work/.b034-rows-gap-data-rows.json",
+      "work/.b034-report-gap-data-rows.txt",
+      "test/batch034-gap-data-rows.test.tsx",
+      "src/sheet/MainTab.tsx"
+    ]
+  },
+  {
+    "file": "work/.b034-rows-gap-engine.json",
+    "kind": "rows",
+    "family": "gap-engine",
+    "stage": [
+      "work/.b034-rows-gap-engine.json",
+      "work/.b034-created-desc-gap-engine.json",
+      "work/.b034-report-gap-engine.txt",
+      "test/batch034-gap-engine.test.ts",
+      "test/batch033-resume-eidolon-languages-and-traits-angel-fey-fixed-language-the-fey-spell-list-trait-narrowing.test.ts",
+      "src/rules/companionGrants.ts",
+      "src/rules/companions.ts",
+      "test/batch033-closer.test.ts",
+      "test/batch034-closer.test.ts"
+    ]
+  },
+  {
+    "file": "work/.b034-created-desc-gap-engine.json",
+    "kind": "created-prose",
+    "family": "gap-engine",
+    "stage": [
+      "work/.b034-rows-gap-engine.json",
+      "work/.b034-created-desc-gap-engine.json",
+      "work/.b034-report-gap-engine.txt",
+      "test/batch034-gap-engine.test.ts",
+      "test/batch033-resume-eidolon-languages-and-traits-angel-fey-fixed-language-the-fey-spell-list-trait-narrowing.test.ts",
+      "src/rules/companionGrants.ts",
+      "src/rules/companions.ts",
+      "test/batch033-closer.test.ts",
+      "test/batch034-closer.test.ts"
+    ]
+  }
+]

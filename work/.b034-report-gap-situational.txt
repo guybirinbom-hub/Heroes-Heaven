@@ -1,0 +1,68 @@
+batch 034 — GAP AGENT, family "situational"
+3 open lines assigned, 3 closed: 2 AUTHORED, 1 PARKED, 0 left open.
+
+
+AUTHORED  work/.b034-gaps.json[12]  (was work/.b034-report-situational.txt:5)
+  ref: work/.b034-rows-situational.json#scar-of-the-survivor#diehard-ungated
+  The row this line asks for already exists and is complete — {category:"classFeatures",
+  id:"scar-of-the-survivor", field:"grantsFeats", value:null, supersedes:true} with its `why` —
+  in the situational family's own rows spec, and that spec is already entry 1 of
+  work/.b034-specs.json with the rows file in its stage[]. No new spec file: re-emitting the same
+  record+field into work/.b034-rows-gap-situational.json would be a second row on
+  classFeatures/scar-of-the-survivor/grantsFeats, which the applier hard-refuses as a collision.
+  The line was harvested as "DATA STILL NEEDED" prose; the data is authored, so the line is
+  AUTHORED and points at the row that closes it.
+
+AUTHORED  work/.b034-gaps.json[16]  (was work/.b034-verify-situational.txt:125)
+  ref: work/.b034-rows-situational.json#scar-of-the-survivor#diehard-ungated
+  The same row, harvested a second time out of the verifier's own DATA STILL NEEDED section
+  (the verifier restates the builder's line after checking it: target exists, reader exists at
+  src/rules/build.ts:5355, no collision). One row, one ref, both lines.
+
+PARKED    work/.b034-gaps.json[17]  (was work/.b034-verify-situational.txt:131)
+  ref: work/.b034-queue.json#scar-of-the-survivor   (owner question, batch 34)
+  Engine-shape decision, and it is not mine to take. Print (ikon-13) gates the whole Immanence
+  sentence — "You gain the benefits of the Diehard feat and a +1 status bonus to Fortitude saving
+  throws" — on the divine spark being in this ikon, so retiring the ungated grantsFeats is right;
+  but Diehard is not prose in this app. content.feats['diehard'].dyingThresholdBonus is summed
+  UNCONDITIONALLY over owned feats at src/rules/build.ts:6849 into Character.dyingThreshold, read
+  by src/sheet/VitalsRail.tsx:179 and src/rules/play.ts:671 through conditions.ts
+  dyingDeathThreshold. After the row lands the exemplar moves from "dies at dying 5 always"
+  (wrong) to "dies at dying 4 always" (also wrong). There is no third state to author today:
+  buildCharacter never sees c.activeModes, ModeDef (src/rules/types.ts:4610) has no field that can
+  move a death threshold, and the app models no divine-spark tracker at all — "immanence" occurs
+  in exactly two source files. Closing it means teaching ModeDef a new carrier field and reading
+  it at the two consumers, i.e. edits to src/rules/types.ts and src/rules/build.ts (both being
+  edited by the ENGINE family in this same batch) plus a UI file no family owns.
+  I did NOT author the half-measure — a toggle-mode with modifiers:[] and a note, the
+  aura-fetching-bangles shape — because it moves no number and the printed clause is already on
+  the situational star at src/rules/situationalBonuses.ts:1434; it would have been a second copy
+  of the same prose and would have read as "closed" while the death threshold stayed wrong.
+  WG is no evidence here either way: `node scripts/wg-show.mjs "Scar of the Survivor"` shows one
+  injectText op (their id 28790) and a record with no operations at all (38674), so this is not a
+  WG-contradicts-print park — it is a carrier the engine does not have.
+  The question is worth one ruling rather than three: scripts/audit/lane-defect-rates.json:793
+  measures the dyingThresholdBonus lane at 4 records, 2 confirmed wrong for the SAME reason
+  (Soul Well's 1-minute emanation and Spirit of Vigil), so the same answer closes all three.
+
+
+SPEC FILES WRITTEN
+  (none — see AUTHORED lines above: the row already lives in the family's spec, and a duplicate
+  would collide.)
+
+MANIFEST
+  work/.b034-specs.json NOT touched — I wrote no new spec, and the situational entry already lists
+  every path this family's work lives in. Re-read at close: 6 entries (situational, data-rows rows,
+  data-rows created-prose, instruments-2, engine, instruments-1), all intact.
+
+FILES I TOUCHED
+  work/.b034-queue.json                     (appended one entry, id "scar-of-the-survivor";
+                                             the existing "spore-order" entry left byte-identical)
+  work/.b034-gaps.json                      (three surgical edits, status+ref on my family's lines
+                                             only; the 15 other-family lines still read "open")
+  work/.b034-report-gap-situational.txt     (this file)
+
+CHECKS RUN
+  node -e JSON.parse on both edited work files -> valid; gaps.json still 18 lines, 0 situational
+  lines open, every non-situational line untouched.
+  No src/, test/ or scripts/ file changed, so no vitest run and no tsc run is owed by this agent.

@@ -1,0 +1,73 @@
+{
+ "_": "BATCH 034 — chunk instruments-1 of the WG-COMPARISON (instruments) family. Every finding in this chunk is a COMPARER MISREAD: the mechanic ships, is read by a live reader and reaches the player, and the flag came from an instrument scoping the record to classFeatures/<id> and never opening the class-side carrier. So every entry carries backfillRows: [] — the work is a teach or a scoped settle in the comparer, not data. Authoring a row for any of these would DOUBLE-COUNT something the player already gets (elemental-instinct and spirit-instinct are that case explicitly).",
+ "findings": [
+  {
+   "id": "empiricism-methodology",
+   "backfillRows": [],
+   "note": "No row. The trained-skill choice is carried by classes.investigator.subclass.options['empiricism-methodology'].skillChoice ['arcana','crafting','occultism','society'] + skillChoiceLore, read at build.ts:3627-3643 (trains the pick), build.ts:1141 (class-skill count), build.ts:1248-1250 (outstanding-choice prompt) and drawn at src/builder/shared.tsx:3256-3290; the feat grant is featFeatGrants.ts:668 and the free action is grantsActions ['expeditious-inspection']. Fixed in the instruments: wg-values now asserts an option's skillChoice in the choice-skill| lane and wg-identity now names its answers in the options bucket. WG's own list omits Society, which print's 'one Intelligence-based skill' allows — WG encoding LESS than print, so nothing is owed there either."
+  },
+  {
+   "id": "precise-discipline",
+   "backfillRows": [],
+   "note": "No row. classes.psychic.extraChoices['subconscious-mind'].options['precise-discipline'].keyAbility = 'int' carries all three flagged kinds: subclassKeyAbility (build.ts:889-901) → the level-1 boost (build.ts:1327) → the character's keyAbility (build.ts:3378/3393) → deriveClassDc (derive.ts:669) and the casting entry's keyAbility (build.ts:4249), with classes.psychic.spellcasting as the casting source; the psyche action is grantsClassFeatures ['calculate-threats']. Fixed by a wg-diff teach: an option's keyAbility credits attribute + classDc, and spellcasting only when the owning class HAS a casting block."
+  },
+  {
+   "id": "spirit-instinct#instrument",
+   "backfillRows": [],
+   "note": "No row, and a row would be a defect: both Raging Resistance entries already ship on classFeatures/spirit-instinct.whileActive[0].resistances (void 3+Con and 'all damage from undead' 3+Con, the latter carrying WG's sentence verbatim in its sibling `condition`), and derive.ts:1162/1175 puts both on the sheet behind the rage + minLevel 9 gate. Their second member is a damage-SOURCE clause with no type name, so the set comparison has nothing to match; settled on THAT ONE MEMBER in wg-values's SETTLED_VALUES, leaving void and any later resistance reporting."
+  },
+  {
+   "id": "vanguard-of-roaring-waters#instrument",
+   "backfillRows": [],
+   "note": "No row and no comparer change owed. classes.animist.extraChoices['apparition'].options['vanguard-of-roaring-waters'] already carries grants.lores ['mountain','river'], loreProgression [{8,expert},{16,master}], ten grantedSpells and focusSpells ['river-carving-mountains'] (build.ts:3618 / :4626-4651), and the batch-033 option-carrier walk reads every one of them — the record is quiet on wg-diff, wg-values and wg-identity today. The credit is pinned mutation-proof in test/batch034-instruments-1.test.ts so it cannot rot. What remains is the EXPERIENCE harness's UNSUPPORTED verdict ('no class or subclass grants this feature at level 20'), whose host resolver is scripts/wg-experience.mjs — outside this chunk's files, filed as a cross-file gap. UNSUPPORTED is printed, never counted as a pass, so it does not fail the gate."
+  },
+  {
+   "id": "elemental-blast#instrument",
+   "backfillRows": [],
+   "note": "No row. The die count WG spells as KINETICIST_BLAST_DICE is deriveBlastStrikes in src/rules/derive.ts — dice = 1 + [5,9,13,17].filter(l => c.level >= l).length + sum(feats[].blastDiceBonus), the ladder zeroed for an archetype blast — plus feats/improved-elemental-blast.blastDiceBonus = 1 (AoN feat-4337). A class ladder plus a field on ANOTHER record, so an OFF_RECORD_CARRIERS entry naming both halves rather than a settle registry; the same variable is judged independently on the experience side by surface.blastDiceBonus."
+  },
+  {
+   "id": "emotional-acceptance#instrument",
+   "backfillRows": [],
+   "note": "No row. Same carrier and same teach as precise-discipline, one option along: classes.psychic.extraChoices['subconscious-mind'].options['emotional-acceptance'].keyAbility = 'cha' (AoN subconscious-mind-5: 'Key Attribute Your key attribute is Charisma'), plus classes.psychic.spellcasting for the casting source and grantsClassFeatures ['restore-the-mind'] for the psyche action. The rogue's four rackets carry the same field with no casting block and correctly credit no spellcasting."
+  },
+  {
+   "id": "way-of-the-pistolero",
+   "backfillRows": [
+    {
+     "category": "classFeatures",
+     "id": "pistoleros-retort",
+     "field": "name",
+     "why": "AoN way-2 (the remastered Way of the Pistolero, and the doc our own way record already claims as its aonId) prints \"**Deeds** *Initial* Ten Paces; *Advanced* Pistoler's Retort; *Greater* Grim Swagger\" and embeds the advanced deed as action-912, titled \"Pistoler's Retort\". The remaster renames the deed; action-912 carries legacy_id action-3681 and action-3681 \"Pistolero's Retort\" carries remaster_id action-912. Our record is the side that differs, and the way's other two deeds (ten-paces action-911, grim-swagger action-913) are already the remaster ones.",
+     "value": "Pistoler's Retort"
+    },
+    {
+     "category": "classFeatures",
+     "id": "pistoleros-retort",
+     "field": "aonId",
+     "why": "Same clause of AoN way-2: the advanced deed it embeds is <document id=\"action-912\" />, not the legacy action-3681 our record points at. Retagging the record's aonId to action-912 makes it cite the printing the way actually grants.",
+     "value": "action-912"
+    },
+    {
+     "category": "classFeatures",
+     "id": "pistoleros-retort",
+     "field": "edition",
+     "why": "AoN way-2 is the remastered way and action-912 is a remaster doc (it carries legacy_id action-3681, and action-3681 carries remaster_id action-912), so the record this way grants is the remaster deed. Supersedes the shipped overlay row {classFeatures/pistoleros-retort, edition, \"legacy\"} — a scalar field, re-emitted whole.",
+     "value": "remaster",
+     "supersedes": true
+    }
+   ],
+   "note": "REWRITTEN BY THE CHUNK VERIFIER — the first pass authored no row and settled the deed as a WG misspelling; it is not one. (i) The options half stands: classes.gunslinger.subclass.options['way-of-the-pistolero'].skillChoice ['deception','intimidation'] is real, read at build.ts:3627-3642 and drawn at shared.tsx:3255, and the wg-identity skillChoice teach credits it. (ii) 'grants theirs-not-ours=[pistolersretort]' is NOT their typo: the REMASTERED printing renames the deed. AoN way-2 (Guns & Gears Remastered — the doc our own way record claims as its aonId) embeds the advanced deed as <document id=\"action-912\" />; action-912 is titled \"Pistoler's Retort\" and carries legacy_id ['action-3681'], while action-3681 \"Pistolero's Retort\" (Guns & Gears) carries remaster_id ['action-912']. Ours is the side that differs — classFeatures/pistoleros-retort is the LEGACY record (aonId action-3681, edition 'legacy', already an overlay row) even though the way's other two deeds are the remaster ones (ten-paces action-911, grim-swagger action-913) and even though the record's own description body is already the remaster text. scripts/backfill-gunslinger-deeds.mjs:38-40 knew and bridged it with a de-typo in its matcher rather than fixing the record. The three rows above retag that one record as the deed print actually gives a remaster-era way; the edition row SUPERSEDES the existing overlay row {classFeatures/pistoleros-retort, edition, 'legacy'} (scalar field, whole value re-emitted). (iii) The experience NO-SHEET-EFFECT is therefore a real undelivered grant and its park was removed from work/experience-instrument-limits.json — the name row is what delivers it, so the gate must be re-run AFTER these rows are applied. Residual, not fixed here: the way option's description prose and its descRefs still print the legacy name, and actions/ still carries both pistoleros-retort (superseded, action-3681) and pistolers-retort (remaster, action-912) — display-bucket work outside this chunk's grant."
+  },
+  {
+   "id": "elemental-instinct#instrument",
+   "backfillRows": [],
+   "note": "No row, and a row would DOUBLE-COUNT: both printed resistance rows already ship per element on classFeatures/elemental-instinct.choice.options[].grant.whileActive[].resistances (twelve entries), merged at build.ts:6042 and read by derive.ts ownedWhileActive — and WG emits its single unnamed RESISTANCES string twice identically. Two scoped settles: their one unnameable clause in wg-values's SETTLED_VALUES, and their six 'Kinetic Element (…)' ability blocks in wg-diff's VERIFIED_EQUIVALENT (grantsRecord) and wg-identity's SETTLED_IDENTITIES, whose counterpart on our side is the instinctElement CHOICE — a stored answer, not a granted record. ⚠ Stated in the test: their resistance set has exactly ONE member, so the wg-values settle silences that whole row for this record; the carrier is guarded by wg-diff, which reports `defense` the moment grant.whileActive is stripped. The `defense` half of this finding was landed by chunk instruments-2 (the grant.whileActive descent in ourKindsOf) — not re-authored here."
+  },
+  {
+   "id": "monarch-of-the-fey-courts#instrument",
+   "backfillRows": [],
+   "note": "No row and no comparer change owed, exactly as vanguard-of-roaring-waters. classes.animist.extraChoices['apparition'].options['monarch-of-the-fey-courts'] carries grants.lores ['art','fey'] + loreProgression [{8,expert},{16,master}] (matching WG's createValue SKILL_LORE_ART/FEY T with adjValue E at 8 and M at 16) plus ten grantedSpells and one focusSpell; classFeatures/monarch-of-the-fey-courts is a stub. All three comparers are quiet and the rung-by-rung credit is pinned mutation-proof. The finding's closing clause 'only the Avatar mode is a genuine gap' does not hold and the batch's own refuted[] entry (monarch-of-the-fey-courts#avatar) says so. What remains is the harness UNSUPPORTED verdict — cross-file gap on scripts/wg-experience.mjs."
+  }
+ ]
+}

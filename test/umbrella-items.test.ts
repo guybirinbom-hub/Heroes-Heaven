@@ -25,8 +25,15 @@ describe('umbrella detection', () => {
     // `soulheart` is equipment-5194-4715, the "Item 5" grade block of that page, and price + kin
     // caught it only because artifacts are priceless. Hiding it would have deleted the base artifact
     // and left only Greater/Major/Pure. See `blockOfAPage` in src/data — an AoN block id now proves a
-    // record is one of the grades, so the fourth condition spares it and the count is 440, not 441.
-    expect(umbrellas().size).toBe(440);
+    // record is one of the grades, so the fourth condition spares it and the count was 440, not 441.
+    // 441 with `throneglass`, from the Dead God's Hand import — new content, not a change in what
+    // detection catches, and the same shape as `peachwood` and `poets-fritter` above. AoN heads
+    // equipment-5212 "Item -1+", unpriced, above two priced grade blocks the app also carries
+    // (throneglass-shard equipment-5212-4727 at 10 gp, throneglass-plate equipment-5212-4728 at
+    // 100 gp). Measured against the commit that last set this constant: `throneglass` is the ONLY id
+    // that joined the set, and nothing left it.
+    // batch 034 premise: equipment-5212 "Throneglass is an incredibly rare resource created during the violence of Earthfall 10,000 years ago"
+    expect(umbrellas().size).toBe(441);
   });
 
   it('hides the summaries the owner named', () => {
