@@ -1,0 +1,1256 @@
+{
+  "findings": [
+    {
+      "id": "lurker-in-devouring-dark#avatar-damage-type",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "crafter-in-the-vault",
+          "field": "description",
+          "value": "Crafters in the vault are found in dungeons, forges, or other places where creation and injury occur concurrently. They enjoy partnering with animists who compliment them on their creations, but often become jealous when anyone else intrudes on their expertise, including casting any of the spells that appear on their apparition list.\n\n---\n\n**Apparition Skills** Architecture Lore, Engineering Lore\n\n**Apparition Spells**\n\n- **Cantrip** Sigil\n- **1st** Mending\n- **2nd** Knock\n- **3rd** Ghostly Weapon\n- **4th** Creation\n- **5th** Impaling Spike\n- **6th** Wall of Metal\n- **7th** Beheading Buzz Saw\n- **8th** Ferrous Form\n- **9th** Resplendent Mansion\n\n**Vessel Spell** Traveling Workshop\n\n**Avatar** *Incarnate Dungeon* Speed 50 feet, either burrow Speed 50 feet or fly Speed 50 feet\n\n**Melee** ⟨1⟩ dungeon trap (reach 10 feet, versatile B or P), **Damage** 6d6+6 slashing plus Grab\n\n**Ranged** ⟨1⟩ deadly darts (range 120 feet, versatile poison), **Damage** 6d6+6 piercing",
+          "why": "AoN apparition-3 prints \"**Damage** 6d6+6 slashing\" on this apparition's avatar Strike and our import dropped the type, leaving the player a Strike with no damage type to read resistances, weaknesses and immunities against. Restored by scripts/repair-damage-type.mjs (insertions only, our wording untouched)."
+        },
+        {
+          "category": "classFeatures",
+          "id": "custodian-of-groves-and-gardens",
+          "field": "description",
+          "value": "Custodians of groves and gardens frequent tended greenery and farmlands cared for by loving stewards, and other places of reflection and restoration where green things grow. Some of these apparitions linger in the mortal realms not because they have lost their way, but because they believe they have already found Elysium. Others are the cultivated spiritual essence of the location itself. Custodians of groves and gardens are peaceful, quiet, and averse to conflict.\n\n---\n\n**Apparition Skills** Farming Lore, Herbalism Lore\n\n**Apparition Spells**\n\n- **Cantrip** Tangle Vine\n- **1st** Protector Tree\n- **2nd** Gentle Breeze\n- **3rd** Safe Passage\n- **4th** Peaceful Bubble\n- **5th** Truespeech\n- **6th** Field of Life\n- **7th** Lifewood Cage\n- **8th** Moment of Renewal\n- **9th** Nature's Enmity\n\n**Vessel Spell** Garden of Healing\n\n**Avatar** *Peaceful Reaches* Speed 60 feet, ignore difficult terrain and greater difficult terrain\n\n**Melee** ⟨1⟩ garden's cradle (agile, nonlethal, reach 10 feet, trip), **Damage** 6d6+6 bludgeoning plus Grab\n\n**Ranged** ⟨1⟩ impose peace (nonlethal, range 120 feet), **Damage** 6d6+6 mental",
+          "why": "AoN apparition-4 prints \"**Damage** 6d6+6 bludgeoning\" on this apparition's avatar Strike and our import dropped the type, leaving the player a Strike with no damage type to read resistances, weaknesses and immunities against. Restored by scripts/repair-damage-type.mjs (insertions only, our wording untouched)."
+        },
+        {
+          "category": "classFeatures",
+          "id": "echo-of-lost-moments",
+          "field": "description",
+          "value": "Echoes of lost moments are apparitions born from memories that everyone has forgotten, often arising from fragmented pieces of magic and memory left behind by time-altering magic. They may even occur in response to significant temporal tampering, cleaning up fragments of time damaged by irresponsible magic. These apparitions are drawn to animists who are orderly and responsible, and they can give such hosts access to spells that alter a target's timeline or removes them from the current timeline, reveal visions of past or future events, or even accelerate magical effects to a point in time where they have already ended.\n\n---\n\n**Apparition Skills** Fortune-Telling Lore, Genealogy Lore\n\n**Apparition Spells**\n\n- **Cantrip** Figment\n- **1st** Déjà Vu\n- **2nd** Dispel Magic\n- **3rd** Curse of Lost Time\n- **4th** Vision of Death\n- **5th** Illusory Scene\n- **6th** Phantasmal Calamity\n- **7th** Retrocognition\n- **8th** Quandary\n- **9th** Foresight\n\n**Vessel Spell** Store Time\n\n**Avatar** *Devourer of Lost Time* Speed 30 feet, fly Speed 50 feet\n\n**Melee** ⟨1⟩ devour potential (reach 15 feet, void), **Damage** 6d10+6 void\n\n**Ranged** ⟨1⟩ scream of loss (range 120 feet, void), **Damage** 6d6+6 void",
+          "supersedes": true,
+          "why": "AoN apparition-5 prints \"**Damage** 6d10+6 void\" on this apparition's avatar Strike and our import dropped the type, leaving the player a Strike with no damage type to read resistances, weaknesses and immunities against. Restored by scripts/repair-damage-type.mjs (insertions only, our wording untouched). Supersedes the existing scripts/data/effect-backfill.json description row for classFeatures/echo-of-lost-moments: this value IS that row's value with the printed damage type spliced in after each dice run, so nothing it authored is dropped."
+        },
+        {
+          "category": "classFeatures",
+          "id": "impostor-in-hidden-places",
+          "field": "description",
+          "value": "Impostors in hidden places whisper in quiet corners where mortal voices rarely resound, hoarding secrets and pondering unknowable truths. They often bring misfortune to those who disturb them, though an animist who earns their trust will find that they make effective allies.\n\n---\n\n**Apparition Skills** Fortune-Telling Lore, Underworld Lore\n\n**Apparition Spells**\n\n- **Cantrip** Telekinetic Hand\n- **1st** Ill Omen\n- **2nd** Invisibility\n- **3rd** Veil of Privacy\n- **4th** Liminal Doorway\n- **5th** Strange Geometry\n- **6th** Mislead\n- **7th** Planar Palace\n- **8th** Disappearance\n- **9th** Phantasmagoria\n\n**Vessel Spell** Discomfiting Whispers\n\n**Avatar** *Whisper Hiding in Shadows* Speed 50 feet, fly Speed 50 feet\n\n**Melee** ⟨1⟩ shadowed touch (reach 15 feet, versatile cold), **Damage** 6d10+6 void\n\n**Ranged** ⟨1⟩ whisper of despair (range 120 feet), **Damage** 6d6+6 void",
+          "supersedes": true,
+          "why": "AoN apparition-6 prints \"**Damage** 6d10+6 void\" on this apparition's avatar Strike and our import dropped the type, leaving the player a Strike with no damage type to read resistances, weaknesses and immunities against. Restored by scripts/repair-damage-type.mjs (insertions only, our wording untouched). Supersedes the existing scripts/data/effect-backfill.json description row for classFeatures/impostor-in-hidden-places: this value IS that row's value with the printed damage type spliced in after each dice run, so nothing it authored is dropped."
+        },
+        {
+          "category": "classFeatures",
+          "id": "lurker-in-devouring-dark",
+          "field": "description",
+          "value": "Lurkers in devouring dark are most often near old shipwrecks, deadly icebergs, and other places where ice and deep water are most prevalent. In places where the Dark Tapestry intrudes upon the world, there can be found variant lurkers in devouring dark who offer Dark Tapestry Lore in place of Sailing Lore and whose spells of water and ice instead deal void damage.\n\n---\n\n**Apparition Skills** Ocean Lore, Sailing Lore\n\n**Apparition Spells**\n\n- **Cantrip** Caustic Blast\n- **1st** Grim Tendrils\n- **2nd** Acid Grip\n- **3rd** Aqueous Orb\n- **4th** Grasp of the Deep\n- **5th** Wall of Ice\n- **6th** Frost Pillar\n- **7th** Hungry Depths\n- **8th** Arctic Rift\n- **9th** Implosion\n\n**Vessel Spell** Devouring Dark Form\n\n**Avatar** *Tentacles from the Dark* Speed 70 feet, swim Speed 70 feet\n\n**Melee** ⟨1⟩ grasping tentacles (reach 30 feet), **Damage** 6d10+6 bludgeoning plus Grab",
+          "why": "AoN apparition-7 prints \"**Damage** 6d10+6 bludgeoning\" on this apparition's avatar Strike and our import dropped the type, leaving the player a Strike with no damage type to read resistances, weaknesses and immunities against. Restored by scripts/repair-damage-type.mjs (insertions only, our wording untouched)."
+        },
+        {
+          "category": "classFeatures",
+          "id": "monarch-of-the-fey-courts",
+          "field": "description",
+          "value": "Monarchs of the fey courts make their homes near places with strong ties to the First World, or in places where nymphs once held sway. They are drawn to animists who blend an appreciation for art and nature's beauty with a ruler's ambition. Monarchs of fey courts are vain, capricious, and do not easily forgive slights or poor manners.\n\n---\n\n**Apparition Skills** Art Lore, Fey Lore\n\n**Apparition Spells**\n\n- **Cantrip** Tangle Vine\n- **1st** Charm\n- **2nd** Create Food\n- **3rd** Enthrall\n- **4th** Suggestion\n- **5th** Hallucination\n- **6th** Dominate\n- **7th** Mask of Terror\n- **8th** Uncontrollable Dance\n- **9th** Unfathomable Song\n\n**Vessel Spell** Nymph's Grace\n\n**Avatar** *Queen of the Winter Court* Speed 50 feet, fly Speed 50 feet, swim Speed 50 feet\n\n**Melee** ⟨1⟩ queen's caress (reach 15 feet, agile), **Damage** 6d10+6 mental\n\n**Ranged** ⟨1⟩ monarch's spite (mental, range 120 feet, versatile cold), **Damage** 6d6+6 mental",
+          "supersedes": true,
+          "why": "AoN apparition-8 prints \"**Damage** 6d10+6 mental\" on this apparition's avatar Strike and our import dropped the type, leaving the player a Strike with no damage type to read resistances, weaknesses and immunities against. Restored by scripts/repair-damage-type.mjs (insertions only, our wording untouched). Supersedes the existing scripts/data/effect-backfill.json description row for classFeatures/monarch-of-the-fey-courts: this value IS that row's value with the printed damage type spliced in after each dice run, so nothing it authored is dropped."
+        },
+        {
+          "category": "classFeatures",
+          "id": "reveler-in-lost-glee",
+          "field": "description",
+          "value": "Revelers in lost glee are twisted apparitions that arise in desolate and abandoned places where people once found great joy. They take immense mirth in causing harm or discomfort to others and do not enjoy being attuned to animists who fail to laugh at their antics.\n\n---\n\n**Apparition Skills** Circus Lore, Fortune-Telling Lore\n\n**Apparition Spells**\n\n- **Cantrip** Prestidigitation\n- **1st** Dizzying Colors\n- **2nd** Laughing Fit\n- **3rd** Hypnotize\n- **4th** Confusion\n- **5th** Illusory Scene\n- **6th** Vibrant Pattern\n- **7th** Warp Mind\n- **8th** Quandary\n- **9th** Wails of the Damned\n\n**Vessel Spell** Trickster's Mirrors\n\n**Avatar** *Ringmaster of the Dark Celebration* Speed 50 feet, ignore difficult terrain and greater difficult terrain\n\n**Melee** ⟨1⟩ ringmaster's whip (reach 15 feet, trip), **Damage** 6d10+6 slashing\n\n**Ranged** ⟨1⟩ feast of the lost (acid, range 120 feet, versatile void), **Damage** 6d6+6 acid",
+          "supersedes": true,
+          "why": "AoN apparition-9 prints \"**Damage** 6d10+6 slashing\" on this apparition's avatar Strike and our import dropped the type, leaving the player a Strike with no damage type to read resistances, weaknesses and immunities against. Restored by scripts/repair-damage-type.mjs (insertions only, our wording untouched). Supersedes the existing scripts/data/effect-backfill.json description row for classFeatures/reveler-in-lost-glee: this value IS that row's value with the printed damage type spliced in after each dice run, so nothing it authored is dropped."
+        },
+        {
+          "category": "classFeatures",
+          "id": "stalker-in-darkened-boughs",
+          "field": "description",
+          "value": "Stalkers in darkened boughs make their homes in ancient forests and jungles unfriendly to humanoids and others who would exert control or influence over nature's designs. These apparitions are drawn to animists who harbor violent thoughts or impulses but are more likely to linger with animists who can quell their hatred. Stalkers in darkened boughs are moody, impulsive, and prone to seeing things from the least charitable perspective.\n\n---\n\n**Apparition Skills** Forest Lore, Hunting Lore\n\n**Apparition Spells**\n\n- **Cantrip** Gouging Claw\n- **1st** Runic Body\n- **2nd** Vomit Swarm\n- **3rd** Wall of Thorns\n- **4th** Bestial Curse\n- **5th** Moon Frenzy\n- **6th** Tangling Creepers\n- **7th** Unfettered Pack\n- **8th** Monstrosity Form\n- **9th** Wrathful Storm\n\n**Vessel Spell** Darkened Forest Form\n\n**Avatar** *Beast of the Boughs* Speed 70 feet, fly Speed 70 feet\n\n**Melee** ⟨1⟩ devouring jaws (deadly 3d10, reach 15 feet), **Damage** 6d10+6 piercing",
+          "why": "AoN apparition-10 prints \"**Damage** 6d10+6 piercing\" on this apparition's avatar Strike and our import dropped the type, leaving the player a Strike with no damage type to read resistances, weaknesses and immunities against. Restored by scripts/repair-damage-type.mjs (insertions only, our wording untouched)."
+        },
+        {
+          "category": "classFeatures",
+          "id": "steward-of-stone-and-fire",
+          "field": "description",
+          "value": "Stewards of stone and fire linger near volcanoes and deep places near the heart of the earth, hot springs where the water is too scorchingly hot to allow casual enjoyment, and other places where the barrier between fire and earth is thin or nonexistent, though particularly old rock formations, canyons, and other natural features of earth may also spawn or attract them. Stewards of stone and fire are quick to anger and slow to forget.\n\n---\n\n**Apparition Skills** Mountain Lore, Volcano Lore\n\n**Apparition Spells**\n\n- **Cantrip** Ignition\n- **1st** Interposing Earth\n- **2nd** Exploding Earth\n- **3rd** Fireball\n- **4th** Wall of Fire\n- **5th** Wall of Stone\n- **6th** Petrify\n- **7th** Volcanic Eruption\n- **8th** Earthquake\n- **9th** Falling Stars\n\n**Vessel Spell** Earth's Bile\n\n**Avatar** *Blood of Planets* Speed 50 feet, burrow Speed 50 feet, ignore difficult terrain and greater difficult terrain\n\n**Melee** ⟨1⟩ avalanche of molten stone (reach 15 feet, versatile B), **Damage** 6d10+6 fire\n\n**Ranged** ⟨1⟩ cleansing eruption (fire, range 120 feet), **Damage** 6d6+6 fire",
+          "why": "AoN apparition-11 prints \"**Damage** 6d10+6 fire\" on this apparition's avatar Strike and our import dropped the type, leaving the player a Strike with no damage type to read resistances, weaknesses and immunities against. Restored by scripts/repair-damage-type.mjs (insertions only, our wording untouched)."
+        },
+        {
+          "category": "classFeatures",
+          "id": "vanguard-of-roaring-waters",
+          "field": "description",
+          "value": "Vanguards of roaring waters are found where rivers carve their way through mountains, creating fearsome rapids. They can also be found near bays where rivers meet the sea and create turbulent breakers and unpredictable undertows, coastal reefs that tear the bottoms from unwary ships and isolate islands, or anywhere else where water becomes violent and difficult to navigate safely. Vanguards of roaring waters encourage chaos and are easily bored.\n\n---\n\n**Apparition Skills** Mountain Lore, River Lore\n\n**Apparition Spells**\n\n- **Cantrip** Rousing Splash\n- **1st** Hydraulic Push\n- **2nd** Mist\n- **3rd** Crashing Wave\n- **4th** Hydraulic Torrent\n- **5th** Control Water\n- **6th** Personal Ocean\n- **7th** Dancing Fountain\n- **8th** Whirlpool\n- **9th** Wrathful Storm\n\n**Vessel Spell** River Carving Mountains\n\n**Avatar** *River that Splits the World* Speed 50 feet, swim Speed 70 feet\n\n**Melee** ⟨1⟩ parting mountains (reach 15 feet, versatile S, water), **Damage** 6d10+6 bludgeoning\n\n**Ranged** ⟨1⟩ crash into the sea (range 120 feet, versatile P, water), **Damage** 6d6+6 bludgeoning",
+          "why": "AoN apparition-12 prints \"**Damage** 6d10+6 bludgeoning\" on this apparition's avatar Strike and our import dropped the type, leaving the player a Strike with no damage type to read resistances, weaknesses and immunities against. Restored by scripts/repair-damage-type.mjs (insertions only, our wording untouched)."
+        },
+        {
+          "category": "classFeatures",
+          "id": "witness-to-ancient-battles",
+          "field": "description",
+          "value": "Witnesses to ancient battles may be the lingering remnants of soldiers who never returned from their last deployment or the restless souls of warriors whose final contest left them unfulfilled. Or the apparitions may be valkyries and other beings from beyond, naturally drawn to sites of death and battle, or even the unquiet entity formed from a battlefield that saw so much death and blood it gained a spiritual essence of its own. Witnesses to ancient battles are often somber and grim.\n\n---\n\n**Apparition Skills** Battlegrounds Lore, Heraldry Lore\n\n**Apparition Spells**\n\n- **Cantrip** Shield\n- **1st** Sure Strike\n- **2nd** Enlarge\n- **3rd** Ghostly Weapon\n- **4th** Weapon Storm\n- **5th** Invoke Spirits\n- **6th** Phantasmal Calamity\n- **7th** True Target\n- **8th** Canticle of Everlasting Grief\n- **9th** Weapon of Judgment\n\n**Vessel Spell** Embodiment of Battle\n\n**Avatar** *General of Endless Battle* Speed 70 feet, immune to immobilized\n\n**Melee** ⟨1⟩ final strike (agile, fatal d12, reach 15 feet), Damage 6d8+6 slashing",
+          "why": "AoN apparition-13 prints \"**Damage** 6d8+6 slashing\" on this apparition's avatar Strike and our import dropped the type, leaving the player a Strike with no damage type to read resistances, weaknesses and immunities against. Restored by scripts/repair-damage-type.mjs (insertions only, our wording untouched)."
+        },
+        {
+          "category": "classes",
+          "id": "animist",
+          "field": "options",
+          "path": [
+            "extraChoices",
+            "id=apparition"
+          ],
+          "value": [
+            {
+              "id": "crafter-in-the-vault",
+              "name": "Crafter in the Vault",
+              "description": "Crafters in the vault are found in dungeons, forges, or other places where creation and injury occur concurrently. They enjoy partnering with animists who compliment them on their creations, but often become jealous when anyone else intrudes on their expertise, including casting any of the spells that appear on their apparition list.\n\n---\n\n**Apparition Skills** Architecture Lore, Engineering Lore\n\n**Apparition Spells**\n\n- **Cantrip** Sigil\n- **1st** Mending\n- **2nd** Knock\n- **3rd** Ghostly Weapon\n- **4th** Creation\n- **5th** Impaling Spike\n- **6th** Wall of Metal\n- **7th** Beheading Buzz Saw\n- **8th** Ferrous Form\n- **9th** Resplendent Mansion\n\n**Vessel Spell** Traveling Workshop\n\n**Avatar** *Incarnate Dungeon* Speed 50 feet, either burrow Speed 50 feet or fly Speed 50 feet\n\n**Melee** ⟨1⟩ dungeon trap (reach 10 feet, versatile B or P), **Damage** 6d6+6 slashing plus Grab\n\n**Ranged** ⟨1⟩ deadly darts (range 120 feet, versatile poison), **Damage** 6d6+6 piercing",
+              "descRefs": [
+                {
+                  "label": "Sigil",
+                  "key": "spells"
+                },
+                {
+                  "label": "Mending",
+                  "key": "spells"
+                },
+                {
+                  "label": "Knock",
+                  "key": "spells"
+                },
+                {
+                  "label": "Ghostly Weapon",
+                  "key": "spells"
+                },
+                {
+                  "label": "Creation",
+                  "key": "spells"
+                },
+                {
+                  "label": "Impaling Spike",
+                  "key": "spells"
+                },
+                {
+                  "label": "Wall of Metal",
+                  "key": "spells"
+                },
+                {
+                  "label": "Beheading Buzz Saw",
+                  "key": "spells"
+                },
+                {
+                  "label": "Ferrous Form",
+                  "key": "spells"
+                },
+                {
+                  "label": "Resplendent Mansion",
+                  "key": "spells"
+                },
+                {
+                  "label": "Traveling Workshop",
+                  "key": "spells"
+                }
+              ],
+              "grantedSpells": [
+                "sigil",
+                "mending",
+                "knock",
+                "ghostly-weapon",
+                "creation",
+                "impaling-spike",
+                "wall-of-metal",
+                "beheading-buzz-saw",
+                "ferrous-form",
+                "resplendent-mansion"
+              ],
+              "focusSpells": [
+                "traveling-workshop"
+              ],
+              "grants": {
+                "lores": [
+                  "architecture",
+                  "engineering"
+                ]
+              },
+              "loreProgression": [
+                {
+                  "level": 8,
+                  "rank": "expert"
+                },
+                {
+                  "level": 16,
+                  "rank": "master"
+                }
+              ]
+            },
+            {
+              "id": "custodian-of-groves-and-gardens",
+              "name": "Custodian of Groves and Gardens",
+              "description": "Custodians of groves and gardens frequent tended greenery and farmlands cared for by loving stewards, and other places of reflection and restoration where green things grow. Some of these apparitions linger in the mortal realms not because they have lost their way, but because they believe they have already found Elysium. Others are the cultivated spiritual essence of the location itself. Custodians of groves and gardens are peaceful, quiet, and averse to conflict.\n\n---\n\n**Apparition Skills** Farming Lore, Herbalism Lore\n\n**Apparition Spells**\n\n- **Cantrip** Tangle Vine\n- **1st** Protector Tree\n- **2nd** Gentle Breeze\n- **3rd** Safe Passage\n- **4th** Peaceful Bubble\n- **5th** Truespeech\n- **6th** Field of Life\n- **7th** Lifewood Cage\n- **8th** Moment of Renewal\n- **9th** Nature's Enmity\n\n**Vessel Spell** Garden of Healing\n\n**Avatar** *Peaceful Reaches* Speed 60 feet, ignore difficult terrain and greater difficult terrain\n\n**Melee** ⟨1⟩ garden's cradle (agile, nonlethal, reach 10 feet, trip), **Damage** 6d6+6 bludgeoning plus Grab\n\n**Ranged** ⟨1⟩ impose peace (nonlethal, range 120 feet), **Damage** 6d6+6 mental",
+              "descRefs": [
+                {
+                  "label": "Tangle Vine",
+                  "key": "spells"
+                },
+                {
+                  "label": "Protector Tree",
+                  "key": "spells"
+                },
+                {
+                  "label": "Gentle Breeze",
+                  "key": "spells"
+                },
+                {
+                  "label": "Safe Passage",
+                  "key": "spells"
+                },
+                {
+                  "label": "Peaceful Bubble",
+                  "key": "spells"
+                },
+                {
+                  "label": "Truespeech",
+                  "key": "spells"
+                },
+                {
+                  "label": "Field of Life",
+                  "key": "spells"
+                },
+                {
+                  "label": "Lifewood Cage",
+                  "key": "spells"
+                },
+                {
+                  "label": "Moment of Renewal",
+                  "key": "spells"
+                },
+                {
+                  "label": "Nature's Enmity",
+                  "key": "spells"
+                },
+                {
+                  "label": "Garden of Healing",
+                  "key": "spells"
+                }
+              ],
+              "grantedSpells": [
+                "tangle-vine",
+                "protector-tree",
+                "gentle-breeze",
+                "safe-passage",
+                "peaceful-bubble",
+                "truespeech",
+                "field-of-life",
+                "lifewood-cage",
+                "moment-of-renewal",
+                "natures-enmity"
+              ],
+              "focusSpells": [
+                "garden-of-healing"
+              ],
+              "grants": {
+                "lores": [
+                  "farming",
+                  "herbalism"
+                ]
+              },
+              "loreProgression": [
+                {
+                  "level": 8,
+                  "rank": "expert"
+                },
+                {
+                  "level": 16,
+                  "rank": "master"
+                }
+              ]
+            },
+            {
+              "id": "echo-of-lost-moments",
+              "name": "Echo of Lost Moments",
+              "description": "Echoes of lost moments are apparitions born from memories that everyone has forgotten, often arising from fragmented pieces of magic and memory left behind by time-altering magic. They may even occur in response to significant temporal tampering, cleaning up fragments of time damaged by irresponsible magic. These apparitions are drawn to animists who are orderly and responsible, and they can give such hosts access to spells that alter a target's timeline or removes them from the current timeline, reveal visions of past or future events, or even accelerate magical effects to a point in time where they have already ended.\n\n---\n\n**Apparition Skills** Fortune-Telling Lore, Genealogy Lore\n\n**Apparition Spells**\n\n- **Cantrip** Figment\n- **1st** Déjà Vu\n- **2nd** Dispel Magic\n- **3rd** Curse of Lost Time\n- **4th** Vision of Death\n- **5th** Illusory Scene\n- **6th** Phantasmal Calamity\n- **7th** Retrocognition\n- **8th** Quandary\n- **9th** Foresight\n\n**Vessel Spell** Store Time\n\n**Avatar** *Devourer of Lost Time* Speed 30 feet, fly Speed 50 feet\n\n**Melee** ⟨1⟩ devour potential (reach 15 feet, void), **Damage** 6d10+6 void\n\n**Ranged** ⟨1⟩ scream of loss (range 120 feet, void), **Damage** 6d6+6 void",
+              "descRefs": [
+                {
+                  "label": "Figment",
+                  "key": "spells"
+                },
+                {
+                  "label": "Déjà Vu",
+                  "key": "spells"
+                },
+                {
+                  "label": "Dispel Magic",
+                  "key": "spells"
+                },
+                {
+                  "label": "Curse of Lost Time",
+                  "key": "spells"
+                },
+                {
+                  "label": "Vision of Death",
+                  "key": "spells"
+                },
+                {
+                  "label": "Illusory Scene",
+                  "key": "spells"
+                },
+                {
+                  "label": "Phantasmal Calamity",
+                  "key": "spells"
+                },
+                {
+                  "label": "Retrocognition",
+                  "key": "spells"
+                },
+                {
+                  "label": "Quandary",
+                  "key": "spells"
+                },
+                {
+                  "label": "Foresight",
+                  "key": "spells"
+                },
+                {
+                  "label": "Store Time",
+                  "key": "spells"
+                }
+              ],
+              "grantedSpells": [
+                "figment",
+                "de-ja-vu",
+                "dispel-magic",
+                "curse-of-lost-time",
+                "vision-of-death",
+                "illusory-scene",
+                "phantasmal-calamity",
+                "retrocognition",
+                "quandary",
+                "foresight"
+              ],
+              "focusSpells": [
+                "store-time"
+              ],
+              "grants": {
+                "lores": [
+                  "fortune-telling",
+                  "genealogy"
+                ]
+              },
+              "loreProgression": [
+                {
+                  "level": 8,
+                  "rank": "expert"
+                },
+                {
+                  "level": 16,
+                  "rank": "master"
+                }
+              ]
+            },
+            {
+              "id": "impostor-in-hidden-places",
+              "name": "Impostor in Hidden Places",
+              "description": "Impostors in hidden places whisper in quiet corners where mortal voices rarely resound, hoarding secrets and pondering unknowable truths. They often bring misfortune to those who disturb them, though an animist who earns their trust will find that they make effective allies.\n\n---\n\n**Apparition Skills** Fortune-Telling Lore, Underworld Lore\n\n**Apparition Spells**\n\n- **Cantrip** Telekinetic Hand\n- **1st** Ill Omen\n- **2nd** Invisibility\n- **3rd** Veil of Privacy\n- **4th** Liminal Doorway\n- **5th** Strange Geometry\n- **6th** Mislead\n- **7th** Planar Palace\n- **8th** Disappearance\n- **9th** Phantasmagoria\n\n**Vessel Spell** Discomfiting Whispers\n\n**Avatar** *Whisper Hiding in Shadows* Speed 50 feet, fly Speed 50 feet\n\n**Melee** ⟨1⟩ shadowed touch (reach 15 feet, versatile cold), **Damage** 6d10+6 void\n\n**Ranged** ⟨1⟩ whisper of despair (range 120 feet), **Damage** 6d6+6 void",
+              "descRefs": [
+                {
+                  "label": "Telekinetic Hand",
+                  "key": "spells"
+                },
+                {
+                  "label": "Ill Omen",
+                  "key": "spells"
+                },
+                {
+                  "label": "Invisibility",
+                  "key": "spells"
+                },
+                {
+                  "label": "Veil of Privacy",
+                  "key": "spells"
+                },
+                {
+                  "label": "Liminal Doorway",
+                  "key": "spells"
+                },
+                {
+                  "label": "Strange Geometry",
+                  "key": "spells"
+                },
+                {
+                  "label": "Mislead",
+                  "key": "spells"
+                },
+                {
+                  "label": "Planar Palace",
+                  "key": "spells"
+                },
+                {
+                  "label": "Disappearance",
+                  "key": "spells"
+                },
+                {
+                  "label": "Phantasmagoria",
+                  "key": "spells"
+                },
+                {
+                  "label": "Discomfiting Whispers",
+                  "key": "spells"
+                }
+              ],
+              "grantedSpells": [
+                "telekinetic-hand",
+                "ill-omen",
+                "invisibility",
+                "veil-of-privacy",
+                "liminal-doorway",
+                "strange-geometry",
+                "mislead",
+                "planar-palace",
+                "disappearance",
+                "phantasmagoria"
+              ],
+              "focusSpells": [
+                "discomfiting-whispers"
+              ],
+              "grants": {
+                "lores": [
+                  "fortune-telling",
+                  "underworld"
+                ]
+              },
+              "loreProgression": [
+                {
+                  "level": 8,
+                  "rank": "expert"
+                },
+                {
+                  "level": 16,
+                  "rank": "master"
+                }
+              ]
+            },
+            {
+              "id": "lamentation-of-sinister-deals",
+              "name": "Lamentation of Sinister Deals",
+              "description": "Lamentations of sinister deals gather wherever someone traded away their integrity, their loyalty or their very soul for a short-term gain — beside corrupt courthouses, in fey markets, and above all in the Whisperwood of Cheliax. Such an apparition will happily coach an animist in the art of the bargain, though it usually nurses a private terror of one particular kind of contract, and it pays out small wishes to whoever is willing to sign.\n\n---\n\n**Apparition Skills** Legal Lore, Scribing Lore\n\n**Apparition Spells**\n\n- **Cantrip** Message\n- **1st** Sure Strike\n- **2nd** Blistering Invective\n- **3rd** Hypercognition\n- **4th** Honeyed Words\n- **5th** Breath of Life\n- **6th** Sacred Form\n- **7th** Contingency\n- **8th** Moment of Renewal\n- **9th** Resplendent Mansion\n\n**Vessel Spell** Wish Market\n\n**Avatar** *Cosmic Notary* Speed 30 feet, fly Speed 50 feet\n\n**Melee** ⟨1⟩ burning pen (agile, reach 15 feet, versatile fire), **Damage** 6d6+6 piercing\n\n**Ranged** ⟨1⟩ exacting language (fatal d10, mental, range 60 feet), **Damage** 6d6+6 mental",
+              "descRefs": [
+                {
+                  "label": "Message",
+                  "key": "spells"
+                },
+                {
+                  "label": "Sure Strike",
+                  "key": "spells"
+                },
+                {
+                  "label": "Blistering Invective",
+                  "key": "spells"
+                },
+                {
+                  "label": "Hypercognition",
+                  "key": "spells"
+                },
+                {
+                  "label": "Honeyed Words",
+                  "key": "spells"
+                },
+                {
+                  "label": "Breath of Life",
+                  "key": "spells"
+                },
+                {
+                  "label": "Sacred Form",
+                  "key": "spells"
+                },
+                {
+                  "label": "Contingency",
+                  "key": "spells"
+                },
+                {
+                  "label": "Moment of Renewal",
+                  "key": "spells"
+                },
+                {
+                  "label": "Resplendent Mansion",
+                  "key": "spells"
+                },
+                {
+                  "label": "Wish Market",
+                  "key": "spells"
+                }
+              ],
+              "grantedSpells": [
+                "message",
+                "sure-strike",
+                "blistering-invective",
+                "hypercognition",
+                "honeyed-words",
+                "breath-of-life",
+                "sacred-form",
+                "contingency",
+                "moment-of-renewal",
+                "resplendent-mansion"
+              ],
+              "focusSpells": [
+                "wish-market"
+              ],
+              "grants": {
+                "lores": [
+                  "legal",
+                  "scribing"
+                ]
+              },
+              "loreProgression": [
+                {
+                  "level": 8,
+                  "rank": "expert"
+                },
+                {
+                  "level": 16,
+                  "rank": "master"
+                }
+              ]
+            },
+            {
+              "id": "lurker-in-devouring-dark",
+              "name": "Lurker in Devouring Dark",
+              "description": "Lurkers in devouring dark are most often near old shipwrecks, deadly icebergs, and other places where ice and deep water are most prevalent. In places where the Dark Tapestry intrudes upon the world, there can be found variant lurkers in devouring dark who offer Dark Tapestry Lore in place of Sailing Lore and whose spells of water and ice instead deal void damage.\n\n---\n\n**Apparition Skills** Ocean Lore, Sailing Lore\n\n**Apparition Spells**\n\n- **Cantrip** Caustic Blast\n- **1st** Grim Tendrils\n- **2nd** Acid Grip\n- **3rd** Aqueous Orb\n- **4th** Grasp of the Deep\n- **5th** Wall of Ice\n- **6th** Frost Pillar\n- **7th** Hungry Depths\n- **8th** Arctic Rift\n- **9th** Implosion\n\n**Vessel Spell** Devouring Dark Form\n\n**Avatar** *Tentacles from the Dark* Speed 70 feet, swim Speed 70 feet\n\n**Melee** ⟨1⟩ grasping tentacles (reach 30 feet), **Damage** 6d10+6 bludgeoning plus Grab",
+              "descRefs": [
+                {
+                  "label": "Caustic Blast",
+                  "key": "spells"
+                },
+                {
+                  "label": "Grim Tendrils",
+                  "key": "spells"
+                },
+                {
+                  "label": "Acid Grip",
+                  "key": "spells"
+                },
+                {
+                  "label": "Aqueous Orb",
+                  "key": "spells"
+                },
+                {
+                  "label": "Grasp of the Deep",
+                  "key": "spells"
+                },
+                {
+                  "label": "Wall of Ice",
+                  "key": "spells"
+                },
+                {
+                  "label": "Frost Pillar",
+                  "key": "spells"
+                },
+                {
+                  "label": "Hungry Depths",
+                  "key": "spells"
+                },
+                {
+                  "label": "Arctic Rift",
+                  "key": "spells"
+                },
+                {
+                  "label": "Implosion",
+                  "key": "spells"
+                },
+                {
+                  "label": "Devouring Dark Form",
+                  "key": "spells"
+                }
+              ],
+              "grantedSpells": [
+                "caustic-blast",
+                "grim-tendrils",
+                "acid-grip",
+                "aqueous-orb",
+                "grasp-of-the-deep",
+                "wall-of-ice",
+                "frost-pillar",
+                "hungry-depths",
+                "arctic-rift",
+                "implosion"
+              ],
+              "focusSpells": [
+                "devouring-dark-form"
+              ],
+              "grants": {
+                "lores": [
+                  "ocean",
+                  "sailing"
+                ]
+              },
+              "loreProgression": [
+                {
+                  "level": 8,
+                  "rank": "expert"
+                },
+                {
+                  "level": 16,
+                  "rank": "master"
+                }
+              ]
+            },
+            {
+              "id": "monarch-of-the-fey-courts",
+              "name": "Monarch of the Fey Courts",
+              "description": "Monarchs of the fey courts make their homes near places with strong ties to the First World, or in places where nymphs once held sway. They are drawn to animists who blend an appreciation for art and nature's beauty with a ruler's ambition. Monarchs of fey courts are vain, capricious, and do not easily forgive slights or poor manners.\n\n---\n\n**Apparition Skills** Art Lore, Fey Lore\n\n**Apparition Spells**\n\n- **Cantrip** Tangle Vine\n- **1st** Charm\n- **2nd** Create Food\n- **3rd** Enthrall\n- **4th** Suggestion\n- **5th** Hallucination\n- **6th** Dominate\n- **7th** Mask of Terror\n- **8th** Uncontrollable Dance\n- **9th** Unfathomable Song\n\n**Vessel Spell** Nymph's Grace\n\n**Avatar** *Queen of the Winter Court* Speed 50 feet, fly Speed 50 feet, swim Speed 50 feet\n\n**Melee** ⟨1⟩ queen's caress (reach 15 feet, agile), **Damage** 6d10+6 mental\n\n**Ranged** ⟨1⟩ monarch's spite (mental, range 120 feet, versatile cold), **Damage** 6d6+6 mental",
+              "descRefs": [
+                {
+                  "label": "Tangle Vine",
+                  "key": "spells"
+                },
+                {
+                  "label": "Charm",
+                  "key": "spells"
+                },
+                {
+                  "label": "Create Food",
+                  "key": "spells"
+                },
+                {
+                  "label": "Enthrall",
+                  "key": "spells"
+                },
+                {
+                  "label": "Suggestion",
+                  "key": "spells"
+                },
+                {
+                  "label": "Hallucination",
+                  "key": "spells"
+                },
+                {
+                  "label": "Dominate",
+                  "key": "spells"
+                },
+                {
+                  "label": "Mask of Terror",
+                  "key": "spells"
+                },
+                {
+                  "label": "Uncontrollable Dance",
+                  "key": "spells"
+                },
+                {
+                  "label": "Unfathomable Song",
+                  "key": "spells"
+                },
+                {
+                  "label": "Nymph's Grace",
+                  "key": "spells"
+                }
+              ],
+              "grantedSpells": [
+                "tangle-vine",
+                "charm",
+                "create-food",
+                "enthrall",
+                "suggestion",
+                "hallucination",
+                "dominate",
+                "mask-of-terror",
+                "uncontrollable-dance",
+                "unfathomable-song"
+              ],
+              "focusSpells": [
+                "nymphs-grace"
+              ],
+              "grants": {
+                "lores": [
+                  "art",
+                  "fey"
+                ]
+              },
+              "loreProgression": [
+                {
+                  "level": 8,
+                  "rank": "expert"
+                },
+                {
+                  "level": 16,
+                  "rank": "master"
+                }
+              ]
+            },
+            {
+              "id": "reveler-in-lost-glee",
+              "name": "Reveler in Lost Glee",
+              "description": "Revelers in lost glee are twisted apparitions that arise in desolate and abandoned places where people once found great joy. They take immense mirth in causing harm or discomfort to others and do not enjoy being attuned to animists who fail to laugh at their antics.\n\n---\n\n**Apparition Skills** Circus Lore, Fortune-Telling Lore\n\n**Apparition Spells**\n\n- **Cantrip** Prestidigitation\n- **1st** Dizzying Colors\n- **2nd** Laughing Fit\n- **3rd** Hypnotize\n- **4th** Confusion\n- **5th** Illusory Scene\n- **6th** Vibrant Pattern\n- **7th** Warp Mind\n- **8th** Quandary\n- **9th** Wails of the Damned\n\n**Vessel Spell** Trickster's Mirrors\n\n**Avatar** *Ringmaster of the Dark Celebration* Speed 50 feet, ignore difficult terrain and greater difficult terrain\n\n**Melee** ⟨1⟩ ringmaster's whip (reach 15 feet, trip), **Damage** 6d10+6 slashing\n\n**Ranged** ⟨1⟩ feast of the lost (acid, range 120 feet, versatile void), **Damage** 6d6+6 acid",
+              "descRefs": [
+                {
+                  "label": "Prestidigitation",
+                  "key": "spells"
+                },
+                {
+                  "label": "Dizzying Colors",
+                  "key": "spells"
+                },
+                {
+                  "label": "Laughing Fit",
+                  "key": "spells"
+                },
+                {
+                  "label": "Hypnotize",
+                  "key": "spells"
+                },
+                {
+                  "label": "Confusion",
+                  "key": "spells"
+                },
+                {
+                  "label": "Illusory Scene",
+                  "key": "spells"
+                },
+                {
+                  "label": "Vibrant Pattern",
+                  "key": "spells"
+                },
+                {
+                  "label": "Warp Mind",
+                  "key": "spells"
+                },
+                {
+                  "label": "Quandary",
+                  "key": "spells"
+                },
+                {
+                  "label": "Wails of the Damned",
+                  "key": "spells"
+                },
+                {
+                  "label": "Trickster's Mirrors",
+                  "key": "spells"
+                }
+              ],
+              "grantedSpells": [
+                "prestidigitation",
+                "dizzying-colors",
+                "laughing-fit",
+                "hypnotize",
+                "confusion",
+                "illusory-scene",
+                "vibrant-pattern",
+                "warp-mind",
+                "quandary",
+                "wails-of-the-damned"
+              ],
+              "focusSpells": [
+                "tricksters-mirrors"
+              ],
+              "grants": {
+                "lores": [
+                  "circus",
+                  "fortune-telling"
+                ]
+              },
+              "loreProgression": [
+                {
+                  "level": 8,
+                  "rank": "expert"
+                },
+                {
+                  "level": 16,
+                  "rank": "master"
+                }
+              ]
+            },
+            {
+              "id": "shepherd-of-errant-winds",
+              "name": "Shepherd of Errant Winds",
+              "description": "Often spun from eddies in the wake of air elementals, a shepherd of errant winds delights in movement and freedom. They might seek animists in breezy canyons or aboard ships cruising the trade winds, after which the apparition follows an animist to less airy locales. However, a shepherd of errant winds chafes at idleness and stirs up trouble if its surroundings seem too still.\n\n---\n\n**Apparition Skill** Sailing Lore, Scouting Lore\n\n**Apparition Spells**\n\n- **Cantrip** Slashing Gust\n- **1st** Tailwind\n- **2nd** Propulsive Breeze\n- **3rd** Wall of Wind\n- **4th** Vapor Form\n- **5th** Scouting Eye\n- **6th** Mislead\n- **7th** Vacuum\n- **8th** Punishing Winds\n- **9th** Wrathful Storm\n\n**Vessel Spell** Gift of the Anemos\n\n**Avatar** *Avatar Will of the Winds* Speed 40 feet, fly 70 feet, ignore difficult terrain and greater difficult terrain\n\n**Melee** ⟨1⟩ air blast (air, reach 20 feet), **Damage** 6d8+6 bludgeoning\n\n**Ranged** ⟨1⟩ thunderclap (electricity, range 120 feet, versatile sonic), **Damage** 6d6+3 electricity",
+              "descRefs": [
+                {
+                  "label": "Slashing Gust",
+                  "key": "spells"
+                },
+                {
+                  "label": "Tailwind",
+                  "key": "spells"
+                },
+                {
+                  "label": "Propulsive Breeze",
+                  "key": "spells"
+                },
+                {
+                  "label": "Wall of Wind",
+                  "key": "spells"
+                },
+                {
+                  "label": "Vapor Form",
+                  "key": "spells"
+                },
+                {
+                  "label": "Scouting Eye",
+                  "key": "spells"
+                },
+                {
+                  "label": "Mislead",
+                  "key": "spells"
+                },
+                {
+                  "label": "Vacuum",
+                  "key": "spells"
+                },
+                {
+                  "label": "Punishing Winds",
+                  "key": "spells"
+                },
+                {
+                  "label": "Wrathful Storm",
+                  "key": "spells"
+                },
+                {
+                  "label": "Gift of the Anemos",
+                  "key": "spells"
+                }
+              ],
+              "grantedSpells": [
+                "slashing-gust",
+                "tailwind",
+                "propulsive-breeze",
+                "wall-of-wind",
+                "vapor-form",
+                "scouting-eye",
+                "mislead",
+                "vacuum",
+                "punishing-winds",
+                "wrathful-storm"
+              ],
+              "focusSpells": [
+                "gift-of-the-anemos"
+              ],
+              "grants": {
+                "lores": [
+                  "sailing",
+                  "scouting"
+                ]
+              },
+              "loreProgression": [
+                {
+                  "level": 8,
+                  "rank": "expert"
+                },
+                {
+                  "level": 16,
+                  "rank": "master"
+                }
+              ]
+            },
+            {
+              "id": "speaker-in-sibilance",
+              "name": "Speaker in Sibilance",
+              "description": "Whether witnessed in hissing serpents or the whisper of pungent fumes wafting up from a forlorn cave, a speaker in sibilance offers forbidden knowledge and revels in the anguish of an unprepared mind. These apparitions often take medusa-like forms, each serpent providing different (and often contradictory) advice.\n\n---\n\n**Apparition Skill** Fortune-Telling Lore, Mountain Lore\n\n**Apparition Spells**\n\n- **Cantrip** Puff of Poison\n- **1st** Ill Omen\n- **2nd** Stupefy\n- **3rd** Hypercognition\n- **4th** Snake Fangs\n- **5th** Slither\n- **6th** Petrify\n- **7th** Mask of Terror\n- **8th** Unrelenting Observation\n- **9th** Unfathomable Song\n\n**Vessel Spell** Crown of Prophets\n\n**Avatar** *Medusa of Merciless Mysteries* Speed 60 feet, climb 60 feet\n\n**Melee** ⟨1⟩ biting hair (poison, reach 15 feet), **Damage** 6d6+6 piercing plus 2d6 persistent poison\n\n**Ranged** ⟨1⟩ jarring prophecy (mental, range 120 feet, versatile sonic), **Damage** 6d6+3 mental",
+              "descRefs": [
+                {
+                  "label": "Puff of Poison",
+                  "key": "spells"
+                },
+                {
+                  "label": "Ill Omen",
+                  "key": "spells"
+                },
+                {
+                  "label": "Stupefy",
+                  "key": "spells"
+                },
+                {
+                  "label": "Hypercognition",
+                  "key": "spells"
+                },
+                {
+                  "label": "Snake Fangs",
+                  "key": "spells"
+                },
+                {
+                  "label": "Slither",
+                  "key": "spells"
+                },
+                {
+                  "label": "Petrify",
+                  "key": "spells"
+                },
+                {
+                  "label": "Mask of Terror",
+                  "key": "spells"
+                },
+                {
+                  "label": "Unrelenting Observation",
+                  "key": "spells"
+                },
+                {
+                  "label": "Unfathomable Song",
+                  "key": "spells"
+                },
+                {
+                  "label": "Crown of Prophets",
+                  "key": "spells"
+                }
+              ],
+              "grantedSpells": [
+                "puff-of-poison",
+                "ill-omen",
+                "stupefy",
+                "hypercognition",
+                "snake-fangs",
+                "slither",
+                "petrify",
+                "mask-of-terror",
+                "unrelenting-observation",
+                "unfathomable-song"
+              ],
+              "focusSpells": [
+                "crown-of-prophets"
+              ],
+              "grants": {
+                "lores": [
+                  "fortune-telling",
+                  "mountain"
+                ]
+              },
+              "loreProgression": [
+                {
+                  "level": 8,
+                  "rank": "expert"
+                },
+                {
+                  "level": 16,
+                  "rank": "master"
+                }
+              ]
+            },
+            {
+              "id": "stalker-in-darkened-boughs",
+              "name": "Stalker in Darkened Boughs",
+              "description": "Stalkers in darkened boughs make their homes in ancient forests and jungles unfriendly to humanoids and others who would exert control or influence over nature's designs. These apparitions are drawn to animists who harbor violent thoughts or impulses but are more likely to linger with animists who can quell their hatred. Stalkers in darkened boughs are moody, impulsive, and prone to seeing things from the least charitable perspective.\n\n---\n\n**Apparition Skills** Forest Lore, Hunting Lore\n\n**Apparition Spells**\n\n- **Cantrip** Gouging Claw\n- **1st** Runic Body\n- **2nd** Vomit Swarm\n- **3rd** Wall of Thorns\n- **4th** Bestial Curse\n- **5th** Moon Frenzy\n- **6th** Tangling Creepers\n- **7th** Unfettered Pack\n- **8th** Monstrosity Form\n- **9th** Wrathful Storm\n\n**Vessel Spell** Darkened Forest Form\n\n**Avatar** *Beast of the Boughs* Speed 70 feet, fly Speed 70 feet\n\n**Melee** ⟨1⟩ devouring jaws (deadly 3d10, reach 15 feet), **Damage** 6d10+6 piercing",
+              "descRefs": [
+                {
+                  "label": "Gouging Claw",
+                  "key": "spells"
+                },
+                {
+                  "label": "Runic Body",
+                  "key": "spells"
+                },
+                {
+                  "label": "Vomit Swarm",
+                  "key": "spells"
+                },
+                {
+                  "label": "Wall of Thorns",
+                  "key": "spells"
+                },
+                {
+                  "label": "Bestial Curse",
+                  "key": "spells"
+                },
+                {
+                  "label": "Moon Frenzy",
+                  "key": "spells"
+                },
+                {
+                  "label": "Tangling Creepers",
+                  "key": "spells"
+                },
+                {
+                  "label": "Unfettered Pack",
+                  "key": "spells"
+                },
+                {
+                  "label": "Monstrosity Form",
+                  "key": "spells"
+                },
+                {
+                  "label": "Wrathful Storm",
+                  "key": "spells"
+                },
+                {
+                  "label": "Darkened Forest Form",
+                  "key": "spells"
+                }
+              ],
+              "grantedSpells": [
+                "gouging-claw",
+                "runic-body",
+                "vomit-swarm",
+                "wall-of-thorns",
+                "bestial-curse",
+                "moon-frenzy",
+                "tangling-creepers",
+                "unfettered-pack",
+                "monstrosity-form",
+                "wrathful-storm"
+              ],
+              "focusSpells": [
+                "darkened-forest-form"
+              ],
+              "grants": {
+                "lores": [
+                  "forest",
+                  "hunting"
+                ]
+              },
+              "loreProgression": [
+                {
+                  "level": 8,
+                  "rank": "expert"
+                },
+                {
+                  "level": 16,
+                  "rank": "master"
+                }
+              ]
+            },
+            {
+              "id": "steward-of-stone-and-fire",
+              "name": "Steward of Stone and Fire",
+              "description": "Stewards of stone and fire linger near volcanoes and deep places near the heart of the earth, hot springs where the water is too scorchingly hot to allow casual enjoyment, and other places where the barrier between fire and earth is thin or nonexistent, though particularly old rock formations, canyons, and other natural features of earth may also spawn or attract them. Stewards of stone and fire are quick to anger and slow to forget.\n\n---\n\n**Apparition Skills** Mountain Lore, Volcano Lore\n\n**Apparition Spells**\n\n- **Cantrip** Ignition\n- **1st** Interposing Earth\n- **2nd** Exploding Earth\n- **3rd** Fireball\n- **4th** Wall of Fire\n- **5th** Wall of Stone\n- **6th** Petrify\n- **7th** Volcanic Eruption\n- **8th** Earthquake\n- **9th** Falling Stars\n\n**Vessel Spell** Earth's Bile\n\n**Avatar** *Blood of Planets* Speed 50 feet, burrow Speed 50 feet, ignore difficult terrain and greater difficult terrain\n\n**Melee** ⟨1⟩ avalanche of molten stone (reach 15 feet, versatile B), **Damage** 6d10+6 fire\n\n**Ranged** ⟨1⟩ cleansing eruption (fire, range 120 feet), **Damage** 6d6+6 fire",
+              "descRefs": [
+                {
+                  "label": "Ignition",
+                  "key": "spells"
+                },
+                {
+                  "label": "Interposing Earth",
+                  "key": "spells"
+                },
+                {
+                  "label": "Exploding Earth",
+                  "key": "spells"
+                },
+                {
+                  "label": "Fireball",
+                  "key": "spells"
+                },
+                {
+                  "label": "Wall of Fire",
+                  "key": "spells"
+                },
+                {
+                  "label": "Wall of Stone",
+                  "key": "spells"
+                },
+                {
+                  "label": "Petrify",
+                  "key": "spells"
+                },
+                {
+                  "label": "Volcanic Eruption",
+                  "key": "spells"
+                },
+                {
+                  "label": "Earthquake",
+                  "key": "spells"
+                },
+                {
+                  "label": "Falling Stars",
+                  "key": "spells"
+                },
+                {
+                  "label": "Earth's Bile",
+                  "key": "spells"
+                }
+              ],
+              "grantedSpells": [
+                "ignition",
+                "interposing-earth",
+                "exploding-earth",
+                "fireball",
+                "wall-of-fire",
+                "wall-of-stone",
+                "petrify",
+                "volcanic-eruption",
+                "earthquake",
+                "falling-stars"
+              ],
+              "focusSpells": [
+                "earths-bile"
+              ],
+              "grants": {
+                "lores": [
+                  "mountain",
+                  "volcano"
+                ]
+              },
+              "loreProgression": [
+                {
+                  "level": 8,
+                  "rank": "expert"
+                },
+                {
+                  "level": 16,
+                  "rank": "master"
+                }
+              ]
+            },
+            {
+              "id": "vanguard-of-roaring-waters",
+              "name": "Vanguard of Roaring Waters",
+              "description": "Vanguards of roaring waters are found where rivers carve their way through mountains, creating fearsome rapids. They can also be found near bays where rivers meet the sea and create turbulent breakers and unpredictable undertows, coastal reefs that tear the bottoms from unwary ships and isolate islands, or anywhere else where water becomes violent and difficult to navigate safely. Vanguards of roaring waters encourage chaos and are easily bored.\n\n---\n\n**Apparition Skills** Mountain Lore, River Lore\n\n**Apparition Spells**\n\n- **Cantrip** Rousing Splash\n- **1st** Hydraulic Push\n- **2nd** Mist\n- **3rd** Crashing Wave\n- **4th** Hydraulic Torrent\n- **5th** Control Water\n- **6th** Personal Ocean\n- **7th** Dancing Fountain\n- **8th** Whirlpool\n- **9th** Wrathful Storm\n\n**Vessel Spell** River Carving Mountains\n\n**Avatar** *River that Splits the World* Speed 50 feet, swim Speed 70 feet\n\n**Melee** ⟨1⟩ parting mountains (reach 15 feet, versatile S, water), **Damage** 6d10+6 bludgeoning\n\n**Ranged** ⟨1⟩ crash into the sea (range 120 feet, versatile P, water), **Damage** 6d6+6 bludgeoning",
+              "descRefs": [
+                {
+                  "label": "Rousing Splash",
+                  "key": "spells"
+                },
+                {
+                  "label": "Hydraulic Push",
+                  "key": "spells"
+                },
+                {
+                  "label": "Mist",
+                  "key": "spells"
+                },
+                {
+                  "label": "Crashing Wave",
+                  "key": "spells"
+                },
+                {
+                  "label": "Hydraulic Torrent",
+                  "key": "spells"
+                },
+                {
+                  "label": "Control Water",
+                  "key": "spells"
+                },
+                {
+                  "label": "Personal Ocean",
+                  "key": "spells"
+                },
+                {
+                  "label": "Dancing Fountain",
+                  "key": "spells"
+                },
+                {
+                  "label": "Whirlpool",
+                  "key": "spells"
+                },
+                {
+                  "label": "Wrathful Storm",
+                  "key": "spells"
+                },
+                {
+                  "label": "River Carving Mountains",
+                  "key": "spells"
+                }
+              ],
+              "grantedSpells": [
+                "rousing-splash",
+                "hydraulic-push",
+                "mist",
+                "crashing-wave",
+                "hydraulic-torrent",
+                "control-water",
+                "personal-ocean",
+                "dancing-fountain",
+                "whirlpool",
+                "wrathful-storm"
+              ],
+              "focusSpells": [
+                "river-carving-mountains"
+              ],
+              "grants": {
+                "lores": [
+                  "mountain",
+                  "river"
+                ]
+              },
+              "loreProgression": [
+                {
+                  "level": 8,
+                  "rank": "expert"
+                },
+                {
+                  "level": 16,
+                  "rank": "master"
+                }
+              ]
+            },
+            {
+              "id": "witness-to-ancient-battles",
+              "name": "Witness to Ancient Battles",
+              "description": "Witnesses to ancient battles may be the lingering remnants of soldiers who never returned from their last deployment or the restless souls of warriors whose final contest left them unfulfilled. Or the apparitions may be valkyries and other beings from beyond, naturally drawn to sites of death and battle, or even the unquiet entity formed from a battlefield that saw so much death and blood it gained a spiritual essence of its own. Witnesses to ancient battles are often somber and grim.\n\n---\n\n**Apparition Skills** Battlegrounds Lore, Heraldry Lore\n\n**Apparition Spells**\n\n- **Cantrip** Shield\n- **1st** Sure Strike\n- **2nd** Enlarge\n- **3rd** Ghostly Weapon\n- **4th** Weapon Storm\n- **5th** Invoke Spirits\n- **6th** Phantasmal Calamity\n- **7th** True Target\n- **8th** Canticle of Everlasting Grief\n- **9th** Weapon of Judgment\n\n**Vessel Spell** Embodiment of Battle\n\n**Avatar** *General of Endless Battle* Speed 70 feet, immune to immobilized\n\n**Melee** ⟨1⟩ final strike (agile, fatal d12, reach 15 feet), Damage 6d8+6 slashing",
+              "descRefs": [
+                {
+                  "label": "Shield",
+                  "key": "spells"
+                },
+                {
+                  "label": "Sure Strike",
+                  "key": "spells"
+                },
+                {
+                  "label": "Enlarge",
+                  "key": "spells"
+                },
+                {
+                  "label": "Ghostly Weapon",
+                  "key": "spells"
+                },
+                {
+                  "label": "Weapon Storm",
+                  "key": "spells"
+                },
+                {
+                  "label": "Invoke Spirits",
+                  "key": "spells"
+                },
+                {
+                  "label": "Phantasmal Calamity",
+                  "key": "spells"
+                },
+                {
+                  "label": "True Target",
+                  "key": "spells"
+                },
+                {
+                  "label": "Canticle of Everlasting Grief",
+                  "key": "spells"
+                },
+                {
+                  "label": "Weapon of Judgment",
+                  "key": "spells"
+                },
+                {
+                  "label": "Embodiment of Battle",
+                  "key": "spells"
+                },
+                {
+                  "label": "immobilized",
+                  "key": "conditions"
+                }
+              ],
+              "grantedSpells": [
+                "shield",
+                "sure-strike",
+                "enlarge",
+                "ghostly-weapon",
+                "weapon-storm",
+                "invoke-spirits",
+                "phantasmal-calamity",
+                "true-target",
+                "canticle-of-everlasting-grief",
+                "weapon-of-judgment"
+              ],
+              "focusSpells": [
+                "embodiment-of-battle"
+              ],
+              "grants": {
+                "lores": [
+                  "battlegrounds",
+                  "heraldry"
+                ]
+              },
+              "loreProgression": [
+                {
+                  "level": 8,
+                  "rank": "expert"
+                },
+                {
+                  "level": 16,
+                  "rank": "master"
+                }
+              ]
+            }
+          ],
+          "supersedes": true,
+          "why": "THE SECOND CARRIER. An apparition reaches the sheet through this option's own copy of the prose (build.ts:8245 pushes option.description into character.classChoices, which FeatsTab renders), not through classFeatures/<id> — so the eleven classFeatures rows above repair a record the player's apparition card never reads. AoN apparition-3, apparition-4, apparition-5, apparition-6, apparition-7, apparition-8, apparition-9, apparition-10, apparition-11, apparition-12, apparition-13 print the damage type on each avatar Strike (\"**Damage** 6d10+6 bludgeoning plus Grab\", apparition-7); the same insertion is applied here. Supersedes the existing scripts/data/effect-backfill.json row for classes/animist.options [extraChoices, id=apparition] (wg-batch-028's loreProgression array, which also created lamentation-of-sinister-deals): this value IS that row's array, byte-for-byte, with only the eleven descriptions re-typed — every other field of every one of the fourteen options is carried whole."
+        }
+      ],
+      "note": "The @Damage cleaner kept the dice and ate the TYPE on 10 of the 14 animist apparitions' avatar Strikes, so \"6d10+6 bludgeoning\" shipped as \"6d10+6\". scripts/repair-damage-type.mjs re-derives each type from the record's own AoN document (apparition-3…apparition-12) and splices it in after the dice — insertions only, never a replacement of our prose with the mirror's. 1 record(s) refused (spells/devil-form: the Archives roll 2d12+10 where we roll 2d10+10 at site 5, so its sites cannot be paired — a separate defect, reported as a cross-file gap). Verifier: a twelfth row re-emits classes/animist.options[extraChoices,id=apparition] whole, because the option keeps its OWN copy of the prose and that copy is what the sheet renders."
+    }
+  ]
+}

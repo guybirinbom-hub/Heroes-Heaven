@@ -1,0 +1,211 @@
+BATCH 033 (RESUME) — ADVERSARIAL BUILD-VERIFIER
+FAMILY: resume-instruments — "the three comparers, 11 red records, every one a verified carrier the
+comparer cannot see"
+=================================================================================================
+Default was NOT DONE. Every item below survived an attempt to break it, except the citation defects
+in section C, which I fixed under the same rules (FIXED-BY-ME).
+
+VERDICT: 13 items DONE, 2 FIXED-BY-ME (a code/test citation lane and a manifest/spec completeness
+lane, both crossing several items), 0 NOT-DONE.
+
+
+A. WHAT I RE-RAN (my own runs, not the builder's numbers)
+---------------------------------------------------------
+  node scripts/wg-diff.mjs --out …                    theyOnly 217 · weOnly 2862 · agree 1089
+  node scripts/wg-diff.mjs --raw --out …              theyOnly 340
+  node scripts/wg-values.mjs   --batch 033            32 compared, 30 agree; 2 to adjudicate
+  node scripts/wg-identity.mjs --batch 033            30 checked, 27 match; 3 unmatched
+  node scripts/wg-values.mjs   --batch 030/031/032    12/12 · 11/11 · 10/10  (unchanged)
+  node scripts/wg-identity.mjs --batch 030/031/032     9/9  ·  9/10 ·  13/13 (unchanged)
+  npx jiti scripts/wg-casting.mjs                     16 sources · 4 mismatches · 180 rows (unchanged)
+  node scripts/vt.mjs <this family's test>            16 passed
+  node scripts/vt.mjs batch030/031/032/033-instruments 36 passed
+  npx tsc --noEmit                                    clean
+  node scripts/test-flip-audit.mjs --batch 033        clean — 18 files, 11 settle keys, every flip cited
+All of the above re-run AFTER my edits, with identical results; the wg-diff theyOnly set is
+byte-identical before and after them (comment-only edits).
+
+
+B. PER ITEM
+-----------
+ 1. curse-of-creeping-ashes (KINDS weapon,speed) — DONE.
+    Settled run: `agree`, ourKinds [conditional,defense,weapon,speed]. Stunt in the test empties
+    `modifiers` on every mode gated on the record and both kinds return. MODE_MODIFIER_KINDS is an
+    EXHAUSTIVE map of `ModeTargetKind` (src/rules/types.ts:4579-4595) minus `all-checks` — I checked
+    member by member; nothing falls through silently.
+    Blast radius measured independently: 250 records are credited by the core.modes half. That is
+    large, but every credit is a real carrier (a mode that ships that modifier, gated by
+    feats/fromItemId on the record), no kind rose, and 5 `all-checks` modifiers are correctly
+    credited with nothing. Adversarial control confirmed on my own run:
+    curse-of-inclement-headwinds still reports missing=[speed] — it has an `attack` modifier and no
+    speed one, so the teach credited the kind it has and not the kind it lacks.
+
+ 2. curse-of-the-mortal-warrior (KINDS save) — DONE. Settled run `agree`, ourKinds carries `save`;
+    the stunt returns exactly ['save']. Print re-read: mystery-13 (Battle), "Curse of the Mortal
+    Warrior" — Cursebound 2 "You take a -1 status penalty to saving throws against spells.",
+    Cursebound 4 "…increases to -2." Matches modes/curse-of-the-mortal-warrior-2..4. (The builder
+    cited mystery-16, which is Flames — fixed, section C.)
+
+ 3. decay-instinct (KINDS unmapped) — DONE, and the builder's deviation from its own spec is CORRECT.
+    I read src/rules/derive.ts:3651: RAGE_DAMAGE holds all eleven keys with `tiers`, decay-instinct
+    [6,10,18] type poison. The reader's regex catches all eleven. Anchoring on modes.ts cat-rotting-
+    rage would indeed have died when the modes-engine group cut the frozen +6 — designing it out
+    rather than waiting was the right call and I could not break it.
+    The `RAGE_DAMAGE -> weapon` map cannot launder: a record whose id is NOT in the tiers table still
+    reports, now as `weapon` instead of `unmapped`. Verified on my run: dragon / elemental / giant /
+    superstition instincts kept `defense` and lost only the unmapped line.
+
+ 4. ligneous-instinct (KINDS unmapped) — DONE. Settled run carries `speed` in ourKinds from the
+    modes.ts source scan; the `--modes` stunt removes it. The `m(value,type,target)` regex matches
+    the helper at src/rules/modes.ts:206 as claimed.
+
+ 5. curse-of-creeping-ashes (VALUES speed×5) — DONE, and honestly scoped.
+    My own wg-values --batch 033 run: speed|land is GONE, speed|fly/climb/burrow/swim still print
+    theirs=-10 ours=(nothing). src/rules/modes.ts:134 does resolve a detail-less speed modifier as
+    `land` ((mod.detail ?? 'land') === target.detail), so the reader's default is the engine's own
+    ruling and not a convenience. CROSS-FILE GAP 1 is real and is already owned: the resume-data-rows
+    spec carries `curse-of-creeping-ashes#speed-penalty` with 1 row.
+
+ 6-8. flame-order / spore-order / stone-order (KINDS specialStat) — DONE.
+    --raw run: all three theyOnly missing=['specialStat'], theirKinds [note,specialStat,conditional,
+    skill,grantsRecord,spell]. Settled run: clean. The closer's "anathema carrier" reading is
+    REFUTED on the data, not just in prose: `note` is in theirKinds and is NOT in `missing` under
+    --raw, so we already model the anathema and the settle cannot be hiding it. Three keys, not a
+    rule — a fourth order still reports. The stunt (delete each option's grants.skills, settles LIVE)
+    brings `skill` back on all three.
+
+ 9. school-of-thassilonian-rune-magic (KINDS spell) — DONE. --raw missing=['spell'], settled clean.
+    I re-ran the ownership check myself against public/core.json: the id is in NO class's
+    subclass/extraChoices option list and `runelord` is. AoN arcane-school-25 quote verified verbatim
+    in the mirror.
+
+10. school-of-unified-magical-theory (KINDS conditional,choice) — DONE; the evidence gate really was
+    cleared. I opened all three carriers rather than trusting the list: featUses.ts:56 `retunedBy`
+    (variant preferred over the generic), build.ts:5080-5084 (umtFeatId injected as a level-1 class
+    feat), Builder.tsx:408 `wizardSpellbookBudget(build.level, isUmtBook)`. Both live carriers are
+    stunted on a BUILT character in the test (uses 5 → 1; feat present → absent). No clause silenced,
+    so no queue line is owed — I agree, and I checked for the one that would be owed if the
+    spellbook clause had no reader.
+    ⚠ The builder cited "picker Builder.tsx:1005" — the option list is at 998-1005 but the select
+    itself is at 2064-2079. Corrected (section C).
+
+11. otherworldly-protection (KINDS choice + IDENTITY options×5) — DONE, and correctly NOT extended to
+    the values. My wg-values run still prints `SET-GAP set|resistances theirs=vitality
+    ours=void,spirit,unholy,holy`, so the one branch we carry as prose (`condition`) rather than as a
+    mechanic is still visible to the gate. wg-identity is clean with the settle and prints all five
+    option titles under --raw. Print re-read: innovation-1 (the REMASTER Armor doc) carries the void /
+    vitality / sanctified sentences verbatim — the record's own aonParentId is innovation-5, which is
+    the LEGACY text (negative/positive/alignment); the builder cited the right document.
+
+12. battle-creed (KINDS ×7) — DONE, and the closer's "needs the creed carriers modelled" is REFUTED.
+    I re-ran the bound myself: the table regex matches 33 top-level tables in advancement.ts and
+    exactly THREE of them are subclass OPTION ids — warpriest, battle-creed, light-mortar-innovation.
+    The file-wide alternative would have credited ~30 keys; rejecting it was right.
+    The `conditional`-from-level>1 credit is justified ON THIS RECORD: `wg-show.mjs "Battle Creed"`
+    shows every one of their conditionals is literally `IF LEVEL GREATER_THAN_OR_EQUALS 5/9/11/13/15/
+    19`. doctrine-6's Lesser/Major Creed clauses verified verbatim in the mirror.
+    The `choice` settle is scoped: with the table stunted and the settle live, the other six kinds
+    come back and `choice` does not.
+    PRECISION CAVEAT (not a defect, and not fixable here) — see section D.1.
+
+13. armor-innovation (KINDS ×3 + IDENTITY items×2) — DONE, closer's triage REFUTED on the code.
+    I opened build.ts:7688-7702 (the suit pushed into grantedItems, worn, sourced "Armor Innovation"),
+    build.ts:1262 (`'Armor base'` listed as an outstanding required choice) and
+    build.ts:2752-2770 `inventorModificationOptions` (tier + suit-tag filter). All three named
+    carriers exist and are reachable. The identity settle is bucket-scoped and stunted twice — --raw
+    brings the items row straight back, and on a BUILT inventor deleting items/power-suit from a
+    content copy makes the grant vanish, which is the state in which the settle would launder.
+
+
+C. FIXED-BY-ME
+--------------
+C1. FALSE AoN CITATIONS (5 places). The rule is that a WHY comment quotes the printed clause; three
+    of these named documents that DO NOT EXIST and one attributed a quote to the wrong feature, and
+    one "quote" was a reworded paraphrase presented as print. All verified against the mirror at
+    C:\wonderers guide\aon-2e-archive\data\by-category before rewriting.
+      · scripts/wg-diff.mjs (kindOfTheirOp / RAGE_DAMAGE) — "AoN instinct-19 (Decay)" and
+        "instinct-20 (Ligneous)". Neither file exists; the instinct category ends at instinct-16.
+        Decay is instinct-15, Ligneous is instinct-16 (and both records' own aonParentId says so).
+        Replaced, with the verbatim "increase the additional damage from Rage from 2 to 6".
+      · scripts/wg-diff.mjs (the RAGE_DAMAGE tiers reader) — the wooden-rage Specialization ladder
+        quoted against "AoN instinct-15", which is Decay. Re-attributed to instinct-16 and completed
+        to the verbatim two sentences ("…when using wooden rage from 10 to 18.").
+      · scripts/wg-diff.mjs (MODE_MODIFIER_KINDS) — curse-of-the-mortal-warrior had no doc id at all;
+        added mystery-13 (Battle), "Curse of the Mortal Warrior".
+      · the test file, mortal-warrior case — "AoN mystery-16" is Flames, a different curse.
+        Corrected to mystery-13 with both Cursebound clauses verbatim.
+      · the test file, ligneous case — "AoN instinct-20" plus *"the bark plates reduce your Speed by
+        10 feet"*, which is a REWRITE of print, not a quote. Print reads "reduce your Speed by 10
+        feet, as the bark plates covering your body are a hinderance to mobility" (instinct-16).
+      · the test file, creeping-ashes case — Cursebound 2 quoted as "you take a -2 circumstance
+        penalty…"; print reads "Swirling ash imposes a -2 circumstance penalty to ranged attack rolls
+        you make." Both Cursebound clauses replaced with the verbatim sentences.
+      · scripts/wg-diff.mjs — "picker src/builder/Builder.tsx:1005" corrected to the option list at
+        998-1005 plus the select at 2064-2079.
+    All comment-only: the wg-diff theyOnly/weOnly/agree sets are identical before and after, the
+    test is 16 passed, tsc is clean and the flip audit is clean.
+
+C2. MANIFEST + SPEC COMPLETENESS.
+      · work/.b033-specs.json — the resume-instruments `stage[]` did not list
+        work/.b033-verify-resume-instruments-….txt (this file). Every other family that has a verify
+        file stages it, and wg-batch-commit.mjs stages by explicit path only, so it would have been
+        left out of the commit exactly as batch 030's closer test file was. Appended; re-read
+        immediately before writing, all 15 entries intact, no other family's entry touched.
+      · the family's spec file — `school-of-unified-magical-theory#instrument-spells` is a confirmed
+        finding covered by the OFF_RECORD_CARRIERS entry and by its own cited test, but had no spec
+        entry. Rule 4 requires an entry with `backfillRows: []` and a note even when no row is owed.
+        Added (marked VERIFIER-ADDED). The spec is now 15 findings, every id in `confirmed[]`.
+
+
+D. CROSS-FILE GAPS (carried forward, plus one I found)
+------------------------------------------------------
+D1. NEW, from me — `light-mortar-innovation`'s `conditional` is now credited BY THE WRONG CARRIER.
+    The advancement teach credits `conditional` from any mapped row with level > 1. On battle-creed
+    that is exactly right (their conditionals ARE level gates). On light-mortar-innovation it is a
+    coincidence: `wg-show.mjs "Light Mortar"` shows their three conditionals are
+    `IF CLASS_FEATURE_NAMES INCLUDES breakthrough modification / revolutionary modification` and a
+    Basic Modification gate — nothing to do with a level ladder.
+    NOT A LAUNDERED GAP: I checked ours, and `inventorModificationOptions` (build.ts:2752-2770)
+    handles the `light-mortar` innovation type and filters by `f.level <= maxTierLevel`, which IS
+    that gate — so the kind is genuinely modelled and the credit is right for the wrong reason.
+    Left as-is deliberately: narrowing the credit would need the WG row's conditional SHAPE, which
+    advancement.ts cannot know, and the alternative (drop `conditional` from the teach) would take
+    the correct battle-creed credit away. Flagged so the resume-light-mortar-siege group's
+    "conditional: NOT MISSING — ours already answers it" is not read as an independent measurement:
+    it is true, but the signal it was read from came from this teach.
+
+D2. `otherworldly-and-curse-rows` (resume-data-rows) — modes['curse-of-creeping-ashes-4'].modifiers[1]
+    needs `detail: 'all'`. CONFIRMED as owed and CONFIRMED as owned: their spec carries
+    `curse-of-creeping-ashes#speed-penalty` with 1 row. Four speed tracks still report until it lands,
+    and this family's test asserts they do — so the row is what closes them, not the teach.
+
+D3. `prose-queue-closeout` — spore-order's wg-identity `grants theirs-not-ours=[leaforder]` line is
+    still printed on my own run (as the test asserts), and the EXPERIENCE NO-SHEET-EFFECT verdict is
+    untouched. The queue follow-up under the RECORD id `spore-order` is still owed and is not this
+    family's.
+
+D4. `resume-engine` / modes-engine — unaffected either way, as designed: the RAGE_DAMAGE reader is
+    anchored on derive.ts, so their cut of cat-rotting-rage's frozen +6 cannot move this teach. I
+    confirmed decay-instinct still carries `weapon` in ourKinds with modes.ts in its current state.
+
+
+E. DATA STILL NEEDED
+--------------------
+(none from this family. All 15 spec entries carry `backfillRows: []`; I re-checked each against the
+finding's claim and none of them is a row hiding behind an instrument teach — the two that DO need
+rows on these records, curse-of-creeping-ashes#speed-penalty and
+otherworldly-protection#void-healing-swap, are authored in the resume-data-rows spec.)
+
+
+F. WHAT I COULD NOT BREAK (the attempts that failed)
+-----------------------------------------------------
+  · Tried to make the advancement teach credit a class-keyed table: the optionIds bound holds — 33
+    tables match the regex, 3 pass the bound, and 'cleric'/'druid'/'inventor' are credited to nobody.
+  · Tried to make MODE_MODIFIER_KINDS credit a track it should not: `all-checks` is the only member
+    of ModeTargetKind absent from the map, and the 5 modifiers that use it credit nothing.
+  · Tried to find a record the specialStat settle silences beyond the bookkeeping variable: `note`
+    (the anathema) is compared and agrees under --raw on all three orders.
+  · Tried to find a settle whose mutation-proof test is vacuous: every one of the 11 keys stunts a
+    real carrier and the flip audit's key-matching check passes; the two OFF_RECORD_CARRIERS entries
+    (which --core cannot stunt) are instead proved on BUILT characters against stripped content.
+  · Tried to make the batch-030/031/032 comparers move: they did not.

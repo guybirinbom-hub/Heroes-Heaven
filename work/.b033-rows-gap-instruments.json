@@ -1,0 +1,19 @@
+{
+ "_": "BATCH 033 — GAP LANE, family gap-instruments. ZERO backfill rows and zero applier edits, deliberately: every one of the instruments family's 41 findings is an instrument misread, so nothing is owed to scripts/data/effect-backfill.json. This spec exists to carry the manifest `stage: []` list, which is what scripts/wg-batch-commit.mjs stages by explicit path. The work itself is two comparer/harness teaches and three parking entries, all listed in work/.b033-report-gap-instruments.txt.",
+ "findings": [
+  {
+   "id": "way-of-the-drifter#instrument-deeds",
+   "backfillRows": [],
+   "codeEdits": [],
+   "note": "GAP LANE, code-only. THE GRANTED-ACTION TEACH. test/wg-experience.harness.test.tsx `surfaceOf` had no list an action could land on: `featureNames` maps snap.ownedFeatures through db.classFeatures and `featNames` maps c.feats, so a record's `grantsActions` grant was invisible and five records read NO-SHEET-EFFECT for exactly one undelivered op — way-of-the-drifter (Reloading Strike), way-of-the-sniper (Covered Reload), way-of-the-vanguard (Clear a Path), interrogation-methodology (Pointed Question), alchemical-sciences-methodology (Quick Tincture). The surface now carries `actionNames`, built from the SAME two carriers the sheet reads onto the encounter action list at MainTab.tsx:281-328: `grantsActions` on an owned feat or class feature, plus Character.grantedActionIds (build.ts:6201/8739, a chosen OPTION's grant). scripts/lib/wg-experience-lanes.mjs's giveAbilityBlock branch reads the new list alongside featNames/featureNames. MEASURED end to end on the ten records of this family through `node scripts/wg-experience.mjs`: NO-SHEET-EFFECT 6 / OK 2 / MISSING-CONTROL 2 before, NO-SHEET-EFFECT 1 / OK 7 / MISSING-CONTROL 2 after. Adversarial: batch 030 replayed through the same script keeps its 2 NO-SHEET-EFFECT and 1 UNVERIFIED-EFFECT verdicts unchanged (0 verdicts moved), and batch 032 stays 40/40 OK. NOTE: the builder's report specified five parking entries for these records; they are NOT written, because the teach makes them unnecessary and a parking entry hides a record from gate 9.",
+   "codeFiles": ["test/wg-experience.harness.test.tsx", "scripts/lib/wg-experience-lanes.mjs", "test/wg-experience-lanes.test.ts"]
+  },
+  {
+   "id": "the-distant-grasp",
+   "backfillRows": [],
+   "codeEdits": [],
+   "note": "GAP LANE, code-only. THE (Psi)/(legacy) NAME TEACH. effectDelivery's giveSpell branch in scripts/lib/wg-experience-lanes.mjs now also matches their spell name with a trailing (Psi) or (legacy) qualifier stripped. ANCHORED to those two families, NOT a blanket parenthetical strip: the WG dump also carries 30 (deprecated) and 170 (playtest) qualifiers, and equating one of those with the base spell we ship would be laundering. Print is the authority both ways — the psi variants are printed as plain cantrips and we place them as the base cantrip, and a (legacy) name is a pre-remaster duplicate of a record we carry remastered. MEASURED: the-unbound-step and the-tangible-dream go NO-SHEET-EFFECT -> OK outright; the-distant-grasp falls from three undelivered ops to one, and that one is parked (see work/experience-instrument-limits.json).",
+   "codeFiles": ["scripts/lib/wg-experience-lanes.mjs", "test/wg-experience-lanes.test.ts"]
+  }
+ ]
+}

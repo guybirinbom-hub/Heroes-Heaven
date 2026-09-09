@@ -1,0 +1,29 @@
+{
+  "findings": [
+    {
+      "id": "the-distant-grasp#telekinetic-projectile",
+      "backfillRows": [],
+      "note": "Code-only. The rider is printed on the CONSCIOUS MIND (conscious-mind-7), not on the spell, so it may not be written onto the spells/telekinetic-projectile record: 30 feet is the correct range for every caster who is not a Distant Grasp psychic. Ruling G's per-character lane is SPELL_MARKERS in src/rules/situationalBonuses.ts, keyed by spell id and gated on owning the source record; it renders through explain.ts spellSituationalFor into SpellsTab.tsx. No backfill row can express a gated per-character modification."
+    },
+    {
+      "id": "the-distant-grasp#telekinetic-hand",
+      "backfillRows": [],
+      "note": "Code-only, same lane and same reason as the projectile rung. The 1/2/3-Bulk ladder is a carrying limit the sheet stores in no field (no reader exists for a spell Bulk cap anywhere in build.ts or derive.ts), so the printed ladder rides the SPELL_MARKERS bonus text rather than a number."
+    },
+    {
+      "id": "the-unbound-step#phase-bolt",
+      "backfillRows": [],
+      "note": "Code-only. The clause moves the TARGET's circumstance bonus to AC (ruling F, someone else's roll), so no stat row of this character's sheet can hold it and no record field on spells/phase-bolt would be true for other casters. SPELL_MARKERS keyed 'phase-bolt', source 'the-unbound-step'."
+    },
+    {
+      "id": "curse-of-creeping-ashes#cursebound-4-text",
+      "backfillRows": [],
+      "note": "Code-only. The wrong sentence lives in the RECORD_MARKERS literal in src/rules/situationalBonuses.ts, which is hand-authored code, not in any core.json field — the classFeatures/curse-of-creeping-ashes record carries no mechanical field at all. Nothing for a backfill row to assign. NOTE for the driver: the authoring source scripts/backfill-oracle-curses.mjs (CURSES['curse-of-creeping-ashes'].note) still holds the old 'you are consumed and die' sentence and REWRITES this registry block on --write; see CROSS-FILE GAPS in work/.b033-report-situational.txt."
+    },
+    {
+      "id": "construct-eidolon#construct-heart",
+      "backfillRows": [],
+      "note": "Code-only. Both halves are FEAT_SITUATIONAL stars in src/rules/situationalBonuses.ts: the existing save line's `when` was truncated at an ellipsis (poison, fatigued and sickened were never displayed) and the DC 10 persistent-bleed flat check had no line at all. The second line reuses the {kind:'hp'} flat-check shape of charhide-goblin and coral-symbiotes verbatim. The save `when` is stated in its shortest complete form because ruling H caps a `when` at 120 characters (test/rulings-dfgh.test.ts 'no note runs longer than about one line'); all six printed categories are named."
+    }
+  ]
+}

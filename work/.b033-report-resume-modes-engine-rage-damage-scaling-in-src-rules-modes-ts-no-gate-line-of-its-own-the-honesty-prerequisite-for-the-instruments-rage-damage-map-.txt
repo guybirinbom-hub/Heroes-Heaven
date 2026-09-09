@@ -1,0 +1,141 @@
+BATCH 033 RESUME — BUILDER REPORT
+group:  modes-engine — rage-damage scaling in src/rules/modes.ts
+family: resume-engine
+spec:   work/.b033-rows-resume-modes-engine-rage-damage-scaling-in-src-rules-modes-ts-no-gate-line-of-its-own-the-honesty-prerequisite-for-the-instruments-rage-damage-map-.json
+test:   test/batch033-resume-modes-engine-rage-damage-scaling-in-src-rules-modes-ts-no-gate-line-of-its-own-the-honesty-prerequisite-for-the-instruments-rage-damage-map-.test.ts
+code:   src/rules/modes.ts  (cat-rotting-rage, cat-wooden-rage — the only two entries touched)
+
+=====================================================================================================
+DATA STILL NEEDED
+=====================================================================================================
+(none — both items are code in this group's own file; the spec carries three entries, all
+backfillRows: [], and no row belongs to any other family.)
+
+=====================================================================================================
+CROSS-FILE GAPS
+=====================================================================================================
+1. ⚠⚠ MUST LAND IN THIS BATCH, INSTRUMENTS FAMILY — scripts/wg-diff.mjs. Deleting the frozen damage
+   modifier moves decay-instinct and ligneous-instinct from AGREE to missing=["weapon"] in wg-diff
+   KINDS. MEASURED, not predicted, by running scripts/wg-diff.mjs --out over the whole corpus twice
+   on this tree (both scratch dumps deleted afterwards):
+     WITH the modifier (tree as instruments left it):
+       decay-instinct    theirKinds [conditional,weapon,defense]  ourKinds [conditional,defense,weapon]        missing []        -> agree
+       ligneous-instinct theirKinds [conditional,weapon,defense]  ourKinds [conditional,defense,speed,weapon]  missing [] extra [speed] -> weOnly
+     WITHOUT it (this group's fix):
+       decay-instinct    ourKinds [conditional,defense]           missing [weapon]  -> theyOnly
+       ligneous-instinct ourKinds [conditional,defense,speed]      missing [weapon] extra [speed] -> theyOnly
+   CAUSE, and why this is bookkeeping and not a real gap: wg-diff.mjs:269 maps their RAGE_DAMAGE to
+   kind "weapon", and the only thing crediting us that kind was the src/rules/modes.ts SOURCE SCRAPE
+   at wg-diff.mjs:775-795, which reads `m(value,'type','target')` out of the catalogue text and folds
+   MODE_MODIFIER_KINDS.damage = 'weapon' onto the mode's gate id. It was crediting us for the WRONG
+   carrier — the frozen duplicate — while our real carrier, RAGE_DAMAGE in src/rules/derive.ts:3651,
+   is invisible to the comparer because it is a hard-coded engine map with no data row.
+   RECIPE (instruments' call, but it is three lines in the same src-scrape section): scrape
+   `RAGE_DAMAGE` out of src/rules/derive.ts the way the modes catalogue is scraped and addKinds(<each
+   map key>, ['weapon']). Blast radius to measure there: the map holds 11 keys (fury-, spirit-,
+   superstition-, dragon-, giant-, animal-, elemental-, decay-, ligneous-instinct, bloodrager), so the
+   teach credits every instinct, not only these two — and it must be a mutation-proof test (stunt the
+   RAGE_DAMAGE entry, prove the record is flagged again), never a settle on the two ids.
+   At baseline (work/.b033-baseline/gate.txt) both records were ALREADY red as missing=[unmapped], so
+   this is not a regression a green baseline is losing — it is the same red the RAGE_DAMAGE mapping
+   set out to close, needing its credit taken off the duplicate and put on the carrier.
+2. src/rules/derive.ts (engine family's file) — rageStrikeRider ignores the CHOICE. Print: *"When you
+   rage, you CAN CHOOSE to increase the additional damage from Rage from 2 to 6"* (AoN instinct-15),
+   *"You may make this choice only when your rage begins"*; instinct-16 the same for wooden rage, with
+   its Speed cost as the price. rageStrikeRider (derive.ts:3668) gates only on c.classResources.rage,
+   so a decay barbarian who rages WITHOUT taking rotting rage still gets 6/10/18 poison, and a
+   ligneous one gets the bigger die without ever paying the 10 feet. The gate already exists in the
+   file one function away: critSpecSources uses `critSpecRequiresModeGroup` and its own comment says
+   "a Decay barbarian rages through cat-rotting-rage". The fix is the same shape — require the
+   matching mode (cat-rotting-rage / cat-wooden-rage) to be active before the instinct tier applies,
+   falling back to the base 2 — and it makes the two modes the gate rather than a second number, which
+   is exactly the shape this group's fix leaves behind. NOT a batch-033 finding; nobody read it.
+3. work/.b033-report-engine.txt / work/.b033-verify-engine.txt CROSS-FILE GAPS 1 and 2 are now CLOSED
+   by this group (they name modes.ts:227/228, the two entries this report fixes). No other line of
+   those two files is touched.
+
+=====================================================================================================
+PER ITEM
+=====================================================================================================
+1. decay-instinct#rotting-rage-damage-scaling — BUILT (code).
+   FILE + SYMBOL: src/rules/modes.ts, RAW_MODES entry `cat-rotting-rage`. `modifiers` goes from
+   [m(6,'untyped','damage',{appliesWhen:'melee or unarmed Strikes while raging (poison damage instead
+   of the weapon's type)'})] to []. The note is unchanged and the block comment above the two entries
+   now carries the WHY, quoting AoN instinct-15 verbatim: *"When you use rotting rage, increase the
+   additional damage from Rage from 6 to 10… If you have greater weapon specialization, instead
+   increase the damage from Rage when using rotting rage from 10 to 18"*.
+   WHY DELETION AND NOT THE SCALING THE TASK PROPOSED: measured first, then decided.
+     (a) The scaled number already ships. RAGE_DAMAGE['decay-instinct'] = {tiers:[6,10,18],
+         type:'poison'} (derive.ts:3660) is resolved by rageStrikeRider (derive.ts:3688,
+         level>=15 ? 18 : level>=7 ? 10 : 6) and pushed onto both the weapon (derive.ts:4432) and the
+         unarmed (derive.ts:4741) Strike as conditionalDamage. Verified on built barbarians: 6 poison
+         at level 1, 10 at 7, 18 at 15 on a non-agile greatclub.
+     (b) The mode's modifier was CONDITIONAL, so modeNumberBonus/modeTypedMods skip it (modes.ts:147,
+         169) and it never double-counted a total — but explain.ts:1568-1573 pushes modeAdjust lines
+         and the rider's conditionalDamage into ONE strike-damage situational list, so a 15th-level
+         decay barbarian read "+6 untyped from Rotting Rage — melee or unarmed Strikes while raging"
+         directly beside "+18 poison — * while raging". That is the defect the finding names.
+     (c) A scaling modifier cannot be built inside this group's files and should not be built
+         anywhere: ModeModifier.value is a static number (types.ts:4598) and a level gate would need a
+         new ModeDef field in types.ts, which is not this group's file — and the engine build-verifier
+         already ruled that field out by name ("it would be a THIRD carrier of a number that already
+         has a correct one"). The sibling finding ligneous-instinct#wooden-rage-mode proposes deletion
+         outright. Two carriers agreeing is still two carriers: the player would then read "+18
+         untyped" beside "+18 poison" on one breakdown and reasonably total 36.
+   TEST: test/batch033-resume-…-.test.ts, describe "decay-instinct — Rotting Rage damage has ONE
+   carrier, and it scales" — (i) a BUILT raging barbarian at levels 1/7/15 reads exactly '6 poison',
+   '10 poison', '18 poison'; (ii) with CATALOG_MODE_MAP['cat-rotting-rage'] switched on at level 15 the
+   damage breakdown holds exactly ONE line mentioning raging, it is the 18, no line comes "from Rotting
+   Rage", modeModifiersFor(mode,{kind:'damage'}) is empty, and the mode's note still states the 10/18
+   ladder so prose and number agree. MUTATION-PROBED: re-inserting m(6,'untyped','damage') into the
+   entry fails test (ii) ("adds no second damage line"), 1 failed | 4 passed; the probe was removed and
+   the file re-verified clean.
+   COULD NOT DO: the choice gate (CROSS-FILE GAP 2) and the comparer credit (CROSS-FILE GAP 1).
+
+2. ligneous-instinct#wooden-rage-mode — BUILT (code).
+   FILE + SYMBOL: src/rules/modes.ts, RAW_MODES entry `cat-wooden-rage`. `modifiers` goes from
+   [m(6,'untyped','damage',{appliesWhen:'melee or unarmed Strikes while raging'}), m(-10,'untyped',
+   'speed')] to [m(-10,'untyped','speed')] — exactly what this finding's own proposal asks. WHY comment
+   quotes AoN instinct-16: *"While raging, you can increase the additional damage from Rage from 2 to
+   6. If you do this, reduce your Speed by 10 feet"* and *"When you use wooden rage, increase the
+   additional damage from Rage from 6 to 10. If you have greater weapon specialization, instead
+   increase the damage from Rage when using wooden rage from 10 to 18."*
+   The Speed penalty STAYS in modes.ts: it is the mode's own effect, nothing else carries it, and
+   deriveSpeeds' statePenalty lane (derive.ts:5060, 5205) is fed from it.
+   TEST: same file, describe "ligneous-instinct — Wooden Rage keeps its Speed cost and drops the frozen
+   damage copy" — a BUILT raging ligneous barbarian reads 6/10/18 at 1/7/15, and with the mode on at
+   15 the land Speed is exactly 10 feet below the same character without it while the damage breakdown
+   again holds one rage line and nothing "from Wooden Rage".
+
+3. cat-cursebound-1..4 `modifiers: []` — NOT BUILT, REFUTED as instructed, with the evidence recorded.
+   public/core.json's modes bucket already ships the per-mystery stage records, 20 of them:
+   curse-of-creeping-ashes-1..4, curse-of-inclement-headwinds-1..4, curse-of-inevitable-rot-1..4,
+   curse-of-the-living-death-1..4, curse-of-the-mortal-warrior-1..4. Each is gated feats:[<curse record
+   id>] and carries the real numbers — curse-of-creeping-ashes-1 weaknesses [{fire,2}];
+   curse-of-creeping-ashes-2 adds modifiers [{-2 circumstance attack, appliesWhen 'ranged attack
+   rolls'}]; -3 raises the weakness to '5+@actor.level'; -4 adds [{-10 status speed}]. Every one of the
+   20 carries exclusiveGroup 'oracle-cursebound', the SAME group cat-cursebound-N uses, so the
+   mystery's own stage mode and the generic stage toggle can never both be on: cat-cursebound-N is the
+   generic STAGE TOGGLE for a mystery whose curse we have not authored, not a mystery's effects.
+   Giving it modifiers would invent mystery-agnostic numbers and duplicate the ones that ship.
+   PINNED so the "lane" is not re-opened: the third describe of this group's test file asserts the 20
+   records exist with the group and the feat gate, that the weakness / -2 ranged-attack / -10 speed
+   shapes are all present among them, and that cat-cursebound-1..4 stay bare in the same group.
+
+=====================================================================================================
+CHECKS RUN
+=====================================================================================================
+node scripts/vt.mjs run <this group's test file> -> 5 passed (5).
+node scripts/vt.mjs run <this group's test file> test/modes.test.ts test/rage-damage.test.ts
+  test/batch033-engine.test.ts test/aura-modes.test.ts test/consumable-modes.test.ts
+  test/battle-form.test.ts -> 7 files, 117 passed (117). (Blast radius: every test file naming a mode
+  catalogue entry, the rage rider, or the mode-modifier lanes. test/modes.test.ts asserts the two modes
+  are OFFERED by name, which they still are; test/batch033-engine.test.ts pins the 6/10/18 ladder on
+  the rider and still passes with the duplicate gone — its comment calling the modes copy "the
+  duplicate this pins the real ladder against" is now stale prose, and that file is not this group's
+  to edit.)
+npx tsc --noEmit -> clean, exit 0.
+node scripts/wg-diff.mjs --out <scratch> twice (with and without the modifier) -> the KINDS numbers in
+  CROSS-FILE GAP 1. Both scratch dumps deleted; no comparer file was edited.
+No git write command was run; work/owner-questions.json was not touched; no owner question was needed
+(nothing here is a WG-vs-print conflict — print, WG and our rider all say 6/10/18).

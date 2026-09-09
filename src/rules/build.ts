@@ -6548,6 +6548,10 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
           spellListTraditions.push({
             ...(add.entryId ? { entryId: add.entryId } : {}),
             traditions: add.traditions,
+            // "spells that have the illusion or mental traits that appear on the arcane spell list"
+            // (AoN eidolon-8) — a trait narrowing rides along with the tradition, or the widening
+            // opens the whole list where print opens a sixth of it.
+            ...(add.traits?.length ? { traits: add.traits } : {}),
             ...(add.max ? { max: add.max } : {}),
             from: src?.name ?? 'A feat',
           });
@@ -7668,6 +7672,33 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     for (const g of content.classFeatures[fid]?.grantsItems ?? []) {
       if (!content.items[g.itemId] || grantedItems.some((x) => x.itemId === g.itemId)) continue;
       grantedItems.push({ ...g, source: content.classFeatures[fid].name });
+    }
+  }
+  /* …and the INVENTOR's armour innovation, which no static `grantsItems` can express because the item
+   * IS the answer to a per-character question: *"Your innovation is a cutting-edge suit of medium
+   * armor… Choose one of the sets of statistics on Innovation Armor Statistics table for your
+   * innovation armor"* (AoN innovation-1). The pick lived only in `build.inventorArmorStats`, where it
+   * gated the modification list and nothing else, so the inventor's own innovation was never in their
+   * inventory and gave them no AC, Dex cap, check penalty or Speed penalty at all.
+   * Worn, because the suit is what the inventor wears; not defaulted, because print asks the player to
+   * choose and build.ts:1262 already reports "Armor base" as an incomplete build item (the
+   * `?? 'power-suit'` at the inventor block below exists only to filter modification options and is
+   * deliberately not reused as an inventory decision).
+   * The type expression is the SAME one the inventor block below uses, so the archetype inventor —
+   * whose innovation is Inventor Dedication's own answer, not a subclass id — is covered too. */
+  {
+    const armorInv = ownsClass('inventor')
+      ? innovationType(subclassOf('inventor'))
+      : takenFeats.has('inventor-dedication')
+        ? innovationType(choiceFlagAnswer('innovation', build, content))
+        : undefined;
+    const suitId = armorInv === 'armor' ? build.inventorArmorStats : undefined;
+    if (suitId && content.items[suitId] && !grantedItems.some((x) => x.itemId === suitId)) {
+      grantedItems.push({
+        itemId: suitId,
+        worn: true,
+        source: content.classFeatures['armor-innovation']?.name ?? 'Armor Innovation',
+      });
     }
   }
   /* …and off the HERITAGE, the third carrier. A heritage whose benefit IS an item had nowhere to put

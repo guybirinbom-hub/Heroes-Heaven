@@ -42,7 +42,7 @@ import { formatMod, modeGateIds, ownedFeatureIds } from '../rules/derive';
 import { InventoryTab } from './InventoryTab';
 import { HpControl } from './HpControl';
 import { specificFamiliars } from '../rules/specificFamiliars';
-import { companionModKeys, featGrantedCompanions, offeredCreatures, CREATURE_OFFERS, FEAT_COMPANION_GRANTS, FAMILIAR_ABILITY_CHOICES, type CreatureOffer } from '../rules/companionGrants';
+import { companionModKeys, featGrantedCompanions, offeredCreatures, COMPANION_MODS, CREATURE_OFFERS, FEAT_COMPANION_GRANTS, FAMILIAR_ABILITY_CHOICES, type CreatureOffer } from '../rules/companionGrants';
 import { ActionGlyph } from './widgets';
 import { InfoTerm } from './InfoTerm';
 import { ConditionsModal } from './ConditionsModal';
@@ -944,6 +944,14 @@ function EidolonBlockView({ b, cond }: { b: EidolonBlock; cond?: ReactNode }) {
           <b>Trained skills</b> {b.skills.map(cap).join(', ')}
         </div>
       )}
+      {/* batch 033, devotion-phantom-eidolon#language — AoN eidolon-20 prints a Language line
+          ("one common mortal language the eidolon spoke in life") that reached the player only as
+          description prose; the pick is made on the Edit card and shown here. */}
+      {b.languages?.length ? (
+        <div className="sb-line">
+          <b>Languages</b> {b.languages.join(', ')}
+        </div>
+      ) : null}
       {b.iwr?.length ? (
         <div className="sb-line">
           <b>IWR</b> {b.iwr.join('; ')}
@@ -1275,6 +1283,12 @@ function EditChoices({ cfg, character, content, onPlay, onAbilities, onSpecializ
             .sort((a, b) => a.name.localeCompare(b.name)),
     [content, eidTradition, eidCantripSlots],
   );
+  // The eidolon TYPE's own printed Language line, when it is a question rather than a fixed list.
+  const eidLanguageSlots = cfg.kind === 'eidolon' && cfg.typeId ? COMPANION_MODS[cfg.typeId]?.languageChoices ?? 0 : 0;
+  const eidLanguageOptions = useMemo(
+    () => (eidLanguageSlots === 0 ? [] : Object.values(content.languages ?? {}).filter((l) => l.rarity === 'common').sort((a, b) => a.name.localeCompare(b.name))),
+    [content, eidLanguageSlots],
+  );
   // A creature the player added from a record's offer has nothing to configure — every statistic is
   // the offer's. Offering the familiar controls here would let a severed arm be turned into a Pipefox.
   const offer = cfg.offerSlug ? CREATURE_OFFERS[cfg.offerSlug] : undefined;
@@ -1427,6 +1441,42 @@ function EditChoices({ cfg, character, content, onPlay, onAbilities, onSpecializ
                 </div>
               </div>
               <div className="cmp-hint">Cast as innate spells, using your own spell attack and DC.</div>
+            </>
+          )}
+
+          {/* batch 033, devotion-phantom-eidolon#language. AoN eidolon-20 (Devotion Phantom) prints
+              "Language one common mortal language the eidolon spoke in life" — a QUESTION, and the
+              app asked nobody, so the line was inert prose. Same control shape as the cantrip slots
+              above; the option list is the COMMON languages, which is what "common mortal language"
+              names. A type whose Language line is a FIXED list (Angel: Celestial, Fey: Sylvan) asks
+              nothing and so shows no control here — `CompanionMod.languages` puts it straight on the
+              block's Languages row above (batch 033 resume, angel-eidolon#language). */}
+          {eidLanguageSlots > 0 && (
+            <>
+              <div className="cmp-crow cmp-crow-top">
+                <span className="cmp-lbl">Languages</span>
+                <div className="eid-cantrips">
+                  {Array.from({ length: eidLanguageSlots }, (_, i) => (
+                    <select
+                      key={i}
+                      className="osel"
+                      aria-label={`Eidolon language ${i + 1}`}
+                      value={ec.languages?.[i] ?? ''}
+                      onChange={(e) => {
+                        const next = Array.from({ length: eidLanguageSlots }, (_, n) => ec.languages?.[n] ?? null);
+                        next[i] = e.target.value || null;
+                        setEid({ languages: next });
+                      }}
+                    >
+                      <option value="">— choose —</option>
+                      {eidLanguageOptions.map((l) => (
+                        <option key={l.id} value={l.id}>{l.name}</option>
+                      ))}
+                    </select>
+                  ))}
+                </div>
+              </div>
+              <div className="cmp-hint">One common mortal language the eidolon spoke in life.</div>
             </>
           )}
 

@@ -1,0 +1,215 @@
+BATCH 033 — ENGINE ADVERSARIAL VERIFY (family: engine)
+Builder report verified: work/.b033-report-engine.txt
+Spec files checked:     work/.b033-rows-engine.json  (the only spec this family owns)
+Files I touched:        src/rules/build.ts, test/batch033-engine.test.ts,
+                        work/.b033-rows-engine.json, work/.b033-specs.json (engine stage[] only)
+Checks run:             node scripts/vt.mjs run test/batch033-engine.test.ts -> 6 passed;
+                        23 blast-radius files (every test naming an inventor / innovation / suit,
+                        plus edit-rebuild, wealth, transfer, singletons) -> 327 passed;
+                        npx tsc --noEmit -> clean;
+                        node scripts/test-flip-audit.mjs --batch 033 -> 6 failures, ALL in the
+                        instruments family's comparers, none in this family's files (see BATCH-LEVEL);
+                        a throwaway harness applied this spec's rows to a content copy and built real
+                        characters (deleted afterwards — results under each finding).
+
+=====================================================================================================
+TWO DEFECTS FOUND IN THE BUILDER'S WORK (both fixed here)
+=====================================================================================================
+A. THE ONE CODE CHANGE THE REPORT CLAIMS DID NOT EXIST. The report says the armour-suit arm was
+   written into the grantsItems collection block of src/rules/build.ts and that the file's 5 tests
+   passed. On the tree this verify pass opened, `grep -n "Armor Innovation|batch 033" src/rules/build.ts`
+   returned NOTHING and test/batch033-engine.test.ts failed 2 of 5 ("expected undefined to be truthy"
+   on the power-suit lookup). Whether it was never written or was clobbered by a sibling agent editing
+   the same file, the batch would have shipped an unfixed finding behind a green report. Re-authored —
+   see armor-innovation#suit-item below.
+
+B. THE SPEC WOULD HAVE CLOSED 15 UNFIXED FINDINGS AS FIXED. The builder's spec listed all 19 assigned
+   findings with `backfillRows: []`, including the 15 it reports as NOT DONE / cross-file, and the
+   THREE it says the driver must author (their row JSON lived only in the report's prose, where no
+   applier reads it). scripts/wg-batch-close.mjs:172-186 turns a rowless spec entry into a "code-only
+   spec" ROW citation whenever the authoring family staged a src/ path this batch changed — this family
+   staged src/rules/build.ts and did change it — so every one of those 15 records would have derived
+   FIXED off work this family did not do. That is precisely the failure that comment's own history
+   records (batch 30's `resilient`). Fixed two ways: the three real rows are now authored as
+   `backfillRows` (and proved on a built character), and the 15 rowless NOT-DONE entries were removed
+   from findings[]. Every one of them is still carried, unchanged, in CROSS-FILE GAPS below and in the
+   builder's report. Their records must be RULED BY HAND at close, not derived.
+
+=====================================================================================================
+PER FINDING (19 assigned)
+=====================================================================================================
+armor-innovation#suit-item — FIXED-BY-ME. Re-authored the granted-items arm (src/rules/build.ts, after
+  the class-features arm) with the innovation-type expression the inventor block below already uses, so
+  the archetype inventor is covered; source 'Armor Innovation', worn:true, not defaulted. A 1st-level
+  armour inventor who picked the Power Suit now wears it and deriveAc is exactly +5 over the same
+  character without it; Subterfuge Suit when that is the pick; nothing for an unanswered or weapon
+  inventor. 6/6 in the file, 327/327 across the blast radius, tsc clean.
+  ALSO MEASURED AND NEWLY PINNED (the report does not mention it): an EDIT round-trip resolves the
+  unanswered pick — Character.inventor.armorStats defaults to 'power-suit' at build.ts:8362 and
+  deriveBuildFromCharacter recovers it onto build.inventorArmorStats, so the SECOND build of the same
+  character hands over the Power Suit where the first handed over nothing. Kept (print: the innovation
+  IS a suit) rather than special-cased, and pinned by a third `it` so it cannot surprise a later reader.
+
+harmonic-oscillator#overdrive-bonus — FIXED-BY-ME (row). Row now authored in the spec, not prose:
+  modes/cat-harmonic-oscillator-overdrive, create:true, feats:['harmonic-oscillator'], resistances
+  force+sonic '5+floor(@actor.level/2)'. Verified as a row: the id is free in core.json's 556-entry
+  modes bucket, there is no `modes` bucket in core-descriptions.json so the create row needs no prose
+  spec, ModeDef.resistances is a real field (types.ts:4651) consumed by deriveDefenses, and no existing
+  effect-backfill row touches it. Proved on a built character: contentGatedModes lists it, modeRelevant
+  is TRUE for a 10th-level armour inventor holding the modification and FALSE for one without it
+  (modeGateIds -> ownedFeatureIds -> c.inventor.modifications, derive.ts:3450), standing force/sonic 8
+  and 10 with the mode on — 10, not 18, which is the proof the IWR merge supersedes rather than adds.
+  The builder's "no classes:['inventor'] gate" warning is correct and the row obeys it.
+
+fey-eidolon#magical-understudy — FIXED-BY-ME (row) for the 1st-level half; the 7th-level half NOT DONE.
+  Row now authored: classes/summoner path ["subclass","options","id=fey-eidolon"] field grantedFeats
+  value ["magical-understudy"]. Verified as a row: the option exists and holds NO grantedFeats today
+  (so the absolute assignment loses nothing — diffed every pre-existing key of the option against the
+  patched copy, all identical, and the options array is the same length); the path shape matches the 53
+  existing classes/*/subclass/options/id=* rows; the only existing row on that option is field
+  `eidolonAbilities`, so no collision and no supersedes; content.feats['magical-understudy'] exists,
+  category 'class', no `.choice`, eidolonCantrips 2. Proved on a built character: the feat lands as a
+  level-1 class feat and eidolonCantripSlots returns 2, while angel-eidolon still returns 0.
+  Magical Adept at 7th cannot ride this lane (it carries a .choice, which build.ts:5092 skips) —
+  CROSS-FILE GAP 14, and FEAT_FEAT_GRANTS_LEVELED's 'shaman' row confirms a SUBCLASS id reaches it.
+
+dragon-eidolon#breath-area — FIXED-BY-ME (row) for the area control; the trait half NOT DONE.
+  Row now authored: classFeatures/dragon-eidolon field effectChoices, one grantless choice
+  'eidolonBreathArea' (60-foot line / 30-foot cone). Verified as a row: the record exists and holds NO
+  effectChoices today; the existing overlay rows on it are `choice` and `edition`, so no collision; the
+  shape matches the shipped effectChoices on gates-threshold; Builder.tsx:1897-1904 mounts
+  EffectChoicesPicker on exactly `content.classFeatures[build.subclassId]?.effectChoices` and
+  dragon-eidolon IS a summoner subclass option id. Proved on a built character: the answer is recorded
+  in effectPicks (build.ts:6093 records a pick even when the option carries no grant) and reaches
+  modeGateIds as 'dragon-eidolon:cone'; the record's existing eidolonBreathDamage `choice` is
+  byte-identical after the row; an unanswered dragon summoner gains no phantom pick.
+  The damage-type answer still has ZERO readers anywhere in src/ (re-grepped) — CROSS-FILE GAP 15.
+
+ligneous-instinct#wooden-rage-mode — NOT-DONE (correctly filed cross-file; the engine half is right).
+  Re-measured both carriers: derive.ts:3639 RAGE_DAMAGE['ligneous-instinct'].tiers [6,10,18] resolved by
+  rageStrikeRider is the only one that reaches a Strike, and it is now pinned at levels 1/7/15 on a
+  non-agile weapon. src/rules/modes.ts:228 STILL carries the frozen m(6,'untyped','damage',{appliesWhen})
+  beside m(-10,'untyped','speed'), so the player still sees a second, frozen situational line.
+  modes.ts is not one of this family's files. CROSS-FILE GAP 1.
+
+decay-instinct#rotting-rage-damage-scaling — NOT-DONE (same shape), and the CLAIM is refuted at the
+  engine: "the damage never grows" is true only of the mode's prose. RAGE_DAMAGE['decay-instinct'] is
+  [6,10,18] with type 'poison' and steps at 7 and 15, pinned by the same test. The proposal's minLevel
+  field on ModeDef (types.ts, which IS an engine file) is correctly NOT built: it would be a THIRD
+  carrier of a number that already has a correct one. modes.ts:227 still carries the flat +6.
+  CROSS-FILE GAP 2.
+
+devotion-phantom-eidolon#language — NOT-DONE. Verified: `languages` appears ZERO times in
+angel-eidolon#language              src/rules/companionGrants.ts and ZERO times in src/rules/companions.ts,
+fey-eidolon#language                and EidolonBlock carries `senses?: string[]` (companions.ts:821)
+dragon-eidolon#language             with no language member. The build.ts grantsLanguages lane exists
+construct-eidolon#language          but delivers to the SUMMONER, and print puts every one of these
+  lines on the eidolon's own stat block, so taking that lane would ship a wrong-placement mechanic —
+  the builder's refusal is right, not a dodge. Two of the five are a PICK ("one common mortal
+  language"), so they need a control as well. CROSS-FILE GAPS 3, 4, 5, 6, 7.
+
+dragon-eidolon#senses — NOT-DONE. Verified the dead key myself: COMPANION_MODS is gated ONLY by
+construct-eidolon#senses  `companionModKeys(character.feats)` (companions.ts:1017-1021), no eidolon type
+  is a feat id, and TYPE_PACKAGE (companions.ts:1002-1005) holds only undead-eidolon and swarm-eidolon —
+  while companionGrants.ts carries ELEVEN eidolon-type rows (angel, anger-phantom, beast, construct,
+  demon, devotion-phantom, dragon, elemental, fey, plant, psychopomp), every one unreachable. Fixing the
+  GATE rather than adding two TYPE_PACKAGE rows is the right call. CROSS-FILE GAP 8.
+
+elemental-eidolon#core-note-generalises-fire — NOT-DONE. Verified: companionGrants.ts:438 is a single
+  flat note that states the FIRE core's resistance/weakness/+1 damage as if it were every core's.
+  CROSS-FILE GAP 9.
+elemental-eidolon#core-choice-no-reader — NOT-DONE. Verified: `grep -rn eidolonElementalCore src/`
+  returns ZERO hits, so the stored answer is read by nothing. CROSS-FILE GAP 10.
+
+light-mortar-innovation#innovation-item — NOT-DONE. Verified: no FEAT_COMPANION_GRANTS entry and no
+light-mortar-innovation#mortar-stats      mortar reference in src/rules besides innovationType's own
+  string (build.ts:2742) and the advancement table. The refusal to route this through the grantsItems
+  block I re-authored is CORRECT: print scales the mortar's AC, HP, saves and hardness off its inventor
+  ("The AC, Fortitude, Reflex, HP and BT statistics for this item are located in the Light Mortar
+  Innovation"), so handing over the static siegeWeapons['light-mortar'] would ship a permanently
+  level-1 mortar. CROSS-FILE GAPS 11, 12.
+
+alchemical-sciences-methodology#versatile-vials — NOT-DONE. Verified: resourcesForCharacter
+  (classResources.ts:235-245) admits on `classId === clsId` or `r.feat && featIds.has(r.feat)` and
+  nothing else, and all four call sites (AlchemyPanel.tsx:42, MainTab.tsx:377, VitalsRail.tsx:242,
+  classResources.ts:258) pass `new Set(character.feats.map(f => f.featId))` — a subclass id can never be
+  in that set. Widening the SET at the one call site inside this family's files would let an id
+  collision decide a resource and would still leave the three UI call sites broken; the gate belongs on
+  the entry. CROSS-FILE GAP 13.
+
+lurker-in-devouring-dark#duplicate-lore-grant — NOT-DONE, and I checked the deletion is SAFE before
+  endorsing it: all eight featGrantsAuto.ts apparition rows grant lores byte-identical to their class
+  option's own grants.lores (compared all 8 pairs), and both paths go through maxRank, so the 8/16
+  loreProgression ladder cannot be demoted today. Comparer-visible duplicate, playerVisible false.
+  CROSS-FILE GAP 16.
+
+=====================================================================================================
+DATA STILL NEEDED  (3 — now authored as machine-readable rows in work/.b033-rows-engine.json; the
+driver still applies them to scripts/data/effect-backfill.json, no agent writes that file)
+=====================================================================================================
+1. modes/cat-harmonic-oscillator-overdrive — create row (force+sonic '5+floor(@actor.level/2)', gated
+   feats:['harmonic-oscillator'] ONLY). [harmonic-oscillator#overdrive-bonus]
+2. classes/summoner path ["subclass","options","id=fey-eidolon"] field grantedFeats ["magical-understudy"].
+   [fey-eidolon#magical-understudy]
+3. classFeatures/dragon-eidolon field effectChoices — the grantless 'eidolonBreathArea' line/cone pick.
+   [dragon-eidolon#breath-area]
+
+=====================================================================================================
+CROSS-FILE GAPS  (16 — the builder's list, verified line by line; one file path corrected)
+=====================================================================================================
+1. src/rules/modes.ts:228 — cat-wooden-rage: delete m(6,'untyped','damage',{appliesWhen:'melee or
+   unarmed Strikes while raging'}), keep m(-10,'untyped','speed') and the note. [ligneous-instinct#wooden-rage-mode]
+2. src/rules/modes.ts:227 — cat-rotting-rage: delete the identical frozen +6 damage modifier, keep the
+   note. [decay-instinct#rotting-rage-damage-scaling]
+3. src/rules/companionGrants.ts — add `languages?: string[]` to CompanionGrant (the field exists for no
+   companion kind). [angel-eidolon#language, fey-eidolon#language, dragon-eidolon#language]
+4. src/rules/companionGrants.ts — set languages: angel-eidolon ["Empyrean"], fey-eidolon ["Fey"]
+   (glossary.ts:191, "called Sylvan before the Remaster"), dragon-eidolon ["Draconic"].
+   [angel-eidolon#language, fey-eidolon#language, dragon-eidolon#language]
+5. src/rules/companions.ts — EidolonBlock gains a `languages` member (beside `senses?: string[]` at
+   :821) and deriveEidolon emits it. [all five #language findings]
+6. src/rules/companions.ts + the eidolon Edit card — a PICK for the two whose printed line is "one
+   common mortal language". [devotion-phantom-eidolon#language, construct-eidolon#language]
+7. src/sheet/CompanionsTab.tsx — render the eidolon block's Languages row; the sibling to copy is
+   SenseList (:720) as used by the eidolon block. (The builder's report says "src/ui CompanionsTab.tsx";
+   the file is src/sheet/CompanionsTab.tsx.) [all five #language findings]
+8. src/rules/companions.ts — make the COMPANION_MODS eidolon pass match cfg.typeId as well as featIdSet
+   (:1017-1021), or extend TYPE_PACKAGE (:1002): the featIdSet key can never match an eidolon type, so
+   all ELEVEN authored eidolon-type rows are dead. [dragon-eidolon#senses, construct-eidolon#senses]
+9. src/rules/companionGrants.ts:438 — replace the flat elemental-eidolon note with a per-core branch
+   (Air, Earth, Fire with print's "(minimum 1)", Metal, Water, Wood). [elemental-eidolon#core-note-generalises-fire]
+10. src/rules/companions.ts — a reader for the elemental core answer (grep: zero readers for
+    eidolonElementalCore) that branches trait, note and fire-core IWR. [elemental-eidolon#core-choice-no-reader]
+11. src/rules/companionGrants.ts — FEAT_COMPANION_GRANTS['light-mortar-innovation'] = { kind: 'siege', … }.
+    [light-mortar-innovation#innovation-item]
+12. src/rules/companions.ts — a siege-companion override lane carrying the innovation's scaling
+    (hardness 5/10@5/15@10/20@15, HP 10 + level×(2+Int), AC and Launch DC = inventor class DC, Int-based
+    Reflex/Fortitude trained→expert@10→master@15, +1 damage die at 5th and every 4 levels); must NOT be
+    written onto siegeWeapons['light-mortar'], which is also a buyable item. [light-mortar-innovation#mortar-stats]
+13. src/rules/classResources.ts — add `subclass?: string` to ClassResource and to the admit test at
+    :241, then add the investigator versatile-vials entry gated
+    subclass:'alchemical-sciences-methodology', maxAbility:'int', refresh:'rest'.
+    [alchemical-sciences-methodology#versatile-vials]
+14. src/rules/featFeatGrants.ts — FEAT_FEAT_GRANTS_LEVELED['fey-eidolon'] = [{ feat: 'magical-adept',
+    minLevel: 7 }]; same subclass-keyed shape as the 'shaman' row at :26. [fey-eidolon#magical-understudy]
+15. src/rules/companions.ts — apply the eidolonBreathDamage answer as a trait on the eidolon and its
+    Breath Weapon (all types except piercing); the flag has zero readers. [dragon-eidolon#breath-area]
+16. src/rules/featGrantsAuto.ts — delete the 8 apparition rows (:228, :293, :453, :511, :533, :669,
+    :671, :763); each is byte-identical to its class option's grants.lores + loreProgression.
+    [lurker-in-devouring-dark#duplicate-lore-grant]
+
+=====================================================================================================
+BATCH-LEVEL (not this family's files, and not counted in the two lists above)
+=====================================================================================================
+node scripts/test-flip-audit.mjs --batch 033 FAILS with 6 uncited flips, all owned by the INSTRUMENTS
+family (work/.b033-rows-instruments.json stages these three files): SETTLED_VALUES 'decay-instinct'
+(wg-values.mjs:1487) and SETTLED_IDENTITIES 'school-of-thassilonian-rune-magic' (wg-identity.mjs:745)
+and 'witness-to-ancient-battles' (:761) — each needs a `// batch 033: <finding id>` or
+`// batch 033 premise:` citation AND a `// mutation-proof` test. I checked the one that touches an
+ENGINE record: the 'decay-instinct' settle is scoped `set|resistances`, so it silences the IWR wording
+comparison and NOT this family's rage-damage finding — it is not an engine family settle and does not
+hide an unfixed engine gap.
+
+MANIFEST: work/.b033-specs.json holds all five families (situational, engine, repair, data-rows,
+instruments) — none removed. This family's stage[] gained work/.b033-verify-engine.txt; the other four
+entries were not touched.

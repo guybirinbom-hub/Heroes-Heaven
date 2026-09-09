@@ -542,6 +542,61 @@ export function onDescriptionsLoaded(fn: (db: ContentDatabase) => void): () => v
   };
 }
 
+/** The shape core-descriptions.json ships: bucket → record id → { d: description, r: descRefs }. */
+export type DescriptionsFile = Record<string, Record<string, { d?: string; r?: unknown }>>;
+
+/**
+ * Write the split-out prose back onto the records it belongs to — BOTH copies of each record.
+ *
+ * Exported (and pure over its two arguments) so the option half can be tested without a fetch; the
+ * loader below is the only caller in the app.
+ */
+export function applyDescriptions(
+  db: Record<string, Record<string, Record<string, unknown>> | undefined> | undefined,
+  byBucket: DescriptionsFile,
+): void {
+  for (const [bucket, records] of Object.entries(byBucket)) {
+    const target = db?.[bucket];
+    if (!target) continue;
+    for (const [id, v] of Object.entries(records)) {
+      const rec = target[id];
+      if (!rec) continue;
+      if (v.d !== undefined) rec.description = v.d;
+      if (v.r !== undefined) rec.descRefs = v.r;
+    }
+  }
+  /*
+   * …and the SECOND copy of the same record: a subclass / extra-choice OPTION.
+   *
+   * A class stores its schools, patrons, eidolons and implements as `classes.<cls>.subclass.options[]`
+   * / `extraChoices[].options[]`, each carrying its own `description` — and that option copy, not the
+   * classFeatures record, is what Builder.tsx:1872 and shared.tsx:1382+3240 render. The loop above
+   * writes db.classFeatures[id] only, so every repair made to a class feature's prose since the split
+   * reached the record and left the option showing the stale text: measured at 45 options across 11
+   * classes (sorcerer 10, thaumaturge 10, wizard 7, exemplar 5, oracle 3, summoner/witch/psychic/
+   * necromancer 2, inventor/gunslinger 1) — among them the-tangible-dream, whose repaired
+   * "- 2nd: Invisibility" line ships in core-descriptions.json and reaches no screen.
+   *
+   * Every option id IS a classFeatures id (the same invariant derive.ts's ownedFeatureIds relies on),
+   * so the option is synced from the record's entry rather than given an entry of its own.
+   */
+  const classes = db?.classes as unknown as Record<string, {
+    subclass?: { options?: Record<string, unknown>[] };
+    extraChoices?: { options?: Record<string, unknown>[] }[];
+  }> | undefined;
+  for (const cls of Object.values(classes ?? {})) {
+    const optionLists = [cls?.subclass?.options, ...(cls?.extraChoices ?? []).map((ec) => ec?.options)];
+    for (const options of optionLists) {
+      for (const opt of options ?? []) {
+        const v = byBucket.classFeatures?.[String(opt?.id ?? '')];
+        if (!v) continue;
+        if (v.d !== undefined) opt.description = v.d;
+        if (v.r !== undefined) opt.descRefs = v.r;
+      }
+    }
+  }
+}
+
 let descPending: Promise<void> | null = null;
 /**
  * Fetch public/core-descriptions.json and write each description back onto the record it belongs to.
@@ -556,23 +611,13 @@ export function loadDescriptions(): Promise<void> {
     try {
       const res = await fetch(`${import.meta.env.BASE_URL}core-descriptions.json`);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const byBucket = (await res.json()) as Record<string, Record<string, { d?: string; r?: unknown }>>;
+      const byBucket = (await res.json()) as DescriptionsFile;
       // Write into the RAW core, then rebuild. Mutating the merged database in place is not enough:
       // several layers downstream snapshot it — applyOverrides copies edited records, and the sheet
       // memoises a player-facing copy — so a mutation lands in objects nobody is reading any more and
       // every description stays blank. A rebuild gives the database a new identity, which is what
       // those memos are keyed on.
-      const db = cachedCore as unknown as Record<string, Record<string, Record<string, unknown>> | undefined>;
-      for (const [bucket, records] of Object.entries(byBucket)) {
-        const target = db?.[bucket];
-        if (!target) continue;
-        for (const [id, v] of Object.entries(records)) {
-          const rec = target[id];
-          if (!rec) continue;
-          if (v.d !== undefined) rec.description = v.d;
-          if (v.r !== undefined) rec.descRefs = v.r;
-        }
-      }
+      applyDescriptions(cachedCore as unknown as Record<string, Record<string, Record<string, unknown>> | undefined>, byBucket);
       descriptionsLoaded = true;
       const rebuilt = rebuildContent();
       for (const fn of descListeners) fn(rebuilt);

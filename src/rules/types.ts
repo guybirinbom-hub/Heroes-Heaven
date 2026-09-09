@@ -514,6 +514,18 @@ export interface IwrEntry {
   whenCreatureTrait?: string;
   unlessCreatureTrait?: string;
   /**
+   * The sibling gate for VOID HEALING, the other "what the character is" fact a printed IWR clause
+   * turns on. Otherworldly Protection (AoN innovation-5) prints *"You gain resistance to void damage
+   * equal to 3 plus half your level. IF YOU HAVE VOID HEALING, YOU INSTEAD GAIN AN EQUAL AMOUNT OF
+   * RESISTANCE TO VITALITY DAMAGE"* — one record, two mutually exclusive entries, exactly the
+   * `whenCreatureTrait` shape, over a fact deriveDefenses computes in this same function
+   * (`negativeHealing`) and build.ts computes again at :6663.
+   *
+   * `true` = only for a character with void healing, `false` = only for one without. Absent is
+   * unconditional, which is every other entry in the database.
+   */
+  whenVoidHealing?: boolean;
+  /**
    * The printed clause the number is limited by, when that limit is NOT resolvable from the sheet but
    * the entry is still COUNTED — Backfire Mantle's *"from your own alchemical items and those of your
    * allies"*.
@@ -4895,6 +4907,17 @@ export interface EidolonConfig {
   cantrips?: (string | null)[];
   /** Secondary unarmed attack (always 1d6, agile + finesse): form name + damage type. */
   secondary?: { name?: string; damageType?: DamageType };
+  /**
+   * The eidolon's OWN languages, one entry per pick its type asks for (`CompanionMod.languageChoices`),
+   * `null`/absent until chosen — the same shape `cantrips` above uses.
+   *
+   * batch 033, devotion-phantom-eidolon#language: AoN eidolon-20 prints *"Language one common mortal
+   * language the eidolon spoke in life"*, a question nothing in the app asked. It is the PLAYER's
+   * answer about this companion, so it belongs on the companion's own config rather than on the
+   * summoner's language slots (`recordLanguageSlots` draws only on feats, heritage, background and
+   * invested items and would have nowhere to put an eidolon's).
+   */
+  languages?: (string | null)[];
 }
 
 export interface CompanionConfig {
@@ -5272,6 +5295,15 @@ export interface SpellAccessGrant {
    * every saved roster entry, to say something a rule says in one line. `'any'` means every tradition.
    */
   traditions?: Tradition[] | 'any';
+  /**
+   * …narrowed to spells carrying ONE OF these traits, when the printed clause names traits rather than
+   * a whole list. AoN eidolon-8, Fey Gift Spells: *"you can add spells that have the ILLUSION OR MENTAL
+   * traits that appear on the arcane spell list to your spell repertoire."* Without this the widening is
+   * all-or-nothing and opens 793 arcane spells where print opens 158.
+   *
+   * ANY of the listed traits qualifies ("illusion OR mental"); the tradition test still applies on top.
+   */
+  traits?: string[];
   /**
    * …or a set resolved from the CHARACTER rather than written down, because it differs per character
    * and so could never be a static list:
@@ -5977,7 +6009,9 @@ export interface Character {
   /** Whole TRADITIONS a record opened to the picker, rather than named spells (Mysterious Repertoire:
    *  "one spell in your spell repertoire not on the divine spell list"). Kept as a rule instead of
    *  ~1,500 expanded ids; `max` and `from` are shown beside the widened options. */
-  spellListTraditions?: { entryId?: string; traditions: Tradition[] | 'any'; max?: number; from: string }[];
+  /*  `traits` narrows the widening to spells carrying one of them — see SpellAccessGrant.traits, whose
+   *  value this carries through unchanged (eidolon-8's "illusion or mental" arcane spells). */
+  spellListTraditions?: { entryId?: string; traditions: Tradition[] | 'any'; traits?: string[]; max?: number; from: string }[];
   /** The spell list a CLASS ARCHETYPE substituted for the entry's tradition — "Replace your spell
    *  list with the elemental spell list. Your actual magical tradition is unchanged, but you choose
    *  your spells from the elemental list instead" (Elemental Magic). Unlike the two fields above this

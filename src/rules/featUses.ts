@@ -39,9 +39,32 @@ export const usesLabel = (u: { max: number; per: string; every?: number }) => `$
  * first one's frequency. Returns null when an upgrade removes the limit entirely (Eternal Wings:
  * "at all times") — an untracked ability, not a zero-use one.
  */
+/**
+ * The `<featureId>-<subclassId>` VARIANT of a class feature the character's subclass retunes, when the
+ * subclass has one and both records carry a limit.
+ *
+ * A subclass can rewrite a class feature's frequency: AoN arcane-school-21 (School of Unified Magical
+ * Theory) prints *"You can Drain Bonded Item once per day for each rank of spell you can cast"*, where
+ * classFeatures/arcane-bond prints once per day flat. The variant record is how this project already
+ * carries a subclass's version of a shared feature (derive.ts:3428-3442 owns it, FeatsTab.tsx:189 shows
+ * it), but nothing PREFERRED its limit — so the retune could only ever add a second pip row beside the
+ * generic one instead of replacing it.
+ *
+ * Deliberately narrow: only when the GENERIC record has a limit of its own, which is what "retunes"
+ * means. A variant carrying a limit the base does not have is a limit of its own and is left alone.
+ */
+function retunedBy(c: Character, feat: Feat, db?: ContentDatabase): { id: string; limitedUses: LimitedUses } | null {
+  if (!db || !c.subclassId || !feat.limitedUses) return null;
+  const suffix = `-${c.subclassId}`;
+  const base = feat.id.endsWith(suffix) ? feat.id.slice(0, -suffix.length) : feat.id;
+  const variant = db.classFeatures?.[`${base}${suffix}`] as { limitedUses?: LimitedUses } | undefined;
+  if (!variant?.limitedUses) return null;
+  return { id: base, limitedUses: variant.limitedUses };
+}
+
 export function effectiveUses(c: Character, feat: Feat | undefined, db?: ContentDatabase): (LimitedUses & { upgradedBy?: string }) | null {
   if (!feat) return null;
-  let lim = feat.limitedUses;
+  let lim = retunedBy(c, feat, db)?.limitedUses ?? feat.limitedUses;
   // A count that grows with level ("at 12th this increases to twice per day") — the highest step the
   // character has reached wins, and `max` is the value before the first step.
   if (lim?.maxByLevel) {
@@ -70,9 +93,14 @@ export function effectiveUses(c: Character, feat: Feat | undefined, db?: Content
 export function featUse(c: Character, feat: Feat | undefined, db?: ContentDatabase): FeatUse | null {
   const lim = effectiveUses(c, feat, db);
   if (!feat || !lim || lim.max <= 0) return null;
-  const spent = c.featUses?.[feat.id] ?? 0;
+  /* One counter for a retuned feature, not two. The Feats tab draws the row from the VARIANT record
+   * (FeatsTab.tsx:189) and the Main tab from the GENERIC one that carries `grantsActions`, so keying the
+   * spend on whichever record the caller happened to hold would give the same ability two independent
+   * pip counts. The generic id is the shared key — and the one PlayState.featUses already stores. */
+  const featId = retunedBy(c, feat, db)?.id ?? feat.id;
+  const spent = c.featUses?.[featId] ?? 0;
   return {
-    featId: feat.id,
+    featId,
     name: feat.name,
     // Clamp: a stale spend count (feat retrained, data changed) must never show a negative pip count.
     current: Math.max(0, Math.min(lim.max, lim.max - spent)),

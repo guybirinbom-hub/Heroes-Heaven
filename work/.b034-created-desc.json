@@ -1,0 +1,17 @@
+{
+ "findings": [
+  {
+   "id": "school-of-unified-magical-theory#drain-bonded-item-uses",
+   "note": "The SECOND PHASE the create row owed. work/.b033-rows-gap-data-rows.json created classFeatures/arcane-bond-school-of-unified-magical-theory with `create: true`, and a create row carries no description by design — its own `why` says so verbatim (\"No description: the created record has none ... that prose is owed to a created-prose spec\"). The record therefore shipped with no entry in public/core-descriptions.json, which is exactly the two verify reds this batch ended on: readable-record-check (\"28 record(s) ship with nothing a player can read\" — one of the 28) and render-check (\"1 of 26,711 records would draw nothing at all\" — that one). Both instruments resolve a record's readable text as `rec.description` -> `descs[bucket][id].d` -> the ast tree -> `rec.note` (scripts/readable-record-check.mjs:70-78), so a `description` row is the whole fix and nothing else is authored here. The wording is ours, not the mirror's: print runs the clause on from the school's own prose (\"Your studies into the very nature of magic itself have let you use it more efficiently--instead of ...\"), where a variant of Arcane Bond has to say what it is a variant OF, so the first sentence names the bonded item and the second is the printed rule it changes. Every token is present in arcane-school-21, which is also what precheck (5) in scripts/wg-batch-run.mjs demands of a description row.",
+   "backfillRows": [
+    {
+     "category": "classFeatures",
+     "id": "arcane-bond-school-of-unified-magical-theory",
+     "field": "description",
+     "value": "Your studies into the very nature of magic itself have let you use it more efficiently—instead of using Drain Bonded Item only once per day, you can use it once per day for each rank of spell you can cast, recalling a spell of that rank each time.",
+     "why": "AoN arcane-school-21 (School of Unified Magical Theory), the clause the create row was built from: \"Your studies into the very nature of magic itself have let you use it more efficiently--instead of using Drain Bonded Item only once per day, you can use it once per day for each rank of spell you can cast, recalling a spell of that rank each time.\" The create row in work/.b033-rows-gap-data-rows.json made this record with no description, because a `create: true` row carries none; this is the created-prose phase it named. Without it the record draws an empty DescriptionModal on the Feats tab (render-check) and reads as textless to readable-record-check."
+    }
+   ]
+  }
+ ]
+}

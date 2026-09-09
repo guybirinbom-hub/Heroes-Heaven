@@ -1,0 +1,209 @@
+{
+ "findings": [
+  {
+   "id": "the-distant-grasp",
+   "backfillRows": [],
+   "note": "Code-only: the option-carrier + per-option-ladder teach in scripts/wg-identity.mjs, plus a work/experience-instrument-limits.json parking entry for WGs pre-remaster Levitate (print says Gravity Well, which is what we grant)."
+  },
+  {
+   "id": "the-unbound-step",
+   "backfillRows": [],
+   "note": "Code-only: the same two teaches; the residual undelivered ops are WGs (Psi)/(legacy) name qualifiers, answered by the effectDelivery teach specified in the report."
+  },
+  {
+   "id": "school-of-kalistrade",
+   "backfillRows": [],
+   "note": "Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers now credit the option record itself (the option-carrier teaches in scripts/wg-values.mjs, scripts/wg-identity.mjs and scripts/wg-diff.mjs)."
+  },
+  {
+   "id": "battle-creed",
+   "backfillRows": [],
+   "note": "Code-only: the advancement-table-keyed-by-subclass teach in scripts/wg-values.mjs (the ranks live in src/rules/advancement.ts, which is code, not data) plus the option-carrier teach for the two granted feats."
+  },
+  {
+   "id": "battle-creed#control",
+   "backfillRows": [],
+   "note": "Code-only: a work/experience-instrument-limits.json parking entry. Print states no player choice (your deitys favored weapon); build.ts:3784 resolves it, so no control and no row is owed."
+  },
+  {
+   "id": "whisper-of-wings",
+   "backfillRows": [],
+   "note": "Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers now credit the option record itself (the option-carrier teaches in scripts/wg-values.mjs, scripts/wg-identity.mjs and scripts/wg-diff.mjs)."
+  },
+  {
+   "id": "ligneous-instinct#instrument",
+   "backfillRows": [],
+   "note": "Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers now credit the option record itself (the option-carrier teaches in scripts/wg-values.mjs, scripts/wg-identity.mjs and scripts/wg-diff.mjs)."
+  },
+  {
+   "id": "school-of-rooted-wisdom#instrument",
+   "backfillRows": [],
+   "note": "Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers now credit the option record itself (the option-carrier teaches in scripts/wg-values.mjs, scripts/wg-identity.mjs and scripts/wg-diff.mjs)."
+  },
+  {
+   "id": "school-of-thassilonian-rune-magic#instrument",
+   "backfillRows": [],
+   "note": "Code-only: SETTLED_IDENTITIES [spells] in scripts/wg-identity.mjs. The carrier is a DIFFERENT record (classFeatures/runelord); classFeatures/school-of-thassilonian-rune-magic is never owned by any class, so no data row could deliver the seven sin spells and none is owed."
+  },
+  {
+   "id": "curse-of-the-mortal-warrior#instrument",
+   "backfillRows": [],
+   "note": "Code-only: the mode-modifier teach in scripts/wg-values.mjs. The four oracle-cursebound modes already carry the -1/-2 status save penalty with the printed numbers."
+  },
+  {
+   "id": "way-of-the-drifter#instrument-skill",
+   "backfillRows": [],
+   "note": "Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers now credit the option record itself (the option-carrier teaches in scripts/wg-values.mjs, scripts/wg-identity.mjs and scripts/wg-diff.mjs)."
+  },
+  {
+   "id": "way-of-the-drifter#instrument-deeds",
+   "backfillRows": [],
+   "note": "Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers now credit the option record itself (the option-carrier teaches in scripts/wg-values.mjs, scripts/wg-identity.mjs and scripts/wg-diff.mjs)."
+  },
+  {
+   "id": "devotion-phantom-eidolon#instrument",
+   "backfillRows": [],
+   "note": "Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers now credit the option record itself (the option-carrier teaches in scripts/wg-values.mjs, scripts/wg-identity.mjs and scripts/wg-diff.mjs)."
+  },
+  {
+   "id": "interrogation-methodology#instrument",
+   "backfillRows": [],
+   "note": "Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers now credit the option record itself (the option-carrier teaches in scripts/wg-values.mjs, scripts/wg-identity.mjs and scripts/wg-diff.mjs)."
+  },
+  {
+   "id": "spinner-of-threads#instrument",
+   "backfillRows": [],
+   "note": "Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers now credit the option record itself (the option-carrier teaches in scripts/wg-values.mjs, scripts/wg-identity.mjs and scripts/wg-diff.mjs)."
+  },
+  {
+   "id": "flame-order#instrument",
+   "backfillRows": [],
+   "note": "Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers now credit the option record itself (the option-carrier teaches in scripts/wg-values.mjs, scripts/wg-identity.mjs and scripts/wg-diff.mjs)."
+  },
+  {
+   "id": "the-tangible-dream#instrument",
+   "backfillRows": [],
+   "note": "Code-only: the same two teaches; the residual undelivered ops are WGs (Psi) name qualifiers."
+  },
+  {
+   "id": "speaker-in-sibilance#instrument",
+   "backfillRows": [],
+   "note": "Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers now credit the option record itself (the option-carrier teaches in scripts/wg-values.mjs, scripts/wg-identity.mjs and scripts/wg-diff.mjs)."
+  },
+  {
+   "id": "school-of-the-boundary#instrument",
+   "backfillRows": [],
+   "note": "Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers now credit the option record itself (the option-carrier teaches in scripts/wg-values.mjs, scripts/wg-identity.mjs and scripts/wg-diff.mjs)."
+  },
+  {
+   "id": "the-resentment#patron-skill",
+   "backfillRows": [],
+   "note": "Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers now credit the option record itself (the option-carrier teaches in scripts/wg-values.mjs, scripts/wg-identity.mjs and scripts/wg-diff.mjs)."
+  },
+  {
+   "id": "fey-eidolon#eidolon-skills",
+   "backfillRows": [],
+   "note": "Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers now credit the option record itself (the option-carrier teaches in scripts/wg-values.mjs, scripts/wg-identity.mjs and scripts/wg-diff.mjs)."
+  },
+  {
+   "id": "alchemical-sciences-methodology#crafting-skill",
+   "backfillRows": [],
+   "note": "Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers now credit the option record itself (the option-carrier teaches in scripts/wg-values.mjs, scripts/wg-identity.mjs and scripts/wg-diff.mjs)."
+  },
+  {
+   "id": "elemental-eidolon#eidolon-skills",
+   "backfillRows": [],
+   "note": "Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers now credit the option record itself (the option-carrier teaches in scripts/wg-values.mjs, scripts/wg-identity.mjs and scripts/wg-diff.mjs)."
+  },
+  {
+   "id": "school-of-unified-magical-theory#instrument-spells",
+   "backfillRows": [],
+   "note": "Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers now credit the option record itself (the option-carrier teaches in scripts/wg-values.mjs, scripts/wg-identity.mjs and scripts/wg-diff.mjs)."
+  },
+  {
+   "id": "faiths-flamekeeper#instrument",
+   "backfillRows": [],
+   "note": "Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers now credit the option record itself (the option-carrier teaches in scripts/wg-values.mjs, scripts/wg-identity.mjs and scripts/wg-diff.mjs)."
+  },
+  {
+   "id": "paradox-of-opposites#instrument",
+   "backfillRows": [],
+   "note": "Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers now credit the option record itself (the option-carrier teaches in scripts/wg-values.mjs, scripts/wg-identity.mjs and scripts/wg-diff.mjs)."
+  },
+  {
+   "id": "decay-instinct#instrument-resistances",
+   "backfillRows": [],
+   "note": "Code-only: whileActive set-collector teach in scripts/wg-values.mjs closed the poison member; the fungus damage-SOURCE clause has no type name, settled in SETTLED_VALUES [set|resistances]. The data already carries both entries with the printed 3+Con value."
+  },
+  {
+   "id": "witness-to-ancient-battles#instrument",
+   "backfillRows": [],
+   "note": "Code-only: option-carrier teach closed the lores ladder and ten of eleven spells; the surviving row is WG spelling Judgement vs our print-correct Judgment, settled in SETTLED_IDENTITIES [spells]. Changing the data would move us away from print."
+  },
+  {
+   "id": "steward-of-stone-and-fire#instrument",
+   "backfillRows": [],
+   "note": "Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers now credit the option record itself (the option-carrier teaches in scripts/wg-values.mjs, scripts/wg-identity.mjs and scripts/wg-diff.mjs)."
+  },
+  {
+   "id": "stone-order#instrument",
+   "backfillRows": [],
+   "note": "Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers now credit the option record itself (the option-carrier teaches in scripts/wg-values.mjs, scripts/wg-identity.mjs and scripts/wg-diff.mjs)."
+  },
+  {
+   "id": "armor-innovation#instrument-control",
+   "backfillRows": [],
+   "note": "Code-only: OFF_RECORD_OPTIONS entry in scripts/wg-identity.mjs plus a work/experience-instrument-limits.json parking entry. The Power Suit / Subterfuge Suit control is rendered in src/builder/shared.tsx into build.inventorArmorStats, so there is no record field to author."
+  },
+  {
+   "id": "lurker-in-devouring-dark#instrument",
+   "backfillRows": [],
+   "note": "Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers now credit the option record itself (the option-carrier teaches in scripts/wg-values.mjs, scripts/wg-identity.mjs and scripts/wg-diff.mjs)."
+  },
+  {
+   "id": "wilding-steward#instrument",
+   "backfillRows": [],
+   "note": "Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers now credit the option record itself (the option-carrier teaches in scripts/wg-values.mjs, scripts/wg-identity.mjs and scripts/wg-diff.mjs)."
+  },
+  {
+   "id": "school-of-the-reclamation#instrument",
+   "backfillRows": [],
+   "note": "Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers now credit the option record itself (the option-carrier teaches in scripts/wg-values.mjs, scripts/wg-identity.mjs and scripts/wg-diff.mjs)."
+  },
+  {
+   "id": "red-mantis-magic-school",
+   "backfillRows": [],
+   "note": "Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers now credit the option record itself (the option-carrier teaches in scripts/wg-values.mjs, scripts/wg-identity.mjs and scripts/wg-diff.mjs)."
+  },
+  {
+   "id": "ripple-in-the-deep",
+   "backfillRows": [],
+   "note": "Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers now credit the option record itself (the option-carrier teaches in scripts/wg-values.mjs, scripts/wg-identity.mjs and scripts/wg-diff.mjs)."
+  },
+  {
+   "id": "angel-eidolon",
+   "backfillRows": [],
+   "note": "Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers now credit the option record itself (the option-carrier teaches in scripts/wg-values.mjs, scripts/wg-identity.mjs and scripts/wg-diff.mjs)."
+  },
+  {
+   "id": "way-of-the-vanguard",
+   "backfillRows": [],
+   "note": "Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers now credit the option record itself (the option-carrier teaches in scripts/wg-values.mjs, scripts/wg-identity.mjs and scripts/wg-diff.mjs)."
+  },
+  {
+   "id": "way-of-the-sniper",
+   "backfillRows": [],
+   "note": "Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers now credit the option record itself (the option-carrier teaches in scripts/wg-values.mjs, scripts/wg-identity.mjs and scripts/wg-diff.mjs)."
+  },
+  {
+   "id": "spore-order",
+   "backfillRows": [],
+   "note": "Code-only for the two flags the finding names (intimidation, mushroom-patch), both cleared by the option-carrier teaches. NO row: the records remaining NO-SHEET-EFFECT verdict is a REAL gap the finding did not cover (print: the spore order counts as a member of the leaf order and qualifies for leaf order feats), reported in CROSS-FILE GAPS rather than papered over."
+  },
+  {
+   "id": "dragon-eidolon#instrument",
+   "backfillRows": [],
+   "note": "Code-only: the option-carrier teaches cleared the two skill rows and the arcane tradition option. The remaining tradition difference is handed to dragon-eidolon#tradition in another family, per the findings own proposal."
+  }
+ ]
+}

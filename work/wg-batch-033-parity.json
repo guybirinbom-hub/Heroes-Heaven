@@ -1,0 +1,255 @@
+{
+ "batch": 33,
+ "records": [
+  {
+   "id": "the-distant-grasp",
+   "verdict": "FIXED",
+   "evidence": "[batch 33 read, adversarially confirmed] the-distant-grasp#telekinetic-projectile: The Distant Grasp increases telekinetic projectile's range to 60 feet and neither side models it, so the spell row shows — cited by code-only spec work/.b033-rows-situational.json finding the-distant-grasp#telekinetic-projectile (0 rows; family situational changed src/rules/situationalBonuses.ts in this batch), test test/batch033-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added), test test/wg-experience-lanes.test.ts (in what this batch added); the-distant-grasp#telekinetic-hand: The Distant Grasp raises telekinetic hand's carrying capacity on a rank ladder and neither side models it, so the spell  — cited by code-only spec work/.b033-rows-situational.json finding the-distant-grasp#telekinetic-hand (0 rows; family situational changed src/rules/situationalBonuses.ts in this batch), test test/batch033-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added), test test/wg-experience-lanes.test.ts (in what this batch added)"
+  },
+  {
+   "id": "the-unbound-step",
+   "verdict": "FIXED",
+   "evidence": "[batch 33 read, adversarially confirmed] the-unbound-step#phase-bolt: The Unbound Step's non-amp modification to phase bolt (stripping 1 point of the target's circumstance AC bonus on a succ — cited by code-only spec work/.b033-rows-situational.json finding the-unbound-step#phase-bolt (0 rows; family situational changed src/rules/situationalBonuses.ts in this batch), test test/batch033-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added)"
+  },
+  {
+   "id": "school-of-kalistrade",
+   "verdict": "MATCHES",
+   "evidence": "[batch 33 read] comparer misread settled/taught: school-of-kalistrade — work/.b033-rows-instruments.json finding school-of-kalistrade note: Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers no"
+  },
+  {
+   "id": "battle-creed",
+   "verdict": "MATCHES",
+   "evidence": "[batch 33 read] comparer misread settled/taught: battle-creed — work/.b033-rows-instruments.json finding battle-creed note: Code-only: the advancement-table-keyed-by-subclass teach in scripts/wg-values.mjs (the ranks live in src/rules/advancement.ts, which is code, not data) plus the; battle-creed#control — work/.b033-rows-instruments.json finding battle-creed#control note: Code-only: a work/experience-instrument-limits.json parking entry. Print states no player choice (your deitys favored weapon); build.ts:3784 resolves it, so no "
+  },
+  {
+   "id": "whisper-of-wings",
+   "verdict": "MATCHES",
+   "evidence": "[batch 33 read] comparer misread settled/taught: whisper-of-wings — work/.b033-rows-instruments.json finding whisper-of-wings note: Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers no"
+  },
+  {
+   "id": "titans-breaker",
+   "verdict": "MATCHES",
+   "evidence": "[batch 33 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "skin-hard-as-horn",
+   "verdict": "FIXED",
+   "evidence": "[batch 33 read, adversarially confirmed] skin-hard-as-horn: The two qualifiers on the ikon's immanence resistance ride in a `note` key that no reader reads, so the resistance is fo — cited by row spec work/.b033-rows-data-rows.json finding skin-hard-as-horn (1 row(s)), row classFeatures/skin-hard-as-horn field:choice in work/.b033-rows-data-rows.json, test test/batch033-data.test.ts (in what this batch added)"
+  },
+  {
+   "id": "school-of-rooted-wisdom",
+   "verdict": "MATCHES",
+   "evidence": "[batch 33 read] comparer misread settled/taught: school-of-rooted-wisdom#instrument — work/.b033-rows-instruments.json finding school-of-rooted-wisdom#instrument note: Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers no"
+  },
+  {
+   "id": "ligneous-instinct",
+   "verdict": "FIXED",
+   "evidence": "[batch 33 read, adversarially confirmed] ligneous-instinct#instrument: The SET-GAP flags (resistances theirs=piercing,slashing ours=(nothing); weaknesses theirs=fire ours=(nothing)) are a com — cited by test test/batch033-engine.test.ts (in what this batch added), test test/batch033-instruments.test.ts (in what this batch added); ligneous-instinct#wooden-rage-mode: Wooden Rage's additional damage is delivered twice — once correctly and level-scaled by the Rage strike rider, and again — cited by test test/batch033-engine.test.ts (in what this batch added), test test/batch033-instruments.test.ts (in what this batch added)"
+  },
+  {
+   "id": "school-of-thassilonian-rune-magic",
+   "verdict": "MATCHES",
+   "evidence": "[batch 33 read] comparer misread settled/taught: school-of-thassilonian-rune-magic#instrument — work/.b033-rows-instruments.json finding school-of-thassilonian-rune-magic#instrument note: Code-only: SETTLED_IDENTITIES [spells] in scripts/wg-identity.mjs. The carrier is a DIFFERENT record (classFeatures/runelord); classFeatures/school-of-thassilon"
+  },
+  {
+   "id": "curse-of-the-mortal-warrior",
+   "verdict": "MATCHES",
+   "evidence": "[batch 33 read] comparer misread settled/taught: curse-of-the-mortal-warrior#instrument — work/.b033-rows-instruments.json finding curse-of-the-mortal-warrior#instrument note: Code-only: the mode-modifier teach in scripts/wg-values.mjs. The four oracle-cursebound modes already carry the -1/-2 status save penalty with the printed numbe"
+  },
+  {
+   "id": "way-of-the-drifter",
+   "verdict": "MATCHES",
+   "evidence": "[batch 33 read] comparer misread settled/taught: way-of-the-drifter#instrument-skill — work/.b033-rows-instruments.json finding way-of-the-drifter#instrument-skill note: Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers no; way-of-the-drifter#instrument-deeds — work/.b033-rows-instruments.json finding way-of-the-drifter#instrument-deeds note: Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers no"
+  },
+  {
+   "id": "devotion-phantom-eidolon",
+   "verdict": "FIXED",
+   "evidence": "[batch 33 read, adversarially confirmed] devotion-phantom-eidolon#instrument: The MISSING skill|medicine, skill|occultism and the `spellcasting` flag are instrument misreads: both skills and the occ — cited by test test/batch033-closer.test.ts (in what this batch added), code src/rules/companions.ts (in what this batch added), code src/rules/companionGrants.ts (in what this batch added), code src/rules/types.ts (in what this batch added), code src/sheet/CompanionsTab.tsx (in what this batch added); devotion-phantom-eidolon#language: WG asks the player to choose the eidolon's language and we ask nothing and record nothing — the printed Language line re — cited by test test/batch033-closer.test.ts (in what this batch added), code src/rules/companions.ts (in what this batch added), code src/rules/companionGrants.ts (in what this batch added), code src/rules/types.ts (in what this batch added), code src/sheet/CompanionsTab.tsx (in what this batch added)"
+  },
+  {
+   "id": "interrogation-methodology",
+   "verdict": "FIXED",
+   "evidence": "[batch 33 read, adversarially confirmed] interrogation-methodology#instrument: The MISSING skill|diplomacy flag is an instrument misread: Diplomacy is granted by the investigator subclass option, and — cited by row classFeatures/interrogation-methodology field:aonId in work/.b033-rows-gap-data-rows.json, row classFeatures/interrogation-methodology field:edition in work/.b033-rows-gap-data-rows.json, test test/wg-experience-lanes.test.ts (in what this batch added)"
+  },
+  {
+   "id": "spinner-of-threads",
+   "verdict": "MATCHES",
+   "evidence": "[batch 33 read] comparer misread settled/taught: spinner-of-threads#instrument — work/.b033-rows-instruments.json finding spinner-of-threads#instrument note: Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers no"
+  },
+  {
+   "id": "flame-order",
+   "verdict": "MATCHES",
+   "evidence": "[batch 33 read] comparer misread settled/taught: flame-order#instrument — work/.b033-rows-instruments.json finding flame-order#instrument note: Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers no"
+  },
+  {
+   "id": "the-tangible-dream",
+   "verdict": "FIXED",
+   "evidence": "[batch 33 read, adversarially confirmed] the-tangible-dream#granted-spell-2nd: The Conscious Mind picker's description for The Tangible Dream shows an empty \"2nd:\" line — the 2nd-rank granted spell I — cited by code-only spec work/.b033-rows-gap-data-rows.json finding the-tangible-dream#granted-spell-2nd (0 rows; family gap-data-rows changed src/data/index.ts, src/rules/featUses.ts, src/rules/featGrantsAuto.ts, src/rules/companionGrants.ts, src/rules/derive.ts, src/rules/modes.ts, src/rules/types.ts, src/rules/build.ts, src/sheet/SpellsTab.tsx in this batch), test test/wg-experience-lanes.test.ts (in what this batch added), test test/batch033-gap-data.test.ts (in what this batch added), code src/data/index.ts (in what this batch added)"
+  },
+  {
+   "id": "speaker-in-sibilance",
+   "verdict": "MATCHES",
+   "evidence": "[batch 33 read] comparer misread settled/taught: speaker-in-sibilance#instrument — work/.b033-rows-instruments.json finding speaker-in-sibilance#instrument note: Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers no"
+  },
+  {
+   "id": "thousand-league-sandals",
+   "verdict": "MATCHES",
+   "evidence": "[batch 33 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "school-of-the-boundary",
+   "verdict": "MATCHES",
+   "evidence": "[batch 33 read] comparer misread settled/taught: school-of-the-boundary#instrument — work/.b033-rows-instruments.json finding school-of-the-boundary#instrument note: Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers no"
+  },
+  {
+   "id": "the-resentment",
+   "verdict": "MATCHES",
+   "evidence": "[batch 33 read] comparer misread settled/taught: the-resentment#patron-skill — work/.b033-rows-instruments.json finding the-resentment#patron-skill note: Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers no"
+  },
+  {
+   "id": "fey-eidolon",
+   "verdict": "FIXED",
+   "evidence": "[batch 33 read, adversarially confirmed] fey-eidolon#eidolon-skills: The digest's \"MISSING skill|deception\" and \"MISSING skill|nature\" are comparer misreads: both are delivered by the summo — cited by row classFeatures/fey-eidolon field:spellListAdditions in work/.b033-rows-data-rows.json, test test/batch033-engine.test.ts (in what this batch added), test test/batch033-data.test.ts (in what this batch added), test test/batch033-gap-data.test.ts (in what this batch added); fey-eidolon#magical-understudy: Print grants the eidolon the Magical Understudy feat at 1st and Magical Adept at 7th; we grant neither, so a fey summone — cited by row spec work/.b033-rows-engine.json finding fey-eidolon#magical-understudy (1 row(s)), row classFeatures/fey-eidolon field:spellListAdditions in work/.b033-rows-data-rows.json, test test/batch033-engine.test.ts (in what this batch added), test test/batch033-data.test.ts (in what this batch added), test test/batch033-gap-data.test.ts (in what this batch added); fey-eidolon#fey-gift-spells: Fey Gift Spells widens the summoner's repertoire to arcane illusion/mental spells; neither side models it, so the one th — cited by row spec work/.b033-rows-data-rows.json finding fey-eidolon#fey-gift-spells (1 row(s)), row classFeatures/fey-eidolon field:spellListAdditions in work/.b033-rows-data-rows.json, test test/batch033-engine.test.ts (in what this batch added), test test/batch033-data.test.ts (in what this batch added), test test/batch033-gap-data.test.ts (in what this batch added); fey-eidolon#language: Print gives the fey eidolon Sylvan; WG grants a language for it and we model no eidolon language anywhere. — cited by row classFeatures/fey-eidolon field:spellListAdditions in work/.b033-rows-data-rows.json, test test/batch033-engine.test.ts (in what this batch added), test test/batch033-data.test.ts (in what this batch added), test test/batch033-gap-data.test.ts (in what this batch added)"
+  },
+  {
+   "id": "harmonic-oscillator",
+   "verdict": "FIXED",
+   "evidence": "[batch 33 read, adversarially confirmed] harmonic-oscillator#overdrive-bonus: Neither side models the Overdrive rider: the resistance stays at 3 + half level while overdriven, where print says it ri — cited by row spec work/.b033-rows-engine.json finding harmonic-oscillator#overdrive-bonus (1 row(s)), test test/batch033-engine.test.ts (in what this batch added)"
+  },
+  {
+   "id": "alchemical-sciences-methodology",
+   "verdict": "FIXED",
+   "evidence": "[batch 33 read, adversarially confirmed] alchemical-sciences-methodology#crafting-skill: The digest's \"MISSING skill|crafting\" is a comparer misread: Crafting trained is delivered by the investigator subclass  — cited by row classFeatures/alchemical-sciences-methodology field:aonId in work/.b033-rows-data-rows.json, row classFeatures/alchemical-sciences-methodology field:edition in work/.b033-rows-data-rows.json, test test/batch033-data.test.ts (in what this batch added), test test/wg-experience-lanes.test.ts (in what this batch added); alchemical-sciences-methodology#versatile-vials: An Alchemical Sciences investigator gets no versatile vial counter, so the Quick Tincture action we grant them has nothi — cited by row classFeatures/alchemical-sciences-methodology field:aonId in work/.b033-rows-data-rows.json, row classFeatures/alchemical-sciences-methodology field:edition in work/.b033-rows-data-rows.json, test test/batch033-data.test.ts (in what this batch added), test test/wg-experience-lanes.test.ts (in what this batch added); alchemical-sciences-methodology#edition-aonid: The record carries the LEGACY Advanced Player's Guide aonId and edition:'legacy' while its text and source are the curre — cited by row spec work/.b033-rows-data-rows.json finding alchemical-sciences-methodology#edition-aonid (2 row(s)), row classFeatures/alchemical-sciences-methodology field:aonId in work/.b033-rows-data-rows.json, row classFeatures/alchemical-sciences-methodology field:edition in work/.b033-rows-data-rows.json, test test/batch033-data.test.ts (in what this batch added), test test/wg-experience-lanes.test.ts (in what this batch added)"
+  },
+  {
+   "id": "elemental-eidolon",
+   "verdict": "FIXED",
+   "evidence": "[batch 33 read, adversarially confirmed] elemental-eidolon#eidolon-skills: The digest's \"MISSING skill|nature\" and \"MISSING skill|survival\" are comparer misreads: both are delivered by the summon — cited by test test/batch033-closer.test.ts (in what this batch added), code src/rules/companions.ts (in what this batch added), code src/rules/companionGrants.ts (in what this batch added); elemental-eidolon#core-note-generalises-fire: Our eidolon note applies the FIRE core's resistance/weakness/+1 damage to every element, which print gives to fire alone — cited by test test/batch033-closer.test.ts (in what this batch added), code src/rules/companions.ts (in what this batch added), code src/rules/companionGrants.ts (in what this batch added); elemental-eidolon#core-choice-no-reader: The Elemental Core pick has NO READER: the player chooses air/earth/fire/metal/wood/water and nothing in src/ ever consu — cited by test test/batch033-closer.test.ts (in what this batch added), code src/rules/companions.ts (in what this batch added), code src/rules/companionGrants.ts (in what this batch added)"
+  },
+  {
+   "id": "light-mortar-innovation",
+   "verdict": "FIXED",
+   "evidence": "[batch 33 read, adversarially confirmed] light-mortar-innovation#innovation-item: The innovation IS a light mortar the character owns from 1st level, and nothing in our data hands it over — WG gives the — cited by row classFeatures/light-mortar-innovation field:choice in work/.b033-rows-data-rows.json, test test/batch033-data.test.ts (in what this batch added), test test/batch033-instruments.test.ts (in what this batch added); light-mortar-innovation#duplicate-modification-choice: The initial light mortar modification is asked twice — once by the record's own inert `choice`, once by the live invento — cited by row spec work/.b033-rows-data-rows.json finding light-mortar-innovation#duplicate-modification-choice (1 row(s)), row classFeatures/light-mortar-innovation field:choice in work/.b033-rows-data-rows.json, test test/batch033-data.test.ts (in what this batch added), test test/batch033-instruments.test.ts (in what this batch added); light-mortar-innovation#mortar-stats: The innovation's own scaling statistics (AC/DC from your class DC, Int-based HP and saves, hardness and save-rank steps, — cited by row classFeatures/light-mortar-innovation field:choice in work/.b033-rows-data-rows.json, test test/batch033-data.test.ts (in what this batch added), test test/batch033-instruments.test.ts (in what this batch added)"
+  },
+  {
+   "id": "school-of-unified-magical-theory",
+   "verdict": "FIXED",
+   "evidence": "[batch 33 read, adversarially confirmed] school-of-unified-magical-theory#drain-bonded-item-uses: A UMT wizard's Drain Bonded Item still shows one use per day at every level; print gives one use per day per spell rank  — cited by row spec work/.b033-rows-gap-data-rows.json finding school-of-unified-magical-theory#drain-bonded-item-uses (1 row(s)), test test/batch033-gap-data.test.ts (in what this batch added)"
+  },
+  {
+   "id": "faiths-flamekeeper",
+   "verdict": "MATCHES",
+   "evidence": "[batch 33 read] comparer misread settled/taught: faiths-flamekeeper#instrument — work/.b033-rows-instruments.json finding faiths-flamekeeper#instrument note: Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers no"
+  },
+  {
+   "id": "decay-instinct",
+   "verdict": "FIXED",
+   "evidence": "[batch 33 read, adversarially confirmed] decay-instinct#instrument-resistances: The 'SET-GAP set|resistances … ours=(nothing)' flag is a comparer misread — Raging Resistance is carried as a whileActiv — cited by row classFeatures/decay-instinct field:whileActive in work/.b033-rows-gap-data-rows.json, test test/batch033-engine.test.ts (in what this batch added), test test/batch033-instruments.test.ts (in what this batch added); decay-instinct#rotting-rage-damage-scaling: Rotting Rage's damage never grows: our mode adds a flat +6 at every level, where print (and WG) give 10 once you have we — cited by row classFeatures/decay-instinct field:whileActive in work/.b033-rows-gap-data-rows.json, test test/batch033-engine.test.ts (in what this batch added), test test/batch033-instruments.test.ts (in what this batch added)"
+  },
+  {
+   "id": "paradox-of-opposites",
+   "verdict": "MATCHES",
+   "evidence": "[batch 33 read] comparer misread settled/taught: paradox-of-opposites#instrument — work/.b033-rows-instruments.json finding paradox-of-opposites#instrument note: Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers no"
+  },
+  {
+   "id": "curse-of-creeping-ashes",
+   "verdict": "FIXED",
+   "evidence": "[batch 33 read, adversarially confirmed] curse-of-creeping-ashes#cursebound-4-text: Our cursebound note invents a mechanic the print does not have — it tells the player cursebound 4 kills them, when print — cited by code-only spec work/.b033-rows-situational.json finding curse-of-creeping-ashes#cursebound-4-text (0 rows; family situational changed src/rules/situationalBonuses.ts in this batch), code-only spec work/.b033-rows-gap-situational.json finding curse-of-creeping-ashes#cursebound-4-text (0 rows; family gap-situational changed src/rules/situationalBonuses.ts in this batch), test test/batch033-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added), test test/batch033-data.test.ts (in what this batch added), test test/batch033-gap-situational.test.ts (in what this batch added), test test/batch033-gap-data.test.ts (in what this batch added); curse-of-creeping-ashes#speed-penalty: The cursebound 4 Speed penalty reaches no number on our sheet even though the mode lane can carry it — WG applies -10 st — cited by row spec work/.b033-rows-data-rows.json finding curse-of-creeping-ashes#speed-penalty (2 row(s)), test test/batch033-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added), test test/batch033-data.test.ts (in what this batch added), test test/batch033-gap-situational.test.ts (in what this batch added), test test/batch033-gap-data.test.ts (in what this batch added)"
+  },
+  {
+   "id": "witness-to-ancient-battles",
+   "verdict": "FIXED",
+   "evidence": "[batch 33 read, adversarially confirmed] witness-to-ancient-battles#instrument: Instrument misread: the comparer read only classFeatures['witness-to-ancient-battles'] and reported the two apparition L — cited by row classFeatures/witness-to-ancient-battles field:description in work/.b033-rows-repair.json, test test/batch033-repair.test.ts (in what this batch added), test test/batch033-instruments.test.ts (in what this batch added)"
+  },
+  {
+   "id": "steward-of-stone-and-fire",
+   "verdict": "FIXED",
+   "evidence": "[batch 33 read, adversarially confirmed] steward-of-stone-and-fire#instrument: Instrument misread: the comparer reported the Mountain/Volcano Lore ranks as stuck at trained and all ten apparition spe — cited by row classFeatures/steward-of-stone-and-fire field:description in work/.b033-rows-repair.json, test test/batch033-instruments.test.ts (in what this batch added), test test/batch033-gap-data.test.ts (in what this batch added), code src/rules/featGrantsAuto.ts (in what this batch added); steward-of-stone-and-fire#duplicate-lore-grant: Two of our carriers train the same two apparition Lores for this record: the class option's grants.lores and a flat entr — cited by row classFeatures/steward-of-stone-and-fire field:description in work/.b033-rows-repair.json, code-only spec work/.b033-rows-gap-data-rows.json finding steward-of-stone-and-fire#duplicate-lore-grant (0 rows; family gap-data-rows changed src/data/index.ts, src/rules/featUses.ts, src/rules/featGrantsAuto.ts, src/rules/companionGrants.ts, src/rules/derive.ts, src/rules/modes.ts, src/rules/types.ts, src/rules/build.ts, src/sheet/SpellsTab.tsx in this batch), test test/batch033-instruments.test.ts (in what this batch added), test test/batch033-gap-data.test.ts (in what this batch added), code src/rules/featGrantsAuto.ts (in what this batch added)"
+  },
+  {
+   "id": "stone-order",
+   "verdict": "MATCHES",
+   "evidence": "[batch 33 read] comparer misread settled/taught: stone-order#instrument — work/.b033-rows-instruments.json finding stone-order#instrument note: Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers no"
+  },
+  {
+   "id": "armor-innovation",
+   "verdict": "FIXED",
+   "evidence": "[batch 33 read, adversarially confirmed] armor-innovation#suit-item: Choosing the suit does not put the innovation armor in the character's inventory — WG's select hands over the Power Suit — cited by code-only spec work/.b033-rows-engine.json finding armor-innovation#suit-item (0 rows; family engine changed src/rules/build.ts, src/rules/companions.ts, src/rules/companionGrants.ts, src/rules/types.ts, src/sheet/CompanionsTab.tsx in this batch), test test/batch033-engine.test.ts (in what this batch added), code src/rules/build.ts (in what this batch added), test test/batch033-data.test.ts (in what this batch added), test test/batch033-instruments.test.ts (in what this batch added), test test/batch033-gap-data.test.ts (in what this batch added)"
+  },
+  {
+   "id": "gleaming-blade",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #135 (batch 33; n from entry.n)"
+  },
+  {
+   "id": "wilding-steward",
+   "verdict": "MATCHES",
+   "evidence": "[batch 33 read] comparer misread settled/taught: wilding-steward#instrument — work/.b033-rows-instruments.json finding wilding-steward#instrument note: Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers no"
+  },
+  {
+   "id": "lurker-in-devouring-dark",
+   "verdict": "FIXED",
+   "evidence": "[batch 33 read, adversarially confirmed] lurker-in-devouring-dark#avatar-damage-type: Our stored text for the apparition's avatar Strike drops the damage TYPE printed on it — \"6d10+6 bludgeoning\" became \"6d — cited by row spec work/.b033-rows-repair.json finding lurker-in-devouring-dark#avatar-damage-type (12 row(s)), row classFeatures/lurker-in-devouring-dark field:description in work/.b033-rows-repair.json, test test/batch033-repair.test.ts (in what this batch added), test test/batch033-gap-data.test.ts (in what this batch added), code src/rules/featGrantsAuto.ts (in what this batch added); lurker-in-devouring-dark#duplicate-lore-grant: Two of our own carriers grant this apparition's Ocean/Sailing Lore: the class option's grants.lores (with the correct 8t — cited by row classFeatures/lurker-in-devouring-dark field:description in work/.b033-rows-repair.json, test test/batch033-repair.test.ts (in what this batch added), test test/batch033-gap-data.test.ts (in what this batch added), code src/rules/featGrantsAuto.ts (in what this batch added); lurker-in-devouring-dark#instrument: The digest's \"DIFFERENT skill|lore:ocean theirs=expert/master ours=trained\" and \"spells theirs-not-ours=[causticblast …  — cited by row classFeatures/lurker-in-devouring-dark field:description in work/.b033-rows-repair.json, test test/batch033-repair.test.ts (in what this batch added), test test/batch033-gap-data.test.ts (in what this batch added), code src/rules/featGrantsAuto.ts (in what this batch added)"
+  },
+  {
+   "id": "school-of-the-reclamation",
+   "verdict": "MATCHES",
+   "evidence": "[batch 33 read] comparer misread settled/taught: school-of-the-reclamation#instrument — work/.b033-rows-instruments.json finding school-of-the-reclamation#instrument note: Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers no"
+  },
+  {
+   "id": "otherworldly-protection",
+   "verdict": "FIXED",
+   "evidence": "[batch 33 read, adversarially confirmed] otherworldly-protection#void-healing-swap: Print (and WG) let the resistance be VITALITY instead of void for a character with void healing; ours hard-codes void wi — cited by row spec work/.b033-rows-data-rows.json finding otherworldly-protection#void-healing-swap (1 row(s)), row classFeatures/otherworldly-protection field:resistances in work/.b033-rows-data-rows.json, test test/batch033-data.test.ts (in what this batch added), test test/batch033-instruments.test.ts (in what this batch added), test test/batch033-gap-data.test.ts (in what this batch added); otherworldly-protection#sanctified-resistance: Print (and WG) extend the resistance to unholy damage for a holy-sanctified character and to holy damage for an unholy-s — cited by row classFeatures/otherworldly-protection field:resistances in work/.b033-rows-data-rows.json, test test/batch033-data.test.ts (in what this batch added), test test/batch033-instruments.test.ts (in what this batch added), test test/batch033-gap-data.test.ts (in what this batch added)"
+  },
+  {
+   "id": "red-mantis-magic-school",
+   "verdict": "FIXED",
+   "evidence": "[batch 33 read, adversarially confirmed] red-mantis-magic-school#curriculum-description: The description the Builder actually shows for this arcane school has six curriculum spell names silently deleted, so th — cited by row spec work/.b033-rows-data-rows.json finding red-mantis-magic-school#curriculum-description (1 row(s)), test test/batch033-data.test.ts (in what this batch added), test test/batch033-instruments.test.ts (in what this batch added), test test/batch033-gap-data.test.ts (in what this batch added)"
+  },
+  {
+   "id": "ripple-in-the-deep",
+   "verdict": "MATCHES",
+   "evidence": "[batch 33 read] comparer misread settled/taught: ripple-in-the-deep — work/.b033-rows-instruments.json finding ripple-in-the-deep note: Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers no"
+  },
+  {
+   "id": "barrows-edge",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #136 (batch 33; n from entry.n)"
+  },
+  {
+   "id": "gaze-sharp-as-steel",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #137 (batch 33; n from entry.n)"
+  },
+  {
+   "id": "angel-eidolon",
+   "verdict": "FIXED",
+   "evidence": "[batch 33 read, adversarially confirmed] angel-eidolon: The digest's \"MISSING skill|diplomacy\" and \"MISSING skill|religion\" are instrument misreads: both trained skills are car — cited by row classFeatures/angel-eidolon field:description in work/.b033-rows-data-rows.json, code src/rules/companions.ts (in what this batch added), code src/rules/companionGrants.ts (in what this batch added), test test/batch033-data.test.ts (in what this batch added), test test/batch033-gap-data.test.ts (in what this batch added); angel-eidolon#language: Their encoding grants the angel eidolon's language and ours grants no language at all — neither the eidolon stat block n — cited by row classFeatures/angel-eidolon field:description in work/.b033-rows-data-rows.json, code src/rules/companions.ts (in what this batch added), code src/rules/companionGrants.ts (in what this batch added), test test/batch033-data.test.ts (in what this batch added), test test/batch033-gap-data.test.ts (in what this batch added); angel-eidolon#hallowed-strikes-text: Two of our three copies of Hallowed Strikes carry pre-remaster text that contradicts print: one says \"good damage\" harmi — cited by row spec work/.b033-rows-data-rows.json finding angel-eidolon#hallowed-strikes-text (1 row(s)), row classFeatures/angel-eidolon field:description in work/.b033-rows-data-rows.json, code-only spec work/.b033-rows-gap-data-rows.json finding angel-eidolon#hallowed-strikes-text (0 rows; family gap-data-rows changed src/data/index.ts, src/rules/featUses.ts, src/rules/featGrantsAuto.ts, src/rules/companionGrants.ts, src/rules/derive.ts, src/rules/modes.ts, src/rules/types.ts, src/rules/build.ts, src/sheet/SpellsTab.tsx in this batch), code src/rules/companions.ts (in what this batch added), code src/rules/companionGrants.ts (in what this batch added), test test/batch033-data.test.ts (in what this batch added), test test/batch033-gap-data.test.ts (in what this batch added)"
+  },
+  {
+   "id": "way-of-the-vanguard",
+   "verdict": "MATCHES",
+   "evidence": "[batch 33 read] comparer misread settled/taught: way-of-the-vanguard — work/.b033-rows-instruments.json finding way-of-the-vanguard note: Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers no"
+  },
+  {
+   "id": "spore-order",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "[batch 33 read] comparer misread settled/taught: spore-order — work/.b033-rows-instruments.json finding spore-order note: Code-only for the two flags the finding names (intimidation, mushroom-patch), both cleared by the option-carrier teaches. NO row: the records remaining NO-SHEET [orchestrator ruling: desk #134 asks the membership-token question; the record must park until ruled]"
+  },
+  {
+   "id": "dragon-eidolon",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #138 (batch 33; n from entry.n)"
+  },
+  {
+   "id": "construct-eidolon",
+   "verdict": "FIXED",
+   "evidence": "[batch 33 read, adversarially confirmed] construct-eidolon#construct-heart: Our Construct Heart situational entry states only part of the printed benefit: the condition text is cut off with an ell — cited by code-only spec work/.b033-rows-situational.json finding construct-eidolon#construct-heart (0 rows; family situational changed src/rules/situationalBonuses.ts in this batch), test test/batch033-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added), code src/rules/companionGrants.ts (in what this batch added)"
+  },
+  {
+   "id": "way-of-the-sniper",
+   "verdict": "MATCHES",
+   "evidence": "[batch 33 read] comparer misread settled/taught: way-of-the-sniper — work/.b033-rows-instruments.json finding way-of-the-sniper note: Instrument misread, no data change: the records mechanic already lives on its class subclass/extraChoice OPTION carrier with a live reader, and the comparers no"
+  }
+ ]
+}

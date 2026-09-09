@@ -1,0 +1,46 @@
+{
+  "findings": [
+    {
+      "id": "light-mortar-innovation#innovation-item",
+      "backfillRows": [
+        {
+          "category": "items",
+          "id": "innovation-light-mortar",
+          "create": true,
+          "supersedes": true,
+          "value": {
+            "id": "innovation-light-mortar",
+            "name": "Light Mortar",
+            "level": 1,
+            "itemType": "equipment",
+            "bulk": 2,
+            "traits": [
+              "siege-weapon",
+              "mounted"
+            ],
+            "rarity": "uncommon",
+            "source": {
+              "book": "Pathfinder Battlecry!",
+              "license": "ORC"
+            },
+            "edition": "remaster-era",
+            "aonId": "siege-weapon-36"
+          },
+          "why": "archetype-329 (Munitions Master, Battlecry! pg. 64): \"Your innovation is a mounted siege weapon called a light mortar that weighs 2 Bulk.\" THE `description` IS NOT ON THIS CREATE ROW: it belongs to the created-prose spec work/.b033-created-desc-resume-light-mortar-siege.json alone, which is the documented shape (\"prose for created records, since a create row never carries a description\"). It was folded in here for one run, to get past apply pre-check (1b) refusing a description row on a record the same manifest creates; the closer fixed (1b) instead — prose is routed by field to public/core-descriptions.json, a different file from the one a create row writes, so neither row can shadow the other. The fold put 1,130 characters of prose INLINE in public/core.json and turned scripts/regen-durability-check.mjs red on \"descriptions are split out\", the same duplication scripts/split-descriptions.mjs exists to prevent; lib/apply-backfill.mjs now applies its skipFields to a create as well, so it cannot recur. Every guard still holds: pre-check (5) checks each prose token against the mirror through the description row, apply-backfill-now.mjs routes that row to core-descriptions.json, and render-check.mjs:92 / readable-record-check.mjs:71-72 read that file first, so the created item is readable. The mortar is a thing the munitions master OWNS from 1st level, and `grantsItems` — the only lane that hands a record's item to a built character (src/rules/build.ts:7671, the class-features arm) — reads `content.items[itemId]` and nothing else, so the grant needs an items-bucket record. siegeWeapons['light-mortar'] (siege-weapon-36) is the BUYABLE catalog entry reachable by hand through AddItemsModal / CompanionsTab and cannot be granted: the companion catalog is priced, player-added, and invisible to wg-identity, which reads the record's own `grantsItems`. A DISTINCT id rather than 'light-mortar': AddItemsModal keys its catalog rows by item id and maps every id in content.siegeWeapons to the companion Buy path (AddItemsModal.tsx:59,104), so an items row sharing the siege id would collide on the React row key and route its Add button to the companion — the shipped items/wolf-fang vs siegeWeapons/wolf-fang pair is exactly that collision. Name kept as \"Light Mortar\" because wg-identity names a granted item through anyName(itemId) (scripts/wg-identity.mjs:345,71) and the comparison is by NAME, not id. 2 Bulk is print's own number; the mortar's SCALING statistics (AC/DC off the inventor's class DC, Int-based HP and saves, hardness steps, +1 damage die at 5th and every 4 levels) are finding light-mortar-innovation#mortar-stats, a separate siege-companion lane that is not in this group and stays open."
+        },
+        {
+          "category": "classFeatures",
+          "id": "light-mortar-innovation",
+          "field": "grantsItems",
+          "value": [
+            {
+              "itemId": "innovation-light-mortar"
+            }
+          ],
+          "why": "archetype-329: \"Instead of choosing an innovation from the options listed in the inventor class, you have the light mortar innovation… Your innovation is a mounted siege weapon called a light mortar that weighs 2 Bulk.\" Nothing on our side handed it over: the record carried no grantsItems, and the innovation block at src/rules/build.ts:7688 branches on `armorInv === 'armor'` only. WHOLE FIELD, first value — classFeatures/light-mortar-innovation has no grantsItems in public/core.json or in scripts/data/effect-backfill.json, so this row supersedes nothing. No engine change is needed with it: 'light-mortar-innovation' is BOTH the subclass option id and the classFeature id, so it is in `grantOptions` for a munitions master, and the class-features arm of the grantsItems collector (build.ts:7671, which walks `[...ownedFeatureIds, ...grantOptions.map(o => o.id)]`) already reads it — measured on a built character by test/batch033-resume-light-mortar-siege-the-munitions-master-innovation-grant-3-red-lines-one-lane-.test.ts. The armour suit needed its own branch only because the item IS the answer to a per-character question (build.inventorArmorStats); the mortar is one fixed item, so the static field is the carrier print describes."
+        }
+      ],
+      "note": "Two rows, one lane: the item the innovation IS, and the grant that hands it over. Clears the KINDS `grantsItem` line (wg-diff FIELD_KINDS maps grantsItem -> ['grantsItems','combinationMeleeForm'], scripts/wg-diff.mjs:497) and the IDENTITY line items theirs-not-ours=[lightmortar] (wg-identity.mjs:345 reads rec.grantsItems and names the item through anyName). NO CODE ROW: measured, not assumed — see the second row's `why`. The KINDS line's other two kinds (`conditional`, `choice`) and the EXPERIENCE UNVERIFIED-EFFECT are NOT closed by these rows and are filed as CROSS-FILE GAPS to the instruments family in work/.b033-report-resume-light-mortar-siege-the-munitions-master-innovation-grant-3-red-lines-one-lane-.txt."
+    }
+  ]
+}

@@ -23,6 +23,7 @@ import { spawnSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { clip, comparerFlags, copyTestbase, dumpBlocks, entryOf, expectRowsFor, familyOf, gapProblems, isFlagged, keyOf, missingGapsRefusal, newRunId, pendingQuestions, precheck, refusalTail, uncitedQuiet, verifyChecks, verifyVerdict, wentQuiet } from '../scripts/wg-batch-run.mjs';
+import { applyBackfill } from '../scripts/lib/apply-backfill.mjs';
 
 /* A row that passes every pre-check, so each fixture below differs from the clean case in ONE way. */
 const row = (over: Record<string, unknown> = {}) => ({
@@ -82,6 +83,53 @@ describe('apply pre-checks (docs/wg-batch-pipeline.md §A)', () => {
     expect(precheck([at('a.json', 'c', create), at('b.json', 'f', field)], [], stubs).problems).toEqual([]);
     // batch 031: wild-winds-initiate#stance
     expect(precheck([at('b.json', 'f', field), at('a.json', 'c', create)], [], stubs).problems).toHaveLength(1);
+  });
+
+  /* The created-prose spec kind ("prose for created records, since a create row never carries a
+   * description") was unusable: (1b) refused every one of its rows. It cannot apply to prose —
+   * apply-backfill-now.mjs passes `skipFields: ['description', 'descRefs']` and routes those two fields
+   * to core-descriptions.json, a different file from the one the create row writes, so neither row can
+   * shadow the other. batch 033's created classFeatures record shipped blank because of the refusal. */
+  // batch 033: school-of-unified-magical-theory#drain-bonded-item-uses
+  it('(1b) exempts a created-prose row for school-of-unified-magical-theory, in either order, and still refuses a real field row', () => {
+    const rec = { category: 'classFeatures', id: 'arcane-bond-school-of-unified-magical-theory' };
+    const create = { ...rec, create: true, why: 'equipment-2827', value: { id: rec.id, name: 'Arcane Bond' } };
+    const prose = { ...rec, field: 'description', why: 'equipment-2827', value: 'The spines are shield spikes in a 10-foot burst.' };
+    // batch 033: school-of-unified-magical-theory#drain-bonded-item-uses
+    expect(precheck([at('rows-gap.json', 'c', create), at('created-desc.json', 'p', prose)], [], stubs).problems).toEqual([]);
+    // batch 033: school-of-unified-magical-theory#drain-bonded-item-uses
+    expect(precheck([at('created-desc.json', 'p', prose), at('rows-gap.json', 'c', create)], [], stubs).problems).toEqual([]);
+    /* Narrow: any field that IS written onto the record is still refused, so the exemption cannot be
+     * read as "(1b) is off for created records". */
+    const field = { ...rec, field: 'limitedUses', why: 'equipment-2827', value: { max: 10, per: 'day' } };
+    // batch 033: school-of-unified-magical-theory#drain-bonded-item-uses
+    expect(precheck([at('rows-gap.json', 'c', create), at('x.json', 'f', field)], [], stubs).problems).toHaveLength(1);
+  });
+
+  /* The other half of the same rule, one layer down. Exempting prose from (1b) is only safe while a
+   * create row cannot smuggle prose into core.json by another door: `applyBackfill` wrote `fix.value`
+   * whole and ignored the `skipFields` its caller passes for exactly these two fields, so batch 033's
+   * created items/innovation-light-mortar landed with 1,130 characters INLINE and
+   * scripts/regen-durability-check.mjs went red on "descriptions are split out". */
+  // batch 033: light-mortar-innovation#innovation-item
+  it('applyBackfill strips skipFields from a CREATE too — light-mortar-innovation prose stays split', () => {
+    const dir = mkdtempSync(join(tmpdir(), 'wg-create-'));
+    const file = join(dir, 'overlay.json');
+    const value = { id: 'innovation-light-mortar', name: 'Light Mortar', bulk: 2, description: 'x'.repeat(300), descRefs: [{ label: 'Aim' }] };
+    writeFileSync(file, JSON.stringify([{ category: 'items', id: 'innovation-light-mortar', create: true, why: 'siege-weapon-36', value }]));
+    const db: Record<string, Record<string, Record<string, unknown>>> = { items: {} };
+    applyBackfill(db, file, { skipFields: ['description', 'descRefs'] });
+    // batch 033: light-mortar-innovation#innovation-item
+    expect(db.items['innovation-light-mortar']).toEqual({ id: 'innovation-light-mortar', name: 'Light Mortar', bulk: 2 });
+    /* …and the row itself is not mutated, because the applier is run repeatedly over one overlay. */
+    // batch 033: light-mortar-innovation#innovation-item
+    expect(value.description).toHaveLength(300);
+    /* Without skipFields the whole record still lands — the rule is the caller's, not a new default. */
+    const plain: Record<string, Record<string, Record<string, unknown>>> = { items: {} };
+    applyBackfill(plain, file);
+    // batch 033: light-mortar-innovation#innovation-item
+    expect(plain.items['innovation-light-mortar'].description).toHaveLength(300);
+    rmSync(dir, { recursive: true, force: true });
   });
 
   it('(2) refuses a row over an existing overlay key unless it declares supersedes, and records old -> new', () => {

@@ -1,0 +1,80 @@
+{
+  "_": "BATCH 033 (resume) — family resume-instruments. Every finding here is an INSTRUMENT misread: the mechanic ships and a comparer could not see it. No backfill row is owed by any of them, so every entry carries backfillRows: [] with the reason. The work landed in scripts/wg-diff.mjs, scripts/wg-values.mjs and scripts/wg-identity.mjs, tested in test/batch033-resume-instruments-the-three-comparers-11-red-records-every-one-a-verified-carrier-the-comparer-cannot-see-.test.ts.",
+  "findings": [
+    {
+      "id": "curse-of-creeping-ashes#speed-penalty",
+      "backfillRows": [],
+      "note": "KINDS missing=[weapon,speed] and VALUES speed|land. No row: modes/curse-of-creeping-ashes-2..4 already carry {value:-2,circumstance,target:'attack'} and -4 {value:-10,status,target:'speed'}, gated feats:['curse-of-creeping-ashes'] — the row this finding proposed has already been applied. Both comparers were blind to a mode's `modifiers` array. TEACH: MODE_MODIFIER_KINDS + the modifiers walk in wg-diff's core.modes loop (KINDS), and the target:'speed' reader in wg-values' mode-modifier loop (VALUES). speed|land now agrees; speed|fly/climb/burrow/swim STILL REPORT, because the modifier carries no `detail` and src/rules/modes.ts:135 defaults a detail-less speed modifier to 'land' — the `detail: 'all'` row is a CROSS-FILE GAP for the otherworldly-and-curse-rows group and is deliberately not authored here."
+    },
+    {
+      "id": "curse-of-the-mortal-warrior#instrument",
+      "backfillRows": [],
+      "note": "KINDS missing=[save]. No row: modes/curse-of-the-mortal-warrior-2..4 carry {value:-1|-2,status,target:'save',appliesWhen:'against spells'} and wg-values.mjs:1259-1276 already reads exactly these by name — wg-diff was the only blind side. Closed by the same one teach as curse-of-creeping-ashes (MODE_MODIFIER_KINDS). Zero remaining rows on this record."
+    },
+    {
+      "id": "decay-instinct#rotting-rage-damage-scaling",
+      "backfillRows": [],
+      "note": "KINDS missing=[unmapped]. No row: their `setValue RAGE_DAMAGE 6/10/18` had no kind in wg-diff's variable map. TEACH: RAGE_DAMAGE -> 'weapon' in kindOfTheirOp (the same lane the unanchored ATTACK test already routes MELEE_ATTACK_DAMAGE_BONUS into), plus a reader for `const RAGE_DAMAGE` in src/rules/derive.ts:3651 — the tiers table, keyed by instinct, that rageStrikeRider actually applies. ⚠ Deliberately NOT anchored on src/rules/modes.ts cat-rotting-rage: this finding and ligneous-instinct#wooden-rage-mode ruled that mode's frozen +6 a display duplicate and the modes-engine group has now cut it, so a reader anchored there would have credited the kind only while the defect existed. THE KIND, NEVER THE NUMBER: no comparer compares rage damage as a value (wg-values holds no VAR mapping for RAGE_DAMAGE), so this cannot hide the 6->10->18 scaling work, which stays with the modes-engine group."
+    },
+    {
+      "id": "ligneous-instinct#wooden-rage-mode",
+      "backfillRows": [],
+      "note": "KINDS missing=[unmapped]. Identical to decay-instinct and closed by the same two teaches. Its second carrier, cat-wooden-rage's m(-10,'untyped','speed'), is credited by the modes.ts SOURCE-SCAN half of the modifiers teach (the catalogue is merged into content at runtime and never lands in public/core.json, so it has its own scan) — mutation-proofed through the new `--modes` hook."
+    },
+    {
+      "id": "flame-order#instrument",
+      "backfillRows": [],
+      "note": "KINDS missing=[specialStat]. SETTLE, wg-diff VERIFIED_EQUIVALENT 'flame-order': ['specialStat']. Their only unmatched op is `createValue MAIN_DRUID_ORDER = flame` and their OWN conditionals read it back (wg-show verified) — select-answer bookkeeping, the class already settled here for speaker-in-training (FAITHSPEAKER/GREENSPEAKER) and path-to-perfection (MONK_SAVES_*). Ours IS the subclass pick; skill, focus spell and granted feat all agree. The order ANATHEMA is a separate `injectText type=class-feature` (kind `note`), so the settle cannot hide it."
+    },
+    {
+      "id": "spore-order",
+      "backfillRows": [],
+      "note": "KINDS missing=[specialStat]. Same settle as flame-order, keyed 'spore-order'. ⚠ Its OTHER two red lines are untouched here and stay reporting: wg-identity `grants theirs-not-ours=[leaforder]` (the leaf-order membership lane, owner question spore-order-counts-as-leaf-order) and the EXPERIENCE NO-SHEET-EFFECT verdict — both the prose-queue-closeout group's. A test in this pass asserts the identity row is still printed after the settle."
+    },
+    {
+      "id": "stone-order#instrument",
+      "backfillRows": [],
+      "note": "KINDS missing=[specialStat]. Same settle as flame-order, keyed 'stone-order'. Three separate registry entries rather than one rule, so a fourth druid order added later still reports."
+    },
+    {
+      "id": "school-of-thassilonian-rune-magic#instrument",
+      "backfillRows": [],
+      "note": "KINDS missing=[spell]. SETTLE, wg-diff VERIFIED_EQUIVALENT ['spell'] — the KINDS mirror of the wg-identity SETTLED_IDENTITIES ['spells'] entry the first instrument pass wrote, because the KINDS gate reads wg-diff's theyOnly and subtracts no other comparer's settle. The sin pick is on classFeatures/runelord on our side (effectChoices['sin'] -> the seven initial school spells, build.ts:4104-4127). Adversarially confirmed in the test: this record appears in NO class's subclass-option list, so it is never owned and nothing on it could ever deliver those spells."
+    },
+    {
+      "id": "school-of-unified-magical-theory#drain-bonded-item-uses",
+      "backfillRows": [],
+      "note": "KINDS missing=[conditional,choice]. OFF_RECORD_CARRIERS 'school-of-unified-magical-theory': ['conditional','choice']. EVIDENCE GATE CLEARED before settling: arcane-school-21 prints three clauses and ALL THREE have carriers. (1) the Drain Bonded Item retune -> the created record classFeatures/arcane-bond-school-of-unified-magical-theory (limitedUses.maxByLevel 1->10) preferred by `retunedBy` at src/rules/featUses.ts:56-63; (2) 'you gain an additional 1st-level wizard class feat' -> BuildState.umtFeatId, picker src/builder/Builder.tsx:1005, injected at src/rules/build.ts:5080-5084; (3) 'you add one 1st-rank spell of your choice to your spellbook' -> wizardSpellbookBudget(level, isUmtBook), src/builder/Builder.tsx:407. So the settle silences no real gap and no CROSS-FILE GAP is owed. Both (1) and (2) are exercised on a BUILT wizard in the test."
+    },
+    {
+      "id": "school-of-unified-magical-theory#instrument-spells",
+      "backfillRows": [],
+      "note": "VERIFIER-ADDED (rule 4: a finding that correctly needs no row still gets an entry). The sibling half of #drain-bonded-item-uses on the same record, covered by the same OFF_RECORD_CARRIERS ['conditional','choice'] entry and named in its own test ('the comparer credits conditional and choice, and the record is clean', cited // batch 033: school-of-unified-magical-theory#instrument-spells). The two school spells already agree off the subclass option, so the record is clean in wg-diff with the entry live; no overlay row is owed."
+    },
+    {
+      "id": "otherworldly-protection#sanctified-resistance",
+      "backfillRows": [],
+      "note": "KINDS missing=[choice] and IDENTITY options theirs-not-ours=[void, vitality, holysanctified, unholysanctified, unsanctified]. TWO SETTLES: wg-diff VERIFIED_EQUIVALENT ['choice'] and wg-identity SETTLED_IDENTITIES ['options']. AoN innovation-1 makes both branches DERIVED, not chosen ('or to vitality damage if you have void healing', 'if you are sanctified ... this resistance applies to unholy damage'), and this batch's rows carry all four outcomes as derived entries on the record's `resistances` (void + condition, unholy whenCreatureTrait 'holy', holy whenCreatureTrait 'unholy'). Same derived-value-not-a-pick class as battle-creed in work/experience-instrument-limits.json. The VALUES set-gap on this record is NOT settled and still reports — it is the row group's."
+    },
+    {
+      "id": "battle-creed",
+      "backfillRows": [],
+      "note": "KINDS missing=[ac,save,weapon,conditional,choice,classDc,spellcasting] — the largest single red. Six of the seven are closed by a TEACH, not a settle: advancement.ts is keyed <classId> AND <subclassId>, a subclass key is a COMPLETE table that replaces the class default, and its rows name the printed CLAUSE in `source` ('initial-creed', 'lesser-creed', 'major-creed', 'true-creed') rather than the subclass — so the existing `source` scan credited the doctrine with nothing. wg-diff now also credits the whole table a subclass OPTION owns, the exact bound wg-values.mjs:141-150 already puts on the same teach. Blast radius MEASURED: exactly three advancement.ts tables are subclass-keyed (warpriest, battle-creed, light-mortar-innovation) and a class-keyed table is credited to nobody, which is why a file-wide REGISTRY_KINDS entry for advancement.ts was rejected — it would credit ~30 class and subclass keys with a whole chassis each."
+    },
+    {
+      "id": "battle-creed#control",
+      "backfillRows": [],
+      "note": "The seventh kind, `choice`. SETTLE, wg-diff VERIFIED_EQUIVALENT 'battle-creed': ['choice']. Their two `select from:ADJ_VALUE \"Select Deity Weapon\"` ops are a workaround for not resolving the deity's favored weapon; doctrine-6 offers no pick ('your deity's favored weapon'), and build.ts:3784 writes master@13 / expert@5 as a per-weapon override over EVERY entry of the chosen deity's favoredWeapons, so even a multi-weapon deity owes the player nothing to select. Cites the existing parking entry in work/experience-instrument-limits.json (lane derived-value-not-a-pick, verified 2026-09-08), whose refuter is the multi-weapon-deity case."
+    },
+    {
+      "id": "armor-innovation#suit-item",
+      "backfillRows": [],
+      "note": "IDENTITY items theirs-not-ours=[powersuit, subterfugesuit]. SETTLE, wg-identity SETTLED_IDENTITIES 'armor-innovation': ['items']. REFUTES the closer's triage line 'the item grant is not parked anywhere': src/rules/build.ts:7688-7702 already pushes items/power-suit or items/subterfuge-suit into grantedItems as a WORN item sourced 'Armor Innovation', with innovation-1 quoted verbatim in the comment. wg-identity reads only rec.grantsItems (line 345) and it cannot ride that field, because WHICH suit is the player's pick. Mutation-proofed on a BUILT inventor against a content copy with items/power-suit removed."
+    },
+    {
+      "id": "armor-innovation#instrument-control",
+      "backfillRows": [],
+      "note": "KINDS missing=[choice,grantsItem,conditional]. OFF_RECORD_CARRIERS 'armor-innovation': three kinds, three named carriers — choice = the 'Armor base statistics' PopupSelect at src/builder/shared.tsx:3565-3579 writing BuildState.inventorArmorStats (an outstanding required choice at build.ts:1262 until answered); grantsItem = build.ts:7688; conditional = inventorModificationOptions (build.ts:2755-2771), which filters the modification list by `f.level <= maxTierLevel` and by the suit tag, answering their four gated ABILITY_BLOCK selects. A hard-coded impl, the exact trap the dead-reader audit warns about. Paired with the existing experience parking (lane control-off-record)."
+    }
+  ]
+}

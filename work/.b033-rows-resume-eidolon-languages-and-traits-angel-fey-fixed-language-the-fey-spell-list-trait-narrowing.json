@@ -1,0 +1,33 @@
+{
+  "findings": [
+    {
+      "id": "angel-eidolon#language",
+      "backfillRows": [],
+      "note": "CODE, not a row. AoN eidolon-1 (the page this record cites) prints \"**Language** Celestial\"; the remaster twin eidolon-15 reads \"Language Empyrean\" (a straight rename). The carrier is a FIXED list on the eidolon TYPE, so it belongs beside the type's senses in src/rules/companionGrants.ts: new field CompanionMod.languages (a fixed answer, the other half of the languageChoices PICK the closer added) plus COMPANION_MODS['angel-eidolon'].languages = ['Celestial'], read in deriveEidolon (src/rules/companions.ts, the same type-row loop that reads languageChoices) so it lands in EidolonBlock.languages and the existing CompanionsTab Languages row. NOT classFeatures.grantsLanguages (types.ts:987): that grants the language to the SUMMONER, and print puts it on the eidolon's stat block. Tested in test/batch033-resume-eidolon-languages-and-traits-angel-fey-fixed-language-the-fey-spell-list-trait-narrowing.test.ts on a built 5th-level summoner."
+    },
+    {
+      "id": "fey-eidolon#language",
+      "backfillRows": [],
+      "note": "CODE, not a row — same carrier as angel-eidolon#language. AoN eidolon-8 (this record's cited page) prints \"**Language** Sylvan\"; remaster twin eidolon-22 reads \"Language Fey\". COMPANION_MODS['fey-eidolon'].languages = ['Sylvan']. Same test file, same built summoner."
+    },
+    {
+      "id": "dragon-eidolon#language",
+      "backfillRows": [],
+      "note": "CODE, not a row — added by the build-verifier, same carrier as the two above. AoN eidolon-7 (this record's cited page) and the remaster twin eidolon-21 both print \"Language Draconic\": COMPANION_MODS['dragon-eidolon'].languages = ['draconic']. A CONFIRMED batch-033 finding on a record inside the batch cut (work/wg-batch-033.json) that the closer's triage had pushed to 'next batch' when no carrier existed; the carrier exists now and the answer is one word, so leaving it would ship half a lane. Stored as the `content.languages` ID because one exists (unlike celestial/sylvan) — which also makes it the only test cover the reader's id-resolution branch has. Its OTHER aspect, dragon-eidolon#tradition, stays parked OWNER-QUEUED and is untouched. The five eidolon types with a fixed printed Language line that are NOT in the batch cut (beast eidolon-3 Sylvan, demon eidolon-5 Abyssal, plant eidolon-9 Sylvan, psychopomp eidolon-10 Requian, undead eidolon-11 Necril — plus swarm eidolon-13 Common and aberrant eidolon-14 Aklo) are deliberately NOT authored here: out-of-batch records."
+    },
+    {
+      "id": "fey-eidolon#fey-gift-spells",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "fey-eidolon",
+          "field": "spellListAdditions",
+          "value": { "traditions": ["arcane"], "traits": ["illusion", "mental"] },
+          "supersedes": true,
+          "why": "Whole-field re-emission of the row this batch already applied ({\"traditions\":[\"arcane\"]}), carrying the trait half of the same printed clause. AoN eidolon-8, verbatim: \"you can choose from the primal list as well as spells that have the illusion or mental traits that appear on the arcane spell list.\" (The remaster twin eidolon-22 reads \"as well as FROM spells that have…\"; this record cites eidolon-8, so the quote is that page's.) The widening was authored all-or-nothing, so the repertoire picker offers every arcane spell (793) where print offers the illusion-or-mental subset (158) — a real player defect with no gate line (gap-verifier residue R2). The reader for the narrowing shipped in this same batch and has had no writer since: SpellAccessGrant.traits (src/rules/types.ts:5288), passed through by the widening loop at src/rules/build.ts:6543 onto Character.spellListTraditions[].traits, and applied per spell by spellOpenedBy (src/sheet/SpellsTab.tsx:293). This row is that writer. The superseded value is merged whole: traditions is unchanged and traits is added."
+        }
+      ],
+      "note": "⚠ CROSS-SPEC COLLISION, and it is deliberate — work/.b033-rows-data-rows.json already carries a row on classFeatures/fey-eidolon/spellListAdditions, and precheck() check (1) in scripts/wg-batch-run.mjs refuses two specs writing one key regardless of supersedes. The row cannot be merged into that spec from here (it is another family's file). Before --stage apply, the earlier row must be dropped from work/.b033-rows-data-rows.json so this one stands alone; see CROSS-FILE GAPS in work/.b033-report-resume-eidolon-languages-and-traits-angel-fey-fixed-language-the-fey-spell-list-trait-narrowing.txt."
+    }
+  ]
+}

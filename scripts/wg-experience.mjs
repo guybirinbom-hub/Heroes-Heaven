@@ -112,7 +112,10 @@ const liveRows = wgRowsByBucket(sql);
 // character owns (the chassis fallback; see judgeDelivery).
 const blockRows = parseCopyBlock(sql, 'ability_block').rows;
 const nameIndex = (table, rows = null) => new Map((rows ?? parseCopyBlock(sql, table).rows).map((r) => [String(r.id), untsv(r.name ?? '')]));
-const names = { block: nameIndex('ability_block', blockRows), spell: nameIndex('spell'), trait: nameIndex('trait') };
+/* `item` joins them for `giveItem`: an inventor's innovation is HANDED OVER (WG's own op), and without
+ * this index the effect fell through effectDelivery to 'unchecked' — which is how light-mortar-innovation
+ * reached the gate as UNVERIFIED-EFFECT while the item was really in the character's inventory. */
+const names = { block: nameIndex('ability_block', blockRows), spell: nameIndex('spell'), trait: nameIndex('trait'), item: nameIndex('item') };
 // Ability blocks that ARE a question (their ops are a select) — "Domains", "Select a Bloodline" carriers.
 const blockIsSelect = new Set(blockRows.filter((r) => parseOps(r.operations).some((op) => op.type === 'select')).map((r) => String(r.id)));
 

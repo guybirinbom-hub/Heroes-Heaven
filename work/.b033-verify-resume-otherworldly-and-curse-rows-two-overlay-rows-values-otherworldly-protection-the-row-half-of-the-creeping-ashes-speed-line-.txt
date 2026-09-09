@@ -1,0 +1,178 @@
+BUILD-VERIFIER REPORT — batch 033 RESUME, group "otherworldly-and-curse-rows" (family resume-data-rows)
+Default: NOT DONE. Every verdict below is what I could not break.
+
+VERDICTS
+  1. otherworldly-protection#void-healing-swap      DONE   (row correct + proven; see BLOCKING)
+  2. otherworldly-protection#sanctified-resistance  DONE   (no-row entry is right; premise refutation re-checked and holds)
+  3. curse-of-creeping-ashes#speed-penalty          DONE   (row correct + proven; see BLOCKING)
+  4. the manifest as a whole                        NOT-DONE — the driver's `apply` pre-check HARD REFUSES
+                                                    this group's two rows. Orchestrator call (see BLOCKING).
+
+--------------------------------------------------------------------------------
+BLOCKING — the two rows can never reach the artefacts as the manifest stands
+--------------------------------------------------------------------------------
+I ran the driver's own pure pre-check (`precheck()` exported from scripts/wg-batch-run.mjs) over the
+REAL manifest work/.b033-specs.json (11 entries) and the real overlay, writing nothing:
+
+  PROBLEMS 4
+   · COLLISION classFeatures/otherworldly-protection/resistances:
+       work/.b033-rows-data-rows.json#otherworldly-protection#void-healing-swap
+       and work/.b033-rows-resume-otherworldly-and-curse-rows-…-speed-line-.json#otherworldly-protection#void-healing-swap
+       both write it — resolve by hand, the applier will not merge
+   · COLLISION modes/curse-of-creeping-ashes-4/modifiers:  (same two spec files, finding
+       curse-of-creeping-ashes#speed-penalty on both sides)
+   · COLLISION classFeatures/fey-eidolon/spellListAdditions  — NOT this group (resume-engine's spec vs
+       the same .b033-rows-data-rows.json); same shape, same cause.
+   · the b034-created-desc / gap-data-rows create-row overlap — NOT this group.
+
+Why it happens: `stageApply()` builds `rows` from **every** manifest entry unconditionally
+(`const rows = manifest.flatMap((m) => specRows(m.file)…)`, scripts/wg-batch-run.mjs:~690) and
+pre-check (1) is unconditional — it has no exemption for a spec whose rows are already on disk
+byte-identical, and `skippedSpecs` is computed AFTER the refusal. `--stage apply` therefore exits
+"4 pre-check problem(s) — NOTHING was written", and the resume's rows never land. The batch cannot
+finish without this being resolved.
+
+Not fixable inside this group: the collision is between two spec files and the only in-my-file move
+that clears it is deleting my own rows, which loses the fix. Removing or neutering the superseded
+rows in work/.b033-rows-data-rows.json is another family's file (absolute prohibition) and is a ROW
+REMOVAL, which prompt-section-9 rule 5 sends to `needsOrchestrator`. So it is reported, not done.
+
+Two resolutions, either one line of work for the orchestrator:
+  (a) In work/.b033-rows-data-rows.json, set `verification.correctedBackfillRows: []` on the two
+      findings otherworldly-protection#void-healing-swap and curse-of-creeping-ashes#speed-penalty
+      (and fey-eidolon#fey-gift-spells for the sibling group). `specFindings`/`specRows`
+      (wg-batch-run.mjs:562-563) already prefer `verification.correctedBackfillRows` over
+      `backfillRows` when non-empty — but an EMPTY array falls through to `backfillRows`, so this
+      route needs the driver's `?.length` test changed too. Read it before choosing (a).
+  (b) Drop the two superseded rows from work/.b033-rows-data-rows.json outright. Their values are
+      already in scripts/data/effect-backfill.json (applied, green) and my rows carry them forward
+      whole, so nothing is lost; the manifest entry and its stage[] stay.
+  (b) is the smaller and safer of the two. Either way the decision is Fable's, not mine.
+
+--------------------------------------------------------------------------------
+PER-ITEM EVIDENCE
+--------------------------------------------------------------------------------
+1. otherworldly-protection#void-healing-swap — DONE
+   PRINT re-read at source, not from the report: C:/wonderers guide/aon-2e-archive/data/by-category/
+   innovation/innovation-1.json → "You gain resistance equal to 3 + half your level to void damage, or
+   to vitality damage if you have void healing (such as if you're a dhampir). You gain the same amount
+   of resistance to spirit damage." innovation-5.json is the LEGACY page (negative/positive/alignment
+   damage) — the builder's choice of innovation-1 in `why` is right and its cross-file gap on
+   `aonParentId` is real.
+   ROW re-emission checked field-by-field against the shipped overlay row
+   (scripts/data/effect-backfill.json, classFeatures/otherworldly-protection.resistances): entries
+   spirit / unholy(whenCreatureTrait:'holy') / holy(whenCreatureTrait:'unholy') carried byte-identical;
+   entry 0 split into void(whenVoidHealing:false) + vitality(whenVoidHealing:true) at the same
+   '3+floor(@actor.level/2)'; the prose `condition` dropped. Nothing lost, nothing narrowed.
+   TARGET EXISTS: public/core.json classFeatures/otherworldly-protection carries `resistances`, so
+   `supersedes: true` is REQUIRED and is present. My-spec-only precheck: 0 problems, both supersessions
+   declared with the old value merged whole.
+   READER exists and handles `false` correctly — this is the one thing that would silently no-op:
+   src/rules/derive.ts `if (r.whenVoidHealing != null && r.whenVoidHealing !== voidHealing) continue;`
+   (and the identical line in the weakness loop). `!= null` — not a truthiness test — so
+   `whenVoidHealing:false` gates instead of being ignored. `voidHealing` is computed in the same
+   function from ancestry / heritage / background / feat / invested-item `negativeHealing`.
+   `whenVoidHealing` is declared at src/rules/types.ts:527. No src/ change needed and none made.
+   COMPARER: I read scripts/wg-values.mjs:1919-1921 — a SET-GAP reports only `theirs` members MISSING
+   from ours (`s.missing.filter(...)`), so adding `vitality` empties `missing` and the line closes with
+   no teach. The builder's "no teach needed" is correct, not a convenience.
+
+2. otherworldly-protection#sanctified-resistance — DONE (backfillRows: [] with a note, which is the
+   required shape for a finding that correctly needs no row)
+   I tried to break the refutation and could not. `whenCreatureTrait` is read at derive.ts through
+   `hasCreatureTrait(c, db, …)` → `creatureTraitsOf(c, db)` (derive.ts:2988-3017), which walks the
+   CHARACTER's ancestry traits, heritage/feat/classFeature/invested-item `grantsCreatureTraits` and
+   `chosenCreatureTraits` — the character's own traits, never the damaging creature's. And a sanctified
+   character is exactly who holds holy/unholy: src/rules/build.ts:6287-6297 pushes the trait from the
+   deity's `sanctification` answer for a cleric (one-option deities included) and :6331-6347 from a
+   feat option's `grantsCreatureTraits` — the Cleric/Champion Dedication route innovation-1 itself
+   names. So {type:'unholy', whenCreatureTrait:'holy'} = "resist unholy damage if you are sanctified
+   holy", which is print. No `whenSanctified` invented; correct — there is no reader for one.
+   Proven live in my harness (below): no unholy resistance unsanctified, 7 with the holy trait.
+
+3. curse-of-creeping-ashes#speed-penalty — DONE
+   PRINT re-read at source: C:/wonderers guide/aon-2e-archive/data/by-category/mystery/mystery-20.json
+   → "**Cursebound 4** You take a –10-foot status penalty to all your Speeds as your limbs begin to
+   crumble like ash." "all your Speeds", verbatim, so `detail:'all'` is print and not an inference.
+   ROW: whole-field re-emission of modes/curse-of-creeping-ashes-4.modifiers; the −2 circumstance
+   ranged-attack entry with its `appliesWhen` carried byte-identical (I diffed both entries against the
+   shipped overlay row and against public/core.json). Target exists, `supersedes: true` present.
+   READERS pre-exist: src/rules/modes.ts:135
+   `if (mod.target === 'speed') return target.detail == null || (mod.detail ?? 'land') === 'all' || …`
+   and the movement loop at src/rules/derive.ts over ['land','fly','climb','swim','burrow'], which asks
+   modeNumberBonus once per movement type and skips a Speed the character does not have. No code change
+   needed and none made. The sibling `note` row already reads "all your Speeds" — checked in core.json,
+   it needed nothing, as claimed.
+
+--------------------------------------------------------------------------------
+CHECKS I RAN MYSELF (not the builder's)
+--------------------------------------------------------------------------------
+· node scripts/vt.mjs <group test> test/batch033-data.test.ts
+    → 4 failed | 8 passed. Every failure is a row-dependent assertion and nothing else:
+      resume file — the `toEqual` on the void entry (received still carries the prose `condition`,
+      no `whenVoidHealing`) and the `toContainEqual` on the mode modifier (no `detail`);
+      data file — the same two, re-pointed. Matches the builder's report exactly.
+· ⚠ THE HOLE THAT LEAVES: both `it`s die at their FIRST assertion, so the derive halves the tests
+  claim to prove (built inventor, built dhampir, built oracle) never execute today. A test that fails
+  for the right reason still proves nothing about the reader. So I built the throwaway harness the
+  build-verifier prompt calls for — test/zz-throwaway-verify-otherworldly.test.ts, which loads the
+  group's spec, writes each `backfillRows` value onto the in-memory content copy, and runs the REAL
+  derive — and then deleted it. Result: 4 passed / 4.
+      · living lv8 armor-innovation inventor: void 7, NO vitality, spirit 7
+      · same build + heritageId 'dhampir': negativeHealing true, vitality 7, NO void, spirit 7
+      · unsanctified: no unholy resistance; with chosenCreatureTraits [holy]: unholy 7
+      · modeNumberBonus is −10 for ALL FIVE of land/fly/climb/swim/burrow (the group's own test only
+        checks fly + land); built lv6 oracle with a mode-granted fly Speed: fly 30 → 20, land −10;
+        the −2 ranged-attack entry survives the re-emission with its `appliesWhen` intact.
+  Both rows deliver the printed mechanic on a BUILT character. This is the evidence the group's own
+  tests will only produce after the driver applies.
+· driver precheck over my spec ALONE: 0 problems; over the whole manifest: the 4 above.
+· npx tsc --noEmit → clean (exit 0, no output).
+· node scripts/test-flip-audit.mjs --batch 033 → FAIL, but NOT on this group: the single complaint is
+  scripts/wg-diff.mjs:1507, VERIFIED_EQUIVALENT gained the key "stone-order" with no mutation-proof
+  test. That is the instruments family and postdates the builder's clean run. Filed below.
+· Citations on the two flips this group made in another family's file
+  (test/batch033-data.test.ts:96 and :131-132): both sit directly under
+  `// batch 033: curse-of-creeping-ashes#speed-penalty` / `// batch 033:
+  otherworldly-protection#void-healing-swap`, both ids are in `confirmed[]` of work/.b033-read.json,
+  and both enclosing describe titles carry the record id. Correct under rule 6. Editing that file was
+  unavoidable (the rows make the assertions stale) and it is listed in this group's own stage[].
+· MANIFEST: work/.b033-specs.json now holds 11 entries (the builder wrote 9; two later builders
+  appended). This group's entry is intact, family `resume-data-rows`, and its stage[] lists all four
+  touched paths — the spec, the report, its own test file and test/batch033-data.test.ts. No other
+  family's entry was dropped or altered. No new settle, no teach, no src/ change, no queue entry — so
+  no mutation-proof test is owed by this group.
+
+--------------------------------------------------------------------------------
+DATA STILL NEEDED
+--------------------------------------------------------------------------------
+- none. Both rows are whole-field re-emissions of fields that already exist in the overlay; no new
+  record, no created prose, no owner input. Confirmed independently against core.json and the overlay.
+
+--------------------------------------------------------------------------------
+CROSS-FILE GAPS
+--------------------------------------------------------------------------------
+- ⚠ BLOCKING, batch-wide: the manifest collision above. Orchestrator, before the next `--stage apply`.
+  It also hits work/.b033-rows-resume-eidolon-…json (classFeatures/fey-eidolon.spellListAdditions), so
+  fixing it for one group and not the other still refuses.
+- ⚠ NEW since the builder ran: scripts/test-flip-audit.mjs --batch 033 now FAILS —
+  scripts/wg-diff.mjs:1507 VERIFIED_EQUIVALENT gained "stone-order" with no mutation-proof test.
+  INSTRUMENTS family. Closer rule 6 makes it a batch failure: add the stunted-copy test, not an
+  exemption.
+- src/sheet/ModesPanel.tsx + src/rules/modes.ts MODE_TARGETS/modeTargetOptions — the mode editor
+  cannot express `detail:'all'` on a speed modifier. `targetKey('speed','all')` yields the key
+  'speed:all', which is in no `modeTargetOptions()` entry (MODE_TARGETS' 'speed' row has no
+  `needsDetail`), so the TargetPicker shows an unmatched value for the shipped cursebound-4 mode, and
+  any edit round-trips through `parseTargetKey` and silently drops the 'all'. `summarizeMod` also
+  labels it plainly "Speed", so the panel reads "−10 status to Speed" for a penalty print applies to
+  every Speed. ENGINE/UI family — a 'speed:all' option ("All Speeds") plus its label. Not authored
+  here; this group's row is correct as data.
+- src/rules/types.ts:4601-4603 — ModeModifier.detail's doc comment enumerates save / skill / ability
+  and omits 'speed'. Confirmed, one comment line, ENGINE family. (Builder's line, re-checked.)
+- classFeatures/otherworldly-protection.aonParentId is "innovation-5", the LEGACY page; the clause
+  this row implements is on innovation-1. Confirmed by reading both mirror docs. Three code comments
+  cite innovation-5 for a remaster sentence that is not on it: src/rules/derive.ts:2681, :2718,
+  src/rules/types.ts:520. DATA-ROWS/ENGINE follow-up. (Builder's line, re-checked and true.)
+- test/batch033-gap-data.test.ts:151's forward-reference names work/.b033-rows-data-rows.json for the
+  row that carries `detail:'all'`; the row is real but lives in this group's spec file. One-file-off
+  comment, gap-data-rows' file. (Builder's line, re-checked and true.)

@@ -1,0 +1,220 @@
+BATCH 033 — CLOSER'S GATE TRIAGE
+=================================================================================================
+Written by the closer after `--stage gate` (runId 6bfb35f4ba303480, 2026-09-08T14:44Z).
+Deliberately NOT named `.b033-report-<family>.txt` / `.b033-verify-<family>.txt`: those two shapes
+are harvested by `--stage apply-digest` into gap lines and read by `wg-batch-close.mjs` as teach
+evidence, and this file is neither. It is a disposition list.
+
+BASELINE vs NOW
+  baseline (work/.b033-baseline/gate.txt): 6 gates failed, KINDS 43 records.
+  now:                                     4 gates failed, KINDS 15 records.
+
+1. KINDS — 15 record(s) still model a kind we do not
+-------------------------------------------------------------------------------------------------
+NEXT BATCH (the work is named, nobody was assigned it — see work/.b033-verify-gaps.txt §3, the 19
+unharvested items; the gap harvester cannot see a report section underlined with `=`):
+
+  angel-eidolon         missing=[language]   \ eidolon LANGUAGES. The closer built the lane for the
+  fey-eidolon           missing=[language]   / three types whose printed Language line is a QUESTION
+      (devotion-phantom / anger-phantom / construct — AoN eidolon-20/16/18, "one common mortal
+      language"): CompanionMod.languageChoices + EidolonConfig.languages + the Edit-card select +
+      the block's Languages row. Angel and Fey print a FIXED list (Empyrean / Fey), which is a DATA
+      lane — a `languages` field on classes.summoner.subclass.options[] plus a wg-diff credit — and
+      a data row cannot be authored here: apply has already run and the manifest is closed.
+      → next batch, with dragon-eidolon (queued, below) settled first.
+
+  curse-of-creeping-ashes    missing=[weapon,speed]   \ src/rules/modes.ts. CROSS-FILE 1/2 of the
+  curse-of-the-mortal-warrior missing=[save]          | engine family and item 2 of the situational
+  decay-instinct             missing=[unmapped]       | verify: cat-wooden-rage and cat-rotting-rage
+  ligneous-instinct          missing=[unmapped]       / still carry a frozen m(6,'untyped','damage')
+      and cat-cursebound-1..3 still carry `modifiers: []`. Named NOT DONE by both the engine and the
+      situational verifiers; modes.ts was assigned to no family in this batch.  → next batch.
+
+  flame-order  spore-order  stone-order   missing=[specialStat]
+      The druid orders' anathema/specialStat carrier. Their skill, focus spell and granted feat all
+      agree after this batch (that is what dropped them from missing=[specialStat,conditional,skill,
+      grantsRecord,spell] at baseline to one kind).  → next batch.
+      spore-order ALSO carries owner question `spore-order-counts-as-leaf-order` — see §5.
+
+  light-mortar-innovation  missing=[grantsItem,conditional,choice]
+      CROSS-FILE 11/12 of the engine family: the siege-companion lane (a light mortar is a buyable
+      siege companion) and its scaling. Whole subsystem, not a row.  → next batch.
+
+  armor-innovation   missing=[choice,grantsItem,conditional]
+  battle-creed       missing=[ac,save,weapon,conditional,choice,classDc,spellcasting]
+      Both are parked in the EXPERIENCE gate by work/experience-instrument-limits.json with a
+      verified `_cite` (control-off-record / derived-value-not-a-pick). The KINDS gate has no
+      parking lot but the owner queue, and neither is a WG-vs-print conflict, so neither may be
+      queued.  → next batch: they need the innovation/creed carriers modelled, not a parking entry.
+
+  otherworldly-protection        missing=[choice]
+  school-of-unified-magical-theory missing=[conditional,choice]
+  school-of-thassilonian-rune-magic missing=[spell]
+      All three are already answered in the settle registries as KEPT OURS or as read findings; the
+      thassilonian one prints in the gate's own KEPT OURS block ("the two sides put the sin pick on
+      DIFFERENT RECORDS"). The KINDS gate reads wg-diff's theyOnly and does not subtract a settle,
+      so a settled record still counts here.  → next batch (or a wg-diff change, which is an
+      instrument decision and not the closer's).
+
+2. VALUES — 2 record(s)  (node scripts/wg-values.mjs --batch work/wg-batch-033.json:
+   "compared 32 records with at least one comparable value; 30 agree on every one")
+-------------------------------------------------------------------------------------------------
+  curse-of-creeping-ashes  MISSING speed|land/fly/climb/burrow/swim  theirs=-10  ours=(nothing)
+      Cursebound 4: "a –10-foot status penalty to all your Speeds". The registry text is now right
+      (scripts/backfill-oracle-curses.mjs:40 — the gap agent removed an INVENTED death clause), but
+      the NUMBER still has no carrier: src/rules/modes.ts's cat-cursebound-1..3 ship
+      `modifiers: []` and there is no cat-cursebound-4 at all. Situational verify item 2, same
+      modes.ts lane as the KINDS rows above.  → next batch, with the modes.ts work.
+      ⚠ CLOSER, END OF BATCH 033 — BOTH HALVES OF THAT PARAGRAPH ARE NOW WRONG; DO NOT CARRY IT
+      FORWARD. (a) `git show HEAD:src/rules/modes.ts | grep -c cat-cursebound-4` is 1: cat-cursebound-4
+      predates this batch (modes.ts:275), so "there is no cat-cursebound-4 at all" was never true.
+      (b) The number now HAS a carrier: the resume-data-rows row on modes/curse-of-creeping-ashes-4
+      .modifiers ships {value:-10, type:'status', target:'speed', detail:'all'}, and speed|land is
+      closed. The four other tracks still print because modes.ts:134 resolves a detail-less speed
+      modifier as `land`; the `detail:'all'` half is applied and tested on a built lv6 oracle
+      (test/batch033-gap-data.test.ts).
+
+  otherworldly-protection  SET-GAP set|resistances  theirs=vitality  ours=void,spirit,unholy,holy
+      Also its KINDS missing=[choice]. WG offers the resistance as a PICK (see the identity row
+      below); print gives the set. One record, one decision, and it is a choice-shape question, not
+      a number.  → next batch.
+
+3. IDENTITY — 4 record(s) counted by the gate (5 printed; dragon-eidolon is parked as OWNER-QUEUED)
+   (node scripts/wg-identity.mjs --batch work/wg-batch-033.json: "checked 30 records that grant a
+   NAMED thing; 25 match on every one")
+-------------------------------------------------------------------------------------------------
+  light-mortar-innovation  items theirs-not-ours=[lightmortar]
+  armor-innovation         items theirs-not-ours=[powersuit, subterfugesuit]
+      The inventor innovation ITEMS. Both records also fail KINDS on grantsItem for the same reason:
+      an innovation hands over a real item and nothing on our side does. armor-innovation's CONTROL
+      is separately adjudicated and parked in work/experience-instrument-limits.json
+      (control-off-record); the item grant is not parked anywhere.  → next batch, one lane.
+
+  otherworldly-protection  options theirs-not-ours=[void, vitality, holysanctified,
+                                                    unholysanctified, unsanctified]
+      The same pick as its VALUES row.  → next batch.
+
+  spore-order  grants theirs-not-ours=[leaforder]  ours=[leshyfamiliar]
+      THIS IS the owner question `spore-order-counts-as-leaf-order` — see §4/§5. Filed, and the gate
+      cannot see it because the entry is keyed by question id rather than record id.
+
+  dragon-eidolon  options theirs-not-ours=[divine, occult, primal]  (parked: OWNER-QUEUED, filed
+      this batch — WG offers a four-way tradition picker, eidolon-7 fixes arcane.)
+
+4. EXPERIENCE — 2 record(s)
+-------------------------------------------------------------------------------------------------
+  light-mortar-innovation  UNVERIFIED-EFFECT — "none of WG's 1 op(s) has a surface predicate yet:
+      giveItem". Same siege-companion lane as its KINDS row.  → next batch.
+
+  spore-order  NO-SHEET-EFFECT — "giveAbilityBlock #34226 'Leaf Order'". This IS owner question
+      `spore-order-counts-as-leaf-order` (work/owner-questions.json), but the gate parks an
+      OWNER-QUEUED record by matching the queue entry's `id` against the RECORD id, and that entry
+      is keyed by a QUESTION id instead. So the question is on the desk and the gate cannot see it.
+      → NEEDS THE ORCHESTRATOR: only she may touch work/owner-questions.json (absolute prohibition
+      for every agent in this workflow), so only she can re-key that entry to `spore-order` — or
+      rule that the gate should match on a `record` field the entry does not yet carry.
+
+5. OWNER QUEUE — 5 question(s) filed this batch through scripts/add-owner-question.mjs
+-------------------------------------------------------------------------------------------------
+  spore-order-counts-as-leaf-order  (filed by the gap-situational agent; see §4 for its id problem)
+  gleaming-blade        WG names the transcendence "Mirrored Spirit Strike"; print (ikon-6) names it
+                        Flowing Spirit Strike and no such record exists anywhere in the AoN mirror.
+  barrows-edge          WG makes the immanence damage PERSISTENT and drops the below-half-HP
+                        escalation; print (ikon-2) has neither. Player-visible.
+  gaze-sharp-as-steel   WG replaces the printed transcendence (1d6/2d6/3d6 precision damage,
+                        ikon-5 / action-3013) with "you gain the Reactive Strike feat".
+  dragon-eidolon        WG offers a four-way tradition picker; print (eidolon-7) fixes arcane.
+  The last four were the read stage's `askOwner` findings. `--stage close` refuses to derive an
+  OWNER-QUEUED verdict without a desk n, which is how they were found still unqueued.
+
+6. REGATE — no disposition owed
+-------------------------------------------------------------------------------------------------
+`--stage regate` (runId bf9a281e996d041f): every earlier batch re-swept and re-gated GREEN (32).
+No earlier-batch record newly fails, so there is nothing to dispose of under the blocking rule, and
+no id outside batch 033 was settled by this batch. The 36 out-of-batch records that went QUIET are a
+different thing — a comparer that stopped misreading them — and each is cited in
+work/.b033-gaps.json, which is what let `--stage close` finish.
+
+7. THE CLOSER'S OWN EDITS (all four listed in work/.b033-specs.json under family "engine")
+-------------------------------------------------------------------------------------------------
+  src/rules/companions.ts        the eidolon COMPANION_MODS pass now matches cfg.typeId as well as
+                                 the owner's feat ids; EidolonBlock.languages; LANGUAGE_UNCHOSEN.
+  src/rules/companionGrants.ts   CompanionMod.languageChoices (devotion-phantom / anger-phantom /
+                                 construct = 1 each); the elemental-eidolon note rewritten to the
+                                 six printed cores.
+  src/rules/types.ts             EidolonConfig.languages.
+  src/sheet/CompanionsTab.tsx    the language select on the eidolon Edit card + the block's
+                                 Languages row.
+  tests                          test/batch033-closer.test.ts (6) and
+                                 test/batch033-closer-render.test.tsx (3), both green; the 14
+                                 existing companion/eidolon test files stay green; tsc clean.
+
+8. SUITE — 4 failing, 3 fixed here, 1 not this batch's
+-------------------------------------------------------------------------------------------------
+First run (runId 42ca2f050dbd2c4e): 4 failed | 5558 passed | 1 skipped.
+Second run (runId eab7b6c64c0ed976): 1 failed | 5561 passed | 1 skipped.
+`node scripts/test-flip-audit.mjs --batch 033` is clean before and after every edit below (12 test
+files touched, 3 new settle keys, every flip cited).
+
+  FIXED — test/batch033-engine.test.ts, "fey-eidolon's grantedFeats reach the feat list…"
+      `expect(eidolonCantripSlots(build('summoner',1,{subclassId:'fey-eidolon'}), db)).toBe(0)` was
+      a PATCHED-VS-SHIPPED baseline: the row it was written beside (fey-eidolon.grantedFeats =
+      ['magical-understudy']) has since been applied, so the "shipped grants nothing" half returned
+      2. Rewritten to assert against a copy with `grantedFeats` STRIPPED — the shape the contract
+      demands ("never a patched-vs-shipped delta that flips once the row is applied"). The claim is
+      unchanged and the row is untouched. Cited: // batch 033: fey-eidolon#magical-understudy.
+
+  FIXED — test/batch033-gap-data.test.ts, "prefers the subclass variant's limit over the generic…"
+      Identical shape: "Unpatched, the generic limit stands" read `db()`, and the create row
+      classFeatures/arcane-bond-school-of-unified-magical-theory has landed, so featUse preferred
+      the variant and returned 5. Rewritten against a copy with that record deleted. Cited:
+      // batch 033: school-of-unified-magical-theory#drain-bonded-item-uses.
+
+  FIXED — test/raging-resistance.test.ts (an EARLIER batch's test), "every option grants…"
+      `o.grant.resistances[0].note` is undefined because the batch 033 row for
+      classFeatures/skin-hard-as-horn moved the clause from an off-schema `note` key to
+      IwrEntry.condition — the field that is actually declared and rendered; `note` is not a member
+      of IwrEntry and nothing read it. The assertion now reads `.condition`, and the record id is in
+      the it( title so the flip audit can check both halves. Cited: // batch 033: skin-hard-as-horn.
+
+  NOT THIS BATCH — test/umbrella-items.test.ts, "finds the AoN family summaries" (441 vs 440).
+      Measured, not assumed: `public/core.json`'s ENTIRE `items` bucket is byte-identical to HEAD
+      (7,879 records, 0 added, 0 removed, 0 changed) and core-descriptions.json changed only 12
+      classFeatures entries, so no batch 033 row can have moved this count. The 441st umbrella is
+      `throneglass` — aonId `equipment-5212`, the unpriced PAGE, with five priced graded kin
+      (throneglass-shard 10gp, -plate 100gp, low/standard/high-grade objects 20/35/600gp) — from the
+      2026-09-07 archive delta. The updated test that expects 441, with that reasoning written out,
+      is IN THE STASH (`git show "stash@{0}:test/umbrella-items.test.ts"` prints it); the working
+      tree holds the HEAD copy. It was failing before batch 033 started.
+      → NEEDS THE ORCHESTRATOR: `git stash pop` is a git write command and an absolute prohibition
+      for every agent here. Not edited by me: the stashed copy is another effort's file and a hand
+      edit would collide with the pop. This is the same flaggedResidue the gap-situational agent
+      parked in work/.b033-gaps.json, which names test/umbrella-items.test.ts explicitly.
+
+9. VERIFY — 38 checks, 34 clean, 2 tolerated, 2 newly red
+-------------------------------------------------------------------------------------------------
+Tolerated (already red at 12:34, work/.b033-baseline/start-state.json): ast-content-check,
+field-diff. Two that were red at the start are now GREEN: bestiary-fields-check and
+parity-residual-check (the latter because `--stage close` wrote the 50 verdicts).
+
+  readable-record-check — "28 record(s) ship with nothing a player can read".
+    · ONE is this batch's: classFeatures/arcane-bond-school-of-unified-magical-theory, the create
+      row behind school-of-unified-magical-theory#drain-bonded-item-uses. A `create:true` overlay
+      row makes a record with NO description inside, by design — the prose is the SECOND phase.
+      → NEEDS THE ORCHESTRATOR (a create-row correction; the closer may not write that phase).
+    · The other 27 are not batch 033's and cannot be: they sit in arcaneSchool, fatalMethod,
+      follower, grimFascination, hybridStudy, itemBonus, sidebar and source, and this batch wrote
+      rows in exactly three buckets — classFeatures (31), modes (3), classes (3). They arrived with
+      the untracked public/ast/{fatalMethod,follower,grimFascination}.json.gz and
+      public/data/bestiary/* files another effort left in the tree after the baseline snapshot.
+
+  render-check — "1 of 26,711 records would draw nothing at all", the single classFeatures row.
+      Same record, same cause, same disposition as above.
+
+10. GATE 9 FRESHNESS — green, and deliberately kept so
+-------------------------------------------------------------------------------------------------
+The newest mtime under src/builder + src/rules + public/core.json + the batch file is
+2026-09-08T14:39:10Z (src/rules/companions.ts, the closer's own edit); the experience artefact was
+OBSERVED at 14:44:08Z. Every edit made after the experience stage was a test/ or work/ file, neither
+of which the staleness walk reads — so the EXPERIENCE evidence is newer than everything it describes
+and the batch does not end on a stale gate.

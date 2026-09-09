@@ -1,0 +1,235 @@
+BATCH 033 — ADVERSARIAL VERIFY — FAMILY: instruments (WG-COMPARISON lane)
+=========================================================================
+
+STATE OF THE DELIVERABLE
+------------------------
+The builder's report opens with a blocking incident: a stray `git stash push` moved the entire tracked
+working tree (214 files) into stash@{0}, including this family's three comparer edits, and the builder
+could not restore it.
+
+I RESTORED THIS FAMILY'S THREE FILES, without any git write command: the blobs were read out of the
+stash with `git show` (read-only), re-normalised to CRLF (core.autocrlf=true; every file in this tree is
+CRLF) and written back with a file copy. Verified byte-exact — `git hash-object` on each restored file
+equals the stash blob's hash:
+    scripts/wg-values.mjs    4bc7e8d7f1528e6a1760c719408f116af16f4aad   (+132 lines)
+    scripts/wg-identity.mjs  68eb3fab3d673faec3c662d59bb15c03312a1bb9   (+122 lines)
+    scripts/wg-diff.mjs      2b826f5fc9a2fac5290e5b2f1a5b9ddfd2e8bd90   (+31 lines)
+Because the content is identical on both sides, a later `git stash pop` merges these three cleanly.
+
+⚠ THE REST OF THE STASH IS STILL OUT OF THE TREE — 211 files, and NOT my lane to restore. It holds at
+least src/rules/situationalBonuses.ts (the situational family's source change, whose test
+test/batch033-situational.test.ts is present and untracked) and tracker/*. A commit of the current tree
+would ship batch 033 with that work missing. See CROSS-FILE GAPS 1, which also records that
+`git stash pop` will now CONFLICT on src/rules/build.ts.
+
+MEASURED, reproduced by me on the restored tree (not taken from the builder's report):
+  wg-diff.mjs, whole database — output byte-identical to the builder's after-capture:
+      THEY-ONLY 296 -> 233     AGREE 1034 -> 1072     WE-ONLY 2838 -> 2863
+  wg-values  --batch work/wg-batch-033.json : 31 records to adjudicate -> 2   (both other families)
+  wg-identity --batch work/wg-batch-033.json: 28 unmatched -> 5   (4 other families + 1 real gap)
+  wg-values / wg-identity --batch 031 and 032: byte-identical to the before-captures. No regression.
+  Per-record, settles BYPASSED (--raw), over all 39 records of this family:
+      wg-values   27 of 28 compared records clean; only decay-instinct flagged (its settled member)
+      wg-identity 23 of 28 checked records match; 5 flagged, every one for a verified reason
+  npx tsc --noEmit                                       clean
+  node scripts/vt.mjs run test/batch033-instruments.test.ts        16 passed
+  node scripts/vt.mjs run test/batch03{0,1,2}-instruments.test.ts  20 passed (no sibling regression)
+  node scripts/test-flip-audit.mjs --batch 033           clean — 3 new settle keys, every flip cited
+
+
+WHAT I FIXED (six defects the builder left; all inside this family's own files)
+------------------------------------------------------------------------------
+F1  THREE WRONG AoN CITATIONS. Every quoted clause was verbatim, but three pointed at the wrong
+    document — the exact thing citation rule (2) exists to stop:
+      wg-values.mjs   Ligneous Instinct cited `instinct-11`      = "Giant"                -> instinct-16
+      wg-identity.mjs Thassilonian cited `arcane-school-20`      = "School of Protean Form"-> arcane-school-25
+      wg-identity.mjs Witness cited `apparition-2`               = DOES NOT EXIST          -> apparition-13
+    Verified each replacement by name AND by finding the quoted clause inside that document.
+
+F2  scripts/wg-identity.mjs HAD NO `--core` HOOK. wg-values.mjs and wg-diff.mjs both ship one; identity
+    hard-coded `public/core.json`. Consequence: TEACH 5, TEACH 6 and both SETTLED_IDENTITIES entries
+    could not be mutation-proofed AT ALL — a stunt run silently re-read the shipped content and printed
+    nothing, which is indistinguishable from a teach that works. My first stunt pass was fooled by this
+    before I found it. Added the hook with the same shape and comment as wg-values.
+
+F3  SETTLED_IDENTITIES 'witness-to-ancient-battles': ['spells'] WAS OVER-BROAD, and its comment claimed
+    the opposite ("a record genuinely missing an apparition spell still reports"). MEASURED FALSE:
+    delete `ghostly-weapon` from the option's grantedSpells and the settled run reported NOTHING, while
+    --raw reported `theirs-not-ours=[ghostlyweapon, weaponofjudgement]`. Narrowed to the one name it
+    actually answers: `['weaponofjudgement']`. Now the same stunt reports `[ghostlyweapon]` and keeps
+    the spelling twin settled.
+
+F4  SETTLED_VALUES 'decay-instinct': ['set|resistances'] WAS OVER-BROAD, same trap. MEASURED: delete the
+    POISON resistance and the settled run reported nothing. Narrowed to the unnameable member (their own
+    printed sentence). The same stunt now reports `SET-GAP set|resistances theirs=poison`.
+
+F5  MEMBER-LEVEL SETTLES did not exist; F3/F4 needed them. Added to both comparers, ~4 lines each: a
+    settle entry that names a MEMBER rather than a bucket/set key drops that member only. A member key
+    can never collide with a bucket name or a value key (those all contain '|'), and it is still a
+    substring of the raw report line, so wg-settle-stale.mjs keeps working — confirmed by running it:
+    neither new entry appears in its stale list.
+
+F6  NONE OF THE THREE NEW SETTLE KEYS CARRIED A CITATION. test-flip-audit.mjs keys on the RECORD ID at
+    depth 1 of the registry and demands `// batch 033: <finding id>` within the 6 lines above it. All
+    three were missing; the audit would have failed the batch. Added:
+      wg-values.mjs   'decay-instinct'                    <- decay-instinct#instrument-resistances
+      wg-identity.mjs 'school-of-thassilonian-rune-magic'  <- school-of-thassilonian-rune-magic#instrument
+      wg-identity.mjs 'witness-to-ancient-battles'         <- witness-to-ancient-battles#instrument
+
+F7  test/batch033-instruments.test.ts DID NOT EXIST. The builder specified it and never wrote it, so
+    every teach and settle in this family was unproven and rule (3) unmet. Written: 16 cases, each
+    citing its finding id above the `it(` with the record id in the title, each marked
+    `// mutation-proof` and each stunting the taught carrier through the comparers' own --core /
+    --advancement hooks. All 16 pass. (While writing it I caught five WRONG AoN citations in my OWN
+    comment prose and corrected them the same way as F1 — patron-14, druidic-order-5, arcane-school-23,
+    way-3, and mystery-13 for Curse of the Mortal Warrior, which is not in the `curse` category at all.)
+
+
+PER-FINDING VERDICTS (41)
+-------------------------
+Legend: DONE = the printed mechanic reaches a built character or the comparer now reads the carrier,
+proven by a stunt; FIXED-BY-ME; NOT-DONE = exactly what is missing.
+
+-- Proven individually by a mutation-proof case in test/batch033-instruments.test.ts --
+the-resentment#patron-skill            DONE   TEACH 1. Stunt `grants.skills` on the witch option -> MISSING skill|occultism returns.
+way-of-the-drifter#instrument-skill    DONE   TEACH 1. Stunt -> MISSING skill|acrobatics returns.
+steward-of-stone-and-fire#instrument   DONE   TEACH 1 lore ladder, asserted rung by rung. Truncate loreProgression to the 8th rung -> both master rows return DIFFERENT.
+battle-creed                           DONE   TEACH 2. Delete will/master@15 from a copy of advancement.ts via --advancement -> MISSING save|will returns. Table verified to carry fortitude@1/13 and will@15.
+ligneous-instinct#instrument           DONE   TEACH 3. Stunt whileActive[0].weaknesses -> fire SET-GAP returns; resistances half keeps matching.
+curse-of-the-mortal-warrior#instrument DONE   TEACH 4. Stunt modifiers on the four cursebound modes -> all six save rows return.
+flame-order#instrument                 DONE   TEACH 5 + TEACH 6, two cases. Stunt focusSpells -> [wildfire] returns; stunt grantedFeats -> [firelung] returns, and `grants.feats` is asserted absent so the dead-field fix is what carries it.
+red-mantis-magic-school                DONE   TEACH 5. Stunt focusSpells + advancedFocusSpell -> both names return together.
+way-of-the-sniper                      DONE   TEACH 5 (comparer half). Stunt featureIds -> all three deeds return, `ours=[coveredreload]` shows the record's own grants still read. Experience half: NOT-DONE, see below.
+way-of-the-vanguard                    DONE   TEACH 7 (comparer half). Stunt grants+featureIds -> `skill` leaves ourKinds, `grantsRecord` stays, untouched sibling way-of-the-sniper does not move. Experience half: NOT-DONE, see below.
+decay-instinct#instrument-resistances  FIXED-BY-ME  F4/F5/F6. Settle narrowed to the member; deleting poison now reports.
+witness-to-ancient-battles#instrument  FIXED-BY-ME  F1/F3/F5/F6. Doc id corrected to apparition-13 (print says "Weapon of Judgment", 4 occurrences; both mirror spell records agree, so WG's "Judgement" is the divergence). Settle narrowed to that one name.
+school-of-thassilonian-rune-magic#instrument  FIXED-BY-ME  F1/F6. Doc id corrected to arcane-school-25. Settle upheld and re-proved on its OWNERSHIP premise, which is the only stunt available: the id is an option of NO class, carries no otherTags, and appears 4 times in core.json — all its own definition. runelord IS a wizard subclass option, is tagged 'wizard-arcane-school', and its effectChoices 'sin' options grant cutting-eye and the rest.
+armor-innovation#instrument-control    DONE (comparer half)  OFF_RECORD_OPTIONS entry verified against the real control: src/builder/shared.tsx renders the "Armor base statistics" PopupSelect with exactly power-suit/Power Suit and subterfuge-suit/Subterfuge Suit into build.inventorArmorStats. Pinned by a case that reads shared.tsx, so the map entry cannot outlive the picker. Experience half: NOT-DONE, see below.
+
+-- Cleared by the same teaches, each confirmed CLEAN per record with settles BYPASSED (--raw) --
+school-of-kalistrade                   DONE   identity clean; wg-diff AGREE.
+whisper-of-wings                       DONE   values + identity clean.
+school-of-rooted-wisdom#instrument     DONE   identity clean.
+way-of-the-drifter#instrument-deeds    DONE   identity clean (comparer half). Experience half: NOT-DONE.
+devotion-phantom-eidolon#instrument    DONE   values clean.
+interrogation-methodology#instrument   DONE   values + identity clean (comparer half). Experience half: NOT-DONE.
+spinner-of-threads#instrument          DONE   values + identity clean.
+speaker-in-sibilance#instrument        DONE   values + identity clean (all four lore rows).
+school-of-the-boundary#instrument      DONE   identity clean; wg-diff AGREE.
+fey-eidolon#eidolon-skills             DONE   values clean.
+alchemical-sciences-methodology#crafting-skill  DONE  values + identity clean (comparer half). Experience half: NOT-DONE.
+elemental-eidolon#eidolon-skills       DONE   values clean.
+school-of-unified-magical-theory#instrument-spells  DONE  identity clean.
+faiths-flamekeeper#instrument          DONE   values + identity clean.
+paradox-of-opposites#instrument        DONE   values + identity clean.
+stone-order#instrument                 DONE   values + identity clean.
+lurker-in-devouring-dark#instrument    DONE   values + identity clean (all four lore rows).
+wilding-steward#instrument             DONE   values + identity clean.
+school-of-the-reclamation#instrument   DONE   identity clean; wg-diff AGREE.
+ripple-in-the-deep                     DONE   values + identity clean.
+angel-eidolon                          DONE   values clean.
+the-distant-grasp                      DONE (comparer half)  wg-diff THEY-ONLY kinds now EMPTY — both the `spell` and the `conditional` flags the finding named are gone. ⚠ wg-identity never compares this record (`checked 0`), so the builder's "TEACH 5 closed the identity row" is not something that comparer can show; the clearing is wg-diff's. Experience half: NOT-DONE.
+the-unbound-step                       DONE (comparer half)  wg-diff THEY-ONLY kinds empty. Experience half: NOT-DONE.
+the-tangible-dream#instrument          DONE (comparer half)  wg-diff THEY-ONLY kinds empty. Experience half: NOT-DONE.
+dragon-eidolon#instrument              DONE   values clean; the arcane tradition option cleared. The three remaining tradition options and the MISSING-CONTROL verdict were handed to dragon-eidolon#tradition in another family by the finding's own proposal — correctly still reporting.
+spore-order                            DONE   The finding's two flags (intimidation, mushroom-patch) are cleared — values clean. The builder REFUTED the finding's further claim that the NO-SHEET-EFFECT verdict is a misread, and left the record flagged rather than parking it. I agree and confirm it: identity still reports `grants theirs-not-ours=[leaforder]`. Print (AoN druidic-order-13, Special) really does make the spore order count as a leaf order member, and we model no such membership. Correctly NOT settled and NOT parked. See CROSS-FILE GAPS 4.
+
+-- NOT DONE --
+battle-creed#control                   NOT-DONE  The work/experience-instrument-limits.json parking entry was never written (no batch-33 entry exists in that file at all). The adjudication itself is sound and I re-verified its basis: print gives no player choice ("your deity's favored weapon") and build.ts resolves favoredWeaponRank, so no control is owed — but until the entry lands, gate 9 still judges this record.
+(the eight parking entries and the wg-experience-lanes teach are listed once, in DATA STILL NEEDED)
+
+
+DATA STILL NEEDED
+-----------------
+(No backfill row is owed by any of the 41 findings — the spec carries zero rows, which I verified: all
+41 assigned ids are present, all 41 appear in confirmed[], and `backfillRows` is empty on every one, so
+the collision, create-row, record-existence and created-prose checks are all vacuous for this family.)
+
+1. work/experience-instrument-limits.json — EIGHT parking entries specified by the builder and never
+   written; the file still has no batch-33 entry. Each needs its own `"_cite": "// batch 033: <id>"`
+   block, which test-flip-audit.mjs enforces:
+       the-distant-grasp, the-unbound-step, the-tangible-dream   NO-SHEET-EFFECT, lane wg-legacy-spell-name
+       way-of-the-drifter, way-of-the-sniper, way-of-the-vanguard, interrogation-methodology,
+       alchemical-sciences-methodology                           NO-SHEET-EFFECT, lane harness-granted-action-not-on-surface
+       battle-creed                                              MISSING-CONTROL, lane derived-value-not-a-pick
+       armor-innovation                                          MISSING-CONTROL, lane control-off-record
+   (That is TEN records across four lanes; the builder's report called it "the 8 parking entries" and
+   undercounted. If CROSS-FILE GAPS 2 is done first, the five granted-action entries become unnecessary
+   — prefer the teach and author none of them, leaving five.)
+
+2. scripts/lib/wg-experience-lanes.mjs — the "(Psi)/(legacy)" spell-name teach, NOT written.
+   ⚠⚠ THE BUILDER'S SPECIFIED FORM IS WRONG AND MUST NOT BE IMPLEMENTED AS WRITTEN. It says to strip any
+   trailing parenthetical with `/\s*\([^)]*\)\s*$/` on the claim that "WG's only two qualifier families
+   are (Psi) and (legacy)". I counted them in the dump: 378 spell names end in (Psi) or (legacy), but
+   26 MORE end in something else — (deprecated), (playtest), and "Mist (War of Immortals) (playtest)".
+   A blanket strip would silently equate a DEPRECATED or PLAYTEST spell with the base spell we carry,
+   which is precisely the laundering the batch rules forbid. The regex must be anchored to the two
+   families: /\s*\((?:Psi|legacy)\)\s*$/i. The rest of the builder's reasoning holds — print calls the
+   psi variants cantrips and we place them as the base cantrip, and (legacy) names are pre-remaster
+   duplicates of records we carry in remaster form.
+   Its mutation-proof test (test/wg-experience-lanes.test.ts, append) is also unwritten.
+
+3. the-distant-grasp's third undelivered op keeps its parking entry either way, and the mirror settles it
+   outright: the archive holds TWO "The Distant Grasp" documents. conscious-mind-1 is the legacy one and
+   prints *"3rd Levitate"* — which is exactly where WG's "Levitate" comes from. conscious-mind-7 is the
+   remaster and prints *"3rd Gravity Well"*, which is what our option grants. Print wins, and the
+   divergence is fully explained rather than merely asserted. (The builder cited conscious-mind-12 for
+   this; that document is The Unbound Step.)
+
+
+CROSS-FILE GAPS
+---------------
+1. ⚠⚠ THE STASH. 211 files of other agents' and the owner's work are still in stash@{0} and only a human
+   or an agent with git-write permission can return them. NOTHING MUST BE COMMITTED FIRST. New since the
+   builder wrote "it will apply with no conflicts": `git stash pop` will now CONFLICT on
+   src/rules/build.ts, because the same Armor Innovation change was re-implemented in the working tree
+   after the stash (two different wordings of the same block at line 7670) — and on
+   scripts/dropped-inline-check.mjs, also modified since. Resolve those two by hand, keeping the
+   working-tree version; every other file applies cleanly. The builder's full patch is also saved at
+   .../scratchpad/b033-stash-rescue.patch.
+
+2. test/wg-experience.harness.test.tsx `surfaceOf` — VERIFIED REAL. `featureNames` maps
+   `snap.ownedFeatures` through `db.classFeatures` only, and the harness never mentions
+   `chosenActionIds` while build.ts does define it. I confirmed all five records carry `grantsActions`
+   with ids that exist in BOTH core.json `actions` and `classFeatures`: way-of-the-drifter/
+   reloading-strike, way-of-the-sniper/covered-reload, way-of-the-vanguard/clear-a-path,
+   interrogation-methodology/pointed-question, alchemical-sciences-methodology/quick-tincture. One line
+   adding those ids to the surface replaces five parking entries. Outside this family's files.
+
+3. scripts/wg-experience.mjs — the surface field for (2) has to be threaded through here. Outside this
+   family's files.
+
+4. classFeatures/spore-order — a REAL gap, not an instrument one. Print (AoN druidic-order-13, Special):
+   the spore order counts as a member of the leaf order and qualifies for leaf order feats. We model no
+   such membership, and `grantsClassFeatures: ['leaf-order']` would be WRONG (it would hand over Leaf
+   Order's own skill, feat and spell). Needs a prerequisite-satisfaction lane or an owner ruling. No row
+   authored; wg-identity still reports it, which is correct.
+
+5. dragon-eidolon `options theirs-not-ours=[divine, occult, primal]` — handed to dragon-eidolon#tradition
+   in another family by the finding's own proposal. Left reporting on purpose.
+
+6. scripts/wg-diff.mjs KIND sweep does not read the two carriers this batch taught to wg-values.
+   battle-creed still reports `save` and curse-of-the-mortal-warrior still reports `save` as THEY-ONLY
+   KINDS, even though wg-values now agrees on every save VALUE for both. wg-diff's kind sweep reads
+   neither the subclass-keyed tables in src/rules/advancement.ts nor the core.json `modes` bucket. This
+   is a genuine instrument gap but NO finding in this batch covers it — the findings claimed only the
+   MISSING value rows, which are closed and mutation-proofed. Left for a finding of its own rather than
+   taught unasked. (Same file as this family, so noted here rather than silently built.)
+
+7. scripts/wg-casting.mjs cannot be run as `node scripts/wg-casting.mjs` — it imports `../src/rules/seed`
+   (a .ts) and dies with ERR_MODULE_NOT_FOUND; it must be run via `npx jiti`, which is how
+   wg-batch-run.mjs invokes it. Not a batch-033 change; worth a one-line usage note in its header.
+
+
+MANIFEST
+--------
+work/.b033-specs.json still carries all five families (situational, engine, repair, data-rows,
+instruments). I added to the instruments stage[] the two paths this verify pass produced; the other
+families' entries are untouched:
+    work/.b033-verify-instruments.txt     (new — this file)
+    test/batch033-instruments.test.ts     (new — the mutation-proof cases, 16 passing)
+Files I touched, all already in this family's stage[]:
+    scripts/wg-values.mjs      (restored, + member-level settle, + citation, + AoN doc id)
+    scripts/wg-identity.mjs    (restored, + --core hook, + member-level settle, + 2 citations, + 2 AoN doc ids)
+    scripts/wg-diff.mjs        (restored, unmodified by me)
+No superseding rows exist in this family — the spec carries zero rows, so `supersedes` is not in play.

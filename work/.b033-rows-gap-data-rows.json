@@ -1,0 +1,577 @@
+{
+  "findings": [
+    {
+      "id": "gap-methodology-edition-aonid",
+      "note": "The three sibling methodologies of alchemical-sciences-methodology#edition-aonid. Each ships Player Core 2 text under the APG's aonId with edition 'legacy', so hide-legacy deletes a class feature the character legitimately has. Remaster ids read off the AoN mirror: methodology-2.remaster_id = [\"methodology-6\"], methodology-3 -> methodology-7, methodology-4 -> methodology-8. Each edition row supersedes the existing overlay row whose value is 'legacy'.",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "empiricism-methodology",
+          "field": "aonId",
+          "value": "methodology-6",
+          "why": "We ship Empiricism's CURRENT text (source.book \"Pathfinder Player Core 2\") while pointing at the Advanced Player's Guide printing methodology-2, whose own remaster_id in the AoN mirror is [\"methodology-6\"], and tagging the record edition 'legacy'. applyEditionFilter (src/rules/build.ts:3131-3145) DROPS a 'legacy' record when a character has hide-legacy on, taking the record's grantsActions and the investigator methodology control with it — a mechanical loss, not a hidden description. methodology-6 is the Player Core 2 printing of the same methodology. Identical defect to alchemical-sciences-methodology#edition-aonid (methodology-1 -> methodology-5) in work/.b033-rows-data-rows.json, which is the finding this row is the sibling of."
+        },
+        {
+          "category": "classFeatures",
+          "id": "empiricism-methodology",
+          "field": "edition",
+          "value": "remaster",
+          "supersedes": true,
+          "why": "We ship Empiricism's CURRENT text (source.book \"Pathfinder Player Core 2\") while pointing at the Advanced Player's Guide printing methodology-2, whose own remaster_id in the AoN mirror is [\"methodology-6\"], and tagging the record edition 'legacy'. applyEditionFilter (src/rules/build.ts:3131-3145) DROPS a 'legacy' record when a character has hide-legacy on, taking the record's grantsActions and the investigator methodology control with it — a mechanical loss, not a hidden description. methodology-6 is the Player Core 2 printing of the same methodology. Identical defect to alchemical-sciences-methodology#edition-aonid (methodology-1 -> methodology-5) in work/.b033-rows-data-rows.json, which is the finding this row is the sibling of."
+        },
+        {
+          "category": "classFeatures",
+          "id": "forensic-medicine-methodology",
+          "field": "aonId",
+          "value": "methodology-7",
+          "why": "We ship Forensic Medicine's CURRENT text (source.book \"Pathfinder Player Core 2\") while pointing at the Advanced Player's Guide printing methodology-3, whose own remaster_id in the AoN mirror is [\"methodology-7\"], and tagging the record edition 'legacy'. applyEditionFilter (src/rules/build.ts:3131-3145) DROPS a 'legacy' record when a character has hide-legacy on, taking the record's grantsActions and the investigator methodology control with it — a mechanical loss, not a hidden description. methodology-7 is the Player Core 2 printing of the same methodology. Identical defect to alchemical-sciences-methodology#edition-aonid (methodology-1 -> methodology-5) in work/.b033-rows-data-rows.json, which is the finding this row is the sibling of."
+        },
+        {
+          "category": "classFeatures",
+          "id": "forensic-medicine-methodology",
+          "field": "edition",
+          "value": "remaster",
+          "supersedes": true,
+          "why": "We ship Forensic Medicine's CURRENT text (source.book \"Pathfinder Player Core 2\") while pointing at the Advanced Player's Guide printing methodology-3, whose own remaster_id in the AoN mirror is [\"methodology-7\"], and tagging the record edition 'legacy'. applyEditionFilter (src/rules/build.ts:3131-3145) DROPS a 'legacy' record when a character has hide-legacy on, taking the record's grantsActions and the investigator methodology control with it — a mechanical loss, not a hidden description. methodology-7 is the Player Core 2 printing of the same methodology. Identical defect to alchemical-sciences-methodology#edition-aonid (methodology-1 -> methodology-5) in work/.b033-rows-data-rows.json, which is the finding this row is the sibling of."
+        },
+        {
+          "category": "classFeatures",
+          "id": "interrogation-methodology",
+          "field": "aonId",
+          "value": "methodology-8",
+          "why": "We ship Interrogation's CURRENT text (source.book \"Pathfinder Player Core 2\") while pointing at the Advanced Player's Guide printing methodology-4, whose own remaster_id in the AoN mirror is [\"methodology-8\"], and tagging the record edition 'legacy'. applyEditionFilter (src/rules/build.ts:3131-3145) DROPS a 'legacy' record when a character has hide-legacy on, taking the record's grantsActions and the investigator methodology control with it — a mechanical loss, not a hidden description. methodology-8 is the Player Core 2 printing of the same methodology. Identical defect to alchemical-sciences-methodology#edition-aonid (methodology-1 -> methodology-5) in work/.b033-rows-data-rows.json, which is the finding this row is the sibling of."
+        },
+        {
+          "category": "classFeatures",
+          "id": "interrogation-methodology",
+          "field": "edition",
+          "value": "remaster",
+          "supersedes": true,
+          "why": "We ship Interrogation's CURRENT text (source.book \"Pathfinder Player Core 2\") while pointing at the Advanced Player's Guide printing methodology-4, whose own remaster_id in the AoN mirror is [\"methodology-8\"], and tagging the record edition 'legacy'. applyEditionFilter (src/rules/build.ts:3131-3145) DROPS a 'legacy' record when a character has hide-legacy on, taking the record's grantsActions and the investigator methodology control with it — a mechanical loss, not a hidden description. methodology-8 is the Player Core 2 printing of the same methodology. Identical defect to alchemical-sciences-methodology#edition-aonid (methodology-1 -> methodology-5) in work/.b033-rows-data-rows.json, which is the finding this row is the sibling of."
+        }
+      ]
+    },
+    {
+      "id": "gap-iwr-note-key-unread",
+      "note": "The 33 remaining IWR entries whose printed limit sits in an unread `note` key, across five barbarian instinct records (decay/fury/spirit `whileActive`, elemental/superstition `choice`). Each field is re-emitted whole because a field is one row, and each supersedes the overlay row that already holds it. The clause text is unchanged — only the key it lives under.",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "decay-instinct",
+          "field": "whileActive",
+          "value": [
+            {
+              "state": "rage",
+              "minLevel": 9,
+              "resistances": [
+                {
+                  "type": "poison",
+                  "value": "3+@actor.con.mod"
+                },
+                {
+                  "type": "all damage from fungus creatures",
+                  "value": "3+@actor.con.mod",
+                  "condition": "attacks and abilities of creatures with the fungus trait, regardless of damage type"
+                }
+              ]
+            }
+          ],
+          "supersedes": true,
+          "why": "AoN instinct-15 prints the limits these resistances are subject to, and the shipped value carried each one in a `note` key. IwrEntry (src/rules/types.ts) declares type/value/against/minLevel/whenCreatureTrait/unlessCreatureTrait/whenVoidHealing/condition and nothing else, and the resistance loop (src/rules/derive.ts:2701-2740) renders exactly `r.condition ?? src.__cond` beside the number — so `note` is stored and read by nobody, and every one of these clauses is invisible on the sheet. Renaming the key to `condition` is the whole fix; the value is otherwise byte-identical, re-emitted whole because a field is one row. Same defect and same repair as skin-hard-as-horn in work/.b033-rows-data-rows.json (its 3 entries; these are the remaining 33 of the 36 in core.json)."
+        },
+        {
+          "category": "classFeatures",
+          "id": "fury-instinct",
+          "field": "whileActive",
+          "value": [
+            {
+              "state": "rage",
+              "minLevel": 9,
+              "resistances": [
+                {
+                  "type": "physical",
+                  "value": "3+@actor.con.mod",
+                  "condition": "weapon damage only — not unarmed attacks or other sources"
+                }
+              ]
+            }
+          ],
+          "supersedes": true,
+          "why": "AoN instinct-3 prints the limits these resistances are subject to, and the shipped value carried each one in a `note` key. IwrEntry (src/rules/types.ts) declares type/value/against/minLevel/whenCreatureTrait/unlessCreatureTrait/whenVoidHealing/condition and nothing else, and the resistance loop (src/rules/derive.ts:2701-2740) renders exactly `r.condition ?? src.__cond` beside the number — so `note` is stored and read by nobody, and every one of these clauses is invisible on the sheet. Renaming the key to `condition` is the whole fix; the value is otherwise byte-identical, re-emitted whole because a field is one row. Same defect and same repair as skin-hard-as-horn in work/.b033-rows-data-rows.json (its 3 entries; these are the remaining 33 of the 36 in core.json)."
+        },
+        {
+          "category": "classFeatures",
+          "id": "spirit-instinct",
+          "field": "whileActive",
+          "value": [
+            {
+              "state": "rage",
+              "minLevel": 9,
+              "resistances": [
+                {
+                  "type": "void",
+                  "value": "3+@actor.con.mod"
+                },
+                {
+                  "type": "all damage from undead",
+                  "value": "3+@actor.con.mod",
+                  "condition": "attacks and abilities of undead creatures, regardless of damage type"
+                }
+              ]
+            }
+          ],
+          "supersedes": true,
+          "why": "AoN instinct-5 prints the limits these resistances are subject to, and the shipped value carried each one in a `note` key. IwrEntry (src/rules/types.ts) declares type/value/against/minLevel/whenCreatureTrait/unlessCreatureTrait/whenVoidHealing/condition and nothing else, and the resistance loop (src/rules/derive.ts:2701-2740) renders exactly `r.condition ?? src.__cond` beside the number — so `note` is stored and read by nobody, and every one of these clauses is invisible on the sheet. Renaming the key to `condition` is the whole fix; the value is otherwise byte-identical, re-emitted whole because a field is one row. Same defect and same repair as skin-hard-as-horn in work/.b033-rows-data-rows.json (its 3 entries; these are the remaining 33 of the 36 in core.json)."
+        },
+        {
+          "category": "classFeatures",
+          "id": "elemental-instinct",
+          "field": "choice",
+          "value": {
+            "flag": "instinctElement",
+            "prompt": "Element (and damage type)",
+            "kind": "array",
+            "options": [
+              {
+                "value": "air-electricity",
+                "label": "Air — electricity",
+                "grant": {
+                  "whileActive": [
+                    {
+                      "state": "rage",
+                      "minLevel": 9,
+                      "resistances": [
+                        {
+                          "type": "air damage",
+                          "value": "3+@actor.con.mod",
+                          "condition": "attacks, spells and abilities with the air trait"
+                        },
+                        {
+                          "type": "damage from air creatures",
+                          "value": "3+@actor.con.mod",
+                          "condition": "elemental creatures of your element, regardless of damage type"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "value": "air-slashing",
+                "label": "Air — slashing",
+                "grant": {
+                  "whileActive": [
+                    {
+                      "state": "rage",
+                      "minLevel": 9,
+                      "resistances": [
+                        {
+                          "type": "air damage",
+                          "value": "3+@actor.con.mod",
+                          "condition": "attacks, spells and abilities with the air trait"
+                        },
+                        {
+                          "type": "damage from air creatures",
+                          "value": "3+@actor.con.mod",
+                          "condition": "elemental creatures of your element, regardless of damage type"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "value": "earth-bludgeoning",
+                "label": "Earth — bludgeoning",
+                "grant": {
+                  "whileActive": [
+                    {
+                      "state": "rage",
+                      "minLevel": 9,
+                      "resistances": [
+                        {
+                          "type": "earth damage",
+                          "value": "3+@actor.con.mod",
+                          "condition": "attacks, spells and abilities with the earth trait"
+                        },
+                        {
+                          "type": "damage from earth creatures",
+                          "value": "3+@actor.con.mod",
+                          "condition": "elemental creatures of your element, regardless of damage type"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "value": "earth-piercing",
+                "label": "Earth — piercing",
+                "grant": {
+                  "whileActive": [
+                    {
+                      "state": "rage",
+                      "minLevel": 9,
+                      "resistances": [
+                        {
+                          "type": "earth damage",
+                          "value": "3+@actor.con.mod",
+                          "condition": "attacks, spells and abilities with the earth trait"
+                        },
+                        {
+                          "type": "damage from earth creatures",
+                          "value": "3+@actor.con.mod",
+                          "condition": "elemental creatures of your element, regardless of damage type"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "value": "fire-fire",
+                "label": "Fire — fire",
+                "grant": {
+                  "whileActive": [
+                    {
+                      "state": "rage",
+                      "minLevel": 9,
+                      "resistances": [
+                        {
+                          "type": "fire damage",
+                          "value": "3+@actor.con.mod",
+                          "condition": "attacks, spells and abilities with the fire trait"
+                        },
+                        {
+                          "type": "damage from fire creatures",
+                          "value": "3+@actor.con.mod",
+                          "condition": "elemental creatures of your element, regardless of damage type"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "value": "metal-piercing",
+                "label": "Metal — piercing",
+                "grant": {
+                  "whileActive": [
+                    {
+                      "state": "rage",
+                      "minLevel": 9,
+                      "resistances": [
+                        {
+                          "type": "metal damage",
+                          "value": "3+@actor.con.mod",
+                          "condition": "attacks, spells and abilities with the metal trait"
+                        },
+                        {
+                          "type": "damage from metal creatures",
+                          "value": "3+@actor.con.mod",
+                          "condition": "elemental creatures of your element, regardless of damage type"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "value": "metal-slashing",
+                "label": "Metal — slashing",
+                "grant": {
+                  "whileActive": [
+                    {
+                      "state": "rage",
+                      "minLevel": 9,
+                      "resistances": [
+                        {
+                          "type": "metal damage",
+                          "value": "3+@actor.con.mod",
+                          "condition": "attacks, spells and abilities with the metal trait"
+                        },
+                        {
+                          "type": "damage from metal creatures",
+                          "value": "3+@actor.con.mod",
+                          "condition": "elemental creatures of your element, regardless of damage type"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "value": "water-bludgeoning",
+                "label": "Water — bludgeoning",
+                "grant": {
+                  "whileActive": [
+                    {
+                      "state": "rage",
+                      "minLevel": 9,
+                      "resistances": [
+                        {
+                          "type": "water damage",
+                          "value": "3+@actor.con.mod",
+                          "condition": "attacks, spells and abilities with the water trait"
+                        },
+                        {
+                          "type": "damage from water creatures",
+                          "value": "3+@actor.con.mod",
+                          "condition": "elemental creatures of your element, regardless of damage type"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "value": "water-cold",
+                "label": "Water — cold",
+                "grant": {
+                  "whileActive": [
+                    {
+                      "state": "rage",
+                      "minLevel": 9,
+                      "resistances": [
+                        {
+                          "type": "water damage",
+                          "value": "3+@actor.con.mod",
+                          "condition": "attacks, spells and abilities with the water trait"
+                        },
+                        {
+                          "type": "damage from water creatures",
+                          "value": "3+@actor.con.mod",
+                          "condition": "elemental creatures of your element, regardless of damage type"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "value": "wood-bludgeoning",
+                "label": "Wood — bludgeoning",
+                "grant": {
+                  "whileActive": [
+                    {
+                      "state": "rage",
+                      "minLevel": 9,
+                      "resistances": [
+                        {
+                          "type": "wood damage",
+                          "value": "3+@actor.con.mod",
+                          "condition": "attacks, spells and abilities with the wood trait"
+                        },
+                        {
+                          "type": "damage from wood creatures",
+                          "value": "3+@actor.con.mod",
+                          "condition": "elemental creatures of your element, regardless of damage type"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "value": "wood-piercing",
+                "label": "Wood — piercing",
+                "grant": {
+                  "whileActive": [
+                    {
+                      "state": "rage",
+                      "minLevel": 9,
+                      "resistances": [
+                        {
+                          "type": "wood damage",
+                          "value": "3+@actor.con.mod",
+                          "condition": "attacks, spells and abilities with the wood trait"
+                        },
+                        {
+                          "type": "damage from wood creatures",
+                          "value": "3+@actor.con.mod",
+                          "condition": "elemental creatures of your element, regardless of damage type"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "supersedes": true,
+          "why": "AoN instinct-7 prints the limits these resistances are subject to, and the shipped value carried each one in a `note` key. IwrEntry (src/rules/types.ts) declares type/value/against/minLevel/whenCreatureTrait/unlessCreatureTrait/whenVoidHealing/condition and nothing else, and the resistance loop (src/rules/derive.ts:2701-2740) renders exactly `r.condition ?? src.__cond` beside the number — so `note` is stored and read by nobody, and every one of these clauses is invisible on the sheet. Renaming the key to `condition` is the whole fix; the value is otherwise byte-identical, re-emitted whole because a field is one row. Same defect and same repair as skin-hard-as-horn in work/.b033-rows-data-rows.json (its 3 entries; these are the remaining 33 of the 36 in core.json)."
+        },
+        {
+          "category": "classFeatures",
+          "id": "superstition-instinct",
+          "field": "choice",
+          "value": {
+            "flag": "ragingResistanceTraditions",
+            "prompt": "Raging Resistance traditions",
+            "kind": "array",
+            "options": [
+              {
+                "value": "arcane-occult",
+                "label": "Arcane and occult",
+                "grant": {
+                  "whileActive": [
+                    {
+                      "state": "rage",
+                      "minLevel": 9,
+                      "resistances": [
+                        {
+                          "type": "arcane spells",
+                          "value": "3+@actor.con.mod",
+                          "condition": "all damage from arcane spells"
+                        },
+                        {
+                          "type": "occult spells",
+                          "value": "3+@actor.con.mod",
+                          "condition": "all damage from occult spells"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "value": "arcane-primal",
+                "label": "Arcane and primal",
+                "grant": {
+                  "whileActive": [
+                    {
+                      "state": "rage",
+                      "minLevel": 9,
+                      "resistances": [
+                        {
+                          "type": "arcane spells",
+                          "value": "3+@actor.con.mod",
+                          "condition": "all damage from arcane spells"
+                        },
+                        {
+                          "type": "primal spells",
+                          "value": "3+@actor.con.mod",
+                          "condition": "all damage from primal spells"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "value": "divine-occult",
+                "label": "Divine and occult",
+                "grant": {
+                  "whileActive": [
+                    {
+                      "state": "rage",
+                      "minLevel": 9,
+                      "resistances": [
+                        {
+                          "type": "divine spells",
+                          "value": "3+@actor.con.mod",
+                          "condition": "all damage from divine spells"
+                        },
+                        {
+                          "type": "occult spells",
+                          "value": "3+@actor.con.mod",
+                          "condition": "all damage from occult spells"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "value": "divine-primal",
+                "label": "Divine and primal",
+                "grant": {
+                  "whileActive": [
+                    {
+                      "state": "rage",
+                      "minLevel": 9,
+                      "resistances": [
+                        {
+                          "type": "divine spells",
+                          "value": "3+@actor.con.mod",
+                          "condition": "all damage from divine spells"
+                        },
+                        {
+                          "type": "primal spells",
+                          "value": "3+@actor.con.mod",
+                          "condition": "all damage from primal spells"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "supersedes": true,
+          "why": "AoN instinct-6 prints the limits these resistances are subject to, and the shipped value carried each one in a `note` key. IwrEntry (src/rules/types.ts) declares type/value/against/minLevel/whenCreatureTrait/unlessCreatureTrait/whenVoidHealing/condition and nothing else, and the resistance loop (src/rules/derive.ts:2701-2740) renders exactly `r.condition ?? src.__cond` beside the number — so `note` is stored and read by nobody, and every one of these clauses is invisible on the sheet. Renaming the key to `condition` is the whole fix; the value is otherwise byte-identical, re-emitted whole because a field is one row. Same defect and same repair as skin-hard-as-horn in work/.b033-rows-data-rows.json (its 3 entries; these are the remaining 33 of the 36 in core.json)."
+        }
+      ]
+    },
+    {
+      "id": "school-of-unified-magical-theory#drain-bonded-item-uses",
+      "note": "The create row the data-rows family specified and could not author until a reader existed. src/rules/featUses.ts effectiveUses() now prefers a `<featureId>-<subclassId>` variant's limitedUses over the generic record's, and featUse() keys the spend on the generic id so the Feats tab (which shows the variant, FeatsTab.tsx:189) and the Main tab (which shows the action the generic grants) share one counter instead of drawing two independent pip rows.",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "arcane-bond-school-of-unified-magical-theory",
+          "create": true,
+          "value": {
+            "id": "arcane-bond-school-of-unified-magical-theory",
+            "name": "Arcane Bond (Unified Magical Theory)",
+            "traits": [
+              "wizard"
+            ],
+            "rarity": "common",
+            "source": {
+              "book": "Pathfinder Player Core",
+              "license": "ORC"
+            },
+            "level": 1,
+            "actionCost": {
+              "type": "passive"
+            },
+            "edition": "remaster",
+            "aonId": "arcane-school-21",
+            "limitedUses": {
+              "max": 1,
+              "per": "day",
+              "maxByLevel": {
+                "3": 2,
+                "5": 3,
+                "7": 4,
+                "9": 5,
+                "11": 6,
+                "13": 7,
+                "15": 8,
+                "17": 9,
+                "19": 10
+              }
+            }
+          },
+          "why": "AoN arcane-school-21 (School of Unified Magical Theory): \"instead of using Drain Bonded Item only once per day, you can use it once per day for each rank of spell you can cast, recalling a spell of that rank each time.\" classFeatures/arcane-bond ships {max:1, per:\"day\"} flat, so a UMT wizard was held to one use at every level. The `<featureId>-<subclassId>` variant is how this project already carries a subclass's version of a shared class feature (owned at src/rules/derive.ts:3428-3442, shown at src/sheet/FeatsTab.tsx:189); the maxByLevel ladder is the wizard rank-by-level table (rank 2 at 3rd … rank 10 at 19th). No description: the created record has none, and the FeatsTab row shows it — that prose is owed to a created-prose spec, see work/.b033-report-gap-data-rows.txt."
+        }
+      ]
+    },
+    {
+      "id": "steward-of-stone-and-fire#duplicate-lore-grant",
+      "note": "Code-only, no core.json row exists to author: the duplicate was in src/rules/featGrantsAuto.ts. All eight animist apparition entries (crafter-in-the-vault, echo-of-lost-moments, impostor-in-hidden-places, lurker-in-devouring-dark, monarch-of-the-fey-courts, stalker-in-darkened-boughs, steward-of-stone-and-fire, vanguard-of-roaring-waters) are removed; the class option's grants.lores + loreProgression already grant the same Lores with the printed 8th/16th ladder at src/rules/build.ts:3620, and the removed entries granted them again flat at trained.",
+      "backfillRows": []
+    },
+    {
+      "id": "angel-eidolon#hallowed-strikes-text",
+      "note": "The third copy of the sentence, in src/rules/companionGrants.ts — the eidolon companion note still read \"an extra 1 spirit (good) damage\" with no holy trait, no target restriction and no nonlethal clause. Replaced with AoN eidolon-1's wording, the same text the data-rows description row carries.",
+      "backfillRows": []
+    },
+    {
+      "id": "the-tangible-dream#granted-spell-2nd",
+      "note": "No row could reach it: the stale copy is classes.psychic.subclass.options[the-tangible-dream].description, and core-descriptions.json is already correct. src/data/index.ts loadDescriptions() now syncs every subclass / extra-choice OPTION from the classFeatures entry of the same id — 45 stale options across 11 classes, this record among them.",
+      "backfillRows": []
+    }
+  ]
+}

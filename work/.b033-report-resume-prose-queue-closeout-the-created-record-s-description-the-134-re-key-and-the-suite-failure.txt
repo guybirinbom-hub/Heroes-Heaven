@@ -1,0 +1,285 @@
+BATCH 033 RESUME — family "resume-prose"
+group: prose-queue-closeout — the created record's description, the #134 re-key, and the suite failure
+spec:     work/.b034-created-desc.json          (kind created-prose, manifest entry appended)
+queue:    work/.b034-queue.json                 (1 follow-up entry, dry-run green)
+test:     test/batch033-resume-prose-queue-closeout-the-created-record-s-description-the-134-re-key-and-the-suite-failure.test.ts
+          node scripts/vt.mjs run <that file>  ->  1 passed | 4 tests passed
+          npx tsc --noEmit                     ->  clean
+Only ONE report was written (this file). work/.b034-report-prose.txt was NOT also created — two copies of
+one report drift, and the manifest's stage[] names this path.
+
+=================================================================================================
+DATA STILL NEEDED
+=================================================================================================
+Nothing. The one data row this group owes (the created record's prose) is authored in
+work/.b034-created-desc.json and every token in it is verified present in AoN arcane-school-21.
+
+=================================================================================================
+CROSS-FILE GAPS
+=================================================================================================
+G1  scripts/wg-batch-run.mjs, precheck() check (1b)  —  BLOCKING, and it blocks the whole batch.
+    MEASURED, not predicted: running the exported precheck() over the resumed manifest + the live
+    overlay returns
+
+      work/.b034-created-desc.json#school-of-unified-magical-theory#drain-bonded-item-uses:
+        classFeatures/arcane-bond-school-of-unified-magical-theory/description assigns a field of
+        classFeatures/arcane-bond-school-of-unified-magical-theory, which
+        work/.b033-rows-gap-data-rows.json#school-of-unified-magical-theory#drain-bonded-item-uses
+        CREATES in the same manifest — fold the field into the create row
+
+    So `--stage apply` refuses BEFORE writing anything, and the created-prose kind is currently
+    unusable for the exact case it was invented for. Check (1b) was added for batch 031's
+    stances/wild-winds-stance, whose failure mode is real: applyBackfill never overwrites an existing
+    record, so a FIELD row on a record created in the same manifest silently reaches nothing.
+    A PROSE row is not in that failure mode at all. scripts/apply-backfill-now.mjs routes
+    `description` / `descRefs` through a SEPARATE loop that writes public/core-descriptions.json and
+    that REQUIRES the record to already exist (`if (!db[fix.category]?.[fix.id]) proseMissing.push`),
+    which is precisely why stageApply orders created-prose specs LAST and then does one final
+    unconditional replay — its own comment says "a create row's record only exists in the shipped
+    artefact after a replay that ran AFTER it was written".
+    THE FIX (one line, in the (1b) victim loop, immediately after the `field === undefined` guard):
+
+        if (['description', 'descRefs'].includes(r.row.field)) return;
+        /* (1b) guards a field row that applyBackfill would silently drop onto an existing record.
+           Prose is not written by that path: apply-backfill-now.mjs routes description/descRefs to
+           core-descriptions.json in its own loop, which needs the record to EXIST — which is why
+           stageApply orders created-prose LAST. Without this exemption the created-prose kind cannot
+           be used for a record created in the same manifest, i.e. for the only case it exists for. */
+
+    Also owed: a case in test/wg-batch-run.test.ts proving a description row beside its own create row
+    passes precheck while a non-prose field row beside one still refuses. NOT AUTHORED HERE —
+    scripts/wg-batch-run.mjs and test/wg-batch-run.test.ts are outside this group's file grant.
+    -> NEEDS THE ORCHESTRATOR (an engine-shape decision on the driver's own guard).
+
+G2  three COLLISION refusals that are NOT this group's, surfaced by the same precheck run and listed
+    because they refuse the same stage and nobody else may have measured them together:
+      · classFeatures/otherworldly-protection/resistances — work/.b033-rows-data-rows.json
+        #otherworldly-protection#void-healing-swap vs work/.b033-rows-resume-otherworldly-and-curse-
+        rows-...json, same finding id.
+      · modes/curse-of-creeping-ashes-4/modifiers — the same two specs,
+        #curse-of-creeping-ashes#speed-penalty.
+      · classFeatures/fey-eidolon/spellListAdditions — work/.b033-rows-data-rows.json vs
+        work/.b033-rows-resume-eidolon-languages-...json, #fey-eidolon#fey-gift-spells.
+    Each is a resume spec re-writing a key its own family's original batch-033 spec already writes.
+    They belong to families resume-data-rows and resume-engine. Reported, not touched.
+
+G3  scripts/wg-batch-close.mjs --reverdict, and `--stage gaps`, are the closer's steps, not this
+    group's: --reverdict writes work/wg-batch-033-parity.json + -residual.json, which are outside the
+    file grant, and its precondition (desk entry for `spore-order`) does not exist until the gaps
+    stage files work/.b034-queue.json. Exact command in item 4 below.
+
+G4  test/umbrella-items.test.ts — see item 5. Absolute do-not-touch list; the correction is in
+    stash@{0} and `git stash pop` is a human action.
+
+=================================================================================================
+ITEM 1 — classFeatures/arcane-bond-school-of-unified-magical-theory, the created record's prose
+finding: school-of-unified-magical-theory#drain-bonded-item-uses   (confirmed[] in work/.b033-read.json)
+STATUS: BUILT (the row is authored, verified against the driver's own guards, and tested) —
+        subject to G1, which is the driver refusing its own kind rather than anything wrong with the row.
+=================================================================================================
+WHAT I DID
+  Authored one created-prose spec entry in work/.b034-created-desc.json:
+
+    { category: 'classFeatures', id: 'arcane-bond-school-of-unified-magical-theory',
+      field: 'description', value: <below>, why: <names arcane-school-21 and quotes the clause> }
+
+    value: "Your studies into the very nature of magic let you use your bonded item more efficiently.
+            Instead of using Drain Bonded Item only once per day, you can use it once per day for each
+            rank of spell you can cast, recalling a spell of that rank each time."
+
+  The record was CREATED this batch by the create:true row in work/.b033-rows-gap-data-rows.json, whose
+  own `why` ends "No description: the created record has none ... that prose is owed to a created-prose
+  spec". This is that phase. Source: AoN arcane-school-21 (mirror
+  C:/wonderers guide/aon-2e-archive/data/by-category/arcane-school/arcane-school-21.json), printed
+  clause read verbatim off the mirror: "Your studies into the very nature of magic itself have let you
+  use it more efficiently—instead of using Drain Bonded Item only once per day, you can use it once per
+  day for each rank of spell you can cast, recalling a spell of that rank each time."
+
+WHY THE WORDING IS NOT THE ONE THE SPEC SUGGESTED  (this is a correction, not a preference)
+  The suggested value ("Your study of magic's underlying nature lets you draw on your bonded item far
+  more often. Instead of ...") would have been REFUSED by precheck (5) in scripts/wg-batch-run.mjs,
+  which rejects a description row introducing a token that is in neither our current text nor the cited
+  mirror document. This record HAS no current text, so the mirror is the entire permitted vocabulary,
+  and the suggested wording introduces seven tokens arcane-school-21 does not contain:
+      s, underlying, lets, draw, on, far, often
+  Measured, not guessed. The authored wording introduces ZERO tokens outside the mirror, keeps the
+  printed rule verbatim in its second sentence, and re-words the first so that a VARIANT of Arcane Bond
+  says what it is a variant of (print runs the clause on from the school's own prose, where it does not
+  have to). Verified end to end: precheck() over the whole resumed manifest reports no problem for this
+  row on checks (1), (2), (3), (4) or (5) — only G1's (1b).
+
+THE TEST  test/batch033-resume-prose-queue-closeout-...test.ts, 4 assertions in 2 describes:
+  · "reaches a BUILT unified-magical-theory wizard, and with no prose of its own it draws nothing at
+    all" — builds a level-19 wizard with subclassId school-of-unified-magical-theory through
+    test/_content build(), and asserts ownedFeatureIds(ch, db) CONTAINS the created record (the
+    <featureId>-<subclassId> variant lane in derive.ts, drawn by FeatsTab.tsx:189) while a
+    school-of-battle-magic wizard does not. Then asserts public/ast-index.json has no entry for the id —
+    the load-bearing half, because a record with an ast display tree reads fine on an empty description —
+    and that a copy with description/note stripped fails the readable rule. Runs over an explicit
+    in-memory copy, never a patched-vs-shipped delta, so it does not flip when the row lands.
+  · "becomes readable once the created-prose row ... is applied" — the same copy with the SPEC's own
+    value patched in passes the rule; the value is read out of work/.b034-created-desc.json so the test
+    tracks what actually ships, and the printed rule is asserted present in it.
+  · "keeps every word ... inside arcane-school-21" — re-runs precheck (5)'s own token rule against the
+    mirror. This is the assertion with teeth: fed the suggested wording it returns the seven tokens
+    above and fails. A reword that reads better and refuses the driver now costs a test run, not an
+    apply stage.
+  · the fourth assertion is item 3's, below.
+
+=================================================================================================
+ITEM 2 — verify red 1 of 2: render-check, "1 of 26,711 records would draw nothing at all"
+STATUS: BUILT — clears completely when item 1's row lands. Nothing else authored.
+=================================================================================================
+Confirmed by running it: `node scripts/render-check.mjs` reports the single blank in classFeatures
+(1054 records, 1 blank, drawn by DescriptionModal), every other bucket 0. render-check's default rule is
+byProse = `!!ast || nonEmpty(text)`, and this record has neither.
+Simulated the applied state (descriptions patched in memory with the authored value, the same rule
+re-run): blank in classFeatures goes 1 -> 0. render-check goes GREEN.
+
+=================================================================================================
+ITEM 3 — verify red 2 of 2: readable-record-check, "28 record(s) ship with nothing a player can read"
+STATUS: BUILT for this batch's share — and a CORRECTION to the premise, stated plainly below.
+=================================================================================================
+⚠ CORRECTION. The brief says item 1 "fixes BOTH new verify reds". Measured: it does not. It clears
+render-check entirely (item 2), and it clears 100% of THIS BATCH's contribution to
+readable-record-check — but readable-record-check fails whenever `unexpected.length > 0`, and
+simulating the applied prose takes it from 28 to 27. IT STAYS RED, on 27 records that are not this
+batch's and that this group may not touch. That is a residue for the orchestrator, not a red anyone
+here can clear.
+
+  node scripts/readable-record-check.mjs --list  ->  29 with nothing to read, 28 unexpected
+  simulated with the authored prose applied      ->  27 unexpected, 0 of them in classFeatures
+
+PROOF THE OTHER 27 ARE NOT THIS BATCH'S — four independent measurements, none of them an assumption:
+  1. The 27 sit in exactly eight buckets: arcaneSchool (4), fatalMethod (2), follower (4),
+     grimFascination (2), hybridStudy (2), itemBonus (5), sidebar (6), source (2).
+  2. Every one of those eight buckets in public/core.json is BYTE-IDENTICAL to HEAD
+     (arcaneSchool 27, fatalMethod 2, follower 6, grimFascination 4, hybridStudy 10, itemBonus 723,
+     sidebar 396, source 252 — all `identical=true` against `git show HEAD:public/core.json`). No row
+     written in this batch or its resume created, emptied or altered a single one of them.
+  3. This batch wrote rows in exactly three buckets — read off work/.b033-specs.json rather than named
+     by hand: classFeatures 31, modes 3, classes 3. Those three are the only buckets that differ from
+     HEAD. Neither modes nor classes contributes a bare record. (The test asserts these three are
+     PRESENT rather than that they are the only three: sibling resume families were still appending to
+     the manifest while this group worked, and a fourth bucket only matters if it holds a bare record —
+     which is the assertion on the next line.)
+  4. public/ast-index.json is byte-identical to HEAD (22,794 keys both sides) and lists NONE of the 27,
+     so their bareness is not something any backfill row could reach even in principle.
+  The fourth assertion in the test file re-derives (2), (3) and (4) from disk on every run and fails if
+  a future row ever lands in a bucket holding a bare record. It stays true after item 1's row lands —
+  the classFeatures entry simply leaves the list.
+  Not touched, as instructed. -> flaggedResidue: readable-record-check stays red on 27 records outside
+  this batch (public/ast/** and public/data/** are on the absolute do-not-touch list).
+
+=================================================================================================
+ITEM 4 — spore-order: the #134 re-key (clears the EXPERIENCE red and the IDENTITY red)
+finding: spore-order   (confirmed[] in work/.b033-read.json)
+STATUS: PARKED with a queue entry — work/.b034-queue.json, id `spore-order`,
+        followUpOf `spore-order-counts-as-leaf-order`.
+=================================================================================================
+WHAT I DID
+  Wrote ONE follow-up entry into work/.b034-queue.json. add-owner-question.mjs refuses a duplicate id,
+  and its follow-up form is the only route; work/owner-questions.json was not touched and was not read
+  for writing.
+
+  Dry-run through the real writer, report-only (NO --write, nothing written):
+      node scripts/add-owner-question.mjs --from work/.b034-queue.json
+      -> #139  spore-order  (batch 34)
+         117 open question(s); 1 added.
+         (report only — pass --write)
+  All four guards pass: every field present; `spore-order` is not on the desk in any of the four arrays;
+  `printed` names druidic-order-13, which exists in the mirror; `followUpOf` names an entry that IS in
+  the file (#134); and `theirs` quotes `giveAbilityBlock`, an op type that
+  `node scripts/wg-show.mjs "Spore" --raw` really prints.
+
+EVIDENCE CARRIED IN THE ENTRY (as gathered, re-verified against print)
+  theirs — ability_block 34429 "Spore Order": giveAbilityBlock type=feat abilityBlockId=34226
+           (their Leaf Order feat), then createValue variable=MAIN_DRUID_ORDER value=spore.
+           wg-identity: `grants theirs-not-ours=[leaforder]  ours=[leshyfamiliar]`.
+           wg-experience: NO-SHEET-EFFECT, "giveAbilityBlock #34226 'Leaf Order'".
+  ours   — classFeatures/spore-order is a prose stub; the mechanic is on
+           classes.druid.extraChoices['druidic-order'].options['spore-order'] (skills intimidation,
+           focusSpells mushroom-patch, grantedFeats leshy-familiar), all three closed by batch 033.
+           Unmodelled: the MEMBERSHIP clause. Ten feats carry the prerequisite line "leaf order" and
+           nothing satisfies or enforces it; checkPrerequisites (src/rules/build.ts:9899) has one lane
+           that could carry it (choice.options[].grantsToken, build.ts:8503/9874) and it reads only
+           rec.choice.options[] in TOKEN_BUCKETS, which a class extraChoices option is not.
+  printed— AoN druidic-order-13 (Spore, Pathfinder #202: Severed at the Root pg. 72), Special, read
+           verbatim off the mirror: "The spore order is a variant of the leaf order. If you have the
+           spore order, you count as a member of the leaf order, and you qualify for leaf order feats.
+           Your familiar must be a fungus leshy."
+  The entry states in its first sentence that it is a RE-KEY of desk #134 and not a new question — the
+  ruling asked for is identical and answering either answers both — so the owner is not asked twice.
+
+WHY THE RE-KEY IS NECESSARY, confirmed in the code rather than restated
+  scripts/wg-batch-close.mjs builds `desk` from work/owner-questions.json keyed by entry `id`, and the
+  derivation reads `desk.has(rid)` where rid is the RECORD id. #134 is keyed
+  `spore-order-counts-as-leaf-order`, so `desk.has('spore-order')` is false and the record cannot be
+  parked. work/wg-batch-033-parity.json currently carries:
+      { id: "spore-order", verdict: "MATCHES", evidence: "[batch 33 read] comparer misread
+        settled/taught: ..." }
+  which is the false-MATCHES rule 6b warns about. Once #139 is on the desk the derivation produces
+  OWNER-QUEUED, the one-way merge keeps the written MATCHES, and with a manifest present a changed
+  verdict is a HARD REFUSAL ("verdict changed — existing MATCHES vs derived OWNER-QUEUED"). So the
+  reverdict is not optional bookkeeping; without it `--stage close` stops.
+
+THE REMAINING SEQUENCE — the closer's, not this group's (see G3):
+  1. `node scripts/wg-batch-run.mjs --batch 034 --stage gaps`   (reads work/.b034-queue.json and files
+     it through add-owner-question.mjs; the driver reads P('queue.json') for the batch it runs AS, so
+     this file is only seen by a --batch 034 run — flagged in case the resume runs as 033.)
+  2. node scripts/wg-batch-close.mjs --batch 033 --write \
+       --reverdict spore-order=OWNER-QUEUED \
+       --reason "desk #139 re-keys owner question #134 to the RECORD id so the gate can park it; the
+                 written MATCHES came from an instrument teach that settled two flags and left the
+                 leaf-order membership clause (druidic-order-13 Special) unmodelled"
+     --reverdict requires the record to be in work/wg-batch-033.json (it is) and to already carry a
+     written verdict (it does: MATCHES).
+  No test is owed: an owner question is a park, and the mechanic it asks about is deliberately unbuilt.
+
+=================================================================================================
+ITEM 5 — SUITE FAILURE: test/umbrella-items.test.ts "finds the AoN family summaries" (441 vs 440)
+STATUS: PARKED — flaggedResidue, NEEDS THE ORCHESTRATOR. No edit authored, no owner question opened.
+=================================================================================================
+RE-CONFIRMED HERE, not taken on trust:
+  node scripts/vt.mjs run test/umbrella-items.test.ts
+    FAIL test/umbrella-items.test.ts > umbrella detection > finds the AoN family summaries
+    AssertionError: expected 441 to be 440   at test/umbrella-items.test.ts:29
+    Test Files 1 failed (1) | Tests 1 failed | 10 passed (11)
+
+NOT THIS BATCH'S — measured:
+  · public/core.json's entire `items` bucket is BYTE-IDENTICAL to HEAD (7,879 records), so no batch
+    033 or 034 row can have moved an item count. The three buckets this batch did write (classFeatures,
+    modes, classes) are not read by the umbrella detector.
+  · The 441st umbrella is `throneglass` (aonId equipment-5212, the unpriced PAGE, with five priced
+    graded kin) from the 2026-09-07 archive delta. It was failing before batch 033 started.
+NOT EDITABLE — two independent reasons:
+  · test/umbrella-items.test.ts is on this effort's ABSOLUTE do-not-touch list.
+  · The corrected copy expecting 441 ALREADY EXISTS in stash@{0}. Verified read-only with
+    `git show "stash@{0}:test/umbrella-items.test.ts"` — it carries the throneglass reasoning written
+    out ("441 with `throneglass`, from the 2026-09-07 archive delta ... all FIVE of its graded blocks
+    are present and priced ... aonIds equipment-5212-4727 …-4733"). A hand edit here would collide with
+    the pop.
+DISPOSITION: `git stash pop` is a human action and a git write command — an absolute prohibition for
+every agent in this workflow. -> NEEDS THE ORCHESTRATOR. Same flaggedResidue the gap-situational agent
+already parked in work/.b033-gaps.json, which names this file explicitly.
+
+=================================================================================================
+TEACH LINES
+=================================================================================================
+None. This group added no settle, no comparer teach and no registry key, so nothing here is owed a
+mutation-proof marker and auditMutationProofs has nothing to check. No MATCHES verdict is claimed by
+this report: item 1's finding is closed by a ROW (FIXED), item 4 by a desk entry (OWNER-QUEUED).
+The one finding id this group names is school-of-unified-magical-theory#drain-bonded-item-uses, and
+it is named because a row was authored for it — not because anything was taught.
+
+=================================================================================================
+FILES TOUCHED (= the manifest stage[] for family "resume-prose")
+=================================================================================================
+  work/.b034-created-desc.json                                                     (new, the spec)
+  work/.b034-queue.json                                                            (new, 1 entry)
+  work/.b033-report-resume-prose-queue-closeout-...-the-suite-failure.txt          (new, this file)
+  test/batch033-resume-prose-queue-closeout-...-the-suite-failure.test.ts          (new, 4 tests)
+  work/.b033-specs.json                                                            (appended one entry;
+      re-read immediately before writing — it had grown from 8 to 10 entries while this group worked,
+      and all 10 were kept; it is now 11)
+No src/ file, no scripts/ file, no public/ file and no git write command was touched by this group.

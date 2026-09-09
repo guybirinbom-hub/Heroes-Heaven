@@ -1,0 +1,221 @@
+BATCH 033 — WG-COMPARISON LANE — FAMILY: data-rows — ADVERSARIAL VERIFY
+Verified: work/.b033-rows-data-rows.json (12 findings / 10 rows), work/.b033-report-data-rows.txt,
+          test/batch033-data.test.ts, work/.b033-specs.json, and all 12 findings re-read in full from
+          work/.b033-read.json (all 12 are in confirmed[], verdict CONFIRMED).
+
+RAN
+  npx tsc --noEmit — clean (exit 0).
+  node scripts/vt.mjs run test/batch033-data.test.ts — 9 failed / 0 passed. Every failure is the ONE
+    assertion on the field the driver has not applied yet (lines 30, 52, 67, 83, 96, 121, 134, 161,
+    175); every harness half above it passes first. No assertion fails for any other reason.
+  node scripts/test-flip-audit.mjs --batch 033 — FAILS, 6 uncited flips. ⚠ THE BUILDER'S REPORT LINE 4
+    ("test-flip-audit clean") IS STALE. All 6 are new settle keys in scripts/wg-values.mjs:1487
+    (SETTLED_VALUES "decay-instinct") and scripts/wg-identity.mjs:745/761 (SETTLED_IDENTITIES
+    "school-of-thassilonian-rune-magic", "witness-to-ancient-battles"), each missing both the
+    "// batch 033: <id>" citation and a "// mutation-proof" test. NONE of them is in data-rows'
+    stage[] — those files belong to another family — but the batch cannot close until that family
+    cites them.
+  Row prechecks: apply-parity-fixes.mjs --write is forbidden and its dry run was blocked by the
+    sandbox, so I re-implemented its six refusals verbatim (overlay index, docIdsIn/mirrorText,
+    addedRuns/unbackedRun LCS, firstUnresolvedStep, supersedes, collision key) against the real
+    overlay + mirror and ran the family's 10 rows through it: 10 planned rows, 0 problems, 5 declared
+    supersessions (overlay #2779 skin-hard-as-horn.choice, #8263 alchemical…edition, #1413
+    light-mortar…choice, #214 otherworldly-protection.resistances, #13329 classes/wizard
+    subclass.options). The angel-eidolon description row passes refusal 4 — every 3+ word run it adds
+    occurs in eidolon-1.
+  Cross-spec collision sweep over all four spec files in work/.b033-specs.json: 24 rows, 24 distinct
+    category/id/path/field keys, 0 collisions.
+  Throwaway harness: test/_b033-harness.test.ts applied all 10 rows as absolute assignments (path
+    steps and value:null included) onto a structuredClone of content(), then built real characters
+    through buildCharacter and read deriveDefenses / deriveSpeeds. 8/8 passed. DELETED after the run
+    (re-ran the flip audit with and without it: 6 flips both times, so it left no trace).
+
+--------------------------------------------------------------------------------
+PER FINDING
+--------------------------------------------------------------------------------
+skin-hard-as-horn — DONE
+  Diffed the row against overlay #2779 key by key: identical object, the ONLY change is note→condition
+  on the three resistance grants. Harness on a level-8 exemplar holding the ikon with
+  dailyChoices['skin-hard-as-horn:attunedDamageType']='bludgeoning': the bludgeoning resistance is
+  still counted and defs.sources['resistance:bludgeoning'] carries "…never against critical hits".
+  Premise verified in the mirror: ikon-15 prints "This resistance doesn't apply against critical hits".
+  Note for the record: `r.condition ?? src.__cond` means the row REPLACES dailyChoiceGrants' generic
+  "chosen this morning" with the printed clause — an upgrade, not a loss, since the new string names
+  the immanence gate itself. (Minor report drift: the report says the test asserts "bludgeoning 4";
+  the test asserts presence, not the value. Harmless.)
+
+the-tangible-dream#granted-spell-2nd — NOT-DONE (correctly deferred; nothing reaches the player)
+  Re-measured: classes.psychic.subclass.options[the-tangible-dream].description is still the stale
+  copy and core-descriptions.json classFeatures/the-tangible-dream is already correct, so the row the
+  builder declined would have been a no-op or a 200 KB whole-array re-emit. The one-line fix is in
+  src/data/index.ts (gap 1). No citation exists for this id anywhere in the batch (0 rows, note fails
+  TEACH_RE, id absent from the staged test), so the closer will correctly leave it unfixed.
+
+fey-eidolon#fey-gift-spells — DONE (widening reaches a built character), with a measured caveat
+  Harness: a level-5 summoner with subclassId fey-eidolon now carries
+  spellListTraditions [{traditions:['arcane'], from:'Fey Eidolon'}]; build.ts:6536-6552 reads the field
+  off classFeatureIdsOwned, which includes the subclassId. Premise verified: eidolon-8 prints the
+  widening.
+  CAVEAT I measured that the report does not: SpellsTab.tsx:296-324 adds every spell of an opened
+  tradition and never renders the `from` label, so the picker gains 793 arcane spells where print
+  opens 158 (arcane ∩ illusion|mental) — 635 the summoner cannot legally learn, with nothing on
+  screen naming the restriction. I did NOT rewrite the row into a 158-id `spells` list: that is the
+  exact expansion SpellAccessGrant's own doc comment refuses (ids land in every saved roster) and it
+  freezes a derived set. The narrowing stays gap 5, now with the numbers on it.
+
+alchemical-sciences-methodology#edition-aonid — DONE
+  Two rows, two fields, no collision; the edition row supersedes overlay #8263 ("legacy"). Premises
+  verified: mirror methodology-1 is the APG text with remaster_id ["methodology-5"]; methodology-5 is
+  the Player Core 2 pg. 103 text we ship verbatim, present in the AoN export with edition "remaster".
+  Checked the two things that could break: "remaster" is a shipped edition value (10,320 records), and
+  the aonId repoint does not change the resolved CATEGORY, so aonid-integrity.mjs still judges it
+  compatible (nameLooksRight: "alchemical sciences methodology" contains "alchemical sciences"). The
+  shared aonId with the separate `methodology/alchemical-sciences` bucket record is harmless —
+  findDuplicateIds keys on NAME within a bucket and the `aon-` id prefix, never on aonId.
+
+light-mortar-innovation#duplicate-modification-choice — DONE
+  value:null deletes the field; the row supersedes overlay #1413 and cannot merge the superseded
+  object, which is correct because dropping it IS the fix. Verified nothing is orphaned: grep for
+  lightMortarModification across src/ returns NOTHING (the only hit in the repo is the overlay row
+  being replaced), and contained-shrapnel / enhanced-shrapnel / spring-loaded all still carry
+  otherTags ['light-mortar-innovation-modification'], the tag the live picker reads. Premise verified:
+  innovation-4 prints "Choose one initial light mortar modification".
+
+school-of-unified-magical-theory#drain-bonded-item-uses — NOT-DONE (deliberate, and I agree)
+  I checked the blocker rather than taking it: derive.ts:3434-3441 does `out.add(variant)` — the
+  variant lane ADDS the `<featureId>-<subclassId>` record alongside the generic one, it never replaces
+  it, and effectiveUses (featUses.ts:42-66) reads only the record's own maxByLevel plus `usesUpgrade`
+  off db.feats. classFeatures/arcane-bond ships {max:1, per:'day'} and no variant record exists, so
+  authoring the create row today really would draw a SECOND pip row. Blocker is real; gap 2 stands.
+
+curse-of-creeping-ashes#speed-penalty — DONE for the walking Speed
+  Two fields on one mode record, no collision, no prior overlay row for modes/curse-of-creeping-ashes-4
+  (so no supersedes needed — and modes/dampening-harmonics proves a field-level modes override
+  applies over toggle-modes.json). Diffed both values against the shipped record in
+  scripts/data/toggle-modes.json: the modifiers array carries the existing −2 circumstance ranged
+  modifier unchanged and adds {value:-10,type:'status',target:'speed'}; the note is byte-identical up
+  to " — apply that Speed penalty by hand, the mode can't", which is dropped. Harness on a level-6
+  oracle: land 25 → 15 with the mode active. Premise verified: mystery-20 prints the −10 status
+  penalty to all Speeds. fly/climb/burrow/swim remains gap 4.
+
+steward-of-stone-and-fire#duplicate-lore-grant — NOT-DONE (code-only, outside this family)
+  I verified the gap's ADVICE is safe before endorsing it: for all eight apparition options the class
+  option's grants.lores is a superset of the featGrantsAuto entry (crafter-in-the-vault
+  architecture/engineering, echo-of-lost-moments fortune-telling/genealogy, impostor-in-hidden-places
+  fortune-telling/underworld, lurker-in-devouring-dark ocean/sailing, monarch-of-the-fey-courts
+  art/fey, stalker-in-darkened-boughs forest/hunting, steward-of-stone-and-fire mountain/volcano,
+  vanguard-of-roaring-waters mountain/river), each with the 8/16 loreProgression. Deleting the eight
+  featGrantsAuto entries loses no grant. Gap 3 stands; no citation exists for this id, so the closer
+  will leave it unfixed.
+
+otherworldly-protection#void-healing-swap — NOT-DONE (partial: the annotation lands, the swap does not)
+  The row is correct as far as it goes — diffed against overlay #214, the shipped void+spirit pair
+  survives whole and the void entry gains the printed clause as `condition`; harness confirms
+  deriveDefenses still returns void 7 on a level-8 armor inventor and that the clause reaches
+  defs.sources['resistance:void']. But the finding's own claim is that "a dhampir inventor gets a
+  resistance that never applies and loses the one that does", and after this row a dhampir inventor
+  STILL gets void and STILL lacks vitality: the printed mechanic does not reach a built character,
+  only a sentence beside the number does. Print of record confirmed: the mirror page innovation-5 is
+  the LEGACY Guns & Gears wording (negative/positive), and the record's own remaster description
+  carries both clauses. I could not fix it inside this family's files — the gate belongs on IwrEntry
+  (src/rules/types.ts) and the resistance loop (src/rules/derive.ts), gap 6.
+  ⚠ CLOSER HAZARD: this finding id carries a real row, so citations() gives it a `row` citation and
+  wg-batch-close will derive FIXED for it. Half of it is not fixed. Flagged as gap 8.
+
+otherworldly-protection#sanctified-resistance — DONE
+  Delivered by the same merged row (correctly merged — two findings on one record+field, which the
+  applier hard-refuses as two rows). Harness on the level-8 armor inventor: no unholy resistance while
+  unsanctified, unholy 7 once chosenCreatureTraits carries 'holy'. So the whole printed sanctification
+  clause lands with no code change, through the whenCreatureTrait gate derive already honours. The
+  builder's refusal of the proposal's `effectChoices` is right and now measured, not argued: the
+  sheet-fact gate works end to end on a built character. WG omitting our spirit resistance is
+  WG-encodes-less; ours stays.
+
+red-mantis-magic-school#curriculum-description — DONE
+  Diffed the re-emitted 18-option array against overlay #13329 option by option and key by key: the
+  ONLY difference in the whole 35 KB value is option[0].description, and the replacement is
+  byte-identical to core-descriptions.json classFeatures/red-mantis-magic-school.d. Line diff shows
+  exactly the six restored names (2nd Invisibility, 3rd Clairaudience, 4th Clairvoyance, 5th
+  Hallucination, 8th Disappearance, 9th Phantasmagoria); premise verified against arcane-school-23.
+  Checked the trap this shape sets: overlay #9929 amends classes/wizard
+  path ["subclass","options","id=runelord"].advancedFocusSpell and applies BEFORE #13329 — the
+  re-emitted array already carries runelord.advancedFocusSpell "personal-runewell", matching both the
+  path row and shipped core.json, so nothing is swallowed. Every focusSpells / advancedFocusSpell id
+  in the array resolves in core.json, and every option id has a classFeatures record.
+
+angel-eidolon#hallowed-strikes-text — DONE for the record description
+  Sentence-level diff against the shipped core-descriptions .d: 14 sentences in, 14 out, exactly one
+  replaced, and the nonlethal clause survives. The replacement is eidolon-1 verbatim (checked in the
+  mirror). Description rows route to core-descriptions.json `.d` (apply-backfill-now.mjs), which is
+  where content() reads it, so the row reaches the record the test reads. The other two copies —
+  the summoner subclass option and companionGrants.ts:423 — stay open as gaps 1 and 7.
+
+--------------------------------------------------------------------------------
+MANIFEST
+--------------------------------------------------------------------------------
+work/.b033-specs.json still holds all four family entries (situational, engine, repair, data-rows)
+with their stage[] intact. data-rows' stage[] lists work/.b033-rows-data-rows.json,
+work/.b033-report-data-rows.txt, test/batch033-data.test.ts — which is every path this family touched
+(git status confirms it staged no src/ file). All five superseding rows declare supersedes:true and
+all five keys exist in the overlay; the five non-superseding rows have no prior overlay row at their
+key. I changed nothing, so I add no stage[] paths.
+
+--------------------------------------------------------------------------------
+DATA STILL NEEDED (5 — all re-measured, all confirmed)
+--------------------------------------------------------------------------------
+1. classFeatures/empiricism-methodology aonId "methodology-6" + edition "remaster" (supersedes the
+   existing "legacy" row). CONFIRMED: mirror methodology-2.remaster_id = ["methodology-6"], and the
+   AoN export carries methodology-6 with edition "remaster".
+2. classFeatures/forensic-medicine-methodology aonId "methodology-7" + edition "remaster"
+   (supersedes). CONFIRMED: methodology-3.remaster_id = ["methodology-7"].
+3. classFeatures/interrogation-methodology aonId "methodology-8" + edition "remaster" (supersedes).
+   CONFIRMED: methodology-4.remaster_id = ["methodology-8"].
+4. The 33 remaining unread `note` IWR entries, whole-value re-emits with note→condition: I walked
+   every resistances/weaknesses/immunities array in core.json — 36 entries total, and the split is
+   exactly as reported: classFeatures/decay-instinct `whileActive` 1, fury-instinct `whileActive` 1,
+   spirit-instinct `whileActive` 1, elemental-instinct `choice` 22, superstition-instinct `choice` 8,
+   plus the 3 in skin-hard-as-horn this batch fixes.
+5. classFeatures/arcane-bond-school-of-unified-magical-theory, create:true, with
+   limitedUses {max:1, per:'day', maxByLevel:{3:2,5:3,7:4,9:5,11:6,13:7,15:8,17:9,19:10}} — AUTHOR
+   ONLY AFTER gap 2 lands. CONFIRMED: arcane-school-21 is Player Core, prints "once per day for each
+   rank of spell you can cast", the ladder matches a wizard's rank-by-level, no such record exists
+   today, and the create row carries no description (its prose belongs in the created-prose spec).
+
+--------------------------------------------------------------------------------
+CROSS-FILE GAPS (8 — 7 from the builder, all verified; 1 added)
+--------------------------------------------------------------------------------
+1. src/data/index.ts loadDescriptions() (:565-574) writes `.d`/`.r` onto db[bucket][id] only, never
+   onto classes.<cls>.subclass.options[<same id>]. VERIFIED, and I re-counted the damage: 30 stale
+   subclass options — sorcerer 10, wizard 7, oracle 3, summoner/witch/psychic/necromancer 2 each,
+   inventor/gunslinger 1. This is the whole of the-tangible-dream#granted-spell-2nd and the second
+   wrong copy in angel-eidolon#hallowed-strikes-text. Owner: the src/data family.
+2. src/rules/featUses.ts effectiveUses() (:42-66) has no preference for a `<featureId>-<subclassId>`
+   variant's limitedUses over the generic record's, and derive.ts:3434-3441 ADDS the variant rather
+   than replacing the generic. VERIFIED. Blocks school-of-unified-magical-theory#drain-bonded-item-uses.
+3. src/rules/featGrantsAuto.ts lines 228, 293, 453, 511, 533, 669, 671, 763 — delete the eight
+   apparition entries the class option's grants.lores + loreProgression already cover. VERIFIED safe
+   (superset check above). That IS steward-of-stone-and-fire#duplicate-lore-grant.
+4. src/rules/derive.ts:5224 folds a 'speed' mode into speeds.land only. VERIFIED (the comment says so
+   in as many words). "All your Speeds" needs fly/climb/burrow/swim; WG emits SPEED_FLY / SPEED_CLIMB
+   / SPEED_BURROW / SPEED_SWIM too.
+5. src/rules/types.ts SpellAccessGrant (:5265-5292) has no trait filter, and SpellsTab.tsx:296-324
+   adds every spell of an opened tradition with no label. VERIFIED and measured: the fey-eidolon row
+   opens 793 arcane spells where print opens 158. Wants `traits?: string[]` on SpellAccessGrant,
+   applied where the picker narrows on tradition.
+6. src/rules/types.ts IwrEntry + the resistance loop at src/rules/derive.ts:2701-2729 have no VOID
+   HEALING gate, so otherworldly-protection's swap rides a `condition` string. VERIFIED. A
+   `whenVoidHealing?: boolean` sibling of `whenCreatureTrait` is the one-line gate; once it lands the
+   void entry becomes {whenVoidHealing:false} and a {type:'vitality', value:'3+floor(@actor.level/2)',
+   whenVoidHealing:true} entry joins it.
+7. src/rules/companionGrants.ts:423 still reads "Hallowed Strikes: the eidolon's unarmed Strikes deal
+   an extra 1 spirit (good) damage." — VERIFIED verbatim: no holy trait, no target restriction, no
+   nonlethal clause. Replace with the eidolon-1 text this batch's description row carries. Third copy
+   of angel-eidolon#hallowed-strikes-text.
+8. NEW — scripts/wg-batch-close.mjs citations(): a finding whose row delivers only PART of its claim
+   still earns an unambiguous `row` citation and closes FIXED. otherworldly-protection#void-healing-swap
+   is that case here (annotation shipped, swap not), and the same shape will recur whenever a reader
+   gap forces a half-fix. The batch-30 verify already got the rowless half of this fixed; the partial
+   half is still open. A `partial: true` flag on the spec entry that routes to the gaps file instead
+   of a row citation would close it. Owner: the driver.
+   (Also, batch-wide and not this family's: the 6 uncited settle flips in scripts/wg-values.mjs and
+   scripts/wg-identity.mjs listed under RAN must be cited before the batch can close.)

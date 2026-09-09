@@ -1,0 +1,335 @@
+BATCH 033 — GAP VERIFIER (WG-comparison lane).  Default: REFUTE.
+Ledger verified: work/.b033-gaps.json (26 lines).  Manifest: work/.b033-specs.json (8 entries).
+Written by the gaps verifier; no source file, no spec file and no other agent's file was edited.
+
+=====================================================================================================
+0. THE TWO CHECKS THE BRIEF ASKS FOR FIRST
+=====================================================================================================
+owner-questions.json UNTOUCHED. `git diff HEAD -- work/owner-questions.json` and
+`git status --porcelain -- work/owner-questions.json` are both EMPTY. The file is at HEAD, 189,631
+bytes. The one question this batch asks (spore-order-counts-as-leaf-order) is in work/.b033-queue.json
+and nowhere else, which is the contract.
+
+NOTHING REMOVED. work/.b033-specs.json holds all five builder families (situational, engine, repair,
+data-rows, instruments) plus the three gap families (gap-situational, gap-instruments, gap-data-rows);
+every entry carries a stage[] and every `file` exists on disk and parses. No gap line was deleted
+either: the ledger holds 26 lines and its duplicates (1/19, 6/21, 15/22, 16/23, 18/20) are the
+harvester reading the same section out of both the report and the verify file, not an edit.
+⚠ But the ledger is NOT the batch's whole gap inventory — see section 3.
+
+=====================================================================================================
+1. THE LEDGER — one line per gap line
+=====================================================================================================
+CLOSED  01  data-rows / DATA STILL NEEDED — empiricism-methodology aonId+edition
+            ref work/.b033-rows-gap-data-rows.json (manifest ✓, valid JSON, findings[]).
+            Rows present: aonId "methodology-6" (no prior overlay row) and edition "remaster" with
+            supersedes:true over the shipped "legacy" row. Target record exists in core.json
+            (aonId methodology-2, edition legacy today). No collision with any other family's rows.
+
+CLOSED  02  data-rows / DATA STILL NEEDED — forensic-medicine-methodology. Same shape, same file;
+            record exists (methodology-3 / legacy); supersedes:true on the edition row.
+
+CLOSED  03  data-rows / DATA STILL NEEDED — interrogation-methodology. Same shape; record exists
+            (methodology-4 / legacy); supersedes:true on the edition row.
+
+CLOSED  04  data-rows / DATA STILL NEEDED — the 33 IWR `note` keys on five instinct records
+            ref work/.b033-rows-gap-data-rows.json. Five WHOLE-field re-emits (decay/fury/spirit
+            .whileActive, elemental/superstition .choice), each supersedes:true over the shipped
+            overlay row. I diffed each new value against the row it supersedes with the rename
+            applied: byte-identical in all five (note counts 1/1/1/22/8 → condition counts 1/1/1/22/8,
+            nothing else moved). The reader half checks out too — `r.condition` / `w.condition` are
+            read at src/rules/derive.ts:2746 and :2758, and `note` is read nowhere on an IWR entry.
+
+CLOSED  05  data-rows / DATA STILL NEEDED — create arcane-bond-school-of-unified-magical-theory
+            ref work/.b033-rows-gap-data-rows.json, create:true. Correctly absent from core.json today
+            (`arcane-bond` is the generic record, {max:1,per:'day'}). The reader that makes the created
+            record do anything is gap line 07, closed below.
+
+CLOSED  06  data-rows / CROSS-FILE — src/data/index.ts loadDescriptions() never syncs option copies
+            ref src/data/index.ts:554 (file:line form ✓). The change is real and at that symbol: a new
+            exported `applyDescriptions(db, byBucket)` (:546-600) that writes .d/.r onto the record AND
+            onto classes.<cls>.subclass.options[] / extraChoices[].options[], with loadDescriptions()
+            reduced to one call. Test: test/batch033-gap-data.test.ts:32, which reads core.json +
+            core-descriptions.json straight off disk, calls applyDescriptions, and asserts
+            `stale === []` across every option of every class. Reverting the option loop makes that
+            assertion fail with the 45 stale ids. PASSES.
+
+CLOSED  07  data-rows / CROSS-FILE — src/rules/featUses.ts has no variant-limit preference
+            ref src/rules/featUses.ts:56 ✓. New `retunedBy(c, feat, db)` above effectiveUses, narrow
+            by design (only when the GENERIC record carries a limit). Test:
+            test/batch033-gap-data.test.ts:73 — a level-9 UMT wizard gets max 5 off a PATCHED-IN-MEMORY
+            variant record, spent against featId 'arcane-bond', while the unpatched db and a
+            school-of-battle-magic wizard both still read 1. Patched-in-memory, not
+            patched-vs-shipped, so it cannot flip when row 05 lands. PASSES.
+
+CLOSED  08  data-rows / CROSS-FILE — eight animist apparition rows in featGrantsAuto.ts
+            ref src/rules/featGrantsAuto.ts:229 ✓. All eight entries are gone (crafter-in-the-vault,
+            echo-of-lost-moments, impostor-in-hidden-places, lurker-in-devouring-dark,
+            monarch-of-the-fey-courts, stalker-in-darkened-boughs, steward-of-stone-and-fire,
+            vanguard-of-roaring-waters), replaced by a comment block that quotes the printed ladder and
+            names the guard test. Test: test/batch033-gap-data.test.ts:106 asserts
+            FEAT_SKILL_GRANTS[id] === undefined for all eight AND that the option still trains both
+            Lores to EXPERT at 8th on a built animist. Reverting any entry fails the first assertion.
+            PASSES. (This also closes ENGINE cross-file gap 16 — see section 3.)
+
+CLOSED  09  data-rows / CROSS-FILE — companionGrants.ts angel-eidolon note
+            ref src/rules/companionGrants.ts:430 ✓. The note now reads "gain the holy trait … to unholy
+            creatures and creatures with weakness to holy … nonlethal … without taking the usual –2",
+            with the eidolon-1 quote in the comment above it. Test:
+            test/batch033-gap-data.test.ts:130 pins all three clauses and `not.toContain('(good)')`.
+            Reverting restores "(good)" and fails. PASSES.
+
+CLOSED  10  data-rows / CROSS-FILE — a mode targeting 'speed' folded into speeds.land only
+            ref src/rules/derive.ts:5246 ✓ (the widened matcher is src/rules/modes.ts:135, reached from
+            derive.ts:5248 `modeNumberBonus(c.activeModes, { kind:'speed', detail: kind })`). Test:
+            test/batch033-gap-data.test.ts:146 — detail:'all' takes land AND fly, no detail still means
+            land only, detail:'fly' takes fly only. PASSES.
+            ⚠ RESIDUE R1 — the reader is closed, the PLAYER outcome is not. See section 2.
+
+CLOSED  11  data-rows / CROSS-FILE — SpellAccessGrant has no trait filter
+            ref src/sheet/SpellsTab.tsx:293 ✓ — `export function spellOpenedBy(w, s)` is at exactly
+            that line and is the single narrowing used at :313; `traits?: string[]` added to the type.
+            Test: test/batch033-gap-data.test.ts:182 — an illusion arcane spell opens, a plain arcane
+            spell does not, a traitless widening still opens everything, and the traits survive
+            buildCharacter onto ch.spellListTraditions. PASSES.
+            ⚠ RESIDUE R2 — reader closed, player outcome not. See section 2.
+
+CLOSED  12  data-rows / CROSS-FILE — no VOID HEALING gate on an IwrEntry
+            ref src/rules/derive.ts:2726 ✓ — `if (r.whenVoidHealing != null && r.whenVoidHealing !==
+            voidHealing) continue;` at :2726 and the weakness twin at :2754; `whenVoidHealing?: boolean`
+            at src/rules/types.ts:527. Test: test/batch033-gap-data.test.ts:213 — a living inventor
+            keeps void 7 and no vitality, a dhampir gets vitality 7 and no void, the ungated spirit
+            entry is untouched in both. PASSES.
+            ⚠ RESIDUE R3 — reader closed, player outcome not. See section 2.
+
+CLOSED  13  data-rows / CROSS-FILE — `effectChoices` on an inventor modification has no reader (PARKED)
+            ref "flaggedResidue: speculative infrastructure …" — a residue with a reason, well over the
+            20-char floor, and the reason holds: no finding in batch 033 needs a visible pick on an
+            inventor modification (otherworldly-protection#sanctified-resistance carries zero backfill
+            rows and was settled on whenCreatureTrait, which the resistance loop already honours). A
+            reader with no caller is exactly what should not be built. Accepted as parked.
+
+CLOSED  14  data-rows / DATA STILL NEEDED — "the-tangible-dream#granted-spell-2nd — NO ROW, and no test"
+            ref src/data/index.ts:554 ✓. The line is now false in both halves: the finding needs no row
+            (the repaired prose already ships in core-descriptions.json; what was missing was the sync
+            to the option copy), and the test exists at test/batch033-gap-data.test.ts:32, which asserts
+            the psychic option's description contains "2nd: Invisibility". Same artefact as line 06.
+
+CLOSED  15  instruments / DATA STILL NEEDED — "----------------" (PARKED)
+            Not a gap: the section underline of work/.b033-report-instruments.txt:41, whose section
+            reads "(none — …)". Re-measured rather than taken on trust: work/.b033-rows-instruments.json
+            carries 41 findings and ZERO backfillRows, work/.b033-rows-gap-instruments.json carries 2
+            findings and ZERO backfillRows. Nothing is owed to effect-backfill.json by this family.
+
+CLOSED  16  instruments / CROSS-FILE — "--------------" (PARKED against an owner question)
+            ref "spore-order-counts-as-leaf-order" is a real entry in work/.b033-queue.json with
+            printed (AoN druidic-order-13, Special, verbatim), theirs (ability_block 34429 →
+            giveAbilityBlock 34226), ours (the extraChoices option + the ten "leaf order" prerequisite
+            lines) and a question print CANNOT answer — print settles the mechanic, not which of three
+            engine shapes to grow, and option (a) changes ten feats for eight other druid orders,
+            outside this batch. Correctly an owner question and not a decision. Not yet on the desk;
+            the driver's gaps stage files it.
+
+CLOSED  17  instruments / CROSS-FILE — surfaceOf has no list a granted ACTION can land on
+            ref test/wg-experience.harness.test.tsx:676 ✓ — `actionNames` is built there from the two
+            carriers MainTab.tsx:281-328 reads (grantsActions on an owned feat/feature, plus
+            Character.grantedActionIds), and scripts/lib/wg-experience-lanes.mjs:503 consumes it.
+            The consumer is pinned mutation-proof (test/wg-experience-lanes.test.ts:830, marker present,
+            stunts actionNames to [] and re-asserts undelivered; the sibling test does the same for the
+            (Psi)/(legacy) strip against spellNames). The PRODUCER at :676 is inside the harness's own
+            `run` test, which is it.skip under `npm test` — so I did not take the spec's measurement on
+            trust and RE-RAN THE GATE: `node scripts/wg-experience.mjs --batch work/wg-batch-033.json`.
+                baseline (work/.b033-baseline/experience.json, untouched):
+                    NO-SHEET-EFFECT 9  OK 24  MISSING-CONTROL 3  UNSUPPORTED 13  UNVERIFIED-EFFECT 1
+                now (work/wg-batch-033-experience.json, rewritten by that run):
+                    NO-SHEET-EFFECT 2  OK 31  MISSING-CONTROL 3  UNSUPPORTED 13  UNVERIFIED-EFFECT 1
+            way-of-the-drifter, way-of-the-sniper, way-of-the-vanguard, interrogation-methodology,
+            alchemical-sciences-methodology, the-unbound-step and the-tangible-dream all moved
+            NO-SHEET-EFFECT → OK. Nothing regressed. The two that remain are the two that are disposed
+            of on purpose: the-distant-grasp (parked, print divergence) and spore-order (the owner
+            question). MEASURED, not claimed.
+            NOTE FOR THE CLOSER: work/wg-batch-033-experience.json was 15:34 (pre-teach) until this
+            run — the gate would have read the BEFORE verdicts. It is now current.
+
+CLOSED  18  data-rows / DATA STILL NEEDED — a 79-dash horizontal rule (PARKED). Harvester artefact,
+            names no record, field or file. Residue reason accepted.
+
+CLOSED  19  data-rows / DATA STILL NEEDED — duplicate of line 01, harvested out of
+            work/.b033-verify-data-rows.txt:166 instead of the report. Same artefact, same verdict.
+
+CLOSED  20  data-rows / CROSS-FILE — a 79-dash horizontal rule (PARKED). As line 18.
+
+CLOSED  21  data-rows / CROSS-FILE — duplicate of line 06 (verify-file copy). Same artefact.
+
+CLOSED  22  instruments / DATA STILL NEEDED — "----------------", the twin of line 15, statused
+            `authored` against work/.b033-rows-gap-instruments.json.
+            It passes the driver (the ref is a manifest spec) and the underlying claim is verified —
+            that spec carries zero backfillRows and its section reads "(none)". Flagged, not reopened:
+            the status/ref pairing is wrong for what this line is (its twin at 15 is parked as residue,
+            which is the honest disposition), but nothing is owed either way. Harmless divergence;
+            on the next apply-digest both copies collapse onto this one's disposition anyway, since the
+            merge key is family|line.
+
+CLOSED  23  instruments / CROSS-FILE — "--------------", twin of line 16 (PARKED). Its residue reason
+            is the useful one: it records that items 2 and 3 are authored (the surfaceOf carrier; and
+            scripts/wg-experience.mjs:189 spreads ...ev.surface so the new field threads through with
+            no edit — verified, that line reads `{ ...ev.surface, grantsInnateSpell, blastDiceBonus }`),
+            item 4 is the queued question, and items 6 and 7 stay residue ON PURPOSE. Item 6 in
+            particular is honest: wg-diff still reports battle-creed and curse-of-the-mortal-warrior as
+            THEY-ONLY `save`, and teaching the comparer that here would silence records nobody read.
+
+CLOSED  24  instruments / CROSS-FILE — ⚠⚠ THE STASH (PARKED). Re-verified read-only: `git stash list`
+            shows stash@{0} "WIP on main: 2686f94 parity batch 032"; `git stash show --name-only
+            stash@{0}` lists 214 paths; the insurance patch exists (…/scratchpad/b033-stash-rescue.patch,
+            114 MB, 16:12). The disposition is correct and unavoidable: every git write command is an
+            absolute prohibition for this workflow, so `git stash pop` is a HUMAN action. Nothing this
+            batch depends on is still stashed — the instruments family's three comparer files
+            (wg-diff/wg-identity/wg-values) and src/rules/situationalBonuses.ts are all back in the
+            working tree and show as modified.
+
+REOPENED 25 situational / CROSS-FILE — "Because the spec entries are rowless, scripts/wg-batch-close.mjs
+            derives FIXED only through its …"
+            THE WORK IS DONE; THE REF IS NOT IN A FORM THE DRIVER ACCEPTS, so this line will refuse.
+            I replayed the driver's own gate read-only (scripts/wg-batch-run.mjs `gapProblems`, the pure
+            export it exists for) against the real gaps/queue/desk/manifest:
+                "situational: … is authored but its ref "src/rules/situationalBonuses.ts (restored
+                 byte-exactly from stash@{0}; the code…" names no manifest spec, no file in the tree
+                 and no file:line"
+            gapProblems accepts an authored ref ONLY if it is a manifest `file`, an existing path, or
+            ends /:\d+$/. This ref is prose wrapped around a path. The artefacts behind it are real —
+            src/rules/situationalBonuses.ts is modified in the tree (+48/-2, not at HEAD),
+            work/.b033-specs.json carries the gap-situational entry with a six-path stage[], and
+            test/batch033-gap-situational.test.ts passes — so this is a one-token fix, not lost work.
+            FIX: set ref to "work/.b033-rows-gap-situational.json" (a manifest file) or
+            "src/rules/situationalBonuses.ts:1". The gap-situational agent owns the line.
+
+REOPENED 26 situational / CROSS-FILE — "scripts/backfill-oracle-curses.mjs:36 — CURSES['curse-of-
+            creeping-ashes'].note still ends …"
+            Same refusal, same cause: ref "scripts/backfill-oracle-curses.mjs:CURSES['curse-of-creeping-
+            ashes'] (printed mystery-20 sentence) + test/…" ends in prose, not :<line>.
+            The work behind it is verified: scripts/backfill-oracle-curses.mjs is modified (+8/-1),
+            test/batch033-gap-situational.test.ts:34+39 reads the generator's own source, pins it to
+            RECORD_MARKERS['curse-of-creeping-ashes'][0].note in both directions and asserts neither
+            side says "die"/"consumed" — so a re-run of the generator cannot restore the invented
+            sentence. Both tests pass.
+            FIX: set ref to "scripts/backfill-oracle-curses.mjs:36".
+
+    Ledger totals: 26 lines — 24 CLOSED (16 authored + 8 parked), 2 REOPENED, 0 STILL-OPEN.
+
+=====================================================================================================
+2. RESIDUES INSIDE CLOSED LINES — a reader was built and no writer uses it (3)
+=====================================================================================================
+Each of gap lines 10, 11 and 12 asked for a READER, and each got one, tested. But every one of them
+was raised BY a data-rows row that was written at 16:0x, before the reader existed at 17:0x, and no
+agent may edit another agent's spec — so the row that would use the new field is still the old row.
+The gap lines are closed; the RECORDS still do not match print. Verified against
+work/.b033-rows-data-rows.json as it stands on disk:
+
+R1  modes/curse-of-creeping-ashes-4 `modifiers` emits {value:-10,type:'status',target:'speed'} with NO
+    `detail`. modes.ts now defaults a detail-less speed modifier to 'land' (deliberately — every
+    shipped mode means the walking Speed). Print, mystery-20 Cursebound 4: "a −10-foot status penalty
+    to ALL YOUR SPEEDS". The row needs detail:'all'.
+    ⚠ test/batch033-gap-data.test.ts:151 says in a comment "the row that will carry detail:'all'
+      belongs to work/.b033-rows-data-rows.json" — that row does not carry it. The comment is a
+      forward reference to something nobody authored.
+
+R2  classFeatures/fey-eidolon `spellListAdditions` emits {"traditions":["arcane"]} with no `traits`.
+    SpellAccessGrant now HAS traits and the picker narrows on it. Print, eidolon-8: "spells that have
+    the illusion or mental traits that appear on the arcane spell list". The row needs
+    traits:["illusion","mental"] — until then the picker still offers 793 spells where print offers
+    158, exactly the number the gap line was raised over.
+
+R3  classFeatures/otherworldly-protection `resistances` still rides a prose `condition` string ("or
+    vitality damage instead, if you have void healing…") rather than the `whenVoidHealing` gate that
+    now exists. The player reads the caveat; the number does not swap. test/batch033-gap-data.test.ts:218
+    carries the same forward reference ("the follow-up row belongs to work/.b033-rows-data-rows.json,
+    which owns this field").
+
+None of these can be fixed by a gap agent (another family's spec file, and a second row on the same
+record+field is exactly the collision the applier hard-refuses). They belong to the driver or to a
+re-cut of the data-rows spec. Merging, not adding: R1/R3 must be edited INTO the existing rows.
+
+=====================================================================================================
+3. ⚠⚠ THE LEDGER IS NOT THE INVENTORY — 19 unfinished items never entered work/.b033-gaps.json
+=====================================================================================================
+This is the finding the closer most needs. `gapLines()` in scripts/wg-batch-run.mjs:825-839 harvests a
+section by walking DOWN from the header and breaking at the first line that is not `- `/`* `/`• `/`1.`.
+Three of the ten report+verify files underline their sections with `=====`, which is not a bullet — so
+the harvester breaks on the underline and the entire section is dropped, silently. (The `----------------`
+lines that ARE in the ledger are the same bug from the other side: a dash underline looks like a bullet.)
+The driver therefore cannot see, and `--stage gaps` will happily pass on, the following REAL items.
+I checked each against the working tree rather than against its report:
+
+ENGINE (work/.b033-verify-engine.txt:147-215 — 3 DATA + 16 CROSS-FILE, none harvested)
+  DONE     DATA 1-3        authored as rows in work/.b033-rows-engine.json (3 rows, verified present,
+                           no collisions) — nothing owed.
+  DONE     CROSS-FILE 16   the 8 apparition rows — done by the gap-data-rows family (ledger line 08).
+  OPEN     CROSS-FILE 1    src/rules/modes.ts:240 cat-wooden-rage still carries the frozen
+                           m(6,'untyped','damage'). Unchanged. [ligneous-instinct#wooden-rage-mode]
+  OPEN     CROSS-FILE 2    src/rules/modes.ts:239 cat-rotting-rage, the identical frozen +6. Unchanged.
+                           [decay-instinct#rotting-rage-damage-scaling]
+  OPEN     CROSS-FILE 3-7  eidolon LANGUAGES (CompanionGrant.languages, the three values,
+                           EidolonBlock.languages, the pick for the two "one common mortal language"
+                           eidolons, the CompanionsTab row). src/rules/companions.ts and
+                           src/sheet/CompanionsTab.tsx are UNMODIFIED; companionGrants.ts's only change
+                           is the angel note. Five findings ride on this.
+  OPEN     CROSS-FILE 8    COMPANION_MODS eidolon pass cannot match cfg.typeId — "all ELEVEN authored
+                           eidolon-type rows are dead". companions.ts unmodified.
+  OPEN     CROSS-FILE 9,10 elemental-eidolon per-core note + a reader for eidolonElementalCore.
+  OPEN     CROSS-FILE 11,12 light-mortar-innovation siege companion + its scaling.
+  OPEN     CROSS-FILE 13   classResources.ts investigator versatile-vials (file unmodified).
+  OPEN     CROSS-FILE 14   featFeatGrants.ts fey-eidolon → magical-adept @7 (file unmodified).
+  OPEN     CROSS-FILE 15   the eidolonBreathDamage trait application (zero readers today).
+                           → 15 OPEN.
+REPAIR (work/.b033-verify-repair.txt:89-111 — 4 CROSS-FILE, none harvested)
+  DONE     4   "test-flip-audit --batch 033 FAILS with 5-6 uncited flips". RE-RUN BY ME:
+               "flip-audit: batch 033 clean — 9 test file(s) touched, 3 new settle key(s), every flip
+               cited." The instruments family cited them. This also closes situational verify item 3.
+  OPEN     1   spells/devil-form — 2d10+10 vs AoN spell-894's 2d12+10, a wrong DIE SIZE. Print-read lane.
+  OPEN     2   classFeatures/lamentation-of-sinister-deals — no core-descriptions entry, no aonId.
+  OPEN     3   core-descriptions classFeatures/witness-to-ancient-battles — ", Damage 6d8+6" lost its
+               `**Damage**` markers. Cosmetic, one record.
+                           → 3 OPEN.
+SITUATIONAL (work/.b033-verify-situational.txt:87-105 — items 2,3,4; only item 1 was harvested)
+  DONE     3   the uncited settles — flip audit is clean (above).
+  DONE     4   "the manifest holds one entry" — it now holds all eight. Verified.
+  OPEN     2   src/rules/modes.ts cat-cursebound-1..3 still carry `modifiers: []`. (Stage 4 alone gets
+               its numbers, from the data-rows row — and even that one under-delivers, see R1.)
+                           → 1 OPEN.
+
+These 19 are not a refusal of anybody's work — no family was assigned them, and no gap agent was spawned
+for engine or repair. They are simply invisible to the gate. Two consequences:
+  (a) "0 open gap lines" from `--stage gaps` must NOT be read as "nothing unfinished in batch 033";
+  (b) the harvester should break on `^=+$`/`^-+$` underlines rather than treating them as content, and
+      should keep reading a numbered list across wrapped lines. Until it does, every family that
+      underlines with `=` loses its whole gap section. (Not fixed here: scripts/wg-batch-run.mjs is
+      the driver's own file and outside this pass.)
+
+=====================================================================================================
+4. WHAT ELSE I CHECKED (all clean, no action)
+=====================================================================================================
+· Spec files parse and their rows target real records — 37 rows across all eight specs; every row's
+  category/id resolves in public/core.json except the one create:true row, which correctly does not.
+· ZERO row collisions across the eight specs (category/id/field key, 37 unique).
+· Every row that lands on a record+field that already has an overlay row in
+  scripts/data/effect-backfill.json carries supersedes:true — checked all 37 against the shipped file.
+· scripts/data/effect-backfill.json is UNMODIFIED: no agent wrote it, the driver still applies.
+· Every finding id cited by a gap artefact is in read.json `confirmed[]` (10 checked, 10 CONFIRMED).
+· node scripts/test-flip-audit.mjs --batch 033 → clean.
+· node scripts/vt.mjs run test/batch033-gap-data.test.ts test/batch033-gap-situational.test.ts
+  test/wg-experience-lanes.test.ts → 3 files, 47 tests, all pass.
+  node scripts/vt.mjs run test/wg-experience.harness.test.tsx → 3 passed, 1 skipped (the gated run).
+· npx tsc --noEmit → clean, exit 0.
+· work/experience-instrument-limits.json gained exactly three parking entries (the-distant-grasp,
+  battle-creed, armor-innovation), each with a `_cite`, a `verified` paragraph and a `refuter` — not
+  "out of scope" hand-waving. The five granted-action records the builder wanted parked were correctly
+  NOT parked: they were fixed instead, and the gate now reads them OK.
+
+=====================================================================================================
+5. VERDICT
+=====================================================================================================
+Ledger: 26 lines → 24 CLOSED, 2 REOPENED (lines 25 and 26; ref FORM only, the work is done and tested).
+        The driver WILL refuse `--stage gaps` today with exactly those two, and no others.
+Beyond the ledger: 3 reader-without-writer residues (section 2) and 19 unfinished items the harvester
+        never collected (section 3).
+OPEN AFTER THIS PASS: 24  (2 ledger + 3 residues + 19 unharvested)

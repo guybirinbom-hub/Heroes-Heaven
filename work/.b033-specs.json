@@ -1,0 +1,215 @@
+[
+  {
+    "file": "work/.b033-rows-situational.json",
+    "kind": "rows",
+    "family": "situational",
+    "stage": [
+      "work/.b033-rows-situational.json",
+      "work/.b033-report-situational.txt",
+      "test/batch033-situational.test.ts",
+      "src/rules/situationalBonuses.ts"
+    ]
+  },
+  {
+    "file": "work/.b033-rows-engine.json",
+    "kind": "rows",
+    "family": "engine",
+    "stage": [
+      "work/.b033-rows-engine.json",
+      "work/.b033-report-engine.txt",
+      "work/.b033-verify-engine.txt",
+      "test/batch033-engine.test.ts",
+      "src/rules/build.ts",
+      "work/.b033-closer-triage.txt",
+      "test/batch033-closer.test.ts",
+      "test/batch033-closer-render.test.tsx",
+      "src/rules/companions.ts",
+      "src/rules/companionGrants.ts",
+      "src/rules/types.ts",
+      "src/sheet/CompanionsTab.tsx"
+    ]
+  },
+  {
+    "file": "work/.b033-rows-repair.json",
+    "kind": "rows",
+    "family": "repair",
+    "stage": [
+      "work/.b033-rows-repair.json",
+      "work/.b033-report-repair.txt",
+      "work/.b033-verify-repair.txt",
+      "test/batch033-repair.test.ts",
+      "scripts/repair-damage-type.mjs",
+      "scripts/dropped-inline-check.mjs"
+    ]
+  },
+  {
+    "file": "work/.b033-rows-data-rows.json",
+    "kind": "rows",
+    "family": "data-rows",
+    "stage": [
+      "work/.b033-rows-data-rows.json",
+      "work/.b033-report-data-rows.txt",
+      "test/batch033-data.test.ts",
+      "test/raging-resistance.test.ts"
+    ]
+  },
+  {
+    "file": "work/.b033-rows-instruments.json",
+    "kind": "rows",
+    "family": "instruments",
+    "stage": [
+      "work/.b033-rows-instruments.json",
+      "work/.b033-report-instruments.txt",
+      "work/.b033-verify-instruments.txt",
+      "test/batch033-instruments.test.ts",
+      "scripts/wg-diff.mjs",
+      "scripts/wg-identity.mjs",
+      "scripts/wg-values.mjs"
+    ]
+  },
+  {
+    "file": "work/.b033-rows-gap-situational.json",
+    "kind": "rows",
+    "family": "gap-situational",
+    "stage": [
+      "work/.b033-rows-gap-situational.json",
+      "work/.b033-report-gap-situational.txt",
+      "work/.b033-verify-situational.txt",
+      "test/batch033-gap-situational.test.ts",
+      "src/rules/situationalBonuses.ts",
+      "scripts/backfill-oracle-curses.mjs"
+    ]
+  },
+  {
+    "file": "work/.b033-rows-gap-instruments.json",
+    "kind": "rows",
+    "family": "gap-instruments",
+    "stage": [
+      "work/.b033-rows-gap-instruments.json",
+      "work/.b033-report-gap-instruments.txt",
+      "work/experience-instrument-limits.json",
+      "scripts/lib/wg-experience-lanes.mjs",
+      "test/wg-experience-lanes.test.ts",
+      "test/wg-experience.harness.test.tsx"
+    ]
+  },
+  {
+    "file": "work/.b033-rows-gap-data-rows.json",
+    "kind": "rows",
+    "family": "gap-data-rows",
+    "stage": [
+      "work/.b033-rows-gap-data-rows.json",
+      "work/.b033-report-gap-data-rows.txt",
+      "test/batch033-gap-data.test.ts",
+      "src/data/index.ts",
+      "src/rules/featUses.ts",
+      "src/rules/featGrantsAuto.ts",
+      "src/rules/companionGrants.ts",
+      "src/rules/derive.ts",
+      "src/rules/modes.ts",
+      "src/rules/types.ts",
+      "src/rules/build.ts",
+      "src/sheet/SpellsTab.tsx"
+    ]
+  },
+  {
+    "file": "work/.b033-rows-resume-otherworldly-and-curse-rows-two-overlay-rows-values-otherworldly-protection-the-row-half-of-the-creeping-ashes-speed-line-.json",
+    "kind": "rows",
+    "family": "resume-data-rows",
+    "stage": [
+      "work/.b033-rows-resume-otherworldly-and-curse-rows-two-overlay-rows-values-otherworldly-protection-the-row-half-of-the-creeping-ashes-speed-line-.json",
+      "work/.b033-report-resume-otherworldly-and-curse-rows-two-overlay-rows-values-otherworldly-protection-the-row-half-of-the-creeping-ashes-speed-line-.txt",
+      "test/batch033-resume-otherworldly-and-curse-rows-two-overlay-rows-values-otherworldly-protection-the-row-half-of-the-creeping-ashes-speed-line-.test.ts",
+      "test/batch033-data.test.ts"
+    ]
+  },
+  {
+    "file": "work/.b033-rows-resume-eidolon-languages-and-traits-angel-fey-fixed-language-the-fey-spell-list-trait-narrowing.json",
+    "kind": "rows",
+    "family": "resume-engine",
+    "stage": [
+      "work/.b033-rows-resume-eidolon-languages-and-traits-angel-fey-fixed-language-the-fey-spell-list-trait-narrowing.json",
+      "work/.b033-report-resume-eidolon-languages-and-traits-angel-fey-fixed-language-the-fey-spell-list-trait-narrowing.txt",
+      "test/batch033-resume-eidolon-languages-and-traits-angel-fey-fixed-language-the-fey-spell-list-trait-narrowing.test.ts",
+      "src/rules/companionGrants.ts",
+      "src/rules/companions.ts",
+      "work/.b033-verify-resume-eidolon-languages-and-traits-angel-fey-fixed-language-the-fey-spell-list-trait-narrowing.txt",
+      "test/batch033-data.test.ts",
+      "src/sheet/CompanionsTab.tsx",
+      "scripts/wg-diff.mjs",
+      "test/batch033-closer.test.ts"
+    ]
+  },
+  {
+    "file": "work/.b034-created-desc.json",
+    "kind": "created-prose",
+    "family": "resume-prose",
+    "stage": [
+      "work/.b034-created-desc.json",
+      "work/.b033-queue.json",
+      "work/.b034-queue.json",
+      "work/.b033-report-resume-prose-queue-closeout-the-created-record-s-description-the-134-re-key-and-the-suite-failure.txt",
+      "work/.b033-verify-resume-prose-queue-closeout-the-created-record-s-description-the-134-re-key-and-the-suite-failure.txt",
+      "test/batch033-resume-prose-queue-closeout-the-created-record-s-description-the-134-re-key-and-the-suite-failure.test.ts",
+      "scripts/wg-batch-run.mjs",
+      "test/wg-batch-run.test.ts"
+    ]
+  },
+  {
+    "file": "work/.b033-rows-resume-modes-engine-rage-damage-scaling-in-src-rules-modes-ts-no-gate-line-of-its-own-the-honesty-prerequisite-for-the-instruments-rage-damage-map-.json",
+    "kind": "rows",
+    "family": "resume-engine",
+    "stage": [
+      "work/.b033-rows-resume-modes-engine-rage-damage-scaling-in-src-rules-modes-ts-no-gate-line-of-its-own-the-honesty-prerequisite-for-the-instruments-rage-damage-map-.json",
+      "work/.b033-report-resume-modes-engine-rage-damage-scaling-in-src-rules-modes-ts-no-gate-line-of-its-own-the-honesty-prerequisite-for-the-instruments-rage-damage-map-.txt",
+      "test/batch033-resume-modes-engine-rage-damage-scaling-in-src-rules-modes-ts-no-gate-line-of-its-own-the-honesty-prerequisite-for-the-instruments-rage-damage-map-.test.ts",
+      "src/rules/modes.ts",
+      "work/.b033-verify-resume-modes-engine-rage-damage-scaling-in-src-rules-modes-ts-no-gate-line-of-its-own-the-honesty-prerequisite-for-the-instruments-rage-damage-map-.txt"
+    ]
+  },
+  {
+    "file": "work/.b033-rows-resume-light-mortar-siege-the-munitions-master-innovation-grant-3-red-lines-one-lane-.json",
+    "kind": "rows",
+    "family": "resume-engine",
+    "stage": [
+      "work/.b033-rows-resume-light-mortar-siege-the-munitions-master-innovation-grant-3-red-lines-one-lane-.json",
+      "work/.b033-created-desc-resume-light-mortar-siege.json",
+      "work/.b033-report-resume-light-mortar-siege-the-munitions-master-innovation-grant-3-red-lines-one-lane-.txt",
+      "work/.b033-verify-resume-light-mortar-siege-the-munitions-master-innovation-grant-3-red-lines-one-lane-.txt",
+      "test/batch033-resume-light-mortar-siege-the-munitions-master-innovation-grant-3-red-lines-one-lane-.test.ts",
+      "scripts/wg-experience.mjs",
+      "scripts/lib/wg-experience-lanes.mjs",
+      "test/wg-experience-lanes.test.ts",
+      "test/wg-experience.harness.test.tsx",
+      "test/batch033-closer.test.ts",
+      "scripts/wg-diff.mjs",
+      "scripts/lib/apply-backfill.mjs",
+      "test/wg-batch-run.test.ts",
+      "scripts/wg-batch-run.mjs"
+    ]
+  },
+  {
+    "file": "work/.b033-created-desc-resume-light-mortar-siege.json",
+    "kind": "created-prose",
+    "family": "resume-engine",
+    "stage": [
+      "work/.b033-created-desc-resume-light-mortar-siege.json"
+    ]
+  },
+  {
+    "file": "work/.b033-rows-resume-instruments-the-three-comparers-11-red-records-every-one-a-verified-carrier-the-comparer-cannot-see-.json",
+    "kind": "rows",
+    "family": "resume-instruments",
+    "stage": [
+      "work/.b033-rows-resume-instruments-the-three-comparers-11-red-records-every-one-a-verified-carrier-the-comparer-cannot-see-.json",
+      "work/.b033-report-resume-instruments-the-three-comparers-11-red-records-every-one-a-verified-carrier-the-comparer-cannot-see-.txt",
+      "work/.b033-verify-resume-instruments-the-three-comparers-11-red-records-every-one-a-verified-carrier-the-comparer-cannot-see-.txt",
+      "test/batch033-resume-instruments-the-three-comparers-11-red-records-every-one-a-verified-carrier-the-comparer-cannot-see-.test.ts",
+      "scripts/wg-diff.mjs",
+      "scripts/wg-values.mjs",
+      "scripts/wg-identity.mjs",
+      "work/.b033-gaps.json",
+      "work/.b033-commit.txt"
+    ]
+  }
+]

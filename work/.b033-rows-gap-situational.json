@@ -1,0 +1,9 @@
+{
+  "findings": [
+    {
+      "id": "curse-of-creeping-ashes#cursebound-4-text",
+      "backfillRows": [],
+      "note": "GAP LANE, code-only. Two things closed here. (1) The whole situational family's source change had been lost out of the working tree — a stray `git stash push` moved it into stash@{0} (see work/.b033-verify-instruments.txt, which restored only that family's own three files). src/rules/situationalBonuses.ts was sitting at HEAD, so all five CONFIRMED situational findings had no code behind them while the reports read TAUGHT. Restored byte-exactly out of the stash blob with read-only git (`git show stash@{0}:src/rules/situationalBonuses.ts`, LF->CRLF); `git diff stash@{0} -- src/rules/situationalBonuses.ts` now shows only the two comment lines deliberately reworded in (2). No git write command was run. (2) scripts/backfill-oracle-curses.mjs CURSES['curse-of-creeping-ashes'].note still ended 'you are consumed and die' and that script REWRITES the oracle-curse block of RECORD_MARKERS on --write, so a re-run reverted the registry fix; it now carries the printed mystery-20 sentence, and test/batch033-gap-situational.test.ts pins the generator string to the displayed one so neither side can drift again. Nothing here is expressible as a backfill row: the classFeatures/curse-of-creeping-ashes record carries no mechanical field, and the text lives in hand-authored registry code."
+    }
+  ]
+}

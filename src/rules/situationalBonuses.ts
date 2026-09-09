@@ -3096,7 +3096,20 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "bracers-of-pain": [{ targets: [{ kind: 'save', detail: 'will' }], when: "while the bracers are worn and invested", bonus: "+2 item" }],
   "brevic-outcast": [{ targets: [{ kind: 'skill', detail: 'deception' }, { kind: 'skill', detail: 'diplomacy' }, { kind: 'skill', detail: 'intimidation' }, { kind: 'skill', detail: 'performance' }], when: "when dealing with members of the nobility…", bonus: "-1 untyped (penalty)" }],
   "cobra-envenom": [{ targets: [{ kind: 'save', detail: 'fortitude' }, { kind: 'save', detail: 'fortitude', dcOnly: true }], when: "while in Cobra Stance — this feat raises the stance's own bonus", bonus: "+2 circumstance" }],
-  "construct-eidolon": [{ targets: [{ kind: 'save', detail: 'all' }], when: "your construct eidolon's saving throws against death effects, disease, necromancy…", bonus: "+2 circumstance" }],
+  /* construct-eidolon — WG parity b033, construct-eidolon#construct-heart. Construct Heart
+   * (eidolon-4) prints FOUR save categories and a flat-check clause: *"a +2 circumstance bonus to
+   * saving throws against death effects, disease, necromancy, and poison effects, as well as effects
+   * causing the fatigued or sickened conditions… it only needs to succeed at a DC 10 flat check to
+   * remove persistent bleed damage (or DC 5 after receiving particularly effective aid)."* The row
+   * stopped at an ellipsis after "necromancy" — poison, fatigued and sickened were never displayed —
+   * and the flat check had no carrier at all. Second line is the charhide-goblin (:741) /
+   * coral-symbiotes (:245) `{ kind: 'hp' }` flat-check shape, verbatim. */
+  "construct-eidolon": [
+    /* Ruling H caps a `when` at ~120 characters, so the printed list is stated in its shortest
+     * complete form — every one of the six categories is named, nothing is elided. */
+    { targets: [{ kind: 'save', detail: 'all' }], when: "your construct eidolon's saves vs death effects, disease, necromancy, poison, and effects causing fatigued or sickened", bonus: "+2 circumstance" },
+    { targets: [{ kind: 'hp' }], when: "on your construct eidolon's flat check to remove persistent bleed damage", bonus: "DC 10 instead of 15 (DC 5 with appropriate assistance)" },
+  ],
   "consume-power": [{ targets: [{ kind: 'spellDamage' }], when: "on the next metal impulse you use before the end of your next turn…", bonus: "+status equal to half your level" }],
   "crown-of-witchcraft": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "if you're a witch, on checks with the skill your patron grants", bonus: "+2 item" }],
   "crown-of-witchcraft-greater": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "if you're a witch, on checks with the skill your patron grants", bonus: "+3 item" }],
@@ -4481,7 +4494,15 @@ export const RECORD_MARKERS: Record<string, RecordMarker[]> = {
   // Transcribed from each record's own text. Reachable only because the chosen mystery now hands
   // its curse over (SubclassOption.featureIds); before that these records had no route to a sheet.
   'curse-of-ancestral-meddling': [{ on: 'condition', id: 'cursebound', value: "clumsy = cursebound", note: "Your ancestors vie for control: you are clumsy with a value equal to your cursebound value." }],
-  'curse-of-creeping-ashes': [{ on: 'condition', id: 'cursebound', value: "fire weakness", note: "Cursebound 1: weakness 2 to fire. 2: −2 circumstance to your ranged attack rolls. 3: your fire weakness becomes 5 + your level. 4: you are consumed and die." }],
+  /* WG parity b033, curse-of-creeping-ashes#cursebound-4-text. The cursebound-4 rung was INVENTED:
+   * the ORC remaster print (mystery-20, this record's aonParentId) reads *"Cursebound 4 You take a
+   * –10-foot status penalty to all your Speeds as your limbs begin to crumble like ash"* — no death
+   * clause anywhere in the record. WG encodes the same thing as a -10 status penalty to SPEED and to
+   * each of SPEED_FLY / CLIMB / BURROW / SWIM. Telling a player the condition kills them is the worst
+   * possible direction for this error to point, so the printed text replaces it verbatim.
+   * The authoring source scripts/backfill-oracle-curses.mjs, which REWRITES this block on --write,
+   * carries the same printed sentence (batch 033 gap lane) so a re-run cannot revert this. */
+  'curse-of-creeping-ashes': [{ on: 'condition', id: 'cursebound', value: "fire weakness", note: "Cursebound 1: weakness 2 to fire. 2: −2 circumstance to your ranged attack rolls. 3: your fire weakness becomes 5 + your level. 4: a −10-foot status penalty to all your Speeds as your limbs begin to crumble like ash." }],
   'curse-of-engulfing-flames': [{ on: 'condition', id: 'cursebound', value: "persistent fire = cursebound", note: "You catch fire, taking persistent fire damage equal to your cursebound value, and any immunity or resistance you have to fire is suppressed." }],
   'curse-of-inclement-headwinds': [{ on: 'condition', id: 'cursebound', value: "electricity weakness", note: "Cursebound 1: electricity weakness 2, and metal-seeking electricity treats you as wearing metal (your immunity or resistance is suppressed). 2: −2 circumstance to your ranged attack rolls. 3: the weakness becomes 5 + your level." }],
   'curse-of-inevitable-rot': [{ on: 'condition', id: 'cursebound', value: "acid + poison weakness", note: "Cursebound 1: weakness 2 to acid and poison. 2: −1 status to saves against diseases and poisons. 3: the weakness becomes twice your level." }],
@@ -4534,6 +4555,29 @@ export interface SpellMarker {
 export const SPELL_MARKERS: Record<string, SpellMarker[]> = {
   "harm": [{ source: 'sap-life', when: "when your harm damages at least one living creature, and you are living", bonus: "regain HP equal to the spell rank" }],
   "dancing-blade": [{ source: 'the-distant-grasp', when: "while an amped dancing blade Guards you — vs melee attacks…", bonus: "+2 circumstance" }],
+
+  /* WG parity b033: the psychic conscious minds modify their STANDARD psi cantrips outside the amp,
+   * and only the dancing-blade rung above had a carrier. Each of the three below is printed on the
+   * conscious mind, not on the spell, so the spell record keeps its unmodified range/Bulk and the
+   * player would otherwise read the base numbers on the very row they cast from. Ruling G puts them
+   * on the spell: "that's what you're looking at when you cast it." */
+
+  /* the-distant-grasp#telekinetic-projectile — conscious-mind-7: *"Your telekinetic projectiles can
+   * fly much further away. Increase the range of telekinetic projectile to 60 feet."* The spell
+   * record still says 30 feet, which is correct for everyone who is not a Distant Grasp psychic. */
+  "telekinetic-projectile": [{ source: 'the-distant-grasp', when: "while you have The Distant Grasp conscious mind", bonus: "range 60 feet (instead of the spell's usual 30)" }],
+
+  /* the-distant-grasp#telekinetic-hand — conscious-mind-7: *"Your telekinetic hand can carry up to 1
+   * Bulk instead of only light Bulk. If the spell is heightened to 3rd rank or higher, its maximum
+   * Bulk is 2. If the spell is heightened to 7th rank or higher, its maximum Bulk is 3."* A rank
+   * ladder on a carrying limit the sheet stores nowhere, so the printed ladder rides the bonus text. */
+  "telekinetic-hand": [{ source: 'the-distant-grasp', when: "while you have The Distant Grasp conscious mind", bonus: "carries 1 Bulk instead of light Bulk (2 Bulk at 3rd rank or higher, 3 Bulk at 7th or higher)" }],
+
+  /* the-unbound-step#phase-bolt — conscious-mind-12: *"Your phase bolt temporarily sends the target's
+   * cover out of phase if it hits. On a success, reduce the target's circumstance bonus to AC (if
+   * any) by 1 until the beginning of your next turn."* It moves the TARGET's AC (ruling F, others'
+   * roll), so no row of this character's sheet holds it — the spell row is the only honest home. */
+  "phase-bolt": [{ source: 'the-unbound-step', when: "on a success with phase bolt", bonus: "reduce the target's circumstance bonus to AC (if any) by 1 until the beginning of your next turn" }],
 };
 
 /** The markers on this spell that the character's own records grant. */

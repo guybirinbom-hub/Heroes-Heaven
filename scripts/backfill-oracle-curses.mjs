@@ -31,9 +31,15 @@ const CURSES = {
     value: 'clumsy = cursebound',
     note: 'Your ancestors vie for control: you are clumsy with a value equal to your cursebound value.',
   },
+  /* WG parity b033, curse-of-creeping-ashes#cursebound-4-text. The cursebound-4 rung transcribed
+   * here was INVENTED — mystery-20 reads *"Cursebound 4 You take a –10-foot status penalty to all
+   * your Speeds as your limbs begin to crumble like ash"* and no death clause appears anywhere in
+   * the record. This block REWRITES RECORD_MARKERS on --write, so leaving the old sentence here
+   * would silently revert the registry fix on the next run; test/batch033-gap-situational.test.ts
+   * pins the two strings to each other. */
   'curse-of-creeping-ashes': {
     value: 'fire weakness',
-    note: 'Cursebound 1: weakness 2 to fire. 2: −2 circumstance to your ranged attack rolls. 3: your fire weakness becomes 5 + your level. 4: you are consumed and die.',
+    note: 'Cursebound 1: weakness 2 to fire. 2: −2 circumstance to your ranged attack rolls. 3: your fire weakness becomes 5 + your level. 4: a −10-foot status penalty to all your Speeds as your limbs begin to crumble like ash.',
   },
   'curse-of-engulfing-flames': {
     value: 'persistent fire = cursebound',

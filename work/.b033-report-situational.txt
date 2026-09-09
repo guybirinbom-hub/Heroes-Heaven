@@ -1,0 +1,103 @@
+BATCH 033 — SITUATIONAL family (WG-COMPARISON lane)
+Findings assigned: 5. All 5 taught. 0 dropped, 0 escalated to the owner.
+
+DATA STILL NEEDED
+(none — all five findings are code-only; work/.b033-rows-situational.json carries five entries with backfillRows: [] and the reason for each)
+
+CROSS-FILE GAPS
+scripts/backfill-oracle-curses.mjs — CURSES['curse-of-creeping-ashes'].note (line ~36) still ends "4: you are consumed and die." and the script REWRITES the oracle-curse block of src/rules/situationalBonuses.ts on --write, so re-running it silently reverts finding curse-of-creeping-ashes#cursebound-4-text. The file is outside my assignment. Replace that trailing clause with the printed one: "4: a −10-foot status penalty to all your Speeds as your limbs begin to crumble like ash." (mystery-20, ORC Divine Mysteries remaster — the record's aonParentId). Nothing else in that file changes.
+
+----------------------------------------------------------------------
+PER FINDING
+
+the-distant-grasp#telekinetic-projectile — TAUGHT
+  What: src/rules/situationalBonuses.ts, SPELL_MARKERS — new key "telekinetic-projectile":
+    [{ source: 'the-distant-grasp', when: "while you have The Distant Grasp conscious mind",
+       bonus: "range 60 feet (instead of the spell's usual 30)" }]
+    with a WHY comment quoting conscious-mind-7: "Increase the range of telekinetic projectile to 60
+    feet." Ruling G's lane, the one the existing dancing-blade entry uses; renders through
+    explain.ts spellSituationalFor into SpellsTab.tsx. The spells/telekinetic-projectile record is
+    left at "30 feet" on purpose — that is correct for every caster who is not a Distant Grasp
+    psychic, and the test pins it.
+  Test: test/batch033-situational.test.ts, describe "the-distant-grasp modifies its two standard psi
+    cantrips outside the amp" > it "a Distant Grasp psychic reads the 60-foot range on the
+    telekinetic-projectile row". Builds psychic 5 with subclassId 'the-distant-grasp', asserts the
+    conscious mind actually reaches characterSituationalIds (the subclass-option route through
+    ownedFeatureIds, which no previous test on this lane exercised), then reads the row through
+    spellSituationalFor. A third it() pins the negative on an Unbound Step psychic and on a wizard.
+  Not done: nothing.
+
+the-distant-grasp#telekinetic-hand — TAUGHT
+  What: src/rules/situationalBonuses.ts, SPELL_MARKERS — new key "telekinetic-hand":
+    [{ source: 'the-distant-grasp', when: "while you have The Distant Grasp conscious mind",
+       bonus: "carries 1 Bulk instead of light Bulk (2 Bulk at 3rd rank or higher, 3 Bulk at 7th or
+       higher)" }], WHY comment quoting the conscious-mind-7 ladder verbatim. The sheet stores no
+    field for a spell's carrying limit (grepped: no reader in build.ts or derive.ts), so the printed
+    ladder rides the bonus text rather than a number.
+  Test: same describe > it "a Distant Grasp psychic reads the 1/2/3 Bulk ladder on the
+    telekinetic-hand row" — asserts all three rungs are present in the displayed string.
+  Not done: nothing.
+
+the-unbound-step#phase-bolt — TAUGHT
+  What: src/rules/situationalBonuses.ts, SPELL_MARKERS — new key "phase-bolt":
+    [{ source: 'the-unbound-step', when: "on a success with phase bolt",
+       bonus: "reduce the target's circumstance bonus to AC (if any) by 1 until the beginning of your
+       next turn" }], WHY comment quoting conscious-mind-12. It moves the TARGET's AC (ruling F,
+    someone else's roll), so no stat row of this character's own sheet can hold it and the spell row
+    is the only honest home. The one pre-existing "the-unbound-step" entry (the warp step Speed
+    bonus) is untouched.
+  Test: describe "the-unbound-step strips a point of the target cover bonus on phase-bolt" > it "an
+    Unbound Step psychic reads the cover-stripping rider on the phase-bolt row" plus its negative
+    twin on a Distant Grasp psychic.
+  Not done: nothing.
+
+curse-of-creeping-ashes#cursebound-4-text — TAUGHT
+  What: src/rules/situationalBonuses.ts, RECORD_MARKERS['curse-of-creeping-ashes'] — the invented
+    trailing clause "4: you are consumed and die." replaced with the printed one, "4: a −10-foot
+    status penalty to all your Speeds as your limbs begin to crumble like ash." The other three rungs
+    and the entry's `value` are unchanged. WHY comment quotes mystery-20 and names WG's encoding
+    (-10 status to SPEED and to each of SPEED_FLY / CLIMB / BURROW / SWIM) as the matching evidence.
+  Test: describe "curse-of-creeping-ashes cursebound 4 penalises Speeds, it does not kill you" —
+    two it()s on a built Ashes oracle read through recordMarkersFor(c, db, 'condition', 'cursebound'),
+    the reader StatDetailModal calls: one asserts the printed Speed penalty is displayed, the other
+    asserts the note no longer matches /\bdie\b/ or contains "consumed" while the three real rungs
+    survive.
+  Not done: the generator that rewrites this block — see CROSS-FILE GAPS.
+
+construct-eidolon#construct-heart — TAUGHT
+  What: src/rules/situationalBonuses.ts, FEAT_SITUATIONAL["construct-eidolon"] — was one truncated
+    line, now two:
+      1. save/all, when "your construct eidolon's saves vs death effects, disease, necromancy,
+         poison, and effects causing fatigued or sickened", bonus "+2 circumstance". The old string
+         ended at an ellipsis after "necromancy", so three of the six printed categories were never
+         displayed.
+      2. NEW {kind:'hp'} line, when "on your construct eidolon's flat check to remove persistent
+         bleed damage", bonus "DC 10 instead of 15 (DC 5 with appropriate assistance)" — the
+         charhide-goblin (:741) / coral-symbiotes (:245) flat-check shape verbatim. Nothing else in
+         the repo delivered this clause (grep for "persistent bleed" hits only actions.ts,
+         critSpec.ts and monsterPartsCatalog.ts).
+    WHY comment quotes eidolon-4 in full. The `when` is stated in its shortest complete form because
+    ruling H caps a `when` at 120 characters — test/rulings-dfgh.test.ts "no note runs longer than
+    about one line" failed at 142 on the first wording, and I shortened the string rather than raise
+    the cap. All six printed categories are still named.
+  Test: describe "construct-eidolon Construct Heart states all four save categories and the bleed
+    flat check" — three it()s on a built summoner with subclassId 'construct-eidolon', read through
+    featSituationalFor(characterSituationalIds(...)): the save star names every printed category and
+    contains no residual ellipsis, the hp row carries the DC 10 / DC 5 flat check, and a beast-eidolon
+    summoner reads neither line.
+  Not done: nothing.
+
+----------------------------------------------------------------------
+NOTES
+
+- No deletion was needed, so the exclusion list of scripts/apply-situational-lane.mjs is untouched:
+  "construct-eidolon" is still spelled in the registry, which is exactly what that script's
+  `existingIds` guard keys on, so the lane will not overwrite the widened wording.
+- Verification: node scripts/vt.mjs run test/batch033-situational.test.ts
+  test/authoring-guards.test.ts test/rulings-dfgh.test.ts → 58 passed. npx tsc --noEmit clean.
+  authoring-guards and rulings-dfgh were run because both hold ratchets over these two registries
+  (the SPELL_MARKERS merge guard, the "every marked spell exists and every source is a real record"
+  guard, and the ruling-H length cap); neither was loosened.
+- test/batch033-situational.test.ts is a wholly NEW file, so scripts/test-flip-audit.mjs takes the
+  newFileScan branch and requires no citations; every it() carries its "// batch 033: <finding id>"
+  comment anyway, and each finding's record id appears in its enclosing describe title.

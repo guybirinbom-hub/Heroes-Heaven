@@ -1,0 +1,190 @@
+=====================================================================================================
+BATCH 033 RESUME — ADVERSARIAL VERIFY of group
+"light-mortar-siege — the munitions-master innovation grant (3 red lines, one lane)"  (family resume-engine)
+Default was NOT DONE. Verdict below is per item, with the command or file that proves it.
+=====================================================================================================
+
+DATA STILL NEEDED
+  none from this group. Both rows are authored and both were measured to clear their comparer line
+  (see items 1 and 2). What remains is other families' work, listed under CROSS-FILE GAPS.
+
+CROSS-FILE GAPS
+  1. instruments — scripts/wg-diff.mjs: `'light-mortar-innovation': ['choice']`. ⚠ NOT
+     ['conditional','choice'] as the builder's report asked. MEASURED, not read off the stale gate line:
+       shipped core.json  -> missing=[grantsItem,choice]
+                             ours=[weapon,conditional,save,classDc,ac,perception,grantsRecord]
+       + this group's rows -> missing=[choice]
+                             ours=[grantsItem,weapon,conditional,save,classDc,ac,perception,grantsRecord]
+     (both from `node scripts/wg-diff.mjs [--core <patched copy>] --out <scratch>`, read back by id).
+     `conditional` is ALREADY answered on our side; a settle naming it would launder a kind that is not
+     missing. The builder's report has been corrected in place to ask for `['choice']` only.
+  2. instruments — scripts/lib/wg-experience-lanes.mjs + test/wg-experience.harness.test.tsx: `giveItem`
+     has no surface predicate. CONFIRMED by reading effectDelivery end to end (branches: adjValue /
+     setValue / addBonusToValue skill+stat, critSpec, blastDice, resistances, giveTrait:481,
+     defineCastingSource:487, giveSpellSlot:492, giveAbilityBlock:493, giveSpell — and nothing for
+     giveItem, whose only appearance in the file is the op-name list at line 298), and by the surface
+     the harness actually published for this record in work/.experience-raw-033.json, whose keys are
+     stars / speeds / defenses / critSpec / proficiencies / spellcasting / featNames / featureNames /
+     actionNames / spellNames / languages / traits — no item or inventory list for a predicate to read.
+     The builder's "the differential can never move here" is also CONFIRMED from that same row:
+     host = {classId:'inventor', subclassId:'light-mortar-innovation', without:'class-features',
+     removedFromClass:['light-mortar-innovation']}, sheetDiffAll 0, sheetDiffCount 0, controlsAdded [].
+     The WITHOUT build keeps the subclass id, and build.ts:7671 collects grantsItems over
+     `[...ownedFeatureIds, ...grantOptions.map(o => o.id)]`, so removing the record from cls.features
+     does not remove it from grantOptions and the grant fires on both sides. Only a surface predicate
+     can judge this record.
+     ⚠ CONSEQUENCE FOR THE CLOSER: this group's rows do NOT turn the EXPERIENCE line green. Gate 9 keeps
+     the UNVERIFIED-EFFECT (giveItem) red for light-mortar-innovation until gap-instruments either adds
+     the predicate or parks it in work/experience-instrument-limits.json. Correct that this group did not
+     write that file (it is the instruments family's), but the gate is blocking and this line is open.
+  3. engine, NEXT BATCH — light-mortar-innovation#mortar-stats (already gap 12 of work/.b033-report-engine.txt).
+     Unchanged by this group and correctly out of it.
+  4. NOT THIS GROUP, but found while running the driver's own pre-check over the whole manifest and
+     reported because `--stage apply` refuses on it: work/.b034-created-desc.json#school-of-unified-
+     magical-theory#drain-bonded-item-uses hits pre-check (1b) exactly the way this group's spec did —
+     the description row assigns a field of classFeatures/arcane-bond-school-of-unified-magical-theory,
+     which work/.b033-rows-gap-data-rows.json CREATES in the same manifest, and the create row carries no
+     `description`, so `harmless` is false. Same fix as item 2 below. Three further pre-check refusals
+     are COLLISIONs between the resume specs and the original ones and are also not this group's:
+       classFeatures/otherworldly-protection/resistances  (data-rows vs resume-data-rows)
+       modes/curse-of-creeping-ashes-4/modifiers          (data-rows vs resume-data-rows)
+       classFeatures/fey-eidolon/spellListAdditions       (data-rows vs resume-engine/eidolon)
+
+=====================================================================================================
+PER ITEM
+=====================================================================================================
+
+1. KINDS missing=[grantsItem, conditional, choice]  ->  DONE (grantsItem) / REFRAMED (conditional) /
+   DONE-as-parked (choice)
+
+   grantsItem — DONE, and proved rather than argued. `OUR_KINDS.grantsItem = ['grantsItems',
+   'combinationMeleeForm']` is at scripts/wg-diff.mjs:519 (the report says 497 — citation drift, the
+   mapping itself is right), it is inverted into `fieldToKinds` at wg-diff.mjs:587-591, and ourKindsOf
+   (wg-diff.mjs:1069ff) adds a kind for every RECORD KEY that indexes into it. Run for real:
+     node scripts/wg-diff.mjs --out <scratch>/diff-shipped.json
+     node scripts/wg-diff.mjs --core <scratch>/core-patched.json --out <scratch>/diff-patched.json
+   where core-patched.json is public/core.json with this group's two rows applied in a scratch copy
+   (public/core.json was NOT touched). light-mortar-innovation moves
+     missing=[grantsItem,choice]  ->  missing=[choice]
+   so the row answers the kind, no settle is involved, and the record still reports for what is genuinely
+   missing. That is the anti-laundering shape.
+
+   conditional — NOT MISSING. The gate line this group was handed is stale: ours already carries
+   `conditional` in BOTH runs above. Asking instruments to settle it would have taught the comparer to
+   stop reporting a kind we answer. The builder's report and its gap line are corrected in place; this is
+   the one substantive correction in this verify.
+
+   choice — correctly parked. The record carries no `choice` at all any more (public/core.json keys are
+   id/name/traits/rarity/source/level/actionCost/otherTags/aonParentId/aonSection, and the overlay holds
+   `{id:'light-mortar-innovation', field:'choice', value:null}` from
+   light-mortar-innovation#duplicate-modification-choice, already applied), while the three tiered
+   pickers are live and OFF-RECORD. Independently evidenced, not taken on trust: the harness's own
+   controlsBoth for this record in work/.experience-raw-033.json lists popup "Initial modification"
+   (3 options), "Breakthrough modification" (6) and "Revolutionary modification" (9). ourKindsOf reads
+   record fields, so nothing in this group's files can answer it — a per-record settle in wg-diff.mjs is
+   the right lot, and armor-innovation (wg-diff.mjs:933) is the precedent.
+
+2. IDENTITY items theirs-not-ours=[lightmortar]  ->  DONE, then FIXED-BY-ME (the spec would have refused
+   the apply stage)
+
+   THE MECHANIC IS RIGHT, measured on both instruments:
+     · node scripts/wg-identity.mjs --ids light-mortar-innovation
+         -> items theirs-not-ours=[lightmortar]  ours=[(nothing)]
+     · the same command --core <scratch>/core-patched.json
+         -> "checked 1 records that grant a NAMED thing; 1 match on every one", 0 misses.
+   The carrier reading is confirmed at the source: wg-identity.mjs:345
+   `for (const it of rec.grantsItems ?? []) out.items.add(key(anyName(it.itemId ?? it)))`, and anyName
+   (wg-identity.mjs:71-76) resolves the `items` bucket by id, so the comparison is by NAME — "Light
+   Mortar" squashes to `lightmortar`, their item 18303.
+   The engine claim is also confirmed and needed no code: src/rules/build.ts:7671 is
+   `for (const fid of [...ownedFeatureIds, ...grantOptions.map((o) => o.id)])` reading
+   `content.classFeatures[fid]?.grantsItems` and skipping any id `content.items` does not hold — which is
+   why the create row is load-bearing, not decoration. git status shows this group touched no src/ and no
+   scripts/ file (its four paths are all new, untracked).
+   The distinct-id argument holds: `innovation-light-mortar` collides with nothing (`items['light-mortar']`
+   does not exist, `siegeWeapons['light-mortar']` does), so the shipped items/wolf-fang ↔
+   siegeWeapons/wolf-fang collision is not repeated.
+   Schema checked against the shipped bucket rather than assumed: `bulk` is a number on all 7,879 items,
+   `equipment` is a real itemType, `remaster-era` a real edition, and `{book, license}` the real source
+   shape. The two traits `siege-weapon` / `mounted` are copied verbatim from the shipped
+   siegeWeapons/light-mortar record; `siege-weapon` has no entry in the `trait` bucket, but neither do 54
+   other trait strings already carried by shipped items, so this is house-normal, not a new dangling id.
+
+   ⚠ WHAT WAS WRONG, and what I changed (FIXED-BY-ME):
+   the spec pair as delivered would have made `--stage apply` REFUSE before writing anything. The
+   driver's pre-check (1b) at scripts/wg-batch-run.mjs:619-627 refuses a field row on a record the SAME
+   manifest creates unless `!path && createRowIndex < fieldRowIndex && eq(createRow.value[field],
+   fieldRow.value)`; the create row carried no `description`, so `eq(undefined, "<the prose>")` is false.
+   Measured, not predicted: I imported the driver's exported `precheck` in a scratch script and ran it
+   over the real work/.b033-specs.json + scripts/data/effect-backfill.json, writing nothing. Before:
+   5 problems, one of them
+     work/.b033-created-desc-resume-light-mortar-siege.json#light-mortar-innovation#innovation-item:
+     items/innovation-light-mortar/description assigns a field of items/innovation-light-mortar, which
+     …CREATES in the same manifest — fold the field into the create row
+   FIX: the same description string now sits on the create row's `value` AND on the created-prose row,
+   byte-identical, which is exactly the `harmless` shape 1b defines. Re-running precheck: 4 problems, none
+   of them this group's (the four listed as CROSS-FILE GAP 4). Why both halves rather than folding and
+   deleting the prose spec — each half still buys a guard:
+     · the description ROW is what pre-check (5) token-checks against the AoN mirror, and what
+       apply-backfill-now.mjs:60-80 routes into public/core-descriptions.json;
+     · the description on the CREATE row is what pre-check (1b) demands, and what the create row's own
+       post-check keeps (`stripped` retains `description` because the create value has it,
+       wg-batch-run.mjs:781-783), so that post-check still passes.
+   Both render guards read either location — render-check.mjs:92
+   `(typeof d === 'string' ? d : d?.d) ?? rec.description` and readable-record-check.mjs:71-72 — so the
+   created item cannot repeat the blank-created-record red this batch already carries on
+   classFeatures/arcane-bond-school-of-unified-magical-theory. The `why` on the create row now states all
+   of this with the line numbers.
+
+   THE PROSE ITSELF was checked the way pre-check (5) checks it, before I accepted it: every token of the
+   description is present in the mirror documents the `why` names —
+   C:/wonderers guide/aon-2e-archive/data/by-category/archetype/archetype-329.json (6,713 chars) and
+   .../siege-weapon/siege-weapon-36.json (616 chars). Tokens in neither: NONE. The last paragraph is
+   AoN's "Nethys Note", reproduced without the label; kept deliberately, because it is the honest pointer
+   to where the AC/Fortitude/Reflex/HP/BT statistics live while #mortar-stats stays unmodelled.
+
+   ROWS AS ROWS: row 1 create:true, target absent from public/core.json and from the overlay -> no
+   supersedes owed; row 2 targets classFeatures/light-mortar-innovation, which exists, on field
+   grantsItems, for which the overlay holds no row (only `field:'choice'`) -> no supersedes owed; the
+   prose row targets the record row 1 creates and the driver orders created-prose last. The driver's own
+   pre-check agrees on all three (no supersedes problem, no collision, no magus-case, no pathed prose
+   row, every `why` names an AoN doc id). Every id referenced exists or is created by this spec.
+
+3. EXPERIENCE UNVERIFIED-EFFECT (giveItem)  ->  DONE-as-parked, and OPEN as a gate line
+
+   The parking is correct and its two premises are verified above (CROSS-FILE GAP 2): no giveItem branch
+   in effectDelivery, no item list on the surface, and a differential that is 0 by construction for this
+   record. Correct also that the group did not write work/experience-instrument-limits.json, which
+   belongs to instruments. But nothing this group authored moves the line, so the closer must not read
+   this item as cleared: the record's EXPERIENCE red survives until gap-instruments acts.
+
+=====================================================================================================
+CHECKS RUN (all from C:\trying ai 2\pf2e codex, node on PATH from "C:\Program Files\nodejs")
+=====================================================================================================
+  node scripts/vt.mjs run test/batch033-resume-light-mortar-siege-…-.test.ts   4 passed (was 3)
+  npx tsc --noEmit                                                            clean
+  node scripts/test-flip-audit.mjs --batch 033                                clean — 18 test files
+                                                                              touched, 11 new settle
+                                                                              keys, every flip cited
+  driver `precheck` over the real manifest (read-only, scratch script)        5 problems -> 4, none mine
+  node scripts/wg-diff.mjs [--core patched] --out <scratch>                   KINDS line, both states
+  node scripts/wg-identity.mjs --ids light-mortar-innovation [--core patched] IDENTITY line, both states
+No git write command was run (status/diff only). public/core.json, public/core-descriptions.json,
+scripts/data/effect-backfill.json and work/owner-questions.json were NOT touched; the patched core used
+for the two comparer runs is a copy in the session scratchpad.
+
+FILES I CHANGED
+  work/.b033-rows-resume-light-mortar-siege-…-.json     description folded onto the create row + the
+                                                        `why` extended with the 1b/post-check reasoning
+  test/batch033-resume-light-mortar-siege-…-.test.ts    4th test added, cited
+                                                        `// batch 033: light-mortar-innovation#innovation-item`,
+                                                        record id in the describe title; it asserts the
+                                                        create row and the prose row stay byte-identical,
+                                                        so dropping either half fails here instead of at
+                                                        --stage apply. Stale comment on MORTAR fixed.
+  work/.b033-report-resume-light-mortar-siege-…-.txt    gap 2 corrected from ['conditional','choice'] to
+                                                        ['choice'], with the measurement inline
+  work/.b033-specs.json                                 this verify file appended to the rows entry's
+                                                        stage[]; all 13 other entries left untouched
+  work/.b033-created-desc-resume-light-mortar-siege.json  unchanged (its value is the one the create row
+                                                        now repeats)

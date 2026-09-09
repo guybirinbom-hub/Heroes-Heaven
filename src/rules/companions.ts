@@ -819,6 +819,10 @@ export interface EidolonBlock extends Defenses {
   attacks: { name: string; attack: number; damage: string; traits: string[]; range?: number }[];
   /** Senses from the eidolon type + evolution feats (Expanded Senses). */
   senses?: string[];
+  /** The eidolon's own languages, from its type's printed Language line: the FIXED ones the line
+   *  answers itself (`CompanionMod.languages` — Angel: Celestial) first, then one entry per pick the
+   *  line asks for (`CompanionMod.languageChoices`), the unanswered ones shown as `LANGUAGE_UNCHOSEN`. */
+  languages?: string[];
   /** Non-land speeds from evolution feats ("swim 25 feet (amphibious)"). */
   extraSpeeds?: string[];
   /** IWR lines from the type/evolutions ("resistance 5 fire", "immune grabbed…"). */
@@ -854,6 +858,10 @@ export const EIDOLON_PRIMARY_OPTIONS: { id: string; label: string; die: number; 
 /** A sensible level-1 starting spread so a freshly-added eidolon isn't broken-looking; the player
  *  overwrites these with their actual array + boost values in the Edit panel. */
 const EIDOLON_DEFAULT_ABILITIES: Record<AbilityId, number> = { str: 4, dex: 2, con: 3, int: 0, wis: 1, cha: 1 };
+
+/** Shown in an eidolon's Languages row while its own language question is unanswered. Exported so the
+ *  Edit card and the test pin the same string (batch 033, devotion-phantom-eidolon#language). */
+export const LANGUAGE_UNCHOSEN = 'one common mortal language (choose in Edit)';
 
 /** The summoner's proficiency in the eidolon's unarmed attacks: trained → expert at 5 (Eidolon Unarmed
  *  Expertise) → master at 13 (Eidolon Unarmed Mastery). (class-features/eidolon-unarmed-expertise.json,
@@ -1000,6 +1008,10 @@ export function deriveEidolon(
   const evoIwr: string[] = [];
   const extraSpeeds: string[] = [];
   const evoNotes: string[] = [];
+  /* batch 033, devotion-phantom-eidolon#language — AoN eidolon-20: "Language one common mortal
+   * language the eidolon spoke in life". The unanswered slot is shown as a prompt rather than
+   * dropped, the same way an unfilled cantrip slot is a prompt in the editor. */
+  const eidolonLanguages: string[] = [];
   const TYPE_PACKAGE: Record<string, { senses?: string[]; iwr?: string[]; notes?: string[] }> = {
     'undead-eidolon': { senses: ['darkvision'], notes: ['Negative Essence: void healing (harmed by vitality, healed by void).'] },
     'swarm-eidolon': { senses: ['low-light vision'], iwr: ['immune grabbed, prone, restrained'] },
@@ -1018,7 +1030,28 @@ export function deriveEidolon(
   // Eidolon-kind entries in COMPANION_MODS (Vibration Sense, …). Without this pass they'd be inert:
   // the table is otherwise only read by deriveAnimalCompanion.
   for (const [slug, mod] of Object.entries(COMPANION_MODS)) {
-    if (!featIdSet.has(slug) || !mod.kinds.includes('eidolon')) continue;
+    /* …AND the eidolon TYPE's own row. batch 033 (devotion-phantom-eidolon#language,
+     * elemental-eidolon#core-note-generalises-fire): COMPANION_MODS holds eleven rows keyed by a
+     * summoner SUBCLASS OPTION id (angel-eidolon, elemental-eidolon, psychopomp-eidolon, …) and this
+     * loop only ever matched `featIdSet`, which holds the owner's FEAT ids. A subclass option is a
+     * classFeature, never a feat, so all eleven rows were dead — an angel eidolon showed no
+     * darkvision and the elemental core note reached nobody. `cfg.typeId` IS that option's id
+     * (types.ts: "eidolon type id (a summoner-eidolon subclass option)"). */
+    if (!mod.kinds.includes('eidolon')) continue;
+    if (!featIdSet.has(slug) && slug !== cfg.typeId) continue;
+    /* The type's FIXED Language line — AoN eidolon-1 *"**Language** Celestial"*, eidolon-8
+     * *"**Language** Sylvan"*. Read before the picks so the answer print already gave sits above the
+     * ones the player still owes, and resolved through content.languages when the entry is an id
+     * (the two above are printed names: our language table is remaster-only, see
+     * CompanionMod.languages). No LANGUAGE_UNCHOSEN branch — a fixed line asks nothing. */
+    for (const l of mod.languages ?? []) {
+      const name = content.languages?.[l]?.name ?? l;
+      if (!eidolonLanguages.includes(name)) eidolonLanguages.push(name);
+    }
+    for (let i = 0; i < (mod.languageChoices ?? 0); i++) {
+      const picked = ec.languages?.[i];
+      eidolonLanguages.push(picked ? content.languages?.[picked]?.name ?? picked : LANGUAGE_UNCHOSEN);
+    }
     for (const s of mod.senses ?? []) if (!evoSenses.includes(s)) evoSenses.push(s);
     evoIwr.push(...(mod.iwr ?? []));
     for (const line of speedLines(mod.speeds, 25)) if (!extraSpeeds.includes(line)) extraSpeeds.push(line);
@@ -1148,6 +1181,7 @@ export function deriveEidolon(
     ...masterDefenses(character, content, conditions, modes),
     ac: eidolonAc,
     ...(evoSenses.length ? { senses: evoSenses } : {}),
+    ...(eidolonLanguages.length ? { languages: eidolonLanguages } : {}),
     ...(extraSpeeds.length ? { extraSpeeds } : {}),
     ...(evoIwr.length ? { iwr: evoIwr } : {}),
     ...(evoNotes.length ? { evoNotes } : {}),

@@ -1,0 +1,136 @@
+=====================================================================================================
+BATCH 033 RESUME — group "light-mortar-siege — the munitions-master innovation grant" (family engine)
+=====================================================================================================
+
+DATA STILL NEEDED
+  none. Both rows this lane needs are authored in
+  work/.b033-rows-resume-light-mortar-siege-the-munitions-master-innovation-grant-3-red-lines-one-lane-.json
+  (create items/innovation-light-mortar + classFeatures/light-mortar-innovation.grantsItems) and the
+  created record's prose in work/.b033-created-desc-resume-light-mortar-siege.json.
+
+CROSS-FILE GAPS
+  1. instruments — scripts/lib/wg-experience-lanes.mjs + test/wg-experience.harness.test.tsx:
+     `giveItem` has NO surface predicate. effectDelivery() branches on giveTrait / defineCastingSource /
+     giveSpellSlot / giveAbilityBlock / giveSpell only (wg-experience-lanes.mjs:481-510) and surfaceOf()
+     (harness:610) publishes no item or inventory list for one to read, so every giveItem op in the
+     corpus returns 'unchecked'. Shape: add the character's item names to the surface (the granted
+     inventory is on the built character as `c.inventory`, each entry's `itemId` naming a
+     `db.items[...]` record) and a fourth name index in scripts/wg-experience.mjs
+     (`nameIndex('item')`, beside block/spell/trait) so `effectDelivery` can answer
+     `giveItem {itemId}` by name. NOT parked in work/experience-instrument-limits.json by me — that
+     file is the instruments family's.
+     ⚠ Measured, so the instruments builder does not chase the differential instead: for this record
+     the differential can never move. classFeatureHost (harness:487ff) keeps
+     `subclassId: 'light-mortar-innovation'` in the WITHOUT build (the subclass ANCHOR is "Innovation",
+     not this record), and the record id is ALSO the subclass OPTION id, so `grantOptions` carries it
+     in both builds and the grant fires on both sides. work/.experience-raw-033.json already records
+     `sheetDiffAll: 0` / `sheetDiffCount: 0` for light-mortar-innovation with 85 controls and
+     `controlsAdded: []`. Only a surface predicate can judge this record.
+  2. instruments — scripts/wg-diff.mjs: the KINDS line's `choice` half ONLY.
+     ⚠ CORRECTED BY THE VERIFIER (evidence in
+     work/.b033-verify-resume-light-mortar-siege-the-munitions-master-innovation-grant-3-red-lines-one-lane-.txt):
+     the gate line this group was handed reads missing=[grantsItem,conditional,choice], but wg-diff run
+     against the CURRENT tree reports light-mortar-innovation as
+     missing=[grantsItem,choice] ours=[weapon,conditional,save,classDc,ac,perception,grantsRecord] —
+     `conditional` is ALREADY answered by a carrier on the record and must NOT be settled. Run against a
+     copy of core.json with this group's two rows applied it becomes missing=[choice]
+     ours=[grantsItem,…], so the settle the instruments family owes is `'light-mortar-innovation':
+     ['choice']` and nothing more. A settle listing `conditional` would launder a kind that is not
+     missing. WG asks the
+     initial / breakthrough / revolutionary modification as three gated selects; ours asks the same
+     three, live, but the control is OFF-RECORD — innovationType + inventorModificationOptions
+     (src/rules/build.ts:2738-2760) rendered by src/builder/shared.tsx:3585, storing on
+     build.inventorModifications. ourKindsOf (wg-diff.mjs:915) reads record FIELDS only, and batch 033's
+     data-rows family correctly deleted this record's inert duplicate `choice` block
+     (light-mortar-innovation#duplicate-modification-choice, already in the overlay), so the record now
+     carries no choice field at all. The three pickers are real and evidenced — the harness's own
+     controlsBoth for this record lists "Initial modification" (3 options), "Breakthrough modification"
+     (6) and "Revolutionary modification" (9). Shape: a per-record settle in wg-diff.mjs's registry
+     (`'light-mortar-innovation': ['choice']` — verifier-corrected from ['conditional','choice'], see
+     the ⚠ above; the `'powerful-tail': ['grantsItem',
+     'choice']` shape) citing the live picker. Same class of finding as armor-innovation's
+     control-off-record parking, which KINDS has no lot for.
+  3. engine (NEXT BATCH, already gap 12 of work/.b033-report-engine.txt) —
+     light-mortar-innovation#mortar-stats: the mortar's scaling (AC and Launch DC = the inventor's class
+     DC, Int-based HP 10 + level x (2 + Int mod) and Reflex/Fortitude trained -> expert@10 -> master@15,
+     Hardness 5/10@5/15@10/20@15, +1 damage die at 5th and every 4 levels) is neither side's and is NOT
+     in this group. It is a siege-companion override lane in src/rules/companions.ts, which belongs to
+     the eidolon-languages-and-traits group's files. The item this batch grants carries print's 2 Bulk
+     and print's own pointer to where those statistics live ("The AC, Fortitude, Reflex, HP and BT
+     statistics for this item are located in the Light Mortar Innovation", siege-weapon-36) and is
+     deliberately not a second, wrong copy of them.
+
+=====================================================================================================
+PER ITEM
+=====================================================================================================
+
+1. light-mortar-innovation — KINDS missing=[grantsItem, conditional, choice]
+   grantsItem: BUILT (data). Row 2 of the spec puts `grantsItems: [{itemId:
+   'innovation-light-mortar'}]` on classFeatures/light-mortar-innovation. wg-diff's FIELD_KINDS maps
+   `grantsItem -> ['grantsItems', 'combinationMeleeForm']` (scripts/wg-diff.mjs:497) and ourKindsOf
+   reads the record's top-level keys, so the kind is answered by the field the print clause describes
+   rather than by a settle.
+   conditional: NOT MISSING — verifier-measured, ours already answers it (see the ⚠ in gap 2).
+   choice: PARKED as CROSS-FILE GAP 2 above (instruments / wg-diff.mjs). Nothing is owed
+   in my files: the pick exists, is live, and is rendered — measured in work/.experience-raw-033.json,
+   not assumed.
+   TEACH: none — no comparer file was touched.
+
+2. light-mortar-innovation — IDENTITY items theirs-not-ours=[lightmortar]
+   BUILT (data). Two rows, one lane:
+     · CREATE items/innovation-light-mortar — name "Light Mortar", level 1, equipment, 2 Bulk, traits
+       siege-weapon + mounted, uncommon, Battlecry! / ORC, aonId siege-weapon-36.
+     · classFeatures/light-mortar-innovation.grantsItems = [{ itemId: 'innovation-light-mortar' }].
+   wg-identity reads `rec.grantsItems` and names the item through anyName(itemId)
+   (scripts/wg-identity.mjs:345 and :71), and anyName resolves the items bucket by id, so the NAME is
+   what the comparer sees — "Light Mortar" keys to `lightmortar`, which is exactly their side's item
+   18303.
+   CARRIER SHAPE, decided from what exists rather than invented: an items-bucket record plus
+   grantsItems, NOT a siege companion.
+     · `grantsItems` is the only lane that hands a record's item to a built character, and it reads
+       `content.items[g.itemId]` (build.ts:7663/7672) — a siegeWeapons entry cannot be granted.
+     · A siege companion is a PLAYER-ADDED, priced catalog row (AddItemsModal.tsx:59/104,
+       CompanionsTab.tsx:170) and would need src/rules/companionGrants.ts, which is not this group's
+       file; it would also leave both the KINDS and the IDENTITY lines red, because both comparers read
+       the record's own grantsItems field, not the sheet.
+     · A DISTINCT id (`innovation-light-mortar`, not `light-mortar`): AddItemsModal keys catalog rows
+       by item id and maps every id present in content.siegeWeapons to the companion Buy path, so an
+       items row sharing the siege id collides on the row key and routes its Add button to the
+       companion. The shipped items/wolf-fang vs siegeWeapons/wolf-fang pair is that collision already;
+       this lane does not add a second one.
+   FILE + SYMBOL: no src/ change. `light-mortar-innovation` is both the subclass OPTION id and the
+   classFeature id, so it is in `grantOptions` (build.ts:3333/3358) and the existing class-features arm
+   of the grantsItems collector — `for (const fid of [...ownedFeatureIds, ...grantOptions.map(o => o.id)])`
+   at src/rules/build.ts:7671 — already reads the record. MEASURED on a built character, not assumed:
+   the third test below fails (no mortar) on a content copy with the grant stripped and passes with it.
+   The armour suit needed its own branch at build.ts:7688 only because the item IS the answer to a
+   per-character question (build.inventorArmorStats); the mortar is one fixed item, so no branch was
+   added — a light-mortar arm in that block would be a second, dead lane for the same grant. The
+   archetype half of that block's expression cannot reach this record either: Inventor Dedication's
+   `innovation` choice offers armor / construct / weapon only (public/core.json,
+   feats['inventor-dedication'].choice), and print gates the archetype on the class — "Prerequisites:
+   You must be an inventor" (archetype-329).
+   TEST: test/batch033-resume-light-mortar-siege-the-munitions-master-innovation-grant-3-red-lines-one-lane-.test.ts
+   — 3 tests, green (node scripts/vt.mjs). Both rows patched IN MEMORY on both sides (never a
+   patched-vs-shipped delta): a level-1 munitions master owns the mortar with `grantedBy: 'Light Mortar
+   Innovation'` and 2 more Bulk on deriveBulk; a level-2 one holding Munitions Master Dedication still
+   has it; and with the grant stripped, or on the armour / weapon / construct innovations, there is no
+   mortar.
+   TEACH: none.
+
+3. light-mortar-innovation — EXPERIENCE UNVERIFIED-EFFECT ("differential moved 0 values and none of
+   WG's 1 op(s) has a surface predicate yet: giveItem")
+   PARKED as CROSS-FILE GAP 1 above (instruments), with the measurement that says why it cannot clear
+   from this group's files: the mortar now lands on the sheet, but the harness's WITHOUT build keeps
+   the same subclass id and therefore the same grant, so the differential stays 0 by construction, and
+   `giveItem` has no predicate for the chassis fallback to use. Not filed in
+   work/experience-instrument-limits.json by me, and not filed as an owner question — it is an
+   instrument gap, not a WG-vs-print conflict.
+
+=====================================================================================================
+NOTHING TAKEN FROM ANOTHER FAMILY; NOTHING DROPPED
+=====================================================================================================
+All three assigned items appear above: one built as data with the code lane measured and found already
+present, one built as data, one parked cross-file with its evidence. Files written: the two specs, this
+report, one new test file and the manifest entry. No src/ file, no script and no other family's file
+was edited; work/owner-questions.json was not touched.

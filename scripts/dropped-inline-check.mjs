@@ -27,6 +27,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { findDroppedInline, MIRROR } from './lib/dropped-inline.mjs';
 import { findStrippedSaveDc } from './repair-stripped-save-dc.mjs';
+import { findDroppedDamageType } from './repair-damage-type.mjs';
 import { hasArtefact } from './repair-stripped-skill-links.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -167,6 +168,43 @@ const ARTEFACT_BASELINE = 17;
     process.exit(1);
   }
   console.log(`dropped-inline: ${hits.length} collapsed-link query string(s) (ratchet ${ARTEFACT_BASELINE}; repair-stripped-skill-links.mjs lowers it)`);
+}
+
+/*
+ * THE STRIPPED DAMAGE TYPE — a seventh class, and the only one that leaves the NUMBER behind.
+ *
+ * The same cleaner sometimes keeps the dice and eats the type, so the Archives'
+ * *"**Damage** 6d10+6 bludgeoning plus Grab"* (AoN apparition-7, Lurker in Devouring Dark) ships as
+ * *"**Damage** 6d10+6 plus Grab"*. Nothing reads as broken — there is a number and the line parses —
+ * but the player has no damage type, which is the half of a Strike that resistances, weaknesses and
+ * immunities are read against. Ten of the fourteen animist apparitions lost it; the three newest kept
+ * theirs, which is what makes it the cleaner rather than a print variation (batch 033 finding
+ * lurker-in-devouring-dark#avatar-damage-type).
+ *
+ * ⚠ ELEVEN, NOT THE TEN THE FINDING NAMED. Witness to Ancient Battles lost the LABEL'S BOLD MARKERS
+ * as well as the type — it ships *"…, Damage 6d8+6"* — so every count taken with a `**Damage**`
+ * pattern walked straight past a record carrying exactly the defect being counted. The detector
+ * matches the label with or without its markup, and repairs only the type.
+ *
+ * ⚠ NOT A SHAPE COUNT — it counts what the ARCHIVES print. A "**Damage** <dice>" with no type is not
+ * on its own a defect: AoN itself prints Devil Form's vordine hoof as "**Damage** 1d4+12 plus 1d6
+ * fire" (spell-894), and print is the authority. Only a site whose own AoN document prints a type we
+ * do not counts here, which is also exactly the set repair-damage-type.mjs will touch.
+ *
+ * A RATCHET, measured at 11 the day the detector was written. This batch's rows
+ * (work/.b033-rows-repair.json, all eleven records) drive it to zero — lower it to 0 as they land,
+ * and never raise it.
+ */
+const DAMAGE_TYPE_BASELINE = 11;
+{
+  const dt = findDroppedDamageType(ROOT);
+  if (!dt) console.log(`dropped-inline: stripped-damage-type ratchet SKIPPED — no AoN mirror at ${MIRROR}`);
+  else if (dt.edits.length > DAMAGE_TYPE_BASELINE) {
+    console.log(`dropped-inline: FAIL — ${dt.edits.length} description(s) drop a damage TYPE the Archives print — more than the ${DAMAGE_TYPE_BASELINE} the ratchet allows:`);
+    for (const e of dt.edits.slice(0, 30)) console.log(`   ${(e.category + '/' + e.id).padEnd(40)} ${e.sites.map((s) => `${s.dice} [missing: ${s.type}]`).join(', ')}`);
+    console.log('\nFix with:  node scripts/repair-damage-type.mjs --write   (the orchestrator applies the rows); never raise DAMAGE_TYPE_BASELINE.');
+    process.exit(1);
+  } else console.log(`dropped-inline: ${dt.edits.length} stripped-damage-type hole(s) (ratchet ${DAMAGE_TYPE_BASELINE}; repair-damage-type.mjs drives it to zero)`);
 }
 
 const found = findDroppedInline(ROOT);

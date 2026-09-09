@@ -1,0 +1,202 @@
+BATCH 033 RESUME — ADVERSARIAL VERIFY REPORT
+group:  modes-engine — rage-damage scaling in src/rules/modes.ts
+family: resume-engine
+builder report: work/.b033-report-resume-modes-engine-rage-damage-scaling-in-src-rules-modes-ts-no-gate-line-of-its-own-the-honesty-prerequisite-for-the-instruments-rage-damage-map-.txt
+default: NOT DONE. Everything below is something I re-ran or re-read myself.
+
+=====================================================================================================
+VERDICTS
+=====================================================================================================
+1. decay-instinct#rotting-rage-damage-scaling ......... DONE
+2. ligneous-instinct#wooden-rage-mode ................. DONE
+3. cat-cursebound-1..4 modifiers:[] (refutation) ...... DONE (refutation stands, and is stronger
+   than the report states — see the two corrections under item 3)
++  FIXED-BY-ME: one false comment in test/batch033-engine.test.ts; my verify file added to this
+   group's stage[].
+
+=====================================================================================================
+ITEM 1 — decay-instinct#rotting-rage-damage-scaling — DONE
+=====================================================================================================
+FILE RE-READ. src/rules/modes.ts:258 `cat-rotting-rage` is `modifiers: []`, note unchanged, and the
+block comment above modes.ts:230-257 carries the WHY.
+
+PRINT RE-READ, not taken from the report. C:/wonderers guide/aon-2e-archive/data/by-category/instinct/
+instinct-15.json is named "Decay" (I listed all 16 instinct docs by name to fix the id, because three
+different files in this batch attribute these two abilities to three different doc ids — see CROSS-FILE
+GAP 3). Its Specialization Ability reads, verbatim: "When you use rotting rage, increase the additional
+damage from Rage from 6 to 10, but the damage you take at the end of your turn increases to 5. If you
+have greater weapon specialization, instead increase the damage from Rage when using rotting rage from
+10 to 18, but the damage you take increases to 10." The modes.ts WHY comment and the test file's two
+block quotes are verbatim substrings of instinct-15 (the elision in the WHY comment is marked). The
+citation is correct and the doc id is correct.
+
+CARRIER RE-READ. RAGE_DAMAGE at src/rules/derive.ts:3651 holds {tiers:[6,10,18], type:'poison'} for
+decay-instinct and is resolved at derive.ts:3685 by rageStrikeRider — so print's ladder does ship, and
+the deleted modifier was a second, frozen copy. The finding's OWN proposal (a minLevel field on
+ModeDef) is refused for a reason I checked rather than accepted: the sibling finding
+ligneous-instinct#wooden-rage-mode proposes the deletion outright and says "cat-rotting-rage … needs
+the same cut", so the two findings' proposals conflict and one carrier is the only reading that
+satisfies both. It also matches THEIR side: WG writes `setValue RAGE_DAMAGE = 6/10/18` off
+CLASS_FEATURE_NAMES + LEVEL, i.e. WG does not gate the number on a mode either.
+
+TEST RUN BY ME. node scripts/vt.mjs run <this group's file> → 1 file, 5 passed (5). The tests are on
+BUILT characters (buildCharacter + deriveStrikes + explainStat), at levels 1 / 7 / 15, on a non-agile
+greatclub, and read the real breakdown list.
+
+MUTATION PROBE RUN BY ME (the builder's is a claim; this is my own). I re-inserted
+m(6,'untyped','damage',{appliesWhen:'melee or unarmed Strikes while raging'}) into BOTH entries with
+Edit, re-ran the group's test → "Tests 2 failed | 3 passed", failing on exactly the two assertions that
+pin the deletion (`modeModifiersFor([mode],{kind:'damage'})` and the one-rage-line assertion), then
+reverted both entries with Edit and re-checked `git diff -- src/rules/modes.ts`: the diff is
+byte-identical to what the builder left. No git write command was used to revert.
+
+NO REGRESSION, MEASURED. `node scripts/wg-diff.mjs --out work/_verifier-wgdiff-now.json` on this tree:
+  decay-instinct    theirKinds [conditional,weapon,defense] ourKinds [conditional,defense,weapon]
+                    missing [] extra []      → agree
+  ligneous-instinct theirKinds [conditional,weapon,defense] ourKinds [conditional,defense,speed,weapon]
+                    missing [] extra [speed] → weOnly  (extra is not a KINDS gate line)
+Baseline (work/.b033-baseline/gate.txt lines 17 and 26) had both at missing=[unmapped]. Both scratch
+dumps deleted. `node scripts/wg-values.mjs --batch work/wg-batch-033.json` → "30 agree", the same 2
+records to adjudicate as the closer's triage (curse-of-creeping-ashes, otherworldly-protection);
+neither instinct appears, so the deletion added no VALUES red either.
+
+DISPLAY CHECK, because a mode with `modifiers: []` could have vanished from the sheet. It does not:
+ModesPanel.tsx:175/177 renders the note when modifiers is empty, ModeDetailModal.tsx:27 falls back to
+the note, SettingsPage.tsx:563 the same, and transfer.ts:596 drops a mode only when it has NEITHER
+modifiers NOR a note. cat-rotting-rage keeps a full note, so the control the player toggles is intact.
+
+=====================================================================================================
+ITEM 2 — ligneous-instinct#wooden-rage-mode — DONE
+=====================================================================================================
+src/rules/modes.ts:259 `cat-wooden-rage` is `modifiers: [m(-10,'untyped','speed')]` — exactly the
+finding's own proposal, which is the least this item could be. instinct-16.json is named "Ligneous" and
+prints, verbatim, "While raging, you can increase the additional damage from Rage from 2 to 6. If you
+do this, reduce your Speed by 10 feet" and "When you use wooden rage, increase the additional damage
+from Rage from 6 to 10. If you have greater weapon specialization, instead increase the damage from
+Rage when using wooden rage from 10 to 18." Both WHY quotes check out against that document.
+
+The Speed penalty is genuinely uncarried elsewhere and the test proves the number rather than the
+field: deriveSpeeds(on).land === deriveSpeeds(off).land - 10 on two BUILT 15th-level ligneous
+barbarians. My mutation probe (above) fails this describe too when the damage modifier comes back.
+
+=====================================================================================================
+ITEM 3 — cat-cursebound-1..4 `modifiers: []` — REFUTATION UPHELD, with two corrections
+=====================================================================================================
+I did not take the refutation on the report's word. public/core.json's modes bucket holds 20 records
+matching /^curse-of-.*-[1-4]$/ across five families (creeping-ashes, inclement-headwinds,
+inevitable-rot, the-living-death, the-mortal-warrior), every one carrying exclusiveGroup
+'oracle-cursebound' and a feats:[] gate, and the shapes the generic toggle is accused of missing (a
+weakness, a -2 attack modifier, a -10 speed modifier) are all present among them. Since the same
+exclusive group holds cat-cursebound-N, the mystery's own stage mode and the generic toggle can never
+be on together, so the generic one is an ALTERNATIVE, not a missing copy. Giving it numbers would
+invent mystery-agnostic effects. Refutation stands and is pinned by the third describe of the group's
+test file.
+
+CORRECTION A (in the batch's favour, and it contradicts the closer's triage): the triage at
+work/.b033-closer-triage.txt:65-66 says "cat-cursebound-1..3 ship modifiers: [] and there is no
+cat-cursebound-4 at all". `git show HEAD:src/rules/modes.ts | grep -c cat-cursebound-4` = 1 — the entry
+exists and existed before this batch (modes.ts:275). The triage line is wrong, and the closer should
+not carry it into the next batch as written.
+
+CORRECTION B (durability, which the report did not check): these 20 records are not overlay-only. They
+are in scripts/data/toggle-modes.json (20 distinct curse ids present, creeping-ashes-4 included), which
+is a build input, so they survive `npm run data`. Only 2 of them appear in scripts/data/
+effect-backfill.json. Had they existed only in the shipped core.json the refutation would have died at
+the next regeneration; it does not.
+
+=====================================================================================================
+FIXED-BY-ME
+=====================================================================================================
+F1. test/batch033-engine.test.ts:95-97 asserted, in prose, the opposite of the tree this group left:
+    "the cat-wooden-rage / cat-rotting-rage modes carry a SECOND, frozen +6 conditional line, which is
+    the duplicate this pins the real ladder against" — the duplicate is gone, and that comment sits
+    directly under `// batch 033: ligneous-instinct#wooden-rage-mode` / `// batch 033:
+    decay-instinct#rotting-rage-damage-scaling`, i.e. under THIS group's two finding ids. It also cited
+    "(AoN instinct-15 / instinct-9)"; instinct-9 is Dragon. Rewritten to state that RAGE_DAMAGE is now
+    the only carrier because of those two findings, and to cite instinct-15 Decay / instinct-16
+    Ligneous. Comment only — no `it(`, `expect(` or literal touched. Re-ran the file: 6 passed (6). The
+    file is the engine family's and is already in that family's stage[], so the fix ships; I did not
+    add it to this group's entry.
+F2. work/.b033-specs.json — appended
+    work/.b033-verify-resume-modes-engine-rage-damage-scaling-…-.txt to THIS group's stage[] (it was
+    the only path this group produces that the commit would not have staged; every other family stages
+    its own verify file). Re-read immediately before the edit, edited with Edit, re-parsed after: 14
+    entries, no other entry touched, engine still stages test/batch033-engine.test.ts.
+
+=====================================================================================================
+SPEC / MANIFEST / CITATION CHECKS
+=====================================================================================================
+· Spec work/.b033-rows-resume-modes-engine-…-.json parses; three findings, all backfillRows: [] with a
+  note saying why — rule 4 satisfied. No row means nothing to target-check, no supersedes to declare,
+  and no `why` doc id requirement (the driver applies those checks per ROW; scripts/wg-batch-run.mjs:
+  605-679 all key off r.row).
+· Finding ids 1 and 2 are in `confirmed[]` of work/.b033-read.json, both verdict CONFIRMED. Id 3
+  ("cat-cursebound-1..4-modifiers-empty") is not a read finding — it is the closer's triage item, and
+  the driver whitelists no id, so this is labelling only. It cannot be misread as a taught gate record.
+· Manifest entry present, family "resume-engine", now 5 stage paths, and every path this group touched
+  is listed (spec, report, test, src/rules/modes.ts, verify). No other family's entry altered — 14
+  entries before and after my edit, engine/instruments/gap-* all intact.
+· node scripts/test-flip-audit.mjs --batch 033: run twice. 10:56 → FAIL, one flip, and it was NOT this
+  group's ("scripts/wg-diff.mjs:1508 VERIFIED_EQUIVALENT gained the key stone-order with no
+  mutation-proof test"). 10:59 → "batch 033 clean — 18 test file(s) touched, 11 new settle key(s),
+  every flip cited", after the parallel resume-instruments agent landed
+  test/batch033-resume-instruments-…-.test.ts. This group's own citations passed in both runs.
+· This group introduces no settle and no comparer teach, so no `// mutation-proof` marker is required
+  of it; I ran the probe anyway (above) because the deletion is the thing that had to be pinned.
+· npx tsc --noEmit → exit 0.
+· Blast radius re-run by me, wider than the builder's: this group's file + test/modes.test.ts,
+  rage-damage, batch033-engine, aura-modes, consumable-modes, battle-form, raging-resistance,
+  transfer → 9 files, 160 passed (160).
+· Git: I ran no write command. `git diff -- src/rules/modes.ts` after my probe is identical to the
+  builder's diff; the stash was not touched.
+
+=====================================================================================================
+DATA STILL NEEDED
+=====================================================================================================
+None for this group — both items are code in its own file and neither needs a row, a description or an
+owner answer (print, WG and our rider all say 6/10/18, so there is no WG-vs-print conflict to queue).
+
+FOR THE CLOSER, rule 3b: src/rules/modes.ts changed after the EXPERIENCE stage. The last experience
+entry in work/.b033-run.json is runId 0cdfbc6fe80215cc, startedAt 2026-09-08T14:43:45.834Z; modes.ts
+now has a 2026-09-09 mtime. `--stage experience` must be re-run before `--stage gate` / suite / verify
+or gate 9 goes red on the source-mtime comparison alone.
+
+=====================================================================================================
+CROSS-FILE GAPS
+=====================================================================================================
+1. CLOSED — the builder's GAP 1 (the wg-diff KINDS credit) has landed, and I verified it end to end
+   rather than trusting the file. scripts/wg-diff.mjs:1039-1063 now scrapes RAGE_DAMAGE out of
+   src/rules/derive.ts and addKinds(<key>, ['weapon']), with a comment that explicitly refuses to
+   anchor on modes.ts. Proof it is the sole carrier: `node scripts/wg-diff.mjs --derive
+   src/rules/modes.ts` (a file with no RAGE_DAMAGE table — the anti-laundering hook used as a stunt)
+   puts both records straight back to theyOnly missing=["weapon"]; the unstunted run has them at
+   missing=[]. The parallel resume-instruments group also shipped a mutation-proof test for it
+   (test/batch033-resume-instruments-…-.test.ts:169-194), cited to this group's two finding ids.
+2. OPEN, derive.ts (engine) — rageStrikeRider ignores the CHOICE, and the consequence is bigger than
+   the builder's line says. Print makes both abilities a choice made as the rage begins ("you can
+   choose to increase the additional damage from Rage from 2 to 6", instinct-15; "While raging, you can
+   increase…", instinct-16), but rageStrikeRider (derive.ts:3685) gates only on c.classResources.rage.
+   So (a) a decay/ligneous barbarian who never takes the choice still gets 6/10/18 and, for ligneous,
+   never pays the 10 feet; and (b) toggling the ORDINARY `cat-rage` mode — whose own
+   m(2,'untyped','damage',{appliesWhen}) is untouched — now reproduces the exact defect this group just
+   deleted, one entry up: "+2 untyped … while raging" printed beside "18 poison … while raging" in one
+   breakdown, and the 2 is the number print says you gave up. The gate shape to copy is
+   critSpecRequiresModeGroup, one function away in the same file. Not a batch-033 finding; nobody read
+   it. This is the honest reason the group's title says "no gate line of its own".
+3. OPEN, scripts/wg-diff.mjs (instruments) — two stale comment defects that this group's deletion
+   created or exposed. wg-diff.mjs:252-253 cites "AoN instinct-19 (Decay)" and "instinct-20
+   (Ligneous)": the mirror's instinct category holds instinct-1..16 only, Decay is instinct-15 and
+   Ligneous is instinct-16, so both doc ids are unresolvable. The same paragraph still says the two
+   records are credited via cat-rotting-rage / cat-wooden-rage's `target: 'damage'` "(credited by
+   MODE_MODIFIER_KINDS below)" — false since this group's deletion, and contradicted by the file's own
+   correct block at 1039-1063. test/batch033-resume-instruments-…-.test.ts:201 repeats "(AoN
+   instinct-20)". Comment-only, in another family's files, so I did not edit them.
+4. OPEN, the modes/toggle-modes lane (data-rows) — a residue item 3's measurement turned up. There are
+   11 oracle curse classFeatures (curse-of-ancestral-meddling, -creeping-ashes, -engulfing-flames,
+   -inclement-headwinds, -inevitable-rot, -outpouring-life, -the-living-death, -the-mortal-warrior,
+   -the-skys-call, -torrential-knowledge, -turbulent-moments) but only FIVE have per-mystery
+   cursebound-stage modes. The other six reach the sheet as a prose note on the cursebound condition
+   only (src/rules/situationalBonuses.ts:4496-4514), and their player falls back to the bare
+   cat-cursebound-N toggle. That is not a cat-cursebound-N modifiers lane — the numbers differ per
+   mystery, which is why item 3's refutation holds — it is six missing curse-of-<mystery>-1..4 mode
+   families in scripts/data/toggle-modes.json. Next batch.

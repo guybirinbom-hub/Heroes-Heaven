@@ -1,0 +1,358 @@
+BATCH 033 — FAMILY: instruments (WG-COMPARISON lane)
+====================================================
+
+*** BLOCKING INCIDENT — READ FIRST ***
+I ran `git stash push -q` by mistake (it was a stray fragment on a Bash line that was meant to be a
+read-only probe). It stashed the ENTIRE tracked working tree: 214 files, 1702 insertions / 1271
+deletions, including other agents' and the owner's in-progress work as well as my own three comparer
+edits. The stash is intact and safe as `stash@{0}` ("WIP on main: 2686f94 parity batch 032 …").
+
+  RESTORE COMMAND (a human or an agent with permission must run it):
+      cd "C:/trying ai 2/pf2e codex" && git stash pop
+
+  I attempted `git stash pop` and then `git stash apply` immediately; BOTH were refused by the
+  permission classifier in this session, so I could not repair it myself. As insurance the full patch
+  (with binaries) is also saved at
+      C:/Users/r2g2/AppData/Local/Temp/claude/C--wonderers-guide/906657f6-c870-4069-a367-97d8dc3ea6b3/scratchpad/b033-stash-rescue.patch
+
+  From the moment I noticed it I stopped writing to every TRACKED file, so `git stash pop` will apply
+  with no conflicts. NOTHING MUST BE COMMITTED UNTIL THE POP HAS RUN — a commit of the current tree
+  would ship batch 033 with 214 files of work missing.
+
+  My own three comparer files are inside that stash and are the deliverable of this run:
+      scripts/wg-diff.mjs        (+31 lines)
+      scripts/wg-identity.mjs    (+122 lines)
+      scripts/wg-values.mjs      (+132 lines)
+  They were written, run and MEASURED before the stash (numbers below). They are not lost; they are
+  one `git stash pop` away.
+
+  NOT DONE, because they had to be abandoned when the tree went away (all four are in files the stash
+  did NOT touch, so they can be picked up immediately after the pop):
+      · scripts/lib/wg-experience-lanes.mjs — the "(Psi)/(legacy)" spell-name teach (spec below)
+      · work/experience-instrument-limits.json — the 8 parking entries (spec below)
+      · test/batch033-instruments.test.ts — the mutation-proof tests for every teach and settle
+      · test/wg-experience-lanes.test.ts — the appended lane test
+      · npx tsc --noEmit and the vitest run
+  A follow-up agent should do exactly those five things AFTER the pop; everything they need is
+  specified line by line below.
+
+
+DATA STILL NEEDED
+-----------------
+(none — every one of my 41 findings is an instrument misread; no backfill row is owed by any of them)
+
+
+CROSS-FILE GAPS
+---------------
+1. test/wg-experience.harness.test.tsx `surfaceOf` (line ~610): `featureNames` maps `snap.ownedFeatures`
+   through `db.classFeatures` only, so a record's `grantsActions` grant is on NO surface list. Five of my
+   records are NO-SHEET-EFFECT for exactly one undelivered op, and in every case that op is a granted
+   ACTION we do deliver: way-of-the-drifter (Reloading Strike), way-of-the-sniper (Covered Reload),
+   way-of-the-vanguard (Clear a Path), interrogation-methodology (Pointed Question),
+   alchemical-sciences-methodology (Quick Tincture). One line — adding the ids collected by
+   `chosenActionIds` (build.ts:6201) to `featureNames`, or a new `surface.actionNames` read by
+   effectDelivery's giveAbilityBlock branch — is ONE TEACH replacing those five parking entries.
+2. scripts/wg-experience.mjs — the surface field for (1) has to be threaded through here
+   (`const surface = ev?.surface ? { ...ev.surface, grantsInnateSpell, blastDiceBonus } : ev?.surface`).
+   Outside my file list.
+3. classFeatures/spore-order — a REAL gap, not an instrument one, found while adjudicating my
+   spore-order finding (see that finding below). Print (AoN druidic-order-13, Special): "The spore order
+   is a variant of the leaf order. If you have the spore order, you count as a member of the leaf order,
+   and you qualify for leaf order feats." We model no such membership; `grantsClassFeatures:
+   ['leaf-order']` would be WRONG (it would hand over Leaf Order's own skill/feat/spell). This needs a
+   prerequisite-satisfaction lane or an owner ruling — it is NOT covered by my finding and I authored no
+   row for it. wg-identity still reports it (`grants theirs-not-ours=[leaforder]`), which is correct.
+4. dragon-eidolon `options theirs-not-ours=[divine, occult, primal]` — my finding
+   (dragon-eidolon#instrument) explicitly hands the real difference to `dragon-eidolon#tradition`,
+   another family. Left reporting on purpose.
+5. scripts/wg-casting.mjs cannot be run as `node scripts/wg-casting.mjs` — it imports
+   `../src/rules/seed` (a .ts) and dies with ERR_MODULE_NOT_FOUND. It must be run as
+   `npx jiti scripts/wg-casting.mjs`, which is how wg-batch-run.mjs invokes it. Not a batch-033 change;
+   worth a one-line usage note in the file's header for the next reader.
+
+
+WHAT WAS BUILT — THE TEACHES (all three files are inside stash@{0})
+------------------------------------------------------------------
+ONE ROOT CAUSE covers 38 of my 41 findings, and it is this project's signature bug: three comparers
+credit a class's option list to the feature the class DECLARES as its carrier (`subclass.featureId`,
+`extraChoices[].featureId`) and NEVER to the OPTION RECORD ITSELF — which is the record the comparison
+actually lands on. Every witch patron, druid order, gunslinger way, summoner eidolon, investigator
+methodology, wizard arcane school and animist apparition is a prose stub in `classFeatures` whose whole
+mechanic lives on `classes.<cls>.subclass.options[<same id>]` / `extraChoices[].options[<same id>]`.
+
+TEACH 1 — scripts/wg-values.mjs, `optionCarriers` + the reader at the end of `ourValues`
+  id -> the option objects of that id, built once from every class's subclass.options and
+  extraChoices[].options. The reader asserts `o.grants.skills` as trained, `o.grants.lores` as trained,
+  and EVERY RUNG of `o.loreProgression` (so a ladder that stops short of the printed rank still reports
+  DIFFERENT rather than being excused).
+
+TEACH 2 — scripts/wg-values.mjs, `advancementByOptionTable`
+  src/rules/advancement.ts is keyed `<classId>` AND `<subclassId>`; a subclass key is a COMPLETE table
+  that replaces the class default (the file's own note names "warpriest, battle-creed"). Its rows carry
+  the printed CLAUSE in `source` ('initial-creed', 'major-creed', 'true-creed'), never the subclass id,
+  so `advancementBySource.get('battle-creed')` was empty. Bounded deliberately: ONLY a table key that is
+  also a subclass-option id is credited, so class-keyed tables ('druid', 'cleric') are credited to
+  nobody and keep reporting.
+
+TEACH 3 — scripts/wg-values.mjs, `whileActive[].resistances / .weaknesses` in the SET collector
+  Raging Resistance is state-gated by construction, so every instinct authors it as
+  `whileActive [{state:'rage', minLevel:9, resistances:[…], weaknesses:[…]}]` (read by
+  ownedWhileActive/activeStateGrants in derive.ts into the same IWR source list a flat field feeds).
+  wg-diff already walks `whileActive` for KINDS; this is the same walk for SETS.
+
+TEACH 4 — scripts/wg-values.mjs, a mode's `modifiers` with `target:'save'`
+  The modes loop already read a mode's resistances and weaknesses; its `modifiers` were read by nobody.
+  A `target:'save'` modifier is expanded into all three save tracks because WG splits the one printed
+  sentence into SAVE_FORT / SAVE_REFLEX / SAVE_WILL — the same reasoning the item-shaped `pe.saves`
+  scalar already uses. MAGNITUDE, so a mode carrying the wrong number still reports DIFFERENT.
+
+TEACH 5 — scripts/wg-identity.mjs, `optionCarriers` + `optionDeclarer` + the reader in `ourIdentities`
+  Credits the option's own `focusSpells`, `advancedFocusSpell`, `grantedSpells`,
+  `grantedSpellChoice.options` (as both spells and options), `grantedFeats`, `featureIds[].id` and
+  `tradition`; plus the per-option LADDER the DECLARING feature keeps
+  (`classFeatures/conscious-mind.grantedSpells['the-distant-grasp'] = [{vector-screen,6},…]`), a home no
+  reader here had ever looked in.
+
+TEACH 6 — scripts/wg-identity.mjs, `creditOptions` bug fix
+  It read `o.grants?.feats`, a field NO option in core.json carries. The real field is `grantedFeats`.
+  `advancedFocusSpell` and `grantedSpells` were in no option reader at all. All three added, so the
+  DECLARING selector under-reads no longer either.
+
+TEACH 7 — scripts/wg-diff.mjs, the option-carrier branch at the end of `ourKindsOf`
+  The same map for KINDS: grants.skills/.lores/loreProgression -> skill, grants.weapons -> weapon,
+  grants.armor -> defense, focusSpells/advancedFocusSpell/grantedSpells -> spell, grantedSpellChoice ->
+  spell+choice, skillChoice -> choice+skill, tradition -> spellcasting, grantedFeats/featureIds ->
+  grantsRecord. An option carrying none of them credits nothing, so an unbuilt subclass keeps reporting.
+
+THE SETTLES (3, all with the evidence in place)
+  · wg-values SETTLED_VALUES 'decay-instinct': ['set|resistances'] — after TEACH 3, `poison` matches;
+    what is left is that a DAMAGE-SOURCE clause has no type NAME, so each side invents a phrase (theirs
+    the whole printed sentence, ours 'all damage from fungus creatures' with the sentence in `note`,
+    which is what the IWR breakdown prints). Adversarially confirmed: strip the entry from a content
+    copy and the record reports the SET-GAP with `ours=poison` alone.
+  · wg-identity SETTLED_IDENTITIES 'school-of-thassilonian-rune-magic': ['spells'] — the two sides put
+    the sin pick on DIFFERENT RECORDS. Ours is classFeatures/runelord (otherTags ['class-archetype',
+    'wizard-arcane-school'], the record the wizard Arcane School picker offers), whose effectChoices
+    'sin' options grant the seven initial school spells (read at build.ts:4104-4127). Adversarially
+    confirmed: classFeatures/school-of-thassilonian-rune-magic has no otherTags, is absent from all 18
+    wizard subclass option ids and no record in core.json names it — it is NEVER OWNED, so no reading of
+    it could deliver those spells and TEACH 5 cannot reach it.
+  · wg-identity SETTLED_IDENTITIES 'witness-to-ancient-battles': ['spells'] — one letter, in THEIR
+    spelling: their `weaponofjudgement` against our `weaponofjudgment`, which is how AoN apparition-2
+    and the spell record print it. TEACH 5 matched the other ten spells and the vessel spell; only the
+    British-spelling twin survives and the loose matcher cannot bridge it. Adopting theirs would move us
+    away from print.
+  · wg-identity OFF_RECORD_OPTIONS 'armor-innovation': ['Power Suit', 'Subterfuge Suit'] — a named
+    entry in the existing map for a picker whose whole state is a BuildState field (the map's own
+    precedent is 'path-to-perfection'). Ours is the "Armor base statistics" PopupSelect at
+    src/builder/shared.tsx:3565-3579 writing `build.inventorArmorStats`, which gates
+    inventorModificationOptions (build.ts:2765), is validated at build.ts:8362-8380 and is listed as an
+    outstanding required choice at build.ts:1262 until answered.
+
+MEASURED BEFORE / AFTER (run on the real packets, before the stash)
+  wg-diff.mjs (whole database — it has no --batch filter, so this is a global regression measure):
+      THEY-ONLY   296 -> 233        AGREE  1034 -> 1072      WE-ONLY  2838 -> 2863
+      by kind:  spell 83->24 · skill 67->15 · spellcasting 45->16 · conditional 73->18 ·
+                grantsRecord 28->22 · choice 59->56
+  wg-values.mjs --batch work/wg-batch-033.json:
+      31 records to adjudicate -> 2   (agree-on-every-value 1 -> 30)
+      the 2 left are curse-of-creeping-ashes (speed, NOT MINE) and otherworldly-protection (NOT MINE)
+  wg-values.mjs --batch work/wg-batch-031.json : byte-identical before and after
+  wg-values.mjs --batch work/wg-batch-032.json : byte-identical before and after
+  wg-identity.mjs --batch work/wg-batch-033.json:
+      28 records with an unmatched named thing -> 5   (match-on-every-one 2 -> 25)
+      the 5 left are light-mortar-innovation (NOT MINE), armor-innovation `items` only (NOT MINE — the
+      `options` half cleared), otherworldly-protection (NOT MINE), spore-order (A REAL GAP, see
+      CROSS-FILE GAPS 3) and dragon-eidolon (handed to dragon-eidolon#tradition)
+  wg-identity.mjs --batch work/wg-batch-031.json : byte-identical before and after
+  wg-identity.mjs --batch work/wg-batch-032.json : byte-identical before and after
+  wg-casting.mjs (npx jiti, whole database): 16 class sources, 4 with mismatches (180 rows) — the same
+      four (animist, magus, summoner, wizard) before and after; none of my teaches touches it.
+  Every before/after capture is in work/.b033-instruments/ (before-*.txt, after-*.txt, after-diff.json).
+
+ADVERSARIAL EVIDENCE THAT THE TEACHES DO NOT LAUNDER
+  · spore-order still reports `grants theirs-not-ours=[leaforder]` after TEACH 5/7 — the one record in
+    my slice with a REAL gap, and it stayed flagged.
+  · dragon-eidolon still reports three of four tradition options.
+  · armor-innovation's `items` half still reports; only the `options` half, which has a named entry with
+    its reading written out, cleared.
+  · light-mortar-innovation and otherworldly-protection, neighbours in the same packet with the same
+    record shape, were untouched.
+  · batches 031 and 032 are byte-identical on both batch-scoped comparers.
+
+
+PER-FINDING
+-----------
+GROUP A — cleared by the option-carrier teaches (TEACH 1/5/7), no settle, no row.
+Each line: what the record's carrier is, and which comparer row it closed.
+
+the-distant-grasp                       TEACH 5 (identity): psychic subclass option `grantedSpells` (14 ids)
+                                        + the conscious-mind per-option ladder [{vector-screen,6},
+                                        {dancing-blade,10}]. Experience half: see GROUP C.
+the-unbound-step                        TEACH 5: same two carriers. Experience half: GROUP C.
+school-of-kalistrade                    TEACH 5: wizard option focusSpells ['unexpected-windfall'] +
+                                        advancedFocusSpell 'capital-dividend'. identity row closed.
+battle-creed                            TEACH 2 (values, the advancement table keyed by the subclass id:
+                                        fortitude expert@1, fortitude master@13, will master@15) closed
+                                        the three MISSING save rows; TEACH 5 (option grantedFeats
+                                        ['battle-harbinger-dedication','deadly-simplicity',
+                                        'reactive-strike']) closed the grants row.
+battle-creed#control                    GROUP C (experience parking entry) — print gives no choice
+                                        ("your deity's favored weapon"); build.ts:3784 resolves it.
+whisper-of-wings                        TEACH 1 (nature) + TEACH 5 (murmuration, gentle-landing).
+ligneous-instinct#instrument            TEACH 3: both SET-GAPs closed (piercing/slashing resistances,
+                                        fire weakness, all on whileActive with the same 3+Con value).
+school-of-rooted-wisdom#instrument      TEACH 5: focusSpells ['halcyon-mists'] + advancedFocusSpell
+                                        'call-the-ten'.
+school-of-thassilonian-rune-magic#instrument   SETTLE (wg-identity SETTLED_IDENTITIES ['spells']) — the
+                                        carrier is a DIFFERENT record (classFeatures/runelord) and this
+                                        one is never owned, so no teach can reach it. Reading above.
+curse-of-the-mortal-warrior#instrument  TEACH 4: the four `oracle-cursebound` modes gated
+                                        `feats:['curse-of-the-mortal-warrior']` carry the -1 / -2 status
+                                        save modifier; all six MISSING save rows closed.
+way-of-the-drifter#instrument-skill     TEACH 1: gunslinger option grants.skills ['acrobatics'].
+way-of-the-drifter#instrument-deeds     TEACH 5: option featureIds [{into-the-fray,1},{finish-the-job,9},
+                                        {drifters-wake,15}]. (The record's NO-SHEET-EFFECT verdict is a
+                                        SIXTH thing — the granted ACTION Reloading Strike — see GROUP C
+                                        and CROSS-FILE GAPS 1.)
+devotion-phantom-eidolon#instrument     TEACH 1 (medicine, occultism) + TEACH 7 (tradition 'occult' ->
+                                        spellcasting kind).
+interrogation-methodology#instrument    TEACH 1 (diplomacy). Experience half: GROUP C.
+spinner-of-threads#instrument           TEACH 1 (occultism) + TEACH 5 (nudge-fate, sure-strike) +
+                                        TEACH 7 (tradition 'occult').
+flame-order#instrument                  TEACH 1 (acrobatics) + TEACH 5 (grantedFeats ['fire-lung'] —
+                                        this is the finding that found the `o.grants?.feats` dead-field
+                                        bug, TEACH 6 — and focusSpells ['wildfire']).
+the-tangible-dream#instrument           TEACH 5 (14 grantedSpells + the conscious-mind ladder
+                                        [{astral-rain,6},{hologram-cage,10}]). Experience half: GROUP C.
+speaker-in-sibilance#instrument         TEACH 1 (grants.lores ['fortune-telling','mountain'] +
+                                        loreProgression 8/expert, 16/master — all four MISSING lore rows)
+                                        + TEACH 5 (ten grantedSpells + focusSpells ['crown-of-prophets']).
+school-of-the-boundary#instrument       TEACH 5 (focusSpells + advancedFocusSpell 'spiral-of-horrors' —
+                                        the finding that named the missing `advancedFocusSpell` read).
+the-resentment#patron-skill             TEACH 1 (occultism). Record now reads AGREE in wg-diff.
+fey-eidolon#eidolon-skills              TEACH 1 (deception, nature).
+alchemical-sciences-methodology#crafting-skill  TEACH 1 (crafting). Experience half: GROUP C.
+elemental-eidolon#eidolon-skills        TEACH 1 (nature, survival).
+school-of-unified-magical-theory#instrument-spells  TEACH 5 (hand-of-the-apprentice +
+                                        interdisciplinary-incantation).
+faiths-flamekeeper#instrument           TEACH 1 (religion) + TEACH 5 (stoke-the-heart, command) +
+                                        TEACH 7 (tradition 'divine').
+paradox-of-opposites#instrument         TEACH 1 (religion) + TEACH 5 (trade-death-for-life, sleep).
+decay-instinct#instrument-resistances   TEACH 3 closed `poison`; the fungus-clause member is SETTLED in
+                                        wg-values SETTLED_VALUES ['set|resistances'] (reading above).
+witness-to-ancient-battles#instrument   TEACH 1 (lores + the 8/16 ladder) + TEACH 5 (ten grantedSpells +
+                                        embodiment-of-battle); the one-letter spelling twin is SETTLED
+                                        in wg-identity SETTLED_IDENTITIES ['spells'] (reading above).
+steward-of-stone-and-fire#instrument    TEACH 1 (mountain/volcano + the 8/16 ladder — this closed four
+                                        DIFFERENT rows that read "theirs=expert ours=trained") +
+                                        TEACH 5 (ten grantedSpells + earths-bile).
+stone-order#instrument                  TEACH 1 (crafting) + TEACH 5 (grantedFeats ['steadying-stone'],
+                                        focusSpells ['crushing-ground']).
+armor-innovation#instrument-control     wg-identity OFF_RECORD_OPTIONS entry (reading above) closed the
+                                        `options` row; the experience MISSING-CONTROL verdict is GROUP C.
+lurker-in-devouring-dark#instrument     TEACH 1 (ocean/sailing + the 8/16 ladder — four DIFFERENT rows) +
+                                        TEACH 5 (ten grantedSpells + devouring-dark-form).
+wilding-steward#instrument              TEACH 1 (nature) + TEACH 5 (wilding-word + the
+                                        grantedSpellChoice summon-animal / summon-plant-or-fungus, which
+                                        is why TEACH 5 credits a spell CHOICE's options as spells).
+school-of-the-reclamation#instrument    TEACH 5 (grasping-vine + unsettling-knowledge).
+red-mantis-magic-school                 TEACH 5 (debilitating-terror + shroud-of-the-mantis).
+ripple-in-the-deep                      TEACH 1 (nature) + TEACH 5 (sting-of-the-sea + the
+                                        dizzying-colors / grease familiar choice).
+angel-eidolon                           TEACH 1 (diplomacy, religion) + TEACH 7 (tradition 'divine').
+way-of-the-vanguard                     TEACH 1 (athletics) + TEACH 5 (featureIds living-fortification@1,
+                                        spinning-crush@9, siegebreaker@15). Experience half: GROUP C.
+way-of-the-sniper                       TEACH 1 (stealth) + TEACH 5 (one-shot-one-kill@1, vital-shot@9,
+                                        ghost-shot@15). Now AGREE in wg-diff. Experience half: GROUP C.
+spore-order                             TEACH 1 (intimidation) + TEACH 5 (mushroom-patch, leshy-familiar)
+                                        closed the values and part of the identity rows. THE FINDING'S
+                                        CLAIM THAT THE NO-SHEET-EFFECT VERDICT IS WRONG DOES NOT HOLD:
+                                        the single undelivered op is `giveAbilityBlock "Leaf Order"`,
+                                        which is print-faithful (see CROSS-FILE GAPS 3) and which we do
+                                        not model. NOT parked, NOT settled — it stays flagged.
+dragon-eidolon#instrument               TEACH 1 (arcana, intimidation) + TEACH 7 (tradition 'arcane')
+                                        closed the values rows and one of the four option members. The
+                                        MISSING-CONTROL verdict and the remaining three tradition
+                                        options belong to dragon-eidolon#tradition (CROSS-FILE GAPS 4).
+
+GROUP C — the experience-harness half, SPECIFIED BUT NOT WRITTEN (see the incident note)
+work/experience-instrument-limits.json entries to author, all class INSTRUMENT, batch 33:
+  the-distant-grasp   NO-SHEET-EFFECT  lane wg-legacy-spell-name. 11 of 14 delivered. Two undelivered
+      are WG's "(Psi)" variant names ("Telekinetic Hand (Psi)", "Telekinetic Projectile (Psi)") against
+      our base cantrips telekinetic-hand / telekinetic-projectile — print calls them cantrips and that is
+      how we place them (build.ts ~4892, occult repertoire, pool seeded from psi-cantrips-and-amps
+      .focusPoolBonus). The third is WG's "Levitate", which is PRE-REMASTER: AoN conscious-mind-12 prints
+      "3rd: Gravity Well" and gravity-well is what our option grants. Print wins.
+  the-unbound-step    NO-SHEET-EFFECT  same lane. Undelivered: "Phase Bolt (Psi)", "Warp Step (Psi)",
+      "Collective Transposition (legacy)" — WG labels the third legacy itself. All three ids
+      (phase-bolt, warp-step, collective-transposition) are on our option's grantedSpells.
+  the-tangible-dream  NO-SHEET-EFFECT  same lane. Undelivered: "Figment (Psi)", "Shield (Psi)" only.
+  way-of-the-drifter          NO-SHEET-EFFECT  lane harness-granted-action-not-on-surface (CROSS-FILE
+  way-of-the-sniper           NO-SHEET-EFFECT  GAPS 1). Each has exactly ONE undelivered op and it is a
+  way-of-the-vanguard         NO-SHEET-EFFECT  granted ACTION: Reloading Strike / Covered Reload /
+  interrogation-methodology   NO-SHEET-EFFECT  Clear a Path / Pointed Question / Quick Tincture. All five
+  alchemical-sciences-methodology NO-SHEET-EFFECT  ride `grantsActions` on the record, all five ids exist
+      in core.json actions AND classFeatures, and build.ts:6201 puts them in `chosenActionIds` — a list
+      surfaceOf does not read. Delivery is 4/1, 4/1, 4/1, 2/1, 2/1: everything else on each record IS
+      delivered. NOTE: if CROSS-FILE GAPS 1 is fixed first, all five entries become unnecessary — prefer
+      the teach and author none of them.
+  battle-creed        MISSING-CONTROL  lane derived-value-not-a-pick. WG asks "Select Deity Weapon"
+      twice; print says "your deity's favored weapon" — no choice at all. build.ts:3784 `favoredWeaponRank`
+      writes master@13 / expert@5 as a per-weapon override over every deity.favoredWeapons entry.
+  armor-innovation    MISSING-CONTROL  lane control-off-record. The Power Suit / Subterfuge Suit
+      PopupSelect is rendered at src/builder/shared.tsx:3565-3579 into `build.inventorArmorStats`; the
+      harness only observes controls the RECORD adds. Paired with the OFF_RECORD_OPTIONS entry above.
+  (dragon-eidolon MISSING-CONTROL is NOT parked — CROSS-FILE GAPS 4.)
+  (spore-order NO-SHEET-EFFECT is NOT parked — CROSS-FILE GAPS 3.)
+
+scripts/lib/wg-experience-lanes.mjs — the ONE TEACH that replaces the first three parking entries:
+  in `effectDelivery`'s giveSpell branch, accept their spell name with a trailing parenthetical
+  qualifier stripped (/\s*\([^)]*\)\s*$/), because WG's only two qualifier families are "(Psi)" (the
+  psychic amp variants, which print calls cantrips and which we model as the base cantrip) and
+  "(legacy)" (pre-remaster duplicates of a record we carry in its remaster form). The base spell must
+  still be reachable on the built character, so a record granting nothing still reports undelivered.
+  It clears the-tangible-dream and the-unbound-step outright and takes the-distant-grasp from three
+  undelivered to one (the genuine WG-legacy Levitate, which keeps its parking entry).
+  MUTATION-PROOF TEST (test/wg-experience-lanes.test.ts, append): call effectDelivery with
+  {type:'giveSpell', data:{spellId:'x'}} and names.spell -> "Figment (Psi)" against a surface whose
+  spellNames is ['Figment'] (expect 'delivered'), and against a surface whose spellNames is [] (expect
+  'undelivered') — the second is the stunt that proves the teach reads the carrier and not the label.
+
+test/batch033-instruments.test.ts — NOT WRITTEN. What it must contain, one per teach, each with
+"// batch 033: <finding id>" in the 6 lines above the changed `it(` and the RECORD id in the enclosing
+describe/it title, and "// mutation-proof" inside the body naming what it stunts:
+  · TEACH 1  the-resentment / way-of-the-drifter#instrument-skill — run ourValues over a content copy
+    with `classes.witch.subclass.options['the-resentment'].grants.skills` deleted IN MEMORY and assert
+    `skill|occultism` comes back missing; with it present, assert it is asserted as trained.
+  · TEACH 1 (lores) steward-of-stone-and-fire#instrument — stunt `loreProgression` to [{level:8,
+    rank:'expert'}] only and assert the master rung reports DIFFERENT (this is the property that
+    separates "read the carrier" from "launder the finding"; wg-values already ships `--advancement`
+    for exactly this kind of stunt).
+  · TEACH 2  battle-creed — run with `--advancement` pointed at a copy whose 'battle-creed' table has
+    the will/master@15 row removed, and assert `save|will theirs=master` reports again.
+  · TEACH 3  ligneous-instinct#instrument — strip whileActive[0].weaknesses and assert the fire SET-GAP
+    returns.
+  · TEACH 4  curse-of-the-mortal-warrior#instrument — strip modes['curse-of-the-mortal-warrior-2']
+    .modifiers and assert the -1 save rows return.
+  · TEACH 5  flame-order#instrument, red-mantis-magic-school, way-of-the-sniper — strip the option's
+    focusSpells / advancedFocusSpell / featureIds respectively and assert each named thing reports again.
+  · TEACH 6  flame-order#instrument — assert `grantedFeats` (not the dead `grants.feats`) is what
+    credits Fire Lung on the DECLARING selector `druidic-order`.
+  · TEACH 7  way-of-the-vanguard — assert ourKindsOf('way-of-the-vanguard') contains skill and
+    grantsRecord, and does not once the option's grants.skills / featureIds are stripped.
+  · The three settles each need their own stunt: decay-instinct (strip the fungus entry -> the SET-GAP
+    reads `ours=poison`), school-of-thassilonian-rune-magic (strip runelord's effectChoices 'sin' ->
+    the settle is still correct because the record is never owned, so assert the OWNERSHIP fact instead:
+    the id appears in no class's subclass option list), witness-to-ancient-battles (strip one of the ten
+    grantedSpells -> that spell reports, proving the settle covers only the spelling twin).
+
+
+FILES I EDITED (all inside stash@{0}, all needing `git stash pop`)
+  scripts/wg-diff.mjs
+  scripts/wg-identity.mjs
+  scripts/wg-values.mjs
+FILES I CREATED (untracked, present in the tree now)
+  work/.b033-report-instruments.txt   (this file)
+  work/.b033-rows-instruments.json    (spec — 41 findings, zero backfill rows)
+  work/.b033-instruments/             (every before/after comparer capture)

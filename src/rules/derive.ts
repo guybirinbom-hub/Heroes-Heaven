@@ -2678,6 +2678,18 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
   const res = new Map<string, number>();
   const weak = new Map<string, number>();
   const imm = new Set<string>();
+  /* VOID HEALING — computed here rather than only in the returned object below, because printed IWR
+   * clauses turn on it: Otherworldly Protection (AoN innovation-5) prints *"You gain resistance to void
+   * damage equal to 3 plus half your level. If you have void healing, you instead gain an equal amount
+   * of resistance to vitality damage"*. One fact, one expression, read by both the gate in the loops
+   * and the flag on the result. */
+  const voidHealing =
+    !!(c.ancestryId && db.ancestries[c.ancestryId]?.negativeHealing) ||
+    !!(c.heritageId && db.heritages[c.heritageId]?.negativeHealing) ||
+    // …and the BACKGROUND (Revenant, batch 21).
+    !!(c.backgroundId && db.backgrounds[c.backgroundId]?.negativeHealing) ||
+    c.feats.some((f) => db.feats[f.featId]?.negativeHealing) ||
+    c.inventory.some((inv) => inv.invested && db.items[inv.itemId]?.negativeHealing);
   // Formulas may reference the character's level and ability modifiers (Wyrmbane Aura's Cha-mod
   // resistance). Speed-relative formulas belong to deriveSpeeds, which knows the resolved Speeds.
   const scope: FormulaScope = { level: c.level, abilities: c.abilities, archetypeFeats: archetypeFeatCounts(c, db) };
@@ -2707,6 +2719,11 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
        * helper so this can never disagree with the Details tab. */
       if (r.whenCreatureTrait && !hasCreatureTrait(c, db, r.whenCreatureTrait)) continue;
       if (r.unlessCreatureTrait && hasCreatureTrait(c, db, r.unlessCreatureTrait)) continue;
+      /* …and the same shape over VOID HEALING. Otherworldly Protection (AoN innovation-5): *"You gain
+       * resistance to void damage equal to 3 plus half your level. If you have void healing, you
+       * instead gain an equal amount of resistance to vitality damage."* Two mutually exclusive
+       * entries on one record, switched by a fact this function already computes. */
+      if (r.whenVoidHealing != null && r.whenVoidHealing !== voidHealing) continue;
       const v = resolveFormula(r.value, scope);
       if (v <= 0) continue;
       /*
@@ -2729,11 +2746,12 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
       note(`resistance:${r.type}`, src.__from, v, r.condition ?? src.__cond);
     }
     for (const w of src.weaknesses ?? []) {
-      // The same two gates as the resistance loop above. Honouring a field on only half of one shared
+      // The same gates as the resistance loop above. Honouring a field on only half of one shared
       // type is how a field becomes silently write-only for the other half.
       if (w.minLevel != null && c.level < w.minLevel) continue;
       if (w.whenCreatureTrait && !hasCreatureTrait(c, db, w.whenCreatureTrait)) continue;
       if (w.unlessCreatureTrait && hasCreatureTrait(c, db, w.unlessCreatureTrait)) continue;
+      if (w.whenVoidHealing != null && w.whenVoidHealing !== voidHealing) continue;
       const v = resolveFormula(w.value, scope);
       if (v > 0) {
         weak.set(w.type, Math.max(weak.get(w.type) ?? 0, v));
@@ -2914,13 +2932,7 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
     weaknesses: [...weak].map(([type, value]) => ({ type, value })).sort(sortByType),
     immunities: [...imm].sort(),
     sources: Object.fromEntries(attribution),
-    negativeHealing:
-      !!(c.ancestryId && db.ancestries[c.ancestryId]?.negativeHealing) ||
-      !!heritage?.negativeHealing ||
-      // …and the BACKGROUND (Revenant, batch 21).
-      !!(c.backgroundId && db.backgrounds[c.backgroundId]?.negativeHealing) ||
-      c.feats.some((f) => db.feats[f.featId]?.negativeHealing) ||
-      c.inventory.some((inv) => inv.invested && db.items[inv.itemId]?.negativeHealing),
+    negativeHealing: voidHealing,
     // "You can breathe underwater." A permanent capability with no number attached, so it fitted no
     // existing field — not a sense, not a speed, not a resistance — and every record saying it did
     // nothing at all. Aggregated exactly like negativeHealing beside it, invested-only rule included.
@@ -5218,11 +5230,24 @@ export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {
       if (v != null && v > 5) speeds[k] = Math.max(5, v - 5);
     }
   }
-  // A mode targeting Speed (the mode editor's plain "+10 to Speed", as opposed to the `speeds` grant
-  // handled above, which SETS a movement type). It means the land Speed you walk at, so it lands there
-  // and nowhere else — and last, so it isn't eaten by the armour and encumbrance penalties.
-  const speedMode = modeNumberBonus(c.activeModes, { kind: 'speed' });
-  if (speedMode) speeds.land = Math.max(0, (speeds.land ?? 0) + speedMode);
+  /*
+   * A mode targeting Speed (the mode editor's plain "+10 to Speed", as opposed to the `speeds` grant
+   * handled above, which SETS a movement type). It means the land Speed you walk at, so it lands there
+   * and nowhere else — and last, so it isn't eaten by the armour and encumbrance penalties.
+   *
+   * …unless the modifier says otherwise. Some printed clauses say "ALL YOUR SPEEDS", not "your Speed":
+   * AoN mystery-20 Cursebound 4 prints *"you take a -10-foot status penalty to all your Speeds"*, and
+   * Wanderer's Guide encodes exactly that as four more adjustments (SPEED_FLY / SPEED_CLIMB /
+   * SPEED_BURROW / SPEED_SWIM) beside the walking one. That is carried on `detail` — the field
+   * ModeModifier already uses to name the save / skill / attribute a modifier picks out: 'all' for every
+   * movement type, or one movement key for just that one, with an absent detail still meaning land
+   * (modes.ts:121). So the walking Speed is derived by the same loop as the rest, not by a special case.
+   */
+  for (const kind of ['land', 'fly', 'climb', 'swim', 'burrow'] as const) {
+    if (speeds[kind] == null && kind !== 'land') continue;   // a Speed the character does not have
+    const n = modeNumberBonus(c.activeModes, { kind: 'speed', detail: kind });
+    if (n) speeds[kind] = Math.max(0, (speeds[kind] ?? 0) + n);
+  }
   return speeds;
 }
 

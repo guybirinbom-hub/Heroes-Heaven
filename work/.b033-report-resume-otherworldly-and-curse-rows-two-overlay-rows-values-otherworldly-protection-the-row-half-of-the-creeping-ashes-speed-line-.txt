@@ -1,0 +1,105 @@
+BUILDER REPORT — batch 033 RESUME, group "otherworldly-and-curse-rows" (family resume-data-rows)
+Two overlay rows: VALUES otherworldly-protection + the row half of the creeping-ashes speed line.
+
+DATA STILL NEEDED
+- none. Both rows are whole-field re-emissions of fields that already exist in
+  scripts/data/effect-backfill.json; no new record, no created prose, no owner input.
+
+CROSS-FILE GAPS
+- src/rules/types.ts:4601-4603 — ModeModifier.detail's doc comment enumerates 'save' / 'skill' /
+  'ability' and does not mention 'speed', which is now a detail-bearing target with a non-empty
+  default ('land', src/rules/modes.ts:135). The behaviour is documented in modes.ts and derive.ts:5238;
+  only the field's own comment is behind. types.ts belongs to the ENGINE family — one comment line.
+- classFeatures/otherworldly-protection.aonParentId is "innovation-5", the LEGACY Armor innovation
+  page (it prints "negative damage / positive damage / negative healing / alignment damage"). The
+  remaster page carrying the clause this row implements is innovation-1. Every code comment written
+  against this record cites innovation-5 for a remaster sentence that is not on that page:
+  src/rules/derive.ts:2681, :2718 and src/rules/types.ts:520. Changing aonParentId moves an identity
+  link and is not a data-rows call; DATA-ROWS/ENGINE follow-up, not authored here.
+- test/batch033-gap-data.test.ts:151 forward-references "the row that will carry detail:'all'" as
+  belonging to work/.b033-rows-data-rows.json. The row is real as of this group, but it lives in this
+  group's spec file instead; the claim is true, the path in the comment is one file off. That test
+  file belongs to gap-data-rows.
+
+--------------------------------------------------------------------------------
+1. otherworldly-protection#void-healing-swap — BUILT (row)
+   VALUES SET-GAP set|resistances theirs=vitality ours=void,spirit,unholy,holy.
+   Print AoN innovation-1: "You gain resistance equal to 3 + half your level to void damage, or to
+   vitality damage if you have void healing (such as if you're a dhampir)."
+   ROW: classFeatures/otherworldly-protection.resistances, whole-field re-emission, supersedes:true —
+   entry 0 splits into {type:'void', whenVoidHealing:false} + {type:'vitality', whenVoidHealing:true},
+   both at '3+floor(@actor.level/2)', and the prose `condition` ("or vitality damage instead, if you
+   have void healing…") is dropped because the branch now says what the sentence said. Entries 1-3
+   (spirit, unholy, holy) carried byte-identical.
+   READER (pre-existing, built this batch, previously used by NOBODY — gap-verifier residue R3):
+   IwrEntry.whenVoidHealing declared at src/rules/types.ts:527; gated in deriveDefenses at
+   src/rules/derive.ts:2726 (resistances) and :2754 (weaknesses) against the `voidHealing` expression
+   computed at :2686. No code change: no comparer teach either — wg-values already reads the
+   resistance set, so the SET-GAP closes on our side alone.
+   SPEC: work/.b033-rows-resume-otherworldly-and-curse-rows-two-overlay-rows-values-otherworldly-protection-the-row-half-of-the-creeping-ashes-speed-line-.json
+   TEST: test/batch033-resume-…-speed-line-.test.ts, "gives a living inventor void resistance and a
+   dhampir inventor vitality instead" — a BUILT level-8 armor-innovation inventor (void 7, no
+   vitality) and the same build with heritageId 'dhampir' (negativeHealing true, vitality 7, no void,
+   spirit 7 on both), all through the real deriveDefenses on the SHIPPED record. Fails today on
+   exactly the two assertions the row moves; passes when the driver applies it.
+   ALSO EDITED (same family's own test file, the row makes its old assertion stale):
+   test/batch033-data.test.ts:113-132 — the `it` that asserted the prose `condition` now asserts
+   `whenVoidHealing === false` and `condition === undefined`, cited
+   `// batch 033: otherworldly-protection#void-healing-swap`. test-flip-audit.mjs --batch 033 is clean.
+
+2. otherworldly-protection#sanctified-resistance (the sanctified branch) — BUILT, NO CHANGE (checked)
+   The premise that entries 2 and 3 key on the DAMAGING creature's trait is REFUTED on inspection.
+   `whenCreatureTrait` is documented at src/rules/types.ts:507 as "the entry belongs only to a
+   character who HAS this creature trait" and is read at src/rules/derive.ts:2720 as
+   hasCreatureTrait(c, db, …) → creatureTraitsOf(c, db) — the CHARACTER's own traits, the same reader
+   the Details tab uses. And a sanctified character is exactly who holds the holy/unholy creature
+   trait: src/rules/build.ts:6289-6296 pushes it from the deity's `sanctification` answer for a cleric
+   (one-option deities included), and build.ts:6331-6347 from a feat option's `grantsCreatureTraits` —
+   the Cleric and Champion Dedications, which is the route innovation-1 itself names ("such as by also
+   being a champion or cleric dedicated to a deity who allows or enforces sanctification"). So
+   {type:'unholy', whenCreatureTrait:'holy'} already reads "resist unholy damage if you are sanctified
+   holy", which is print. No `whenSanctified` field invented — there is no reader for one and the
+   carrier that exists is correct. The two entries are carried through the re-emission byte-identical.
+   TEST: same file, "keeps the sanctified branch, which reads the character own holy/unholy trait" —
+   pins both entries and proves the gate on a BUILT inventor (no unholy resistance unsanctified; 7
+   once the character carries the holy creature trait). This one passes TODAY, which is the point.
+   No queue entry filed: nothing here needs the owner.
+
+3. curse-of-creeping-ashes#speed-penalty (the ROW HALF; the gate line is owned by `instruments`)
+   — BUILT (row)
+   Print AoN mystery-20, Cursebound 4: "You take a -10-foot status penalty to all your Speeds as your
+   limbs begin to crumble like ash."
+   ROW: modes/curse-of-creeping-ashes-4.modifiers, whole-field re-emission, supersedes:true — the
+   speed entry gains detail:'all'; the -2 circumstance ranged-attack entry (with its `appliesWhen`) is
+   carried unchanged. The sibling `note` row on the same record needed no change: it already reads
+   "a -10-foot status penalty to all your Speeds".
+   READER (pre-existing, no code change): modeMatches at src/rules/modes.ts:135 —
+   `(mod.detail ?? 'land') === 'all' || (mod.detail ?? 'land') === target.detail` — and the movement
+   loop at src/rules/derive.ts:5246-5250, which asks modeNumberBonus once per movement type. A
+   detail-less speed modifier still means the walking Speed, which is what the mode editor's plain
+   "+10 to Speed" means and what every other shipped mode relies on.
+   SPEC: same file as item 1.
+   TEST: test/batch033-resume-…-speed-line-.test.ts, "drops a built oracle fly Speed by 10 as well as
+   their land Speed" — the SHIPPED mode record (not a hand-built one) through modeNumberBonus for
+   'fly' and 'land', then a BUILT level-6 oracle given a fly Speed by a mode `speeds` grant
+   (derive.ts:5168): fly 30 → 20 and land -10 with the curse active.
+   ALSO EDITED (same family's own test file): test/batch033-data.test.ts:96-101 —
+   `toContainEqual({…target:'speed'})` is an exact-object match, so the added `detail` made it stale;
+   now `toContainEqual({…, detail:'all'})`, cited `// batch 033: curse-of-creeping-ashes#speed-penalty`.
+   test/batch033-gap-data.test.ts:151's forward-reference comment ("the row that will carry
+   detail:'all'") becomes true with this row; see CROSS-FILE GAPS for its one-file-off path.
+
+--------------------------------------------------------------------------------
+CHECKS RUN
+  node scripts/vt.mjs test/batch033-resume-…-speed-line-.test.ts
+    → 2 failed | 1 passed, and the two failures are exactly the row-dependent assertions
+      (resistances entry shape; the mode modifier's `detail`) — the shape a data-rows test is
+      required to have before the driver applies.
+  node scripts/vt.mjs test/batch033-data.test.ts
+    → 2 failed | 7 passed, the two failures being the two assertions this group re-pointed at the
+      new values, same reason.
+  npx tsc --noEmit → clean.
+  node scripts/test-flip-audit.mjs --batch 033 → "batch 033 clean — 16 test file(s) touched,
+    3 new settle key(s), every flip cited."
+
+NO teach, NO settle, NO comparer change, NO src/ change, NO queue entry from this group.

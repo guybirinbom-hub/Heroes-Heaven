@@ -622,6 +622,20 @@ export function precheck(rows, overlayBefore, { mirror = mirrorText, currentDesc
     if (!r.row?.category || !r.row?.id || r.row.field === undefined) return;
     const c = creates.get(`${r.row.category}/${r.row.id}`);
     if (!c) return;
+    /* PROSE IS NOT A FIELD OF THE RECORD, so (1b)'s premise cannot arise for it. `description` and
+     * `descRefs` are exactly the two fields apply-backfill-now.mjs hands the applier as
+     * `skipFields: ['description', 'descRefs']` (scripts/apply-backfill-now.mjs:45) and then routes BY
+     * HAND to public/core-descriptions.json — a different file from the one a create row writes. Neither
+     * row can therefore "reach the shipped artefact instead of" the other, which is the whole harm (1b)
+     * exists to refuse, and the create row's own post-check below still compares the shipped record with
+     * the create value (deleting description/descRefs from the shipped copy when the create carries
+     * none). This is also the documented shape of the `created-prose` spec kind —
+     * docs/wg-batch-workflow-prompts.md §5, "prose for created records, since a create row never carries
+     * a description" — so refusing it made that kind unusable for the ONE case it exists for: batch 033
+     * created classFeatures/arcane-bond-school-of-unified-magical-theory and it shipped BLANK, red in
+     * both scripts/render-check.mjs and scripts/readable-record-check.mjs. Checks (4) and (5) still
+     * govern the prose row itself (no path; every restored token in our text or the cited mirror doc). */
+    if (r.row.field === 'description' || r.row.field === 'descRefs') return;
     const harmless = !r.row.path?.length && c.i < i && eq(c.r.row.value?.[r.row.field], r.row.value);
     if (!harmless) problems.push(`${r.file}#${r.finding}: ${keyOf(r.row)} assigns a field of ${r.row.category}/${r.row.id}, which ${c.r.file}#${c.r.finding} CREATES in the same manifest — fold the field into the create row (a create row has no \`field\`, so the collision check never sees these two)`);
   });
@@ -778,9 +792,16 @@ async function stageApply() {
        * existing record, so a CORRECTED create silently keeps the old one until a full regeneration. */
       const shipped = core[row.category]?.[row.id];
       if (!shipped) { post.push(`${file}#${finding}: created record ${row.category}/${row.id} is not in the shipped core.json`); continue; }
+      /* PROSE IS OFF BOTH SIDES, symmetrically. Prose is stored split (core.json holds the record,
+       * core-descriptions.json the text) and lib/apply-backfill.mjs now applies its `skipFields` to a
+       * CREATE as well, so a created record NEVER carries description/descRefs however the row is
+       * written. Comparing the shipped record against a create value that still holds prose would
+       * therefore report "NEEDS npm run data" for a record that is exactly right — the old asymmetric
+       * form only deleted the key from the shipped side when the row lacked it. */
       const stripped = { ...shipped };
-      for (const k of ['description', 'descRefs']) if (!(k in (row.value ?? {}))) delete stripped[k];
-      if (!eq(stripped, row.value)) post.push(`NEEDS npm run data — ${file}#${finding}: the shipped ${row.category}/${row.id} does not equal the create row (applyBackfill never overwrites an existing record, so a corrected create needs a full regeneration)`);
+      const expected = { ...(row.value ?? {}) };
+      for (const k of ['description', 'descRefs']) { delete stripped[k]; delete expected[k]; }
+      if (!eq(stripped, expected)) post.push(`NEEDS npm run data — ${file}#${finding}: the shipped ${row.category}/${row.id} does not equal the create row (applyBackfill never overwrites an existing record, so a corrected create needs a full regeneration)`);
       continue;
     }
     const shipped = shippedOf(row);

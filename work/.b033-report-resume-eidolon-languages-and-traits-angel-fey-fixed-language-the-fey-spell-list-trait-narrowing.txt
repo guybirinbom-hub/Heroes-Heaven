@@ -1,0 +1,92 @@
+BATCH 033 RESUME — group "eidolon-languages-and-traits" (family engine)
+angel/fey fixed language + the fey spell-list trait narrowing
+
+DATA STILL NEEDED
+  none for my four items. (Residue, not mine: with CompanionMod.languages now built, the OTHER six
+  eidolon types wg-diff still lists as missing=[language] — beast, demon, dragon, plant, psychopomp,
+  undead — have a printed fixed Language line and no entry. The carrier exists now; filling them is a
+  one-line-per-type lane for a later batch, and I did not author rows for records outside my group.)
+
+CROSS-FILE GAPS
+  1. family `instruments` — scripts/wg-diff.mjs REGISTRY_KINDS (:629) reads
+     ['src/rules/companionGrants.ts', ['grantsRecord', 'choice']] with no 'language'. VERIFIED after my
+     rows landed: `node scripts/wg-diff.mjs --list --bucket they-only` still prints
+     `angel-eidolon lvl 1 missing=[language] ours=[grantsRecord,choice,skill,spellcasting]` and the same
+     line for fey-eidolon, so the new fixed carrier is not credited. The `language` kind list (:507)
+     already contains the path `languages`; only the FILE map is short. One-word edit, in the
+     instruments group's file — I did not touch wg-diff.mjs.
+  2. family `data-rows` / the CLOSER — work/.b033-rows-data-rows.json already carries a row on
+     classFeatures/fey-eidolon/spellListAdditions ({"traditions":["arcane"]}). My re-emission of that
+     same field (with the traits half) is in my own spec with supersedes:true, but precheck() check (1)
+     in scripts/wg-batch-run.mjs refuses TWO SPECS writing one key regardless of supersedes:
+     `COLLISION classFeatures/fey-eidolon/spellListAdditions`. Before `--stage apply`, the earlier row
+     must be dropped from work/.b033-rows-data-rows.json (it is that family's file, not mine) so the
+     superseding row stands alone. Nothing else about the row changes.
+
+ITEMS
+
+1. angel-eidolon — KINDS missing=[language]  → BUILT (code lane)
+   Print: AoN eidolon-1, the page this record cites, "**Language** Celestial"; the remaster twin
+   eidolon-15 reads "Language Empyrean" (a straight rename, named in the WHY comment; retargeting the
+   record's aonId/edition is out of scope).
+   FILE + SYMBOL: src/rules/companionGrants.ts — new field `CompanionMod.languages?: string[]`
+   (a FIXED answer, added beside `languageChoices?: number`, which is the PICK shape and would show
+   the player an unanswered prompt for something print already answered), and
+   COMPANION_MODS['angel-eidolon'].languages = ["Celestial"].
+   READER: src/rules/companions.ts, deriveEidolon — the same COMPANION_MODS type-row loop that reads
+   languageChoices, resolving an entry through content.languages when it is an id and falling through
+   to the string as written; the value lands in EidolonBlock.languages and so in the existing
+   CompanionsTab Languages row (CompanionsTab.tsx:950). No CompanionsTab edit was needed: the language
+   PICKER there is gated on `languageChoices` (:1287), which is undefined for these two types, so a
+   fixed line correctly shows no prompt.
+   Why "Celestial" and not "celestial": content.languages is remaster-only (120 records; no
+   `celestial`/`sylvan` id exists, only `empyrean`/`fey`), so an id-style token would render lowercase
+   raw. The printed name is what the record's own shipped description already says ("**Language**
+   Celestial"). Documented on the field.
+   NOT classFeatures.grantsLanguages (types.ts:987) — that grants the language to the SUMMONER; print
+   puts it on the eidolon's stat block.
+   TEST: test/batch033-resume-eidolon-languages-and-traits-angel-fey-fixed-language-the-fey-spell-list-trait-narrowing.test.ts
+   "angel-eidolon shows Celestial on the block, with no unanswered pick" — built 5th-level summoner
+   with subclassId angel-eidolon, deriveEidolon: languages === ['Celestial'], no LANGUAGE_UNCHOSEN.
+   PASSES.
+
+2. fey-eidolon — KINDS missing=[language]  → BUILT (code lane, same carrier)
+   Print: AoN eidolon-8 (this record's cited page) "**Language** Sylvan"; remaster twin eidolon-22
+   reads "Language Fey".
+   FILE + SYMBOL: COMPANION_MODS['fey-eidolon'].languages = ["Sylvan"] in src/rules/companionGrants.ts.
+   TEST: same file, "fey-eidolon shows Sylvan on the block, with no unanswered pick" (PASSES), plus
+   "the fixed lane leaves the fey-eidolon sibling lanes alone" — devotion-phantom-eidolon still shows
+   its one unanswered pick and beast-eidolon still shows no Languages row, i.e. the fixed lane did not
+   swallow the pick lane (PASSES).
+
+3. wg-diff credit for the fixed-language carrier  → VERIFIED NOT CREDITED, HANDED OFF
+   See CROSS-FILE GAPS 1. Verified empirically after items 1 and 2 landed, not by reading the map
+   alone. I did not edit scripts/wg-diff.mjs.
+
+4. fey-eidolon spell-list trait narrowing (gap-verifier residue R2)  → BUILT (one row, in my spec)
+   Print (AoN eidolon-8): "you can choose from the primal list as well as from spells that have the
+   illusion or mental traits that appear on the arcane spell list."
+   ROW (work/.b033-rows-resume-eidolon-languages-and-traits-angel-fey-fixed-language-the-fey-spell-list-trait-narrowing.json,
+   finding fey-eidolon#fey-gift-spells): classFeatures/fey-eidolon field spellListAdditions,
+   whole-field re-emission {"traditions":["arcane"],"traits":["illusion","mental"]}, supersedes:true —
+   the superseded value merged whole (traditions unchanged, traits added).
+   The reader shipped in this same batch and had no writer: SpellAccessGrant.traits (types.ts:5288) →
+   the widening loop at build.ts:6543 → Character.spellListTraditions[].traits → spellOpenedBy
+   (SpellsTab.tsx:293). This row is that writer. Without it the picker offers 793 arcane spells where
+   print offers the illusion-or-mental slice.
+   TEST: same file, "fey-eidolon narrows its arcane widening to illusion or mental" — asserts the
+   shipped record's field, then builds a 5th-level fey summoner and checks
+   spellListTraditions[].traits === ['illusion','mental'], an illusion arcane spell opened and a plain
+   arcane spell not. FAILS FOR THE RIGHT REASON until the driver applies the row: the only failing
+   assertion is `expected { traditions: ['arcane'] } to deeply equal { traditions: ['arcane'],
+   traits: [...] }`. No patched-vs-shipped delta.
+
+TEACH LINES
+  none — no settle, no comparer teach, no exemption authored by this group. (The one comparer change
+  this group needs belongs to `instruments`; see CROSS-FILE GAPS 1.)
+
+CHECKS RUN
+  node scripts/vt.mjs run test/batch033-resume-…-narrowing.test.ts → 4 tests, 3 pass, 1 fails on the
+    unapplied row (quoted above).
+  npx tsc --noEmit → clean.
+  node scripts/wg-diff.mjs --list --bucket they-only → the credit check for item 3.

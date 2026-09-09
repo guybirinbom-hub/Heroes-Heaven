@@ -1,0 +1,46 @@
+{
+  "findings": [
+    {
+      "id": "otherworldly-protection#void-healing-swap",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "otherworldly-protection",
+          "field": "resistances",
+          "value": [
+            { "type": "void", "value": "3+floor(@actor.level/2)", "whenVoidHealing": false },
+            { "type": "vitality", "value": "3+floor(@actor.level/2)", "whenVoidHealing": true },
+            { "type": "spirit", "value": "3+floor(@actor.level/2)" },
+            { "type": "unholy", "value": "3+floor(@actor.level/2)", "whenCreatureTrait": "holy" },
+            { "type": "holy", "value": "3+floor(@actor.level/2)", "whenCreatureTrait": "unholy" }
+          ],
+          "supersedes": true,
+          "why": "AoN innovation-1 (the REMASTER Armor innovation page; the record's aonParentId still points at the legacy innovation-5) prints \"You gain resistance equal to 3 + half your level to void damage, or to vitality damage if you have void healing (such as if you're a dhampir).\" The shipped row rode the void branch alone and carried the vitality half as PROSE on `condition`, so a dhampir inventor read a void resistance that never applies and had no vitality one, and the wg-values comparer saw a SET-GAP (theirs=vitality, ours=void,spirit,unholy,holy). The branch reader was built this batch and had no user: `whenVoidHealing` is declared at src/rules/types.ts:527 and gated in deriveDefenses at src/rules/derive.ts:2726 (resistances) / :2754 (weaknesses), over the same `negativeHealing` fact that function already computes at :2688. Entry 0 splits into the two mutually exclusive entries the gate exists for and the prose `condition` is dropped, because the branch now says what the sentence said. Whole-field re-emission of `resistances`; entries 1-3 of the superseded row are carried byte-identical."
+        }
+      ],
+      "note": "One field (`resistances`), one row, superseding the existing effect-backfill row for classFeatures/otherworldly-protection.resistances. Closes the wg-values SET-GAP on our side alone — wg-values already reads the resistance set, so no comparer teach is needed and none is authored. Tested on a BUILT living inventor (void, no vitality) and on a BUILT dhampir inventor (vitality, no void) through deriveDefenses."
+    },
+    {
+      "id": "otherworldly-protection#sanctified-resistance",
+      "backfillRows": [],
+      "note": "CHECKED WHILE RE-EMITTING, no change: the shipped entries are already right and the premise that they key on the DAMAGING creature is refuted. `whenCreatureTrait` is documented at src/rules/types.ts:507 as \"the entry belongs only to a character who HAS this creature trait\" and is read at src/rules/derive.ts:2720 as hasCreatureTrait(c, db, ...) — the CHARACTER's own traits, through creatureTraitsOf. A sanctified character IS the one who holds the holy/unholy creature trait: build.ts:6289-6296 pushes it from the deity's `sanctification` answer for a cleric (one-option deities included) and build.ts:6331-6347 from a feat option's `grantsCreatureTraits` (the Cleric and Champion dedications, which is exactly the route innovation-1's \"such as by also being a champion or cleric dedicated to a deity\" names). So {type:'unholy', whenCreatureTrait:'holy'} already means \"resist unholy damage if you are sanctified holy\", which is print. No `whenSanctified` field is added — there is no reader for one, and the carrier that exists is correct."
+    },
+    {
+      "id": "curse-of-creeping-ashes#speed-penalty",
+      "backfillRows": [
+        {
+          "category": "modes",
+          "id": "curse-of-creeping-ashes-4",
+          "field": "modifiers",
+          "value": [
+            { "value": -2, "type": "circumstance", "target": "attack", "appliesWhen": "ranged attack rolls" },
+            { "value": -10, "type": "status", "target": "speed", "detail": "all" }
+          ],
+          "supersedes": true,
+          "why": "AoN mystery-20, Cursebound 4: \"You take a -10-foot status penalty to all your Speeds as your limbs begin to crumble like ash.\" The shipped row's speed modifier carries no `detail`, and modeMatches (src/rules/modes.ts:135) defaults a detail-less speed modifier to 'land' — the ruling deriveSpeeds has always applied, because the mode editor's plain \"+10 to Speed\" means the Speed you walk at. So the penalty hit the walking Speed and nothing else, while print and WG (SPEED / SPEED_FLY / SPEED_CLIMB / SPEED_BURROW / SPEED_SWIM) take all five. `detail: 'all'` is the carrier modes.ts:135 and deriveSpeeds' movement loop (src/rules/derive.ts:5246-5250) were built to read and that nothing shipped uses. Whole-field re-emission of `modifiers`; the -2 circumstance ranged-attack entry is carried byte-identical."
+        }
+      ],
+      "note": "The ROW HALF of the instruments group's VALUES line; the gate line itself is owned by `instruments`. One field (`modifiers`), one row, superseding the existing effect-backfill row for modes/curse-of-creeping-ashes-4.modifiers. The sibling `note` row on the same record needs no change — it already reads \"a -10-foot status penalty to all your Speeds\". Tested on a BUILT oracle given a fly Speed, through deriveSpeeds (and the raw modeNumberBonus match) with the SHIPPED mode record, not a hand-built one."
+    }
+  ]
+}

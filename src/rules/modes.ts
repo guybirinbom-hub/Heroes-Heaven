@@ -120,6 +120,18 @@ function modeMatches(mod: ModeModifier, target: ModeTarget): boolean {
   // must match. `ability` always names one attribute — a blanket +1 to every attribute isn't a thing.
   if (mod.target === 'save' || mod.target === 'skill') return !mod.detail || mod.detail === target.detail;
   if (mod.target === 'ability') return mod.detail === target.detail;
+  /*
+   * 'speed' is detail-bearing too, but its DEFAULT is not "all of this kind": a mode saying "+10 to
+   * Speed" means the walking Speed, which is the ruling deriveSpeeds has always applied. A printed
+   * clause that means every movement type says so — AoN mystery-20 Cursebound 4: *"you take a -10-foot
+   * status penalty to ALL YOUR SPEEDS"* — and carries `detail: 'all'`; one movement key ('fly', 'swim',
+   * …) carries that key.
+   *
+   * A target with no detail still matches everything: the stat breakdown and the "an active mode moved
+   * this number" highlight ask `{ kind: 'speed' }` meaning "anything at all", and answering 'land' only
+   * would drop a fly-Speed mode out of the panel that exists to show it.
+   */
+  if (mod.target === 'speed') return target.detail == null || (mod.detail ?? 'land') === 'all' || (mod.detail ?? 'land') === target.detail;
   return true;
 }
 
@@ -218,14 +230,33 @@ const RAW_MODES: ModeDef[] = [
   // ---- Barbarian — rage states (one at a time) ----
   { id: 'cat-rage', name: 'Rage', category: 'Barbarian', classes: ['barbarian'], exclusiveGroup: 'barbarian-rage', modifiers: [m(2, 'untyped', 'damage', { appliesWhen: 'melee or unarmed Strikes while raging' })], note: 'Gain temporary Hit Points and +2 damage on melee & unarmed Strikes (more at higher levels). You can’t use concentrate actions (except Seek) while raging.' },
   { id: 'cat-rage-legacy', name: 'Rage (legacy)', category: 'Barbarian', classes: ['barbarian'], exclusiveGroup: 'barbarian-rage', modifiers: [m(2, 'untyped', 'damage', { appliesWhen: 'melee or unarmed Strikes while raging' }), m(-1, 'untyped', 'ac')], note: 'Pre-Remaster Rage: +2 Strike damage and a −1 penalty to AC while raging.' },
-  // Rotting Rage (Decay) and Wooden Rage (Ligneous) are the instinct abilities of PF #202's two
-  // instincts, and both are a CHOICE made as the rage begins: "you can choose to increase the
-  // additional damage from Rage from 2 to 6". Both shipped as copies of the generic rage template —
-  // +2 damage and a placeholder note — so the trade the whole ability consists of (the bigger die for
-  // a real cost) reached the sheet as an ordinary Rage. The damage is 6 because these REPLACE the
-  // base rage state (one `barbarian-rage` mode at a time), not stack with it.
-  { id: 'cat-rotting-rage', name: 'Rotting Rage', category: 'Barbarian', classes: ['barbarian'], feats: ['decay-instinct'], exclusiveGroup: 'barbarian-rage', modifiers: [m(6, 'untyped', 'damage', { appliesWhen: 'melee or unarmed Strikes while raging (poison damage instead of the weapon’s type)' })], note: 'Decay: Rage’s additional damage becomes 6 and its type becomes poison; your Rage action gains the primal and poison traits. You take 1 damage at the end of each of your turns, which can’t be reduced or avoided by any means. With weapon specialization the damage is 10 and you take 5; with greater weapon specialization it is 18 and you take 10. Chosen only as the rage begins, and it lasts until the rage ends.' },
-  { id: 'cat-wooden-rage', name: 'Wooden Rage', category: 'Barbarian', classes: ['barbarian'], feats: ['ligneous-instinct'], exclusiveGroup: 'barbarian-rage', modifiers: [m(6, 'untyped', 'damage', { appliesWhen: 'melee or unarmed Strikes while raging' }), m(-10, 'untyped', 'speed')], note: 'Ligneous: Rage’s additional damage becomes 6, and the bark plates reduce your Speed by 10 feet. That reduction can’t be overcome by any means, though it can be offset by Speed increases. With weapon specialization the damage is 10; with greater weapon specialization, 18.' },
+  /*
+   * Rotting Rage (Decay) and Wooden Rage (Ligneous) are the instinct abilities of PF #202's two
+   * instincts, and both are a CHOICE made as the rage begins: "you can choose to increase the
+   * additional damage from Rage from 2 to 6". Both shipped as copies of the generic rage template —
+   * +2 damage and a placeholder note — so the trade the whole ability consists of (the bigger die for
+   * a real cost) reached the sheet as an ordinary Rage. The damage is 6 because these REPLACE the
+   * base rage state (one `barbarian-rage` mode at a time), not stack with it.
+   *
+   * ⚠ batch 033 — NEITHER MODE CARRIES THE DAMAGE ANY MORE. The 6 was FROZEN, and print does not stop
+   * at 6: *"When you use rotting rage, increase the additional damage from Rage from 6 to 10… If you
+   * have greater weapon specialization, instead increase the damage from Rage when using rotting rage
+   * from 10 to 18"* (AoN instinct-15; instinct-16 prints the same 6→10→18 ladder for wooden rage).
+   * Our own `note` below has always said 10 and 18, so the modifier line contradicted the prose beside
+   * it from 7th level on.
+   *
+   * The scaled number was never missing — `RAGE_DAMAGE` in derive.ts carries {tiers:[6,10,18]} for
+   * BOTH instincts and `rageStrikeRider` puts it on every melee/unarmed Strike. The mode's modifier
+   * was a SECOND carrier of the same number: conditional (`appliesWhen`), so `modeNumberBonus` /
+   * `modeTypedMods` skip it and it never double-counted the total — but `explain.ts` pushes mode
+   * situational lines and the rider's conditionalDamage into ONE strike-damage breakdown, so the
+   * player read "+6 untyped" beside "18 poison" on the same list. Deleting the frozen copy (rather
+   * than teaching ModeDef a level-scaled value, which would have been a third carrier of one number)
+   * leaves the rider as the single carrier and the note as the prose. The Speed penalty stays here:
+   * it is the ligneous mode's own effect and nothing else carries it.
+   */
+  { id: 'cat-rotting-rage', name: 'Rotting Rage', category: 'Barbarian', classes: ['barbarian'], feats: ['decay-instinct'], exclusiveGroup: 'barbarian-rage', modifiers: [], note: 'Decay: Rage’s additional damage becomes 6 and its type becomes poison; your Rage action gains the primal and poison traits. You take 1 damage at the end of each of your turns, which can’t be reduced or avoided by any means. With weapon specialization the damage is 10 and you take 5; with greater weapon specialization it is 18 and you take 10. Chosen only as the rage begins, and it lasts until the rage ends.' },
+  { id: 'cat-wooden-rage', name: 'Wooden Rage', category: 'Barbarian', classes: ['barbarian'], feats: ['ligneous-instinct'], exclusiveGroup: 'barbarian-rage', modifiers: [m(-10, 'untyped', 'speed')], note: 'Ligneous: Rage’s additional damage becomes 6, and the bark plates reduce your Speed by 10 feet. That reduction can’t be overcome by any means, though it can be offset by Speed increases. With weapon specialization the damage is 10; with greater weapon specialization, 18.' },
 
   // ---- Bard — compositions (one at a time) ----
   { id: 'cat-inspire-courage', name: 'Courageous Anthem', category: 'Bard', classes: ['bard'], exclusiveGroup: 'bard-composition', modifiers: [m(1, 'status', 'attack'), m(1, 'status', 'damage'), m(1, 'status', 'save', { detail: 'will', appliesWhen: 'vs fear effects' })], note: 'Allies gain a +1 status bonus to attack rolls, damage rolls, and saves vs fear.' },

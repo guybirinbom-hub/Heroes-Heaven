@@ -39,7 +39,13 @@ if (!existsSync(DUMP)) {
   process.exit(2);
 }
 const sql = readFileSync(DUMP, 'utf8');
-const core = JSON.parse(readFileSync(join(ROOT, 'public/core.json'), 'utf8'));
+/* `--core <path>` points the comparer at a STUNTED copy of the content, so a test can delete a carrier
+ * and prove the record it answers goes back to reporting — the same anti-laundering hook wg-values.mjs
+ * and wg-diff.mjs already carry. Without it the option-carrier teach and the two identity settles below
+ * could not be mutation-proofed at all: a stunt run silently re-read the shipped content and reported
+ * nothing, which reads exactly like a teach that works. Defaults to the shipped content, so a normal
+ * run is unchanged. */
+const core = JSON.parse(readFileSync(join(ROOT, arg('--core', 'public/core.json')), 'utf8'));
 
 /** Loose name key: case, punctuation, spacing and a leading article all ignored. */
 /** The ORIGINAL spelling behind each squashed key, so the word-set comparison has words to work with. */
@@ -112,6 +118,36 @@ for (const [cid, cls] of Object.entries(core.classes ?? {})) {
 }
 
 /*
+ * THE RECORD *IS* THE OPTION — the other half of the class-chassis crediting below.
+ *
+ * `creditOptions` (further down) hands a class's option list to the feature the class DECLARES as its
+ * carrier — `druidic-order` gets Flame Order's spells, `arcane-school` gets every school's. It never
+ * credited the OPTION RECORD ITSELF, and that is where the comparison actually lands: batch 033 compared
+ * `classFeatures/flame-order`, `…/red-mantis-magic-school`, `…/spinner-of-threads`, `…/way-of-the-sniper`
+ * and twenty more, each a prose stub whose whole mechanic lives on
+ * `classes.<cls>.subclass.options[<same id>]` (or `extraChoices[].options[<same id>]`) — so every school
+ * spell, order spell, hex cantrip, familiar-taught spell and gunslinger deed read as
+ * `ours=[(nothing)]` on records that deliver all of them.
+ *
+ * Built once, id -> the option objects of that id, plus id -> the FEATURE that declares the list (needed
+ * for the per-option ladder read in `optionIdentities`).
+ */
+const optionCarriers = new Map();
+const optionDeclarer = new Map();
+{
+  const add = (o, declaredBy) => {
+    if (!o?.id) return;
+    if (!optionCarriers.has(o.id)) optionCarriers.set(o.id, []);
+    optionCarriers.get(o.id).push(o);
+    if (declaredBy && !optionDeclarer.has(o.id)) optionDeclarer.set(o.id, declaredBy);
+  };
+  for (const cls of Object.values(core.classes ?? {})) {
+    for (const o of cls.subclass?.options ?? []) add(o, cls.subclass?.featureId);
+    for (const ec of cls.extraChoices ?? []) for (const o of ec.options ?? []) add(o, ec.featureId);
+  }
+}
+
+/*
  * OPTIONS OFFERED BY A PICKER THAT IS NOT ON THE RECORD — NAMED ONE BY ONE, WITH THE PICKER.
  *
  * Every other option reader here starts from a field (`choice.options`, `effectChoices`, a subclass or
@@ -130,6 +166,17 @@ const OFF_RECORD_OPTIONS = {
    * clause by CHOICE_SAVE_ANSWERS.pathToPerfection in src/rules/explain.ts. Same question, same three
    * answers; only the storage differs. Paired with the same id in wg-diff's OFF_RECORD_CARRIERS. */
   'path-to-perfection': ['Fortitude', 'Reflex', 'Will'],
+  /* ARMOR INNOVATION — *"Choose one of the sets of statistics on Innovation Armor Statistics table for
+   * your innovation armor."* Their `select from:CUSTOM "Choose a suit"` offers Power Suit / Subterfuge
+   * Suit; ours is the same two-option PopupSelect, titled "Armor base statistics", rendered in the
+   * "Armor base" SubCard at src/builder/shared.tsx:3565-3579 and answered into `build.inventorArmorStats`
+   * — which gates `inventorModificationOptions` (src/rules/build.ts:2765, the power-suit-modification vs
+   * subterfuge-suit-modification sub-tags), is validated at build.ts:8362-8380, and is listed as an
+   * outstanding required choice at build.ts:1262 until answered. Same question, same two answers; the
+   * state is a BuildState field rather than a record `choice`, which is exactly the case this map is for.
+   * Adversarially confirmed: the record itself carries no `choice`/`effectChoices` at all, so nothing
+   * else on our side could have offered them. */
+  'armor-innovation': ['Power Suit', 'Subterfuge Suit'],
 };
 
 const featFeatText = readFileSync(join(ROOT, 'src/rules/featFeatGrants.ts'), 'utf8');
@@ -566,6 +613,42 @@ function ourIdentities(id, rec) {
       out.options.add(key(ikonId));
     }
   }
+  /*
+   * THE OPTION'S OWN CARRIERS, when THIS RECORD is the option — see `optionCarriers`.
+   *
+   * Everything a SubclassOption can hand over, because every one of them was reported missing in batch
+   * 033 on a record that delivers it:
+   *   · `focusSpells`        the order/school/hex spell   (build.ts:4650, grantOptions.flatMap)
+   *   · `advancedFocusSpell` the Advanced School Spell target (build.ts:3854, ADV_SPELL) — read by NO
+   *                          option reader before this, so every arcane school, bloodline and mystery
+   *                          reported its advanced spell absent
+   *   · `grantedSpells`      the familiar-taught spell / the psychic's and apparition's repertoire
+   *                          (build.ts:4227, subOption.grantedSpells -> grantedByRank)
+   *   · `grantedSpellChoice` "your familiar learns dizzying colors OR grease" — a two-answer pick, so
+   *                          both answers are offered AND named as options
+   *   · `grantedFeats`       the order's bonus druid feat (build.ts:5090). NOTE the sibling
+   *                          `creditOptions` below reads `o.grants?.feats`, a field NO option in
+   *                          core.json carries — the real one is `grantedFeats`, added there too.
+   *   · `featureIds`         the gunslinger way's three deeds, level-gated (derive.ts:3475)
+   *   · `tradition`          named so their "Select a Tradition" option list has a counterpart
+   *
+   * …and the LADDER the DECLARING feature keeps per option: `classFeatures/conscious-mind.grantedSpells
+   * = { 'the-distant-grasp': [{id:'vector-screen',level:6}, …] }` is the psychic's *"Deeper Psi Cantrip
+   * (Level 6) … Deepest (Level 10)"*, read by build.ts's `notYetGranted`, and it lives on the declaring
+   * feature keyed by the OPTION's id — a home no reader here looked in.
+   */
+  for (const o of optionCarriers.get(id) ?? []) {
+    for (const s of o.focusSpells ?? []) addSpell(s);
+    addSpell(o.advancedFocusSpell);
+    for (const s of o.grantedSpells ?? []) addSpell(s);
+    for (const s of o.grantedSpellChoice?.options ?? []) { addSpell(s); out.options.add(key(anyName(s))); out.options.add(key(s)); }
+    for (const g of o.grantedFeats ?? []) addGrant(g);
+    for (const f of o.featureIds ?? []) addGrant(f?.id ?? f);
+    if (o.tradition) out.options.add(key(o.tradition));
+    const decl = core.classFeatures[optionDeclarer.get(id) ?? ''];
+    const ladder = decl?.grantedSpells;
+    if (ladder && !Array.isArray(ladder)) for (const e of ladder[id] ?? []) addSpell(e?.id ?? e);
+  }
   const owner = classOfFeature.get(id);
   if (owner) {
     const cls = core.classes[owner];
@@ -575,6 +658,13 @@ function ourIdentities(id, rec) {
         out.options.add(key(o.id));
         for (const s of o.focusSpells ?? []) addSpell(s);
         for (const g of o.grants?.feats ?? []) addGrant(g);
+        /* ⚠ `grants.feats` above matches NO option in core.json — the field is `grantedFeats`, and
+         * reading only the dead name meant every druid order's bonus feat (Fire Lung, Steadying Stone)
+         * read as missing from its declaring selector too. The advanced school spell and the
+         * familiar-taught spell were likewise in no option reader at all. */
+        for (const g of o.grantedFeats ?? []) addGrant(g);
+        addSpell(o.advancedFocusSpell);
+        for (const s of o.grantedSpells ?? []) addSpell(s);
         const optRec = core.classFeatures[o.id];
         for (const g of optRec?.grantsFeats ?? []) addGrant(g);
         for (const g of optRec?.grantsActions ?? []) addGrant(g);
@@ -638,6 +728,90 @@ const contains = (set, name) => {
  * ⚠ Only for a difference verified against the printed text. Never a place to quiet a real gap.
  */
 const SETTLED_IDENTITIES = {
+  /* ---- BATCH 33 (resume) ------------------------------------------------------------------------
+   *
+   * ARMOR INNOVATION — the suits ARE handed over, by a hard-coded branch instead of `grantsItems`.
+   *
+   * This collector reads `rec.grantsItems` (line 345) and classFeatures/armor-innovation has none, so
+   * their two `giveItem` options (Power Suit / Subterfuge Suit) read as granted by nobody. Ours grants
+   * exactly those two, at src/rules/build.ts:7688-7702: when the inventor's innovation type is `armor`
+   * and `build.inventorArmorStats` is answered, the chosen suit is pushed into `grantedItems` as a WORN
+   * item sourced "Armor Innovation" — the comment there quotes AoN innovation-1 verbatim. Both are real
+   * armour records in core.json (power-suit acBonus 5 / dexCap 1 / check -2 / speed -5; subterfuge-suit
+   * acBonus 2 / dexCap 4 / check -1), so the player gets the AC, not just the name.
+   *
+   * It cannot ride `grantsItems` on the record: WHICH suit is the player's pick, and a static field
+   * would hand over both. Paired with this record's existing OFF_RECORD_OPTIONS entry (the picker) and
+   * with wg-diff's OFF_RECORD_CARRIERS entry (choice / grantsItem / conditional). ⚠ `items` only —
+   * every other bucket on this record still reports.
+   */
+  // batch 033: armor-innovation#suit-item
+  'armor-innovation': ['items'],
+
+  /*
+   * OTHERWORLDLY PROTECTION — their two selects ask a question print does not.
+   *
+   * Their row offers five option titles across two `select optionType=CUSTOM` blocks (Void | Vitality,
+   * and Holy Sanctified | Unholy Sanctified | Unsanctified). Print derives all five — AoN innovation-1:
+   * *"You gain resistance equal to 3 + half your level to void damage, or to vitality damage if you have
+   * void healing (such as if you're a dhampir)"* and *"If you are sanctified … this resistance applies to
+   * unholy damage (if you are sanctified holy) or holy damage (if you are sanctified unholy)"*. Void
+   * healing and sanctification are already facts about the character; neither sentence asks anything.
+   *
+   * Ours holds the same five outcomes as DERIVED entries on classFeatures/otherworldly-protection
+   * .resistances (applied this batch): void carrying the void-healing clause in `condition`, spirit
+   * flat, unholy `whenCreatureTrait: 'holy'` and holy `whenCreatureTrait: 'unholy'` — with
+   * "unsanctified" being the absence of both trait gates. The `defense` comparison already agrees on
+   * both sides; what is left is the shape of the question, the derived-value-not-a-pick class recorded
+   * for battle-creed in work/experience-instrument-limits.json. ⚠ `options` only.
+   */
+  // batch 033: otherworldly-protection#sanctified-resistance
+  'otherworldly-protection': ['options'],
+
+  /* ---- BATCH 33 --------------------------------------------------------------------------------
+   *
+   * SCHOOL OF THASSILONIAN RUNE MAGIC — the two sides put the sin pick on DIFFERENT RECORDS.
+   *
+   * Printed (AoN arcane-school-25): *"you must choose one of the seven sins to specialize in. You add
+   * your sin's spells and initial school spells to your curriculum."* WG puts the seven-branch
+   * `select from:CUSTOM "Select a Sin"` (each branch a giveSpell) on the SCHOOL row. Ours puts it on
+   * `classFeatures/runelord` — otherTags ['class-archetype','wizard-arcane-school'], which is the record
+   * the wizard Arcane School picker actually offers — whose `effectChoices[id='sin']` options carry
+   * grant.focusSpells cutting-eye / all-encompassing-hunger / precious-gleam / hearts-hook /
+   * crescent-scepter / reclined-apport / vengeful-glare (read at src/rules/build.ts:4104-4127, commented
+   * in place as "the wizard's Runelord school grants the chosen sin's initial school spell"), the full
+   * printed curriculum, curriculumBranches for all seven sins, and
+   * classes.wizard.subclass.options['runelord'].advancedFocusSpell = 'personal-runewell'.
+   *
+   * Adversarially confirmed: `classFeatures/school-of-thassilonian-rune-magic` carries no otherTags, is
+   * absent from all 18 wizard subclass option ids, and a core.json scan finds no other record naming it —
+   * it is NEVER OWNED, so there is nothing for the option-carrier teach in this batch to credit it with
+   * and no reading of that record could deliver the seven spells. Settled on the `spells` bucket only.
+   */
+  // batch 033: school-of-thassilonian-rune-magic#instrument
+  'school-of-thassilonian-rune-magic': ['spells'],
+
+  /*
+   * WITNESS TO ANCIENT BATTLES — one letter, in THEIR spelling.
+   *
+   * Their tenth apparition spell keys as `weaponofjudgement`; ours is `weaponofjudgment`, which is how
+   * AoN apparition-13 and the spell record itself print it (*"**9th** Weapon of Judgment"*). The
+   * option-carrier teach in this batch matched the other ten spells and the vessel spell off
+   * classes.animist.extraChoices['apparition'].options['witness-to-ancient-battles'].grantedSpells /
+   * .focusSpells; only the British-spelling twin survives, and the loose matcher cannot bridge it
+   * (neither string contains the other and the word sets differ by that letter).
+   *
+   * Adversarially confirmed: the printed name is the one we carry, so adopting theirs would move us AWAY
+   * from print.
+   *
+   * ⚠ Settled on THAT ONE NAME, not on the `spells` bucket. A bucket-wide settle here was measured to
+   * hide a real gap: with `ghostly-weapon` deleted from the option's grantedSpells the raw run reports
+   * `theirs-not-ours=[ghostlyweapon, weaponofjudgement]` and the settled run reported nothing at all.
+   * The member scope keeps the other ten apparition spells under comparison.
+   */
+  // batch 033: witness-to-ancient-battles#instrument
+  'witness-to-ancient-battles': ['weaponofjudgement'],
+
   /*
    * SPELLSHIFTER DEDICATION — their `shiftspell` names a record our corpus does not contain.
    *
@@ -1481,9 +1655,19 @@ for (const id of ids) {
   checked++;
   const ours = ourIdentities(id, rec);
   const rows = [];
+  const settled = RAW_SETTLES ? [] : (SETTLED_IDENTITIES[id] ?? []);
   for (const bucket of ['grants', 'spells', 'items', 'options']) {
-    if (!RAW_SETTLES && (SETTLED_IDENTITIES[id] ?? []).includes(bucket)) continue;   // read and settled — see above
-    const missing = [...theirs[bucket]].filter((n) => !contains(ours[bucket], n));
+    if (settled.includes(bucket)) continue;   // the WHOLE bucket read and settled — see above
+    /* …or exactly ONE NAMED THING in it. A settle entry that names one of their keys rather than a
+     * bucket drops that name only, so every other member of the bucket keeps reporting. Without this
+     * the only scope was the whole bucket: witness-to-ancient-battles, whose sole real difference is
+     * WG's British spelling of one spell, also silenced its other ten — a deleted `ghostly-weapon`
+     * went unreported, which is the trap this registry's header warns about.
+     * A member key is a squashed name and can never equal a bucket name; it is also a substring of the
+     * raw report line, which is what wg-settle-stale.mjs matches on. */
+    const missing = [...theirs[bucket]]
+      .filter((n) => !contains(ours[bucket], n))
+      .filter((n) => !settled.includes(n));
     if (missing.length) rows.push({ bucket, missing, have: [...ours[bucket]] });
   }
   if (!rows.length) { clean++; if (VERBOSE) console.log(`ok    ${id}  (${total} identities agree)`); continue; }

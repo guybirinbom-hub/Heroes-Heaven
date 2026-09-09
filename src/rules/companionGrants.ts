@@ -397,6 +397,36 @@ export interface CompanionMod {
    * to put it.
    */
   maneuvers?: string[];
+  /**
+   * LANGUAGES the companion speaks that the player CHOOSES — the count of picks, not the answers.
+   *
+   * batch 033, devotion-phantom-eidolon#language. AoN eidolon-20 (and eidolon-16 Anger Phantom,
+   * eidolon-18 Construct) print a Language line that is a question — *"one common mortal language the
+   * eidolon spoke in life"* — and nothing in the app asked it or recorded it, so the printed line
+   * reached the player only as inert description prose. The ANSWERS live on the companion
+   * (`EidolonConfig.languages`), because they are the player's, not the type's; this field only says
+   * how many the type asks for. Eidolon types whose Language line is a FIXED list (Angel: Empyrean,
+   * Dragon: Draconic, …) are a separate lane and are not modelled here.
+   */
+  languageChoices?: number;
+  /**
+   * LANGUAGES the companion speaks that its TYPE fixes — the answers, not a question. The other half
+   * of `languageChoices` above, which said this lane was "not modelled here".
+   *
+   * batch 033 resume, angel-eidolon#language / fey-eidolon#language. AoN eidolon-1 prints
+   * *"**Language** Celestial"* and eidolon-8 *"**Language** Sylvan"*; both lines reached the player
+   * only as description prose, and the eidolon block showed no Languages row at all. A fixed line is
+   * NOT a pick: routing it through `languageChoices` would show the player an unanswered prompt for
+   * something print already answered.
+   *
+   * An entry is a `content.languages` id where one exists and otherwise the printed NAME, because the
+   * app's language table is remaster-only (`empyrean`, `fey`) while these two records cite their
+   * legacy pages (`edition: 'legacy-era'`, aonId eidolon-1 / eidolon-8) — the remaster twins
+   * eidolon-15 and eidolon-22 read *"Language Empyrean"* / *"Language Fey"*, and re-pointing the
+   * records at those pages is a separate decision. `deriveEidolon` resolves an id and falls through
+   * to the string as written.
+   */
+  languages?: string[];
   note?: string;
 }
 
@@ -420,8 +450,20 @@ export const COMPANION_MODS: Record<string, CompanionMod> = {
   'stealthy-companion': { kinds: ['animal'], note: "Stealthy Companion: your companion gains the benefit of the Camouflage feat. If it is a specialized ambusher, its Stealth rank increases to master (legendary if it was already master) — apply that by hand, as it depends on the specialization you chose." },
   'advanced-reanimated-companion': {"kinds":["animal"],"maturityFloor":"mature","note":"Advanced Reanimated Companion: your construct companion is at least an advanced construct companion (the mature rung here) — +1 Str/Dex/Con/Wis, unarmed Strikes go from one die to two, and Perception and all saves become expert. During an encounter, even if you don't use the Command a Minion action, it can still use 1 action on your turn that round to Stride or Strike. It also becomes trained in Intimidation, Stealth, and Survival, and you may change its Size to Small, Medium, or Large (not tracked on this block)."},
   'airborne-form': {"kinds":["eidolon"],"speeds":{"fly":"land"},"note":"Airborne Form: your eidolon can fly."},
-  'angel-eidolon': {"kinds":["eidolon"],"senses":["darkvision"],"note":"Hallowed Strikes: the eidolon's unarmed Strikes deal an extra 1 spirit (good) damage."},
-  'anger-phantom-eidolon': {"kinds":["eidolon"],"senses":["darkvision"]},
+  /* AoN eidolon-1, Hallowed Strikes: *"Your eidolon's unarmed Strikes GAIN THE HOLY TRAIT and deal 1
+   * extra spirit damage TO UNHOLY CREATURES AND CREATURES WITH WEAKNESS TO HOLY. Additionally, your
+   * eidolon can make nonlethal attacks with its unarmed attacks without taking the usual –2 circumstance
+   * penalty."* The note said "an extra 1 spirit (good) damage" — pre-remaster in three ways at once (no
+   * holy trait, no target restriction, the alignment word `good`) and missing the nonlethal clause
+   * entirely. Third and last copy of angel-eidolon#hallowed-strikes-text: the record description and the
+   * summoner subclass option carry the same sentence. */
+  // AoN eidolon-1 (the page this record cites): *"**Language** Celestial"*. Remaster twin eidolon-15
+  // reads "Language Empyrean" — a straight rename, not a second language.
+  'angel-eidolon': {"kinds":["eidolon"],"senses":["darkvision"],"languages":["Celestial"],"note":"Hallowed Strikes: the eidolon's unarmed Strikes gain the holy trait and deal 1 extra spirit damage to unholy creatures and creatures with weakness to holy. It can also make nonlethal attacks with its unarmed attacks without taking the usual –2 circumstance penalty."},
+  /* batch 033, devotion-phantom-eidolon#language. AoN eidolon-16 / eidolon-20 / eidolon-18 each print
+   * a Language line the PLAYER answers — "one common mortal language the eidolon spoke in life"
+   * (phantoms) / "one common mortal language" (construct). One pick each. */
+  'anger-phantom-eidolon': {"kinds":["eidolon"],"senses":["darkvision"],"languageChoices":1},
   'animal-trainer-dedication': {"kinds":["animal"],"note":"Animal Trainer: this companion is trained in Performance instead of the skill listed for its type."},
   'aon-celestial-mount': {"kinds":["animal"],"senses":["darkvision"],"maxHpBonus":40,"flyEqualsLand":true,"iwr":["weakness 10 unholy"],"note":"Celestial Mount"},
   'aon-fiendish-mount': {"kinds":["animal"],"senses":["darkvision"],"maxHpBonus":40,"flyEqualsLand":true,"iwr":["weakness 10 holy"],"note":"Fiendish Mount"},
@@ -430,15 +472,29 @@ export const COMPANION_MODS: Record<string, CompanionMod> = {
   'burrowing-form': {"kinds":["eidolon"],"speeds":{"burrow":15},"note":"Burrowing Form: your eidolon can burrow through loose dirt."},
   'celestial-mount': {"kinds":["animal"],"senses":["darkvision"],"maxHpBonus":40,"flyEqualsLand":true,"iwr":["weakness 10 unholy"],"note":"Celestial Mount"},
   'chorus-companion': {"kinds":["animal"],"skillGrants":[{"skill":"performance","rank":"trained"}],"note":"Chorus Companion: your animal companion is trained in Performance (expert if it was already trained)."},
-  'construct-eidolon': {"kinds":["eidolon"],"senses":["darkvision"]},
+  'construct-eidolon': {"kinds":["eidolon"],"senses":["darkvision"],"languageChoices":1},
   'demon-eidolon': {"kinds":["eidolon"],"senses":["darkvision"],"note":"Demonic Strikes: the eidolon's unarmed Strikes deal an extra 1 unholy (evil) damage."},
   'demon-hunting-companion': {"kinds":["animal"],"senses":["scent (fiends only, imprecise 30 ft)"],"note":"Its scent detects only fiends."},
-  'devotion-phantom-eidolon': {"kinds":["eidolon"],"senses":["darkvision"]},
-  'dragon-eidolon': {"kinds":["eidolon"],"senses":["darkvision"],"note":"Dragon eidolon: darkvision."},
-  'elemental-eidolon': {"kinds":["eidolon"],"senses":["darkvision"],"note":"Elemental Core: resistance equal to half your level to your core's damage type (fire core = fire resistance) plus an equal weakness to the opposing element (cold and water for a fire core), and +1 damage of the core's type on its Strikes."},
+  'devotion-phantom-eidolon': {"kinds":["eidolon"],"senses":["darkvision"],"languageChoices":1},
+  // AoN eidolon-7 (the page this record cites) and its remaster twin eidolon-21 both print
+  // "Language Draconic" — the one fixed eidolon language our table already holds as an ID, so this
+  // entry is the `content.languages` lookup in deriveEidolon rather than a printed name.
+  'dragon-eidolon': {"kinds":["eidolon"],"senses":["darkvision"],"languages":["draconic"],"note":"Dragon eidolon: darkvision."},
+  /* batch 033, elemental-eidolon#core-note-generalises-fire. The note said "resistance equal to half
+   * your level to your core's damage type … and +1 damage of the core's type on its Strikes" for
+   * EVERY core. Print (AoN eidolon-12) gives that to FIRE alone — Air gets doubled jumps and no
+   * falling damage, Earth a +2 vs Shove/Trip and half forced movement, Metal a versatile trait, Water
+   * amphibious with swim 25/land 15, Wood the plant trait and Refocus healing — so five of the six
+   * cores were shown a benefit they do not have and were missing the one they do. The note lists all
+   * six because nothing here can read the core: the choice answer (flag `eidolonElementalCore`) lives
+   * in BuildState.featChoices and the companion block is derived from the Character, which does not
+   * carry it — that plumbing is elemental-eidolon#core-choice-no-reader, still open. */
+  'elemental-eidolon': {"kinds":["eidolon"],"senses":["darkvision"],"note":"Elemental Core (your eidolon and all its unarmed attacks gain the chosen element's trait): AIR — it can Leap, High Jump and Long Jump twice as far, and takes no falling damage. EARTH — +2 circumstance bonus to its Fortitude or Reflex DC against Shove and Trip, and any effect that would force it to move 10 feet or more moves it only half that distance. FIRE — resistance equal to half your level (minimum 1) to fire and an equal weakness to cold and water; its unarmed attacks deal 1 additional fire damage. METAL — one of its starting melee unarmed attacks gains versatile bludgeoning, piercing or slashing. WATER — it gains the amphibious trait, its land Speed drops to 15 feet and it gains a swim Speed of 25 feet. WOOD — you can choose to have it gain the plant trait, and whenever you Refocus it regains Hit Points equal to double your level."},
   'faithful-steed': {"kinds":["animal"],"note":"Mount: if you have the holy or unholy trait, your steed gains it too, as do its Strikes. Typically an animal companion with the mount ability (e.g. a horse)."},
   'fell-rider': {"kinds":["animal"],"skillGrants":[{"skill":"intimidation","rank":"trained"}],"note":"Fell Rider: your animal companion is trained in Intimidation."},
-  'fey-eidolon': {"kinds":["eidolon"],"senses":["low-light vision"]},
+  // AoN eidolon-8 (the page this record cites): *"**Language** Sylvan"*. Remaster twin eidolon-22
+  // reads "Language Fey" — the same rename.
+  'fey-eidolon': {"kinds":["eidolon"],"senses":["low-light vision"],"languages":["Sylvan"]},
   'fiendish-mount': {"kinds":["animal"],"senses":["darkvision"],"maxHpBonus":40,"flyEqualsLand":true,"iwr":["weakness 10 holy"],"note":"Fiendish Mount"},
   'incredible-megafauna-companion': {"kinds":["animal"],"maturityFloor":"savage","note":"Incredible Megafauna Companion: your megafauna companion is at least an indomitable or savage companion (your choice) — 'indomitable' is the megafauna name for the nimble rung, so pick nimble in Edit if you want that side."},
   'night-terror': {"kinds":["animal"],"speeds":{"fly":"land"},"note":"Night Terror: your apocalypse mount gains a fly Speed equal to its land Speed. At night or anywhere deprived of natural sunlight it gains a +10-foot circumstance bonus to that fly Speed, and critical failures on Acrobatics checks to Maneuver in Flight become failures instead. If it already had a fly Speed it also gains a +2 circumstance bonus to Acrobatics checks to Maneuver in Flight."},

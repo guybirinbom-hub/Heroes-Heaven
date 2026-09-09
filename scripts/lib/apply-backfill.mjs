@@ -52,7 +52,20 @@ export function applyBackfill(db, file = 'scripts/data/effect-backfill.json', { 
     if (fix.create) {
       db[fix.category] ??= {};
       if (!db[fix.category][fix.id]) {
-        db[fix.category][fix.id] = fix.value;
+        /*
+         * `skipFields` applies to a CREATE too. Prose is stored split — core.json holds the record,
+         * public/core-descriptions.json holds the text — and apply-backfill-now.mjs enforces that by
+         * passing skipFields ['description','descRefs'] here and then routing those two fields to the
+         * descriptions file by hand. A create row's `value` bypassed that: batch 033 created
+         * items/innovation-light-mortar with its description folded in (a workaround for an apply
+         * pre-check that has since been fixed), 1,130 characters of prose landed INLINE in core.json,
+         * and scripts/regen-durability-check.mjs went red on "descriptions are split out" — the same
+         * 184 KB duplication that split-descriptions.mjs exists to prevent. One rule, both paths.
+         */
+        const record = fix.value && typeof fix.value === 'object' && !Array.isArray(fix.value)
+          ? { ...fix.value } : fix.value;
+        if (record && typeof record === 'object') for (const f of skip) delete record[f];
+        db[fix.category][fix.id] = record;
         applied++;
       }
       continue;

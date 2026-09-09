@@ -246,6 +246,36 @@ const kindOfTheirOp = (op) => {
        * reported as understood, silently unreachable.
        */
       if (/WEAPON|ATTACK|^UNARMED/.test(v)) return 'weapon';
+      /*
+       * RAGE_DAMAGE IS THE SAME LANE AS MELEE_ATTACK_DAMAGE_BONUS — it just does not say ATTACK.
+       *
+       * AoN instinct-15 (Decay) prints *"increase the additional damage from Rage from 2 to 6"* and
+       * instinct-16 (Ligneous) *"you can increase the additional damage from Rage from 2 to 6"*, and
+       * their side writes both as `setValue RAGE_DAMAGE 6`. The
+       * unanchored ATTACK test above exists precisely so a DAMAGE bonus on Strikes lands in the weapon
+       * lane, and this variable is the one member of that family whose name contains neither WEAPON nor
+       * ATTACK — so it fell to the named `unmapped` fallback and Decay Instinct and Ligneous Instinct
+       * each reported `missing=[unmapped]` against a carrier this file could not see.
+       *
+       * ⚠ CLOSER, batch 033: that carrier is NOT the modes. This paragraph used to end "(credited by
+       * MODE_MODIFIER_KINDS below)", naming `src/rules/modes.ts` cat-rotting-rage / cat-wooden-rage and
+       * their `target: 'damage'` modifier — and the resume-modes group then DELETED that modifier
+       * (modes.ts:258 `cat-rotting-rage`.modifiers is now `[]`) as a frozen second copy of the ladder.
+       * The real and only carrier is `RAGE_DAMAGE` in src/rules/derive.ts:3651, resolved by
+       * rageStrikeRider — which is exactly what this file scrapes at the block below (~:1097-1102), and
+       * what the last paragraph here already says. The two halves of the comment disagreed; the
+       * derive.ts half is the true one.
+       *
+       * ⚠ THE KIND, NEVER THE NUMBER. Whether our 6 keeps up with their 6/10/18 weapon-specialization
+       * ladder is a VALUES question, and it is live as findings decay-instinct#rotting-rage-damage-scaling
+       * and ligneous-instinct#wooden-rage-mode — neither of which this mapping can hide, because
+       * wg-values.mjs deliberately holds no VAR mapping for RAGE_DAMAGE and compares no number here.
+       * Blast radius measured over the whole dump: 11 rows name RAGE_DAMAGE at all (most of them read
+       * it back in a conditional), and the before/after corpus run in this pass's report
+       * (work/.b033-report-resume-instruments-*.txt) names every record whose `missing` it changes:
+       * eight instincts, every one of them carried by the derive.ts tiers table read below.
+       */
+      if (/^RAGE_DAMAGE/.test(v)) return 'weapon';
       if (/^SENSE|VISION|DARKVISION/.test(v)) return 'sense';
       if (/^SIZE/.test(v)) return 'size';
       if (/^CLASS_DC/.test(v)) return 'classDc';
@@ -656,6 +686,34 @@ const SITUATIONAL_TARGET_KINDS = {
 };
 
 /**
+ * Their kind for one of a MODE MODIFIER's `target` values (`ModeTargetKind`, src/rules/types.ts:4579).
+ *
+ * BOTH mode readers below — the `src/rules/modes.ts` source scan and the `core.modes` loop — read a
+ * mode's grantedStrikes, IWR, senses, speeds and size, and NEITHER read its `modifiers`, which is where
+ * a mode keeps every plain number it applies. Four batch-033 records failed KINDS on nothing else:
+ *
+ *   curse-of-creeping-ashes      missing=[weapon,speed]  — modes/curse-of-creeping-ashes-2..4 carry
+ *       {value:-2,type:'circumstance',target:'attack'} and -4 also {value:-10,type:'status',
+ *       target:'speed'}, AoN mystery-20 Cursebound 2 and 4.
+ *   curse-of-the-mortal-warrior  missing=[save]          — its four modes carry {target:'save'}, which
+ *       wg-values.mjs ALREADY reads by name; wg-diff was the only blind side. AoN mystery-13 (Battle),
+ *       "Curse of the Mortal Warrior", Cursebound 2 and 4.
+ *   decay-instinct / ligneous-instinct  missing=[unmapped] — cat-rotting-rage / cat-wooden-rage carry
+ *       {target:'damage'} (and, for Ligneous, {target:'speed'}), against their RAGE_DAMAGE above.
+ *
+ * ⚠ A MAP, NOT A BLANKET "it has a mode, believe it". The gate on a mode is still `feats`/`fromItemId`
+ * naming the record, and only the tracks listed here are credited: `all-checks` is deliberately absent
+ * (it names no single kind, so a mode carrying only one still reports). The pairs mirror
+ * SITUATIONAL_TARGET_KINDS above — the same targets, reached through the other conditional lane.
+ */
+const MODE_MODIFIER_KINDS = {
+  ac: 'ac', save: 'save', perception: 'perception', skill: 'skill',
+  attack: 'weapon', damage: 'weapon',
+  'spell-attack': 'spellcasting', 'spell-dc': 'spellcasting', 'class-dc': 'classDc',
+  speed: 'speed', 'max-hp': 'hp', initiative: 'perception', ability: 'attribute',
+};
+
+/**
  * classFeature id -> the class that grants it, so a chassis feature can be credited with the mechanic
  * its CLASS record carries. Built from the classes' own feature tables; first grant wins, which matters
  * only for a feature two classes share (and then either owner answers the same question).
@@ -717,7 +775,10 @@ for (const [path, kinds] of REGISTRY_KINDS) {
   /* 1. Mode catalogue. Entries are sequential objects in one array, each opening with `id: '…'`, so
    * slicing between consecutive `id:` matches gives one entry's body. */
   let text = '';
-  try { text = readFileSync(join(ROOT, 'src/rules/modes.ts'), 'utf8'); } catch { text = ''; }
+  /* `--modes` is the anti-laundering hook, the twin of `--core`: a teach that reads a TypeScript table
+   * can only be mutation-proved against a copy of that table with the carrier removed. Same for
+   * `--advancement` and `--derive` below (wg-values.mjs already shipped `--advancement`). */
+  try { text = readFileSync(join(ROOT, arg('--modes', 'src/rules/modes.ts')), 'utf8'); } catch { text = ''; }
   const marks = [...text.matchAll(/\bid:\s*'([a-z0-9][a-z0-9-]*)'/g)];
   for (const [i, m] of marks.entries()) {
     const body = text.slice(m.index, marks[i + 1]?.index ?? text.length);
@@ -734,6 +795,13 @@ for (const [path, kinds] of REGISTRY_KINDS) {
     if (/\bsenses:\s*\[/.test(body)) k.push('sense');
     if (/\bspeeds:\s*\{/.test(body)) k.push('speed');
     if (/\bsize:\s*'/.test(body)) k.push('size');
+    /* …and the entry's own `modifiers`, built by the `m(value, type, target, extra)` helper at
+     * src/rules/modes.ts:207 — see MODE_MODIFIER_KINDS. This is the half that reaches cat-rotting-rage
+     * and cat-wooden-rage, whose whole mechanic is one m(6,'untyped','damage'). */
+    for (const mo of body.matchAll(/\bm\(\s*-?\d+\s*,\s*'[a-z-]+'\s*,\s*'([a-z-]+)'/g)) {
+      const kk = MODE_MODIFIER_KINDS[mo[1]];
+      if (kk) k.push(kk);
+    }
     /* A gate may be `<id>` or `<id>:<answer>` — the record is the part before the colon. */
     for (const g of gates) addKinds(g.split(':')[0], k);
   }
@@ -855,6 +923,68 @@ const OFF_RECORD_CARRIERS = {
    * spellbook clause, are live findings on the record (studious-spells#gecko-grip / #spellbook) — this
    * entry credits the slot/rank/ladder mechanic only, and the identity comparer still checks the spells. */
   'studious-spells': ['spell', 'conditional'],
+  /* Armor Innovation — *"Choose one of the sets of statistics on Table 2-2: Innovation Armor Statistics
+   * for your innovation armor"* (AoN innovation-1). Three kinds, three carriers, none of them on the
+   * record — this is a HARD-CODED impl, the shape the dead-reader audit warns about, and the closer's
+   * triage read it as unmodelled because the record has no `grantsItems`/`choice`.
+   *   `choice`     — BuildState.inventorArmorStats, PopupSelect "Armor base statistics" at
+   *                  src/builder/shared.tsx:3565-3579 (Power Suit / Subterfuge Suit), listed as an
+   *                  outstanding required choice at src/rules/build.ts:1262 until answered.
+   *   `grantsItem` — src/rules/build.ts:7688-7702 pushes items/power-suit or items/subterfuge-suit into
+   *                  grantedItems as a WORN item sourced "Armor Innovation"; both are real armour
+   *                  records (AC/dexCap/checkPenalty/speedPenalty), which is what their two `giveItem`
+   *                  options hand over. Paired with the `items` entry in wg-identity's SETTLED_IDENTITIES.
+   *   `conditional`— their four modification `select`s are gated on breakthrough/revolutionary
+   *                  innovation and Basic Modification; ours is inventorModificationOptions
+   *                  (build.ts:2755-2771), which filters by `f.level <= maxTierLevel` and by the
+   *                  power-suit/subterfuge-suit tag against the answer above.
+   * The experience half is separately parked in work/experience-instrument-limits.json
+   * (armor-innovation, lane `control-off-record`). */
+  'armor-innovation': ['choice', 'grantsItem', 'conditional'],
+  /* School of Unified Magical Theory — *"instead of using Drain Bonded Item only once per day, you can
+   * use it once per day for each rank of spell you can cast"* and *"you gain an additional 1st-level
+   * wizard class feat, and you add one 1st-rank spell of your choice to your spellbook"* (AoN
+   * arcane-school-21). Their row is one `conditional IF CLASS_FEATURE_NAMES INCLUDES arcane school THEN
+   * select optionType=ABILITY_BLOCK + injectText` plus two feat-gated conditionals.
+   *   `conditional` — the Drain Bonded Item retune is a SEPARATE RECORD on our side,
+   *                   classFeatures/arcane-bond-school-of-unified-magical-theory (created this batch,
+   *                   limitedUses.maxByLevel 1→10 by odd level), preferred over the generic
+   *                   classFeatures/arcane-bond by the `retunedBy` variant reader at
+   *                   src/rules/featUses.ts:56-63. A carrier on ANOTHER record plus a code reader:
+   *                   nothing wg-diff can see from this one.
+   *   `choice`      — the other two printed clauses, both live pickers: BuildState.umtFeatId (the bonus
+   *                   L1 wizard class feat; option list src/builder/Builder.tsx:998-1005, the select
+   *                   itself at Builder.tsx:2064-2079, injected at
+   *                   src/rules/build.ts:5080-5084) and the +1 spellbook slot (Builder.tsx:407,
+   *                   `wizardSpellbookBudget(level, isUmtBook)`).
+   * Its `spell` kind (the two school spells) already agrees off the subclass option. */
+  'school-of-unified-magical-theory': ['conditional', 'choice'],
+  /* CLOSER, batch 033 — findings angel-eidolon#language and fey-eidolon#language.
+   * *"Language Celestial"* (AoN eidolon-1) and *"Language Sylvan"* (AoN eidolon-8): a FIXED line, not a
+   * pick, so there is nothing on the record and nothing in content.languages to key it to — neither
+   * `celestial` nor `sylvan` is a key of the remaster-only content.languages bucket, which is why the
+   * printed NAME is what ships. The carrier is `CompanionMod.languages` in
+   * src/rules/companionGrants.ts, read in deriveEidolon's type-row loop (src/rules/companions.ts) onto
+   * EidolonBlock.languages and rendered at src/sheet/CompanionsTab.tsx:950; the language PICKER one
+   * screen down (:1287) is gated on `languageChoices`, so a fixed line correctly asks nothing.
+   * ⚠ PER ID, and that is the whole point: this is NOT put on the companionGrants.ts file row, because
+   * REGISTRY_KINDS credits a file's kinds to EVERY id in it (~112 ids) and would falsely credit the
+   * eidolon types that still have no Language row at all. Five of them report `missing=[language]`
+   * today — beast, demon, plant, psychopomp, undead — and test/batch033-closer.test.ts asserts all five
+   * still do, so a later hand moving this credit onto the file row fails there rather than silently. */
+  'angel-eidolon': ['language'],
+  'fey-eidolon': ['language'],
+  /* CLOSER, batch 033 — finding light-mortar-innovation#duplicate-modification-choice.
+   * *"Choose one of the sets of statistics on the Innovation Siege Weapon Statistics table"* plus the
+   * tiered modification picks (AoN innovation-9 / archetype-329). The record's own `choice` field was
+   * DELETED this batch (overlay row `field:'choice', value:null` — it was a frozen duplicate), so the
+   * three tiered pickers are off-record by construction: `inventorModificationOptions`
+   * (src/rules/build.ts:2752-2770) builds them for the `light-mortar` type and filters by
+   * `f.level <= maxTierLevel`, and the harness's own play of the record records them as `controlsBoth`
+   * with 3 / 6 / 9 options at the three tiers (work/.experience-raw-033.json).
+   * ⚠ `choice` ONLY. Their `conditional` is already answered off the record (ourKinds carries it on
+   * every run, shipped and stunted), and settling it here would launder a kind we do answer. */
+  'light-mortar-innovation': ['choice'],
 };
 for (const [id, kinds] of Object.entries(OFF_RECORD_CARRIERS)) addKinds(id, kinds);
 
@@ -888,10 +1018,44 @@ const ADVANCEMENT_TRACK_KINDS = {
 };
 {
   let text = '';
-  try { text = readFileSync(join(ROOT, 'src/rules/advancement.ts'), 'utf8'); } catch { /* absent */ }
+  try { text = readFileSync(join(ROOT, arg('--advancement', 'src/rules/advancement.ts')), 'utf8'); } catch { /* absent */ }
   for (const m of text.matchAll(/\{\s*level:\s*\d+,\s*track:\s*'([a-zA-Z]+)',\s*rank:\s*'[a-z]+',\s*source:\s*'([^']+)'\s*\}/g)) {
     const kind = ADVANCEMENT_TRACK_KINDS[m[1]];
     if (kind) addKinds(m[2].replace(/\s*\([^)]*\)\s*$/, ''), [kind]);
+  }
+  /*
+   * …AND THE WHOLE TABLE A SUBCLASS OPTION *OWNS*, not only the rows that name it in `source`.
+   *
+   * advancement.ts is keyed `<classId>` AND `<subclassId>`, and a subclass key is a COMPLETE table that
+   * REPLACES the class default — the file's own note at :688-697 names "warpriest, battle-creed". Those
+   * rows carry the printed CLAUSE in `source` ('initial-creed', 'lesser-creed', 'major-creed',
+   * 'true-creed'), never the subclass id, so the `source` scan above credited the doctrine with nothing
+   * and classFeatures/battle-creed reported missing=[ac,save,weapon,conditional,choice,classDc,
+   * spellcasting] — seven kinds against advancement.ts:78, a complete cleric chassis that ships.
+   * `conditional` is credited with them because every row carries its own `level`: their side writes
+   * the same ladder as `IF LEVEL >= 5 / 11 / 13 / 15 / 19 THEN adjValue …`, and the level column IS
+   * that gate.
+   *
+   * ⚠ ONLY a key that is a subclass OPTION id — the exact bound wg-values.mjs:141-150 puts on the same
+   * teach. A class-keyed table ('cleric', 'druid') is credited to nobody: its rows belong to the
+   * features that name them in `source`, and crediting a whole class table to the class record would
+   * excuse every rank it does not raise.
+   */
+  const optionIds = new Set();
+  for (const cls of Object.values(core.classes ?? {})) {
+    for (const o of cls.subclass?.options ?? []) if (o?.id) optionIds.add(o.id);
+    for (const ec of cls.extraChoices ?? []) for (const o of ec.options ?? []) if (o?.id) optionIds.add(o.id);
+  }
+  for (const m of text.matchAll(/\n {2}'?([a-z][a-z0-9-]*)'?:\s*\[([\s\S]*?)\n {2}\],/g)) {
+    if (!optionIds.has(m[1])) continue;
+    const kinds = new Set();
+    for (const r of m[2].matchAll(/\{\s*level:\s*(\d+),\s*track:\s*'([a-zA-Z]+)',\s*rank:\s*'[a-z]+'/g)) {
+      const kind = ADVANCEMENT_TRACK_KINDS[r[2]];
+      if (!kind) continue;           // an unmapped track credits nothing at all, `conditional` included
+      kinds.add(kind);
+      if (Number(r[1]) > 1) kinds.add('conditional');
+    }
+    if (kinds.size) addKinds(m[1], kinds);
   }
 }
 
@@ -908,6 +1072,34 @@ const FOCUS_CASTING_CLASSES = new Set();
   try { text = readFileSync(join(ROOT, 'src/rules/build.ts'), 'utf8'); } catch { /* absent */ }
   const m = /const FOCUS_CASTING[^=]*=\s*\{([\s\S]*?)\n\s*\};/.exec(text);
   for (const e of (m?.[1] ?? '').matchAll(/^\s*'?([a-z][a-z0-9-]*)'?\s*:\s*\{/gm)) FOCUS_CASTING_CLASSES.add(e[1]);
+}
+
+/*
+ * THE BARBARIAN INSTINCTS' ADDITIONAL RAGE DAMAGE, read from the table that delivers it.
+ *
+ * Every instinct prints the same Specialization ladder — AoN instinct-16 (Ligneous): *"When you use
+ * wooden rage, increase the additional damage from Rage from 6 to 10. If you have greater weapon
+ * specialization, instead increase the damage from Rage when using wooden rage from 10 to 18."*
+ * (instinct-15, Decay, prints the identical two sentences for rotting rage.) Their side writes it as
+ * `setValue RAGE_DAMAGE`
+ * = 6 / 10 / 18, mapped to `weapon` in kindOfTheirOp above.
+ *
+ * Ours is `RAGE_DAMAGE` in src/rules/derive.ts:3651, keyed by the INSTINCT (subclass) id and carrying
+ * all three tiers, resolved by rageStrikeRider and pushed onto every melee/unarmed Strike's
+ * conditionalDamage. Nothing about it is on `classFeatures/<instinct>`, so all ten instincts read as
+ * modelling no weapon damage at all. Read from the source text, exactly as FOCUS_CASTING above.
+ *
+ * ⚠ Deliberately NOT read off `src/rules/modes.ts` cat-rotting-rage / cat-wooden-rage, which carried a
+ * second, FROZEN copy of the same +6: findings decay-instinct#rotting-rage-damage-scaling and
+ * ligneous-instinct#wooden-rage-mode ruled that duplicate a display defect and cut it, so a reader
+ * anchored there would have credited the kind only while the defect existed. The tiers table is the
+ * single carrier. ⚠ THE KIND, NEVER THE NUMBER — no comparer compares rage damage as a value.
+ */
+{
+  let text = '';
+  try { text = readFileSync(join(ROOT, arg('--derive', 'src/rules/derive.ts')), 'utf8'); } catch { /* absent */ }
+  const m = /const RAGE_DAMAGE[^=]*=\s*\{([\s\S]*?)\n\};/.exec(text);
+  for (const e of (m?.[1] ?? '').matchAll(/^\s*'([a-z][a-z0-9-]*)'\s*:\s*\{\s*tiers:/gm)) addKinds(e[1], ['weapon']);
 }
 
 /* Recursive for ONE level: a subclass selector folds in its options kinds.  rather than a
@@ -1100,6 +1292,13 @@ function ourKindsOf(rec, id, bucket) {
     if (m.battleForm?.size) kinds.add('size');
     if ((m.battleForm?.senses ?? []).length) kinds.add('sense');
     if (m.battleForm?.ac != null) kinds.add('ac');
+    /* …and the mode's `modifiers`, the bucket that holds every plain number a mode applies — see
+     * MODE_MODIFIER_KINDS. Read by nobody here, so an oracle curse whose whole Cursebound escalation is
+     * a modifier list reported the record as modelling nothing but the conditional itself. */
+    for (const mod of m.modifiers ?? []) {
+      const kk = MODE_MODIFIER_KINDS[mod?.target];
+      if (kk) kinds.add(kk);
+    }
   }
   /* …and a STANCE of the same id, which is a separate collection from `modes`. A battle form's granted
    * attacks live there (Ursine Avenger Form's jaws and claws), and their side ships them as two items. */
@@ -1218,6 +1417,37 @@ function ourKindsOf(rec, id, bucket) {
      * focus-casting class is not credited. */
     if ((cls?.focusSpells ?? []).length && /-spells$/.test(id)) kinds.add('spell');
   }
+  /*
+   * …AND WHEN THE RECORD *IS* THE OPTION.
+   *
+   * The two walks above credit an option list to the feature the class DECLARES as its carrier. The
+   * comparison, though, usually lands on the OPTION: batch 033 compared `classFeatures/flame-order`,
+   * `…/the-resentment`, `…/way-of-the-sniper`, `…/devotion-phantom-eidolon` and twenty more, each a
+   * prose stub (`{actionCost, otherTags}` and nothing else) whose whole mechanic lives on
+   * `classes.<cls>.subclass.options[<same id>]` or `extraChoices[].options[<same id>]`. So every witch
+   * patron read as modelling no skill, no spell and no spellcasting; every gunslinger way as granting
+   * no deed; every arcane school as holding no school spell. Same failure, one level along, as the
+   * declared-carrier crediting itself was written for.
+   *
+   * The fields are the option's OWN carriers and every one has a live reader: `grants.skills`/`.lores`
+   * at build.ts:3600-3624, `focusSpells` at :4650, `advancedFocusSpell` at :3854, `grantedSpells` at
+   * :4227, `featureIds` at derive.ts:3475, `tradition` at build.ts:4196, `grantedFeats` at :5090.
+   * An option that carries NONE of them still credits nothing, so an unbuilt subclass keeps reporting.
+   */
+  for (const cls of Object.values(core.classes ?? {})) {
+    const opts = [...(cls.subclass?.options ?? []), ...(cls.extraChoices ?? []).flatMap((ec) => ec.options ?? [])];
+    for (const o of opts) {
+      if (o?.id !== id) continue;
+      if ((o.grants?.skills ?? []).length || (o.grants?.lores ?? []).length || (o.loreProgression ?? []).length) kinds.add('skill');
+      if ((o.grants?.weapons ?? []).length) kinds.add('weapon');
+      if ((o.grants?.armor ?? []).length) kinds.add('defense');
+      if ((o.focusSpells ?? []).length || o.advancedFocusSpell || (o.grantedSpells ?? []).length) kinds.add('spell');
+      if (o.grantedSpellChoice) { kinds.add('spell'); kinds.add('choice'); }
+      if ((o.skillChoice ?? []).length) { kinds.add('choice'); kinds.add('skill'); }
+      if (o.tradition) kinds.add('spellcasting');
+      if ((o.grantedFeats ?? []).length || (o.featureIds ?? []).length) kinds.add('grantsRecord');
+    }
+  }
   return kinds;
 }
 
@@ -1288,6 +1518,103 @@ for (const [bucket, rowMap] of Object.entries(wgRowsByBucket(sql))) {
  * ⚠ Only for a mismatch verified by reading the printed text. Never a place to quiet a real gap.
  */
 const VERIFIED_EQUIVALENT = {
+  /* ---- BATCH 33 (resume) ------------------------------------------------------------------------
+   *
+   * THE DRUID ORDER IS THE SUBCLASS PICK, AND `MAIN_DRUID_ORDER` IS THEIR ENGINE WRITING IT DOWN.
+   *
+   * `node scripts/wg-show.mjs "Flame Order" --raw`: the row's ONLY unmatched operation is
+   * `createValue MAIN_DRUID_ORDER = flame` (type=str), and their own three conditionals then read it
+   * back — `IF MAIN_DRUID_ORDER EQUALS flame THEN adjValue SKILL_ACROBATICS T` and
+   * `… THEN giveSpell FOCUS`. That is select-answer bookkeeping, the class already settled here for
+   * `speaker-in-training` (FAITHSPEAKER / GREENSPEAKER) and `path-to-perfection` (MONK_SAVES_*): their
+   * engine has no notion of "which subclass did you take", so a variable stands in for it.
+   *
+   * Ours IS the subclass pick: classes.druid.subclass.options['flame-order' | 'spore-order' |
+   * 'stone-order'], whose grants.skills (acrobatics / intimidation / crafting), focusSpells and
+   * grantedFeats all AGREE after the option-carrier teach — which is why these three dropped from five
+   * missing kinds at baseline to this one. `build.subclassId` is the answer their variable records.
+   *
+   * ⚠ THE ANATHEMA IS NOT THIS. Each row states its order anathema as an `injectText type=class-feature`,
+   * which maps to `note` and is compared separately; it is not carried by the createValue, so settling
+   * `specialStat` cannot hide it. One entry per order rather than a rule, so a fourth order added later
+   * still reports.
+   */
+  // batch 033: flame-order#instrument
+  'flame-order': ['specialStat'],
+  /* SAME THING, DIFFERENT FIELD. `createValue MAIN_DRUID_ORDER = spore` is their engine writing down
+   * the answer to a select; ours is `build.subclassId === 'spore-order'`, and the grants their three
+   * conditionals hang off it (SKILL_INTIMIDATION T, the order focus spell, the order feat) all AGREE on
+   * this record. ⚠ This settle covers the KINDS lane and nothing else: spore-order is OWNER-QUEUED on
+   * Rulings Desk #134/#139, and that question is about wg-identity's `grants theirs-not-ours=[leaforder]`
+   * membership token — a different comparer, still reporting, and untouched by this entry. */
+  // batch 033: spore-order
+  'spore-order': ['specialStat'],
+  /* SAME THING, DIFFERENT FIELD, identically: `createValue MAIN_DRUID_ORDER = stone` against
+   * `build.subclassId === 'stone-order'`, whose grants.skills crafting, focusSpells and grantedFeats
+   * agree on the record after the option-carrier teach. The order's anathema is an `injectText
+   * type=class-feature` that maps to `note` and is compared on its own, so this entry cannot hide it. */
+  // batch 033: stone-order#instrument
+  'stone-order': ['specialStat'],
+
+  /*
+   * SCHOOL OF THASSILONIAN RUNE MAGIC — the two sides put the sin pick on DIFFERENT RECORDS.
+   *
+   * The KINDS half of the settle wg-identity.mjs's SETTLED_IDENTITIES already carries (and which this
+   * batch's gate prints in its own KEPT OURS block): their row is one `select optionType=CUSTOM` with
+   * seven `giveSpell FOCUS` branches — kind `spell` — on `classFeatures/school-of-thassilonian-rune-magic`.
+   * Ours is on `classFeatures/runelord`, otherTags ['class-archetype','wizard-arcane-school'], the record
+   * the wizard Arcane School picker actually offers, whose effectChoices['sin'] options grant the seven
+   * initial school spells (read at src/rules/build.ts:4104-4127).
+   *
+   * Adversarially confirmed the same way the identity settle was: the thassilonian record carries no
+   * otherTags, appears in none of the 18 wizard subclass option ids, and no record in core.json names it
+   * — it is NEVER OWNED, so no reading of it could deliver those spells and the option-carrier teach
+   * cannot reach it. Settled on `spell` only; its `choice` kind already agrees.
+   */
+  // batch 033: school-of-thassilonian-rune-magic#instrument
+  'school-of-thassilonian-rune-magic': ['spell'],
+
+  /*
+   * OTHERWORLDLY PROTECTION — A DERIVED VALUE, WHICH THEIR VOCABULARY CAN ONLY ASK AS A QUESTION.
+   *
+   * Their row is two `select optionType=CUSTOM` blocks (void | vitality, and unholy | holy | none).
+   * Print makes BOTH branches derived, not chosen — AoN innovation-1: *"You gain resistance equal to
+   * 3 + half your level to void damage, or to vitality damage if you have void healing (such as if
+   * you're a dhampir)"* and *"If you are sanctified … this resistance applies to unholy damage (if you
+   * are sanctified holy) or holy damage (if you are sanctified unholy)"*. Neither sentence asks the
+   * player anything: the answer is already on the character sheet.
+   *
+   * Ours reads it off the character, which is why the record carries no picker: `resistances` (applied
+   * this batch by otherworldly-protection#void-healing-swap / #sanctified-resistance) holds the void
+   * entry with the void-healing clause in `condition`, plus unholy `whenCreatureTrait: 'holy'` and holy
+   * `whenCreatureTrait: 'unholy'` — the derived-value-not-a-pick class already adjudicated for
+   * `battle-creed` in work/experience-instrument-limits.json. `defense` agrees on both sides, so what
+   * their selects add over ours is the QUESTION, not the resistance.
+   */
+  // batch 033: otherworldly-protection#sanctified-resistance
+  'otherworldly-protection': ['choice'],
+
+  /*
+   * BATTLE CREED — their `select ADJ_VALUE "Select Deity Weapon"` is a workaround, not a choice.
+   *
+   * The other six kinds this record used to miss are now credited from the advancement.ts table it owns
+   * (see the subclass-option-table teach above). What is left is `choice`, twice: `select from:ADJ_VALUE`
+   * inside `IF LEVEL >= 5` and again inside `IF LEVEL >= 13`.
+   *
+   * Print offers nothing to select — AoN doctrine-6, Lesser Creed: *"You gain expert proficiency with
+   * your deity's favored weapon"*, Major Creed: *"master proficiency with your deity's favored weapon"*.
+   * The weapon is DERIVED from the deity already chosen: build.ts:3784 `favoredWeaponRank` gives
+   * battle-creed master@13 / expert@5 / trained, written as a per-weapon override over EVERY entry of
+   * the deity's favoredWeapons — so even a multi-weapon deity owes the player no pick. Their select is
+   * their own workaround for not resolving the deity's favored weapon.
+   *
+   * Adjudicated and parked with the same reading in work/experience-instrument-limits.json
+   * (battle-creed, lane `derived-value-not-a-pick`, verified 2026-09-08), whose refuter is the
+   * multi-weapon-deity case. Settled on `choice` only; every other kind on this record still reports.
+   */
+  // batch 033: battle-creed#control
+  'battle-creed': ['choice'],
+
   /*
    * SPELLSHIFTER DEDICATION — their grant points at a record that does not exist on our side, and the
    * one sharing its NAME is a different feat entirely.

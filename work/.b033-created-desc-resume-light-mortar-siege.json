@@ -1,0 +1,17 @@
+{
+  "findings": [
+    {
+      "id": "light-mortar-innovation#innovation-item",
+      "backfillRows": [
+        {
+          "category": "items",
+          "id": "innovation-light-mortar",
+          "field": "description",
+          "value": "Your innovation is a mounted siege weapon called a light mortar that weighs 2 Bulk. Whether it propels its payload via an elaborate mechanism or explosive reagents, it's capable of dealing immense damage.\n\nYour light mortar requires an Interact action to deploy it before you can Aim, Load, or Launch it, and it includes its own wheeled platform that it is mounted on as part of the deployment. It can be packed back up for easy transport as a 2-action activity with the manipulate trait and either worn as a backpack or carried in one hand while packed. Because of the light mortar's smaller size, the Move Siege Engine activity takes only 1 action when it is deployed.\n\nLaunch (1 action; attack, manipulate, range increment 120 feet) 2d6 bludgeoning, 10-foot burst, DC 15 basic Reflex.\n\nYour innovation fires small cannonballs called carry shot. A group of 10 carry shot, which weighs 1 Bulk, can be purchased for 5 sp from most shops that sell ammunition.\n\nThe AC, Fortitude, Reflex, HP and BT statistics for this item are located in the Light Mortar Innovation. This item does not have a price as it is an Inventor Innovation.",
+          "why": "Prose for the record created by work/.b033-rows-resume-light-mortar-siege-the-munitions-master-innovation-grant-3-red-lines-one-lane-.json. Every sentence is print: archetype-329 (Munitions Master, Battlecry! pg. 64) for the mortar itself, its deployment, the pack-up activity, the Move Siege Engine reduction and the carry shot ammunition; siege-weapon-36 for the Launch line and for the two Nethys notes that say where the AC/Fortitude/Reflex/HP/BT statistics live and why the item has no price. A create row carries no description, so the item would otherwise ship blank and fail render-check / readable-record-check the way classFeatures/arcane-bond-school-of-unified-magical-theory did in this batch."
+        }
+      ],
+      "note": "One description row for the one created record."
+    }
+  ]
+}

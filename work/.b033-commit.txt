@@ -1,0 +1,169 @@
+WG parity batch 033: 50 records, 41 overlay rows, twelve families, all nine gates green
+
+THE BATCH. Fifty Wanderer's-Guide-comparison records read against the printed text by an Opus
+reader and an adversarial verifier per slice (work/.b033-read.json: 78 confirmed, 3 refuted,
+4 askOwner), built by twelve families: five original (situational, engine, repair, data-rows,
+instruments), three gap families (gap-situational, gap-instruments, gap-data-rows) and, after the
+first gate came back red, four RESUME families in six groups that took the remaining red lines one
+lane each — resume-data-rows, resume-engine (eidolon languages and traits, the rage-damage modes
+engine, the light mortar siege innovation), resume-instruments and resume-prose. The manifest
+(work/.b033-specs.json) carries 15 spec files and 100 finding entries; the driver applied them as 41
+overlay rows through scripts/data/effect-backfill.json — 23 on keys the overlay did not have, 18 superseding an
+existing row with its value carried whole — taking the overlay from 14,135 rows at 2686f944 to
+14,158. (That 23/18 split is the batch total measured against the overlay at 2686f944; the driver's
+LAST apply entry reports only its own delta, because the apply stage ran four times as each refusal was
+fixed and most rows were already written by then.) Every row was read back from the shipped artefacts,
+no earlier row was lost or narrowed, and
+no agent wrote the overlay or ran `npm run data`: the driver applied, as the protocol requires.
+
+WHAT IT SETTLED. work/wg-batch-033-parity.json carries a verdict for all fifty records — FIXED 23,
+MATCHES 22, OWNER-QUEUED 5 — each derived by scripts/wg-batch-close.mjs from a cited row, code edit,
+test or instrument teach, never hand-written. The one hand correction is recorded as such: spore-order
+was written MATCHES before its owner question existed, and `--reverdict spore-order=OWNER-QUEUED
+--reason "desk #134 asks the membership-token question; the record must park until ruled"` moved it,
+with the reason stamped into its evidence and into residual.reverdicts. The residual audit beside it
+records 78 confirmed and 3 refuted findings, the 4 askOwner findings the readers raised, and 7 flagged
+residues. (Six entries reached the desk, not four: two more were parked at the gaps stage — see QUEUED
+FOR THE OWNER.) Forty records
+OUTSIDE this batch went quiet between the baseline and now — the option-carrier teach accounts for 38
+of them and the resume pass for two more (animal-instinct's `unmapped`, now mapped by the RAGE_DAMAGE
+lane, and curse-of-inevitable-rot's `save`, now credited off the mode's own modifiers) — and every one
+of the forty is itemised with its carrier in work/.b033-gaps.json rather than left to go quiet
+unexplained.
+
+CODE LANES. App side: situationalBonuses.ts (RECORD_MARKERS + FEAT_SITUATIONAL), build.ts, derive.ts,
+featUses.ts, featGrantsAuto.ts, companionGrants.ts, companions.ts, modes.ts, types.ts, data/index.ts,
+CompanionsTab.tsx and SpellsTab.tsx. Comparer side: wg-diff.mjs, wg-identity.mjs and wg-values.mjs —
+11 new settle keys, every flip cited, `node scripts/test-flip-audit.mjs --batch 033` clean across 19
+touched test files, and every new teach carries a mutation-proof test that stunts its own carrier and
+proves the comparer still reports. Data hygiene: repair-damage-type.mjs, dropped-inline-check.mjs,
+backfill-oracle-curses.mjs. Harness: wg-experience.mjs, lib/wg-experience-lanes.mjs and three verified
+parking entries in work/experience-instrument-limits.json.
+
+THE CLOSER'S OWN EDITS, every one with a test. (1) scripts/wg-batch-run.mjs — apply pre-check (1b)
+refused every `created-prose` row, the one kind it exists for, and the created record
+classFeatures/arcane-bond-school-of-unified-magical-theory shipped BLANK because of it. (1b) cannot
+apply to prose: apply-backfill-now.mjs passes `skipFields: ['description','descRefs']` and routes those
+two fields to core-descriptions.json, a different file from the one a create row writes, so neither row
+can shadow the other. Exempted, with its own case in test/wg-batch-run.test.ts asserting both orders
+pass AND that a real field row on the same created record is still refused. (2) work/.b034-created-desc.json
+— its description was a rewrite; the applier's mirror-token check refused it, correctly. Replaced with
+the verbatim clause from AoN arcane-school-21. render-check now reports 0 of 26,712 blank and
+readable-record-check exits 0. (3) work/.b033-rows-data-rows.json — three cross-spec COLLISION refusals
+(otherworldly-protection.resistances, curse-of-creeping-ashes-4.modifiers, fey-eidolon.spellListAdditions).
+In each case a resume group re-emitted the same key carrying the original's value forward whole and
+adding the half print asks for, so the earlier and strictly narrower row is withdrawn to `backfillRows:
+[]` with a note naming its successor; nothing is lost and the sibling `note` row on the ashes finding
+still ships. (4) scripts/wg-diff.mjs OFF_RECORD_CARRIERS — angel-eidolon and fey-eidolon `language`
+(the fixed printed line lives on CompanionMod.languages, not the record) and light-mortar-innovation
+`choice` (its `choice` field was deleted this batch; the three tiered pickers are inventorModificationOptions
+in build.ts). Per id, never on the companionGrants.ts file row, because REGISTRY_KINDS would credit ~112
+ids: test/batch033-closer.test.ts asserts the five uncredited eidolon types still report `language`, and
+that `conditional` is NOT in the light-mortar entry. (5) the same file's three druid-order settles —
+the gate's SETTLES check read two of them as ungrounded because the citation comments split the group;
+each now states its own grounds (same thing, different field: MAIN_DRUID_ORDER against build.subclassId),
+and spore-order's says in as many words that the settle covers KINDS only while desk #134/#139 is about
+a different comparer. (6) the same file's RAGE_DAMAGE comment claimed the credit came from the modes'
+`target:'damage'` — the resume-modes group deleted that modifier, so the comment named a carrier that no
+longer exists; it now names derive.ts's tiers table, which its own last paragraph already did. (7) the
+`giveItem` surface predicate — WG's last value-bearing op with no predicate, which is why
+light-mortar-innovation reached the gate as UNVERIFIED-EFFECT while our inventor really was handed
+items/innovation-light-mortar. `surface.itemNames` off the built character's inventory (build.ts:8815
+folds grantedItems there), matched by name like giveSpell/giveTrait, with `unchecked` for an id the dump
+cannot name; three assertions in test/wg-experience-lanes.test.ts, one per outcome. (8)
+scripts/lib/apply-backfill.mjs — the other half of (1). Prose is stored SPLIT, and apply-backfill-now.mjs
+enforces that by passing `skipFields: ['description','descRefs']`; a CREATE row's `value` bypassed it,
+so the light mortar's 1,130-character description (folded onto the create row as the workaround for the
+(1b) refusal) landed INLINE in public/core.json and turned scripts/regen-durability-check.mjs red on
+"descriptions are split out" — the same duplication split-descriptions.mjs exists to prevent. skipFields
+now applies to a create too, the create row's description is gone (its `why` says why), the inline copy
+was removed from core.json with the byte-identical text kept in core-descriptions.json where the loader
+reads it, the driver's create post-check is symmetric on both sides, and a case in
+test/wg-batch-run.test.ts pins all of it. regen-durability-check is green again, 14,158 overlay rows all
+present. (9) Four failing tests, three causes — each one a test that asserted the state BEFORE a row
+this batch applied, flipped to the closed state with a fresh citation: the four extra Speed tracks on
+curse-of-creeping-ashes (the row that
+closed them is `detail:'all'`, and its own comment said the row landing should be what closed them),
+otherworldly-protection's resistance set gaining `vitality`, and the light-mortar test's `withoutGrant()`
+helper, which restored the record from the SHIPPED content and so stopped stripping anything the moment
+the grant was applied — it now deletes the field, the shape that stays honest on both sides of an apply.
+(10) work/.b033-gaps.json — the two went-quiet dispositions above; work/.b033-closer-triage.txt — its
+VALUES paragraph claimed "there is no cat-cursebound-4 at all", which `git show HEAD:src/rules/modes.ts`
+refutes (it is modes.ts:275 and predates the batch), corrected so the next batch does not inherit it.
+
+GATES. All nine pass. The first gate of this run was red on KINDS 3, SETTLES 2 and EXPERIENCE 1; each
+was built, not parked — the two eidolon languages and the light mortar choice by naming their carriers,
+the settles by stating their grounds, the experience line by writing the missing predicate. The
+EXPERIENCE sweep plays all fifty on the real builder: OK 32, UNSUPPORTED 13, MISSING-CONTROL 3,
+NO-SHEET-EFFECT 2, and gate 9's freshness is green — the experience artefact was re-observed after every
+source edit, three times in this run, the last after the create-row prose fix touched public/core.json,
+as rule 3b requires. The three comparers on this packet: wg-diff reports no missing kind on any record
+in the cut (corpus-wide it is 214 they-only against 1,089 agreeing, down 3 from the resume pass's 217 —
+angel-eidolon, fey-eidolon and light-mortar-innovation), wg-values has 0 records with a value to adjudicate (2 at the last red gate — the last two
+closed by the `detail:'all'` Speed row and the vitality resistance entry), and wg-identity's only two
+remaining `theirs-not-ours` records are spore-order and dragon-eidolon, both OWNER-QUEUED and both
+parked by the gate for that reason. work/.b033-gaps.json holds 32 lines, 25 authored and 7 parked, none open: the gaps
+stage refuses to proceed while any line is prose rather than a spec, an edit, a queue entry or a
+flaggedResidue with a reason.
+
+RE-GATE. Every earlier batch was re-swept and re-gated GREEN (32 of 32), so nothing this batch did —
+not the option-carrier teach, not the RAGE_DAMAGE and mode-modifier teaches, not the eidolon type rows
+— broke an earlier batch's record.
+
+QUEUED FOR THE OWNER (work/owner-questions.json, every entry filed through scripts/add-owner-question.mjs
+from work/.b033-queue.json; no agent touched that file by hand). Six, desk #134-#139: #134
+spore-order-counts-as-leaf-order (does "counts as a member of the leaf order" become a blocking
+prerequisite token, and at what blast radius); #135 gleaming-blade (WG names the transcendence "Mirrored
+Spirit Strike"; ikon-6 names it Flowing Spirit Strike and no such record is in the mirror); #136
+barrows-edge (WG makes the immanence persistent and drops the below-half-HP escalation; ikon-2 has
+neither); #137 gaze-sharp-as-steel (WG replaces the printed 1d6/2d6/3d6 precision damage with Reactive
+Strike); #138 dragon-eidolon (WG offers a four-way tradition picker where eidolon-7 fixes arcane); #139
+spore-order, the follow-up that files #134 under the RECORD id so gate 5b can park the record — the
+question itself is unchanged, and it is what let the reverdict above be derived rather than asserted.
+
+SUITE. 5,605 tests, 5,603 passing, 1 skipped, ONE failing: test/umbrella-items.test.ts expects 440
+umbrella summaries and counts 441. It is not this batch's — the whole `items` bucket is byte-identical
+to 2686f944 apart from the one record this batch created, the 441st umbrella is `throneglass` from the
+2026-09-07 archive delta, and the corrected test (which reads throneglass against the soulheart case
+rather than assuming it) is in `stash@{0}`. The file is in this run's do-not-touch set, so no agent here
+may close it; the ruling that the suite tolerates nothing is why it is stated plainly rather than
+excused. The suite came into this run with 5 failures: the other four were this batch's own tests
+asserting a pre-apply state, and all four are fixed and cited above. A fifth turned red later, when the
+created item's prose moved off the create row — the light-mortar test asserted the prose was on BOTH
+rows, which was the workaround's shape; it now asserts the correct one in three places at once (not on
+the create row, verbatim on the prose row, in core-descriptions.json rather than inline on the record).
+
+VERIFY. 38 checks, 35 clean. Two are tolerated as red before this batch started (ast-content-check, an
+AST regen that wiped patch content; field-diff, whose every remaining row is a throneglass grade or
+`beckon-the-blasphemous-brethren` — the 2026-09-07 archive delta again, the same import behind the
+umbrella count and, through the AST index, behind readable-record-check). One is red and
+is NOT tolerated by the driver because it was green when the baseline was taken: readable-record-check,
+27 records with nothing a player can read — every one of them measured in the DEFERRED block below and
+shown to be public/ast-index.json's loss rather than this batch's. Two checks that were
+red mid-run are green again: render-check (0 of 26,712 records would draw nothing) and
+regen-durability-check, both closed by the created-record prose work rather than tolerated.
+
+DEFERRED, and named rather than hidden. Three things need the orchestrator and only her, because each
+is a write no agent in this workflow may make.
+· `git stash pop`. It holds the corrected test/umbrella-items.test.ts — the single remaining suite
+  failure — and 17 other source files. The test file itself is in this run's do-not-touch set, so the
+  only two ways to close that red are the stash or an edit no agent may make.
+· public/ast-index.json. It is untracked, was rebuilt at 2026-09-08 16:10 (after this batch's baseline
+  at 12:34) by the OTHER effort's archive pipeline, and lost the index entries for 27 records whose AST
+  trees are still present in public/ast/*.json — so readable-record-check now reports 27 records with
+  nothing to read. Measured, not asserted: all 27 exist unchanged in core.json at 2686f944, and none of
+  them is among the 33 record keys this batch writes. public/ast/** and the bestiary lane are outside
+  this run's grant; regenerating that index is the fix, and `node scripts/apply-ast-patches.mjs` is what
+  ast-content-check (red since before this batch) has been asking for on the same surface.
+· src/rules/derive.ts rageStrikeRider — an engine-shape decision, not a defect this batch can settle. It
+  gates on `classResources.rage` alone, so the ordinary `cat-rage` mode's own `m(2,'untyped','damage')`
+  still reads out beside the instinct rider: a raging Decay barbarian sees "+2 untyped … while raging"
+  next to "18 poison … while raging", which is the exact duplicate the resume-modes group cut from
+  cat-rotting-rage. Same shape, one mode over. `critSpecRequiresModeGroup` one function away is the gate.
+Everything else deferred is a line in work/.b033-gaps.json with a `ref` a reader can open, or a
+flaggedResidue with its reason in work/wg-batch-033-residual.json: the six oracle mysteries whose
+Cursebound stages have no per-mystery mode records (ancestral-meddling, engulfing-flames,
+outpouring-life, the-skys-call, torrential-knowledge, turbulent-moments) and so fall back to the generic
+toggle; the eidolon Language residue outside the fifty-record cut (beast, demon, plant, psychopomp,
+undead, swarm, aberrant — print already read and quoted there, so the next batch need not); and
+light-mortar-innovation#mortar-stats, the siege-companion scaling lane.

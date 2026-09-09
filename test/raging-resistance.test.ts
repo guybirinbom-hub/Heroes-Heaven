@@ -186,10 +186,15 @@ describe("a daily answer now does something", () => {
     expect((def?.options ?? []).map((o) => o.value)).toEqual(['bludgeoning', 'piercing', 'slashing']);
   });
 
-  it('every option grants, and states the condition rather than pretending there is none', () => {
+  // batch 033: skin-hard-as-horn
+  // The clause moved from an off-schema `note` key to IwrEntry.condition, which is the field the IWR
+  // breakdown actually renders — `note` is not a member of IwrEntry and nothing read it.
+  it('every skin-hard-as-horn option grants, and states the condition rather than pretending there is none', () => {
     for (const o of db.classFeatures[IKON].choice!.options!) {
+      // batch 033: skin-hard-as-horn
       expect(o.grant?.resistances?.[0]?.value, o.value).toBe('floor(@actor.level/2)');
-      expect(o.grant?.resistances?.[0]?.note, o.value).toMatch(/divine spark|critical hits/i);
+      // batch 033: skin-hard-as-horn
+      expect(o.grant?.resistances?.[0]?.condition, o.value).toMatch(/divine spark|critical hits/i);
     }
   });
 

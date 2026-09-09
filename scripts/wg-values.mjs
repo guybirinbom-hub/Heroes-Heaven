@@ -96,6 +96,62 @@ const advancementBySource = new Map();
   }
 }
 const SAVE_TRACKS = new Set(['fortitude', 'reflex', 'will']);
+/* The five movement tracks, in the order `speedAdjust.key === 'all'` already expands them below —
+ * used again by the mode-modifier `target: 'speed'` reader, whose `detail: 'all'` means the same thing. */
+const SPEED_TRACKS = ['land', 'fly', 'swim', 'climb', 'burrow'];
+
+/*
+ * THE RECORD *IS* THE OPTION — the other half of the class-chassis crediting.
+ *
+ * Three comparers already credit a class's option list to the feature the class DECLARES as its carrier
+ * (`subclass.featureId`, `extraChoices[].featureId`). None of them credited the OPTION ITSELF. Every
+ * witch patron, druid order, gunslinger way, summoner eidolon, investigator methodology, wizard arcane
+ * school and animist apparition keeps its whole mechanic on `classes.<cls>.subclass.options[<id>]` (or
+ * `extraChoices[].options[<id>]`) while `classFeatures/<id>` is a prose stub — so reading the stub alone
+ * reported the patron skill, the way skill, the order spell and the apparition Lore ladder as absent on
+ * 24 records of batch 033 that deliver every one of them. This project's most repeated instrument bug:
+ * a predicate that knows one storage location reads every other one as absent.
+ *
+ * The map is built once, id -> the option objects of that id (a record can be an option of one class
+ * only, but the array costs nothing and keeps the reader honest).
+ */
+const optionCarriers = new Map();
+{
+  const add = (o) => {
+    if (!o?.id) return;
+    if (!optionCarriers.has(o.id)) optionCarriers.set(o.id, []);
+    optionCarriers.get(o.id).push(o);
+  };
+  for (const cls of Object.values(core.classes ?? {})) {
+    for (const o of cls.subclass?.options ?? []) add(o);
+    for (const ec of cls.extraChoices ?? []) for (const o of ec.options ?? []) add(o);
+  }
+}
+
+/*
+ * …AND THE ADVANCEMENT TABLE A SUBCLASS OPTION *OWNS*, not only the rows that name it in `source`.
+ *
+ * src/rules/advancement.ts is keyed `<classId>` and `<subclassId>`, and a subclass key is a COMPLETE
+ * table that REPLACES the class default (advancement.ts's own note: "warpriest, battle-creed"). Its rows
+ * carry the printed CLAUSE in `source` ('initial-creed', 'major-creed', 'true-creed'), never the subclass
+ * id — so `advancementBySource.get('battle-creed')` is empty and the doctrine reported three MISSING
+ * saves for ranks it raises exactly as printed. WG flattens the same three onto its Battle Creed row.
+ *
+ * ⚠ ONLY a key that is a subclass OPTION id. A class-keyed table ('druid', 'cleric') is credited to
+ * nobody here: those rows belong to the features that name them in `source`, and crediting the whole
+ * class table to the class record would excuse every rank it does not actually raise.
+ */
+const advancementByOptionTable = new Map();
+{
+  let text = '';
+  try { text = readFileSync(join(ROOT, arg('--advancement', 'src/rules/advancement.ts')), 'utf8'); } catch { /* absent */ }
+  for (const m of text.matchAll(/\n {2}'?([a-z][a-z0-9-]*)'?:\s*\[([\s\S]*?)\n {2}\],/g)) {
+    if (!optionCarriers.has(m[1])) continue;
+    const rows = [...m[2].matchAll(/\{\s*level:\s*(\d+),\s*track:\s*'([a-zA-Z]+)',\s*rank:\s*'([a-z]+)'/g)]
+      .map((r) => ({ level: Number(r[1]), track: r[2], rank: r[3] }));
+    if (rows.length) advancementByOptionTable.set(m[1], rows);
+  }
+}
 
 /**
  * Their variable -> the assertion in OUR terms. Only variables with an unambiguous counterpart are
@@ -493,6 +549,23 @@ function ourSets(rec, id) {
     if (m.fromItemId !== id && !(m.feats ?? []).includes(id)) continue;
     for (const r of m.resistances ?? []) add('resistances', r.type);
     for (const w of m.weaknesses ?? []) add('weaknesses', w.type);
+  }
+  /*
+   * …and a resistance or weakness carried by a `whileActive` CLAUSE.
+   *
+   * Raging Resistance is state-gated by construction — *"You resist piercing and slashing damage, but
+   * you gain weakness to fire equal to 3 + your Constitution modifier"* (Ligneous Instinct, instinct-16)
+   * applies only while raging — so every instinct authors it as `whileActive [{state:'rage', minLevel:9,
+   * resistances:[…], weaknesses:[…]}]`, read by ownedWhileActive/activeStateGrants (src/rules/derive.ts)
+   * into the same IWR source list a flat field feeds. This collector read only the flat fields, the
+   * `resonant` twin and the option/choice grants, so all eight instincts that carry one reported
+   * `SET-GAP … ours=(nothing)` against the exact three entries WG writes as rage-gated adjValue
+   * RESISTANCES/WEAKNESSES. wg-diff.mjs already walks `whileActive` for KINDS; this is the same walk for
+   * SETS. An instinct that resists the WRONG type still reports, because the type is what is compared.
+   */
+  for (const w of Array.isArray(rec.whileActive) ? rec.whileActive : []) {
+    for (const r of w?.resistances ?? []) add('resistances', r.type);
+    for (const x of w?.weaknesses ?? []) add('weaknesses', x.type);
   }
   /* …and a resistance carried by one of this record's own SUBCLASS OPTIONS. Their `select` flattens
    * every option's operations onto the selector row, so their Animistic Practice row asserts the seer's
@@ -1162,6 +1235,69 @@ function ourAssertions(id, rec) {
     if (SAVE_TRACKS.has(r.track)) put(`save|${r.track}`, r.rank);
     else if (r.track === 'perception') put('perception|', r.rank);
   }
+  /* …and the whole table this record OWNS as a subclass key — see `advancementByOptionTable`. Same
+   * two tracks, same rule: a table that stops short of the printed rank still reports DIFFERENT. */
+  for (const r of advancementByOptionTable.get(id) ?? []) {
+    if (SAVE_TRACKS.has(r.track)) put(`save|${r.track}`, r.rank);
+    else if (r.track === 'perception') put('perception|', r.rank);
+  }
+  /*
+   * …and THIS RECORD'S OWN OPTION CARRIER — see `optionCarriers`. Skills and Lores only: those are the
+   * two tracks this comparer holds in a currency an option carries, and they are the whole of the
+   * printed "**Patron Skill** Occultism" / "**Way Skill** Acrobatics" / "**Apparition Skills** Mountain
+   * Lore, Volcano Lore" clause. `loreProgression` is the ladder build.ts:3617-3624 folds in through
+   * maxRank, and it is asserted RUNG BY RUNG so an option whose ladder stops short of the printed rank
+   * still reports DIFFERENT rather than being excused.
+   */
+  for (const o of optionCarriers.get(id) ?? []) {
+    for (const s of o.grants?.skills ?? []) put(`skill|${s}`, 'trained');
+    for (const l of o.grants?.lores ?? []) {
+      put(`skill|lore:${l}`, 'trained');
+      for (const step of o.loreProgression ?? []) if (step?.rank) put(`skill|lore:${l}`, step.rank);
+    }
+  }
+  /*
+   * …and A SAVE PENALTY CARRIED BY A MODE GATED ON THIS RECORD.
+   *
+   * The modes loop above this function already reads a mode's resistances and weaknesses; its
+   * `modifiers` were read by nobody. Curse of the Mortal Warrior prints *"You take a -1 status penalty
+   * to saving throws against spells"* (Cursebound 2) and *"…increases to -2"* (Cursebound 4), authored
+   * as `modes['curse-of-the-mortal-warrior-2'..'-4'].modifiers [{value:-1|-2, type:'status',
+   * target:'save', appliesWhen:'against spells'}]` and gated `feats: ['curse-of-the-mortal-warrior']`.
+   * WG splits that one printed sentence into SAVE_FORT / SAVE_REFLEX / SAVE_WILL, so a `target:'save'`
+   * modifier is an assertion about all three tracks and is expanded into all three — the same reasoning
+   * the item-shaped `pe.saves` scalar above already uses. MAGNITUDE, matching the abs on their op loop,
+   * so a mode carrying the WRONG number still reports DIFFERENT.
+   */
+  for (const m of Object.values(core.modes ?? {})) {
+    if (m?.fromItemId !== id && !(m?.feats ?? []).some((f) => f === id || String(f).startsWith(`${id}:`))) continue;
+    for (const mod of m.modifiers ?? []) {
+      if (typeof mod?.value !== 'number') continue;
+      if (mod.target === 'save') for (const t of SAVE_TRACKS) put(`save|${t}`, Math.abs(mod.value));
+      else if (mod.target === 'perception') put('perception|', Math.abs(mod.value));
+      /*
+       * …AND A SPEED PENALTY, which the loop above read for nobody either.
+       *
+       * Curse of Creeping Ashes prints *"you take a -10-foot status penalty to all your Speeds"*
+       * (AoN mystery-20, Cursebound 4) and their side splits it into SPEED / SPEED_FLY / SPEED_CLIMB /
+       * SPEED_BURROW / SPEED_SWIM, so all five reported `theirs=-10 ours=(nothing)` against
+       * modes['curse-of-creeping-ashes-4'].modifiers [{value:-10,type:'status',target:'speed'}].
+       *
+       * Expanded by the modifier's own `detail`, exactly as src/rules/modes.ts:135 resolves it for the
+       * sheet: `detail: 'all'` is every track, a movement key is that track, and NO detail defaults to
+       * `land` — a mode saying "+10 to Speed" means the walking Speed, which is the ruling deriveSpeeds
+       * has always applied. So a detail-less -10 asserts speed|land ONLY and the other four tracks keep
+       * reporting, which is the honest reading while the `detail: 'all'` row is unwritten.
+       *
+       * SIGNED, not absolute: on the speed track the sign is the mechanic (see the `scalar` note in
+       * theirValues — a Speed penalty and a Speed bonus of the same size are different rules).
+       */
+      else if (mod.target === 'speed') {
+        const d = mod.detail ?? 'land';
+        for (const t of (d === 'all' ? SPEED_TRACKS : [d])) put(`speed|${t}`, Number(mod.value));
+      }
+    }
+  }
   return out;
 }
 
@@ -1353,6 +1489,32 @@ const SETTLED_VALUES = {
   /* ghostly-resistance — settle REMOVED: divergence fixed (the base no longer reads 0 below 4th, and the non-magical band is authored). Re-report if it returns. */
   'mortification': ['set|resistances'],
   'hardened-chassis': ['set|resistances'],
+
+  /*
+   * DECAY INSTINCT — the same "the exception is written into the TYPE STRING" shape as ghostly-resistance
+   * above, on the second of two Raging Resistance entries.
+   *
+   * Printed (AoN instinct-15, Raging Resistance): *"You resist poison damage, as well as damage dealt by
+   * the attacks and abilities of creatures with the fungus trait, regardless of the damage type."* Ours is
+   * classFeatures/decay-instinct.whileActive [{state:'rage', minLevel:9, resistances:[{type:'poison',
+   * value:'3+@actor.con.mod'}, {type:'all damage from fungus creatures', value:'3+@actor.con.mod',
+   * note:'attacks and abilities of creatures with the fungus trait, regardless of damage type'}]}] — both
+   * entries, the same rage gate and the same 3+Con value WG writes. The `whileActive` teach in this batch
+   * made `poison` match; what is left is that a damage-source clause has no TYPE NAME, so each side
+   * invents a phrase for it — theirs the whole printed sentence, ours a short label with the sentence
+   * carried in `note` (which is what the IWR breakdown prints to the player). Nothing to reconcile: the
+   * set comparison is a name match, and there is no name.
+   *
+   * Adversarially confirmed: with the entry removed from a content copy the record reports the SET-GAP
+   * with `ours=poison` alone, so this settle answers the wording and not the carrier.
+   *
+   * ⚠ Settled on THAT ONE MEMBER — their unnameable clause — not on `set|resistances`. A whole-set
+   * settle here was measured to hide a real gap: with the POISON entry deleted from a content copy the
+   * raw run reports it missing and the settled run reported nothing at all. The member scope keeps
+   * poison, and any resistance added later, under comparison.
+   */
+  // batch 033: decay-instinct#instrument-resistances
+  'decay-instinct': ['damage dealt by the attacks and abilities of creatures with the fungus trait regardless of the damage type'],
   'basic-fury': ['hp|'],
   'basic-devotion': ['hp|'],
   'devout-magic': ['hp|'],
@@ -1744,8 +1906,19 @@ for (const id of ids) {
     }
   }
   for (const s of setRows) {
-    if (!RAW_SETTLES && (SETTLED_VALUES[id] ?? []).includes(`set|${s.key}`)) continue;   // read and settled — see above
-    rowsOut.push({ key: `set|${s.key}`, tv: s.missing.join(','), ov: s.have.join(',') || '(nothing)', kind: 'SET-GAP' });
+    const settled = RAW_SETTLES ? [] : (SETTLED_VALUES[id] ?? []);
+    if (settled.includes(`set|${s.key}`)) continue;   // the WHOLE set read and settled — see above
+    /* …or exactly ONE MEMBER of it. A settle entry that names a member rather than `set|<key>` drops
+     * that member only, so every other member of the same set keeps reporting. Without this the only
+     * available scope was the whole set, and a record whose sole real difference is one unnameable
+     * clause had to silence its every other resistance too — measured on decay-instinct, where a
+     * whole-set settle also hid a deleted POISON resistance, the exact "silence the NEXT difference of
+     * that kind on that record, unread" trap this registry's own header warns about.
+     * A member key is a bare name; every value key contains '|', so the two can never collide. It is
+     * also a substring of the raw report line, which is what wg-settle-stale.mjs matches on. */
+    const missing = s.missing.filter((m) => !settled.includes(m));
+    if (!missing.length) continue;
+    rowsOut.push({ key: `set|${s.key}`, tv: missing.join(','), ov: s.have.join(',') || '(nothing)', kind: 'SET-GAP' });
   }
   if (!rowsOut.length) { clean++; if (VERBOSE) console.log(`ok    ${id}  (${theirs.size} values, ${theirSets.size} sets agree)`); continue; }
   conflicts.push({ id, name: rec.name, rowsOut, theirs, ours });

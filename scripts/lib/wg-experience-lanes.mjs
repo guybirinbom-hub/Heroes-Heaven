@@ -484,6 +484,28 @@ export function effectDelivery(effect, surface, names = {}) {
     // WG names creature traits "Plant (creature)" / "Unholy (creature)"; ours is the bare trait.
     return has(surface.traits, name) || has(surface.traits, name.replace(/\s*\(creature\)\s*$/i, '')) ? 'delivered' : 'undelivered';
   }
+  if (type === 'giveItem') {
+    /*
+     * AN ITEM A RECORD HANDS YOU REACHES THE PLAYER AS A LINE IN THEIR INVENTORY, and nowhere else — so
+     * that is the surface this predicate reads (`surface.itemNames`, built from the built character's
+     * own `c.inventory`, which is where build.ts:8815 puts every `grantedItems` entry).
+     *
+     * Before this branch `giveItem` was in the op-name list and in NO predicate, so every one of them
+     * fell through to 'unchecked'. That is how light-mortar-innovation reached the EXPERIENCE gate as
+     * UNVERIFIED-EFFECT — "none of WG's 1 op(s) has a surface predicate yet: giveItem" — while our
+     * inventor really was handed items/innovation-light-mortar (created this batch; granted at
+     * src/rules/build.ts:7671 off the subclass option id). armor-innovation's two `giveItem` options
+     * (power-suit / subterfuge-suit, build.ts:7688-7702) are the second case, and the ancestry and
+     * background arms of the same loop (a dwarf's clan dagger, a Sally Guard's horse) the rest.
+     *
+     * Matched by NAME, like giveSpell / giveAbilityBlock / giveTrait above, because their item ids are
+     * their own. `unchecked` when their id is not in the dump's `item` table: an id we cannot name is
+     * not evidence either way.
+     */
+    const name = names.item?.get(String(data.itemId));
+    if (!name) return 'unchecked';
+    return has(surface.itemNames, name) ? 'delivered' : 'undelivered';
+  }
   if (type === 'defineCastingSource') {
     const token = String(data.value ?? '').split(':::')[1] ?? '';
     if (token === '-') return sc.length ? 'delivered' : 'undelivered';
@@ -493,7 +515,15 @@ export function effectDelivery(effect, surface, names = {}) {
   if (type === 'giveAbilityBlock') {
     const name = names.block?.get(String(data.abilityBlockId));
     if (!name) return 'unchecked';
-    return has(surface.featNames, name) || has(surface.featureNames, name) ? 'delivered' : 'undelivered';
+    /*
+     * `actionNames` is the THIRD carrier: a record's `grantsActions` reaches the player as
+     * `Character.grantedActionIds` (build.ts:6201/8739 → MainTab.tsx:325), not as an owned feature, so
+     * the two name lists above cannot see it. The five gunslinger Ways / investigator Methodologies
+     * each hand over exactly one action this way (Reloading Strike, Covered Reload, Clear a Path,
+     * Pointed Question, Quick Tincture) and read NO-SHEET-EFFECT for it without this list.
+     */
+    return has(surface.featNames, name) || has(surface.featureNames, name) || has(surface.actionNames, name)
+      ? 'delivered' : 'undelivered';
   }
   if (type === 'giveSpell') {
     /*
@@ -508,7 +538,19 @@ export function effectDelivery(effect, surface, names = {}) {
      */
     const name = names.spell?.get(String(data.spellId));
     if (!name) return 'unchecked';
-    return has(surface.spellNames, name) ? 'delivered' : 'undelivered';
+    /*
+     * TWO of their name qualifiers name a spell we carry under its bare name, and only two:
+     *   "(Psi)"    — the psychic amp variants. Print (AoN conscious-mind-7, The Distant Grasp) lists
+     *                them as the plain cantrips *"Telekinetic Hand"* / *"Telekinetic Projectile"*, and
+     *                that is the record our conscious-mind option grants.
+     *   "(legacy)" — a pre-remaster duplicate of a record we carry in its remaster form.
+     * ⚠ The strip is ANCHORED TO THOSE TWO on purpose. The dump also carries "(deprecated)" (30) and
+     * "(playtest)" (170) qualifiers; a blanket /\([^)]*\)$/ strip would equate a deprecated or playtest
+     * spell with the base spell we ship, which is laundering, not a teach. The base spell must still be
+     * reachable on the built character, so a record that grants nothing still reports undelivered.
+     */
+    const bare = name.replace(/\s*\((?:Psi|legacy)\)\s*$/i, '');
+    return has(surface.spellNames, name) || has(surface.spellNames, bare) ? 'delivered' : 'undelivered';
   }
   return 'unchecked';
 }

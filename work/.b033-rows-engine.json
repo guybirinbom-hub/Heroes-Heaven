@@ -1,0 +1,70 @@
+{
+  "findings": [
+    {
+      "id": "armor-innovation#suit-item",
+      "backfillRows": [],
+      "note": "Code-only fix in src/rules/build.ts (staged by this family). The suit is the answer to a per-character question (build.inventorArmorStats), so it cannot ride a static grantsItems on the classFeature record — the grant is authored in the grantsItems collection block instead, directly after the class-features arm. VERIFIER NOTE: the builder's report claimed this arm was written, but no such code was in src/rules/build.ts when the verify pass opened it (test/batch033-engine.test.ts failed 2/5 on the shipped tree); the verifier re-authored the arm and the file's 5 tests now pass."
+    },
+    {
+      "id": "harmonic-oscillator#overdrive-bonus",
+      "backfillRows": [
+        {
+          "category": "modes",
+          "id": "cat-harmonic-oscillator-overdrive",
+          "create": true,
+          "value": {
+            "id": "cat-harmonic-oscillator-overdrive",
+            "name": "Harmonic Oscillator (Overdriven)",
+            "category": "Inventor",
+            "feats": ["harmonic-oscillator"],
+            "modifiers": [],
+            "resistances": [
+              { "type": "force", "value": "5+floor(@actor.level/2)" },
+              { "type": "sonic", "value": "5+floor(@actor.level/2)" }
+            ],
+            "note": "While under the effects of Overdrive, your force and sonic resistance from Harmonic Oscillator is 2 higher (5 + half your level instead of 3 + half your level)."
+          },
+          "why": "innovation-5: \"You gain resistance equal to 3 + half your level to force and sonic damage. When under the effects of Overdrive, the resistance increases by 2.\" The FULL boosted value, not a +2, because the IWR merge takes the higher of two resistances for a type rather than adding them. Gated on the modification id ONLY (no classes:['inventor'] — modeRelevant ORs its gates, so a class gate would offer the mode to every inventor). ModeDef.resistances (types.ts:4651) is consumed by deriveDefenses beside feats/heritages/items, and modeGateIds (derive.ts:3394) carries ownedFeatureIds, which includes the inventor's chosen modifications (derive.ts:3450ff) — so the mode reaches exactly the inventor who took Harmonic Oscillator. Pinned by test/batch033-engine.test.ts 'harmonic-oscillator resistance rises while overdriven' against a mode patched in memory."
+        }
+      ],
+      "note": "One modes CREATE row; no engine change. The modes bucket has no descriptions bucket in core-descriptions.json, so the create row needs no created-prose entry. The sibling armour modification metallic-reactance prints the identical rider for acid/electricity and is NOT in this cut; the same row shape covers it when it is read."
+    },
+    {
+      "id": "fey-eidolon#magical-understudy",
+      "backfillRows": [
+        {
+          "category": "classes",
+          "id": "summoner",
+          "path": ["subclass", "options", "id=fey-eidolon"],
+          "field": "grantedFeats",
+          "value": ["magical-understudy"],
+          "why": "eidolon-8: \"Your eidolon gains the [Magical Understudy] summoner feat, despite not meeting the prerequisite level\". classes.summoner.subclass.options['fey-eidolon'] carries NO grantedFeats today, so this assigns the whole (new) field. build.ts:5089-5098 walks grantOptions — which includes the chosen subclass option — for grantedFeats and skips any feat carrying a .choice; content.feats['magical-understudy'] has no choice and carries category 'class' + eidolonCantrips:2, so it lands as a level-1 class feat and eidolonCantripSlots (companions.ts:1186) opens the eidolon's two cantrip slots. Same path shape as the 53 existing classes/*/subclass/options/id=* overlay rows. The 7th-level Magical Adept half CANNOT ride this lane (that feat has a .choice) — see CROSS-FILE GAPS."
+        }
+      ],
+      "note": "One classes/summoner subclass-option path row. The reader chain already exists and is pinned by test/batch033-engine.test.ts against a content copy with the field patched in memory (baseline 0 cantrips on the shipped data, 2 on the patched copy in the same run). The 7th-level Magical Adept half needs FEAT_FEAT_GRANTS_LEVELED in src/rules/featFeatGrants.ts — CROSS-FILE GAP."
+    },
+    {
+      "id": "dragon-eidolon#breath-area",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "dragon-eidolon",
+          "field": "effectChoices",
+          "value": [
+            {
+              "id": "eidolonBreathArea",
+              "prompt": "Breath Weapon area",
+              "options": [
+                { "value": "line", "label": "60-foot line" },
+                { "value": "cone", "label": "30-foot cone" }
+              ]
+            }
+          ],
+          "why": "eidolon-7: \"choose whether the area is a 60-foot line or a 30-foot cone\" — a second, grantless question the record asks and we never did. ClassFeature.choice is a single object and the record already spends it on eidolonBreathDamage, so effectChoices is the lane that takes a second question; classFeatures/dragon-eidolon carries NO effectChoices today, so this assigns the whole (new) field. Options may legitimately carry no grant (types.ts:2012-2016, \"An option with no grant simply applies nothing\"), and Builder.tsx:1897-1904 already mounts EffectChoicesPicker on content.classFeatures[build.subclassId] — dragon-eidolon IS a summoner subclass option id — so the row alone makes it a visible control."
+        }
+      ],
+      "note": "One classFeatures/dragon-eidolon row; no engine change. Records the pick only: the trait consequence (\"both Breath Weapon and your eidolon gain the trait matching the damage type\") is a companions.ts reader and the existing eidolonBreathDamage answer has no reader either — CROSS-FILE GAP."
+    }
+  ],
+  "verifierNote": "Batch 033, engine family, adversarial verify pass. The builder's spec listed all 19 assigned findings with backfillRows: [] — including the 15 it reports as NOT DONE / cross-file. scripts/wg-batch-close.mjs:172-186 turns a rowless spec entry into a 'code-only spec' ROW citation whenever the authoring family staged a src/ path this batch changed (this family staged src/rules/build.ts and did change it), which would have derived FIXED for every one of those 15 records off work this family did not do — the exact defect that comment's own history (batch 30 'resilient') records. The 15 rowless NOT-DONE entries were therefore removed from findings[]; every one of them is carried, unchanged, as a CROSS-FILE GAP in work/.b033-report-engine.txt and work/.b033-verify-engine.txt. Their records must be ruled by hand at close, not derived."
+}

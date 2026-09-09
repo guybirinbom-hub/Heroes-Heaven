@@ -1,0 +1,19 @@
+{
+  "findings": [
+    {
+      "id": "decay-instinct#rotting-rage-damage-scaling",
+      "backfillRows": [],
+      "note": "CODE, no row. Fixed in src/rules/modes.ts: cat-rotting-rage's frozen m(6,'untyped','damage',{appliesWhen}) is DELETED, leaving modifiers: [] and the note. The scaled number was never missing - RAGE_DAMAGE['decay-instinct'] = {tiers:[6,10,18], type:'poison'} in derive.ts is resolved by rageStrikeRider (level>=15 ? 18 : level>=7 ? 10 : 6) and pushed onto every melee/unarmed Strike's conditionalDamage. The mode's modifier was a SECOND carrier of the same number, frozen at 6, and explain.ts pushes mode situational lines and the rider's conditionalDamage into ONE strike-damage breakdown, so a 15th-level decay barbarian read '+6 untyped from Rotting Rage' beside '18 poison'. The read finding's own proposal (a minLevel field on ModeDef + three level-gated entries) was refuted by the engine build-verifier as a THIRD carrier of one number and is deliberately NOT built. Tested on BUILT barbarians at levels 1/7/15 in test/batch033-resume-modes-engine-rage-damage-scaling-in-src-rules-modes-ts-no-gate-line-of-its-own-the-honesty-prerequisite-for-the-instruments-rage-damage-map-.test.ts; mutation-probed (restoring the modifier fails the second test)."
+    },
+    {
+      "id": "ligneous-instinct#wooden-rage-mode",
+      "backfillRows": [],
+      "note": "CODE, no row. Fixed in src/rules/modes.ts exactly as this finding's own proposal asks: cat-wooden-rage keeps m(-10,'untyped','speed') and the note, and the frozen m(6,'untyped','damage',{appliesWhen}) is deleted. RAGE_DAMAGE['ligneous-instinct'] = {tiers:[6,10,18]} on the rider is the single carrier. The Speed penalty stays in modes.ts because nothing else carries it - the test proves land Speed is still exactly 10 feet lower with the mode on. AoN instinct-16: 'When you use wooden rage, increase the additional damage from Rage from 6 to 10. If you have greater weapon specialization, instead increase the damage from Rage when using wooden rage from 10 to 18.'"
+    },
+    {
+      "id": "cat-cursebound-1..4-modifiers-empty",
+      "backfillRows": [],
+      "note": "REFUTED, no code and no row - not a lane. The closer's SS1/SS2 and the situational verifier's item 2 call cat-cursebound-1..4 modifiers:[] an open modes.ts lane. MEASURED against public/core.json: the modes bucket already ships 20 per-mystery stage records (curse-of-creeping-ashes-1..4, curse-of-inclement-headwinds-1..4, curse-of-inevitable-rot-1..4, curse-of-the-living-death-1..4, curse-of-the-mortal-warrior-1..4), each gated feats:[<curse record id>] and each carrying the real numbers - e.g. curse-of-creeping-ashes-1 weaknesses [{fire,2}], -2 curse-of-creeping-ashes-2 modifiers [{-2 circumstance attack, appliesWhen 'ranged attack rolls'}], -3 weaknesses [{fire,'5+@actor.level'}], -4 modifiers [{-2 circumstance attack},{-10 status speed}]. All 20 share exclusiveGroup 'oracle-cursebound' with cat-cursebound-N, so a mystery's own stage mode and the generic stage toggle can never be on at the same time: cat-cursebound-N is the generic STAGE TOGGLE for a mystery whose curse we have not authored, not the mystery's effects. Giving it modifiers would invent mystery-agnostic numbers and duplicate the ones that ship. Pinned by the third describe block of this group's test file so the 'lane' is not re-opened."
+    }
+  ]
+}

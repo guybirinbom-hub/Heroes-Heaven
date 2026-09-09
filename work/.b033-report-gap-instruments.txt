@@ -1,0 +1,141 @@
+BATCH 033 — GAP AGENT, family gap-instruments (WG-COMPARISON lane)
+==================================================================
+Six open gap lines, all disposed of: 3 AUTHORED, 3 PARKED, 0 open.
+
+THE SIX LINES
+-------------
+AUTHORED  work/.b033-report-instruments.txt:47  ->  test/wg-experience.harness.test.tsx:676
+    "surfaceOf: featureNames maps snap.ownedFeatures through db.classFeatures only, so a record's
+    grantsActions grant is on NO surface list."  BUILT, and the builder's diagnosis was HALF right:
+    `Character.grantedActionIds` alone does NOT carry these five records (it is filled only from a
+    chosen OPTION's grantsActions, build.ts:6201 — the first cut of this teach measured `actionNames []`
+    and moved nothing). The sheet's own reader is MainTab.tsx:281-328, which reads TWO carriers, so the
+    surface now mirrors both: `grantsActions` on an owned feat or class feature, PLUS grantedActionIds.
+    scripts/lib/wg-experience-lanes.mjs:503 (giveAbilityBlock) reads the new list beside featNames /
+    featureNames.  Closes finding way-of-the-drifter#instrument-deeds' delivery half and replaces FIVE
+    parking entries the builder had specified — a parking entry hides a record from gate 9, and these
+    five records were never limited, only unobserved.
+
+AUTHORED  work/.b033-verify-instruments.txt:143  ->  work/.b033-rows-gap-instruments.json
+    The verify pass's DATA STILL NEEDED section: ten parking entries and the (Psi)/(legacy) teach, none
+    of them written.  Delivered as (a) the "(Psi)"/"(legacy)" teach in effectDelivery's giveSpell branch,
+    scripts/lib/wg-experience-lanes.mjs:530, and (b) THREE parking entries in
+    work/experience-instrument-limits.json — not ten, because seven of the ten are no longer limited
+    (five cleared by the actionNames teach above, two by the qualifier teach).
+    ⚠ The verify pass's correction was taken, not the builder's form: the regex is anchored
+    /\s*\((?:Psi|legacy)\)\s*$/i, NEVER a blanket parenthetical strip. Re-counted in work/wg/wg-data.sql
+    this run: (Psi) 12, (legacy) 2296, but also (deprecated) 30 and (playtest) 170 — a blanket strip
+    would equate a deprecated or playtest spell with the base spell we ship, which is laundering.
+
+PARKED    work/.b033-report-instruments.txt:41  ->  flaggedResidue (section underline)
+    The DATA STILL NEEDED underline. The section itself reads "(none)"; re-verified — 41 findings, all
+    instrument misreads, zero backfillRows in the instruments spec and zero in this gap spec.
+
+PARKED    work/.b033-report-instruments.txt:46  ->  owner question spore-order-counts-as-leaf-order
+    The CROSS-FILE GAPS underline; its live item is spore-order. Print (AoN druidic-order-13, Special)
+    makes a spore druid count as a leaf order member and qualify for leaf order feats. Ten feats in
+    core.json carry the prerequisite line "leaf order" and NOTHING satisfies or enforces it today.
+    Queued rather than built because the only lane that could carry it — a declared choice token
+    (build.ts:8503/9874) — reads `rec.choice.options[]` in TOKEN_BUCKETS only, which a class's
+    subclass/extraChoices option is not; and declaring the token would make that line BLOCKING for the
+    first time, taking ten feats away from the other eight druid orders. That is a behaviour change
+    outside batch 033, so it is the owner's call, not mine. Copying WG (`grantsClassFeatures:
+    ['leaf-order']`) would be WRONG — it hands over Leaf Order's own skill, feat and focus spell.
+    Validated against scripts/add-owner-question.mjs (report mode): accepted as #134.
+    (The section's other items: 2 and 3 authored — scripts/wg-experience.mjs:189 already spreads
+    ...ev.surface so the new surface field needs no edit there; 5, dragon-eidolon, belongs to
+    dragon-eidolon#tradition in another family and is left reporting on purpose.)
+
+PARKED    work/.b033-verify-instruments.txt:181 ->  flaggedResidue (section underline)
+    Items 6 and 7 stay residue deliberately. (6) wg-diff's KIND sweep still reports battle-creed and
+    curse-of-the-mortal-warrior as THEY-ONLY `save` because it reads neither the subclass-keyed tables in
+    src/rules/advancement.ts nor the core.json modes bucket — a real instrument gap, but NO finding in
+    this batch covers it, and teaching it would silence records nobody read. (7) scripts/wg-casting.mjs
+    must be run via `npx jiti`; the verify pass itself called that not-a-batch-033 change.
+
+PARKED    work/.b033-verify-instruments.txt:182 ->  flaggedResidue (THE STASH — a human must act)
+    Every git write command is an absolute prohibition for this run, so no agent here can pop it.
+    RE-MEASURED with read-only git: stash@{0} holds 214 paths, 208 of which are NOT modified in the
+    working tree — 190 generated artefacts (public/ast/*.json.gz, public/data/bestiary/*) and 18 real
+    source files, all under tracker/, scripts/ and test/umbrella-items.test.ts. Those 208 sit at HEAD in
+    the tree, so committing batch 033 does not destroy them and `git stash pop` still applies after the
+    commit; the two conflicts the verify pass named (src/rules/build.ts, scripts/dropped-inline-check.mjs)
+    must be resolved by hand keeping the WORKING-TREE version. Nothing this batch depends on is still
+    stashed: the three comparer files are already back (restored by the gap-situational agent with
+    read-only `git show stash@{0}:<path>`), which I confirmed by reading them.
+
+THE TEACHES — the finding id on each teach line
+-----------------------------------------------
+TEACH — finding way-of-the-drifter#instrument-deeds — surface.actionNames
+    test/wg-experience.harness.test.tsx:676 (surfaceOf) + scripts/lib/wg-experience-lanes.mjs:503.
+    Also delivers the same undelivered op for way-of-the-sniper, way-of-the-vanguard,
+    interrogation-methodology and alchemical-sciences-methodology — one carrier, five records.
+TEACH — finding the-distant-grasp — the anchored (Psi)/(legacy) spell-name match
+    scripts/lib/wg-experience-lanes.mjs:530. Also delivers the-unbound-step and the-tangible-dream.
+
+THE PARKING ENTRIES (work/experience-instrument-limits.json, batch 33, each with its own _cite)
+-----------------------------------------------------------------------------------------------
+the-distant-grasp   NO-SHEET-EFFECT  wg-legacy-spell-name        _cite the-distant-grasp
+    One giveSpell survives, "Levitate", and the mirror settles it outright: TWO "The Distant Grasp"
+    documents exist — conscious-mind-1 (legacy) prints "**3rd** [Levitate]", conscious-mind-7 (remaster)
+    prints "**3rd** [Gravity Well]", and our option's description and grantedSpells carry gravity-well.
+    Print wins; adopting theirs would move us away from print. (The builder cited conscious-mind-12 for
+    this; that document is The Unbound Step. The verify pass caught it and I re-read both files.)
+battle-creed        MISSING-CONTROL  derived-value-not-a-pick    _cite battle-creed#control
+    Print gives no choice ("your deity's favored weapon"); build.ts:3784 computes favoredWeaponRank
+    (master@13 / expert@5) and build.ts:3817 writes it over every deity.favoredWeapons entry, so even a
+    multi-weapon deity owes the player no pick.
+armor-innovation    MISSING-CONTROL  control-off-record          _cite armor-innovation#instrument-control
+    The control exists and is load-bearing: src/builder/shared.tsx:3567-3577 renders the "Armor base
+    statistics" PopupSelect (Power Suit / Subterfuge Suit) into build.inventorArmorStats, read at
+    shared.tsx:3559, build.ts:7691 and build.ts:8389, and build.ts:1262 reports the character as having
+    an outstanding required choice until it is answered. The harness only observes controls the RECORD's
+    differential adds. Its `items` half (armor-innovation#suit-item) is NOT covered and still reports.
+
+MEASURED (node scripts/wg-experience.mjs on the real Builder in jsdom)
+----------------------------------------------------------------------
+this family's ten records:  NO-SHEET-EFFECT 6 · OK 2 · MISSING-CONTROL 2
+                        ->  NO-SHEET-EFFECT 1 · OK 7 · MISSING-CONTROL 2
+    the-unbound-step and the-tangible-dream: NO-SHEET-EFFECT -> OK (qualifier teach)
+    way-of-the-drifter, way-of-the-sniper, way-of-the-vanguard, interrogation-methodology,
+    alchemical-sciences-methodology: NO-SHEET-EFFECT -> OK (actionNames teach)
+    the-distant-grasp: 3 undelivered -> 1 (parked); battle-creed / armor-innovation: unchanged (parked)
+
+ADVERSARIAL — the teaches launder nothing outside their carriers
+    batch 030 replayed through the same script: OK 37 · NO-SHEET-EFFECT 2 · UNVERIFIED-EFFECT 1 before
+        and after — 0 verdicts moved, and both surviving NO-SHEET-EFFECTs stayed flagged.
+    batch 032 replayed: 40 OK before and after, 0 verdicts moved.
+    the-distant-grasp kept its one undelivered op through the qualifier teach (the teach is anchored, so
+        the pre-remaster name it names is not matched).
+    battle-creed and armor-innovation were untouched by both teaches — the two records in the same ten
+        whose verdicts are MISSING-CONTROL rather than a delivery question.
+    (the replay batches were copies under throwaway tokens; every probe artefact was deleted afterwards
+     and no other agent's batch file was overwritten.)
+
+TESTS + GATES
+    test/wg-experience-lanes.test.ts — 2 new it( in describe('batch 33 …'), 38 passing. Both carry
+        `// batch 033: <finding id>` above every changed expect and a `// mutation-proof` marker naming
+        the carrier they stunt: actionNames -> [] returns undelivered, spellNames -> [] returns
+        undelivered, and a DIFFERENT action against a populated actionNames stays undelivered.
+    test/wg-experience.harness.test.tsx — 3 passing / 1 skipped (the sweep skips without its env vars).
+    node scripts/test-flip-audit.mjs --batch 033 — clean (8 test files touched, every flip cited).
+    npx tsc --noEmit — clean.
+
+CROSS-FILE GAPS (mine, not built)
+    1. scripts/wg-diff.mjs KIND sweep — see the parked line above (item 6). Unchanged from the verify
+       pass: a real gap that no finding in this batch covers.
+    2. spore-order membership — owner question spore-order-counts-as-leaf-order, above. The second
+       printed clause ("Your familiar must be a fungus leshy") rides on the same answer.
+
+DATA STILL NEEDED
+    (none — this family owes no overlay row. work/.b033-rows-gap-instruments.json carries zero
+     backfillRows and zero codeEdits by design; it exists to carry the manifest stage[] list, which is
+     what scripts/wg-batch-commit.mjs stages by explicit path.)
+
+MANIFEST
+    Appended ONE entry to work/.b033-specs.json (re-read immediately before writing; all six existing
+    entries untouched):
+      { file: "work/.b033-rows-gap-instruments.json", kind: "rows", family: "gap-instruments",
+        stage: [ work/.b033-rows-gap-instruments.json, work/.b033-report-gap-instruments.txt,
+                 work/experience-instrument-limits.json, scripts/lib/wg-experience-lanes.mjs,
+                 test/wg-experience-lanes.test.ts, test/wg-experience.harness.test.tsx ] }

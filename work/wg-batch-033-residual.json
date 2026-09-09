@@ -1,0 +1,671 @@
+{
+ "batch": "work/wg-batch-033.json",
+ "examined": 50,
+ "method": "Opus readers (print + WG raw ops + every carrier) each followed by an adversarial verifier; findings applied by 8 family spec(s), verdicts derived by scripts/wg-batch-close.mjs from the cited rows, edits, tests and teaches",
+ "confirmed": [
+  {
+   "id": "the-distant-grasp",
+   "finding": "the-distant-grasp",
+   "severity": "internal",
+   "summary": "The digest's \"spell | conditional | NO-SHEET-EFFECT\" flags are a comparer misread: the conscious mind's granted spells, psi cantrips and its level ladder are all delivered, and the record does have a sheet effect.",
+   "fixed": true
+  },
+  {
+   "id": "the-distant-grasp",
+   "finding": "the-distant-grasp#telekinetic-projectile",
+   "severity": "player-visible",
+   "summary": "The Distant Grasp increases telekinetic projectile's range to 60 feet and neither side models it, so the spell row shows the unmodified 30 feet.",
+   "fixed": true
+  },
+  {
+   "id": "the-distant-grasp",
+   "finding": "the-distant-grasp#telekinetic-hand",
+   "severity": "player-visible",
+   "summary": "The Distant Grasp raises telekinetic hand's carrying capacity on a rank ladder and neither side models it, so the spell row shows only the base light-Bulk limit.",
+   "fixed": true
+  },
+  {
+   "id": "the-unbound-step",
+   "finding": "the-unbound-step",
+   "severity": "internal",
+   "summary": "The digest's \"spell | NO-SHEET-EFFECT\" flags are a comparer misread: the conscious mind's granted spells and psi cantrips are delivered from the psychic class's subclass option and the conscious-mind ladder, and the record already has a she",
+   "fixed": true
+  },
+  {
+   "id": "the-unbound-step",
+   "finding": "the-unbound-step#phase-bolt",
+   "severity": "player-visible",
+   "summary": "The Unbound Step's non-amp modification to phase bolt (stripping 1 point of the target's circumstance AC bonus on a success) is modelled by neither side; only the warp step Speed clause has a carrier.",
+   "fixed": true
+  },
+  {
+   "id": "school-of-kalistrade",
+   "finding": "school-of-kalistrade",
+   "severity": "internal",
+   "summary": "The digest's \"spells theirs-not-ours=[unexpectedwindfall, capitaldividend] | ours=[(nothing)]\" is a comparer misread: both school spells are carried on the wizard class's subclass option, and the curriculum matches print exactly.",
+   "fixed": true
+  },
+  {
+   "id": "battle-creed",
+   "finding": "battle-creed",
+   "severity": "internal",
+   "summary": "The digest's three MISSING save lines and \"grants theirs-not-ours=[deadlysimplicity, reactivestrike] | ours=[(nothing)]\" are comparer misreads: all four are carried, the saves on the owning class's advancement table and the feats on the cle",
+   "fixed": true
+  },
+  {
+   "id": "battle-creed",
+   "finding": "battle-creed#control",
+   "severity": "internal",
+   "summary": "The MISSING-CONTROL flag (WG's two `select from:ADJ_VALUE \"Select Deity Weapon\"` ops) is a comparer misread: print gives the player no choice here, and ours resolves the deity's favored weapon automatically.",
+   "fixed": true
+  },
+  {
+   "id": "whisper-of-wings",
+   "finding": "whisper-of-wings",
+   "severity": "internal",
+   "summary": "The digest's \"MISSING skill|nature theirs=trained ours=(nothing)\" and \"spells theirs-not-ours=[murmuration, gentlelanding] | ours=[(nothing)]\" are comparer misreads: all three, plus the familiar ability WG does not encode, are carried on th",
+   "fixed": true
+  },
+  {
+   "id": "skin-hard-as-horn",
+   "finding": "skin-hard-as-horn",
+   "severity": "player-visible",
+   "summary": "The two qualifiers on the ikon's immanence resistance ride in a `note` key that no reader reads, so the resistance is folded into the sheet's IWR total unconditionally — it pays out while the divine spark is in another ikon and against crit",
+   "fixed": true
+  },
+  {
+   "id": "ligneous-instinct",
+   "finding": "ligneous-instinct#instrument",
+   "severity": "internal",
+   "summary": "The SET-GAP flags (resistances theirs=piercing,slashing ours=(nothing); weaknesses theirs=fire ours=(nothing)) are a comparer misread — we carry exactly those three entries, on `whileActive`, with the same 3+Con value WG uses.",
+   "fixed": true
+  },
+  {
+   "id": "ligneous-instinct",
+   "finding": "ligneous-instinct#wooden-rage-mode",
+   "severity": "player-visible",
+   "summary": "Wooden Rage's additional damage is delivered twice — once correctly and level-scaled by the Rage strike rider, and again by the `cat-wooden-rage` mode's own +6 damage modifier, which is frozen at 6 and so contradicts the printed 10/18 escal",
+   "fixed": true
+  },
+  {
+   "id": "school-of-rooted-wisdom",
+   "finding": "school-of-rooted-wisdom#instrument",
+   "severity": "internal",
+   "summary": "The 'spells theirs-not-ours=[halcyonmists, calltheten] | ours=[(nothing)]' flag is a comparer misread — both school spells are ours, carried on the wizard class's subclass OPTION rather than on the classFeature record.",
+   "fixed": true
+  },
+  {
+   "id": "school-of-thassilonian-rune-magic",
+   "finding": "school-of-thassilonian-rune-magic#instrument",
+   "severity": "internal",
+   "summary": "The 'spells theirs-not-ours=[cuttingeye, allencompassinghunger, preciousgleam, heartshook, crescentscepter, reclinedapport, vengefulglare] | ours=[(nothing)]' flag is a comparer misread — all seven initial sin spells, the curriculum and the",
+   "fixed": true
+  },
+  {
+   "id": "curse-of-the-mortal-warrior",
+   "finding": "curse-of-the-mortal-warrior#instrument",
+   "severity": "internal",
+   "summary": "The six MISSING save|fortitude/reflex/will flags are an instrument misread: every cursebound stage of this curse is already carried by four core.json `modes` records, with the same numbers WG uses.",
+   "fixed": true
+  },
+  {
+   "id": "way-of-the-drifter",
+   "finding": "way-of-the-drifter#instrument-skill",
+   "severity": "internal",
+   "summary": "The MISSING skill|acrobatics flag is an instrument misread: the Way Skill is granted by the gunslinger's own subclass option, not by the class-feature record.",
+   "fixed": true
+  },
+  {
+   "id": "way-of-the-drifter",
+   "finding": "way-of-the-drifter#instrument-deeds",
+   "severity": "internal",
+   "summary": "The `grants theirs-not-ours=[intothefray, finishthejob, drifterswake]` flag is an instrument misread: all three deeds are granted at the right levels through the subclass option's featureIds.",
+   "fixed": true
+  },
+  {
+   "id": "devotion-phantom-eidolon",
+   "finding": "devotion-phantom-eidolon#instrument",
+   "severity": "internal",
+   "summary": "The MISSING skill|medicine, skill|occultism and the `spellcasting` flag are instrument misreads: both skills and the occult casting source are carried by the summoner subclass option.",
+   "fixed": true
+  },
+  {
+   "id": "devotion-phantom-eidolon",
+   "finding": "devotion-phantom-eidolon#language",
+   "severity": "player-visible",
+   "summary": "WG asks the player to choose the eidolon's language and we ask nothing and record nothing — the printed Language line reaches the player only as inert description text.",
+   "fixed": true
+  },
+  {
+   "id": "interrogation-methodology",
+   "finding": "interrogation-methodology#instrument",
+   "severity": "internal",
+   "summary": "The MISSING skill|diplomacy flag is an instrument misread: Diplomacy is granted by the investigator subclass option, and the No Cause for Alarm feat grant is already carried too.",
+   "fixed": true
+  },
+  {
+   "id": "spinner-of-threads",
+   "finding": "spinner-of-threads#instrument",
+   "severity": "internal",
+   "summary": "The MISSING skill|occultism flag and `spells theirs-not-ours=[nudgefate, surestrike]` are instrument misreads: the patron skill, the occult spell list and both spells are carried by the witch subclass option.",
+   "fixed": true
+  },
+  {
+   "id": "flame-order",
+   "finding": "flame-order#instrument",
+   "severity": "internal",
+   "summary": "All three flags on Flame Order (skill|acrobatics MISSING, grants theirs-not-ours=[firelung], spells theirs-not-ours=[wildfire]) are an instrument misread: every one of them is carried on the druid class record's subclass option, which the c",
+   "fixed": true
+  },
+  {
+   "id": "the-tangible-dream",
+   "finding": "the-tangible-dream#instrument",
+   "severity": "internal",
+   "summary": "The NO-SHEET-EFFECT flag on The Tangible Dream is wrong: the conscious mind's 14 granted spells and their level ladder are both built and both reach the sheet, on the psychic class record rather than on the feature record.",
+   "fixed": true
+  },
+  {
+   "id": "the-tangible-dream",
+   "finding": "the-tangible-dream#granted-spell-2nd",
+   "severity": "player-visible",
+   "summary": "The Conscious Mind picker's description for The Tangible Dream shows an empty \"2nd:\" line — the 2nd-rank granted spell Invisibility was dropped from the subclass-option copy of the text, so a player choosing a conscious mind reads that this",
+   "fixed": true
+  },
+  {
+   "id": "speaker-in-sibilance",
+   "finding": "speaker-in-sibilance#instrument",
+   "severity": "internal",
+   "summary": "The four MISSING lore-proficiency flags and the ten theirs-not-ours spells on Speaker in Sibilance are an instrument misread: the Lores (with their 8th/16th ladder), all ten apparition spells and the vessel focus spell are carried on the an",
+   "fixed": true
+  },
+  {
+   "id": "school-of-the-boundary",
+   "finding": "school-of-the-boundary#instrument",
+   "severity": "internal",
+   "summary": "The theirs-not-ours=[fortifysummoning, spiralofhorrors] flag on School of the Boundary is an instrument misread: both school spells are carried on the wizard class record's subclass option, and we additionally model the full curriculum that",
+   "fixed": true
+  },
+  {
+   "id": "the-resentment",
+   "finding": "the-resentment#patron-skill",
+   "severity": "internal",
+   "summary": "The baseline digest's \"MISSING skill|occultism\" is a comparer misread: Occultism trained IS delivered, on the witch's subclass OPTION rather than on the classFeatures record.",
+   "fixed": true
+  },
+  {
+   "id": "fey-eidolon",
+   "finding": "fey-eidolon#eidolon-skills",
+   "severity": "internal",
+   "summary": "The digest's \"MISSING skill|deception\" and \"MISSING skill|nature\" are comparer misreads: both are delivered by the summoner subclass option.",
+   "fixed": true
+  },
+  {
+   "id": "fey-eidolon",
+   "finding": "fey-eidolon#magical-understudy",
+   "severity": "player-visible",
+   "summary": "Print grants the eidolon the Magical Understudy feat at 1st and Magical Adept at 7th; we grant neither, so a fey summoner's eidolon never gets its two innate cantrips even though the plumbing to hold them already exists.",
+   "fixed": true
+  },
+  {
+   "id": "fey-eidolon",
+   "finding": "fey-eidolon#fey-gift-spells",
+   "severity": "player-visible",
+   "summary": "Fey Gift Spells widens the summoner's repertoire to arcane illusion/mental spells; neither side models it, so the one thing the fey eidolon exists for is unavailable in the spell picker.",
+   "fixed": true
+  },
+  {
+   "id": "fey-eidolon",
+   "finding": "fey-eidolon#language",
+   "severity": "player-visible",
+   "summary": "Print gives the fey eidolon Sylvan; WG grants a language for it and we model no eidolon language anywhere.",
+   "fixed": true
+  },
+  {
+   "id": "harmonic-oscillator",
+   "finding": "harmonic-oscillator#overdrive-bonus",
+   "severity": "player-visible",
+   "summary": "Neither side models the Overdrive rider: the resistance stays at 3 + half level while overdriven, where print says it rises by 2.",
+   "fixed": true
+  },
+  {
+   "id": "alchemical-sciences-methodology",
+   "finding": "alchemical-sciences-methodology#crafting-skill",
+   "severity": "internal",
+   "summary": "The digest's \"MISSING skill|crafting\" is a comparer misread: Crafting trained is delivered by the investigator subclass option.",
+   "fixed": true
+  },
+  {
+   "id": "alchemical-sciences-methodology",
+   "finding": "alchemical-sciences-methodology#versatile-vials",
+   "severity": "player-visible",
+   "summary": "An Alchemical Sciences investigator gets no versatile vial counter, so the Quick Tincture action we grant them has nothing to spend — neither side models the vials.",
+   "fixed": true
+  },
+  {
+   "id": "alchemical-sciences-methodology",
+   "finding": "alchemical-sciences-methodology#edition-aonid",
+   "severity": "player-visible",
+   "summary": "The record carries the LEGACY Advanced Player's Guide aonId and edition:'legacy' while its text and source are the current Player Core 2 methodology, so the four current investigator methodologies are treated as legacy content by the editio",
+   "fixed": true
+  },
+  {
+   "id": "elemental-eidolon",
+   "finding": "elemental-eidolon#eidolon-skills",
+   "severity": "internal",
+   "summary": "The digest's \"MISSING skill|nature\" and \"MISSING skill|survival\" are comparer misreads: both are delivered by the summoner subclass option.",
+   "fixed": true
+  },
+  {
+   "id": "elemental-eidolon",
+   "finding": "elemental-eidolon#core-note-generalises-fire",
+   "severity": "player-visible",
+   "summary": "Our eidolon note applies the FIRE core's resistance/weakness/+1 damage to every element, which print gives to fire alone — five of the six cores are shown a benefit they do not have and are missing the one they do.",
+   "fixed": true
+  },
+  {
+   "id": "elemental-eidolon",
+   "finding": "elemental-eidolon#core-choice-no-reader",
+   "severity": "player-visible",
+   "summary": "The Elemental Core pick has NO READER: the player chooses air/earth/fire/metal/wood/water and nothing in src/ ever consults the answer.",
+   "fixed": true
+  },
+  {
+   "id": "light-mortar-innovation",
+   "finding": "light-mortar-innovation#innovation-item",
+   "severity": "player-visible",
+   "summary": "The innovation IS a light mortar the character owns from 1st level, and nothing in our data hands it over — WG gives the item, we grant no item and no siege companion.",
+   "fixed": true
+  },
+  {
+   "id": "light-mortar-innovation",
+   "finding": "light-mortar-innovation#duplicate-modification-choice",
+   "severity": "player-visible",
+   "summary": "The initial light mortar modification is asked twice — once by the record's own inert `choice`, once by the live inventor modification picker that actually applies the pick.",
+   "fixed": true
+  },
+  {
+   "id": "light-mortar-innovation",
+   "finding": "light-mortar-innovation#mortar-stats",
+   "severity": "player-visible",
+   "summary": "The innovation's own scaling statistics (AC/DC from your class DC, Int-based HP and saves, hardness and save-rank steps, extra damage die every 4 levels) are modelled by neither side, so the shipped light mortar stays a fixed level-1 siege ",
+   "fixed": true
+  },
+  {
+   "id": "school-of-unified-magical-theory",
+   "finding": "school-of-unified-magical-theory#instrument-spells",
+   "severity": "internal",
+   "summary": "The 'spells theirs-not-ours=[handoftheapprentice, interdisciplinaryincantation]' flag is a comparer misread — both school spells are carried, just on the wizard subclass option rather than on the classFeatures record.",
+   "fixed": true
+  },
+  {
+   "id": "school-of-unified-magical-theory",
+   "finding": "school-of-unified-magical-theory#drain-bonded-item-uses",
+   "severity": "player-visible",
+   "summary": "A UMT wizard's Drain Bonded Item still shows one use per day at every level; print gives one use per day per spell rank they can cast, and no carrier in the app can retune a class feature's limitedUses from a subclass option.",
+   "fixed": true
+  },
+  {
+   "id": "faiths-flamekeeper",
+   "finding": "faiths-flamekeeper#instrument",
+   "severity": "internal",
+   "summary": "The 'skill|religion theirs=trained ours=(nothing)' and 'spells theirs-not-ours=[stoketheheart, command]' flags are a comparer misread — the tradition, the patron skill and both spells are all carried on the witch subclass option.",
+   "fixed": true
+  },
+  {
+   "id": "paradox-of-opposites",
+   "finding": "paradox-of-opposites#instrument",
+   "severity": "internal",
+   "summary": "The 'skill|religion theirs=trained ours=(nothing)' and 'spells theirs-not-ours=[tradedeathforlife, sleep]' flags are a comparer misread — the tradition, the patron skill and both spells are all carried on the witch subclass option.",
+   "fixed": true
+  },
+  {
+   "id": "decay-instinct",
+   "finding": "decay-instinct#instrument-resistances",
+   "severity": "internal",
+   "summary": "The 'SET-GAP set|resistances … ours=(nothing)' flag is a comparer misread — Raging Resistance is carried as a whileActive clause with the same rage gate and the same 3+Con value WG uses.",
+   "fixed": true
+  },
+  {
+   "id": "decay-instinct",
+   "finding": "decay-instinct#rotting-rage-damage-scaling",
+   "severity": "player-visible",
+   "summary": "Rotting Rage's damage never grows: our mode adds a flat +6 at every level, where print (and WG) give 10 once you have weapon specialization and 18 with greater weapon specialization.",
+   "fixed": true
+  },
+  {
+   "id": "curse-of-creeping-ashes",
+   "finding": "curse-of-creeping-ashes#cursebound-4-text",
+   "severity": "player-visible",
+   "summary": "Our cursebound note invents a mechanic the print does not have — it tells the player cursebound 4 kills them, when print gives a -10-foot status penalty to all Speeds.",
+   "fixed": true
+  },
+  {
+   "id": "curse-of-creeping-ashes",
+   "finding": "curse-of-creeping-ashes#speed-penalty",
+   "severity": "player-visible",
+   "summary": "The cursebound 4 Speed penalty reaches no number on our sheet even though the mode lane can carry it — WG applies -10 status to all five Speeds.",
+   "fixed": true
+  },
+  {
+   "id": "witness-to-ancient-battles",
+   "finding": "witness-to-ancient-battles#instrument",
+   "severity": "internal",
+   "summary": "Instrument misread: the comparer read only classFeatures['witness-to-ancient-battles'] and reported the two apparition Lores and all ten apparition spells as missing — every one of them is carried on the animist class record's apparition ch",
+   "fixed": true
+  },
+  {
+   "id": "steward-of-stone-and-fire",
+   "finding": "steward-of-stone-and-fire#instrument",
+   "severity": "internal",
+   "summary": "Instrument misread: the comparer reported the Mountain/Volcano Lore ranks as stuck at trained and all ten apparition spells as missing — the level ladder and the spells are on the animist class record's apparition option, not the classFeatu",
+   "fixed": true
+  },
+  {
+   "id": "steward-of-stone-and-fire",
+   "finding": "steward-of-stone-and-fire#duplicate-lore-grant",
+   "severity": "internal",
+   "summary": "Two of our carriers train the same two apparition Lores for this record: the class option's grants.lores and a flat entry in featGrantsAuto.ts.",
+   "fixed": true
+  },
+  {
+   "id": "stone-order",
+   "finding": "stone-order#instrument",
+   "severity": "internal",
+   "summary": "Instrument misread: the comparer reported Crafting training, the Steadying Stone feat and the Crushing Ground order spell as missing — all three are on the druid class record's subclass option.",
+   "fixed": true
+  },
+  {
+   "id": "armor-innovation",
+   "finding": "armor-innovation#instrument-control",
+   "severity": "internal",
+   "summary": "Instrument misread: MISSING-CONTROL is wrong — the Power Suit / Subterfuge Suit choice is a visible control in the Builder, and it gates the modification picker exactly as WG's select does.",
+   "fixed": true
+  },
+  {
+   "id": "armor-innovation",
+   "finding": "armor-innovation#suit-item",
+   "severity": "player-visible",
+   "summary": "Choosing the suit does not put the innovation armor in the character's inventory — WG's select hands over the Power Suit or Subterfuge Suit item, so our inventor gets no AC bonus, Dex cap, check penalty or Speed penalty from their innovatio",
+   "fixed": true
+  },
+  {
+   "id": "otherworldly-protection",
+   "finding": "otherworldly-protection#void-healing-swap",
+   "severity": "player-visible",
+   "summary": "Print (and WG) let the resistance be VITALITY instead of void for a character with void healing; ours hard-codes void with no choice, so a dhampir inventor gets a resistance that never applies and loses the one that does.",
+   "fixed": true
+  },
+  {
+   "id": "otherworldly-protection",
+   "finding": "otherworldly-protection#sanctified-resistance",
+   "severity": "player-visible",
+   "summary": "Print (and WG) extend the resistance to unholy damage for a holy-sanctified character and to holy damage for an unholy-sanctified one; ours carries no sanctification branch at all, so a sanctified inventor is short a whole resistance.",
+   "fixed": true
+  },
+  {
+   "id": "lurker-in-devouring-dark",
+   "finding": "lurker-in-devouring-dark#avatar-damage-type",
+   "severity": "player-visible",
+   "summary": "Our stored text for the apparition's avatar Strike drops the damage TYPE printed on it — \"6d10+6 bludgeoning\" became \"6d10+6\" — so the player reading the avatar's melee attack has no damage type at all; the same drop hit 10 of the 14 appari",
+   "fixed": true
+  },
+  {
+   "id": "lurker-in-devouring-dark",
+   "finding": "lurker-in-devouring-dark#duplicate-lore-grant",
+   "severity": "internal",
+   "summary": "Two of our own carriers grant this apparition's Ocean/Sailing Lore: the class option's grants.lores (with the correct 8th/16th ladder) and a flat-'trained' row in featGrantsAuto.ts that fires through the same build pass.",
+   "fixed": true
+  },
+  {
+   "id": "lurker-in-devouring-dark",
+   "finding": "lurker-in-devouring-dark#instrument",
+   "severity": "internal",
+   "summary": "The digest's \"DIFFERENT skill|lore:ocean theirs=expert/master ours=trained\" and \"spells theirs-not-ours=[causticblast … implosion]\" are instrument misreads: it read classFeatures/lurker-in-devouring-dark plus featGrantsAuto.ts and never loo",
+   "fixed": true
+  },
+  {
+   "id": "wilding-steward",
+   "finding": "wilding-steward#instrument",
+   "severity": "internal",
+   "summary": "The digest's \"MISSING skill|nature theirs=trained ours=(nothing)\" and \"spells theirs-not-ours=[wildingword]\" are instrument misreads: witch patron mechanics live on the witch subclass option, not on classFeatures/wilding-steward.",
+   "fixed": true
+  },
+  {
+   "id": "school-of-the-reclamation",
+   "finding": "school-of-the-reclamation#instrument",
+   "severity": "internal",
+   "summary": "The digest's \"spells theirs-not-ours=[graspingvine, unsettlingknowledge]\" is an instrument misread: both school spells are carried on the wizard subclass option, not on classFeatures/school-of-the-reclamation.",
+   "fixed": true
+  },
+  {
+   "id": "red-mantis-magic-school",
+   "finding": "red-mantis-magic-school",
+   "severity": "internal",
+   "summary": "The digest's \"spells theirs-not-ours=[debilitatingterror, shroudofthemantis] | ours=[(nothing)]\" is an instrument misread: both school spells are carried on the wizard SUBCLASS OPTION, not on the classFeatures record the comparer read.",
+   "fixed": true
+  },
+  {
+   "id": "red-mantis-magic-school",
+   "finding": "red-mantis-magic-school#curriculum-description",
+   "severity": "player-visible",
+   "summary": "The description the Builder actually shows for this arcane school has six curriculum spell names silently deleted, so the player reads an incomplete curriculum while the mechanical `curriculum` field is complete.",
+   "fixed": true
+  },
+  {
+   "id": "ripple-in-the-deep",
+   "finding": "ripple-in-the-deep",
+   "severity": "internal",
+   "summary": "The digest's \"MISSING skill|nature theirs=trained ours=(nothing)\" and \"spells theirs-not-ours=[stingofthesea]\" are instrument misreads: the patron skill, the hex cantrip and the familiar's spell choice are all carried on the witch SUBCLASS ",
+   "fixed": true
+  },
+  {
+   "id": "angel-eidolon",
+   "finding": "angel-eidolon",
+   "severity": "internal",
+   "summary": "The digest's \"MISSING skill|diplomacy\" and \"MISSING skill|religion\" are instrument misreads: both trained skills are carried on the summoner SUBCLASS OPTION, not on the classFeatures record the comparer read.",
+   "fixed": true
+  },
+  {
+   "id": "angel-eidolon",
+   "finding": "angel-eidolon#language",
+   "severity": "player-visible",
+   "summary": "Their encoding grants the angel eidolon's language and ours grants no language at all — neither the eidolon stat block nor any character-side lane delivers Celestial/Empyrean for this eidolon type.",
+   "fixed": true
+  },
+  {
+   "id": "angel-eidolon",
+   "finding": "angel-eidolon#hallowed-strikes-text",
+   "severity": "player-visible",
+   "summary": "Two of our three copies of Hallowed Strikes carry pre-remaster text that contradicts print: one says \"good damage\" harming \"evil creatures\", the other states the extra damage unconditionally and drops both the holy trait and the target rest",
+   "fixed": true
+  },
+  {
+   "id": "way-of-the-vanguard",
+   "finding": "way-of-the-vanguard",
+   "severity": "internal",
+   "summary": "The flagged gap is an instrument misread: Athletics training and all three deeds ARE delivered, by the Gunslinger subclass table in core.json, not by the classFeatures/way-of-the-vanguard record the comparer read.",
+   "fixed": true
+  },
+  {
+   "id": "way-of-the-sniper",
+   "finding": "way-of-the-sniper",
+   "severity": "internal",
+   "summary": "The flagged gap is an instrument misread: Stealth training and all three deeds ARE delivered, by the Gunslinger subclass table, not by the classFeatures/way-of-the-sniper record.",
+   "fixed": true
+  },
+  {
+   "id": "spore-order",
+   "finding": "spore-order",
+   "severity": "internal",
+   "summary": "The flagged gaps are an instrument misread: Intimidation training and the mushroom patch order spell ARE delivered, by the Druid subclass table.",
+   "fixed": true
+  },
+  {
+   "id": "dragon-eidolon",
+   "finding": "dragon-eidolon#instrument",
+   "severity": "internal",
+   "summary": "The MISSING-CONTROL verdict is an instrument misread: the comparer compared their tradition select against our Breath Weapon damage-type picker (two different choices), and the tradition and both skills are already delivered by the Summoner",
+   "fixed": true
+  },
+  {
+   "id": "dragon-eidolon",
+   "finding": "dragon-eidolon#senses",
+   "severity": "player-visible",
+   "summary": "The dragon eidolon never gains darkvision on the sheet: COMPANION_MODS['dragon-eidolon'] authors it but that table is keyed by the OWNER'S FEAT ids, and the eidolon type is character.subclassId, so the entry has no reader.",
+   "fixed": true
+  },
+  {
+   "id": "dragon-eidolon",
+   "finding": "dragon-eidolon#language",
+   "severity": "player-visible",
+   "summary": "The dragon eidolon's printed language (Draconic) is not modelled anywhere — the eidolon block has no language lane at all — while WG delivers it.",
+   "fixed": true
+  },
+  {
+   "id": "dragon-eidolon",
+   "finding": "dragon-eidolon#breath-area",
+   "severity": "player-visible",
+   "summary": "Breath Weapon prints two choices and a trait consequence; we record only the damage type, and WG records neither — the area (60-foot line vs 30-foot cone) and the matching damage trait are lost.",
+   "fixed": true
+  },
+  {
+   "id": "construct-eidolon",
+   "finding": "construct-eidolon#senses",
+   "severity": "player-visible",
+   "summary": "The construct eidolon never gains darkvision on the sheet: COMPANION_MODS['construct-eidolon'] authors it but is keyed by owner feat id, and the eidolon type arrives as character.subclassId.",
+   "fixed": true
+  },
+  {
+   "id": "construct-eidolon",
+   "finding": "construct-eidolon#language",
+   "severity": "player-visible",
+   "summary": "The construct eidolon's printed language pick ('one common mortal language') is not offered anywhere in our app; WG asks for it.",
+   "fixed": true
+  },
+  {
+   "id": "construct-eidolon",
+   "finding": "construct-eidolon#construct-heart",
+   "severity": "player-visible",
+   "summary": "Our Construct Heart situational entry states only part of the printed benefit: the condition text is cut off with an ellipsis (dropping poison, fatigued and sickened) and the DC 10 persistent-bleed flat check is not carried at all.",
+   "fixed": true
+  }
+ ],
+ "refuted": [
+  {
+   "id": "interrogation-methodology",
+   "finding": "interrogation-methodology#edition",
+   "summary": "Our record carries the remastered Player Core 2 text and source but is stamped edition 'legacy' with the superseded legacy aonId, so with \"Hide legacy data\" on the investigator loses the methodology e",
+   "evidence": "The mis-stamp half is real (record is edition 'legacy' + aonId 'methodology-4', the APG doc whose remaster_id is ['methodology-8'], while our description is verbatim methodology-8/PC2; the three siblings are stamped the same way), but the stated consequence is false: the methodology picker renders `"
+  },
+  {
+   "id": "harmonic-oscillator",
+   "finding": "harmonic-oscillator#instrument-unsupported",
+   "summary": "The record is flagged UNSUPPORTED, but our encoding is exact parity with theirs — the comparer has no rule for WG's RESISTANCES adjValue.",
+   "evidence": "The encoding-parity half is true (ours \"3+floor(@actor.level/2)\" vs their \"{{3+level/2}}\" for force and sonic), but the stated cause is wrong: work/wg-batch-033-experience.json records harmonic-oscillator as verdict UNSUPPORTED with detail \"no class or subclass grants this feature at level 20\" — the"
+  },
+  {
+   "id": "elemental-eidolon",
+   "finding": "elemental-eidolon#core-common-benefits",
+   "summary": "The core-independent half of Elemental Core — the +2 circumstance bonus against poison/sleep/paralyzed and the reduced persistent-bleed flat check — is modelled by neither side.",
+   "evidence": "The finding's own evidence (\"no saves bonus and no bleed-DC line anywhere for the eidolon\") is false: the Elemental Core entry in classes.summoner.subclass.options['elemental-eidolon'].eidolonAbilities is a level-1 'initial' tier, companions.ts:1157-1159 exposes every reached tier as `typeAbilities`"
+  }
+ ],
+ "flaggedResidues": [
+  {
+   "id": "flaggedResidue: speculative infrastructure, and the gap line says so — \"Not needed for my rows (I used sheet-fact gates instead), but any future finding that wants a visible pick on a modification hits this wall.\" No finding in batch 033 needs a visible pick on an inventor modification: otherworldly-protection#sanctified-resistance was deliberately settled on whenCreatureTrait instead, which the resistance loop already honours. Widening resolvePick to c.inventor.modifications is a builder-shape change with no caller, so it is measured and left: build.ts:6299/6304 runs over ownedFeatureIds (build.ts:6149) and grantOptions, and c.inventor.modifications is in neither, though derive.ts ownedFeatureIds does include them.",
+   "finding": "flaggedResidue: speculative infrastructure, and the gap line says so — \"Not needed for my rows (I used sheet-fact gates instead), but any future finding that wants a visible pick on a modification hits this wall.\" No finding in batch 033 needs a visible pick on an inventor modification: otherworldly-protection#sanctified-resistance was deliberately settled on whenCreatureTrait instead, which the resistance loop already honours. Widening resolvePick to c.inventor.modifications is a builder-shape change with no caller, so it is measured and left: build.ts:6299/6304 runs over ownedFeatureIds (build.ts:6149) and grantOptions, and c.inventor.modifications is in neither, though derive.ts ownedFeatureIds does include them.",
+   "severity": "internal",
+   "summary": "src/builder + build.ts resolvePick (build.ts:6299/6304): `effectChoices` on an INVENTOR MODIFICATION record has no reader at all — resolvePick runs over ownedFeatureIds (the class feature list, build.ts:6149) and grantOptions (subclass / extra-choice picks), and c.inventor.modifications is in neither, though derive's ownedFeatureIds does include them. Not needed for my rows (I used sheet-fact gat…",
+   "fixed": false,
+   "family": "data-rows",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: the section underline, not a gap. work/.b033-report-instruments.txt:42 reads \"(none)\" and the verify pass re-measured it: all 41 findings are instrument misreads, work/.b033-rows-instruments.json carries zero backfillRows, and the gap spec work/.b033-rows-gap-instruments.json carries zero too. Nothing is owed to scripts/data/effect-backfill.json by this family.",
+   "finding": "flaggedResidue: the section underline, not a gap. work/.b033-report-instruments.txt:42 reads \"(none)\" and the verify pass re-measured it: all 41 findings are instrument misreads, work/.b033-rows-instruments.json carries zero backfillRows, and the gap spec work/.b033-rows-gap-instruments.json carries zero too. Nothing is owed to scripts/data/effect-backfill.json by this family.",
+   "severity": "internal",
+   "summary": "----------------",
+   "fixed": false,
+   "family": "instruments",
+   "kind": "DATA STILL NEEDED"
+  },
+  {
+   "id": "spore-order-counts-as-leaf-order",
+   "finding": "spore-order-counts-as-leaf-order",
+   "severity": "internal",
+   "summary": "--------------",
+   "fixed": false,
+   "family": "instruments",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: not a gap — a horizontal rule of dashes copied out of work/.b033-verify-data-rows.txt by the apply-digest's line splitter. It names no record, no field and no file, so there is nothing to author or ask; the two report sections it separated are disposed of by the lines beneath it.",
+   "finding": "flaggedResidue: not a gap — a horizontal rule of dashes copied out of work/.b033-verify-data-rows.txt by the apply-digest's line splitter. It names no record, no field and no file, so there is nothing to author or ask; the two report sections it separated are disposed of by the lines beneath it.",
+   "severity": "internal",
+   "summary": "-------------------------------------------------------------------------------",
+   "fixed": false,
+   "family": "data-rows",
+   "kind": "DATA STILL NEEDED"
+  },
+  {
+   "id": "flaggedResidue: not a gap — a horizontal rule of dashes copied out of work/.b033-verify-data-rows.txt by the apply-digest's line splitter. It names no record, no field and no file, so there is nothing to author or ask; the two report sections it separated are disposed of by the lines beneath it.",
+   "finding": "flaggedResidue: not a gap — a horizontal rule of dashes copied out of work/.b033-verify-data-rows.txt by the apply-digest's line splitter. It names no record, no field and no file, so there is nothing to author or ask; the two report sections it separated are disposed of by the lines beneath it.",
+   "severity": "internal",
+   "summary": "-------------------------------------------------------------------------------",
+   "fixed": false,
+   "family": "data-rows",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: the section underline. Its items 2 and 3 are AUTHORED (the surfaceOf actionNames carrier; scripts/wg-experience.mjs:189 already spreads ...ev.surface, so the new field threads through with no edit) and item 4 is QUEUED as spore-order-counts-as-leaf-order. Items 6 and 7 stay residue on purpose: (6) wg-diff's KIND sweep still reports battle-creed and curse-of-the-mortal-warrior as THEY-ONLY `save` because it reads neither the subclass-keyed tables in src/rules/advancement.ts nor the core.json modes bucket — a real instrument gap that NO finding in this batch covers, so teaching it here would silence records nobody read; (7) scripts/wg-casting.mjs must be run as `npx jiti`, a usage note the verify pass itself called not-a-batch-033-change.",
+   "finding": "flaggedResidue: the section underline. Its items 2 and 3 are AUTHORED (the surfaceOf actionNames carrier; scripts/wg-experience.mjs:189 already spreads ...ev.surface, so the new field threads through with no edit) and item 4 is QUEUED as spore-order-counts-as-leaf-order. Items 6 and 7 stay residue on purpose: (6) wg-diff's KIND sweep still reports battle-creed and curse-of-the-mortal-warrior as THEY-ONLY `save` because it reads neither the subclass-keyed tables in src/rules/advancement.ts nor the core.json modes bucket — a real instrument gap that NO finding in this batch covers, so teaching it here would silence records nobody read; (7) scripts/wg-casting.mjs must be run as `npx jiti`, a usage note the verify pass itself called not-a-batch-033-change.",
+   "severity": "internal",
+   "summary": "--------------",
+   "fixed": false,
+   "family": "instruments",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: a HUMAN must run `cd \"C:/trying ai 2/pf2e codex\" && git stash pop` — every git write command is an absolute prohibition for this run, so no agent in this workflow can close it. RE-MEASURED here with read-only git: stash@{0} holds 214 paths, of which 208 are NOT currently modified in the working tree (190 generated public/ast + public/data/bestiary artefacts and 18 real source files, all under tracker/, scripts/ and test/umbrella-items.test.ts). Those 208 sit at HEAD in the tree, so committing batch 033 does NOT destroy them and the pop still applies afterwards; the two files the verify pass named as conflicts (src/rules/build.ts, scripts/dropped-inline-check.mjs) must be resolved by hand keeping the WORKING-TREE version. The instruments family's own three comparer files (wg-diff/wg-identity/wg-values) are already back in the tree — the gap-situational agent restored them with read-only `git show stash@{0}:<path>` — so nothing this batch depends on is still stashed. Full patch insurance: .../scratchpad/b033-stash-rescue.patch.",
+   "finding": "flaggedResidue: a HUMAN must run `cd \"C:/trying ai 2/pf2e codex\" && git stash pop` — every git write command is an absolute prohibition for this run, so no agent in this workflow can close it. RE-MEASURED here with read-only git: stash@{0} holds 214 paths, of which 208 are NOT currently modified in the working tree (190 generated public/ast + public/data/bestiary artefacts and 18 real source files, all under tracker/, scripts/ and test/umbrella-items.test.ts). Those 208 sit at HEAD in the tree, so committing batch 033 does NOT destroy them and the pop still applies afterwards; the two files the verify pass named as conflicts (src/rules/build.ts, scripts/dropped-inline-check.mjs) must be resolved by hand keeping the WORKING-TREE version. The instruments family's own three comparer files (wg-diff/wg-identity/wg-values) are already back in the tree — the gap-situational agent restored them with read-only `git show stash@{0}:<path>` — so nothing this batch depends on is still stashed. Full patch insurance: .../scratchpad/b033-stash-rescue.patch.",
+   "severity": "internal",
+   "summary": "⚠⚠ THE STASH. 211 files of other agents' and the owner's work are still in stash@{0} and only a human",
+   "fixed": false,
+   "family": "instruments",
+   "kind": "CROSS-FILE GAPS"
+  }
+ ],
+ "rejected": 3,
+ "askOwner": [
+  {
+   "id": "gleaming-blade",
+   "desk": 135,
+   "summary": "WG's injected text names this ikon's transcendence \"Mirrored Spirit Strike\"; print names it Flowing Spirit Strike, and no record called \"Mirrored Spirit Strike\" exists anywhere in the AoN mirror or in"
+  },
+  {
+   "id": "barrows-edge",
+   "desk": 136,
+   "summary": "Wanderer's Guide's injected text for this ikon states PERSISTENT spirit damage and omits the below-half-HP escalation entirely; the printed immanence is ordinary additional damage that TRIPLES per die"
+  },
+  {
+   "id": "gaze-sharp-as-steel",
+   "desk": 137,
+   "summary": "Wanderer's Guide's injected text replaces the printed Transcendence (A Moment Unending) with an entirely different effect — it grants the Reactive Strike feat instead of the printed precision damage."
+  },
+  {
+   "id": "dragon-eidolon",
+   "desk": 138,
+   "summary": "Wanderer's Guide lets a dragon-eidolon summoner pick any of the four traditions; the printed entry fixes the tradition at arcane."
+  }
+ ],
+ "complete": true,
+ "reverdicts": [
+  {
+   "id": "spore-order",
+   "from": "MATCHES",
+   "to": "OWNER-QUEUED",
+   "derived": "OWNER-QUEUED",
+   "reason": "desk #134 asks the membership-token question; the record must park until ruled"
+  }
+ ]
+}

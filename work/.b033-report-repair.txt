@@ -1,0 +1,112 @@
+BATCH 033 — REPAIR LANE (WG-comparison), report
+Assigned findings: lurker-in-devouring-dark#avatar-damage-type   (1 of 1 done)
+
+DATA STILL NEEDED
+  (none — the lane's 11 overlay rows are authored in work/.b033-rows-repair.json and pass
+   `node scripts/apply-parity-fixes.mjs work/.b033-rows-repair.json` dry-run: "all preconditions pass".)
+
+CROSS-FILE GAPS
+  scripts/import-core.mjs — THE SECOND CARRIER IS UNREACHABLE BY ANY ROW. classes.animist.extraChoices
+    [id=apparition].options[id=<apparition>].description holds its own copy of the same class-feature
+    prose (built at import-core.mjs:1365 from the same Foundry record, not shared with
+    db.classFeatures[id]), and it carries all 11 untyped **Damage** lines too. An overlay row cannot
+    reach it: a `description` row with a `path` is refused on purpose (apply-parity-fixes.mjs:241) and
+    a pathless whole-value row on `extraChoices` would swallow the 87 existing path rows (refusal 2).
+    The fix is one re-sync after the effect-backfill stage (import-core.mjs:2158-2168): for every
+    subclass/extraChoices option whose id names a db.classFeatures record a backfill row rewrote, copy
+    that record's `description`/`descRefs` onto the option. Until that lands the Builder's apparition
+    picker still shows "**Damage** 6d10+6 plus Grab" for all 11 while the sheet's class-feature popup
+    shows the repaired text. Family: whoever owns import-core.mjs (data/engine lane).
+  spells/devil-form — REFUSED by the repairer and it should stay refused: at site 5 we roll 2d10+10
+    where AoN spell-894 rolls 2d12+10, so the sites cannot be paired. That is a wrong DIE SIZE, not a
+    dropped type, and it is outside this finding. Belongs to the print-read / data lane.
+  classFeatures/lamentation-of-sinister-deals — has no core-descriptions.json entry and no aonId at
+    all, while the animist option copy carries the full (and correctly typed) prose. The finding's
+    evidence flags this as its "minor correction"; nothing here can create the missing carrier.
+    Family: data lane.
+  public/core-descriptions.json classFeatures/witness-to-ancient-battles — its Damage LABEL lost its
+    bold markers as well as its type ("…, Damage 6d8+6"). The type is repaired by this lane; restoring
+    `**Damage**` is a markup substitution, not an insertion, so the repairer deliberately does not do
+    it. Cosmetic, and the only record in the corpus with the shape. Family: data lane.
+
+----------------------------------------------------------------------------------------------------
+lurker-in-devouring-dark#avatar-damage-type  — CONFIRMED, repaired
+
+WHAT THE FINDING IS. AoN apparition-7 prints the avatar Strike as "**Damage** 6d10+6 bludgeoning plus
+Grab"; we ship "**Damage** 6d10+6 plus Grab". The @Damage cleaner kept the dice and ate the TYPE, so
+the player reading the avatar's melee attack has the number but not the half of a Strike that
+resistances, weaknesses and immunities are read against. Nothing looks broken, which is why it
+shipped.
+
+WHAT I BUILT.
+
+  scripts/repair-damage-type.mjs (new) — `restoreDamageTypes(ours, theirs)` and
+  `findDroppedDamageType(root)`. Insertions only: the printed type word is spliced in immediately
+  after the dice run we already print, and every other byte of our description — our ⟨1⟩ glyphs, our
+  de-linked "Grab", our blank lines, any authored correction — is left alone. It never replaces our
+  prose with the mirror's. Four refusals, because a confident wrong damage type is worse than a
+  visible missing one:
+    1. ORDERED ALIGNMENT. Sites are paired BY ORDER and the record is refused unless the counts match
+       and every pair's dice run is identical. This is load-bearing, not belt-and-braces: Crafter in
+       the Vault rolls 6d6+6 slashing in melee and 6d6+6 piercing at range, so a dice-string lookup
+       would have handed one of them the other's type.
+    2. TAIL AGREEMENT. The first word after the site must agree on both sides ("plus", "Ranged", or
+       end-of-block).
+    3. VOCABULARY. Only a PF2e damage type (with optional persistent/splash qualifier) is insertable.
+    4. ALREADY CORRECT / PRINT WINS. A site that already carries its type is skipped (re-running is a
+       no-op), and where AoN itself prints no type — Devil Form's vordine hoof, "1d4+12 plus 1d6
+       fire", spell-894 — nothing is invented.
+  It reuses `MIRROR`, `plain` and `mirrorIndex` from scripts/repair-stripped-save-dc.mjs rather than
+  re-deriving them, and follows that script's CLI shape (report by default, `--write` emits the spec;
+  I never ran --write — the spec below was generated from the same exported function and the driver
+  applies it).
+
+  MEASURED: 11 records, 19 sites, 1 record refused. The finding named ten; the eleventh is
+  classFeatures/witness-to-ancient-battles, which lost the label's BOLD MARKERS as well as the type
+  ("…, Damage 6d8+6"), so every count taken with a `**Damage**` pattern — including my own first run,
+  and including the finding's sweep — walked past a record carrying exactly the defect being counted.
+  The matcher now takes the label with or without its markup and repairs only the type. The eleven and
+  their restored types: crafter-in-the-vault (slashing, piercing), custodian-of-groves-and-gardens
+  (bludgeoning, mental), echo-of-lost-moments (void, void), impostor-in-hidden-places (void, void),
+  lurker-in-devouring-dark (bludgeoning), monarch-of-the-fey-courts (mental, mental),
+  reveler-in-lost-glee (slashing, acid), stalker-in-darkened-boughs (piercing),
+  steward-of-stone-and-fire (fire, fire), vanguard-of-roaring-waters (bludgeoning, bludgeoning),
+  witness-to-ancient-battles (slashing). Every one matches the type the finding's evidence lists.
+
+  scripts/dropped-inline-check.mjs — new hole class, the seventh, with its own ratchet
+  DAMAGE_TYPE_BASELINE = 11 (the count I measured; the comment says repair-damage-type.mjs and this
+  batch's rows drive it to zero and to lower it as they land, never raise it). It is deliberately NOT
+  a shape count: a "**Damage** <dice>" with no type is not on its own a defect, because AoN itself
+  prints one that way, so only a site whose own AoN document prints a type we do not is counted —
+  which is exactly the set the repairer will touch. Skips cleanly with no mirror. Verified: the guard
+  now prints "11 stripped-damage-type hole(s) (ratchet 11…)" and `npm run verify`'s other five classes
+  are unchanged (162 / 0 / 96 / 17 / ok).
+
+  work/.b033-rows-repair.json — 11 pathless `classFeatures/<id>.description` rows, four of them
+  carrying `supersedes: true` (echo-of-lost-moments, impostor-in-hidden-places,
+  monarch-of-the-fey-courts, reveler-in-lost-glee already have a description row in
+  scripts/data/effect-backfill.json). The superseded value is carried WHOLE: each new value is the
+  shipped description, which is byte-identical to the prior row's value, with the printed type spliced
+  in — verified row-by-row, and the dry-run prints the four supersessions with old/new side by side.
+  Every `why` names the record's own AoN doc id (apparition-3 … apparition-13).
+
+TEST THAT PINS IT. test/batch033-repair.test.ts — 8 tests, all green
+(`node scripts/vt.mjs test/batch033-repair.test.ts`). They drive `restoreDamageTypes` on real sentence
+PAIRS taken verbatim from the AoN mirror and from our shipped text:
+  - lurker-in-devouring-dark gains exactly "bludgeoning" and nothing else changes (asserted both ways:
+    the expected string, and `next.replace(' bludgeoning','') === ours`);
+  - re-running on the repaired text is a no-op;
+  - crafter-in-the-vault's two same-dice Strikes get slashing then piercing IN ORDER (the alignment
+    proof);
+  - shepherd-of-errant-winds, already correct, is returned untouched;
+  - witness-to-ancient-battles is repaired through an UNBOLDED label and stays unbolded;
+  - devil-form's hoof, which AoN prints untyped, is not invented;
+  - the two misalignment refusals (unpairable counts, disagreeing dice) and the tail-disagreement
+    refusal.
+They are fixtures on purpose, not assertions on a built character's description: this batch's rows
+change that description, so a shipped-text assertion would flip the moment the rows land and would
+prove nothing either side of the flip. What is pinned is the matcher's contract, which does not move.
+`npx tsc --noEmit` is clean.
+
+WHAT I COULD NOT DO. The second carrier (classes.animist.extraChoices option descriptions) — see
+CROSS-FILE GAPS; no row shape reaches it, and the fix is in scripts/import-core.mjs, outside my files.

@@ -1,0 +1,118 @@
+BATCH 033 — REPAIR LANE, ADVERSARIAL VERIFY
+Assigned findings: 1 (lurker-in-devouring-dark#avatar-damage-type)
+Spec files checked: work/.b033-rows-repair.json
+Gates: npx tsc --noEmit clean · node scripts/vt.mjs test/batch033-repair.test.ts 11/11 green ·
+       node scripts/dropped-inline-check.mjs exit 0 (162 / 0 / 96 / 17 / 11 / ok) ·
+       node scripts/test-flip-audit.mjs --batch 033 → no violation in ANY repair-lane file
+       (it does now fail on the INSTRUMENTS family's files — see CROSS-FILE GAPS).
+
+====================================================================================================
+lurker-in-devouring-dark#avatar-damage-type ......................................... FIXED-BY-ME
+
+WHAT THE BUILDER GOT RIGHT (checked, not taken on trust)
+
+  · All 11 row values diffed token-by-token against the SHIPPED public/core-descriptions.json value:
+    every row is the shipped string with ONLY the printed damage-type word(s) inserted — 19 sites,
+    19 inserted words, zero other bytes changed, no leftover tail on either side.
+  · All 11 types re-derived independently from the AoN mirror (apparition-3 … apparition-13) and
+    compared site-for-site with the row values: 11/11 MATCH, including the two same-dice pairs
+    (crafter slashing/piercing) that an unordered matcher would have crossed.
+  · The 4 supersessions (echo-of-lost-moments, impostor-in-hidden-places, monarch-of-the-fey-courts,
+    reveler-in-lost-glee) each have a prior scripts/data/effect-backfill.json description row whose
+    value is BYTE-IDENTICAL to the shipped description, so "the superseded value carried whole" is
+    literally true; supersedes:true is declared on exactly those 4 and on no other.
+  · Row hygiene: every target record exists; no row is a prose row with a path; every `why` names an
+    AoN doc id that resolves in the mirror under the applier's own docIdRe; no two rows in the spec —
+    and no two rows across ALL FOUR b033 specs (25 rows) — share a category/id/field/path key.
+  · Mutation-tested the matcher rather than trusting its 8 green tests: six stunted copies of
+    scripts/repair-damage-type.mjs replayed against the test file's own fixtures. Dropping the count
+    refusal, pairing by dice-string instead of by order, dropping tail agreement, splicing the whole
+    printed clause, and inventing a type where AoN prints none are each caught by a named test.
+
+WHAT WAS MISSING — AND WHY THE LANE WAS NOT DONE
+
+  The finding's own `ours` names TWO carriers, and the report shipped only one of them repaired,
+  filing the other as an unreachable cross-file gap. That gap claim is REFUTED, and the carrier it
+  gave up on is the one the player actually reads.
+
+  MEASURED on a real built character (throwaway harness: content() copy + the spec's rows applied +
+  buildCharacter('animist', 5, {extraChoices:{apparition:['lurker-in-devouring-dark']}}) + the sheet's
+  own featEntries()):
+
+      entries: ["choice:Apparitions:Lurker in Devouring Dark :: BARE"]
+      classChoiceTyped: false          classFeatureRecordTyped: true
+
+  build.ts:8245 pushes the OPTION's `description` into character.classChoices, and FeatsTab renders
+  that string as the "Apparitions" card. classFeatures/lurker-in-devouring-dark reaches no entry on
+  this character at all. With the builder's eleven rows and nothing else, the eleven repaired records
+  are correct and the player's apparition card still reads "**Damage** 6d10+6 plus Grab".
+
+  The carrier is NOT unreachable. scripts/data/effect-backfill.json already carries a whole-array
+  overlay row {classes/animist, field `options`, path ["extraChoices","id=apparition"]} — the
+  wg-batch-028 loreProgression row, and the row that created lamentation-of-sinister-deals, proving
+  the overlay writes into that exact node. apply-parity-fixes.mjs:241 refuses a `description`-FIELD
+  row with a path; it does not refuse a re-emitted `options` array, and refusal 2 (a pathless row
+  swallowing path rows) does not apply to a row that HAS a path.
+
+WHAT I ADDED
+
+  work/.b033-rows-repair.json — a TWELFTH row: classes/animist.options at path
+  ["extraChoices","id=apparition"], supersedes:true, the prior overlay array re-emitted whole with
+  only the eleven descriptions re-typed. Proven whole, not asserted: the prior overlay value and the
+  shipped core.json array are byte-identical (diffed, zero fields differ), and with `description`
+  stripped from both the prior array and mine the two are JSON-identical — so all 14 options keep
+  their id/name/descRefs/grantedSpells/focusSpells/grants/loreProgression, and the three options with
+  no row (lamentation-of-sinister-deals, shepherd-of-errant-winds, speaker-in-sibilance, all three
+  already correctly typed) keep their prose untouched. The repaired strings are the SAME strings as
+  the eleven classFeatures rows — the option copy is byte-identical to the classFeatures description
+  for all eleven (asserted before copying), so there is no second derivation to disagree.
+
+  test/batch033-repair.test.ts — 3 new tests (8 → 11, all green), each cited
+  `// batch 033: lurker-in-devouring-dark#avatar-damage-type` with the record id in the describe/it:
+    · the reach test: the Apparitions card on a BUILT animist contains
+      "**Damage** 6d10+6 bludgeoning plus Grab". It applies the spec to a content COPY, so it states
+      the same thing before and after the rows land — never a patched-vs-shipped delta.
+    · the classFeatures record carries the same repaired clause (the other carrier, same assertion).
+    · feats/morphic-strike, the ONE other record in the corpus whose Damage sites are mixed (four
+      typed, one AoN prints untyped on purpose, feat-6991): returns null, nothing inserted. This was
+      the single hole the mutation run found — removing the per-site "already correct" skip
+      (refusal 4) was caught by no test before, and morphic-strike is a live record, not a fixture.
+
+  KNOWN CEILING, left alone deliberately: the ratchet in scripts/dropped-inline-check.mjs measures
+  public/core-descriptions.json only, so it counts the classFeatures carrier and is blind to the
+  option copies. Acceptable — the two are written from the same Foundry record by import-core and
+  stay byte-identical, so the cleaner's damage is visible on the side the ratchet does read.
+
+====================================================================================================
+DATA STILL NEEDED
+  (none)
+
+CROSS-FILE GAPS  (4)
+  ✗ REMOVED — "scripts/import-core.mjs: the second carrier is unreachable by any row". Refuted and
+    fixed in-lane by the twelfth row above. No import-core.mjs change is needed for this finding.
+
+  1. spells/devil-form — REFUSED by the repairer, correctly, and it stays a gap: at site 5 we roll
+     2d10+10 where AoN spell-894 rolls 2d12+10, so the sites cannot be paired. Verified: the refusal
+     message is exactly that, and our shipped text does read 2d10+10. A wrong DIE SIZE, not a dropped
+     type, and outside this finding. Family: print-read / data lane.
+  2. classFeatures/lamentation-of-sinister-deals — verified: no core-descriptions.json entry and no
+     aonId at all. Not player-visible (the animist option copy carries the full, correctly typed
+     prose, which is what the sheet renders), but the classFeatures carrier is missing and nothing in
+     this lane can create it. Family: data lane.
+  3. public/core-descriptions.json classFeatures/witness-to-ancient-battles — verified: the label
+     lost its bold markers as well as its type, shipping ", Damage 6d8+6". The TYPE is repaired by
+     this lane (both carriers); restoring `**Damage**` is a markup substitution, not an insertion, so
+     the repairer deliberately does not do it. Cosmetic, and the only record in the corpus with the
+     shape. Family: data lane.
+  4. NOT THIS LANE, but it will fail the batch: node scripts/test-flip-audit.mjs --batch 033 now
+     reports 5 violations, all in the INSTRUMENTS family's files — scripts/wg-identity.mjs:745
+     ("school-of-thassilonian-rune-magic") and :761 ("witness-to-ancient-battles") and
+     scripts/wg-values.mjs:1487 ("decay-instinct") each gained a settle key with no citation in the 6
+     lines above AND no `// mutation-proof` test. Zero violations in any repair-lane file.
+     Family: instruments.
+
+MANIFEST (work/.b033-specs.json)
+  All five families' entries present (situational, engine, repair, data-rows, instruments) — none
+  clobbered. The repair entry's stage[] already listed every path this lane touched; I appended
+  work/.b033-verify-repair.txt. Files I touched: work/.b033-rows-repair.json,
+  test/batch033-repair.test.ts, work/.b033-verify-repair.txt.

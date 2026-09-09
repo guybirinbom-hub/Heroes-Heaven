@@ -1,0 +1,202 @@
+BUILD-VERIFIER — batch 033 RESUME, group "eidolon-languages-and-traits" (family resume-engine)
+angel/fey fixed language + the fey spell-list trait narrowing.  Default was NOT DONE.
+
+VERDICT PER ITEM
+  1. angel-eidolon#language ................ DONE
+  2. fey-eidolon#language .................. DONE
+  3. wg-diff credit ........................ DONE as a handoff (claim re-verified), and the gate line
+                                             the group exists to clear is STILL RED — see GAP 1
+  4. fey-eidolon#fey-gift-spells ........... DONE as a row, with one consequence the builder missed
+                                             (FIXED-BY-ME, below) and one blocker (GAP 2)
+  +  dragon-eidolon#language ............... FIXED-BY-ME — a CONFIRMED batch-033 finding, in the cut,
+                                             one word once the carrier existed, left unbuilt
+
+=================================================================================================
+WHAT I RE-READ AND WHAT IT SHOWED
+=================================================================================================
+PRINT (AoN mirror, read myself, not from the report):
+  eidolon-1  "… Senses darkvision Language Celestial Speed 25 feet"      → angel, legacy page
+  eidolon-15 "… Language Empyrean"                                       → its remaster twin
+  eidolon-8  "… Senses low-light vision Language Sylvan Speed 25 feet"   → fey, legacy page
+  eidolon-22 "… Language Fey"                                            → its remaster twin
+  eidolon-7  "… Language Draconic" (eidolon-21 the same)                 → dragon
+  eidolon-8, Fey Gift Spells, VERBATIM: "When you add spells to your repertoire, you can choose from
+     the primal list as well as spells that have the illusion or mental traits that appear on the
+     arcane spell list."
+RECORDS (public/core.json): classFeatures/angel-eidolon aonId eidolon-1 edition legacy-era;
+  fey-eidolon aonId eidolon-8 legacy-era, spellListAdditions {"traditions":["arcane"]};
+  dragon-eidolon aonId eidolon-7 legacy-era. So each record's cited page IS the legacy one and the
+  builder's Celestial/Sylvan (not Empyrean/Fey) follows the record it is attached to — print is the
+  authority and the reader's own proposal ("Empyrean", taken from WG's languageId 307) is the half
+  that would have contradicted the cited page. Confirmed, not adopted from the report.
+  content.languages is remaster-only (120 records): no `celestial`, no `sylvan`; `empyrean`, `fey`,
+  `draconic`, `necril`, `requian`, `muan`, `chthonian`, `aklo`, `common` all present.
+CODE (every changed file opened): src/rules/companionGrants.ts CompanionMod.languages + the two
+  entries; src/rules/companions.ts deriveEidolon's type-row loop (the fixed list read BEFORE the
+  picks, deduped, resolved through content.languages then falling through to the token) →
+  EidolonBlock.languages; src/sheet/CompanionsTab.tsx:950 renders it and :1287 gates the PICKER on
+  languageChoices alone, so a fixed line shows no prompt — the "no CompanionsTab edit needed" claim
+  is true.
+READER CHAIN for item 4, opened end to end and all three links real: SpellAccessGrant.traits
+  (src/rules/types.ts:5288 region) → the widening loop src/rules/build.ts:6543-6553, which passes
+  `traits` onto Character.spellListTraditions → spellOpenedBy (src/sheet/SpellsTab.tsx:293),
+  `onTradition && (!w.traits?.length || w.traits.some(...))`. The row is genuinely that chain's first
+  writer, and scripts/data/effect-backfill.json holds exactly one prior spellListAdditions row for
+  fey-eidolon ({"traditions":["arcane"]}) — so supersedes:true is required and is declared.
+
+ROWS AS ROWS (checked without applying)
+  · one row, classFeatures/fey-eidolon.spellListAdditions — target record EXISTS, no create needed.
+  · whole-field re-emission: the superseded value is carried whole (traditions unchanged) and only
+    `traits` is added. Nothing lost.
+  · supersedes:true present. `why` names eidolon-8 (precheck (5) satisfied).
+  · the two language items correctly carry `backfillRows: []` with a note (spec rule 4).
+  · cross-spec key scan over the WHOLE manifest (14 entries as of this writing): 41 rows, 3
+    collisions — mine is one of three of the same shape, see GAP 2.
+
+TESTS
+  node scripts/vt.mjs run <the group's test file>  → 5 tests, 4 pass, 1 fails, and the ONLY failing
+    assertion is the unapplied row: `expected { traditions: ['arcane'] } to deeply equal
+    { traditions: ['arcane'], traits: [...] }`. Correct shape for a row test before apply.
+  I did not take "only that assertion fails" on trust: I built a THROWAWAY harness
+    (test/zz-throwaway-verify-eidolon.test.ts, deleted immediately after the run) that patched
+    classFeatures/fey-eidolon.spellListAdditions in memory to the row's value, built a level-5 fey
+    summoner through buildCharacter and asserted the three lines that sit AFTER the failing one:
+    spellListTraditions[].traits === ['illusion','mental'], an illusion arcane spell opened, a plain
+    arcane spell not. All three PASS — so the test goes green on apply and does not hide a second
+    failure behind the first.
+  Regression run on the whole eidolon/companion lane — companions, companion-fixes,
+    companion-cluster-batch1, companion-feat-grants, eidolon-abilities, eidolon-cantrips,
+    feat-audit-companion-mods, answered-pickers, batch033-closer, batch033-gap-data:
+    10 files, 96 tests, ALL PASS.
+  npx tsc --noEmit → clean (exit 0), after every edit below.
+  node scripts/test-flip-audit.mjs --batch 033 → "batch 033 clean — 18 test file(s) touched, 11 new
+    settle key(s), every flip cited". (It FAILED when I started, on wg-diff's stone-order settle
+    having no mutation-proof test — somebody else's group fixed that while I worked. Not mine, and I
+    claim no credit for it; recorded only because the two runs bracket my edits.)
+  This group authored NO settle and NO comparer teach, so no mutation-proof test is owed.
+
+CITATIONS
+  Every `// batch 033: <id>` in the group's test file names an id that IS in confirmed[] of
+  work/.b033-read.json (angel-eidolon#language, fey-eidolon#language, dragon-eidolon#language,
+  fey-eidolon#fey-gift-spells) and every enclosing describe title carries that finding's record id.
+  Re-checked by running the audit, not by eye.
+
+MANIFEST
+  The group's entry is present, family resume-engine, and every OTHER family's entry is intact (14
+  entries; three more were appended by other resume groups while I worked — left untouched).
+  stage[] was SHORT: it named neither this verify file, nor the sibling test file my fix touches, nor
+  CompanionsTab.tsx. Added all three.
+
+=================================================================================================
+FIXED-BY-ME
+=================================================================================================
+1. test/batch033-data.test.ts:52 would have gone RED the moment this group's row applied.
+   It asserts `expect(cf('fey-eidolon')?.spellListAdditions).toEqual({ traditions: ['arcane'] })` —
+   an EXACT equality on the field this group re-emits. The builder flagged the spec collision and
+   missed the assertion. Updated to the post-apply value with a fresh `// batch 033:
+   fey-eidolon#fey-gift-spells` citation directly above it (the line 44 citation is 8 lines up, past
+   the audit's 6-line window) plus a comment pointing at this group's test file for the narrowing —
+   the SAME pattern the other resume group already used twice in this file (lines 97-100 and
+   127-130). test/batch033-data.test.ts now fails 3 of 9, all three "fails until the driver applies a
+   resume row"; 2 of those 3 were already failing before I touched it.
+2. dragon-eidolon#language — BUILT (code). A CONFIRMED batch-033 finding, on a record that IS in the
+   cut (work/wg-batch-033.json), left unbuilt because the closer's triage sent the whole language
+   lane to "next batch" back when no carrier existed. The carrier exists now and the answer is one
+   word, so shipping angel+fey without it ships half a lane.
+   COMPANION_MODS['dragon-eidolon'].languages = ["draconic"] — the content.languages ID, per the
+   field's own documented rule ("an id where one exists, otherwise the printed name"); `draconic`
+   exists where `celestial`/`sylvan` do not. That also closes a real hole in the builder's coverage:
+   the reader's `content.languages?.[l]?.name ?? l` id branch had NO test, because both of its
+   entries were printed names that fall straight through. Test "dragon-eidolon resolves its fixed
+   language through the id, not the raw token" pins the id on the mod, the table's name, and
+   'Draconic' on a built 5th-level summoner's block. PASSES. dragon-eidolon#tradition stays parked
+   OWNER-QUEUED and is untouched. Spec entry added (backfillRows: [], note).
+3. Two comments falsified by this group's own change:
+   · src/sheet/CompanionsTab.tsx (the Edit-card language block) still read "Types whose Language line
+     is a fixed list are not modelled yet." Rewritten to say the fixed list asks nothing and reaches
+     the block's Languages row through CompanionMod.languages.
+   · src/rules/companions.ts EidolonBlock.languages was documented as picks only ("one entry per
+     pick … the unanswered ones shown as LANGUAGE_UNCHOSEN"); the field now carries the fixed ones
+     first. Rewritten to say both halves and their order.
+4. A misquote, in two of this group's own files. The row's `why` and the test comment both attributed
+   "…as well as FROM spells that have the illusion or mental traits…" to eidolon-8. That extra "from"
+   is eidolon-22's wording (the remaster twin); eidolon-8 reads "as well as spells that have…".
+   Both now quote eidolon-8 verbatim and name the difference. The builder's report .txt still carries
+   the old wording — I did not rewrite another agent's report; it is recorded here instead.
+   (The line numbers in the report's GAP 1, ":629" and ":507", are also both 21 short of the real
+   ones — REGISTRY_KINDS' companionGrants row is scripts/wg-diff.mjs:650 and the `language` kind list
+   is :528. The claim is right; only the anchors are stale.)
+
+=================================================================================================
+DATA STILL NEEDED
+=================================================================================================
+none for the four items or for the dragon one I added. No row needs owner input, no created record,
+no prose.
+
+RESIDUE, deliberately NOT authored here — the five other eidolon types with a FIXED printed Language
+line are NOT IN THE BATCH CUT (work/wg-batch-033.json holds 50 records, of which the eidolons are
+devotion-phantom, fey, elemental, angel, dragon, construct and no others). Authoring them here would
+be out-of-batch content. The carrier is now built, so each is one word plus a citation; print read
+and verified by me for the whole lane, so the next batch does not have to re-read it:
+      beast-eidolon      eidolon-3  "Language Sylvan"     (remaster twin eidolon-17 "Fey")
+      demon-eidolon      eidolon-5  "Language Abyssal"    (remaster twin eidolon-19 "Chthonian")
+      plant-eidolon      eidolon-9  "Language Sylvan"     (remaster twin eidolon-24 "Muan")
+      psychopomp-eidolon eidolon-10 "Language Requian"    (eidolon-25 the same)
+      undead-eidolon     eidolon-11 "Language Necril"     (eidolon-26 the same)
+      swarm-eidolon      eidolon-13 "Language Common"  ·  aberrant-eidolon eidolon-14 "Language Aklo"
+      (elemental and ooze print no Language line at all — not a gap.)
+  ⚠ Noticed while reading print: classFeatures/beast-eidolon is `edition: "remaster-era"` but its
+  aonId is eidolon-3, the LEGACY page. Its remaster twin is eidolon-17. Identity, not this lane.
+
+=================================================================================================
+CROSS-FILE GAPS
+=================================================================================================
+1. family `instruments` — THE GROUP'S OWN GATE LINE IS STILL RED, and the fix is NOT the one-word
+   edit the report describes. Re-run by me after the rows landed:
+   `node scripts/wg-diff.mjs --list --bucket they-only` still prints
+     angel-eidolon lvl 1 missing=[language] ours=[grantsRecord,choice,skill,spellcasting]
+     fey-eidolon   lvl 1 missing=[language] ours=[spell,grantsRecord,choice,skill,spellcasting]
+   …and six more eidolons on the same line (beast, demon, dragon, plant, psychopomp, undead).
+   MEASURED BLAST RADIUS, which the report does not mention: REGISTRY_KINDS credits a registry FILE's
+   kinds to EVERY id in it (scripts/wg-diff.mjs:726-737, `for (const m of body.matchAll(KEY_RE))
+   addKinds(...)`). Adding 'language' to the companionGrants.ts row at :650 would therefore credit
+   `language` to all ~112 ids in that file — including the six eidolon types that genuinely have NO
+   language carrier, three of which are still open findings. That is the exact false-green the
+   instruments rules exist to prevent.
+   The right shape is the per-ID map: `OFF_RECORD_CARRIERS` (scripts/wg-diff.mjs:883-952, applied at
+   :952) — `'angel-eidolon': ['language'], 'fey-eidolon': ['language'], 'dragon-eidolon':
+   ['language']`, three entries and no other record touched. OFF_RECORD_CARRIERS is NOT one of the
+   audited registries (scripts/test-flip-audit.mjs:119-122 audits VERIFIED_EQUIVALENT /
+   SETTLED_VALUES / NOT_A_SCALAR / SETTLED_IDENTITIES only), so this needs no mutation-proof test —
+   but it still needs the instruments proof that a type WITHOUT the carrier is still flagged, and the
+   six above are the ready-made control group. Nobody in this resume is assigned wg-diff.mjs; until
+   somebody is, this group's two KINDS lines stay red however correct the app now is.
+2. family `data-rows` / THE CLOSER — the collision the builder filed is REAL and I reproduced it:
+   `precheck()` check (1) at scripts/wg-batch-run.mjs:607 keys on category/id/path/field and hard
+   refuses two specs writing one key regardless of `supersedes`. Before `--stage apply`, the row on
+   classFeatures/fey-eidolon.spellListAdditions must be dropped from work/.b033-rows-data-rows.json
+   so this group's superseding row stands alone. I did not touch that file.
+   IT IS NOT ONE COLLISION, IT IS THREE — my scan of the whole manifest found the same shape twice
+   more, both from the other resume group:
+     classFeatures/otherworldly-protection/resistances   data-rows  VS  resume-otherworldly-…
+     modes/curse-of-creeping-ashes-4/modifiers           data-rows  VS  resume-otherworldly-…
+     classFeatures/fey-eidolon/spellListAdditions        data-rows  VS  this group
+   Same cause every time: a resume group re-emits a field whose ORIGINAL row is still sitting in the
+   data-rows spec. One decision, three rows, all in work/.b033-rows-data-rows.json.
+3. observation only, for the closer's eye — the manifest now carries an entry whose spec file is
+   `work/.b034-created-desc.json` (family resume-prose) with `work/.b034-queue.json` in its stage[]:
+   BATCH 034 files staged by the batch-033 commit. It parses and it is another group's deliberate
+   choice (the created-prose second phase), so I only name it.
+
+=================================================================================================
+FILES I TOUCHED
+=================================================================================================
+  test/batch033-data.test.ts                                  (fix 1 — assertion + citation)
+  src/rules/companionGrants.ts                                (fix 2 — dragon-eidolon.languages)
+  test/batch033-…-narrowing.test.ts                           (fix 2 test, fix 4 quote)
+  work/.b033-rows-…-narrowing.json                            (fix 2 spec entry, fix 4 quote)
+  src/sheet/CompanionsTab.tsx, src/rules/companions.ts        (fix 3 — comments only)
+  work/.b033-specs.json                                       (this group's stage[] only)
+  work/.b033-verify-…-narrowing.txt                           (this file)
+⚠ RULE 3b: src/ changed again here (companionGrants.ts, companions.ts, CompanionsTab.tsx), so the
+  EXPERIENCE evidence is stale — re-run `--stage experience` then `--stage gate` before suite/verify.

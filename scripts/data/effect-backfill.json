@@ -3026,13 +3026,30 @@
   "value": [
    {
     "type": "void",
-    "value": "3+floor(@actor.level/2)"
+    "value": "3+floor(@actor.level/2)",
+    "whenVoidHealing": false
+   },
+   {
+    "type": "vitality",
+    "value": "3+floor(@actor.level/2)",
+    "whenVoidHealing": true
    },
    {
     "type": "spirit",
     "value": "3+floor(@actor.level/2)"
+   },
+   {
+    "type": "unholy",
+    "value": "3+floor(@actor.level/2)",
+    "whenCreatureTrait": "holy"
+   },
+   {
+    "type": "holy",
+    "value": "3+floor(@actor.level/2)",
+    "whenCreatureTrait": "unholy"
    }
-  ]
+  ],
+  "why": "AoN innovation-1 (the REMASTER Armor innovation page; the record's aonParentId still points at the legacy innovation-5) prints \"You gain resistance equal to 3 + half your level to void damage, or to vitality damage if you have void healing (such as if you're a dhampir).\" The shipped row rode the void branch alone and carried the vitality half as PROSE on `condition`, so a dhampir inventor read a void resistance that never applies and had no vitality one, and the wg-values comparer saw a SET-GAP (theirs=vitality, ours=void,spirit,unholy,holy). The branch reader was built this batch and had no user: `whenVoidHealing` is declared at src/rules/types.ts:527 and gated in deriveDefenses at src/rules/derive.ts:2726 (resistances) / :2754 (weaknesses), over the same `negativeHealing` fact that function already computes at :2688. Entry 0 splits into the two mutually exclusive entries the gate exists for and the prose `condition` is dropped, because the branch now says what the sentence said. Whole-field re-emission of `resistances`; entries 1-3 of the superseded row are carried byte-identical."
  },
  {
   "category": "classFeatures",
@@ -36456,26 +36473,8 @@
   "category": "classFeatures",
   "id": "light-mortar-innovation",
   "field": "choice",
-  "value": {
-   "flag": "lightMortarModification",
-   "prompt": "Initial light mortar modification",
-   "kind": "array",
-   "inert": "Recorded only — the light mortar isn't modelled as a strike, so the nonlethal / versatile P and S traits and the free-action deployment aren't applied. Breakthrough (7th) and revolutionary (15th) light mortar modifications aren't recorded here.",
-   "options": [
-    {
-     "value": "contained-shrapnel",
-     "label": "Contained Shrapnel — your innovation gains the nonlethal trait (optional on each Launch)"
-    },
-    {
-     "value": "enhanced-shrapnel",
-     "label": "Enhanced Shrapnel — your innovation gains the versatile P and versatile S traits"
-    },
-    {
-     "value": "spring-loaded",
-     "label": "Spring-Loaded — you can deploy your light mortar as a free action"
-    }
-   ]
-  }
+  "value": null,
+  "why": "AoN innovation-4 prints \"Choose one initial light mortar modification to apply to your innovation\" — ONE pick. Ours asked it twice: this record's own `choice` (flag lightMortarModification, marked `inert`, with contained-shrapnel / enhanced-shrapnel / spring-loaded) renders in the Builder via renderChoice(content.classFeatures[build.subclassId].choice) and delivers nothing, while the SAME three level-1 classFeatures tagged 'light-mortar-innovation-modification' are offered live by inventorModificationOptions (src/builder/shared.tsx:3585) and are the only control that writes build.inventorModifications — read by src/rules/build.ts:2945 and src/rules/derive.ts (c.inventor.modifications). Two controls for one printed pick can disagree; deleting the inert one leaves the tiered inventor picker as the single lane. WG encodes one modification lane too (a single per-tier select)."
  },
  {
   "category": "classFeatures",
@@ -56173,11 +56172,12 @@
      {
       "type": "physical",
       "value": "3+@actor.con.mod",
-      "note": "weapon damage only — not unarmed attacks or other sources"
+      "condition": "weapon damage only — not unarmed attacks or other sources"
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN instinct-3 prints the limits these resistances are subject to, and the shipped value carried each one in a `note` key. IwrEntry (src/rules/types.ts) declares type/value/against/minLevel/whenCreatureTrait/unlessCreatureTrait/whenVoidHealing/condition and nothing else, and the resistance loop (src/rules/derive.ts:2701-2740) renders exactly `r.condition ?? src.__cond` beside the number — so `note` is stored and read by nobody, and every one of these clauses is invisible on the sheet. Renaming the key to `condition` is the whole fix; the value is otherwise byte-identical, re-emitted whole because a field is one row. Same defect and same repair as skin-hard-as-horn in work/.b033-rows-data-rows.json (its 3 entries; these are the remaining 33 of the 36 in core.json)."
  },
  {
   "category": "classFeatures",
@@ -56222,11 +56222,12 @@
      {
       "type": "all damage from undead",
       "value": "3+@actor.con.mod",
-      "note": "attacks and abilities of undead creatures, regardless of damage type"
+      "condition": "attacks and abilities of undead creatures, regardless of damage type"
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN instinct-5 prints the limits these resistances are subject to, and the shipped value carried each one in a `note` key. IwrEntry (src/rules/types.ts) declares type/value/against/minLevel/whenCreatureTrait/unlessCreatureTrait/whenVoidHealing/condition and nothing else, and the resistance loop (src/rules/derive.ts:2701-2740) renders exactly `r.condition ?? src.__cond` beside the number — so `note` is stored and read by nobody, and every one of these clauses is invisible on the sheet. Renaming the key to `condition` is the whole fix; the value is otherwise byte-identical, re-emitted whole because a field is one row. Same defect and same repair as skin-hard-as-horn in work/.b033-rows-data-rows.json (its 3 entries; these are the remaining 33 of the 36 in core.json)."
  },
  {
   "category": "classFeatures",
@@ -56244,11 +56245,12 @@
      {
       "type": "all damage from fungus creatures",
       "value": "3+@actor.con.mod",
-      "note": "attacks and abilities of creatures with the fungus trait, regardless of damage type"
+      "condition": "attacks and abilities of creatures with the fungus trait, regardless of damage type"
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN instinct-15 prints the limits these resistances are subject to, and the shipped value carried each one in a `note` key. IwrEntry (src/rules/types.ts) declares type/value/against/minLevel/whenCreatureTrait/unlessCreatureTrait/whenVoidHealing/condition and nothing else, and the resistance loop (src/rules/derive.ts:2701-2740) renders exactly `r.condition ?? src.__cond` beside the number — so `note` is stored and read by nobody, and every one of these clauses is invisible on the sheet. Renaming the key to `condition` is the whole fix; the value is otherwise byte-identical, re-emitted whole because a field is one row. Same defect and same repair as skin-hard-as-horn in work/.b033-rows-data-rows.json (its 3 entries; these are the remaining 33 of the 36 in core.json)."
  },
  {
   "category": "classFeatures",
@@ -56349,12 +56351,12 @@
          {
           "type": "arcane spells",
           "value": "3+@actor.con.mod",
-          "note": "all damage from arcane spells"
+          "condition": "all damage from arcane spells"
          },
          {
           "type": "occult spells",
           "value": "3+@actor.con.mod",
-          "note": "all damage from occult spells"
+          "condition": "all damage from occult spells"
          }
         ]
        }
@@ -56373,12 +56375,12 @@
          {
           "type": "arcane spells",
           "value": "3+@actor.con.mod",
-          "note": "all damage from arcane spells"
+          "condition": "all damage from arcane spells"
          },
          {
           "type": "primal spells",
           "value": "3+@actor.con.mod",
-          "note": "all damage from primal spells"
+          "condition": "all damage from primal spells"
          }
         ]
        }
@@ -56397,12 +56399,12 @@
          {
           "type": "divine spells",
           "value": "3+@actor.con.mod",
-          "note": "all damage from divine spells"
+          "condition": "all damage from divine spells"
          },
          {
           "type": "occult spells",
           "value": "3+@actor.con.mod",
-          "note": "all damage from occult spells"
+          "condition": "all damage from occult spells"
          }
         ]
        }
@@ -56421,12 +56423,12 @@
          {
           "type": "divine spells",
           "value": "3+@actor.con.mod",
-          "note": "all damage from divine spells"
+          "condition": "all damage from divine spells"
          },
          {
           "type": "primal spells",
           "value": "3+@actor.con.mod",
-          "note": "all damage from primal spells"
+          "condition": "all damage from primal spells"
          }
         ]
        }
@@ -56434,7 +56436,8 @@
      }
     }
    ]
-  }
+  },
+  "why": "AoN instinct-6 prints the limits these resistances are subject to, and the shipped value carried each one in a `note` key. IwrEntry (src/rules/types.ts) declares type/value/against/minLevel/whenCreatureTrait/unlessCreatureTrait/whenVoidHealing/condition and nothing else, and the resistance loop (src/rules/derive.ts:2701-2740) renders exactly `r.condition ?? src.__cond` beside the number — so `note` is stored and read by nobody, and every one of these clauses is invisible on the sheet. Renaming the key to `condition` is the whole fix; the value is otherwise byte-identical, re-emitted whole because a field is one row. Same defect and same repair as skin-hard-as-horn in work/.b033-rows-data-rows.json (its 3 entries; these are the remaining 33 of the 36 in core.json)."
  },
  {
   "category": "classFeatures",
@@ -57570,12 +57573,12 @@
          {
           "type": "air damage",
           "value": "3+@actor.con.mod",
-          "note": "attacks, spells and abilities with the air trait"
+          "condition": "attacks, spells and abilities with the air trait"
          },
          {
           "type": "damage from air creatures",
           "value": "3+@actor.con.mod",
-          "note": "elemental creatures of your element, regardless of damage type"
+          "condition": "elemental creatures of your element, regardless of damage type"
          }
         ]
        }
@@ -57594,12 +57597,12 @@
          {
           "type": "air damage",
           "value": "3+@actor.con.mod",
-          "note": "attacks, spells and abilities with the air trait"
+          "condition": "attacks, spells and abilities with the air trait"
          },
          {
           "type": "damage from air creatures",
           "value": "3+@actor.con.mod",
-          "note": "elemental creatures of your element, regardless of damage type"
+          "condition": "elemental creatures of your element, regardless of damage type"
          }
         ]
        }
@@ -57618,12 +57621,12 @@
          {
           "type": "earth damage",
           "value": "3+@actor.con.mod",
-          "note": "attacks, spells and abilities with the earth trait"
+          "condition": "attacks, spells and abilities with the earth trait"
          },
          {
           "type": "damage from earth creatures",
           "value": "3+@actor.con.mod",
-          "note": "elemental creatures of your element, regardless of damage type"
+          "condition": "elemental creatures of your element, regardless of damage type"
          }
         ]
        }
@@ -57642,12 +57645,12 @@
          {
           "type": "earth damage",
           "value": "3+@actor.con.mod",
-          "note": "attacks, spells and abilities with the earth trait"
+          "condition": "attacks, spells and abilities with the earth trait"
          },
          {
           "type": "damage from earth creatures",
           "value": "3+@actor.con.mod",
-          "note": "elemental creatures of your element, regardless of damage type"
+          "condition": "elemental creatures of your element, regardless of damage type"
          }
         ]
        }
@@ -57666,12 +57669,12 @@
          {
           "type": "fire damage",
           "value": "3+@actor.con.mod",
-          "note": "attacks, spells and abilities with the fire trait"
+          "condition": "attacks, spells and abilities with the fire trait"
          },
          {
           "type": "damage from fire creatures",
           "value": "3+@actor.con.mod",
-          "note": "elemental creatures of your element, regardless of damage type"
+          "condition": "elemental creatures of your element, regardless of damage type"
          }
         ]
        }
@@ -57690,12 +57693,12 @@
          {
           "type": "metal damage",
           "value": "3+@actor.con.mod",
-          "note": "attacks, spells and abilities with the metal trait"
+          "condition": "attacks, spells and abilities with the metal trait"
          },
          {
           "type": "damage from metal creatures",
           "value": "3+@actor.con.mod",
-          "note": "elemental creatures of your element, regardless of damage type"
+          "condition": "elemental creatures of your element, regardless of damage type"
          }
         ]
        }
@@ -57714,12 +57717,12 @@
          {
           "type": "metal damage",
           "value": "3+@actor.con.mod",
-          "note": "attacks, spells and abilities with the metal trait"
+          "condition": "attacks, spells and abilities with the metal trait"
          },
          {
           "type": "damage from metal creatures",
           "value": "3+@actor.con.mod",
-          "note": "elemental creatures of your element, regardless of damage type"
+          "condition": "elemental creatures of your element, regardless of damage type"
          }
         ]
        }
@@ -57738,12 +57741,12 @@
          {
           "type": "water damage",
           "value": "3+@actor.con.mod",
-          "note": "attacks, spells and abilities with the water trait"
+          "condition": "attacks, spells and abilities with the water trait"
          },
          {
           "type": "damage from water creatures",
           "value": "3+@actor.con.mod",
-          "note": "elemental creatures of your element, regardless of damage type"
+          "condition": "elemental creatures of your element, regardless of damage type"
          }
         ]
        }
@@ -57762,12 +57765,12 @@
          {
           "type": "water damage",
           "value": "3+@actor.con.mod",
-          "note": "attacks, spells and abilities with the water trait"
+          "condition": "attacks, spells and abilities with the water trait"
          },
          {
           "type": "damage from water creatures",
           "value": "3+@actor.con.mod",
-          "note": "elemental creatures of your element, regardless of damage type"
+          "condition": "elemental creatures of your element, regardless of damage type"
          }
         ]
        }
@@ -57786,12 +57789,12 @@
          {
           "type": "wood damage",
           "value": "3+@actor.con.mod",
-          "note": "attacks, spells and abilities with the wood trait"
+          "condition": "attacks, spells and abilities with the wood trait"
          },
          {
           "type": "damage from wood creatures",
           "value": "3+@actor.con.mod",
-          "note": "elemental creatures of your element, regardless of damage type"
+          "condition": "elemental creatures of your element, regardless of damage type"
          }
         ]
        }
@@ -57810,12 +57813,12 @@
          {
           "type": "wood damage",
           "value": "3+@actor.con.mod",
-          "note": "attacks, spells and abilities with the wood trait"
+          "condition": "attacks, spells and abilities with the wood trait"
          },
          {
           "type": "damage from wood creatures",
           "value": "3+@actor.con.mod",
-          "note": "elemental creatures of your element, regardless of damage type"
+          "condition": "elemental creatures of your element, regardless of damage type"
          }
         ]
        }
@@ -57823,7 +57826,8 @@
      }
     }
    ]
-  }
+  },
+  "why": "AoN instinct-7 prints the limits these resistances are subject to, and the shipped value carried each one in a `note` key. IwrEntry (src/rules/types.ts) declares type/value/against/minLevel/whenCreatureTrait/unlessCreatureTrait/whenVoidHealing/condition and nothing else, and the resistance loop (src/rules/derive.ts:2701-2740) renders exactly `r.condition ?? src.__cond` beside the number — so `note` is stored and read by nobody, and every one of these clauses is invisible on the sheet. Renaming the key to `condition` is the whole fix; the value is otherwise byte-identical, re-emitted whole because a field is one row. Same defect and same repair as skin-hard-as-horn in work/.b033-rows-data-rows.json (its 3 entries; these are the remaining 33 of the 36 in core.json)."
  },
  {
   "category": "classFeatures",
@@ -57843,7 +57847,7 @@
        {
         "type": "bludgeoning",
         "value": "floor(@actor.level/2)",
-        "note": "only while your divine spark is in this ikon (immanence), and never against critical hits"
+        "condition": "only while your divine spark is in this ikon (immanence), and never against critical hits"
        }
       ]
      }
@@ -57856,7 +57860,7 @@
        {
         "type": "piercing",
         "value": "floor(@actor.level/2)",
-        "note": "only while your divine spark is in this ikon (immanence), and never against critical hits"
+        "condition": "only while your divine spark is in this ikon (immanence), and never against critical hits"
        }
       ]
      }
@@ -57869,13 +57873,14 @@
        {
         "type": "slashing",
         "value": "floor(@actor.level/2)",
-        "note": "only while your divine spark is in this ikon (immanence), and never against critical hits"
+        "condition": "only while your divine spark is in this ikon (immanence), and never against critical hits"
        }
       ]
      }
     }
    ]
-  }
+  },
+  "why": "AoN ikon-15 prints \"When your skin houses your divine spark, you gain resistance to the attuned damage type equal to half your level. This resistance doesn't apply against critical hits\" — two qualifiers our copy carried in a `note` key that NO reader reads. IwrEntry (src/rules/types.ts:479-527) declares type/value/against/minLevel/whenCreatureTrait/unlessCreatureTrait/condition and nothing else, and the resistance loop at src/rules/derive.ts:2701-2729 renders exactly `r.condition ?? src.__cond` beside the number. Renaming the key is the whole fix: the value keeps counting (it is a real resistance, not a source-qualified one, so `against` would withhold it from the total and the type would render on no screen at all) and the printed limit now rides with it. Whole-field re-emit of the `choice` object; every other key byte-identical to the superseded row."
  },
  {
   "category": "feats",
@@ -115648,7 +115653,8 @@
   "category": "classFeatures",
   "id": "alchemical-sciences-methodology",
   "field": "edition",
-  "value": "legacy"
+  "value": "remaster",
+  "why": "Same AoN methodology-5, source Player Core 2 — which is also the record's own source.book. `edition` is live, not cosmetic: applyEditionFilter (src/rules/build.ts:3131-3145) drops every 'legacy' record when the hide-legacy toggle is on, and it would take with it this record's grantsActions [\"quick-tincture\"] and the investigator subclass control, so a player hiding legacy content lost a current Player Core 2 methodology and its action. Supersedes the existing effect-backfill row whose value is \"legacy\"."
  },
  {
   "category": "classFeatures",
@@ -116062,7 +116068,8 @@
   "category": "classFeatures",
   "id": "empiricism-methodology",
   "field": "edition",
-  "value": "legacy"
+  "value": "remaster",
+  "why": "We ship Empiricism's CURRENT text (source.book \"Pathfinder Player Core 2\") while pointing at the Advanced Player's Guide printing methodology-2, whose own remaster_id in the AoN mirror is [\"methodology-6\"], and tagging the record edition 'legacy'. applyEditionFilter (src/rules/build.ts:3131-3145) DROPS a 'legacy' record when a character has hide-legacy on, taking the record's grantsActions and the investigator methodology control with it — a mechanical loss, not a hidden description. methodology-6 is the Player Core 2 printing of the same methodology. Identical defect to alchemical-sciences-methodology#edition-aonid (methodology-1 -> methodology-5) in work/.b033-rows-data-rows.json, which is the finding this row is the sibling of."
  },
  {
   "category": "classFeatures",
@@ -116212,7 +116219,8 @@
   "category": "classFeatures",
   "id": "forensic-medicine-methodology",
   "field": "edition",
-  "value": "legacy"
+  "value": "remaster",
+  "why": "We ship Forensic Medicine's CURRENT text (source.book \"Pathfinder Player Core 2\") while pointing at the Advanced Player's Guide printing methodology-3, whose own remaster_id in the AoN mirror is [\"methodology-7\"], and tagging the record edition 'legacy'. applyEditionFilter (src/rules/build.ts:3131-3145) DROPS a 'legacy' record when a character has hide-legacy on, taking the record's grantsActions and the investigator methodology control with it — a mechanical loss, not a hidden description. methodology-7 is the Player Core 2 printing of the same methodology. Identical defect to alchemical-sciences-methodology#edition-aonid (methodology-1 -> methodology-5) in work/.b033-rows-data-rows.json, which is the finding this row is the sibling of."
  },
  {
   "category": "classFeatures",
@@ -116434,7 +116442,8 @@
   "category": "classFeatures",
   "id": "interrogation-methodology",
   "field": "edition",
-  "value": "legacy"
+  "value": "remaster",
+  "why": "We ship Interrogation's CURRENT text (source.book \"Pathfinder Player Core 2\") while pointing at the Advanced Player's Guide printing methodology-4, whose own remaster_id in the AoN mirror is [\"methodology-8\"], and tagging the record edition 'legacy'. applyEditionFilter (src/rules/build.ts:3131-3145) DROPS a 'legacy' record when a character has hide-legacy on, taking the record's grantsActions and the investigator methodology control with it — a mechanical loss, not a hidden description. methodology-8 is the Player Core 2 printing of the same methodology. Identical defect to alchemical-sciences-methodology#edition-aonid (methodology-1 -> methodology-5) in work/.b033-rows-data-rows.json, which is the finding this row is the sibling of."
  },
  {
   "category": "classFeatures",
@@ -160900,7 +160909,8 @@
   "category": "classFeatures",
   "id": "monarch-of-the-fey-courts",
   "field": "description",
-  "value": "Monarchs of the fey courts make their homes near places with strong ties to the First World, or in places where nymphs once held sway. They are drawn to animists who blend an appreciation for art and nature's beauty with a ruler's ambition. Monarchs of fey courts are vain, capricious, and do not easily forgive slights or poor manners.\n\n---\n\n**Apparition Skills** Art Lore, Fey Lore\n\n**Apparition Spells**\n\n- **Cantrip** Tangle Vine\n- **1st** Charm\n- **2nd** Create Food\n- **3rd** Enthrall\n- **4th** Suggestion\n- **5th** Hallucination\n- **6th** Dominate\n- **7th** Mask of Terror\n- **8th** Uncontrollable Dance\n- **9th** Unfathomable Song\n\n**Vessel Spell** Nymph's Grace\n\n**Avatar** *Queen of the Winter Court* Speed 50 feet, fly Speed 50 feet, swim Speed 50 feet\n\n**Melee** ⟨1⟩ queen's caress (reach 15 feet, agile), **Damage** 6d10+6\n\n**Ranged** ⟨1⟩ monarch's spite (mental, range 120 feet, versatile cold), **Damage** 6d6+6"
+  "value": "Monarchs of the fey courts make their homes near places with strong ties to the First World, or in places where nymphs once held sway. They are drawn to animists who blend an appreciation for art and nature's beauty with a ruler's ambition. Monarchs of fey courts are vain, capricious, and do not easily forgive slights or poor manners.\n\n---\n\n**Apparition Skills** Art Lore, Fey Lore\n\n**Apparition Spells**\n\n- **Cantrip** Tangle Vine\n- **1st** Charm\n- **2nd** Create Food\n- **3rd** Enthrall\n- **4th** Suggestion\n- **5th** Hallucination\n- **6th** Dominate\n- **7th** Mask of Terror\n- **8th** Uncontrollable Dance\n- **9th** Unfathomable Song\n\n**Vessel Spell** Nymph's Grace\n\n**Avatar** *Queen of the Winter Court* Speed 50 feet, fly Speed 50 feet, swim Speed 50 feet\n\n**Melee** ⟨1⟩ queen's caress (reach 15 feet, agile), **Damage** 6d10+6 mental\n\n**Ranged** ⟨1⟩ monarch's spite (mental, range 120 feet, versatile cold), **Damage** 6d6+6 mental",
+  "why": "AoN apparition-8 prints \"**Damage** 6d10+6 mental\" on this apparition's avatar Strike and our import dropped the type, leaving the player a Strike with no damage type to read resistances, weaknesses and immunities against. Restored by scripts/repair-damage-type.mjs (insertions only, our wording untouched). Supersedes the existing scripts/data/effect-backfill.json description row for classFeatures/monarch-of-the-fey-courts: this value IS that row's value with the printed damage type spliced in after each dice run, so nothing it authored is dropped."
  },
  {
   "category": "classFeatures",
@@ -160973,7 +160983,8 @@
   "category": "classFeatures",
   "id": "impostor-in-hidden-places",
   "field": "description",
-  "value": "Impostors in hidden places whisper in quiet corners where mortal voices rarely resound, hoarding secrets and pondering unknowable truths. They often bring misfortune to those who disturb them, though an animist who earns their trust will find that they make effective allies.\n\n---\n\n**Apparition Skills** Fortune-Telling Lore, Underworld Lore\n\n**Apparition Spells**\n\n- **Cantrip** Telekinetic Hand\n- **1st** Ill Omen\n- **2nd** Invisibility\n- **3rd** Veil of Privacy\n- **4th** Liminal Doorway\n- **5th** Strange Geometry\n- **6th** Mislead\n- **7th** Planar Palace\n- **8th** Disappearance\n- **9th** Phantasmagoria\n\n**Vessel Spell** Discomfiting Whispers\n\n**Avatar** *Whisper Hiding in Shadows* Speed 50 feet, fly Speed 50 feet\n\n**Melee** ⟨1⟩ shadowed touch (reach 15 feet, versatile cold), **Damage** 6d10+6\n\n**Ranged** ⟨1⟩ whisper of despair (range 120 feet), **Damage** 6d6+6"
+  "value": "Impostors in hidden places whisper in quiet corners where mortal voices rarely resound, hoarding secrets and pondering unknowable truths. They often bring misfortune to those who disturb them, though an animist who earns their trust will find that they make effective allies.\n\n---\n\n**Apparition Skills** Fortune-Telling Lore, Underworld Lore\n\n**Apparition Spells**\n\n- **Cantrip** Telekinetic Hand\n- **1st** Ill Omen\n- **2nd** Invisibility\n- **3rd** Veil of Privacy\n- **4th** Liminal Doorway\n- **5th** Strange Geometry\n- **6th** Mislead\n- **7th** Planar Palace\n- **8th** Disappearance\n- **9th** Phantasmagoria\n\n**Vessel Spell** Discomfiting Whispers\n\n**Avatar** *Whisper Hiding in Shadows* Speed 50 feet, fly Speed 50 feet\n\n**Melee** ⟨1⟩ shadowed touch (reach 15 feet, versatile cold), **Damage** 6d10+6 void\n\n**Ranged** ⟨1⟩ whisper of despair (range 120 feet), **Damage** 6d6+6 void",
+  "why": "AoN apparition-6 prints \"**Damage** 6d10+6 void\" on this apparition's avatar Strike and our import dropped the type, leaving the player a Strike with no damage type to read resistances, weaknesses and immunities against. Restored by scripts/repair-damage-type.mjs (insertions only, our wording untouched). Supersedes the existing scripts/data/effect-backfill.json description row for classFeatures/impostor-in-hidden-places: this value IS that row's value with the printed damage type spliced in after each dice run, so nothing it authored is dropped."
  },
  {
   "category": "classFeatures",
@@ -161105,7 +161116,8 @@
   "category": "classFeatures",
   "id": "reveler-in-lost-glee",
   "field": "description",
-  "value": "Revelers in lost glee are twisted apparitions that arise in desolate and abandoned places where people once found great joy. They take immense mirth in causing harm or discomfort to others and do not enjoy being attuned to animists who fail to laugh at their antics.\n\n---\n\n**Apparition Skills** Circus Lore, Fortune-Telling Lore\n\n**Apparition Spells**\n\n- **Cantrip** Prestidigitation\n- **1st** Dizzying Colors\n- **2nd** Laughing Fit\n- **3rd** Hypnotize\n- **4th** Confusion\n- **5th** Illusory Scene\n- **6th** Vibrant Pattern\n- **7th** Warp Mind\n- **8th** Quandary\n- **9th** Wails of the Damned\n\n**Vessel Spell** Trickster's Mirrors\n\n**Avatar** *Ringmaster of the Dark Celebration* Speed 50 feet, ignore difficult terrain and greater difficult terrain\n\n**Melee** ⟨1⟩ ringmaster's whip (reach 15 feet, trip), **Damage** 6d10+6\n\n**Ranged** ⟨1⟩ feast of the lost (acid, range 120 feet, versatile void), **Damage** 6d6+6"
+  "value": "Revelers in lost glee are twisted apparitions that arise in desolate and abandoned places where people once found great joy. They take immense mirth in causing harm or discomfort to others and do not enjoy being attuned to animists who fail to laugh at their antics.\n\n---\n\n**Apparition Skills** Circus Lore, Fortune-Telling Lore\n\n**Apparition Spells**\n\n- **Cantrip** Prestidigitation\n- **1st** Dizzying Colors\n- **2nd** Laughing Fit\n- **3rd** Hypnotize\n- **4th** Confusion\n- **5th** Illusory Scene\n- **6th** Vibrant Pattern\n- **7th** Warp Mind\n- **8th** Quandary\n- **9th** Wails of the Damned\n\n**Vessel Spell** Trickster's Mirrors\n\n**Avatar** *Ringmaster of the Dark Celebration* Speed 50 feet, ignore difficult terrain and greater difficult terrain\n\n**Melee** ⟨1⟩ ringmaster's whip (reach 15 feet, trip), **Damage** 6d10+6 slashing\n\n**Ranged** ⟨1⟩ feast of the lost (acid, range 120 feet, versatile void), **Damage** 6d6+6 acid",
+  "why": "AoN apparition-9 prints \"**Damage** 6d10+6 slashing\" on this apparition's avatar Strike and our import dropped the type, leaving the player a Strike with no damage type to read resistances, weaknesses and immunities against. Restored by scripts/repair-damage-type.mjs (insertions only, our wording untouched). Supersedes the existing scripts/data/effect-backfill.json description row for classFeatures/reveler-in-lost-glee: this value IS that row's value with the printed damage type spliced in after each dice run, so nothing it authored is dropped."
  },
  {
   "category": "classFeatures",
@@ -161153,7 +161165,8 @@
   "category": "classFeatures",
   "id": "echo-of-lost-moments",
   "field": "description",
-  "value": "Echoes of lost moments are apparitions born from memories that everyone has forgotten, often arising from fragmented pieces of magic and memory left behind by time-altering magic. They may even occur in response to significant temporal tampering, cleaning up fragments of time damaged by irresponsible magic. These apparitions are drawn to animists who are orderly and responsible, and they can give such hosts access to spells that alter a target's timeline or removes them from the current timeline, reveal visions of past or future events, or even accelerate magical effects to a point in time where they have already ended.\n\n---\n\n**Apparition Skills** Fortune-Telling Lore, Genealogy Lore\n\n**Apparition Spells**\n\n- **Cantrip** Figment\n- **1st** Déjà Vu\n- **2nd** Dispel Magic\n- **3rd** Curse of Lost Time\n- **4th** Vision of Death\n- **5th** Illusory Scene\n- **6th** Phantasmal Calamity\n- **7th** Retrocognition\n- **8th** Quandary\n- **9th** Foresight\n\n**Vessel Spell** Store Time\n\n**Avatar** *Devourer of Lost Time* Speed 30 feet, fly Speed 50 feet\n\n**Melee** ⟨1⟩ devour potential (reach 15 feet, void), **Damage** 6d10+6\n\n**Ranged** ⟨1⟩ scream of loss (range 120 feet, void), **Damage** 6d6+6"
+  "value": "Echoes of lost moments are apparitions born from memories that everyone has forgotten, often arising from fragmented pieces of magic and memory left behind by time-altering magic. They may even occur in response to significant temporal tampering, cleaning up fragments of time damaged by irresponsible magic. These apparitions are drawn to animists who are orderly and responsible, and they can give such hosts access to spells that alter a target's timeline or removes them from the current timeline, reveal visions of past or future events, or even accelerate magical effects to a point in time where they have already ended.\n\n---\n\n**Apparition Skills** Fortune-Telling Lore, Genealogy Lore\n\n**Apparition Spells**\n\n- **Cantrip** Figment\n- **1st** Déjà Vu\n- **2nd** Dispel Magic\n- **3rd** Curse of Lost Time\n- **4th** Vision of Death\n- **5th** Illusory Scene\n- **6th** Phantasmal Calamity\n- **7th** Retrocognition\n- **8th** Quandary\n- **9th** Foresight\n\n**Vessel Spell** Store Time\n\n**Avatar** *Devourer of Lost Time* Speed 30 feet, fly Speed 50 feet\n\n**Melee** ⟨1⟩ devour potential (reach 15 feet, void), **Damage** 6d10+6 void\n\n**Ranged** ⟨1⟩ scream of loss (range 120 feet, void), **Damage** 6d6+6 void",
+  "why": "AoN apparition-5 prints \"**Damage** 6d10+6 void\" on this apparition's avatar Strike and our import dropped the type, leaving the player a Strike with no damage type to read resistances, weaknesses and immunities against. Restored by scripts/repair-damage-type.mjs (insertions only, our wording untouched). Supersedes the existing scripts/data/effect-backfill.json description row for classFeatures/echo-of-lost-moments: this value IS that row's value with the printed damage type spliced in after each dice run, so nothing it authored is dropped."
  },
  {
   "category": "classFeatures",
@@ -168569,11 +168582,15 @@
   "category": "classes",
   "id": "animist",
   "field": "options",
+  "path": [
+   "extraChoices",
+   "id=apparition"
+  ],
   "value": [
    {
     "id": "crafter-in-the-vault",
     "name": "Crafter in the Vault",
-    "description": "Crafters in the vault are found in dungeons, forges, or other places where creation and injury occur concurrently. They enjoy partnering with animists who compliment them on their creations, but often become jealous when anyone else intrudes on their expertise, including casting any of the spells that appear on their apparition list.\n\n---\n\n**Apparition Skills** Architecture Lore, Engineering Lore\n\n**Apparition Spells**\n\n- **Cantrip** Sigil\n- **1st** Mending\n- **2nd** Knock\n- **3rd** Ghostly Weapon\n- **4th** Creation\n- **5th** Impaling Spike\n- **6th** Wall of Metal\n- **7th** Beheading Buzz Saw\n- **8th** Ferrous Form\n- **9th** Resplendent Mansion\n\n**Vessel Spell** Traveling Workshop\n\n**Avatar** *Incarnate Dungeon* Speed 50 feet, either burrow Speed 50 feet or fly Speed 50 feet\n\n**Melee** ⟨1⟩ dungeon trap (reach 10 feet, versatile B or P), **Damage** 6d6+6 plus Grab\n\n**Ranged** ⟨1⟩ deadly darts (range 120 feet, versatile poison), **Damage** 6d6+6",
+    "description": "Crafters in the vault are found in dungeons, forges, or other places where creation and injury occur concurrently. They enjoy partnering with animists who compliment them on their creations, but often become jealous when anyone else intrudes on their expertise, including casting any of the spells that appear on their apparition list.\n\n---\n\n**Apparition Skills** Architecture Lore, Engineering Lore\n\n**Apparition Spells**\n\n- **Cantrip** Sigil\n- **1st** Mending\n- **2nd** Knock\n- **3rd** Ghostly Weapon\n- **4th** Creation\n- **5th** Impaling Spike\n- **6th** Wall of Metal\n- **7th** Beheading Buzz Saw\n- **8th** Ferrous Form\n- **9th** Resplendent Mansion\n\n**Vessel Spell** Traveling Workshop\n\n**Avatar** *Incarnate Dungeon* Speed 50 feet, either burrow Speed 50 feet or fly Speed 50 feet\n\n**Melee** ⟨1⟩ dungeon trap (reach 10 feet, versatile B or P), **Damage** 6d6+6 slashing plus Grab\n\n**Ranged** ⟨1⟩ deadly darts (range 120 feet, versatile poison), **Damage** 6d6+6 piercing",
     "descRefs": [
      {
       "label": "Sigil",
@@ -168655,7 +168672,7 @@
    {
     "id": "custodian-of-groves-and-gardens",
     "name": "Custodian of Groves and Gardens",
-    "description": "Custodians of groves and gardens frequent tended greenery and farmlands cared for by loving stewards, and other places of reflection and restoration where green things grow. Some of these apparitions linger in the mortal realms not because they have lost their way, but because they believe they have already found Elysium. Others are the cultivated spiritual essence of the location itself. Custodians of groves and gardens are peaceful, quiet, and averse to conflict.\n\n---\n\n**Apparition Skills** Farming Lore, Herbalism Lore\n\n**Apparition Spells**\n\n- **Cantrip** Tangle Vine\n- **1st** Protector Tree\n- **2nd** Gentle Breeze\n- **3rd** Safe Passage\n- **4th** Peaceful Bubble\n- **5th** Truespeech\n- **6th** Field of Life\n- **7th** Lifewood Cage\n- **8th** Moment of Renewal\n- **9th** Nature's Enmity\n\n**Vessel Spell** Garden of Healing\n\n**Avatar** *Peaceful Reaches* Speed 60 feet, ignore difficult terrain and greater difficult terrain\n\n**Melee** ⟨1⟩ garden's cradle (agile, nonlethal, reach 10 feet, trip), **Damage** 6d6+6 plus Grab\n\n**Ranged** ⟨1⟩ impose peace (nonlethal, range 120 feet), **Damage** 6d6+6",
+    "description": "Custodians of groves and gardens frequent tended greenery and farmlands cared for by loving stewards, and other places of reflection and restoration where green things grow. Some of these apparitions linger in the mortal realms not because they have lost their way, but because they believe they have already found Elysium. Others are the cultivated spiritual essence of the location itself. Custodians of groves and gardens are peaceful, quiet, and averse to conflict.\n\n---\n\n**Apparition Skills** Farming Lore, Herbalism Lore\n\n**Apparition Spells**\n\n- **Cantrip** Tangle Vine\n- **1st** Protector Tree\n- **2nd** Gentle Breeze\n- **3rd** Safe Passage\n- **4th** Peaceful Bubble\n- **5th** Truespeech\n- **6th** Field of Life\n- **7th** Lifewood Cage\n- **8th** Moment of Renewal\n- **9th** Nature's Enmity\n\n**Vessel Spell** Garden of Healing\n\n**Avatar** *Peaceful Reaches* Speed 60 feet, ignore difficult terrain and greater difficult terrain\n\n**Melee** ⟨1⟩ garden's cradle (agile, nonlethal, reach 10 feet, trip), **Damage** 6d6+6 bludgeoning plus Grab\n\n**Ranged** ⟨1⟩ impose peace (nonlethal, range 120 feet), **Damage** 6d6+6 mental",
     "descRefs": [
      {
       "label": "Tangle Vine",
@@ -168737,7 +168754,7 @@
    {
     "id": "echo-of-lost-moments",
     "name": "Echo of Lost Moments",
-    "description": "Echoes of lost moments are apparitions born from memories that everyone has forgotten, often arising from fragmented pieces of magic and memory left behind by time-altering magic. They may even occur in response to significant temporal tampering, cleaning up fragments of time damaged by irresponsible magic. These apparitions are drawn to animists who are orderly and responsible, and they can give such hosts access to spells that alter a target's timeline or removes them from the current timeline, reveal visions of past or future events, or even accelerate magical effects to a point in time where they have already ended.\n\n---\n\n**Apparition Skills** Fortune-Telling Lore, Genealogy Lore\n\n**Apparition Spells**\n\n- **Cantrip** Figment\n- **1st** Déjà Vu\n- **2nd** Dispel Magic\n- **3rd** Curse of Lost Time\n- **4th** Vision of Death\n- **5th** Illusory Scene\n- **6th** Phantasmal Calamity\n- **7th** Retrocognition\n- **8th** Quandary\n- **9th** Foresight\n\n**Vessel Spell** Store Time\n\n**Avatar** *Devourer of Lost Time* Speed 30 feet, fly Speed 50 feet\n\n**Melee** ⟨1⟩ devour potential (reach 15 feet, void), **Damage** 6d10+6\n\n**Ranged** ⟨1⟩ scream of loss (range 120 feet, void), **Damage** 6d6+6",
+    "description": "Echoes of lost moments are apparitions born from memories that everyone has forgotten, often arising from fragmented pieces of magic and memory left behind by time-altering magic. They may even occur in response to significant temporal tampering, cleaning up fragments of time damaged by irresponsible magic. These apparitions are drawn to animists who are orderly and responsible, and they can give such hosts access to spells that alter a target's timeline or removes them from the current timeline, reveal visions of past or future events, or even accelerate magical effects to a point in time where they have already ended.\n\n---\n\n**Apparition Skills** Fortune-Telling Lore, Genealogy Lore\n\n**Apparition Spells**\n\n- **Cantrip** Figment\n- **1st** Déjà Vu\n- **2nd** Dispel Magic\n- **3rd** Curse of Lost Time\n- **4th** Vision of Death\n- **5th** Illusory Scene\n- **6th** Phantasmal Calamity\n- **7th** Retrocognition\n- **8th** Quandary\n- **9th** Foresight\n\n**Vessel Spell** Store Time\n\n**Avatar** *Devourer of Lost Time* Speed 30 feet, fly Speed 50 feet\n\n**Melee** ⟨1⟩ devour potential (reach 15 feet, void), **Damage** 6d10+6 void\n\n**Ranged** ⟨1⟩ scream of loss (range 120 feet, void), **Damage** 6d6+6 void",
     "descRefs": [
      {
       "label": "Figment",
@@ -168819,7 +168836,7 @@
    {
     "id": "impostor-in-hidden-places",
     "name": "Impostor in Hidden Places",
-    "description": "Impostors in hidden places whisper in quiet corners where mortal voices rarely resound, hoarding secrets and pondering unknowable truths. They often bring misfortune to those who disturb them, though an animist who earns their trust will find that they make effective allies.\n\n---\n\n**Apparition Skills** Fortune-Telling Lore, Underworld Lore\n\n**Apparition Spells**\n\n- **Cantrip** Telekinetic Hand\n- **1st** Ill Omen\n- **2nd** Invisibility\n- **3rd** Veil of Privacy\n- **4th** Liminal Doorway\n- **5th** Strange Geometry\n- **6th** Mislead\n- **7th** Planar Palace\n- **8th** Disappearance\n- **9th** Phantasmagoria\n\n**Vessel Spell** Discomfiting Whispers\n\n**Avatar** *Whisper Hiding in Shadows* Speed 50 feet, fly Speed 50 feet\n\n**Melee** ⟨1⟩ shadowed touch (reach 15 feet, versatile cold), **Damage** 6d10+6\n\n**Ranged** ⟨1⟩ whisper of despair (range 120 feet), **Damage** 6d6+6",
+    "description": "Impostors in hidden places whisper in quiet corners where mortal voices rarely resound, hoarding secrets and pondering unknowable truths. They often bring misfortune to those who disturb them, though an animist who earns their trust will find that they make effective allies.\n\n---\n\n**Apparition Skills** Fortune-Telling Lore, Underworld Lore\n\n**Apparition Spells**\n\n- **Cantrip** Telekinetic Hand\n- **1st** Ill Omen\n- **2nd** Invisibility\n- **3rd** Veil of Privacy\n- **4th** Liminal Doorway\n- **5th** Strange Geometry\n- **6th** Mislead\n- **7th** Planar Palace\n- **8th** Disappearance\n- **9th** Phantasmagoria\n\n**Vessel Spell** Discomfiting Whispers\n\n**Avatar** *Whisper Hiding in Shadows* Speed 50 feet, fly Speed 50 feet\n\n**Melee** ⟨1⟩ shadowed touch (reach 15 feet, versatile cold), **Damage** 6d10+6 void\n\n**Ranged** ⟨1⟩ whisper of despair (range 120 feet), **Damage** 6d6+6 void",
     "descRefs": [
      {
       "label": "Telekinetic Hand",
@@ -168983,7 +169000,7 @@
    {
     "id": "lurker-in-devouring-dark",
     "name": "Lurker in Devouring Dark",
-    "description": "Lurkers in devouring dark are most often near old shipwrecks, deadly icebergs, and other places where ice and deep water are most prevalent. In places where the Dark Tapestry intrudes upon the world, there can be found variant lurkers in devouring dark who offer Dark Tapestry Lore in place of Sailing Lore and whose spells of water and ice instead deal void damage.\n\n---\n\n**Apparition Skills** Ocean Lore, Sailing Lore\n\n**Apparition Spells**\n\n- **Cantrip** Caustic Blast\n- **1st** Grim Tendrils\n- **2nd** Acid Grip\n- **3rd** Aqueous Orb\n- **4th** Grasp of the Deep\n- **5th** Wall of Ice\n- **6th** Frost Pillar\n- **7th** Hungry Depths\n- **8th** Arctic Rift\n- **9th** Implosion\n\n**Vessel Spell** Devouring Dark Form\n\n**Avatar** *Tentacles from the Dark* Speed 70 feet, swim Speed 70 feet\n\n**Melee** ⟨1⟩ grasping tentacles (reach 30 feet), **Damage** 6d10+6 plus Grab",
+    "description": "Lurkers in devouring dark are most often near old shipwrecks, deadly icebergs, and other places where ice and deep water are most prevalent. In places where the Dark Tapestry intrudes upon the world, there can be found variant lurkers in devouring dark who offer Dark Tapestry Lore in place of Sailing Lore and whose spells of water and ice instead deal void damage.\n\n---\n\n**Apparition Skills** Ocean Lore, Sailing Lore\n\n**Apparition Spells**\n\n- **Cantrip** Caustic Blast\n- **1st** Grim Tendrils\n- **2nd** Acid Grip\n- **3rd** Aqueous Orb\n- **4th** Grasp of the Deep\n- **5th** Wall of Ice\n- **6th** Frost Pillar\n- **7th** Hungry Depths\n- **8th** Arctic Rift\n- **9th** Implosion\n\n**Vessel Spell** Devouring Dark Form\n\n**Avatar** *Tentacles from the Dark* Speed 70 feet, swim Speed 70 feet\n\n**Melee** ⟨1⟩ grasping tentacles (reach 30 feet), **Damage** 6d10+6 bludgeoning plus Grab",
     "descRefs": [
      {
       "label": "Caustic Blast",
@@ -169065,7 +169082,7 @@
    {
     "id": "monarch-of-the-fey-courts",
     "name": "Monarch of the Fey Courts",
-    "description": "Monarchs of the fey courts make their homes near places with strong ties to the First World, or in places where nymphs once held sway. They are drawn to animists who blend an appreciation for art and nature's beauty with a ruler's ambition. Monarchs of fey courts are vain, capricious, and do not easily forgive slights or poor manners.\n\n---\n\n**Apparition Skills** Art Lore, Fey Lore\n\n**Apparition Spells**\n\n- **Cantrip** Tangle Vine\n- **1st** Charm\n- **2nd** Create Food\n- **3rd** Enthrall\n- **4th** Suggestion\n- **5th** Hallucination\n- **6th** Dominate\n- **7th** Mask of Terror\n- **8th** Uncontrollable Dance\n- **9th** Unfathomable Song\n\n**Vessel Spell** Nymph's Grace\n\n**Avatar** *Queen of the Winter Court* Speed 50 feet, fly Speed 50 feet, swim Speed 50 feet\n\n**Melee** ⟨1⟩ queen's caress (reach 15 feet, agile), **Damage** 6d10+6\n\n**Ranged** ⟨1⟩ monarch's spite (mental, range 120 feet, versatile cold), **Damage** 6d6+6",
+    "description": "Monarchs of the fey courts make their homes near places with strong ties to the First World, or in places where nymphs once held sway. They are drawn to animists who blend an appreciation for art and nature's beauty with a ruler's ambition. Monarchs of fey courts are vain, capricious, and do not easily forgive slights or poor manners.\n\n---\n\n**Apparition Skills** Art Lore, Fey Lore\n\n**Apparition Spells**\n\n- **Cantrip** Tangle Vine\n- **1st** Charm\n- **2nd** Create Food\n- **3rd** Enthrall\n- **4th** Suggestion\n- **5th** Hallucination\n- **6th** Dominate\n- **7th** Mask of Terror\n- **8th** Uncontrollable Dance\n- **9th** Unfathomable Song\n\n**Vessel Spell** Nymph's Grace\n\n**Avatar** *Queen of the Winter Court* Speed 50 feet, fly Speed 50 feet, swim Speed 50 feet\n\n**Melee** ⟨1⟩ queen's caress (reach 15 feet, agile), **Damage** 6d10+6 mental\n\n**Ranged** ⟨1⟩ monarch's spite (mental, range 120 feet, versatile cold), **Damage** 6d6+6 mental",
     "descRefs": [
      {
       "label": "Tangle Vine",
@@ -169147,7 +169164,7 @@
    {
     "id": "reveler-in-lost-glee",
     "name": "Reveler in Lost Glee",
-    "description": "Revelers in lost glee are twisted apparitions that arise in desolate and abandoned places where people once found great joy. They take immense mirth in causing harm or discomfort to others and do not enjoy being attuned to animists who fail to laugh at their antics.\n\n---\n\n**Apparition Skills** Circus Lore, Fortune-Telling Lore\n\n**Apparition Spells**\n\n- **Cantrip** Prestidigitation\n- **1st** Dizzying Colors\n- **2nd** Laughing Fit\n- **3rd** Hypnotize\n- **4th** Confusion\n- **5th** Illusory Scene\n- **6th** Vibrant Pattern\n- **7th** Warp Mind\n- **8th** Quandary\n- **9th** Wails of the Damned\n\n**Vessel Spell** Trickster's Mirrors\n\n**Avatar** *Ringmaster of the Dark Celebration* Speed 50 feet, ignore difficult terrain and greater difficult terrain\n\n**Melee** ⟨1⟩ ringmaster's whip (reach 15 feet, trip), **Damage** 6d10+6\n\n**Ranged** ⟨1⟩ feast of the lost (acid, range 120 feet, versatile void), **Damage** 6d6+6",
+    "description": "Revelers in lost glee are twisted apparitions that arise in desolate and abandoned places where people once found great joy. They take immense mirth in causing harm or discomfort to others and do not enjoy being attuned to animists who fail to laugh at their antics.\n\n---\n\n**Apparition Skills** Circus Lore, Fortune-Telling Lore\n\n**Apparition Spells**\n\n- **Cantrip** Prestidigitation\n- **1st** Dizzying Colors\n- **2nd** Laughing Fit\n- **3rd** Hypnotize\n- **4th** Confusion\n- **5th** Illusory Scene\n- **6th** Vibrant Pattern\n- **7th** Warp Mind\n- **8th** Quandary\n- **9th** Wails of the Damned\n\n**Vessel Spell** Trickster's Mirrors\n\n**Avatar** *Ringmaster of the Dark Celebration* Speed 50 feet, ignore difficult terrain and greater difficult terrain\n\n**Melee** ⟨1⟩ ringmaster's whip (reach 15 feet, trip), **Damage** 6d10+6 slashing\n\n**Ranged** ⟨1⟩ feast of the lost (acid, range 120 feet, versatile void), **Damage** 6d6+6 acid",
     "descRefs": [
      {
       "label": "Prestidigitation",
@@ -169393,7 +169410,7 @@
    {
     "id": "stalker-in-darkened-boughs",
     "name": "Stalker in Darkened Boughs",
-    "description": "Stalkers in darkened boughs make their homes in ancient forests and jungles unfriendly to humanoids and others who would exert control or influence over nature's designs. These apparitions are drawn to animists who harbor violent thoughts or impulses but are more likely to linger with animists who can quell their hatred. Stalkers in darkened boughs are moody, impulsive, and prone to seeing things from the least charitable perspective.\n\n---\n\n**Apparition Skills** Forest Lore, Hunting Lore\n\n**Apparition Spells**\n\n- **Cantrip** Gouging Claw\n- **1st** Runic Body\n- **2nd** Vomit Swarm\n- **3rd** Wall of Thorns\n- **4th** Bestial Curse\n- **5th** Moon Frenzy\n- **6th** Tangling Creepers\n- **7th** Unfettered Pack\n- **8th** Monstrosity Form\n- **9th** Wrathful Storm\n\n**Vessel Spell** Darkened Forest Form\n\n**Avatar** *Beast of the Boughs* Speed 70 feet, fly Speed 70 feet\n\n**Melee** ⟨1⟩ devouring jaws (deadly 3d10, reach 15 feet), **Damage** 6d10+6",
+    "description": "Stalkers in darkened boughs make their homes in ancient forests and jungles unfriendly to humanoids and others who would exert control or influence over nature's designs. These apparitions are drawn to animists who harbor violent thoughts or impulses but are more likely to linger with animists who can quell their hatred. Stalkers in darkened boughs are moody, impulsive, and prone to seeing things from the least charitable perspective.\n\n---\n\n**Apparition Skills** Forest Lore, Hunting Lore\n\n**Apparition Spells**\n\n- **Cantrip** Gouging Claw\n- **1st** Runic Body\n- **2nd** Vomit Swarm\n- **3rd** Wall of Thorns\n- **4th** Bestial Curse\n- **5th** Moon Frenzy\n- **6th** Tangling Creepers\n- **7th** Unfettered Pack\n- **8th** Monstrosity Form\n- **9th** Wrathful Storm\n\n**Vessel Spell** Darkened Forest Form\n\n**Avatar** *Beast of the Boughs* Speed 70 feet, fly Speed 70 feet\n\n**Melee** ⟨1⟩ devouring jaws (deadly 3d10, reach 15 feet), **Damage** 6d10+6 piercing",
     "descRefs": [
      {
       "label": "Gouging Claw",
@@ -169475,7 +169492,7 @@
    {
     "id": "steward-of-stone-and-fire",
     "name": "Steward of Stone and Fire",
-    "description": "Stewards of stone and fire linger near volcanoes and deep places near the heart of the earth, hot springs where the water is too scorchingly hot to allow casual enjoyment, and other places where the barrier between fire and earth is thin or nonexistent, though particularly old rock formations, canyons, and other natural features of earth may also spawn or attract them. Stewards of stone and fire are quick to anger and slow to forget.\n\n---\n\n**Apparition Skills** Mountain Lore, Volcano Lore\n\n**Apparition Spells**\n\n- **Cantrip** Ignition\n- **1st** Interposing Earth\n- **2nd** Exploding Earth\n- **3rd** Fireball\n- **4th** Wall of Fire\n- **5th** Wall of Stone\n- **6th** Petrify\n- **7th** Volcanic Eruption\n- **8th** Earthquake\n- **9th** Falling Stars\n\n**Vessel Spell** Earth's Bile\n\n**Avatar** *Blood of Planets* Speed 50 feet, burrow Speed 50 feet, ignore difficult terrain and greater difficult terrain\n\n**Melee** ⟨1⟩ avalanche of molten stone (reach 15 feet, versatile B), **Damage** 6d10+6\n\n**Ranged** ⟨1⟩ cleansing eruption (fire, range 120 feet), **Damage** 6d6+6",
+    "description": "Stewards of stone and fire linger near volcanoes and deep places near the heart of the earth, hot springs where the water is too scorchingly hot to allow casual enjoyment, and other places where the barrier between fire and earth is thin or nonexistent, though particularly old rock formations, canyons, and other natural features of earth may also spawn or attract them. Stewards of stone and fire are quick to anger and slow to forget.\n\n---\n\n**Apparition Skills** Mountain Lore, Volcano Lore\n\n**Apparition Spells**\n\n- **Cantrip** Ignition\n- **1st** Interposing Earth\n- **2nd** Exploding Earth\n- **3rd** Fireball\n- **4th** Wall of Fire\n- **5th** Wall of Stone\n- **6th** Petrify\n- **7th** Volcanic Eruption\n- **8th** Earthquake\n- **9th** Falling Stars\n\n**Vessel Spell** Earth's Bile\n\n**Avatar** *Blood of Planets* Speed 50 feet, burrow Speed 50 feet, ignore difficult terrain and greater difficult terrain\n\n**Melee** ⟨1⟩ avalanche of molten stone (reach 15 feet, versatile B), **Damage** 6d10+6 fire\n\n**Ranged** ⟨1⟩ cleansing eruption (fire, range 120 feet), **Damage** 6d6+6 fire",
     "descRefs": [
      {
       "label": "Ignition",
@@ -169557,7 +169574,7 @@
    {
     "id": "vanguard-of-roaring-waters",
     "name": "Vanguard of Roaring Waters",
-    "description": "Vanguards of roaring waters are found where rivers carve their way through mountains, creating fearsome rapids. They can also be found near bays where rivers meet the sea and create turbulent breakers and unpredictable undertows, coastal reefs that tear the bottoms from unwary ships and isolate islands, or anywhere else where water becomes violent and difficult to navigate safely. Vanguards of roaring waters encourage chaos and are easily bored.\n\n---\n\n**Apparition Skills** Mountain Lore, River Lore\n\n**Apparition Spells**\n\n- **Cantrip** Rousing Splash\n- **1st** Hydraulic Push\n- **2nd** Mist\n- **3rd** Crashing Wave\n- **4th** Hydraulic Torrent\n- **5th** Control Water\n- **6th** Personal Ocean\n- **7th** Dancing Fountain\n- **8th** Whirlpool\n- **9th** Wrathful Storm\n\n**Vessel Spell** River Carving Mountains\n\n**Avatar** *River that Splits the World* Speed 50 feet, swim Speed 70 feet\n\n**Melee** ⟨1⟩ parting mountains (reach 15 feet, versatile S, water), **Damage** 6d10+6\n\n**Ranged** ⟨1⟩ crash into the sea (range 120 feet, versatile P, water), **Damage** 6d6+6",
+    "description": "Vanguards of roaring waters are found where rivers carve their way through mountains, creating fearsome rapids. They can also be found near bays where rivers meet the sea and create turbulent breakers and unpredictable undertows, coastal reefs that tear the bottoms from unwary ships and isolate islands, or anywhere else where water becomes violent and difficult to navigate safely. Vanguards of roaring waters encourage chaos and are easily bored.\n\n---\n\n**Apparition Skills** Mountain Lore, River Lore\n\n**Apparition Spells**\n\n- **Cantrip** Rousing Splash\n- **1st** Hydraulic Push\n- **2nd** Mist\n- **3rd** Crashing Wave\n- **4th** Hydraulic Torrent\n- **5th** Control Water\n- **6th** Personal Ocean\n- **7th** Dancing Fountain\n- **8th** Whirlpool\n- **9th** Wrathful Storm\n\n**Vessel Spell** River Carving Mountains\n\n**Avatar** *River that Splits the World* Speed 50 feet, swim Speed 70 feet\n\n**Melee** ⟨1⟩ parting mountains (reach 15 feet, versatile S, water), **Damage** 6d10+6 bludgeoning\n\n**Ranged** ⟨1⟩ crash into the sea (range 120 feet, versatile P, water), **Damage** 6d6+6 bludgeoning",
     "descRefs": [
      {
       "label": "Rousing Splash",
@@ -169639,7 +169656,7 @@
    {
     "id": "witness-to-ancient-battles",
     "name": "Witness to Ancient Battles",
-    "description": "Witnesses to ancient battles may be the lingering remnants of soldiers who never returned from their last deployment or the restless souls of warriors whose final contest left them unfulfilled. Or the apparitions may be valkyries and other beings from beyond, naturally drawn to sites of death and battle, or even the unquiet entity formed from a battlefield that saw so much death and blood it gained a spiritual essence of its own. Witnesses to ancient battles are often somber and grim.\n\n---\n\n**Apparition Skills** Battlegrounds Lore, Heraldry Lore\n\n**Apparition Spells**\n\n- **Cantrip** Shield\n- **1st** Sure Strike\n- **2nd** Enlarge\n- **3rd** Ghostly Weapon\n- **4th** Weapon Storm\n- **5th** Invoke Spirits\n- **6th** Phantasmal Calamity\n- **7th** True Target\n- **8th** Canticle of Everlasting Grief\n- **9th** Weapon of Judgment\n\n**Vessel Spell** Embodiment of Battle\n\n**Avatar** *General of Endless Battle* Speed 70 feet, immune to immobilized\n\n**Melee** ⟨1⟩ final strike (agile, fatal d12, reach 15 feet), Damage 6d8+6",
+    "description": "Witnesses to ancient battles may be the lingering remnants of soldiers who never returned from their last deployment or the restless souls of warriors whose final contest left them unfulfilled. Or the apparitions may be valkyries and other beings from beyond, naturally drawn to sites of death and battle, or even the unquiet entity formed from a battlefield that saw so much death and blood it gained a spiritual essence of its own. Witnesses to ancient battles are often somber and grim.\n\n---\n\n**Apparition Skills** Battlegrounds Lore, Heraldry Lore\n\n**Apparition Spells**\n\n- **Cantrip** Shield\n- **1st** Sure Strike\n- **2nd** Enlarge\n- **3rd** Ghostly Weapon\n- **4th** Weapon Storm\n- **5th** Invoke Spirits\n- **6th** Phantasmal Calamity\n- **7th** True Target\n- **8th** Canticle of Everlasting Grief\n- **9th** Weapon of Judgment\n\n**Vessel Spell** Embodiment of Battle\n\n**Avatar** *General of Endless Battle* Speed 70 feet, immune to immobilized\n\n**Melee** ⟨1⟩ final strike (agile, fatal d12, reach 15 feet), Damage 6d8+6 slashing",
     "descRefs": [
      {
       "label": "Shield",
@@ -169723,11 +169740,7 @@
     ]
    }
   ],
-  "why": "wg-batch-028: class-71 Apparition Skills: 'at 8th level these Lore skills become expert, and at 16th level master' - loreProgression on every apparition option (engine agent 1's reader at build.ts ~3206). Whole array re-emitted from spec 1 (the new lamentation option + filled rank lines kept).",
-  "path": [
-   "extraChoices",
-   "id=apparition"
-  ]
+  "why": "THE SECOND CARRIER. An apparition reaches the sheet through this option's own copy of the prose (build.ts:8245 pushes option.description into character.classChoices, which FeatsTab renders), not through classFeatures/<id> — so the eleven classFeatures rows above repair a record the player's apparition card never reads. AoN apparition-3, apparition-4, apparition-5, apparition-6, apparition-7, apparition-8, apparition-9, apparition-10, apparition-11, apparition-12, apparition-13 print the damage type on each avatar Strike (\"**Damage** 6d10+6 bludgeoning plus Grab\", apparition-7); the same insertion is applied here. Supersedes the existing scripts/data/effect-backfill.json row for classes/animist.options [extraChoices, id=apparition] (wg-batch-028's loreProgression array, which also created lamentation-of-sinister-deals): this value IS that row's array, byte-for-byte, with only the eleven descriptions re-typed — every other field of every one of the fourteen options is carried whole."
  },
  {
   "category": "classFeatures",
@@ -171948,15 +171961,15 @@
  {
   "category": "classes",
   "id": "wizard",
+  "field": "options",
   "path": [
    "subclass"
   ],
-  "field": "options",
   "value": [
    {
     "id": "red-mantis-magic-school",
     "name": "Red Mantis Magic School",
-    "description": "While any thug can commit a murder, proper assassination requires finesse and guile. Deep within the Crimson Citadel, the Red Mantis assassins have developed a specific selection of spells they teach to all magically capable members. These spells complement the assassins' clandestine and deadly methods.\n\n**Curriculum**\n\n- **cantrips:** Figment, Gouging Claw\n- **1st** Fleet Step, Illusory Disguise, Sure Strike\n- **2nd** , Mist\n- **3rd** , Paralyze\n- **4th** , Translocate\n- **5th** , Illusory Scene\n- **6th** Mislead, Phantasmal Calamity\n- **7th** Duplicate Foe, Project Image\n- **8th** , Unrelenting Observation\n- **9th**\n\n**School Spells** initial: Debilitating Terror; advanced: Shroud of the Mantis",
+    "description": "While any thug can commit a murder, proper assassination requires finesse and guile. Deep within the Crimson Citadel, the Red Mantis assassins have developed a specific selection of spells they teach to all magically capable members. These spells complement the assassins' clandestine and deadly methods.\n\n**Curriculum**\n\n- **cantrips:** Figment, Gouging Claw\n- **1st** Fleet Step, Illusory Disguise, Sure Strike\n- **2nd** Invisibility, Mist\n- **3rd** Clairaudience, Paralyze\n- **4th** Clairvoyance, Translocate\n- **5th** Hallucination, Illusory Scene\n- **6th** Mislead, Phantasmal Calamity\n- **7th** Duplicate Foe, Project Image\n- **8th** Disappearance, Unrelenting Observation\n- **9th** Phantasmagoria\n\n**School Spells** initial: Debilitating Terror; advanced: Shroud of the Mantis",
     "descRefs": [
      {
       "label": "Figment",
@@ -173481,7 +173494,7 @@
     "advancedFocusSpell": "interdisciplinary-incantation"
    }
   ],
-  "why": "class-63: 'At 1st level, you choose your arcane school' — four printed common schools from Impossible Magic were absent from the picker entirely."
+  "why": "AoN arcane-school-23 prints all 19 curriculum spells. The copy the Builder actually shows the player — classes.wizard.subclass.options[red-mantis-magic-school].description, rendered straight through PopupSelect at src/builder/Builder.tsx:1872 — read \"- **2nd** , Mist / - **3rd** , Paralyze / … / - **9th**\", with Invisibility, Clairaudience, Clairvoyance, Hallucination, Disappearance and Phantasmagoria deleted while descRefs still listed all 16 labels. That mangled string is shipped BY this very effect-backfill row, so repairing it here removes the defect at its source rather than papering over it. The replacement is core-descriptions.json classFeatures/red-mantis-magic-school.d, which is complete and otherwise byte-identical. Everything else in the 18-option array — every other option, and this option's id/name/descRefs/focusSpells/advancedFocusSpell — is carried over unchanged."
  },
  {
   "category": "classFeatures",
@@ -181656,5 +181669,281 @@
   "field": "description",
   "value": "You gain the master spellcasting benefits.",
   "why": "AoN feat-7688 prints \"the master spellcasting benefits\" where the importer's de-linkifier deleted the link and its LABEL, leaving the sentence as \"the .\" — the rule ends at an article with nothing after it. Only the label is restored; every byte outside the hole is copied unchanged."
+ },
+ {
+  "category": "modes",
+  "id": "cat-harmonic-oscillator-overdrive",
+  "create": true,
+  "value": {
+   "id": "cat-harmonic-oscillator-overdrive",
+   "name": "Harmonic Oscillator (Overdriven)",
+   "category": "Inventor",
+   "feats": [
+    "harmonic-oscillator"
+   ],
+   "modifiers": [],
+   "resistances": [
+    {
+     "type": "force",
+     "value": "5+floor(@actor.level/2)"
+    },
+    {
+     "type": "sonic",
+     "value": "5+floor(@actor.level/2)"
+    }
+   ],
+   "note": "While under the effects of Overdrive, your force and sonic resistance from Harmonic Oscillator is 2 higher (5 + half your level instead of 3 + half your level)."
+  },
+  "why": "innovation-5: \"You gain resistance equal to 3 + half your level to force and sonic damage. When under the effects of Overdrive, the resistance increases by 2.\" The FULL boosted value, not a +2, because the IWR merge takes the higher of two resistances for a type rather than adding them. Gated on the modification id ONLY (no classes:['inventor'] — modeRelevant ORs its gates, so a class gate would offer the mode to every inventor). ModeDef.resistances (types.ts:4651) is consumed by deriveDefenses beside feats/heritages/items, and modeGateIds (derive.ts:3394) carries ownedFeatureIds, which includes the inventor's chosen modifications (derive.ts:3450ff) — so the mode reaches exactly the inventor who took Harmonic Oscillator. Pinned by test/batch033-engine.test.ts 'harmonic-oscillator resistance rises while overdriven' against a mode patched in memory."
+ },
+ {
+  "category": "classes",
+  "id": "summoner",
+  "path": [
+   "subclass",
+   "options",
+   "id=fey-eidolon"
+  ],
+  "field": "grantedFeats",
+  "value": [
+   "magical-understudy"
+  ],
+  "why": "eidolon-8: \"Your eidolon gains the [Magical Understudy] summoner feat, despite not meeting the prerequisite level\". classes.summoner.subclass.options['fey-eidolon'] carries NO grantedFeats today, so this assigns the whole (new) field. build.ts:5089-5098 walks grantOptions — which includes the chosen subclass option — for grantedFeats and skips any feat carrying a .choice; content.feats['magical-understudy'] has no choice and carries category 'class' + eidolonCantrips:2, so it lands as a level-1 class feat and eidolonCantripSlots (companions.ts:1186) opens the eidolon's two cantrip slots. Same path shape as the 53 existing classes/*/subclass/options/id=* overlay rows. The 7th-level Magical Adept half CANNOT ride this lane (that feat has a .choice) — see CROSS-FILE GAPS."
+ },
+ {
+  "category": "classFeatures",
+  "id": "dragon-eidolon",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "eidolonBreathArea",
+    "prompt": "Breath Weapon area",
+    "options": [
+     {
+      "value": "line",
+      "label": "60-foot line"
+     },
+     {
+      "value": "cone",
+      "label": "30-foot cone"
+     }
+    ]
+   }
+  ],
+  "why": "eidolon-7: \"choose whether the area is a 60-foot line or a 30-foot cone\" — a second, grantless question the record asks and we never did. ClassFeature.choice is a single object and the record already spends it on eidolonBreathDamage, so effectChoices is the lane that takes a second question; classFeatures/dragon-eidolon carries NO effectChoices today, so this assigns the whole (new) field. Options may legitimately carry no grant (types.ts:2012-2016, \"An option with no grant simply applies nothing\"), and Builder.tsx:1897-1904 already mounts EffectChoicesPicker on content.classFeatures[build.subclassId] — dragon-eidolon IS a summoner subclass option id — so the row alone makes it a visible control."
+ },
+ {
+  "category": "classFeatures",
+  "id": "crafter-in-the-vault",
+  "field": "description",
+  "value": "Crafters in the vault are found in dungeons, forges, or other places where creation and injury occur concurrently. They enjoy partnering with animists who compliment them on their creations, but often become jealous when anyone else intrudes on their expertise, including casting any of the spells that appear on their apparition list.\n\n---\n\n**Apparition Skills** Architecture Lore, Engineering Lore\n\n**Apparition Spells**\n\n- **Cantrip** Sigil\n- **1st** Mending\n- **2nd** Knock\n- **3rd** Ghostly Weapon\n- **4th** Creation\n- **5th** Impaling Spike\n- **6th** Wall of Metal\n- **7th** Beheading Buzz Saw\n- **8th** Ferrous Form\n- **9th** Resplendent Mansion\n\n**Vessel Spell** Traveling Workshop\n\n**Avatar** *Incarnate Dungeon* Speed 50 feet, either burrow Speed 50 feet or fly Speed 50 feet\n\n**Melee** ⟨1⟩ dungeon trap (reach 10 feet, versatile B or P), **Damage** 6d6+6 slashing plus Grab\n\n**Ranged** ⟨1⟩ deadly darts (range 120 feet, versatile poison), **Damage** 6d6+6 piercing",
+  "why": "AoN apparition-3 prints \"**Damage** 6d6+6 slashing\" on this apparition's avatar Strike and our import dropped the type, leaving the player a Strike with no damage type to read resistances, weaknesses and immunities against. Restored by scripts/repair-damage-type.mjs (insertions only, our wording untouched)."
+ },
+ {
+  "category": "classFeatures",
+  "id": "custodian-of-groves-and-gardens",
+  "field": "description",
+  "value": "Custodians of groves and gardens frequent tended greenery and farmlands cared for by loving stewards, and other places of reflection and restoration where green things grow. Some of these apparitions linger in the mortal realms not because they have lost their way, but because they believe they have already found Elysium. Others are the cultivated spiritual essence of the location itself. Custodians of groves and gardens are peaceful, quiet, and averse to conflict.\n\n---\n\n**Apparition Skills** Farming Lore, Herbalism Lore\n\n**Apparition Spells**\n\n- **Cantrip** Tangle Vine\n- **1st** Protector Tree\n- **2nd** Gentle Breeze\n- **3rd** Safe Passage\n- **4th** Peaceful Bubble\n- **5th** Truespeech\n- **6th** Field of Life\n- **7th** Lifewood Cage\n- **8th** Moment of Renewal\n- **9th** Nature's Enmity\n\n**Vessel Spell** Garden of Healing\n\n**Avatar** *Peaceful Reaches* Speed 60 feet, ignore difficult terrain and greater difficult terrain\n\n**Melee** ⟨1⟩ garden's cradle (agile, nonlethal, reach 10 feet, trip), **Damage** 6d6+6 bludgeoning plus Grab\n\n**Ranged** ⟨1⟩ impose peace (nonlethal, range 120 feet), **Damage** 6d6+6 mental",
+  "why": "AoN apparition-4 prints \"**Damage** 6d6+6 bludgeoning\" on this apparition's avatar Strike and our import dropped the type, leaving the player a Strike with no damage type to read resistances, weaknesses and immunities against. Restored by scripts/repair-damage-type.mjs (insertions only, our wording untouched)."
+ },
+ {
+  "category": "classFeatures",
+  "id": "lurker-in-devouring-dark",
+  "field": "description",
+  "value": "Lurkers in devouring dark are most often near old shipwrecks, deadly icebergs, and other places where ice and deep water are most prevalent. In places where the Dark Tapestry intrudes upon the world, there can be found variant lurkers in devouring dark who offer Dark Tapestry Lore in place of Sailing Lore and whose spells of water and ice instead deal void damage.\n\n---\n\n**Apparition Skills** Ocean Lore, Sailing Lore\n\n**Apparition Spells**\n\n- **Cantrip** Caustic Blast\n- **1st** Grim Tendrils\n- **2nd** Acid Grip\n- **3rd** Aqueous Orb\n- **4th** Grasp of the Deep\n- **5th** Wall of Ice\n- **6th** Frost Pillar\n- **7th** Hungry Depths\n- **8th** Arctic Rift\n- **9th** Implosion\n\n**Vessel Spell** Devouring Dark Form\n\n**Avatar** *Tentacles from the Dark* Speed 70 feet, swim Speed 70 feet\n\n**Melee** ⟨1⟩ grasping tentacles (reach 30 feet), **Damage** 6d10+6 bludgeoning plus Grab",
+  "why": "AoN apparition-7 prints \"**Damage** 6d10+6 bludgeoning\" on this apparition's avatar Strike and our import dropped the type, leaving the player a Strike with no damage type to read resistances, weaknesses and immunities against. Restored by scripts/repair-damage-type.mjs (insertions only, our wording untouched)."
+ },
+ {
+  "category": "classFeatures",
+  "id": "stalker-in-darkened-boughs",
+  "field": "description",
+  "value": "Stalkers in darkened boughs make their homes in ancient forests and jungles unfriendly to humanoids and others who would exert control or influence over nature's designs. These apparitions are drawn to animists who harbor violent thoughts or impulses but are more likely to linger with animists who can quell their hatred. Stalkers in darkened boughs are moody, impulsive, and prone to seeing things from the least charitable perspective.\n\n---\n\n**Apparition Skills** Forest Lore, Hunting Lore\n\n**Apparition Spells**\n\n- **Cantrip** Gouging Claw\n- **1st** Runic Body\n- **2nd** Vomit Swarm\n- **3rd** Wall of Thorns\n- **4th** Bestial Curse\n- **5th** Moon Frenzy\n- **6th** Tangling Creepers\n- **7th** Unfettered Pack\n- **8th** Monstrosity Form\n- **9th** Wrathful Storm\n\n**Vessel Spell** Darkened Forest Form\n\n**Avatar** *Beast of the Boughs* Speed 70 feet, fly Speed 70 feet\n\n**Melee** ⟨1⟩ devouring jaws (deadly 3d10, reach 15 feet), **Damage** 6d10+6 piercing",
+  "why": "AoN apparition-10 prints \"**Damage** 6d10+6 piercing\" on this apparition's avatar Strike and our import dropped the type, leaving the player a Strike with no damage type to read resistances, weaknesses and immunities against. Restored by scripts/repair-damage-type.mjs (insertions only, our wording untouched)."
+ },
+ {
+  "category": "classFeatures",
+  "id": "steward-of-stone-and-fire",
+  "field": "description",
+  "value": "Stewards of stone and fire linger near volcanoes and deep places near the heart of the earth, hot springs where the water is too scorchingly hot to allow casual enjoyment, and other places where the barrier between fire and earth is thin or nonexistent, though particularly old rock formations, canyons, and other natural features of earth may also spawn or attract them. Stewards of stone and fire are quick to anger and slow to forget.\n\n---\n\n**Apparition Skills** Mountain Lore, Volcano Lore\n\n**Apparition Spells**\n\n- **Cantrip** Ignition\n- **1st** Interposing Earth\n- **2nd** Exploding Earth\n- **3rd** Fireball\n- **4th** Wall of Fire\n- **5th** Wall of Stone\n- **6th** Petrify\n- **7th** Volcanic Eruption\n- **8th** Earthquake\n- **9th** Falling Stars\n\n**Vessel Spell** Earth's Bile\n\n**Avatar** *Blood of Planets* Speed 50 feet, burrow Speed 50 feet, ignore difficult terrain and greater difficult terrain\n\n**Melee** ⟨1⟩ avalanche of molten stone (reach 15 feet, versatile B), **Damage** 6d10+6 fire\n\n**Ranged** ⟨1⟩ cleansing eruption (fire, range 120 feet), **Damage** 6d6+6 fire",
+  "why": "AoN apparition-11 prints \"**Damage** 6d10+6 fire\" on this apparition's avatar Strike and our import dropped the type, leaving the player a Strike with no damage type to read resistances, weaknesses and immunities against. Restored by scripts/repair-damage-type.mjs (insertions only, our wording untouched)."
+ },
+ {
+  "category": "classFeatures",
+  "id": "vanguard-of-roaring-waters",
+  "field": "description",
+  "value": "Vanguards of roaring waters are found where rivers carve their way through mountains, creating fearsome rapids. They can also be found near bays where rivers meet the sea and create turbulent breakers and unpredictable undertows, coastal reefs that tear the bottoms from unwary ships and isolate islands, or anywhere else where water becomes violent and difficult to navigate safely. Vanguards of roaring waters encourage chaos and are easily bored.\n\n---\n\n**Apparition Skills** Mountain Lore, River Lore\n\n**Apparition Spells**\n\n- **Cantrip** Rousing Splash\n- **1st** Hydraulic Push\n- **2nd** Mist\n- **3rd** Crashing Wave\n- **4th** Hydraulic Torrent\n- **5th** Control Water\n- **6th** Personal Ocean\n- **7th** Dancing Fountain\n- **8th** Whirlpool\n- **9th** Wrathful Storm\n\n**Vessel Spell** River Carving Mountains\n\n**Avatar** *River that Splits the World* Speed 50 feet, swim Speed 70 feet\n\n**Melee** ⟨1⟩ parting mountains (reach 15 feet, versatile S, water), **Damage** 6d10+6 bludgeoning\n\n**Ranged** ⟨1⟩ crash into the sea (range 120 feet, versatile P, water), **Damage** 6d6+6 bludgeoning",
+  "why": "AoN apparition-12 prints \"**Damage** 6d10+6 bludgeoning\" on this apparition's avatar Strike and our import dropped the type, leaving the player a Strike with no damage type to read resistances, weaknesses and immunities against. Restored by scripts/repair-damage-type.mjs (insertions only, our wording untouched)."
+ },
+ {
+  "category": "classFeatures",
+  "id": "witness-to-ancient-battles",
+  "field": "description",
+  "value": "Witnesses to ancient battles may be the lingering remnants of soldiers who never returned from their last deployment or the restless souls of warriors whose final contest left them unfulfilled. Or the apparitions may be valkyries and other beings from beyond, naturally drawn to sites of death and battle, or even the unquiet entity formed from a battlefield that saw so much death and blood it gained a spiritual essence of its own. Witnesses to ancient battles are often somber and grim.\n\n---\n\n**Apparition Skills** Battlegrounds Lore, Heraldry Lore\n\n**Apparition Spells**\n\n- **Cantrip** Shield\n- **1st** Sure Strike\n- **2nd** Enlarge\n- **3rd** Ghostly Weapon\n- **4th** Weapon Storm\n- **5th** Invoke Spirits\n- **6th** Phantasmal Calamity\n- **7th** True Target\n- **8th** Canticle of Everlasting Grief\n- **9th** Weapon of Judgment\n\n**Vessel Spell** Embodiment of Battle\n\n**Avatar** *General of Endless Battle* Speed 70 feet, immune to immobilized\n\n**Melee** ⟨1⟩ final strike (agile, fatal d12, reach 15 feet), Damage 6d8+6 slashing",
+  "why": "AoN apparition-13 prints \"**Damage** 6d8+6 slashing\" on this apparition's avatar Strike and our import dropped the type, leaving the player a Strike with no damage type to read resistances, weaknesses and immunities against. Restored by scripts/repair-damage-type.mjs (insertions only, our wording untouched)."
+ },
+ {
+  "category": "classFeatures",
+  "id": "fey-eidolon",
+  "field": "spellListAdditions",
+  "value": {
+   "traditions": [
+    "arcane"
+   ],
+   "traits": [
+    "illusion",
+    "mental"
+   ]
+  },
+  "why": "Whole-field re-emission of the row this batch already applied ({\"traditions\":[\"arcane\"]}), carrying the trait half of the same printed clause. AoN eidolon-8, verbatim: \"you can choose from the primal list as well as spells that have the illusion or mental traits that appear on the arcane spell list.\" (The remaster twin eidolon-22 reads \"as well as FROM spells that have…\"; this record cites eidolon-8, so the quote is that page's.) The widening was authored all-or-nothing, so the repertoire picker offers every arcane spell (793) where print offers the illusion-or-mental subset (158) — a real player defect with no gate line (gap-verifier residue R2). The reader for the narrowing shipped in this same batch and has had no writer since: SpellAccessGrant.traits (src/rules/types.ts:5288), passed through by the widening loop at src/rules/build.ts:6543 onto Character.spellListTraditions[].traits, and applied per spell by spellOpenedBy (src/sheet/SpellsTab.tsx:293). This row is that writer. The superseded value is merged whole: traditions is unchanged and traits is added."
+ },
+ {
+  "category": "classFeatures",
+  "id": "alchemical-sciences-methodology",
+  "field": "aonId",
+  "value": "methodology-5",
+  "why": "AoN methodology-5 (Player Core 2 pg. 103) is the text we ship verbatim — \"You start with a standard formula book, which contains the formulas for two common 1st-level alchemical items of your choice (these must be elixirs or tools)\" — while the record pointed at the LEGACY methodology-1 (Advanced Player's Guide pg. 57, \"you gain a standard formula book for free and learn the formulas for two additional common 1st-level alchemical items\"), whose own remaster_id is [\"methodology-5\"]. Repointing the id is what makes every downstream AoN lookup (the mirror read, the verify guards, the description importer) land on the document the record actually carries."
+ },
+ {
+  "category": "modes",
+  "id": "curse-of-creeping-ashes-4",
+  "field": "modifiers",
+  "value": [
+   {
+    "value": -2,
+    "type": "circumstance",
+    "target": "attack",
+    "appliesWhen": "ranged attack rolls"
+   },
+   {
+    "value": -10,
+    "type": "status",
+    "target": "speed",
+    "detail": "all"
+   }
+  ],
+  "why": "AoN mystery-20, Cursebound 4: \"You take a -10-foot status penalty to all your Speeds as your limbs begin to crumble like ash.\" The shipped row's speed modifier carries no `detail`, and modeMatches (src/rules/modes.ts:135) defaults a detail-less speed modifier to 'land' — the ruling deriveSpeeds has always applied, because the mode editor's plain \"+10 to Speed\" means the Speed you walk at. So the penalty hit the walking Speed and nothing else, while print and WG (SPEED / SPEED_FLY / SPEED_CLIMB / SPEED_BURROW / SPEED_SWIM) take all five. `detail: 'all'` is the carrier modes.ts:135 and deriveSpeeds' movement loop (src/rules/derive.ts:5246-5250) were built to read and that nothing shipped uses. Whole-field re-emission of `modifiers`; the -2 circumstance ranged-attack entry is carried byte-identical."
+ },
+ {
+  "category": "modes",
+  "id": "curse-of-creeping-ashes-4",
+  "field": "note",
+  "value": "Cursebound 4 (cumulative): fire weakness 5 + your level, −2 circumstance to ranged attack rolls, and a −10-foot status penalty to all your Speeds as your limbs crumble.",
+  "why": "Same AoN mystery-20 clause. The shipped note ended \"apply that Speed penalty by hand, the mode can’t\" — an instruction to the player that is now both wrong and stale, because the modifiers row above makes the mode carry it. Everything before that clause is byte-identical."
+ },
+ {
+  "category": "classFeatures",
+  "id": "angel-eidolon",
+  "field": "description",
+  "value": "Your eidolon is a celestial messenger, a member of the angelic host with a unique link to you, allowing them to carry a special message to the mortal world at your side. Most angel eidolons are roughly humanoid in form, with feathered wings, glowing eyes, halos, or similar angelic features. However, some take the form of smaller angelic servitors like the winged helmet cassisian angel instead. The two of you are destined for an important role in the plans of the celestial realms. Though a true angel, your angel eidolon's link to you as a mortal prevents them from casting the angelic messenger ritual, even if they somehow learn it.\n\n**Tradition** divine\n\n**Traits** angel, celestial, eidolon\n\n**Alignment** must be good, usually neutral good\n\n**Home Plane** Nirvana (if NG), Elysium (if CG), or Heaven (if LG)\n\n---\n\n**Size** Medium or Small\n\n**Suggested Attacks** fist (bludgeoning), wing (bludgeoning), unarmed attacks shaped like a weapon\n\n**Angelic Avenger** Str 18, Dex 14, Con 16, Int 8, Wis 12, Cha 10; +2 AC (+3 Dex cap)\n\n**Angelic Emissary** Str 12, Dex 18, Con 12, Int 10, Wis 12, Cha 14; +1 AC (+4 Dex cap)\n\n**Skills** Diplomacy, Religion\n\n**Senses** darkvision\n\n**Language** Celestial\n\n**Speed** 25 feet\n\n---\n\n**Eidolon Abilities** *Initial* hallowed strikes; *Symbiosis* traveler's aura; *Transcendence* angelic mercy\n\n## Hallowed Strikes\n\nYour eidolon's attacks are hallowed by the celestial realms. Your eidolon's unarmed Strikes gain the holy trait and deal 1 extra spirit damage to unholy creatures and creatures with weakness to holy. Additionally, your eidolon can make nonlethal attacks with its unarmed attacks without taking the usual –2 circumstance penalty.\n\n## Traveler's Aura 7th\n\nYour eidolon emanates a powerful aura—resembling that of an astral deva—that protects creatures as they travel. The aura has the abjuration, aura, and divine traits. Your eidolon and its allies within a 20-foot emanation are protected from severe heat and cold, and your eidolon is never off-guard to creatures inside the aura that are of a lower level than the eidolon. When you gain the transcendence class feature, this evolves to the full benefits of an astral deva; your eidolon and allies in the aura are protected from environmental damage from any plane, including severe and extreme heat and cold as well as more unusual dangers.\n\n## Angelic Mercy 17th\n\nYour eidolon's angelic power allows them to assuage a variety of ailments, just like most other powerful angels. Your eidolon can cast *remove curse*, *remove disease*, *remove fear*, and *remove paralysis* once per day each as 9th-level divine innate spells.",
+  "why": "AoN eidolon-1 prints \"Your eidolon's unarmed Strikes gain the holy trait and deal 1 extra spirit damage to unholy creatures and creatures with weakness to holy.\" Our description carried the pre-remaster sentence — \"deal an extra 1 good damage; as usual, this extra damage harms only evil creatures or those with a weakness to good damage\" — which contradicts print on the trait, the damage type and the targets. Only that one sentence is replaced; the rest of the record's description is byte-identical, and descRefs is untouched (no ref label changes)."
+ },
+ {
+  "category": "classFeatures",
+  "id": "empiricism-methodology",
+  "field": "aonId",
+  "value": "methodology-6",
+  "why": "We ship Empiricism's CURRENT text (source.book \"Pathfinder Player Core 2\") while pointing at the Advanced Player's Guide printing methodology-2, whose own remaster_id in the AoN mirror is [\"methodology-6\"], and tagging the record edition 'legacy'. applyEditionFilter (src/rules/build.ts:3131-3145) DROPS a 'legacy' record when a character has hide-legacy on, taking the record's grantsActions and the investigator methodology control with it — a mechanical loss, not a hidden description. methodology-6 is the Player Core 2 printing of the same methodology. Identical defect to alchemical-sciences-methodology#edition-aonid (methodology-1 -> methodology-5) in work/.b033-rows-data-rows.json, which is the finding this row is the sibling of."
+ },
+ {
+  "category": "classFeatures",
+  "id": "forensic-medicine-methodology",
+  "field": "aonId",
+  "value": "methodology-7",
+  "why": "We ship Forensic Medicine's CURRENT text (source.book \"Pathfinder Player Core 2\") while pointing at the Advanced Player's Guide printing methodology-3, whose own remaster_id in the AoN mirror is [\"methodology-7\"], and tagging the record edition 'legacy'. applyEditionFilter (src/rules/build.ts:3131-3145) DROPS a 'legacy' record when a character has hide-legacy on, taking the record's grantsActions and the investigator methodology control with it — a mechanical loss, not a hidden description. methodology-7 is the Player Core 2 printing of the same methodology. Identical defect to alchemical-sciences-methodology#edition-aonid (methodology-1 -> methodology-5) in work/.b033-rows-data-rows.json, which is the finding this row is the sibling of."
+ },
+ {
+  "category": "classFeatures",
+  "id": "interrogation-methodology",
+  "field": "aonId",
+  "value": "methodology-8",
+  "why": "We ship Interrogation's CURRENT text (source.book \"Pathfinder Player Core 2\") while pointing at the Advanced Player's Guide printing methodology-4, whose own remaster_id in the AoN mirror is [\"methodology-8\"], and tagging the record edition 'legacy'. applyEditionFilter (src/rules/build.ts:3131-3145) DROPS a 'legacy' record when a character has hide-legacy on, taking the record's grantsActions and the investigator methodology control with it — a mechanical loss, not a hidden description. methodology-8 is the Player Core 2 printing of the same methodology. Identical defect to alchemical-sciences-methodology#edition-aonid (methodology-1 -> methodology-5) in work/.b033-rows-data-rows.json, which is the finding this row is the sibling of."
+ },
+ {
+  "category": "classFeatures",
+  "id": "arcane-bond-school-of-unified-magical-theory",
+  "create": true,
+  "value": {
+   "id": "arcane-bond-school-of-unified-magical-theory",
+   "name": "Arcane Bond (Unified Magical Theory)",
+   "traits": [
+    "wizard"
+   ],
+   "rarity": "common",
+   "source": {
+    "book": "Pathfinder Player Core",
+    "license": "ORC"
+   },
+   "level": 1,
+   "actionCost": {
+    "type": "passive"
+   },
+   "edition": "remaster",
+   "aonId": "arcane-school-21",
+   "limitedUses": {
+    "max": 1,
+    "per": "day",
+    "maxByLevel": {
+     "3": 2,
+     "5": 3,
+     "7": 4,
+     "9": 5,
+     "11": 6,
+     "13": 7,
+     "15": 8,
+     "17": 9,
+     "19": 10
+    }
+   }
+  },
+  "why": "AoN arcane-school-21 (School of Unified Magical Theory): \"instead of using Drain Bonded Item only once per day, you can use it once per day for each rank of spell you can cast, recalling a spell of that rank each time.\" classFeatures/arcane-bond ships {max:1, per:\"day\"} flat, so a UMT wizard was held to one use at every level. The `<featureId>-<subclassId>` variant is how this project already carries a subclass's version of a shared class feature (owned at src/rules/derive.ts:3428-3442, shown at src/sheet/FeatsTab.tsx:189); the maxByLevel ladder is the wizard rank-by-level table (rank 2 at 3rd … rank 10 at 19th). No description: the created record has none, and the FeatsTab row shows it — that prose is owed to a created-prose spec, see work/.b033-report-gap-data-rows.txt."
+ },
+ {
+  "category": "items",
+  "id": "innovation-light-mortar",
+  "create": true,
+  "value": {
+   "id": "innovation-light-mortar",
+   "name": "Light Mortar",
+   "level": 1,
+   "itemType": "equipment",
+   "bulk": 2,
+   "traits": [
+    "siege-weapon",
+    "mounted"
+   ],
+   "rarity": "uncommon",
+   "source": {
+    "book": "Pathfinder Battlecry!",
+    "license": "ORC"
+   },
+   "edition": "remaster-era",
+   "aonId": "siege-weapon-36"
+  },
+  "why": "archetype-329 (Munitions Master, Battlecry! pg. 64): \"Your innovation is a mounted siege weapon called a light mortar that weighs 2 Bulk.\" THE `description` IS NOT ON THIS CREATE ROW: it belongs to the created-prose spec work/.b033-created-desc-resume-light-mortar-siege.json alone, which is the documented shape (\"prose for created records, since a create row never carries a description\"). It was folded in here for one run, to get past apply pre-check (1b) refusing a description row on a record the same manifest creates; the closer fixed (1b) instead — prose is routed by field to public/core-descriptions.json, a different file from the one a create row writes, so neither row can shadow the other. The fold put 1,130 characters of prose INLINE in public/core.json and turned scripts/regen-durability-check.mjs red on \"descriptions are split out\", the same duplication scripts/split-descriptions.mjs exists to prevent; lib/apply-backfill.mjs now applies its skipFields to a create as well, so it cannot recur. Every guard still holds: pre-check (5) checks each prose token against the mirror through the description row, apply-backfill-now.mjs routes that row to core-descriptions.json, and render-check.mjs:92 / readable-record-check.mjs:71-72 read that file first, so the created item is readable. The mortar is a thing the munitions master OWNS from 1st level, and `grantsItems` — the only lane that hands a record's item to a built character (src/rules/build.ts:7671, the class-features arm) — reads `content.items[itemId]` and nothing else, so the grant needs an items-bucket record. siegeWeapons['light-mortar'] (siege-weapon-36) is the BUYABLE catalog entry reachable by hand through AddItemsModal / CompanionsTab and cannot be granted: the companion catalog is priced, player-added, and invisible to wg-identity, which reads the record's own `grantsItems`. A DISTINCT id rather than 'light-mortar': AddItemsModal keys its catalog rows by item id and maps every id in content.siegeWeapons to the companion Buy path (AddItemsModal.tsx:59,104), so an items row sharing the siege id would collide on the React row key and route its Add button to the companion — the shipped items/wolf-fang vs siegeWeapons/wolf-fang pair is exactly that collision. Name kept as \"Light Mortar\" because wg-identity names a granted item through anyName(itemId) (scripts/wg-identity.mjs:345,71) and the comparison is by NAME, not id. 2 Bulk is print's own number; the mortar's SCALING statistics (AC/DC off the inventor's class DC, Int-based HP and saves, hardness steps, +1 damage die at 5th and every 4 levels) are finding light-mortar-innovation#mortar-stats, a separate siege-companion lane that is not in this group and stays open."
+ },
+ {
+  "category": "classFeatures",
+  "id": "light-mortar-innovation",
+  "field": "grantsItems",
+  "value": [
+   {
+    "itemId": "innovation-light-mortar"
+   }
+  ],
+  "why": "archetype-329: \"Instead of choosing an innovation from the options listed in the inventor class, you have the light mortar innovation… Your innovation is a mounted siege weapon called a light mortar that weighs 2 Bulk.\" Nothing on our side handed it over: the record carried no grantsItems, and the innovation block at src/rules/build.ts:7688 branches on `armorInv === 'armor'` only. WHOLE FIELD, first value — classFeatures/light-mortar-innovation has no grantsItems in public/core.json or in scripts/data/effect-backfill.json, so this row supersedes nothing. No engine change is needed with it: 'light-mortar-innovation' is BOTH the subclass option id and the classFeature id, so it is in `grantOptions` for a munitions master, and the class-features arm of the grantsItems collector (build.ts:7671, which walks `[...ownedFeatureIds, ...grantOptions.map(o => o.id)]`) already reads it — measured on a built character by test/batch033-resume-light-mortar-siege-the-munitions-master-innovation-grant-3-red-lines-one-lane-.test.ts. The armour suit needed its own branch only because the item IS the answer to a per-character question (build.inventorArmorStats); the mortar is one fixed item, so the static field is the carrier print describes."
+ },
+ {
+  "category": "classFeatures",
+  "id": "arcane-bond-school-of-unified-magical-theory",
+  "field": "description",
+  "value": "Your studies into the very nature of magic itself have let you use it more efficiently—instead of using Drain Bonded Item only once per day, you can use it once per day for each rank of spell you can cast, recalling a spell of that rank each time.",
+  "why": "AoN arcane-school-21 (School of Unified Magical Theory), the clause the create row was built from: \"Your studies into the very nature of magic itself have let you use it more efficiently--instead of using Drain Bonded Item only once per day, you can use it once per day for each rank of spell you can cast, recalling a spell of that rank each time.\" The create row in work/.b033-rows-gap-data-rows.json made this record with no description, because a `create: true` row carries none; this is the created-prose phase it named. Without it the record draws an empty DescriptionModal on the Feats tab (render-check) and reads as textless to readable-record-check."
+ },
+ {
+  "category": "items",
+  "id": "innovation-light-mortar",
+  "field": "description",
+  "value": "Your innovation is a mounted siege weapon called a light mortar that weighs 2 Bulk. Whether it propels its payload via an elaborate mechanism or explosive reagents, it's capable of dealing immense damage.\n\nYour light mortar requires an Interact action to deploy it before you can Aim, Load, or Launch it, and it includes its own wheeled platform that it is mounted on as part of the deployment. It can be packed back up for easy transport as a 2-action activity with the manipulate trait and either worn as a backpack or carried in one hand while packed. Because of the light mortar's smaller size, the Move Siege Engine activity takes only 1 action when it is deployed.\n\nLaunch (1 action; attack, manipulate, range increment 120 feet) 2d6 bludgeoning, 10-foot burst, DC 15 basic Reflex.\n\nYour innovation fires small cannonballs called carry shot. A group of 10 carry shot, which weighs 1 Bulk, can be purchased for 5 sp from most shops that sell ammunition.\n\nThe AC, Fortitude, Reflex, HP and BT statistics for this item are located in the Light Mortar Innovation. This item does not have a price as it is an Inventor Innovation.",
+  "why": "Prose for the record created by work/.b033-rows-resume-light-mortar-siege-the-munitions-master-innovation-grant-3-red-lines-one-lane-.json. Every sentence is print: archetype-329 (Munitions Master, Battlecry! pg. 64) for the mortar itself, its deployment, the pack-up activity, the Move Siege Engine reduction and the carry shot ammunition; siege-weapon-36 for the Launch line and for the two Nethys notes that say where the AC/Fortitude/Reflex/HP/BT statistics live and why the item has no price. A create row carries no description, so the item would otherwise ship blank and fail render-check / readable-record-check the way classFeatures/arcane-bond-school-of-unified-magical-theory did in this batch."
  }
 ]

@@ -203,6 +203,25 @@ describe('the chassis fallback — delivery judged on the built character', () =
     expect(effectDelivery(eff('giveTrait', { traitId: 7 }), surface, names)).toBe('delivered');
     expect(effectDelivery(eff('giveTrait', { traitId: 8 }), surface, names)).toBe('undelivered');
   });
+
+  /*
+   * `giveItem` was in the op-name list and in no predicate, so every one fell through to 'unchecked' —
+   * which is how light-mortar-innovation reached the batch-033 EXPERIENCE gate as UNVERIFIED-EFFECT
+   * ("none of WG's 1 op(s) has a surface predicate yet: giveItem") while the item really was in the
+   * built inventor's inventory. Read by NAME off `surface.itemNames`, like the three predicates above.
+   */
+  // batch 033: light-mortar-innovation#duplicate-modification-choice
+  it('reads an item handed over by light-mortar-innovation off the inventory, by name', () => {
+    const held = { ...surface, itemNames: ['Light Mortar', 'Leather Armor'] };
+    // batch 033: light-mortar-innovation#duplicate-modification-choice
+    expect(effectDelivery(eff('giveItem', { itemId: 18303 }), held, { ...names, item: new Map([['18303', 'Light Mortar'], ['99', 'Power Suit']]) })).toBe('delivered');
+    // The predicate keeps its teeth: an item their row hands over and ours does not is still reported.
+    // batch 033: light-mortar-innovation#duplicate-modification-choice
+    expect(effectDelivery(eff('giveItem', { itemId: 99 }), held, { ...names, item: new Map([['18303', 'Light Mortar'], ['99', 'Power Suit']]) })).toBe('undelivered');
+    // An id the dump cannot name is not evidence either way.
+    // batch 033: light-mortar-innovation#duplicate-modification-choice
+    expect(effectDelivery(eff('giveItem', { itemId: 18303 }), held, names)).toBe('unchecked');
+  });
   const eff = (type, data, variable = null) => ({ type, variable, valueBearing: true, gate: 'open', inOption: false, data });
 
   it('reads proficiency letters against the character', () => {
@@ -812,4 +831,59 @@ describe('batch 29 — the comparers read the carriers that live off the record'
       .toMatch(/^ok\s+path-to-perfection\s+\(3 identities agree\)/m);
   }, 120_000);
 });
+
+describe('batch 33 — the experience instrument reads the granted-action and psi-name carriers', () => {
+  const eff = (type, data, variable = null) => ({ type, variable, valueBearing: true, gate: 'open', inOption: false, data });
+  const base = {
+    stars: {}, proficiencies: {}, spellcasting: [], featNames: [], featureNames: [], spellNames: [],
+    actionNames: [], languages: [], traits: [],
+  };
+
+  /*
+   * way-of-the-drifter, way-of-the-sniper, way-of-the-vanguard, interrogation-methodology and
+   * alchemical-sciences-methodology each hand the player ONE action through `grantsActions`, which
+   * reaches the sheet as `Character.grantedActionIds` (build.ts:6201/8739 → MainTab.tsx:325) and lands
+   * on NO other name list the surface carries. Each read NO-SHEET-EFFECT for exactly that op.
+   */
+  // batch 033: way-of-the-drifter#instrument-deeds
+  it('way-of-the-sniper / way-of-the-drifter: a granted ACTION is delivered off surface.actionNames', () => {
+    const names = { block: new Map([['1', 'Covered Reload'], ['2', 'Reloading Strike']]) };
+    const surface = { ...base, actionNames: ['Covered Reload'], featureNames: ['Way of the Sniper'] };
+    expect(effectDelivery(eff('giveAbilityBlock', { abilityBlockId: 1 }), surface, names)).toBe('delivered');
+    // mutation-proof: stunt `actionNames` (the new carrier) and the op must report undelivered again —
+    // the teach reads the character's granted actions, it does not pass every giveAbilityBlock.
+    // A DIFFERENT action on a populated list stays undelivered: the match is by name, not by presence.
+    // batch 033: way-of-the-drifter#instrument-deeds
+    expect(effectDelivery(eff('giveAbilityBlock', { abilityBlockId: 1 }), { ...surface, actionNames: [] }, names)).toBe('undelivered');
+    expect(effectDelivery(eff('giveAbilityBlock', { abilityBlockId: 2 }), surface, names)).toBe('undelivered');
+  });
+
+  /*
+   * Their spell names carry qualifiers. Only "(Psi)" and "(legacy)" name a record we ship under its
+   * bare name — print (AoN conscious-mind-7) lists the psi variants as the plain cantrips, and a
+   * "(legacy)" name is a pre-remaster duplicate of a remaster record we carry.
+   */
+  // batch 033: the-distant-grasp
+  it('the-distant-grasp / the-tangible-dream: (Psi) and (legacy) strip, (deprecated) and (playtest) do NOT', () => {
+    const names = {
+      spell: new Map([
+        ['1', 'Telekinetic Hand (Psi)'], ['2', 'Collective Transposition (legacy)'],
+        ['3', 'Figment (deprecated)'], ['4', 'Mist (War of Immortals) (playtest)'],
+      ]),
+    };
+    const surface = { ...base, spellNames: ['Telekinetic Hand', 'Collective Transposition', 'Figment', 'Mist'] };
+    // The anchor is the whole point: a deprecated or playtest name must NOT be equated with the base
+    // spell, which is what a blanket parenthetical strip would have done.
+    // mutation-proof: the last line stunts `spellNames` (the carrier the strip resolves against) — the
+    // base spell must still be REACHABLE, so a record that grants nothing keeps reporting.
+    // batch 033: the-distant-grasp
+    expect(effectDelivery(eff('giveSpell', { spellId: 1 }), surface, names)).toBe('delivered');
+    expect(effectDelivery(eff('giveSpell', { spellId: 2 }), surface, names)).toBe('delivered');
+    expect(effectDelivery(eff('giveSpell', { spellId: 3 }), surface, names)).toBe('undelivered');
+    expect(effectDelivery(eff('giveSpell', { spellId: 4 }), surface, names)).toBe('undelivered');
+    // batch 033: the-distant-grasp
+    expect(effectDelivery(eff('giveSpell', { spellId: 1 }), { ...base, spellNames: [] }, names)).toBe('undelivered');
+  });
+});
+
 

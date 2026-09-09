@@ -225,7 +225,27 @@ export const FEAT_SKILL_GRANTS: Record<string, FeatGrant> = {
 
   },
   'corpse-tender-dedication': { skills: { diplomacy: 'trained' }, redundantFallback: true },
-  'crafter-in-the-vault': { skills: { 'lore:architecture': 'trained', 'lore:engineering': 'trained' } },
+  /*
+   * THE EIGHT ANIMIST APPARITIONS ARE NOT HERE, and that is deliberate — see the removal note below.
+   *
+   * `crafter-in-the-vault`, `echo-of-lost-moments`, `impostor-in-hidden-places`,
+   * `lurker-in-devouring-dark`, `monarch-of-the-fey-courts`, `stalker-in-darkened-boughs`,
+   * `steward-of-stone-and-fire` and `vanguard-of-roaring-waters` are apparition OPTIONS of the animist
+   * class (core.json classes.animist.extraChoices), not feats, and build.ts:5637-5654 feeds every owned
+   * class-feature id through this table — so each of them granted its two Lores a SECOND time, flat at
+   * 'trained', beside the option's own `grants.lores` + `loreProgression` (build.ts:3620), whose printed
+   * ladder is *"trained … expert at 8th, master at 16th"* (AoN class-feature-3020, Apparition Attunement).
+   *
+   * The duplicate is invisible today only because build.ts:5739 writes maxRank(cur, at(r)) — a raise-only
+   * write, so the flat 'trained' cannot pull the 8th/16th ladder back down. It is a floor waiting for an
+   * ordering change, which is what steward-of-stone-and-fire#duplicate-lore-grant reported. Verified
+   * before removal: for all eight, the option's grants.lores is a superset of the entry that was here
+   * (architecture/engineering, fortune-telling/genealogy, fortune-telling/underworld, ocean/sailing,
+   * art/fey, forest/hunting, mountain/volcano, mountain/river) — deleting them loses no grant.
+   *
+   * ⚠ Five scripts re-serialise this table whole; anything that re-derives it from record text will put
+   * these back. test/batch033-gap-data.test.ts pins their absence.
+   */
   /* OVER-GRANT. Printed: *"You are trained in PERFORMANCE. If you were already trained in Performance,
    * you instead become trained in another skill of your choice."* One skill. The entry granted
    * Performance AND Deception AND Art Lore — two trainings neither the printed text nor Wanderer's
@@ -290,7 +310,6 @@ export const FEAT_SKILL_GRANTS: Record<string, FeatGrant> = {
    * the granted Additional Lore feat (FEAT_GRANT_BOUND_CHOICE in featFeatGrants.ts). */
   'eagle-knight-dedication': { skillChoices: [{ options: ['lore:politics'], rank: 'trained', redundantFallback: true, loreFallback: true }] },
   'earned-glory': { skills: { performance: 'trained' }, redundantFallback: true },
-  'echo-of-lost-moments': { skills: { 'lore:fortune-telling': 'trained', 'lore:genealogy': 'trained' } },
   /*
    * *"You become trained in SOCIETY OR THIEVERY; if you are already trained in BOTH of these skills,
    * you instead become trained in a skill of your choice."* — ONE skill, picked from a pair.
@@ -450,7 +469,6 @@ export const FEAT_SKILL_GRANTS: Record<string, FeatGrant> = {
   'hobgoblin-weapon-expertise': { weaponFamiliarity: { 'weapons': ['composite-longbow', 'composite-shortbow', 'glaive', 'longbow', 'longsword', 'shortbow', 'breaching-pike', 'phalanx-piercer', 'capturing-spetum'], 'mirrorBestCategory': true } },
   'ice-crafter': { conditionalSkills: { crafting: { base: 'trained', upgraded: 'expert' } } },
   'idyllkin': { skills: { nature: 'trained' }, redundantFallback: true },
-  'impostor-in-hidden-places': { skills: { 'lore:fortune-telling': 'trained', 'lore:underworld': 'trained' } },
   'initiate-benefit-tome': { skillChoices: [{ options: 'any', rank: 'trained' }, { options: 'any', rank: 'trained' }], rankUpgrade: { level: 5, rank: 'expert' } },
   'innocuous': { skills: { deception: 'trained' }, redundantFallback: true },
   'intuitive-crafting': { skills: { crafting: 'trained' }, redundantFallback: true },
@@ -508,7 +526,6 @@ export const FEAT_SKILL_GRANTS: Record<string, FeatGrant> = {
       'lore:loremaster': { whenSkill: ['arcana', 'occultism', 'religion', 'society'], whenRank: 'legendary', rank: 'expert' }
     }
   },
-  'lurker-in-devouring-dark': { skills: { 'lore:ocean': 'trained', 'lore:sailing': 'trained' } },
   /* *"…you also either become trained in Arcana or Nature, or an EXPERT in one of those skills in
    * which you were already trained."* — the lion-blade shape exactly, and the upgrade half was
    * missing: a druid taking this got nothing from the clause at all. */
@@ -530,7 +547,6 @@ export const FEAT_SKILL_GRANTS: Record<string, FeatGrant> = {
   'merfolk-lore': { skills: { arcana: 'trained', society: 'trained', 'lore:merfolk': 'trained' }, redundantFallback: true },
   'minotaur-lore': { skills: { society: 'trained', stealth: 'trained', 'lore:minotaur': 'trained' }, redundantFallback: true },
   'miresoul': { skills: { acrobatics: 'trained' }, redundantFallback: true },
-  'monarch-of-the-fey-courts': { skills: { 'lore:art': 'trained', 'lore:fey': 'trained' } },
   'monastic-archer-stance': { weaponFamiliarity: { 'weapons': ['longbow', 'shortbow', 'gakgung', 'bow-staff', 'bow-staff-ranged', 'mikazuki', 'mikazuki-ranged'], 'mirrorBestCategory': true } },
   // ⚠ The MONK TRAIT was missing: the printed clause is *"access to uncommon weapons with the MONK
   // TRAIT and become trained in simple and martial monk weapons"*, and the list enumerates ~70 of them
@@ -666,9 +682,7 @@ export const FEAT_SKILL_GRANTS: Record<string, FeatGrant> = {
   'sorcerer-dedication': { skillChoices: [{ options: 'any', rank: 'trained' }, { options: 'any', rank: 'trained' }], redundantFallback: true },
   'spellshot-dedication': { skills: { arcana: 'trained' }, redundantFallback: true },
   'spiritual-echo': { loreChoices: 1 },
-  'stalker-in-darkened-boughs': { skills: { 'lore:forest': 'trained', 'lore:hunting': 'trained' } },
   'startling-appearance-fleshwarp': { skills: { intimidation: 'trained' }, redundantFallback: true },
-  'steward-of-stone-and-fire': { skills: { 'lore:mountain': 'trained', 'lore:volcano': 'trained' } },
   'stonebound-dedication': { skills: { 'lore:plane-of-earth': 'trained' }, redundantFallback: true },
   // ⚠ NO fallback: the printed clause is "If you're already trained in Crafting, you instead gain the
   // Specialty Crafting skill feat for stonemasonry" — a FEAT, never "a skill of your choice". The flag
@@ -760,7 +774,6 @@ export const FEAT_SKILL_GRANTS: Record<string, FeatGrant> = {
   'vanara-lore': { skills: { survival: 'trained', thievery: 'trained', 'lore:vanara': 'trained' }, redundantFallback: true },
   'vanara-weapon-expertise': { weaponFamiliarity: { 'weapons': ['bo-staff', 'chakram', 'katar', 'panabas', 'urumi', 'gada'], 'mirrorBestCategory': true } },
   'vandal': { skills: { thievery: 'trained' }, redundantFallback: true },
-  'vanguard-of-roaring-waters': { skills: { 'lore:mountain': 'trained', 'lore:river': 'trained' } },
   'vehicle-mechanic-dedication': { skills: { crafting: 'expert' } },
   'verduran-shadow-dedication': { skills: { survival: 'expert' } },
   'viking-dedication': { skills: { 'lore:sailing': 'trained', 'lore:warfare': 'trained' } },

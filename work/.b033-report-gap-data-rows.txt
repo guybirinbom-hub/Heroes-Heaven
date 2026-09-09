@@ -1,0 +1,157 @@
+BATCH 033 — WG-COMPARISON LANE — FAMILY: gap-data-rows
+spec: work/.b033-rows-gap-data-rows.json (6 spec entries, 12 rows)   tests: test/batch033-gap-data.test.ts (7 tests, all passing)
+code: src/data/index.ts · src/rules/featUses.ts · src/rules/featGrantsAuto.ts · src/rules/companionGrants.ts ·
+      src/rules/derive.ts · src/rules/modes.ts · src/rules/types.ts · src/rules/build.ts · src/sheet/SpellsTab.tsx
+npx tsc --noEmit clean; node scripts/test-flip-audit.mjs --batch 033 clean; the 19 test files nearest these
+readers (modes / speeds / feat-uses / defenses / granted-lores / companionGrants / spell-access / uses-upgrades /
+field-catalogue / daily-*) all green. The 9 failures in test/batch033-data.test.ts are that family's own
+row-pending tests and are untouched by this work.
+
+18 gap lines, 15 AUTHORED, 3 PARKED, 0 open.
+
+DATA STILL NEEDED
+-----------------
+1. AUTHORED — work/.b033-rows-gap-data-rows.json
+   classFeatures/empiricism-methodology aonId "methodology-6" + edition "remaster" (supersedes the overlay's
+   "legacy" row). The mirror's methodology-2.remaster_id is ["methodology-6"], and we already ship the Player
+   Core 2 text, so hide-legacy was deleting a class feature the character legitimately has.
+
+2. AUTHORED — work/.b033-rows-gap-data-rows.json
+   classFeatures/forensic-medicine-methodology aonId "methodology-7" + edition "remaster". Same defect, same
+   two rows, methodology-3.remaster_id = ["methodology-7"].
+
+3. AUTHORED — work/.b033-rows-gap-data-rows.json
+   classFeatures/interrogation-methodology aonId "methodology-8" + edition "remaster";
+   methodology-4.remaster_id = ["methodology-8"].
+
+4. AUTHORED — work/.b033-rows-gap-data-rows.json
+   The 33 remaining unread IWR `note` keys, renamed to `condition`: decay/fury/spirit-instinct `whileActive`
+   (1 each), elemental-instinct `choice` (22), superstition-instinct `choice` (8). Each field is re-emitted
+   whole and supersedes the overlay row that already holds it; the generator walked the shipped values and
+   renamed exactly 33 keys, which is the count the verifier measured. Clause text unchanged — only the key,
+   because `condition` is the one field the resistance loop renders beside the number.
+
+5. AUTHORED — work/.b033-rows-gap-data-rows.json
+   classFeatures/arcane-bond-school-of-unified-magical-theory, create:true, with the 1/day + rank-by-level
+   ladder. Authored only after gap 2 below landed, exactly as the line required: effectiveUses() now prefers
+   the variant's limit instead of adding a second pip row beside the generic 1/day one.
+   ⚠ OWED, and it is the one thing this family leaves incomplete: the created record carries NO description,
+   per the create-row contract, and FeatsTab.tsx:189 prefers the variant record — so a UMT wizard's Arcane
+   Bond row will render with no text under it until a created-prose spec supplies it. That spec could not be
+   written here: precheck (1b) in scripts/wg-batch-run.mjs:620-627 refuses a `description` row on a record the
+   same manifest creates unless the create row already carries that exact string, which the contract forbids.
+   Whoever runs the next batch should either author the prose row against the by-then-existing record, or the
+   driver should exempt a created-prose row from (1b). The mechanical loss the create row fixes (1 use per day
+   instead of up to 10) is the larger of the two, which is why the row is authored rather than parked.
+
+6. AUTHORED — src/data/index.ts:554
+   the-tangible-dream#granted-spell-2nd — no row exists that can reach it, and none is authored. The stale copy
+   is classes.psychic.subclass.options[the-tangible-dream].description and core-descriptions.json is already
+   correct, so the systemic sync below IS the fix for this record.
+
+CROSS-FILE GAPS
+---------------
+7. AUTHORED — src/data/index.ts:554
+   loadDescriptions() wrote `.d`/`.r` onto db[bucket][id] only. The write is now a pure exported
+   `applyDescriptions(db, byBucket)` that also syncs every classes.<cls>.subclass.options[] and
+   extraChoices[].options[] entry from the classFeatures entry of the same id. Measured before and after: 45
+   stale options across 11 classes (sorcerer 10, thaumaturge 10, wizard 7, exemplar 5, oracle 3,
+   summoner/witch/psychic/necromancer 2, inventor/gunslinger 1) → 0. The test asserts BOTH the-tangible-dream's
+   "2nd: Invisibility" line and that no option anywhere disagrees with its record. Exported so the option half
+   is testable without a fetch; loadDescriptions is the only app caller.
+
+8. AUTHORED — src/rules/featUses.ts:56
+   effectiveUses() had no preference for a `<featureId>-<subclassId>` variant's limitedUses. A new `retunedBy`
+   helper resolves the variant when the character's subclass has one AND the generic record carries a limit of
+   its own (which is what "retunes" means; a variant with a limit the base lacks is left alone — measured: zero
+   such pairs ship today, so the narrow rule regresses nothing). featUse() also keys the SPEND on the generic
+   id, so the Feats tab (which shows the variant, FeatsTab.tsx:189) and the Main tab (which shows the action
+   the generic grants) share one counter instead of two independent pip counts.
+   FINDING FIXED: school-of-unified-magical-theory#drain-bonded-item-uses (this reader + the create row above).
+
+9. AUTHORED — src/rules/featGrantsAuto.ts:229
+   All eight animist apparition entries removed (crafter-in-the-vault, echo-of-lost-moments,
+   impostor-in-hidden-places, lurker-in-devouring-dark, monarch-of-the-fey-courts, stalker-in-darkened-boughs,
+   steward-of-stone-and-fire, vanguard-of-roaring-waters), replaced by one block comment saying why and naming
+   all eight. Re-verified the superset claim before deleting: each option's grants.lores covers the entry's two
+   Lores with the printed 8th/16th loreProgression. The test pins their absence AND that a level-8 animist with
+   steward-of-stone-and-fire is still EXPERT in Lore (mountain) and Lore (volcano) — i.e. the ladder the flat
+   'trained' duplicate was a floor under.
+   FINDING FIXED: steward-of-stone-and-fire#duplicate-lore-grant.
+
+10. AUTHORED — src/rules/companionGrants.ts:430
+    The angel-eidolon COMPANION_MODS note now carries eidolon-1's wording: holy trait, "unholy creatures and
+    creatures with weakness to holy", and the nonlethal clause. The old note was pre-remaster in three ways at
+    once and dropped the nonlethal sentence.
+    FINDING FIXED (third copy): angel-eidolon#hallowed-strikes-text — with the record description row in
+    work/.b033-rows-data-rows.json and the option copy, which gap 7's sync now repairs, that is all three.
+
+11. AUTHORED — src/rules/derive.ts:5246 (with src/rules/modes.ts:134)
+    A mode targeting 'speed' folded into speeds.land only. `detail` — the field ModeModifier already uses to
+    name the save / skill / attribute a modifier picks out — now names the movement type: absent still means
+    the walking Speed (every shipped toggle and every mode the editor writes is unchanged), 'all' means every
+    movement type the character has, and a movement key means that one. modeMatches carries the semantics, so
+    a target asking `{kind:'speed'}` with no detail still matches everything, which is what the stat breakdown
+    and the active-mode highlight ask. deriveSpeeds derives land through the same loop as the rest instead of a
+    special case. NOT claimed as a fix for curse-of-creeping-ashes#speed-penalty: the row that would carry
+    detail:'all' is data-rows' (modes/curse-of-creeping-ashes-4 `modifiers`) and a second row on that key would
+    be refused as a collision, so the reader ships without its writer and the test drives it from an in-memory
+    mode. That row is the follow-up.
+
+12. AUTHORED — src/sheet/SpellsTab.tsx:293 (with src/rules/types.ts SpellAccessGrant + Character
+    .spellListTraditions, and the carry at src/rules/build.ts:6548)
+    SpellAccessGrant gains `traits?: string[]`, build.ts carries it onto Character.spellListTraditions, and the
+    picker's tradition test is now the exported `spellOpenedBy(w, s)` — ANY of the named traits qualifies, the
+    tradition test still applies on top, and a widening with no traits opens the whole list exactly as before.
+    Exported so the rule is pinnable without mounting the tab. NOT claimed as a fix for
+    fey-eidolon#fey-gift-spells: that record's `spellListAdditions` row belongs to data-rows and adding the
+    traits to it here would collide, so the narrowing ships as a reader and the test drives it from a patched
+    content copy. The follow-up row is {traditions:['arcane'], traits:['illusion','mental']}.
+
+13. AUTHORED — src/rules/derive.ts:2726 (with IwrEntry.whenVoidHealing at src/rules/types.ts:527)
+    IwrEntry gains `whenVoidHealing?: boolean`, the sibling of whenCreatureTrait, honoured by BOTH the
+    resistance and the weakness loop (honouring a field on half of a shared type is how a field becomes
+    write-only for the other half). The void-healing fact is computed once, near the top of deriveDefenses, and
+    the returned `negativeHealing` now reads that same const instead of restating the five-way expression — one
+    fact, one place. NOT claimed as a fix for otherworldly-protection#void-healing-swap: the resistances row is
+    data-rows' and carries the annotation half; the follow-up row is the void entry gaining
+    {whenVoidHealing:false} and a {type:'vitality', value:'3+floor(@actor.level/2)', whenVoidHealing:true}
+    entry joining it. The test proves both directions on a patched copy (living inventor → void 7, dhampir →
+    vitality 7, and the ungated spirit entry unaffected either way).
+
+14. PARKED — flaggedResidue (see work/.b033-gaps.json)
+    `effectChoices` on an inventor modification has no reader in resolvePick. The gap line itself says it is
+    not needed by any row in this batch, and it is not: otherworldly-protection#sanctified-resistance was
+    deliberately settled on whenCreatureTrait, which the resistance loop already honours. Widening resolvePick
+    to c.inventor.modifications is a builder-shape change with no caller today, so it is measured and left
+    rather than built speculatively.
+
+15-16. PARKED ×2 — flaggedResidue (see work/.b033-gaps.json)
+    Two gap "lines" that are a horizontal rule of dashes, split out of work/.b033-verify-data-rows.txt by the
+    apply-digest's line splitter. They name no record, field or file; the sections they separated are disposed
+    of by the lines beneath them. ⚠ Worth a driver fix: the splitter should skip a line that is only
+    punctuation, or every batch's verify file will keep manufacturing gap lines that cannot be closed.
+
+17-18. AUTHORED ×2 — the same two lines re-reported from work/.b033-verify-data-rows.txt (the empiricism
+    methodology rows, and the loadDescriptions() sync), closed by the spec and by src/data/index.ts:554
+    respectively.
+
+FINDING VERDICTS THIS FAMILY CLAIMS
+-----------------------------------
+FIXED  school-of-unified-magical-theory#drain-bonded-item-uses — create row + src/rules/featUses.ts:56 retunedBy
+FIXED  steward-of-stone-and-fire#duplicate-lore-grant           — src/rules/featGrantsAuto.ts:229, 8 entries removed
+FIXED  angel-eidolon#hallowed-strikes-text                      — src/rules/companionGrants.ts:430 (third copy)
+FIXED  the-tangible-dream#granted-spell-2nd                     — src/data/index.ts:554 applyDescriptions option sync
+NOT CLAIMED, reader only (the writing row belongs to data-rows and a second row on its key would be refused as
+a collision): curse-of-creeping-ashes#speed-penalty, fey-eidolon#fey-gift-spells,
+otherworldly-protection#void-healing-swap.
+
+CROSS-FILE GAPS THIS FAMILY LEAVES
+----------------------------------
+· The created-prose hole under DATA STILL NEEDED 5: precheck (1b) makes a created record's description
+  unauthorable in the manifest that creates it. Owner: the driver (scripts/wg-batch-run.mjs).
+· Three follow-up rows, each one row on a key data-rows owns this batch, listed verbatim in items 11, 12 and 13
+  above. Owner: whoever cuts the next batch.
+· test/_content.ts merges core-descriptions.json with the same record-only loop applyDescriptions replaced, so
+  a test reading a subclass option's description still reads the stale copy. Not edited (another family's file
+  and a shared harness); test/batch033-gap-data.test.ts reads the two files off disk to work around it.

@@ -661,7 +661,33 @@ function surfaceOf(c: Record<string, unknown>, db: ContentDatabase, snap: Record
     })),
     featNames: ((c.feats as { featId: string }[] | undefined) ?? []).map((f) => db.feats[f.featId]?.name).filter(Boolean),
     featureNames: ((snap.ownedFeatures as string[] | undefined) ?? []).map((id) => db.classFeatures[id]?.name).filter(Boolean),
+    /*
+     * A record's `grantsActions` grant is on NO other list here: `featureNames` maps `ownedFeatures`
+     * through `db.classFeatures` and `featNames` maps `c.feats`, and an ACTION is a third bucket — the
+     * five Way/Methodology records read NO-SHEET-EFFECT for the one action each hands over.
+     *
+     * The two carriers are exactly the two MainTab.tsx:281-328 reads onto the encounter action list:
+     * `grantsActions` on an owned feat or class feature (Reloading Strike, Covered Reload, Clear a
+     * Path, Pointed Question, Quick Tincture), and `Character.grantedActionIds`, which buildCharacter
+     * fills from a chosen OPTION's grantsActions (build.ts:6201/8739, Grand Metamorphosis) where no
+     * record can be walked for it. Mirrored rather than invented: the sheet is the authority on what
+     * the player can see, so the surface must read the same two places.
+     */
+    actionNames: [
+      ...((snap.ownedFeatures as string[] | undefined) ?? []).flatMap((id) => db.classFeatures[id]?.grantsActions ?? []),
+      ...((c.feats as { featId: string }[] | undefined) ?? []).flatMap((f) => db.feats[f.featId]?.grantsActions ?? []),
+      ...((c.grantedActionIds as string[] | undefined) ?? []),
+    ].map((id) => (db.actions as Record<string, { name?: string } | undefined>)[id]?.name).filter(Boolean),
     spellNames: [...spellIds].map((id) => spells[id]?.name).filter(Boolean),
+    /*
+     * Items a record HANDS the player. build.ts:8815 folds every `grantedItems` entry into the built
+     * character's own `c.inventory` (as `granted-N` instances), which is exactly the Inventory tab the
+     * player reads — so the inventory is the surface, not the grant list, and a granted item the player
+     * already owned (build.ts filters those out) is still on it. Feeds `giveItem` in
+     * scripts/lib/wg-experience-lanes.mjs, the last of WG's value-bearing ops with no predicate.
+     */
+    itemNames: ((c.inventory as { itemId: string }[] | undefined) ?? [])
+      .map((i) => (db.items as Record<string, { name?: string } | undefined>)[i.itemId]?.name).filter(Boolean),
     languages: c.languages ?? [],
     // The single reader every consumer goes through (ancestry + heritage/feat grants + chosen), not the
     // answer-driven array alone — a heritage's `grantsCreatureTraits` never reached the latter.

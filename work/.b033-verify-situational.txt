@@ -1,0 +1,107 @@
+BATCH 033 — SITUATIONAL family, ADVERSARIAL VERIFICATION
+Findings re-read from work/.b033-read.json (all five in confirmed[]). Spec checked as rows without
+applying it: work/.b033-rows-situational.json holds five entries, every one with backfillRows: []
+— nothing to apply, so no create:true / supersedes / collision / prose question arises. Every entry
+id matches a CONFIRMED finding id one-for-one; no sixth entry, none missing.
+
+Instruments run: npx tsc --noEmit (clean); node scripts/vt.mjs run test/batch033-situational.test.ts
+test/authoring-guards.test.ts test/rulings-dfgh.test.ts → 3 files, 58 passed;
+node scripts/test-flip-audit.mjs --batch 033 → FAIL, but on scripts/wg-values.mjs only (another
+family — see CROSS-FILE GAPS); zero flip-audit items touch this family's two files.
+Throwaway harness (test/_tmp-verify033.test.ts, run then deleted) built a Distant Grasp psychic and
+an Unbound Step psychic and dumped their spell lists, to prove the new stars land on rows the player
+actually has rather than on rows nobody sees.
+
+PER FINDING
+
+the-distant-grasp#telekinetic-projectile — DONE
+  SPELL_MARKERS["telekinetic-projectile"] (situationalBonuses.ts:4568) reaches a BUILT psychic:
+  spellSituationalFor returns exactly one row carrying "60 feet", and the harness confirmed
+  classes/psychic subclass option the-distant-grasp lists telekinetic-projectile in grantedSpells, so
+  the star sits on a row the character owns. Print verified verbatim in the mirror
+  (conscious-mind-7): "Increase the range of telekinetic projectile to 60 feet." spells/
+  telekinetic-projectile still reads range "30 feet" in core.json — correct, and pinned by the test.
+
+the-distant-grasp#telekinetic-hand — DONE
+  SPELL_MARKERS["telekinetic-hand"] (:4574) carries all three rungs; conscious-mind-7 verified
+  verbatim ("…its maximum Bulk is 2 … maximum Bulk is 3"). telekinetic-hand is in the subclass
+  option's grantedSpells (harness), so the row exists on the sheet. No carrier for a spell Bulk cap
+  exists anywhere in build.ts/derive.ts — grepped, confirmed — so text is the only honest lane and
+  the finding's own proposal says so.
+
+the-unbound-step#phase-bolt — DONE
+  SPELL_MARKERS["phase-bolt"] (:4580); conscious-mind-12 verified verbatim, including "until the
+  beginning of your next turn". phase-bolt is in the-unbound-step's grantedSpells (harness). The
+  pre-existing "the-unbound-step" warp-step Speed entry is untouched (diff read line by line). The
+  negative twin on a Distant Grasp psychic passes, so the source gate really gates.
+
+curse-of-creeping-ashes#cursebound-4-text — DONE
+  RECORD_MARKERS['curse-of-creeping-ashes'] (:4505) now ends with the printed clause. Mirror
+  mystery-20 read directly: "Cursebound 4 You take a –10-foot status penalty to all your Speeds as
+  your limbs begin to crumble like ash" — no death clause anywhere in that record, so the removed
+  sentence was invented. Rungs 1–3 and `value: "fire weakness"` are byte-identical to before (diff
+  checked); recordMarkersFor on a built Ashes oracle returns the mark, so the fix is on the reader
+  StatDetailModal path, not just in the literal. grep over src/ and test/ finds no surviving
+  "consumed and die" outside the batch test's own quotation of the old text.
+
+construct-eidolon#construct-heart — DONE
+  FEAT_SITUATIONAL["construct-eidolon"] (:3104) is now two lines. eidolon-4 verified verbatim in the
+  mirror: all four save categories plus fatigued/sickened, plus "DC 10 flat check to remove
+  persistent bleed damage (or DC 5 after receiving particularly effective aid)". The save `when` is
+  118 characters, under the ruling-H 120 cap that test/rulings-dfgh.test.ts enforces (measured, not
+  taken on trust), and every one of the six printed categories survives in it. The second line is
+  the {kind:'hp'} flat-check shape of charhide-goblin (:741) and coral-symbiotes (:245) verbatim, and
+  {kind:'hp'} has a real reader (explain.ts:101, builder/shared.tsx:4366 StatLine refTarget). Both
+  lines reach a built summoner through featSituationalFor(characterSituationalIds(...)), and neither
+  reaches a beast-eidolon summoner. Only one "construct-eidolon" key exists in the registry (checked:
+  a duplicate would silently delete the entry, which authoring-guards:144 also ratchets).
+
+SPEC / MANIFEST CHECKS
+  - work/.b033-rows-situational.json: 5 entries, 0 backfillRows total. No record targeted, so no
+    create:true is owed, no created-prose spec is owed, no supersedes is owed, and no two rows can
+    collide on record+field. Each note states the reason the mechanic cannot be a row (gated
+    per-character modification / a target's stat / a hand-authored registry literal) and each reason
+    was checked against the code rather than accepted.
+  - work/.b033-specs.json: this family's entry names all four paths it touched
+    (work/.b033-rows-situational.json, work/.b033-report-situational.txt,
+    test/batch033-situational.test.ts, src/rules/situationalBonuses.ts) and nothing it did not touch.
+    src/rules/build.ts and test/umbrella-items.test.ts are modified in the tree but belong to the
+    ENGINE family (inventor armour innovation) — not staged here, correctly.
+  - The manifest currently holds ONLY this family's entry; see CROSS-FILE GAPS.
+  - Because the spec entries are rowless, scripts/wg-batch-close.mjs derives FIXED only through its
+    code-only branch, which needs this family's stage[] to name a src/ path this batch really
+    changed. It does (src/rules/situationalBonuses.ts), so the derivation stands. Note for the
+    driver: the report's per-finding headings end in the word "TAUGHT", which matches the closer's
+    TEACH_RE — harmless while the code-only citation wins, but it is the only thing between these
+    five and a MATCHES verdict if the stage[] entry is ever dropped.
+  - scripts/apply-situational-lane.mjs cannot clobber the widened row: its `existingIds` regex
+    /^ {2}"([a-z0-9-]+)":\s\[/gm still matches the reformatted `  "construct-eidolon": [` opener
+    (checked against the new multi-line shape, which is where that guard would have quietly failed).
+
+FIXED BY ME: nothing. No verdict was WRONG or NOT-DONE; no file was edited by this verifier, so no
+manifest stage[] paths are appended.
+
+DATA STILL NEEDED
+(none — all five findings are code-only and the spec says so per entry; verified, no row is owed)
+
+CROSS-FILE GAPS
+1. scripts/backfill-oracle-curses.mjs:36 — CURSES['curse-of-creeping-ashes'].note still ends "4: you
+   are consumed and die." and the script rewrites this registry block on --write, so re-running it
+   reverts curse-of-creeping-ashes#cursebound-4-text. Confirmed verbatim at that line. Mitigating
+   fact the builder did not check and I did: the script is manual-only — it appears in no npm
+   script and no other script invokes it — so this is a latent revert, not one `npm run data` fires.
+   Replace the clause with "4: a −10-foot status penalty to all your Speeds as your limbs begin to
+   crumble like ash." (mystery-20).
+2. src/rules/modes.ts:241-244 — the cursebound-stage modes (cat-cursebound-1..4) carry
+   `modifiers: []`, so the −10-foot Speed penalty WG actually applies (SPEED + FLY/CLIMB/BURROW/SWIM,
+   status) reaches no number on our sheet; ours is display text only. Outside the finding, whose
+   scope is the printed TEXT (#cursebound-4-text), and consistent with every other cursebound rung
+   in RECORD_MARKERS — but it is a real unbuilt lane and nothing else in the batch names it.
+3. scripts/wg-values.mjs:1487 — SETTLED_VALUES gained the key "decay-instinct" with no citation in
+   the six lines above it and no `// mutation-proof` test that stunts it, so
+   `node scripts/test-flip-audit.mjs --batch 033` FAILS with 2 items today. Another family's file and
+   another family's finding; the batch cannot close until that family cites it.
+4. work/.b033-specs.json holds one entry (situational), while work/.b033-rows-repair.json and
+   work/.b033-rows-data-rows.json exist on disk unregistered. Those families must append their own
+   manifest entries — a rowless-or-not spec that is not in the manifest is cited by nothing and its
+   records derive no verdict. Not edited here (another agent's file).

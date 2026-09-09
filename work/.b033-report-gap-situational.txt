@@ -1,0 +1,90 @@
+BATCH 033 — GAP AGENT, family "situational" (WG-COMPARISON lane)
+Lines assigned: 2. AUTHORED 2, PARKED 0. Still open: 0.
+
+----------------------------------------------------------------------
+LINE 1 — work/.b033-verify-situational.txt:71
+  "Because the spec entries are rowless, scripts/wg-batch-close.mjs derives FIXED only through its
+   code-only branch, which needs this family's stage[] to name a src/ path this batch really changed."
+
+AUTHORED — ref: src/rules/situationalBonuses.ts (restored byte-exactly out of stash@{0}), plus the
+work/.b033-specs.json entry family "gap-situational".
+
+Why: the verifier's premise had gone FALSE between its run and mine. src/rules/situationalBonuses.ts
+was sitting at HEAD (batch 032) with ZERO of the five situational lanes in it — `git diff` on that
+path was empty, `grep` found no "telekinetic-projectile", no "phase-bolt", no widened
+"construct-eidolon", and the curse note still ended "4: you are consumed and die". The cause is the
+incident work/.b033-verify-instruments.txt records: a stray `git stash push` moved the whole tracked
+tree into stash@{0}, and the instruments verifier restored only its own three files. So this family's
+stage[] named a src/ path the batch had NOT changed, the closer's code-only branch would have derived
+FIXED from nothing, and all five CONFIRMED findings — the-distant-grasp#telekinetic-projectile,
+the-distant-grasp#telekinetic-hand, the-unbound-step#phase-bolt,
+curse-of-creeping-ashes#cursebound-4-text and construct-eidolon#construct-heart — would have shipped
+as taught with no code behind them. That is exactly the "a real gap ships as MATCHES" failure.
+
+What I did, with NO git write command: read the blob with `git show stash@{0}:src/rules/
+situationalBonuses.ts` (read-only), and re-applied its three hunks to the working file with the Edit
+tool (FEAT_SITUATIONAL["construct-eidolon"] widened to two lines, RECORD_MARKERS
+['curse-of-creeping-ashes'] printed cursebound-4 text, and the three new SPELL_MARKERS keys).
+Proof it is byte-exact rather than retyped: `git diff stash@{0} -- src/rules/situationalBonuses.ts`
+now reports ONLY the two comment lines I deliberately reworded (the stash comment said the generator
+"still holds the old sentence"; after LINE 2 it does not, so the comment now says so).
+
+Verified on a BUILT character, not on the literal: node scripts/vt.mjs run
+test/batch033-situational.test.ts test/batch033-gap-situational.test.ts -> 12 passed (the builder's
+10 cases now actually exercise restored code); test/authoring-guards.test.ts test/rulings-dfgh.test.ts
+-> 48 passed (the SPELL_MARKERS merge guard and the ruling-H 120-char `when` cap both still hold);
+npx tsc --noEmit clean; node scripts/test-flip-audit.mjs --batch 033 -> clean, 8 test files touched,
+3 new settle keys, every flip cited.
+
+----------------------------------------------------------------------
+LINE 2 — work/.b033-verify-situational.txt:88
+  "scripts/backfill-oracle-curses.mjs:36 — CURSES['curse-of-creeping-ashes'].note still ends '4: you
+   are consumed and die.' and the script rewrites this registry block on --write."
+
+AUTHORED — ref: scripts/backfill-oracle-curses.mjs, CURSES['curse-of-creeping-ashes'].note, pinned by
+test/batch033-gap-situational.test.ts.
+
+Why: that script is the AUTHORING SOURCE of the oracle-curse block of RECORD_MARKERS, so the fix for
+finding curse-of-creeping-ashes#cursebound-4-text was only as durable as the next `--write` run. The
+note now carries the printed sentence — "4: a −10-foot status penalty to all your Speeds as your limbs
+begin to crumble like ash." — verified verbatim in the mirror myself rather than taken from the
+report: aon-2e-archive/data/by-category/mystery/mystery-20.json reads "Cursebound 4 You take a –10-foot
+status penalty to all your Speeds as your limbs begin to crumble like ash." and holds no death clause
+anywhere. A WHY comment above the entry quotes it and names the revert risk.
+
+The lazy durable half is the test, not the edit: test/batch033-gap-situational.test.ts reads the
+generator's own source and asserts its note string is IDENTICAL to the note RECORD_MARKERS displays,
+plus that neither side matches /\bdie\b/ or contains "consumed". Either side drifting fails the test,
+which is the only thing that stops this pair separating again. Both cases carry
+"// batch 033: curse-of-creeping-ashes#cursebound-4-text" and the record id is in the describe title.
+
+----------------------------------------------------------------------
+DATA STILL NEEDED
+(none — both lines were code, no backfill row is expressible for either; work/.b033-rows-gap-
+situational.json carries the one rowless entry with the reason, in this family's convention)
+
+CROSS-FILE GAPS
+1. ⚠⚠ THE STASH IS STILL THERE. I restored ONE file. stash@{0} still holds ~210 other files of other
+   agents' and the owner's work (tracker/* among them). It is already on the gaps list as an
+   instruments line (work/.b033-verify-instruments.txt:182) and needs a human or a git-write agent:
+   NOTHING MUST BE COMMITTED FIRST. A `git stash pop` will now conflict on src/rules/build.ts,
+   scripts/dropped-inline-check.mjs and — new, because of my restore — src/rules/situationalBonuses.ts;
+   for that third one keep the WORKING-TREE version, which is the stash content plus the two reworded
+   comment lines. Not raised as an owner question: it is a mechanical rescue, not a ruling, and the
+   instruments lane already owns the line.
+2. work/.b033-specs.json — the situational family's own entry never staged
+   work/.b033-verify-situational.txt, so that verify would not have reached the commit. I did not edit
+   another family's entry; I listed the path in MY stage[] instead, so it lands either way.
+3. src/rules/modes.ts:241-244 (cat-cursebound-1..4 carry `modifiers: []`) — the −10-foot Speed penalty
+   is display text on our sheet and no number. That is the OTHER confirmed finding on this record,
+   curse-of-creeping-ashes#speed-penalty, and the data-rows family already owns its half (its own gap
+   line names src/rules/derive.ts:5224 folding a 'speed' mode into speeds.land only). Out of scope
+   here, and deliberately not touched: my two lines are about the printed TEXT.
+
+FILES TOUCHED
+  src/rules/situationalBonuses.ts             (restored from stash@{0}; 2 comment lines reworded)
+  scripts/backfill-oracle-curses.mjs          (CURSES['curse-of-creeping-ashes'].note + WHY comment)
+  test/batch033-gap-situational.test.ts       (new, 2 cases, both cited)
+  work/.b033-rows-gap-situational.json        (new, rowless spec)
+  work/.b033-specs.json                       (appended one entry; every existing entry untouched)
+  work/.b033-gaps.json                        (my two lines only, open -> authored)

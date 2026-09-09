@@ -1,7 +1,7 @@
 import { useMemo, useState, type ReactNode } from 'react';
 import { cleanRun } from './RichText';
 import { listValues } from '../data';
-import type { ActionCost, Character, ContentDatabase, Spell, SpellcastingEntry } from '../rules/types';
+import type { ActionCost, Character, ContentDatabase, Spell, SpellcastingEntry, Tradition } from '../rules/types';
 import { deityDomainsOf, deriveSpellcasting, deriveClassDc, formatMod, ownedFeatureIds } from '../rules/derive';
 import { toggleKnownRitual,
   poolKey,
@@ -279,6 +279,22 @@ function groupBy<T>(items: T[], key: (t: T) => string): [string, T[]][] {
  * Shared by the prepare/repertoire picker and Learn a Spell — both mean "what's on this caster's list",
  * including everything a feat, an opened tradition, or a replaced list has done to it.
  */
+/**
+ * Does ONE tradition widening open this spell?
+ *
+ * A widening may be narrowed BY TRAIT — AoN eidolon-8, Fey Gift Spells: *"spells that have the ILLUSION
+ * OR MENTAL traits that appear on the arcane spell list"*. Any of the named traits qualifies, and the
+ * tradition test still applies on top; a widening with no `traits` opens the whole list, as before.
+ *
+ * Tested per spell rather than folded into a set of open traditions, because the trait list belongs to
+ * the widening and not to the tradition: two records can open arcane on different terms. Exported so
+ * the rule can be pinned without mounting the tab.
+ */
+export function spellOpenedBy(w: { traditions: Tradition[] | 'any'; traits?: string[] }, s: Spell): boolean {
+  const onTradition = w.traditions === 'any' || s.traditions.some((t) => w.traditions.includes(t));
+  return onTradition && (!w.traits?.length || w.traits.some((t) => (s.traits ?? []).includes(t)));
+}
+
 function useTraditionSpells(character: Character, entry: SpellcastingEntry, content: ContentDatabase) {
   return useMemo(() => {
     const byRank: Record<number, Spell[]> = {};
@@ -294,8 +310,7 @@ function useTraditionSpells(character: Character, entry: SpellcastingEntry, cont
     // not on the divine spell list" (Mysterious Repertoire). Expanding that into ids on the character
     // would be ~1,500 entries in every saved roster to say one sentence.
     const openTraditions = (character.spellListTraditions ?? []).filter((w) => !w.entryId || w.entryId === entry.id);
-    const anyTradition = openTraditions.some((w) => w.traditions === 'any');
-    const openSet = new Set(openTraditions.flatMap((w) => (w.traditions === 'any' ? [] : w.traditions)));
+    const openedBy = (s: Spell) => openTraditions.some((w) => spellOpenedBy(w, s));
     // A class archetype may REPLACE the list rather than widen it — "Replace your spell list with the
     // elemental spell list … your actual magical tradition is unchanged". So this stands in for the
     // tradition test; everything else (feat additions, opened traditions) still applies on top.
@@ -320,7 +335,7 @@ function useTraditionSpells(character: Character, entry: SpellcastingEntry, cont
       const e = (s as { edition?: string }).edition;
       if (e === 'superseded') continue; // renamed/outdated half of a remaster change — always hidden
       if (hideLegacy && (e === 'legacy' || e === 'legacy-era')) continue; // per-character Hide legacy data
-      const opened = anyTradition || s.traditions.some((t) => openSet.has(t));
+      const opened = openedBy(s);
       if (onList(s) || added.has(s.id) || opened) (byRank[s.rank] ??= []).push(s);
     }
     const upTo: Record<number, Spell[]> = {};
