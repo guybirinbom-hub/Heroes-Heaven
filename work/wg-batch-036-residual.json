@@ -1,0 +1,392 @@
+{
+ "batch": "work/wg-batch-036.json",
+ "examined": 40,
+ "method": "Opus readers (print + WG raw ops + every carrier) each followed by an adversarial verifier; findings applied by 6 family spec(s), verdicts derived by scripts/wg-batch-close.mjs from the cited rows, edits, tests and teaches",
+ "confirmed": [
+  {
+   "id": "lesson-of-protection",
+   "finding": "lesson-of-protection#familiar-spell",
+   "severity": "player-visible",
+   "summary": "The lesson's second half — the ordinary spell the familiar learns — has no carrier: only the hex reaches the character, so Mystic Armor never joins the witch's spellbook.",
+   "fixed": true
+  },
+  {
+   "id": "lesson-of-dreams",
+   "finding": "lesson-of-dreams#familiar-spell",
+   "severity": "player-visible",
+   "summary": "The lesson's second half — the ordinary spell the familiar learns — has no carrier: only the hex reaches the character, so Sleep never joins the witch's spellbook.",
+   "fixed": true
+  },
+  {
+   "id": "lesson-of-life",
+   "finding": "lesson-of-life#familiar-spell",
+   "severity": "player-visible",
+   "summary": "The lesson's second half — the ordinary spell the familiar learns — has no carrier: only the hex reaches the character, so Spirit Link never joins the witch's spellbook.",
+   "fixed": true
+  },
+  {
+   "id": "lesson-of-shadow",
+   "finding": "lesson-of-shadow#familiar-spell",
+   "severity": "player-visible",
+   "summary": "The lesson's second half — the ordinary spell the familiar learns — has no carrier: only the hex reaches the character, so Chilling Darkness never joins the witch's spellbook.",
+   "fixed": true
+  },
+  {
+   "id": "blessed-swiftness",
+   "finding": "blessed-swiftness#mounted",
+   "severity": "player-visible",
+   "summary": "Neither side models the mounted redirect of the Speed bonus, and our own modeAdjust note tells the player the opposite of what the feature prints.",
+   "fixed": true
+  },
+  {
+   "id": "blessed-swiftness",
+   "finding": "blessed-swiftness#aon-parent",
+   "severity": "internal",
+   "summary": "The record's print join points at the wrong AoN document — Bracers of Devotion (an Item 11 from Treasure Vault) instead of the champion feature it is a section of — a name collision between the item's \"Blessed Swiftness\" section and the cla",
+   "fixed": true
+  },
+  {
+   "id": "lesson-of-decay",
+   "finding": "lesson-of-decay",
+   "severity": "player-visible",
+   "summary": "The familiar half of the lesson is missing: we carry only the hex (focusSpells: [mycological-malady]) and nothing delivers the Insect Form the familiar learns, while WG grants it.",
+   "fixed": true
+  },
+  {
+   "id": "lesson-of-mischief",
+   "finding": "lesson-of-mischief",
+   "severity": "player-visible",
+   "summary": "The familiar half of the lesson is missing: we carry only the hex (focusSpells: [deceivers-cloak]) and nothing delivers the Mad Monkeys the familiar learns, while WG grants it.",
+   "fixed": true
+  },
+  {
+   "id": "lesson-of-snow",
+   "finding": "lesson-of-snow",
+   "severity": "player-visible",
+   "summary": "The familiar half of the lesson is missing: we carry only the hex (focusSpells: [personal-blizzard]) and nothing delivers the Wall of Wind the familiar learns, while WG grants it.",
+   "fixed": true
+  },
+  {
+   "id": "lesson-of-the-shark",
+   "finding": "lesson-of-the-shark",
+   "severity": "player-visible",
+   "summary": "The familiar half of the lesson is missing: we carry only the hex (focusSpells: [blood-in-the-water]) and nothing delivers the Feet to Fins the familiar learns, while WG grants it.",
+   "fixed": true
+  },
+  {
+   "id": "lesson-of-the-flock",
+   "finding": "lesson-of-the-flock",
+   "severity": "player-visible",
+   "summary": "The familiar half of the lesson is missing: we carry only the hex (focusSpells: [sheltering-wings]) and nothing delivers the Levitate the familiar learns, while WG grants it.",
+   "fixed": true
+  },
+  {
+   "id": "advanced-weaponry-construct",
+   "finding": "advanced-weaponry-construct",
+   "severity": "player-visible",
+   "summary": "The modification the feature tells the player to choose is not recorded anywhere on our side — the record has no effectChoices, no effectPicks handler and no reference in build.ts/Builder — while WG stores the pick.",
+   "fixed": true
+  },
+  {
+   "id": "hyper-boosters",
+   "finding": "hyper-boosters#overdrive",
+   "severity": "player-visible",
+   "summary": "The Overdrive step of the Speed bonus is a live number on their side and prose on ours, although the inventor Overdrive state and the whileActive lane that carries exactly this shape both exist here (batch 035 built them for metallic-reacta",
+   "fixed": true
+  },
+  {
+   "id": "hyper-boosters",
+   "finding": "hyper-boosters#prerequisite",
+   "severity": "player-visible",
+   "summary": "The printed prerequisite is enforced by neither side, and our +10 is stored as a +5 DELTA over speed-boosters — so an inventor who takes Hyper Boosters without Speed Boosters (which the modification picker permits) walks at +5 feet instead ",
+   "fixed": true
+  },
+  {
+   "id": "wind-seeker",
+   "finding": "wind-seeker",
+   "severity": "player-visible",
+   "summary": "Wind Seeker's printed spell grant reaches nothing: the record carries no spellListAdditions, so aerial form never joins the animist's apparition repertoire.",
+   "fixed": true
+  },
+  {
+   "id": "wind-seeker",
+   "finding": "wind-seeker#darkened-forest-form",
+   "severity": "player-visible",
+   "summary": "The Special clause that adds the bat and bird forms to the darkened forest form lists reaches nothing on our side; we carry no spellNotes for it.",
+   "fixed": true
+  },
+  {
+   "id": "deadly-mutation",
+   "finding": "deadly-mutation",
+   "severity": "player-visible",
+   "summary": "Deadly Mutation delivers nothing at all: it never modifies the Spit Ambient Magic action it upgrades, so neither the d8 damage dice nor the 1d6 persistent damage on a critical failure reaches the sheet.",
+   "fixed": true
+  },
+  {
+   "id": "skill-mastery-rogue",
+   "finding": "skill-mastery-rogue#maxtakable",
+   "severity": "player-visible",
+   "summary": "Skill Mastery (Rogue) prints \"up to five times\" but carries no maxTakable, so maxTakes() defaults it to 1 and the player can only ever take it once.",
+   "fixed": true
+  },
+  {
+   "id": "skill-mastery-rogue",
+   "finding": "skill-mastery-rogue#duplicate-skill",
+   "severity": "player-visible",
+   "summary": "Skill Mastery (Rogue)'s two skill-increase slots are both `options: 'any'`, and an unanswered pair defaults both to Acrobatics — so the second printed increase (trained to expert on ANOTHER skill) silently vanishes.",
+   "fixed": true
+  },
+  {
+   "id": "golem-grafter-dedication",
+   "finding": "golem-grafter-dedication",
+   "severity": "player-visible",
+   "summary": "Our resistance entry omits the printed adamantine exception, so the sheet grants (and displays) resistance to ALL physical damage including adamantine.",
+   "fixed": true
+  },
+  {
+   "id": "unravel-mysteries",
+   "finding": "unravel-mysteries",
+   "severity": "player-visible",
+   "summary": "Both printed effects (half-time Decipher Writing and the waived -2 circumstance penalty on a failure) reach the player nowhere in our app; their side injects them onto the Decipher Writing action.",
+   "fixed": true
+  },
+  {
+   "id": "spirit-walk",
+   "finding": "spirit-walk#resistance",
+   "severity": "player-visible",
+   "summary": "The printed first-turn resistance to haunt/spirit damage is modelled by neither side — our situational registry entry covers only the +2 Recall Knowledge bonus and its AC/saves extension.",
+   "fixed": true
+  },
+  {
+   "id": "lorefinder",
+   "finding": "lorefinder",
+   "severity": "player-visible",
+   "summary": "Our innate Locate grant never heightens, so a 14th-level Eldritch Researcher still casts it at 3rd rank instead of 5th.",
+   "fixed": true
+  },
+  {
+   "id": "animalistic-brutality",
+   "finding": "animalistic-brutality",
+   "severity": "player-visible",
+   "summary": "Neither side models the trait the feat adds to the animal-instinct unarmed attack — our record carries only an action cost, and WG only injects descriptive text onto the twelve bestial-rage attack items.",
+   "fixed": true
+  },
+  {
+   "id": "armored-resistance",
+   "finding": "armored-resistance#resistance",
+   "severity": "player-visible",
+   "summary": "The feat's entire printed content — physical resistance equal to half your level while intercepting in medium or heavy armor — is carried by neither side.",
+   "fixed": true
+  },
+  {
+   "id": "armored-resistance",
+   "finding": "armored-resistance#instrument",
+   "severity": "internal",
+   "summary": "The 'hp' instrument flag is a comparer misread: WG's MAX_HEALTH_BONUS op on this feat is the Guardian Resiliency per-archetype-feat HP, which we already deliver from the Resiliency record.",
+   "fixed": true
+  },
+  {
+   "id": "cultivators-keen-eye",
+   "finding": "cultivators-keen-eye#materials",
+   "severity": "player-visible",
+   "summary": "The feat's second half — sensing precious materials at 30 feet and spending them in place of a ritual's cost — is modelled by neither side; only the lifesense clause is carried.",
+   "fixed": true
+  },
+  {
+   "id": "eye-of-the-unseen",
+   "finding": "eye-of-the-unseen",
+   "severity": "player-visible",
+   "summary": "Our flat passiveEffects.perception adds the +1 item bonus to EVERY Perception check, while print limits it to visual Perception, and the conditional star in situationalBonuses.ts already states the same bonus — so the sheet both over-grants",
+   "fixed": true
+  },
+  {
+   "id": "eye-of-the-unseen",
+   "finding": "eye-of-the-unseen#innate-spell",
+   "severity": "player-visible",
+   "summary": "The once-per-day See the Unseen cast is modelled by neither side: our record has the frequency counter and the 2-action activation cost but no spell grant, so the spell never reaches the Spells page.",
+   "fixed": true
+  },
+  {
+   "id": "composer-staff-greater",
+   "finding": "composer-staff-greater",
+   "severity": "player-visible",
+   "summary": "Our flat +1 Performance passive applies to every Performance check while the staff is merely held, though print grants it only for checks made by playing the staff as an instrument; the situational star already carries the conditional bonus",
+   "fixed": true
+  },
+  {
+   "id": "energy-resistant",
+   "finding": "energy-resistant",
+   "severity": "player-visible",
+   "summary": "Nothing on our side ever delivers the rune's resistance: the effectChoices grant can only fire from a loose inventory row that is worn/held/affixed, and etching consumes that row, so an etched energy-resistant rune gives 0 resistance while ",
+   "fixed": true
+  },
+  {
+   "id": "illusionists-hat",
+   "finding": "illusionists-hat#skill-bonuses",
+   "severity": "player-visible",
+   "summary": "The hat's two printed +1 item bonuses (Deception to Create a Diversion, Thievery to Palm an Object) are carried by neither our item record nor any registry, while Wanderer's Guide encodes both.",
+   "fixed": true
+  }
+ ],
+ "refuted": [
+  {
+   "id": "wind-seeker",
+   "finding": "wind-seeker#instrument",
+   "summary": "The baseline digest's NO-SHEET-EFFECT flag on wind-seeker is a comparer misread — the record has a live sheet effect.",
+   "evidence": "work/.b036-baseline/experience.json's wind-seeker entry gives the verdict's own basis — \"WG encodes 1 value-bearing op(s); not on our built character: giveSpell \\\"Aerial Form\\\"\" with delivery {delivered:0, undelivered:1, unchecked:0} — and scripts/wg-experience.mjs:233 fires NO-SHEET-EFFECT only whe"
+  },
+  {
+   "id": "illusionists-hat",
+   "finding": "illusionists-hat#daily-illusory-creature",
+   "summary": "The hat's once-per-day two-action activation that casts a 3rd-rank illusory creature is modelled by neither side, so the player never sees the spell or its daily use.",
+   "evidence": "Refuted as the listed false-positive class 'WG encoding LESS than print (that is parity, not a finding)': the finding's own 'theirs' is empty and I confirmed it by parsing WG item row 23007 directly - its operations array holds only the two addBonusToValue ops and its meta_data has an empty charges "
+  }
+ ],
+ "flaggedResidues": [
+  {
+   "id": "flaggedResidue: confirmed and out of scope, and measured as n=1 rather than a lane. Re-verified the carrier sweep myself: the character's four land-Speed lanes (speeds / speedsIf / landSpeedBonus / landSpeedMin / speedAdjust, derive.ts:5222-5296) all target the CHARACTER, and the companion's land Speed at src/rules/companions.ts:404 (`speeds.land += m.speedBonus + (spec?.speedBonus ?? 0) + gear.speedBonus`) takes exactly three addends — maturity, specialization, invested companion gear — all companion-side, with no character-feature addend; CompanionMod.speeds (companions.ts:531-536) is a Math.max SET of extra speed TYPES, so even the existing grants lane cannot express \"+5 feet\". A real redirect therefore needs BOTH a character-feature→companion-speed addend in another family's file (src/rules/companions.ts / src/rules/derive.ts) AND a player-facing mounted state, which the engine does not have: a scan of every mounted clause in src returns only situational stars (`when: \"while mounted…\"`, situationalBonuses.ts:2424/2426/2438/2547/3309/3465) and notes — zero mounted-state carriers. Scale measured over public/core-descriptions.json: 8 records mention a mount gaining something, 5 of which (faithful-steed, auspicious-mount, specialized-mount, behold-a-pale-horse, night-terror) are ordinary companion grants already carried by src/rules/companionGrants.ts, and the remaining 3 (classes/champion, classFeatures/blessing-of-the-devoted, classFeatures/blessed-swiftness) are the SAME single Blessed Swiftness clause — so the whole mechanic is one clause in the game. The house precedent already settles it without an owner ruling: situationalBonuses.ts:4358 swift-paragon carries the identical \"if you're mounted … the mount instead\" redirect as a disclosure note rather than a mechanical redirect, exactly what work/.b036-rows-data-rows-1.json now does for this record, so no owner question is owed (print settles the mechanic, WG encodes strictly less — bare addBonusToValue SPEED 5 status). The player-visible half already ships in this batch; building a mounted mode plus a companion-speed addend lane for one clause is speculative infrastructure and belongs to a measured engine lane, not to batch 036. No double-count to fix meanwhile: I dumped the siblings and only blessed-swiftness carries landSpeedBonus (blessing-of-the-devoted, blessed-shield and blessed-armament carry none).",
+   "finding": "flaggedResidue: confirmed and out of scope, and measured as n=1 rather than a lane. Re-verified the carrier sweep myself: the character's four land-Speed lanes (speeds / speedsIf / landSpeedBonus / landSpeedMin / speedAdjust, derive.ts:5222-5296) all target the CHARACTER, and the companion's land Speed at src/rules/companions.ts:404 (`speeds.land += m.speedBonus + (spec?.speedBonus ?? 0) + gear.speedBonus`) takes exactly three addends — maturity, specialization, invested companion gear — all companion-side, with no character-feature addend; CompanionMod.speeds (companions.ts:531-536) is a Math.max SET of extra speed TYPES, so even the existing grants lane cannot express \"+5 feet\". A real redirect therefore needs BOTH a character-feature→companion-speed addend in another family's file (src/rules/companions.ts / src/rules/derive.ts) AND a player-facing mounted state, which the engine does not have: a scan of every mounted clause in src returns only situational stars (`when: \"while mounted…\"`, situationalBonuses.ts:2424/2426/2438/2547/3309/3465) and notes — zero mounted-state carriers. Scale measured over public/core-descriptions.json: 8 records mention a mount gaining something, 5 of which (faithful-steed, auspicious-mount, specialized-mount, behold-a-pale-horse, night-terror) are ordinary companion grants already carried by src/rules/companionGrants.ts, and the remaining 3 (classes/champion, classFeatures/blessing-of-the-devoted, classFeatures/blessed-swiftness) are the SAME single Blessed Swiftness clause — so the whole mechanic is one clause in the game. The house precedent already settles it without an owner ruling: situationalBonuses.ts:4358 swift-paragon carries the identical \"if you're mounted … the mount instead\" redirect as a disclosure note rather than a mechanical redirect, exactly what work/.b036-rows-data-rows-1.json now does for this record, so no owner question is owed (print settles the mechanic, WG encodes strictly less — bare addBonusToValue SPEED 5 status). The player-visible half already ships in this batch; building a mounted mode plus a companion-speed addend lane for one clause is speculative infrastructure and belongs to a measured engine lane, not to batch 036. No double-count to fix meanwhile: I dumped the siblings and only blessed-swiftness carries landSpeedBonus (blessing-of-the-devoted, blessed-shield and blessed-armament carry none).",
+   "severity": "internal",
+   "summary": "blessed-swiftness#mounted: there is no mount-Speed carrier anywhere in the engine (src/rules/derive.ts:5177 sums landSpeedBonus onto the CHARACTER unconditionally, and no companion/mount Speed lane exists to redirect it to) — WG has no carrier for it either. This chunk discloses the redirect in the record's modeAdjust note instead of mis-modelling it; a real redirect would be an engine-family cha…",
+   "fixed": false,
+   "family": "data-rows-1",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: the collision this line warns about is verified ABSENT, so there is nothing to author. I re-measured it across every spec in work/.b036-specs.json rather than trusting the note: the only other row on either record is work/.b036-rows-data-rows-2.json # eye-of-the-unseen#innate-spell, which is FIELD-SCOPED ({category:'items',id:'eye-of-the-unseen',field:'innateSpells'}) and so cannot restore or collide with the passiveEffects field my family deletes (keyOf is category/id/field; the applier's collision check would refuse a real clash anyway, wg-batch-run.mjs precheck (1)); and illusionists-hat#daily-illusory-creature is in refuted[] of work/.b036-read.json, so NO family emits any row on items/illusionists-hat at all — grep of all five spec files for /eye-of-the-unseen|illusionists-hat/ returns that one innateSpells row and nothing else. The line is a builder's forward-looking warning to sibling agents, already discharged by the verifier (work/.b036-verify-situational.txt: \"REMOVED (builder's first cross-file line): the collision risk … is verified ABSENT, not merely unlikely\"), not a gap in the app. No owner question is owed: nothing about print or WG is in dispute.",
+   "finding": "flaggedResidue: the collision this line warns about is verified ABSENT, so there is nothing to author. I re-measured it across every spec in work/.b036-specs.json rather than trusting the note: the only other row on either record is work/.b036-rows-data-rows-2.json # eye-of-the-unseen#innate-spell, which is FIELD-SCOPED ({category:'items',id:'eye-of-the-unseen',field:'innateSpells'}) and so cannot restore or collide with the passiveEffects field my family deletes (keyOf is category/id/field; the applier's collision check would refuse a real clash anyway, wg-batch-run.mjs precheck (1)); and illusionists-hat#daily-illusory-creature is in refuted[] of work/.b036-read.json, so NO family emits any row on items/illusionists-hat at all — grep of all five spec files for /eye-of-the-unseen|illusionists-hat/ returns that one innateSpells row and nothing else. The line is a builder's forward-looking warning to sibling agents, already discharged by the verifier (work/.b036-verify-situational.txt: \"REMOVED (builder's first cross-file line): the collision risk … is verified ABSENT, not merely unlikely\"), not a gap in the app. No owner question is owed: nothing about print or WG is in dispute.",
+   "severity": "internal",
+   "summary": "eye-of-the-unseen#innate-spell and illusionists-hat#daily-illusory-creature are other families' findings on records I also touch: whoever owns them must NOT emit a whole-record (or whole-passiveEffects) row for items/eye-of-the-unseen or items/illusionists-hat, or it will collide with / silently restore the field my rows delete.",
+   "fixed": false,
+   "family": "situational",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: confirmed, and measured as n=1 — an unmodelled subsystem, not a gap this batch can close. I re-verified both halves myself instead of trusting the note: core.json's actions bucket has exactly ONE id matching /ritual/ and it is 'spiritual-aid' (rituals live only as rules pages — rules/rituals, rules/casting-rituals, rules/learning-rituals, rules/ley-line-rituals), and RecordMarker.on is typed 'action' | 'condition' | 'feature' at src/rules/situationalBonuses.ts:4174, so there is literally no row for a ritual-cost mark to attach to. Scale: a scan of every description in public/core-descriptions.json for a ritual-cost substitution clause returns ONE record in the game, feats/cultivators-keen-eye, whose clause already reaches the player on the feat's own `note` field (row in work/.b036-rows-situational.json, pinned by test/batch036-situational.test.ts through featEntries) — so nothing is lost today and the player reads the printed sentence. Closing it properly means creating an actions-bucket ritual record plus a cost lane and a RecordMarker.on widening, all in other families' files (src/rules/situationalBonuses.ts's marker TYPE, plus a created record and its prose) — speculative infrastructure for one clause. No owner question is owed: print settles the mechanic, WG encodes strictly less (ability block 28489 carries the lifesense only), and nothing is in dispute.",
+   "finding": "flaggedResidue: confirmed, and measured as n=1 — an unmodelled subsystem, not a gap this batch can close. I re-verified both halves myself instead of trusting the note: core.json's actions bucket has exactly ONE id matching /ritual/ and it is 'spiritual-aid' (rituals live only as rules pages — rules/rituals, rules/casting-rituals, rules/learning-rituals, rules/ley-line-rituals), and RecordMarker.on is typed 'action' | 'condition' | 'feature' at src/rules/situationalBonuses.ts:4174, so there is literally no row for a ritual-cost mark to attach to. Scale: a scan of every description in public/core-descriptions.json for a ritual-cost substitution clause returns ONE record in the game, feats/cultivators-keen-eye, whose clause already reaches the player on the feat's own `note` field (row in work/.b036-rows-situational.json, pinned by test/batch036-situational.test.ts through featEntries) — so nothing is lost today and the player reads the printed sentence. Closing it properly means creating an actions-bucket ritual record plus a cost lane and a RecordMarker.on widening, all in other families' files (src/rules/situationalBonuses.ts's marker TYPE, plus a created record and its prose) — speculative infrastructure for one clause. No owner question is owed: print settles the mechanic, WG encodes strictly less (ability block 28489 carries the lifesense only), and nothing is in dispute.",
+   "severity": "internal",
+   "summary": "core.json has no ritual ACTION record (only the rules pages casting-rituals / rituals / learning-rituals), and RecordMarker.on is 'action' | 'condition' | 'feature', so a printed clause about a ritual's COST has no action row to be marked on. Cultivator's ritual clause is carried on the feat's own `note` instead; a future ritual-cost lane would need an actions-bucket record, which is outside my f…",
+   "fixed": false,
+   "family": "situational",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: not a gap — this is the ASCII rule at work/.b036-report-situational.txt:13, the horizontal divider that closes the CROSS-FILE GAPS section and opens 'PER FINDING'. The apply-digest collator harvests every line inside the section it scans and swept the rule up as a line of its own, the same artefact parked twice in work/.b030-gaps.json (lines 56 and 63). It carries no claim, names no record and asks for nothing; the section's actual content is the two bullets above it, both dispositioned separately in this file (one authored to work/.b036-rows-gap-situational.json, one parked as the ritual-record residue).",
+   "finding": "flaggedResidue: not a gap — this is the ASCII rule at work/.b036-report-situational.txt:13, the horizontal divider that closes the CROSS-FILE GAPS section and opens 'PER FINDING'. The apply-digest collator harvests every line inside the section it scans and swept the rule up as a line of its own, the same artefact parked twice in work/.b030-gaps.json (lines 56 and 63). It carries no claim, names no record and asks for nothing; the section's actual content is the two bullets above it, both dispositioned separately in this file (one authored to work/.b036-rows-gap-situational.json, one parked as the ritual-record residue).",
+   "severity": "internal",
+   "summary": "---------------------------------------------------------------------",
+   "fixed": false,
+   "family": "situational",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: the same blessed-swiftness#mounted gap as the report line above — the verify agent restated the builder's CROSS-FILE GAP after confirming it (\"Confirmed by me, stands as the builder wrote it\", work/.b036-verify-data-rows-1.txt:104-108), so it is one gap counted twice, not a second one. Parked for the same reason and against the same evidence: no character-feature→companion-speed addend exists (src/rules/companions.ts:404 takes maturity + specialization + invested gear only), no mounted state exists anywhere in src (every mounted clause is a situational star or a note), the mechanic measures as ONE clause in the game (the 3 core-descriptions hits are all the same Blessed Swiftness sentence; the other 5 mount hits are ordinary companion grants already in companionGrants.ts), and the house precedent at situationalBonuses.ts:4358 (swift-paragon) already handles the identical mounted redirect as a disclosure note — which is what this batch's modeAdjust row does. No owner question is owed because print settles the mechanic and WG encodes strictly less. Verify's separate NEW finding on the same record (that an aon* overlay row does not survive `npm run data` because scripts/migration/stamp-aonid.mjs re-stamps from map/sections.json) is a different, durability gap in another family's files and was not collated as a line of mine; it is restated in work/.b036-report-gap-data-rows-1.txt so it is not lost.",
+   "finding": "flaggedResidue: the same blessed-swiftness#mounted gap as the report line above — the verify agent restated the builder's CROSS-FILE GAP after confirming it (\"Confirmed by me, stands as the builder wrote it\", work/.b036-verify-data-rows-1.txt:104-108), so it is one gap counted twice, not a second one. Parked for the same reason and against the same evidence: no character-feature→companion-speed addend exists (src/rules/companions.ts:404 takes maturity + specialization + invested gear only), no mounted state exists anywhere in src (every mounted clause is a situational star or a note), the mechanic measures as ONE clause in the game (the 3 core-descriptions hits are all the same Blessed Swiftness sentence; the other 5 mount hits are ordinary companion grants already in companionGrants.ts), and the house precedent at situationalBonuses.ts:4358 (swift-paragon) already handles the identical mounted redirect as a disclosure note — which is what this batch's modeAdjust row does. No owner question is owed because print settles the mechanic and WG encodes strictly less. Verify's separate NEW finding on the same record (that an aon* overlay row does not survive `npm run data` because scripts/migration/stamp-aonid.mjs re-stamps from map/sections.json) is a different, durability gap in another family's files and was not collated as a line of mine; it is restated in work/.b036-report-gap-data-rows-1.txt so it is not lost.",
+   "severity": "internal",
+   "summary": "blessed-swiftness#mounted: there is no mount-Speed carrier anywhere in the engine — src/rules/derive.ts",
+   "fixed": false,
+   "family": "data-rows-1",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: the same ritual-ACTION-record gap as the report line above — the verify agent restated the builder's CROSS-FILE GAP after confirming it (work/.b036-verify-situational.txt:117-123 adds only the measurement that the sole actions id matching /ritual/ is 'spiritual-aid'), so it is one gap counted twice, not a second one. Parked for the same reason and against the same evidence I re-measured: no ritual record exists in the actions bucket, RecordMarker.on is 'action' | 'condition' | 'feature' (src/rules/situationalBonuses.ts:4174), exactly ONE record in the game prints a ritual-cost substitution (feats/cultivators-keen-eye, by a scan of every description in public/core-descriptions.json), and that record's clause already reaches the Feats tab on the feat's own `note` field via work/.b036-rows-situational.json. Nothing is owed to the owner; a ritual-cost lane is a measured engine lane for the day a second record wants it.",
+   "finding": "flaggedResidue: the same ritual-ACTION-record gap as the report line above — the verify agent restated the builder's CROSS-FILE GAP after confirming it (work/.b036-verify-situational.txt:117-123 adds only the measurement that the sole actions id matching /ritual/ is 'spiritual-aid'), so it is one gap counted twice, not a second one. Parked for the same reason and against the same evidence I re-measured: no ritual record exists in the actions bucket, RecordMarker.on is 'action' | 'condition' | 'feature' (src/rules/situationalBonuses.ts:4174), exactly ONE record in the game prints a ritual-cost substitution (feats/cultivators-keen-eye, by a scan of every description in public/core-descriptions.json), and that record's clause already reaches the Feats tab on the feat's own `note` field via work/.b036-rows-situational.json. Nothing is owed to the owner; a ritual-cost lane is a measured engine lane for the day a second record wants it.",
+   "severity": "internal",
+   "summary": "core.json has no ritual ACTION record (only the rules pages casting-rituals / rituals /",
+   "fixed": false,
+   "family": "situational",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: confirmed, player-visible, and deliberately NOT built here — it is a NEW SHEET CONTROL, which is engine/UI scope rather than closer scope, and the batch is not shipping a wrong number meanwhile: the fallback is the FIRST option (acid), which is exactly what WG's own row grants, so the etched rune is WG-equal today instead of the zero it granted before this batch. Measured blast radius: four records (energy-resistant, energy-resistant-greater, energy-absorbing, energy-absorbing-greater), of which only energy-resistant is a batch-036 record; the other three are outside this batch and rule 8 forbids settling them here. The reader is already in place and needs no second change when the control lands (src/rules/derive.ts etchedRuneDefences reads inv.effectChoices['<runeId>:<choiceId>'], the same key shape ItemDetail.tsx:343 already writes for a LOOSE row), so the remaining work is one select on the etched-rune card. A Living Rune body rune has no host row at all and can only ever take the fallback, which is a second, smaller lane. Reported to the orchestrator as the next step for this lane.",
+   "finding": "flaggedResidue: confirmed, player-visible, and deliberately NOT built here — it is a NEW SHEET CONTROL, which is engine/UI scope rather than closer scope, and the batch is not shipping a wrong number meanwhile: the fallback is the FIRST option (acid), which is exactly what WG's own row grants, so the etched rune is WG-equal today instead of the zero it granted before this batch. Measured blast radius: four records (energy-resistant, energy-resistant-greater, energy-absorbing, energy-absorbing-greater), of which only energy-resistant is a batch-036 record; the other three are outside this batch and rule 8 forbids settling them here. The reader is already in place and needs no second change when the control lands (src/rules/derive.ts etchedRuneDefences reads inv.effectChoices['<runeId>:<choiceId>'], the same key shape ItemDetail.tsx:343 already writes for a LOOSE row), so the remaining work is one select on the etched-rune card. A Living Rune body rune has no host row at all and can only ever take the fallback, which is a second, smaller lane. Reported to the orchestrator as the next step for this lane.",
+   "severity": "internal",
+   "summary": "B. src/sheet/ItemDetail.tsx (or InventoryTab.tsx) — no control asks the crafter's energy type for an ETCHED property rune. derive.ts now reads that answer off the HOST inventory row at `inv.effectChoices[\"<runeId>:<choiceId>\"]`; until a control writes it, all four choice-carrying armour runes (energy-resistant, energy-resistant-greater, energy-absorbing, energy-absorbing-greater) fall back to acid.",
+   "fixed": false,
+   "family": "engine",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: confirmed and correctly OUT of this batch — these are DATA ROWS, and in this workflow no agent writes scripts/data/effect-backfill.json: a family emits a spec and the driver applies it, which is a build step this batch has already passed. Two of the five records (dense-plating, layered-mesh, tensile-absorption) are batch-036 records that read MATCHES on their own findings, and the rest are outside batch 036 entirely, so authoring rows for them here would settle ids this batch may not settle (rule 8). Nothing regresses meanwhile: requiresModification is a NEW field this batch introduced and its reader (inventorModificationOptions) enforces only the records that carry it, so an absent row leaves a modification exactly as permissive as it was before the batch — the field is additive, never a new refusal. Handed to the orchestrator as a measured next-batch data lane with the record list and the printed source documents already named.",
+   "finding": "flaggedResidue: confirmed and correctly OUT of this batch — these are DATA ROWS, and in this workflow no agent writes scripts/data/effect-backfill.json: a family emits a spec and the driver applies it, which is a build step this batch has already passed. Two of the five records (dense-plating, layered-mesh, tensile-absorption) are batch-036 records that read MATCHES on their own findings, and the rest are outside batch 036 entirely, so authoring rows for them here would settle ids this batch may not settle (rule 8). Nothing regresses meanwhile: requiresModification is a NEW field this batch introduced and its reader (inventorModificationOptions) enforces only the records that carry it, so an absent row leaves a modification exactly as permissive as it was before the batch — the field is additive, never a new refusal. Handed to the orchestrator as a measured next-batch data lane with the record list and the printed source documents already named.",
+   "severity": "internal",
+   "summary": "C. scripts/data/effect-backfill.json — FIVE sibling `requiresModification` rows the new reader would enforce, from the same printed clauses (innovation-1/-5 armour, innovation-2/-6 construct): layered-mesh [\"speed-boosters\"]; the harmonic-oscillator / metallic-reactance / phlogistonic-regulator or-list and the dense-plating / layered-mesh / tensile-absorption or-list; construct's wonder-gears, projectile-launcher and marvelous-gears.",
+   "fixed": false,
+   "family": "engine",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: confirmed by the engine verifier and explicitly measured as BIGGER THAN THIS BATCH ('Bigger than this batch', work/.b036-verify-engine.txt). The half that is player-visible DID ship: the record's second question now has a route, is stored, and is shown (work/.b036-rows-engine.json's effectChoices row plus the Builder reader, pinned by test/batch036-engine.test.ts's advanced-weaponry-construct describe), so the printed 'Choose one of your construct's unarmed attacks to gain your choice of one initial weapon modification' reaches the player as an answered question rather than as prose. What is missing is a GRANT lane that carries a weapon-modification rider from a character-side pick onto a companion/construct unarmed attack, which needs a new addend in src/rules/companions.ts and a widening of applyWeaponRiders — an engine-shape decision, and rule 5 sends an engine-shape decision to the orchestrator rather than letting the closer invent one. No owner RULING is owed: print and WG agree about what the modification does, and no option in the batch's own row carries a grant that could double-count while the lane is absent.",
+   "finding": "flaggedResidue: confirmed by the engine verifier and explicitly measured as BIGGER THAN THIS BATCH ('Bigger than this batch', work/.b036-verify-engine.txt). The half that is player-visible DID ship: the record's second question now has a route, is stored, and is shown (work/.b036-rows-engine.json's effectChoices row plus the Builder reader, pinned by test/batch036-engine.test.ts's advanced-weaponry-construct describe), so the printed 'Choose one of your construct's unarmed attacks to gain your choice of one initial weapon modification' reaches the player as an answered question rather than as prose. What is missing is a GRANT lane that carries a weapon-modification rider from a character-side pick onto a companion/construct unarmed attack, which needs a new addend in src/rules/companions.ts and a widening of applyWeaponRiders — an engine-shape decision, and rule 5 sends an engine-shape decision to the orchestrator rather than letting the closer invent one. No owner RULING is owed: print and WG agree about what the modification does, and no option in the batch's own row carries a grant that could double-count while the lane is absent.",
+   "severity": "internal",
+   "summary": "D. A COMPANION-STRIKE RIDER LANE (src/rules/derive.ts applyWeaponRiders / companions.ts) — residual on advanced-weaponry-construct: a chosen weapon modification's `weaponTraits` cannot reach a CONSTRUCT's unarmed attack, because applyWeaponRiders walks inventory WeaponItems and razor-prongs' rider matches `designated:'innovation'`. Row 1 records and shows the answer and grants nothing; no option in it carries a grant.",
+   "fixed": false,
+   "family": "engine",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: confirmed, and the twin of a row this batch DID build (hyper-boosters#overdrive) — but classFeatures/speed-boosters is NOT one of batch 036's 40 records, and rule 8 forbids this closer from settling an id outside the batch; it is also a data row, which in this workflow only the driver writes. Nothing was made worse and nothing is contradictory on the sheet: the speed-boosters star ('+10 status, replacing the base +5', situationalBonuses.ts:1457) is still the carrier for a speed-boosters-only inventor and is still true for them, and for the one character where it had become false — an inventor who ALSO has Hyper Boosters, which this batch's requiresModification row now makes the only legal way to hold Hyper Boosters — gap A' above suppresses it through SITUATIONAL_SUPERSEDES so the player reads one line rather than two that contradict each other. The remaining loss is mechanical only and is one record: an Overdrive toggle that moves no number for a speed-boosters-only inventor. Handed to the orchestrator as a one-row next-batch lane whose shape is already proved by this batch's hyper-boosters row.",
+   "finding": "flaggedResidue: confirmed, and the twin of a row this batch DID build (hyper-boosters#overdrive) — but classFeatures/speed-boosters is NOT one of batch 036's 40 records, and rule 8 forbids this closer from settling an id outside the batch; it is also a data row, which in this workflow only the driver writes. Nothing was made worse and nothing is contradictory on the sheet: the speed-boosters star ('+10 status, replacing the base +5', situationalBonuses.ts:1457) is still the carrier for a speed-boosters-only inventor and is still true for them, and for the one character where it had become false — an inventor who ALSO has Hyper Boosters, which this batch's requiresModification row now makes the only legal way to hold Hyper Boosters — gap A' above suppresses it through SITUATIONAL_SUPERSEDES so the player reads one line rather than two that contradict each other. The remaining loss is mechanical only and is one record: an Overdrive toggle that moves no number for a speed-boosters-only inventor. Handed to the orchestrator as a one-row next-batch lane whose shape is already proved by this batch's hyper-boosters row.",
+   "severity": "internal",
+   "summary": "E. (mine) scripts/data/effect-backfill.json — classFeatures/speed-boosters carries no `whileActive`, so a speed-boosters-only inventor still reads +5 in Overdrive against a printed \"+5-foot status bonus … which increases to a +10-foot status bonus when under the effects of Overdrive\" (innovation-5). It is the exact twin of row 2, in the same lane, on the record row 3 now makes a prerequisite.",
+   "fixed": false,
+   "family": "engine",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: CONFIRMED by the closer and NOT built here, with the blast radius measured rather than guessed. The hole is real and the diagnosis is right: the early `continue` bypasses all three park checks. It is inert for batch 036 as it stands — all 40 records in work/wg-batch-036-experience.json now read OK and 0 read UNSUPPORTED (the group's own teach moved hyper-boosters off UNSUPPORTED), so closing the hole would change nothing about THIS batch's verdict. What it would change is the REGATE, which is a blocking stage: scanning every work/wg-batch-NNN-experience.json on disk, exactly two earlier-batch records still read UNSUPPORTED — batch 002 exploit-vulnerability and batch 033 school-of-thassilonian-rune-magic — and neither carries a queue entry, an owner ruling or an instrument-limit line, so tightening the check turns both red at once. Rule 8 forbids this closer from settling an id outside batch 036, and writing an instrument-limit line for either record would be exactly that. So the guard is handed to the orchestrator WITH its two blockers named: the fix is ~4 lines (move the UNSUPPORTED test below the three park checks and push it into `bad` when unparked), and it must land together with a disposition for those two records or the very next regate is red. Filed in needsOrchestrator. It cannot go on the owner's desk instead: scripts/add-owner-question.mjs refuses any entry whose `printed` names no AoN doc id and whose `theirs` quotes no op wg-show.mjs --raw prints, and a driver-guard question has neither.",
+   "finding": "flaggedResidue: CONFIRMED by the closer and NOT built here, with the blast radius measured rather than guessed. The hole is real and the diagnosis is right: the early `continue` bypasses all three park checks. It is inert for batch 036 as it stands — all 40 records in work/wg-batch-036-experience.json now read OK and 0 read UNSUPPORTED (the group's own teach moved hyper-boosters off UNSUPPORTED), so closing the hole would change nothing about THIS batch's verdict. What it would change is the REGATE, which is a blocking stage: scanning every work/wg-batch-NNN-experience.json on disk, exactly two earlier-batch records still read UNSUPPORTED — batch 002 exploit-vulnerability and batch 033 school-of-thassilonian-rune-magic — and neither carries a queue entry, an owner ruling or an instrument-limit line, so tightening the check turns both red at once. Rule 8 forbids this closer from settling an id outside batch 036, and writing an instrument-limit line for either record would be exactly that. So the guard is handed to the orchestrator WITH its two blockers named: the fix is ~4 lines (move the UNSUPPORTED test below the three park checks and push it into `bad` when unparked), and it must land together with a disposition for those two records or the very next regate is red. Filed in needsOrchestrator. It cannot go on the owner's desk instead: scripts/add-owner-question.mjs refuses any entry whose `printed` names no AoN doc id and whose `theirs` quotes no op wg-show.mjs --raw prints, and a driver-guard question has neither.",
+   "severity": "internal",
+   "summary": "scripts/wg-batch-gate.mjs:594 — `if (r.verdict === 'UNSUPPORTED') { unsupported.push(r.id); continue; }` runs BEFORE the queuedFor / ownerRuled / instrumentLimited parking checks, so an UNSUPPORTED record can never enter `bad` and never fails the gate: it is printed under \"recorded, NOT passed\" and the batch reads green with the record's entire delivery unjudged. An UNSUPPORTED record should need the same park artefact every other non-OK verdict needs — a queue entry, an owner ruling or a work/experience-instrument-limits.json line — and fail otherwise.",
+   "fixed": false,
+   "family": "red-experience-host-inventor-mods",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: CONFIRMED by the closer, and correctly NOT built. Both the builder and the adversarial verifier of the repair group measured it the same way and I re-read the landed code rather than the description: mergeArray (scripts/wg-batch-close.mjs) only refuses to append a fresh twin, and rule 9 of this workflow forbids the closer hand-writing or overwriting work/wg-batch-036-residual.json — it is derived, and an existing verdict is never overwritten. The two entries are harmless-but-untrue rather than wrong-and-load-bearing: each one's own ref opens with the sentence saying it is not a gap, so the owner reading the residual is told so in the entry itself. Building the retirement means teaching the close to drop a residue whose ref declares it discharged, which changes what the owner is shown and is therefore a ruling, not a defect fix. Handed to the orchestrator; recorded here so the next batch does not re-diagnose it. Same reasoning retires nothing about the four builder/verifier restatement PAIRS: those are the same gap in genuinely different sentences (see the policy line below).",
+   "finding": "flaggedResidue: CONFIRMED by the closer, and correctly NOT built. Both the builder and the adversarial verifier of the repair group measured it the same way and I re-read the landed code rather than the description: mergeArray (scripts/wg-batch-close.mjs) only refuses to append a fresh twin, and rule 9 of this workflow forbids the closer hand-writing or overwriting work/wg-batch-036-residual.json — it is derived, and an existing verdict is never overwritten. The two entries are harmless-but-untrue rather than wrong-and-load-bearing: each one's own ref opens with the sentence saying it is not a gap, so the owner reading the residual is told so in the entry itself. Building the retirement means teaching the close to drop a residue whose ref declares it discharged, which changes what the owner is shown and is therefore a ruling, not a defect fix. Handed to the orchestrator; recorded here so the next batch does not re-diagnose it. Same reasoning retires nothing about the four builder/verifier restatement PAIRS: those are the same gap in genuinely different sentences (see the policy line below).",
+   "severity": "internal",
+   "summary": "scripts/wg-batch-close.mjs — the new content-keyed residueKey stops a re-close APPENDING a twin, but mergeArray never REMOVES an entry already in work/wg-batch-036-residual.json, so the two residues that assert they are not gaps at all (flaggedResidues[1], the eye-of-the-unseen / illusionists-hat collision verified ABSENT, and flaggedResidues[3], an ASCII divider swept up by the collator) will still be listed after the next close. Retiring a \"not a gap\" residue needs the close to honour the ref that says so, or a one-time regeneration of the residual from gaps.json.",
+   "fixed": false,
+   "family": "red-pipeline-collation-repair",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: CONFIRMED, and the group is right that it is a POLICY question rather than a defect — both candidate fixes change what the owner reads in the residual, and rule 5 sends that to the orchestrator rather than letting the closer pick one. Not urgent and not lossy: a duplicate residue over-reports, it never hides a gap, and the pairs are visibly the same gap in two voices. Handed to the orchestrator with the measurement attached so the next batch does not re-derive it.",
+   "finding": "flaggedResidue: CONFIRMED, and the group is right that it is a POLICY question rather than a defect — both candidate fixes change what the owner reads in the residual, and rule 5 sends that to the orchestrator rather than letting the closer pick one. Not urgent and not lossy: a duplicate residue over-reports, it never hides a gap, and the pairs are visibly the same gap in two voices. Handed to the orchestrator with the measurement attached so the next batch does not re-derive it.",
+   "severity": "internal",
+   "summary": "scripts/wg-batch-run.mjs stageApplyDigest — a builder report and its verifier's report are collated under the SAME `family` (the regex group is the family for both `report-` and `verify-` files; only the `label` distinguishes them), so every CROSS-FILE GAP a verifier restates is collated twice. Measured as 4 of the 18 lines in work/.b036-gaps.json. Content keying cannot merge them because the two sentences genuinely differ. Closing it means either collating verify- reports under a distinct family label and letting the gap agent pair them, or a near-duplicate warning at digest time — either way",
+   "fixed": false,
+   "family": "red-pipeline-collation-repair",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: PRE-EXISTING and correctly parked, not caused by batch 036 — another effort's `npm run data` reverted the patches, and batch 035 already desk-queued it as ast-patches-reverted-by-regen. The verify stage sees it and TOLERATES it for exactly that reason (work/.b036-run.json verify: '38 verify check(s), 37 clean; pre-existing at start (not this batch): ast-content-check'), so it is not this batch's red and does not gate the commit. The closer may not clear it: the batch prohibitions forbid running any apply-*.mjs and forbid `npm run data`, and apply-ast-patches.mjs is an apply-*.mjs. The RECURRENCE is fixed in this batch — package.json's `data` chain now ends with `node scripts/apply-ast-patches.mjs` (idempotent, and last so nothing downstream reads public/ast), with the reason quoted into _data_note — so this is the last time a regen can silently wipe them. What remains is one command the driver runs once. Filed in needsOrchestrator.",
+   "finding": "flaggedResidue: PRE-EXISTING and correctly parked, not caused by batch 036 — another effort's `npm run data` reverted the patches, and batch 035 already desk-queued it as ast-patches-reverted-by-regen. The verify stage sees it and TOLERATES it for exactly that reason (work/.b036-run.json verify: '38 verify check(s), 37 clean; pre-existing at start (not this batch): ast-content-check'), so it is not this batch's red and does not gate the commit. The closer may not clear it: the batch prohibitions forbid running any apply-*.mjs and forbid `npm run data`, and apply-ast-patches.mjs is an apply-*.mjs. The RECURRENCE is fixed in this batch — package.json's `data` chain now ends with `node scripts/apply-ast-patches.mjs` (idempotent, and last so nothing downstream reads public/ast), with the reason quoted into _data_note — so this is the last time a regen can silently wipe them. What remains is one command the driver runs once. Filed in needsOrchestrator.",
+   "severity": "internal",
+   "summary": "scripts/apply-ast-patches.mjs — the six AST-patched records (classFeatures/ashes, bloodline-elemental, bloodline-imperial, way-of-the-vanguard, items/razmiri-mask-porcelain, items/whispering-staff) have wiped nodes in public/ast on disk RIGHT NOW, so scripts/ast-content-check.mjs is red. The driver owes one `node scripts/apply-ast-patches.mjs`; no agent in this batch may run it.",
+   "fixed": false,
+   "family": "red-pipeline-collation-repair",
+   "kind": "DATA STILL NEEDED"
+  }
+ ],
+ "rejected": 2,
+ "askOwner": [
+  {
+   "id": "hyper-boosters",
+   "desk": 148,
+   "summary": "WG's legendary-Crafting conditional has an empty trueOperations and grants its +30 from falseOperations, so the +30 fires whenever the character is in Overdrive regardless of Crafting rank — a non-leg"
+  },
+  {
+   "id": "spirit-walk",
+   "desk": 149,
+   "summary": "WG's Spirit Walk row grants a PRECISE 30-foot 'apparition sight' sense that Spirit Walk's printed text does not grant at all — print gives apparition sight on the prerequisite feat Apparition Sense, a"
+  },
+  {
+   "id": "chronomancers-secrets",
+   "desk": 150,
+   "summary": "WG grants Stasis as a NORMAL (non-focus) spell and from the legacy Stasis record, contradicting print, which calls it a domain spell (i.e. a focus spell); their Path of Least Resistance option is corr"
+  }
+ ],
+ "complete": true
+}

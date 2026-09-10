@@ -1,0 +1,150 @@
+[
+  {
+    "file": "work/.b036-rows-data-rows-2.json",
+    "kind": "rows",
+    "family": "data-rows-2",
+    "stage": [
+      "work/.b036-rows-data-rows-2.json",
+      "work/.b036-report-data-rows-2.txt",
+      "test/batch036-data-rows-2.test.ts",
+      "work/.b036-report-gap-data-rows-2.txt",
+      "test/batch036-gap-data-rows-2.test.tsx",
+      "src/rules/derive.ts",
+      "src/sheet/DefensesPills.tsx",
+      "src/sheet/VitalsRail.tsx",
+      "scripts/wg-values.mjs"
+    ]
+  },
+  {
+    "file": "work/.b036-rows-instruments.json",
+    "kind": "rows",
+    "family": "instruments",
+    "stage": [
+      "work/.b036-rows-instruments.json",
+      "work/.b036-report-instruments.txt",
+      "test/batch036-instruments.test.ts",
+      "scripts/wg-diff.mjs"
+    ]
+  },
+  {
+    "file": "work/.b036-rows-data-rows-1.json",
+    "kind": "rows",
+    "family": "data-rows-1",
+    "stage": [
+      "work/.b036-rows-data-rows-1.json",
+      "work/.b036-report-data-rows-1.txt",
+      "test/batch036-data-rows-1.test.ts",
+      "work/.b036-report-gap-data-rows-1.txt",
+      "test/authoring-guards.test.ts",
+      "test/integrity-sweeps.test.ts"
+    ]
+  },
+  {
+    "file": "work/.b036-rows-situational.json",
+    "kind": "rows",
+    "family": "situational",
+    "stage": [
+      "work/.b036-rows-situational.json",
+      "work/.b036-report-situational.txt",
+      "test/batch036-situational.test.ts",
+      "src/rules/situationalBonuses.ts"
+    ]
+  },
+  {
+    "file": "work/.b036-rows-engine.json",
+    "kind": "rows",
+    "family": "engine",
+    "stage": [
+      "work/.b036-rows-engine.json",
+      "work/.b036-report-engine.txt",
+      "work/.b036-verify-engine.txt",
+      "test/batch036-engine.test.ts",
+      "src/rules/types.ts",
+      "src/rules/build.ts",
+      "src/rules/derive.ts",
+      "src/builder/Builder.tsx",
+      "src/builder/shared.tsx",
+      "test/batch036-closer.test.ts",
+      "test/wg-experience.harness.test.tsx",
+      "test/batch035-field-diff.test.ts",
+      "test/batch036-living-rune-picker.test.tsx",
+      "work/.b036-commit.txt"
+    ]
+  },
+  {
+    "file": "work/.b036-rows-gap-situational.json",
+    "kind": "rows",
+    "family": "gap-situational",
+    "stage": [
+      "work/.b036-rows-gap-situational.json",
+      "work/.b036-report-gap-situational.txt",
+      "test/batch036-gap-situational.test.ts",
+      "src/rules/situationalBonuses.ts"
+    ]
+  },
+  {
+    "file": "work/.b036-rows-red-etched-rune-energy-choice.json",
+    "kind": "rows",
+    "family": "red-etched-rune-energy-choice",
+    "stage": [
+      "work/.b036-rows-red-etched-rune-energy-choice.json",
+      "work/.b036-report-red-etched-rune-energy-choice.txt",
+      "work/.b036-verify-red-etched-rune-energy-choice.txt",
+      "test/batch036-gap-rune-choice.test.tsx",
+      "src/sheet/ItemDetail.tsx"
+    ]
+  },
+  {
+    "file": "work/.b036-rows-red-experience-host-inventor-mods.json",
+    "kind": "rows",
+    "family": "red-experience-host-inventor-mods",
+    "stage": [
+      "work/.b036-rows-red-experience-host-inventor-mods.json",
+      "work/.b036-report-red-experience-host-inventor-mods.txt",
+      "work/.b036-verify-red-experience-host-inventor-mods.txt",
+      "test/batch036-red-experience-host-inventor-mods.test.ts",
+      "test/wg-experience.harness.test.tsx",
+      "work/wg-batch-036-experience.json"
+    ]
+  },
+  {
+    "file": "work/.b036-rows-red-pipeline-collation-repair.json",
+    "kind": "rows",
+    "family": "red-pipeline-collation-repair",
+    "stage": [
+      "work/.b036-rows-red-pipeline-collation-repair.json",
+      "work/.b036-report-red-pipeline-collation-repair.txt",
+      "work/.b036-verify-red-pipeline-collation-repair.txt",
+      "test/batch036-red-pipeline-collation-repair.test.ts",
+      "scripts/wg-batch-run.mjs",
+      "scripts/wg-batch-close.mjs",
+      "package.json"
+    ]
+  },
+  {
+    "file": "work/.b036-rows-red-parked-lanes-and-desk.json",
+    "kind": "rows",
+    "family": "red-parked-lanes-and-desk",
+    "stage": [
+      "work/.b036-rows-red-parked-lanes-and-desk.json",
+      "work/.b036-report-red-parked-lanes-and-desk.txt",
+      "work/.b036-report-triage-parked.txt",
+      "test/batch036-red-parked-lanes-and-desk.test.ts",
+      "work/.b036-verify-red-parked-lanes-and-desk.txt"
+    ]
+  },
+  {
+    "file": "work/.b036-rows-red-inventor-modification-rows.json",
+    "kind": "rows",
+    "family": "red-inventor-modification-rows",
+    "stage": [
+      "work/.b036-rows-red-inventor-modification-rows.json",
+      "work/.b036-report-red-inventor-modification-rows.txt",
+      "test/batch036-gap-inventor.test.ts",
+      "src/rules/situationalBonuses.ts",
+      "work/.b036-verify-red-inventor-modification-rows.txt",
+      "test/batch036-engine.test.ts",
+      "test/inventor-innovation.test.ts"
+    ]
+  }
+]

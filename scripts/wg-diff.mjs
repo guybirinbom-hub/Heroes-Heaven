@@ -3304,6 +3304,37 @@ const VERIFIED_EQUIVALENT = {
    */
   // batch 034: elemental-instinct#instrument
   'elemental-instinct': ['grantsRecord'],
+
+  /*
+   * ARMORED RESISTANCE — the same resiliency rider as monk-moves above, one archetype over.
+   *
+   * Printed (AoN feat-7897) says nothing about Hit Points: *"While you are wearing medium or heavy
+   * armor, you gain resistance to physical damage equal to half your character level when you use the
+   * Intercept Attack reaction to take damage instead of your ally."* Their row is `conditional IF
+   * MAX_HEALTH_CLASS_PER_LEVEL <= 10 AND FEAT_NAMES INCLUDES "guardian resiliency" THEN adjValue
+   * MAX_HEALTH_BONUS = 3` — Guardian Resiliency's own per-guardian-archetype-feat +3, replicated onto
+   * each qualifying guardian feat row because their vocabulary has no "per feat of this archetype" verb.
+   *
+   * Ours holds that sentence ONCE, where it is printed: `feats/guardian-resiliency.maxHpBonus =
+   * {perArchetypeFeat: 3, archetype: 'guardian'}`, multiplied by the count of taken feats whose
+   * `archetype === 'guardian'` in featHpBonus (src/rules/derive.ts:897-901) and folded into starting
+   * HP by build.ts:8557-8561 — a set that includes armored-resistance. Same total, one carrier.
+   *
+   * wg-values already drops this whole shape globally (RESILIENCY_GATE, batch 031); wg-diff's kinds
+   * reader flattens the conditional to a bare `hp` on the record it sits on, so it needs the settle
+   * too — exactly as monk-moves did.
+   *
+   * ⚠ `hp` ONLY, and the blast radius is one row: the settle is keyed by record id and `armored-
+   * resistance` names a single feat row in the walk (the same-id `modes` record is outside
+   * WG_PAIRING). The record's other kinds still report, and the printed resistance is delivered by
+   * `modes/armored-resistance` (physical, floor(@actor.level/2)), which is why `defense` is already on
+   * our side of the row. Adversarially confirmed both ways: under `--raw` the record goes straight
+   * back to THEY-ONLY `missing=[hp]`, and with `maxHpBonus` stripped from feats/guardian-resiliency
+   * the sentence is still reported — Guardian Resiliency's own row asserts its +3 UNGATED, so
+   * wg-values reopens `MISSING hp|` there (test/batch036-instruments.test.ts).
+   */
+  // batch 036: armored-resistance#instrument
+  'armored-resistance': ['hp'],
 };
 
 const out = { theyOnly: [], disagree: [], weOnly: [], agree: [], noMatch: [], theirsUnencoded: [] };

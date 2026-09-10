@@ -1,0 +1,64 @@
+BATCH 036 — GAP AGENT REPORT, family "instruments" (WG-COMPARISON lane)
+2 open lines assigned (both the SAME item, raised twice: once by the instruments builder, once by its
+verifier). 2 AUTHORED, 0 PARKED, 0 still open. No spec file written, no manifest entry added, no code
+or test touched — because the thing both lines ask for already exists, produced by the ENGINE family's
+verifier after my family raised the gap. Re-building it would be a second carrier for one sentence,
+which is the exact defect the gap warned about.
+
+
+LINE 1 — work/.b036-report-instruments.txt:12
+  "armored-resistance#resistance (ENGINE family) — its `ours` half is WRONG, and a row authored from
+   it would DOUBLE the resistance …"
+  AUTHORED — ref test/batch036-engine.test.ts:392
+  The engine family acted on the gap: the row was WITHDRAWN (work/.b036-rows-engine.json,
+  findings[armored-resistance#resistance].backfillRows = [], with the withdrawal note quoting the
+  modes-bucket carrier), and the test that would have pinned a patched-in field now pins the SHIPPED
+  one — describe('armored-resistance: the Intercept Attack resistance already reaches the guardian'),
+  three its cited `// batch 036: armored-resistance#resistance`, the last of which (line 392) is the
+  one-carrier guard: `p.feats['armored-resistance'].resistances` must stay undefined and
+  deriveDefenses().sources['resistance:physical'] must hold exactly ONE line named 'Armored
+  Resistance'. That guard is precisely the reconciliation my gap demanded ("what must not happen is
+  both carriers shipping unreconciled"), so the line is closed by a test, not by prose.
+
+LINE 2 — work/.b036-verify-instruments.txt:89
+  Same finding, restated by my verifier, plus the one genuinely open half: the PRESENTATION call —
+  toggled mode, or a passive `resistances` entry with an `against` qualifier beside it.
+  AUTHORED — ref work/.b036-rows-engine.json
+  The call was made there and is right: the mode stays the single carrier. Two independent facts
+  settle it and neither needed an owner:
+    · the mode produces a real number (physical resistance floor(level/2) in the headline total when
+      the player toggles it on the round they Intercept), and
+    · the alternative cannot produce one at all. data-rows-2's verifier established, independently of
+      this record, that an `against`-only IWR entry reaches NO surface: derive.ts:2786 skips res.set
+      for it by design, derive.ts:2979 builds `resistances` from that map alone, and both renderers
+      (DefensesPills.tsx:46, VitalsRail.tsx:774) iterate `resistances` only — see their still-open
+      CROSS-FILE GAP on spirit-walk#resistance, work/.b036-verify-data-rows-2.txt:108.
+  So the rejected option is not merely redundant, it is invisible. No engine-shape decision is left
+  for the owner, and nothing goes to work/.b036-queue.json.
+
+INDEPENDENTLY RE-VERIFIED HERE (not taken on the engine family's word)
+  · public/core.json modes['armored-resistance'] ships today: {feats:['armored-resistance'],
+    duration:'while you Intercept an Attack in medium or heavy armor', modifiers:[],
+    resistances:[{type:'physical', value:'floor(@actor.level/2)'}], note:'…applies ONLY to the damage
+    you take in your ally's place with Intercept Attack…', aonOrigin:'authored'} — the printed clause
+    of AoN feat-7897, whole.
+  · public/core.json feats['armored-resistance'] has NO `resistances` key (only actionCost/archetype/
+    prerequisites), and the engine spec adds none, so no doubling can ship from this batch.
+  · No overlay row is owed to the driver for this finding by any family.
+  · The engine packet is green as it stands: work/.b036-verify-engine.txt:2 records
+    test/batch036-engine.test.ts 19 pass and npx tsc --noEmit clean. I ran no vitest of my own — I
+    changed no file, so no test file is mine to run and the heavy-job lock stayed free.
+
+DATA STILL NEEDED
+  (none)
+
+CROSS-FILE GAPS
+  (none new. The one this family raised is closed above; the related spirit-walk#resistance gap is
+  data-rows-2's line, left exactly as it was.)
+
+FILES CHANGED BY THIS AGENT
+  work/.b036-gaps.json — my two lines only, open → authored with the refs above. Every other family's
+    line byte-identical (10 lines still open, all theirs).
+  work/.b036-report-gap-instruments.txt — this file.
+  Nothing else: no spec, no manifest entry (kind must be "rows" or "created-prose" and I emit no rows),
+  no queue entry, no residue.

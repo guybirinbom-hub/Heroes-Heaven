@@ -1,0 +1,5 @@
+{
+  "family": "red-parked-lanes-and-desk",
+  "note": "GATE-RED triage group. Every one of this group's five items is a PARK or a desk confirmation, so NO backfill row is owed and none is emitted. The artefacts are: the n=4 measure on the companion-strike rider lane (item 1, pinned by test/batch036-red-parked-lanes-and-desk.test.ts), three residual re-checks (items 2-4) and three desk confirmations (item 5, work/.b036-queue.json entries hyper-boosters / spirit-walk / chronomancers-secrets). Deliberately empty: an empty findings[] is the honest shape here, and the applier loops over findings so it is a no-op.",
+  "findings": []
+}

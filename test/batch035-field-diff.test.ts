@@ -23,9 +23,22 @@
  *       a real defect along with the false ones.
  */
 import { describe, expect, it, vi } from 'vitest';
-import { CHILD_TIMEOUT } from './_timeouts';
-/* (b) and (c) run field-diff as a real node child over core.json and the whole AoN mirror. */
-vi.setConfig({ testTimeout: CHILD_TIMEOUT, hookTimeout: CHILD_TIMEOUT });
+import { INSTRUMENT_TIMEOUT } from './_timeouts';
+/*
+ * (b) and (c) run field-diff as a real node child over core.json and the whole AoN mirror.
+ *
+ * batch 036, RECLASSIFICATION (no assertion touched, no work removed): this file was on CHILD_TIMEOUT
+ * (90 s) and case (c) timed out at 183 s in batch 036's suite run — the FIRST suite that exceeded it,
+ * because the suite grew from 528 to 537 files (202 s total, up from 175 s in batch 035) and this file
+ * is the one that competes hardest for the disk. _timeouts.ts draws the line by WHAT THE TEST DOES, and
+ * by its own wording this file has always been on the wrong side of it: CHILD_TIMEOUT is for "a child
+ * that boots its own runtime and reads the shipped data", INSTRUMENT_TIMEOUT for one that "re-reads
+ * every page in the Archives mirror … minutes of work rather than seconds". field-diff.mjs walks the
+ * ENTIRE AoN mirror, three times in this file. So the clock was mis-set, not the test: the assertions,
+ * the stunts and the mutation-proof are byte-identical, and case (c) still fails if the guard ever
+ * swallows the real ritual-275 defect.
+ */
+vi.setConfig({ testTimeout: INSTRUMENT_TIMEOUT, hookTimeout: INSTRUMENT_TIMEOUT });
 import { execFileSync } from 'node:child_process';
 import { readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';

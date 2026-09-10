@@ -1,0 +1,112 @@
+BATCH 036 — GATE-RED VERIFY, family: red-pipeline-collation-repair
+Builder report: work/.b036-report-red-pipeline-collation-repair.txt
+Spec checked:   work/.b036-rows-red-pipeline-collation-repair.json  (kind: rows, findings: [] — verified empty)
+Tests run:      node scripts/vt.mjs run test/batch036-red-pipeline-collation-repair.test.ts
+                test/wg-batch-close.test.ts test/wg-batch-run.test.ts  -> 3 files, 43 tests, all green
+Typecheck:      npx tsc --noEmit -> exit 0
+Flip audit:     node scripts/test-flip-audit.mjs --batch 036 -> "clean — 17 test file(s) touched,
+                2 new settle key(s), every flip cited" (this group adds no settle and no teach)
+
+PER ITEM
+
+[1] UNCOLLATED GAPS — lettered bullets never matched — DONE
+Measured on the real artefacts, not on the report's word: I re-ran the PRE-fix gapLines body and the
+shipped one over all 20 work/.b036-{report,verify}-*.txt files. OLD total 18 lines, and
+work/.b036-verify-engine.txt yielded 0. NEW total 35, and work/.b036-verify-engine.txt yields exactly
+11 — the 5 DATA STILL NEEDED rows plus the 6 CROSS-FILE GAPS A / A′ / B / C / D / E, each folded whole
+out of its indented continuations, each ref pointing at the line it opens on (169/173/179/186/192/197).
+The old 18 is byte-for-byte the 18 lines standing in work/.b036-gaps.json, which confirms the diagnosis
+as well as the fix. GAP_BULLET_RE's letter branch requires punctuation-or-prime AND a space, so
+"e.g. foo" and an ordinary one-letter sentence opener still do not match; `-` / `*` / `•` / `1.` keep
+their old no-space latitude, so nothing that collated before stopped collating.
+
+[2] ASCII RULE HARVESTED AS A GAP — DONE
+Same two runs: the OLD body harvested 3 rule-only lines
+(work/.b036-report-red-inventor-modification-rows.txt:132 and :137, work/.b036-report-situational.txt:13
+— the last being flaggedResidue #3 of work/wg-batch-036-residual.json). The NEW body harvests none, and
+work/.b036-report-situational.txt still yields its 4 real lines. The recurrence claim checks out too:
+work/.b030-gaps.json:54-63 parks the identical divider twice. `continue` rather than `break` is
+load-bearing and correct — work/.b036-verify-engine.txt:168 puts a `======` rule directly under the
+heading, so breaking there is precisely the second reason that file collated nothing.
+
+[3] DUPLICATE RESIDUES — DONE (with the assigned root cause corrected, see gap C below)
+scripts/wg-batch-close.mjs:402 now keys flaggedResidues on residueKey (family + kind + sha1 of the
+whitespace-normalised summary) instead of pairKey over `g.ref ?? g.family`; confirmed/refuted/askOwner
+keep pairKey, whose ids are record ids. I checked the entry shape rather than assuming it: every entry
+in work/wg-batch-036-residual.json carries family, kind and summary (summary = trim(g.line, 600) at
+:372), so the key is total. The existing assertion at test/wg-batch-close.test.ts:376 still asserts
+`id: 'alpha#reach'` and still passes — only the merge key changed, not the emitted `id`.
+The builder's refusal to also collapse the four pairs already in work/.b036-gaps.json is CORRECT and I
+verified it independently: 0/7, 2/10, 5/11 and 1/9 are each a builder report line and its verifier's
+restatement, in DIFFERENT files with DIFFERENT sentences, not one line whose ref shifted. Content keying
+cannot merge two different sentences and should not try. What the item's stated root cause actually
+explains is the cross-RE-CLOSE growth ("4 new entr(y/ies) appended, 6 kept"), and that is the half the
+fix kills, pinned by a test that re-closes a throwaway batch 900 with the line moved from :12 to :15.
+
+[4] VERIFY RED — ast-content-check — PARKED as a red, with the artefact, recurrence killed
+Artefact, produced by me now: `node scripts/ast-content-check.mjs` prints
+"ast-content: FAIL — a regen wiped the AST patches" over exactly the six named records
+(classFeatures/ashes, bloodline-elemental, bloodline-imperial, way-of-the-vanguard,
+items/razmiri-mask-porcelain, items/whispering-staff). Pre-existing, another effort's regen, correctly
+parked rather than claimed.
+The recurrence fix is real and is NOT a no-op — the one thing that could have made it one: I read
+scripts/apply-ast-patches.mjs and it takes NO flags at all (its own header's usage line is the bare
+`node scripts/apply-ast-patches.mjs`) and writes public/ast/*.json{,.gz} unconditionally at :91-92, so
+the chain step writes. Idempotency confirmed at :80 ("already carries its probes — skipped"). Ordering
+confirmed: it is last, after backfill-ast-edition, and nothing later in the chain reads public/ast.
+The header quote in package.json's _data_note is verbatim. Residual risk worth one line: the script
+throws "segment not found" if a regen moves the prose it transplants — being last, that aborts nothing
+else and fails loudly, which is the right failure.
+⚠ THE DRIVER OWES ONE RUN of `node scripts/apply-ast-patches.mjs` to clear today's red. No agent in
+this batch may run it, and I did not.
+
+SPEC / MANIFEST CHECKS
+- work/.b036-rows-red-pipeline-collation-repair.json carries findings: [] — no record to exist, no
+  supersedes to declare, no `why` AoN doc id owed, no collision possible. Correct: all four items are
+  driver defects, none is game data.
+- A ROWLESS spec is safe here, which I checked rather than assumed (the concern raised on
+  gap-data-rows-2): stageApply hands the applier --expect-rows = expectRowsFor(overlay, []) =
+  overlay.length, and apply-parity-fixes.mjs:466-468 takes the "spec writes no rows" branch and exits 0
+  when that number matches. It walks through, changes nothing, refuses nothing.
+- work/.b036-specs.json holds 11 entries, all still present; the red-pipeline-collation-repair entry's
+  stage[] is exactly the six paths the report claims (spec, report, test, wg-batch-run.mjs,
+  wg-batch-close.mjs, package.json) — nothing touched is unstaged and no other entry was dropped.
+- Tests in a NEW file rather than in test/wg-batch-run.test.ts / test/wg-batch-close.test.ts: the
+  deviation from the assignment is justified and I verified the mechanism. scripts/test-flip-audit.mjs
+  exempts an added file (:386-388 newFileScan for status 'A', and the untracked branch below it) but
+  demands a `// batch 036: <finding id>` on every added expect(/it( in an EXISTING one; no finding in
+  work/.b036-read.json is about the pipeline and the premise form needs an AoN doc id, which a driver
+  defect has not. The audit runs clean, and coverage is equivalent — gapLines has exactly one consumer
+  (wg-batch-run.mjs:910) and neither existing test file had any gapLines coverage to lose.
+- No new settle and no new teach in this group, so no "// mutation-proof" test is owed.
+
+FIXED-BY-ME: none. Nothing in the group needed correcting.
+
+DATA STILL NEEDED
+- (none)
+
+CROSS-FILE GAPS
+- NEW (found in verification), scripts/wg-batch-run.mjs stageApplyDigest :915-917 — do NOT re-run
+  `--stage apply-digest` for batch 036 without re-dispositioning. The prior-disposition merge keys on
+  `${family}|${line}`, i.e. on the collated TEXT, and item 1 deliberately changes that text: the lead
+  letter is stripped and the indented continuations are folded in. So the six engine lines the closer
+  hand-transcribed into work/.b036-gaps.json (entries 12-17, still carrying their "A. " / "A′ " leads)
+  will not match their re-collated selves, and the file would go from 18 dispositioned lines to 35 with
+  ~17 back at status "open" — which is `--stage gaps` refusing a batch that is otherwise closed. This is
+  the fix behaving correctly on a batch that was already hand-repaired around the bug; it costs nothing
+  from batch 037 on. I did not paper over it by rewriting work/.b036-gaps.json, which is the closer's
+  file. If the driver wants apply-digest re-run for 036, the dispositions must be re-applied to the new
+  line texts first.
+- CARRIED FORWARD from the builder, confirmed by me and still a POLICY question, not a defect:
+  stageApplyDigest collates a builder report and its verifier's report under the same `family` (m[2] is
+  the family for both `report-` and `verify-` files; only `label` distinguishes them), so every gap a
+  verifier restates is collated twice. I measured it: that is 4 of the 18 lines in work/.b036-gaps.json
+  (0/7, 2/10, 5/11, 1/9). Content keying cannot merge them because the two sentences genuinely differ.
+  Closing it means either a distinct family label for verify- files or a near-duplicate warning at
+  digest time — either changes what the owner is shown, so it wants a ruling before it is built.
+- scripts/apply-ast-patches.mjs — the six patched public/ast nodes are wiped on disk right now, proved
+  by my run of scripts/ast-content-check.mjs above. The driver owes one
+  `node scripts/apply-ast-patches.mjs`; no agent in this batch may run it.
+
+MANIFEST STAGE[] — PATHS I TOUCHED
+work/.b036-verify-red-pipeline-collation-repair.txt   (this file)

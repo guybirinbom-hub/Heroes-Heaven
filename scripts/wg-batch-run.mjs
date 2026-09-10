@@ -840,6 +840,26 @@ function shippedDescription(category, id) {
 
 /* ---- apply-digest ------------------------------------------------------------------------------- */
 const GAP_HEADS = [['DATA STILL NEEDED', 'DATA STILL NEEDED'], ['CROSS-FILE GAPS', 'CROSS-FILE GAPS']];
+/*
+ * WHY these three shapes, measured on batch 036 (the closer's own note, work/wg-batch-036-residual.json):
+ *
+ *  1. A LETTERED bullet is a bullet. work/.b036-verify-engine.txt letters its CROSS-FILE GAPS
+ *     "A." / "A′" / "B." / "C." / "D." / "E." — none of which matched `^[-*•]|^\d+[.)]`, so the loop
+ *     broke on the section's first line and all five real lanes reached work/.b036-gaps.json as
+ *     nothing at all. They had to be hand-transcribed, which is a fix that does not survive the batch.
+ *  2. An ASCII RULE is not a gap. The divider closing a section ("------" / "======") matched `^[-*•]`
+ *     and was harvested as a gap line of its own — parked as flaggedResidue #3 of batch 036, and the
+ *     SAME artefact parked twice before that in work/.b030-gaps.json (lines 56 and 63). A rule now
+ *     skips the line instead of ending or entering the run.
+ *  3. A hard-wrapped bullet is ONE gap. Every lettered item above wraps over three to seven INDENTED
+ *     continuation lines; without folding them the loop still stops at the first one and reports a
+ *     truncated lane. A continuation is an indented line under an item already opened in this run.
+ */
+const GAP_RULE_RE = /^[-–—=_•*\s]+$/;
+/* `- ` / `* ` / `• ` / `3. ` / `A. ` / `b) ` / `A′ ` / `A'. ` — a letter needs its punctuation (or a
+ * prime) AND a space, so an ordinary sentence starting with a one-letter word is still not a bullet. */
+const GAP_BULLET_RE = /^(?:[-*•]|\d+[.)]|[A-Za-z](?:[’'′][.)]?|[.)])\s)/;
+const GAP_LEAD_RE = /^(?:[-*•]\s*|\d+[.)]\s*|[A-Za-z](?:[’'′][.)]?|[.)])\s*)/;
 /** Collate the two lists every builder and verifier report ends with. A list item is a bullet under the
  *  heading; the run ends at a blank line followed by a non-bullet, or at the next heading. */
 export function gapLines(text, file) {
@@ -848,13 +868,19 @@ export function gapLines(text, file) {
   for (let i = 0; i < lines.length; i++) {
     const head = GAP_HEADS.find(([h]) => new RegExp(`\\b${h}\\b`, 'i').test(lines[i]) && lines[i].length < 120);
     if (!head) continue;
+    let cur = null;                                 // the item an indented continuation belongs to
     for (let j = i + 1; j < lines.length; j++) {
       const l = lines[j].trim();
       if (!l) { if (out.length && /^\s*$/.test(lines[j + 1] ?? '')) break; continue; }
       if (GAP_HEADS.some(([h]) => new RegExp(`\\b${h}\\b`, 'i').test(l))) break;
-      if (!/^[-*•]|^\d+[.)]/.test(l)) break;
-      if (/^[-*•]\s*\(?none\)?\.?$/i.test(l)) continue;
-      out.push({ kind: head[1], line: clip(l.replace(/^[-*•]\s*|^\d+[.)]\s*/, ''), 400), ref: `${file}:${j + 1}` });
+      if (GAP_RULE_RE.test(l)) { cur = null; continue; }
+      if (!GAP_BULLET_RE.test(l)) {
+        if (cur && /^\s/.test(lines[j])) { cur.line = clip(`${cur.line} ${l}`, 400); continue; }
+        break;
+      }
+      if (/^[-*•]\s*\(?none\)?\.?$/i.test(l)) { cur = null; continue; }
+      cur = { kind: head[1], line: clip(l.replace(GAP_LEAD_RE, ''), 400), ref: `${file}:${j + 1}` };
+      out.push(cur);
     }
   }
   return out;

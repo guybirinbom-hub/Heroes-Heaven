@@ -1688,10 +1688,19 @@ export function skillSlotOptions(
  * to `options[0]` — so an unanswered pair resolved to Arcana twice and the second printed increase
  * vanished, while an answered pair could collide the same way.
  *
- * Narrow on purpose: only a sibling whose option list is BYTE-IDENTICAL and closed ('any' never
- * excludes and is never excluded). Measured across FEAT_GRANTS + FEAT_LANE_GRANTS, exactly two records
- * carry more than one `skillChoices` slot, and only Magical Knowledge's pair matches — the other
- * (`{stealth, thievery}` then `'any'`) is untouched, so this widening changes one record.
+ * Narrow on purpose: only a sibling whose option list is BYTE-IDENTICAL. An 'any' slot USED to be
+ * excluded from both halves, and that hole is what batch 036 closed: Skill Mastery (rogue) prints
+ * *"Increase your proficiency rank in one of your skills from expert to master and IN ANOTHER of your
+ * skills from trained to expert"* through two `options: 'any'` slots, so an unanswered pair resolved
+ * to Acrobatics twice and `proficiencies.skills[skill] = maxRank(...)` collapsed master+expert onto
+ * one key — one of the two printed increases simply vanished. 'any' is byte-identical to 'any', which
+ * is exactly the condition this helper already tests, so the bail-out was the only thing in the way.
+ *
+ * Blast radius, measured over FEAT_GRANTS + FEAT_LANE_GRANTS: EIGHT records carry two or more
+ * identical slots and now default their later slots to distinct skills — clan-lore's `other-clan`
+ * branch, initiate-benefit-tome, natural-skill, officers-education, old-soul, skill-mastery,
+ * skill-mastery-rogue and sorcerer-dedication. Rogue Dedication (`{stealth, thievery}` then `'any'`)
+ * is still untouched: the two lists are not identical.
  */
 function distinctSiblingPicks(
   slot: { options: ProficiencyKey[] | 'any' },
@@ -1699,14 +1708,14 @@ function distinctSiblingPicks(
   content: ContentDatabase,
   ctx: { featId: string; index: number; choiceValue?: string | null },
 ): Set<string> | undefined {
-  if (ctx.index <= 0 || slot.options === 'any') return undefined;
+  if (ctx.index <= 0) return undefined;
   const base = FEAT_GRANTS[ctx.featId];
   const src = ctx.choiceValue == null ? base : choiceGrantFor(base, ctx.choiceValue);
   const mine = JSON.stringify(slot.options);
   const taken = new Set<string>();
   for (let i = 0; i < ctx.index; i++) {
     const sib = src?.skillChoices?.[i];
-    if (!sib || sib.options === 'any' || JSON.stringify(sib.options) !== mine) continue;
+    if (!sib || JSON.stringify(sib.options) !== mine) continue;
     const v = featSkillChoiceValue(build, content, ctx.featId, i, ctx.choiceValue);
     if (v) taken.add(v);
   }
@@ -2749,14 +2758,20 @@ export function innovationType(subclassId: string | null | undefined): Innovatio
  * mods). Armor sub-gates (power-suit / subterfuge-suit) are enforced; weapon sub-gates depend on the
  * chosen base weapon (not modelled) so all weapon mods of the tier are offered. Construct mods are
  * prose-only in the dataset (no items) → returns [].
+ *
+ * `chosen` is the character's OTHER modification picks, needed for the printed *"You must have the
+ * speed boosters modification to select this modification"* gate (`requiresModification`). Omitted =
+ * ungated, which is what every caller before batch 036 wanted; both real callers now pass it.
  */
 export function inventorModificationOptions(
   content: ContentDatabase,
   type: InnovationType,
   armorStats: 'power-suit' | 'subterfuge-suit' | undefined,
   maxTierLevel: number,
+  chosen?: readonly (string | null | undefined)[],
 ): ClassFeature[] {
   const typeTag = `${type}-innovation-modification`;
+  const held = chosen ? new Set(chosen.filter((id): id is string => !!id)) : undefined;
   return Object.values(content.classFeatures)
     .filter((f) => f.otherTags?.includes(typeTag) && f.level <= maxTierLevel)
     .filter((f) => {
@@ -2765,6 +2780,10 @@ export function inventorModificationOptions(
         if (tags.includes('power-suit-modification') && armorStats !== 'power-suit') return false;
         if (tags.includes('subterfuge-suit-modification') && armorStats !== 'subterfuge-suit') return false;
       }
+      /* batch 036: hyper-boosters#prerequisite — *"You must have the speed boosters modification to
+       * select this modification."* Any ONE of the listed ids satisfies it (four of the six printed
+       * clauses are or-lists). A record that names none is offered as before. */
+      if (held && f.requiresModification?.length && !f.requiresModification.some((id) => held.has(id))) return false;
       return true;
     })
     .sort((a, b) => a.level - b.level || a.name.localeCompare(b.name));
@@ -6378,6 +6397,18 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     if (ownedFeatureIds.has(o.id)) continue; // already resolved above
     resolvePick(o.id, content.classFeatures[o.id]?.effectChoices, applyAlwaysOn, content.classFeatures[o.id]?.name ?? o.name ?? o.id);
   }
+  /*
+   * batch 036: advanced-weaponry-construct — …and the inventor's INNOVATION MODIFICATIONS, which are
+   * classFeatures records but reach neither list above (`ownedFeatureIds` here is the class's own
+   * feature list, `grantOptions` is the extra-choice lane; only derive.ts's own ownedFeatureIds folds
+   * them in, and it never resolves picks). Advanced Weaponry prints *"Choose one of your construct's
+   * unarmed attacks to gain your choice of one initial weapon modification"* — a second question the
+   * modification asks — and there was no route for the answer at all: it could not be stored, applied
+   * or shown. Blast radius today: zero, no innovation modification ships `effectChoices` yet.
+   */
+  for (const mid of Object.values(build.inventorModifications ?? {})) {
+    if (mid && !ownedFeatureIds.has(mid)) resolvePick(mid, content.classFeatures[mid]?.effectChoices, applyAlwaysOn, content.classFeatures[mid]?.name ?? mid);
+  }
   // A class feature's PLAIN `choice` (stored under `feature:<id>`) may now carry a grant too. Those
   // pickers already rendered and their answers already round-tripped — the barbarian's instinct even
   // shipped a choice literally flagged `ragingResistanceTraditions` — but no reader ever looked at
@@ -7437,6 +7468,21 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       }
     }, content.items[inv.itemId]?.name ?? inv.itemId);
   }
+  /* batch 036 (closer): the LIVING RUNE's crafter question. Energy-Resistant prints *"You gain
+   * resistance 5 to acid, cold, electricity, or fire. The crafter chooses the damage type when
+   * creating the rune."* (AoN equipment-2788-2576) — and a body rune sits on NO inventory row, so the
+   * loop above never reaches it and its answer had nowhere to be recorded. Four of the runes a Living
+   * Rune may take carry that question (energy-resistant/-greater, energy-absorbing/-greater), and all
+   * four were stuck on the first option for every character.
+   *
+   * A no-op sink deliberately: the payload is delivered ONCE, on the etched side, by
+   * etchedRuneDefences (src/rules/derive.ts) — `resolvedItemPassives` is keyed by itemId and read only
+   * for inventory rows in use, so routing the grant here as well would either do nothing or pay it
+   * twice. What this call is for is the `effectPicks` row, which is the only carrier that reaches a
+   * derived Character, and which derive resolves back to the option's own value. */
+  if (build.bodyRune) {
+    resolvePick(build.bodyRune, content.items[build.bodyRune]?.effectChoices, () => {}, content.items[build.bodyRune]?.name ?? build.bodyRune);
+  }
 
   // Granted melee strikes from feats/heritage/ancestry/class features (Iruxi Fangs, Razortooth jaws,
   // …). Seeded with any WG-imported natural-attack names so a feat grant doesn't duplicate one the
@@ -8475,7 +8521,11 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
        * tiers stay closed to a dedicated character however high their level. */
       if (inventorViaDedication && (tier !== 'initial' || !takenFeats.has('basic-modification'))) return undefined;
       if (!pick || level < INVENTOR_TIER_LEVEL[tier]) return undefined;
-      return inventorModificationOptions(content, invType, armorStats, INVENTOR_TIER_LEVEL[tier]).some((o) => o.id === pick)
+      /* batch 036: hyper-boosters#prerequisite — the RAW picks of all three tiers, so *"You must have
+       * the speed boosters modification"* is judged against what the player actually chose. A
+       * modification never requires itself, so passing the slot's own pick back in is harmless. */
+      const held = Object.values(build.inventorModifications ?? {});
+      return inventorModificationOptions(content, invType, armorStats, INVENTOR_TIER_LEVEL[tier], held).some((o) => o.id === pick)
         ? pick
         : undefined;
     };

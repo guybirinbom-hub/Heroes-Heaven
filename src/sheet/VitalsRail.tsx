@@ -4,6 +4,7 @@ import { SAVES } from '../rules/types';
 import { dyingDeathThreshold } from '../rules/conditions';
 import {
   abilityMod,
+  conditionalResistances,
   deriveAc,
   deriveClassDc,
   deriveDefenses,
@@ -233,6 +234,9 @@ export function VitalsRail({
     }
   }, [hasShield]);
   const charDefenses = deriveDefenses(character, content);
+  /* `against`-only resistances are withheld from charDefenses.resistances by design, so this list is
+     the only way they reach the rail — see conditionalResistances in derive.ts. */
+  const condResistances = conditionalResistances(charDefenses);
 
   // Base-class resources PLUS any granted by an owned archetype dedication (Barbarian/Swashbuckler…).
   // Rage and Panache are SIGNATURE STATES: they get a prominent one-tap card of their own (below) and
@@ -753,6 +757,7 @@ export function VitalsRail({
   );
   cards.defenses =
     charDefenses.resistances.length > 0 ||
+    condResistances.length > 0 ||
     charDefenses.weaknesses.length > 0 ||
     charDefenses.immunities.length > 0 ||
     charDefenses.negativeHealing ? (
@@ -776,6 +781,24 @@ export function VitalsRail({
               <span className="kv-label">Resistances</span>
               <span className="iwr-val">
                 {charDefenses.resistances.map((r, i) => (
+                  <IwrTerm
+                    key={r.type}
+                    first={i === 0}
+                    label={`${typeLabel(r.type)} ${r.value}`}
+                    sources={charDefenses.sources?.[`resistance:${r.type}`]}
+                    onOpen={() => setDefBreak(explainDefense(charDefenses, 'resistance', r.type))}
+                  />
+                ))}
+              </span>
+            </div>
+          )}
+          {/* Its own row: the number applies only against a named source, so printing it beside the
+              always-on resistances would claim one the character usually does not have. */}
+          {condResistances.length > 0 && (
+            <div className="rail-kv">
+              <span className="kv-label">Situational resistances</span>
+              <span className="iwr-val">
+                {condResistances.map((r, i) => (
                   <IwrTerm
                     key={r.type}
                     first={i === 0}

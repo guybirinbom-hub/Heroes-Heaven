@@ -3584,7 +3584,16 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                 // BASIC (initial-tier) one — so the two later tiers stay closed however high the level.
                 if (viaDedication && (t.key !== 'initial' || !Object.values(build.featPicks ?? {}).includes('basic-modification'))) return null;
                 if (build.level < INVENTOR_TIER_LEVEL[t.key]) return null;
-                const opts = inventorModificationOptions(content, type, armorStats, INVENTOR_TIER_LEVEL[t.key]);
+                /* batch 036: hyper-boosters#prerequisite — the other tiers' picks feed the printed
+                 * *"You must have the speed boosters modification to select this modification"* gate,
+                 * so Hyper Boosters appears only once Speed Boosters is actually chosen. */
+                const opts = inventorModificationOptions(
+                  content,
+                  type,
+                  armorStats,
+                  INVENTOR_TIER_LEVEL[t.key],
+                  Object.values(build.inventorModifications ?? {}),
+                );
                 // An empty picker is a worse answer than none: every innovation type that ships
                 // modification records has options at every tier it can reach, so this only ever
                 // hides a tier whose records the dataset does not carry yet.
@@ -3809,6 +3818,19 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                     descRefs: content.items[r.id]?.descRefs,
                   })),
                 ]}
+              />
+              {/* batch 036 (closer): the rune's OWN question. Energy-Resistant prints "The crafter
+                  chooses the damage type when creating the rune" (AoN equipment-2788-2576), and four
+                  of the runes offered above ask it — but an etched rune's answer normally rides on the
+                  host inventory row, and a body rune has none, so there was no control anywhere and
+                  every Living Rune silently resisted acid. Same picker, same `effectChoices` store the
+                  engine reads. */}
+              <EffectChoicesPicker
+                recordId={cur}
+                choices={cur ? content.items[cur]?.effectChoices : undefined}
+                build={build}
+                actions={actions}
+                content={content}
               />
               <div className="cmp-note">
                 Runes with a requirement on the type or category of armor, and runes whose effect is on the armor rather

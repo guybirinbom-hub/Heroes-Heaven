@@ -1,0 +1,156 @@
+{
+  "findings": [
+    {
+      "id": "lesson-of-the-flock",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "lesson-of-the-flock",
+          "field": "grantedSpells",
+          "value": ["levitate"],
+          "why": "AoN lesson-27 prints \"You gain the Sheltering Wings hex, and your familiar learns Levitate.\" — we carried only the hex (focusSpells), so the familiar half reached nothing. Flat grantedSpells is the batch-035 lesson lane read at src/rules/build.ts:4048, the same row lesson-of-vengeance uses; spells/levitate is rank 3, matching WG's giveSpell rank 3."
+        }
+      ],
+      "note": "One flat spell id on the existing lesson reader. No collision: the record's live overlay rows are focusSpells and edition."
+    },
+    {
+      "id": "wind-seeker",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "wind-seeker",
+          "field": "spellListAdditions",
+          "value": { "spells": ["aerial-form"], "as": "repertoire", "entryId": "animist-apparition-casting" },
+          "why": "AoN feat-7138 prints \"You add aerial form to your apparition spell repertoire, allowing you to cast it with your apparition spellcasting.\" — the record carried no carrier at all. Byte-identical in shape to its own prerequisite feats/walk-the-wilds (animal-form) and to monstrous-inclinations; reader at src/rules/build.ts:6618 walks taken feats and routes as:'repertoire' into grantedRepertoireAdds."
+        }
+      ],
+      "note": "Whole-field object (spellListAdditions is a single object here, not an array — the reader accepts either). Separate field from the #darkened-forest-form row on the same record, so the two do not merge."
+    },
+    {
+      "id": "wind-seeker#darkened-forest-form",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "wind-seeker",
+          "field": "spellNotes",
+          "value": [
+            {
+              "spellId": "darkened-forest-form",
+              "note": "Wind Seeker: if you are attuned to an apparition of darkened boughs, add the bat and bird forms in aerial form to your darkened forest form lists."
+            }
+          ],
+          "why": "AoN feat-7138 Special: \"If you are attuned to an apparition of darkened boughs, add the bat and bird forms in aerial form to your darkened forest form lists.\" — a clause that changes no number the sheet holds, which is exactly what spellNotes carries (writer src/rules/build.ts:6797, display via spellNotesFor in explain.ts). Same shape as feats/scattered-fire's fireball note."
+        }
+      ],
+      "note": "Distinct field from the spellListAdditions row above; both land on feats/wind-seeker."
+    },
+    {
+      "id": "deadly-mutation",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "deadly-mutation",
+          "field": "modifiesGrant",
+          "value": [
+            {
+              "from": "ostilli-host-dedication",
+              "actionRider": {
+                "actionId": "spit-ambient-magic",
+                "value": "d8 damage dice",
+                "note": "Deadly Mutation: the damage dice of your Spit Ambient Magic are d8s, and a target that critically fails its save also takes 1d6 persistent bleed damage — persistent damage of the energy type instead, if you dealt energy damage with the ability."
+              }
+            }
+          ],
+          "why": "AoN feat-5459 prints \"The damage dice of your Spit Ambient Magic increase to d8s, and when a target critically fails its save against the ability, it also takes 1d6 persistent bleed damage.\" — the record delivered nothing. modifiesGrant.actionRider is the live lane (src/rules/build.ts:6555-6578), used by feats/draconic-paragon for the same shape of clause on Kobold Breath."
+        }
+      ],
+      "note": "⚠ The finding's proposal wrote from:'spit-ambient-magic'; that would never fire. The ownership gate at build.ts:6551 tests `ownedIds.has(mod.from)` where ownedIds holds FEAT and CLASS-FEATURE ids only — draconic-paragon works because feats/kobold-breath is a feat, while spit-ambient-magic exists only in the actions bucket. `from` is therefore feats/ostilli-host-dedication (the grantsActions owner, and Deadly Mutation's printed prerequisite, so the gate can never wrongly withhold it) with actionRider.actionId naming the action row."
+    },
+    {
+      "id": "skill-mastery-rogue#maxtakable",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "skill-mastery-rogue",
+          "field": "maxTakable",
+          "value": 5,
+          "why": "AoN feat-5096 prints \"**Special** You can select this feat up to five times.\" — absent maxTakable means once, because maxTakes() at src/rules/featGrants.ts:789 returns `feat.maxTakable ?? 1`. Sibling feats/skill-mastery (feat-6208, same Special clause) already carries maxTakable: 5."
+        }
+      ],
+      "note": "Scalar field. Does not collide with the sibling chunk's skill-mastery-rogue#duplicate-skill finding, which is a code fix to distinctSiblingPicks in build.ts and authors no row."
+    },
+    {
+      "id": "golem-grafter-dedication",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "golem-grafter-dedication",
+          "field": "resistances",
+          "value": [
+            {
+              "type": "physical",
+              "value": "@actor.archetypeFeats.golem-grafter",
+              "condition": "except adamantine"
+            }
+          ],
+          "supersedes": true,
+          "why": "AoN feat-1227 prints \"resistance to physical damage (except adamantine) equal to your number of class feats from the golem grafter archetype\" — our row omitted the exception, so the IWR breakdown showed a bare physical line and the sheet resisted adamantine. `condition` annotates a COUNTED resistance at src/rules/derive.ts:~2752 (`r.condition ?? src.__cond`), which is the right half of the pair: the number is real, its scope is not checkable. Exact shape of feats/stoney-skin."
+        }
+      ],
+      "note": "SUPERSEDES the existing effect-backfill.json row {feats, golem-grafter-dedication, resistances} = [{type:'physical', value:'@actor.archetypeFeats.golem-grafter'}]; that value is carried whole into this one with only `condition` added. maxHpBonus is untouched."
+    },
+    {
+      "id": "unravel-mysteries",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "unravel-mysteries",
+          "field": "recordMarks",
+          "value": [
+            {
+              "on": "action",
+              "id": "decipher-writing",
+              "note": "Unravel Mysteries: Deciphering Writing takes only half as long as usual (about half a minute per page), and on a failure you don't take the usual -2 circumstance penalty to further checks to decipher that text."
+            }
+          ],
+          "why": "AoN feat-1132 prints \"When you Decipher Writing, you need only half as long as usual … and if you fail, you don't take the usual -2 circumstance penalty to further checks to decipher that text.\" — neither clause reached the player. recordMarks on:'action' is our injectText-on-an-action equivalent (reader recordMarksFor, src/rules/explain.ts:477, which walks taken feats); actions/decipher-writing exists."
+        }
+      ],
+      "note": "A time change and a waived penalty — neither is a number the sheet holds, so a mark on the action row is the whole of it."
+    },
+    {
+      "id": "spirit-walk#resistance",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "spirit-walk",
+          "field": "resistances",
+          "value": [
+            {
+              "type": "all",
+              "value": "floor(@actor.level/2)",
+              "against": "damage dealt by haunts or spirits, during your first turn in an encounter (you and allies in the 30-foot aura)"
+            }
+          ],
+          "why": "AoN feat-7137 prints \"During your first turn in an encounter, you and allies in the aura have resistance equal to half your level against damage dealt by haunts or spirits.\" — the record had no resistances field and the situational registry covers only the +2 Recall Knowledge line. `against` withholds the number from the total and still renders the conditional IWR line (src/rules/derive.ts:2744), the shape modes/dampening-harmonics uses; type 'all' + floor() are both already in service (modes/deitys-protection)."
+        }
+      ],
+      "note": "`against`, not `condition`: a first-turn-only resistance must not be folded into the headline number. The record's only other overlay row is a description repair — different field, no supersede."
+    },
+    {
+      "id": "eye-of-the-unseen#innate-spell",
+      "backfillRows": [
+        {
+          "category": "items",
+          "id": "eye-of-the-unseen",
+          "field": "innateSpells",
+          "value": [
+            { "spellId": "see-the-unseen", "tradition": "arcane", "rank": 2, "usesPerDay": 1 }
+          ],
+          "why": "AoN equipment-1367-1240 prints \"**Activate** ⟨2⟩ command, envision **Frequency** once per day … The eye casts See the Unseen on you.\" — the item had the 1/day counter and the activation cost but no spell grant, so the cast never reached the Spells page. The invested-item innateSpells walk (src/rules/build.ts:8013) is the only lane that can put it there; items/hydration-cloak carries the identical 1/day shape and spells/see-the-unseen is rank 2, arcane/divine/occult."
+        }
+      ],
+      "note": "Does not collide with the sibling chunk's eye-of-the-unseen finding, which deletes the passiveEffects field on the same record — different field."
+    }
+  ]
+}

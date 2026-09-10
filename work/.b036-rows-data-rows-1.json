@@ -1,0 +1,147 @@
+{
+  "findings": [
+    {
+      "id": "lesson-of-protection#familiar-spell",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "lesson-of-protection",
+          "field": "grantedSpells",
+          "value": ["mystic-armor"],
+          "why": "AoN lesson-19 (Lesson of Protection, Player Core pg. 185): \"You gain the Blood Ward hex, and your familiar learns Mystic Armor.\" Only the hex half had a carrier (focusSpells: [blood-ward]); the taught spell reached nothing. Reader: the choice-owned-feature walk in buildCharacter (src/rules/build.ts:4046-4055 flat grantedSpells branch) collects it into featureGrantedSpells and merges it into the caster pool's grantedByRank at build.ts:4295 - the same route the shipped lesson-of-vengeance grantedSpells row already takes. spells['mystic-armor'] exists at rank 1, matching WG's NORMAL giveSpell rank 1. Existing overlay rows for this record are focusSpells + edition only, so no supersedes."
+        }
+      ],
+      "note": "One flat grantedSpells row, identical in shape to the shipped lesson-of-vengeance row. No new reader, no code."
+    },
+    {
+      "id": "lesson-of-dreams#familiar-spell",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "lesson-of-dreams",
+          "field": "grantedSpells",
+          "value": ["sleep"],
+          "why": "AoN lesson-16 (Lesson of Dreams, Player Core pg. 185): \"You gain the Veil of Dreams hex, and your familiar learns Sleep.\" Our record carried focusSpells: [veil-of-dreams] only. Same reader as lesson-of-vengeance (src/rules/build.ts:4048 flat grantedSpells branch). spells['sleep'] exists at rank 1, matching WG's NORMAL giveSpell rank 1. Existing overlay rows: focusSpells + edition only, so no supersedes."
+        }
+      ],
+      "note": "Same lane as lesson-of-protection; nothing else on the record changes."
+    },
+    {
+      "id": "lesson-of-life#familiar-spell",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "lesson-of-life",
+          "field": "grantedSpells",
+          "value": ["spirit-link"],
+          "why": "AoN lesson-18 (Lesson of Life, Player Core pg. 185): \"You gain the Life Boost hex, and your familiar learns Spirit Link.\" Our record carried focusSpells: [life-boost] only. Same reader as lesson-of-vengeance (src/rules/build.ts:4048). spells['spirit-link'] exists at rank 1, matching WG's NORMAL giveSpell rank 1. Existing overlay rows: focusSpells + edition only, so no supersedes."
+        }
+      ],
+      "note": "Same lane; basic lesson, rank 1."
+    },
+    {
+      "id": "lesson-of-shadow#familiar-spell",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "lesson-of-shadow",
+          "field": "grantedSpells",
+          "value": ["chilling-darkness"],
+          "why": "AoN lesson-22 (Lesson of Shadow, Player Core pg. 185): \"You gain the Malicious Shadow hex, and your familiar learns Chilling Darkness.\" Our record carried focusSpells: [malicious-shadow] only. Same reader as lesson-of-vengeance (src/rules/build.ts:4048); the merge at build.ts:4295 files the id by content.spells[id].rank, and spells['chilling-darkness'] is rank 3, matching WG's NORMAL giveSpell rank 3. Existing overlay rows: focusSpells + edition only, so no supersedes."
+        }
+      ],
+      "note": "Greater lesson; the only difference from the basic ones is that the reader files it in the rank-3 bucket, which is the same code path."
+    },
+    {
+      "id": "lesson-of-decay",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "lesson-of-decay",
+          "field": "grantedSpells",
+          "value": ["insect-form"],
+          "why": "AoN lesson-26 (Lesson of Decay, Howl of the Wild pg. 62): \"You gain the Mycological Malady hex, and your familiar learns Insect Form.\" Our record carried focusSpells: [mycological-malady] only, and a grep of src finds no other carrier. Same reader as lesson-of-vengeance (src/rules/build.ts:4048). spells['insect-form'] exists at rank 3, matching WG's NORMAL giveSpell rank 3. Existing overlay rows: focusSpells + edition only, so no supersedes."
+        }
+      ],
+      "note": "Same lane; the record reaches the walk as a greater-lesson/major-lesson ownsFeature option."
+    },
+    {
+      "id": "lesson-of-mischief",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "lesson-of-mischief",
+          "field": "grantedSpells",
+          "value": ["mad-monkeys"],
+          "why": "AoN lesson-21 (Lesson of Mischief, Player Core pg. 185): \"You gain the Deceiver's Cloak hex, and your familiar learns Mad Monkeys.\" Our record carried focusSpells: [deceivers-cloak] only. Same reader as lesson-of-vengeance (src/rules/build.ts:4048). spells['mad-monkeys'] exists at rank 3, matching WG's NORMAL giveSpell rank 3. Existing overlay rows: focusSpells + edition only, so no supersedes."
+        }
+      ],
+      "note": "Same lane."
+    },
+    {
+      "id": "lesson-of-snow",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "lesson-of-snow",
+          "field": "grantedSpells",
+          "value": ["wall-of-wind"],
+          "why": "AoN lesson-23 (Lesson of Snow, Player Core pg. 185): \"You gain the Personal Blizzard hex, and your familiar learns Wall of Wind.\" Our record carried focusSpells: [personal-blizzard] only. Same reader as lesson-of-vengeance (src/rules/build.ts:4048). spells['wall-of-wind'] exists at rank 3, matching WG's NORMAL giveSpell rank 3. Existing overlay rows: focusSpells + edition only, so no supersedes."
+        }
+      ],
+      "note": "Same lane."
+    },
+    {
+      "id": "lesson-of-the-shark",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "lesson-of-the-shark",
+          "field": "grantedSpells",
+          "value": ["feet-to-fins"],
+          "why": "AoN lesson-28 (Lesson of the Shark, Howl of the Wild pg. 62): \"You gain the Blood in the Water hex, and your familiar learns Feet to Fins.\" Our record carried focusSpells: [blood-in-the-water] only. Same reader as lesson-of-vengeance (src/rules/build.ts:4048). spells['feet-to-fins'] exists at rank 3, matching WG's NORMAL giveSpell rank 3. Existing overlay rows: focusSpells + edition only, so no supersedes."
+        }
+      ],
+      "note": "Same lane."
+    },
+    {
+      "id": "blessed-swiftness#mounted",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "blessed-swiftness",
+          "field": "modeAdjust",
+          "supersedes": true,
+          "value": [
+            {
+              "match": { "ids": ["aura-champions-aura"] },
+              "note": "Blessed Swiftness: when an ally’s movement inside the aura triggers an enemy’s reaction, that ally gains a +2 status bonus to all defenses against it. (The +5-foot status bonus is yours while on foot; if you’re mounted, your mount gains the bonus instead.)"
+            }
+          ],
+          "why": "AoN class-feature-877 (Blessing of the Devoted, Player Core 2 pg. 86): \"Blessed Swiftness: You gain a +5-foot status bonus to Speed. If you're mounted, your mount gains the bonus instead.\" The shipped modeAdjust note ended \"(The +5-foot Speed is yours wherever you stand and is already on your sheet.)\" - it told the player the opposite of the clause the record's own description prints. Whole value re-emitted with only the parenthetical replaced (modeAdjust is one field), superseding the existing overlay row on classFeatures/blessed-swiftness.modeAdjust. landSpeedBonus:5 stays as it is: neither our engine nor WG has a mount-Speed carrier, so the redirect is disclosed in the note rather than silently mis-modelled."
+        }
+      ],
+      "note": "Text-only amendment to an existing overlay row (supersedes, whole value merged). No mounted-Speed mechanic is invented - the mount lane does not exist on either side, so the honest fix is to stop contradicting print in the disclosure the player reads."
+    },
+    {
+      "id": "blessed-swiftness#aon-parent",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "blessed-swiftness",
+          "field": "aonParentId",
+          "value": "class-feature-877",
+          "why": "AoN class-feature-877 (Blessing of the Devoted, Player Core 2 pg. 86) carries the section \"Blessed Swiftness: You gain a +5-foot status bonus to Speed...\". The shipped aonParentId was equipment-2320 - Bracers of Devotion, an Item 11 from Treasure Vault (Remastered), whose same-named section reads only \"Blessed Swiftness The bonus to Speed is +10 feet.\" - a different mechanic from a different book, joined by name collision. The sibling classFeatures/blessed-shield already joins to class-feature-877. No existing overlay row for this field on this record, so no supersedes."
+        },
+        {
+          "category": "classFeatures",
+          "id": "blessed-swiftness",
+          "field": "aonSection",
+          "value": "Blessed Swiftness:",
+          "why": "AoN class-feature-877 spells its section headings with a colon (\"Blessed Armament:\", \"Blessed Shield:\", \"Blessed Swiftness:\"), and the sibling classFeatures/blessed-shield carries aonSection \"Blessed Shield:\" against the same parent. The shipped \"Blessed Swiftness\" (no colon) was the Bracers of Devotion spelling and would not match under the corrected parent. No existing overlay row for this field on this record, so no supersedes."
+        }
+      ],
+      "note": "Two fields, one record, one finding - the parent and the section key must move together or the join lands on a heading that does not exist in the new parent. Both are print-join fields (read by render-check.mjs / lane-sample.mjs / wg-field-catalogue.mjs), not player-visible."
+    }
+  ]
+}

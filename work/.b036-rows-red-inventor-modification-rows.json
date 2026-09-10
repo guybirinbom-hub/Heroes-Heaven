@@ -1,0 +1,66 @@
+{
+  "findings": [
+    {
+      "id": "gap C — inventor modification prerequisites (engine CROSS-FILE GAPS line, print premise innovation-5 / innovation-2)",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "energy-barrier",
+          "field": "requiresModification",
+          "value": ["harmonic-oscillator", "metallic-reactance", "phlogistonic-regulator"],
+          "why": "AoN innovation-5, Revolutionary Modifications (Level 15) — Energy Barrier, verbatim: \"You must have the harmonic oscillator, metallic reactance, or phlogistonic regulator modification to select this modification.\" `requiresModification` is the ClassFeature field batch 036 added for exactly this clause; its reader is inventorModificationOptions (src/rules/build.ts:2786) and ANY ONE of the listed ids satisfies it, which is what the printed or-list means. All three named ids are armor-innovation-modification records in core.json at level 1, below Energy Barrier's 15, so the gate is always satisfiable. The record carries no requiresModification today, so this is a first assignment — no supersedes, no collision."
+        },
+        {
+          "category": "classFeatures",
+          "id": "physical-protections",
+          "field": "requiresModification",
+          "value": ["dense-plating", "layered-mesh", "tensile-absorption"],
+          "why": "AoN innovation-5, Revolutionary Modifications (Level 15) — Physical Protections, verbatim: \"You must have the dense plating, layered mesh, or tensile absorption breakthrough modification to select this modification.\" Same lane and same or-list semantics as energy-barrier above. The three named ids are armor-innovation-modification records at level 7, below Physical Protections' 15. First assignment — no supersedes."
+        },
+        {
+          "category": "classFeatures",
+          "id": "marvelous-gears",
+          "field": "requiresModification",
+          "value": ["wonder-gears"],
+          "why": "AoN innovation-2, Breakthrough Modifications (Level 7) — Marvelous Gears, verbatim: \"You must have the wonder gears modification to select this modification.\" A single-id list: the gate passes only when wonder-gears (construct-innovation-modification, level 1) is one of the character's picks. The record itself was CREATED by an earlier batch-036 overlay row ({create:true}); this adds one top-level field to it, so there is no collision with that row or with its separate description row."
+        },
+        {
+          "category": "classFeatures",
+          "id": "turret-configuration",
+          "field": "requiresModification",
+          "value": ["projectile-launcher"],
+          "why": "AoN innovation-2, Breakthrough Modifications (Level 7) — Turret Configuration, verbatim: \"You must have the projectile launcher modification to select this modification.\" Single-id gate; projectile-launcher is a construct-innovation-modification at level 1. Same created-record situation as marvelous-gears — a first assignment of a field the record does not carry."
+        },
+        {
+          "category": "classFeatures",
+          "id": "miracle-gears",
+          "field": "requiresModification",
+          "value": ["marvelous-gears"],
+          "why": "AoN innovation-2, Revolutionary Modifications (Level 15) — Miracle Gears, verbatim: \"You must have the marvelous gears modification to select this modification.\" Single-id gate, and it CHAINS: marvelous-gears is itself gated on wonder-gears by the row above, so a construct inventor who wants Miracle Gears at 15th must have spent the 1st-level slot on Wonder Gears and the 7th on Marvelous Gears. `held` at src/rules/build.ts:8512 is the RAW picks of all three tiers, so the chain is judged against what the player chose rather than against what already validated — each link is tested on its own printed clause, which is what print says."
+        }
+      ],
+      "note": "Five rows, one lane. The reader shipped earlier in this same batch (src/rules/build.ts:2786, cited `// batch 036: hyper-boosters#prerequisite`) and hyper-boosters was its only data row until now, so five of the six printed prerequisite clauses in the inventor chapter had no carrier. The gap line as parked was GARBLED — it listed the prerequisite ids as if they were the owners (\"layered-mesh [\\\"speed-boosters\\\"]\"); the owners above were re-derived from public/ast/classFeatures.json against the mirror and every one of the thirteen ids was verified present in core.json with the prerequisite at a strictly lower tier than the record naming it."
+    },
+    {
+      "id": "gap E — speed-boosters Overdrive step (verifier's own line; follow-through on CONFIRMED hyper-boosters#overdrive)",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "speed-boosters",
+          "field": "whileActive",
+          "value": [{ "state": "overdrive", "speeds": { "land": 5 } }],
+          "why": "AoN innovation-5, Initial Modifications — Speed Boosters, verbatim: \"You gain a +5-foot status bonus to your Speed, which increases to a +10-foot status bonus when under the effects of Overdrive.\" (the mirror writes the first hyphen as U+2011). The standing +5 landed as `landSpeedBonus` 5 earlier in this batch; the Overdrive step had no carrier at all, so a speed-boosters-only inventor read +5 whether Overdrive was on or off. `whileActive` is the live lane activeStateGrants gates on classResources['overdrive'] (src/rules/derive.ts:1185, folded into deriveSpeeds at :5233), and land grants are ADDITIVE over landSpeedBonus, so +5 while the toggle is on reads exactly as the printed +10. WG agrees and is stricter than we were: `wg-show \"Speed Boosters\" --raw` is one conditional, IF ACTIVE_MODES NOT_INCLUDES overdrive AND NOT_INCLUDES 'critical overdrive' THEN SPEED +5 status ELSE SPEED +10 status. First assignment of the field on this record."
+        },
+        {
+          "category": "classFeatures",
+          "id": "hyper-boosters",
+          "field": "whileActive",
+          "value": [{ "state": "overdrive", "speeds": { "land": 5 } }],
+          "supersedes": true,
+          "why": "RECALIBRATION forced by the row above, and the exact twin of what already happened to this record's landSpeedBonus. SUPERSEDES the shipped overlay row {category:'classFeatures',id:'hyper-boosters',field:'whileActive',value:[{state:'overdrive',speeds:{land:10}}]}; that array held one clause and nothing else, so the whole superseded value is merged here with only its number changed. AoN innovation-5, Breakthrough Modifications — Hyper Boosters, verbatim: \"You gain a +10-foot status bonus to your Speed, which increases to a +20-foot status bonus when you're in Overdrive.\" The 10 was correct only while speed-boosters carried NOTHING for the Overdrive step. Batch 036's own requiresModification row makes speed-boosters a hard prerequisite of hyper-boosters, so the pair is never separable and every hyper-boosters number is a DELTA over the speed-boosters number underneath it — which is precisely why the landSpeedBonus row was superseded 10 -> 5 with the note \"derive.ts ADDS the two\". deriveSpeeds adds whileActive land grants the same way (src/rules/derive.ts:5233 pushes each into grantSources, :5310 does `speeds.land = (speeds.land ?? 0) + v`), so leaving it at 10 beside the new speed-boosters 5 would pay the pair +25 feet in Overdrive against a printed +20. With both rows the arithmetic is: speed-boosters alone 5 base / 5+5 = +10 in Overdrive; the pair 5+5 = +10 base / +10 +5+5 = +20 in Overdrive. Both printed numbers, exactly."
+        }
+      ],
+      "note": "Two rows, ONE mechanic — the Overdrive Speed ladder. The second row is a supersede of a row applied earlier in this same batch, not another group's pending spec: gap E is the verifier's own parked line and no family was assigned either record's whileActive this round. Code follow-through in the same chunk: the FEAT_SITUATIONAL['speed-boosters'] star is removed (src/rules/situationalBonuses.ts:1467), because once the row lands the star repeats a number the Speed row already shows."
+    }
+  ]
+}

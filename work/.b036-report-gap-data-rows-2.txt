@@ -1,0 +1,65 @@
+BATCH 036 — gap family gap-data-rows-2
+Spec files: (none — this line closed as a CODE fix, no backfill row and therefore no manifest entry)
+Tests: test/batch036-gap-data-rows-2.test.tsx
+1 gap line assigned, 1 AUTHORED, 0 parked, 0 still open, 0 owner questions raised.
+
+PER GAP LINE
+- AUTHORED — ref src/rules/derive.ts:3019 (conditionalResistances) — "spirit-walk#resistance: an
+  `against`-only IWR entry reaches NO surface".
+  WHY: the row this batch authors for feats/spirit-walk (AoN feat-7137, "During your first turn in an
+  encounter, you and allies in the aura have resistance equal to half your level against damage dealt
+  by haunts or spirits") would have shipped inert. derive.ts skips `res.set` for an `against` entry BY
+  DESIGN — that skip is what keeps the headline total honest — so the entry never joins `resistances`,
+  and both IWR renderers iterate `resistances` alone: DefensesPills.tsx and VitalsRail.tsx drew no
+  pill, and explainDefense (which already holds the clause, with its trigger, and needs no change) is
+  reachable only by clicking a pill that was never drawn. Stored, attributed and displayed nowhere.
+
+  THE FIX, exactly as the gap line prescribes — "a conditional-only line fed from defenses.sources
+  keys that have no res entry":
+    · src/rules/derive.ts:3019 — new export `conditionalResistances(def)`, derived from the attribution
+      map: every `resistance:<type>` key with no entry in `def.resistances`, valued at the best single
+      source (the same no-stacking rule the counted list uses). Derived rather than folded into
+      `resistances`, because folding is precisely what the `res.set` skip exists to prevent.
+    · src/sheet/DefensesPills.tsx:69 — its own "Situational resistances" row, reusing the existing
+      `pill()` (so the `*` conditional marker and the StatDetailModal breakdown come for free). The
+      component's `has` guard now counts these too: a character whose ONLY defence is conditional
+      previously rendered nothing at all.
+    · src/sheet/VitalsRail.tsx:799 — the same row in the Defenses card, reusing IwrTerm; the card's
+      own render guard likewise now counts them.
+  This also un-silences the one carrier already shipped, modes/dampening-harmonics (resistance 10
+  against spell/magical-ability damage of the magiphage trait), which had the same fate.
+
+  PINNED BY test/batch036-gap-data-rows-2.test.tsx, four tests on a BUILT animist who has taken the feat,
+  with feats/spirit-walk PATCHED IN MEMORY to the value the driver's row writes (so every assertion is
+  true both before and after the row lands, never a patched-vs-shipped delta):
+    · "feats/spirit-walk: conditionalResistances carries what the headline total withholds" — the
+      entry stays OUT of `resistances`, IS in `sources` with the printed trigger, and comes back from
+      the new list as All 4 at level 8.
+    · "…the situational value follows half the level" — All 10 at level 20 (the clause is a ladder).
+    · "…DefensesPills prints the situational resistance" — the half this gap line is about: the number
+      reaches a pixel ("Situational resistances", "All 4") through a real jsdom render.
+    · "…a counted resistance never doubles into the situational list" — the guard on the other side:
+      add a plain always-on entry of the same type and the situational list goes empty.
+
+VERIFICATION
+- node scripts/vt.mjs run test/batch036-gap-data-rows-2.test.tsx — 4 passed.
+- npx tsc --noEmit — clean.
+- node scripts/test-flip-audit.mjs --batch 036 — "clean — 7 test file(s) touched, 1 new settle key(s),
+  every flip cited" (each new it( carries "// batch 036: spirit-walk#resistance" and names the record
+  in its title).
+
+NOTE ON THE MANIFEST
+- No entry was appended to work/.b036-specs.json and no work/.b036-rows-gap-data-rows-2.json was
+  written: this line authored ZERO backfill rows, and a rowless spec would (a) be walked by
+  stageApply's apply-parity-fixes.mjs pass for no reason and (b) force another read-modify-write of the
+  shared manifest, which work/.b036-verify-data-rows-2.txt records as having already dropped a
+  sibling family's entry once in this batch. The finding spirit-walk#resistance already carries its row
+  citation from work/.b036-rows-data-rows-2.json, so its verdict does not depend on an entry here.
+
+DATA STILL NEEDED
+- (none)
+
+CROSS-FILE GAPS
+- (none — the three files this fix touches are the three the gap line named. src/rules/derive.ts is
+  also in the engine family's stage[]; this change is purely ADDITIVE there, one new exported function
+  after deriveDefenses, and touches no line that family edits.)

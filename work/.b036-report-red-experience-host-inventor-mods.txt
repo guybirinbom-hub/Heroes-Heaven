@@ -1,0 +1,78 @@
+BATCH 036 — GATE-RED, group "red-experience-host-inventor-mods" (family instruments)
+
+ITEM 1 — hyper-boosters, the only EXPERIENCE line printed as "recorded, NOT passed".
+  TEACH  hyper-boosters#prerequisite — test/wg-experience.harness.test.tsx, function
+         innovationModificationHost (route 4 of the host search). Before `base` is assembled it now
+         walks the record's `requiresModification` list and seats the FIRST entry that fits a tier
+         strictly BELOW the record's own tier (hyper-boosters level 7 -> breakthrough, speed-boosters
+         level 1 -> initial), into `seededModifications`. That object goes into `base`
+         (`inventorModifications: seededModifications`) — which IS `withoutBuild` — and `withBuild`
+         spreads it (`{ ...seededModifications, [tier]: id }`), so the seat is in BOTH builds and the
+         differential still counts only what hyper-boosters itself adds. It is reported on the host as
+         `meta.seededModifications`. A record whose whole required list fits no cheaper tier returns
+         null as before (genuinely unseatable), and a record with no `requiresModification` gets an
+         empty seed and behaves exactly as it did.
+  CAUSE  (pinned, not guessed) this batch's own row classFeatures/hyper-boosters.requiresModification
+         = ["speed-boosters"] plus the new gate at src/rules/build.ts:2786 (inventorModificationOptions)
+         and :8513 (validPick) filter hyper-boosters out when no lower tier holds speed-boosters, so
+         buildCharacter never seated it, `held.includes(id)` at the old :540 was false, the host
+         returned null and classFeatureHost fell through to
+         "no class or subclass grants this feature at level 20". Print
+         (AoN innovation-5, Hyper Boosters: "You must have the speed boosters modification to select
+         this modification.") is on our side; WG's own row (wg-show "Hyper Boosters") carries the
+         prerequisite as TEXT with no gate, so nothing about the teach adopts their encoding.
+  PINNED test/batch036-red-experience-host-inventor-mods.test.ts — three its, all citing
+         "// batch 036: hyper-boosters#prerequisite" with the record id in the describe title.
+
+ITEM 2 — the mandatory mutation-proof test for that teach (citation rule 3).
+  test/batch036-red-experience-host-inventor-mods.test.ts, it("the seat that makes hyper-boosters
+  hostable is still in route 4, and lands in BOTH builds") carries "// mutation-proof" plus the settle
+  key (harness route 4 `innovationModificationHost` / seededModifications). It stunts the seat two
+  ways:
+    · EXECUTED stunt — it("hyper-boosters needs speed-boosters in a lower tier before a built inventor
+      holds it at all") builds the exact BuildState route 4 made before the teach
+      ({ breakthrough: 'hyper-boosters' }, no seat) and asserts the built inventor does NOT hold
+      hyper-boosters, i.e. route 4's own `held.includes(id)` check fails and the host returns null;
+      the seated build ({ initial: 'speed-boosters', breakthrough: 'hyper-boosters' }) does hold it.
+      The reason string the null lands on is asserted to still be the gate's one, verbatim.
+    · SOURCE stunt — the harness source sliced from `function innovationModificationHost` to
+      `function featChoiceHost` (the same slicing test/batch035-instruments-1.test.ts:267 and
+      test/batch035-red-experience-hosts.test.ts:59 use) must still contain the seat AND must place it
+      in `base`, not in `withBuild` alone.
+    · DIFFERENTIAL stunt — the third it proves the "without" build must carry the seat: with the seat
+      in both, hyper-boosters is credited its own +5 delta; a seatless "without" would credit it
+      speed-boosters' 5 feet too (25 -> 30 -> 35 on a level-20 armour inventor).
+  hyper-boosters was NOT added to work/experience-instrument-limits.json (checked: absent), per the
+  file's own rule — the instrument can see this record.
+
+ITEM 3 — optional re-measure. TEACH hyper-boosters#prerequisite: 0 other records flip off UNSUPPORTED.
+  · node scripts/wg-experience.mjs --batch work/wg-batch-036.json now reports "40 records — OK 40"
+    (was OK 39 / UNSUPPORTED 1). hyper-boosters itself is the only flip in this batch.
+  · Batches 032/033/034 were measured from their shipped artefacts rather than re-run, because a
+    re-run would clobber another batch's evidence file for no information: 032 is OK 40, 034 has one
+    NO-SHEET-EFFECT (the-infinite-eye) and no UNSUPPORTED, and 033's single UNSUPPORTED record is
+    school-of-thassilonian-rune-magic, whose otherTags are [] — route 4 returns null on the tag test
+    long before the seat is considered, so the teach cannot reach it. 033's armor-innovation is parked
+    as "instrument limit: control-off-record" and is MISSING-CONTROL, not UNSUPPORTED, so it is out of
+    this teach's reach as well.
+  · The teach can only ever change a record that carries `requiresModification`, and a dump of
+    core.json's classFeatures shows hyper-boosters is the ONLY record in the dataset that does. The
+    count is therefore 0 by construction, not by sampling.
+
+TESTS RUN
+  node scripts/vt.mjs run test/batch036-red-experience-host-inventor-mods.test.ts  — 3 passed
+  node scripts/wg-experience.mjs --batch work/wg-batch-036.json                    — 40 played, OK 40
+  npx tsc --noEmit                                                                 — clean
+
+DATA STILL NEEDED
+  (none — no data row was needed for this group; the hyper-boosters rows had already landed from the
+  engine/data families and are shipped in public/core.json)
+
+CROSS-FILE GAPS
+  scripts/wg-batch-gate.mjs:594 — `if (r.verdict === 'UNSUPPORTED') { unsupported.push(r.id); continue; }`
+    runs BEFORE the queuedFor / ownerRuled / instrumentLimited parking checks, so an UNSUPPORTED record
+    can never enter `bad` and never fails the gate: it is printed under "recorded, NOT passed" and the
+    batch reads green with the record's entire delivery unjudged. That is how three findings on
+    hyper-boosters shipped unmeasured this batch. The fix belongs in that file (not mine): an
+    UNSUPPORTED record should need the same park artefact every other non-OK verdict needs — a queue
+    entry, an owner ruling or a work/experience-instrument-limits.json line — and fail otherwise.

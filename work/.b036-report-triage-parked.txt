@@ -1,0 +1,33 @@
+BATCH 036 — GATE-RED — group red-parked-lanes-and-desk — TRIAGE LEDGER
+Full reasoning, measures and citations: work/.b036-report-red-parked-lanes-and-desk.txt
+
+1. gap D, companion-strike rider lane (engine CROSS-FILE GAPS, work/.b036-gaps.json entry 16)
+   PARKED, measure BUILT. n=4, not n=1: of the 11 initial weapon modifications
+   advanced-weaponry-construct offers, four carry a weaponTraits payload (hampering-spikes,
+   hefty-composition, modular-head, razor-prongs) and the other seven carry no rider at all; all four
+   are scoped match.designated='innovation', so one engine change lands all four. Of the 18 records
+   tagged otherTags 'construct-innovation-modification', ZERO carry a grant payload of their own.
+   Residual entry work/wg-batch-036-residual.json flaggedResidues[8] is the only residue mentioning
+   the record and has no twin — it survives any dedup. Pinned by
+   test/batch036-red-parked-lanes-and-desk.test.ts (measure + built-character tripwire).
+
+2. blessed-swiftness#mounted (data-rows-1)  PARK CONFIRMED, no build. Re-verified: no character
+   feature -> companion speed addend (companions.ts:404), no mounted state in src, n=1 clause,
+   precedent situationalBonuses.ts:4358. Artefact: flaggedResidues[0] (restated at [4]).
+
+3. cultivators-keen-eye ritual-cost (situational)  PARK CONFIRMED, no build. Re-verified: one /ritual/
+   id in the actions bucket (spiritual-aid), RecordMarker.on is 'action'|'condition'|'feature'
+   (situationalBonuses.ts:4174), n=1, clause already ships on the feat's `note`. situationalBonuses.ts
+   NOT widened — it belongs to another group this round. Artefact: flaggedResidues[2] (restated at [5]).
+
+4. eye-of-the-unseen / illusionists-hat collision warning (situational)  DISCHARGED — not a gap and
+   not a park. Collision verified ABSENT across every spec in work/.b036-specs.json (the only sibling
+   row is field-scoped items/eye-of-the-unseen.innateSpells; illusionists-hat is in refuted[]).
+   Residual NOT hand-edited. Correction raised as a cross-file gap: flaggedResidues[1] is UNIQUE, so a
+   duplicate-merging dedup will not remove it; retiring it needs the close to honour its "not a gap" ref.
+
+5. Desk #148 hyper-boosters / #149 spirit-walk / #150 chronomancers-secrets  ARTEFACT CONFIRMED.
+   All three present in work/.b036-queue.json with clause, WG encoding, our carrier and the question;
+   all three WG-vs-print; nothing decided by any agent, including this one.
+
+Open lines: DATA STILL NEEDED 0, CROSS-FILE GAPS 1.

@@ -1,0 +1,11 @@
+{
+  "family": "red-experience-host-inventor-mods",
+  "note": "GATE-RED group. Every item on this group's list was an INSTRUMENT teach, not a data change: hyper-boosters' own data rows (requiresModification, whileActive, landSpeedBonus) had already landed from the engine/data families and are shipped in core.json. This spec therefore carries NO backfill rows on purpose — it exists so the manifest can name a real file for the family.",
+  "findings": [
+    {
+      "id": "hyper-boosters#prerequisite",
+      "backfillRows": [],
+      "note": "Disposition is a comparer/harness TEACH, not a row: test/wg-experience.harness.test.tsx innovationModificationHost now seats one satisfying `requiresModification` id in the cheapest tier BELOW the record's own (hyper-boosters -> initial: speed-boosters), in `base`, so it reaches BOTH withBuild and withoutBuild and the differential still counts only what hyper-boosters adds; recorded in meta.seededModifications. Pinned by test/batch036-red-experience-host-inventor-mods.test.ts. The data half of this finding (classFeatures/hyper-boosters.requiresModification = [\"speed-boosters\"] plus the inventorModificationOptions/validPick gate at src/rules/build.ts:2786/8513) was already applied by the engine family and is shipped."
+    }
+  ]
+}

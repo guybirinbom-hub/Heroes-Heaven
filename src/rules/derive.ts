@@ -2526,6 +2526,37 @@ export function meetsDefenceGate(c: Character, db: ContentDatabase, gate: NonNul
   return true;
 }
 
+/**
+ * The DEFENCES an ETCHED property rune grants its wearer — the resistances/senses/immunities/
+ * weaknesses that had no route to the character at all before batch 036.
+ *
+ * Energy-Resistant (AoN equipment-2788-2576): *"You gain resistance 5 to acid, cold, electricity, or
+ * fire. The crafter chooses the damage type when creating the rune."* The whole payload shipped as an
+ * `effectChoices` picker on the rune's ITEM record, which `resolvedItemPassives` resolves only for an
+ * inventory ROW that is worn/held/affixed — and etching consumes that row (planAttach 'etch' +
+ * removeInventoryItem). So an etched Energy-Resistant rune granted 0 resistance, and the `runes`
+ * record it becomes carries nothing. Both halves are read here.
+ *
+ * The crafter's pick lives on the HOST row (the armour the rune is etched onto), keyed
+ * `<runeId>:<choiceId>` so it cannot collide with the host item's own choices. Unanswered falls back
+ * to the FIRST option — which is acid, matching what WG's own row grants — because an etched rune
+ * always has a type: the crafter chose one whether or not this character's sheet recorded it.
+ */
+function etchedRuneDefences(inv: InventoryItem, rune: RuneDef, db: ContentDatabase): DefenseGrants | undefined {
+  const out: DefenseGrants = { ...(rune.passiveEffects ?? {}) };
+  for (const ch of db.items[rune.id]?.effectChoices ?? []) {
+    const opts = ch.options ?? [];
+    const picked = inv.effectChoices?.[`${rune.id}:${ch.id}`];
+    const passive = (opts.find((o) => o.value === picked) ?? opts[0])?.grant?.passive;
+    if (!passive) continue;
+    for (const k of ['resistances', 'weaknesses', 'immunities', 'senses'] as const) {
+      const add = passive[k];
+      if (add?.length) (out[k] as unknown[]) = [...((out[k] as unknown[]) ?? []), ...add];
+    }
+  }
+  return out.resistances || out.weaknesses || out.immunities || out.senses ? out : undefined;
+}
+
 export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefenses {
   // Each source carries the NAME of what granted it, so the sheet can answer "where is my Fire 2
   // coming from?" — the same question every other stat's breakdown already answers.
@@ -2625,6 +2656,32 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
     const resonant = db.items[inv.itemId]?.resonant;
     if (resonant?.resistances?.length && inv.invested && inv.designations?.includes('wayfinder-slotted'))
       push(db.items[inv.itemId]?.name ?? inv.itemId, { resistances: resonant.resistances }, 'while slotted in a wayfinder');
+    /* batch 036: energy-resistant — …and the ETCHED PROPERTY RUNES on this row. `propertyRuneDefs` had
+     * four call sites (item bonus, breakdown, body-rune list, bulk) and none of them was this walk, so
+     * every armour property rune whose payload is a defence delivered nothing once it was etched. */
+    for (const rune of propertyRuneDefs(inv, db)) push(rune.name ?? rune.id, etchedRuneDefences(inv, rune, db));
+  }
+  /* …and the rune etched on the character's own BODY (Living Rune), which sits on no inventory row and
+   * is therefore invisible to every reader that walks `inventory[].runes`.
+   *
+   * batch 036 (closer): its crafter-choice has no host row, so it USED to take the first-option
+   * fallback for every character — acid, always, on all four choice-carrying armour runes. Energy-
+   * Resistant prints *"The crafter chooses the damage type when creating the rune"* (AoN
+   * equipment-2788-2576), so a fallback is a wrong answer, not a missing one. The answer now rides in
+   * on `effectPicks` (buildCharacter records it beside the inventory picks) and is resolved back to
+   * the option's own `value` here — the same label->value resolution answeredEffectOptions does, which
+   * cannot be reused because it looks in the five CHOSEN-RECORD collections and a rune's question
+   * lives on its ITEM record. Synthesised into the host-row shape etchedRuneDefences already reads, so
+   * the etched lane and the body lane resolve a pick exactly the same way. */
+  const bodyRune = bodyRuneDef(c, db);
+  if (bodyRune) {
+    const answers: Record<string, string> = {};
+    for (const ch of db.items[bodyRune.id]?.effectChoices ?? []) {
+      const label = (c.effectPicks ?? []).find((p) => p.recordId === bodyRune.id && p.choiceId === ch.id)?.label;
+      const value = ch.options?.find((o) => o.label === label)?.value;
+      if (value) answers[`${bodyRune.id}:${ch.id}`] = value;
+    }
+    push(bodyRune.name ?? bodyRune.id, etchedRuneDefences({ instanceId: 'body', itemId: bodyRune.id, quantity: 1, effectChoices: answers }, bodyRune, db));
   }
   // The ACTIVE stance / form: its typed resistances (Rain of Embers: fire = half level) and senses (an
   // ursine form's low-light + scent) apply only while it's the active one.
@@ -2960,6 +3017,28 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
       !!(c.backgroundId && db.backgrounds[c.backgroundId]?.breathesWater) ||
       c.inventory.some((inv) => inv.invested && db.items[inv.itemId]?.breathesWater),
   };
+}
+
+/**
+ * Resistances the character HAS but that no headline number can carry — every `against`-only entry.
+ *
+ * Spirit Walk (AoN feat-7137) prints *"During your first turn in an encounter, you and allies in the
+ * aura have resistance equal to half your level against damage dealt by haunts or spirits."* The loop
+ * above deliberately skips `res.set` for an `against` entry, so the resistance never joins
+ * `resistances` — and both IWR renderers iterate `resistances` alone, which left the clause stored,
+ * attributed and displayed NOWHERE (the breakdown modal that holds it is reachable only by clicking a
+ * pill that is never drawn). Same silence over the one shipped carrier, modes/dampening-harmonics.
+ *
+ * Derived from `sources` rather than added to `resistances`, because folding it into the array is
+ * exactly what would put a conditional number in the headline the skip exists to protect.
+ * `value` is the best single source, matching the no-stacking rule the counted list uses.
+ */
+export function conditionalResistances(def: CharacterDefenses): { type: string; value: number }[] {
+  const counted = new Set(def.resistances.map((r) => r.type));
+  return Object.entries(def.sources ?? {})
+    .filter(([key]) => key.startsWith('resistance:') && !counted.has(key.slice('resistance:'.length)))
+    .map(([key, list]) => ({ type: key.slice('resistance:'.length), value: Math.max(0, ...list.map((s) => s.value ?? 0)) }))
+    .sort((a, b) => a.type.localeCompare(b.type));
 }
 
 /**
@@ -4880,7 +4959,7 @@ function applyUnarmedRiders(c: Character, db: ContentDatabase, p: UnarmedProfile
   /* The record AND the answer the player gave it, because a rider may be gated on one branch of the
    * granting record's own choice. A class feature carries no per-character answer here, so its riders
    * must be ungated to fire — which is the case for every one that exists. */
-  const sources: { rec: DefenseGrants | undefined; choiceValue?: string }[] = [
+  const sources: { rec: DefenseGrants | Pick<ModeDef, 'unarmedTraits'> | undefined; choiceValue?: string }[] = [
     ...(c.feats ?? []).map((fc) => ({ rec: db.feats[fc.featId], choiceValue: fc.choice?.value })),
     ...[...ownedFeatureIds(c, db)].map((id) => ({ rec: db.classFeatures[id] as DefenseGrants | undefined })),
     /* …and HERITAGES. Warrior Automaton prints *"the damage die for your fist increases to 1d6 instead
@@ -4888,6 +4967,12 @@ function applyUnarmedRiders(c: Character, db: ContentDatabase, p: UnarmedProfile
      * field could be authored on the heritage and would never fire. A reader that never looks is the
      * same as no data — and worse, it looks like data. */
     ...heritageRecords(c, db).map((h) => ({ rec: h as DefenseGrants | undefined })),
+    /* batch 036: animalistic-brutality — …and the ACTIVE MODES, exactly as `applyWeaponRiders` above
+     * already reads `m.weaponTraits`. *"Your unarmed attack from bestial rage gains one of the
+     * following traits UNTIL YOU STOP RAGING"* is a rider with an off switch, which no owned record
+     * can express; without this the mode could be authored, toggled and shown, and the Strike row
+     * would never change. Blast radius: none today — no shipped mode carries `unarmedTraits`. */
+    ...(c.activeModes ?? []).filter((m) => m.unarmedTraits).map((m) => ({ rec: m as Pick<ModeDef, 'unarmedTraits'> })),
   ];
   let bestStep = 0;
   let setDie: string | undefined;

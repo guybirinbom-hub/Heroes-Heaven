@@ -9,7 +9,7 @@ import { eligibleFeatsForSlot } from '../src/rules/featSlots';
 import { FEAT_PICK_GRANTS } from '../src/rules/featPickGrants';
 import { choiceOwnedFeatureIds, classFeatureIdsOwned, creatureTraitsOf, critSpecSources, deriveDefenses } from '../src/rules/derive';
 import { sheetLoreKeys, statMarkClass } from '../src/rules/explain';
-import { addInventoryItem, applyPlayState, initialPlay, toggleItemMode, useConsumable } from '../src/rules/play';
+import { addInventoryItem, applyPlayState, initialPlay, toggleItemMode, updateInventoryItem, useConsumable } from '../src/rules/play';
 import { ItemDetail } from '../src/sheet/ItemDetail';
 import { snapshot, diff } from '../scripts/lib/sheet-snapshot.mjs';
 import { SKILLS } from '../src/rules/types';
@@ -534,8 +534,40 @@ function innovationModificationHost(db: ContentDatabase, id: string): Host | nul
   );
   if (!tier) return null;
   const suit = (rec?.otherTags ?? []).includes('subterfuge-suit-modification') ? 'subterfuge-suit' : 'power-suit';
-  const base: BuildState = { ...minimalHost(db, classId, 'human', 20), subclassId, inventorArmorStats: suit, inventorModifications: {} };
-  const withBuild: BuildState = { ...base, inventorModifications: { [tier]: id } };
+  /* batch 036: hyper-boosters#prerequisite — *"You must have the speed boosters modification to select
+   * this modification."* That printed clause is now a real gate (`requiresModification`, honoured by
+   * inventorModificationOptions at build.ts:2786 and by validPick at build.ts:8513), so seating the
+   * record ALONE no longer holds it: buildCharacter drops it, `held` misses it and the host returned
+   * null — the record read UNSUPPORTED and its whole delivery went unjudged. Seat each satisfying
+   * modification in the cheapest tier BELOW this one (hyper-boosters → initial: speed-boosters), in
+   * `base`, so it is in BOTH builds and the differential still counts only what THIS record adds. Same
+   * shape as the extraChoices seat below: make the pick legal, then measure the pick. */
+  /* The requirement CHAIN, not one link: print stacks them — innovation-2 Miracle Gears *"You must
+   * have the marvelous gears modification to select this modification"*, and Marvelous Gears in the
+   * same document *"You must have the wonder gears mod[ification]"*. Seating only the first link
+   * leaves the seat itself illegal, `held` misses the record and the host returns null again — the
+   * exact silent UNSUPPORTED this seat exists to stop, and one no gate would catch
+   * (wg-batch-gate.mjs:594 skips UNSUPPORTED before every parking check). Each link goes in a tier
+   * strictly cheaper than the last, so the walk cannot run past the three tiers or loop on a cycle. */
+  const TIERS = ['initial', 'breakthrough', 'revolutionary'] as const;
+  const seededModifications: Record<string, string> = {};
+  let need: typeof rec | undefined = rec;
+  let ceiling: (typeof TIERS)[number] = tier;
+  while (need?.requiresModification?.length) {
+    let seat: { id: string; tier: (typeof TIERS)[number] } | undefined;
+    for (const reqId of need.requiresModification) {
+      const req = db.classFeatures[reqId];
+      const t = req && TIERS.find((x) => INVENTOR_TIER_LEVEL[x] >= (req.level ?? 1) && INVENTOR_TIER_LEVEL[x] < INVENTOR_TIER_LEVEL[ceiling]);
+      if (t) { seat = { id: reqId, tier: t }; break; }
+    }
+    // Nothing on the required list fits a cheaper tier → the record is genuinely unseatable, say so.
+    if (!seat) return null;
+    seededModifications[seat.tier] = seat.id;
+    need = db.classFeatures[seat.id];
+    ceiling = seat.tier;
+  }
+  const base: BuildState = { ...minimalHost(db, classId, 'human', 20), subclassId, inventorArmorStats: suit, inventorModifications: seededModifications };
+  const withBuild: BuildState = { ...base, inventorModifications: { ...seededModifications, [tier]: id } };
   const held = Object.values(buildCharacter(withBuild, db).inventor?.modifications ?? {});
   if (!held.includes(id)) return null;
   const { build: answeredBuild, answered } = answerOwnPicks(db, withBuild, rec as never, `feature:${id}`);
@@ -547,7 +579,7 @@ function innovationModificationHost(db: ContentDatabase, id: string): Host | nul
     withDb: db,
     withoutDb: db,
     pages: pagesFor(20),
-    meta: { classId, subclassId, level: 20, innovationTier: tier, answered, without: 'innovation-modification-unpicked' },
+    meta: { classId, subclassId, level: 20, innovationTier: tier, answered, seededModifications, without: 'innovation-modification-unpicked' },
   };
 }
 
@@ -1227,9 +1259,28 @@ describe('wg experience harness', () => {
             const controls = collectItemControls(db, applyPlayState(base, play1, db), host.itemId!);
             // PLAY the item: a consumable is drunk (its mode switches on), an item that owns a mode has it
             // toggled — otherwise a potion of resistance reads as doing nothing (its whole effect is the mode).
-            const itemRec = db.items[host.itemId!] as { itemType?: string } | undefined;
+            const itemRec = db.items[host.itemId!] as { itemType?: string; effectChoices?: { id: string; options?: { value: string }[] }[] } | undefined;
             const ownsMode = Object.values((db as unknown as { modes?: Record<string, { fromItemId?: string }> }).modes ?? {}).some((m) => m.fromItemId === host.itemId);
             const instance = (play1.inventory ?? []).find((i) => i.itemId === host.itemId)?.instanceId;
+            /*
+             * batch 036: energy-resistant — ANSWER THE ITEM'S OWN PICK, the same thing answerOwnPicks()
+             * already does for a feat's `choice` / `effectChoices` on the builder side. An item's answer
+             * lives on the INVENTORY INSTANCE (InventoryItem.effectChoices, play.ts:116; ItemDetail.tsx:343
+             * is the control that writes it), which this branch never wrote — so every item whose payload
+             * sits BEHIND its pick read as NO-SHEET-EFFECT however correct the engine was. Printed
+             * (AoN equipment-2788-2576): "You gain resistance 5 to acid, cold, electricity, or fire. The
+             * crafter chooses the damage type when creating the rune." — the resistance IS the answer.
+             * `controls` is collected ABOVE, on the unanswered card, so the select is still reported as an
+             * added control in the `empty` state and the choice-lane evidence does not move.
+             */
+            for (const ch2 of itemRec?.effectChoices ?? []) {
+              const v = ch2.options?.[0]?.value;
+              if (!v || !instance) continue;
+              const row0 = (play1.inventory ?? []).find((i) => i.instanceId === instance);
+              play1 = updateInventoryItem(play1, instance, { effectChoices: { ...(row0?.effectChoices ?? {}), [ch2.id]: v } });
+              const meta = rec.host as Record<string, unknown>;
+              meta.answered = [...((meta.answered as string[] | undefined) ?? []), `${ch2.id}=${v}`];
+            }
             if (ownsMode && instance) {
               play1 = itemRec?.itemType === 'consumable'
                 ? useConsumable(play1, instance, (db as unknown as { modes?: never }).modes)

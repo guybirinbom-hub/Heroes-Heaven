@@ -1,0 +1,205 @@
+{
+ "batch": 36,
+ "records": [
+  {
+   "id": "lesson-of-protection",
+   "verdict": "FIXED",
+   "evidence": "[batch 36 read, adversarially confirmed] lesson-of-protection#familiar-spell: The lesson's second half — the ordinary spell the familiar learns — has no carrier: only the hex reaches the character,  — cited by row spec work/.b036-rows-data-rows-1.json finding lesson-of-protection#familiar-spell (1 row(s)), row classFeatures/lesson-of-protection field:grantedSpells in work/.b036-rows-data-rows-1.json, test test/batch036-data-rows-1.test.ts (in what this batch added)"
+  },
+  {
+   "id": "lesson-of-dreams",
+   "verdict": "FIXED",
+   "evidence": "[batch 36 read, adversarially confirmed] lesson-of-dreams#familiar-spell: The lesson's second half — the ordinary spell the familiar learns — has no carrier: only the hex reaches the character,  — cited by row spec work/.b036-rows-data-rows-1.json finding lesson-of-dreams#familiar-spell (1 row(s)), row classFeatures/lesson-of-dreams field:grantedSpells in work/.b036-rows-data-rows-1.json, test test/batch036-data-rows-1.test.ts (in what this batch added)"
+  },
+  {
+   "id": "lesson-of-life",
+   "verdict": "FIXED",
+   "evidence": "[batch 36 read, adversarially confirmed] lesson-of-life#familiar-spell: The lesson's second half — the ordinary spell the familiar learns — has no carrier: only the hex reaches the character,  — cited by row spec work/.b036-rows-data-rows-1.json finding lesson-of-life#familiar-spell (1 row(s)), row classFeatures/lesson-of-life field:grantedSpells in work/.b036-rows-data-rows-1.json, test test/batch036-data-rows-1.test.ts (in what this batch added)"
+  },
+  {
+   "id": "blessed-swiftness",
+   "verdict": "FIXED",
+   "evidence": "[batch 36 read, adversarially confirmed] blessed-swiftness#mounted: Neither side models the mounted redirect of the Speed bonus, and our own modeAdjust note tells the player the opposite o — cited by row spec work/.b036-rows-data-rows-1.json finding blessed-swiftness#mounted (1 row(s)), row classFeatures/blessed-swiftness field:modeAdjust in work/.b036-rows-data-rows-1.json, row classFeatures/blessed-swiftness field:aonParentId in work/.b036-rows-data-rows-1.json, row classFeatures/blessed-swiftness field:aonSection in work/.b036-rows-data-rows-1.json, test test/batch036-data-rows-1.test.ts (in what this batch added); blessed-swiftness#aon-parent: The record's print join points at the wrong AoN document — Bracers of Devotion (an Item 11 from Treasure Vault) instead  — cited by row classFeatures/blessed-swiftness field:modeAdjust in work/.b036-rows-data-rows-1.json, row spec work/.b036-rows-data-rows-1.json finding blessed-swiftness#aon-parent (2 row(s)), row classFeatures/blessed-swiftness field:aonParentId in work/.b036-rows-data-rows-1.json, row classFeatures/blessed-swiftness field:aonSection in work/.b036-rows-data-rows-1.json, test test/batch036-data-rows-1.test.ts (in what this batch added)"
+  },
+  {
+   "id": "lesson-of-shadow",
+   "verdict": "FIXED",
+   "evidence": "[batch 36 read, adversarially confirmed] lesson-of-shadow#familiar-spell: The lesson's second half — the ordinary spell the familiar learns — has no carrier: only the hex reaches the character,  — cited by row spec work/.b036-rows-data-rows-1.json finding lesson-of-shadow#familiar-spell (1 row(s)), row classFeatures/lesson-of-shadow field:grantedSpells in work/.b036-rows-data-rows-1.json, test test/batch036-data-rows-1.test.ts (in what this batch added)"
+  },
+  {
+   "id": "lesson-of-decay",
+   "verdict": "FIXED",
+   "evidence": "[batch 36 read, adversarially confirmed] lesson-of-decay: The familiar half of the lesson is missing: we carry only the hex (focusSpells: [mycological-malady]) and nothing delive — cited by row spec work/.b036-rows-data-rows-1.json finding lesson-of-decay (1 row(s)), row classFeatures/lesson-of-decay field:grantedSpells in work/.b036-rows-data-rows-1.json, test test/batch036-data-rows-1.test.ts (in what this batch added)"
+  },
+  {
+   "id": "lesson-of-mischief",
+   "verdict": "FIXED",
+   "evidence": "[batch 36 read, adversarially confirmed] lesson-of-mischief: The familiar half of the lesson is missing: we carry only the hex (focusSpells: [deceivers-cloak]) and nothing delivers  — cited by row spec work/.b036-rows-data-rows-1.json finding lesson-of-mischief (1 row(s)), row classFeatures/lesson-of-mischief field:grantedSpells in work/.b036-rows-data-rows-1.json, test test/batch036-data-rows-1.test.ts (in what this batch added)"
+  },
+  {
+   "id": "lesson-of-snow",
+   "verdict": "FIXED",
+   "evidence": "[batch 36 read, adversarially confirmed] lesson-of-snow: The familiar half of the lesson is missing: we carry only the hex (focusSpells: [personal-blizzard]) and nothing deliver — cited by row spec work/.b036-rows-data-rows-1.json finding lesson-of-snow (1 row(s)), row classFeatures/lesson-of-snow field:grantedSpells in work/.b036-rows-data-rows-1.json, test test/batch036-data-rows-1.test.ts (in what this batch added)"
+  },
+  {
+   "id": "lesson-of-the-shark",
+   "verdict": "FIXED",
+   "evidence": "[batch 36 read, adversarially confirmed] lesson-of-the-shark: The familiar half of the lesson is missing: we carry only the hex (focusSpells: [blood-in-the-water]) and nothing delive — cited by row spec work/.b036-rows-data-rows-1.json finding lesson-of-the-shark (1 row(s)), row classFeatures/lesson-of-the-shark field:grantedSpells in work/.b036-rows-data-rows-1.json, test test/batch036-data-rows-1.test.ts (in what this batch added)"
+  },
+  {
+   "id": "lesson-of-the-flock",
+   "verdict": "FIXED",
+   "evidence": "[batch 36 read, adversarially confirmed] lesson-of-the-flock: The familiar half of the lesson is missing: we carry only the hex (focusSpells: [sheltering-wings]) and nothing delivers — cited by row spec work/.b036-rows-data-rows-2.json finding lesson-of-the-flock (1 row(s)), row classFeatures/lesson-of-the-flock field:grantedSpells in work/.b036-rows-data-rows-2.json, test test/batch036-data-rows-2.test.ts (in what this batch added)"
+  },
+  {
+   "id": "advanced-weaponry-construct",
+   "verdict": "FIXED",
+   "evidence": "[batch 36 read, adversarially confirmed] advanced-weaponry-construct: The modification the feature tells the player to choose is not recorded anywhere on our side — the record has no effectC — cited by row spec work/.b036-rows-engine.json finding advanced-weaponry-construct (1 row(s)), row classFeatures/advanced-weaponry-construct field:effectChoices in work/.b036-rows-engine.json, test test/batch036-engine.test.ts (in what this batch added), code src/rules/build.ts (in what this batch added), code src/builder/Builder.tsx (in what this batch added)"
+  },
+  {
+   "id": "hyper-boosters",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #148 (batch 36; n from entry.n)"
+  },
+  {
+   "id": "dense-plating",
+   "verdict": "MATCHES",
+   "evidence": "[batch 36 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "tensile-absorption",
+   "verdict": "MATCHES",
+   "evidence": "[batch 36 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "layered-mesh",
+   "verdict": "MATCHES",
+   "evidence": "[batch 36 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "wind-seeker",
+   "verdict": "FIXED",
+   "evidence": "[batch 36 read, adversarially confirmed] wind-seeker: Wind Seeker's printed spell grant reaches nothing: the record carries no spellListAdditions, so aerial form never joins  — cited by row spec work/.b036-rows-data-rows-2.json finding wind-seeker (1 row(s)), row feats/wind-seeker field:spellListAdditions in work/.b036-rows-data-rows-2.json, row feats/wind-seeker field:spellNotes in work/.b036-rows-data-rows-2.json, test test/batch036-data-rows-2.test.ts (in what this batch added); wind-seeker#darkened-forest-form: The Special clause that adds the bat and bird forms to the darkened forest form lists reaches nothing on our side; we ca — cited by row feats/wind-seeker field:spellListAdditions in work/.b036-rows-data-rows-2.json, row spec work/.b036-rows-data-rows-2.json finding wind-seeker#darkened-forest-form (1 row(s)), row feats/wind-seeker field:spellNotes in work/.b036-rows-data-rows-2.json, test test/batch036-data-rows-2.test.ts (in what this batch added)"
+  },
+  {
+   "id": "staff-of-water-greater",
+   "verdict": "MATCHES",
+   "evidence": "[batch 36 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "eye-of-the-unseen",
+   "verdict": "FIXED",
+   "evidence": "[batch 36 read, adversarially confirmed] eye-of-the-unseen: Our flat passiveEffects.perception adds the +1 item bonus to EVERY Perception check, while print limits it to visual Per — cited by row items/eye-of-the-unseen field:innateSpells in work/.b036-rows-data-rows-2.json, row spec work/.b036-rows-situational.json finding eye-of-the-unseen (1 row(s)), row items/eye-of-the-unseen field:passiveEffects in work/.b036-rows-situational.json, test test/batch036-data-rows-2.test.ts (in what this batch added), test test/batch036-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added); eye-of-the-unseen#innate-spell: The once-per-day See the Unseen cast is modelled by neither side: our record has the frequency counter and the 2-action  — cited by row spec work/.b036-rows-data-rows-2.json finding eye-of-the-unseen#innate-spell (1 row(s)), row items/eye-of-the-unseen field:innateSpells in work/.b036-rows-data-rows-2.json, row items/eye-of-the-unseen field:passiveEffects in work/.b036-rows-situational.json, test test/batch036-data-rows-2.test.ts (in what this batch added), test test/batch036-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added)"
+  },
+  {
+   "id": "scattered-fire",
+   "verdict": "MATCHES",
+   "evidence": "[batch 36 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "energy-resistant",
+   "verdict": "FIXED",
+   "evidence": "[batch 36 read, adversarially confirmed] energy-resistant: Nothing on our side ever delivers the rune's resistance: the effectChoices grant can only fire from a loose inventory ro — cited by code-only spec work/.b036-rows-engine.json finding energy-resistant (0 rows; family engine changed src/rules/types.ts, src/rules/build.ts, src/rules/derive.ts, src/builder/Builder.tsx, src/builder/shared.tsx in this batch), code src/rules/derive.ts (in what this batch added), test test/batch036-engine.test.ts (in what this batch added)"
+  },
+  {
+   "id": "deadly-mutation",
+   "verdict": "FIXED",
+   "evidence": "[batch 36 read, adversarially confirmed] deadly-mutation: Deadly Mutation delivers nothing at all: it never modifies the Spit Ambient Magic action it upgrades, so neither the d8  — cited by row spec work/.b036-rows-data-rows-2.json finding deadly-mutation (1 row(s)), row feats/deadly-mutation field:modifiesGrant in work/.b036-rows-data-rows-2.json, test test/batch036-data-rows-2.test.ts (in what this batch added)"
+  },
+  {
+   "id": "skill-mastery-rogue",
+   "verdict": "FIXED",
+   "evidence": "[batch 36 read, adversarially confirmed] skill-mastery-rogue#maxtakable: Skill Mastery (Rogue) prints \"up to five times\" but carries no maxTakable, so maxTakes() defaults it to 1 and the player — cited by row spec work/.b036-rows-data-rows-2.json finding skill-mastery-rogue#maxtakable (1 row(s)), row feats/skill-mastery-rogue field:maxTakable in work/.b036-rows-data-rows-2.json, test test/batch036-data-rows-2.test.ts (in what this batch added), test test/batch036-engine.test.ts (in what this batch added), code src/rules/build.ts (in what this batch added); skill-mastery-rogue#duplicate-skill: Skill Mastery (Rogue)'s two skill-increase slots are both `options: 'any'`, and an unanswered pair defaults both to Acro — cited by row feats/skill-mastery-rogue field:maxTakable in work/.b036-rows-data-rows-2.json, code-only spec work/.b036-rows-engine.json finding skill-mastery-rogue#duplicate-skill (0 rows; family engine changed src/rules/types.ts, src/rules/build.ts, src/rules/derive.ts, src/builder/Builder.tsx, src/builder/shared.tsx in this batch), test test/batch036-data-rows-2.test.ts (in what this batch added), test test/batch036-engine.test.ts (in what this batch added), code src/rules/build.ts (in what this batch added)"
+  },
+  {
+   "id": "pipes-of-compulsion-greater",
+   "verdict": "MATCHES",
+   "evidence": "[batch 36 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "jellyfish-stance",
+   "verdict": "MATCHES",
+   "evidence": "[batch 36 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "chronomancers-secrets",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #150 (batch 36; n from entry.n)"
+  },
+  {
+   "id": "composer-staff-greater",
+   "verdict": "FIXED",
+   "evidence": "[batch 36 read, adversarially confirmed] composer-staff-greater: Our flat +1 Performance passive applies to every Performance check while the staff is merely held, though print grants i — cited by row spec work/.b036-rows-situational.json finding composer-staff-greater (1 row(s)), row items/composer-staff-greater field:passiveEffects in work/.b036-rows-situational.json, test test/batch036-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added), test test/batch036-gap-situational.test.ts (in what this batch added)"
+  },
+  {
+   "id": "golem-grafter-dedication",
+   "verdict": "FIXED",
+   "evidence": "[batch 36 read, adversarially confirmed] golem-grafter-dedication: Our resistance entry omits the printed adamantine exception, so the sheet grants (and displays) resistance to ALL physic — cited by row spec work/.b036-rows-data-rows-2.json finding golem-grafter-dedication (1 row(s)), row feats/golem-grafter-dedication field:resistances in work/.b036-rows-data-rows-2.json, test test/batch036-data-rows-2.test.ts (in what this batch added)"
+  },
+  {
+   "id": "unravel-mysteries",
+   "verdict": "FIXED",
+   "evidence": "[batch 36 read, adversarially confirmed] unravel-mysteries: Both printed effects (half-time Decipher Writing and the waived -2 circumstance penalty on a failure) reach the player n — cited by row spec work/.b036-rows-data-rows-2.json finding unravel-mysteries (1 row(s)), row feats/unravel-mysteries field:recordMarks in work/.b036-rows-data-rows-2.json, test test/batch036-data-rows-2.test.ts (in what this batch added)"
+  },
+  {
+   "id": "lore-seeker",
+   "verdict": "MATCHES",
+   "evidence": "[batch 36 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "spirit-walk",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #149 (batch 36; n from entry.n)"
+  },
+  {
+   "id": "lorefinder",
+   "verdict": "FIXED",
+   "evidence": "[batch 36 read, adversarially confirmed] lorefinder: Our innate Locate grant never heightens, so a 14th-level Eldritch Researcher still casts it at 3rd rank instead of 5th. — cited by row spec work/.b036-rows-engine.json finding lorefinder (1 row(s)), row feats/lorefinder field:innateSpells in work/.b036-rows-engine.json, test test/batch036-engine.test.ts (in what this batch added)"
+  },
+  {
+   "id": "runic-impression",
+   "verdict": "MATCHES",
+   "evidence": "[batch 36 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "animalistic-brutality",
+   "verdict": "FIXED",
+   "evidence": "[batch 36 read, adversarially confirmed] animalistic-brutality: Neither side models the trait the feat adds to the animal-instinct unarmed attack — our record carries only an action co — cited by row spec work/.b036-rows-engine.json finding animalistic-brutality (5 row(s)), code src/rules/derive.ts (in what this batch added), test test/batch036-engine.test.ts (in what this batch added)"
+  },
+  {
+   "id": "spore-shepherds-staff-greater",
+   "verdict": "MATCHES",
+   "evidence": "[batch 36 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "armored-resistance",
+   "verdict": "FIXED",
+   "evidence": "[batch 36 read, adversarially confirmed] armored-resistance#resistance: The feat's entire printed content — physical resistance equal to half your level while intercepting in medium or heavy a — cited by code-only spec work/.b036-rows-engine.json finding armored-resistance#resistance (0 rows; family engine changed src/rules/types.ts, src/rules/build.ts, src/rules/derive.ts, src/builder/Builder.tsx, src/builder/shared.tsx in this batch), test test/batch036-instruments.test.ts (in what this batch added), test test/batch036-engine.test.ts (in what this batch added)"
+  },
+  {
+   "id": "cultivators-keen-eye",
+   "verdict": "FIXED",
+   "evidence": "[batch 36 read, adversarially confirmed] cultivators-keen-eye#materials: The feat's second half — sensing precious materials at 30 feet and spending them in place of a ritual's cost — is modell — cited by row spec work/.b036-rows-situational.json finding cultivators-keen-eye#materials (2 row(s)), row feats/cultivators-keen-eye field:senses in work/.b036-rows-situational.json, row feats/cultivators-keen-eye field:note in work/.b036-rows-situational.json, test test/batch036-situational.test.ts (in what this batch added)"
+  },
+  {
+   "id": "animal-staff-greater",
+   "verdict": "MATCHES",
+   "evidence": "[batch 36 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "illusionists-hat",
+   "verdict": "FIXED",
+   "evidence": "[batch 36 read, adversarially confirmed] illusionists-hat#skill-bonuses: The hat's two printed +1 item bonuses (Deception to Create a Diversion, Thievery to Palm an Object) are carried by neith — cited by code-only spec work/.b036-rows-situational.json finding illusionists-hat#skill-bonuses (0 rows; family situational changed src/rules/situationalBonuses.ts in this batch), test test/batch036-situational.test.ts (in what this batch added), code src/rules/situationalBonuses.ts (in what this batch added)"
+  },
+  {
+   "id": "primal-guardian",
+   "verdict": "MATCHES",
+   "evidence": "[batch 36 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  },
+  {
+   "id": "sin-reservoir",
+   "verdict": "MATCHES",
+   "evidence": "[batch 36 read] printed text, their ops and our carriers compared by an Opus reader + adversarial verifier; no finding"
+  }
+ ]
+}

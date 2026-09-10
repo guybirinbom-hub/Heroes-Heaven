@@ -1,0 +1,44 @@
+BATCH 036 — SITUATIONAL family report
+Findings assigned: cultivators-keen-eye#materials, eye-of-the-unseen, composer-staff-greater, illusionists-hat#skill-bonuses
+Spec file: work/.b036-rows-situational.json (kind: rows)
+
+DATA STILL NEEDED
+- items / composer-staff / passiveEffects / null (supersedes:true; deletes the shipped {"skills":{"performance":1}}) — the level-4 base staff prints the SAME clause as the greater one (AoN equipment-2249, "it grants a +1 item bonus to Performance checks made with it") and carries the same flat twin beside the same conditional star at situationalBonuses.ts:1821. Not one of my four findings, so I did not author the row.
+- items / composer-staff-major / passiveEffects / null (supersedes:true; deletes the shipped {"skills":{"performance":2}}) — same clause, same duplicate, star at situationalBonuses.ts:1823 (+2 item). Not one of my four findings, so I did not author the row.
+
+CROSS-FILE GAPS
+- eye-of-the-unseen#innate-spell and illusionists-hat#daily-illusory-creature are other families' findings on records I also touch: whoever owns them must NOT emit a whole-record (or whole-passiveEffects) row for items/eye-of-the-unseen or items/illusionists-hat, or it will collide with / silently restore the field my rows delete.
+- core.json has no ritual ACTION record (only the rules pages casting-rituals / rituals / learning-rituals), and RecordMarker.on is 'action' | 'condition' | 'feature', so a printed clause about a ritual's COST has no action row to be marked on. Cultivator's ritual clause is carried on the feat's own `note` instead; a future ritual-cost lane would need an actions-bucket record, which is outside my files.
+
+----------------------------------------------------------------------
+PER FINDING
+
+[1] cultivators-keen-eye#materials — TAUGHT (data rows specced, no code)
+What I did: two overlay rows in work/.b036-rows-situational.json, one per half of feat-7090's paragraph.
+  - feats/cultivators-keen-eye/senses (supersedes:true) — the shipped value {name:lifesense,range:30,acuity:imprecise} carried whole, plus note: 'You also sense precious materials ("cultivation materials") in the same range.' SenseEntry.note is the field written for a clause printed in the same breath as the range (its doc names the carcharodon-merfolk blood-range precedent); it renders inline on the derived Senses row (VitalsRail.tsx:741, DetailsTab.tsx:466), which is the "beside the lifesense" surface the proposal asked for.
+  - feats/cultivators-keen-eye/note (new field) — the ritual-cost substitution. No sheet number moves and no ritual action record exists, so neither FEAT_SITUATIONAL (SituationalTarget mirrors StatRef) nor RECORD_MARKERS could hold it; the feat `note` lane is FeatsTab's "here is the part you apply yourself" paragraph and already carries 89 overlay rows.
+Test that pins it: test/batch036-situational.test.ts, describe "cultivators-keen-eye senses cultivation materials and pays ritual costs with them" — three its through deriveDefenses(...).senses (lifesense survives at 30 ft imprecise AND carries the materials clause) and featEntries(...) (the ritual sentence reaches the Feats-tab entry the player reads), plus a no-feat control. Both rows are read from a content copy PATCHED IN MEMORY with exactly the specced values, so nothing flips when the driver applies them.
+Could not do: nothing outstanding. Note for the closer: the record's description already carried the printed paragraph, so this finding was a SURFACING gap, not lost text — both halves now reach a sheet surface of their own.
+
+[2] eye-of-the-unseen — TAUGHT (data row specced; registry unchanged, comment added)
+What I did: one overlay row, items/eye-of-the-unseen/passiveEffects = null (supersedes:true — the shipped row's object held {perception:1} and nothing else, so nothing survives to merge). Print (equipment-1367-1240) scopes the +1 to VISUAL Perception; passiveItemBonus / passiveItemBonusDetail gate on itemInUse alone (derive.ts:303-322, :386-408), so the flat field raised every Perception check and the conditional star then restated the same +1. The star at src/rules/situationalBonuses.ts stays and is the whole mechanic (the day-goggles precedent at derive.ts:326-339). Code: no registry change; added a "⚠ THE STAR IS THE WHOLE MECHANIC — do not add a flat passiveEffects.perception beside it" comment above the entry so the twin is not re-authored.
+Test that pins it: test/batch036-situational.test.ts, describe "eye-of-the-unseen states its +1 once, and only for sight" — explainStat(..., strippedContent, {kind:'perception'}) has no 'Eye of the Unseen' part and no 'item bonus' part, and exactly one situational note with sourceId 'eye-of-the-unseen' naming "+1 item" and "rely on sight". Measured against the shipped data first (throwaway probe): today the parts list really does read [Proficiency, Wisdom, Eye of the Unseen item bonus +1] with the star beside it, so the stripped copy is doing real work.
+Could not do: nothing. DELIBERATE DIVERGENCE FROM WG, as the finding's caveat says: WG encodes addBonusToValue PERCEPTION = 1 flat. Print is the authority.
+
+[3] composer-staff-greater — TAUGHT (data row specced; registry unchanged, comment added)
+What I did: one overlay row, items/composer-staff-greater/passiveEffects = null (supersedes:true — the shipped object held {skills:{performance:1}} only). Print (equipment-2249-1995) grants the +1 for Performance checks MADE WITH the staff; a held staff is `equipped`, so the flat field passed the itemInUse gate for every Performance check while the star restated it. The star at situationalBonuses.ts stays (sibling pipes-of-compulsion-greater is already star-only). Code: no registry change; same ⚠ comment above the entry.
+Test that pins it: test/batch036-situational.test.ts, describe "composer-staff-greater bonuses only the Performance you play on it" — a bard holding the staff, read through explainStat(..., strippedContent, {kind:'skill',skill:'performance'}): no 'Composer Staff (Greater)' part, no 'item bonus' part, exactly one situational note naming "+1 item" and "playing the staff as an instrument". Same throwaway probe confirmed the shipped data adds the flat +1 today.
+Could not do: the two SIBLINGS (composer-staff, composer-staff-major) carry the identical defect and are not in my findings — see DATA STILL NEEDED.
+
+[4] illusionists-hat#skill-bonuses — TAUGHT (code only, no row)
+What I did: added FEAT_SITUATIONAL["illusionists-hat"] in src/rules/situationalBonuses.ts — two entries, {kind:'skill',detail:'deception'} "on Deception checks to Create a Diversion" and {kind:'skill',detail:'thievery'} "on Thievery checks to Palm an Object", both "+1 item", cited "// batch 036: illusionists-hat#skill-bonuses". Print (equipment-5201) scopes both to an ACTION, so a whole-skill passiveEffects would be wrong in exactly the way findings [2] and [3] are deleting; the shape is the one the-demons-lantern (:2051) and lightweave-scarf (:3098) already use, and the item reaches the registry through characterSituationalIds' existing inventory walk — no new lane, no data row (spec entry carries backfillRows: [] with that reasoning).
+Test that pins it: test/batch036-situational.test.ts, describe "illusionists-hat carries its two printed +1 item bonuses" — four its: the Deception star, the Thievery star, both reaching explainStat(...).situational exactly once each with nothing landing in .parts, and a control proving a character without the hat (and a hat left unworn in the pack) reads nothing.
+Could not do: nothing.
+
+----------------------------------------------------------------------
+FILES TOUCHED
+  src/rules/situationalBonuses.ts   (illusionists-hat entry; two ⚠ comments above the eye / composer-staff-greater entries)
+  test/batch036-situational.test.ts (new, 11 its, all passing)
+  work/.b036-rows-situational.json  (spec: 4 findings, 4 overlay rows)
+Not touched: scripts/apply-situational-lane.mjs — its exclusion list is for DELETIONS only and this family deleted no registry row.
+Gates: node scripts/vt.mjs run test/batch036-situational.test.ts → 11 passed; npx tsc --noEmit → clean.

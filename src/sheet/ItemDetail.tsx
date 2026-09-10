@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { Character, ContentDatabase, InventoryItem, Item, ItemDesignation } from '../rules/types';
 import { removeInventoryItem, setItemCounter, setItemDesignation, setItemQuantity, toggleItemMode, updateInventoryItem, useConsumable, type PlayUpdater } from '../rules/play';
-import { containerOptionsFor } from '../rules/derive';
+import { containerOptionsFor, propertyRuneDefs } from '../rules/derive';
 import { formatPrice } from '../rules/wealth';
 import { useEscapeClose } from './useEscapeClose';
 import { useIsMobile } from './useIsMobile';
@@ -232,6 +232,23 @@ export function ItemDetail({
   // If THIS item is affixed to something, name the host so the card can show it.
   const host = inv.attachedTo ? inventory.find((i) => i.instanceId === inv.attachedTo) : undefined;
   const hostName = host ? content.items[host.itemId]?.name : undefined;
+  /*
+   * batch 036: energy-resistant — the crafter question an ETCHED property rune carries.
+   *
+   * Energy-Resistant: *"You gain resistance 5 to acid, cold, electricity, or fire. The crafter chooses
+   * the damage type when creating the rune."* The question shipped as `effectChoices` on the rune's
+   * ITEM record, and the only control that ever asked it was the block below — which writes the answer
+   * under the BARE choice id on the rune's own loose inventory row. Etching consumes that row
+   * (planAttach 'etch' + removeInventoryItem), so the answer died with it, and derive's reader
+   * (`etchedRuneDefences`, derive.ts) — which looks for `<runeId>:<choiceId>` on the HOST row — found
+   * nothing and every choice-carrying armour rune silently fell back to options[0] = acid.
+   *
+   * So the question is asked again here, on the item the rune is etched onto, keyed the way the reader
+   * reads it. Same `sd-choice-row` control as the item's own choices: one question, one shape.
+   */
+  const runeChoices = propertyRuneDefs(inv, content).flatMap((rune) =>
+    (content.items[rune.id]?.effectChoices ?? []).map((ch) => ({ rune, ch })),
+  );
   return (
     <>
     <div className="picker-overlay" onClick={onClose}>
@@ -344,6 +361,44 @@ export function ItemDetail({
                       }
                     >
                       <option value="">Choose…</option>
+                      {(ch.options ?? []).map((o) => (
+                        <option key={o.value} value={o.value}>
+                          {o.label}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                );
+              })}
+            </div>
+          )}
+          {/* batch 036: energy-resistant — the ETCHED runes' crafter questions (see `runeChoices`
+              above). Keyed `<runeId>:<choiceId>` on THIS row, which is what `etchedRuneDefences`
+              reads; unanswered keeps the acid fallback the reader applies. */}
+          {onPlay && runeChoices.length > 0 && (
+            <div className="sd-uses">
+              <span className="sd-uses-title">Etched rune choices</span>
+              {runeChoices.map(({ rune, ch }) => {
+                const key = `${rune.id}:${ch.id}`;
+                /* batch 036: energy-resistant — an unanswered ETCHED rune is not inert: `etchedRuneDefences`
+                 * falls back to options[0] because *"the crafter chooses the damage type when creating the
+                 * rune"* — the rune HAS a type whether or not this sheet recorded it. So the empty option
+                 * names the type the sheet is actually granting instead of reading "Choose…" beside an
+                 * acid 5 the player cannot account for. (The item's own Choices block above grants nothing
+                 * when unanswered, which is why its placeholder stays bare.) */
+                const fallback = (ch.options ?? [])[0];
+                return (
+                  <label className="sd-choice-row" key={key}>
+                    <span className="sd-choice-prompt">
+                      {content.items[rune.id]?.name ?? rune.name ?? rune.id}: {ch.prompt}
+                    </span>
+                    <select
+                      value={inv.effectChoices?.[key] ?? ''}
+                      onChange={(e) =>
+                        onPlay((p) => updateInventoryItem(p, inv.instanceId, { effectChoices: { ...(inv.effectChoices ?? {}), [key]: e.currentTarget.value } }))
+                      }
+                    >
+                      <option value="">{fallback ? `Unanswered — ${fallback.label}` : 'Choose…'}</option>
                       {(ch.options ?? []).map((o) => (
                         <option key={o.value} value={o.value}>
                           {o.label}

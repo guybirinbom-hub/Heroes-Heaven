@@ -240,6 +240,23 @@ describe('a grant that points at nothing', () => {
   });
 });
 
+/**
+ * The AoN JOIN KEYS — which printed document, and which section of it, a record was made from.
+ *
+ * The one honest exception to "a field the overlay writes must be read in src/": their reader is the
+ * AoN PIPELINE (scripts/wg-prose.mjs and its siblings resolve a record's printed text through
+ * `aonParentId` + `aonSection`; scripts/migration/stamp-aonid.mjs writes them), not the app. A wrong
+ * join still reaches the player — it is what every print pass and every parity read compares the record
+ * AGAINST — but never through a field lookup in src/, so both sweeps below scored them as dead the
+ * moment batch 036 authored the first one (classFeatures/blessed-swiftness had been joined by NAME
+ * COLLISION to equipment-2320, Bracers of Devotion, an Item 11 whose same-titled section is a different
+ * mechanic from a different book, instead of class-feature-877, the champion feature it is a section
+ * of). They are checked against THEIR readers in test/authoring-guards.test.ts
+ * ("an AoN join key authored on blessed-swiftness is read by the pipeline, not by src/") rather than
+ * waved through: this is a reroute, not an exemption.
+ */
+const AON_JOIN_KEYS = new Set(['aonId', 'aonParentId', 'aonSection']);
+
 describe('a data field nothing reads', () => {
   // Scans every src file for every overlay field — well over 5 s when the whole suite runs in parallel.
   it('every field the overlay writes has a reader in src', { timeout: 60_000 }, () => {
@@ -267,7 +284,8 @@ describe('a data field nothing reads', () => {
           // A DELETION (`value: null`) removes a field; a whole-record creation (`create: true`,
           // field `__record`) authors no field at all. Neither is an authored-but-dead field, and for
           // a deletion "nothing reads it" is the entire point.
-          .filter((e) => e.value !== null && !e.create && e.field !== '__record')
+          // …and an AoN JOIN KEY is read by the pipeline rather than by src/ — see AON_JOIN_KEYS above.
+          .filter((e) => e.value !== null && !e.create && e.field !== '__record' && !AON_JOIN_KEYS.has(e.field ?? ''))
           .map((e) => e.field)
           .filter(Boolean) as string[],
       ),
@@ -275,6 +293,7 @@ describe('a data field nothing reads', () => {
       const esc = f.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       return !new RegExp(`\\.\\s*${esc}\\b|\\b${esc}\\s*[,}:?)\\]]|['"\`]${esc}['"\`]`).test(code);
     });
+    // batch 036: blessed-swiftness#aon-parent
     expect(dead).toEqual([]);
   });
 });
@@ -341,7 +360,8 @@ describe('a field that only LOOKS read', () => {
           // A DELETION (`value: null`) REMOVES a field rather than authoring one, and a whole-record
           // creation (`create: true`, field `__record`) is not a field at all. Asking "is this read?"
           // of either is the wrong question — for a deletion the right answer is precisely "no".
-          .filter((e) => e.value !== null && !e.create && e.field !== '__record')
+          // …and an AoN JOIN KEY is read by the pipeline rather than by src/ — see AON_JOIN_KEYS above.
+          .filter((e) => e.value !== null && !e.create && e.field !== '__record' && !AON_JOIN_KEYS.has(e.field ?? ''))
           .map((e) => `${e.category}|${e.field}`),
       ),
     ];
@@ -353,6 +373,7 @@ describe('a field that only LOOKS read', () => {
       const hit = files.some((f) => reads.test(f.code) && f.code.includes(collection));
       if (!hit) dead.push(`${collection}.${field}`);
     }
+    // batch 036: blessed-swiftness#aon-parent
     expect(dead).toEqual([]);
   });
 });

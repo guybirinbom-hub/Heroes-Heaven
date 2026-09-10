@@ -1,0 +1,193 @@
+BATCH 036 — GAP VERIFIER (family "gaps"). Default: REFUTE. 12 lines in work/.b036-gaps.json.
+RESULT: 11 CLOSED, 1 REOPENED, 0 left STILL-OPEN-as-filed. gapsOpen after this pass = 1.
+
+PRE-CHECKS (all three green)
+· work/owner-questions.json UNTOUCHED — `git diff --stat HEAD -- work/owner-questions.json` empty,
+  `git status --porcelain` on it empty, mtime 13:24 (batch cut 13:57). No agent wrote it.
+· NO GAP LINE REMOVED — work/.b036-run.json stage apply-digest recorded counts {gaps:12, open:12};
+  the file still holds 12 lines, and every family's text is the collated original.
+· NO MANIFEST ENTRY REMOVED — work/.b036-specs.json holds 6 entries and every family that emitted a
+  spec file has one: data-rows-1, data-rows-2, engine, instruments, situational, gap-situational.
+  (work/.b036-verify-data-rows-2.txt records that a sibling entry was dropped once mid-batch; it is
+  back, so nothing is lost now. The only manifest defect left is an entry that was never ADDED — see
+  LINE 9.)
+· scripts/test-flip-audit.mjs --batch 036 re-run by me: "clean — 7 test file(s) touched, 1 new settle
+  key(s), every flip cited."
+
+────────────────────────────────────────────────────────────────────────────────────────────────────
+LINE 1 — data-rows-1, CROSS-FILE GAPS, "blessed-swiftness#mounted: there is no mount-Speed carrier…"
+CLOSED — ref flaggedResidue (parked)
+  Every load-bearing claim re-measured, not taken on the note's word:
+  · src/rules/companions.ts:404 is verbatim `if (speeds.land) speeds.land += m.speedBonus +
+    (spec?.speedBonus ?? 0) + gear.speedBonus;` — three companion-side addends, no character-feature
+    addend. A redirect genuinely has nowhere to land.
+  · the character-side land lanes are character-scoped (derive.ts:5244-5246 sum landSpeedBonus off
+    feats / class features / heritages onto the CHARACTER).
+  · the house precedent is real: situationalBonuses.ts:4358 'swift-paragon' carries the identical
+    "if you're mounted … the mount instead" clause as a disclosure note, not a mechanical redirect.
+  · the player-visible half really ships this batch: work/.b036-rows-data-rows-1.json carries
+    classFeatures/blessed-swiftness field `modeAdjust` (plus `speeds`:null and `landSpeedBonus`:5 in
+    the existing overlay), so the printed sentence reaches the sheet.
+  A parked line needs an artefact and a reason; this one has both, and the reason is measured (n=1),
+  not "out of scope".
+
+LINE 2 — instruments, CROSS-FILE GAPS, "armored-resistance#resistance (ENGINE family) — its `ours`
+  half is WRONG, and a row authored from it would DOUBLE the resistance…"
+CLOSED — ref test/batch036-engine.test.ts:392
+  · Line 392 is exactly the guard `it('armored-resistance has exactly ONE carrier — the feat record
+    must not grow a resistances field', …)`, inside describe('armored-resistance: …') and carrying
+    `// batch 036: armored-resistance#resistance` on line 391. Finding id is in confirmed[] of
+    work/.b036-read.json with the record id in the enclosing title — both halves of citation rule (1).
+  · It fails when the change is reverted: it asserts `p.feats['armored-resistance'].resistances`
+    stays undefined and that sources['resistance:physical'] holds exactly ONE line named "Armored
+    Resistance". Re-authoring the withdrawn row turns it red. That is precisely the reconciliation
+    the gap demanded.
+  · The withdrawal itself is real: work/.b036-rows-engine.json finding armored-resistance#resistance
+    has backfillRows = [] (0 rows), and public/core.json feats['armored-resistance'] carries no
+    `resistances` key, while modes['armored-resistance'] does. One carrier, as claimed.
+  · The test file IS staged (engine entry's stage[] names test/batch036-engine.test.ts).
+
+LINE 3 — situational, DATA STILL NEEDED, "items / composer-staff / passiveEffects / null (supersedes)"
+CLOSED — ref work/.b036-rows-gap-situational.json
+  · Spec exists, is valid JSON in the {findings:[{backfillRows:[…]}]} format, and the manifest carries
+    it (family gap-situational, stage[] = the spec, the report, test/batch036-gap-situational.test.ts,
+    src/rules/situationalBonuses.ts).
+  · The row targets a record that exists: core.json items['composer-staff'] ships
+    passiveEffects={"skills":{"performance":1}} today.
+  · supersedes:true is justified and lossless — scripts/data/effect-backfill.json holds exactly ONE
+    row for items/composer-staff (field passiveEffects, value {"skills":{"performance":1}}), whose
+    whole value is the performance key, so nothing survives to merge into a value:null delete.
+  · The mechanic is not lost: the conditional star `"composer-staff": [… 'on Performance checks made
+    by playing the staff as an instrument', '+1 item']` is in FEAT_SITUATIONAL and untouched.
+  · Pinned by test/batch036-gap-situational.test.ts, which strips passiveEffects IN MEMORY (the shape
+    the row produces) rather than diffing patched-vs-shipped, and cites
+    `// batch 036 premise: equipment-2249 "…"` per citation rule (2).
+  · No collision: the only other row on any composer staff is items/composer-staff-greater in
+    work/.b036-rows-situational.json — a different record.
+
+LINE 4 — situational, DATA STILL NEEDED, "items / composer-staff-major / passiveEffects / null"
+CLOSED — ref work/.b036-rows-gap-situational.json
+  Same evidence as LINE 3, re-measured for this record: core.json items['composer-staff-major']
+  ships passiveEffects={"skills":{"performance":2}}; effect-backfill.json holds exactly one row for
+  it with that same whole value; the star at FEAT_SITUATIONAL 'composer-staff-major' (+2 item) stays.
+
+LINE 5 — situational, CROSS-FILE GAPS, "eye-of-the-unseen#innate-spell and
+  illusionists-hat#daily-illusory-creature … must NOT emit a whole-record row"
+CLOSED — ref flaggedResidue (parked)
+  Independently re-measured across ALL SIX spec files rather than trusting the park note. Dumping
+  every row key in the batch gives, for these two records, exactly one row: items/eye-of-the-unseen
+  field `innateSpells` (work/.b036-rows-data-rows-2.json). The situational family's row on the same
+  record is field `passiveEffects` (work/.b036-rows-situational.json) — a different field, so
+  different keyOf, no collision and no silent restore. items/illusionists-hat carries ZERO rows in the
+  batch, consistent with illusionists-hat#daily-illusory-creature sitting in refuted[] of
+  work/.b036-read.json. The warned-of collision is verifiably absent, so there is nothing to author
+  and nothing to ask the owner.
+
+LINE 6 — situational, CROSS-FILE GAPS, "core.json has no ritual ACTION record … RecordMarker.on is
+  'action' | 'condition' | 'feature'"
+CLOSED — ref flaggedResidue (parked)
+  Both halves re-measured by me:
+  · `Object.keys(core.actions).filter(/ritual/i)` returns exactly ['spiritual-aid'] — no ritual action
+    record exists for a mark to attach to.
+  · src/rules/situationalBonuses.ts:4174 is verbatim `on: 'action' | 'condition' | 'feature';`.
+  · Nothing is lost today: work/.b036-rows-situational.json carries feats/cultivators-keen-eye field
+    `note` (and `senses`), so the printed ritual clause reaches the Feats tab as prose.
+  A measured n=1 subsystem gap with the player-facing half already shipped is a legitimate residue,
+  not an unartefacted "out of scope".
+
+LINE 7 — situational, CROSS-FILE GAPS, "-------------------------------------------------------"
+CLOSED — ref flaggedResidue (parked)
+  Verified as a collation artefact, not a gap: work/.b036-report-situational.txt line 13 is exactly
+  that ASCII rule (`grep -n '^----'` returns 13 and 38), the divider closing CROSS-FILE GAPS and
+  opening PER FINDING. It carries no claim and names no record; the section's two real bullets are
+  LINE 5 and LINE 6 above, each dispositioned on its own.
+
+LINE 8 — data-rows-1, CROSS-FILE GAPS, "blessed-swiftness#mounted … (verifier's restatement)"
+CLOSED — ref flaggedResidue (parked)
+  A duplicate of LINE 1 (the verify agent restated the builder's gap after confirming it), closed on
+  the same re-measured evidence. Its extra disclosure is worth keeping visible: the verifier's SEPARATE
+  finding — that the aonParentId / aonSection overlay rows in work/.b036-rows-data-rows-1.json do not
+  survive `npm run data` because scripts/migration/stamp-aonid.mjs re-stamps from map/sections.json —
+  is NOT a line in this file and is not closed by this pass. It is restated in
+  work/.b036-report-gap-data-rows-1.txt. Flagging it here so the closer sees it; it is a durability
+  question for another family's files, not a gap line I can dispose of.
+
+LINE 9 — data-rows-2, CROSS-FILE GAPS, "spirit-walk#resistance: an `against`-only IWR entry reaches
+  NO surface…"
+REOPENED (status set back to "open" in work/.b036-gaps.json) — ref src/rules/derive.ts:3019
+  THE FIX ITSELF IS REAL AND CORRECT — I checked it before reopening:
+  · src/rules/derive.ts:3019 is exactly `export function conditionalResistances(def:
+    CharacterDefenses)`, so the file:symbol ref resolves.
+  · It is wired to a pixel, which is the half the gap was about: DefensesPills.tsx:3/:26 and
+    VitalsRail.tsx:7/:239 both call it.
+  · It is pinned by test/batch036-gap-data-rows-2.test.tsx (4 tests), which patches feats/spirit-walk
+    IN MEMORY to the value the driver's row writes, so no assertion flips when the row lands; revert
+    conditionalResistances and the file cannot even import.
+  WHY IT IS STILL REOPENED — as staged, this artefact CANNOT SHIP, so the line is not closed:
+  · work/.b036-specs.json has NO entry for family gap-data-rows-2 (the family says so itself, and
+    explains it as avoiding a rowless spec being walked by apply-parity-fixes.mjs). That reasoning is
+    about the APPLY stage; it does not survive the COMMIT stage.
+  · Consequence 1 — THE BATCH COMMIT REFUSES. src/sheet/DefensesPills.tsx and src/sheet/VitalsRail.tsx
+    are modified TRACKED paths that appear in no stage[], match no KEEP pattern (KEEP is work/ only)
+    and no SCRATCH pattern, and are ABSENT from work/.b036-baseline/start-state.json dirtyAtStart
+    (which I read: 158 paths, neither sheet file among them; work/.b036-run.json's apply-digest git
+    snapshot likewise lists 7 dirty tracked paths and neither of these). wg-batch-commit.mjs:162-169
+    therefore classes both as `newlyDirty` and refuses the entire commit with "2 modified tracked
+    path(s) this batch does not account for, dirtied since it started".
+  · Consequence 2 — THE PINNING TEST IS NOT COMMITTED. test/batch036-gap-data-rows-2.test.tsx is
+    untracked (`??`) and in no stage[], so `toAdd` never contains it; the other six batch-036 test
+    files are all named in a stage[] and would be added. Even past consequence 1, the guard would not
+    reach history and the next batch could revert the fix silently.
+  TO CLOSE: append one manifest entry for family gap-data-rows-2 with
+    stage: ['work/.b036-report-gap-data-rows-2.txt', 'test/batch036-gap-data-rows-2.test.tsx',
+            'src/rules/derive.ts', 'src/sheet/DefensesPills.tsx', 'src/sheet/VitalsRail.tsx']
+  then set the line back to "authored". (If a rowless spec file is unwanted, the entry can point
+  `file` at an empty-findings rows spec exactly as work/.b036-rows-instruments.json already does —
+  that file carries 0 rows and is in the manifest without harming the apply stage.)
+  I did not add the entry myself: the manifest is not my file and the closer must choose the `file`
+  and `kind` values that its own stage guards expect.
+
+LINE 10 — instruments, CROSS-FILE GAPS, "armored-resistance#resistance … (verifier's restatement,
+  plus the PRESENTATION call)"
+CLOSED — ref work/.b036-rows-engine.json
+  · The ref is a real, valid spec file, in the manifest (family engine) with a stage[] that names
+    src/rules/derive.ts, build.ts, types.ts, Builder.tsx, shared.tsx and its test — so everything the
+    ref depends on is accounted for.
+  · Its rows target existing records: classFeatures/advanced-weaponry-construct,
+    classFeatures/hyper-boosters, feats/lorefinder, plus five modes/animalistic-brutality-* create
+    rows. The armored-resistance finding in it is the withdrawal (0 rows) with the reason recorded.
+  · The presentation call the line asks for is settled and is right, and I confirmed the fact it rests
+    on independently: an `against`-only IWR entry reaches no surface today (that is exactly LINE 9's
+    subject), so the rejected alternative would have been invisible, while modes/armored-resistance
+    puts a real number (physical floor(level/2)) in the headline when toggled. No owner ruling is owed
+    because print settles the mechanic.
+
+LINE 11 — situational, DATA STILL NEEDED, "items / composer-staff / passiveEffects / null (short
+  restatement)"
+CLOSED — ref work/.b036-rows-gap-situational.json
+  Duplicate of LINE 3 (same bullet, truncated by the collator at a different width), closed on the
+  same evidence: same spec, same manifest entry, same record, same one-row supersedes, same star.
+
+LINE 12 — situational, CROSS-FILE GAPS, "core.json has no ritual ACTION record … (verifier's
+  restatement)"
+CLOSED — ref flaggedResidue (parked)
+  Duplicate of LINE 6, closed on the same re-measured evidence (only ritual-matching actions id is
+  'spiritual-aid'; RecordMarker.on typed at situationalBonuses.ts:4174; the clause already reaches the
+  player through feats/cultivators-keen-eye `note`).
+
+────────────────────────────────────────────────────────────────────────────────────────────────────
+SPEC FILES CHECKED (all six: exist, valid JSON, spec format, every row targets an existing record, no
+two rows share a category/id/field key across the batch)
+  work/.b036-rows-data-rows-1.json      11 rows
+  work/.b036-rows-data-rows-2.json       9 rows
+  work/.b036-rows-engine.json            9 rows (4 field rows + 5 modes create rows)
+  work/.b036-rows-instruments.json       0 rows
+  work/.b036-rows-situational.json       4 rows
+  work/.b036-rows-gap-situational.json   2 rows
+
+FILES CHANGED BY THIS AGENT
+  work/.b036-gaps.json — LINE 9 only: status authored → open, with the reason and the exact fix in its
+    ref. Every other line byte-identical.
+  work/.b036-verify-gaps.txt — this file.
+  Nothing else. No spec, no manifest entry, no queue entry, no code, no test, no vitest run (I changed
+  no test file, so the heavy-job lock stayed free).

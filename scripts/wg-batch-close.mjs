@@ -29,6 +29,7 @@
  * verdict already on disk. It is repeatable (each --reverdict takes the --reason at its own position),
  * refuses without a reason, and logs the change to `residual.reverdicts`.
  */
+import { createHash } from 'node:crypto';
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { join, dirname } from 'node:path';
@@ -387,6 +388,18 @@ function mergeArray(existing, fresh, keyOf) {
   return { out, added: n };
 }
 const pairKey = (e) => `${e.id}|${e.finding ?? ''}`;
+/*
+ * A residue is keyed by its CONTENT, never by its `ref`.
+ *
+ * WHY (measured on batch 036): a gap's id/finding is `g.ref ?? g.family`, and `ref` is the
+ * `<file>:<line>` pointer scripts/wg-batch-run.mjs stamps at collation time. Any later edit to a
+ * report file — a builder appending a paragraph, a verifier restating a line — shifts every ref
+ * below it, so pairKey saw a NEW residue and the merge below appended instead of matching. Batch
+ * 036's residual carried "4 new entr(y/ies) appended, 6 kept" and work/.b036-gaps.json held four
+ * pairs of the same gap twice. family + kind + the clipped summary is what actually identifies the
+ * gap, and it survives the line moving.
+ */
+const residueKey = (e) => `${e.family ?? ''}|${e.kind ?? ''}|${createHash('sha1').update(String(e.summary ?? '').replace(/\s+/g, ' ').trim()).digest('hex').slice(0, 16)}`;
 const residual = { ...derivedResidual };
 if (existingResidual) {
   for (const k of ['batch', 'examined', 'method', 'rejected', 'complete']) {
@@ -395,7 +408,7 @@ if (existingResidual) {
       residual[k] = existingResidual[k];
     }
   }
-  const mergeKeys = [['confirmed', pairKey], ['refuted', pairKey], ['flaggedResidues', pairKey], ['askOwner', (e) => e.id]];
+  const mergeKeys = [['confirmed', pairKey], ['refuted', pairKey], ['flaggedResidues', residueKey], ['askOwner', (e) => e.id]];
   /* WHY the `existing` half: a later close of the same batch passes no --reverdict, so without this the
    * merge would silently DROP the ruling log a previous run wrote — the one thing the residual keeps. */
   if (derivedResidual.reverdicts || existingResidual.reverdicts) mergeKeys.push(['reverdicts', (e) => `${e.id}|${e.to}`]);

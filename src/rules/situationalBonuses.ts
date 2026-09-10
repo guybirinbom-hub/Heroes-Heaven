@@ -1230,6 +1230,14 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   // line (test/rulings-dfgh.test.ts "no note runs longer than about one line", 120 chars); this row
   // shipped at 131 and failed that gate. Same two halves of methodology-7, 116 chars.
   "forensic-medicine-methodology": [{ targets: [{ kind: 'hp' }], when: "on Hit Points a target regains from your successful Battle Medicine; they are then immune for only 1 hour, not 1 day", bonus: "+ your level" }],
+  /* WG parity b036, illusionists-hat#skill-bonuses. Print (equipment-5201, Pathfinder #224 pg. 239):
+   * *"You gain a +1 item bonus to Deception checks made to Create a Diversion and to Thievery checks
+   * made to Palm an Object."* The item record carried NOTHING mechanical — no passiveEffects, no
+   * alias, no mark, no registry key — so both printed bonuses reached the player nowhere, while WG's
+   * row 23007 encodes both. Both are ACTION-scoped, so they are stars rather than a whole-skill
+   * passive: the shape `the-demons-lantern` (:2051) and `lightweave-scarf` (:3098) already use. */
+  // batch 036: illusionists-hat#skill-bonuses
+  "illusionists-hat": [{ targets: [{ kind: 'skill', detail: 'deception' }], when: "on Deception checks to Create a Diversion", bonus: "+1 item" }, { targets: [{ kind: 'skill', detail: 'thievery' }], when: "on Thievery checks to Palm an Object", bonus: "+1 item" }],
   "glean-contents": [{ targets: [{ kind: 'skill', detail: 'society' }], when: "on Society checks to Decipher Writing that is only partially glimpsed, upside down, or reversed", bonus: "+1 circumstance" }],
   "inoculation": [{ targets: [{ kind: 'save', detail: 'all' }], when: "for 1 week, on saves against a specific disease — granted to the creature you successfully Treated for that disease", bonus: "+2 circumstance" }],
   "keen-follower": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "while using Follow the Expert in exploration mode, on checks with the skill you're following", bonus: "+3 circumstance (expert ally) or +4 circumstance (master ally), replacing Follow the Expert's normal bonus" }],
@@ -1400,7 +1408,17 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "vaccine": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against other strains of the specific disease you were vaccinated against…", bonus: "+2 item" }],
   "bloodline-wyrmblessed": [{ targets: [{ kind: 'skill', detail: 'intimidation' }], when: "for 1 round after your blood magic triggers, if you choose the self-buff option…", bonus: "+1 status" }],
   "gaze-sharp-as-steel": [{ targets: [{ kind: 'perception' }], when: "while your divine spark is in this ikon (immanence active)", bonus: "+1 status" }, { targets: [{ kind: 'ac' }], when: "against ranged attacks, while your divine spark is in this ikon (immanence active)", bonus: "+2 status" }],
-  "hyper-boosters": [{ targets: [{ kind: 'speed' }], when: "while under the effects of Overdrive", bonus: "+20 status (+30 if legendary in Crafting), replacing the base +10" }],
+  /* innovation-5 (Hyper Boosters): *"You gain a +10-foot status bonus to your Speed, which increases to
+   * a +20-foot status bonus when you're in Overdrive. If you're legendary in Crafting, it instead
+   * increases to a +30-foot status bonus when you're in Overdrive."* The +10 and the Overdrive +20 are
+   * NUMBERS ON THE SHEET as of batch 036 (`landSpeedBonus` 5 over speed-boosters' own 5, plus the
+   * whileActive row {state:'overdrive', speeds:{land:10}} that activeStateGrants reads), so a star that
+   * repeated "+20 … replacing the base +10" was a second, contradicting answer to a question the sheet
+   * had already answered. Only the legendary rung has no carrier — WhileActiveClause has no skill-rank
+   * gate and WG's own row encodes +10/+20 with no legendary branch — so that rung, and only it, is what
+   * the star is for now. */
+  // batch 036: hyper-boosters#overdrive
+  "hyper-boosters": [{ targets: [{ kind: 'speed' }], when: "while under the effects of Overdrive, if you are legendary in Crafting", bonus: "+30 status instead of the +20 already on the sheet" }],
   "initiate-benefit-regalia": [{ targets: [{ kind: 'skill', detail: 'deception' }], when: "while you hold your regalia implement", bonus: "+1 circumstance" }, { targets: [{ kind: 'skill', detail: 'diplomacy' }], when: "while you hold your regalia implement", bonus: "+1 circumstance" }, { targets: [{ kind: 'skill', detail: 'intimidation' }], when: "while you hold your regalia implement", bonus: "+1 circumstance" }, { targets: [{ kind: 'save', detail: 'all' }], when: "against fear effects, while you hold your regalia (your inspiring aura; allies in 15 feet get it too)", bonus: "+1 status" }],
   "initiate-benefit-shield": [{ targets: [{ kind: 'ac' }], when: "while your shield implement is at 1 Hit Point: its Raise a Shield bonus to AC is 1 lower until it's repaired", bonus: "-1 circumstance (a penalty)" }],
   "initiate-benefit-tome": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "to Recall Knowledge, while you hold your tome implement", bonus: "+1 circumstance" }],
@@ -1446,7 +1464,16 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "seer": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against haunts and the abilities of spirits and incorporeal undead", bonus: "+1 status (+2 at 9th, +3 at 17th)" }, { targets: [{ kind: 'ac' }], when: "against haunts and the abilities of spirits and incorporeal undead", bonus: "+1 status (+2 at 9th, +3 at 17th)" }],
   "segmented-frame": [{ targets: [{ kind: 'skill', detail: 'stealth' }], when: "to Stealth checks (and your DC) to hide or conceal your innovation, while it's collapsed to light Bulk", bonus: "+2 circumstance" }],
   "sparkling-targe": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against spells and other magical effects, while in Arcane Cascade stance with your shield raised", bonus: "+circumstance equal to your shield's AC bonus (usually +2)" }],
-  "speed-boosters": [{ targets: [{ kind: 'speed' }], when: "while under the effects of Overdrive", bonus: "+10 status (replacing the base +5)" }],
+  /* innovation-5 (Speed Boosters): *"You gain a +5-foot status bonus to your Speed, which increases to
+   * a +10-foot status bonus when under the effects of Overdrive."* NO ENTRY, deliberately. Both rungs
+   * are numbers on the sheet as of batch 036 — `landSpeedBonus` 5 for the standing half plus the
+   * whileActive row {state:'overdrive', speeds:{land:5}} that activeStateGrants reads — so a star
+   * saying "+10 status (replacing the base +5)" was a second, contradicting answer to a question the
+   * Speed row already answers. The comment at SITUATIONAL_SUPERSEDES['hyper-boosters'] predicted this:
+   * the star was "still the whole carrier for them until that record gets a whileActive row of its
+   * own". It has one now. Nothing about this record is conditional beyond the Overdrive toggle, and
+   * the toggle moves the number, so there is nothing left for a star to say. */
+  // batch 036: hyper-boosters#overdrive
   "spinner-of-threads": [{ targets: [{ kind: 'ac' }], when: "when you Cast or Sustain a hex and you are within 15 feet of your familiar and choose…", bonus: "+1 status" }],
   "subtle-dampeners": [{ targets: [{ kind: 'skill', detail: 'stealth' }], when: "while under the effects of Overdrive", bonus: "+1 circumstance (+2 if master in Crafting)" }],
   "superstition-instinct": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against magic, while raging", bonus: "+2 status" }, { targets: [{ kind: 'strikeDamage' }], when: "while raging, against a creature you have witnessed Casting a Spell within the last hour", bonus: "+1 extra Rage damage (+3 instead, if you have greater weapon specialization)" }],
@@ -1690,6 +1717,12 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "enhanced-hearing-aid": [{ targets: [{ kind: 'perception' }], when: "for 10 minutes after activating (once per day, hearing aids switched on), on Perception checks that rely on hearing", bonus: "+1 item" }],
   "maestros-chair": [{ targets: [{ kind: 'skill', detail: 'performance' }], when: "on Performance checks made by playing the chair's built-in pipe organ (uses both hands)", bonus: "+1 item" }],
   "minotaur-chair": [{ targets: [{ kind: 'strikeDamage' }], when: "on the wheel-spike Strikes of the chair's 2-action charge (once per hour), against foes that are prone", bonus: "+1 circumstance per weapon damage die" }],
+  /* ⚠ THE STAR IS THE WHOLE MECHANIC — do not add a flat `passiveEffects.perception` beside it.
+   * batch 036: eye-of-the-unseen. Print (equipment-1367-1240): *"While wearing the eye, you gain a +1
+   * item bonus to VISUAL Perception checks."* The record shipped `passiveEffects:{perception:1}` as
+   * well, which passiveItemBonus reads on any in-use row, so every Perception check got the bonus and
+   * the sheet listed it twice. The overlay row that deletes that field is this batch's; the day-goggles
+   * precedent is spelled out at derive.ts:326-339. */
   "eye-of-the-unseen": [{ targets: [{ kind: 'perception' }], when: "on Perception checks that rely on sight, while wearing the prosthetic eye", bonus: "+1 item" }],
   "eye-of-the-unseen-greater": [{ targets: [{ kind: 'perception' }], when: "on Perception checks that rely on sight, while wearing the prosthetic eye", bonus: "+2 item" }],
   "memory-palace": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "on Recall Knowledge checks about details contained in a memory imprinted on one of the…", bonus: "+2 item" }],
@@ -1819,6 +1852,17 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "celestial-staff": [{ targets: [{ kind: 'save', detail: 'all' }], when: "while wielding the staff, on saving throws against unholy effects and effects created by unholy creatures", bonus: "+1 circumstance" }],
   "chronomancer-staff": [{ targets: [{ kind: 'initiative' }], when: "on initiative rolls while wielding the staff", bonus: "+1 circumstance" }],
   "composer-staff": [{ targets: [{ kind: 'skill', detail: 'performance' }], when: "on Performance checks made by playing the staff as an instrument", bonus: "+1 item" }],
+  /* ⚠ THE STAR IS THE WHOLE MECHANIC — do not add a flat `passiveEffects.skills.performance` beside
+   * it. batch 036: composer-staff-greater. Print (equipment-2249-1995): *"In this way, you can play it
+   * as though it were an instrument, and it grants a +1 item bonus to Performance checks MADE WITH
+   * IT."* The greater staff also shipped `passiveEffects:{skills:{performance:1}}`, which reaches the
+   * Performance total for any equipped row — a held staff is `equipped` — so a bard who merely held it
+   * got the bonus on every Performance check and read the same +1 twice. The sibling instrument
+   * pipes-of-compulsion-greater carries the star and no passive; the deleting overlay row is this
+   * batch's. The BASE and MAJOR staves print the same clause out of the same AoN document
+   * (equipment-2249, the major adding only "The item bonus is +2.") and shipped the same flat twin;
+   * their deleting rows are batch 036's gap lane, work/.b036-rows-gap-situational.json. All three
+   * entries here are star-only on purpose. */
   "composer-staff-greater": [{ targets: [{ kind: 'skill', detail: 'performance' }], when: "on Performance checks made by playing the staff as an instrument", bonus: "+1 item" }],
   "composer-staff-major": [{ targets: [{ kind: 'skill', detail: 'performance' }], when: "on Performance checks made by playing the staff as an instrument", bonus: "+2 item" }],
   "dragonprism-staff": [{ targets: [{ kind: 'skill', detail: 'intimidation' }], when: "while wielding the staff, on Intimidation checks to Demoralize", bonus: "+1 circumstance" }],
@@ -4786,6 +4830,24 @@ export const SITUATIONAL_SUPERSEDES: Record<string, string[]> = {
    * lines for one rule. Same shape as master-overdrive / grave-strength: an increase supersedes the
    * rung below it. WG carry it as ONE injectText on the trait itself, never two. */
   "mighty-bulwark": ['trait:bulwark'],
+  /* WG parity b036, the Overdrive SPEED ladder — the same shape as the Overdrive DAMAGE ladder six
+   * entries above. innovation-5 prints Speed Boosters as *"a +5-foot status bonus to your Speed, which
+   * increases to a +10-foot status bonus when under the effects of Overdrive"* and Hyper Boosters as
+   * *"a +10-foot status bonus to your Speed, which increases to a +20-foot status bonus when you're in
+   * Overdrive"* — one number that GROWS, not a second bonus beside it. Batch 036 made the pair reachable
+   * on one character for the first time (classFeatures/hyper-boosters.requiresModification =
+   * ["speed-boosters"], so holding Hyper Boosters now REQUIRES holding Speed Boosters), and the two
+   * stars then sat on the same Speed row reading "+10, replacing the base +5" and "+30 … instead of the
+   * +20 already on the sheet" at once: two lines that contradict each other for the same character.
+   * ⚠ INERT IN THE STAR LANE as of this batch's speed-boosters `whileActive` row: that record's own
+   * entry is gone (see the NO ENTRY note at :1466), so there is no longer a speed-boosters star for
+   * this hop to silence. RETAINED anyway because supersededIds() runs inside characterSituationalIds
+   * (explain.ts:266) over ALL owned ids, not only starred ones, so the entry still drops the id from
+   * that list and test/batch036-closer.test.ts:182 pins exactly that drop. Revisit only if
+   * speed-boosters ever gains a RECORD_MARKERS or degreeShifts entry, where the hop would then hide
+   * something real. */
+  // batch 036: hyper-boosters#prerequisite
+  "hyper-boosters": ['speed-boosters'],
 };
 
 /** The ids to drop from a lookup because a record the character ALSO has supersedes them. */

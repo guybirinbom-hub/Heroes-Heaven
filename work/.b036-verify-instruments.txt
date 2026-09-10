@@ -1,0 +1,101 @@
+BATCH 036 — ADVERSARIAL VERIFY, instruments family (WG-COMPARISON lane)
+1 finding assigned. Verdict: 1 DONE, 0 FIXED-BY-ME, 0 NOT-DONE. Nothing edited by the verifier.
+
+
+PER FINDING
+
+armored-resistance#instrument — DONE.
+  Evidence: `VERIFIED_EQUIVALENT['armored-resistance'] = ['hp']` lands at scripts/wg-diff.mjs:3336-3337
+  with the required `// batch 036: armored-resistance#instrument` citation; a corpus-wide run I made
+  myself moves the record out of THEY-ONLY into weOnly with `missing:[], extra:['defense'],
+  theirKinds:['note','conditional','hp'], ourKinds:['conditional','defense']`.
+
+  Each half of the claim re-checked independently of the builder's report:
+   · PRINT — core.json feats/armored-resistance is aonId feat-7897 and its printed clause names no Hit
+     Points, so a bare `hp` on this row cannot be a printed mechanic of this record.
+   · THEIR OP is a prerequisite echo, not a second sentence — WG's gate `MAX_HEALTH_CLASS_PER_LEVEL <=
+     10` is feats/guardian-resiliency's own printed prerequisite ("class granting no more Hit Points
+     than 10 + your Constitution modifier"), and `FEAT_NAMES INCLUDES "guardian resiliency"` is the
+     rider's own carrier. Replication onto each qualifying archetype row, exactly as the finding says.
+   · OUR CARRIER IS LIVE, verified on data and on a built character, not from the report: core.json
+     feats/guardian-resiliency.maxHpBonus = {perArchetypeFeat:3, archetype:'guardian'}; core.json ships
+     7 feats with archetype==='guardian' (guardian-dedication, basic-defender, guardian-resiliency,
+     advanced-defender, guardians-intercept, armored-resistance, ironclad-fortitude) — armored-
+     resistance is one of them; src/rules/derive.ts:897-899 multiplies 3 by that count inside
+     featHpBonus, which deriveMaxHp calls at derive.ts:920; src/rules/build.ts:8586-8597 folds the same
+     per-archetype-feat term into the starting `current` so a fresh character is not born damaged.
+     Both readers exist; neither is another family's.
+   · BLAST RADIUS is one row, confirmed by data rather than by assertion: `armored-resistance` exists
+     in exactly two buckets, `feats` and `modes`, and `modes` is not a key of WG_PAIRING
+     (scripts/lib/wg-parse.mjs:197-206), so the id names a single walked row. Settle names ONE kind
+     (`hp`); the record's `conditional` and `defense` halves still report on my own run.
+   · CORPUS DELTA re-measured against work/.b036-baseline/diff.json: THEY-ONLY 187 -> 185, no record
+     NEW, none CHANGED. `GONE armored-resistance [hp]` is this family's; `GONE illusionists-hat
+     [skill]` is the SITUATIONAL family's (src/rules/situationalBonuses.ts is dirty; `git diff
+     scripts/wg-diff.mjs` is +31 lines and contains nothing but this one entry, and the file was clean
+     in work/.b036-baseline/start-state.json). The builder's "only one record moved" was true when
+     written; it is now one of two, and the second is not theirs.
+
+  Tests re-run by me, not taken on trust:
+    node scripts/vt.mjs run test/batch036-instruments.test.ts — 3 passed (3).
+    node scripts/test-flip-audit.mjs --batch 036 — clean (5 test files touched, 1 new settle key, every
+    flip cited). The mutation-proof requirement is genuinely met: the audit's own detector
+    (scripts/test-flip-audit.mjs:616-625) looks for a body containing both `mutation-proof` and the
+    settle key, and test/batch036-instruments.test.ts carries three such bodies — one stunting the
+    registry itself through wg-diff's `--raw` bypass (scripts/wg-diff.mjs:43 RAW_SETTLES), one stunting
+    the taught carrier in a copied core.json, one stunting it in an in-memory ContentDatabase and
+    asserting a 12-HP DELTA (4 guardian feats x 3) rather than an absolute chassis total.
+    npx tsc --noEmit — clean.
+
+  No leftover harness: the test's `work/.b036-stunt-*.json` and `work/.b036-diff-*.json` temporaries are
+  removed in `finally` blocks and none survive the run (checked after). My own throwaway
+  work/.verify-inst-diff.json is deleted.
+
+  Non-blocking observation, NOT a defect and deliberately not churned: the prose in
+  scripts/wg-diff.mjs:3320-3321 and in the test header cites "build.ts:8557-8561" for the starting-HP
+  fold, which now sits at src/rules/build.ts:8586-8597 — build.ts has been edited by other families
+  this batch and any number written today drifts again at apply. The derive.ts:897-901 citation is
+  accurate. Substance of both comments is correct; only the build.ts line span is stale.
+
+
+SPEC ROWS — CHECKED AS ROWS, NOT APPLIED
+  work/.b036-rows-instruments.json holds 1 finding entry with `backfillRows: []`. Nothing to diff
+  against a shipped value, no target record to exist-check, no field needing a reader, no key
+  collision possible, no created record and so no created-prose spec owed, no `supersedes` owed.
+  Adversarially: a row IS correctly absent — the finding is that nothing about this record's Hit Points
+  is wrong, and an overlay row here would either duplicate guardian-resiliency's rider onto a second
+  carrier (double-counting the +3 for this feat) or encode a sentence print does not contain.
+  Confirmed no pre-existing overlay row touches either id: scripts/data/effect-backfill.json (14,273
+  rows) contains no `armored-resistance` and no `guardian-resiliency` entry.
+
+MANIFEST — work/.b036-specs.json
+  Intact: the other families' entries are both still present (data-rows-1, data-rows-2) and unmodified.
+  The instruments entry lists exactly the four paths this family touched — work/.b036-rows-
+  instruments.json, work/.b036-report-instruments.txt, test/batch036-instruments.test.ts,
+  scripts/wg-diff.mjs — and `git status --porcelain` shows no fifth path attributable to this family.
+  No superseding row exists in this family's spec, so nothing owes `supersedes: true`.
+  Noted, outside this family's control: the `engine` (8 findings) and `situational` (4 findings)
+  families have no manifest entry yet; if they never write one their work will not be staged. Flagged
+  for the driver, not fixed here — writing another family's manifest entry is not mine to do.
+  I fixed nothing, so no stage[] paths are appended.
+
+
+DATA STILL NEEDED
+  (none — the finding is a comparer misread, not a content defect, and I confirmed no overlay row is
+  owed by the driver for it.)
+
+
+CROSS-FILE GAPS
+  1. armored-resistance#resistance (ENGINE family) — its `ours` half is WRONG as written, and a row
+     authored straight from that proposal would DOUBLE the printed resistance. Independently verified
+     here: core.json `modes/armored-resistance` = {feats:['armored-resistance'], duration:'while you
+     Intercept an Attack in medium or heavy armor', modifiers:[], resistances:[{type:'physical',
+     value:'floor(@actor.level/2)'}], note:'…applies ONLY to the damage you take in your ally's place
+     with Intercept Attack…', aonOrigin:'authored'}, and it reaches any character holding the feat via
+     the feat gate in `modeRelevant` (src/rules/modes.ts:613, `mode.feats.some(f => featIds.has(f))`).
+     That mode is why wg-diff already reads `ours=[conditional,defense]` on this record, so the
+     finding's "nothing in the app delivers it" was written without looking in the modes bucket. What
+     remains genuinely open for that family is a PRESENTATION call — whether the delivery should also
+     be a passive `resistances` entry with an `against` qualifier (an always-listed IWR line) beside
+     the player-toggled mode. Whichever is chosen, both carriers must not ship unreconciled.
+     Not made here: core.json content and the engine family's finding are outside this family's files.

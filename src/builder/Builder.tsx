@@ -2057,6 +2057,25 @@ export function Builder({
                                   content={content}
                                 />
                               ))}
+                          {/* batch 036: advanced-weaponry-construct — the inventor's INNOVATION
+                              MODIFICATIONS carry them too, and were in neither loop above: they are
+                              stored on `build.inventorModifications`, not in `extraChoices`. Advanced
+                              Weaponry prints *"Choose one of your construct's unarmed attacks to gain
+                              your choice of one initial weapon modification"*, and the answer had
+                              nowhere on screen to be given. */}
+                          {subAnchorId &&
+                            Object.values(build.inventorModifications ?? {})
+                              .filter((mid): mid is string => !!mid && !!content.classFeatures[mid]?.effectChoices?.length)
+                              .map((mid) => (
+                                <EffectChoicesPicker
+                                  key={`imec-${mid}`}
+                                  recordId={mid}
+                                  choices={content.classFeatures[mid]!.effectChoices}
+                                  build={build}
+                                  actions={actions}
+                                  content={content}
+                                />
+                              ))}
                           {/* …and an extra-choice pick can hand over a FEAT to choose, not just an
                               effect. Wizard Experimental Spellshaping: *"You gain one 1st-level
                               spellshape wizard feat of your choice."* The FEAT_PICK_GRANTS picker was

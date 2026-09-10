@@ -1,0 +1,65 @@
+{
+  "findings": [
+    {
+      "id": "cultivators-keen-eye#materials",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "cultivators-keen-eye",
+          "field": "senses",
+          "value": [
+            {
+              "name": "lifesense",
+              "range": 30,
+              "acuity": "imprecise",
+              "note": "You also sense precious materials (\"cultivation materials\") in the same range."
+            }
+          ],
+          "supersedes": true,
+          "why": "wg-batch-036 cultivators-keen-eye#materials. SUPERSEDES the shipped senses row {name:lifesense,range:30,acuity:imprecise}, whose three fields are carried whole into this value; only `note` is added. AoN feat-7090 prints the sense in one breath with the lifesense — \"you gain lifesense as an imprecise sense with a range of 30 feet. You can also sense the presence of precious materials in the same range\" — and SenseEntry.note is the field written for exactly that shape (types.ts: the carcharodon-merfolk blood-range clause), rendered inline on the derived Senses row by VitalsRail.tsx:741 and DetailsTab.tsx:466. That is the \"beside the lifesense\" surface the finding's proposal asks for."
+        },
+        {
+          "category": "feats",
+          "id": "cultivators-keen-eye",
+          "field": "note",
+          "value": "When you participate in a ritual you can substitute all or part of its cost with an equivalent value of precious materials. Costs in valuable substances like diamonds only — never a ritual that requires specific items to function; the GM makes the call if it's unclear.",
+          "why": "wg-batch-036 cultivators-keen-eye#materials, the SECOND half of the same finding. AoN feat-7090: \"When you participate in rituals, you can substitute all or part of the ritual's cost with an equivalent value of precious materials. This applies only to costs in valuable substances like diamonds, not to rituals that require specific items to function; the GM makes the call if it's unclear.\" No sheet number moves and no ritual ACTION record exists in core.json (only the rules pages casting-rituals / rituals), so neither FEAT_SITUATIONAL (SituationalTarget mirrors StatRef) nor RECORD_MARKERS (on: action|condition|feature) can hold it. The feat `note` field is the lane for \"here is the part you apply yourself\" — 89 overlay rows already use it and FeatsTab.tsx renders it as the record's Note paragraph. New field on this record; nothing superseded."
+        }
+      ],
+      "note": "Two fields, two halves of one printed paragraph, no collision: `senses` carries the precious-material SENSE on the Senses row (the field built for a stimulus clause printed in the same breath as the range), `note` carries the ritual-cost substitution on the feat's own entry. The situational registry could hold neither: a sense is not a StatRef, and a cost substitution names no stat."
+    },
+    {
+      "id": "eye-of-the-unseen",
+      "backfillRows": [
+        {
+          "category": "items",
+          "id": "eye-of-the-unseen",
+          "field": "passiveEffects",
+          "value": null,
+          "supersedes": true,
+          "why": "wg-batch-036 eye-of-the-unseen. SUPERSEDES (deletes) the shipped overlay row passiveEffects={perception:1}; that object held the perception key and nothing else, so nothing survives to merge into this value. AoN equipment-1367-1240 prints \"While wearing the eye, you gain a +1 item bonus to VISUAL Perception checks\", but passiveItemBonus/passiveItemBonusDetail (derive.ts:303-322, :386-408) gate on itemInUse alone, so the flat field added the bonus to EVERY Perception check and the sheet then listed the same +1 a second time as the conditional star at situationalBonuses.ts. The conditional star stays and is the whole mechanic — the day-goggles precedent named in the passiveItemPenalty comment at derive.ts:326-339."
+        }
+      ],
+      "note": "Code-side: no registry change. The star already reads correctly; the defect was the flat twin. A ⚠ comment above the entry in src/rules/situationalBonuses.ts now says the star is the whole mechanic, so the flat field is not re-authored. WG encodes it flat (addBonusToValue PERCEPTION = 1) — this row diverges from WG on purpose, because print scopes it to visual Perception."
+    },
+    {
+      "id": "composer-staff-greater",
+      "backfillRows": [
+        {
+          "category": "items",
+          "id": "composer-staff-greater",
+          "field": "passiveEffects",
+          "value": null,
+          "supersedes": true,
+          "why": "wg-batch-036 composer-staff-greater. SUPERSEDES (deletes) the shipped overlay row passiveEffects={skills:{performance:1}}; that object held the performance key and nothing else, so nothing survives to merge into this value. AoN equipment-2249-1995 prints \"In this way, you can play it as though it were an instrument, and it grants a +1 item bonus to Performance checks made with it\" — a bonus for playing the staff, not for holding it, while a held staff is `equipped` and so passed passiveItemBonus's itemInUse gate on every Performance check, listing the same +1 twice. The conditional star at situationalBonuses.ts stays; the sibling instrument pipes-of-compulsion-greater already has the star and passiveEffects=null."
+        }
+      ],
+      "note": "Code-side: no registry change, plus a ⚠ comment above the entry so the flat twin is not re-authored. Same deliberate divergence from WG as eye-of-the-unseen (they encode it flat with the condition as display text)."
+    },
+    {
+      "id": "illusionists-hat#skill-bonuses",
+      "backfillRows": [],
+      "note": "Code-only fix, no data row: both printed bonuses are ACTION-scoped (\"to Create a Diversion\", \"to Palm an Object\"), so a whole-skill passiveEffects would be wrong in exactly the way the two rows above are being deleted for. Added as a FEAT_SITUATIONAL entry \"illusionists-hat\" in src/rules/situationalBonuses.ts, the shape the-demons-lantern and lightweave-scarf already use; the item reaches the registry through characterSituationalIds' inventory walk (itemInUse) with no new lane."
+    }
+  ]
+}

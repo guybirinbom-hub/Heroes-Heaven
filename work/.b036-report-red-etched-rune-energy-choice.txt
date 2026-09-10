@@ -1,0 +1,92 @@
+BATCH 036 — GATE-RED group "red-etched-rune-energy-choice" (family engine, gap B)
+================================================================================
+
+ITEM 1 — gap B, etched-rune half. BUILT.
+
+  Finding: energy-resistant (CONFIRMED, work/.b036-read.json).
+
+  The defect as measured. src/rules/derive.ts:2545 etchedRuneDefences reads the crafter's answer at
+  inv.effectChoices[`${rune.id}:${ch.id}`] on the HOST inventory row. Nothing anywhere wrote that
+  key: the only writer of InventoryItem.effectChoices was the "Choices" block in
+  src/sheet/ItemDetail.tsx, which keys an item's OWN choices by the bare ch.id on the item's own row,
+  and etching consumes the rune's row (planAttach 'etch' + removeInventoryItem). So the reader this
+  batch shipped was a DEAD READER and all four choice-carrying armour property runes silently took
+  opts[0] = acid whatever the crafter chose.
+
+  Measured scope: exactly 4 runes are affected — every armour property rune in core.json whose item
+  record carries effectChoices: energy-resistant ('energy', 4 options, resistance 5),
+  energy-resistant-greater ('energy', resistance 10), energy-absorbing ('energy-absorbing-type',
+  resistance 5), energy-absorbing-greater ('energy-absorbing-greater-type', resistance 10).
+
+  Built: src/sheet/ItemDetail.tsx
+    - new const `runeChoices` (beside `attached` / `hostName`): propertyRuneDefs(inv, content)
+      flat-mapped to that rune's item-record effectChoices. propertyRuneDefs is already exported from
+      derive.ts:1515, so NO derive.ts edit was needed for this half — derive.ts is untouched by this
+      group.
+    - new "Etched rune choices" block, immediately after the existing "Choices" block, rendering one
+      control per (rune, choice) and writing effectChoices[`${runeId}:${choiceId}`] on the HOST row
+      through the existing updateInventoryItem updater.
+    - the existing `sd-choice-row` / `sd-choice-prompt` / `<select>` markup is reused VERBATIM — one
+      question, one control shape. The prompt is prefixed with the rune's name so a suit with two
+      choice-carrying runes reads unambiguously.
+    - new import: propertyRuneDefs from '../rules/derive'.
+
+  Pinned by: test/batch036-gap-rune-choice.test.tsx, it #1
+    "renders one control per etched-rune choice, and answering \"cold\" moves energy-resistant off
+    acid" — cited "// batch 036: energy-resistant".
+    End to end on a BUILT character (renderDom): a level-8 fighter wearing leather armour with
+    energy-resistant etched on it opens the ARMOUR, the control renders, a change event on the select
+    runs the real onPlay updater, and the answer is asserted at
+    play.inventory[0].effectChoices['energy-resistant:energy'] === 'cold'; applyPlayState +
+    deriveDefenses then gives cold 5 and NO acid entry.
+
+ITEM 2 — gap B, Living Rune half. PARKED, with the measurement.
+
+  flaggedResidue: the body-rune branch (src/rules/derive.ts:2668) still takes the acid fallback for
+  all 4 choice-carrying runes, because its answer store cannot be reached from this group's files.
+
+  Measurement (why it is not "small"). The proposal's cheap version was "a sibling select writing
+  build.effectChoices[`${bodyRune}:${ch.id}`] plus reading it back through c.effectPicks". The
+  read-back half does not exist: Character.effectPicks (types.ts:5966) is populated ONLY by
+  resolvePick() in src/rules/build.ts, whose eight call sites are build.ts:6328 (feats), :6344
+  (heritage), :6372 (deity), :6392 (background), :6393 and :6398 and :6410 (class features) and :7461
+  (one per INVENTORY row). The body rune is on none of those lanes — it is carried onto the character
+  as a bare id at build.ts:8781-8784 — so nothing pushes an effectPicks row for it, and
+  answeredEffectOptions (derive.ts:1485) resolves recordIds against feats/heritages/classFeatures/
+  ancestries/backgrounds only, never db.items, where a rune's effectChoices live.
+
+  The carrier is therefore 3 files, and the load-bearing one is not mine:
+    (a) src/rules/build.ts — ONE resolvePick(build.bodyRune, content.items[build.bodyRune]
+        ?.effectChoices, …) call beside the inventory loop at :7460-7469;  ← NOT IN MY FILE SET
+    (b) src/rules/derive.ts — ~3 lines in the body-rune push at :2668 mapping the effectPicks LABEL
+        back to the option's value (effectPicks stores label, the reader keys on value);
+    (c) src/builder/shared.tsx — ~6 lines reusing the existing EffectChoicesPicker (shared.tsx:4537)
+        inside the Living Rune SetupCard at :3797-3826.
+
+  Deliberately NOT half-built. Adding (c) alone would ship a visible control whose answer no reader
+  can see — a new dead WRITER, which is the exact defect class gap B exists to close. It is raised
+  under CROSS-FILE GAPS instead.
+
+ITEM 3 — the test. DONE.
+  test/batch036-gap-rune-choice.test.tsx, 2 its, both cited "// batch 036: energy-resistant" with the
+  record id in each it title.
+    #1 the control renders and an explicit 'cold' displaces the acid fallback (above).
+    #2 "still grants acid 5 for an energy-resistant rune nobody answered, matching what WG grants" —
+       pins the fallback the batch shipped so it cannot be removed by accident, and asserts the other
+       direction on the same row (an answered 'fire' gives fire 5 and no acid).
+  node scripts/vt.mjs run test/batch036-gap-rune-choice.test.tsx → 2 passed.
+  npx tsc --noEmit → clean.
+  node scripts/test-flip-audit.mjs --batch 036 → clean.
+
+DATA STILL NEEDED
+  (none — the 4 runes' effectChoices are already complete in core.json; this was a carrier gap, and
+  work/.b036-rows-red-etched-rune-energy-choice.json carries no rows for that reason.)
+
+CROSS-FILE GAPS
+  1. src/rules/build.ts (NOT in this group's file set) — no resolvePick() call exists for
+     build.bodyRune, so a Living Rune's crafter choice can never reach Character.effectPicks and the
+     body-rune branch at src/rules/derive.ts:2668 is stuck on the acid fallback for all 4
+     choice-carrying armour runes. Needs one resolvePick(build.bodyRune,
+     content.items[build.bodyRune]?.effectChoices, …) beside the inventory loop at build.ts:7460-7469,
+     after which derive.ts:2668 (~3 lines, label→value) and the Living Rune SetupCard in
+     src/builder/shared.tsx:3797-3826 (~6 lines, reuse EffectChoicesPicker) close the lane.

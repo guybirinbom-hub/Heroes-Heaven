@@ -1,0 +1,213 @@
+BATCH 036 — WG-COMPARISON LANE — FAMILY: engine
+Findings assigned: advanced-weaponry-construct, hyper-boosters#overdrive, hyper-boosters#prerequisite,
+skill-mastery-rogue#duplicate-skill, lorefinder, animalistic-brutality, armored-resistance#resistance,
+energy-resistant. All eight handled; none dropped, none taken from another family.
+
+Spec file: work/.b036-rows-engine.json (10 backfill rows across 6 findings; 2 findings are code-only).
+Test file: test/batch036-engine.test.ts — 17 tests, all green; every assertion reads a BUILT character
+(or a derived Strike / Speed / defence block), never a data field. Verified non-vacuous: with the five
+new readers stubbed out, 7 of the 17 fail (one per engine change), and they go green again when the
+readers are restored. npx tsc --noEmit is clean.
+
+======================================================================================================
+DATA STILL NEEDED  (rows the driver must author — all ten are IN work/.b036-rows-engine.json, listed
+                    here so the driver can see them without opening the spec)
+======================================================================================================
+1. classFeatures / advanced-weaponry-construct / effectChoices = one choice `modification` whose 11
+   options are the level-1 weapon-innovation-modification ids (advanced-design, blunt-shot,
+   complex-simplicity, dynamic-weighting, entangling-form, hampering-spikes, hefty-composition,
+   modular-head, pacification-tools, razor-prongs, segmented-frame), no grants.
+2. classFeatures / hyper-boosters / whileActive = [{"state":"overdrive","speeds":{"land":10}}]
+3. classFeatures / hyper-boosters / requiresModification = ["speed-boosters"]
+4. feats / lorefinder / innateSpells = [{"spellId":"locate","tradition":"occult","usesPerDay":1,
+   "heightenAt":[{"level":14,"rank":5}]}]  — supersedes:true, superseded value merged whole.
+5. feats / armored-resistance / resistances = [{"type":"physical","value":"floor(@actor.level/2)",
+   "against":"damage you take with Intercept Attack while wearing medium or heavy armor"}]
+6-10. modes / animalistic-brutality-{backswing,forceful,parry,razing,sweep} — create:true, each
+   gated feats:["animalistic-brutality"], exclusiveGroup "animalistic-brutality", and carrying
+   unarmedTraits {"fromRecord":"animal-instinct","add":["<trait>"]}.
+
+======================================================================================================
+CROSS-FILE GAPS  (outside the files assigned to me — NOT edited)
+======================================================================================================
+A. src/rules/situationalBonuses.ts:1403 — once row 2 lands, the "hyper-boosters" star should be
+   trimmed to the LEGENDARY branch only ("+30 status while in Overdrive if you are legendary in
+   Crafting"); the +20 step is a number on the sheet from that row on, and a star that repeats it
+   reads as a second, contradicting answer. Owner of situationalBonuses.ts this batch: the
+   situational family.
+B. src/sheet/ItemDetail.tsx (or InventoryTab.tsx) — no control asks the crafter's energy type for an
+   ETCHED Energy-Resistant rune. derive.ts now reads that answer off the HOST inventory row at
+   `inv.effectChoices["<runeId>:<choiceId>"]` (the same per-row store ItemDetail already writes for a
+   loose item's own choices, namespaced by rune id so it cannot collide with the host item's
+   choices). Until a control writes it, an etched rune falls back to the first option, acid — which
+   is what WG's own row grants, so nothing is worse than before and the number is now non-zero.
+C. scripts/data/effect-backfill.json — FIVE sibling `requiresModification` rows the same new reader
+   would enforce, from the same printed clauses (innovation-1/-5 armour, innovation-2/-6 construct).
+   Not authored here because they are not my findings: layered-mesh ["speed-boosters"] is the armour
+   twin; the harmonic-oscillator / metallic-reactance / phlogistonic-regulator or-list and the
+   dense-plating / layered-mesh / tensile-absorption or-list each gate one later armour modification;
+   construct's wonder-gears, projectile-launcher and marvelous-gears gate one each. Worth a lane, and
+   the field is `string[]` precisely because four of the six clauses are or-lists.
+D. src/rules/derive.ts applyWeaponRiders — RESIDUAL on advanced-weaponry-construct, exactly as the
+   finding predicted: a chosen weapon modification's `weaponTraits` cannot reach a CONSTRUCT's unarmed
+   attack (applyWeaponRiders walks inventory WeaponItems, and razor-prongs' rider matches
+   `designated: 'innovation'`). The row records and shows the answer; it grants nothing, and no option
+   in it carries a grant. Closing this needs a companion-strike rider lane, which is a bigger piece of
+   work than this batch and does not belong to any of my eight findings.
+
+======================================================================================================
+PER FINDING
+======================================================================================================
+
+--- skill-mastery-rogue#duplicate-skill  (CODE ONLY) ---
+WHAT: src/rules/build.ts, `distinctSiblingPicks`. Dropped both 'any' bail-outs — the guard's first
+line (`ctx.index <= 0 || slot.options === 'any'`) and the in-loop `sib.options === 'any' ||`. 'any' is
+byte-identical to 'any', which is the condition the helper already tests, so the bail-out was the only
+thing standing between Skill Mastery's two printed increases and two different skills. The never-empty
+guard in `skillSlotOptions` is untouched. The stale "this widening changes one record" doc-comment was
+rewritten with the measured blast radius (the audit's rule (1) is why it could not be left as it was).
+WHY (printed, feat-5096; the investigator sibling skill-mastery is feat-6208): "Increase your
+proficiency rank in one of your skills
+from expert to master AND IN ANOTHER of your skills from trained to expert." Both slots resolved to
+Acrobatics and `proficiencies.skills[skill] = maxRank(cur, at(grant))` collapsed master+expert onto
+one key, so one of the two increases silently vanished.
+BLAST RADIUS (measured over FEAT_GRANTS + FEAT_LANE_GRANTS, 8 records): clan-lore's `other-clan`
+branch, initiate-benefit-tome, natural-skill, officers-education, old-soul, skill-mastery,
+skill-mastery-rogue, sorcerer-dedication. Each now defaults its later identical slot to a DIFFERENT
+skill instead of repeating the first. Rogue Dedication ({stealth,thievery} then 'any') and
+golden-league-xun (two identical CLOSED lists, already covered) are unchanged.
+TEST: test/batch036-engine.test.ts, describe "skill-mastery-rogue: the two skill increases land on two
+DIFFERENT skills" — a diff of the built character's skill ranks with and without the feat, so the
+assertion is what the feat actually DID. Three its: the headline record, the investigator sibling
+skill-mastery, and a non-regression on rogue-dedication's non-identical pair (its free slot still
+defaults to acrobatics).
+
+--- hyper-boosters#prerequisite  (CODE + ROW 3) ---
+WHAT: new field `ClassFeature.requiresModification?: string[]` (src/rules/types.ts) — "any ONE of these
+modifications must already be chosen"; read in `inventorModificationOptions` (src/rules/build.ts),
+which gained an optional 5th parameter `chosen`. Both real callers now pass the character's three raw
+modification picks: the built character's `validPick` (build.ts) and the builder's tier picker
+(src/builder/shared.tsx). Omitted `chosen` stays ungated, so no third-party caller changes behaviour.
+WHY (printed, innovation-5): "You must have the speed boosters modification to select this
+modification." Nothing gated the pick, and hyper-boosters' `landSpeedBonus` is deliberately the +5
+DELTA over speed-boosters' own +5 — so metallic-reactance (initial) + hyper-boosters (breakthrough)
+was a legal build here that walked at +5 feet against a printed "+10-foot status bonus to your Speed".
+Enforcing the prerequisite is what makes the delta encoding true, which is why the gate is the fix and
+not a landSpeedBonus rewrite.
+BLAST RADIUS: zero today — no shipped classFeature carries `requiresModification`. Once row 3 lands,
+exactly one record changes: hyper-boosters is hidden from the breakthrough picker (and dropped from a
+built character) unless speed-boosters is among the three picks. See CROSS-FILE GAP C for the five
+siblings that print the same clause and are deliberately not authored here.
+TEST: describe "hyper-boosters: the speed-boosters prerequisite" — three its on built inventors with
+the row PATCHED INTO A CONTENT COPY IN MEMORY: the pick is dropped without speed-boosters; with it the
+pick stands and the two halves of the delta sum to the printed +10 over the same character's own
+unmodified land Speed; and a modification naming no prerequisite is untouched by the gate.
+
+--- hyper-boosters#overdrive  (ROW 2 ONLY — no code) ---
+WHAT: nothing in src/. Confirmed the reader before writing the row, per the standing rule:
+`WhileActiveClause` already unions 'overdrive' into `state` and carries `speeds`, `activeStateGrants`
+(derive.ts) gates on `classResources['overdrive']`, derive.ts pushes `wa.speeds` into grantSources and
+land grants are additive. The lane was live and unused for this record.
+WHY (printed, innovation-5): "…which increases to a +20-foot status bonus when you're in Overdrive."
+NOT DONE, deliberately: the legendary-Crafting +30 stays a situational star. WG's own row encodes
++10/+20 with no legendary branch, so extending WhileActiveClause with a skill/rank gate would put us
+ahead of the comparer for a clause both sides star. See CROSS-FILE GAP A for the star's wording.
+TEST: describe "hyper-boosters: the Overdrive step of the Speed bonus" — one it comparing the same
+built inventor's land Speed with the Overdrive resource off and on, field patched in memory.
+
+--- advanced-weaponry-construct  (CODE + ROW 1) ---
+WHAT: two readers, because the record's second question had no route at all.
+  (a) src/rules/build.ts — buildCharacter now `resolvePick`s the chosen inventor modifications. They
+      are classFeatures records that reach NEITHER existing loop: `ownedFeatureIds` there is the
+      class's own feature list, `grantOptions` is the extra-choice lane, and only derive.ts's own
+      ownedFeatureIds folds modifications in (and it resolves no picks).
+  (b) src/builder/Builder.tsx — an `EffectChoicesPicker` per chosen modification that carries
+      effectChoices, beside the existing granted-feat and extraChoices loops. Without it the answer
+      could be stored by nothing.
+WHY (printed, innovation-2): "Choose one of your construct's unarmed attacks to gain your choice of one
+initial weapon modification, chosen any initial weapon modifications to which you have access."
+BLAST RADIUS: zero today — none of the 74 innovation-modification classFeatures ships effectChoices.
+RESIDUAL (also CROSS-FILE GAP D): the row records and displays the answer and grants nothing, because
+applying the chosen modification's weaponTraits to a construct's unarmed attack has no reader.
+TEST: describe "advanced-weaponry-construct: the chosen weapon modification is recorded" — two its on a
+built construct inventor with the effectChoices block patched in memory: an answered pick reaches
+`character.effectPicks` with its label, and an unanswered multi-option pick records nothing rather than
+inventing the first option.
+
+--- animalistic-brutality  (CODE + ROWS 6-10) ---
+WHAT: `ModeDef.unarmedTraits?: UnarmedRider | UnarmedRider[]` (src/rules/types.ts), hoisted exactly as
+`ModeDef.weaponTraits` was and for the same reason; read in `applyUnarmedRiders` (src/rules/derive.ts)
+by adding the active modes to its source list, mirroring `applyWeaponRiders`' own
+`(c.activeModes ?? []).filter(m => m.weaponTraits)` line.
+WHY (printed, feat-5835): "Your unarmed attack from bestial rage gains one of the following traits
+until you stop raging: backswing, forceful, parry, razing, or sweep… You can choose a different trait
+each time you use Animalistic Brutality." An "until you stop raging" rider with a re-made choice is a
+mode by owner ruling Q11; `DefenseGrants.unarmedTraits` on the feat has no off switch and would hand
+the barbarian all five traits permanently.
+BLAST RADIUS: zero today — no shipped mode carries `unarmedTraits`.
+TEST: describe "animalistic-brutality: the chosen trait reaches the bestial-rage Strike" — two its on a
+RAGING animal-instinct barbarian (the bestial-rage Jaws carry `requiresState: 'rage'`, so the Strike
+the feat talks about exists only with the Rage toggle on) with one of the five modes patched into a
+content copy: the Jaws gain forceful with the mode on and do not with it off, which is the whole point
+of it being a mode.
+
+--- lorefinder  (ROW 4 ONLY — no code) ---
+WHAT: nothing in src/. Reader confirmed first: `castRank` in build.ts already resolves a `heightenAt`
+ladder (`(g.heightenAt ?? []).filter(h => level >= h.level).sort(...)`), used today by dragon-prince
+and shadows-assault. Our grant simply carried no ladder, so the cast rank fell to spells.locate.rank =
+3 at every level.
+WHY (printed, feat-2663): "You can cast Locate as an innate occult spell once per day. When you reach
+14th level, this spell is heightened to 5th level."
+NOTE ON THE ROW: `innateSpells` is ONE field and one already exists for this record, so the row is
+supersedes:true and re-emits the whole array with the superseded row's three fields merged in.
+TEST: describe "lorefinder: the innate Locate heightens at 14th" — two its reading the RANK BUCKET the
+built character's innate spellcasting entry files Locate under (that bucket is the cast rank): 5 at
+level 14, still 3 at level 13, with the field patched in memory.
+
+--- armored-resistance#resistance  (ROW 5 ONLY — no code) ---
+WHAT: nothing in src/. Reader confirmed first: the DefenseGrants resistance walk in derive.ts already
+resolves formula values and already handles the `against` qualifier — it emits a source note with the
+clause and SKIPS `res.set`, so a conditional resistance shows its own IWR line without inflating the
+headline number. 59 feats already ship `resistances`.
+WHY (printed, feat-7897): "While you are wearing medium or heavy armor, you gain resistance to physical
+damage equal to half your character level when you use the Intercept Attack reaction to take damage
+instead of your ally." Neither armored-resistance nor guardians-intercept nor intercept-attack carried
+it, so nothing in the app delivered it.
+TEST: describe "armored-resistance: the Intercept Attack resistance is a line on the sheet" — one it on
+a built 10th-level guardian-archetype fighter, field patched in memory: the qualified line comes back
+from `deriveDefenses().sources['resistance:physical']` with value 5 and the Intercept Attack clause,
+AND the headline `resistances` list still carries no physical entry — the half that keeps the number
+honest.
+
+--- energy-resistant  (CODE ONLY) ---
+WHAT: src/rules/derive.ts. New `etchedRuneDefences(inv, rune, db)` + two pushes in the DefenseGrants
+inventory walk: every etched property rune on a row that passes `itemInUse`, and the Living Rune body
+rune (which sits on no row at all, so every reader that walks `inventory[].runes` was blind to it).
+The helper merges `RuneDef.passiveEffects` with the rune ITEM's resolved `effectChoices` grant,
+reading the crafter's answer off the HOST row at `inv.effectChoices["<runeId>:<choiceId>"]` and
+falling back to the first option when it is unanswered.
+WHY (printed, equipment-2788-2576): "You gain resistance 5 to acid, cold, electricity, or fire. The
+crafter chooses the damage type when creating the rune." The whole payload was already authored on the
+ITEM record, but `resolvedItemPassives` resolves only for an inventory ROW that is worn/held/affixed —
+and etching consumes that row — while the DefenseGrants walk never called `propertyRuneDefs` at all
+(its four call sites are item bonus, breakdown, body-rune list and bulk). An etched Energy-Resistant
+rune granted 0 against WG's real resistance 5. The first-option fallback is acid, which is exactly what
+WG's own row grants, so an unrecorded pick is now WG-equal instead of empty.
+BLAST RADIUS: every ARMOUR property rune whose payload is a defence now reaches its wearer once
+etched. Measured in core.json today that is: energy-resistant / energy-resistant-greater (via the item
+choice) plus the three runes that carry `passiveEffects` at all (assisting, trudds-strength,
+sinister-knight). Nothing loses anything — the walk only adds sources, and it is inside the existing
+`itemInUse` gate, so armour in the pack still protects nobody.
+NOT DONE: no control writes the crafter's pick yet — see CROSS-FILE GAP B.
+TEST: describe "energy-resistant: the etched rune delivers its resistance" — three its on a built
+character wearing a chain shirt etched with the rune: acid 5 with no recorded pick, fire 5 (and no
+acid) when the host row records `energy-resistant:energy = fire` the way play state does, and nothing
+at all while the armour is off.
+
+======================================================================================================
+CITATIONS
+======================================================================================================
+Every it( in test/batch036-engine.test.ts carries "// batch 036: <finding id>" within the 6 lines
+above it, and the finding's RECORD id appears in the enclosing describe title. Every changed src/ line
+carries the same citation in its comment. No settle, no comparer teach, no ratchet constant and no
+experience-limits entry was touched by this family, so no "// mutation-proof" marker applies.

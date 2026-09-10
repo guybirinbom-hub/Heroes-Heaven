@@ -1,0 +1,101 @@
+BATCH 036 — GATE-RED verify, group "red-etched-rune-energy-choice" (family engine, gap B)
+================================================================================
+Verdict: DONE (item 1 built + one FIXED-BY-ME on top; item 2 parked with a measurement I
+re-derived line by line; item 3 green at 3 its).
+
+ITEM 1 — the etched-rune crafter control. DONE, plus FIXED-BY-ME.
+  Evidence: src/sheet/ItemDetail.tsx:375-410 renders one `sd-choice-row` select per
+  propertyRuneDefs(inv, content) choice and writes effectChoices[`<runeId>:<choiceId>`] on the HOST
+  row through the existing updateInventoryItem updater — exactly the key derive.ts:2545
+  etchedRuneDefences reads (`inv.effectChoices?.[`${rune.id}:${ch.id}`]`), so the dead reader now has
+  its writer. Markup is the sibling Choices block's, verbatim; derive.ts is untouched by the group,
+  because propertyRuneDefs was already exported (derive.ts:1515). Reachable in the real app:
+  <ItemDetail> is the inventory row's detail popup (InventoryTab.tsx:1365, VitalsRail.tsx:554).
+  Measurement re-run independently: dumping core.json for every id in `runes` gives exactly FOUR
+  rune items carrying effectChoices — energy-resistant / energy-resistant-greater (id 'energy'),
+  energy-absorbing ('energy-absorbing-type'), energy-absorbing-greater
+  ('energy-absorbing-greater-type') — each with FOUR options (acid/cold/electricity/fire), resistance
+  5 / 10, all usage 'etched-onto-armor'. The task brief's "8 energy types" is wrong and the builder's
+  "4 options" is right: AoN equipment-2788-2576 prints *"You gain resistance 5 to acid, cold,
+  electricity, or fire. The crafter chooses the damage type when creating the rune."* — four types.
+  Print quoted in the code comment is verbatim against the mirror doc (checked
+  by-category/equipment/equipment-2788-2576.json; the Kingmaker sibling equipment-1763-1558 prints the
+  same clause for energy-absorbing).
+
+  FIXED-BY-ME (finding energy-resistant): the control the builder shipped read "Choose…" while the
+  reader was already granting acid 5 to the same character — the sheet contradicting itself on the
+  one screen a player would use to check. src/sheet/ItemDetail.tsx now labels the empty option
+  `Unanswered — <options[0].label>` (taken from the same options[0] the reader falls back to, not
+  hard-coded), with the printed clause quoted as the reason and a note that the sibling Choices block
+  keeps its bare placeholder because an unanswered ITEM choice genuinely grants nothing.
+  Pinned by test/batch036-gap-rune-choice.test.tsx it #3 ("// batch 036: energy-resistant", record id
+  in the title), which asserts the placeholder names the same type deriveDefenses actually grants and
+  is not the bare 'Choose…'.
+  FIXED-BY-ME (fixture reachability): the test's armour fixture carried runes.potency 0 with a
+  property rune — a state planAttach refuses ("property-rune slots come from the potency rune",
+  attachments.ts:154-159), i.e. a shape the app cannot make. Raised to potency 1; no assertion
+  changed, still 3/3 green.
+
+ITEM 2 — the Living Rune half. DONE as a PARK, and the artefact is real, not an excuse.
+  Evidence: every line the builder cited checks out. `resolvePick` has exactly eight call sites
+  (build.ts:6328, 6344, 6372, 6392, 6393, 6398, 6410, 7461) and none is the body rune, which is
+  carried onto the character as a bare id (build.ts:8781-8784, mirrored back at :9109);
+  Character.effectPicks is types.ts:5966 and is the only answer store that reaches derive
+  (derive.ts:1473-1483 states outright that no raw answer map reaches the character). The body-rune
+  push at derive.ts:2668 hands etchedRuneDefences a synthetic {instanceId:'body'} row with no
+  effectChoices, so it can only take options[0]. The cheap carrier therefore needs src/rules/build.ts
+  — not in this group's file set, and owned by the engine family this batch — so building the
+  builder-side select alone would have shipped a dead WRITER, the exact defect class gap B exists to
+  close. Park upheld.
+  My correction to the measurement (it UNDERSTATES one hop): the builder's step (b) is only ~3 lines
+  if the body-rune branch reads c.effectPicks DIRECTLY. `answeredEffectOptions` (derive.ts:1486-1495)
+  resolves p.recordId against db.feats / heritages / classFeatures / ancestries / backgrounds and
+  NEVER db.items, and a rune's effectChoices live on db.items[runeId] — so routing the body rune
+  through that resolver returns nothing and would need a sixth collection added there.
+
+ITEM 3 — the test. DONE.
+  Evidence: test/batch036-gap-rune-choice.test.tsx, now 3 its, all three cited "// batch 036:
+  energy-resistant" (CONFIRMED in work/.b036-read.json) with the record id in each title. #1 renders
+  the control on a BUILT fighter (renderDom + initialPlay), fires a real change event, and asserts
+  both the stored key `energy-resistant:energy` === 'cold' AND cold 5 with NO acid entry after
+  applyPlayState + deriveDefenses; #2 pins the acid 5 fallback for an unanswered row (WG's own row
+  grants "acid, 5" per the finding's `theirs`; wg-show.mjs finds no ability_block, because a rune is
+  an item, not an ability) and the displacing 'fire' answer; #3 is mine, above.
+  node scripts/vt.mjs run test/batch036-gap-rune-choice.test.tsx → 3 passed.
+  node scripts/vt.mjs run test/display-reach.test.tsx test/bulk-nesting.test.ts (the other suites that
+  render ItemDetail) → 14 passed.
+  npx tsc --noEmit → clean. node scripts/test-flip-audit.mjs --batch 036 → clean (no settle and no
+  comparer teach in this group, so no mutation-proof marker is owed).
+
+SPEC / MANIFEST
+  work/.b036-rows-red-etched-rune-energy-choice.json carries findings: [] — verified correct, not an
+  omission: all four rune records already ship complete effectChoices WITH grant.passive.resistances,
+  so there is no record to create, no field to supersede, and therefore no collision with any other
+  group's rows. Nothing durable was written into core.json by this group.
+  work/.b036-specs.json: all 11 entries present (6 families + 5 red groups), none dropped; this
+  group's stage[] now lists work/.b036-rows-…json, work/.b036-report-…txt, this verify file,
+  test/batch036-gap-rune-choice.test.tsx and src/sheet/ItemDetail.tsx — every path the group touched,
+  mine included.
+
+DATA STILL NEEDED
+  (none — measured, not assumed: the four choice-carrying armour runes carry complete effectChoices
+  with grants in core.json. Gap B was a carrier gap.)
+
+CROSS-FILE GAPS
+  1. src/rules/build.ts + src/rules/derive.ts + src/builder/shared.tsx (none in this group's file set)
+     — the Living Rune half. No resolvePick() exists for build.bodyRune (the eight sites are
+     build.ts:6328/6344/6372/6392/6393/6398/6410/7461), so a body rune's crafter answer can never
+     reach Character.effectPicks and derive.ts:2668 is stuck on the acid fallback for all four
+     choice-carrying armour runes. Carrier: one resolvePick(build.bodyRune,
+     content.items[build.bodyRune]?.effectChoices, …) beside the inventory loop at build.ts:7460-7469;
+     ~3 lines in the derive.ts:2668 push mapping the effectPicks LABEL back to the option's value AND
+     reading c.effectPicks directly, because answeredEffectOptions (derive.ts:1486-1495) resolves
+     against feats/heritages/classFeatures/ancestries/backgrounds only, never db.items; ~6 lines
+     reusing EffectChoicesPicker (shared.tsx:4537) inside the Living Rune SetupCard
+     (shared.tsx:3797-3826).
+  2. work/.b036-gaps.json (the closer's file) — the gap-B line, family "engine", is now STALE: its ref
+     reads "deliberately NOT built here — it is a NEW SHEET CONTROL", which was true when it was
+     parked and is not true now. The etched half is built by this group (src/sheet/ItemDetail.tsx +
+     test/batch036-gap-rune-choice.test.tsx); only the Living Rune half of that line still stands.
+     Whoever owns the gaps stage should re-file it as authored-in-part with this group's ref, leaving
+     gap 1 above as the parked remainder.

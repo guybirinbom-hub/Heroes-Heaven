@@ -1,0 +1,202 @@
+parity batch 036 (WG-COMPARISON lane): 40 records, 41 overlay rows, seven code lanes, two instrument teaches and a gate-red round
+
+WHAT WAS READ. 40 WG-comparison records at level <= 9 were read against the printed text by an Opus
+reader and an adversarial verifier: 32 findings confirmed, 2 refuted, 3 routed to the owner. The close
+stage derives the verdicts from that read plus the manifest: 24 FIXED, 13 MATCHES, 3 OWNER-QUEUED, with
+14 flagged residues. Every MATCHES in this batch is a "no finding" verdict — no record was settled into
+MATCHES by a comparer teach, so the record-only-teach hazard (a teach line naming a record instead of a
+finding, which turns every sibling finding on that record into MATCHES too) did not arise here; the two
+teach lines that exist name their findings (armored-resistance#instrument, hyper-boosters#prerequisite)
+and each carries a mutation-proof test.
+
+WHAT CHANGED — DATA. 41 rows through scripts/data/effect-backfill.json, applied by the driver from
+eleven family specs — the six original families (data-rows-1, data-rows-2, engine, instruments,
+situational, gap-situational) plus the five gate-red groups (red-etched-rune-energy-choice,
+red-experience-host-inventor-mods, red-inventor-modification-rows, red-parked-lanes-and-desk,
+red-pipeline-collation-repair). 33 new keys and 9 supersedes, overlay 14273 -> 14306 in two passes
+(14273 -> 14300, then 14300 -> 14306), every row read back from the shipped artefacts and no overlay row
+lost or narrowed against the batch-start commit 0b4b92c8. The supersedes are whole-value re-emissions
+(golem-grafter-dedication's resistances ladder among them), never a member edit.
+
+WHAT CHANGED — CODE. Seven lanes, each with a printed clause in its comment and a vitest test on a BUILT
+character:
+ · src/rules/derive.ts, conditionalResistances() + the DefensesPills / VitalsRail rows that render it.
+   An `against`-scoped IWR entry used to be stored, attributed and displayed nowhere — derive skips
+   res.set for it by design, and both IWR renderers iterate `resistances` alone — so feats/spirit-walk's
+   "resistance equal to half your level against damage dealt by haunts or spirits" (AoN feat-7137)
+   would have shipped inert, as modes/dampening-harmonics already had. Pinned by
+   test/batch036-gap-data-rows-2.test.tsx, including a real jsdom render.
+ · src/rules/derive.ts, etchedRuneDefences() + two pushes in the DefenseGrants inventory walk. An ETCHED
+   armour property rune delivered nothing: the payload resolved only for a loose inventory row, and
+   etching consumes that row. Energy-Resistant (AoN equipment-2788-2576, "You gain resistance 5 to acid,
+   cold, electricity, or fire. The crafter chooses the damage type when creating the rune.") now reaches
+   its wearer, reading the crafter's answer off the host row and falling back to the first option when it
+   is unanswered.
+ · src/sheet/ItemDetail.tsx — the CONTROL that writes that answer, added in the gate-red round: one
+   sd-choice-row select per propertyRuneDefs(inv, content) choice, writing effectChoices
+   ["<runeId>:<choiceId>"] on the host row through the existing updateInventoryItem updater, which is
+   exactly the key derive.ts reads. Four runes carry the question (energy-resistant,
+   energy-resistant-greater, energy-absorbing, energy-absorbing-greater), each with four options.
+   Pinned by test/batch036-gap-rune-choice.test.tsx.
+ · src/rules/build.ts + src/rules/derive.ts + src/builder/shared.tsx — the LIVING RUNE half of the same
+   clause, built by the closer in the gate-red round. A body rune sits on no inventory row, so there was
+   no host to carry the crafter's answer and no control to ask it: every Living Rune Energy-Resistant in
+   the app resisted acid, the first option, whatever the player meant. build.ts now records the answer as
+   an effectPick beside the inventory picks (a no-op sink deliberately — the payload is delivered once,
+   on the etched side, and routing the grant here too would pay it twice), derive.ts resolves that pick
+   back to the option's own value at the bodyRune branch, and the Living Rune SetupCard renders the
+   existing EffectChoicesPicker so the choice EXPERIENCE ships with the mechanic. The first-option
+   fallback is kept on purpose: an etched rune always HAS a type. Pinned by test/batch036-closer.test.ts.
+ · src/rules/types.ts + build.ts + Builder.tsx + shared.tsx — the engine family's remaining findings
+   (ClassFeature.requiresModification and its reader, the inventor-modification pick route, and the
+   distinctSiblingPicks widening that stopped Skill Mastery's two printed increases collapsing onto one
+   skill). The gate-red round then filled the field for five sibling records (energy-barrier,
+   physical-protections, marvelous-gears, turret-configuration, miracle-gears), each row quoting its own
+   innovation-5 / innovation-2 clause.
+ · src/rules/situationalBonuses.ts — the situational and gap-situational stars and record marks, plus the
+   Overdrive Speed ladder. innovation-5 prints ONE number that grows, and this batch's
+   requiresModification row made speed-boosters and hyper-boosters reachable on one character for the
+   first time, so the two records had to be recalibrated together: classFeatures/speed-boosters gains
+   whileActive [{state:'overdrive',speeds:{land:5}}] and classFeatures/hyper-boosters' own whileActive was
+   superseded from land:10 to land:5, because derive ADDS the two. Arithmetic: speed-boosters alone +5 /
+   +10 in Overdrive, the pair +10 / +20 — both printed numbers exactly. The speed-boosters star is
+   retired (the step is a number on the Speed row now), the hyper-boosters star carries only the rung with
+   no carrier ("+30 while legendary in Crafting"), and SITUATIONAL_SUPERSEDES gains
+   "hyper-boosters": ['speed-boosters'] so the player reads one line rather than two.
+ · scripts/wg-batch-run.mjs + scripts/wg-batch-close.mjs + package.json — pipeline repairs from the
+   gate-red round. gapLines() now reads lettered and prime-lettered bullets and folds their indented
+   continuations, and skips ASCII rule lines with `continue` rather than `break` (work/.b036-verify-engine
+   .txt put a `======` rule directly under its heading, which is why that file collated 0 gap lines
+   instead of 11). wg-batch-close.mjs keys a flaggedResidue on family + kind + sha1(normalised summary)
+   instead of on the `<file>:<line>` ref the collator stamps, so a re-close no longer appends a twin of a
+   residue whose line moved. package.json's `data` chain now ends with `node scripts/apply-ast-patches
+   .mjs` (idempotent, last, nothing downstream reads public/ast) so a regen can no longer silently wipe
+   the six patched AST nodes. Each pinned by test/batch036-red-pipeline-collation-repair.test.ts.
+
+WHAT CHANGED — INSTRUMENTS. Two comparer teaches, one comparer HARVEST fix and two harness teaches,
+each mutation-proof:
+ · scripts/wg-values.mjs now reads `whileActive[].speeds` — a Speed a record grants only while a state
+   is on — and, for `land` beside a numeric `landSpeedBonus`, their TOTAL as well as the step. This is a
+   harvest hole, not a settle: no registry key was added and nothing outside batch 036 was settled. It
+   surfaced as a REGATE RED that this batch caused. innovation-5 prints "You gain a +5-foot status bonus
+   to your Speed, which increases to a +10-foot status bonus when under the effects of Overdrive" and
+   WG's row writes that total as SPEED = 10; the only thing on our side that had ever asserted a 10 for
+   classFeatures/speed-boosters was the PROSE of its FEAT_SITUATIONAL star, which situationalMagnitudes
+   scrapes. Gap E moved the step onto a real `whileActive` number the sheet applies and retired the star,
+   so a strictly better encoding read as a disagreement and batch 034 went red on VALUES. Reading the
+   real carrier is the fix; `put` is multi-assertion, so it can only let a true assertion match. Blast
+   radius measured: four records in the corpus carry a whileActive Speed (speed-boosters, hyper-boosters,
+   fast-movement, raging-athlete), two carry both fields, and the two outside this batch already agreed
+   on every comparable value before the change and still do. Pinned by test/batch036-closer.test.ts with
+   a mutation-proof stunt that deletes the carrier and demands the disagreement come back.
+ · scripts/wg-diff.mjs VERIFIED_EQUIVALENT gains 'armored-resistance': ['hp'] (finding
+   armored-resistance#instrument). Their conditional replicates Guardian Resiliency's per-archetype-feat
+   +3 onto every qualifying guardian feat; ours holds the sentence once on feats/guardian-resiliency
+   .maxHpBonus and multiplies by the feats taken. monk-moves#hp (batch 031) one archetype over.
+ · scripts/wg-values.mjs NOT_A_SCALAR gains SENSES_PRECISE — the exact twin of SENSES_IMPRECISE, in the
+   registry since batch 7. A sense is a name plus a range ("apparition sight, 30"), never a number on a
+   track, and the lane it routes to is demonstrably live: wg-diff still reports spirit-walk as missing
+   kind `sense`, and stops the moment a `senses` carrier is written onto the record in a stunted core
+   copy (test/batch036-closer.test.ts).
+ · test/wg-experience.harness.test.tsx — the item lane now answers an ITEM's own effectChoices on the
+   inventory instance, the same thing answerOwnPicks() has done for a feat's picks since batch 5. Without
+   it every item whose payload sits behind its pick read as NO-SHEET-EFFECT however correct the engine
+   was; energy-resistant was the record that exposed it.
+ · test/wg-experience.harness.test.tsx again, gate-red round, teach hyper-boosters#prerequisite: route 4
+   (innovationModificationHost) now seats the first entry of a record's `requiresModification` list into a
+   strictly lower tier before assembling the host, and seats it in BOTH builds so the differential still
+   counts only what the record itself adds. Without it this batch's own requiresModification row made
+   hyper-boosters unbuildable by the harness and it read UNSUPPORTED — printed as "recorded, NOT passed"
+   while the gate stayed green. hyper-boosters is the only record in core.json carrying the field, so the
+   teach's blast radius is 0 other records by construction. Pinned by
+   test/batch036-red-experience-host-inventor-mods.test.ts (executed, source and differential stunts).
+
+WHAT CHANGED — GUARDS. blessed-swiftness' aonParentId / aonSection rows are the first AoN JOIN KEYS the
+overlay has ever carried (the record was joined by NAME COLLISION to equipment-2320, Bracers of
+Devotion — an Item 11 whose same-titled section is a different mechanic from a different book — instead
+of class-feature-877, the champion feature it is a section of), and three authored-but-dead sweeps
+scored them dead because their reader is the AoN pipeline, not src/. They are REROUTED, never exempted:
+test/authoring-guards.test.ts and test/integrity-sweeps.test.ts skip the join keys in the src/ sweep and
+a new test demands each one be read in a real scripts/*.mjs, so dropping one from the pipeline still
+fails. Separately, test/batch035-field-diff.test.ts was reclassified from CHILD_TIMEOUT to
+INSTRUMENT_TIMEOUT: it walks the WHOLE AoN mirror three times, which _timeouts.ts' own wording puts in
+the instrument class, and it timed out at 183 s in this batch's first suite run. No assertion, stunt or
+mutation-proof in that file changed.
+
+QUEUED FOR THE OWNER. Three WG-vs-print conflicts, filed through scripts/add-owner-question.mjs as desk
+#148 hyper-boosters (their +30 Speed branch fires at any Crafting rank because trueOperations is empty
+and SKILL_CRAFTING <= L is universally true; print gates it on legendary), #149 spirit-walk (their
+operation-bearing row is the PLAYTEST edition and grants a PRECISE sense the released feat does not
+grant at all — asked as a LANE ruling so playtest-edition rows stop producing false positives), and #150
+chronomancers-secrets (they hand Stasis over as a NORMAL spell from the legacy record; print calls it a
+domain spell). Ours follows print in all three; nothing was changed on our side for any of them.
+
+DEFERRED, WITH ARTEFACTS. work/wg-batch-036-residual.json carries 14 flagged residues and
+work/.b036-gaps.json 25 disposed gap lines (14 authored, 11 parked). Five residues are game-mechanics
+parks, each measured rather than asserted: blessed-swiftness's mounted redirect (no character-feature ->
+companion-speed addend and no mounted state exist; the mechanic is ONE clause in the game, and the house
+precedent at situationalBonuses.ts:4358 already discloses the identical redirect as a note); the
+ritual-cost mark (core.json has no ritual ACTION record for a RecordMarker to attach to, and the single
+record printing such a clause already carries it on its own `note`); and a companion-strike rider lane
+for advanced-weaponry-construct — now MEASURED for the next round at n=4, not n=1: of the eleven initial
+weapon modifications that record offers, exactly four (hampering-spikes, hefty-composition, modular-head,
+razor-prongs) carry a weaponTraits rider and all four are scoped match.designated='innovation', so ONE
+engine change lands all four, and of the 18 records tagged construct-innovation-modification zero carry
+a payload of their own. That measure is itself pinned by test/batch036-red-parked-lanes-and-desk.test.ts.
+Four more residues are pipeline items handed to the orchestrator: the UNSUPPORTED bypass in
+scripts/wg-batch-gate.mjs (an UNSUPPORTED record skips the queued / ruled / instrument-limited park
+checks and can never fail the gate — inert for this batch at 0 UNSUPPORTED, but closing it turns exactly
+two earlier-batch records red at once, batch 002 exploit-vulnerability and batch 033
+school-of-thassilonian-rune-magic, and neither may be settled from inside batch 036); the close's
+inability to RETIRE a residue whose own ref says it is not a gap; the apply-digest policy of collating a
+builder report and its verifier's restatement under one family; and one command the driver owes,
+`node scripts/apply-ast-patches.mjs`, to clear a pre-existing ast-content-check red that another effort's
+regen caused (the verify stage tolerates it as pre-existing, and this batch fixed its recurrence).
+
+THE ONE SUITE RED, AND ITS TRIAGE. test/inventor-innovation.test.ts, "it upgrades ONLY the initial
+modification, not every resistance the inventor has", built an inventor holding physical-protections in
+the revolutionary slot with Enhanced Resistance in the breakthrough slot. Batch 036 enforced the printed
+prerequisite on every revolutionary modification that carries one, and physical-protections' own is a
+BREAKTHROUGH modification — innovation-5: "You must have the dense plating, layered mesh, or tensile
+absorption breakthrough modification to select this modification." — which that build cannot hold,
+because there is exactly one breakthrough slot and Enhanced Resistance is in it. So the old build became
+illegal by print and the modification correctly granted nothing: the gate working, not a regression. The
+case is re-aimed at energy-barrier, the same shape one modification over, whose prerequisite list is
+initial-tier and is already satisfied by the build's phlogistonic-regulator. What the case is FOR — that
+Enhanced Resistance rewrites the initial modification's formula and leaves every other modification's
+alone — is unchanged, and now reads on six non-overlapping energy types instead of three physical ones.
+Both premises are quoted verbatim from innovation-5 in the citation comments, and
+scripts/test-flip-audit.mjs passes.
+
+THE ONE REGATE RED, AND ITS DISPOSITION. The gate-red round's --stage regate failed on ONE earlier
+batch: 034, VALUES, one record — classFeatures/speed-boosters, theirs=10 against ours=5 / 5. FIXED HERE,
+not queued and not deferred. It was measured before it was touched: a probe against the batch-START core
+(git show 0b4b92c8:public/core.json) reports the identical disagreement, which proves the DATA was never
+the cause; what changed was the carrier the comparer could see, because gap E retired the FEAT_SITUATIONAL
+star whose prose was the only assertion of the printed 10. The fix is the wg-values harvest widening
+described above, it settles no id outside batch 036, and after it batch 034 compares 23 records with 22
+agreeing — the one left being curse-of-turbulent-moments, which is already on the owner's desk. Stated
+precisely, because the regate resumes on unchanged content hashes: the first regate of this round swept
+and gated all 35 earlier batches (34 green, 034 red), and the second re-swept and re-gated the one that
+had failed. The widening cannot have stalled the other 34 — `put` only ADDS assertions on our side and
+wg-values iterates THEIR assertions, so a record that agreed cannot start disagreeing — and the only
+four records in the corpus that carry a whileActive Speed were each checked by hand.
+
+FINAL STATE, INCLUDING THE GATE-RED ROUND. This batch ran a second building round after its first gate
+pass, and it ends GREEN: all nine gates pass for work/wg-batch-036.json, the regate over all 35 earlier
+batches is clean, the full suite is green (5953 passed, 1 skipped, 5954 total), verify is 38 checks with
+37 clean and only the pre-existing ast-content-check tolerated, `npx tsc --noEmit` is clean and
+`node scripts/test-flip-audit.mjs --batch 036` reports every flip cited across 18 touched test files and
+2 new settle keys. The gate-red round closed four of the six lettered engine gaps that the first round
+had parked: gap B (the etched-rune and Living Rune crafter controls), gap C (five requiresModification
+rows), gap E (the speed-boosters / hyper-boosters Overdrive recalibration) and the batch-blocking
+collision the parked-lanes group found — two specs writing classFeatures/hyper-boosters.whileActive, which
+precheck (1) hard-refuses, merged into the single superseding row per the "one row per record+field" rule.
+It also closed the regate red above and the two lanes the red groups handed up: the Living Rune crafter
+choice and the stale it( title in the closer's own test file. Those gap lines are now `authored` in
+work/.b036-gaps.json (26 lines, 15 authored, 11 parked) with the build named. ⚠ THE RESIDUAL STILL
+LISTS THEM: entries 6, 7 and 9 of flaggedResidues are the pre-build parks for gaps B, C and E, and
+wg-batch-close.mjs never removes an existing residue — the very item queued to the orchestrator above —
+so read those three against this paragraph, not on their own. What genuinely remains open is the
+companion-strike rider lane (measured, parked), the four pipeline items above, and the three owner
+questions. Nothing else in this batch is unbuilt and nothing red was left undescribed.

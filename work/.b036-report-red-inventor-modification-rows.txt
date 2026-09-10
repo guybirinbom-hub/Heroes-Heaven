@@ -1,0 +1,156 @@
+BATCH 036 — GATE-RED round, group "red-inventor-modification-rows" (family data-rows)
+Builder report. Three assigned items, all BUILT. Nothing parked.
+
+SPEC EMITTED
+  work/.b036-rows-red-inventor-modification-rows.json  (kind: rows, 7 backfill rows, 2 findings)
+  No created-prose spec: every record touched already exists in core.json with its description.
+
+--------------------------------------------------------------------------------------------
+ITEM 1 — gap C: the five inventor modification prerequisites that had no carrier   [BUILT]
+--------------------------------------------------------------------------------------------
+The reader shipped earlier in this same batch (src/rules/build.ts:2786, inventorModificationOptions,
+cited "// batch 036: hyper-boosters#prerequisite") and classFeatures/hyper-boosters was its only data
+row, so five of the six printed prerequisite clauses in the inventor chapter reached nothing.
+
+The parked gap line was GARBLED — it listed the PREREQUISITE ids as if they were the owners
+("layered-mesh [\"speed-boosters\"]"). Owners re-derived from public/ast/classFeatures.json against
+the AoN mirror and cross-checked against core.json; all thirteen ids are present, and in every case
+the prerequisite sits at a strictly lower tier than the record naming it.
+
+Five rows in work/.b036-rows-red-inventor-modification-rows.json, finding
+"gap C — inventor modification prerequisites":
+  classFeatures/energy-barrier.requiresModification        = ["harmonic-oscillator","metallic-reactance","phlogistonic-regulator"]   (innovation-5, Revolutionary, lvl 15; prereqs lvl 1)
+  classFeatures/physical-protections.requiresModification  = ["dense-plating","layered-mesh","tensile-absorption"]                   (innovation-5, Revolutionary, lvl 15; prereqs lvl 7)
+  classFeatures/marvelous-gears.requiresModification       = ["wonder-gears"]                                                        (innovation-2, Breakthrough, lvl 7; prereq lvl 1)
+  classFeatures/turret-configuration.requiresModification  = ["projectile-launcher"]                                                 (innovation-2, Breakthrough, lvl 7; prereq lvl 1)
+  classFeatures/miracle-gears.requiresModification         = ["marvelous-gears"]                                                     (innovation-2, Revolutionary, lvl 15; prereq lvl 7)
+Each is a first assignment of one whole top-level field on a record that carries none today — no
+supersedes, no collision. marvelous-gears / turret-configuration / miracle-gears were CREATED by
+earlier batch-036 {create:true} rows; a field row beside a create row is the same shape their
+description rows already use.
+
+The or-list semantics are print's, not ours: four of the six printed clauses name alternatives
+("harmonic oscillator, metallic reactance, OR phlogistonic regulator"), and build.ts:2786 already
+reads the field as "any one of these satisfies it".
+
+miracle-gears CHAINS through marvelous-gears through wonder-gears. `held` at build.ts:8512 is the RAW
+picks of all three tiers, so each link is judged on its own printed clause against what the player
+actually chose — which is what print says.
+
+PINNED BY  test/batch036-gap-inventor.test.ts, on BUILT level-15 inventors via test/_content.ts
+content() with the five rows patched into a content copy IN MEMORY (the driver applies the rows after
+this file was written, so the tests pin the reader and cannot flip when the rows land):
+  describe "energy-barrier / physical-protections: the armour innovation prerequisites"
+    - "energy-barrier is refused when none of the three named modifications is held"
+    - "energy-barrier stands on any ONE of the three — phlogistonic-regulator here"
+    - "physical-protections needs one of the three breakthrough platings"
+  describe "marvelous-gears / miracle-gears / turret-configuration: the construct innovation prerequisites"
+    - "miracle-gears is refused without marvelous-gears, and stands with the whole chain held"
+    - "marvelous-gears is refused without wonder-gears"
+    - "turret-configuration is refused without projectile-launcher and stands with it"
+Citations are the premise form (no CONFIRMED finding covers these five records):
+  // batch 036 premise: innovation-5 "You must have the harmonic oscillator, metallic reactance, or phlogistonic regulator modification to select this modification."
+  // batch 036 premise: innovation-5 "You must have the dense plating, layered mesh, or tensile absorption breakthrough modification to select this modification."
+  // batch 036 premise: innovation-2 "You must have the wonder gears modification to select this modification."
+  // batch 036 premise: innovation-2 "You must have the projectile launcher modification to select this modification."
+  // batch 036 premise: innovation-2 "You must have the marvelous gears modification to select this modification."
+All five clauses verified byte-verbatim in the mirror at
+C:\wonderers guide\aon-2e-archive\data\by-category\innovation\innovation-5.json and innovation-2.json.
+
+--------------------------------------------------------------------------------------------
+ITEM 2 — gap E: the speed-boosters Overdrive step                                   [BUILT]
+--------------------------------------------------------------------------------------------
+TEACH: finding hyper-boosters#overdrive (CONFIRMED) — its follow-through onto the record underneath it.
+
+classFeatures/speed-boosters was {landSpeedBonus:5} with no whileActive, so a speed-boosters-only
+inventor read +5 feet whether Overdrive was on or off, against innovation-5's "You gain a +5-foot
+status bonus to your Speed, which increases to a +10-foot status bonus when under the effects of
+Overdrive." WG agrees and was stricter than us: one conditional, +5 status out of Overdrive / +10 in.
+
+TWO rows, because the proposed row alone would have been WRONG. Batch 036's own
+requiresModification row makes speed-boosters a hard prerequisite of hyper-boosters, so the pair is
+inseparable and every hyper-boosters number is a DELTA over the speed-boosters number underneath it —
+which is exactly why hyper-boosters.landSpeedBonus was already superseded 10 -> 5 this batch with the
+note "derive.ts ADDS the two". deriveSpeeds adds whileActive land grants the same way (derive.ts:5233
+pushes each into grantSources; :5310 does `speeds.land = (speeds.land ?? 0) + v`), so a new
+speed-boosters +5 beside the shipped hyper-boosters +10 would have paid the pair +25 feet in Overdrive
+against a printed +20.
+  classFeatures/speed-boosters.whileActive = [{state:"overdrive",speeds:{land:5}}]                    (first assignment)
+  classFeatures/hyper-boosters.whileActive = [{state:"overdrive",speeds:{land:5}}]  supersedes:true    (was land:10)
+The superseded array held one clause and nothing else, so the whole superseded value is carried into
+the new one with only its number changed.
+Arithmetic, both printed numbers exactly:
+  speed-boosters alone   base 5            Overdrive 5+5   = +10
+  the pair               base 5+5 = +10    Overdrive +10 +5+5 = +20
+
+DECLARED, per the standing rule: hyper-boosters.whileActive is a field ANOTHER family's row applied
+earlier in this batch (work spec -> scripts/data/effect-backfill.json). It is superseded here, not
+edited: gap E is the verifier's own parked line, no family was assigned either record's whileActive in
+the RED round, and both records' whileActive is now authored in one place — this spec.
+
+PINNED BY  test/batch036-gap-inventor.test.ts, describe "hyper-boosters and speed-boosters: the
+Overdrive Speed ladder pays both printed numbers", both rows patched in memory:
+  - "a speed-boosters-only inventor walks +5, and +10 with Overdrive on"      // batch 036: hyper-boosters#overdrive
+  - "speed-boosters + hyper-boosters walks +10, and +20 with Overdrive on"    // batch 036: hyper-boosters#overdrive
+Built level-7 armour (power-suit) inventors, Speed read through deriveSpeeds with classResources.
+overdrive off and on, both measured against the same inventor with no modifications.
+Citation is the finding form rather than the premise form deliberately: innovation-5's Speed Boosters
+clause writes "+5‑foot" with a U+2011 non-breaking hyphen, and the premise form must quote byte-verbatim.
+
+--------------------------------------------------------------------------------------------
+ITEM 3 — gap A-prime follow-through: the speed-boosters star                        [BUILT]
+--------------------------------------------------------------------------------------------
+TEACH: finding hyper-boosters#overdrive (CONFIRMED) — the display half of the same row.
+
+FILE + SYMBOL  src/rules/situationalBonuses.ts, FEAT_SITUATIONAL["speed-boosters"] (was :1467) —
+REMOVED. It read "+10 status (replacing the base +5)" while under Overdrive. The closer closed gap
+A-prime with SITUATIONAL_SUPERSEDES['hyper-boosters']=['speed-boosters'] (:4836), which silences the
+star only for a character holding BOTH; once gap E's row lands the number is on the sheet for the
+speed-boosters-ONLY inventor too and the star is a duplicate of a live value for everyone. The comment
+at :4834 predicted exactly this ("still the whole carrier for them until that record gets a whileActive
+row of its own"). Replaced by a NO-ENTRY comment quoting the printed clause, so the entry is not
+re-added, carrying "// batch 036: hyper-boosters#overdrive".
+
+PINNED BY  test/batch036-gap-inventor.test.ts — "the speed-boosters-only inventor gets no star on the
+Speed row" (// batch 036: hyper-boosters#overdrive, record id in the sibling describe title). A BUILT
+level-7 armour inventor with initial='speed-boosters' and the SHIPPED content, read through
+statHasSituational(ch, {kind:'speed'}, db) — the same helper the sheet uses to decide whether to print
+the asterisk. Would have failed before this removal.
+
+--------------------------------------------------------------------------------------------
+VERIFICATION
+--------------------------------------------------------------------------------------------
+node scripts/vt.mjs run test/batch036-gap-inventor.test.ts   -> 1 file, 9 tests, all passing
+node scripts/vt.mjs run test/batch036-closer.test.ts          -> 7 passing (regression check: the
+    closer's two speed-boosters its still pass — characterSituationalIds lists OWNED ids, so neither
+    depended on the star existing)
+node scripts/test-flip-audit.mjs --batch 036                  -> clean
+npx tsc --noEmit                                              -> clean
+
+--------------------------------------------------------------------------------------------
+DATA STILL NEEDED
+--------------------------------------------------------------------------------------------
+(none)
+
+--------------------------------------------------------------------------------------------
+CROSS-FILE GAPS
+--------------------------------------------------------------------------------------------
+1. test/batch036-closer.test.ts:193 — the it titled "a speed-boosters-only inventor keeps its own
+   Overdrive line" still PASSES but its title is now false: there is no line, the star is gone and the
+   Overdrive step is a number on the Speed row. Its assertion
+   (characterSituationalIds(...).toContain('speed-boosters')) only proves the id is OWNED, never that
+   it carries a star, so it never tested what it claims. The file belongs to the engine family and is
+   not mine to edit — it needs its title and comment re-aimed at what it actually checks (the pair
+   suppression's control), or retiring. Its sibling at :182 must NOT be touched: it is the only thing
+   pinning SITUATIONAL_SUPERSEDES['hyper-boosters'] (see the residue line below).
+
+--------------------------------------------------------------------------------------------
+FLAGGED RESIDUE
+--------------------------------------------------------------------------------------------
+1. src/rules/situationalBonuses.ts SITUATIONAL_SUPERSEDES['hyper-boosters'] = ['speed-boosters']
+   (:4836) now silences nothing in the star lane — speed-boosters has no FEAT_SITUATIONAL entry left
+   to suppress. RETAINED deliberately, not deleted: supersededIds() runs inside
+   characterSituationalIds (explain.ts:334) over ALL owned ids, so the entry still drops the id from
+   that list, and test/batch036-closer.test.ts:182 pins exactly that drop. Deleting it would break a
+   test file this group may not edit, for no gain. Reason to revisit: only if speed-boosters ever gains
+   a RECORD_MARKERS or degreeShifts entry, where the suppression would then hide something real.

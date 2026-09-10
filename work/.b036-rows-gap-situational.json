@@ -1,0 +1,32 @@
+{
+  "findings": [
+    {
+      "id": "composer-staff (gap line, print premise equipment-2249)",
+      "backfillRows": [
+        {
+          "category": "items",
+          "id": "composer-staff",
+          "field": "passiveEffects",
+          "value": null,
+          "supersedes": true,
+          "why": "wg-batch-036 GAP LANE, sibling of the confirmed finding composer-staff-greater. SUPERSEDES (deletes) the shipped overlay row {category:'items',id:'composer-staff',field:'passiveEffects',value:{skills:{performance:1}}}; that object held the performance key and nothing else, so nothing survives to merge into this value. Print premise AoN equipment-2249 (Treasure Vault Remastered pg. 131), the base-staff paragraph the greater and major variants inherit verbatim: \"In this way, you can play it as though it were an instrument, and it grants a +1 item bonus to Performance checks made with it.\" The bonus is for PLAYING the staff, not for holding it, but a held staff is `equipped`, so the flat field passed passiveItemBonus / passiveItemBonusDetail's itemInUse gate (derive.ts:303-322, :386-408) and raised every Performance check while the conditional star at src/rules/situationalBonuses.ts:1835 restated the same +1 beside it. The star stays and is the whole mechanic — the sibling instrument pipes-of-compulsion-greater is already star-only, and composer-staff-greater gets the identical row in work/.b036-rows-situational.json."
+        }
+      ],
+      "note": "No code change: the star already reads correctly and the registry entry is untouched. Deliberate divergence from WG, same as composer-staff-greater: WG encodes the +1 flat with the condition as display text; print scopes it to checks made with the staff."
+    },
+    {
+      "id": "composer-staff-major (gap line, print premise equipment-2249)",
+      "backfillRows": [
+        {
+          "category": "items",
+          "id": "composer-staff-major",
+          "field": "passiveEffects",
+          "value": null,
+          "supersedes": true,
+          "why": "wg-batch-036 GAP LANE, sibling of the confirmed finding composer-staff-greater. SUPERSEDES (deletes) the shipped overlay row {category:'items',id:'composer-staff-major',field:'passiveEffects',value:{skills:{performance:2}}}; that object held the performance key and nothing else, so nothing survives to merge into this value. Print premise AoN equipment-2249: the same base paragraph — \"it grants a +1 item bonus to Performance checks made with it\" — plus the major variant's own line, \"The item bonus is +2.\" Same defect as the base and greater staves: a held staff is `equipped`, so the flat {skills:{performance:2}} reached every Performance check through the itemInUse gate while the conditional star at src/rules/situationalBonuses.ts:1845 (+2 item) restated it. The star stays and is the whole mechanic."
+        }
+      ],
+      "note": "No code change; registry entry untouched. Same deliberate divergence from WG as the base and greater staves."
+    }
+  ]
+}

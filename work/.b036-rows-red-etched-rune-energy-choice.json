@@ -1,0 +1,4 @@
+{
+  "findings": [],
+  "note": "No backfill rows. Gap B is a CARRIER gap, not a data gap: items/energy-resistant, items/energy-resistant-greater, items/energy-absorbing and items/energy-absorbing-greater already ship the crafter's effectChoices (ids 'energy', 'energy', 'energy-absorbing-type', 'energy-absorbing-greater-type'; 4 energy options each, resistance 5 / 10), and derive.ts:etchedRuneDefences already reads them. What was missing was a WRITER for the reader's key. Built in src/sheet/ItemDetail.tsx instead."
+}

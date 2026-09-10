@@ -1,0 +1,98 @@
+BATCH 036 — GAP AGENT, family "gap-data-rows-1" (WG-comparison lane)
+Assigned gap lines: 2, both open on entry, both PARKED as flaggedResidue. 0 still open.
+Spec files written: none. Manifest work/.b036-specs.json NOT touched (nothing authored, so no entry is owed).
+Code files edited: none. work/.b036-queue.json NOT touched (no owner question is owed — see below).
+
+PER GAP LINE
+
+1. PARKED — work/.b036-gaps.json[0], from work/.b036-report-data-rows-1.txt:9
+   "blessed-swiftness#mounted: there is no mount-Speed carrier anywhere in the engine…"
+   ref "flaggedResidue: confirmed and out of scope, and measured as n=1 rather than a lane. …"
+   Why: the redirect needs engine infrastructure in another family's files AND a mounted state the
+   engine does not have, for exactly ONE printed clause in the game, and the house precedent already
+   settles how HH renders that clause — so the disclosure row the builder authored IS the fix, and the
+   lane is speculative.
+
+2. PARKED — work/.b036-gaps.json[7], from work/.b036-verify-data-rows-1.txt:104
+   Same finding, restated by the verify agent after it confirmed the builder's line ("Confirmed by me,
+   stands as the builder wrote it").
+   ref "flaggedResidue: the same blessed-swiftness#mounted gap as the report line above …"
+   Why: one gap collated twice, not two gaps; parked for the same reason and the same evidence.
+
+WHY THESE ARE RESIDUE AND NOT AN OWNER QUESTION
+
+I re-ran the carrier sweep rather than taking the builder's word for it, and it holds in both directions:
+
+- Character side: every land-Speed lane targets the CHARACTER. derive.ts:5222-5224 sums landSpeedBonus
+  over feats, ownedFeatureIds and heritages unconditionally; speeds / speedsIf / landSpeedMin /
+  speedAdjust (derive.ts:5256, 5296) are all character-scoped. Nothing routes a character's class
+  feature to a companion.
+- Companion side: a companion land Speed DOES exist — src/rules/companions.ts:404,
+  `speeds.land += m.speedBonus + (spec?.speedBonus ?? 0) + gear.speedBonus`. Its addends are exactly
+  three and all companion-side: maturity, specialization, invested companion gear (companions.ts:283).
+  There is no character-feature addend. And CompanionMod.speeds (companions.ts:531-536) is a Math.max
+  SET of extra speed TYPES, not an addend, so even the existing companionGrants lane cannot express
+  "+5 feet" — a redirect could not be smuggled in as a grant.
+- The condition has no carrier either: a scan of every "mounted" occurrence in src/rules and src/sheet
+  returns only situational STARS (situationalBonuses.ts:2424, 2426, 2438, 2547, 3309, 3465 — all of the
+  form when: "while mounted…") and prose notes. There is no mounted state, mode or condition anywhere,
+  so an engine redirect would first need a player-facing mounted toggle before it had anything to key on.
+
+Scale, measured over public/core-descriptions.json (8 records mention a mount gaining something):
+  - 5 are ordinary companion grants already carried by src/rules/companionGrants.ts —
+    feats/faithful-steed, feats/auspicious-mount, feats/specialized-mount, feats/behold-a-pale-horse,
+    feats/night-terror.
+  - 3 are the SAME single Blessed Swiftness sentence seen from three records — classes/champion (class
+    blurb), classFeatures/blessing-of-the-devoted (parent), classFeatures/blessed-swiftness (the record).
+So the "redirect a bonus that would otherwise be yours to your mount" mechanic is ONE clause in the game.
+
+Precedent decides the shape without an owner ruling: src/rules/situationalBonuses.ts:4358, swift-paragon,
+carries the identical construction — *"If you're mounted on your animal companion at the start of your
+turn, you can have the mount be quickened that turn instead of you."* — as a disclosure note on a
+condition marker, not as a mechanical redirect. work/.b036-rows-data-rows-1.json does exactly that for
+blessed-swiftness (the modeAdjust parenthetical now states the redirect instead of denying it), so the
+player-visible half of this finding ships in this batch and the record is consistent with the one other
+record in the game that has the same problem.
+
+No owner question is owed on the three tests: print settles the mechanic unambiguously ("If you're
+mounted, your mount gains the bonus instead."), WG does not contradict print — it encodes strictly less
+(bare addBonusToValue SPEED 5 status, no mounted clause) — and no ruling of the owner's conflicts with
+another. What is missing is engine capacity, not a decision, and building a mounted mode plus a
+character→companion speed addend for a single clause is speculative infrastructure. If a second clause
+of this shape ever lands, it wants its own measured lane with the mounted-state model decided up front.
+
+Checked while I was in the records, so it is not left as an unknown: there is no double-count to fix.
+I dumped the sibling features — only classFeatures/blessed-swiftness carries landSpeedBonus (5);
+blessing-of-the-devoted, blessed-shield and blessed-armament carry none — so the character is not being
+given +10, and the builder's decision to leave landSpeedBonus:5 in place is the correct on-foot value.
+
+CARRIED FORWARD (not a line of mine, restated so it is not lost)
+
+The verify agent recorded a NEW finding on the same record that the collator did not turn into a gap
+line: an aon* overlay row does not survive `npm run data`. The chain applies effect-backfill.json in
+import-core-v2 and then, five steps later, scripts/migration/stamp-aonid.mjs --write deletes
+aonId/aonParentId/aonSection/aonOrigin on every mapped record and re-stamps from
+scripts/migration/out/{map,sections}.json, where blessed-swiftness is status "subblock" with parentDocId
+"equipment-2320" — so the next regeneration restores the Bracers of Devotion join that this batch's
+blessed-swiftness#aon-parent rows exist to correct. scripts/fix-aonid-collisions.mjs documents this exact
+clobber and re-mirrors only the records in its own tables, which do not include blessed-swiftness (and
+its REPOINTS lane sets aonId only, never aonParentId/aonSection). The durable fix is a parent-repoint
+entry in scripts/fix-aonid-collisions.mjs or a correction to the sections.json entry (as blessed-shield's
+already was) — both outside this family's files, and outside a gap agent's remit since neither is one of
+my two lines. It is not silent meanwhile: the two assertions in test/batch036-data-rows-1.test.ts read
+the SHIPPED core.json, so a regeneration that reverts the join turns them red.
+
+Also observed and deliberately NOT acted on: classFeatures/blessed-armament joins aonParentId
+"creature-2439" / aonSection "Blessed Armaments", which looks like the same wrong-parent name collision
+that blessed-swiftness#aon-parent fixes (its siblings join class-feature-877). It is not a finding in
+work/.b036-read.json confirmed[] and not one of my gap lines, so authoring a row for it would be an
+uncited flip; recorded here for whoever measures that lane.
+
+VERIFICATION
+- work/.b036-gaps.json re-read immediately before writing and edited in place with the Edit tool: still
+  12 entries, both data-rows-1 lines now status "parked" with a flaggedResidue ref, and every other
+  family's line byte-identical (situational x6, data-rows-2 x1 left open; instruments x2 left "authored").
+- Both refs satisfy the driver's check at scripts/wg-batch-run.mjs:932-934 (match /^flaggedResidue:/i,
+  reason length well over the 20-char floor).
+- No src/, scripts/ or test/ file touched, so no test flip and nothing for scripts/test-flip-audit.mjs to
+  cite; no vitest run is owed and npx tsc --noEmit is unaffected (no TypeScript changed).

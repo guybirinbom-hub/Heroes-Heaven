@@ -3426,6 +3426,23 @@ export interface ClassFeature extends ContentBase, DefenseGrants {
   /** Foundry classification tags (e.g. `armor-innovation-modification`) used to filter selectable options. */
   otherTags?: string[];
   /**
+   * Another INNOVATION MODIFICATION this one requires — *"You must have the speed boosters
+   * modification to select this modification"* (Hyper Boosters, AoN innovation-5). Any ONE of the
+   * listed ids satisfies it, because four of the six printed clauses are or-lists (*"You must have the
+   * harmonic oscillator, metallic reactance, OR phlogistonic regulator modification"*).
+   *
+   * Read by `inventorModificationOptions` (build.ts), the one place both the picker and the built
+   * character resolve a modification pick. It is not decoration: Hyper Boosters' `landSpeedBonus` is
+   * deliberately stored as the +5 DELTA over Speed Boosters' own +5, so an inventor who took Hyper
+   * Boosters without Speed Boosters — which the picker permitted — walked at +5 feet against a printed
+   * *"+10-foot status bonus to your Speed"*. Enforcing the prerequisite is what makes the delta true.
+   *
+   * ⚠ A prerequisite naming a modification the character has NOT chosen hides the option; it does not
+   * warn. The three tiers are picked in one card, so a player who wants Hyper Boosters can see the
+   * requirement appear the moment they choose Speed Boosters.
+   */
+  requiresModification?: string[];
+  /**
    * Enhanced Resistance: "The resistance from your initial armor modification adds your full level,
    * instead of half your level."
    *
@@ -4792,6 +4809,23 @@ export interface ModeDef {
    * `agile` really does move the row's three attack numbers onto the −4/−8 progression.
    */
   weaponTraits?: WeaponRider | WeaponRider[];
+  /**
+   * The same rider for an UNARMED Strike, while the mode is on.
+   *
+   * Animalistic Brutality (AoN feat-5835): *"Your unarmed attack from bestial rage gains one of the
+   * following traits until you stop raging: backswing, forceful, parry, razing, or sweep… You can
+   * choose a different trait each time you use Animalistic Brutality."* A choice you re-make every
+   * Rage, held for as long as the Rage lasts, is by Q11 a mode — and `DefenseGrants.unarmedTraits`,
+   * the field that says exactly this, is read off the owned RECORD and has no off switch, so
+   * authoring it on the feat would give a barbarian all five traits permanently.
+   *
+   * Same hoist, and the same reason, as `weaponTraits` directly above: the rider shape is the one
+   * feats and class features already use, so a toggleable source and a permanent one produce the same
+   * Strike row. Read by `applyUnarmedRiders` (derive.ts) before `mapStepFor`, so a mode that adds
+   * `forceful` really does move the row's damage and a mode that adds an agile-family trait really
+   * does move its three attack numbers.
+   */
+  unarmedTraits?: UnarmedRider | UnarmedRider[];
 }
 
 /**

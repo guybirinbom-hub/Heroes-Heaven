@@ -1,0 +1,147 @@
+BATCH 036 — WG-COMPARISON LANE — GATE-RED — ADVERSARIAL VERIFY — GROUP: red-parked-lanes-and-desk
+
+Verified against: work/.b036-report-red-parked-lanes-and-desk.txt, work/.b036-report-triage-parked.txt,
+work/.b036-rows-red-parked-lanes-and-desk.json (findings: [], deliberately empty),
+test/batch036-red-parked-lanes-and-desk.test.ts.
+Re-measured independently off shipped public/core.json / public/core-descriptions.json, the AoN mirror
+(C:/wonderers guide/aon-2e-archive/data/by-category) and `node scripts/wg-show.mjs "<name>" --raw`.
+
+GATES RUN BY ME
+  node scripts/vt.mjs run test/batch036-red-parked-lanes-and-desk.test.ts  ->  1 file, 2 tests, PASS
+  node scripts/test-flip-audit.mjs --batch 036                             ->  clean (17 files, every flip cited)
+  npx tsc --noEmit                                                         ->  clean
+
+SPEC CHECK
+  The group's spec carries findings: [] — no row to check for existence / supersedes / AoN id / collision.
+  I ran the record+field+path collision scan across ALL 11 specs in work/.b036-specs.json anyway (41 row
+  keys). Result: this group collides with nothing, eye-of-the-unseen carries two rows on DIFFERENT fields
+  (items/eye-of-the-unseen|innateSpells from data-rows-2, |passiveEffects from situational) so item 4's
+  "no collision" holds by key, and illusionists-hat carries no backfill row at all. ONE collision exists
+  elsewhere and it will refuse the whole batch — CROSS-FILE GAP 1 below.
+
+MANIFEST
+  work/.b036-specs.json has 11 entries, one per family, none dropped. The group's entry lists all four
+  paths it touched (rows, report, triage ledger, test). I appended this verify file to that entry's
+  stage[] and touched no other entry.
+
+PER ITEM
+--------------------------------------------------------------------------------------------------
+1. gap D — companion-strike rider lane (engine CROSS-FILE GAPS, work/.b036-gaps.json entry 16)
+   DONE (parked WITH the measure it was missing).
+   EVIDENCE: I re-measured the number rather than reading it. classFeatures/advanced-weaponry-construct
+   .effectChoices[modification].options = 11 ids; exactly four carry `weaponTraits` — hampering-spikes
+   {hampering,trip,versatile-p}, hefty-composition {shove,razing,versatile-b}, modular-head
+   {modular-b-p-or-s}, razor-prongs {tearing,trip,versatile-s} — and every one is scoped
+   match.designated:'innovation'; the other seven carry actionCost+aonSection only. Of the 18 records
+   tagged otherTags 'construct-innovation-modification', ZERO carry weaponTraits or any other grant
+   payload (their key union is id,name,traits,rarity,source,level,actionCost,otherTags,aonParentId,
+   aonSection,effectChoices). So n=4, not n=1, and the engine report's razor-prongs line understated it
+   by three. The measure lives in the report, the ledger and both it( of the test, so it cannot rot.
+   SUPPLEMENTARY MEASURE (mine, for the next round): the corpus holds 26 weapon-innovation-modification
+   records and SEVEN of them carry weaponTraits — the four above plus inconspicuous-appearance,
+   integrated-gauntlet and tangle-line, which are NOT in the level-1 offer set. advanced-weaponry-
+   construct is the ONLY record in core.json whose effectChoices offer weapon modifications (checked by
+   scanning every classFeature's effectChoices options against the 26), so the construct-side exposure is
+   4 today and 7 is the ceiling if an advanced-modification route is ever added.
+   RESIDUAL SURVIVES: work/wg-batch-036-residual.json flaggedResidues[8] is the only one of the 10
+   entries that mentions the record, and work/.b036-gaps.json has exactly one gap-D line (entry 16,
+   status "parked"). I computed the repair group's landed dedup key (family|kind|sha1(summary),
+   wg-batch-close.mjs:401) over all 10 residues: 10 distinct keys, so nothing merges and nothing drops.
+   It survives. Not hand-edited.
+
+2. flaggedResidue blessed-swiftness#mounted (data-rows-1) — DONE (park confirmed, correctly no build).
+   EVIDENCE: companions.ts:403 is the whole land-Speed lane — `speeds.land += m.speedBonus +
+   (spec?.speedBonus ?? 0) + gear.speedBonus`, three companion-side addends and no character-feature
+   addend; CompanionMod.speeds (companions.ts:531-536) is a Math.max SET of speed TYPES and cannot
+   express "+5 feet"; `grep -rn mounted src/rules/*.ts` returns only situational stars, a glossary line,
+   an itemAlias and swift-paragon's disclosure note — no mounted STATE. n=1 re-measured my way: exactly
+   three description records carry the redirect (classes/champion, classFeatures/blessing-of-the-devoted,
+   classFeatures/blessed-swiftness) and all three are the SAME Blessed Swiftness sentence. Print
+   (AoN class-feature-877, in the mirror) settles the mechanic and WG encodes strictly less, so nothing
+   is owed to the owner. The disclosure ships through work/.b036-rows-data-rows-1.json's superseding
+   modeAdjust row, and situationalBonuses.ts:4380 (swift-paragon) is the identical house precedent.
+   CORRECTION, cosmetic: the report cites situationalBonuses.ts:4358 for swift-paragon; the line is 4380
+   in the tree I verified — the inventor-modification-rows group added rows to that file this round.
+   Substance unaffected.
+
+3. flaggedResidue cultivators-keen-eye ritual-cost (situational) — DONE (park confirmed, correctly no build).
+   EVIDENCE: core.json's actions bucket has exactly one /ritual/ id (spiritual-aid) and there is no
+   `rituals` bucket at all; RecordMarker.on is 'action' | 'condition' | 'feature' — at line 4193, not the
+   4174 the report cites (same file drift as item 2) — so a ritual-cost mark has no row to attach to.
+   The printed clause reaches the player today: shipped feats/cultivators-keen-eye.note carries it
+   verbatim-in-substance against AoN feat-7090's second paragraph, which I read in the mirror. n=1.
+   src/rules/situationalBonuses.ts was NOT touched by this group, which is correct — it belongs to
+   inventor-modification-rows this round.
+
+4. flaggedResidue eye-of-the-unseen / illusionists-hat collision warning — DONE (discharged, not a park).
+   EVIDENCE: my own cross-spec collision scan (41 row keys over all 11 specs) shows the only rows on
+   either record are items/eye-of-the-unseen|innateSpells (data-rows-2) and items/eye-of-the-unseen|
+   passiveEffects (situational) — different fields, so keyOf (wg-batch-run.mjs:172) never collides them
+   — and items/illusionists-hat carries no backfill row from any family. The warned-of collision is
+   ABSENT. Residual entry [1] correctly not hand-edited.
+   CORRECTION to the report's reasoning (not to its verdict): the report says no row exists on
+   illusionists-hat "because illusionists-hat#daily-illusory-creature sits in refuted[]". That finding is
+   refuted, but illusionists-hat#skill-bonuses is in confirmed[] — it emits no row because the
+   situational family fixed it in CODE (a FEAT_SITUATIONAL entry), not because the record is refuted.
+   The conclusion is right for a different reason, which I verified directly rather than by inheritance.
+
+5. OWNER-QUEUED, all three — DONE (artefact confirmed, nothing decided here).
+   EVIDENCE: work/owner-questions.json open[] holds n=148 hyper-boosters, n=149 spirit-walk, n=150
+   chronomancers-secrets (max n = 150), each matching its work/.b036-queue.json entry (3 entries).
+   #148: `node scripts/wg-show.mjs "Hyper Boosters" --raw` (their id 24841) prints the second conditional
+   with NO THEN branch — trueOperations [] — and falseOperations addBonusToValue SPEED 30 status under
+   [SKILL_CRAFTING <= L, ACTIVE_MODES NOT_INCLUDES overdrive/critical overdrive], exactly as filed. The
+   mirror's innovation-5 prints "If you're legendary in Crafting, it instead increases to a +30-foot
+   status bonus when you're in Overdrive" — a RANK gate. Ours states it at situationalBonuses.ts:1421
+   (the report cites 1403; same drift). WG-vs-print, correctly at the desk.
+   #149: mirror feat-7137 prints no sense clause and lists Apparition Sense as a prerequisite; mirror
+   feat-7120 prints "apparition sight, an imprecise sense ... within 30 feet". Ours: feats/spirit-walk
+   has no `senses` (fields: ...,edition,aonId,resistances) and feats/apparition-sense carries
+   [{apparition sight, 30, imprecise}]. REFUTED verdict is right; nothing is missing on our side.
+   #150: mirror feat-8482 prints "You gain either the stasis domain spell or the path of least
+   resistance focus spell". Ours: feats/chronomancers-secrets.choice grants focusSpells ['stasis'] /
+   ['path-of-least-resistance'], and both spells carry the `focus` trait. WG-vs-print, correctly filed.
+   No agent, this verifier included, decided any of the three.
+
+FIXED-BY-ME: nothing. Every item was already DONE as delivered; the two corrections above are
+line-number drift and one mis-stated reason, neither of which changes a disposition, and the one real
+defect I found lives in another group's spec file and is filed below.
+
+==================================================================================================
+DATA STILL NEEDED
+==================================================================================================
+(none — this group emits no backfill row, and the record its measure reads,
+classFeatures/advanced-weaponry-construct, already carries the engine family's applied effectChoices row
+in shipped core.json.)
+
+==================================================================================================
+CROSS-FILE GAPS  (outside the files assigned to me — NOT edited)
+==================================================================================================
+1. ⚠ BATCH-BLOCKING. work/.b036-rows-engine.json (hyper-boosters#overdrive) and
+   work/.b036-rows-red-inventor-modification-rows.json ("gap E — speed-boosters Overdrive step") BOTH
+   write classFeatures/hyper-boosters.whileActive — engine's value [{state:"overdrive",speeds:{land:10}}]
+   (already applied; it is what shipped core.json holds), the red group's superseding
+   [{state:"overdrive",speeds:{land:5}}]. Neither row carries a `path`, so keyOf
+   (scripts/wg-batch-run.mjs:172) produces the identical key classFeatures/hyper-boosters/whileActive.
+   stageApply builds `rows` from EVERY spec in the manifest (wg-batch-run.mjs:704) and runs precheck
+   BEFORE the "already in the overlay byte-identical, skip this spec" loop (:707 vs :736), and precheck
+   check (1) hard-refuses a duplicate key with "resolve by hand, the applier will not merge" (:602-609).
+   So the next `--stage apply` refuses the whole batch and writes nothing — the engine row being applied
+   already does not exempt it. FIX (owner: red-inventor-modification-rows, whose row is the surviving
+   one): merge the two into ONE superseding row in that group's spec and drop the engine spec's row, per
+   the "two findings on the same record+field must be merged into ONE row" rule. Not editable by me —
+   both files belong to other groups.
+2. scripts/wg-batch-close.mjs (owner this round: the repair group) — I confirm the builder's flag and
+   found it correct against the LANDED code, not the described intent. The dedup that shipped keys a
+   residue by family|kind|sha1(normalised summary) (:401) and mergeArray (:384-388) only refuses to
+   APPEND a fresh twin; it never removes an entry that is already in
+   work/wg-batch-036-residual.json. Computed over the current 10 residues: 10 distinct keys, zero merges
+   — the two genuine restatement pairs ([0]/[4] blessed-swiftness#mounted, [2]/[5] the ritual-record
+   gap) are the same gap in different words and hash differently, and [1] (eye-of-the-unseen collision,
+   verified ABSENT) and [3] (an ASCII divider swept up by the collator) are unique and are not gaps at
+   all. So item 4's expected disappearance does NOT follow from the dedup: retiring a "not a gap" residue
+   needs the close to honour the ref that says so, or a one-time regeneration of the residual from
+   gaps.json. Until then flaggedResidues[1] and [3] will still be listed after the next close, and this
+   file (with the builder's report) is the record that they are discharged rather than open.
+
+Open lines: DATA STILL NEEDED 0, CROSS-FILE GAPS 2.

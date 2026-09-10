@@ -880,9 +880,16 @@
    {
     "spellId": "locate",
     "tradition": "occult",
-    "usesPerDay": 1
+    "usesPerDay": 1,
+    "heightenAt": [
+     {
+      "level": 14,
+      "rank": 5
+     }
+    ]
    }
-  ]
+  ],
+  "why": "feat-2663 prints \"You can cast Locate as an innate occult spell once per day. When you reach 14th level, this spell is heightened to 5th level.\" The grant carried no rank and no heightenAt, so castRank (build.ts) returned the spell's own base rank 3 at every level and a 14th-level Eldritch Researcher cast a 3rd-rank Locate forever. SUPERSEDES the existing feats/lorefinder innateSpells row [{spellId:locate,tradition:occult,usesPerDay:1}], whose three fields are carried whole into this value; heightenAt is the same shape dragon-prince and shadows-assault already use."
  },
  {
   "category": "feats",
@@ -2076,9 +2083,11 @@
    {
     "name": "lifesense",
     "range": 30,
-    "acuity": "imprecise"
+    "acuity": "imprecise",
+    "note": "You also sense precious materials (\"cultivation materials\") in the same range."
    }
-  ]
+  ],
+  "why": "wg-batch-036 cultivators-keen-eye#materials. SUPERSEDES the shipped senses row {name:lifesense,range:30,acuity:imprecise}, whose three fields are carried whole into this value; only `note` is added. AoN feat-7090 prints the sense in one breath with the lifesense — \"you gain lifesense as an imprecise sense with a range of 30 feet. You can also sense the presence of precious materials in the same range\" — and SenseEntry.note is the field written for exactly that shape (types.ts: the carcharodon-merfolk blood-range clause), rendered inline on the derived Senses row by VitalsRail.tsx:741 and DetailsTab.tsx:466. That is the \"beside the lifesense\" surface the finding's proposal asks for."
  },
  {
   "category": "feats",
@@ -3964,9 +3973,8 @@
   "category": "items",
   "id": "eye-of-the-unseen",
   "field": "passiveEffects",
-  "value": {
-   "perception": 1
-  }
+  "value": null,
+  "why": "wg-batch-036 eye-of-the-unseen. SUPERSEDES (deletes) the shipped overlay row passiveEffects={perception:1}; that object held the perception key and nothing else, so nothing survives to merge into this value. AoN equipment-1367-1240 prints \"While wearing the eye, you gain a +1 item bonus to VISUAL Perception checks\", but passiveItemBonus/passiveItemBonusDetail (derive.ts:303-322, :386-408) gate on itemInUse alone, so the flat field added the bonus to EVERY Perception check and the sheet then listed the same +1 a second time as the conditional star at situationalBonuses.ts. The conditional star stays and is the whole mechanic — the day-goggles precedent named in the passiveItemPenalty comment at derive.ts:326-339."
  },
  {
   "category": "items",
@@ -4488,31 +4496,22 @@
   "category": "items",
   "id": "composer-staff",
   "field": "passiveEffects",
-  "value": {
-   "skills": {
-    "performance": 1
-   }
-  }
+  "value": null,
+  "why": "wg-batch-036 GAP LANE, sibling of the confirmed finding composer-staff-greater. SUPERSEDES (deletes) the shipped overlay row {category:'items',id:'composer-staff',field:'passiveEffects',value:{skills:{performance:1}}}; that object held the performance key and nothing else, so nothing survives to merge into this value. Print premise AoN equipment-2249 (Treasure Vault Remastered pg. 131), the base-staff paragraph the greater and major variants inherit verbatim: \"In this way, you can play it as though it were an instrument, and it grants a +1 item bonus to Performance checks made with it.\" The bonus is for PLAYING the staff, not for holding it, but a held staff is `equipped`, so the flat field passed passiveItemBonus / passiveItemBonusDetail's itemInUse gate (derive.ts:303-322, :386-408) and raised every Performance check while the conditional star at src/rules/situationalBonuses.ts:1835 restated the same +1 beside it. The star stays and is the whole mechanic — the sibling instrument pipes-of-compulsion-greater is already star-only, and composer-staff-greater gets the identical row in work/.b036-rows-situational.json."
  },
  {
   "category": "items",
   "id": "composer-staff-greater",
   "field": "passiveEffects",
-  "value": {
-   "skills": {
-    "performance": 1
-   }
-  }
+  "value": null,
+  "why": "wg-batch-036 composer-staff-greater. SUPERSEDES (deletes) the shipped overlay row passiveEffects={skills:{performance:1}}; that object held the performance key and nothing else, so nothing survives to merge into this value. AoN equipment-2249-1995 prints \"In this way, you can play it as though it were an instrument, and it grants a +1 item bonus to Performance checks made with it\" — a bonus for playing the staff, not for holding it, while a held staff is `equipped` and so passed passiveItemBonus's itemInUse gate on every Performance check, listing the same +1 twice. The conditional star at situationalBonuses.ts stays; the sibling instrument pipes-of-compulsion-greater already has the star and passiveEffects=null."
  },
  {
   "category": "items",
   "id": "composer-staff-major",
   "field": "passiveEffects",
-  "value": {
-   "skills": {
-    "performance": 2
-   }
-  }
+  "value": null,
+  "why": "wg-batch-036 GAP LANE, sibling of the confirmed finding composer-staff-greater. SUPERSEDES (deletes) the shipped overlay row {category:'items',id:'composer-staff-major',field:'passiveEffects',value:{skills:{performance:2}}}; that object held the performance key and nothing else, so nothing survives to merge into this value. Print premise AoN equipment-2249: the same base paragraph — \"it grants a +1 item bonus to Performance checks made with it\" — plus the major variant's own line, \"The item bonus is +2.\" Same defect as the base and greater staves: a held staff is `equipped`, so the flat {skills:{performance:2}} reached every Performance check through the itemInUse gate while the conditional star at src/rules/situationalBonuses.ts:1845 (+2 item) restated it. The star stays and is the whole mechanic."
  },
  {
   "category": "items",
@@ -87945,9 +87944,11 @@
   "value": [
    {
     "type": "physical",
-    "value": "@actor.archetypeFeats.golem-grafter"
+    "value": "@actor.archetypeFeats.golem-grafter",
+    "condition": "except adamantine"
    }
-  ]
+  ],
+  "why": "AoN feat-1227 prints \"resistance to physical damage (except adamantine) equal to your number of class feats from the golem grafter archetype\" — our row omitted the exception, so the IWR breakdown showed a bare physical line and the sheet resisted adamantine. `condition` annotates a COUNTED resistance at src/rules/derive.ts:~2752 (`r.condition ?? src.__cond`), which is the right half of the pair: the number is real, its scope is not checkable. Exact shape of feats/stoney-skin."
  },
  {
   "category": "feats",
@@ -107306,9 +107307,10 @@
       "aura-champions-aura"
      ]
     },
-    "note": "Blessed Swiftness: when an ally’s movement inside the aura triggers an enemy’s reaction, that ally gains a +2 status bonus to all defenses against it. (The +5-foot Speed is yours wherever you stand and is already on your sheet.)"
+    "note": "Blessed Swiftness: when an ally’s movement inside the aura triggers an enemy’s reaction, that ally gains a +2 status bonus to all defenses against it. (The +5-foot status bonus is yours while on foot; if you’re mounted, your mount gains the bonus instead.)"
    }
-  ]
+  ],
+  "why": "AoN class-feature-877 (Blessing of the Devoted, Player Core 2 pg. 86): \"Blessed Swiftness: You gain a +5-foot status bonus to Speed. If you're mounted, your mount gains the bonus instead.\" The shipped modeAdjust note ended \"(The +5-foot Speed is yours wherever you stand and is already on your sheet.)\" - it told the player the opposite of the clause the record's own description prints. Whole value re-emitted with only the parenthetical replaced (modeAdjust is one field), superseding the existing overlay row on classFeatures/blessed-swiftness.modeAdjust. landSpeedBonus:5 stays as it is: neither our engine nor WG has a mount-Speed carrier, so the redirect is disclosed in the note rather than silently mis-modelled."
  },
  {
   "category": "feats",
@@ -184933,5 +184935,464 @@
   "field": "description",
   "value": "Spirit necromancers, also known as vitamancers, seek the secrets of the soul and play with the eternal energies of the living and dead. Your thralls often resemble ghosts and spirits.\n\n**Grave Spell** Life Tap\n\n**Thrall Enhancement** Your thralls, while still being tied to the physical world, have an incorporeal essence. Whenever one of your thralls Strikes, you can choose for that damage to be spirit or void damage instead of physical damage.",
   "why": "AoN grim-fascination-4 — the printed Spirit grim fascination entry (Impossible Magic pg. 30)."
+ },
+ {
+  "category": "classFeatures",
+  "id": "lesson-of-the-flock",
+  "field": "grantedSpells",
+  "value": [
+   "levitate"
+  ],
+  "why": "AoN lesson-27 prints \"You gain the Sheltering Wings hex, and your familiar learns Levitate.\" — we carried only the hex (focusSpells), so the familiar half reached nothing. Flat grantedSpells is the batch-035 lesson lane read at src/rules/build.ts:4048, the same row lesson-of-vengeance uses; spells/levitate is rank 3, matching WG's giveSpell rank 3."
+ },
+ {
+  "category": "feats",
+  "id": "wind-seeker",
+  "field": "spellListAdditions",
+  "value": {
+   "spells": [
+    "aerial-form"
+   ],
+   "as": "repertoire",
+   "entryId": "animist-apparition-casting"
+  },
+  "why": "AoN feat-7138 prints \"You add aerial form to your apparition spell repertoire, allowing you to cast it with your apparition spellcasting.\" — the record carried no carrier at all. Byte-identical in shape to its own prerequisite feats/walk-the-wilds (animal-form) and to monstrous-inclinations; reader at src/rules/build.ts:6618 walks taken feats and routes as:'repertoire' into grantedRepertoireAdds."
+ },
+ {
+  "category": "feats",
+  "id": "wind-seeker",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "darkened-forest-form",
+    "note": "Wind Seeker: if you are attuned to an apparition of darkened boughs, add the bat and bird forms in aerial form to your darkened forest form lists."
+   }
+  ],
+  "why": "AoN feat-7138 Special: \"If you are attuned to an apparition of darkened boughs, add the bat and bird forms in aerial form to your darkened forest form lists.\" — a clause that changes no number the sheet holds, which is exactly what spellNotes carries (writer src/rules/build.ts:6797, display via spellNotesFor in explain.ts). Same shape as feats/scattered-fire's fireball note."
+ },
+ {
+  "category": "feats",
+  "id": "deadly-mutation",
+  "field": "modifiesGrant",
+  "value": [
+   {
+    "from": "ostilli-host-dedication",
+    "actionRider": {
+     "actionId": "spit-ambient-magic",
+     "value": "d8 damage dice",
+     "note": "Deadly Mutation: the damage dice of your Spit Ambient Magic are d8s, and a target that critically fails its save also takes 1d6 persistent bleed damage — persistent damage of the energy type instead, if you dealt energy damage with the ability."
+    }
+   }
+  ],
+  "why": "AoN feat-5459 prints \"The damage dice of your Spit Ambient Magic increase to d8s, and when a target critically fails its save against the ability, it also takes 1d6 persistent bleed damage.\" — the record delivered nothing. modifiesGrant.actionRider is the live lane (src/rules/build.ts:6555-6578), used by feats/draconic-paragon for the same shape of clause on Kobold Breath."
+ },
+ {
+  "category": "feats",
+  "id": "skill-mastery-rogue",
+  "field": "maxTakable",
+  "value": 5,
+  "why": "AoN feat-5096 prints \"**Special** You can select this feat up to five times.\" — absent maxTakable means once, because maxTakes() at src/rules/featGrants.ts:789 returns `feat.maxTakable ?? 1`. Sibling feats/skill-mastery (feat-6208, same Special clause) already carries maxTakable: 5."
+ },
+ {
+  "category": "feats",
+  "id": "unravel-mysteries",
+  "field": "recordMarks",
+  "value": [
+   {
+    "on": "action",
+    "id": "decipher-writing",
+    "note": "Unravel Mysteries: Deciphering Writing takes only half as long as usual (about half a minute per page), and on a failure you don't take the usual -2 circumstance penalty to further checks to decipher that text."
+   }
+  ],
+  "why": "AoN feat-1132 prints \"When you Decipher Writing, you need only half as long as usual … and if you fail, you don't take the usual -2 circumstance penalty to further checks to decipher that text.\" — neither clause reached the player. recordMarks on:'action' is our injectText-on-an-action equivalent (reader recordMarksFor, src/rules/explain.ts:477, which walks taken feats); actions/decipher-writing exists."
+ },
+ {
+  "category": "feats",
+  "id": "spirit-walk",
+  "field": "resistances",
+  "value": [
+   {
+    "type": "all",
+    "value": "floor(@actor.level/2)",
+    "against": "damage dealt by haunts or spirits, during your first turn in an encounter (you and allies in the 30-foot aura)"
+   }
+  ],
+  "why": "AoN feat-7137 prints \"During your first turn in an encounter, you and allies in the aura have resistance equal to half your level against damage dealt by haunts or spirits.\" — the record had no resistances field and the situational registry covers only the +2 Recall Knowledge line. `against` withholds the number from the total and still renders the conditional IWR line (src/rules/derive.ts:2744), the shape modes/dampening-harmonics uses; type 'all' + floor() are both already in service (modes/deitys-protection)."
+ },
+ {
+  "category": "items",
+  "id": "eye-of-the-unseen",
+  "field": "innateSpells",
+  "value": [
+   {
+    "spellId": "see-the-unseen",
+    "tradition": "arcane",
+    "rank": 2,
+    "usesPerDay": 1
+   }
+  ],
+  "why": "AoN equipment-1367-1240 prints \"**Activate** ⟨2⟩ command, envision **Frequency** once per day … The eye casts See the Unseen on you.\" — the item had the 1/day counter and the activation cost but no spell grant, so the cast never reached the Spells page. The invested-item innateSpells walk (src/rules/build.ts:8013) is the only lane that can put it there; items/hydration-cloak carries the identical 1/day shape and spells/see-the-unseen is rank 2, arcane/divine/occult."
+ },
+ {
+  "category": "classFeatures",
+  "id": "lesson-of-protection",
+  "field": "grantedSpells",
+  "value": [
+   "mystic-armor"
+  ],
+  "why": "AoN lesson-19 (Lesson of Protection, Player Core pg. 185): \"You gain the Blood Ward hex, and your familiar learns Mystic Armor.\" Only the hex half had a carrier (focusSpells: [blood-ward]); the taught spell reached nothing. Reader: the choice-owned-feature walk in buildCharacter (src/rules/build.ts:4046-4055 flat grantedSpells branch) collects it into featureGrantedSpells and merges it into the caster pool's grantedByRank at build.ts:4295 - the same route the shipped lesson-of-vengeance grantedSpells row already takes. spells['mystic-armor'] exists at rank 1, matching WG's NORMAL giveSpell rank 1. Existing overlay rows for this record are focusSpells + edition only, so no supersedes."
+ },
+ {
+  "category": "classFeatures",
+  "id": "lesson-of-dreams",
+  "field": "grantedSpells",
+  "value": [
+   "sleep"
+  ],
+  "why": "AoN lesson-16 (Lesson of Dreams, Player Core pg. 185): \"You gain the Veil of Dreams hex, and your familiar learns Sleep.\" Our record carried focusSpells: [veil-of-dreams] only. Same reader as lesson-of-vengeance (src/rules/build.ts:4048 flat grantedSpells branch). spells['sleep'] exists at rank 1, matching WG's NORMAL giveSpell rank 1. Existing overlay rows: focusSpells + edition only, so no supersedes."
+ },
+ {
+  "category": "classFeatures",
+  "id": "lesson-of-life",
+  "field": "grantedSpells",
+  "value": [
+   "spirit-link"
+  ],
+  "why": "AoN lesson-18 (Lesson of Life, Player Core pg. 185): \"You gain the Life Boost hex, and your familiar learns Spirit Link.\" Our record carried focusSpells: [life-boost] only. Same reader as lesson-of-vengeance (src/rules/build.ts:4048). spells['spirit-link'] exists at rank 1, matching WG's NORMAL giveSpell rank 1. Existing overlay rows: focusSpells + edition only, so no supersedes."
+ },
+ {
+  "category": "classFeatures",
+  "id": "lesson-of-shadow",
+  "field": "grantedSpells",
+  "value": [
+   "chilling-darkness"
+  ],
+  "why": "AoN lesson-22 (Lesson of Shadow, Player Core pg. 185): \"You gain the Malicious Shadow hex, and your familiar learns Chilling Darkness.\" Our record carried focusSpells: [malicious-shadow] only. Same reader as lesson-of-vengeance (src/rules/build.ts:4048); the merge at build.ts:4295 files the id by content.spells[id].rank, and spells['chilling-darkness'] is rank 3, matching WG's NORMAL giveSpell rank 3. Existing overlay rows: focusSpells + edition only, so no supersedes."
+ },
+ {
+  "category": "classFeatures",
+  "id": "lesson-of-decay",
+  "field": "grantedSpells",
+  "value": [
+   "insect-form"
+  ],
+  "why": "AoN lesson-26 (Lesson of Decay, Howl of the Wild pg. 62): \"You gain the Mycological Malady hex, and your familiar learns Insect Form.\" Our record carried focusSpells: [mycological-malady] only, and a grep of src finds no other carrier. Same reader as lesson-of-vengeance (src/rules/build.ts:4048). spells['insect-form'] exists at rank 3, matching WG's NORMAL giveSpell rank 3. Existing overlay rows: focusSpells + edition only, so no supersedes."
+ },
+ {
+  "category": "classFeatures",
+  "id": "lesson-of-mischief",
+  "field": "grantedSpells",
+  "value": [
+   "mad-monkeys"
+  ],
+  "why": "AoN lesson-21 (Lesson of Mischief, Player Core pg. 185): \"You gain the Deceiver's Cloak hex, and your familiar learns Mad Monkeys.\" Our record carried focusSpells: [deceivers-cloak] only. Same reader as lesson-of-vengeance (src/rules/build.ts:4048). spells['mad-monkeys'] exists at rank 3, matching WG's NORMAL giveSpell rank 3. Existing overlay rows: focusSpells + edition only, so no supersedes."
+ },
+ {
+  "category": "classFeatures",
+  "id": "lesson-of-snow",
+  "field": "grantedSpells",
+  "value": [
+   "wall-of-wind"
+  ],
+  "why": "AoN lesson-23 (Lesson of Snow, Player Core pg. 185): \"You gain the Personal Blizzard hex, and your familiar learns Wall of Wind.\" Our record carried focusSpells: [personal-blizzard] only. Same reader as lesson-of-vengeance (src/rules/build.ts:4048). spells['wall-of-wind'] exists at rank 3, matching WG's NORMAL giveSpell rank 3. Existing overlay rows: focusSpells + edition only, so no supersedes."
+ },
+ {
+  "category": "classFeatures",
+  "id": "lesson-of-the-shark",
+  "field": "grantedSpells",
+  "value": [
+   "feet-to-fins"
+  ],
+  "why": "AoN lesson-28 (Lesson of the Shark, Howl of the Wild pg. 62): \"You gain the Blood in the Water hex, and your familiar learns Feet to Fins.\" Our record carried focusSpells: [blood-in-the-water] only. Same reader as lesson-of-vengeance (src/rules/build.ts:4048). spells['feet-to-fins'] exists at rank 3, matching WG's NORMAL giveSpell rank 3. Existing overlay rows: focusSpells + edition only, so no supersedes."
+ },
+ {
+  "category": "classFeatures",
+  "id": "blessed-swiftness",
+  "field": "aonParentId",
+  "value": "class-feature-877",
+  "why": "AoN class-feature-877 (Blessing of the Devoted, Player Core 2 pg. 86) carries the section \"Blessed Swiftness: You gain a +5-foot status bonus to Speed...\". The shipped aonParentId was equipment-2320 - Bracers of Devotion, an Item 11 from Treasure Vault (Remastered), whose same-named section reads only \"Blessed Swiftness The bonus to Speed is +10 feet.\" - a different mechanic from a different book, joined by name collision. The sibling classFeatures/blessed-shield already joins to class-feature-877. No existing overlay row for this field on this record, so no supersedes."
+ },
+ {
+  "category": "classFeatures",
+  "id": "blessed-swiftness",
+  "field": "aonSection",
+  "value": "Blessed Swiftness:",
+  "why": "AoN class-feature-877 spells its section headings with a colon (\"Blessed Armament:\", \"Blessed Shield:\", \"Blessed Swiftness:\"), and the sibling classFeatures/blessed-shield carries aonSection \"Blessed Shield:\" against the same parent. The shipped \"Blessed Swiftness\" (no colon) was the Bracers of Devotion spelling and would not match under the corrected parent. No existing overlay row for this field on this record, so no supersedes."
+ },
+ {
+  "category": "feats",
+  "id": "cultivators-keen-eye",
+  "field": "note",
+  "value": "When you participate in a ritual you can substitute all or part of its cost with an equivalent value of precious materials. Costs in valuable substances like diamonds only — never a ritual that requires specific items to function; the GM makes the call if it's unclear.",
+  "why": "wg-batch-036 cultivators-keen-eye#materials, the SECOND half of the same finding. AoN feat-7090: \"When you participate in rituals, you can substitute all or part of the ritual's cost with an equivalent value of precious materials. This applies only to costs in valuable substances like diamonds, not to rituals that require specific items to function; the GM makes the call if it's unclear.\" No sheet number moves and no ritual ACTION record exists in core.json (only the rules pages casting-rituals / rituals), so neither FEAT_SITUATIONAL (SituationalTarget mirrors StatRef) nor RECORD_MARKERS (on: action|condition|feature) can hold it. The feat `note` field is the lane for \"here is the part you apply yourself\" — 89 overlay rows already use it and FeatsTab.tsx renders it as the record's Note paragraph. New field on this record; nothing superseded."
+ },
+ {
+  "category": "classFeatures",
+  "id": "advanced-weaponry-construct",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "modification",
+    "prompt": "Choose an initial weapon modification for your construct's unarmed attack",
+    "options": [
+     {
+      "value": "advanced-design",
+      "label": "Advanced Design"
+     },
+     {
+      "value": "blunt-shot",
+      "label": "Blunt Shot"
+     },
+     {
+      "value": "complex-simplicity",
+      "label": "Complex Simplicity"
+     },
+     {
+      "value": "dynamic-weighting",
+      "label": "Dynamic Weighting"
+     },
+     {
+      "value": "entangling-form",
+      "label": "Entangling Form"
+     },
+     {
+      "value": "hampering-spikes",
+      "label": "Hampering Spikes"
+     },
+     {
+      "value": "hefty-composition",
+      "label": "Hefty Composition"
+     },
+     {
+      "value": "modular-head",
+      "label": "Modular Head"
+     },
+     {
+      "value": "pacification-tools",
+      "label": "Pacification Tools"
+     },
+     {
+      "value": "razor-prongs",
+      "label": "Razor Prongs"
+     },
+     {
+      "value": "segmented-frame",
+      "label": "Segmented Frame"
+     }
+    ]
+   }
+  ],
+  "why": "innovation-2 (Breakthrough Modifications, Advanced Weaponry) prints \"Choose one of your construct's unarmed attacks to gain your choice of one initial weapon modification, chosen any initial weapon modifications to which you have access.\" The record carried only actionCost.passive + otherTags, so the pick could not be stored, applied or shown. The eleven options are exactly the level-1 weapon-innovation-modification classFeatures in core.json. No option carries a grant: applying the chosen modification's weaponTraits to a COMPANION's unarmed attack has no reader (applyWeaponRiders walks inventory WeaponItems only), so the row records the answer and claims nothing more. Reader added in batch 036: buildCharacter now resolvePicks the chosen inventor modifications, and the Builder mounts an EffectChoicesPicker for them."
+ },
+ {
+  "category": "classFeatures",
+  "id": "hyper-boosters",
+  "field": "whileActive",
+  "value": [
+   {
+    "state": "overdrive",
+    "speeds": {
+     "land": 5
+    }
+   }
+  ],
+  "why": "RECALIBRATION forced by the row above, and the exact twin of what already happened to this record's landSpeedBonus. SUPERSEDES the shipped overlay row {category:'classFeatures',id:'hyper-boosters',field:'whileActive',value:[{state:'overdrive',speeds:{land:10}}]}; that array held one clause and nothing else, so the whole superseded value is merged here with only its number changed. AoN innovation-5, Breakthrough Modifications — Hyper Boosters, verbatim: \"You gain a +10-foot status bonus to your Speed, which increases to a +20-foot status bonus when you're in Overdrive.\" The 10 was correct only while speed-boosters carried NOTHING for the Overdrive step. Batch 036's own requiresModification row makes speed-boosters a hard prerequisite of hyper-boosters, so the pair is never separable and every hyper-boosters number is a DELTA over the speed-boosters number underneath it — which is precisely why the landSpeedBonus row was superseded 10 -> 5 with the note \"derive.ts ADDS the two\". deriveSpeeds adds whileActive land grants the same way (src/rules/derive.ts:5233 pushes each into grantSources, :5310 does `speeds.land = (speeds.land ?? 0) + v`), so leaving it at 10 beside the new speed-boosters 5 would pay the pair +25 feet in Overdrive against a printed +20. With both rows the arithmetic is: speed-boosters alone 5 base / 5+5 = +10 in Overdrive; the pair 5+5 = +10 base / +10 +5+5 = +20 in Overdrive. Both printed numbers, exactly."
+ },
+ {
+  "category": "classFeatures",
+  "id": "hyper-boosters",
+  "field": "requiresModification",
+  "value": [
+   "speed-boosters"
+  ],
+  "why": "innovation-5 (Hyper Boosters) prints \"You must have the speed boosters modification to select this modification.\" Nothing gated the pick and hyper-boosters' landSpeedBonus is deliberately the +5 DELTA over speed-boosters' own +5, so metallic-reactance + hyper-boosters was a legal build here that walked at +5 feet against a printed +10. requiresModification is a new ClassFeature field read by inventorModificationOptions (batch 036); enforcing the prerequisite is what makes the delta encoding true."
+ },
+ {
+  "category": "modes",
+  "id": "animalistic-brutality-backswing",
+  "create": true,
+  "value": {
+   "id": "animalistic-brutality-backswing",
+   "name": "Animalistic Brutality (Backswing)",
+   "category": "Barbarian",
+   "exclusiveGroup": "animalistic-brutality",
+   "feats": [
+    "animalistic-brutality"
+   ],
+   "duration": "until you stop raging",
+   "survivesRest": false,
+   "modifiers": [],
+   "unarmedTraits": {
+    "fromRecord": "animal-instinct",
+    "add": [
+     "backswing"
+    ]
+   },
+   "note": "Once per Rage: your unarmed attack from bestial rage gains the backswing trait until you stop raging."
+  },
+  "why": "feat-5835 (Animalistic Brutality) prints \"Your unarmed attack from bestial rage gains one of the following traits until you stop raging: backswing, forceful, parry, razing, or sweep… You can choose a different trait each time you use Animalistic Brutality.\" A trait with an off switch is a mode (owner ruling Q11): DefenseGrants.unarmedTraits is read off the owned RECORD and would hand the barbarian all five traits permanently. One mode per printed trait, sharing an exclusiveGroup so only one is on at a time, gated to the feat. ModeDef.unarmedTraits is the new field batch 036 hoisted and applyUnarmedRiders now reads."
+ },
+ {
+  "category": "modes",
+  "id": "animalistic-brutality-forceful",
+  "create": true,
+  "value": {
+   "id": "animalistic-brutality-forceful",
+   "name": "Animalistic Brutality (Forceful)",
+   "category": "Barbarian",
+   "exclusiveGroup": "animalistic-brutality",
+   "feats": [
+    "animalistic-brutality"
+   ],
+   "duration": "until you stop raging",
+   "survivesRest": false,
+   "modifiers": [],
+   "unarmedTraits": {
+    "fromRecord": "animal-instinct",
+    "add": [
+     "forceful"
+    ]
+   },
+   "note": "Once per Rage: your unarmed attack from bestial rage gains the forceful trait until you stop raging."
+  },
+  "why": "feat-5835 prints the same sentence for forceful — \"gains one of the following traits until you stop raging: backswing, forceful, parry, razing, or sweep\". forceful is the branch that moves a number rather than a note: it adds damage on the second and third Strike of the turn, which is why the trait has to reach the Strike row instead of a star."
+ },
+ {
+  "category": "modes",
+  "id": "animalistic-brutality-parry",
+  "create": true,
+  "value": {
+   "id": "animalistic-brutality-parry",
+   "name": "Animalistic Brutality (Parry)",
+   "category": "Barbarian",
+   "exclusiveGroup": "animalistic-brutality",
+   "feats": [
+    "animalistic-brutality"
+   ],
+   "duration": "until you stop raging",
+   "survivesRest": false,
+   "modifiers": [],
+   "unarmedTraits": {
+    "fromRecord": "animal-instinct",
+    "add": [
+     "parry"
+    ]
+   },
+   "note": "Once per Rage: your unarmed attack from bestial rage gains the parry trait until you stop raging."
+  },
+  "why": "feat-5835 prints \"gains one of the following traits until you stop raging: backswing, forceful, parry, razing, or sweep\"."
+ },
+ {
+  "category": "modes",
+  "id": "animalistic-brutality-razing",
+  "create": true,
+  "value": {
+   "id": "animalistic-brutality-razing",
+   "name": "Animalistic Brutality (Razing)",
+   "category": "Barbarian",
+   "exclusiveGroup": "animalistic-brutality",
+   "feats": [
+    "animalistic-brutality"
+   ],
+   "duration": "until you stop raging",
+   "survivesRest": false,
+   "modifiers": [],
+   "unarmedTraits": {
+    "fromRecord": "animal-instinct",
+    "add": [
+     "razing"
+    ]
+   },
+   "note": "Once per Rage: your unarmed attack from bestial rage gains the razing trait until you stop raging."
+  },
+  "why": "feat-5835 prints \"gains one of the following traits until you stop raging: backswing, forceful, parry, razing, or sweep\"."
+ },
+ {
+  "category": "modes",
+  "id": "animalistic-brutality-sweep",
+  "create": true,
+  "value": {
+   "id": "animalistic-brutality-sweep",
+   "name": "Animalistic Brutality (Sweep)",
+   "category": "Barbarian",
+   "exclusiveGroup": "animalistic-brutality",
+   "feats": [
+    "animalistic-brutality"
+   ],
+   "duration": "until you stop raging",
+   "survivesRest": false,
+   "modifiers": [],
+   "unarmedTraits": {
+    "fromRecord": "animal-instinct",
+    "add": [
+     "sweep"
+    ]
+   },
+   "note": "Once per Rage: your unarmed attack from bestial rage gains the sweep trait until you stop raging."
+  },
+  "why": "feat-5835 prints \"gains one of the following traits until you stop raging: backswing, forceful, parry, razing, or sweep\"."
+ },
+ {
+  "category": "classFeatures",
+  "id": "energy-barrier",
+  "field": "requiresModification",
+  "value": [
+   "harmonic-oscillator",
+   "metallic-reactance",
+   "phlogistonic-regulator"
+  ],
+  "why": "AoN innovation-5, Revolutionary Modifications (Level 15) — Energy Barrier, verbatim: \"You must have the harmonic oscillator, metallic reactance, or phlogistonic regulator modification to select this modification.\" `requiresModification` is the ClassFeature field batch 036 added for exactly this clause; its reader is inventorModificationOptions (src/rules/build.ts:2786) and ANY ONE of the listed ids satisfies it, which is what the printed or-list means. All three named ids are armor-innovation-modification records in core.json at level 1, below Energy Barrier's 15, so the gate is always satisfiable. The record carries no requiresModification today, so this is a first assignment — no supersedes, no collision."
+ },
+ {
+  "category": "classFeatures",
+  "id": "physical-protections",
+  "field": "requiresModification",
+  "value": [
+   "dense-plating",
+   "layered-mesh",
+   "tensile-absorption"
+  ],
+  "why": "AoN innovation-5, Revolutionary Modifications (Level 15) — Physical Protections, verbatim: \"You must have the dense plating, layered mesh, or tensile absorption breakthrough modification to select this modification.\" Same lane and same or-list semantics as energy-barrier above. The three named ids are armor-innovation-modification records at level 7, below Physical Protections' 15. First assignment — no supersedes."
+ },
+ {
+  "category": "classFeatures",
+  "id": "marvelous-gears",
+  "field": "requiresModification",
+  "value": [
+   "wonder-gears"
+  ],
+  "why": "AoN innovation-2, Breakthrough Modifications (Level 7) — Marvelous Gears, verbatim: \"You must have the wonder gears modification to select this modification.\" A single-id list: the gate passes only when wonder-gears (construct-innovation-modification, level 1) is one of the character's picks. The record itself was CREATED by an earlier batch-036 overlay row ({create:true}); this adds one top-level field to it, so there is no collision with that row or with its separate description row."
+ },
+ {
+  "category": "classFeatures",
+  "id": "turret-configuration",
+  "field": "requiresModification",
+  "value": [
+   "projectile-launcher"
+  ],
+  "why": "AoN innovation-2, Breakthrough Modifications (Level 7) — Turret Configuration, verbatim: \"You must have the projectile launcher modification to select this modification.\" Single-id gate; projectile-launcher is a construct-innovation-modification at level 1. Same created-record situation as marvelous-gears — a first assignment of a field the record does not carry."
+ },
+ {
+  "category": "classFeatures",
+  "id": "miracle-gears",
+  "field": "requiresModification",
+  "value": [
+   "marvelous-gears"
+  ],
+  "why": "AoN innovation-2, Revolutionary Modifications (Level 15) — Miracle Gears, verbatim: \"You must have the marvelous gears modification to select this modification.\" Single-id gate, and it CHAINS: marvelous-gears is itself gated on wonder-gears by the row above, so a construct inventor who wants Miracle Gears at 15th must have spent the 1st-level slot on Wonder Gears and the 7th on Marvelous Gears. `held` at src/rules/build.ts:8512 is the RAW picks of all three tiers, so the chain is judged against what the player chose rather than against what already validated — each link is tested on its own printed clause, which is what print says."
+ },
+ {
+  "category": "classFeatures",
+  "id": "speed-boosters",
+  "field": "whileActive",
+  "value": [
+   {
+    "state": "overdrive",
+    "speeds": {
+     "land": 5
+    }
+   }
+  ],
+  "why": "AoN innovation-5, Initial Modifications — Speed Boosters, verbatim: \"You gain a +5-foot status bonus to your Speed, which increases to a +10-foot status bonus when under the effects of Overdrive.\" (the mirror writes the first hyphen as U+2011). The standing +5 landed as `landSpeedBonus` 5 earlier in this batch; the Overdrive step had no carrier at all, so a speed-boosters-only inventor read +5 whether Overdrive was on or off. `whileActive` is the live lane activeStateGrants gates on classResources['overdrive'] (src/rules/derive.ts:1185, folded into deriveSpeeds at :5233), and land grants are ADDITIVE over landSpeedBonus, so +5 while the toggle is on reads exactly as the printed +10. WG agrees and is stricter than we were: `wg-show \"Speed Boosters\" --raw` is one conditional, IF ACTIVE_MODES NOT_INCLUDES overdrive AND NOT_INCLUDES 'critical overdrive' THEN SPEED +5 status ELSE SPEED +10 status. First assignment of the field on this record."
  }
 ]

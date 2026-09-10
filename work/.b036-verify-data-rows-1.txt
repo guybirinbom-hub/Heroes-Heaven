@@ -1,0 +1,125 @@
+BATCH 036 — ADVERSARIAL VERIFY, family data-rows-1 (chunk 1 of 2 of "data-rows")
+Spec checked: work/.b036-rows-data-rows-1.json   Test checked: test/batch036-data-rows-1.test.ts
+Builder report: work/.b036-report-data-rows-1.txt
+Nothing fixed by me — no file edited, no row rewritten. One NEW cross-file gap found (see below).
+
+HOW THE ROWS WERE CHECKED (without applying them)
+- Every target record exists in public/core.json: the 8 lesson classFeatures + blessed-swiftness (and
+  the sibling blessed-shield the aon rows copy their shape from). No row needs create:true, none carries
+  one, no row carries a description.
+- Every spell a row names exists, at the rank the finding claims: mystic-armor 1, sleep 1, spirit-link 1,
+  chilling-darkness 3, insect-form 3, mad-monkeys 3, wall-of-wind 3, feet-to-fins 3. class-feature-877
+  exists in the AoN mirror (Blessing of the Devoted, Player Core 2), equipment-2320 is Bracers of
+  Devotion (Treasure Vault Remastered) — both read out of the mirror, not taken on trust.
+- Re-emitted value diffed against the shipped one with node -e: classFeatures/blessed-swiftness.modeAdjust
+  is a 1-entry array before and after, `match` byte-identical, `note` identical for its first 158 chars —
+  the ONLY change is the trailing parenthetical, "Speed is yours wherever you stand and is already on your
+  sheet.)" -> "status bonus is yours while on foot; if you're mounted, your mount gains the bonus
+  instead.)". The +2-defenses clause survives whole.
+- supersedes: the only pre-existing overlay row among the 11 targets is
+  classFeatures/blessed-swiftness.modeAdjust, and that is the one row (and only that row) carrying
+  supersedes: true. blessed-swiftness.aonParentId / .aonSection and all 8 grantedSpells fields have no
+  existing overlay row, and correctly carry no supersedes. (Existing rows on the 8 lessons are
+  focusSpells + edition only, exactly as claimed.)
+- Collisions: all three spec files in work/.b036-specs.json were parsed and keyed on
+  category|id|field|path. 20 rows across the batch, ZERO duplicate keys — no collision inside this spec
+  and none with data-rows-2 or instruments. This chunk's 11 keys are the 8 lesson grantedSpells plus
+  blessed-swiftness modeAdjust / aonParentId / aonSection.
+- Readers: grantedSpells -> src/rules/build.ts flat branch of the choice-owned-feature walk
+  (`Array.isArray(rec?.grantedSpells)`) -> featureGrantedSpells -> merged into grantedByRank by
+  `content.spells[id]?.rank`; modeAdjust on a classFeature -> src/rules/modes.ts:681; aonParentId /
+  aonSection have NO src reader (print/lane passes only: lane-sample.mjs, wg-field-catalogue.mjs,
+  wg-batch.mjs, wg-prose.mjs) — disclosed by the builder and confirmed by grep, so "not player-visible"
+  stands and this is not a no-reader finding.
+- HARNESS (built, run, deleted): a throwaway vitest file cloned content(), applied all 11 spec rows to
+  the copy, and built a REAL witch per lesson through buildCharacter — level 2 / basic-lesson for the
+  three rank-1 lessons, level 6 / greater-lesson for the five rank-3 ones — asserting the taught spell in
+  the prepared spellbook at the SPELL'S OWN rank, the hex in the focus repertoire as the control, and a
+  STUNTED build (shipped content, no row) NOT containing the spell. 8/8 green. So the eight rows are
+  proven to reach a built character before they are applied, and proven not to be passing by accident.
+
+PER FINDING
+- lesson-of-protection#familiar-spell — DONE. Row {classFeatures/lesson-of-protection, grantedSpells,
+  ["mystic-armor"]}; mirror lesson-19 prints "...your familiar learns Mystic Armor."; harness: rank-1
+  spellbook of a 2nd-level witch contains mystic-armor with blood-ward as the control, and does not on
+  the stunted copy.
+- lesson-of-dreams#familiar-spell — DONE. lesson-16 "...learns Sleep."; harness green (rank 1,
+  veil-of-dreams control, stunt bites).
+- lesson-of-life#familiar-spell — DONE. lesson-18 "...learns Spirit Link."; harness green (rank 1,
+  life-boost control, stunt bites).
+- lesson-of-shadow#familiar-spell — DONE. lesson-22 "...learns Chilling Darkness."; harness green at
+  RANK 3 (malicious-shadow control) — the rank comes from content.spells, not from the row, so WG's
+  rank:3 is matched without a second field.
+- lesson-of-decay — DONE. lesson-26 (Howl of the Wild) "...learns Insect Form."; harness green at rank 3,
+  mycological-malady control, stunt bites.
+- lesson-of-mischief — DONE. lesson-21 "...learns Mad Monkeys."; harness green at rank 3.
+- lesson-of-snow — DONE. lesson-23 "...learns Wall of Wind."; harness green at rank 3.
+- lesson-of-the-shark — DONE. lesson-28 (Howl of the Wild) "...learns Feet to Fins."; harness green at
+  rank 3.
+- blessed-swiftness#mounted — DONE. class-feature-877 in the mirror reads verbatim "Blessed Swiftness:
+  You gain a +5-foot status bonus to Speed. If you're mounted, your mount gains the bonus instead." The
+  superseding row keeps the whole modeAdjust value and only stops the parenthetical contradicting that
+  clause; the reader (src/rules/modes.ts:681) is the one already carrying this note to the player, so the
+  correction is what the player reads. landSpeedBonus:5 deliberately unchanged and re-verified as the
+  right call: src/rules/derive.ts sums classFeature landSpeedBonus unconditionally over ownedFeatureIds
+  (one of three separate loops around line 5222) and `grep blessed-swiftness src/` returns NOTHING — no
+  speedsIf, no situationalBonuses entry, no mount lane on either side. Disclosure, not invention.
+- blessed-swiftness#aon-parent — DONE for this batch's artefact, WITH A DURABILITY GAP I am escalating
+  (new CROSS-FILE GAP 2 below, not a defect in the rows). Both rows are right: sections.json's own entry
+  proves the collision (classFeatures/blessed-swiftness -> parentDocId equipment-2320, label "Blessed
+  Swiftness", correctedFrom feat-5911) while the sibling classFeatures/blessed-shield -> class-feature-877,
+  label "Blessed Shield:" is the shape copied; the mirror confirms class-feature-877 spells the heading
+  with a colon and equipment-2320's same-named section says only "Blessed Swiftness The bonus to Speed is
+  +10 feet." Nothing else in test/, src/ or scripts/ depends on the old pair (grep equipment-2320).
+
+TEST FILE — checked, not rewritten
+- 12 tests, and I ran them: 12 fail, each on its OWN missing row and nothing else. Every built-character
+  test reaches its spellbook assertion with the hex control already green ("expected [ 'chilling-spray' ]
+  to include 'mystic-armor'", "expected [] to include 'insect-form'"), so no test is red for a build,
+  fixture or shape reason that would survive the driver applying the rows. The harness above is the
+  independent proof that all 12 go green once applied.
+- The red-until-applied shape is this lane's established convention (test/batch035-data-rows-1.test.ts
+  carries the identical header and the identical shipped-artefact assertions), and it is the pin: it is
+  not a "patched-vs-shipped delta" — nothing here flips to FAILING once the row lands. Deliberately left
+  alone: converting the field assertions to patched-in-memory copies would make the driver's post-apply
+  suite prove nothing about the rows. The in-memory/stunted proof the rule wants was supplied by my
+  harness instead.
+- Citations: every it( carries "// batch 036: <finding id>" within the 6 lines above it, each id is in
+  confirmed[] of work/.b036-read.json, and each finding's RECORD id appears in its it( title. No settle,
+  no teach, no ratchet, no comparer touched, so no mutation-proof marker is owed.
+  node scripts/test-flip-audit.mjs --batch 036 -> clean. npx tsc --noEmit -> clean.
+
+MANIFEST — checked
+- work/.b036-specs.json still holds all three entries (data-rows-2, instruments, data-rows-1); nothing
+  was dropped. This family's stage[] lists work/.b036-rows-data-rows-1.json,
+  work/.b036-report-data-rows-1.txt, test/batch036-data-rows-1.test.ts — and git status confirms the
+  builder touched no other file (the modified src/ files belong to the engine and situational families).
+  I fixed nothing, so I append no stage[] path of my own.
+
+DATA STILL NEEDED
+(none — every row these ten findings need is in work/.b036-rows-data-rows-1.json, and all eleven verify
+as rows)
+
+CROSS-FILE GAPS
+1. blessed-swiftness#mounted: there is no mount-Speed carrier anywhere in the engine — src/rules/derive.ts
+   sums classFeature landSpeedBonus unconditionally over ownedFeatureIds and no companion/mount Speed lane
+   exists to redirect it to; WG has no carrier either (bare addBonusToValue SPEED 5 status). A real
+   redirect is an engine-family change in src/rules/derive.ts plus a mount-aware Speed lane. Confirmed by
+   me, stands as the builder wrote it.
+2. NEW (found in verification): an aon* overlay row does not survive `npm run data`, so the
+   blessed-swiftness#aon-parent fix is correct but not yet durable. The chain runs import-core-v2 (which
+   applies effect-backfill.json) and then, FIVE steps later, scripts/migration/stamp-aonid.mjs --write,
+   which deletes aonId/aonParentId/aonSection/aonOrigin on every mapped record and re-stamps from
+   scripts/migration/out/{map,sections}.json — and map.map.classFeatures['blessed-swiftness'] is
+   status "subblock" with sections.classFeatures['blessed-swiftness'].parentDocId "equipment-2320",
+   label "Blessed Swiftness". So the next regeneration puts the Bracers of Devotion join straight back.
+   This is not a hypothetical: scripts/fix-aonid-collisions.mjs documents exactly this clobber in its own
+   set() ("stamp-aonid.mjs runs LATER... putting back exactly the wrong answer this script exists to
+   override. Measured 2026-08-19: 37 records"), and it re-mirrors ONLY the records in its own
+   COLLISIONS / REPOINTS / PRICE_FIXES tables — blessed-swiftness is in none of them, and its REPOINTS
+   lane sets aonId only, never aonParentId/aonSection. The durable fix is one of: a parent-repoint entry
+   (new lane) in scripts/fix-aonid-collisions.mjs, or correcting the sections.json entry the way
+   blessed-shield's already was (correctedFrom feat-3598 -> class-feature-877, label with the colon).
+   Both are outside this family's files. Tripwire meanwhile: the two assertions in
+   test/batch036-data-rows-1.test.ts read the SHIPPED core.json, so a regen that reverts the join turns
+   them red rather than shipping silently.

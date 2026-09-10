@@ -37,15 +37,34 @@ const srcText = (() => {
 type Row = { category: string; id: string; field: string; path?: string; value: unknown; create?: boolean; delete?: boolean };
 const overlay: Row[] = JSON.parse(read('scripts/data/effect-backfill.json'));
 
+/**
+ * The AoN JOIN KEYS: which printed document (and which section of it) a record was made from.
+ *
+ * They are the one honest exception to "a field with no reader in src/ cannot reach a pixel", because
+ * their reader is the AoN PIPELINE, not the app — scripts/wg-prose.mjs and its siblings resolve a
+ * record's printed text through `aonParentId` + `aonSection`, and scripts/migration/stamp-aonid.mjs
+ * writes them. A wrong join does reach the player, just not through a field lookup: it is what every
+ * print pass, every parity read and every description slice reads the record AGAINST. Batch 036 is the
+ * first batch to author one (classFeatures/blessed-swiftness pointed at equipment-2320, Bracers of
+ * Devotion — an Item 11 whose "Blessed Swiftness" section is a different mechanic from a different book
+ * — instead of class-feature-877, the champion feature it is a section of).
+ *
+ * This is a REROUTE, not an exemption: the `it` below still demands a real reader for each of them, in
+ * the place they are actually read. Dropping one from the pipeline fails that test.
+ */
+const AON_JOIN_KEYS = ['aonId', 'aonParentId', 'aonSection'];
+
 describe('every field authored into the overlay has a reader in src/', () => {
   it('or it cannot reach the sheet, whatever the data says', () => {
     /* Two kinds of row are not a field being SET, and both were false positives the first time this
      * ran (`__record` and `baseItem`):
      *   · `create: true` inserts a WHOLE record — `applyBackfill` branches on `create` and never looks
      *     at `field`, which is the label `__record`. Twelve trait records arrive this way.
-     *   · `value: null` DELETES the field. Nothing reading it is the point of the row. */
+     *   · `value: null` DELETES the field. Nothing reading it is the point of the row.
+     * …and a third, added in batch 036: an AoN JOIN KEY is read by the pipeline rather than by src/,
+     * and is checked against ITS readers in the next test instead of being waved through here. */
     const setsAField = overlay.filter((r) => !r.create && r.field !== '__record' && r.value !== null);
-    const fields = [...new Set(setsAField.map((r) => r.field))];
+    const fields = [...new Set(setsAField.map((r) => r.field))].filter((f) => !AON_JOIN_KEYS.includes(f));
     const orphaned = fields.filter((f) => !srcText.includes(f));
     expect(
       orphaned.length
@@ -53,6 +72,34 @@ describe('every field authored into the overlay has a reader in src/', () => {
           'Either give it a reader, or the value cannot reach a pixel and should not be authored.'
         : 'all authored fields are read',
     ).toBe('all authored fields are read');
+  });
+
+  /*
+   * The other half of the reroute above — blessed-swiftness' `aonParentId` / `aonSection` rows are the
+   * batch-036 rows that made it necessary, and this is what stops the reroute from becoming a hole: an
+   * AoN join key must be read by the AoN pipeline, in a real .mjs, or it is orphaned after all.
+   */
+  // batch 036: blessed-swiftness#aon-parent
+  it('an AoN join key authored on blessed-swiftness is read by the pipeline, not by src/', () => {
+    const scriptText = (() => {
+      const out: string[] = [];
+      const walk = (d: string) => {
+        for (const e of readdirSync(d, { withFileTypes: true })) {
+          const p = join(d, e.name);
+          if (e.isDirectory()) walk(p);
+          else if (/\.mjs$/.test(e.name)) out.push(readFileSync(p, 'utf8'));
+        }
+      };
+      walk(join(ROOT, 'scripts'));
+      return out.join('\n');
+    })();
+    const unread = AON_JOIN_KEYS.filter((f) => !scriptText.includes(f));
+    // batch 036: blessed-swiftness#aon-parent
+    expect(unread, 'an AoN join key nothing in scripts/ resolves is orphaned after all').toEqual([]);
+    // …and the record this batch repointed really does carry the corrected join.
+    const row = overlay.find((r) => r.category === 'classFeatures' && r.id === 'blessed-swiftness' && r.field === 'aonParentId');
+    // batch 036: blessed-swiftness#aon-parent
+    expect(row?.value).toBe('class-feature-877');
   });
 });
 

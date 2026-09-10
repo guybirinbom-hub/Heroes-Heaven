@@ -1,0 +1,9 @@
+{
+  "findings": [
+    {
+      "id": "armored-resistance#instrument",
+      "backfillRows": [],
+      "note": "Instrument settle, not a content defect. Print (AoN feat-7897) mentions no Hit Points; WG's `conditional IF MAX_HEALTH_CLASS_PER_LEVEL <= 10 AND FEAT_NAMES INCLUDES \"guardian resiliency\" THEN adjValue MAX_HEALTH_BONUS = 3` is Guardian Resiliency's per-guardian-archetype-feat rider replicated onto each qualifying guardian feat row. We hold that sentence once, on feats/guardian-resiliency.maxHpBonus {perArchetypeFeat:3, archetype:'guardian'}, and armored-resistance carries archetype:'guardian' so it is already counted (derive.ts featHpBonus, build.ts starting-HP fold). Fixed in the comparer: VERIFIED_EQUIVALENT['armored-resistance'] = ['hp'] in scripts/wg-diff.mjs. wg-values already drops the shape corpus-wide via RESILIENCY_GATE (batch 031), so no second settle is owed there. No overlay row: nothing about this record's Hit Points is wrong."
+    }
+  ]
+}

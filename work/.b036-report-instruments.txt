@@ -1,0 +1,86 @@
+BATCH 036 — REPORT, instruments family (WG-COMPARISON lane)
+1 finding assigned, 1 handled. 1 settle, 0 rows, 0 parks.
+Spec: work/.b036-rows-instruments.json (1 entry, backfillRows: [] — the finding is an instrument fact).
+
+
+DATA STILL NEEDED
+  (none — armored-resistance#instrument is a comparer misread, not a content defect. No overlay row
+  is owed by the driver for it.)
+
+
+CROSS-FILE GAPS
+  1. armored-resistance#resistance (ENGINE family) — its `ours` half is WRONG, and a row authored from
+     it would DOUBLE the resistance. The printed clause IS already delivered, from a different bucket:
+     core.json `modes/armored-resistance` = {feats:['armored-resistance'], duration:'while you Intercept
+     an Attack in medium or heavy armor', resistances:[{type:'physical', value:'floor(@actor.level/2)'}],
+     note:'…applies ONLY to the damage you take in your ally's place with Intercept Attack…',
+     aonOrigin:'authored'}, gated onto the character by src/rules/modes.ts:613 (`mode.feats.some(f =>
+     featIds.has(f))`). That mode is why wg-diff already reads `ours=[conditional,defense]` on this
+     record — the finding's claim that "nothing in the app delivers it" was made without looking in the
+     modes bucket. Whether the delivery should ALSO be a passive `resistances` entry on the feat (an
+     always-listed IWR line with an `against` qualifier) instead of / beside a player-toggled mode is a
+     presentation call for that family; what must not happen is both carriers shipping unreconciled.
+     Not made here: core.json content and the engine family's finding are outside this family's files.
+
+
+PER FINDING
+
+armored-resistance#instrument — SETTLE (comparer teach). The only registry key this family adds.
+  Did: added `'armored-resistance': ['hp']` to VERIFIED_EQUIVALENT in scripts/wg-diff.mjs (after
+  'elemental-instinct'), cited `// batch 036: armored-resistance#instrument`. The note records the
+  whole chain: print (AoN feat-7897) mentions no Hit Points; their op is `conditional IF
+  MAX_HEALTH_CLASS_PER_LEVEL <= 10 AND FEAT_NAMES INCLUDES "guardian resiliency" THEN adjValue
+  MAX_HEALTH_BONUS = 3` — Guardian Resiliency's own per-guardian-archetype-feat +3, replicated onto
+  each qualifying guardian feat row because their vocabulary has no "per feat of this archetype" verb;
+  ours holds the sentence once, on feats/guardian-resiliency.maxHpBonus {perArchetypeFeat:3,
+  archetype:'guardian'}, multiplied by the count of taken feats whose archetype === 'guardian' in
+  featHpBonus (src/rules/derive.ts:897-901) and folded into starting HP at build.ts:8557-8561 — a set
+  that includes armored-resistance. This is monk-moves#hp (batch 031) one archetype over.
+  ONE settle, not two: wg-values already drops the whole shape corpus-wide (RESILIENCY_GATE,
+  scripts/wg-values.mjs:416-421), so the value lane needed nothing — with the gate applied the record
+  keeps no comparable value at all and falls to "prose-only bonus (no number asserted)". Only wg-diff's
+  KINDS reader flattens the conditional to a bare `hp`, which is the single lane the settle closes.
+  Test: test/batch036-instruments.test.ts, describe('batch 036 instruments — armored-resistance settles
+  the resiliency-parked `hp`'), three its:
+    · MUTATION-PROOF (settle key 'armored-resistance', stunted via wg-diff's own `--raw` bypass): the
+      record is absent from THEY-ONLY on the shipped run and comes straight back as missing=['hp']
+      with settles bypassed — so the registry is what quiets it, not a carrier the comparer can read.
+    · MUTATION-PROOF (taught carrier `maxHpBonus` on feats/guardian-resiliency, stunted in a copied
+      core.json): wg-values reports `ok guardian-resiliency` on shipped data and `MISSING hp| theirs=3
+      ours=(nothing)` with the field gone. The settle MOVES the assertion to the record that prints it;
+      it does not make it vanish. No resiliency-gated op in the dump sits on a Resiliency feat — each
+      Resiliency row states its own +3 UNGATED — so that record is still compared for real.
+    · MUTATION-PROOF (same carrier, stunted in an in-memory ContentDatabase): a level-20 fighter with
+      guardian-dedication + guardian-resiliency + guardians-intercept + armored-resistance loses
+      exactly 12 Hit Points (4 guardian feats x 3) when `maxHpBonus` is deleted — the engine half of
+      the claim, asserted as a DELTA so a chassis-HP change in another batch cannot flip it.
+  Scope, adversarially confirmed: the entry names ONE kind. The settle is keyed by record id and
+  `armored-resistance` names a single row in wg-diff's walk (the same-id `modes` record is outside
+  WG_PAIRING, which walks feats only), so the blast radius is one row and one kind; the record's
+  `conditional` and `defense` halves still report. Corpus-wide before/after moved exactly one record:
+  `GONE armored-resistance [hp]`, with no record changing its missing list and none appearing.
+
+  Nothing was left undone on this finding.
+
+
+COMPARERS — BEFORE / AFTER, this batch and the two previous packets
+  wg-diff (corpus-wide, full --out dumps diffed record by record):
+      THEY-ONLY 187 → 186. The ONLY difference in the whole corpus is `GONE armored-resistance [hp]`.
+      weOnly 2880 → 2881 (armored-resistance moves across with missing=[], extra=['defense'] — the
+      modes-carried physical resistance), agree 1101 → 1101 unchanged.
+      Scoped per packet: batch 034 THEY-ONLY 0 → 0, batch 035 0 → 0, batch 036 5 → 4.
+  wg-values (--batch, unchanged by this family — no value lane was touched):
+      034: 23 compared, 22 agree, 1 to adjudicate. 035: 27 compared, 27 agree, 0 to adjudicate.
+      036: 14 compared, 13 agree, 1 to adjudicate.
+  wg-identity (--batch, unchanged — SETTLED_IDENTITIES untouched):
+      034: 1 record with an unmatched name. 035: 2. 036: 10.
+  wg-casting (npx jiti, unchanged — this family touched no casting lane):
+      16 class sources compared, 4 with mismatches (180 rows), 52 non-class sources skipped.
+  No earlier batch flipped.
+
+
+VERIFICATION
+  node scripts/vt.mjs run test/batch036-instruments.test.ts — 3 passed (3).
+  node scripts/test-flip-audit.mjs --batch 036 — clean (3 test files touched, 1 new settle key, every
+  flip cited).
+  npx tsc --noEmit — clean.

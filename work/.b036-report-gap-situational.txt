@@ -1,0 +1,51 @@
+BATCH 036 — GAP AGENT, family "situational"
+Spec written: work/.b036-rows-gap-situational.json (kind: rows, family gap-situational; manifest entry appended to work/.b036-specs.json)
+Test written: test/batch036-gap-situational.test.ts (5 its, all passing)
+Code touched: src/rules/situationalBonuses.ts — the existing ⚠ guard comment above the composer-staff entries extended to name all three staves (comment only; no registry entry changed, no citation owed, flip-audit clean)
+Gates: node scripts/vt.mjs run test/batch036-gap-situational.test.ts test/batch036-situational.test.ts → 16 passed | npx tsc --noEmit → clean | node scripts/test-flip-audit.mjs --batch 036 → clean
+
+MY LINES — 7 collated (2 of them the verify agent's restatement of a report line), 0 left open
+
+[1] AUTHORED — work/.b036-rows-gap-situational.json
+    line: "items / composer-staff / passiveEffects / null (supersedes:true; deletes the shipped {"skills":{"performance":1}}) …"  (work/.b036-report-situational.txt:6)
+    The level-4 staff prints the SAME clause as the confirmed finding composer-staff-greater, out of the SAME AoN document (equipment-2249: "In this way, you can play it as though it were an instrument, and it grants a +1 item bonus to Performance checks made with it"), and shipped the same flat twin; the row deletes it so the conditional star at situationalBonuses.ts:1835 is the whole mechanic.
+
+[2] AUTHORED — work/.b036-rows-gap-situational.json
+    line: "items / composer-staff-major / passiveEffects / null (supersedes:true; deletes the shipped {"skills":{"performance":2}}) …"  (work/.b036-report-situational.txt:7)
+    Same paragraph in the same document plus the major variant's own line "The item bonus is +2."; same flat twin, same star (situationalBonuses.ts:1845, +2 item), same deleting row.
+
+[3] AUTHORED — work/.b036-rows-gap-situational.json
+    line: "items / composer-staff / passiveEffects / null (supersedes:true; deletes the shipped …"  (work/.b036-verify-situational.txt:104)
+    The verify agent's restatement of [1] after re-measuring it on the harness — one gap counted twice, closed by the same row.
+
+[4] PARKED — flaggedResidue (see work/.b036-gaps.json for the full reason)
+    line: "eye-of-the-unseen#innate-spell and illusionists-hat#daily-illusory-creature are other families' findings on records I also touch …"  (work/.b036-report-situational.txt:10)
+    The warned-of collision is verified ABSENT, re-measured across all five specs: the only other row on either record is data-rows-2's FIELD-SCOPED items/eye-of-the-unseen/innateSpells (a different key from the passiveEffects the situational family deletes), and illusionists-hat#daily-illusory-creature is in refuted[], so no family emits any row on the hat at all. Nothing to author.
+
+[5] PARKED — flaggedResidue
+    line: "core.json has no ritual ACTION record … RecordMarker.on is 'action' | 'condition' | 'feature' …"  (work/.b036-report-situational.txt:11)
+    Confirmed and measured as n=1: the only actions id matching /ritual/ is 'spiritual-aid', RecordMarker.on is typed at situationalBonuses.ts:4174, and exactly ONE record in the game prints a ritual-cost substitution (feats/cultivators-keen-eye, by a scan of every description in public/core-descriptions.json) — whose clause already reaches the Feats tab on the feat's `note` row. An actions-bucket record plus a cost lane plus a marker-type widening is speculative infrastructure for one clause, in other families' files.
+
+[6] PARKED — flaggedResidue
+    line: "core.json has no ritual ACTION record (only the rules pages …"  (work/.b036-verify-situational.txt:117)
+    The verify agent's restatement of [5]; same evidence, same disposition.
+
+[7] PARKED — flaggedResidue
+    line: "---------------------------------------------------------------------"  (work/.b036-report-situational.txt:13)
+    Not a gap: the ASCII divider that closes the report's CROSS-FILE GAPS section, swept up by the apply-digest collator — the same artefact parked twice in work/.b030-gaps.json. It carries no claim and asks for nothing; the section's real content is [4] and [5].
+
+OWNER QUESTIONS RAISED: none. Nothing on my lines has print and WG in conflict, and nothing needed a ruling — work/.b036-queue.json untouched.
+
+EVIDENCE FOR THE TWO AUTHORED ROWS (measured, not assumed)
+- Shipped overlay rows exist for all three staves in scripts/data/effect-backfill.json
+  ({items,composer-staff,passiveEffects,{skills:{performance:1}}} / -greater same / -major {…:2}), so both new rows carry supersedes:true; each superseded object held the performance key and nothing else, so nothing survives to merge into value:null.
+- Print: mirror doc C:/wonderers guide/aon-2e-archive/data/by-category/equipment/equipment-2249.json, Treasure Vault (Remastered) pg. 131. The base paragraph is inherited verbatim by equipment-2249-1995 and -1996; only the major adds "The item bonus is +2."
+- The defect is real TODAY, proven by a throwaway probe (written, run, deleted) against the SHIPPED content: a bard merely holding the base staff reads parts ["Proficiency — Trained","Charisma modifier","Composer Staff|item bonus|1"] AND the star; the major reads the same with |item bonus|2. So the +1/+2 was both added to every Performance check (a held staff is `equipped`, and passiveItemBonus / passiveItemBonusDetail gate on itemInUse alone, derive.ts:303-322 / :386-408) and restated beside it. That is what the stripped-copy tests now pin.
+- Citation form: neither record is a finding in confirmed[], so both tests use the print-premise form `// batch 036 premise: equipment-2249 "<verbatim clause>"`, which scripts/test-flip-audit.mjs accepts and which I ran green.
+- No collision: a grep of all five spec files for /composer-staff/ returns only work/.b036-rows-situational.json # composer-staff-greater, a different record id.
+
+DATA STILL NEEDED
+  (none — both rows are authored in work/.b036-rows-gap-situational.json)
+
+CROSS-FILE GAPS
+  (none new. The two my family collated are dispositioned above: one verified absent, one an n=1 unmodelled subsystem. src/rules/situationalBonuses.ts is staged by both "situational" and "gap-situational"; my only edit to it is inside the existing ⚠ comment block, which touches no registry entry and cannot collide with that family's finished work.)

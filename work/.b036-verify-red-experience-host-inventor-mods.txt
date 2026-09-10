@@ -1,0 +1,122 @@
+BATCH 036 — ADVERSARIAL VERIFY, GATE-RED group "red-experience-host-inventor-mods" (family instruments)
+Verdict: items 1-3 DONE, one FIXED-BY-ME on top, 0 NOT-DONE. Every claim below was re-measured from
+print, from the WG dump and from a re-run of the instrument — none accepted on the builder's word.
+
+ITEM 1 — hyper-boosters host teach (finding hyper-boosters#prerequisite) — DONE
+  Print re-read verbatim in the mirror, not from the report: C:\wonderers guide\aon-2e-archive\data\
+  by-category\innovation\innovation-5.json, Hyper Boosters — "You must have the speed boosters
+  modification to select this modification." WG's own row carries NO gate: `node scripts/wg-show.mjs
+  "Hyper Boosters" --raw` prints two conditionals, both ACTIVE_MODES / SKILL_CRAFTING, no prerequisite
+  branch — so the teach adopts nothing of their encoding, which is what the GPL line requires.
+  The cause the builder pinned is real and I reproduced it end to end: core.json ships
+  classFeatures/hyper-boosters.requiresModification=["speed-boosters"] — the ONLY record in the dataset
+  carrying that field (I dumped all classFeatures; count 1) — its readers are
+  inventorModificationOptions (src/rules/build.ts:2786) and validPick (:8513), and route 4 seated only
+  the record itself.
+  The teach (git diff test/wg-experience.harness.test.tsx, in innovationModificationHost) seats the
+  requirement into `base`, and `base` IS `withoutBuild`. I checked that ARITHMETICALLY rather than by
+  reading the source alone: work/wg-batch-036-experience.json, hyper-boosters sheetDiff is
+  speeds.land 25 -> 30, a +5 delta, and stored.inventor.modifications.initial is NOT a diff. A seat
+  present in withBuild only would read +10 (speed-boosters' 5 plus hyper-boosters' 5) and would list
+  the initial slot as changed; it does neither. Records with no requiresModification get an empty seed
+  and a `base` identical to the old one — the four other innovation-tier records in the raw dump
+  (dense-plating, layered-mesh, tensile-absorption, advanced-weaponry-construct) are unmoved.
+
+ITEM 2 — the mandatory mutation-proof test — DONE
+  test/batch036-red-experience-host-inventor-mods.test.ts — 4 its, all passing
+  (node scripts/vt.mjs run <that file> — 4 passed). Citation form checked by hand and by tool:
+  "// batch 036: hyper-boosters#prerequisite" sits directly above each it(, the finding is in
+  confirmed[] of work/.b036-read.json with verdict CONFIRMED, and the record id "hyper-boosters" is in
+  the describe title — both halves rule (1) demands. The mutation-proof its carry "// mutation-proof"
+  INSIDE the body with the settle key ("harness route 4 `innovationModificationHost` /
+  seededModifications"), rule (3). node scripts/test-flip-audit.mjs --batch 036 — clean, 17 test files,
+  2 new settle keys, violations: [] in work/.b036-flip-audit.json.
+  The stunt is real, not decorative: `function innovationModificationHost` and `function featChoiceHost`
+  each occur exactly once as a declaration, so the slice is the route body (4.1 KB), and it asserts BOTH
+  `seededModifications` and `inventorModifications: seededModifications` — the `base` placement — so
+  deleting the seat or moving it into withBuild alone fails. That is the ONLY guard there is: I
+  confirmed the gate hole verbatim at scripts/wg-batch-gate.mjs:594,
+  `if (r.verdict === 'UNSUPPORTED') { unsupported.push(r.id); continue; }`, and it does run before every
+  queuedFor / ownerRuled / instrumentLimited check.
+  hyper-boosters is NOT in work/experience-instrument-limits.json (43 records, checked by key) —
+  correct, the instrument can see this one; 033's armor-innovation "control-off-record" park is
+  untouched.
+
+ITEM 3 — the optional re-measure — DONE, count confirmed at 0
+  Re-run, not read: node scripts/wg-experience.mjs --batch work/wg-batch-036.json — "40 records — OK
+  40", 0 UNSUPPORTED. TEACH hyper-boosters#prerequisite: 0 other records flip off UNSUPPORTED, and the
+  reason is structural rather than sampled — the seat can only fire on a record carrying
+  `requiresModification`, and core.json has exactly one. The neighbours corroborate: 032 is 40/40 OK;
+  034 has one NO-SHEET-EFFECT (the-infinite-eye) and no UNSUPPORTED; 033's single UNSUPPORTED is
+  school-of-thassilonian-rune-magic, which has no innovation-modification tag and leaves route 4 before
+  the seat is reached, and its armor-innovation is MISSING-CONTROL parked as an instrument limit.
+
+FIXED-BY-ME — the seat now walks the whole requirement CHAIN (same finding, hyper-boosters#prerequisite)
+  The shipped seat took ONE link and stopped. hyper-boosters needs one, so nothing in the group's own
+  evidence could show the difference — but print stacks prerequisites and the rows that carry them are
+  landing in this same batch (work/.b036-rows-red-inventor-modification-rows.json, which entered
+  work/.b036-specs.json while I was verifying). AoN innovation-2, verbatim: Miracle Gears "You must
+  have the marvelous gears modification to select this modification.", and Marvelous Gears in the same
+  document "You must have the wonder gears mod[ification]". A one-link seat seats marvelous-gears at
+  breakthrough and leaves that pick ITSELF illegal.
+  test/wg-experience.harness.test.tsx, innovationModificationHost: the seat loop is now a walk — each
+  link goes in a tier strictly cheaper than the last, which also bounds it at three iterations and makes
+  a cyclic requiresModification terminate. Pinned by the 4th it in the group's test file
+  (mutation-proof, same settle key), which patches the two requiresModification fields into a CONTENT
+  COPY — never the shared cache, the rows are not applied yet — and shows the half-seated build leaving
+  marvelous-gears unheld while the full chain holds all three.
+  Behaviour-neutral today, verified by re-running the instrument after the change: still 40/40 OK, and
+  hyper-boosters' seed ({"initial":"speed-boosters"}) and sheetDiff (25 -> 30) are byte-identical.
+  One correction inside the same file while I was there: the builder's comment on the differential test
+  quoted Speed Boosters as "+10-foot status bonus to your Speed". Print (innovation-1) reads "You gain a
+  +5-foot status bonus to your Speed, which increases to a +10-foot status bonus when under the effects
+  of Overdrive" — the +10 is its Overdrive step. Comment corrected; no assertion depended on it.
+
+SPEC + MANIFEST CHECKS
+  work/.b036-rows-red-experience-host-inventor-mods.json — 1 finding, backfillRows [] deliberately (the
+  disposition is a harness teach). No row to collide, none to supersede, no missing record.
+  Its note carries the finding id and the word TEACH, so scripts/wg-batch-close.mjs derives MATCHES from
+  hyper-boosters#prerequisite by two independent paths (spec note at close.mjs:206, report teach line at
+  :226) and NOT from the bare record id. The record's other two findings are separately accounted for:
+  #overdrive by the engine spec's classFeatures/hyper-boosters.whileActive row (shipped in core.json, I
+  dumped it) and #wg-legendary by an entry in work/.b036-queue.json.
+  Manifest: this family's stage[] lists rows / report / test / harness / wg-batch-036-experience.json —
+  every path the group touched — and I appended this verify file. No other entry is dropped: the one I
+  found missing mid-run (red-inventor-modification-rows, whose 7 rows were stranded) was added by that
+  group before I finished, and I confirmed it is present with its own report.
+  npx tsc --noEmit — clean (exit 0).
+
+DATA STILL NEEDED
+  (none for this group — no data row was needed; hyper-boosters' rows had already landed from the engine
+  family and are shipped in public/core.json.)
+
+CROSS-FILE GAPS
+  1. scripts/wg-batch-gate.mjs:594 — `if (r.verdict === 'UNSUPPORTED') { unsupported.push(r.id);
+     continue; }` runs BEFORE the queuedFor / ownerRuled / instrumentLimited parking checks, so an
+     UNSUPPORTED record can never reach `bad` and never fails the gate. It is printed under "recorded,
+     NOT passed" and the batch reads green with that record's whole delivery unjudged — which is how
+     three findings on hyper-boosters shipped unmeasured. CONFIRMED verbatim. An UNSUPPORTED record
+     should need the same park artefact every other non-OK verdict needs — a queue entry, an owner
+     ruling or a work/experience-instrument-limits.json line — and fail otherwise.
+  2. src/rules/build.ts:8513 — validPick judges `requiresModification` against
+     `Object.values(build.inventorModifications)`, the RAW picks, and that is wrong twice over.
+     (a) MEASURED, with a reproducer in this group's 4th test: a construct inventor whose picks are
+     {breakthrough: marvelous-gears, revolutionary: miracle-gears} keeps miracle-gears even though
+     marvelous-gears is itself REFUSED — a pick the engine threw away still satisfies the record above
+     it, so the printed chain is not actually enforced.
+     (b) A prerequisite taken at a HIGHER tier satisfies a record at a lower one: speed-boosters chosen
+     at revolutionary (level 15) satisfies hyper-boosters chosen at breakthrough (level 7). Print reads
+     as a condition on SELECTION, so it should be judged against the tiers at or below the picking tier.
+     Engine family's file. Note for whoever closes it: route 4's seat no longer relies on (a) — it seats
+     a build that is legal all the way down — so fixing this does not knock hyper-boosters back to
+     UNSUPPORTED.
+  3. classFeatures/speed-boosters carries NO whileActive in core.json or in
+     scripts/data/effect-backfill.json (I dumped both). Print, AoN innovation-1, verbatim: "You gain a
+     +5-foot status bonus to your Speed, which increases to a +10-foot status bonus when under the
+     effects of Overdrive." A speed-boosters-only inventor therefore reads +5 in Overdrive where print
+     gives +10; the PAIR is accidentally right because hyper-boosters' whileActive land:10 covers the
+     whole step, so only the solo case is wrong. The row exists in
+     work/.b036-rows-red-inventor-modification-rows.json (which also supersedes
+     classFeatures/hyper-boosters.whileActive to land:5 — harmless to this group, whose tests measure
+     the always-on half) but is not applied yet. Open until the driver applies that spec.
+     speed-boosters is not among batch 036's 40 records, so this is a lane gap, not a red item.

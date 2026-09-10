@@ -1,0 +1,125 @@
+BATCH 036 — GATE-RED family: red-pipeline-collation-repair
+Items assigned: 4 (uncollated lettered gaps; ASCII rule harvested as a gap; duplicate residues; verify RED ast-content-check)
+Spec file: work/.b036-rows-red-pipeline-collation-repair.json (kind: rows, findings: [] — see below)
+Test file: test/batch036-red-pipeline-collation-repair.test.ts (4 its, all green through node scripts/vt.mjs)
+
+WHY THE SPEC IS EMPTY
+All four items are defects in the pipeline itself — two in scripts/wg-batch-run.mjs, one in
+scripts/wg-batch-close.mjs, one in package.json's `data` chain. None of them is game data, so there is
+no overlay row to author. The spec file exists only so the manifest entry can carry the `file` the
+manifest shape requires; the deliverables are the code fixes and the test file, both in stage[].
+
+WHY THE TESTS ARE NOT IN test/wg-batch-run.test.ts / test/wg-batch-close.test.ts
+Those two files were offered to me and I deliberately did not edit them. scripts/test-flip-audit.mjs
+(scanTestFile, :487-490) demands a `// batch 036: <finding id>` citation on every added expect( / it(
+in an EXISTING test file, and the finding id must be a CONFIRMED finding in work/.b036-read.json whose
+RECORD id also appears in the enclosing title. No finding in .b036-read.json is about the pipeline, and
+the premise form needs an AoN doc id, which a driver defect also does not have — so an added assertion
+in either file would be an uncitable flip and would fail the batch. A wholly new test file is exempt by
+design (test-flip-audit.mjs:386 newFileScan, "a file the batch ADDED is a wholly new test file"), so
+both fixes are pinned in test/batch036-red-pipeline-collation-repair.test.ts instead, which is the
+batch's own test file and the same convention every other family in 036 used.
+
+--------------------------------------------------------------------------------
+PER ITEM
+
+[1] UNCOLLATED GAPS — lettered bullets never matched — BUILT
+File + symbol: scripts/wg-batch-run.mjs, gapLines() (the bullet test formerly at :855).
+What I did: replaced the inline `/^[-*•]|^\d+[.)]/` with a named GAP_BULLET_RE that also accepts a
+lettered bullet — `/^(?:[-*•]|\d+[.)]|[A-Za-z](?:[’'′][.)]?|[.)])\s)/` — plus a matching GAP_LEAD_RE so
+"A. " / "A′ " / "b) " are stripped from the collated line exactly as "- " is. The letter branch requires
+its punctuation (or a prime) AND a space, so an ordinary sentence opening with a one-letter word is
+still not a bullet. Every regex carries a WHY block above it quoting the measurement.
+A SECOND change was needed for the item to actually be built, and it is the reason the assigned
+one-line fix alone would still have collated nothing: work/.b036-verify-engine.txt hard-wraps every
+lettered item over three to seven INDENTED continuation lines, and the old loop broke on the first of
+them. gapLines now folds an indented line into the item above it (`cur`), so a wrapped bullet is ONE
+gap rather than a truncated one followed by a break. Measured on the real artefact after the fix:
+work/.b036-verify-engine.txt now yields 11 lines (5 DATA STILL NEEDED + the 6 CROSS-FILE GAPS
+A / A′ / B / C / D / E), where before it yielded 0.
+Test that pins it: describe "gapLines collates a lettered, hard-wrapped, rule-separated gap list",
+it "a lettered bullet is a bullet, and its indented continuations fold into it" — the fixture is the
+exact shape of work/.b036-verify-engine.txt:167-198 (heading, `====` rule, lettered items, a
+prime-lettered widening), asserting three gaps, the stripped lead, the folded continuation text and the
+ref still pointing at the line the item opens on.
+
+[2] ASCII RULE HARVESTED AS A GAP — BUILT
+File + symbol: scripts/wg-batch-run.mjs, gapLines(), new GAP_RULE_RE = /^[-–—=_•*\s]+$/, tested BEFORE
+the bullet test and `continue`-ing (not breaking) so a rule neither becomes a gap nor ends the run.
+`continue` rather than `break` is load-bearing in both directions: work/.b036-report-situational.txt:13
+puts its `------` divider AFTER the two real bullets (breaking there would have been harmless), but
+work/.b036-verify-engine.txt:168 puts a `======` rule immediately UNDER the heading, so breaking there
+is precisely why that file collated nothing. The rule line also resets `cur`, so a stray indented line
+after a divider cannot be folded into the item above it.
+Test that pins it: it "an ASCII rule is skipped, not harvested and not treated as the end of the run" —
+asserts the `====`-under-heading fixture still yields its 3 items, and that the
+work/.b036-report-situational.txt shape (bullet, `-----` divider, "PER FINDING") yields exactly 1 gap
+with no rule-only line among them. A third it, "still reads the plain forms, still drops (none), still
+stops at prose", is the regression guard on the shapes that already worked.
+
+[3] DUPLICATE RESIDUES — BUILT
+File + symbol: scripts/wg-batch-close.mjs, new `residueKey` beside `pairKey` (:389), used for
+flaggedResidues in the `mergeKeys` list (:402). A residue is now keyed on
+family + kind + sha1(whitespace-normalised summary), never on `g.ref ?? g.family` — `ref` being the
+`<file>:<line>` pointer wg-batch-run.mjs stamps at collation time, which any edit to a report file
+shifts, which is why the merge appended a duplicate instead of matching ("4 new entr(y/ies) appended,
+6 kept" in work/wg-batch-036-residual.json). confirmed / refuted / askOwner keep pairKey — their ids are
+record ids and are already stable.
+Test that pins it: describe "wg-batch-close keys a flaggedResidue on content, so re-closing does not
+duplicate it", it "the same gap with a shifted file:line ref merges instead of appending" — closes a
+throwaway batch 900 with a parked gap at ref ...:12, re-closes it with the SAME line at ref ...:15, and
+asserts flaggedResidues stays at 1 and no "1 new entr" note is printed; then adds a genuinely different
+line and asserts it does append (2), so the key is not merely collapsing everything.
+NOT FIXED BY THIS, and deliberately so: the four duplicate PAIRS already sitting in
+work/.b036-gaps.json are builder-line vs verifier-restatement of the same gap, whose TEXT differs (see
+work/wg-batch-036-residual.json entries 1 vs 5 and 3 vs 6 — one is the full paragraph, the other the
+clipped restatement). Content keying cannot merge two different sentences, and guessing at near-matches
+in a file the owner reads is worse than the duplicate. What this fix kills is the recurrence across
+re-closes, which is the root cause the item named; the intra-run builder/verifier restatement is a
+separate lane and is listed under CROSS-FILE GAPS below.
+
+[4] VERIFY RED — ast-content-check — PARKED as a red, recurrence killed
+File: package.json, the `data` script (and its `_data_note`).
+What I did: appended `&& node scripts/apply-ast-patches.mjs` to the end of the chain — after
+backfill-ast-edition, which is the ordering constraint the item names (backfill-ast-edition needs the
+FINAL ast files; apply-ast-patches then rewrites public/ast/* and nothing downstream reads them). Added
+the reason to `_data_note`, quoting apply-ast-patches.mjs's own header: it "MUST be re-run after any
+npm run data", and nothing re-ran it, so a regen wiped the six patched nodes and
+scripts/ast-content-check.mjs went red. The script is idempotent (a node already carrying its probes is
+skipped), so a chain that ends with it is safe to run repeatedly.
+Verified: `node -e` read-back of package.json confirms the chain parses and ends with the new step.
+⚠ THE DRIVER OWES ONE RUN. Today's red is still red: the six records (classFeatures/ashes,
+bloodline-elemental, bloodline-imperial, way-of-the-vanguard, items/razmiri-mask-porcelain,
+items/whispering-staff) have wiped ast nodes ON DISK right now, and nothing in this batch restored
+them. Per the batch prohibitions I ran neither apply-*.mjs nor `npm run data`, so the driver must run
+`node scripts/apply-ast-patches.mjs` once to clear it. The red itself is pre-existing (batch 035
+desk-queued it as ast-patches-reverted-by-regen, another effort's regen), so it PARKS as a red for this
+batch; only its recurrence is fixed here.
+No test: a package.json chain string is not a lane a vitest can reach without running the chain, which
+is forbidden here. The guard that catches the regression already exists and is what found it —
+scripts/ast-content-check.mjs in `npm run verify`.
+
+--------------------------------------------------------------------------------
+DATA STILL NEEDED
+- (none)
+
+CROSS-FILE GAPS
+- scripts/wg-batch-run.mjs stageApplyDigest (:876-880, outside the function I fixed but inside the file
+  I own — named here rather than built because it is a POLICY question, not a defect): a builder report
+  and its verifier's report both carry the same CROSS-FILE GAP, restated in the verifier's own words, so
+  every gap a verifier confirms is collated twice under the same `family` (m[2] is the family for both
+  `report-` and `verify-` files; only the `label` distinguishes them). That is 4 of the 8 residues in
+  work/wg-batch-036-residual.json. Content keying (item 3) cannot merge them because the two sentences
+  genuinely differ. Closing it means either collating verify- reports under a distinct family label and
+  letting the gap agent pair them, or a near-duplicate warning at digest time — either way it changes
+  what the owner is shown, so it wants a ruling before it is built.
+- scripts/apply-ast-patches.mjs — the six patched records are wiped on disk NOW (item 4). The driver
+  owes one `node scripts/apply-ast-patches.mjs`; no agent in this batch may run it.
+
+MANIFEST STAGE[] — PATHS I TOUCHED
+work/.b036-rows-red-pipeline-collation-repair.json   (spec, findings: [])
+work/.b036-report-red-pipeline-collation-repair.txt  (this file)
+test/batch036-red-pipeline-collation-repair.test.ts  (4 its, new file)
+scripts/wg-batch-run.mjs                             (gapLines: lettered bullets, rule lines, wrapped items)
+scripts/wg-batch-close.mjs                           (residueKey; flaggedResidues merged on content)
+package.json                                         (`data` chain ends with apply-ast-patches; _data_note)

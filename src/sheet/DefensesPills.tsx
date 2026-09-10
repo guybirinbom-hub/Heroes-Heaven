@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { Character, ContentDatabase } from '../rules/types';
-import { deriveDefenses, type DefenseSource } from '../rules/derive';
+import { conditionalResistances, deriveDefenses, type DefenseSource } from '../rules/derive';
 import { explainDefense, type StatBreakdown } from '../rules/explain';
 import { StatDetailModal } from './StatDetailModal';
 
@@ -20,7 +20,12 @@ export function DefensesPills({ character, content }: { character: Character; co
   const def = deriveDefenses(character, content);
   const [brk, setBrk] = useState<StatBreakdown | null>(null);
 
-  const has = def.resistances.length > 0 || def.weaknesses.length > 0 || def.immunities.length > 0 || def.negativeHealing || def.breathesWater;
+  /* An `against`-only resistance is withheld from `def.resistances` on purpose (derive.ts keeps the
+     headline honest), so it reaches this component through `sources` alone — and a character whose
+     ONLY defence is one of those used to render nothing at all. */
+  const condRes = conditionalResistances(def);
+
+  const has = def.resistances.length > 0 || condRes.length > 0 || def.weaknesses.length > 0 || def.immunities.length > 0 || def.negativeHealing || def.breathesWater;
   if (!has) return null;
 
   const label = (t: string) => {
@@ -49,6 +54,21 @@ export function DefensesPills({ character, content }: { character: Character; co
           <span className="idl">Resistances</span>
           <div className="idpills">
             {def.resistances.map((r) =>
+              pill(r.type, `${label(r.type)} ${r.value}`, def.sources?.[`resistance:${r.type}`], () =>
+                setBrk(explainDefense(def, 'resistance', r.type)),
+              ),
+            )}
+          </div>
+        </div>
+      )}
+      {/* Its own row, not a pill in the one above: the number is real but applies only against a
+          named source, and printing it beside the always-on ones would claim a resistance the
+          character usually does not have. Clicking opens the same breakdown, which names the trigger. */}
+      {condRes.length > 0 && (
+        <div className="id-row">
+          <span className="idl">Situational resistances</span>
+          <div className="idpills">
+            {condRes.map((r) =>
               pill(r.type, `${label(r.type)} ${r.value}`, def.sources?.[`resistance:${r.type}`], () =>
                 setBrk(explainDefense(def, 'resistance', r.type)),
               ),

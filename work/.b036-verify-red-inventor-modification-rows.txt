@@ -1,0 +1,162 @@
+BATCH 036 — GATE-RED round, group "red-inventor-modification-rows"
+ADVERSARIAL VERIFIER report.  Verdict: all four items stand, with TWO FIXED-BY-ME repairs — one of
+them a time bomb that would have failed the batch the moment the driver applied this group's rows.
+
+Spec checked:   work/.b036-rows-red-inventor-modification-rows.json   (7 rows, 2 findings)
+Builder report: work/.b036-report-red-inventor-modification-rows.txt
+
+============================================================================================
+ITEM 1 — gap C: the five modification prerequisites                                    DONE
+============================================================================================
+Re-derived from print rather than from the builder's report. `grep "You must have"` across ALL SEVEN
+innovation mirror docs returns exactly six distinct clauses (innovation-1/-5 armour, innovation-2/-6
+construct; innovation-3/-4/-7 carry none), and reading each one back with 320 characters of leading
+context names its owner unambiguously:
+  +10/+20 Speed text  -> Hyper Boosters      "…speed boosters modification…"                (SHIPPED already)
+  resistance to eight energy types -> Energy Barrier        "…harmonic oscillator, metallic reactance, or phlogistonic regulator…"
+  resistance to all physical       -> Physical Protections  "…dense plating, layered mesh, or tensile absorption breakthrough…"
+  expert Intimidation/Stealth/Survival -> Marvelous Gears   "…wonder gears…"
+  turret transform, 1d6 + 60 ft    -> Turret Configuration  "…projectile launcher…"
+  Int +2, legendary in two skills  -> Miracle Gears         "…marvelous gears…"
+The builder's five owners are these five. The GARBLED gap line (prerequisite ids read as owners) is
+correctly discarded. Lane is COMPLETE: six printed clauses, six carriers, none left.
+All five premise citations re-checked BYTE-VERBATIM against the named doc's `text` — all five OK.
+All thirteen ids present in core.json, correct `<type>-innovation-modification` tag, prerequisite
+strictly below the record naming it in every case (1<15, 7<15, 1<7, 1<7, 7<15).
+Reader confirmed present, not assumed: src/rules/build.ts:2786 (or-list, `.some`) reached from
+validPick at :8512-8513 with the RAW picks of all three tiers; `requiresModification` declared at
+src/rules/types.ts:3444.
+
+NOT VACUOUS — proved, not argued.  A throwaway test built the same five characters on SHIPPED content
+and every one of the five picks was ALLOWED (energy-barrier with no energy mod, physical-protections
+with nothing, marvelous-gears with no wonder-gears, turret-configuration with no launcher,
+miracle-gears off a projectile-launcher line). The six its in test/batch036-gap-inventor.test.ts
+therefore each measure a real gate, and each negative is paired with a positive so "undefined" cannot
+be passing for the wrong reason.
+
+============================================================================================
+ITEM 2 — gap E: the speed-boosters Overdrive step                                      DONE
+============================================================================================
+The defect is real and was measured, not inferred: on shipped content a level-7 power-suit inventor
+holding only speed-boosters reads base+5 with `classResources.overdrive` OFF and base+5 with it ON,
+against innovation-5's printed +5 / +10. WG agrees and is stricter — `wg-show "Speed Boosters" --raw`
+is one conditional, +5 status out of Overdrive / +10 in.
+
+THE TWO-ROW RECALIBRATION IS CORRECT, and I checked it the hard way rather than accepting the
+arithmetic in the report. Patching speed-boosters +5 while LEAVING hyper-boosters at the shipped
+whileActive land:10 pays the pair base+25 in Overdrive against a printed +20; patching both to 5 pays
+base+10 solo / base+20 in Overdrive, i.e. both printed numbers exactly. The proposal as parked (the
+single speed-boosters row) would therefore have SHIPPED A DEFECT; the builder was right to add the
+supersede, and right about why (derive.ts:5233 pushes each whileActive clause into grantSources and
+:5310 does `speeds.land = (speeds.land ?? 0) + v` — additive, the same reason landSpeedBonus was
+already superseded 10 -> 5 this batch).
+Supersede is well-formed: the superseded row IS in scripts/data/effect-backfill.json and IS applied
+(core.json carries whileActive land:10 today), it held ONE clause, and the whole value is merged into
+the new one with only the number changed. `supersedes: true` present.
+COLLISION SWEEP across all eleven work/.b036-rows-*.json: exactly one record+field appears twice —
+classFeatures/hyper-boosters.whileActive, ours vs .b036-rows-engine.json's applied row, which is what
+`supersedes: true` is for. The other six rows collide with nothing. The three {create:true} records
+(marvelous-gears / turret-configuration / miracle-gears) already carry a separate `.description` field
+row beside their create row in effect-backfill, so a field row beside a create row is a proven shape.
+Every row's `why` names its AoN doc id.
+
+============================================================================================
+ITEM 3 — gap A' follow-through: the speed-boosters star                   DONE + FIXED-BY-ME
+============================================================================================
+FEAT_SITUATIONAL["speed-boosters"] is gone, replaced by a NO ENTRY note at situationalBonuses.ts:1466
+carrying "// batch 036: hyper-boosters#overdrive". Correct: I read Speed Boosters' whole printed
+entry in innovation-5 and its entire mechanic is the two rungs — nothing conditional survives the
+removal, so the star had nothing left to say. (The builder's choice of the FINDING citation form over
+the premise form is also right: the clause writes "+5-foot" with U+2011, which the premise form's
+byte-verbatim rule would have rejected.)
+
+FIXED-BY-ME (1) — src/rules/situationalBonuses.ts:4842, the comment above
+SITUATIONAL_SUPERSEDES['hyper-boosters']. It still read "a speed-boosters-only inventor keeps its own
+line, which is still the whole carrier for them until that record gets a whileActive row of its own".
+That record gets one in THIS spec and its entry is gone, so the comment asserted the opposite of what
+the file now does — in a file this group edited, three lines above the entry it describes. Rewritten
+to say what is true: the hop is now INERT in the star lane, and is retained only because
+supersededIds() runs inside characterSituationalIds (explain.ts:266) over ALL owned ids — not just
+starred ones — which is the drop test/batch036-closer.test.ts:182 pins. The entry itself and its
+citation are untouched.
+New it added to test/batch036-gap-inventor.test.ts ("the pair still stars the legendary-Crafting
+rung, which no number carries", // batch 036: hyper-boosters#overdrive) so the removal is fenced on
+both sides: no star for the solo inventor, and the ONE remaining star — hyper-boosters' legendary
+rung, the only rung no number carries — is not taken away with it.
+
+============================================================================================
+ITEM 4 — test shape                                                      DONE + FIXED-BY-ME
+============================================================================================
+test/batch036-gap-inventor.test.ts is the right shape: BUILT characters through test/_content.ts
+content(), every row patched into a content copy IN MEMORY, no patched-vs-shipped delta, and all three
+required its present (level-15 armour energy-barrier gate, level-15 construct miracle-gears chain,
+level-7 speed-boosters-only +5/+10 with classResources.overdrive on). 10 tests, all passing.
+No new settle key and no comparer teach in this group, so rule (3)'s mutation-proof marker does not
+apply here; the batch's two new settle keys belong to other families and the flip audit passes.
+
+FIXED-BY-ME (2) — THE TIME BOMB.  test/batch036-engine.test.ts:150,
+"an inventor in Overdrive walks 10 feet faster than the same inventor out of it", patched ONLY
+hyper-boosters (whileActive land:10) over shipped content and asserted `on === off + 10`. That is
+precisely the patched-vs-shipped delta the standing rule forbids, and THIS GROUP'S ROW is what arms
+it: once classFeatures/speed-boosters ships whileActive land:5, the same build reads +15 and the
+assertion FAILS. Measured both states in a throwaway harness before touching anything — 10 today, 15
+after the row — so this is not a prediction. Repaired in place by STRIPPING speed-boosters'
+whileActive alongside the hyper-boosters patch, which is what the test's own comment says it wants
+("pins the activeStateGrants reader rather than the row"): its assertion, its citation and its
+describe/it titles are unchanged, only the content copy is. Re-measured after the repair: 10 before
+the rows AND 10 after. The pair's real post-row arithmetic (+10 base / +20 in Overdrive) is pinned in
+this group's own file, and a pointer to it is in the repaired setup's comment.
+The file is listed in the engine family's stage[] as well as mine; the edit adds a field to one
+in-memory fixture and removes nothing, so no other agent's work is displaced.
+
+CHECKED AND CLEAR, not repaired because nothing was wrong:
+  - test/batch034-data.test.ts:35-38 asserts only BASE speeds (+5 solo, +10 pair). whileActive moves
+    nothing with Overdrive off, so the rows cannot flip it. Runs green.
+  - test/wg-experience.harness.test.tsx — the miracle-gears -> marvelous-gears -> wonder-gears CHAIN
+    would defeat a one-link seater and read UNSUPPORTED, but the seater at :552-567 already walks the
+    whole chain with a strictly-decreasing tier ceiling (red-experience-host-inventor-mods built it).
+    All five gap C records seat: harmonic-oscillator@initial, layered-mesh@breakthrough,
+    wonder-gears@initial, projectile-launcher@initial, and the two-link construct chain.
+  - test/batch036-closer.test.ts — 7 passing; characterSituationalIds returns OWNED ids
+    (explain.ts:266-275), not starred ones, so neither speed-boosters it depended on the entry.
+
+VERIFICATION RUN
+  node scripts/vt.mjs run test/batch036-gap-inventor.test.ts test/batch036-engine.test.ts
+       test/batch036-closer.test.ts test/batch034-data.test.ts   -> 4 files, 43 tests, all passing
+  node scripts/test-flip-audit.mjs --batch 036                    -> clean (17 files, every flip cited)
+  npx tsc --noEmit                                                -> clean
+  work/.b036-specs.json                                           -> 11 entries intact, none dropped;
+       this group's stage[] extended with test/batch036-engine.test.ts and this verify file.
+
+============================================================================================
+DATA STILL NEEDED
+============================================================================================
+(none)
+
+============================================================================================
+CROSS-FILE GAPS
+============================================================================================
+1. test/batch036-closer.test.ts:193 — the it titled "a speed-boosters-only inventor keeps its own
+   Overdrive line" still PASSES but its title and comment are now false: there is no line, the star is
+   gone and the Overdrive step is a number on the Speed row. Its assertion
+   (characterSituationalIds(...).toContain('speed-boosters')) only ever proved the id is OWNED, never
+   that it carries a star. The file is the ENGINE family's; the it needs re-aiming at what it actually
+   checks — the control half of SITUATIONAL_SUPERSEDES['hyper-boosters'] — or retiring. Its sibling at
+   :182 must NOT be touched: it is the only thing pinning that suppression entry, which is why the
+   entry is retained (see FIXED-BY-ME (1)). Carried forward from the builder's report; re-verified.
+2. test/batch034-data.test.ts:31 — the comment "The Overdrive rider stays a star
+   (situationalBonuses.ts:1408/1392)" is now false for both records: speed-boosters' star is removed
+   and hyper-boosters' remaining star is the legendary-Crafting rung only. The file's ASSERTIONS are
+   base-Speed only and stay green, so this is prose rot, not a failure — but the two line numbers it
+   cites no longer point at what it claims. Not in any batch-036 stage[], so not mine to edit.
+
+============================================================================================
+FLAGGED RESIDUE (carried forward, agreed)
+============================================================================================
+1. SITUATIONAL_SUPERSEDES['hyper-boosters'] = ['speed-boosters'] (situationalBonuses.ts:4850) is inert
+   in the star lane. Retained deliberately — deleting it breaks test/batch036-closer.test.ts:182,
+   which this group may not edit, for no gain. Its comment now says so (FIXED-BY-ME (1)). Revisit only
+   if speed-boosters gains a RECORD_MARKERS or degreeShifts entry.
+2. hyper-boosters#wg-legendary stays an OWNER QUESTION: the legendary-Crafting +30 rung has no number
+   because WhileActiveClause carries no skill-rank gate, and WG's own row encodes +10/+20 with no
+   legendary branch at all. It is the one thing the surviving star is for.

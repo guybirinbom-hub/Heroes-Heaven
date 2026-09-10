@@ -1,0 +1,126 @@
+BATCH 036 — SITUATIONAL family, ADVERSARIAL VERIFY
+Verifier default: NOT done until measured. Everything below was measured, not read off the report.
+
+Instruments run: node scripts/vt.mjs run test/batch036-situational.test.ts → 11 passed.
+                 npx tsc --noEmit → clean (exit 0).
+                 node scripts/test-flip-audit.mjs --batch 036 → clean, every flip cited.
+                 node scripts/vt.mjs run test/rulings-dfgh.test.ts test/field-catalogue.test.ts
+                   test/batch001-surfaces.test.tsx test/batch26-stars.test.ts → 85 passed
+                   (the four suites that iterate FEAT_SITUATIONAL as a whole; no sibling broken).
+                 THROWAWAY harness test/_tmp-verify-b036sit.test.ts — applied the four spec rows to a
+                   content copy with the applier's own semantics (absolute field assignment,
+                   value:null = delete) and built real characters on BOTH sides. 8 its, all passed.
+                   DELETED after the run (flip-audit re-run clean afterwards: 5 test files touched).
+
+----------------------------------------------------------------------
+PER FINDING
+
+[1] cultivators-keen-eye#materials — DONE
+    Harness, SHIPPED side: deriveDefenses(cultivator, db).senses lifesense.note === undefined and the
+    featEntries description contains no ritual clause — the gap was real. APPLIED side: lifesense
+    survives at range 30 / acuity imprecise AND carries "cultivation materials"; the feat entry's
+    description contains "substitute all or part of its cost". Both rows carry readers I opened:
+    SenseEntry.note (types.ts:470, the carcharodon-merfolk stimulus-clause field) rendered at
+    VitalsRail.tsx:746 and DetailsTab.tsx:469; ContentBase.note (types.ts:280) rendered by
+    FeatsTab.tsx's withPicks ("<strong>Note:</strong>"). Print re-read at the mirror
+    (feat/feat-7090.json) — both halves quoted verbatim in the row `why` and the test header.
+    Row hygiene: the superseding `senses` row carries the shipped {lifesense,30,imprecise} whole
+    (diffed against effect-backfill.json's single shipped row for the id) and adds only `note`;
+    `note` is a NEW field on the record, so no supersedes is owed. Record-diff assertion in the
+    harness proved no other key of feats/cultivators-keen-eye moved.
+    Length gate checked: ruling H's 120-char cap (test/rulings-dfgh.test.ts "no note runs longer than
+    about one line") scans FEAT_SITUATIONAL[].when only, NOT ContentBase.note — the long ritual note
+    is not exposed to it. Verified by running that suite.
+
+[2] eye-of-the-unseen — DONE
+    Harness, SHIPPED side: explainStat(worn+invested fighter, db, {kind:'perception'}).parts DOES
+    contain a part labelled "Eye of the Unseen" today — so the builder's stripped-copy test is not
+    vacuous, the flat twin is real. APPLIED side: that part is gone and exactly ONE situational line
+    with sourceId 'eye-of-the-unseen' remains. Reader chain confirmed at derive.ts:274 (itemInUse =
+    worn||invested||equipped||attachedTo, the only gate) and :303-322 / :386-408.
+    Row hygiene: shipped overlay value was {perception:1} and nothing else (dumped from
+    effect-backfill.json), so value:null loses nothing; supersedes:true present.
+    Print verbatim at the mirror (equipment/equipment-1367-1240.json): "you gain a +1 item bonus to
+    visual Perception checks". The +2 greater twin already ships star-only with no passiveEffects —
+    the precedent holds inside the same record family.
+    WG divergence checked, not assumed: deleting the flat field does NOT open a new comparer red.
+    wg-diff.mjs reads situationalBonuses.ts entry-by-entry (:860-876) and maps kind:'perception' to
+    the perception kind; wg-values.mjs situationalMagnitudes (:748-800) pulls the magnitude out of the
+    "+1 item" string and files it under the same perception| track. The value key WG asserts is still
+    supplied by the star.
+
+[3] composer-staff-greater — DONE
+    Harness, SHIPPED side: a bard merely HOLDING the staff (equipped:true) has a
+    "Composer Staff (Greater)" part in the Performance parts today. APPLIED side: gone, one star left.
+    Row hygiene: shipped overlay value was {skills:{performance:1}} only; value:null, supersedes:true.
+    Print verbatim (equipment/equipment-2249-1995.json): "it grants a +1 item bonus to Performance
+    checks made with it".
+    No sibling test asserted the flat bonus (grepped every test naming these ids) — nothing breaks.
+
+[4] illusionists-hat#skill-bonuses — DONE
+    Registry entry added at src/rules/situationalBonuses.ts:1240 with the "// batch 036:
+    illusionists-hat#skill-bonuses" citation in the line above and the record id in the describe
+    title. Both `when` strings are 41 and 36 chars — under ruling H's 120 cap (suite re-run green).
+    Reached a BUILT character: characterSituationalIds contains 'illusionists-hat' for a
+    worn+invested hat, one Deception star and one Thievery star, nothing in .parts, and a hat left in
+    the pack reads nothing. Print verbatim at the mirror (equipment/equipment-5201.json, Pathfinder
+    #224 pg. 239) — the clause in the code comment is character-for-character correct.
+    Action-scoped, so a star and not passiveEffects, is the right call: it is the same shape being
+    DELETED in [2] and [3], and the cited neighbours the-demons-lantern / lightweave-scarf use it.
+    Measured non-gap (so the closer does not re-open it): items/illusionists-hat has no `usage`
+    field, but 184 invested items share that and `usage` is display-only for this record
+    (ItemDetail.tsx:301) — investing alone satisfies itemInUse. Not a batch-036 gap.
+
+SPEC ROWS AS ROWS — all four checked without applying
+  - Every target record exists in core.json (feats/cultivators-keen-eye, items/eye-of-the-unseen,
+    items/composer-staff-greater). No row needs create:true; no create rows, so no created-prose spec
+    is owed and no row carries a description.
+  - Every re-emitted value diffed against the shipped value with node -e: the senses row is the
+    shipped object plus `note`; the two null rows delete objects that held exactly one key each.
+  - Readers exist for all three fields (SenseEntry.note, ContentBase.note, and the deletion side of
+    passiveEffects — passiveItemBonus/passiveItemBonusDetail simply stop seeing the row).
+  - No two rows in ANY of the four b036 spec files share a record+field key. Scanned all 24 row keys
+    across rows-situational / rows-data-rows-1 / rows-data-rows-2 / rows-instruments: zero collisions.
+    data-rows-2 writes items/eye-of-the-unseen/innateSpells — a DIFFERENT field on a shared record,
+    which the absolute-assignment applier handles without interference.
+  - No row names a spell / action / trait / item id.
+
+MANIFEST — work/.b036-specs.json
+  Four entries present (data-rows-1, data-rows-2, instruments, situational) — no family's entry was
+  dropped. situational.stage[] lists all four paths it touched: work/.b036-rows-situational.json,
+  work/.b036-report-situational.txt, test/batch036-situational.test.ts, src/rules/situationalBonuses.ts.
+  Nothing else in the working tree is attributable to this family (git diff on
+  src/rules/situationalBonuses.ts is exactly the three additions above: one entry, two ⚠ comments).
+  Both superseding rows declare supersedes: true; the one new-field row correctly does not.
+  Comment-placement hazard checked, because the two ⚠ blocks sit BETWEEN registry entries and both
+  comparers slice an entry "from its key to the next key": neither block contains `kind:`, `targets:`
+  or a quoted `bonus:`, so no magnitude or kind leaks into the PRECEDING entry (minotaur-chair,
+  composer-staff, forensic-medicine-methodology). Verified by reading the three bodies.
+
+FIXED BY ME: nothing. No row or line contradicted print, and no sibling broke.
+
+----------------------------------------------------------------------
+DATA STILL NEEDED  (2 lines — both re-measured and CONFIRMED still standing)
+- items / composer-staff / passiveEffects / null (supersedes:true; deletes the shipped
+  {"skills":{"performance":1}}) — the level-4 base staff prints the SAME clause as the greater one
+  (mirror equipment-2249-1995: "it grants a +1 item bonus to Performance checks made with it") and
+  carries the same flat twin beside the same star (situationalBonuses.ts:1835). My harness confirmed
+  it: after this family's rows are applied, a bard merely HOLDING composer-staff still gets a
+  "Composer Staff" part in the Performance parts. Not one of the four findings, and the citation
+  convention has no finding id to cite for it, so no row was authored here either — the driver should
+  either queue it or hand it to a family that can cite it as a print premise.
+- items / composer-staff-major / passiveEffects / null (supersedes:true; deletes the shipped
+  {"skills":{"performance":2}}) — same clause plus "The item bonus is +2." in the same mirror doc;
+  star at situationalBonuses.ts:1845 (+2 item). Same harness result, same reason it is not authored.
+
+CROSS-FILE GAPS  (1 line — the other was verified closed and is removed)
+- core.json has no ritual ACTION record (only the rules pages casting-rituals / rituals /
+  learning-rituals; the only actions-bucket id matching /ritual/ is 'spiritual-aid'), and
+  RecordMarker.on is 'action' | 'condition' | 'feature' (situationalBonuses.ts:4171), so a printed
+  clause about a ritual's COST has no action row to be marked on. Cultivator's ritual clause rides
+  the feat's own `note` instead; a ritual-cost lane would need an actions-bucket record, outside this
+  family's files.
+- REMOVED (builder's first cross-file line): the collision risk on items/eye-of-the-unseen and
+  items/illusionists-hat is verified ABSENT, not merely unlikely. data-rows-2 emits a field-scoped
+  innateSpells row on the eye, never a whole-record row; and illusionists-hat#daily-illusory-creature
+  is in refuted[], so no family emits any row on the hat at all.

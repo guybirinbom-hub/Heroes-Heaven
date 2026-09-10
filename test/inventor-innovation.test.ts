@@ -75,16 +75,32 @@ describe('Enhanced Resistance', () => {
     expect(res(7, { initial: 'phlogistonic-regulator', breakthrough: 'enhanced-resistance' })).toMatchObject({ cold: 7, fire: 7 });
   });
 
+  /*
+   * WAS physical-protections in the revolutionary slot. Batch 036 enforced the printed prerequisite on
+   * every revolutionary modification that carries one, and physical-protections' own is a BREAKTHROUGH
+   * one — which this build cannot hold, because Enhanced Resistance is already in that single slot. So
+   * the old build became illegal by print and the modification granted nothing, which is the gate
+   * working, not a regression. energy-barrier is the same shape one modification over and IS legal here:
+   * its prerequisite list is initial-tier and the build's initial already satisfies it. What the case is
+   * for — that Enhanced Resistance rewrites the INITIAL modification's formula and leaves every other
+   * modification's alone — is unchanged and now reads on six non-overlapping energy types instead of
+   * three physical ones. Level 20: initial half-level 10 upgraded to the full 20; energy-barrier
+   * 2 + half level = 12, untouched. cold/fire are asserted at 20 because both modifications grant them
+   * and the higher wins, which is the same assertion the old case made.
+   */
+  // batch 036 premise: innovation-5 "You must have the dense plating, layered mesh, or tensile absorption breakthrough modification to select "
+  // batch 036 premise: innovation-5 "You must have the harmonic oscillator, metallic reactance, or phlogistonic regulator modification to select this modification."
   it('it upgrades ONLY the initial modification, not every resistance the inventor has', () => {
-    // physical-protections is a REVOLUTIONARY modification with its own half-level resistance.
+    // energy-barrier is a REVOLUTIONARY modification with its own 2 + half-level resistance.
     // "The resistance from your initial armor modification" — this one is untouched.
     const r = res(20, {
       initial: 'phlogistonic-regulator',
       breakthrough: 'enhanced-resistance',
-      revolutionary: 'physical-protections',
+      revolutionary: 'energy-barrier',
     });
     expect(r).toMatchObject({ cold: 20, fire: 20 }); // initial → full level
-    expect(r).toMatchObject({ bludgeoning: 10, slashing: 10, bleed: 10 }); // revolutionary → still half
+    // batch 036 premise: innovation-5 "you gain resistance to all energy damage (acid, cold, electricity, fire, force, negative, positive, and sonic damage) equal to 2 + half your level"
+    expect(r).toMatchObject({ acid: 12, force: 12, sonic: 12, void: 12 }); // revolutionary → still 2 + half
   });
 
   it('falls back to a later slot holding an initial-TIER modification', () => {

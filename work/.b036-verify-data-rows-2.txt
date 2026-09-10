@@ -1,0 +1,108 @@
+BATCH 036 — ADVERSARIAL VERIFY, family data-rows-2 (chunk 2 of 2 of "data-rows")
+Spec checked: work/.b036-rows-data-rows-2.json   Report checked: work/.b036-report-data-rows-2.txt
+Test checked: test/batch036-data-rows-2.test.ts  (9 it(), all fail today on exactly one missing
+authored field each — verified one by one, no test passes for a reason other than its own row)
+npx tsc --noEmit: clean.  node scripts/test-flip-audit.mjs --batch 036: clean, every flip cited.
+Verified with a THROWAWAY harness (test/_b036v2harness.test.ts, deleted after the run) that applied
+all nine rows to a content COPY and built real characters through buildCharacter/deriveDefenses/
+recordMarkersFor/spellNotesFor/maxTakes: 8 checks, all as reported below. No file of another family
+was edited, and no row of mine was changed.
+
+PER FINDING
+- lesson-of-the-flock — DONE. Harness: a level-6 witch (baba-yaga) picking greater-lesson =
+  aon-lesson-of-the-flock now has 'levitate' in the prepared spellbook and still has the
+  sheltering-wings hex; on the SHIPPED db the same build has no levitate. Reader confirmed live at
+  src/rules/build.ts:4067 → featureGrantedSpells → grantedByRank merge at :4317. spells/levitate is
+  rank 3, matching WG's giveSpell rank. No overlay collision (record's live rows are focusSpells +
+  edition).
+- wind-seeker — DONE. Harness: a level-8 animist bonded to crafter-in-the-vault with walk-the-wilds +
+  wind-seeker has 'aerial-form' in BOTH grantedRepertoire and repertoire of the
+  'animist-apparition-casting' entry; absent on the shipped db. Reader src/rules/build.ts:6649 →
+  grantedRepertoireAdds → final pass at :6923 (which also unions granted ⊆ repertoire). entryId is a
+  real entry id (build.ts:4543/4687) and spells/aerial-form exists (rank 4).
+- wind-seeker#darkened-forest-form — DONE. Harness: spellNotesFor(ch,'darkened-forest-form') returns
+  the "bat and bird forms" note on the same animist. Writer src/rules/build.ts:6828 (ownedRecords
+  walk), display SpellsTab.tsx:2352. Distinct FIELD from the row above, so the two rows do not merge
+  and do not collide. spells/darkened-forest-form exists.
+- deadly-mutation — DONE, and the builder's CORRECTION of the finding's proposal is right, not a
+  liberty: the ownership gate at src/rules/build.ts:6588 tests ownedIds (feats + owned class features
+  only), and feats['spit-ambient-magic'] is undefined — the proposal's from:'spit-ambient-magic'
+  would have shipped a permanently dead row. Harness: with ostilli-host-dedication + deadly-mutation,
+  recordMarkersFor(ch,'action','spit-ambient-magic') returns the rider with value "d8 damage dice";
+  with deadly-mutation alone it returns []. The row reaches a REAL sheet row: MainTab.tsx:290-345
+  builds the Spit Ambient Magic entry from the taken dedication's grantsActions and keys marks by the
+  action name's slug, which is 'spit-ambient-magic'.
+- skill-mastery-rogue#maxtakable — DONE. Harness: maxTakes() returns 5 on the patched db and 1 on the
+  shipped one (src/rules/featGrants.ts:789). The five takes are not empty: the increases and the
+  granted skill feat live in featGrantsAuto.ts:677 and featPickGrants.ts:157, identical to the
+  sibling feats/skill-mastery which already carries maxTakable 5. AoN feat-5096 Special verified
+  verbatim in the mirror.
+- golem-grafter-dedication — DONE. The superseding row carries the prior overlay value WHOLE
+  ([{type:'physical',value:'@actor.archetypeFeats.golem-grafter'}]) plus `condition` only — diffed
+  against scripts/data/effect-backfill.json, and it is the ONLY row of this chunk whose key already
+  exists in the overlay, so precheck (2) is satisfied by the single declared supersedes:true. Harness:
+  the built character keeps a counted physical resistance (value 1 with one archetype feat) and
+  sources['resistance:physical'] now carries condition "except adamantine" — the `*` DefensesPills
+  and VitalsRail render. maxHpBonus {perLevel:1} untouched. Mirror feat-1227 confirms the exception.
+- unravel-mysteries — DONE. Harness: recordMarkersFor(ch,'action','decipher-writing') returns the
+  Unravel Mysteries mark (alongside the pre-existing student-of-the-canon one, which it does not
+  displace); absent on the shipped db. Reader recordMarksFor src/rules/explain.ts:477 walks taken
+  feats, and StatDetailModal.tsx:185 renders marks on the skill-action row — skillActionsFor()
+  lists "Decipher Writing", whose slug is exactly 'decipher-writing'. actions/decipher-writing exists.
+- spirit-walk#resistance — NOT-DONE (row is right, REACH is not). The row's own justification is
+  false: derive.ts:2786 does emit the note for an `against` entry, but `resistances` is built from the
+  res map alone (derive.ts:2979), and BOTH renderers iterate that array only (DefensesPills.tsx:46,
+  VitalsRail.tsx:774) — explainDefense is reachable solely by clicking a pill that exists. Harness,
+  on a level-8 animist with spirit-walk and the row applied: sources['resistance:all'] is present and
+  def.resistances has LENGTH 0, so the printed clause renders on no surface of the sheet. I did NOT
+  re-encode it: `condition` would put a permanent "All 4" resistance in the headline (blanket
+  resistance to every damage type, far worse than silence), and the only shipped `against` carrier,
+  modes/dampening-harmonics, is visible only because a MODE also prints its own `note`. Keep the row —
+  it is the honest durable encoding — and close the display gap listed below; until then this finding
+  must not be reported as taught.
+- eye-of-the-unseen#innate-spell — DONE. Harness: with the eye invested, the built character has an
+  innate entry holding 'see-the-unseen' at arcane; absent on the shipped db. Reader is the invested-
+  item walk at src/rules/build.ts:8041. spells/see-the-unseen is rank 2 (arcane/divine/occult) and the
+  mirror's equipment-1367-1240 prints "The eye casts see invisibility on you" with Frequency once per
+  day — the legacy title of that record, and the Greater entry's "5th-level see invisibility" confirms
+  the base cast is the spell's own rank 2. The counter+usesPerDay pair is not double-modelling: 27 of
+  the 66 innateSpells items ship exactly that shape (items/nosoi-charm is the twin). No collision with
+  the sibling chunk's eye-of-the-unseen row, which deletes passiveEffects — different field.
+
+ROWS AS ROWS
+- 9 rows, 9 distinct category|id|field keys; across BOTH data-rows specs (20 rows) there is not one
+  repeated key, so precheck (1) cannot fire. No create rows, no delete rows, no path rows, no prose
+  rows. Every target record exists in public/core.json; every id a row names exists —
+  spells/levitate, aerial-form, darkened-forest-form, see-the-unseen; actions/decipher-writing,
+  spit-ambient-magic; feats/ostilli-host-dedication (carrying grantsActions:['spit-ambient-magic',…]).
+- Every row's `why` names a real AoN doc id (lesson-27, feat-7138 ×2, feat-5459, feat-5096, feat-1227,
+  feat-1132, feat-7137, equipment-1367-1240) and I read all eight documents in the mirror: every
+  "printed" quote in the report is verbatim.
+- Every field has a live reader in OUR files, none borrowed from another family's pending work:
+  grantedSpells build.ts:4067; spellListAdditions build.ts:6649; spellNotes build.ts:6828;
+  modifiesGrant.actionRider build.ts:6586-6609; maxTakable featGrants.ts:789; resistances
+  condition/against derive.ts:2786-2794; recordMarks explain.ts:477; item innateSpells build.ts:8041.
+
+MANIFEST
+- This family's entry in work/.b036-specs.json is correct: stage[] = the spec, the report and the test
+  file, which are the only three paths this chunk touched (git status shows no src/ or scripts/ change
+  attributable to it, and no "batch 036" comment of this chunk's finding ids in src/).
+- ⚠ TRANSIENT LOSS, since repaired by another agent — recorded because the same race can recur before
+  --stage apply. At 14:21:05 work/.b036-specs.json listed ONLY data-rows-2 and instruments, while
+  work/.b036-rows-data-rows-1.json (11 rows, 14:17:39) and work/.b036-report-data-rows-1.txt (14:20:50)
+  both existed: a concurrent read-modify-write of the shared manifest had dropped that entry, and
+  wg-batch-run.mjs stageApply() applies ONLY the files the manifest names — the sibling chunk's eleven
+  rows would have gone unwritten while its report read as taught. I deliberately did not re-add it
+  (a second entry for one file makes specRows() list its rows twice and precheck (1) refuses the whole
+  batch as a COLLISION). On re-reading at the end of this verify the manifest holds four entries —
+  data-rows-1, data-rows-2, instruments, situational — each exactly once, but work/.b036-rows-engine.json
+  now exists on disk with NO entry (that family may simply not have written its entry yet). The race is
+  live: whoever runs --stage apply must re-read the manifest last and confirm every work/.b036-rows-*.json
+  on disk is named exactly once — no duplicate (precheck (1) COLLISION) and none missing (rows silently
+  never written while the family's report reads as taught).
+
+DATA STILL NEEDED
+- (none)
+
+CROSS-FILE GAPS
+- spirit-walk#resistance: an `against`-only IWR entry reaches NO surface — derive.ts:2786 skips res.set for it by design, derive.ts:2979 builds `resistances` from that map alone, and DefensesPills.tsx:46 + VitalsRail.tsx:774 iterate `resistances` only (explainDefense is reachable solely by clicking a pill), so a conditional-only resistance is stored, attributed and displayed nowhere; both renderers need a conditional-only line fed from defenses.sources keys that have no res entry. Also silences the one shipped carrier, modes/dampening-harmonics. Engine/display family — outside this chunk's files.

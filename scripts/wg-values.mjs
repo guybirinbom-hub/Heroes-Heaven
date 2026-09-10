@@ -265,6 +265,14 @@ const NOT_A_SCALAR = {
   SIZE: 'a SIZE, not a value on a track — covered by `sizeOverride` (Mighty Dragonet: "instead of Tiny, your size is Small")',
   IMPROVED_MULTILINGUAL: 'extra languages, and extra languages FROM ANOTHER FEAT — covered by `languageChoices` + `languageChoicesBonus`',
   SENSES_IMPRECISE: 'a sense, not a value — covered by `senses` / `conditionalSenses`',
+  /* Batch 036, spirit-walk. The EXACT twin of SENSES_IMPRECISE above and nothing more: their two sense
+   * variables differ only in which of the two printed sense kinds they name, and a sense is a NAME plus
+   * a RANGE ("apparition sight, 30"), never a number on a track. The lane that compares it is the same
+   * one, and it is LIVE on this very record — wg-diff still reports spirit-walk as missing kind `sense`,
+   * which is what keeps this entry a routing note rather than a suppression (pinned mutation-proof in
+   * test/batch036-closer.test.ts, which also shows the report dying the moment a `senses` carrier lands). */
+  // batch 036 premise: feat-7120 "You have apparition sight, an imprecise sense that allows you to detect the presence of"
+  SENSES_PRECISE: 'a sense, not a value — covered by `senses` / `conditionalSenses`, the same lane as SENSES_IMPRECISE',
   MAX_HEALTH_CLASS_PER_LEVEL: 'HP per level — covered by `maxHpBonus.perLevel` (Toughness: "increase your maximum Hit Points by your level")',
   UNBURDENED_IRON: 'their record-named var for the Speed-penalty clauses — covered by `speedAdjust.ignoreArmorPenalty` + `reduceOtherPenalty`',
   STONE_BRAWLER_FEAT_COUNT: 'their running tally of archetype feats held — engine plumbing, computed at read time on our side',
@@ -932,6 +940,35 @@ function ourAssertions(id, rec) {
      */
     const chassis = Number(core.ancestries?.[rec.ancestryId]?.speeds?.land);
     if (rec.speeds?.land === undefined && Number.isFinite(chassis)) put('speed|land', chassis + Number(rec.landSpeedBonus));
+  }
+  /*
+   * …and a Speed carried by a `whileActive` CLAUSE — the STATE-GATED form, which this walk never read.
+   *
+   * batch 036 (closer). The same hole `speedsIf` above was opened for, one carrier along: a Speed the
+   * record grants only while a state is on lives in `whileActive[].speeds` (read by deriveSpeeds, which
+   * pushes each into grantSources and ADDS it to the land Speed), and nothing here looked at it. That
+   * was invisible while the only carrier of such a clause was a FEAT_SITUATIONAL star, whose magnitudes
+   * `situationalMagnitudes` scrapes out of the prose. The moment batch 036 moved Speed Boosters' step
+   * from a star to a real number the sheet applies — strictly better for the player — the record's only
+   * assertion of "10" vanished and classFeatures/speed-boosters read as a DISAGREEMENT on a number we
+   * now grant more honestly than before. A comparer that goes red when a mechanic is UPGRADED is reading
+   * the wrong carrier, not finding a defect.
+   *
+   * THE TOTAL as well as the step, and only for `land` beside a `landSpeedBonus`: print states the
+   * state's number as a total — innovation-5, Speed Boosters: *"You gain a +5-foot status bonus to your
+   * Speed, which increases to a +10-foot status bonus when under the effects of Overdrive."* — and their
+   * row writes that total (SPEED = 10). Ours holds the same ten as 5 + 5, exactly as the chassis lane a
+   * dozen lines above holds a heritage's absolute Speed as base + delta, so BOTH numbers are asserted
+   * and either encoding matches. `put` is multi-assertion, so this can only ever let a true assertion
+   * match; it never removes one. n is small and measured: four records in the corpus carry a
+   * `whileActive` Speed at all (classFeatures/speed-boosters, classFeatures/hyper-boosters,
+   * feats/fast-movement, feats/raging-athlete) and two of them carry both fields.
+   */
+  for (const w of Array.isArray(rec.whileActive) ? rec.whileActive : []) {
+    for (const [k, v] of Object.entries(w?.speeds ?? {})) {
+      putSpeed(k, v);
+      if (k === 'land' && typeof v === 'number' && typeof rec.landSpeedBonus === 'number') put('speed|land', rec.landSpeedBonus + v);
+    }
   }
   /* …and an ITEM's speeds, which live under `passiveEffects` and were not read: Boots of Bounding
    * carries `passiveEffects.speeds.land = 5` and read as granting no Speed at all. Same shape as the

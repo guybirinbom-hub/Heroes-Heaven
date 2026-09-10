@@ -1,0 +1,4 @@
+{
+  "_note": "GATE-RED group \"pipeline-collation-repair\" authors NO overlay rows: all four of its items are defects in the batch DRIVER itself (scripts/wg-batch-run.mjs gapLines, scripts/wg-batch-close.mjs's residue merge key) and in the `data` script chain in package.json, none of which is game data. The spec file exists so the manifest entry has the `file` its shape requires; the deliverables are the code fixes and test/batch036-red-pipeline-collation-repair.test.ts, both listed in the manifest entry's stage[]. See work/.b036-report-red-pipeline-collation-repair.txt.",
+  "findings": []
+}

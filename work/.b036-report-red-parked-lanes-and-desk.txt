@@ -1,0 +1,173 @@
+BATCH 036 — WG-COMPARISON LANE — GATE-RED — GROUP: red-parked-lanes-and-desk (family engine)
+
+Five items, all of them parks or desk confirmations. Nothing in src/ was touched; no backfill row is
+owed and none is emitted. What this group actually produces is the ONE thing item 1 said was missing —
+a MEASURE on the parked companion-strike rider lane — plus three re-checks of standing residues and
+three desk confirmations. Every disposition below ends BUILT (the measure, pinned by a test) or PARKED
+WITH AN ARTEFACT (a named residual entry or a named desk number). No item ends in prose.
+
+Spec file: work/.b036-rows-red-parked-lanes-and-desk.json — findings: [] (deliberately empty).
+Test file: test/batch036-red-parked-lanes-and-desk.test.ts — 2 tests, green.
+Ledger:     work/.b036-report-triage-parked.txt (per-item disposition, one line each).
+npx tsc --noEmit clean. node scripts/test-flip-audit.mjs --batch 036 clean.
+
+No settle was taught and no comparer was widened by this group, so no "// mutation-proof" marker
+applies and there is no teach line to name.
+
+======================================================================================================
+DATA STILL NEEDED
+======================================================================================================
+(none — this group emits no rows, and the one record it measures, classFeatures/advanced-weaponry-
+construct, already carries the engine family's applied `effectChoices` row in shipped core.json.)
+
+======================================================================================================
+CROSS-FILE GAPS  (outside the files assigned to me — NOT edited)
+======================================================================================================
+1. scripts/wg-batch-close.mjs (owner this round: the repair group) — a DUPLICATE-merging dedup will
+   not retire the "not a gap" residues, so item 4's expected disappearance does not follow from the
+   dedup alone. Measured over the current work/wg-batch-036-residual.json and the current close
+   script: flaggedResidues has 10 entries, and their `id`/`summary` text is DISTINCT in all 10 (no
+   two share even a normalised first 200 characters), so the existing prose key
+   (`pairKey = id|finding`, wg-batch-close.mjs:399) merges nothing and a byte-content key would merge
+   nothing either. The two genuine restatements — [0]/[4] blessed-swiftness#mounted (builder + verify)
+   and [2]/[5] the ritual-record gap — are the same gap in DIFFERENT WORDS, so only a key derived
+   from what a residue is ABOUT (record id, or family+kind+gap letter) collapses them. Entries [1]
+   (eye-of-the-unseen collision, verified ABSENT) and [3] (the ASCII divider swept up by the apply-
+   digest collator) are UNIQUE and assert they are not gaps at all: no dedup of any shape removes
+   them, and retiring them needs the close to honour a ref that says "not a gap" (both refs already
+   open with exactly that sentence). Flagged, not edited — scripts/ is not mine this round, and
+   work/wg-batch-036-residual.json is rewritten by wg-batch-close.mjs and must not be hand-edited.
+
+======================================================================================================
+PER ITEM
+======================================================================================================
+
+--- 1. gap D — A COMPANION-STRIKE RIDER LANE (engine CROSS-FILE GAPS, work/.b036-gaps.json entry 16)
+       DISPOSITION: STAYS PARKED, and the missing MEASURE is now BUILT. ---
+
+THE MEASURE (this is the deliverable). The question the next round has to answer is whether gap D is
+n=1 or a lane. Measured over shipped public/core.json:
+
+  * The offer set is 11 records — the level-1 weapon innovation modifications listed in
+    classFeatures/advanced-weaponry-construct.effectChoices[0].options (the engine family's row, now
+    applied): advanced-design, blunt-shot, complex-simplicity, dynamic-weighting, entangling-form,
+    hampering-spikes, hefty-composition, modular-head, pacification-tools, razor-prongs,
+    segmented-frame.
+  * FOUR of those 11 carry a machine payload, and it is `weaponTraits` in every case:
+      hampering-spikes  {match:{designated:'innovation'}, add:[hampering, trip, versatile-p]}
+      hefty-composition {match:{designated:'innovation'}, add:[shove, razing, versatile-b]}
+      modular-head      {match:{designated:'innovation'}, add:[modular-b-p-or-s]}
+      razor-prongs      {match:{designated:'innovation'}, add:[tearing, trip, versatile-s]}
+    So the answer is n=4, NOT n=1 — a construct inventor loses a real trait payload on four of his
+    eleven legal answers. The engine report's "razor-prongs' rider matches designated:'innovation'"
+    was true of the record it named and understated the width by four.
+  * The other SEVEN carry no rider of any kind (actionCost + aonSection only), so they grant nothing
+    to ANY inventor, construct or weapon. They are not a construct-side loss and must not be counted
+    as one — that distinction is the whole reason the measure was worth taking.
+  * All four payloads are scoped `match.designated: 'innovation'`, i.e. they are all blocked by the
+    SAME condition (applyWeaponRiders, src/rules/derive.ts:4349/4385, walks inventory WeaponItems and
+    tests `inv.designations`; a construct's unarmed attacks are companion rows produced by
+    deriveAnimalCompanion and reach neither). So closing the lane is ONE engine change that lands all
+    four, not four bespoke fixes — which is the argument for building it as a lane next round.
+  * Second measure, for the sibling question: of the 18 records tagged
+    otherTags 'construct-innovation-modification', ZERO carry weaponTraits or any other grant payload
+    of their own (all 18 are actionCost + aonSection, plus advanced-weaponry-construct's
+    effectChoices). The construct bucket contributes nothing to the lane; the whole of gap D is the
+    four weapon modifications reachable THROUGH advanced-weaponry-construct.
+
+RESIDUAL ENTRY, CONFIRMED TO SURVIVE THE DEDUP. work/wg-batch-036-residual.json flaggedResidues[8]
+(family engine, kind CROSS-FILE GAPS, the "confirmed by the engine verifier and explicitly measured as
+BIGGER THAN THIS BATCH" entry) is the ONLY residue of the 10 that mentions advanced-weaponry-construct,
+and work/.b036-gaps.json has exactly ONE line for gap D (entry 16). It has no twin of any shape, so no
+dedup — prose-keyed as today, or content-keyed as the repair group is landing — can collapse or drop
+it. It survives. Not hand-edited (wg-batch-close.mjs rewrites that file).
+
+TEST: test/batch036-red-parked-lanes-and-desk.test.ts, describe "advanced-weaponry-construct: the
+companion-strike rider lane, measured while it stays parked".
+  it #1 pins the measure off shipped content: the offer set is 11, exactly four of them carry a rider
+  and they are those four by name, every rider is `match.designated === 'innovation'`, and the other
+  seven carry none. If any half of the measure moves, the next round is forced to re-triage instead of
+  inheriting a stale n.
+  it #2 pins the PARK on a BUILT character and is the tripwire: a level-7 construct-innovation inventor
+  who has answered `advanced-weaponry-construct:modification = razor-prongs` records the pick
+  (`effectPicks[].label === 'Razor Prongs'` — the half that DID ship), and the construct block derived
+  exactly the way src/sheet/CompanionsTab.tsx:1731 derives it carries none of tearing / trip /
+  versatile-s. It goes red the day the rider lane lands, which is when residual entry [8] should be
+  retired — a failure here is a re-triage event, not a test bug, and the test says so in a comment.
+
+--- 2. flaggedResidue blessed-swiftness#mounted (data-rows-1) — PARK CONFIRMED, no build. ---
+Re-checked rather than inherited. All four claims hold as written:
+  * derive.ts's land-Speed lanes (speeds / speedsIf / landSpeedBonus / landSpeedMin / speedAdjust) all
+    target the CHARACTER; src/rules/companions.ts:404 takes exactly three companion-side addends
+    (maturity + specialization + invested gear) with no character-feature addend.
+  * CompanionMod.speeds (companions.ts:531-536) is a Math.max SET of speed TYPES, so the existing
+    grants lane cannot express "+5 feet" even if it were reachable.
+  * The engine has no mounted STATE: every mounted clause in src/ is a situational star or a note.
+  * n=1 — the mechanic is one clause in the game (the 3 core-descriptions hits are the same Blessed
+    Swiftness sentence; the other 5 mount hits are ordinary companion grants already carried by
+    companionGrants.ts).
+  * House precedent stands: situationalBonuses.ts:4358 (swift-paragon) carries the identical
+    "if you're mounted … the mount instead" redirect as a disclosure note, which is exactly what
+    work/.b036-rows-data-rows-1.json does for this record.
+Nothing is owed to the owner (print settles the mechanic; WG encodes strictly less — a bare
+addBonusToValue SPEED 5 status). ARTEFACT: work/wg-batch-036-residual.json flaggedResidues[0], with
+its verify-side restatement at [4]; work/.b036-gaps.json entry 0, status "parked", ref flaggedResidue.
+This line records that triage re-checked it; it adds no new artefact because none is owed.
+
+--- 3. flaggedResidue cultivators-keen-eye ritual-cost (situational) — PARK CONFIRMED, no build. ---
+Re-checked: core.json's actions bucket has exactly one id matching /ritual/ (spiritual-aid) — rituals
+ship as rules pages only — and RecordMarker.on is typed 'action' | 'condition' | 'feature' at
+src/rules/situationalBonuses.ts:4174, so a ritual-cost mark has no row to attach to. n=1: one record
+in the game prints a ritual-cost substitution, and its clause already reaches the player on the feat's
+own `note` (row in work/.b036-rows-situational.json, pinned by test/batch036-situational.test.ts).
+NOT WIDENED, deliberately: src/rules/situationalBonuses.ts belongs to the inventor-modification-rows
+group this round, so the marker type is untouched here — and widening it for one record would be the
+speculative infrastructure the park exists to refuse. ARTEFACT: flaggedResidues[2], restated at [5].
+
+--- 4. flaggedResidue eye-of-the-unseen / illusionists-hat collision warning (situational)
+       — DISCHARGED: not a gap and not a park. ---
+The collision the line warns about is verified ABSENT, and I re-measured it across every spec named in
+work/.b036-specs.json rather than trusting the note: the only sibling row on either record is
+work/.b036-rows-data-rows-2.json # eye-of-the-unseen#innate-spell, which is FIELD-SCOPED
+({category:'items', id:'eye-of-the-unseen', field:'innateSpells'}) and therefore cannot collide with a
+`passiveEffects` row (the applier's key is category/id/field and its precheck would refuse a real
+clash); and illusionists-hat#daily-illusory-creature sits in refuted[] of work/.b036-read.json, so no
+family emits any row on items/illusionists-hat at all. It is a builder's forward-looking note to
+sibling agents that did its job, not an open lane.
+NOT HAND-EDITED: work/wg-batch-036-residual.json is rewritten by scripts/wg-batch-close.mjs, so the
+entry (flaggedResidues[1]) is left exactly where it is. One correction to the disposition as handed to
+me, raised as CROSS-FILE GAP 1 above and repeated here because it changes what the next close will
+show: this entry is UNIQUE among the 10 residues, so a content-keyed DEDUP will not remove it — a
+dedup merges twins, and this one has none. Retiring it needs the close to honour the "not a gap" ref
+it already carries. Until then it will still be listed after the next close, and this line is the
+record that it is discharged rather than open.
+
+--- 5. OWNER-QUEUED, all three — ARTEFACT CONFIRMED, nothing decided. ---
+All three are present in work/.b036-queue.json with their printed clause, WG's raw encoding, our
+carrier and the question, and all three are correctly filed as WG-vs-print. No agent decided any of
+them and this group decided none. Desk numbers verified against the queue entries:
+  #148 hyper-boosters (VALUES) — WG's legendary-Crafting conditional has an EMPTY trueOperations and
+       pays its +30 out of falseOperations under a SKILL_CRAFTING <= L condition that is true for
+       every character, so their +30 fires in Overdrive at any Crafting rank; print (innovation-1/-5)
+       gates it on legendary. Ours follows print (situationalBonuses.ts:1403 states the rank gate).
+  #149 spirit-walk (KINDS, missing=[sense]) — WG grants a PRECISE 30-foot apparition sight that
+       feat-7137 does not print; print puts apparition sight on the prerequisite feat Apparition
+       Sense (feat-7120) and prints it IMPRECISE. The read verdict is REFUTED and nothing on our side
+       is missing; it reaches the desk only because close requires a desk number for any record
+       carrying an askOwner finding. The queue entry asks it as a LANE question (playtest-edition WG
+       rows sharing a name with the released record) so the corpus stops paying for it.
+  #150 chronomancers-secrets — WG hands Stasis over as a NORMAL spell from the LEGACY record against
+       print's "stasis domain spell" (= focus spell). Ours follows print: both granted spells carry
+       the `focus` trait, each brings its own pool point, and build.ts:3988 suppresses the record's
+       own focusPoolBonus so nothing double-counts.
+No test and no row: a desk question is an artefact, and confirming it is exactly the work of leaving
+it parked rather than re-opened.
+
+======================================================================================================
+CITATIONS
+======================================================================================================
+Both it( in test/batch036-red-parked-lanes-and-desk.test.ts carry "// batch 036:
+advanced-weaponry-construct" within the 6 lines above them, and that finding id is in confirmed[] of
+work/.b036-read.json with verdict CONFIRMED; its RECORD id (advanced-weaponry-construct) opens the
+enclosing describe title. No src/ line, settle key, comparer teach, ratchet constant or experience
+limit was touched by this group.
