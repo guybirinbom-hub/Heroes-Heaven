@@ -1,0 +1,127 @@
+BATCH 035 — GATE-RED, ADVERSARIAL VERIFY of group "close-out" (family red-close-out).
+Builder report: work/.b035-report-red-close-out.txt   Spec: work/.b035-rows-red-close-out.json
+Default was NOT DONE. Every claim below was re-measured against the files, not read off the report.
+
+
+ITEM 1 — ast-content-check (VERIFY red, 6 records).                                          DONE
+  PARKED WITH A WORKING ARTEFACT, and the "not buildable here" claim is true, not an excuse.
+  · Re-ran `node scripts/ast-content-check.mjs`: exit 1, all six records, byte-identical to the
+    report's quote and to work/.b035-run.log:10821. public/ast/{classFeatures,items}.json are dated
+    Sep 7 18:39, i.e. after the last patch run — the silent revert the guard header describes.
+  · NO OVERLAY ROW CAN CARRY IT, checked three ways rather than accepted: `public/ast` does not
+    appear anywhere in scripts/apply-parity-fixes.mjs OR scripts/apply-backfill-now.mjs (the only two
+    scripts the overlay lane runs), and the only writers of public/ast in the repo are the ast-*/
+    import-*/rebuild-* scripts — every one of them outside what an agent may run here. The repair
+    instruction in the guard is `node scripts/apply-ast-patches.mjs`. Not run by me either.
+  · THE ARTEFACT ACTUALLY FILES. I reproduced stageGaps's own path read-only: pendingQuestions() over
+    work/.b035-queue.json vs the desk yields exactly ['ast-patches-reverted-by-regen'], and
+    `node scripts/add-owner-question.mjs --from <that one entry>` (no --write) prints
+    "#146  ast-patches-reverted-by-regen  (batch 35) … 1 added". All four guards pass for real:
+    fields present; id on none of the desk's four arrays; `printed` names way-10, mystery-10,
+    bloodline-24, bloodline-27, equipment-3593, equipment-2146 and all six files exist in the mirror;
+    `theirs` names giveAbilityBlock, which wg-show prints for "Way of the Vanguard".
+  · THE TEST IS FAITHFUL. Its PROBES array is character-for-character the PROBES of
+    scripts/ast-content-check.mjs. Its ANCHORS array is character-for-character the five `lines()`
+    calls in scripts/apply-ast-patches.mjs — and the omission of way-of-the-vanguard is CORRECT, not a
+    hole: that patch is a literal `add: ['**Deeds** *Initial* …']`, it slices nothing. Citation
+    `// batch 035 premise: bloodline-27 "4th Translocate - 5th Scouting Eye - 6th Disintegrate -
+    7th Retrocognition"` — the doc exists and the string is verbatim inside it (checked with node).
+    test/_content.ts merges core-descriptions `.d` onto `.description`, which is the SAME field
+    apply-ast-patches.mjs transplants from, so the test asserts the repair's real source.
+  · ONE CONCERN RAISED AND DISMISSED WITH EVIDENCE: whispering-staff's transplant is
+    `lines(...).slice(0, 7)`, and the test pins only that the anchor resolves. Measured today the
+    7 sliced lines are Cantrip..6th and DO contain Clairvoyance and Truesight; and if a line is ever
+    inserted the script's own post-check throws "still missing", loudly. No gap.
+  Still RED, and that is the correct state of a park.
+
+ITEM 2 — work/.b035-queue.json ownership.                                                    DONE
+  Three entries, in order: cultivation-order, animal-instinct-spider-web, ast-patches-reverted-by-regen.
+  Preservation proved rather than asserted: both pre-existing entries compare EQUAL on all four text
+  fields (printed / theirs / ours / question) to the copies already filed on the desk at n=144 and
+  n=145 — a read-modify-write or a re-wording would show as a diff. No #146 exists in
+  work/owner-questions.json, so no agent filed anything: that file was not edited by this group.
+  animal-instinct-spider-web was NOT re-filed under a second id, so desk entry #145 is not duplicated.
+
+ITEM 3 — work/.b035-specs.json ownership.                          DONE — report's snapshot superseded
+  The report's numbers (18 entries, 1 orphan) were true at 12:26 and are now stale: red-experience-hosts
+  appended at 12:27-12:30 and red-readable-records at 12:31. RE-VERIFIED BY ME AT 12:31 over the real
+  files: 20 entries; 0 orphan specs on disk; 0 entries naming a missing spec; 0 file named twice;
+  0 kinds outside {"rows","created-prose"}; 80 applier-visible rows (rowsOf precedence:
+  verification.correctedBackfillRows before backfillRows, and the applicable/findings fallback
+  wg-batch-run.mjs uses) with 0 collisions on category+id+field+path.
+  The one orphan the report flagged — work/.b035-created-desc-readable-records.json — was closed by its
+  OWNING group with exactly the entry shape the report predicted (family red-readable-records,
+  kind created-prose). Not guessing it was the right call; guessing would have produced a duplicate
+  `file` and handed the applier the same prose twice.
+  The "gate-fix" -> "rows" normalisation was necessary and minimal: scripts/wg-batch-run.mjs:556 refuses
+  any kind outside that pair, and only `kind` differs from what red-gate-park wrote.
+  The empty spec is safe, read not run: apply-parity-fixes.mjs:441 takes the `else` branch when
+  plannedRows is empty and :465 compares --expect-rows against the unchanged overlay length, which is
+  exactly what expectRowsFor() hands it for a zero-row spec — exit 0, no rows, no edits.
+  NOTE, not a defect: one staged path does not exist yet (work/.b035-verify-red-gate-park.txt, that
+  group's verifier still in flight). loadManifest only requires the `file` to exist and
+  wg-batch-commit stages only paths that actually changed, so a not-yet-written stage path refuses
+  nothing.
+
+ITEM 4 — disposition record.                                                                 DONE
+  work/.b035-report-closeout.txt names a round-group and an outcome for each of the three pre-existing
+  verify reds (ast-content-check -> close-out, PARKED; readable-record-check -> red-readable-records,
+  whose report and created-prose spec are now both on disk; field-diff -> red-field-diff, closed with
+  one row on beckon-the-blasphemous-brethren#level plus an instrument fix), so "35 clean, 3
+  pre-existing" can no longer be quoted as unowned. Both no-touch records check out: cultivation-order
+  is on the desk at n=144, and the-oscillating-wave is in work/experience-instrument-limits.json under
+  lane "wg-legacy-spell-name", verdict NO-SHEET-EFFECT, batch 35.
+
+FIXED-BY-ME
+  work/.b035-specs.json — appended "work/.b035-verify-red-close-out.txt" to the red-close-out entry's
+  stage[] (this file was not in it). Surgical Edit of that one array; no other entry read or rewritten.
+  Re-parsed after the edit: 20 entries, invariant still holds in both directions. No test: adding a
+  path to a stage list is data, and the invariant check above is the check.
+
+TEACH / SETTLE LINES: none — this group authored no settle, no teach, no ratchet change and no
+instrument-limit park, so no finding id is claimed as taught by it and no MATCHES verdict can be
+derived from either report. Both test citations are the `// batch 035 premise:` form.
+
+RUNS (mine, this verify)
+  node scripts/vt.mjs run test/batch035-red-close-out.test.ts   -> 1 file, 2 passed
+  npx tsc --noEmit                                              -> clean (exit 0)
+  node scripts/test-flip-audit.mjs --batch 035                  -> clean, 23 test file(s) touched,
+                                                                   1 new settle key, every flip cited
+  node scripts/ast-content-check.mjs                            -> FAIL, all six, unchanged (expected)
+  node scripts/add-owner-question.mjs --from <pending>           -> #146 would be added; 0 refusals
+  (apply-parity-fixes.mjs / apply-ast-patches.mjs were NOT run, in any mode.)
+
+
+DATA STILL NEEDED:
+- The six AST display trees (classFeatures/ashes, classFeatures/bloodline-elemental,
+  classFeatures/bloodline-imperial, classFeatures/way-of-the-vanguard, items/razmiri-mask-porcelain,
+  items/whispering-staff) still ship without their printed sections on the surface DescBody renders.
+  The content is NOT missing — it is verbatim in public/core-descriptions.json and pinned there by
+  test/batch035-red-close-out.test.ts — but nothing an agent in this workflow may write repairs the
+  rendered tree. Needs the driver: owner question `ast-patches-reverted-by-regen` (would file as desk
+  #146), option (a) run scripts/apply-ast-patches.mjs at close, or (b) a durable carrier for the ast lane.
+
+CROSS-FILE GAPS:
+- scripts/wg-batch-run.mjs loadManifest (:556) is the ONLY place enforcing kind ∈ {"rows",
+  "created-prose"}; wg-batch-close.mjs:96-99 checks `file` and existence only and wg-batch-commit.mjs
+  never reads `kind`. A builder can therefore write a kind that reads clean everywhere it looks and
+  refuses --stage apply for the whole batch. It happened this round (red-gate-park, "gate-fix").
+  Fix: check kind where builders look, or have loadManifest name the entry AND the allowed set.
+- work/.b035-queue.json has no guard against a whole-file rewrite: pendingQuestions() merges against
+  the DESK, not against the queue's own prior content, so an agent writing the file whole drops every
+  entry it did not know about and nothing fails. It cost an owner question this batch
+  (work/.b035-verify-gaps.txt REPAIR 1). Fix: make stageGaps refuse a queue write that loses a prior id.
+- SAME EXPOSURE, SECOND FILE, FOUND THIS ROUND: work/.b035-specs.json has no such guard either, and the
+  single-owner convention did not actually hold — red-field-diff, red-gate-park, red-experience-hosts
+  and red-readable-records each appended their own entry directly while close-out "owned" it. Nothing
+  was lost only because every write happened to be an append; one whole-file rewrite would have
+  silently dropped up to 19 entries and the batch would have applied a subset of its specs with no
+  refusal. Fix belongs beside the queue guard: refuse a specs.json write that loses a prior `file`.
+
+FLAGGED RESIDUE:
+  (none — item 1 ended PARKED with a filing-verified artefact, items 2-4 ended BUILT, one stage-list
+  omission FIXED-BY-ME)
+
+MANIFEST STAGE (paths this verify touched)
+- work/.b035-verify-red-close-out.txt   (this file)
+- work/.b035-specs.json                 (red-close-out stage[] += this file)

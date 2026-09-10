@@ -1,0 +1,139 @@
+BATCH 035 — GAP AGENT, family "gap-engine-1" (the 17 open lines of family engine-1)
+
+Spec:     work/.b035-rows-gap-engine-1.json   (6 rows, 1 finding: animal-instinct#edition)
+Test:     test/batch035-gap-engine-1.test.ts  (10 tests, wholly new file)
+Code:     src/rules/companionGrants.ts, src/rules/companions.ts
+Queue:    work/.b035-queue.json               (1 entry: cultivation-order)
+Manifest: work/.b035-specs.json               (entry appended, family "gap-engine-1"; the 11 existing
+                                               entries re-read and carried whole — gap-instruments-1
+                                               had landed between my read and my write)
+
+No settle key, no comparer teach and no ratchet constant was added or moved by this agent.
+
+ONE LINE PER GAP LINE  (in the order they appear in work/.b035-gaps.json)
+
+ 1. AUTHORED — work/.b035-rows-engine-1.json — "(none beyond this chunk's own spec)": the three rows
+    the line names (fury-instinct aonId/edition, dragon-instinct choice.note) are already authored in
+    engine-1's own spec, which is in the manifest, so nothing is owed and a second row on the same
+    record+field would be a collision the applier hard-refuses.
+
+ 2. AUTHORED — src/rules/companionGrants.ts:559 — plant-eidolon#language: added "languages":["Sylvan"]
+    to the existing 'plant-eidolon' COMPANION_MODS row, the printed NAME (verified: content.languages
+    has no 'sylvan' key), so deriveEidolon's `content.languages?.[l]?.name ?? l` falls through to the
+    string as written — the 'beast-eidolon' / 'fey-eidolon' shape. Premise re-read off the mirror
+    myself: eidolon-9 is "Plant", Secrets of Magic, and carries "Language Sylvan".
+
+ 3. AUTHORED — src/rules/companionGrants.ts:575 — swarm-eidolon#language: added the new row
+    'swarm-eidolon': {"kinds":["eidolon"],"languages":["common"]}. The ID form (content.languages
+    ['common'] exists). languages ONLY, per the verify chunk's correction: evoIwr.push(...) does not
+    dedupe where evoSenses does, so copying the companions.ts TYPE_PACKAGE entry here would print the
+    grabbed/prone/restrained immunity twice. Premise: mirror eidolon-13 "Language Common".
+
+ 4. AUTHORED — src/rules/companionGrants.ts:582 — undead-eidolon#language: added the new row
+    'undead-eidolon': {"kinds":["eidolon"],"languages":["necril"]}. The ID form (content.languages
+    ['necril'] = "Necril"), the 'dragon-eidolon' shape. The TYPE_PACKAGE darkvision and Negative
+    Essence note are untouched and this row adds neither. Premise: mirror eidolon-11 and its remaster
+    twin eidolon-26 both print "Language Necril".
+
+ 5. AUTHORED — src/rules/companions.ts:1036 — swarm-eidolon#area-weakness: one line right after the
+    TYPE_PACKAGE merge — `if (cfg.typeId === 'swarm-eidolon') evoIwr.push(\`weakness ${level} area
+    damage\`)`. Interpolated because a static TYPE_PACKAGE string cannot scale with level, which is
+    why the immunities from the same printed sentence landed and the weakness did not. Premise:
+    mirror eidolon-13, Swarm Form, "It has weakness to area damage equal to its level."
+
+ 6. AUTHORED — work/.b035-rows-gap-engine-1.json — the SIBLING instincts, under the CONFIRMED finding
+    animal-instinct#edition, whose own proposal names all four ("fix them in the same pass"). Six
+    rows: giant-instinct aonId "instinct-11" + edition "remaster" (supersedes), spirit-instinct
+    "instinct-12" + "remaster" (supersedes), superstition-instinct "instinct-13" + "remaster"
+    (supersedes). Only THREE of the four are here: animal-instinct's own pair is already in
+    work/.b035-rows-data-rows-2.json and fury-instinct's in work/.b035-rows-engine-1.json, and two
+    specs may not author one record+field. Re-measured before authoring rather than taken from the
+    line: all three carry source.book "Pathfinder Player Core 2" while citing a Core Rulebook / APG
+    aonId, each shipped description matches its Player Core 2 page more closely than the page it
+    cites (giant .983 vs .943, spirit .972 vs .877, superstition .987 vs .775 on a token overlap), and
+    the "legacy" edition rows being superseded were never a judgement — scripts/backfill-ast-edition.
+    mjs:111 derives `edition` FROM the aonId's mirror doc, so the tag is a downstream consequence of
+    the same mis-join and moves with it. The picker consequence the read lane REFUTED on
+    superstition-instinct#edition-and-aonid is NOT claimed by any row; the harm fixed is the join.
+
+ 7. PARKED — owner question `cultivation-order` (work/.b035-queue.json) —
+    cultivation-order#leaf-membership, the ENFORCEMENT half. Not authorable here by the line's own
+    terms ("+ an OWNER decision"): the only lane that makes "leaf order" resolve is the declared-token
+    lane, a declared token is checked FIRST in checkPrerequisites and an unmet one BLOCKS, so building
+    it turns a line that has never blocked anything into one that blocks ten feats for every druid of
+    the other eight orders — and false-blocks every Order Explorer druid unless the token is declared
+    on that feat's option list too. Filed as a re-key of desk #134
+    (`spore-order-counts-as-leaf-order`, still open) and its batch-034 re-key (`spore-order`, still
+    open): the parity gate parks an owner-queued record by matching the queue id against the RECORD
+    id, so the question has to carry this record's id to park this record. Dry-run through
+    scripts/add-owner-question.mjs (no --write): accepted, #144.
+
+ 8. AUTHORED — work/.b035-rows-engine-1.json — verify's restatement of line 1; same disposition.
+
+ 9. PARKED — flaggedResidue — fury-instinct's AST half. Out of scope for every agent in this workflow:
+    the line's own remedy is a full `npm run data`, which the batch rules forbid me to run, and
+    apply-backfill-now.mjs does not rebuild public/ast. Re-verified that the disagreement is real —
+    public/ast/classFeatures.json.gz still holds instinct-3's Core Rulebook prose while
+    public/core-descriptions.json classFeatures/fury-instinct holds the Player Core 2 text ("from 2 to
+    3 … from 3 to 7"). The DATA half is already fixed by the two rows in engine-1's spec; what is left
+    is a regeneration the owner runs, and no row I could write would close it.
+
+10. PARKED — flaggedResidue — the ORDER-DEPENDENT ROW PAIR. A note to the DRIVER about apply order,
+    not a thing to author: both rows already exist and are correct (data-rows-1 re-emits
+    classFeatures/dragon-instinct.choice whole, engine-1 deletes .choice.note through a path row), and
+    apply-parity-fixes.mjs replaces an existing overlay key in place while appending a new one, so the
+    delete replays last. Any row I wrote would be a third writer of the same record. Recorded so the
+    ordering is visible if either row is ever re-authored as a new key.
+
+11. AUTHORED — src/rules/companionGrants.ts:559 — verify's restatement of line 2 (with the printed-name
+    reasoning independently confirmed); same edit.
+
+12. AUTHORED — src/rules/companionGrants.ts:575 — verify's restatement of line 3, carrying the evoIwr /
+    evoSenses correction; the edit follows verify, not the builder's note.
+
+13. AUTHORED — src/rules/companionGrants.ts:582 — verify's restatement of line 4; same edit.
+
+14. AUTHORED — src/rules/companions.ts:1036 — verify's restatement of line 5; same edit, at the site it
+    names.
+
+15. AUTHORED — work/.b035-rows-gap-engine-1.json — verify's restatement of line 6, re-read off
+    core.json; same three records, same six rows.
+
+16. PARKED — owner question `cultivation-order` — verify's restatement of line 7, which spells out the
+    Order Explorer false-block; same disposition, same queue entry.
+
+17. PARKED — owner question `cultivation-order` — cultivation-order#leaf-membership, the COMPARER half
+    (WG's giveAbilityBlock #34226 "Leaf Order"). Deliberately NOT settled: a settle in
+    scripts/wg-diff.mjs would declare the divergence resolved while the mechanic it stands for is
+    unbuilt and unruled, which is the exact shape the settle registries exist to make visible. The
+    queue entry parks the record instead — the gate's own route for a record awaiting a ruling — and
+    option (c) of the question is the settle, for the owner to choose.
+
+CROSS-FILE GAPS (opened by this agent — nothing here was edited)
+- None. Every edit is inside the two files the gap lines name.
+
+NOT MINE, FLAGGED FOR THE DRIVER
+- engine-2's own gap lines demon-eidolon#language-abyssal and demon-eidolon#demonic-strikes-note name
+  src/rules/companionGrants.ts and say "Owner: the engine-1 sibling chunk". They were already landed by
+  the gap-engine-2 agent (COMPANION_MODS:525 carries languages ["Abyssal"] and the remastered note) when
+  I opened the file. I touched neither row; my three rows are at :559, :575 and :582 and do not overlap.
+
+VERIFICATION
+- npx tsc --noEmit — clean.
+- node scripts/vt.mjs run test/batch035-gap-engine-1.test.ts — 10 passed.
+- node scripts/vt.mjs run test/batch035-gap-engine-1.test.ts test/batch035-gap-engine-2.test.ts
+  test/companions.test.ts test/eidolon-abilities.test.ts test/companion-fixes.test.ts
+  test/batch033-engine.test.ts test/batch034-gap-engine.test.ts test/answered-pickers.test.ts
+  test/batch033-resume-eidolon-languages-and-traits-*.test.ts — 70 passed.
+- node scripts/vt.mjs run test/companion-cluster-batch1.test.ts test/companion-inventory.test.ts
+  test/deadly-simplicity-eidolon-runes.test.ts test/eidolon-cantrips.test.ts test/echo-pickers.test.ts
+  test/feature-gaps.test.ts test/merged-evidence.test.ts test/weaponspec.test.ts — 141 passed.
+  (Every test file in test/ that mentions an eidolon was run; none flipped.)
+- node scripts/test-flip-audit.mjs --batch 035 — clean, 14 test files touched, every flip cited.
+- node scripts/add-owner-question.mjs --from work/.b035-queue.json (report only, no --write) —
+  accepted as #144.
+- gapProblems() from scripts/wg-batch-run.mjs, run over this family's 17 lines with the real desk, the
+  real queue and the real manifest — 0 problems.
+- The instinct rows are NOT applied by me (the driver applies specs), so every assertion in the
+  instinct block of the test runs on a content copy PATCHED IN MEMORY, never a patched-vs-shipped
+  delta that would flip once the rows land.

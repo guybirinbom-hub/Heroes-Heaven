@@ -1,0 +1,18 @@
+{
+ "findings": [
+  {
+   "id": "crafter-in-the-vault#instrument",
+   "backfillRows": [],
+   "note": "Instrument fix, no row is owed. GAP LINE 1 of family instruments-2 (test/wg-experience.harness.test.tsx — classFeatureHost's ownedAt20 calls classFeatureIdsOwned with no classChoices) is CLOSED IN CODE, in the file the line names. The owner-search half was authored by the gap agent for family instruments-1, working the same defect in the same file concurrently: classFeatureHost now falls back to scanning cls.extraChoices[].options for the record's id, seats that one pick on the WITH build (primaryApparition with it, for the apparition group) and seats an empty group on the WITHOUT build ('extra-choice-unpicked'). I did NOT re-route ownedAt20 itself: giving classFeatureIdsOwned every option as classChoices would make the FIRST loop answer 'owned' and break before that new fallback runs, leaving `extra` null and the pick unseated — a silent regression of the fix that closes this line. The second half, and the half these five apparitions actually needed, is mine: minimalHost's extra-choice prefill was DEAD (the `...emptyBuild()` spread sat after it and reset extraChoices to {} and primaryApparition to null), so a seated host still built with nothing answered anywhere else. Measured after both halves, on the real harness (WG_EXPERIENCE_BATCH over the five): all five now report supported:true, 22 pages, 98 controls, 32 attributable sheet changes each — both Lores at master, the ten-spell ladder in the apparition entry and the vessel spell in the focus pool.",
+   "files": ["test/wg-experience.harness.test.tsx"],
+   "tests": ["test/wg-experience.harness.test.tsx — describe('classFeatureHost — shepherd-of-errant-winds and custodian-of-groves-and-gardens deliver their printed block on the with build and none of it on the without')"]
+  },
+  {
+   "id": "shepherd-of-errant-winds",
+   "backfillRows": [],
+   "note": "Instrument fix, no row is owed. GAP LINE 2 of family instruments-2 (test/wg-experience.harness.test.tsx:78-88 — minimalHost's apparition/extraChoices PREFILL IS DEAD CODE) is CLOSED IN CODE: `...emptyBuild()` now spreads FIRST and the two prefill keys after it, so the host really carries the answers its own comment claims (two apparitions, one conscious mind, one element, one implement, one ikon). This moves EVERY host in the harness, not only the animist's, so the change carries a guard that answers every class's groups and builds all 27. Pinned end to end on a really built pair: shepherd-of-errant-winds hands the WITH build Sailing and Scouting Lore at master (loreProgression 8 expert / 16 master, AoN apparition-14) and Gift of the Anemos in the focus pool, and the WITHOUT build neither; custodian-of-groves-and-gardens the same for Farming/Herbalism Lore and Garden of Healing (AoN apparition-4).",
+   "files": ["test/wg-experience.harness.test.tsx"],
+   "tests": ["test/wg-experience.harness.test.tsx — it('the revived prefill answers every class, and every one of them still builds')"]
+  }
+ ]
+}

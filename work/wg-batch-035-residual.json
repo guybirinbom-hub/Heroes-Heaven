@@ -1,0 +1,546 @@
+{
+ "batch": "work/wg-batch-035.json",
+ "examined": 40,
+ "method": "Opus readers (print + WG raw ops + every carrier) each followed by an adversarial verifier; findings applied by 14 family spec(s), verdicts derived by scripts/wg-batch-close.mjs from the cited rows, edits, tests and teaches",
+ "confirmed": [
+  {
+   "id": "fury-instinct",
+   "finding": "fury-instinct",
+   "severity": "internal",
+   "summary": "Our Fury Instinct record is joined to the LEGACY Core Rulebook instinct page (aonId \"instinct-3\") and tagged edition \"legacy\", while its source, its stored description and its rage-damage tiers are all the Player Core 2 remaster ones — so t",
+   "fixed": true
+  },
+  {
+   "id": "cultivation-order",
+   "finding": "cultivation-order#leaf-membership",
+   "severity": "internal",
+   "summary": "Print and WG both make a cultivation druid a member of the leaf order for feat eligibility; we model no counts-as at all, so the membership is delivered by nothing on our side (it is the single op the experience gate reports undelivered for",
+   "fixed": true
+  },
+  {
+   "id": "cultivation-order",
+   "finding": "cultivation-order#anathema-sidebar",
+   "severity": "player-visible",
+   "summary": "The **Anathema** line in the summary block of our Cultivation Order text is the LEAF order's anathema, and it contradicts the cultivation anathema printed two paragraphs above it in the same description — our own text tells the player both ",
+   "fixed": true
+  },
+  {
+   "id": "cultivation-order",
+   "finding": "cultivation-order#instrument",
+   "severity": "internal",
+   "summary": "The specialStat flag on this record is their select-answer bookkeeping, not a statistic we are missing — identical to the settle already written for the other eight druid orders.",
+   "fixed": true
+  },
+  {
+   "id": "wandering-reverie",
+   "finding": "wandering-reverie#instrument",
+   "severity": "internal",
+   "summary": "The UNSUPPORTED verdict is a harness host-resolution miss, not a gap: every one of WG's four ops is delivered on our side, but the harness cannot seat a psychic subconscious mind because it is an extraChoices option rather than a subclass o",
+   "fixed": true
+  },
+  {
+   "id": "forensic-medicine-methodology",
+   "finding": "forensic-medicine-methodology#battle-medicine-rider",
+   "severity": "player-visible",
+   "summary": "The Battle Medicine rider this methodology prints — +level Hit Points on a success and a 1-hour instead of 1-day immunity — is computed by neither side, and our Battle Medicine card still tells this character the immunity is 1 day.",
+   "fixed": true
+  },
+  {
+   "id": "plant-eidolon",
+   "finding": "plant-eidolon#language",
+   "severity": "player-visible",
+   "summary": "The plant eidolon's printed Language line reaches nobody: the 'plant-eidolon' COMPANION_MODS row carries senses and a note but no `languages`, so the eidolon block shows no Language at all.",
+   "fixed": true
+  },
+  {
+   "id": "swarm-eidolon",
+   "finding": "swarm-eidolon#language",
+   "severity": "player-visible",
+   "summary": "The swarm eidolon's printed Languages line is carried by neither side — its package lives in companions.ts TYPE_PACKAGE, which has no languages field, and it has no COMPANION_MODS row at all.",
+   "fixed": true
+  },
+  {
+   "id": "swarm-eidolon",
+   "finding": "swarm-eidolon#area-weakness",
+   "severity": "player-visible",
+   "summary": "Swarm Form's weakness is dropped while its immunities from the same sentence are modelled — the eidolon's IWR block shows the immunities and no weakness.",
+   "fixed": true
+  },
+  {
+   "id": "swarm-eidolon",
+   "finding": "swarm-eidolon#redistribute",
+   "severity": "player-visible",
+   "summary": "The Sudden Shift text shipped with the granted reaction's NAME deleted, so the eidolon picker tells the player their eidolon gains \"the reaction\".",
+   "fixed": true
+  },
+  {
+   "id": "swarm-eidolon",
+   "finding": "swarm-eidolon#sickening-swarm-name",
+   "severity": "player-visible",
+   "summary": "Our stored description names the 17th-level transcendence ability \"Sickening Form\" while print and our own eidolonAbilities entry call it Sickening Swarm — one record, two names for the same ability.",
+   "fixed": true
+  },
+  {
+   "id": "dragon-instinct",
+   "finding": "dragon-instinct#breath-damage-type",
+   "severity": "player-visible",
+   "summary": "Draconic Rage's damage TYPE is not delivered: every dragon barbarian's Strike rider reads \"4 energy\" instead of the chosen dragon's breath type, which our own record admits in an apology note.",
+   "fixed": true
+  },
+  {
+   "id": "dragon-instinct",
+   "finding": "dragon-instinct#optional-rage",
+   "severity": "player-visible",
+   "summary": "Draconic Rage is optional per Rage in print, but we force it: a dragon barbarian is never shown the plain Rage branch (2, weapon's own type), and the 7th/15th step-ups are printed unconditionally though they apply only when draconic rage is",
+   "fixed": true
+  },
+  {
+   "id": "dragon-instinct",
+   "finding": "dragon-instinct#duplicate-piercing",
+   "severity": "player-visible",
+   "summary": "The Crystal and Forest dragon options grant piercing resistance twice, so a 9th-level Crystal or Forest barbarian's IWR breakdown lists the same Dragon Instinct source line twice on the piercing row.",
+   "fixed": true
+  },
+  {
+   "id": "undead-eidolon",
+   "finding": "undead-eidolon#language",
+   "severity": "player-visible",
+   "summary": "The undead eidolon's printed Language line (Necril) reaches nothing on our side — the eidolon stat block shows no language at all.",
+   "fixed": true
+  },
+  {
+   "id": "metallic-reactance",
+   "finding": "metallic-reactance#overdrive",
+   "severity": "player-visible",
+   "summary": "The Overdrive clause — the resistance rises by 2 while Overdriven — is modelled by neither side; the sheet always shows 3 + half level.",
+   "fixed": true
+  },
+  {
+   "id": "metallic-reactance",
+   "finding": "metallic-reactance#instrument",
+   "severity": "internal",
+   "summary": "The 'experience: UNSUPPORTED' flag is a harness limitation, not a gap: our resistances DO reach the sheet.",
+   "fixed": true
+  },
+  {
+   "id": "impostor-in-hidden-places",
+   "finding": "impostor-in-hidden-places#instrument",
+   "severity": "internal",
+   "summary": "The 'experience: UNSUPPORTED' flag is a harness limitation: every op WG encodes for this apparition is already delivered.",
+   "fixed": true
+  },
+  {
+   "id": "impostor-in-hidden-places",
+   "finding": "impostor-in-hidden-places#vessel-spell",
+   "severity": "player-visible",
+   "summary": "The vessel spell this apparition grants points at a duplicate spell record whose name is pluralised and whose duration drops \"sustained\", contradicting print.",
+   "fixed": true
+  },
+  {
+   "id": "way-of-the-spellshot",
+   "finding": "way-of-the-spellshot#description-spellcasting",
+   "severity": "player-visible",
+   "summary": "Our description tells the player this way comes with spellcasting; print says the opposite in the same sentence.",
+   "fixed": true
+  },
+  {
+   "id": "curse-of-inevitable-rot",
+   "finding": "curse-of-inevitable-rot#acid-trait",
+   "severity": "player-visible",
+   "summary": "The record is missing its printed Acid trait; every sibling oracle curse carries its energy trait (creeping-ashes/engulfing-flames have 'fire', the-living-death has 'vitality','void').",
+   "fixed": true
+  },
+  {
+   "id": "demon-eidolon",
+   "finding": "demon-eidolon#language-abyssal",
+   "severity": "player-visible",
+   "summary": "The demon eidolon type's printed fixed Language line is delivered by nothing, so the eidolon block shows no Languages row at all; WG grants it.",
+   "fixed": true
+  },
+  {
+   "id": "demon-eidolon",
+   "finding": "demon-eidolon#demonic-strikes-note",
+   "severity": "player-visible",
+   "summary": "The companionGrants note is a second, less accurate copy of Demonic Strikes: it drops print's target restriction (so it reads as a flat +1 damage against everything) and omits the versatile clause, while the subclass option's own eidolonAbi",
+   "fixed": true
+  },
+  {
+   "id": "superstition-instinct",
+   "finding": "superstition-instinct#rage-hp-and-frightened",
+   "severity": "player-visible",
+   "summary": "Two printed riders that fire every time this barbarian Rages — the HP regain and the frightened-1 penalty for accepting magic — are modelled by neither side and exist only as description prose.",
+   "fixed": true
+  },
+  {
+   "id": "the-oscillating-wave",
+   "finding": "the-oscillating-wave#conservation-of-energy",
+   "severity": "player-visible",
+   "summary": "WG grants a separate 'Conservation of Energy' class-feature record for this conscious mind; we have no such record and no carrier, so the fire/cold alternation that rewrites the damage type and traits of every granted spell and standard psi",
+   "fixed": true
+  },
+  {
+   "id": "the-oscillating-wave",
+   "finding": "the-oscillating-wave#psi-cantrip-mods",
+   "severity": "player-visible",
+   "summary": "The Oscillating Wave rewrites the range of both of its standard psi cantrips and the reach of melee ignition, and neither side carries it — the spell rows show frostbite at 60 feet and ignition at 30 feet, the numbers that are right for eve",
+   "fixed": true
+  },
+  {
+   "id": "the-oscillating-wave",
+   "finding": "the-oscillating-wave#instrument",
+   "severity": "internal",
+   "summary": "The experience verdict NO-SHEET-EFFECT reads as though none of WG's ops land, but the giveSpell half is fully delivered — it just is not carried on this record, so a record-keyed predicate cannot see it.",
+   "fixed": true
+  },
+  {
+   "id": "animal-instinct",
+   "finding": "animal-instinct#no-reader",
+   "severity": "player-visible",
+   "summary": "All 29 of animal-instinct's grantedStrikes are unreachable: collectGrantedNaturals only passes a `pick` for feats and heritages, so the subclass push drops every row whose choiceValue is set — and every one of animal-instinct's 29 rows has ",
+   "fixed": true
+  },
+  {
+   "id": "animal-instinct",
+   "finding": "animal-instinct#cat",
+   "severity": "player-visible",
+   "summary": "The Cat animal is offered in the picker but grants nothing: choice.options carries a 'cat' entry while grantedStrikes has no row with choiceValue 'cat', so a barbarian who picks Cat gets neither Jaws nor Claw.",
+   "fixed": true
+  },
+  {
+   "id": "animal-instinct",
+   "finding": "animal-instinct#spider-web",
+   "severity": "player-visible",
+   "summary": "The Spider animal's second attack, Web, is missing from our grantedStrikes — WG grants it as an item and print gives it its own row with a range increment and a Speed-penalty/immobilize rider.",
+   "fixed": true
+  },
+  {
+   "id": "animal-instinct",
+   "finding": "animal-instinct#strike-names",
+   "severity": "player-visible",
+   "summary": "Two granted strikes carry the wrong printed name: the Wasp's attack is stored as 'Pincer' (print names it Stinger — Pincer is the Scorpion's second attack) and the Crab's is stored as 'BigClaw' where print reads 'Big Claw'.",
+   "fixed": true
+  },
+  {
+   "id": "animal-instinct",
+   "finding": "animal-instinct#rage-gate",
+   "severity": "player-visible",
+   "summary": "The animal's unarmed attacks are printed as gained WHILE RAGING and WG gates every grant on the rage mode; ours grants them unconditionally, so once the reader gap above is fixed the barbarian would carry jaws and claws while not raging.",
+   "fixed": true
+  },
+  {
+   "id": "animal-instinct",
+   "finding": "animal-instinct#rage-damage-scope",
+   "severity": "player-visible",
+   "summary": "The 7th/15th-level Rage damage increase is applied to every unarmed Strike; print restricts it to the chosen animal's unarmed attacks, so a level-7 Animal barbarian's plain Fist reads +5 (and +12 at 15th) where print gives it the ordinary +",
+   "fixed": true
+  },
+  {
+   "id": "animal-instinct",
+   "finding": "animal-instinct#spec-die-step",
+   "severity": "player-visible",
+   "summary": "The other half of the 7th-level specialization ability — stepping the granted attacks' damage die up one size — is modelled by neither side, so a 7th-level Animal barbarian's Jaws stays 1d10 where print makes it 1d12.",
+   "fixed": true
+  },
+  {
+   "id": "animal-instinct",
+   "finding": "animal-instinct#edition",
+   "severity": "player-visible",
+   "summary": "The record's content is the Player Core 2 Animal instinct (22 animals, 1d6 frog Tongue, the Howl of the Wild table) but its aonId and edition point at the legacy Core Rulebook printing, so it disappears from the instinct picker whenever 'Hi",
+   "fixed": true
+  },
+  {
+   "id": "noble-branch",
+   "finding": "noble-branch#instrument",
+   "severity": "internal",
+   "summary": "The UNSUPPORTED experience verdict is a harness limitation, not a gap: both halves of the ikon are carried, and WG encodes strictly less (injectText only), which is parity under R10.",
+   "fixed": true
+  },
+  {
+   "id": "starless-shadow",
+   "finding": "starless-shadow#familiar-of-stalking-night",
+   "severity": "player-visible",
+   "summary": "The patron's familiar ability — an enemy adjacent to your concealed/hidden/undetected familiar becomes frightened 1 whenever you Cast or Sustain a hex — is carried by neither side, although the identically-shaped clause on the sibling patro",
+   "fixed": true
+  },
+  {
+   "id": "devourer-of-decay",
+   "finding": "devourer-of-decay#familiar-of-parasitic-might",
+   "severity": "player-visible",
+   "summary": "The patron's familiar ability — a creature within 15 feet of your familiar and below half Hit Points becomes sickened 1 on a failed Fortitude save whenever you Cast or Sustain a hex — is carried by neither side, the same lane gap as its sib",
+   "fixed": true
+  },
+  {
+   "id": "curse-of-torrential-knowledge",
+   "finding": "curse-of-torrential-knowledge",
+   "severity": "player-visible",
+   "summary": "WG applies the cursebound status penalty to Perception and Will as real numbers on the sheet; we carry it only as a text note in situationalBonuses.ts, so no oracle of the Lore mystery ever sees the penalty in a stat.",
+   "fixed": true
+  },
+  {
+   "id": "phlogistonic-regulator",
+   "finding": "phlogistonic-regulator#resistance-minimum",
+   "severity": "player-visible",
+   "summary": "Our resistance formula floors at 1, but the printed text has no minimum, so a 1st-level inventor gets cold and fire resistance 1 where print grants 0.",
+   "fixed": true
+  },
+  {
+   "id": "phlogistonic-regulator",
+   "finding": "phlogistonic-regulator#overdrive",
+   "severity": "player-visible",
+   "summary": "The printed Overdrive clause raises the resistance by 2 and neither side models it, so an inventor in Overdrive shows the un-boosted resistance.",
+   "fixed": true
+  },
+  {
+   "id": "phlogistonic-regulator",
+   "finding": "phlogistonic-regulator#instrument",
+   "severity": "internal",
+   "summary": "The 'experience: UNSUPPORTED' flag is a harness limitation, not a coverage gap: the record is reachable in the builder through the inventor's modification picker, which the reference host never opens.",
+   "fixed": true
+  },
+  {
+   "id": "gathered-lore",
+   "finding": "gathered-lore",
+   "severity": "internal",
+   "summary": "The 'experience: UNSUPPORTED' flag is a harness limitation, not a coverage gap: every printed and WG-encoded mechanic on this record is delivered, but the record lives on the psychic's extraChoices group, which the harness's host search nev",
+   "fixed": true
+  },
+  {
+   "id": "shepherd-of-errant-winds",
+   "finding": "shepherd-of-errant-winds",
+   "severity": "internal",
+   "summary": "The 'experience: UNSUPPORTED' flag is a harness limitation, not a coverage gap: every printed and WG-encoded mechanic on this apparition is delivered by the animist's extraChoices option, which the harness's host search never reaches.",
+   "fixed": true
+  },
+  {
+   "id": "stalker-in-darkened-boughs",
+   "finding": "stalker-in-darkened-boughs",
+   "severity": "internal",
+   "summary": "The 'experience: UNSUPPORTED' flag is a harness limitation, not a coverage gap: every printed and WG-encoded mechanic on this apparition is delivered by the animist's extraChoices option, which the harness's host search never reaches.",
+   "fixed": true
+  },
+  {
+   "id": "school-of-protean-form",
+   "finding": "school-of-protean-form#curriculum-9th",
+   "severity": "player-visible",
+   "summary": "The wizard subclass option the Builder's school picker renders drops the 9th-rank curriculum spell: its description ends the list with an empty \"**9th:**\" and its descRefs carry no Metamorphosis, so the player choosing this school sees a cu",
+   "fixed": true
+  },
+  {
+   "id": "crafter-in-the-vault",
+   "finding": "crafter-in-the-vault#instrument",
+   "severity": "internal",
+   "summary": "The baseline digest's \"experience: UNSUPPORTED\" flag is a comparer misread: every mechanic this apparition prints is delivered, and picked by the player through a visible control, on the animist class's `apparition` extraChoices option of t",
+   "fixed": true
+  },
+  {
+   "id": "curse-of-the-skys-call",
+   "finding": "curse-of-the-skys-call",
+   "severity": "player-visible",
+   "summary": "The cursebound save penalty has no numeric carrier: we ship only a descriptive situationalBonuses note, while five sibling oracle curses already carry per-rung `modes` records and this one carries none.",
+   "fixed": true
+  },
+  {
+   "id": "lesson-of-vengeance",
+   "finding": "lesson-of-vengeance#familiar-spell",
+   "severity": "player-visible",
+   "summary": "Only the hex is delivered: the half of the lesson that teaches the familiar Phantom Pain reaches no carrier, so the spell never enters the witch's spellbook.",
+   "fixed": true
+  },
+  {
+   "id": "lesson-of-vengeance",
+   "finding": "lesson-of-vengeance#experience-flag",
+   "severity": "internal",
+   "summary": "The 'experience: UNSUPPORTED' flag is an instrument misread — the record IS owned and reachable; the harness's owner search simply has no route to a feat choice that owns a class feature.",
+   "fixed": true
+  },
+  {
+   "id": "lesson-of-elements",
+   "finding": "lesson-of-elements#familiar-spell-choice",
+   "severity": "player-visible",
+   "summary": "Only the hex is delivered: the printed four-way choice of familiar spell has no control and no grant on our side.",
+   "fixed": true
+  },
+  {
+   "id": "lesson-of-elements",
+   "finding": "lesson-of-elements#edition",
+   "severity": "player-visible",
+   "summary": "The record is pinned to the LEGACY Advanced Player's Guide printing (aonId lesson-2, edition 'legacy') although its source is Player Core, so it names the wrong familiar spell — Air Bubble instead of the printed Gust of Wind — and is droppe",
+   "fixed": true
+  },
+  {
+   "id": "lesson-of-elements",
+   "finding": "lesson-of-elements#experience-flag",
+   "severity": "internal",
+   "summary": "The 'experience: UNSUPPORTED' flag is an instrument misread — the record IS owned and reachable; the harness's owner search has no route to a feat choice that owns a class feature.",
+   "fixed": true
+  },
+  {
+   "id": "reveler-in-lost-glee",
+   "finding": "reveler-in-lost-glee",
+   "severity": "internal",
+   "summary": "The 'experience: UNSUPPORTED' flag is an instrument misread — every mechanic this apparition prints is already carried, on the animist's extraChoices option rather than on the classFeatures stub the comparer read.",
+   "fixed": true
+  },
+  {
+   "id": "custodian-of-groves-and-gardens",
+   "finding": "custodian-of-groves-and-gardens",
+   "severity": "internal",
+   "summary": "The 'experience: UNSUPPORTED' flag is an instrument misread — every mechanic this apparition prints is already carried, on the animist's extraChoices option rather than on the classFeatures stub the comparer read.",
+   "fixed": true
+  }
+ ],
+ "refuted": [
+  {
+   "id": "curse-of-inclement-headwinds",
+   "finding": "curse-of-inclement-headwinds#cursebound-4",
+   "summary": "Our cursebound note stops at rung 3, so the printed Cursebound 4 −10-foot status penalty to all Speeds reaches the player nowhere; WG encodes it.",
+   "evidence": "Print (mirror mystery-19, Tempest/PC2) does carry the rung-4 −10-foot Speed clause and wg-show.mjs confirms WG's SPEED/SPEED_FLY/CLIMB/BURROW/SWIM −10 block, but the reader swept only situationalBonuses.ts: the modes lane already delivers it — public/core.json modes['curse-of-inclement-headwinds-4']"
+  },
+  {
+   "id": "curse-of-inevitable-rot",
+   "finding": "curse-of-inevitable-rot#cursebound-4",
+   "summary": "Our cursebound note stops at rung 3, so the printed Cursebound 4 escalation of the disease/poison save penalty to −2 is delivered by nothing; WG encodes it.",
+   "evidence": "Print (mirror mystery-21, Blight/Divine Mysteries) has the rung-4 escalation, but public/core.json modes['curse-of-inevitable-rot-4'] delivers it mechanically — modifiers [{value:-2,type:'status',target:'save',appliesWhen:'against diseases and poisons'}] plus weaknesses acid/poison 2*@actor.level an"
+  },
+  {
+   "id": "curse-of-inevitable-rot",
+   "finding": "curse-of-inevitable-rot#treat-check-penalty",
+   "summary": "Print's Cursebound 2 also penalises anyone Treating your Disease, Poison or Wounds by −1; neither side carries that half of the sentence, so a player being healed never learns their medic is at −1.",
+   "evidence": "Re-read mystery-21: the ally-facing −1 is printed as claimed, but our modes lane already states it — modes['curse-of-inevitable-rot-2'] note ends \"Anyone attempting to Treat your Disease, Poison, or Wounds also takes −1 — that penalty is on their sheet\", modes['…-3'] repeats it and modes['…-4'] esca"
+  },
+  {
+   "id": "superstition-instinct",
+   "finding": "superstition-instinct#edition-and-aonid",
+   "summary": "The record carries the Player Core 2 remaster text but is tagged edition \"legacy\" with aonId \"instinct-6\", the pre-remaster APG page — so \"Hide legacy data\" deletes a core PC2 barbarian instinct from ",
+   "evidence": "The mistag itself is real (our description matches mirror instinct-13/PC2 while aonId is instinct-6/APG, edition 'legacy' set deliberately by a scripts/data/effect-backfill.json entry, same on the four sibling instincts) but BOTH stated consequences break: the barbarian instinct picker is built from"
+  },
+  {
+   "id": "curse-of-torrential-knowledge",
+   "finding": "curse-of-torrential-knowledge#cursebound-4-stupefied",
+   "summary": "The printed stupefied 1 at cursebound 4 is modelled by neither side, and our own note drops that half of the sentence, so a player at cursebound 4 is never told they are stupefied.",
+   "evidence": "The mechanical half of the claim holds (WG's row 31436 has only the four Perception/Will conditionals, and no mode in the 557-mode core.json bucket grants a condition), but the load-bearing consequence is false: core-descriptions.json classFeatures['curse-of-torrential-knowledge'] carries the printe"
+  }
+ ],
+ "flaggedResidues": [
+  {
+   "id": "cultivation-order",
+   "finding": "cultivation-order",
+   "severity": "internal",
+   "summary": "src/rules/build.ts + a data lane + an owner decision — cultivation-order#leaf-membership, the ENFORCEMENT half: the membership is now stated (below), but the ten records printing prerequisite \"leaf order\" are still unenforced for everyone, because \"leaf order\" resolves to classFeatures/leaf-order and checkPrerequisites only enforces a has-feat line that resolves to a known FEAT. Making the line e…",
+   "fixed": false,
+   "family": "engine-1",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "animal-instinct-spider-web",
+   "finding": "animal-instinct-spider-web",
+   "severity": "internal",
+   "summary": "classFeatures / animal-instinct / grantedStrikes = the 29 shipped rows PLUS a Web row for choiceValue 'spider' (range increment 15 feet, no damage) — HELD: GrantedStrike has no damageless shape (die + damageType are required strings) and the subclass push drops every choiceValue row anyway (see cross-file gap 1). Authoring it now ships a mistyped row that nothing reads.",
+   "fixed": false,
+   "family": "situational",
+   "kind": "DATA STILL NEEDED"
+  },
+  {
+   "id": "animal-instinct-spider-web",
+   "finding": "animal-instinct-spider-web",
+   "severity": "internal",
+   "summary": "src/rules/types.ts:5258 GrantedStrike — no shape for a damageless attack (`die` and `damageType` required); the Spider's Web and any other \"Special*\" attack cannot be stored as a Strike row.",
+   "fixed": false,
+   "family": "situational",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: the curated SKILL_ACTIONS text stays printed and the deviation rides on the row, which is ruling G/Q2 applied as the app applies it everywhere else (spell records keep their printed ranges; the-oscillating-wave's rider goes on the spell ROW). RECORD_MARKERS[forensic-medicine-methodology] now marks battle-medicine with \"+your level HP, 1-hour immunity\" on the very row that opens the card, and StatDetailModal's read popup prefers the AoN ast for actions/battle-medicine over the curated desc anyway, so making the card character-aware would mean forking a printed page per character — a new lane, not a fix.",
+   "finding": "flaggedResidue: the curated SKILL_ACTIONS text stays printed and the deviation rides on the row, which is ruling G/Q2 applied as the app applies it everywhere else (spell records keep their printed ranges; the-oscillating-wave's rider goes on the spell ROW). RECORD_MARKERS[forensic-medicine-methodology] now marks battle-medicine with \"+your level HP, 1-hour immunity\" on the very row that opens the card, and StatDetailModal's read popup prefers the AoN ast for actions/battle-medicine over the curated desc anyway, so making the card character-aware would mean forking a printed page per character — a new lane, not a fix.",
+   "severity": "internal",
+   "summary": "src/rules/skillActions.ts:594 — the Battle Medicine card still ends \"The target is then immune to your Battle Medicine for 1 day.\" for a forensic-medicine-methodology investigator, whose print says 1 hour. The situational row now says so on the HP breakdown, but the action card itself is not character-aware.",
+   "fixed": false,
+   "family": "situational",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: NOTED ONLY by the reader, and now moot — the +2 is delivered as a NUMBER through the whileActive/overdrive lane authored in work/.b035-rows-gap-situational.json, which is where the reader said it belonged (\"the whileActive lane above is the right home, not a new target kind\"). A `resistance` member on SituationalTarget would be a second, prose-only carrier for a value the sheet can now compute.",
+   "finding": "flaggedResidue: NOTED ONLY by the reader, and now moot — the +2 is delivered as a NUMBER through the whileActive/overdrive lane authored in work/.b035-rows-gap-situational.json, which is where the reader said it belonged (\"the whileActive lane above is the right home, not a new target kind\"). A `resistance` member on SituationalTarget would be a second, prose-only carrier for a value the sheet can now compute.",
+   "severity": "internal",
+   "summary": "src/rules/situationalBonuses.ts SituationalTarget.kind — no 'resistance' member, which is why the metallic-reactance +2 could not go in FEAT_SITUATIONAL. Noted only; the whileActive lane above is the right home, not a new target kind.",
+   "fixed": false,
+   "family": "situational",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: not a gap — the engine-1 chunk did NOT drop it: work/.b035-rows-engine-1.json findings[0] id \"fury-instinct\" already carries both halves, {classFeatures/fury-instinct field aonId value \"instinct-10\"} and {classFeatures/fury-instinct field edition value \"remaster\", supersedes:true} replacing the existing effect-backfill row {classFeatures/fury-instinct/edition:\"legacy\"} whole, and that file is staged in work/.b035-specs.json. Verified against the mirror myself: C:/wonderers guide/aon-2e-archive/data/by-category/instinct/instinct-10.json is name \"Fury\", source [\"Player Core 2\"] pg. 75 — the page our description, RAGE_DAMAGE 3/7/13 and the bonus 1st-level barbarian feat already match, so the rows as authored are correct and complete. Re-emitting them here would be a second row on the same record+field and the applier hard-refuses collisions, so there is nothing left for this family to author.",
+   "finding": "flaggedResidue: not a gap — the engine-1 chunk did NOT drop it: work/.b035-rows-engine-1.json findings[0] id \"fury-instinct\" already carries both halves, {classFeatures/fury-instinct field aonId value \"instinct-10\"} and {classFeatures/fury-instinct field edition value \"remaster\", supersedes:true} replacing the existing effect-backfill row {classFeatures/fury-instinct/edition:\"legacy\"} whole, and that file is staged in work/.b035-specs.json. Verified against the mirror myself: C:/wonderers guide/aon-2e-archive/data/by-category/instinct/instinct-10.json is name \"Fury\", source [\"Player Core 2\"] pg. 75 — the page our description, RAGE_DAMAGE 3/7/13 and the bonus 1st-level barbarian feat already match, so the rows as authored are correct and complete. Re-emitting them here would be a second row on the same record+field and the applier hard-refuses collisions, so there is nothing left for this family to author.",
+   "severity": "internal",
+   "summary": "classFeatures/fury-instinct edition + aonId (\"legacy\"/instinct-3 -> \"remaster\"/instinct-10) is the",
+   "fixed": false,
+   "family": "data-rows-2",
+   "kind": "DATA STILL NEEDED"
+  },
+  {
+   "id": "flaggedResidue: out of scope for any agent in this workflow — the AST half lands only on a full `npm run data`, which the batch rules forbid every agent from running (apply-backfill-now.mjs does not rebuild public/ast). The DATA is fixed by the two rows already in work/.b035-rows-engine-1.json; what is left is a regeneration the owner runs, not a thing to author. Re-verified: public/ast/classFeatures.json.gz still holds instinct-3 prose while public/core-descriptions.json classFeatures/fury-instinct holds the Player Core 2 text (\"from 2 to 3 … from 3 to 7\"), so the two disagree until that run and no row can close the gap.",
+   "finding": "flaggedResidue: out of scope for any agent in this workflow — the AST half lands only on a full `npm run data`, which the batch rules forbid every agent from running (apply-backfill-now.mjs does not rebuild public/ast). The DATA is fixed by the two rows already in work/.b035-rows-engine-1.json; what is left is a regeneration the owner runs, not a thing to author. Re-verified: public/ast/classFeatures.json.gz still holds instinct-3 prose while public/core-descriptions.json classFeatures/fury-instinct holds the Player Core 2 text (\"from 2 to 3 … from 3 to 7\"), so the two disagree until that run and no row can close the gap.",
+   "severity": "internal",
+   "summary": "fury-instinct's AST is NOT fixed by the aonId row alone: public/ast/classFeatures.json.gz still holds instinct-3's Core Rulebook page (\"Increase the additional damage from Rage from 2 to 6\") while core-descriptions holds the PC2 text, and apply-backfill-now.mjs does not rebuild public/ast — only a full `npm run data` re-joins the record to instinct-10, so until that run the in-app Fury Instinct p…",
+   "fixed": false,
+   "family": "engine-1",
+   "kind": "DATA STILL NEEDED"
+  },
+  {
+   "id": "flaggedResidue: a note to the DRIVER about apply order, not a thing an agent can author — both rows already exist and are correct (data-rows-1 re-emits classFeatures/dragon-instinct.choice whole, engine-1 deletes .choice.note through a path row). apply-parity-fixes.mjs replaces an existing overlay key in place and appends a new one, so the delete replays last and the note stays gone; nothing to write, and any row I added would be a third writer of the same record. Recorded here so the ordering is visible if either row is ever re-authored as a new key.",
+   "finding": "flaggedResidue: a note to the DRIVER about apply order, not a thing an agent can author — both rows already exist and are correct (data-rows-1 re-emits classFeatures/dragon-instinct.choice whole, engine-1 deletes .choice.note through a path row). apply-parity-fixes.mjs replaces an existing overlay key in place and appends a new one, so the delete replays last and the note stays gone; nothing to write, and any row I added would be a third writer of the same record. Recorded here so the ordering is visible if either row is ever re-authored as a new key.",
+   "severity": "internal",
+   "summary": "ORDER-DEPENDENT ROW PAIR (driver): data-rows-1's whole-value classFeatures/dragon-instinct `choice` row still carries the stale apology note and this chunk's path row deletes it, so the delete must stay LATER in scripts/data/effect-backfill.json than the whole-value row (it will be, as an appended new key over an in-place replacement) or the note returns; neither precheck (1) nor precheck (3) see…",
+   "fixed": false,
+   "family": "engine-1",
+   "kind": "DATA STILL NEEDED"
+  },
+  {
+   "id": "cultivation-order",
+   "finding": "cultivation-order",
+   "severity": "internal",
+   "summary": "src/rules/build.ts + a data lane + an OWNER decision — cultivation-order#leaf-membership enforcement: making \"leaf order\" resolve needs the token lane widened to SUBCLASS options (TOKEN_BUCKETS + the choiceTokens collector together) plus grantsToken:\"Leaf Order\" on the druid options leaf-order/cultivation-order/spore-order AND on Order Explorer's option list, because a declared token is checked F…",
+   "fixed": false,
+   "family": "engine-1",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "cultivation-order",
+   "finding": "cultivation-order",
+   "severity": "internal",
+   "summary": "scripts/wg-diff.mjs settle lane (instruments family) — cultivation-order#leaf-membership comparer half: the undelivered op is giveAbilityBlock #34226 \"Leaf Order\", WG's operation-less name row, and nothing in this chunk gives our built character a carrier for it, so the honest disposition is a settle entry on cultivation-order for that op (our subclass IS the membership) authored by whoever owns …",
+   "fixed": false,
+   "family": "engine-1",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "animal-instinct-spider-web",
+   "finding": "animal-instinct-spider-web",
+   "severity": "internal",
+   "summary": "classFeatures / animal-instinct / grantedStrikes = the 29 shipped rows PLUS a Web row for choiceValue 'spider' — HELD on the TYPE shape alone (the pick lane is now fixed, see above). Whoever authors it needs a damageless GrantedStrike shape first, and must write `range: 15` (a number of feet), not `range: '15 feet'`.",
+   "fixed": false,
+   "family": "situational",
+   "kind": "DATA STILL NEEDED"
+  },
+  {
+   "id": "animal-instinct-spider-web",
+   "finding": "animal-instinct-spider-web",
+   "severity": "internal",
+   "summary": "src/rules/types.ts:5305 GrantedStrike — no shape for a damageless attack (`die` and `damageType` are required strings), so the Spider's Web and every other \"Special*\" attack cannot be stored as a Strike row. (Not the subclass pick: build.ts's push was fixed by engine-1 this batch and MEASURED working.)",
+   "fixed": false,
+   "family": "situational",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: the curated SKILL_ACTIONS text stays printed and the deviation rides on the row, which is ruling G/Q2 applied as the app applies it everywhere else (spell records keep their printed ranges; the-oscillating-wave's rider goes on the spell ROW). RECORD_MARKERS[forensic-medicine-methodology] now marks battle-medicine with \"+your level HP, 1-hour immunity\" on the very row that opens the card, and StatDetailModal's read popup prefers the AoN ast for actions/battle-medicine over the curated desc anyway, so making the card character-aware would mean forking a printed page per character — a new lane, not a fix.",
+   "finding": "flaggedResidue: the curated SKILL_ACTIONS text stays printed and the deviation rides on the row, which is ruling G/Q2 applied as the app applies it everywhere else (spell records keep their printed ranges; the-oscillating-wave's rider goes on the spell ROW). RECORD_MARKERS[forensic-medicine-methodology] now marks battle-medicine with \"+your level HP, 1-hour immunity\" on the very row that opens the card, and StatDetailModal's read popup prefers the AoN ast for actions/battle-medicine over the curated desc anyway, so making the card character-aware would mean forking a printed page per character — a new lane, not a fix.",
+   "severity": "internal",
+   "summary": "src/rules/skillActions.ts:594 — the curated Battle Medicine text still ends \"The target is then immune to your Battle Medicine for 1 day.\" for every reader, including the forensic-medicine investigator print gives 1 hour. The skill-action ROW now carries the correction as a mark (my fix above) and StatDetailModal's read popup renders the raw `desc`, so the contradicting sentence is still what tha…",
+   "fixed": false,
+   "family": "situational",
+   "kind": "CROSS-FILE GAPS"
+  }
+ ],
+ "rejected": 5,
+ "askOwner": [],
+ "complete": true
+}

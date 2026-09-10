@@ -1,0 +1,130 @@
+BATCH 035 — SITUATIONAL family, ADVERSARIAL VERIFY
+Verifier ran: npx tsc --noEmit (clean) · node scripts/vt.mjs test/batch035-situational.test.ts
+test/situational-bonuses.test.ts test/authoring-guards.test.ts test/triage-lane-close.test.ts →
+59 passed (57 the builder's + 2 mine) · node scripts/test-flip-audit.mjs --batch 035 → "batch 035
+clean — 11 test file(s) touched, 1 new settle key(s), every flip cited" (the 1 settle key is
+instruments-1's, not this family's).
+
+Every verdict below was re-measured on a BUILT character through the reader the SHEET uses, in a
+throwaway vitest harness (test/_b035sitverify.test.ts + work/_b035sitprobe.txt), now DELETED. The
+harness replicated MainTab's own action walk (feats + ownedFeatureIds → grantsActions →
+content.actions, `isActionCost`, name slugified) rather than trusting `character.actions`, which is
+empty on a built character and would have said every action mark was unreachable.
+
+SPEC ROWS — work/.b035-rows-situational.json
+  Parses; 7 entries, one per assigned finding; `backfillRows: []` on all seven. So every row-level
+  check is vacuously clean: no target record to exist-check, no re-emitted whole value to diff, no
+  record+field+path collision possible, no created record and so no created-prose obligation, no
+  `supersedes` owed. The two records the HELD rows name do exist (classFeatures/metallic-reactance,
+  classFeatures/animal-instinct — both read out of core.json). No spell / action / trait / item id is
+  named by any row. The family shipped zero data and all code, which is the correct call for six of
+  the seven (nothing on those records could hold the clause) and a defensible one for the seventh —
+  see animal-instinct below, where I corrected the stated reason.
+
+SURFACE PROBE — measured, not argued
+  inventor(armor-innovation, metallic-reactance) action rows ......... ["shield-block","explode","overdrive"]  → the Overdrive mark is reachable
+  barbarian action rows .............................................. contains "rage"                          → both Rage marks are reachable
+  investigator(forensic) statHasSituational({kind:'hp'}) ............. true                                     → the hp star renders
+  investigator(forensic) feat name "Battle Medicine" ................. true                                     → the skill-action row exists to mark
+  psychic(the-oscillating-wave) spellSituationalFor('ignition') ...... 1 rider, correct text                    → SpellsTab reads it
+  witch class features include 'patron', no 'patron-starless-shadow' .. true / false                             → FeatsTab's variant lookup falls back to 'patron', as claimed
+  leak sweep fighter/wizard/cleric/rogue over all 7 new keys ......... zero hits
+  RECORD_MARKERS / FEAT_SITUATIONAL / SPELL_MARKERS duplicate keys ... 0 / 0 / 0 (156 / 2821 / 9 keys)
+  authoring-guards RECORD_MARKERS ratchet ............................ `toBeGreaterThanOrEqual(119)` — a floor, so no ratchet constant was flipped and none needed a citation
+  AoN mirror check of all seven cited docs ........................... methodology-7, instinct-13, instinct-8, innovation-5, conscious-mind-9, patron-17, patron-19 all exist and carry the quoted clause VERBATIM (checked in context: the "resistance increases by 2" sentence is inside innovation-5's Metallic Reactance paragraph, not a sibling modification's)
+
+PER FINDING
+
+forensic-medicine-methodology#battle-medicine-rider — FIXED-BY-ME
+  The builder's FEAT_SITUATIONAL `hp` row is real and reaches the sheet (statHasSituational true on a
+  built investigator, one row, both halves, empiricism gets none). But `kind: 'hp'` is THIS
+  character's Hit Points row and methodology-7 puts the heal on the TARGET's — so the rider was
+  displayed in the one place it does not apply, while the row the player actually reads
+  (skillActions.ts Medicine → "Battle Medicine") still ended *"The target is then immune to your
+  Battle Medicine for 1 day."* for this investigator. Added, in the same file and an existing lane:
+  RECORD_MARKERS['forensic-medicine-methodology'] = [{ on: 'action', id: 'battle-medicine',
+  value: "+your level HP, 1-hour immunity", note: "on a success the target recovers additional Hit
+  Points equal to your level, and is then immune to your Battle Medicine for only 1 hour, not 1
+  day." }] — ruling Q2 lets the star and the mark coexist, and both StatDetailModal's skill-action
+  list (actionSlug) and MainTab's activity rows (actionId) slug the name to 'battle-medicine'.
+  MEASURED on a built forensic investigator: exactly one mark with that value and note; an
+  empiricism investigator has none. Two tests added inside the existing describe (its title carries
+  the record id), each cited "// batch 035: forensic-medicine-methodology#battle-medicine-rider".
+  The builder's own hp row is left untouched.
+
+metallic-reactance#overdrive — DONE (display half; the NUMBER is correctly held and still open)
+  RECORD_MARKERS['metallic-reactance'] reaches a built armor-innovation inventor on a real Overdrive
+  action row (probe above); value "+2", note names acid, electricity, 5 + half your level and says
+  the sheet's number is the un-Overdriven one; a dense-plating inventor reads nothing. The refusal to
+  emit the proposed `whileActive` row is CORRECT and I re-verified both prerequisites myself:
+  types.ts:1182 `state: 'rage' | 'panache' | 'hunt-prey' | 'unleash-psyche'` (no 'overdrive' — the
+  engine-2 family's types.ts edits this batch added grantedStrikesState / minLevel / requiresState and
+  did NOT touch this union), and `grep overdrive src/rules/classResources.ts` → zero hits. An emitted
+  row would have had no reader. Both prerequisites stay in the lists below; the computed resistance is
+  NOT delivered and I count it as an open gap, not as done work.
+
+superstition-instinct#rage-hp-and-frightened — DONE
+  One mark on the built superstitious barbarian's Rage row carrying both riders (temp-HP regain, the
+  10-minute lockout, frightened 1 and its floor); a fury barbarian gets none; the pre-existing
+  FEAT_SITUATIONAL +2-vs-magic star is still exactly one row on Will. instinct-13 read in context in
+  the mirror: both sentences are verbatim and belong to Superstition, not a neighbouring instinct.
+
+the-oscillating-wave#psi-cantrip-mods — DONE
+  Both SPELL_MARKERS rows reach a built Oscillating Wave psychic through spellSituationalFor (probe
+  shows the ignition rider verbatim); spells.frostbite.range is still "60 feet" and spells.ignition
+  .range still "30 feet", correct for every other caster; a Silent Whisper psychic and a wizard read
+  neither. conscious-mind-9 carries all three quoted clauses.
+
+animal-instinct#spider-web — DONE (note lane), with the builder's STATED REASON CORRECTED
+  The mark reaches a built animal-instinct barbarian on the Rage row with the whole printed attack
+  (range increment 15 feet, no damage, the −10-foot Speed penalty, the second-hit immobilize vs your
+  class DC); a giant-instinct barbarian reads nothing.
+  ⚠ CORRECTION — the report's cross-file gap 1 and half its DATA STILL NEEDED reason are now STALE.
+  The engine-1 family fixed build.ts in this same batch (`featurePick(subclassId)` is now passed to
+  the subclass `grantedStrikes` push, cited "// batch 035: animal-instinct#no-reader"). MEASURED just
+  now: build('barbarian', 5, { subclassId:'animal-instinct', featChoices:{'feature:animal-instinct':
+  'spider'} }) → naturalAttacks ["Fangs"], and the same build with 'bear' → ["Jaws","Claw"]. The
+  choiceValue rows DO reach the sheet. The only remaining blocker on a Web row is the TYPE shape, and
+  it is worse than the report said: GrantedStrike (types.ts:5305) requires `die: string` and
+  `damageType: string`, and `range?: number` is a number of FEET — so the reader's proposed row
+  ({ damageType: 'none', range: '15 feet' }) would have been wrong on two fields, and holding it was
+  the right call for a reason the report did not state.
+  ⚠ NEW DEFECT I MEASURED, accepted not fixed: the mark is keyed by record id and RecordMarker has no
+  gate, so all 22 animals read it — a built BEAR barbarian shows the "Spider: …" note on Rage. The
+  note is scoped in its first word, which IS the documented contract for this lane
+  (situationalBonuses.ts:4135 "When the clause names one skill, say so in the note's first words"),
+  so this is the lane's known ceiling rather than a false claim, and the honest fix is a gate in
+  explain.ts — another family's file. Listed below.
+
+starless-shadow#familiar-of-stalking-night — DONE
+  Verified the surface rather than the registry: witch class features include 'patron', no
+  'patron-starless-shadow' variant record exists, so FeatsTab's `${featureId}-${subclassId}` lookup
+  falls back to 'patron' and withPicks('patron') renders the mark. MEASURED: one mark on the built
+  Starless Shadow witch's Patron entry, none on a Devourer's. patron-17 verbatim.
+
+devourer-of-decay#familiar-of-parasitic-might — DONE
+  Same lane, same surface, measured the same way; each Patron entry carries exactly one mark and
+  neither leaks onto the other. patron-19 verbatim.
+
+MANIFEST — work/.b035-specs.json
+  Re-read at the end of this run: 8 entries, all seven families plus data-rows-1's created-prose
+  entry. (An earlier read mid-run showed only this family's entry — a write race between the parallel
+  families, resolved by itself; nothing was lost.) This family's stage[] lists exactly the four paths
+  it touched. I appended work/.b035-verify-situational.txt to that stage[]; the two files I edited
+  (src/rules/situationalBonuses.ts, test/batch035-situational.test.ts) were already in it.
+
+DATA STILL NEEDED
+- classFeatures / metallic-reactance / whileActive = [{"state":"overdrive","resistances":[{"type":"acid","value":"5+floor(@actor.level/2)"},{"type":"electricity","value":"5+floor(@actor.level/2)"}]}] — HELD and re-verified as unreadable: types.ts:1182's state union has no 'overdrive' and classResources.ts has no inventor Overdrive toggle. Author it only together with the two cross-file fixes below, or it is inert data. Same row shape is owed by the four sibling Overdrive riders (hyper-boosters, subtle-dampeners, muscular-exoskeleton, speed-boosters).
+- classFeatures / animal-instinct / grantedStrikes = the 29 shipped rows PLUS a Web row for choiceValue 'spider' — HELD on the TYPE shape alone (the pick lane is now fixed, see above). Whoever authors it needs a damageless GrantedStrike shape first, and must write `range: 15` (a number of feet), not `range: '15 feet'`.
+
+CROSS-FILE GAPS
+- src/rules/types.ts:5305 GrantedStrike — no shape for a damageless attack (`die` and `damageType` are required strings), so the Spider's Web and every other "Special*" attack cannot be stored as a Strike row. (Not the subclass pick: build.ts's push was fixed by engine-1 this batch and MEASURED working.)
+- src/rules/skillActions.ts:594 — the curated Battle Medicine text still ends "The target is then immune to your Battle Medicine for 1 day." for every reader, including the forensic-medicine investigator print gives 1 hour. The skill-action ROW now carries the correction as a mark (my fix above) and StatDetailModal's read popup renders the raw `desc`, so the contradicting sentence is still what that popup prints; making the card itself character-aware is still owed.
+- src/rules/types.ts:1182 — the whileActive.state union (rage|panache|hunt-prey|unleash-psyche) needs an 'overdrive' member before any inventor Overdrive rider can be a NUMBER.
+- src/rules/classResources.ts — no inventor 'overdrive' toggle (the rage / panache `kind: 'toggle'` shape); the other half of the same lane. Together these two are the right home for the +2, not a new `resistance` member on SituationalTarget.
+- src/rules/explain.ts `markersFor` / the RecordMarker interface — a mark cannot be gated on one answer of its own record's choice, so animal-instinct's "Spider:" note shows to all 22 animal choices (MEASURED on a built bear barbarian). A `choiceValue`-style gate resolved from `Character.featureChoices` would scope it; the same gate would let the 21 other animals carry their own printed riders later.
+
+MANIFEST STAGE (files I touched)
+- src/rules/situationalBonuses.ts
+- test/batch035-situational.test.ts
+- work/.b035-verify-situational.txt

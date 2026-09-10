@@ -1159,7 +1159,15 @@ function ownedWhileActive(c: Character, db: ContentDatabase): { from: string; wa
   const scan = (g: (DefenseGrants & { name?: string }) | undefined) => {
     // minLevel: an instinct is chosen at 1st but prints the damage types for Raging Resistance, a
     // 9th-level feature. Without the gate a 1st-level barbarian would rage with a 9th-level defence.
-    for (const wa of g?.whileActive ?? []) if (c.level >= (wa.minLevel ?? 0)) out.push({ from: g?.name ?? 'Active state', wa });
+    /* `wa.from` FIRST: a clause the player CHOSE (Dragon Instinct's breath type, Giant Instinct's
+     * energy) reaches here inside `c.chosenEffects` — one shared bag merged from many records, so the
+     * bag's `name` cannot say which one printed the clause. build.ts stamps the granting record's name
+     * on each chosen clause instead; without this read every one of them was attributed to the bare
+     * fallback, and a resistance you cannot trace to its feature is what this breakdown exists to
+     * prevent. The record-scanned path below is unchanged and still reads its name off the record. */
+    for (const wa of (g?.whileActive ?? []) as (WhileActiveClause & { from?: string })[]) {
+      if (c.level >= (wa.minLevel ?? 0)) out.push({ from: wa.from ?? g?.name ?? 'Active state', wa });
+    }
   };
   // `?? []` for the same reason deriveBulk guards it: this is also reached from hand-built partial
   // characters (the container-nesting tests), which carry no feats array at all.
@@ -3667,12 +3675,24 @@ const RAGE_DAMAGE: Record<
     /** The instinct's damage type is the one the PLAYER chose, read from this `feature:<id>` choice
      *  answer (value `<element>-<damageType>`); `type` is then only the unanswered fallback. */
     typeFromChoice?: string;
+    /* batch 035: dragon-instinct#breath-damage-type — Draconic Rage: *"change its damage type to match
+     * that of your instinct's dragon breath"*. The dragon answer is a BARE NAME ('cinder'), so the
+     * `<element>-<damageType>` split above can never reach a type. The breath type is already data on
+     * the option itself — `grant.whileActive[0].resistances` is [piercing, <breath type>] for all 50
+     * dragons (the 9th-level Draconic Resistance pair) — so it is read from there rather than
+     * hand-copied into a 50-entry map that would drift from the record at the next regeneration. */
+    breathFromChoice?: boolean;
   }
 > = {
   'fury-instinct': { tiers: [3, 7, 13] },
   'spirit-instinct': { tiers: [3, 7, 13], type: 'spirit', typeOptional: true, ghostTouch: true },
   'superstition-instinct': { tiers: [3, 7, 13] },
-  'dragon-instinct': { tiers: [4, 8, 16], type: 'energy' },
+  /* batch 035: dragon-instinct#breath-damage-type + dragon-instinct#optional-rage — *"When you rage,
+   * you CAN increase the additional damage from Rage from 2 to 4 and change its damage type to match
+   * that of your instinct's dragon breath"*: both halves are per-Rage OPTIONAL (typeOptional, the
+   * spirit-instinct shape) and the type is the chosen dragon's, not the placeholder 'energy', which
+   * stays only as the fallback for a barbarian who has not answered the dragon pick yet. */
+  'dragon-instinct': { tiers: [4, 8, 16], type: 'energy', typeOptional: true, typeFromChoice: 'dragon-instinct', breathFromChoice: true },
   'giant-instinct': { tiers: [6, 10, 18], largerWeapon: true },
   'animal-instinct': { tiers: [2, 5, 12], unarmedOnly: true },
   // War of Immortals / Rage of Elements / Severed at the Root instincts (were falling through to flat +2):
@@ -3689,7 +3709,11 @@ const RAGE_DAMAGE: Record<
  *  leading `*` in the note flags the condition. */
 function rageStrikeRider(
   c: Character,
-  opts: { ranged: boolean; unarmed: boolean; weaponType: string; thrown?: boolean; agile?: boolean },
+  db: ContentDatabase,
+  /* batch 035: animal-instinct#rage-damage-scope — `source` is the RECORD that granted this unarmed
+   * Strike. Animal Instinct raises Rage's damage only *"for your chosen animal's unarmed attacks"*,
+   * and `unarmed` cannot tell the animal's Jaws from the barbarian's own Fist. */
+  opts: { ranged: boolean; unarmed: boolean; weaponType: string; thrown?: boolean; agile?: boolean; source?: string },
 ): { text: string; note: string } | null {
   if (!c.classResources?.rage) return null; // not currently raging → no bonus
   const isBarb = c.classId === 'barbarian';
@@ -3710,13 +3734,38 @@ function rageStrikeRider(
     const inst = RAGE_DAMAGE[c.subclassId ?? ''];
     if (inst) {
       if (inst.unarmedOnly && !opts.unarmed) return null; // Animal Instinct: only its animal unarmed attack
-      value = inst.tiers[c.level >= 15 ? 2 : c.level >= 7 ? 1 : 0];
-      if (inst.type) type = inst.type; // spirit / energy / poison override the weapon's own type
+      /*
+       * batch 035: animal-instinct#rage-damage-scope — *"increase the additional damage from Rage from
+       * 2 to 5 FOR YOUR CHOSEN ANIMAL'S UNARMED ATTACKS"*. The gate above asks only "is this Strike
+       * unarmed", so a 7th-level Animal barbarian's plain Fist read +5 (and +12 at 15th) where print
+       * gives it Rage's ordinary +2. The instinct's own Strikes carry its record id as their source.
+       * Blast radius: `unarmedOnly` is set on animal-instinct alone, so every other instinct — and
+       * every non-barbarian — takes the same branch it always did.
+       */
+      const scoped = !inst.unarmedOnly || opts.source === c.subclassId;
+      if (!scoped) note += ", Rage's base damage: not your animal's attack";
+      value = scoped ? inst.tiers[c.level >= 15 ? 2 : c.level >= 7 ? 1 : 0] : 2;
+      if (inst.type && scoped) type = inst.type; // spirit / energy / poison override the weapon's own type
       /* *"change its damage type to the one you selected for your element"* (Elemental Rage) — the
        * answer is `<element>-<damageType>`, e.g. `air-slashing`, so an Air barbarian who chose slashing
        * no longer reads the placeholder "energy" on every Strike. */
       const answer = inst.typeFromChoice ? c.featureChoices?.[`feature:${inst.typeFromChoice}`] : undefined;
       if (answer?.includes('-')) type = answer.slice(answer.indexOf('-') + 1);
+      /* batch 035: dragon-instinct#breath-damage-type — *"change its damage type to match that of your
+       * instinct's dragon breath"*. The dragon answer is a bare name, so the type comes from the chosen
+       * option's own Draconic Resistance list — *"You resist piercing damage and the damage type of
+       * your instinct's dragon breath"* — whose LAST entry is the breath. Not index 1: Crystal and
+       * Forest breathe PIERCING, so that sentence's two clauses collapse to a single entry for them
+       * (batch 035 dragon-instinct#duplicate-piercing removes the duplicate), and reading [1] would
+       * hand those two dragons the 'energy' placeholder the moment that row lands. Last entry is the
+       * breath in BOTH shapes. An unanswered pick keeps 'energy' rather than claiming a type the
+       * player never chose. */
+      else if (inst.breathFromChoice && answer && inst.typeFromChoice) {
+        const opt = db.classFeatures?.[inst.typeFromChoice]?.choice?.options?.find((o) => o.value === answer);
+        const res = opt?.grant?.whileActive?.[0]?.resistances;
+        const breath = res?.length ? res[res.length - 1]?.type : undefined;
+        if (breath) type = breath;
+      }
       // *"(choose each time you Rage)"* — Spirit Rage's 3 spirit is optional; the other branch is Rage's own 2.
       if (inst.typeOptional) alt = { value: 2, type: opts.weaponType };
       // *"your weapon or unarmed attack gains the effects of the Ghost Touch property rune"* — only on the branch that deals spirit.
@@ -4464,7 +4513,7 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
     category: w.category,
     dieFaces: Number(String(w.damage.die).replace('d', '')) || 0,
   });
-  const rageRider = rageStrikeRider(c, {
+  const rageRider = rageStrikeRider(c, db, {
     ranged,
     unarmed: false,
     weaponType: w.damage.type,
@@ -4781,7 +4830,9 @@ function deriveUnarmedStrike(
     (nCritRiders.length ? ` (plus ${nCritRiders.join(', ')} on a crit)` : '') +
     (nFatal ? ` (fatal ${nFatal})` : '');
   const conditionalDamage = strikePrecisionRiders(c, db, { traits: p.traits, ranged: isRanged, unarmed: true });
-  const rageRider = rageStrikeRider(c, { ranged: isRanged, unarmed: true, weaponType: p.damageType, agile: p.traits.includes('agile') });
+  // batch 035: animal-instinct#rage-damage-scope — the granting record, so Animal Instinct's raised
+  // Rage damage reaches its animal's attacks and not the barbarian's own Fist.
+  const rageRider = rageStrikeRider(c, db, { ranged: isRanged, unarmed: true, weaponType: p.damageType, agile: p.traits.includes('agile'), source: p.source });
   if (rageRider) conditionalDamage.push(rageRider);
   return {
     instanceId: p.instanceId,
@@ -4854,6 +4905,12 @@ function applyUnarmedRiders(c: Character, db: ContentDatabase, p: UnarmedProfile
       // for the player who picked Claws, not the one who picked Fangs. Fails CLOSED — an unanswered
       // choice grants no branch, rather than every branch.
       if (r.choiceValue && src.choiceValue !== r.choiceValue) continue;
+      /* batch 035: animal-instinct#spec-die-step — *"Specialization Ability (Level 7): Increase the
+       * damage die size for the unarmed attacks granted by your chosen animal by one step."* The rider
+       * had no level of its own, so a record whose clause is a LATER feature could not be authored at
+       * all without handing a 1st-level character a 7th-level die. Absent = ungated, which is every
+       * rider that shipped before this one. */
+      if (r.minLevel && c.level < r.minLevel) continue;
 
       /* …plus the traits the PLAYER chose, for a record whose printed clause names no traits of its
        * own ("your horn gains the chosen traits"). Gathered across takings — see the helper. */
@@ -4946,7 +5003,13 @@ export function deriveStrikes(c: Character, db: ContentDatabase): Strike[] {
   const mpHw = bestMpHandwraps(c, db);
   // Ancestry/feat natural attacks (Iruxi Fangs, claws, …) are unarmed Strikes too — buffed by handwraps.
   const naturals = (c.naturalAttacks ?? []).map((na, i) =>
-    deriveUnarmedStrike(
+    /* batch 035: animal-instinct#rage-gate — *"While raging, you gain your chosen animal's unarmed
+     * attack (or attacks)"*. A gated attack does not EXIST while the state is off, so it is dropped
+     * rather than annotated. Mapped-then-filtered, not filtered-then-mapped, so `natural:<i>` stays
+     * the attack's own index and a pinned Strike does not change identity when the toggle flips. */
+    na.requiresState && !(c.classResources?.[na.requiresState] ?? 0)
+      ? null
+      : deriveUnarmedStrike(
       c,
       db,
       applyUnarmedRiders(c, db, {
@@ -4966,7 +5029,7 @@ export function deriveStrikes(c: Character, db: ContentDatabase): Strike[] {
       false,
       mpHw,
     ),
-  );
+  ).filter((s): s is Strike => s != null);
   /*
    * The Fist's damage die increases to 1d6 (and it loses the nonlethal trait) from Powerful Fist, the
    * level-1 monk class feature.

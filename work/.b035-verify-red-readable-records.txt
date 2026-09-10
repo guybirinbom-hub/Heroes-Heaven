@@ -1,0 +1,171 @@
+BATCH 035 — GATE-RED group "readable-records" — ADVERSARIAL VERIFY
+==================================================================
+Verdict: DONE, with one FIXED-BY-ME defect (four uncitable premise doc ids) and two of the
+builder's seven CROSS-FILE GAPS corrected — one of them was simply false.
+
+Instruments actually run (not read off the report):
+  node scripts/readable-record-check.mjs               -> 20 reds, exit 1 (the 20 unapplied prose rows)
+  simulated apply of all 24 rows onto a copy of core   -> 0 unexpected. The guard reaches ZERO.
+  node scripts/vt.mjs test/batch035-red-readable-records.test.ts  -> 38 passed (37 builder + 1 mine)
+  npx tsc --noEmit                                     -> clean
+  node scripts/test-flip-audit.mjs --batch 035         -> clean
+  every spec row re-read against C:\wonderers guide\aon-2e-archive\data\by-category
+  cross-spec collision scan over all 20 work/.b035-{rows,created-desc}-*.json -> 0
+  scripts/data/effect-backfill.json (14,248 rows) scanned for the 24 record+field pairs -> 0
+
+PER ITEM
+--------
+ 1. THE LANE — DONE. Guard is at 20, exactly the unapplied prose rows; I re-ran the whole scan with
+    the 24 rows patched into a copy of core.json and it returns 0 unexpected (1 bare, a KNOWN id).
+    27 = 20 prose + 5 itemBonus + 2 source: the two new exemptions account for the 7 the count
+    dropped by. KNOWN is byte-unchanged (2 entries) — I diffed it; nothing was parked there.
+    Both new exempt() rules are SHAPE rules, not id lists: itemBonus is conditioned on the parent
+    item being readable, source on the bucket (a bucket that cannot hold a rules record).
+ 2-5. arcaneSchool/school-of-breathtaking-influence, -keen-inquiry, -nexian-spaces, -quantic-control
+    — DONE. Row per record, field description, why names arcane-school-31/-32/-33/-34; all four
+    mirror files exist. Every sentence of all four rows is a verbatim substring of its own mirror
+    doc with links flattened (checked mechanically, not by eye): flavour paragraph, the full
+    Cantrips-through-9th curriculum, both School Spells.
+ 6-7. fatalMethod/puppeteer, /reaper — DONE, prose. fatal-method-1/-2 read; Consume Thrall's whole
+    block (frequency, requirements, effect) and reaper's edge with the 11th/13th ranks are present
+    and verbatim. "at least one thrall WITH 30 feet of you" is print's own typo, transcribed as
+    printed — correct call, and the report says so rather than silently fixing it.
+ 8-11. follower/berserker, /sharpshooter, /shieldbearer, /adept — DONE, prose, and the exemption
+    was correctly REFUSED. I read follower-1/-4/-5/-6: a follower page is not a stat line whose
+    text lives on a parent — it prints flavour, weapon lines, six modifiers, HP, Kit Armor, Skills,
+    a Follower Ability and three advancement tiers granting named actions. I checked all five stat
+    lines digit by digit against the mirror (Str/Dex/Con/Int/Wis/Cha and Hit Points): every one
+    matches. The only difference from the page is `**Str** 3` rendered as `+3`, which is the
+    modifier the page means.
+12-13. grimFascination/blood, /flesh — DONE, prose, verbatim against grim-fascination-1/-3.
+14-15. hybridStudy/twofold-tine, /volatile-spark — DONE, prose, verbatim against hybrid-study-15/-16
+    including the Reloading Cascade action and all three studious spells.
+16-20. itemBonus/aeon-stone-eastern-star, /deravons-helm, /lookouts-spyglass,
+    /mantle-of-far-horizons, /azlanti-diamond — DONE as ONE rule exemption, and the measurement it
+    rests on is real: I re-measured independently — 723 itemBonus records, 0 of them without an
+    `items` parent, 718 passing today on the parent item's ast. All five parents carry full prose.
+    The rule is `readable('items', id, db.items[id])`, so a bonus whose parent is missing or bare
+    still fails; the test proves both directions. Correct disposition — five hand-written copies of
+    the parent item's paragraph would have been the wrong answer.
+21-26. sidebar/arcane-cascade-damage, /runic-phrases, /motion-sense, /jotunborn-adventurers,
+    /jotunborn-enclaves, /on-jotuns — DONE, prose. Verbatim against sidebar-3750/-3753/-3756/
+    -3758/-3759/-3760. A sidebar cannot be a rule exemption and was not made one.
+27-28. source/the-dead-gods-hand, source/pathfinder-221-into-the-apocalypse-archive — DONE as one
+    rule exemption, confirmed against the mirror as instructed: source-370 and source-371 carry a
+    product page, a release date, a Product Line and a Source Group and NO rules text. I also
+    checked the whole bucket: 252 source records, ZERO with a description, a `.d` entry or a note —
+    so the rule describes the bucket's real shape and covers every future book, which is what was
+    asked for.
+29. CITATION + TEST — FIXED-BY-ME. Four of the fourteen premise citations named a doc id the flip
+    audit cannot resolve:
+        equipment-3055-4734-bonus-1716   (x2 — test file and scripts/readable-record-check.mjs)
+        equipment-5218-bonus-1719
+        equipment-5220-bonus-1721
+    All four docs DO exist in the mirror, but under `item-bonus/`, while scripts/test-flip-audit.mjs
+    :296-301 derives a premise's folder by stripping the trailing `-<digits>` — which for those ids
+    yields `equipment-3055-4734-bonus`, a folder that does not exist. The audit reported the batch
+    clean only because a WHOLLY NEW test file is exempt from the citation scan (:424-431); the
+    citations would have failed the first time a later batch edited a line under one of them.
+    Repointed at the PARENT ITEM pages — equipment-3055, equipment-5218, equipment-5220 — which
+    carry the identical clauses verbatim (checked), derive cleanly, and are the stronger premise
+    anyway, since "the text lives on the parent item" is exactly what the itemBonus exemption
+    asserts. The other ten premise clauses are verbatim in their docs; I checked all fourteen.
+    Added one test (`every premise citation is one the flip audit can check`) that re-derives the
+    audit's own resolution over both files this group touched and asserts the clause is verbatim in
+    the resolved doc. Mutation evidence: the same logic, run against the pre-fix ids, reported the
+    four FILE MISS lines above; it reports none now.
+    The builder's own testing is sound where I could break it: every prose row is asserted against a
+    STRIPPED and a PATCHED in-memory copy (never the shipped artefact), both new exempt rules are
+    proved in both directions, and both carry a `// mutation-proof` marker naming the key they stunt.
+30. MANIFEST — DONE. work/.b035-specs.json holds 20 entries; no other family's entry was dropped
+    (I listed all 20). This group's single entry is kind "created-prose" for
+    work/.b035-created-desc-readable-records.json — correct, because the group emitted no non-
+    description row, so no "rows" entry is owed. I appended work/.b035-verify-red-readable-records.txt
+    to its stage[]; nothing else in the file was touched.
+
+SPEC INTEGRITY (checked row by row, 24 rows)
+  every row targets a record core.json actually has                      24/24
+  every row is field:"description" on a record whose description is ""   24/24  (no create: true owed)
+  every `why` names an AoN doc id, and that doc exists in the mirror      24/24
+  supersedes owed?  effect-backfill.json has 0 rows on these record+field pairs, and 0 rows in
+                    arcaneSchool / fatalMethod / follower / sidebar / grimFascination / hybridStudy
+                    at all — so none is owed and none is missing
+  collisions with the other 19 b035 spec files                           0
+  applyDescriptions clobber risk: none of the 24 has a core-descriptions.json entry, so the runtime
+                    sync cannot overwrite the row (this is the mechanism behind gap 1 below)
+
+DATA STILL NEEDED
+-----------------
+  (none) — every one of the 27 was settled off the printed page. No owner ruling is owed and
+  work/.b035-queue.json was correctly left alone.
+
+CROSS-FILE GAPS
+---------------
+1. CONFIRMED (verified, not accepted). src/data/index.ts:588-597, the subclass-option arm of
+   applyDescriptions, SHRINKS the necromancer's Puppeteer option at runtime:
+   classes.necromancer.subclass.options[puppeteer].description is 567 chars in core.json and
+   contains the whole Consume Thrall action block; the sync overwrites it from
+   core-descriptions.json classFeatures/puppeteer, which is 237 chars and contains only the
+   sentence that names the action. The player loses the frequency, the requirement and the effect.
+   Fix is a classFeatures/puppeteer description row or a longer-text-wins sync. Not this group's files.
+2. CONFIRMED, and the number reproduced exactly. public/ast-index.json carries no bucket per entry,
+   so readable-record-check's hasAst() is bucket-blind: 1,574 records pass ONLY through an ast file
+   whose name is not their bucket (itemBonus<-items 715, runes<-items 155, rules<-categoryPage 118,
+   trait<-ancestries 50 …). Making it strict on that premise would open a 1,574-record red, so the
+   builder was right to reject it and give the four records it hid their text instead.
+   ADDED BY ME — the blindness hides more than the four inside this group's own buckets: 44 further
+   `sidebar` records and 4 `source` records pass only on a foreign-named ast and have never been read.
+   Two I spot-checked are real: sidebar/tiny-pcs (sidebar-3365, a Dragonet sidebar from Draconic
+   Codex) displays rules-3271's tree, and sidebar/conditions (sidebar-2201, Player Core pg. 426)
+   displays the Conditions CATEGORY PAGE. The full list, `<bucket>/<id><-<ast file>`:
+     sidebar: conditions<-categoryPage, exploration-activities<-categoryPage, adjusting-treasure<-rules,
+     groups-of-conditions<-categoryPage, tiny-pcs<-rules, riding-pcs<-rules, key-terms<-rules,
+     versatile-heritages<-categoryPage, soul-cage<-items, the-five-branches-of-scholarship<-rules,
+     assistive-items<-categoryPage, epitomes<-rules, special-rules<-rules, overview<-rules,
+     leveling-up-checklist<-rules, pathfinder-society<-creatureThemeTemplate, domains<-categoryPage,
+     riding-animal-companions<-rules, quick-equipment-packages<-rules, encumbered<-conditions,
+     broken<-conditions, materials<-categoryPage, spellshape<-actions, flat-checks<-rules,
+     secret-checks<-rules, heroic-recovery<-feats, cost-of-living<-rules,
+     gaining-and-losing-actions<-rules, remember-the-first-rule<-rules, hero-points<-rules,
+     unexpected-difficulty<-rules, bypassed-encounters<-rules, focus-spells<-rules, time<-domain,
+     enhanced-and-impeded-magic<-rules, types-of-terrain<-rules, gallop<-actions, falling<-rules,
+     leap<-actions, forced-movement<-rules, formulas<-rules, propulsion<-rules,
+     blightburn-sickness<-disease, edicts-and-anathema<-rules
+     source: gods-magic<-rules, knights-of-lastwall<-creatureThemeTemplate,
+     crown-of-the-kobold-king<-items, firebrands<-creatureThemeTemplate  (the 4 sources are now
+     rule-exempt anyway, so only the 44 sidebars are open text.)
+   These are NOT a failure of any of items 1-28 — the guard does not report them and no item names
+   them — but they are the same hole, measured, and they belong to whoever closes gap 2 properly:
+   the ast index carrying a bucket per entry, which is a data-stage change.
+3. CORRECTED — the builder's version was half wrong. The four new wizard arcane schools DO have
+   their SCHOOL SPELLS encoded, exactly like the other fourteen: classes.wizard.subclass.options
+   carries focusSpells + advancedFocusSpell for each, and the values match print
+   (breathtaking-influence appeal-to-authority/hot-air, keen-inquiry fact-check/unsettling-perspective,
+   nexian-spaces extradimensional-cover/unbounded-sphere, quantic-control circle-of-weakness/
+   quantic-dampening). What is unencoded is the CURRICULUM ladder — and that is true of all 18
+   wizard schools, not of these four, so it is a feature-wide lane gap and not a batch-035 arrival.
+   The two necromancer fatal methods are likewise both present as subclass options.
+4. CONFIRMED. hybridStudy holds 10 records; classes.magus.subclass.options lists 8, and neither
+   twofold-tine nor volatile-spark is among them. A magus cannot select either study today, so
+   their conflux spell and three studious spells reach nothing. build.ts / the class data are not
+   this group's files.
+5. CONFIRMED. grimFascination has no classFeatures twin, no reader anywhere in src/, and
+   classes.necromancer.extraChoices is []. A necromancer cannot pick a grim fascination, so the
+   Grave Spell and Thrall Enhancement my rows transcribe reach no character.
+6. WITHDRAWN — the claim is false. Reaper's edge IS fully encoded: the trained-at-1 half by the
+   subclass option itself (classes.necromancer.subclass.options[reaper].grants =
+   {armor:['medium'], weapons:['martial']}) and the later ranks by src/rules/advancement.ts:243-246,
+   `'necromancer-reaper': [{level:11, martial, expert}, {level:13, medium, expert}]`, under the
+   documented supplement-key convention. Nothing is owed here; carrying it would have sent a future
+   batch to build a lane that exists.
+7. CONFIRMED. `follower` (6 AoN-scraped records) and `followers` (5 playable, no Adept) are
+   duplicates, and nothing in src/ reads content.follower. A data-stage/catalogue reconciliation.
+
+OPEN LINES IN THE TWO LISTS: 6  (DATA STILL NEEDED 0; CROSS-FILE GAPS 6 standing — 1, 2, 3, 4, 5, 7
+— gap 6 withdrawn as refuted.)
+
+FILES I TOUCHED
+  test/batch035-red-readable-records.test.ts     (3 premise doc ids repointed, 1 test added)
+  scripts/readable-record-check.mjs              (1 premise doc id repointed, comment only)
+  work/.b035-specs.json                          (appended this file to the group's stage[])
+  work/.b035-verify-red-readable-records.txt     (this file)

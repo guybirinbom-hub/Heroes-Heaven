@@ -1,0 +1,308 @@
+CLOSER — parity batch 035 (WG-COMPARISON lane)
+============================================================================================
+
+STAGES RUN, one at a time, in order: apply · gaps · close · experience · gate · regate · suite · verify.
+Every refusal below was fixed at the CAUSE and the stage re-run; no guard, ratchet, settle registry or
+test was edited to make a stage pass without a citation.
+
+
+APPLY — four refusals, four causes
+--------------------------------------------------------------------------------------------
+1. work/.b035-rows-gap-engine-1.json — the spirit-instinct/edition and superstition-instinct/edition
+   rows had a `why` naming no AoN doc id. Fixed the two `why` strings to name the pages the join moves
+   between, verified in the mirror first: instinct-5 "Spirit" (Core Rulebook, remaster_id
+   ["instinct-12"]) -> instinct-12 (Player Core 2); instinct-6 "Superstition" (Advanced Player's Guide,
+   remaster_id ["instinct-13"]) -> instinct-13. No value changed.
+
+2. work/.b035-rows-data-rows-1.json, cultivation-order#anathema-sidebar — the summary Anathema line was
+   written "Commit … or neglect to nurture …", which introduces the token "neglect" that is in neither
+   our shipped text nor mirror druidic-order-12. Reworded to the gerund our own prose paragraph already
+   prints ("Committing … or neglecting to nurture …"). Both copies (the classFeatures description row
+   and the classes/druid subclass options row) carry the same wording.
+
+3. scripts/apply-parity-fixes.mjs — the applier's `unbackedRun` refused that same row for "adds 8 words
+   no named doc prints". It was right about the mirror (druidic-order-12's scrape carries no Anathema
+   block at all; a corpus grep for "neglecting to nurture" finds it in NO mirror document) and wrong
+   about the row: addedRuns is an LCS diff, so a clause MOVED from the prose paragraph into the summary
+   block reads as added. The record's own shipped text is now a haystack beside the named docs — a
+   VERBATIM contiguous run only, so genuinely new wording is still refused.
+
+4. scripts/apply-parity-fixes.mjs — `delete:true` rows. The shape is honoured by
+   scripts/lib/apply-backfill.mjs (the `if (fix.delete)` branch) and has been in the overlay since batch
+   026 (classFeatures/nudging-whisper), but this applier had never been taught it: a delete row failed
+   the "no field and no create:true" pre-check always, and the "does not exist" pre-check once the
+   record is already gone, and it crashed the plan printout on JSON.stringify(undefined). All three
+   fixed; rowKey now ends a delete row "(delete)" so a retirement and a creation of the same id are not
+   one key. This unblocked work/.b035-rows-data-rows-1.json#impostor-in-hidden-places#vessel-spell,
+   which renames spells/discomfiting-whispers to the printed singular and retires the unstatted
+   scrape-split twin spells/discomfiting-whisper in the same spec — the rename WITHOUT the retirement
+   would have shipped two records with one name.
+
+5. POST-CHECK — classFeatures/dragon-instinct/choice was not readable from the shipped artefact: the
+   data-rows-1 whole-`choice` row restated the `note` key that a SIBLING batch-035 row (path ["choice"],
+   field "note", value null) retires, and the path row applies after it. Dropped `note` from the
+   whole-value row and said so in its `why`. Both rows now agree; the note is gone once, not resurrected.
+
+
+GAPS / CLOSE
+--------------------------------------------------------------------------------------------
+gaps: 47 gap line(s) — 34 authored, 13 parked; 2 owner questions filed (#144 cultivation-order,
+#145 animal-instinct-spider-web).
+close: 40 parity verdicts [FIXED 22, OWNER-QUEUED 1, MATCHES 17], 13 flagged residues, 0 records outside
+this batch went quiet.
+Rule 6b check: every MATCHES verdict derived from a teach names the FINDING id, not the record — I read
+all eight teach lines in work/wg-batch-035-parity.json and each is keyed on `<record>#<aspect>` or on a
+finding whose id IS the record because that record carries exactly one finding. No report line needed
+fixing.
+
+
+GATE TRIAGE — what the closer built
+--------------------------------------------------------------------------------------------
+A. KINDS, demon-eidolon / plant-eidolon / undead-eidolon missing=[language]  ->  BUILT (settle earned).
+   The batch's engine families put each printed Language line on COMPANION_MODS.languages
+   (src/rules/companionGrants.ts) — the carrier the four already-settled siblings use — but nobody added
+   the matching per-id credit in wg-diff's OFF_RECORD_CARRIERS, which is the closer's half of the
+   batch-033/034 shape. Added the three entries, citing eidolon-5 "Language Abyssal", eidolon-9
+   "Language Sylvan", eidolon-11 / eidolon-26 "Language Necril".
+   The control that keeps the credit honest is no longer "an eidolon type with no row" — this batch
+   emptied that group — it is dragon-eidolon, which carries languages: ['draconic'] on the same table
+   and deliberately has NO entry, because it is not a batch-035 record and a closer may not settle an id
+   outside its own batch. test/batch035-closer.test.ts asserts dragon-eidolon still reports `language`
+   and that the credit is not on the companionGrants.ts FILE row; the batch-033 control loop was flipped
+   to the positive with the three finding ids cited above it.
+
+B. IDENTITY, lesson-of-vengeance spells theirs-not-ours=[phantompain]  ->  BUILT (comparer teach).
+   The row had already landed (classFeatures/lesson-of-vengeance.grantedSpells = ['phantom-pain']) and
+   reaches the familiar's spellbook. wg-identity read `grantedSpells` in two homes — a SubclassOption
+   and the declaring feature's per-option ladder — and never on a plain class-feature record, which is
+   where all 19 witch lessons keep it. Taught (array form only; the psychic's conscious-mind
+   `grantedSpells` is an OBJECT keyed by option id and is credited by the ladder reader). Pinned with a
+   `// mutation-proof` test that stunts classFeatures/lesson-of-vengeance.grantedSpells and asserts the
+   comparer reports phantompain again.
+
+C. KINDS + VALUES, curse-of-inclement-headwinds missing=[speed] / five -10s  ->  BUILT (two data rows).
+   The read lane's finding curse-of-inclement-headwinds#cursebound-4 is in refuted[], and correctly so:
+   the verifier showed the rung-4 clause is not missing from the player's VIEW, because the modes lane
+   prints it. But the comparers were flagging the ARITHMETIC, and they were right — the mode said
+   "apply that Speed penalty by hand, the mode can't". Authored the shape batch 033 built for the
+   sibling one mystery over (mystery-20 -> mystery-19):
+     modes/curse-of-inclement-headwinds-4.modifiers  (whole-field re-emission; the -2 circumstance
+       ranged-attack entry carried byte-identical, plus {value:-10, type:'status', target:'speed',
+       detail:'all'} — `detail: 'all'` is what modes.ts:135 and deriveSpeeds' movement loop read, and
+       what stops a detail-less speed modifier defaulting to 'land')
+     modes/curse-of-inclement-headwinds-4.note       (the by-hand apology removed; leaving it would tell
+       the player to apply a penalty the sheet has already applied)
+   Cited by premise, not by finding, because the finding is refuted: mystery-19 "The raging winds push
+   you back, imposing a -10- foot status penalty to all your Speeds."
+   VALUES is now 0 to adjudicate; KINDS no longer lists the record.
+
+D. IDENTITY, animal-instinct items theirs-not-ours=[spiderweb]  ->  PARKED, and the park is INVISIBLE
+   to the gate. NEEDS THE ORCHESTRATOR. See below.
+
+
+THE ONE RED THAT STANDS — animal-instinct, IDENTITY
+--------------------------------------------------------------------------------------------
+The record IS parked: the gap-situational agent filed a complete, four-guard-clean owner question this
+batch — desk #145, printed clause quoted off instinct-8, WG's two rage-gated giveItem ops quoted off
+wg-show --raw, three named options for the engine shape and a recommendation. The Web itself already
+reaches the player as prose scoped to the barbarian who answered 'spider' (RECORD_MARKERS).
+
+What is wrong is one slug. scripts/wg-batch-gate.mjs parks an owner-queued record with
+`ownerQueued.has(<record id>)`, and every other entry on the desk is keyed by its record id
+(#143 curse-of-turbulent-moments, #144 cultivation-order). #145 is keyed `animal-instinct-spider-web`,
+so the gate cannot see it and reports the record as a live IDENTITY failure.
+
+I did not fix it, and the fix is one character-string:
+  · work/owner-questions.json is on my absolute-prohibition list — I may not edit it;
+  · re-filing through work/.b035-queue.json under the id `animal-instinct` would MINT A SECOND DESK
+    ENTRY (#146) about the same record — add-owner-question refuses only an id that already exists, and
+    a duplicate question on his desk is worse than a red gate line;
+  · settling it in wg-identity's SETTLED_IDENTITIES would be laundering: we do not deliver the Web as a
+    named thing, we describe it, and WHICH thing to deliver is exactly what #145 asks him.
+ORCHESTRATOR: rename desk entry #145's `id` from "animal-instinct-spider-web" to "animal-instinct"
+(everything else in the entry stands), then re-run --stage gate; it parks and the gate is green.
+
+
+ALSO NOTED, NOT MINE TO SETTLE
+--------------------------------------------------------------------------------------------
+dragon-eidolon reports KINDS missing=[language] and did so at baseline too (work/.b035-baseline/diff.json).
+It carries COMPANION_MODS['dragon-eidolon'].languages = ['draconic'] — a live carrier with no per-id
+credit — so it is a one-line OFF_RECORD_CARRIERS entry for whichever batch cuts that record. It is
+outside batch 035 and rule 8 forbids settling it here; it is doing useful work as the control group in
+the meantime.
+
+
+CROSS-FILE GAPS: none.
+DATA STILL NEEDED: none.
+
+
+================================================================================================
+CLOSER, SECOND PASS — after the GATE-RED round (2026-09-10)
+================================================================================================
+
+⚠ THE ORCHESTRATOR PARAGRAPH ABOVE IS SUPERSEDED. Do NOT rename desk entry #145. The gate-park group
+fixed the GATE instead (scripts/wg-batch-gate.mjs: `ownerQueued`, a Set of desk ids asked for a record
+id, replaced by RECORD_IDS + parkMapOf + queuedFor asked by all six call sites), which is the better
+half of the fix: the desk keeps one entry per QUESTION, and every record whose question is filed as
+`<record>-<aspect>` now parks. The gate prints
+    animal-instinct    IDENTITY   [desk: animal-instinct-spider-web]
+under OWNER-QUEUED and all nine gates pass.
+
+WHAT THIS PASS DID
+1. THE SIX CREATED FOLLOWER DESCRIPTIONS — the applier refused them and it was right.
+   work/.b035-created-desc-readable-records.json's follower rows coined tier headings the page never
+   prints ("**Experienced follower**"), and apply-parity-fixes.mjs backs a created description against
+   its named mirror document as ONE CONTIGUOUS token run, so the whole 454-word row read as invented.
+   Every heading is now the printed sentence, taken from the document itself in order:
+     berserker/medic/scout/shieldbearer/adept   "When the <name> becomes an experienced|veteran|
+                                                 exceptional follower:"
+     sharpshooter                               experienced + exceptional name the sharpshooter, and
+                                                the VETERAN heading really prints "When the scout
+                                                becomes a veteran follower" (follower-4). Transcribed
+                                                as printed — print is the authority, not consistency.
+   Two more word-level repairs, both print: follower-4 prints "**Range**", not "**Ranged**"; follower-2
+   prints "(functions as dagger)", not "as a dagger". Measured after: all 24 created rows have ZERO
+   unbacked runs against their own mirror document. test/batch035-red-readable-records.test.ts's three
+   heading assertions moved with them, under `// batch 035 premise: follower-6 "When the adept becomes
+   an experienced follower:"`; 38 tests still pass.
+   AFTER APPLY: `node scripts/readable-record-check.mjs` -> ok, 0 reds (2 known exceptions).
+                `node scripts/field-diff.mjs` -> UNEXPLAINED 0 (the ritual row landed).
+
+2. test/batch035-instruments-2.test.ts — header corrected, no flip. Its prose called route B (a witch
+   LESSON) a live harness blindness; since the experience-hosts group's featChoiceHost it is not, and
+   `harnessSees` in that file is a FROZEN LOCAL COPY of the pre-batch-035 search. The header now says
+   so and points at work/.b035-report-red-experience-hosts.txt. No it(, expect( or literal changed;
+   9 tests still pass.
+
+3. scripts/wg-batch-close.mjs — COMMENT ONLY, and the reason it is only a comment is item 4.
+
+4. NOT FIXED, ESCALATED — the close instrument, and one verdict.
+   The gate-park verifier found it and re-measured it here. Two defects, one shape:
+     :238  `desk.has(rid)` asks a Map keyed by DESK ENTRY ID for a RECORD id — the identical bug the
+           gate just lost. animal-instinct, filed as `animal-instinct-spider-web`, never takes the
+           OWNER-QUEUED branch.
+     :186-188  the ROW citation is keyed on the RECORD (`if (r?.id === rid)`), not the finding, so every
+           row any family authored on classFeatures/animal-instinct cites animal-instinct#spider-web
+           too; :255 then sets the WHOLE RECORD to FIXED. The TEACH path two lines down was already
+           keyed on the finding for exactly this reason (its own batch-29 measurement says so).
+   RESULT TODAY: work/wg-batch-035-parity.json reads `animal-instinct: FIXED` while
+   animal-instinct#spider-web is CONFIRMED, player-visible, deliberately UNBUILT and desk #145. A real
+   gap inside a done verdict.
+   I WROTE THE FIX AND TOOK IT BACK OUT. Measured first, over the real desk and the real batch: exactly
+   TWO of the 40 records resolve a desk entry under the corrected rule — cultivation-order by exact
+   match (unchanged) and animal-instinct by prefix — so the blast radius is that one verdict and no
+   other. But the corrected derivation flips FIXED -> OWNER-QUEUED, and this file's one-way merge
+   refuses to overwrite a verdict already on disk ("the existing verdict is not overwritten; rule it by
+   hand"). Correcting a verdict is `--reverdict`, which the file's own header calls "the one hand-held
+   exception ... an orchestrator CORRECTING a verdict already on disk". Rule 5 hands that to Fable, so
+   the instrument keeps the defect this batch and carries a comment naming it above the branch that has
+   it. The same shape is in scripts/parity-residual-check.mjs:25/:52 and
+   scripts/held-spell-rank-check.mjs:44/:62 (neither is red today: parity-residual runs clean).
+   FOR FABLE, both halves, in this order:
+     (a) apply the resolver to wg-batch-close.mjs (RECORD_IDS + parkMapOf + queuedFor, or import the
+         gate's) and key the row citation on the finding id;
+     (b) node scripts/wg-batch-close.mjs --batch 035 --write --reverdict animal-instinct=OWNER-QUEUED
+         --reason "desk #145 animal-instinct-spider-web: the Web mechanic is unbuilt pending the ruling;
+         the FIXED verdict was derived off seven sibling rows through a record-keyed citation".
+
+5. GAP LINES INHERITED FROM THE RED GROUPS — --stage apply-digest does not run again in this pass, so
+   nothing collated them. Disposed here, every one:
+   BUILT   · the six follower rows (item 1)
+           · test/batch035-instruments-2.test.ts's stale route-B prose (item 2)
+   PARKED, DESK ENTRY #146 `ast-patches-reverted-by-regen`
+           · the six AST display trees (red-close-out's DATA STILL NEEDED). Filed at --stage gaps.
+   PARKED, ORCHESTRATOR (item 4 and the commit file's FOR THE ORCHESTRATOR paragraph)
+           · wg-batch-close.mjs, parity-residual-check.mjs, held-spell-rank-check.mjs desk-id resolver
+           · src/data/index.ts:588-597 SHRINKS the necromancer's Puppeteer subclass option at runtime:
+             the sync copies classFeatures/puppeteer's 237-character description over the option's
+             567-character one and the whole Consume Thrall action block stops reaching the screen.
+             Re-measured here; it is real and player-visible. NOT built: classFeatures/puppeteer's
+             description lives inside a `create:true` overlay row, so repairing it is a CREATE-ROW
+             CORRECTION, which rule 5 forbids me. One row on that create value fixes both surfaces.
+   PARKED, LANE GAPS — prose reaches the player, mechanics reach nothing; each needs a grant lane, not
+   a row, and none is a gate red:
+           · wizard arcane schools (4 new) — no curriculum / school-spell lane
+           · necromancer fatal methods (2) — reaper's edge grants no proficiency (advancement.ts)
+           · magus hybrid studies (2) — not offered as subclass options at all; no conflux/studious lane
+           · necromancer grim fascinations (4) — extraChoices is empty; unpickable; no grave-spell lane
+           · `follower` (6, AoN) vs `followers` (5, playable, no Adept) — duplicate buckets, nothing in
+             src reads the first
+           · public/ast-index.json carries no bucket, so readable-record-check's hasAst() is
+             bucket-blind (1,574 records resolve through a differently-named ast file today, so a strict
+             check would open a false red). Data-stage change.
+           · inventor Overdrive's +2 to a modification's resistance — modelled by NEITHER side
+           · wg-batch-run.mjs:845 gapLines() ends a heading's run at the first non-bullet line, so a
+             numbered gap with indented continuations loses everything after its first line. It ate a
+             gap in this very batch.
+           · wg-batch-run.mjs loadManifest is the only place that enforces kind ∈ {rows, created-prose},
+             and it refuses the WHOLE batch at --stage apply with nothing naming the entry. It happened
+             this round (red-gate-park wrote kind "gate-fix").
+           · work/.b035-queue.json has no append-only guard; a whole-file rewrite drops entries silently
+             and did, once, this batch.
+
+MANIFEST: work/.b035-specs.json gained scripts/wg-batch-close.mjs on the `closer` entry's stage[]. Every
+other file this pass touched was already staged by its owning family. 20 entries, 80 rows, 0 collisions.
+
+VERIFICATION, this pass: node scripts/vt.mjs run test/batch035-red-readable-records.test.ts
+test/batch035-instruments-2.test.ts -> 47 passed. node scripts/test-flip-audit.mjs --batch 035 -> clean,
+23 test files touched, every flip cited. npx tsc --noEmit -> clean.
+
+6. REGATE RED — batch 033 / otherworldly-protection. DISPOSITION: QUEUED, desk #147.
+   Caused by this batch, in the good sense: the experience-hosts group's innovationModificationHost
+   lifted it out of UNSUPPORTED, where the harness could not see it, and it landed on EXPERIENCE
+   MISSING-CONTROL. Measured, not read off the sweep: AoN innovation-5 gives the player NO choice —
+   void or vitality follows from void healing, unholy or holy from sanctification — and our record
+   carries both as `resistances[]` predicates, delivering spirit 13 + void 13 and naming them, on a
+   level-20 inventor who is neither sanctified nor void-healing. `wg-show "Otherworldly Protection"
+   --raw` really does raise two `select optionType=CUSTOM` ops for the same two conditions.
+   NOT SETTLED, on purpose: rule 8 forbids me settling an id outside batch 035, and the honest park
+   would have been an experience-instrument-limits.json line under lane `derived-value-not-a-pick` —
+   exactly where batch 033 parked battle-creed, on exactly this reasoning. So the question filed is the
+   LANE, not the record: does his standing "every WG select is a visible control here" ruling extend to
+   a WG select that encodes a condition print DERIVES? One ruling retires the class; if it goes the way
+   battle-creed went, batch 036 writes one line and reopens nothing.
+   After --stage gaps filed it, regate is green with no other change.
+
+7. THE SUITE RED — test/integrity-sweeps.test.ts "every backfilled field is read in a file that knows
+   its collection", 4 pairs: arcaneSchool.description, fatalMethod.description,
+   grimFascination.description, hybridStudy.description.  DISPOSITION: BUILT.
+   The guard was RIGHT and the red was new, caused by the red round's own rows: `grep -rn` over src/
+   for all four bucket names returns NOTHING, so ten rows of printed prose had landed where no screen
+   could show them. Pre-existing in substance — 43 records ship in those buckets (27 arcane schools,
+   2 fatal methods, 4 grim fascinations, 10 hybrid studies) and only a backfill row on the pair made
+   the sweep look. Measured further: arcaneSchool and fatalMethod have readable classFeatures twins
+   (766/748/793/826/237/501 chars), grimFascination and hybridStudy have NO twin at all, so for six of
+   the ten records nothing anywhere carried the text.
+   I did not touch the guard, and I could not have cited an edit to it: no confirmed finding covers a
+   suite red and print has nothing to say about an src reader. Removing the rows is a row removal,
+   which rule 5 hands to the orchestrator. So the fix is a real reader, and the lane already existed —
+   src/sheet/RichEditor.tsx `REF_MAPS`, "Content maps a description link can point at — anything the
+   user might want a popup for". Four entries added (Arcane school / Fatal method / Grim fascination /
+   Hybrid study). A player can now find any of the 43 by name in the description-link picker and read
+   the printed entry through the same DescBody popup as every other ref link.
+   PINNED BY test/batch035-closer-refmaps.test.tsx (new, 4 tests, no flip and no settle, so no
+   citation is owed): three tests render the REAL RefSearchModal over the real content database, type
+   a name, and assert the row appears with the right kind AND that clicking it hands back a RefTarget
+   whose `key` is the bucket — Twofold Tine (Hybrid study), School of Keen Inquiry (Arcane school),
+   Reaper (Fatal method). The fourth does the same for Flesh (Grim fascination) — "Flesh", not
+   "Blood", because the picker caps at 60 rows and the four buckets sort last, so a fascination named
+   after a common word falls off the end (Blood matches 220 records) — and then asserts every one of
+   the ten records the red round wrote text for carries both a `name` and a `description`, which is the
+   picker's own gate: an entry in REF_MAPS is worth nothing for a record it silently drops.
+   AFTER: node scripts/vt.mjs run test/batch035-closer-refmaps.test.tsx test/integrity-sweeps.test.ts
+   -> 18 passed. Rule 3b honoured: --stage experience and --stage gate were both re-run after this
+   src/ edit, before suite and verify.
+
+FINAL RUN, every stage green in order:
+  apply       20 spec(s), 80 rows, 24 new; overlay 14209 -> 14273
+  gaps        47 lines (34 authored, 13 parked); 4 owner questions filed
+  close       FIXED 22 · OWNER-QUEUED 1 · MATCHES 17; 13 flagged residues
+  experience  40 records on the real builder — OK 38 · NO-SHEET-EFFECT 2 · UNSUPPORTED 0
+  gate        all nine pass
+  regate      every earlier batch re-swept and re-gated green
+  suite       5855 passed, 1 skipped
+  verify      38 checks, 37 clean (ast-content-check still red, parked as desk #146)
+  npx tsc --noEmit clean · node scripts/test-flip-audit.mjs --batch 035 clean (24 test files touched)
+
+CROSS-FILE GAPS: none of my own — every line above is either built or parked with a named artefact.
+DATA STILL NEEDED: none of my own.

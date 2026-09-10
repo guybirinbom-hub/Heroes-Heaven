@@ -1,0 +1,39 @@
+{
+  "findings": [
+    {
+      "id": "shepherd-of-errant-winds",
+      "backfillRows": [],
+      "note": "Instrument only — no row is owed. The experience harness reports UNSUPPORTED because classFeatureHost (test/wg-experience.harness.test.tsx:494-506) calls classFeatureIdsOwned WITHOUT the classChoices argument the app passes at build.ts:5290-5296, so an animist apparition owned by classes.animist.extraChoices['apparition'] can never be hosted. Every printed mechanic (Sailing/Scouting Lore with the 8th/16th ladder, the ten-spell ladder, Vessel Spell Gift of the Anemos) is already carried on that option and read at build.ts:3618-3624 / 4455-4483 / 4637-4662. Settled as an instrument limit in work/experience-instrument-limits.json (lane harness-host-search-no-extra-choice-route), hand-verified on a built level-20 animist and mutation-proofed in test/batch035-instruments-2.test.ts."
+    },
+    {
+      "id": "stalker-in-darkened-boughs",
+      "backfillRows": [],
+      "note": "Instrument only — no row is owed; same extra-choice host blindness as shepherd-of-errant-winds, parked in work/experience-instrument-limits.json and pinned in test/batch035-instruments-2.test.ts. The read finding's correction (that WG trains Herbalism rather than Hunting) is itself a homonym misread: WG holds TWO feat rows for this apparition, 28015 (Forest + Herbalism, first printing) and 38714 (Forest + Hunting), the comparers pair to 38714, and wg-values reports 1 agree on every one — so print, WG's current row and our record all say Hunting Lore and no owner question arises."
+    },
+    {
+      "id": "crafter-in-the-vault#instrument",
+      "backfillRows": [],
+      "note": "Instrument only — no row is owed. The comparer read only classFeatures/crafter-in-the-vault, a prose twin with no registries; the carrier is the animist extraChoices option of the same id (grants.lores, loreProgression, ten grantedSpells, focusSpells ['traveling-workshop']), picked through the visible SubCard/PopupSelect at src/builder/shared.tsx:3334+ and the Primary apparition picker at :3735. Settled as an instrument limit and mutation-proofed in test/batch035-instruments-2.test.ts."
+    },
+    {
+      "id": "reveler-in-lost-glee",
+      "backfillRows": [],
+      "note": "Instrument only — no row is owed; the same extra-choice host blindness, settled in work/experience-instrument-limits.json and pinned on a built level-20 animist in test/batch035-instruments-2.test.ts. The only print content on neither side is the Avatar strike block, which WG does not encode either."
+    },
+    {
+      "id": "custodian-of-groves-and-gardens",
+      "backfillRows": [],
+      "note": "Instrument only — no row is owed; the same extra-choice host blindness, settled in work/experience-instrument-limits.json and pinned on a built level-20 animist in test/batch035-instruments-2.test.ts. Same Avatar-block caveat as its sibling: absent on both sides."
+    },
+    {
+      "id": "lesson-of-vengeance#experience-flag",
+      "backfillRows": [],
+      "note": "Instrument only — no row is owed for the FLAG. A second blind route in the same host search: classFeatureIdsOwned (derive.ts:3361-3391) has no path to a class feature owned by a feat's choice, so all nineteen witch lessons are unhostable however it is called. The lesson is owned by feats['basic-lesson'].choice.ownsFeature, resolved by choiceOwnedFeatureIds (derive.ts:3551-3560) and consumed at build.ts:4005-4013, which delivers needle-of-vengeance to the focus pool. Settled as an instrument limit (lane harness-host-search-no-feat-choice-route) and mutation-proofed in test/batch035-instruments-2.test.ts. The record's familiar-spell finding is another family's and is untouched by this entry."
+    },
+    {
+      "id": "lesson-of-elements#experience-flag",
+      "backfillRows": [],
+      "note": "Instrument only — no row is owed for the FLAG; the same feat-choice host route as lesson-of-vengeance, delivering elemental-betrayal to the focus pool at build.ts:4005-4013. Settled as an instrument limit and mutation-proofed in test/batch035-instruments-2.test.ts. The record's familiar-spell-choice and edition findings are another family's and are untouched by this entry."
+    }
+  ]
+}

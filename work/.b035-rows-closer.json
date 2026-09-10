@@ -1,0 +1,37 @@
+{
+  "findings": [
+    {
+      "id": "curse-of-inclement-headwinds#cursebound-4-speed",
+      "backfillRows": [
+        {
+          "category": "modes",
+          "id": "curse-of-inclement-headwinds-4",
+          "field": "modifiers",
+          "value": [
+            {
+              "value": -2,
+              "type": "circumstance",
+              "target": "attack",
+              "appliesWhen": "ranged attack rolls"
+            },
+            {
+              "value": -10,
+              "type": "status",
+              "target": "speed",
+              "detail": "all"
+            }
+          ],
+          "why": "AoN mystery-19 (Tempest), Cursebound 4: \"The raging winds push you back, imposing a -10- foot status penalty to all your Speeds.\" The rung-4 mode carried the electricity weakness and the -2 circumstance ranged-attack penalty but no Speed carrier at all, so the -10 reached the player only as prose that told him to apply it by hand; WG applies it as SPEED / SPEED_FLY / SPEED_CLIMB / SPEED_BURROW / SPEED_SWIM -10 status. This is byte-for-byte the shape batch 033 built for the sibling curse-of-creeping-ashes-4 (AoN mystery-20, the same clause one mystery over): `detail: 'all'` is the carrier modeMatches (src/rules/modes.ts:135, which otherwise defaults a detail-less speed modifier to 'land') and deriveSpeeds' movement loop (src/rules/derive.ts:5246-5250) were built to read. Whole-field re-emission of `modifiers`; the -2 circumstance ranged-attack entry is carried byte-identical."
+        },
+        {
+          "category": "modes",
+          "id": "curse-of-inclement-headwinds-4",
+          "field": "note",
+          "value": "Cursebound 4 (cumulative): electricity weakness 5 + your level, −2 circumstance to ranged attack rolls, and the raging winds push you back for a −10-foot status penalty to all your Speeds.",
+          "why": "Same AoN mystery-19 clause. The shipped note ended \"— apply that Speed penalty by hand, the mode can't\", which stops being true the moment the modifiers row above lands: leaving it would tell the player to apply a penalty the sheet has already applied, i.e. to take it twice. The sibling curse-of-creeping-ashes-4 note carries no such apology for exactly this reason."
+        }
+      ],
+      "note": "CLOSER row, batch 035. The read lane's finding curse-of-inclement-headwinds#cursebound-4 is in refuted[] — the verifier showed the rung-4 clause is NOT missing from the player's view (the modes lane prints it) — but the KINDS and VALUES gates both still flag this record, and they are right: print and WG both APPLY the number and we only described it. The refutation was about the RECORD_MARKERS note, not about the arithmetic. Built here rather than settled, because the carrier already exists and its sibling already uses it."
+    }
+  ]
+}

@@ -1,0 +1,161 @@
+BATCH 035 — GATE-RED, group "experience-hosts" (family red-experience-hosts)
+============================================================================
+
+WHAT THIS GROUP WAS: the OPTIONAL half of the gate-red round. All four records arrived already
+PARKED with an artefact (work/experience-instrument-limits.json, verdict UNSUPPORTED, class
+INSTRUMENT, a named lane and a hand verification each) and none of them failed a gate. The job was
+to LIFT the instrument limit, not to rescue an unparked red.
+
+BOTH ROUTES LANDED. The four records now report OK from the real sweep, delivered by the
+differential — measured, not argued:
+
+    node scripts/wg-experience.mjs --batch work/wg-batch-RED.json --verbose
+    experience: 4 records — OK 4
+      OK  classFeatures/metallic-reactance      OK  classFeatures/lesson-of-vengeance
+      OK  classFeatures/phlogistonic-regulator  OK  classFeatures/lesson-of-elements
+
+(work/wg-batch-RED.json is a 4-record slice of work/wg-batch-035.json written for this measurement;
+the verdicts are in work/wg-batch-RED-experience.json and the harness dump in
+work/.experience-raw-RED.json. The token is alphabetic, so none of the work/ globs — every one of
+them `wg-batch-\d+\.json` — picks it up.)
+
+
+ITEM 2 — metallic-reactance#instrument, phlogistonic-regulator#instrument      BUILT (route lifted)
+--------------------------------------------------------------------------------------------------
+TEACH — finding metallic-reactance#instrument and finding phlogistonic-regulator#instrument are both
+settled by a new comparer host route, not by a data row: test/wg-experience.harness.test.tsx,
+`function innovationModificationHost` (a FOURTH ownership route, called from `classFeatureHost` in
+the `if (!fixed && !owner)` branch immediately before the UNSUPPORTED return). It seats a record
+whose `otherTags` carry `<type>-innovation-modification` on the class that owns the matching
+subclass (inventor / armor-innovation), with `inventorArmorStats` set from the record's own suit tag
+and the record in the cheapest tier its level fits (`INVENTOR_TIER_LEVEL`); "without" is the same
+inventor with `inventorModifications: {}`. The seat is CONFIRMED on a built character before the
+host is handed back — `validPick` (src/rules/build.ts:8473) re-derives the offer, so a construct
+modification (the dataset offers none) or a suit-gated one is not silently unheld, which would have
+turned an unheld pick into a reported delivery gap.
+
+Sweep result for both: verdict OK, deliveredBy differential, host
+{classId inventor, subclassId armor-innovation, level 20, innovationTier initial}. The differential
+moves 11 sheet paths each — resistances acid/electricity 13 (3 + half of 20) for Metallic Reactance,
+cold/fire 10 for Phlogistonic Regulator, with `defenses.sources.resistance:*` naming the record —
+against WG's two `adjValue RESISTANCES` ops.
+
+PINNED BY: test/wg-experience.harness.test.tsx, describe 'classFeatureHost — metallic-reactance and
+phlogistonic-regulator are hosted on the inventor innovation modification pick':
+  · it 'metallic-reactance is owned by no class, subclass or extra choice, yet gets an inventor host
+    whose pick carries acid and electricity resistance' — the host is found, and 13/13 is on the with
+    build and 0/0 on the without.
+  · it 'phlogistonic-regulator rides the same route, and with the route stunted out both records read
+    UNSUPPORTED again' — 10/10 vs 0/0, plus the // mutation-proof half.
+
+MUTATION-PROOF (route key `harness-host-search-no-innovation-modification-route`): on a content copy
+with the record's `<type>-innovation-modification` tag stripped AND every `choice.ownsFeature` flag
+off, classFeatureHost returns supported:false with the parked reason string, for both records. The
+second stunt is not padding: Manifold Modifications (feat, level 8, `choice.ownsFeature`, 27 options)
+offers every modification, so a modification is reachable by BOTH of this batch's new routes and
+stunting one alone would prove nothing. The same test then shows it really is route 4 serving them —
+with only the feat-choice route stunted, both are still hosted and `meta.innovationTier` is 'initial'.
+
+ALSO: level 20 rather than level 10 is deliberate for the Phlogistonic Regulator numbers. The
+record's formula is under repair in this same batch by phlogistonic-regulator#resistance-minimum
+(max(1,floor(l/2)) -> floor(l/2)); the two agree at every even level, so 10 is the state before AND
+after that row and never a patched-vs-shipped delta.
+
+
+ITEM 3 — lesson-of-vengeance#experience-flag, lesson-of-elements#experience-flag   BUILT (route lifted)
+--------------------------------------------------------------------------------------------------
+TEACH — finding lesson-of-vengeance#experience-flag and finding lesson-of-elements#experience-flag
+are settled by a FIFTH ownership route: test/wg-experience.harness.test.tsx,
+`function featChoiceHost`. It finds the LOWEST-level feat whose `choice.ownsFeature` offers the
+record (the `aon-` prefix and the ownsFeature gate are both left to `choiceOwnedFeatureIds`, which is
+asked directly rather than reimplemented), hosts that feat through the harness's own `featHost` so
+the slot is a really rendered one, and answers its question with the record —
+`featChoices[choiceKeys(slot, granter.choice)[0]]`. "Without" is the same feat with the question
+UNANSWERED, the shape featHost's FEAT_PICK_GRANTS branch already uses, so the granter's own popup is
+in both builds and only what the chosen feature adds is counted.
+
+No src/rules/derive.ts change was needed: `choiceOwnedFeatureIds` is already exported and already the
+app's route, so the harness only had to call it. (The brief allowed for derive.ts being required and
+for reporting it as a cross-file gap; it was not required.)
+
+Sweep result: both OK, deliveredBy differential, host {classId witch, level 20, slotKey '2:class:0',
+slotRendered true, via basic-lesson, without 'pick-unanswered'}. lesson-of-vengeance moves 9 sheet
+paths — needle-of-vengeance into the witch focus repertoire with `spellSources` naming the lesson,
+and phantom-pain into the familiar's spellbook — against WG's two giveSpells. lesson-of-elements
+moves 7 AND adds one control, the "Familiar spell" popup on the Basic Lesson subcard with 4 options,
+which is WG's `select from:SPELL "Select a Spell"` with its four options.
+
+PINNED BY: test/wg-experience.harness.test.tsx, describe 'classFeatureHost — lesson-of-vengeance and
+lesson-of-elements are hosted on the witch feat whose choice owns them':
+  · it 'lesson-of-vengeance is in no class feature list, yet gets a witch host that answers Basic
+    Lesson with it and puts Needle of Vengeance in the focus pool' — no class owns it, the host is
+    found, via is basic-lesson (the lowest granter of the three: Basic / Greater / Major Lesson), and
+    the hex is in the focus pool on the with build and not on the without.
+  · it 'lesson-of-elements rides the same route, and with the route stunted out both lessons read
+    UNSUPPORTED again' — elemental-betrayal with/without, plus the // mutation-proof half.
+
+MUTATION-PROOF (route key `harness-host-search-no-feat-choice-route`): on a content copy with
+`choice.ownsFeature` set false on every feat — the exact flag the route is gated on, and gated on for
+a reason (33 feats offer a value that merely collides with a classFeature id) — classFeatureHost
+returns supported:false with the parked reason string, for both lessons.
+
+
+ITEM 5 — the parks retired honestly
+--------------------------------------------------------------------------------------------------
+work/experience-instrument-limits.json: the four batch-35 entries for metallic-reactance,
+phlogistonic-regulator, lesson-of-vengeance and lesson-of-elements are REMOVED (47 records -> 43).
+The file's own header says "Remove an entry the moment the instrument can see the record (the gate
+then judges it again)", and it can. Untouched, as instructed: the four
+`harness-host-search-no-extra-choice-route` records (wandering-reverie, gathered-lore,
+impostor-in-hidden-places, noble-branch), the five apparitions on the same lane, the-oscillating-wave,
+and every pre-batch-35 entry. The gate's `if (r.verdict === 'UNSUPPORTED') { unsupported.push(r.id);
+continue; }` branch was not touched.
+
+test/batch035-instruments-1.test.ts: the ROUTE map (the assertion that `limits.records[id]` matches
+the lane) lost its two innovation-modification entries in the same edit, so the retirement cannot be
+a half one, and the two ids are now asserted ABSENT from the limits file instead. The four
+extra-choice entries in that map are unchanged. Both changes carry
+`// batch 035: metallic-reactance#instrument` / `// batch 035: phlogistonic-regulator#instrument`.
+
+test/batch035-red-experience-hosts.test.ts (new): pins the other half of the lift, which nothing else
+would catch — all four parks GONE (a park that outlives its blindness is a gap in hiding, because the
+gate never judges a record the file lists), both routes still present in the host search body sliced
+to its reason string, and the extra-choice lane + the-oscillating-wave still parked exactly as they
+were.
+
+VERIFICATION RUN
+--------------------------------------------------------------------------------------------------
+node scripts/vt.mjs run test/batch035-red-experience-hosts.test.ts test/batch035-instruments-1.test.ts   13 passed
+node scripts/vt.mjs run test/wg-experience.harness.test.tsx -t "classFeatureHost"                        10 passed, 4 skipped
+node scripts/vt.mjs run test/batch035-instruments-2.test.ts                                               9 passed (not edited; still green)
+node scripts/test-flip-audit.mjs --batch 035                                                             clean
+npx tsc --noEmit                                                                                         clean
+
+
+DATA STILL NEEDED
+--------------------------------------------------------------------------------------------------
+(none — this group emitted no data rows; work/.b035-rows-red-experience-hosts.json is deliberately
+an empty findings list, and the record data of all four was left untouched as instructed.)
+
+
+CROSS-FILE GAPS
+--------------------------------------------------------------------------------------------------
+1. test/batch035-instruments-2.test.ts (another group's file) carries a LOCAL REPRODUCTION of the old
+   host search — `const harnessSees = (classId, id) => ...`, class features and subclass options only
+   — and asserts it returns false for lesson-of-vengeance, lesson-of-elements and the five
+   apparitions. Those assertions still PASS (the copy is not the harness), and its file header still
+   describes "route B — a witch LESSON ... a route classFeatureIdsOwned has at all" as a live
+   blindness. Since this batch, the real classFeatureHost DOES host both lessons, so that file's
+   prose and its `harnessSees` name are stale, and a reader would take them as evidence the lessons
+   are still unhostable. Not edited — outside this group's files. The owning group should either
+   retarget it at the real harness or say in the header that it is a frozen copy of the pre-batch-035
+   search.
+
+2. metallic-reactance#overdrive / phlogistonic-regulator#overdrive — *"When under the effects of
+   Overdrive, the resistance increases by 2"* is modelled by NEITHER side (their rows carry no op for
+   it either), and reaching it needs an `overdrive` toggle in src/rules/classResources.ts plus a
+   whileActive row. Both files are outside this group. Restated here because both records' limits
+   entries carried this as a cross-file gap and those entries have now been deleted, so this line is
+   the only surviving carrier of it.
+
+flaggedResidue: none. Every one of the four items ended BUILT.

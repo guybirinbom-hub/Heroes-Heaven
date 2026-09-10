@@ -1,0 +1,22 @@
+{
+  "findings": [
+    {
+      "id": "beckon-the-blasphemous-brethren#level",
+      "backfillRows": [
+        {
+          "category": "spells",
+          "id": "beckon-the-blasphemous-brethren",
+          "field": "rank",
+          "value": 3,
+          "why": "AoN ritual-275, the record's OWN document (our aonId), prints the heading `right=\"Ritual 3\"` and carries structured level 3, with **Primary Check** \"Occultism or Religion (expert)\" and **Secondary Casters** 4. We shipped rank 1. The app keeps rituals in the `spells` bucket and reads their printed level off `rank` (scripts/field-diff.mjs:60 maps the spells bucket through `(r) => r.rank`), so the printed Ritual 3 is rank 3 here. No graded-family heading is involved: ritual-275's markdown carries exactly one `right=` heading and `printedLevel` does not match `Ritual`, so the value falls back to the document's own structured level 3 — heading and structured field agree and the batch-035 own-document guard still reports it."
+        }
+      ],
+      "note": "VERIFY red from scripts/field-diff.mjs (`level spells/beckon-the-blasphemous-brethren app 1 -> mirror 3`), the only unexplained row that survives the family-head guard added this batch. ONE row on one field. traits/traditions were checked against the mirror and are NOT separate rows: ritual-275's `trait` array is [\"Rare\"] and nothing else — the rarity, which we already store on `rarity: 'rare'`, so our `traits: []` is right; and the document has no `tradition` field at all (rituals print no tradition), so our `traditions: []` is right. Pinned by test/batch035-field-diff.test.ts against a content copy with `rank` patched in memory to 3."
+    },
+    {
+      "id": "throneglass-family#level",
+      "backfillRows": [],
+      "note": "INSTRUMENT MISREAD, no data row — our records were right and the checker was wrong. throneglass / throneglass-shard / throneglass-plate / standard-grade-throneglass-object / high-grade-throneglass-object were all reported as `-> mirror 2`; each record's OWN mirror document agrees with us (equipment-5212 level -1, -4727 level -1, -4728 level -1, -4731 level 8, -4733 level 16 vs our 0/0/0/8/16, and -1 is the mirror's sentinel for \"prints no level\", which we store as 0). The `mirror 2` came from `printedLevel()` (scripts/field-diff.mjs:43-49) reading a FAMILY-HEAD heading: every sub-document of a graded family ships the whole family's markdown, so all five carry `right=\"Item -1+\"`, `right=\"Item -1\"`, `right=\"Item 2\"`, `right=\"Item 8\"` and `right=\"Item 16\"`, and the regex takes the first match — \"Item 2\". Fixed in scripts/field-diff.mjs by giving the own-document branch the same second condition its by-NAME sibling already requires at :142 (`m.level === wantLevel`): `headingAgreesOwn = own.level === wantLevelOwn`, else pushed to `held` with a why naming the graded-family sibling heading. UNEXPLAINED 6 -> 1, held back by a guard 20 -> 25."
+    }
+  ]
+}

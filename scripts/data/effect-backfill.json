@@ -3069,13 +3069,14 @@
   "value": [
    {
     "type": "cold",
-    "value": "max(1,floor(@actor.level/2))"
+    "value": "floor(@actor.level/2)"
    },
    {
     "type": "fire",
-    "value": "max(1,floor(@actor.level/2))"
+    "value": "floor(@actor.level/2)"
    }
-  ]
+  ],
+  "why": "AoN innovation-5 §Phlogistonic Regulator: \"You gain resistance equal to half your level to cold and fire damage\" — no minimum, and WG row 24832 (adjValue RESISTANCES \"cold, {{level/2}}\" / \"fire, {{level/2}}\") has none either, so a 1st-level inventor read resistance 1 where both authorities read 0. Supersedes the existing {classFeatures, phlogistonic-regulator, resistances} row, whose value was [{cold,\"max(1,floor(@actor.level/2))\"},{fire,\"max(1,floor(@actor.level/2))\"}]: both members are carried over with only the floor dropped, matching the armour-innovation modification with identical wording (dense-plating, stored as plain floor(@actor.level/2)). The value really reaches the sheet — ownedFeatureIds (src/rules/derive.ts:3468) admits c.inventor.modifications and derive.ts:2555+ pushes the record’s resistances."
  },
  {
   "category": "classFeatures",
@@ -56448,7 +56449,6 @@
    "flag": "instinctDragon",
    "prompt": "Dragon type",
    "kind": "array",
-   "note": "Draconic Rage's extra damage is applied but shown as generic 'energy' rather than your dragon's breath type.",
    "options": [
     {
      "value": "adamantine",
@@ -56638,10 +56638,6 @@
          {
           "type": "piercing",
           "value": "3+@actor.con.mod"
-         },
-         {
-          "type": "piercing",
-          "value": "3+@actor.con.mod"
          }
         ]
        }
@@ -56767,10 +56763,6 @@
         "state": "rage",
         "minLevel": 9,
         "resistances": [
-         {
-          "type": "piercing",
-          "value": "3+@actor.con.mod"
-         },
          {
           "type": "piercing",
           "value": "3+@actor.con.mod"
@@ -57551,7 +57543,8 @@
      }
     }
    ]
-  }
+  },
+  "why": "AoN instinct-9 Raging Resistance: \"You resist piercing damage and the damage type of your instinct’s dragon breath.\" Crystal and Forest breathe PIERCING, so the sentence's two clauses collapse to one type; we shipped the entry twice and derive.ts note()d it twice, printing the same Dragon Instinct source line twice on the piercing row. Supersedes the existing classFeatures/dragon-instinct choice row (value merged whole — byte-identical to the shipped choice) with two deliberate differences: crystal and forest lose their duplicate piercing entry, and the `note` key is dropped because the sibling batch-035 row {classFeatures/dragon-instinct, path [\"choice\"], field \"note\", value null} retires it (instinct-9's \"change its damage type to match that of your instinct's dragon breath\" is now modelled in rageStrikeRider, so the apology note tells the player something untrue). Restating the note here would have resurrected it whenever this pathless row is applied after that path row."
  },
  {
   "category": "classFeatures",
@@ -71312,7 +71305,7 @@
     },
     {
      "value": "crab",
-     "label": "Crab (Claw 1d10 B, razing; Claw 1d4 S, parry)"
+     "label": "Crab (Big Claw 1d10 B, razing; Claw 1d4 S, parry)"
     },
     {
      "value": "crocodile",
@@ -71363,7 +71356,8 @@
      "label": "Wolf (Jaws 1d10 P, trip)"
     }
    ]
-  }
+  },
+  "why": "AoN instinct-8 (Animal, Player Core 2 pg. 74) prints \"Crab Big Claw 1d10 B Razing, unarmed\" then \"Claw 1d4 S Parry, unarmed\" — our picker label read \"Crab (Claw 1d10 B, razing; Claw 1d4 S, parry)\", naming both crab attacks Claw, so the player choosing Crab could not tell the printed 1d10 Big Claw from the 1d4 Claw. Supersedes the existing pathless {classFeatures, animal-instinct, choice} row (whose value is byte-identical to the shipped core.json copy): all 22 options and every other label are carried over whole, with only that one label rewritten."
  },
  {
   "category": "classFeatures",
@@ -96163,7 +96157,7 @@
     {
      "id": "way-of-the-spellshot",
      "name": "Way of the Spellshot",
-     "description": "You've learned the intricacies of magic and technology, blending the two together with deadly results. You combine a knowledge of arcane theories with a strong connection to your chosen weapon that allows you to manifest unique effects, combining deadly skill with a firearm alongside an array of moderate spellcasting. You can imbue energy into your weapon and conjure bullets from thin air. As you progress, you eventually learn to phase bullets through walls or even to teleport yourself along the path of your bullets. You must select Spellshot Dedication as your 2nd-level class feat.\n\n**Prerequisites** You must be a gunslinger.\n\n**Spellshot Adjustments** Instead of choosing a way from the options listed in the gunslinger class, you have the way of the spellshot. It has the following way skill, slinger's reload, and deeds. You gain these abilities at the same levels as normal for the class. You use Intelligence for your class DC.\n\n**Way Skill** Arcana\n\n**Slinger's Reload** Thoughtful Reload\n\n**Deeds** *Initial* Energy Shot; *Advanced* Recall Ammunition; *Greater* Dispelling Bullet",
+     "description": "You've learned the intricacies of magic and technology, blending the two together with deadly results. You combine a knowledge of arcane theories with a strong connection to your chosen weapon that allows you to manifest unique effects, though your knowledge doesn't extend as far as actual spellcasting. You can imbue energy into your weapon and conjure bullets from thin air. As you progress, you eventually learn to phase bullets through walls or even to teleport yourself along the path of your bullets. You must select Spellshot Dedication as your 2nd-level class feat.\n\n**Prerequisites** You must be a gunslinger.\n\n**Spellshot Adjustments** Instead of choosing a way from the options listed in the gunslinger class, you have the way of the spellshot. It has the following way skill, slinger's reload, and deeds. You gain these abilities at the same levels as normal for the class. You use Intelligence for your class DC.\n\n**Way Skill** Arcana\n\n**Slinger's Reload** Thoughtful Reload\n\n**Deeds** *Initial* Energy Shot; *Advanced* Recall Ammunition; *Greater* Dispelling Bullet",
      "descRefs": [
       {
        "label": "Spellshot Dedication",
@@ -96290,7 +96284,7 @@
    ],
    "featureId": "gunslingers-way"
   },
-  "why": "AoN way-6, the same clause, in the copy the Builder renders. The superseded row (wg-batch-028: archetype-122 Spellshot keeps the gunslinger key attribute) is carried whole — its value equals the shipped classes.gunslinger.subclass byte for byte and only way-of-the-triggerbrand.description differs here."
+  "why": "AoN way-5 — the same reversed clause in the Builder's way picker copy. Supersedes the existing classes/gunslinger subclass row (value merged whole — byte-identical to the shipped subclass object, so the featureIds path rows applied on top of it are preserved)."
  },
  {
   "category": "classes",
@@ -115663,7 +115657,8 @@
   "category": "classFeatures",
   "id": "animal-instinct",
   "field": "edition",
-  "value": "legacy"
+  "value": "remaster",
+  "why": "AoN instinct-8 \"Animal\" is Source [\"Player Core 2\"] pg. 74 and prints the exact table this record reproduces; instinct-1 is the Core Rulebook printing. The record’s own source.book already reads \"Pathfinder Player Core 2\", so the \"legacy\" tag contradicted it and cost the picker a remaster instinct whenever \"Hide legacy data\" is on (applyEditionFilter drops edition legacy/legacy-era, src/rules/build.ts:3131). Supersedes the existing {classFeatures, animal-instinct, edition, \"legacy\"} row — a scalar, so the superseded value is replaced whole. \"remaster\" is the value the comparable remaster record lesson-of-vengeance already carries."
  },
  {
   "category": "classFeatures",
@@ -116217,7 +116212,8 @@
   "category": "classFeatures",
   "id": "fury-instinct",
   "field": "edition",
-  "value": "legacy"
+  "value": "remaster",
+  "why": "Same mis-join: the \"legacy\" tag was authored to match the legacy aonId instinct-3, but the record IS the Player Core 2 page instinct-10 (source.book \"Pathfinder Player Core 2\"). With edition legacy, applyEditionFilter drops Fury Instinct from every picker for a player who turns Hide legacy data on — a remaster barbarian loses a remaster instinct. Replaces the existing overlay row {classFeatures/fury-instinct/edition: \"legacy\"} whole."
  },
  {
   "category": "classFeatures",
@@ -116235,7 +116231,8 @@
   "category": "classFeatures",
   "id": "giant-instinct",
   "field": "edition",
-  "value": "legacy"
+  "value": "remaster",
+  "why": "Replaces the existing overlay row {classFeatures/giant-instinct/edition: \"legacy\"} (scripts/data/effect-backfill.json #8365) whole - a scalar, so the superseded value is carried in full by restating it. That row was not a judgement: scripts/backfill-ast-edition.mjs derives `edition` from the aonId's mirror doc, so \"legacy\" was read off the Core Rulebook page instinct-4 and moves with the corrected join to the Player Core 2 page instinct-11."
  },
  {
   "category": "classFeatures",
@@ -116476,7 +116473,8 @@
   "category": "classFeatures",
   "id": "lesson-of-elements",
   "field": "edition",
-  "value": "legacy"
+  "value": "remaster",
+  "why": "AoN lesson-17 \"Lesson of the Elements\" is Source [\"Player Core\"] pg. 185 — the book this record already names in source.book — while lesson-2 is the Advanced Player’s Guide printing (its remaster_id is lesson-17). Tagged \"legacy\", applyEditionFilter (src/rules/build.ts:3131) dropped a Player Core lesson from every picker whenever \"Hide legacy data\" is on. Supersedes the existing {classFeatures, lesson-of-elements, edition, \"legacy\"} row; a scalar, replaced whole. Matches the sibling lesson-of-vengeance (\"remaster\", lesson-20)."
  },
  {
   "category": "classFeatures",
@@ -117244,7 +117242,8 @@
   "category": "classFeatures",
   "id": "spirit-instinct",
   "field": "edition",
-  "value": "legacy"
+  "value": "remaster",
+  "why": "Replaces the existing overlay row {classFeatures/spirit-instinct/edition: \"legacy\"} (scripts/data/effect-backfill.json #8533) whole - a scalar, so the superseded value is carried in full by restating it. That row was not a judgement: scripts/backfill-ast-edition.mjs derives `edition` from the aonId's mirror doc, so \"legacy\" was read off the Core Rulebook page instinct-5 (name \"Spirit\", whose own remaster_id field is [\"instinct-12\"]) and it moves with the corrected join to the Player Core 2 page instinct-12."
  },
  {
   "category": "classFeatures",
@@ -117304,7 +117303,8 @@
   "category": "classFeatures",
   "id": "superstition-instinct",
   "field": "edition",
-  "value": "legacy"
+  "value": "remaster",
+  "why": "Replaces the existing overlay row {classFeatures/superstition-instinct/edition: \"legacy\"} (scripts/data/effect-backfill.json #8543) whole - a scalar, so the superseded value is carried in full by restating it. That row was not a judgement: scripts/backfill-ast-edition.mjs derives `edition` from the aonId's mirror doc, so \"legacy\" was read off the Advanced Player's Guide page instinct-6 (name \"Superstition\", whose own remaster_id field is [\"instinct-13\"]) and it moves with the corrected join to the Player Core 2 page instinct-13."
  },
  {
   "category": "classFeatures",
@@ -139286,8 +139286,30 @@
     ],
     "group": "brawling",
     "choiceValue": "wasp"
+   },
+   {
+    "name": "Jaws",
+    "die": "d10",
+    "damageType": "piercing",
+    "traits": [
+     "unarmed"
+    ],
+    "group": "brawling",
+    "choiceValue": "cat"
+   },
+   {
+    "name": "Claw",
+    "die": "d6",
+    "damageType": "slashing",
+    "traits": [
+     "unarmed",
+     "agile"
+    ],
+    "group": "brawling",
+    "choiceValue": "cat"
    }
-  ]
+  ],
+  "why": "AoN instinct-8 (and instinct-1) list Cat | Jaws 1d10 P | Unarmed and Claw 1d6 S | Agile, unarmed. choice.options already offered Cat but grantedStrikes had no row for it, so a barbarian who picked Cat got no unarmed attacks at all. Supersedes the existing classFeatures/animal-instinct grantedStrikes row (all 29 existing entries merged whole, byte-identical to the shipped array, plus the two Cat rows)."
  },
  {
   "category": "feats",
@@ -160957,8 +160979,8 @@
   "category": "classFeatures",
   "id": "impostor-in-hidden-places",
   "field": "description",
-  "value": "Impostors in hidden places whisper in quiet corners where mortal voices rarely resound, hoarding secrets and pondering unknowable truths. They often bring misfortune to those who disturb them, though an animist who earns their trust will find that they make effective allies.\n\n---\n\n**Apparition Skills** Fortune-Telling Lore, Underworld Lore\n\n**Apparition Spells**\n\n- **Cantrip** Telekinetic Hand\n- **1st** Ill Omen\n- **2nd** Invisibility\n- **3rd** Veil of Privacy\n- **4th** Liminal Doorway\n- **5th** Strange Geometry\n- **6th** Mislead\n- **7th** Planar Palace\n- **8th** Disappearance\n- **9th** Phantasmagoria\n\n**Vessel Spell** Discomfiting Whispers\n\n**Avatar** *Whisper Hiding in Shadows* Speed 50 feet, fly Speed 50 feet\n\n**Melee** ⟨1⟩ shadowed touch (reach 15 feet, versatile cold), **Damage** 6d10+6 void\n\n**Ranged** ⟨1⟩ whisper of despair (range 120 feet), **Damage** 6d6+6 void",
-  "why": "AoN apparition-6 prints \"**Damage** 6d10+6 void\" on this apparition's avatar Strike and our import dropped the type, leaving the player a Strike with no damage type to read resistances, weaknesses and immunities against. Restored by scripts/repair-damage-type.mjs (insertions only, our wording untouched). Supersedes the existing scripts/data/effect-backfill.json description row for classFeatures/impostor-in-hidden-places: this value IS that row's value with the printed damage type spliced in after each dice run, so nothing it authored is dropped."
+  "value": "Impostors in hidden places whisper in quiet corners where mortal voices rarely resound, hoarding secrets and pondering unknowable truths. They often bring misfortune to those who disturb them, though an animist who earns their trust will find that they make effective allies.\n\n---\n\n**Apparition Skills** Fortune-Telling Lore, Underworld Lore\n\n**Apparition Spells**\n\n- **Cantrip** Telekinetic Hand\n- **1st** Ill Omen\n- **2nd** Invisibility\n- **3rd** Veil of Privacy\n- **4th** Liminal Doorway\n- **5th** Strange Geometry\n- **6th** Mislead\n- **7th** Planar Palace\n- **8th** Disappearance\n- **9th** Phantasmagoria\n\n**Vessel Spell** Discomfiting Whisper\n\n**Avatar** *Whisper Hiding in Shadows* Speed 50 feet, fly Speed 50 feet\n\n**Melee** ⟨1⟩ shadowed touch (reach 15 feet, versatile cold), **Damage** 6d10+6 void\n\n**Ranged** ⟨1⟩ whisper of despair (range 120 feet), **Damage** 6d6+6 void",
+  "why": "AoN apparition-6 \"**Vessel Spell** Discomfiting Whisper\" — our prose printed the pluralised name print does not use. Supersedes the existing classFeatures/impostor-in-hidden-places description row (value merged whole — byte-identical to the shipped text)."
  },
  {
   "category": "classFeatures",
@@ -161207,7 +161229,8 @@
   "category": "classFeatures",
   "id": "swarm-eidolon",
   "field": "description",
-  "value": "Your eidolon is a collective of primal energy and nature spirits, gathered into a single fragmentary being. This collection of natural energy has neither form nor identity until bonded with a summoner. You give these spirits purpose, connecting with them and drawing them through to the physical realm. When manifesting, these nature spirits don a simple form, adopting the guise of many Tiny animals. Each of these animals is the same creature and is marked with your summoner's sigil. The act of manifesting in this swarm form temporarily binds the spirits together into one being, making the eidolon a single entity—one mind and personality speaking with a multitude of voices, and a multitude of bodies acting in concert with a singular purpose.\n\n**Tradition** primal\n\n**Traits** animal, eidolon, swarm\n\n**Home Plane** the Universe\n\n---\n\n**Size** Medium (condensed) and Large (dispersed)\n\n**Suggested Attacks** beaks (piercing), claws (slashing), jaws (piercing), talons (slashing)\n\n**Brazen Swarm** *Str* +4, *Dex* +2, *Con* +3, *Int* +0, *Wis* +0, *Cha* +0; +2 AC (+3 Dex cap)\n\n**Slinking Swarm** *Str* +2, *Dex* +4, *Con* +3, *Int* +0, *Wis* +1, *Cha* –1; +1 AC (+4 Dex cap)\n\n**Skills** Nature, Survival\n\n**Senses** low-light vision\n\n**Languages** Common\n\n**Speed** 25 feet\n\n---\n\n**Eidolon Abilities** *Initial *swarm form*; Symbiosis *sudden shift*; Transcendence *sickening swarm\n\n## Swarm Form\n\nYour eidolon is an intelligent swarm composed of hundreds of Tiny creatures, and it's immune to the grabbed, prone, and restrained conditions. It can fit through tight spaces as though it were a Tiny creature. It has weakness to area damage equal to its level. Your eidolon has two forms: condensed and dispersed. When you Manifest Eidolon, it manifests condensed. It can switch between these two forms as a single action that has the concentrate trait.\n\n**Condensed Form:** When condensed, your eidolon draws all its component bodies into a single, condensed mound that functions as a Medium creature. It has a reach of 5 feet, can make Strikes, and can't occupy the same space as other creatures. While condensed, it can use the Haunting Visage action.\n\n**Dispersed Form:** When dispersed, your eidolon scatters its component bodies across a wider area, increasing its size by one category (to Large for most swarm eidolons). It has a reach of 0 feet, can't make Strikes, and can occupy the same space as other creatures. While dispersed, it can use the Swarming Assault activity.\n\n## Sudden Shift 7th\n\nOnce per round, your eidolon can switch forms between condensed and dispersed as a free action, rather than a single action. In addition, your eidolon gains the Redistribute reaction.\n\n## Sickening Form 17th\n\nYour eidolon is particularly good at distracting and hindering its foes while dispersed. While dispersed, spaces your eidolon occupies are difficult terrain for other creatures. In addition, your eidolon gains the Sickening Assault action."
+  "value": "Your eidolon is a collective of primal energy and nature spirits, gathered into a single fragmentary being. This collection of natural energy has neither form nor identity until bonded with a summoner. You give these spirits purpose, connecting with them and drawing them through to the physical realm. When manifesting, these nature spirits don a simple form, adopting the guise of many Tiny animals. Each of these animals is the same creature and is marked with your summoner's sigil. The act of manifesting in this swarm form temporarily binds the spirits together into one being, making the eidolon a single entity—one mind and personality speaking with a multitude of voices, and a multitude of bodies acting in concert with a singular purpose.\n\n**Tradition** primal\n\n**Traits** animal, eidolon, swarm\n\n**Home Plane** the Universe\n\n---\n\n**Size** Medium (condensed) and Large (dispersed)\n\n**Suggested Attacks** beaks (piercing), claws (slashing), jaws (piercing), talons (slashing)\n\n**Brazen Swarm** *Str* +4, *Dex* +2, *Con* +3, *Int* +0, *Wis* +0, *Cha* +0; +2 AC (+3 Dex cap)\n\n**Slinking Swarm** *Str* +2, *Dex* +4, *Con* +3, *Int* +0, *Wis* +1, *Cha* –1; +1 AC (+4 Dex cap)\n\n**Skills** Nature, Survival\n\n**Senses** low-light vision\n\n**Languages** Common\n\n**Speed** 25 feet\n\n---\n\n**Eidolon Abilities** *Initial *swarm form*; Symbiosis *sudden shift*; Transcendence *sickening swarm\n\n## Swarm Form\n\nYour eidolon is an intelligent swarm composed of hundreds of Tiny creatures, and it's immune to the grabbed, prone, and restrained conditions. It can fit through tight spaces as though it were a Tiny creature. It has weakness to area damage equal to its level. Your eidolon has two forms: condensed and dispersed. When you Manifest Eidolon, it manifests condensed. It can switch between these two forms as a single action that has the concentrate trait.\n\n**Condensed Form:** When condensed, your eidolon draws all its component bodies into a single, condensed mound that functions as a Medium creature. It has a reach of 5 feet, can make Strikes, and can't occupy the same space as other creatures. While condensed, it can use the Haunting Visage action.\n\n**Dispersed Form:** When dispersed, your eidolon scatters its component bodies across a wider area, increasing its size by one category (to Large for most swarm eidolons). It has a reach of 0 feet, can't make Strikes, and can occupy the same space as other creatures. While dispersed, it can use the Swarming Assault activity.\n\n## Sudden Shift 7th\n\nOnce per round, your eidolon can switch forms between condensed and dispersed as a free action, rather than a single action. In addition, your eidolon gains the Redistribute reaction.\n\n## Sickening Swarm 17th\n\nYour eidolon is particularly good at distracting and hindering its foes while dispersed. While dispersed, spaces your eidolon occupies are difficult terrain for other creatures. In addition, your eidolon gains the Sickening Assault action.",
+  "why": "AoN eidolon-13 titles the 17th-level transcendence \"Sickening Swarm\" in both the ability list and the section heading; our heading read \"## Sickening Form 17th\" while the record's own eidolonAbilities entry said Sickening Swarm. Supersedes the existing classFeatures/swarm-eidolon description row (value merged whole — it is byte-identical to the shipped text)."
  },
  {
   "category": "items",
@@ -168810,7 +168833,7 @@
    {
     "id": "impostor-in-hidden-places",
     "name": "Impostor in Hidden Places",
-    "description": "Impostors in hidden places whisper in quiet corners where mortal voices rarely resound, hoarding secrets and pondering unknowable truths. They often bring misfortune to those who disturb them, though an animist who earns their trust will find that they make effective allies.\n\n---\n\n**Apparition Skills** Fortune-Telling Lore, Underworld Lore\n\n**Apparition Spells**\n\n- **Cantrip** Telekinetic Hand\n- **1st** Ill Omen\n- **2nd** Invisibility\n- **3rd** Veil of Privacy\n- **4th** Liminal Doorway\n- **5th** Strange Geometry\n- **6th** Mislead\n- **7th** Planar Palace\n- **8th** Disappearance\n- **9th** Phantasmagoria\n\n**Vessel Spell** Discomfiting Whispers\n\n**Avatar** *Whisper Hiding in Shadows* Speed 50 feet, fly Speed 50 feet\n\n**Melee** ⟨1⟩ shadowed touch (reach 15 feet, versatile cold), **Damage** 6d10+6 void\n\n**Ranged** ⟨1⟩ whisper of despair (range 120 feet), **Damage** 6d6+6 void",
+    "description": "Impostors in hidden places whisper in quiet corners where mortal voices rarely resound, hoarding secrets and pondering unknowable truths. They often bring misfortune to those who disturb them, though an animist who earns their trust will find that they make effective allies.\n\n---\n\n**Apparition Skills** Fortune-Telling Lore, Underworld Lore\n\n**Apparition Spells**\n\n- **Cantrip** Telekinetic Hand\n- **1st** Ill Omen\n- **2nd** Invisibility\n- **3rd** Veil of Privacy\n- **4th** Liminal Doorway\n- **5th** Strange Geometry\n- **6th** Mislead\n- **7th** Planar Palace\n- **8th** Disappearance\n- **9th** Phantasmagoria\n\n**Vessel Spell** Discomfiting Whisper\n\n**Avatar** *Whisper Hiding in Shadows* Speed 50 feet, fly Speed 50 feet\n\n**Melee** ⟨1⟩ shadowed touch (reach 15 feet, versatile cold), **Damage** 6d10+6 void\n\n**Ranged** ⟨1⟩ whisper of despair (range 120 feet), **Damage** 6d6+6 void",
     "descRefs": [
      {
       "label": "Telekinetic Hand",
@@ -168853,7 +168876,7 @@
       "key": "spells"
      },
      {
-      "label": "Discomfiting Whispers",
+      "label": "Discomfiting Whisper",
       "key": "spells"
      }
     ],
@@ -169714,7 +169737,7 @@
     ]
    }
   ],
-  "why": "THE SECOND CARRIER. An apparition reaches the sheet through this option's own copy of the prose (build.ts:8245 pushes option.description into character.classChoices, which FeatsTab renders), not through classFeatures/<id> — so the eleven classFeatures rows above repair a record the player's apparition card never reads. AoN apparition-3, apparition-4, apparition-5, apparition-6, apparition-7, apparition-8, apparition-9, apparition-10, apparition-11, apparition-12, apparition-13 print the damage type on each avatar Strike (\"**Damage** 6d10+6 bludgeoning plus Grab\", apparition-7); the same insertion is applied here. Supersedes the existing scripts/data/effect-backfill.json row for classes/animist.options [extraChoices, id=apparition] (wg-batch-028's loreProgression array, which also created lamentation-of-sinister-deals): this value IS that row's array, byte-for-byte, with only the eleven descriptions re-typed — every other field of every one of the fourteen options is carried whole."
+  "why": "AoN apparition-6 — the SECOND carrier of the same prose, the apparition picker's own option copy (description + descRefs label). Supersedes the existing classes/animist options@[extraChoices,id=apparition] row, whose value is merged whole (byte-identical to the shipped array)."
  },
  {
   "category": "classFeatures",
@@ -172988,7 +173011,7 @@
    {
     "id": "school-of-protean-form",
     "name": "School of Protean Form",
-    "description": "The uninitiated often think of wizards as cerebral, focused on their studies more than the body, yet your school of magic taught of the relationship between the two. Your magic, whether learned at a storied institution like Kintargo's Alabaster Academy or someplace more sinister, like the Fleshforges of Nex, focuses on the ways that living matter can be convinced into another shape for a time, allowing you to polymorph a seed into a vine, a human into a beast, or a harmless germ into a deadly toxin.\n\n**Curriculum**\n\n- **cantrips:** Gouging Claw, Tangle Vine\n- **1st:** Jump, Pest Form, Spider Sting\n- **2nd:** Enlarge, Humanoid Form\n- **3rd:** Feet to Fins, Vampiric Feast\n- **4th:** Mountain Resilience, Vapor Form\n- **5th:** Elemental Form, Toxic Cloud\n- **6th:** Cursed Metamorphosis, Petrify\n- **7th:** Duplicate Foe, Fiery Body\n- **8th:** Desiccate, Monstrosity Form\n- **9th:**\n\n**School Spells** initial: Scramble Body; advanced: Shifting Form",
+    "description": "The uninitiated often think of wizards as cerebral, focused on their studies more than the body, yet your school of magic taught of the relationship between the two. Your magic, whether learned at a storied institution like Kintargo's Alabaster Academy or someplace more sinister, like the Fleshforges of Nex, focuses on the ways that living matter can be convinced into another shape for a time, allowing you to polymorph a seed into a vine, a human into a beast, or a harmless germ into a deadly toxin.\n\n**Curriculum**\n\n- **cantrips:** Gouging Claw, Tangle Vine\n- **1st:** Jump, Pest Form, Spider Sting\n- **2nd:** Enlarge, Humanoid Form\n- **3rd:** Feet to Fins, Vampiric Feast\n- **4th:** Mountain Resilience, Vapor Form\n- **5th:** Elemental Form, Toxic Cloud\n- **6th:** Cursed Metamorphosis, Petrify\n- **7th:** Duplicate Foe, Fiery Body\n- **8th:** Desiccate, Monstrosity Form\n- **9th:** Metamorphosis\n\n**School Spells** initial: Scramble Body; advanced: Shifting Form",
     "descRefs": [
      {
       "label": "Gouging Claw",
@@ -173064,6 +173087,10 @@
      },
      {
       "label": "Monstrosity Form",
+      "key": "spells"
+     },
+     {
+      "label": "Metamorphosis",
       "key": "spells"
      },
      {
@@ -173468,7 +173495,7 @@
     "advancedFocusSpell": "interdisciplinary-incantation"
    }
   ],
-  "why": "AoN arcane-school-23 prints all 19 curriculum spells. The copy the Builder actually shows the player — classes.wizard.subclass.options[red-mantis-magic-school].description, rendered straight through PopupSelect at src/builder/Builder.tsx:1872 — read \"- **2nd** , Mist / - **3rd** , Paralyze / … / - **9th**\", with Invisibility, Clairaudience, Clairvoyance, Hallucination, Disappearance and Phantasmagoria deleted while descRefs still listed all 16 labels. That mangled string is shipped BY this very effect-backfill row, so repairing it here removes the defect at its source rather than papering over it. The replacement is core-descriptions.json classFeatures/red-mantis-magic-school.d, which is complete and otherwise byte-identical. Everything else in the 18-option array — every other option, and this option's id/name/descRefs/focusSpells/advancedFocusSpell — is carried over unchanged."
+  "why": "AoN arcane-school-20 (School of Protean Form, Player Core pg. 200) ends the Curriculum \"- 9th: Metamorphosis\"; the option the picker shows ended \"- **8th:** Desiccate, Monstrosity Form\\n- **9th:**\" with 21 descRefs that skipped Metamorphosis, so a player choosing this school read a curriculum one spell short of print. Supersedes the existing {classes, wizard, options, path:[\"subclass\"]} row, whose 18-option value (byte-identical to the shipped core.json array, including the red-mantis-magic-school curriculum repair that row was written for) is carried over whole with only school-of-protean-form’s 9th-rank line filled in and one descRef inserted after Monstrosity Form; spells/metamorphosis exists in core.json."
  },
  {
   "category": "classFeatures",
@@ -182456,7 +182483,7 @@
    {
     "id": "swarm-eidolon",
     "name": "Swarm Eidolon",
-    "description": "Your eidolon is a collective of primal energy and nature spirits, gathered into a single fragmentary being. This collection of natural energy has neither form nor identity until bonded with a summoner. You give these spirits purpose, connecting with them and drawing them through to the physical realm. When manifesting, these nature spirits don a simple form, adopting the guise of many Tiny animals. Each of these animals is the same creature and is marked with your summoner's sigil. The act of manifesting in this swarm form temporarily binds the spirits together into one being, making the eidolon a single entity—one mind and personality speaking with a multitude of voices, and a multitude of bodies acting in concert with a singular purpose.\n\n**Tradition** primal\n\n**Traits** animal, eidolon, swarm\n\n**Home Plane** the Universe\n\n---\n\n**Size** Medium (condensed) and Large (dispersed)\n\n**Suggested Attacks** beaks (piercing), claws (slashing), jaws (piercing), talons (slashing)\n\n**Brazen Swarm** *Str* +4, *Dex* +2, *Con* +3, *Int* +0, *Wis* +0, *Cha* +0; +2 AC (+3 Dex cap)\n\n**Slinking Swarm** *Str* +2, *Dex* +4, *Con* +3, *Int* +0, *Wis* +1, *Cha* –1; +1 AC (+4 Dex cap)\n\n**Skills** Nature, Survival\n\n**Senses** low-light vision\n\n**Languages** Common\n\n**Speed** 25 feet\n\n---\n\n**Eidolon Abilities** *Initial *swarm form*; Symbiosis *sudden shift*; Transcendence *sickening swarm\n\n## Swarm Form\n\nYour eidolon is an intelligent swarm composed of hundreds of Tiny creatures, and it's immune to the grabbed, prone, and restrained conditions. It can fit through tight spaces as though it were a Tiny creature. It has weakness to area damage equal to its level. Your eidolon has two forms: condensed and dispersed. When you Manifest Eidolon, it manifests condensed. It can switch between these two forms as a single action that has the concentrate trait.\n\n**Condensed Form:** When condensed, your eidolon draws all its component bodies into a single, condensed mound that functions as a Medium creature. It has a reach of 5 feet, can make Strikes, and can't occupy the same space as other creatures. While condensed, it can use the Haunting Visage action.\n\n**Dispersed Form:** When dispersed, your eidolon scatters its component bodies across a wider area, increasing its size by one category (to Large for most swarm eidolons). It has a reach of 0 feet, can't make Strikes, and can occupy the same space as other creatures. While dispersed, it can use the Swarming Assault activity.\n\n## Sudden Shift 7th\n\nOnce per round, your eidolon can switch forms between condensed and dispersed as a free action, rather than a single action. In addition, your eidolon gains the reaction.\n\n## Sickening Form 17th\n\nYour eidolon is particularly good at distracting and hindering its foes while dispersed. While dispersed, spaces your eidolon occupies are difficult terrain for other creatures. In addition, your eidolon gains the Sickening Assault action.",
+    "description": "Your eidolon is a collective of primal energy and nature spirits, gathered into a single fragmentary being. This collection of natural energy has neither form nor identity until bonded with a summoner. You give these spirits purpose, connecting with them and drawing them through to the physical realm. When manifesting, these nature spirits don a simple form, adopting the guise of many Tiny animals. Each of these animals is the same creature and is marked with your summoner's sigil. The act of manifesting in this swarm form temporarily binds the spirits together into one being, making the eidolon a single entity—one mind and personality speaking with a multitude of voices, and a multitude of bodies acting in concert with a singular purpose.\n\n**Tradition** primal\n\n**Traits** animal, eidolon, swarm\n\n**Home Plane** the Universe\n\n---\n\n**Size** Medium (condensed) and Large (dispersed)\n\n**Suggested Attacks** beaks (piercing), claws (slashing), jaws (piercing), talons (slashing)\n\n**Brazen Swarm** *Str* +4, *Dex* +2, *Con* +3, *Int* +0, *Wis* +0, *Cha* +0; +2 AC (+3 Dex cap)\n\n**Slinking Swarm** *Str* +2, *Dex* +4, *Con* +3, *Int* +0, *Wis* +1, *Cha* –1; +1 AC (+4 Dex cap)\n\n**Skills** Nature, Survival\n\n**Senses** low-light vision\n\n**Languages** Common\n\n**Speed** 25 feet\n\n---\n\n**Eidolon Abilities** *Initial *swarm form*; Symbiosis *sudden shift*; Transcendence *sickening swarm\n\n## Swarm Form\n\nYour eidolon is an intelligent swarm composed of hundreds of Tiny creatures, and it's immune to the grabbed, prone, and restrained conditions. It can fit through tight spaces as though it were a Tiny creature. It has weakness to area damage equal to its level. Your eidolon has two forms: condensed and dispersed. When you Manifest Eidolon, it manifests condensed. It can switch between these two forms as a single action that has the concentrate trait.\n\n**Condensed Form:** When condensed, your eidolon draws all its component bodies into a single, condensed mound that functions as a Medium creature. It has a reach of 5 feet, can make Strikes, and can't occupy the same space as other creatures. While condensed, it can use the Haunting Visage action.\n\n**Dispersed Form:** When dispersed, your eidolon scatters its component bodies across a wider area, increasing its size by one category (to Large for most swarm eidolons). It has a reach of 0 feet, can't make Strikes, and can occupy the same space as other creatures. While dispersed, it can use the Swarming Assault activity.\n\n## Sudden Shift 7th\n\nOnce per round, your eidolon can switch forms between condensed and dispersed as a free action, rather than a single action. In addition, your eidolon gains the Redistribute reaction.\n\n## Sickening Swarm 17th\n\nYour eidolon is particularly good at distracting and hindering its foes while dispersed. While dispersed, spaces your eidolon occupies are difficult terrain for other creatures. In addition, your eidolon gains the Sickening Assault action.",
     "descRefs": [
      {
       "label": "grabbed",
@@ -182554,7 +182581,7 @@
     ]
    }
   ],
-  "why": "AoN eidolon-3 \"Brutal Beast\" / \"Fleet Beast\", in the copy the Builder renders (src/builder/Builder.tsx:1872 passes the option's own description through). Only beast-eidolon.description differs from the shipped array."
+  "why": "AoN eidolon-13 \"In addition, your eidolon gains the Redistribute reaction.\" — the option copy shipped with the reaction NAME deleted. The same value also carries swarm-eidolon#sickening-swarm-name's \"## Sickening Swarm 17th\" heading (eidolon-13 titles it Sickening Swarm), merged here because two findings hit one record+field. Supersedes the existing classes/summoner options@[subclass] row, whose value is merged whole (it is byte-identical to the shipped array)."
  },
  {
   "category": "classes",
@@ -183841,5 +183868,1070 @@
   "field": "description",
   "value": "Your innovation can transform from a mobile construct to a stationary battlefield emplacement. It can unfold as a 2-action activity that has the manipulate trait, changing from its usual form into a thin, straight wall of metal and gears up to 10 feet tall and 30 feet long. The wall must extend through your innovation's original space. While your construct is a wall, it can't take any actions except to use the same activity to transform back, and it can't defend itself easily, making it flat-footed and giving it an additional -2 status penalty to its AC. The wall blocks line of sight and effect unless your innovation has half its maximum HP or fewer, at which point holes in the wall allow creatures to see through and attack with cover, and Tiny creatures to slip through.",
   "why": "AoN innovation-2, Revolutionary Modifications — verbatim."
+ },
+ {
+  "category": "classFeatures",
+  "id": "fury-instinct",
+  "field": "aonId",
+  "value": "instinct-10",
+  "why": "instinct-10 (Player Core 2 pg. 75) is the page every mechanic of this record already carries — \"Instinct Ability—Unstoppable Frenzy … from 2 to 3 … from 3 to 7 … to 13\" plus the bonus 1st-level barbarian feat. The record cited instinct-3 (Core Rulebook pg. 87), which prints \"from 2 to 6 … instead increase … to 12\" and no bonus feat, so the join contradicted the record's own source, description and RAGE_DAMAGE tiers."
+ },
+ {
+  "category": "classFeatures",
+  "id": "dragon-instinct",
+  "path": [
+   "choice"
+  ],
+  "field": "note",
+  "value": null,
+  "why": "instinct-9 (Player Core 2 pg. 74) \"change its damage type to match that of your instinct's dragon breath\" — the choice's apology note (\"Draconic Rage's extra damage is applied but shown as generic 'energy' rather than your dragon's breath type\") describes a defect this batch fixed in rageStrikeRider, so the note now tells the player something untrue about their own sheet. A path row on the existing pathless `choice` row's `note` key, so the 50 options are not re-emitted (and cannot be narrowed by a re-typed copy)."
+ },
+ {
+  "category": "classFeatures",
+  "id": "animal-instinct",
+  "field": "aonId",
+  "value": "instinct-8",
+  "why": "AoN instinct-8 is the Player Core 2 Animal instinct whose 22-animal / Howl of the Wild table our grantedStrikes and choice.options reproduce; instinct-1 (Core Rulebook pg. 86) lists only nine animals and prints the frog Tongue as 1d4 B where ours is d6. Pointing the record at the document it actually carries is what stops every later print-read pass from reading our Player Core 2 numbers against the Core Rulebook page."
+ },
+ {
+  "category": "modes",
+  "id": "curse-of-torrential-knowledge-1",
+  "create": true,
+  "value": {
+   "id": "curse-of-torrential-knowledge-1",
+   "name": "Torrential Knowledge 1",
+   "category": "Oracle",
+   "feats": [
+    "curse-of-torrential-knowledge"
+   ],
+   "exclusiveGroup": "oracle-cursebound",
+   "duration": "while cursebound 1",
+   "note": "Cursebound 1: −1 status penalty to Perception checks and Will saves.",
+   "modifiers": [
+    {
+     "value": -1,
+     "type": "status",
+     "target": "perception"
+    },
+    {
+     "value": -1,
+     "type": "status",
+     "target": "save",
+     "detail": "will"
+    }
+   ],
+   "aonOrigin": "authored"
+  },
+  "why": "AoN mystery-18 §Curse of Torrential Knowledge: \"You take a status penalty to Perception checks and Will saving throws equal to your cursebound value\" (and \"If you are cursebound 4, you additionally can’t speak, use linguistic effects, or otherwise communicate with your allies\"). Nothing carried the number: the record holds only actionCost, its single carrier is a RECORD_MARKERS note at src/rules/situationalBonuses.ts:4557 which never reaches a stat row, and the generic cat-cursebound-1..4 (src/rules/modes.ts:272-275) carry modifiers: [] — so no oracle of the Lore mystery ever saw the penalty. Shape copied whole from the sibling rung modes/curse-of-creeping-ashes-1 (same class, same cursebound ladder); the exclusiveGroup keeps the four rungs mutually exclusive and `feats` resolves through modeGateIds → ownedFeatureIds (src/rules/derive.ts:3468), which admits the Lore mystery’s featureIds. Created through the overlay rather than scripts/data/toggle-modes.json because modes/item-umbral-wings is the standing precedent for a mode that lives only in effect-backfill.json."
+ },
+ {
+  "category": "modes",
+  "id": "curse-of-torrential-knowledge-2",
+  "create": true,
+  "value": {
+   "id": "curse-of-torrential-knowledge-2",
+   "name": "Torrential Knowledge 2",
+   "category": "Oracle",
+   "feats": [
+    "curse-of-torrential-knowledge"
+   ],
+   "exclusiveGroup": "oracle-cursebound",
+   "duration": "while cursebound 2",
+   "note": "Cursebound 2: −2 status penalty to Perception checks and Will saves.",
+   "modifiers": [
+    {
+     "value": -2,
+     "type": "status",
+     "target": "perception"
+    },
+    {
+     "value": -2,
+     "type": "status",
+     "target": "save",
+     "detail": "will"
+    }
+   ],
+   "aonOrigin": "authored"
+  },
+  "why": "AoN mystery-18 §Curse of Torrential Knowledge: \"You take a status penalty to Perception checks and Will saving throws equal to your cursebound value\" (and \"If you are cursebound 4, you additionally can’t speak, use linguistic effects, or otherwise communicate with your allies\"). Nothing carried the number: the record holds only actionCost, its single carrier is a RECORD_MARKERS note at src/rules/situationalBonuses.ts:4557 which never reaches a stat row, and the generic cat-cursebound-1..4 (src/rules/modes.ts:272-275) carry modifiers: [] — so no oracle of the Lore mystery ever saw the penalty. Shape copied whole from the sibling rung modes/curse-of-creeping-ashes-2 (same class, same cursebound ladder); the exclusiveGroup keeps the four rungs mutually exclusive and `feats` resolves through modeGateIds → ownedFeatureIds (src/rules/derive.ts:3468), which admits the Lore mystery’s featureIds. Created through the overlay rather than scripts/data/toggle-modes.json because modes/item-umbral-wings is the standing precedent for a mode that lives only in effect-backfill.json."
+ },
+ {
+  "category": "modes",
+  "id": "curse-of-torrential-knowledge-3",
+  "create": true,
+  "value": {
+   "id": "curse-of-torrential-knowledge-3",
+   "name": "Torrential Knowledge 3",
+   "category": "Oracle",
+   "feats": [
+    "curse-of-torrential-knowledge"
+   ],
+   "exclusiveGroup": "oracle-cursebound",
+   "duration": "while cursebound 3",
+   "note": "Cursebound 3: −3 status penalty to Perception checks and Will saves.",
+   "modifiers": [
+    {
+     "value": -3,
+     "type": "status",
+     "target": "perception"
+    },
+    {
+     "value": -3,
+     "type": "status",
+     "target": "save",
+     "detail": "will"
+    }
+   ],
+   "aonOrigin": "authored"
+  },
+  "why": "AoN mystery-18 §Curse of Torrential Knowledge: \"You take a status penalty to Perception checks and Will saving throws equal to your cursebound value\" (and \"If you are cursebound 4, you additionally can’t speak, use linguistic effects, or otherwise communicate with your allies\"). Nothing carried the number: the record holds only actionCost, its single carrier is a RECORD_MARKERS note at src/rules/situationalBonuses.ts:4557 which never reaches a stat row, and the generic cat-cursebound-1..4 (src/rules/modes.ts:272-275) carry modifiers: [] — so no oracle of the Lore mystery ever saw the penalty. Shape copied whole from the sibling rung modes/curse-of-creeping-ashes-3 (same class, same cursebound ladder); the exclusiveGroup keeps the four rungs mutually exclusive and `feats` resolves through modeGateIds → ownedFeatureIds (src/rules/derive.ts:3468), which admits the Lore mystery’s featureIds. Created through the overlay rather than scripts/data/toggle-modes.json because modes/item-umbral-wings is the standing precedent for a mode that lives only in effect-backfill.json."
+ },
+ {
+  "category": "modes",
+  "id": "curse-of-torrential-knowledge-4",
+  "create": true,
+  "value": {
+   "id": "curse-of-torrential-knowledge-4",
+   "name": "Torrential Knowledge 4",
+   "category": "Oracle",
+   "feats": [
+    "curse-of-torrential-knowledge"
+   ],
+   "exclusiveGroup": "oracle-cursebound",
+   "duration": "while cursebound 4",
+   "note": "Cursebound 4: −4 status penalty to Perception checks and Will saves. You also can’t speak, use linguistic effects, or otherwise communicate with your allies; you can still cast spells, but you’re stupefied 1.",
+   "modifiers": [
+    {
+     "value": -4,
+     "type": "status",
+     "target": "perception"
+    },
+    {
+     "value": -4,
+     "type": "status",
+     "target": "save",
+     "detail": "will"
+    }
+   ],
+   "aonOrigin": "authored"
+  },
+  "why": "AoN mystery-18 §Curse of Torrential Knowledge: \"You take a status penalty to Perception checks and Will saving throws equal to your cursebound value\" (and \"If you are cursebound 4, you additionally can’t speak, use linguistic effects, or otherwise communicate with your allies\"). Nothing carried the number: the record holds only actionCost, its single carrier is a RECORD_MARKERS note at src/rules/situationalBonuses.ts:4557 which never reaches a stat row, and the generic cat-cursebound-1..4 (src/rules/modes.ts:272-275) carry modifiers: [] — so no oracle of the Lore mystery ever saw the penalty. Shape copied whole from the sibling rung modes/curse-of-creeping-ashes-4 (same class, same cursebound ladder); the exclusiveGroup keeps the four rungs mutually exclusive and `feats` resolves through modeGateIds → ownedFeatureIds (src/rules/derive.ts:3468), which admits the Lore mystery’s featureIds. Created through the overlay rather than scripts/data/toggle-modes.json because modes/item-umbral-wings is the standing precedent for a mode that lives only in effect-backfill.json."
+ },
+ {
+  "category": "modes",
+  "id": "cat-phlogistonic-regulator-overdrive",
+  "create": true,
+  "value": {
+   "id": "cat-phlogistonic-regulator-overdrive",
+   "name": "Phlogistonic Regulator (Overdriven)",
+   "category": "Inventor",
+   "feats": [
+    "phlogistonic-regulator"
+   ],
+   "modifiers": [],
+   "resistances": [
+    {
+     "type": "cold",
+     "value": "2+floor(@actor.level/2)"
+    },
+    {
+     "type": "fire",
+     "value": "2+floor(@actor.level/2)"
+    }
+   ],
+   "note": "While under the effects of Overdrive, your cold and fire resistance from Phlogistonic Regulator is 2 higher (2 + half your level instead of half your level)."
+  },
+  "why": "AoN innovation-5 §Phlogistonic Regulator ends \"When under the effects of Overdrive, the resistance increases by 2.\" Nothing carried it: the record held only the flat resistances pair, situationalBonuses.ts has no phlogistonic entry, and of the 557 modes exactly one mentions Overdrive — cat-harmonic-oscillator-overdrive, whose shape this copies (feats gate, modifiers: [], resistances as a replacement total, prose note). The gate resolves because modeGateIds → ownedFeatureIds (src/rules/derive.ts:3468) admits c.inventor.modifications."
+ },
+ {
+  "category": "modes",
+  "id": "curse-of-the-skys-call-1",
+  "create": true,
+  "value": {
+   "id": "curse-of-the-skys-call-1",
+   "name": "Sky’s Call 1",
+   "category": "Oracle",
+   "feats": [
+    "curse-of-the-skys-call"
+   ],
+   "exclusiveGroup": "oracle-cursebound",
+   "duration": "while cursebound 1",
+   "note": "Cursebound 1: you are enfeebled 1, and the same −1 status penalty applies to your DCs against forced movement.",
+   "modifiers": [
+    {
+     "value": -1,
+     "type": "status",
+     "target": "save",
+     "detail": "fortitude",
+     "appliesWhen": "against all forms of forced movement"
+    },
+    {
+     "value": -1,
+     "type": "status",
+     "target": "save",
+     "detail": "reflex",
+     "appliesWhen": "against all forms of forced movement"
+    },
+    {
+     "value": -1,
+     "type": "status",
+     "target": "save",
+     "detail": "will",
+     "appliesWhen": "against all forms of forced movement"
+    }
+   ],
+   "aonOrigin": "authored"
+  },
+  "why": "AoN mystery-15 §Curse of the Sky’s Call: \"you are enfeebled with a value equal to your cursebound value, and you take a status penalty to saves and DCs against all forms of forced movement equal to your cursebound value\". Our only carrier was a RECORD_MARKERS note at src/rules/situationalBonuses.ts:4556 (markersFor matches on on/id alone and never puts it on a save row) and the generic cat-cursebound-1 carries modifiers: [], so no save moved — while five sibling curses already ship per-rung modes. Shape copied whole from modes/curse-of-the-living-death-1, with the printed rider carried as appliesWhen the way modes/curse-of-creeping-ashes-4 carries its ranged-attack rider. The enfeebled clause and the DC half stay in the note: ModeDef has no `conditions` field (0 of 557 modes carry one) and no DC modifier target, so neither has a reader to write to."
+ },
+ {
+  "category": "modes",
+  "id": "curse-of-the-skys-call-2",
+  "create": true,
+  "value": {
+   "id": "curse-of-the-skys-call-2",
+   "name": "Sky’s Call 2",
+   "category": "Oracle",
+   "feats": [
+    "curse-of-the-skys-call"
+   ],
+   "exclusiveGroup": "oracle-cursebound",
+   "duration": "while cursebound 2",
+   "note": "Cursebound 2: you are enfeebled 2, and the same −2 status penalty applies to your DCs against forced movement.",
+   "modifiers": [
+    {
+     "value": -2,
+     "type": "status",
+     "target": "save",
+     "detail": "fortitude",
+     "appliesWhen": "against all forms of forced movement"
+    },
+    {
+     "value": -2,
+     "type": "status",
+     "target": "save",
+     "detail": "reflex",
+     "appliesWhen": "against all forms of forced movement"
+    },
+    {
+     "value": -2,
+     "type": "status",
+     "target": "save",
+     "detail": "will",
+     "appliesWhen": "against all forms of forced movement"
+    }
+   ],
+   "aonOrigin": "authored"
+  },
+  "why": "AoN mystery-15 §Curse of the Sky’s Call: \"you are enfeebled with a value equal to your cursebound value, and you take a status penalty to saves and DCs against all forms of forced movement equal to your cursebound value\". Our only carrier was a RECORD_MARKERS note at src/rules/situationalBonuses.ts:4556 (markersFor matches on on/id alone and never puts it on a save row) and the generic cat-cursebound-2 carries modifiers: [], so no save moved — while five sibling curses already ship per-rung modes. Shape copied whole from modes/curse-of-the-living-death-2, with the printed rider carried as appliesWhen the way modes/curse-of-creeping-ashes-4 carries its ranged-attack rider. The enfeebled clause and the DC half stay in the note: ModeDef has no `conditions` field (0 of 557 modes carry one) and no DC modifier target, so neither has a reader to write to."
+ },
+ {
+  "category": "modes",
+  "id": "curse-of-the-skys-call-3",
+  "create": true,
+  "value": {
+   "id": "curse-of-the-skys-call-3",
+   "name": "Sky’s Call 3",
+   "category": "Oracle",
+   "feats": [
+    "curse-of-the-skys-call"
+   ],
+   "exclusiveGroup": "oracle-cursebound",
+   "duration": "while cursebound 3",
+   "note": "Cursebound 3: you are enfeebled 3, and the same −3 status penalty applies to your DCs against forced movement.",
+   "modifiers": [
+    {
+     "value": -3,
+     "type": "status",
+     "target": "save",
+     "detail": "fortitude",
+     "appliesWhen": "against all forms of forced movement"
+    },
+    {
+     "value": -3,
+     "type": "status",
+     "target": "save",
+     "detail": "reflex",
+     "appliesWhen": "against all forms of forced movement"
+    },
+    {
+     "value": -3,
+     "type": "status",
+     "target": "save",
+     "detail": "will",
+     "appliesWhen": "against all forms of forced movement"
+    }
+   ],
+   "aonOrigin": "authored"
+  },
+  "why": "AoN mystery-15 §Curse of the Sky’s Call: \"you are enfeebled with a value equal to your cursebound value, and you take a status penalty to saves and DCs against all forms of forced movement equal to your cursebound value\". Our only carrier was a RECORD_MARKERS note at src/rules/situationalBonuses.ts:4556 (markersFor matches on on/id alone and never puts it on a save row) and the generic cat-cursebound-3 carries modifiers: [], so no save moved — while five sibling curses already ship per-rung modes. Shape copied whole from modes/curse-of-the-living-death-3, with the printed rider carried as appliesWhen the way modes/curse-of-creeping-ashes-4 carries its ranged-attack rider. The enfeebled clause and the DC half stay in the note: ModeDef has no `conditions` field (0 of 557 modes carry one) and no DC modifier target, so neither has a reader to write to."
+ },
+ {
+  "category": "modes",
+  "id": "curse-of-the-skys-call-4",
+  "create": true,
+  "value": {
+   "id": "curse-of-the-skys-call-4",
+   "name": "Sky’s Call 4",
+   "category": "Oracle",
+   "feats": [
+    "curse-of-the-skys-call"
+   ],
+   "exclusiveGroup": "oracle-cursebound",
+   "duration": "while cursebound 4",
+   "note": "Cursebound 4: you are enfeebled 4, and the same −4 status penalty applies to your DCs against forced movement.",
+   "modifiers": [
+    {
+     "value": -4,
+     "type": "status",
+     "target": "save",
+     "detail": "fortitude",
+     "appliesWhen": "against all forms of forced movement"
+    },
+    {
+     "value": -4,
+     "type": "status",
+     "target": "save",
+     "detail": "reflex",
+     "appliesWhen": "against all forms of forced movement"
+    },
+    {
+     "value": -4,
+     "type": "status",
+     "target": "save",
+     "detail": "will",
+     "appliesWhen": "against all forms of forced movement"
+    }
+   ],
+   "aonOrigin": "authored"
+  },
+  "why": "AoN mystery-15 §Curse of the Sky’s Call: \"you are enfeebled with a value equal to your cursebound value, and you take a status penalty to saves and DCs against all forms of forced movement equal to your cursebound value\". Our only carrier was a RECORD_MARKERS note at src/rules/situationalBonuses.ts:4556 (markersFor matches on on/id alone and never puts it on a save row) and the generic cat-cursebound-4 carries modifiers: [], so no save moved — while five sibling curses already ship per-rung modes. Shape copied whole from modes/curse-of-the-living-death-4, with the printed rider carried as appliesWhen the way modes/curse-of-creeping-ashes-4 carries its ranged-attack rider. The enfeebled clause and the DC half stay in the note: ModeDef has no `conditions` field (0 of 557 modes carry one) and no DC modifier target, so neither has a reader to write to."
+ },
+ {
+  "category": "classFeatures",
+  "id": "lesson-of-elements",
+  "field": "aonId",
+  "value": "lesson-17",
+  "why": "AoN lesson-17 is the Player Core printing of this lesson; lesson-2 is the legacy Advanced Player’s Guide one (\"burning hands, air bubble, hydraulic push, or pummeling rubble\"), whose remaster_id is lesson-17. Our record’s source is Player Core, so the join pointed at a document the record does not carry and every print pass would read our text against the APG page."
+ },
+ {
+  "category": "classFeatures",
+  "id": "lesson-of-elements",
+  "field": "name",
+  "value": "Lesson of the Elements",
+  "why": "AoN lesson-17 prints the name \"Lesson of the Elements\" (so does lesson-2); we shipped \"Lesson of Elements\", while our own feats['basic-lesson'] option for this very record is already labelled \"Lesson of the Elements\" — so one record showed the player two different names."
+ },
+ {
+  "category": "classFeatures",
+  "id": "lesson-of-elements",
+  "field": "description",
+  "value": "You gain the Elemental Betrayal hex. Your familiar learns your choice of Breathe Fire, Gust of Wind, Hydraulic Push, or Pummeling Rubble.",
+  "why": "AoN lesson-17: \"You gain the Elemental Betrayal hex. Your familiar learns your choice of breathe fire, gust of wind, hydraulic push, or pummeling rubble.\" We shipped a hybrid list matching NEITHER printing — \"Breathe Fire, Air Bubble, Hydraulic Push, or Pummeling Rubble\" (breathe fire is the remaster entry, air bubble the legacy lesson-2 one) — so the lesson named a familiar spell no printing of it grants. Title Case and the mechanics-only sentence are the house style the sibling lesson-of-vengeance description already uses, and the list matches our own feats['basic-lesson'] option text."
+ },
+ {
+  "category": "classFeatures",
+  "id": "lesson-of-elements",
+  "field": "descRefs",
+  "value": [
+   {
+    "label": "Elemental Betrayal",
+    "key": "spells"
+   },
+   {
+    "label": "Breathe Fire",
+    "key": "spells"
+   },
+   {
+    "label": "Gust of Wind",
+    "key": "spells"
+   },
+   {
+    "label": "Hydraulic Push",
+    "key": "spells"
+   },
+   {
+    "label": "Pummeling Rubble",
+    "key": "spells"
+   }
+  ],
+  "why": "AoN lesson-17 names gust of wind where the legacy lesson-2 names air bubble; the shipped descRefs linked Air Bubble, so the description popup offered a spell this lesson does not grant and offered no link for the one it does. One field, so re-emitted whole with only that member swapped — spells/gust-of-wind exists in core.json."
+ },
+ {
+  "category": "classFeatures",
+  "id": "animal-instinct",
+  "field": "grantedStrikesState",
+  "value": "rage",
+  "why": "AoN instinct-8, Instinct Ability—Bestial Rage: \"While raging, you gain your chosen animal's unarmed attack (or attacks), but you're unable to use weapons.\" The grant is printed as existing only while raging; without this field the 29 grantedStrikes rows (now reachable after animal-instinct#no-reader) would stand permanently, so an Animal barbarian would walk around with jaws out of combat. Record-level because the printed clause gates the whole grant. Reader: collectGrantedNaturals copies it onto NaturalAttack.requiresState (src/rules/build.ts) and deriveStrikes drops the Strike while c.classResources.rage is 0 (src/rules/derive.ts). classFeatures/animal-instinct carries no existing overlay row for this field (the overlay has whileActive / choice / edition / grantedStrikes only), so no supersedes. VERIFIER-ADDED: the builder filed this row as \"DATA STILL NEEDED, the data-rows family's\", but no other family's spec (.b035-rows-data-rows-1/-2, engine-1, instruments-1/-2, situational) emits it, so the reader would have shipped with no carrier."
+ },
+ {
+  "category": "classFeatures",
+  "id": "animal-instinct",
+  "field": "unarmedTraits",
+  "value": [
+   {
+    "fromRecord": "animal-instinct",
+    "stepDie": 1,
+    "minLevel": 7
+   }
+  ],
+  "why": "AoN instinct-8, Specialization Ability (Level 7): \"Increase the damage die size for the unarmed attacks granted by your chosen animal by one step, and increase the additional damage from Rage from 2 to 5 for your chosen animal's unarmed attacks.\" Only the flat-damage half was modelled (RAGE_DAMAGE tiers); the die step had no carrier, so a 7th-level Animal barbarian's Jaws stayed 1d10 where print makes it 1d12. Reader: applyUnarmedRiders (src/rules/derive.ts) already honours fromRecord + stepDie; minLevel is the level predicate added in this chunk, without which the step would fire at 1st. fromRecord keeps it off the barbarian's own Fist. classFeatures/animal-instinct carries no existing overlay row for unarmedTraits, so no supersedes. VERIFIER-ADDED for the same reason as the row above."
+ },
+ {
+  "category": "classFeatures",
+  "id": "lesson-of-vengeance",
+  "field": "grantedSpells",
+  "value": [
+   "phantom-pain"
+  ],
+  "why": "AoN lesson-20: \"You gain the Needle of Vengeance hex, and your familiar learns Phantom Pain.\" Only the hex half had a carrier (focusSpells: [needle-of-vengeance]); the taught spell reached nothing. Reader: the choice-owned-feature walk in buildCharacter collects it into the caster pool's grantedByRank merge — the same route SubclassOption.grantedSpells (the witch patron's taught spells) already takes into the spellbook. spells['phantom-pain'] exists in core.json (rank 1). The existing overlay rows for this record are focusSpells + edition only, so no supersedes. VERIFIER-ADDED after confirming no sibling family emitted it."
+ },
+ {
+  "category": "classFeatures",
+  "id": "lesson-of-elements",
+  "field": "grantedSpellChoice",
+  "value": {
+   "id": "lesson-of-elements-familiar",
+   "prompt": "Familiar spell",
+   "options": [
+    "breathe-fire",
+    "gust-of-wind",
+    "hydraulic-push",
+    "pummeling-rubble"
+   ]
+  },
+  "why": "AoN lesson-17: \"You gain the Elemental Betrayal hex. Your familiar learns your choice of breathe fire, gust of wind, hydraulic push, or pummeling rubble.\" A flat grantedSpells list cannot say \"or\", so the four-way pick is a control — WG shows a PREDEFINED SPELL select of exactly these four (their 4423/4650/4668/4787). Reader: the choice-owned-feature walk in buildCharacter honours build.featSpellChoices['<slot>:granted-spell'] while it names one of this feature's own options, and Builder.tsx renders the PopupSelect beside the lesson pick. All four spell ids exist in core.json (rank 1 each). The existing overlay rows for this record are focusSpells + edition (+ data-rows-2's edition/aonId/name/description/descRefs), none of them this field, so no supersedes and no collision. VERIFIER-ADDED after confirming no sibling family emitted it."
+ },
+ {
+  "category": "classFeatures",
+  "id": "cultivation-order",
+  "field": "description",
+  "value": "You believe that nature is best tended, pruned, and maintained. Nature is inherently random and chaotic out of necessity of survival—the flower spreads its seeds far and wide, hoping that some might sprout, but you believe that plants truly thrive in orderly environments. Thus, you lend a hand, decluttering that which is stagnant, planting in ideal locations, replanting that which grows in suboptimal locations, mulching the soil, and performing other maintenance. While many druids might consider your approach \"meddling\" or \"unnatural,\" you know that the work you do is vital for the overall health of the environment you tend.\n\nYou're trained in Crafting. You also gain the Leshy Familiar druid feat. You gain the cornucopia order spell. Committing wanton cruelty to plants or fungi or neglecting to nurture plants in need of tending is anathema to your order. This doesn't prevent you from killing plants or fungi and it doesn't prevent you from defending yourself against plants or fungi.\n\n---\n\n**Order Skill** Crafting\n\n**Druid Feat** Leshy Familiar\n\n**Order Spell** Cornucopia\n\n**Anathema** Committing wanton cruelty to plants or fungi or neglecting to nurture plants in need of tending. (This doesn't prevent you from killing plants or fungi and it doesn't prevent you from defending yourself against plants or fungi.)\n\n---\n\n**Special**: The cultivation order is a variant of the leaf order. If you have the cultivation order, you count as a member of the leaf order, and you qualify for leaf order feats.",
+  "why": "AoN druidic-order-12 prints the cultivation anathema \"Committing wanton cruelty to plants or fungi or neglecting to nurture plants in need of tending is anathema to your order. This doesn't prevent you from killing plants or fungi…\" — the summary block carried the LEAF order's \"kill them unnecessarily\" line, so our own text told the player both things at once."
+ },
+ {
+  "category": "classes",
+  "id": "druid",
+  "field": "options",
+  "path": [
+   "subclass"
+  ],
+  "value": [
+   {
+    "id": "animal-order",
+    "name": "Animal Order",
+    "description": "You have a strong connection to beasts, always feeling like you understood them (and they you) better than your own people. You stand for the animals of nature, a powerful animal companion at your side.\n\n**Order Skill** Athletics\n\n**Druid Feat** Animal Companion\n\n**Order Spell** Heal Animal\n\n**Anathema** Commit wanton cruelty to animals or kill animals unnecessarily. (This doesn't prevent you from defending yourself against animals or killing them cleanly for food).",
+    "descRefs": [
+     {
+      "label": "Animal Companion",
+      "key": "feats"
+     },
+     {
+      "label": "Heal Animal",
+      "key": "spells"
+     }
+    ],
+    "grantedFeats": [
+     "animal-companion"
+    ],
+    "grants": {
+     "skills": [
+      "athletics"
+     ]
+    },
+    "focusSpells": [
+     "heal-animal"
+    ]
+   },
+   {
+    "id": "cultivation-order",
+    "name": "Cultivation Order",
+    "description": "You believe that nature is best tended, pruned, and maintained. Nature is inherently random and chaotic out of necessity of survival—the flower spreads its seeds far and wide, hoping that some might sprout, but you believe that plants truly thrive in orderly environments. Thus, you lend a hand, decluttering that which is stagnant, planting in ideal locations, replanting that which grows in suboptimal locations, mulching the soil, and performing other maintenance. While many druids might consider your approach \"meddling\" or \"unnatural,\" you know that the work you do is vital for the overall health of the environment you tend.\n\nYou're trained in Crafting. You also gain the Leshy Familiar druid feat. You gain the cornucopia order spell. Committing wanton cruelty to plants or fungi or neglecting to nurture plants in need of tending is anathema to your order. This doesn't prevent you from killing plants or fungi and it doesn't prevent you from defending yourself against plants or fungi.\n\n---\n\n**Order Skill** Crafting\n\n**Druid Feat** Leshy Familiar\n\n**Order Spell** Cornucopia\n\n**Anathema** Committing wanton cruelty to plants or fungi or neglecting to nurture plants in need of tending. (This doesn't prevent you from killing plants or fungi and it doesn't prevent you from defending yourself against plants or fungi.)\n\n---\n\n**Special**: The cultivation order is a variant of the leaf order. If you have the cultivation order, you count as a member of the leaf order, and you qualify for leaf order feats.",
+    "descRefs": [
+     {
+      "label": "Leshy Familiar",
+      "key": "feats"
+     },
+     {
+      "label": "Cornucopia",
+      "key": "spells"
+     }
+    ],
+    "grantedFeats": [
+     "leshy-familiar"
+    ],
+    "grants": {
+     "skills": [
+      "crafting"
+     ]
+    },
+    "focusSpells": [
+     "cornucopia"
+    ]
+   },
+   {
+    "id": "flame-order",
+    "name": "Flame Order",
+    "description": "You feel a kinship with flames and can use them for succor and destruction.\n\n**Order Skill** Acrobatics\n\n**Druid Feat** Fire Lung\n\n**Order Spell** Wildfire\n\n**Anathema** Allowing unnatural fires to spread or preventing natural fires from occurring in a way that harms the environment. (this doesn't prevent you from using fire destructively or force you to combat a controlled or natural fire).",
+    "descRefs": [
+     {
+      "label": "Fire Lung",
+      "key": "feats"
+     },
+     {
+      "label": "Wildfire",
+      "key": "spells"
+     }
+    ],
+    "grantedFeats": [
+     "fire-lung"
+    ],
+    "grants": {
+     "skills": [
+      "acrobatics"
+     ]
+    },
+    "focusSpells": [
+     "wildfire"
+    ]
+   },
+   {
+    "id": "leaf-order",
+    "name": "Leaf Order",
+    "description": "You revere the bounty of nature, acting as both a gardener and warden for the wilderness. With your leshy familiar at your side, you help areas regrow after disasters or negligent expansion and turn flora against those who would abuse them.\n\n**Order Skill** Diplomacy\n\n**Druid Feat** Leshy Familiar\n\n**Order Spell** Cornucopia\n\n**Anathema** Commit wanton cruelty to plants or fungi or kill them unnecessarily. (This doesn't prevent you from defending yourself or harvesting them for survival.)",
+    "descRefs": [
+     {
+      "label": "Leshy Familiar",
+      "key": "feats"
+     },
+     {
+      "label": "Cornucopia",
+      "key": "spells"
+     }
+    ],
+    "grantedFeats": [
+     "leshy-familiar"
+    ],
+    "grants": {
+     "skills": [
+      "diplomacy"
+     ]
+    },
+    "focusSpells": [
+     "cornucopia"
+    ]
+   },
+   {
+    "id": "spore-order",
+    "name": "Spore Order",
+    "description": "You're fascinated by molds and fungi, and you understand the important role they play in the continued health of ecosystems. This interest often puts you at odds with local communities, who view molds and fungi as something to be eradicated, rather than nurtured.\n\nYou're trained in Intimidation. You also gain the Leshy Familiar druid feat, but you must create a fungus leshy. You gain the *mushroom patch* order spell. Committing wanton cruelty to molds or fungi, killing molds or fungi unnecessarily, or interfering with the natural processes of decay, is anathema to your order. This doesn't prevent you from defending yourself against fungi or molds or from harvesting fungi or molds for sustenance.\n\n---\n\n**Order Skill** Intimidation\n\n**Druid Feat** Leshy Familiar\n\n**Order Spell** Mushroom Patch\n\n**Anathema** Committing wanton cruelty to molds or fungi, killing molds or fungi unnecessarily, or interfering with the natural processes of decay, is anathema to your order. This doesn't prevent you from defending yourself against fungi or molds or from harvesting fungi or molds for sustenance.\n\n---\n\n**Special**: The spore order is a variant of the leaf order. If you have the spore order, you count as a member of the leaf order, and you qualify for leaf order feats.",
+    "descRefs": [
+     {
+      "label": "Leshy Familiar",
+      "key": "feats"
+     },
+     {
+      "label": "Mushroom Patch",
+      "key": "spells"
+     }
+    ],
+    "grantedFeats": [
+     "leshy-familiar"
+    ],
+    "grants": {
+     "skills": [
+      "intimidation"
+     ]
+    },
+    "focusSpells": [
+     "mushroom-patch"
+    ]
+   },
+   {
+    "id": "stone-order",
+    "name": "Stone Order",
+    "description": "You're as enduring as stone, and you take comfort in its steadfast presence, both natural and worked.\n\n**Order Skill** Crafting\n\n**Druid Feat** Steadying Stone\n\n**Order Spell** Crushing Ground\n\n**Anathema** Poisoning or polluting the land and heedlessly carving the earth to plunder its natural resources. (this doesn't prevent you from responsibly digging or mining).",
+    "descRefs": [
+     {
+      "label": "Steadying Stone",
+      "key": "feats"
+     },
+     {
+      "label": "Crushing Ground",
+      "key": "spells"
+     }
+    ],
+    "grantedFeats": [
+     "steadying-stone"
+    ],
+    "grants": {
+     "skills": [
+      "crafting"
+     ]
+    },
+    "focusSpells": [
+     "crushing-ground"
+    ]
+   },
+   {
+    "id": "storm-order",
+    "name": "Storm Order",
+    "description": "Whether you were born under a tempest or survived a bolt of lightning from a clear blue sky, you now carry the fury of the storm in your heart, channeling thunder to terrifying destructive effect and riding the winds through the air.\n\n**Order Skill** Acrobatics\n\n**Druid Feat** Storm Born\n\n**Order Spell** Tempest Surge\n\n**Anathema** Pollute the air, allow those who cause major air pollution or climate shifts to go unpunished. (This doesn't force you to take action against merely potential environmental harm or to sacrifice yourself against an obviously superior foe.)",
+    "descRefs": [
+     {
+      "label": "Storm Born",
+      "key": "feats"
+     },
+     {
+      "label": "Tempest Surge",
+      "key": "spells"
+     }
+    ],
+    "grantedFeats": [
+     "storm-born"
+    ],
+    "grants": {
+     "skills": [
+      "acrobatics"
+     ]
+    },
+    "focusSpells": [
+     "tempest-surge"
+    ]
+   },
+   {
+    "id": "untamed-order",
+    "name": "Untamed Order",
+    "description": "The uncontrollable call of the natural world courses through your body. You might have been raised by a wild animal, or you might have come to reject the artifices of cities after growing up in one. Now, primal magic grants you the ability to wear the form of an untamed creature.\n\n**Order Skill** Intimidation\n\n**Druid Feat** Untamed Form\n\n**Order Spell** Untamed Shift\n\n**Anathema** Become fully domesticated by the temptations of civilization. (This doesn't prevent you from buying and using processed goods or staying in a city for an adventure, but you can never come to rely on these conveniences or truly call such a place your permanent home.)",
+    "descRefs": [
+     {
+      "label": "Untamed Form",
+      "key": "feats"
+     },
+     {
+      "label": "Untamed Shift",
+      "key": "spells"
+     }
+    ],
+    "grantedFeats": [
+     "untamed-form"
+    ],
+    "grants": {
+     "skills": [
+      "intimidation"
+     ]
+    },
+    "focusSpells": [
+     "untamed-shift"
+    ]
+   },
+   {
+    "id": "wave-order",
+    "name": "Wave Order",
+    "description": "Water is the source of life, and you've learned to shape how it flows.\n\n**Order Skill** Medicine\n\n**Druid Feat** Shore Step\n\n**Order Spell** Rising Surf\n\n**Anathema** Polluting water or allowing those who pollute water sources to go unpunished. (this doesn't force you to take action against potential water pollution or to sacrifice yourself against an obviously superior foe).",
+    "descRefs": [
+     {
+      "label": "Shore Step",
+      "key": "feats"
+     },
+     {
+      "label": "Rising Surf",
+      "key": "spells"
+     }
+    ],
+    "grantedFeats": [
+     "shore-step"
+    ],
+    "grants": {
+     "skills": [
+      "medicine"
+     ]
+    },
+    "focusSpells": [
+     "rising-surf"
+    ]
+   }
+  ],
+  "why": "AoN druidic-order-12 — the same corrected Anathema line in the SECOND carrier, the Builder's subclass picker (src/builder/Builder.tsx:1872 passes the option's own description). Whole options array re-emitted because one member changed; leaf-order keeps its own (correct) line."
+ },
+ {
+  "category": "spells",
+  "id": "discomfiting-whispers",
+  "field": "name",
+  "value": "Discomfiting Whisper",
+  "why": "AoN spell-2139 is titled \"Discomfiting Whisper\" (singular) and apparition-6 prints \"**Vessel Spell** Discomfiting Whisper\"; the reachable, fully statted record was pluralised."
+ },
+ {
+  "category": "spells",
+  "id": "discomfiting-whispers",
+  "field": "duration",
+  "value": "sustained up to 1 minute",
+  "why": "AoN spell-2139 \"**Duration** sustained up to 1 minute\" — ours dropped \"sustained\", losing the Sustain requirement."
+ },
+ {
+  "category": "spells",
+  "id": "discomfiting-whispers",
+  "field": "aonId",
+  "value": "spell-2139",
+  "why": "AoN spell-2139 — the aonId moves onto the surviving twin so the AoN link outlives the retired stub."
+ },
+ {
+  "category": "spells",
+  "id": "discomfiting-whispers",
+  "field": "edition",
+  "value": "remaster-era",
+  "why": "AoN spell-2139 (War of Immortals, ORC) — edition carried over from the retired twin."
+ },
+ {
+  "category": "spells",
+  "id": "discomfiting-whisper",
+  "delete": true,
+  "why": "AoN spell-2139 is ONE spell. This twin held the printed name and the aonId but no cast/area/save/duration at all, so it was the unstatted half of a scrape split; both are now the single statted record. Retiring it keeps the aon-discomfiting-whisper suppression working (findDuplicateIds keys on the canonical NAME, which the renamed record still supplies)."
+ },
+ {
+  "category": "classFeatures",
+  "id": "impostor-in-hidden-places",
+  "field": "descRefs",
+  "value": [
+   {
+    "label": "Telekinetic Hand",
+    "key": "spells"
+   },
+   {
+    "label": "Ill Omen",
+    "key": "spells"
+   },
+   {
+    "label": "Veil of Privacy",
+    "key": "spells"
+   },
+   {
+    "label": "Liminal Doorway",
+    "key": "spells"
+   },
+   {
+    "label": "Strange Geometry",
+    "key": "spells"
+   },
+   {
+    "label": "Mislead",
+    "key": "spells"
+   },
+   {
+    "label": "Planar Palace",
+    "key": "spells"
+   },
+   {
+    "label": "Discomfiting Whisper",
+    "key": "spells"
+   }
+  ],
+  "why": "AoN apparition-6 — the cross-reference label follows the corrected name so the popup link keeps resolving by exact match instead of the de-inflection fallback in src/sheet/descref.ts."
+ },
+ {
+  "category": "classFeatures",
+  "id": "way-of-the-spellshot",
+  "field": "description",
+  "value": "You've learned the intricacies of magic and technology, blending the two together with deadly results. You combine a knowledge of arcane theories with a strong connection to your chosen weapon that allows you to manifest unique effects, though your knowledge doesn't extend as far as actual spellcasting. You can imbue energy into your weapon and conjure bullets from thin air. As you progress, you eventually learn to phase bullets through walls or even to teleport yourself along the path of your bullets. You must select Spellshot Dedication as your 2nd-level class feat.\n\n**Prerequisites** You must be a gunslinger.\n\n**Spellshot Adjustments** Instead of choosing a way from the options listed in the gunslinger class, you have the way of the spellshot. It has the following way skill, slinger's reload, and deeds. You gain these abilities at the same levels as normal for the class. You use Intelligence for your class DC.\n\n**Way Skill** Arcana\n\n**Slinger's Reload** Thoughtful Reload\n\n**Deeds** *Initial* Energy Shot; *Advanced* Recall Ammunition; *Greater* Dispelling Bullet",
+  "why": "AoN way-5 \"…that allows you to manifest unique effects, though your knowledge doesn’t extend as far as actual spellcasting.\" Our clause was reversed (\"alongside an array of moderate spellcasting\"), telling the player this way grants spellcasting when print says it does not."
+ },
+ {
+  "category": "classFeatures",
+  "id": "curse-of-inevitable-rot",
+  "field": "traits",
+  "value": [
+   "acid",
+   "curse",
+   "divine",
+   "oracle",
+   "poison"
+  ],
+  "why": "AoN mystery-21 prints the trait block Acid, Curse, Divine, Oracle, Poison for Curse Of Inevitable Rot; ours dropped Acid, though every sibling oracle curse carries its energy trait and content.trait[acid] exists."
+ },
+ {
+  "category": "classFeatures",
+  "id": "conservation-of-energy",
+  "create": true,
+  "value": {
+   "id": "conservation-of-energy",
+   "name": "Conservation of Energy",
+   "traits": [
+    "psychic"
+   ],
+   "rarity": "common",
+   "source": {
+    "book": "Pathfinder Dark Archive (Remastered)",
+    "license": "ORC"
+   },
+   "level": 1,
+   "actionCost": {
+    "type": "passive"
+   },
+   "otherTags": [
+    "psychic-conscious-mind"
+   ],
+   "edition": "remaster",
+   "aonId": "conscious-mind-9"
+  },
+  "why": "AoN conscious-mind-9 carries a `<title level=\"2\">Conservation of Energy</title>` section of its own (Dark Archives Remastered pg. 19), and WG grants it as a separate class-feature block (ability_block 24728). We had no record anywhere, so the fire/cold alternation reached the player only buried in the subclass option's description blob."
+ },
+ {
+  "category": "classFeatures",
+  "id": "the-oscillating-wave",
+  "field": "grantsClassFeatures",
+  "value": [
+   "conservation-of-energy"
+  ],
+  "why": "AoN conscious-mind-9 — the conscious mind hands the feature over, exactly the shape classFeatures/noble-branch already uses for strike-breathe-rend; the reader is derive.ts:3532."
+ },
+ {
+  "category": "classFeatures",
+  "id": "giant-instinct",
+  "field": "aonId",
+  "value": "instinct-11",
+  "why": "instinct-11 is \"Giant\", Source [\"Player Core 2\"] pg. 75 - the printing this record's own source.book already names. It cited instinct-4, \"Giant\", Source [\"Core Rulebook\"] pg. 87, so the join contradicted the record's own source and pointed the print-read lane and the AST import at the pre-remaster text."
+ },
+ {
+  "category": "classFeatures",
+  "id": "spirit-instinct",
+  "field": "aonId",
+  "value": "instinct-12",
+  "why": "instinct-12 is \"Spirit\", Source [\"Player Core 2\"] pg. 75. It cited instinct-5, \"Spirit\", Source [\"Core Rulebook\"] pg. 87. Same mis-join as its confirmed sibling animal-instinct: the record's source.book is Player Core 2 and its shipped description matches the PC2 page more closely than the page it cites."
+ },
+ {
+  "category": "classFeatures",
+  "id": "superstition-instinct",
+  "field": "aonId",
+  "value": "instinct-13",
+  "why": "instinct-13 is \"Superstition\", Source [\"Player Core 2\"] pg. 75. It cited instinct-6, \"Superstition\", Source [\"Advanced Player's Guide\"] pg. 108, whose own remaster_id field is [\"instinct-13\"] - the mirror itself names the successor page. The two printings differ in their numbers (APG: \"from 2 to 4 against creatures that can cast spells\"; PC2: \"from 2 to 3, or 4 against creatures you have witnessed Casting a Spell within the last hour\"), and our shipped description is the PC2 one. This record's own finding superstition-instinct#edition-and-aonid is in refuted[], but on its stated CONSEQUENCES only (a picker that applyEditionFilter never touches, and an aonId with no .tsx consumer) - the read lane's verifier wrote \"The mistag itself is real\". The provenance of this row is the CONFIRMED animal-instinct#edition, whose proposal names superstition-instinct explicitly."
+ },
+ {
+  "category": "classFeatures",
+  "id": "metallic-reactance",
+  "field": "whileActive",
+  "value": [
+   {
+    "state": "overdrive",
+    "resistances": [
+     {
+      "type": "acid",
+      "value": "5+floor(@actor.level/2)"
+     },
+     {
+      "type": "electricity",
+      "value": "5+floor(@actor.level/2)"
+     }
+    ]
+   }
+  ],
+  "why": "AoN innovation-5 (Metallic Reactance): \"You gain resistance equal to 3 + half your level to acid and electricity damage. When under the effects of Overdrive, the resistance increases by 2.\" The record's own `resistances` field carries only the first sentence (acid/electricity \"3+floor(@actor.level/2)\"), and the second sentence had no reader at all — the `whileActive.state` union held no 'overdrive' member and CLASS_RESOURCES had no inventor bucket, so nothing could ever be \"under the effects of Overdrive\". Both are in place as of this gap pass, so this row is the whole clause: same-type resistances do not stack and the highest wins (src/rules/derive.ts, deriveDefenses), so the 5 + half level applies while the toggle is on and the flat 3 + half level stands when it is off. No `whileActive` row exists for this record in the overlay, so no supersedes is owed."
+ },
+ {
+  "category": "classFeatures",
+  "id": "conservation-of-energy",
+  "field": "description",
+  "value": "Energy can’t be created or destroyed, only transferred or changed—whenever you use your magic to add or remove energy, you must then balance it with the opposing force. While this allows you to invert your spells to cast a scorching *frostbite* or frozen *fireball*, it also means your spells alternate between fire and cold in equal measure. The first time in an encounter that you cast a granted spell or standard psi cantrip from your conscious mind, decide whether you’re adding energy or removing it. Once you add energy, you must remove energy the next time you cast one of these spells, and vice versa. When you Refocus, you restore yourself to a neutral state, allowing you to once again freely choose whether you add or remove energy on your next spell.\n\n**Adding Energy:** The ability gains the fire trait and any damage it deals is fire damage. It loses any traits matching damage types it no longer deals.\n\n**Removing Energy:** The ability gains the cold trait and any damage it deals is cold damage. It loses any traits matching damage types it no longer deals.\n\n**Mindshift:** When you use an action that has the mindshift trait, you can choose to add or remove energy to it instead of making it mental. Alter it as normal for adding or removing energy and change any save it requires to a Reflex save.",
+  "why": "AoN conscious-mind-9, the \"Conservation of Energy\" section verbatim (Adding Energy / Removing Energy / Mindshift clauses included)."
+ },
+ {
+  "category": "modes",
+  "id": "curse-of-inclement-headwinds-4",
+  "field": "modifiers",
+  "value": [
+   {
+    "value": -2,
+    "type": "circumstance",
+    "target": "attack",
+    "appliesWhen": "ranged attack rolls"
+   },
+   {
+    "value": -10,
+    "type": "status",
+    "target": "speed",
+    "detail": "all"
+   }
+  ],
+  "why": "AoN mystery-19 (Tempest), Cursebound 4: \"The raging winds push you back, imposing a -10- foot status penalty to all your Speeds.\" The rung-4 mode carried the electricity weakness and the -2 circumstance ranged-attack penalty but no Speed carrier at all, so the -10 reached the player only as prose that told him to apply it by hand; WG applies it as SPEED / SPEED_FLY / SPEED_CLIMB / SPEED_BURROW / SPEED_SWIM -10 status. This is byte-for-byte the shape batch 033 built for the sibling curse-of-creeping-ashes-4 (AoN mystery-20, the same clause one mystery over): `detail: 'all'` is the carrier modeMatches (src/rules/modes.ts:135, which otherwise defaults a detail-less speed modifier to 'land') and deriveSpeeds' movement loop (src/rules/derive.ts:5246-5250) were built to read. Whole-field re-emission of `modifiers`; the -2 circumstance ranged-attack entry is carried byte-identical."
+ },
+ {
+  "category": "modes",
+  "id": "curse-of-inclement-headwinds-4",
+  "field": "note",
+  "value": "Cursebound 4 (cumulative): electricity weakness 5 + your level, −2 circumstance to ranged attack rolls, and the raging winds push you back for a −10-foot status penalty to all your Speeds.",
+  "why": "Same AoN mystery-19 clause. The shipped note ended \"— apply that Speed penalty by hand, the mode can't\", which stops being true the moment the modifiers row above lands: leaving it would tell the player to apply a penalty the sheet has already applied, i.e. to take it twice. The sibling curse-of-creeping-ashes-4 note carries no such apology for exactly this reason."
+ },
+ {
+  "category": "spells",
+  "id": "beckon-the-blasphemous-brethren",
+  "field": "rank",
+  "value": 3,
+  "why": "AoN ritual-275, the record's OWN document (our aonId), prints the heading `right=\"Ritual 3\"` and carries structured level 3, with **Primary Check** \"Occultism or Religion (expert)\" and **Secondary Casters** 4. We shipped rank 1. The app keeps rituals in the `spells` bucket and reads their printed level off `rank` (scripts/field-diff.mjs:60 maps the spells bucket through `(r) => r.rank`), so the printed Ritual 3 is rank 3 here. No graded-family heading is involved: ritual-275's markdown carries exactly one `right=` heading and `printedLevel` does not match `Ritual`, so the value falls back to the document's own structured level 3 — heading and structured field agree and the batch-035 own-document guard still reports it."
+ },
+ {
+  "category": "arcaneSchool",
+  "id": "school-of-breathtaking-influence",
+  "field": "description",
+  "value": "You have sway in powerful social circles and pride yourself on being able to predict and manipulate opponents. Less scrupulous academies openly teach this curriculum to aspiring politicians, while other colleges frame it as the study of countering mental manipulation. These spells are staples in Quantium, where ambition and ruthlessness are measures of success.\n\n**Curriculum**\n- Cantrips: Daze, Infectious Enthusiasm\n- 1st: Command, Fear, Sleep\n- 2nd: Blood Vendetta, Phantom Crowd\n- 3rd: Enthrall, Mind of Menace\n- 4th: Confusion, Outcast's Curse\n- 5th: Subconscious Suggestion, Wave of Despair\n- 6th: Dominate, Never Mind\n- 7th: Contingency, Puppet Strings\n- 8th: Dream Council, Hidden Mind\n- 9th: Telepathic Demand\n\n**School Spells**\n- Initial: Appeal to Authority\n- Advanced: Hot Air",
+  "why": "AoN arcane-school-31 — the printed School of Breathtaking Influence entry (Impossible Magic pg. 108): flavour paragraph, Curriculum ladder and School Spells, links flattened to spell names."
+ },
+ {
+  "category": "arcaneSchool",
+  "id": "school-of-keen-inquiry",
+  "field": "description",
+  "value": "You're a scholar of truth, seeking knowledge about the nature of existence and events past, present, and future. Whether you share or obfuscate that truth—best reserve judgment until you know what you're working with. Quantium's elite claim agents of Her Most Keen Eye, Nex's network of spies, developed this curriculum, but it's a staple in many politically oriented colleges.\n\n**Curriculum**\n- Cantrips: Detect Magic, Sigil\n- 1st: Disguise Magic, Illusory Disguise, Mindlink\n- 2nd: Knock, See the Unseen\n- 3rd: Clairaudience, Locate\n- 4th: Clairvoyance, Detect Scrying\n- 5th: Mind Probe, Scouting Eye\n- 6th: Scrying, Truesight\n- 7th: Retrocognition, True Target\n- 8th: Disappearance, Pinpoint\n- 9th: Foresight\n\n**School Spells**\n- Initial: Fact Check\n- Advanced: Unsettling Perspective",
+  "why": "AoN arcane-school-32 — the printed School of Keen Inquiry entry (Impossible Magic pg. 108)."
+ },
+ {
+  "category": "arcaneSchool",
+  "id": "school-of-nexian-spaces",
+  "field": "description",
+  "value": "Whether your goal is immortality or creating a world with every detail tailored to your liking, retracing Nex's experiments with demiplanes is the road to achieving your desires. Your formal learning starts with reshaping your current reality and drawing power from other planes of existence. You graduate to creating extraplanar spaces and traveling between planes, making time and space yours to mold like clay.\n\n**Curriculum**\n- Cantrips: Phase Bolt, Warp Step\n- 1st: Alarm, Pet Cache, Thoughtful Gift\n- 2nd: Dimensional Drop, Vanish Weapon\n- 3rd: Cozy Cabin, Far Reach\n- 4th: Flicker, Liminal Doorway\n- 5th: Banishment, Space Fold Gate\n- 6th: Collective Transposition, Proximal Shift\n- 7th: Interplanar Teleport, Planar Palace\n- 8th: Quandary, Stars of Another Sky\n- 9th: Resplendent Mansion\n\n**School Spells**\n- Initial: Extradimensional Cover\n- Advanced: Unbounded Sphere",
+  "why": "AoN arcane-school-33 — the printed School of Nexian Spaces entry (Impossible Magic pg. 108)."
+ },
+ {
+  "category": "arcaneSchool",
+  "id": "school-of-quantic-control",
+  "field": "description",
+  "value": "You're an architect, but not merely of buildings. You call upon elemental forces to control the building blocks of reality itself, reshaping the environment and moving creatures like the world is a diorama for you to perfect. Your curriculum draws heavily upon the experience of the geniekin of Quantium's Wish, who maintain the infrastructure of Nex's capital in seeming defiance of physics itself.\n\n**Curriculum**\n- Cantrips: Gale Blast, Scatter Scree\n- 1st: Cradle Aloft, Gentle Landing, Pummeling Rubble\n- 2nd: Dismantle, Unrelenting Gravity\n- 3rd: Chosen Gravity, Inertia Lock\n- 4th: Containment, Living Terrain\n- 5th: Control Water, Wall of Stone\n- 6th: Repulsion, Wall of Force\n- 7th: Infinitesimal Collapse Field, Planar Seal\n- 8th: Arctic Rift, Earthbreaker Stride\n- 9th: Implosion\n\n**School Spells**\n- Initial: Circle of Weakness\n- Advanced: Quantic Dampening",
+  "why": "AoN arcane-school-34 — the printed School of Quantic Control entry (Impossible Magic pg. 108)."
+ },
+ {
+  "category": "fatalMethod",
+  "id": "puppeteer",
+  "field": "description",
+  "value": "You prefer to study life and death from afar. You gain the Consume Thrall action and the thrall proliferation ability.\n\n**Consume Thrall** Free Action (concentrate, necromancer, occult); **Frequency** once per day; **Requirements** You have 0 Focus Points and at least one thrall with 30 feet of you; **Effects** You destroy one thrall within 30 feet of you and regain 1 Focus Point. You can spend this focus point only to cast a grave spell.\n\n**Thrall Proliferation** Once per round when you cast *create thrall*, you can create one additional thrall in range.",
+  "why": "AoN fatal-method-1 — the printed Puppeteer entry (Impossible Magic pg. 29). \"at least one thrall with 30 feet of you\" is transcribed as printed."
+ },
+ {
+  "category": "fatalMethod",
+  "id": "reaper",
+  "field": "description",
+  "value": "You study flesh up close by clashing blade against bone. You gain the reaper's edge and thrall teamwork abilities.\n\n**Reaper's Edge** You become trained in martial weapons and medium armor. At 11th level, you become an expert in martial weapons, and at 13th you become an expert in medium armor.\n\n**Thrall Teamwork** Once per round after you cast *create thrall*, you can make a melee Strike as a free action against a creature within your melee reach that is adjacent to at least one of your thralls.",
+  "why": "AoN fatal-method-2 — the printed Reaper entry (Impossible Magic pg. 29)."
+ },
+ {
+  "category": "follower",
+  "id": "berserker",
+  "field": "description",
+  "value": "This incautious fighter can become a terrifying harbinger of destruction.\n\n**Melee** Single Action falchion (forceful, sweep), **Damage** 1d10 slashing\n\n**Str** +3, **Dex** +0, **Con** +2, **Int** +0, **Wis** +0, **Cha** +2\n\n**Hit Points** 8\n\n**Kit Armor** item bonus +3, Dex cap +2\n\n**Skills** Athletics, Intimidation, Warfare Lore\n\n**Follower Ability** When a berserker takes damage, they gain a +1 status bonus to their next damage roll before the end of your next turn.\n\nWhen the berserker becomes an experienced follower:\n- Increase their Strength modifier to +4 and their Constitution modifier to +3.\n- Increase their proficiency rank with Fortitude and Will saves to expert.\n- Increase their falchion Strike damage dice from 1d10 to 2d10.\n- Increase the status bonus to damage rolls the berserker gains from their follower ability to +2.\n\nWhen the berserker becomes a veteran follower:\n- Increase their Constitution modifier to +4, their Wisdom modifier to +1, and their Charisma modifier to +3.\n- Increase their item bonus to AC to +4.\n- Increase their proficiency rank in Perception to expert.\n- Increase their proficiency rank in Athletics, Intimidation, and Warfare Lore to expert.\n- Increase their proficiency rank in their falchion Strikes to expert, and give them a +1 item bonus to attack rolls with their falchion Strikes. Their Strikes deal 3 additional damage and become magical for the purposes of ignoring resistances.\n- Increase the status bonus to damage rolls the berserker gains from their follower ability to +3.\n- The berserker gains Reckless Attack. **Reckless Attack** Free Action; **Frequency** once per turn; **Trigger** You Direct the berserker; **Effect** The berserker gains a +1 circumstance bonus to their next attack roll on this turn. They are off-guard until the beginning of your next turn.\n\nWhen the berserker becomes an exceptional follower:\n- Increase their Strength modifier to +5, their Dexterity modifier to +1, their Wisdom modifier to +2, and their Charisma modifier to +4.\n- Increase their item bonus to AC to +5.\n- Increase their proficiency rank in Fortitude saves and Will saves to master, and their proficiency rank in Reflex saves to expert. Give them a +1 item bonus to all saving throws.\n- Increase their proficiency rank in Athletics to master.\n- Increase their item bonus to attack rolls with their falchion Strikes to +2. Increase their falchion Strike damage dice from 2d10 to 3d10 and increase the additional damage that their falchion Strikes deal from 3 to 6.\n- Increase the status bonus to damage rolls the berserker gains from their follower action to +4.\n- The berserker gains a reaction when Directed. If this reaction isn't spent before the beginning of your next turn, it is lost. The berserker also gains the Share the Pain reaction. **Share the Pain** Reaction; **Trigger** The berserker is critically hit by a creature that is within their reach; **Effect** The berserker makes a melee Strike against that creature.",
+  "why": "AoN follower-1 — the printed Berserker follower entry (Battlecry! pg. 78): stat line, Follower Ability and all three advancement tiers."
+ },
+ {
+  "category": "follower",
+  "id": "sharpshooter",
+  "field": "description",
+  "value": "This trainee archer can learn to shoot with terrifying precision.\n\n**Range** Single Action shortbow (deadly d10, propulsive, range increment 60 feet, reload 0), **Damage** 1d6 piercing\n\n**Str** +0, **Dex** +3, **Con** +1, **Int** +0, **Wis** +2, **Cha** +1\n\n**Hit Points** 4\n\n**Kit Armor** item bonus +1, Dex cap +4\n\n**Skills** Acrobatics, Hunting Lore, Stealth\n\n**Follower Ability** The sharpshooter learns Take Aim. **Take Aim** Two Actions; The sharpshooter takes aim at their foe and makes a ranged Strike, gaining a +2 circumstance bonus to the attack roll.\n\nWhen the sharpshooter becomes an experienced follower:\n- Increase their Dexterity modifier to +4 and their Wisdom modifier to +3.\n- Increase their proficiency rank in Fortitude saves and Reflex saves to expert.\n- Increase their shortbow Strike damage dice from 1d6 to 2d6.\n- When a creature takes damage from a sharpshooter's ranged Strike, it takes a –5-foot circumstance penalty to its Speeds for 1 round, or a –10-foot circumstance penalty if the attack was a critical hit.\n\nWhen the scout becomes a veteran follower:\n- Increase their Constitution modifier to +2, their Intelligence modifier to +1, and their Charisma modifier to +2.\n- Increase their item bonus to AC to +2.\n- Increase their proficiency rank in Perception to expert.\n- Increase their proficiency rank in Acrobatics, Hunting Lore, and Stealth to expert. They also become an expert in Intimidation.\n- Increase their proficiency rank in their shortbow Strikes to expert, and give them a +1 item bonus to attack rolls with their shortbow Strikes. Their Strikes deal 2 additional damage and become magical for the purposes of ignoring resistances.\n- When the sharpshooter Takes Aim, they also ignore the target's concealment.\n\nWhen the sharpshooter becomes an exceptional follower:\n- Increase their Dexterity modifier to +5, their Constitution modifier to +3, their Wisdom modifier to +4, and their Charisma modifier to +3.\n- Increase their item bonus to AC to +3.\n- Increase their proficiency rank in Reflex saves and Will saves to master and their proficiency rank in Fortitude saves to expert. Give them a +1 item bonus to all saving throws.\n- Increase their proficiency rank in Acrobatics to master.\n- Increase their item bonus to attack rolls with their shortbow Strikes to +2. Increase their shortbow Strike damage dice from 2d6 to 3d6 and increase the additional damage that their shortbow Strikes deal from 2 to 4.\n- The sharpshooter learns Following Shot. **Following Shot** Free Action; **Frequency** once per turn; **Trigger** The sharpshooter critically hits with a ranged Strike; **Requirements** The sharpshooter is wielding a weapon with reload 0; **Effect** Bolstered by their success, the sharpshooter quickly takes another shot. They make another ranged Strike with the same weapon at the same multiple attack penalty. This attack still counts toward the sharpshooter's multiple attack penalty.",
+  "why": "AoN follower-4 — the printed Sharpshooter follower entry (Battlecry! pg. 80). The veteran tier's heading reads \"When the scout becomes a veteran follower\" on the page; transcribed here under the sharpshooter's own tier, since the bullets name the sharpshooter throughout."
+ },
+ {
+  "category": "follower",
+  "id": "shieldbearer",
+  "field": "description",
+  "value": "This aspiring bodyguard can learn to deflect the most devastating of blows.\n\n**Melee** Single Action longsword (versatile P), **Damage** 1d8 slashing\n**Melee** Single Action shield boss, **Damage** 1d6 bludgeoning\n\n**Str** +3, **Dex** +1, **Con** +2, **Int** +0, **Wis** +1, **Cha** +0\n\n**Hit Points** 8\n\n**Kit Armor** item bonus +5, Dex cap +1\n\n**Skills** Athletics, Survival, Warfare Lore\n\n**Follower Ability** A shieldbearer carries a shield (Hardness 5, HP 20, BT 10). They can Raise the Shield to gain a +2 circumstance bonus to AC. The shieldbearer also gains a reaction when Directed. If this reaction isn't spent before the beginning of your next turn, it is lost. Finally, they gain the Shield Block feat.\n\n**Special** A shieldbearer takes a –5-foot penalty to their Speeds from their heavy armor.\n\nWhen the shieldbearer becomes an experienced follower:\n- Increase their Strength modifier to +4 and their Constitution modifier to +3.\n- Increase their proficiency rank in Fortitude and Will saves to expert.\n- Increase their weapons' Strike damage from one die to two dice (for instance 1d8 to 2d8).\n- Increase their shield's statistics to Hardness 6, HP 40, and BT 20.\n- The shieldbearer can defend you. When the shieldbearer has their shield raised, they can use their Shield Block reaction when an attack is made against you as long as they are adjacent to you. If they do, the shield prevents you from taking damage up to the shield's Hardness, but you and the shield each take any remaining damage, following the normal rules for Shield Block.\n\nWhen the shieldbearer becomes a veteran follower:\n- Increase their Constitution modifier to +4, their Intelligence modifier to +1, and their Wisdom modifier to +2.\n- Increase their item bonus to AC to +6. Their armor gains the bulwark trait.\n- Increase their proficiency rank in Perception to expert.\n- Increase their proficiency rank in Athletics, Survival, and Warfare Lore to expert. They become an expert in Crafting and add a repair toolkit to their kit.\n- Increase their proficiency rank in weapon Strikes to expert, and give them a +1 item bonus to attack rolls with their weapon Strikes. Their weapon Strikes deal 2 additional damage and become magical for the purposes of ignoring resistances.\n- Increase their shield's statistics to Hardness 8, HP 64, BT 32.\n- The shieldbearer can now defend anyone. The shieldbearer can use Shield Block to protect any adjacent ally, not just you.\n\nWhen the shieldbearer becomes an exceptional follower:\n- Increase their Strength modifier to +5, their Dexterity modifier to +2, their Intelligence modifier to +2, and their Wisdom modifier to +3.\n- Increase their item bonus to AC to +7.\n- Increase their proficiency rank in Fortitude saves and Will saves to master, and their proficiency rank in Reflex saves to expert. Give them a +1 item bonus to all saving throws.\n- Increase their proficiency rank in Athletics to master. They become an expert in Acrobatics.\n- Increase their item bonus to attack rolls with their listed weapon Strikes to +2. Increase their weapon Strike damage from two dice to three dice (for instance, 2d8 to 3d8) and increase the additional damage that their weapon Strikes deal from 2 to 4.\n- Increase their shield's statistics to Hardness 10, HP 100, BT 50.\n- The shieldbearer gains an additional reaction when Directed, which the shieldbearer can use only to Shield Block to protect themself.",
+  "why": "AoN follower-5 — the printed Shieldbearer follower entry (Battlecry! pg. 81)."
+ },
+ {
+  "category": "follower",
+  "id": "adept",
+  "field": "description",
+  "value": "This novice spellcaster eagerly explores the world's secrets while learning to hurl destructive magic.\n\n**Melee** Single Action dagger (agile, finesse, thrown 10 feet, versatile S), **Damage** 1d4 piercing\n**Ranged** Single Action energy blast (magical, range 60 feet), **Damage** 1d6 (see special)\n\n**Str** +0, **Dex** +1, **Con** +1, **Int** +3, **Wis** +2, **Cha** +0\n\n**Hit Points** 4\n\n**Kit Armor** item bonus +1, Dex cap +4\n\n**Skills** Arcana; either Nature, Occultism, or Religion; any two Lore skills\n\n**Follower Ability** The adept learns Spellshaped Blast. **Spellshaped Blast** Two Actions; The adept gathers additional energy before making an energy blast Strike, granting the Strike two of the following benefits of their choice: the Strike gains the fatal d8 trait, the Strike's range increases to 120 feet, or the Strike deals splash damage equal to its damage dice.\n\n**Special** An adept can use their Intelligence modifier in place of their Dexterity modifier when making energy blast Strikes. An adept selects two of the following novice damage types: acid, cold, electricity, fire, mental, poison, or void. When using several abilities—their energy blast, Energy Deflection, Energy Wave, and dagger Strikes' additional damage from their veteran advancement—the adept chooses one of their selected damage types for the ability to deal, and the Strike or ability gains the trait corresponding to that damage type. An adept can spend 1 week experimenting with their magic to change one or both of their damage type choices.\n\nWhen the adept becomes an experienced follower:\n- Increase their Intelligence modifier to +4 and their Dexterity modifier to +2.\n- Increase their proficiency rank in Reflex and Will saves to expert.\n- Increase their dagger Strike damage from 1d4 to 2d4. Increase their energy blast Strike damage from 1d6 to 2d6.\n- An adept adds Investigate to the list of exploration activities they can perform without spending your exploration activity.\n\nWhen the adept becomes a veteran follower:\n- Increase their Dexterity modifier to +3, their Constitution modifier to +2, and their Wisdom modifier to +3.\n- Increase their item bonus to AC to +2.\n- Increase their proficiency rank in Perception to expert.\n- Increase their proficiency rank in Arcana and their Lore skills to expert. Increase their proficiency ranks in Nature, Occultism, and Religion to trained, and if they were already trained in one of those skills, increase their proficiency in that skill to expert.\n- Increase their proficiency rank in their dagger and energy blast Strikes to expert, and give them a +1 item bonus to attack rolls with their Strikes. Their energy blast Strikes deal 2 additional damage. Their dagger Strikes become magical for the purposes of ignoring resistances, and their dagger Strikes deal 3 additional damage, chosen from the damage types the adept can deal with their energy blast.\n- The adept selects one additional damage type that their energy blast can deal. They can select one of the novice damage types, or they can choose one of the veteran damage types: force, sonic, spirit, or vitality. The adept can know only one veteran damage type at a time.\n- The adept learns Energy Deflection. **Energy Deflection** Reaction (arcane); **Trigger** The adept or an ally within 10 feet of the adept takes acid, cold, electricity, fire, force, mental, poison, sonic, spirit, vitality, or void damage; **Effect** The adept grants the creature resistance to the triggering damage equal to half your level. If the damage is one of the types the adept can deal with their energy blast Strikes, the creature instead gains resistance equal to your level. The creature is then immune to the adept's Energy Deflection for 1 minute.\n\nWhen the adept becomes an exceptional follower:\n- Increase their Strength modifier to +1, their Constitution modifier to +3, their Intelligence modifier to +5, and their Wisdom modifier to +4.\n- Increase their item bonus to AC to +3.\n- Increase their proficiency rank in Reflex and Will saves to master. Increase their proficiency in Fortitude saves to expert. Give them a +1 item bonus to all saving throws.\n- Increase their proficiency rank in Perception to expert.\n- Increase their proficiency rank in Arcana and their Lore skills to master.\n- Increase their item bonus to attack rolls with their dagger and energy blast Strikes to +2. Increase their dagger Strike damage dice from 2d4 to 3d4, and increase the additional energy damage dealt by their dagger Strikes from 3 to 5. Increase the adept's energy blast Strike damage dice from 2d6 to 3d6, and increase the additional damage deal by their energy blast Strikes from 2 to 4.\n- The adept learns Energy Wave. **Energy Wave** Two Actions; The adept unleashes a close-range blast that deals damage equal to their energy blast Strike to each creature in a 15-foot cone or 30-foot cone (basic Reflex save). The adept uses an expert DC using their Intelligence modifier. After using Energy Wave, the adept can't do so again for 1d6 rounds.",
+  "why": "AoN follower-6 — the printed Adept follower entry (Pathfinder #223: Hell's Destiny pg. 229)."
+ },
+ {
+  "category": "grimFascination",
+  "id": "blood",
+  "field": "description",
+  "value": "Blood necromancers, also known as sanguimancers, manipulate their own blood and the flowing blood of their enemies. Your thralls often resemble vampiric spawn or constructs of hardened blood.\n\n**Grave Spell** Blood Infusion\n\n**Thrall Enhancement** Your thralls are enhanced with a drop of your blood, and when they fall, your blood returns to you. Whenever a thrall is destroyed, you regain 1 Hit Point. At 5th level and every 4 levels thereafter, the amount of Hit Points you regain when a thrall is destroyed increases by 1.",
+  "why": "AoN grim-fascination-1 — the printed Blood grim fascination entry (Impossible Magic pg. 30)."
+ },
+ {
+  "category": "grimFascination",
+  "id": "flesh",
+  "field": "description",
+  "value": "Flesh necromancers, also known as caromancers, are experts at the destruction, production, and manipulation of flesh and muscles. Your thralls generally take on the form of zombies and other creatures of dead flesh.\n\n**Grave Spell** Dead Weight\n\n**Thrall Enhancement** You can still make use of a destroyed thrall's flesh. Whenever one of your thralls is destroyed, you can cause the thrall to leave behind difficult terrain in the space it was destroyed. The difficult terrain lasts 10 minutes.",
+  "why": "AoN grim-fascination-3 — the printed Flesh grim fascination entry (Impossible Magic pg. 30)."
+ },
+ {
+  "category": "hybridStudy",
+  "id": "twofold-tine",
+  "field": "description",
+  "value": "Magic dances between the two weapons you wield with equally deadly grace. Fighting groups of enemies takes full advantage of your capabilities as you move from one foe to another.\n\nWhile in Arcane Cascade stance, if you make a Strike with a melee weapon you're holding, you can intensify the stance's power for another melee weapon of your choice you're holding in a different hand. Until the end of your turn, any extra damage the chosen weapon gains from Arcane Cascade is increased to 2. The extra damage increases to 4 if you have weapon specialization or 6 if you have greater weapon specialization.\n\n**Conflux Spell** Force Fling\n\n**Studious Spell (7th)** Blur\n\n**Studious Spell (11th)** Gravity Well\n\n**Studious Spell (13th)** Unfettered Movement",
+  "why": "AoN hybrid-study-15 — the printed Twofold Tine magus hybrid study entry (Impossible Magic pg. 14)."
+ },
+ {
+  "category": "hybridStudy",
+  "id": "volatile-spark",
+  "field": "description",
+  "value": "Your crashing spells meet their match with booming gunshots in a magical fusillade. By modifying your shots with your magic, you create explosions and cut through defenses.\n\nWhen you use Spellstrike, you can make a ranged firearm Strike, as long as the target is within the first range increment of your firearm. This overrides the actual range of the spell. If your firearm has the concussive trait, any damage from the spell you use in the Spellstrike uses the target's weakest resistance to any of the following: the spell's damage type, piercing, or bludgeoning. This benefit applies only to creatures you target with your firearm Strike during the Spellstrike, so it wouldn't apply to other creatures damaged with Expansive Spellstrike or similar abilities.\n\nIn addition, you gain the Reloading Cascade action. **Reloading Cascade** Single Action; You use Arcane Cascade and Interact to reload a firearm.\n\n**Conflux Spell** Booming Blast\n\n**Studious Spell (7th)** Entangling Flora\n\n**Studious Spell (11th)** Earthbind\n\n**Studious Spell (13th)** Seal Fate",
+  "why": "AoN hybrid-study-16 — the printed Volatile Spark magus hybrid study entry (Impossible Magic pg. 14)."
+ },
+ {
+  "category": "sidebar",
+  "id": "arcane-cascade-damage",
+  "field": "description",
+  "value": "Feats like Burning Cascade, Devastating Spellstrike, and Distracting Spellstrike have values dependent on your Arcane Cascade damage. Note that abilities that can increase the extra damage, such as the laughing shadow and twofold tine hybrid studies, apply only to the Strikes that meet their criteria, not to other abilities. This means feats like the listed ones use the base damage value, not the boosted one!",
+  "why": "AoN sidebar-3750 — the Arcane Cascade Damage sidebar on the Magus class page (Impossible Magic pg. 9)."
+ },
+ {
+  "category": "sidebar",
+  "id": "runic-phrases",
+  "field": "description",
+  "value": "While runes can have different proper names in various cultures or magical schools, the following represent some of their most common forms. Scholars and runesmiths will assemble runes according to a standard grammar, often appending diacritic runes onto their base runes. For instance, the combined form of *ranshu, the rune of thunder*, and *en, the rune of expansion*, might be called \"en-ranshu.\" While runes describe fundamental forces of the world, language is ever-changing, and so new runes might be born (and old runes fade from memory) as words and concepts are born and fall out of use.",
+  "why": "AoN sidebar-3753 — the Runic Phrases sidebar on the Runesmith class page (Impossible Magic pg. 43)."
+ },
+ {
+  "category": "sidebar",
+  "id": "motion-sense",
+  "field": "description",
+  "value": "An ooze eidolon has motion sense, allowing them to detect movement as a precise sense since they have no eyes. This lets them detect even minor movements like breathing, but even if a creature can become perfectly still, the ooze can usually determine the creature's location based on the last time the creature moved. Using Stealth usually still works against an ooze eidolon, but effects that are solely visual (such as a spell that might create concealment with a visual illusion) might not work against motion sense. The GM determines the specifics.",
+  "why": "AoN sidebar-3756 — the Motion Sense sidebar on the Ooze eidolon page (Impossible Magic pg. 76)."
+ },
+ {
+  "category": "sidebar",
+  "id": "jotunborn-adventurers",
+  "field": "description",
+  "value": "The brawny frames of jotunborn make them natural barbarians, champion, fighters, guardians, and monks. Many of these jotunborn take on roles as caravan defenders or local guards. Others become druids and rangers, especially those that prefer to maintain their nomadic lifestyle or those that have found their bonded site. While jotunborn are no more or less capable of spellcasting than others, most jotunborn tend to favor the occult tradition, with occult sorcerers, summoners, and witches being most prevalent in jotunborn societies.",
+  "why": "AoN sidebar-3758 — the Jotunborn Adventurers sidebar on the Jotunborn ancestry page (Battlecry! pg. 10)."
+ },
+ {
+  "category": "sidebar",
+  "id": "jotunborn-enclaves",
+  "field": "description",
+  "value": "Jotunborn rarely maintain permanent settlements due to their generally nomadic lifestyles. The only proper jotunborn settlement within the Fray is the town of Iivlar's Hold. This settlement is home to over 5,000 jotunborn and manages to successfully grow crops due to its planar proximity to the Universe. Iivlar's Hold lies near a thinner boundary within the Fray, just \"beneath\" the Verduran Forest. Unfortunately, the town can't sustain all jotunborn, so most of them continue with their nomadic lifestyle. No jotunborn settlements currently exist within the mortal Universe, so most jotunborn tend to live within the settlement closest to their bonded site. Since some people fear jotunborn, confusing them with dangerous giants, it's not uncommon for jotunborn within the Universe to simply live among nature.",
+  "why": "AoN sidebar-3759 — the Jotunborn Enclaves sidebar on the Jotunborn ancestry page (Battlecry! pg. 10)."
+ },
+ {
+  "category": "sidebar",
+  "id": "on-jotuns",
+  "field": "description",
+  "value": "The origins of the term \"jotun\" is generally unclear to nongiants. In the tongue of giants, jotun refers to any giant progenitors. Specifically, this refers to titans and gigases, the first giants. The word jotun roughly translates to \"free ones,\" referring to how titans rebelled against the gods and become an independent people, eventually creating the first gigases. The Jotun language came about in the wake of Earthfall. As the language was born when the Cyclops language was forcibly mixed with Thassilonian during the height of the runelords' rule, the remaining giants who now spoke this language decided to name it in honor of the free ones as a way to reclaim the tongue for themselves. Jotunborn refer to themselves as vahndyrs, a word that roughly translates to \"descendants\" and was transformed into \"jotunborn\" in other languages.",
+  "why": "AoN sidebar-3760 — the On Jotuns sidebar on the Jotunborn ancestry page (Battlecry! pg. 10)."
+ },
+ {
+  "category": "follower",
+  "id": "medic",
+  "field": "description",
+  "value": "This trainee healer can master the art of bringing people back from the brink of death.\n\n**Melee** Single Action scalpel (agile, deadly d8, finesse, versatile S), **Damage** 1d4 piercing (functions as dagger)\n\n**Str** +0, **Dex** +2, **Con** +1, **Int** +1, **Wis** +3, **Cha** +0\n\n**Hit Points** 6\n\n**Kit Armor** item bonus +1, Dex cap +4\n\n**Skills** Herbalism Lore, Medicine, Nature, Survival\n\n**Follower Ability** A medic has the Battle Medicine feat. Their kit includes a healer's toolkit.\n\nWhen the medic becomes an experienced follower:\n- Increase their Dexterity modifier to +3 and their Wisdom modifier to +4.\n- Increase their proficiency rank in Fortitude saves and Will saves to expert.\n- Increase their proficiency rank in Medicine to expert.\n- Increase their scalpel Strike damage dice from 1d4 to 2d4. Their scalpel Strikes deal 1 persistent bleed damage (or 1d6 persistent bleed damage on a critical hit).\n- Once per day, the medic can use Battle Medicine on a creature that is temporarily immune.\n\nWhen the medic becomes a veteran follower:\n- Increase their Strength modifier to +1, their Dexterity modifier to +4, and their Constitution modifier to +2.\n- Increase their item bonus to AC to +2.\n- Increase their proficiency rank in Perception to expert.\n- Increase their proficiency rank in Medicine to master, and their proficiency rank in Herbalism Lore, Nature, and Survival to expert. Give them a +1 item bonus to Medicine checks.\n- Increase their proficiency rank in their scalpel Strikes to expert, and give them a +1 item bonus to attack rolls with their scalpel Strikes. Their scalpel Strikes deal 2 additional damage and become magical for the purposes of ignoring resistances.\n- The medic can use Medic's Treatment. **Medic's Treatment** Single Action; **Requirements** The medic is wearing or holding a healer's toolkit; **Effect** The medic treats an adjacent creature in an attempt to reduce the clumsy, enfeebled, sickened, or stupefied condition. If a creature has multiple conditions from this list, the medic chooses one to treat. The medic attempts a counteract check against the condition, using their Medicine modifier as their counteract modifier and half their level as the counteract rank. The condition's source determines the DC. The medic can't treat a condition that came from an artifact or an effect above 20th level. Using Medic's Treatment on a condition that is continually applied (for instance, the enfeebled condition a holy creature gains from carrying an unholy weapon) has no effect as long as the circumstances continue. **Critical Success** Reduce the chosen condition's value by 2. **Success** Reduce the chosen condition's value by 1. **Critical Failure** Increase the chosen condition's value by 1.\n\nWhen the medic becomes an exceptional follower:\n- Increase their Strength modifier to +2, their Constitution modifier to +3, their Intelligence modifier to +2, and their Wisdom modifier to +5.\n- Increase their item bonus to AC to +3.\n- Increase their proficiency rank in Fortitude and Will saves to master, and their proficiency rank in Reflex saves to expert. Give them a +1 item bonus to all saving throws.\n- Increase their item bonus to Medicine checks to +2. They become an expert in Acrobatics.\n- Increase their item bonus to attack rolls with their scalpel Strikes to +2. Increase their scalpel Strike damage dice from 2d4 to 3d4 and increase the additional damage that their scalpel Strikes deal from 2 to 4. Increase the persistent bleed their scalpel Strikes deal to 2 (or 2d6 on a critical hit).\n- Once per hour, the medic can use Battle Medicine on a creature that is temporarily immune.\n- The medic can use Quick Treatment. **Quick Treatment** Single Action; **Frequency** once per round; **Effect** The medic Strides and then uses Administer First Aid, Battle Medicine, Medic's Treatment, or Treat Poison.",
+  "why": "AoN follower-2 — the printed Medic follower entry (Battlecry! pg. 78)."
+ },
+ {
+  "category": "follower",
+  "id": "scout",
+  "field": "description",
+  "value": "This novice lookout can become a master of traversing terrain silently to strike their foes' weak points.\n\n**Melee** Single Action shortsword (agile, finesse, versatile S), **Damage** 1d6 piercing\n\n**Str** +1, **Dex** +3, **Con** +1, **Int** +0, **Wis** +2, **Cha** +0\n\n**Hit Points** 6\n\n**Kit Armor** item bonus +1, Dex cap +4\n\n**Skills** Acrobatics, Stealth, Survival, one Lore about a specific settlement or a specific terrain\n\n**Follower Ability** A scout deals 1d4 extra precision damage to off-guard targets.\n\n**Special** A scout adds Scout to the list of exploration activities that they can perform without spending your exploration activity.\n\nWhen the scout becomes an experienced follower:\n- Increase their Dexterity modifier to +4 and their Wisdom modifier to +3.\n- Increase their proficiency rank with Reflex saves, Will saves, and Perception to expert.\n- Increase their shortsword Strike damage dice from 1d6 to 2d6.\n- Add Search to the list of exploration activities the scout can perform without spending your exploration activity.\n\nWhen the scout becomes a veteran follower:\n- Increase their Strength modifier to +2, their Constitution modifier to +2, and their Intelligence modifier to +1.\n- Increase their item bonus to AC to +2.\n- Increase their proficiency rank in Acrobatics, Stealth, Survival, and their specific Lore to expert. Give them a +1 item bonus to Stealth checks.\n- Increase their proficiency rank in their shortsword Strikes to expert, and give them a +1 item bonus to attack rolls with their shortsword Strikes. Their Strikes deal 2 additional damage and become magical for the purposes of ignoring resistances.\n- Increase the extra precision damage the scout does to off-guard targets to 1d6.\n- The scout learns Exploit Injury. **Exploit Injury** Single Action; **Requirements** The scout's last action was a successful melee Strike against an off-guard target; **Effect** The target of the Strike is off-guard until the end of your next turn.\n\nWhen the scout becomes an exceptional follower:\n- Increase their Strength modifier to +3, their Dexterity modifier to +5, their Constitution modifier to +3, and their Wisdom modifier to +4.\n- Increase their item bonus to AC to +3.\n- Increase their proficiency rank in Reflex saves, Will saves, and Perception to master, and their proficiency rank in Fortitude saves to expert. Give them a +1 item bonus to all saving throws.\n- Increase their proficiency rank in Stealth to master, and increase their item bonus to Stealth checks to +2.\n- Increase their item bonus to attack rolls with their shortsword Strikes to +2. Increase their shortsword Strike damage dice from 2d6 to 3d6 and increase the additional damage that their shortsword Strikes deal from 2 to 4.\n- When the scout uses the Scout exploration activity, they also Avoid Notice and Search.",
+  "why": "AoN follower-3 — the printed Scout follower entry (Battlecry! pg. 79)."
+ },
+ {
+  "category": "grimFascination",
+  "id": "bone",
+  "field": "description",
+  "value": "Bone necromancers, also known as osteomancers, craft what they desire from the skeletons of the dead or simply create new skeletons by expanding and shaping small bone pieces.\n\n**Grave Spell** Bone Spear\n\n**Thrall Enhancement** Your thralls are well constructed and nimble. Each of your thralls' Speed is increased by 5 feet.",
+  "why": "AoN grim-fascination-2 — the printed Bone grim fascination entry (Impossible Magic pg. 30)."
+ },
+ {
+  "category": "grimFascination",
+  "id": "spirit",
+  "field": "description",
+  "value": "Spirit necromancers, also known as vitamancers, seek the secrets of the soul and play with the eternal energies of the living and dead. Your thralls often resemble ghosts and spirits.\n\n**Grave Spell** Life Tap\n\n**Thrall Enhancement** Your thralls, while still being tied to the physical world, have an incorporeal essence. Whenever one of your thralls Strikes, you can choose for that damage to be spirit or void damage instead of physical damage.",
+  "why": "AoN grim-fascination-4 — the printed Spirit grim fascination entry (Impossible Magic pg. 30)."
  }
 ]

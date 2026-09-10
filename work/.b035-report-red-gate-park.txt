@@ -1,0 +1,100 @@
+BATCH 035 — REPORT, GATE-RED group gate-park (WG-COMPARISON / instruments family)
+1 item assigned, 1 handled. BUILT, no data row. The batch's only failing gate is now green.
+Spec: work/.b035-rows-red-gate-park.json (findings: [] — see the file's own `_` for why it exists at all).
+
+
+WHAT WAS WRONG
+  `node scripts/wg-identity.mjs --batch work/wg-batch-035.json` reported
+      --- animal-instinct  (Animal Instinct)
+            items    theirs-not-ours=[spiderweb]
+  and the gate failed IDENTITY on it. The MECHANIC is real and is NOT this group's to decide: AoN
+  instinct-8's Spider row prints `Web | Special* | Range increment 15 feet` with the -10-foot Speed
+  rider and the second-hit immobilize, WG hands it over as giveItem 13946 + 13947 inside a rage-gated
+  conditional, and it is on the owner's desk as entry #145, id `animal-instinct-spider-web`. Nothing in
+  work/owner-questions.json was touched and the question was NOT re-filed.
+
+  The defect was in the instrument. scripts/wg-batch-gate.mjs:81 built `ownerQueued` as a Set of DESK
+  IDS and every gate asked `ownerQueued.has(<RECORD id>)`, so a question filed as `<record>-<aspect>`
+  parked nothing. The evidence that this had been costing real work is on the desk: #134
+  `spore-order-counts-as-leaf-order` was re-keyed to `spore-order` (#139) and then to
+  `cultivation-order` (#144) purely to make a record park, losing the aspect and leaving three entries
+  where one question stands.
+
+
+1. animal-instinct#spider-web — FIXED IN THE INSTRUMENT (teach)
+   scripts/wg-batch-gate.mjs — `ownerQueued` (a Set) is replaced by `RECORD_IDS` + `parkMapOf(desk)` +
+   `queuedFor(recordId)`, one resolver at the top of the file, and ALL SIX call sites now ask it:
+     :167 KINDS park           :168 KINDS filter        :182 VALUES
+     :205 IDENTITY             :584 EXPERIENCE          :429 PARITY 5b OWNER-QUEUED membership
+     :613/:614 the awaiting/settled split of the announcement
+   The 5b check also LOSES its private re-read of work/owner-questions.json (the `_oq2` / `queuedIds`
+   pair): a parity row could carry OWNER-QUEUED for a record whose question is filed under
+   record#aspect and be refused as unusable, the same bug one gate over.
+
+   THE RULE: a desk id parks a record when it IS that record's id, or when it starts with
+   `<record id>-` AND is not itself a record id anywhere in public/core.json. Longest record wins.
+   Exact always beats prefix. MEASURED over the whole desk (136 open+deferred): the bare prefix rule
+   parks 57 records nobody queued (`weapon-expertise` -> `weapon`, `divine-font` -> `divine`,
+   `instinct-ability` -> `instinct`); the non-record clause cuts that to six candidates, of which FIVE
+   actually widen anything — `spore-order` is filed under BOTH #134 and #139, so it parks by exact
+   match. The five: animal-instinct, dream-magic, flexible-spellcaster (never `flexible`), speed,
+   relic. The last two are LANE questions, accepted rather than narrowed: neither record has ever been
+   cut into a batch so the park is inert, and distinguishing a lane question from a record question
+   would need a marker in the owner's file, which is his and not this gate's.
+
+   Also added: the `--queued-for <record>` / `--queued-parks` probe (prints and exits before any
+   comparer — the file is a script, so a test cannot import it) and, in the OWNER-QUEUED announcement,
+   a `[desk: <id>]` suffix whenever the entry id differs from the record id, so a reader sent to
+   owner-questions.json for `animal-instinct` is told the entry is `animal-instinct-spider-web`.
+   `--queue <path>` is honoured by the probe ONLY, deliberately: a real gate run may never be pointed
+   at a desk the owner did not write.
+
+   PINNED BY test/batch035-gate-park.test.ts, 4 cases, all cited `// batch 035: animal-instinct#spider-web`:
+     (a) `queuedFor('animal-instinct')` -> `animal-instinct-spider-web`, the desk really is keyed that
+         way and has no `animal-instinct` entry, and the IDENTITY call site really routes through the
+         resolver (source assertion on the exact line).
+     (b) // mutation-proof — on a COPY of the desk with entry #145 removed (the stunted key is the
+         queue id `animal-instinct-spider-web`) the resolver returns nothing and the record leaves
+         `--queued-parks`, while wg-identity still prints `--- animal-instinct (` with
+         `theirs-not-ours=[spiderweb]`. Those two facts together ARE the gate's IDENTITY failure
+         condition; the gate is not re-run inside the test because it reads the desk by path (see
+         above) and a full run is four minutes.
+     (c) anti-over-park: `weapon`, `divine` and `instinct` each have a near-match desk id that is
+         itself a record, and park nothing.
+     (d) `--queued-parks` equals exactly the five records above — the pin that stops the widening
+         growing silently — plus `flexible` parking nothing, `spore-order` parking by exact match, and
+         the byte-identical UNSUPPORTED branch test/batch035-instruments-1.test.ts depends on.
+
+   VERIFIED END TO END: `node scripts/wg-batch-gate.mjs --batch work/wg-batch-035.json --verbose` now
+   prints `BATCH DONE — all nine gates pass`, with
+       animal-instinct   IDENTITY   [desk: animal-instinct-spider-web]
+   under OWNER-QUEUED. `node scripts/test-flip-audit.mjs --batch 035` clean. `npx tsc --noEmit` clean.
+
+   NOT EDITED, as briefed: scripts/wg-diff.mjs, scripts/wg-values.mjs, scripts/wg-identity.mjs and
+   scripts/wg-casting.mjs — zero changes, nothing was found wrong with any of them.
+
+   MANIFEST: this group emits no overlay rows. It DOES add a work/.b035-specs.json entry, because it
+   has to — scripts/wg-batch-close.mjs:97 refuses a manifest entry with no `file`, and
+   scripts/wg-batch-commit.mjs refuses any modified path no manifest entry declares, which would
+   otherwise be the gate script, the test and this report. The entry names an empty spec
+   (work/.b035-rows-red-gate-park.json, findings: []) and stages the three paths. Close-out: no rows
+   are owed by the driver for this group.
+
+
+DATA STILL NEEDED
+  (none — the one item is an instrument defect. The Spider Web MECHANIC stays parked as desk entry
+  #145 `animal-instinct-spider-web`; it is his to rule on, and this group deliberately did not build
+  a grantedStrikes row for it.)
+
+
+CROSS-FILE GAPS
+  1. scripts/held-spell-rank-check.mjs:44 carries the IDENTICAL defect, copied:
+       const ownerQueued = new Set([...(_oq.open ?? []), ...(_oq.deferred ?? [])].map((q) => q.id));
+     and skips on `ownerQueued.has(id)` at :62, so a record whose question is filed under
+     record#aspect is not skipped there either. Same three-line replacement as here (RECORD_IDS +
+     parkMapOf + queuedFor). Not made: the file is outside this group's list. Low urgency — that
+     script's skip set has no known aspect-keyed member today.
+  2. The `--queue` probe override deliberately stops at the probe, so no test can drive the gate's own
+     IDENTITY/KINDS/VALUES arithmetic against a stunted desk. Making that possible durably means the
+     gate taking its desk as an injected value rather than a path (a refactor of the file's top), which
+     is a bigger diff than this item earns. Flagged rather than done.

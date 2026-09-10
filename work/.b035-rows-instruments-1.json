@@ -1,0 +1,44 @@
+{
+  "findings": [
+    {
+      "id": "cultivation-order#instrument",
+      "backfillRows": [],
+      "note": "Instrument settle, no data row. Their `createValue MAIN_DRUID_ORDER = \"cultivation\"` is bookkeeping for a select answer, not a printed statistic; ours is the pick itself (classes.druid.subclass.options['cultivation-order'] -> build.subclassId). Taught by adding 'cultivation-order': ['specialStat'] to VERIFIED_EQUIVALENT in scripts/wg-diff.mjs, beside the eight orders already there (flame/spore/stone b033, animal/leaf/storm/untamed/wave b034) whose note explicitly held this one back until its grants were checked. Mutation-proof test: test/batch035-instruments-1.test.ts, describe('batch 035 instruments-1 - cultivation-order settles `specialStat` and nothing else'). Scope is the KINDS lane only: the anathema is description prose and the leaf-order membership is a giveAbilityBlock the EXPERIENCE comparer still reports."
+    },
+    {
+      "id": "the-oscillating-wave#instrument",
+      "backfillRows": [],
+      "note": "Instrument park, no data row - and NOT a settle registry. WG's granted-spell ladder is the LEGACY printing (AoN conscious-mind-3: 2nd Heat Metal, 4th Fire Shield, 6th Flame Vortex, 7th Fiery Body) while our record IS the remaster one (conscious-mind-9, edition 'remaster': 2nd Blazing Bolt, 4th Ice Storm, 6th Frozen Fog, 7th Volcanic Eruption), so four of their giveSpells can never deliver and adopting them would move us away from print. Recorded in work/experience-instrument-limits.json under lane 'wg-legacy-spell-name', the lane the-distant-grasp (b33) and the-infinite-eye (b34) are already parked in. The entry states its own limit: it does NOT cover the-oscillating-wave#conservation-of-energy, which is a real experience-visible gap owned by another family and fixed by a create row in this same batch. Pinned by test/batch035-instruments-1.test.ts against the AoN mirror and our carrier."
+    },
+    {
+      "id": "wandering-reverie#instrument",
+      "backfillRows": [],
+      "note": "Instrument, no data row and no code change in this chunk's files. Verdict is UNSUPPORTED because classFeatureHost's owner search (test/wg-experience.harness.test.tsx) walks cls.features and subclass.options only, and a psychic subconscious mind is an extraChoices option. All four WG ops land: the option's keyAbility 'cha' answers CLASS_DC/ATTRIBUTE_CHA/defineCastingSource at once and grantsClassFeatures ['fade-into-daydreams'] answers the giveAbilityBlock. Recorded in work/experience-instrument-limits.json (lane harness-host-search-no-extra-choice-route, beside this batch's five apparitions) and proved on a BUILT level-20 psychic in test/batch035-instruments-1.test.ts. The durable fix is in the harness file, outside this chunk - CROSS-FILE GAP."
+    },
+    {
+      "id": "gathered-lore",
+      "backfillRows": [],
+      "note": "Instrument, no data row. wandering-reverie's twin: the same extraChoices host miss, the same four WG ops answered by the option's keyAbility ('int') plus grantsClassFeatures ['recall-the-teachings']. Recorded in work/experience-instrument-limits.json under the same lane and proved on a built level-20 psychic in test/batch035-instruments-1.test.ts."
+    },
+    {
+      "id": "impostor-in-hidden-places#instrument",
+      "backfillRows": [],
+      "note": "Instrument, no data row. The sixth animist apparition of this batch and the same extraChoices host miss as the five the sibling chunk parked: the option carries grants.lores ['fortune-telling','underworld'] + loreProgression 8/16, ten grantedSpells and focusSpells ['discomfiting-whispers'], and wg-identity reports 10 identities agree on the shipped data. Recorded in work/experience-instrument-limits.json, lane harness-host-search-no-extra-choice-route."
+    },
+    {
+      "id": "noble-branch#instrument",
+      "backfillRows": [],
+      "note": "Instrument, no data row. Same extraChoices host miss, on the exemplar's ikon group. WG encodes strictly LESS than print (one injectText, no value-bearing op), so there was never a value for the harness to judge; ours carries both printed halves (FEAT_SITUATIONAL['noble-branch'] for the +2 spirit damage per weapon damage die, grantsClassFeatures ['strike-breathe-rend'] for the transcendence). Parity under R10. Recorded in work/experience-instrument-limits.json, lane harness-host-search-no-extra-choice-route."
+    },
+    {
+      "id": "metallic-reactance#instrument",
+      "backfillRows": [],
+      "note": "Instrument, no data row. An inventor innovation modification is not a class feature, a subclass option or an extraChoices option, so classFeatureHost can never seat it; the delivery is nonetheless live - c.inventor.modifications -> ownedFeatureIds (derive.ts:3468) -> deriveDefenses (derive.ts:2579). Proved on a BUILT level-10 inventor in test/batch035-instruments-1.test.ts: acid 8 and electricity 8 (3 + half level), 0 with the sibling modification picked instead. Recorded in work/experience-instrument-limits.json, lane harness-host-search-no-innovation-modification-route. The Overdrive clause is metallic-reactance#overdrive, a different finding outside this chunk - CROSS-FILE GAP."
+    },
+    {
+      "id": "phlogistonic-regulator#instrument",
+      "backfillRows": [],
+      "note": "Instrument, no data row. metallic-reactance's twin, same innovation-modification host miss. Proved on a built level-10 inventor: cold 5 and fire 5, 0 with the sibling picked instead - level 10 chosen deliberately so the assertion is identical before and after phlogistonic-regulator#resistance-minimum's row (max(1,floor(l/2)) and floor(l/2) both give 5), never a patched-vs-shipped delta. Recorded in work/experience-instrument-limits.json, lane harness-host-search-no-innovation-modification-route."
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "findings": [
+    {
+      "id": "animal-instinct#edition",
+      "note": "The SIBLING half of the confirmed finding animal-instinct#edition, filed as a CROSS-FILE GAP by work/.b035-report-engine-1.txt and re-stated by work/.b035-verify-engine-1.txt. The finding's own proposal reads: \"The same mislink is on its four siblings sourced to Player Core 2 - fury-instinct (instinct-3 -> instinct-10), giant-instinct (instinct-4 -> instinct-11), spirit-instinct (instinct-5 -> instinct-12), superstition-instinct (instinct-6 -> instinct-13) - fix them in the same pass so the print-read lane stops being pointed at the CRB text.\" Of those four, animal-instinct itself is authored by work/.b035-rows-data-rows-2.json and fury-instinct by work/.b035-rows-engine-1.json, so this spec authors the remaining THREE and nothing else - one row per record+field, no collision with any sibling spec. Re-measured off public/core.json and the AoN mirror before authoring: all three carry source.book \"Pathfinder Player Core 2\" while citing a Core Rulebook / Advanced Player's Guide aonId, and the shipped description of each is a closer word-for-word match to its Player Core 2 page than to the page it cites (giant 0.983 vs 0.943, spirit 0.972 vs 0.877, superstition 0.987 vs 0.775). The `edition: \"legacy\"` value being superseded was never an authored judgement: scripts/backfill-ast-edition.mjs:111 derives edition FROM the aonId's mirror doc, so the legacy tag is a downstream consequence of the same mis-join and moves with it. NOT claimed here: the picker consequence the read lane REFUTED on superstition-instinct#edition-and-aonid (the barbarian instinct picker is built from cls.subclass.options, which applyEditionFilter never touches). The harm these rows fix is the JOIN - the AoN page the record points at, and the AST prose imported from it, which is the pre-remaster text with different numbers.",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "giant-instinct",
+          "field": "aonId",
+          "value": "instinct-11",
+          "why": "instinct-11 is \"Giant\", Source [\"Player Core 2\"] pg. 75 - the printing this record's own source.book already names. It cited instinct-4, \"Giant\", Source [\"Core Rulebook\"] pg. 87, so the join contradicted the record's own source and pointed the print-read lane and the AST import at the pre-remaster text."
+        },
+        {
+          "category": "classFeatures",
+          "id": "giant-instinct",
+          "field": "edition",
+          "value": "remaster",
+          "supersedes": true,
+          "why": "Replaces the existing overlay row {classFeatures/giant-instinct/edition: \"legacy\"} (scripts/data/effect-backfill.json #8365) whole - a scalar, so the superseded value is carried in full by restating it. That row was not a judgement: scripts/backfill-ast-edition.mjs derives `edition` from the aonId's mirror doc, so \"legacy\" was read off the Core Rulebook page instinct-4 and moves with the corrected join to the Player Core 2 page instinct-11."
+        },
+        {
+          "category": "classFeatures",
+          "id": "spirit-instinct",
+          "field": "aonId",
+          "value": "instinct-12",
+          "why": "instinct-12 is \"Spirit\", Source [\"Player Core 2\"] pg. 75. It cited instinct-5, \"Spirit\", Source [\"Core Rulebook\"] pg. 87. Same mis-join as its confirmed sibling animal-instinct: the record's source.book is Player Core 2 and its shipped description matches the PC2 page more closely than the page it cites."
+        },
+        {
+          "category": "classFeatures",
+          "id": "spirit-instinct",
+          "field": "edition",
+          "value": "remaster",
+          "supersedes": true,
+          "why": "Replaces the existing overlay row {classFeatures/spirit-instinct/edition: \"legacy\"} (scripts/data/effect-backfill.json #8533) whole - a scalar, so the superseded value is carried in full by restating it. That row was not a judgement: scripts/backfill-ast-edition.mjs derives `edition` from the aonId's mirror doc, so \"legacy\" was read off the Core Rulebook page instinct-5 (name \"Spirit\", whose own remaster_id field is [\"instinct-12\"]) and it moves with the corrected join to the Player Core 2 page instinct-12."
+        },
+        {
+          "category": "classFeatures",
+          "id": "superstition-instinct",
+          "field": "aonId",
+          "value": "instinct-13",
+          "why": "instinct-13 is \"Superstition\", Source [\"Player Core 2\"] pg. 75. It cited instinct-6, \"Superstition\", Source [\"Advanced Player's Guide\"] pg. 108, whose own remaster_id field is [\"instinct-13\"] - the mirror itself names the successor page. The two printings differ in their numbers (APG: \"from 2 to 4 against creatures that can cast spells\"; PC2: \"from 2 to 3, or 4 against creatures you have witnessed Casting a Spell within the last hour\"), and our shipped description is the PC2 one. This record's own finding superstition-instinct#edition-and-aonid is in refuted[], but on its stated CONSEQUENCES only (a picker that applyEditionFilter never touches, and an aonId with no .tsx consumer) - the read lane's verifier wrote \"The mistag itself is real\". The provenance of this row is the CONFIRMED animal-instinct#edition, whose proposal names superstition-instinct explicitly."
+        },
+        {
+          "category": "classFeatures",
+          "id": "superstition-instinct",
+          "field": "edition",
+          "value": "remaster",
+          "supersedes": true,
+          "why": "Replaces the existing overlay row {classFeatures/superstition-instinct/edition: \"legacy\"} (scripts/data/effect-backfill.json #8543) whole - a scalar, so the superseded value is carried in full by restating it. That row was not a judgement: scripts/backfill-ast-edition.mjs derives `edition` from the aonId's mirror doc, so \"legacy\" was read off the Advanced Player's Guide page instinct-6 (name \"Superstition\", whose own remaster_id field is [\"instinct-13\"]) and it moves with the corrected join to the Player Core 2 page instinct-13."
+        }
+      ]
+    }
+  ]
+}

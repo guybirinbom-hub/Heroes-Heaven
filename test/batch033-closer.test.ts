@@ -115,7 +115,10 @@ const diffIndex = () => {
 describe('batch 033 closer — angel-eidolon, fey-eidolon and light-mortar-innovation credit their off-record carriers', () => {
   // batch 034: beast-eidolon#language-sylvan
   // batch 034: psychopomp-eidolon#language
-  it('angel-eidolon, fey-eidolon, beast-eidolon and psychopomp-eidolon no longer report the language kind, and the still-uncredited types do', () => {
+  // batch 035: demon-eidolon#language-abyssal
+  // batch 035: plant-eidolon#language
+  // batch 035: undead-eidolon#language
+  it('angel-eidolon, fey-eidolon, beast-eidolon, psychopomp-eidolon, demon-eidolon, plant-eidolon and undead-eidolon no longer report the language kind', () => {
     const idx = diffIndex();
     // batch 033: fey-eidolon#language
     for (const id of ['angel-eidolon', 'fey-eidolon']) expect(idx.get(id)?.missing).toEqual([]);
@@ -124,12 +127,19 @@ describe('batch 033 closer — angel-eidolon, fey-eidolon and light-mortar-innov
      * eidolon-10 "Language Requian"), and the closer added the matching per-id credit in wg-diff. */
     // batch 034: psychopomp-eidolon#language
     for (const id of ['beast-eidolon', 'psychopomp-eidolon']) expect(idx.get(id)?.missing).not.toContain('language');
-    /* The control group that REMAINS: same printed Language line, no COMPANION_MODS.languages row,
-     * still red. If a later hand moves the credit onto the companionGrants.ts file row, these three go
-     * quiet and this test fails — which is the whole reason they are asserted. */
-    // batch 034: beast-eidolon#language-sylvan
+    /* These three left the control group in batch 035: the engine families gave each the same
+     * COMPANION_MODS.languages carrier (AoN eidolon-5 "Language Abyssal", eidolon-9 "Language Sylvan",
+     * eidolon-11 "Language Necril") and the closer added the matching per-id credit, so asserting they
+     * still report would now assert a gap that is closed. The control group is not empty — it is
+     * dragon-eidolon, which carries `languages: ['draconic']` and deliberately has NO per-id credit
+     * (it is not a batch-035 record, and a closer may not settle an id outside its own batch).
+     * test/batch035-closer.test.ts asserts dragon-eidolon still reports `language`, which is the same
+     * blanket-credit trip-wire this loop used to be. */
+    // batch 035: demon-eidolon#language-abyssal
+    // batch 035: plant-eidolon#language
+    // batch 035: undead-eidolon#language
     for (const id of ['demon-eidolon', 'plant-eidolon', 'undead-eidolon']) {
-      expect(idx.get(id)?.missing).toContain('language');
+      expect(idx.get(id)?.missing).not.toContain('language');
     }
   });
 

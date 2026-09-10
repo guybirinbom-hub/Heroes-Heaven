@@ -1028,6 +1028,12 @@ export function deriveEidolon(
     evoIwr.push(...(pkg.iwr ?? []));
     evoNotes.push(...(pkg.notes ?? []));
   }
+  /* batch 035, swarm-eidolon#area-weakness. AoN eidolon-13, Swarm Form: *"it's immune to the grabbed,
+   * prone, and restrained conditions … It has weakness to area damage equal to its level."* The
+   * immunities from that sentence are the TYPE_PACKAGE row above; the weakness had no carrier
+   * anywhere (`grep "area damage" src/` was empty) because a static TYPE_PACKAGE string cannot scale
+   * with level. Interpolated here, the same form Dual Energy Heart's resistance uses below. */
+  if (cfg.typeId === 'swarm-eidolon') evoIwr.push(`weakness ${level} area damage`);
   // `companionModKeys` adds `<featId>:<answer>` beside every plain feat id, so an eidolon mod chosen by
   // the owner's own answer can be found here too. A superset of the old set: the composite keys carry a
   // colon, which no feat id does, so the `featIdSet.has('expanded-senses')` style lookups below are

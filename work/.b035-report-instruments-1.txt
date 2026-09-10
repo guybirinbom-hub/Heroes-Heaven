@@ -1,0 +1,159 @@
+BATCH 035 — REPORT, CHUNK instruments-1 (WG-COMPARISON / instruments family)
+8 findings assigned, 8 handled. 1 settle, 1 experience park, 6 host-miss records.
+Spec: work/.b035-rows-instruments-1.json (8 entries, all backfillRows: [] — no finding here needs a row).
+
+
+DATA STILL NEEDED
+  (none — every finding in this chunk is an instrument fact, not a content defect. No overlay row is
+  owed by the driver for cultivation-order#instrument, the-oscillating-wave#instrument,
+  wandering-reverie#instrument, gathered-lore, impostor-in-hidden-places#instrument,
+  noble-branch#instrument, metallic-reactance#instrument or phlogistonic-regulator#instrument.)
+
+
+CROSS-FILE GAPS
+  1. test/batch034-closer.test.ts:83 — `expect(shipped.get('cultivation-order')?.missing).toContain('specialStat')`
+     was batch 034's CONTROL for the five order settles ("the order this batch did not cut is
+     untouched"). This batch cuts it, so wg-diff now reports missing=[] and that one assertion fails.
+     The edit is one line plus its citation, and the enclosing it( title must gain the record id so
+     scripts/test-flip-audit.mjs's record-id-in-title half passes:
+       it('the five settled orders are clear on the shipped data, and cultivation-order is settled too', ...)
+       // batch 035: cultivation-order#instrument
+       expect(shipped.get('cultivation-order')?.missing).toEqual([]);
+     Not made here: test/batch034-closer.test.ts is outside this chunk's files.
+  2. test/wg-experience.harness.test.tsx, classFeatureHost (:494-509) — the owner search walks
+     ownedAt20(db, classId, null) and db.classes[classId].subclass?.options ONLY. Extend it to walk
+     db.classes[classId].extraChoices[].options and seat the pick in build.extraChoices[group.id], so
+     an extra-choice option is judged instead of skipped. Unparks NINE records at once: this chunk's
+     wandering-reverie, gathered-lore, impostor-in-hidden-places and noble-branch, the sibling chunk's
+     five animist apparitions, and (a different route) the two lesson records. Same instrument was
+     already recorded in work/.b034-read-slice-8.json.
+  3. test/wg-experience.harness.test.tsx, classFeatureHost — a SECOND host branch for a record held on
+     c.inventor.modifications: when the id carries otherTags '<type>-innovation-modification', host it
+     on an inventor with the matching subclassId, inventorArmorStats and
+     build.inventorModifications[tier] = id. Unparks metallic-reactance and phlogistonic-regulator.
+     classFeatureIdsOwned (derive.ts:3361-3391) never walks that store, and the harness passes no
+     classChoices either.
+  4. the-oscillating-wave#conservation-of-energy (owned by the data-rows family) — my experience park
+     for the-oscillating-wave does NOT cover it, and says so inside its own entry. Once that create row
+     lands, the only ops still open on the record are the four legacy giveSpells the park is for. If
+     that row does not land in this batch the park is still correct for the four spells, but the record
+     will be green in the gate while a real giveAbilityBlock gap is open — flagged deliberately.
+  5. metallic-reactance#overdrive and phlogistonic-regulator#overdrive / #resistance-minimum are other
+     families' findings on records I hold the #instrument half of. Nothing in this chunk touches them;
+     my level-10 assertions were chosen so the #resistance-minimum row cannot flip them.
+
+
+PER FINDING
+
+cultivation-order#instrument — SETTLE (comparer teach), the only registry key this chunk adds.
+  Did: added `'cultivation-order': ['specialStat']` to VERIFIED_EQUIVALENT in scripts/wg-diff.mjs
+  (after 'wave-order'), cited `// batch 035: cultivation-order#instrument`, with the note explaining
+  that the batch-034 block deliberately held this order back until its grants were checked and that
+  this batch checked them. Their `createValue MAIN_DRUID_ORDER = "cultivation"` (type=str) is their
+  engine writing down a select answer — their own conditionals read it straight back — while ours is
+  the pick itself: classes.druid.subclass.options['cultivation-order'] (grants.skills ['crafting'],
+  grantedFeats ['leshy-familiar'], focusSpells ['cornucopia']) selected into build.subclassId.
+  Test: test/batch035-instruments-1.test.ts, describe('batch 035 instruments-1 — cultivation-order
+  settles `specialStat` and nothing else'), three its. MUTATION-PROOF: stunts the option's grants /
+  focusSpells / grantedFeats and asserts the SETTLED run reports skill and spell straight back and
+  still never specialStat; the `--raw` run on shipped data shows the registry is what quiets it.
+  Scope, adversarially confirmed: the entry names ONE kind. cultivation-order#anathema-sidebar is
+  description prose wg-diff never compares, and cultivation-order#leaf-membership is a giveAbilityBlock
+  the EXPERIENCE comparer still reports (NO-SHEET-EFFECT, 'giveAbilityBlock #34226 "Leaf Order"').
+  Blast radius measured, not assumed: corpus-wide wg-diff before/after moved exactly one record.
+
+the-oscillating-wave#instrument — INSTRUMENT PARK in work/experience-instrument-limits.json.
+  Did: parked the record (verdict NO-SHEET-EFFECT, lane 'wg-legacy-spell-name', _cite
+  '// batch 035: the-oscillating-wave#instrument'). NOT a settle registry, so no mutation-proof marker
+  is owed. The finding's own claim ("rung for rung the same ladder") is WRONG and the entry says so:
+  four rungs differ, and the reason is the PRINTING. AoN conscious-mind-3 (Dark Archive, remaster_id
+  ['conscious-mind-9']) prints 2nd Heat Metal / 4th Fire Shield / 6th Flame Vortex / 7th Fiery Body;
+  conscious-mind-9 (Dark Archives (Remastered)) prints 2nd Blazing Bolt / 4th Ice Storm / 6th Frozen
+  Fog / 7th Volcanic Eruption. Our record IS conscious-mind-9. Their row is a HYBRID — the legacy rungs
+  whose spell was merely RENAMED in the remaster (Burning Hands→Breathe Fire, Cone of Cold→Howling
+  Blizzard, Polar Ray→Arctic Rift, Meteor Swarm→Falling Stars) took the new name and DO deliver — which
+  is why it reads as a delivery gap rather than an edition difference. The batch-33 '(Psi)|(legacy)'
+  qualifier strip reaches only 'Flame Vortex (legacy)' and there is no flame-vortex behind it, so
+  widening it would launder every genuinely undelivered giveSpell in the corpus: parked per record.
+  Test: same file, describe('batch 035 instruments-1 — the-oscillating-wave: WG grants the legacy
+  ladder, ours is the remaster one'), two its — the remaster ladder rung by rung off our carrier plus
+  the conscious-mind 6/10 sub-ladder, and the entry's own lane/cite/scope with the two mirror documents
+  read directly (guarded on the mirror being mounted).
+  NOT DONE, deliberately: the record's fifth open op is the giveAbilityBlock "Conservation of Energy",
+  a real gap owned elsewhere — CROSS-FILE GAPS #4.
+
+wandering-reverie#instrument — INSTRUMENT, harness host miss. No row, no code.
+  Did: recorded in work/experience-instrument-limits.json, lane
+  'harness-host-search-no-extra-choice-route' (the lane the sibling chunk opened for its five
+  apparitions), _cite '// batch 035: wandering-reverie#instrument'. The entry states that it changes NO
+  gate verdict — scripts/wg-batch-gate.mjs short-circuits UNSUPPORTED before it ever consults the file
+  — so it is the family's ledger of WHY the harness is blind, not a pass.
+  Test: same file, describe('batch 035 instruments-1 — wandering-reverie, gathered-lore,
+  impostor-in-hidden-places and noble-branch are extraChoices options'). Pins the CAUSE (each record is
+  an extraChoices option and in no class's features and no subclass option, and the harness's owner
+  search really does contain 'subclass?.options' and not 'extraChoices') and the DELIVERY on a really
+  built level-20 psychic: extraChoices['subconscious-mind'] = ['wandering-reverie'] gives
+  character.keyAbility 'cha', which is their ATTRIBUTE_CHA, their CLASS_DC attribute and their
+  defineCastingSource attribute in one field.
+
+gathered-lore — INSTRUMENT, harness host miss. No row, no code.
+  Did: same lane, same entry shape, _cite '// batch 035: gathered-lore'. Their four ops (CLASS_DC T/INT,
+  ATTRIBUTE_INT +1, defineCastingSource …ATTRIBUTE_INT, giveAbilityBlock #23157 "Recall the Teachings")
+  are answered by the option's keyAbility 'int' plus classFeatures['gathered-lore'].grantsClassFeatures
+  ['recall-the-teachings'].
+  Test: same it as wandering-reverie's delivery half — the built psychic's keyAbility is 'int' with this
+  pick and 'cha' with the sibling, which is what shows the field is live rather than decoration.
+
+impostor-in-hidden-places#instrument — INSTRUMENT, harness host miss. No row, no code.
+  Did: same lane; it is the SIXTH animist apparition of this batch and belongs with the five the sibling
+  chunk parked, so it is filed identically rather than left as a lone omission.
+  Adversarially confirmed against the comparers rather than the finding's prose: wg-identity reports
+  '10 identities agree' for the record on shipped data and wg-values '1 agree on every one', so every
+  named grant their row raises has a counterpart. Carrier: grants.lores ['fortune-telling','underworld']
+  + loreProgression [{8,expert},{16,master}], ten grantedSpells, focusSpells ['discomfiting-whispers'].
+  Test: the extraChoices-carrier it above covers it (its host is `extraChoices:animist` and nothing else).
+
+noble-branch#instrument — INSTRUMENT, harness host miss. No row, no code.
+  Did: same lane, on the exemplar's ikon group. WG encodes strictly LESS than print — one injectText,
+  no value-bearing op at all — so there was never a value the harness could have judged even with a
+  host; parity under R10. Ours carries both printed halves: FEAT_SITUATIONAL['noble-branch']
+  (src/rules/situationalBonuses.ts:3583, +2 spirit damage per weapon damage die on strikeDamage) and
+  classFeatures['noble-branch'].grantsClassFeatures ['strike-breathe-rend'] (1 action, spirit /
+  transcendence, aonId action-3019).
+  Test: the extraChoices-carrier it above (`extraChoices:exemplar`, and in no cls.features / subclass).
+
+metallic-reactance#instrument — INSTRUMENT, harness host miss on a SECOND route. No row, no code.
+  Did: recorded under lane 'harness-host-search-no-innovation-modification-route' (new — an innovation
+  modification is not a class feature, a subclass option OR an extraChoices option, so it is a
+  different blindness from the four above and is named differently on purpose).
+  Test: same file, describe('batch 035 instruments-1 — metallic-reactance and phlogistonic-regulator
+  are inventor innovation modifications'). Proves the CLAIM on a built character instead of on the
+  harness: a level-10 inventor (armor-innovation / power-suit / inventorModifications.initial) reads
+  acid 8 and electricity 8 off deriveDefenses — print's "3 + half your level", their two adjValue
+  RESISTANCES ops — and 0 with the sibling modification picked instead, so it is the PICK that delivers.
+
+phlogistonic-regulator#instrument — INSTRUMENT, same route. No row, no code.
+  Did: same lane and entry shape. Test asserts cold 5 and fire 5 on the same built level-10 inventor,
+  0 with the sibling picked. LEVEL 10 IS DELIBERATE: the record's formula is under repair in this batch
+  by another family (phlogistonic-regulator#resistance-minimum, max(1,floor(l/2)) → floor(l/2)) and the
+  two agree at 5, so the assertion is the state before AND after that row and can never become a
+  patched-vs-shipped delta.
+
+
+COMPARERS — BEFORE / AFTER, this batch and the two previous packets
+  wg-diff (corpus-wide, work/.b035-baseline/diff.json vs a fresh --out run):
+      THEY-ONLY 196 → 195. The ONLY difference in the whole corpus is
+      `GONE cultivation-order [specialStat]`; no record changed its missing list and none appeared.
+      weOnly 2872 → 2873 (cultivation-order moves across with missing=[], extra=['choice']).
+      Scoped per packet: batch 033 THEY-ONLY 1 → 1, batch 034 0 → 0, batch 035 9 → 8.
+  wg-values:  --batch 035 output byte-identical to work/.b035-baseline/values.txt. 033: 0 to
+      adjudicate; 034: 1; 035: 3 — all unmoved (this chunk touched no value lane).
+  wg-identity: --batch 035 mismatch lines byte-identical to the baseline (the baseline was captured
+      without --verbose, so only the `ok` lines differ). 033: 28/30 match, 034: 24/25, 035: 23/26.
+  wg-casting (npx jiti): output identical to work/.b035-baseline/casting.txt apart from the `written:`
+      path line — 16 class sources compared, 4 with mismatches (180 rows), unchanged.
+  No earlier batch flipped.
+
+VERIFICATION
+  npx tsc --noEmit — clean.
+  node scripts/vt.mjs run test/batch035-instruments-1.test.ts — 9 passed (9).

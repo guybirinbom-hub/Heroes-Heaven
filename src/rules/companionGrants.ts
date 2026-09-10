@@ -504,7 +504,25 @@ export const COMPANION_MODS: Record<string, CompanionMod> = {
   'celestial-mount': {"kinds":["animal"],"senses":["darkvision"],"maxHpBonus":40,"flyEqualsLand":true,"iwr":["weakness 10 unholy"],"note":"Celestial Mount"},
   'chorus-companion': {"kinds":["animal"],"skillGrants":[{"skill":"performance","rank":"trained"}],"note":"Chorus Companion: your animal companion is trained in Performance (expert if it was already trained)."},
   'construct-eidolon': {"kinds":["eidolon"],"senses":["darkvision"],"languageChoices":1},
-  'demon-eidolon': {"kinds":["eidolon"],"senses":["darkvision"],"note":"Demonic Strikes: the eidolon's unarmed Strikes deal an extra 1 unholy (evil) damage."},
+  /* batch 035 gap, demon-eidolon#language-abyssal + demon-eidolon#demonic-strikes-note. Two defects
+   * on one row, both against AoN eidolon-5.
+   *
+   * (1) Print's fixed Language line — *"**Language** Abyssal"* — reached the player as description
+   * prose only: this row carried neither `languages` nor `languageChoices`, the summoner subclass
+   * option grants skills alone, and deriveEidolon builds eidolonLanguages from mod.languages /
+   * mod.languageChoices only, so the block showed NO Languages row at all. The printed NAME rather
+   * than an id, exactly as the siblings 'angel-eidolon' (Celestial) and 'beast-eidolon' /
+   * 'fey-eidolon' (Sylvan) above: content.languages is remaster-only and holds no 'abyssal' key, so
+   * deriveEidolon's `content.languages?.[l]?.name ?? l` falls through to the string as written.
+   *
+   * (2) The note was a second, pre-remaster copy of Demonic Strikes sitting beside the record's own
+   * correct eidolonAbilities text. Print (eidolon-5): *"Your eidolon's unarmed Strikes gain the
+   * unholy trait and deal 1 extra spirit damage to holy creatures and creatures with weakness to
+   * unholy. Additionally, choose one of your eidolon's unarmed attacks that deals physical damage;
+   * it gains your choice of versatile B, versatile P, or versatile S."* The old note said "an extra
+   * 1 unholy (evil) damage" — wrong damage type, no target restriction (so it read as a flat +1
+   * against everything) and no versatile clause. Same fix batch 033 applied to 'angel-eidolon'. */
+  'demon-eidolon': {"kinds":["eidolon"],"senses":["darkvision"],"languages":["Abyssal"],"note":"Demonic Strikes: the eidolon's unarmed Strikes gain the unholy trait and deal 1 extra spirit damage to holy creatures and creatures with weakness to unholy; one of its physical unarmed attacks also gains versatile B, P or S (your choice)."},
   'demon-hunting-companion': {"kinds":["animal"],"senses":["scent (fiends only, imprecise 30 ft)"],"note":"Its scent detects only fiends."},
   'devotion-phantom-eidolon': {"kinds":["eidolon"],"senses":["darkvision"],"languageChoices":1},
   // AoN eidolon-7 (the page this record cites) and its remaster twin eidolon-21 both print
@@ -531,7 +549,14 @@ export const COMPANION_MODS: Record<string, CompanionMod> = {
   'night-terror': {"kinds":["animal"],"speeds":{"fly":"land"},"note":"Night Terror: your apocalypse mount gains a fly Speed equal to its land Speed. At night or anywhere deprived of natural sunlight it gains a +10-foot circumstance bonus to that fly Speed, and critical failures on Acrobatics checks to Maneuver in Flight become failures instead. If it already had a fly Speed it also gains a +2 circumstance bonus to Acrobatics checks to Maneuver in Flight."},
   'paragon-companion': {"kinds":["animal"],"maturityFloor":"specialized","note":"Paragon Companion: your construct companion is at least a paragon (specialized) companion."},
   'peerless-mascot-companion': {"kinds":["animal"],"abilityBoosts":{"int":2,"wis":1},"maxHpBonus":20,"speeds":{"climb":"land","swim":"land"},"note":"Peerless Mascot specialization: expert in Warfare Lore; can speak one language you also speak (chosen when you gain this feat); gains the beast trait and a 30-foot banner aura acting as a second banner. Max HP increases by 20 (the app applies this flat +20; it rises to +25 at 18th level and +30 at 20th in the rules)."},
-  'plant-eidolon': {"kinds":["eidolon"],"senses":["low-light vision"],"note":"Growing Vines (7th): all its melee unarmed Strikes gain the reach trait."},
+  /* batch 035, plant-eidolon#language. AoN eidolon-9 (the page this record cites) prints
+   * *"**Language** Sylvan"* — a fixed ANSWER, not a pick — and this row carried senses/note but no
+   * `languages`, so deriveEidolon's eidolonLanguages loop contributed nothing and CompanionsTab
+   * rendered no Languages line at all. Printed NAME rather than an id, exactly like the sibling
+   * 'beast-eidolon' and 'fey-eidolon' rows above: content.languages is remaster-only ('fey', 'muan')
+   * and holds no 'sylvan' key, and re-pointing the record at the remaster twin is a separate
+   * decision. */
+  'plant-eidolon': {"kinds":["eidolon"],"senses":["low-light vision"],"languages":["Sylvan"],"note":"Growing Vines (7th): all its melee unarmed Strikes gain the reach trait."},
   /* batch 034, psychopomp-eidolon#language. AoN eidolon-10 prints *"**Language** Requian"*, and this
    * row carried senses/strikeRider/note but no `languages`, so the printed line reached the player as
    * description prose only. The ID, not the printed name — content.languages['requian'] exists, so
@@ -539,6 +564,22 @@ export const COMPANION_MODS: Record<string, CompanionMod> = {
   'psychopomp-eidolon': {"kinds":["eidolon"],"senses":["darkvision"],"languages":["requian"],"strikeRider":"ghost touch","note":"Spirit Touch: its unarmed Strikes deal an extra 1 void damage to living creatures and an extra 1 vitality damage to undead."},
   'specialized-companion-animal-trainer': {"kinds":["animal"],"maturityFloor":"specialized","note":"Animal Trainer companion: gains one specialization of your choice, and its Performance proficiency is legendary in place of one of the specialization's skill increases."},
   'specialized-spirit-companion': {"kinds":["animal"],"strikeRider":"ghost touch","note":"Spirit-blessed: Strikes gain ghost touch."},
+  /* batch 035, swarm-eidolon#language. AoN eidolon-13 prints *"**Language** Common"*, and the swarm
+   * type had no COMPANION_MODS row at all — its package lives in the companions.ts TYPE_PACKAGE
+   * literal, which is typed { senses?; iwr?; notes? } and can carry no language. The `mod.languages`
+   * loop is the only feed for the block's Languages line, so the printed line reached the player as
+   * description prose only.
+   * languages ONLY in this row: the senses and the IWR stay in TYPE_PACKAGE, because deriveEidolon
+   * merges BOTH sources and `evoIwr.push(...)` does not dedupe (evoSenses does) — repeating the entry
+   * here would print the grabbed/prone/restrained immunity twice. */
+  'swarm-eidolon': {"kinds":["eidolon"],"languages":["common"]},
+  /* batch 035, undead-eidolon#language. AoN eidolon-11 and its remaster twin eidolon-26 both print
+   * *"**Language** Necril"*; the type had no COMPANION_MODS row, only the companions.ts TYPE_PACKAGE
+   * senses/note entry, so eidolonLanguages stayed empty and the Languages line was omitted. The ID,
+   * not the printed name — content.languages['necril'] exists, so this is the 'dragon-eidolon' /
+   * 'psychopomp-eidolon' shape. The TYPE_PACKAGE darkvision and Negative Essence note stay where they
+   * are: evoSenses dedupes and this row adds neither. */
+  'undead-eidolon': {"kinds":["eidolon"],"languages":["necril"]},
   'vibration-sense': {"kinds":["eidolon"],"senses":["tremorsense (imprecise 30 ft)"],"note":"Vibration Sense: tremorsense as an imprecise sense, range 30 feet. An aquatic eidolon gains wavesense (imprecise 30 ft) instead; an amphibious eidolon gains both."},
   'wing-rider': {"kinds":["animal"],"speeds":{"fly":25},"note":"Wing Rider: your dragon companion has a fly Speed of 25 feet at all times."},
 

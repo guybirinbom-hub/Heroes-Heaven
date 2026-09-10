@@ -1,0 +1,17 @@
+{
+  "findings": [
+    {
+      "id": "the-oscillating-wave#conservation-of-energy",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "conservation-of-energy",
+          "field": "description",
+          "value": "Energy can’t be created or destroyed, only transferred or changed—whenever you use your magic to add or remove energy, you must then balance it with the opposing force. While this allows you to invert your spells to cast a scorching *frostbite* or frozen *fireball*, it also means your spells alternate between fire and cold in equal measure. The first time in an encounter that you cast a granted spell or standard psi cantrip from your conscious mind, decide whether you’re adding energy or removing it. Once you add energy, you must remove energy the next time you cast one of these spells, and vice versa. When you Refocus, you restore yourself to a neutral state, allowing you to once again freely choose whether you add or remove energy on your next spell.\n\n**Adding Energy:** The ability gains the fire trait and any damage it deals is fire damage. It loses any traits matching damage types it no longer deals.\n\n**Removing Energy:** The ability gains the cold trait and any damage it deals is cold damage. It loses any traits matching damage types it no longer deals.\n\n**Mindshift:** When you use an action that has the mindshift trait, you can choose to add or remove energy to it instead of making it mental. Alter it as normal for adding or removing energy and change any save it requires to a Reflex save.",
+          "why": "AoN conscious-mind-9, the \"Conservation of Energy\" section verbatim (Adding Energy / Removing Energy / Mindshift clauses included)."
+        }
+      ],
+      "note": "Prose for the record created in the rows spec; a create row never carries a description."
+    }
+  ]
+}

@@ -1,0 +1,133 @@
+BATCH 035 — WG-COMPARISON LANE — family data-rows-2 (chunk 2 of 2 of the data-rows family)
+
+Spec:   work/.b035-rows-data-rows-2.json  (8 findings, 19 backfill rows)
+Tests:  test/batch035-data-rows-2.test.ts (8 tests; all 8 fail today, each for exactly the field its
+        row authors; `node scripts/test-flip-audit.mjs --batch 035` is clean; `npx tsc --noEmit` clean)
+No src/ or scripts/ file was edited. No created-prose spec was needed: the only created records are
+`modes` rows, which carry a `note`, not a description.
+
+============================================================================================
+DATA STILL NEEDED  (rows the driver must author — exact category/id/field/value)
+============================================================================================
+1. classFeatures / animal-instinct / grantedStrikes — inside the whole-array value chunk data-rows-1 re-emits for animal-instinct#cat, rename the wasp row's name "Pincer" -> "Stinger" and the crab row's "BigClaw" -> "Big Claw" (instinct-8: "Wasp Stinger 1d4 P Backstabber, deadly d8, unarmed, venomous" and "Crab Big Claw 1d10 B Razing, unarmed"; Pincer is the SCORPION's 1d4 S parry row, which we store correctly under choiceValue 'scorpion' and must keep).
+2. classFeatures / giant-instinct / aonId = "instinct-11", and / edition = "remaster" (supersedes the existing {giant-instinct, edition, "legacy"} row) — same mis-join as animal-instinct#edition; the record is source Player Core 2 but cites instinct-4 (CRB pg. 87). instinct-11 is Giant, Player Core 2 pg. 75.
+3. classFeatures / spirit-instinct / aonId = "instinct-12", and / edition = "remaster" (supersedes the existing legacy row). instinct-12 is Spirit, Player Core 2 pg. 75.
+4. classFeatures / superstition-instinct / aonId = "instinct-13", and / edition = "remaster" (supersedes the existing legacy row). instinct-13 is Superstition, Player Core 2 pg. 75.
+5. classFeatures / school-of-protean-form / descRefs — append {"label":"Metamorphosis","key":"spells"} after "Monstrosity Form". The classFeatures description already reads "- **9th:** Metamorphosis" but its 21 descRefs skip the spell, so that copy of the popup shows the name unlinked. Adjacent to school-of-protean-form#curriculum-9th (which is about the classes/wizard copy) and covered by no finding, so it is not claimed here.
+
+============================================================================================
+CROSS-FILE GAPS  (things outside the files this chunk may write)
+============================================================================================
+1. classFeatures/animal-instinct.grantedStrikes belongs to chunk data-rows-1 (its animal-instinct#cat row re-emits that exact field), so the strike-name half of animal-instinct#strike-names cannot be a row here — the driver hard-refuses cross-spec collisions. It must be folded into that chunk's value (DATA STILL NEEDED #1).
+2. classFeatures/fury-instinct edition + aonId ("legacy"/instinct-3 -> "remaster"/instinct-10) is the record of another chunk's finding, `fury-instinct`, whose proposal already asks for it. Not authored here to avoid a collision; if that chunk drops it, it becomes a driver row.
+3. scripts/migration/build-map.mjs:151 — the map entry 'classFeatures|Lesson of Elements' -> docId 'lesson-2' should become 'lesson-17'. The overlay rows in this spec already reach the right end state (the overlay is applied after generation, so it wins), but until the map is repointed the pre-overlay record is still generated from the Advanced Player's Guide printing.
+4. src/rules/types.ts ModeDef has no `conditions` field (0 of 557 shipped modes carry one), so the enfeebled clause of curse-of-the-skys-call ("you are enfeebled with a value equal to your cursebound value") has no numeric carrier and stays prose in each rung's note. WG does not encode it either.
+5. ModeModifier's ModeTargetKind has no DC-against-an-effect target, so the "and DCs against all forms of forced movement" half of curse-of-the-skys-call likewise stays in the note. Same for the cursebound-4 silence clause on curse-of-torrential-knowledge, which is not a number at all.
+6. src/rules/situationalBonuses.ts RECORD_MARKERS entries for 'curse-of-the-skys-call' (:4556) and 'curse-of-torrential-knowledge' (:4557) become redundant prose once these mode ladders land — the numbers will now be on the stat rows. Left untouched (another family's file); worth a reword to the residual halves only (enfeebled / DCs / silence).
+
+============================================================================================
+PER FINDING
+============================================================================================
+
+animal-instinct#strike-names — DONE IN PART (row) + 1 cross-file gap
+  Row: {classFeatures, animal-instinct, choice, supersedes:true} — the whole choice value re-emitted
+  with one label fixed: "Crab (Claw 1d10 B, razing; Claw 1d4 S, parry)" -> "Crab (Big Claw 1d10 B,
+  razing; Claw 1d4 S, parry)". instinct-8 prints "Crab Big Claw 1d10 B Razing, unarmed" then "Claw
+  1d4 S Parry, unarmed"; our label named both attacks Claw. The finding's second label change was
+  already correct on the shipped data — the wasp option reads "Wasp (Stinger 1d4 P,
+  backstabber/deadly d8/venomous)" — and is carried over untouched.
+  NOT DONE: the grantedStrikes renames ('Pincer' -> 'Stinger' on the wasp row, 'BigClaw' -> 'Big
+  Claw' on the crab row). That is classFeatures/animal-instinct.grantedStrikes, the same record+field
+  chunk data-rows-1 re-emits for animal-instinct#cat. See CROSS-FILE GAPS 1 / DATA STILL NEEDED 1.
+  Test: describe 'animal-instinct labels the crab attacks the way instinct-8 prints them' >
+  'offers Crab with a Big Claw, not two attacks both called Claw'. Fails today with
+  'Crab (Claw 1d10 B, ...)'.
+
+animal-instinct#edition — DONE
+  Rows: {classFeatures, animal-instinct, edition, "remaster", supersedes:true} (over the existing
+  "legacy" row) and {classFeatures, animal-instinct, aonId, "instinct-8"}. instinct-8 is Player Core 2
+  pg. 74 — the 22-animal / Howl of the Wild table this record reproduces, and the printing its own
+  source.book already names — while instinct-1 is the Core Rulebook page (nine animals, frog Tongue
+  1d4 B where ours is d6). "legacy" made applyEditionFilter (src/rules/build.ts:3131) drop the record
+  from the instinct picker under "Hide legacy data".
+  The four Player Core 2 siblings the proposal names are NOT authored here: fury-instinct is another
+  chunk's finding (CROSS-FILE GAPS 2) and giant/spirit/superstition-instinct are covered by no
+  finding at all (DATA STILL NEEDED 2-4).
+  Test: describe 'animal-instinct cites instinct-8, the printing whose table it carries' >
+  'is joined to the Player Core 2 page and is not tagged legacy'. Fails today with 'instinct-1'.
+
+curse-of-torrential-knowledge — DONE
+  Rows: four create rows in the `modes` bucket, curse-of-torrential-knowledge-1..4, each
+  {feats:['curse-of-torrential-knowledge'], exclusiveGroup:'oracle-cursebound',
+  duration:'while cursebound N', modifiers:[{-N status perception},{-N status save/will}]}, shape
+  copied whole from the sibling rung curse-of-creeping-ashes-N. mystery-18: "You take a status
+  penalty to Perception checks and Will saving throws equal to your cursebound value"; WG encodes the
+  identical four-rung ladder (PERCEPTION + SAVE_WILL at -1..-4). Before this the only carrier was a
+  RECORD_MARKERS note (situationalBonuses.ts:4557) that never reaches a stat row, and the generic
+  cat-cursebound-1..4 carry modifiers: [] — so no oracle of the Lore mystery saw the number.
+  Authored as effect-backfill create rows rather than scripts/data/toggle-modes.json (which this
+  chunk may not write): modes/item-umbral-wings is the standing precedent for a mode that lives only
+  in the overlay. The cursebound-4 silence clause stays in that rung's note (CROSS-FILE GAPS 5).
+  Test: describe 'curse-of-torrential-knowledge puts its cursebound penalty on a stat' > 'carries a
+  four-rung ladder, each rung -N status to Perception and Will'. Fails today: rung 1 undefined.
+
+phlogistonic-regulator#resistance-minimum — DONE
+  Row: {classFeatures, phlogistonic-regulator, resistances, supersedes:true} — the same two-entry
+  array with the max(1,...) floor dropped from both members: [{cold, "floor(@actor.level/2)"},
+  {fire, "floor(@actor.level/2)"}]. innovation-5 prints "You gain resistance equal to half your level
+  to cold and fire damage" with no minimum, WG's row 24832 has none either, and the sibling
+  modification with identical wording (dense-plating) is already stored without one — so a 1st-level
+  inventor read resistance 1 where both authorities read 0.
+  Test: describe 'phlogistonic-regulator resists half your level, and 2 more in Overdrive' > 'has no
+  minimum on the resistance print does not floor'. Fails today on the max(1,...) values.
+
+phlogistonic-regulator#overdrive — DONE
+  Row: create modes/cat-phlogistonic-regulator-overdrive, copied field-for-field from the only other
+  Overdrive mode in the bucket (cat-harmonic-oscillator-overdrive): feats gate on the modification,
+  modifiers: [], resistances [{cold,"2+floor(@actor.level/2)"},{fire,"2+floor(@actor.level/2)"}] as a
+  REPLACEMENT total, prose note. innovation-5: "When under the effects of Overdrive, the resistance
+  increases by 2." With the #resistance-minimum row applied the base is floor(level/2), so
+  2+floor(level/2) is exactly +2. The gate resolves because modeGateIds -> ownedFeatureIds
+  (src/rules/derive.ts:3468) admits c.inventor.modifications.
+  Test: same describe > 'gains an Overdrive mode worth the printed +2'. Fails today: mode undefined.
+
+school-of-protean-form#curriculum-9th — DONE
+  Row: {classes, wizard, options, path:["subclass"], supersedes:true} — the whole 18-option array
+  re-emitted (byte-identical to the shipped one, including the red-mantis-magic-school curriculum
+  repair the superseded row was written for) with two edits inside school-of-protean-form: the
+  curriculum line "- **9th:**" becomes "- **9th:** Metamorphosis", and {"label":"Metamorphosis",
+  "key":"spells"} is inserted after "Monstrosity Form" in that option's descRefs. arcane-school-20
+  (Player Core pg. 200) ends the Curriculum "- 9th: Metamorphosis". Display-only: the engine copy
+  (classFeatures/school-of-protean-form.curriculum["9"] = ["metamorphosis"]) was already right and is
+  untouched. The classFeatures copy's own descRefs gap is DATA STILL NEEDED 5.
+  Test: describe 'school-of-protean-form shows the 9th-rank curriculum spell it prints' > 'ends the
+  picker copy of the curriculum with Metamorphosis, and links it'. Fails today on the bare "- **9th:**".
+
+curse-of-the-skys-call — DONE (numeric half; two clauses have no reader)
+  Rows: four create rows in `modes`, curse-of-the-skys-call-1..4, shape copied whole from
+  curse-of-the-living-death-N, each carrying three modifiers (fortitude / reflex / will) at -N status
+  with appliesWhen "against all forms of forced movement" — the same three-save shape WG encodes
+  (4 x 3 = 16 ops at -1..-4). mystery-15: "you take a status penalty to saves and DCs against all
+  forms of forced movement equal to your cursebound value". Before this the only carrier was a
+  RECORD_MARKERS note (situationalBonuses.ts:4556) and the generic cat-cursebound-N with
+  modifiers: [], so no save moved while five sibling curses already shipped per-rung modes.
+  The enfeebled clause and the DC half stay in each rung's note: ModeDef has no `conditions` field and
+  ModeTargetKind has no DC target (CROSS-FILE GAPS 4 and 5).
+  Test: describe 'curse-of-the-skys-call puts its forced-movement penalty on the saves' > 'carries a
+  four-rung ladder, each rung -N status on all three saves'. Fails today: rung 1 undefined.
+
+lesson-of-elements#edition — DONE (overlay half; the build-map repoint is a cross-file gap)
+  Rows: five on the record — edition "remaster" (supersedes the existing "legacy" row), aonId
+  "lesson-17", name "Lesson of the Elements", description "You gain the Elemental Betrayal hex. Your
+  familiar learns your choice of Breathe Fire, Gust of Wind, Hydraulic Push, or Pummeling Rubble.",
+  and descRefs with Gust of Wind in place of Air Bubble. lesson-17 is the Player Core printing this
+  record is sourced to; lesson-2 is the Advanced Player's Guide one (burning hands, air bubble, ...)
+  whose remaster_id IS lesson-17, and we shipped a hybrid list matching NEITHER printing. The
+  "legacy" tag dropped a Player Core lesson from every picker under "Hide legacy data".
+  The proposal's first half (scripts/migration/build-map.mjs:151) is a scripts/ file this chunk may
+  not touch — CROSS-FILE GAPS 3 — but the overlay rows are durable without it, because the overlay is
+  applied after generation. The record's other defect, the missing four-way familiar-spell picker, is
+  another chunk's finding (lesson-of-elements#familiar-spell-choice, field grantedSpellChoice); the
+  description authored here names exactly the four spells that picker will offer.
+  Test: describe 'lesson-of-elements cites the Player Core printing it is sourced to' > 'is joined to
+  lesson-17 and names gust of wind, not the legacy air bubble'. Fails today with 'lesson-2'.

@@ -1,0 +1,100 @@
+BATCH 035 — ADVERSARIAL VERIFY of GATE-RED group "field-diff".
+Builder report: work/.b035-report-red-field-diff.txt   Spec: work/.b035-rows-field-diff.json
+Everything below was re-measured from the AoN mirror and by running the instrument, not read off the report.
+
+
+ITEM 1 (throneglass x5 — is the red an instrument misread?)  — DONE
+  Re-dumped all five own documents from the mirror myself. equipment-5212 / -4727 / -4728 carry
+  structured level -1, -4731 level 8, -4733 level 16; our records are 0 / 0 / 0 / 8 / 16 (-1 is the
+  mirror's "prints no level" sentinel, stored as 0 here — the same reading :153 already documents).
+  Every one of the five documents carries the SAME six headings, in this order:
+      right="Item -1+"  right="Item -1"  right="Item -1"  right="Item 2"  right="Item 8"  right="Item 16"
+  so printedLevel() (:44-49) returns 2 on all five — a sibling's heading, exactly the FAMILY HEADS trap
+  named at :21. The builder's diagnosis is correct and it is the instrument, not the data. No data row
+  is owed and none was written.
+
+ITEM 2 (the fix in scripts/field-diff.mjs)  — DONE
+  Read :98-116. The added condition is `const headingAgreesOwn = own.level === wantLevelOwn;` (:112),
+  which is literally the second half of the by-NAME branch's :154 `m.level === wantLevel` — no new guard
+  list, no new predicate. Non-agreeing cases go to `held` with a why naming the graded-family sibling.
+  Blast radius measured, not assumed: `node scripts/field-diff.mjs` gives compared 13005 (unchanged),
+  held 25, UNEXPLAINED 1; `--all` shows the five new held lines are EXACTLY the five throneglass records
+  and nothing else moved. Rarity reporting is untouched (the condition is inside the level branch only).
+  Degenerate cases checked: when printedLevel returns null, wantLevelOwn === own.level so the condition
+  is a no-op; the `wantLevelOwn > 0` gate still runs first, so the -1 sentinel path is unchanged.
+
+ITEM 3 (beckon-the-blasphemous-brethren — real lane, must survive the guard)  — DONE
+  ritual-275 re-dumped: level 3, one single heading right="Ritual 3", trait ["Rare"], NO tradition
+  field, source "The Dead God's Hand", **Primary Check** "Occultism or Religion (expert)",
+  **Secondary Casters** 4. printedLevel's regex (Item|Feat|Spell|Cantrip|Focus) does not match Ritual,
+  so wantLevelOwn falls back to the structured 3 and the new condition is satisfied — I confirmed by
+  running the fixed script that this line is the one row still in UNEXPLAINED
+  (`level spells/beckon-the-blasphemous-brethren app 1 -> mirror 3`). Our record ships rank 1.
+  `rank` is the right field, verified independently rather than taken from the report: 164 records in
+  the spells bucket carry ritual-* aonIds and every sampled one stores its printed ritual level on
+  `rank` (statuette 6, awaken-portal 3, bathe-in-blood 8 ...), and the instrument maps the bucket
+  through `(r) => r.rank` (:60).
+  ROW CHECKED: one row, {category:'spells', id:'beckon-the-blasphemous-brethren', field:'rank',
+  value:3}. The record EXISTS in public/core.json, so no create:true is needed; scripts/data/
+  effect-backfill.json holds NO row for this record (grepped by id), so no supersedes is owed; a scan of
+  all 17 work/.b035-rows-*.json spec files found no other row on any record+field this one touches (55
+  rows total, one collision-free key each). `why` names the AoN doc id verbatim.
+  traits / traditions, asked for explicitly: I agree with the builder and re-verified both. The mirror's
+  trait array is ["Rare"] alone — that is the rarity, which we already carry on `rarity: 'rare'` — and
+  ritual-275 has no `tradition` field at all. Our `traits: []` / `traditions: []` are right; no second
+  row is owed, and nothing was merged into the rank row.
+  WG: `node scripts/wg-show.mjs "Beckon the Blasphemous Brethren" --raw` returns no ability_block at
+  all — WG does not carry this record, so print is the only authority here and there is nothing of
+  theirs to match.
+
+ITEM 4 (test/batch035-field-diff.test.ts)  — DONE
+  4 tests, all passing through `node scripts/vt.mjs test/batch035-field-diff.test.ts` (4 passed, 7.06s).
+  `npx tsc --noEmit` clean. `node scripts/test-flip-audit.mjs --batch 035` clean.
+  (a) present — the ritual case patches `rank` IN MEMORY on a content() copy and also pins the mirror
+      side (heading, structured level, aonId). Noted for the record: `{...shipped, rank:3}.rank === 3`
+      is a tautology by construction, which is what the "patched in memory, never a shipped delta" rule
+      forces; the assertion that actually pins the value is (c)'s `app 1 -> mirror 3` through the real
+      instrument, which is why I did not add a fourth child-process run for it.
+  (b) present and correctly marked `// mutation-proof` (line 128), naming the stunt point. It rewrites
+      `headingAgreesOwn` to `true` on a COPY of the script and asserts all five throneglass ids return
+      with UNEXPLAINED: 6. I re-read the copy mechanics: the copy lands in work/ (whose `..` is the repo
+      root, so public/core.json still resolves) and is removed in a `finally` — I checked work/ after my
+      own run and there are no leftovers.
+  (c) present — pins the ritual's rank to 1 in memory, asserts the line is reported, UNEXPLAINED: 1 and
+      no throneglass. DURABILITY CHECKED, this is the trap that would have bitten: because BOTH child
+      runs pin rank to 1 themselves, the counts 6 and 1 stay true after the driver applies the row.
+  Citations are form (2) on all four: `// batch 035 premise: ritual-275 "Ritual 3"` and
+  `// batch 035 premise: equipment-5212 "Item 2"`. Both doc ids exist in the mirror and both clauses
+  are verbatim substrings of those documents' markdown (I grepped the headings out of the raw docs).
+  I also re-checked that no OTHER family's spec row can move these counts: the only other batch-035 rows
+  in a compared bucket are spells/discomfiting-whispers (name/duration/aonId/edition) and the delete of
+  spells/discomfiting-whisper, and that record already sits clean against spell-2139 (level 1 vs rank 1,
+  uncommon vs uncommon), so UNEXPLAINED does not move when they land.
+  TEACH / SETTLE: none in this group, correctly. The five reports were silenced by a correctness
+  condition inside the instrument, not by a registry entry, and it is mutation-proved. The two verify
+  lane finding ids this group carries are beckon-the-blasphemous-brethren#level (real, one row) and
+  throneglass-family#level (instrument misread, no row).
+
+ITEM 5 (manifest)  — FIXED-BY-ME
+  The builder appended his own entry to work/.b035-specs.json even though the brief said to hand the
+  line to close-out and not write that file. I left the entry in place rather than removing it: it is
+  the CORRECT one (the verbatim line staged work/.b035-report-field-diff.txt, which does not exist, and
+  omitted the report that does). What I changed is one line — I appended the missing
+  work/.b035-verify-red-field-diff.txt to that entry's `stage[]`, matching every other family's entry.
+  Re-parsed afterwards: 17 entries, 17 distinct `file` values, no entry dropped, valid JSON.
+  ⚠ HAND-OFF HAZARD FOR CLOSE-OUT (not a gap, an instruction): work/.b035-rows-field-diff.json must
+  appear ONCE. The entry already in the manifest (family "red-field-diff") is that one entry. Do NOT
+  also add the verbatim line from the brief — two entries on the same spec file hand the applier the
+  same row twice. Final stage[] for it:
+    work/.b035-rows-field-diff.json, work/.b035-report-red-field-diff.txt,
+    work/.b035-verify-red-field-diff.txt, test/batch035-field-diff.test.ts, scripts/field-diff.mjs
+
+VERDICT: both red items are BUILT with artefacts — one instrument fix (mutation-proved) and one data
+row (spec'd, collision-free, print-cited). Nothing is parked, nothing is explained away.
+
+DATA STILL NEEDED:
+  (none)
+
+CROSS-FILE GAPS:
+  (none — the only file outside the group I touched is work/.b035-specs.json, one stage[] line, as
+  the verify brief directs)

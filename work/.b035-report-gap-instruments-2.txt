@@ -1,0 +1,95 @@
+BATCH 035 — GAP AGENT, FAMILY instruments-2
+Both open lines of my family are CLOSED IN CODE, in the one file both of them name
+(test/wg-experience.harness.test.tsx). No spec row was owed by either; the spec
+work/.b035-rows-gap-instruments-2.json carries two rowless entries (backfillRows: []) so the close
+script reads them as TEACH lines, and the manifest entry stages the harness file.
+
+THE TWO LINES
+
+- AUTHORED — "test/wg-experience.harness.test.tsx — classFeatureHost's `ownedAt20` calls
+  classFeatureIdsOwned(...) with NO classChoices".
+  ref: test/wg-experience.harness.test.tsx:classFeatureHost (the extraChoices owner route + seat())
+       · work/.b035-rows-gap-instruments-2.json, finding crafter-in-the-vault#instrument.
+  Why: the owner search now reaches a class feature that IS an extraChoices OPTION, seats that one
+  pick on the WITH build (and primaryApparition with it) and an empty group on the WITHOUT build.
+
+  SAID PLAINLY, BECAUSE IT IS NOT ALL MINE: the owner-search half was authored by the gap agent for
+  family instruments-1, working the same defect in the same file at the same time as me (their gap
+  line, work/.b035-gaps.json index 38, is the same sentence from their side and is now "authored").
+  It had landed before my first edit. I did not duplicate it, and I deliberately did NOT do what my
+  own gap line literally asks — route `ownedAt20` through `classChoices`: giving
+  classFeatureIdsOwned every option of every group makes the FIRST loop in classFeatureHost answer
+  "owned" and `break` before the new extraChoices fallback runs, which leaves `extra` null, seats no
+  pick, and silently regresses the fix that closes this line. The line's END (a host that really
+  attunes the record) is met; its proposed MEANS is the wrong one now.
+
+  What is mine on this line: the second half below, without which a "found" host still built with
+  nothing answered — and the end-to-end pin plus the measurement that says the line is actually shut.
+
+- AUTHORED — "test/wg-experience.harness.test.tsx:78-88 — minimalHost's apparition/extraChoices
+  PREFILL IS DEAD CODE."
+  ref: test/wg-experience.harness.test.tsx:minimalHost (`...emptyBuild()` now spreads FIRST)
+       · work/.b035-rows-gap-instruments-2.json, finding shepherd-of-errant-winds.
+  Why: `extraChoices` and `primaryApparition` were spread ABOVE `...emptyBuild()`, which sets
+  `extraChoices: {}` (build.ts:403) and `primaryApparition: null` (build.ts:412); the later spread
+  won, so the prefill the function's own comment describes never reached a single build. Moving
+  `...emptyBuild()` to the top is the whole fix. Also folded out two helpers the file now uses in
+  three places — `extraGroupsOf(db, classId)` and `groupCap(groupId)` (an animist answers TWO
+  apparitions, every other group one), so the with/without pair cannot drift on the pick COUNT.
+
+TESTS (all in the file the lines name, per the gap-agent rule; every flip cited)
+describe('classFeatureHost — shepherd-of-errant-winds and custodian-of-groves-and-gardens deliver
+their printed block on the with build and none of it on the without'):
+- shepherd-of-errant-winds — a really built pair: Sailing and Scouting Lore at MASTER on the WITH
+  build (AoN apparition-14 "Apparition Skills Sailing Lore, Scouting Lore" on the class's own
+  loreProgression 8 expert / 16 master) and no such Lore row at all on the WITHOUT build;
+  Gift of the Anemos in the focus pool with the pick and absent without it (the vessel spell is
+  PRIMARY-only, build.ts:4713, so this fails the moment the seat stops moving primaryApparition).
+- custodian-of-groves-and-gardens — the same shape on AoN apparition-4 (Farming/Herbalism Lore,
+  Garden of Healing), plus the dead-prefill half pinned where it lives: minimalHost's own
+  extraChoices.apparition has two entries and primaryApparition is the first of them.
+- 'the revived prefill answers every class, and every one of them still builds' — the guard the
+  change needs: the prefill was dead for EVERY record in EVERY experience run, so switching it on
+  moves every host in this file, not just the animist's. Every class's every group is answered to
+  groupCap and all 27 classes still build.
+
+MEASURED, NOT ASSUMED (the point of the two lines)
+Ran the harness itself over the five apparitions this family parked —
+  WG_EXPERIENCE_BATCH=<5 classFeatures rows> WG_EXPERIENCE_OUT=… node scripts/vt.mjs test/wg-experience.harness.test.tsx
+All five: supported TRUE (was "no class or subclass grants this feature at level 20"), host
+{classId: animist, extraChoiceGroup: apparition, without: 'extra-choice-unpicked'}, 22 pages, 98
+controls rendered, 32 attributable sheet changes each — both Lores at master, `grantedSkills` for
+both, the focus pool opening at 3, the ten-spell ladder landing in
+spellcasting[animist-apparition-casting] (cantrips[0] slashing-gust, repertoire.1..9), and the
+vessel spell on the surface. controlsAdded is 0 and that is correct: the apparition PICKER exists in
+both builds (only the answer differs), so the record's delivery is a SHEET difference, which is what
+the giveSpell / skill lanes read.
+
+FOLLOW-UP I DID NOT TAKE (deliberately, and it is not one of my lines)
+work/experience-instrument-limits.json still parks all ten apparitions — this family's five and
+instruments-1's five — on lane 'harness-host-search-no-extra-choice-route'. The measurement above
+says those parks are now STALE: the instrument sees the records. I left them alone because (a)
+neither of my gap lines asks for it, (b) the file is being appended to by the sibling gap agent as I
+write, and (c) removing a park un-excuses the record at gate 9 in THIS batch on a lanes verdict I
+have not measured, which can only cost the batch. The evidence to drop all ten with confidence is in
+the paragraph above; the closer or the next batch can act on it in one edit.
+
+CROSS-FILE GAPS
+- (none new). The third gap the instruments-2 verify raised — no host strategy for a class feature
+  owned by a feat's `choice.ownsFeature` (derive.ts:3551 choiceOwnedFeatureIds; all 19 witch lessons,
+  lesson-of-vengeance and lesson-of-elements among them) — is NOT a line of my family in
+  work/.b035-gaps.json and is untouched: it needs a `featChoiceHost` that places basic/greater/major
+  lesson and answers its choice, and no argument list to classFeatureIdsOwned can rescue it.
+
+DATA STILL NEEDED
+(none — both lines are instrument code, no backfill row is owed by either.)
+
+CHECKS
+node scripts/vt.mjs test/wg-experience.harness.test.tsx  -> 1 file, 9 tests + 1 skipped, all green
+                                                            (10/10 with the harness batch env set)
+node scripts/test-flip-audit.mjs --batch 035              -> clean, 14 test files touched, every flip cited
+npx tsc --noEmit                                          -> clean
+Files touched: test/wg-experience.harness.test.tsx (minimalHost + the new describe only — I did not
+edit the sibling's extraChoices route), work/.b035-rows-gap-instruments-2.json,
+work/.b035-specs.json (appended one entry, every existing entry kept), work/.b035-gaps.json (my two
+lines only), this report.

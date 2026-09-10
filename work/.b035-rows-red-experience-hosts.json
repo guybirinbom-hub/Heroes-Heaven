@@ -1,0 +1,4 @@
+{
+  "_": "BATCH 035 — GATE-RED, group red-experience-hosts. NO DATA ROWS, on purpose. All four items in this group's brief were instrument misreads already parked with a hand verification, and the disposition asked for was to LIFT the harness limitation rather than change a record. Both routes landed in test/wg-experience.harness.test.tsx (innovationModificationHost, featChoiceHost) and the four records now report OK from the experience sweep, so nothing in scripts/data/effect-backfill.json is owed by this group. The two real DATA defects on these records (phlogistonic-regulator#resistance-minimum, and the #overdrive pair neither side models) belong to other families and are not touched here.",
+  "findings": []
+}

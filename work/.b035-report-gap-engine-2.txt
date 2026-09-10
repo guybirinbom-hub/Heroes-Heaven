@@ -1,0 +1,101 @@
+BATCH 035 — GAPS STAGE, family gap-engine-2
+9 open lines in, 9 closed, 0 left open. 8 AUTHORED, 1 AUTHORED-by-reference. No PARKED lines, no
+owner questions, no flagged residue: every line turned out to be either a row a sibling agent had
+already emitted or a two-defect edit to one src line.
+
+Spec file written: work/.b035-rows-gap-engine-2.json (manifest entry appended, family "gap-engine-2",
+stage = the rows file, this report, test/batch035-gap-engine-2.test.ts, src/rules/companionGrants.ts).
+
+--------------------------------------------------------------------------------------------------
+1. AUTHORED — DATA STILL NEEDED, classFeatures/animal-instinct/grantedStrikesState = "rage"
+   ref: work/.b035-rows-engine-2.json (finding animal-instinct#rage-gate)
+   Already emitted: the engine-2 VERIFIER added the row after confirming no sibling family carried
+   it, so the reader in this batch (collectGrantedNaturals -> NaturalAttack.requiresState) ships with
+   its carrier. Re-verified here: scripts/data/effect-backfill.json holds NO row for
+   animal-instinct/grantedStrikesState, and no other b035 spec emits that record+field, so the row
+   needs no `supersedes` and collides with nothing.
+
+2. AUTHORED — DATA STILL NEEDED, classFeatures/animal-instinct/unarmedTraits =
+   [{"fromRecord":"animal-instinct","stepDie":1,"minLevel":7}]
+   ref: work/.b035-rows-engine-2.json (finding animal-instinct#spec-die-step)
+   Same story: the row is in the engine-2 spec already. Re-verified no existing backfill row for
+   animal-instinct/unarmedTraits and no cross-family collision. (The situational family's
+   animal-instinct line is `grantedStrikes`, a different field — not a collision.)
+
+3. AUTHORED — DATA STILL NEEDED, classFeatures/lesson-of-vengeance/grantedSpells = ["phantom-pain"]
+   ref: work/.b035-rows-engine-2.json (finding lesson-of-vengeance#familiar-spell)
+   Already emitted. Re-verified no existing backfill row for that record+field (the record's only
+   overlay rows are focusSpells + edition) and no cross-family collision.
+
+4. AUTHORED — DATA STILL NEEDED, classFeatures/lesson-of-elements/grantedSpellChoice = {...four
+   spells...}
+   ref: work/.b035-rows-engine-2.json (finding lesson-of-elements#familiar-spell-choice)
+   Already emitted. Re-verified no existing backfill row for that record+field and no cross-family
+   collision with data-rows-2's edition/aonId/name/description/descRefs rows on the same record.
+
+5. AUTHORED — CROSS-FILE GAPS, demon-eidolon#language-abyssal (builder line, report:10)
+   ref: src/rules/companionGrants.ts COMPANION_MODS['demon-eidolon'] — added "languages":["Abyssal"]
+   AoN eidolon-5 prints "**Language** Abyssal". The row carried neither `languages` nor
+   `languageChoices`, the summoner subclass option grants skills only, and deriveEidolon
+   (src/rules/companions.ts:1053) fills eidolonLanguages from mod.languages / mod.languageChoices
+   alone — so the eidolon block showed NO Languages row at all. Written as the printed NAME, not an
+   id: I checked public/core.json (120 language records) and there is no 'abyssal' key, so
+   deriveEidolon's `content.languages?.[l]?.name ?? l` must fall through to the string as written —
+   the same shape the siblings 'angel-eidolon' (Celestial) and 'beast-eidolon' / 'fey-eidolon'
+   (Sylvan) already ship. Taken here rather than left to the engine-1 gap agent (who owns the
+   plant / swarm / undead language lines in the same table) because it is a different key on a
+   different line; both edits coexist.
+
+6. AUTHORED — CROSS-FILE GAPS, demon-eidolon#demonic-strikes-note (builder line, report:11)
+   ref: src/rules/companionGrants.ts COMPANION_MODS['demon-eidolon'].note
+   Replaced the pre-remaster note ("the eidolon's unarmed Strikes deal an extra 1 unholy (evil)
+   damage" — wrong damage type, no target restriction, no versatile clause) with the remastered
+   wording. Verified against BOTH authorities before writing: the AoN mirror doc eidolon-5 reads
+   "Your eidolon's unarmed Strikes gain the unholy trait and deal 1 extra spirit damage to holy
+   creatures and creatures with weakness to unholy. Additionally, choose one of your eidolon's
+   unarmed attacks that deals physical damage; it gains your choice of versatile B, versatile P, or
+   versatile S.", and public/core.json classes.summoner.subclass.options['demon-eidolon']
+   .eidolonAbilities[0] carries that same text — which is what made the note a SECOND, less accurate
+   copy rendered beside the correct one. Same fix batch 033 applied to the 'angel-eidolon' note.
+
+7. AUTHORED — CROSS-FILE GAPS, demon-eidolon#demonic-strikes-note NOT-DONE (verifier line,
+   verify:23) — the verifier's restatement of line 6. Same ref, closed by the same edit.
+
+8. AUTHORED — DATA STILL NEEDED, "(none) — the four rows the builder listed here are now emitted in
+   work/.b035-rows-engine-2.json" (verifier line, verify:115)
+   ref: work/.b035-rows-engine-2.json — the verifier's own summary of lines 1-4; closed by the same
+   four rows, re-verified above.
+
+9. AUTHORED — CROSS-FILE GAPS, src/rules/companionGrants.ts:507 demon-eidolon#language-abyssal
+   (verifier line, verify:119) — the verifier's restatement of line 5. Same ref, same edit.
+
+--------------------------------------------------------------------------------------------------
+TESTS
+test/batch035-gap-engine-2.test.ts — 3 tests, all on a BUILT 5th-level summoner run through
+deriveEidolon (the same route CompanionsTab uses):
+  - demon-eidolon shows Abyssal on the block, with no unanswered pick   [demon-eidolon#language-abyssal]
+  - demon-eidolon carries the printed name because no abyssal language record exists
+    [demon-eidolon#language-abyssal] — pins WHY the entry is "Abyssal" and not "abyssal", so a later
+    tidy-up to the id form fails loudly instead of printing the raw token to the player
+  - demon-eidolon note names spirit damage, the holy target restriction and the versatile pick
+    [demon-eidolon#demonic-strikes-note] — asserts the new clauses AND that the pre-remaster wording
+    is gone, then that the note still reaches the block as an evoNote
+Every it( carries "// batch 035: <finding id>" within 6 lines above it and the record id
+"demon-eidolon" appears in both enclosing describe titles. No new settle or comparer teach in this
+chunk, so no "// mutation-proof" marker is owed.
+
+VERIFICATION RUN
+  node scripts/vt.mjs run test/batch035-gap-engine-2.test.ts                       3 passed
+  node scripts/vt.mjs run (batch033 eidolon-languages, companions, eidolon-abilities,
+                           companion-fixes — the neighbours of the edited table)   30 passed
+  npx tsc --noEmit                                                                 clean
+  node scripts/test-flip-audit.mjs --batch 035                                     clean
+
+CROSS-FILE GAPS (mine, still open elsewhere)
+  none. Both cross-file lines named src/rules/companionGrants.ts and both were taken here.
+
+NOTE FOR THE DRIVER
+  src/rules/companionGrants.ts is also named by the engine-1 gap agent's lines (plant-eidolon /
+  swarm-eidolon / undead-eidolon languages). My edit touches only the 'demon-eidolon' key; if both
+  agents' stage lists name the file, staging it twice is harmless, but confirm before commit that
+  the file holds BOTH families' rows.

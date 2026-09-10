@@ -730,7 +730,10 @@ export function recordMarkersFor(
     extra = { ...(extra ?? {}) };
     for (const [rid, marks] of Object.entries(owned)) extra[rid] = [...(extra[rid] ?? []), ...marks];
   }
-  return markersFor(characterSituationalIds(c, db), on, id, extra);
+  /* batch 035: animal-instinct#spider-web — the character's own `feature:<id>` answers, so a mark that
+   * names one answer of its source record's choice (the Spider's Web attack, one of Animal Instinct's
+   * 22 animals) reaches only the barbarian who picked it. Every OTHER mark ignores this argument. */
+  return markersFor(characterSituationalIds(c, db), on, id, extra, c.featureChoices);
 }
 
 /**

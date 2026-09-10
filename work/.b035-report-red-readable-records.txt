@@ -1,0 +1,191 @@
+BATCH 035 — GATE-RED group "readable-records" (family prose)
+============================================================
+
+THE LANE
+  `node scripts/readable-record-check.mjs` opened the batch red: 27 records ship with nothing a
+  player can read, against the SIX the guard's header holds at. Twenty-one arrived from the
+  Impossible Magic / Battlecry! scrapes since and nobody read them.
+
+  DISPOSITION, 27 of 27, two kinds only — nothing was added to KNOWN:
+     20  printed prose off the record's own AoN page  -> work/.b035-created-desc-readable-records.json
+      5  itemBonus synthetic carriers                 -> new RULE exemption, scripts/readable-record-check.mjs
+      2  `source` book entries                        -> new RULE exemption, scripts/readable-record-check.mjs
+
+  Plus FOUR more the guard never reported (see FOUND ON THE WAY below), so the spec carries 24 rows.
+
+  Guard state now: `node scripts/readable-record-check.mjs` reports 20 — exactly the 20 prose rows
+  the driver has yet to apply. It reaches ZERO on apply; nothing is carried silently.
+
+WHAT WAS BUILT
+--------------
+1. THE LANE — scripts/readable-record-check.mjs
+   - `readable(bucket, id, rec, descsFile)` extracted (new export) from the scan loop, so an exemption
+     rule can ask the SAME four-surface question about a DIFFERENT record. Loop rewritten to call it.
+   - `exempt(bucket, rec, id, db, descsFile)` gains the two rules below; the two pre-existing rules
+     (`modes`, `items`+itemType:treasure) are byte-unchanged and re-pinned by test.
+   - The CLI report is now behind a `pathToFileURL(process.argv[1])` main guard (the repo's existing
+     pattern, scripts/repair-damage-type.mjs:160), so a test can import the two functions without the
+     script printing and process.exit()-ing out of the runner. Scan behaviour unchanged.
+   - Header updated with the batch-035 count and dispositions, and with the measured instrument
+     weakness (below). No id was added to KNOWN.
+   Pinned by: test/batch035-red-readable-records.test.ts, all four describes.
+
+2-5. arcaneSchool/school-of-breathtaking-influence, /school-of-keen-inquiry, /school-of-nexian-spaces,
+   /school-of-quantic-control — BUILT, prose.
+   Rows: finding `readable-record-check#arcaneSchool`, one `field:"description"` row each, from
+   AoN arcane-school-31 / -32 / -33 / -34 (Impossible Magic pg. 108): flavour paragraph, the full
+   Curriculum ladder (cantrips through 9th) and both School Spells, links flattened to spell names.
+   Pinned by: "the prose rows" (strip -> false, patch -> true, per row) and
+   "school-of-keen-inquiry carries the curriculum ladder and both school spells".
+
+6-7. fatalMethod/puppeteer, fatalMethod/reaper — BUILT, prose.
+   Rows: finding `readable-record-check#fatalMethod`, from AoN fatal-method-1 / -2 (Impossible Magic
+   pg. 29). Puppeteer carries the whole Consume Thrall action block (frequency, requirements, effect)
+   and thrall proliferation; Reaper carries reaper's edge with both later ranks and thrall teamwork.
+   "at least one thrall with 30 feet of you" is transcribed as printed.
+   Pinned by: "reaper states reaper's edge verbatim, including both later ranks".
+
+8-11. follower/berserker, /sharpshooter, /shieldbearer, /adept — BUILT, prose. NOT an exemption.
+   Read before deciding: a follower page is not a stat line whose text lives on a parent — it prints
+   a flavour line, a Melee/Ranged line, six ability modifiers, Hit Points, Kit Armor, Skills, a
+   Follower Ability and THREE full advancement tiers (experienced / veteran / exceptional), several
+   of which grant named actions (Reckless Attack, Take Aim, Following Shot, Energy Deflection,
+   Energy Wave, Spellshaped Blast). None of that lives anywhere else in our data: the app's playable
+   catalogue is the SEPARATE `followers` bucket, whose entries carry a one-sentence `notes` line and
+   which has no Adept at all. So: prose, all four.
+   Rows: finding `readable-record-check#follower`, from AoN follower-1 / -4 / -5 / -6.
+   Pinned by: "adept carries the stat line and all three advancement tiers".
+
+12-13. grimFascination/blood, /flesh — BUILT, prose.
+   Rows: finding `readable-record-check#grimFascination`, from AoN grim-fascination-1 / -3
+   (Impossible Magic pg. 30): flavour, Grave Spell, and the Thrall Enhancement with its scaling.
+   Pinned by: "blood states the thrall enhancement with its scaling".
+
+14-15. hybridStudy/twofold-tine, /volatile-spark — BUILT, prose.
+   Rows: finding `readable-record-check#hybridStudy`, from AoN hybrid-study-15 / -16 (Impossible
+   Magic pg. 14): the study's own rules paragraph, the Reloading Cascade action (volatile spark),
+   the conflux spell and all three studious spells.
+   Pinned by: "twofold-tine states the Arcane Cascade damage it raises, at all three tiers".
+
+16-20. itemBonus/aeon-stone-eastern-star, /deravons-helm, /lookouts-spyglass, /mantle-of-far-horizons,
+   /azlanti-diamond — BUILT, RULE EXEMPTION (not five hand-written descriptions).
+   scripts/readable-record-check.mjs `exempt()`:
+       if (bucket === 'itemBonus' && readable('items', id, db?.items?.[id], descsFile))
+         return 'item bonus — synthetic carrier; text lives on the parent item';
+   MEASURED, not assumed: all 723 itemBonus ids are also `items` ids, and the 718 that pass today
+   pass on the PARENT ITEM's ast tree — the itemBonus record is a carrier for one scraped bonus
+   value. All five parents here carry their full prose in core-descriptions.json (aeon stone 9,667
+   chars, azlanti diamond 3,580, mantle 1,198, helm 1,094, spyglass 1,010). This is the `modes` shape
+   at :59 exactly. Conditioned on the parent being READABLE, never on the bucket name, so an item
+   bonus whose parent is missing or itself bare is still a hole and still fails.
+   Pinned by: "every itemBonus id is also an items id — the measurement the rule rests on";
+   "exempts a bonus whose parent item reads, and NOT one whose parent is bare or missing"
+   (mutation-proof: stunts the parent); "does not exempt a record in another bucket that happens to
+   share a readable item slug".
+
+21-26. sidebar/arcane-cascade-damage, /runic-phrases, /motion-sense, /jotunborn-adventurers,
+   /jotunborn-enclaves, /on-jotuns — BUILT, prose.
+   A sidebar IS prose by definition; it can never be a rule-based exemption.
+   Rows: finding `readable-record-check#sidebar`, from AoN sidebar-3750 / -3753 / -3756 / -3758 /
+   -3759 / -3760, each the whole printed paragraph with links flattened.
+   Pinned by: the per-row strip/patch tests.
+
+27-28. source/the-dead-gods-hand, source/pathfinder-221-into-the-apocalypse-archive — BUILT,
+   RULE EXEMPTION. Confirmed against the mirror as instructed: source-370 and source-371 carry a
+   product-page link, a release date, a Product Line and a Source Group and NO rules text at all —
+   the rules are the thousands of records that cite the book. The bucket exists so the per-character
+   book filter has something to list.
+   scripts/readable-record-check.mjs `exempt()`: `if (bucket === 'source') return 'source — a book
+   entry, not a rules record';` — one rule, covering both and every future book.
+   Pinned by: "exempts the source bucket and nothing else with the same empty shape" (mutation-proof:
+   the identical bare record moved into `feats` and `sidebar` must still fail) and "leaves the two
+   pre-existing exemptions exactly as they were".
+
+29. CITATION + TEST
+   No read finding covers a verify-lane red, so every flip carries form (2):
+   `// batch 035 premise: <AoN doc id> "<verbatim clause>"`. Every doc id was checked to exist under
+   C:\wonderers guide\aon-2e-archive\data\by-category\<category>\<id>.json and every clause checked
+   to be a verbatim substring of that document's markdown/text — arcane-school-31, arcane-school-32,
+   fatal-method-1, fatal-method-2, follower-2, follower-6, grim-fascination-1, hybrid-study-15,
+   sidebar-3750, source-370, source-371, equipment-3055-4734-bonus-1716, equipment-5218-bonus-1719,
+   equipment-5220-bonus-1721. Each new exemption is proved in BOTH directions and each carries a
+   `// mutation-proof` marker naming the exempt() key it stunts.
+   Every prose row is asserted against a copy of the record with the description PATCHED IN MEMORY,
+   and against the same copy STRIPPED — never against the shipped artefact, so nothing in the file
+   flips when the driver applies the rows.
+   test/batch035-red-readable-records.test.ts — 37 tests, green through `node scripts/vt.mjs`.
+   `npx tsc --noEmit` clean.
+   The spec was additionally run through the driver's own `precheck()` (scripts/wg-batch-run.mjs)
+   against the live overlay: 0 problems, 0 undeclared supersessions — every `why` names a mirror doc
+   and every restored token is in that doc.
+
+   REMAINING COUNT: 20 before apply (the 20 unapplied prose rows), 0 after. No residue is carried.
+
+FOUND ON THE WAY — four more textless records the guard cannot see
+------------------------------------------------------------------
+   follower/medic, follower/scout, grimFascination/bone, grimFascination/spirit ship with no
+   description, no `note` and no ast of their own. They pass only because `hasAst()` looks an id up
+   in public/ast-index.json WITHOUT its bucket: `medic` resolves to the Medic ARCHETYPE's display
+   tree, `scout` to the Scout exploration activity's, `bone` to an item's, `spirit` to the barbarian
+   Spirit instinct's.
+   Making the lookup bucket-strict was MEASURED before it was rejected: 1,574 records currently
+   resolve through an ast FILE whose name differs from their bucket (itemBonus<-items 715,
+   runes<-items 155, rules<-categoryPage 118, trait<-ancestries 50, …), because public/ast/*.json are
+   GROUPED display files and were never per-bucket. A strict check would open a 1,574-record red on
+   a false premise.
+   BUILT instead: all four get their printed text (finding
+   `readable-record-check#foreign-ast-collision`, AoN follower-2, follower-3, grim-fascination-2,
+   grim-fascination-4), which removes the dependence on the colliding entry. The blindness itself is
+   documented above `hasAst` in scripts/readable-record-check.mjs and listed under CROSS-FILE GAPS.
+   Pinned by: "covers the four records the bucket-blind ast lookup hides", and the per-row strip test
+   states the instrument's real verdict for them rather than skipping it.
+
+DATA STILL NEEDED
+-----------------
+   (none)
+
+CROSS-FILE GAPS
+---------------
+1. src/data/index.ts:588-597 (applyDescriptions, the subclass-option arm) SHRINKS the necromancer's
+   Puppeteer option at runtime. classes.necromancer.subclass.options[puppeteer].description holds 567
+   characters in core.json INCLUDING the whole Consume Thrall action block; the sync overwrites it
+   from core-descriptions.json's classFeatures/puppeteer entry, which holds 237 characters and does
+   NOT contain that block. Measured corpus-wide: exactly ONE option loses more than 100 characters
+   this way, this one. The player-facing fix is a classFeatures/puppeteer description row (that
+   record's prose, not mine — my row is on the reference bucket fatalMethod/puppeteer), or the sync
+   keeping the longer text. Not touched: src/data/index.ts and the classFeatures prose lane are not
+   my files.
+2. public/ast-index.json carries no bucket per entry, which is what makes `hasAst()` bucket-blind
+   (1,574 records measured above). Closing it properly is a data-stage change in the ast build, not a
+   guard change; scripts/data/ is not my file. Until then the guard can hide a textless record whose
+   slug collides with a readable record in another bucket.
+3. The 4 new wizard arcane schools and the 2 necromancer fatal methods reach the player as
+   classFeatures + subclass options, NOT through the `arcaneSchool` / `fatalMethod` reference buckets
+   my rows write. Their CURRICULUM and SCHOOL/GRAVE SPELLS are prose in both places and are not
+   encoded anywhere: no `spellSlotBonus` / granted-spell lane carries a wizard curriculum ladder or a
+   school spell pair. build.ts is not my file.
+4. hybridStudy/twofold-tine and /volatile-spark have NO classFeatures twin and are NOT offered as
+   magus subclass options (classes.magus.subclass.options lists eight, neither of these). A magus
+   cannot select either study today; their conflux spell and three studious spells have no grant
+   lane. classes/build.ts is not my file.
+5. grimFascination (blood, flesh, bone, spirit) has no classFeatures twin and no reader in src at
+   all: a necromancer cannot pick a grim fascination, so its Grave Spell and Thrall Enhancement
+   reach nothing. The necromancer's `extraChoices` list is empty. build.ts is not my file.
+6. fatalMethod/reaper's reaper's edge grants martial weapons + medium armor at trained, expert at
+   11th and 13th. No row in src/rules/advancement.ts covers it; the text is prose only.
+   src/rules/advancement.ts is not my file.
+7. The `follower` (singular, AoN-scraped, 6 records) and `followers` (playable catalogue, 5 records)
+   buckets are duplicates of each other, and the playable one has no Adept. Nothing in src reads
+   `content.follower`. The reconciliation is a data-stage / catalogue decision, not a guard one.
+
+FILES TOUCHED
+-------------
+   scripts/readable-record-check.mjs
+   work/.b035-created-desc-readable-records.json     (spec, kind created-prose, 24 rows)
+   test/batch035-red-readable-records.test.ts        (new, 37 tests)
+   work/.b035-report-red-readable-records.txt        (this file)
+   work/.b035-specs.json                             (manifest entry appended)
+
+   work/.b035-rows-red-readable-records.json was NOT written: no non-description row was needed.
+   Nothing was written to work/.b035-queue.json — no item needed an owner ruling; every disposition
+   was settled by the printed page.

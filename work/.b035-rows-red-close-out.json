@@ -1,0 +1,4 @@
+{
+  "note": "Group red-close-out authors ZERO overlay rows, deliberately. Its single VERIFY red (ast-content-check, 6 records) is not reachable from scripts/data/effect-backfill.json: the patched nodes live in public/ast/<bucket>.json, not in public/core.json, so no {category,id,field,value} row can carry them. It is PARKED as owner-question `ast-patches-reverted-by-regen` in work/.b035-queue.json, addressed to the driver. This file exists so the manifest entry for family red-close-out names a spec that is really on disk (scripts/wg-batch-run.mjs loadManifest refuses a manifest naming a file that does not exist) and so the one-entry-per-file/one-file-per-entry invariant the gap verifier checks holds in both directions. It writes no rows, so apply-parity-fixes.mjs's --expect-rows path is the no-rows branch and the overlay count is unchanged.",
+  "findings": []
+}

@@ -349,13 +349,25 @@ describe('the SHAPE behind Animal Empathy — a ratchet on every picker that lis
    */
   const CEILING = 39;
 
+  /*
+   * ONE audit for the two tests below, taken at collection time.
+   *
+   * `audit()` runs the app's own eligibleFeatsForSlot over every (category × class/ancestry)
+   * combination; it takes ~1.4s alone and several times that under the memory pressure of the full
+   * suite. Called from inside the first `it`, that sweep is charged to the 5,000 ms testTimeout and
+   * the test failed as a TIMEOUT — twice in batch 035's suite runs — while passing in 1.4s when the
+   * file runs on its own. Nothing about the ratchet or its ceiling changed: the same audit, computed
+   * once instead of twice, outside a per-test budget it was always going to sit on the edge of.
+   */
+  const AUDIT = audit();
+
   it(`no more than ${CEILING} groups are still offered twice`, () => {
-    const { groups } = audit();
+    const { groups } = AUDIT;
     expect(groups.length).toBeLessThanOrEqual(CEILING);
   });
 
   it('the group the audit named is settled, and the two that were never defects are untouched', () => {
-    const { groups } = audit();
+    const { groups } = AUDIT;
     const ids = new Set(groups.flatMap((g) => g.ids));
     // Fixed by this cluster.
     expect(ids.has('animal-empathy')).toBe(false);

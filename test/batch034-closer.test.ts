@@ -72,15 +72,19 @@ describe('batch 034 closer — animal-order, leaf-order, storm-order, untamed-or
    * quietly cover a real gap on the same record. Stunting the carrier proves it does not: with each
    * order option's `grants.skills`, `focusSpells` and `grantedFeats` deleted, the SETTLED run (no
    * `--raw`) reports skill, spell and grantsRecord on all five — and still not `specialStat`, which is
-   * the one thing these entries are allowed to silence. cultivation-order is the control: the same
-   * printed shape, deliberately NOT in the registry, still reporting `specialStat` on the shipped run.
+   * the one thing these entries are allowed to silence. cultivation-order WAS the control: the same
+   * printed shape, deliberately NOT in the registry. Batch 035 checked its grants and cut it too, so
+   * the control is retired here — the stunt below is what still keeps the five entries honest.
    */
   // batch 034 premise: class-feature-668 "Upon becoming a druid, you align yourself with a druidic order, which grants you a class feat, an order spell (see below), and an additional trained skill tied to your order."
-  it('the five settled orders are clear on the shipped data, and cultivation-order still reports', () => {
+  // batch 035: cultivation-order#instrument
+  it('the five settled orders are clear on the shipped data, and cultivation-order is settled too', () => {
     const shipped = diffRows([], 'orders-shipped');
     for (const id of ORDERS) expect(shipped.get(id)?.missing).toEqual([]);
-    // Not a rule, one entry per order: the order this batch did not cut is untouched.
-    expect(shipped.get('cultivation-order')?.missing).toContain('specialStat');
+    /* batch 035 cut the ninth order (VERIFIED_EQUIVALENT['cultivation-order'] = ['specialStat'] in
+     * scripts/wg-diff.mjs); its own mutation-proof stunt is in test/batch035-instruments-1.test.ts. */
+    // batch 035: cultivation-order#instrument
+    expect(shipped.get('cultivation-order')?.missing).toEqual([]);
   });
 
   // batch 034 premise: class-feature-668 "Upon becoming a druid, you align yourself with a druidic order, which grants you a class feat, an order spell (see below), and an additional trained skill tied to your order."

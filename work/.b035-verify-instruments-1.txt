@@ -1,0 +1,144 @@
+BATCH 035 — ADVERSARIAL VERIFY, CHUNK instruments-1 (WG-COMPARISON / instruments family)
+8 findings judged. 7 DONE as built, 1 DONE with a sibling break I fixed here (FIXED-BY-ME).
+
+SPEC ROWS — work/.b035-rows-instruments-1.json
+  8 entries, every one `backfillRows: []`. There is nothing for the driver to apply from this chunk,
+  so the row checks are vacuous by construction and I confirmed they are vacuous rather than absent:
+  no target record, no re-emitted whole value, no create row, no supersedes, no record+field+path key
+  — therefore no collision with any sibling spec is possible. I still checked the two records another
+  family writes rows for (work/.b035-rows-data-rows-2.json: phlogistonic-regulator.resistances,
+  supersedes:true, and modes/cat-phlogistonic-regulator-overdrive create:true) and this chunk touches
+  neither field, so the driver has no cross-spec collision on my records either.
+  Every id the chunk's prose credits exists in public/core.json — checked by hand, not taken on trust:
+  feats/leshy-familiar, spells/cornucopia, all 14 the-oscillating-wave granted spells, all 10 apparition
+  spells + discomfiting-whispers, classFeatures/recall-the-teachings, /fade-into-daydreams,
+  /strike-breathe-rend, ikon/noble-branch (ikonType 'weapon').
+
+MANIFEST — work/.b035-specs.json
+  All 7 families still present (situational, instruments-1, instruments-2, engine-1, engine-2,
+  data-rows-1, data-rows-2) plus the data-rows-1 created-prose entry. instruments-1's stage[] listed
+  every path the builder touched; I appended the two paths I touched (see FILES I TOUCHED). No row in
+  any spec carries supersedes except data-rows-2's phlogistonic-regulator.resistances, which declares it.
+
+INSTRUMENTS — work/experience-instrument-limits.json
+  git diff on the shared file is 140 insertions, 0 deletions: the sibling chunk's 7 batch-35 records
+  (5 apparitions + 2 lessons) and this chunk's 7 all stand, nothing was clobbered or re-keyed.
+
+GATES RUN
+  npx tsc --noEmit — clean (twice: as found, and after my fix).
+  node scripts/vt.mjs run test/batch035-instruments-1.test.ts test/batch034-closer.test.ts —
+    AS FOUND: 1 failed / 14 passed. AFTER MY FIX: 15 passed (2 files).
+  node scripts/test-flip-audit.mjs --batch 035 — clean, 10 test files touched, 1 new settle key,
+    every flip cited (it FAILED once on my first edit, which put the citation 7 lines above the
+    changed expect(); the citation now sits directly above it).
+  Corpus-wide wg-diff re-run against work/.b035-baseline/diff.json, diffed id by id:
+    theyOnly 196 -> 195, and the ONLY line in the whole corpus is `GONE cultivation-order [specialStat]`.
+    No record changed its missing list and none appeared. The blast-radius claim is measured, not taken.
+
+
+PER FINDING
+
+cultivation-order#instrument — DONE, and FIXED-BY-ME where it broke batch 034.
+  The settle landed: VERIFIED_EQUIVALENT['cultivation-order'] = ['specialStat'] in scripts/wg-diff.mjs
+  with `// batch 035: cultivation-order#instrument` directly above it. The carrier it credits is real
+  and whole (grants.skills ['crafting'], grantedFeats ['leshy-familiar'], focusSpells ['cornucopia'],
+  all three dumped from core.json), which is exactly what print grants, and the mutation-proof stunt is
+  substantive rather than decorative: with those three deleted the SETTLED run reports skill and spell
+  again and still never specialStat.
+  THE BREAK THE BUILDER LEFT RED: test/batch034-closer.test.ts:83 was batch 034's control for the five
+  order settles and asserted cultivation-order still reports specialStat. This settle silences it, so
+  the assertion failed — I reproduced it (AssertionError: expected [] to include 'specialStat') before
+  touching anything. The builder logged it as CROSS-FILE GAP #1 and shipped the batch red; a batch with
+  a red test is not done, so I made the one-line fix myself under the same rules: the assertion is now
+  `toEqual([])`, cited `// batch 035: cultivation-order#instrument` in the line above it, the enclosing
+  it( title keeps the record id ('…and cultivation-order is settled too'), and the stale describe-block
+  prose that called cultivation-order "the control" now says the control is retired and points at this
+  batch's stunt. No sibling chunk names that file in any b035 spec or report, so this is not a
+  concurrent-edit collision.
+
+the-oscillating-wave#instrument — DONE.
+  Parked in work/experience-instrument-limits.json (NO-SHEET-EFFECT, lane 'wg-legacy-spell-name',
+  _cite correct). The park's premise is the real one and the builder was right to contradict the
+  finding's own "rung for rung" prose: our record is aonId conscious-mind-9 / edition 'remaster' and its
+  carrier holds the nine remaster rungs plus the five psi cantrips, all 14 ids present in core.json, so
+  WG's four legacy giveSpells (Heat Metal, Fire Shield, Flame Vortex, Fiery Body) are an edition
+  difference and adopting them would move us away from print. The entry states its own limit out loud
+  and the test asserts that it does (`expect(e.refuter).toContain('conservation-of-energy')`).
+
+wandering-reverie#instrument — DONE.
+  Recorded, lane 'harness-host-search-no-extra-choice-route'. The CAUSE is pinned falsifiably: the test
+  scans all 27 class defs and gets exactly ['extraChoices:psychic'], and reads classFeatureHost's own
+  source to show the owner search contains 'subclass?.options' and not 'extraChoices'. The DELIVERY is
+  proved on a really built level-20 psychic (keyAbility 'cha' with this pick), which is the op the
+  UNSUPPORTED verdict claims was never seen. Honest about changing no gate verdict.
+
+gathered-lore — DONE.
+  Same lane, same shape; keyAbility 'int' on the built psychic against 'cha' for the sibling, which is
+  what shows the field is live rather than decoration. classFeatures['gathered-lore'].grantsClassFeatures
+  = ['recall-the-teachings'] and that record exists — checked, not taken from the finding's prose.
+
+impostor-in-hidden-places#instrument — DONE.
+  Same lane. Carrier verified in core.json rather than from the report: grants.lores
+  ['fortune-telling','underworld'], loreProgression [{8,expert},{16,master}], ten grantedSpells and
+  focusSpells ['discomfiting-whispers'], every id real. It is the sixth apparition of the batch and is
+  filed identically to the sibling chunk's five, so one harness fix unparks all six.
+
+noble-branch#instrument — DONE.
+  Same lane, on the exemplar ikon group. Both printed halves confirmed present:
+  FEAT_SITUATIONAL['noble-branch'] (+2 spirit damage per weapon damage die on strikeDamage) and
+  classFeatures['noble-branch'].grantsClassFeatures ['strike-breathe-rend'] (1 action, spirit /
+  transcendence, aonId action-3019). Parity under R10 — WG's whole row is one injectText. One prose
+  nit only, no defect: the situational entry is now at src/rules/situationalBonuses.ts:3591, not :3583
+  (the situational family added lines above it this batch), and the ikonType 'weapon' the entry cites
+  lives on core.json's `ikon` bucket, not on the extraChoices option.
+
+metallic-reactance#instrument — DONE.
+  Lane 'harness-host-search-no-innovation-modification-route'. The claim is proved where it matters —
+  on a built level-10 inventor, acid 8 and electricity 8 off deriveDefenses (print's 3 + half level;
+  the shipped record carries "3+floor(@actor.level/2)" for both), and 0 with the sibling modification
+  picked, so it is the pick that delivers and not the chassis.
+
+phlogistonic-regulator#instrument — DONE.
+  Same lane. cold 5 / fire 5 at level 10, 0 with the sibling picked. The level-10 choice really is
+  delta-proof: the shipped value is max(1,floor(@actor.level/2)) and data-rows-2's superseding row is
+  floor(@actor.level/2) — both 5 at level 10, so the assertion is the state before AND after that row.
+  I also checked data-rows-2's new mode cat-phlogistonic-regulator-overdrive cannot flip it: the built
+  character activates no mode.
+
+
+DATA STILL NEEDED
+  (none — confirmed, not accepted. Every finding in this chunk is an instrument fact; no overlay row is
+  owed by the driver for any of the eight ids, and the spec's eight empty backfillRows are correct.)
+
+
+CROSS-FILE GAPS  (2 still stand; the builder listed 5, three of which I closed)
+  1. test/wg-experience.harness.test.tsx, classFeatureHost — STILL OPEN. The owner search walks
+     ownedAt20(db, classId, null) and db.classes[classId].subclass?.options only; extend it to walk
+     db.classes[classId].extraChoices[].options and seat the pick in build.extraChoices[group.id].
+     Unparks nine records at once: wandering-reverie, gathered-lore, impostor-in-hidden-places and
+     noble-branch here, the sibling chunk's five animist apparitions, and by a different route the two
+     lesson records. Same instrument was already recorded in work/.b034-read-slice-8.json — it has now
+     survived two batches, which is the argument for cutting it in 036 rather than parking it a third time.
+  2. test/wg-experience.harness.test.tsx, classFeatureHost — STILL OPEN, a SECOND branch: a record held
+     on c.inventor.modifications (otherTags '<type>-innovation-modification') needs a host with the
+     matching subclassId, inventorArmorStats and build.inventorModifications[tier] = id.
+     classFeatureIdsOwned (src/rules/derive.ts) never walks that store and the harness passes no
+     classChoices. Unparks metallic-reactance and phlogistonic-regulator.
+
+  CLOSED BY THIS VERIFY (were on the builder's list; do not carry them into 036):
+  - (builder #1) test/batch034-closer.test.ts:83 — FIXED HERE, cited and green. Not a gap.
+  - (builder #4) the-oscillating-wave#conservation-of-energy — I checked the sibling spec instead of
+    accepting the contingency: work/.b035-rows-data-rows-1.json DOES carry both rows (create
+    classFeatures/conservation-of-energy, and grantsClassFeatures ['conservation-of-energy'] on
+    the-oscillating-wave). The "green in the gate while a real gap is open" scenario the builder flagged
+    does not arise in this batch.
+  - (builder #5) metallic-reactance#overdrive, phlogistonic-regulator#overdrive and
+    #resistance-minimum — every one is owned and handled: #resistance-minimum and phlogistonic's
+    overdrive mode by data-rows-2, metallic's overdrive by the situational family
+    (work/.b035-rows-situational.json). No action owed by anyone, so it is a note and not a gap.
+
+
+FILES I TOUCHED (appended to work/.b035-specs.json, family instruments-1, stage[])
+  test/batch034-closer.test.ts        — the batch-034 control assertion, its it( title and its stale
+                                        describe prose, cited `// batch 035: cultivation-order#instrument`
+  work/.b035-verify-instruments-1.txt — this file

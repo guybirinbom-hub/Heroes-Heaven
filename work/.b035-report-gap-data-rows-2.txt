@@ -1,0 +1,25 @@
+GAP AGENT — family "gap-data-rows-2" — parity batch 035
+============================================================================================
+
+PARKED  ref: flaggedResidue (recorded on the line in work/.b035-gaps.json)
+  line: "classFeatures/fury-instinct edition + aonId (\"legacy\"/instinct-3 -> \"remaster\"/instinct-10) is the"
+        (source: work/.b035-verify-data-rows-2.txt:201, DATA STILL NEEDED)
+  why:  The verify file parked this on the condition "if that chunk drops it, it becomes a driver row" —
+        the chunk did not drop it. work/.b035-rows-engine-1.json findings[0], id "fury-instinct",
+        already carries both halves as backfillRows: {classFeatures/fury-instinct field aonId value
+        "instinct-10"} and {classFeatures/fury-instinct field edition value "remaster",
+        supersedes:true} replacing the existing effect-backfill row
+        {classFeatures/fury-instinct/edition:"legacy"} whole; that spec file is staged in
+        work/.b035-specs.json under family engine-1. Verified independently against the AoN mirror:
+        .../by-category/instinct/instinct-10.json is name "Fury", source ["Player Core 2"] pg. 75 —
+        the page our stored description, RAGE_DAMAGE tiers 3/7/13 (src/rules/derive.ts:3672) and the
+        bonus 1st-level barbarian feat (featPickGrants.ts:246) already match, so the authored rows are
+        correct and complete. Authoring the same record+field again here would be a collision and the
+        applier hard-refuses collisions, so no spec file was written for this family.
+
+SPEC FILES WRITTEN: none.
+OPEN LINES REMAINING FOR THIS FAMILY: 0.
+
+Note on scope: my earlier sweep of the specs missed this because rows specs key their rows under
+"findings"[].backfillRows, not a top-level "rows" array — a spec search that looks only for "rows"
+reads every authored row as absent.

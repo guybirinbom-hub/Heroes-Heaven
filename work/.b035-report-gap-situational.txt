@@ -1,0 +1,115 @@
+BATCH 035 — GAP AGENT, family "situational"
+Spec:  work/.b035-rows-gap-situational.json (1 backfill row, 1 code-only finding) — manifest entry appended as family "gap-situational"
+Queue: work/.b035-queue.json (1 owner question: animal-instinct-spider-web; dry-run through scripts/add-owner-question.mjs --from passes all four guards, would be #144)
+Code:  src/rules/types.ts (whileActive.state += 'overdrive') · src/rules/classResources.ts (inventor Overdrive toggle)
+       src/rules/situationalBonuses.ts (RecordMarker.choiceValue + markersFor's `choices` arg + animal-instinct gate + one over-long `when`)
+       src/rules/explain.ts (recordMarkersFor passes Character.featureChoices)
+Test:  test/batch035-gap-situational.test.ts (7 its, all cited) — green; npx tsc --noEmit clean;
+       node scripts/test-flip-audit.mjs --batch 035 → "batch 035 clean — 14 test file(s) touched, every flip cited"
+       node scripts/vt.mjs on the 10 files these edits can reach → 166 passed.
+
+15 open lines in, 15 disposed of: 8 AUTHORED, 7 PARKED, 0 open.
+
+LINE BY LINE (read-stage lines first, then the verifier's; the two lanes duplicate each other)
+
+1. AUTHORED — classFeatures/metallic-reactance/whileActive → work/.b035-rows-gap-situational.json
+   finding metallic-reactance#overdrive. The row is exactly the reader's proposal; what was missing was
+   the two readers below, and they are now in place, so the row is live data instead of inert data.
+
+2. PARKED — animal-instinct grantedStrikes + a Web row → owner question `animal-instinct-spider-web`
+   An engine-shape decision, not a rules one: print (instinct-8) and WG agree the Spider gets a second
+   attack and disagree only on what KIND of thing it is — WG hands it over as an ITEM (two giveItem ops
+   behind a conditional on ACTIVE_MODES rage: 13946 spider fangs, 13947 spider web), ours would need
+   `die`/`damageType` optional on GrantedStrike AND NaturalAttack AND a damageless render path through
+   deriveUnarmedStrike and the Strikes row. Three options put to the owner with a recommendation.
+
+3. AUTHORED — src/rules/build.ts:2882 subclass grantedStrikes push → src/rules/build.ts:2903
+   Already delivered by the engine-1 family inside this batch (`featurePick(subclassId)` is passed,
+   cited "// batch 035: animal-instinct#no-reader"), and the verifier measured it working. I re-measured
+   it myself on built barbarians before relying on it: 'spider' → ["Fangs"], 'bear' → ["Jaws","Claw"].
+   Nothing owed; the line is stale, not open.
+
+4. PARKED — types.ts GrantedStrike has no damageless shape → owner question `animal-instinct-spider-web`
+   Same question as line 2 — it IS the question. Not authored here because the fix reaches the Strikes
+   surface (types.ts, derive.ts's natural-attack walk, deriveUnarmedStrike and the row that renders it),
+   which is a change to what a Strike IS, and no line in my family names those files.
+
+5. PARKED — skillActions.ts:594 Battle Medicine "1 day" → flaggedResidue
+   Decided rather than asked, because an owner ruling already covers it. Ruling G/Q2 is how this app
+   handles every printed value one record changes for one character: the printed record keeps its text
+   and the deviation rides on the ROW (the-oscillating-wave leaves spells.ignition.range at "30 feet"
+   and puts the 60 on the spell row). The situational verifier's RECORD_MARKERS['forensic-medicine-
+   methodology'] now marks `battle-medicine` with "+your level HP, 1-hour immunity" on the very row that
+   opens the card. I also checked the premise: StatDetailModal's read popup passes key 'actions' +
+   slug 'battle-medicine' to DescriptionModal, which prefers the AoN ast over the curated `desc`
+   (src/sheet/useAst.ts) — so "the popup prints the contradicting sentence" is true only where no ast
+   exists, and forking a printed page per character would be a new lane, not a fix.
+
+6. AUTHORED — types.ts whileActive.state needs 'overdrive' → src/rules/types.ts:1187
+   One union member, with innovation-5's clause quoted above it. Every reader downstream was already
+   generic — activeStateGrants (derive.ts) asks only `classResources[state] > 0` — so the union was the
+   entire blocker to the second sentence being a number.
+
+7. AUTHORED — classResources.ts has no inventor Overdrive toggle → src/rules/classResources.ts:191
+   New `inventor` bucket, one `{ kind: 'toggle', refresh: 'encounter' }` entry, the rage / panache shape.
+   Class-only, no `feat` gate: I checked the whole feats bucket for anything that grants the `overdrive`
+   class feature and there is nothing, so an `inventor-dedication` gate would hand the toggle to a
+   character who cannot take the action. 'encounter' because action-901 prints "Frequency once per
+   round" and lasts "for 1 minute". Rage already lives in BOTH modes.ts (cat-rage) and here, so the
+   pre-existing inert `cat-overdrive` mode beside it is the established shape, not a new duplication.
+
+8. PARKED — SituationalTarget.kind has no 'resistance' member → flaggedResidue
+   The reader marked it "noted only" and named the right home; that home is now built, so the +2 is a
+   computed number rather than a prose star and a second carrier would only be able to say it worse.
+
+9-15. The verifier's restatements of 1, 2, 4, 5, 6, 7 get the same disposition, plus one line of its own:
+
+15. AUTHORED — explain.ts markersFor / RecordMarker cannot gate on an answer → src/rules/explain.ts:736
+   The verifier MEASURED a built bear barbarian reading the "Spider:" note. Closed in the two files the
+   line names: `RecordMarker.choiceValue`, a `choices` argument on `markersFor`, and `recordMarkersFor`
+   feeding it `Character.featureChoices` — the same `feature:<id>` map build.ts already writes and
+   derive.ts already reads for Elemental Rage, so nothing new is stored and no other caller changes
+   behaviour (an ungated mark never consults the argument; the two test-only callers pass nothing).
+   RECORD_MARKERS['animal-instinct'] carries `choiceValue: 'spider'`. The same gate is what lets the
+   other 21 animals carry their own printed riders later.
+
+WHAT THE TEACH LINES ARE (finding ids, not record ids)
+- metallic-reactance#overdrive — TAUGHT as a number: whileActive row + 'overdrive' state + inventor
+  toggle. Measured on a BUILT 5th-level armour-innovation inventor through deriveDefenses: acid 5 with
+  Overdrive off, 7 with it on, and 5 with the SHIPPED record even while the toggle is on (so the row,
+  not the toggle, is what raises it). The builder's display mark stays; its "the sheet shows the
+  un-Overdriven value" sentence is the wording to retire once the row lands.
+- animal-instinct#spider-web — TAUGHT as a scope, NOT as a Strike. The note now reaches the spider
+  barbarian only; the Web ATTACK itself is the parked owner question and is not delivered.
+
+ONE THING FIXED THAT WAS NOT MY LINE
+- src/rules/situationalBonuses.ts FEAT_SITUATIONAL['forensic-medicine-methodology'].when was 131
+  characters and failed a shipped gate the situational verifier did not run (test/rulings-dfgh.test.ts,
+  "H — wording > no note runs longer than about one line", cap 120). Rewritten to 116 characters keeping
+  both halves of methodology-7, including the "1 hour, not 1 day" clause an existing batch-035 test
+  asserts on. Reported rather than left: a red gate in a file I was editing would have failed the batch.
+
+DATA STILL NEEDED
+- none. The one row my family held is authored in work/.b035-rows-gap-situational.json.
+
+CROSS-FILE GAPS
+- src/rules/types.ts GrantedStrike / NaturalAttack + src/rules/derive.ts deriveUnarmedStrike — a
+  damageless attack still has no shape. On the owner's desk as `animal-instinct-spider-web`; whoever
+  builds it must write `range: 15` (a number of feet), not `range: '15 feet'`.
+- The four sibling Overdrive riders (hyper-boosters, speed-boosters, subtle-dampeners,
+  muscular-exoskeleton) are NOT owed a whileActive row of this shape and I did not author one: two are
+  Speed STATUS bonuses and two are skill CIRCUMSTANCE bonuses, each with a Crafting-proficiency branch,
+  and the read stage's own evidence records that all four already ship as situationalBonuses.ts prose.
+  With the 'overdrive' state now real, the two Speed ones could become numbers in a later batch.
+
+MANIFEST STAGE (files I touched)
+- work/.b035-rows-gap-situational.json
+- work/.b035-report-gap-situational.txt
+- work/.b035-queue.json
+- work/.b035-gaps.json (my family's 15 lines only; re-read immediately before writing)
+- work/.b035-specs.json (appended, re-read immediately before writing)
+- test/batch035-gap-situational.test.ts
+- src/rules/types.ts
+- src/rules/classResources.ts
+- src/rules/situationalBonuses.ts
+- src/rules/explain.ts

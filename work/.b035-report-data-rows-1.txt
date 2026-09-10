@@ -1,0 +1,157 @@
+BATCH 035 — data-rows-1 (WG-comparison lane, chunk 1 of 2 of the "data-rows" family)
+
+Spec:  work/.b035-rows-data-rows-1.json          (19 rows over 9 findings)
+Prose: work/.b035-created-desc-data-rows-1.json  (1 row — the created record's description)
+Test:  test/batch035-data-rows-1.test.ts         (16 tests; 13 fail today for exactly the pinned
+       defect, 3 controls pass — they are the "the fix must not spill" halves)
+No src/ or scripts/ file was modified.
+
+DATA STILL NEEDED
+(none — every row this chunk's findings need is authored in the two spec files above.)
+
+CROSS-FILE GAPS
+- src/rules/build.ts:6061 + src/rules/derive.ts:1161 (engine lane, NOT mine): a CHOICE-driven
+  whileActive grant reaches deriveDefenses through `c.chosenEffects`, which carries no `name`, so
+  `ownedWhileActive` falls back to the bare "Active state". Measured on a built 9th-level Sky
+  dragon-instinct barbarian: sources['resistance:piercing'][0].from === 'Active state', never
+  "Dragon Instinct". This is the same blindness raging-resistance.test.ts:64 fixed for the
+  non-choice instincts, still open for every instinct that asks a question (dragon, giant, animal).
+  My dragon-instinct test therefore counts LINES on the row rather than lines from a named source.
+- classes.psychic.subclass.options['the-oscillating-wave'].description still carries the
+  "### **Conservation of Energy**" blob now that classFeatures/conservation-of-energy exists. Not
+  re-emitted here: it means shipping the whole 27 KB psychic options array to delete one paragraph,
+  and that array is the sort of shared value a sibling chunk may also be re-emitting. Whoever else
+  touches classes/psychic options@[subclass] should drop the duplicated section.
+- CONTENTION NOTE (not a gap, a warning for the driver): five of my rows re-emit a whole shared
+  nested value — classes/druid options@[subclass], classes/summoner options@[subclass],
+  classes/gunslinger subclass, classes/animist options@[extraChoices,id=apparition] and
+  classFeatures/dragon-instinct choice. If data-rows-2 authored a row on any of those keys the
+  driver will see a cross-spec collision; the two rows have to be merged by hand, they are not
+  independently appliable.
+
+────────────────────────────────────────────────────────────────────────────────────────────────
+PER FINDING
+────────────────────────────────────────────────────────────────────────────────────────────────
+
+cultivation-order#anathema-sidebar  — TAUGHT (data)
+  Rows: classFeatures/cultivation-order `description`  (new row)
+        classes/druid `options` @ [subclass]           (new row, whole 9-option array)
+  The summary block's **Anathema** line was the LEAF order's ("kill them unnecessarily"), in both
+  carriers, contradicting the cultivation clause printed two paragraphs above it in the same text.
+  Both now read "Commit wanton cruelty to plants or fungi or neglect to nurture plants in need of
+  tending. (This doesn't prevent you from killing plants or fungi and it doesn't prevent you from
+  defending yourself against plants or fungi.)" — AoN druidic-order-12's clause in the sidebar's
+  imperative voice, which is also how WG encodes it. No mechanical field touched.
+  Test: "the cultivation-order classFeature summary block quotes the cultivation clause" and "the
+  druid subclass picker's copy of cultivation-order agrees, and leaf-order keeps its own line" —
+  the second one also asserts leaf-order STILL carries the leaf line, so the fix cannot spill.
+
+swarm-eidolon#redistribute  — TAUGHT (data)
+  Row: classes/summoner `options` @ [subclass]  (SUPERSEDES the existing row; its value is merged
+       whole — it was byte-identical to the shipped array, verified before editing)
+  The option copy read "your eidolon gains the reaction." — the reaction's NAME had been deleted.
+  Now "your eidolon gains the Redistribute reaction." per AoN eidolon-13. The classFeature copy of
+  the same paragraph was already intact, so it needed nothing here.
+  ⚠ This one row ALSO carries swarm-eidolon#sickening-swarm-name's heading fix for the option copy:
+  two findings hitting one record+field must be one row, and the applier refuses collisions.
+  Test: "the swarm-eidolon picker copy names the Redistribute reaction Sudden Shift grants".
+
+swarm-eidolon#sickening-swarm-name  — TAUGHT (data)
+  Row: classFeatures/swarm-eidolon `description`  (SUPERSEDES the existing row; value merged whole)
+  Both description copies headed the 17th-level transcendence "## Sickening Form 17th" while the
+  record's own eidolonAbilities entry and AoN eidolon-13 call it Sickening Swarm. The classFeature
+  copy is fixed by this row; the subclass-option copy is fixed inside swarm-eidolon#redistribute's
+  classes/summoner row (see above).
+  Test: "swarm-eidolon heads the 17th-level transcendence Sickening Swarm in both copies" — it
+  asserts BOTH carriers, so neither half can land alone.
+
+dragon-instinct#duplicate-piercing  — TAUGHT (data)
+  Row: classFeatures/dragon-instinct `choice`  (SUPERSEDES the existing row; value merged whole)
+  Crystal and Forest breathe PIERCING, so AoN instinct-9's "You resist piercing damage and the
+  damage type of your instinct's dragon breath" collapses to ONE type for them — we shipped
+  {piercing,piercing}. derive.ts:2699 note()s once per entry with no dedupe and the supersede pass
+  at 2905 only clears entries strictly below `best`, so two equal rows both stayed applied and the
+  breakdown printed the same line twice. Fixed in the data, not the reader: every other dragon
+  already lists two DIFFERENT types, so the duplicate is authored, not a missing dedupe.
+  Tests: "a crystal dragon-instinct barbarian reads ONE line on the piercing row, not two" (crystal
+  AND forest) and "a dragon-instinct whose breath is a SECOND type keeps both of its rows" (Sky —
+  the control, which passes today and must keep passing).
+
+impostor-in-hidden-places#vessel-spell  — TAUGHT (data)
+  Rows: spells/discomfiting-whispers `name`     → "Discomfiting Whisper"
+        spells/discomfiting-whispers `duration` → "sustained up to 1 minute"
+        spells/discomfiting-whispers `aonId`    → "spell-2139"
+        spells/discomfiting-whispers `edition`  → "remaster-era"
+        spells/discomfiting-whisper  DELETE     (the statless twin)
+        classFeatures/impostor-in-hidden-places `description` (SUPERSEDES; value merged whole)
+        classFeatures/impostor-in-hidden-places `descRefs`    (new row)
+        classes/animist `options` @ [extraChoices,id=apparition] (SUPERSEDES; value merged whole)
+  The apparition's focusSpells pointed at the pluralised, aonId-less twin whose duration had lost
+  "sustained" (AoN spell-2139: "Discomfiting Whisper … Duration sustained up to 1 minute";
+  apparition-6: "**Vessel Spell** Discomfiting Whisper"). The reachable record — the one with the
+  cast/area/save/damage/heightening — keeps its id and now carries the printed name, the Sustain
+  duration and the aonId; the unstatted twin that held only the name and the aonId is retired, so
+  exactly one Discomfiting Whisper is reachable. Verified with findDuplicateIds' own rule that the
+  suppressed `aon-discomfiting-whisper` STAYS suppressed: it is keyed on the canonical NAME, which
+  the renamed record still supplies. Both prose carriers and both descRefs labels follow the name.
+  Tests: "the vessel spell impostor-in-hidden-places points at is named and durated as printed"
+  (name + duration + aonId + it is still the statted half), "only one Discomfiting Whisper is
+  reachable", "both copies of the impostor-in-hidden-places prose print the singular name".
+
+way-of-the-spellshot#description-spellcasting  — TAUGHT (data)
+  Rows: classFeatures/way-of-the-spellshot `description`  (new row)
+        classes/gunslinger `subclass`  (SUPERSEDES the existing row; value merged whole, so the
+        featureIds path rows applied on top of it survive — pinned by a test)
+  Our clause was the reverse of print: "combining deadly skill with a firearm alongside an array of
+  moderate spellcasting" where AoN way-5 (and legacy way-11) print "though your knowledge doesn't
+  extend as far as actual spellcasting". Text only — arcana, the three deeds, thoughtful-reload and
+  classDcKeyAbility int were already correct.
+  Tests: "both copies of the way-of-the-spellshot prose carry the printed clause" and "the
+  way-of-the-spellshot mechanics the whole-object row carried over are untouched" (the second is
+  the guard on re-emitting a whole subclass object; it passes today and must keep passing).
+
+curse-of-inevitable-rot#acid-trait  — TAUGHT (data)
+  Row: classFeatures/curse-of-inevitable-rot `traits` → ["acid","curse","divine","oracle","poison"]
+  AoN mystery-21's trait block for the curse is Acid, Curse, Divine, Oracle, Poison; ours dropped
+  Acid, though every sibling oracle curse carries its own energy trait and content.trait['acid']
+  exists. Whole array re-emitted (traits is one field), acid first to match the printed order.
+  Test: "curse-of-inevitable-rot is an acid curse".
+
+the-oscillating-wave#conservation-of-energy  — TAUGHT (data)
+  Rows: classFeatures/conservation-of-energy CREATE (level 1, traits ['psychic'], actionCost
+        passive, otherTags ['psychic-conscious-mind'], edition remaster, aonId conscious-mind-9)
+        classFeatures/the-oscillating-wave `grantsClassFeatures` → ["conservation-of-energy"]
+        + work/.b035-created-desc-data-rows-1.json: the record's description (the create row
+        carries none, per the split rule apply-backfill.mjs enforces).
+  AoN conscious-mind-9 carries Conservation of Energy as its own `<title level="2">` section, and
+  WG grants it as its own class-feature block (ability_block 24728). We had no record in any
+  bucket, so the fire/cold alternation reached the player only buried in the subclass option's
+  description blob. Shape copied from classFeatures/noble-branch → strike-breathe-rend; the reader
+  is derive.ts:3532, and I verified on a built psychic that 'the-oscillating-wave' is itself in
+  ownedFeatureIds, which is what makes the grant fire.
+  Tests: "a the-oscillating-wave psychic owns Conservation of Energy as a feature" (built
+  character, plus a the-distant-grasp psychic that must NOT own it) and "the-oscillating-wave's
+  Conservation of Energy record carries the printed alternation" (the Adding / Removing / Mindshift
+  clauses).
+
+animal-instinct#cat  — TAUGHT (data)
+  Row: classFeatures/animal-instinct `grantedStrikes`  (SUPERSEDES the existing row; all 29 shipped
+       entries merged whole, plus two tagged choiceValue 'cat')
+  Cat was offered by choice.options and armed by nothing: 21 of the 22 animals had grantedStrikes
+  rows and Cat had none, so a barbarian who picked it got no animal attack at all (measured: the
+  built character's only Strike is Fist). Added Jaws d10 piercing [unarmed] and Claw d6 slashing
+  [unarmed, agile], group brawling — the shape the other 21 use — per AoN instinct-8 (and
+  instinct-1) "Cat | Jaws | 1d10 P | Unarmed ;; Claw | 1d6 S | Agile, unarmed".
+  Tests: "a Cat animal-instinct barbarian gets Jaws and Claw" (built character, agile pinned) and
+  "animal-instinct still gives every other animal exactly its own attacks" (Wolf control: one Jaws,
+  no Claw — proof the rows are tagged, not global; it passes today and must keep passing).
+
+────────────────────────────────────────────────────────────────────────────────────────────────
+HOW THE ROWS WERE BUILT / WHAT I CHECKED
+────────────────────────────────────────────────────────────────────────────────────────────────
+- Every superseding row's base was dumped from the SHIPPED artefact and checked byte-identical to
+  the overlay row it replaces before editing, so "the superseded value merged whole" is literal.
+- The spec was replayed through the real applier (scripts/lib/apply-backfill.mjs, with the same
+  skipFields/prose routing apply-backfill-now.mjs uses) against in-memory copies: 14 field rows
+  applied, 0 unresolved, 6 prose rows routed, and all 43 post-conditions the test asserts hold.
+- npx tsc --noEmit is clean. The test file was run alone through scripts/vt.mjs.

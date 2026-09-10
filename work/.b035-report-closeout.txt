@@ -1,0 +1,53 @@
+BATCH 035 — GATE-RED, group "close-out": THE DISPOSITION RECORD (item 4).
+
+The family this group closes under is `red-close-out`, so scripts/wg-batch-close.mjs looks for
+work/.b035-report-red-close-out.txt — that is the full report, and it holds items 1-4 in detail.
+This file exists because the brief named this path for item 4, and it holds item 4 only.
+
+WHO TOOK EACH OF THE THREE PRE-EXISTING VERIFY REDS
+Written down so "35 clean, 3 pre-existing" is never re-quoted as if nobody owned them.
+
+  ast-content-check      -> CLOSE-OUT group (this one). PARKED with an artefact: owner question
+                            `ast-patches-reverted-by-regen` in work/.b035-queue.json, addressed to the
+                            DRIVER. Six records (classFeatures/ashes, bloodline-elemental,
+                            bloodline-imperial, way-of-the-vanguard, items/razmiri-mask-porcelain,
+                            whispering-staff). Not buildable in this workflow: the patched nodes live
+                            in public/ast/<bucket>.json, which the effect-backfill overlay cannot
+                            reach, and the guard's own repair instruction is
+                            `node scripts/apply-ast-patches.mjs`, which no agent here may run. The
+                            question asks for exactly one of (a) the driver runs that script at close,
+                            or (b) the six display trees become durable rows. STILL RED — a park is a
+                            disposition, not a fix.
+
+  readable-record-check  -> READABLE-RECORDS group. 27 records ship with nothing a player can read
+                            (4 arcaneSchool, 2 fatalMethod, 4 follower, 2 grimFascination,
+                            2 hybridStudy, 5 itemBonus, 8 sidebar). Its created-prose spec
+                            work/.b035-created-desc-readable-records.json was on disk when this was
+                            written; its manifest entry and report are that group's to file. Nothing
+                            about it was touched by close-out.
+
+  field-diff             -> FIELD-DIFF group, closed this round. Five throneglass reports were an
+                            INSTRUMENT MISREAD (a graded family's shared markdown, heading taken from
+                            a sibling document; fixed in scripts/field-diff.mjs) and
+                            beckon-the-blasphemous-brethren#level is a real defect carrying one row in
+                            work/.b035-rows-field-diff.json. Report:
+                            work/.b035-report-red-field-diff.txt.
+
+TWO RECORDS THE GATE PARKS LEGITIMATELY — NO GROUP SHOULD TOUCH EITHER
+
+  cultivation-order      OWNER-QUEUED. Desk entry lost to this batch's queue clobber and restored
+                         (work/.b035-verify-gaps.txt, REPAIR 1); on the desk now. Also carries the
+                         KEPT-OURS [specialStat] settle the gate prints as equivalent — a recorded,
+                         reviewable decision, not a defect. The leaf-order membership mechanic stays
+                         UNBUILT and the wg-diff settle for their operation-less giveAbilityBlock
+                         #34226 stays UNAUTHORED while the question is open, on purpose: a settle
+                         would declare the divergence resolved while the mechanic is unruled.
+
+  the-oscillating-wave   PARKED BY INSTRUMENT LIMIT `wg-legacy-spell-name` in
+                         work/experience-instrument-limits.json — EXPERIENCE NO-SHEET-EFFECT, verified
+                         by hand, the same lane as the-distant-grasp (batch 33) and the-infinite-eye
+                         (batch 34). Settled, not counted, leave alone.
+
+Full detail, including the measurement behind the ast-content-check park, the two shared-file
+ownerships (work/.b035-queue.json and work/.b035-specs.json), the test that pins it, and the DATA
+STILL NEEDED / CROSS-FILE GAPS sections: work/.b035-report-red-close-out.txt.

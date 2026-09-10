@@ -1,0 +1,146 @@
+wg parity batch 035 — 40 records (level 9), the WG-comparison lane
+
+Read 40 batched records against their printed text and Wanderer's Guide encoding: 55 findings confirmed
+by an Opus reader and an adversarial verifier, 5 refuted, 0 sent straight to the owner. Eight builder
+families (engine-1/2, data-rows-1/2, instruments-1/2, situational, plus seven gap families), then five
+GATE-RED groups (gate-park, field-diff, readable-records, experience-hosts, close-out), then the closer
+landed the work; 47 gap lines were resolved (34 authored, 13 parked with a reason). Verdicts:
+FIXED 22, OWNER-QUEUED 1, MATCHES 17, plus 13 flagged residues.
+
+DATA — the overlay grew 14209 -> 14273 rows (scripts/data/effect-backfill.json), 80 rows across 20
+family specs, one supersession. The lanes: the five Player Core 2 barbarian instincts (animal, fury,
+giant, spirit, superstition) had aonId/edition pointing at their pre-remaster Core Rulebook / APG pages,
+so the print-read lane and the "hide legacy data" filter both had them wrong — each moved to its PC2
+page with the derived `edition` row superseded whole; dragon-instinct's choice lost its duplicate
+piercing entry (crystal and forest breathe piercing, so print's two clauses collapse to one) and its
+now-untrue apology note; the Animist's Impostor in Hidden Places lane renamed spells/discomfiting-
+whispers to print's singular, gave it the duration ("sustained up to 1 minute") it had dropped, moved
+the aonId onto it and RETIRED the unstatted scrape-split twin; cultivation-order's summary Anathema
+block, which was printing the LEAF order's "kill them unnecessarily" line beside its own correct prose;
+the closer's two rows on modes/curse-of-inclement-headwinds-4 (below); and, from the gate-red round,
+spells/beckon-the-blasphemous-brethren's rank 1 -> 3 (ritual-275 prints "Ritual 3") and 24 created
+descriptions for records that shipped with nothing a player could read.
+
+CODE — eidolon Language lines for demon (Abyssal), plant (Sylvan), swarm (Common) and undead (Necril)
+on COMPANION_MODS, plus the swarm's area-damage weakness; the demon's pre-remaster Demonic Strikes note
+replaced with the printed remaster text it was duplicating badly; the animal-instinct pick lane in
+build.ts, which passed no answer to collectGrantedNaturals and so dropped every choiceValue-tagged
+Strike — a Spider barbarian was getting no Fangs at all; the Rage damage tiers narrowed to the granting
+record; situational marks, class resources and explain lines for the batch's oracle curses and lessons.
+And, from the closer's last pass, four entries in RichEditor's REF_MAPS — arcaneSchool, fatalMethod,
+grimFascination, hybridStudy. The red round wrote the printed entry onto ten records in those four
+buckets and test/integrity-sweeps.test.ts "every backfilled field is read in a file that knows its
+collection" went red on all four at once: not one file under src/ so much as NAMED them, so 43 shipped
+records (27 arcane schools among them) had no surface at all, and grimFascination and hybridStudy have
+no classFeatures twin either. They are now searchable in the description-link picker and open through
+the same DescBody popup as every other ref link.
+
+SETTLED, AND WHY — three per-id credits in wg-diff's OFF_RECORD_CARRIERS (demon/plant/undead eidolon
+`language`), because the carrier those records now use lives in a src table this comparer cannot read.
+Kept PER ID, never on the companionGrants.ts file row, which would credit ~112 ids at once;
+dragon-eidolon is the control that proves it, and test/batch035-closer.test.ts asserts it still reports.
+One comparer TEACH in wg-identity: `grantedSpells` on a plain class-feature record had no reader, so
+lesson-of-vengeance's landed phantom-pain row still read as a gap — taught for the array form only and
+pinned with a mutation-proof test that stunts the carrier and watches the flag come back.
+Two rows for curse-of-inclement-headwinds' Cursebound 4: mystery-19's "-10-foot status penalty to all
+your Speeds" had no carrier and the mode told the player to apply it by hand. It now applies, using the
+`detail: 'all'` shape batch 033 built for the sibling curse-of-creeping-ashes-4.
+scripts/apply-parity-fixes.mjs learned `delete:true` (already honoured downstream and in the overlay
+since batch 026, but never accepted by this applier) and learned that a clause MOVED within a record's
+own description is not invented prose.
+
+THE GATE-RED ROUND — the batch's first pass ended with IDENTITY red and three pre-existing verify reds.
+All four are closed, and none was closed by narrowing a guard:
+ · IDENTITY / animal-instinct was an INSTRUMENT defect. scripts/wg-batch-gate.mjs built its owner-queued
+   park set out of DESK IDS and then asked it for a RECORD id, so a question filed as `<record>-<aspect>`
+   parked nothing — which is why an earlier batch re-keyed a desk entry three times to make one record
+   park. Replaced by RECORD_IDS + parkMapOf + queuedFor, one resolver asked by all six call sites, with
+   a `--queued-for` probe and a mutation-proof test (test/batch035-gate-park.test.ts). The Spider Web
+   MECHANIC itself is deliberately unbuilt and stays on the owner's desk as #145.
+ · field-diff's five throneglass records were a FAMILY-HEAD misread: every sub-document of a graded item
+   family ships the whole family's markdown, and the own-document branch trusted the first "Item N"
+   heading it could parse while the by-name branch next to it already refused exactly that. One
+   condition added, mutation-proved; UNEXPLAINED 6 -> 0.
+ · readable-record-check was red on 27 records with no readable text (21 of them arrived with the
+   Impossible Magic / Battlecry! scrapes and nobody read them). 20 got their printed prose, 7 got two new
+   RULE exemptions — an itemBonus record whose PARENT ITEM reads (all 723 itemBonus ids are items ids),
+   and the `source` bucket, which is a book entry and not a rules record. Four more textless records the
+   guard could not even see (a bucket-blind ast lookup: `medic` resolved to the Medic ARCHETYPE's tree)
+   got their prose too. Nothing was added to KNOWN; the guard now reports zero.
+ · the EXPERIENCE harness's four UNSUPPORTED records were lifted rather than parked: two new ownership
+   routes in test/wg-experience.harness.test.tsx — an inventor innovation-modification host
+   (metallic-reactance, phlogistonic-regulator) and a feat-choice host that answers a witch's Basic
+   Lesson with the record (lesson-of-vengeance, lesson-of-elements). Their four parks were DELETED from
+   work/experience-instrument-limits.json (47 -> 43 records), because a park that outlives its blindness
+   hides a record from the gate. The sweep now reads OK 38 · NO-SHEET-EFFECT 2 · UNSUPPORTED 0, against
+   OK 34 · UNSUPPORTED 4 before.
+The closer's own round then repaired the six created follower descriptions, which the applier refused:
+they coined tier headings ("**Experienced follower**") the page never prints. Every heading is now the
+printed sentence — including follower-4's "When the scout becomes a veteran follower", which is what the
+Sharpshooter page really prints — plus follower-4's "**Range**" (not "Ranged") and follower-2's
+"(functions as dagger)". Print is the authority; the row is backed by its own mirror document as one
+contiguous run, which is the check that caught it.
+
+REGATE — one earlier batch went red and it is this batch's own doing, in the good sense. Teaching the
+harness to host inventor innovation modifications lifted batch 033's otherworldly-protection out of
+UNSUPPORTED, where nobody could see it, and it landed on EXPERIENCE MISSING-CONTROL: WG raises "Select
+a Resistence" and "Select a Sanctification", and print (innovation-5) offers the player no choice at
+all — void or vitality follows from void healing, unholy or holy from sanctification, and our record
+carries both as predicates. Batch 033 already parked the identical shape (battle-creed, lane
+`derived-value-not-a-pick`), but rule 8 forbids this batch's closer from settling an earlier batch's
+record, so it is QUEUED as desk #147 and the question asked is the LANE, not the record. Every other
+earlier batch re-swept and re-gated green.
+
+FOR THE OWNER — 4 questions on the desk. #144 cultivation-order (WG grants the leaf order itself; we
+grant the order's contents). #145 animal-instinct-spider-web (print, WG and we agree the Spider gets a
+second attack; the three sides disagree on what KIND of thing a damageless attack is — Strike shape,
+item, or the Rage-row mark it is today); the gate now parks it correctly against that aspect-keyed id.
+#146 ast-patches-reverted-by-regen: six records (classFeatures/ashes, bloodline-elemental,
+bloodline-imperial, way-of-the-vanguard, items/razmiri-mask-porcelain, whispering-staff) lost whole
+printed sections from the display tree DescBody renders when public/ast/* was last regenerated. The
+prose is intact in public/core-descriptions.json and pinned there by test; what is undecided is whether
+the driver runs apply-ast-patches.mjs at close or the six trees become durable rows. No agent in this
+workflow may write either artefact. #147 otherworldly-protection, above: does the standing "every WG
+select is a visible control here" ruling extend to a WG select that encodes a condition print DERIVES
+from the character, or is `derived-value-not-a-pick` permanently an instrument limit? One ruling
+retires the whole lane; battle-creed is already parked on the second reading.
+
+FOR THE ORCHESTRATOR — one verdict and one instrument. scripts/wg-batch-close.mjs asks `desk.has(<record
+id>)` for the OWNER-QUEUED branch, the same defect the gate had, so animal-instinct — whose #spider-web
+finding is CONFIRMED, player-visible and deliberately UNBUILT pending #145 — derives FIXED off its seven
+rowed siblings, and its row citations are keyed on the RECORD rather than the finding. The corrected
+derivation flips that one verdict and no other (measured across the batch), but this file's one-way
+merge refuses to overwrite a verdict on disk and a correction is `--reverdict`, which is the
+orchestrator's hand, not the closer's. The defect is written into the file above the branch that has it;
+scripts/parity-residual-check.mjs and scripts/held-spell-rank-check.mjs carry the same shape.
+
+DEFERRED — 13 flagged residues, each with its reason in work/wg-batch-035-residual.json; the largest is
+that fury-instinct's AST prose still holds the legacy instinct-3 text until someone runs `npm run data`
+(no row can close that, and every agent in this workflow is forbidden to run it). Parked cross-file
+lanes from the red round, none of them a gate red and none reachable from a data row: the necromancer's
+Puppeteer subclass option is SHRUNK at runtime by src/data/index.ts (the sync copies the 237-character
+classFeatures record over the 567-character option, losing the whole Consume Thrall block) — the repair
+is a create-row correction, which rule 5 hands to the orchestrator; the four new wizard arcane schools,
+the two necromancer fatal methods, the two magus hybrid studies and the four grim fascinations reach a
+player as prose only, with no curriculum / school-spell / conflux-spell grant lane and, for
+grimFascination and hybridStudy, no way to pick them at all; reaper's edge grants no proficiency row;
+`follower` (6 AoN records) and `followers` (5 playable) are duplicate buckets and nothing in src reads
+the first; public/ast-index.json carries no bucket per entry, which is what makes the readable-record
+guard's ast lookup bucket-blind (1,574 records resolve through a differently-named file today, so a
+strict check would open a false red); and the Overdrive +2 to inventor resistance is modelled by neither
+side. dragon-eidolon reports KINDS missing=[language] with a live carrier and no credit — a one-line
+entry for whichever batch cuts that record, out of scope here.
+
+FINAL STATE, after the gate-red round and the closer's second pass — every stage green, in this order:
+apply (20 specs, 80 rows, 24 new; overlay 14209 -> 14273), gaps (47 lines, 34 authored, 13 parked, 4
+owner questions filed), close (FIXED 22, OWNER-QUEUED 1, MATCHES 17, 13 flagged residues), experience
+(40 records on the real builder: OK 38 · NO-SHEET-EFFECT 2 · UNSUPPORTED 0, against OK 34 ·
+UNSUPPORTED 4 before this round), gate (all nine pass), regate (every earlier batch green), suite
+(5855 passed, 1 skipped), verify (38 checks, 37 clean). Two of the three verify reds this batch
+inherited are genuinely fixed — readable-record-check reports zero and field-diff reports UNEXPLAINED
+zero — and the third, ast-content-check, is STILL RED and is parked, not repaired: desk #146 asks who
+runs the repair and whether it survives the next regeneration, and no artefact any agent in this
+workflow may write reaches public/ast. Nothing else in this batch is red, and nothing red is
+unassigned. What is NOT settled is listed above, item by item: four owner questions (#144, #145, #146,
+#147), one verdict correction plus the close-instrument fix behind it for the orchestrator, and the
+deferred lanes — every one of them named, none of them silent.

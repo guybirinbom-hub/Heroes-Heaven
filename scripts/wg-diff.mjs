@@ -994,6 +994,29 @@ const OFF_RECORD_CARRIERS = {
    * companionGrants.ts FILE row (which would credit all ~112 ids) that test fails rather than passing. */
   'beast-eidolon': ['language'],
   'psychopomp-eidolon': ['language'],
+  /*
+   * CLOSER, batch 035 — findings demon-eidolon#language-abyssal, plant-eidolon#language and
+   * undead-eidolon#language. The last three the batch-033 note listed as bare are bare no longer: this
+   * batch's engine families put each printed Language line on the same CompanionMod.languages carrier
+   * the four settled siblings above use, so the credit is earned here too.
+   *   demon-eidolon  — AoN eidolon-5  *"**Language** Abyssal"*; COMPANION_MODS['demon-eidolon']
+   *                    .languages = ['Abyssal'] (src/rules/companionGrants.ts:525), the printed NAME
+   *                    because `abyssal` is not a key of the remaster-only content.languages bucket.
+   *   plant-eidolon  — AoN eidolon-9  *"**Language** Sylvan"*; .languages = ['Sylvan'] (:559), the
+   *                    printed NAME for the same reason as its beast/fey siblings.
+   *   undead-eidolon — AoN eidolon-11 and its remaster twin eidolon-26, both *"**Language** Necril"*;
+   *                    .languages = ['necril'] (:582), the ID this time — content.languages['necril']
+   *                    exists. The type had no COMPANION_MODS row at all before this batch.
+   * All three are read by the same `for (const l of mod.languages ?? [])` loop in deriveEidolon
+   * (src/rules/companions.ts) onto EidolonBlock.languages, rendered at src/sheet/CompanionsTab.tsx:950.
+   * ⚠ STILL PER ID, for the reason the 033 note gives — REGISTRY_KINDS would credit a file row to every
+   * id in companionGrants.ts. The control that proves it has not become blanket is now dragon-eidolon:
+   * it carries `languages: ['draconic']` on the same table and has NO entry here, because it is not a
+   * batch-035 record and a closer may not settle an id outside its own batch. It still reports
+   * `language`, and test/batch035-closer.test.ts asserts exactly that beside the three credits above. */
+  'demon-eidolon': ['language'],
+  'plant-eidolon': ['language'],
+  'undead-eidolon': ['language'],
   /* CLOSER, batch 033 — finding light-mortar-innovation#duplicate-modification-choice.
    * *"Choose one of the sets of statistics on the Innovation Siege Weapon Statistics table"* plus the
    * tiered modification picks (AoN innovation-9 / archetype-329). The record's own `choice` field was
@@ -1695,6 +1718,31 @@ const VERIFIED_EQUIVALENT = {
   'untamed-order': ['specialStat'],
   // batch 034 premise: class-feature-668 "Upon becoming a druid, you align yourself with a druidic order, which grants you a class feat, an order spell (see below), and an additional trained skill tied to your order."
   'wave-order': ['specialStat'],
+
+  /* ---- BATCH 35 — the NINTH order, the one the 034 note deliberately held back ------------------
+   *
+   * The note above says cultivation-order "is NOT listed and still reports, which is what keeps this
+   * from becoming a rule that swallows an order whose grants were never checked". Batch 035 checked
+   * them, so the entry is now owed. `node scripts/wg-show.mjs "Cultivation Order" --raw` shows the
+   * single unaccounted operation is `createValue MAIN_DRUID_ORDER = "cultivation"` (type=str), read
+   * straight back by their own conditionals (`IF MAIN_DRUID_ORDER EQUALS cultivation THEN adjValue
+   * SKILL_CRAFTING {"value":"T"}` / `… THEN giveSpell FOCUS`) — bookkeeping for the pick, not a
+   * printed statistic. Print makes it a subclass, not a number on the character.
+   *
+   * Ours IS that pick: classes.druid.subclass.options['cultivation-order'] — grants.skills
+   * ['crafting'], grantedFeats ['leshy-familiar'] (configured through companionGrants.ts:125),
+   * focusSpells ['cornucopia'] — selected into `build.subclassId`, so every grant their variable
+   * gates already AGREES and `missing` is `['specialStat']` alone.
+   *
+   * ⚠ SCOPE, adversarially confirmed rather than assumed. This entry is the KINDS lane and nothing
+   * else. The order anathema is an `injectText type=class-feature` mapping to `note`, compared
+   * separately, so cultivation-order#anathema-sidebar is untouched; and the leaf-order membership
+   * (cultivation-order#leaf-membership) is a `giveAbilityBlock` judged by the EXPERIENCE comparer,
+   * which this registry does not reach — the gate still reports it. Mutation-proof test:
+   * test/batch035-instruments-1.test.ts.
+   */
+  // batch 035: cultivation-order#instrument
+  'cultivation-order': ['specialStat'],
 
   /*
    * SCHOOL OF THASSILONIAN RUNE MAGIC — the two sides put the sin pick on DIFFERENT RECORDS.

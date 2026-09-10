@@ -1,0 +1,80 @@
+{
+  "findings": [
+    {
+      "id": "demon-eidolon#language-abyssal",
+      "backfillRows": [],
+      "note": "Not a data row and not mine: COMPANION_MODS is a src table in src/rules/companionGrants.ts, which is outside this chunk's file grant. Filed as a CROSS-FILE GAP naming the engine-1 sibling chunk, which is editing the very same table for plant-eidolon / swarm-eidolon / undead-eidolon language rows."
+    },
+    {
+      "id": "demon-eidolon#demonic-strikes-note",
+      "backfillRows": [],
+      "note": "Same file as the finding above (src/rules/companionGrants.ts:507 note string) and outside this chunk's file grant. Filed as a CROSS-FILE GAP."
+    },
+    {
+      "id": "animal-instinct#no-reader",
+      "backfillRows": [],
+      "note": "Code-only. collectGrantedNaturals now takes build.featChoices and both class-feature pushes pass `feature:<id>` as `pick`, so the record's 29 choiceValue-tagged grantedStrikes rows are reachable. The round-trip subtractor gets the same answers from Character.featureChoices. No data change: the rows already exist and are already tagged."
+    },
+    {
+      "id": "animal-instinct#rage-gate",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "animal-instinct",
+          "field": "grantedStrikesState",
+          "value": "rage",
+          "why": "AoN instinct-8, Instinct Ability—Bestial Rage: \"While raging, you gain your chosen animal's unarmed attack (or attacks), but you're unable to use weapons.\" The grant is printed as existing only while raging; without this field the 29 grantedStrikes rows (now reachable after animal-instinct#no-reader) would stand permanently, so an Animal barbarian would walk around with jaws out of combat. Record-level because the printed clause gates the whole grant. Reader: collectGrantedNaturals copies it onto NaturalAttack.requiresState (src/rules/build.ts) and deriveStrikes drops the Strike while c.classResources.rage is 0 (src/rules/derive.ts). classFeatures/animal-instinct carries no existing overlay row for this field (the overlay has whileActive / choice / edition / grantedStrikes only), so no supersedes. VERIFIER-ADDED: the builder filed this row as \"DATA STILL NEEDED, the data-rows family's\", but no other family's spec (.b035-rows-data-rows-1/-2, engine-1, instruments-1/-2, situational) emits it, so the reader would have shipped with no carrier."
+        }
+      ],
+      "note": "Reader in this chunk plus the record-level row above (added by the engine-2 VERIFIER after confirming no sibling family emitted it); the row is the data-rows family's (DATA STILL NEEDED). New record-level field DefenseGrants.grantedStrikesState rides onto NaturalAttack.requiresState in build.ts, and deriveStrikes drops a gated Strike while the class-resource toggle is off. Record-level rather than per-row because print gates the whole grant and the record's grantedStrikes is one field of 29 rows."
+    },
+    {
+      "id": "animal-instinct#rage-damage-scope",
+      "backfillRows": [],
+      "note": "Code-only. rageStrikeRider now takes the granting record (`source`) and raises the tier only when it is the instinct's own Strike; every other unarmed Strike falls back to Rage's flat 2. Blast radius is animal-instinct alone — `unarmedOnly` is set on no other RAGE_DAMAGE entry."
+    },
+    {
+      "id": "animal-instinct#spec-die-step",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "animal-instinct",
+          "field": "unarmedTraits",
+          "value": [{ "fromRecord": "animal-instinct", "stepDie": 1, "minLevel": 7 }],
+          "why": "AoN instinct-8, Specialization Ability (Level 7): \"Increase the damage die size for the unarmed attacks granted by your chosen animal by one step, and increase the additional damage from Rage from 2 to 5 for your chosen animal's unarmed attacks.\" Only the flat-damage half was modelled (RAGE_DAMAGE tiers); the die step had no carrier, so a 7th-level Animal barbarian's Jaws stayed 1d10 where print makes it 1d12. Reader: applyUnarmedRiders (src/rules/derive.ts) already honours fromRecord + stepDie; minLevel is the level predicate added in this chunk, without which the step would fire at 1st. fromRecord keeps it off the barbarian's own Fist. classFeatures/animal-instinct carries no existing overlay row for unarmedTraits, so no supersedes. VERIFIER-ADDED for the same reason as the row above."
+        }
+      ],
+      "note": "Reader in this chunk plus the rider row above (added by the engine-2 VERIFIER after confirming no sibling family emitted it); the unarmedTraits row is the data-rows family's (DATA STILL NEEDED). UnarmedRider gains minLevel and applyUnarmedRiders honours it — the level predicate the rider lane was explicitly documented as lacking, without which a 7th-level clause would have fired at 1st."
+    },
+    {
+      "id": "lesson-of-vengeance#familiar-spell",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "lesson-of-vengeance",
+          "field": "grantedSpells",
+          "value": ["phantom-pain"],
+          "why": "AoN lesson-20: \"You gain the Needle of Vengeance hex, and your familiar learns Phantom Pain.\" Only the hex half had a carrier (focusSpells: [needle-of-vengeance]); the taught spell reached nothing. Reader: the choice-owned-feature walk in buildCharacter collects it into the caster pool's grantedByRank merge — the same route SubclassOption.grantedSpells (the witch patron's taught spells) already takes into the spellbook. spells['phantom-pain'] exists in core.json (rank 1). The existing overlay rows for this record are focusSpells + edition only, so no supersedes. VERIFIER-ADDED after confirming no sibling family emitted it."
+        }
+      ],
+      "note": "Reader in this chunk plus the grant row above (added by the engine-2 VERIFIER after confirming no sibling family emitted it); the grantedSpells row is the data-rows family's (DATA STILL NEEDED). ClassFeature gains grantedSpells and the choice-owned-feature walk in buildCharacter collects it into the caster pool's grantedByRank merge — the identical route the witch patron's grantedSpells already takes into the spellbook."
+    },
+    {
+      "id": "lesson-of-elements#familiar-spell-choice",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "lesson-of-elements",
+          "field": "grantedSpellChoice",
+          "value": {
+            "id": "lesson-of-elements-familiar",
+            "prompt": "Familiar spell",
+            "options": ["breathe-fire", "gust-of-wind", "hydraulic-push", "pummeling-rubble"]
+          },
+          "why": "AoN lesson-17: \"You gain the Elemental Betrayal hex. Your familiar learns your choice of breathe fire, gust of wind, hydraulic push, or pummeling rubble.\" A flat grantedSpells list cannot say \"or\", so the four-way pick is a control — WG shows a PREDEFINED SPELL select of exactly these four (their 4423/4650/4668/4787). Reader: the choice-owned-feature walk in buildCharacter honours build.featSpellChoices['<slot>:granted-spell'] while it names one of this feature's own options, and Builder.tsx renders the PopupSelect beside the lesson pick. All four spell ids exist in core.json (rank 1 each). The existing overlay rows for this record are focusSpells + edition (+ data-rows-2's edition/aonId/name/description/descRefs), none of them this field, so no supersedes and no collision. VERIFIER-ADDED after confirming no sibling family emitted it."
+        }
+      ],
+      "note": "Reader + control in this chunk plus the choice row above (added by the engine-2 VERIFIER after confirming no sibling family emitted it); the grantedSpellChoice row is the data-rows family's (DATA STILL NEEDED). ClassFeature gains grantedSpellChoice, the same walk honours the answer, and Builder renders a visible PopupSelect beside the lesson pick (WG parity requires a control, not a silent grant). Answer storage reuses BuildState.featSpellChoices under `<slot>:granted-spell`, so no new BuildState field and no persistence change."
+    }
+  ]
+}

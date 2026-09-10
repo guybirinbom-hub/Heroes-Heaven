@@ -1,0 +1,39 @@
+{
+  "findings": [
+    {
+      "id": "forensic-medicine-methodology#battle-medicine-rider",
+      "backfillRows": [],
+      "note": "Code-only. The rider is a display clause on Hit Points the target regains, so it belongs in FEAT_SITUATIONAL (src/rules/situationalBonuses.ts, key 'forensic-medicine-methodology', kind 'hp') beside godless-healing / medic-dedication / robust-health. No field on the record could hold it: the +level is on ANOTHER creature's healing and the 1-hour immunity has no stat row at all."
+    },
+    {
+      "id": "metallic-reactance#overdrive",
+      "backfillRows": [],
+      "note": "No row emitted ON PURPOSE. The proposed `whileActive: [{state:'overdrive', ...}]` has NO READER: the whileActive.state union in src/rules/types.ts:1173 is rage|panache|hunt-prey|unleash-psyche and CLASS_RESOURCES has no inventor overdrive toggle, so the row would sit in core.json doing nothing and would be untestable through any sheet reader. Shipped instead as a RECORD_MARKERS mark on the Overdrive action (the surface where the inventor turns it on), which says the printed +2 and says which value the sheet is showing. The row and its two prerequisites are in DATA STILL NEEDED / CROSS-FILE GAPS of work/.b035-report-situational.txt."
+    },
+    {
+      "id": "superstition-instinct#rage-hp-and-frightened",
+      "backfillRows": [],
+      "note": "Code-only. Both riders change no number the sheet holds (a heal equal to temp HP already granted, and an enemy-triggered frightened 1 on yourself), so RECORD_MARKERS { on: 'action', id: 'rage' } is the lane — the same one revitalizing-rage and berserkers-cloak already use for Rage riders."
+    },
+    {
+      "id": "the-oscillating-wave#psi-cantrip-mods",
+      "backfillRows": [],
+      "note": "Code-only, and deliberately NOT a data row: spells.frostbite.range '60 feet' and spells.ignition.range '30 feet' are correct for every caster who is not an Oscillating Wave psychic. Ruling G puts the per-character rewrite on the spell ROW via SPELL_MARKERS, the lane the other three conscious minds already use (b033/b034)."
+    },
+    {
+      "id": "animal-instinct#spider-web",
+      "backfillRows": [],
+      "note": "The proposed grantedStrikes row is HELD, not dropped, for two measured reasons. (1) GrantedStrike (src/rules/types.ts:5258) requires `die` and `damageType`; the Web deals no damage, so any row I emit invents a shape ('none'/'') that no reader is written for. (2) MEASURED: collectGrantedNaturals pushes a SUBCLASS record's grantedStrikes with no `pick` (src/rules/build.ts:2882), so every choiceValue row is dropped — a built animal-instinct barbarian has zero naturalAttacks for spider AND for bear, i.e. the shipped Fangs row does not reach the sheet either. A Web row authored today would be inert and unprovable. The whole printed attack (range increment, no damage, -10-foot Speed penalty, second-hit immobilize vs your class DC) ships instead as a RECORD_MARKERS note on the Rage action, scoped 'Spider:' in its first word because a mark cannot be scoped to one answer of the record's own choice."
+    },
+    {
+      "id": "starless-shadow#familiar-of-stalking-night",
+      "backfillRows": [],
+      "note": "Code-only. Enemy-facing (ruling F): the frightened 1 lands on the enemy, so no row of this character's sheet holds it. RECORD_MARKERS { on: 'feature', id: 'patron' } puts it on the Patron entry the witch reads — 'patron' is the id FeatsTab renders with, since no `patron-starless-shadow` variant record exists."
+    },
+    {
+      "id": "devourer-of-decay#familiar-of-parasitic-might",
+      "backfillRows": [],
+      "note": "Code-only, same lane and same reason as starless-shadow above: the sickened 1 and its Fortitude save belong to the enemy, so the honest surface is a note on the Patron feature entry."
+    }
+  ]
+}

@@ -639,6 +639,28 @@ export function Builder({
                                       options={initialDomainSpellOptions(content)}
                                     />
                                   )}
+                                  {/* batch 035: lesson-of-elements#familiar-spell-choice — a pick that hands
+                                      over a CLASS FEATURE whose own clause is an "or": *"Your familiar learns
+                                      your choice of breathe fire, gust of wind, hydraulic push, or pummeling
+                                      rubble."* WG shows a second select here and so must we — the flat
+                                      `grantedSpells` list cannot say "or", and a silent default would decide
+                                      the spell for the player. Same storage as the domain spell above. */}
+                                  {def.ownsFeature && (() => {
+                                    const ans = build.featChoices[key] ?? '';
+                                    const rec = content.classFeatures[ans] ?? content.classFeatures[ans.replace(/^aon-/, '')];
+                                    const gsc = rec?.grantedSpellChoice;
+                                    if (!gsc) return null;
+                                    const sk = `${key}:granted-spell`;
+                                    return (
+                                      <PopupSelect
+                                        title={gsc.prompt}
+                                        placeholder={`${gsc.prompt}…`}
+                                        value={gsc.options.includes(build.featSpellChoices?.[sk] ?? '') ? build.featSpellChoices![sk] : ''}
+                                        onChange={(v) => actions.patch({ featSpellChoices: { ...(build.featSpellChoices ?? {}), [sk]: v } })}
+                                        options={gsc.options.map((id) => ({ value: id, label: content.spells[id]?.name ?? id, description: content.spells[id]?.description }))}
+                                      />
+                                    );
+                                  })()}
                                   {limitReasons.map((r) => (
                                     <div className="choice-inert" key={r}>
                                       <i className="ti ti-filter" aria-hidden="true" />

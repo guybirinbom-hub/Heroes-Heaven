@@ -1,0 +1,10 @@
+GATE-RED group gate-park — the report lives at work/.b035-report-red-gate-park.txt.
+
+The family name this group closes under is `red-gate-park` (GATE-RED round), so
+scripts/wg-batch-close.mjs looks for work/.b035-report-red-gate-park.txt. This file exists only
+because the brief named both paths; it holds no findings of its own.
+
+MANIFEST (item 5): the group emits NO overlay rows. It does add one work/.b035-specs.json entry —
+{file: "work/.b035-rows-red-gate-park.json" (findings: []), kind: "gate-fix", family: "red-gate-park"} —
+because wg-batch-close.mjs:97 refuses a manifest entry with no `file` and wg-batch-commit.mjs refuses
+a modified path no entry declares. Close-out: no rows are owed by the driver for this group.

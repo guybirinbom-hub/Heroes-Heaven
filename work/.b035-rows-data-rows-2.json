@@ -1,0 +1,2100 @@
+{
+ "findings": [
+  {
+   "id": "animal-instinct#strike-names",
+   "note": "Half the finding only. The crab picker label read \"Claw 1d10 B\" where instinct-8 prints \"Big Claw\", so this row re-emits classFeatures/animal-instinct.choice whole with that one label corrected; the wasp label already read \"Wasp (Stinger 1d4 P, backstabber/deadly d8/venomous)\" and is carried over untouched. The other half — renaming the grantedStrikes rows \"Pincer\"→\"Stinger\" (wasp) and \"BigClaw\"→\"Big Claw\" (crab) — lands on classFeatures/animal-instinct.grantedStrikes, the same record+field chunk data-rows-1 re-emits for animal-instinct#cat. Two specs may not author one field, so that half is a CROSS-FILE GAPS line naming that chunk, with the exact renames listed under DATA STILL NEEDED.",
+   "backfillRows": [
+    {
+     "category": "classFeatures",
+     "id": "animal-instinct",
+     "field": "choice",
+     "value": {
+      "flag": "instinctAnimal",
+      "prompt": "Animal",
+      "kind": "array",
+      "options": [
+       {
+        "value": "ankylosaurus",
+        "label": "Ankylosaurus (Tail 1d10 B, razing)"
+       },
+       {
+        "value": "ant",
+        "label": "Ant (Mandibles 1d10 P, grapple)"
+       },
+       {
+        "value": "ape",
+        "label": "Ape (Fist 1d10 B, grapple)"
+       },
+       {
+        "value": "bat",
+        "label": "Bat (Fangs 1d10 P; Wing 1d4 P, parry)"
+       },
+       {
+        "value": "bear",
+        "label": "Bear (Jaws 1d10 P; Claw 1d6 S, agile)"
+       },
+       {
+        "value": "bird",
+        "label": "Bird (Beak 1d10 P; Talon 1d6 S, agile)"
+       },
+       {
+        "value": "brontosaurus",
+        "label": "Brontosaurus (Tail 1d10 B, trip)"
+       },
+       {
+        "value": "bull",
+        "label": "Bull (Horn 1d10 P, shove)"
+       },
+       {
+        "value": "cat",
+        "label": "Cat (Jaws 1d10 P; Claw 1d6 S, agile)"
+       },
+       {
+        "value": "crab",
+        "label": "Crab (Big Claw 1d10 B, razing; Claw 1d4 S, parry)"
+       },
+       {
+        "value": "crocodile",
+        "label": "Crocodile (Jaws 1d10 P; Tail 1d6 B, agile)"
+       },
+       {
+        "value": "deer",
+        "label": "Deer (Antler 1d10 P, grapple)"
+       },
+       {
+        "value": "frog",
+        "label": "Frog (Jaws 1d10 B; Tongue 1d6 B, agile)"
+       },
+       {
+        "value": "orca",
+        "label": "Orca (Jaws 1d8 P, forceful)"
+       },
+       {
+        "value": "scorpion",
+        "label": "Scorpion (Stinger 1d6 P, reach/venomous; Pincer 1d4 S, parry)"
+       },
+       {
+        "value": "seal",
+        "label": "Seal (Jaws 1d10 P, grapple)"
+       },
+       {
+        "value": "shark",
+        "label": "Shark (Jaws 1d10 P, grapple)"
+       },
+       {
+        "value": "snake",
+        "label": "Snake (Fangs 1d10 P, grapple)"
+       },
+       {
+        "value": "spider",
+        "label": "Spider (Fangs 1d8 P, grapple/venomous; Web special)"
+       },
+       {
+        "value": "tyrannosaurus",
+        "label": "Tyrannosaurus (Jaws 1d8 P, deadly d12; Tail 1d6 B, agile)"
+       },
+       {
+        "value": "wasp",
+        "label": "Wasp (Stinger 1d4 P, backstabber/deadly d8/venomous)"
+       },
+       {
+        "value": "wolf",
+        "label": "Wolf (Jaws 1d10 P, trip)"
+       }
+      ]
+     },
+     "supersedes": true,
+     "why": "AoN instinct-8 (Animal, Player Core 2 pg. 74) prints \"Crab Big Claw 1d10 B Razing, unarmed\" then \"Claw 1d4 S Parry, unarmed\" — our picker label read \"Crab (Claw 1d10 B, razing; Claw 1d4 S, parry)\", naming both crab attacks Claw, so the player choosing Crab could not tell the printed 1d10 Big Claw from the 1d4 Claw. Supersedes the existing pathless {classFeatures, animal-instinct, choice} row (whose value is byte-identical to the shipped core.json copy): all 22 options and every other label are carried over whole, with only that one label rewritten."
+    }
+   ]
+  },
+  {
+   "id": "animal-instinct#edition",
+   "note": "Two rows on the record itself. The content we ship (22 animals, the 1d6 frog Tongue, the Howl of the Wild table) is instinct-8, the Player Core 2 printing, but the record cited instinct-1 (Core Rulebook, nine animals, frog Tongue 1d4 B) and was tagged edition \"legacy\", which applyEditionFilter (src/rules/build.ts:3131) drops from the instinct picker whenever \"Hide legacy data\" is on. The edition row supersedes the existing {field:\"edition\", value:\"legacy\"} row; the aonId row is new. The four Player Core 2 siblings the proposal names are NOT authored here: fury-instinct is the record of another chunk’s finding (fury-instinct), and giant/spirit/superstition-instinct are covered by no finding at all — all four are listed under DATA STILL NEEDED instead.",
+   "backfillRows": [
+    {
+     "category": "classFeatures",
+     "id": "animal-instinct",
+     "field": "edition",
+     "value": "remaster",
+     "supersedes": true,
+     "why": "AoN instinct-8 \"Animal\" is Source [\"Player Core 2\"] pg. 74 and prints the exact table this record reproduces; instinct-1 is the Core Rulebook printing. The record’s own source.book already reads \"Pathfinder Player Core 2\", so the \"legacy\" tag contradicted it and cost the picker a remaster instinct whenever \"Hide legacy data\" is on (applyEditionFilter drops edition legacy/legacy-era, src/rules/build.ts:3131). Supersedes the existing {classFeatures, animal-instinct, edition, \"legacy\"} row — a scalar, so the superseded value is replaced whole. \"remaster\" is the value the comparable remaster record lesson-of-vengeance already carries."
+    },
+    {
+     "category": "classFeatures",
+     "id": "animal-instinct",
+     "field": "aonId",
+     "value": "instinct-8",
+     "why": "AoN instinct-8 is the Player Core 2 Animal instinct whose 22-animal / Howl of the Wild table our grantedStrikes and choice.options reproduce; instinct-1 (Core Rulebook pg. 86) lists only nine animals and prints the frog Tongue as 1d4 B where ours is d6. Pointing the record at the document it actually carries is what stops every later print-read pass from reading our Player Core 2 numbers against the Core Rulebook page."
+    }
+   ]
+  },
+  {
+   "id": "curse-of-torrential-knowledge",
+   "note": "Four created modes, one per cursebound rung, in the exact shape of the sibling oracle-cursebound ladder curse-of-creeping-ashes-1..4. WG encodes the identical ladder (four ACTIVE_MODES conditionals, PERCEPTION and SAVE_WILL at −1..−4 status), which is the evidence the four-rung shape is the right one rather than a single scaling star.",
+   "backfillRows": [
+    {
+     "category": "modes",
+     "id": "curse-of-torrential-knowledge-1",
+     "create": true,
+     "value": {
+      "id": "curse-of-torrential-knowledge-1",
+      "name": "Torrential Knowledge 1",
+      "category": "Oracle",
+      "feats": [
+       "curse-of-torrential-knowledge"
+      ],
+      "exclusiveGroup": "oracle-cursebound",
+      "duration": "while cursebound 1",
+      "note": "Cursebound 1: −1 status penalty to Perception checks and Will saves.",
+      "modifiers": [
+       {
+        "value": -1,
+        "type": "status",
+        "target": "perception"
+       },
+       {
+        "value": -1,
+        "type": "status",
+        "target": "save",
+        "detail": "will"
+       }
+      ],
+      "aonOrigin": "authored"
+     },
+     "why": "AoN mystery-18 §Curse of Torrential Knowledge: \"You take a status penalty to Perception checks and Will saving throws equal to your cursebound value\" (and \"If you are cursebound 4, you additionally can’t speak, use linguistic effects, or otherwise communicate with your allies\"). Nothing carried the number: the record holds only actionCost, its single carrier is a RECORD_MARKERS note at src/rules/situationalBonuses.ts:4557 which never reaches a stat row, and the generic cat-cursebound-1..4 (src/rules/modes.ts:272-275) carry modifiers: [] — so no oracle of the Lore mystery ever saw the penalty. Shape copied whole from the sibling rung modes/curse-of-creeping-ashes-1 (same class, same cursebound ladder); the exclusiveGroup keeps the four rungs mutually exclusive and `feats` resolves through modeGateIds → ownedFeatureIds (src/rules/derive.ts:3468), which admits the Lore mystery’s featureIds. Created through the overlay rather than scripts/data/toggle-modes.json because modes/item-umbral-wings is the standing precedent for a mode that lives only in effect-backfill.json."
+    },
+    {
+     "category": "modes",
+     "id": "curse-of-torrential-knowledge-2",
+     "create": true,
+     "value": {
+      "id": "curse-of-torrential-knowledge-2",
+      "name": "Torrential Knowledge 2",
+      "category": "Oracle",
+      "feats": [
+       "curse-of-torrential-knowledge"
+      ],
+      "exclusiveGroup": "oracle-cursebound",
+      "duration": "while cursebound 2",
+      "note": "Cursebound 2: −2 status penalty to Perception checks and Will saves.",
+      "modifiers": [
+       {
+        "value": -2,
+        "type": "status",
+        "target": "perception"
+       },
+       {
+        "value": -2,
+        "type": "status",
+        "target": "save",
+        "detail": "will"
+       }
+      ],
+      "aonOrigin": "authored"
+     },
+     "why": "AoN mystery-18 §Curse of Torrential Knowledge: \"You take a status penalty to Perception checks and Will saving throws equal to your cursebound value\" (and \"If you are cursebound 4, you additionally can’t speak, use linguistic effects, or otherwise communicate with your allies\"). Nothing carried the number: the record holds only actionCost, its single carrier is a RECORD_MARKERS note at src/rules/situationalBonuses.ts:4557 which never reaches a stat row, and the generic cat-cursebound-1..4 (src/rules/modes.ts:272-275) carry modifiers: [] — so no oracle of the Lore mystery ever saw the penalty. Shape copied whole from the sibling rung modes/curse-of-creeping-ashes-2 (same class, same cursebound ladder); the exclusiveGroup keeps the four rungs mutually exclusive and `feats` resolves through modeGateIds → ownedFeatureIds (src/rules/derive.ts:3468), which admits the Lore mystery’s featureIds. Created through the overlay rather than scripts/data/toggle-modes.json because modes/item-umbral-wings is the standing precedent for a mode that lives only in effect-backfill.json."
+    },
+    {
+     "category": "modes",
+     "id": "curse-of-torrential-knowledge-3",
+     "create": true,
+     "value": {
+      "id": "curse-of-torrential-knowledge-3",
+      "name": "Torrential Knowledge 3",
+      "category": "Oracle",
+      "feats": [
+       "curse-of-torrential-knowledge"
+      ],
+      "exclusiveGroup": "oracle-cursebound",
+      "duration": "while cursebound 3",
+      "note": "Cursebound 3: −3 status penalty to Perception checks and Will saves.",
+      "modifiers": [
+       {
+        "value": -3,
+        "type": "status",
+        "target": "perception"
+       },
+       {
+        "value": -3,
+        "type": "status",
+        "target": "save",
+        "detail": "will"
+       }
+      ],
+      "aonOrigin": "authored"
+     },
+     "why": "AoN mystery-18 §Curse of Torrential Knowledge: \"You take a status penalty to Perception checks and Will saving throws equal to your cursebound value\" (and \"If you are cursebound 4, you additionally can’t speak, use linguistic effects, or otherwise communicate with your allies\"). Nothing carried the number: the record holds only actionCost, its single carrier is a RECORD_MARKERS note at src/rules/situationalBonuses.ts:4557 which never reaches a stat row, and the generic cat-cursebound-1..4 (src/rules/modes.ts:272-275) carry modifiers: [] — so no oracle of the Lore mystery ever saw the penalty. Shape copied whole from the sibling rung modes/curse-of-creeping-ashes-3 (same class, same cursebound ladder); the exclusiveGroup keeps the four rungs mutually exclusive and `feats` resolves through modeGateIds → ownedFeatureIds (src/rules/derive.ts:3468), which admits the Lore mystery’s featureIds. Created through the overlay rather than scripts/data/toggle-modes.json because modes/item-umbral-wings is the standing precedent for a mode that lives only in effect-backfill.json."
+    },
+    {
+     "category": "modes",
+     "id": "curse-of-torrential-knowledge-4",
+     "create": true,
+     "value": {
+      "id": "curse-of-torrential-knowledge-4",
+      "name": "Torrential Knowledge 4",
+      "category": "Oracle",
+      "feats": [
+       "curse-of-torrential-knowledge"
+      ],
+      "exclusiveGroup": "oracle-cursebound",
+      "duration": "while cursebound 4",
+      "note": "Cursebound 4: −4 status penalty to Perception checks and Will saves. You also can’t speak, use linguistic effects, or otherwise communicate with your allies; you can still cast spells, but you’re stupefied 1.",
+      "modifiers": [
+       {
+        "value": -4,
+        "type": "status",
+        "target": "perception"
+       },
+       {
+        "value": -4,
+        "type": "status",
+        "target": "save",
+        "detail": "will"
+       }
+      ],
+      "aonOrigin": "authored"
+     },
+     "why": "AoN mystery-18 §Curse of Torrential Knowledge: \"You take a status penalty to Perception checks and Will saving throws equal to your cursebound value\" (and \"If you are cursebound 4, you additionally can’t speak, use linguistic effects, or otherwise communicate with your allies\"). Nothing carried the number: the record holds only actionCost, its single carrier is a RECORD_MARKERS note at src/rules/situationalBonuses.ts:4557 which never reaches a stat row, and the generic cat-cursebound-1..4 (src/rules/modes.ts:272-275) carry modifiers: [] — so no oracle of the Lore mystery ever saw the penalty. Shape copied whole from the sibling rung modes/curse-of-creeping-ashes-4 (same class, same cursebound ladder); the exclusiveGroup keeps the four rungs mutually exclusive and `feats` resolves through modeGateIds → ownedFeatureIds (src/rules/derive.ts:3468), which admits the Lore mystery’s featureIds. Created through the overlay rather than scripts/data/toggle-modes.json because modes/item-umbral-wings is the standing precedent for a mode that lives only in effect-backfill.json."
+    }
+   ]
+  },
+  {
+   "id": "phlogistonic-regulator#resistance-minimum",
+   "note": "One superseding row: the same two-entry resistances array with the max(1,…) floor removed from both members. The array is one field, so it is re-emitted whole with the superseded value merged in.",
+   "backfillRows": [
+    {
+     "category": "classFeatures",
+     "id": "phlogistonic-regulator",
+     "field": "resistances",
+     "value": [
+      {
+       "type": "cold",
+       "value": "floor(@actor.level/2)"
+      },
+      {
+       "type": "fire",
+       "value": "floor(@actor.level/2)"
+      }
+     ],
+     "supersedes": true,
+     "why": "AoN innovation-5 §Phlogistonic Regulator: \"You gain resistance equal to half your level to cold and fire damage\" — no minimum, and WG row 24832 (adjValue RESISTANCES \"cold, {{level/2}}\" / \"fire, {{level/2}}\") has none either, so a 1st-level inventor read resistance 1 where both authorities read 0. Supersedes the existing {classFeatures, phlogistonic-regulator, resistances} row, whose value was [{cold,\"max(1,floor(@actor.level/2))\"},{fire,\"max(1,floor(@actor.level/2))\"}]: both members are carried over with only the floor dropped, matching the armour-innovation modification with identical wording (dense-plating, stored as plain floor(@actor.level/2)). The value really reaches the sheet — ownedFeatureIds (src/rules/derive.ts:3468) admits c.inventor.modifications and derive.ts:2555+ pushes the record’s resistances."
+    }
+   ]
+  },
+  {
+   "id": "phlogistonic-regulator#overdrive",
+   "note": "One created mode, copied field-for-field from the only other Overdrive mode in the bucket (cat-harmonic-oscillator-overdrive), which stores the boosted resistance as a REPLACEMENT total rather than a delta. With the #resistance-minimum row applied the base is floor(level/2), so 2+floor(level/2) is exactly \"the resistance increases by 2\".",
+   "backfillRows": [
+    {
+     "category": "modes",
+     "id": "cat-phlogistonic-regulator-overdrive",
+     "create": true,
+     "value": {
+      "id": "cat-phlogistonic-regulator-overdrive",
+      "name": "Phlogistonic Regulator (Overdriven)",
+      "category": "Inventor",
+      "feats": [
+       "phlogistonic-regulator"
+      ],
+      "modifiers": [],
+      "resistances": [
+       {
+        "type": "cold",
+        "value": "2+floor(@actor.level/2)"
+       },
+       {
+        "type": "fire",
+        "value": "2+floor(@actor.level/2)"
+       }
+      ],
+      "note": "While under the effects of Overdrive, your cold and fire resistance from Phlogistonic Regulator is 2 higher (2 + half your level instead of half your level)."
+     },
+     "why": "AoN innovation-5 §Phlogistonic Regulator ends \"When under the effects of Overdrive, the resistance increases by 2.\" Nothing carried it: the record held only the flat resistances pair, situationalBonuses.ts has no phlogistonic entry, and of the 557 modes exactly one mentions Overdrive — cat-harmonic-oscillator-overdrive, whose shape this copies (feats gate, modifiers: [], resistances as a replacement total, prose note). The gate resolves because modeGateIds → ownedFeatureIds (src/rules/derive.ts:3468) admits c.inventor.modifications."
+    }
+   ]
+  },
+  {
+   "id": "school-of-protean-form#curriculum-9th",
+   "note": "Display-only, and on the classes/wizard copy rather than the class feature. The school SetupCard renders classes.wizard.subclass.options[school-of-protean-form].description/descRefs (src/builder/shared.tsx:3335) and that copy ended the curriculum with a bare \"- **9th:**\". The whole 18-option array is one field, so it is re-emitted whole with a single line and a single descRef changed; classFeatures/school-of-protean-form (curriculum[\"9\"] = [\"metamorphosis\"], plus its own already-correct description) is untouched, so the engine is unaffected.",
+   "backfillRows": [
+    {
+     "category": "classes",
+     "id": "wizard",
+     "field": "options",
+     "path": [
+      "subclass"
+     ],
+     "value": [
+      {
+       "id": "red-mantis-magic-school",
+       "name": "Red Mantis Magic School",
+       "description": "While any thug can commit a murder, proper assassination requires finesse and guile. Deep within the Crimson Citadel, the Red Mantis assassins have developed a specific selection of spells they teach to all magically capable members. These spells complement the assassins' clandestine and deadly methods.\n\n**Curriculum**\n\n- **cantrips:** Figment, Gouging Claw\n- **1st** Fleet Step, Illusory Disguise, Sure Strike\n- **2nd** Invisibility, Mist\n- **3rd** Clairaudience, Paralyze\n- **4th** Clairvoyance, Translocate\n- **5th** Hallucination, Illusory Scene\n- **6th** Mislead, Phantasmal Calamity\n- **7th** Duplicate Foe, Project Image\n- **8th** Disappearance, Unrelenting Observation\n- **9th** Phantasmagoria\n\n**School Spells** initial: Debilitating Terror; advanced: Shroud of the Mantis",
+       "descRefs": [
+        {
+         "label": "Figment",
+         "key": "spells"
+        },
+        {
+         "label": "Gouging Claw",
+         "key": "spells"
+        },
+        {
+         "label": "Fleet Step",
+         "key": "spells"
+        },
+        {
+         "label": "Illusory Disguise",
+         "key": "spells"
+        },
+        {
+         "label": "Sure Strike",
+         "key": "spells"
+        },
+        {
+         "label": "Mist",
+         "key": "spells"
+        },
+        {
+         "label": "Paralyze",
+         "key": "spells"
+        },
+        {
+         "label": "Translocate",
+         "key": "spells"
+        },
+        {
+         "label": "Illusory Scene",
+         "key": "spells"
+        },
+        {
+         "label": "Mislead",
+         "key": "spells"
+        },
+        {
+         "label": "Phantasmal Calamity",
+         "key": "spells"
+        },
+        {
+         "label": "Duplicate Foe",
+         "key": "spells"
+        },
+        {
+         "label": "Project Image",
+         "key": "spells"
+        },
+        {
+         "label": "Unrelenting Observation",
+         "key": "spells"
+        },
+        {
+         "label": "Debilitating Terror",
+         "key": "spells"
+        },
+        {
+         "label": "Shroud of the Mantis",
+         "key": "spells"
+        }
+       ],
+       "focusSpells": [
+        "debilitating-terror"
+       ],
+       "advancedFocusSpell": "shroud-of-the-mantis"
+      },
+      {
+       "id": "runelord",
+       "name": "Runelord",
+       "description": "You draw untold power from runes, sometimes called sin magic. You associate with one of the seven sins, also known as the seven rewards of rule: envy, gluttony, greed, lust, pride, sloth, and wrath. If you choose this class archetype, you must select Runelord Dedication as your 2nd-level class feat.\n\n**Prerequisites:** You must be a wizard.\n\n**Runelord Adjustments:** You become trained in martial polearms and spears. When your proficiency for simple weapons increases, your proficiencies in these weapons increases as well. You learn the Thassilonian language.\n\nInstead of an arcane thesis, you gain a personal rune. Your personal rune also affects your arcane bond.\n\nYou must select the School of Thassilonian Rune Magic as your arcane school, and you must choose one sin to specialize in. When you cast any curriculum spell or school spell from the School of Thassilonian Rune Magic, you do so simply by tracing runes of power in the air. This removes the need to speak incantations aloud. When you Refocus, you do so by contemplating or indulging in your sin.\n\nEach sin is opposed by two others. The incompatibility of these sins means that casting magic philosophically appropriate to those opposing sins, as represented by each school's anathema, interrupts your connection to your own sin and personal rune. If you violate your sin's anathema, you lose the benefits of your personal rune, and whenever you attempt to cast a curriculum spell or school spell, you must succeed at a or the spell is lost. This disruption lasts until you complete an Atone ritual; unlike a normal atone ritual, Arcana can be used for both the primary and secondary checks. Your curriculum spells (including spells of your own sin) never violate this anathema, sometimes providing alternatives to prohibited magic.\n\nYou gain Advanced School Spell as a bonus feat at 8th level, gaining the advanced school spell for the School of Thassilonian Rune Magic; once you've begun your studies of sin magic, there is no turning back from its allure.\n\n### School of Thassilonian Rune Magic\n\n### **Arcane Bond and Personal Rune**\n\nRunelords hail from an era where even a scholar was expected to be able to defend themself with arms if necessary, leading to the practice of attaching a blade to the typical wizard's staff. You must choose a polearm or spear as your arcane bond. In place of an arcane thesis, you have a personal rune, which appears on your bonded weapon. The weapon functions as a staff only you can prepare and contains the sin spells from your sin up to the highest rank of spell you can cast (including your cantrips). Your personal rune isn't a property rune and doesn't count against the weapon's limit of such runes.\n\nWhen you prepare your bonded weapon as a staff, you can physically merge one other staff in your possession into it, adding the staff's spells to your bonded weapon until your next daily preparations. While merged, the weapons haft takes on aesthetic aspects of the staff.",
+       "descRefs": [
+        {
+         "label": "Runelord Dedication",
+         "key": "feats"
+        },
+        {
+         "label": "School of Thassilonian Rune Magic",
+         "key": "classFeatures"
+        },
+        {
+         "label": "Atone",
+         "key": "spells"
+        },
+        {
+         "label": "Advanced School Spell",
+         "key": "feats"
+        }
+       ],
+       "advancedFocusSpell": "personal-runewell"
+      },
+      {
+       "id": "school-of-ars-grammatica",
+       "name": "School of Ars Grammatica",
+       "description": "Runes and wards, numbers and letters—they underpin all magic, making them the logical subject for a wizard who studies fundamental forces. Perhaps you studied at the Pathfinder Society's School of Spells or a similar institution, but whether you're lacing your words with magic to compel others, casting wards around your workshop, or destabilizing the very structure of an opponent's spells, you know this unassuming school carries elegant power.\n\n**Curriculum**\n\n- **cantrips:** Message, Sigil\n- **1st:** Command, Disguise Magic, Runic Body, Runic Weapon\n- **2nd:** Dispel Magic, Translate\n- **3rd:** Enthrall, Veil of Privacy\n- **4th:** Dispelling Globe, Suggestion\n- **5th:** Sending, Truespeech\n- **6th:** Repulsion, Spellwrack\n- **7th:** Contingency, Planar Seal\n- **8th:** Quandary, Unrelenting Observation\n- **9th:** Detonate Magic\n\n**School Spells** initial: Protective Wards; advanced: Rune of Observation",
+       "descRefs": [
+        {
+         "label": "Message",
+         "key": "spells"
+        },
+        {
+         "label": "Sigil",
+         "key": "spells"
+        },
+        {
+         "label": "Command",
+         "key": "spells"
+        },
+        {
+         "label": "Disguise Magic",
+         "key": "spells"
+        },
+        {
+         "label": "Runic Body",
+         "key": "spells"
+        },
+        {
+         "label": "Runic Weapon",
+         "key": "spells"
+        },
+        {
+         "label": "Dispel Magic",
+         "key": "spells"
+        },
+        {
+         "label": "Translate",
+         "key": "spells"
+        },
+        {
+         "label": "Enthrall",
+         "key": "spells"
+        },
+        {
+         "label": "Veil of Privacy",
+         "key": "spells"
+        },
+        {
+         "label": "Dispelling Globe",
+         "key": "spells"
+        },
+        {
+         "label": "Suggestion",
+         "key": "spells"
+        },
+        {
+         "label": "Sending",
+         "key": "spells"
+        },
+        {
+         "label": "Truespeech",
+         "key": "spells"
+        },
+        {
+         "label": "Repulsion",
+         "key": "spells"
+        },
+        {
+         "label": "Spellwrack",
+         "key": "spells"
+        },
+        {
+         "label": "Contingency",
+         "key": "spells"
+        },
+        {
+         "label": "Planar Seal",
+         "key": "spells"
+        },
+        {
+         "label": "Quandary",
+         "key": "spells"
+        },
+        {
+         "label": "Unrelenting Observation",
+         "key": "spells"
+        },
+        {
+         "label": "Detonate Magic",
+         "key": "spells"
+        },
+        {
+         "label": "Protective Wards",
+         "key": "spells"
+        },
+        {
+         "label": "Rune of Observation",
+         "key": "spells"
+        }
+       ],
+       "focusSpells": [
+        "protective-wards"
+       ],
+       "advancedFocusSpell": "rune-of-observation"
+      },
+      {
+       "id": "school-of-battle-magic",
+       "name": "School of Battle Magic",
+       "description": "Magic is power, and there are always those who will use power for the art of battle. You may have studied in the military of a nation of the brink of war—Cheliax and Andoran perhaps, or Geb and Nex. You summon whirling energies that can lay waste to both soldiers and armies, while being sure not to neglect arcane countermeasures for common tactical complications or the shields and defenses that keep combatants alive on the battlefield.\n\n**Curriculum**\n\n- **cantrips:** Shield, Telekinetic Projectile\n- **1st:** Breathe Fire, Force Barrage, Mystic Armor\n- **2nd:** Mist, Resist Energy\n- **3rd:** Earthbind, Fireball\n- **4th:** Wall of Fire, Weapon Storm\n- **5th:** Howling Blizzard, Impaling Spike\n- **6th:** Chain Lightning,\n- **7th:** Energy Aegis, True Target\n- **8th:** Arctic Rift, Desiccate\n- **9th:** Falling Stars\n\n**School Spells** initial: Force Bolt; advanced: Energy Absorption",
+       "descRefs": [
+        {
+         "label": "Shield",
+         "key": "spells"
+        },
+        {
+         "label": "Telekinetic Projectile",
+         "key": "spells"
+        },
+        {
+         "label": "Breathe Fire",
+         "key": "spells"
+        },
+        {
+         "label": "Force Barrage",
+         "key": "spells"
+        },
+        {
+         "label": "Mystic Armor",
+         "key": "spells"
+        },
+        {
+         "label": "Mist",
+         "key": "spells"
+        },
+        {
+         "label": "Resist Energy",
+         "key": "spells"
+        },
+        {
+         "label": "Earthbind",
+         "key": "spells"
+        },
+        {
+         "label": "Fireball",
+         "key": "spells"
+        },
+        {
+         "label": "Wall of Fire",
+         "key": "spells"
+        },
+        {
+         "label": "Weapon Storm",
+         "key": "spells"
+        },
+        {
+         "label": "Howling Blizzard",
+         "key": "spells"
+        },
+        {
+         "label": "Impaling Spike",
+         "key": "spells"
+        },
+        {
+         "label": "Chain Lightning",
+         "key": "spells"
+        },
+        {
+         "label": "Energy Aegis",
+         "key": "spells"
+        },
+        {
+         "label": "True Target",
+         "key": "spells"
+        },
+        {
+         "label": "Arctic Rift",
+         "key": "spells"
+        },
+        {
+         "label": "Desiccate",
+         "key": "spells"
+        },
+        {
+         "label": "Falling Stars",
+         "key": "spells"
+        },
+        {
+         "label": "Force Bolt",
+         "key": "spells"
+        },
+        {
+         "label": "Energy Absorption",
+         "key": "spells"
+        }
+       ],
+       "focusSpells": [
+        "force-bolt"
+       ],
+       "advancedFocusSpell": "energy-absorption"
+      },
+      {
+       "id": "school-of-breathtaking-influence",
+       "name": "School of Breathtaking Influence",
+       "description": "You hold sway in powerful social circles and take pride in reading an opponent before they move. Some academies teach this curriculum openly to would-be politicians; others present it as the study of resisting mental manipulation. Either way it is a staple of Quantium, where ambition is a measure of success.\n\n**Curriculum**\n\n**cantrips:** Daze, Infectious Enthusiasm\n\n**1st:** Command, Fear, Sleep\n\n**2nd:** Blood Vendetta, Phantom Crowd\n\n**3rd:** Enthrall, Mind of Menace\n\n**4th:** Confusion, Outcast's Curse\n\n**5th:** Subconscious Suggestion, Wave of Despair\n\n**6th:** Dominate, Never Mind\n\n**7th:** Contingency, Puppet Strings\n\n**8th:** Dream Council, Hidden Mind\n\n**9th:** Telepathic Demand\n\n**School Spells** *initial:* Appeal to Authority *advanced:* Hot Air",
+       "descRefs": [
+        {
+         "label": "Daze",
+         "key": "spells"
+        },
+        {
+         "label": "Infectious Enthusiasm",
+         "key": "spells"
+        },
+        {
+         "label": "Command",
+         "key": "spells"
+        },
+        {
+         "label": "Fear",
+         "key": "spells"
+        },
+        {
+         "label": "Sleep",
+         "key": "spells"
+        },
+        {
+         "label": "Blood Vendetta",
+         "key": "spells"
+        },
+        {
+         "label": "Phantom Crowd",
+         "key": "spells"
+        },
+        {
+         "label": "Enthrall",
+         "key": "spells"
+        },
+        {
+         "label": "Mind of Menace",
+         "key": "spells"
+        },
+        {
+         "label": "Confusion",
+         "key": "spells"
+        },
+        {
+         "label": "Outcast's Curse",
+         "key": "spells"
+        },
+        {
+         "label": "Subconscious Suggestion",
+         "key": "spells"
+        },
+        {
+         "label": "Wave of Despair",
+         "key": "spells"
+        },
+        {
+         "label": "Dominate",
+         "key": "spells"
+        },
+        {
+         "label": "Never Mind",
+         "key": "spells"
+        },
+        {
+         "label": "Contingency",
+         "key": "spells"
+        },
+        {
+         "label": "Puppet Strings",
+         "key": "spells"
+        },
+        {
+         "label": "Dream Council",
+         "key": "spells"
+        },
+        {
+         "label": "Hidden Mind",
+         "key": "spells"
+        },
+        {
+         "label": "Telepathic Demand",
+         "key": "spells"
+        },
+        {
+         "label": "Appeal to Authority",
+         "key": "spells"
+        },
+        {
+         "label": "Hot Air",
+         "key": "spells"
+        }
+       ],
+       "focusSpells": [
+        "appeal-to-authority"
+       ],
+       "advancedFocusSpell": "hot-air"
+      },
+      {
+       "id": "school-of-civic-wizardry",
+       "name": "School of Civic Wizardry",
+       "description": "Whether you studied in Manaket's Occularium or the Academy of Applied Magic, you learned that the fruits of arcane studies—like any other field—should ultimately help the common citizen. You've learned the humble art of construction, of finding lost people and things, of moving speedily among buildings and moats—yet these same arts can be turned to demolition, and the constructs you animate to build bridges can just as easily tear them down.\n\n**Curriculum**\n\n- **cantrips:** , Read Aura\n- **1st:** Hydraulic Push, Pummeling Rubble, Summon Construct\n- **2nd:** Revealing Light, Water Walk\n- **3rd:** Cozy Cabin, Safe Passage\n- **4th:** Creation, Unfettered Movement\n- **5th:** Control Water, Wall of Stone\n- **6th:** , Wall of Force\n- **7th:** Planar Palace,\n- **8th:** Earthquake, Pinpoint\n- **9th:** Foresight\n\n**School Spells** initial: Earthworks; advanced: Community Restoration",
+       "descRefs": [
+        {
+         "label": "Read Aura",
+         "key": "spells"
+        },
+        {
+         "label": "Hydraulic Push",
+         "key": "spells"
+        },
+        {
+         "label": "Pummeling Rubble",
+         "key": "spells"
+        },
+        {
+         "label": "Summon Construct",
+         "key": "spells"
+        },
+        {
+         "label": "Revealing Light",
+         "key": "spells"
+        },
+        {
+         "label": "Water Walk",
+         "key": "spells"
+        },
+        {
+         "label": "Cozy Cabin",
+         "key": "spells"
+        },
+        {
+         "label": "Safe Passage",
+         "key": "spells"
+        },
+        {
+         "label": "Creation",
+         "key": "spells"
+        },
+        {
+         "label": "Unfettered Movement",
+         "key": "spells"
+        },
+        {
+         "label": "Control Water",
+         "key": "spells"
+        },
+        {
+         "label": "Wall of Stone",
+         "key": "spells"
+        },
+        {
+         "label": "Wall of Force",
+         "key": "spells"
+        },
+        {
+         "label": "Planar Palace",
+         "key": "spells"
+        },
+        {
+         "label": "Earthquake",
+         "key": "spells"
+        },
+        {
+         "label": "Pinpoint",
+         "key": "spells"
+        },
+        {
+         "label": "Foresight",
+         "key": "spells"
+        },
+        {
+         "label": "Earthworks",
+         "key": "spells"
+        },
+        {
+         "label": "Community Restoration",
+         "key": "spells"
+        }
+       ],
+       "focusSpells": [
+        "earthworks"
+       ],
+       "advancedFocusSpell": "community-restoration"
+      },
+      {
+       "id": "school-of-gates",
+       "name": "School of Gates",
+       "description": "Some are content to stay in place and let the world shape them, but you prefer to move at your own pace. You've studied the ancient *aiudara* and other structures to learn the magic of transposition, using your knowledge to move across great distances and even planes. With knowledge as your path and magic as your key, there's no door you can't open, and no world you won't explore.\n\n**Curriculum**\n\n- **cantrips:** Message, Telekinetic Hand\n- **1st:** Fleet Step, Lock, Thoughtful Gift\n- **2nd:** Knock, Warping Pull\n- **3rd:** Echo Jump, Trade Items\n- **4th:** Flicker, Translocate\n- **5th:** King's Castle, Magic Passage\n- **6th:** Collective Transposition, Teleport\n- **7th:** Interplanar Teleport, Planar Seal\n- **8th:** Quandary, Sudden Transposition\n- **9th:** Forest of Gates\n\n**School Spells** initial: Friendly Push; advanced: Rapid Retreat",
+       "descRefs": [
+        {
+         "label": "Message",
+         "key": "spells"
+        },
+        {
+         "label": "Telekinetic Hand",
+         "key": "spells"
+        },
+        {
+         "label": "Fleet Step",
+         "key": "spells"
+        },
+        {
+         "label": "Lock",
+         "key": "spells"
+        },
+        {
+         "label": "Thoughtful Gift",
+         "key": "spells"
+        },
+        {
+         "label": "Knock",
+         "key": "spells"
+        },
+        {
+         "label": "Warping Pull",
+         "key": "spells"
+        },
+        {
+         "label": "Echo Jump",
+         "key": "spells"
+        },
+        {
+         "label": "Trade Items",
+         "key": "spells"
+        },
+        {
+         "label": "Flicker",
+         "key": "spells"
+        },
+        {
+         "label": "Translocate",
+         "key": "spells"
+        },
+        {
+         "label": "King's Castle",
+         "key": "spells"
+        },
+        {
+         "label": "Magic Passage",
+         "key": "spells"
+        },
+        {
+         "label": "Collective Transposition",
+         "key": "spells"
+        },
+        {
+         "label": "Teleport",
+         "key": "spells"
+        },
+        {
+         "label": "Interplanar Teleport",
+         "key": "spells"
+        },
+        {
+         "label": "Planar Seal",
+         "key": "spells"
+        },
+        {
+         "label": "Quandary",
+         "key": "spells"
+        },
+        {
+         "label": "Sudden Transposition",
+         "key": "spells"
+        },
+        {
+         "label": "Forest of Gates",
+         "key": "spells"
+        },
+        {
+         "label": "Friendly Push",
+         "key": "spells"
+        },
+        {
+         "label": "Rapid Retreat",
+         "key": "spells"
+        }
+       ],
+       "focusSpells": [
+        "friendly-push"
+       ],
+       "advancedFocusSpell": "rapid-retreat"
+      },
+      {
+       "id": "school-of-kalistrade",
+       "name": "School of Kalistrade",
+       "description": "Power and money are closely intertwined, and you recognize the potential for magic to assist in your pursuit of wealth and influence. Though you might study this school without joining the Prophets of Kalistrade, most who do so are either a part of the organization or local to Kerse and therefore used to the customs and culture of the Kalistocrats. You deploy magic to help you see through the illusions and trickery of others. At the same time, you push boundaries and exploit loopholes to get ahead of your competitors.\n\n**Curriculum**\n\n- **cantrips:** , Read Aura\n- **1st:** Alarm, Charm, Item Facade\n- **2nd:** Ghostly Carrier,\n- **3rd:** , Veil of Privacy\n- **4th:** Outcast's Curse, Suggestion\n- **5th:** Imaginary Lockbox, Subconscious Suggestion\n- **6th:** Repulsion, Scrying\n- **7th:** Project Image,\n- **8th:** , Hidden Mind\n- **9th:** Resplendent Mansion\n\n**School Spells** initial: Unexpected Windfall; advanced: Capital Dividend",
+       "descRefs": [
+        {
+         "label": "Read Aura",
+         "key": "spells"
+        },
+        {
+         "label": "Alarm",
+         "key": "spells"
+        },
+        {
+         "label": "Charm",
+         "key": "spells"
+        },
+        {
+         "label": "Item Facade",
+         "key": "spells"
+        },
+        {
+         "label": "Ghostly Carrier",
+         "key": "spells"
+        },
+        {
+         "label": "Veil of Privacy",
+         "key": "spells"
+        },
+        {
+         "label": "Outcast's Curse",
+         "key": "spells"
+        },
+        {
+         "label": "Suggestion",
+         "key": "spells"
+        },
+        {
+         "label": "Imaginary Lockbox",
+         "key": "spells"
+        },
+        {
+         "label": "Subconscious Suggestion",
+         "key": "spells"
+        },
+        {
+         "label": "Repulsion",
+         "key": "spells"
+        },
+        {
+         "label": "Scrying",
+         "key": "spells"
+        },
+        {
+         "label": "Project Image",
+         "key": "spells"
+        },
+        {
+         "label": "Hidden Mind",
+         "key": "spells"
+        },
+        {
+         "label": "Resplendent Mansion",
+         "key": "spells"
+        },
+        {
+         "label": "Unexpected Windfall",
+         "key": "spells"
+        },
+        {
+         "label": "Capital Dividend",
+         "key": "spells"
+        }
+       ],
+       "focusSpells": [
+        "unexpected-windfall"
+       ],
+       "advancedFocusSpell": "capital-dividend"
+      },
+      {
+       "id": "school-of-keen-inquiry",
+       "name": "School of Keen Inquiry",
+       "description": "You study truth itself — what happened, what is happening, and what is about to. Whether you share what you find or bury it is a judgement you reserve until you know what you are holding. Quantium credits the curriculum to the spies of Her Most Keen Eye, and it is taught in many politically minded colleges.\n\n**Curriculum**\n\n**cantrips:** Detect Magic, Sigil\n\n**1st:** Disguise Magic, Illusory Disguise, Mindlink\n\n**2nd:** Knock, See the Unseen\n\n**3rd:** Clairaudience, Locate\n\n**4th:** Clairvoyance, Detect Scrying\n\n**5th:** Mind Probe, Scouting Eye\n\n**6th:** Scrying, Truesight\n\n**7th:** Retrocognition, True Target\n\n**8th:** Disappearance, Pinpoint\n\n**9th:** Foresight\n\n**School Spells** *initial:* Fact Check *advanced:* Unsettling Perspective",
+       "descRefs": [
+        {
+         "label": "Detect Magic",
+         "key": "spells"
+        },
+        {
+         "label": "Sigil",
+         "key": "spells"
+        },
+        {
+         "label": "Disguise Magic",
+         "key": "spells"
+        },
+        {
+         "label": "Illusory Disguise",
+         "key": "spells"
+        },
+        {
+         "label": "Mindlink",
+         "key": "spells"
+        },
+        {
+         "label": "Knock",
+         "key": "spells"
+        },
+        {
+         "label": "See the Unseen",
+         "key": "spells"
+        },
+        {
+         "label": "Clairaudience",
+         "key": "spells"
+        },
+        {
+         "label": "Locate",
+         "key": "spells"
+        },
+        {
+         "label": "Clairvoyance",
+         "key": "spells"
+        },
+        {
+         "label": "Detect Scrying",
+         "key": "spells"
+        },
+        {
+         "label": "Mind Probe",
+         "key": "spells"
+        },
+        {
+         "label": "Scouting Eye",
+         "key": "spells"
+        },
+        {
+         "label": "Scrying",
+         "key": "spells"
+        },
+        {
+         "label": "Truesight",
+         "key": "spells"
+        },
+        {
+         "label": "Retrocognition",
+         "key": "spells"
+        },
+        {
+         "label": "True Target",
+         "key": "spells"
+        },
+        {
+         "label": "Disappearance",
+         "key": "spells"
+        },
+        {
+         "label": "Pinpoint",
+         "key": "spells"
+        },
+        {
+         "label": "Foresight",
+         "key": "spells"
+        },
+        {
+         "label": "Fact Check",
+         "key": "spells"
+        },
+        {
+         "label": "Unsettling Perspective",
+         "key": "spells"
+        }
+       ],
+       "focusSpells": [
+        "fact-check"
+       ],
+       "advancedFocusSpell": "unsettling-perspective"
+      },
+      {
+       "id": "school-of-magical-technologies",
+       "name": "School of Magical Technologies",
+       "description": "At the height of ancient Azlant, the study of magical technologies—better known as magitech—was considered among the most prestigious of arcane specializations, and practitioners were both well regarded and well paid. While some magitech specialists trained in academies or as apprentices, others studied at religious cloisters dedicated to the worship of Amaznen, a now-dead god of invention and magic. Today, practitioners are more likely to learn from scraps of ancient spellbooks, forgotten lore unearthed in Azlanti ruins, or from a time-displaced graduate like Anoreth Zorillen. Modern magitech schools exist today, divorced from their ancient Azlanti origins but no less prestigious, including the famed Clockwork Cathedral in Absalom and temples of Brigh, goddess of clockwork and invention.\n\nAs a student of magical technologies, you've learned the art of fusing magic with mundane technology to create something truly unique.\n\n**Curriculum**\n\n**cantrips:** Needle Darts, Shield\n\n**1st:** Mending, Runic Weapon, Summon Construct\n\n**2nd:** Animated Assault, Dismantle\n\n**3rd:** Shrink Item, Wooden Double\n\n**4th:** Creation, Weapon Storm\n\n**5th:** Impaling Spike, Wall of Stone\n\n**6th:** Field of Razors, Petrify\n\n**7th:** Beheading Buzz Saw, Lifewood Cage\n\n**8th:** Ferrous Form, Quandary\n\n**9th:** Resplendent Mansion\n\n**School Spells** *initial:* Augmented Body *advanced:* Conjured Clockwork",
+       "descRefs": [
+        {
+         "label": "Needle Darts",
+         "key": "spells"
+        },
+        {
+         "label": "Shield",
+         "key": "spells"
+        },
+        {
+         "label": "Mending",
+         "key": "spells"
+        },
+        {
+         "label": "Runic Weapon",
+         "key": "spells"
+        },
+        {
+         "label": "Summon Construct",
+         "key": "spells"
+        },
+        {
+         "label": "Animated Assault",
+         "key": "spells"
+        },
+        {
+         "label": "Dismantle",
+         "key": "spells"
+        },
+        {
+         "label": "Shrink Item",
+         "key": "spells"
+        },
+        {
+         "label": "Wooden Double",
+         "key": "spells"
+        },
+        {
+         "label": "Creation",
+         "key": "spells"
+        },
+        {
+         "label": "Weapon Storm",
+         "key": "spells"
+        },
+        {
+         "label": "Impaling Spike",
+         "key": "spells"
+        },
+        {
+         "label": "Wall of Stone",
+         "key": "spells"
+        },
+        {
+         "label": "Field of Razors",
+         "key": "spells"
+        },
+        {
+         "label": "Petrify",
+         "key": "spells"
+        },
+        {
+         "label": "Beheading Buzz Saw",
+         "key": "spells"
+        },
+        {
+         "label": "Lifewood Cage",
+         "key": "spells"
+        },
+        {
+         "label": "Ferrous Form",
+         "key": "spells"
+        },
+        {
+         "label": "Quandary",
+         "key": "spells"
+        },
+        {
+         "label": "Resplendent Mansion",
+         "key": "spells"
+        },
+        {
+         "label": "Augmented Body",
+         "key": "spells"
+        },
+        {
+         "label": "Conjured Clockwork",
+         "key": "spells"
+        }
+       ],
+       "focusSpells": [
+        "augmented-body"
+       ],
+       "advancedFocusSpell": "conjured-clockwork"
+      },
+      {
+       "id": "school-of-mentalism",
+       "name": "School of Mentalism",
+       "description": "As a scholar, you know all too well the importance of a sound mind. Thus, you attended a school—like the Farseer Tower or the Stone of the Seers—that taught the arts of befuddling lesser minds with figments and illusions or implanted sensations and memories.\n\n**Curriculum**\n\n- **cantrips:** Daze, Figment\n- **1st:** Dizzying Colors, Sleep, Sure Strike\n- **2nd:** Illusory Creature, Stupefy\n- **3rd:** Dream Message, Mind Reading\n- **4th:** Nightmare, Vision of Death\n- **5th:** , Illusory Scene\n- **6th:** Never Mind, Phantasmal Calamity\n- **7th:** Project Image, Warp Mind\n- **8th:** , Uncontrollable Dance\n- **9th:**\n\n**School Spells** initial: Charming Push; advanced: Invisibility Cloak",
+       "descRefs": [
+        {
+         "label": "Daze",
+         "key": "spells"
+        },
+        {
+         "label": "Figment",
+         "key": "spells"
+        },
+        {
+         "label": "Dizzying Colors",
+         "key": "spells"
+        },
+        {
+         "label": "Sleep",
+         "key": "spells"
+        },
+        {
+         "label": "Sure Strike",
+         "key": "spells"
+        },
+        {
+         "label": "Illusory Creature",
+         "key": "spells"
+        },
+        {
+         "label": "Stupefy",
+         "key": "spells"
+        },
+        {
+         "label": "Dream Message",
+         "key": "spells"
+        },
+        {
+         "label": "Mind Reading",
+         "key": "spells"
+        },
+        {
+         "label": "Nightmare",
+         "key": "spells"
+        },
+        {
+         "label": "Vision of Death",
+         "key": "spells"
+        },
+        {
+         "label": "Illusory Scene",
+         "key": "spells"
+        },
+        {
+         "label": "Never Mind",
+         "key": "spells"
+        },
+        {
+         "label": "Phantasmal Calamity",
+         "key": "spells"
+        },
+        {
+         "label": "Project Image",
+         "key": "spells"
+        },
+        {
+         "label": "Warp Mind",
+         "key": "spells"
+        },
+        {
+         "label": "Uncontrollable Dance",
+         "key": "spells"
+        },
+        {
+         "label": "Charming Push",
+         "key": "spells"
+        },
+        {
+         "label": "Invisibility Cloak",
+         "key": "spells"
+        }
+       ],
+       "focusSpells": [
+        "charming-push"
+       ],
+       "advancedFocusSpell": "invisibility-cloak"
+      },
+      {
+       "id": "school-of-nexian-spaces",
+       "name": "School of Nexian Spaces",
+       "description": "Whether you are chasing immortality or a world built exactly to your taste, Nex's experiments with demiplanes are the road there. You begin by reshaping the reality you already stand in and drawing on other planes for power, and you graduate to building extraplanar spaces and stepping between them.\n\n**Curriculum**\n\n**cantrips:** Phase Bolt, Warp Step\n\n**1st:** Alarm, Pet Cache, Thoughtful Gift\n\n**2nd:** Dimensional Drop, Vanish Weapon\n\n**3rd:** Cozy Cabin, Far Reach\n\n**4th:** Flicker, Liminal Doorway\n\n**5th:** Banishment, Space Fold Gate\n\n**6th:** Collective Transposition, Proximal Shift\n\n**7th:** Interplanar Teleport, Planar Palace\n\n**8th:** Quandary, Stars of Another Sky\n\n**9th:** Resplendent Mansion\n\n**School Spells** *initial:* Extradimensional Cover *advanced:* Unbounded Sphere",
+       "descRefs": [
+        {
+         "label": "Phase Bolt",
+         "key": "spells"
+        },
+        {
+         "label": "Warp Step",
+         "key": "spells"
+        },
+        {
+         "label": "Alarm",
+         "key": "spells"
+        },
+        {
+         "label": "Pet Cache",
+         "key": "spells"
+        },
+        {
+         "label": "Thoughtful Gift",
+         "key": "spells"
+        },
+        {
+         "label": "Dimensional Drop",
+         "key": "spells"
+        },
+        {
+         "label": "Vanish Weapon",
+         "key": "spells"
+        },
+        {
+         "label": "Cozy Cabin",
+         "key": "spells"
+        },
+        {
+         "label": "Far Reach",
+         "key": "spells"
+        },
+        {
+         "label": "Flicker",
+         "key": "spells"
+        },
+        {
+         "label": "Liminal Doorway",
+         "key": "spells"
+        },
+        {
+         "label": "Banishment",
+         "key": "spells"
+        },
+        {
+         "label": "Space Fold Gate",
+         "key": "spells"
+        },
+        {
+         "label": "Collective Transposition",
+         "key": "spells"
+        },
+        {
+         "label": "Proximal Shift",
+         "key": "spells"
+        },
+        {
+         "label": "Interplanar Teleport",
+         "key": "spells"
+        },
+        {
+         "label": "Planar Palace",
+         "key": "spells"
+        },
+        {
+         "label": "Quandary",
+         "key": "spells"
+        },
+        {
+         "label": "Stars of Another Sky",
+         "key": "spells"
+        },
+        {
+         "label": "Resplendent Mansion",
+         "key": "spells"
+        },
+        {
+         "label": "Extradimensional Cover",
+         "key": "spells"
+        },
+        {
+         "label": "Unbounded Sphere",
+         "key": "spells"
+        }
+       ],
+       "focusSpells": [
+        "extradimensional-cover"
+       ],
+       "advancedFocusSpell": "unbounded-sphere"
+      },
+      {
+       "id": "school-of-protean-form",
+       "name": "School of Protean Form",
+       "description": "The uninitiated often think of wizards as cerebral, focused on their studies more than the body, yet your school of magic taught of the relationship between the two. Your magic, whether learned at a storied institution like Kintargo's Alabaster Academy or someplace more sinister, like the Fleshforges of Nex, focuses on the ways that living matter can be convinced into another shape for a time, allowing you to polymorph a seed into a vine, a human into a beast, or a harmless germ into a deadly toxin.\n\n**Curriculum**\n\n- **cantrips:** Gouging Claw, Tangle Vine\n- **1st:** Jump, Pest Form, Spider Sting\n- **2nd:** Enlarge, Humanoid Form\n- **3rd:** Feet to Fins, Vampiric Feast\n- **4th:** Mountain Resilience, Vapor Form\n- **5th:** Elemental Form, Toxic Cloud\n- **6th:** Cursed Metamorphosis, Petrify\n- **7th:** Duplicate Foe, Fiery Body\n- **8th:** Desiccate, Monstrosity Form\n- **9th:** Metamorphosis\n\n**School Spells** initial: Scramble Body; advanced: Shifting Form",
+       "descRefs": [
+        {
+         "label": "Gouging Claw",
+         "key": "spells"
+        },
+        {
+         "label": "Tangle Vine",
+         "key": "spells"
+        },
+        {
+         "label": "Jump",
+         "key": "spells"
+        },
+        {
+         "label": "Pest Form",
+         "key": "spells"
+        },
+        {
+         "label": "Spider Sting",
+         "key": "spells"
+        },
+        {
+         "label": "Enlarge",
+         "key": "spells"
+        },
+        {
+         "label": "Humanoid Form",
+         "key": "spells"
+        },
+        {
+         "label": "Feet to Fins",
+         "key": "spells"
+        },
+        {
+         "label": "Vampiric Feast",
+         "key": "spells"
+        },
+        {
+         "label": "Mountain Resilience",
+         "key": "spells"
+        },
+        {
+         "label": "Vapor Form",
+         "key": "spells"
+        },
+        {
+         "label": "Elemental Form",
+         "key": "spells"
+        },
+        {
+         "label": "Toxic Cloud",
+         "key": "spells"
+        },
+        {
+         "label": "Cursed Metamorphosis",
+         "key": "spells"
+        },
+        {
+         "label": "Petrify",
+         "key": "spells"
+        },
+        {
+         "label": "Duplicate Foe",
+         "key": "spells"
+        },
+        {
+         "label": "Fiery Body",
+         "key": "spells"
+        },
+        {
+         "label": "Desiccate",
+         "key": "spells"
+        },
+        {
+         "label": "Monstrosity Form",
+         "key": "spells"
+        },
+        {
+         "label": "Metamorphosis",
+         "key": "spells"
+        },
+        {
+         "label": "Scramble Body",
+         "key": "spells"
+        },
+        {
+         "label": "Shifting Form",
+         "key": "spells"
+        }
+       ],
+       "focusSpells": [
+        "scramble-body"
+       ],
+       "advancedFocusSpell": "shifting-form"
+      },
+      {
+       "id": "school-of-quantic-control",
+       "name": "School of Quantic Control",
+       "description": "You are an architect of more than buildings: you call on elemental forces to move the building blocks of reality, reshaping ground and rearranging creatures as though the world were a diorama to be perfected. The curriculum leans on the geniekin of Quantium's Wish, who keep a capital standing in apparent defiance of physics.\n\n**Curriculum**\n\n**cantrips:** Gale Blast, Scatter Scree\n\n**1st:** Cradle Aloft, Gentle Landing, Pummeling Rubble\n\n**2nd:** Dismantle, Unrelenting Gravity\n\n**3rd:** Chosen Gravity, Inertia Lock\n\n**4th:** Containment, Living Terrain\n\n**5th:** Control Water, Wall of Stone\n\n**6th:** Repulsion, Wall of Force\n\n**7th:** Infinitesimal Collapse Field, Planar Seal\n\n**8th:** Arctic Rift, Earthbreaker Stride\n\n**9th:** Implosion\n\n**School Spells** *initial:* Circle of Weakness *advanced:* Quantic Dampening",
+       "descRefs": [
+        {
+         "label": "Gale Blast",
+         "key": "spells"
+        },
+        {
+         "label": "Scatter Scree",
+         "key": "spells"
+        },
+        {
+         "label": "Cradle Aloft",
+         "key": "spells"
+        },
+        {
+         "label": "Gentle Landing",
+         "key": "spells"
+        },
+        {
+         "label": "Pummeling Rubble",
+         "key": "spells"
+        },
+        {
+         "label": "Dismantle",
+         "key": "spells"
+        },
+        {
+         "label": "Unrelenting Gravity",
+         "key": "spells"
+        },
+        {
+         "label": "Chosen Gravity",
+         "key": "spells"
+        },
+        {
+         "label": "Inertia Lock",
+         "key": "spells"
+        },
+        {
+         "label": "Containment",
+         "key": "spells"
+        },
+        {
+         "label": "Living Terrain",
+         "key": "spells"
+        },
+        {
+         "label": "Control Water",
+         "key": "spells"
+        },
+        {
+         "label": "Wall of Stone",
+         "key": "spells"
+        },
+        {
+         "label": "Repulsion",
+         "key": "spells"
+        },
+        {
+         "label": "Wall of Force",
+         "key": "spells"
+        },
+        {
+         "label": "Infinitesimal Collapse Field",
+         "key": "spells"
+        },
+        {
+         "label": "Planar Seal",
+         "key": "spells"
+        },
+        {
+         "label": "Arctic Rift",
+         "key": "spells"
+        },
+        {
+         "label": "Earthbreaker Stride",
+         "key": "spells"
+        },
+        {
+         "label": "Implosion",
+         "key": "spells"
+        },
+        {
+         "label": "Circle of Weakness",
+         "key": "spells"
+        },
+        {
+         "label": "Quantic Dampening",
+         "key": "spells"
+        }
+       ],
+       "focusSpells": [
+        "circle-of-weakness"
+       ],
+       "advancedFocusSpell": "quantic-dampening"
+      },
+      {
+       "id": "school-of-rooted-wisdom",
+       "name": "School of Rooted Wisdom",
+       "description": "You've studied at the Magaambya or under one of its traveling professors, learning the ancient magic of Golarion's oldest academy. Your curriculum is self-directed, allowing you to choose a branch of study and personalize your learning. If you choose the School of Rooted Wisdom, you gain the below curriculum and school spells.\n\n**Curriculum**\n\n- **cantrips:** Detect Magic\n- **1st:** Alarm\n- **2nd:** Dispel Magic\n- **3rd:** Safe Passage\n- **4th:** Mountain Resilience\n- **5th:** Control Water\n- **6th:** Truesight\n- **7th:** Energy Aegis\n- **8th:** Quandary\n- **9th:**—\n\n**School Spells** initial: Halcyon Mists; advanced: Call the Ten\n\nThis is your primary trunk of study, to which you add one of the following five secondary branches, granting you additional curriculum spells.\n\n- **Cascade Bearers**\n- **Emerald Boughs**\n- **Rain-Scribes**\n- **Tempest-Sun Mages**\n- **Uzunjati**",
+       "descRefs": [
+        {
+         "label": "Detect Magic",
+         "key": "spells"
+        },
+        {
+         "label": "Alarm",
+         "key": "spells"
+        },
+        {
+         "label": "Dispel Magic",
+         "key": "spells"
+        },
+        {
+         "label": "Safe Passage",
+         "key": "spells"
+        },
+        {
+         "label": "Mountain Resilience",
+         "key": "spells"
+        },
+        {
+         "label": "Control Water",
+         "key": "spells"
+        },
+        {
+         "label": "Truesight",
+         "key": "spells"
+        },
+        {
+         "label": "Energy Aegis",
+         "key": "spells"
+        },
+        {
+         "label": "Quandary",
+         "key": "spells"
+        },
+        {
+         "label": "Halcyon Mists",
+         "key": "spells"
+        },
+        {
+         "label": "Call the Ten",
+         "key": "spells"
+        },
+        {
+         "label": "Cascade Bearers",
+         "key": "classFeatures"
+        },
+        {
+         "label": "Emerald Boughs",
+         "key": "classFeatures"
+        },
+        {
+         "label": "Rain-Scribes",
+         "key": "classFeatures"
+        },
+        {
+         "label": "Tempest-Sun Mages",
+         "key": "classFeatures"
+        },
+        {
+         "label": "Uzunjati",
+         "key": "classFeatures"
+        }
+       ],
+       "focusSpells": [
+        "halcyon-mists"
+       ],
+       "advancedFocusSpell": "call-the-ten"
+      },
+      {
+       "id": "school-of-the-boundary",
+       "name": "School of the Boundary",
+       "description": "Why use your magic to affect something as pedestrian as the physical world? Whether you studied at the College of Dimensional Studies in Katapesh or an underground school in haunted Ustalav, you've turned your magic past the Universe to the forces beyond, summoning spirits and shades, manipulating dimensions and planes, and treading in a place not meant for mortals.\n\n**Curriculum**\n\n- **cantrips:** Telekinetic Hand, Void Warp\n- **1st:** Grim Tendrils, Phantasmal Minion, Summon Undead\n- **2nd:** Darkness, See the Unseen\n- **3rd:** Bind Undead, Ghostly Weapon\n- **4th:** Flicker, Translocate\n- **5th:** Banishment, Invoke Spirits\n- **6th:** Teleport, Vampiric Exsanguination\n- **7th:** Eclipse Burst, Interplanar Teleport\n- **8th:** Quandary, Unrelenting Observation\n- **9th:** Massacre\n\n**School Spells** initial: Fortify Summoning; advanced: Spiral of Horrors",
+       "descRefs": [
+        {
+         "label": "Telekinetic Hand",
+         "key": "spells"
+        },
+        {
+         "label": "Void Warp",
+         "key": "spells"
+        },
+        {
+         "label": "Grim Tendrils",
+         "key": "spells"
+        },
+        {
+         "label": "Phantasmal Minion",
+         "key": "spells"
+        },
+        {
+         "label": "Summon Undead",
+         "key": "spells"
+        },
+        {
+         "label": "Darkness",
+         "key": "spells"
+        },
+        {
+         "label": "See the Unseen",
+         "key": "spells"
+        },
+        {
+         "label": "Bind Undead",
+         "key": "spells"
+        },
+        {
+         "label": "Ghostly Weapon",
+         "key": "spells"
+        },
+        {
+         "label": "Flicker",
+         "key": "spells"
+        },
+        {
+         "label": "Translocate",
+         "key": "spells"
+        },
+        {
+         "label": "Banishment",
+         "key": "spells"
+        },
+        {
+         "label": "Invoke Spirits",
+         "key": "spells"
+        },
+        {
+         "label": "Teleport",
+         "key": "spells"
+        },
+        {
+         "label": "Vampiric Exsanguination",
+         "key": "spells"
+        },
+        {
+         "label": "Eclipse Burst",
+         "key": "spells"
+        },
+        {
+         "label": "Interplanar Teleport",
+         "key": "spells"
+        },
+        {
+         "label": "Quandary",
+         "key": "spells"
+        },
+        {
+         "label": "Unrelenting Observation",
+         "key": "spells"
+        },
+        {
+         "label": "Massacre",
+         "key": "spells"
+        },
+        {
+         "label": "Fortify Summoning",
+         "key": "spells"
+        },
+        {
+         "label": "Spiral of Horrors",
+         "key": "spells"
+        }
+       ],
+       "focusSpells": [
+        "fortify-summoning"
+       ],
+       "advancedFocusSpell": "spiral-of-horrors"
+      },
+      {
+       "id": "school-of-the-reclamation",
+       "name": "School of the Reclamation",
+       "description": "Whether it's been lost to war, abandoned during calamity, or simply buried by the ages, there is as much important knowledge to be found in the hidden corners of the world as in the schools and libraries of the academy. Your study of magic in the service of rediscovering lost knowledge for the Sarkoris Reclamation has taught you that much that was once lost can still be found, but only if someone is willing to seek it out and retrieve it. You've focused your magic on reaching the world's hidden and forgotten places, whether they are found in a distant ruin or the depths of a lost memory, and bringing their knowledge back to the surface—whatever the cost.\n\n**Curriculum**\n\n- **cantrips:** Telekinetic Hand, Telekinetic Projectile\n- **1st:** Fleet Step, Gust of Wind, Mending\n- **2nd:** Knock, Mental Map\n- **3rd:** Locate, Overwhelming Memory\n- **4th:** Bridge of Vines, Shape Stone\n- **5th:** Mind Probe, Scouting Eye\n- **6th:** Truesight, Wall of Force\n- **7th:** Restore Ground,\n- **8th:** Pinpoint, Unrelenting Observation\n- **9th:**\n\n**School Spells** initial: Grasping Vine; advanced: Unsettling Knowledge",
+       "descRefs": [
+        {
+         "label": "Telekinetic Hand",
+         "key": "spells"
+        },
+        {
+         "label": "Telekinetic Projectile",
+         "key": "spells"
+        },
+        {
+         "label": "Fleet Step",
+         "key": "spells"
+        },
+        {
+         "label": "Gust of Wind",
+         "key": "spells"
+        },
+        {
+         "label": "Mending",
+         "key": "spells"
+        },
+        {
+         "label": "Knock",
+         "key": "spells"
+        },
+        {
+         "label": "Mental Map",
+         "key": "spells"
+        },
+        {
+         "label": "Locate",
+         "key": "spells"
+        },
+        {
+         "label": "Overwhelming Memory",
+         "key": "spells"
+        },
+        {
+         "label": "Bridge of Vines",
+         "key": "spells"
+        },
+        {
+         "label": "Shape Stone",
+         "key": "spells"
+        },
+        {
+         "label": "Mind Probe",
+         "key": "spells"
+        },
+        {
+         "label": "Scouting Eye",
+         "key": "spells"
+        },
+        {
+         "label": "Truesight",
+         "key": "spells"
+        },
+        {
+         "label": "Wall of Force",
+         "key": "spells"
+        },
+        {
+         "label": "Restore Ground",
+         "key": "spells"
+        },
+        {
+         "label": "Pinpoint",
+         "key": "spells"
+        },
+        {
+         "label": "Unrelenting Observation",
+         "key": "spells"
+        },
+        {
+         "label": "Grasping Vine",
+         "key": "spells"
+        },
+        {
+         "label": "Unsettling Knowledge",
+         "key": "spells"
+        }
+       ],
+       "focusSpells": [
+        "grasping-vine"
+       ],
+       "advancedFocusSpell": "unsettling-knowledge"
+      },
+      {
+       "id": "school-of-unified-magical-theory",
+       "name": "School of Unified Magical Theory",
+       "description": "You eschew the idea that magic can be neatly expressed by the teachings of any single school or college, instead directing your self-study to pick up the best of every school of magic. In doing so, you'll find the truths that lie at the intersection of each school, coming closer to the ideal nature of arcane magic. One day, you'll uncover that single elegant theory detailing all magic (perhaps a theory bearing your name?), but until then, your studies continue.\n\n**No Curriculum** You don't have a set curriculum, and so you don't have curriculum spells and can't benefit from abilities that specifically affect them. Instead, you gain an additional 1st-level wizard class feat, and you add one 1st-rank spell of your choice to your spellbook to represent your diverse studies.\n\nYour studies into the very nature of magic itself have let you use it more efficiently—instead of using Drain Bonded Item only once per day, you can use it once per day for each rank of spell you can cast, recalling a spell of that rank each time.\n\n**School Spells** initial: Hand of the Apprentice; advanced: Interdisciplinary Incantation",
+       "descRefs": [
+        {
+         "label": "Drain Bonded Item",
+         "key": "actions"
+        },
+        {
+         "label": "Hand of the Apprentice",
+         "key": "spells"
+        },
+        {
+         "label": "Interdisciplinary Incantation",
+         "key": "spells"
+        }
+       ],
+       "focusSpells": [
+        "hand-of-the-apprentice"
+       ],
+       "advancedFocusSpell": "interdisciplinary-incantation"
+      }
+     ],
+     "supersedes": true,
+     "why": "AoN arcane-school-20 (School of Protean Form, Player Core pg. 200) ends the Curriculum \"- 9th: Metamorphosis\"; the option the picker shows ended \"- **8th:** Desiccate, Monstrosity Form\\n- **9th:**\" with 21 descRefs that skipped Metamorphosis, so a player choosing this school read a curriculum one spell short of print. Supersedes the existing {classes, wizard, options, path:[\"subclass\"]} row, whose 18-option value (byte-identical to the shipped core.json array, including the red-mantis-magic-school curriculum repair that row was written for) is carried over whole with only school-of-protean-form’s 9th-rank line filled in and one descRef inserted after Monstrosity Form; spells/metamorphosis exists in core.json."
+    }
+   ]
+  },
+  {
+   "id": "curse-of-the-skys-call",
+   "note": "Four created modes, one per cursebound rung, in the shape of modes/curse-of-the-living-death-1..4 — the carrier the proposal names, and the one five sibling curses already use. Each rung carries the printed −N status penalty on all three saves with the printed rider as appliesWhen, which is the same three-save shape WG encodes (SAVE_FORT/REFLEX/WILL at −1..−4, 16 ops).",
+   "backfillRows": [
+    {
+     "category": "modes",
+     "id": "curse-of-the-skys-call-1",
+     "create": true,
+     "value": {
+      "id": "curse-of-the-skys-call-1",
+      "name": "Sky’s Call 1",
+      "category": "Oracle",
+      "feats": [
+       "curse-of-the-skys-call"
+      ],
+      "exclusiveGroup": "oracle-cursebound",
+      "duration": "while cursebound 1",
+      "note": "Cursebound 1: you are enfeebled 1, and the same −1 status penalty applies to your DCs against forced movement.",
+      "modifiers": [
+       {
+        "value": -1,
+        "type": "status",
+        "target": "save",
+        "detail": "fortitude",
+        "appliesWhen": "against all forms of forced movement"
+       },
+       {
+        "value": -1,
+        "type": "status",
+        "target": "save",
+        "detail": "reflex",
+        "appliesWhen": "against all forms of forced movement"
+       },
+       {
+        "value": -1,
+        "type": "status",
+        "target": "save",
+        "detail": "will",
+        "appliesWhen": "against all forms of forced movement"
+       }
+      ],
+      "aonOrigin": "authored"
+     },
+     "why": "AoN mystery-15 §Curse of the Sky’s Call: \"you are enfeebled with a value equal to your cursebound value, and you take a status penalty to saves and DCs against all forms of forced movement equal to your cursebound value\". Our only carrier was a RECORD_MARKERS note at src/rules/situationalBonuses.ts:4556 (markersFor matches on on/id alone and never puts it on a save row) and the generic cat-cursebound-1 carries modifiers: [], so no save moved — while five sibling curses already ship per-rung modes. Shape copied whole from modes/curse-of-the-living-death-1, with the printed rider carried as appliesWhen the way modes/curse-of-creeping-ashes-4 carries its ranged-attack rider. The enfeebled clause and the DC half stay in the note: ModeDef has no `conditions` field (0 of 557 modes carry one) and no DC modifier target, so neither has a reader to write to."
+    },
+    {
+     "category": "modes",
+     "id": "curse-of-the-skys-call-2",
+     "create": true,
+     "value": {
+      "id": "curse-of-the-skys-call-2",
+      "name": "Sky’s Call 2",
+      "category": "Oracle",
+      "feats": [
+       "curse-of-the-skys-call"
+      ],
+      "exclusiveGroup": "oracle-cursebound",
+      "duration": "while cursebound 2",
+      "note": "Cursebound 2: you are enfeebled 2, and the same −2 status penalty applies to your DCs against forced movement.",
+      "modifiers": [
+       {
+        "value": -2,
+        "type": "status",
+        "target": "save",
+        "detail": "fortitude",
+        "appliesWhen": "against all forms of forced movement"
+       },
+       {
+        "value": -2,
+        "type": "status",
+        "target": "save",
+        "detail": "reflex",
+        "appliesWhen": "against all forms of forced movement"
+       },
+       {
+        "value": -2,
+        "type": "status",
+        "target": "save",
+        "detail": "will",
+        "appliesWhen": "against all forms of forced movement"
+       }
+      ],
+      "aonOrigin": "authored"
+     },
+     "why": "AoN mystery-15 §Curse of the Sky’s Call: \"you are enfeebled with a value equal to your cursebound value, and you take a status penalty to saves and DCs against all forms of forced movement equal to your cursebound value\". Our only carrier was a RECORD_MARKERS note at src/rules/situationalBonuses.ts:4556 (markersFor matches on on/id alone and never puts it on a save row) and the generic cat-cursebound-2 carries modifiers: [], so no save moved — while five sibling curses already ship per-rung modes. Shape copied whole from modes/curse-of-the-living-death-2, with the printed rider carried as appliesWhen the way modes/curse-of-creeping-ashes-4 carries its ranged-attack rider. The enfeebled clause and the DC half stay in the note: ModeDef has no `conditions` field (0 of 557 modes carry one) and no DC modifier target, so neither has a reader to write to."
+    },
+    {
+     "category": "modes",
+     "id": "curse-of-the-skys-call-3",
+     "create": true,
+     "value": {
+      "id": "curse-of-the-skys-call-3",
+      "name": "Sky’s Call 3",
+      "category": "Oracle",
+      "feats": [
+       "curse-of-the-skys-call"
+      ],
+      "exclusiveGroup": "oracle-cursebound",
+      "duration": "while cursebound 3",
+      "note": "Cursebound 3: you are enfeebled 3, and the same −3 status penalty applies to your DCs against forced movement.",
+      "modifiers": [
+       {
+        "value": -3,
+        "type": "status",
+        "target": "save",
+        "detail": "fortitude",
+        "appliesWhen": "against all forms of forced movement"
+       },
+       {
+        "value": -3,
+        "type": "status",
+        "target": "save",
+        "detail": "reflex",
+        "appliesWhen": "against all forms of forced movement"
+       },
+       {
+        "value": -3,
+        "type": "status",
+        "target": "save",
+        "detail": "will",
+        "appliesWhen": "against all forms of forced movement"
+       }
+      ],
+      "aonOrigin": "authored"
+     },
+     "why": "AoN mystery-15 §Curse of the Sky’s Call: \"you are enfeebled with a value equal to your cursebound value, and you take a status penalty to saves and DCs against all forms of forced movement equal to your cursebound value\". Our only carrier was a RECORD_MARKERS note at src/rules/situationalBonuses.ts:4556 (markersFor matches on on/id alone and never puts it on a save row) and the generic cat-cursebound-3 carries modifiers: [], so no save moved — while five sibling curses already ship per-rung modes. Shape copied whole from modes/curse-of-the-living-death-3, with the printed rider carried as appliesWhen the way modes/curse-of-creeping-ashes-4 carries its ranged-attack rider. The enfeebled clause and the DC half stay in the note: ModeDef has no `conditions` field (0 of 557 modes carry one) and no DC modifier target, so neither has a reader to write to."
+    },
+    {
+     "category": "modes",
+     "id": "curse-of-the-skys-call-4",
+     "create": true,
+     "value": {
+      "id": "curse-of-the-skys-call-4",
+      "name": "Sky’s Call 4",
+      "category": "Oracle",
+      "feats": [
+       "curse-of-the-skys-call"
+      ],
+      "exclusiveGroup": "oracle-cursebound",
+      "duration": "while cursebound 4",
+      "note": "Cursebound 4: you are enfeebled 4, and the same −4 status penalty applies to your DCs against forced movement.",
+      "modifiers": [
+       {
+        "value": -4,
+        "type": "status",
+        "target": "save",
+        "detail": "fortitude",
+        "appliesWhen": "against all forms of forced movement"
+       },
+       {
+        "value": -4,
+        "type": "status",
+        "target": "save",
+        "detail": "reflex",
+        "appliesWhen": "against all forms of forced movement"
+       },
+       {
+        "value": -4,
+        "type": "status",
+        "target": "save",
+        "detail": "will",
+        "appliesWhen": "against all forms of forced movement"
+       }
+      ],
+      "aonOrigin": "authored"
+     },
+     "why": "AoN mystery-15 §Curse of the Sky’s Call: \"you are enfeebled with a value equal to your cursebound value, and you take a status penalty to saves and DCs against all forms of forced movement equal to your cursebound value\". Our only carrier was a RECORD_MARKERS note at src/rules/situationalBonuses.ts:4556 (markersFor matches on on/id alone and never puts it on a save row) and the generic cat-cursebound-4 carries modifiers: [], so no save moved — while five sibling curses already ship per-rung modes. Shape copied whole from modes/curse-of-the-living-death-4, with the printed rider carried as appliesWhen the way modes/curse-of-creeping-ashes-4 carries its ranged-attack rider. The enfeebled clause and the DC half stay in the note: ModeDef has no `conditions` field (0 of 557 modes carry one) and no DC modifier target, so neither has a reader to write to."
+    }
+   ]
+  },
+  {
+   "id": "lesson-of-elements#edition",
+   "note": "Five rows, all on the record. The proposal’s first half (scripts/migration/build-map.mjs:151, docId lesson-2 → lesson-17) is a scripts/ file this chunk may not touch, so it is a CROSS-FILE GAPS line; the overlay rows here reach the same end state and are durable without it, because the overlay is applied after generation and so wins over whatever the mirror join produces. The record’s other defect, the missing four-way familiar-spell picker, is another chunk’s finding (lesson-of-elements#familiar-spell-choice, field grantedSpellChoice) and is not touched here — the description this row authors names exactly the four spells that picker will offer.",
+   "backfillRows": [
+    {
+     "category": "classFeatures",
+     "id": "lesson-of-elements",
+     "field": "edition",
+     "value": "remaster",
+     "supersedes": true,
+     "why": "AoN lesson-17 \"Lesson of the Elements\" is Source [\"Player Core\"] pg. 185 — the book this record already names in source.book — while lesson-2 is the Advanced Player’s Guide printing (its remaster_id is lesson-17). Tagged \"legacy\", applyEditionFilter (src/rules/build.ts:3131) dropped a Player Core lesson from every picker whenever \"Hide legacy data\" is on. Supersedes the existing {classFeatures, lesson-of-elements, edition, \"legacy\"} row; a scalar, replaced whole. Matches the sibling lesson-of-vengeance (\"remaster\", lesson-20)."
+    },
+    {
+     "category": "classFeatures",
+     "id": "lesson-of-elements",
+     "field": "aonId",
+     "value": "lesson-17",
+     "why": "AoN lesson-17 is the Player Core printing of this lesson; lesson-2 is the legacy Advanced Player’s Guide one (\"burning hands, air bubble, hydraulic push, or pummeling rubble\"), whose remaster_id is lesson-17. Our record’s source is Player Core, so the join pointed at a document the record does not carry and every print pass would read our text against the APG page."
+    },
+    {
+     "category": "classFeatures",
+     "id": "lesson-of-elements",
+     "field": "name",
+     "value": "Lesson of the Elements",
+     "why": "AoN lesson-17 prints the name \"Lesson of the Elements\" (so does lesson-2); we shipped \"Lesson of Elements\", while our own feats['basic-lesson'] option for this very record is already labelled \"Lesson of the Elements\" — so one record showed the player two different names."
+    },
+    {
+     "category": "classFeatures",
+     "id": "lesson-of-elements",
+     "field": "description",
+     "value": "You gain the Elemental Betrayal hex. Your familiar learns your choice of Breathe Fire, Gust of Wind, Hydraulic Push, or Pummeling Rubble.",
+     "why": "AoN lesson-17: \"You gain the Elemental Betrayal hex. Your familiar learns your choice of breathe fire, gust of wind, hydraulic push, or pummeling rubble.\" We shipped a hybrid list matching NEITHER printing — \"Breathe Fire, Air Bubble, Hydraulic Push, or Pummeling Rubble\" (breathe fire is the remaster entry, air bubble the legacy lesson-2 one) — so the lesson named a familiar spell no printing of it grants. Title Case and the mechanics-only sentence are the house style the sibling lesson-of-vengeance description already uses, and the list matches our own feats['basic-lesson'] option text."
+    },
+    {
+     "category": "classFeatures",
+     "id": "lesson-of-elements",
+     "field": "descRefs",
+     "value": [
+      {
+       "label": "Elemental Betrayal",
+       "key": "spells"
+      },
+      {
+       "label": "Breathe Fire",
+       "key": "spells"
+      },
+      {
+       "label": "Gust of Wind",
+       "key": "spells"
+      },
+      {
+       "label": "Hydraulic Push",
+       "key": "spells"
+      },
+      {
+       "label": "Pummeling Rubble",
+       "key": "spells"
+      }
+     ],
+     "why": "AoN lesson-17 names gust of wind where the legacy lesson-2 names air bubble; the shipped descRefs linked Air Bubble, so the description popup offered a spell this lesson does not grant and offered no link for the one it does. One field, so re-emitted whole with only that member swapped — spells/gust-of-wind exists in core.json."
+    }
+   ]
+  }
+ ]
+}

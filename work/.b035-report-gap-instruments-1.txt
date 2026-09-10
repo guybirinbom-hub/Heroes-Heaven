@@ -1,0 +1,82 @@
+BATCH 035 — GAP AGENT REPORT, family gap-instruments-1
+2 open lines assigned, 2 closed. 0 still open. Spec: work/.b035-rows-gap-instruments-1.json (2 entries,
+both backfillRows: [] — neither gap is a content defect; both are the measuring instrument).
+
+
+LINE 1 — test/batch034-closer.test.ts:83, `expect(shipped.get('cultivation-order')?.missing).toContain('specialStat')`
+  AUTHORED — ref test/batch034-closer.test.ts:87
+  The batch-034 control assertion was already flipped to `expect(shipped.get('cultivation-order')?.missing)
+  .toEqual([])` by the instruments-1 verifier (the verify file closes it explicitly at
+  work/.b035-verify-instruments-1.txt, "CLOSED BY THIS VERIFY (builder #1)"), with the enclosing it( title
+  carrying the record id ('… and cultivation-order is settled too') and the flip cited
+  `// batch 035: cultivation-order#instrument`. Confirmed on disk and green; nothing left to author, so the
+  line is closed against the assertion itself rather than against a report line.
+
+
+LINE 2 — test/wg-experience.harness.test.tsx, classFeatureHost — the owner search walks only
+         ownedAt20(db, classId, null) and db.classes[classId].subclass?.options
+  AUTHORED — ref test/wg-experience.harness.test.tsx:classFeatureHost
+  TEACH — finding wandering-reverie#instrument (and the same instrument under gathered-lore,
+  impostor-in-hidden-places#instrument and noble-branch#instrument).
+  Added a THIRD ownership route to classFeatureHost's owner search: if any
+  db.classes[classId].extraChoices[].options carries the id, that class is the owner and the group is
+  recorded as `extra = { groupId }`. The host then SEATS the pick — withBuild gets
+  extraChoices[groupId] = [id] (minimalHost had seated the group's first option instead), withoutBuild gets
+  [], and the apparition group's `primaryApparition` moves with the pick because the vessel spell is gated
+  on it (build.ts:4662). meta gains `extraChoiceGroup` and reports `without: 'extra-choice-unpicked'`.
+  Why here and not in src/rules: this is the harness's own host resolution, not the app's — the app already
+  passes classChoices into classFeatureIdsOwned (build.ts:5290-5296), which is exactly how an animist owns
+  an apparition; only the harness passed none, so the blindness is the instrument's.
+
+  MEASURED, NOT ASSUMED. With the branch in place I re-played the affected records through the real sweep
+  (`node scripts/wg-experience.mjs --batch <scratch batch>`, harness run, not --skip-harness):
+      wandering-reverie, gathered-lore, impostor-in-hidden-places, noble-branch      → OK 4
+      shepherd-of-errant-winds, stalker-in-darkened-boughs, crafter-in-the-vault,
+      reveler-in-lost-glee, custodian-of-groves-and-gardens (instruments-2's five)   → OK 5
+  Nine records unparked and not one of them was hiding a real gap. The scratch batch files and their
+  -experience.json outputs were deleted afterwards; nothing in work/ was clobbered.
+
+  TEST that pins it — test/wg-experience.harness.test.tsx, a new always-running describe
+  ('classFeatureHost — wandering-reverie, gathered-lore, impostor-in-hidden-places and noble-branch are
+  hosted on their own extraChoices pick'), three its, each cited:
+    · `// batch 035: wandering-reverie#instrument` — classFeatureIdsOwned really does NOT own the record,
+      yet the host is found on psychic with extraChoiceGroup 'subconscious-mind', without
+      'extra-choice-unpicked', withBuild seated ['wandering-reverie'] and withoutBuild [].
+    · `// batch 035: gathered-lore` — the seated pick is LIVE, not decoration: buildCharacter of the host's
+      own withBuild gives keyAbility 'cha' for wandering-reverie and 'int' for gathered-lore. That single
+      field is WG's ATTRIBUTE_CHA/ATTRIBUTE_INT, their CLASS_DC attribute and their defineCastingSource
+      attribute at once, so it is the strongest one-assertion proof the route delivers.
+    · `// batch 035: noble-branch#instrument` — the route is not psychic-only: impostor-in-hidden-places
+      finds the animist 'apparition' group (and primaryApparition moves with the pick, null without it) and
+      noble-branch the exemplar 'ikon' group.
+  Delete the extraChoices branch and all three fail.
+
+  NO mutation-proof marker is owed: this adds no key to VERIFIED_EQUIVALENT / SETTLED_VALUES /
+  NOT_A_SCALAR / SETTLED_IDENTITIES and no comparer settle — it makes records JUDGED that were skipped,
+  the opposite of a silencer. scripts/test-flip-audit.mjs --batch 035 is clean (12 test files touched,
+  1 new settle key — the instruments-1 verifier's, not mine — every flip cited).
+
+  NOT CLOSED HERE, deliberately: the harness's SECOND blindness (a record held on
+  c.inventor.modifications, otherTags '<type>-innovation-modification' — metallic-reactance and
+  phlogistonic-regulator) is a different route and is not one of my gaps.json lines. It stands.
+
+
+CROSS-FILE GAPS (mine, for the driver / batch 036 — no edit made)
+  1. work/experience-instrument-limits.json — the nine entries in lane
+     'harness-host-search-no-extra-choice-route' (wandering-reverie, gathered-lore,
+     impostor-in-hidden-places, noble-branch from instruments-1; shepherd-of-errant-winds,
+     stalker-in-darkened-boughs, crafter-in-the-vault, reveler-in-lost-glee,
+     custodian-of-groves-and-gardens from instruments-2) are now STALE — each entry's own `refuter` says
+     "Remove it the day classFeatureHost walks extraChoices", and that day is this one. I did not remove
+     them: five belong to the sibling family and the file is shared, and removing four of nine would leave
+     the lane half-retired.
+     Inert today, not urgent: scripts/wg-batch-gate.mjs:527 short-circuits on the verdict and only consults
+     the limits file for a NON-OK record — all nine now measure OK, so no park silences anything in this
+     batch. The debt is future-tense: leave them and a later regression on one of these nine ids parks
+     itself instead of failing gate 9. Retire the whole lane in 036.
+
+VERIFICATION
+  node scripts/vt.mjs run test/wg-experience.harness.test.tsx — 6 passed | 1 skipped (7); the three new
+    its are the added ones (the harness's own sweep it( skips without WG_EXPERIENCE_BATCH, as designed).
+  npx tsc --noEmit — clean.
+  node scripts/test-flip-audit.mjs --batch 035 — clean.

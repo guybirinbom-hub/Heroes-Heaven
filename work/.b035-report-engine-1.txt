@@ -1,0 +1,103 @@
+BATCH 035 — ENGINE CHUNK 1 (engine-1)
+Findings owned: fury-instinct, cultivation-order#leaf-membership, plant-eidolon#language,
+swarm-eidolon#language, swarm-eidolon#area-weakness, dragon-instinct#breath-damage-type,
+dragon-instinct#optional-rage, undead-eidolon#language.
+
+Spec: work/.b035-rows-engine-1.json      Test: test/batch035-engine-1.test.ts
+Code: src/rules/derive.ts, src/rules/build.ts (+ one cited flip in test/batch034-engine.test.ts)
+
+DATA STILL NEEDED
+- (none beyond this chunk's own spec) — the three rows this chunk needs are in work/.b035-rows-engine-1.json: classFeatures/fury-instinct field aonId = "instinct-10"; classFeatures/fury-instinct field edition = "remaster" (supersedes the existing "legacy" row); classFeatures/dragon-instinct path ["choice"] field note = null.
+
+CROSS-FILE GAPS
+- src/rules/companionGrants.ts (outside this chunk's file grant) — plant-eidolon#language: add "languages":["Sylvan"] to the existing 'plant-eidolon' COMPANION_MODS row (eidolon-9 "**Language** Sylvan"); the printed NAME, not an id, exactly like the sibling 'fey-eidolon' and 'beast-eidolon' rows, because content.languages is remaster-only and has no 'sylvan'.
+- src/rules/companionGrants.ts (outside this chunk's file grant) — swarm-eidolon#language: add 'swarm-eidolon': {"kinds":["eidolon"],"languages":["common"]} (eidolon-13 "**Language** Common"). languages ONLY: the senses/iwr stay in the companions.ts TYPE_PACKAGE entry, and repeating them here would print 'low-light vision' twice.
+- src/rules/companionGrants.ts (outside this chunk's file grant) — undead-eidolon#language: add 'undead-eidolon': {"kinds":["eidolon"],"languages":["necril"]} (eidolon-11 / its remaster twin eidolon-26, "**Language** Necril"); the id, since content.languages['necril'] exists. The existing companions.ts TYPE_PACKAGE darkvision/Negative Essence note stay as they are — evoSenses dedupes.
+- src/rules/companions.ts (outside this chunk's file grant) — swarm-eidolon#area-weakness: right after the TYPE_PACKAGE merge (`if (pkg) { … }`), push `weakness ${level} area damage` when cfg.typeId === 'swarm-eidolon' (eidolon-13 "It has weakness to area damage equal to its level"); a static TYPE_PACKAGE string cannot scale with level, which is why the immunities from the same sentence landed and the weakness did not.
+- scripts/data/effect-backfill.json / data-rows family — the fury-instinct finding's evidence names four SIBLING records with the identical PC2-book + "legacy"-tag + legacy-aonId mis-join: animal-instinct (instinct-1 → the remaster page instinct-8), giant-instinct (instinct-4 → instinct-11), spirit-instinct (instinct-5 → instinct-12), superstition-instinct (instinct-6 → instinct-13). No confirmed finding covers them, so this chunk wrote no rows for them; each needs the same aonId + edition pair, and until then Hide legacy data removes four Player Core 2 instincts from the barbarian picker.
+- src/rules/build.ts + a data lane + an owner decision — cultivation-order#leaf-membership, the ENFORCEMENT half: the membership is now stated (below), but the ten records printing prerequisite "leaf order" are still unenforced for everyone, because "leaf order" resolves to classFeatures/leaf-order and checkPrerequisites only enforces a has-feat line that resolves to a known FEAT. Making the line enforce needs the existing token lane widened to SUBCLASS options (TOKEN_BUCKETS + the choiceTokens collector, both halves together) plus grantsToken:"Leaf Order" rows on the druid subclass options leaf-order/cultivation-order/spore-order AND on Order Explorer's option list — without the last one, "You gain access to that order's feats" (Order Explorer) would be false-blocked for every druid who took it. Deliberately not attempted here: a lane that starts blocking ten feats is the project's worst failure mode, and no finding asked for it.
+
+PER FINDING
+
+1. fury-instinct — DONE (data rows + a pinned test)
+   Rows (work/.b035-rows-engine-1.json): classFeatures/fury-instinct aonId "instinct-3" -> "instinct-10",
+   and edition "legacy" -> "remaster" (supersedes:true, the existing overlay row's value carried whole —
+   it is a scalar). Nothing in src/ changed: RAGE_DAMAGE['fury-instinct'] = {tiers:[3,7,13]} and
+   featPickGrants' bonus 1st-level barbarian feat are ALREADY instinct-10's mechanics; only the join was
+   wrong. Player-visible effect of the edition half: with "legacy" the record is dropped from the
+   instinct picker whenever Hide legacy data is on.
+   Test: test/batch035-engine-1.test.ts › "batch 035 — fury-instinct is Player Core 2 content, not
+   legacy" — applyEditionFilter({hideLegacy:true}) keeps the record on a content copy PATCHED IN MEMORY
+   with the corrected edition/aonId (never a patched-vs-shipped delta), and the same test reads the
+   3/7/13 rage off a BUILT barbarian at L5 and L15, which is what makes instinct-10 the right page.
+
+2. dragon-instinct#breath-damage-type — DONE (src/rules/derive.ts + one row)
+   src/rules/derive.ts, RAGE_DAMAGE: the 'dragon-instinct' row gains typeFromChoice:'dragon-instinct'
+   and a new breathFromChoice flag; rageStrikeRider now takes `db` and, for that flag, reads the chosen
+   dragon's breath type off the option's OWN data — grant.whileActive[0].resistances is [piercing,
+   <breath type>] for all 50 dragons (the 9th-level Draconic Resistance pair). No hand-copied 50-entry
+   map: a copy of data that already ships is a copy that drifts at the next regeneration. An UNANSWERED
+   dragon pick still reads 'energy' — the rider never claims a type the player did not choose.
+   Row: classFeatures/dragon-instinct path ["choice"] field note = null — the record's apology note
+   ("shown as generic 'energy' rather than your dragon's breath type") describes the defect this fixes
+   and would now be a false statement on the picker. A nested value:null row, so the 50 options are not
+   re-typed (and cannot be narrowed by a re-typed copy); the applier appends, so it lands after the
+   existing whole-value `choice` row.
+   Blast radius: rageStrikeRider's new `db` parameter is internal (two call sites in derive.ts, both had
+   `db` in scope). The lookup is gated on breathFromChoice, which only 'dragon-instinct' sets, so no
+   other instinct, class or archetype changes. Behaviour changes for barbarians with subclassId
+   'dragon-instinct' AND an answered dragon pick.
+   Tests: test/batch035-engine-1.test.ts › "batch 035 — dragon-instinct: Draconic Rage" — a Cinder
+   barbarian's greatclub rider reads "4 fire" and no longer contains "energy"; a Rime barbarian reads
+   "4 cold" (two different dragons, so the lookup is a lookup and not a constant); an unanswered
+   dragon-instinct barbarian still reads "energy".
+
+3. dragon-instinct#optional-rage — DONE (src/rules/derive.ts)
+   RAGE_DAMAGE['dragon-instinct'] gains typeOptional:true, the field spirit-instinct already uses for
+   the identical "you CAN … (choose each Rage)" clause, so the rider renders both branches:
+   "4 fire or 2 bludgeoning (choose each Rage)". The 7th/15th step-ups stay on the draconic branch only
+   ("When you use draconic rage, you increase the additional damage from Rage from 4 to 8"), which is
+   what the alt branch's flat 2 encodes.
+   Blast radius: dragon-instinct barbarians only — one row of RAGE_DAMAGE gained one field. It DOES flip
+   one existing assertion: test/batch034-engine.test.ts used dragon-instinct as its "an instinct with no
+   typeOptional prints one branch" control. That control moved to fury-instinct in the same block, the
+   dragon line now asserts both branches, and all three changes (the it() title, the changed expect, the
+   removed expect) carry "// batch 035: dragon-instinct#optional-rage" citations with the record id in
+   the it() title. scripts/test-flip-audit.mjs --batch 035 reports clean.
+   Tests: test/batch035-engine-1.test.ts — the exact two-branch string at L5, and the step-ups at L7/L15
+   with the plain branch still at 2.
+
+4. cultivation-order#leaf-membership — PARTLY DONE (src/rules/build.ts); enforcement is a CROSS-FILE GAP
+   src/rules/build.ts, checkPrerequisites: the has-set seed now adds the PARENT order for the two leaf
+   variants (cultivation-order, spore-order -> leaf-order), quoting druidic-order-12's Special clause.
+   Blast radius: a prerequisite line only blocks when it resolves to a known FEAT, and no feat has the id
+   'leaf-order', so no shipped build changes behaviour today — this states the membership where the
+   prerequisite lane reads it, which is the op WG delivers (giveAbilityBlock #34226) and we delivered
+   nowhere. The half that would actually gate the ten "leaf order" feats is in CROSS-FILE GAPS above,
+   with the Order Explorer false-block that makes it a bigger job than this finding.
+   Test: test/batch035-engine-1.test.ts › "batch 035 — cultivation-order counts as a member of the leaf
+   order" — on a content copy PATCHED IN MEMORY so that 'leaf-order' is a known feat (the only state in
+   which the has-set is observable at all), checkPrerequisites on the real feats/leshy-familiar
+   (prerequisites ["leaf order"]) is met for a BUILT cultivation-order, spore-order and leaf-order druid
+   and unmet for a stone-order druid. Nothing in the shipped content is touched by the test.
+
+5. plant-eidolon#language — NOT DONE (CROSS-FILE GAP, src/rules/companionGrants.ts)
+6. swarm-eidolon#language — NOT DONE (CROSS-FILE GAP, src/rules/companionGrants.ts)
+7. undead-eidolon#language — NOT DONE (CROSS-FILE GAP, src/rules/companionGrants.ts)
+8. swarm-eidolon#area-weakness — NOT DONE (CROSS-FILE GAP, src/rules/companions.ts)
+   All four are one-line carriers in COMPANION_MODS / deriveEidolon, and both files are outside this
+   chunk's file grant (types.ts, build.ts, derive.ts, spellcasting.ts, advancement.ts, Builder.tsx,
+   shared.tsx). There is no data-row route: the eidolon Language line is fed ONLY by `mod.languages` in
+   companions.ts (the subclass option record has no languages field any reader looks at), and the swarm
+   weakness has to be interpolated with the character's level, which no static field can carry. The exact
+   rows are written out verbatim in CROSS-FILE GAPS so whoever owns those files can paste them.
+
+VERIFICATION
+- node scripts/vt.mjs run test/batch035-engine-1.test.ts — 7 passed.
+- node scripts/vt.mjs run test/rage-damage.test.ts test/prerequisites.test.ts test/batch20-parity.test.ts
+  test/batch26-engine.test.ts test/polish.test.ts test/residual-final.test.ts
+  test/daily-preparations-lane.test.ts — 114 passed.
+- node scripts/vt.mjs run test/batch034-engine.test.ts test/forms.test.ts test/raging-resistance.test.ts
+  test/mode-targets.test.ts test/action-gates.test.ts — 66 passed (batch034-engine after the cited flip).
+- npx tsc --noEmit — clean.
+- node scripts/test-flip-audit.mjs --batch 035 — clean.

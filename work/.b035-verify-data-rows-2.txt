@@ -1,0 +1,231 @@
+BATCH 035 — WG-COMPARISON LANE — ADVERSARIAL VERIFY of family data-rows-2 (chunk 2 of 2)
+
+Spec checked:  work/.b035-rows-data-rows-2.json   (8 findings, 19 backfill rows)
+Report read:   work/.b035-report-data-rows-2.txt
+Tests:         test/batch035-data-rows-2.test.ts  (8 tests, all 8 red on shipped data, each for
+               exactly the field its row authors — re-verified, see per-finding evidence)
+Gates:         npx tsc --noEmit clean · node scripts/test-flip-audit.mjs --batch 035 clean
+               (12 test files touched, every flip cited) — both re-run AFTER my two edits.
+
+ROW-LEVEL CHECKS (all 19 rows, done without applying anything)
+  · target exists / create:true ......... 10 patch rows all hit an existing record; 9 create rows all
+                                          hit an id that is ABSENT from core.json (apply-backfill.mjs
+                                          never overwrites, so a create on a live id would be silently
+                                          inert — none is).
+  · supersedes correctness .............. exactly the 5 rows whose (category,id,field,path) already has
+                                          a row in scripts/data/effect-backfill.json carry
+                                          supersedes:true; the other 14 have 0 existing rows and
+                                          correctly omit it. No over- or under-declaration.
+  · re-emitted values diffed whole ...... classFeatures/animal-instinct.choice: 22 options, ONE byte of
+                                          change (options[9].label "Crab (Claw 1d10 B…" ->
+                                          "Crab (Big Claw 1d10 B…"); shipped value is byte-identical to
+                                          the superseded row, so nothing is silently dropped.
+                                          classes/wizard subclass.options: 18 options in and 18 out;
+                                          only options[12] (school-of-protean-form) moves — the "- **9th:**"
+                                          line gains "Metamorphosis" and descRefs grows 21 -> 22 with
+                                          {Metamorphosis,spells} inserted AFTER "Monstrosity Form"
+                                          (index 19), the rest shifting intact. The red-mantis-magic-school
+                                          curriculum repair the superseded row carried is preserved.
+                                          classFeatures/phlogistonic-regulator.resistances: both members
+                                          re-emitted, max(1,…) removed from each, nothing else.
+                                          classFeatures/lesson-of-elements.descRefs: 5 refs in, 5 out,
+                                          Air Bubble -> Gust of Wind only.
+  · no key collisions ................... swept ALL seven .b035-rows-*.json specs together: 41 distinct
+                                          (category|id|field|path) keys, 0 collisions. The one real risk
+                                          — classFeatures/animal-instinct.grantedStrikes, owned by chunk
+                                          data-rows-1's animal-instinct#cat row — was correctly kept OUT
+                                          of this spec (see finding 1 below).
+  · created records carry no prose ...... all 9 create values: no `description`, no `descRefs`; prose is
+                                          in `note`, which is what apply-backfill's skipFields rule
+                                          requires. No created-prose spec is needed and none is claimed.
+  · readers exist for every field ....... edition -> applyEditionFilter (build.ts:3147); aonId -> src/data,
+                                          build.ts, situationalBonuses.ts; choice -> Builder.tsx:1912;
+                                          classes.subclass.options description/descRefs -> shared.tsx
+                                          school SetupCard; resistances -> derive.ts:2555+/2900;
+                                          modes.modifiers -> modeTypedMods / hasConditionalMode
+                                          (modes.ts:140-204); modes.resistances -> derive.ts:2651.
+                                          No "no reader" field in this spec.
+  · every id a row names is real ........ elemental-betrayal, breathe-fire, gust-of-wind, hydraulic-push,
+                                          pummeling-rubble, metamorphosis, monstrosity-form all resolve
+                                          in core.spells. Every mode gate (curse-of-the-skys-call,
+                                          curse-of-torrential-knowledge, phlogistonic-regulator) is a
+                                          real classFeatures id, so integrity-sweeps' "every mode names a
+                                          real item and a real gate" stays green. aonIds instinct-8 /
+                                          lesson-17 are shared with the thin reference records
+                                          instinct/animal and lesson/lesson-of-the-elements — that is the
+                                          ESTABLISHED pattern (63 classFeatures do it, including the exact
+                                          sibling lesson-of-vengeance/lesson-20), not a collision.
+  · manifest ............................ work/.b035-specs.json still carries all seven families plus the
+                                          data-rows-1 created-prose entry; this family's stage[] lists
+                                          the three paths it touched and nothing else. Correct as it
+                                          stands — my edits landed inside a path already staged.
+
+THROWAWAY HARNESS (written, run, deleted — test/_tmpverify035dr2.test.ts)
+  Applied the 19 rows to an in-memory content copy using apply-backfill.mjs's own walk, then BUILT real
+  characters. 5/5 green:
+    · inventor(armor-innovation, power-suit, initial=phlogistonic-regulator) — deriveDefenses: level 1
+      cold/fire resistance is now ABSENT (was 1); level 6 = 3; with cat-phlogistonic-regulator-overdrive
+      active, level 1 = 2 and level 6 = 5. The "highest same-type wins" rule (derive.ts:2900) makes the
+      replacement total behave as the printed "+2" at every level.
+    · oracle(lore) lvl 5 + curse-of-torrential-knowledge-3 — Perception -3 and Will -3 on the real stat
+      lines, Fortitude untouched.
+    · oracle(cosmos) lvl 5 + curse-of-the-skys-call-2 — no save NUMBER moves (correct: appliesWhen makes
+      it conditional, which is what print says) and hasConditionalMode is true for fort/reflex/will and
+      false for perception, so all three save rows carry the cue.
+    · contentGatedModes + modeRelevant + modeGateIds: the Lore rungs are offered to the Lore oracle and
+      NOT to the Cosmos one; the Sky's Call rungs the reverse; the Overdrive mode to the inventor and to
+      neither oracle.
+    · animal-instinct / lesson-of-elements both read edition "remaster", crab label carries "Big Claw".
+
+============================================================================================
+PER FINDING
+============================================================================================
+
+animal-instinct#strike-names — NOT-DONE (the finding's own claim is unfixed; the row fixes an adjacent
+  half). The claim is "two granted STRIKES carry the wrong printed name". Dumped chunk data-rows-1's
+  animal-instinct#cat grantedStrikes value as it stands right now: it still ships
+  {name:'Pincer', d4, piercing, [unarmed,backstabber,deadly-d8,venomous], choiceValue:'wasp'} and
+  {name:'BigClaw', d10, bludgeoning, [unarmed,razing], choiceValue:'crab'} — so a barbarian who picks
+  Wasp still reads a Strike row called "Pincer" and one called "BigClaw". What IS done is the picker
+  LABEL (verified: instinct-8 prints "Crab Big Claw 1d10 B Razing, unarmed"). The builder's reason for
+  stopping is correct and I confirm it: that field belongs to a sibling chunk's row and the driver hard-
+  refuses cross-spec collisions, so it cannot be a row here. It must be folded into chunk data-rows-1's
+  value (DATA STILL NEEDED 1) or the finding ships half-fixed.
+
+animal-instinct#edition — FIXED-BY-ME (rows were right; the stated consequence was not).
+  Rows verified: aonId instinct-8, edition "remaster" (superseding the existing "legacy" row).
+  Print verified in the mirror: instinct-8 is Source ["Player Core 2"] and contains "Crab Big Claw 1d10
+  B Razing, unarmed" and "Wasp Stinger 1d4 P Backstabber, deadly d8, unarmed, venomous" — the table our
+  record reproduces; instinct-1 is Source ["Core Rulebook"]. "remaster" is a live edition value (10,327
+  records). No aonId collision (see above).
+  WHAT I FIXED: the test's WHY comment claimed applyEditionFilter "drops the record from the instinct
+  picker". Batch 035's OWN sibling finding superstition-instinct#edition-and-aonid is in refuted[] for
+  exactly that claim, and it is right: the instinct picker is built from `cls.subclass.options`
+  (Builder.tsx:1894), an array applyEditionFilter never walks (build.ts:3147 filters top-level map
+  entries). Shipping a rationale this batch refuted is how a wrong mechanism gets quoted forward, so I
+  rewrote the comment to the reach that IS real — content.classFeatures['animal-instinct'] is dropped,
+  and the follow-up "which animal" question is read off that record
+  (`content.classFeatures[build.subclassId]?.choice`, Builder.tsx:1912) with `content` memoised on stale
+  keepIds, so a barbarian picking Animal in that session is offered no animal at all. Assertions
+  unchanged; still red for the right reason; flip-audit and tsc re-run clean.
+
+curse-of-torrential-knowledge — DONE. Four create rows, shape byte-checked against the sibling ladder
+  curse-of-creeping-ashes-1..4 (category "Oracle" and exclusiveGroup "oracle-cursebound" both already in
+  use; `duration` and `aonOrigin` match the shipped siblings; target 'perception' and target 'save' +
+  detail 'will' are both valid ModeTargetKind/detail shapes). Print re-read from the mirror: mystery-18
+  (Lore, Player Core 2) reads "You take a status penalty to Perception checks and Will saving throws
+  equal to your cursebound value", and the rung-4 note is a VERBATIM carry of the printed silence clause
+  including "You can still cast spells, but you're stupefied 1" — nothing authored beyond print.
+  Harness: rung 3 really moves Perception and Will by -3 on a built Lore oracle, and the rungs are
+  offered to the Lore oracle only.
+
+phlogistonic-regulator#resistance-minimum — DONE. Print re-read: innovation-5 reads "You gain resistance
+  equal to half your level to cold and fire damage" with no minimum, and the sibling with identical
+  wording (Dense Plating, same innovation-5 list) is already stored as plain floor(@actor.level/2).
+  Harness: a level-1 inventor now has NO cold/fire resistance row (was 1), a level-6 one has 3.
+
+phlogistonic-regulator#overdrive — DONE. Create row copied field-for-field from the only other Overdrive
+  mode in the bucket (cat-harmonic-oscillator-overdrive), which stores the boosted number as a
+  REPLACEMENT total. Print: innovation-5 ends "When under the effects of Overdrive, the resistance
+  increases by 2." Harness confirms the replacement really behaves as +2 at both level 1 (0 -> 2) and
+  level 6 (3 -> 5), because same-type resistances take the highest (derive.ts:2900). Gate resolves:
+  modeGateIds -> ownedFeatureIds admits c.inventor.modifications (derive.ts:3468), and the harness
+  offered the mode to the inventor and to nobody else.
+
+school-of-protean-form#curriculum-9th — DONE. Print re-read: arcane-school-20 (School of Protean Form,
+  Source ["Player Core"]) ends the Curriculum "- 9th: Metamorphosis". Whole-array diff shows exactly the
+  two intended edits inside options[12] and nothing else across the other 17 options. Display-only as
+  claimed: classFeatures/school-of-protean-form.curriculum["9"] was already ["metamorphosis"] and is
+  untouched. Metamorphosis resolves in core.spells, so the new descRef is a live link.
+
+curse-of-the-skys-call — DONE. Four create rows in the curse-of-the-living-death-N shape. Print:
+  mystery-15 "you take a status penalty to saves and DCs against all forms of forced movement equal to
+  your cursebound value" — so `appliesWhen` (not a flat modifier) is the CORRECT encoding, the same
+  shape cat-inspire-courage uses for its will-vs-fear rider; encoding it unconditionally the way WG does
+  would over-apply it. Harness confirms the reach: no save number moves, and hasConditionalMode returns
+  true for all three saves (the underline cue + the stat-detail breakdown), false for Perception. The
+  enfeebled clause and the DC half genuinely have no carrier — I re-measured: 0 of 557 shipped modes
+  carry a `conditions` field and ModeDef has none, and ModeTargetKind has no DC-against-an-effect target.
+
+lesson-of-elements#edition — FIXED-BY-ME (rows were right; the stated consequence was not).
+  Print re-read: lesson-17 is Source ["Player Core"] pg. 185, "breathe fire, gust of wind, hydraulic
+  push, or pummeling rubble"; lesson-2 is Source ["Advanced Player's Guide"] pg. 100 with remaster_id
+  lesson-17, "burning hands, air bubble, ...". Our shipped description ("Breathe Fire, Air Bubble, ...")
+  matches NEITHER — the hybrid is real. All five rows check out, all four spells resolve, and the record
+  really is reachable: scripts/backfill-lesson-of-elements.mjs repointed the picker option to
+  'aon-lesson-of-elements' and choiceOwnedFeatureIds resolves it by stripping the 'aon-' prefix, so a
+  witch who takes Basic Lesson owns classFeatures['lesson-of-elements'] and reads its name and prose.
+  The name change is safe: findDuplicateIds only suppresses `aon-`-prefixed ids and classFeatures is not
+  in DEDUPE_MAPS, so nothing new collides with lesson/lesson-of-the-elements.
+  WHAT I FIXED: same overstatement as above — the comment said the "legacy" tag "dropped a Player Core
+  lesson from every picker". The picker is feats['basic-lesson'].choice.options, which the filter never
+  touches, and the live character is built from the unfiltered ovContent (Builder.tsx:227). Rewrote the
+  comment to the real cost (the record leaves the picker DB, so the choice's details popup loses it) and
+  named the refuted sibling. Assertions unchanged.
+
+============================================================================================
+DATA STILL NEEDED  (rows the driver must author — corrected)
+============================================================================================
+1. classFeatures / animal-instinct / grantedStrikes — inside the whole-array value chunk data-rows-1
+   re-emits for animal-instinct#cat, rename the wasp row's name "Pincer" -> "Stinger" and the crab
+   row's "BigClaw" -> "Big Claw". VERIFIED STILL OPEN: I dumped that spec's value and both wrong names
+   are still in it. Keep the scorpion's own "Pincer" (d4 slashing, parry) and "Stinger" (d6 piercing,
+   reach/venomous) rows exactly as they are — they are correct. Cite as animal-instinct#strike-names.
+2. classFeatures / giant-instinct / aonId = "instinct-11" and / edition = "remaster" (supersedes the
+   existing {giant-instinct, edition, "legacy"} row — confirmed present). Mirror verified: instinct-11
+   is Giant, Source ["Player Core 2"]; our record is aonId instinct-4, edition "legacy", book Player
+   Core 2. ⚠ CORRECTION TO THE BUILDER: no finding covers giant-instinct at all, so this row cannot
+   carry a "batch 035: <finding id>" citation — it needs the premise form
+   "// batch 035 premise: instinct-11 \"…\"".
+3. classFeatures / spirit-instinct / aonId = "instinct-12" and / edition = "remaster" (supersedes the
+   existing legacy row — confirmed present). instinct-12 is Spirit, Source ["Player Core 2"]; ours is
+   instinct-5 / "legacy". Same citation caveat as 2 — no finding covers spirit-instinct.
+4. classFeatures / superstition-instinct / aonId = "instinct-13" and / edition = "remaster" (supersedes
+   the existing legacy row — confirmed present). instinct-13 is Superstition, Source ["Player Core 2"];
+   ours is instinct-6 / "legacy". ⚠ CORRECTION TO THE BUILDER: this record is NOT "covered by no
+   finding" — superstition-instinct#edition-and-aonid is in read.json's refuted[]. It was refuted for
+   its CONSEQUENCES ("the mistag itself is real"), so the data fix stands, but a row here must use the
+   premise citation form: a refuted id is not in confirmed[] and the flip audit will reject it.
+5. classFeatures / school-of-protean-form / descRefs — append {"label":"Metamorphosis","key":"spells"}
+   after "Monstrosity Form". VERIFIED: that copy's description already ends "- **9th:** Metamorphosis"
+   but its 21 descRefs skip the spell, so that popup shows the name unlinked. Adjacent to, and not
+   covered by, school-of-protean-form#curriculum-9th (which is the classes/wizard copy) — premise
+   citation, arcane-school-20.
+
+============================================================================================
+CROSS-FILE GAPS  (outside the files this chunk may write — corrected)
+============================================================================================
+1. classFeatures/animal-instinct.grantedStrikes belongs to chunk data-rows-1 (its animal-instinct#cat
+   row re-emits that exact field), so the strike-name half of animal-instinct#strike-names cannot be a
+   row here. CONFIRMED by a whole-corpus key sweep of all seven specs. -> DATA STILL NEEDED 1.
+2. classFeatures/fury-instinct edition + aonId ("legacy"/instinct-3 -> "remaster"/instinct-10) is the
+   record of another chunk's finding, `fury-instinct` (CONFIRMED in read.json), whose proposal already
+   asks for it. Mirror verified: instinct-10 is Fury, Player Core 2. Not authored here; if that chunk
+   drops it, it becomes a driver row and CAN carry the `fury-instinct` finding id.
+3. scripts/migration/build-map.mjs:151 — 'classFeatures|Lesson of Elements' docId 'lesson-2' should
+   become 'lesson-17'. VERIFIED verbatim at that line. The overlay rows in this spec reach the right end
+   state without it (the overlay is applied after generation), but until the map is repointed the
+   pre-overlay record is still generated from the Advanced Player's Guide printing, so every regeneration
+   re-creates the hybrid the overlay then has to paper over.
+4. src/rules/types.ts ModeDef has no `conditions` field — RE-MEASURED: 0 of the 557 shipped modes carry
+   one — so the enfeebled clause of curse-of-the-skys-call has no numeric carrier and stays prose in
+   each rung's note. WG does not encode it either.
+5. ModeModifier's ModeTargetKind has no DC-against-an-effect target (the list has spell-dc and class-dc
+   only), so the "and DCs against all forms of forced movement" half of curse-of-the-skys-call likewise
+   stays in the note. Same for the cursebound-4 silence clause on curse-of-torrential-knowledge, which
+   is not a number at all.
+6. src/rules/situationalBonuses.ts RECORD_MARKERS entries for 'curse-of-the-skys-call' and
+   'curse-of-torrential-knowledge' become redundant prose once these mode ladders land. ⚠ LINE NUMBERS
+   CORRECTED: they are now :4564 and :4565 (the report's :4556/:4557 drifted when a sibling family
+   edited that file). Left untouched — another family's file; worth a reword down to the residual halves
+   only (enfeebled / DCs / silence).
+
+DATA STILL NEEDED: 5 lines · CROSS-FILE GAPS: 6 lines · 11 open.
+
+============================================================================================
+MANIFEST STAGE[] FOR WHAT I TOUCHED
+============================================================================================
+  test/batch035-data-rows-2.test.ts   (two WHY comments corrected; no assertion changed)
+  work/.b035-verify-data-rows-2.txt   (this file)
+Both are already inside work/.b035-specs.json's data-rows-2 entry or are the verify file itself, so no
+new stage[] path is required. The throwaway harness (test/_tmpverify035dr2.test.ts) was deleted.

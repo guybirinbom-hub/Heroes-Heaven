@@ -177,6 +177,24 @@ export const CLASS_RESOURCES: Record<string, ClassResource[]> = {
       note: 'Roll a d20 now (before you Strike) against a chosen creature; use that roll plus your Intelligence for your next Strike against it this turn, and add your Strategic Strike precision damage on a hit.',
     },
   ],
+  /* batch 035: metallic-reactance#overdrive. Overdrive is a signature STATE the printed text keeps
+   * referring back to — *"When under the effects of Overdrive, the resistance increases by 2"*
+   * (innovation-5, Metallic Reactance), and the same clause shape on four sibling modifications — but
+   * the inventor had no bucket here at all, so nothing could ever be "under the effects of Overdrive"
+   * and every one of those riders had to stay prose. Class-only (no `feat`): no feat and no archetype
+   * dedication in the corpus grants the `overdrive` class feature, so an `inventor-dedication` gate
+   * would hand the toggle to a character who cannot take the action.
+   * The action itself (action-901) lasts *"for 1 minute"* and is *"once per round"*, so it refreshes
+   * with the encounter like Rage and Panache rather than on rest. */
+  inventor: [
+    {
+      id: 'overdrive',
+      name: 'Overdrive',
+      kind: 'toggle',
+      refresh: 'encounter',
+      note: 'Crafting check, once per round: your Strikes deal extra damage for 1 minute (Int mod on a critical success, half on a success), and every "while under the effects of Overdrive" modification on your innovation is live while this is on.',
+    },
+  ],
   oracle: [
     {
       id: 'cursebound',

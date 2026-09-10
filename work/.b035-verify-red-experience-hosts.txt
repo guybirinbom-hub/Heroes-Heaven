@@ -1,0 +1,202 @@
+BATCH 035 — GATE-RED, ADVERSARIAL VERIFY of group "experience-hosts" (family red-experience-hosts)
+==================================================================================================
+Verifier default is NOT DONE. Every verdict below was re-measured from scratch, not read off the
+builder's report. The decisive independent measurement:
+
+    node scripts/wg-experience.mjs --batch work/wg-batch-VRED.json --verbose     (my own 4-record
+      slice, byte-identical to the four packets in work/wg-batch-035.json — checked packet by packet)
+    -> experience: 4 records — OK 4   (metallic-reactance, phlogistonic-regulator,
+                                       lesson-of-vengeance, lesson-of-elements)
+
+and, because two NEW host routes in the shared harness change the instrument for EVERY record, the
+whole batch re-swept on my own token as well:
+
+    node scripts/wg-experience.mjs --batch work/wg-batch-VALL.json   (a copy of work/wg-batch-035.json)
+    -> experience: 40 records — OK 38 · NO-SHEET-EFFECT 2 · UNSUPPORTED 0
+
+The driver's last experience stage (08:57, work/.b035-run.json) read OK 34 · NO-SHEET-EFFECT 2 ·
+UNSUPPORTED 4. The four UNSUPPORTED were exactly this group's four; nothing else moved, and no record
+regressed into a failing verdict. The lift is real and it is free of collateral.
+
+
+ITEM 1 — the park discipline (do not weaken the park, do not touch the four records' data)   DONE
+--------------------------------------------------------------------------------------------------
+work/.b035-rows-red-experience-hosts.json carries `"findings": []` — no data row, so no record field
+was touched, which is what the brief asked for. The four parks were removed ONLY because the
+instrument can now see the records (43 entries left; `limits.records[<id>]` is undefined for all
+four). No exemption was added anywhere: the gate's `if (r.verdict === 'UNSUPPORTED') {
+unsupported.push(r.id); continue; }` branch is byte-identical at scripts/wg-batch-gate.mjs:595, the
+nine `harness-host-search-no-extra-choice-route` entries and `the-oscillating-wave` are untouched, and
+`node scripts/test-flip-audit.mjs --batch 035` is clean (23 test files touched, every flip cited).
+
+
+ITEM 2 — metallic-reactance#instrument, phlogistonic-regulator#instrument                    DONE
+--------------------------------------------------------------------------------------------------
+Re-read against print, not against the report. AoN mirror innovation-5: *"You gain resistance equal to
+3 + half your level to acid and electricity damage"* (Metallic Reactance) and *"You gain resistance
+equal to half your level to cold and fire damage"* (Phlogistonic Regulator). WG raw
+(node scripts/wg-show.mjs "Metallic Reactance" --raw) is two `adjValue RESISTANCES =
+"acid|electricity, {{3+level/2}}"` and, for the regulator, `"cold|fire, {{level/2}}"` — no third op,
+so there is nothing on their side the differential could be missing.
+
+Route 4 (`innovationModificationHost`, test/wg-experience.harness.test.tsx) is a genuine fourth
+ownership lane, not a special case: it reads the record's own `<type>-innovation-modification` tag,
+finds the class whose subclass carries that id, picks the cheapest tier the record's level fits, and
+— the part that makes it honest — CONFIRMS the seat on a built character
+(`buildCharacter(withBuild, db).inventor.modifications`) before handing the host back, so a
+construct-only or suit-gated modification returns null instead of reporting an unheld pick as a
+delivery gap. My sweep artefact work/wg-batch-VRED-experience.json: both records OK, deliveredBy
+differential, host {inventor / armor-innovation / level 20 / tier initial}, 11 sheet paths each,
+resistances 13/13 and 10/10 with `defenses.sources.resistance:*` naming the record. Level 20 (3+10=13,
+20/2=10) is not a patched-vs-shipped delta: phlogistonic-regulator#resistance-minimum
+(max(1,floor(l/2)) -> floor(l/2)) agrees at every even level.
+
+Tests re-run by me: node scripts/vt.mjs run test/batch035-red-experience-hosts.test.ts
+test/batch035-instruments-1.test.ts -> 13 passed; node scripts/vt.mjs run
+test/wg-experience.harness.test.tsx -t "classFeatureHost" -> 10 passed, 4 skipped.
+
+
+ITEM 3 — lesson-of-vengeance#experience-flag, lesson-of-elements#experience-flag             DONE
+--------------------------------------------------------------------------------------------------
+Print (AoN mirror lesson-20, Player Core): *"You gain the Needle of Vengeance hex, and your familiar
+learns Phantom Pain."* Print (lesson-17, Player Core): *"You gain the Elemental Betrayal hex. Your
+familiar learns your choice of breathe fire, gust of wind, hydraulic push, or pummeling rubble."* WG
+raw: two giveSpells (FOCUS 4739 + NORMAL 4765) for vengeance; one giveSpell FOCUS 4593 plus a
+`select optionType=SPELL "Select a Spell"` with four predefined options for elements. Both sides
+re-read at the source; the report's account of them is accurate.
+
+Route 5 (`featChoiceHost`) hosts the lesson on the LOWEST-level granting feat (basic-lesson, over
+Greater and Major Lesson), seats it through the harness's own `featHost` so the slot is really
+rendered, and answers the question with the record; "without" is the same feat with the question
+unanswered, so the granter's own popup is present in BOTH builds and only what the chosen lesson adds
+is counted. The `aon-` prefix and the `ownsFeature` gate are delegated to `choiceOwnedFeatureIds`
+rather than reimplemented, which is why a value that merely collides with a classFeature id cannot
+produce a false host. My artefact: lesson-of-vengeance OK, 9 sheet paths, via basic-lesson;
+lesson-of-elements OK, 7 sheet paths PLUS one control — popup "Familiar spell", 4 options, 4 live, on
+the Basic Lesson subcard — which is WG's `select` with its four options, matched.
+
+The report's claim that no src/rules/derive.ts change was needed is TRUE: `choiceOwnedFeatureIds` is
+already exported and already the app's route. There is no cross-file gap owed here.
+
+
+ITEM 4 — citations and mutation-proof                                                        DONE
+--------------------------------------------------------------------------------------------------
+Every flip carries `// batch 035: <finding id>` within the 6 lines above it, each finding id is in
+confirmed[] of work/.b035-read.json, and each finding's RECORD id appears in the enclosing describe or
+it title. scripts/test-flip-audit.mjs --batch 035 is clean.
+
+Both new routes are comparer TEACHES and both carry their mutation-proof half, and the halves are
+stronger than the brief required:
+  · route 4 — a stunted copy with the record's `<type>-innovation-modification` tag stripped AND every
+    `choice.ownsFeature` flag off returns supported:false with the parked reason string. The second
+    stunt is load-bearing rather than padding: Manifold Modifications (feat, level 8, ownsFeature, 27
+    options) makes a modification reachable by BOTH new routes, so stunting one alone would prove
+    nothing. The same test then shows it really is route 4 serving them (feat-choice route off alone
+    -> still hosted, tier 'initial'). I re-ran it; it fails as designed when either half is removed.
+  · route 5 — `choice.ownsFeature` off on every feat returns supported:false for both lessons.
+NOTE (not a defect): the `mutation-proof` marker sits inside a block comment in the test body rather
+than on a `//` line. scripts/test-flip-audit.mjs detects it by substring (auditMutationProofs, line
+622: `f.text.includes('mutation-proof') && f.text.includes(key)`), and both route keys —
+`harness-host-search-no-innovation-modification-route`, `harness-host-search-no-feat-choice-route` —
+are named beside it, so the marker is found by the enforcer as written. Left as it is rather than
+re-touching a harness file three groups share this round.
+
+Report-line check for scripts/wg-batch-close.mjs: both TEACH lines in
+work/.b035-report-red-experience-hosts.txt name the FINDING ids (metallic-reactance#instrument +
+phlogistonic-regulator#instrument on one line; lesson-of-vengeance#experience-flag +
+lesson-of-elements#experience-flag on the other) and both match TEACH_RE, so no finding on these
+records can read as taught off a sibling's line. The other findings on the four records
+(#overdrive x2, #resistance-minimum, #familiar-spell, #familiar-spell-choice, #edition) are cited by
+gap-situational, data-rows-2, situational and instruments-1 — checked, none is orphaned.
+
+
+ITEM 5 — the parks retired honestly                                                          DONE
+--------------------------------------------------------------------------------------------------
+work/experience-instrument-limits.json: 43 records, and `metallic-reactance`,
+`phlogistonic-regulator`, `lesson-of-vengeance`, `lesson-of-elements` are all absent. No entry for
+`harness-host-search-no-innovation-modification-route` or `harness-host-search-no-feat-choice-route`
+survives. The extra-choice lane still holds its nine, and the-oscillating-wave is still parked
+NO-SHEET-EFFECT / wg-legacy-spell-name.
+
+test/batch035-instruments-1.test.ts: the ROUTE map is down to the four extra-choice records, the two
+innovation ids are asserted ABSENT from the limits file in the same it, and the gate's UNSUPPORTED
+short-circuit is still asserted verbatim. The retirement cannot be a half one — I re-ran that file
+and its sibling; 13 passed. test/batch035-red-experience-hosts.test.ts pins the other half (all four
+parks gone, both routes present in the host-search body sliced to its reason string, the
+extra-choice lane and the-oscillating-wave unmoved), which is the half a green suite would not
+otherwise notice.
+
+
+FIXED-BY-ME
+--------------------------------------------------------------------------------------------------
+work/.b035-specs.json — the red-experience-hosts entry listed every path the group touched EXCEPT its
+verify file, which every other family's entry carries. Appended
+"work/.b035-verify-red-experience-hosts.txt" to that entry's stage[]. No other entry was altered and
+none was dropped (20 entries, one per family, red-readable-records included).
+No code fix was owed: nothing in this group's work was wrong.
+
+
+DATA STILL NEEDED
+--------------------------------------------------------------------------------------------------
+(none — this group emitted no data rows by design, and none is owed. The record data of all four was
+left untouched, as the brief required.)
+
+
+CROSS-FILE GAPS
+--------------------------------------------------------------------------------------------------
+1. test/batch035-instruments-2.test.ts (instruments-2's file) still describes the feat-choice lane as
+   a live blindness — its header at :13 ("route B — a witch LESSON is owned by
+   `feats['basic-lesson'].choice.ownsFeature`") and its it title at :155 ("a route the host search has
+   not got"). Since this batch the real classFeatureHost DOES host both lessons; the assertions still
+   pass only because `harnessSees` (:88) is a LOCAL REPRODUCTION of the pre-batch search, not the
+   harness. Stale evidence that a reader would take as proof the lessons are unhostable. The owning
+   group should retarget it at the real harness or say in the header that it is a frozen copy.
+   (Builder reported this; I re-checked it and it STANDS.)
+
+2. NINE records are still parked under `harness-host-search-no-extra-choice-route` in
+   work/experience-instrument-limits.json — shepherd-of-errant-winds, stalker-in-darkened-boughs,
+   crafter-in-the-vault, reveler-in-lost-glee, custodian-of-groves-and-gardens, wandering-reverie,
+   gathered-lore, impostor-in-hidden-places, noble-branch — but the harness gained that route in THIS
+   batch and every one of them now reports OK from the real sweep (my work/wg-batch-VALL-experience.json:
+   all nine verdict OK, ours.supported true). This is the same "a park that outlives its blindness is a
+   gap in hiding" shape the experience-hosts group retired its own four for, and it is not merely
+   documentary: scripts/wg-batch-gate.mjs:599 parks ANY non-OK, non-UNSUPPORTED verdict for a listed
+   record (`instrumentLimited.has(r.id)` -> parkQueued), so the day one of the nine reads
+   MISSING-CONTROL or NO-SHEET-EFFECT it is excused by a hand verification written about a different
+   blindness. Owned by instruments-1 / instruments-2 / gap-instruments-1; this group was explicitly
+   told to leave them untouched, so it is reported rather than fixed.
+
+3. The EXPERIENCE staleness check in scripts/wg-batch-gate.mjs:582 compares the artefact's `observed`
+   time against `src/builder`, `src/rules`, `public/core.json` and the batch file only — NOT against
+   test/wg-experience.harness.test.tsx. This batch changed that harness in a way that flips four
+   verdicts (UNSUPPORTED -> OK), so an experience artefact generated before the change is still
+   accepted as fresh; the driver's own 08:57 artefact is exactly such a file. The instrument is not in
+   its own staleness set. scripts/wg-batch-gate.mjs belongs to the gate-park group.
+
+4. (WITHDRAWN — the builder's cross-file gap 2 is stale.) metallic-reactance#overdrive /
+   phlogistonic-regulator#overdrive are NOT unmodelled by both sides any more: gap-situational built
+   the lane in this same batch (an `overdrive` state in src/rules/classResources.ts:180-191, cited
+   `/* batch 035: metallic-reactance#overdrive`, plus a whileActive row in
+   work/.b035-rows-gap-situational.json) and data-rows-2 carries phlogistonic-regulator#overdrive
+   ("DONE", work/.b035-report-data-rows-2.txt:84). Nothing is owed here; the line is struck rather
+   than carried forward, so it does not become a phantom gap in the close-out.
+
+Standing lines in the two lists: 3 (DATA STILL NEEDED 0, CROSS-FILE GAPS 3 — item 4 above is a
+withdrawal, not a gap).
+
+
+VERIFICATION RUN (mine, all re-executed — nothing taken on the report's word)
+--------------------------------------------------------------------------------------------------
+node scripts/wg-experience.mjs --batch work/wg-batch-VRED.json --verbose      4 records — OK 4
+node scripts/wg-experience.mjs --batch work/wg-batch-VALL.json               40 records — OK 38 ·
+                                                                            NO-SHEET-EFFECT 2 ·
+                                                                            UNSUPPORTED 0
+node scripts/vt.mjs run test/batch035-red-experience-hosts.test.ts
+                        test/batch035-instruments-1.test.ts                  13 passed
+node scripts/vt.mjs run test/wg-experience.harness.test.tsx -t classFeatureHost  10 passed, 4 skipped
+node scripts/test-flip-audit.mjs --batch 035                                 clean
+npx tsc --noEmit                                                             clean
+node scripts/wg-show.mjs "<each of the four>" --raw                          their ops re-read
+AoN mirror innovation-5, lesson-20, lesson-17                                print re-read
+
+VERDICT: every item DONE. No red item in this group is unbuilt or unparked.

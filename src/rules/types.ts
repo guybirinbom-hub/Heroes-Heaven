@@ -599,6 +599,15 @@ export interface UnarmedRider {
   /** THIS strike gets its weapon group's critical specialization, with no other source needed.
    *  critSpecWeapons filters by group, trait or base weapon — never by one particular attack. */
   critSpec?: boolean;
+  /**
+   * The character level this rider starts at.
+   *
+   * Animal Instinct's Specialization Ability (Level 7): *"Increase the damage die size for the unarmed
+   * attacks granted by your chosen animal by one step."* The rider had no level of its own — the
+   * limitation `critSpecWeapons.names` is documented against — so authoring the step would have given
+   * a 1st-level barbarian a 7th-level die. Absent = ungated, which is every rider shipped before this.
+   */
+  minLevel?: number;
 }
 
 /**
@@ -1170,7 +1179,12 @@ export interface DefenseGrants {
   /** Effects that apply ONLY while a signature resource STATE is active (Raging Resistance: resistance
    *  while raging; Raging Athlete: climb/swim while raging). Gated on the character's live toggle. */
   whileActive?: {
-    state: 'rage' | 'panache' | 'hunt-prey' | 'unleash-psyche';
+    /* batch 035: metallic-reactance#overdrive — the inventor's Overdrive is the fifth signature state
+     * a printed clause gates on. innovation-5: *"You gain resistance equal to 3 + half your level to
+     * acid and electricity damage. When under the effects of Overdrive, the resistance increases by
+     * 2."* Every reader here is generic (`activeStateGrants` asks only `classResources[state] > 0`),
+     * so the union was the whole blocker to that second sentence being a NUMBER instead of prose. */
+    state: 'rage' | 'panache' | 'hunt-prey' | 'unleash-psyche' | 'overdrive';
     resistances?: IwrEntry[];
     /** Ligneous Instinct's bark-like flesh: the same clause that resists piercing and slashing also
      *  grants weakness to fire. A benefit block that could only ever help would have dropped it. */
@@ -1498,6 +1512,19 @@ export interface DefenseGrants {
   };
   /** Melee unarmed Strikes this feat/feature grants (from Foundry `Strike` rule elements). */
   grantedStrikes?: GrantedStrike[];
+  /**
+   * `grantedStrikes` exist only WHILE a signature resource STATE is on.
+   *
+   * Bestial Rage: *"While raging, you gain your chosen animal's unarmed attack (or attacks), but
+   * you're unable to use weapons."* Every other `grantedStrikes` carrier hands over a standing attack
+   * (a heritage's fangs, an ancestry's claws), so the rows carried no gate of any kind and an Animal
+   * barbarian would have walked around with jaws out of combat. Record-level rather than per-row
+   * because the printed clause gates the whole grant, and the record's 29 rows are one field.
+   *
+   * Rides onto every Strike it grants as `NaturalAttack.requiresState`; the live toggle is only known
+   * after the play overlay, so the FILTER is in derive, not here.
+   */
+  grantedStrikesState?: 'rage' | 'panache' | 'hunt-prey' | 'unleash-psyche';
   /** "You gain X — or Y instead if you already have X" sense grants (Superior Sight, Ember's Eyes,
    *  Aquatic Eyes). `ifPresent` is the sense the character must ALREADY have (from ancestry vision or
    *  any other source) for the grant to upgrade from `base` to `upgraded`. */
@@ -3457,6 +3484,24 @@ export interface ClassFeature extends ContentBase, DefenseGrants {
    *  reads these; before it did, the feature did nothing even at 20th level. */
   focusSpells?: string[];
   /**
+   * Spells this feature adds to the caster's spellbook/repertoire — *"You gain the Needle of Vengeance
+   * hex, AND YOUR FAMILIAR LEARNS PHANTOM PAIN"* (Lesson of Vengeance). Only the hex half of a witch
+   * lesson had a carrier, so the taught spell reached nothing at all. Same meaning and the same merge
+   * as `SubclassOption.grantedSpells`, which is the route a PATRON's taught spell already takes.
+   *
+   * ⚠ Array only. `classFeatures['conscious-mind'].grantedSpells` in core.json is a different shape
+   * (option id → ladder entries) read through its own cast in buildCharacter, so every reader of this
+   * field must guard with `Array.isArray`.
+   */
+  grantedSpells?: string[];
+  /**
+   * …and the "or" form of the same clause: *"Your familiar learns your choice of breathe fire, gust of
+   * wind, hydraulic push, or pummeling rubble"* (Lesson of the Elements). A flat list cannot say "or",
+   * so the choice is a control — the answer lives in `BuildState.featSpellChoices['<slot>:granted-spell']`,
+   * beside the feat pick that owns this feature. Same shape as `SubclassOption.grantedSpellChoice`.
+   */
+  grantedSpellChoice?: { id: string; prompt: string; options: string[] };
+  /**
    * A pick the feature itself asks for ("choose a damage type", "choose a Thassilonian school").
    *
    * The field was never DECLARED here, which is why nothing rendered it: 25 class-feature choices
@@ -5248,6 +5293,13 @@ export interface NaturalAttack {
    *  naming what enlarged it. The die itself stays a VALUE on the Strikes row; this is the source
    *  attribution Q31 established for a changed MAP progression, applied to a changed die. */
   dieNote?: string;
+  /**
+   * This attack EXISTS only while the named class-resource state is on — Bestial Rage's *"While
+   * raging, you gain your chosen animal's unarmed attack (or attacks)"*. Copied from the granting
+   * record's `grantedStrikesState`; read by deriveStrikes, which drops the Strike entirely while the
+   * toggle is off (the live toggle arrives with the play overlay, after buildCharacter has run).
+   */
+  requiresState?: string;
 }
 
 /**

@@ -99,8 +99,20 @@ for (const [coll, dirs, appLevel] of SETS) {
       const wantLevelOwn = printedLevel(own) ?? own.level;
       const haveLevelOwn = appLevel(rec);
       const isCantripOwn = coll === 'spells' && (rec.traits ?? []).includes('cantrip');
+      /*
+       * FAMILY HEADS, the trap this file's own header names at line 21 — guarded only on the by-NAME
+       * branch (:142 `m.level === wantLevel`) until batch 035, so this branch trusted a heading its
+       * sibling would refuse. Every sub-document of a graded family carries the WHOLE family's
+       * markdown: equipment-5212-4733 (High-grade Throneglass Object, structured level 16) prints
+       * `right="Item -1+"`, `right="Item 2"`, `right="Item 8"` AND `right="Item 16"`, and printedLevel
+       * takes the first the regex matches — "Item 2", the low-grade sibling's heading. Five throneglass
+       * records were reported as `-> mirror 2` on that. Report only when the heading and the document's
+       * own structured level agree, exactly the second condition line 142 already requires.
+       */
+      const headingAgreesOwn = own.level === wantLevelOwn;
       if (!isCantripOwn && wantLevelOwn > 0 && wantLevelOwn !== haveLevelOwn) {
-        unexplained.push({ coll, id, field: 'level', have: haveLevelOwn, want: wantLevelOwn });
+        if (headingAgreesOwn) unexplained.push({ coll, id, field: 'level', have: haveLevelOwn, want: wantLevelOwn });
+        else held.push({ coll, id, why: `printed heading says level ${wantLevelOwn} but this document's own level is ${own.level} — a graded family sibling's heading` });
       }
       const traitsOwn = (own.trait ?? []).map(norm);
       const wantRarityOwn = RARITIES.find((x) => traitsOwn.includes(x)) ?? 'common';

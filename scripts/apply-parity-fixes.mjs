@@ -108,7 +108,9 @@ const readOnce = (rel) => {
 };
 
 /* ---------- the overlay index (refusals 1 and 2) ---------- */
-const rowKey = (r) => `${r.category}/${r.id}/${r.path?.length ? r.path.join('.') + '.' : ''}${r.field ?? '(create)'}`;
+/* A `delete:true` row keys as `(delete)`, not `(create)`: the two are opposite operations on the same
+ * record, and one key for both would read a retirement and a creation of the same id as the same row. */
+const rowKey = (r) => `${r.category}/${r.id}/${r.path?.length ? r.path.join('.') + '.' : ''}${r.field ?? (r.delete ? '(delete)' : '(create)')}`;
 const overlayByKey = new Map();
 /** category/id/<field the path descends into> → EVERY overlay path row with an `id=` step. */
 const overlayIdPaths = new Map();
@@ -215,6 +217,14 @@ function unbackedRun(row, docIds) {
     .filter((h) => h.text != null)
     .map((h) => ({ d: h.d, hay: ` ${tokens(h.text).join(' ')} ` }));
   if (!haystacks.length) return `names ${docIds.join(', ')}, which is not in the mirror`;
+  /* The record's OWN shipped text is a haystack too. addedRuns is an LCS diff, so a row that MOVES a
+   * clause already in the description — batch 035's classFeatures/cultivation-order, whose prose
+   * paragraph prints the cultivation anathema ("neglecting to nurture plants in need of tending")
+   * while the summary block below it carried the LEAF order's "kill them unnecessarily" line — reads
+   * the second occurrence as added and was refused as invented prose. It is not invented: it is
+   * already shipped in this very record. Only a VERBATIM contiguous run counts, so genuinely new
+   * wording is still refused. */
+  haystacks.push({ d: 'our own shipped text', hay: ` ${tokens(before).join(' ')} ` });
   for (const run of runs) {
     const needle = ` ${run.join(' ')} `;
     if (!haystacks.some((h) => h.hay.includes(needle))) {
@@ -280,11 +290,16 @@ for (const f of findings) {
   for (const row of rowsOf(f)) {
     if (!row || !row.category || !row.id) { problems.push(`${f.id}: an overlay row is missing category/id`); continue; }
     const where = `${row.category}/${row.id}`;
-    if (!core[row.category]?.[row.id] && !row.create) {
+    /* `delete:true` retires a WHOLE record — the mirror of `create`, honoured by scripts/lib/apply-backfill.mjs
+     * (the `if (fix.delete)` branch) and already in the overlay since batch 026 (classFeatures/nudging-whisper).
+     * This applier had never been taught the shape, so a delete row failed BOTH checks below — "does not
+     * exist" once the record is already gone (the idempotent resume) and "no field and no create:true"
+     * always — and a spec that retires a scrape-split twin could not be applied at all. */
+    if (!core[row.category]?.[row.id] && !row.create && !row.delete) {
       problems.push(`${f.id}: row targets ${where}, which does not exist and has no create:true — it would reach nothing`);
       continue;
     }
-    if (!row.create && !row.field) { problems.push(`${f.id}: row for ${where} has no field and no create:true`); continue; }
+    if (!row.create && !row.delete && !row.field) { problems.push(`${f.id}: row for ${where} has no field, no create:true and no delete:true`); continue; }
 
     /* 3 — prose is never nested. */
     if ((row.field === 'description' || row.field === 'descRefs') && row.path?.length) {
@@ -404,7 +419,8 @@ for (const e of plannedEdits) (byFile[e.file] ??= []).push(e);
 
 console.log(`${findings.length} finding(s): ${plannedRows.length} overlay row(s), ${plannedEdits.length} code edit(s) across ${Object.keys(byFile).length} file(s).\n`);
 for (const { from, row } of plannedRows) {
-  console.log(`   row   ${String(from).padEnd(34)} ${row.category}/${row.id}.${row.field ?? '(create)'} = ${JSON.stringify(row.value).slice(0, 84)}`);
+  /* A delete row has no `value` at all, so JSON.stringify(undefined) is undefined, not a string. */
+  console.log(`   row   ${String(from).padEnd(34)} ${row.category}/${row.id}.${row.field ?? (row.delete ? '(delete)' : '(create)')} = ${String(JSON.stringify(row.value)).slice(0, 84)}`);
 }
 for (const e of plannedEdits) console.log(`   edit  ${String(e.from).padEnd(34)} ${e.file}: ${JSON.stringify(e.find.slice(0, 56))}`);
 for (const a of alreadyApplied) console.log(`   skip  ${a}`);

@@ -1219,6 +1219,17 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "strangle": [{ targets: [{ kind: 'strikeDamage' }], when: "on a successful Strangle Strike against a creature you already have grabbed or restrained", bonus: "+circumstance equal to the Strike's number of weapon damage dice" }],
   "biographical-eye": [{ targets: [{ kind: 'skill', detail: 'society' }], when: "on the Biographical Eye Society check, if you engaged the person in conversation during the minute you spent with them", bonus: "+1 circumstance" }],
   "forensic-acumen": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "on the immediate follow-up Recall Knowledge check after a successful forensic examination of a body", bonus: "+2 circumstance (+3 if master in Medicine, +4 if legendary)" }],
+  /* WG parity b035, forensic-medicine-methodology#battle-medicine-rider. The methodology's grants
+   * (Medicine training, Forensic Acumen, Battle Medicine) all shipped; its RIDER on the feat it hands
+   * you had no carrier at all — methodology-7: *"When you use Battle Medicine, on a success the target
+   * recovers additional Hit Points equal to your level, and the target becomes temporarily immune for
+   * only 1 hour, not 1 day."* Both halves ride one `hp` row, the godless-healing (:3317) /
+   * medic-dedication (:3692) / robust-health (:1228) shape, because the immunity window has no row of
+   * its own and the player meets it on the same heal. */
+  // batch 035: forensic-medicine-methodology#battle-medicine-rider — ruling H caps a note at about one
+  // line (test/rulings-dfgh.test.ts "no note runs longer than about one line", 120 chars); this row
+  // shipped at 131 and failed that gate. Same two halves of methodology-7, 116 chars.
+  "forensic-medicine-methodology": [{ targets: [{ kind: 'hp' }], when: "on Hit Points a target regains from your successful Battle Medicine; they are then immune for only 1 hour, not 1 day", bonus: "+ your level" }],
   "glean-contents": [{ targets: [{ kind: 'skill', detail: 'society' }], when: "on Society checks to Decipher Writing that is only partially glimpsed, upside down, or reversed", bonus: "+1 circumstance" }],
   "inoculation": [{ targets: [{ kind: 'save', detail: 'all' }], when: "for 1 week, on saves against a specific disease — granted to the creature you successfully Treated for that disease", bonus: "+2 circumstance" }],
   "keen-follower": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "while using Follow the Expert in exploration mode, on checks with the skill you're following", bonus: "+3 circumstance (expert ally) or +4 circumstance (master ally), replacing Follow the Expert's normal bonus" }],
@@ -4143,6 +4154,18 @@ export interface RecordMarker {
   value?: string;
   /** One line: what the source does to that action or condition. */
   note: string;
+  /**
+   * batch 035: animal-instinct#spider-web — show this mark ONLY when the source record's own choice
+   * was answered with this value.
+   *
+   * ⚠ This is the ONE scope a mark can now carry, and it is not the skill scope the header warns
+   * about. instinct-8 gives 22 different animals 22 different attacks and only the Spider's carries
+   * the Web clause, so a mark keyed by record id alone showed a bear barbarian a note about a spider.
+   * Resolved from `Character.featureChoices['feature:<sourceId>']` — the same `feature:<id>` key
+   * `build.ts` writes and `derive.ts` already reads for Elemental Rage's damage type — so nothing new
+   * is stored, and the other 21 animals can carry their own printed riders by the same route.
+   */
+  choiceValue?: string;
 }
 
 /** Source record id → the action/condition marks it carries. Keyed the same way as FEAT_SITUATIONAL
@@ -4578,6 +4601,66 @@ export const RECORD_MARKERS: Record<string, RecordMarker[]> = {
    * maneuvers into a single action; the DC … is equal to the DC of the most difficult maneuver +
    * 10."* Marks the action it modifies, the 'water-dancer' / 'shortshanks-hobgoblin' lane. */
   'aerobatics-mastery': [{ on: 'action', id: 'maneuver-in-flight', value: "2 maneuvers per action (3 if legendary)", note: "You can combine two maneuvers into a single action; the DC equals the DC of the most difficult maneuver + 5. If you're legendary in Acrobatics you can combine three, at the most difficult maneuver's DC + 10." }],
+
+  // ---- WG parity b035: printed clauses on a class feature that changed no stat and had no carrier ----
+
+  /* superstition-instinct#rage-hp-and-frightened — instinct-13: *"When you Rage, you regain Hit Point
+   * equal to the temporary HP you gained from the Rage action; you then can't regain HP in this way
+   * again for 10 minutes. While raging, if you willingly accept the effects of a magic spell or effect,
+   * you are frightened 1. You cannot reduce your frightened condition below 1 as long as you are
+   * affected by the spell or effect."* Both riders fire EVERY time this barbarian Rages and existed only
+   * as description prose; FEAT_SITUATIONAL held just the +2 status saves vs magic and the extra Rage
+   * damage. Marks the Rage action, the 'revitalizing-rage' / 'berserkers-cloak' lane. */
+  'superstition-instinct': [{ on: 'action', id: 'rage', note: "when you Rage you also regain Hit Points equal to the temporary Hit Points that Rage gave you — then not again this way for 10 minutes. While raging, willingly accepting the effects of a magic spell or effect makes you frightened 1, and you can't reduce that frightened condition below 1 while that effect lasts." }],
+
+  /* animal-instinct#spider-web — instinct-8 gives the Spider TWO attacks, and only Fangs is in the
+   * record: *"Web | Special* | Range increment 15 feet"* with the footnote *"The spider's web attack
+   * deals no damage, but the target takes a –10-foot circumstance penalty to its Speeds for 1 round on
+   * a hit. If a target is hit a second time by the same character's web attack while they have this
+   * penalty, they're instead immobilized until they succeed at a check to Escape against your class
+   * DC."* A damageless Strike has no shape in `GrantedStrike` (die/damageType are required), so the
+   * whole attack rides here, on the Rage action the instinct's attacks belong to.
+   * ⚠ batch 035 gap pass: the subclass-push half of that reason is STALE (build.ts now passes the
+   * feature pick, measured), and the "a mark cannot be scoped to one answer" half is no longer true
+   * either — `choiceValue` gates this on the answered animal, so the 21 non-spider barbarians who used
+   * to read a spider's footnote on their Rage row no longer do. The "Spider:" prefix stays: all three
+   * renderers show the SOURCE record's name ("Animal Instinct"), which does not say which animal. */
+  'animal-instinct': [{ on: 'action', id: 'rage', choiceValue: 'spider', note: "Spider: besides Fangs you have a Web attack — range increment 15 feet, no damage. On a hit the target takes a −10-foot circumstance penalty to its Speeds for 1 round; a second hit while that penalty lasts immobilizes it instead, until it succeeds at a check to Escape against your class DC." }],
+
+  /* metallic-reactance#overdrive — innovation-5: *"You gain resistance equal to 3 + half your level to
+   * acid and electricity damage. When under the effects of Overdrive, the resistance increases by 2."*
+   * The record carries only the flat resistance, so the sheet shows 3 + half level whatever the
+   * inventor is doing. There is no `resistance` target kind in this file and no 'overdrive'
+   * `whileActive` state in types.ts, so the NUMBER stays flat (see the batch report's cross-file gaps);
+   * this puts the printed increase on the Overdrive action, which is where the player turns it on. */
+  'metallic-reactance': [{ on: 'action', id: 'overdrive', value: "acid/electricity resistance +2", note: "while you're under the effects of Overdrive, your Metallic Reactance resistance to acid and electricity increases by 2 (to 5 + half your level); the sheet shows the un-Overdriven value." }],
+
+  /* starless-shadow#familiar-of-stalking-night — patron-17: *"When you Cast or Sustain a hex, and your
+   * familiar is adjacent to an enemy to which it's concealed, hidden, or undetected, the enemy becomes
+   * frightened 1."* Enemy-facing, so it moves no number of this character's (ruling F) — a note on the
+   * Patron feature entry, where the rest of the patron is read. The sibling patron spinner-of-threads
+   * already had a carrier for the same "when you Cast or Sustain a hex" shape. */
+  'starless-shadow': [{ on: 'feature', id: 'patron', note: "Familiar of Stalking Night: when you Cast or Sustain a hex and your familiar is adjacent to an enemy to which it's concealed, hidden, or undetected, that enemy becomes frightened 1." }],
+
+  /* devourer-of-decay#familiar-of-parasitic-might — patron-19: *"When you Cast or Sustain a hex, your
+   * familiar can draw on the waning strength of another to sustain itself. One creature within 15 feet
+   * of your familiar with less than half of its maximum Hit Points becomes sickened 1 unless it
+   * succeeds at a Fortitude saving throw against your spell DC."* Same lane and same reason as
+   * starless-shadow above. */
+  'devourer-of-decay': [{ on: 'feature', id: 'patron', note: "Familiar of Parasitic Might: when you Cast or Sustain a hex, one creature within 15 feet of your familiar that is below half its maximum Hit Points becomes sickened 1 unless it succeeds at a Fortitude save against your spell DC." }],
+
+  /* forensic-medicine-methodology#battle-medicine-rider, the OTHER half of the same finding —
+   * methodology-7: *"When you use Battle Medicine, on a success the target recovers additional Hit
+   * Points equal to your level, and the target becomes temporarily immune for only 1 hour, not 1
+   * day."* The `hp` star above sits on THIS character's Hit Points, and the printed heal lands on the
+   * TARGET's, so on its own it says the rider in the one place the rider is not. The row the player
+   * actually reads is Battle Medicine — whose curated text (skillActions.ts, Medicine "Battle
+   * Medicine") ends *"The target is then immune to your Battle Medicine for 1 day."* for everyone,
+   * including the investigator print gives 1 hour. Marks that action, so the star and its tooltip sit
+   * beside the sentence they contradict (ruling Q2: a star and a mark coexist). Keyed by the ACTION's
+   * slug, which is what `recordMarkersFor` matches — StatDetailModal's skill-action list and MainTab's
+   * activity rows both slug the name to 'battle-medicine'. */
+  'forensic-medicine-methodology': [{ on: 'action', id: 'battle-medicine', value: "+your level HP, 1-hour immunity", note: "on a success the target recovers additional Hit Points equal to your level, and is then immune to your Battle Medicine for only 1 hour, not 1 day." }],
 };
 
 /**
@@ -4642,6 +4725,23 @@ export const SPELL_MARKERS: Record<string, SpellMarker[]> = {
    * spell already prints 120 feet), so this is a reach-and-traits rider, not a number: the spell's
    * `traits` still carry `auditory`, correctly, for every other caster of it. */
   "message": [{ source: 'the-silent-whisper', when: "while you have The Silent Whisper conscious mind", bonus: "no line of effect or line of sight needed — any unblocked path of 120 feet or less reaches the target; you can also cast it purely telepathically, losing the auditory trait" }],
+
+  /* WG parity b035: The Oscillating Wave is the fourth and last conscious mind to rewrite its standard
+   * psi cantrips, and the only one still without a carrier. Both clauses are printed on
+   * conscious-mind-9, not on the spell, so the spell rows keep the numbers that are right for every
+   * other caster — ruling G puts them on the spell, "that's what you're looking at when you cast it." */
+
+  /* the-oscillating-wave#psi-cantrip-mods, frostbite — conscious-mind-9: *"You can freeze people from
+   * even farther away. The range of your frostbite increases to 120 feet."* spells/frostbite.range
+   * stays "60 feet", correct for everyone who is not an Oscillating Wave psychic. */
+  "frostbite": [{ source: 'the-oscillating-wave', when: "while you have The Oscillating Wave conscious mind", bonus: "range 120 feet (instead of the spell's usual 60)" }],
+
+  /* the-oscillating-wave#psi-cantrip-mods, ignition — conscious-mind-9: *"You can drastically increase
+   * the heat against targets at a distance. When using ignition as a ranged attack, increase the range
+   * to 60 feet. When using ignition as a melee attack, your reach increases by 5 feet."* Two halves of
+   * one printed clause on one row: the spell's 30-foot range is the ranged half, and the melee half is
+   * a reach the sheet stores nowhere. */
+  "ignition": [{ source: 'the-oscillating-wave', when: "while you have The Oscillating Wave conscious mind", bonus: "range 60 feet as a ranged attack (instead of the spell's usual 30); your reach increases by 5 feet when you use it as a melee attack" }],
 };
 
 /** The markers on this spell that the character's own records grant. */
@@ -4696,12 +4796,18 @@ export function supersededIds(ownedIds: Iterable<string>): Set<string> {
   return out;
 }
 
-/** Every mark this character's records put on one action or condition. */
+/** Every mark this character's records put on one action or condition.
+ *
+ *  `choices` is the character's `featureChoices` (`feature:<id>` -> answer), and is what makes
+ *  `RecordMarker.choiceValue` possible: a mark that names an answer is dropped unless the SOURCE
+ *  record's own question was answered that way. Optional, so every caller that has no character in
+ *  hand keeps its current behaviour — an ungated mark never consults it. */
 export function markersFor(
   ownedIds: Iterable<string>,
   on: 'action' | 'condition' | 'feature',
   id: string,
   extra?: Readonly<Record<string, readonly RecordMarker[] | undefined>>,
+  choices?: Readonly<Record<string, string>>,
 ): { sourceId: string; value?: string; note: string }[] {
   const out: { sourceId: string; value?: string; note: string }[] = [];
   const seen = new Set<string>();
@@ -4709,7 +4815,10 @@ export function markersFor(
     if (seen.has(sourceId)) continue;
     seen.add(sourceId);
     for (const m of [...(RECORD_MARKERS[sourceId] ?? []), ...(extra?.[sourceId] ?? [])]) {
-      if (m.on === on && m.id === id) out.push({ sourceId, value: m.value, note: m.note });
+      if (m.on !== on || m.id !== id) continue;
+      // batch 035: animal-instinct#spider-web — an answer-scoped mark shows to that answer only.
+      if (m.choiceValue && choices?.[`feature:${sourceId}`] !== m.choiceValue) continue;
+      out.push({ sourceId, value: m.value, note: m.note });
     }
   }
   return out;

@@ -1,0 +1,154 @@
+BATCH 035 — ADVERSARIAL VERIFY, family "data-rows-1" (chunk 1 of 2)
+Verifier default: NOT done until measured. Every row below was diffed against the SHIPPED artefact
+and against the overlay row it supersedes; every mechanic was exercised on a BUILT character through
+a throwaway harness that applied the two spec files to an in-memory content copy (harness deleted).
+
+Spec files checked:
+  work/.b035-rows-data-rows-1.json          (9 findings, 19 rows)
+  work/.b035-created-desc-data-rows-1.json  (1 prose row for the created record)
+Test file:  test/batch035-data-rows-1.test.ts  (now 17 tests)
+
+────────────────────────────────────────────────────────────────────────────────────────────────
+PER FINDING
+────────────────────────────────────────────────────────────────────────────────────────────────
+
+cultivation-order#anathema-sidebar — DONE
+  Both carriers re-emitted; diff vs shipped is ONE string change in each (the **Anathema** line), and
+  the druid options array is otherwise byte-identical (9 options, leaf-order's description compared
+  === shipped). New line matches AoN druidic-order-12's clause and WG's injectText; classFeature copy
+  and option copy are identical strings.
+
+swarm-eidolon#redistribute — DONE
+  classes/summoner options@[subclass] supersedes the existing overlay row; diff vs THAT row is 2
+  edits inside options[11].description only ("gains the Redistribute reaction." + the Sickening Swarm
+  heading, the merged half of the naming finding). All 13 options and every other field survive.
+  Print: mirror eidolon-13 "In addition, your eidolon gains the Redistribute reaction." verified.
+
+swarm-eidolon#sickening-swarm-name — DONE
+  classFeatures/swarm-eidolon description supersedes its overlay row; single heading change, 2,959
+  chars otherwise identical. Mirror eidolon-13 titles it "Sickening Swarm" in BOTH the ability list
+  and the level-17 section — checked in the mirror myself. Both carriers land (the option copy rides
+  the summoner row above), and the test asserts both, so neither half can ship alone.
+
+dragon-instinct#duplicate-piercing — DONE
+  The re-emitted `choice` differs from the superseded overlay row at exactly options[8] (crystal) and
+  options[14] (forest): resistances 2 -> 1, nothing else in 49 options touched. Independently
+  confirmed against print, not just against WG: Monster Core's Young/Adult/Ancient Crystal Dragon and
+  Forest Dragon Breath Weapons all deal PIERCING, and instinct-9's Raging Resistance is "piercing
+  damage and the damage type of your instinct's dragon breath" — so the two clauses do collapse.
+  Crystal and forest are the ONLY piercing/piercing pairs in the shipped option list (checked all 49).
+  Built 9th-level raging barbarian with the rows applied: piercing row = 1 line for crystal and for
+  forest, sky still 1 piercing + 1 electricity.
+
+impostor-in-hidden-places#vessel-spell — FIXED-BY-ME (rows were right; they exposed a live link bug)
+  Rows verified: the four spells/discomfiting-whispers field rows land on the STATTED record (area,
+  cast, save, heightening all still present), the delete row's target exists, both prose carriers and
+  both descRefs label lists follow the printed singular name, and the animist options row supersedes
+  its overlay row with only those two edits. Print re-checked in the mirror: spell-2139 is
+  "Discomfiting Whisper … Duration sustained up to 1 minute".
+  WHAT THE BUILDER MISSED — measured, not argued: descRefs resolve by LABEL, and src/sheet/descref.ts
+  tries `map[slugify(label)]` first. slugify("Discomfiting Whisper") is `discomfiting-whisper`, the id
+  the delete row RETIRES, so the lookup fell through to the name index — which was a plain
+  "last writer wins" over Object.values and handed back the SUPPRESSED `aon-discomfiting-whisper`
+  scrape (the copy findDuplicateIds hides from every list, with the unsubstituted `<%RULES%2387%%>`
+  markup and the legacy `negative` trait). Probe with the rows applied, before my fix:
+  lookupRef('Discomfiting Whisper','spells') -> 'aon-discomfiting-whisper'. Before the rows it
+  resolved correctly, so the batch would have SHIPPED a new dead-end link on the apparition popup.
+  FIX (root cause, one place every caller routes through): src/sheet/descref.ts nameIndex now refuses
+  to let a suppressed duplicate shadow a canonical record of the same name (a duplicate still fills a
+  name no canonical claims — the 149 `aon-` sole copies keep working). New test in the family file:
+  "the impostor-in-hidden-places link opens the reachable Discomfiting Whisper, not the hidden
+  scrape", cited `// batch 035: impostor-in-hidden-places#vessel-spell`. After the fix the probe
+  returns 'discomfiting-whispers' and duplicateIds does not hold it.
+  Also checked: no other record in core.json or core-descriptions.json mentions either name (all six
+  occurrences are covered by the spec rows); nothing references the deleted id; the suppression of
+  `aon-discomfiting-whisper` survives, since findDuplicateIds keys on the canonical NAME which the
+  renamed record still supplies (spells IS in DEDUPE_MAPS, dedupeKey is exact so the plural never
+  matched). Note (not a gap): core-descriptions.json keeps an orphan `spells/discomfiting-whisper`
+  entry after the shortcut applier runs — _content and the app both ignore a description whose record
+  is gone, and the next `npm run data` never writes it (the overlay deletes the record before
+  split-descriptions runs).
+
+way-of-the-spellshot#description-spellcasting — DONE
+  classes/gunslinger `subclass` supersedes its overlay row with ONE change, options[3].description;
+  classDcKeyAbility int and featureIds [energy-shot, recall-ammunition, dispelling-bullet] are still
+  in the emitted object (pinned by a test that passes today and after). Order-independent: the
+  emitted value equals shipped+change, and shipped already carries every path row, so a path row
+  re-applied after this one produces the same object.
+
+curse-of-inevitable-rot#acid-trait — DONE
+  traits re-emitted whole as [acid, curse, divine, oracle, poison]; content.trait['acid'] exists
+  (remaster, trait-524). Mirror mystery-21's curse section confirms the acid weakness/anathema text
+  and the printed trait block.
+
+the-oscillating-wave#conservation-of-energy — DONE
+  The create row targets a key absent from EVERY bucket, carries no `description`/`descRefs` (the
+  applier would strip them anyway) and its prose is in the created-prose spec, which routes correctly
+  because the field pass creates the record before the prose pass runs. Shape matches its sibling
+  the-oscillating-wave / noble-branch→strike-breathe-rend (source, level, actionCost {type:passive},
+  aonId conscious-mind-9). Description compared word-for-word against the mirror's conscious-mind-9
+  "Conservation of Energy" section including the Adding / Removing / Mindshift clauses.
+  Reader: derive.ts:3532 resolves grantsClassFeatures LAST over everything owned, and a built level-1
+  the-oscillating-wave psychic owns 'conservation-of-energy' with the rows applied, while a
+  the-distant-grasp psychic does not. Checked for spill: the only global walks over classFeatures
+  filter on the `calling` trait, `critSpec`, or an innovation-modification tag, and `otherTags` is
+  read nowhere but the innovation lane — so the new record cannot leak into a picker.
+
+animal-instinct#cat — DONE
+  grantedStrikes supersedes its overlay row: 29 shipped entries byte-identical, +2 tagged
+  choiceValue 'cat' in the shape the other 21 animals use. Print checked in the mirror myself —
+  instinct-8's Animal Instincts table reads "Cat Jaws 1d10 P Unarmed / Claw 1d6 S Agile, unarmed".
+  Built 1st-level Cat barbarian with the rows applied gets Jaws and an agile Claw; the Wolf control
+  still gets one Jaws and no Claw.
+
+────────────────────────────────────────────────────────────────────────────────────────────────
+SPEC / MANIFEST CHECKS
+────────────────────────────────────────────────────────────────────────────────────────────────
+- Every target record exists in core.json except the one create row, which carries create:true and
+  whose id exists in NO bucket. The one delete row's target exists.
+- Every superseding row (5) declares supersedes:true and its value equals the superseded overlay row
+  plus exactly the intended change (diffed field-by-field). No row that carries supersedes:true lacks
+  an existing overlay row, and no row WITHOUT it collides with one.
+- No two rows in this spec share a record+field+path key. CROSS-SPEC: all 7 batch-035 row specs
+  together produce 41 distinct keys and ZERO collisions — the builder's CONTENTION NOTE about
+  data-rows-2 possibly touching druid / summoner / gunslinger / animist / dragon-instinct is CLEARED,
+  data-rows-2 authored none of them.
+- Readers exist for every field written: grantsClassFeatures (derive.ts:3532, FeatsTab.tsx:70),
+  grantedStrikes (collectGrantedNaturals), choice.grant.whileActive (ownedWhileActive/derive),
+  traits, description/descRefs (descref + DescBody), name/duration/aonId/edition (SpellsTab,
+  build.ts:3161 — 'remaster-era' is neither legacy nor superseded, so nothing is hidden by it).
+- Every id a row names resolves: trait 'acid' and 'psychic' exist, focusSpells still points at a live
+  spell, grantsClassFeatures points at the record the same spec creates.
+- work/.b035-specs.json still holds all 8 entries (7 families + this family's created-prose entry);
+  this family's stage[] now also lists src/sheet/descref.ts and this verify file.
+- npx tsc --noEmit clean. test/batch035-data-rows-1.test.ts: 14 fail / 3 pass on the SHIPPED data
+  (each failure is the pinned defect, none is a harness error), 17/17 pass with the two spec files
+  applied to an in-memory content copy. Regression sweep on my src change: descref-resolution,
+  descref, notes-tables, sanitize, aon-dedupe, overlay-shape-check, authoring-guards — 65 pass.
+  scripts/test-flip-audit.mjs --batch 035: clean, every flip cited (my new test included).
+
+────────────────────────────────────────────────────────────────────────────────────────────────
+DATA STILL NEEDED
+────────────────────────────────────────────────────────────────────────────────────────────────
+(none — confirmed: every row these nine findings need is authored in the two spec files.)
+
+────────────────────────────────────────────────────────────────────────────────────────────────
+CROSS-FILE GAPS
+────────────────────────────────────────────────────────────────────────────────────────────────
+- src/rules/build.ts:6060 + src/rules/derive.ts:1171 (engine lane, not this family's): a CHOICE-driven
+  whileActive grant reaches ownedWhileActive through `c.chosenEffects`, a bare DefenseGrants with no
+  `name`, so every line it produces is attributed to "Active state" instead of the instinct that
+  granted it. Verified in the source, and pre-existing — this chunk's row changes how MANY lines the
+  dragon row has, never their attribution. Open for every instinct that asks a question (dragon,
+  giant, animal); raging-resistance.test.ts:64 already closed it for the non-choice instincts.
+- classes.psychic.subclass.options['the-oscillating-wave'].description still repeats the
+  "### **Conservation of Energy**" blob now that classFeatures/conservation-of-energy exists, so the
+  player reads the alternation twice. NOT a print contradiction and no finding covers it, so it was
+  correctly left out of this batch; the builder's stated reason (a sibling might be re-emitting the
+  psychic options array) is void — no other spec touches classes/psychic. Whoever next re-emits that
+  array should drop the duplicated section.
+
+MANIFEST STAGE ADDITIONS (files I touched)
+- src/sheet/descref.ts            (nameIndex: a suppressed duplicate may not shadow a canonical name)
+- test/batch035-data-rows-1.test.ts (one added test, cited)
+- work/.b035-verify-data-rows-1.txt

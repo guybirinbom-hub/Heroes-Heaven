@@ -1,0 +1,195 @@
+BATCH 035 — GAP VERIFIER (family "gaps"). Default REFUTE: a line is CLOSED only against an artefact I
+opened myself.
+
+47 gap lines in work/.b035-gaps.json. After this pass: 47 CLOSED, 0 REOPENED, 0 STILL-OPEN.
+Two repairs were needed to get there, both recorded below and both against work that really existed.
+
+HEADLINE — WHAT WAS WRONG WHEN I ARRIVED
+  gapProblems() from scripts/wg-batch-run.mjs, run over the real gaps.json / queue / desk / manifest,
+  refused SIX lines. The driver would have refused the batch at --stage gaps.
+    · 3 lines parked against owner question `cultivation-order`, which was on neither the desk nor the
+      queue — the gap-situational agent rewrote work/.b035-queue.json WHOLE at 10:41 and dropped the
+      entry the gap-engine-1 agent had written into it at 10:39. Two writers, one shared file, no
+      merge. RESTORED (see REPAIR 1).
+    · 3 lines whose ref was real prose but not a form gapProblems() accepts (no manifest spec, no file
+      on disk, no file:line). The ARTEFACTS were all present and tested; only the refs were unusable.
+      REPAIRED to file:line (see REPAIR 2).
+  After both repairs: gapProblems() → 0 problems.
+
+INTEGRITY CHECKS ASKED FOR
+  · work/owner-questions.json — UNTOUCHED. `git diff HEAD -- work/owner-questions.json` empty and
+    `git status --porcelain` on it empty. No agent edited the desk.
+  · No gap line removed. Re-derived all 47 lines with the driver's own gapLines() over the 14
+    report/verify files: regenerated 47, gaps.json holds 47, zero missing and zero extra.
+  · No manifest entry removed. work/.b035-specs.json holds 14 entries; work/ holds exactly 14 spec
+    files (.b035-rows-*.json + .b035-created-desc-data-rows-1.json). One-to-one, no orphan either way.
+    gap-data-rows-2 has a report and no spec, correctly — it authored nothing (see line 24).
+  · Every spec file: exists, parses, every row targets a record that exists in public/core.json, and
+    no two specs write the same record+field. 52 rows across 6 row-bearing specs, 0 collisions.
+    (classFeatures/conservation-of-energy is absent from core.json ON PURPOSE — data-rows-1 carries the
+    `create:true` row and the created-prose spec carries only its description. Correct, not a defect.)
+  · Readers exist for every new field a row writes: grantedStrikesState (build.ts), unarmedTraits
+    (derive.ts), grantedSpells (build.ts), grantedSpellChoice (build.ts), whileActive incl. the new
+    'overdrive' state (build.ts + derive.ts). No row lands on a field nothing reads.
+  · node scripts/vt.mjs run test/batch035-gap-data-rows-1 · -gap-engine-1 · -gap-engine-2 ·
+    -gap-situational · test/wg-experience.harness.test.tsx · test/batch034-closer.test.ts
+      → 6 files, 41 passed | 1 skipped. npx tsc --noEmit clean.
+      node scripts/test-flip-audit.mjs --batch 035 → clean, 14 test files touched, every flip cited.
+
+REPAIR 1 — work/.b035-queue.json, entry `cultivation-order` RESTORED
+  Rebuilt from the gap-engine-1 agent's own report (work/.b035-report-gap-engine-1.txt:59-69 and
+  :102-110) and the read finding cultivation-order#leaf-membership in work/.b035-read.json. The
+  printed clause was re-verified verbatim off the AoN mirror myself, not copied from a report:
+  .../by-category/druidic-order/druidic-order-12.json, Special — "The cultivation order is a variant
+  of the leaf order. If you have the cultivation order, you count as a member of the leaf order, and
+  you qualify for leaf order feats." `theirs` re-verified with `node scripts/wg-show.mjs "Cultivation
+  Order" --raw`: the first op really is giveAbilityBlock, abilityBlockId 34226. All four
+  add-owner-question.mjs guards checked by hand (every field present; the id is on neither the desk's
+  open/deferred/ruled/authorisedExceptions nor twice in the run; `printed` names druidic-order-12,
+  which exists in the mirror; `theirs` names "giveAbilityBlock", an op wg-show --raw really prints).
+  The entry says in its own text that it is a restoration and by whom, so the owner is not being shown
+  a question whose provenance is hidden. animal-instinct-spider-web is kept whole beside it.
+  ⚠ FOR THE DRIVER: two agents wrote this file this batch and the second clobbered the first. Nothing
+  guards it — pendingQuestions() merges against the DESK, not against the queue's own prior content.
+
+REPAIR 2 — three refs rewritten to a file:line form. No artefact was created, moved or altered; the
+  prose of each ref is preserved and the repair is stated inside the ref itself.
+    idx 15, idx 38 → test/wg-experience.harness.test.tsx:523   (classFeatureHost's extraChoices route)
+    idx 39         → test/wg-experience.harness.test.tsx:93    (minimalHost, `...emptyBuild()` first)
+
+ONE LINE PER GAP LINE (index in work/.b035-gaps.json)
+
+ 0 CLOSED  data-rows-1  ref src/rules/derive.ts:1169 — read line 1168 is `wa.from ?? g?.name ?? 'Active
+     state'`, with the WHY comment above it; build.ts stamps `from` on each chosen clause. Pinned by
+     test/batch035-gap-data-rows-1.test.ts (3 of its 6 its failed before the fix, per its report).
+ 1 CLOSED  engine-1  ref work/.b035-rows-engine-1.json — in the manifest, family engine-1, stage[7].
+     3 rows, all verified: fury-instinct aonId "instinct-10"; fury-instinct edition "remaster"
+     supersedes:true; dragon-instinct path ["choice"] field note null. Records exist, no collision.
+ 2 CLOSED  engine-1  ref src/rules/companionGrants.ts:559 — 'plant-eidolon' row now carries
+     "languages":["Sylvan"], printed NAME (core.json has no 'sylvan' key — checked), batch-035 comment.
+ 3 CLOSED  engine-1  ref src/rules/companionGrants.ts:575 — new 'swarm-eidolon' row, languages ONLY,
+     id form ('common'). The evoIwr-does-not-dedupe reasoning is in the comment above it.
+ 4 CLOSED  engine-1  ref src/rules/companionGrants.ts:582 — new 'undead-eidolon' row, "necril" id form.
+ 5 CLOSED  engine-1  ref src/rules/companions.ts:1036 — `if (cfg.typeId === 'swarm-eidolon')
+     evoIwr.push(\`weakness ${level} area damage\`)`, level-scaled, eidolon-13 quoted above it.
+ 6 CLOSED  engine-1  ref work/.b035-rows-gap-engine-1.json — in the manifest, family gap-engine-1,
+     stage[5]. 6 rows on giant-/spirit-/superstition-instinct (aonId + edition supersedes), all under
+     the CONFIRMED finding animal-instinct#edition. Records exist, no collision with any sibling spec.
+ 7 CLOSED  engine-1  ref cultivation-order — WAS REOPENED-ON-ARRIVAL (the queue entry had been
+     clobbered). Now a real entry in work/.b035-queue.json again; see REPAIR 1.
+ 8 CLOSED  engine-2  ref work/.b035-rows-engine-2.json — row classFeatures/animal-instinct
+     grantedStrikesState "rage" present; reader in build.ts; no existing overlay row, so no supersedes
+     is owed. Pinned by test/batch035-engine-2.test.ts ("// batch 035: animal-instinct#rage-gate", on a
+     content copy patched in memory — not a patched-vs-shipped delta).
+ 9 CLOSED  engine-2  ref work/.b035-rows-engine-2.json — row animal-instinct unarmedTraits
+     [{fromRecord,stepDie:1,minLevel:7}] present; reader in derive.ts. Different field from the
+     situational family's animal-instinct line, so not a collision.
+10 CLOSED  engine-2  ref work/.b035-rows-engine-2.json — row lesson-of-vengeance grantedSpells
+     ["phantom-pain"] present; spell id resolves; reader in build.ts.
+11 CLOSED  engine-2  ref work/.b035-rows-engine-2.json — row lesson-of-elements grantedSpellChoice
+     present, all four spell ids resolve; reader in build.ts; no collision with data-rows-2's rows on
+     the same record (different fields).
+12 CLOSED  engine-2  ref companionGrants.ts COMPANION_MODS['demon-eidolon'] — line 525 carries
+     "languages":["Abyssal"]. Pinned by test/batch035-gap-engine-2.test.ts, including an it( that pins
+     WHY the printed name and not an id, so a later tidy-up fails loudly.
+13 CLOSED  engine-2  ref COMPANION_MODS['demon-eidolon'].note — line 525's note is the remastered
+     wording (spirit damage, the holy/weakness-to-unholy restriction, the versatile pick); the
+     pre-remaster "extra 1 unholy (evil) damage" is gone and the test asserts its absence.
+14 CLOSED  instruments-1  ref test/batch034-closer.test.ts:87 — the assertion is now
+     `expect(shipped.get('cultivation-order')?.missing).toEqual([])`, cited "// batch 035:
+     cultivation-order#instrument" 2 lines above, record id in the it( title. Its mutation-proof stunt
+     lives in test/batch035-instruments-1.test.ts, as the comment says.
+15 CLOSED  instruments-2  ref REPAIRED → test/wg-experience.harness.test.tsx:523 — classFeatureHost's
+     third ownership route (extraChoices option owns the record) is on disk at 523 and the host seats
+     the pick at 537. Three cited its in the always-running describe at 848 pin it; delete the branch
+     and all three fail. Spec work/.b035-rows-gap-instruments-2.json is in the manifest.
+16 CLOSED  situational  ref work/.b035-rows-gap-situational.json — in the manifest, family
+     gap-situational, stage[7]. 1 row: metallic-reactance whileActive with state "overdrive". It is
+     live data, not inert: the two readers it needed are lines 21 and 22 below.
+17 CLOSED  situational  ref animal-instinct-spider-web — a real, complete entry in
+     work/.b035-queue.json (printed verbatim from instinct-8 incl. the footnote, theirs verified with
+     wg-show --raw, ours naming the required-string types, and a three-option question with a
+     recommendation). Print cannot answer it: it is an engine-shape choice, not a rules one.
+18 CLOSED  situational  ref src/rules/build.ts:2903 — the subclass push now passes
+     `featurePick(subclassId)`. Pinned by test/batch035-engine-2.test.ts describe 'animal-instinct —
+     Bestial Rage': wolf → ['Jaws'], bear → ['Claw','Jaws']. Revert it and both assertions fail.
+19 CLOSED  situational  ref animal-instinct-spider-web — same queue entry; this line IS the question
+     (a damageless GrantedStrike shape). Correctly parked rather than decided.
+20 CLOSED  situational  ref flaggedResidue: … — reason present and substantive (ruling G/Q2 applied as
+     the app applies it everywhere; the deviation rides on the row via
+     RECORD_MARKERS['forensic-medicine-methodology']; StatDetailModal prefers the AoN ast).
+21 CLOSED  situational  ref src/rules/types.ts:1187 — the whileActive.state union now ends
+     `| 'overdrive'`, with innovation-5's clause quoted above it.
+22 CLOSED  situational  ref src/rules/classResources.ts:191 — new `inventor` bucket, one
+     { id:'overdrive', kind:'toggle', refresh:'encounter' } entry, the rage/panache shape.
+23 CLOSED  situational  ref flaggedResidue: … — reason present and correct: the reader itself said the
+     whileActive lane was the right home, that lane is now built, so a `resistance` target kind would
+     be a second and worse carrier for a value the sheet computes.
+24 CLOSED  data-rows-2  ref flaggedResidue: … — reason present and INDEPENDENTLY TRUE, not just
+     asserted: work/.b035-rows-engine-1.json really does carry both fury-instinct halves, so a second
+     row here would be the collision the applier hard-refuses. Correct that this family wrote no spec.
+25 CLOSED  engine-1  ref work/.b035-rows-engine-1.json — the verify-side restatement of line 1.
+26 CLOSED  engine-1  ref flaggedResidue: … — reason present and verified: public/ast/classFeatures.json.gz
+     still holds instinct-3's prose while core-descriptions holds the PC2 text. Only a full
+     `npm run data` re-joins them, which every agent in this workflow is forbidden to run. Genuinely
+     out of scope, not an excuse.  ⚠ FOR THE OWNER: the in-app Fury Instinct page stays wrong until
+     that regeneration, even after these rows apply.
+27 CLOSED  engine-1  ref flaggedResidue: … — reason present: an apply-ORDER note to the driver
+     (data-rows-1 re-emits dragon-instinct.choice whole, engine-1 deletes .choice.note by path row;
+     apply-parity-fixes.mjs replaces in place and appends, so the delete replays last). Confirmed the
+     two rows exist and target the same record by different routes, so the note really does stay gone.
+28 CLOSED  engine-1  ref src/rules/companionGrants.ts:559 — verify-side restatement of line 2.
+29 CLOSED  engine-1  ref src/rules/companionGrants.ts:575 — verify-side restatement of line 3.
+30 CLOSED  engine-1  ref src/rules/companionGrants.ts:582 — verify-side restatement of line 4.
+31 CLOSED  engine-1  ref src/rules/companions.ts:1036 — verify-side restatement of line 5.
+32 CLOSED  engine-1  ref work/.b035-rows-gap-engine-1.json — verify-side restatement of line 6.
+33 CLOSED  engine-1  ref cultivation-order — see line 7 and REPAIR 1.
+34 CLOSED  engine-1  ref cultivation-order — the COMPARER half. See line 7 and REPAIR 1. The refusal to
+     author a wg-diff settle while the mechanic is unbuilt and unruled is the right call, and option
+     (c) of the restored question is that settle, for the owner to choose.
+35 CLOSED  engine-2  ref COMPANION_MODS['demon-eidolon'].note — verify-side restatement of line 13;
+     the "NOT-DONE" in the line text is stale, the edit is on disk at line 525.
+36 CLOSED  engine-2  ref work/.b035-rows-engine-2.json — verify-side summary of lines 8-11; all four
+     rows re-checked present and collision-free.
+37 CLOSED  engine-2  ref COMPANION_MODS['demon-eidolon'] — verify-side restatement of line 12.
+38 CLOSED  instruments-1  ref REPAIRED → test/wg-experience.harness.test.tsx:523 — same artefact as
+     line 15, from the owning family's side. The line text still reads "STILL OPEN"; it is not.
+39 CLOSED  instruments-2  ref REPAIRED → test/wg-experience.harness.test.tsx:93 — `...emptyBuild()`
+     now spreads FIRST (line 93), with the batch-035 comment at 94 saying what the dead prefill was.
+     Pinned in the describe at 897, incl. the "revived prefill answers every class and all 27 still
+     build" guard the change needed.
+40 CLOSED  situational  ref work/.b035-rows-gap-situational.json — verify-side restatement of line 16.
+41 CLOSED  situational  ref animal-instinct-spider-web — verify-side restatement of line 17.
+42 CLOSED  situational  ref animal-instinct-spider-web — verify-side restatement of line 19.
+43 CLOSED  situational  ref flaggedResidue: … — verify-side restatement of line 20.
+44 CLOSED  situational  ref src/rules/types.ts:1187 — verify-side restatement of line 21.
+45 CLOSED  situational  ref src/rules/classResources.ts:191 — verify-side restatement of line 22.
+46 CLOSED  situational  ref src/rules/explain.ts:736 — `recordMarkersFor` now passes
+     `c.featureChoices` into `markersFor`, and RECORD_MARKERS['animal-instinct'] carries
+     choiceValue:'spider'. Cited comment above the call. Pinned by test/batch035-gap-situational.test.ts
+     ("// batch 035: animal-instinct#spider-web", lines 117 and 127).
+
+WHAT I CHANGED (and nothing else)
+  work/.b035-queue.json  — restored the `cultivation-order` entry; animal-instinct-spider-web untouched.
+  work/.b035-gaps.json   — three `ref` strings repaired to file:line. No status changed, no line added
+                           or removed, all 47 still regenerate identically from the reports.
+  work/.b035-verify-gaps.txt — this file.
+  No source file, no test, no spec, no manifest entry and no other agent's report was touched.
+
+FOR THE DRIVER / THE CLOSER
+  1. work/.b035-queue.json is written by more than one agent with no merge and no guard. It cost an
+     owner question this batch. The lasting fix is a guard in stageGaps (or the agent contract): an
+     agent APPENDS to the queue, never rewrites it.
+  2. stageApplyDigest() collates EVERY work/.b035-{report,verify}-*.txt. The seven gap-agent reports
+     were written after the last collate, and several of them carry their own "CROSS-FILE GAPS"
+     sections. Re-running --stage apply-digest now would mint a fresh crop of OPEN lines from them
+     (they merge by family|line, and these are new lines, so `prior` will not cover them). Go straight
+     to --stage gaps, or expect a second gap round.
+  3. work/experience-instrument-limits.json still parks all ten apparitions on lane
+     'harness-host-search-no-extra-choice-route'. Both instruments gap agents MEASURED those parks
+     stale and both deliberately left them (shared file, half-retired lane). Inert this batch —
+     wg-batch-gate.mjs:527 short-circuits on an OK verdict — but retire the whole lane in 036, or a
+     later regression on one of those ten ids parks itself instead of failing gate 9.
+  4. Neither gap-engine-1's nor gap-situational's manifest `stage` list names work/.b035-queue.json,
+     though both wrote it. If the driver stages only what the manifest lists, the restored question
+     will not be staged with the batch.

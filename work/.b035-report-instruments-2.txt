@@ -1,0 +1,139 @@
+BATCH 035 — INSTRUMENTS, CHUNK 2 OF 2
+Findings owned: shepherd-of-errant-winds, stalker-in-darkened-boughs, crafter-in-the-vault#instrument,
+lesson-of-vengeance#experience-flag, lesson-of-elements#experience-flag, reveler-in-lost-glee,
+custodian-of-groves-and-gardens.
+
+All seven are the SAME defect in the SAME instrument, seen from two sides. No data row is owed by any
+of them; no comparer settle is owed by any of them either (all seven records are quiet on wg-diff,
+wg-values and wg-identity today). What was owed was the hand verification the harness cannot do, and
+the ledger entry that says so.
+
+DATA STILL NEEDED
+(none — every one of the seven findings is an instrument limitation with no backfill row; the spec
+work/.b035-rows-instruments-2.json carries seven entries with backfillRows: [] and a note each.)
+
+CROSS-FILE GAPS
+- test/wg-experience.harness.test.tsx — classFeatureHost's `ownedAt20` calls
+  classFeatureIdsOwned({classId, subclassId, level}) with NO `classChoices`, while the app passes it
+  at src/rules/build.ts:5290-5296. Passing the class's extraChoices options (the same shape build.ts
+  builds: grantOptions.map(o => ({ id: o.id, level: 1 }))) would host all 14 animist apparitions, the
+  psychic conscious/subconscious minds, thaumaturge implements, exemplar ikons and kineticist
+  elements in one edit, and would let the 5 apparition entries this batch parked be DELETED from
+  work/experience-instrument-limits.json. This is the ONE TEACH the family would rather have than
+  five parks; it is outside this chunk's files, so it is reported and not made.
+- test/wg-experience.harness.test.tsx — classFeatureHost has no host strategy at all for a class
+  feature owned by a feat's `choice.ownsFeature` (derive.ts's `choiceOwnedFeatureIds`, derive.ts:3551).
+  All 19 witch lessons are unhostable however the harness is called, so 19 records will read
+  UNSUPPORTED for as long as this route is missing; a `featChoiceHost` that places the owning feat
+  (basic/greater/major-lesson) and answers its choice would close the lane. Also outside this chunk.
+(Two gaps, both the same file. Nothing outside this chunk's assigned files was edited.)
+
+WHAT I DID, PER FINDING
+
+- shepherd-of-errant-winds — INSTRUMENT SETTLE, no row. Parked in
+  work/experience-instrument-limits.json, key "shepherd-of-errant-winds", batch 35, verdict
+  UNSUPPORTED, lane "harness-host-search-no-extra-choice-route", _cite "// batch 035:
+  shepherd-of-errant-winds". Diagnosis: classFeatureHost (test/wg-experience.harness.test.tsx:494-506)
+  reaches an owner only through ownedAt20 -> classFeatureIdsOwned({classId, subclassId, level}), which
+  passes no classChoices; the app passes exactly that at build.ts:5290-5296. Print (AoN mirror
+  apparition/apparition-14.json) gives Sailing/Scouting Lore, the ten-spell ladder Slashing Gust ..
+  Wrathful Storm and Vessel Spell Gift of the Anemos, and classes.animist.extraChoices['apparition']
+  option shepherd-of-errant-winds carries grants.lores, loreProgression [{8,expert},{16,master}], the
+  ten grantedSpells and focusSpells ['gift-of-the-anemos'], read at build.ts:3618-3624, 4455-4483 and
+  4637-4662.
+  TEST: test/batch035-instruments-2.test.ts, describe('batch 035 instruments-2 —
+  shepherd-of-errant-winds delivers its printed block off the animist extraChoices option') — both
+  Lores at master on a really built level-20 animist, all ten printed spells at their printed ranks
+  (cantrip in `cantrips`, 1st-9th in `repertoire`), the vessel spell in the focus pool; then
+  mutation-proof, the identical assertions against an in-memory content copy with grants.lores,
+  grantedSpells and focusSpells deleted, all of which must go to nothing, while
+  harnessSees('animist', id) stays false on healthy AND stunted content — which is the proof the park
+  is about the host search and not about the carrier.
+
+- stalker-in-darkened-boughs — INSTRUMENT SETTLE, no row. Parked, key
+  "stalker-in-darkened-boughs", same lane and _cite form. Same three readers; print
+  (apparition/apparition-10.json) Forest Lore, Hunting Lore, Gouging Claw .. Wrathful Storm, Vessel
+  Spell Darkened Forest Form.
+  CORRECTION TO THE READ FINDING, adversarially confirmed: the finding's evidence says WG trains
+  SKILL_LORE_HERBALISM rather than HUNTING, i.e. a WG-vs-print divergence. It is not one. `node
+  scripts/wg-show.mjs "Stalker in Darkened Boughs"` returns three rows, two of them feat rows: 28015
+  (FOREST + HERBALISM, the first printing) and 38714 (FOREST + HUNTING). The comparers pair to 38714
+  and `node scripts/wg-values.mjs --ids stalker-in-darkened-boughs --verbose` reports "ok
+  stalker-in-darkened-boughs (2 values, 0 sets agree) … 1 agree on every one", 0 to adjudicate. Print,
+  WG's current row and our record all say Hunting Lore, so no owner question is raised and none is
+  owed.
+  TEST: the same describe block for this id in test/batch035-instruments-2.test.ts, healthy +
+  mutation-proof.
+
+- crafter-in-the-vault#instrument — INSTRUMENT SETTLE, no row. Parked, key "crafter-in-the-vault",
+  _cite "// batch 035: crafter-in-the-vault#instrument". The comparer read only the classFeatures
+  record, which holds nothing but otherTags ['animist-apparition']; the carrier is the extraChoices
+  option of the same id, and the player picks it through the generic extraChoices SubCard/PopupSelect
+  at src/builder/shared.tsx:3334+ plus the Primary apparition picker at :3735.
+  TEST: the same describe block for this id, healthy + mutation-proof.
+
+- reveler-in-lost-glee — INSTRUMENT SETTLE, no row. Parked, key "reveler-in-lost-glee", same lane.
+  Print apparition/apparition-9: Circus/Fortune-Telling Lore, Prestidigitation .. Wails of the Damned,
+  Vessel Spell Trickster's Mirrors — all on the option. Only print content on neither side is the
+  Avatar strike block, which WG does not encode either.
+  TEST: the same describe block for this id, healthy + mutation-proof.
+
+- custodian-of-groves-and-gardens — INSTRUMENT SETTLE, no row. Parked, key
+  "custodian-of-groves-and-gardens", same lane. Print apparition/apparition-4: Farming/Herbalism Lore,
+  Tangle Vine .. Nature's Enmity, Vessel Spell Garden of Healing — all on the option; same Avatar-block
+  caveat.
+  TEST: the same describe block for this id, healthy + mutation-proof.
+
+- lesson-of-vengeance#experience-flag — INSTRUMENT SETTLE, no row for the flag. Parked, key
+  "lesson-of-vengeance", lane "harness-host-search-no-feat-choice-route", _cite "// batch 035:
+  lesson-of-vengeance#experience-flag". This is a SECOND and wider blind route: classFeatureIdsOwned
+  (derive.ts:3361-3391) has no path whatever to a class feature owned by a feat's choice, so no
+  argument list can rescue it. The lesson is owned through feats['basic-lesson'].choice (flag
+  'basic_lesson', ownsFeature true, value 'aon-lesson-of-vengeance'), resolved by
+  choiceOwnedFeatureIds (derive.ts:3551-3560) and consumed at build.ts:4005-4013, which is how
+  needle-of-vengeance reaches the focus pool. I re-scanned every class's features and every subclass
+  option's featureIds in core.json: nothing owns the id.
+  TEST: test/batch035-instruments-2.test.ts, describe('batch 035 instruments-2 — lesson-of-vengeance
+  and lesson-of-elements reach the focus pool') — the hex in the focus entry's repertoire on a built
+  level-20 witch holding Basic Lesson, then mutation-proof against a content copy with the lesson's
+  focusSpells stripped (the hex must vanish) with harnessSees('witch', id) false either way. The
+  route itself is pinned separately by it('lesson-of-vengeance and lesson-of-elements are owned by a
+  feat choice, a route the host search has not got'), which asserts no class or subclass owns either
+  id while choiceOwnedFeatureIds does.
+  NOT COVERED BY THIS ENTRY: the record's familiar-spell finding, which is another family's.
+
+- lesson-of-elements#experience-flag — INSTRUMENT SETTLE, no row for the flag. Parked, key
+  "lesson-of-elements", same lane and route, delivering elemental-betrayal at build.ts:4005-4013.
+  TEST: the same describe block, the it.each row for lesson-of-elements / elemental-betrayal, healthy
+  + mutation-proof.
+  NOT COVERED BY THIS ENTRY: the record's familiar-spell-choice and edition findings, another
+  family's.
+
+WHY NO COMPARER SETTLE AND NO TEACH IN wg-diff / wg-values / wg-identity / wg-experience-lanes
+The batch-033 option-carrier walk already reads grants.lores, loreProgression, grantedSpells and
+focusSpells off an extraChoices option, so all five apparitions are quiet on all three comparers
+today (measured, below). Teaching anything for them would be a settle that answers nothing — and
+under --raw would silence the NEXT real gap on those records. The flags this chunk owns are raised by
+the EXPERIENCE harness alone, whose host search is not in this chunk's files, so the honest lane is
+the parking ledger plus the cross-file report above. Nothing was added to VERIFIED_EQUIVALENT,
+SETTLED_VALUES, NOT_A_SCALAR or SETTLED_IDENTITIES by this chunk.
+
+COMPARER COUNTS, BEFORE AND AFTER (no earlier batch flipped)
+                                   before                     after
+wg-diff (corpus-wide)              theyOnly 195 / weOnly 2874 / agree 1100   -> identical
+wg-casting (npx jiti)              16 class sources, 4 with mismatches (180 rows)  -> identical
+                                   (ANIMIST_APPARITION is a skipped non-class source on both runs, so
+                                   the apparition pool is outside this comparer by construction)
+wg-values  --batch wg-batch-035    27 compared, 24 agree, 3 to adjudicate     -> identical
+wg-values  --batch wg-batch-034    23 compared, 22 agree, 1 to adjudicate     -> identical
+wg-values  --batch wg-batch-033    32 compared, 32 agree, 0 to adjudicate     -> identical
+wg-identity --batch wg-batch-035   3 records with a named thing unmatched     -> identical
+wg-identity --batch wg-batch-034   1 record                                   -> identical
+wg-identity --batch wg-batch-033   2 records                                  -> identical
+Expected, and checked rather than assumed: this chunk changed no comparer script, no src/ file and no
+content, so a moved count would have meant something else in the tree moved.
+
+CHECKS RUN
+node scripts/vt.mjs test/batch035-instruments-2.test.ts   -> 1 file, 9 tests, all green
+node scripts/test-flip-audit.mjs --batch 035              -> clean, every flip cited
+npx tsc --noEmit                                          -> clean

@@ -1,0 +1,133 @@
+BATCH 035 — family engine-2 (chunk 2 of 2 of "engine") — ADVERSARIAL VERIFIER report
+Judged only: demon-eidolon#language-abyssal, demon-eidolon#demonic-strikes-note, animal-instinct#no-reader,
+animal-instinct#rage-gate, animal-instinct#rage-damage-scope, animal-instinct#spec-die-step,
+lesson-of-vengeance#familiar-spell, lesson-of-elements#familiar-spell-choice.
+
+HEADLINE
+The builder's four "DATA STILL NEEDED" rows were filed as the data-rows family's. They are NOT in any
+sibling spec: I walked every row of .b035-rows-data-rows-1.json, -data-rows-2.json, -engine-1.json,
+-instruments-1.json, -instruments-2.json and -situational.json — none of them emits
+classFeatures/animal-instinct/grantedStrikesState, classFeatures/animal-instinct/unarmedTraits,
+classFeatures/lesson-of-vengeance/grantedSpells or classFeatures/lesson-of-elements/grantedSpellChoice.
+Four readers would have shipped with no carrier, i.e. four confirmed printed mechanics reaching no built
+character. I emitted the four rows into this chunk's own spec (work/.b035-rows-engine-2.json) and proved
+each one on a real built character with a throwaway in-memory harness (deleted after the run).
+
+PER FINDING
+- demon-eidolon#language-abyssal — NOT-DONE. src/rules/companionGrants.ts is unmodified (git diff is
+  empty for it) and line 507 still reads {"kinds":["eidolon"],"senses":["darkvision"],"note":"…"} with no
+  `languages`, so deriveEidolon still renders no Languages row. ⚠ UNOWNED: the builder filed it to the
+  engine-1 sibling, but .b035-report-engine-1.txt files its own three eidolon language findings as the
+  SAME cross-file gap and .b035-rows-engine-1.json carries no row for it — nobody has taken this file.
+  Left in CROSS-FILE GAPS rather than edited, per "stay inside the files assigned to you".
+- demon-eidolon#demonic-strikes-note — NOT-DONE. Same line 507, still the pre-remaster wording
+  "Demonic Strikes: the eidolon's unarmed Strikes deal an extra 1 unholy (evil) damage." — wrong damage
+  type, no target restriction, no versatile clause, rendered as an evoNote beside the correct
+  eidolonAbilities text. Same file, same single edit as the gap above; same UNOWNED status.
+
+- animal-instinct#no-reader — DONE. collectGrantedNaturals now takes build.featChoices and BOTH
+  class-feature pushes pass `feature:<id>`; I checked the key form against the actual storage
+  (Builder.tsx:1913 renderChoice(def, `feature:${build.subclassId}`) and choiceKeys, which suffixes `#i`
+  only for multi-pick) — the finding's "feature:animal-instinct:0" is wrong and the builder's bare key is
+  right. It is also the same key buildCharacter already uses to derive Character.featureChoices, so the
+  round-trip subtractor at build.ts:9047 reads a matching map. Monotonic by construction: push's guard is
+  `if (g.choiceValue && g.choiceValue !== pick) continue`, so supplying a pick can only ADD tagged rows,
+  never drop an untagged one. Verified on a real build: wolf → exactly [Jaws] source animal-instinct,
+  bear → [Claw, Jaws], and with data-rows-1's superseding grantedStrikes row applied, cat → [Jaws, Claw].
+- animal-instinct#rage-gate — FIXED-BY-ME. The reader was correct and complete (DefenseGrants
+  .grantedStrikesState → NaturalAttack.requiresState → deriveStrikes drops it while classResources[state]
+  is falsy; mapped-then-filtered so `natural:<i>` identity survives the toggle, and deriveStrikes is the
+  only display route for c.naturalAttacks — the other two readers are the round-trip subtractor and
+  heritageAttackReplacesFist, neither of which should see the gate). What was missing was the carrier:
+  I added {classFeatures, animal-instinct, grantedStrikesState: "rage"} to this chunk's spec. Harness on
+  the applied copy: a 7th-level wolf barbarian has no Jaws in deriveStrikes with rage off and has it with
+  rage on; the Fist is present in both.
+- animal-instinct#rage-damage-scope — DONE. rageStrikeRider's new `scoped` gate keys on the granting
+  record (opts.source === c.subclassId) and falls back to Rage's flat 2 with a note; the type override is
+  gated on it too. Blast radius re-checked: `unarmedOnly` is set on animal-instinct alone in RAGE_DAMAGE,
+  and the change is a no-op below 7th (tiers[0] is 2). Harness on a real 7th-level build: Jaws 5 piercing,
+  Fist 1 bludgeoning (Rage's 2 halved by agile); a 7th-level fury barbarian's Fist still 3.
+- animal-instinct#spec-die-step — FIXED-BY-ME. The minLevel predicate in applyUnarmedRiders is right
+  (guard placed beside match / fromRecord / choiceValue; absent = ungated, so every shipped rider is
+  unchanged), but the rider row existed nowhere. I added
+  {classFeatures, animal-instinct, unarmedTraits: [{fromRecord:"animal-instinct",stepDie:1,minLevel:7}]}.
+  Harness on the applied copy: a real wolf barbarian's Jaws is 1d10 at 6th and 1d12 at 7th, and the Fist
+  stays 1d4 (fromRecord narrows it).
+- lesson-of-vengeance#familiar-spell — FIXED-BY-ME. The reader is sound: Array.isArray guards against
+  classFeatures['conscious-mind'].grantedSpells, which is the ladder shape read through its own cast, and
+  the merge lands in the same grantedByRank the patron's grantedSpells use (a single `if (cls?.spellcasting)`
+  block, not a loop, so no double-grant). Missing carrier added:
+  {classFeatures, lesson-of-vengeance, grantedSpells: ["phantom-pain"]}; spells['phantom-pain'] exists,
+  rank 1. Harness on a real level-2 witch with Basic Lesson → Lesson of Vengeance: phantom-pain in
+  spellbook rank 1, needle-of-vengeance still in the focus repertoire.
+  Residual (NOT counted as a gap, and inherited from the patron route this deliberately reuses): the merge
+  is inside the CLASS pool block, so a witch-ARCHETYPE character's lesson spell reaches no pool. Only
+  reachable at all with Basic Spellcasting (activeCasterArchetype), and the patron lane has the same
+  ceiling — worth a finding of its own in a later batch, not a change to make under this one's citations.
+- lesson-of-elements#familiar-spell-choice — FIXED-BY-ME. Reader + control both check out: the answer key
+  `${slotKey}:granted-spell` matches Builder's `${key}:granted-spell` (same slotKey the sibling Initial-
+  domain-spell picker uses), the option-membership guard fails closed, and the Builder's
+  `content.classFeatures[ans] ?? content.classFeatures[ans.replace(/^aon-/,'')]` mirrors
+  choiceOwnedFeatureIds' own resolution. Missing carrier added:
+  {classFeatures, lesson-of-elements, grantedSpellChoice: {id:"lesson-of-elements-familiar",
+  prompt:"Familiar spell", options:["breathe-fire","gust-of-wind","hydraulic-push","pummeling-rubble"]}} —
+  all four spell ids exist in core.json. Harness on a real level-2 witch: gust-of-wind reaches the
+  spellbook, breathe-fire does not, and an unanswered pick grants nothing.
+  Noted, not failed: the picker is mounted only under `def.ownsFeature`, so a feature reached through
+  `derivedGrant` would get the grant with no control. No lesson is reached that way today.
+
+SPEC ROWS — checked as rows, not applied
+- 4 rows, all category classFeatures, all targeting records that EXIST in core.json (animal-instinct ×2,
+  lesson-of-vengeance, lesson-of-elements); no create:true needed, none used.
+- None re-emits an existing value: I dumped all three records with node -e and grantedStrikesState,
+  unarmedTraits, grantedSpells and grantedSpellChoice are all `undefined` on the shipped records, and
+  scripts/data/effect-backfill.json holds no row for any of those four record+field keys (it holds
+  animal-instinct whileActive/choice/edition/grantedStrikes, lesson-of-* focusSpells/edition,
+  demon-eidolon choice/edition). So no supersedes is due on any of them, and none is claimed.
+- Collision scan across all seven .b035-rows-*.json on category/id/field/path: ZERO collisions. The
+  neighbours on the same records are data-rows-1 grantedStrikes (supersedes:true, additive — I diffed it
+  against the shipped 29 rows: nothing removed, Cat|Jaws + Cat|Claw added, all 31 rows still carry
+  choiceValue, so it does not break the no-reader lane) and data-rows-2 choice/edition/aonId +
+  lesson-of-elements edition/aonId/name/description/descRefs.
+- A reader exists for every field, all four in this chunk's own files (build.ts / derive.ts / Builder.tsx);
+  none is another family's.
+- No created records, so nothing to check against the created-prose spec; no row carries a description.
+- Every spell id named by a row exists in core.json: phantom-pain, breathe-fire, gust-of-wind,
+  hydraulic-push, pummeling-rubble (rank 1 each).
+
+MANIFEST
+- work/.b035-specs.json still lists all eight entries (seven families' rows + data-rows-1's created-prose);
+  I added nothing to and removed nothing from any other family's entry.
+- engine-2's stage[] listed every path the builder touched; I appended work/.b035-verify-engine-2.txt.
+- No row in this chunk supersedes anything, so there is no supersedes:true to declare.
+
+VERIFICATION RUN
+- node scripts/vt.mjs run test/batch035-engine-2.test.ts — 8 passed.
+- Throwaway harness (test/_b035e2harness.test.ts, applying this chunk's 4 rows + the two data-rows
+  families' rows for the same records to a content copy and building real characters) — 3 passed, then
+  DELETED.
+- node scripts/vt.mjs run test/raging-resistance.test.ts test/ancestry-unarmed-attacks.test.ts
+  test/build.test.ts test/batch035-engine-1.test.ts — 181 passed.
+- npx tsc --noEmit — clean.
+- node scripts/test-flip-audit.mjs --batch 035 — clean, every flip cited.
+
+DATA STILL NEEDED
+- (none) — the four rows the builder listed here are now emitted in work/.b035-rows-engine-2.json and
+  verified against a real build.
+
+CROSS-FILE GAPS
+- src/rules/companionGrants.ts:507 — demon-eidolon#language-abyssal: add "languages":["Abyssal"] to
+  COMPANION_MODS['demon-eidolon'], the printed NAME as in the sibling 'angel-eidolon' (Celestial) row,
+  because content.languages is remaster-only and has no 'abyssal' key. UNOWNED — neither engine chunk
+  took this file.
+- src/rules/companionGrants.ts:507 — demon-eidolon#demonic-strikes-note: replace the note with
+  "Demonic Strikes: the eidolon's unarmed Strikes gain the unholy trait and deal 1 extra spirit damage to
+  holy creatures and creatures with weakness to unholy; one of its physical unarmed attacks also gains
+  versatile B, P or S (your choice)." Same record, same single edit as the gap above (do them together).
+  UNOWNED — same reason. Note that engine-1 has three MORE language rows queued against this same file
+  (plant / swarm / undead eidolon) plus one against src/rules/companions.ts, so whoever picks it up should
+  take all five in one pass.
+
+STAGE (verifier)
+- work/.b035-rows-engine-2.json (the four rows added above)
+- work/.b035-verify-engine-2.txt

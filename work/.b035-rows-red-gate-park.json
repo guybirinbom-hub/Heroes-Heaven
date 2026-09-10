@@ -1,0 +1,4 @@
+{
+  "_": "GATE-RED, group gate-park. This group emits NO overlay rows: its one item is an instrument defect in scripts/wg-batch-gate.mjs, fixed in code, and the mechanic behind it (animal-instinct#spider-web) is already PARKED on the owner's desk as entry #145 and must not be decided here. The file exists empty because scripts/wg-batch-close.mjs refuses a manifest entry with no `file` and scripts/wg-batch-commit.mjs refuses a modified path no manifest entry declares — so an entry with an empty spec is the only shape that lets the group's code + test changes be staged without inventing a data row.",
+  "findings": []
+}

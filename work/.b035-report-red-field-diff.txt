@@ -1,0 +1,133 @@
+BATCH 035 — GATE-RED, group "field-diff" (family instruments). Report of the RED round.
+
+Instrument: scripts/field-diff.mjs (LEVEL and RARITY, app vs the AoN mirror).
+Baseline before this round:  compared 13005 | held back by a guard 20 | UNEXPLAINED 6
+After this round:            compared 13005 | held back by a guard 25 | UNEXPLAINED 1
+(the one that remains is the real defect below, and it stays red until the driver applies my row)
+
+
+ITEM 1+2 — throneglass, throneglass-shard, throneglass-plate, standard-grade-throneglass-object,
+           high-grade-throneglass-object.  VERDICT: INSTRUMENT MISREAD.  DISPOSITION: BUILT (fix in
+           scripts/field-diff.mjs).
+
+  MEASURED, not assumed. Each record's OWN mirror document agrees with us:
+      equipment-5212      Throneglass                       structured level -1   ours 0
+      equipment-5212-4727 Throneglass Shard                 structured level -1   ours 0
+      equipment-5212-4728 Throneglass Plate                 structured level -1   ours 0
+      equipment-5212-4731 Standard-grade Throneglass Object structured level  8   ours 8
+      equipment-5212-4733 High-grade Throneglass Object     structured level 16   ours 16
+  (-1 is the mirror's sentinel for "prints no level", which this app stores as 0 — the same reading
+  the by-NAME branch already documents at scripts/field-diff.mjs:134-141.)
+
+  The reported `mirror 2` came from printedLevel() (scripts/field-diff.mjs:43-49). Every sub-document
+  of a graded family ships the WHOLE family's markdown; all five docs carry, in order,
+      right="Item -1+"  right="Item -1"  right="Item -1"  right="Item 2"  right="Item 8"  right="Item 16"
+  and the regex takes the first match it can parse — "Item 2", the low-grade sibling's heading. This is
+  the FAMILY HEADS trap the file's own header names at line 21, and its guard existed only on the
+  by-NAME branch (:133 "mirror level 0 — a graded family head", :141 the -1 sentinel, and critically
+  :142's second condition `m.level === wantLevel`). The own-document branch at :99-103 had no such
+  condition, so it trusted a heading its sibling branch would refuse.
+
+  FIX — scripts/field-diff.mjs, the own-document branch, one condition mirroring :142:
+      const headingAgreesOwn = own.level === wantLevelOwn;
+      if (!isCantripOwn && wantLevelOwn > 0 && wantLevelOwn !== haveLevelOwn) {
+        if (headingAgreesOwn) unexplained.push({ coll, id, field: 'level', have: haveLevelOwn, want: wantLevelOwn });
+        else held.push({ coll, id, why: `printed heading says level ${wantLevelOwn} but this document's own level is ${own.level} — a graded family sibling's heading` });
+      }
+  No new guard list was invented; the WHY comment above it quotes the four competing headings verbatim.
+  VERIFIED by `node scripts/field-diff.mjs`: UNEXPLAINED 6 -> 1, held back by a guard 20 -> 25, exactly
+  the five throneglass records moving across.
+
+  PINNED BY: test/batch035-field-diff.test.ts
+    describe('batch 035 field-diff — the throneglass family heads are the instrument, not a defect')
+      it('agrees with each record's own mirror document')          — every record vs its own aonId doc
+      it('come back the moment the own-document level condition is stunted out')   // mutation-proof
+        stunts `const headingAgreesOwn = own.level === wantLevelOwn;` to `= true` on a COPY of the
+        script and asserts all five throneglass lines return and UNEXPLAINED is 6 again — the guard is
+        what silences them, not luck.
+  Citation form (2) on both: // batch 035 premise: equipment-5212 "Item 2"
+  (no read finding covers a verify-lane red; the clause is verbatim from that document's markdown).
+
+
+ITEM 3 — beckon-the-blasphemous-brethren.  VERDICT: REAL DEFECT.  DISPOSITION: BUILT (one data row in
+         the spec; it SURVIVES the guard above, verified).
+
+  ritual-275 prints `right="Ritual 3"`. printedLevel()'s regex lists Item|Feat|Spell|Cantrip|Focus and
+  does not match "Ritual", so the value falls back to the document's structured level 3 — heading and
+  structured field agree, so the new `own.level === wantLevelOwn` condition still reports it. Checked
+  by running the fixed script: the ritual is the one row left in UNEXPLAINED.
+
+  Ours shipped {rank:1, traits:[], traditions:[], rarity:'rare', source:{book:"Pathfinder The Dead
+  God's Hand"}, aonId:'ritual-275'}; field-diff maps the spells bucket through `(r) => r.rank` (:60),
+  which is where a ritual's printed level lives in this app.
+
+  ROW (work/.b035-rows-field-diff.json, finding id beckon-the-blasphemous-brethren#level):
+      { "category": "spells", "id": "beckon-the-blasphemous-brethren", "field": "rank", "value": 3 }
+  why: AoN ritual-275, the record's own document — heading `right="Ritual 3"`, structured level 3,
+  **Primary Check** "Occultism or Religion (expert)", **Secondary Casters** 4.
+
+  traits / traditions, asked for explicitly: NEITHER needs a row, and neither is merged into this one.
+  The mirror document's `trait` array is ["Rare"] and nothing else — that is the rarity, which this app
+  stores separately on `rarity: 'rare'` (already correct), so our empty `traits` is right. The document
+  has NO `tradition` field at all (rituals print no tradition), so our empty `traditions` is right.
+  Both are asserted against the mirror in the test so they cannot be silently owed later.
+
+  PINNED BY: test/batch035-field-diff.test.ts
+    describe('batch 035 field-diff — beckon-the-blasphemous-brethren prints Ritual 3')
+      it('carries rank 3, the level its own AoN document prints')
+        content() copy with `rank` PATCHED IN MEMORY to 3 and asserted against the mirror's own level —
+        never a patched-vs-shipped delta, so it does not flip when the driver applies the row.
+      it('is still reported by field-diff when its rank is stunted back to 1')
+        runs a copy of the script with the ritual's rank pinned to 1 in memory and asserts the line is
+        reported and UNEXPLAINED is 1 with no throneglass in it — the guard did not swallow a real
+        defect. Also durable across the row landing.
+  Citation form (2) on both: // batch 035 premise: ritual-275 "Ritual 3"
+
+
+ITEM 4 — TEST. test/batch035-field-diff.test.ts, 4 cases, all passing through
+         `node scripts/vt.mjs test/batch035-field-diff.test.ts` (4 passed, 5.64 s).
+         `node scripts/test-flip-audit.mjs --batch 035` — clean, every flip cited.
+         `npx tsc --noEmit` — clean.
+         The two script-copy cases write their stunted copy to work/.b035-field-diff-{pinned,stunted}.mjs
+         (work/.. is the repo root, so `public/core.json` still resolves) and remove it in a finally;
+         verified no leftovers after the run.
+
+
+ITEM 5 — MANIFEST. Handed to the close-out group verbatim, as instructed:
+
+    {"file":"work/.b035-rows-field-diff.json","kind":"rows","family":"field-diff","stage":["work/.b035-rows-field-diff.json","work/.b035-report-field-diff.txt","test/batch035-field-diff.test.ts","scripts/field-diff.mjs"]}
+
+  ⚠ CLOSE-OUT, READ THIS BEFORE ADDING THAT LINE: I was also instructed to append my own entry, and I
+  did — one entry, family "red-field-diff", whose `file` is the SAME work/.b035-rows-field-diff.json.
+  Adding the line above as well would put that spec file in the manifest twice and hand the applier the
+  same row twice. Take one of the two, not both. Two differences to be aware of if you take the
+  verbatim line instead of mine: its stage names work/.b035-report-field-diff.txt, which does not exist
+  — the red round's report is work/.b035-report-red-field-diff.txt (this file) — and it does not stage
+  that report. My entry stages the four paths that were actually touched.
+
+  PATHS TOUCHED BY THIS GROUP (the whole list):
+    scripts/field-diff.mjs
+    test/batch035-field-diff.test.ts
+    work/.b035-rows-field-diff.json
+    work/.b035-report-red-field-diff.txt
+  Not written: work/.b035-rows-red-field-diff.json. It would have held a second copy of the single row
+  already in work/.b035-rows-field-diff.json (item 3 names that file explicitly), and the applier hard-
+  refuses collisions. One row, one spec file, one manifest entry.
+
+
+TEACH / SETTLE LINES: none. This group added no comparer settle and no VERIFIED_EQUIVALENT teach — the
+five throneglass reports were silenced by a CORRECTNESS condition inside the instrument (a heading that
+belongs to another document), not by a registry entry, and it is proved mutation-proof above. The two
+finding ids this group carries are its own verify-lane ids, both in work/.b035-rows-field-diff.json:
+  beckon-the-blasphemous-brethren#level   — real defect, one row
+  throneglass-family#level                — instrument misread, no row
+
+
+DATA STILL NEEDED:
+  (none)
+
+CROSS-FILE GAPS:
+  (none)
+
+FLAGGED RESIDUE:
+  (none — both items ended BUILT)

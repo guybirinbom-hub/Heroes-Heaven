@@ -29,7 +29,23 @@ function nameIndex(content: ContentDatabase, key: string) {
   if (!perContent[key]) {
     const idx = new Map<string, { name: string; description?: string; descRefs?: DescRef[] }>();
     const map = (content as unknown as Record<string, Record<string, { name: string }>>)[key];
-    if (map) for (const e of Object.values(map)) if (e?.name) idx.set(e.name.toLowerCase(), e as never);
+    /*
+     * A SUPPRESSED `aon-` scrape must never win the name index. The index was a plain "last writer
+     * wins", and the scrapes sort after their canonical twins, so any label whose slug misses (the
+     * printed name and the record id disagree — "Discomfiting Whisper" is stored as
+     * `discomfiting-whispers`) resolved to the copy findDuplicateIds hides from every list: the one
+     * with the unsubstituted `<%RULES%…%%>` markup and the legacy traits. Canonical always wins;
+     * a duplicate only fills a name no canonical record claims (149 `aon-` records are the sole
+     * copy of their content).
+     */
+    if (map) {
+      for (const [id, e] of Object.entries(map)) {
+        if (!e?.name) continue;
+        const k = e.name.toLowerCase();
+        if (content.duplicateIds?.has(id) && idx.has(k)) continue;
+        idx.set(k, e as never);
+      }
+    }
     perContent[key] = idx;
   }
   return perContent[key];

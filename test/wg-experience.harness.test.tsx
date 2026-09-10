@@ -4,10 +4,10 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { content } from './_content';
 import { renderDom } from './_render';
 import { Builder } from '../src/builder/Builder';
-import { buildCharacter, buildChoiceOptions, emptyBuild, levelGrants, type BuildState } from '../src/rules/build';
+import { INVENTOR_TIER_LEVEL, buildCharacter, buildChoiceOptions, choiceKeys, emptyBuild, levelGrants, type BuildState } from '../src/rules/build';
 import { eligibleFeatsForSlot } from '../src/rules/featSlots';
 import { FEAT_PICK_GRANTS } from '../src/rules/featPickGrants';
-import { classFeatureIdsOwned, creatureTraitsOf, critSpecSources } from '../src/rules/derive';
+import { choiceOwnedFeatureIds, classFeatureIdsOwned, creatureTraitsOf, critSpecSources, deriveDefenses } from '../src/rules/derive';
 import { sheetLoreKeys, statMarkClass } from '../src/rules/explain';
 import { addInventoryItem, applyPlayState, initialPlay, toggleItemMode, useConsumable } from '../src/rules/play';
 import { ItemDetail } from '../src/sheet/ItemDetail';
@@ -72,6 +72,15 @@ const byName = (db: ContentDatabase, bucket: 'classes' | 'ancestries') => {
   return m;
 };
 
+/** A class's extra-choice groups, loosely typed — the picks the app hands `classFeatureIdsOwned` as
+ *  `classChoices` (src/rules/build.ts:5346) all come from here. */
+type ExtraGroup = { id: string; name?: string; featureId?: string; max?: number; options?: { id: string }[] };
+const extraGroupsOf = (db: ContentDatabase, classId: string | null | undefined): ExtraGroup[] =>
+  (classId ? (db.classes[classId] as { extraChoices?: ExtraGroup[] } | undefined)?.extraChoices ?? [] : []);
+/** How many options of a group a host answers: an animist attunes TWO apparitions, every other group
+ *  is one pick. Named once because the with/without pair must answer the same NUMBER of them. */
+const groupCap = (groupId: string) => (groupId === 'apparition' ? 2 : 1);
+
 /** A MINIMAL host: nothing spent, so "become trained in X" is never masked by a host already trained.
  *  The class's extra choice groups ARE filled with their first options (two apparitions, one conscious
  *  mind, …): a class feature whose controls or effects hang off that pick would otherwise read as absent. */
@@ -79,13 +88,16 @@ function minimalHost(db: ContentDatabase, classId: string | null, ancestryId: st
   const cls = classId ? db.classes[classId] : undefined;
   const heritageId = ancestryId ? (Object.values(db.heritages).find((h) => h.ancestryId === ancestryId)?.id ?? null) : null;
   const extraChoices: Record<string, string[]> = {};
-  for (const g of (cls as { extraChoices?: { id: string; max?: number; options?: { id: string }[] }[] } | undefined)?.extraChoices ?? []) {
-    extraChoices[g.id] = (g.options ?? []).slice(0, g.id === 'apparition' ? 2 : 1).map((o) => o.id);
-  }
+  for (const g of extraGroupsOf(db, classId)) extraChoices[g.id] = (g.options ?? []).slice(0, groupCap(g.id)).map((o) => o.id);
   return {
+    ...emptyBuild(),
+    /* batch 035: crafter-in-the-vault#instrument — these two lines used to sit ABOVE `...emptyBuild()`,
+     * which sets `extraChoices: {}` (build.ts:403) and `primaryApparition: null` (build.ts:412). The
+     * later spread wins, so the prefill this comment describes was DEAD and every host in the harness
+     * built with no extra-choice answer at all — no apparition attuned, no kineticist element, no
+     * psychic mind — which is half of why an option-carried class feature read as doing nothing. */
     extraChoices,
     primaryApparition: extraChoices.apparition?.[0] ?? null,
-    ...emptyBuild(),
     name: 'wg-experience',
     level,
     ancestryId,
@@ -492,8 +504,106 @@ const ownedAt20 = (db: ContentDatabase, classId: string, subclassId: string | nu
   return s;
 };
 
+/**
+ * A FOURTH ownership route — an INVENTOR INNOVATION MODIFICATION.
+ *
+ * One lane further out than the extraChoices route below: a modification is a class feature of NO
+ * class, no subclass option and no extra-choice group. The player reaches it through
+ * `inventorModificationOptions` (src/rules/build.ts:2753, filtering classFeatures on
+ * `otherTags: ['<type>-innovation-modification']`) in a per-tier PopupSelect, and it is stored on
+ * `c.inventor.modifications` — which `ownedFeatureIds` admits (derive.ts:3468) and `deriveDefenses`
+ * then reads. The owner search knew none of that, so Metallic Reactance ("You gain resistance equal
+ * to 3 + half your level to acid and electricity damage") read UNSUPPORTED with its whole delivery
+ * unjudged. Seat it as the pick it is; "without" is the same inventor with no modification chosen.
+ *
+ * The seat is CONFIRMED on a built character before the host is handed back, because `validPick`
+ * (build.ts:8473) re-derives the offer: a construct modification (the dataset has no options at all)
+ * or one gated on the other armour suit would otherwise be silently not held, and the differential
+ * would then report a delivery gap that is really an unheld pick.
+ */
+function innovationModificationHost(db: ContentDatabase, id: string): Host | null {
+  const rec = db.classFeatures[id];
+  const tag = (rec?.otherTags ?? []).find((t) => t.endsWith('-innovation-modification'));
+  if (!tag) return null;
+  const subclassId = tag.replace(/-modification$/, '');
+  const classId = Object.keys(db.classes).find((c) => (db.classes[c].subclass?.options ?? []).some((o) => (o.id as string) === subclassId));
+  if (!classId) return null;
+  // The cheapest tier that can hold it: its own level ≤ the tier's level ≤ the host's.
+  const tier = (['initial', 'breakthrough', 'revolutionary'] as const).find(
+    (t) => INVENTOR_TIER_LEVEL[t] >= (rec?.level ?? 1) && INVENTOR_TIER_LEVEL[t] <= 20,
+  );
+  if (!tier) return null;
+  const suit = (rec?.otherTags ?? []).includes('subterfuge-suit-modification') ? 'subterfuge-suit' : 'power-suit';
+  const base: BuildState = { ...minimalHost(db, classId, 'human', 20), subclassId, inventorArmorStats: suit, inventorModifications: {} };
+  const withBuild: BuildState = { ...base, inventorModifications: { [tier]: id } };
+  const held = Object.values(buildCharacter(withBuild, db).inventor?.modifications ?? {});
+  if (!held.includes(id)) return null;
+  const { build: answeredBuild, answered } = answerOwnPicks(db, withBuild, rec as never, `feature:${id}`);
+  return {
+    supported: true,
+    withBuild,
+    sheetBuild: answeredBuild,
+    withoutBuild: base,
+    withDb: db,
+    withoutDb: db,
+    pages: pagesFor(20),
+    meta: { classId, subclassId, level: 20, innovationTier: tier, answered, without: 'innovation-modification-unpicked' },
+  };
+}
+
+/**
+ * A FIFTH ownership route — a class feature owned by a FEAT's CHOICE.
+ *
+ * Wider than the modification route: `classFeatureIdsOwned` has no path at all to a feature held
+ * through `feats[...].choice.ownsFeature`, so all nineteen witch lessons ("You gain the Needle of
+ * Vengeance hex, and your familiar learns Phantom Pain") were unhostable however the search was
+ * called. `choiceOwnedFeatureIds` (derive.ts:3551) is that path, and build.ts:4029-4041 is what turns
+ * the answer into the hex — so the host is the granting feat, placed in a real slot by featHost, with
+ * its question ANSWERED. "Without" is the same feat with the question unanswered, the same shape the
+ * FEAT_PICK_GRANTS branch of featHost already uses, so the granter's own popup is in both builds and
+ * only what the chosen feature adds is counted.
+ *
+ * The LOWEST-level granter wins: three feats offer a lesson (Basic / Greater / Major) and the one a
+ * player reaches first is the honest host.
+ */
+function featChoiceHost(db: ContentDatabase, id: string): Host | null {
+  let granter: Feat | undefined;
+  let value: string | undefined;
+  for (const f of Object.values(db.feats)) {
+    if (!f.choice?.ownsFeature) continue;
+    const opt = (f.choice.options ?? []).find((o) => o.value === id || o.value === `aon-${id}`);
+    if (!opt) continue;
+    if (!granter || (f.level ?? 1) < (granter.level ?? 1)) { granter = f; value = opt.value; }
+  }
+  if (!granter || !value) return null;
+  // The `aon-` prefix and the ownsFeature gate are both the resolver's business, not ours — ask it.
+  if (!choiceOwnedFeatureIds([{ featId: granter.id, choice: { value } }], db).includes(id)) return null;
+  const g = featHost(db, granter);
+  const slot = g.meta.slotKey as string | undefined;
+  if (!g.supported || !slot) return null;
+  const withBuild: BuildState = { ...g.withBuild, featChoices: { ...(g.withBuild.featChoices ?? {}), [choiceKeys(slot, granter.choice)[0]]: value } };
+  const { build: answeredBuild, answered } = answerOwnPicks(db, withBuild, db.classFeatures[id] as never, `feature:${id}`);
+  return {
+    supported: true,
+    withBuild,
+    sheetBuild: answeredBuild,
+    withoutBuild: g.withBuild,
+    withDb: db,
+    withoutDb: db,
+    pages: pagesFor(20),
+    meta: { ...g.meta, level: 20, via: granter.id, answered, without: 'pick-unanswered' },
+  };
+}
+
 function classFeatureHost(db: ContentDatabase, id: string, fixed?: { build: BuildState; owner: { classId: string; subclassId: string | null } }): Host {
   let owner: { classId: string; subclassId: string | null } | null = fixed?.owner ?? null;
+  /* A THIRD ownership route. Print gives some classes a second named pick that is not the subclass —
+   * the psychic's Subconscious Mind ("Key Attribute Your key attribute is Charisma"), the animist's
+   * apparitions, the exemplar's ikons — and ours holds those as `cls.extraChoices[].options`.
+   * classFeatureIdsOwned walks features and subclass options only, so the search below found no owner
+   * and every such record read UNSUPPORTED ("no class or subclass grants this feature at level 20")
+   * with its whole delivery unjudged. The record is owned by BEING the group's pick, so seat it. */
+  let extra: { groupId: string } | null = null;
   if (!fixed) {
     for (const classId of Object.keys(db.classes)) {
       if (ownedAt20(db, classId, null).has(id)) { owner = { classId, subclassId: null }; break; }
@@ -501,14 +611,30 @@ function classFeatureHost(db: ContentDatabase, id: string, fixed?: { build: Buil
         if (ownedAt20(db, classId, opt.id as string).has(id)) { owner = { classId, subclassId: opt.id as string }; break; }
       }
       if (owner) break;
+      for (const g of (db.classes[classId] as { extraChoices?: { id: string; options?: { id: string }[] }[] }).extraChoices ?? []) {
+        if ((g.options ?? []).some((o) => o.id === id)) { owner = { classId, subclassId: null }; extra = { groupId: g.id }; break; }
+      }
+      if (owner) break;
     }
+  }
+  /* Neither a class, a subclass nor an extra choice holds it — the last two routes a real player uses
+   * for a class feature no such list carries: an inventor innovation modification, and a feature
+   * handed over by a feat's own question. Each returns a whole host or nothing. */
+  if (!fixed && !owner) {
+    const outer = innovationModificationHost(db, id) ?? featChoiceHost(db, id);
+    if (outer) return outer;
   }
   // Real-character mode hands in the owner's own build; the reference host is a level-20 minimal one.
   const base = fixed?.build ?? minimalHost(db, owner?.classId ?? null, 'human', 20);
   if (!owner) {
     return { supported: false, reason: 'no class or subclass grants this feature at level 20', withBuild: base, withoutBuild: base, withDb: db, withoutDb: db, pages: [], meta: {} };
   }
-  const withBuild = fixed ? base : { ...base, subclassId: owner.subclassId ?? base.subclassId };
+  /* minimalHost already seated the group's FIRST option (two for apparitions); the differential wants
+   * this record picked and, in the "without" build, nothing picked in the group at all. */
+  const seat = (b: BuildState, picks: string[]): BuildState => (extra
+    ? { ...b, extraChoices: { ...b.extraChoices, [extra.groupId]: picks }, ...(extra.groupId === 'apparition' ? { primaryApparition: picks[0] ?? null } : {}) }
+    : b);
+  const withBuild = fixed ? base : seat({ ...base, subclassId: owner.subclassId ?? base.subclassId }, [id]);
   const cls = db.classes[owner.classId];
   // A `<feature>-<class>` / `<feature>-<subclass>` variant is owned through its BASE feature; removing
   // the base removes both, so the base's controls are attributed to the variant too — recorded in meta.
@@ -539,7 +665,7 @@ function classFeatureHost(db: ContentDatabase, id: string, fixed?: { build: Buil
   const extraChoices = groups?.filter((g) => !baseIds.has(g.id) && norm(g.id) !== recName && !(g.featureId && baseIds.has(g.featureId)) && norm(g.name) !== recName);
   const withoutCls = { ...cls, features, subclass, ...(groups ? { extraChoices } : {}) };
   const withoutDb = { ...db, classes: { ...db.classes, [owner.classId]: withoutCls } } as ContentDatabase;
-  const withoutBuild = isSubclassAnchor ? { ...withBuild, subclassId: null } : withBuild;
+  const withoutBuild = isSubclassAnchor ? { ...withBuild, subclassId: null } : extra ? seat(withBuild, []) : withBuild;
   const grantLevel = cls.features.find((f) => baseIds.has(f.featureId))?.level ?? null;
   const { build: answeredBuild, answered } = answerOwnPicks(db, withBuild, db.classFeatures[id] as never, `feature:${id}`);
   return {
@@ -556,7 +682,8 @@ function classFeatureHost(db: ContentDatabase, id: string, fixed?: { build: Buil
       grantLevel,
       answered,
       removedFromClass: [...baseIds].filter((b) => b !== id).length ? [...baseIds] : [id],
-      without: isSubclassAnchor ? 'class-features+subclass' : (groups?.length ?? 0) !== (extraChoices?.length ?? 0) ? 'class-features+extraChoices' : 'class-features',
+      ...(extra ? { extraChoiceGroup: extra.groupId } : {}),
+      without: extra ? 'extra-choice-unpicked' : isSubclassAnchor ? 'class-features+subclass' : (groups?.length ?? 0) !== (extraChoices?.length ?? 0) ? 'class-features+extraChoices' : 'class-features',
     },
   };
 }
@@ -802,6 +929,274 @@ describe('featHost — a class-archetype feat is hosted on the class its dedicat
     const feat = (over: Partial<Feat>): Feat => ({ ...db.feats['expanded-elemental-magic'], ...over });
     expect(classArchetypeHost(db, feat({}))).toBe(many[0]);
     expect(classArchetypeHost(db, feat({ spellSlotBonus: { entryId: 'druid-casting' } }))).toBe('druid');
+  });
+});
+
+/*
+ * THE INSTRUMENT'S SECOND HOST ROUTE — an extraChoices option. Also always runs (it picks classes and
+ * builds characters, it renders nothing). Batch 034 recorded the miss and batch 035 parked nine records
+ * on it (work/experience-instrument-limits.json, lane 'harness-host-search-no-extra-choice-route'):
+ * classFeatureHost's owner search knew only features and subclass options, so a psychic subconscious
+ * mind, an animist apparition and an exemplar ikon each read UNSUPPORTED with their whole delivery
+ * unjudged. These its pin the route on its two halves — the host is FOUND, and the pick it seats is
+ * live on a really built character (the psychic's key attribute flips with the pick, which is WG's
+ * ATTRIBUTE_CHA / ATTRIBUTE_INT, their CLASS_DC attribute and their defineCastingSource attribute in
+ * one field). Delete the extraChoices branch and every one of them fails.
+ */
+describe('classFeatureHost — wandering-reverie, gathered-lore, impostor-in-hidden-places and noble-branch are hosted on their own extraChoices pick', () => {
+  const db = content();
+
+  // batch 035: wandering-reverie#instrument
+  it('wandering-reverie is owned by no class or subclass, yet gets a psychic host that seats the subconscious-mind pick', () => {
+    expect(classFeatureIdsOwned({ classId: 'psychic', subclassId: null, level: 20 }, db).has('wandering-reverie')).toBe(false);
+    const h = classFeatureHost(db, 'wandering-reverie');
+    expect(h.supported).toBe(true);
+    expect(h.meta.classId).toBe('psychic');
+    // batch 035: wandering-reverie#instrument
+    expect(h.meta.extraChoiceGroup).toBe('subconscious-mind');
+    expect(h.meta.without).toBe('extra-choice-unpicked');
+    expect(h.withBuild.extraChoices['subconscious-mind']).toEqual(['wandering-reverie']);
+    expect(h.withoutBuild.extraChoices['subconscious-mind']).toEqual([]);
+  });
+
+  // batch 035: gathered-lore
+  it('the seated pick is live, not decoration — wandering-reverie builds a cha psychic and gathered-lore an int one', () => {
+    expect(buildCharacter(classFeatureHost(db, 'wandering-reverie').withBuild, db).keyAbility).toBe('cha');
+    expect(buildCharacter(classFeatureHost(db, 'gathered-lore').withBuild, db).keyAbility).toBe('int');
+  });
+
+  // batch 035: noble-branch#instrument
+  it('the route is not psychic-only — impostor-in-hidden-places finds the animist apparition group and noble-branch the exemplar ikon group', () => {
+    const ap = classFeatureHost(db, 'impostor-in-hidden-places');
+    expect(ap.meta.classId).toBe('animist');
+    expect(ap.meta.extraChoiceGroup).toBe('apparition');
+    // The apparition group drives `primaryApparition` too; seating one pick must move it with them.
+    // batch 035: noble-branch#instrument
+    expect(ap.withBuild.primaryApparition).toBe('impostor-in-hidden-places');
+    expect(ap.withoutBuild.primaryApparition).toBe(null);
+    const ik = classFeatureHost(db, 'noble-branch');
+    expect(ik.meta.classId).toBe('exemplar');
+    // batch 035: noble-branch#instrument
+    expect(ik.meta.extraChoiceGroup).toBe('ikon');
+    expect(ik.withBuild.extraChoices.ikon).toEqual(['noble-branch']);
+  });
+});
+
+/*
+ * THE OTHER HALF OF THAT ROUTE — the half batch 035's five parked APPARITIONS needed. A host that is
+ * merely "found" and a differential that still moves nothing is the same UNSUPPORTED verdict wearing a
+ * host: an apparition's whole delivery (two Lores on the class's own ladder, ten granted spells, a
+ * primary-only vessel spell) hangs off the pick being ANSWERED on a built character, and until this
+ * batch minimalHost's extra-choice prefill was dead code — `...emptyBuild()` was spread AFTER it and
+ * reset both keys, so every host in this file built with no answer in any group. These its build the
+ * pair for real and check the printed block moves with the record, which is what the parked entries in
+ * work/experience-instrument-limits.json said the instrument could not do.
+ */
+describe('classFeatureHost — shepherd-of-errant-winds and custodian-of-groves-and-gardens deliver their printed block on the with build and none of it on the without', () => {
+  const db = content();
+  const loreRank = (c: Character, subject: string) => (c.proficiencies.skills as Record<string, string | undefined>)[`lore:${subject}`];
+  const focusKnown = (c: Character) =>
+    new Set(c.spellcasting.filter((e) => e.type === 'focus').flatMap((e) => Object.values(e.repertoire ?? {}).flat()));
+
+  // batch 035: shepherd-of-errant-winds
+  it('shepherd-of-errant-winds hands the WITH build Sailing and Scouting Lore and the Gift of the Anemos vessel spell, and the WITHOUT build neither', () => {
+    const h = classFeatureHost(db, 'shepherd-of-errant-winds');
+    expect(h.supported).toBe(true);
+    expect(h.meta.classId).toBe('animist');
+    const withC = buildCharacter(h.withBuild, db);
+    const withoutC = buildCharacter(h.withoutBuild, h.withoutDb);
+    // AoN apparition-14: "Apparition Skills Sailing Lore, Scouting Lore" on the class's own Lore ladder
+    // (loreProgression 8 expert / 16 master), so a level-20 host reads master with the pick and has no
+    // such Lore row at all without it.
+    // batch 035: shepherd-of-errant-winds
+    for (const lore of ['sailing', 'scouting']) {
+      expect(loreRank(withC, lore), `${lore} Lore is not on the with build`).toBe('master');
+      expect(loreRank(withoutC, lore), `${lore} Lore survived the record's removal`).toBeUndefined();
+    }
+    // batch 035: shepherd-of-errant-winds — the vessel spell is PRIMARY-only (build.ts:4713), so the
+    // seated pick must move `primaryApparition` with it or the focus pool stays empty.
+    expect(focusKnown(withC).has('gift-of-the-anemos')).toBe(true);
+    expect(focusKnown(withoutC).has('gift-of-the-anemos')).toBe(false);
+  });
+
+  // batch 035: custodian-of-groves-and-gardens
+  it('custodian-of-groves-and-gardens rides the same route, on a prefill that is now actually in the build state', () => {
+    // The dead-prefill half, pinned where it lives: emptyBuild() no longer overwrites these two keys.
+    const bare = minimalHost(db, 'animist', 'human', 20);
+    expect(bare.extraChoices.apparition, 'the extra-choice prefill is dead again').toHaveLength(2);
+    expect(bare.primaryApparition).toBe(bare.extraChoices.apparition[0]);
+    const h = classFeatureHost(db, 'custodian-of-groves-and-gardens');
+    const withC = buildCharacter(h.withBuild, db);
+    const withoutC = buildCharacter(h.withoutBuild, h.withoutDb);
+    // AoN apparition-4: Farming Lore, Herbalism Lore, Vessel Spell Garden of Healing.
+    // batch 035: custodian-of-groves-and-gardens
+    for (const lore of ['farming', 'herbalism']) {
+      expect(loreRank(withC, lore), `${lore} Lore is not on the with build`).toBe('master');
+      expect(loreRank(withoutC, lore), `${lore} Lore survived the record's removal`).toBeUndefined();
+    }
+    // batch 035: custodian-of-groves-and-gardens
+    expect(focusKnown(withC).has('garden-of-healing')).toBe(true);
+    expect(focusKnown(withoutC).has('garden-of-healing')).toBe(false);
+  });
+
+  // batch 035: shepherd-of-errant-winds
+  it('the revived prefill answers every class, and every one of them still builds', () => {
+    // The prefill was dead for every record in every experience run, so switching it on moves EVERY
+    // host in this file, not just the animist's — a group whose first option a level-20 host cannot
+    // legally hold would break the instrument wholesale and silently (the harness catches per record).
+    // batch 035: shepherd-of-errant-winds
+    for (const classId of Object.keys(db.classes)) {
+      const b = minimalHost(db, classId, 'human', 20);
+      for (const g of extraGroupsOf(db, classId)) {
+        expect(b.extraChoices[g.id]?.length ?? 0, `${classId}/${g.id} unanswered`).toBe(Math.min(groupCap(g.id), (g.options ?? []).length));
+      }
+      // batch 035: shepherd-of-errant-winds
+      expect(() => buildCharacter(b, db), `${classId} no longer builds with its groups answered`).not.toThrow();
+    }
+  });
+});
+
+/*
+ * THE INSTRUMENT'S FOURTH AND FIFTH HOST ROUTES — an inventor innovation MODIFICATION, and a class
+ * feature owned by a FEAT's CHOICE. Batch 035 parked four records on them
+ * (work/experience-instrument-limits.json, lanes 'harness-host-search-no-innovation-modification-route'
+ * and 'harness-host-search-no-feat-choice-route'): with no host the harness judged nothing at all and
+ * reported UNSUPPORTED, which is a sentence about the harness. These its pin each route on both
+ * halves — the host is FOUND, and the printed delivery really moves between the with and without
+ * builds — and each carries the `mutation-proof` half its route needs: with the route's own carrier
+ * stunted out of the content, the record reads UNSUPPORTED again, so these assertions are reading the
+ * route and not something the class was doing anyway.
+ */
+describe('classFeatureHost — metallic-reactance and phlogistonic-regulator are hosted on the inventor innovation modification pick', () => {
+  const db = content();
+  const resist = (b: BuildState, type: string) => deriveDefenses(buildCharacter(b, db), db).resistances.find((r) => r.type === type)?.value ?? 0;
+  /** The route's carrier removed: with no `<type>-innovation-modification` tag there is no pick to seat. */
+  const noModRoute = (id: string): ContentDatabase => ({
+    ...db,
+    classFeatures: { ...db.classFeatures, [id]: { ...db.classFeatures[id], otherTags: [] } },
+  }) as ContentDatabase;
+  /** …and the FIFTH route off too: Manifold Modifications (feat, level 8) offers all 27 modifications
+   *  through a `choice.ownsFeature`, so a modification is reachable by BOTH of this batch's routes. */
+  const noOwnsFeature = (on: ContentDatabase): ContentDatabase => ({
+    ...on,
+    feats: Object.fromEntries(
+      Object.entries(on.feats).map(([id, f]) => [id, f.choice?.ownsFeature ? { ...f, choice: { ...f.choice, ownsFeature: false } } : f]),
+    ),
+  }) as ContentDatabase;
+
+  // batch 035: metallic-reactance#instrument
+  it('metallic-reactance is owned by no class, subclass or extra choice, yet gets an inventor host whose pick carries acid and electricity resistance', () => {
+    /* Print (AoN innovation-5, Metallic Reactance): *"You gain resistance equal to 3 + half your level
+     * to acid and electricity damage."* At the harness's level 20 that is 3 + 10 = 13, and it is WG's
+     * two `adjValue RESISTANCES = "acid|electricity, {{3+level/2}}"` ops exactly. */
+    // batch 035: metallic-reactance#instrument
+    expect(classFeatureIdsOwned({ classId: 'inventor', subclassId: 'armor-innovation', level: 20 }, db).has('metallic-reactance')).toBe(false);
+    const h = classFeatureHost(db, 'metallic-reactance');
+    // batch 035: metallic-reactance#instrument
+    expect(h.supported).toBe(true);
+    expect(h.meta.classId).toBe('inventor');
+    expect(h.meta.subclassId).toBe('armor-innovation');
+    // batch 035: metallic-reactance#instrument
+    expect(h.meta.without).toBe('innovation-modification-unpicked');
+    expect(h.withBuild.inventorModifications).toEqual({ initial: 'metallic-reactance' });
+    // …and the seat is live: the resistances are on the WITH build and on neither of the WITHOUT one.
+    // batch 035: metallic-reactance#instrument
+    for (const type of ['acid', 'electricity']) {
+      expect(resist(h.withBuild, type), `${type} is not on the with build`).toBe(13);
+      expect(resist(h.withoutBuild, type), `${type} survived the record's removal`).toBe(0);
+    }
+  });
+
+  // batch 035: phlogistonic-regulator#instrument
+  it('phlogistonic-regulator rides the same route, and with the route stunted out both records read UNSUPPORTED again', () => {
+    /* Print (AoN innovation-5, Phlogistonic Regulator): *"You gain resistance equal to half your level
+     * to cold and fire damage."* Level 20 is half of 20 = 10 — and the record's formula is under
+     * repair in this same batch by phlogistonic-regulator#resistance-minimum (max(1,floor(l/2)) →
+     * floor(l/2)), which agrees at every even level, so this is the state before AND after that row. */
+    const h = classFeatureHost(db, 'phlogistonic-regulator');
+    // batch 035: phlogistonic-regulator#instrument
+    expect(h.supported).toBe(true);
+    for (const type of ['cold', 'fire']) {
+      expect(resist(h.withBuild, type), `${type} is not on the with build`).toBe(10);
+      expect(resist(h.withoutBuild, type), `${type} survived the record's removal`).toBe(0);
+    }
+    /*
+     * mutation-proof — the route keys are `harness-host-search-no-innovation-modification-route` (the
+     * lane both records were parked under) and `harness-host-search-no-feat-choice-route`, which has
+     * to come off with it: Manifold Modifications offers all 27 modifications through a
+     * `choice.ownsFeature`, so a modification is reachable by both of this batch's new routes and
+     * stunting one alone proves nothing. With the record's `<type>-innovation-modification` tag gone
+     * (what inventorModificationOptions filters on) AND every `ownsFeature` flag off, the host search
+     * falls all the way back to the parked verdict — which is the pre-batch state, for both records.
+     */
+    // batch 035: phlogistonic-regulator#instrument
+    for (const id of ['metallic-reactance', 'phlogistonic-regulator']) {
+      const stunted = classFeatureHost(noOwnsFeature(noModRoute(id)), id);
+      expect(stunted.supported, `${id} still has a host with both routes stunted`).toBe(false);
+      expect(stunted.reason).toBe('no class or subclass grants this feature at level 20');
+      // …and it really is the MODIFICATION route serving them: with only the feat-choice route off,
+      // batch 035: phlogistonic-regulator#instrument
+      const modOnly = classFeatureHost(noOwnsFeature(db), id);
+      expect(modOnly.supported, `${id} was riding the feat-choice route all along`).toBe(true);
+      expect(modOnly.meta.innovationTier).toBe('initial');
+    }
+  });
+});
+
+describe('classFeatureHost — lesson-of-vengeance and lesson-of-elements are hosted on the witch feat whose choice owns them', () => {
+  const db = content();
+  const focusKnown = (b: BuildState, on: ContentDatabase = db) =>
+    new Set(buildCharacter(b, on).spellcasting.filter((e) => e.type === 'focus').flatMap((e) => Object.values(e.repertoire ?? {}).flat()));
+  /** The route's carrier removed: `ownsFeature` is the flag choiceOwnedFeatureIds is gated on. */
+  const noRoute = (): ContentDatabase => ({
+    ...db,
+    feats: Object.fromEntries(
+      Object.entries(db.feats).map(([id, f]) => [id, f.choice?.ownsFeature ? { ...f, choice: { ...f.choice, ownsFeature: false } } : f]),
+    ),
+  }) as ContentDatabase;
+
+  // batch 035: lesson-of-vengeance#experience-flag
+  it('lesson-of-vengeance is in no class feature list, yet gets a witch host that answers Basic Lesson with it and puts Needle of Vengeance in the focus pool', () => {
+    /* Print: *"You gain the Needle of Vengeance hex, and your familiar learns Phantom Pain."* The hex
+     * reaches the pool only through the feat's answer (build.ts:4029-4041), which is the route. */
+    // batch 035: lesson-of-vengeance#experience-flag
+    for (const classId of Object.keys(db.classes)) {
+      expect(classFeatureIdsOwned({ classId, subclassId: null, level: 20 }, db).has('lesson-of-vengeance'), `${classId} owns it after all`).toBe(false);
+    }
+    const h = classFeatureHost(db, 'lesson-of-vengeance');
+    // batch 035: lesson-of-vengeance#experience-flag
+    expect(h.supported).toBe(true);
+    expect(h.meta.classId).toBe('witch');
+    // The LOWEST-level granter, which is the one a player reaches first.
+    // batch 035: lesson-of-vengeance#experience-flag
+    expect(h.meta.via).toBe('basic-lesson');
+    expect(h.meta.without).toBe('pick-unanswered');
+    // …and the pick is live: the hex is on the WITH build and not on the granter-with-no-answer one.
+    // batch 035: lesson-of-vengeance#experience-flag
+    expect(focusKnown(h.withBuild).has('needle-of-vengeance')).toBe(true);
+    expect(focusKnown(h.withoutBuild).has('needle-of-vengeance')).toBe(false);
+  });
+
+  // batch 035: lesson-of-elements#experience-flag
+  it('lesson-of-elements rides the same route, and with the route stunted out both lessons read UNSUPPORTED again', () => {
+    /* Print: *"You gain the Elemental Betrayal hex."* Same carrier, same granter. */
+    const h = classFeatureHost(db, 'lesson-of-elements');
+    // batch 035: lesson-of-elements#experience-flag
+    expect(h.supported).toBe(true);
+    expect(focusKnown(h.withBuild).has('elemental-betrayal')).toBe(true);
+    expect(focusKnown(h.withoutBuild).has('elemental-betrayal')).toBe(false);
+    /*
+     * mutation-proof — the route key is `harness-host-search-no-feat-choice-route`, the lane both
+     * lessons were parked under. Stunt the flag the route is gated on (`choice.ownsFeature`, the same
+     * gate choiceOwnedFeatureIds uses, because 33 feats offer a value that merely collides with a
+     * classFeature id) and the host search must fall back to the parked verdict for both lessons.
+     */
+    // batch 035: lesson-of-elements#experience-flag
+    for (const id of ['lesson-of-vengeance', 'lesson-of-elements']) {
+      const stunted = classFeatureHost(noRoute(), id);
+      expect(stunted.supported, `${id} still has a host with the route stunted`).toBe(false);
+      expect(stunted.reason).toBe('no class or subclass grants this feature at level 20');
+    }
   });
 });
 

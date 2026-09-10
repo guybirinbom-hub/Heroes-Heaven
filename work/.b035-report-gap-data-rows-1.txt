@@ -1,0 +1,97 @@
+BATCH 035 — GAP LANE, family gap-data-rows-1 (the open gap lines of family "data-rows-1")
+
+Spec:  work/.b035-rows-gap-data-rows-1.json   (0 backfill rows, 0 applier edits — it carries the
+       manifest `stage` list only; the gap was a READER defect, the data was already right)
+Code:  src/rules/build.ts:6106-6117, src/rules/derive.ts:1163-1170
+Test:  test/batch035-gap-data-rows-1.test.ts  (6 tests: 3 pinned the defect and FAILED before the
+       fix, 3 are controls that passed before and after)
+
+────────────────────────────────────────────────────────────────────────────────────────────────
+ONE LINE PER GAP LINE
+────────────────────────────────────────────────────────────────────────────────────────────────
+
+AUTHORED — ref src/rules/derive.ts:1169 — "src/rules/build.ts:6061 + src/rules/derive.ts:1161
+  (engine lane, NOT mine): a CHOICE-driven whileActive grant reaches deriveDefenses through
+  `c.chosenEffects`, which carries no `name`, so `ownedWhileActive` falls back to the bare
+  'Active state'." Fixed at both ends of the same fact: build.ts stamps the granting record's name
+  on each chosen clause, derive.ts reads it before the fallback, so a resistance the player CHOSE
+  now traces to the instinct that printed it exactly as a record-level one always has.
+
+────────────────────────────────────────────────────────────────────────────────────────────────
+WHAT THE DEFECT WAS, AND WHAT I MEASURED
+────────────────────────────────────────────────────────────────────────────────────────────────
+A `whileActive` clause authored ON a record is scanned off that record, which carries a `name`, so
+the IWR breakdown says "Ligneous Instinct". A clause the player CHOSE arrives through
+`applyAlwaysOn` → `mergeEffect` into `Character.chosenEffects` — ONE shared DefenseGrants bag
+merged from many records — which has no `name` at all, so derive.ts's `ownedWhileActive` had
+nothing to attribute it to and pushed the bare fallback string.
+
+MEASURED before the fix, on a built 9th-level Rime dragon-instinct barbarian with rage on:
+  deriveDefenses(c, db).sources['resistance:piercing'].map(s => s.from)  ===  ['Active state']
+  deriveDefenses(c, db).sources['resistance:cold'].map(s => s.from)      ===  ['Active state']
+  stateGrantSummary(c, db, 'rage').map(e => e.from)                      ===  ['Active state']
+and the same on a Giant Instinct barbarian who picked fire (bludgeoning + fire, both 'Active
+state'). The Rage card — the "what will entering this state give me" index — was blind the same
+way, which the builder's note had not covered. That is every instinct that asks a question:
+dragon, giant, superstition. raging-resistance.test.ts:64 had already closed the identical hole
+for the instincts that ask none.
+
+Print is the authority for the attribution, not just for the numbers:
+  AoN instinct-9 (Dragon): "You resist piercing damage and the damage type of your instinct's
+    dragon breath." — ONE sentence, printed on the instinct, producing BOTH breakdown lines.
+  AoN instinct-4 (Giant):  "You resist bludgeoning damage and your choice of cold, electricity, or
+    fire, chosen when you gain raging resistance." — likewise.
+A line the sheet cannot trace back to the feature that granted it is the thing the breakdown
+exists to prevent.
+
+────────────────────────────────────────────────────────────────────────────────────────────────
+THE FIX
+────────────────────────────────────────────────────────────────────────────────────────────────
+src/rules/build.ts
+  `mergeEffect(into, g, srcName?)` — the whileActive branch now pushes a COPY of each clause with
+  `from: srcName` stamped on it when a source name is known. A copy, not a mutation: `g` is the
+  shared content record, and stamping it would have leaked the first character's instinct name
+  into the database for every later build. `applyAlwaysOn` already receives `srcName` (it uses it
+  for innate-spell source labels and creature-trait pills) and simply passes it through, so no
+  call site changed and no new lane was invented — every `applyAlwaysOn` caller already supplies
+  the record's own `name`. `mergeEffect` has exactly one caller, so the optional third argument
+  cannot silently miss a path.
+
+src/rules/derive.ts
+  `ownedWhileActive`'s scan reads `wa.from ?? g?.name ?? 'Active state'`. The record-scanned path
+  is untouched and still reads its name off the record; the fallback is untouched and still exists
+  for a clause that genuinely has no owner. `activeStateGrants` and `stateGrantSummary` share this
+  one walk, which is why one read fixes both the IWR breakdown and the Rage card.
+
+Both edits carry a WHY comment quoting the printed clause, per the batch rules.
+No data row was needed or authored: the data was already correct — this was a reader that dropped
+a fact it had been handed.
+
+────────────────────────────────────────────────────────────────────────────────────────────────
+CHECKS
+────────────────────────────────────────────────────────────────────────────────────────────────
+- test/batch035-gap-data-rows-1.test.ts BEFORE the fix: 3 failed / 3 passed. Each failure is the
+  pinned defect verbatim ("expected [ 'Active state' ] to include 'Dragon Instinct'"), none is a
+  harness error. AFTER: 6/6 pass.
+- test/raging-resistance.test.ts — the file that owns the non-choice half of this lane — 24/24
+  pass, unchanged and untouched.
+- Regression sweep over every other test file that names whileActive / chosenEffects /
+  activeStateGrants / stateGrantSummary: batch030-data, batch031-gap-situational, batch12-parity,
+  batch25-engine, batch27-data, natural-armour, senses-supersede, subclass-owned — 166 pass.
+  batch035-engine-1 also passes. (batch035-data-rows-1 still shows its own 14 pre-apply failures,
+  which are that family's pinned defects awaiting the driver's apply, not mine.)
+- npx tsc --noEmit: clean.
+- node scripts/test-flip-audit.mjs --batch 035: clean. The test file is wholly new, so the audit
+  needs no citations in it; the premise citations are there anyway and both doc ids
+  (instinct-9, instinct-4) resolve in the AoN mirror with the quoted clauses verbatim.
+- work/.b035-specs.json re-read immediately before writing: all 9 existing entries kept byte for
+  byte, one appended (10 now). work/.b035-gaps.json re-read immediately before writing: 47 lines
+  in and 47 out, only the single data-rows-1 line changed.
+
+────────────────────────────────────────────────────────────────────────────────────────────────
+DATA STILL NEEDED
+────────────────────────────────────────────────────────────────────────────────────────────────
+(none — this gap owed no backfill row.)
+
+CROSS-FILE GAPS
+(none — the fix landed entirely in the two files the gap line named.)

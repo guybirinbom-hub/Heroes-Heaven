@@ -1,0 +1,14 @@
+{
+  "findings": [
+    {
+      "id": "demon-eidolon#language-abyssal",
+      "backfillRows": [],
+      "note": "Code-only, no data row. The eidolon Language line has no data route: deriveEidolon (src/rules/companions.ts:1053) builds eidolonLanguages from CompanionMod.languages / languageChoices alone, and COMPANION_MODS is a src table. The gap agent added \"languages\":[\"Abyssal\"] to COMPANION_MODS['demon-eidolon'] (src/rules/companionGrants.ts) — the printed NAME, not an id, because content.languages is remaster-only and holds no 'abyssal' key (verified: 120 language records, no 'abyssal'), so deriveEidolon's `content.languages?.[l]?.name ?? l` falls through to the string as written. Exactly the shape the siblings 'angel-eidolon' (Celestial), 'beast-eidolon' and 'fey-eidolon' (Sylvan) already ship. AoN eidolon-5 prints \"**Language** Abyssal\"; before this the block showed no Languages row at all. Pinned by test/batch035-gap-engine-2.test.ts on a built 5th-level summoner."
+    },
+    {
+      "id": "demon-eidolon#demonic-strikes-note",
+      "backfillRows": [],
+      "note": "Code-only, no data row. Same src table, same row: the `note` string on COMPANION_MODS['demon-eidolon'] was a second, PRE-REMASTER copy of Demonic Strikes (\"the eidolon's unarmed Strikes deal an extra 1 unholy (evil) damage\") rendered as an evoNote beside the record's own correct eidolonAbilities text. Wrong damage type, no target restriction (it read as a flat +1 against everything) and no versatile clause. Replaced with the remastered wording AoN eidolon-5 prints and public/core.json classes.summoner.subclass.options['demon-eidolon'].eidolonAbilities[0] already carries: \"Demonic Strikes: the eidolon's unarmed Strikes gain the unholy trait and deal 1 extra spirit damage to holy creatures and creatures with weakness to unholy; one of its physical unarmed attacks also gains versatile B, P or S (your choice).\" The same fix batch 033 applied to the sibling 'angel-eidolon' note. Pinned by test/batch035-gap-engine-2.test.ts."
+    }
+  ]
+}

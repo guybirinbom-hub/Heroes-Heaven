@@ -310,6 +310,24 @@ function ourIdentities(id, rec) {
    * their-side skip is invisible to settle-divergence-audit, which reads only the SETTLED registries. */
   if (rec.resonant) { out.options.add(key('yes')); out.options.add(key('no')); }
   for (const s of rec.focusSpells ?? []) addSpell(s);
+  /*
+   * …and `grantedSpells` ON THE RECORD ITSELF.
+   *
+   * TEACH, batch 035 — finding lesson-of-vengeance#familiar-spell. Print (AoN lesson-4): the witch's
+   * Lesson of Vengeance *"teaches your familiar the phantom pain spell"* and gives you the needle of
+   * vengeance hex; WG writes both as giveSpell. `grantedSpells` was read in TWO homes here — the
+   * SubclassOption (`o.grantedSpells`, ~line 640) and the declaring feature's per-option LADDER
+   * (`decl.grantedSpells[optionId]`) — but never on a plain class-feature record, which is where the
+   * witch lessons keep it (`classFeatures/<lesson>.grantedSpells = ['phantom-pain']`, read by
+   * build.ts's owned-feature walk into the familiar's spellbook). So the row landed, reached the
+   * sheet, and this comparer still reported "theirs-not-ours=[phantompain]" — the same
+   * one-storage-location instrument bug the class-chassis note below describes.
+   *
+   * ⚠ Array form ONLY. The psychic's `classFeatures/conscious-mind.grantedSpells` is an OBJECT keyed
+   * by option id ({'the-distant-grasp': [{id, level}, …]}) and is credited by the ladder reader; a
+   * blind spread would iterate its keys and add the OPTION ids as spell names.
+   */
+  if (Array.isArray(rec.grantedSpells)) for (const s of rec.grantedSpells) addSpell(s?.id ?? s);
   for (const s of rec.spellListAdditions?.spells ?? []) addSpell(s);
   /*
    * …and the spells a RESTRICTED SLOT GRANT allows into its own slots.

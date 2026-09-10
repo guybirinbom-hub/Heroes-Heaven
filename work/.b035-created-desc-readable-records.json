@@ -1,0 +1,214 @@
+{
+  "findings": [
+    {
+      "id": "readable-record-check#arcaneSchool",
+      "backfillRows": [
+        {
+          "category": "arcaneSchool",
+          "id": "school-of-breathtaking-influence",
+          "field": "description",
+          "value": "You have sway in powerful social circles and pride yourself on being able to predict and manipulate opponents. Less scrupulous academies openly teach this curriculum to aspiring politicians, while other colleges frame it as the study of countering mental manipulation. These spells are staples in Quantium, where ambition and ruthlessness are measures of success.\n\n**Curriculum**\n- Cantrips: Daze, Infectious Enthusiasm\n- 1st: Command, Fear, Sleep\n- 2nd: Blood Vendetta, Phantom Crowd\n- 3rd: Enthrall, Mind of Menace\n- 4th: Confusion, Outcast's Curse\n- 5th: Subconscious Suggestion, Wave of Despair\n- 6th: Dominate, Never Mind\n- 7th: Contingency, Puppet Strings\n- 8th: Dream Council, Hidden Mind\n- 9th: Telepathic Demand\n\n**School Spells**\n- Initial: Appeal to Authority\n- Advanced: Hot Air",
+          "why": "AoN arcane-school-31 — the printed School of Breathtaking Influence entry (Impossible Magic pg. 108): flavour paragraph, Curriculum ladder and School Spells, links flattened to spell names."
+        },
+        {
+          "category": "arcaneSchool",
+          "id": "school-of-keen-inquiry",
+          "field": "description",
+          "value": "You're a scholar of truth, seeking knowledge about the nature of existence and events past, present, and future. Whether you share or obfuscate that truth—best reserve judgment until you know what you're working with. Quantium's elite claim agents of Her Most Keen Eye, Nex's network of spies, developed this curriculum, but it's a staple in many politically oriented colleges.\n\n**Curriculum**\n- Cantrips: Detect Magic, Sigil\n- 1st: Disguise Magic, Illusory Disguise, Mindlink\n- 2nd: Knock, See the Unseen\n- 3rd: Clairaudience, Locate\n- 4th: Clairvoyance, Detect Scrying\n- 5th: Mind Probe, Scouting Eye\n- 6th: Scrying, Truesight\n- 7th: Retrocognition, True Target\n- 8th: Disappearance, Pinpoint\n- 9th: Foresight\n\n**School Spells**\n- Initial: Fact Check\n- Advanced: Unsettling Perspective",
+          "why": "AoN arcane-school-32 — the printed School of Keen Inquiry entry (Impossible Magic pg. 108)."
+        },
+        {
+          "category": "arcaneSchool",
+          "id": "school-of-nexian-spaces",
+          "field": "description",
+          "value": "Whether your goal is immortality or creating a world with every detail tailored to your liking, retracing Nex's experiments with demiplanes is the road to achieving your desires. Your formal learning starts with reshaping your current reality and drawing power from other planes of existence. You graduate to creating extraplanar spaces and traveling between planes, making time and space yours to mold like clay.\n\n**Curriculum**\n- Cantrips: Phase Bolt, Warp Step\n- 1st: Alarm, Pet Cache, Thoughtful Gift\n- 2nd: Dimensional Drop, Vanish Weapon\n- 3rd: Cozy Cabin, Far Reach\n- 4th: Flicker, Liminal Doorway\n- 5th: Banishment, Space Fold Gate\n- 6th: Collective Transposition, Proximal Shift\n- 7th: Interplanar Teleport, Planar Palace\n- 8th: Quandary, Stars of Another Sky\n- 9th: Resplendent Mansion\n\n**School Spells**\n- Initial: Extradimensional Cover\n- Advanced: Unbounded Sphere",
+          "why": "AoN arcane-school-33 — the printed School of Nexian Spaces entry (Impossible Magic pg. 108)."
+        },
+        {
+          "category": "arcaneSchool",
+          "id": "school-of-quantic-control",
+          "field": "description",
+          "value": "You're an architect, but not merely of buildings. You call upon elemental forces to control the building blocks of reality itself, reshaping the environment and moving creatures like the world is a diorama for you to perfect. Your curriculum draws heavily upon the experience of the geniekin of Quantium's Wish, who maintain the infrastructure of Nex's capital in seeming defiance of physics itself.\n\n**Curriculum**\n- Cantrips: Gale Blast, Scatter Scree\n- 1st: Cradle Aloft, Gentle Landing, Pummeling Rubble\n- 2nd: Dismantle, Unrelenting Gravity\n- 3rd: Chosen Gravity, Inertia Lock\n- 4th: Containment, Living Terrain\n- 5th: Control Water, Wall of Stone\n- 6th: Repulsion, Wall of Force\n- 7th: Infinitesimal Collapse Field, Planar Seal\n- 8th: Arctic Rift, Earthbreaker Stride\n- 9th: Implosion\n\n**School Spells**\n- Initial: Circle of Weakness\n- Advanced: Quantic Dampening",
+          "why": "AoN arcane-school-34 — the printed School of Quantic Control entry (Impossible Magic pg. 108)."
+        }
+      ],
+      "note": "Four arcane schools arrived from the Impossible Magic scrape with an aonId and nothing readable; a wizard picking a school must be able to read its curriculum and its two school spells. Prose only — the curriculum ladder is not encoded here, and that gap is reported separately."
+    },
+    {
+      "id": "readable-record-check#fatalMethod",
+      "backfillRows": [
+        {
+          "category": "fatalMethod",
+          "id": "puppeteer",
+          "field": "description",
+          "value": "You prefer to study life and death from afar. You gain the Consume Thrall action and the thrall proliferation ability.\n\n**Consume Thrall** Free Action (concentrate, necromancer, occult); **Frequency** once per day; **Requirements** You have 0 Focus Points and at least one thrall with 30 feet of you; **Effects** You destroy one thrall within 30 feet of you and regain 1 Focus Point. You can spend this focus point only to cast a grave spell.\n\n**Thrall Proliferation** Once per round when you cast *create thrall*, you can create one additional thrall in range.",
+          "why": "AoN fatal-method-1 — the printed Puppeteer entry (Impossible Magic pg. 29). \"at least one thrall with 30 feet of you\" is transcribed as printed."
+        },
+        {
+          "category": "fatalMethod",
+          "id": "reaper",
+          "field": "description",
+          "value": "You study flesh up close by clashing blade against bone. You gain the reaper's edge and thrall teamwork abilities.\n\n**Reaper's Edge** You become trained in martial weapons and medium armor. At 11th level, you become an expert in martial weapons, and at 13th you become an expert in medium armor.\n\n**Thrall Teamwork** Once per round after you cast *create thrall*, you can make a melee Strike as a free action against a creature within your melee reach that is adjacent to at least one of your thralls.",
+          "why": "AoN fatal-method-2 — the printed Reaper entry (Impossible Magic pg. 29)."
+        }
+      ],
+      "note": "Both necromancer fatal methods shipped with nothing to read. Reaper's proficiency grant (martial weapons + medium armor, expert at 11th/13th) is prose here only — the advancement lane for it is a CROSS-FILE GAP in the report."
+    },
+    {
+      "id": "readable-record-check#follower",
+      "backfillRows": [
+        {
+          "category": "follower",
+          "id": "berserker",
+          "field": "description",
+          "value": "This incautious fighter can become a terrifying harbinger of destruction.\n\n**Melee** Single Action falchion (forceful, sweep), **Damage** 1d10 slashing\n\n**Str** +3, **Dex** +0, **Con** +2, **Int** +0, **Wis** +0, **Cha** +2\n\n**Hit Points** 8\n\n**Kit Armor** item bonus +3, Dex cap +2\n\n**Skills** Athletics, Intimidation, Warfare Lore\n\n**Follower Ability** When a berserker takes damage, they gain a +1 status bonus to their next damage roll before the end of your next turn.\n\nWhen the berserker becomes an experienced follower:\n- Increase their Strength modifier to +4 and their Constitution modifier to +3.\n- Increase their proficiency rank with Fortitude and Will saves to expert.\n- Increase their falchion Strike damage dice from 1d10 to 2d10.\n- Increase the status bonus to damage rolls the berserker gains from their follower ability to +2.\n\nWhen the berserker becomes a veteran follower:\n- Increase their Constitution modifier to +4, their Wisdom modifier to +1, and their Charisma modifier to +3.\n- Increase their item bonus to AC to +4.\n- Increase their proficiency rank in Perception to expert.\n- Increase their proficiency rank in Athletics, Intimidation, and Warfare Lore to expert.\n- Increase their proficiency rank in their falchion Strikes to expert, and give them a +1 item bonus to attack rolls with their falchion Strikes. Their Strikes deal 3 additional damage and become magical for the purposes of ignoring resistances.\n- Increase the status bonus to damage rolls the berserker gains from their follower ability to +3.\n- The berserker gains Reckless Attack. **Reckless Attack** Free Action; **Frequency** once per turn; **Trigger** You Direct the berserker; **Effect** The berserker gains a +1 circumstance bonus to their next attack roll on this turn. They are off-guard until the beginning of your next turn.\n\nWhen the berserker becomes an exceptional follower:\n- Increase their Strength modifier to +5, their Dexterity modifier to +1, their Wisdom modifier to +2, and their Charisma modifier to +4.\n- Increase their item bonus to AC to +5.\n- Increase their proficiency rank in Fortitude saves and Will saves to master, and their proficiency rank in Reflex saves to expert. Give them a +1 item bonus to all saving throws.\n- Increase their proficiency rank in Athletics to master.\n- Increase their item bonus to attack rolls with their falchion Strikes to +2. Increase their falchion Strike damage dice from 2d10 to 3d10 and increase the additional damage that their falchion Strikes deal from 3 to 6.\n- Increase the status bonus to damage rolls the berserker gains from their follower action to +4.\n- The berserker gains a reaction when Directed. If this reaction isn't spent before the beginning of your next turn, it is lost. The berserker also gains the Share the Pain reaction. **Share the Pain** Reaction; **Trigger** The berserker is critically hit by a creature that is within their reach; **Effect** The berserker makes a melee Strike against that creature.",
+          "why": "AoN follower-1 — the printed Berserker follower entry (Battlecry! pg. 78): stat line, Follower Ability and all three advancement tiers."
+        },
+        {
+          "category": "follower",
+          "id": "sharpshooter",
+          "field": "description",
+          "value": "This trainee archer can learn to shoot with terrifying precision.\n\n**Range** Single Action shortbow (deadly d10, propulsive, range increment 60 feet, reload 0), **Damage** 1d6 piercing\n\n**Str** +0, **Dex** +3, **Con** +1, **Int** +0, **Wis** +2, **Cha** +1\n\n**Hit Points** 4\n\n**Kit Armor** item bonus +1, Dex cap +4\n\n**Skills** Acrobatics, Hunting Lore, Stealth\n\n**Follower Ability** The sharpshooter learns Take Aim. **Take Aim** Two Actions; The sharpshooter takes aim at their foe and makes a ranged Strike, gaining a +2 circumstance bonus to the attack roll.\n\nWhen the sharpshooter becomes an experienced follower:\n- Increase their Dexterity modifier to +4 and their Wisdom modifier to +3.\n- Increase their proficiency rank in Fortitude saves and Reflex saves to expert.\n- Increase their shortbow Strike damage dice from 1d6 to 2d6.\n- When a creature takes damage from a sharpshooter's ranged Strike, it takes a –5-foot circumstance penalty to its Speeds for 1 round, or a –10-foot circumstance penalty if the attack was a critical hit.\n\nWhen the scout becomes a veteran follower:\n- Increase their Constitution modifier to +2, their Intelligence modifier to +1, and their Charisma modifier to +2.\n- Increase their item bonus to AC to +2.\n- Increase their proficiency rank in Perception to expert.\n- Increase their proficiency rank in Acrobatics, Hunting Lore, and Stealth to expert. They also become an expert in Intimidation.\n- Increase their proficiency rank in their shortbow Strikes to expert, and give them a +1 item bonus to attack rolls with their shortbow Strikes. Their Strikes deal 2 additional damage and become magical for the purposes of ignoring resistances.\n- When the sharpshooter Takes Aim, they also ignore the target's concealment.\n\nWhen the sharpshooter becomes an exceptional follower:\n- Increase their Dexterity modifier to +5, their Constitution modifier to +3, their Wisdom modifier to +4, and their Charisma modifier to +3.\n- Increase their item bonus to AC to +3.\n- Increase their proficiency rank in Reflex saves and Will saves to master and their proficiency rank in Fortitude saves to expert. Give them a +1 item bonus to all saving throws.\n- Increase their proficiency rank in Acrobatics to master.\n- Increase their item bonus to attack rolls with their shortbow Strikes to +2. Increase their shortbow Strike damage dice from 2d6 to 3d6 and increase the additional damage that their shortbow Strikes deal from 2 to 4.\n- The sharpshooter learns Following Shot. **Following Shot** Free Action; **Frequency** once per turn; **Trigger** The sharpshooter critically hits with a ranged Strike; **Requirements** The sharpshooter is wielding a weapon with reload 0; **Effect** Bolstered by their success, the sharpshooter quickly takes another shot. They make another ranged Strike with the same weapon at the same multiple attack penalty. This attack still counts toward the sharpshooter's multiple attack penalty.",
+          "why": "AoN follower-4 — the printed Sharpshooter follower entry (Battlecry! pg. 80). The veteran tier's heading reads \"When the scout becomes a veteran follower\" on the page; transcribed here under the sharpshooter's own tier, since the bullets name the sharpshooter throughout."
+        },
+        {
+          "category": "follower",
+          "id": "shieldbearer",
+          "field": "description",
+          "value": "This aspiring bodyguard can learn to deflect the most devastating of blows.\n\n**Melee** Single Action longsword (versatile P), **Damage** 1d8 slashing\n**Melee** Single Action shield boss, **Damage** 1d6 bludgeoning\n\n**Str** +3, **Dex** +1, **Con** +2, **Int** +0, **Wis** +1, **Cha** +0\n\n**Hit Points** 8\n\n**Kit Armor** item bonus +5, Dex cap +1\n\n**Skills** Athletics, Survival, Warfare Lore\n\n**Follower Ability** A shieldbearer carries a shield (Hardness 5, HP 20, BT 10). They can Raise the Shield to gain a +2 circumstance bonus to AC. The shieldbearer also gains a reaction when Directed. If this reaction isn't spent before the beginning of your next turn, it is lost. Finally, they gain the Shield Block feat.\n\n**Special** A shieldbearer takes a –5-foot penalty to their Speeds from their heavy armor.\n\nWhen the shieldbearer becomes an experienced follower:\n- Increase their Strength modifier to +4 and their Constitution modifier to +3.\n- Increase their proficiency rank in Fortitude and Will saves to expert.\n- Increase their weapons' Strike damage from one die to two dice (for instance 1d8 to 2d8).\n- Increase their shield's statistics to Hardness 6, HP 40, and BT 20.\n- The shieldbearer can defend you. When the shieldbearer has their shield raised, they can use their Shield Block reaction when an attack is made against you as long as they are adjacent to you. If they do, the shield prevents you from taking damage up to the shield's Hardness, but you and the shield each take any remaining damage, following the normal rules for Shield Block.\n\nWhen the shieldbearer becomes a veteran follower:\n- Increase their Constitution modifier to +4, their Intelligence modifier to +1, and their Wisdom modifier to +2.\n- Increase their item bonus to AC to +6. Their armor gains the bulwark trait.\n- Increase their proficiency rank in Perception to expert.\n- Increase their proficiency rank in Athletics, Survival, and Warfare Lore to expert. They become an expert in Crafting and add a repair toolkit to their kit.\n- Increase their proficiency rank in weapon Strikes to expert, and give them a +1 item bonus to attack rolls with their weapon Strikes. Their weapon Strikes deal 2 additional damage and become magical for the purposes of ignoring resistances.\n- Increase their shield's statistics to Hardness 8, HP 64, BT 32.\n- The shieldbearer can now defend anyone. The shieldbearer can use Shield Block to protect any adjacent ally, not just you.\n\nWhen the shieldbearer becomes an exceptional follower:\n- Increase their Strength modifier to +5, their Dexterity modifier to +2, their Intelligence modifier to +2, and their Wisdom modifier to +3.\n- Increase their item bonus to AC to +7.\n- Increase their proficiency rank in Fortitude saves and Will saves to master, and their proficiency rank in Reflex saves to expert. Give them a +1 item bonus to all saving throws.\n- Increase their proficiency rank in Athletics to master. They become an expert in Acrobatics.\n- Increase their item bonus to attack rolls with their listed weapon Strikes to +2. Increase their weapon Strike damage from two dice to three dice (for instance, 2d8 to 3d8) and increase the additional damage that their weapon Strikes deal from 2 to 4.\n- Increase their shield's statistics to Hardness 10, HP 100, BT 50.\n- The shieldbearer gains an additional reaction when Directed, which the shieldbearer can use only to Shield Block to protect themself.",
+          "why": "AoN follower-5 — the printed Shieldbearer follower entry (Battlecry! pg. 81)."
+        },
+        {
+          "category": "follower",
+          "id": "adept",
+          "field": "description",
+          "value": "This novice spellcaster eagerly explores the world's secrets while learning to hurl destructive magic.\n\n**Melee** Single Action dagger (agile, finesse, thrown 10 feet, versatile S), **Damage** 1d4 piercing\n**Ranged** Single Action energy blast (magical, range 60 feet), **Damage** 1d6 (see special)\n\n**Str** +0, **Dex** +1, **Con** +1, **Int** +3, **Wis** +2, **Cha** +0\n\n**Hit Points** 4\n\n**Kit Armor** item bonus +1, Dex cap +4\n\n**Skills** Arcana; either Nature, Occultism, or Religion; any two Lore skills\n\n**Follower Ability** The adept learns Spellshaped Blast. **Spellshaped Blast** Two Actions; The adept gathers additional energy before making an energy blast Strike, granting the Strike two of the following benefits of their choice: the Strike gains the fatal d8 trait, the Strike's range increases to 120 feet, or the Strike deals splash damage equal to its damage dice.\n\n**Special** An adept can use their Intelligence modifier in place of their Dexterity modifier when making energy blast Strikes. An adept selects two of the following novice damage types: acid, cold, electricity, fire, mental, poison, or void. When using several abilities—their energy blast, Energy Deflection, Energy Wave, and dagger Strikes' additional damage from their veteran advancement—the adept chooses one of their selected damage types for the ability to deal, and the Strike or ability gains the trait corresponding to that damage type. An adept can spend 1 week experimenting with their magic to change one or both of their damage type choices.\n\nWhen the adept becomes an experienced follower:\n- Increase their Intelligence modifier to +4 and their Dexterity modifier to +2.\n- Increase their proficiency rank in Reflex and Will saves to expert.\n- Increase their dagger Strike damage from 1d4 to 2d4. Increase their energy blast Strike damage from 1d6 to 2d6.\n- An adept adds Investigate to the list of exploration activities they can perform without spending your exploration activity.\n\nWhen the adept becomes a veteran follower:\n- Increase their Dexterity modifier to +3, their Constitution modifier to +2, and their Wisdom modifier to +3.\n- Increase their item bonus to AC to +2.\n- Increase their proficiency rank in Perception to expert.\n- Increase their proficiency rank in Arcana and their Lore skills to expert. Increase their proficiency ranks in Nature, Occultism, and Religion to trained, and if they were already trained in one of those skills, increase their proficiency in that skill to expert.\n- Increase their proficiency rank in their dagger and energy blast Strikes to expert, and give them a +1 item bonus to attack rolls with their Strikes. Their energy blast Strikes deal 2 additional damage. Their dagger Strikes become magical for the purposes of ignoring resistances, and their dagger Strikes deal 3 additional damage, chosen from the damage types the adept can deal with their energy blast.\n- The adept selects one additional damage type that their energy blast can deal. They can select one of the novice damage types, or they can choose one of the veteran damage types: force, sonic, spirit, or vitality. The adept can know only one veteran damage type at a time.\n- The adept learns Energy Deflection. **Energy Deflection** Reaction (arcane); **Trigger** The adept or an ally within 10 feet of the adept takes acid, cold, electricity, fire, force, mental, poison, sonic, spirit, vitality, or void damage; **Effect** The adept grants the creature resistance to the triggering damage equal to half your level. If the damage is one of the types the adept can deal with their energy blast Strikes, the creature instead gains resistance equal to your level. The creature is then immune to the adept's Energy Deflection for 1 minute.\n\nWhen the adept becomes an exceptional follower:\n- Increase their Strength modifier to +1, their Constitution modifier to +3, their Intelligence modifier to +5, and their Wisdom modifier to +4.\n- Increase their item bonus to AC to +3.\n- Increase their proficiency rank in Reflex and Will saves to master. Increase their proficiency in Fortitude saves to expert. Give them a +1 item bonus to all saving throws.\n- Increase their proficiency rank in Perception to expert.\n- Increase their proficiency rank in Arcana and their Lore skills to master.\n- Increase their item bonus to attack rolls with their dagger and energy blast Strikes to +2. Increase their dagger Strike damage dice from 2d4 to 3d4, and increase the additional energy damage dealt by their dagger Strikes from 3 to 5. Increase the adept's energy blast Strike damage dice from 2d6 to 3d6, and increase the additional damage deal by their energy blast Strikes from 2 to 4.\n- The adept learns Energy Wave. **Energy Wave** Two Actions; The adept unleashes a close-range blast that deals damage equal to their energy blast Strike to each creature in a 15-foot cone or 30-foot cone (basic Reflex save). The adept uses an expert DC using their Intelligence modifier. After using Energy Wave, the adept can't do so again for 1d6 rounds.",
+          "why": "AoN follower-6 — the printed Adept follower entry (Pathfinder #223: Hell's Destiny pg. 229)."
+        }
+      ],
+      "note": "The `follower` bucket is the scraped AoN catalogue; the app's playable catalogue is the separate `followers` bucket, which has no Adept at all. Prose here so every follower reads, whichever bucket is opened; the missing playable Adept is a CROSS-FILE GAP."
+    },
+    {
+      "id": "readable-record-check#grimFascination",
+      "backfillRows": [
+        {
+          "category": "grimFascination",
+          "id": "blood",
+          "field": "description",
+          "value": "Blood necromancers, also known as sanguimancers, manipulate their own blood and the flowing blood of their enemies. Your thralls often resemble vampiric spawn or constructs of hardened blood.\n\n**Grave Spell** Blood Infusion\n\n**Thrall Enhancement** Your thralls are enhanced with a drop of your blood, and when they fall, your blood returns to you. Whenever a thrall is destroyed, you regain 1 Hit Point. At 5th level and every 4 levels thereafter, the amount of Hit Points you regain when a thrall is destroyed increases by 1.",
+          "why": "AoN grim-fascination-1 — the printed Blood grim fascination entry (Impossible Magic pg. 30)."
+        },
+        {
+          "category": "grimFascination",
+          "id": "flesh",
+          "field": "description",
+          "value": "Flesh necromancers, also known as caromancers, are experts at the destruction, production, and manipulation of flesh and muscles. Your thralls generally take on the form of zombies and other creatures of dead flesh.\n\n**Grave Spell** Dead Weight\n\n**Thrall Enhancement** You can still make use of a destroyed thrall's flesh. Whenever one of your thralls is destroyed, you can cause the thrall to leave behind difficult terrain in the space it was destroyed. The difficult terrain lasts 10 minutes.",
+          "why": "AoN grim-fascination-3 — the printed Flesh grim fascination entry (Impossible Magic pg. 30)."
+        }
+      ],
+      "note": "Two of the four grim fascinations shipped bare; the other two pass the guard only through an ast keyed under a same-slug record in another bucket (`items`/`instinct`), which is a separate instrument weakness reported as residue."
+    },
+    {
+      "id": "readable-record-check#hybridStudy",
+      "backfillRows": [
+        {
+          "category": "hybridStudy",
+          "id": "twofold-tine",
+          "field": "description",
+          "value": "Magic dances between the two weapons you wield with equally deadly grace. Fighting groups of enemies takes full advantage of your capabilities as you move from one foe to another.\n\nWhile in Arcane Cascade stance, if you make a Strike with a melee weapon you're holding, you can intensify the stance's power for another melee weapon of your choice you're holding in a different hand. Until the end of your turn, any extra damage the chosen weapon gains from Arcane Cascade is increased to 2. The extra damage increases to 4 if you have weapon specialization or 6 if you have greater weapon specialization.\n\n**Conflux Spell** Force Fling\n\n**Studious Spell (7th)** Blur\n\n**Studious Spell (11th)** Gravity Well\n\n**Studious Spell (13th)** Unfettered Movement",
+          "why": "AoN hybrid-study-15 — the printed Twofold Tine magus hybrid study entry (Impossible Magic pg. 14)."
+        },
+        {
+          "category": "hybridStudy",
+          "id": "volatile-spark",
+          "field": "description",
+          "value": "Your crashing spells meet their match with booming gunshots in a magical fusillade. By modifying your shots with your magic, you create explosions and cut through defenses.\n\nWhen you use Spellstrike, you can make a ranged firearm Strike, as long as the target is within the first range increment of your firearm. This overrides the actual range of the spell. If your firearm has the concussive trait, any damage from the spell you use in the Spellstrike uses the target's weakest resistance to any of the following: the spell's damage type, piercing, or bludgeoning. This benefit applies only to creatures you target with your firearm Strike during the Spellstrike, so it wouldn't apply to other creatures damaged with Expansive Spellstrike or similar abilities.\n\nIn addition, you gain the Reloading Cascade action. **Reloading Cascade** Single Action; You use Arcane Cascade and Interact to reload a firearm.\n\n**Conflux Spell** Booming Blast\n\n**Studious Spell (7th)** Entangling Flora\n\n**Studious Spell (11th)** Earthbind\n\n**Studious Spell (13th)** Seal Fate",
+          "why": "AoN hybrid-study-16 — the printed Volatile Spark magus hybrid study entry (Impossible Magic pg. 14)."
+        }
+      ],
+      "note": "Both new magus hybrid studies print their own rules text plus a conflux spell and three studious spells; prose only here, the conflux/studious grants are a CROSS-FILE GAP."
+    },
+    {
+      "id": "readable-record-check#sidebar",
+      "backfillRows": [
+        {
+          "category": "sidebar",
+          "id": "arcane-cascade-damage",
+          "field": "description",
+          "value": "Feats like Burning Cascade, Devastating Spellstrike, and Distracting Spellstrike have values dependent on your Arcane Cascade damage. Note that abilities that can increase the extra damage, such as the laughing shadow and twofold tine hybrid studies, apply only to the Strikes that meet their criteria, not to other abilities. This means feats like the listed ones use the base damage value, not the boosted one!",
+          "why": "AoN sidebar-3750 — the Arcane Cascade Damage sidebar on the Magus class page (Impossible Magic pg. 9)."
+        },
+        {
+          "category": "sidebar",
+          "id": "runic-phrases",
+          "field": "description",
+          "value": "While runes can have different proper names in various cultures or magical schools, the following represent some of their most common forms. Scholars and runesmiths will assemble runes according to a standard grammar, often appending diacritic runes onto their base runes. For instance, the combined form of *ranshu, the rune of thunder*, and *en, the rune of expansion*, might be called \"en-ranshu.\" While runes describe fundamental forces of the world, language is ever-changing, and so new runes might be born (and old runes fade from memory) as words and concepts are born and fall out of use.",
+          "why": "AoN sidebar-3753 — the Runic Phrases sidebar on the Runesmith class page (Impossible Magic pg. 43)."
+        },
+        {
+          "category": "sidebar",
+          "id": "motion-sense",
+          "field": "description",
+          "value": "An ooze eidolon has motion sense, allowing them to detect movement as a precise sense since they have no eyes. This lets them detect even minor movements like breathing, but even if a creature can become perfectly still, the ooze can usually determine the creature's location based on the last time the creature moved. Using Stealth usually still works against an ooze eidolon, but effects that are solely visual (such as a spell that might create concealment with a visual illusion) might not work against motion sense. The GM determines the specifics.",
+          "why": "AoN sidebar-3756 — the Motion Sense sidebar on the Ooze eidolon page (Impossible Magic pg. 76)."
+        },
+        {
+          "category": "sidebar",
+          "id": "jotunborn-adventurers",
+          "field": "description",
+          "value": "The brawny frames of jotunborn make them natural barbarians, champion, fighters, guardians, and monks. Many of these jotunborn take on roles as caravan defenders or local guards. Others become druids and rangers, especially those that prefer to maintain their nomadic lifestyle or those that have found their bonded site. While jotunborn are no more or less capable of spellcasting than others, most jotunborn tend to favor the occult tradition, with occult sorcerers, summoners, and witches being most prevalent in jotunborn societies.",
+          "why": "AoN sidebar-3758 — the Jotunborn Adventurers sidebar on the Jotunborn ancestry page (Battlecry! pg. 10)."
+        },
+        {
+          "category": "sidebar",
+          "id": "jotunborn-enclaves",
+          "field": "description",
+          "value": "Jotunborn rarely maintain permanent settlements due to their generally nomadic lifestyles. The only proper jotunborn settlement within the Fray is the town of Iivlar's Hold. This settlement is home to over 5,000 jotunborn and manages to successfully grow crops due to its planar proximity to the Universe. Iivlar's Hold lies near a thinner boundary within the Fray, just \"beneath\" the Verduran Forest. Unfortunately, the town can't sustain all jotunborn, so most of them continue with their nomadic lifestyle. No jotunborn settlements currently exist within the mortal Universe, so most jotunborn tend to live within the settlement closest to their bonded site. Since some people fear jotunborn, confusing them with dangerous giants, it's not uncommon for jotunborn within the Universe to simply live among nature.",
+          "why": "AoN sidebar-3759 — the Jotunborn Enclaves sidebar on the Jotunborn ancestry page (Battlecry! pg. 10)."
+        },
+        {
+          "category": "sidebar",
+          "id": "on-jotuns",
+          "field": "description",
+          "value": "The origins of the term \"jotun\" is generally unclear to nongiants. In the tongue of giants, jotun refers to any giant progenitors. Specifically, this refers to titans and gigases, the first giants. The word jotun roughly translates to \"free ones,\" referring to how titans rebelled against the gods and become an independent people, eventually creating the first gigases. The Jotun language came about in the wake of Earthfall. As the language was born when the Cyclops language was forcibly mixed with Thassilonian during the height of the runelords' rule, the remaining giants who now spoke this language decided to name it in honor of the free ones as a way to reclaim the tongue for themselves. Jotunborn refer to themselves as vahndyrs, a word that roughly translates to \"descendants\" and was transformed into \"jotunborn\" in other languages.",
+          "why": "AoN sidebar-3760 — the On Jotuns sidebar on the Jotunborn ancestry page (Battlecry! pg. 10)."
+        }
+      ],
+      "note": "Six sidebars arrived with an aonId and no text. A sidebar IS prose by definition — it can never be a rule-based exemption, so all six get their printed paragraph."
+    },
+    {
+      "id": "readable-record-check#foreign-ast-collision",
+      "backfillRows": [
+        {
+          "category": "follower",
+          "id": "medic",
+          "field": "description",
+          "value": "This trainee healer can master the art of bringing people back from the brink of death.\n\n**Melee** Single Action scalpel (agile, deadly d8, finesse, versatile S), **Damage** 1d4 piercing (functions as dagger)\n\n**Str** +0, **Dex** +2, **Con** +1, **Int** +1, **Wis** +3, **Cha** +0\n\n**Hit Points** 6\n\n**Kit Armor** item bonus +1, Dex cap +4\n\n**Skills** Herbalism Lore, Medicine, Nature, Survival\n\n**Follower Ability** A medic has the Battle Medicine feat. Their kit includes a healer's toolkit.\n\nWhen the medic becomes an experienced follower:\n- Increase their Dexterity modifier to +3 and their Wisdom modifier to +4.\n- Increase their proficiency rank in Fortitude saves and Will saves to expert.\n- Increase their proficiency rank in Medicine to expert.\n- Increase their scalpel Strike damage dice from 1d4 to 2d4. Their scalpel Strikes deal 1 persistent bleed damage (or 1d6 persistent bleed damage on a critical hit).\n- Once per day, the medic can use Battle Medicine on a creature that is temporarily immune.\n\nWhen the medic becomes a veteran follower:\n- Increase their Strength modifier to +1, their Dexterity modifier to +4, and their Constitution modifier to +2.\n- Increase their item bonus to AC to +2.\n- Increase their proficiency rank in Perception to expert.\n- Increase their proficiency rank in Medicine to master, and their proficiency rank in Herbalism Lore, Nature, and Survival to expert. Give them a +1 item bonus to Medicine checks.\n- Increase their proficiency rank in their scalpel Strikes to expert, and give them a +1 item bonus to attack rolls with their scalpel Strikes. Their scalpel Strikes deal 2 additional damage and become magical for the purposes of ignoring resistances.\n- The medic can use Medic's Treatment. **Medic's Treatment** Single Action; **Requirements** The medic is wearing or holding a healer's toolkit; **Effect** The medic treats an adjacent creature in an attempt to reduce the clumsy, enfeebled, sickened, or stupefied condition. If a creature has multiple conditions from this list, the medic chooses one to treat. The medic attempts a counteract check against the condition, using their Medicine modifier as their counteract modifier and half their level as the counteract rank. The condition's source determines the DC. The medic can't treat a condition that came from an artifact or an effect above 20th level. Using Medic's Treatment on a condition that is continually applied (for instance, the enfeebled condition a holy creature gains from carrying an unholy weapon) has no effect as long as the circumstances continue. **Critical Success** Reduce the chosen condition's value by 2. **Success** Reduce the chosen condition's value by 1. **Critical Failure** Increase the chosen condition's value by 1.\n\nWhen the medic becomes an exceptional follower:\n- Increase their Strength modifier to +2, their Constitution modifier to +3, their Intelligence modifier to +2, and their Wisdom modifier to +5.\n- Increase their item bonus to AC to +3.\n- Increase their proficiency rank in Fortitude and Will saves to master, and their proficiency rank in Reflex saves to expert. Give them a +1 item bonus to all saving throws.\n- Increase their item bonus to Medicine checks to +2. They become an expert in Acrobatics.\n- Increase their item bonus to attack rolls with their scalpel Strikes to +2. Increase their scalpel Strike damage dice from 2d4 to 3d4 and increase the additional damage that their scalpel Strikes deal from 2 to 4. Increase the persistent bleed their scalpel Strikes deal to 2 (or 2d6 on a critical hit).\n- Once per hour, the medic can use Battle Medicine on a creature that is temporarily immune.\n- The medic can use Quick Treatment. **Quick Treatment** Single Action; **Frequency** once per round; **Effect** The medic Strides and then uses Administer First Aid, Battle Medicine, Medic's Treatment, or Treat Poison.",
+          "why": "AoN follower-2 — the printed Medic follower entry (Battlecry! pg. 78)."
+        },
+        {
+          "category": "follower",
+          "id": "scout",
+          "field": "description",
+          "value": "This novice lookout can become a master of traversing terrain silently to strike their foes' weak points.\n\n**Melee** Single Action shortsword (agile, finesse, versatile S), **Damage** 1d6 piercing\n\n**Str** +1, **Dex** +3, **Con** +1, **Int** +0, **Wis** +2, **Cha** +0\n\n**Hit Points** 6\n\n**Kit Armor** item bonus +1, Dex cap +4\n\n**Skills** Acrobatics, Stealth, Survival, one Lore about a specific settlement or a specific terrain\n\n**Follower Ability** A scout deals 1d4 extra precision damage to off-guard targets.\n\n**Special** A scout adds Scout to the list of exploration activities that they can perform without spending your exploration activity.\n\nWhen the scout becomes an experienced follower:\n- Increase their Dexterity modifier to +4 and their Wisdom modifier to +3.\n- Increase their proficiency rank with Reflex saves, Will saves, and Perception to expert.\n- Increase their shortsword Strike damage dice from 1d6 to 2d6.\n- Add Search to the list of exploration activities the scout can perform without spending your exploration activity.\n\nWhen the scout becomes a veteran follower:\n- Increase their Strength modifier to +2, their Constitution modifier to +2, and their Intelligence modifier to +1.\n- Increase their item bonus to AC to +2.\n- Increase their proficiency rank in Acrobatics, Stealth, Survival, and their specific Lore to expert. Give them a +1 item bonus to Stealth checks.\n- Increase their proficiency rank in their shortsword Strikes to expert, and give them a +1 item bonus to attack rolls with their shortsword Strikes. Their Strikes deal 2 additional damage and become magical for the purposes of ignoring resistances.\n- Increase the extra precision damage the scout does to off-guard targets to 1d6.\n- The scout learns Exploit Injury. **Exploit Injury** Single Action; **Requirements** The scout's last action was a successful melee Strike against an off-guard target; **Effect** The target of the Strike is off-guard until the end of your next turn.\n\nWhen the scout becomes an exceptional follower:\n- Increase their Strength modifier to +3, their Dexterity modifier to +5, their Constitution modifier to +3, and their Wisdom modifier to +4.\n- Increase their item bonus to AC to +3.\n- Increase their proficiency rank in Reflex saves, Will saves, and Perception to master, and their proficiency rank in Fortitude saves to expert. Give them a +1 item bonus to all saving throws.\n- Increase their proficiency rank in Stealth to master, and increase their item bonus to Stealth checks to +2.\n- Increase their item bonus to attack rolls with their shortsword Strikes to +2. Increase their shortsword Strike damage dice from 2d6 to 3d6 and increase the additional damage that their shortsword Strikes deal from 2 to 4.\n- When the scout uses the Scout exploration activity, they also Avoid Notice and Search.",
+          "why": "AoN follower-3 — the printed Scout follower entry (Battlecry! pg. 79)."
+        },
+        {
+          "category": "grimFascination",
+          "id": "bone",
+          "field": "description",
+          "value": "Bone necromancers, also known as osteomancers, craft what they desire from the skeletons of the dead or simply create new skeletons by expanding and shaping small bone pieces.\n\n**Grave Spell** Bone Spear\n\n**Thrall Enhancement** Your thralls are well constructed and nimble. Each of your thralls' Speed is increased by 5 feet.",
+          "why": "AoN grim-fascination-2 — the printed Bone grim fascination entry (Impossible Magic pg. 30)."
+        },
+        {
+          "category": "grimFascination",
+          "id": "spirit",
+          "field": "description",
+          "value": "Spirit necromancers, also known as vitamancers, seek the secrets of the soul and play with the eternal energies of the living and dead. Your thralls often resemble ghosts and spirits.\n\n**Grave Spell** Life Tap\n\n**Thrall Enhancement** Your thralls, while still being tied to the physical world, have an incorporeal essence. Whenever one of your thralls Strikes, you can choose for that damage to be spirit or void damage instead of physical damage.",
+          "why": "AoN grim-fascination-4 — the printed Spirit grim fascination entry (Impossible Magic pg. 30)."
+        }
+      ],
+      "note": "NOT on the guard's red list, and that is the point: these four are just as textless as their siblings, and they pass only because scripts/readable-record-check.mjs looks an id up in public/ast-index.json WITHOUT its bucket — 'medic' resolves to the Medic ARCHETYPE's display tree, 'scout' to the Scout exploration activity's, 'bone' to an item's, 'spirit' to the barbarian Spirit instinct's. Making the ast lookup bucket-aware was measured first and rejected: 1,574 records currently resolve through an ast FILE whose name differs from their bucket (itemBonus<-items 715, runes<-items 155, rules<-categoryPage 118 …), because the ast files are grouped display files and not per-bucket, so a strict check would open a 1,574-record red on a false premise. Giving these four their printed text removes the dependence on the colliding entry instead."
+    }
+  ]
+}

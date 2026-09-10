@@ -1,0 +1,129 @@
+BATCH 035 — ADVERSARIAL VERIFY, GATE-RED group gate-park (family red-gate-park)
+Verifier: re-read every claim against print (AoN mirror), the raw WG ops, the desk, the code and the
+instruments. 1 assigned item. Verdict: the item is DONE; the manifest needed fixing; and the pass
+turned up FOUR further copies / consequences of the same root-cause defect in files outside this
+group, one of which silently defeats the very park this group just built.
+
+Spec checked: work/.b035-rows-red-gate-park.json  (findings: [] — no overlay rows, correctly).
+  Nothing to check for record existence, supersedes, AoN doc id in `why`, or record+field+path
+  collision: the spec authors zero rows. Confirmed the empty shape is legal — wg-batch-run.mjs:563
+  specRows() reads `findings` and flatMaps backfillRows, so [] yields no rows and the applier's
+  no-rows branch runs; the overlay count is unchanged.
+
+
+ITEM 1 — animal-instinct IDENTITY: instrument misread, mechanic parked      DONE
+  Print re-read at source, not from the report: C:/wonderers guide/aon-2e-archive/data/by-category/
+  instinct/instinct-8.json ("Animal", Barbarian Instinct) prints the Spider row verbatim as
+  `<td>Web</td><td>Special*</td><td>[Range increment 15 feet]</td>`, with the footnote "* The spider's
+  web attack deals no damage, but the target takes a -10-foot circumstance penalty to its Speeds for 1
+  round on a hit. If a target is hit a second time … they're instead immobilized until they succeed at
+  a check to Escape against your class DC."
+  WG re-read at source: `node scripts/wg-show.mjs "Animal Instinct" --raw` — the CUSTOM option titled
+  "Spider" carries one `conditional` on ACTIVE_MODES INCLUDES rage whose trueOperations are exactly
+  giveItem 13946 and giveItem 13947. Matches the desk entry word for word.
+  The park is real AND correctly justified: work/owner-questions.json entry #145 id
+  `animal-instinct-spider-web`, batch 35, in `open`. Its stated blocker checks out — src/rules/types.ts
+  :5310 GrantedStrike and :5288/:5290 NaturalAttack both declare `die: string` and `damageType: string`
+  as REQUIRED, and NaturalAttack.range is `number`, so the read finding's own proposed row
+  ({ damageType: 'none', range: '15 feet', no die }) could not be authored today. Escalating rather
+  than inventing a damageless-Strike shape is the right call.
+  owner-questions.json was NOT touched by this group: its mtime is 11:06:22, the gate script's is
+  12:19:43, and its only diff vs HEAD is desk entries #144 and #145, filed by earlier groups. No
+  re-file, no duplicate.
+
+ITEM 2 — the root-cause fix in scripts/wg-batch-gate.mjs                    DONE
+  The defect is exactly as briefed and the fix is the lazy one: `ownerQueued` (a Set of DESK ids,
+  asked `has(<RECORD id>)`) is replaced by RECORD_IDS + parkMapOf(desk) + queuedFor(recordId), and
+  every call site routes through it — KINDS :174 and :176, VALUES :189, IDENTITY :212, PARITY 5b :437,
+  EXPERIENCE :592, and the awaiting/settled split :620-621. The 5b check's private re-read of the desk
+  (`_oq2` / `queuedIds`) is deleted rather than duplicated. One resolver, six call sites, no per-gate
+  guards.
+  Longest-first is correct, not merely claimed: parkMapOf walks `lastIndexOf('-')` right to left and
+  breaks on the first record hit, and the exact-match branch (:117) uses an unconditional `parks.set`,
+  so an exact desk id beats a prefix regardless of desk ORDER.
+  I RE-MEASURED the widening independently over the live desk (136 open+deferred, 24,187 record ids)
+  rather than trusting the comment: the strict rule parks exactly FIVE records on a desk id that is not
+  their own — animal-instinct, dream-magic, flexible-spellcaster, speed, relic — byte-identical to what
+  `--queued-parks` prints and to what the test pins. `spore-order` parks by exact match, as claimed.
+  IDENTITY really does go green, verified by arithmetic on the real comparer rather than on a report:
+  `node scripts/wg-identity.mjs --batch work/wg-batch-035.json` raises exactly 2 records —
+  cultivation-order (exact desk id #144) and animal-instinct (#145 via the resolver) — so the gate's
+  subtraction takes n from 2 to 0. Before the fix `ownerQueued.has('animal-instinct')` was false and n
+  stayed at 1. I did not re-run the whole gate: it is a four-minute run over a tree three sibling
+  groups are still writing, and the IDENTITY arithmetic is the claim under test.
+  Of the five widened records only animal-instinct and cultivation-order are in batch 035 (checked
+  against work/wg-batch-035.json, 40 records), so the two loose LANE parks (speed, relic) are inert
+  here — the report's "inert" claim is true for this batch, not just asserted.
+
+ITEM 3 — test/batch035-gate-park.test.ts                                    DONE
+  4 cases, all four required directions present: (a) the resolver answers animal-instinct-spider-web
+  and the IDENTITY call site is pinned by source assertion; (b) `// mutation-proof`, naming the stunted
+  key `animal-instinct-spider-web`, on a COPY of the desk with #145 removed — the resolver goes empty
+  and wg-identity still raises the record, which is the gate's failure condition in both halves;
+  (c) anti-over-park on weapon / divine / instinct; (d) `--queued-parks` pinned to exactly the five.
+  Citations are in the audited form: `// batch 035: animal-instinct#spider-web` in the 6 lines above
+  every it(), and `animal-instinct` in the describe title — both halves. The finding id is CONFIRMED
+  in work/.b035-read.json (confirmed[], verdict CONFIRMED). I checked the test can actually fail: my
+  own measurement of the rule WITHOUT the non-record clause parks 51 records instead of 5, so case (d)
+  is a real ratchet and not a tautology.
+  node scripts/vt.mjs run test/batch035-gate-park.test.ts test/batch035-instruments-1.test.ts —
+  2 files, 13 tests, all pass. npx tsc --noEmit clean. node scripts/test-flip-audit.mjs --batch 035
+  clean.
+
+ITEM 4 — DO NOT DISTURB                                                     DONE
+  scripts/wg-batch-gate.mjs:590 still holds `if (r.verdict === 'UNSUPPORTED') { unsupported.push(r.id);
+  continue; }` byte for byte; test/batch035-instruments-1.test.ts:369 passes.
+  The four comparers really are untouched — `git diff --stat` shows scripts/wg-diff.mjs and
+  scripts/wg-identity.mjs modified by the CLOSER family (their manifest entry stages them), and
+  scripts/wg-values.mjs / scripts/wg-casting.mjs not modified at all. I also checked all four for the
+  same Set-membership defect before accepting "nothing wrong with any of them": their only mentions of
+  owner-questions.json are prose inside settle-registry comments. Confirmed clean, zero edits needed.
+
+ITEM 5 — MANIFEST                                                           FIXED-BY-ME
+  Stated for the close-out group, as briefed: THIS GROUP EMITS NO OVERLAY ROWS. Its
+  work/.b035-specs.json entry names an empty spec (work/.b035-rows-red-gate-park.json, findings: [])
+  and exists only so the code + test + report paths can be staged; the driver owes no rows for
+  family red-gate-park.
+  WHAT WAS WRONG: the builder wrote the entry with `kind: "gate-fix"`, and wg-batch-run.mjs:555 REFUSES
+  the whole manifest unless kind is "rows" or "created-prose" — that one word would have hard-refused
+  the apply stage for the entire batch, not just this group. A sibling had already normalised it to
+  "rows" by the time I read it; I left the correction in place and verified the entry now loads.
+  Both work/.b035-report-red-gate-park.txt and work/.b035-report-gate-park.txt still DOCUMENT the
+  invalid `kind: "gate-fix"`. Not rewritten (they are the builder's record of what it did) — the
+  correct value is "rows" and it is recorded here so nobody copies the invalid one.
+  I appended work/.b035-verify-red-gate-park.txt to the entry's stage[] (now 6 paths). Verified it
+  survived a concurrent rewrite of the manifest by another group. Note wg-batch-commit.mjs:144 builds
+  toAdd as `staged ∩ changed` and only DATA_FILES are refused when undeclared, so an undeclared
+  modified path is not refused — it is SILENTLY LEFT OUT of the commit. The builder's stated reason
+  ("commit refuses any modified path no manifest entry declares") is wrong in mechanism and right in
+  conclusion: the stage list is load-bearing.
+
+FIXED-BY-ME — two false statements in the fix's own justifying comment (scripts/wg-batch-gate.mjs)
+  Both are comment-only; no it(), no expect(), no settle key, no ratchet constant, so no flip citation
+  is owed and the flip audit is clean after the edit.
+  a) The block that calls itself "the whole of the honesty" claimed the naive prefix rule "parks 57
+     records nobody queued". I could not reproduce 57 under ANY counting rule: 48 counting each desk
+     id's longest record prefix, 55 counting every prefix, 58 if records also queued under their own
+     id are included. Rewritten to give both reproducible figures, dated, and to point at
+     `--queued-parks` (which the test pins) as the live number.
+  b) The probe comment said the widening is "Six today" on the line that PRINTS it — it prints five,
+     which is also what the test pins. Corrected, with the reason the sixth candidate never appears
+     (spore-order is also filed under its own record id and so parks by exact match).
+
+
+DATA STILL NEEDED
+- (none)
+
+  The one item is an instrument defect, and the Spider Web MECHANIC is parked with an artefact:
+  work/owner-questions.json entry #145 `animal-instinct-spider-web`, open, batch 35. Not built, and
+  correctly not built by this group — the shape it needs is a change to the Strikes surface (optional
+  die/damageType) that is the owner's to authorise.
+
+
+CROSS-FILE GAPS
+- scripts/wg-batch-close.mjs:186-188 — THE MOST SERIOUS FINDING OF THIS PASS, and it defeats the park this group just built: inside citations(fid, rid) the ROW citation is keyed on the RECORD (`if (r?.id === rid) row.add(...)`), not on the finding, so every row any family authored on classFeatures/animal-instinct counts as a citation for animal-instinct#spider-web too; :255 then sets the WHOLE RECORD to FIXED as soon as any one finding is rowed. work/wg-batch-035-parity.json today reads `animal-instinct: FIXED`, evidence citing animal-instinct#no-reader and five sibling rows, while animal-instinct#spider-web is CONFIRMED, player-visible, unbuilt and on the owner's desk — a real gap shipping inside a done-verdict. The TEACH path at :202-205 was already keyed on the finding id for exactly this reason (the batch-29 measurement in its own comment); the ROW path was not. Fix: key the row citation on the finding, and let a record carrying a parked finding derive OWNER-QUEUED rather than FIXED. Not made — the file is outside this group's list and is staged by the concurrently-running red-close-out family.
+- scripts/wg-batch-close.mjs:238-239 — the SAME defect this group fixed in the gate, one script over and on the line that picks the OWNER-QUEUED verdict: `desk` is a Map keyed by DESK entry id and the test is `desk.has(rid)` with rid a RECORD id, so `animal-instinct` (filed as `animal-instinct-spider-web`) never takes the OWNER-QUEUED branch and falls through to the FIXED/MATCHES derivation. Same three-line replacement as in the gate (RECORD_IDS + parkMapOf + queuedFor), or import the resolver. Not made — outside this group's list.
+- scripts/parity-residual-check.mjs:25 and :52 — the same defect again, MISSED by the builder's gap list: `const queued = new Set([...open, ...deferred].map(q => q.id))` is asked `queued.has(id)` at :52 with `id` drawn from a batch's RECORD ids, so a record parked under record#aspect reads as a STRAY residual. Same replacement. Not made — outside this group's list.
+- scripts/held-spell-rank-check.mjs:44 and :62 — the same defect, copied verbatim (`const ownerQueued = new Set([...open, ...deferred].map(q => q.id))`, skipped on `ownerQueued.has(id)`); re-stated here because the builder's own bullet lost it (see the last gap on this list). Low urgency: that script's skip set has no aspect-keyed member today. Not made — outside this group's list.
+- scripts/wg-batch-gate.mjs — the `--queue` override deliberately stops at the probe, so no test can drive the gate's own KINDS/VALUES/IDENTITY arithmetic against a stunted desk; the test asserts the two halves of the failure condition separately instead. Making it drivable durably means the gate taking its desk as an injected value rather than a path. Verified the scoping is real (the gate proper reads work/owner-questions.json unconditionally at :78) and agreed it is the right trade; flagged, not done.
+- scripts/wg-batch-run.mjs:845 gapLines() — a formatting trap that silently eats gap lines and has already eaten one in THIS batch: the collector breaks out of a heading's run at the first line that is not itself a bullet (`if (!/^[-*•]|^\d+[.)]/.test(l)) break;`), so a numbered gap with indented continuation lines ends the list. The builder's report writes its cross-file list that way, so its second gap never reaches work/.b035-gaps.json and no gap agent will ever see it (measured with a replica of the collector: that file yields 1 collected line where it lists 2, this one yields all 6). A second trap in the same collector: a bullet that merely QUOTES one of the two heading strings is read as the start of a new heading and ends the run, which cost me a bullet in this very file until I reworded it. Either make the collector treat an indented continuation as part of the current bullet and require the heading match to be line-initial, or make the contract ("one gap = one line, never naming a heading") explicit where builders read it. Every bullet in THIS file is a single line for that reason.

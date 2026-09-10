@@ -1,0 +1,54 @@
+BATCH 035 — SITUATIONAL family report
+Spec: work/.b035-rows-situational.json (7 findings, 0 backfill rows — every fix is code-only or held)
+Code: src/rules/situationalBonuses.ts (FEAT_SITUATIONAL +1, RECORD_MARKERS +5, SPELL_MARKERS +2)
+Test: test/batch035-situational.test.ts (18 assertions, all green; npx tsc --noEmit clean)
+
+DATA STILL NEEDED
+- classFeatures / metallic-reactance / whileActive = [{"state":"overdrive","resistances":[{"type":"acid","value":"5+floor(@actor.level/2)"},{"type":"electricity","value":"5+floor(@actor.level/2)"}]}] — HELD: no reader exists (types.ts:1173 whileActive.state union has no 'overdrive', classResources.ts has no inventor Overdrive toggle). Author it only together with the two cross-file fixes below, or it is inert data.
+- classFeatures / animal-instinct / grantedStrikes = the 29 shipped rows PLUS a Web row for choiceValue 'spider' (range increment 15 feet, no damage) — HELD: GrantedStrike has no damageless shape (die + damageType are required strings) and the subclass push drops every choiceValue row anyway (see cross-file gap 1). Authoring it now ships a mistyped row that nothing reads.
+
+CROSS-FILE GAPS
+- src/rules/build.ts:2882 — `push(content.classFeatures[subclassId]?.grantedStrikes, subclassId)` passes no `pick`, so EVERY choiceValue-tagged Strike on a subclass record is dropped. MEASURED on a built barbarian: animal-instinct with 'spider' and with 'bear' both yield zero naturalAttacks, so the shipped Fangs row reaches no sheet either. Fix: pass the answered instinct animal (build.featChoices['feature:<subclassId>'] / choiceFlagAnswer('instinctAnimal', ...)).
+- src/rules/types.ts:5258 GrantedStrike — no shape for a damageless attack (`die` and `damageType` required); the Spider's Web and any other "Special*" attack cannot be stored as a Strike row.
+- src/rules/skillActions.ts:594 — the Battle Medicine card still ends "The target is then immune to your Battle Medicine for 1 day." for a forensic-medicine-methodology investigator, whose print says 1 hour. The situational row now says so on the HP breakdown, but the action card itself is not character-aware.
+- src/rules/types.ts:1173 — the whileActive.state union (rage|panache|hunt-prey|unleash-psyche) needs an 'overdrive' member before any inventor Overdrive rider can be a NUMBER (metallic-reactance and its four siblings hyper-boosters / subtle-dampeners / muscular-exoskeleton / speed-boosters).
+- src/rules/classResources.ts — no inventor 'overdrive' toggle (the rage / panache `kind: 'toggle'` shape), which is the other half of the same lane.
+- src/rules/situationalBonuses.ts SituationalTarget.kind — no 'resistance' member, which is why the metallic-reactance +2 could not go in FEAT_SITUATIONAL. Noted only; the whileActive lane above is the right home, not a new target kind.
+
+PER FINDING
+
+forensic-medicine-methodology#battle-medicine-rider
+  Did: FEAT_SITUATIONAL["forensic-medicine-methodology"] in src/rules/situationalBonuses.ts — one `hp` row carrying BOTH halves of methodology-7's sentence ("+ your level" on the Hit Points a target regains from your successful Battle Medicine, "and they are then immune to it for only 1 hour, not 1 day"). The godless-healing / medic-dedication / robust-health shape; reached through ownedFeatureIds, no new plumbing.
+  Test: test/batch035-situational.test.ts, describe 'forensic-medicine-methodology carries its Battle Medicine rider' — 3 its through featSituationalFor(characterSituationalIds(...)) on a BUILT investigator: the id arrives, the +level row exists exactly once, the 1-hour immunity travels with it, and an empiricism investigator gets neither half.
+  Not done: the Battle Medicine action card's own "1 day" text (cross-file gap 3).
+
+metallic-reactance#overdrive
+  Did: RECORD_MARKERS['metallic-reactance'] = { on: 'action', id: 'overdrive', value: "acid/electricity resistance +2", note: … } — innovation-5's "When under the effects of Overdrive, the resistance increases by 2" on the Overdrive action row, with the note saying explicitly that the sheet's number is the un-Overdriven one. Verified the surface exists: the 'overdrive' class feature grantsActions 'overdrive' and content.actions['overdrive'] is real, so MainTab's `recordMarkersFor(character, content, 'action', actionId(a.name))` finds it.
+  Test: describe 'metallic-reactance shows the Overdrive increase on the Overdrive action' — 3 its on a built armor-innovation inventor holding the modification (value carries +2, note names acid and electricity and 5 + half your level and un-Overdriven); an inventor with dense-plating instead reads nothing.
+  Not done: the NUMBER. The proposal's whileActive row has no reader — see DATA STILL NEEDED and cross-file gaps 4 and 5. This is a display carrier, not the computed resistance; if the toggle lane is ever built, the mark's "the sheet shows the un-Overdriven value" sentence is the part to retire.
+
+superstition-instinct#rage-hp-and-frightened
+  Did: RECORD_MARKERS['superstition-instinct'] = { on: 'action', id: 'rage', note: … } — instinct-13's two Rage riders (regain HP equal to the temp HP Rage gave you, not again for 10 minutes; willingly accepting a magic spell or effect makes you frightened 1 with a floor of 1 while it lasts) on the Rage action, the revitalizing-rage / berserkers-cloak lane. The existing FEAT_SITUATIONAL row (+2 status saves vs magic, extra Rage damage) is untouched — Q2 lets a star and a mark coexist.
+  Test: describe 'superstition-instinct shows both Rage riders on the Rage action' — 3 its: the HP half, the frightened half with its floor, and a fury-instinct barbarian seeing no mark while the superstitious one keeps its single Will-save star.
+
+animal-instinct#spider-web
+  Did: RECORD_MARKERS['animal-instinct'] = { on: 'action', id: 'rage', note: "Spider: … Web attack — range increment 15 feet, no damage … −10-foot circumstance penalty … immobilizes … Escape against your class DC" } — instinct-8's whole Web row and its footnote, on the Rage action the instinct's attacks belong to.
+  Test: describe 'animal-instinct carries the Spider Web attack' — 3 its on a built barbarian who answered 'spider': the range/no-damage/Speed-penalty half, the second-hit immobilize half plus the 'Spider:' scoping, and a giant-instinct barbarian seeing nothing.
+  Not done: the grantedStrikes ROW (DATA STILL NEEDED) — see the spec note and cross-file gaps 1 and 2. Because a mark is keyed by record id alone, the note is scoped in its first word rather than by the animal answer; the RecordMarker contract requires exactly that ("when the clause names one skill, say so in the note's first words").
+
+the-oscillating-wave#psi-cantrip-mods
+  Did: SPELL_MARKERS['frostbite'] and SPELL_MARKERS['ignition'], both sourced 'the-oscillating-wave' — conscious-mind-9's "range … increases to 120 feet" and "increase the range to 60 feet … your reach increases by 5 feet". Same lane as the b033/b034 entries directly above them; the spell records keep the ranges that are right for everyone else.
+  Test: describe 'the-oscillating-wave rewrites frostbite and ignition for its own psychic' — 3 its through spellSituationalFor on a built psychic: one rider per row, both halves of the ignition clause, the spell records still 60 feet / 30 feet, and a Silent Whisper psychic plus a wizard reading neither.
+
+starless-shadow#familiar-of-stalking-night
+  Did: RECORD_MARKERS['starless-shadow'] = { on: 'feature', id: 'patron', note: … } — patron-17's Familiar of Stalking Night verbatim in substance (Cast or Sustain a hex, familiar adjacent to an enemy to which it's concealed/hidden/undetected, that enemy becomes frightened 1). Enemy-facing, so a note rather than a star (ruling F). Verified 'patron' is the id FeatsTab renders with: no `patron-starless-shadow` variant record exists, so the variant lookup falls back to the feature id.
+  Test: describe 'starless-shadow and devourer-of-decay carry their familiar abilities' — the Starless Shadow it plus the shared leak test (neither patron's mark shows on the other, each Patron entry carries exactly one mark).
+
+devourer-of-decay#familiar-of-parasitic-might
+  Did: RECORD_MARKERS['devourer-of-decay'] = { on: 'feature', id: 'patron', note: … } — patron-19's Familiar of Parasitic Might (one creature within 15 feet of your familiar below half its maximum HP becomes sickened 1 unless it succeeds at a Fortitude save against your spell DC). Same lane and same reason.
+  Test: same describe, the Devourer of Decay it (15 feet, half its maximum Hit Points, sickened 1, Fortitude save against your spell DC) plus the shared leak test.
+
+NOTES
+- scripts/apply-situational-lane.mjs was NOT edited: nothing was deleted from the registry this batch, and the script already skips ids hand-authored in it.
+- node scripts/vt.mjs test/batch035-situational.test.ts test/situational-bonuses.test.ts test/triage-lane-close.test.ts test/authoring-guards.test.ts — 57 passed (the three guards are the registry ratchets: key shape, dead-id resolution, and the RECORD_MARKERS row count).
+- node scripts/test-flip-audit.mjs --batch 035 reports 4 violations, none in my files (test/batch034-engine.test.ts x3 and scripts/wg-diff.mjs VERIFIED_EQUIVALENT 'cultivation-order'); my test file is clean under it.

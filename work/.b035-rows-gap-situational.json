@@ -1,0 +1,30 @@
+{
+  "findings": [
+    {
+      "id": "metallic-reactance#overdrive",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "metallic-reactance",
+          "field": "whileActive",
+          "value": [
+            {
+              "state": "overdrive",
+              "resistances": [
+                { "type": "acid", "value": "5+floor(@actor.level/2)" },
+                { "type": "electricity", "value": "5+floor(@actor.level/2)" }
+              ]
+            }
+          ],
+          "why": "AoN innovation-5 (Metallic Reactance): \"You gain resistance equal to 3 + half your level to acid and electricity damage. When under the effects of Overdrive, the resistance increases by 2.\" The record's own `resistances` field carries only the first sentence (acid/electricity \"3+floor(@actor.level/2)\"), and the second sentence had no reader at all — the `whileActive.state` union held no 'overdrive' member and CLASS_RESOURCES had no inventor bucket, so nothing could ever be \"under the effects of Overdrive\". Both are in place as of this gap pass, so this row is the whole clause: same-type resistances do not stack and the highest wins (src/rules/derive.ts, deriveDefenses), so the 5 + half level applies while the toggle is on and the flat 3 + half level stands when it is off. No `whileActive` row exists for this record in the overlay, so no supersedes is owed."
+        }
+      ],
+      "note": "The DATA half of the finding the situational builder held. The two CODE halves it named as cross-file gaps are done in the same pass and are what makes this row readable: src/rules/types.ts's `whileActive.state` union gains 'overdrive', and src/rules/classResources.ts gains an `inventor` bucket with an `overdrive` toggle (kind 'toggle', refresh 'encounter' — action-901 lasts \"for 1 minute\" and is \"once per round\" — class-only, because no feat or archetype dedication in the corpus grants the `overdrive` class feature). Every reader downstream was already generic: `activeStateGrants` (src/rules/derive.ts) asks only `classResources[state] > 0`. Pinned by test/batch035-gap-situational.test.ts, which patches this exact value into a content copy (the row has not landed yet) and measures deriveDefenses on a BUILT 5th-level armour-innovation inventor: acid 5 with Overdrive off, 7 with it on, and 5 with the shipped record even when the toggle is on — so the row, not the toggle, is what raises it. The RECORD_MARKERS['metallic-reactance'] display mark the builder shipped stays: its 'the sheet shows the un-Overdriven value' sentence is now the sentence to retire when this row lands, which is a wording follow-up, not a mechanic."
+    },
+    {
+      "id": "animal-instinct#spider-web",
+      "backfillRows": [],
+      "note": "Code-only, no data row — and the Web STRIKE itself is parked as owner question `animal-instinct-spider-web`, because a damageless attack has no shape in GrantedStrike/NaturalAttack and giving it one changes the Strikes surface. What IS delivered here is the scope the builder's own note said it could not have: `RecordMarker.choiceValue` (src/rules/situationalBonuses.ts) plus the `choices` argument on `markersFor`, fed from `Character.featureChoices` by `recordMarkersFor` (src/rules/explain.ts) — the same `feature:<id>` map derive.ts already reads for Elemental Rage's damage type, so nothing new is stored. RECORD_MARKERS['animal-instinct'] now carries `choiceValue: 'spider'`, so the 21 barbarians who answered something else stop reading a spider's footnote on their Rage row (MEASURED before the fix on a built bear barbarian). Pinned by test/batch035-gap-situational.test.ts on two built barbarians of the SAME instinct that differ only in the answer."
+    }
+  ]
+}

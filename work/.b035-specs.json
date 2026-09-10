@@ -1,0 +1,262 @@
+[
+  {
+    "file": "work/.b035-rows-situational.json",
+    "kind": "rows",
+    "family": "situational",
+    "stage": [
+      "work/.b035-rows-situational.json",
+      "work/.b035-report-situational.txt",
+      "work/.b035-verify-situational.txt",
+      "test/batch035-situational.test.ts",
+      "src/rules/situationalBonuses.ts"
+    ]
+  },
+  {
+    "file": "work/.b035-rows-instruments-2.json",
+    "kind": "rows",
+    "family": "instruments-2",
+    "stage": [
+      "work/.b035-rows-instruments-2.json",
+      "work/.b035-report-instruments-2.txt",
+      "work/.b035-verify-instruments-2.txt",
+      "work/experience-instrument-limits.json",
+      "test/batch035-instruments-2.test.ts"
+    ]
+  },
+  {
+    "file": "work/.b035-rows-engine-1.json",
+    "kind": "rows",
+    "family": "engine-1",
+    "stage": [
+      "work/.b035-rows-engine-1.json",
+      "work/.b035-report-engine-1.txt",
+      "work/.b035-verify-engine-1.txt",
+      "test/batch035-engine-1.test.ts",
+      "test/batch034-engine.test.ts",
+      "src/rules/derive.ts",
+      "src/rules/build.ts"
+    ]
+  },
+  {
+    "file": "work/.b035-rows-data-rows-2.json",
+    "kind": "rows",
+    "family": "data-rows-2",
+    "stage": [
+      "work/.b035-rows-data-rows-2.json",
+      "work/.b035-report-data-rows-2.txt",
+      "test/batch035-data-rows-2.test.ts"
+    ]
+  },
+  {
+    "file": "work/.b035-rows-instruments-1.json",
+    "kind": "rows",
+    "family": "instruments-1",
+    "stage": [
+      "work/.b035-rows-instruments-1.json",
+      "work/.b035-report-instruments-1.txt",
+      "work/experience-instrument-limits.json",
+      "scripts/wg-diff.mjs",
+      "test/batch035-instruments-1.test.ts",
+      "test/batch034-closer.test.ts",
+      "work/.b035-verify-instruments-1.txt"
+    ]
+  },
+  {
+    "file": "work/.b035-rows-engine-2.json",
+    "kind": "rows",
+    "family": "engine-2",
+    "stage": [
+      "work/.b035-rows-engine-2.json",
+      "work/.b035-report-engine-2.txt",
+      "test/batch035-engine-2.test.ts",
+      "src/rules/types.ts",
+      "src/rules/build.ts",
+      "src/rules/derive.ts",
+      "src/builder/Builder.tsx",
+      "work/.b035-verify-engine-2.txt"
+    ]
+  },
+  {
+    "file": "work/.b035-rows-data-rows-1.json",
+    "kind": "rows",
+    "family": "data-rows-1",
+    "stage": [
+      "work/.b035-rows-data-rows-1.json",
+      "work/.b035-created-desc-data-rows-1.json",
+      "work/.b035-report-data-rows-1.txt",
+      "test/batch035-data-rows-1.test.ts",
+      "src/sheet/descref.ts",
+      "work/.b035-verify-data-rows-1.txt"
+    ]
+  },
+  {
+    "file": "work/.b035-created-desc-data-rows-1.json",
+    "kind": "created-prose",
+    "family": "data-rows-1",
+    "stage": [
+      "work/.b035-rows-data-rows-1.json",
+      "work/.b035-created-desc-data-rows-1.json",
+      "work/.b035-report-data-rows-1.txt",
+      "test/batch035-data-rows-1.test.ts",
+      "src/sheet/descref.ts",
+      "work/.b035-verify-data-rows-1.txt"
+    ]
+  },
+  {
+    "file": "work/.b035-rows-gap-engine-2.json",
+    "kind": "rows",
+    "family": "gap-engine-2",
+    "stage": [
+      "work/.b035-rows-gap-engine-2.json",
+      "work/.b035-report-gap-engine-2.txt",
+      "test/batch035-gap-engine-2.test.ts",
+      "src/rules/companionGrants.ts"
+    ]
+  },
+  {
+    "file": "work/.b035-rows-gap-data-rows-1.json",
+    "kind": "rows",
+    "family": "gap-data-rows-1",
+    "stage": [
+      "work/.b035-rows-gap-data-rows-1.json",
+      "work/.b035-report-gap-data-rows-1.txt",
+      "test/batch035-gap-data-rows-1.test.ts",
+      "src/rules/build.ts",
+      "src/rules/derive.ts"
+    ]
+  },
+  {
+    "file": "work/.b035-rows-gap-instruments-1.json",
+    "kind": "rows",
+    "family": "gap-instruments-1",
+    "stage": [
+      "work/.b035-rows-gap-instruments-1.json",
+      "work/.b035-report-gap-instruments-1.txt",
+      "test/wg-experience.harness.test.tsx"
+    ]
+  },
+  {
+    "file": "work/.b035-rows-gap-engine-1.json",
+    "kind": "rows",
+    "family": "gap-engine-1",
+    "stage": [
+      "work/.b035-rows-gap-engine-1.json",
+      "work/.b035-report-gap-engine-1.txt",
+      "test/batch035-gap-engine-1.test.ts",
+      "src/rules/companionGrants.ts",
+      "src/rules/companions.ts"
+    ]
+  },
+  {
+    "file": "work/.b035-rows-gap-instruments-2.json",
+    "kind": "rows",
+    "family": "gap-instruments-2",
+    "stage": [
+      "work/.b035-rows-gap-instruments-2.json",
+      "work/.b035-report-gap-instruments-2.txt",
+      "test/wg-experience.harness.test.tsx"
+    ]
+  },
+  {
+    "file": "work/.b035-rows-gap-situational.json",
+    "kind": "rows",
+    "family": "gap-situational",
+    "stage": [
+      "work/.b035-rows-gap-situational.json",
+      "work/.b035-report-gap-situational.txt",
+      "test/batch035-gap-situational.test.ts",
+      "src/rules/types.ts",
+      "src/rules/classResources.ts",
+      "src/rules/situationalBonuses.ts",
+      "src/rules/explain.ts"
+    ]
+  },
+  {
+    "file": "work/.b035-rows-closer.json",
+    "kind": "rows",
+    "family": "closer",
+    "stage": [
+      "work/.b035-rows-closer.json",
+      "work/.b035-report-closer.txt",
+      "work/.b035-commit.txt",
+      "test/batch035-closer.test.ts",
+      "test/batch033-closer.test.ts",
+      "test/inventor-innovation.test.ts",
+      "test/batch001-surfaces.test.tsx",
+      "scripts/wg-diff.mjs",
+      "scripts/wg-identity.mjs",
+      "scripts/apply-parity-fixes.mjs",
+      "scripts/wg-batch-close.mjs",
+      "src/sheet/RichEditor.tsx",
+      "test/batch035-closer-refmaps.test.tsx"
+    ]
+  },
+  {
+    "file": "work/.b035-rows-field-diff.json",
+    "kind": "rows",
+    "family": "red-field-diff",
+    "stage": [
+      "work/.b035-rows-field-diff.json",
+      "work/.b035-report-red-field-diff.txt",
+      "work/.b035-verify-red-field-diff.txt",
+      "test/batch035-field-diff.test.ts",
+      "scripts/field-diff.mjs"
+    ]
+  },
+  {
+    "file": "work/.b035-rows-red-gate-park.json",
+    "kind": "rows",
+    "family": "red-gate-park",
+    "stage": [
+      "work/.b035-rows-red-gate-park.json",
+      "work/.b035-report-red-gate-park.txt",
+      "work/.b035-report-gate-park.txt",
+      "work/.b035-verify-red-gate-park.txt",
+      "scripts/wg-batch-gate.mjs",
+      "test/batch035-gate-park.test.ts"
+    ]
+  },
+  {
+    "file": "work/.b035-rows-red-close-out.json",
+    "kind": "rows",
+    "family": "red-close-out",
+    "stage": [
+      "work/.b035-rows-red-close-out.json",
+      "work/.b035-report-red-close-out.txt",
+      "work/.b035-report-closeout.txt",
+      "work/.b035-queue.json",
+      "work/.b035-specs.json",
+      "test/batch035-red-close-out.test.ts",
+      "work/.b035-verify-red-close-out.txt"
+    ]
+  },
+  {
+    "file": "work/.b035-rows-red-experience-hosts.json",
+    "kind": "rows",
+    "family": "red-experience-hosts",
+    "stage": [
+      "work/.b035-rows-red-experience-hosts.json",
+      "work/.b035-report-red-experience-hosts.txt",
+      "work/.b035-verify-red-experience-hosts.txt",
+      "work/experience-instrument-limits.json",
+      "test/wg-experience.harness.test.tsx",
+      "test/batch035-instruments-1.test.ts",
+      "test/batch035-red-experience-hosts.test.ts",
+      "work/wg-batch-RED.json",
+      "work/wg-batch-RED-experience.json",
+      "work/.experience-raw-RED.json"
+    ]
+  },
+  {
+    "file": "work/.b035-created-desc-readable-records.json",
+    "kind": "created-prose",
+    "family": "red-readable-records",
+    "stage": [
+      "work/.b035-created-desc-readable-records.json",
+      "work/.b035-report-red-readable-records.txt",
+      "scripts/readable-record-check.mjs",
+      "test/batch035-red-readable-records.test.ts",
+      "work/.b035-verify-red-readable-records.txt"
+    ]
+  }
+]

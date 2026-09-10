@@ -1,0 +1,179 @@
+BATCH 035 — ADVERSARIAL VERIFY, ENGINE CHUNK 1 (engine-1)
+Findings judged: fury-instinct, cultivation-order#leaf-membership, plant-eidolon#language,
+swarm-eidolon#language, swarm-eidolon#area-weakness, dragon-instinct#breath-damage-type,
+dragon-instinct#optional-rage, undead-eidolon#language.
+
+Spec checked: work/.b035-rows-engine-1.json (3 rows, 8 findings)
+Builder report:  work/.b035-report-engine-1.txt
+Files opened:    src/rules/derive.ts, src/rules/build.ts, test/batch035-engine-1.test.ts,
+                 test/batch034-engine.test.ts, src/rules/companions.ts, src/rules/companionGrants.ts (read only),
+                 scripts/lib/apply-backfill.mjs, scripts/apply-parity-fixes.mjs, scripts/wg-batch-run.mjs,
+                 scripts/migration/stamp-aonid.mjs, scripts/edition-drift-check.mjs
+
+PER FINDING
+
+1. fury-instinct — DONE
+   Both rows verified as rows. classFeatures/fury-instinct exists with aonId "instinct-3", edition
+   "legacy" (overlay row #8362, scalar) — so the edition row's supersedes:true is required and its
+   whole value is carried (a scalar cannot be narrowed); the aonId row is a NEW key (no overlay row
+   holds classFeatures/fury-instinct/aonId), so it correctly carries no supersedes. Premise checked
+   against the mirror myself: instinct-10.json is source ["Player Core 2"] pg. 75, "Instinct
+   Ability—Unstoppable Frenzy … from 2 to 3 … from 3 to 7", "You gain a bonus 1st-level barbarian
+   feat" — our RAGE_DAMAGE tiers [3,7,13] and featPickGrants exactly. DURABILITY verified in both
+   directions: stamp-aonid.mjs re-applies authored aonId rows AFTER its own stamp ("the overlay is the
+   ruling", :148-156), and edition-drift-check.mjs --write only touches records whose edition is in
+   HIDDEN — 'remaster' is in CURRENT, so it skips ours instead of undoing it. No sibling spec writes
+   either key (checked all six spec files). Tests pass.
+   ⚠ CORRECTION TO THE BUILDER'S REPORT, not to the rows: the report's player-visible claim ("with
+   'legacy' the record is dropped from the instinct picker whenever Hide legacy data is on") is the
+   claim the read lane's own adversarial verifier REFUTED for the identical sibling record —
+   work/.b035-read.json refuted[] superstition-instinct#edition-and-aonid: "the barbarian instinct
+   picker is built from cls.subclass.options (Builder.tsx:1872), whose option entries carry no
+   `edition` and which applyEditionFilter never touches". The real player harm is elsewhere and is
+   bigger: public/ast/classFeatures.json.gz['fury-instinct'] is instinct-3's Core Rulebook page and
+   contains "from 2 to 6" (I gunzipped it), while core-descriptions holds the PC2 "2 to 3 /
+   Unstoppable Frenzy" text — so the in-app Fury Instinct page renders LEGACY numbers today. The rows
+   are the fix; the AST half only lands on a full `npm run data` (item 2 of the data list below).
+
+2. dragon-instinct#breath-damage-type — FIXED-BY-ME (was WRONG: it broke on a row in this same batch)
+   The lookup as built read `grant.whileActive[0].resistances[1].type`. All 50 shipped options are
+   [piercing, <breath>], so it passed — but work/.b035-rows-data-rows-1.json (finding
+   dragon-instinct#duplicate-piercing) re-emits the WHOLE `choice` value with crystal's and forest's
+   resistance list collapsed to a single [piercing] entry, because those two dragons BREATHE piercing
+   and the printed sentence's two clauses are one type for them. I diffed that row against the shipped
+   value with node -e: exactly two options change, both to length 1. The moment that row lands,
+   `resistances[1]` is undefined for Crystal and Forest and both dragons silently fall back to the
+   'energy' placeholder this finding exists to remove — a 2-of-50 regression that no test in the batch
+   would have caught. Fixed in src/rules/derive.ts (my file grant): the breath is the LAST entry of the
+   list, which is the breath in BOTH shapes, with the reason quoted in the comment.
+   Two tests added to test/batch035-engine-1.test.ts, both cited "// batch 035:
+   dragon-instinct#breath-damage-type" with the record id in the it() title: Crystal reads
+   "4 piercing or 2 bludgeoning (choose each Rage)" on the SHIPPED list, and again on a copy PATCHED IN
+   MEMORY to the collapsed one-entry shape (asserted `toHaveLength(1)` first, so the patch cannot go
+   silently stale). Neither flips when the sibling row lands — the same string before and after.
+   Rest of the mechanic verified: all 50 option values are hyphen-free (so the elemental
+   `answer.includes('-')` branch can never steal a dragon answer — checked on the shipped options AND
+   on data-rows-1's re-emitted copy), every option's last resistance type equals the type printed in
+   its own label (0 mismatches over 50), and adamantine/conspirator/diabolic/mirage/omen/empyreal/
+   fortune match WG's own setValue RAGE_DAMAGE_TYPE list in the finding's `theirs`.
+   The `note` row: path ["choice"] resolves (choice is a plain object on the record), the key
+   classFeatures/dragon-instinct/choice.note is NEW so no supersedes is owed, and value:null DELETES
+   the field in the shared applier (scripts/lib/apply-backfill.mjs:90) rather than storing a null. The
+   field has a real reader — Builder.tsx:819 / shared.tsx:2834 render `def.note` as the picker's
+   setup-hint — so removing it removes a hint that this batch made false. Simulated: deleting the key
+   leaves all 50 options byte-identical and the other three choice keys intact.
+
+3. dragon-instinct#optional-rage — DONE
+   RAGE_DAMAGE['dragon-instinct'] gained typeOptional only; spirit-instinct's identical clause already
+   used it, and no other row of the table changed (read the whole table). The step-ups stay on the
+   draconic branch and the alt branch stays Rage's own 2, matching *"When you USE draconic rage, you
+   increase the additional damage from Rage from 4 to 8"*. The flip it forces in
+   test/batch034-engine.test.ts is properly cited: the changed it() title, the changed expect and the
+   added expect each carry "// batch 035: dragon-instinct#optional-rage" within the 6 lines above, and
+   the it() title names dragon-instinct. The control it replaced moved to fury-instinct in the same
+   block, so the "nothing else grew a choice" guard still exists.
+
+4. cultivation-order#leaf-membership — NOT-DONE
+   The build.ts change is exactly what the confirmed finding proposed and it is safe (I read the whole
+   of checkPrerequisites: `has` is consumed at ONE site — `if (content.feats[fid] && !has.has(fid))` —
+   so a member added to it can only satisfy a line, never block one). But it delivers nothing that can
+   be observed: content.feats['leaf-order'] is false (leaf-order ships as a classFeature, not a feat),
+   so the ten "leaf order" prerequisite lines stay unenforced for everyone and no BUILT character
+   changes in any way — and the gate op this finding cites (giveAbilityBlock #34226 "Leaf Order")
+   still has no carrier on our built character, so no comparer reads it either. The test proves the
+   has-set only on a content copy where 'leaf-order' has been PATCHED IN to be a feat, which is honest
+   about that and is also the admission: the state it tests does not ship. Not WRONG, and I did not
+   change it — the alternative (declaring "leaf order" as a token) is checked FIRST in the same loop
+   and an unmet token BLOCKS, so it would false-block every Order Explorer druid. Left NOT-DONE so the
+   gap line stays open (items 6 and 7 of the gap list below) instead of the batch reading this record
+   as delivered.
+
+5. plant-eidolon#language — NOT-DONE (real, unbuilt; the pasted row is correct)
+   companionGrants.ts:534 'plant-eidolon' still has kinds/senses/note and no `languages`, and
+   companions.ts:1053 fills eidolonLanguages from `mod.languages` alone. Verified the paste before
+   endorsing it: core.json languages has no 'sylvan' key (120 languages; 'fey' and 'muan' are there),
+   so the printed NAME "Sylvan" is right — the same shape 'beast-eidolon' (:502) already ships, and
+   companions.ts resolves `content.languages?.[l]?.name ?? l`, so a name passes through unchanged.
+
+6. swarm-eidolon#language — NOT-DONE (real, unbuilt; the pasted row is correct with one correction)
+   No 'swarm-eidolon' key exists in companionGrants.ts; core.json languages['common'] exists, so the
+   id form is right. Verified the loop reaches a row keyed by a SUBCLASS OPTION id and not only by a
+   feat id: companions.ts `if (!featIdSet.has(slug) && slug !== cfg.typeId) continue;` — the typeId
+   half is exactly what makes this row live.
+   ⚠ correction to the gap text: the reason to carry ONLY `languages` is the IWR, not the senses —
+   `evoSenses` dedupes (`if (!evoSenses.includes(s))`) but `evoIwr.push(...)` does not, so repeating
+   the TYPE_PACKAGE entry would print the grabbed/prone/restrained immunity twice, not the low-light
+   vision.
+
+7. swarm-eidolon#area-weakness — NOT-DONE (real, unbuilt; the pasted change is feasible where it says)
+   companions.ts:1023 carries the immunities from the same printed sentence and nothing else; `grep
+   "area damage" src/` is still empty. `level` is in scope at the suggested site (the identical
+   interpolated form is used at :1096 for Dual Energy Heart's `resistance ${...}`), so the one-line
+   push works as written.
+
+8. undead-eidolon#language — NOT-DONE (real, unbuilt; the pasted row is correct)
+   No 'undead-eidolon' key in companionGrants.ts; core.json languages['necril'] exists, so the id form
+   is right (the 'dragon-eidolon'/'draconic' shape at :513). The TYPE_PACKAGE darkvision/Negative
+   Essence entry is untouched by the row and evoSenses dedupes, as the gap says.
+
+SPEC ROWS AS ROWS (checked without applying)
+- 3 rows, 8 findings. Every target record exists; no row carries create:true and none is needed.
+- No re-emitted composite values in this spec (the only superseding row is a scalar), so there is
+  nothing that could be narrowed by a partial copy.
+- Readers exist for all three fields: aonId (import/AST join + src/data/index.ts), edition
+  (applyEditionFilter, build.ts:3147), choice.note (Builder.tsx:819, shared.tsx:2834).
+- Collision sweep across ALL SIX spec files in the manifest: 41 rows, 0 duplicate record+field+path
+  keys. No sibling writes fury-instinct or classFeatures/dragon-instinct/choice.note.
+- ⚠ ONE ORDERING HAZARD the driver's precheck cannot see (item 3 of the data list below): data-rows-1's
+  pathless whole-value `choice` row still CONTAINS the stale note, and my chunk's row deletes that
+  note through path ["choice"]. precheck (1) misses it (different keys) and precheck (3) misses it
+  (baseKeyOf is .../choice vs .../note, and the path has no `id=` step). It comes out right only
+  because apply-parity-fixes.mjs:438 replaces an existing overlay key IN PLACE (the choice row stays
+  at overlay #2777) while a new key is appended, so the delete replays last. If either row is ever
+  re-authored as a new key, the note comes back.
+
+MANIFEST
+- work/.b035-specs.json holds all 8 entries (situational, instruments-1, instruments-2, engine-1,
+  engine-2, data-rows-1, data-rows-2 + data-rows-1's created-prose). Nothing was lost.
+- engine-1's stage[] listed every path the builder touched; I appended work/.b035-verify-engine-1.txt
+  (the two files I edited, src/rules/derive.ts and test/batch035-engine-1.test.ts, were already there).
+- Every superseding row in this chunk declares supersedes:true (one row, classFeatures/fury-instinct/
+  edition), and it is the only key of this chunk that already exists in the overlay.
+
+VERIFICATION RUN
+- npx tsc --noEmit — clean (after my derive.ts + test edits).
+- node scripts/vt.mjs run test/batch035-engine-1.test.ts test/batch034-engine.test.ts
+  test/raging-resistance.test.ts test/rage-damage.test.ts — 55 passed (9 in engine-1's file, up from 7).
+- node scripts/vt.mjs run test/batch035-engine-1.test.ts test/batch034-engine.test.ts
+  test/rage-damage.test.ts test/prerequisites.test.ts — 39 passed.
+- node scripts/test-flip-audit.mjs --batch 035 — clean (12 test files touched, every flip cited).
+  ⚠ transient: at 10:15 it failed on test/batch034-closer.test.ts:87, an added
+  `expect(shipped.get('cultivation-order')?.missing)` with no citation in the 6 lines above it — that
+  is instruments-1's file (cultivation-order#instrument) and it was clean again on the re-run. It is
+  named here only because a concurrent chunk can red the whole batch on a file this chunk cannot edit.
+- Throwaway harnesses (deleted): node -e dumps of all 50 dragon options (values, resistance lengths,
+  label-vs-resistance agreement), the simulated note deletion, the data-rows-1 choice-row diff, the
+  gunzipped classFeatures AST, and the overlay key scan.
+
+(one line per item, deliberately: gapLines() in scripts/wg-batch-run.mjs stops collecting at the
+first line under a heading that does not start with a bullet, so an indented continuation line drops
+every item after it out of work/.b035-gaps.json.)
+
+DATA STILL NEEDED
+- The three rows of work/.b035-rows-engine-1.json are the whole data ask and all three are verified applicable: classFeatures/fury-instinct aonId = "instinct-10"; classFeatures/fury-instinct edition = "remaster" (supersedes:true over the existing "legacy" row); classFeatures/dragon-instinct path ["choice"] field note = null.
+- fury-instinct's AST is NOT fixed by the aonId row alone: public/ast/classFeatures.json.gz still holds instinct-3's Core Rulebook page ("Increase the additional damage from Rage from 2 to 6") while core-descriptions holds the PC2 text, and apply-backfill-now.mjs does not rebuild public/ast — only a full `npm run data` re-joins the record to instinct-10, so until that run the in-app Fury Instinct page shows legacy numbers.
+- ORDER-DEPENDENT ROW PAIR (driver): data-rows-1's whole-value classFeatures/dragon-instinct `choice` row still carries the stale apology note and this chunk's path row deletes it, so the delete must stay LATER in scripts/data/effect-backfill.json than the whole-value row (it will be, as an appended new key over an in-place replacement) or the note returns; neither precheck (1) nor precheck (3) sees this pair.
+
+CROSS-FILE GAPS
+- src/rules/companionGrants.ts — plant-eidolon#language: add "languages":["Sylvan"] to the existing 'plant-eidolon' row (eidolon-9 "**Language** Sylvan"); the printed NAME, verified — core.json has no 'sylvan' language key, so this is the 'beast-eidolon' shape at :502.
+- src/rules/companionGrants.ts — swarm-eidolon#language: add 'swarm-eidolon': {"kinds":["eidolon"],"languages":["common"]} (eidolon-13 "**Language** Common"); languages ONLY, because repeating the TYPE_PACKAGE entry would print the grabbed/prone/restrained IMMUNITY twice (evoIwr does not dedupe; evoSenses does — the builder's note had this the wrong way round).
+- src/rules/companionGrants.ts — undead-eidolon#language: add 'undead-eidolon': {"kinds":["eidolon"],"languages":["necril"]} (eidolon-11 / remaster twin eidolon-26, "**Language** Necril"); the id form, verified present in core.json languages, the 'dragon-eidolon'/'draconic' shape at :513.
+- src/rules/companions.ts — swarm-eidolon#area-weakness: right after the TYPE_PACKAGE merge push `weakness ${level} area damage` when cfg.typeId === 'swarm-eidolon' (eidolon-13 "It has weakness to area damage equal to its level"); `level` is in scope and :1096 already uses the same interpolated form, and a static TYPE_PACKAGE string cannot scale with level — which is why the immunities from that same sentence landed and the weakness did not.
+- scripts/data/effect-backfill.json / data-rows family — the same PC2-book + "legacy"-tag + legacy-aonId mis-join stands on four SIBLING instincts I re-read off core.json: animal-instinct (instinct-1 -> instinct-8), giant-instinct (instinct-4 -> instinct-11), spirit-instinct (instinct-5 -> instinct-12), superstition-instinct (instinct-6 -> instinct-13); no confirmed finding covers them (superstition's was REFUTED on its stated consequences, not on the mis-join) and each renders a legacy AoN page in-app exactly as fury-instinct does.
+- src/rules/build.ts + a data lane + an OWNER decision — cultivation-order#leaf-membership enforcement: making "leaf order" resolve needs the token lane widened to SUBCLASS options (TOKEN_BUCKETS + the choiceTokens collector together) plus grantsToken:"Leaf Order" on the druid options leaf-order/cultivation-order/spore-order AND on Order Explorer's option list, because a declared token is checked FIRST in checkPrerequisites and an unmet one BLOCKS — without the last one every Order Explorer druid is false-blocked out of ten feats. Not attempted, correctly.
+- scripts/wg-diff.mjs settle lane (instruments family) — cultivation-order#leaf-membership comparer half: the undelivered op is giveAbilityBlock #34226 "Leaf Order", WG's operation-less name row, and nothing in this chunk gives our built character a carrier for it, so the honest disposition is a settle entry on cultivation-order for that op (our subclass IS the membership) authored by whoever owns the instruments lane — not a silent DONE here.
+
+MANIFEST STAGE ADDITIONS (files I touched)
+- src/rules/derive.ts (already in engine-1's stage[])
+- test/batch035-engine-1.test.ts (already in engine-1's stage[])
+- work/.b035-verify-engine-1.txt (appended to engine-1's stage[] in work/.b035-specs.json)

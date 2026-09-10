@@ -32,6 +32,21 @@ const REF_MAPS: { key: string; label: string }[] = [
   { key: 'ancestries', label: 'Ancestry' },
   { key: 'heritages', label: 'Heritage' },
   { key: 'backgrounds', label: 'Background' },
+  /*
+   * The four SUBCLASS-OPTION reference buckets. They ship 43 records between them (27 arcane
+   * schools, 2 fatal methods, 4 grim fascinations, 10 hybrid studies), every one of them named and
+   * every one of them carrying the printed entry — a wizard's whole Curriculum ladder and both
+   * School Spells, a necromancer's Grave Spell and Thrall Enhancement, a magus's conflux spell and
+   * three studious spells — and until this batch nothing in src touched any of the four, so that
+   * prose reached no screen at all. `test/integrity-sweeps.test.ts` "every backfilled field is read
+   * in a file that knows its collection" is what found it, the moment batch 035 wrote the first
+   * description rows into them. grimFascination and hybridStudy have no classFeatures twin either,
+   * so this picker is the only place their text is reachable today.
+   */
+  { key: 'arcaneSchool', label: 'Arcane school' },
+  { key: 'fatalMethod', label: 'Fatal method' },
+  { key: 'grimFascination', label: 'Grim fascination' },
+  { key: 'hybridStudy', label: 'Hybrid study' },
 ];
 
 function escapeHtml(s: string): string {

@@ -1,0 +1,60 @@
+BATCH 035 — family engine-2 (chunk 2 of 2 of "engine") — ENGINE BUILDER report
+
+DATA STILL NEEDED
+- classFeatures / animal-instinct / grantedStrikesState / "rage"  — gates all 29 grantedStrikes on the Rage toggle (AoN instinct-8, Bestial Rage: "While raging, you gain your chosen animal's unarmed attack (or attacks)"). No existing effect-backfill row for this record+field, so no supersedes.
+- classFeatures / animal-instinct / unarmedTraits / [{"fromRecord":"animal-instinct","stepDie":1,"minLevel":7}]  — the 7th-level Specialization Ability's die step (AoN instinct-8: "Increase the damage die size for the unarmed attacks granted by your chosen animal by one step"). No existing row for this record+field, so no supersedes.
+- classFeatures / lesson-of-vengeance / grantedSpells / ["phantom-pain"]  — AoN lesson-20: "You gain the Needle of Vengeance hex, and your familiar learns Phantom Pain." No existing row for this record+field (only focusSpells + edition), so no supersedes.
+- classFeatures / lesson-of-elements / grantedSpellChoice / {"id":"lesson-of-elements-familiar","prompt":"Familiar spell","options":["breathe-fire","gust-of-wind","hydraulic-push","pummeling-rubble"]}  — AoN lesson-17: "Your familiar learns your choice of breathe fire, gust of wind, hydraulic push, or pummeling rubble." All four spell ids exist in core.json. No existing row for this record+field, so no supersedes.
+
+CROSS-FILE GAPS
+- demon-eidolon#language-abyssal — needs src/rules/companionGrants.ts (COMPANION_MODS['demon-eidolon'] += "languages":["Abyssal"]), which is not in this chunk's file grant. Owner: the engine-1 sibling chunk, which is already editing the same table for plant-eidolon#language / swarm-eidolon#language / undead-eidolon#language. NOT taken here and NOT dropped.
+- demon-eidolon#demonic-strikes-note — needs the same file and the same row (src/rules/companionGrants.ts:507 `note`), replacing the pre-remaster wording with "Demonic Strikes: the eidolon's unarmed Strikes gain the unholy trait and deal 1 extra spirit damage to holy creatures and creatures with weakness to unholy; one of its physical unarmed attacks also gains versatile B, P or S (your choice)." Owner: the engine-1 sibling chunk. Same record+field as the gap above, so the two must be ONE edit.
+- scripts/data/effect-backfill.json — the four rows listed under DATA STILL NEEDED. In this workflow no agent writes that file; the driver applies.
+
+PER-FINDING
+- demon-eidolon#language-abyssal — NOT DONE. src/rules/companionGrants.ts is outside my file grant (types.ts / build.ts / derive.ts / spellcasting.ts / advancement.ts / Builder.tsx / shared.tsx / my test file). Filed in CROSS-FILE GAPS above with the exact row. No test.
+- demon-eidolon#demonic-strikes-note — NOT DONE, same reason and same file. Filed in CROSS-FILE GAPS with the verbatim replacement text. No test.
+
+- animal-instinct#no-reader — DONE, code-only.
+  src/rules/build.ts, collectGrantedNaturals: new trailing parameter `featChoices?: Record<string,string>`; both class-feature pushes (the `cls.features` loop and the subclass push) now pass `featChoices['feature:<id>']` as `pick`, via the local `featurePick`. Call site in buildCharacter passes `build.featChoices`; the round-trip subtractor in deriveBuildFromCharacter passes `c.featureChoices` — it must subtract exactly what the build adds, or the derived Jaws is stored back as a manual attack and loses its `source` (which the rage gate and the Rage-damage scope both read).
+  Tests (test/batch035-engine-2.test.ts, describe "animal-instinct — Bestial Rage"):
+    "animal-instinct grants the chosen animal's unarmed attack (Wolf → Jaws)" — Wolf → exactly [Jaws] d10 source animal-instinct; Bear → exactly [Claw, Jaws]; proves the pick both REACHES and NARROWS (29 rows, 22 animals).
+    "animal-instinct's granted Strike is subtracted on the Character → BuildState round-trip" — derived BuildState carries no manual naturalAttacks and the rebuilt Jaws still has source 'animal-instinct'.
+  Blast radius: only records whose grantedStrikes rows carry a choiceValue AND live on a class feature change behaviour. animal-instinct is the only such record in core.json (unfurling-brocade's single row is untagged), so no shipped character loses or gains any other Strike.
+
+- animal-instinct#rage-gate — DONE (reader); needs the data row above.
+  src/rules/types.ts: new `DefenseGrants.grantedStrikesState?: 'rage'|'panache'|'hunt-prey'|'unleash-psyche'` and new `NaturalAttack.requiresState?: string`.
+  src/rules/build.ts, collectGrantedNaturals: `push` takes a 6th `requiresState` argument and copies it onto the emitted NaturalAttack; both class-feature pushes pass the record's `grantedStrikesState`.
+  src/rules/derive.ts, deriveStrikes: the naturals map returns null for a Strike whose `requiresState` toggle is off and the list is `.filter`ed — mapped-then-filtered so `natural:<i>` stays the attack's own index and a pinned Strike does not change identity when the toggle flips.
+  Test: "animal-instinct's Jaws exists only while raging" — content COPY with the field patched in memory (the field is stripped in the shipped data, so this is not a patched-vs-shipped delta that flips when the row lands); Jaws absent with rage 0, present with rage 1, Fist present in both.
+  Blast radius: zero until the data row lands — no shipped record carries grantedStrikesState.
+
+- animal-instinct#rage-damage-scope — DONE, code-only.
+  src/rules/derive.ts, rageStrikeRider: `opts` gains `source`; inside the instinct branch `const scoped = !inst.unarmedOnly || opts.source === c.subclassId`, and both the tier lookup and the `inst.type` override are gated on it, with the note saying "Rage's base damage: not your animal's attack" when it is not. The unarmed call site (deriveUnarmedStrike) passes `p.source`.
+  Tests: "animal-instinct raises Rage damage for its own attack only, not for a plain Fist" — at 7th, Jaws 5 piercing and Fist 1 bludgeoning (Rage's 2, halved by agile); at 15th, 12 vs 1. "animal-instinct's narrowing leaves the other instincts' Rage damage alone" — a 7th-level Fury barbarian's Fist still reads 3 bludgeoning.
+  Blast radius: `unarmedOnly` is set on animal-instinct alone in RAGE_DAMAGE, so only Animal barbarians change; every other instinct and every barbarian-archetype character takes the identical branch as before.
+
+- animal-instinct#spec-die-step — DONE (reader); needs the unarmedTraits row above.
+  src/rules/types.ts: new `UnarmedRider.minLevel?: number` (the level predicate the rider lane was documented as lacking — see the `critSpecWeapons.names` note that cites the absence).
+  src/rules/derive.ts, applyUnarmedRiders: `if (r.minLevel && c.level < r.minLevel) continue;` beside the existing match / fromRecord / choiceValue guards.
+  Test: "animal-instinct steps its animal attack's die at 7th, and not before" — patched content copy: Jaws 1d10 at 6th, 1d12 at 7th; the SAME rider without minLevel fires at 6th (so the gate is what is proving it); the Fist stays 1d4 because `fromRecord` narrows to the instinct's own Strike.
+  Blast radius: zero for existing data — every shipped unarmedTraits rider has no minLevel and is therefore ungated exactly as before.
+
+- lesson-of-vengeance#familiar-spell — DONE (reader); needs the grantedSpells row above.
+  src/rules/types.ts: new `ClassFeature.grantedSpells?: string[]`, documented with the ⚠ that classFeatures['conscious-mind'].grantedSpells is a DIFFERENT (ladder) shape read through its own cast — so the reader guards with Array.isArray.
+  src/rules/build.ts: new accumulator `featureGrantedSpells`, filled in the choice-owned-feature walk beside the existing focusSpells collection, and merged into `grantedByRank` next to the bookGrantedSpellIds merge — the same single route the witch PATRON's grantedSpells take, so the spellbook / repertoire / cantrip branches all inherit it.
+  Test: "lesson-of-vengeance puts Phantom Pain in the witch's spellbook alongside the hex" — patched content copy; phantom-pain in spellbook rank 1, needle-of-vengeance still in the focus repertoire, and the STUNTED copy (shipped content, field absent) does not contain phantom-pain.
+  Blast radius: zero for existing data — no shipped class feature carries an array-shaped grantedSpells, and the one object-shaped carrier (conscious-mind) is not an ownsFeature choice target and is skipped by Array.isArray.
+
+- lesson-of-elements#familiar-spell-choice — DONE (reader + control); needs the grantedSpellChoice row above.
+  src/rules/types.ts: new `ClassFeature.grantedSpellChoice?: { id; prompt; options }` (same shape as SubclassOption's).
+  src/rules/build.ts: the same walk honours the answer at `build.featSpellChoices['<slotKey>:granted-spell']`, only while it names one of that feature's own options — the same fail-closed guard the subclass lane uses.
+  src/builder/Builder.tsx: a PopupSelect rendered inside the feat-choice SubCard whenever `def.ownsFeature` and the answered value resolves to a class feature carrying grantedSpellChoice, beside the existing Initial-domain-spell picker. Storage reuses BuildState.featSpellChoices, so there is no new BuildState field and no persistence/normalize change.
+  Test: "lesson-of-elements teaches the familiar the spell the player chose, and only that one" — patched content copy; gust-of-wind reaches the spellbook, breathe-fire does not, an UNANSWERED pick grants nothing (no silent default), and an off-list answer is ignored.
+  Blast radius: zero for existing data — no shipped class feature carries grantedSpellChoice, and the picker is mounted only when one does.
+
+VERIFICATION
+- node scripts/vt.mjs run test/batch035-engine-2.test.ts — 8 passed.
+- Regression, related lanes: test/raging-resistance.test.ts, test/ancestry-unarmed-attacks.test.ts, test/fix-campaign.test.ts (100 passed); test/batch033-resume-modes-engine…test.ts, test/batch25-engine.test.ts, test/batch27-engine.test.ts, test/batch29-engine.test.ts, test/grant-modification.test.ts (84 passed); test/build.test.ts, test/batch28-engine.test.ts, test/audit-followup.test.ts (186 passed).
+- npx tsc --noEmit — clean.
+- node scripts/test-flip-audit.mjs --batch 035 — clean, every flip cited.

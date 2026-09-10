@@ -1,0 +1,69 @@
+{
+  "findings": [
+    {
+      "id": "fury-instinct",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "fury-instinct",
+          "field": "aonId",
+          "value": "instinct-10",
+          "why": "instinct-10 (Player Core 2 pg. 75) is the page every mechanic of this record already carries — \"Instinct Ability—Unstoppable Frenzy … from 2 to 3 … from 3 to 7 … to 13\" plus the bonus 1st-level barbarian feat. The record cited instinct-3 (Core Rulebook pg. 87), which prints \"from 2 to 6 … instead increase … to 12\" and no bonus feat, so the join contradicted the record's own source, description and RAGE_DAMAGE tiers."
+        },
+        {
+          "category": "classFeatures",
+          "id": "fury-instinct",
+          "field": "edition",
+          "value": "remaster",
+          "supersedes": true,
+          "why": "Same mis-join: the \"legacy\" tag was authored to match the legacy aonId instinct-3, but the record IS the Player Core 2 page instinct-10 (source.book \"Pathfinder Player Core 2\"). With edition legacy, applyEditionFilter drops Fury Instinct from every picker for a player who turns Hide legacy data on — a remaster barbarian loses a remaster instinct. Replaces the existing overlay row {classFeatures/fury-instinct/edition: \"legacy\"} whole."
+        }
+      ],
+      "note": "Data-only finding: the mechanics (3/7/13, the bonus feat) are already right — it is the join that is wrong, and both halves of the join live in the overlay. The four sibling instincts the finding names (animal/giant/spirit/superstition) are NOT in this chunk's assignment and are listed in CROSS-FILE GAPS instead of quietly widened here."
+    },
+    {
+      "id": "dragon-instinct#breath-damage-type",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "dragon-instinct",
+          "path": ["choice"],
+          "field": "note",
+          "value": null,
+          "why": "instinct-9 (Player Core 2 pg. 74) \"change its damage type to match that of your instinct's dragon breath\" — the choice's apology note (\"Draconic Rage's extra damage is applied but shown as generic 'energy' rather than your dragon's breath type\") describes a defect this batch fixed in rageStrikeRider, so the note now tells the player something untrue about their own sheet. A path row on the existing pathless `choice` row's `note` key, so the 50 options are not re-emitted (and cannot be narrowed by a re-typed copy)."
+        }
+      ],
+      "note": "The mechanic is code (src/rules/derive.ts reads the breath type off the chosen option's own Draconic Resistance pair); the only data left over is the stale apology note, removed as a nested value:null row."
+    },
+    {
+      "id": "dragon-instinct#optional-rage",
+      "backfillRows": [],
+      "note": "Code-only: RAGE_DAMAGE['dragon-instinct'] gains typeOptional (src/rules/derive.ts), the same field spirit-instinct uses for the identically-optional clause. No record changes."
+    },
+    {
+      "id": "cultivation-order#leaf-membership",
+      "backfillRows": [],
+      "note": "Code-only: the parent-order membership is stated in checkPrerequisites' has-set (src/rules/build.ts). No data row — the printed Special clause is a rule about the order, not a field of a record, and the ten \"leaf order\" prerequisite lines are read from the feats' existing prerequisites."
+    },
+    {
+      "id": "plant-eidolon#language",
+      "backfillRows": [],
+      "note": "Not delivered by this chunk: the only carrier is COMPANION_MODS in src/rules/companionGrants.ts, which is outside this chunk's file grant. CROSS-FILE GAPS carries the exact one-line row."
+    },
+    {
+      "id": "swarm-eidolon#language",
+      "backfillRows": [],
+      "note": "Not delivered by this chunk: needs a new COMPANION_MODS row in src/rules/companionGrants.ts (outside the file grant). CROSS-FILE GAPS carries it."
+    },
+    {
+      "id": "swarm-eidolon#area-weakness",
+      "backfillRows": [],
+      "note": "Not delivered by this chunk: the level-scaled weakness has to be pushed in deriveEidolon (src/rules/companions.ts), outside the file grant. CROSS-FILE GAPS carries it."
+    },
+    {
+      "id": "undead-eidolon#language",
+      "backfillRows": [],
+      "note": "Not delivered by this chunk: needs a new COMPANION_MODS row in src/rules/companionGrants.ts (outside the file grant). CROSS-FILE GAPS carries it."
+    }
+  ]
+}

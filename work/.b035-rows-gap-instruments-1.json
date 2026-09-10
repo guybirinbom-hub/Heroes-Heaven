@@ -1,0 +1,14 @@
+{
+  "findings": [
+    {
+      "id": "wandering-reverie#instrument",
+      "backfillRows": [],
+      "note": "Code-only, no data row — the gap is in the MEASURING INSTRUMENT, not in the content. classFeatureHost (test/wg-experience.harness.test.tsx) resolved an owner through ownedAt20(db, classId, null) and db.classes[classId].subclass?.options only. classFeatureIdsOwned never walks cls.extraChoices, so a record that is owned by BEING an extraChoices pick — the psychic's Subconscious Mind, the animist's apparitions, the exemplar's ikons — found no owner and read UNSUPPORTED ('no class or subclass grants this feature at level 20') with its whole delivery unjudged. Added a third route to the owner search: if any cls.extraChoices[].options carries the id, the owner is that class and `extra = { groupId }`; withBuild seats extraChoices[groupId] = [id] (and primaryApparition for the apparition group, whose pick drives the vessel spell), withoutBuild seats []. meta gains extraChoiceGroup and reports without: 'extra-choice-unpicked'. Measured, not assumed: with the branch in place `node scripts/wg-experience.mjs --batch <4 records>` reports OK for wandering-reverie, gathered-lore, impostor-in-hidden-places and noble-branch, and a second run over the sibling family's five animist apparitions (shepherd-of-errant-winds, stalker-in-darkened-boughs, crafter-in-the-vault, reveler-in-lost-glee, custodian-of-groves-and-gardens) reports OK for all five — nine records unparked, none of them a real gap. Pinned by three its in test/wg-experience.harness.test.tsx, describe('classFeatureHost — wandering-reverie, gathered-lore, impostor-in-hidden-places and noble-branch are hosted on their own extraChoices pick'), which assert the host is found, the group id, the seated/unseated builds, and that the pick is LIVE on a really built psychic (keyAbility 'cha' for wandering-reverie, 'int' for gathered-lore — WG's ATTRIBUTE_CHA / ATTRIBUTE_INT, their CLASS_DC attribute and their defineCastingSource attribute in one field)."
+    },
+    {
+      "id": "cultivation-order#instrument",
+      "backfillRows": [],
+      "note": "Code-only, no data row. The batch-034 control assertion (test/batch034-closer.test.ts:83, `expect(shipped.get('cultivation-order')?.missing).toContain('specialStat')`) was flipped to `.toEqual([])` because batch 035 cut that ninth order into VERIFIED_EQUIVALENT; the it( title gained the record id and the flip carries `// batch 035: cultivation-order#instrument`. Already applied by the instruments-1 verifier — this entry records it so the gaps line has a manifest home; no further edit was made here."
+    }
+  ]
+}

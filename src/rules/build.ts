@@ -2808,13 +2808,24 @@ function collectGrantedNaturals(
    *  feat's. Without the answers every tagged row was dropped by `push`'s guard, so a climbing animal
    *  who chose Jaws got only the baseline Fist. Absent for the caller that only wants the NAMES. */
   effectChoices?: Record<string, string>,
+  /*
+   * batch 035: animal-instinct#no-reader — `build.featChoices`, so a CLASS FEATURE's own answer can
+   * select among its tagged `grantedStrikes` the way a feat's and a heritage's already do.
+   *
+   * Bestial Rage: *"you gain your chosen animal's unarmed attack (or attacks)"*. All 29 of Animal
+   * Instinct's rows carry a `choiceValue` and the subclass push passed no `pick`, so `push`'s first
+   * guard dropped every one of them — an Animal barbarian got no animal attack at all. Absent for the
+   * caller that only wants the NAMES… which is exactly why that caller must pass it too: it subtracts
+   * what the build adds, and a granted Strike it cannot see round-trips into a manual duplicate.
+   */
+  featChoices?: Record<string, string>,
 ): NaturalAttack[] {
   const out: NaturalAttack[] = [];
   /* `sourceId` is the record handing the Strike over. It rides onto the attack so a rider can gate on
    * WHICH record granted it — Deadly Aspect upgrades *"the unarmed attack you gained from Draconic
    * Aspect"*, and a nephilim's Bestial Manifestation claw must not qualify. Nothing assigned it before,
    * so that gate matched nothing and the feat was inert. */
-  const push = (gs: GrantedStrike[] | undefined, sourceId: string, pick?: string, dieSteps = 0, dieNote?: string) => {
+  const push = (gs: GrantedStrike[] | undefined, sourceId: string, pick?: string, dieSteps = 0, dieNote?: string, requiresState?: string) => {
     for (const g of gs ?? []) {
       if (g.choiceValue && g.choiceValue !== pick) continue;
       const key = g.name.toLowerCase();
@@ -2825,7 +2836,10 @@ function collectGrantedNaturals(
       // `dieNote` rides along only when a step actually landed, so the breakdown can name the source.
       let die = g.die;
       for (let i = 0; i < dieSteps; i++) die = stepDie(die);
-      out.push({ name: g.name, source: sourceId, die, damageType: g.damageType, traits: g.traits, group: g.group, range: g.range, ...(die !== g.die && dieNote ? { dieNote } : {}) });
+      /* batch 035: animal-instinct#rage-gate — *"WHILE RAGING, you gain your chosen animal's unarmed
+       * attack (or attacks)"*. The gate rides onto the attack rather than being tested here, because
+       * the live toggle only exists after the play overlay; deriveStrikes drops it while it is off. */
+      out.push({ name: g.name, source: sourceId, die, damageType: g.damageType, traits: g.traits, group: g.group, range: g.range, ...(die !== g.die && dieNote ? { dieNote } : {}), ...(requiresState ? { requiresState } : {}) });
     }
   };
   for (const f of feats) {
@@ -2876,10 +2890,17 @@ function collectGrantedNaturals(
   }
   if (ancestryId) push(content.ancestries[ancestryId]?.grantedStrikes, ancestryId);
   const cls = classId ? content.classes[classId] : undefined;
-  for (const cf of cls?.features ?? []) if (cf.level <= level) push(content.classFeatures[cf.featureId]?.grantedStrikes, cf.featureId);
+  /* batch 035: animal-instinct#no-reader — a class feature's own `feature:<id>` answer selects among
+   * its tagged rows, exactly as `f.choice?.value` does for a feat and `pick` for a heritage. Both
+   * class-feature pushes get it, so the lane is not left half-wired. */
+  const featurePick = (id: string) => featChoices?.[`feature:${id}`];
+  for (const cf of cls?.features ?? [])
+    if (cf.level <= level)
+      push(content.classFeatures[cf.featureId]?.grantedStrikes, cf.featureId, featurePick(cf.featureId), 0, undefined, content.classFeatures[cf.featureId]?.grantedStrikesState);
   // The chosen SUBCLASS's own record. `cls.features` lists the class's features, never the option the
   // player picked, so a subclass that grants a Strike (Unfurling Brocade) granted none.
-  if (subclassId) push(content.classFeatures[subclassId]?.grantedStrikes, subclassId);
+  if (subclassId)
+    push(content.classFeatures[subclassId]?.grantedStrikes, subclassId, featurePick(subclassId), 0, undefined, content.classFeatures[subclassId]?.grantedStrikesState);
   // Items that grant a Strike (Phantom Shroud → ghostly touch; a Spined Shield's shield spikes).
   for (const itemId of strikeItemIds) push(content.items[itemId]?.grantedStrikes, itemId);
   return out;
@@ -3837,6 +3858,13 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   const featChoiceById: Record<string, { value: string; label: string }> = {};
   const grantedChoiceById: Record<string, { value: string; label: string }> = {};
   const featFocusSpells: string[] = [];
+  /**
+   * batch 035: lesson-of-vengeance#familiar-spell — ordinary (non-focus) spells a CHOICE-OWNED class
+   * feature teaches. *"You gain the Needle of Vengeance hex, AND YOUR FAMILIAR LEARNS PHANTOM PAIN."*
+   * Only the hex half had a carrier; these join the class pool's `grantedByRank` merge below, which is
+   * the very route the witch PATRON's taught spells already take.
+   */
+  const featureGrantedSpells: string[] = [];
   /** Which feat/feature granted each focus spell — the focus entry pools many sources, so the Spells
    *  page labels each spell with its origin. */
   const focusSource: Record<string, string> = {};
@@ -4008,6 +4036,22 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
           if (!content.spells[sid] || featFocusSpells.includes(sid)) continue;
           featFocusSpells.push(sid);
           focusSource[sid] ??= content.classFeatures[id]?.name ?? id;
+        }
+        /*
+         * batch 035: lesson-of-vengeance#familiar-spell / lesson-of-elements#familiar-spell-choice —
+         * the OTHER half of a lesson: *"and your familiar learns Phantom Pain"*, and its "or" form
+         * *"your familiar learns your choice of breathe fire, gust of wind, hydraulic push, or
+         * pummeling rubble"*. `Array.isArray` because classFeatures['conscious-mind'].grantedSpells is
+         * a different (ladder) shape read through its own cast further down.
+         */
+        const rec = content.classFeatures[id];
+        const flat = Array.isArray(rec?.grantedSpells) ? rec.grantedSpells : [];
+        const gsc = rec?.grantedSpellChoice;
+        // Honoured only while the answer names one of THIS feature's own options — the same guard the
+        // subclass option's `grantedSpellChoice` uses, so a stale answer grants nothing.
+        const picked = gsc && build.featSpellChoices?.[`${slotKey}:granted-spell`];
+        for (const sid of [...flat, ...(picked && gsc.options.includes(picked) ? [picked] : [])]) {
+          if (content.spells[sid] && !featureGrantedSpells.includes(sid)) featureGrantedSpells.push(sid);
         }
       }
     }
@@ -4245,6 +4289,13 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
      * they are IN THE BOOK, so an ordinary slot can hold them too. Ours put them solely into two
      * walled-off slots and the round-trip then stripped them out of the book again. */
     for (const id of bookGrantedSpellIds(content, cls, build.subclassId, level)) {
+      const rank = content.spells[id]?.rank ?? 1;
+      if (!(grantedByRank[rank] ??= []).includes(id)) grantedByRank[rank].push(id);
+    }
+    /* batch 035: lesson-of-vengeance#familiar-spell — *"and your familiar learns Phantom Pain."* A
+     * lesson's taught spell is a grant to THIS pool exactly as the patron's is, so it merges here and
+     * nowhere else: one route, and the spellbook/repertoire/cantrip branches all inherit it. */
+    for (const id of featureGrantedSpells) {
       const rank = content.spells[id]?.rank ?? 1;
       if (!(grantedByRank[rank] ??= []).includes(id)) grantedByRank[rank].push(id);
     }
@@ -6036,7 +6087,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     for (const sid of grantedStaffSpells) (held[content.spells[sid]?.rank ?? 0] ??= []).push(sid);
     return Object.keys(held).length ? held : undefined;
   };
-  const mergeEffect = (into: DefenseGrants, g: EffectGrant) => {
+  const mergeEffect = (into: DefenseGrants, g: EffectGrant, srcName?: string) => {
     if (g.senses) (into.senses ??= []).push(...g.senses);
     if (g.resistances) (into.resistances ??= []).push(...g.resistances);
     if (g.weaknesses) (into.weaknesses ??= []).push(...g.weaknesses);
@@ -6050,7 +6101,20 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     // A pick whose benefit is STATE-GATED ("bludgeoning and your choice of cold, electricity, or
     // fire" — but only while raging, and only from 9th). Everything else here lands unconditionally,
     // so without this branch the pick would grant a permanent resistance to a barbarian standing still.
-    if (g.whileActive?.length) (into.whileActive ??= []).push(...g.whileActive);
+    /* …carrying the OWNING record's name on each clause. Dragon Instinct prints *"You resist piercing
+     * damage and the damage type of your instinct's dragon breath"* (AoN instinct-9) on the instinct,
+     * and Giant Instinct *"…and your choice of cold, electricity, or fire"* (instinct-4) on its own —
+     * but a chosen clause lands in `chosenEffects`, ONE shared bag with no `name`, so derive's
+     * `ownedWhileActive` had nothing to attribute it to and every line of the IWR breakdown (and of
+     * the Rage card) read a bare "Active state". A record-level clause is scanned off the record and
+     * has always been named; this is the same fact for the instincts that ask a question. Copied, not
+     * mutated: `g` is the shared content record. */
+    if (g.whileActive?.length) {
+      type WhileActiveClause = NonNullable<DefenseGrants['whileActive']>[number];
+      (into.whileActive ??= []).push(
+        ...(srcName ? g.whileActive.map((wa) => ({ ...wa, from: srcName }) as WhileActiveClause) : g.whileActive),
+      );
+    }
     if (g.strikeDamage?.length) (into.strikeDamage ??= []).push(...g.strikeDamage);
     if (g.staffSpells?.length) grantedStaffSpells.push(...g.staffSpells);
   };
@@ -6190,7 +6254,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
    * there, not in this function.
    */
   const applyAlwaysOn = (g: EffectGrant, srcName?: string, recordId?: string) => {
-    mergeEffect(chosenEffects, g);
+    mergeEffect(chosenEffects, g, srcName);
     for (const [k, r] of Object.entries(g.skills ?? {})) if (r) proficiencies.skills[k as ProficiencyKey] = maxRank(proficiencies.skills[k as ProficiencyKey] ?? 'untrained', r);
     for (const s of g.innateSpells ?? []) {
       if (!content.spells[s.spellId]) continue;
@@ -7401,6 +7465,9 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     build.subclassId,
     enhancedFeatIds,
     build.effectChoices,
+    // batch 035: animal-instinct#no-reader — the `feature:<id>` answers, so a class feature's tagged
+    // rows can be selected by the pick the player already made.
+    build.featChoices,
   );
   const naturalAttacks = [...(build.naturalAttacks ?? []), ...grantedNaturals];
 
@@ -8987,7 +9054,10 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
     const grantedNames = new Set(
       // Must subtract exactly what the build ADDS, subclass included, or a subclass-granted Strike
       // round-trips into a manually-added one and then appears twice.
-      collectGrantedNaturals(content, c.feats ?? [], c.heritageId, c.ancestryId, c.classId, c.level, new Set(), [], c.subclassId).map((g) =>
+      // batch 035: animal-instinct#no-reader — the CLASS-FEATURE answers too (`Character.featureChoices`
+      // carries the same `feature:<id>` keys the build stores), or an Animal barbarian's Jaws is added
+      // by the build, not subtracted here, and comes back as a second manual attack on every round-trip.
+      collectGrantedNaturals(content, c.feats ?? [], c.heritageId, c.ancestryId, c.classId, c.level, new Set(), [], c.subclassId, undefined, undefined, c.featureChoices).map((g) =>
         g.name.toLowerCase(),
       ),
     );
@@ -9965,6 +10035,13 @@ export function checkPrerequisites(
   for (const id of [character.heritageId, character.ancestryId, character.classId, character.subclassId]) {
     if (id) has.add(id);
   }
+  /* batch 035: cultivation-order#leaf-membership — druidic-order-12 (and -13 for spore) print
+   * *"The cultivation order is a variant of the leaf order. If you have the cultivation order, you
+   * count as a member of the leaf order, and you qualify for leaf order feats."* The membership was
+   * stated nowhere, so the ten records printing prerequisite "leaf order" had no way to read it. */
+  const PARENT_ORDER: Record<string, string> = { 'cultivation-order': 'leaf-order', 'spore-order': 'leaf-order' };
+  const parentOrder = PARENT_ORDER[character.subclassId ?? ''];
+  if (parentOrder) has.add(parentOrder);
 
   // Tokens this character's CHOICE ANSWERS grant (Magaambyan branch, …), and the universe of tokens
   // anything declares. Both normalized once, outside the loop.

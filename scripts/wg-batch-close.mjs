@@ -116,6 +116,25 @@ for (const arr of ['open', 'deferred']) {
   });
 }
 
+/*
+ * ⚠ KNOWN DEFECT, escalated to the orchestrator by batch 035's closer rather than fixed here.
+ *
+ * A desk entry is keyed by QUESTION, and a question about one aspect of a record is filed as
+ * `<record id>-<aspect>`: batch 035's Spider Web mechanic is desk #145 `animal-instinct-spider-web`.
+ * `desk.has(<record id>)` at the OWNER-QUEUED branch below therefore misses it, and animal-instinct —
+ * a record whose `#spider-web` finding is CONFIRMED, player-visible and deliberately UNBUILT while the
+ * owner rules on it — falls through to the FIXED branch on its seven rowed siblings. A real gap ships
+ * inside a done verdict. scripts/wg-batch-gate.mjs already carries the resolver (`RECORD_IDS` +
+ * `parkMapOf` + `queuedFor`, batch 035); scripts/parity-residual-check.mjs:25/:52 and
+ * scripts/held-spell-rank-check.mjs:44/:62 carry the same defect.
+ *
+ * NOT fixed in batch 035: the corrected derivation flips animal-instinct FIXED -> OWNER-QUEUED, which
+ * this file's one-way merge refuses ("the existing verdict is not overwritten; rule it by hand"), and
+ * a verdict correction is the orchestrator's `--reverdict`, not a closer's. Measured over batch 035:
+ * exactly two records resolve a desk entry under the corrected rule (cultivation-order, by exact
+ * match, unchanged; animal-instinct, by prefix) so the blast radius of the fix is that one verdict.
+ */
+
 /** A finding id is a record id, optionally batch-prefixed and/or '#aspect'-suffixed. Map it back. */
 function rec(fid) {
   let f = String(fid).replace(/^b\d{2,3}-/, '');

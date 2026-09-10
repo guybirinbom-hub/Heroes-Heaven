@@ -76,9 +76,76 @@ const ok = (label, detail) => { if (VERBOSE) console.log(`  ok    ${label}${deta
  * verdict whose queue membership it checks. The queue file is the single authority.
  */
 const _oq = read('work/owner-questions.json') ?? {};
-// deferred = parked until after the whole batching process by the owner's 2026-08-27 ruling — honored
-// exactly like open, so a deferred record never fails a gate and never gets re-asked.
-const ownerQueued = new Set([...(_oq.open ?? []), ...(_oq.deferred ?? [])].map((q) => q.id));
+/*
+ * A DESK ENTRY IS KEYED BY RECORD **OR** BY RECORD#ASPECT, and until batch 035 this gate only knew the
+ * first shape. `ownerQueued` was a Set of queue ids and all three data gates asked
+ * `ownerQueued.has(<RECORD id>)`, so desk #145 `animal-instinct-spider-web` — a real, correctly filed
+ * question about the Spider's Web attack (AoN instinct-8: "Web | Special* | Range increment 15 feet")
+ * — could not park `animal-instinct`, and IDENTITY failed on a record whose divergence is already on
+ * his desk. The workaround was to re-key the question until its id equalled the record id, which loses
+ * the aspect and puts a second entry in front of him: `spore-order-counts-as-leaf-order` was re-keyed
+ * TWICE for exactly this, a treadmill its own queue entry documents.
+ *
+ * So the lookup is a RESOLVER, not a membership test: a desk id parks a record when it IS that record's
+ * id, or when it starts with `<record id>-` AND is not itself a record id anywhere in core.json.
+ *
+ * That second clause is the whole of the honesty. MEASURED over the whole desk (136 open+deferred): the
+ * bare prefix rule parks dozens of records nobody queued — 48 counting only each desk id's LONGEST
+ * record prefix, 55 counting every prefix (re-measured 2026-09-10 by the batch-035 verifier, who could
+ * not reproduce the 57 this comment first claimed under any counting rule; the live figure is whatever
+ * `--queued-parks` prints, which is what the test pins) — (`weapon-expertise` would park `weapon`,
+ * `divine-font` would park `divine`, `instinct-ability` would park `instinct`); requiring the desk id
+ * to be a NON-record cuts that to six — four aspect ids (animal-instinct-spider-web,
+ * spore-order-counts-as-leaf-order, dream-magic-second-taking, flexible-spellcaster-collection-shape)
+ * and two lane questions (speed-status-lane-031, relic-gift-family-…-adamantine) that would park their
+ * record only if it were ever cut into a batch. FIVE of the six actually widen anything: an exact desk
+ * id always beats a prefix, and `spore-order` carries BOTH (#134 under the old aspect key and #139
+ * under the record id), so it parks by exact match. `node scripts/wg-batch-gate.mjs --batch …
+ * --queued-parks` lists the live widening. The LONGEST record wins, so
+ * `flexible-spellcaster-collection-shape` parks `flexible-spellcaster` and never `flexible`.
+ *
+ * deferred = parked until after the whole batching process by the owner's 2026-08-27 ruling — honored
+ * exactly like open, so a deferred record never fails a gate and never gets re-asked.
+ */
+const RECORD_IDS = new Set();
+for (const bucket of Object.values(core)) {
+  if (bucket && typeof bucket === 'object' && !Array.isArray(bucket)) for (const id of Object.keys(bucket)) RECORD_IDS.add(id);
+}
+/** desk file -> Map(record id -> the desk id that parks it). */
+const parkMapOf = (desk) => {
+  const parks = new Map();
+  for (const q of [...(desk?.open ?? []), ...(desk?.deferred ?? [])]) {
+    const qid = q?.id;
+    if (!qid) continue;
+    if (RECORD_IDS.has(qid)) { parks.set(qid, qid); continue; }   // keyed by record — the old shape
+    /* Longest-first: lastIndexOf walks the hyphens right to left, so the first record id that matches
+     * is the longest one, and a shorter prefix of the same id never sees the entry. */
+    for (let cut = qid.lastIndexOf('-'); cut > 0; cut = qid.lastIndexOf('-', cut - 1)) {
+      const rec = qid.slice(0, cut);
+      if (RECORD_IDS.has(rec)) { if (!parks.has(rec)) parks.set(rec, qid); break; }
+    }
+  }
+  return parks;
+};
+const _parks = parkMapOf(_oq);
+/** The desk entry that parks this RECORD, or undefined. The one authority every gate below asks. */
+const queuedFor = (recordId) => _parks.get(recordId);
+/*
+ * PROBE — the resolver's only test surface, since this file is a script and importing it runs the whole
+ * gate. Answers for one record and exits before any comparer. `--queue` redirects the desk HERE ONLY:
+ * a real gate run always reads work/owner-questions.json, or a batch could be parked against a desk the
+ * owner never wrote.
+ */
+if (process.argv.includes('--queued-for') || process.argv.includes('--queued-parks')) {
+  const parks = parkMapOf(read(arg('--queue', 'work/owner-questions.json')));
+  /* `--queued-parks` is the widening itself, listed: every record parked by a desk id that is NOT its
+   * own. FIVE today — six desk ids qualify, but `spore-order` is also filed under its own record id and
+   * so parks by exact match and never appears here. Anything new here is a record the desk started
+   * parking without being asked to; test/batch035-gate-park.test.ts pins the list at exactly these five. */
+  if (process.argv.includes('--queued-parks')) for (const [rec, qid] of parks) { if (rec !== qid) console.log(`${rec}\t${qid}`); }
+  else console.log(parks.get(arg('--queued-for')) ?? '');
+  process.exit(0);
+}
 /* RULED records park only in the EXPERIENCE gate: a ruling can keep OURS where WG differs (Circle of
  * Spirits: the printed formula, not their flat +1), and the player-experience judge then rightly sees
  * their op undelivered. The data comparers are not parked for ruled ids — a ruling is implemented
@@ -109,8 +176,8 @@ console.log(`gate: ${batchPath} — ${ids.size} records\n`);
   else {
     const diff = JSON.parse(readFileSync(join(ROOT, out), 'utf8'));
     const raw = diff.theyOnly.filter((r) => ids.has(r.id));
-    for (const h of raw) if (ownerQueued.has(h.id)) parkQueued(h.id, `KINDS missing=[${(h.missing ?? []).join(',')}]`);
-    const hits = raw.filter((r) => !ownerQueued.has(r.id));
+    for (const h of raw) if (queuedFor(h.id)) parkQueued(h.id, `KINDS missing=[${(h.missing ?? []).join(',')}]`);
+    const hits = raw.filter((r) => !queuedFor(r.id));
     if (hits.length) fail(`KINDS: ${hits.length} record(s) model a kind we do not`, hits.map((h) => `${h.id} missing=[${(h.missing ?? []).join(',')}]`).join('\n      '));
     else ok('KINDS', '0 THEY-ONLY');
   }
@@ -124,7 +191,7 @@ const valuesOut = run('wg-values.mjs', ['--verbose']);
   if (n !== null && n > 0) {
     // Subtract the owner-queued mismatch records (announced below) — mismatches print as "--- id (Name)".
     for (const m of valuesOut.matchAll(/^--- ([a-z0-9-]+)\s+\(/gm)) {
-      if (ownerQueued.has(m[1])) { parkQueued(m[1], 'VALUES'); n--; }
+      if (queuedFor(m[1])) { parkQueued(m[1], 'VALUES'); n--; }
     }
   }
   if (n === null) fail('VALUES: could not read the comparer\'s summary', 'wg-values changed its output shape — the gate is blind until it is re-read');
@@ -147,7 +214,7 @@ const valuesOut = run('wg-values.mjs', ['--verbose']);
   if (n !== null && n > 0) {
     // Subtract the owner-queued mismatch records (announced below) — mismatches print as "--- id (Name)".
     for (const mm of out.matchAll(/^--- ([a-z0-9-]+)\s+\(/gm)) {
-      if (ownerQueued.has(mm[1])) { parkQueued(mm[1], 'IDENTITY'); n--; }
+      if (queuedFor(mm[1])) { parkQueued(mm[1], 'IDENTITY'); n--; }
     }
   }
   if (n === null) fail('IDENTITY: could not read the comparer\'s summary', 'wg-identity changed its output shape');
@@ -365,13 +432,14 @@ const valuesOut = run('wg-values.mjs', ['--verbose']);
     const p = read(parityPath);
     const seen = new Map((p.records ?? []).map((r) => [r.id, r]));
     const missing = encoded.filter((r) => !seen.has(r.id));
-    const _oq2 = read('work/owner-questions.json') ?? {};
-    const queuedIds = new Set([...(_oq2.open ?? []), ...(_oq2.deferred ?? [])].map((q) => q.id));
     const bad = [...seen.values()].filter(
       (r) =>
         !['MATCHES', 'FIXED', 'OWNER-RULED', 'THEY-ENCODE-NOTHING-USEFUL'].includes(r.verdict) &&
-        // OWNER-QUEUED is only usable when the queue actually holds the id — the claim is checked here.
-        !(r.verdict === 'OWNER-QUEUED' && queuedIds.has(r.id)),
+        /* OWNER-QUEUED is only usable when the desk actually holds a question for the RECORD — the
+         * claim is checked here, through the same resolver the data gates use (batch 035). It used to
+         * re-read the queue into its own id Set, which meant a parity row could carry OWNER-QUEUED for
+         * a record whose question is filed under record#aspect and be refused as unusable. */
+        !(r.verdict === 'OWNER-QUEUED' && queuedFor(r.id)),
     );
     if (missing.length) {
       fail(
@@ -526,7 +594,7 @@ const valuesOut = run('wg-values.mjs', ['--verbose']);
       if (!ids.has(r.id)) continue;
       if (r.verdict === 'UNSUPPORTED') { unsupported.push(r.id); continue; }
       if (r.verdict === 'OK') continue;
-      if (ownerQueued.has(r.id)) { parkQueued(r.id, `EXPERIENCE ${r.verdict}`); continue; }
+      if (queuedFor(r.id)) { parkQueued(r.id, `EXPERIENCE ${r.verdict}`); continue; }
       if (ownerRuled.has(r.id)) { parkQueued(r.id, `EXPERIENCE ${r.verdict} (ruled — ours kept by ruling)`); continue; }
       if (instrumentLimited.has(r.id)) { limited.push(r); parkQueued(r.id, `EXPERIENCE ${r.verdict} (instrument limit: ${instrumentLimited.get(r.id)?.lane ?? '?'})`); continue; }
       bad.push(r);
@@ -554,12 +622,17 @@ if (queuedFlagged.size) {
   // already settled (ruled, or verified by hand where the harness is blind). Only the first heading
   // may say "await his ruling" — a `reflection` under it sent a reader to owner-questions.json for
   // an entry that does not exist.
-  const awaiting = [...queuedFlagged].filter(([id]) => ownerQueued.has(id));
-  const settled = [...queuedFlagged].filter(([id]) => !ownerQueued.has(id));
+  const awaiting = [...queuedFlagged].filter(([id]) => queuedFor(id));
+  const settled = [...queuedFlagged].filter(([id]) => !queuedFor(id));
   if (awaiting.length) {
     console.log(`\n  OWNER-QUEUED — ${awaiting.length} flagged record(s) in this batch await his ruling`);
     console.log('  (work/owner-questions.json). Their diffs are recorded there, not counted above:');
-    for (const [id, gates] of awaiting) console.log(`      ${id.padEnd(34)} ${gates.join(', ')}`);
+    /* Name the DESK ENTRY when it differs from the record id: a reader sent to owner-questions.json
+     * looking for `animal-instinct` finds nothing — the entry is `animal-instinct-spider-web`. */
+    for (const [id, gates] of awaiting) {
+      const desk = queuedFor(id);
+      console.log(`      ${id.padEnd(34)} ${gates.join(', ')}${desk === id ? '' : `   [desk: ${desk}]`}`);
+    }
   }
   if (settled.length) {
     console.log(`\n  PARKED BY RULING / INSTRUMENT LIMIT — ${settled.length} record(s), settled, not counted above:`);

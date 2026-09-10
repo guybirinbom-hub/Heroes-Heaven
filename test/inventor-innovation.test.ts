@@ -56,10 +56,23 @@ describe('Enhanced Resistance', () => {
     });
   });
 
-  it("min(1) survives too — it just stops mattering once it's the full level", () => {
-    // phlogistonic-regulator is max(1,floor(level/2)): at level 1 half-level floors to 0, so the
-    // max(1,…) is what keeps it at 1. Upgraded it reads max(1,level).
-    expect(res(1, { initial: 'phlogistonic-regulator' })).toMatchObject({ cold: 1, fire: 1 });
+  /*
+   * WAS "min(1) survives too": phlogistonic-regulator shipped max(1,floor(level/2)) and this test
+   * pinned the floor. Batch 035 read the record against print and removed it — AoN innovation-5
+   * §Phlogistonic Regulator is "You gain resistance equal to half your level to cold and fire damage",
+   * with no minimum, and WG's row 24832 (adjValue RESISTANCES "cold, {{level/2}}") has none either, so
+   * a 1st-level inventor was reading 1 where BOTH authorities read 0. What this test is actually for —
+   * that Enhanced Resistance rewrites the formula rather than replacing it, keeping whatever wrapper
+   * the modification's own value carries — is preserved on the upgraded half, which is the half that
+   * exercises the rewriter.
+   */
+  // batch 035: phlogistonic-regulator#resistance-minimum
+  it('phlogistonic-regulator has no floor: half of level 1 is 0, and Enhanced Resistance still rewrites it at 7th', () => {
+    expect(res(1, { initial: 'phlogistonic-regulator' })).toEqual({});
+    // Enhanced Resistance is a BREAKTHROUGH modification (level 7), so 7th is the first level at which
+    // the rewriter runs at all: half of 7 is 3, upgraded to the full 7.
+    expect(res(7, { initial: 'phlogistonic-regulator' })).toMatchObject({ cold: 3, fire: 3 });
+    expect(res(7, { initial: 'phlogistonic-regulator', breakthrough: 'enhanced-resistance' })).toMatchObject({ cold: 7, fire: 7 });
   });
 
   it('it upgrades ONLY the initial modification, not every resistance the inventor has', () => {

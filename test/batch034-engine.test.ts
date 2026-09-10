@@ -115,13 +115,19 @@ describe('spirit-instinct: Spirit Rage is a per-Rage choice that also grants gho
   });
 
   // batch 034: spirit-instinct#damage-type-choice
-  it('spirit-instinct halves BOTH branches on an agile attack, and no other instinct grows a choice', () => {
+  // batch 035: dragon-instinct#optional-rage — the title's "no other instinct grows a choice" is no
+  // longer true: Draconic Rage is optional per Rage as well, so this block now names dragon-instinct.
+  it('spirit-instinct halves BOTH branches on an agile attack, and dragon-instinct is the only instinct that has since grown one', () => {
     const fist = deriveStrikes(barb(5, 'spirit-instinct'), db).find((s) => /fist/i.test(s.name));
     const r = fist?.conditionalDamage?.find((x) => x.note.includes('raging'))!;
     expect(r.text).toContain('1 spirit'); // floor(3/2)
     expect(r.text).toContain('1 bludgeoning'); // floor(2/2)
-    // Blast radius: an instinct with no `typeOptional` still prints one branch.
-    expect(rageRider(barb(5, 'dragon-instinct'))!.text).toBe('4 energy');
+    // batch 035: dragon-instinct#optional-rage — "When you rage, you CAN increase the additional
+    // damage from Rage from 2 to 4 and change its damage type": Draconic Rage is a per-Rage choice
+    // too, so the single-branch "4 energy" assertion that stood here is now both branches.
+    expect(rageRider(barb(5, 'dragon-instinct'))!.text).toBe('4 energy or 2 bludgeoning (choose each Rage)');
+    // batch 035: dragon-instinct#optional-rage — blast radius: an instinct with no `typeOptional`
+    // (fury-instinct) still prints exactly one branch, so nothing else grew a choice.
     expect(rageRider(barb(5, 'fury-instinct'))!.text).toBe('3 bludgeoning');
   });
 });
