@@ -1,0 +1,164 @@
+BATCH 037 — GATE-RED ADVERSARIAL VERIFY, group "close-offbatch-door" (family red-close-offbatch-door).
+Verifier run 2026-09-11, after the builder's report at work/.b037-report-red-close-offbatch-door.txt.
+
+⚠ NO LINE ON THIS PAGE IS A SETTLE LINE OR A TEACH LINE. This group credited no comparer. Every id
+below is kept off the lines carrying the words the closer's citation scan matches, and the whole page
+was scanned against that regex before it was written (0 hits). This group's disposition is one branch
+in the closer, its guard, and the manifest.
+
+HEADLINE — the round's own instrument now runs clean, and ONE driver stage stands between here and
+three green gates. `node scripts/wg-batch-close.mjs --batch 037` (my run, this tree):
+    125 record(s), 144 confirmed / 0 refuted / 0 askOwner
+    verdicts: OWNER-QUEUED 112, FIXED 12, MATCHES 1   (added 125)
+    residual: confirmed 144, flaggedResidues 44, offBatch 12
+    REFUSED: none.   work/wg-batch-037-parity.json + -residual.json: "would be created".
+  The builder's tree still printed THREE refusals when I picked it up; see ITEM 8.
+
+
+ITEM 1+2+3 — ROOT CAUSE, the off-batch verdict router
+  DONE. scripts/wg-batch-close.mjs:240-262 (in f1da70a) routes a confirmed finding whose rec() lands
+  outside work/wg-batch-037.json out of the verdict derivation and into residual.offBatch, and REFUSES
+  it only when nothing in the batch cites it. The WHY comment quotes the gate's own PARITY sentence
+  ("125 record(s) in this batch have an encoding on their side"), which is the right authority: I read
+  scripts/wg-batch-gate.mjs:422-455 and that text is verbatim from its fail() at :427.
+
+  RE-MEASURED, not accepted:
+    · work/wg-batch-037.json holds exactly 125 ids and NONE of android, wild-lights,
+      armigers-protection, flexible-spellcaster, soul-well, mask-of-the-mantis-major, zealot-staff,
+      screech-shooter-greater/-major, wyrm-spindle-greater/-major is among them. swashbucklers-speed IS.
+    · `node scripts/wg-show.mjs "Armiger's Protection" --raw` and `"Zealot Staff" --raw` both print
+      "No ability_block row ... they do not carry this record at all"; `"Soul Well" --raw` prints
+      "(no operations — they carry the record but encode nothing mechanical)".
+    · Every one of the twelve carries evidence "owner ruling, 2026-09-10 desk pass" in
+      work/.b037-read.json, i.e. the print-read lane riding in the WG-comparison read file.
+  BLAST RADIUS re-measured myself, not taken from the report: I replayed rec() over
+  work/.b030..036-read.json against each batch's own id list — 33/29/29/78/42/55/32 confirmed findings,
+  ZERO off-batch in all seven. The new branch is a no-op for every earlier batch, so the regate cannot
+  move.
+
+ITEM 4 — the citation check
+  DONE, and it is now TWELVE of twelve cited, not eleven. The closer prints one off-batch line per
+  finding with its citation; eleven are row-spec citations from families data-rows-2/3/4/6 and the
+  instruments-1 spec note, exactly as predicted. The twelfth (the flexible-spellcaster collection
+  shape) picked up a citation of its own while I was verifying, from the engine group's staged test
+  file — the weak tier doing its designed job. The guard was NOT weakened: I re-ran the uncited case
+  in the group's own test and it still exits 1 and names the id.
+
+ITEM 5 — print, read by me against the mirror
+  DONE. All three doc ids the round quoted check out verbatim at C:/wonderers guide/aon-2e-archive/data:
+    · feat-8814 — "you receive a non-magical suit of Hellknight armor of a type you become trained in
+      (Hellknight breastplate, Hellknight half plate, or Hellknight plate)" → ONE suit, chosen.
+    · feat-7707 — "living creatures within the same area die from the dying condition at dying 5 rather
+      than dying 4", scoped to "For the next minute" → a toggle, not a passive.
+    · equipment-2263 — "Activate Free Action (concentrate) Trigger You hit with a Strike using the
+      staff" with NO Frequency line on the activation (the only Frequency on the page is none; the
+      drained clause is the daily-preparation one).
+  Nothing here is a decision this round makes, and this group authored no row over any of it.
+
+ITEM 6 — VERIFY RED 15 (parity-residual-check)
+  DONE, resolves with nothing extra, and scripts/parity-residual-check.mjs is untouched (git reports it
+  clean). I ran it: "13 record(s) have no verdict and are NOT waiting on a ruling", all thirteen in
+  batch 037 — and the closer now derives a verdict for every one of them (I replicated its citations()
+  read-only over all thirteen: twelve FIXED off a row spec, one MATCHES). The check goes green the
+  moment the artefact is on disk. The 13th, swashbucklers-speed, now derives FIXED off an 8-row spec
+  and no longer refuses.
+
+ITEM 7 — the unstaged guard (verify-gaps [108] REOPENED, family gap-instruments-6)
+  DONE, but the measurement in the report was already STALE when it was written, and I am saying so
+  rather than passing it on. The manifest entry exists and names scripts/wg-diff.mjs,
+  test/batch037-gap-instruments-6.test.ts, test/batch035-closer.test.ts and
+  work/.b037-report-gap-instruments-6.txt. The defect it was written for was gone before it landed:
+  `git show --stat f1da70a` lists test/batch035-closer.test.ts (+31/-x) INSIDE that commit, so it was
+  never left in the working tree. The entry is harmless belt-and-braces and I left it alone.
+  The report's other half I re-checked at source and it holds: scripts/wg-batch-commit.mjs:96 carries
+  the KEEP glob ^work/\.b037-report-.*\.txt$, so -gap-instruments-4.txt and -5.txt are staged whether or
+  not any stage[] names them. No manifest edit is owed for those two.
+
+ITEM 8 — manifest ownership — FIXED-BY-ME (then absorbed by a concurrent write)
+  NOT-DONE as I received it; DONE now. The builder's entry named work/.b037-rows-engine-lanes.json /
+  family engine-lanes, taken from the round's shorthand. No such file existed: that group's spec, test
+  and report are all under its real family name red-owner-ruled-engine-lanes. The closer hard-refuses a
+  manifest naming a missing spec, so the builder's tree printed three refusals, and the other two were
+  downstream of the first (the engine group's two findings had no spec to be cited from):
+      manifest names work/.b037-rows-engine-lanes.json (family engine-lanes) and it does not exist
+      confirmed finding <the flexible-spellcaster collection-shape one> ... nothing in this batch cites it
+      uncited NEW verdict — swashbucklers-speed
+  I repointed the entry at the file on disk and re-ran: all three refusals gone, 125 verdicts derived.
+  At 15:07 that group rewrote work/.b037-specs.json itself (replace-by-family) and folded my note into
+  its own entry, so the manifest now holds ONE engine entry, 26 in total, no duplicate family, and
+  every `file` exists — verified by re-reading it after their write. I left their version standing.
+  ⚠ The round told this group the manifest "belongs to this group and NO other". It does not: another
+  group wrote it mid-round. Any future manifest write must re-read at the moment of the write.
+
+ITEM 9 — the test
+  DONE. test/wg-batch-close.test.ts, describe "an off-batch confirmed finding (android) is routed to
+  residual.offBatch, not refused", two cases. I read both in full: they spawn the REAL closer as a node
+  child over a --root fixture (the same harness as the file's other twelve cases), and they hold the two
+  halves apart properly — the cited case asserts parity.records is exactly the three batch records
+  (so the off-batch id is proved NOT to become a verdict) and that residual.offBatch carries the row
+  citation; the uncited case asserts exit 1, the id in the output, and NO parity file on disk.
+  Citation form checks out against rule (1): the marker sits within the 6 lines above each changed
+  it()/expect(), the finding it names is in confirmed[] of work/.b037-read.json with verdict CONFIRMED,
+  and the record half of its id appears in the describe title.
+  No "// mutation-proof" marker is owed and none is missing — rule (3) is about a new comparer credit
+  or an lane-tool teach, and this is the closer's verdict router. Nothing in this group's change adds a
+  key to any comparer registry.
+  RUN BY ME: `node scripts/vt.mjs run test/wg-batch-close.test.ts` → 14 passed (14).
+             `node scripts/test-flip-audit.mjs --batch 037` → clean, 50 test file(s), every flip cited.
+             `npx tsc --noEmit` → exit 0.
+
+ITEM 10 — the committed-batch guard (the builder's own find)
+  DONE, and it is load-bearing: without it the other nine items clear nothing, because f1da70a closed
+  the batch with neither artefact in it and the old guard made them unwritable forever. The branch is
+  right and its WHY comment says so. Checked myself:
+    · I enumerated batches 025-037 on disk: every batch 025-036 has BOTH artefacts, only 037 has
+      neither. So today the relaxed branch changes behaviour for exactly one batch.
+    · The plan-E acceptance (batch 029, artefacts present) still refuses and still returns both files
+      byte-identical — it is case 13 of the 14 that passed.
+  And I pushed past the report to the question it did not ask: is the artefact the gate wants actually
+  going to be ACCEPTED once written? I read both gate checks rather than assuming.
+    · RESIDUAL (wg-batch-gate.mjs:367-389) demands examined >= 125 and every confirmed entry marked
+      fixed. The closer writes examined: ids.length (125) and fixed: true on all 144 (:390, :392); the
+      44 unfixed residues live under flaggedResidues, which that gate does not read. Passes.
+    · PARITY (:422-455) demands a verdict for every record with theirOps, and that each OWNER-QUEUED one
+      resolve through queuedFor(). The closer refuses to write OWNER-QUEUED without an exact desk hit,
+      and the gate's resolver is a superset of that (it also matches record#aspect keys), so all 112
+      resolve. Passes.
+  So gate reds 1 and 2 and verify red 15 clear together on the next close, with nothing further owed.
+
+
+WHAT IS STILL RED ON DISK, stated plainly
+  work/wg-batch-037-parity.json and work/wg-batch-037-residual.json DO NOT EXIST yet, so gate reds 1, 2
+  and verify red 15 are still red as of this file. Every refusal that kept them unwritten is gone and
+  the dry run says "would be created" for both — but writing them is `--stage close`, which is the
+  DRIVER's stage and not a thing this round may do halfway: scripts/wg-batch-run.mjs:1013-1098 runs the
+  went-quiet diff against the baseline flags and regenerates src/data/trust-ledger.json in the same
+  stage, and a closer run by hand produces the artefact while silently skipping both. That is why I did
+  not run --write. It is CROSS-FILE GAPS 1, and it is one command.
+
+
+DATA STILL NEEDED
+  (none — this group authored no overlay row and owes none. Its spec file is deliberately empty and
+  contributes no citation, which I confirmed: work/.b037-rows-red-close-offbatch-door.json has
+  findings: [] and the closer's citation pass draws nothing from it.)
+
+CROSS-FILE GAPS
+  1. DRIVER ACTION, the one thing left: run `node scripts/wg-batch-run.mjs --batch 037 --stage close`.
+     It is refusal-free now (verified by dry run in this tree) and it is what creates the two artefacts
+     gate reds 1+2 and verify red 15 are about. Nothing else in this round can clear them.
+  2. scripts/wg-batch-close.mjs — the relaxed guard decides "a batch committed without its artefacts"
+     with existsSync on the WORKING TREE, while the claim it encodes is about HISTORY. Deleting a
+     committed batch's parity/residual locally would therefore let --write re-derive over what history
+     holds. Not live today (025-036 all have both files on disk) and the damage would be a visible git
+     diff, so I did not widen the code to a `git show HEAD:` probe: that half cannot be tested without a
+     git-repo fixture, and this round may not run git write commands. Whoever owns the git-fixture
+     decision gets both this and the builder's own untested-branch gap in one go.
+  3. work/.b037-rows-engine-lanes.json, work/.b037-report-engine-lanes.txt and
+     test/batch037-engine-lanes.test.ts now exist only as placeholders under the round's shorthand name
+     (the first is deliberately empty and points at the real spec). The manifest no longer has an entry
+     whose `file` is that empty spec, so nothing cites them; they are staged by the engine entry and
+     would enter history as three near-empty files. The driver should decide whether it wants them.
+  4. work/.b037-specs.json is written by at least two groups concurrently (mine at 15:05, the engine
+     group's replace-by-family at 15:07, which absorbed my entry). It survived this time because that
+     group re-read before writing. The round's "belongs to this group and NO other" is not true of this
+     batch, and a later group that appends without re-reading will silently drop entries.

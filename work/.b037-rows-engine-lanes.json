@@ -1,0 +1,9 @@
+{
+  "findings": [
+    {
+      "id": "swashbucklers-speed#typed-all-speeds",
+      "note": "NO ROWS HERE — this file exists only because work/.b037-specs.json already carried an entry naming it (family \"engine-lanes\") before this round's engine group was named, and CROSS-FILE GAPS #1 of work/.b037-report-red-close-offbatch-door.txt asks for it to exist so the commit stage does not stage a path that was never written. The REAL rows for both of this group's findings are in work/.b037-rows-red-owner-ruled-engine-lanes.json (8 rows: speedBonusType on seven carriers, speedBonusAllSpeeds on feats/swashbucklers-speed). Deliberately empty rather than a copy: the applier hard-refuses two rows on the same record+field, so a duplicate spec would break the batch it is meant to unblock. The report is work/.b037-report-red-owner-ruled-engine-lanes.txt; work/.b037-report-engine-lanes.txt points at it, and test/batch037-engine-lanes.test.ts pins the lane's SCOPE (which carriers may carry a type at all) while test/batch037-red-owner-ruled-engine-lanes.test.ts pins the mechanic.",
+      "backfillRows": []
+    }
+  ]
+}

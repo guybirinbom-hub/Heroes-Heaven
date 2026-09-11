@@ -1,13 +1,14 @@
-parity batch 037 — WG-comparison lane, 125 records read against print
+parity batch 037 — WG-comparison lane, 125 records read against print, closed
 
 WHAT WAS READ. 136 ids were cut; Wanderer's Guide encodes 125 of them and the read produced 144
 CONFIRMED findings, 0 refuted, 0 deferred to the owner at read time. Fourteen build families worked
-them (instruments-1..7, data-rows-1..6, situational) and eight gap families built the readers and
-lanes the data families were blocked on.
+them (instruments-1..7, data-rows-1..6, situational), eight gap families built the readers and lanes
+the data families were blocked on, and a gate-red round added three more (red-close-offbatch-door,
+red-owner-ruled-engine-lanes, red-closer) — 27 manifest specs across 25 families in all.
 
-WHAT CHANGED. 23 manifest specs applied 147 overlay rows into scripts/data/effect-backfill.json
-(14,411 -> 14,413 rows; 2 new keys, 3 supersessions), every one replayed into public/core.json and
-public/core-descriptions.json and read back from the shipped artefacts. Code lanes built this batch:
+WHAT CHANGED. 158 overlay rows went into scripts/data/effect-backfill.json (14,411 -> 14,423 rows;
+12 new keys, 4 supersessions), every one replayed into public/core.json and public/core-descriptions
+.json and read back from the shipped artefacts. Code lanes built this batch:
 InnateSpellGrant.heightenWhenFlag (a grant gated on ANOTHER record's answer — Locate Lawbreakers
 heightens only for the Order of the Gate), ItemBase.resonant.spellNotes and its reader (the three
 aeon stones' resonant clauses now reach the spell entry), IwrEntry.whenArmorCategory (Guardian's
@@ -20,6 +21,25 @@ the sheet by no route at all before). Six records left FEAT_CANTRIP_GRANTS for t
 `choice`: all three kitsune and all three nagaji spell feats print "During your daily preparations,
 choose …" and were asking the question twice, once in the builder and once at daily preparations,
 with only the builder one granting.
+
+WHAT THE GATE-RED ROUND ADDED. Two owner-ruled engine lanes and one closed door.
+(1) swashbucklers-speed#typed-all-speeds — feat-6238, "You gain a +5-foot STATUS bonus to your
+SpeedS": Speed bonuses now carry a TYPE and a clause that says "your Speeds" raises every Speed the
+character has. DefenseGrants.speedBonusType / .speedBonusAllSpeeds plus stackSpeedBonuses in
+deriveSpeeds (highest per named type; untyped bonuses and the seaweed leshy's −5 keep stacking, which
+is RAW), and 8 rows over the 7 carriers whose own printed clause names a type. Owner ruling
+2026-09-10 #127.
+(2) flexible-spellcaster#collection-shape — archetype-99, "The number of spells in your spell
+collection each day equals the total number of spell slots you get each day from your class spells":
+ONE flat pool sized by total daily slots with the printed 1st-rank floor, replacing a per-rank list
+print never gave. build.ts's exported flexibleCollectionSize plus the across-rank rail in
+Builder.tsx, so the picker and the sheet cannot disagree. Owner ruling 2026-09-10 #102. Code-only —
+no row can carry it.
+(3) scripts/wg-batch-close.mjs learned that an off-batch CONFIRMED finding (a record with no WG
+ability_block at all — eleven of them, carrying the 2026-09-10 print-read answers) is not a parity
+verdict: it routes to residual.offBatch with its citations instead of refusing the whole close, while
+an off-batch finding that NOTHING in the batch cites still refuses. That single refusal was the whole
+of gate reds 1, 2 and 15: without it neither artefact could ever be written.
 
 WHAT THE CLOSER SETTLED. One EXPERIENCE red, feats/nagaji-spell-expertise: their `adjValue SPELL_DC
 = E` / `SPELL_ATTACK = E` pair had no surface predicate, because ours delivers the pair centrally —
@@ -35,29 +55,63 @@ has no rules body at all, so the entry is print's own line), a mirror doc id tha
 for mask-of-the-mantis-major, a Wyrm Spindle grade DC written as a phrase print never forms, and a
 Kitsune Spell Familiarity option granting Ghost Sound, which is superseded by Figment.
 
-WHAT IS QUEUED FOR THE OWNER. Desk #151 screech-shooter-major-rune-grade: print states a rune grade
-for the base and the greater screech shooter and is SILENT for the major, so the major's grade — and
-whether builtInRunes may be authored for all three from that ruling — cannot be invented. Desk #152
-empty-description-marker-line: ruling 2026-09-10 #17 asked for one plain line, clearly marked as
-ours, on merchants-scale, and the apply pre-check refuses authored prose in a description row; the
-question is whether that guard should learn a marker prefix, whether the line belongs on the sheet
-instead of in the data, and whether it applies to all 244 items that ship an empty description for
-the same reason. 44 gap lines are parked, most against desk #127 (the typed all-Speeds lane) and #85
-(reborn-soul's restricted skill increases), both unruled since earlier batches.
+WHAT THE CLOSER BUILT IN THE LAST ROUND (family red-closer, 3 rows + 2 code lanes). Both were
+measured defects the gate-red round handed UP as cross-file gaps, neither buildable in the group that
+found them.
+· src/rules/explain.ts — a REGRESSION of this batch's own typed-Speed lane: the Speed breakdown kept
+  SUMMING every landSpeedBonus while deriveSpeeds had started taking the highest of a type, and
+  reported the surplus as "Armor Speed penalty — heavy armor or unmet Strength" on a character wearing
+  no armour (Swashbuckler's Speed + Scout's Speed read [25, +5, +10, −5] under a correct total of 35).
+  The block now mirrors the stacking and keeps the suppressed bonus VISIBLE at 0, naming what beat it.
+· feats/tillers-drive — the only record in the database carrying BOTH `landSpeedBonus` and
+  `speeds.land`, so feat-932's "Your Speed bonus from Bellflower Dedication increases to +10 feet" was
+  paid as +20: a tiller walked 45 feet where print gives 35. Three rows (speeds deleted,
+  landSpeedBonus 5 -> 10 superseding the row shipped in 46a2885, speedBonusType status) make the pair
+  take the highest and pay the printed +10 once. The one pin that flips, test/speed-increases.test.ts,
+  had excused this record in a comment for exactly the reason the new lane removes.
+· scripts/wg-batch-close.mjs — the committed-batch guard asked `existsSync` while its own refusal says
+  "a closed batch's artefacts are HISTORY". Once the round wrote the missing pair for a batch already
+  committed without it, the two answers diverged and every later close refused — skipping the
+  went-quiet diff and the trust-ledger regeneration that stageClose runs afterwards, which left
+  src/data/trust-ledger.json stamped with a stale core.json and no way through --stage verify. The
+  probe is `git show HEAD:<path>` now, which also closes the hole the round named (deleting a
+  committed batch's artefacts locally no longer makes them re-derivable).
 
-WHAT IS DEFERRED, AND WHY THIS BATCH IS NOT CLOSED. The close stage refuses: twelve CONFIRMED
-findings sit on eleven records that have no Wanderer's Guide packet at all (android, wild-lights,
-armigers-protection, flexible-spellcaster, soul-well, mask-of-the-mantis-major, zealot-staff, both
-screech-shooter grades, both wyrm-spindle grades), and wg-batch-close.mjs may not write a
-WG-comparison verdict for a record whose id is not in work/wg-batch-037.json. Their rows ARE applied
-and tested; it is the verdict file that cannot name them. A thirteenth refusal, swashbucklers-speed,
-is the known desk-key defect the close script documents: its question is filed as
-`speed-status-lane-031`, which `desk.has(<record id>)` does not resolve. Both need the orchestrator —
-a batch-composition call and a --reverdict — so work/wg-batch-037-parity.json and -residual.json are
-unwritten and the RESIDUAL and PARITY gates are red for that reason and no other.
+WHAT IS QUEUED FOR THE OWNER — five desk questions, #151-#155. #151 screech-shooter-major-rune-grade:
+print states a rune grade for the base and the greater screech shooter and is SILENT for the major.
+#152 empty-description-marker-line: ruling 2026-09-10 #17 asked for one plain line marked as ours on
+merchants-scale, and the apply pre-check refuses authored prose in a description row — should the
+guard learn a marker prefix, should the line live on the sheet instead, and does it apply to all 244
+items that ship an empty description? #153 timewracked-dedication-speed-clause: feat-8166's "for each
+mode of movement available to you" reads two ways and the shipped flat +5 is neither. #154
+speed-plural-while-a-state-is-on: the panache half of feat-6238 has no carrier and is not rowable —
+the modes Speed lane cannot say "+5 to every Speed while a state is on". #155
+flexible-spellcaster-book-casters: a flexible WIZARD, WITCH or MAGUS still takes the spellbook branch
+before the collection branch and silently gets nothing; the fix is a combined branch, not a reorder.
+44 gap lines are parked, each with its reason in work/wg-batch-037-residual.json.
 
-STATE AT COMMIT. Full suite green (6,264 passed, 1 skipped). npx tsc --noEmit clean. The verify chain
-is 40 of 41 clean; the one red, parity-residual-check, was already red when the batch was cut and is
-the same missing parity file. The earlier-batch re-gate is green across all 36 batches — nothing this
-batch changed made an older record fall silent. The EXPERIENCE gate is green: 125 records played on
-the real builder, 111 OK. The flip audit is clean across 47 touched test files and 13 new settle keys.
+WHAT IS DEFERRED. classFeatures/hyper-boosters stays untyped by design — the pair totals the printed
++10 today, but a third status bonus in play would make it pay 15; the tidy encoding is pinned at 5 by
+two earlier batches' tests and is a batch of its own. Twelve desk entries (#19 #27 #32 #34 #38 #53
+#65 #66 #74 #75 #76 #77) are ruled in work/desk-answers-2026-09-10.json but still sit in
+work/owner-questions.json open[], which only the orchestrator may move, so they close as OWNER-QUEUED
+here. The narrow non-playtest tie-break (desk #149) is a corpus-wide re-pairing that would restate 106
+records across 36 prior batches' settle registries and needs its own batch with a settle-staleness
+sweep. scripts/wg-batch-close.mjs's writing half still has no vitest case of its own that runs inside
+a git fixture, and addedText() diffs against HEAD — f1da70a — so the code-only citation tier is empty
+for the four src/ files that commit already swept in; both need the orchestrator.
+
+STATE AT COMMIT — the final state, after the gate-red round and the closer's second pass. ALL NINE
+GATES PASS for work/wg-batch-037.json, on the tree as it stands. work/wg-batch-037-parity.json holds
+125 verdicts (OWNER-QUEUED 112, FIXED 12, MATCHES 1) and work/wg-batch-037-residual.json holds 144
+confirmed findings, 44 flagged residues and 12 off-batch entries, examined 125. 112 gap lines are
+disposed of: 68 authored, 44 parked. The verify chain is 41 of 41 clean with nothing tolerated — the
+parity-residual check that was red when the batch was cut is green, and the trust ledger is
+regenerated with its coreSha matching the shipped public/core.json. The full suite is green (6,285
+passed, 1 skipped) and npx tsc --noEmit exits 0; the six tests that failed the first full run were all
+consequences of this round's own rows and desk entries, each re-cited rather than loosened. The
+earlier-batch re-gate is green across all 36 batches — nothing this batch changed made an older record
+fall silent. The EXPERIENCE gate is green: 125 records played on the real builder, 111 OK, and the 14
+that are not are each parked with a verbatim print quote in work/experience-instrument-limits.json or
+queued on the desk. The flip audit is clean across 52 touched test files and 13 new settle keys.
+Nothing is left red; what is not built is queued (#151-#155) or named above as deferred.

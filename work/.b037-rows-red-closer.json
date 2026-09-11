@@ -1,0 +1,32 @@
+{
+  "findings": [
+    {
+      "id": "tillers-drive#double-carrier",
+      "note": "CLOSER ROUND, batch 037 (2026-09-11). Raised as CROSS-FILE GAPS 2 of work/.b037-verify-red-owner-ruled-engine-lanes.txt (FIXED-BY-ME (c)) and re-measured here from public/core.json rather than taken on the verifier's word: feats/tillers-drive is the only record in the database that carries BOTH `landSpeedBonus: 5` AND `speeds: { land: 10 }`, so a Bellflower tiller walked 25 + 5 (Bellflower Dedication) + 5 + 10 = 45 feet where AoN feat-932 prints one +10 total, a 10-foot over-grant. The engine lane batch 037 built for swashbucklers-speed#typed-all-speeds is what finally makes the printed shape expressible: Bellflower Dedication's bonus is a STATUS bonus (feat-928, already typed by work/.b037-rows-red-owner-ruled-engine-lanes.json) and Tiller's Drive raises that same bonus, so with both typed `status` deriveSpeeds takes the HIGHEST and the pair pays exactly the printed +10. Three rows: delete the raise-to carrier, move the whole printed bonus into landSpeedBonus, and name its type. The engine spec's own note deliberately left this record untyped on the reasoning that it 'carries the delta, not a second bonus' - that reasoning is sound for classFeatures/hyper-boosters (a single 5) and FALSE here, because this record's delta is 15, not 5. The one pin that flips is test/speed-increases.test.ts, which listed feats/tillers-drive as a known-bad double carrier explicitly because 'no lane could say replace'; the lane exists now, so the list is empty and the expectation is re-cited from print. Pinned on a BUILT character by test/batch037-closer-red.test.ts.",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "tillers-drive",
+          "field": "speeds",
+          "value": null,
+          "why": "AoN feat-932: \"Your Speed bonus from Bellflower Dedication increases to +10 feet.\" ONE bonus, raised - not a second grant on top of it. The record carried the raise-to field `speeds: { land: 10 }` AND `landSpeedBonus: 5` at the same time, the only record in the database to carry both, and deriveSpeeds adds them both, so the printed +10 was paid as +15 on top of Bellflower's own +5. The whole printed bonus moves into landSpeedBonus (the sibling row) where the type lane can suppress the smaller one, and this field goes."
+        },
+        {
+          "category": "feats",
+          "id": "tillers-drive",
+          "field": "landSpeedBonus",
+          "value": 10,
+          "supersedes": true,
+          "why": "AoN feat-932: \"Your Speed bonus from Bellflower Dedication increases to +10 feet.\" The printed number is the WHOLE bonus, not a delta over Bellflower's +5. SUPERSEDES the pre-existing overlay row {category: feats, id: tillers-drive, field: landSpeedBonus, value: 5} (no `why`, shipped in 46a2885 \"v0.1.21 - every printed effect reaches the sheet\"), whose 5 was written as a delta back when nothing could express replacement; the superseded value is a scalar and is replaced whole by the 10 above. With feats/bellflower-dedication typed `status` (feat-928: \"You gain a +5-foot STATUS bonus to your Speed\") and this row typed the same, deriveSpeeds' highest-per-type rule pays the pair exactly the printed +10."
+        },
+        {
+          "category": "feats",
+          "id": "tillers-drive",
+          "field": "speedBonusType",
+          "value": "status",
+          "why": "AoN feat-932 raises the bonus feat-928 grants, and feat-928 prints \"You gain a +5-foot STATUS bonus to your Speed\" - a raised bonus keeps its type. This is what makes the replacement work instead of the addition: two status bonuses take the highest (deriveSpeeds' stackSpeedBonuses, built this batch for swashbucklers-speed#typed-all-speeds), so Bellflower's +5 is suppressed by this +10 and the tiller pays the printed number once."
+        }
+      ]
+    }
+  ]
+}

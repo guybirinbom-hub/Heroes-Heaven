@@ -57,10 +57,18 @@ describe('speed increases actually raise your Speed', () => {
      * monk-moves USED to be listed here, with the note "its +10 applies only while unarmored, and the
      * unconditional field would over-grant" — an acknowledgement that it WAS wrong, kept because no
      * lane could say "unarmored". It now lives in `speedsIf.unarmored` and is evaluated, so a monk in
-     * plate gets nothing; see test/conditional-speeds.test.ts. tillers-drive stays: it REPLACES another
-     * feat's bonus rather than adding to the base, which is a different shape from this defect.
+     * plate gets nothing; see test/conditional-speeds.test.ts.
+     *
+     * tillers-drive USED to be listed here too, excused as "it REPLACES another feat's bonus rather
+     * than adding to the base" — the same shape of acknowledgement, kept because no lane could say
+     * "replace". It carried BOTH `landSpeedBonus: 5` and `speeds.land: 10` (the only record in the
+     * database to carry both), so the one bonus print raises was paid three times over: a tiller walked
+     * 45 feet where feat-932 prints 35. The typed-Speed lane says "replace" now — both halves are
+     * status bonuses and the highest wins — so the record carries one `landSpeedBonus: 10` typed
+     * `status` and nothing is left in the raise-to field. The list is empty, and it should stay empty.
      */
-    expect(bad.sort()).toEqual(['feats/tillers-drive']);
+    // batch 037 premise: feat-932 "Your Speed bonus from Bellflower Dedication increases to +10 feet."
+    expect(bad.sort()).toEqual([]);
   });
 
   it('a real "becomes N feet" record still raises to N', () => {

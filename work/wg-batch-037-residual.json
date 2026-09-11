@@ -1,0 +1,1519 @@
+{
+ "batch": "work/wg-batch-037.json",
+ "examined": 125,
+ "method": "Opus readers (print + WG raw ops + every carrier) each followed by an adversarial verifier; findings applied by 26 family spec(s), verdicts derived by scripts/wg-batch-close.mjs from the cited rows, edits, tests and teaches",
+ "confirmed": [
+  {
+   "id": "devil-allies",
+   "finding": "devil-allies#printing",
+   "severity": "internal",
+   "summary": "Nothing changes: the app already follows the 2026 Hellfire Dispatches printing (rank 6, heightening from 14th to a maximum of 10th); WG's older Character Guide numbers are a deliberate difference that must be written down.",
+   "fixed": true
+  },
+  {
+   "id": "fear-no-law-fear-no-one",
+   "finding": "fear-no-law-fear-no-one#printing",
+   "severity": "internal",
+   "summary": "Nothing changes: the app already carries the current one-action Strike that lowers nearby allies' frightened value; WG's superseded save-upgrade printing is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "steady-balance",
+   "finding": "steady-balance#grab-an-edge",
+   "severity": "internal",
+   "summary": "Nothing changes: the app carries the Player Core text only; WG's extra Acrobatics-for-Reflex substitution on Grab an Edge is the Core Rulebook clause Player Core deliberately dropped and must not be added.",
+   "fixed": true
+  },
+  {
+   "id": "firework-technician-dedication",
+   "finding": "firework-technician-dedication#pyrotechnic-vial",
+   "severity": "player-visible",
+   "summary": "The dedication's 4 pyrotechnic versatile vials are a bare counter with no item behind them, so the player has nothing to throw; a real pyrotechnic versatile vial item must exist.",
+   "fixed": true
+  },
+  {
+   "id": "firework-technician-dedication",
+   "finding": "firework-technician-dedication#source",
+   "severity": "internal",
+   "summary": "The record's book link still points at the superseded 2021 printing even though its displayed text is already the current one.",
+   "fixed": true
+  },
+  {
+   "id": "hellknight-dedication",
+   "finding": "hellknight-dedication#armor-training",
+   "severity": "internal",
+   "summary": "Nothing changes: the dedication grants mental resistance and the Intimidation step only; WG's armour training belongs to Armiger's Protection, which the app already builds.",
+   "fixed": true
+  },
+  {
+   "id": "reverse-engineer",
+   "finding": "reverse-engineer#crafting-star",
+   "severity": "player-visible",
+   "summary": "The +2 Crafting situational star comes from the superseded 2021 printing and must be deleted; the current entry prints no +2.",
+   "fixed": true
+  },
+  {
+   "id": "ardent-armiger",
+   "finding": "ardent-armiger#printing",
+   "severity": "internal",
+   "summary": "Nothing changes: the app matches the Hellfire Dispatches reprint word for word; WG's Character Guide text is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "advanced-red-mantis-magic",
+   "finding": "advanced-red-mantis-magic#legacy-slots",
+   "severity": "internal",
+   "summary": "Nothing changes: this 2019 World Guide feat belongs to a Red Mantis archetype the 2024 book replaced whole, so it grants nothing on the new archetype; WG's legacy slot grant is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "android#printing",
+   "finding": "android#printing",
+   "severity": "internal",
+   "summary": "Nothing changes: the app keeps the Lost Omens Ancestry Guide printing (Rare, Androffan + Common); WG's Starfinder Player Core printing is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "aon-wishes-for-riches",
+   "finding": "aon-wishes-for-riches#classification-choice",
+   "severity": "internal",
+   "summary": "Nothing changes: the app asks dragon or leech and grants the matching deviant feat; WG's flat Consume Energy grant is the older wording and is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "sense-of-belonging",
+   "finding": "sense-of-belonging#classification-choice",
+   "severity": "internal",
+   "summary": "Nothing changes: the app asks flicker or wraith and grants the matching deviant feat; WG's flat Eerie Flicker grant is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "lost-loved-one",
+   "finding": "lost-loved-one#classification-choice",
+   "severity": "internal",
+   "summary": "Nothing changes: the app asks leech or wraith and grants the matching deviant feat; WG's flat Ghostly Grasp grant is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "wanderlust",
+   "finding": "wanderlust#classification-choice",
+   "severity": "internal",
+   "summary": "Nothing changes: the app asks flicker or troll per the newer printing; WG's troll-only text and data are a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "beast-blessed",
+   "finding": "beast-blessed#trigger",
+   "severity": "internal",
+   "summary": "Nothing changes: Bestial Clarity triggers on an enchantment effect exactly as printed; WG's wider 'mental effect' trigger must not be copied.",
+   "fixed": true
+  },
+  {
+   "id": "total-power",
+   "finding": "total-power#classification-choice",
+   "severity": "internal",
+   "summary": "Nothing changes: the app asks dragon or troll and grants that branch; WG's troll-only Bone Spikes text is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "necromantic-tenacity",
+   "finding": "necromantic-tenacity#trigger",
+   "severity": "internal",
+   "summary": "Nothing changes: the feat keeps print's necromancy wording; WG's death/void trait trigger is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "magus",
+   "finding": "magus#2026-printing",
+   "severity": "player-visible",
+   "summary": "The magus must move whole to the 2026 Impossible Magic printing, whose Spells per Day table keeps 2 slots at every unlocked rank instead of emptying the lower ranks.",
+   "fixed": true
+  },
+  {
+   "id": "summoner",
+   "finding": "summoner#2026-printing",
+   "severity": "player-visible",
+   "summary": "The summoner must move whole to the 2026 Impossible Magic printing, whose Spells per Day table keeps 2 slots at every unlocked rank instead of only the two highest.",
+   "fixed": true
+  },
+  {
+   "id": "basic-magus-spellcasting",
+   "finding": "basic-magus-spellcasting#2026-printing",
+   "severity": "player-visible",
+   "summary": "Basic Magus Spellcasting is a Feat 4 granting the ordinary basic spellcasting benefits in the 2026 printing, not a Feat 6 granting the bounded ones.",
+   "fixed": true
+  },
+  {
+   "id": "expert-magus-spellcasting",
+   "finding": "expert-magus-spellcasting#2026-printing",
+   "severity": "player-visible",
+   "summary": "Expert Magus Spellcasting grants the expert spellcasting benefits (not the bounded ones) and requires master in Arcana in the 2026 printing.",
+   "fixed": true
+  },
+  {
+   "id": "master-magus-spellcasting",
+   "finding": "master-magus-spellcasting#2026-printing",
+   "severity": "player-visible",
+   "summary": "Master Magus Spellcasting grants the master spellcasting benefits (not the bounded ones) and requires legendary in Arcana in the 2026 printing.",
+   "fixed": true
+  },
+  {
+   "id": "basic-summoner-spellcasting",
+   "finding": "basic-summoner-spellcasting#2026-printing",
+   "severity": "player-visible",
+   "summary": "Basic Summoner Spellcasting is a Feat 4 granting the ordinary basic spellcasting benefits in the 2026 printing, not a Feat 6 granting the bounded ones.",
+   "fixed": true
+  },
+  {
+   "id": "expert-summoner-spellcasting",
+   "finding": "expert-summoner-spellcasting#2026-printing",
+   "severity": "player-visible",
+   "summary": "Expert Summoner Spellcasting grants the expert spellcasting benefits (not the bounded ones) and requires master in the skill associated with the eidolon's tradition.",
+   "fixed": true
+  },
+  {
+   "id": "master-summoner-spellcasting",
+   "finding": "master-summoner-spellcasting#2026-printing",
+   "severity": "player-visible",
+   "summary": "Master Summoner Spellcasting grants the master spellcasting benefits (not the bounded ones) and requires legendary in the skill associated with the eidolon's tradition.",
+   "fixed": true
+  },
+  {
+   "id": "studious-spells",
+   "finding": "studious-spells#2026-rebuild",
+   "severity": "player-visible",
+   "summary": "Studious Spells must be rebuilt as the 2026 'Studious Spell': a level-7 list of named spells added to the spellbook with a free-action Arcane Cascade rider, not a grant of extra restricted spell slots.",
+   "fixed": true
+  },
+  {
+   "id": "animist-apparition-spellcasting",
+   "finding": "animist-apparition-spellcasting#slot-levels",
+   "severity": "internal",
+   "summary": "Nothing changes: the app's apparition/animist slot levels match the printed table row for row; WG is one level late on the 7th, 8th and 9th ranks.",
+   "fixed": true
+  },
+  {
+   "id": "animist",
+   "finding": "animist#slot-table",
+   "severity": "internal",
+   "summary": "Nothing changes: the animist class slot table matches print at every level and rank; WG's single 7th-rank slot at levels 13-18 is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "sequestered-spell",
+   "finding": "sequestered-spell#innate-proficiency",
+   "severity": "internal",
+   "summary": "Nothing changes: the innate spell is trained and becomes expert at 12th by the general rule, and the single tradition-narrowed picker stays; WG's four tradition-gated pickers and level-4 expert condition are a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "spore-order",
+   "finding": "spore-order#leaf-order-membership",
+   "severity": "internal",
+   "summary": "Nothing changes: Spore Order already counts as a member of the Leaf Order for the ten feats that ask for it, and blocking stays off (option B, know the membership and block nothing); WG's whole-Leaf-Order grant is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "cultivation-order",
+   "finding": "cultivation-order#leaf-order-membership",
+   "severity": "internal",
+   "summary": "Nothing changes: Cultivation Order already counts as a member of the Leaf Order and blocking stays off; WG's empty Leaf Order record is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "divine-breadth",
+   "finding": "divine-breadth#no-cantrip",
+   "severity": "internal",
+   "summary": "Nothing changes: Divine Breadth grants extra slots only, no cantrip; WG's extra cantrip entry is a copied slip and a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "primal-breadth",
+   "finding": "primal-breadth#no-cantrip",
+   "severity": "internal",
+   "summary": "Nothing changes: Primal Breadth grants extra slots only, no cantrip; WG's copied cantrip entry is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "occult-breadth",
+   "finding": "occult-breadth#no-cantrip",
+   "severity": "internal",
+   "summary": "Nothing changes: Occult Breadth grants extra slots only, no cantrip - the same ruling the owner gave for Divine and Primal Breadth; WG's copied cantrip entry is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "sponsored-by-a-village",
+   "finding": "sponsored-by-a-village#rarity",
+   "severity": "internal",
+   "summary": "Nothing changes: the background stays common because the printed entry carries no rarity trait; WG's uncommon rating is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "sponsored-by-teacher-ot",
+   "finding": "sponsored-by-teacher-ot#one-pick",
+   "severity": "player-visible",
+   "summary": "The Survival-or-Performance choice is asked twice and the two controls can be answered differently, training two skills instead of one; it must be asked once.",
+   "fixed": true
+  },
+  {
+   "id": "sponsored-by-teacher-ot",
+   "finding": "sponsored-by-teacher-ot#rarity",
+   "severity": "internal",
+   "summary": "Nothing changes on rarity: the background stays common; WG's uncommon rating is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "unsponsored",
+   "finding": "unsponsored#rarity",
+   "severity": "internal",
+   "summary": "Nothing changes: the background stays common; WG's uncommon rating is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "sponsored-by-family",
+   "finding": "sponsored-by-family#rarity",
+   "severity": "internal",
+   "summary": "Nothing changes: the background stays common; WG's uncommon rating is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "sponsored-by-a-stranger",
+   "finding": "sponsored-by-a-stranger#rarity",
+   "severity": "internal",
+   "summary": "Nothing changes: the background stays common; WG's uncommon rating is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "sky-rider",
+   "finding": "sky-rider#both-skills",
+   "severity": "internal",
+   "summary": "Nothing changes: Sky Rider trains Acrobatics AND Plane of Air Lore, not one or the other; WG's pick is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "streetfood-vendor",
+   "finding": "streetfood-vendor#printed-choice",
+   "severity": "player-visible",
+   "summary": "The Crafting-or-Society choice is correct and stays, but the record's description text must be the printed sentence from the current Tian Xia Character Guide page rather than our rewrite.",
+   "fixed": true
+  },
+  {
+   "id": "locate-lawbreakers",
+   "finding": "locate-lawbreakers#order-of-the-gate",
+   "severity": "player-visible",
+   "summary": "The heightening to rank 5 at level 14 is a note that nothing reads; it must fire only for Order of the Gate members, read from the order the player already recorded.",
+   "fixed": true
+  },
+  {
+   "id": "gunslinger-weapon-mastery",
+   "finding": "gunslinger-weapon-mastery#advanced-rank",
+   "severity": "internal",
+   "summary": "Nothing changes: the app carries the printed split (master for simple and martial firearms and crossbows, expert for advanced) plus the critical specialization; WG's blanket master and missing crit spec are a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "brutality",
+   "finding": "brutality#melee-only",
+   "severity": "internal",
+   "summary": "Nothing changes: critical specialization while raging is melee weapons and unarmed attacks only; WG's whole-category grant is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "shoony-lore",
+   "finding": "shoony-lore#no-additional-lore",
+   "severity": "internal",
+   "summary": "Nothing changes: the feat trains Shoony Lore and nothing else; WG's Additional Lore grant adds three skill increases this feat never prints.",
+   "fixed": true
+  },
+  {
+   "id": "bone-magic",
+   "finding": "bone-magic#cantrip-list",
+   "severity": "internal",
+   "summary": "Nothing changes: the picker offers the printed union of the occult and primal cantrip lists, with the answer only setting the innate tradition; WG's tradition-first narrowing is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "oatia-skysage-dedication",
+   "finding": "oatia-skysage-dedication#cantrip-picker",
+   "severity": "player-visible",
+   "summary": "The repertoire picker offers all 38 occult cantrips; print names exactly four, so the picker must be restricted to them.",
+   "fixed": true
+  },
+  {
+   "id": "mightyfall-kobold",
+   "finding": "mightyfall-kobold#boosts",
+   "severity": "internal",
+   "summary": "Nothing changes: 'instead of the normal attribute boosts and flaws' replaces the whole set, free boost included; WG's three-boost reading is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "glyph-expert",
+   "finding": "glyph-expert#magical-writing",
+   "severity": "internal",
+   "summary": "Nothing changes: the save upgrade fires only against traps that feature magical writing; WG's any-magical-trap trigger is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "aeon-stone-agate-ellipsoid",
+   "finding": "aeon-stone-agate-ellipsoid#resonant-note",
+   "severity": "player-visible",
+   "summary": "The resonant sentence is only in the item's description; it must also print on the augury spell entry the stone grants.",
+   "fixed": true
+  },
+  {
+   "id": "aeon-stone-dusty-rose-prism",
+   "finding": "aeon-stone-dusty-rose-prism#resonant-note",
+   "severity": "player-visible",
+   "summary": "The resonant 10-damage sentence is only in the item's description; it must also print on the shield spell entry the stone grants.",
+   "fixed": true
+  },
+  {
+   "id": "aeon-stone-dusty-rose-prism",
+   "finding": "aeon-stone-dusty-rose-prism#duplicate-picker",
+   "severity": "player-visible",
+   "summary": "This one stone carries both the wayfinder mark and an older yes/no picker asking the same question; the duplicate picker must go.",
+   "fixed": true
+  },
+  {
+   "id": "aeon-stone-western-star",
+   "finding": "aeon-stone-western-star#resonant-note",
+   "severity": "player-visible",
+   "summary": "The resonant sentence is only in the item's description; it must also print on the illusory disguise entry the stone grants.",
+   "fixed": true
+  },
+  {
+   "id": "wild-lights#printed-spell-name",
+   "finding": "wild-lights#printed-spell-name",
+   "severity": "player-visible",
+   "summary": "The printed spell name was rewritten at import from Dancing Lights to Light, which is wrong against our Light and invisible to the player; the printed name must be restored and the broken link dropped.",
+   "fixed": true
+  },
+  {
+   "id": "toppling-tentacles",
+   "finding": "toppling-tentacles#replacement-note",
+   "severity": "player-visible",
+   "summary": "The feat's note appears nowhere: Black Tentacles is hidden as superseded and Slither, its recorded replacement, carries nothing.",
+   "fixed": true
+  },
+  {
+   "id": "spew-tentacles",
+   "finding": "spew-tentacles#replacement-note",
+   "severity": "player-visible",
+   "summary": "Spew Tentacles has the same defect as Toppling Tentacles: its printed note reaches neither Black Tentacles nor Slither.",
+   "fixed": true
+  },
+  {
+   "id": "unifying-emblem-shundar-quah",
+   "finding": "unifying-emblem-shundar-quah#daily-spell",
+   "severity": "player-visible",
+   "summary": "The emblem has a one-action activation and a daily use but no spell behind them; the printed once-per-day Thoughtful Gift must be added.",
+   "fixed": true
+  },
+  {
+   "id": "unifying-emblem-sklar-quah",
+   "finding": "unifying-emblem-sklar-quah#daily-spell",
+   "severity": "player-visible",
+   "summary": "The emblem has no activation cost and no spell; the printed once-per-day Concordant Choir must be added with the spell's own 1-to-3-action cost.",
+   "fixed": true
+  },
+  {
+   "id": "unifying-emblem-tamiir-quah",
+   "finding": "unifying-emblem-tamiir-quah#daily-spell",
+   "severity": "player-visible",
+   "summary": "The emblem shows a two-action activation and a once-a-day use but casts nothing; the printed once-per-day Tailwind must be added.",
+   "fixed": true
+  },
+  {
+   "id": "molten-wit",
+   "finding": "molten-wit#three-branches",
+   "severity": "player-visible",
+   "summary": "Only the neither-trained branch is built; the two branches the book prints for a character already trained in one or both skills are missing.",
+   "fixed": true
+  },
+  {
+   "id": "intuitive-crafting",
+   "finding": "intuitive-crafting#middle-case",
+   "severity": "player-visible",
+   "summary": "The already-trained-in-Crafting case wrongly hands out a free skill of choice on top of Specialty Crafting; print gives the feat only.",
+   "fixed": true
+  },
+  {
+   "id": "empathic-calm",
+   "finding": "empathic-calm#one-pick",
+   "severity": "internal",
+   "summary": "Nothing changes: 'either X or Y' is ONE pick, which the app already asks; WG's grant of both spells is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "colugos-traversal",
+   "finding": "colugos-traversal#one-pick",
+   "severity": "internal",
+   "summary": "Nothing changes: 'your choice of X or Y' is ONE pick, which the app already asks; WG's grant of both spells is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "armor-in-earth",
+   "finding": "armor-in-earth#armour-proficiency",
+   "severity": "player-visible",
+   "summary": "The granted stone armour carries no proficiency at all, so a kineticist's AC is wrong until the player fixes it by hand; the armour must use the wearer's best armour proficiency by itself.",
+   "fixed": true
+  },
+  {
+   "id": "hardwood-armor-armor",
+   "finding": "hardwood-armor-armor#armour-proficiency",
+   "severity": "player-visible",
+   "summary": "The granted hardwood armour carries no proficiency, only a note telling the player to set it themselves, so the impulse leaves a kineticist worse off than their own armour.",
+   "fixed": true
+  },
+  {
+   "id": "hardened-chassis",
+   "finding": "hardened-chassis#enhancement",
+   "severity": "player-visible",
+   "summary": "The Enhancement tier is only a note telling the player to work it out; it must be computed, and switched on only by an augmentation feat that names this feat.",
+   "fixed": true
+  },
+  {
+   "id": "armigers-protection#armor-pick",
+   "finding": "armigers-protection#armor-pick",
+   "severity": "player-visible",
+   "summary": "The free armour pick offers a non-existent item and grants nothing; it must be a real pick landing in inventory.",
+   "fixed": true
+  },
+  {
+   "id": "flexible-spellcaster#collection-shape",
+   "finding": "flexible-spellcaster#collection-shape",
+   "severity": "player-visible",
+   "summary": "The spell collection is built per rank, matching WG rather than print; it must be ONE flat pool sized by the character's total spell slots, with at least one 1st-rank spell.",
+   "fixed": true
+  },
+  {
+   "id": "haunting-memories",
+   "finding": "haunting-memories#skill-feat-pick",
+   "severity": "player-visible",
+   "summary": "Only the proficiency half of the daily choice is asked; the printed skill feat half is a note that grants nothing.",
+   "fixed": true
+  },
+  {
+   "id": "dream-magic",
+   "finding": "dream-magic#second-taking",
+   "severity": "player-visible",
+   "summary": "Both takings of Dream Magic share one answer, so a player who takes it twice still gets only one spell; print says the second taking gives the spell not chosen the first time.",
+   "fixed": true
+  },
+  {
+   "id": "scar-of-the-survivor",
+   "finding": "scar-of-the-survivor#dying-toggle",
+   "severity": "player-visible",
+   "summary": "The immanence gives the benefits of Diehard, but the dying value on the sheet never moves.",
+   "fixed": true
+  },
+  {
+   "id": "soul-well#dying-toggle",
+   "finding": "soul-well#dying-toggle",
+   "severity": "player-visible",
+   "summary": "Soul Well's one-minute effect raises the dying value permanently; the same toggle shape that fixes Scar of the Survivor fixes it.",
+   "fixed": true
+  },
+  {
+   "id": "animal-instinct",
+   "finding": "animal-instinct#spider-web",
+   "severity": "player-visible",
+   "summary": "The spider instinct's Web attack rides as text on the Rage action because the engine cannot hold an attack that deals no damage; it must become a real attack row.",
+   "fixed": true
+  },
+  {
+   "id": "reinforced-chassis",
+   "finding": "reinforced-chassis#ac-scaling",
+   "severity": "internal",
+   "summary": "Nothing changes: the armour's item bonus rises to +4 at 5th and +5 at 10th as printed; WG's flat +3 is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "psychic-dedication",
+   "finding": "psychic-dedication#no-focus-point",
+   "severity": "internal",
+   "summary": "Nothing changes: the dedication grants no Focus Point - the pool is printed on Psi Development at 6th, where the app already carries it; WG's dedication-granted pool is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "elemental-existence",
+   "finding": "elemental-existence#adopted-ancestry",
+   "severity": "internal",
+   "summary": "Nothing changes: the feat grants Adopted Ancestry outright as printed; WG's hide-the-feat encoding is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "thats-not-natural",
+   "finding": "thats-not-natural#circumstance-bonus",
+   "severity": "internal",
+   "summary": "Nothing changes: the master-Survival +2 raises the initiative bonus - the only thing the printed text calls a circumstance bonus; WG's Perception-only reading is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "devils-eye",
+   "finding": "devils-eye#legal-lore-rank",
+   "severity": "internal",
+   "summary": "Nothing changes: expert Legal Lore rising to master at 7th and legendary at 15th, plus the Objection reaction and the +1 note, all as printed; WG's trained-only row is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "instinct-ability",
+   "finding": "instinct-ability#no-hit-points",
+   "severity": "internal",
+   "summary": "Nothing changes: the feat grants the matching instinct ability and no Hit Points; WG's +3 maximum HP is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "pistol-wand",
+   "finding": "pistol-wand#stock-runes",
+   "severity": "internal",
+   "summary": "Nothing changes: the pistol's runes carry over to the reinforced stock as printed; WG's plain base weapon is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "tumbling-theft",
+   "finding": "tumbling-theft#thievery",
+   "severity": "internal",
+   "summary": "Nothing changes: the +1 circumstance bonus lands on Thievery as printed; WG's Stealth placement is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "keys-to-destiny",
+   "finding": "keys-to-destiny#labor-lore",
+   "severity": "internal",
+   "summary": "Nothing changes: all nine printed Lores are offered and each trains itself; WG's Labor Lore option writing Herbalism Lore is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "concordance-scout",
+   "finding": "concordance-scout#six-lores",
+   "severity": "internal",
+   "summary": "Nothing changes: all six printed planar lores are offered and each trains the right lore; WG's five-option list is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "poppet",
+   "finding": "poppet#fire-weakness",
+   "severity": "internal",
+   "summary": "Nothing changes: the fire weakness is one-third level with a minimum of 1, as printed; WG's minimum-less formula is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "goloma",
+   "finding": "goloma#languages",
+   "severity": "internal",
+   "summary": "Nothing changes: a goloma is granted Goloma and Mwangi as printed; WG's Common grant is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "traveling-gourmand",
+   "finding": "traveling-gourmand#survival",
+   "severity": "internal",
+   "summary": "Nothing changes: the background trains Survival and Cooking Lore and grants Forager, as printed; WG's untrained Survival operation is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "seer-of-the-dead",
+   "finding": "seer-of-the-dead#one-boost",
+   "severity": "internal",
+   "summary": "Nothing changes: the background prints one boost (Constitution or Wisdom) and no free boost; WG's second boost is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "haunted",
+   "finding": "haunted#no-skill-feat",
+   "severity": "internal",
+   "summary": "Nothing changes: no printing of Haunted names a feat; WG's Recognize Spell grant is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "tree-friend",
+   "finding": "tree-friend#arboreal",
+   "severity": "internal",
+   "summary": "Nothing changes: 'you can choose Arboreal' is permission, and our language picker already offers every language; WG's outright Arboreal grant is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "hammered-by-fate",
+   "finding": "hammered-by-fate#three-lores",
+   "severity": "internal",
+   "summary": "Nothing changes: all three printed Lores are offered and the Harrow the Fiend free action is built; WG's duplicated Daemon Lore is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "lesser-scion",
+   "finding": "lesser-scion#heraldry-lore",
+   "severity": "internal",
+   "summary": "Nothing changes: the background trains Heraldry Lore as printed; WG's misspelled \"Heradlry Lore\" is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "bachuan-revolutionary",
+   "finding": "bachuan-revolutionary#wisdom-boost",
+   "severity": "internal",
+   "summary": "Nothing changes: the background offers Strength or Wisdom plus a free boost, uncommon as printed; WG's broken Wisdom option is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "divine-font",
+   "finding": "divine-font#rank-9",
+   "severity": "internal",
+   "summary": "Nothing changes: the font stays at 9th rank because Miraculous Spell bars 10th-rank slots from slot-granting abilities; WG's 10th-rank font at 19-20 is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "undine",
+   "finding": "undine#swim-speed",
+   "severity": "internal",
+   "summary": "Nothing changes: the swim Speed of 10 feet and the amphibious trait are unconditional as printed; WG's capping condition is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "grave-orc",
+   "finding": "grave-orc#void-resistance",
+   "severity": "internal",
+   "summary": "Nothing changes: void resistance is half your level with a minimum of 1 as printed; WG's minimum-less formula is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "deny-lady-nanbyos-charity",
+   "finding": "deny-lady-nanbyos-charity#bulk-thresholds",
+   "severity": "internal",
+   "summary": "Nothing changes: print gives two different numbers (encumbered +1, maximum +2) and the app carries both; WG's single value of 2 is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "waning-moon-sarangay",
+   "finding": "waning-moon-sarangay#reroll-skill",
+   "severity": "internal",
+   "summary": "Nothing changes: the reroll follows the chosen skill and the note already sits on that skill's row; WG's Acrobatics-for-everything reroll is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "barrows-edge",
+   "finding": "barrows-edge#damage-wording",
+   "severity": "internal",
+   "summary": "Nothing changes: +1 spirit damage per die, +3 per die against a foe below half Hit Points, as printed; WG's persistent-damage reading with no below-half clause is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "gaze-sharp-as-steel",
+   "finding": "gaze-sharp-as-steel#transcendence",
+   "severity": "internal",
+   "summary": "Nothing changes: the transcendence is A Moment Unending's precision damage as printed; WG's Reactive Strike grant is a different ability wearing the printed name.",
+   "fixed": true
+  },
+  {
+   "id": "hyper-boosters",
+   "finding": "hyper-boosters#overdrive-bonus",
+   "severity": "internal",
+   "summary": "Nothing changes: +10 Speed standing and +20 in Overdrive is the printed total, with the legendary +30 shown as a note; WG's rank-free +30 is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "chronomancers-secrets",
+   "finding": "chronomancers-secrets#focus-spell",
+   "severity": "internal",
+   "summary": "Nothing changes: both options grant a focus spell and Stasis carries the focus trait; WG's ordinary-spell Stasis is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "benefactors-resistance",
+   "finding": "benefactors-resistance#floor-and-dragons",
+   "severity": "internal",
+   "summary": "Nothing changes: the resistance keeps its floor of 1 (a deliberate small step past the literal page, which prints no minimum), and WG's extra resistance against dragons is not copied.",
+   "fixed": true
+  },
+  {
+   "id": "merchants-scale",
+   "finding": "merchants-scale#no-rules",
+   "severity": "player-visible",
+   "summary": "The item shows as a blank priced object; print has no rules body at all, so one plain line clearly marked as ours must say so - and WG's invented +1 to seven skills must never be added.",
+   "fixed": true
+  },
+  {
+   "id": "mask-of-the-mantis-major#printed-contents",
+   "finding": "mask-of-the-mantis-major#printed-contents",
+   "severity": "player-visible",
+   "summary": "The Major grade stays at the base 2nd rank for both spells (the archive's Major block never restates the 5th-rank heightening), but its own printed pieces must be present.",
+   "fixed": true
+  },
+  {
+   "id": "zealot-staff#free-action-limit",
+   "finding": "zealot-staff#free-action-limit",
+   "severity": "player-visible",
+   "summary": "The staff ships a once-per-minute limit and a 'per minute' pip that no source prints; the page has no Frequency line at all.",
+   "fixed": true
+  },
+  {
+   "id": "zealot-staff#printed-contents",
+   "finding": "zealot-staff#printed-contents",
+   "severity": "player-visible",
+   "summary": "The rest of the staff's printed contents must be verified against the page in the same pass.",
+   "fixed": true
+  },
+  {
+   "id": "northridge-scholar",
+   "finding": "northridge-scholar#seasonal-boon-frequency",
+   "severity": "internal",
+   "summary": "Nothing changes: Seasonal Boon stays a free action with no frequency because our page prints none; WG's 'once per season' is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "skybearers-belt",
+   "finding": "skybearers-belt#scoped-stars",
+   "severity": "player-visible",
+   "summary": "The three +1 stars must be scoped to the four named actions and to resisting them, not blanket, and the two-sizes-larger permission must be shown.",
+   "fixed": true
+  },
+  {
+   "id": "skybearers-belt",
+   "finding": "skybearers-belt#bulk-aura",
+   "severity": "internal",
+   "summary": "Nothing changes on the Bulk aura: WG's 15-foot aura letting allies carry 4 more Bulk is not printed anywhere and is not copied.",
+   "fixed": true
+  },
+  {
+   "id": "spirit-walk",
+   "finding": "spirit-walk#printed-pieces",
+   "severity": "player-visible",
+   "summary": "Spirit Walk prints no sense clause; its three printed benefits must be present as stars and notes instead.",
+   "fixed": true
+  },
+  {
+   "id": "spirit-walk",
+   "finding": "spirit-walk#playtest-row",
+   "severity": "internal",
+   "summary": "Nothing changes: WG's precise 30-foot sense comes from a row marked (playtest), which is never evidence about the released record.",
+   "fixed": true
+  },
+  {
+   "id": "nagaji-spell-familiarity",
+   "finding": "nagaji-spell-familiarity#daily-control",
+   "severity": "player-visible",
+   "summary": "The feat carries a live builder-time picker and a dead daily-preparations picker; there must be ONE control, asked at daily preparations.",
+   "fixed": true
+  },
+  {
+   "id": "kitsune-spell-familiarity",
+   "finding": "kitsune-spell-familiarity#daily-control",
+   "severity": "player-visible",
+   "summary": "Same defect as its nagaji twin: the choice must be a single control at daily preparations granting a divine at-will cantrip.",
+   "fixed": true
+  },
+  {
+   "id": "kitsune-spell-mysteries",
+   "finding": "kitsune-spell-mysteries#daily-control",
+   "severity": "player-visible",
+   "summary": "All three spells are granted correctly but the question is asked in the builder and again, uselessly, at daily preparations; one control at daily preparations is what print prints.",
+   "fixed": true
+  },
+  {
+   "id": "nagaji-spell-mysteries",
+   "finding": "nagaji-spell-mysteries#daily-control",
+   "severity": "player-visible",
+   "summary": "Two questions are asked for one decision and only the builder one grants; there must be a single daily-preparations control.",
+   "fixed": true
+  },
+  {
+   "id": "kitsune-spell-expertise",
+   "finding": "kitsune-spell-expertise#daily-control",
+   "severity": "player-visible",
+   "summary": "Same defect as the other five kitsune and nagaji spell feats: the choice belongs at daily preparations as a single control.",
+   "fixed": true
+  },
+  {
+   "id": "nagaji-spell-expertise",
+   "finding": "nagaji-spell-expertise#daily-control",
+   "severity": "player-visible",
+   "summary": "Same defect as the other five kitsune and nagaji spell feats: the choice belongs at daily preparations as a single control.",
+   "fixed": true
+  },
+  {
+   "id": "shadowcaster-dedication",
+   "finding": "shadowcaster-dedication#tradition",
+   "severity": "internal",
+   "summary": "Nothing changes: the domain spells use the tradition the character qualified with; WG's divine/Wisdom pin is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "hallowed-necromancer-dedication",
+   "finding": "hallowed-necromancer-dedication#tradition",
+   "severity": "internal",
+   "summary": "Nothing changes: the focus spells use the tradition of the character's own spell slots; WG's divine/Intelligence pin is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "spellmaster-dedication",
+   "finding": "spellmaster-dedication#tradition",
+   "severity": "internal",
+   "summary": "Nothing changes: the feat prints no tradition, so the character's own focus tradition and attribute stand; WG's separate Arcane/Intelligence focus source has no printed basis.",
+   "fixed": true
+  },
+  {
+   "id": "dragon-eidolon",
+   "finding": "dragon-eidolon#tradition",
+   "severity": "internal",
+   "summary": "Nothing changes: the dragon eidolon's tradition is printed as Arcane and fixed, with no picker; WG's four-way picker is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "otherworldly-protection",
+   "finding": "otherworldly-protection#computed-value",
+   "severity": "internal",
+   "summary": "Nothing changes: the resistance is worked out from the character (3 + half level to void, or vitality with void healing) with no control shown; WG's two pickers are a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "time-mage-dedication",
+   "finding": "time-mage-dedication#innate-tradition",
+   "severity": "player-visible",
+   "summary": "The innate Time Sense cantrip falls back to arcane instead of deriving its tradition the way the archetype's focus spells already do.",
+   "fixed": true
+  },
+  {
+   "id": "favored-terrain",
+   "finding": "favored-terrain#conditional-speed",
+   "severity": "internal",
+   "summary": "Nothing changes: the Speed benefit is a star naming both conditions, not a number; WG's unconditional Speed change is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "acute-vision",
+   "finding": "acute-vision#while-raging",
+   "severity": "internal",
+   "summary": "Nothing changes: darkvision appears only while the Rage toggle is on, as printed; WG's permanent Darkvision is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "born-of-animal",
+   "finding": "born-of-animal#speed-dash",
+   "severity": "internal",
+   "summary": "Nothing changes: the 30-foot dash is a table choice shown as a star, not a flat Speed increase; WG's always-on +5 Speed is a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "curse-of-turbulent-moments",
+   "finding": "curse-of-turbulent-moments#conditional-penalty",
+   "severity": "internal",
+   "summary": "Nothing changes: both halves of the penalty apply only in one narrow spot each, so they stay notes rather than numbers on the sheet; WG's sixteen numeric rows are a deliberate difference.",
+   "fixed": true
+  },
+  {
+   "id": "guardians-armor",
+   "finding": "guardians-armor#automatic-resistance",
+   "severity": "player-visible",
+   "summary": "The physical resistance is behind a hand toggle, but the condition (wearing medium or heavy armour) is visible to the sheet, so it must be a real automatic number.",
+   "fixed": true
+  },
+  {
+   "id": "clawdancer-dedication",
+   "finding": "clawdancer-dedication#duplicate-strikes",
+   "severity": "player-visible",
+   "summary": "The dedication grants a duplicate copy of both claw Strikes, so each shows twice and the dedication's pair shows even with no stance turned on.",
+   "fixed": true
+  },
+  {
+   "id": "versatile-mutation",
+   "finding": "versatile-mutation#energy-level",
+   "severity": "player-visible",
+   "summary": "The five-option energy question is asked at 4th level; print holds it back to 8th.",
+   "fixed": true
+  },
+  {
+   "id": "versatile-mutation",
+   "finding": "versatile-mutation#takable-twice",
+   "severity": "player-visible",
+   "summary": "The record is flagged takable twice, but no printed clause allows it.",
+   "fixed": true
+  },
+  {
+   "id": "arcana-of-iron",
+   "finding": "arcana-of-iron#weapon-proficiency",
+   "severity": "player-visible",
+   "summary": "The feat grants trained advanced weapons forever with no expert step, and wrongly hands over the Weapon Expertise class feature.",
+   "fixed": true
+  },
+  {
+   "id": "arcana-of-iron",
+   "finding": "arcana-of-iron#bespell-strikes",
+   "severity": "player-visible",
+   "summary": "The Bespell Strikes extra damage line is missing from the record entirely.",
+   "fixed": true
+  },
+  {
+   "id": "swashbucklers-speed",
+   "finding": "swashbucklers-speed#typed-all-speeds",
+   "severity": "player-visible",
+   "summary": "Speed bonuses are added together untyped and only to walking Speed; print types them and a clause saying 'to your Speeds' raises every Speed.",
+   "fixed": true
+  },
+  {
+   "id": "echo-of-lost-moments",
+   "finding": "echo-of-lost-moments#fifth-rung",
+   "severity": "internal",
+   "summary": "Nothing changes: the ten-spell apparition ladder matches print rung for rung, with Illusory Scene at 5th; WG's rank-1 Illusory Disguise on that rung is their mistake.",
+   "fixed": true
+  },
+  {
+   "id": "astrolabe-of-falling-stars",
+   "finding": "astrolabe-of-falling-stars#identify-star",
+   "severity": "player-visible",
+   "summary": "The record carries no bonus at all, though its six sibling astrolabes carry the printed star and the item can be used as a mariner's astrolabe.",
+   "fixed": true
+  },
+  {
+   "id": "breath-of-the-dragon",
+   "finding": "breath-of-the-dragon#derive-from-exemplar",
+   "severity": "player-visible",
+   "summary": "Three separate pickers for shape, damage and save make illegal breaths buildable and ignore the draconic exemplar the player already chose; all three must be derived from that exemplar using the printed Draconic Benefactors table.",
+   "fixed": true
+  },
+  {
+   "id": "reborn-soul",
+   "finding": "reborn-soul#restricted-increases",
+   "severity": "player-visible",
+   "summary": "The three printed skill increases are not built at all and the record's note tells the player to apply them by hand, quietly taking WG's both-Lores-each-time reading.",
+   "fixed": true
+  },
+  {
+   "id": "screech-shooter-greater#grade-numbers",
+   "finding": "screech-shooter-greater#grade-numbers",
+   "severity": "player-visible",
+   "summary": "The greater grade still shows the base 30-foot, DC 25 sentence; only its own printed numbers belong on it.",
+   "fixed": true
+  },
+  {
+   "id": "screech-shooter-major#grade-numbers",
+   "finding": "screech-shooter-major#grade-numbers",
+   "severity": "player-visible",
+   "summary": "The major grade still shows the base 30-foot, DC 25 sentence; only its own printed numbers belong on it.",
+   "fixed": true
+  },
+  {
+   "id": "wyrm-spindle-greater#grade-numbers",
+   "finding": "wyrm-spindle-greater#grade-numbers",
+   "severity": "player-visible",
+   "summary": "The greater wyrm spindle carries the base grade's numbers; only its own printed numbers belong on it.",
+   "fixed": true
+  },
+  {
+   "id": "wyrm-spindle-major#grade-numbers",
+   "finding": "wyrm-spindle-major#grade-numbers",
+   "severity": "player-visible",
+   "summary": "The major wyrm spindle carries the base grade's numbers; only its own printed numbers belong on it.",
+   "fixed": true
+  },
+  {
+   "id": "gleaming-blade",
+   "finding": "gleaming-blade#transcendence-name",
+   "severity": "internal",
+   "summary": "Nothing changes: the transcendence keeps its printed name Flowing Spirit Strike; WG's Mirrored Spirit Strike appears nowhere in the archive.",
+   "fixed": true
+  }
+ ],
+ "refuted": [],
+ "flaggedResidues": [
+  {
+   "id": "flaggedResidue: not a gap — this is the literal line \"(nothing else — every other finding this chunk owns is authored in work/.b037-rows-data-rows-2.json)\" from under the DATA STILL NEEDED heading of work/.b037-report-data-rows-2.txt, swept up by the apply-digest collator because it sits inside the section it harvests. Re-checked against that spec: all eleven findings are accounted for there, so there is no row, question or edit this line could produce.",
+   "finding": "flaggedResidue: not a gap — this is the literal line \"(nothing else — every other finding this chunk owns is authored in work/.b037-rows-data-rows-2.json)\" from under the DATA STILL NEEDED heading of work/.b037-report-data-rows-2.txt, swept up by the apply-digest collator because it sits inside the section it harvests. Re-checked against that spec: all eleven findings are accounted for there, so there is no row, question or edit this line could produce.",
+   "severity": "internal",
+   "summary": "(nothing else — every other finding this chunk owns is authored in work/.b037-rows-data-rows-2.json)",
+   "fixed": false,
+   "family": "data-rows-2",
+   "kind": "DATA STILL NEEDED"
+  },
+  {
+   "id": "flaggedResidue: not a gap — the builder and verifier recorded NON-collision note (\"no sibling touches any of my records\"), harvested as a line. Re-verified here against all 22 manifest specs, including the five other gap specs written this stage: the only other batch-037 row on any record this family touches is sponsored-by-teacher-ot#rarity, a different FIELD from ours (choice), and this family two new rows (feats/locate-lawbreakers effectChoices and note) collide with nothing. Nothing is owed.",
+   "finding": "flaggedResidue: not a gap — the builder and verifier recorded NON-collision note (\"no sibling touches any of my records\"), harvested as a line. Re-verified here against all 22 manifest specs, including the five other gap specs written this stage: the only other batch-037 row on any record this family touches is sponsored-by-teacher-ot#rarity, a different FIELD from ours (choice), and this family two new rows (feats/locate-lawbreakers effectChoices and note) collide with nothing. Nothing is owed.",
+   "severity": "internal",
+   "summary": "data-rows-1..6 siblings: no collision found. The only other batch-037 finding on any record I touch is `sponsored-by-teacher-ot#rarity`, which is a different FIELD (`rarity`) from mine (`choice`), so the two rows cannot collide.",
+   "fixed": false,
+   "family": "data-rows-2",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: nothing to author — items/armor-in-earth-heavy's note never carried the \"set it yourself\" sentence and the medium suit's wording was not mirrored onto it, while the src/rules/featGrants.ts armorFamiliarity entry covers BOTH granted suits, so its proficiency is right with no row at all.",
+   "finding": "flaggedResidue: nothing to author — items/armor-in-earth-heavy's note never carried the \"set it yourself\" sentence and the medium suit's wording was not mirrored onto it, while the src/rules/featGrants.ts armorFamiliarity entry covers BOTH granted suits, so its proficiency is right with no row at all.",
+   "severity": "internal",
+   "summary": "items/armor-in-earth-heavy, create row re-emitted with supersedes:true, same note cleanup (its note carries no \"set it yourself\" sentence today, so this row is only needed if the medium one's wording is mirrored onto it).",
+   "fixed": false,
+   "family": "data-rows-3",
+   "kind": "DATA STILL NEEDED"
+  },
+  {
+   "id": "flaggedResidue: precondition false — the driver's own precheck keys the path row as feats/haunting-memories/choice.note, distinct from the existing whole-value overlay key, with hasIdStep false so check (3) never fires; re-run over the whole 22-spec manifest it reports 0 problems, so no whole-value re-emission is needed.",
+   "finding": "flaggedResidue: precondition false — the driver's own precheck keys the path row as feats/haunting-memories/choice.note, distinct from the existing whole-value overlay key, with hasIdStep false so check (3) never fires; re-run over the whole 22-spec manifest it reports 0 problems, so no whole-value re-emission is needed.",
+   "severity": "internal",
+   "summary": "FALLBACK ONLY: if the driver refuses my path row {category:'feats', id:'haunting-memories', path:['choice'], field:'note'} because a pathless whole-value row for feats/haunting-memories `choice` already exists (valLen 6830), re-emit that row whole with supersedes:true and change nothing but `note`, to the value my spec carries.",
+   "fixed": false,
+   "family": "data-rows-3",
+   "kind": "DATA STILL NEEDED"
+  },
+  {
+   "id": "flaggedResidue: the multi-skill gate cannot carry molten-wit#three-branches and would ship a lane nothing reads — qualifiesForOption reads the BUILT character (Builder.tsx:477 narrows against buildCharacter, which already includes this feat's own answer's grant), so \"already trained in Deception\" is self-satisfying and answering the option deletes it. The missing piece is a rank-before-this-carrier's-own-grant reader on Character (build.ts:5551 skillRankHere lives inside buildCharacter, where derive cannot reach it) — an engine shape, not a gate field.",
+   "finding": "flaggedResidue: the multi-skill gate cannot carry molten-wit#three-branches and would ship a lane nothing reads — qualifiesForOption reads the BUILT character (Builder.tsx:477 narrows against buildCharacter, which already includes this feat's own answer's grant), so \"already trained in Deception\" is self-satisfying and answering the option deletes it. The missing piece is a rank-before-this-carrier's-own-grant reader on Character (build.ts:5551 skillRankHere lives inside buildCharacter, where derive cannot reach it) — an engine shape, not a gate field.",
+   "severity": "internal",
+   "summary": "src/rules/types.ts (SkillRankGate, line 2817) — molten-wit#three-branches needs a MULTI-skill option gate (e.g. `requiresSkillRanks?: SkillRankGate[]`, honoured by qualifiesForOption at derive.ts:1771); both printed branch conditions name two skills at once and the single-skill gate cannot express either.",
+   "fixed": false,
+   "family": "data-rows-3",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: no edit owed — the line's claim is already true. CHOICE_FEAT_GRANTS['molten-wit'] = { deception: ['charming-liar'], diplomacy: ['group-impression'] } is the home, and a FEAT's choice.options[].grant.grantsFeats is collected nowhere (build.ts:5406 heritage, :5465 classFeature, comment at :5400). Extending it to the branch-2/branch-3 answers is dead code until the self-satisfaction problem above is solved, because those answers cannot exist on the record.",
+   "finding": "flaggedResidue: no edit owed — the line's claim is already true. CHOICE_FEAT_GRANTS['molten-wit'] = { deception: ['charming-liar'], diplomacy: ['group-impression'] } is the home, and a FEAT's choice.options[].grant.grantsFeats is collected nowhere (build.ts:5406 heritage, :5465 classFeature, comment at :5400). Extending it to the branch-2/branch-3 answers is dead code until the self-satisfaction problem above is solved, because those answers cannot exist on the record.",
+   "severity": "internal",
+   "summary": "src/rules/featFeatGrants.ts (CHOICE_FEAT_GRANTS, line 57) + src/rules/featGrantsLane.ts (line 46) — molten-wit#three-branches: the per-answer FEAT grant must stay here, because a FEAT's choice.options[].grant.grantsFeats is not read anywhere (build.ts:5406/5465 collect that lane for heritage and classFeature effectChoices only; the comment at build.ts:5400 states it).",
+   "fixed": false,
+   "family": "data-rows-3",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: nothing to author — items/armor-in-earth-heavy's note never carried the \"set it yourself\" sentence and the medium suit's wording was not mirrored onto it, while the src/rules/featGrants.ts armorFamiliarity entry covers BOTH granted suits, so its proficiency is right with no row at all.",
+   "finding": "flaggedResidue: nothing to author — items/armor-in-earth-heavy's note never carried the \"set it yourself\" sentence and the medium suit's wording was not mirrored onto it, while the src/rules/featGrants.ts armorFamiliarity entry covers BOTH granted suits, so its proficiency is right with no row at all.",
+   "severity": "internal",
+   "summary": "src/rules/featGrantsAuto.ts — armor-in-earth#armour-proficiency: add `'armor-in-earth': { armorFamiliarity: { armors: ['armor-in-earth-medium','armor-in-earth-heavy'], mirrorBest: true } }` and NO `armor: {...}` categories, so the kineticist borrows their best light/medium/heavy rank for these two items only and gains no medium/heavy training (which would let them wear real plate — WG's shortcut,…",
+   "fixed": false,
+   "family": "data-rows-3",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: engine work no row reaches — the collection shape is build.ts:4475 (per-rank slots) plus Builder.tsx:367/387 (a per-rank repertoire), ClassArchetype.spellCollection is a boolean, and archetype/flexible-spellcaster carries no field at all. A flat pool sized by the character's total daily class slots with a one-1st-rank floor is a new engine lane AND a new builder control, which the finding's own proposal says outright.",
+   "finding": "flaggedResidue: engine work no row reaches — the collection shape is build.ts:4475 (per-rank slots) plus Builder.tsx:367/387 (a per-rank repertoire), ClassArchetype.spellCollection is a boolean, and archetype/flexible-spellcaster carries no field at all. A flat pool sized by the character's total daily class slots with a one-1st-rank floor is a new engine lane AND a new builder control, which the finding's own proposal says outright.",
+   "severity": "internal",
+   "summary": "src/rules/build.ts:4475 + src/builder/Builder.tsx:367,387 — flexible-spellcaster#collection-shape: the whole collection shape is those two code sites (per-rank slots and a per-rank repertoire); archetype/flexible-spellcaster carries no field at all. A flat pool sized by the character's TOTAL daily class slots, with a one-1st-rank-spell floor, is engine work. No backfill row can reach it.",
+   "fixed": false,
+   "family": "data-rows-3",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: work/.b037-report-gap-data-rows-5.txt flaggedResidue 1 — test/batch031-data.test.ts:96 — `node scripts/test-flip-audit.mjs --batch 037` fails on one uncited assertion in that file. It is not from this chunk and I did not touch it; flagged so the driver does not attribute it here.",
+   "finding": "flaggedResidue: work/.b037-report-gap-data-rows-5.txt flaggedResidue 1 — test/batch031-data.test.ts:96 — `node scripts/test-flip-audit.mjs --batch 037` fails on one uncited assertion in that file. It is not from this chunk and I did not touch it; flagged so the driver does not attribute it here.",
+   "severity": "internal",
+   "summary": "test/batch031-data.test.ts:96 — `node scripts/test-flip-audit.mjs --batch 037` fails on one uncited assertion in that file. It is not from this chunk and I did not touch it; flagged so the driver does not attribute it here.",
+   "fixed": false,
+   "family": "data-rows-5",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "speed-status-lane-031",
+   "finding": "speed-status-lane-031",
+   "severity": "internal",
+   "summary": "feats/swashbucklers-speed — re-author the +5/+10 status bonus the moment the engine grows a typed, all-Speeds carrier (see the first gap below); today the only field is the untyped land-only landSpeedBonus row already shipped.",
+   "fixed": false,
+   "family": "data-rows-6",
+   "kind": "DATA STILL NEEDED"
+  },
+  {
+   "id": "speed-status-lane-031",
+   "finding": "speed-status-lane-031",
+   "severity": "internal",
+   "summary": "swashbucklers-speed#typed-all-speeds belongs to the engine family: src/rules/derive.ts (landBonusOf / the landSpeedBonus fold) must give every speed bonus a TYPE so two status bonuses take the highest instead of adding, and must honour a clause worded \"to your Speeds\" on every Speed, not land alone — ~20 records carry a bonus through that one untyped field.",
+   "fixed": false,
+   "family": "data-rows-6",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "reborn-soul",
+   "finding": "reborn-soul",
+   "severity": "internal",
+   "summary": "reborn-soul#restricted-increases, the BUILT half, belongs to the engine family: bonusSkillIncreaseLevels and restrictedSkillIncreaseLevels are read off the CLASS only (src/rules/build.ts:3724 and build.ts:1137) and their skills list is fixed SkillIds, so a BACKGROUND granting one restricted increase at 3/7/15 against two player-chosen Lores has no reader; the restriction needs a chosen-Lore resol…",
+   "fixed": false,
+   "family": "data-rows-6",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: the Draconic Benefactors table is already carried WHOLE, with its citation, inside feats/breath-of-the-dragon's effectChoices row (work/.b037-rows-data-rows-6.json) and again in my heritages/dragonblood row's `why`. A standalone scripts/data/draconic-benefactors.json would have no reader and would be a second source of truth for the same 40 rows — the shape that drifts. Author it when something actually reads a table (e.g. the rune/speed columns), not before. See work/.b037-report-gap-data-rows-6.txt, line R1.",
+   "finding": "flaggedResidue: the Draconic Benefactors table is already carried WHOLE, with its citation, inside feats/breath-of-the-dragon's effectChoices row (work/.b037-rows-data-rows-6.json) and again in my heritages/dragonblood row's `why`. A standalone scripts/data/draconic-benefactors.json would have no reader and would be a second source of truth for the same 40 rows — the shape that drifts. Author it when something actually reads a table (e.g. the rune/speed columns), not before. See work/.b037-report-gap-data-rows-6.txt, line R1.",
+   "severity": "internal",
+   "summary": "breath-of-the-dragon#derive-from-exemplar asks for a new data file scripts/data/draconic-benefactors.json (scripts/ is outside this chunk) — the table itself is carried whole inside my effectChoices row, so nothing is lost, but the standalone file and its citation are for whoever owns scripts/data.",
+   "fixed": false,
+   "family": "data-rows-6",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: adding https://2e.aonprd.com/DraconicBenefactors.aspx to the AoN update pipeline is scraper work in C:\\pf2e-tracker plus a fetch stage, and this run may not run `npm run data` or any apply-*.mjs. Nothing in batch 037 waits on it: the owner's transcription is the authority the two rows cite. See work/.b037-report-gap-data-rows-6.txt, line R2.",
+   "finding": "flaggedResidue: adding https://2e.aonprd.com/DraconicBenefactors.aspx to the AoN update pipeline is scraper work in C:\\pf2e-tracker plus a fetch stage, and this run may not run `npm run data` or any apply-*.mjs. Nothing in batch 037 waits on it: the owner's transcription is the authority the two rows cite. See work/.b037-report-gap-data-rows-6.txt, line R2.",
+   "severity": "internal",
+   "summary": "breath-of-the-dragon#derive-from-exemplar also carries the owner's MIRROR GAP: https://2e.aonprd.com/DraconicBenefactors.aspx is not in the AoN update pipeline, so our 44 draconic-exemplar docs still lack the breath and save columns — pipeline lane, not a row.",
+   "fixed": false,
+   "family": "data-rows-6",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: CLOSED on inspection, nothing owed. work/.b037-rows-situational.json holds one finding (reverse-engineer) and no astrolabe entry, and src/rules/situationalBonuses.ts:3083 keys the DIFFERENT record id astrolabe-of-the-falling-stars, so no item can carry the star twice in this batch. The two records' remaining split is the price, which my spec closes. See work/.b037-report-gap-data-rows-6.txt, line R4.",
+   "finding": "flaggedResidue: CLOSED on inspection, nothing owed. work/.b037-rows-situational.json holds one finding (reverse-engineer) and no astrolabe entry, and src/rules/situationalBonuses.ts:3083 keys the DIFFERENT record id astrolabe-of-the-falling-stars, so no item can carry the star twice in this batch. The two records' remaining split is the price, which my spec closes. See work/.b037-report-gap-data-rows-6.txt, line R4.",
+   "severity": "internal",
+   "summary": "astrolabe-of-falling-stars#identify-star: my row is the DATA twin of the six sibling stars in src/rules/situationalBonuses.ts (entries \"astrolabe\", \"astrolabe-standard\", \"astrolabe-mariners\"). If the situational family also adds an \"astrolabe-of-falling-stars\" entry to that file the item would carry the star twice — one of the two must be dropped, and the data row is the one that survives a regen…",
+   "fixed": false,
+   "family": "data-rows-6",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: driver-only desk move — desk #19 #27 #32 #34 #38 #53 #65 #66 #74 #75 #76 #77 are ruled by the 28-id answer in work/desk-answers-2026-09-10.json but still sit in work/owner-questions.json `open`; every agent in this workflow is forbidden to edit that file and add-owner-question.mjs only appends to `open`, so only the driver can move them to `ruled` — until it does, wg-batch-close.mjs:258 derives OWNER-QUEUED for all twelve.",
+   "finding": "flaggedResidue: driver-only desk move — desk #19 #27 #32 #34 #38 #53 #65 #66 #74 #75 #76 #77 are ruled by the 28-id answer in work/desk-answers-2026-09-10.json but still sit in work/owner-questions.json `open`; every agent in this workflow is forbidden to edit that file and add-owner-question.mjs only appends to `open`, so only the driver can move them to `ruled` — until it does, wg-batch-close.mjs:258 derives OWNER-QUEUED for all twelve.",
+   "severity": "internal",
+   "summary": "work/owner-questions.json (PROHIBITED for me to edit): all twelve of my records are still in the `open` array with their desk numbers (#19 reinforced-chassis, #27 psychic-dedication, #32 elemental-existence, #34 thats-not-natural, #38 devils-eye, #53 instinct-ability, #65 pistol-wand, #66 tumbling-theft, #74 keys-to-destiny, #75 concordance-scout, #76 poppet, #77 goloma), although work/desk-answe…",
+   "fixed": false,
+   "family": "instruments-4",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: re-measured at gap time, not inherited — work/owner-questions.json still holds all twelve in open[] (open 128 / deferred 13 / ruled 6 / authorisedExceptions 3; none of 80 81 83 84 89 90 91 103 114 117 118 119 is in ruled[] or deferred[]), while work/desk-answers-2026-09-10.json carries the owner's answer for exactly those ns (\"DECIDED BY FABLE under the 2026-08-22 rule (book wins) … Keep the app on all 28 … Each gets WRITTEN DOWN as a known deliberate difference from WG (settle)\"). The mechanism is real and I re-read it: scripts/wg-batch-close.mjs:111 builds `desk` from open[]+deferred[] ONLY and :255 takes the OWNER-QUEUED branch on desk.has(rid) BEFORE it looks at any citation, so all twelve close as OWNER-QUEUED whatever this family reports; moved to ruled[] they leave `desk` and derive OWNER-RULED / MATCHES instead. The closer's known `<record>-<aspect>` blindness (:120-130) does not apply — these twelve are keyed by bare record id, so they ARE seen. NOT AUTHORABLE HERE: the only file that closes it is work/owner-questions.json, which the project rules forbid every agent in this workflow to edit, so it is the driver/orchestrator's move. A queue entry is not a back door either: work/.b037-queue.json feeds scripts/add-owner-question.mjs, which files NEW questions, and pendingQuestions() (scripts/wg-batch-run.mjs:966) drops any id already on the desk — queuing these twelve would be a silent no-op that re-asks a question the owner has already answered. Restated in the CROSS-FILE GAPS section of work/.b037-report-gap-instruments-5.txt so the driver still sees it at close.",
+   "finding": "flaggedResidue: re-measured at gap time, not inherited — work/owner-questions.json still holds all twelve in open[] (open 128 / deferred 13 / ruled 6 / authorisedExceptions 3; none of 80 81 83 84 89 90 91 103 114 117 118 119 is in ruled[] or deferred[]), while work/desk-answers-2026-09-10.json carries the owner's answer for exactly those ns (\"DECIDED BY FABLE under the 2026-08-22 rule (book wins) … Keep the app on all 28 … Each gets WRITTEN DOWN as a known deliberate difference from WG (settle)\"). The mechanism is real and I re-read it: scripts/wg-batch-close.mjs:111 builds `desk` from open[]+deferred[] ONLY and :255 takes the OWNER-QUEUED branch on desk.has(rid) BEFORE it looks at any citation, so all twelve close as OWNER-QUEUED whatever this family reports; moved to ruled[] they leave `desk` and derive OWNER-RULED / MATCHES instead. The closer's known `<record>-<aspect>` blindness (:120-130) does not apply — these twelve are keyed by bare record id, so they ARE seen. NOT AUTHORABLE HERE: the only file that closes it is work/owner-questions.json, which the project rules forbid every agent in this workflow to edit, so it is the driver/orchestrator's move. A queue entry is not a back door either: work/.b037-queue.json feeds scripts/add-owner-question.mjs, which files NEW questions, and pendingQuestions() (scripts/wg-batch-run.mjs:966) drops any id already on the desk — queuing these twelve would be a silent no-op that re-asks a question the owner has already answered. Restated in the CROSS-FILE GAPS section of work/.b037-report-gap-instruments-5.txt so the driver still sees it at close.",
+   "severity": "internal",
+   "summary": "work/owner-questions.json (FORBIDDEN TO ME, driver/orchestrator must do it): all twelve records are still entries in `open[]` (#80 #81 #83 #84 #89 #90 #91 #103 #114 #117 #118 #119) although the owner ANSWERED them on 2026-09-10. scripts/wg-batch-close.mjs:258 derives OWNER-QUEUED for any record with a desk entry BEFORE it ever looks at a finding's citations, so all twelve will close as OWNER-QUEU…",
+   "fixed": false,
+   "family": "instruments-5",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: the proposed lane is WRONG on two of the three parks it claims to retire, so there is nothing correct to author. I read all three out of work/experience-instrument-limits.json instead of trusting the note: seer-of-the-dead (lane wg-unprinted-extra-select) has a WG select print never asks — AoN background-243 gives one boost, restricted to Con or Wis, and their row carries a SECOND free \"Select an Attribute\" — so the right outcome is \"their surplus\", with no control to pair and none that should exist; dongun-education (lane one-control-answers-n-selects) and free-heart (lane harness-one-control-serves-many-selects) are the OPPOSITE — our one control genuinely ANSWERS their 2 and 3 selects, so the right outcome is an N-to-1 PAIRING. Two opposite treatments, not one lane. The pairing half is already expressible: controlCapacity() at scripts/lib/wg-experience-lanes.mjs:264 already lets one control absorb N selects, and those two parks exist because a `popup` control declares no capacity — a question about observing OUR controls, not about matchSelects. The unprinted half is not derivable from WG data at all: whether a select is printed is a fact about the book, which is exactly what a park with a verbatim print quote records. BLAST RADIUS measured on work/.b037-baseline/experience.json (125 records): 7 read MISSING-CONTROL — otherworldly-protection, dragon-eidolon, bone-magic, molten-wit, hardened-chassis, time-mage-dedication, seer-of-the-dead — and only 3 are parked, so the other 4 are LIVE detections; verdictFor() raises MISSING-CONTROL on `unmatched.length` alone (wg-experience-lanes.mjs:613), so relaxing the one-to-one rule generically silences all 7 and trades four live signals for three parks. The :307 gate is deliberate (\"with two of either there is no way to know which is which\") and that reasoning still holds. The correct mechanism ALREADY EXISTS and already carries this record: work/experience-instrument-limits.json \"seer-of-the-dead\", verdict MISSING-CONTROL, class ALREADY-OK, cite \"// batch 037: seer-of-the-dead#one-boost\", refuter-checked 2026-09-11, pinned by test/batch037-instruments-5.test.ts. Widening a shared engine file to hide a difference the book settles would import WG's error into the comparer.",
+   "finding": "flaggedResidue: the proposed lane is WRONG on two of the three parks it claims to retire, so there is nothing correct to author. I read all three out of work/experience-instrument-limits.json instead of trusting the note: seer-of-the-dead (lane wg-unprinted-extra-select) has a WG select print never asks — AoN background-243 gives one boost, restricted to Con or Wis, and their row carries a SECOND free \"Select an Attribute\" — so the right outcome is \"their surplus\", with no control to pair and none that should exist; dongun-education (lane one-control-answers-n-selects) and free-heart (lane harness-one-control-serves-many-selects) are the OPPOSITE — our one control genuinely ANSWERS their 2 and 3 selects, so the right outcome is an N-to-1 PAIRING. Two opposite treatments, not one lane. The pairing half is already expressible: controlCapacity() at scripts/lib/wg-experience-lanes.mjs:264 already lets one control absorb N selects, and those two parks exist because a `popup` control declares no capacity — a question about observing OUR controls, not about matchSelects. The unprinted half is not derivable from WG data at all: whether a select is printed is a fact about the book, which is exactly what a park with a verbatim print quote records. BLAST RADIUS measured on work/.b037-baseline/experience.json (125 records): 7 read MISSING-CONTROL — otherworldly-protection, dragon-eidolon, bone-magic, molten-wit, hardened-chassis, time-mage-dedication, seer-of-the-dead — and only 3 are parked, so the other 4 are LIVE detections; verdictFor() raises MISSING-CONTROL on `unmatched.length` alone (wg-experience-lanes.mjs:613), so relaxing the one-to-one rule generically silences all 7 and trades four live signals for three parks. The :307 gate is deliberate (\"with two of either there is no way to know which is which\") and that reasoning still holds. The correct mechanism ALREADY EXISTS and already carries this record: work/experience-instrument-limits.json \"seer-of-the-dead\", verdict MISSING-CONTROL, class ALREADY-OK, cite \"// batch 037: seer-of-the-dead#one-boost\", refuter-checked 2026-09-11, pinned by test/batch037-instruments-5.test.ts. Widening a shared engine file to hide a difference the book settles would import WG's error into the comparer.",
+   "severity": "internal",
+   "summary": "scripts/lib/wg-experience-lanes.mjs matchSelects (NOT edited — a shared engine file, and the fix is wider than this chunk): its one-select/one-control wording rescue is gated on `selects.length === 1`, so a record where WG asks N questions and print asks fewer can never pair. seer-of-the-dead is the case here and is parked instead; free-heart and dongun-education are two older parks of the same s…",
+   "fixed": false,
+   "family": "instruments-5",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: not a gap — the collator sliced work/.b037-report-situational.txt:45 out of the middle of the situational family's 'Test that pins it' paragraph; it is that test's third bullet plus its gate transcript, makes no claim, names no record/field/value and asks for nothing. What it describes already exists and is green (test/batch037-situational.test.ts it #3, re-run by me: 3 passed). Same collator artefact parked in work/.b030-gaps.json and work/.b036-gaps.json.",
+   "finding": "flaggedResidue: not a gap — the collator sliced work/.b037-report-situational.txt:45 out of the middle of the situational family's 'Test that pins it' paragraph; it is that test's third bullet plus its gate transcript, makes no claim, names no record/field/value and asks for nothing. What it describes already exists and is green (test/batch037-situational.test.ts it #3, re-run by me: 3 passed). Same collator artefact parked in work/.b030-gaps.json and work/.b036-gaps.json.",
+   "severity": "internal",
+   "summary": "an inventor who never took the feat reads neither clause. `node scripts/vt.mjs run test/batch037-situational.test.ts` - 3 passed. `npx tsc --noEmit` clean. Could not do: nothing on this finding.",
+   "fixed": false,
+   "family": "situational",
+   "kind": "DATA STILL NEEDED"
+  },
+  {
+   "id": "flaggedResidue: out of family and not pinnable as the script stands. scripts/apply-backfill-now.mjs is the DRIVER applier — the class of script this workflow forbids an agent to run — and nothing in batch 037 emits a prose-removal row (data-rows-2 used [], which every descRefs reader treats identically), so the hole is latent, not live. It also cannot carry a test: the script body runs at import time and writes public/core.json, so no vitest file can import it, and making the fix checkable means first extracting that body behind an entry-point guard — a change to the applier the driver is about to run in this same batch, which is a driver decision, not a family one. The recipe, unchanged and ready: in the prose-routing loop let isDesc/isRefs accept value === null, then delete entry[key] (dropping the descriptions entry when it empties) instead of assigning, and have the apply-stage post-check treat an absent prose field as satisfying a null row. Re-raise as its own line the first time a batch needs to REMOVE a description.",
+   "finding": "flaggedResidue: out of family and not pinnable as the script stands. scripts/apply-backfill-now.mjs is the DRIVER applier — the class of script this workflow forbids an agent to run — and nothing in batch 037 emits a prose-removal row (data-rows-2 used [], which every descRefs reader treats identically), so the hole is latent, not live. It also cannot carry a test: the script body runs at import time and writes public/core.json, so no vitest file can import it, and making the fix checkable means first extracting that body behind an entry-point guard — a change to the applier the driver is about to run in this same batch, which is a driver decision, not a family one. The recipe, unchanged and ready: in the prose-routing loop let isDesc/isRefs accept value === null, then delete entry[key] (dropping the descriptions entry when it empties) instead of assigning, and have the apply-stage post-check treat an absent prose field as satisfying a null row. Re-raise as its own line the first time a batch needs to REMOVE a description.",
+   "severity": "internal",
+   "summary": "NEW (found by this verify) scripts/apply-backfill-now.mjs:72 — a prose field cannot be REMOVED by a row. `descRefs` with value:null is skipped for core.json (skipFields, line 45) and skipped again by the routing (`Array.isArray(value)`), so it reaches neither artefact and the apply stage's post-check then refuses the batch after writing. Same hole for `description: null` (isDesc requires a string…",
+   "fixed": false,
+   "family": "data-rows-2",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: not a gap — the builder and verifier recorded NON-collision note (\"no sibling touches any of my records\"), harvested as a line. Re-verified here against all 22 manifest specs, including the five other gap specs written this stage: the only other batch-037 row on any record this family touches is sponsored-by-teacher-ot#rarity, a different FIELD from ours (choice), and this family two new rows (feats/locate-lawbreakers effectChoices and note) collide with nothing. Nothing is owed.",
+   "finding": "flaggedResidue: not a gap — the builder and verifier recorded NON-collision note (\"no sibling touches any of my records\"), harvested as a line. Re-verified here against all 22 manifest specs, including the five other gap specs written this stage: the only other batch-037 row on any record this family touches is sponsored-by-teacher-ot#rarity, a different FIELD from ours (choice), and this family two new rows (feats/locate-lawbreakers effectChoices and note) collide with nothing. Nothing is owed.",
+   "severity": "internal",
+   "summary": "(not a gap, recorded) sibling collisions: none. All 16 manifest specs were loaded and their 100 rows keyed; no cross-spec collision exists anywhere in batch 037, and no sibling touches any of my records.",
+   "fixed": false,
+   "family": "data-rows-2",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: nothing to author — items/armor-in-earth-heavy's note never carried the \"set it yourself\" sentence and the medium suit's wording was not mirrored onto it, while the src/rules/featGrants.ts armorFamiliarity entry covers BOTH granted suits, so its proficiency is right with no row at all.",
+   "finding": "flaggedResidue: nothing to author — items/armor-in-earth-heavy's note never carried the \"set it yourself\" sentence and the medium suit's wording was not mirrored onto it, while the src/rules/featGrants.ts armorFamiliarity entry covers BOTH granted suits, so its proficiency is right with no row at all.",
+   "severity": "internal",
+   "summary": "items/armor-in-earth-heavy, create row re-emitted with supersedes:true, same note cleanup; needed only if the medium one's wording is mirrored onto it (its note carries no \"set it yourself\" sentence today).",
+   "fixed": false,
+   "family": "data-rows-3",
+   "kind": "DATA STILL NEEDED"
+  },
+  {
+   "id": "flaggedResidue: the multi-skill gate cannot carry molten-wit#three-branches and would ship a lane nothing reads — qualifiesForOption reads the BUILT character (Builder.tsx:477 narrows against buildCharacter, which already includes this feat's own answer's grant), so \"already trained in Deception\" is self-satisfying and answering the option deletes it. The missing piece is a rank-before-this-carrier's-own-grant reader on Character (build.ts:5551 skillRankHere lives inside buildCharacter, where derive cannot reach it) — an engine shape, not a gate field.",
+   "finding": "flaggedResidue: the multi-skill gate cannot carry molten-wit#three-branches and would ship a lane nothing reads — qualifiesForOption reads the BUILT character (Builder.tsx:477 narrows against buildCharacter, which already includes this feat's own answer's grant), so \"already trained in Deception\" is self-satisfying and answering the option deletes it. The missing piece is a rank-before-this-carrier's-own-grant reader on Character (build.ts:5551 skillRankHere lives inside buildCharacter, where derive cannot reach it) — an engine shape, not a gate field.",
+   "severity": "internal",
+   "summary": "src/rules/types.ts (SkillRankGate, line 2817) - molten-wit#three-branches needs a MULTI-skill option gate (e.g. `requiresSkillRanks?: SkillRankGate[]`, honoured by qualifiesForOption at derive.ts:1771); both printed branch conditions name two skills at once and the single-skill gate cannot express either.",
+   "fixed": false,
+   "family": "data-rows-3",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: no edit owed — the line's claim is already true. CHOICE_FEAT_GRANTS['molten-wit'] = { deception: ['charming-liar'], diplomacy: ['group-impression'] } is the home, and a FEAT's choice.options[].grant.grantsFeats is collected nowhere (build.ts:5406 heritage, :5465 classFeature, comment at :5400). Extending it to the branch-2/branch-3 answers is dead code until the self-satisfaction problem above is solved, because those answers cannot exist on the record.",
+   "finding": "flaggedResidue: no edit owed — the line's claim is already true. CHOICE_FEAT_GRANTS['molten-wit'] = { deception: ['charming-liar'], diplomacy: ['group-impression'] } is the home, and a FEAT's choice.options[].grant.grantsFeats is collected nowhere (build.ts:5406 heritage, :5465 classFeature, comment at :5400). Extending it to the branch-2/branch-3 answers is dead code until the self-satisfaction problem above is solved, because those answers cannot exist on the record.",
+   "severity": "internal",
+   "summary": "src/rules/featFeatGrants.ts (CHOICE_FEAT_GRANTS, line 57) + src/rules/featGrantsLane.ts (line 46) - molten-wit#three-branches: the per-answer FEAT grant must stay here, because a FEAT's choice.options[].grant.grantsFeats is read nowhere (build.ts:5406 is heritage, 5465 is classFeature; the comment at build.ts:5400 says so outright).",
+   "fixed": false,
+   "family": "data-rows-3",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: nothing to author — items/armor-in-earth-heavy's note never carried the \"set it yourself\" sentence and the medium suit's wording was not mirrored onto it, while the src/rules/featGrants.ts armorFamiliarity entry covers BOTH granted suits, so its proficiency is right with no row at all.",
+   "finding": "flaggedResidue: nothing to author — items/armor-in-earth-heavy's note never carried the \"set it yourself\" sentence and the medium suit's wording was not mirrored onto it, while the src/rules/featGrants.ts armorFamiliarity entry covers BOTH granted suits, so its proficiency is right with no row at all.",
+   "severity": "internal",
+   "summary": "src/rules/featGrantsAuto.ts - armor-in-earth#armour-proficiency: add `'armor-in-earth': { armorFamiliarity: { armors: ['armor-in-earth-medium','armor-in-earth-heavy'], mirrorBest: true } }` and NO `armor: {...}` categories, so the kineticist borrows their best light/medium/heavy rank for these two items only and gains no medium/heavy training (which would let them wear real plate - WG's shortcut,…",
+   "fixed": false,
+   "family": "data-rows-3",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: engine work no row reaches — the collection shape is build.ts:4475 (per-rank slots) plus Builder.tsx:367/387 (a per-rank repertoire), ClassArchetype.spellCollection is a boolean, and archetype/flexible-spellcaster carries no field at all. A flat pool sized by the character's total daily class slots with a one-1st-rank floor is a new engine lane AND a new builder control, which the finding's own proposal says outright.",
+   "finding": "flaggedResidue: engine work no row reaches — the collection shape is build.ts:4475 (per-rank slots) plus Builder.tsx:367/387 (a per-rank repertoire), ClassArchetype.spellCollection is a boolean, and archetype/flexible-spellcaster carries no field at all. A flat pool sized by the character's total daily class slots with a one-1st-rank floor is a new engine lane AND a new builder control, which the finding's own proposal says outright.",
+   "severity": "internal",
+   "summary": "src/rules/build.ts:4475 + src/builder/Builder.tsx:367,387 - flexible-spellcaster#collection-shape: the whole collection shape is those two code sites (per-rank slots and a per-rank repertoire); archetype/flexible-spellcaster carries no field at all and ClassArchetype.spellCollection is a boolean. A flat pool sized by the character's TOTAL daily class slots, with a one-1st-rank-spell floor, is eng…",
+   "fixed": false,
+   "family": "data-rows-3",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: another agent's file (work/.b037-rows-data-rows-4.json) and an absolute prohibition forbids rewriting it. Still live: the driver's precheck over the whole 22-spec manifest refuses the description row for introducing heroes, heaven, note, not, printed, text, the, book, none of which are in equipment-2734/equipment-34 or in our current text. That chunk's owner must re-word it; the apply stage refuses the WHOLE manifest on one problem.",
+   "finding": "flaggedResidue: another agent's file (work/.b037-rows-data-rows-4.json) and an absolute prohibition forbids rewriting it. Still live: the driver's precheck over the whole 22-spec manifest refuses the description row for introducing heroes, heaven, note, not, printed, text, the, book, none of which are in equipment-2734/equipment-34 or in our current text. That chunk's owner must re-word it; the apply stage refuses the WHOLE manifest on one problem.",
+   "severity": "internal",
+   "summary": "work/.b037-rows-data-rows-4.json (SIBLING CHUNK, not mine to edit) - the description row for items/merchants-scale fails the same precheck (5) that refused my prose row: it introduces heroes, heaven, note, not, printed, text, the, book, none of which are in equipment-2734/equipment-34 or in our current text. The apply stage refuses the WHOLE manifest on one problem, so this blocks this family too…",
+   "fixed": false,
+   "family": "data-rows-3",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: work/.b037-report-gap-data-rows-5.txt flaggedResidue 1 — STRUCK — the builder's gap #8 (uncited assertion at test/batch031-data.test.ts:96) no longer stands: `node scripts/test-flip-audit.mjs --batch 037` is clean. data-rows-4 owns that file and closed it.",
+   "finding": "flaggedResidue: work/.b037-report-gap-data-rows-5.txt flaggedResidue 1 — STRUCK — the builder's gap #8 (uncited assertion at test/batch031-data.test.ts:96) no longer stands: `node scripts/test-flip-audit.mjs --batch 037` is clean. data-rows-4 owns that file and closed it.",
+   "severity": "internal",
+   "summary": "STRUCK — the builder's gap #8 (uncited assertion at test/batch031-data.test.ts:96) no longer stands: `node scripts/test-flip-audit.mjs --batch 037` is clean. data-rows-4 owns that file and closed it.",
+   "fixed": false,
+   "family": "data-rows-5",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "speed-status-lane-031",
+   "finding": "speed-status-lane-031",
+   "severity": "internal",
+   "summary": "feats/swashbucklers-speed — re-author the +5/+10 STATUS bonus the moment the engine grows a typed, all-Speeds carrier; today the only field is the untyped land-only landSpeedBonus already shipped.",
+   "fixed": false,
+   "family": "data-rows-6",
+   "kind": "DATA STILL NEEDED"
+  },
+  {
+   "id": "screech-shooter-greater",
+   "finding": "screech-shooter-greater",
+   "severity": "internal",
+   "summary": "NEW (owner question): items/screech-shooter-major's first sentence calls it \"a special +2 greater striking harmona gun\" — that is the GREATER grade's rune line (equipment-1169-1109). The major grade prints NO rune sentence of its own, so the number belongs to no grade and cannot be invented from print. The builder was right not to touch it; it needs the owner, not a row.",
+   "fixed": false,
+   "family": "data-rows-6",
+   "kind": "DATA STILL NEEDED"
+  },
+  {
+   "id": "speed-status-lane-031",
+   "finding": "speed-status-lane-031",
+   "severity": "internal",
+   "summary": "swashbucklers-speed#typed-all-speeds — engine: src/rules/derive.ts (the landSpeedBonus fold at 5274-5276) must give every speed bonus a TYPE so two status bonuses take the highest instead of adding, and must honour a clause worded \"to your Speeds\" on every Speed, not land alone. ~20 records carry a bonus through that one untyped field.",
+   "fixed": false,
+   "family": "data-rows-6",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "reborn-soul",
+   "finding": "reborn-soul",
+   "severity": "internal",
+   "summary": "reborn-soul#restricted-increases, the BUILT half — engine: bonusSkillIncreaseLevels (build.ts:3724,",
+   "fixed": false,
+   "family": "data-rows-6",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "reborn-soul",
+   "finding": "reborn-soul",
+   "severity": "internal",
+   "summary": "and restrictedSkillIncreaseLevels (build.ts:1137) are read off the CLASS only and their `skills` list is fixed SkillIds, so a BACKGROUND granting one restricted increase at 3/7/15 against two player-chosen Lores has no reader; it needs a chosen-Lore resolver the way includeSubclassGrantedSkills resolves a subclass skill.",
+   "fixed": false,
+   "family": "data-rows-6",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: same line as the builder's — the 40 rows are carried whole, with citation, in the breath-of-the-dragon effectChoices row and in my dragonblood row's `why`; a second copy with no reader is a drift risk, not a gain. See work/.b037-report-gap-data-rows-6.txt, line R1.",
+   "finding": "flaggedResidue: same line as the builder's — the 40 rows are carried whole, with citation, in the breath-of-the-dragon effectChoices row and in my dragonblood row's `why`; a second copy with no reader is a drift risk, not a gain. See work/.b037-report-gap-data-rows-6.txt, line R1.",
+   "severity": "internal",
+   "summary": "breath-of-the-dragon#derive-from-exemplar asks for a new data file scripts/data/draconic-benefactors.json (scripts/ is outside this chunk). The table itself is carried whole inside the effectChoices row, so nothing is lost; the standalone file and its citation are for whoever owns scripts/data.",
+   "fixed": false,
+   "family": "data-rows-6",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: pipeline lane — the mirror fetch is scraper work this run is forbidden to run (no npm run data, no apply-*.mjs), and nothing in batch 037 waits on it. See work/.b037-report-gap-data-rows-6.txt, line R2.",
+   "finding": "flaggedResidue: pipeline lane — the mirror fetch is scraper work this run is forbidden to run (no npm run data, no apply-*.mjs), and nothing in batch 037 waits on it. See work/.b037-report-gap-data-rows-6.txt, line R2.",
+   "severity": "internal",
+   "summary": "MIRROR GAP: https://2e.aonprd.com/DraconicBenefactors.aspx is not in the AoN update pipeline. CONFIRMED by me: the mirror has no such document, and all 44 draconic-exemplar docs carry tradition / bloodline skill / sorcerous gifts but neither the breath nor the save column (only 5 mention \"breath\" at all, incidentally). Pipeline lane, not a row.",
+   "fixed": false,
+   "family": "data-rows-6",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: an IN-USE control for held gear is an unmodelled mechanic, not a row — the app has no 'held' state for an itemType `equipment` record, and giving it one flips `itemInUse` on for EVERY such record at once, firing every passiveEffects/situational clause they carry (blast radius unmeasured, and `toggleEquipped` in src/builder/shared.tsx:632 has no caller to widen). No family stages src/sheet/InventoryTab.tsx in batch 037. My astrolabe star reaches the player meanwhile through `whileCarried`. See work/.b037-report-gap-data-rows-6.txt, line R3.",
+   "finding": "flaggedResidue: an IN-USE control for held gear is an unmodelled mechanic, not a row — the app has no 'held' state for an itemType `equipment` record, and giving it one flips `itemInUse` on for EVERY such record at once, firing every passiveEffects/situational clause they carry (blast radius unmeasured, and `toggleEquipped` in src/builder/shared.tsx:632 has no caller to widen). No family stages src/sheet/InventoryTab.tsx in batch 037. My astrolabe star reaches the player meanwhile through `whileCarried`. See work/.b037-report-gap-data-rows-6.txt, line R3.",
+   "severity": "internal",
+   "summary": "NEW: src/sheet/InventoryTab.tsx — equipControl (line 72) returns null for every itemType that is not armor/weapon/shield and the Invest button needs the 'invested' trait (line 194), while the drag path refuses the same items (isEquippable, line 732) and `toggleEquipped` (builder/shared.tsx:632) has no caller. So an itemType 'equipment' record without the 'invested' trait can NEVER satisfy itemInU…",
+   "fixed": false,
+   "family": "data-rows-6",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: the line reports itself CLOSED and I re-checked it — no astrolabe entry in work/.b037-rows-situational.json, and situationalBonuses.ts:3083 keys the other record id. Nothing to author or ask. See work/.b037-report-gap-data-rows-6.txt, line R4.",
+   "finding": "flaggedResidue: the line reports itself CLOSED and I re-checked it — no astrolabe entry in work/.b037-rows-situational.json, and situationalBonuses.ts:3083 keys the other record id. Nothing to author or ask. See work/.b037-report-gap-data-rows-6.txt, line R4.",
+   "severity": "internal",
+   "summary": "CLOSED (was: \"if the situational family also adds an astrolabe-of-falling-stars entry the item would carry the star twice\"). work/.b037-rows-situational.json contains ONE finding (reverse-engineer) and no astrolabe entry, and src/rules/situationalBonuses.ts:3083 keys \"astrolabe-of-the-falling-stars\" — a different record id that also exists in core.json. No double star is possible in this batch.",
+   "fixed": false,
+   "family": "data-rows-6",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: driver-only desk move — desk #19 #27 #32 #34 #38 #53 #65 #66 #74 #75 #76 #77 are ruled by the 28-id answer in work/desk-answers-2026-09-10.json but still sit in work/owner-questions.json `open`; every agent in this workflow is forbidden to edit that file and add-owner-question.mjs only appends to `open`, so only the driver can move them to `ruled` — until it does, wg-batch-close.mjs:258 derives OWNER-QUEUED for all twelve.",
+   "finding": "flaggedResidue: driver-only desk move — desk #19 #27 #32 #34 #38 #53 #65 #66 #74 #75 #76 #77 are ruled by the 28-id answer in work/desk-answers-2026-09-10.json but still sit in work/owner-questions.json `open`; every agent in this workflow is forbidden to edit that file and add-owner-question.mjs only appends to `open`, so only the driver can move them to `ruled` — until it does, wg-batch-close.mjs:258 derives OWNER-QUEUED for all twelve.",
+   "severity": "internal",
+   "summary": "work/owner-questions.json (prohibited for the builder and for me to edit): all twelve records are still in `open` with desk numbers #19 #27 #32 #34 #38 #53 #65 #66 #74 #75 #76 #77, although the 28-id answer in work/desk-answers-2026-09-10.json rules every one of them (`ruled` holds 6 entries, none of them these). VERIFIED CONSEQUENCE, both halves: while they sit in `open`, wg-batch-close.mjs:258 …",
+   "fixed": false,
+   "family": "instruments-4",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: the verifier's restatement of the builder's owner-questions.json line after confirming it — one gap counted twice, the same shape as batch 036's blessed-swiftness#mounted pair, not a second gap. Parked for the same reason and on the same evidence I re-measured at gap time: all twelve ns (80 81 83 84 89 90 91 103 114 117 118 119) are still in work/owner-questions.json open[] and none is in ruled[] or deferred[]; work/desk-answers-2026-09-10.json answers exactly those ns (book wins, ours kept, written down as a settle); scripts/wg-batch-close.mjs:111 builds `desk` from open[]+deferred[] only and :255 fires OWNER-QUEUED before any citation, so all twelve close OWNER-QUEUED until they move to ruled[]. Also verified the verifier's own caveat: the closer's `<record>-<aspect>` desk blindness does not hide these — they are keyed by bare record id. NOT AUTHORABLE HERE for the same reason: work/owner-questions.json is forbidden to every agent in this workflow and a queue entry would be filtered out by pendingQuestions() as already-on-desk, so the move is the driver/orchestrator's. Carried forward in the CROSS-FILE GAPS section of work/.b037-report-gap-instruments-5.txt.",
+   "finding": "flaggedResidue: the verifier's restatement of the builder's owner-questions.json line after confirming it — one gap counted twice, the same shape as batch 036's blessed-swiftness#mounted pair, not a second gap. Parked for the same reason and on the same evidence I re-measured at gap time: all twelve ns (80 81 83 84 89 90 91 103 114 117 118 119) are still in work/owner-questions.json open[] and none is in ruled[] or deferred[]; work/desk-answers-2026-09-10.json answers exactly those ns (book wins, ours kept, written down as a settle); scripts/wg-batch-close.mjs:111 builds `desk` from open[]+deferred[] only and :255 fires OWNER-QUEUED before any citation, so all twelve close OWNER-QUEUED until they move to ruled[]. Also verified the verifier's own caveat: the closer's `<record>-<aspect>` desk blindness does not hide these — they are keyed by bare record id. NOT AUTHORABLE HERE for the same reason: work/owner-questions.json is forbidden to every agent in this workflow and a queue entry would be filtered out by pendingQuestions() as already-on-desk, so the move is the driver/orchestrator's. Carried forward in the CROSS-FILE GAPS section of work/.b037-report-gap-instruments-5.txt.",
+   "severity": "internal",
+   "summary": "work/owner-questions.json (forbidden to every agent in this workflow; driver/orchestrator must do it): all twelve are still in `open[]` with desk numbers #80 #81 #83 #84 #89 #90 #91 #103 #114 #117 #118 #119, although the owner ANSWERED them on 2026-09-10 (work/desk-answers-2026-09-10.json, the answer block whose `ns` is exactly those twelve: \"Keep the app on all 28 … Each gets WRITTEN DOWN as a k…",
+   "fixed": false,
+   "family": "instruments-5",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: the verifier's restatement of the builder's matchSelects line after confirming it — one gap counted twice, not a second gap. Parked on the same re-measured evidence: the three parks are two OPPOSITE shapes, so no single lane retires them (seer-of-the-dead's surplus select is UNPRINTED — background-243 prints one restricted boost and no free one — and must not pair with anything, while dongun-education and free-heart are N-selects-answered-by-one-control, which controlCapacity() at scripts/lib/wg-experience-lanes.mjs:264 already expresses and which fails today only because a `popup` control declares no capacity). Whether a WG select is printed cannot be derived from WG data; it is a fact about the book, which is what the per-record park with a verbatim quote records. Measured blast radius of a generic relaxation on work/.b037-baseline/experience.json: 7 of 125 records read MISSING-CONTROL and only 3 are parked, so bone-magic, molten-wit, hardened-chassis and time-mage-dedication are live detections that verdictFor() (:613, raises on `unmatched.length` alone) would stop reporting. I also confirmed the verifier's in-flight note: the sibling chunk's tradition lane at :162-183 is untouched by this decision and nothing in this family edits the file. The correct mechanism already exists and already carries seer-of-the-dead in work/experience-instrument-limits.json, cited and pinned by test/batch037-instruments-5.test.ts.",
+   "finding": "flaggedResidue: the verifier's restatement of the builder's matchSelects line after confirming it — one gap counted twice, not a second gap. Parked on the same re-measured evidence: the three parks are two OPPOSITE shapes, so no single lane retires them (seer-of-the-dead's surplus select is UNPRINTED — background-243 prints one restricted boost and no free one — and must not pair with anything, while dongun-education and free-heart are N-selects-answered-by-one-control, which controlCapacity() at scripts/lib/wg-experience-lanes.mjs:264 already expresses and which fails today only because a `popup` control declares no capacity). Whether a WG select is printed cannot be derived from WG data; it is a fact about the book, which is what the per-record park with a verbatim quote records. Measured blast radius of a generic relaxation on work/.b037-baseline/experience.json: 7 of 125 records read MISSING-CONTROL and only 3 are parked, so bone-magic, molten-wit, hardened-chassis and time-mage-dedication are live detections that verdictFor() (:613, raises on `unmatched.length` alone) would stop reporting. I also confirmed the verifier's in-flight note: the sibling chunk's tradition lane at :162-183 is untouched by this decision and nothing in this family edits the file. The correct mechanism already exists and already carries seer-of-the-dead in work/experience-instrument-limits.json, cited and pinned by test/batch037-instruments-5.test.ts.",
+   "severity": "internal",
+   "summary": "scripts/lib/wg-experience-lanes.mjs matchSelects (shared engine file; not edited, and the fix is wider than this chunk): the one-select/one-control wording rescue at :307 is gated on `selects.length === 1`, so a record where WG asks MORE questions than print can never pair. seer-of-the-dead is parked instead; free-heart and dongun-education are older parks of the same shape. A \"their surplus sele…",
+   "fixed": false,
+   "family": "instruments-5",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: re-measured at gap time and the watch is CLEAR — no lost update, so there is nothing to author. work/.b037-specs.json now holds 16 entries and every rows file on disk is cited: work/.b037-rows-{situational,instruments-1..7,data-rows-1..6}.json, all 14, plus work/.b037-created-desc-data-rows-1.json and work/.b037-created-desc-data-rows-3.json as kind created-prose. The five families the verifier saw missing (data-rows-1, data-rows-3, data-rows-4, instruments-3, instruments-6) each have their entry now, which is exactly the in-flight explanation it suspected rather than a dropped read-modify-write. This family's own entry is intact and unchanged (family instruments-5, file work/.b037-rows-instruments-5.json). The line asked the DRIVER to re-check the race at close; that re-check is the driver's to repeat at close and is not a gap in the app, and this family neither wrote nor needed a new manifest entry (no rows, no edits, no test), so it cannot have perturbed the file.",
+   "finding": "flaggedResidue: re-measured at gap time and the watch is CLEAR — no lost update, so there is nothing to author. work/.b037-specs.json now holds 16 entries and every rows file on disk is cited: work/.b037-rows-{situational,instruments-1..7,data-rows-1..6}.json, all 14, plus work/.b037-created-desc-data-rows-1.json and work/.b037-created-desc-data-rows-3.json as kind created-prose. The five families the verifier saw missing (data-rows-1, data-rows-3, data-rows-4, instruments-3, instruments-6) each have their entry now, which is exactly the in-flight explanation it suspected rather than a dropped read-modify-write. This family's own entry is intact and unchanged (family instruments-5, file work/.b037-rows-instruments-5.json). The line asked the DRIVER to re-check the race at close; that re-check is the driver's to repeat at close and is not a gap in the app, and this family neither wrote nor needed a new manifest entry (no rows, no edits, no test), so it cannot have perturbed the file.",
+   "severity": "internal",
+   "summary": "work/.b037-specs.json — for the DRIVER to re-check at close, not for me to edit: as of this verify the manifest holds 9 entries and five families that have already written a rows file have no entry (data-rows-1, data-rows-3, data-rows-4, instruments-3, instruments-6). Those siblings are still running, so this is most likely in-flight rather than a lost update — but the manifest is a read-modify-w…",
+   "fixed": false,
+   "family": "instruments-5",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: the narrow non-playtest tie-break is the right shape and desk #149 already rules it, but it is a CORPUS-WIDE re-pairing, not a batch-037 item: measured on the live dump, 562 playtest rows win the tie-break today (209 of them playtest-only) and 106 records' WG encoding actually CHANGES under the narrow rule — feats/Spirit Walk among them (171 ops -> 2), which is this batch's own VERIFIED_EQUIVALENT['spirit-walk'] = ['sense'] settle and the --raw assertion in test/batch037-instruments-6.test.ts. Landing it in the gaps stage would silently restate 106 records across 36 prior batches' settle registries and break batch 037's own green tests, so it needs a batch of its own with a settle-staleness sweep (scripts/wg-settle-stale.mjs) attached. Measurement recorded in work/.b037-report-gap-instruments-6.txt.",
+   "finding": "flaggedResidue: the narrow non-playtest tie-break is the right shape and desk #149 already rules it, but it is a CORPUS-WIDE re-pairing, not a batch-037 item: measured on the live dump, 562 playtest rows win the tie-break today (209 of them playtest-only) and 106 records' WG encoding actually CHANGES under the narrow rule — feats/Spirit Walk among them (171 ops -> 2), which is this batch's own VERIFIED_EQUIVALENT['spirit-walk'] = ['sense'] settle and the --raw assertion in test/batch037-instruments-6.test.ts. Landing it in the gaps stage would silently restate 106 records across 36 prior batches' settle registries and break batch 037's own green tests, so it needs a batch of its own with a settle-staleness sweep (scripts/wg-settle-stale.mjs) attached. Measurement recorded in work/.b037-report-gap-instruments-6.txt.",
+   "severity": "internal",
+   "summary": "STANDS — scripts/lib/wg-parse.mjs:304. `wgRowsByBucket`'s tie-break is literally `if (!prev || ops.length > String(prev.operations ?? '').length) m.set(key, row)` — richest row wins, with no notion of a PLAYTEST row, which is what paired us against a draft Paizo cut on spirit-walk. Owner's standing rule (desk #149): a WG row marked (playtest) is never evidence about the released record. The build…",
+   "fixed": false,
+   "family": "instruments-6",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: not a gap — re-verified here, not taken on the verifier's word: `node scripts/test-flip-audit.mjs --batch 037` reports \"batch 037 clean — 26 test file(s) touched, 13 new settle key(s), every flip cited\" when run BEFORE this agent touched anything (23 then, 27 after siblings landed; still clean). The uncited flip in test/batch031-data.test.ts:96 that the instruments-6 builder reported was cited by its owning chunk after that report was written. Nothing to author and nobody to ask.",
+   "finding": "flaggedResidue: not a gap — re-verified here, not taken on the verifier's word: `node scripts/test-flip-audit.mjs --batch 037` reports \"batch 037 clean — 26 test file(s) touched, 13 new settle key(s), every flip cited\" when run BEFORE this agent touched anything (23 then, 27 after siblings landed; still clean). The uncited flip in test/batch031-data.test.ts:96 that the instruments-6 builder reported was cited by its owning chunk after that report was written. Nothing to author and nobody to ask.",
+   "severity": "internal",
+   "summary": "CLOSED, not a gap any more — the builder reported one uncited flip in test/batch031-data.test.ts:96 as an open cross-file item. `node scripts/test-flip-audit.mjs --batch 037` now passes clean (19 test files touched, 13 new settle keys, every flip cited): the owning chunk added its citation after this report was written. Struck from the list.",
+   "fixed": false,
+   "family": "instruments-6",
+   "kind": "CROSS-FILE GAPS"
+  },
+  {
+   "id": "flaggedResidue: real drift, but it is the DRIVER's close-stage task and not an agent edit. scripts/wg-batch-run.mjs:1068 runs scripts/trust-ledger.mjs inside stageClose (allow-listed :1249, reported as trustLedgerRegenerated :1097; the header at :1051 says a closed batch regenerates the ledger precisely so nobody runs the generator by hand). Re-measured: node scripts/trust-ledger-check.mjs prints FAIL 'the tracked ledger is what the generator produces' today. Regenerating now would be stale immediately — the ledger stamps coreSha and none of batch 037's overlay rows (mine included) have been applied yet — so it must happen once, at close. Runtime impact meanwhile is nil: an id with no registry entry suppresses nothing (src/data/trustGate.ts:266).",
+   "finding": "flaggedResidue: real drift, but it is the DRIVER's close-stage task and not an agent edit. scripts/wg-batch-run.mjs:1068 runs scripts/trust-ledger.mjs inside stageClose (allow-listed :1249, reported as trustLedgerRegenerated :1097; the header at :1051 says a closed batch regenerates the ledger precisely so nobody runs the generator by hand). Re-measured: node scripts/trust-ledger-check.mjs prints FAIL 'the tracked ledger is what the generator produces' today. Regenerating now would be stale immediately — the ledger stamps coreSha and none of batch 037's overlay rows (mine included) have been applied yet — so it must happen once, at close. Runtime impact meanwhile is nil: an id with no registry entry suppresses nothing (src/data/trustGate.ts:266).",
+   "severity": "internal",
+   "summary": "src/data/trust-ledger.json is now STALE and `npm run verify` FAILS on it. The builder's note to the closer (\"the ledger is derived from core.json + the WG comparer output and never from this registry ... no regeneration is needed\") is WRONG: scripts/trust-ledger.mjs:83 declares LANE_REGISTRY.situational = ['src/rules/situationalBonuses.ts#FEAT_SITUATIONAL', '...#CHOICE_SITUATIONAL'] and :340-341 …",
+   "fixed": false,
+   "family": "situational",
+   "kind": "CROSS-FILE GAPS"
+  }
+ ],
+ "rejected": 0,
+ "askOwner": [],
+ "complete": true,
+ "offBatch": [
+  {
+   "id": "android#printing",
+   "finding": "android#printing",
+   "summary": "Nothing changes: the app keeps the Lost Omens Ancestry Guide printing (Rare, Androffan + Common); WG's Starfinder Player Core printing is a deliberate difference.",
+   "citations": [
+    "work/.b037-rows-instruments-1.json finding android#printing note: Residual read, no row and NO settle POSSIBLE. WG's dump carries no ancestry row named Android, so wg-diff files the record under noMatch and the other comparers",
+    "work/.b037-report-instruments-1.txt: android#printing — no instrument can hold this finding. WG's dump has no ancestry row named \"Android\",",
+    "work/.b037-report-instruments-1.txt: android#printing — RESIDUAL READ, no row, NO settle POSSIBLE (see CROSS-FILE GAPS).",
+    "work/.b037-verify-instruments-1.txt: android#printing has no comparer surface at all — WG's dump carries no ancestry row of that name, so wg-diff"
+   ]
+  },
+  {
+   "id": "wild-lights#printed-spell-name",
+   "finding": "wild-lights#printed-spell-name",
+   "summary": "The printed spell name was rewritten at import from Dancing Lights to Light, which is wrong against our Light and invisible to the player; the printed name must be restored and the broken link dropped.",
+   "citations": [
+    "row spec work/.b037-rows-data-rows-2.json finding wild-lights#printed-spell-name (3 row(s))"
+   ]
+  },
+  {
+   "id": "armigers-protection#armor-pick",
+   "finding": "armigers-protection#armor-pick",
+   "summary": "The free armour pick offers a non-existent item and grants nothing; it must be a real pick landing in inventory.",
+   "citations": [
+    "row spec work/.b037-rows-data-rows-3.json finding armigers-protection#armor-pick (1 row(s))",
+    "row spec work/.b037-rows-gap-data-rows-3.json finding armigers-protection#armor-pick (1 row(s))"
+   ]
+  },
+  {
+   "id": "flexible-spellcaster#collection-shape",
+   "finding": "flexible-spellcaster#collection-shape",
+   "summary": "The spell collection is built per rank, matching WG rather than print; it must be ONE flat pool sized by the character's total spell slots, with at least one 1st-rank spell.",
+   "citations": [
+    "test test/batch037-red-owner-ruled-engine-lanes.test.ts (in what this batch added)"
+   ]
+  },
+  {
+   "id": "soul-well#dying-toggle",
+   "finding": "soul-well#dying-toggle",
+   "summary": "Soul Well's one-minute effect raises the dying value permanently; the same toggle shape that fixes Scar of the Survivor fixes it.",
+   "citations": [
+    "row spec work/.b037-rows-data-rows-4.json finding soul-well#dying-toggle (2 row(s))"
+   ]
+  },
+  {
+   "id": "mask-of-the-mantis-major#printed-contents",
+   "finding": "mask-of-the-mantis-major#printed-contents",
+   "summary": "The Major grade stays at the base 2nd rank for both spells (the archive's Major block never restates the 5th-rank heightening), but its own printed pieces must be present.",
+   "citations": [
+    "row spec work/.b037-rows-data-rows-4.json finding mask-of-the-mantis-major#printed-contents (2 row(s))"
+   ]
+  },
+  {
+   "id": "zealot-staff#free-action-limit",
+   "finding": "zealot-staff#free-action-limit",
+   "summary": "The staff ships a once-per-minute limit and a 'per minute' pip that no source prints; the page has no Frequency line at all.",
+   "citations": [
+    "row spec work/.b037-rows-data-rows-4.json finding zealot-staff#free-action-limit (3 row(s))"
+   ]
+  },
+  {
+   "id": "zealot-staff#printed-contents",
+   "finding": "zealot-staff#printed-contents",
+   "summary": "The rest of the staff's printed contents must be verified against the page in the same pass.",
+   "citations": [
+    "row spec work/.b037-rows-data-rows-4.json finding zealot-staff#printed-contents (1 row(s))"
+   ]
+  },
+  {
+   "id": "screech-shooter-greater#grade-numbers",
+   "finding": "screech-shooter-greater#grade-numbers",
+   "summary": "The greater grade still shows the base 30-foot, DC 25 sentence; only its own printed numbers belong on it.",
+   "citations": [
+    "row spec work/.b037-rows-data-rows-6.json finding screech-shooter-greater#grade-numbers (1 row(s))"
+   ]
+  },
+  {
+   "id": "screech-shooter-major#grade-numbers",
+   "finding": "screech-shooter-major#grade-numbers",
+   "summary": "The major grade still shows the base 30-foot, DC 25 sentence; only its own printed numbers belong on it.",
+   "citations": [
+    "row spec work/.b037-rows-data-rows-6.json finding screech-shooter-major#grade-numbers (1 row(s))"
+   ]
+  },
+  {
+   "id": "wyrm-spindle-greater#grade-numbers",
+   "finding": "wyrm-spindle-greater#grade-numbers",
+   "summary": "The greater wyrm spindle carries the base grade's numbers; only its own printed numbers belong on it.",
+   "citations": [
+    "row spec work/.b037-rows-data-rows-6.json finding wyrm-spindle-greater#grade-numbers (2 row(s))"
+   ]
+  },
+  {
+   "id": "wyrm-spindle-major#grade-numbers",
+   "finding": "wyrm-spindle-major#grade-numbers",
+   "summary": "The major wyrm spindle carries the base grade's numbers; only its own printed numbers belong on it.",
+   "citations": [
+    "row spec work/.b037-rows-data-rows-6.json finding wyrm-spindle-major#grade-numbers (2 row(s))"
+   ]
+  }
+ ]
+}

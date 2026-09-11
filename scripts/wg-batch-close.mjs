@@ -456,8 +456,43 @@ for (const n of notes) console.log(`  note: ${n}`);
 
 if (committed) {
   const line = `batch ${TAG} is already committed (${committed.split('\n')[0]})`;
-  if (WRITE) { refuse(`${line} — --write refuses: a closed batch's artefacts are history.`); }
-  else console.log(`  note: ${line}; --write would refuse.`);
+  /*
+   * The guard protects ARTEFACTS, and a batch committed without them has none to protect.
+   *
+   * WHY (measured on batch 037, 2026-09-11): the off-batch refusal above kept close from ever writing
+   * this batch's parity/residual pair, and the batch was committed anyway (f1da70a carries the rows,
+   * the tests and the comparer edits, but neither work/wg-batch-037-parity.json nor -residual.json).
+   * With the refusal unconditional there is then NO path that can ever produce them — the two files the
+   * gate's RESIDUAL and PARITY checks are about stay missing forever, which is the very red this branch
+   * exists to clear. Re-deriving cannot damage history that does not contain them.
+   *
+   * The real case is untouched: a batch whose artefacts ARE committed still refuses (plan-E acceptance,
+   * batch 029, pinned in test/wg-batch-close.test.ts), and the one-way merge still protects every
+   * verdict inside a file that does exist.
+   */
+  /*
+   * …and the probe asks HISTORY, not the working tree.
+   *
+   * `existsSync` answers "is this file on disk"; the claim this guard makes — and the words of its own
+   * refusal — is "a closed batch's artefacts are HISTORY". The two diverged the moment the branch above
+   * wrote the missing pair for a committed batch: from then on the files were on disk, f1da70a still did
+   * not contain them, and the NEXT close of batch 037 refused. That refusal is not harmless, because
+   * scripts/wg-batch-run.mjs stageClose does two more things after this script returns — the went-quiet
+   * diff against the baseline flags, and the trust-ledger regeneration (docs/trust-gate.md §6) — so a
+   * batch that lands one more overlay row after its first close has no way to restamp
+   * src/data/trust-ledger.json and goes red in --stage verify with nothing to fix.
+   *
+   * `git show HEAD:<path>` is the question the refusal text asks, and it also closes the hole the
+   * gate-red round named (work/.b037-verify-red-close-offbatch-door.txt, CROSS-FILE GAPS 2): deleting a
+   * committed batch's artefacts locally used to make them re-derivable, and now does not. `isRepo`
+   * gates the spawn for the same reason addedText() does — a --root fixture tree is not a repo, where
+   * "not in history" is also what existsSync answered.
+   */
+  const inHistory = (rel) => isRepo && gitQuiet(['show', `HEAD:${rel}`]) !== '';
+  const haveArtefacts = inHistory(PARITY_PATH) || inHistory(RESIDUAL_PATH);
+  if (WRITE && haveArtefacts) refuse(`${line} — --write refuses: a closed batch's artefacts are history.`);
+  else if (WRITE) console.log(`  note: ${line}, and neither ${PARITY_PATH} nor ${RESIDUAL_PATH} is on disk — the commit shipped without them, so they are written rather than refused.`);
+  else console.log(`  note: ${line}; --write would ${haveArtefacts ? 'refuse' : `write the missing ${PARITY_PATH} + ${RESIDUAL_PATH}`}.`);
 }
 
 if (refusals.length) {

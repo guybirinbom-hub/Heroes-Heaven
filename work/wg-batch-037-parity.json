@@ -1,0 +1,630 @@
+{
+ "batch": 37,
+ "records": [
+  {
+   "id": "merchants-scale",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #17 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "guardians-armor",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #109 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "devil-allies",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #3 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "shoony-lore",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #45 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "fear-no-law-fear-no-one",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #5 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "gleaming-blade",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #135 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "otherworldly-protection",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #147 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "barrows-edge",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #136 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "gaze-sharp-as-steel",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #137 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "animist-apparition-spellcasting",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #4 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "spore-order",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #139 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "dragon-eidolon",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #138 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "acute-vision",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #108 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "sequestered-spell",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #20 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "breath-of-the-dragon",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #55 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "curse-of-turbulent-moments",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #143 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "intuitive-crafting",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #16 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "nagaji-spell-familiarity",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #18 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "reinforced-chassis",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #19 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "skybearers-belt",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #141 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "locate-lawbreakers",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #7 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "kitsune-spell-familiarity",
+   "verdict": "FIXED",
+   "evidence": "[batch 37 read, adversarially confirmed] kitsune-spell-familiarity#daily-control: Same defect as its nagaji twin: the choice must be a single control at daily preparations granting a divine at-will cant — cited by row spec work/.b037-rows-data-rows-5.json finding kitsune-spell-familiarity#daily-control (1 row(s)), row feats/kitsune-spell-familiarity field:choice in work/.b037-rows-data-rows-5.json"
+  },
+  {
+   "id": "scar-of-the-survivor",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #140 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "hardwood-armor-armor",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #26 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "echo-of-lost-moments",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #142 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "cultivation-order",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #144 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "steady-balance",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #9 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "bone-magic",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #107 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "animal-instinct",
+   "verdict": "FIXED",
+   "evidence": "[batch 37 read, adversarially confirmed] animal-instinct#spider-web: The spider instinct's Web attack rides as text on the Rage action because the engine cannot hold an attack that deals no — cited by row spec work/.b037-rows-gap-data-rows-4.json finding animal-instinct#spider-web (1 row(s)), row classFeatures/animal-instinct field:grantedStrikes in work/.b037-rows-gap-data-rows-4.json"
+  },
+  {
+   "id": "benefactors-resistance",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #11 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "armor-in-earth",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #10 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "molten-wit",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #12 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "divine-font",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #103 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "firework-technician-dedication",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #13 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "oatia-skysage-dedication",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #113 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "hellknight-dedication",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #14 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "reverse-engineer",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #15 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "favored-terrain",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #24 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "hallowed-necromancer-dedication",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #25 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "psychic-dedication",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #27 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "shadowcaster-dedication",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #22 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "clawdancer-dedication",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #21 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "aeon-stone-dusty-rose-prism",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #48 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "unifying-emblem-shundar-quah",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #28 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "unifying-emblem-sklar-quah",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #29 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "unifying-emblem-tamiir-quah",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #30 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "versatile-mutation",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #35 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "elemental-existence",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #32 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "thats-not-natural",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #34 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "ardent-armiger",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #37 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "devils-eye",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #38 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "pistol-wand",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #65 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "empathic-calm",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #111 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "hardened-chassis",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #40 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "colugos-traversal",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #112 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "gunslinger-weapon-mastery",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #39 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "nagaji-spell-mysteries",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #44 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "brutality",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #42 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "aeon-stone-agate-ellipsoid",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #47 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "astrolabe-of-falling-stars",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #51 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "kitsune-spell-mysteries",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #43 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "advanced-red-mantis-magic",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #46 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "arcana-of-iron",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #50 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "instinct-ability",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #53 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "spellmaster-dedication",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #110 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "aeon-stone-western-star",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #49 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "time-mage-dedication",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #57 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "basic-summoner-spellcasting",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #56 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "basic-magus-spellcasting",
+   "verdict": "FIXED",
+   "evidence": "[batch 37 read, adversarially confirmed] basic-magus-spellcasting#2026-printing: Basic Magus Spellcasting is a Feat 4 granting the ordinary basic spellcasting benefits in the 2026 printing, not a Feat  — cited by row spec work/.b037-rows-data-rows-1.json finding basic-magus-spellcasting#2026-printing (5 row(s)), row feats/basic-magus-spellcasting field:level in work/.b037-rows-data-rows-1.json, row feats/basic-magus-spellcasting field:aonId in work/.b037-rows-data-rows-1.json, row feats/basic-magus-spellcasting field:source in work/.b037-rows-data-rows-1.json, row feats/basic-magus-spellcasting field:edition in work/.b037-rows-data-rows-1.json, row feats/basic-magus-spellcasting field:description in work/.b037-rows-data-rows-1.json"
+  },
+  {
+   "id": "hyper-boosters",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #148 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "tumbling-theft",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #66 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "studious-spells",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #121 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "glyph-expert",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #130 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "dream-magic",
+   "verdict": "FIXED",
+   "evidence": "[batch 37 read, adversarially confirmed] dream-magic#second-taking: Both takings of Dream Magic share one answer, so a player who takes it twice still gets only one spell; print says the s — cited by row spec work/.b037-rows-data-rows-4.json finding dream-magic#second-taking (2 row(s)), row feats/dream-magic field:effectChoices in work/.b037-rows-data-rows-4.json, row feats/dream-magic field:choice in work/.b037-rows-data-rows-4.json"
+  },
+  {
+   "id": "swashbucklers-speed",
+   "verdict": "FIXED",
+   "evidence": "[batch 37 read, adversarially confirmed] swashbucklers-speed#typed-all-speeds: Speed bonuses are added together untyped and only to walking Speed; print types them and a clause saying 'to your Speeds — cited by row spec work/.b037-rows-red-owner-ruled-engine-lanes.json finding swashbucklers-speed#typed-all-speeds (8 row(s)), row feats/swashbucklers-speed field:speedBonusType in work/.b037-rows-red-owner-ruled-engine-lanes.json, row feats/swashbucklers-speed field:speedBonusAllSpeeds in work/.b037-rows-red-owner-ruled-engine-lanes.json, test test/batch037-red-owner-ruled-engine-lanes.test.ts (in what this batch added), test test/batch037-engine-lanes.test.ts (in what this batch added)"
+  },
+  {
+   "id": "haunting-memories",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #128 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "divine-breadth",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #131 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "primal-breadth",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #132 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "occult-breadth",
+   "verdict": "MATCHES",
+   "evidence": "[batch 37 read] comparer misread settled/taught: occult-breadth#no-cantrip — work/.b037-rows-instruments-2.json finding occult-breadth#no-cantrip note: Residual read — no row, no settle. The third of the copied-cantrip Breadth rows, covered by the same 2026-09-10 ruling (#131/#132, stated as covering Divine, Pr"
+  },
+  {
+   "id": "necromantic-tenacity",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #133 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "chronomancers-secrets",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #150 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "spirit-walk",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #149 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "toppling-tentacles",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #71 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "expert-summoner-spellcasting",
+   "verdict": "FIXED",
+   "evidence": "[batch 37 read, adversarially confirmed] expert-summoner-spellcasting#2026-printing: Expert Summoner Spellcasting grants the expert spellcasting benefits (not the bounded ones) and requires master in the s — cited by row spec work/.b037-rows-data-rows-1.json finding expert-summoner-spellcasting#2026-printing (4 row(s)), row feats/expert-summoner-spellcasting field:aonId in work/.b037-rows-data-rows-1.json, row feats/expert-summoner-spellcasting field:source in work/.b037-rows-data-rows-1.json, row feats/expert-summoner-spellcasting field:edition in work/.b037-rows-data-rows-1.json, row feats/expert-summoner-spellcasting field:description in work/.b037-rows-data-rows-1.json"
+  },
+  {
+   "id": "expert-magus-spellcasting",
+   "verdict": "FIXED",
+   "evidence": "[batch 37 read, adversarially confirmed] expert-magus-spellcasting#2026-printing: Expert Magus Spellcasting grants the expert spellcasting benefits (not the bounded ones) and requires master in Arcana i — cited by row spec work/.b037-rows-data-rows-1.json finding expert-magus-spellcasting#2026-printing (4 row(s)), row feats/expert-magus-spellcasting field:aonId in work/.b037-rows-data-rows-1.json, row feats/expert-magus-spellcasting field:source in work/.b037-rows-data-rows-1.json, row feats/expert-magus-spellcasting field:edition in work/.b037-rows-data-rows-1.json, row feats/expert-magus-spellcasting field:description in work/.b037-rows-data-rows-1.json"
+  },
+  {
+   "id": "spew-tentacles",
+   "verdict": "FIXED",
+   "evidence": "[batch 37 read, adversarially confirmed] spew-tentacles#replacement-note: Spew Tentacles has the same defect as Toppling Tentacles: its printed note reaches neither Black Tentacles nor Slither. — cited by row spec work/.b037-rows-data-rows-2.json finding spew-tentacles#replacement-note (1 row(s)), row feats/spew-tentacles field:spellNotes in work/.b037-rows-data-rows-2.json"
+  },
+  {
+   "id": "nagaji-spell-expertise",
+   "verdict": "FIXED",
+   "evidence": "[batch 37 read, adversarially confirmed] nagaji-spell-expertise#daily-control: Same defect as the other five kitsune and nagaji spell feats: the choice belongs at daily preparations as a single contr — cited by row spec work/.b037-rows-data-rows-5.json finding nagaji-spell-expertise#daily-control (1 row(s)), row feats/nagaji-spell-expertise field:choice in work/.b037-rows-data-rows-5.json"
+  },
+  {
+   "id": "kitsune-spell-expertise",
+   "verdict": "FIXED",
+   "evidence": "[batch 37 read, adversarially confirmed] kitsune-spell-expertise#daily-control: Same defect as the other five kitsune and nagaji spell feats: the choice belongs at daily preparations as a single contr — cited by row spec work/.b037-rows-data-rows-5.json finding kitsune-spell-expertise#daily-control (1 row(s)), row feats/kitsune-spell-expertise field:choice in work/.b037-rows-data-rows-5.json"
+  },
+  {
+   "id": "master-summoner-spellcasting",
+   "verdict": "FIXED",
+   "evidence": "[batch 37 read, adversarially confirmed] master-summoner-spellcasting#2026-printing: Master Summoner Spellcasting grants the master spellcasting benefits (not the bounded ones) and requires legendary in th — cited by row spec work/.b037-rows-data-rows-1.json finding master-summoner-spellcasting#2026-printing (5 row(s)), row feats/master-summoner-spellcasting field:aonId in work/.b037-rows-data-rows-1.json, row feats/master-summoner-spellcasting field:source in work/.b037-rows-data-rows-1.json, row feats/master-summoner-spellcasting field:edition in work/.b037-rows-data-rows-1.json, row feats/master-summoner-spellcasting field:prerequisites in work/.b037-rows-data-rows-1.json, row feats/master-summoner-spellcasting field:description in work/.b037-rows-data-rows-1.json"
+  },
+  {
+   "id": "master-magus-spellcasting",
+   "verdict": "FIXED",
+   "evidence": "[batch 37 read, adversarially confirmed] master-magus-spellcasting#2026-printing: Master Magus Spellcasting grants the master spellcasting benefits (not the bounded ones) and requires legendary in Arcan — cited by row spec work/.b037-rows-data-rows-1.json finding master-magus-spellcasting#2026-printing (4 row(s)), row feats/master-magus-spellcasting field:aonId in work/.b037-rows-data-rows-1.json, row feats/master-magus-spellcasting field:source in work/.b037-rows-data-rows-1.json, row feats/master-magus-spellcasting field:edition in work/.b037-rows-data-rows-1.json, row feats/master-magus-spellcasting field:description in work/.b037-rows-data-rows-1.json"
+  },
+  {
+   "id": "keys-to-destiny",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #74 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "born-of-animal",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #116 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "concordance-scout",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #75 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "seer-of-the-dead",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #81 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "streetfood-vendor",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #82 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "tree-friend",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #84 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "traveling-gourmand",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #80 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "mightyfall-kobold",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #115 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "grave-orc",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #117 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "undine",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #114 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "aon-wishes-for-riches",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #79 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "haunted",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #83 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "sense-of-belonging",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #86 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "deny-lady-nanbyos-charity",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #118 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "sponsored-by-a-village",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #87 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "poppet",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #76 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "reborn-soul",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #85 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "sky-rider",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #88 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "goloma",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #77 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "hammered-by-fate",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #89 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "lesser-scion",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #90 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "unsponsored",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #94 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "summoner",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #120 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "bachuan-revolutionary",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #91 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "sponsored-by-family",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #96 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "northridge-scholar",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #97 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "wanderlust",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #95 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "sponsored-by-teacher-ot",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #92 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "lost-loved-one",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #93 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "magus",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #104 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "animist",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #105 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "total-power",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #101 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "waning-moon-sarangay",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #119 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "sponsored-by-a-stranger",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #100 (batch 37; n from entry.n)"
+  },
+  {
+   "id": "beast-blessed",
+   "verdict": "OWNER-QUEUED",
+   "evidence": "WG-vs-print — Rulings Desk #99 (batch 37; n from entry.n)"
+  }
+ ]
+}

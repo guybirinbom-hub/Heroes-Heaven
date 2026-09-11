@@ -38467,7 +38467,8 @@
   "category": "feats",
   "id": "tillers-drive",
   "field": "landSpeedBonus",
-  "value": 5
+  "value": 10,
+  "why": "AoN feat-932: \"Your Speed bonus from Bellflower Dedication increases to +10 feet.\" The printed number is the WHOLE bonus, not a delta over Bellflower's +5. SUPERSEDES the pre-existing overlay row {category: feats, id: tillers-drive, field: landSpeedBonus, value: 5} (no `why`, shipped in 46a2885 \"v0.1.21 - every printed effect reaches the sheet\"), whose 5 was written as a delta back when nothing could express replacement; the superseded value is a scalar and is replaced whole by the 10 above. With feats/bellflower-dedication typed `status` (feat-928: \"You gain a +5-foot STATUS bonus to your Speed\") and this row typed the same, deriveSpeeds' highest-per-type rule pays the pair exactly the printed +10."
  },
  {
   "category": "items",
@@ -186861,5 +186862,75 @@
   "field": "note",
   "value": "Created by the Hardwood Armor impulse. It is medium armor but uses your highest armor proficiency, which your sheet works out for you. Any bonuses, runes and magical abilities of your actual armor are suppressed while it is worn, and any runes that could apply to the hardwood armor are replicated onto it.",
   "why": "feat-4283 \"This hardwood armor is medium armor but uses your highest armor proficiency.\" The delivery half of the create row above, byte-identical to its `note`."
+ },
+ {
+  "category": "feats",
+  "id": "swashbucklers-speed",
+  "field": "speedBonusType",
+  "value": "status",
+  "why": "AoN feat-6238: \"You gain a +5-foot STATUS bonus to your Speeds; this increases to a +10-foot status bonus while you have panache.\" The type was dropped, so a swashbuckler carrying both this and Vivacious Speed's standing status half walked 5 feet past the printed number. Owner ruling 2026-09-10 #127."
+ },
+ {
+  "category": "feats",
+  "id": "swashbucklers-speed",
+  "field": "speedBonusAllSpeeds",
+  "value": true,
+  "why": "AoN feat-6238: \"a +5-foot status bonus to your SPEEDS\" - the plural. The only carrier in the database that prints it; every other speed-bonus clause says \"your Speed\". Read by deriveSpeeds beside the speedAdjust loop, so a swim or fly Speed the character already has takes the 5 feet and a Speed they do not have is not created."
+ },
+ {
+  "category": "feats",
+  "id": "scouts-speed",
+  "field": "speedBonusType",
+  "value": "status",
+  "why": "AoN feat-6398: \"You gain a +10-foot STATUS bonus to your Speed.\""
+ },
+ {
+  "category": "feats",
+  "id": "bellflower-dedication",
+  "field": "speedBonusType",
+  "value": "status",
+  "why": "AoN feat-928: \"You gain a +5-foot STATUS bonus to your Speed.\" (Tiller's Drive raises this same bonus to +10 and stays untyped - it carries the delta, not a second bonus.)"
+ },
+ {
+  "category": "classFeatures",
+  "id": "furious-footfalls",
+  "field": "speedBonusType",
+  "value": "status",
+  "why": "AoN class-feature-849: \"You gain a +5-foot STATUS bonus to your Speed.\""
+ },
+ {
+  "category": "classFeatures",
+  "id": "blessed-swiftness",
+  "field": "speedBonusType",
+  "value": "status",
+  "why": "AoN class-feature-877 (Blessing of the Devoted), section \"Blessed Swiftness:\" - the record's own aonParentId: \"You gain a +5-foot STATUS bonus to Speed.\" (VERIFIER FIX 2026-09-11: this why named no AoN doc id.)"
+ },
+ {
+  "category": "classFeatures",
+  "id": "speed-boosters",
+  "field": "speedBonusType",
+  "value": "status",
+  "why": "AoN innovation-5 SpeedBoosters: \"You gain a +5-foot STATUS bonus to your Speed, which increases to a +10-foot status bonus when under the effects of Overdrive.\" (Hyper Boosters carries the +5 delta over this one and stays untyped, so the pair still sums to the printed +10.)"
+ },
+ {
+  "category": "classFeatures",
+  "id": "vivacious-speed",
+  "field": "speedBonusType",
+  "value": "status",
+  "why": "AoN class-feature-1017: \"When you don't have panache, you still get half this STATUS bonus to your Speed, rounded down to the nearest 5-foot increment\" - the half this record's landSpeedBonus formula carries. Two status bonuses take the highest, so a swashbuckler with Swashbuckler's Speed gets the larger of the two rather than their sum."
+ },
+ {
+  "category": "feats",
+  "id": "tillers-drive",
+  "field": "speeds",
+  "value": null,
+  "why": "AoN feat-932: \"Your Speed bonus from Bellflower Dedication increases to +10 feet.\" ONE bonus, raised - not a second grant on top of it. The record carried the raise-to field `speeds: { land: 10 }` AND `landSpeedBonus: 5` at the same time, the only record in the database to carry both, and deriveSpeeds adds them both, so the printed +10 was paid as +15 on top of Bellflower's own +5. The whole printed bonus moves into landSpeedBonus (the sibling row) where the type lane can suppress the smaller one, and this field goes."
+ },
+ {
+  "category": "feats",
+  "id": "tillers-drive",
+  "field": "speedBonusType",
+  "value": "status",
+  "why": "AoN feat-932 raises the bonus feat-928 grants, and feat-928 prints \"You gain a +5-foot STATUS bonus to your Speed\" - a raised bonus keeps its type. This is what makes the replacement work instead of the addition: two status bonuses take the highest (deriveSpeeds' stackSpeedBonuses, built this batch for swashbucklers-speed#typed-all-speeds), so Bellflower's +5 is suppressed by this +10 and the tiller pays the printed number once."
  }
 ]

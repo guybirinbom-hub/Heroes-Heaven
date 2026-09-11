@@ -133,7 +133,8 @@ describe('batch 035 gate-park — animal-instinct is parked by desk entry #145, 
 
   // batch 035: animal-instinct#spider-web
   // batch 037: screech-shooter-major#grade-numbers
-  it('the widening around animal-instinct is exactly six records since screech-shooter-major joined, the two loose ones accepted and printed', () => {
+  // batch 037 premise: feat-8166 "Your Speed increases by 5 feet for each mode of movement available to you."
+  it('the widening around animal-instinct is exactly seven records since screech-shooter-major and timewracked-dedication joined, the two loose ones accepted and printed', () => {
     /*
      * The pin against silent growth. `--queued-parks` lists every record parked by a desk id that is
      * not its own; today that is five, and each is deliberate:
@@ -158,12 +159,26 @@ describe('batch 035 gate-park — animal-instinct is parked by desk entry #145, 
      * major's grade cannot be invented and is queued. The id is an aspect key on a real record, the
      * same shape as animal-instinct and dream-magic above, so the park is the rule working.
      */
+    /*
+     * SEVEN after the closer's gate-red round, which filed three more desk questions. Only ONE of them
+     * widens this map, and the other two are the rule working rather than an exception:
+     *   · #153 `timewracked-dedication-speed-clause` — an aspect key on a real record, the same shape
+     *     as animal-instinct and dream-magic. feat-8166's "for each mode of movement available to you"
+     *     reads two ways, print settles neither, and the shipped flat +5 is neither reading, so the
+     *     record is queued and its park is correct.
+     *   · #155 `flexible-spellcaster-book-casters` maps to a record ALREADY parked by
+     *     `flexible-spellcaster-collection-shape`, and an existing park is never replaced.
+     *   · #154 `speed-plural-while-a-state-is-on` maps to `speed`, already parked by the batch-031
+     *     lane question below. Neither adds a key.
+     */
     // batch 037: screech-shooter-major#grade-numbers
+    // batch 037 premise: feat-8166 "Your Speed increases by 5 feet for each mode of movement available to you."
     expect(widened()).toEqual({
       'animal-instinct': 'animal-instinct-spider-web',
       'dream-magic': 'dream-magic-second-taking',
       'flexible-spellcaster': 'flexible-spellcaster-collection-shape',
       'screech-shooter-major': 'screech-shooter-major-rune-grade',
+      'timewracked-dedication': 'timewracked-dedication-speed-clause',
       speed: 'speed-status-lane-031',
       relic: 'relic-gift-family-skysunder-sparkwarden-uniter-adamantine',
     });

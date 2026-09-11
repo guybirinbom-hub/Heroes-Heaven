@@ -1,0 +1,1481 @@
+{
+  "findings": [
+    {
+      "id": "devil-allies#printing",
+      "claim": "Nothing changes: the app already follows the 2026 Hellfire Dispatches printing (rank 6, heightening from 14th to a maximum of 10th); WG's older Character Guide numbers are a deliberate difference that must be written down.",
+      "printed": "\"You gain summon fiend as a 6th-rank innate spell of a tradition of your choice, which you can cast once per day... At 14th level and every 2 levels thereafter, the spell is heightened by one rank (to a maximum of 10th rank when you reach 20th level).\"",
+      "ours": "Rank 6, heightening to 7, 8, 9 and 10 at levels 14, 16, 18 and 20.",
+      "theirs": "Rank 5 until level 16, then 6, 7 and 8 - the older 2019 Character Guide numbers.",
+      "proposal": "instrument: settle devil-allies - owner ruled 2026-09-10 (#3) under standing rule R12 (newest printing in our mirror wins): the book wins; WG's rank-5-until-16 Character Guide ladder is a deliberate difference, not a defect.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "fear-no-law-fear-no-one#printing",
+      "claim": "Nothing changes: the app already carries the current one-action Strike that lowers nearby allies' frightened value; WG's superseded save-upgrade printing is a deliberate difference.",
+      "printed": "\"Make a Strike. If you hit and deal damage, each ally within a 20-foot emanation around you who can see you reduces the value of their frightened condition by 1.\"",
+      "ours": "The current one-action Strike that lowers nearby allies' frightened value. No save upgrade.",
+      "theirs": "The older Character Guide version: a fear-save success becomes a critical success. No Strike, nothing for allies.",
+      "proposal": "instrument: settle fear-no-law-fear-no-one - owner ruled 2026-09-10 (#5) under R12: the book wins; WG's fear-save-success-becomes-critical-success encoding is the superseded Character Guide printing and is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "steady-balance#grab-an-edge",
+      "claim": "Nothing changes: the app carries the Player Core text only; WG's extra Acrobatics-for-Reflex substitution on Grab an Edge is the Core Rulebook clause Player Core deliberately dropped and must not be added.",
+      "printed": "\"Whenever you roll a success using the Balance action, you get a critical success instead. You're not off-guard while attempting to Balance on narrow surfaces and uneven ground.\"",
+      "ours": "Success on Balance becomes a critical success; the off-guard clause is description text only.",
+      "theirs": "The printed clause, plus an Acrobatics-for-Reflex substitution on Grab an Edge (the dropped Core Rulebook sentence).",
+      "proposal": "instrument: settle steady-balance - owner ruled 2026-09-10 (#9) under R12: the book wins; WG's Acrobatics-for-Reflex substitution on Grab an Edge is a superseded Core Rulebook clause and is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "firework-technician-dedication#pyrotechnic-vial",
+      "claim": "The dedication's 4 pyrotechnic versatile vials are a bare counter with no item behind them, so the player has nothing to throw; a real pyrotechnic versatile vial item must exist.",
+      "printed": "\"You gain the quick alchemy benefits, creating up to 4 pyrotechnic versatile vials during your daily preparations. These vials have the fire trait and deal fire damage instead of acid. You can use pyrotechnic versatile vials only to throw as bombs, for the Launch Fireworks action (see below), or with Quick Alchemy to create fireworks consumables, including doses or rounds of black powder, the sparkler item, and other items determined by the GM.\" (feat-8528, Guns & Gears Remastered pg. 134)",
+      "ours": "A counter of 4 vials only. No item exists, so there is nothing to throw.",
+      "theirs": "Gives a real item, Pyrotechnic Versatile Vials: martial bomb, fire damage, range 20.",
+      "proposal": "Create items/pyrotechnic-versatile-vial modelled field-for-field on items/versatile-vial (level 1, price {}, bulk 0, rarity common, usage held-in-one-hand, itemType weapon, hands 1, category martial, group bomb, range 20, reload null, damage {dice:1,die:'d6',type:'fire'}) with traits [fire, alchemical, bomb, consumable, infused, splash] replacing acid with fire, source Pathfinder Guns & Gears (Remastered)/ORC; then point the dedication's vial counter at that item id so the 4 daily vials become throwable rows.",
+      "playerVisible": true,
+      "askOwner": false
+    },
+    {
+      "id": "firework-technician-dedication#source",
+      "claim": "The record's book link still points at the superseded 2021 printing even though its displayed text is already the current one.",
+      "printed": "Firework Technician Dedication, Source Guns & Gears (Remastered) pg. 134 (feat-8528); AoN marks feat-3245 as superseded.",
+      "ours": "feats/firework-technician-dedication carries aonId 'feat-3245' and source {book:'Pathfinder Guns & Gears', license:'ORC'}.",
+      "theirs": "",
+      "proposal": "Set feats/firework-technician-dedication aonId to 'feat-8528' and source.book to 'Pathfinder Guns & Gears (Remastered)' so the record cites the printing whose text it already shows (R12).",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "hellknight-dedication#armor-training",
+      "claim": "Nothing changes: the dedication grants mental resistance and the Intimidation step only; WG's armour training belongs to Armiger's Protection, which the app already builds.",
+      "printed": "\"You gain resistance to mental damage equal to 1 + your number of archetype class feats from the Hellknight archetype. You become trained in Intimidation; if you were already trained, you become an expert instead.\" (feat-8812, Hellfire Dispatches)",
+      "ours": "Mental resistance, Intimidation trained (expert if already trained), Additional Lore for Hell, and the order recorded.",
+      "theirs": "Expert Intimidation always, light, medium and heavy armor training, an armor-scaled Intimidation bonus, no mental resistance.",
+      "proposal": "instrument: settle hellknight-dedication - owner ruled 2026-09-10 (#14) under R12: the book wins; WG's armour training and armour-scaled Intimidation bonus on the dedication are a deliberate difference (that armour training is printed on Armiger's Protection, feat-8814, which the app already builds).",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "reverse-engineer#crafting-star",
+      "claim": "The +2 Crafting situational star comes from the superseded 2021 printing and must be deleted; the current entry prints no +2.",
+      "printed": "\"Furthermore, you can use Crafting instead of Thievery to Disable a Device or Pick a Lock.\" No +2 appears anywhere in the current entry (feat-3053, Guns & Gears Remastered 2025); the +2 lives only in feat-8555, the 2021 printing.",
+      "ours": "The Crafting-for-Thievery substitution on the record, plus a +2 Crafting star in src/rules/situationalBonuses.ts line 559. The description shown to the player is already the new text and has no +2 in it.",
+      "theirs": "Keeps the +2 Crafting bonus and writes the other two clauses in as plain text.",
+      "proposal": "Delete the reverse-engineer +2 Crafting entry from src/rules/situationalBonuses.ts (line 559); keep the Crafting-for-Thievery substitution and leave the Critical Crafting clause as description text (R12: the 2025 printing wins).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+    {
+      "id": "ardent-armiger#printing",
+      "claim": "Nothing changes: the app matches the Hellfire Dispatches reprint word for word; WG's Character Guide text is a deliberate difference.",
+      "printed": "\"You gain a +1 circumstance bonus to saves against effects that could inflict the controlled or frightened conditions.\" (feat-8813)",
+      "ours": "+1 circumstance to all saves against effects that could inflict controlled or frightened.",
+      "theirs": "+1 to all three saves against mental effects that improve your attitude, and to your Will DC against Coerce, Demoralize, Make an Impression or Make a Request.",
+      "proposal": "instrument: settle ardent-armiger - owner ruled 2026-09-10 (#37) under R12: the book wins; WG's attitude-effect/Will-DC wording is the earlier printing and is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "advanced-red-mantis-magic#legacy-slots",
+      "claim": "Nothing changes: this 2019 World Guide feat belongs to a Red Mantis archetype the 2024 book replaced whole, so it grants nothing on the new archetype; WG's legacy slot grant is a deliberate difference.",
+      "printed": "\"Add two 2nd-level spells to your Red Mantis assassin spellbook. You gain a 2nd-level spell slot... At 8th level... a 3rd-level spell slot. At 10th level... a 4th-level spell slot.\" (feat-897, the 2019 World Guide printing, referring to a Red Mantis assassin spellbook)",
+      "ours": "Nothing - the app's Red Mantis spell slots all come from the dedication running the ordinary ladder, and this feat grants no slots.",
+      "theirs": "They carry the legacy printing and grant its slots exactly as written, hung on a spellcasting source their own data never defines.",
+      "proposal": "instrument: settle advanced-red-mantis-magic - owner ruled 2026-09-10 (#46) under R12: the book wins; the record stays an old-book entry that grants nothing on the 2024 archetype, and WG's 2nd/3rd/4th-rank slot grant is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "android#printing",
+      "claim": "Nothing changes: the app keeps the Lost Omens Ancestry Guide printing (Rare, Androffan + Common); WG's Starfinder Player Core printing is a deliberate difference.",
+      "printed": "\"Languages Androffan Common Additional languages equal to your Intelligence modifier (if positive).\" The same page records rarity \"Rare\" and source \"Ancestry Guide\". (ancestry-27)",
+      "ours": "Rare, Lost Omens Ancestry Guide, grants Androffan and Common.",
+      "theirs": "Common rarity, Starfinder Player Core text, Common plus a free language, no Androffan, plus an extra line about environmental protections.",
+      "proposal": "instrument: settle android - owner ruled 2026-09-10 (#78) under R12: the book wins (our mirror's newest android page is the Ancestry Guide one); WG's Starfinder Player Core rarity, language set and environmental-protections line are a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "aon-wishes-for-riches#classification-choice",
+      "claim": "Nothing changes: the app asks dragon or leech and grants the matching deviant feat; WG's flat Consume Energy grant is the older wording and is a deliberate difference.",
+      "printed": "\"Your deviant abilities are of either the dragon or leech classification. If you choose dragon, you gain the Consume Energy deviant feat with the cold type. If you choose leech, you gain the Borrowed Ability deviant feat.\" (background-580)",
+      "ours": "Offers Dragon (Consume Energy) or Leech (Borrowed Ability), grants whichever feat is picked, and pins the dragon classification's damage type to cold.",
+      "theirs": "Older wording: dragon only, Consume Energy granted flatly, no leech option and no choice.",
+      "proposal": "instrument: settle aon-wishes-for-riches - owner ruled 2026-09-10 (#79) under R12: the book wins; WG's unconditional dragon/Consume Energy grant with no choice is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "sense-of-belonging#classification-choice",
+      "claim": "Nothing changes: the app asks flicker or wraith and grants the matching deviant feat; WG's flat Eerie Flicker grant is a deliberate difference.",
+      "printed": "\"Your deviant abilities are of either the flicker or the wraith classification. If you choose flicker, you gain the Sonic Dash deviant feat. If you choose wraith, you gain the Eerie Flicker deviant feat.\" (background-577)",
+      "ours": "Asks flicker or wraith and grants the matching feat; both feats exist under those names and the grant fires.",
+      "theirs": "Grants Eerie Flicker to everyone, with no classification choice.",
+      "proposal": "instrument: settle sense-of-belonging - owner ruled 2026-09-10 (#86) under R12: the book wins; WG's choiceless Eerie Flicker grant is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "lost-loved-one#classification-choice",
+      "claim": "Nothing changes: the app asks leech or wraith and grants the matching deviant feat; WG's flat Ghostly Grasp grant is a deliberate difference.",
+      "printed": "\"Your deviant abilities are of either the leech, or the wraith classification. If you choose leech, you gain the Draining Touch deviant feat. If you choose wraith, you gain the Ghostly Grasp deviant feat.\" (background-576)",
+      "ours": "Offers both branches and grants the picked feat; the wraith option points at the deviant Ghostly Grasp and not the archetype feat of the same name.",
+      "theirs": "Grants Ghostly Grasp to everyone, with no branch.",
+      "proposal": "instrument: settle lost-loved-one - owner ruled 2026-09-10 (#93) under R12: the book wins; WG's choiceless Ghostly Grasp grant is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "wanderlust#classification-choice",
+      "claim": "Nothing changes: the app asks flicker or troll per the newer printing; WG's troll-only text and data are a deliberate difference.",
+      "printed": "\"Your deviant abilities are of either the flicker or the troll classification. If you choose flicker, you gain the Overclock Senses deviant feat. If you choose troll, you gain the Titan Swing deviant feat.\" (background-579)",
+      "ours": "Asks flicker or troll, grants that branch's feat, plus Express Rider.",
+      "theirs": "Their copy of the text reads \"Your deviant abilities are of the troll classification. You gain the Titan Swing deviant feat.\" and their data matches: Titan Swing plus Express Rider, no branch.",
+      "proposal": "instrument: settle wanderlust - owner ruled 2026-09-10 (#95) under R12: the book wins; WG's troll-only Titan Swing grant is the older printing and is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "beast-blessed#trigger",
+      "claim": "Nothing changes: Bestial Clarity triggers on an enchantment effect exactly as printed; WG's wider 'mental effect' trigger must not be copied.",
+      "printed": "\"**Frequency** once per day; **Trigger** You fail a saving throw against an enchantment effect; **Effect** ... You can reroll the triggering saving throw with a +2 circumstance bonus, but you must use the new result. This is a fortune effect.\" (background-362)",
+      "ours": "The trigger text reads \"an enchantment effect\", word for word with print; once per day.",
+      "theirs": "Their trigger reads \"a mental effect\" - wider than print, so the reaction fires more often.",
+      "proposal": "instrument: settle beast-blessed - owner ruled 2026-09-10 (#99) under R12: the book wins; WG's widened 'mental effect' trigger is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "total-power#classification-choice",
+      "claim": "Nothing changes: the app asks dragon or troll and grants that branch; WG's troll-only Bone Spikes text is a deliberate difference.",
+      "printed": "\"If you choose dragon, you gain the Blasting Beams deviant feat with the electricity type. If you choose troll, you gain the Bone Spikes deviant feat.\" (background-578)",
+      "ours": "Asks dragon or troll; the dragon pick grants Blasting Beams and locks its damage to electricity.",
+      "theirs": "Their text reads \"Your deviant abilities are of the troll classification. You gain the Bone Spikes deviant feat.\" and their data matches, so no dragon branch exists.",
+      "proposal": "instrument: settle total-power - owner ruled 2026-09-10 (#101) under R12: the book wins; WG's troll-only Bone Spikes grant is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "necromantic-tenacity#trigger",
+      "claim": "Nothing changes: the feat keeps print's necromancy wording; WG's death/void trait trigger is a deliberate difference.",
+      "printed": "\"If you roll a success on a saving throw against a necromancy effect, you get a critical success instead; if you roll a critical failure on such a save, you get a failure instead.\" (feat-886)",
+      "ours": "The same two upgrades, triggered by a necromancy effect, print's wording word for word.",
+      "theirs": "The same two upgrades, but triggered by the death or void traits.",
+      "proposal": "instrument: settle necromantic-tenacity - owner ruled 2026-09-10 (#133): keep the printed necromancy wording (the feat has never been reprinted); WG's death/void trait trigger is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+
+    {
+      "id": "magus#2026-printing",
+      "claim": "The magus must move whole to the 2026 Impossible Magic printing, whose Spells per Day table keeps 2 slots at every unlocked rank instead of emptying the lower ranks.",
+      "printed": "Magus, Source Impossible Magic (class-74, released 2026-07-30). Magus Spells per Day (level | cantrips | 1st..9th): 1|5|1; 2|5|2; 3|5|2|1; 4|5|2|2; 5|5|2|2|1; 6|5|2|2|2; 7|5|2|2|2|1; 8|5|2|2|2|2; 9|5|2|2|2|2|1; 10|5|2|2|2|2|2; 11|5|2|2|2|2|2|1; 12|5|2|2|2|2|2|2; 13|5|2|2|2|2|2|2|1; 14|5|2|2|2|2|2|2|2; 15|5|2|2|2|2|2|2|2|1; 16|5|2|2|2|2|2|2|2|2; 17|5|2|2|2|2|2|2|2|2|1; 18-20|5|2|2|2|2|2|2|2|2|2. The class-features table gives 'studious spells' at level 7.",
+      "ours": "classes/magus spellcasting {type:'prepared', tradition:'arcane', keyAbility:'int', repertoire:false, progression:'two-rank', spellbook:{spells:4, perLevel:2}}, source Pathfinder Secrets of Magic (the 2021 table, which empties the lower ranks as you level).",
+      "theirs": "They keep 2 slots at every rank from 5th level on, which is the 2026 table.",
+      "proposal": "Move classes/magus to the 2026 printing whole (R12, owner 2026-09-10 #56/#104/#120/#121: 'we need to use the newest sources we have'): change spellcasting.progression from 'two-rank' to the ordinary full-ladder progression so the lower ranks are retained at 2 slots each, set source to {book:'Pathfinder Impossible Magic'} and aonId to 'class-74', and keep the spellbook clause (eight arcane cantrips and five 1st-rank spells at 1st level, two arcane spells added per level).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+    {
+      "id": "summoner#2026-printing",
+      "claim": "The summoner must move whole to the 2026 Impossible Magic printing, whose Spells per Day table keeps 2 slots at every unlocked rank instead of only the two highest.",
+      "printed": "Summoner, Source Impossible Magic (class-77, released 2026-07-30). Summoner Spells per Day (level | cantrips | 1st..9th): 1|5|1; 2|5|2; 3|5|2|1; 4|5|2|2; 5|5|2|2|1; 6|5|2|2|2; 7|5|2|2|2|1; 8|5|2|2|2|2; 9|5|2|2|2|2|1; 10|5|2|2|2|2|2; 11|5|2|2|2|2|2|1; 12|5|2|2|2|2|2|2; 13|5|2|2|2|2|2|2|1; 14|5|2|2|2|2|2|2|2; 15|5|2|2|2|2|2|2|2|1; 16|5|2|2|2|2|2|2|2|2; 17|5|2|2|2|2|2|2|2|2|1; 18-20|5|2|2|2|2|2|2|2|2|2. \"Each time you get a spell slot (see the Summoner Spells per Day table), you add a spell to your spell repertoire of the same rank.\"",
+      "ours": "classes/summoner spellcasting {type:'spontaneous', tradition:'arcane', keyAbility:'cha', repertoire:true, progression:'two-rank', extraRepertoire:{'1':1}}, source Pathfinder Secrets of Magic (the 2021 rule: two slots each of your two highest ranks, lower ones lost).",
+      "theirs": "They keep every lower rank at 2 slots, which is the 2026 table; 77 of their slot rows differ from the app's.",
+      "proposal": "Move classes/summoner to the 2026 printing whole (owner 2026-09-10 #56/#104/#120/#121, R12): change spellcasting.progression from 'two-rank' to the ordinary full-ladder progression so every unlocked rank keeps 2 slots, set source to {book:'Pathfinder Impossible Magic'} and aonId to 'class-77', and keep the repertoire rule of one spell added per slot gained.",
+      "playerVisible": true,
+      "askOwner": false
+    },
+    {
+      "id": "basic-magus-spellcasting#2026-printing",
+      "claim": "Basic Magus Spellcasting is a Feat 4 granting the ordinary basic spellcasting benefits in the 2026 printing, not a Feat 6 granting the bounded ones.",
+      "printed": "\"Basic Magus Spellcasting Source Impossible Magic pg. 88 Archetype Magus Prerequisites Magus Dedication --- You gain the basic spellcasting benefits. Each time you gain a spell slot of a new rank from the magus archetype, add two common spells of that rank or lower to your spellbook.\" (Feat 4, feat-9285)",
+      "ours": "feats/basic-magus-spellcasting level 6, aonId 'feat-2950', source Pathfinder Secrets of Magic (\"You gain the basic bounded spellcasting benefits.\"); the slot mechanics already run the ordinary ladder.",
+      "theirs": "Their record sits at level 4, matching the 2026 printing, and runs the ordinary ladder - three levelled slots from 8th onward, all retained, no replacement.",
+      "proposal": "Set feats/basic-magus-spellcasting level to 4, aonId to 'feat-9285', source.book to 'Pathfinder Impossible Magic', and replace the description with the 2026 text (basic spellcasting benefits + 'add two common spells of that rank or lower to your spellbook'); drop any bounded-spellcasting wording (owner 2026-09-10 #56/#104/#120/#121, R12).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+    {
+      "id": "expert-magus-spellcasting#2026-printing",
+      "claim": "Expert Magus Spellcasting grants the expert spellcasting benefits (not the bounded ones) and requires master in Arcana in the 2026 printing.",
+      "printed": "\"Expert Magus Spellcasting Source Impossible Magic pg. 88 Archetype Magus Prerequisites Basic Magus Spellcasting; Master in Arcana --- You gain the expert spellcasting benefits.\" (Feat 12, feat-9290)",
+      "ours": "feats/expert-magus-spellcasting level 12, aonId 'feat-2951', source Pathfinder Secrets of Magic (\"You gain the expert bounded spellcasting benefits.\").",
+      "theirs": "",
+      "proposal": "Set feats/expert-magus-spellcasting aonId to 'feat-9290', source.book to 'Pathfinder Impossible Magic', prerequisites to 'Basic Magus Spellcasting; Master in Arcana', and the description to the 2026 expert (non-bounded) spellcasting benefits - the sibling half of the magus book move (owner 2026-09-10 #56/#104/#120/#121, R12).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+    {
+      "id": "master-magus-spellcasting#2026-printing",
+      "claim": "Master Magus Spellcasting grants the master spellcasting benefits (not the bounded ones) and requires legendary in Arcana in the 2026 printing.",
+      "printed": "\"Master Magus Spellcasting Source Impossible Magic pg. 88 Archetype Magus Prerequisites Expert Magus Spellcasting; Legendary in Arcana --- You gain the master spellcasting benefits.\" (Feat 18, feat-9291)",
+      "ours": "feats/master-magus-spellcasting level 18, aonId 'feat-2952', source Pathfinder Secrets of Magic (\"You gain the master bounded spellcasting benefits.\").",
+      "theirs": "",
+      "proposal": "Set feats/master-magus-spellcasting aonId to 'feat-9291', source.book to 'Pathfinder Impossible Magic', prerequisites to 'Expert Magus Spellcasting; Legendary in Arcana', and the description to the 2026 master (non-bounded) spellcasting benefits (owner 2026-09-10 #56/#104/#120/#121, R12).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+    {
+      "id": "basic-summoner-spellcasting#2026-printing",
+      "claim": "Basic Summoner Spellcasting is a Feat 4 granting the ordinary basic spellcasting benefits in the 2026 printing, not a Feat 6 granting the bounded ones.",
+      "printed": "\"Basic Summoner Spellcasting Source Impossible Magic pg. 91 Archetype Summoner Prerequisites Summoner Dedication --- You gain the basic spellcasting benefits. You gain the Cast a Spell activity. Your key spellcasting attribute for summoner archetype spells is Charisma, and they are summoner spells of your eidolon's tradition. You become trained in the spell attack modifier and spell DC statistics. You gain a spell repertoire and two cantrips. Each time you gain a spell slot of a new rank from the summoner archetype, add a spell of the appropriate spell rank to your repertoire.\" (Feat 4, feat-9308)",
+      "ours": "feats/basic-summoner-spellcasting level 6, aonId 'feat-2957', source Pathfinder Secrets of Magic (the bounded text, which also prints the 'remove those spells from your repertoire' clause the 2026 printing drops); the slot mechanics already run the ordinary ladder.",
+      "theirs": "Their record sits at level 4, matching the 2026 printing, and runs the ordinary ladder - three retained slots, no replacement.",
+      "proposal": "Set feats/basic-summoner-spellcasting level to 4, aonId to 'feat-9308', source.book to 'Pathfinder Impossible Magic', and replace the description with the 2026 text above (drop 'bounded' and drop the 'Each time you lose spell slots of a particular level, remove those spells from your repertoire' sentence) (owner 2026-09-10 #56/#104/#120/#121, R12).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+    {
+      "id": "expert-summoner-spellcasting#2026-printing",
+      "claim": "Expert Summoner Spellcasting grants the expert spellcasting benefits (not the bounded ones) and requires master in the skill associated with the eidolon's tradition.",
+      "printed": "\"Expert Summoner Spellcasting Source Impossible Magic pg. 91 Archetype Summoner Prerequisites Basic Summoner Spellcasting; master in the skill associated with your eidolon's tradition --- You gain the expert spellcasting benefits.\" (Feat 12, feat-9313)",
+      "ours": "feats/expert-summoner-spellcasting level 12, aonId 'feat-2959', source Pathfinder Secrets of Magic (\"You gain the expert bounded spellcasting benefits.\").",
+      "theirs": "",
+      "proposal": "Set feats/expert-summoner-spellcasting aonId to 'feat-9313', source.book to 'Pathfinder Impossible Magic', prerequisites to 'Basic Summoner Spellcasting; master in the skill associated with your eidolon's tradition', and the description to the 2026 expert (non-bounded) spellcasting benefits (owner 2026-09-10 #56/#104/#120/#121, R12).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+    {
+      "id": "master-summoner-spellcasting#2026-printing",
+      "claim": "Master Summoner Spellcasting grants the master spellcasting benefits (not the bounded ones) and requires legendary in the skill associated with the eidolon's tradition.",
+      "printed": "\"Master Summoner Spellcasting Source Impossible Magic pg. 91 Archetype Summoner Prerequisites Expert Summoner Spellcasting; legendary in the skill associated with your eidolon's tradition --- You gain the master spellcasting benefits.\" (Feat 18, feat-9314)",
+      "ours": "feats/master-summoner-spellcasting level 18, aonId 'feat-2961', source Pathfinder Secrets of Magic (\"You gain the master bounded spellcasting benefits.\").",
+      "theirs": "",
+      "proposal": "Set feats/master-summoner-spellcasting aonId to 'feat-9314', source.book to 'Pathfinder Impossible Magic', prerequisites to 'Expert Summoner Spellcasting; legendary in the skill associated with your eidolon's tradition', and the description to the 2026 master (non-bounded) spellcasting benefits (owner 2026-09-10 #56/#104/#120/#121, R12).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+    {
+      "id": "studious-spells#2026-rebuild",
+      "claim": "Studious Spells must be rebuilt as the 2026 'Studious Spell': a level-7 list of named spells added to the spellbook with a free-action Arcane Cascade rider, not a grant of extra restricted spell slots.",
+      "printed": "\"Studious Spell Source Impossible Magic pg. 9 Class Magus --- You've deeply studied certain beneficial spells to speedily enter Arcane Cascade when you cast them. When you cast a studious spell, you can use Arcane Cascade as a free action as your next action this turn. Add any studious spell you gain to your spellbook if you don't know it already. Your studious spells are gecko grip and an additional spell depending on your hybrid study, listed in the hybrid study's entry. At 11th level, add haste and an additional spell depending on your hybrid study to your studious spells. At 13th level, add fly and an additional spell depending on your hybrid study to your studious spells.\" (class-feature-1270, level 7)",
+      "ours": "classFeatures/studious-spells (aonId class-feature-431, Secrets of Magic, level 7) is a spellSlotBonus on entry 'magus-casting' with a restricted ladder granting 2 extra 2nd-rank slots at 7, 2 extra 3rd at 11 and 2 extra 4th at 13, listing gecko-grip, sure-strike and water-breathing; no Arcane Cascade rider anywhere.",
+      "theirs": "They add the free Arcane Cascade to every studious spell at all three tiers.",
+      "proposal": "Rebuild classFeatures/studious-spells to the 2026 feature (owner 2026-09-10 #56/#104/#120/#121, R12): rename to 'Studious Spell', set aonId 'class-feature-1270' and source 'Pathfinder Impossible Magic', keep level 7, drop the spellSlotBonus entirely (the 2026 feature grants no extra slots), and replace it with a spellbook addition of the listed spells - gecko grip at 7, haste at 11, fly at 13, each plus the spell listed in the character's hybrid study entry - carrying the printed rider 'When you cast a studious spell, you can use Arcane Cascade as a free action as your next action this turn.'",
+      "playerVisible": true,
+      "askOwner": false
+    },
+
+    {
+      "id": "animist-apparition-spellcasting#slot-levels",
+      "claim": "Nothing changes: the app's apparition/animist slot levels match the printed table row for row; WG is one level late on the 7th, 8th and 9th ranks.",
+      "printed": "Class table: \"13 ... 7th-rank spells\", \"15 ... 8th-rank spells\", \"17 ... 9th-rank spells\"; the Animist Spells per Day table's level-13 row prints \"1+1\" under 7th. (class-64, War of Immortals)",
+      "ours": "First slot at 13, 15 and 17; second at 14, 16 and 18. Matches the table exactly.",
+      "theirs": "First 7th, 8th and 9th slot arrive at levels 14, 16 and 18 - one level late.",
+      "proposal": "instrument: settle animist-apparition-spellcasting - owner ruled 2026-09-10 (#4): the book wins, the app matches the printed table row for row; WG's one-level-late 7th/8th/9th-rank slots are a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "animist#slot-table",
+      "claim": "Nothing changes: the animist class slot table matches print at every level and rank; WG's single 7th-rank slot at levels 13-18 is a deliberate difference.",
+      "printed": "The Animist Spells per Day table reads, in the 7th-rank column, \"1+1\" at level 13, \"2+1\" at 14 to 16, and \"2+2\" at 17 to 18. Its note: \"The number before a plus sign indicates your spell slots via animist spellcasting, and the number after it indicates your spell slots from apparition spellcasting.\" (class-64)",
+      "ours": "Two at level 13, three at 14 to 16, four at 17 to 18 - the printed table exactly, at every level and every rank.",
+      "theirs": "One 7th-rank slot in total across both pools at levels 13-18.",
+      "proposal": "instrument: settle animist - owner ruled 2026-09-10 (#105): the book wins; WG's single combined 7th-rank slot at levels 13-18 is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+
+    {
+      "id": "sequestered-spell#innate-proficiency",
+      "claim": "Nothing changes: the innate spell is trained and becomes expert at 12th by the general rule, and the single tradition-narrowed picker stays; WG's four tradition-gated pickers and level-4 expert condition are a deliberate difference.",
+      "printed": "\"When you gain an innate spell, you become trained in the spell attack modifier and spell DC statistics. At 12th level, these proficiencies increase to expert.\" (rules-2232, Player Core p. 298, Innate Spells)",
+      "ours": "One picker narrowed to the surki's recorded tradition; trained, then expert at 12th level.",
+      "theirs": "Same cantrip, split into four tradition-gated pickers; expert on a level-4 condition.",
+      "proposal": "instrument: settle sequestered-spell - owner ruled 2026-09-10 (#20): the book wins (the general innate-spell rule gives trained, expert at 12th, which the app already does); WG's four tradition-gated pickers and level-4 expert step are a deliberate difference, and filtering picker options to the recorded tradition is the owner's standing call.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+
+    {
+      "id": "spore-order#leaf-order-membership",
+      "claim": "Nothing changes: Spore Order already counts as a member of the Leaf Order for the ten feats that ask for it, and blocking stays off (option B, know the membership and block nothing); WG's whole-Leaf-Order grant is a deliberate difference.",
+      "printed": "\"The spore order is a variant of the leaf order. If you have the spore order, you count as a member of the leaf order, and you qualify for leaf order feats. Your familiar must be a fungus leshy.\" (druidic-order-13)",
+      "ours": "The skill, the focus spell and the granted feat all agree with print; the leaf-order membership was added in an earlier batch and already works, with prerequisite blocking switched off.",
+      "theirs": "Their Spore Order hands over their whole Leaf Order feature and then marks the druid's order as spore, with the skill and the order spell hung off that mark.",
+      "proposal": "instrument: settle spore-order - owner ruled 2026-09-10 (#134 and its duplicate #139, answer B): nothing to build, the membership is already known and nothing is blocked; WG's copy of the whole Leaf Order feature onto Spore Order must not be imported and is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "cultivation-order#leaf-order-membership",
+      "claim": "Nothing changes: Cultivation Order already counts as a member of the Leaf Order and blocking stays off; WG's empty Leaf Order record is a deliberate difference.",
+      "printed": "\"The cultivation order is a variant of the leaf order. If you have the cultivation order, you count as a member of the leaf order, and you qualify for leaf order feats.\" (druidic-order-12)",
+      "ours": "Already built: the app counts a Cultivation or Spore druid as a leaf druid, and the ten leaf-order feats are refused to nobody.",
+      "theirs": "Hands the druid an empty \"Leaf Order\" record, so the name appears but nothing mechanical happens.",
+      "proposal": "instrument: settle cultivation-order - owner ruled 2026-09-10 (#144, answer B): already done, keep blocking switched off; WG's empty Leaf Order record is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+
+    {
+      "id": "divine-breadth#no-cantrip",
+      "claim": "Nothing changes: Divine Breadth grants extra slots only, no cantrip; WG's extra cantrip entry is a copied slip and a deliberate difference.",
+      "printed": "\"Increase the spell slots you gain from cleric archetype feats by 1 for each spell rank other than your two highest cleric spell slots.\" (feat-5070)",
+      "ours": "No cantrip. One extra slot per rank except the two highest, exactly as printed.",
+      "theirs": "Adds one cantrip slot at every level, on top of Cleric Dedication's two.",
+      "proposal": "instrument: settle divine-breadth - owner ruled 2026-09-10 (#131/#132, one ruling for the whole Breadth family): the book wins, no cantrip; WG's extra cantrip entry is a copied slip and a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "primal-breadth#no-cantrip",
+      "claim": "Nothing changes: Primal Breadth grants extra slots only, no cantrip; WG's copied cantrip entry is a deliberate difference.",
+      "printed": "\"Increase the spell slots you gain from druid archetype feats by 1 for each spell rank other than your two highest druid spell slots.\" (feat-5078)",
+      "ours": "No cantrip. One extra slot per rank except the two highest, exactly as printed - the same shape on all four Breadth feats.",
+      "theirs": "The identical extra cantrip entry, the same copy as Divine Breadth's, aimed at druid.",
+      "proposal": "instrument: settle primal-breadth - owner ruled 2026-09-10 (#131/#132): the book wins, no cantrip; WG's copied extra cantrip entry is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "occult-breadth#no-cantrip",
+      "claim": "Nothing changes: Occult Breadth grants extra slots only, no cantrip - the same ruling the owner gave for Divine and Primal Breadth; WG's copied cantrip entry is a deliberate difference.",
+      "printed": "Increase the spell slots you gain from the archetype's feats by 1 for each spell rank other than your two highest spell slots. No cantrip is printed on any Breadth feat.",
+      "ours": "No cantrip. One extra slot per rank except the two highest - the same shape on all four Breadth feats.",
+      "theirs": "The same copied extra cantrip entry that Divine Breadth and Primal Breadth carry (WG's three Breadth feats share the one copied row).",
+      "proposal": "instrument: settle occult-breadth - owner ruled 2026-09-10 (#131/#132, stated as covering Divine, Primal, Occult and Arcane): the book wins, no cantrip; WG's copied extra cantrip entry is a deliberate difference. (Arcane Breadth needs no settle - WG carries no cantrip entry on it.)",
+      "playerVisible": false,
+      "askOwner": false
+    },
+
+    {
+      "id": "sponsored-by-a-village#rarity",
+      "claim": "Nothing changes: the background stays common because the printed entry carries no rarity trait; WG's uncommon rating is a deliberate difference.",
+      "printed": "The entry prints no traits at all and Nethys records it as common. An entry with no rarity trait is common by the general rule. (background-226)",
+      "ours": "Common, which agrees with print.",
+      "theirs": "Rates it uncommon - and does the same to all five backgrounds from that free adventure guide.",
+      "proposal": "instrument: settle sponsored-by-a-village - owner ruled 2026-09-10 (#87, one answer covering all five adventure-path backgrounds): the book wins, no printed rarity trait means common; WG's uncommon rating is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "sponsored-by-teacher-ot#one-pick",
+      "claim": "The Survival-or-Performance choice is asked twice and the two controls can be answered differently, training two skills instead of one; it must be asked once.",
+      "printed": "\"You're trained in your choice of the Survival or Performance skill. You gain a skill feat: Survey Wildlife if you chose Survival or Impressive Performance if you chose Performance.\" (background-224)",
+      "ours": "Two separate controls with two separate answers; answering them differently really does train two skills instead of one.",
+      "theirs": "Asks once, each option carrying its own training and its own feat.",
+      "proposal": "Ask the Survival-or-Performance choice ONCE on backgrounds/sponsored-by-teacher-ot: drop the second control and keep the one the granted feat already follows, so the single pick drives both the skill training and the feat (owner 2026-09-10 #92).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+    {
+      "id": "sponsored-by-teacher-ot#rarity",
+      "claim": "Nothing changes on rarity: the background stays common; WG's uncommon rating is a deliberate difference.",
+      "printed": "The printed entry carries no rarity trait, so it is common by the general rule. (background-224)",
+      "ours": "Rarity is common, matching print.",
+      "theirs": "They also rate it uncommon.",
+      "proposal": "instrument: settle sponsored-by-teacher-ot - owner ruled 2026-09-10 (#87/#92/#94/#96/#100): adventure-path backgrounds stay common (no printed rarity trait); WG's uncommon rating is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "unsponsored#rarity",
+      "claim": "Nothing changes: the background stays common; WG's uncommon rating is a deliberate difference.",
+      "printed": "The entry prints no traits at all and Nethys records it as common. An entry with no rarity trait is common by the general rule. (background-227)",
+      "ours": "Common, which agrees with print.",
+      "theirs": "Rates it uncommon, as it does for every background from that free adventure guide.",
+      "proposal": "instrument: settle unsponsored - owner ruled 2026-09-10 (#94): the book wins, no printed rarity trait means common; WG's uncommon rating is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "sponsored-by-family#rarity",
+      "claim": "Nothing changes: the background stays common; WG's uncommon rating is a deliberate difference.",
+      "printed": "The record's own rarity field reads \"common\", and the printed traits block is empty - \"<traits>\" then \"</traits>\" with no Uncommon or Rare line, unlike the Rare backgrounds which print one. (background-223)",
+      "ours": "The app's data says rarity \"common\", matching print.",
+      "theirs": "Their row sets the rarity column to Uncommon.",
+      "proposal": "instrument: settle sponsored-by-family - owner ruled 2026-09-10 (#96): the book wins; WG's uncommon rating is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "sponsored-by-a-stranger#rarity",
+      "claim": "Nothing changes: the background stays common; WG's uncommon rating is a deliberate difference.",
+      "printed": "The record's own rarity field reads \"common\", and the printed traits block is empty - \"<traits>\" then \"</traits>\" - with no Uncommon or Rare line. (background-225)",
+      "ours": "The app's data says rarity \"common\", and the picker shows that note.",
+      "theirs": "Their row sets the rarity column to Uncommon.",
+      "proposal": "instrument: settle sponsored-by-a-stranger - owner ruled 2026-09-10 (#100): the book wins; WG's uncommon rating is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+
+    {
+      "id": "sky-rider#both-skills",
+      "claim": "Nothing changes: Sky Rider trains Acrobatics AND Plane of Air Lore, not one or the other; WG's pick is a deliberate difference.",
+      "printed": "\"You're trained in the Acrobatics skill, and the Plane of Air Lore skill. You gain the Cat Fall skill feat.\" (background-381)",
+      "ours": "Trains both, exactly as printed. The Foundry transcription of the same page agrees.",
+      "theirs": "Offers a pick between Acrobatics and Plane of Air Lore.",
+      "proposal": "instrument: settle sky-rider - owner ruled 2026-09-10 (#88, 'keep the app'): the book wins, both skills are trained; WG's Acrobatics-or-Plane-of-Air-Lore pick is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+
+    {
+      "id": "streetfood-vendor#printed-choice",
+      "claim": "The Crafting-or-Society choice is correct and stays, but the record's description text must be the printed sentence from the current Tian Xia Character Guide page rather than our rewrite.",
+      "printed": "\"You're trained in your choice of either the Crafting or Society skill, as well as the Cooking Lore skill. You gain the Seasoned skill feat.\" (Tian Xia Character Guide pg. 11, the current page as pasted by the owner 2026-09-10)",
+      "ours": "A choice of Crafting or Society, with the description text rewritten to say \"either Crafting or Society\".",
+      "theirs": "A picker offering Crafting or Society. The Foundry data reads it the same way.",
+      "proposal": "Keep the Crafting-or-Society choice on backgrounds/streetfood-vendor and set its description to the printed sentence quoted above, verbatim (owner 2026-09-10 #82). Note: the mirror doc background-479.json (release_date 2024-08-28) is STALE - it reads \"trained in the Crafting skill, and the Cooking Lore skill\" - and is being refreshed from live AoN through the AoN update pipeline separately, together with a freshness re-check for the Tian Xia Character Guide backgrounds the desk touches; do not re-derive this record from the mirror until that refresh lands.",
+      "playerVisible": true,
+      "askOwner": false
+    },
+
+    {
+      "id": "locate-lawbreakers#order-of-the-gate",
+      "claim": "The heightening to rank 5 at level 14 is a note that nothing reads; it must fire only for Order of the Gate members, read from the order the player already recorded.",
+      "printed": "\"If you're a member of the Order of the Gate, when you reach 14th level, the spell is heightened to 5th rank.\" (hellknight-order-9, Hellfire Dispatches)",
+      "ours": "Tradition pick and the once-a-day Locate are built. The heightening is only a note; nothing reads the chosen order.",
+      "theirs": "Rank 3 below level 14, rank 5 from 14, for everyone. No order check at all.",
+      "proposal": "Make the rank-5-at-14 heightening conditional on the stored Hellknight order being Order of the Gate (the app already records which order the player picked) and drop the standing note (owner 2026-09-10 #7, 'keep the printed scope').",
+      "playerVisible": true,
+      "askOwner": false
+    },
+    {
+      "id": "gunslinger-weapon-mastery#advanced-rank",
+      "claim": "Nothing changes: the app carries the printed split (master for simple and martial firearms and crossbows, expert for advanced) plus the critical specialization; WG's blanket master and missing crit spec are a deliberate difference.",
+      "printed": "\"Your proficiency rank increases to master with simple and martial firearms and crossbows. Your proficiency rank for advanced firearms and crossbows, simple weapons, martial weapons, and unarmed attacks increases to expert. You gain access to the critical specialization effects for firearms and crossbows.\" (class-feature-520)",
+      "ours": "Master for simple and martial firearms and crossbows, expert for advanced ones, expert for simple, martial and unarmed weapons, plus critical specialization on firearms and crossbows.",
+      "theirs": "The whole firearm and crossbow groups at master, advanced ones included, and no critical specialization at all.",
+      "proposal": "instrument: settle gunslinger-weapon-mastery - owner ruled 2026-09-10 (#39, 'keep the printed scope'): the book wins; WG's master rank on advanced firearms and crossbows, and their missing critical specialization, are a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "brutality#melee-only",
+      "claim": "Nothing changes: critical specialization while raging is melee weapons and unarmed attacks only; WG's whole-category grant is a deliberate difference.",
+      "printed": "\"While raging, you have the critical specialization benefits for melee weapons and unarmed attacks.\" (class-feature-853)",
+      "ours": "Critical specialization while a rage mode is on, melee weapons and unarmed attacks only.",
+      "theirs": "Simple, martial and unarmed weapon categories while raging, with no melee restriction.",
+      "proposal": "instrument: settle brutality - owner ruled 2026-09-10 (#42, 'keep the printed scope'): the book wins; WG's ranged-inclusive simple/martial/unarmed grant is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "shoony-lore#no-additional-lore",
+      "claim": "Nothing changes: the feat trains Shoony Lore and nothing else; WG's Additional Lore grant adds three skill increases this feat never prints.",
+      "printed": "\"You also become trained in Shoony Lore.\" (feat-1219)",
+      "ours": "Diplomacy, Survival and Shoony Lore trained, with the fallback when one is already trained.",
+      "theirs": "Diplomacy and Survival trained, plus the whole Additional Lore feat with its extra skill increases at 3rd, 7th and 15th level.",
+      "proposal": "instrument: settle shoony-lore - owner ruled 2026-09-10 (#45, 'keep the printed scope'): the book wins; WG's Additional Lore grant with its three extra skill increases is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "bone-magic#cantrip-list",
+      "claim": "Nothing changes: the picker offers the printed union of the occult and primal cantrip lists, with the answer only setting the innate tradition; WG's tradition-first narrowing is a deliberate difference.",
+      "printed": "\"Choose one cantrip from either the occult spell list or the primal spell list... **Special** Choose when you gain this feat whether your innate spells are primal or occult; this choice applies to all innate spells you gain from lizardfolk ancestry feats that have Bone Magic as a prerequisite.\" (feat-5632)",
+      "ours": "One picker holding all 56 common occult and primal cantrips; the answer only sets the casting tradition.",
+      "theirs": "Asks the tradition first, then shows only that tradition's cantrips in the picker.",
+      "proposal": "instrument: settle bone-magic - owner ruled 2026-09-10 (#107, 'keep the printed scope'): the book wins, the cantrip may come from either list regardless of the tradition chosen; WG's tradition-gated narrowing of the cantrip picker is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "oatia-skysage-dedication#cantrip-picker",
+      "claim": "The repertoire picker offers all 38 occult cantrips; print names exactly four, so the picker must be restricted to them.",
+      "printed": "\"You gain a spell repertoire with two of the following cantrips of your choice: detect magic, guidance, know the way, or read aura.\" (feat-8112)",
+      "ours": "Offers all 38 occult cantrips, with no restriction.",
+      "theirs": "Filters on a trait no cantrip in their own data has, so it lists nothing or everything.",
+      "proposal": "Restrict the feats/oatia-skysage-dedication cantrip picker to the four printed cantrips - detect-magic, guidance, know-the-way, read-aura - and force existing characters holding any other pick to re-choose (owner 2026-09-10 #113).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+    {
+      "id": "mightyfall-kobold#boosts",
+      "claim": "Nothing changes: 'instead of the normal attribute boosts and flaws' replaces the whole set, free boost included; WG's three-boost reading is a deliberate difference.",
+      "printed": "\"Instead of the normal attribute boosts and flaws, you can choose to gain a boost to Strength, a boost to Charisma, and a flaw in Intelligence.\" (heritage-374)",
+      "ours": "Replaces the whole set: a Strength boost, a Charisma boost, an Intelligence flaw. The extra ancestry Hit Points are there too.",
+      "theirs": "Adjusts four attributes on top of the normal kobold set, leaving the free boost: three boosts.",
+      "proposal": "instrument: settle mightyfall-kobold - owner ruled 2026-09-10 (#115, 'keep the printed scope'): the book wins, the replacement takes the ancestry's free boost too; WG's retained free boost is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "glyph-expert#magical-writing",
+      "claim": "Nothing changes: the save upgrade fires only against traps that feature magical writing; WG's any-magical-trap trigger is a deliberate difference.",
+      "printed": "\"traps that feature magical writing... When you attempt a saving throw against the effects of these traps, if you roll a success, you get a critical success instead\" (feat-2242)",
+      "ours": "Already matches print: the upgrade fires only against traps that feature magical writing.",
+      "theirs": "Fires the save upgrade against any magical trap, with no magical-writing wording at all.",
+      "proposal": "instrument: settle glyph-expert - owner ruled 2026-09-10 (#130, 'keep the printed scope'): the book wins; WG's any-magical-trap trigger is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+
+    {
+      "id": "aeon-stone-agate-ellipsoid#resonant-note",
+      "claim": "The resonant sentence is only in the item's description; it must also print on the augury spell entry the stone grants.",
+      "printed": "\"The resonant power causes the augury spell from the aeon stone to always succeed at the DC 6 flat check to give an answer other than \\\"nothing.\\\"\" (equipment-407-868)",
+      "ours": "Grants augury once. The sentence sits in the item's description, and a \"Slotted in a wayfinder\" mark on the item is what turns the power on.",
+      "theirs": "One yes/no question, \"Is this granting the resonant power?\". Both answers grant augury once; the yes answer also prints this sentence on the spell.",
+      "proposal": "Keep the 'Slotted in a wayfinder' mark as the only control (do not add WG's yes/no picker) and additionally print the resonant sentence above on the granted augury spell entry, gated on that mark (owner 2026-09-10 #47).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+    {
+      "id": "aeon-stone-dusty-rose-prism#resonant-note",
+      "claim": "The resonant 10-damage sentence is only in the item's description; it must also print on the shield spell entry the stone grants.",
+      "printed": "\"The resonant power increases the damage prevented by your aeon stone's shield spell from 5 to 10.\" (equipment-407-870)",
+      "ours": "Grants shield at will; the sentence sits in the item text only.",
+      "theirs": "One yes/no question. Both answers grant shield once; the yes answer also prints this sentence on the shield spell.",
+      "proposal": "Print the resonant sentence above on the granted shield spell entry, gated on the 'Slotted in a wayfinder' mark (owner 2026-09-10 #47/#48).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+    {
+      "id": "aeon-stone-dusty-rose-prism#duplicate-picker",
+      "claim": "This one stone carries both the wayfinder mark and an older yes/no picker asking the same question; the duplicate picker must go.",
+      "printed": "\"The resonant power increases the damage prevented by your aeon stone's shield spell from 5 to 10.\" (equipment-407-870)",
+      "ours": "Grants shield at will, the sentence sits in the item text, and this one stone carries BOTH a wayfinder mark and an older yes/no picker asking the same thing.",
+      "theirs": "One yes/no question only.",
+      "proposal": "Drop the duplicate yes/no picker from items/aeon-stone-dusty-rose-prism so only the 'Slotted in a wayfinder' mark asks the question (owner 2026-09-10 #48).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+    {
+      "id": "aeon-stone-western-star#resonant-note",
+      "claim": "The resonant sentence is only in the item's description; it must also print on the illusory disguise entry the stone grants.",
+      "printed": "\"The resonant power allows you to render all of your aeon stones and your wayfinder invisible whenever you use the activation to gain the effects of illusory disguise.\" (equipment-407-874)",
+      "ours": "Grants the illusory disguise activation. The sentence sits in the item's description, behind the same \"Slotted in a wayfinder\" mark.",
+      "theirs": "One yes/no question. Both answers grant illusory disguise once; the yes answer also prints this sentence on the spell.",
+      "proposal": "Keep the wayfinder mark as the only control and additionally print the resonant sentence above on the granted illusory disguise entry, gated on that mark (owner 2026-09-10 #49).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+    {
+      "id": "wild-lights#printed-spell-name",
+      "claim": "The printed spell name was rewritten at import from Dancing Lights to Light, which is wrong against our Light and invisible to the player; the printed name must be restored and the broken link dropped.",
+      "printed": "\"When you cast Dancing Lights, change its duration to 1 minute and its effect to a single floating light shaped like a Tiny creature, instead of up to four floating lights.\" (feat-3375)",
+      "ours": "No working piece. The printed sentence was quietly rewritten at import to say \"When you cast Light\", which is wrong against our Light, and the display still shows \"dancing lights\", so the rewrite is invisible.",
+      "theirs": "They carry no record for this feat at all.",
+      "proposal": "On feats/wild-lights restore the printed spell name Dancing Lights in the stored text, remove the import-time link to Light, and add one short line clearly marked as ours saying Light is the spell that replaced Dancing Lights - with NO mechanical rider on Light. Standing rule from this ruling (owner 2026-09-10 #70/#71): never rewrite a printed spell name; attach the feat's rider to the replacement only where the effect still makes sense.",
+      "playerVisible": true,
+      "askOwner": false
+    },
+    {
+      "id": "toppling-tentacles#replacement-note",
+      "claim": "The feat's note appears nowhere: Black Tentacles is hidden as superseded and Slither, its recorded replacement, carries nothing.",
+      "printed": "\"When you cast Black Tentacles, replace the standard effects: spell attack rolls against each creature's Reflex DC; on a success the creature falls prone and takes 3d6 bludgeoning; the tentacles deal 1d6 to creatures already prone; the area is difficult terrain.\" (feat-3391)",
+      "ours": "No note anywhere. Black Tentacles is hidden as a superseded spell, and the archive records Slither as its replacement.",
+      "theirs": "They match print exactly - bludgeoning damage, on Black Tentacles.",
+      "proposal": "Print the note on Black Tentacles with the printed spell name intact, and print the same note - clearly marked as coming from feats/toppling-tentacles - on Slither, the recorded replacement, where the effect still works (owner 2026-09-10 #70/#71 standing rule).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+    {
+      "id": "spew-tentacles#replacement-note",
+      "claim": "Spew Tentacles has the same defect as Toppling Tentacles: its printed note reaches neither Black Tentacles nor Slither.",
+      "printed": "The feat modifies Black Tentacles; Black Tentacles is hidden as superseded in our data and the archive records Slither as its replacement. (feat page reached from feat-3391's sibling, Spew Tentacles)",
+      "ours": "No note anywhere, for the same reason as Toppling Tentacles.",
+      "theirs": "",
+      "proposal": "Fix feats/spew-tentacles the same way as toppling-tentacles: print its printed note on Black Tentacles with the printed spell name intact, and the same note - marked as coming from this feat - on Slither (owner 2026-09-10 #71, 'same for Spew Tentacles').",
+      "playerVisible": true,
+      "askOwner": false
+    },
+
+    {
+      "id": "unifying-emblem-shundar-quah#daily-spell",
+      "claim": "The emblem has a one-action activation and a daily use but no spell behind them; the printed once-per-day Thoughtful Gift must be added.",
+      "printed": "\"Frequency once per day; Effect The tattoo casts its spell... The tattoo of the Spire clan depicts a cracked stone with a metal vein inside. It can cast thoughtful gift.\" (equipment-2223-1924)",
+      "ours": "Language, Diplomacy, a one-action activation and a daily use, but no spell behind them.",
+      "theirs": "Only the language and Diplomacy half; nothing at all for the daily casting.",
+      "proposal": "Add the once-per-day Thoughtful Gift casting to items/unifying-emblem-shundar-quah so the existing activation does what it says - finishing the emblem family (owner 2026-09-10 #28/#29/#30, a SPECIFIC approval to go past WG on this family only, not a general licence).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+    {
+      "id": "unifying-emblem-sklar-quah#daily-spell",
+      "claim": "The emblem has no activation cost and no spell; the printed once-per-day Concordant Choir must be added with the spell's own 1-to-3-action cost.",
+      "printed": "\"Activate - the actions required are the same as those needed to cast its spell; Frequency once per day; Effect The tattoo casts its spell.\" The Sun clan tattoo casts Concordant Choir. (equipment-2223-1925)",
+      "ours": "The language and the Diplomacy bonus, both delivered. The spell is missing, and this emblem carries no activation cost at all.",
+      "theirs": "The language branch only (Shoanti, or +1 item Diplomacy when speaking it); nothing for the once-per-day spell, on all seven emblems.",
+      "proposal": "Add the once-per-day Concordant Choir casting to items/unifying-emblem-sklar-quah, with the activation cost taken from the spell itself so the player can spend 1, 2 or 3 actions as Concordant Choir allows (owner 2026-09-10 #28/#29/#30, specific approval).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+    {
+      "id": "unifying-emblem-tamiir-quah#daily-spell",
+      "claim": "The emblem shows a two-action activation and a once-a-day use but casts nothing; the printed once-per-day Tailwind must be added.",
+      "printed": "\"Activate... Frequency once per day; Effect The tattoo casts its spell.\" The Wind clan tattoo casts Tailwind. (equipment-2223-1920)",
+      "ours": "The language, the Diplomacy bonus, a two-action activation and a once-a-day use - but no spell behind any of it, so the button casts nothing.",
+      "theirs": "The same one-branch language encoding as every other emblem; nothing for the daily spell.",
+      "proposal": "Add the once-per-day Tailwind casting to items/unifying-emblem-tamiir-quah so the two-action activation the record already shows does what it says (owner 2026-09-10 #28/#29/#30, specific approval).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+
+    {
+      "id": "molten-wit#three-branches",
+      "claim": "Only the neither-trained branch is built; the two branches the book prints for a character already trained in one or both skills are missing.",
+      "printed": "\"You either become trained in Deception and gain the Charming Liar skill feat, or you become trained in Diplomacy and gain the Group Impression skill feat. If you're already trained in one of these skills, you must take the other and can choose from either skill feat. If you're trained in both skills, you become trained in a different skill of your choice instead and can choose from either skill feat.\" (feat-3930, Impossible Lands)",
+      "ours": "One question. Deception gives Charming Liar, Diplomacy gives Group Impression, always paired. No branch for a character already trained in either skill.",
+      "theirs": "Two separate questions: pick the skill, then pick either skill feat freely.",
+      "proposal": "Build all three printed branches on feats/molten-wit (owner 2026-09-10 #12): trained in neither - the existing paired skill+feat; trained in exactly one - the other skill is forced and either skill feat may be picked; trained in both - a free skill of the player's choice plus either skill feat.",
+      "playerVisible": true,
+      "askOwner": false
+    },
+    {
+      "id": "intuitive-crafting#middle-case",
+      "claim": "The already-trained-in-Crafting case wrongly hands out a free skill of choice on top of Specialty Crafting; print gives the feat only.",
+      "printed": "\"You are trained in Crafting. If you were already trained in Crafting, you instead gain the Specialty Crafting skill feat...; if you have both, you instead become trained in a skill of your choice.\" (feat-7200, War of Immortals)",
+      "ours": "Untrained: Crafting trained, correct. Already trained: Specialty Crafting AND a free skill of choice. Already has both: the free skill only, correct.",
+      "theirs": "Already trained gets Specialty Crafting; untrained gets Crafting. A character with both gets nothing.",
+      "proposal": "On feats/intuitive-crafting, make the middle case grant Specialty Crafting ONLY - remove the extra free skill of choice from that branch; keep the untrained branch and keep the free skill for the both-already-held case (which WG drops) (owner 2026-09-10 #16).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+
+    {
+      "id": "empathic-calm#one-pick",
+      "claim": "Nothing changes: 'either X or Y' is ONE pick, which the app already asks; WG's grant of both spells is a deliberate difference.",
+      "printed": "\"Once per day, you can cast either calm emotions or sanctuary as an innate occult spell, heightened to half your level rounded up.\" (feat-3970)",
+      "ours": "Asks the player to pick one; the pick becomes the once-per-day occult innate spell.",
+      "theirs": "Grants both spells, once each per day, and asks the player nothing.",
+      "proposal": "instrument: settle empathic-calm - owner ruled 2026-09-10 (#111/#112) and set STANDING RULE R13: any feat printed as 'either X or Y' / 'your choice of X or Y' is ONE pick and never returns to the desk per record (precedent ruling #1, Backup Runic Enhancement); WG's both-spells grant is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "colugos-traversal#one-pick",
+      "claim": "Nothing changes: 'your choice of X or Y' is ONE pick, which the app already asks; WG's grant of both spells is a deliberate difference.",
+      "printed": "\"You can cast your choice of gentle landing or jump as a primal innate spell once per day. At 9th level, these spells are heightened to 3rd rank.\" (feat-6975)",
+      "ours": "One pick; the chosen spell is a once-per-day primal innate, 3rd rank from level 9.",
+      "theirs": "Grants both gentle landing and jump, one cast each, with no choice offered.",
+      "proposal": "instrument: settle colugos-traversal - owner ruled 2026-09-10 (#111/#112) under new standing rule R13 (one pick for every 'either X or Y' / 'your choice of X or Y' feat): WG's both-spells grant is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+
+    {
+      "id": "armor-in-earth#armour-proficiency",
+      "claim": "The granted stone armour carries no proficiency at all, so a kineticist's AC is wrong until the player fixes it by hand; the armour must use the wearer's best armour proficiency by itself.",
+      "printed": "\"Stone encases you like armor. The stone armor is medium armor but uses your highest armor proficiency.\" At 3rd level it becomes heavy armour. No sentence anywhere trains the kineticist in medium or heavy armour. (feat-4221)",
+      "ours": "The two armour items (items/armor-in-earth-medium and items/armor-in-earth-heavy) with the right statistics and no proficiency at all, plus a note telling the player to sort it out by hand.",
+      "theirs": "They hand over the same two armour items, and each item trains the wearer in medium armour (the heavy one in heavy armour) - which also lets a kineticist wear real plate and half plate.",
+      "proposal": "Attach the existing best-armour-proficiency borrowing (the Sentinel Dedication / Mountain Skin lane) to the GRANTED armour items items/armor-in-earth-medium and items/armor-in-earth-heavy, grant the kineticist NO medium or heavy armour training, and drop the 'set it yourself' note. Not WG's train-in-medium shortcut (owner 2026-09-10 #10/#26).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+    {
+      "id": "hardwood-armor-armor#armour-proficiency",
+      "claim": "The granted hardwood armour carries no proficiency, only a note telling the player to set it themselves, so the impulse leaves a kineticist worse off than their own armour.",
+      "printed": "\"Wood and bark grow over your body like armor. This hardwood armor is medium armor but uses your highest armor proficiency.\" AC Bonus +3, Dex Cap +2, Check Penalty -2, Speed Penalty -5 feet, Strength +2, Bulk 1, group wood. (feat-4283)",
+      "ours": "The same statistics plus the printed armour group, but no proficiency of any kind - only a note telling the player to set it themselves.",
+      "theirs": "The same statistics, plus three level-gated steps on the item itself: trained in medium armour below 13th level, expert from 13th to 18th, master from 19th.",
+      "proposal": "Attach the same best-armour-proficiency borrowing to items/hardwood-armor-armor (and its heavy version), grant the kineticist no medium or heavy armour training, and drop the 'set it yourself' note - the identical answer given to Armor in Earth in the same breath (owner 2026-09-10 #10/#26).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+
+    {
+      "id": "hardened-chassis#enhancement",
+      "claim": "The Enhancement tier is only a note telling the player to work it out; it must be computed, and switched on only by an augmentation feat that names this feat.",
+      "printed": "\"Enhancement Your chassis gets even tougher. Choose one of the following benefits: you gain resistance 3 to all physical damage, or your chosen resistance increases to a value equal to half your level (minimum 3).\" And the automaton rules (ancestry-98): \"You don't gain the benefits of the enhancement unless you take a feat that grants you those benefits, such as Lesser Augmentation.\" (feat-9400)",
+      "ours": "Only the damage-type question with resistance 3. Hardened Chassis is offered inside Lesser and Greater Augmentation, but picking it there only shows a note telling you to work the benefit out yourself.",
+      "theirs": "Asks \"Enhancement?\" right on the feat, with a No option, so any automaton can answer yes - and their \"increase\" answer just adds another 3 instead of half your level.",
+      "proposal": "Build the Hardened Chassis Enhancement as a computed value (resistance 3 to all physical damage, or the chosen resistance raised to half your level minimum 3), switched on ONLY when an augmentation feat that names Hardened Chassis is held - never asked of every automaton (owner 2026-09-10 #40).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+    {
+      "id": "armigers-protection#armor-pick",
+      "claim": "The free armour pick offers a non-existent item and grants nothing; it must be a real pick landing in inventory.",
+      "printed": "\"In addition, when you choose this feat, you receive a non-magical suit of Hellknight armor of a type you become trained in (Hellknight breastplate, Hellknight half plate, or Hellknight plate).\" (feat-8814)",
+      "ours": "A live picker offers \"Hellknight Breastplate\" or \"Hellknight Plates\"; the second is not a real item and neither grants anything. The armour training itself is already worked out correctly from the printed branches.",
+      "theirs": "Wanderer's Guide carries no Armiger's Protection record at all.",
+      "proposal": "Replace the picker on feats/armigers-protection with a real pick of Hellknight breastplate, Hellknight half plate and Hellknight plate, greying out the ones the character is not trained in and saying why, and landing the chosen non-magical suit in inventory (owner 2026-09-10 #73, option B).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+    {
+      "id": "flexible-spellcaster#collection-shape",
+      "claim": "The spell collection is built per rank, matching WG rather than print; it must be ONE flat pool sized by the character's total spell slots, with at least one 1st-rank spell.",
+      "printed": "\"The number of spells in your spell collection each day equals the total number of spell slots you get each day from your class spells.\" The printed table gives one Collection number per level - 4 at level 3 - and the only limit stated is \"you must select at least one 1st-level spell for your collection each time you prepare\". (archetype-99)",
+      "ours": "The collection is built, but per rank - the same shape as Wanderer's Guide.",
+      "theirs": "Forces a per-rank list: as many collected spells at each rank as slots at that rank. Their own copy of the text still quotes the flat rule.",
+      "proposal": "Rebuild the Flexible Spellcaster collection as ONE flat pool whose size is the character's total daily class spell slots, requiring at least one 1st-rank spell in it, instead of a per-rank list - new engine work on the spell-collection lane (owner 2026-09-10 #102).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+    {
+      "id": "haunting-memories#skill-feat-pick",
+      "claim": "Only the proficiency half of the daily choice is asked; the printed skill feat half is a note that grants nothing.",
+      "printed": "\"You also gain one skill feat with a minimum requirement of your new rank in the chosen skill. For the purpose of meeting level prerequisites for this feat, your level is equal to half your level.\" (feat-7701)",
+      "ours": "Only the proficiency pick. The feat half is a note that grants nothing.",
+      "theirs": "Offers a real second pick: any skill feat of level 10 or lower.",
+      "proposal": "Add a second morning question to feats/haunting-memories granting a temporary skill feat, capped at half the character's level per print (not WG's flat level 10), built the way the wizard's daily feat pick already works - let the feat hand over a small feature carrying the second daily-preparations question (owner 2026-09-10 #128).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+    {
+      "id": "dream-magic#second-taking",
+      "claim": "Both takings of Dream Magic share one answer, so a player who takes it twice still gets only one spell; print says the second taking gives the spell not chosen the first time.",
+      "printed": "\"Special You can take this feat twice, gaining the spell you didn't select initially the second time.\" (feat-8518)",
+      "ours": "Both takings share one answer, so a player who takes it twice still gets one spell.",
+      "theirs": "One pick per taking; each option grants one of the two spells.",
+      "proposal": "Move the Dream Magic pick onto the feat's own question so it is remembered per taking, and force the second taking to the answer not chosen the first time (owner 2026-09-10 #129).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+    {
+      "id": "scar-of-the-survivor#dying-toggle",
+      "claim": "The immanence gives the benefits of Diehard, but the dying value on the sheet never moves.",
+      "printed": "Immanence: \"Divine energy spreads outward from your scar, reinforcing your flesh. You gain the benefits of the Diehard feat and a +1 status bonus to Fortitude saving throws.\" (ikon-13)",
+      "ours": "The old always-on Diehard grant is gone. A note on the Fortitude line mentions Diehard; the dying value itself never moves.",
+      "theirs": "Nothing mechanical at all - only the printed paragraph as text.",
+      "proposal": "Give scar-of-the-survivor a divine-spark toggle in the shape of the three immanence toggles already shipped, which really raises the dying value while the spark is in the ikon (and carries the +1 status bonus to Fortitude) (owner 2026-09-10 #140).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+    {
+      "id": "soul-well#dying-toggle",
+      "claim": "Soul Well's one-minute effect raises the dying value permanently; the same toggle shape that fixes Scar of the Survivor fixes it.",
+      "printed": "Soul Well's effect raises your dying value for 1 minute, not permanently.",
+      "ours": "The one-minute effect raises the dying value permanently.",
+      "theirs": "",
+      "proposal": "Apply the same divine-spark/duration toggle shape built for scar-of-the-survivor to feats/soul-well so its dying-value rise lasts only while the effect is on, instead of permanently (owner 2026-09-10 #140, 'also fixes Soul Well').",
+      "playerVisible": true,
+      "askOwner": false
+    },
+    {
+      "id": "animal-instinct#spider-web",
+      "claim": "The spider instinct's Web attack rides as text on the Rage action because the engine cannot hold an attack that deals no damage; it must become a real attack row.",
+      "printed": "\"The spider's web attack deals no damage, but the target takes a -10-foot circumstance penalty to its Speeds for 1 round on a hit.\" (instinct-8)",
+      "ours": "Fangs only - 31 granted attacks on this feature, no Web. The Web rides as text on the Rage action.",
+      "theirs": "Hands the raging barbarian two items - spider fangs and spider web - rather than attack rows.",
+      "proposal": "Allow attacks with no damage in the granted-attack lane and give the spider animal instinct a real damageless Web attack row carrying the -10-foot circumstance Speed penalty for 1 round on a hit; this also houses every other damageless attack in the books (owner 2026-09-10 #145, option A).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+
+    {
+      "id": "reinforced-chassis#ac-scaling",
+      "claim": "Nothing changes: the armour's item bonus rises to +4 at 5th and +5 at 10th as printed; WG's flat +3 is a deliberate difference.",
+      "printed": "\"grants a +3 item bonus to AC with a Dexterity cap of +1. If you are at least 5th level, the item bonus increases to +4 and at 10th level it increases to +5.\" (feat-3095)",
+      "ours": "Same armour with +3, then +4 at 5th level and +5 at 10th; already tested.",
+      "theirs": "One armour item, flat +3 AC, Dex cap +1, no level scaling anywhere.",
+      "proposal": "instrument: settle reinforced-chassis - owner ruled 2026-09-10 (#19, decided under the 2026-08-22 rule that the book wins): WG's unscaled flat +3 AC is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "psychic-dedication#no-focus-point",
+      "claim": "Nothing changes: the dedication grants no Focus Point - the pool is printed on Psi Development at 6th, where the app already carries it; WG's dedication-granted pool is a deliberate difference.",
+      "printed": "Psi Development (6th level): \"You gain the ability to amp your psi cantrips. If you don't have one, you gain a focus pool of 1 Focus Point\"; the Dedication (feat-8391) never mentions a pool. (feat-8395)",
+      "ours": "Occultism, one occult psi cantrip, trained spell attack and DC, a recorded conscious mind. No pool.",
+      "theirs": "Everything the app has, plus one Focus Point granted by the dedication itself.",
+      "proposal": "instrument: settle psychic-dedication - owner ruled 2026-09-10 (#27, book wins): WG's Focus Point on the dedication is a deliberate difference (print puts it on Psi Development at 6th, which the app already builds).",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "elemental-existence#adopted-ancestry",
+      "claim": "Nothing changes: the feat grants Adopted Ancestry outright as printed; WG's hide-the-feat encoding is a deliberate difference.",
+      "printed": "\"You gain the Adopted Ancestry feat and gain a 1st level oread ancestry feat as a bonus feat, ignoring the limitations of the lineage trait.\" (feat-4378)",
+      "ours": "Grants Adopted Ancestry outright, and the granted feat brings its own \"choose an ancestry\" question. Also offers the 1st-level oread feat and opens oread feats later.",
+      "theirs": "Never grants Adopted Ancestry. It hides that feat from the pickable list, grants a 1st-level oread feat, and opens the oread feats.",
+      "proposal": "instrument: settle elemental-existence - owner ruled 2026-09-10 (#32, book wins): 'You gain the Adopted Ancestry feat' is a grant; WG's hiding of the feat instead of granting it is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "thats-not-natural#circumstance-bonus",
+      "claim": "Nothing changes: the master-Survival +2 raises the initiative bonus - the only thing the printed text calls a circumstance bonus; WG's Perception-only reading is a deliberate difference.",
+      "printed": "\"You gain a +1 circumstance bonus to all initiative checks... In wilderness regions, you also increase your Perception DC by 1 against these types of creatures for the purposes of resolving their Stealth checks. If you're master in Survival, this circumstance bonus increases to +2.\" (feat-3897)",
+      "ours": "+1 to your Perception DC that never grows, and the master-Survival +2 sits on the initiative bonus instead.",
+      "theirs": "Both the +1 and the +2 sit on Perception, upgrading on Perception rank rather than master Survival, and they give no initiative bonus at all.",
+      "proposal": "instrument: settle thats-not-natural - owner ruled 2026-09-10 (#34, re-checked against the printed clause: 'this circumstance bonus' names the initiative bonus): the book wins; WG's Perception-only placement and Perception-rank upgrade are a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "devils-eye#legal-lore-rank",
+      "claim": "Nothing changes: expert Legal Lore rising to master at 7th and legendary at 15th, plus the Objection reaction and the +1 note, all as printed; WG's trained-only row is a deliberate difference.",
+      "printed": "\"You gain the Objection reaction. You also become an expert in Legal Lore and gain a +1 circumstance bonus to any check you make to read or negotiate a treatise, contract, or similar text. At 7th level you become a master of Legal Lore, and at 15th level you become legendary in Legal Lore.\" (feat-8404)",
+      "ours": "Expert Legal Lore, master at 7th, legendary at 15th, the Objection reaction, and the +1 note on the skill rows.",
+      "theirs": "Creates Legal Lore at trained. No later ranks, no reaction, no bonus.",
+      "proposal": "instrument: settle devils-eye - owner ruled 2026-09-10 (#38, book wins): WG's trained-only Legal Lore with no later ranks, no Objection reaction and no +1 bonus is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "instinct-ability#no-hit-points",
+      "claim": "Nothing changes: the feat grants the matching instinct ability and no Hit Points; WG's +3 maximum HP is a deliberate difference.",
+      "printed": "\"You gain the instinct ability for the instinct you chose for Barbarian Dedication.\" (feat-6194)",
+      "ours": "Grants whichever instinct ability matches the instinct chosen on Barbarian Dedication. No Hit Points.",
+      "theirs": "Their newer row grants no instinct, only +3 maximum Hit Points if you also hold Barbarian Resiliency; their older row grants the instinct and the same +3.",
+      "proposal": "instrument: settle instinct-ability - owner ruled 2026-09-10 (#53, book wins): WG's +3 maximum Hit Points is one slice of how they pay out Barbarian Resiliency (already settled under R11) and is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "pistol-wand#stock-runes",
+      "claim": "Nothing changes: the pistol's runes carry over to the reinforced stock as printed; WG's plain base weapon is a deliberate difference.",
+      "printed": "\"This +1 flintlock pistol has a reinforced stock permanently attached to it, and the pistol's potency rune (and any other runes) applies to Strikes with the stock as well.\" (equipment-3589)",
+      "ours": "The stock carries a built-in +1 potency, so stock Strikes get the printed bonus.",
+      "theirs": "Hands over a plain Reinforced Stock weapon with no rune, so stock Strikes get no bonus.",
+      "proposal": "instrument: settle pistol-wand - owner ruled 2026-09-10 (#65, book wins): WG's runeless reinforced stock is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "tumbling-theft#thievery",
+      "claim": "Nothing changes: the +1 circumstance bonus lands on Thievery as printed; WG's Stealth placement is a deliberate difference.",
+      "printed": "\"You gain a +1 circumstance bonus to your Thievery check to Steal as your tumbling make it difficult for your enemy to keep track of your movement.\" (feat-6513)",
+      "ours": "A +1 circumstance star on Thievery for the Steal after a critical Tumble Through.",
+      "theirs": "The +1 lands on Stealth, even though the paragraph they quote says Thievery and their own bonus wording says the Steal.",
+      "proposal": "instrument: settle tumbling-theft - owner ruled 2026-09-10 (#66, book wins): WG's Stealth placement contradicts their own quoted paragraph and is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "keys-to-destiny#labor-lore",
+      "claim": "Nothing changes: all nine printed Lores are offered and each trains itself; WG's Labor Lore option writing Herbalism Lore is a deliberate difference.",
+      "printed": "\"trained in one of the following Lore skills associated with a profession, as befits your history: Art Lore, Engineering Lore, Farming Lore, Herbalism Lore, Labor Lore, Mercantile Lore, Scribing Lore, Theater Lore, or Warfare Lore.\" (background-367)",
+      "ours": "Offers all nine printed lores; picking Labor Lore trains Labor Lore.",
+      "theirs": "Their option is titled Labor Lore and says Labor Lore, but the operation underneath writes Herbalism Lore - a copy-paste slip from the option above it.",
+      "proposal": "instrument: settle keys-to-destiny - owner ruled 2026-09-10 (#74, book wins): WG's Labor-Lore-writes-Herbalism-Lore operation is their copy-paste slip and is a deliberate difference; do not import it.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "concordance-scout#six-lores",
+      "claim": "Nothing changes: all six printed planar lores are offered and each trains the right lore; WG's five-option list is a deliberate difference.",
+      "printed": "\"one of the following lore skills: Plane of Air Lore, Plane of Earth Lore, Plane of Fire Lore, Plane of Metal Lore, Plane of Water Lore, or Plane of Wood Lore.\" (background-383)",
+      "ours": "All six printed planar lores are offered, each training the right lore.",
+      "theirs": "Five options, Plane of Earth missing entirely, and a stray space in their Plane of Air option makes it train nothing.",
+      "proposal": "instrument: settle concordance-scout - owner ruled 2026-09-10 (#75, book wins): WG's shortened five-option list with a broken Plane of Air option is a deliberate difference; do not import it.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "poppet#fire-weakness",
+      "claim": "Nothing changes: the fire weakness is one-third level with a minimum of 1, as printed; WG's minimum-less formula is a deliberate difference.",
+      "printed": "\"Flammable You have weakness to fire damage equal to one-third your level (minimum 1).\" (ancestry-49)",
+      "ours": "Fire weakness is one-third level, minimum 1, exactly as printed, and it shows on the sheet.",
+      "theirs": "Their formula is level divided by three with no minimum, so a level 1 or 2 poppet takes no extra fire damage.",
+      "proposal": "instrument: settle poppet - owner ruled 2026-09-10 (#76, book wins): WG's minimum-less one-third-level formula is a deliberate difference; do not import it.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "goloma#languages",
+      "claim": "Nothing changes: a goloma is granted Goloma and Mwangi as printed; WG's Common grant is a deliberate difference.",
+      "printed": "\"Languages Goloma Mwangi Additional languages equal to your Intelligence modifier (if it's positive).\" (ancestry-45)",
+      "ours": "Grants Goloma and Mwangi; both exist as real languages in the app.",
+      "theirs": "They hand every goloma Common instead of Goloma, though their own language list does contain Goloma.",
+      "proposal": "instrument: settle goloma - owner ruled 2026-09-10 (#77, book wins): WG's Common-instead-of-Goloma language reference is a deliberate difference; do not import it.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "traveling-gourmand#survival",
+      "claim": "Nothing changes: the background trains Survival and Cooking Lore and grants Forager, as printed; WG's untrained Survival operation is a deliberate difference.",
+      "printed": "\"You're trained in the Survival skill, and the Cooking Lore skill. You gain the Forager skill feat.\" (background-482)",
+      "ours": "Trains Survival and Cooking Lore, grants Forager, boost is Dexterity or Intelligence plus a free one.",
+      "theirs": "Their operation writes Survival as untrained; their Cooking Lore and Forager grants are correct.",
+      "proposal": "instrument: settle traveling-gourmand - owner ruled 2026-09-10 (#80, book wins): WG's Survival-as-untrained operation is a deliberate difference; do not import it.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "seer-of-the-dead#one-boost",
+      "claim": "Nothing changes: the background prints one boost (Constitution or Wisdom) and no free boost; WG's second boost is a deliberate difference.",
+      "printed": "\"You gain one ability boost. It must be to Constitution or Wisdom.\" (background-243)",
+      "ours": "One boost, Constitution or Wisdom, plus Religion and Undead Lore. No free boost. Spirit Sense is already built.",
+      "theirs": "They add a second, free attribute boost this background never prints, copied from their other backgrounds.",
+      "proposal": "instrument: settle seer-of-the-dead - owner ruled 2026-09-10 (#81, book wins): WG's second free attribute boost is a deliberate difference; do not import it.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "haunted#no-skill-feat",
+      "claim": "Nothing changes: no printing of Haunted names a feat; WG's Recognize Spell grant is a deliberate difference.",
+      "printed": "You are trained in Occultism and an additional skill in which the haunting entity is well-versed, determined by the GM. No feat is named anywhere in the entry. (background-468)",
+      "ours": "Trained Occultism, a control for the GM-chosen extra skill, and the +1 star on that skill. The frightened cost is in the printed text we show. No feat.",
+      "theirs": "Grants the Recognize Spell skill feat.",
+      "proposal": "instrument: settle haunted - owner ruled 2026-09-10 (#83, re-checked: no printing of Haunted names a feat): the book wins; WG's Recognize Spell grant is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "tree-friend#arboreal",
+      "claim": "Nothing changes: 'you can choose Arboreal' is permission, and our language picker already offers every language; WG's outright Arboreal grant is a deliberate difference.",
+      "printed": "\"You gain the No Cause for Alarm skill feat, and you can choose Arboreal as one of your known languages.\" (background-504)",
+      "ours": "No Cause for Alarm is granted; the record says nothing about Arboreal, but the language picker offers every language to every character, so Arboreal is reachable.",
+      "theirs": "Grants Arboreal outright, with no choice.",
+      "proposal": "instrument: settle tree-friend - owner ruled 2026-09-10 (#84, re-checked: 'you can choose Arboreal' is permission, our picker already offers every language - nothing to do): the book wins; WG's outright Arboreal grant is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "hammered-by-fate#three-lores",
+      "claim": "Nothing changes: all three printed Lores are offered and the Harrow the Fiend free action is built; WG's duplicated Daemon Lore is a deliberate difference.",
+      "printed": "\"You gain the Hefty Hauler skill feat and are trained in one of the following Lore skills, as fits your history: Daemon Lore, Demon Lore, or Devil Lore.\" (background-366)",
+      "ours": "Offers all three, and also grants the Harrow the Fiend free action the entry prints.",
+      "theirs": "Lists Daemon Lore twice and never offers Demon Lore.",
+      "proposal": "instrument: settle hammered-by-fate - owner ruled 2026-09-10 (#89, book wins): WG's duplicated Daemon Lore and missing Demon Lore are a deliberate difference; do not import them.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "lesser-scion#heraldry-lore",
+      "claim": "Nothing changes: the background trains Heraldry Lore as printed; WG's misspelled \"Heradlry Lore\" is a deliberate difference.",
+      "printed": "\"You're trained in the Diplomacy skill, and the Heraldry Lore skill. You gain the Hobnobber skill feat.\" (background-37)",
+      "ours": "Trains Heraldry Lore, exactly as printed. The Foundry data spells it the same way we do.",
+      "theirs": "Trains a misspelled \"Heradlry Lore\" skill.",
+      "proposal": "instrument: settle lesser-scion - owner ruled 2026-09-10 (#90, book wins): WG's misspelled Heradlry Lore is a deliberate difference; do not import it.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "bachuan-revolutionary#wisdom-boost",
+      "claim": "Nothing changes: the background offers Strength or Wisdom plus a free boost, uncommon as printed; WG's broken Wisdom option is a deliberate difference.",
+      "printed": "\"Choose two attribute boosts. One must be to Wisdom or Strength, and one is a free attribute boost.\" (background-472)",
+      "ours": "Offers Strength or Wisdom, then a free boost, and carries the uncommon rarity the entry prints. Matches print throughout.",
+      "theirs": "Their Wisdom option writes to a name that does not exist, so it does nothing.",
+      "proposal": "instrument: settle bachuan-revolutionary - owner ruled 2026-09-10 (#91, book wins): WG's dead Wisdom-boost operation is a deliberate difference; do not import it.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "divine-font#rank-9",
+      "claim": "Nothing changes: the font stays at 9th rank because Miraculous Spell bars 10th-rank slots from slot-granting abilities; WG's 10th-rank font at 19-20 is a deliberate difference.",
+      "printed": "Miraculous Spell: \"You gain a single 10th-rank spell slot... Unlike with other spell slots, you can't use 10-rank slots with abilities that give you more spell slots or that let you cast spells without expending spell slots.\" (class-feature-662)",
+      "ours": "Font stays at 9th rank; the code deliberately leaves rank 10 out of the font's reach.",
+      "theirs": "Raises the font to 10th rank at levels 19-20; every other level matches ours.",
+      "proposal": "instrument: settle divine-font - owner ruled 2026-09-10 (#103, re-checked: Miraculous Spell bars 10th-rank slots from slot-granting abilities and the font is one): the book wins; WG's 10th-rank font at 19-20 is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "undine#swim-speed",
+      "claim": "Nothing changes: the swim Speed of 10 feet and the amphibious trait are unconditional as printed; WG's capping condition is a deliberate difference.",
+      "printed": "\"You gain a swim Speed of 10 feet and the amphibious trait.\" (heritage-134)",
+      "ours": "Swim Speed 10, always, plus the amphibious trait. Matches print.",
+      "theirs": "A condition that gives no swim Speed to a non-swimmer and caps a faster one at 10.",
+      "proposal": "instrument: settle undine - owner ruled 2026-09-10 (#114, book wins): WG's conditional/capping swim Speed encoding is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "grave-orc#void-resistance",
+      "claim": "Nothing changes: void resistance is half your level with a minimum of 1 as printed; WG's minimum-less formula is a deliberate difference.",
+      "printed": "\"You gain resistance to void damage equal to half your level (minimum 1).\" (heritage-275)",
+      "ours": "Half your level, never below 1. Matches print.",
+      "theirs": "Half your level with no minimum, so zero void resistance at levels 1 to 3.",
+      "proposal": "instrument: settle grave-orc - owner ruled 2026-09-10 (#117, book wins): WG's minimum-less half-level formula is a deliberate difference (their own Stormtossed Tengu row shows they encode the minimum elsewhere).",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "deny-lady-nanbyos-charity#bulk-thresholds",
+      "claim": "Nothing changes: print gives two different numbers (encumbered +1, maximum +2) and the app carries both; WG's single value of 2 is a deliberate difference.",
+      "printed": "\"Your vow grants you the strength to carry 1 more Bulk than normal before becoming encumbered and up to a maximum of 2 more Bulk\" (heritage-407)",
+      "ours": "Encumbered +1, maximum +2. Already built.",
+      "theirs": "A single value of 2, which moves the encumbered threshold by 2 as well.",
+      "proposal": "instrument: settle deny-lady-nanbyos-charity - owner ruled 2026-09-10 (#118, book wins): WG's single Bulk value of 2 moving both thresholds is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "waning-moon-sarangay#reroll-skill",
+      "claim": "Nothing changes: the reroll follows the chosen skill and the note already sits on that skill's row; WG's Acrobatics-for-everything reroll is a deliberate difference.",
+      "printed": "\"Once per day, when you roll a critical failure with the chosen skill, you can reroll the check, taking the new result, even if it's worse.\" (heritage-394)",
+      "ours": "The reroll follows the chosen skill, and the note already sits on that skill's row.",
+      "theirs": "Their Crafting and Performance options both say the reroll fires on an Acrobatics check.",
+      "proposal": "instrument: settle waning-moon-sarangay - owner ruled 2026-09-10 (#119, book wins): WG's Acrobatics-pinned reroll on the Crafting and Performance options is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "barrows-edge#damage-wording",
+      "claim": "Nothing changes: +1 spirit damage per die, +3 per die against a foe below half Hit Points, as printed; WG's persistent-damage reading with no below-half clause is a deliberate difference.",
+      "printed": "\"The barrow's edge deals 1 additional spirit damage per weapon damage die... If the creature is below half its maximum Hit Points, the weapon deals 3 additional spirit damage per weapon damage dice instead.\" (ikon-2)",
+      "ours": "+1 spirit damage per die, or +3 per die against a foe below half its Hit Points.",
+      "theirs": "1 persistent spirit damage per die, and no extra damage against a foe below half Hit Points.",
+      "proposal": "instrument: settle barrows-edge - owner ruled 2026-09-10 (#136, book wins): WG's persistent spirit damage and missing below-half clause are a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "gaze-sharp-as-steel#transcendence",
+      "claim": "Nothing changes: the transcendence is A Moment Unending's precision damage as printed; WG's Reactive Strike grant is a different ability wearing the printed name.",
+      "printed": "\"Transcendence Single Action (Concentrate, Prediction, Transcendence) A Moment Unending... Your next successful Strike against an enemy before the end of your next turn deals an additional 1d6 precision damage.\" (ikon-5)",
+      "ours": "A Moment Unending as printed: 1d6 precision damage, rising to 2d6 at 10th and 3d6 at 18th.",
+      "theirs": "Grants the Reactive Strike feat until your next turn instead of any damage.",
+      "proposal": "instrument: settle gaze-sharp-as-steel - owner ruled 2026-09-10 (#137, book wins, offer no alternative): WG's Reactive Strike grant is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "hyper-boosters#overdrive-bonus",
+      "claim": "Nothing changes: +10 Speed standing and +20 in Overdrive is the printed total, with the legendary +30 shown as a note; WG's rank-free +30 is a deliberate difference.",
+      "printed": "\"which increases to a +20-foot status bonus when you're in Overdrive. If you're legendary in Crafting, it instead increases to a +30-foot status bonus when you're in Overdrive.\" (innovation-5)",
+      "ours": "+10 Speed, +20 in Overdrive - Hyper Boosters and Speed Boosters each add 5 standing and 5 more in Overdrive, exactly the printed total. The legendary +30 shows as a note.",
+      "theirs": "Their +30 fires at any Crafting rank the moment Overdrive is on - a mistake in how they wrote the condition.",
+      "proposal": "instrument: settle hyper-boosters - owner ruled 2026-09-10 (#148, book wins): WG's rank-free +30 in Overdrive is a mistake in their data and is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "chronomancers-secrets#focus-spell",
+      "claim": "Nothing changes: both options grant a focus spell and Stasis carries the focus trait; WG's ordinary-spell Stasis is a deliberate difference.",
+      "printed": "\"The secrets of time peel back, revealing deeper truths. You gain either the stasis domain spell or the path of least resistance focus spell.\" (feat-8482)",
+      "ours": "Both options grant a focus spell; Stasis carries the focus trait, and the feat's own focus point is not counted twice.",
+      "theirs": "Gives Stasis as an ordinary spell, from their old record, under a menu titled \"Select a focus spell\".",
+      "proposal": "instrument: settle chronomancers-secrets - owner ruled 2026-09-10 (#150, book wins): WG's ordinary-spell Stasis is a mistake in their data - their own menu title says focus spell - and is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+
+    {
+      "id": "benefactors-resistance#floor-and-dragons",
+      "claim": "Nothing changes: the resistance keeps its floor of 1 (a deliberate small step past the literal page, which prints no minimum), and WG's extra resistance against dragons is not copied.",
+      "printed": "\"You gain resistance equal to half your level to the damage type dealt by the breath of your draconic benefactor... If your draconic benefactor's breath deals bludgeoning, piercing, or slashing damage, instead of gaining resistance to that type, you must choose acid, cold, fire, electricity, or sonic.\" No minimum is printed, and there is no clause about dragons anywhere. (feat-8064)",
+      "ours": "One pick over ten damage types, each granting resistance equal to half the character's level with a floor of 1. Nothing about dragons.",
+      "theirs": "For every breath type they emit four effects: resistance 1 plus resistance half your level to that type, AND resistance 2 plus resistance equal to your full level to that same type from dragons.",
+      "proposal": "instrument: settle benefactors-resistance - owner ruled 2026-09-10 (#11): keep the floor of 1 as a deliberate small step past the literal page (print gives 0 at 1st level), and record that WG's dragon half - resistance 2 plus full level against dragon breath - has no printed source and is deliberately not copied.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+
+    {
+      "id": "merchants-scale#no-rules",
+      "claim": "The item shows as a blank priced object; print has no rules body at all, so one plain line clearly marked as ours must say so - and WG's invented +1 to seven skills must never be added.",
+      "printed": "Print is silent: the whole entry is \"Merchant's Scale Source Player Core pg. 290 Price 2 sp Hands 2 Bulk L\" - there is no rules body. (equipment-2734, and the legacy equipment-34)",
+      "ours": "A priced object with no text, no bonus and no description at all.",
+      "theirs": "+1 item bonus to seven skills, for Recall Knowledge about the value of items, gems and precious metals.",
+      "proposal": "On items/merchants-scale add ONE plain line, clearly marked as ours (not as printed text), saying the book prints no rules for this item; grant no mechanical effect, and never WG's +1 item bonus to seven skills. Do not author flavour text of our own into a printed record (owner 2026-09-10 #17).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+
+    {
+      "id": "mask-of-the-mantis-major#printed-contents",
+      "claim": "The Major grade stays at the base 2nd rank for both spells (the archive's Major block never restates the 5th-rank heightening), but its own printed pieces must be present.",
+      "printed": "\"Mask of the Mantis (Major) Source Prey for Death pg. 104 Price 19,000 gp --- The item bonus to Perception and Intimidation is +3. Activate-Locate Target Two Actions 10 minutes (concentrate) Frequency once per day; Effect You cast pinpoint. If the target of this spell is a creature for which you've accepted a contract to assassinate, you are considered to have seen the creature in person for the purposes of pinpoint's requirements.\" The Greater block alone prints \"When you Enhance Vision, the darkvision spell or see the unseen spell is heightened to 5th-rank.\" (equipment-3497-3391)",
+      "ours": "The Major stores both spells at rank 2 (which the owner confirmed is correct - follow the archive literally); the Greater correctly stores rank 5.",
+      "theirs": "Not consulted - this is a hole in the printed text, not a difference with them.",
+      "proposal": "check: items/mask-of-the-mantis-major keeps both Enhance Vision spells at the base 2nd rank (nothing changes there), AND carries the once-per-day Locate Target activation casting pinpoint with its assassination-contract clause, AND carries the +3 item bonus to Perception and Intimidation (including the Vernai's Ire Intimidation line) exactly as the Major block prints them (owner 2026-09-10 #68, follow the archive literally).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+
+    {
+      "id": "zealot-staff#free-action-limit",
+      "claim": "The staff ships a once-per-minute limit and a 'per minute' pip that no source prints; the page has no Frequency line at all.",
+      "printed": "\"Activate Free Action (concentrate) Trigger You hit with a Strike using the staff; Effect A vicious blast of deific power explodes as you hit.\" The page has no Frequency line. (equipment-2263)",
+      "ours": "Ships a once-per-minute limit and a \"per minute\" pip next to the charge pool - a cadence no source prints.",
+      "theirs": "Not Wanderer's Guide but Foundry: it adds once per 10 minutes plus two traits. Players never see that text in our app.",
+      "proposal": "Remove the once-per-minute limit and its 'per minute' pip from items/zealot-staff, keeping only the staff's charge pool (owner 2026-09-10 #69, follow the page Guy pasted: no use limit on the free action).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+    {
+      "id": "zealot-staff#printed-contents",
+      "claim": "The rest of the staff's printed contents must be verified against the page in the same pass.",
+      "printed": "Zealot Staff (equipment-2263): a +3 greater striking staff; drained 1 until your next daily preparations if you do not worship its deity when preparing it; spell list divine lance / bane / augury / warding aggression / divine wrath / crisis of faith / spiritual armament / zealous conviction at their printed ranks; the deity's cleric spells are added at their rank and every higher rank.",
+      "ours": "The charge pool and spell list are built; the per-minute limit is the known defect.",
+      "theirs": "",
+      "proposal": "check: items/zealot-staff is a +3 greater striking staff; it becomes drained 1 until the next daily preparations if the wielder does not worship its deity when preparing it; its spell list is divine lance, bane, augury, warding aggression, divine wrath, crisis of faith, spiritual armament and zealous conviction at the printed ranks; and the deity's cleric spells are added at their rank and at every higher rank (owner 2026-09-10 #69 FIX-PASS CHECK).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+
+    {
+      "id": "northridge-scholar#seasonal-boon-frequency",
+      "claim": "Nothing changes: Seasonal Boon stays a free action with no frequency because our page prints none; WG's 'once per season' is a deliberate difference.",
+      "printed": "\"**Seasonal Boon** <actions string=\\\"Free Action\\\" /> **Trigger** The party's reputation with Northridge increases; **Effect** Increase the party's reputation with Northridge by an additional 2 points\" - no Frequency line. None of the six Willowshore boons prints one. (background-395)",
+      "ours": "The app carries the boon: a free action with the trigger and effect, no frequency.",
+      "theirs": "\"Once per Season\" on five of the six boons - and they also carry a general \"Seasonal Boon (Standard)\" that our copy of the book does not have at all.",
+      "proposal": "instrument: settle northridge-scholar - owner ruled 2026-09-10 (#97, 'leave it as it is'): our page prints no frequency, so the boon stays a free action with none; WG's once-per-season limit and their extra general Seasonal Boon (Standard) record are a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+
+    {
+      "id": "skybearers-belt#scoped-stars",
+      "claim": "The three +1 stars must be scoped to the four named actions and to resisting them, not blanket, and the two-sizes-larger permission must be shown.",
+      "printed": "\"You can attempt to Disarm, Grapple, Shove, or Trip creatures up to two sizes larger than you, and you gain a +1 circumstance bonus to checks for these actions and to your saving throws to resist these actions.\" (ikon-16)",
+      "ours": "Three +1 stars - Athletics, Fortitude, Reflex - each while your divine spark is in the belt; all three come from the one printed sentence.",
+      "theirs": "Prints a different rule: a 15-foot aura letting allies carry 4 more Bulk. Drops the +1 entirely.",
+      "proposal": "check: the skybearers-belt immanence stars are SCOPED - the Athletics star to checks for Disarm, Grapple, Shove and Trip only, and the Fortitude and Reflex stars to saving throws to resist those four actions only, never blanket; the two-sizes-larger permission is shown to the player; and the transcendence Bear Allies' Burdens stays text (owner 2026-09-10 #141 FIX-PASS CHECK).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+    {
+      "id": "skybearers-belt#bulk-aura",
+      "claim": "Nothing changes on the Bulk aura: WG's 15-foot aura letting allies carry 4 more Bulk is not printed anywhere and is not copied.",
+      "printed": "\"You can attempt to Disarm, Grapple, Shove, or Trip creatures up to two sizes larger than you, and you gain a +1 circumstance bonus to checks for these actions and to your saving throws to resist these actions.\" No Bulk aura is printed. (ikon-16)",
+      "ours": "The printed +1 bonuses only; no Bulk aura.",
+      "theirs": "A 15-foot aura letting allies carry 4 more Bulk, with the +1 dropped entirely.",
+      "proposal": "instrument: settle skybearers-belt - owner ruled 2026-09-10 (#141, follow the page Guy pasted): the book wins; WG's 15-foot 4-Bulk aura is not printed and is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+
+    {
+      "id": "spirit-walk#printed-pieces",
+      "claim": "Spirit Walk prints no sense clause; its three printed benefits must be present as stars and notes instead.",
+      "printed": "Print is silent on senses: Spirit Walk (feat-7137) prints no sense clause at all. Its prerequisite, Apparition Sense, prints \"You have apparition sight, an imprecise sense that allows you to detect the presence of invisible or hidden spirits, haunts, and undead within 30 feet of you.\"",
+      "ours": "No sense on Spirit Walk; apparition sight sits on Apparition Sense, imprecise, 30 feet, exactly where print puts it. The conditional resistance was built in batch 036 as conditionalResistances.",
+      "theirs": "Two rows share the name; only the playtest one has a mechanic, granting a precise 30-foot sense. Their released Spirit Walk row carries nothing.",
+      "proposal": "check: the three printed Spirit Walk pieces are present as stars/notes - a +2 status bonus to Recall Knowledge about spirits, haunts and undead in a 30-foot aura that also covers allies; while Searching or Detecting Magic in exploration the same +2 also applies to AC and to saves against reactions from haunts and spirits; and on the first turn of an encounter, resistance equal to half your level against damage from haunts and spirits (built in batch 036 as conditionalResistances) (owner 2026-09-10 #149 FIX-PASS CHECK).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+    {
+      "id": "spirit-walk#playtest-row",
+      "claim": "Nothing changes: WG's precise 30-foot sense comes from a row marked (playtest), which is never evidence about the released record.",
+      "printed": "Spirit Walk (feat-7137) prints no sense clause at all.",
+      "ours": "No sense on Spirit Walk.",
+      "theirs": "Two rows share the name; only the playtest one has a mechanic, granting a precise 30-foot sense.",
+      "proposal": "instrument: settle spirit-walk - owner ruled 2026-09-10 (#149) and set the STANDING RULE: a WG row marked (playtest) is never evidence about the released record; WG's playtest precise 30-foot sense is a deliberate difference and must stop being raised.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+
+    {
+      "id": "nagaji-spell-familiarity#daily-control",
+      "claim": "The feat carries a live builder-time picker and a dead daily-preparations picker; there must be ONE control, asked at daily preparations.",
+      "printed": "\"During your daily preparations, choose daze, detect magic, or mage hand. Until your next daily preparations, you can cast the chosen spell as an occult innate cantrip.\" (feat-3984; mage hand is now Telekinetic Hand)",
+      "ours": "The grant fires from a build-time picker, plus a second picker at daily preparations that changes nothing - one live control and one dead one on the same feat.",
+      "theirs": "One picker with the three spells, asked once while building the character. They do not model the daily re-choice at all.",
+      "proposal": "On feats/nagaji-spell-familiarity delete the builder-time picker and make the daily-preparations control the single live one, defaulting to yesterday's answer: daze, detect magic or telekinetic hand, granted as an occult innate cantrip usable at will (owner 2026-09-10 #18/#43/#44).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+    {
+      "id": "kitsune-spell-familiarity#daily-control",
+      "claim": "Same defect as its nagaji twin: the choice must be a single control at daily preparations granting a divine at-will cantrip.",
+      "printed": "\"During your daily preparations, choose daze, forbidding ward, or ghost sound. Until your next daily preparations, you can cast the chosen spell as a divine innate cantrip.\" (feat-2619)",
+      "ours": "A build-time picker plus a dead daily-preparations picker.",
+      "theirs": "One picker asked once while building the character; the daily re-choice is not modelled.",
+      "proposal": "On feats/kitsune-spell-familiarity delete the builder-time picker and make the daily-preparations control the single live one, defaulting to yesterday's answer: daze, forbidding ward or ghost sound, granted as a divine innate at-will cantrip heightened to half your level rounded up (owner 2026-09-10 #18/#43/#44).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+    {
+      "id": "kitsune-spell-mysteries#daily-control",
+      "claim": "All three spells are granted correctly but the question is asked in the builder and again, uselessly, at daily preparations; one control at daily preparations is what print prints.",
+      "printed": "\"During your daily preparations, choose bane, illusory object, or sanctuary. You can cast this as a 1st-level divine innate spell once that day.\" (feat-2624)",
+      "ours": "All three become 1st-rank divine innate spells once a day - but the question is asked while building, and a second copy of the same question at daily preparations grants nothing.",
+      "theirs": "Only Bane is set up as a divine innate spell; the other two grant nothing usable.",
+      "proposal": "On feats/kitsune-spell-mysteries delete the builder-time picker and keep one control at daily preparations, defaulting to yesterday's answer: bane, illusory object or sanctuary as a 1st-rank divine innate spell once that day (owner 2026-09-10 #18/#43/#44).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+    {
+      "id": "nagaji-spell-mysteries#daily-control",
+      "claim": "Two questions are asked for one decision and only the builder one grants; there must be a single daily-preparations control.",
+      "printed": "\"During your daily preparations, choose charm, fleet step, or heal. You can cast the chosen spell as a 1st-level occult innate spell once that day.\" (feat-3988)",
+      "ours": "Two questions for one decision. Only the one in the builder grants; the one at daily preparations grants nothing.",
+      "theirs": "One picker with no tradition, no rank and no daily cast, and their middle option points at no spell at all.",
+      "proposal": "On feats/nagaji-spell-mysteries delete the builder-time picker and keep one control at daily preparations, defaulting to yesterday's answer: charm, fleet step or heal as a 1st-rank occult innate spell once that day (owner 2026-09-10 #18/#43/#44).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+    {
+      "id": "kitsune-spell-expertise#daily-control",
+      "claim": "Same defect as the other five kitsune and nagaji spell feats: the choice belongs at daily preparations as a single control.",
+      "printed": "\"During your daily preparations, choose confusion, death ward, or illusory scene. You can cast this as a 5th-rank divine innate spell once that day.\" The feat also makes your divine spell DC and spell attack modifier expert. (feat-2629)",
+      "ours": "A build-time picker plus a dead daily-preparations picker, as on its siblings.",
+      "theirs": "A builder-time picker only; the daily re-choice is not modelled.",
+      "proposal": "On feats/kitsune-spell-expertise delete the builder-time picker and keep one control at daily preparations, defaulting to yesterday's answer: confusion, death ward or illusory scene as a 5th-rank divine innate spell once that day, plus expert divine spell DC and spell attack modifier (owner 2026-09-10 #18/#43/#44).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+    {
+      "id": "nagaji-spell-expertise#daily-control",
+      "claim": "Same defect as the other five kitsune and nagaji spell feats: the choice belongs at daily preparations as a single control.",
+      "printed": "\"During your daily preparations, choose blink, control water, or subconscious suggestion. You can cast this as a 5th-rank occult innate spell once that day.\" The feat also makes your occult spell DC and spell attack modifier expert. (feat-3996)",
+      "ours": "A build-time picker plus a dead daily-preparations picker, as on its siblings.",
+      "theirs": "A builder-time picker only; the daily re-choice is not modelled.",
+      "proposal": "On feats/nagaji-spell-expertise delete the builder-time picker and keep one control at daily preparations, defaulting to yesterday's answer: blink, control water or subconscious suggestion as a 5th-rank occult innate spell once that day, plus expert occult spell DC and spell attack modifier (owner 2026-09-10 #18/#43/#44).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+
+    {
+      "id": "shadowcaster-dedication#tradition",
+      "claim": "Nothing changes: the domain spells use the tradition the character qualified with; WG's divine/Wisdom pin is a deliberate difference.",
+      "printed": "\"Your domain spells from the shadowcaster archetype are of the same tradition as the spells you used to meet the shadowcaster archetype's prerequisites.\" (feat-3009)",
+      "ours": "Cloak of Shadow, one Focus Point, cast on the character's own tradition and attribute.",
+      "theirs": "Cloak of Shadow, one Focus Point, and casting pinned to divine keyed on Wisdom.",
+      "proposal": "instrument: settle shadowcaster-dedication - owner ruled 2026-09-10 (#22, decided from the AoN page) under standing rule R14 (where print works a value out from the character, the app works it out and shows no picker): the book wins; WG's fixed divine/Wisdom casting is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "hallowed-necromancer-dedication#tradition",
+      "claim": "Nothing changes: the focus spells use the tradition of the character's own spell slots; WG's divine/Intelligence pin is a deliberate difference.",
+      "printed": "\"Focus spells from the hallowed necromancer archetype have the same tradition as your spell slots.\" (feat-3459)",
+      "ours": "Hallowed Ground and a Focus Point; the tradition follows the character's own spell slots.",
+      "theirs": "The granted spell plus casting hard-pinned to the divine tradition with Intelligence as the attribute.",
+      "proposal": "instrument: settle hallowed-necromancer-dedication - owner ruled 2026-09-10 (#25) under R14: the book wins; WG's fixed divine/Intelligence casting is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "spellmaster-dedication#tradition",
+      "claim": "Nothing changes: the feat prints no tradition, so the character's own focus tradition and attribute stand; WG's separate Arcane/Intelligence focus source has no printed basis.",
+      "printed": "The feat names no tradition. Its prerequisite is \"ability to cast focus spells\", and the general rule (rules-2231) says \"you need to use the attribute modifier determined by the source of the focus spell\". (feat-1134 / feat-2241)",
+      "ours": "Both spells join the character's own focus spells, using their tradition and attribute.",
+      "theirs": "Builds a separate Arcane, Intelligence focus source and hangs both spells on it.",
+      "proposal": "instrument: settle spellmaster-dedication - owner ruled 2026-09-10 (#110) under R14: the book wins; WG's fixed Arcane/Intelligence focus source has no printed basis and is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "dragon-eidolon#tradition",
+      "claim": "Nothing changes: the dragon eidolon's tradition is printed as Arcane and fixed, with no picker; WG's four-way picker is a deliberate difference.",
+      "printed": "\"Tradition Arcane\" (eidolon-7)",
+      "ours": "Arcane, fixed, with no picker anywhere.",
+      "theirs": "A four-way picker: arcane, divine, occult or primal.",
+      "proposal": "instrument: settle dragon-eidolon - owner ruled 2026-09-10 (#138) under R14: the book wins, arcane is fixed and no picker is built; WG's four-way tradition picker is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "otherworldly-protection#computed-value",
+      "claim": "Nothing changes: the resistance is worked out from the character (3 + half level to void, or vitality with void healing) with no control shown; WG's two pickers are a deliberate difference.",
+      "printed": "\"You gain resistance equal to 3 + half your level to negative damage, or to positive damage if you have negative healing (such as if you're a dhampir).\" (innovation-5)",
+      "ours": "Works it out from the character - a level-20 inventor gets the value automatically, with no control shown.",
+      "theirs": "Asks two questions: pick a resistance (void or vitality), and pick a sanctification (holy, unholy, or none).",
+      "proposal": "instrument: settle otherworldly-protection - owner ruled 2026-09-10 (#147) and set STANDING RULE R14 as a permanent exception: where print works a value out from the character, the app works it out and shows no picker (as battle-creed already does); WG's resistance and sanctification pickers are a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+
+    {
+      "id": "time-mage-dedication#innate-tradition",
+      "claim": "The innate Time Sense cantrip falls back to arcane instead of deriving its tradition the way the archetype's focus spells already do.",
+      "printed": "\"You also gain time sense as an innate cantrip usable at will. This innate spell and your focus spells from the time mage archetype are of the same tradition as the spells you used to meet the archetype's prerequisites.\" (feat-8480)",
+      "ours": "Matches print on the focus side, but the innate Time Sense carries no tradition and falls back to arcane.",
+      "theirs": "A free four-way tradition picker, Wisdom as the key attribute on all four answers, and focus and innate spells swapped.",
+      "proposal": "Derive the Time Sense innate cantrip's tradition on feats/time-mage-dedication exactly the way the archetype's focus-spell tradition is already derived (the tradition of the spells used to meet the prerequisites) instead of falling back to arcane; build no picker - three of WG's four answers are illegal (owner 2026-09-10 #57).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+
+    {
+      "id": "favored-terrain#conditional-speed",
+      "claim": "Nothing changes: the Speed benefit is a star naming both conditions, not a number; WG's unconditional Speed change is a deliberate difference.",
+      "printed": "\"If you have the unimpeded journey class feature, you gain a second benefit while in your favored terrain... Plains You gain a +10-foot status bonus to your land Speed.\" (feat-4866)",
+      "ours": "A star on Speed naming both conditions; the Speed number itself is not changed.",
+      "theirs": "Speed changed from level 2 with no class-feature check and no in-terrain check.",
+      "proposal": "instrument: settle favored-terrain - owner ruled 2026-09-10 (#24; rule 2026-08-22: a condition the sheet cannot see is a star, never a number): the book wins; WG's unconditional Speed change is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "acute-vision#while-raging",
+      "claim": "Nothing changes: darkvision appears only while the Rage toggle is on, as printed; WG's permanent Darkvision is a deliberate difference.",
+      "printed": "\"When you are raging, your visual senses improve, granting you darkvision.\" (feat-5806)",
+      "ours": "Darkvision appears in Senses only while the Rage toggle is on, and the Rage card lists it.",
+      "theirs": "Grants a permanent Darkvision ability; it sits on the sheet whether or not the barbarian is raging.",
+      "proposal": "instrument: settle acute-vision - owner ruled 2026-09-10 (#108): the book wins, darkvision shows only while Rage is on; WG's always-on darkvision is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "born-of-animal#speed-dash",
+      "claim": "Nothing changes: the 30-foot dash is a table choice shown as a star, not a flat Speed increase; WG's always-on +5 Speed is a deliberate difference.",
+      "printed": "\"Yaoguai Form You can dash like an animal. If you have both hands free, you can increase your Speed to 30 feet as you run on all fours.\" (heritage-412)",
+      "ours": "A star on the Speed row explaining the 30-foot dash and its conditions.",
+      "theirs": "A flat, always-on +5 Speed on top of the 25-foot yaoguai Speed.",
+      "proposal": "instrument: settle born-of-animal - owner ruled 2026-09-10 (#116; rule 2026-08-22: a condition the sheet cannot see is a star, never a number): the book wins; WG's always-on +5 Speed is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+    {
+      "id": "curse-of-turbulent-moments#conditional-penalty",
+      "claim": "Nothing changes: both halves of the penalty apply only in one narrow spot each, so they stay notes rather than numbers on the sheet; WG's sixteen numeric rows are a deliberate difference.",
+      "printed": "\"You take a status penalty to your AC against attacks made against you from reactions or free actions and a status penalty to saving throws against effects that would make you fatigued or slowed equal to your cursebound value.\" (mystery-23)",
+      "ours": "A note on AC and a note on saves, each saying the penalty and when it applies; the numbers on the sheet do not move.",
+      "theirs": "Sixteen numeric rows, one set per cursebound stage: -1/-2/-3/-4 to AC and to all three saves, with the printed conditions written beside them as text.",
+      "proposal": "instrument: settle curse-of-turbulent-moments - owner ruled 2026-09-10 (#143, answer C; rule 2026-08-22: anything conditional is a note, not a number): the book wins, the cursebound value stays a conditional note; WG's sixteen flat numeric rows are a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+
+    {
+      "id": "guardians-armor#automatic-resistance",
+      "claim": "The physical resistance is behind a hand toggle, but the condition (wearing medium or heavy armour) is visible to the sheet, so it must be a real automatic number.",
+      "printed": "\"While wearing medium or heavy armor, you gain resistance to physical damage equal to 1 + half your level. In addition, you can rest normally while wearing medium and heavy armor.\" (class-feature-1115)",
+      "ours": "A mode the player switches on by hand; nothing shows on the sheet until they do.",
+      "theirs": "Gives the physical resistance always, with no armour condition at all.",
+      "proposal": "Make classFeatures/guardians-armor automatic: show resistance to physical damage equal to 1 + half your level whenever the equipped armour's category is medium or heavy, and drop the hand toggle. Never WG's always-on version (owner 2026-09-10 #109; the condition IS visible to the sheet, so by his rule it is a real number).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+
+    {
+      "id": "clawdancer-dedication#duplicate-strikes",
+      "claim": "The dedication grants a duplicate copy of both claw Strikes, so each shows twice and the dedication's pair shows even with no stance turned on.",
+      "printed": "Claw Stance: \"The only Strikes you can make are frenzied claw unarmed attacks. These deal 1d6 slashing damage, are in the brawling group...\" - the Strikes are defined inside each stance's effect. (feat-5436)",
+      "ours": "Both Strikes twice over: once from the dedication, again from each stance. The dedication's pair also shows with no stance turned on.",
+      "theirs": "Each Strike granted once, by its own stance; nothing on the dedication itself.",
+      "proposal": "Drop the duplicate Strike grants from feats/clawdancer-dedication and keep frenzied claw on Claw Stance and spinning talon on Talon Stance only, so each Strike shows once and only while its stance is on (owner 2026-09-10 #21).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+
+    {
+      "id": "versatile-mutation#energy-level",
+      "claim": "The five-option energy question is asked at 4th level; print holds it back to 8th.",
+      "printed": "\"At 8th level, choose one of the following: acid, cold, electricity, fire, or sonic damage; when your ostilli Spits Ambient Magic, it can deal that damage type instead\" (feat-5454)",
+      "ours": "Asks at 4th level with no level check.",
+      "theirs": "Asks the five-option question only from 8th level; below that it is not asked at all.",
+      "proposal": "Hold the acid/cold/electricity/fire/sonic question on feats/versatile-mutation until level 8; the bludgeoning-or-slashing option stays available from level 4 (owner 2026-09-10 #35).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+    {
+      "id": "versatile-mutation#takable-twice",
+      "claim": "The record is flagged takable twice, but no printed clause allows it.",
+      "printed": "The feat prints no Special clause allowing it to be taken more than once. (feat-5454)",
+      "ours": "The record is marked as takable twice.",
+      "theirs": "",
+      "proposal": "Remove the takable-twice flag from feats/versatile-mutation - no printed clause allows a second taking (owner 2026-09-10 #35).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+
+    {
+      "id": "arcana-of-iron#weapon-proficiency",
+      "claim": "The feat grants trained advanced weapons forever with no expert step, and wrongly hands over the Weapon Expertise class feature.",
+      "printed": "\"You become trained in advanced weapons. If you gain the weapon expertise class feature, your proficiency in martial and advanced weapons increases to expert.\" (feat-7980)",
+      "ours": "Trained in advanced weapons forever, no expert step, and it wrongly hands over the Weapon Expertise class feature.",
+      "theirs": "Expert at character level 13 whatever the class, martial weapons never touched.",
+      "proposal": "On feats/arcana-of-iron: keep trained in advanced weapons; raise BOTH martial and advanced weapons to expert only when the character's class grants the weapon expertise class feature, at whatever level that class earns it - never a flat level 13; and remove the wrong grant of the Weapon Expertise class feature itself (owner 2026-09-10 #50, follow print).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+    {
+      "id": "arcana-of-iron#bespell-strikes",
+      "claim": "The Bespell Strikes extra damage line is missing from the record entirely.",
+      "printed": "Arcana of Iron raises the extra damage from Bespell Strikes to 1d8. (feat-7980)",
+      "ours": "No Bespell Strikes line at all.",
+      "theirs": "Carries the Bespell Strikes 1d8 line as text.",
+      "proposal": "Add the printed Bespell Strikes clause to feats/arcana-of-iron so its extra damage becomes 1d8 (owner 2026-09-10 #50).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+
+    {
+      "id": "swashbucklers-speed#typed-all-speeds",
+      "claim": "Speed bonuses are added together untyped and only to walking Speed; print types them and a clause saying 'to your Speeds' raises every Speed.",
+      "printed": "\"You gain a +5-foot status bonus to your Speeds; this increases to a +10-foot status bonus while you have panache.\" (feat-6238)",
+      "ours": "Adds every Speed bonus together, untyped, and only to walking Speed. Twenty records carry one today.",
+      "theirs": "Records the status type on Swashbuckler's Speed, but has only one Speed value, so it cannot do all Speeds.",
+      "proposal": "Engine lane (owner 2026-09-10 #127, follow print on both halves): give every Speed bonus a TYPE so two status bonuses take the highest instead of adding, and make a clause worded 'to your Speeds' raise all Speeds rather than land Speed alone. Roughly 20 records carry a speed bonus today; a monk or barbarian with Swashbuckler's Speed loses the 5 feet the app wrongly added.",
+      "playerVisible": true,
+      "askOwner": false
+    },
+
+    {
+      "id": "echo-of-lost-moments#fifth-rung",
+      "claim": "Nothing changes: the ten-spell apparition ladder matches print rung for rung, with Illusory Scene at 5th; WG's rank-1 Illusory Disguise on that rung is their mistake.",
+      "printed": "\"Apparition Spells - Cantrip Figment - 1st Deja Vu - 2nd Dispel Magic - 3rd Curse of Lost Time - 4th Vision of Death - 5th Illusory Scene\" (apparition-5)",
+      "ours": "Grants Illusory Scene at 5th; the whole ten-spell ladder matches print exactly, rung for rung.",
+      "theirs": "Grants Illusory Disguise, a rank-1 spell, on the 5th rung of the ladder.",
+      "proposal": "instrument: settle echo-of-lost-moments - owner ruled 2026-09-10 (#142, keep the app): the book wins; WG's rank-1 Illusory Disguise on the 5th rung is their mistake and is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    },
+
+    {
+      "id": "astrolabe-of-falling-stars#identify-star",
+      "claim": "The record carries no bonus at all, though its six sibling astrolabes carry the printed star and the item can be used as a mariner's astrolabe.",
+      "printed": "\"An astrolabe also grants a +1 item bonus to checks to identify celestial bodies.\" (equipment-4027, reached from equipment-4028, which says the Astrolabe of Falling Stars \"can be used as a mariner's astrolabe\") - no skill is named.",
+      "ours": "Nothing on this record. Six sibling astrolabe records carry the star, all of them on every skill.",
+      "theirs": "A +1 item bonus pinned to Survival, with the celestial-bodies restriction carried as text on the bonus.",
+      "proposal": "Add the same star its six siblings carry to items/astrolabe-of-falling-stars: +1 item bonus on all skills, on checks to identify celestial bodies, requiring trained in Survival and held in two hands. Do not narrow it to Survival as WG does (owner 2026-09-10 #51).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+
+    {
+      "id": "breath-of-the-dragon#derive-from-exemplar",
+      "claim": "Three separate pickers for shape, damage and save make illegal breaths buildable and ignore the draconic exemplar the player already chose; all three must be derived from that exemplar using the printed Draconic Benefactors table.",
+      "printed": "\"The shape of the breath, the damage type, and the saving throw match those of your draconic exemplar (see above).\" (feat-5730). Breath of the Dragon: 15-foot cone or 30-foot line, 1d4 damage (+1d4 at 3rd and every 2 levels thereafter), basic save against the higher of your class DC or spell DC, recharge 1d4 rounds, and the feat gains the trait of the damage type. The Draconic Benefactors table is printed in Draconic Codex pg. 206 and published at https://2e.aonprd.com/DraconicBenefactors.aspx (also reachable from Heritages.aspx?ID=368).",
+      "ours": "Three separate pickers for shape, damage and save, so illegal breaths are buildable, and the dragon answer the player already gave is ignored.",
+      "theirs": "Forty rules keyed to the dragon's name, each writing one sentence that states shape, damage and save together. Text only, no numbers.",
+      "proposal": "Drop the three pickers on feats/breath-of-the-dragon and derive shape, damage type and saving throw from the character's Dragonblood draconic exemplar; add a new data file scripts/data/draconic-benefactors.json citing Draconic Codex pg. 206 + https://2e.aonprd.com/DraconicBenefactors.aspx with these rows (dragon | tradition | speed | breath | save): Adamantine|Primal|Burrow|Cone bludgeoning|Reflex; Barrage|Arcane|-|Cone force|Reflex; Bog|Primal|Swim|Cone acid|Reflex; Brine|Primal|Swim|Line bludgeoning|Reflex; Cinder|Primal|-|Cone fire|Reflex; Cloud|Primal|-|Cone electricity|Reflex; Conspirator|Occult|Climb|Cone poison|Fortitude; Coral|Primal|Swim|Line bludgeoning|Reflex; Crystal|Primal|-|Cone piercing|Reflex; Delight|Divine|-|Cone spirit|Reflex; Despair|Occult|-|Cone sonic|Will; Diabolic|Divine|-|Cone fire|Reflex; Empyreal|Divine|-|Cone spirit|Reflex; Executor|Divine|-|Cone sonic|Reflex; Forest|Primal|-|Cone piercing|Reflex; Fortune|Arcane|-|Cone force|Reflex; Horned|Primal|Swim|Cone poison|Fortitude; Magma|Primal|Burrow|Cone fire|Reflex; Mirage|Arcane|Climb|Cone mental|Will; Mocking|Occult|-|Cone bludgeoning|Reflex; Oath|Divine|-|Cone spirit|Will; Omen|Occult|-|Cone mental|Will; Phase|Arcane|-|Cone force|Reflex; Requiem|Divine|Swim|Line spirit|Will; Resurrection|Divine|-|Cone void|Fortitude; Rime|Primal|Swim|Cone cold|Reflex; Rune|Arcane|-|Cone fire|Reflex; Sage|Occult|-|Cone mental|Will; Sea|Arcane|Swim|Cone bludgeoning|Reflex; Sky|Divine|-|Cone electricity|Reflex; Sovereign|Occult|-|Cone mental|Will; Stormcrown|Primal|-|Line electricity|Reflex; Time|Arcane|-|Cone force|Will; Umbral|Occult|-|Cone void|Reflex; Underworld|Arcane|Burrow|Cone fire|Reflex; Vizier|Occult|Swim|Cone fire|Reflex; Vorpal|Arcane|-|Cone void|Will; Wailing|Arcane|-|Cone sonic|Fortitude; Whisper|Occult|-|Cone mental|Will; Wish|Arcane|Climb|Cone mental|Will. Dragons not in the table show the printed sentence only. MIRROR GAP: add the DraconicBenefactors table page to the AoN update pipeline so the mirror carries it - our 44 draconic-exemplar docs carry tradition/skill/gifts/resistance/weakness but not the breath and save columns (owner 2026-09-10 #55).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+
+    {
+      "id": "reborn-soul#restricted-increases",
+      "claim": "The three printed skill increases are not built at all and the record's note tells the player to apply them by hand, quietly taking WG's both-Lores-each-time reading.",
+      "printed": "\"At 3rd level, 7th level, and 15th level, you receive skill increases, which you can apply only to these Lore skills.\" (background-590)",
+      "ours": "The two typed past-life Lores and the +1 star are built; the increases are not. Our own note calls them EXTRA increases and tells the player to apply them by hand.",
+      "theirs": "Raises both Lores to expert, master and legendary on top of the normal increases - six raises in all.",
+      "proposal": "On backgrounds/reborn-soul build ONE extra skill increase at 3rd, 7th and 15th level each, spendable only on one of the two past-life Lores (the player chooses which each time), and rewrite the record's note to match - not WG's both-Lores-each-time six raises, and not the 'normal increases are locked' reading (owner 2026-09-10 #85, 'A as I describe it').",
+      "playerVisible": true,
+      "askOwner": false
+    },
+
+    {
+      "id": "screech-shooter-greater#grade-numbers",
+      "claim": "The greater grade still shows the base 30-foot, DC 25 sentence; only its own printed numbers belong on it.",
+      "printed": "\"A greater screech shooter is a +2 greater striking harmona gun. The DC for the activation is 30 and it affects creatures in a 40-foot emanation.\" The base page prints \"All creatures in a 30-foot emanation from you must attempt a DC 25 Will save.\" (equipment-1169 / equipment-1169-1109)",
+      "ours": "Greater shows the base 30-foot, DC 25 sentence; the first sentence was already rewritten per grade (\"+2 greater striking\"), so only the numbers were left behind.",
+      "theirs": "Not Wanderer's Guide: the archive page inside our own app already carries both the base blurb and the upgrade line, word for word.",
+      "proposal": "Give items/screech-shooter-greater one sentence per grade carrying only that grade's numbers (option A): DC 30, 40-foot emanation, +2 greater striking harmona gun - never the base DC 25 / 30-foot text (owner 2026-09-10 #72).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+    {
+      "id": "screech-shooter-major#grade-numbers",
+      "claim": "The major grade still shows the base 30-foot, DC 25 sentence; only its own printed numbers belong on it.",
+      "printed": "\"Screech Shooter (Major)... The DC for the activation is 37 and it affects creatures in a 50-foot emanation.\" (equipment-1169-1110)",
+      "ours": "Major shows the base 30-foot, DC 25 sentence.",
+      "theirs": "",
+      "proposal": "Give items/screech-shooter-major one sentence per grade carrying only that grade's numbers (option A): DC 37, 50-foot emanation (owner 2026-09-10 #72).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+    {
+      "id": "wyrm-spindle-greater#grade-numbers",
+      "claim": "The greater wyrm spindle carries the base grade's numbers; only its own printed numbers belong on it.",
+      "printed": "\"Wyrm Spindle (Greater)... Resistance when affixed to armor is 10, and damage from Dragon Breath when affixed to a weapon is 9d6 (DC 34). Activate Cast a Spell; Frequency once per day; Effect You cast 7th-rank summon dragon.\" The base grade prints resistance 5, 6d6 and DC 28. (equipment-2243-1983)",
+      "ours": "The upgraded grade shows the base grade's resistance 5 / 6d6 / DC 28 numbers.",
+      "theirs": "",
+      "proposal": "Give items/wyrm-spindle-greater one sentence carrying only its own numbers (option A): resistance 10 when affixed to armour, Dragon Breath 9d6 with a DC 34 basic Reflex save, and a once-per-day 7th-rank summon dragon (owner 2026-09-10 #72, 'the two upgraded wyrm spindles').",
+      "playerVisible": true,
+      "askOwner": false
+    },
+    {
+      "id": "wyrm-spindle-major#grade-numbers",
+      "claim": "The major wyrm spindle carries the base grade's numbers; only its own printed numbers belong on it.",
+      "printed": "\"Wyrm Spindle (Major)... Resistance when affixed to armor is 15, and damage from Dragon Breath when affixed to a weapon is 12d6 (DC 41). Activate Cast a Spell; Frequency once per day; Effect You cast summon draconic legion.\" (equipment-2243-1984)",
+      "ours": "The upgraded grade shows the base grade's resistance 5 / 6d6 / DC 28 numbers.",
+      "theirs": "",
+      "proposal": "Give items/wyrm-spindle-major one sentence carrying only its own numbers (option A): resistance 15 when affixed to armour, Dragon Breath 12d6 with a DC 41 basic Reflex save, and a once-per-day summon draconic legion (owner 2026-09-10 #72).",
+      "playerVisible": true,
+      "askOwner": false
+    },
+    {
+      "id": "gleaming-blade#transcendence-name",
+      "claim": "Nothing changes: the transcendence keeps its printed name Flowing Spirit Strike; WG's Mirrored Spirit Strike appears nowhere in the archive.",
+      "printed": "\"Transcendence Two Actions (Spirit, Transcendence) Flowing Spirit Strike; Effect Make two Strikes with the gleaming blade, each against the same target and using your current multiple attack penalty.\" (ikon-6)",
+      "ours": "Uses the printed name Flowing Spirit Strike, with the printed effect.",
+      "theirs": "Calls it Mirrored Spirit Strike, a name that appears nowhere in the whole Nethys archive.",
+      "proposal": "instrument: settle gleaming-blade - owner ruled 2026-09-10 (#135): keep the printed name only; WG's Mirrored Spirit Strike exists nowhere in the rules and is a deliberate difference.",
+      "playerVisible": false,
+      "askOwner": false
+    }
+  ]
+}

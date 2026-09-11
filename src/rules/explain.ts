@@ -1443,7 +1443,7 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
       // 15 feet"), then increased by every additive source. This mirrors deriveSpeeds exactly —
       // it previously used raise-to semantics for `speeds.land` while deriveSpeeds added it, so a
       // +5 from Fleet was in the total but missing from the parts, and the breakdown didn't sum.
-      const named: { name?: string; landSpeedBonus?: number | string; landSpeedMin?: number; speeds?: SpeedGrants; speedsIf?: DefenseGrants['speedsIf'] }[] = [];
+      const named: { name?: string; landSpeedBonus?: number | string; landSpeedMin?: number; speeds?: SpeedGrants; speedsIf?: DefenseGrants['speedsIf']; speedBonusType?: string }[] = [];
       if (c.heritageId && db.heritages[c.heritageId]) named.push(db.heritages[c.heritageId]);
       for (const f of c.feats) {
         const ft = db.feats[f.featId];
@@ -1462,18 +1462,37 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
         parts.push({ label: 'Raised to', note: src?.name, value: floor - ancestryLand });
       }
       let preArmorLand = Math.max(ancestryLand, floor);
-      for (const src of named) {
-        /* A formula-valued bonus (Vivacious Speed) is resolved the same way deriveSpeeds resolves it,
-         * so the breakdown still SUMS to the total — the property this block exists to preserve. */
-        const bonus =
-          typeof src.landSpeedBonus === 'string'
-            ? resolveFormula(src.landSpeedBonus, { level: c.level, abilities: c.abilities, speeds })
-            : (src.landSpeedBonus ?? 0);
-        const add = bonus + (typeof src.speeds?.land === 'number' ? src.speeds.land : 0);
-        if (!add) continue;
-        parts.push({ label: 'Speed increase', note: src.name, value: add });
+      /* A formula-valued bonus (Vivacious Speed) is resolved the same way deriveSpeeds resolves it,
+       * so the breakdown still SUMS to the total — the property this block exists to preserve. */
+      const landBonusOf = (src: (typeof named)[number]) =>
+        typeof src.landSpeedBonus === 'string'
+          ? resolveFormula(src.landSpeedBonus, { level: c.level, abilities: c.abilities, speeds })
+          : (src.landSpeedBonus ?? 0);
+      /* batch 037: swashbucklers-speed#typed-all-speeds — *"You gain a +5-foot STATUS bonus to your
+       * Speeds"* (feat-6238). deriveSpeeds now takes the HIGHEST of two bonuses sharing a type instead
+       * of summing them, and this loop kept summing: the suppressed bonus stayed in the parts, and the
+       * surplus came out of the block BELOW as an armour penalty on a character wearing no armour —
+       * Swashbuckler's Speed + Scout's Speed read [Ancestry 25, +5, +10, Armor Speed penalty −5] under
+       * a correct total of 35 ft. Mirror the stacking here (highest per named type, first wins a tie,
+       * exactly as `stackSpeedBonuses` settles it) and keep the losing bonus VISIBLE at 0 naming what
+       * beat it, rather than dropping a line the player took a feat for. Untyped bonuses are untouched
+       * and still stack, so Fleet still shows its own +5. */
+      const winnerOfType: Record<string, number> = {};
+      named.forEach((src, i) => {
+        const t = src.speedBonusType;
+        if (!t || !landBonusOf(src)) return;
+        if (winnerOfType[t] == null || landBonusOf(src) > landBonusOf(named[winnerOfType[t]])) winnerOfType[t] = i;
+      });
+      named.forEach((src, i) => {
+        const t = src.speedBonusType;
+        const bonus = landBonusOf(src);
+        const beaten = !!t && !!bonus && winnerOfType[t] !== i;
+        const add = (beaten ? 0 : bonus) + (typeof src.speeds?.land === 'number' ? src.speeds.land : 0);
+        if (!add && !beaten) return;
+        const note = beaten ? `${src.name} — ${t} bonus, does not stack with ${named[winnerOfType[t!]]?.name ?? 'a larger one'}` : src.name;
+        parts.push({ label: 'Speed increase', note, value: add });
         preArmorLand += add;
-      }
+      });
 
       const naturalLand = speeds.land ?? 0;
       const penalty = preArmorLand - naturalLand;

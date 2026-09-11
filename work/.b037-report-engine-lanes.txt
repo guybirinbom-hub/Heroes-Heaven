@@ -1,0 +1,23 @@
+BATCH 037 — family "engine-lanes": see work/.b037-report-red-owner-ruled-engine-lanes.txt.
+
+This round's engine group is named "red-owner-ruled-engine-lanes" and owns both engine findings
+(swashbucklers-speed#typed-all-speeds and flexible-spellcaster#collection-shape). This file exists only
+because work/.b037-specs.json already carried an entry for family "engine-lanes" naming it, and
+CROSS-FILE GAPS #1 of work/.b037-report-red-close-offbatch-door.txt asks for the three paths that entry
+names to exist so the commit stage does not stage files that were never written. All three now do:
+
+  work/.b037-rows-engine-lanes.json    deliberately empty; the 8 real rows are in
+                                       work/.b037-rows-red-owner-ruled-engine-lanes.json (a duplicate
+                                       row set would hit the applier's same-record+field refusal).
+  work/.b037-report-engine-lanes.txt   this pointer.
+  test/batch037-engine-lanes.test.ts   real, non-duplicate assertions: the SCOPE of the speed-type lane
+                                       (which of the twenty landSpeedBonus carriers may name a type at
+                                       all), cited `// batch 037: swashbucklers-speed#typed-all-speeds`.
+                                       The mechanic itself is pinned in
+                                       test/batch037-red-owner-ruled-engine-lanes.test.ts.
+
+DATA STILL NEEDED
+  (none — see the real report.)
+
+CROSS-FILE GAPS
+  (none of its own — see the real report.)

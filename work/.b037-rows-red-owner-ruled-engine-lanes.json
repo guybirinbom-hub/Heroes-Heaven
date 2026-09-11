@@ -1,0 +1,71 @@
+{
+  "findings": [
+    {
+      "id": "swashbucklers-speed#typed-all-speeds",
+      "note": "ENGINE BUILT FIRST, then the rows. src/rules/types.ts gains two siblings to landSpeedBonus - speedBonusType ('status'|'item'|'circumstance') and speedBonusAllSpeeds (true) - and src/rules/derive.ts:deriveSpeeds now collects every feat/classFeature/heritage speed bonus into one list and stacks it by type (highest per named type; untyped bonuses and the leshy's -5 penalty keep adding, which is RAW), then applies the 'to your Speeds' half to every OTHER movement type the character already has, beside the existing speedAdjust loop. landSpeedBonus itself is UNCHANGED in type (still number|string) on purpose: src/rules/explain.ts:1446 declares its own local {landSpeedBonus?: number|string} row shape and is owned by another group this round, so widening the field would fail tsc in a file this group may not edit. The rows below carry ONLY the type, so explain.ts keeps naming and itemising each bonus exactly as it does today. SCOPE: 20 records carry a landSpeedBonus; each printed clause was read (public/core-descriptions.json) and only the 7 whose OWN text names a bonus type are re-authored. The 11 that print 'Your Speed increases by 5 feet' (fleet, nimble-elf, nimble-hooves, swift, call-of-elysium, animal-swiftness, timewracked-dedication, fleetwind-centaur, shadow-of-the-wanderer, spindly-anadi, seaweed-leshy) name no type and stay bare numbers. hyper-boosters and tillers-drive are deliberately left untyped and are flagged as residue in the report: each stores the DELTA over a sibling's bonus (Hyper Boosters over Speed Boosters, Tiller's Drive over Bellflower Dedication), so typing them would make the pair take the highest of two halves (5) instead of the printed whole (10). With the sibling typed and the delta untyped the pair still totals the printed number. Pinned by test/batch037-red-owner-ruled-engine-lanes.test.ts, which asserts on in-memory PATCHED and STRIPPED copies of the database, never a patched-vs-shipped delta.",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "swashbucklers-speed",
+          "field": "speedBonusType",
+          "value": "status",
+          "why": "AoN feat-6238: \"You gain a +5-foot STATUS bonus to your Speeds; this increases to a +10-foot status bonus while you have panache.\" The type was dropped, so a swashbuckler carrying both this and Vivacious Speed's standing status half walked 5 feet past the printed number. Owner ruling 2026-09-10 #127."
+        },
+        {
+          "category": "feats",
+          "id": "swashbucklers-speed",
+          "field": "speedBonusAllSpeeds",
+          "value": true,
+          "why": "AoN feat-6238: \"a +5-foot status bonus to your SPEEDS\" - the plural. The only carrier in the database that prints it; every other speed-bonus clause says \"your Speed\". Read by deriveSpeeds beside the speedAdjust loop, so a swim or fly Speed the character already has takes the 5 feet and a Speed they do not have is not created."
+        },
+        {
+          "category": "feats",
+          "id": "scouts-speed",
+          "field": "speedBonusType",
+          "value": "status",
+          "why": "AoN feat-6398: \"You gain a +10-foot STATUS bonus to your Speed.\""
+        },
+        {
+          "category": "feats",
+          "id": "bellflower-dedication",
+          "field": "speedBonusType",
+          "value": "status",
+          "why": "AoN feat-928: \"You gain a +5-foot STATUS bonus to your Speed.\" (Tiller's Drive raises this same bonus to +10 and stays untyped - it carries the delta, not a second bonus.)"
+        },
+        {
+          "category": "classFeatures",
+          "id": "furious-footfalls",
+          "field": "speedBonusType",
+          "value": "status",
+          "why": "AoN class-feature-849: \"You gain a +5-foot STATUS bonus to your Speed.\""
+        },
+        {
+          "category": "classFeatures",
+          "id": "blessed-swiftness",
+          "field": "speedBonusType",
+          "value": "status",
+          "why": "AoN class-feature-877 (Blessing of the Devoted), section \"Blessed Swiftness:\" - the record's own aonParentId: \"You gain a +5-foot STATUS bonus to Speed.\" (VERIFIER FIX 2026-09-11: this why named no AoN doc id.)"
+        },
+        {
+          "category": "classFeatures",
+          "id": "speed-boosters",
+          "field": "speedBonusType",
+          "value": "status",
+          "why": "AoN innovation-5 SpeedBoosters: \"You gain a +5-foot STATUS bonus to your Speed, which increases to a +10-foot status bonus when under the effects of Overdrive.\" (Hyper Boosters carries the +5 delta over this one and stays untyped, so the pair still sums to the printed +10.)"
+        },
+        {
+          "category": "classFeatures",
+          "id": "vivacious-speed",
+          "field": "speedBonusType",
+          "value": "status",
+          "why": "AoN class-feature-1017: \"When you don't have panache, you still get half this STATUS bonus to your Speed, rounded down to the nearest 5-foot increment\" - the half this record's landSpeedBonus formula carries. Two status bonuses take the highest, so a swashbuckler with Swashbuckler's Speed gets the larger of the two rather than their sum."
+        }
+      ]
+    },
+    {
+      "id": "flexible-spellcaster#collection-shape",
+      "note": "CODE-ONLY, and now built rather than listed: no data row is possible or needed. src/rules/build.ts exports flexibleCollectionSize() (the total of the archetype-capped slot table, ranks >= 1) and the spellCollection branch fills the collection from the lowest rank up against that one flat budget instead of slice(0, count) per rank; src/builder/Builder.tsx routes the collection onto the existing across-rank rail the spellbook already uses (flatBudget/flatAt), calling the SAME exported sizer so the picker cannot disagree with the sheet, and prints the printed floor ('at least one 1st-rank spell') where the player chooses. Pinned by test/batch037-red-owner-ruled-engine-lanes.test.ts on a BUILT flexible druid. This finding previously carried backfillRows: [] in work/.b037-rows-data-rows-3.json with no citation anywhere; it is cited here and in work/.b037-report-red-owner-ruled-engine-lanes.txt.",
+      "backfillRows": []
+    }
+  ]
+}

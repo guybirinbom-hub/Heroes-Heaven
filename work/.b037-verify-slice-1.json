@@ -1,0 +1,868 @@
+{
+  "verdicts": [
+    {
+      "id": "devil-allies#printing",
+      "claim": "Nothing changes: the app already follows the 2026 Hellfire Dispatches printing (rank 6, heightening from 14th to a maximum of 10th); WG's older Character Guide numbers are a deliberate difference that must be written down.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "fear-no-law-fear-no-one#printing",
+      "claim": "Nothing changes: the app already carries the current one-action Strike that lowers nearby allies' frightened value; WG's superseded save-upgrade printing is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "steady-balance#grab-an-edge",
+      "claim": "Nothing changes: the app carries the Player Core text only; WG's extra Acrobatics-for-Reflex substitution on Grab an Edge is the Core Rulebook clause Player Core deliberately dropped and must not be added.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "firework-technician-dedication#pyrotechnic-vial",
+      "claim": "The dedication's 4 pyrotechnic versatile vials are a bare counter with no item behind them, so the player has nothing to throw; a real pyrotechnic versatile vial item must exist.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "firework-technician-dedication#source",
+      "claim": "The record's book link still points at the superseded 2021 printing even though its displayed text is already the current one.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "hellknight-dedication#armor-training",
+      "claim": "Nothing changes: the dedication grants mental resistance and the Intimidation step only; WG's armour training belongs to Armiger's Protection, which the app already builds.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "reverse-engineer#crafting-star",
+      "claim": "The +2 Crafting situational star comes from the superseded 2021 printing and must be deleted; the current entry prints no +2.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "ardent-armiger#printing",
+      "claim": "Nothing changes: the app matches the Hellfire Dispatches reprint word for word; WG's Character Guide text is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "advanced-red-mantis-magic#legacy-slots",
+      "claim": "Nothing changes: this 2019 World Guide feat belongs to a Red Mantis archetype the 2024 book replaced whole, so it grants nothing on the new archetype; WG's legacy slot grant is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "android#printing",
+      "claim": "Nothing changes: the app keeps the Lost Omens Ancestry Guide printing (Rare, Androffan + Common); WG's Starfinder Player Core printing is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "aon-wishes-for-riches#classification-choice",
+      "claim": "Nothing changes: the app asks dragon or leech and grants the matching deviant feat; WG's flat Consume Energy grant is the older wording and is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "sense-of-belonging#classification-choice",
+      "claim": "Nothing changes: the app asks flicker or wraith and grants the matching deviant feat; WG's flat Eerie Flicker grant is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "lost-loved-one#classification-choice",
+      "claim": "Nothing changes: the app asks leech or wraith and grants the matching deviant feat; WG's flat Ghostly Grasp grant is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "wanderlust#classification-choice",
+      "claim": "Nothing changes: the app asks flicker or troll per the newer printing; WG's troll-only text and data are a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "beast-blessed#trigger",
+      "claim": "Nothing changes: Bestial Clarity triggers on an enchantment effect exactly as printed; WG's wider 'mental effect' trigger must not be copied.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "total-power#classification-choice",
+      "claim": "Nothing changes: the app asks dragon or troll and grants that branch; WG's troll-only Bone Spikes text is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "necromantic-tenacity#trigger",
+      "claim": "Nothing changes: the feat keeps print's necromancy wording; WG's death/void trait trigger is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "magus#2026-printing",
+      "claim": "The magus must move whole to the 2026 Impossible Magic printing, whose Spells per Day table keeps 2 slots at every unlocked rank instead of emptying the lower ranks.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "summoner#2026-printing",
+      "claim": "The summoner must move whole to the 2026 Impossible Magic printing, whose Spells per Day table keeps 2 slots at every unlocked rank instead of only the two highest.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "basic-magus-spellcasting#2026-printing",
+      "claim": "Basic Magus Spellcasting is a Feat 4 granting the ordinary basic spellcasting benefits in the 2026 printing, not a Feat 6 granting the bounded ones.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "expert-magus-spellcasting#2026-printing",
+      "claim": "Expert Magus Spellcasting grants the expert spellcasting benefits (not the bounded ones) and requires master in Arcana in the 2026 printing.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "master-magus-spellcasting#2026-printing",
+      "claim": "Master Magus Spellcasting grants the master spellcasting benefits (not the bounded ones) and requires legendary in Arcana in the 2026 printing.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "basic-summoner-spellcasting#2026-printing",
+      "claim": "Basic Summoner Spellcasting is a Feat 4 granting the ordinary basic spellcasting benefits in the 2026 printing, not a Feat 6 granting the bounded ones.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "expert-summoner-spellcasting#2026-printing",
+      "claim": "Expert Summoner Spellcasting grants the expert spellcasting benefits (not the bounded ones) and requires master in the skill associated with the eidolon's tradition.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "master-summoner-spellcasting#2026-printing",
+      "claim": "Master Summoner Spellcasting grants the master spellcasting benefits (not the bounded ones) and requires legendary in the skill associated with the eidolon's tradition.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "studious-spells#2026-rebuild",
+      "claim": "Studious Spells must be rebuilt as the 2026 'Studious Spell': a level-7 list of named spells added to the spellbook with a free-action Arcane Cascade rider, not a grant of extra restricted spell slots.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "animist-apparition-spellcasting#slot-levels",
+      "claim": "Nothing changes: the app's apparition/animist slot levels match the printed table row for row; WG is one level late on the 7th, 8th and 9th ranks.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "animist#slot-table",
+      "claim": "Nothing changes: the animist class slot table matches print at every level and rank; WG's single 7th-rank slot at levels 13-18 is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "sequestered-spell#innate-proficiency",
+      "claim": "Nothing changes: the innate spell is trained and becomes expert at 12th by the general rule, and the single tradition-narrowed picker stays; WG's four tradition-gated pickers and level-4 expert condition are a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "spore-order#leaf-order-membership",
+      "claim": "Nothing changes: Spore Order already counts as a member of the Leaf Order for the ten feats that ask for it, and blocking stays off (option B, know the membership and block nothing); WG's whole-Leaf-Order grant is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "cultivation-order#leaf-order-membership",
+      "claim": "Nothing changes: Cultivation Order already counts as a member of the Leaf Order and blocking stays off; WG's empty Leaf Order record is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "divine-breadth#no-cantrip",
+      "claim": "Nothing changes: Divine Breadth grants extra slots only, no cantrip; WG's extra cantrip entry is a copied slip and a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "primal-breadth#no-cantrip",
+      "claim": "Nothing changes: Primal Breadth grants extra slots only, no cantrip; WG's copied cantrip entry is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "occult-breadth#no-cantrip",
+      "claim": "Nothing changes: Occult Breadth grants extra slots only, no cantrip - the same ruling the owner gave for Divine and Primal Breadth; WG's copied cantrip entry is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "sponsored-by-a-village#rarity",
+      "claim": "Nothing changes: the background stays common because the printed entry carries no rarity trait; WG's uncommon rating is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "sponsored-by-teacher-ot#one-pick",
+      "claim": "The Survival-or-Performance choice is asked twice and the two controls can be answered differently, training two skills instead of one; it must be asked once.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "sponsored-by-teacher-ot#rarity",
+      "claim": "Nothing changes on rarity: the background stays common; WG's uncommon rating is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "unsponsored#rarity",
+      "claim": "Nothing changes: the background stays common; WG's uncommon rating is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "sponsored-by-family#rarity",
+      "claim": "Nothing changes: the background stays common; WG's uncommon rating is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "sponsored-by-a-stranger#rarity",
+      "claim": "Nothing changes: the background stays common; WG's uncommon rating is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "sky-rider#both-skills",
+      "claim": "Nothing changes: Sky Rider trains Acrobatics AND Plane of Air Lore, not one or the other; WG's pick is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "streetfood-vendor#printed-choice",
+      "claim": "The Crafting-or-Society choice is correct and stays, but the record's description text must be the printed sentence from the current Tian Xia Character Guide page rather than our rewrite.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "locate-lawbreakers#order-of-the-gate",
+      "claim": "The heightening to rank 5 at level 14 is a note that nothing reads; it must fire only for Order of the Gate members, read from the order the player already recorded.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "gunslinger-weapon-mastery#advanced-rank",
+      "claim": "Nothing changes: the app carries the printed split (master for simple and martial firearms and crossbows, expert for advanced) plus the critical specialization; WG's blanket master and missing crit spec are a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "brutality#melee-only",
+      "claim": "Nothing changes: critical specialization while raging is melee weapons and unarmed attacks only; WG's whole-category grant is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "shoony-lore#no-additional-lore",
+      "claim": "Nothing changes: the feat trains Shoony Lore and nothing else; WG's Additional Lore grant adds three skill increases this feat never prints.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "bone-magic#cantrip-list",
+      "claim": "Nothing changes: the picker offers the printed union of the occult and primal cantrip lists, with the answer only setting the innate tradition; WG's tradition-first narrowing is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "oatia-skysage-dedication#cantrip-picker",
+      "claim": "The repertoire picker offers all 38 occult cantrips; print names exactly four, so the picker must be restricted to them.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "mightyfall-kobold#boosts",
+      "claim": "Nothing changes: 'instead of the normal attribute boosts and flaws' replaces the whole set, free boost included; WG's three-boost reading is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "glyph-expert#magical-writing",
+      "claim": "Nothing changes: the save upgrade fires only against traps that feature magical writing; WG's any-magical-trap trigger is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "aeon-stone-agate-ellipsoid#resonant-note",
+      "claim": "The resonant sentence is only in the item's description; it must also print on the augury spell entry the stone grants.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "aeon-stone-dusty-rose-prism#resonant-note",
+      "claim": "The resonant 10-damage sentence is only in the item's description; it must also print on the shield spell entry the stone grants.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "aeon-stone-dusty-rose-prism#duplicate-picker",
+      "claim": "This one stone carries both the wayfinder mark and an older yes/no picker asking the same question; the duplicate picker must go.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "aeon-stone-western-star#resonant-note",
+      "claim": "The resonant sentence is only in the item's description; it must also print on the illusory disguise entry the stone grants.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "wild-lights#printed-spell-name",
+      "claim": "The printed spell name was rewritten at import from Dancing Lights to Light, which is wrong against our Light and invisible to the player; the printed name must be restored and the broken link dropped.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "toppling-tentacles#replacement-note",
+      "claim": "The feat's note appears nowhere: Black Tentacles is hidden as superseded and Slither, its recorded replacement, carries nothing.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "spew-tentacles#replacement-note",
+      "claim": "Spew Tentacles has the same defect as Toppling Tentacles: its printed note reaches neither Black Tentacles nor Slither.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "unifying-emblem-shundar-quah#daily-spell",
+      "claim": "The emblem has a one-action activation and a daily use but no spell behind them; the printed once-per-day Thoughtful Gift must be added.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "unifying-emblem-sklar-quah#daily-spell",
+      "claim": "The emblem has no activation cost and no spell; the printed once-per-day Concordant Choir must be added with the spell's own 1-to-3-action cost.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "unifying-emblem-tamiir-quah#daily-spell",
+      "claim": "The emblem shows a two-action activation and a once-a-day use but casts nothing; the printed once-per-day Tailwind must be added.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "molten-wit#three-branches",
+      "claim": "Only the neither-trained branch is built; the two branches the book prints for a character already trained in one or both skills are missing.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "intuitive-crafting#middle-case",
+      "claim": "The already-trained-in-Crafting case wrongly hands out a free skill of choice on top of Specialty Crafting; print gives the feat only.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "empathic-calm#one-pick",
+      "claim": "Nothing changes: 'either X or Y' is ONE pick, which the app already asks; WG's grant of both spells is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "colugos-traversal#one-pick",
+      "claim": "Nothing changes: 'your choice of X or Y' is ONE pick, which the app already asks; WG's grant of both spells is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "armor-in-earth#armour-proficiency",
+      "claim": "The granted stone armour carries no proficiency at all, so a kineticist's AC is wrong until the player fixes it by hand; the armour must use the wearer's best armour proficiency by itself.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "hardwood-armor-armor#armour-proficiency",
+      "claim": "The granted hardwood armour carries no proficiency, only a note telling the player to set it themselves, so the impulse leaves a kineticist worse off than their own armour.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "hardened-chassis#enhancement",
+      "claim": "The Enhancement tier is only a note telling the player to work it out; it must be computed, and switched on only by an augmentation feat that names this feat.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "armigers-protection#armor-pick",
+      "claim": "The free armour pick offers a non-existent item and grants nothing; it must be a real pick landing in inventory.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "flexible-spellcaster#collection-shape",
+      "claim": "The spell collection is built per rank, matching WG rather than print; it must be ONE flat pool sized by the character's total spell slots, with at least one 1st-rank spell.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "haunting-memories#skill-feat-pick",
+      "claim": "Only the proficiency half of the daily choice is asked; the printed skill feat half is a note that grants nothing.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "dream-magic#second-taking",
+      "claim": "Both takings of Dream Magic share one answer, so a player who takes it twice still gets only one spell; print says the second taking gives the spell not chosen the first time.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "scar-of-the-survivor#dying-toggle",
+      "claim": "The immanence gives the benefits of Diehard, but the dying value on the sheet never moves.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "soul-well#dying-toggle",
+      "claim": "Soul Well's one-minute effect raises the dying value permanently; the same toggle shape that fixes Scar of the Survivor fixes it.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "animal-instinct#spider-web",
+      "claim": "The spider instinct's Web attack rides as text on the Rage action because the engine cannot hold an attack that deals no damage; it must become a real attack row.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "reinforced-chassis#ac-scaling",
+      "claim": "Nothing changes: the armour's item bonus rises to +4 at 5th and +5 at 10th as printed; WG's flat +3 is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "psychic-dedication#no-focus-point",
+      "claim": "Nothing changes: the dedication grants no Focus Point - the pool is printed on Psi Development at 6th, where the app already carries it; WG's dedication-granted pool is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "elemental-existence#adopted-ancestry",
+      "claim": "Nothing changes: the feat grants Adopted Ancestry outright as printed; WG's hide-the-feat encoding is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "thats-not-natural#circumstance-bonus",
+      "claim": "Nothing changes: the master-Survival +2 raises the initiative bonus - the only thing the printed text calls a circumstance bonus; WG's Perception-only reading is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "devils-eye#legal-lore-rank",
+      "claim": "Nothing changes: expert Legal Lore rising to master at 7th and legendary at 15th, plus the Objection reaction and the +1 note, all as printed; WG's trained-only row is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "instinct-ability#no-hit-points",
+      "claim": "Nothing changes: the feat grants the matching instinct ability and no Hit Points; WG's +3 maximum HP is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "pistol-wand#stock-runes",
+      "claim": "Nothing changes: the pistol's runes carry over to the reinforced stock as printed; WG's plain base weapon is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "tumbling-theft#thievery",
+      "claim": "Nothing changes: the +1 circumstance bonus lands on Thievery as printed; WG's Stealth placement is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "keys-to-destiny#labor-lore",
+      "claim": "Nothing changes: all nine printed Lores are offered and each trains itself; WG's Labor Lore option writing Herbalism Lore is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "concordance-scout#six-lores",
+      "claim": "Nothing changes: all six printed planar lores are offered and each trains the right lore; WG's five-option list is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "poppet#fire-weakness",
+      "claim": "Nothing changes: the fire weakness is one-third level with a minimum of 1, as printed; WG's minimum-less formula is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "goloma#languages",
+      "claim": "Nothing changes: a goloma is granted Goloma and Mwangi as printed; WG's Common grant is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "traveling-gourmand#survival",
+      "claim": "Nothing changes: the background trains Survival and Cooking Lore and grants Forager, as printed; WG's untrained Survival operation is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "seer-of-the-dead#one-boost",
+      "claim": "Nothing changes: the background prints one boost (Constitution or Wisdom) and no free boost; WG's second boost is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "haunted#no-skill-feat",
+      "claim": "Nothing changes: no printing of Haunted names a feat; WG's Recognize Spell grant is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "tree-friend#arboreal",
+      "claim": "Nothing changes: 'you can choose Arboreal' is permission, and our language picker already offers every language; WG's outright Arboreal grant is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "hammered-by-fate#three-lores",
+      "claim": "Nothing changes: all three printed Lores are offered and the Harrow the Fiend free action is built; WG's duplicated Daemon Lore is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "lesser-scion#heraldry-lore",
+      "claim": "Nothing changes: the background trains Heraldry Lore as printed; WG's misspelled \"Heradlry Lore\" is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "bachuan-revolutionary#wisdom-boost",
+      "claim": "Nothing changes: the background offers Strength or Wisdom plus a free boost, uncommon as printed; WG's broken Wisdom option is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "divine-font#rank-9",
+      "claim": "Nothing changes: the font stays at 9th rank because Miraculous Spell bars 10th-rank slots from slot-granting abilities; WG's 10th-rank font at 19-20 is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "undine#swim-speed",
+      "claim": "Nothing changes: the swim Speed of 10 feet and the amphibious trait are unconditional as printed; WG's capping condition is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "grave-orc#void-resistance",
+      "claim": "Nothing changes: void resistance is half your level with a minimum of 1 as printed; WG's minimum-less formula is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "deny-lady-nanbyos-charity#bulk-thresholds",
+      "claim": "Nothing changes: print gives two different numbers (encumbered +1, maximum +2) and the app carries both; WG's single value of 2 is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "waning-moon-sarangay#reroll-skill",
+      "claim": "Nothing changes: the reroll follows the chosen skill and the note already sits on that skill's row; WG's Acrobatics-for-everything reroll is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "barrows-edge#damage-wording",
+      "claim": "Nothing changes: +1 spirit damage per die, +3 per die against a foe below half Hit Points, as printed; WG's persistent-damage reading with no below-half clause is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "gaze-sharp-as-steel#transcendence",
+      "claim": "Nothing changes: the transcendence is A Moment Unending's precision damage as printed; WG's Reactive Strike grant is a different ability wearing the printed name.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "hyper-boosters#overdrive-bonus",
+      "claim": "Nothing changes: +10 Speed standing and +20 in Overdrive is the printed total, with the legendary +30 shown as a note; WG's rank-free +30 is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "chronomancers-secrets#focus-spell",
+      "claim": "Nothing changes: both options grant a focus spell and Stasis carries the focus trait; WG's ordinary-spell Stasis is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "benefactors-resistance#floor-and-dragons",
+      "claim": "Nothing changes: the resistance keeps its floor of 1 (a deliberate small step past the literal page, which prints no minimum), and WG's extra resistance against dragons is not copied.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "merchants-scale#no-rules",
+      "claim": "The item shows as a blank priced object; print has no rules body at all, so one plain line clearly marked as ours must say so - and WG's invented +1 to seven skills must never be added.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "mask-of-the-mantis-major#printed-contents",
+      "claim": "The Major grade stays at the base 2nd rank for both spells (the archive's Major block never restates the 5th-rank heightening), but its own printed pieces must be present.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "zealot-staff#free-action-limit",
+      "claim": "The staff ships a once-per-minute limit and a 'per minute' pip that no source prints; the page has no Frequency line at all.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "zealot-staff#printed-contents",
+      "claim": "The rest of the staff's printed contents must be verified against the page in the same pass.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "northridge-scholar#seasonal-boon-frequency",
+      "claim": "Nothing changes: Seasonal Boon stays a free action with no frequency because our page prints none; WG's 'once per season' is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "skybearers-belt#scoped-stars",
+      "claim": "The three +1 stars must be scoped to the four named actions and to resisting them, not blanket, and the two-sizes-larger permission must be shown.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "skybearers-belt#bulk-aura",
+      "claim": "Nothing changes on the Bulk aura: WG's 15-foot aura letting allies carry 4 more Bulk is not printed anywhere and is not copied.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "spirit-walk#printed-pieces",
+      "claim": "Spirit Walk prints no sense clause; its three printed benefits must be present as stars and notes instead.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "spirit-walk#playtest-row",
+      "claim": "Nothing changes: WG's precise 30-foot sense comes from a row marked (playtest), which is never evidence about the released record.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "nagaji-spell-familiarity#daily-control",
+      "claim": "The feat carries a live builder-time picker and a dead daily-preparations picker; there must be ONE control, asked at daily preparations.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "kitsune-spell-familiarity#daily-control",
+      "claim": "Same defect as its nagaji twin: the choice must be a single control at daily preparations granting a divine at-will cantrip.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "kitsune-spell-mysteries#daily-control",
+      "claim": "All three spells are granted correctly but the question is asked in the builder and again, uselessly, at daily preparations; one control at daily preparations is what print prints.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "nagaji-spell-mysteries#daily-control",
+      "claim": "Two questions are asked for one decision and only the builder one grants; there must be a single daily-preparations control.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "kitsune-spell-expertise#daily-control",
+      "claim": "Same defect as the other five kitsune and nagaji spell feats: the choice belongs at daily preparations as a single control.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "nagaji-spell-expertise#daily-control",
+      "claim": "Same defect as the other five kitsune and nagaji spell feats: the choice belongs at daily preparations as a single control.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "shadowcaster-dedication#tradition",
+      "claim": "Nothing changes: the domain spells use the tradition the character qualified with; WG's divine/Wisdom pin is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "hallowed-necromancer-dedication#tradition",
+      "claim": "Nothing changes: the focus spells use the tradition of the character's own spell slots; WG's divine/Intelligence pin is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "spellmaster-dedication#tradition",
+      "claim": "Nothing changes: the feat prints no tradition, so the character's own focus tradition and attribute stand; WG's separate Arcane/Intelligence focus source has no printed basis.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "dragon-eidolon#tradition",
+      "claim": "Nothing changes: the dragon eidolon's tradition is printed as Arcane and fixed, with no picker; WG's four-way picker is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "otherworldly-protection#computed-value",
+      "claim": "Nothing changes: the resistance is worked out from the character (3 + half level to void, or vitality with void healing) with no control shown; WG's two pickers are a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "time-mage-dedication#innate-tradition",
+      "claim": "The innate Time Sense cantrip falls back to arcane instead of deriving its tradition the way the archetype's focus spells already do.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "favored-terrain#conditional-speed",
+      "claim": "Nothing changes: the Speed benefit is a star naming both conditions, not a number; WG's unconditional Speed change is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "acute-vision#while-raging",
+      "claim": "Nothing changes: darkvision appears only while the Rage toggle is on, as printed; WG's permanent Darkvision is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "born-of-animal#speed-dash",
+      "claim": "Nothing changes: the 30-foot dash is a table choice shown as a star, not a flat Speed increase; WG's always-on +5 Speed is a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "curse-of-turbulent-moments#conditional-penalty",
+      "claim": "Nothing changes: both halves of the penalty apply only in one narrow spot each, so they stay notes rather than numbers on the sheet; WG's sixteen numeric rows are a deliberate difference.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "guardians-armor#automatic-resistance",
+      "claim": "The physical resistance is behind a hand toggle, but the condition (wearing medium or heavy armour) is visible to the sheet, so it must be a real automatic number.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "clawdancer-dedication#duplicate-strikes",
+      "claim": "The dedication grants a duplicate copy of both claw Strikes, so each shows twice and the dedication's pair shows even with no stance turned on.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "versatile-mutation#energy-level",
+      "claim": "The five-option energy question is asked at 4th level; print holds it back to 8th.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "versatile-mutation#takable-twice",
+      "claim": "The record is flagged takable twice, but no printed clause allows it.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "arcana-of-iron#weapon-proficiency",
+      "claim": "The feat grants trained advanced weapons forever with no expert step, and wrongly hands over the Weapon Expertise class feature.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "arcana-of-iron#bespell-strikes",
+      "claim": "The Bespell Strikes extra damage line is missing from the record entirely.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "swashbucklers-speed#typed-all-speeds",
+      "claim": "Speed bonuses are added together untyped and only to walking Speed; print types them and a clause saying 'to your Speeds' raises every Speed.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "echo-of-lost-moments#fifth-rung",
+      "claim": "Nothing changes: the ten-spell apparition ladder matches print rung for rung, with Illusory Scene at 5th; WG's rank-1 Illusory Disguise on that rung is their mistake.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "astrolabe-of-falling-stars#identify-star",
+      "claim": "The record carries no bonus at all, though its six sibling astrolabes carry the printed star and the item can be used as a mariner's astrolabe.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "breath-of-the-dragon#derive-from-exemplar",
+      "claim": "Three separate pickers for shape, damage and save make illegal breaths buildable and ignore the draconic exemplar the player already chose; all three must be derived from that exemplar using the printed Draconic Benefactors table.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "reborn-soul#restricted-increases",
+      "claim": "The three printed skill increases are not built at all and the record's note tells the player to apply them by hand, quietly taking WG's both-Lores-each-time reading.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "screech-shooter-greater#grade-numbers",
+      "claim": "The greater grade still shows the base 30-foot, DC 25 sentence; only its own printed numbers belong on it.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "screech-shooter-major#grade-numbers",
+      "claim": "The major grade still shows the base 30-foot, DC 25 sentence; only its own printed numbers belong on it.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "wyrm-spindle-greater#grade-numbers",
+      "claim": "The greater wyrm spindle carries the base grade's numbers; only its own printed numbers belong on it.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "wyrm-spindle-major#grade-numbers",
+      "claim": "The major wyrm spindle carries the base grade's numbers; only its own printed numbers belong on it.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    },
+    {
+      "id": "gleaming-blade#transcendence-name",
+      "claim": "Nothing changes: the transcendence keeps its printed name Flowing Spirit Strike; WG's Mirrored Spirit Strike appears nowhere in the archive.",
+      "verdict": "CONFIRMED",
+      "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"
+    }
+  ]
+}

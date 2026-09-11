@@ -323,17 +323,23 @@
     ]
   },
   {
-    "file": "work/.b037-rows-engine-lanes.json",
+    "file": "work/.b037-rows-red-owner-ruled-engine-lanes.json",
     "kind": "rows",
-    "family": "engine-lanes",
+    "family": "red-owner-ruled-engine-lanes",
+    "note": "VERIFIER FIX (gate-red round, 2026-09-11): the entry was written from the round's shorthand name \"engine-lanes\" and named work/.b037-rows-engine-lanes.json, which does not exist — that group's spec, test and report are all under its real family name red-owner-ruled-engine-lanes. A manifest naming a missing spec is a hard refusal in scripts/wg-batch-close.mjs, so the entry now names what is on disk. | BUILDER (this round): 8 rows for swashbucklers-speed#typed-all-speeds (speedBonusType on 7 carriers + speedBonusAllSpeeds on feats/swashbucklers-speed); flexible-spellcaster#collection-shape is CODE-ONLY (backfillRows: []). Stage list extended with the three paths the superseded \"engine-lanes\" entry had named - all three now exist on disk: work/.b037-rows-engine-lanes.json is deliberately EMPTY and points at this spec (duplicating the rows would hit the applier same-record+field refusal), work/.b037-report-engine-lanes.txt points at this report, and test/batch037-engine-lanes.test.ts carries the lane SCOPE pins.",
     "stage": [
-      "work/.b037-rows-engine-lanes.json",
-      "work/.b037-report-engine-lanes.txt",
-      "test/batch037-engine-lanes.test.ts",
+      "work/.b037-rows-red-owner-ruled-engine-lanes.json",
+      "work/.b037-report-red-owner-ruled-engine-lanes.txt",
+      "test/batch037-red-owner-ruled-engine-lanes.test.ts",
       "src/rules/build.ts",
       "src/rules/derive.ts",
       "src/rules/types.ts",
-      "src/builder/Builder.tsx"
+      "src/builder/Builder.tsx",
+      "work/.b037-rows-engine-lanes.json",
+      "work/.b037-report-engine-lanes.txt",
+      "test/batch037-engine-lanes.test.ts",
+      "work/.b037-specs.json",
+      "work/.b037-verify-red-owner-ruled-engine-lanes.txt"
     ]
   },
   {
@@ -343,6 +349,7 @@
     "stage": [
       "work/.b037-rows-red-close-offbatch-door.json",
       "work/.b037-report-red-close-offbatch-door.txt",
+      "work/.b037-verify-red-close-offbatch-door.txt",
       "work/.b037-specs.json",
       "scripts/wg-batch-close.mjs",
       "test/wg-batch-close.test.ts"
@@ -358,6 +365,27 @@
       "test/batch037-gap-instruments-6.test.ts",
       "test/batch035-closer.test.ts",
       "work/.b037-report-gap-instruments-6.txt"
+    ]
+  },
+  {
+    "file": "work/.b037-rows-red-closer.json",
+    "kind": "rows",
+    "family": "red-closer",
+    "note": "THE CLOSER's own two lanes, second closer pass (2026-09-11). Both were handed UP as CROSS-FILE GAPS by the gate-red round and neither was buildable inside the group that found them. (1) src/rules/explain.ts — the Speed breakdown summed every landSpeedBonus itself while deriveSpeeds had just learned to take the highest of two bonuses sharing a type, so the surplus was reported as an 'Armor Speed penalty' on an unarmoured character; the block now mirrors the stacking and keeps the suppressed bonus visible at 0. No overlay row. (2) feats/tillers-drive — 3 rows: `speeds` deleted, `landSpeedBonus` 5 -> 10 (supersedes the pre-existing overlay row from 46a2885), `speedBonusType` status, which makes the pair pay feat-932's printed +10 instead of +20. The one pin that flips is test/speed-increases.test.ts, cited from feat-932 under citation form (2). The finding id in the spec is deliberately NOT an id from work/.b037-read.json confirmed[], so it earns no record a MATCHES verdict. Full disposition of every DATA STILL NEEDED / CROSS-FILE GAPS line left by the gate-red round is in work/.b037-report-red-closer.txt.",
+    "stage": [
+      "work/.b037-rows-red-closer.json",
+      "work/.b037-report-red-closer.txt",
+      "test/batch037-closer-red.test.ts",
+      "test/speed-increases.test.ts",
+      "test/batch037-engine-lanes.test.ts",
+      "test/trust-approvals.test.ts",
+      "test/batch035-gate-park.test.ts",
+      "scripts/data/trust-approvals.json",
+      "src/rules/explain.ts",
+      "scripts/wg-batch-close.mjs",
+      "work/.b037-specs.json",
+      "work/.b037-queue.json",
+      "work/.b037-commit.txt"
     ]
   }
 ]

@@ -1,0 +1,230 @@
+BATCH 037 — CLOSER REPORT, family "red-closer" (the closer's own two lanes, second closer pass).
+
+⚠ NO LINE ON THIS PAGE IS A TEACH LINE. This family credits no comparer, adds no settle key and
+teaches no instrument. It exists because the gate-red round handed two measured defects UP as
+CROSS-FILE GAPS that the group which found them could not build — one of them a REGRESSION the
+gate-red round's own engine change introduced — and rule 12 says a red ends BUILT or PARKED, never
+described away. Both are BUILT. The finding id in the rows spec (tillers-drive#double-carrier) is
+deliberately NOT an id from work/.b037-read.json confirmed[], so it cannot earn any record a MATCHES
+verdict: both lanes are cited from PRINT under citation form (2).
+
+WHAT WAS RUN, IN ORDER (one stage at a time, work/.b037-run.json read after each): apply, gaps,
+close, experience, gate, regate, suite, verify — then apply..verify a second time for the rows below.
+
+
+ITEM 1 — src/rules/explain.ts: the Speed popup blamed armour for a bonus the type rule suppressed
+  BUILT. Raised as CROSS-FILE GAPS 1 of both work/.b037-report-red-owner-ruled-engine-lanes.txt and
+  work/.b037-verify-red-owner-ruled-engine-lanes.txt, and correctly left unbuilt there (explain.ts was
+  another group's file that round).
+
+  THE REGRESSION, re-measured here and not taken on the report's word: deriveSpeeds learned this batch
+  to take the HIGHEST of two bonuses sharing a type (swashbucklers-speed#typed-all-speeds, feat-6238
+  *"You gain a +5-foot status bonus to your Speeds"*). The `case 'speed'` block of explain.ts kept
+  SUMMING every carrier's landSpeedBonus itself, and then reported the difference against deriveSpeeds
+  as a penalty. A character holding Swashbuckler's Speed (+5 status) and Scout's Speed (+10 status),
+  wearing no armour at all, read: Ancestry Speed 25 · Speed increase 5 · Speed increase 10 · "Armor
+  Speed penalty — heavy armor or unmet Strength" −5, under a correct total of 35 ft. The number was
+  right; the popup named a cause that did not exist.
+
+  THE FIX, and why it is that shape: the block's whole purpose is that the parts SUM to the header
+  (test/speed-increases.test.ts "the Speed breakdown sums to the Speed"), so the stacking rule has to
+  be mirrored here rather than the difference re-labelled. `landBonusOf` is hoisted out of the loop,
+  the winning carrier per named type is found once (highest, first-wins on a tie — the same order
+  deriveSpeeds settles), and a losing typed bonus now contributes 0 and keeps a VISIBLE line reading
+  "<record> — status bonus, does not stack with <winner>". Nothing is dropped, the untyped lane is
+  untouched (Fleet still stacks and still shows its own +5), and the surplus/deficit reporting either
+  side of the loop is unchanged for every other case.
+
+  Pinned by: test/batch037-closer-red.test.ts, describe "swashbucklers-speed: the Speed breakdown
+  agrees with the Speed it suppresses" — four cases, each cited
+  `// batch 037: swashbucklers-speed#typed-all-speeds` with the record id in the describe title:
+    · the pair pays the printed 35 feet once;
+    · no "Armor Speed penalty" part on an unarmoured character;
+    · the parts still sum to 35 and the suppressed line names Scout's Speed at value 0;
+    · Fleet, untyped, still stacks to 40 and still shows its own part.
+  Every assertion runs on an IN-MEMORY patched copy of the database, so none of them flips when a
+  driver applies a row.
+
+
+ITEM 2 — feats/tillers-drive over-granted 10 feet (3 rows, work/.b037-rows-red-closer.json)
+  BUILT. Raised as CROSS-FILE GAPS 2 / FIXED-BY-ME (c) of
+  work/.b037-verify-red-owner-ruled-engine-lanes.txt, with the recipe and the blocking pin named.
+
+  RE-MEASURED from public/core.json, not inherited: feats/tillers-drive is the only record in the
+  database carrying BOTH `landSpeedBonus: 5` and `speeds: { land: 10 }`. deriveSpeeds adds both, so a
+  Bellflower tiller walked 25 + 5 (Bellflower Dedication) + 5 + 10 = 45 feet.
+  PRINT, verbatim from the mirror (C:/wonderers guide/aon-2e-archive/data/by-category/feat/feat-932.json):
+  *"Your Speed bonus from Bellflower Dedication increases to +10 feet."* ONE bonus, raised — the pair
+  pays +10, i.e. 35 feet. feat-928 gives that bonus its type: *"You gain a +5-foot status bonus to
+  your Speed."*
+
+  The engine group left this record untyped on purpose, reasoning that it "carries the DELTA over a
+  sibling's bonus, so the pair still totals the printed number". That reasoning is right for
+  classFeatures/hyper-boosters (a lone 5) and FALSE here, because this record's delta is 15, not 5 —
+  which is exactly what its own verifier found and could not build, the blocking pin being in a file
+  that group did not own. Three rows:
+    · feats/tillers-drive `speeds` -> null (delete the raise-to carrier)
+    · feats/tillers-drive `landSpeedBonus` -> 10, supersedes: true (the pre-existing overlay row
+      value 5, shipped in 46a2885, is a scalar and is replaced whole)
+    · feats/tillers-drive `speedBonusType` -> "status" (a raised bonus keeps its type)
+  Highest-per-type then pays max(Bellflower 5, Tiller's 10) = the printed 10. Collision check: no other
+  batch-037 spec writes any field on this record (scanned all 25 work/.b037-rows-*.json), and the only
+  overlay rows on it today are the superseded landSpeedBonus.
+
+  THE ONE PIN THAT FLIPS, cited from print: test/speed-increases.test.ts "no increase stayed in the
+  raise-to field, where it could never fire" listed `feats/tillers-drive` as a KNOWN-BAD double carrier,
+  with a comment excusing it because "it REPLACES another feat's bonus rather than adding to the base"
+  — an acknowledgement written when no lane could say "replace". The type lane says it now, so the
+  record leaves the list and the expectation becomes `[]`, under
+  `// batch 037 premise: feat-932 "Your Speed bonus from Bellflower Dedication increases to +10 feet."`
+  The comment above it is rewritten to say what changed rather than left claiming an exemption that no
+  longer exists.
+
+  Pinned by: test/batch037-closer-red.test.ts, describe "tillers-drive raises one Speed bonus instead
+  of granting a second" — two cases, both cited from feat-932 under form (2): the pre-row shape
+  measured at 45, the rowed shape at 35, and a tiller without the feat still on Bellflower's printed
+  30. Both on IN-MEMORY copies, so neither flips when the rows land.
+
+
+ITEM 3 — scripts/wg-batch-close.mjs: the committed-batch guard asked the WORKING TREE, not history
+  BUILT, and it turned out to be BLOCKING rather than latent. The gate-red round parked it
+  (work/.b037-verify-red-close-offbatch-door.txt CROSS-FILE GAPS 2: "decides … with existsSync on the
+  WORKING TREE, while the claim it encodes is about HISTORY … Not live today"). It went live in this
+  pass, exactly one stage later:
+
+    · --stage close ran green at 12:26 and wrote work/wg-batch-037-{parity,residual}.json. The batch's
+      commit, f1da70a, does not contain either file.
+    · --stage apply then landed ITEM 2's three rows, so public/core.json changed.
+    · --stage close refused: "batch 037 is already committed — --write refuses: a closed batch's
+      artefacts are history." The files were on DISK; they were not in HISTORY.
+    · That refusal is not a no-op. scripts/wg-batch-run.mjs stageClose does two more things AFTER the
+      closer returns — the went-quiet diff against work/.b037-baseline/flags.json, and the trust-ledger
+      regeneration (docs/trust-gate.md §6) — and both were skipped. MEASURED at that moment:
+      `node scripts/trust-ledger-check.mjs` -> "FAIL the ledger is stamped with the core.json we ship
+      (ledger 892357f18bf7… vs core.json e798d039a409…)", which is a --stage verify red
+      (regen-durability-check.mjs) with no way through.
+
+  So the CAUSE was fixed rather than the refusal worked around: the probe is
+  `git show HEAD:<path>` (through the file's existing `isRepo` + `gitQuiet` helpers, so a --root
+  fixture tree still answers "not in history", which is what existsSync answered there too). That is
+  the question the refusal text asks, and it also closes the hole the round named from the other side:
+  deleting a committed batch's artefacts locally no longer makes them re-derivable over history.
+  --stage close then ran green, derived the SAME 125 verdicts (OWNER-QUEUED 112, FIXED 12, MATCHES 1 —
+  the one-way merge kept every one), diffed 0 records outside the batch gone quiet, and regenerated the
+  ledger with "coreSha ok".
+
+  Pinned by: test/batch037-closer-red.test.ts, describe "wg-batch-close: the closed-batch refusal
+  follows history, not the working tree" — two cases (batch 029 and batch 037) that drive the REAL
+  closer as a node child in --write-less dry-run mode and assert that "--write would refuse" appears
+  exactly when `git show HEAD:<the parity/residual pair>` succeeds. The expectation is DERIVED from
+  git, not hard-coded, so it stays true after this batch is committed (both answers agree again) and
+  still fails today under the old existsSync reading, where 037's pair is on disk, is not in HEAD, and
+  would wrongly refuse. test/wg-batch-close.test.ts is unchanged and all 14 of its cases still pass,
+  including the plan-E acceptance (batch 029, artefacts in history, still refuses).
+  No "// mutation-proof" marker is owed: this is the closer's verdict guard, not a comparer credit or
+  an instrument teach, and it adds no key to any registry.
+
+
+DISPOSITION OF EVERY OTHER LINE THE GATE-RED ROUND LEFT OPEN
+  (--stage apply-digest does not run in a second pass, so nothing collated these; each is disposed of
+  here, and the parked ones carry their artefact.)
+
+  CLOSED BY THE DRIVER, verified on disk:
+    · rows-engine-lanes.json missing / close refusing the manifest — the entry now names the file that
+      exists; apply ran clean over all 26 entries.
+    · flexible-spellcaster#collection-shape uncited — cited by the engine spec and its staged tests;
+      close derived all 125 verdicts with no refusal.
+    · swashbucklers-speed, the 13th record of verify red 15 — FIXED off the 8-row spec.
+    · verify red 15 (parity-residual-check) and gate reds 1+2 — work/wg-batch-037-parity.json and
+      work/wg-batch-037-residual.json are written; all nine gates pass.
+
+  BUILT HERE: ITEM 1, ITEM 2 and ITEM 3 above. ITEM 3 was one of the round's PARKED lines ("not live
+  today") and is the reason parking a measured defect is only ever provisional: it became the one thing
+  standing between this batch and a green verify, one stage after it was parked.
+
+  PARKED, each with its artefact and its reason (none of it prose standing in for work):
+    · feats/timewracked-dedication — feat-8166 *"Your Speed increases by 5 feet for each mode of
+      movement available to you"* reads either as +5 to EACH Speed or as +5 to land per movement mode
+      owned, and the shipped `landSpeedBonus: 5` is NEITHER. Print does not settle it, so it is an
+      owner question, filed in work/.b037-queue.json as timewracked-dedication-speed-clause. No row.
+    · feats/swashbucklers-speed, the PANACHE half — feat-6238 *"this increases to a +10-foot status
+      bonus while you have panache"* has no carrier, and it is not rowable: the modes `speeds` lane
+      SETS non-land Speeds by max and ADDS land, so it cannot say "+5 to every Speed while a state is
+      on" — the plural clause would have to reach the active-mode loop first. Engine scoping, filed in
+      work/.b037-queue.json as swashbucklers-speed-panache-half. The finding this batch settled
+      (#typed-all-speeds) claims the TYPE and the PLURAL and both are built; the conditional is a
+      separate claim and is not counted as settled.
+    · src/rules/build.ts branch ORDER — a flexible WIZARD, WITCH or MAGUS still reaches the spellbook
+      branch before the collection branch and gets no collection at all. Print gives them both, so the
+      fix is a COMBINED branch and a bare reorder breaks test/bare-feat-lanes.test.ts "leaves the wizard
+      curriculum slot alone" (restrictedSlots are built only in the book branch). An engine-shape
+      decision: needsOrchestrator, and filed in work/.b037-queue.json as
+      flexible-spellcaster-book-casters.
+    · classFeatures/hyper-boosters — stays untyped by design; the pair totals the printed +10 today
+      (5 status + 5 untyped) but a THIRD status bonus in play makes it pay 15 where print pays 10. The
+      tidy encoding is pinned at 5 by test/batch034-data.test.ts:36 and reasoned about by
+      test/batch036-gap-inventor.test.ts. Already carried as a flaggedResidue in
+      work/wg-batch-037-residual.json; not re-filed, and deliberately NOT built, because two rows plus
+      two expectation flips across two other batches' pins is a batch of its own.
+    · scripts/wg-batch-close.mjs, the WRITING half of the relaxed guard — the working-tree-vs-history
+      half is BUILT (ITEM 3), and its two cases drive the real closer against the real repo. What is
+      still uncovered is the branch that WRITES the missing pair for a committed batch: proving it
+      needs a fixture that is a git repo carrying a "parity batch NNN" commit, and every case in
+      test/wg-batch-close.test.ts is deliberately repo-free (a --root fixture tree is not a repo, and a
+      `git show` per path pushed those tests past their timeout). Building that fixture means running
+      git write commands from a test, which every agent in this workflow is forbidden to do.
+      needsOrchestrator — it is one `it.runIf` away for whoever owns the git-fixture decision.
+    · scripts/wg-batch-close.mjs addedText() — it diffs against `git show HEAD:<path>` and HEAD is
+      f1da70a, which already swept in src/rules/{build,derive,types}.ts and src/builder/Builder.tsx, so
+      the code-only citation tier is EMPTY for those four paths. Harmless this batch (both findings are
+      carried by rows or by a staged test), but any later close that leans on that tier for these paths
+      needs a batch-base ref older than f1da70a. needsOrchestrator.
+    · the manifest hygiene lines — work/.b037-rows-gap-instruments-6.json does not exist and family
+      gap-instruments-6 borrows work/.b037-rows-red-close-offbatch-door.json (deliberately empty, so it
+      contributes no citation); work/.b037-rows-engine-lanes.json, work/.b037-report-engine-lanes.txt
+      and test/batch037-engine-lanes.test.ts exist under the round's shorthand name and are staged by
+      the engine entry; and work/.b037-specs.json was written concurrently by two groups this round
+      (it survived because both re-read at the moment of the write). None of it changes an artefact or
+      a verdict — apply validated all 26 entries and every `file` and `stage[]` path exists — so it is
+      recorded for the driver rather than churned at close.
+
+SUITE TRIAGE — the six tests the full suite failed, every one a consequence of this family's own work
+  · test/batch037-engine-lanes.test.ts (2) — its scope pins said feats/tillers-drive was untyped and
+    carried `speeds.land: 10`, which ITEM 2 makes false. The first case now states the rule with its ONE
+    checked exception ("a clause that RAISES another record's bonus inherits that bonus's type", proved
+    by asserting tillers-drive carries bellflower-dedication's type and that bellflower's own text
+    prints one) instead of a bare exclusion; the second pins hyper-boosters as the one delta carrier
+    left, and tillers-drive at its printed 10 with `speeds` gone. Both cited from feat-932.
+  · test/trust-approvals.test.ts (3) + scripts/data/trust-approvals.json — filing desk #153/#154/#155
+    moved the roster from 152 to 155, and every desk number must carry exactly one disposition. Three
+    `unruled`/`open` entries added to the data file (the same shape #151 and #152 got) and the roster
+    constant re-cited. No disposition was invented: all three are open questions, and `unruled` is
+    exactly the set the 2026-09-10 answers skip.
+  · test/batch035-gate-park.test.ts (1) — desk #153 is an aspect key on a real record, so parkMapOf
+    widens by one. Pinned with the reason, and with the reason the other two new questions do NOT widen
+    it: #155 maps to a record already parked by flexible-spellcaster-collection-shape and #154 to
+    `speed`, already parked by the batch-031 lane question; an existing park is never replaced.
+  No expectation was loosened and no park was added to hide a live detection: every flip is a
+  consequence of a row or a desk entry this round authored, and each carries its citation.
+
+FILES CHANGED BY THIS FAMILY
+  src/rules/explain.ts                  the typed-stacking mirror in the speed breakdown
+  scripts/wg-batch-close.mjs            the committed-batch guard now probes history
+  scripts/data/trust-approvals.json     + 3 unruled entries for desk #153-#155
+  test/batch037-closer-red.test.ts      new — 8 cases across the three lanes
+  test/speed-increases.test.ts          one expectation, cited from feat-932
+  test/batch037-engine-lanes.test.ts    two scope pins, cited from feat-932
+  test/trust-approvals.test.ts          the roster constant, cited from feat-8166
+  test/batch035-gate-park.test.ts       the widening map, cited from feat-8166
+  work/.b037-rows-red-closer.json       new — 3 rows on feats/tillers-drive
+  work/.b037-report-red-closer.txt      this file
+  work/.b037-specs.json                 + 1 entry (family red-closer)
+  work/.b037-queue.json                 + 3 owner questions
+  work/.b037-commit.txt                 rewritten for the final state
+
+DATA STILL NEEDED
+  (none — ITEM 2's three rows are authored and applied; every other open line is parked above with its
+  artefact.)
+
+CROSS-FILE GAPS
+  (none owed onward that is not already in the parked list above or in needsOrchestrator.)

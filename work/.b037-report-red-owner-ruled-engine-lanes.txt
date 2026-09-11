@@ -1,0 +1,182 @@
+BATCH 037 — GATE-RED BUILDER REPORT, group "owner-ruled-engine-lanes" (family red-owner-ruled-engine-lanes).
+
+Both items are BUILT. Two CONFIRMED, playerVisible findings the owner ruled on 2026-09-10 and the
+engine had no vocabulary for; both now reach a built character, both are pinned on one, and both are
+cited by FINDING id below so the closer cannot read either record's other findings as taught.
+
+
+ITEM 1+2+3 — swashbucklers-speed#typed-all-speeds  (RED 14, desk #127)
+  BUILT — src/rules/types.ts (DefenseGrants.speedBonusType, DefenseGrants.speedBonusAllSpeeds),
+          src/rules/derive.ts (deriveSpeeds: pushSpeedBonus / stackSpeedBonuses / allSpeedsBonus),
+          8 overlay rows in work/.b037-rows-red-owner-ruled-engine-lanes.json.
+
+  The closer's triage said "parked against desk #127" and proposed --reverdict. Both halves are wrong
+  and the task brief is right: scripts/wg-batch-close.mjs:319 refuses --reverdict while no verdict has
+  been written (work/wg-batch-037-parity.json does not exist), and work/desk-answers-2026-09-10.json
+  ns:[127] is an ANSWER, not a park — "follow print on both — Speed bonuses carry a TYPE (two status
+  bonuses take the highest, never add), and a clause 'to your Speeds' raises all Speeds, not only land."
+
+  PRINT (feat-6238): "You gain a +5-foot status bonus to your Speeds; this increases to a +10-foot
+  status bonus while you have panache." Two clauses the carrier could not say: the TYPE and the PLURAL.
+  WG records the status type (live row 32855, addBonusToValue SPEED with "type":"status") and cannot do
+  the plural at all — one SPEED variable — so half this lane is deliberately beyond WG, which is what
+  the desk asked and the owner answered.
+
+  SHAPE, and why it is NOT the widened `landSpeedBonus` the brief proposed: src/rules/explain.ts:1446
+  declares its own local row type `{ landSpeedBonus?: number | string; ... }` and pushes feat /
+  classFeature / heritage records straight into it. Widening the field to an object union fails
+  `npx tsc --noEmit` inside explain.ts, which belongs to another group this round. So the value stays
+  `number | string` and the two printed facts ride as SIBLING fields beside it. That also keeps the
+  Speed breakdown popup naming and itemising every bonus exactly as it does today (see CROSS-FILE
+  GAPS #1 for the one case where it now mislabels the difference).
+
+  READER: `deriveSpeeds` collects every feat / owned class feature / heritage bonus into one list
+  (formula strings still resolved through the existing `landBonusOf`), then stacks it: highest per
+  named type, untyped ones summed as before — so Fleet still stacks and the seaweed leshy's −5 penalty
+  is never suppressed by a bonus. The plural half is applied beside the existing `speedAdjust` loop, on
+  that lane's own terms: after the grants resolve, to each movement type the character already has, and
+  a Speed of 0 stays absent.
+
+  ROWS (8). I read all twenty carriers' printed clauses out of public/core-descriptions.json before
+  writing one. Seven name a type and get `speedBonusType: "status"` — feats/swashbucklers-speed,
+  feats/scouts-speed, feats/bellflower-dedication, classFeatures/furious-footfalls,
+  classFeatures/blessed-swiftness, classFeatures/speed-boosters, classFeatures/vivacious-speed — and
+  feats/swashbucklers-speed additionally gets `speedBonusAllSpeeds: true`, the only record in the
+  database whose clause prints "your SpeedS". No collision: no other batch-037 spec writes any speed
+  field (work/.b037-rows-data-rows-6.json deliberately emitted `backfillRows: []` for this finding and
+  deferred to this engine group), and neither field exists on any record today.
+
+  Pinned by: test/batch037-red-owner-ruled-engine-lanes.test.ts, describe "swashbucklers-speed: a typed
+  Speed bonus does not stack with its own type" — three cases, each cited
+  `// batch 037: swashbucklers-speed#typed-all-speeds`:
+    · Swashbuckler's Speed + Scout's Speed = +10 typed where untyped gave +15;
+    · Fleet (prints no type) still stacks with the status bonus;
+    · a seaweed leshy's swim 20 becomes 25 under the plural clause, land takes it exactly once, and a
+      fly Speed the character does not have is not invented.
+  Both sides of every speed assertion are IN-MEMORY copies (patched / stripped), never patched-vs-
+  shipped, so nothing here flips when the driver applies the rows.
+  Scope pinned separately by test/batch037-engine-lanes.test.ts (three cases, same citation): a carrier
+  whose description never prints "status bonus" may not carry a type, the two delta carriers stay
+  untyped, and only a clause printing the plural may carry speedBonusAllSpeeds.
+  Re-checked and still green, unchanged: test/batch031-situational.test.ts, test/batch031-data.test.ts,
+  test/vivacious-speed-floor.test.ts, test/speed-increases.test.ts, test/batch034-data.test.ts,
+  test/batch036-engine.test.ts, test/batch036-gap-inventor.test.ts, test/batch036-data-rows-1.test.ts,
+  test/audit-fixes.test.ts, test/land-legs-floor.test.ts, test/subclass-owned.test.ts,
+  test/batch26-data.test.ts, test/wg-experience-lanes.test.ts, test/batch031-gap-situational.test.ts
+  (132 + 154 assertions across two runs). No test outside this group changed.
+
+
+ITEM 4+5 — flexible-spellcaster#collection-shape  (RED 17, desk #102)
+  BUILT — src/rules/build.ts (exported `flexibleCollectionSize`, plus the spellCollection branch),
+          src/builder/Builder.tsx (isFlexCollection / flatBudget / flatAt on the across-rank rail).
+          CODE-ONLY: no overlay row is possible or needed, and the spec entry says so.
+
+  The closer called it "parked awaiting a verdict". Refuted on both halves: the owner RULED it
+  (work/desk-answers-2026-09-10.json ns:[40,73,102,128,129,140,145] — "#102 Flexible Spellcaster ONE
+  flat pool sized by total slots, >=1 first-rank (not per rank)"), and it was the one off-batch
+  CONFIRMED finding with no citation anywhere — work/.b037-rows-data-rows-3.json carried it with
+  `backfillRows: []` and a note deferring it to CROSS-FILE GAPS. It is cited now, by finding id, in
+  work/.b037-rows-red-owner-ruled-engine-lanes.json and in this report, which is what the
+  close-offbatch-door group's new branch requires before the batch can close.
+
+  PRINT (archetype-99): "The number of spells in your spell collection each day equals the total number
+  of spell slots you get each day from your class spells" — one Collection number per level, 4 at 3rd —
+  and the only stated limit is "you must select at least one 1st-level spell for your collection each
+  time you prepare". WG forces the per-rank shape while its own copy of the text quotes the flat rule,
+  so WG is the defect and print is the authority.
+
+  ENGINE: the branch walked `slotCounts` and wrote `entry.repertoire[rank] =
+  build.spells[rank].slice(0, count)` — each rank capped at its own slots. It now sizes ONE budget with
+  `flexibleCollectionSize(slotCounts)` (total of the archetype-capped table, ranks >= 1) and fills from
+  the LOWEST rank up, which is also how the printed 1st-rank floor holds for any player who picked one.
+  The SLOTS stay per rank: "you can cast any of the spells in your collection by using a spell slot of
+  an appropriate level" is a slot rule, not a pool rule, and flattening both would hand a 6th-level
+  character six 3rd-rank casts.
+
+  BUILDER (the choice experience, parity rule): a collection is an across-rank pool, exactly the shape
+  the spellbook rail already draws, so it rides that rail instead of the per-rank caps — `flatBudget`
+  is `isWizardBook || isFlexCollection`, and the header, the "+ add" cap, the disabled state and the
+  picker's own cap all read `flatAt(lvl)`, which calls buildCharacter's OWN exported sizer rather than
+  a second copy of the arithmetic (the cantrip-cap lesson written at Builder.tsx:365). The player now
+  sees "Spell collection — 4 / 6 collected" and the printed floor beneath it ("at least one 1st-rank
+  spell") where they choose, instead of a per-rank budget print never gave them.
+
+  Pinned by: test/batch037-red-owner-ruled-engine-lanes.test.ts, describe "flexible-spellcaster: the
+  collection is one flat pool, not a per-rank list" — four cases, each cited
+  `// batch 037: flexible-spellcaster#collection-shape`, all on a BUILT 6th-level flexible druid:
+    · six 1st-rank picks all reach the collection against six total slots (the old shape kept two);
+    · a seventh pick is not collected — the pool is a cap;
+    · the slot table is still 2 / 2 / 2;
+    · a crowded 2nd rank never crowds out the 1st-rank spell print requires.
+  Re-checked and still green, unchanged: test/bare-feat-lanes.test.ts, test/batch24-parity.test.ts,
+  test/batch035-gate-park.test.ts, test/class-archetype-options.test.tsx,
+  test/experience-gate-fixes.test.tsx, test/daily-choices-not-in-builder.test.tsx,
+  test/builder-control-attrs.test.tsx, test/unpickable-looks-unpickable.test.tsx.
+
+
+ITEM 6 — scope, and the manifest name collision
+  Files touched, all inside this group's list: src/rules/types.ts, src/rules/derive.ts,
+  src/rules/build.ts, src/builder/Builder.tsx, test/batch037-red-owner-ruled-engine-lanes.test.ts,
+  test/batch037-engine-lanes.test.ts, work/.b037-rows-red-owner-ruled-engine-lanes.json,
+  work/.b037-rows-engine-lanes.json, work/.b037-report-engine-lanes.txt, this file, work/.b037-specs.json.
+  Nothing else was edited; no other group's test was touched.
+
+  work/.b037-specs.json entry [23] is this group's, and a verifier had already re-pointed it from the
+  round's shorthand name "engine-lanes" to the real files. NO SECOND ENTRY was appended — that would
+  have staged the same spec twice; the existing entry's stage[] was extended with the four paths it did
+  not yet name and its note carries this round's summary. Every other entry is untouched.
+
+  The three files the superseded "engine-lanes" name referred to — CROSS-FILE GAPS #1 of
+  work/.b037-report-red-close-offbatch-door.txt — are all in this group's file list and all three now
+  EXIST, so that gap is closed from both ends: work/.b037-rows-engine-lanes.json is deliberately empty
+  and points at the real spec (a duplicate row set would hit the applier's same-record+field refusal and
+  break the batch it is meant to unblock), work/.b037-report-engine-lanes.txt points at this report, and
+  test/batch037-engine-lanes.test.ts carries real, non-duplicate assertions — the lane's SCOPE rather
+  than its mechanic.
+
+  `npx tsc --noEmit` is clean. Both test files pass under `node scripts/vt.mjs`.
+
+  FLAGGED RESIDUE (each with its reason, none of it prose standing in for work):
+    · classFeatures/hyper-boosters and feats/tillers-drive — the two remaining carriers whose printed
+      clause names "status", left UNTYPED on purpose. Each stores the DELTA over a sibling's bonus
+      (Hyper Boosters over Speed Boosters, Tiller's Drive over Bellflower Dedication) because print
+      gives each PAIR one +10 status bonus, not two. With the sibling typed and the delta untyped the
+      pair still totals the printed number; typing the delta would make the pair take the highest of the
+      two halves and pay +5. Pinned so a later pass cannot "finish the job" and break it
+      (test/batch037-engine-lanes.test.ts, second case). The tidier encoding — one typed total plus a
+      prerequisite — is a data reshape across two lanes and is not this finding.
+    · feats/timewracked-dedication — "Your Speed increases by 5 feet for each mode of movement available
+      to you" (feat-8166) is a candidate for `speedBonusAllSpeeds`, and it is genuinely ambiguous in
+      print: it reads either as +5 to each Speed or as +5 to land per movement mode owned. Print does
+      not settle it, so no row. Not queued as an owner question either: the record is off-batch and no
+      finding covers it — it belongs to whoever reads feat-8166 against print next.
+    · A flexible spellcaster on a BOOK caster (wizard, witch, magus) still never reaches the collection
+      branch at all — see CROSS-FILE GAPS #2.
+
+
+DATA STILL NEEDED
+  (none — both findings are fully specified by print and the owner's 2026-09-10 answers; the 8 rows are
+  authored and the rest is code.)
+
+CROSS-FILE GAPS
+  1. src/rules/explain.ts (owned by another group this round) — the Speed breakdown sums each record's
+     landSpeedBonus itself, untyped, and reports the difference against deriveSpeeds as an armour
+     penalty. With a bonus now legitimately SUPPRESSED by its type, that difference is mislabelled.
+     MEASURED on a fighter holding Swashbuckler's Speed + Scout's Speed with both rows applied in
+     memory: parts = [Ancestry Speed 25, Speed increase 5, Speed increase 10, "Armor Speed penalty —
+     heavy armor or unmet Strength" −5] under a correct total of 35 ft. The number is right and the
+     popup blames the wrong thing. The fix is one line in that block — stack the named types there the
+     same way (or read the suppressed amount from deriveSpeeds) and label it "does not stack with
+     <source>". The same block also itemises land only, so the plural clause's +5 on a swim Speed
+     appears in no breakdown; both belong to whoever owns explain.ts.
+  2. src/rules/build.ts branch ORDER, blocked by a pin in test/bare-feat-lanes.test.ts (not this
+     group's file) — `else if (sp.spellbook || cls.id === 'wizard' || cls.id === 'witch')` is tested
+     BEFORE `else if (archSpellMods.spellCollection)`, so a flexible WIZARD, WITCH or MAGUS takes the
+     spellbook branch and gets no collection at all: they keep a per-slot prepared list, and this
+     finding's flat pool reaches only the classes that fall through (cleric, druid, animist). Print
+     gives them both — a spellbook AND a collection prepared from it — so the right fix is a combined
+     branch, not a reorder. A bare reorder breaks test/bare-feat-lanes.test.ts "leaves the wizard
+     curriculum slot alone" (restrictedSlots are built only in the book branch), which this group may
+     not edit, and it is outside finding #collection-shape, whose claim is the shape of the collection
+     where one is built. Handed on with its measurement: a 6th-level flexible wizard built here returns
+     a `prepared` entry with no `slots` and no `repertoire`.
