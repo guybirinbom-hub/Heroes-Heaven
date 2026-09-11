@@ -59,7 +59,7 @@ import { applyCounterMods } from './counterMods';
  * keeps reading the raw table so its pickers still render. */
 import { bonusSkillFeatCount, bonusSkillFeatKey, choiceGrantFor, grantsFor, grantsRecordOff, LOCKED_SKILL_KEYS, maxTakes, upgradeRankAt } from './featGrants';
 import { engineLaneOff } from './trustLanes';
-import { EXTRA_FEAT_TAKINGS, FEAT_FEAT_GRANTS, FEAT_FEAT_GRANTS_LEVELED, FEAT_GRANT_BOUND_CHOICE, FEAT_RANK_FEAT_GRANTS, FEAT_SUBSTITUTE_GRANTS, featFeatGrantsFor } from './featFeatGrants';
+import { EXTRA_FEAT_TAKINGS, FEAT_FEAT_GRANTS, FEAT_FEAT_GRANTS_LEVELED, FEAT_GRANT_BOUND_CHOICE, FEAT_RANK_FEAT_GRANTS, FEAT_SUBSTITUTE_GRANTS, SKILL_RANK_BEFORE_OWN_GRANTS, featFeatGrantsFor } from './featFeatGrants';
 import { BACKGROUND_CANTRIP_GRANTS, BACKGROUND_GRANT_BOUND_CHOICE } from './backgroundGrants';
 import { FEAT_PICK_GRANTS, pickKeysFor, pickableFeats } from './featPickGrants';
 import { gateElementLimit, kineticistElements } from './kineticElements';
@@ -287,6 +287,11 @@ export interface BuildState {
    *  ladder (the swashbuckler's Stylish Tricks at 3/7/15). Keyed by level, like `skillIncreases`, so the
    *  two cannot overwrite each other — which is what a single map did. */
   bonusSkillIncreases?: Record<number, ProficiencyKey>;
+  /** A THIRD skill increase at the same level, from the BACKGROUND — Reborn Soul's extra increase at
+   *  3rd, 7th and 15th, spendable only on one of its two past-life Lores. Its own store for the same
+   *  reason `bonusSkillIncreases` has one: a swashbuckler Reborn Soul is granted two extra increases
+   *  at 3/7/15 on different terms, and one map per level can only hold one answer. */
+  backgroundSkillIncreases?: Record<number, ProficiencyKey>;
   /** Attribute-boost choices at levels 5/10/15/20, keyed by level -> 4 picks. */
   attributeBoosts: Record<number, (AbilityId | null)[]>;
   /** Chosen cantrip spell ids (casters). */
@@ -441,6 +446,7 @@ export function emptyBuild(): BuildState {
     featChoices: {},
     skillIncreases: {},
     bonusSkillIncreases: {},
+    backgroundSkillIncreases: {},
     attributeBoosts: {},
     cantrips: [],
     spells: {},
@@ -1015,6 +1021,7 @@ export function levelChoices(build: BuildState, content: ContentDatabase): Missi
     }
     if (g.skillIncrease && !build.skillIncreases[lvl]) at('skill increase');
     if (g.bonusSkillIncrease && !build.bonusSkillIncreases?.[lvl]) at('skill increase');
+    if (g.backgroundSkillIncrease && !build.backgroundSkillIncreases?.[lvl]) at('skill increase');
     if (g.attributeBoosts) {
       const done = new Set((build.attributeBoosts[lvl] ?? []).filter(Boolean)).size;
       const want = attributeBoostCount(build.variantRules);
@@ -1151,6 +1158,57 @@ export function restrictedSkillIncreaseAllowed(
     for (const s of sub?.grants?.removesSkills ?? []) skills.delete(s);
     for (const s of sub?.skillChoice ?? []) if (build.subclassSkill === s) skills.add(s);
   }
+  return { levels: r.levels, skills, reason: r.reason };
+}
+
+/**
+ * The Lore keys a background's free-text "choose a Lore" boxes trained — `lore:<subject>` per answered
+ * box, in the order they are asked, de-duplicated.
+ *
+ * Lifted out of buildCharacter's proficiency walk so the RESTRICTION on Reborn Soul's extra increases
+ * resolves against the very answers that trained them. *"These Lore skills"* (background-590) names
+ * two subjects the player TYPED, so — unlike the class half, which can list `skills` — the allowed set
+ * can only ever be computed, and computing it twice is how the picker and the build come to disagree.
+ */
+export function backgroundChosenLoreKeys(build: Partial<BuildState>, content: ContentDatabase): ProficiencyKey[] {
+  const bg = resolveBackground(build as BuildState, content);
+  if (!bg?.trainedLoreChoice || (bg.trainedLoreOptions ?? []).length) return [];
+  const count = bg.trainedLoreChoiceCount ?? 1;
+  const typed = [
+    build.backgroundLore?.trim() || bg.trainedLoreChoiceDefault || '',
+    ...(count > 1 ? [build.backgroundLore2?.trim() || ''] : []),
+    ...(count > 2 ? [build.backgroundLore3?.trim() || ''] : []),
+  ];
+  const out: ProficiencyKey[] = [];
+  for (const t of typed) {
+    if (!t) continue;
+    const k = loreKey(t);
+    if (k !== 'lore:' && !out.includes(k)) out.push(k);
+  }
+  return out;
+}
+
+/**
+ * The BACKGROUND's extra skill increases and what they may be spent on — the background-half twin of
+ * `restrictedSkillIncreaseAllowed`, and a SEPARATE lane rather than a widening of it.
+ *
+ * Separate because the two stack: a swashbuckler with Reborn Soul is granted Stylish Tricks' extra
+ * increase AND the background's at the same three levels (3rd, 7th, 15th), on different terms. Merging
+ * the allowed sets would have handed that character one increase where print gives two, and merging
+ * the levels would have let the Lore increase be spent on Acrobatics.
+ *
+ * Returns null when the background grants none, so the builder renders no control and buildCharacter
+ * ignores any stored answer. An UNANSWERED Lore box yields an empty `skills` set — every option is
+ * then illegal, which is the true state: there is no past-life Lore to raise until one is named.
+ */
+export function backgroundSkillIncreaseAllowed(
+  build: Partial<BuildState>,
+  content: ContentDatabase,
+): { levels: number[]; skills: Set<string>; reason: string } | null {
+  const r = resolveBackground(build as BuildState, content)?.restrictedSkillIncreaseLevels;
+  if (!r) return null;
+  const skills = new Set<string>(r.skills ?? []);
+  if (r.includeBackgroundLores) for (const k of backgroundChosenLoreKeys(build, content)) skills.add(k);
   return { levels: r.levels, skills, reason: r.reason };
 }
 
@@ -2410,7 +2468,15 @@ export function classArchetypeSpellMods(
  * must offer exactly the pool the sheet keeps, or the player picks spells the sheet drops.
  */
 export function flexibleCollectionSize(slotCounts: Record<number, number>): number {
-  return Object.entries(slotCounts).reduce((n, [rank, count]) => (Number(rank) >= 1 ? n + count : n), 0);
+  /* ⚠ Ranks 1-9 ONLY. The 19th-level capstone 10th-rank slot is a CLASS FEATURE's slot, not one of the
+   * "spell slots you get each day from your class spells", and print carves it out by name: *"Your
+   * class most likely has a class feature that gives you a single 10th level spell slot that works a
+   * bit differently from other slots. If so, flexible spellcaster doesn't change the way that spell
+   * works"* (archetype-99). Table 5-1 confirms the arithmetic — Collection is 18 at 17th AND at 19th,
+   * nine ranks x 2, even though the slot table has gained the 10th-rank slot in between. Summing every
+   * rank handed a 19th-level flexible cleric a 19th collected spell the printed table never gives, on
+   * the sheet AND in the builder's rail (`flatAt` calls this). */
+  return Object.entries(slotCounts).reduce((n, [rank, count]) => (Number(rank) >= 1 && Number(rank) <= 9 ? n + count : n), 0);
 }
 
 /**
@@ -3593,16 +3659,10 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   // the printed first option as the default (Night Watch's "either Legal Lore or the Lore skill for
   // your home settlement"), so an unanswered pick still trains something rather than nothing.
   if (background?.trainedLoreChoice && !loreOptions.length) {
-    // One typed subject normally; Reborn Soul asks for TWO (trainedLoreChoiceCount).
-    const typedSubjects = [
-      build.backgroundLore?.trim() || background.trainedLoreChoiceDefault || '',
-      ...((background.trainedLoreChoiceCount ?? 1) > 1 ? [build.backgroundLore2?.trim() || ''] : []),
-      ...((background.trainedLoreChoiceCount ?? 1) > 2 ? [build.backgroundLore3?.trim() || ''] : []),
-    ];
-    for (const typed of typedSubjects) {
-      const subj = typed.toLowerCase().replace(/\s*lore$/, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
-      if (subj) skills[`lore:${subj}` as ProficiencyKey] = 'trained';
-    }
+    // One typed subject normally; Reborn Soul asks for TWO (trainedLoreChoiceCount). The subjects are
+    // resolved by `backgroundChosenLoreKeys`, which the restricted-increase picker reads too — the two
+    // must name the same Lores or a player is offered an increase on a Lore they aren't trained in.
+    for (const key of backgroundChosenLoreKeys(build, content)) skills[key] = 'trained';
   }
   // ADDITIONAL fixed skills beside trainedSkill (Tech-Reliant prints Crafting AND Medicine).
   for (const sk of background?.trainedSkills ?? []) {
@@ -3752,11 +3812,24 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   const bonusSiLevels = cls?.bonusSkillIncreaseLevels ?? [];
   /* …and the RESTRICTION on that second increase, resolved once (it walks the subclass). */
   const bonusSiRestrict = restrictedSkillIncreaseAllowed(build, content);
+  /* …and a THIRD, from the BACKGROUND — Reborn Soul (background-590): *"At 3rd level, 7th level, and
+   * 15th level, you receive skill increases, which you can apply only to these Lore skills."* Its own
+   * store and its own restriction for the same reason the bonus lane has them: a swashbuckler Reborn
+   * Soul is owed BOTH extra increases at 3/7/15, on terms that do not overlap. Here the levels list is
+   * also what GRANTS the increase — see RestrictedSkillIncrease in types.ts. */
+  const bgSiRestrict = backgroundSkillIncreaseAllowed(build, content);
+  /* batch 037: molten-wit#three-branches — the ranks BEFORE any increase is spent, kept for
+   * `skillRankHere(…, asOf)`. *"If you're already trained in one of these skills"* is a question about
+   * the level the record was taken at, and every skill increase lands at 3rd or later: without this,
+   * a 3rd-level increase spent on the very skill Molten Wit's answer trains made the character
+   * "already trained" at 1st level and handed them the other skill free. */
+  const skillsBeforeIncreases = { ...skills };
   const skillIncreases: SkillIncrease[] = [];
   for (let lvl = 1; lvl <= level; lvl++) {
-    for (const [key, isBonus] of [
-      [siLevels.includes(lvl) ? build.skillIncreases[lvl] : undefined, false],
-      [bonusSiLevels.includes(lvl) ? build.bonusSkillIncreases?.[lvl] : undefined, true],
+    for (const [key, restrict] of [
+      [siLevels.includes(lvl) ? build.skillIncreases[lvl] : undefined, null],
+      [bonusSiLevels.includes(lvl) ? build.bonusSkillIncreases?.[lvl] : undefined, bonusSiRestrict],
+      [bgSiRestrict?.levels.includes(lvl) ? build.backgroundSkillIncreases?.[lvl] : undefined, bgSiRestrict],
     ] as const) {
       if (!key) continue;
       /* A record can forbid its own skill being increased — Bardic Lore: "you can't increase your
@@ -3769,8 +3842,10 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
        * swashbuckler's style"*; thaumaturge Thaumaturgic Expertise/Mastery: *"which you can apply only
        * to Arcana, Nature, Occultism, or Religion"*. Dropped, not applied — same reason as above: a
        * character saved while the picker was unguarded must not keep a rank print forbids. Only the
-       * BONUS increase is narrowed; the level's ordinary increase stays free. */
-      if (isBonus && bonusSiRestrict?.levels.includes(lvl) && !bonusSiRestrict.skills.has(key)) continue;
+       * BONUS increase is narrowed; the level's ordinary increase stays free. …and so can the
+       * BACKGROUND that granted the third one — *"only to these Lore skills"*, resolved against the
+       * two subjects the player typed. */
+      if (restrict && restrict.levels.includes(lvl) && !restrict.skills.has(key)) continue;
       skills[key] = stepRank(skills[key] ?? 'untrained', skillIncreaseCap(lvl));
       skillIncreases.push({ level: lvl, skill: key });
     }
@@ -4521,8 +4596,19 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
        * sixth 1st-rank spell a 6th-level flexible wizard is entitled to collect. Filled from the lowest
        * rank up, so the printed floor — *"you must select at least one 1st-level spell for your
        * collection each time you prepare"* — holds for any player who picked one. Owner ruling
-       * 2026-09-10 #102. */
-      let collectionLeft = flexibleCollectionSize(slotCounts);
+       * 2026-09-10 #102.
+       *
+       * …and for a player who picked NONE, the last place is HELD rather than filled from a higher
+       * rank: *"The only restriction is that you must select at least one 1st-level spell for your
+       * collection each time you prepare, ensuring that you can use all your spell slots each day"*
+       * (archetype-99) — a collection with no 1st-rank spell is not a legal collection, so the pool
+       * is one short until the player picks one. The builder refuses the same pick with a message,
+       * so the picker and the sheet hold the same place. Held only where a 1st-rank slot exists for
+       * that spell to be cast from, and read off the player's own picks because print says *"you must
+       * SELECT"* — a granted repertoire spell is not a selection, and the builder cannot see one
+       * anyway, so exempting it here would hand the sheet a place the picker never offers. */
+      const floorHeld = (slotCounts[1] ?? 0) > 0 && !(build.spells[1] ?? []).length ? 1 : 0;
+      let collectionLeft = flexibleCollectionSize(slotCounts) - floorHeld;
       for (const rank of Object.keys(slotCounts).map(Number).sort((a, b) => a - b)) {
         entry.slots[rank] = { max: slotCounts[rank], used: 0 };
         const collected = (build.spells[rank] ?? []).slice(0, Math.max(0, collectionLeft));
@@ -5448,6 +5534,28 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     // …and the ANCESTRY (lizardfolk's Aquatic Adaptation grants Breath Control).
     if (build.ancestryId) grantSources.push({ id: build.ancestryId, grants: content.ancestries[build.ancestryId]?.grantsFeats });
     for (const fc of [...feats]) grantSources.push({ id: fc.featId, grants: content.feats[fc.featId]?.grantsFeats });
+    /* batch 037: molten-wit#three-branches — …and the feat ONE BRANCH of a FEAT's own `choice` grants.
+     *
+     * The heritage loop above and the class-feature loop below both read `opt.grant.grantsFeats`; a
+     * FEAT's own choice was the one carrier with no reader, so `choice.options[].grant.grantsFeats`
+     * was authorable, gate-approvable and delivered to nobody. (Measured 2026-09-11: 0 of 6,552 feats
+     * carried it — scripts/data/trust-fields.json's note then said the path "occurs on NO record yet",
+     * which is what a field nothing can read looks like from the outside. The closer's re-seed listed
+     * it the moment this record carried it.) Molten Wit is the first, and it needs this rather than a
+     * `CHOICE_FEAT_GRANTS` row because that table WAS gated off for it (src/data/trust-ledger.json
+     * lanes.featGrants["molten-wit"], an entry that disappeared with the key itself) while its record
+     * fields are trusted.
+     *
+     * Read off `fc.choice.value` — the answer a feat carries on its own row — and split on `,` for the
+     * same reason the always-on reader does: a `picks > 1` answer is stored joined. */
+    for (const fc of [...feats]) {
+      const def = content.feats[fc.featId]?.choice;
+      if (!def || askedAtDailyPrep(def)) continue;
+      for (const answer of String(fc.choice?.value ?? '').split(',').filter(Boolean)) {
+        const opt = (def.options ?? []).find((o) => o.value === answer);
+        if (opt?.grant?.grantsFeats?.length) grantSources.push({ id: fc.featId, grants: opt.grant.grantsFeats });
+      }
+    }
     /* An invested item can grant a bonus feat too (The Survivor → Diehard) — and so can one that is
      * merely held or worn. A SHIELD is never invested, so gating on `invested` alone made every
      * shield's feat grant write-only: the metal carapace and hardwood shields print Shield Block and
@@ -5541,6 +5649,12 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
    * (Three Clear Breaths). Surfaced on the Character for the same reason `skillFallbacks` is: the
    * builder must not work out "already have" a second way and drift from the engine. */
   const featSubstitutions: { featId: string; ifHave: string; options: string[]; key: string }[] = [];
+  /* batch 037: molten-wit#three-branches — the skills `SKILL_RANK_BEFORE_OWN_GRANTS` names, snapshot
+   * inside the block below because `skillRankHere` (the only reader that can answer "before this
+   * carrier's own grants") lives there and dies with it. Surfaced on the Character so the builder's
+   * option gate asks the engine instead of working it out a second way — the same reason
+   * `skillFallbacks` and `featSubstitutions` are surfaced. */
+  const skillRankBefore: Record<string, Partial<Record<ProficiencyKey, ProficiencyRank>>> = {};
   {
     // Seeded with owned CLASS FEATURES as well as feats: 19 entries in featFeatGrants.ts are keyed to
     // class-feature ids (Alchemical Sciences Methodology, Aloof Firmament, Battledancer) and this
@@ -5586,10 +5700,21 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
      * answer counts — matching WG, whose Courtly Graces conditional is the SECOND operation in the
      * row and so sees the first one's training.
      */
-    const skillRankHere = (skill: ProficiencyKey, exceptId: string | undefined): ProficiencyRank => {
-      let best = proficiencies.skills[skill] ?? 'untrained';
+    /* batch 037: molten-wit#three-branches — `asOf` reads the rank as it stood AT THAT LEVEL instead
+     * of at the end of the build: the increases already spent by then, replayed over the pre-increase
+     * ranks, and only the feats taken by then. *"If you're ALREADY trained"* is a fact about the
+     * moment the record was taken, and the final ranks contain answers the character gave later —
+     * a 3rd-level increase spent on the skill a 1st-level feat's own answer trains is the case.
+     * Omitted (the Stonemason's Eye caller) it reads the built ranks exactly as before. */
+    const skillRankHere = (skill: ProficiencyKey, exceptId: string | undefined, asOf?: number): ProficiencyRank => {
+      let best =
+        asOf == null
+          ? proficiencies.skills[skill] ?? 'untrained'
+          : skillIncreases
+              .filter((si) => si.skill === skill && si.level <= asOf)
+              .reduce((r, si) => stepRank(r, skillIncreaseCap(si.level)), skillsBeforeIncreases[skill] ?? 'untrained');
       for (const f of feats) {
-        if (f.featId === exceptId) continue;
+        if (f.featId === exceptId || (asOf != null && f.level > asOf)) continue;
         const g = grantsFor(f.featId);
         if (!g) continue;
         const stat = g.skills?.[skill];
@@ -5751,6 +5876,29 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         feats.push({ featId: lg.feat, level: lg.minLevel, category: content.feats[lg.feat].category as FeatCategory, grantedBy: srcId, choice: boundGrantChoice(build, content, srcId, lg.feat, srcFc?.slotKey) ?? grantedChoiceById[lg.feat] });
         queue.push(lg.feat);
       }
+    }
+    /* batch 037: molten-wit#three-branches — THE SNAPSHOT, taken here and nowhere else.
+     *
+     * `skillRankHere` is the only reader in the file that can answer *"were you already trained in
+     * this, not counting what this record gives you"*, and it is only sound at this point in the
+     * build: `proficiencies.skills` holds class, background, free picks and skill increases, and the
+     * feat-proficiency pass is ~200 lines below. Taken AFTER the queue drains so a skill trained by a
+     * feat this expansion GRANTED (an archetype dedication's training, say) is in the answer — the
+     * carrier's own grants are what `exceptId` removes, and nobody else's.
+     *
+     * Every carrier on the list, whether or not the character took it: an absent entry and an entry
+     * of untrained ranks are different claims, and the reader must not have to guess which it holds. */
+    for (const [carrier, skills] of Object.entries(SKILL_RANK_BEFORE_OWN_GRANTS)) {
+      if (!takenFeats.has(carrier)) continue;
+      /* AS OF THE LEVEL THE CARRIER WAS TAKEN, not the end of the build: the clause asks what was
+       * true when the feat was taken, and a later skill increase or a later feat is not an answer to
+       * that. Molten Wit is a 1st-level ancestry feat and every increase lands at 3rd or after, so
+       * without the level a 3rd-level increase spent on the skill its own answer trains read as
+       * "already trained" and fired the second branch — a free second skill the book never gives. */
+      const takenAt = feats.find((f) => f.featId === carrier)?.level ?? 1;
+      const before: Partial<Record<ProficiencyKey, ProficiencyRank>> = {};
+      for (const s of skills) before[s] = skillRankHere(s, carrier, takenAt);
+      skillRankBefore[carrier] = before;
     }
   }
   if (build.overrides?.removedFeatIds?.length) {
@@ -6122,6 +6270,54 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       if (!subject) continue;
       const key = loreKey(subject);
       proficiencies.skills[key] = maxRank(proficiencies.skills[key] ?? 'untrained', at('trained'));
+    }
+  }
+
+  /*
+   * batch 037: molten-wit#three-branches — MOLTEN WIT's other two printed branches.
+   *
+   * feat-3930: *"You either become trained in Deception and gain the Charming Liar skill feat, or you
+   * become trained in Diplomacy and gain the Group Impression skill feat. IF YOU'RE ALREADY TRAINED IN
+   * ONE OF THESE SKILLS, YOU MUST TAKE THE OTHER and can choose from either skill feat. IF YOU'RE
+   * TRAINED IN BOTH SKILLS, YOU BECOME TRAINED IN A DIFFERENT SKILL OF YOUR CHOICE instead and can
+   * choose from either skill feat."*
+   *
+   * The FEAT half needs nothing here: the record's `choice` asks which skill feat you take, and each
+   * option carries it in `grant.grantsFeats`, which is free in all three branches — print pairs the
+   * feat with its skill in the first branch and lets you take either in the other two, and an option
+   * that grants Charming Liar is the option that trains Deception, so the pairing holds where print
+   * prints it and nowhere else.
+   *
+   * The SKILL half is what branches, and it branches on a fact the built character cannot state —
+   * hence `skillRankBefore`, snapshot in the grant expansion above. Both other branches are written as
+   * RAISES on top of the option grant, never instead of it: in branch two the option's own
+   * `skills` entry either names the skill this trains (same answer, applied twice, harmless) or names
+   * the one the character already has (a maxRank no-op), and in branch three both are no-ops. So the
+   * three branches compose rather than contend, which is why no branch has to suppress the record.
+   */
+  {
+    /* An id-keyed engine lane, so it is on the books in scripts/data/trust-lanes.json and routed
+     * through engineLaneOff — the record's own `choice.options[].grant.skills` half is trusted or
+     * stripped by the ledger, and a branch the ledger cannot reach handing out the SAME skill would
+     * make the two halves of one printed clause disagree. Off today: approval #12 keeps the whole
+     * record on. */
+    const mw = engineLaneOff('molten-wit') ? undefined : skillRankBefore['molten-wit'];
+    const untrained = mw ? (['deception', 'diplomacy'] as const).filter((s) => (mw[s] ?? 'untrained') === 'untrained') : [];
+    if (mw && untrained.length === 1) {
+      // *"you must take the other"* — not a choice, so it lands whether or not the feat's own control
+      // has been answered. The player sees it on the sheet as a trained skill they did not pick.
+      proficiencies.skills[untrained[0]] = maxRank(proficiencies.skills[untrained[0]] ?? 'untrained', 'trained');
+    } else if (mw && untrained.length === 0) {
+      /* *"a DIFFERENT skill of your choice"* — the shipped replacement-pick lane, which is the same
+       * sentence every `redundantFallback` record prints and already has its own builder control and
+       * its own storage key. `note` because the heading this lane derives by default names one skill
+       * ("Already trained in Deception"), and here the pick is owed to both at once. */
+      const key = 'molten-wit:fallback:deception';
+      skillFallbacks.push({ featId: 'molten-wit', skill: 'deception', note: 'Already trained in Deception and Diplomacy' });
+      const picked = build.featSkillChoices?.[key];
+      if (picked && SKILLS.includes(picked)) {
+        proficiencies.skills[picked] = maxRank(proficiencies.skills[picked] ?? 'untrained', 'trained');
+      }
     }
   }
 
@@ -9004,6 +9200,8 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     feats,
     skillIncreases,
     ...(skillFallbacks.length ? { skillFallbacks } : {}),
+    // batch 037: molten-wit#three-branches — the pre-grant ranks the builder's option gate reads.
+    ...(Object.keys(skillRankBefore).length ? { skillRankBefore } : {}),
     ...(featSubstitutions.length ? { featSubstitutions } : {}),
     // The skills a free class pick can NOT be spent on, with where each came from — the builder's
     // picker greys those rather than offering a pick this build silently discards (Q27).
@@ -9268,10 +9466,19 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
   // hand-authored characters that only recorded final ranks), the Skills block below SYNTHESIZES the
   // missing increases so the builder's skill-increase slots are populated and ranks survive a rebuild.
   /* Two entries at one level are the Stylish Tricks shape: the first fills the ordinary slot, the
-   * second the bonus one. Without the split the second overwrote the first on every load. */
+   * second the bonus one. Without the split the second overwrote the first on every load. A THIRD is
+   * the swashbuckler-with-Reborn-Soul shape (both grant an extra increase at 3/7/15) and fills the
+   * background slot — a store that only holds two answers loses one of them on every round-trip. */
+  /* Routed by which lane can LEGALLY hold it, not by position: a Reborn Soul who is not a
+   * swashbuckler has exactly two entries at 3rd level and the second belongs to the background store,
+   * where a positional split would have parked it in a bonus lane the class never grants — and
+   * buildCharacter, reading `bonusSkillIncreaseLevels`, would have dropped it on the next rebuild. */
+  const bonusLevels = new Set(c.classId ? content.classes[c.classId]?.bonusSkillIncreaseLevels ?? [] : []);
   for (const si of c.skillIncreases ?? []) {
-    if (b.skillIncreases[si.level] == null) b.skillIncreases[si.level] = si.skill;else
-    (b.bonusSkillIncreases ??= {})[si.level] = si.skill;
+    if (b.skillIncreases[si.level] == null) b.skillIncreases[si.level] = si.skill;
+    else if (bonusLevels.has(si.level) && (b.bonusSkillIncreases ??= {})[si.level] == null)
+      b.bonusSkillIncreases[si.level] = si.skill;
+    else (b.backgroundSkillIncreases ??= {})[si.level] = si.skill;
   }
 
   const ancestry = c.ancestryId ? content.ancestries[c.ancestryId] : undefined;
@@ -9997,6 +10204,9 @@ export interface LevelGrants {
    *  swashbuckler's Stylish Tricks at 3/7/15). Its answer lives in `BuildState.bonusSkillIncreases`,
    *  keyed by level, so it cannot overwrite the class's own increase at the same level. */
   bonusSkillIncrease?: boolean;
+  /** A THIRD skill increase at this level, granted by the BACKGROUND and narrowed to the Lores it
+   *  trained (Reborn Soul at 3/7/15). Its answer lives in `BuildState.backgroundSkillIncreases`. */
+  backgroundSkillIncrease?: boolean;
   attributeBoosts: boolean;
 }
 
@@ -10089,6 +10299,10 @@ export function levelGrants(
     featSlots,
     skillIncrease: (cls?.skillIncreaseLevels ?? SKILL_INCREASE_LEVELS).includes(level),
     bonusSkillIncrease: (cls?.bonusSkillIncreaseLevels ?? []).includes(level),
+    /* The BACKGROUND's extra increase (Reborn Soul at 3/7/15). Only reachable when the caller passed
+     * the whole build — the dozen callers that only want feat slots do not, and a background they
+     * cannot see grants nothing, exactly as a class archetype does not above. */
+    backgroundSkillIncrease: !!(build && backgroundSkillIncreaseAllowed(build, content)?.levels.includes(level)),
     attributeBoosts: attributeBoostLevels(variant).includes(level),
   };
 }

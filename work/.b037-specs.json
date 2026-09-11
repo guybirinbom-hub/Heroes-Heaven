@@ -387,5 +387,23 @@
       "work/.b037-queue.json",
       "work/.b037-commit.txt"
     ]
+  },
+  {
+    "file": "work/.b037-rows-molten-wit.json",
+    "kind": "rows",
+    "family": "molten-wit",
+    "note": "LANE M (desk #12, finding molten-wit#three-branches) — the two printed branches Molten Wit never had, plus the engine reader they hang on. ONE overlay row (feats/molten-wit `choice`; CLOSER 2026-09-11: the row's `supersedes: true` was dropped at apply — the shipped `choice` comes from the base import, not from the overlay, so no overlay row held that key and the applier refused the flag) which moves both halves of the feat's own sentence onto its choice options: `grant.skills` (the shape 112 other option grants already use) and `grant.grantsFeats` (the path scripts/data/trust-approvals.json n:12 names, which gains its reader in build.ts's grantSources beside the heritage and class-feature loops that already read it — measured 2026-09-11, 0 of 6,552 feats could use it before). The two duplicate carriers are removed and say where they went: CHOICE_FEAT_GRANTS['molten-wit'] in src/rules/featFeatGrants.ts (it HAD to move — src/data/trust-ledger.json lanes.featGrants[\"molten-wit\"] = [\"grantsRecord\"], so the paired feat shipped dark under the gate) and the `choiceGrants` row in src/rules/featGrantsLane.ts. The engine piece is `Character.skillRankBefore`: buildCharacter snapshots the skills named in SKILL_RANK_BEFORE_OWN_GRANTS inside the feat-grant expansion (the only point where no feat grant has been applied), and `qualifiesForOption(c, gate, recordId)` prefers it — the fix for a whole class of self-satisfying option gates, 112 of the 118 in core.json. ⚠ test/experience-gate-fixes.test.tsx's molten-wit `it` and test/batch037-molten-wit.test.ts's record assertions are RED until this spec is applied, by construction: the carriers moved onto the record in the same change. ⚠ test/held-back-registry-fixes.test.ts:177 is flipped deliberately (the registry row must be GONE, not merely unused) and cites the finding.",
+    "stage": [
+      "work/.b037-rows-molten-wit.json",
+      "work/.b037-report-molten-wit.txt",
+      "test/batch037-molten-wit.test.ts",
+      "test/held-back-registry-fixes.test.ts",
+      "src/rules/build.ts",
+      "src/rules/derive.ts",
+      "src/rules/types.ts",
+      "src/rules/featFeatGrants.ts",
+      "src/rules/featGrantsLane.ts",
+      "work/.b037-specs.json"
+    ]
   }
 ]

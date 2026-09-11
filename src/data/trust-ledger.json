@@ -1,5 +1,5 @@
 {
- "coreSha": "e798d039a40908c6174e7aaf70072d42f840e1649cc927318768dff75ae4818f",
+ "coreSha": "02883714f56503d39cb803143843a8e35adb6ec2c2308676caa5dce7105bce87",
  "generator": "scripts/trust-ledger.mjs",
  "lanes": {
   "engine": [
@@ -452,9 +452,6 @@
    ],
    "miresoul": [
     "choice"
-   ],
-   "molten-wit": [
-    "grantsRecord"
    ],
    "monk-dedication": [
     "skill"
@@ -7484,5 +7481,5 @@
    "passiveEffects.resistances"
   ]
  },
- "wgSha": "432d85e2344b64bec017a2a849d09ab8093a64e0dcc00f9444cc054ca79a77bd"
+ "wgSha": "f5378853c46ffa27f609dacbed9a470db9c380a121479723fc9f6a0bd7404260"
 }

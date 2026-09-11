@@ -50,11 +50,18 @@ export const CHOICE_FEAT_GRANTS: Record<string, Record<string, string[]>> = {
    * asks which case applies and this answers it; an unanswered pick falls through to no grant, which
    * is the "I gain a familiar" branch. */
   'familiar-master-dedication': { yes: ['enhanced-familiar'], no: [] },
-  /* *"You EITHER become trained in Deception and gain the CHARMING LIAR skill feat, OR become trained
-   * in Diplomacy and gain the GROUP IMPRESSION skill feat."* Only the skill training was modelled —
-   * the record's own answer values are `deception`/`diplomacy` — so whichever branch the player chose,
-   * the skill feat half of the sentence was silently dropped. */
-  'molten-wit': { deception: ['charming-liar'], diplomacy: ['group-impression'] },
+  /* batch 037: molten-wit#three-branches — 'molten-wit' MOVED to the record, not deleted.
+   *
+   * *"You EITHER become trained in Deception and gain the CHARMING LIAR skill feat, OR become trained
+   * in Diplomacy and gain the GROUP IMPRESSION skill feat."* The pairing is unchanged; what changed is
+   * the CARRIER. This table is the `lanes.featGrants` half of the trust gate, and molten-wit WAS in its
+   * off-list (src/data/trust-ledger.json lanes.featGrants["molten-wit"] = ["grantsRecord"]), so the
+   * feat half shipped DARK from here while the record's own fields were all trusted. (That entry is
+   * gone as of the re-seed that applied this change: the ledger scrapes this table for its keys, and
+   * the key is no longer here. The reason the move was needed is the sentence above, not the entry.) The owner's
+   * approval for desk #12 (scripts/data/trust-approvals.json n:12) names
+   * `choice.options[].grant.grantsFeats` for exactly that reason, so the grant now rides the record's
+   * own option beside the skill it is paired with — one carrier for one sentence, and a live one. */
   /* *"You gain the Hunt Prey action. … IF YOU ALREADY HAVE HUNT PREY, you gain the Monster Hunter feat
    * in addition to the other benefits of this feat."* The Monster Hunter half is the consolation for a
    * character who ALREADY had Hunt Prey, and the record's unconditional `grantsFeats` handed it to every
@@ -124,6 +131,35 @@ export const FEAT_RANK_FEAT_GRANTS: Record<
     { skill: 'intimidation', rank: 'trained', feat: 'intimidating-glare' },
     { skill: 'intimidation', rank: 'legendary', feat: 'scare-to-death' },
   ],
+};
+
+/**
+ * Skills whose rank a carrier's own text asks about BEFORE that carrier has granted anything.
+ *
+ * `FEAT_RANK_FEAT_GRANTS` above reads exactly that rank, through buildCharacter's `skillRankHere`,
+ * and it can only do so because it is read INSIDE the feat-grant expansion — a point in the build
+ * where `proficiencies.skills` holds class, background, free picks and skill increases and not one
+ * feat grant. Nothing outside that loop could ask the question: by the time the character exists,
+ * the carrier's own grant is in the answer, so *"if you're already trained in Deception"* is true
+ * for every character who took a feat that trains Deception. That is a whole class of defect, not a
+ * molten-wit one — measured 2026-09-11, **112 of the 118 `choice.options[].requiresSkillRank` gates
+ * in public/core.json sit on an option whose own `grant.skills` trains the very skill the gate
+ * reads** (Ageless Spirit's sixteen among them), so the builder's option gate removed the answer the
+ * player had just given.
+ *
+ * So buildCharacter snapshots the named skills at that point and hands them out on
+ * `Character.skillRankBefore[<carrier>]`, where `qualifiesForOption` prefers them over the built
+ * ranks whenever it is asked about that carrier's own options. A LIST, not every skill on every
+ * record: the snapshot is only sound for a carrier the loop actually reaches, and naming the skills
+ * keeps it to the clauses that print the question.
+ *
+ * Molten Wit (feat-3930) is the record the list exists for: *"If you're ALREADY trained in one of
+ * these skills, you must take the other… If you're trained in BOTH skills, you become trained in a
+ * different skill of your choice instead."* Three branches, and which one a character is in is a
+ * fact about the moment before this feat fires.
+ */
+export const SKILL_RANK_BEFORE_OWN_GRANTS: Record<string, ProficiencyKey[]> = {
+  'molten-wit': ['deception', 'diplomacy'],
 };
 
 /**

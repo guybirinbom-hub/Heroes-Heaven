@@ -92,15 +92,25 @@ describe('breath-of-the-dragon — shape, damage and save derive from the dracon
 
 describe('reborn-soul — three extra increases, one each, not WG’s six', () => {
   // batch 037: reborn-soul#restricted-increases
-  it('reborn-soul’s note states ONE extra increase per level, player’s choice of Lore', () => {
+  it('reborn-soul DELIVERS the three restricted increases, and no longer warns instead', () => {
     // AoN background-590: *"At 3rd level, 7th level, and 15th level, you receive skill increases,
-    // which you can apply only to these Lore skills."* The shipped note took WG's both-Lores-each-time
-    // reading (six raises) without saying so.
-    const warn = db.backgrounds['reborn-soul']!.dataWarning ?? '';
-    expect(warn).toContain('ONE extra skill increase');
-    expect(warn).toContain('you choose which one each time');
-    // …and it must not keep the plural reading that let a player raise both Lores at every level.
-    expect(warn).not.toContain('EXTRA skill increases');
+    // which you can apply only to these Lore skills."* This row shipped FIRST as a `dataWarning`
+    // telling the player to apply the three increases by hand, because the restricted-increase lane
+    // was class-only. The residual lane built the background twin, so the warning was superseded to
+    // null in the same apply: leaving it would have printed the red "Missing data" panel over a
+    // working mechanic AND doubled every raise the builder already grants.
+    const bg = db.backgrounds['reborn-soul']!;
+    const restricted = bg.restrictedSkillIncreaseLevels!;
+    expect(restricted.levels).toEqual([3, 7, 15]);
+    // ONE increase per level, spendable on ONE of the two TYPED past-life Lores — the flag is what
+    // makes "these Lore skills" resolvable, since the subjects are free text on this record.
+    expect(restricted.includeBackgroundLores).toBe(true);
+    expect(restricted.reason).toContain('only to one of your two past-life Lore skills');
+    expect(restricted.reason).toContain('you choose which one each time');
+    // …and it must not carry the plural reading that let a player raise both Lores at every level.
+    expect(restricted.reason).not.toContain('both');
+    // The red panel is GONE, not merely reworded.
+    expect(bg.dataWarning).toBeUndefined();
   });
 });
 

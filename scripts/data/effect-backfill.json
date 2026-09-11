@@ -165280,8 +165280,8 @@
   "category": "backgrounds",
   "id": "reborn-soul",
   "field": "dataWarning",
-  "value": "At 3rd, 7th and 15th level you gain ONE extra skill increase, and it can be applied only to one of your two past-life Lore skills — you choose which one each time, and your ordinary skill increases at those levels are unaffected. The app's restricted bonus-increase lane is class-only today, so apply these three by hand.",
-  "why": "AoN background-590 (Reborn Soul): \"At 3rd level, 7th level, and 15th level, you receive skill increases, which you can apply only to these Lore skills.\" SUPERSEDES the shipped batch-021 dataWarning, whose wording (\"EXTRA skill increases that can only raise your two past-life Lore skills\") is silently WG's both-Lores-each-time reading - six raises where print grants three (owner 2026-09-10 #85, 'A as I describe it'). The superseded row's only content was that sentence plus its 'apply them by hand' instruction; both halves are carried into this value, corrected. The BUILT half (one restricted increase at each of 3/7/15) cannot be a row: bonusSkillIncreaseLevels + restrictedSkillIncreaseLevels are read off the CLASS only (src/rules/build.ts:3724 `cls?.bonusSkillIncreaseLevels`, build.ts:1137 `cls?.restrictedSkillIncreaseLevels`) and their `skills` list is fixed SkillIds, which cannot name the two Lores the player picked - see CROSS-FILE GAPS."
+  "value": null,
+  "why": "AoN background-590 (Reborn Soul): \"At 3rd level, 7th level, and 15th level, you receive skill increases, which you can apply only to these Lore skills.\" SUPERSEDES the batch-037 warning (work/.b037-rows-data-rows-6.json) that ended \"The app's restricted bonus-increase lane is class-only today, so apply these three by hand.\" — the lane is no longer class-only and the app delivers all three. `dataWarning` is the RED \"Missing data\" panel (src/sheet/FeatsTab.tsx:372-378, \"effects reference content not in the current data\"), so leaving it would report a working mechanic as broken AND instruct the player to apply by hand three increases the builder has already given them, doubling every raise. The sentence it carried is not lost: the ruling's wording now rides `restrictedSkillIncreaseLevels.reason` on the row above, which the builder prints on the increase card at 3rd, 7th and 15th and on every greyed option — the place the player actually meets the choice."
  },
  {
   "category": "actions",
@@ -186932,5 +186932,69 @@
   "field": "speedBonusType",
   "value": "status",
   "why": "AoN feat-932 raises the bonus feat-928 grants, and feat-928 prints \"You gain a +5-foot STATUS bonus to your Speed\" - a raised bonus keeps its type. This is what makes the replacement work instead of the addition: two status bonuses take the highest (deriveSpeeds' stackSpeedBonuses, built this batch for swashbucklers-speed#typed-all-speeds), so Bellflower's +5 is suppressed by this +10 and the tiller pays the printed number once."
+ },
+ {
+  "category": "feats",
+  "id": "molten-wit",
+  "field": "choice",
+  "value": {
+   "flag": "skill",
+   "prompt": "Skill feat",
+   "kind": "array",
+   "options": [
+    {
+     "value": "deception",
+     "label": "Charming Liar",
+     "description": "You become trained in Deception and gain the Charming Liar skill feat. If you are already trained in Deception, you become trained in Diplomacy instead; if you are trained in both, you become trained in a skill of your choice instead. Either way you gain Charming Liar.",
+     "grant": {
+      "skills": {
+       "deception": "trained"
+      },
+      "grantsFeats": [
+       "charming-liar"
+      ]
+     }
+    },
+    {
+     "value": "diplomacy",
+     "label": "Group Impression",
+     "description": "You become trained in Diplomacy and gain the Group Impression skill feat. If you are already trained in Diplomacy, you become trained in Deception instead; if you are trained in both, you become trained in a skill of your choice instead. Either way you gain Group Impression.",
+     "grant": {
+      "skills": {
+       "diplomacy": "trained"
+      },
+      "grantsFeats": [
+       "group-impression"
+      ]
+     }
+    }
+   ]
+  },
+  "why": "AoN feat-3930, quoted in full in the finding note. The shipped `choice` asked \"Skill\" over the two skills and carried no grant at all: the skill was granted by a `choiceGrants` row in src/rules/featGrantsLane.ts and the paired feat by CHOICE_FEAT_GRANTS in src/rules/featFeatGrants.ts, both keyed by this same answer, and the two branches for a character already trained in one or both skills existed nowhere. Print pairs the feat with its skill ONLY in the first branch — \"if you're already trained in one of these skills, you must take the other AND CAN CHOOSE FROM EITHER SKILL FEAT\" — so the open question in all three branches is the FEAT, and the skill is paired to it, forced, or free depending on the branch. Putting both halves on one option is what lets that be true: the option that grants Charming Liar is the option that trains Deception, so the pairing holds where the book prints it, while the branch code raises the other skill (branch two) or offers the replacement pick (branch three) on top — every combination is a maxRank raise, so the branches compose and none has to suppress the record. The `grant.skills` half is the shape 112 other option grants in public/core.json already use (applied by buildCharacter's applyAlwaysOn); the `grant.grantsFeats` half is the path scripts/data/trust-approvals.json n:12 names and gains its reader in the same change (build.ts grantSources, beside the heritage and class-feature loops that already read it). Values and flag deliberately unchanged so saved answers survive."
+ },
+ {
+  "category": "backgrounds",
+  "id": "reborn-soul",
+  "field": "restrictedSkillIncreaseLevels",
+  "value": {
+   "levels": [
+    3,
+    7,
+    15
+   ],
+   "includeBackgroundLores": true,
+   "reason": "Reborn Soul: this extra skill increase can be applied only to one of your two past-life Lore skills — you choose which one each time."
+  },
+  "why": "AoN background-590 (Reborn Soul): \"You become trained in two Lore skills, which you and your GM choose from Lore skills associated with your past life. At 3rd level, 7th level, and 15th level, you receive skill increases, which you can apply only to these Lore skills.\" Owner ruling 2026-09-10 #85 (work/desk-answers-2026-09-10.json, ns:[85], \"A as I describe it\"): ONE EXTRA skill increase at each of those three levels, spendable only on ONE of the two past-life Lores (the player chooses which each time) — not Wanderer's Guide's both-Lores-each-time reading (six raises), and not the 'normal increases are locked' reading; the ordinary increase at each of those levels stays free. `includeBackgroundLores` is the resolver flag: \"these Lore skills\" names two subjects the player TYPED into the record's own trainedLoreChoice boxes, so the allowed list cannot be written down here the way the swashbuckler's `skills: [acrobatics]` can."
+ },
+ {
+  "category": "feats",
+  "id": "flexible-spellcaster-dedication",
+  "path": [
+   "classArchetype"
+  ],
+  "field": "note",
+  "value": "Flexible Spellcaster: you prepare a spell COLLECTION rather than filling each slot, and can cast any spell in it using any slot of an appropriate rank. The collection is ONE pool, not a list per rank: it holds as many spells as the total spell slots you get each day from your class, in any mix of ranks, and at least one of them must be 1st rank. In exchange your slots per rank never advance past 2, and you learn 2 fewer class cantrips. Restricted slots (a wizard curriculum slot, a cleric divine font) are unaffected and their spells do not count toward the collection.",
+  "why": "AoN archetype-99: \"The number of spells in your spell collection each day equals the total number of spell slots you get each day from your class spells\" and \"The only restriction is that you must select at least one 1st-level spell for your collection each time you prepare, ensuring that you can use all your spell slots each day.\" The shipped note described the collection but named neither the flat size nor the 1st-rank floor, so the two rules the engine now enforces were nowhere on the player's sheet. Owner ruling 2026-09-10 #102."
  }
 ]

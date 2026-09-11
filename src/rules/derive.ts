@@ -1733,13 +1733,13 @@ export function narrowChoiceOptions(
     // A per-option gate on the record's OWN list. `requiresSkillRank` has existed since Haunting
     // Memories but was read only on the daily-preparations path, so the same field on a BUILD-time
     // choice was inert — this is the first place it applies to both.
-    if (!qualifiesForOption(c, o.requiresSkillRank)) continue;
+    if (!qualifiesForOption(c, o.requiresSkillRank, recordId)) continue;
     if (o.requiresAnyFeature?.length && !o.requiresAnyFeature.some(hasFeature)) continue;
     if (limits.length) {
       // Intersection: the value has to be allowed by EVERY limit in force, and by an entry whose own
       // condition currently holds.
       const allowedByAll = limits.every((l) =>
-        l.allow.some((a) => a.value === o.value && qualifiesForOption(c, a.requiresSkillRank)),
+        l.allow.some((a) => a.value === o.value && qualifiesForOption(c, a.requiresSkillRank, recordId)),
       );
       if (!allowedByAll) continue;
     }
@@ -1766,10 +1766,28 @@ export function narrowChoiceOptions(
  */
 const RANK_ORDER = ['untrained', 'trained', 'expert', 'master', 'legendary'] as const;
 
-/** Whether a character meets an option's skill-rank gate. No gate ⇒ always offered. */
-export function qualifiesForOption(c: Character, gate: SkillRankGate | undefined): boolean {
+/**
+ * Whether a character meets an option's skill-rank gate. No gate ⇒ always offered.
+ *
+ * batch 037: molten-wit#three-branches — `recordId` is the record whose option is being gated, and it
+ * is what makes *"if you're ALREADY trained"* answerable. Without it this reads the BUILT character,
+ * whose ranks include the very grant the option hands over, so the gate satisfies itself: measured
+ * 2026-09-11, 112 of the 118 `choice.options[].requiresSkillRank` gates in public/core.json sit on an
+ * option whose own `grant.skills` trains the skill the gate reads (all sixteen of Ageless Spirit's
+ * among them) — answer the picker and the answer leaves the menu. ⚠ ALL 118 of them are on records
+ * whose choice is `daily: true` (measured 2026-09-11: ageless-spirit, ancient-memories,
+ * endless-memories, ancestral-longevity, expert-longevity, energy-fortification, haunting-memories),
+ * and the daily path below deliberately keeps the built-rank reading — so this arm changes nothing
+ * for them today. It is the reader the shape needs, live for whatever `SKILL_RANK_BEFORE_OWN_GRANTS`
+ * names, and molten-wit is its only entry. `Character.skillRankBefore` is
+ * buildCharacter's snapshot of those skills before that record's own grants, so the gate asks the
+ * engine rather than working the same question out a second way. Absent for a record the snapshot
+ * does not cover, which falls through to the built rank exactly as before.
+ */
+export function qualifiesForOption(c: Character, gate: SkillRankGate | undefined, recordId?: string): boolean {
   if (!gate) return true;
-  const at = RANK_ORDER.indexOf((c.proficiencies.skills[gate.skill] ?? 'untrained') as (typeof RANK_ORDER)[number]);
+  const before = recordId ? c.skillRankBefore?.[recordId]?.[gate.skill] : undefined;
+  const at = RANK_ORDER.indexOf((before ?? c.proficiencies.skills[gate.skill] ?? 'untrained') as (typeof RANK_ORDER)[number]);
   if (gate.min && at < RANK_ORDER.indexOf(gate.min)) return false;
   if (gate.max && at > RANK_ORDER.indexOf(gate.max)) return false;
   return true;

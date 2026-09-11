@@ -231,8 +231,8 @@
   {
    "n": 85,
    "record": "backgrounds/reborn-soul",
-   "fields": ["trainedLoreChoice", "trainedLoreChoiceCount", "skillProgression"],
-   "why": "The ruling BUILDS three restricted increases: 'at 3rd, 7th and 15th level ONE EXTRA skill increase each, spendable only on one of the two past-life Lores … build the three extra increases as a restricted pick.' WG's row encodes choice/conditional only, with `skill` as our extra."
+   "fields": ["trainedLoreChoice", "trainedLoreChoiceCount", "restrictedSkillIncreaseLevels"],
+   "why": "The ruling BUILDS three restricted increases: 'at 3rd, 7th and 15th level ONE EXTRA skill increase each, spendable only on one of the two past-life Lores … build the three extra increases as a restricted pick.' WG's row encodes choice/conditional only, with `skill` as our extra. ⚠ CARRIER CORRECTED 2026-09-11 when the batch-037 residual lane built the mechanic: this entry named `skillProgression`, which is a FIXED schedule ({skill, at:[{level,rank}]}, src/rules/types.ts) and on this record would raise BOTH past-life Lores at each of the three levels — Wanderer's Guide's both-Lores-each-time reading, the one the owner explicitly rejected. The built carrier is `restrictedSkillIncreaseLevels` (one extra increase per level, spendable on ONE of the two typed Lores), and the record carries it as of the residual apply. Naming the rejected path would have approved the wrong mechanic while looking correct."
   },
   {
    "n": 97,

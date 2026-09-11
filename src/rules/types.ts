@@ -2719,7 +2719,46 @@ export interface Heritage extends ContentBase, DefenseGrants {
   bulkMaxBonus?: number;
 }
 
+/**
+ * "…an additional skill increase, which you can apply only to X" — the narrowing on an EXTRA skill
+ * increase, carried by whatever record prints it.
+ *
+ * One shape for both carriers, because the sentence is the same sentence. A CLASS prints it on a
+ * feature (swashbuckler Stylish Tricks, thaumaturge Thaumaturgic Expertise/Mastery) and names fixed
+ * skills, optionally widened by the subclass pick. A BACKGROUND prints it on itself — Reborn Soul
+ * (background-590): *"You become trained in two Lore skills… At 3rd level, 7th level, and 15th level,
+ * you receive skill increases, which you can apply only to these Lore skills"* — and names no skill
+ * at all, because *"these Lore skills"* are two subjects the player typed. That is what
+ * `includeBackgroundLores` resolves; `skills` stays empty there.
+ *
+ * ⚠ On a background the levels list ALSO grants the increase (there is no `bonusSkillIncreaseLevels`
+ * twin): a background that narrows an increase it does not grant is not a thing any record prints.
+ */
+export interface RestrictedSkillIncrease {
+  levels: number[];
+  skills?: SkillId[];
+  /** Widen by the chosen SUBCLASS option's granted skill — *"or the skill from your style"*. */
+  includeSubclassGrantedSkills?: boolean;
+  /** Widen by the Lore subjects the BACKGROUND's own `trainedLoreChoice` boxes trained —
+   *  *"only to these Lore skills"*. The subjects are free text, so they cannot be listed here. */
+  includeBackgroundLores?: boolean;
+  /** The feature whose text imposes it, so the picker can say why an option is greyed. */
+  featureId?: string;
+  reason: string;
+}
+
 export interface Background extends ContentBase {
+  /**
+   * Levels at which this BACKGROUND grants one extra skill increase, narrowed by the same field.
+   *
+   * Reborn Soul (background-590) is the only carrier: *"At 3rd level, 7th level, and 15th level, you
+   * receive skill increases, which you can apply only to these Lore skills."* Owner ruling
+   * 2026-09-10 #85 — ONE extra increase at each of those levels, spendable on EITHER past-life Lore
+   * (the player picks which each time), and the ordinary increases at those levels are untouched.
+   * Its answer lives in `BuildState.backgroundSkillIncreases`, a third store keyed by level, so a
+   * swashbuckler with this background still gets their Stylish Tricks increase at the same levels.
+   */
+  restrictedSkillIncreaseLevels?: RestrictedSkillIncrease;
   /** A "choose one of N" this record asks at build time; resolved by buildCharacter and rendered
    *  by the shared EffectChoicesPicker. */
   effectChoices?: EffectChoice[];
@@ -3950,14 +3989,7 @@ export interface ClassDef extends ContentBase {
    * subclass option's `grants.skills`. Read by `restrictedSkillIncreaseAllowed` (build.ts), which both
    * buildCharacter and the builder's bonus-increase picker consult, so the two cannot drift apart.
    */
-  restrictedSkillIncreaseLevels?: {
-    levels: number[];
-    skills?: SkillId[];
-    includeSubclassGrantedSkills?: boolean;
-    /** The feature whose text imposes it, so the picker can say why an option is greyed. */
-    featureId?: string;
-    reason: string;
-  };
+  restrictedSkillIncreaseLevels?: RestrictedSkillIncrease;
   /**
    * Skill-feat slots a class feature NARROWS rather than grants — the investigator's Skillful Lessons
    * (*"the feat must be one for an Intelligence-, Wisdom-, or Charisma-based skill, or for the skill
@@ -6021,6 +6053,16 @@ export interface Character {
    *  replacement grants that rank, and the options are the skills the character is ALREADY TRAINED in
    *  (an untrained skill is not "another skill in which you're trained"). */
   skillFallbacks?: { featId: string; skill: ProficiencyKey; note?: string; lore?: true; rank?: ProficiencyRank }[];
+  /** batch 037: molten-wit#three-branches — a skill's rank as it stood BEFORE the named record's own
+   *  grants, keyed by that record. *"If you're ALREADY trained in one of these skills"* is a question
+   *  about the moment before the carrier fired, and the built character cannot answer it: its own
+   *  grant is in the answer, so every such gate is self-satisfying (112 of the 118
+   *  `choice.options[].requiresSkillRank` gates in core.json sit on an option that trains the skill
+   *  the gate reads). buildCharacter snapshots the skills named in `SKILL_RANK_BEFORE_OWN_GRANTS`
+   *  inside the feat-grant expansion — the one point in the build where no feat grant has been
+   *  applied — and `qualifiesForOption(c, gate, recordId)` prefers this over `proficiencies.skills`
+   *  whenever it is asked about that record's own options. Absent for every record not on the list. */
+  skillRankBefore?: Record<string, Partial<Record<ProficiencyKey, ProficiencyRank>>>;
   /** Replacements the character is OWED because a flat feat grant landed on a feat they already had —
    *  *"for each of these feats you already have, you can instead gain a different feat from the
    *  following list"* (FEAT_SUBSTITUTE_GRANTS). One entry per replaceable feat, present whether or not

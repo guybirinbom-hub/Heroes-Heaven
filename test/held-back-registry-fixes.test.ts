@@ -174,10 +174,18 @@ describe('granted feats that were left asking a question the text already answer
     }
   });
 
-  it('Molten Wit grants the skill feat that goes with the branch', () => {
+  // batch 037: molten-wit#three-branches
+  it('Molten Wit grants the skill feat that goes with the branch — from the record, not this table', () => {
     /* *"You EITHER become trained in Deception and gain CHARMING LIAR, or Diplomacy and GROUP
-     * IMPRESSION."* Only the skill training was modelled; the feat half was dropped either way. */
-    expect(CHOICE_FEAT_GRANTS['molten-wit']).toEqual({ deception: ['charming-liar'], diplomacy: ['group-impression'] });
+     * IMPRESSION."* Only the skill training was modelled; the feat half was dropped either way, which
+     * is what this row fixed. The PAIRING is unchanged and still pinned (test/batch037-molten-wit.test.ts,
+     * branch one); the CARRIER moved onto the record's own choice options, because this table is the
+     * `lanes.featGrants` half of the trust gate and molten-wit is in its off-list
+     * (src/data/trust-ledger.json), so the grant shipped dark from here while the record's fields are
+     * trusted — the owner's approval for desk #12 names `choice.options[].grant.grantsFeats` for
+     * exactly that reason. The row must be GONE, not merely unused: two carriers keyed by one answer
+     * is the duplicate-grant shape this file exists to prevent. */
+    expect(CHOICE_FEAT_GRANTS['molten-wit']).toBeUndefined();
   });
 
   it('Skilled Herbalist replaces the Alchemical Crafting list instead of stacking with it', () => {

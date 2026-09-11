@@ -39,6 +39,7 @@ import { classFeatureDescription } from '../rules/featureText';
 import {
   resolveBackground,
   restrictedSkillIncreaseAllowed,
+  backgroundSkillIncreaseAllowed,
   skillIncreaseCap,
 } from '../rules/build';
 import { casterSlots, repertoireCounts, spellbookBudget, wizardSpellbookBudget, cantripsKnown } from '../rules/spellcasting';
@@ -334,9 +335,24 @@ export function Builder({
     // "Before this level's increase" must include ONLY increases at LOWER levels. Deleting just this
     // level's increase still re-applied higher-level increases (buildCharacter applies them in level
     // order), which inflated the rank shown as the starting point and could disable a legal increase.
-    const rest: typeof build.skillIncreases = {};
-    for (const [lvl, key] of Object.entries(build.skillIncreases)) if (Number(lvl) < sel) rest[Number(lvl)] = key;
-    return buildCharacter({ ...build, skillIncreases: rest }, content).proficiencies.skills;
+    /* …and ALL THREE stores, not just the ordinary one. The extra increases (swashbuckler Stylish
+     * Tricks, Reborn Soul's past-life Lores) land at the level being edited too, so leaving them in
+     * showed this level's own pick as the starting rank — "expert → master" for a skill still at
+     * trained, and the legal top rank greyed out. */
+    const below = (m: Record<number, ProficiencyKey> | undefined) => {
+      const rest: Record<number, ProficiencyKey> = {};
+      for (const [lvl, key] of Object.entries(m ?? {})) if (Number(lvl) < sel) rest[Number(lvl)] = key;
+      return rest;
+    };
+    return buildCharacter(
+      {
+        ...build,
+        skillIncreases: below(build.skillIncreases),
+        bonusSkillIncreases: below(build.bonusSkillIncreases),
+        backgroundSkillIncreases: below(build.backgroundSkillIncreases),
+      },
+      content,
+    ).proficiencies.skills;
   }, [build, content, sel]);
 
   // Only show levels up to the character's current level; the +/− stepper extends/trims it.
@@ -1236,6 +1252,15 @@ export function Builder({
               .sort((a, b) => a - b)
               .map((rank) => {
                 const chosen = build.spells[rank] ?? [];
+                /* batch 037: flexible-spellcaster#collection-shape — the pool's one printed
+                 * restriction, enforced where it is spent: *"you must select at least one 1st-level
+                 * spell for your collection each time you prepare"* (archetype-99). With no 1st-rank
+                 * spell collected, the last place is HELD — a higher rank cannot take it — which is
+                 * the same place buildCharacter holds, so the picker offers exactly what the sheet
+                 * keeps. The hint above says the rule; this says it where the press lands. */
+                const floorHeld = isFlexCollection && rank >= 2 && !(build.spells[1] ?? []).length ? 1 : 0;
+                const capHere = flatAt(lvl) - floorHeld;
+                const full = learnedTotal >= capHere;
                 return (
                   <div className="spell-pick-row" key={rank}>
                     <div className="spr-head">
@@ -1251,7 +1276,7 @@ export function Builder({
                           </button>
                         </span>
                       ))}
-                      <button className="spr-add" type="button" disabled={learnedTotal >= flatAt(lvl)} title={learnedTotal >= flatAt(lvl) ? (isFlexCollection ? `Your collection holds all ${flatAt(lvl)} spells it can at this level.` : `Your spellbook holds all ${flatAt(lvl)} spells it can at this level.`) : undefined} data-ctl="spell" data-ctl-title={rank === 0 ? 'Cantrip' : `Rank ${rank} spell`} onClick={() => setPicker({ kind: 'spell', rank, cap: flatAt(lvl) })}>
+                      <button className="spr-add" type="button" disabled={full} title={full ? (floorHeld ? `Your collection must include at least one 1st-rank spell — the last of its ${flatAt(lvl)} places is held for one.` : isFlexCollection ? `Your collection holds all ${flatAt(lvl)} spells it can at this level.` : `Your spellbook holds all ${flatAt(lvl)} spells it can at this level.`) : undefined} data-ctl="spell" data-ctl-title={rank === 0 ? 'Cantrip' : `Rank ${rank} spell`} onClick={() => setPicker({ kind: 'spell', rank, cap: capHere })}>
                         + add
                       </button>
                     </div>
@@ -2713,24 +2738,46 @@ export function Builder({
                       </div>
                     )}
 
-                    {/* The class's BONUS skill increase (swashbuckler's Stylish Tricks at 3/7/15). The engine
-                        read `bonusSkillIncreases[lvl]` and the pending counter demanded it, but no control
-                        ever wrote it — a permanent "1 choice left" nothing on the page could clear
-                        (experience gate, 2026-09-02). */}
-                    {g.bonusSkillIncrease &&
-                      (() => {
-                        const chosenBonus = build.bonusSkillIncreases?.[lvl] ?? null;
-                        /* The feature that grants this increase may NARROW it. Swashbuckler Stylish
+                    {/* The EXTRA skill increases — the class's (swashbuckler's Stylish Tricks at 3/7/15;
+                        the engine read `bonusSkillIncreases[lvl]` and the pending counter demanded it, but
+                        no control ever wrote it — a permanent "1 choice left" nothing on the page could
+                        clear, experience gate 2026-09-02) and the background's (Reborn Soul, batch 037).
+                        One lane each, because they STACK: a swashbuckler Reborn Soul is owed both at 3rd,
+                        7th and 15th on terms that do not overlap. Same control, same helper shape; only
+                        the option list narrows. */}
+                    {[
+                      {
+                        key: 'bonus' as const,
+                        on: !!g.bonusSkillIncrease,
+                        label: 'Bonus skill increase',
+                        store: build.bonusSkillIncreases,
+                        restrict: restrictedSkillIncreaseAllowed(build, content),
+                        write: (next: Record<number, ProficiencyKey>) => actions.patch({ bonusSkillIncreases: next }),
+                      },
+                      {
+                        key: 'background' as const,
+                        on: !!g.backgroundSkillIncrease,
+                        /* Reborn Soul (background-590): *"At 3rd level, 7th level, and 15th level, you
+                         * receive skill increases, which you can apply only to these Lore skills."* */
+                        label: 'Background skill increase',
+                        store: build.backgroundSkillIncreases,
+                        restrict: backgroundSkillIncreaseAllowed(build, content),
+                        write: (next: Record<number, ProficiencyKey>) => actions.patch({ backgroundSkillIncreases: next }),
+                      },
+                    ]
+                      .filter((lane) => lane.on)
+                      .map((lane) => {
+                        const chosenBonus = lane.store?.[lvl] ?? null;
+                        /* The record that grants this increase may NARROW it. Swashbuckler Stylish
                          * Tricks: *"you gain an additional skill increase you can apply only to
                          * Acrobatics or the skill from your swashbuckler's style"*; thaumaturge
                          * Thaumaturgic Expertise/Mastery: *"which you can apply only to Arcana, Nature,
                          * Occultism, or Religion"*. The list was unfiltered, so a level-3 Braggart could
                          * raise Medicine — buildCharacter now drops such a pick, and greying it here is
                          * what stops the player making it. Same helper both sides. */
-                        const bonusRestrict = restrictedSkillIncreaseAllowed(build, content);
-                        const narrowed = bonusRestrict?.levels.includes(lvl) ? bonusRestrict : null;
+                        const narrowed = lane.restrict?.levels.includes(lvl) ? lane.restrict : null;
                         return (
-                          <div className="lvl-group">
+                          <div className="lvl-group" key={lane.key}>
                             <div className="lvl-group-h">
                               <i className="ti ti-bulb" aria-hidden="true" /> Skills (bonus increase)
                             </div>
@@ -2740,17 +2787,22 @@ export function Builder({
                                   <i className="ti ti-arrow-up" aria-hidden="true" />
                                 </span>
                                 <div className="lvl-card-text">
-                                  <div className="lvl-card-label">Bonus skill increase</div>
+                                  <div className="lvl-card-label">{lane.label}</div>
+                                  {/* The narrowing, said out loud rather than left to be discovered by
+                                      tapping a greyed option — and the only thing on screen when the
+                                      allowed set is still empty (Reborn Soul before its two past-life
+                                      Lores are typed on the origins page). */}
+                                  {narrowed && <div className="lvl-auto">{narrowed.reason}</div>}
                                   <div className="lvl-card-row">
                                     <PopupSelect
-                                      title="Bonus skill increase"
+                                      title={lane.label}
                                       placeholder="Choose a skill…"
                                       value={chosenBonus ?? ''}
                                       onChange={(v) => {
-                                        const next = { ...(build.bonusSkillIncreases ?? {}) };
+                                        const next = { ...(lane.store ?? {}) };
                                         if (v) next[lvl] = v as ProficiencyKey;
                                         else delete next[lvl];
-                                        actions.patch({ bonusSkillIncreases: next });
+                                        lane.write(next);
                                       }}
                                       clearLabel="Clear"
                                       options={skillOptions.map((k) => {
@@ -2781,7 +2833,7 @@ export function Builder({
                             </div>
                           </div>
                         );
-                      })()}
+                      })}
 
                     {(() => {
                       // Monk Path to Perfection: a save-proficiency choice at L7/L11/L15.
@@ -3208,6 +3260,9 @@ export function Builder({
         // batch 037: flexible-spellcaster#collection-shape — the collection is the second across-rank
         // pool this picker serves; `flatBudget` covers both, so neither is capped by one rank's slots.
         const capBook = c2 ? spellbookSize2 : isFlexCollection ? flexibleCollectionSize(slotCounts) : spellbookSize;
+        // …and the pool's one printed restriction reaches the picker too: with no 1st-rank spell
+        // collected, the last place is held for one (archetype-99), so the rows must say why.
+        const floorHeldPicker = !c2 && isFlexCollection && picker.rank >= 2 && !(build.spells[1] ?? []).length;
         const capSlots = c2 ? slotCounts2 : slotCounts;
         const wizBook = c2 ? isWizardBook2 : flatBudget;
         const prepared = c2 ? isPrepared2 : isPrepared;
@@ -3266,7 +3321,9 @@ export function Builder({
                     disabled
                       ? isCantrip
                         ? `All ${cap_} cantrip slots are filled — remove one first.`
-                        : `All ${cap_} spells at this rank are chosen — remove one first.`
+                        : floorHeldPicker
+                          ? 'Your collection must include at least one 1st-rank spell — the last place is held for one.'
+                          : `All ${cap_} spells at this rank are chosen — remove one first.`
                       : undefined
                   }
                   onSelect={() =>

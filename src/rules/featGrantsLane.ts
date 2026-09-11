@@ -38,12 +38,14 @@ export const FEAT_LANE_GRANTS: Record<string, FeatGrant> = {
   'evasiveness': { "save": { "reflex": "master" } },
   'gladiator-dedication': { "skills": { "lore:gladiatorial": "trained" } },
   'master-spotter': { "perception": "master" },
-  /* ONE answer. The record's own `choice` (flag 'skill') is what CHOICE_FEAT_GRANTS reads for the paired
-   * feat, so the skill is granted off that same answer — a separate skillChoices slot asked the skill a
-   * second time under its own key and silently defaulted to Deception while unanswered (experience
-   * gate, 2026-09-02). The WG-vs-print question on the skill/feat pairing (owner queue, batch 6) is
-   * untouched by this: whichever way it is ruled, the skill is asked once. */
-  'molten-wit': { "choiceGrants": { "deception": { "skills": { "deception": "trained" } }, "diplomacy": { "skills": { "diplomacy": "trained" } } } },
+  /* batch 037: molten-wit#three-branches — 'molten-wit' REMOVED, its skill grant moved onto the
+   * record's own choice options (`choice.options[].grant.skills`, the shape 112 other option grants
+   * already use and the path the owner's approval for desk #12 names). It was a `choiceGrants` entry
+   * keyed by the same answer, so the grant is unchanged; what the move buys is that the skill and the
+   * skill feat it is printed with now ride the SAME option — feat-3930 pairs them in its first branch
+   * and separates them in the other two, and two carriers keyed by one answer could not express that
+   * without agreeing by luck. The ONE answer this entry was originally about is still one answer: the
+   * record asks its question once and nothing else asks it again. */
   /* "…trained in your choice of Diplomacy or Society. If you would automatically become trained in
    * BOTH these skills (from your background or class, for example), you instead become trained in a
    * skill of your choice. If you're trained in Society, you also gain the Courtly Graces skill feat."
