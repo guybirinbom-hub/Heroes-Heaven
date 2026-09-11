@@ -1,0 +1,29 @@
+{
+ "findings": [
+  {
+   "id": "reborn-soul#restricted-increases",
+   "note": "ENGINE BUILT FIRST, then the rows — the residual half of batch 037's reborn-soul finding (work/wg-batch-037-residual.json flaggedResidues, family data-rows-6), parked because bonusSkillIncreaseLevels and restrictedSkillIncreaseLevels were read off the CLASS only (src/rules/build.ts:3724, build.ts:1137) with a fixed SkillIds list, so a BACKGROUND narrowing an increase to two player-TYPED Lores had no reader. What was built: (a) types.ts gains the shared interface RestrictedSkillIncrease — the class's old inline shape, plus one flag `includeBackgroundLores` — and Background gains `restrictedSkillIncreaseLevels` of that type; (b) build.ts gains `backgroundChosenLoreKeys` (the `lore:<subject>` keys the background's own free-text boxes trained, lifted out of buildCharacter's proficiency walk so the picker and the build read ONE resolver) and `backgroundSkillIncreaseAllowed` (the background twin of restrictedSkillIncreaseAllowed); (c) a THIRD per-level store, BuildState.backgroundSkillIncreases, beside skillIncreases and bonusSkillIncreases, because a swashbuckler Reborn Soul is owed BOTH extra increases at 3/7/15 on terms that do not overlap and one map per level can hold only one answer; (d) levelGrants reports `backgroundSkillIncrease`, setupMissing counts it, and characterToBuild routes a second/third entry at one level by which lane can LEGALLY hold it rather than by position; (e) Builder.tsx's bonus-increase block became a two-lane map over the same control, so the background increase is a VISIBLE pick at 3/7/15 whose option list is narrowed to the two typed Lores and whose `reason` is printed on the card. On a background the levels list is ALSO what grants the increase — there is no bonusSkillIncreaseLevels twin, because a background that narrows an increase it does not grant is not a thing any record prints. TRUST GATE: no new path is added to scripts/data/trust-fields.json — src/data/trust-ledger.json carries 0 records in the backgrounds bucket (it is a chassis bucket, all-on), so nothing on this record can be stripped. ⚠ scripts/data/trust-approvals.json #85 names `skillProgression` as the intended path; that field is a FIXED schedule ({skill, at:[{level,rank}]}) and would raise BOTH Lores at each of the three levels — WG's both-Lores-each-time reading, which the owner explicitly rejected — so it cannot be the carrier. Orchestrator note: the approval still passes scripts/trust-ledger-check.mjs (skillProgression is in trust-fields.json, so the path is 'plausible'); adding `restrictedSkillIncreaseLevels` to that entry's `fields` is only meaningful once the row below has landed in public/core.json, which is why it is left to the closer. Pinned by test/batch037-reborn-soul.test.ts against in-memory PATCHED and STRIPPED copies of the database, never a patched-vs-shipped delta.",
+   "backfillRows": [
+    {
+     "category": "backgrounds",
+     "id": "reborn-soul",
+     "field": "restrictedSkillIncreaseLevels",
+     "value": {
+      "levels": [3, 7, 15],
+      "includeBackgroundLores": true,
+      "reason": "Reborn Soul: this extra skill increase can be applied only to one of your two past-life Lore skills — you choose which one each time."
+     },
+     "why": "AoN background-590 (Reborn Soul): \"You become trained in two Lore skills, which you and your GM choose from Lore skills associated with your past life. At 3rd level, 7th level, and 15th level, you receive skill increases, which you can apply only to these Lore skills.\" Owner ruling 2026-09-10 #85 (work/desk-answers-2026-09-10.json, ns:[85], \"A as I describe it\"): ONE EXTRA skill increase at each of those three levels, spendable only on ONE of the two past-life Lores (the player chooses which each time) — not Wanderer's Guide's both-Lores-each-time reading (six raises), and not the 'normal increases are locked' reading; the ordinary increase at each of those levels stays free. `includeBackgroundLores` is the resolver flag: \"these Lore skills\" names two subjects the player TYPED into the record's own trainedLoreChoice boxes, so the allowed list cannot be written down here the way the swashbuckler's `skills: [acrobatics]` can."
+    },
+    {
+     "category": "backgrounds",
+     "id": "reborn-soul",
+     "field": "dataWarning",
+     "supersedes": true,
+     "value": null,
+     "why": "AoN background-590 (Reborn Soul): \"At 3rd level, 7th level, and 15th level, you receive skill increases, which you can apply only to these Lore skills.\" SUPERSEDES the batch-037 warning (work/.b037-rows-data-rows-6.json) that ended \"The app's restricted bonus-increase lane is class-only today, so apply these three by hand.\" — the lane is no longer class-only and the app delivers all three. `dataWarning` is the RED \"Missing data\" panel (src/sheet/FeatsTab.tsx:372-378, \"effects reference content not in the current data\"), so leaving it would report a working mechanic as broken AND instruct the player to apply by hand three increases the builder has already given them, doubling every raise. The sentence it carried is not lost: the ruling's wording now rides `restrictedSkillIncreaseLevels.reason` on the row above, which the builder prints on the increase card at 3rd, 7th and 15th and on every greyed option — the place the player actually meets the choice."
+    }
+   ]
+  }
+ ]
+}

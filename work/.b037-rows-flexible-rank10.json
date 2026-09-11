@@ -1,0 +1,19 @@
+{
+  "findings": [
+    {
+      "id": "flexible-spellcaster#capstone-outside-collection",
+      "note": "LANE F (desk #102), the CAPSTONE half. The engine half shipped with this round (src/rules/build.ts: the collection loop no longer walks rank 10 against collectionLeft, so the class's single 10th-rank pick keeps its own slot instead of being sliced away once the 18 lower places are full; src/builder/Builder.tsx: the flat pool rail covers ranks 1-9 and the 10th-rank row is its own control, capped by that one slot). This row is the PLAYER-FACING half: the class-archetype note the sheet prints (src/sheet/FeatsTab.tsx:387) said the collection holds \"as many spells as the total spell slots you get each day from your class\", which is wrong by one from 19th level on - archetype-99's Table 5-1 prints Collection 18 at 17th AND at 19th, even though the slot table has gained the 10th-rank slot in between, and the table's footnote carves that slot out by name. The replacement keeps every sentence already approved for this field and adds the carve-out. Still NO FIELD CARRIES THE POOL SIZE, for the same reason as the superseded row: print sizes it from the character's own capped slot table, so a stored number would be a second copy of Table 5-1. Pinned by test/batch037-flexible-spellcaster.test.tsx. Desk #155 (a flexible wizard/witch/magus takes the spellbook branch and gets no collection at all) stays OPEN and is untouched here.",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "flexible-spellcaster-dedication",
+          "path": ["classArchetype"],
+          "field": "note",
+          "supersedes": true,
+          "value": "Flexible Spellcaster: you prepare a spell COLLECTION rather than filling each slot, and can cast any spell in it using any slot of an appropriate rank. The collection is ONE pool, not a list per rank: it holds as many spells as the total spell slots you get each day from your class, in any mix of ranks, and at least one of them must be 1st rank. That total counts your 1st- to 9th-rank slots only: a single 10th-rank slot from a class feature stays OUTSIDE the collection and works just as it always did, so the spell you choose for it is not one of the collection's spells and does not use up one of its places. In exchange your slots per rank never advance past 2, and you learn 2 fewer class cantrips. Restricted slots (a wizard curriculum slot, a cleric divine font) are unaffected and their spells do not count toward the collection.",
+          "why": "AoN archetype-99, the footnote to Table 5-1: \"Your class most likely has a class feature that gives you a single 10th level spell slot that works a bit differently from other slots. If so, flexible spellcaster doesn't change the way that spell works.\" The same table prints Collection 18 at 17th, 18th, 19th and 20th while its 10th-rank column turns from an em dash to that footnote mark at 19th - so the capstone slot enlarges nothing. The shipped note said the collection equals \"the total spell slots you get each day from your class\" with no carve-out, which reads as 19 places at 19th level and contradicts both the footnote and the printed column. Owner ruling 2026-09-10 #102."
+        }
+      ]
+    }
+  ]
+}

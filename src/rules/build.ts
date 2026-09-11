@@ -4611,8 +4611,17 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       let collectionLeft = flexibleCollectionSize(slotCounts) - floorHeld;
       for (const rank of Object.keys(slotCounts).map(Number).sort((a, b) => a - b)) {
         entry.slots[rank] = { max: slotCounts[rank], used: 0 };
-        const collected = (build.spells[rank] ?? []).slice(0, Math.max(0, collectionLeft));
-        collectionLeft -= collected.length;
+        /* batch 037: flexible-spellcaster#capstone-outside-collection — rank 10 is OUTSIDE the pool on
+         * BOTH sides of the sum. `flexibleCollectionSize` stops counting at 9, but this loop still walked
+         * rank 10, so a 19th-level flexible caster's capstone pick competed for the 18 places and was
+         * silently sliced away (`slice(0, 0)`) once the lower ranks had filled them. Print carves the slot
+         * out whole — *"Your class most likely has a class feature that gives you a single 10th level spell
+         * slot that works a bit differently from other slots. If so, flexible spellcaster doesn't change the
+         * way that spell works"* (archetype-99) — so it keeps its own pick, capped by its own slot count,
+         * exactly as the per-rank path did before the flat pool, and never charges the collection. */
+        const outside = rank > 9;
+        const collected = (build.spells[rank] ?? []).slice(0, outside ? slotCounts[rank] : Math.max(0, collectionLeft));
+        if (!outside) collectionLeft -= collected.length;
         entry.repertoire[rank] = [...new Set([...collected, ...(grantedByRank[rank] ?? [])])];
         if (grantedByRank[rank]?.length) (entry.grantedRepertoire ??= {})[rank] = [...grantedByRank[rank]];
       }

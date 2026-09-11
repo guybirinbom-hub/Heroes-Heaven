@@ -1,0 +1,35 @@
+{
+  "findings": [
+    {
+      "id": "molten-wit#three-branches",
+      "note": "LANE M (desk #12). AoN feat-3930, whole clause: \"You either become trained in Deception and gain the Charming Liar skill feat, or you become trained in Diplomacy and gain the Group Impression skill feat. If you're already trained in one of these skills, you must take the other and can choose from either skill feat. If you're trained in both skills, you become trained in a different skill of your choice instead and can choose from either skill feat.\" Three branches; one was built. The ONE row below re-shapes the record's own `choice` so that the question it asks is WHICH SKILL FEAT (the only half that is open in all three branches), and each option carries both halves of its own sentence on the paths the owner's approval for #12 names — `choice.options[].grant.skills` and `choice.options[].grant.grantsFeats`. The answer VALUES are unchanged (`deception` / `diplomacy`), so every character saved with an answer keeps it. The two carriers that used to hold those halves are removed in the same change and say where they went: src/rules/featGrantsLane.ts ('molten-wit' choiceGrants, the skill) and src/rules/featFeatGrants.ts (CHOICE_FEAT_GRANTS['molten-wit'], the feat). The feat half HAD to move: src/data/trust-ledger.json lanes.featGrants[\"molten-wit\"] = [\"grantsRecord\"], so the registry row shipped dark under the gate while the record's own fields are trusted — which is exactly why approval #12 names a record path. build.ts gains the two branches the record cannot state (the skill is forced in branch two and free in branch three, and which branch you are in is a fact about the moment BEFORE this feat fired), reading the new `Character.skillRankBefore` snapshot. Pinned by test/batch037-molten-wit.test.ts.",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "molten-wit",
+          "field": "choice",
+          "value": {
+            "flag": "skill",
+            "prompt": "Skill feat",
+            "kind": "array",
+            "options": [
+              {
+                "value": "deception",
+                "label": "Charming Liar",
+                "description": "You become trained in Deception and gain the Charming Liar skill feat. If you are already trained in Deception, you become trained in Diplomacy instead; if you are trained in both, you become trained in a skill of your choice instead. Either way you gain Charming Liar.",
+                "grant": { "skills": { "deception": "trained" }, "grantsFeats": ["charming-liar"] }
+              },
+              {
+                "value": "diplomacy",
+                "label": "Group Impression",
+                "description": "You become trained in Diplomacy and gain the Group Impression skill feat. If you are already trained in Diplomacy, you become trained in Deception instead; if you are trained in both, you become trained in a skill of your choice instead. Either way you gain Group Impression.",
+                "grant": { "skills": { "diplomacy": "trained" }, "grantsFeats": ["group-impression"] }
+              }
+            ]
+          },
+          "why": "AoN feat-3930, quoted in full in the finding note. The shipped `choice` asked \"Skill\" over the two skills and carried no grant at all: the skill was granted by a `choiceGrants` row in src/rules/featGrantsLane.ts and the paired feat by CHOICE_FEAT_GRANTS in src/rules/featFeatGrants.ts, both keyed by this same answer, and the two branches for a character already trained in one or both skills existed nowhere. Print pairs the feat with its skill ONLY in the first branch — \"if you're already trained in one of these skills, you must take the other AND CAN CHOOSE FROM EITHER SKILL FEAT\" — so the open question in all three branches is the FEAT, and the skill is paired to it, forced, or free depending on the branch. Putting both halves on one option is what lets that be true: the option that grants Charming Liar is the option that trains Deception, so the pairing holds where the book prints it, while the branch code raises the other skill (branch two) or offers the replacement pick (branch three) on top — every combination is a maxRank raise, so the branches compose and none has to suppress the record. The `grant.skills` half is the shape 112 other option grants in public/core.json already use (applied by buildCharacter's applyAlwaysOn); the `grant.grantsFeats` half is the path scripts/data/trust-approvals.json n:12 names and gains its reader in the same change (build.ts grantSources, beside the heritage and class-feature loops that already read it). Values and flag deliberately unchanged so saved answers survive."
+        }
+      ]
+    }
+  ]
+}

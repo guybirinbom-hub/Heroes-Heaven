@@ -110,6 +110,9 @@ work/wg/
 # process-parity). Committing them would add ~125 MB of duplicate JSON.
 work/*.bak
 public/*.bak
+# Nested backups too (2026-09-11: public/data/*.pre-archives.bak, 4 MB, were one `git add -A` from shipping).
+public/**/*.bak
+public/**/*.pre-*.json
 public/data.pre-bestiary.bak/
 out.txt
 

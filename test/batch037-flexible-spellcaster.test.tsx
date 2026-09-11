@@ -198,3 +198,122 @@ describe('the BUILDER offers exactly the pool the sheet keeps', () => {
     full.stop();
   });
 });
+
+/**
+ * THE CAPSTONE SLOT IS OUTSIDE THE COLLECTION.
+ *
+ * Print (archetype-99): *"Your class most likely has a class feature that gives you a single 10th level
+ * spell slot that works a bit differently from other slots. If so, flexible spellcaster doesn't change
+ * the way that spell works."* Table 5-1 prints the arithmetic: Collection is 18 at 17th AND at 19th,
+ * even though the slot table gains the 10th-rank slot in between.
+ *
+ * `flexibleCollectionSize` stopped counting at rank 9 (pinned above), but the loop that FILLS the
+ * collection still walked rank 10 — so the capstone pick competed for the 18 places and was sliced away
+ * the moment the lower ranks filled them. A 19th-level flexible cleric lost its 10th-rank spell.
+ */
+const LOWER_18: Record<number, string[]> = {
+  1: ['heal', 'bless'],
+  2: ['restoration', 'spiritual-armament'],
+  3: ['circle-of-protection', 'agonizing-despair'],
+  4: ['air-walk', 'anathematic-reprisal'],
+  5: ['abyssal-plague', 'death-ward'],
+  6: ['bacchanalia', 'stone-to-flesh'],
+  7: ['divine-vessel', 'ethereal-jaunt'],
+  8: ['antimagic-field', 'divine-aura'],
+  9: ['crusade', 'astral-labyrinth'],
+};
+/** The lower-rank half of what the sheet keeps — the collection, which is ranks 1-9 and nothing else. */
+const lowerCollected = (ch: Character) =>
+  Object.entries(mainCasting(ch)?.repertoire ?? {}).filter(([r]) => Number(r) <= 9).flatMap(([, ids]) => ids);
+
+describe('the class’s single 10th-rank slot is outside the collection', () => {
+  // batch 037: flexible-spellcaster#capstone-outside-collection
+  it('a 19th-level flexible cleric keeps its 10th-rank spell with all 18 collection places already spent', () => {
+    /* The exact case the flat pool broke: 18 lower-rank spells fill the collection, and the capstone
+     * pick — walked last, because the loop runs the ranks in order — was charged against a pool with
+     * nothing left and silently dropped by `slice(0, 0)`. */
+    const ch = built(19, { ...LOWER_18, 10: ['avatar'] });
+    const main = mainCasting(ch)!;
+    expect(main.slots?.[10], 'the capstone slot is there').toEqual({ max: 1, used: 0 });
+    expect(main.repertoire?.[10], 'and the spell picked for it survives the collection’s cap').toEqual(['avatar']);
+    expect(lowerCollected(ch).length, 'the collection still holds its printed 18').toBe(18);
+    expect(flexibleCollectionSize({ 1: 2, 2: 2, 3: 2, 4: 2, 5: 2, 6: 2, 7: 2, 8: 2, 9: 2, 10: 1 })).toBe(18);
+  });
+
+  // batch 037: flexible-spellcaster#capstone-outside-collection
+  it('the capstone pick spends none of the collection’s places — not even the one the printed floor holds', () => {
+    /* *"The number of spells in your spell collection each day equals the total number of spell slots
+     * you get each day from your class spells"* — the 10th-rank slot is not one of them, so collecting
+     * a spell for it must leave the pool exactly where it was, and the pool exactly where it was must
+     * leave the capstone alone.
+     *
+     * The second half is the one a mutation can reach, and it is the harshest arrangement of it: no
+     * 1st-rank spell, so print's floor HOLDS the 18th place, and 18 lower-rank picks then take every
+     * place there is to take. A capstone charged against the collection has nothing left to be charged
+     * against and is dropped; one outside it is untouched. */
+    const alone = built(19, { 10: ['avatar'] });
+    expect(mainCasting(alone)?.repertoire?.[10], 'the lone capstone pick is kept').toEqual(['avatar']);
+    expect(lowerCollected(alone), 'and it took no collection place with it').toEqual([]);
+    const exhausted = built(19, { ...LOWER_18, 1: [], 2: [...LOWER_18[2], 'death-knell', 'enhance-victuals'], 10: ['avatar'] });
+    expect(lowerCollected(exhausted).length, 'the floor holds the 18th place, so 17 of the 18 picks land').toBe(17);
+    expect(mainCasting(exhausted)?.repertoire?.[10], 'and the capstone is still there — it was never charged').toEqual(['avatar']);
+  });
+});
+
+describe('the BUILDER draws the capstone slot outside the pool rail', () => {
+  /** Open the builder on a level page the way a player does — the level chip. */
+  const openAt = (b: BuildState, level: number) => {
+    const r = renderDom(<Builder content={db} initial={b} onCancel={noop} onCreate={noop} />);
+    r.click([...r.host.querySelectorAll<HTMLButtonElement>('button.lchip')].find((x) => (x.textContent ?? '').trim() === String(level)) ?? null);
+    return r;
+  };
+  const addButton = (host: HTMLElement, label: string) => host.querySelector<HTMLButtonElement>(`button.spr-add[data-ctl-title="${label}"]`);
+
+  // batch 037: flexible-spellcaster#capstone-outside-collection
+  it('at 19th the pool rail still says 18 and the 10th-rank row is its own control, capped at one', () => {
+    /* The collection is full — every one of its 18 places spent — and the 10th-rank slot the character
+     * gains at 19th is still open, because it is not one of them. Drawn inside the rail, its row read
+     * the pool's cap and came up disabled: the player was given a slot with no way to fill it. */
+    const r = openAt(flexCleric(19, LOWER_18), 19);
+    const text = (r.host.textContent ?? '').replace(/\s+/g, ' ');
+    expect(text, 'the pool, and its printed size at 19th').toContain('Spell collection — 18 / 18 collected');
+    expect(text, 'the 10th-rank slot, named as sitting outside it').toContain('10th rank — outside your spell collection');
+    expect(text, 'and the rule said in words where the pick is made').toContain('flexible spellcaster doesn’t change it');
+    expect(text, 'its own cap — one slot, one spell').toContain('0 / 1 chosen');
+    const rank10 = addButton(r.host, 'Rank 10 spell');
+    expect(rank10, 'the row is drawn at all').toBeTruthy();
+    expect(rank10?.disabled, 'a full collection does not close the capstone slot').toBe(false);
+    r.stop();
+  });
+
+  /* The rail's "+ add" is only half the control here too: it opens the picker at 0 / 1 and the picker
+   * STAYS OPEN while the pick is made, so the refusal a player actually reaches is the picker's row
+   * message, not the button's title. The generic per-rank line — "All 1 spells at this rank are chosen"
+   * — is both ungrammatical and the wrong rule: what is full is the class's single 10th-rank slot, and
+   * the collection beside it is untouched either way. */
+  // batch 037: flexible-spellcaster#capstone-outside-collection
+  // mutation-proof
+  it('says which slot is full inside the PICKER, where the capstone is actually spent', () => {
+    const r = openAt(flexCleric(19, LOWER_18), 19);
+    r.click(addButton(r.host, 'Rank 10 spell'));
+    const rows = () => [...r.host.querySelectorAll<HTMLElement>('.picker-item, .pick-row')];
+    const act = (row: HTMLElement) => (row.classList.contains('pick-row') ? row.querySelector<HTMLButtonElement>('.pick-add') : (row as HTMLButtonElement));
+    const live = rows().filter((row) => !act(row)?.disabled);
+    expect(live.length, 'the picker opened with the one slot still empty').toBeGreaterThan(1);
+    r.click(act(live[0])); // …and one pick fills it
+    const held = rows().find((row) => act(row)?.disabled);
+    expect(held, 'every other 10th-rank spell is now refused').toBeTruthy();
+    expect(held!.querySelector('.picker-why')?.textContent ?? '').toContain('single 10th-rank slot');
+    r.stop();
+  });
+
+  // batch 037: flexible-spellcaster#capstone-outside-collection
+  it('…and spending the capstone slot leaves the pool’s count alone, then closes only itself', () => {
+    const r = openAt(flexCleric(19, { ...LOWER_18, 10: ['avatar'] }), 19);
+    const text = (r.host.textContent ?? '').replace(/\s+/g, ' ');
+    expect(text, 'the 19th collected spell print never gives is not counted here either').toContain('Spell collection — 18 / 18 collected');
+    expect(text).toContain('1 / 1 chosen');
+    expect(addButton(r.host, 'Rank 10 spell')?.disabled, 'one slot, and it is taken').toBe(true);
+    r.stop();
+  });
+});

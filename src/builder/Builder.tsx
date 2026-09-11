@@ -1088,6 +1088,15 @@ export function Builder({
    * and the sheet cannot disagree about how many spells the pool holds). */
   const flatBudget = isWizardBook || isFlexCollection;
   const flatAt = (L: number) => (L < 1 ? 0 : isFlexCollection ? flexibleCollectionSize(slotsAt(L)) : bookAt(L));
+  /* batch 037: flexible-spellcaster#capstone-outside-collection — the class's single 10th-rank slot is
+   * OUTSIDE the collection (*"flexible spellcaster doesn't change the way that spell works"*,
+   * archetype-99), so it is neither counted against the pool's places nor drawn inside the pool rail.
+   * `capstoneAt` is the level it arrives (19th for a full caster) and how many such slots there are;
+   * `poolSpent` is what the pool itself has spent, which `learnedTotal` — every rank — cannot say. */
+  const capstoneAt = (L: number) => (isFlexCollection && !(slotsAt(L - 1)[10] ?? 0) ? slotsAt(L)[10] ?? 0 : 0);
+  const poolSpent = isFlexCollection
+    ? Object.entries(build.spells).reduce((n, [r, arr]) => (Number(r) <= 9 ? n + (arr?.length ?? 0) : n), 0)
+    : learnedTotal;
   // The first level this character can cast — cantrips, tradition, and divine font live here.
   const firstCasterLevel = (() => {
     if (!showSpells) return 0;
@@ -1232,13 +1241,14 @@ export function Builder({
             </div>
           </div>
         )}
-        {flatBudget && g.bookGained > 0 && (
+        {flatBudget && (g.bookGained > 0 || capstoneAt(lvl) > 0) && (
           <>
             {/* batch 037: flexible-spellcaster#collection-shape — one across-rank pool, named for the
                 rule that gives it: a spellbook, or the archetype's spell collection. */}
             <div className="bsec-sub">
-              {isFlexCollection ? 'Spell collection' : 'Spellbook'} — {learnedTotal} / {flatAt(lvl)}{' '}
-              {isFlexCollection ? 'collected' : 'learned'} (+{g.bookGained} this level)
+              {isFlexCollection ? 'Spell collection' : 'Spellbook'} — {poolSpent} / {flatAt(lvl)}{' '}
+              {isFlexCollection ? 'collected' : 'learned'}
+              {g.bookGained > 0 ? ` (+${g.bookGained} this level)` : ''}
             </div>
             {isFlexCollection && (
               // "You must select at least one 1st-level spell for your collection each time you
@@ -1248,7 +1258,10 @@ export function Builder({
             )}
             {Object.keys(slotsAt(lvl))
               .map(Number)
-              .filter((r) => r >= 1)
+              // batch 037: flexible-spellcaster#capstone-outside-collection — ranks 1-9 only for a
+              // collection: the 10th-rank slot is not one of the pool's places, so it gets its own
+              // control below rather than a row that spends them.
+              .filter((r) => r >= 1 && !(isFlexCollection && r > 9))
               .sort((a, b) => a - b)
               .map((rank) => {
                 const chosen = build.spells[rank] ?? [];
@@ -1260,7 +1273,7 @@ export function Builder({
                  * keeps. The hint above says the rule; this says it where the press lands. */
                 const floorHeld = isFlexCollection && rank >= 2 && !(build.spells[1] ?? []).length ? 1 : 0;
                 const capHere = flatAt(lvl) - floorHeld;
-                const full = learnedTotal >= capHere;
+                const full = poolSpent >= capHere;
                 return (
                   <div className="spell-pick-row" key={rank}>
                     <div className="spr-head">
@@ -1283,6 +1296,49 @@ export function Builder({
                   </div>
                 );
               })}
+            {/* batch 037: flexible-spellcaster#capstone-outside-collection — the class's single
+                10th-rank slot, its OWN control below the pool: *"Your class most likely has a class
+                feature that gives you a single 10th level spell slot that works a bit differently from
+                other slots. If so, flexible spellcaster doesn't change the way that spell works"*
+                (archetype-99), and Table 5-1 prints Collection 18 at both 17th and 19th. Capped by that
+                slot count, and spending it costs the collection nothing. */}
+            {capstoneAt(lvl) > 0 &&
+              (() => {
+                const chosen = build.spells[10] ?? [];
+                const capR = capstoneAt(lvl);
+                const full = chosen.length >= capR;
+                return (
+                  <>
+                    <div className="bsec-sub">10th rank — outside your spell collection</div>
+                    <p className="setup-hint">
+                      Your class&rsquo;s single 10th-rank spell slot works exactly as it always did — flexible
+                      spellcaster doesn&rsquo;t change it, and the spell you pick for it is not one of the{' '}
+                      {flatAt(lvl)} spells in your collection.
+                    </p>
+                    <div className="spell-pick-row">
+                      <div className="spr-head">
+                        <span>{ord(10)} rank</span>
+                        <span className="spr-count">
+                          {chosen.length} / {capR} chosen
+                        </span>
+                      </div>
+                      <div className="spr-chips">
+                        {chosen.map((id, idx) => (
+                          <span className="spr-chip" key={id + ':' + idx}>
+                            {content.spells[id]?.name ?? id}
+                            <button type="button" className="spr-chip-x" aria-label={`Remove ${content.spells[id]?.name ?? id}`} onClick={() => actions.removeSpellAt(10, idx)}>
+                              <i className="ti ti-x" aria-hidden="true" />
+                            </button>
+                          </span>
+                        ))}
+                        <button className="spr-add" type="button" disabled={full} title={full ? `Your single 10th-rank slot already holds a spell — remove it first.` : undefined} data-ctl="spell" data-ctl-title="Rank 10 spell" onClick={() => setPicker({ kind: 'spell', rank: 10, cap: capR })}>
+                          + add
+                        </button>
+                      </div>
+                    </div>
+                  </>
+                );
+              })()}
           </>
         )}
         {/* batch 037: flexible-spellcaster#collection-shape — per-rank caps only where the rule is
@@ -3262,17 +3318,22 @@ export function Builder({
         const capBook = c2 ? spellbookSize2 : isFlexCollection ? flexibleCollectionSize(slotCounts) : spellbookSize;
         // …and the pool's one printed restriction reaches the picker too: with no 1st-rank spell
         // collected, the last place is held for one (archetype-99), so the rows must say why.
-        const floorHeldPicker = !c2 && isFlexCollection && picker.rank >= 2 && !(build.spells[1] ?? []).length;
+        const floorHeldPicker = !c2 && isFlexCollection && picker.rank >= 2 && picker.rank <= 9 && !(build.spells[1] ?? []).length;
+        /* batch 037: flexible-spellcaster#capstone-outside-collection — the 10th-rank slot is not one of
+         * the pool's places (archetype-99), so this picker counts and caps against that ONE slot, not
+         * against the collection. Only the arithmetic changes: `preparedMode` still reads `wizBook`, so
+         * the pick toggles like every other collected spell. */
+        const capstone = !c2 && isFlexCollection && picker.rank > 9;
         const capSlots = c2 ? slotCounts2 : slotCounts;
         const wizBook = c2 ? isWizardBook2 : flatBudget;
         const prepared = c2 ? isPrepared2 : isPrepared;
         const cantripList = c2 ? build.cantrips2 ?? [] : build.cantrips;
         const spellList = c2 ? build.spells2?.[picker.rank] ?? [] : build.spells[picker.rank] ?? [];
-        const learned = c2 ? learnedTotal2 : learnedTotal;
+        const learned = c2 ? learnedTotal2 : poolSpent;
         const items = c2 ? eligibleSpells2(picker.rank) : eligibleSpells(picker.rank);
         // Wizards cap by the total spellbook budget; others by the rank's slot count.
-        const cap_ = picker.cap ?? (picker.rank === 0 ? capCantrip : wizBook ? capBook : capSlots[picker.rank] ?? 0);
-        const have = picker.rank === 0 ? cantripList.length : wizBook ? learned : spellList.length;
+        const cap_ = picker.cap ?? (picker.rank === 0 ? capCantrip : wizBook && !capstone ? capBook : capSlots[picker.rank] ?? 0);
+        const have = picker.rank === 0 ? cantripList.length : wizBook && !capstone ? learned : spellList.length;
         const atCap = have >= cap_;
         const isCantrip = picker.rank === 0;
         const preparedMode = !isCantrip && prepared && !wizBook;
@@ -3323,7 +3384,7 @@ export function Builder({
                         ? `All ${cap_} cantrip slots are filled — remove one first.`
                         : floorHeldPicker
                           ? 'Your collection must include at least one 1st-rank spell — the last place is held for one.'
-                          : `All ${cap_} spells at this rank are chosen — remove one first.`
+                          : capstone ? `Your single 10th-rank slot already holds a spell — remove it first.` : `All ${cap_} spells at this rank are chosen — remove one first.`
                       : undefined
                   }
                   onSelect={() =>
