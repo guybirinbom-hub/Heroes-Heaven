@@ -488,18 +488,18 @@
   },
   {
    "id": "nagaji-spell-mysteries",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 15) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"A fix was proposed and REFUSED on review because it picks a side in a WG-vs-print disagreement. The reviewer's reasoning: DEFECT REAL, FIX MUST NOT BE APPLIED — this is ASK-OWNER. …\""
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#44): DECIDED BY FABLE from the AoN pages (Guy: 'read the archives of nethys pages and if you still cant reach a reliable answer ask me')"
   },
   {
    "id": "brutality",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 15) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"Printed: \"While raging, you have the critical specialization benefits for melee weapons and unarmed attacks.\" Ours (core.json classFeatures/brutality): critSpec true, critSpecWeapo…\""
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#42): yes — Keep the printed scope. No change on 39/41/42/45/107/115/130. FIX #7 Locate Lawbreakers: rank 5 at level 14 only for Order of the Gate members (read the stored order). FIX..."
   },
   {
    "id": "kitsune-spell-mysteries",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 15) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"Their encoding and the printed text disagree. RAN `node scripts/wg-show.mjs \"kitsune-spell-mysteries\" --raw` (their id 23477) and resolved 4409/4816/4678 against the dump's spell t…\""
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#43): DECIDED BY FABLE from the AoN pages (Guy: 'read the archives of nethys pages and if you still cant reach a reliable answer ask me')"
   }
  ]
 }

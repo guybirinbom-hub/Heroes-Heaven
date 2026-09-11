@@ -185,15 +185,22 @@ describe('trust gate', () => {
   it('(g) costs and prose survive on a dark record', () => {
     const b = ungated();
     const a = gated();
-    // Demon Mask: its innate spell goes dark; the printed frequency and the spell's own note stay.
-    expect(TRUST_LEDGER.records['items/demon-mask']).toContain('innateSpells');
-    expect(TRUST_LEDGER.records['items/demon-mask']).not.toContain('spellNotes');
-    expect(a.items['demon-mask'].innateSpells).toBeUndefined();
-    expect(a.items['demon-mask'].frequency).toEqual(b.items['demon-mask'].frequency);
-    expect(a.items['demon-mask'].spellNotes).toEqual(b.items['demon-mask'].spellNotes);
-    // A wand: the spells it holds go dark, its uses and frequency (both LIMITS) do not.
-    expect(TRUST_LEDGER.records['items/arboreal-wand-rank-2']).toContain('heldSpells');
-    expect(a.items['arboreal-wand-rank-2'].heldSpells).toBeUndefined();
+    /*
+     * Folding Drums: its situational star goes dark; the printed frequency (a COST) and its per-spell
+     * notes (PROSE) stay. It replaced the Demon Mask and the arboreal wand here on 2026-09-11 — the
+     * owner's `item-held-spells` rule (scripts/data/trust-approvals.json `rules`) turned innateSpells,
+     * heldSpells, spellSlot and resonant back on across every item, *"a staff offers its spells"*, so
+     * neither of those records is dark any more. Both are still asserted, from the other side.
+     */
+    expect(TRUST_LEDGER.records['items/folding-drums']).toContain('situational');
+    expect(TRUST_LEDGER.records['items/folding-drums']).not.toContain('spellNotes');
+    expect(a.items['folding-drums'].situational).toBeUndefined();
+    expect(a.items['folding-drums'].frequency).toEqual(b.items['folding-drums'].frequency);
+    expect(a.items['folding-drums'].spellNotes).toEqual(b.items['folding-drums'].spellNotes);
+    // The item-held-spells rule: the mask's innate spell and the wand's held spells reach the player,
+    // and the wand's uses and frequency (both LIMITS) were never strippable in the first place.
+    expect(a.items['demon-mask'].innateSpells).toEqual(b.items['demon-mask'].innateSpells);
+    expect(a.items['arboreal-wand-rank-2'].heldSpells).toEqual(b.items['arboreal-wand-rank-2'].heldSpells);
     expect(a.items['arboreal-wand-rank-2'].uses).toEqual(b.items['arboreal-wand-rank-2'].uses);
     expect(a.items['arboreal-wand-rank-2'].frequency).toEqual(b.items['arboreal-wand-rank-2'].frequency);
     // A dedication: the feat it hands over goes dark, the "no other dedication until…" gate does not.

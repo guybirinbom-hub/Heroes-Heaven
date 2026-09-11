@@ -233,8 +233,8 @@
   },
   {
    "id": "total-power",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "WG-vs-print disagreement queued as ruling #101."
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#101): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording"
   },
   {
    "id": "runaway-noble",
@@ -278,8 +278,8 @@
   },
   {
    "id": "sponsored-by-a-stranger",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "WG-vs-print disagreement queued as ruling #100; the record’s other confirmed findings are FIXED (see work/.b023-findings.json)."
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#100): yes — Adventure-path backgrounds stay common (no printed rarity trait); nothing changes on rarity. #92 Teacher Ot: ask the Survival-or-Performance choice ONCE (drop the second c..."
   },
   {
    "id": "mammoth-speaker",
@@ -308,8 +308,8 @@
   },
   {
    "id": "beast-blessed",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "WG-vs-print disagreement queued as ruling #99; the record’s other confirmed findings are FIXED (see work/.b023-findings.json)."
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#99): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording"
   },
   {
    "id": "secular-medic",

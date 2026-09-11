@@ -493,13 +493,13 @@
   },
   {
    "id": "time-mage-dedication",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 17) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"Their encoding contradicts the printed text TWICE: (1) a free 4-way tradition pick where print derives the tradition from your class (\"the same tradition as the spells you used to …\""
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#57): DECIDED BY FABLE from the AoN page: FIX the innate cantrip's tradition"
   },
   {
    "id": "basic-summoner-spellcasting",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 17) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"PRINTED (rules-1485): basic bounded spellcasting = a 1st AND a 2nd-level slot; at 10th the 1st-level slot is REPLACED by a 3rd-level one — two slots at every level. THEIRS: three s…\""
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#56): yes — Guy: 'we need to use the newest sources we have' -> move magus + summoner to the 2026 Impossible Magic printing whole: full slot tables (lower ranks kept), archetype basic..."
   }
  ]
 }

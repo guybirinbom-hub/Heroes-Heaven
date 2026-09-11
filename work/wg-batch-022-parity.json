@@ -23,8 +23,8 @@
   },
   {
    "id": "hammered-by-fate",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "A WG-vs-print question sits in the open queue AND its confirmed findings were applied: Harrow the Fiend's +1 status bonus on Strikes/spell attacks against fiends (and its Hammers degree-of-success bump) has no carrier on either"
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#89): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'"
   },
   {
    "id": "cultist",
@@ -48,8 +48,8 @@
   },
   {
    "id": "lesser-scion",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "A WG-vs-print question for this record sits in work/owner-questions.json open (batch-22 read)."
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#90): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'"
   },
   {
    "id": "entertainer",
@@ -88,8 +88,8 @@
   },
   {
    "id": "unsponsored",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "A WG-vs-print question sits in the open queue AND its confirmed findings were applied: Two independent carriers deliver the same single printed skill choice — `trainedSkillChoice` (read from `build.backgroundSkillChoice`) and `"
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#94): yes — Adventure-path backgrounds stay common (no printed rarity trait); nothing changes on rarity. #92 Teacher Ot: ask the Survival-or-Performance choice ONCE (drop the second c..."
   },
   {
    "id": "quick-refugee",
@@ -148,8 +148,8 @@
   },
   {
    "id": "bachuan-revolutionary",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "A WG-vs-print question for this record sits in work/owner-questions.json open (batch-22 read)."
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#91): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'"
   },
   {
    "id": "southbank-traditionalist",
@@ -233,13 +233,13 @@
   },
   {
    "id": "sponsored-by-family",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "A WG-vs-print question sits in the open queue AND its confirmed findings were applied: Sponsored by Family asks the Diplomacy-or-Society question through two independent carriers stored under two different keys, so answering th"
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#96): yes — Adventure-path backgrounds stay common (no printed rarity trait); nothing changes on rarity. #92 Teacher Ot: ask the Survival-or-Performance choice ONCE (drop the second c..."
   },
   {
    "id": "northridge-scholar",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "A WG-vs-print question sits in the open queue AND its confirmed findings were applied: Northridge Scholar's Seasonal Boon has no carrier and no action record on our side, and our description keeps only the bare heading with the | Our situational star grants Northridge Scholar an unconditional +1 status to saves that the printed record does not grant — it belongs to th"
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#97): leave it as it is — Northridge Scholar: Seasonal Boon stays a free action with no frequency (our page prints none); WG's 'once per season' not copied. Close."
   },
   {
    "id": "curious-apprentice",
@@ -258,8 +258,8 @@
   },
   {
    "id": "wanderlust",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "A WG-vs-print question sits in the open queue AND its confirmed findings were applied: Wanderlust is filed under the wrong book and the wrong licence: ours says Dark Archive (Remastered) / OGL where print (and WG) say Gatewalke"
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#95): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording"
   },
   {
    "id": "magical-merchant",
@@ -358,13 +358,13 @@
   },
   {
    "id": "sponsored-by-teacher-ot",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "A WG-vs-print question for this record sits in work/owner-questions.json open (batch-22 read)."
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#92): yes — Adventure-path backgrounds stay common (no printed rarity trait); nothing changes on rarity. #92 Teacher Ot: ask the Survival-or-Performance choice ONCE (drop the second c..."
   },
   {
    "id": "dreams-of-vengeance",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "A WG-vs-print question for this record sits in work/owner-questions.json open (batch-22 read)."
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#98): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording"
   },
   {
    "id": "silk-farmer",
@@ -403,8 +403,8 @@
   },
   {
    "id": "lost-loved-one",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "A WG-vs-print question sits in the open queue AND its confirmed findings were applied: Lost Loved One's wraith branch grants `ghostly-grasp` — the level-6 Book of the Dead GHOST ARCHETYPE feat (aonId feat-3499, prerequisite \"Gh | Lost Loved One is attributed to the wrong book: our record says Dark Archive (Remastered) under OGL, while the print (and WG) put it in the "
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#93): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording"
   },
   {
    "id": "aspiring-free-captain",

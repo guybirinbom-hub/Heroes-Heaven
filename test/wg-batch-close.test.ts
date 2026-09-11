@@ -257,6 +257,58 @@ describe('wg-batch-close derives verdicts from evidence', () => {
     rmSync(unqueued, { recursive: true, force: true });
   });
 
+  /*
+   * The two halves of the desk lookup, which used to be one map and broke on 2026-09-11 when the desk
+   * pass moved 128 answered questions out of `open` and into `ruled`.
+   *
+   * A desk NUMBER is permanent and must be findable in whichever bucket the entry now sits in — without
+   * this, re-closing batch 029 refused with "studious-spells: a read finding asks the owner but
+   * work/owner-questions.json has no entry", because studious-spells is #121 and #121 is now ruled.
+   * Whether the owner is still being WAITED on is a different question, and only open + deferred answer
+   * yes: a ruled record that the read had nothing to say about is MATCHES, not OWNER-QUEUED.
+   */
+  it('a RULED desk entry still supplies its number, but no longer makes a record OWNER-QUEUED on its own', () => {
+    const answered = fixture({
+      'work/owner-questions.json': { open: [], deferred: [], ruled: [{ id: 'gamma', batch: 900, n: 77, ruling: 'yes — keep the app' }] },
+      'work/.b900-report-items.txt': 'beta#two — settled: comparer taught\n',
+    });
+    const r = close(answered, '--batch', '900', '--write');
+    expect(r.code).toBe(0);
+    const parity = JSON.parse(readFileSync(join(answered, 'work/wg-batch-900-parity.json'), 'utf8'));
+    expect(parity.records.find((v: { id: string }) => v.id === 'gamma').verdict).toBe('MATCHES');
+    rmSync(answered, { recursive: true, force: true });
+
+    const asked = fixture({
+      'work/owner-questions.json': { open: [], deferred: [], ruled: [{ id: 'gamma', batch: 900, n: 77 }] },
+      'work/.b900-read.json': { confirmed: [], refuted: [], askOwner: [{ id: 'gamma#ruling', claim: 'their row contradicts print' }] },
+    });
+    const r2 = close(asked, '--batch', '900', '--write');
+    expect(r2.code).toBe(0);
+    const p2 = JSON.parse(readFileSync(join(asked, 'work/wg-batch-900-parity.json'), 'utf8'));
+    const g = p2.records.find((v: { id: string }) => v.id === 'gamma');
+    expect(g.verdict).toBe('OWNER-QUEUED');
+    expect(g.evidence).toContain('#77');
+    rmSync(asked, { recursive: true, force: true });
+  }, 20_000);
+
+  /*
+   * These files have TWO writers — this one, which ends at `}`, and scripts/record-parity-verdict.mjs,
+   * which ended at `}\n` — and HEAD carries both shapes (batches 001-018 with the newline, 019-037
+   * without). Whichever tool touched a file last decided its last byte, so the plan-E acceptance below
+   * went red when the desk re-verdict pass ran the bulk writer over batch 029: same JSON, one extra
+   * byte, "would change". Following the file is what the CRLF half already did.
+   */
+  it("follows the parity file's own trailing newline, so a re-close is a no-op either way", () => {
+    for (const tail of ['', '\n']) {
+      const root = fixture({ 'work/.b900-report-items.txt': 'beta#two — settled: comparer taught\n' });
+      expect(close(root, '--batch', '900', '--write').code).toBe(0);
+      const p = join(root, 'work/wg-batch-900-parity.json');
+      writeFileSync(p, readFileSync(p, 'utf8').replace(/\n$/, '') + tail);
+      expect(close(root, '--batch', '900').out).toContain('work/wg-batch-900-parity.json: byte-identical, no change');
+      rmSync(root, { recursive: true, force: true });
+    }
+  }, 20_000);
+
   it('falls back to the permanent rulings-numbering map and SAYS SO when an entry has no n', () => {
     const root = fixture({
       'work/owner-questions.json': { open: [{ id: 'gamma', batch: 900 }], deferred: [] },

@@ -153,8 +153,13 @@ const PINNED: Record<string, number> = {
   'summiting-dragonblood': 6,
   'monastic-archer-stance': 8,
 };
-/** The three authorisedExceptions carry no id; their numbers are pinned by position. */
-const PINNED_EXCEPTIONS = [124, 125, 126];
+/**
+ * The authorisedExceptions carry no id; their numbers are pinned by position. 124-126 are the three
+ * from 2026-08-22; 156-157 were added by the 2026-09-10 desk pass (scripts/rule-owner-questions.mjs):
+ * the Shoanti Unifying Emblem family, and the trust gate's class-features/item-spell exemption of
+ * 2026-09-11. APPEND here when a new exception is authorised — never renumber a line above.
+ */
+const PINNED_EXCEPTIONS = [124, 125, 126, 156, 157];
 
 describe('the rulings desk numbers are permanent', () => {
   it('every entry of all four arrays carries an integer n', () => {
@@ -232,9 +237,12 @@ describe('add-owner-question.mjs allocates and refuses', () => {
   });
 
   it('refuses an id already on the desk and points at the follow-up form', () => {
+    /* magus (#104) moved `open` -> `ruled` in the 2026-09-10 desk pass. The refusal must still fire and
+     * must name the array it really sits in — the guard reads all four arrays, not just `open`. */
+    const at = ARRAYS.find((a) => (doc[a] ?? []).some((e) => e.id === 'magus'));
     const r = run(swap('--id', 'magus'));
     expect(r.code).toBe(2);
-    expect(r.out).toContain('magus: already on the desk in `open` (n=104)');
+    expect(r.out).toContain(`magus: already on the desk in \`${at}\` (n=104)`);
     expect(r.out).toContain('--follow-up-of magus');
   });
 

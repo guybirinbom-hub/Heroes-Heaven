@@ -1,0 +1,1286 @@
+[
+ {
+  "batch": 2,
+  "id": "devil-allies",
+  "evidence": "owner ruled 2026-09-10 (#3): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 3,
+  "id": "fear-no-law-fear-no-one",
+  "evidence": "owner ruled 2026-09-10 (#5): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 3,
+  "id": "animist-apparition-spellcasting",
+  "evidence": "owner ruled 2026-09-10 (#4): yes — Animist slot table: keep the app (matches the printed table row for row); nothing changes; close both. Guy: 'good' after asking which solution matches the written text best.",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 4,
+  "id": "locate-lawbreakers",
+  "evidence": "owner ruled 2026-09-10 (#7): yes — Keep the printed scope. No change on 39/41/42/45/107/115/130. FIX #7 Locate Lawbreakers: rank 5 at level 14 only for Order of the Gate members (read the stored order). FIX...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 5,
+  "id": "steady-balance",
+  "evidence": "owner ruled 2026-09-10 (#9): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 6,
+  "id": "benefactors-resistance",
+  "evidence": "owner ruled 2026-09-10 (#11): yes — Benefactor's Resistance: keep the floor of 1 (half level, min 1); written down as a deliberate small step past the literal page; WG's dragon half is NOT copied (no printed...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 6,
+  "id": "armor-in-earth",
+  "evidence": "owner ruled 2026-09-10 (#10): yes — Armor in Earth + Hardwood Armor: attach the existing best-armour-proficiency borrowing (Sentinel Dedication / Mountain Skin lane) to the GRANTED armour item (medium and he...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 6,
+  "id": "molten-wit",
+  "evidence": "owner ruled 2026-09-10 (#12): yes — #12 Molten Wit: build all three printed branches (neither trained: paired skill+feat; trained in one: must take the other skill, pick either feat; trained in both: free sk...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 7,
+  "id": "firework-technician-dedication",
+  "evidence": "owner ruled 2026-09-10 (#13): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 7,
+  "id": "hellknight-dedication",
+  "evidence": "owner ruled 2026-09-10 (#14): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 7,
+  "id": "reverse-engineer",
+  "evidence": "owner ruled 2026-09-10 (#15): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 8,
+  "id": "merchants-scale",
+  "evidence": "owner ruled 2026-09-10 (#17): yes — Merchant's Scale: no mechanical effect; show one plain line clearly marked as ours: the book prints no rules for this item. Never WG's +1 to seven skills.",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 8,
+  "id": "sequestered-spell",
+  "evidence": "owner ruled 2026-09-10 (#20): yes — Innate spells: trained, expert at 12th by the general rule; the app already does it on both (#20 keeps its single narrowed picker). Guy: 'keep the app on both, nothing cha...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 8,
+  "id": "breath-of-the-dragon",
+  "evidence": "owner ruled 2026-09-10 (#55): derive all three from the Dragonblood exemplar; the table is PRINTED (Draconic Codex pg. 206, 'Draconic Benefactors' table) — Guy pointed at https://2e.aonprd.com/DraconicBenefa...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 8,
+  "id": "intuitive-crafting",
+  "evidence": "owner ruled 2026-09-10 (#16): yes — #12 Molten Wit: build all three printed branches (neither trained: paired skill+feat; trained in one: must take the other skill, pick either feat; trained in both: free sk...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 8,
+  "id": "nagaji-spell-familiarity",
+  "evidence": "owner ruled 2026-09-10 (#18): DECIDED BY FABLE from the AoN pages (Guy: 'read the archives of nethys pages and if you still cant reach a reliable answer ask me')",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 8,
+  "id": "reinforced-chassis",
+  "evidence": "owner ruled 2026-09-10 (#19): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 9,
+  "id": "shadowcaster-dedication",
+  "evidence": "owner ruled 2026-09-10 (#22): DECIDED BY FABLE from the AoN pages: keep the app, nothing changes",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 9,
+  "id": "clawdancer-dedication",
+  "evidence": "owner ruled 2026-09-10 (#21): DECIDED BY FABLE from the page (feat-5436)",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 9,
+  "id": "soul-warden-dedication",
+  "evidence": "owner ruled 2026-09-10 (#23): yes — Innate spells: trained, expert at 12th by the general rule; the app already does it on both (#20 keeps its single narrowed picker). Guy: 'keep the app on both, nothing cha...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 10,
+  "id": "hardwood-armor-armor",
+  "evidence": "owner ruled 2026-09-10 (#26): yes — Armor in Earth + Hardwood Armor: attach the existing best-armour-proficiency borrowing (Sentinel Dedication / Mountain Skin lane) to the GRANTED armour item (medium and he...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 10,
+  "id": "favored-terrain",
+  "evidence": "owner ruled 2026-09-10 (#24): DECIDED BY FABLE from the AoN pages: keep the app (star / mode), nothing changes",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 10,
+  "id": "hallowed-necromancer-dedication",
+  "evidence": "owner ruled 2026-09-10 (#25): DECIDED BY FABLE from the AoN pages: keep the app, nothing changes",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 10,
+  "id": "psychic-dedication",
+  "evidence": "owner ruled 2026-09-10 (#27): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 11,
+  "id": "unifying-emblem-shundar-quah",
+  "evidence": "owner ruled 2026-09-10 (#28): finish the family (SPECIFIC approval) — Guy: 'for this case specifically because i went over this and approve we can implement the rest of the family.' Add Thoughtful Gift (Shun...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 11,
+  "id": "unifying-emblem-sklar-quah",
+  "evidence": "owner ruled 2026-09-10 (#29): finish the family (SPECIFIC approval) — Guy: 'for this case specifically because i went over this and approve we can implement the rest of the family.' Add Thoughtful Gift (Shun...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 11,
+  "id": "unifying-emblem-tamiir-quah",
+  "evidence": "owner ruled 2026-09-10 (#30): finish the family (SPECIFIC approval) — Guy: 'for this case specifically because i went over this and approve we can implement the rest of the family.' Add Thoughtful Gift (Shun...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 12,
+  "id": "versatile-mutation",
+  "evidence": "owner ruled 2026-09-10 (#35): DECIDED BY FABLE from the page (feat-5454)",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 12,
+  "id": "elemental-existence",
+  "evidence": "owner ruled 2026-09-10 (#32): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 12,
+  "id": "thats-not-natural",
+  "evidence": "owner ruled 2026-09-10 (#34): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 13,
+  "id": "aon-sacred-ki",
+  "evidence": "owner ruled 2026-09-10 (#36): DECIDED BY FABLE: keep the app — Sacred Ki feat-1184 is a legacy printing (choose chaos/evil/good/law matching a deity alignment component). No deity in the remastered data carr...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 13,
+  "id": "ardent-armiger",
+  "evidence": "owner ruled 2026-09-10 (#37): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 14,
+  "id": "devils-eye",
+  "evidence": "owner ruled 2026-09-10 (#38): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 14,
+  "id": "hardened-chassis",
+  "evidence": "owner ruled 2026-09-10 (#40): yes — Build the missing piece: #40 Hardened Chassis Enhancement computed, switched on only by an augmentation feat naming it (never asked of every automaton); #73 Armiger's Prot...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 14,
+  "id": "gunslinger-weapon-mastery",
+  "evidence": "owner ruled 2026-09-10 (#39): yes — Keep the printed scope. No change on 39/41/42/45/107/115/130. FIX #7 Locate Lawbreakers: rank 5 at level 14 only for Order of the Gate members (read the stored order). FIX...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 14,
+  "id": "weapon-expertise",
+  "evidence": "owner ruled 2026-09-10 (#41): yes — Keep the printed scope. No change on 39/41/42/45/107/115/130. FIX #7 Locate Lawbreakers: rank 5 at level 14 only for Order of the Gate members (read the stored order). FIX...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 15,
+  "id": "nagaji-spell-mysteries",
+  "evidence": "owner ruled 2026-09-10 (#44): DECIDED BY FABLE from the AoN pages (Guy: 'read the archives of nethys pages and if you still cant reach a reliable answer ask me')",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 15,
+  "id": "brutality",
+  "evidence": "owner ruled 2026-09-10 (#42): yes — Keep the printed scope. No change on 39/41/42/45/107/115/130. FIX #7 Locate Lawbreakers: rank 5 at level 14 only for Order of the Gate members (read the stored order). FIX...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 15,
+  "id": "kitsune-spell-mysteries",
+  "evidence": "owner ruled 2026-09-10 (#43): DECIDED BY FABLE from the AoN pages (Guy: 'read the archives of nethys pages and if you still cant reach a reliable answer ask me')",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 16,
+  "id": "astrolabe-of-falling-stars",
+  "evidence": "owner ruled 2026-09-10 (#51): DECIDED BY FABLE from the pages (equipment-4027 / equipment-4028)",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 16,
+  "id": "advanced-red-mantis-magic",
+  "evidence": "owner ruled 2026-09-10 (#46): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 16,
+  "id": "arcana-of-iron",
+  "evidence": "owner ruled 2026-09-10 (#50): DECIDED BY FABLE from the page (feat-7980): follow print",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 16,
+  "id": "instinct-ability",
+  "evidence": "owner ruled 2026-09-10 (#53): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 17,
+  "id": "time-mage-dedication",
+  "evidence": "owner ruled 2026-09-10 (#57): DECIDED BY FABLE from the AoN page: FIX the innate cantrip's tradition",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 17,
+  "id": "basic-summoner-spellcasting",
+  "evidence": "owner ruled 2026-09-10 (#56): yes — Guy: 'we need to use the newest sources we have' -> move magus + summoner to the 2026 Impossible Magic printing whole: full slot tables (lower ranks kept), archetype basic...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 18,
+  "id": "tumbling-theft",
+  "evidence": "owner ruled 2026-09-10 (#66): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 19,
+  "id": "keys-to-destiny",
+  "evidence": "owner ruled 2026-09-10 (#74): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 19,
+  "id": "concordance-scout",
+  "evidence": "owner ruled 2026-09-10 (#75): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 19,
+  "id": "poppet",
+  "evidence": "owner ruled 2026-09-10 (#76): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 19,
+  "id": "goloma",
+  "evidence": "owner ruled 2026-09-10 (#77): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 19,
+  "id": "android",
+  "evidence": "owner ruled 2026-09-10 (#78): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 20,
+  "id": "seer-of-the-dead",
+  "evidence": "owner ruled 2026-09-10 (#81): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 20,
+  "id": "streetfood-vendor",
+  "evidence": "owner ruled 2026-09-10 (#82): keep the app's CHOICE (Crafting or Society) — the book prints it",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 20,
+  "id": "tree-friend",
+  "evidence": "owner ruled 2026-09-10 (#84): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 20,
+  "id": "traveling-gourmand",
+  "evidence": "owner ruled 2026-09-10 (#80): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 20,
+  "id": "aon-wishes-for-riches",
+  "evidence": "owner ruled 2026-09-10 (#79): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 20,
+  "id": "haunted",
+  "evidence": "owner ruled 2026-09-10 (#83): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 21,
+  "id": "sense-of-belonging",
+  "evidence": "owner ruled 2026-09-10 (#86): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 21,
+  "id": "sponsored-by-a-village",
+  "evidence": "owner ruled 2026-09-10 (#87): yes — Adventure-path backgrounds stay common (no printed rarity trait); nothing changes on rarity. #92 Teacher Ot: ask the Survival-or-Performance choice ONCE (drop the second c...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 21,
+  "id": "reborn-soul",
+  "evidence": "owner ruled 2026-09-10 (#85): A as Fable described it (Guy: 'A as I describe it')",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 21,
+  "id": "sky-rider",
+  "evidence": "owner ruled 2026-09-10 (#88): keep the app — Sky Rider trains Acrobatics AND Plane of Air Lore; nothing changes.",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 22,
+  "id": "hammered-by-fate",
+  "evidence": "owner ruled 2026-09-10 (#89): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 22,
+  "id": "lesser-scion",
+  "evidence": "owner ruled 2026-09-10 (#90): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 22,
+  "id": "unsponsored",
+  "evidence": "owner ruled 2026-09-10 (#94): yes — Adventure-path backgrounds stay common (no printed rarity trait); nothing changes on rarity. #92 Teacher Ot: ask the Survival-or-Performance choice ONCE (drop the second c...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 22,
+  "id": "bachuan-revolutionary",
+  "evidence": "owner ruled 2026-09-10 (#91): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 22,
+  "id": "sponsored-by-family",
+  "evidence": "owner ruled 2026-09-10 (#96): yes — Adventure-path backgrounds stay common (no printed rarity trait); nothing changes on rarity. #92 Teacher Ot: ask the Survival-or-Performance choice ONCE (drop the second c...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 22,
+  "id": "northridge-scholar",
+  "evidence": "owner ruled 2026-09-10 (#97): leave it as it is — Northridge Scholar: Seasonal Boon stays a free action with no frequency (our page prints none); WG's 'once per season' not copied. Close.",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 22,
+  "id": "wanderlust",
+  "evidence": "owner ruled 2026-09-10 (#95): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 22,
+  "id": "sponsored-by-teacher-ot",
+  "evidence": "owner ruled 2026-09-10 (#92): yes — Adventure-path backgrounds stay common (no printed rarity trait); nothing changes on rarity. #92 Teacher Ot: ask the Survival-or-Performance choice ONCE (drop the second c...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 22,
+  "id": "dreams-of-vengeance",
+  "evidence": "owner ruled 2026-09-10 (#98): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 22,
+  "id": "lost-loved-one",
+  "evidence": "owner ruled 2026-09-10 (#93): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 23,
+  "id": "total-power",
+  "evidence": "owner ruled 2026-09-10 (#101): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 23,
+  "id": "sponsored-by-a-stranger",
+  "evidence": "owner ruled 2026-09-10 (#100): yes — Adventure-path backgrounds stay common (no printed rarity trait); nothing changes on rarity. #92 Teacher Ot: ask the Survival-or-Performance choice ONCE (drop the second c...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 23,
+  "id": "beast-blessed",
+  "evidence": "owner ruled 2026-09-10 (#99): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 24,
+  "id": "divine-font",
+  "evidence": "owner ruled 2026-09-10 (#103): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 25,
+  "id": "undine",
+  "evidence": "owner ruled 2026-09-10 (#114): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 26,
+  "id": "mightyfall-kobold",
+  "evidence": "owner ruled 2026-09-10 (#115): yes — Keep the printed scope. No change on 39/41/42/45/107/115/130. FIX #7 Locate Lawbreakers: rank 5 at level 14 only for Order of the Gate members (read the stored order). FIX...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 27,
+  "id": "born-of-animal",
+  "evidence": "owner ruled 2026-09-10 (#116): DECIDED BY FABLE from the AoN pages: keep the app (star / mode), nothing changes",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 27,
+  "id": "grave-orc",
+  "evidence": "owner ruled 2026-09-10 (#117): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 27,
+  "id": "deny-lady-nanbyos-charity",
+  "evidence": "owner ruled 2026-09-10 (#118): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 27,
+  "id": "waning-moon-sarangay",
+  "evidence": "owner ruled 2026-09-10 (#119): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 28,
+  "id": "summoner",
+  "evidence": "owner ruled 2026-09-10 (#120): yes — Guy: 'we need to use the newest sources we have' -> move magus + summoner to the 2026 Impossible Magic printing whole: full slot tables (lower ranks kept), archetype basic...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 28,
+  "id": "magus",
+  "evidence": "owner ruled 2026-09-10 (#104): yes — Guy: 'we need to use the newest sources we have' -> move magus + summoner to the 2026 Impossible Magic printing whole: full slot tables (lower ranks kept), archetype basic...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 28,
+  "id": "animist",
+  "evidence": "owner ruled 2026-09-10 (#105): yes — Animist slot table: keep the app (matches the printed table row for row); nothing changes; close both. Guy: 'good' after asking which solution matches the written text best.",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 29,
+  "id": "studious-spells",
+  "evidence": "owner ruled 2026-09-10 (#121): yes — Guy: 'we need to use the newest sources we have' -> move magus + summoner to the 2026 Impossible Magic printing whole: full slot tables (lower ranks kept), archetype basic...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 31,
+  "id": "glyph-expert",
+  "evidence": "owner ruled 2026-09-10 (#130): yes — Keep the printed scope. No change on 39/41/42/45/107/115/130. FIX #7 Locate Lawbreakers: rank 5 at level 14 only for Order of the Gate members (read the stored order). FIX...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 31,
+  "id": "haunting-memories",
+  "evidence": "owner ruled 2026-09-10 (#128): yes — Build the missing piece: #40 Hardened Chassis Enhancement computed, switched on only by an augmentation feat naming it (never asked of every automaton); #73 Armiger's Prot...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 31,
+  "id": "divine-breadth",
+  "evidence": "owner ruled 2026-09-10 (#131): yes — Breadth feats grant no cantrip (Divine, Primal, Occult, Arcane); WG's extra cantrip entry is a copied slip; nothing changes; close both.",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 31,
+  "id": "primal-breadth",
+  "evidence": "owner ruled 2026-09-10 (#132): yes — Breadth feats grant no cantrip (Divine, Primal, Occult, Arcane); WG's extra cantrip entry is a copied slip; nothing changes; close both.",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 32,
+  "id": "necromantic-tenacity",
+  "evidence": "owner ruled 2026-09-10 (#133): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 33,
+  "id": "gleaming-blade",
+  "evidence": "owner ruled 2026-09-10 (#135): yes — #72 Screech Shooter greater/major + the two upgraded wyrm spindles: one sentence per grade carrying only that grade's numbers (option A). #135 Gleaming Blade: printed name...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 33,
+  "id": "barrows-edge",
+  "evidence": "owner ruled 2026-09-10 (#136): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 33,
+  "id": "gaze-sharp-as-steel",
+  "evidence": "owner ruled 2026-09-10 (#137): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 33,
+  "id": "spore-order",
+  "evidence": "owner ruled 2026-09-10 (#139): B — Spore + Cultivation count as Leaf Order: already built; know the membership, block nothing (B); nothing changes; close all three. Do not copy WG's whole-Leaf-Order grant. Gu...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 33,
+  "id": "dragon-eidolon",
+  "evidence": "owner ruled 2026-09-10 (#138): DECIDED BY FABLE from the AoN pages: keep the app, nothing changes",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 34,
+  "id": "skybearers-belt",
+  "evidence": "owner ruled 2026-09-10 (#141): follow the page (Guy pasted it) — Skybearer's Belt immanence: '+1 circumstance bonus to checks for Disarm, Grapple, Shove, Trip and to saving throws to resist these actions; may...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 34,
+  "id": "scar-of-the-survivor",
+  "evidence": "owner ruled 2026-09-10 (#140): yes — Build the missing piece: #40 Hardened Chassis Enhancement computed, switched on only by an augmentation feat naming it (never asked of every automaton); #73 Armiger's Prot...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 34,
+  "id": "echo-of-lost-moments",
+  "evidence": "owner ruled 2026-09-10 (#142): DECIDED BY FABLE: keep the app, write WG's slip down",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 35,
+  "id": "cultivation-order",
+  "evidence": "owner ruled 2026-09-10 (#144): B — Spore + Cultivation count as Leaf Order: already built; know the membership, block nothing (B); nothing changes; close all three. Do not copy WG's whole-Leaf-Order grant. Gu...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 36,
+  "id": "hyper-boosters",
+  "evidence": "owner ruled 2026-09-10 (#148): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 36,
+  "id": "chronomancers-secrets",
+  "evidence": "owner ruled 2026-09-10 (#150): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 36,
+  "id": "spirit-walk",
+  "evidence": "owner ruled 2026-09-10 (#149): yes — a playtest row is never evidence — Spirit Walk (Guy pasted the page): no sense. FIX-PASS CHECK the three printed pieces are present as stars/notes: +2 status to Recall Kno...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "merchants-scale",
+  "evidence": "owner ruled 2026-09-10 (#17): yes — Merchant's Scale: no mechanical effect; show one plain line clearly marked as ours: the book prints no rules for this item. Never WG's +1 to seven skills.",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "guardians-armor",
+  "evidence": "owner ruled 2026-09-10 (#109): DECIDED BY FABLE from the AoN page: make it automatic",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "devil-allies",
+  "evidence": "owner ruled 2026-09-10 (#3): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "shoony-lore",
+  "evidence": "owner ruled 2026-09-10 (#45): yes — Keep the printed scope. No change on 39/41/42/45/107/115/130. FIX #7 Locate Lawbreakers: rank 5 at level 14 only for Order of the Gate members (read the stored order). FIX...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "fear-no-law-fear-no-one",
+  "evidence": "owner ruled 2026-09-10 (#5): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "gleaming-blade",
+  "evidence": "owner ruled 2026-09-10 (#135): yes — #72 Screech Shooter greater/major + the two upgraded wyrm spindles: one sentence per grade carrying only that grade's numbers (option A). #135 Gleaming Blade: printed name...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "otherworldly-protection",
+  "evidence": "owner ruled 2026-09-10 (#147): DECIDED BY FABLE from the AoN pages: keep the app, nothing changes",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "barrows-edge",
+  "evidence": "owner ruled 2026-09-10 (#136): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "gaze-sharp-as-steel",
+  "evidence": "owner ruled 2026-09-10 (#137): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "animist-apparition-spellcasting",
+  "evidence": "owner ruled 2026-09-10 (#4): yes — Animist slot table: keep the app (matches the printed table row for row); nothing changes; close both. Guy: 'good' after asking which solution matches the written text best.",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "spore-order",
+  "evidence": "owner ruled 2026-09-10 (#139): B — Spore + Cultivation count as Leaf Order: already built; know the membership, block nothing (B); nothing changes; close all three. Do not copy WG's whole-Leaf-Order grant. Gu...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "dragon-eidolon",
+  "evidence": "owner ruled 2026-09-10 (#138): DECIDED BY FABLE from the AoN pages: keep the app, nothing changes",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "acute-vision",
+  "evidence": "owner ruled 2026-09-10 (#108): DECIDED BY FABLE from the AoN pages: keep the app (star / mode), nothing changes",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "sequestered-spell",
+  "evidence": "owner ruled 2026-09-10 (#20): yes — Innate spells: trained, expert at 12th by the general rule; the app already does it on both (#20 keeps its single narrowed picker). Guy: 'keep the app on both, nothing cha...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "breath-of-the-dragon",
+  "evidence": "owner ruled 2026-09-10 (#55): derive all three from the Dragonblood exemplar; the table is PRINTED (Draconic Codex pg. 206, 'Draconic Benefactors' table) — Guy pointed at https://2e.aonprd.com/DraconicBenefa...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "curse-of-turbulent-moments",
+  "evidence": "owner ruled 2026-09-10 (#143): DECIDED BY FABLE from the AoN pages: keep the app (star / mode), nothing changes",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "intuitive-crafting",
+  "evidence": "owner ruled 2026-09-10 (#16): yes — #12 Molten Wit: build all three printed branches (neither trained: paired skill+feat; trained in one: must take the other skill, pick either feat; trained in both: free sk...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "nagaji-spell-familiarity",
+  "evidence": "owner ruled 2026-09-10 (#18): DECIDED BY FABLE from the AoN pages (Guy: 'read the archives of nethys pages and if you still cant reach a reliable answer ask me')",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "reinforced-chassis",
+  "evidence": "owner ruled 2026-09-10 (#19): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "skybearers-belt",
+  "evidence": "owner ruled 2026-09-10 (#141): follow the page (Guy pasted it) — Skybearer's Belt immanence: '+1 circumstance bonus to checks for Disarm, Grapple, Shove, Trip and to saving throws to resist these actions; may...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "locate-lawbreakers",
+  "evidence": "owner ruled 2026-09-10 (#7): yes — Keep the printed scope. No change on 39/41/42/45/107/115/130. FIX #7 Locate Lawbreakers: rank 5 at level 14 only for Order of the Gate members (read the stored order). FIX...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "scar-of-the-survivor",
+  "evidence": "owner ruled 2026-09-10 (#140): yes — Build the missing piece: #40 Hardened Chassis Enhancement computed, switched on only by an augmentation feat naming it (never asked of every automaton); #73 Armiger's Prot...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "hardwood-armor-armor",
+  "evidence": "owner ruled 2026-09-10 (#26): yes — Armor in Earth + Hardwood Armor: attach the existing best-armour-proficiency borrowing (Sentinel Dedication / Mountain Skin lane) to the GRANTED armour item (medium and he...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "echo-of-lost-moments",
+  "evidence": "owner ruled 2026-09-10 (#142): DECIDED BY FABLE: keep the app, write WG's slip down",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "cultivation-order",
+  "evidence": "owner ruled 2026-09-10 (#144): B — Spore + Cultivation count as Leaf Order: already built; know the membership, block nothing (B); nothing changes; close all three. Do not copy WG's whole-Leaf-Order grant. Gu...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "steady-balance",
+  "evidence": "owner ruled 2026-09-10 (#9): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "bone-magic",
+  "evidence": "owner ruled 2026-09-10 (#107): yes — Keep the printed scope. No change on 39/41/42/45/107/115/130. FIX #7 Locate Lawbreakers: rank 5 at level 14 only for Order of the Gate members (read the stored order). FIX...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "benefactors-resistance",
+  "evidence": "owner ruled 2026-09-10 (#11): yes — Benefactor's Resistance: keep the floor of 1 (half level, min 1); written down as a deliberate small step past the literal page; WG's dragon half is NOT copied (no printed...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "armor-in-earth",
+  "evidence": "owner ruled 2026-09-10 (#10): yes — Armor in Earth + Hardwood Armor: attach the existing best-armour-proficiency borrowing (Sentinel Dedication / Mountain Skin lane) to the GRANTED armour item (medium and he...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "molten-wit",
+  "evidence": "owner ruled 2026-09-10 (#12): yes — #12 Molten Wit: build all three printed branches (neither trained: paired skill+feat; trained in one: must take the other skill, pick either feat; trained in both: free sk...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "divine-font",
+  "evidence": "owner ruled 2026-09-10 (#103): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "firework-technician-dedication",
+  "evidence": "owner ruled 2026-09-10 (#13): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "oatia-skysage-dedication",
+  "evidence": "owner ruled 2026-09-10 (#113): yes — Keep the printed scope. No change on 39/41/42/45/107/115/130. FIX #7 Locate Lawbreakers: rank 5 at level 14 only for Order of the Gate members (read the stored order). FIX...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "hellknight-dedication",
+  "evidence": "owner ruled 2026-09-10 (#14): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "reverse-engineer",
+  "evidence": "owner ruled 2026-09-10 (#15): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "favored-terrain",
+  "evidence": "owner ruled 2026-09-10 (#24): DECIDED BY FABLE from the AoN pages: keep the app (star / mode), nothing changes",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "hallowed-necromancer-dedication",
+  "evidence": "owner ruled 2026-09-10 (#25): DECIDED BY FABLE from the AoN pages: keep the app, nothing changes",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "psychic-dedication",
+  "evidence": "owner ruled 2026-09-10 (#27): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "shadowcaster-dedication",
+  "evidence": "owner ruled 2026-09-10 (#22): DECIDED BY FABLE from the AoN pages: keep the app, nothing changes",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "clawdancer-dedication",
+  "evidence": "owner ruled 2026-09-10 (#21): DECIDED BY FABLE from the page (feat-5436)",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "aeon-stone-dusty-rose-prism",
+  "evidence": "owner ruled 2026-09-10 (#48): yes — Aeon stones: keep the wayfinder mark AND print the resonant sentence on the spell entry (augury / shield / illusory disguise); #48 drop the duplicate yes/no picker. #70 Wi...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "unifying-emblem-shundar-quah",
+  "evidence": "owner ruled 2026-09-10 (#28): finish the family (SPECIFIC approval) — Guy: 'for this case specifically because i went over this and approve we can implement the rest of the family.' Add Thoughtful Gift (Shun...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "unifying-emblem-sklar-quah",
+  "evidence": "owner ruled 2026-09-10 (#29): finish the family (SPECIFIC approval) — Guy: 'for this case specifically because i went over this and approve we can implement the rest of the family.' Add Thoughtful Gift (Shun...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "unifying-emblem-tamiir-quah",
+  "evidence": "owner ruled 2026-09-10 (#30): finish the family (SPECIFIC approval) — Guy: 'for this case specifically because i went over this and approve we can implement the rest of the family.' Add Thoughtful Gift (Shun...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "versatile-mutation",
+  "evidence": "owner ruled 2026-09-10 (#35): DECIDED BY FABLE from the page (feat-5454)",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "elemental-existence",
+  "evidence": "owner ruled 2026-09-10 (#32): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "thats-not-natural",
+  "evidence": "owner ruled 2026-09-10 (#34): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "ardent-armiger",
+  "evidence": "owner ruled 2026-09-10 (#37): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "devils-eye",
+  "evidence": "owner ruled 2026-09-10 (#38): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "pistol-wand",
+  "evidence": "owner ruled 2026-09-10 (#65): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "empathic-calm",
+  "evidence": "owner ruled 2026-09-10 (#111): yes — 'either X or Y' / 'your choice of X or Y' = ONE pick; keep the app on both, nothing changes. STANDING RULE (R13): any feat printed this way is one pick, never comes back t...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "hardened-chassis",
+  "evidence": "owner ruled 2026-09-10 (#40): yes — Build the missing piece: #40 Hardened Chassis Enhancement computed, switched on only by an augmentation feat naming it (never asked of every automaton); #73 Armiger's Prot...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "colugos-traversal",
+  "evidence": "owner ruled 2026-09-10 (#112): yes — 'either X or Y' / 'your choice of X or Y' = ONE pick; keep the app on both, nothing changes. STANDING RULE (R13): any feat printed this way is one pick, never comes back t...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "gunslinger-weapon-mastery",
+  "evidence": "owner ruled 2026-09-10 (#39): yes — Keep the printed scope. No change on 39/41/42/45/107/115/130. FIX #7 Locate Lawbreakers: rank 5 at level 14 only for Order of the Gate members (read the stored order). FIX...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "nagaji-spell-mysteries",
+  "evidence": "owner ruled 2026-09-10 (#44): DECIDED BY FABLE from the AoN pages (Guy: 'read the archives of nethys pages and if you still cant reach a reliable answer ask me')",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "brutality",
+  "evidence": "owner ruled 2026-09-10 (#42): yes — Keep the printed scope. No change on 39/41/42/45/107/115/130. FIX #7 Locate Lawbreakers: rank 5 at level 14 only for Order of the Gate members (read the stored order). FIX...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "aeon-stone-agate-ellipsoid",
+  "evidence": "owner ruled 2026-09-10 (#47): yes — Aeon stones: keep the wayfinder mark AND print the resonant sentence on the spell entry (augury / shield / illusory disguise); #48 drop the duplicate yes/no picker. #70 Wi...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "astrolabe-of-falling-stars",
+  "evidence": "owner ruled 2026-09-10 (#51): DECIDED BY FABLE from the pages (equipment-4027 / equipment-4028)",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "kitsune-spell-mysteries",
+  "evidence": "owner ruled 2026-09-10 (#43): DECIDED BY FABLE from the AoN pages (Guy: 'read the archives of nethys pages and if you still cant reach a reliable answer ask me')",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "advanced-red-mantis-magic",
+  "evidence": "owner ruled 2026-09-10 (#46): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "arcana-of-iron",
+  "evidence": "owner ruled 2026-09-10 (#50): DECIDED BY FABLE from the page (feat-7980): follow print",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "instinct-ability",
+  "evidence": "owner ruled 2026-09-10 (#53): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "spellmaster-dedication",
+  "evidence": "owner ruled 2026-09-10 (#110): DECIDED BY FABLE from the AoN pages: keep the app, nothing changes",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "aeon-stone-western-star",
+  "evidence": "owner ruled 2026-09-10 (#49): yes — Aeon stones: keep the wayfinder mark AND print the resonant sentence on the spell entry (augury / shield / illusory disguise); #48 drop the duplicate yes/no picker. #70 Wi...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "time-mage-dedication",
+  "evidence": "owner ruled 2026-09-10 (#57): DECIDED BY FABLE from the AoN page: FIX the innate cantrip's tradition",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "basic-summoner-spellcasting",
+  "evidence": "owner ruled 2026-09-10 (#56): yes — Guy: 'we need to use the newest sources we have' -> move magus + summoner to the 2026 Impossible Magic printing whole: full slot tables (lower ranks kept), archetype basic...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "hyper-boosters",
+  "evidence": "owner ruled 2026-09-10 (#148): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "tumbling-theft",
+  "evidence": "owner ruled 2026-09-10 (#66): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "studious-spells",
+  "evidence": "owner ruled 2026-09-10 (#121): yes — Guy: 'we need to use the newest sources we have' -> move magus + summoner to the 2026 Impossible Magic printing whole: full slot tables (lower ranks kept), archetype basic...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "glyph-expert",
+  "evidence": "owner ruled 2026-09-10 (#130): yes — Keep the printed scope. No change on 39/41/42/45/107/115/130. FIX #7 Locate Lawbreakers: rank 5 at level 14 only for Order of the Gate members (read the stored order). FIX...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "haunting-memories",
+  "evidence": "owner ruled 2026-09-10 (#128): yes — Build the missing piece: #40 Hardened Chassis Enhancement computed, switched on only by an augmentation feat naming it (never asked of every automaton); #73 Armiger's Prot...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "divine-breadth",
+  "evidence": "owner ruled 2026-09-10 (#131): yes — Breadth feats grant no cantrip (Divine, Primal, Occult, Arcane); WG's extra cantrip entry is a copied slip; nothing changes; close both.",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "primal-breadth",
+  "evidence": "owner ruled 2026-09-10 (#132): yes — Breadth feats grant no cantrip (Divine, Primal, Occult, Arcane); WG's extra cantrip entry is a copied slip; nothing changes; close both.",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "necromantic-tenacity",
+  "evidence": "owner ruled 2026-09-10 (#133): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "chronomancers-secrets",
+  "evidence": "owner ruled 2026-09-10 (#150): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "spirit-walk",
+  "evidence": "owner ruled 2026-09-10 (#149): yes — a playtest row is never evidence — Spirit Walk (Guy pasted the page): no sense. FIX-PASS CHECK the three printed pieces are present as stars/notes: +2 status to Recall Kno...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "toppling-tentacles",
+  "evidence": "owner ruled 2026-09-10 (#71): yes — Aeon stones: keep the wayfinder mark AND print the resonant sentence on the spell entry (augury / shield / illusory disguise); #48 drop the duplicate yes/no picker. #70 Wi...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "keys-to-destiny",
+  "evidence": "owner ruled 2026-09-10 (#74): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "born-of-animal",
+  "evidence": "owner ruled 2026-09-10 (#116): DECIDED BY FABLE from the AoN pages: keep the app (star / mode), nothing changes",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "concordance-scout",
+  "evidence": "owner ruled 2026-09-10 (#75): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "seer-of-the-dead",
+  "evidence": "owner ruled 2026-09-10 (#81): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "streetfood-vendor",
+  "evidence": "owner ruled 2026-09-10 (#82): keep the app's CHOICE (Crafting or Society) — the book prints it",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "tree-friend",
+  "evidence": "owner ruled 2026-09-10 (#84): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "traveling-gourmand",
+  "evidence": "owner ruled 2026-09-10 (#80): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "mightyfall-kobold",
+  "evidence": "owner ruled 2026-09-10 (#115): yes — Keep the printed scope. No change on 39/41/42/45/107/115/130. FIX #7 Locate Lawbreakers: rank 5 at level 14 only for Order of the Gate members (read the stored order). FIX...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "grave-orc",
+  "evidence": "owner ruled 2026-09-10 (#117): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "undine",
+  "evidence": "owner ruled 2026-09-10 (#114): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "aon-wishes-for-riches",
+  "evidence": "owner ruled 2026-09-10 (#79): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "haunted",
+  "evidence": "owner ruled 2026-09-10 (#83): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "sense-of-belonging",
+  "evidence": "owner ruled 2026-09-10 (#86): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "deny-lady-nanbyos-charity",
+  "evidence": "owner ruled 2026-09-10 (#118): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "sponsored-by-a-village",
+  "evidence": "owner ruled 2026-09-10 (#87): yes — Adventure-path backgrounds stay common (no printed rarity trait); nothing changes on rarity. #92 Teacher Ot: ask the Survival-or-Performance choice ONCE (drop the second c...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "poppet",
+  "evidence": "owner ruled 2026-09-10 (#76): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "reborn-soul",
+  "evidence": "owner ruled 2026-09-10 (#85): A as Fable described it (Guy: 'A as I describe it')",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "sky-rider",
+  "evidence": "owner ruled 2026-09-10 (#88): keep the app — Sky Rider trains Acrobatics AND Plane of Air Lore; nothing changes.",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "goloma",
+  "evidence": "owner ruled 2026-09-10 (#77): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "hammered-by-fate",
+  "evidence": "owner ruled 2026-09-10 (#89): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "lesser-scion",
+  "evidence": "owner ruled 2026-09-10 (#90): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "unsponsored",
+  "evidence": "owner ruled 2026-09-10 (#94): yes — Adventure-path backgrounds stay common (no printed rarity trait); nothing changes on rarity. #92 Teacher Ot: ask the Survival-or-Performance choice ONCE (drop the second c...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "summoner",
+  "evidence": "owner ruled 2026-09-10 (#120): yes — Guy: 'we need to use the newest sources we have' -> move magus + summoner to the 2026 Impossible Magic printing whole: full slot tables (lower ranks kept), archetype basic...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "bachuan-revolutionary",
+  "evidence": "owner ruled 2026-09-10 (#91): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "sponsored-by-family",
+  "evidence": "owner ruled 2026-09-10 (#96): yes — Adventure-path backgrounds stay common (no printed rarity trait); nothing changes on rarity. #92 Teacher Ot: ask the Survival-or-Performance choice ONCE (drop the second c...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "northridge-scholar",
+  "evidence": "owner ruled 2026-09-10 (#97): leave it as it is — Northridge Scholar: Seasonal Boon stays a free action with no frequency (our page prints none); WG's 'once per season' not copied. Close.",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "wanderlust",
+  "evidence": "owner ruled 2026-09-10 (#95): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "sponsored-by-teacher-ot",
+  "evidence": "owner ruled 2026-09-10 (#92): yes — Adventure-path backgrounds stay common (no printed rarity trait); nothing changes on rarity. #92 Teacher Ot: ask the Survival-or-Performance choice ONCE (drop the second c...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "lost-loved-one",
+  "evidence": "owner ruled 2026-09-10 (#93): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "magus",
+  "evidence": "owner ruled 2026-09-10 (#104): yes — Guy: 'we need to use the newest sources we have' -> move magus + summoner to the 2026 Impossible Magic printing whole: full slot tables (lower ranks kept), archetype basic...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "animist",
+  "evidence": "owner ruled 2026-09-10 (#105): yes — Animist slot table: keep the app (matches the printed table row for row); nothing changes; close both. Guy: 'good' after asking which solution matches the written text best.",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "total-power",
+  "evidence": "owner ruled 2026-09-10 (#101): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "waning-moon-sarangay",
+  "evidence": "owner ruled 2026-09-10 (#119): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "sponsored-by-a-stranger",
+  "evidence": "owner ruled 2026-09-10 (#100): yes — Adventure-path backgrounds stay common (no printed rarity trait); nothing changes on rarity. #92 Teacher Ot: ask the Survival-or-Performance choice ONCE (drop the second c...",
+  "verdict": "OWNER-RULED"
+ },
+ {
+  "batch": 37,
+  "id": "beast-blessed",
+  "evidence": "owner ruled 2026-09-10 (#99): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording",
+  "verdict": "OWNER-RULED"
+ }
+]

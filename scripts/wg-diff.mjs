@@ -1667,6 +1667,38 @@ for (const [bucket, rowMap] of Object.entries(wgRowsByBucket(sql))) {
  * ⚠ Only for a mismatch verified by reading the printed text. Never a place to quiet a real gap.
  */
 const VERIFIED_EQUIVALENT = {
+  /* ---- BATCH 37 (lane S — the regate settles) -----------------------------------------------------
+   *
+   * TIME MAGE DEDICATION — PRINT DERIVES THE TRADITION, SO THERE IS NO QUESTION TO ASK.
+   *
+   * Print (AoN feat-8480, Dark Archives (Remastered) pg. 184): *"You also gain time sense as an innate
+   * cantrip usable at will. This innate spell and your focus spells from the time mage archetype are of
+   * the same tradition as the spells you used to meet the archetype's prerequisites."* The prerequisite
+   * is *"You have a spellcasting class feature"*, so the tradition is a fact about the character who
+   * qualified — never a pick. WG has no way to derive it, so it models the answer as a four-branch
+   * `select "Select a Tradition"` (`node scripts/wg-show.mjs "Time Mage Dedication" --raw`), each branch
+   * a `giveSpell INNATE` of time sense plus `defineCastingSource TIME_MAGE:::-:::<TRADITION>:::
+   * ATTRIBUTE_WIS`. Three of their four answers are illegal for any given character.
+   *
+   * Ours derives it: feats/time-mage-dedication `innateSpells [{spellId:'time-sense', atWill:true,
+   * traditionFromCasting:true}]` (the flag built in this batch), read at src/rules/build.ts:8351 —
+   * `(g.traditionFromCasting ? caster?.tradition : undefined) ?? g.tradition ?? …` — so a divine cleric
+   * reads Time Sense as divine and an occult bard as occult, off the casting they qualified with. The
+   * focus half (`focusSpells ['delay-consequence']`) already agreed. Owner ruled 2026-09-10 (desk #57,
+   * standing rule R14): derive it, build no picker.
+   *
+   * ⚠ BLAST RADIUS, MEASURED. THE `choice` KIND ALONE, on this record. `--out` on the shipped data
+   * reports `theirKinds ["choice","spell","spellcasting"] ourKinds ["spell","focus","spellcasting"]
+   * missing ["choice"] extra ["focus"]` — `spell` and `spellcasting` already match and are untouched by
+   * this entry, so a real grant this dedication ought to hand over still reports. The MEMBERSHIP half of
+   * the same finding (their four tradition titles) is a different comparer and is settled separately in
+   * wg-identity's SETTLED_IDENTITIES, member by member; this entry cannot reach it. Adversarially
+   * confirmed under `--raw` (the registry's own bypass): `missing ["choice"]` comes straight back, so
+   * the settle is what silences it. Pinned in test/batch037-settles.test.ts.
+   */
+  // batch 037: time-mage-dedication#innate-tradition
+  'time-mage-dedication': ['choice'],
+
   /* ---- BATCH 33 (resume) ------------------------------------------------------------------------
    *
    * THE DRUID ORDER IS THE SUBCLASS PICK, AND `MAIN_DRUID_ORDER` IS THEIR ENGINE WRITING IT DOWN.

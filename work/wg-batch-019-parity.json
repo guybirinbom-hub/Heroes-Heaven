@@ -23,8 +23,8 @@
   },
   {
    "id": "keys-to-destiny",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "A WG-contradicts-print question for this record sits in work/owner-questions.json open (batch-19 read); every other finding on it was applied — see work/.b019-findings.json."
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#74): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'"
   },
   {
    "id": "undercover-contender",
@@ -223,8 +223,8 @@
   },
   {
    "id": "concordance-scout",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "A WG-contradicts-print question for this record sits in work/owner-questions.json open (batch-19 read); every other finding on it was applied — see work/.b019-findings.json."
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#75): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'"
   },
   {
    "id": "osprey-scion",
@@ -348,8 +348,8 @@
   },
   {
    "id": "poppet",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "A WG-contradicts-print question for this record sits in work/owner-questions.json open (batch-19 read); every other finding on it was applied — see work/.b019-findings.json."
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#76): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'"
   },
   {
    "id": "elf",
@@ -373,8 +373,8 @@
   },
   {
    "id": "goloma",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "A WG-contradicts-print question for this record sits in work/owner-questions.json open (batch-19 read); every other finding on it was applied — see work/.b019-findings.json."
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#77): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'"
   },
   {
    "id": "samsaran",
@@ -498,8 +498,8 @@
   },
   {
    "id": "android",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "A WG-contradicts-print question for this record sits in work/owner-questions.json open (batch-19 read); every other finding on it was applied — see work/.b019-findings.json."
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#78): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording"
   }
  ]
 }

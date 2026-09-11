@@ -20,6 +20,10 @@ plan is `docs/wg-batch-pipeline.md` (three-judge reviewed); the prompts are
    decision, a ruling conflict, a create-row correction or row removal that needs `npm run data`),
    then commit through `scripts/wg-batch-commit.mjs --batch NNN` (stages by explicit path from the
    manifest; refuses strays; never `-A`) and record the hash in memory.
+   `scripts/wg-batch-commit.mjs` is the orchestrator's command and refuses without `HH_ORCHESTRATOR=1`;
+   do not set that variable (2026-09-11: an agent ran it mid-batch and f1da70a landed with two gates
+   red). Fable sets it on her own shell: `HH_ORCHESTRATOR=1 node scripts/wg-batch-commit.mjs --batch NNN`.
+   `--dry-run` is read-only and needs nothing.
 
 The guards that replaced the orchestrator's eyes — do not bypass them by hand:
 - `scripts/apply-parity-fixes.mjs` refuses an undeclared `supersedes`, a whole-value row landing on a

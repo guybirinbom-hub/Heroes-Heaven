@@ -478,13 +478,13 @@
   },
   {
    "id": "versatile-mutation",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 12) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"A fix was proposed and REFUSED on review because it picks a side in a WG-vs-print disagreement. The reviewer's reasoning: PREMISE CONFIRMED, FIX REFUTED. The mismatch is real: `nod…\""
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#35): DECIDED BY FABLE from the page (feat-5454)"
   },
   {
    "id": "elemental-existence",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 12) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"Their encoding and the printed text disagree. RAN `node scripts/wg-show.mjs elemental-existence --raw` for the four ops, then resolved trait 3041 against their `trait` table (= Ore…\""
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#32): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'"
   },
   {
    "id": "monk-resiliency",
@@ -498,8 +498,8 @@
   },
   {
    "id": "thats-not-natural",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 12) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"PRINTED: \"...you gain a +1 circumstance bonus to all initiative checks made at the start of a battle in which at least one of your enemies is an aberration, fey, mutant, or undead.…\""
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#34): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'"
   }
  ]
 }

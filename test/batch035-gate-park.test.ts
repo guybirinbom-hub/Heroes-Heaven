@@ -54,25 +54,50 @@ const widened = (desk = DESK): Record<string, string> =>
       .map((l) => l.split('\t') as [string, string]),
   );
 
-describe('batch 035 gate-park — animal-instinct is parked by desk entry #145, filed under record#aspect', () => {
+/*
+ * ── RE-PINNED 2026-09-11, and the reason is the desk working rather than the resolver breaking ──
+ *
+ * The record this file is named for is no longer parked. #145 `animal-instinct-spider-web` was one of
+ * the 128 questions the owner ANSWERED in his 2026-09-10 desk pass, batch 037 built the Web from that
+ * ruling, and the 2026-09-11 desk pass moved the entry out of `open` and into `ruled` in
+ * work/owner-questions.json. A ruled question parks nothing on purpose: scripts/wg-batch-gate.mjs:117
+ * builds the park map from `open` + `deferred` only (deferred being parked-until-later under the
+ * 2026-08-27 ruling), because a park is "the owner has not spoken yet", and he has. Every fixture the
+ * four cases below used — #145, #64 `weapon-expertise`, #42 `divine-font`, #78 `instinct-ability`,
+ * #139 `spore-order`, #144 `cultivation-order` — went the same way in the same pass.
+ *
+ * The MECHANISM is untouched and still load-bearing: five records are parked through a widened key
+ * today. So the cases are re-pointed at entries that are still live — #151
+ * `screech-shooter-major-rune-grade` for the `<record>-<aspect>` shape animal-instinct had, and the
+ * deferred relic family for the anti-over-park direction — and animal-instinct is asserted on the
+ * OTHER side of the desk, so this file still fails if the entry silently vanishes.
+ */
+describe('batch 035 gate-park — a question filed under record#aspect parks its record', () => {
   // batch 035: animal-instinct#spider-web
-  it('queuedFor("animal-instinct") resolves to the desk id animal-instinct-spider-web', () => {
-    expect(queuedFor('animal-instinct')).toBe('animal-instinct-spider-web');
+  // batch 037: screech-shooter-major#grade-numbers
+  it('queuedFor("screech-shooter-major") resolves to the desk id screech-shooter-major-rune-grade, and the answered animal-instinct parks nothing', () => {
+    expect(queuedFor('screech-shooter-major')).toBe('screech-shooter-major-rune-grade');
     /* The desk really is keyed that way, and the record really is not — which is the defect in one
-     * line: the old `ownerQueued.has('animal-instinct')` was false against this file. */
+     * line: the old `ownerQueued.has('<record>')` was false against this file. */
     const desk = JSON.parse(readFileSync(join(CLI_ROOT, DESK), 'utf8').replace(/^﻿/, ''));
     const ids = [...desk.open, ...desk.deferred].map((q: { id: string }) => q.id);
-    expect(ids).toContain('animal-instinct-spider-web');
-    expect(ids).not.toContain('animal-instinct');
+    expect(ids).toContain('screech-shooter-major-rune-grade');
+    expect(ids).not.toContain('screech-shooter-major');
+    /* The original fixture, asserted where it now lives: ruled, therefore not parked. If #145 is ever
+     * dropped from the file altogether — rather than answered — this is what says so. */
+    expect((desk.ruled ?? []).map((q: { id: string }) => q.id)).toContain('animal-instinct-spider-web');
+    expect(queuedFor('animal-instinct')).toBe('');
     /* …and the IDENTITY gate asks the resolver, not a Set. This is the join between the probe above
      * and the gate proper: if the call site stops routing through queuedFor, this fails. */
     expect(GATE_SRC).toContain("if (queuedFor(mm[1])) { parkQueued(mm[1], 'IDENTITY'); n--; }");
   });
 
   // batch 035: animal-instinct#spider-web
-  it('with desk entry #145 removed, nothing parks animal-instinct and the IDENTITY gate fails on it again', () => {
+  // batch 037: screech-shooter-major#grade-numbers
+  it('with desk entry #151 removed, nothing parks screech-shooter-major', () => {
     /*
-     * mutation-proof — the settle/park key stunted is the QUEUE ID `animal-instinct-spider-web`. The
+     * mutation-proof — the settle/park key stunted is the QUEUE ID `screech-shooter-major-rune-grade`
+     * (it was #145 `animal-instinct-spider-web` until that question was answered; see the header). The
      * danger of a resolver that widens a lookup is that it parks a record on something other than the
      * entry it claims to read, so the entry is deleted from a COPY of the desk and the park must go
      * with it.
@@ -86,12 +111,12 @@ describe('batch 035 gate-park — animal-instinct is parked by desk entry #145, 
      */
     const rel = `work/.b035gp-desk-${tag()}.json`;
     const desk = JSON.parse(readFileSync(join(CLI_ROOT, DESK), 'utf8').replace(/^﻿/, ''));
-    desk.open = desk.open.filter((q: { id: string }) => q.id !== 'animal-instinct-spider-web');
+    desk.open = desk.open.filter((q: { id: string }) => q.id !== 'screech-shooter-major-rune-grade');
     expect(desk.open.length).toBe(JSON.parse(readFileSync(join(CLI_ROOT, DESK), 'utf8').replace(/^﻿/, '')).open.length - 1);
     writeFileSync(join(CLI_ROOT, rel), JSON.stringify(desk));
     try {
-      expect(queuedFor('animal-instinct', rel)).toBe('');
-      expect(widened(rel)['animal-instinct']).toBeUndefined();
+      expect(queuedFor('screech-shooter-major', rel)).toBe('');
+      expect(widened(rel)['screech-shooter-major']).toBeUndefined();
     } finally {
       rmSync(join(CLI_ROOT, rel), { force: true });
     }
@@ -112,80 +137,82 @@ describe('batch 035 gate-park — animal-instinct is parked by desk entry #145, 
   });
 
   // batch 035: animal-instinct#spider-web
-  it('the widening that parks animal-instinct does not park `weapon`, `divine` or `instinct`', () => {
+  it('a desk id that is ITSELF a record parks only itself — `adamantine-echo` never parks `adamantine`', () => {
     /*
      * The anti-over-park direction, which is what the `is not itself a record id` clause buys. Over the
-     * whole desk the bare prefix rule parks 57 records nobody queued; every one of these three has a
-     * desk id that starts with it AND is itself a record, so the entry answers for that record alone.
+     * whole desk the bare prefix rule parks 57 records nobody queued; a desk id that is itself a record
+     * answers for that record alone.
+     *
+     * The three fixtures this case used (weapon/weapon-expertise, divine/divine-font,
+     * instinct/instinct-ability) were all answered in the 2026-09-10 desk pass and are `ruled` now, so
+     * they park nothing at all and prove nothing either way. The live pair is the deferred relic family:
+     * #62 `adamantine-echo` is a record AND has the shorter record `adamantine` as a prefix.
      */
-    for (const [record, deskId] of [
-      ['weapon', 'weapon-expertise'],
-      ['divine', 'divine-font'],
-      ['instinct', 'instinct-ability'],
-    ]) {
-      const desk = JSON.parse(readFileSync(join(CLI_ROOT, DESK), 'utf8').replace(/^﻿/, ''));
-      const ids = [...desk.open, ...desk.deferred].map((q: { id: string }) => q.id);
-      expect(ids).toContain(deskId);          // the near-match is really on the desk
-      expect(queuedFor(record)).toBe('');     // …and parks nothing but its own record
-      expect(queuedFor(deskId)).toBe(deskId);
-    }
+    const desk = JSON.parse(readFileSync(join(CLI_ROOT, DESK), 'utf8').replace(/^﻿/, ''));
+    const ids = [...desk.open, ...desk.deferred].map((q: { id: string }) => q.id);
+    expect(ids).toContain('adamantine-echo');          // the near-match is really on the desk
+    expect(queuedFor('adamantine')).toBe('');          // …and parks nothing but its own record
+    expect(queuedFor('adamantine-echo')).toBe('adamantine-echo');
+    /*
+     * The same clause from the other side: #63 `spectacles-of-understanding` and #64
+     * `spectacles-of-understanding-greater` are BOTH on the desk and both are records, so the base
+     * record must resolve to its own entry and never to the longer one sitting next to it.
+     */
+    expect(ids).toContain('spectacles-of-understanding-greater');
+    expect(queuedFor('spectacles-of-understanding')).toBe('spectacles-of-understanding');
   });
 
   // batch 035: animal-instinct#spider-web
   // batch 037: screech-shooter-major#grade-numbers
   // batch 037 premise: feat-8166 "Your Speed increases by 5 feet for each mode of movement available to you."
-  it('the widening around animal-instinct is exactly seven records since screech-shooter-major and timewracked-dedication joined, the two loose ones accepted and printed', () => {
+  it('the widening is exactly five records — the four still-open aspect keys and the deferred relic family', () => {
     /*
      * The pin against silent growth. `--queued-parks` lists every record parked by a desk id that is
      * not its own; today that is five, and each is deliberate:
      *
-     *   animal-instinct        ← #145 animal-instinct-spider-web         the finding this batch fixes
-     *   dream-magic            ← dream-magic-second-taking               aspect
-     *   flexible-spellcaster   ← flexible-spellcaster-collection-shape   aspect, LONGEST wins (not `flexible`)
-     *   speed                  ← speed-status-lane-031                   LANE question, loose
-     *   relic                  ← relic-gift-family-…-adamantine          LANE question, loose
+     *   screech-shooter-major  ← #151 screech-shooter-major-rune-grade   aspect: print states a rune
+     *                                                                    grade for the base and greater
+     *                                                                    shooter and is SILENT for the
+     *                                                                    major, so it cannot be invented
+     *   timewracked-dedication ← #153 timewracked-dedication-speed-clause  aspect: feat-8166's "for each
+     *                                                                    mode of movement available to
+     *                                                                    you" reads two ways and the
+     *                                                                    shipped flat +5 is neither
+     *   speed                  ← #154 speed-plural-while-a-state-is-on   LANE question, loose
+     *   flexible-spellcaster   ← #155 flexible-spellcaster-book-casters  aspect, LONGEST wins (not `flexible`)
+     *   relic                  ← #58  relic-gift-family-…-adamantine     LANE question, loose, deferred
      *
-     * The last two are accepted rather than fixed: neither `speed` nor `relic` has ever been cut into a
-     * batch, so the park is inert, and narrowing the rule to exclude them would need the desk to mark
-     * lane questions as lane questions — which is the owner's file, not this gate's. They are pinned so
-     * the widening can never grow past them without a test failing.
+     * `speed` and `relic` are accepted rather than fixed: neither has ever been cut into a batch, so the
+     * park is inert, and narrowing the rule to exclude them would need the desk to mark lane questions
+     * as lane questions — which is the owner's file, not this gate's. They are pinned so the widening
+     * can never grow past them without a test failing.
      *
-     * `spore-order` is NOT here and that is the rule working: an exact desk id always beats a prefix,
-     * and it carries both #134 (the old aspect key) and #139 (the record id).
-     */
-    /*
-     * SIX since batch 037, which filed desk #151 `screech-shooter-major-rune-grade` — print states a
-     * rune grade for the base and the greater screech shooter and is SILENT for the major, so the
-     * major's grade cannot be invented and is queued. The id is an aspect key on a real record, the
-     * same shape as animal-instinct and dream-magic above, so the park is the rule working.
-     */
-    /*
-     * SEVEN after the closer's gate-red round, which filed three more desk questions. Only ONE of them
-     * widens this map, and the other two are the rule working rather than an exception:
-     *   · #153 `timewracked-dedication-speed-clause` — an aspect key on a real record, the same shape
-     *     as animal-instinct and dream-magic. feat-8166's "for each mode of movement available to you"
-     *     reads two ways, print settles neither, and the shipped flat +5 is neither reading, so the
-     *     record is queued and its park is correct.
-     *   · #155 `flexible-spellcaster-book-casters` maps to a record ALREADY parked by
-     *     `flexible-spellcaster-collection-shape`, and an existing park is never replaced.
-     *   · #154 `speed-plural-while-a-state-is-on` maps to `speed`, already parked by the batch-031
-     *     lane question below. Neither adds a key.
+     * WAS SEVEN until 2026-09-11, and the two that left are the desk working (see the header): #145
+     * `animal-instinct-spider-web` and `dream-magic-second-taking` were both answered in the owner's
+     * 2026-09-10 pass and are `ruled`. The two that CHANGED key are the same story one level down —
+     * `flexible-spellcaster-collection-shape` and `speed-status-lane-031` were answered, and the
+     * still-open #155 and #154 took over the same two records. The count is stable at five either way.
+     *
+     * `spore-order` and `cultivation-order` are not here and no longer park at all: both were answered
+     * in the same pass. They USED to be the demonstration that an exact desk id beats a prefix; that
+     * demonstration now lives on `adamantine-echo` in the case above.
      */
     // batch 037: screech-shooter-major#grade-numbers
     // batch 037 premise: feat-8166 "Your Speed increases by 5 feet for each mode of movement available to you."
     expect(widened()).toEqual({
-      'animal-instinct': 'animal-instinct-spider-web',
-      'dream-magic': 'dream-magic-second-taking',
-      'flexible-spellcaster': 'flexible-spellcaster-collection-shape',
+      'flexible-spellcaster': 'flexible-spellcaster-book-casters',
       'screech-shooter-major': 'screech-shooter-major-rune-grade',
       'timewracked-dedication': 'timewracked-dedication-speed-clause',
-      speed: 'speed-status-lane-031',
+      speed: 'speed-plural-while-a-state-is-on',
       relic: 'relic-gift-family-skysunder-sparkwarden-uniter-adamantine',
     });
     expect(queuedFor('flexible')).toBe('');
-    expect(queuedFor('spore-order')).toBe('spore-order');
-    /* The batch's OTHER queued record is an exact-match park, untouched by any of this. */
-    expect(queuedFor('cultivation-order')).toBe('cultivation-order');
+    /* Answered 2026-09-10, so parked no longer — asserted rather than deleted, because a record that
+     * silently stopped being parked for any OTHER reason is exactly the bug this file watches for. */
+    expect(queuedFor('spore-order')).toBe('');
+    expect(queuedFor('cultivation-order')).toBe('');
+    const ruledIds = ((JSON.parse(readFileSync(join(CLI_ROOT, DESK), 'utf8').replace(/^﻿/, '')).ruled ?? []) as { id: string }[]).map((q) => q.id);
+    for (const id of ['spore-order', 'cultivation-order', 'dream-magic-second-taking']) expect(ruledIds).toContain(id);
     /* Item 4 of this group's brief: the UNSUPPORTED branch test/batch035-instruments-1.test.ts pins
      * stays byte-identical through the resolver change. */
     expect(GATE_SRC).toContain("if (r.verdict === 'UNSUPPORTED') { unsupported.push(r.id); continue; }");

@@ -498,8 +498,8 @@
   },
   {
    "id": "steady-balance",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 5) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"Our side matches the printed text: the record carries `degreeShifts[{shift:'successToCrit', skills:['acrobatics'], actions:['balance'], when:'on a check to Balance'}]`, and the not…\""
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#9): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording"
   }
  ]
 }

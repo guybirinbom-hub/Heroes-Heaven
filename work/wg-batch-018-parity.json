@@ -493,8 +493,8 @@
   },
   {
    "id": "tumbling-theft",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 18) and awaits his ruling; until ruled the record stays as it is (the standing rule at the top of that file). Verified a genuine conflict by the adversarial pass (work/b018-verify.json 'investigation:tumbling-theft')."
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#66): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'"
   },
   {
    "id": "monarch",

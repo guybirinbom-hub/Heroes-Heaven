@@ -483,23 +483,23 @@
   },
   {
    "id": "astrolabe-of-falling-stars",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 16) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"A fix was proposed and REFUSED on review because it picks a side in a WG-vs-print disagreement. The reviewer's reasoning: REFUSED: the fix settles a WG-vs-printed-text contradictio…\""
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#51): DECIDED BY FABLE from the pages (equipment-4027 / equipment-4028)"
   },
   {
    "id": "advanced-red-mantis-magic",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 16) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"Their encoding and the printed text disagree. RAN `node scripts/wg-show.mjs \"Advanced Red Mantis Magic\" --raw` and summarised the table (r2@6, +r3@8, +r4@10). RAN `grep -o 'RED_MAN…\""
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#46): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording"
   },
   {
    "id": "arcana-of-iron",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 16) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"Their encoding and the printed text disagree. RAN `node scripts/wg-show.mjs \"Arcana of Iron\" --raw` → the LEVEL>=13 conditional and the injectText, in full. RAN `grep -n \"arcana-of…\""
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#50): DECIDED BY FABLE from the page (feat-7980): follow print"
   },
   {
    "id": "instinct-ability",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 16) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"The printed sentence is the whole feat: \"You gain the instinct ability for the instinct you chose for Barbarian Dedication.\" Their encoding delivers a Hit Point bonus the printed t…\""
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#53): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'"
   }
  ]
 }

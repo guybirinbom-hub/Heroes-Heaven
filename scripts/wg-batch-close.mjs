@@ -106,11 +106,28 @@ const reportPaths = families.flatMap((f) => [`work/.b${TAG}-report-${f}.txt`, `w
 // ── owner questions: membership AND the desk number ──────────────────────────────────────────────
 const questions = existsSync(p(QUESTIONS_PATH)) ? readJson(QUESTIONS_PATH) : { open: [], deferred: [] };
 const numbering = existsSync(p(NUMBERING_PATH)) ? (readJson(NUMBERING_PATH).numbers ?? {}) : {};
+/*
+ * TWO different questions, which used to share one map and must not.
+ *
+ * `desk` answers "what is this question's number?" — and a desk number is PERMANENT, so it has to be
+ * findable in whichever bucket the entry has since moved to. `queued` answers "is the owner still
+ * being waited on?" — only `open` and `deferred` (deferred is parked-until-later by the 2026-08-27
+ * ruling, honored exactly like open).
+ *
+ * Reading both out of an open+deferred map broke on 2026-09-11, when the desk pass moved 128 answered
+ * questions into `ruled`: re-closing batch 029 refused with "studious-spells: a read finding asks the
+ * owner but work/owner-questions.json has no entry", because studious-spells is desk #121 and #121 is
+ * now ruled. The number never went anywhere; only the bucket changed.
+ */
 /** desk n: the entry's own `n` (added by the owner-questions builder), else the permanent rulings-numbering map, else its position. */
 const desk = new Map();
-for (const arr of ['open', 'deferred']) {
+/** ids the owner has not answered yet — the OWNER-QUEUED half. Open + deferred only, never ruled. */
+const queued = new Set();
+for (const arr of ['open', 'deferred', 'ruled']) {
   (questions[arr] ?? []).forEach((e, i) => {
-    if (!e?.id || desk.has(e.id)) return;
+    if (!e?.id) return;
+    if (arr !== 'ruled') queued.add(e.id);
+    if (desk.has(e.id)) return;
     if (typeof e.n === 'number') desk.set(e.id, { n: e.n, from: 'entry.n' });
     else if (typeof numbering[e.id] === 'number') desk.set(e.id, { n: numbering[e.id], from: 'rulings-numbering.json' });
     else desk.set(e.id, { n: i + 1, from: `POSITION in ${arr}[] — no n on the entry and no rulings-numbering entry` });
@@ -277,7 +294,7 @@ const derived = new Map(); // id -> {verdict, evidence} | null when this run can
 const uncited = [];
 for (const rid of ids) {
   const findings = byRec.get(rid) ?? [];
-  if (askOwnerRecs.has(rid) || desk.has(rid)) {
+  if (askOwnerRecs.has(rid) || queued.has(rid)) {
     if (!desk.has(rid)) { refuse(`${rid}: a read finding asks the owner but ${QUESTIONS_PATH} has no entry — OWNER-QUEUED needs the desk n`); derived.set(rid, null); continue; }
     const d = desk.get(rid);
     if (d.from.startsWith('POSITION')) notes.push(`${rid}: desk #${d.n} taken by ${d.from}`);
@@ -501,10 +518,25 @@ if (refusals.length) {
   process.exit(1);
 }
 
-/** Match the file's own line endings so a re-close is a no-op diff, not a whole-file rewrite. */
+/*
+ * Match the file's own line endings — AND its trailing newline — so a re-close is a no-op diff, not a
+ * whole-file rewrite.
+ *
+ * The trailing newline half was added 2026-09-11. These files have TWO writers: this one, which ends
+ * at `}`, and scripts/record-parity-verdict.mjs, which ended at `}\n`. HEAD carries both shapes
+ * (batches 001-018 with the newline, 019-037 without), so whichever tool touched a file last decided
+ * its last byte, and the plan-E acceptance — re-closing batch 029 changes nothing — went red the
+ * moment the desk re-verdict pass ran the bulk writer over it: same JSON, one extra byte. Following
+ * the file instead of imposing a shape is what the CRLF line below already does.
+ */
+const shapeLike = (prior, next) => {
+  let s = next;
+  if (prior?.endsWith('\n')) s += '\n';
+  if (prior?.includes('\r\n')) s = s.replace(/\n/g, '\r\n');
+  return s;
+};
 const emit = (rel, obj, prior) => {
-  let s = JSON.stringify(obj, null, 1);
-  if (prior && prior.includes('\r\n')) s = s.replace(/\n/g, '\r\n');
+  const s = shapeLike(prior, JSON.stringify(obj, null, 1));
   writeFileSync(p(rel), s);
   return s;
 };
@@ -513,7 +545,7 @@ const priorResidual = text(RESIDUAL_PATH);
 if (!WRITE) {
   const wouldParity = JSON.stringify({ batch: BATCH, records }, null, 1);
   const wouldResidual = JSON.stringify(residual, null, 1);
-  const same = (prior, next) => prior !== null && (prior.includes('\r\n') ? next.replace(/\n/g, '\r\n') : next) === prior;
+  const same = (prior, next) => prior !== null && shapeLike(prior, next) === prior;
   console.log(`\n(dry run — pass --write)`);
   console.log(`  ${PARITY_PATH}: ${priorParity === null ? 'would be created' : same(priorParity, wouldParity) ? 'byte-identical, no change' : 'would change'}`);
   console.log(`  ${RESIDUAL_PATH}: ${priorResidual === null ? 'would be created' : same(priorResidual, wouldResidual) ? 'byte-identical, no change' : 'would change'}`);

@@ -488,18 +488,18 @@
   },
   {
    "id": "benefactors-resistance",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 6) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"Their encoding and the printed text disagree. RAN buildCharacter + deriveDefenses for a kobold with heritageId 'dragonscaled-kobold', the feat taken, and effectChoices{'benefactors…\""
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#11): yes — Benefactor's Resistance: keep the floor of 1 (half level, min 1); written down as a deliberate small step past the literal page; WG's dragon half is NOT copied (no printed..."
   },
   {
    "id": "armor-in-earth",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 6) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"A fix was proposed and REFUSED on review because it picks a side in a WG-vs-print disagreement. The reviewer's reasoning: THE GAP IS REAL — I re-verified every factual claim — but …\""
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#10): yes — Armor in Earth + Hardwood Armor: attach the existing best-armour-proficiency borrowing (Sentinel Dedication / Mountain Skin lane) to the GRANTED armour item (medium and he..."
   },
   {
    "id": "molten-wit",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 6) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"A fix was proposed and REFUSED on review because it picks a side in a WG-vs-print disagreement. The reviewer's reasoning: MISMATCH IS REAL, FIX MUST NOT BE APPLIED — verdict is ASK…\""
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#12): yes — #12 Molten Wit: build all three printed branches (neither trained: paired skill+feat; trained in one: must take the other skill, pick either feat; trained in both: free sk..."
   }
  ]
 }

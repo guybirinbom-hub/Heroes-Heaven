@@ -136,6 +136,17 @@ A stage that needs a full regen stops with `needs the orchestrator: npm run data
   printed under `left alone (dirty before this batch started)`, and only a path dirtied SINCE the start is
   refused; the three data artefacts stay always-staged-together even when they were dirty at the start,
   and the printed plan says so.
+  RULING (2026-09-11): this script is the ORCHESTRATOR's command and refuses (exit 2, nothing staged)
+  without `HH_ORCHESTRATOR=1` in the calling shell. No agent prompt names that variable and no script in
+  this repo sets it — do not set it. Fable sets it on her own shell; `--dry-run` is read-only and needs
+  nothing. WHY: on 2026-09-11 a pipeline agent ran the commit mid-batch and f1da70a landed with two gates
+  red and without the batch's parity/residual artefacts. Every "did this batch change X" test in the
+  script measures against the batch-start commit (`startSha` in `work/.bNNN-cut.json`), never HEAD: a
+  mid-batch commit puts the change INTO HEAD, which is what made the prose rule ("manifest specs carry
+  prose but `public/core-descriptions.json` did not change") misfire on the close-out. The driver's cut
+  stage writes `work/.bNNN-open` and only a successful commit removes it; while it exists, the `baseline`
+  and `close` stages print a loud MID-BATCH COMMIT line into `work/.bNNN-run.json` whenever HEAD has moved
+  off `startSha`.
 - `scripts/wg-regate-all.mjs` — the re-gate loop (ported from the scratchpad), resumable.
 
 ## C. One saved workflow — `.claude/workflows/wg-batch.js`

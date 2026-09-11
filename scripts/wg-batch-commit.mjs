@@ -20,7 +20,7 @@
  *   node scripts/wg-batch-commit.mjs --batch 030
  *   node scripts/wg-batch-commit.mjs --batch 030 --root <dir>   # (tests) a throwaway repo
  */
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync, rmSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -35,6 +35,26 @@ const rawBatch = arg('--batch');
 if (!rawBatch) { console.error('usage: node scripts/wg-batch-commit.mjs --batch NNN [--dry-run] [--root dir]'); process.exit(2); }
 const TAG = /^\d+$/.test(rawBatch) ? String(Number(rawBatch)).padStart(3, '0') : rawBatch.toUpperCase();
 
+/*
+ * THE ORCHESTRATOR'S COMMAND, MECHANICALLY (2026-09-11).
+ *
+ * On 2026-09-11 a pipeline agent ran this script mid-batch: f1da70a landed with two gates still red and
+ * without the batch's parity/residual artefacts, which then wedged wg-batch-close.mjs and misfired the
+ * prose rule below. Every agent prompt already forbids git writes — a prompt is not a guard, and the
+ * agent that broke this one had read it. So the commit is gated on an environment variable the
+ * orchestrator (Fable) sets on her own shell: no agent prompt names it and no script in this repo sets
+ * it, so an agent following its instructions cannot arrive here with it set.
+ *
+ * `--dry-run` writes nothing and stays open to everyone — a closer must still be able to see the plan.
+ */
+if (!DRY && process.env.HH_ORCHESTRATOR !== '1') {
+  console.error(`REFUSED, nothing staged: committing batch ${TAG} is the ORCHESTRATOR's step, not an agent's.`);
+  console.error('This script only commits when HH_ORCHESTRATOR=1 is set in the calling shell, which only the orchestrator sets.');
+  console.error('WHY: on 2026-09-11 an agent ran it mid-batch and f1da70a landed with two gates red and no parity/residual artefacts.');
+  console.error('If you are an agent: write work/.b' + TAG + '-commit.txt and stop; the orchestrator commits. `--dry-run` shows the plan.');
+  process.exit(2);
+}
+
 const p = (rel) => join(ROOT, rel);
 const git = (...a) => execFileSync('git', a, { cwd: ROOT, encoding: 'utf8' });
 const refusals = [];
@@ -46,6 +66,9 @@ const DATA_FILES = ['scripts/data/effect-backfill.json', 'public/core.json', 'pu
 const MSG_PATH = `work/.b${TAG}-commit.txt`;
 const SPECS_PATH = `work/.b${TAG}-specs.json`;
 const START_STATE_PATH = `work/.b${TAG}-baseline/start-state.json`;
+/** Written by the driver's cut stage, removed HERE after a successful commit — the batch is open while
+ *  it exists, which is what makes the driver's "HEAD moved since the cut" line fire (2026-09-11). */
+const OPEN_MARKER = `work/.b${TAG}-open`;
 
 /*
  * Per-run scratch — THE SAME SPLIT .gitignore encodes, and it must stay the same split. These are the
@@ -166,8 +189,29 @@ for (const extra of ['work/owner-questions.json', 'work/rulings-numbering.json']
  * With no start-state file (a batch cut before this existed) nothing is subtracted — the guard's default
  * stays "refuse over anything unaccounted for".
  */
-const startState = existsSync(p(START_STATE_PATH)) ? JSON.parse(readFileSync(p(START_STATE_PATH), 'utf8')) : null;
+const readJsonMaybe = (rel) => { try { return JSON.parse(readFileSync(p(rel), 'utf8')); } catch { return null; } };
+const startState = readJsonMaybe(START_STATE_PATH);
 const dirtyAtStart = new Set(startState?.dirtyAtStart ?? []);
+
+/*
+ * "DID THIS BATCH CHANGE X" IS MEASURED FROM THE BATCH START, NOT FROM HEAD (2026-09-11).
+ *
+ * `git status` compares the working tree with HEAD. That is the right question for "what can be staged"
+ * and the WRONG one for "did this batch move public/core-descriptions.json": after the mid-batch commit
+ * of 2026-09-11 HEAD already carried the prose the batch had authored, status showed the file clean, and
+ * the prose rule below refused the close-out commit over a file the batch HAD changed. So every
+ * change-since test reads `git diff --name-only <startSha>` unioned with the porcelain list (which adds
+ * the untracked paths a diff cannot see). With no recorded start commit nothing is added and the tests
+ * fall back to the working tree alone, which is where they were before.
+ */
+const startSha = readJsonMaybe(`work/.b${TAG}-cut.json`)?.startSha ?? readJsonMaybe(`work/.b${TAG}-testbase.json`)?.startSha ?? null;
+const changedSinceStart = new Set(changed.keys());
+if (startSha) {
+  let sinceStart = '';
+  try { sinceStart = git('diff', '--name-only', startSha, '--'); }
+  catch { refuse(`git diff against the batch-start commit ${startSha.slice(0, 12)} failed — it is recorded in work/.b${TAG}-cut.json and must exist in this repo; without it "did this batch change core-descriptions.json" cannot be answered.`); }
+  for (const f of sinceStart.split('\n').filter(Boolean)) changedSinceStart.add(f.trim().replace(/^"|"$/g, ''));
+}
 
 // ── refusals ─────────────────────────────────────────────────────────────────────────────────────
 const unaccounted = status.filter(isTracked).filter((s) => !staged.has(s.path) && !SCRATCH.some((re) => re.test(s.path)));
@@ -191,9 +235,9 @@ if (newlyDirty.length) refuse(`${newlyDirty.length} modified tracked path(s) thi
  */
 const DESC_FILE = 'public/core-descriptions.json';
 const OVERLAY_PAIR = DATA_FILES.filter((f) => f !== DESC_FILE);
-const pairChanged = OVERLAY_PAIR.filter((f) => changed.has(f));
+const pairChanged = OVERLAY_PAIR.filter((f) => changedSinceStart.has(f));
 if (pairChanged.length === 1) {
-  refuse(`the overlay and its artefact move together: ${pairChanged[0]} changed but ${OVERLAY_PAIR.find((f) => !changed.has(f))} did not. Replay the overlay (apply-backfill-now.mjs) before committing, or explain the split.`);
+  refuse(`the overlay and its artefact move together: ${pairChanged[0]} changed but ${OVERLAY_PAIR.find((f) => !changedSinceStart.has(f))} did not${startSha ? ` (measured against the batch-start commit ${startSha.slice(0, 8)})` : ''}. Replay the overlay (apply-backfill-now.mjs) before committing, or explain the split.`);
 }
 
 const proseSpecs = manifest.filter((m) => {
@@ -204,8 +248,8 @@ const proseSpecs = manifest.filter((m) => {
   return findings.some((f) => ((f.verification?.correctedBackfillRows?.length ? f.verification.correctedBackfillRows : f.backfillRows) ?? [])
     .some((r) => r.field === 'description' || r.field === 'descRefs'));
 });
-if (proseSpecs.length && !changed.has(DESC_FILE)) {
-  refuse(`${proseSpecs.length} manifest spec(s) carry prose (${proseSpecs.map((m) => m.file ?? m.family).join(', ')}) but ${DESC_FILE} did not change. Replay the overlay (apply-backfill-now.mjs) before committing, or explain the split.`);
+if (proseSpecs.length && !changedSinceStart.has(DESC_FILE)) {
+  refuse(`${proseSpecs.length} manifest spec(s) carry prose (${proseSpecs.map((m) => m.file ?? m.family).join(', ')}) but ${DESC_FILE} did not change${startSha ? ` since the batch started (${startSha.slice(0, 8)})` : ''}. Replay the overlay (apply-backfill-now.mjs) before committing, or explain the split.`);
 }
 for (const f of DATA_FILES) if (changed.has(f) && !toAdd.includes(f)) refuse(`${f} is modified and not in the stage set`);
 
@@ -239,7 +283,8 @@ const dataDirtyAtStart = DATA_FILES.filter((f) => dirtyAtStart.has(f));
 if (dataDirtyAtStart.length) console.log(`staged anyway (the three data artefacts always move together, dirty at start or not): ${dataDirtyAtStart.join(', ')}`);
 // ruling (batch 030): a rows-only batch may legitimately leave core-descriptions.json alone — say so,
 // so the absent third data file reads as expected rather than as something the plan failed to notice.
-if (!proseSpecs.length && !changed.has(DESC_FILE)) console.log(`no prose rows in this batch; ${DESC_FILE} unchanged is expected`);
+if (!proseSpecs.length && !changedSinceStart.has(DESC_FILE)) console.log(`no prose rows in this batch; ${DESC_FILE} unchanged is expected`);
+if (startSha) console.log(`change tests measured against the batch-start commit ${startSha.slice(0, 8)} (not HEAD)`);
 if (msg) console.log(`message (${msg.trim().length} chars): ${msg.trim().split('\n')[0]}`);
 
 if (refusals.length) {
@@ -258,6 +303,9 @@ if (surprise.length) {
 }
 git('commit', '-F', p(MSG_PATH));
 const sha = git('rev-parse', 'HEAD').trim();
+/* The batch is no longer open, so the driver's "HEAD moved since the cut" line stops firing. This is the
+ * ONLY place the marker is removed: while it exists, any commit on top of the cut is a mid-batch one. */
+if (existsSync(p(OPEN_MARKER))) { rmSync(p(OPEN_MARKER), { force: true }); console.log(`removed ${OPEN_MARKER} — batch ${TAG} is committed, not open`); }
 console.log(`\nstaged ${stagedNow.length} path(s):`);
 for (const f of stagedNow) console.log(`  ${f}`);
 console.log(`committed ${sha}`);

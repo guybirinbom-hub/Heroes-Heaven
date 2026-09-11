@@ -178,8 +178,8 @@
   },
   {
    "id": "gleaming-blade",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "WG-vs-print — Rulings Desk #135 (batch 33; n from entry.n)"
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#135): yes — #72 Screech Shooter greater/major + the two upgraded wyrm spindles: one sentence per grade carrying only that grade's numbers (option A). #135 Gleaming Blade: printed name..."
   },
   {
    "id": "wilding-steward",
@@ -213,13 +213,13 @@
   },
   {
    "id": "barrows-edge",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "WG-vs-print — Rulings Desk #136 (batch 33; n from entry.n)"
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#136): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'"
   },
   {
    "id": "gaze-sharp-as-steel",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "WG-vs-print — Rulings Desk #137 (batch 33; n from entry.n)"
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#137): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'"
   },
   {
    "id": "angel-eidolon",
@@ -233,13 +233,13 @@
   },
   {
    "id": "spore-order",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "[batch 33 read] comparer misread settled/taught: spore-order — work/.b033-rows-instruments.json finding spore-order note: Code-only for the two flags the finding names (intimidation, mushroom-patch), both cleared by the option-carrier teaches. NO row: the records remaining NO-SHEET [orchestrator ruling: desk #134 asks the membership-token question; the record must park until ruled]"
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#139): B — Spore + Cultivation count as Leaf Order: already built; know the membership, block nothing (B); nothing changes; close all three. Do not copy WG's whole-Leaf-Order grant. Gu..."
   },
   {
    "id": "dragon-eidolon",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "WG-vs-print — Rulings Desk #138 (batch 33; n from entry.n)"
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#138): DECIDED BY FABLE from the AoN pages: keep the app, nothing changes"
   },
   {
    "id": "construct-eidolon",

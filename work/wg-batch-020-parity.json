@@ -13,8 +13,8 @@
   },
   {
    "id": "seer-of-the-dead",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "A WG-vs-print question for this record sits in work/owner-questions.json open (batch-20 read); every other confirmed finding on it was applied — see work/.b020-findings.json."
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#81): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'"
   },
   {
    "id": "necromancers-apprentice",
@@ -23,8 +23,8 @@
   },
   {
    "id": "streetfood-vendor",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "A WG-vs-print question for this record sits in work/owner-questions.json open (batch-20 read); every other confirmed finding on it was applied — see work/.b020-findings.json."
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#82): keep the app's CHOICE (Crafting or Society) — the book prints it"
   },
   {
    "id": "scarnetti-connected",
@@ -58,8 +58,8 @@
   },
   {
    "id": "tree-friend",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "A WG-vs-print question for this record sits in work/owner-questions.json open (batch-20 read); every other confirmed finding on it was applied — see work/.b020-findings.json."
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#84): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'"
   },
   {
    "id": "ruby-phoenix-fanatic",
@@ -153,8 +153,8 @@
   },
   {
    "id": "traveling-gourmand",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "A WG-vs-print question for this record sits in work/owner-questions.json open (batch-20 read); every other confirmed finding on it was applied — see work/.b020-findings.json."
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#80): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'"
   },
   {
    "id": "ocean-diver",
@@ -373,8 +373,8 @@
   },
   {
    "id": "aon-wishes-for-riches",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "A WG-vs-print question for this record sits in work/owner-questions.json open (batch-20 read); every other confirmed finding on it was applied — see work/.b020-findings.json."
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#79): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording"
   },
   {
    "id": "issian-partisan",
@@ -418,8 +418,8 @@
   },
   {
    "id": "haunted",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "A WG-vs-print question for this record sits in work/owner-questions.json open (batch-20 read); every other confirmed finding on it was applied — see work/.b020-findings.json."
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#83): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'"
   },
   {
    "id": "arcane-revolutionary",

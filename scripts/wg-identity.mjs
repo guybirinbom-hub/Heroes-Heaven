@@ -762,6 +762,70 @@ const contains = (set, name) => {
  * ⚠ Only for a difference verified against the printed text. Never a place to quiet a real gap.
  */
 const SETTLED_IDENTITIES = {
+  /* ---- BATCH 37 (lane S — the regate settles) -----------------------------------------------------
+   *
+   * TIME MAGE DEDICATION — four option titles for a tradition print works out from the character.
+   *
+   * Print (AoN feat-8480, Dark Archives (Remastered) pg. 184): *"You also gain time sense as an innate
+   * cantrip usable at will. This innate spell and your focus spells from the time mage archetype are of
+   * the same tradition as the spells you used to meet the archetype's prerequisites."* The prerequisite
+   * is *"You have a spellcasting class feature"*, so the tradition is already a fact about whoever
+   * qualified. WG asks it anyway: a four-branch `select "Select a Tradition"` whose branch titles are
+   * Arcane / Divine / Occult / Primal, each carrying `giveSpell INNATE` time sense and
+   * `defineCastingSource TIME_MAGE:::-:::<TRADITION>:::ATTRIBUTE_WIS`. Three of the four are illegal for
+   * any given character.
+   *
+   * Ours derives it instead of offering it: feats/time-mage-dedication `innateSpells [{spellId:
+   * 'time-sense', atWill:true, traditionFromCasting:true}]` (built in this batch), read at
+   * src/rules/build.ts:8351, so the innate cantrip takes the caster's own tradition and the focus spell
+   * `delay-consequence` keeps taking it as before. There is no `options` set on our side for their four
+   * titles to pair with — `ours=[(nothing)]` on the report line — because the answer is computed, not
+   * stored. Owner ruled 2026-09-10 (desk #57, standing rule R14): derive it, build no picker.
+   *
+   * ⚠ MEMBER SCOPE, NOT THE `options` BUCKET — the witness-to-ancient-battles trap. Their four titles
+   * are named one at a time, so a fifth option added to this row later still reports rather than being
+   * swallowed. ⚠ AND the `spells` bucket is untouched: their two giveSpells (time sense, delay
+   * consequence) already match ours and keep being compared, so a spell this dedication ought to hand
+   * over still reports. ⚠ The KINDS half of the same finding (`missing=[choice]`) is a different
+   * comparer and is settled separately in wg-diff's VERIFIED_EQUIVALENT; this entry cannot reach it.
+   * Adversarially confirmed under `--raw` (the registry's own bypass): all four titles come straight
+   * back as `options theirs-not-ours=[arcane, divine, occult, primal]`. Pinned in
+   * test/batch037-settles.test.ts.
+   */
+  // batch 037: time-mage-dedication#innate-tradition
+  'time-mage-dedication': ['arcane', 'divine', 'occult', 'primal'],
+
+  /*
+   * HAUNTING MEMORIES — ONE printed question, asked by them in two steps and by us in one.
+   *
+   * Print (AoN feat-7701, Shining Kingdoms pg. 122): *"When you make your daily preparations, you can
+   * either gain the expert proficiency rank in one skill in which you're untrained or raise your
+   * proficiency rank to master in one skill in which you're trained or better."* That is a single
+   * either/or. WG splits it into two `select`s (`node scripts/wg-show.mjs "Haunting Memories" --raw`):
+   * an outer CUSTOM one titled *"Untrained or Trained Skill?"* whose two branch titles are `Untrained`
+   * and `Trained`, each wrapping an inner FILTERED `"Select a Skill"` that adjusts a SKILL to E or M.
+   * Those two titles are the whole of their `options` set — they are the split itself, not content.
+   *
+   * Ours asks the same printed question once: feats/haunting-memories `choice {flag:'hauntingMemory',
+   * daily:true, kind:'array'}` with 32 options, "<Skill> → expert" gated `requiresSkillRank {max:
+   * 'untrained'}` and "<Skill> → master" gated `{min:'trained'}` — the same sixteen skills under the
+   * same two rank gates, flattened into one list so the legal answers are the ones shown. The comparer
+   * reports their two step labels against our 64 answer tokens (`acrobaticsexpert … masterthievery`),
+   * which is the shape of the question differing, not the content. Owner ruled 2026-09-10 (desk #128)
+   * and the batch built the missing half beside it: `grantsFeats ['haunting-memories-skill-feat']`, the
+   * second daily question print's next sentence calls for, capped at half the character's level.
+   *
+   * ⚠ MEMBER SCOPE, NOT THE `options` BUCKET. Both of their two titles are named one at a time rather
+   * than settling the bucket, so a THIRD option added to that select later still reports — which is the
+   * whole point after witness-to-ancient-battles, where a bucket settle hid ten spells to silence one
+   * spelling. ⚠ The `grants` bucket is untouched: their skill-feat `select optionType=ABILITY_BLOCK` is
+   * FILTERED and names nothing today, so anything they later name there still reports.
+   * Adversarially confirmed under `--raw` (the registry's own bypass): both titles come straight back as
+   * `options theirs-not-ours=[untrained, trained]`. Pinned in test/batch037-settles.test.ts.
+   */
+  // batch 037: haunting-memories#skill-feat-pick
+  'haunting-memories': ['untrained', 'trained'],
+
   /* ---- BATCH 37 (instruments-7) ------------------------------------------------------------------
    *
    * ECHO OF LOST MOMENTS — their 5th rung holds a RANK-1 SPELL. Ours holds the printed one.

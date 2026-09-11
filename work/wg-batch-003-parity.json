@@ -488,8 +488,8 @@
   },
   {
    "id": "fear-no-law-fear-no-one",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 3) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"Their encoding is a different ability from the one the book prints under this name. I searched the whole AoN mirror for any printed text matching 'success against a fear effect ...…\""
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#5): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording"
   },
   {
    "id": "summiting-dragonblood",
@@ -498,8 +498,8 @@
   },
   {
    "id": "animist-apparition-spellcasting",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 3) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"PRINTED (the Animist Spells per Day table, read from the AoN mirror C:\\wonderers guide\\aon-2e-archive\\data\\by-category\\class\\class-64.json, where each cell is \"prepared+apparition\"…\""
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#4): yes — Animist slot table: keep the app (matches the printed table row for row); nothing changes; close both. Guy: 'good' after asking which solution matches the written text best."
   }
  ]
 }

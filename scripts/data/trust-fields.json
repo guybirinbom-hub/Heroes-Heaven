@@ -1,5 +1,6 @@
 {
   "_": "WHY THIS FILE EXISTS. The trust gate (docs/trust-gate.md) is a DENYLIST: it may only ever blank a field path that is named here, so a generator bug fails safe (a record the generator never reaches keeps everything) instead of emptying the app. Seeded once, by hand, from the non-underscore field lists of OUR_KINDS (scripts/wg-diff.mjs:396-582) plus the nested container paths ourKindsOf walks (scripts/wg-diff.mjs:1216-1330), MINUS everything docs/trust-gate.md section 1 protects, MINUS OUR_KINDS._noCounterpart (scripts/wg-diff.mjs:582). Every path below was confirmed to occur on at least one record of the 8 WG-paired buckets in public/core.json on 2026-09-10; the count in each `why` is that measurement. Entries are PATHS, not bare field names, so a nested grant can be emptied without touching the option row that asks the question. `kinds` is the full kind list fieldToKinds gives the path: the path stays ON when ANY one of those kinds is in the record's theirKinds (docs/trust-gate-decisions.md decision 1 — ANY, not EVERY, because `innateSpells` answers spellcasting+spell and a WG row that encodes only `spell` HAS encoded the innate spell; the aeon stones are the case).",
+  "_reseeded": "2026-09-11, docs/trust-gate-decisions.md decision 5 (\"after the desk-fix batch lands, trust-fields.json is re-seeded and the guard re-run\"). Re-measured by the SAME rule as the original seed — every OUR_KINDS leaf x every container ourKindsOf walks, occurring on at least one record of the 8 paired buckets, minus the protected and _excluded sets. Result: 159 paths are carried now, 137 were already listed, ONE was new (`choice.options[].grant.whileActive`, carried by 4 class features — the four barbarian instincts — as 68 whileActive blocks; the sibling leaf entry's \"68 class features\" was a value count mislabelled as a record count and is corrected in the same pass), and NO listed path has stopped occurring. The three paths decision 5 names as desk-fix creations — `choice.options[].grant.grantsFeats`, `enhancement.grant.resistances`, `effectChoices[].options[].grant.grantedStrikes` — occur on NO record yet (measured 2026-09-11), so they stay what decision 5 allows them to be: `pending` approvals, not universe paths. `grantsItems[].whenChoice` (1 feat) and `resonant.spellNotes` (3 items) are carried now and are recorded under `_excluded` rather than added: the first has no leaf fieldToKinds names, the second is prose.",
   "_excluded": {
     "_": "Paths that a naive seed from OUR_KINDS would have produced and that are DELIBERATELY not in the universe. Recorded here rather than dropped silently, because a future reader will otherwise re-add them.",
     "zero-occurrence": {
@@ -22,7 +23,8 @@
     "prose": {
       "_": "Section 1: prose is not a mechanic. wg-diff already filters `note` out of `missing` (scripts/wg-diff.mjs:3369).",
       "note": "133 records",
-      "spellNotes": "130 records"
+      "spellNotes": "130 records",
+      "resonant.spellNotes": "the same prose one level down, on the aeon stone's slotted-in-a-wayfinder block (3 items). Recorded at the 2026-09-11 re-seed: `resonant` is a field of the 2026-09-11 item-held-spells rule, and this is the one path under it that the rule must NOT bring back, because prose was never stripped in the first place"
     },
     "chassis": {
       "_": "Section 1: item/weapon/ancestry chassis is never touched. Each of these was checked against public/core.json and occurs ONLY as a printed stat-block line, never as a granted benefit.",
@@ -47,7 +49,7 @@
     },
     "leaf-not-in-fieldToKinds": {
       "_": "Nested paths that occur in core.json but whose leaf no OUR_KINDS list names, so no WG kind maps to them and the per-path rule has nothing to ask. Not in the universe; recorded so the next reader does not think they were missed.",
-      "paths": ["alternateAttributes.whenChoice", "choice.options[].grant.whileActive[].minLevel", "choice.options[].grant.whileActive[].state", "effectChoices[].options[].grant.strikeDamage", "whileActive[].minLevel", "whileActive[].state"]
+      "paths": ["alternateAttributes.whenChoice", "choice.options[].grant.whileActive[].minLevel", "choice.options[].grant.whileActive[].state", "effectChoices[].options[].grant.strikeDamage", "grantsItems[].whenChoice", "whileActive[].minLevel", "whileActive[].state"]
     }
   },
   "paths": [
@@ -70,7 +72,8 @@
     { "path": "choice.options[].grant.resistances", "kinds": ["defense"], "why": "a resistance an option hands over; 20 records" },
     { "path": "choice.options[].grant.senses", "kinds": ["sense"], "why": "a sense an option hands over; 12 feats" },
     { "path": "choice.options[].grant.skills", "kinds": ["skill"], "why": "a skill an option trains; 132 records" },
-    { "path": "choice.options[].grant.whileActive[].resistances", "kinds": ["defense"], "why": "Raging Resistance's picked type, one level deeper; 68 class features" },
+    { "path": "choice.options[].grant.whileActive", "kinds": ["conditional"], "why": "the whole while-a-state-is-on block inside an option, the nested twin of top-level `whileActive`; 68 blocks on 4 class features (the barbarian instincts dragon / elemental / giant / superstition — scripts/wg-diff.mjs:1334 names the same four). RE-SEEDED 2026-09-11 (docs/trust-gate-decisions.md decision 5): the leaf `…whileActive[].resistances` was seeded and the CONTAINER was missed, so the gate could take the resistance and not the block that gates it" },
+    { "path": "choice.options[].grant.whileActive[].resistances", "kinds": ["defense"], "why": "Raging Resistance's picked type, one level deeper; 68 blocks on 4 class features (corrected 2026-09-11 — the 2026-09-10 seed wrote the VALUE count as a record count; the carriers are the four barbarian instincts, scripts/wg-diff.mjs:1334)" },
     { "path": "classDc", "kinds": ["classDc"], "why": "a class's own DC progression; 29 classes (chassis bucket, all-on today)" },
     { "path": "classDcGrant", "kinds": ["classDc"], "why": "an archetype training you in another class's DC; 17 feats" },
     { "path": "combinationMeleeForm", "kinds": ["grantsItem"], "why": "a combination weapon's other usage; 19 items" },

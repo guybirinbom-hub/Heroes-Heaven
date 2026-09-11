@@ -136,6 +136,8 @@ work/settle-audit.json
 # this run needed is not.
 work/.b*-run.json
 work/.b*-run.log
+# the cut stage's open-batch marker (wg-batch-run.mjs writes it, wg-batch-commit.mjs removes it after the commit lands)
+work/.b*-open
 work/.b*-gaps.json
 work/.b*-queue.json
 work/.b*-apply.json

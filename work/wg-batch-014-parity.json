@@ -483,23 +483,23 @@
   },
   {
    "id": "devils-eye",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 14) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"Printed: \"You also become an expert in Legal Lore … At 7th level you become a master of Legal Lore, and at 15th level you become legendary in Legal Lore.\" THEIR encoding: a single …\""
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#38): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'"
   },
   {
    "id": "hardened-chassis",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 14) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"A fix was proposed and REFUSED on review because it picks a side in a WG-vs-print disagreement. The reviewer's reasoning: REFUTED ON CHECK 3 (WG vs PRINT). The gap the finder descr…\""
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#40): yes — Build the missing piece: #40 Hardened Chassis Enhancement computed, switched on only by an augmentation feat naming it (never asked of every automaton); #73 Armiger's Prot..."
   },
   {
    "id": "gunslinger-weapon-mastery",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 14) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"Printed: \"Your proficiency rank increases to master with simple and martial firearms and crossbows. Your proficiency rank for ADVANCED firearms and crossbows, simple weapons, marti…\""
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#39): yes — Keep the printed scope. No change on 39/41/42/45/107/115/130. FIX #7 Locate Lawbreakers: rank 5 at level 14 only for Order of the Gate members (read the stored order). FIX..."
   },
   {
    "id": "weapon-expertise",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 14) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"Printed splits the classes explicitly: martial weapons are named only for Champion/Exemplar/Investigator/Magus, Guardian, Swashbuckler and Thaumaturge; Druid, Kineticist, Oracle, P…\""
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#41): yes — Keep the printed scope. No change on 39/41/42/45/107/115/130. FIX #7 Locate Lawbreakers: rank 5 at level 14 only for Order of the Gate members (read the stored order). FIX..."
   }
  ]
 }

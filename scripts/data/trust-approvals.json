@@ -4,6 +4,22 @@
  "_fieldPaths": "⚠ scripts/data/trust-fields.json (the strippable universe, plan §2a) DID NOT EXIST when this file was written — lane A had not produced it. Every path below is therefore taken from the OUR_KINDS field lists at scripts/wg-diff.mjs:396-582 and the nested container paths ourKindsOf walks at scripts/wg-diff.mjs:1216-1330 (`choice.options[].grant.*`, `effectChoices[].options[].grant.*`, `whileActive[].*`, `enhancement.grant.*`, `resonant.*`, `passiveEffects.*`). When trust-fields.json lands, re-check every path here against it.",
  "_pending": "\"pending\": true means the RECORD does not exist in public/core.json yet — the ruling creates it, and `record` is the intended id. A field named in `fields` that the record does not carry yet is normal and expected: the approval is written BEFORE the desk fix so the fix is live the moment it lands (docs/trust-gate.md:327-329).",
  "_multipleRows": "A desk number may own MORE THAN ONE approvals row when one ruling touches several records (the quah emblem family, the six kitsune/nagaji feats, the magus/summoner move). What must be unique is the DISPOSITION: no number appears in two of the four lists. test/trust-approvals.test.ts pins exactly that.",
+ "_rules": "`rules` is the FIFTH disposition, and the only one that is not per desk number. A rule is a WHOLE-CLASS approval the owner gave on 2026-09-11 when he read the census and saw what the gate had taken: not \"turn this path on for this record\" but \"this kind of thing is trusted wherever it occurs\". The generator (scripts/trust-ledger.mjs) implements each rule by NAME as a trust source that runs after the WG-encoded kinds — a rule name it does not know is a hard refusal, so a typo here cannot silently approve nothing. `rule` is the name; `fields` (where a rule has one) are trust-fields paths, their bare leaf, or a container prefix (`resonant` covers `resonant.innateSpells`); `why` is the owner's words; `date` is the day he said them. scripts/trust-ledger-check.mjs pins both halves: every rule named here is one the generator knows, and nothing a rule turns on is left on the OFF list.",
+ "_alsoRecords": "`alsoRecords` on a rule is the records the owner NAMED on 2026-09-11 that the rule's own derivation cannot reach. Deadly Simplicity is the case and the reason it exists: he listed it among the core class features, and it is feats/deadly-simplicity (feat-4642, a class FEAT), so the class-owned-features walk — which starts at the class record's feature table — can never see it. Each entry is a `bucket/id` key; the generator treats it exactly as it treats a record the rule derived (every strippable path stays ON and no lane is gated), and scripts/trust-ledger-check.mjs pins that it names a real record and is left fully on. It is a LIST OF NAMES, not a second derivation: nothing goes in it that the owner did not say out loud.",
+ "rules": [
+  {
+   "rule": "class-owned-features",
+   "alsoRecords": ["feats/deadly-simplicity"],
+   "why": "Guy, 2026-09-11, verbatim (work/desk-answers-2026-09-10.json, key trust_gate_directive_2026-09-10.decided_2026-09-11[0]): \"Yes, switch them back on. I add the core class features and the item-held spells to the approvals list. A rogue gets sneak attack dice again, a barbarian gets Rage, a staff offers its spells. Everything else stays dark as ruled.\" A class feature a class's OWN progression hands over is the class — Sneak Attack, Rage, Hunt Prey — and a character who does not get it is not a rogue, a barbarian or a ranger. The rule covers every classFeatures record reachable from a class record the way the app reaches it (src/rules/derive.ts ownedFeatureIds): the level-table `features[]` entries and their `-<classId>` / `-<subclassId>` variants, the subclass options and the `featureIds` they hand over, the `extraChoices` options, and everything those reach through `grantsClassFeatures`. Every strippable path on such a record stays ON, and its hard-coded engine lane, star and grant lanes are not gated. `alsoRecords` carries the one he named that the walk cannot reach — Deadly Simplicity is a class FEAT, not a classFeatures record (see `_alsoRecords`).",
+   "date": "2026-09-11"
+  },
+  {
+   "rule": "item-held-spells",
+   "fields": ["heldSpells", "spellSlot", "innateSpells", "resonant"],
+   "why": "Guy, 2026-09-11, verbatim (work/desk-answers-2026-09-10.json, key trust_gate_directive_2026-09-10.decided_2026-09-11[0]): \"Yes, switch them back on. I add the core class features and the item-held spells to the approvals list. A rogue gets sneak attack dice again, a barbarian gets Rage, a staff offers its spells. Everything else stays dark as ruled.\" A staff, wand, scroll or aeon stone whose spells are dark is an item with nothing in it — the spell list IS the item. These four fields stay ON on every items record: `heldSpells` (a staff's or wand's list), `spellSlot` (the scroll/wand single spell), `innateSpells` (the item's own cast-it-yourself spell, wherever it is nested), and `resonant` (the aeon stone's second spell, live only while the stone is slotted in a wayfinder). Nothing else on an item is touched by this rule.",
+   "date": "2026-09-11"
+  }
+ ],
  "_source": "Rulings: work/desk-answers-2026-09-10.json (the `answers` array, 128 numbers) and work/desk-brief-2026-09-10.json (the `entries` array, per-number id/title/recommendation/ifYes). Roster of desk numbers: work/owner-questions.json (open 128 + deferred 13 + ruled 6 + authorisedExceptions 3 = 150). WG verdicts quoted in `why`: work/.wg-diff-all.json.",
 
  "approvals": [
@@ -445,6 +461,8 @@
   { "n": 152, "id": "empty-description-marker-line", "status": "open" },
   { "n": 153, "id": "timewracked-dedication-speed-clause", "status": "open" },
   { "n": 154, "id": "speed-plural-while-a-state-is-on", "status": "open" },
-  { "n": 155, "id": "flexible-spellcaster-book-casters", "status": "open" }
+  { "n": 155, "id": "flexible-spellcaster-book-casters", "status": "open" },
+  { "n": 156, "id": null, "status": "authorisedException" },
+  { "n": 157, "id": null, "status": "authorisedException" }
  ]
 }

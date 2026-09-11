@@ -1384,6 +1384,41 @@ function ourAssertions(id, rec) {
  * and the disagreement is recorded rather than adopted.
  */
 const SETTLED_VALUES = {
+  /* ---- BATCH 37 (lane S — the regate settles) -----------------------------------------------------
+   *
+   * REVERSE ENGINEER — THEIR +2 IS THE 2021 PRINTING. The current entry carries no number at all.
+   *
+   * Print (AoN feat-3053, Guns & Gears **Remastered** pg. 25 — this record's own aonId): *"You are
+   * incredibly skilled at reverse engineering items to learn their formulas or disassembling them just
+   * to disable them. If you are using the Critical Crafting alternate rules and you get a critical
+   * success on your Crafting check to reverse engineer an item, you can reassemble the original item
+   * with one of the critical success crafting benefits (as determined by your GM.) Furthermore, you can
+   * use Crafting instead of Thievery to Disable a Device or Pick a Lock."* No bonus appears anywhere in
+   * it. The +2 lives ONLY in the superseded printing, AoN feat-8555 (Guns & Gears pg. 26): *"You gain a
+   * +2 circumstance bonus to Crafting checks to reverse engineer a formula from an item."* — a
+   * different entry, with a different prerequisite (expert in Crafting against the remaster's trained).
+   * WG encodes feat-8555's number on the record whose text is feat-3053's.
+   *
+   * Ours carries the whole remastered mechanic and no number: feats/reverse-engineer
+   * `skillSubstitutions` puts Crafting in Thievery's place for Disable a Device and Pick a Lock, which
+   * src/rules/explain.ts:648 surfaces as a note on the Thievery rows, and the Critical Crafting clause
+   * is description text. The +2 star this app used to ship was DELETED in this batch —
+   * src/rules/situationalBonuses.ts:559 now holds the deletion note where the row was, and names the
+   * record in apply-situational-lane.mjs's exclusion list so the lane cannot re-emit it. Owner ruled
+   * 2026-09-10 (desk #15, "drop the +2 Crafting star"), under standing rule R12: the 2025 printing wins.
+   *
+   * ⚠ BLAST RADIUS, MEASURED. ONE key, this record only — and it is the record's ENTIRE numeric content,
+   * the same shape as curse-of-turbulent-moments below. `node scripts/wg-values.mjs --ids
+   * reverse-engineer --verbose` prints `ours(all): (none)`: ours asserts no value on this row at all and
+   * theirs asserts exactly this one, so there is nothing else here for the entry to silence, and a
+   * future WG number on any other track of this record still reports. Adversarially confirmed under
+   * `--raw` (the registry's own bypass): the row comes straight back as `MISSING skill|crafting
+   * theirs=2 ours=(nothing)`, so the settle is what silences it and is not redundant beside a carrier
+   * this comparer could already read. Pinned in test/batch037-settles.test.ts.
+   */
+  // batch 037: reverse-engineer#crafting-star
+  'reverse-engineer': ['skill|crafting'],
+
   /* ---- BATCH 37 (instruments-7) ------------------------------------------------------------------
    *
    * CURSE OF TURBULENT MOMENTS — sixteen flat rows for a penalty that applies in two narrow places.

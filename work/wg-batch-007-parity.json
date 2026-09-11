@@ -488,18 +488,18 @@
   },
   {
    "id": "firework-technician-dedication",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 7) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"A fix was proposed and REFUSED on review because it picks a side in a WG-vs-print disagreement. The reviewer's reasoning: THE PREMISE IS REAL, THE ROW IS NOT THEIRS. I confirmed th…\""
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#13): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording"
   },
   {
    "id": "hellknight-dedication",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 7) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"Their encoding and the printed text disagree in three places. Printed (public/core-descriptions.json feats.hellknight-dedication, Hellfire Dispatches): \"You gain resistance to ment…\""
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#14): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording"
   },
   {
    "id": "reverse-engineer",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 7) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"The printed sentence, verbatim from the Remastered Guns & Gears text in the mirror (feat-3053): \"You are incredibly skilled at reverse engineering items to learn their formulas or …\""
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#15): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording"
   }
  ]
 }

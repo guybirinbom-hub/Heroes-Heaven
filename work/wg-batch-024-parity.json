@@ -13,8 +13,8 @@
   },
   {
    "id": "divine-font",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "ruling #103 (font rank at 19–20: WG says 10, our Miraculous-Spell reading says 9). The seeded \"font slots missing\" question was REFUTED — they live on entry.font and render; the at-rank popup fix (SpellsTab) shipped besides. Ledger: work/.b024-findings.json."
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#103): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'"
   },
   {
    "id": "aiuvarin",

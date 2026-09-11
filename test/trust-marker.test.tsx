@@ -117,8 +117,20 @@ describe('the surfaces that render it', () => {
     const row = featEntries(ch, con).find((e) => trustRefOf(e).id === 'ruffian');
     expect(row?.name).toBe(con.classFeatures['ruffian'].name);
     expect(trustRefOf(row!)).toEqual({ bucket: 'classFeatures', id: 'ruffian' });
-    // …and it is one of the records the shipped ledger actually turns off.
-    expect(Object.keys(LEDGER.records)).toContain('classFeatures/ruffian');
+    /*
+     * …and until 2026-09-11 `ruffian` was also one of the records the shipped ledger turned off. It is
+     * not any more, and that is a RULING rather than a break: desk #157 (work/owner-questions.json,
+     * authorisedExceptions) switched core class features back on — a class with its features off is not
+     * a character — so every subclass option in public/core.json is now fully trusted, and the 28
+     * classFeatures the ledger still gates are the archetype/subsystem records no class progression
+     * owns (the deviant classifications, the witch lessons, the thaumaturge initiate benefits).
+     *
+     * That leaves this line one thing to prove, which is the thing it was always for: the key
+     * trustRefOf builds is the key the ledger is keyed by. So it is asserted through trustRefOf's own
+     * bucket against a record the ledger really holds, and still fails the moment the two drift.
+     */
+    expect(Object.keys(LEDGER.records)).not.toContain('classFeatures/ruffian');
+    expect(Object.keys(LEDGER.records)).toContain(`${trustRefOf(row!).bucket}/lesson-of-vows`);
   });
 
   /* Rendering the component proves the component. Only rendering a SURFACE proves the surface still

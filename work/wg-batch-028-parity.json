@@ -83,8 +83,8 @@
   },
   {
    "id": "summoner",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "WG-vs-print — on the Rulings Desk (batch 28)"
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#120): yes — Guy: 'we need to use the newest sources we have' -> move magus + summoner to the 2026 Impossible Magic printing whole: full slot tables (lower ranks kept), archetype basic..."
   },
   {
    "id": "exemplar",
@@ -108,8 +108,8 @@
   },
   {
    "id": "magus",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "WG-vs-print — on the Rulings Desk (batch 28)"
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#104): yes — Guy: 'we need to use the newest sources we have' -> move magus + summoner to the 2026 Impossible Magic printing whole: full slot tables (lower ranks kept), archetype basic..."
   },
   {
    "id": "oracle",
@@ -118,8 +118,8 @@
   },
   {
    "id": "animist",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "WG-vs-print — on the Rulings Desk (batch 28)"
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#105): yes — Animist slot table: keep the app (matches the printed table row for row); nothing changes; close both. Guy: 'good' after asking which solution matches the written text best."
   },
   {
    "id": "inventor",

@@ -483,23 +483,23 @@
   },
   {
    "id": "hardwood-armor-armor",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 10) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"Their encoding and the printed text disagree. RAN `node scripts/wg-item.mjs \"Hardwood Armor\"` - their item id 13154, level 0, the meta_data above, unselectable: true, and the three…\""
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#26): yes — Armor in Earth + Hardwood Armor: attach the existing best-armour-proficiency borrowing (Sentinel Dedication / Mountain Skin lane) to the GRANTED armour item (medium and he..."
   },
   {
    "id": "favored-terrain",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 10) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"Their encoding appears to contradict the printed text and I did not decide it. PRINTED: 'When in that terrain, you can ignore the effects of non-magical difficult terrain. If you h…\""
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#24): DECIDED BY FABLE from the AoN pages: keep the app (star / mode), nothing changes"
   },
   {
    "id": "hallowed-necromancer-dedication",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 10) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"Printed, verbatim: \"Focus spells from the hallowed necromancer archetype have the same tradition as your spell slots.\" Their encoding fixes the tradition to divine and the attribut…\""
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#25): DECIDED BY FABLE from the AoN pages: keep the app, nothing changes"
   },
   {
    "id": "psychic-dedication",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 10) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"The printed Dedication text (full description read from public/core-descriptions.json, not the packet) never mentions a focus pool. The pool belongs to Psi Development, the 6th-lev…\""
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#27): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'"
   }
  ]
 }

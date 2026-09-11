@@ -67,6 +67,9 @@ for (const [batch, list] of Object.entries(byBatch)) {
     else doc.records.push(row);
     console.log(`  ${path}: ${e.id} → ${verdict}`);
   }
-  if (WRITE) writeFileSync(full, JSON.stringify(doc, null, 1) + '\n');
+  /* Follow the file's own last byte rather than imposing one: scripts/wg-batch-close.mjs writes these
+   * same files and ends at `}`, so a hard `+ '\n'` here flipped the shape of every file the bulk pass
+   * touched and turned the plan-E "re-closing batch 029 changes nothing" acceptance red. */
+  if (WRITE) writeFileSync(full, JSON.stringify(doc, null, 1) + (existsSync(full) && readFileSync(full, 'utf8').endsWith('\n') ? '\n' : ''));
 }
 if (!WRITE) console.log('\n(report only — pass --write)');

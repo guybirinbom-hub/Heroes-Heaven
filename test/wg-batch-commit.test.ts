@@ -22,7 +22,7 @@ import { CHILD_TIMEOUT } from './_timeouts';
  * several times slower under the full suite. See test/_timeouts.ts. */
 vi.setConfig({ testTimeout: CHILD_TIMEOUT, hookTimeout: CHILD_TIMEOUT });
 import { execFileSync } from 'node:child_process';
-import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, existsSync, rmSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { tmpdir } from 'node:os';
 
@@ -34,14 +34,23 @@ const MESSAGE =
   'hundred characters has never said what actually changed.\n';
 
 type Run = { code: number; out: string };
-function commit(root: string, ...args: string[]): Run {
+/**
+ * The env is set EXPLICITLY on both sides (2026-09-11): the script only commits under
+ * HH_ORCHESTRATOR=1, and the orchestrator's own shell has that set — so a test that inherited the
+ * parent env would pass for her and fail for everyone else, or the reverse.
+ */
+function run(root: string, args: string[], orchestrator: boolean): Run {
+  const env = { ...process.env };
+  if (orchestrator) env.HH_ORCHESTRATOR = '1';
+  else delete env.HH_ORCHESTRATOR;
   try {
-    return { code: 0, out: execFileSync(process.execPath, [SCRIPT, '--root', root, ...args], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }) };
+    return { code: 0, out: execFileSync(process.execPath, [SCRIPT, '--root', root, ...args], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], env }) };
   } catch (e) {
     const err = e as { status: number; stdout: string; stderr: string };
     return { code: err.status ?? 1, out: `${err.stdout ?? ''}${err.stderr ?? ''}` };
   }
 }
+const commit = (root: string, ...args: string[]): Run => run(root, args, true);
 const git = (root: string, ...a: string[]) => execFileSync('git', a, { cwd: root, encoding: 'utf8' });
 
 const TRACKED_AT_HEAD = [
@@ -306,6 +315,96 @@ describe('wg-batch-commit stages by explicit path or refuses', { timeout: 60_000
     expect(r.out).toContain('the three data artefacts always move together, dirty at start or not');
     for (const f of ['scripts/data/effect-backfill.json', 'public/core.json']) expect(r.out).toMatch(new RegExp(`would stage:[\\s\\S]*${f.replace(/[./]/g, '\\$&')}`));
     rmSync(root, { recursive: true, force: true });
+  });
+
+  /*
+   * THE 2026-09-11 INCIDENT. A pipeline agent ran this script mid-batch: f1da70a landed with two gates
+   * still red and without the batch's parity/residual artefacts. Every agent prompt already forbade git
+   * writes and the agent had read it, so the guard had to stop being a sentence: the commit now needs
+   * HH_ORCHESTRATOR=1, which only the orchestrator's own shell sets (no prompt names it, no script here
+   * sets it). Reading the plan is not committing, so --dry-run stays open.
+   */
+  it('REFUSES to commit without HH_ORCHESTRATOR=1, staging nothing', () => {
+    const root = repo();
+    const r = run(root, ['--batch', '900'], false);
+    expect(r.code).toBe(2);
+    expect(r.out).toContain('HH_ORCHESTRATOR');
+    expect(r.out).toContain('2026-09-11');
+    expect(git(root, 'diff', '--cached', '--name-only')).toBe('');
+    expect(git(root, 'rev-list', '--count', 'HEAD').trim()).toBe('1');
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  it('--dry-run plans without HH_ORCHESTRATOR — it is read-only', () => {
+    const root = repo();
+    const r = run(root, ['--batch', '900', '--dry-run'], false);
+    expect(r.code).toBe(0);
+    expect(r.out).toContain('would stage:');
+    expect(git(root, 'diff', '--cached', '--name-only')).toBe('');
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  /*
+   * The same incident's second half: `git status` compares the working tree with HEAD, and the mid-batch
+   * commit had already put the batch's prose INTO HEAD — so the prose rule ("specs carry prose but
+   * core-descriptions.json did not change") refused the close-out commit over a file the batch HAD
+   * changed. Every change-since test now measures from the batch-start commit in work/.bNNN-cut.json.
+   */
+  it('measures "did core-descriptions.json change" against the batch START, not HEAD', () => {
+    const root = repo({
+      'work/.b900-rows-items.json': JSON.stringify({
+        findings: [{ id: 'alpha', backfillRows: [{ category: 'feats', id: 'alpha', field: 'description', value: 'the printed text' }] }],
+      }),
+    });
+    const startSha = git(root, 'rev-parse', 'HEAD').trim();
+    writeFileSync(join(root, 'work/.b900-cut.json'), JSON.stringify({ batch: '900', startSha }));
+    git(root, 'add', '--', 'public/core-descriptions.json');
+    git(root, 'commit', '-qm', 'the mid-batch commit: HEAD now carries this batch prose');
+    expect(git(root, 'status', '--porcelain')).not.toContain('public/core-descriptions.json');
+
+    const r = commit(root, '--batch', '900', '--dry-run');
+    expect(r.code).toBe(0);
+    expect(r.out).not.toContain('carry prose');
+    expect(r.out).toContain(`batch-start commit ${startSha.slice(0, 8)}`);
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  /* The other half of that rule, and the one that fails SILENTLY if anyone loosens the catch: with an
+   * unreachable start commit the script cannot answer "did this batch change core-descriptions.json"
+   * at all, and falling back to the working tree would be the exact pre-2026-09-11 behaviour wearing
+   * the new code's clothes. It must refuse and name the sha instead. */
+  it('REFUSES when the recorded batch-start commit is not in this repo', () => {
+    const root = repo({ 'work/.b900-cut.json': JSON.stringify({ batch: '900', startSha: 'dead0000beef1111dead0000beef1111dead0000' }) });
+    const r = commit(root, '--batch', '900', '--dry-run');
+    expect(r.code).toBe(1);
+    expect(r.out).toContain('dead0000beef');
+    expect(r.out).toContain('cannot be answered');
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  /*
+   * THE OPEN MARKER — the tripwire that does not depend on anyone reading a prompt. The driver's cut
+   * stage writes work/.bNNN-open; while it exists the batch is open, so the driver's baseline and close
+   * stages print a loud MID-BATCH COMMIT line whenever HEAD has moved off the cut. This script is the
+   * only thing that removes it, and only after the commit it guards actually landed.
+   */
+  it('removes the open marker only after a successful commit', () => {
+    const root = repo({ 'work/.b900-open': 'batch 900 is open until it is committed\n' });
+    const marker = join(root, 'work/.b900-open');
+    expect(commit(root, '--batch', '900', '--dry-run').code).toBe(0);
+    expect(existsSync(marker)).toBe(true);                        // a plan removes nothing
+    expect(run(root, ['--batch', '900'], false).code).toBe(2);
+    expect(existsSync(marker)).toBe(true);                        // a refusal removes nothing
+    expect(commit(root, '--batch', '900').code).toBe(0);
+    expect(existsSync(marker)).toBe(false);
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  /* The marker's other half is in the driver, which cannot cut a batch against a fixture repo (the cut
+   * stage reads the real mirror and the real eligible list). Pinned across the file boundary instead:
+   * delete the write and this test names the contract that broke. */
+  it('the driver cut stage writes the open marker this script removes', () => {
+    expect(readFileSync(join(__dirname, '..', 'scripts/wg-batch-run.mjs'), 'utf8')).toMatch(/write\(P\('open'\)/);
   });
 
   it('REFUSES when the batch has changed nothing at all', () => {

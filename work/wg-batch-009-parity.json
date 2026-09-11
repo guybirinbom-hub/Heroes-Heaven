@@ -488,18 +488,18 @@
   },
   {
    "id": "shadowcaster-dedication",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 9) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"Printed sentence: \"Your domain spells from the shadowcaster archetype are of the same tradition as the spells you used to meet the shadowcaster archetype's prerequisites.\" The prer…\""
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#22): DECIDED BY FABLE from the AoN pages: keep the app, nothing changes"
   },
   {
    "id": "clawdancer-dedication",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 9) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"A fix was proposed and REFUSED on review because it picks a side in a WG-vs-print disagreement. The reviewer: REFUTED — this fix settles a WG-vs-printed-text contradiction by itsel…\""
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#21): DECIDED BY FABLE from the page (feat-5436)"
   },
   {
    "id": "soul-warden-dedication",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 9) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"Printed says only \"You're trained in divine spell attack rolls and spell DCs. Your key spellcasting ability for these spells is Wisdom\" — it never grants a later increase. I resolv…\""
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#23): yes — Innate spells: trained, expert at 12th by the general rule; the app already does it on both (#20 keeps its single narrowed picker). Guy: 'keep the app on both, nothing cha..."
   }
  ]
 }

@@ -179,7 +179,120 @@ if (!existsSync(R(DESK))) {
     `${deskNumbers.length} answered${none.length ? ` — ${none.length} with none: ${some(none)}` : ''}${twice.length ? ` — ${twice.length} filed twice: ${some(twice)}` : ''}`);
 }
 
-/* ---- 8. regenerate and diff (the half a clean clone skips) --------------------------------------
+/* ---- 8. every whole-class rule is one the generator implements ----------------------------------
+ * The 2026-09-11 rules (`rules` in trust-approvals.json) are the owner's *"switch them back on"* —
+ * "a rogue gets sneak attack dice again, a barbarian gets Rage, a staff offers its spells". They are
+ * matched by NAME in scripts/trust-ledger.mjs, so a renamed or misspelt rule turns nothing back on.
+ * The generator itself refuses on an unknown name; this repeats the question from the tracked side,
+ * where a clean clone can ask it without the comparer input the generator needs.
+ *
+ * RULE_NAMES is read TEXTUALLY for the same reason OUR_KINDS is above: importing the generator runs
+ * it, and running it needs work/.wg-diff-all.json. */
+{
+  const src = readFileSync(R('scripts/trust-ledger.mjs'), 'utf8');
+  const m = /^const RULE_NAMES = \[([^\]]*)\];/m.exec(src);
+  const known = new Set(m ? [...m[1].matchAll(/'([^']+)'/g)].map((x) => x[1]) : []);
+  const named = (approvals.rules ?? []).map((r) => r?.rule);
+  if (!m) {
+    check('every trust-approvals rule is one the generator implements', false, 'scripts/trust-ledger.mjs has no top-level `const RULE_NAMES = [...]` — the rule names cannot be checked');
+  } else {
+    const unknown = named.filter((r) => !known.has(r));
+    check('every trust-approvals rule is one the generator implements', unknown.length === 0,
+      `${named.length} rule(s): ${named.join(', ') || 'none'}${unknown.length ? ` — ${unknown.length} the generator has never heard of: ${some(unknown)}` : ''}`);
+  }
+}
+
+/* ---- 9. what the rules turn on is actually on ---------------------------------------------------
+ * A rule that is listed and does nothing is the silent failure of this whole file: the census would
+ * still print, the ledger would still be valid, and the rogue would still be dark. So the two rules
+ * are asserted from the OTHER end — against the shipped OFF list, not against the generator's own
+ * bookkeeping.
+ *
+ * ⚠ The class-owned walk below is a DELIBERATE SECOND COPY of the one in scripts/trust-ledger.mjs,
+ * for the same reason FEATGRANT_KEY_KINDS is copied between wg-diff.mjs and the generator: a guard
+ * that asks the generator for its own answer cannot catch the generator getting it wrong. Check 10
+ * catches the two copies drifting, because a changed derivation changes the ledger bytes. */
+{
+  const off = ledger.records ?? {};
+  if ((approvals.rules ?? []).some((r) => r?.rule === 'class-owned-features')) {
+    const owned = new Set();
+    const add = (id) => { if (id && core.classFeatures?.[id]) owned.add(id); };
+    for (const cls of Object.values(core.classes ?? {})) {
+      const subIds = (cls.subclass?.options ?? []).map((o) => o.id);
+      for (const f of cls.features ?? []) {
+        add(f.featureId);
+        add(`${f.featureId}-${cls.id}`);
+        for (const s of subIds) add(`${f.featureId}-${s}`);
+      }
+      for (const o of cls.subclass?.options ?? []) {
+        add(o.id);
+        for (const e of o.featureIds ?? []) add(typeof e === 'string' ? e : e?.id);
+      }
+      for (const g of cls.extraChoices ?? []) for (const o of g.options ?? []) add(o.id);
+    }
+    for (const stack = [...owned]; stack.length;) {
+      for (const g of core.classFeatures[stack.pop()]?.grantsClassFeatures ?? []) {
+        if (core.classFeatures[g] && !owned.has(g)) { owned.add(g); stack.push(g); }
+      }
+    }
+    const dark = Object.keys(off).filter((k) => k.startsWith('classFeatures/') && owned.has(k.slice('classFeatures/'.length)));
+    /* …and the hard-coded lanes, which is where Sneak Attack's dice and Hunt Prey actually live: a
+     * record with no OFF path can still have its engine lane gated, and then the rule bought nothing.
+     * ALL FIVE lanes, not the three the rule visibly moved: `kindOn` answers for every kind, so a
+     * class-owned record left on `modes` or `stances` would be the same bug with a quieter symptom
+     * (the kinetic-gate auras and the deviant/curse modes are carried by class-owned features, and
+     * 18 of them came off `modes` when the rule landed). Both are 0 today; unasserted is how they
+     * would come back. */
+    const lanes = [
+      ...(ledger.lanes?.engine ?? []).map((id) => `engine/${id}`),
+      ...(ledger.lanes?.situational ?? []).map((id) => `situational/${id}`),
+      ...(ledger.lanes?.modes ?? []).map((id) => `modes/${id}`),
+      ...(ledger.lanes?.stances ?? []).map((id) => `stances/${id}`),
+      ...Object.keys(ledger.lanes?.featGrants ?? {}).map((id) => `featGrants/${id}`),
+    ].filter((k) => owned.has(k.split('/')[1]));
+    check('no class-owned class feature is on the OFF list', dark.length === 0 && lanes.length === 0,
+      `${owned.size} class-owned features${dark.length ? ` — ${dark.length} with off paths: ${some(dark)}` : ''}${lanes.length ? ` — ${lanes.length} still lane-gated: ${some(lanes)}` : ''}`);
+    /* …and not vacuously: the three the owner named by hand. */
+    const named = ['sneak-attack', 'rage', 'hunt-prey'].filter((id) => !owned.has(id));
+    check('the features the owner named are class-owned', named.length === 0, named.length ? `not derived: ${some(named)}` : 'sneak-attack, rage, hunt-prey');
+  }
+  const itemRule = (approvals.rules ?? []).find((r) => r?.rule === 'item-held-spells');
+  if (itemRule) {
+    const onPath = (p) => (itemRule.fields ?? []).some((f) => p === f || p.endsWith(`.${f}`) || p.startsWith(`${f}.`));
+    const dark = Object.entries(off).filter(([k]) => k.startsWith('items/')).flatMap(([k, ps]) => ps.filter(onPath).map((p) => `${k}: ${p}`));
+    const carriers = Object.values(core.items ?? {}).filter((r) => r?.heldSpells || r?.spellSlot || r?.innateSpells || r?.resonant).length;
+    check('no item-held-spell path is on the OFF list', dark.length === 0,
+      dark.length ? some(dark) : `${itemRule.fields?.join(', ')} across ${carriers} items`);
+  }
+}
+
+/* ---- 9b. the records a rule NAMES BY HAND ------------------------------------------------------
+ * `alsoRecords` is the escape hatch for a record the owner named that a rule's derivation cannot
+ * reach — Deadly Simplicity is a class FEAT (feats/deadly-simplicity, feat-4642), so the class-owned
+ * walk, which starts at the class feature table, never sees it. Its failure mode is the quiet one: a
+ * typo'd key, or a generator that reads the list and does nothing with it, leaves the record exactly
+ * as dark as before while the file says it was turned on. So it is asserted against the SHIPPED
+ * ledger — real record, no OFF path, on no lane. */
+{
+  const named = (approvals.rules ?? []).flatMap((r) => (r.alsoRecords ?? []).map((rec) => [r.rule, rec]));
+  if (named.length) {
+    const laneIds = new Set([
+      ...(ledger.lanes?.engine ?? []), ...(ledger.lanes?.situational ?? []),
+      ...(ledger.lanes?.modes ?? []), ...(ledger.lanes?.stances ?? []),
+      ...Object.keys(ledger.lanes?.featGrants ?? {}),
+    ]);
+    const bad = named
+      .filter(([, rec]) => {
+        const [bucket, id] = String(rec).split('/');
+        return !core[bucket]?.[id] || (ledger.records ?? {})[rec] || laneIds.has(id);
+      })
+      .map(([rule, rec]) => `${rule}: ${rec}`);
+    check('every rule `alsoRecords` entry is a real record with nothing switched off', bad.length === 0,
+      bad.length ? some(bad) : named.map(([, rec]) => rec).join(', '));
+  }
+}
+
+/* ---- 10. regenerate and diff (the half a clean clone skips) -------------------------------------
  * The tracked ledger must be exactly what the generator produces from the same inputs — otherwise a
  * hand edit, or a generator that drifted from the file it wrote months ago, ships unnoticed. The
  * generator is deterministic (no clock, sorted keys: test/trust-ledger.test.ts pins that), so a byte
@@ -187,7 +300,7 @@ if (!existsSync(R(DESK))) {
  *
  * It exits 2 to REFUSE when its comparer input is missing or older than public/core.json. That is not
  * a defect in the tracked ledger, it is an input this machine does not have, so it prints skipped
- * with the generator's own message — the seven checks above already stand on their own. Any other
+ * with the generator's own message — the nine checks above already stand on their own. Any other
  * non-zero exit is the generator actually failing, and that is red. */
 {
   const DIFF = 'work/.wg-diff-all.json';

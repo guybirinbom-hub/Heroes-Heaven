@@ -261,6 +261,13 @@ async function stageCut() {
     predicate, missing,
     startSha: gitSnap().head, // the batch-start commit, for the flip audit and the overlay-loss check
   });
+  /* THE BATCH IS NOW OPEN (2026-09-11). A marker file, not a git hook: a hook is untracked and a fresh
+   * clone would not have it. While this file exists the batch has been cut and not committed, so any
+   * commit on top of the cut is a MID-BATCH commit — which is what runStage below prints loudly and what
+   * scripts/wg-batch-commit.mjs (the only thing that removes this file) is gated on. */
+  write(P('open'), `batch ${BATCH} was cut at ${new Date().toISOString()} from ${gitSnap().head}\n`
+    + 'It is OPEN until scripts/wg-batch-commit.mjs commits it (HH_ORCHESTRATOR=1, the orchestrator only).\n'
+    + 'While this file exists, a commit on top of that start commit is a mid-batch commit — the 2026-09-11 incident.\n');
   return {
     counts: { requested: ids.length, packets: packets.length, noPacket: missing.length },
     digest: `cut ${packets.length} packet(s) into ${BATCH_FILE} from ${ids.length} id(s)${missing.length ? `; no packet for ${missing.slice(0, 6).join(', ')}` : ''}. predicate ${JSON.stringify(predicate)}. batch sha ${String(shaFile(BATCH_FILE)).slice(0, 12)}, start commit ${gitSnap().head.slice(0, 8)}.`,
@@ -1285,6 +1292,25 @@ export const entryOf = ({ stage, ok, runId, startedAt, endedAt, counts, digest, 
   refusals: refusals ?? [],
 });
 
+/*
+ * A MID-BATCH COMMIT IS LOUD IN THE DIGEST, THE MOMENT IT HAPPENS (2026-09-11).
+ *
+ * runStage's git-moved check below only catches history moving DURING a stage. The 2026-09-11 commit
+ * landed BETWEEN stages, so every later stage read as clean and the digest Fable reads said nothing.
+ * `baseline` and `close` are where the plan puts this check (§A: baseline records the start state, close
+ * derives the batch's artefacts) and both re-read the cut record anyway. `openMarker` — work/.bNNN-open,
+ * written by the cut stage — is what separates "someone committed mid-batch" from "the batch is committed
+ * and this is a replay": scripts/wg-batch-commit.mjs removes it, and only after the commit lands.
+ *
+ * Exported and pure because a warning nobody tests is a comment: the only thing that fires it is a real
+ * mid-batch commit, which is exactly the state no test can afford to reproduce in the real repo.
+ * `openMarker` is the marker's path when it exists and null when it does not.
+ */
+export const midBatchLoudLine = (stage, openMarker, cutSha, headSha, batch) =>
+  (['baseline', 'close'].includes(stage) && openMarker && cutSha && cutSha !== headSha)
+    ? `⚠⚠ MID-BATCH COMMIT: HEAD is ${headSha.slice(0, 8)} but batch ${batch} was cut at ${cutSha.slice(0, 8)} and ${openMarker} says it is still OPEN — only scripts/wg-batch-commit.mjs may commit a batch (2026-09-11: f1da70a landed mid-batch with two gates red).`
+    : null;
+
 async function runStage(stage) {
   CURRENT = stage;
   const runId = newRunId(); // the per-stage nonce a verifier must quote back
@@ -1317,6 +1343,14 @@ async function runStage(stage) {
     digest = `REFUSED — ${msg}`;
     next = 'read the refusal in ' + RUN_LOG + ', fix it, then re-run this stage';
     say(msg);
+  }
+
+  // the mid-batch-commit alarm (see midBatchLoudLine above): the block below only catches history
+  // moving DURING a stage, and the 2026-09-11 commit landed BETWEEN two of them.
+  const loud = midBatchLoudLine(stage, has(P('open')) ? P('open') : null, cutRecord()?.startSha ?? null, gitStart.head, BATCH);
+  if (loud) {
+    say(loud);
+    digest = `${loud} ${digest}`;
   }
 
   const gitEnd = gitSnap();

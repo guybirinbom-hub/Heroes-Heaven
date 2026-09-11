@@ -473,33 +473,33 @@
   },
   {
    "id": "merchants-scale",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 8) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"Their encoding and the printed text disagree. RAN `node scripts/wg-item.mjs \"Merchant's Scale\"` — the seven addBonusToValue ops above. RAN a dump of the AoN mirror (equipment-2734.…\""
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#17): yes — Merchant's Scale: no mechanical effect; show one plain line clearly marked as ours: the book prints no rules for this item. Never WG's +1 to seven skills."
   },
   {
    "id": "sequestered-spell",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 8) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"THE CANTRIP LANE AGREES. Printed: \"Choose one cantrip from the spell list of your magiphage ability. You can cast this cantrip as an innate spell at will. A cantrip is heightened t…\""
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#20): yes — Innate spells: trained, expert at 12th by the general rule; the app already does it on both (#20 keeps its single narrowed picker). Guy: 'keep the app on both, nothing cha..."
   },
   {
    "id": "breath-of-the-dragon",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 8) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"PRINTED (Player Core 2 pg. 45): \"The shape of the breath, the damage type, and the saving throw match those of your draconic exemplar (see above).\" One answer decides all three. OU…\""
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#55): derive all three from the Dragonblood exemplar; the table is PRINTED (Draconic Codex pg. 206, 'Draconic Benefactors' table) — Guy pointed at https://2e.aonprd.com/DraconicBenefa..."
   },
   {
    "id": "intuitive-crafting",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 8) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"A fix was proposed and REFUSED on review because it picks a side in a WG-vs-print disagreement. The reviewer's reasoning: REFUTED on three independent grounds: two of the three cod…\""
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#16): yes — #12 Molten Wit: build all three printed branches (neither trained: paired skill+feat; trained in one: must take the other skill, pick either feat; trained in both: free sk..."
   },
   {
    "id": "nagaji-spell-familiarity",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 8) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"A fix was proposed and REFUSED on review because it picks a side in a WG-vs-print disagreement. The reviewer's reasoning: REFUSED — this fix settles a printed-text-vs-WG contradict…\""
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#18): DECIDED BY FABLE from the AoN pages (Guy: 'read the archives of nethys pages and if you still cant reach a reliable answer ask me')"
   },
   {
    "id": "reinforced-chassis",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 8) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"Their encoding and the printed text disagree. OURS: public/core.json feats['reinforced-chassis'] + items['reinforced-chassis-armor']; both authored by scripts/data/effect-backfill.…\""
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#19): DECIDED BY FABLE under the 2026-08-22 rule (book wins) — Guy: 'use fable to answer and if still not sure add to the file that reaches me'"
   }
  ]
 }

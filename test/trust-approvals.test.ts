@@ -83,11 +83,20 @@ describe('trust-approvals.json — completeness', () => {
    * flexible wizard/witch/magus takes the spellbook branch and gets no collection at all). All five
    * are `open`, so all five are `unruled` below.
    */
+  /*
+   * Then the 2026-09-11 desk pass minted TWO more, and not as questions: #156 (the seven Shoanti
+   * Unifying Emblems may be built past what WG encodes, a one-family permission) and #157 (the trust
+   * gate switches core class features and item-held spells back on) are `authorisedExceptions` — a
+   * permission the owner gave, carrying no id, so the allocator was called without the numbers file.
+   * The answers file work/desk-answers-2026-09-10.json was closed on 2026-09-10 and names neither, so
+   * both are `unruled` here: `unruled` means "the answers file does not speak for this number", NOT
+   * "the owner has not ruled". Roster 155 -> 157.
+   */
   // batch 037: screech-shooter-major#grade-numbers
   // batch 037 premise: feat-8166 "Your Speed increases by 5 feet for each mode of movement available to you."
-  it('the desk roster is every number in work/owner-questions.json — 155 once screech-shooter-major and merchants-scale were filed, then the closer round filed three more — with no gaps or repeats', () => {
+  it('the desk roster is every number in work/owner-questions.json — 157: 155 batch-filed questions plus the two 2026-09-11 authorised exceptions — with no gaps or repeats', () => {
     expect(new Set(deskNumbers).size).toBe(deskNumbers.length);
-    expect(deskNumbers.length).toBe(155);
+    expect(deskNumbers.length).toBe(157);
   });
 
   it('every desk number has exactly one disposition', () => {

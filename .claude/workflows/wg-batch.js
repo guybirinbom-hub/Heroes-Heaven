@@ -148,7 +148,7 @@ const CLOSE_VERIFY_OUT = {
 // ---------------------------------------------------------------- shared prompt blocks
 
 const NEVER = [
-  'ABSOLUTE PROHIBITIONS (a violation is a failed run, not a note): never run any git write command (add / commit / stash / checkout / reset - reading status, log, diff, rev-parse, show is fine); never run npm run data; never run apply-parity-fixes.mjs --write, apply-backfill-now.mjs or any apply-*.mjs (the driver applies); never pass --skip-harness to anything; never edit work/owner-questions.json (an owner question is an entry you write into work/' + B + '-queue.json and nothing else); never delete or rewrite another agent\'s file.',
+  'ABSOLUTE PROHIBITIONS (a violation is a failed run, not a note): never run any git write command (add / commit / stash / checkout / reset - reading status, log, diff, rev-parse, show is fine); never run npm run data; never run apply-parity-fixes.mjs --write, apply-backfill-now.mjs or any apply-*.mjs (the driver applies); never pass --skip-harness to anything; never edit work/owner-questions.json (an owner question is an entry you write into work/' + B + '-queue.json and nothing else); never delete or rewrite another agent\'s file. scripts/wg-batch-commit.mjs is the orchestrator\'s command and refuses without HH_ORCHESTRATOR=1; do not set that variable.',
   'Run vitest ONLY through node scripts/vt.mjs <args> (it takes the exclusive heavy-job lock) - never npx vitest, and never more than one vitest process at a time. Do not run the full suite; run only the test files you touched. Finish with npx tsc --noEmit clean.',
   'Write code with the Edit / Write tools, NEVER through a shell heredoc or node -e. node -e is for INSPECTING data only.',
 ].join('\n')

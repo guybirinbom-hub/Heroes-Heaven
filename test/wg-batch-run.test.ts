@@ -22,7 +22,7 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync
 import { spawnSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { clip, comparerFlags, copyTestbase, dumpBlocks, entryOf, expectRowsFor, familyOf, gapProblems, isFlagged, keyOf, missingGapsRefusal, newRunId, pendingQuestions, precheck, refusalTail, uncitedQuiet, verifyChecks, verifyVerdict, wentQuiet } from '../scripts/wg-batch-run.mjs';
+import { clip, comparerFlags, copyTestbase, dumpBlocks, entryOf, expectRowsFor, familyOf, gapProblems, isFlagged, keyOf, midBatchLoudLine, missingGapsRefusal, newRunId, pendingQuestions, precheck, refusalTail, uncitedQuiet, verifyChecks, verifyVerdict, wentQuiet } from '../scripts/wg-batch-run.mjs';
 import { applyBackfill } from '../scripts/lib/apply-backfill.mjs';
 
 /* A row that passes every pre-check, so each fixture below differs from the clean case in ONE way. */
@@ -394,6 +394,25 @@ describe('driver stage guards, on fixture roots', () => {
       .map((q: { id: string }) => q.id)).toEqual(['zealot-staff']);    // an OPEN line cites nothing
     expect(uncitedQuiet(quiet, [{ family: 'instruments', status: 'authored', line: 'taught the comparer zealot-staff', ref: 'work/.b030-rows-instruments.json' }])).toEqual([]);
     expect(uncitedQuiet(quiet, [{ family: 'instruments', status: 'parked', line: 'their grant is prose', ref: 'flaggedResidue: zealot-staff, theirs encodes it as prose' }])).toEqual([]);
+  });
+
+  /*
+   * THE MID-BATCH-COMMIT ALARM (2026-09-11). The only thing that fires it for real is the incident it
+   * exists for — a commit landing between two stages — so the condition is a pure function and this is
+   * the only place it is exercised. Each case below is the line NOT firing for a different honest
+   * reason; get any of them wrong and the driver either cries wolf on every replay or stays silent
+   * through the one run that mattered.
+   */
+  it('the mid-batch-commit line fires on baseline/close while the batch is open and HEAD has moved', () => {
+    const CUT = 'aaaaaaaa1111', HEAD = 'bbbbbbbb2222', M = 'work/.b900-open';
+    expect(midBatchLoudLine('baseline', M, CUT, HEAD, '900')).toContain('MID-BATCH COMMIT');
+    expect(midBatchLoudLine('close', M, CUT, HEAD, '900')).toContain(M);          // names the marker
+    expect(midBatchLoudLine('close', M, CUT, HEAD, '900')).toContain('aaaaaaaa'); // and both shas
+    expect(midBatchLoudLine('close', M, CUT, HEAD, '900')).toContain('bbbbbbbb');
+    expect(midBatchLoudLine('gate', M, CUT, HEAD, '900')).toBe(null);   // not one of the two stages
+    expect(midBatchLoudLine('baseline', null, CUT, HEAD, '900')).toBe(null); // committed: not open
+    expect(midBatchLoudLine('baseline', M, CUT, CUT, '900')).toBe(null); // HEAD still at the cut
+    expect(midBatchLoudLine('baseline', M, null, HEAD, '900')).toBe(null); // no cut record yet
   });
 });
 

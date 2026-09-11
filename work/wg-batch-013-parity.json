@@ -493,13 +493,13 @@
   },
   {
    "id": "aon-sacred-ki",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 13) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"The printed text on this record says the player chooses among FOUR alignment components (matching one of the deity's), and the substitution is of that alignment's damage. Their enc…\""
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#36): DECIDED BY FABLE: keep the app — Sacred Ki feat-1184 is a legacy printing (choose chaos/evil/good/law matching a deity alignment component). No deity in the remastered data carr..."
   },
   {
    "id": "ardent-armiger",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 13) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"These are two different feats' worth of benefit under one id. The printed text on this record is the controlled/frightened version plus the free-action re-save when a mental effect…\""
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#37): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording"
   }
  ]
 }

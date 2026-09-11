@@ -331,3 +331,146 @@ describe('trust ledger — the featGrants lane is per kind, so widening the scra
     expect(wrong).toEqual([]);
   });
 });
+
+describe('trust ledger — the 2026-09-11 whole-class rules', () => {
+  /*
+   * The owner, 2026-09-11, on reading the census: *"Yes, switch them back on. … A rogue gets sneak
+   * attack dice again, a barbarian gets Rage, a staff offers its spells. Everything else stays dark as
+   * ruled."* Two rules in scripts/data/trust-approvals.json say it, the generator implements them by
+   * name, and every one of them can fail SILENTLY — a renamed rule, a derivation that misses the class
+   * table, a field list that does not reach a nested path. What the owner asked for is therefore
+   * asserted as three separate claims: the named records are back, the boundary did NOT move, and the
+   * rules are not vacuous (each case is pinned against the state the ledger was in before them).
+   */
+  const approvals: Json = JSON.parse(readFileSync(join(CLI_ROOT, 'scripts/data/trust-approvals.json'), 'utf8'));
+  const lanesFile: Json = JSON.parse(readFileSync(join(CLI_ROOT, 'scripts/data/trust-lanes.json'), 'utf8'));
+  const ruleNames = (approvals.rules ?? []).map((r: Json) => r.rule);
+  const ITEM_FIELDS: string[] = (approvals.rules ?? []).find((r: Json) => r.rule === 'item-held-spells')?.fields ?? [];
+  const isSpellPath = (p: string) => ITEM_FIELDS.some((f) => p === f || p.endsWith(`.${f}`) || p.startsWith(`${f}.`));
+
+  it('both rules are declared and carry the owner\'s words', () => {
+    expect(ruleNames).toEqual(['class-owned-features', 'item-held-spells']);
+    for (const r of approvals.rules) {
+      expect(r.date, r.rule).toBe('2026-09-11');
+      expect(r.why, r.rule).toMatch(/switch them back on/);
+      /* The quote used to be elided to "…" over its middle sentence, and that sentence is the one that
+       * says WHICH two things he approved — so the round that wrote these rules had to record "his
+       * verbatim words are not on file". They are now (work/desk-answers-2026-09-10.json, key
+       * trust_gate_directive_2026-09-10.decided_2026-09-11), and both halves are pinned with the
+       * citation beside them so an editor cannot quietly trim it back to an ellipsis. */
+      expect(r.why, r.rule).toMatch(/I add the core class features and the item-held spells to the approvals list/);
+      expect(r.why, r.rule).toMatch(/trust_gate_directive_2026-09-10\.decided_2026-09-11/);
+    }
+    expect(ITEM_FIELDS).toEqual(['heldSpells', 'spellSlot', 'innateSpells', 'resonant']);
+  });
+
+  /*
+   * `alsoRecords` — THE RECORD HE NAMED THAT THE DERIVATION CANNOT REACH.
+   *
+   * He listed Deadly Simplicity among the core class features he said yes to, and it is
+   * `feats/deadly-simplicity` (feat-4642, a class FEAT). The class-owned walk starts at the class
+   * record's feature table and only ever adds `classFeatures` ids, so it can never see this record:
+   * without the named list, the rule that is supposed to cover his words leaves the damage-die step on
+   * `lanes.engine` and the fighter's Fist stays dark. The control is the point of the test — the list
+   * must turn on the record he named and nothing beside it.
+   */
+  it('a record named in `alsoRecords` is fully on, and a control engine lane is still dark', () => {
+    expect(core.feats['deadly-simplicity'], 'deadly-simplicity is a FEAT, not a classFeature').toBeDefined();
+    expect(core.classFeatures['deadly-simplicity']).toBeUndefined();
+    const named: string[] = approvals.rules.flatMap((r: Json) => r.alsoRecords ?? []);
+    expect(named).toContain('feats/deadly-simplicity');
+
+    expect(ledger.records['feats/deadly-simplicity']).toBeUndefined();
+    expect(batched.records['feats/deadly-simplicity'], '--batched-only').toBeUndefined();
+    for (const lane of ['engine', 'situational', 'modes', 'stances']) {
+      expect(ledger.lanes[lane], lane).not.toContain('deadly-simplicity');
+    }
+    expect(ledger.lanes.featGrants['deadly-simplicity']).toBeUndefined();
+    // …and not vacuously: it IS a gated engine lane, and an un-named sibling of the same kind stays off.
+    const gated = new Set(lanesFile.lanes.filter((e: Json) => e.gated !== false).map((e: Json) => e.id));
+    expect(gated.has('deadly-simplicity')).toBe(true);
+    expect(gated.has('raging-thrower')).toBe(true);
+    expect(named).not.toContain('feats/raging-thrower');
+    expect(ledger.lanes.engine, 'the control must still be gated').toContain('raging-thrower');
+  });
+
+  /*
+   * Rule (a). Sneak Attack and Hunt Prey are HARD-CODED ENGINE LANES (scripts/data/trust-lanes.json)
+   * and both were on `lanes.engine` before this rule — that is precisely the dice the owner says the
+   * rogue gets back, and a record with no OFF path can still have its lane gated. Rage is the other
+   * shape: it carries `grantsActions` (the Rage action itself), which went dark as a record path.
+   */
+  it('sneak attack, rage and hunt prey are fully on and on no lane', () => {
+    for (const id of ['sneak-attack', 'rage', 'hunt-prey']) {
+      expect(core.classFeatures[id], id).toBeDefined();
+      expect(ledger.records[`classFeatures/${id}`], id).toBeUndefined();
+      expect(batched.records[`classFeatures/${id}`], `${id} (--batched-only)`).toBeUndefined();
+      expect(ledger.lanes.engine, id).not.toContain(id);
+      expect(ledger.lanes.situational, id).not.toContain(id);
+      expect(ledger.lanes.featGrants[id], id).toBeUndefined();
+    }
+    // …and not vacuously: two of the three ARE gated engine lanes, and Rage does carry a strippable path.
+    const gated = new Set(lanesFile.lanes.filter((e: Json) => e.gated !== false).map((e: Json) => e.id));
+    expect(gated.has('sneak-attack')).toBe(true);
+    expect(gated.has('hunt-prey')).toBe(true);
+    expect(core.classFeatures.rage.grantsActions?.length).toBeGreaterThan(0);
+    expect(fields.paths.map((f: Json) => f.path)).toContain('grantsActions');
+  });
+
+  /* THE BOUNDARY. "Everything else stays dark as ruled": a classFeatures record NO class progression
+   * reaches is an archetype/subsystem record, and the rule must not have widened to it. The deviant
+   * classifications (Dark Archive's Deviant Abilities) are reached only by that archetype's feats. */
+  it('an archetype-only class feature is still dark', () => {
+    expect(core.classFeatures['wraith-deviant-classification']).toBeDefined();
+    expect(ledger.records['classFeatures/wraith-deviant-classification']).toContain('specialStatistic');
+  });
+
+  /*
+   * …and THE CONTESTED HALF of that boundary, which the deviant classifications do not test.
+   *
+   * The generator derives class ownership from the CLASS RECORD, so it is narrower than the app's
+   * `ownedFeatureIds` (src/rules/derive.ts:3540): that function also owns a class feature handed over
+   * by a FEAT whose `choice.ownsFeature` is set (`choiceOwnedFeatureIds`, derive.ts:3665), by
+   * `c.inventor.modifications` and by `c.mythicCalling` — none of them reachable from core.json's
+   * class table. A witch's Lesson of Vows IS owned by the app and is dark here, and that is a
+   * judgement, not an oversight: a lesson costs a class FEAT SLOT, and the owner said *"everything
+   * else stays dark as ruled"*.
+   *
+   * Pinned so the narrow reading cannot widen by accident. If the owner rules that a lesson's hex is
+   * "the class" the way Rage is, this test is the thing that goes red and says so out loud.
+   */
+  it('a class feature owned only through a FEAT choice is still dark', () => {
+    for (const id of ['lesson-of-vows', 'lesson-of-bargains', 'metallic-reactance']) {
+      expect(core.classFeatures[id], id).toBeDefined();
+      expect(ledger.records[`classFeatures/${id}`], id).toBeDefined();
+    }
+    // …and not vacuously: these really are handed over by a feat the app treats as owning them.
+    const owners = Object.entries(core.feats as Record<string, Json>)
+      .filter(([, f]) => f.choice?.ownsFeature)
+      .filter(([, f]) => (f.choice.options ?? []).some((o: Json) => String(o.value ?? o.id ?? '').replace(/^aon-/, '') === 'lesson-of-vows'));
+    expect(owners.map(([id]) => id)).toContain('greater-lesson');
+  });
+
+  /* Rule (b). A staff whose spell list is dark is an item with nothing in it. Asserted over the whole
+   * bucket as well as on the one staff, because the fields reach nested paths too
+   * (`resonant.innateSpells`, `enhancement.grant.innateSpells`) and a leaf-only match would miss them. */
+  it('a staff keeps its held spells, and no item is dark on a spell path', () => {
+    // `heldSpells` is a rank -> spell-ids map, not a list.
+    expect(Object.keys(core.items['staff-of-the-magi'].heldSpells ?? {}).length).toBeGreaterThan(0);
+    expect(ledger.records['items/staff-of-the-magi'] ?? []).not.toContain('heldSpells');
+    const dark = Object.entries(ledger.records as Record<string, string[]>)
+      .filter(([k]) => k.startsWith('items/'))
+      .flatMap(([k, ps]) => ps.filter(isSpellPath).map((p) => `${k}: ${p}`));
+    expect(dark).toEqual([]);
+    expect(Object.keys(batched.records).filter((k) => k.startsWith('items/') && (batched.records[k] as string[]).some(isSpellPath))).toEqual([]);
+  });
+
+  /* …and the other boundary: the rule is per PATH, not per record. An aeon stone that carries a
+   * `resonant` spell block keeps it and still loses the resistance it also carries — the item rule
+   * turns on four fields, not the item. */
+  it('the item rule does not resurrect a non-spell path on the same item', () => {
+    const stone = core.items['aeon-stone-black-disc'];
+    expect(stone.resonant ?? stone.innateSpells).toBeDefined();
+    expect(ledger.records['items/aeon-stone-black-disc']).toContain('passiveEffects.resistances');
+  });
+});

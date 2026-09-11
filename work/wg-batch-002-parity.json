@@ -498,8 +498,8 @@
   },
   {
    "id": "devil-allies",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "OWNER-QUEUED — the WG-vs-print divergence is recorded in work/owner-questions.json (open, batch 2) and awaits his ruling; until ruled the record stays as it is, which is the standing rule at the top of that file. Question on file: \"Printed: \"You gain Summon Fiend as a 6th-rank innate spell of a tradition of your choice, which you can cast once per day… At 14th level and every 2 levels thereafter, the spell is…\""
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#3): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording"
   }
  ]
 }

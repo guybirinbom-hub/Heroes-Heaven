@@ -13,8 +13,8 @@
   },
   {
    "id": "sense-of-belonging",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "A WG-vs-print question for this record sits in work/owner-questions.json open (batch-21 read); every other confirmed finding on it was applied — see work/.b021-findings.json."
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#86): yes — 13 change nothing; #13 vials item, #15 drop the +2 Crafting star, #46 legacy feat grants nothing on the new archetype, #133 keep the necromancy wording"
   },
   {
    "id": "goblinblood-orphan",
@@ -78,8 +78,8 @@
   },
   {
    "id": "sponsored-by-a-village",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "A WG-vs-print question for this record sits in work/owner-questions.json open (batch-21 read); every other confirmed finding on it was applied — see work/.b021-findings.json."
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#87): yes — Adventure-path backgrounds stay common (no printed rarity trait); nothing changes on rarity. #92 Teacher Ot: ask the Survival-or-Performance choice ONCE (drop the second c..."
   },
   {
    "id": "butcher",
@@ -263,8 +263,8 @@
   },
   {
    "id": "reborn-soul",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "A WG-vs-print question for this record sits in work/owner-questions.json open (batch-21 read); every other confirmed finding on it was applied — see work/.b021-findings.json."
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#85): A as Fable described it (Guy: 'A as I describe it')"
   },
   {
    "id": "fireworks-performer",
@@ -368,8 +368,8 @@
   },
   {
    "id": "sky-rider",
-   "verdict": "OWNER-QUEUED",
-   "evidence": "A WG-vs-print question for this record sits in work/owner-questions.json open (batch-21 read); every other confirmed finding on it was applied — see work/.b021-findings.json."
+   "verdict": "OWNER-RULED",
+   "evidence": "owner ruled 2026-09-10 (#88): keep the app — Sky Rider trains Acrobatics AND Plane of Air Lore; nothing changes."
   },
   {
    "id": "student-of-the-ancients",

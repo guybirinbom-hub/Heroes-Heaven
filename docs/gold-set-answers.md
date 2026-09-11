@@ -651,3 +651,132 @@ is now ASSERTED on built characters (add +3 / remove restores / removing the res
 the whole bonus) in test/batch12-parity.test.ts, so a caching or accumulate-in-place regression can
 never ship silently. The wider principle — anything granted by a feat must vanish when the feat is
 removed in the builder — is the standing expectation for every lane.
+
+---
+
+## Round 12 — the desk pass of 2026-09-10 (128 rulings)
+
+He went down the whole rulings desk in one sitting and answered 128 of the open questions
+(`work/desk-answers-2026-09-10.json`; his instruction for the sitting was *"you will first hear the
+solution i offer and when i finish going over the file then you will fix them all"*). Batch 037
+applied the fixes; `scripts/rule-owner-questions.mjs` moved all 128 entries from `open` to `ruled`
+keeping their permanent desk numbers, so each one is quotable by number.
+
+Most of the 128 are single records and live in the desk file. The six below are the ones that are
+**general** — each settles a shape, not a record, so it is written here instead and every future batch
+is adjudicated against it.
+
+### R12 · The newest printing wins, whole
+
+> *"what i want is that the things will display and implement the new virsion of things not the old
+> ones if there are implementatiom taht have diffrent text and you are not sure how to implement ask
+> me"*
+
+The app shows and implements the **newest** printing our copy of Archives of Nethys holds, and follows
+it **whole** — never a mix of two books on one record. Where the new printing's text is clear, it is
+simply built; where it is not, the record comes back to the desk rather than being half-translated.
+
+**What it changes:** a legacy printing is no longer a defence for an older encoding. It moved magus and
+summoner to the 2026 *Impossible Magic* printing entire — full slot tables (the lower ranks kept),
+archetype basic spellcasting at level 4 with ordinary casting, and Studious Spell rebuilt at level 7
+with its listed spells and free Arcane Cascade (desk #56, #104, #120, #121; his words there: *"we need
+to use the newest sources we have"*). It is also why a record whose legacy twin is empty stays hidden
+rather than being offered (#36).
+
+### R13 · "either X or Y" / "your choice of X or Y" is ONE pick
+
+A feat or background printed *"you're trained in your choice of either the Crafting or Society skill"*
+offers **one** control with both options on it. This was already ruled once, on #1 Backup Runic
+Enhancement; the desk pass made it standing so it never comes back per record.
+
+**What it changes:** nothing on the sheet — #111 Empathic Calm and #112 Colugo's Traversal were
+already right and were closed unchanged. What it removes is the question: the comparer and the batch
+reader no longer queue a record for this shape.
+
+### R14 · A value print works out from the character gets NO picker
+
+> the standing rule as recorded with the five records it closed: *"where print works a value out from
+> the character, the app works it out and shows no picker"*
+
+When the printed text derives a value from something the character already has — *"the same tradition
+as the spells you used to meet the … prerequisites"*, *"resistance equal to half your level"* — the app
+**derives it**. A picker there is not a convenience; it is the app asking the player to answer a
+question the book already answered, and it lets them answer it wrongly.
+
+**What it changes:** it closed #22 Shadowcaster, #25 Hallowed Necromancer, #110 Spellmaster's Ward
+(WG's fixed Arcane/Int has no printed basis — the character's own focus tradition stands), #138 the
+dragon eidolon (arcane, fixed) and #147 Otherworldly Protection (3 + half level, computed) with the app
+already correct. It is also the reason Time Mage's innate Time Sense is derived rather than defaulted
+to arcane (#57) and why Breath of the Dragon's three pickers come off in favour of the Dragonblood
+exemplar's own row (#55).
+
+### R15 · A Wanderer's Guide row marked (playtest) is never evidence
+
+> *"a playtest row is never evidence"* (his answer to #149, Spirit Walk, after reading the released
+> page)
+
+A WG row carrying the **(playtest)** marker describes a different document from the one we ship
+against. It is not a weaker source, it is not a source: it never supports a claim about the released
+record, and a divergence from it is not a finding.
+
+**What it changes:** #149 was closed on the printed page alone, and its three printed pieces (the +2
+status to Recall Knowledge about spirits/haunts/undead in a 30-foot aura, the same +2 on AC and saves
+against haunt and spirit reactions while Searching or Detecting Magic, and the first-turn resistance of
+half your level) stand as built in batch 036. For future batches: check the marker before quoting a WG
+row at all.
+
+### R16 · When WG and Foundry BOTH disagree with our mirror, re-fetch the page
+
+Our AoN mirror is a snapshot, and Archives of Nethys corrects pages after we take one. The Streetfood
+Vendor background (#82, `background-479`) is the case: our mirror doc (release date 2024-08-28) reads
+*"trained in the Crafting skill, and the Cooking Lore skill"*, while WG, Foundry and the page Guy
+pasted from the *Tian Xia Character Guide* (pg. 11) all read *"You're trained in your choice of either
+the Crafting or Society skill, as well as the Cooking Lore skill."*
+
+**Two agreeing outside sources against the mirror is a freshness signal, not a parity finding.**
+Re-fetch the page from live AoN and re-read before ruling.
+
+**What it changes:** the app keeps its Crafting-or-Society choice (R13's shape), the description takes
+the printed sentence, `background-479` is refreshed through the AoN update pipeline — see the note at
+`scripts/export-sync-from-mirror.mjs:12` — and the records this desk touched get a freshness re-check
+before a mirror quote is trusted over two agreeing sources.
+
+### R17 · The trust gate — what is not checked against WG is shown but not applied
+
+> *"i cant trust them and i will go over them in the future but for now i want to turn them off, i want
+> to be able to turn them on in the furtur. the goal is taht now i will have a working app. if we have
+> implementation on all of the thing wg has then the app is palyble and because we implemented the smae
+> as them the implementation is trustworthy"*
+
+Every effect implementation **not** in the verified ledger is switched OFF at runtime. It stays in the
+data and is switchable back on; the Builder's structure, its choices, the text and the displays all
+stay on. Nothing is ever deleted. Built in commit e88873a; the design is `docs/trust-gate.md`, the
+ledger is generated by `scripts/trust-ledger.mjs` into `src/data/trust-ledger.json`, and
+`scripts/trust-ledger-check.mjs` guards it inside `npm run verify`.
+
+Three answers shape it:
+
+- **Q1 — batched extras are OFF.** On a record a closed batch has read, only the kinds WG actually
+  encodes (plus his explicit approvals and the batch's own fixes) stay on; a mechanic that is ours
+  alone goes dark even there. His words: he will check them in the future. Trust is **kind-level**, not
+  record-level.
+- **Q2 — deities are ON.** *"there isnt realy a place to mess up here and we need this"* — the deity
+  sweep counts as verified and the bucket is unpaired anyway.
+- **2026-09-11 — core class features and item-held spells go back ON.** His words, on reading the
+  census: *"Yes, switch them back on. I add the core class features and the item-held spells to the
+  approvals list. A rogue gets sneak attack dice again, a barbarian gets Rage, a staff offers its
+  spells. Everything else stays dark as ruled."* (`work/desk-answers-2026-09-10.json`, key
+  `trust_gate_directive_2026-09-10.decided_2026-09-11`.) A class whose features are dark is not a
+  character and an item whose held spell is dark does nothing, so both are exempt until the print-read
+  lane puts them in the ledger properly. Recorded as authorised exception #157 in
+  `work/owner-questions.json`; implemented as the two `rules` entries in
+  `scripts/data/trust-approvals.json`. **Deadly Simplicity**, which he named in that list, is
+  `feats/deadly-simplicity` (feat-4642) — a class **feat**, not a `classFeatures` record — so the
+  class-owned derivation cannot reach it and it is named by hand in that rule's `alsoRecords`.
+
+**What it changes:** it is the largest visible change to a player in the project's history — records WG
+leaves prose-only and records WG has no row for lose their mechanics at runtime — and it is the reason
+the census in `docs/trust-gate.md` §7 prints the count in his face rather than letting him find it.
+Order matters: he asked for the gate first and the website/GitHub update only after it
+(*"dont push now, after we finish all of the tasks from the file and the turning off of things that
+arent in wg then we update the website and git hub"*).

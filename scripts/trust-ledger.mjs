@@ -173,6 +173,119 @@ for (const a of approvalsFile.approvals ?? []) {
   approvedBy.set(a.record, set);
 }
 
+/*
+ * ------------------------------------------------------------------ the whole-class RULES
+ *
+ * WHY: on 2026-09-11 the owner read the census and answered the one question the gate had left him —
+ * *"Yes, switch them back on. … A rogue gets sneak attack dice again, a barbarian gets Rage, a staff
+ * offers its spells. Everything else stays dark as ruled."* An `approvals` entry cannot say that: it
+ * names ONE record and ONE field list, and this is a statement about two whole classes of record.
+ * So `rules` is a fifth disposition in trust-approvals.json, and each rule is implemented HERE, by
+ * name, as a trust source that runs AFTER the WG-encoded kinds and before the OFF list is written.
+ *
+ * A rule name this file does not implement is a REFUSAL, not a no-op: the failure mode of a
+ * hand-maintained approvals file is a typo that approves nothing while looking like it approved
+ * something, and a silent one would ship the rogue dark again.
+ */
+const RULE_NAMES = ['class-owned-features', 'item-held-spells'];
+const rules = new Map();
+for (const r of approvalsFile.rules ?? []) {
+  if (!RULE_NAMES.includes(r?.rule)) {
+    refuse(`scripts/data/trust-approvals.json names rule "${r?.rule}", which this generator does not implement (it knows: ${RULE_NAMES.join(', ')})`);
+  }
+  rules.set(r.rule, r);
+}
+
+/*
+ * `alsoRecords` — the records the owner NAMED that the rule's own derivation cannot reach.
+ *
+ * He listed Deadly Simplicity among the core class features, and it is feats/deadly-simplicity
+ * (feat-4642, a class FEAT): the class-owned walk below starts at the class record's feature table and
+ * can never see it, so the rule that is supposed to cover what he said would leave its engine lane
+ * gated. A named record is treated exactly as a derived one — every strippable path stays on and no
+ * lane is gated — and a name that resolves to nothing is a refusal, for the same reason an unknown rule
+ * name is: a list that silently approves nothing looks identical to one that worked.
+ */
+const alsoRecords = new Map();   // bucket/id -> the rule that named it
+for (const r of rules.values()) {
+  for (const key of r.alsoRecords ?? []) {
+    const [bucket, id] = String(key).split('/');
+    if (!core[bucket]?.[id]) refuse(`rule "${r.rule}" names alsoRecords "${key}", which resolves to no record in public/core.json`);
+    alsoRecords.set(key, r.rule);
+  }
+}
+
+/*
+ * (a) class-owned-features. Every classFeatures record a class's OWN progression hands over, taken
+ * from the CLASS RECORD in public/core.json — the first four of the routes `ownedFeatureIds`
+ * (src/rules/derive.ts:3540) walks:
+ *   · `cls.features[].featureId`, plus the `-<classId>` and `-<subclassId>` VARIANTS that carry the
+ *     mechanics the generic prose record does not (field-discovery-toxicologist);
+ *   · every subclass option id (159 of the 160 are classFeatures records — Giant Instinct, Cloistered
+ *     Cleric) and the `featureIds` an option hands over (an oracle mystery's curse);
+ *   · every `extraChoices` option id (implements, ikons, elements, theses, apparitions);
+ *   · and the transitive closure of `grantsClassFeatures` over all of that.
+ * The level gates the app applies (`f.level > c.level`, subclassFeatureIds' `{id, level}`) are
+ * deliberately NOT applied: the ledger is per RECORD, not per character, and a 19th-level feature is
+ * still class-owned. `featProgression` names no record — it is the feat-slot schedule — so it
+ * contributes nothing to this set, and there is no separate level table in the class record.
+ *
+ * ⚠ NARROWER THAN `ownedFeatureIds` ON PURPOSE, and this is the part to read before widening it.
+ * That function has three more routes, and all three start at a CHARACTER'S CHOICES rather than at
+ * the class table, so none of them is reachable from core.json alone:
+ *   · `choiceOwnedFeatureIds` (derive.ts:3665) — a FEAT whose `choice.ownsFeature` hands over a class
+ *     feature. 88 records, 7 of which are still dark today: the six witch `lesson-of-*` (Basic /
+ *     Greater / Major Lesson) and the inventor's `metallic-reactance` (Manifold Modifications).
+ *   · `c.inventor.modifications` — innovation modifications, reached by `aonParentId`, not by the
+ *     class table (`enhanced-resistance`, `heavy-construction` are still dark).
+ *   · `c.mythicCalling`.
+ * The owner's words were *"a class's OWN progression"* and *"everything else stays dark as ruled"*,
+ * and a lesson costs a FEAT SLOT — so the narrow reading is the one that does not approve past what
+ * he said. Widening to any of the three is HIS call, not this file's; test/trust-ledger.test.ts pins
+ * the boundary so it cannot move by accident.
+ */
+const classOwned = new Set();
+if (rules.has('class-owned-features')) {
+  const add = (id) => { if (id && core.classFeatures?.[id]) classOwned.add(id); };
+  for (const cls of Object.values(core.classes ?? {})) {
+    const subIds = (cls.subclass?.options ?? []).map((o) => o.id);
+    for (const f of cls.features ?? []) {
+      add(f.featureId);
+      add(`${f.featureId}-${cls.id}`);
+      for (const s of subIds) add(`${f.featureId}-${s}`);
+    }
+    for (const o of cls.subclass?.options ?? []) {
+      add(o.id);
+      for (const e of o.featureIds ?? []) add(typeof e === 'string' ? e : e?.id);
+    }
+    for (const g of cls.extraChoices ?? []) for (const o of g.options ?? []) add(o.id);
+  }
+  for (const stack = [...classOwned]; stack.length;) {
+    for (const g of core.classFeatures[stack.pop()]?.grantsClassFeatures ?? []) {
+      if (core.classFeatures[g] && !classOwned.has(g)) { classOwned.add(g); stack.push(g); }
+    }
+  }
+}
+
+/*
+ * (b) item-held-spells. The four fields whose contents ARE the item: a staff's or wand's list, the
+ * scroll/wand single spell, the item's own innate spell wherever it is nested, and the aeon stone's
+ * `resonant` block. Matched as a path, as a path's bare leaf (so `innateSpells` covers
+ * `enhancement.grant.innateSpells`), or as a container prefix (`resonant` covers `resonant.*`) — the
+ * same three shapes the per-record `approvals` matching below uses.
+ */
+const itemSpellFields = rules.get('item-held-spells')?.fields ?? [];
+const isItemSpellPath = (path) =>
+  itemSpellFields.some((f) => path === f || path.endsWith(`.${f}`) || path.startsWith(`${f}.`));
+/** the rule that keeps this path on, or null. */
+const ruleFor = (bucket, id, path) => {
+  const named = alsoRecords.get(`${bucket}/${id}`);
+  if (named) return named;
+  if (bucket === 'classFeatures' && classOwned.has(id)) return 'class-owned-features';
+  if (bucket === 'items' && isItemSpellPath(path)) return 'item-held-spells';
+  return null;
+};
+
 /* Ids a CLOSED batch has read. A batch is closed when its close stage wrote the parity artefact
  * (scripts/wg-batch-run.mjs stage `close` -> work/wg-batch-NNN-parity.json). */
 const batchedKeys = new Set();
@@ -272,12 +385,20 @@ function buildLedger(batchedOnly) {
   const kindOn = (bucket, id, kind) => {
     if (!BUCKETS.includes(bucket)) return true;          // outside the 8 buckets: never gated
     if (CHASSIS.has(bucket)) return true;                // chassis is all-on
+    /* Rule (a) is a statement about the RECORD, so it answers for every kind — which is what takes
+     * sneak-attack, hunt-prey and the instincts' RAGE_DAMAGE tiers off `lanes.engine`, their stars off
+     * `lanes.situational` and their entries off `lanes.featGrants`. The item rule is per PATH and says
+     * nothing about a kind, so it deliberately does not appear here. */
+    if (bucket === 'classFeatures' && classOwned.has(id)) return true;
     const key = `${bucket}/${id}`;
+    /* A NAMED record (`alsoRecords`) answers for every kind for the same reason a derived one does —
+     * that is what takes Deadly Simplicity's damage-die step off `lanes.engine`. */
+    if (alsoRecords.has(key)) return true;
     return trustedOf(key).has(kind) || approvedKinds(key).has(kind);
   };
 
   const records = {};
-  const stats = { fullyOn: 0, partlyOn: 0, off: 0, byBucket: {}, fullyDark: [] };
+  const stats = { fullyOn: 0, partlyOn: 0, off: 0, byBucket: {}, fullyDark: [], byRule: Object.fromEntries(RULE_NAMES.map((r) => [r, 0])) };
   for (const bucket of BUCKETS) {
     stats.byBucket[bucket] = { records: 0, withOffPaths: 0, fullyDark: 0, offPaths: 0 };
     for (const [id, rec] of Object.entries(core[bucket] ?? {})) {
@@ -289,14 +410,21 @@ function buildLedger(batchedOnly) {
       const approved = approvedBy.get(key) ?? new Set();
       let present = 0;
       const off = [];
+      const rescued = new Set();
       for (const { path, kinds } of FIELDS) {
         if (!pathValues(rec, path).length) continue;
         present++;
         /* ANY, not EVERY — decision 1. See the header. */
         if (kinds.some((k) => trusted.has(k))) continue;
         if (approved.has(path) || approved.has(path.split('.').pop().replace(/\[\]$/, ''))) continue;
+        /* …and last, the 2026-09-11 whole-class rules. Counted so the census can say how many records
+         * each one handed back — the owner asked for the rogue and the staff, and the number is how
+         * anyone checks he got them. */
+        const by = ruleFor(bucket, id, path);
+        if (by) { rescued.add(by); continue; }
         off.push(path);
       }
+      for (const r of rescued) stats.byRule[r]++;
       if (!off.length) { stats.fullyOn++; continue; }
       records[key] = off.sort();
       stats.byBucket[bucket].withOffPaths++;
@@ -428,6 +556,12 @@ const census = (label, m, bytes) => {
 console.log(`-> ${OUT}  (${BATCHED_ONLY ? '--batched-only' : 'default'} mode)`);
 console.log(census('default        ', modes.default, Buffer.byteLength(stable(modes.default.ledger))));
 console.log(census('--batched-only ', modes.batchedOnly, Buffer.byteLength(stable(modes.batchedOnly.ledger))));
+/* The 2026-09-11 rules, per mode: how many records each one handed back paths on. A rule that is in
+ * trust-approvals.json and rescues NOTHING is the silent failure this line exists to make loud. */
+for (const [label, m] of [['default        ', modes.default], ['--batched-only ', modes.batchedOnly]]) {
+  const named = RULE_NAMES.filter((r) => rules.has(r));
+  console.log(`${label}rules: ${named.length ? named.map((r) => `${r} turned ${m.stats.byRule[r]} records back on`).join(' · ') : 'none in scripts/data/trust-approvals.json'}`);
+}
 /* The featGrants tables refuse when they scrape nothing, because an empty lane reads as "all trusted".
  * The ENGINE lane cannot refuse — plan section 3 has lane C write scripts/data/trust-lanes.json AFTER
  * this generator exists, so absent must mean empty. It must not mean SILENTLY empty: a ledger built
