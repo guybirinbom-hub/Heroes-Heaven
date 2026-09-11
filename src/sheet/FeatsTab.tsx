@@ -4,7 +4,8 @@ import { classFeatureDescription } from '../rules/featureText';
 import { ownedFeatureIds, subclassFeatureIds } from '../rules/derive';
 import { markNote, nameOfRecord, recordMarkersFor } from '../rules/explain';
 import { ActionGlyph, isActionCost } from './widgets';
-import { FeatDetail, type FeatEntry } from './FeatDetail';
+import { FeatDetail, trustRefOf, type FeatEntry } from './FeatDetail';
+import { TrustMarker } from './TrustMarker';
 import { toPlainText } from './RichText';
 import { InfoTerm } from './InfoTerm';
 import { traitDesc, traitLabel } from '../rules/glossary';
@@ -252,6 +253,10 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
       descRefs: c.descRefs,
       isFeature: true,
       bucket: 'Class',
+      // Most of these picks ARE class-feature records (a rogue's racket, a witch's lesson), and 51 of
+      // them are gated — without the id the row printed its full text and the marker had nothing to
+      // name. Not `featureId`: that one also draws use pips.
+      trustFeatureId: c.id && content.classFeatures[c.id] ? c.id : undefined,
     });
   }
   // Inventor modifications (chosen innovation customizations — they ARE class features).
@@ -270,6 +275,7 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
         descRefs: f.descRefs,
         isFeature: true,
         bucket: 'Class',
+        trustFeatureId: f.id,
         rarity: f.rarity,
       });
     }
@@ -286,6 +292,7 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
       descRefs: g.descRefs,
       isFeature: true,
       bucket: 'Class',
+      trustFeatureId: g.featureId,
       rarity: g.rarity,
     });
   }
@@ -311,6 +318,7 @@ export function featEntries(character: Character, content: ContentDatabase): Fea
       // Four heritages print "once per day"; the pip lookup takes a feat or a class feature and a
       // heritage row has neither id, so all four drew nothing.
       usesRecord: heritage,
+      heritageId: heritage.id,
       rarity: heritage.rarity,
     });
   }
@@ -459,6 +467,9 @@ export function FeatsTab({ character, content, onPlay }: { character: Character;
                         </InfoTerm>
                       ))}
                     </div>
+                    {/* Under the name, above the text — the same place on every surface that shows a
+                        record, so "not yet verified" is one thing to learn rather than five. */}
+                    <TrustMarker {...trustRefOf(e)} />
                     {/* A feat printing "Frequency once per day" used to be text the player had to
                         remember; items have had use pips for a while, so match that control here.
                         stopPropagation because the whole row opens the feat detail. */}

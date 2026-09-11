@@ -44,6 +44,11 @@ const dataHashes = () => ({
   overlay: sha('scripts/data/effect-backfill.json'),
   core: sha('public/core.json'),
   descriptions: sha('public/core-descriptions.json'),
+  /* The trust gate's OFF list (docs/trust-gate.md). It decides which field paths on which records stop
+   * touching the sheet, so it changes what the experience sweep RENDERS as surely as core.json does —
+   * and a green recorded before the gate existed proves nothing about the tree that has it. Same rule
+   * as the three above: any change clears the recorded progress rather than being inherited. */
+  ledger: sha('src/data/trust-ledger.json'),
 });
 
 /* ---- which batches ------------------------------------------------------------------------------ */

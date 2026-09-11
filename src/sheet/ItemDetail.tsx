@@ -13,6 +13,7 @@ import { DescBody } from './DescBody';
 import { CritSpecText } from './CritSpecText';
 import { critSpec } from '../rules/critSpec';
 import { PinStar } from './PinStar';
+import { TrustMarker } from './TrustMarker';
 import { ActionGlyph } from './widgets';
 import { mpApplied } from '../rules/monsterParts';
 import { MpProse } from './MpProse';
@@ -278,6 +279,10 @@ export function ItemDetail({
             {TYPE_LABEL[item.itemType] ?? item.itemType} · level {item.level}
             {item.rarity && item.rarity !== 'common' ? ` · ${cap(item.rarity)}` : ''}
           </div>
+          {/* Under the name, above the text — the shared position (see TrustMarker). An item's
+              chassis (damage, AC, bulk, price) is never gated, so this line is only ever about the
+              magic on top of it. */}
+          <TrustMarker bucket="items" id={item.id} />
           {item.traits?.length > 0 && (
             <div className="sd-traits">
               {[...item.traits]

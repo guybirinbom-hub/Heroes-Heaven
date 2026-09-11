@@ -1753,6 +1753,8 @@ export function Builder({
                                 name={f.name}
                                 flavor={classFeatureDescription(content.classFeatures[f.id]?.description, build.classId, content)}
                                 descRefs={content.classFeatures[f.id]?.descRefs}
+                                bucket="classFeatures"
+                                id={f.id}
                               />
                               {/* The question it asks lives in the choice zone below — see
                                   `askingFeatures`. This says where it went. */}
@@ -1785,7 +1787,7 @@ export function Builder({
                                   <span className="lvl-gain-name">{nm}</span>
                                   <span className="lvl-gain-tag">skill feat · granted</span>
                                 </div>
-                                <ChoiceDetails name={nm} flavor={ft?.description} descRefs={ft?.descRefs} />
+                                <ChoiceDetails name={nm} flavor={ft?.description} descRefs={ft?.descRefs} bucket="feats" id={gid} />
                                 {/* Its own sub-choice is asked in the choice zone below, not here —
                                     UNLESS the background already answered it. Abadar's Avenger grants
                                     "Assurance with Religion", so promising a choice it does not offer

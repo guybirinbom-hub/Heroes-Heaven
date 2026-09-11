@@ -25,6 +25,7 @@
  *     node scripts/regen-durability-check.mjs
  */
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -227,6 +228,32 @@ for (const bucket of ['kingdomStructure', 'kingdomEvent', 'creatureAdjustment', 
   if (stale.length) {
     console.log('        The overlay has been edited since the last bake. Run `npm run data` — until you do,');
     console.log('        every one of those rows is authored and inert, and no other guard will say so.');
+  }
+}
+
+/* ---- 10. THE TRUST LEDGER STILL DESCRIBES THIS core.json ---------------------------------------
+ *
+ * src/data/trust-ledger.json (docs/trust-gate.md) is the OFF list the runtime gate reads: for each
+ * record, which field paths stop touching the sheet. It is generated from public/core.json AND from
+ * Wanderer's Guide's comparer output, so `npm run data` deliberately does NOT regenerate it — that
+ * would put the gitignored 50 MB dump in the middle of a chain that must stay runnable everywhere.
+ *
+ * Which leaves exactly this gap: a regen that adds, renames or drops records leaves the ledger
+ * talking about a file we no longer ship. Nothing else notices — a ledger key that resolves to
+ * nothing strips nothing and says nothing, and a record that changed shape keeps whatever the old
+ * OFF list happened to name. The stamped sha is the cheap, total answer.
+ *
+ * Regenerate with `node scripts/trust-ledger.mjs` (that step, and only that step, needs the dump).
+ */
+{
+  const LEDGER = 'src/data/trust-ledger.json';
+  if (!existsSync(join(ROOT, LEDGER))) {
+    console.log(`  --    no ${LEDGER} — the trust gate has not shipped here (skipped)`);
+  } else {
+    const stamped = read(LEDGER).coreSha;
+    const actual = createHash('sha256').update(readFileSync(join(ROOT, 'public/core.json'))).digest('hex');
+    check('the trust ledger is stamped with this core.json', stamped === actual,
+      stamped === actual ? '' : `ledger ${String(stamped).slice(0, 12)}… vs core.json ${actual.slice(0, 12)}… — re-run \`node scripts/trust-ledger.mjs\``);
   }
 }
 

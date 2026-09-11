@@ -6,6 +6,7 @@ import { lookupRef, type DescNode } from './descref';
 import { RichText } from './RichText';
 import { useEscapeClose } from './useEscapeClose';
 import { AstRenderer } from './AstRenderer';
+import { TrustMarker } from './TrustMarker';
 import { astSlug, useAstNode } from './useAst';
 
 /**
@@ -73,6 +74,10 @@ export function DescriptionModal({
   const back = () => { if (stack.length > 1) setStack((s) => s.slice(0, -1)); else onClose(); };
   const showBack = stack.length > 1 || !!backToSource;
 
+  /* "Not yet verified", for whichever node of the stack is open. A node whose key/slug does not
+     resolve to a gated record renders nothing, which is every glossary term and every homebrew page. */
+  const marker = <TrustMarker bucket={cur.key} id={curSlug} />;
+
   const controls = (
     <>
       {showBack && (
@@ -100,7 +105,10 @@ export function DescriptionModal({
     return (
       <div className="picker-overlay" onClick={exit}>
         <div ref={modalRef} className="ast-modal" onPointerDown={liftCapOnGrip} onClick={(e) => e.stopPropagation()}>
-          <AstRenderer node={astNode} selfRef={`${astBucket}:${curSlug}`} onOpenRef={openRef} headerControls={controls} />
+          {/* The ast popup owns its own head + body markup, so the only slot this component can reach
+              is the header. That still puts the line beside the name and above the text — and, being
+              in the head rather than the scrolling body, it stays on screen on a long rules page. */}
+          <AstRenderer node={astNode} selfRef={`${astBucket}:${curSlug}`} onOpenRef={openRef} headerControls={<>{marker}{controls}</>} />
         </div>
       </div>
     );
@@ -118,7 +126,10 @@ export function DescriptionModal({
               <span className="ast-name">{cur.title}</span>
               <span className="ast-head-right"><span className="ast-controls">{controls}</span></span>
             </div>
-            <div className="ast-body ast-loading" aria-busy="true" />
+            {/* Inside the body, so it picks up the body's padding rather than sitting flush against
+                the popup edge — and so the warning is there from the first frame, not after the ast
+                lands. */}
+            <div className="ast-body ast-loading" aria-busy="true">{marker}</div>
           </div>
         </div>
       </div>
@@ -150,6 +161,7 @@ export function DescriptionModal({
           </button>
         </div>
         <div className="info-body">
+          {marker}
           <RichText text={cur.description} refs={cur.descRefs} onOpen={open} selfLabel={cur.title} />
         </div>
       </div>

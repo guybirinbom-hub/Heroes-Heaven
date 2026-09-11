@@ -11,6 +11,7 @@ import { isCloudSyncEnabled } from '../data/supabase';
 import { useAuth, signOut } from '../data/useAuth';
 import { getDeviceInfo, setLoginSkipped } from '../data/device';
 import { setPref, usePrefs } from '../data/prefs';
+import { TRUST_LEDGER, trustCensus } from '../data/trustGate';
 import { CustomizationEditor } from './CustomizationEditor';
 import { useGlobalCustomization, setGlobalCustomizationField, DEFAULT_CUSTOMIZATION } from '../data/customization';
 import { PageMenu } from './PageMenu';
@@ -26,9 +27,10 @@ import { ModeEditor, summarizeMod } from './ModesPanel';
 import { useIsMobile } from './useIsMobile';
 import { useBackHandler } from './useEscapeClose';
 
-type SectionId = 'appearance' | 'modes' | 'tracker' | 'backup' | 'account' | 'about' | 'uninstall';
+type SectionId = 'appearance' | 'rules' | 'modes' | 'tracker' | 'backup' | 'account' | 'about' | 'uninstall';
 const ALL_SECTIONS: { id: SectionId; label: string; icon: string }[] = [
   { id: 'appearance', label: 'Appearance', icon: 'ti-palette' },
+  { id: 'rules', label: 'Rules', icon: 'ti-shield-check' },
   { id: 'modes', label: 'Modes', icon: 'ti-toggle-left' },
   // Removable integration — see src/integration/README.md.
   { id: 'tracker', label: 'Initiative tracker', icon: 'ti-swords' },
@@ -183,6 +185,58 @@ function AppearanceSection() {
           </p>
         </>
       )}
+    </div>
+  );
+}
+
+/**
+ * VERIFIED RULES ONLY — the trust gate's switch (docs/trust-gate.md §4).
+ *
+ * The owner's players read this card, so it says what the app is doing in plain words and never in
+ * ours: no "ledger", no "kinds", no "records with a WG counterpart". Flipping it only writes the pref;
+ * App.tsx watches the pref (it is cloud-synced, so a flip on another device must land the same way)
+ * and rebuilds the content database AND re-derives every character.
+ */
+function RulesSection() {
+  const prefs = usePrefs();
+  const on = prefs.trustGate !== false;
+  const census = trustCensus();
+  const n = (x: number) => x.toLocaleString();
+  return (
+    <div className="settings-section">
+      <h3 className="settings-h">Rules</h3>
+      <p className="settings-desc">
+        Pathfinder has tens of thousands of rules, and we are still working through them one by one. This decides how the
+        app treats the ones we haven't finished checking.
+      </p>
+
+      <div className="menu-label">Verified rules only</div>
+      <div className="menu-row">
+        <button className={'chip' + (on ? ' active' : '')} onClick={() => setPref('trustGate', !on)}>
+          Verified rules only — {on ? 'on' : 'off'}
+        </button>
+      </div>
+      <p className="settings-desc">
+        When this is <strong>on</strong>, the app applies only the rules that have been checked line by line against the
+        printed books and against Wanderer's Guide. Everything else is still there — you can still take the feat, buy the
+        item, pick the option, and read its full text — it just doesn't change any number on your sheet, and it says so
+        underneath its name. Turn it <strong>off</strong> to apply everything, checked or not: more of your character
+        works, and some of it may be wrong. Either way nothing is deleted, and you can switch back at any time.
+      </p>
+      <p className="settings-desc">
+        {on ? (
+          <>
+            Right now {n(census.recordsOff)} feats, features and items apply none of their rules and{' '}
+            {n(census.recordsPartly)} apply part of them, and {n(census.stars)} situational bonuses (the "+1 to this when
+            that" reminders) are hidden.
+          </>
+        ) : (
+          <>
+            Everything is being applied. Turning this on would hold back{' '}
+            {n(Object.keys(TRUST_LEDGER.records).length)} feats, features and items until they have been checked.
+          </>
+        )}
+      </p>
     </div>
   );
 }
@@ -651,6 +705,7 @@ export function SettingsPage({
   const renderSection = (id: SectionId) => (
     <>
       {id === 'appearance' && <AppearanceSection />}
+      {id === 'rules' && <RulesSection />}
       {id === 'modes' && <ModesSection modes={modes} characters={characters} onSaveMode={onSaveMode} onDeleteMode={onDeleteMode} />}
       {id === 'tracker' && TRACKER_IN_CAMPAIGN && <TrackerSettingsSection />}
       {id === 'backup' && <BackupSection />}

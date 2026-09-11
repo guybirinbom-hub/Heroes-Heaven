@@ -85,6 +85,7 @@ import { RankPill, SituationalStar } from '../sheet/widgets';
 import { StatDetailModal } from '../sheet/StatDetailModal';
 import { DefensesPills } from '../sheet/DefensesPills';
 import { DescriptionModal } from '../sheet/DescriptionModal';
+import { TrustMarker } from '../sheet/TrustMarker';
 import { MythicRules } from '../sheet/MythicRules';
 import { PickerRow, descNodeOf } from '../sheet/FilterableSelect';
 import { useEscapeClose } from '../sheet/useEscapeClose';
@@ -110,18 +111,28 @@ export function ChoiceDetails({
   flavor,
   descRefs,
   grants,
+  bucket,
+  id,
 }: {
   /** The option's name — the popup title. */
   name?: string;
   flavor?: string;
   descRefs?: DescRef[];
   grants?: ReactNode;
+  /** The record this row is showing (`feats` / `classFeatures` + its core.json id), so a gated pick
+   *  can say why it does nothing. Optional: a caller that does not know which record it has passes
+   *  neither and gets silence — a "not verified" line on a verified record is worse than none. */
+  bucket?: string;
+  id?: string;
 }) {
   const [open, setOpen] = useState(false);
   const hasFlavor = !!flavor && flavor.trim().length > 0;
   if (!hasFlavor && !grants) return null;
   return (
     <>
+      {/* Under the name (the caller prints it just above) and above everything this row says about
+          what you gain — the shared position, see TrustMarker. */}
+      <TrustMarker bucket={bucket} id={id} />
       {grants}
       {hasFlavor && (
         <button type="button" className="cc-det" onClick={() => setOpen(true)}>

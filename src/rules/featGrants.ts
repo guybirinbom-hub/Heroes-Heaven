@@ -756,6 +756,98 @@ export const FEAT_GRANTS: Record<string, FeatGrant> = {
   ...HAND_AUTHORED_GRANTS,
 };
 
+/*
+ * ------------------------------------------------------------------ the trust gate (lane C)
+ *
+ * WHY: docs/trust-gate.md section 3, "The grant registries". A record whose mechanic the gate turns
+ * off must grant nothing — but this table is CODE, so the ledger cannot strip a field off it. The
+ * ledger instead carries `lanes.featGrants`, keyed by carrier id, valued with the registry KINDS
+ * that are off for that carrier (decision 2). `grantsFor(id)` is the APPLY-side reader: it returns
+ * the entry with those kinds' keys removed. `Builder.tsx` keeps reading FEAT_GRANTS raw, so every
+ * picker still renders and still records the player's pick (section 1, ruling Q27).
+ *
+ * Which key delivers which kind is `FEATGRANT_KEY_KINDS` in scripts/wg-diff.mjs (~838) — the same
+ * table the comparer measures the registry with, mirrored here so the two can never disagree about
+ * what a key means. The six armour/skill RIDERS below the mirrored block are ours: the comparer has
+ * no kind to credit them with, but leaving `armorFamiliarity` live while `armor` on the same entry
+ * has gone dark would grant armour proficiency off a record the gate turned off. They ride the kind
+ * their sibling already answers.
+ *
+ * A key that maps to NO kind (`rankUpgrade`, `minLevel`) is never removed — it modifies another key
+ * rather than granting anything of its own.
+ */
+const GRANT_KEY_KINDS: Record<string, string[]> = {
+  // mirrored from scripts/wg-diff.mjs FEATGRANT_KEY_KINDS
+  skills: ['skill'], skillChoices: ['skill', 'choice'], conditionalSkills: ['skill'],
+  crossConditionalSkills: ['skill'], loreChoices: ['skill', 'choice'], bonusSkillFeat: ['grantsRecord'],
+  save: ['save'], perception: ['perception'], armor: ['ac'], armorCascade: ['ac', 'choice'],
+  weapon: ['weapon'], weaponFamiliarity: ['weapon'], choiceGrants: ['choice'],
+  redundantFallback: ['choice'], rankUpgrade: [], minLevel: [],
+  // …and the riders the comparer's table cannot name, on their sibling's kind.
+  conditionalArmor: ['ac'], conditionalArmorFamiliarity: ['ac'], armorFamiliarity: ['ac'],
+  armorMirrorBest: ['ac'], crossConditionalArmor: ['ac'], conditionalSkillsFallback: ['skill'],
+  skillsIfFeature: ['skill'],
+};
+
+/** carrier id -> the registry kinds that are OFF for it. Written once, at content load. */
+const trustOffKinds = new Map<string, Set<string>>();
+
+/** The `lanes.featGrants` map from the ledger (`{ "<id>": ["skill", …] }`). Replaces the whole map. */
+export const setFeatGrantTrustOff = (map: Record<string, string[]> | undefined): void => {
+  trustOffKinds.clear();
+  for (const [id, kinds] of Object.entries(map ?? {})) if (kinds?.length) trustOffKinds.set(id, new Set(kinds));
+};
+
+/** One entry with every key whose kinds are ALL off removed; `undefined` when nothing kind-bearing
+ *  survives. A key stays as long as ANY kind it answers is still trusted (decision 1). */
+function withoutOffKinds(g: FeatGrant, off: Set<string>): FeatGrant | undefined {
+  const out: Record<string, unknown> = {};
+  let delivered = 0;
+  let kept = 0;
+  for (const [key, value] of Object.entries(g)) {
+    const kinds = GRANT_KEY_KINDS[key];
+    if (kinds?.length) {
+      delivered++;
+      if (kinds.every((k) => off.has(k))) continue;
+      kept++;
+    }
+    // `choiceGrants` holds whole FeatGrants under the player's answer (Canny Acumen's four), and an
+    // off kind has to go dark on those too or the answer would grant what the entry may not.
+    out[key] = key === 'choiceGrants'
+      ? Object.fromEntries(Object.entries(value as Record<string, FeatGrant>).map(([k, v]) => [k, withoutOffKinds(v, off) ?? {}]))
+      : value;
+  }
+  // An entry the kind table cannot read at all (no kind-bearing key) stays whole: the gate is a
+  // DENYLIST, and a key nothing can measure is a key nothing may darken.
+  if (!delivered) return g;
+  return kept ? (out as FeatGrant) : undefined;
+}
+
+/**
+ * The OTHER half of the same lane: the seven feat-grants-a-FEAT tables in featFeatGrants.ts.
+ *
+ * They are keyed by carrier id exactly like FEAT_GRANTS, and the generator credits every key of that
+ * file with `grantsRecord` (scripts/trust-ledger.mjs `FEATFEAT_FILE`), so the ledger already names
+ * them on `lanes.featGrants` — 128 of the 254 ids, 31 of which appear on no FEAT_GRANTS entry at all.
+ * `grantsFor` cannot answer for them (they are not FeatGrant rows), so the apply-side loops in
+ * build.ts ask this instead. Plan section 3 lists both registries under "The grant registries".
+ */
+export const grantsRecordOff = (id: string | undefined | null): boolean =>
+  !!id && !!trustOffKinds.get(id)?.has('grantsRecord');
+
+/**
+ * THE APPLY-SIDE READ of FEAT_GRANTS. Every reader in src/rules goes through this; a raw
+ * `FEAT_GRANTS[…]` there is a lane the gate cannot reach, which `scripts/featgrants-raw-check.mjs`
+ * turns red in `npm run verify`.
+ */
+export function grantsFor(id: string | undefined | null): FeatGrant | undefined {
+  if (!id) return undefined;
+  const g = FEAT_GRANTS[id];
+  const off = trustOffKinds.get(id);
+  if (!g || !off?.size) return g;
+  return withoutOffKinds(g, off);
+}
+
 /**
  * Skills whose rank NO skill increase may raise, because a record's own text forbids it — keyed by
  * proficiency key, valued with the reason the player is shown.

@@ -20,8 +20,50 @@
  *   node scripts/wg-experience.mjs --batch work/wg-batch-024.json
  *   node scripts/wg-experience.mjs --batch work/wg-batch-024.json --skip-harness   # re-judge only
  *   node scripts/wg-experience.mjs --batch work/wg-batch-024.json --verbose        # print OK rows too
+ *   node scripts/wg-experience.mjs --batch work/wg-batch-TRUST.json --gated        # THROUGH the trust gate
  *
  * Exit 0 once the artefact is written, whatever the verdicts say — deciding pass/fail is the gate's job.
+ *
+ * ---------------------------------------------------------------------------------------------------
+ * `--gated` — THE TRUST GATE'S END-TO-END PROOF (docs/trust-gate.md §5).
+ *
+ * The harness builds its content with `content({ trustGate: true })`, so the sweep plays the builder a
+ * player with the gate ON actually sees. Everything else is unchanged. It writes to its OWN artefacts
+ * (`…-experience-gated.json`, `work/.experience-raw-<token>-gated.json`) so a gated sweep can never be
+ * read by `scripts/wg-batch-gate.mjs` as a batch's own gate-9 evidence — the batch lane stays ungated.
+ *
+ * THE 20+20 SAMPLE, as a recipe (the plan's proof; run it when the closer asks, not inside a batch):
+ *   1. Twenty records the ledger leaves ON — pick at random from work/.wg-diff-all.json's `agree` /
+ *      `weOnly` / `theyOnly` rows whose `bucket/id` has NO entry in src/data/trust-ledger.json's
+ *      `records` AND whose bare id is on NONE of the four code lanes (`lanes.situational`,
+ *      `lanes.featGrants`, `lanes.modes`, `lanes.stances`, `lanes.engine`). The `records` test ALONE
+ *      is not enough and the closer's first run proved it: `feats/aerobatics-mastery` has no `records`
+ *      entry — its whole mechanic is a situational STAR, which lives in code, not in a field — and it
+ *      is on `lanes.situational` because our star is the `conditional` kind while WG encodes only
+ *      `note`+`skill` there. It came back NO-SHEET-EFFECT, which is the RULED behaviour (Q1: a kind
+ *      WG does not encode is off) read as a failure by a sample that could not see four of five lanes.
+ *   2. Twenty it turns OFF — pick at random from the KEYS of that same `records` map, preferring keys
+ *      whose off-path list is the record's whole mechanic (work/.trust-census/fully-dark.json is
+ *      exactly that list, already computed).
+ *   3. Write the forty rows as `work/wg-batch-TRUST.json`, in the batch shape
+ *      (`[{ "bucket": "feats", "id": "…", "name": "…", "level": 3 }, …]` — `wg-batch.mjs` writes it,
+ *      or hand-write it: only bucket/id/name/level are read).
+ *   4. `node scripts/wg-experience.mjs --batch work/wg-batch-TRUST.json --gated`
+ *   5. READ IT AS: the first twenty must come back OK — a trusted record still asks its question and
+ *      still moves the sheet. A NO-SHEET-EFFECT or MISSING-CONTROL verdict THERE is the failure this
+ *      proof exists to catch (having picked the twenty by step 1's full test, all five lanes).
+ *      For the second twenty, read TWO things and run the same batch UNGATED to have them to read
+ *      against — the artefacts are named apart, so both survive:
+ *        · CONTROLS: `ours.controlsAdded.length` must be the SAME gated and ungated, record for
+ *          record. That is §1's promise — the picker still asks, the answer grants nothing. This is
+ *          the half that actually bites; the closer's run had all 40 identical.
+ *        · SHEET: only where WG encodes a value-bearing op (`wg.openValueEffects > 0`) does
+ *          `sheetDiffCount` have to fall to 0. A blanket "`sheetDiffCount: 0`" is WRONG and the
+ *          closer's run proved that too: a dark STAFF still shows 40 diffs gated and ungated alike,
+ *          because they are the weapon CHASSIS — wielding a staff changes your Strike, and §1 puts
+ *          chassis permanently out of the gate's reach. Expect most of the twenty to have nothing to
+ *          judge at all: a record is fully dark mostly BECAUSE WG leaves it prose-only or has no row,
+ *          so 18 of the closer's 20 had `wg.openValueEffects === 0` and their OK is vacuous.
  */
 import { readFileSync, writeFileSync, existsSync, statSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
@@ -51,9 +93,13 @@ if (characterPath && !existsSync(join(ROOT, characterPath))) { console.error(`no
 const DUMP = join(ROOT, 'work/wg/wg-data.sql');
 if (!existsSync(DUMP)) { console.error("No Wanderer's Guide dump at work/wg/wg-data.sql (gitignored on purpose: GPL-3.0; differ only)."); process.exit(2); }
 
+/* --gated: play the sweep through the TRUST GATE (docs/trust-gate.md §5; see the header recipe). Its
+ * artefacts are named apart so a gated sweep is never mistaken for a batch's own gate-9 evidence. */
+const GATED = process.argv.includes('--gated');
+const G = GATED ? '-gated' : '';
 const slug = characterPath ? characterPath.replace(/^.*[\\/]/, '').replace(/\.codex\.json$/i, '').replace(/[^a-z0-9]+/gi, '-').toLowerCase() : null;
-const RAW = characterPath ? `work/.experience-raw-character-${slug}.json` : `work/.experience-raw-${n}.json`;
-const OUT = characterPath ? `work/wg-character-${slug}-experience.json` : batchPath.replace(/\.json$/, '-experience.json');
+const RAW = characterPath ? `work/.experience-raw-character-${slug}${G}.json` : `work/.experience-raw-${n}${G}.json`;
+const OUT = characterPath ? `work/wg-character-${slug}-experience${G}.json` : batchPath.replace(/\.json$/, `-experience${G}.json`);
 const read = (p) => JSON.parse(readFileSync(join(ROOT, p), 'utf8').replace(/^﻿/, ''));
 const norm = (s) => String(s ?? '').toLowerCase().replace(/[^a-z0-9]+/g, '');
 
@@ -81,11 +127,11 @@ if (!SKIP_HARNESS) {
      * transient and a whole batch stage should not die of it — but a second failure is a real one, and
      * retrying forever would hide a broken harness behind a slow loop. */
     for (let attempt = 1; attempt <= 2; attempt++) {
-      console.log(`experience: playing ${batchPath ?? characterPath} on the real builder (jsdom)${attempt > 1 ? ' — retry' : ''} …`);
+      console.log(`experience: playing ${batchPath ?? characterPath} on the real builder (jsdom)${GATED ? ' — THROUGH THE TRUST GATE' : ''}${attempt > 1 ? ' — retry' : ''} …`);
       const startedAt = Date.now();
       const r = spawnSync('npx', ['vitest', 'run', 'test/wg-experience.harness.test.tsx', '--reporter=dot'], {
         cwd: ROOT, stdio: 'inherit', shell: true,
-        env: { ...process.env, ...(batchPath ? { WG_EXPERIENCE_BATCH: batchPath } : { WG_EXPERIENCE_CHARACTER: join(ROOT, characterPath) }), WG_EXPERIENCE_OUT: RAW },
+        env: { ...process.env, ...(batchPath ? { WG_EXPERIENCE_BATCH: batchPath } : { WG_EXPERIENCE_CHARACTER: join(ROOT, characterPath) }), WG_EXPERIENCE_OUT: RAW, ...(GATED ? { WG_EXPERIENCE_GATED: '1' } : {}) },
       });
       const rawStat = existsSync(join(ROOT, RAW)) ? statSync(join(ROOT, RAW)) : null;
       if (r.status === 0 && rawStat && rawStat.mtimeMs >= startedAt) return;
@@ -102,6 +148,19 @@ if (!existsSync(join(ROOT, RAW))) { console.error(`experience: no harness output
 
 /* ---- 2. their side ------------------------------------------------------------------------------- */
 const raw = read(RAW);
+/* The harness stamps which content it played. A dump whose `gated` disagrees with this run's flag means
+ * the env never reached the vitest process, and judging it would report gated verdicts about an ungated
+ * sweep (or the reverse) — the exact shape of the four measuring scripts that lied in this repo.
+ *
+ * Asked on EVERY run, --skip-harness included: re-judging a dump this run did not produce is exactly
+ * when a stale one is read, and gating the question on "we just wrote it" left the guard unreachable in
+ * the only mode that needs it (verified: `--gated --skip-harness` over an ungated dump wrote a
+ * `-experience-gated.json` artefact stamped `gated: true`, exit 0). A dump older than this flag carries
+ * no `gated` key at all, and that case is still allowed through. */
+if (raw.gated !== undefined && !!raw.gated !== GATED) {
+  console.error(`experience: ${RAW} was produced ${raw.gated ? 'WITH' : 'WITHOUT'} the trust gate but this run is ${GATED ? '--gated' : 'ungated'} — refusing to judge it`);
+  process.exit(1);
+}
 const ours = new Map((raw.records ?? []).map((r) => [r.id, r]));
 // In character mode the harness decided the rows (everything the character owns); they come back on the raw records.
 const batch = batchPath ? Object.values(read(batchPath)) : (raw.records ?? []).map((r) => ({ bucket: r.bucket, id: r.id, name: r.name, level: r.level ?? null }));
@@ -283,6 +342,9 @@ const counts = {};
 for (const r of records) counts[r.verdict] = (counts[r.verdict] ?? 0) + 1;
 const out = {
   batch: batchPath,
+  /* Which content this sweep played: WITH the trust gate applied, or the shipped database. Stamped so a
+   * reader of the artefact can never mistake a gated verdict for the batch's own gate-9 evidence. */
+  gated: GATED,
   generated: new Date().toISOString(),
   /* WHEN THE BUILDER WAS ACTUALLY PLAYED — the raw dump's mtime, not the moment this file was written.
    * docs/wg-batch-pipeline.md §A: "the artefact gains `observed` (the raw file's mtime) and gate 9

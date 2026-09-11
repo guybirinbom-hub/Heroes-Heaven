@@ -25,7 +25,7 @@ import { computeSummary } from './sheet/partySummary';
 import { publishCharacter, unpublishCharacter, fetchGmEdits, deleteGmEdit, currentUserId, subscribeGmEdits } from './data/party';
 import { loadRoster, saveRoster, newRosterId, duplicateChar, uniqueName, loadActiveId, saveActiveId, saveHomebrewItem, saveMode, deleteMode, loadCampaigns, saveCampaigns, loadGmEditsApplied, saveGmEditsApplied, ROSTER_KEY, localStorageBytes, type SavedChar } from './data/storage';
 import { isTauri } from './platform';
-import { getPrefs } from './data/prefs';
+import { getPrefs, subscribePrefs } from './data/prefs';
 import { useShowUndoButtons } from './sheet/useIsMobile';
 import { playerWorkWasOverwritten, editsToApply } from './sheet/gmSync';
 import { useHeightVar } from './sheet/useHeightVar';
@@ -158,6 +158,37 @@ export default function App() {
       return next;
     });
   }, [content, setRoster]);
+
+  /*
+   * VERIFIED RULES ONLY — the trust gate's switch (docs/trust-gate.md §4).
+   *
+   * Flipping it must do TWO things, not one: re-merge the content database (the gate runs inside
+   * mergeWithSeed, on the raw core, so a rebuild re-gates from scratch in either direction) AND
+   * re-derive every character, because the stored `character` is a derived cache — without the roster
+   * rebuild only the open sheet would change and every other character would keep its pre-flip numbers.
+   *
+   * Watched HERE rather than handled in the Settings card because prefs are cloud-synced: a flip made
+   * on the phone arrives through `reloadPrefs` and has to land the same way, with no relaunch.
+   *
+   * ⚠ `noteDerivedRefresh` — a rebuild is a DERIVED refresh, never an edit. See the launch rebuild
+   * above and src/data/rebuild.ts:14-15 for the two-device data loss that taught this.
+   */
+  const gatePref = useRef(getPrefs().trustGate);
+  useEffect(
+    () =>
+      subscribePrefs((p) => {
+        if (p.trustGate === gatePref.current) return;
+        gatePref.current = p.trustGate;
+        const db = rebuildContent();
+        setContent(db);
+        setRoster((r) => {
+          const next = rebuildRoster(r, db);
+          noteDerivedRefresh(next);
+          return next;
+        });
+      }),
+    [setRoster],
+  );
 
   useEffect(() => {
     // Any interaction while loading cancels the boot-time jump to the sheet.

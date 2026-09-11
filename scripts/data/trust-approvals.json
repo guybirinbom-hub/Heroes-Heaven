@@ -1,0 +1,446 @@
+{
+ "_": "WHY THIS FILE EXISTS. The trust gate (docs/trust-gate.md) switches OFF every record mechanic Wanderer's Guide does not encode, so the app ships only what the WG parity effort has verified. That rule is right for the 11,100 records nobody has read against print, and WRONG for the ~150 records the owner personally ruled on at the rulings desk on 2026-09-10: those he HAS read, and a ruling that builds or keeps a mechanic would ship dark the day it lands unless this file says otherwise. So every desk number in work/owner-questions.json is given exactly one disposition here, and the generator (scripts/trust-ledger.mjs) removes an `approvals` entry's field paths from that record's OFF list. Hand-maintained on purpose: an approval is a judgement about which FIELDS a ruling turns on, and that cannot be read out of prose (docs/trust-gate.md:361-363).",
+ "_dispositions": "approvals = the ruling KEEPS or ADDS a mechanic WG does not encode on that record, so the named paths must stay ON. noMechanic = the ruling changes nothing a field carries (it settles a difference, removes a duplicate control, fixes prose or a value), or the mechanic it lands on is a kind WG already encodes on that record so the gate leaves it alone. engine = the ruling is code, not a record field. unruled = the 22 numbers work/desk-answers-2026-09-10.json skips (already ruled, deferred, or a standing authorised exception); they carry no approval until the owner answers them.",
+ "_fieldPaths": "⚠ scripts/data/trust-fields.json (the strippable universe, plan §2a) DID NOT EXIST when this file was written — lane A had not produced it. Every path below is therefore taken from the OUR_KINDS field lists at scripts/wg-diff.mjs:396-582 and the nested container paths ourKindsOf walks at scripts/wg-diff.mjs:1216-1330 (`choice.options[].grant.*`, `effectChoices[].options[].grant.*`, `whileActive[].*`, `enhancement.grant.*`, `resonant.*`, `passiveEffects.*`). When trust-fields.json lands, re-check every path here against it.",
+ "_pending": "\"pending\": true means the RECORD does not exist in public/core.json yet — the ruling creates it, and `record` is the intended id. A field named in `fields` that the record does not carry yet is normal and expected: the approval is written BEFORE the desk fix so the fix is live the moment it lands (docs/trust-gate.md:327-329).",
+ "_multipleRows": "A desk number may own MORE THAN ONE approvals row when one ruling touches several records (the quah emblem family, the six kitsune/nagaji feats, the magus/summoner move). What must be unique is the DISPOSITION: no number appears in two of the four lists. test/trust-approvals.test.ts pins exactly that.",
+ "_source": "Rulings: work/desk-answers-2026-09-10.json (the `answers` array, 128 numbers) and work/desk-brief-2026-09-10.json (the `entries` array, per-number id/title/recommendation/ifYes). Roster of desk numbers: work/owner-questions.json (open 128 + deferred 13 + ruled 6 + authorisedExceptions 3 = 150). WG verdicts quoted in `why`: work/.wg-diff-all.json.",
+
+ "approvals": [
+  {
+   "n": 7,
+   "record": "feats/locate-lawbreakers",
+   "fields": ["effectChoices", "effectChoices[].options[].grant.innateSpells"],
+   "why": "The ruling BUILDS a mechanic: 'FIX #7 Locate Lawbreakers: rank 5 at level 14 only for Order of the Gate members (read the stored order)' — the innate spell lives in the effectChoices branches, and WG encodes only choice/conditional/spell on this row, so the grant's spellcasting half goes dark without this."
+  },
+  {
+   "n": 10,
+   "record": "feats/armor-in-earth",
+   "fields": ["grantsItems"],
+   "why": "The ruling ADDS the armour-proficiency borrowing: 'attach the existing best-armour-proficiency borrowing (Sentinel Dedication / Mountain Skin lane) to the GRANTED armour item (medium and heavy versions)' — the grant is what carries it, and the borrowing itself is the code lane at src/rules/featGrantsAuto.ts:570 (armorMirrorBest), keyed by this feat id."
+  },
+  {
+   "n": 10,
+   "record": "items/armor-in-earth-medium",
+   "fields": ["acBonus", "armorSpec"],
+   "why": "Same ruling, the granted medium suit: 'kineticist gains no medium/heavy training, drop the \"set it yourself\" note' — the borrowing rides on the granted armour item, and this item has no WG row at all, so every path on it goes dark by default."
+  },
+  {
+   "n": 10,
+   "record": "items/armor-in-earth-heavy",
+   "fields": ["acBonus", "armorSpec"],
+   "why": "Same ruling, the granted heavy suit — same reasoning as the medium version; the item has no WG row, so its chassis-adjacent effect paths go dark by default."
+  },
+  {
+   "n": 12,
+   "record": "feats/molten-wit",
+   "fields": ["choice", "choice.options[].grant.skills", "choice.options[].grant.grantsFeats"],
+   "why": "The ruling BUILDS all three printed branches: '#12 Molten Wit: build all three printed branches (neither trained: paired skill+feat; trained in one: must take the other skill, pick either feat; trained in both: free skill of choice + either feat)' — WG encodes only `choice` here (work/.wg-diff-all.json weOnly, extra=[specialStat,skill,grantsRecord]), so every branch grant would ship dark."
+  },
+  {
+   "n": 13,
+   "record": "items/pyrotechnic-versatile-vial",
+   "fields": ["damage", "range", "reload"],
+   "pending": true,
+   "modelledOn": "items/versatile-vial",
+   "why": "The ruling CREATES a record that does not exist yet: '#13 vials item' — 'add a pyrotechnic copy of the existing Versatile Vial item (fire damage instead of acid, thrown, range 20)'. The intended id is items/pyrotechnic-versatile-vial, shaped on items/versatile-vial, which is itself `noMatch` in work/.wg-diff-all.json (WG has no row) — so the copy inherits no trust. Its fields are weapon chassis, which §1 protects (docs/trust-gate.md:35-38); the entry exists so the new record is on the ledger's books rather than appearing later as an unexplained ungated item."
+  },
+  {
+   "n": 13,
+   "record": "feats/firework-technician-dedication",
+   "fields": ["grantsItems"],
+   "why": "Same ruling, the granting side: the dedication must hand the vials over rather than only counting them ('A counter of 4 vials only. No item exists, so there is nothing to throw'). WG's row encodes grantsItem, but our record does not carry the field yet, so the approval is written ahead of the fix."
+  },
+  {
+   "n": 16,
+   "record": "feats/intuitive-crafting",
+   "fields": ["degreeShifts", "choice", "choice.options[].grant.grantsFeats"],
+   "why": "The ruling CHANGES what the middle branch grants: '#16 Intuitive Crafting: middle case gives Specialty Crafting ONLY (no extra free skill); keep the free skill for the both-held case.' WG's row does encode conditional/grantsRecord/skill, so most of this survives on its own — the entry is here because docs/trust-gate.md:76 names it in the add-a-mechanic list and the branch grants must not be emptied."
+  },
+  {
+   "n": 17,
+   "record": "items/merchants-scale",
+   "fields": ["note"],
+   "why": "The ruling KEEPS the item inert and adds one line of ours: 'no mechanical effect; show one plain line clearly marked as ours: the book prints no rules for this item. Never WG's +1 to seven skills.' The line is prose, which §1 already protects, and this entry records that the item's emptiness is DELIBERATE — WG encodes `skill` here and the gate must not be read later as having stripped it."
+  },
+  {
+   "n": 18,
+   "record": "feats/nagaji-spell-familiarity",
+   "fields": ["choice", "dailyChoice", "choice.options[].grant.innateSpells"],
+   "why": "The ruling REBUILDS the control: 'ONE control at daily preparations, defaulting to yesterday's answer; delete the builder-time picker' — nagaji-spell-familiarity feat-3984 (daze/detect magic/mage hand, occult at-will cantrip). WG encodes only `choice` (weOnly, extra=[specialStat,spell]), so the granted cantrip goes dark without this."
+  },
+  {
+   "n": 18,
+   "record": "feats/kitsune-spell-familiarity",
+   "fields": ["choice", "dailyChoice", "choice.options[].grant.innateSpells"],
+   "why": "Same ruling, the kitsune twin the desk did not number separately: 'kitsune-spell-familiarity feat-2619 (daze/forbidding ward/ghost sound, divine at-will cantrip, heightened half level round up)'."
+  },
+  {
+   "n": 18,
+   "record": "feats/kitsune-spell-expertise",
+   "fields": ["choice", "dailyChoice", "choice.options[].grant.innateSpells", "choice.options[].grant.spellcastingGrant"],
+   "why": "Same ruling, the third kitsune feat: 'kitsune-spell-expertise feat-2629 (confusion/death ward/illusory scene, 5th-rank divine 1/day + expert divine spell DC/attack)'."
+  },
+  {
+   "n": 18,
+   "record": "feats/nagaji-spell-expertise",
+   "fields": ["choice", "dailyChoice", "choice.options[].grant.innateSpells", "choice.options[].grant.spellcastingGrant"],
+   "why": "Same ruling, the third nagaji feat: 'nagaji-spell-expertise feat-3996 (blink/control water/subconscious suggestion, 5th-rank occult 1/day + expert occult DC/attack)'."
+  },
+  {
+   "n": 26,
+   "record": "items/hardwood-armor-armor",
+   "fields": ["acBonus", "armorSpec", "note"],
+   "why": "The ruling ADDS the same armour-proficiency borrowing as #10: 'Armor in Earth + Hardwood Armor: attach the existing best-armour-proficiency borrowing … to the GRANTED armour item … Not WG's train-in-medium shortcut.' WG's row here encodes conditional/ac only (work/.wg-diff-all.json, extra=[speed,note])."
+  },
+  {
+   "n": 28,
+   "record": "items/unifying-emblem-shundar-quah",
+   "fields": ["innateSpells"],
+   "why": "SPECIFIC owner approval to go past WG: 'for this case specifically because i went over this and approve we can implement the rest of the family. Add Thoughtful Gift (Shundar) …' WG encodes conditional/skill/language on all seven emblems and no spell at all, so the once-per-day spell exists only because he approved it."
+  },
+  {
+   "n": 28,
+   "record": "items/unifying-emblem-lyrune-quah",
+   "fields": ["innateSpells"],
+   "why": "Same approval, one of the four emblems that ALREADY ships the spell — 'If he says match Wanderer's Guide: remove the spell from Lyrune, Shadde, Shriikirri and Skoan' was the other branch, and he chose to finish the family instead. work/.wg-diff-all.json puts this row in weOnly with the spell as our extra."
+  },
+  {
+   "n": 28,
+   "record": "items/unifying-emblem-shadde-quah",
+   "fields": ["innateSpells"],
+   "why": "Same approval, second of the four already-shipped emblems (weOnly in work/.wg-diff-all.json; WG's row carries no spell)."
+  },
+  {
+   "n": 28,
+   "record": "items/unifying-emblem-shriikirri-quah",
+   "fields": ["innateSpells"],
+   "why": "Same approval, third of the four already-shipped emblems (weOnly in work/.wg-diff-all.json; WG's row carries no spell)."
+  },
+  {
+   "n": 28,
+   "record": "items/unifying-emblem-skoan-quah",
+   "fields": ["innateSpells"],
+   "why": "Same approval, fourth of the four already-shipped emblems (weOnly in work/.wg-diff-all.json; WG's row carries no spell)."
+  },
+  {
+   "n": 29,
+   "record": "items/unifying-emblem-sklar-quah",
+   "fields": ["innateSpells", "actionCost"],
+   "why": "Same specific approval: 'Add … Concordant Choir (Sklar, spell's own 1-3 action cost)'. WG's row encodes conditional/skill/language and no spell."
+  },
+  {
+   "n": 30,
+   "record": "items/unifying-emblem-tamiir-quah",
+   "fields": ["innateSpells"],
+   "why": "Same specific approval: 'Add … Tailwind (Tamiir) once per day'. WG's row encodes conditional/skill/language and no spell."
+  },
+  {
+   "n": 40,
+   "record": "feats/hardened-chassis",
+   "fields": ["choice.options[].grant.resistances", "enhancement.grant.resistances", "resistanceLevelUpgrade"],
+   "why": "The ruling BUILDS the missing tier: '#40 Hardened Chassis Enhancement computed, switched on only by an augmentation feat naming it (never asked of every automaton)'. WG's row does encode defense here, but the Enhancement tier is a container the record does not carry yet, and docs/trust-gate.md:75 names it in the add-a-mechanic list."
+  },
+  {
+   "n": 43,
+   "record": "feats/kitsune-spell-mysteries",
+   "fields": ["choice", "dailyChoice", "choice.options[].grant.innateSpells"],
+   "why": "The ruling REBUILDS the control and keeps the granted spell: 'kitsune-spell-mysteries feat-2624 (bane/illusory object/sanctuary, 1st-rank divine innate 1/day)' asked once at daily preparations. WG encodes only `choice` (weOnly, extra=[specialStat,spell])."
+  },
+  {
+   "n": 44,
+   "record": "feats/nagaji-spell-mysteries",
+   "fields": ["choice", "dailyChoice", "choice.options[].grant.innateSpells"],
+   "why": "Same ruling, the nagaji twin: 'nagaji-spell-mysteries feat-3988 (charm/fleet step/heal, 1st-rank occult innate 1/day)'. WG encodes only `choice` (weOnly, extra=[specialStat,spell])."
+  },
+  {
+   "n": 51,
+   "record": "items/astrolabe-of-falling-stars",
+   "fields": ["situational"],
+   "why": "The ruling ADDS a star this item does not have: 'Add the same star its six siblings carry (all skills, on checks to identify celestial bodies, trained in Survival, held in two hands). Not WG's Survival-only narrowing.' WG's row encodes `skill` only (theyOnly, missing=[skill]), so a `conditional` star is ours alone."
+  },
+  {
+   "n": 55,
+   "record": "feats/breath-of-the-dragon",
+   "fields": ["effectChoices", "effectChoices[].options[].grant.grantedStrikes"],
+   "why": "The ruling REPLACES three pickers with a derivation: 'drop the three pickers on Breath of the Dragon; shape, damage and save come from the Dragonblood exemplar' against the printed Draconic Benefactors table. WG's row encodes conditional/note only, so `choice` is our extra and the whole effectChoices container would be emptied."
+  },
+  {
+   "n": 56,
+   "record": "feats/basic-summoner-spellcasting",
+   "fields": ["spellcastingGrant", "spellSlotBonus"],
+   "why": "The 2026 Impossible Magic move: 'archetype basic spellcasting at level 4 with ordinary casting'. WG's row agrees on spellcasting/spellSlot today, but the rebuilt feat carries fields the record does not have yet, and the whole magus/summoner move is named at docs/trust-gate.md:80."
+  },
+  {
+   "n": 57,
+   "record": "feats/time-mage-dedication",
+   "fields": ["innateSpells", "focusSpells"],
+   "why": "The ruling FIXES a derivation: 'Time Mage Dedication feat-8480 … The app derives the focus side but Time Sense falls back to arcane — derive it the same way. No picker.' WG's row is theyOnly with `focus` as our extra, so the focus-spell path carries a kind WG never emits."
+  },
+  {
+   "n": 68,
+   "record": "items/mask-of-the-mantis-major",
+   "fields": ["heldSpells", "passiveEffects.perception"],
+   "why": "The ruling KEEPS and completes the Major mask: 'Make sure the Major carries the pinpoint activation and the +3 to Perception and Intimidation (Vernai's Ire) as printed.' WG has NO row for this item at all (noMatch in work/.wg-diff-all.json), so every mechanic on it is dark by default."
+  },
+  {
+   "n": 69,
+   "record": "items/zealot-staff",
+   "fields": ["heldSpells", "passiveEffects.skills"],
+   "why": "The ruling CHANGES the limit and keeps the pool: 'remove the app's once-per-minute limit and its \"per minute\" pip; keep only the charge pool', plus the printed spell list at the printed ranks. WG's row is `theirsUnencoded` (they have the row, prose only, zero ops), so the whole staff is dark by default."
+  },
+  {
+   "n": 70,
+   "record": "feats/wild-lights",
+   "fields": ["note", "recordMarks"],
+   "why": "The ruling RESTORES the printed name and adds one marked line of ours: 'restore the printed name Dancing Lights, remove the link to Light, add one clearly-marked line of ours naming Light as the replacement; NO mechanical rider on Light.' WG has NO row for this feat (noMatch), so anything it carries is dark by default."
+  },
+  {
+   "n": 71,
+   "record": "feats/toppling-tentacles",
+   "fields": ["recordMarks"],
+   "why": "The ruling ADDS annotations to other records: 'printed note on Black Tentacles + the same note (marked as from this feat) on Slither'. `recordMarks` is our `modifiesGrant` kind and WG's row here encodes only `note`, so the riders would ship dark."
+  },
+  {
+   "n": 71,
+   "record": "feats/spew-tentacles",
+   "fields": ["recordMarks"],
+   "why": "Same ruling, the sibling the desk names in the same sentence: 'same for Spew Tentacles'. WG's row encodes `spell` only, so a `modifiesGrant` rider is ours alone."
+  },
+  {
+   "n": 73,
+   "record": "feats/armigers-protection",
+   "fields": ["choice", "grantsItems", "choice.options[].grant.grantsItems"],
+   "why": "The ruling BUILDS the pick: '#73 Armiger's Protection real pick of breastplate/half plate/plate (greyed where untrained) landing in inventory'. WG has NO row for this feat (noMatch in work/.wg-diff-all.json), so both the picker's grant and the item grant are dark by default."
+  },
+  {
+   "n": 85,
+   "record": "backgrounds/reborn-soul",
+   "fields": ["trainedLoreChoice", "trainedLoreChoiceCount", "skillProgression"],
+   "why": "The ruling BUILDS three restricted increases: 'at 3rd, 7th and 15th level ONE EXTRA skill increase each, spendable only on one of the two past-life Lores … build the three extra increases as a restricted pick.' WG's row encodes choice/conditional only, with `skill` as our extra."
+  },
+  {
+   "n": 97,
+   "record": "backgrounds/northridge-scholar",
+   "fields": ["grantsActions", "situational"],
+   "why": "The ruling KEEPS our free action against WG's limit: 'Seasonal Boon stays a free action with no frequency (our page prints none); WG's \"once per season\" not copied.' The granted action actions/seasonal-boon-northridge is itself `noMatch` in work/.wg-diff-all.json, and the record's star lives in the registry at src/rules/situationalBonuses.ts:3146."
+  },
+  {
+   "n": 102,
+   "record": "feats/flexible-spellcaster-dedication",
+   "fields": ["spellSlotBonus", "spellcastingGrant"],
+   "why": "The ruling RESHAPES the pool: '#102 Flexible Spellcaster ONE flat pool sized by total slots, >=1 first-rank (not per rank)'. WG's row is `theirsUnencoded` (row present, zero ops), so every mechanic on the dedication is dark by default."
+  },
+  {
+   "n": 104,
+   "record": "classes/magus",
+   "fields": ["spellcasting"],
+   "why": "The 2026 move: 'move magus + summoner to the 2026 Impossible Magic printing whole: full slot tables (lower ranks kept)'. Class records are chassis and all-on by construction (docs/trust-gate.md:118-121); the entry is written anyway because docs/trust-gate.md:80 names the move and the rebuilt slot table must be provably on."
+  },
+  {
+   "n": 104,
+   "record": "classFeatures/arcane-spellcasting-magus",
+   "fields": ["spellcasting", "spellSlot"],
+   "why": "Same move, the class feature that states the magus casting. It is NOT chassis (classFeatures go through the per-path rule), and the record carries no mechanical field today, so the rebuilt slot table would land on an untrusted record."
+  },
+  {
+   "n": 113,
+   "record": "feats/oatia-skysage-dedication",
+   "fields": ["effectChoices", "choiceOptionLimits", "spellcastingGrant"],
+   "why": "The ruling NARROWS the picker: 'FIX #113 Oatia Skysage: cantrip picker offers only Detect Magic, Guidance, Know the Way, Read Aura (existing characters with another pick must re-choose).' Narrowing a picker is the owner's own standing prerogative (owner-questions.json authorisedExceptions #125) and WG's row is disagree/weOnly with spell+spellSlot as our extras."
+  },
+  {
+   "n": 120,
+   "record": "classes/summoner",
+   "fields": ["spellcasting", "focusSpells", "trainedSkills"],
+   "why": "The 2026 move: 'move magus + summoner to the 2026 Impossible Magic printing whole: full slot tables (lower ranks kept)'. Chassis keeps the class record on, but work/.wg-diff-all.json shows skill/spell/focus as OUR extras on this row, so the paths are named explicitly."
+  },
+  {
+   "n": 120,
+   "record": "classFeatures/summoner-spellcasting",
+   "fields": ["spellcasting", "spellSlot"],
+   "why": "Same move, the class feature that states the summoner casting: work/.wg-diff-all.json weOnly, theirKinds=[spellSlot], extra=[spellcasting]. Not chassis, and the record carries no mechanical field today."
+  },
+  {
+   "n": 121,
+   "record": "classFeatures/studious-spells",
+   "fields": ["spellSlotBonus", "grantsActions"],
+   "why": "The ruling REBUILDS the feature: 'Studious Spell rebuilt (level 7, listed spells, free Arcane Cascade)'. work/.wg-diff-all.json has this row as weOnly with theirKinds=[spell,note,conditional] and `spellSlot` as our extra, so the extra slot is dark without this."
+  },
+  {
+   "n": 128,
+   "record": "feats/haunting-memories",
+   "fields": ["choice", "choice.options[].grant.skills", "dailyChoice", "temporaryProficiency"],
+   "why": "The ruling BUILDS a second daily question: '#128 Haunting Memories second morning question (temporary skill feat, half-level cap per print)'. WG encodes only `choice` (weOnly, extra=[specialStat,skill]), so the branch's skill grant would be emptied."
+  },
+  {
+   "n": 129,
+   "record": "feats/dream-magic",
+   "fields": ["effectChoices", "spellcastingGrant", "effectChoices[].options[].grant.innateSpells"],
+   "why": "The ruling BUILDS the second taking: '#129 Dream Magic per-taking answer, second taking forces the other spell'. WG encodes only `choice` (weOnly, extra=[spellcasting,spell]), so both the granted spell and its casting entry would ship dark."
+  },
+  {
+   "n": 140,
+   "record": "classFeatures/scar-of-the-survivor",
+   "fields": ["grantsClassFeatures", "situational"],
+   "why": "The ruling BUILDS a toggle that moves a number: '#140 Scar of the Survivor divine-spark toggle that raises the dying value (also fixes Soul Well)'. WG's row encodes `note` only, so grantsRecord/conditional/save are all ours; the star is registered at src/rules/situationalBonuses.ts:1463."
+  },
+  {
+   "n": 141,
+   "record": "classFeatures/skybearers-belt",
+   "fields": ["situational", "grantsClassFeatures"],
+   "why": "The ruling KEEPS the printed bonuses against WG's different rule: 'the three stars (Athletics / Fortitude / Reflex) must be SCOPED to those four actions and to resisting them, not blanket … WG's 15-ft Bulk aura is NOT printed'. WG's row encodes `note` only; the three stars live in the registry at src/rules/situationalBonuses.ts:2861."
+  },
+  {
+   "n": 143,
+   "record": "classFeatures/curse-of-turbulent-moments",
+   "fields": ["situational"],
+   "why": "The ruling KEEPS the star instead of WG's sixteen numeric rows: 'status penalty to AC vs reactions/free actions and to saves vs fatigued/slowed effects = cursebound value — conditional, note. Rule 2026-08-22: a condition the sheet cannot see is a star, never a number.' The star is registered at src/rules/situationalBonuses.ts:4625; WG's row does encode `conditional`, so this entry is belt-and-braces for a record docs/trust-gate.md:78 names."
+  },
+  {
+   "n": 149,
+   "record": "feats/spirit-walk",
+   "fields": ["resistances", "situational"],
+   "why": "The ruling KEEPS three printed pieces against a playtest row: 'first turn of an encounter: resistance = half level vs damage from haunts/spirits (built in batch 036 as conditionalResistances)' and the two +2 status stars. WG's row is theyOnly with theirKinds=[sense] and defense/conditional/skill/ac/save ALL ours — docs/trust-gate.md:313 names this record as the example of a paired record that shares no kind with WG."
+  }
+ ],
+
+ "noMechanic": [
+  { "n": 3, "record": "feats/devil-allies", "why": "'yes' under R12 — keep the newest printing. The app already ships rank 6 with heightening from level 14; the ruling moves no field, it only settles which printing wins (brief ifYes: 'Nothing changes; the app already does this.')." },
+  { "n": 4, "record": "classFeatures/animist-apparition-spellcasting", "why": "'Animist slot table: keep the app (matches the printed table row for row); nothing changes; close both.'" },
+  { "n": 5, "record": "feats/fear-no-law-fear-no-one", "why": "'yes' under R12 — 'Nothing changes; Scourge Hellknights keep the Strike and gain no fear-save upgrade.' No field moves." },
+  { "n": 9, "record": "feats/steady-balance", "why": "'yes' under R12 — 'Nothing changes; Steady Balance keeps its two printed effects.' The record's mechanic is `degreeShifts`, which OUR_KINDS files under `_noCounterpart` (scripts/wg-diff.mjs:582) and the gate never strips." },
+  { "n": 11, "record": "feats/benefactors-resistance", "why": "'keep the floor of 1 (half level, min 1); written down as a deliberate small step past the literal page; WG's dragon half is NOT copied.' A floor is a VALUE inside `effectChoices[].options[].grant.resistances`, and WG encodes choice+defense on this row, so the path stays on by the per-path rule." },
+  { "n": 14, "record": "feats/hellknight-dedication", "why": "'yes' — 'Nothing changes. Hellknights keep mental resistance, and the armor training stays where the book puts it - on Armiger's Protection, which the app already grants.' The armour training itself is approved under #73." },
+  { "n": 15, "record": "feats/reverse-engineer", "why": "'#15 drop the +2 Crafting star' — a REMOVAL. Removing our star cannot ship dark, and the surviving Crafting-for-Thievery substitution is `skillSubstitutions`, a `skill` path WG also encodes." },
+  { "n": 19, "record": "feats/reinforced-chassis", "why": "'keep the app on all 28 (it already follows the printed page); nothing changes for a player' — an automaton keeps the correct AC at 5th and 10th. The AC lives on items/reinforced-chassis (chassis fields, never stripped per docs/trust-gate.md:35-38) and the feat's grants are agree in work/.wg-diff-all.json." },
+  { "n": 20, "record": "feats/sequestered-spell", "why": "'Innate spells: trained, expert at 12th by the general rule; the app already does it on both … keep the app on both, nothing changes, close both.' The proficiency is delivered centrally (src/rules/build.ts, the pooled innate entry), not by a record field." },
+  { "n": 21, "record": "feats/clawdancer-dedication", "why": "'Drop the dedication's duplicate copy; each Strike shows once, only while its stance is on.' A REMOVAL from this record, so this ruling adds nothing that needs approving. ⚠ CORRECTED BY THE VERIFIER 2026-09-10: the surviving Strikes live on core.stances claw-stance / talon-stance, and both ids ARE on the generated ledger's `stances` lane — a stance is gated on its CARRIER's `conditional` kind (scripts/trust-ledger.mjs:62 LANE_KIND, :292), and the actions rows claw-stance / talon-stance encode only `weapon` (work/.wg-diff-all.json weOnly, theirKinds=[weapon]). So the stance payloads go dark through the lane, not through this ruling. Whether a stance whose whole payload is Strikes should be gated on `conditional` is a lane-A/owner question, not a disposition change here." },
+  { "n": 22, "record": "feats/shadowcaster-dedication", "why": "'#22 Shadowcaster feat-3009 \"domain spells... same tradition as the spells you used to meet the prerequisites\"' — keep the app, nothing changes. `focusPoolBonus` and `focusSpells` both map to kinds WG encodes on this row (spellcasting/spell/focus)." },
+  { "n": 23, "record": "feats/soul-warden-dedication", "why": "'keep the app on both, nothing changes, close both' — a 12th-level soul warden already rolls at expert through the central innate rule, not a record field." },
+  { "n": 24, "record": "feats/favored-terrain", "why": "'#24 Favored Terrain feat-4866: benefits only in the chosen terrain (and with unimpeded journey) — star.' Keep the app; the `situational` field maps to `conditional`, which WG encodes on this row." },
+  { "n": 25, "record": "feats/hallowed-necromancer-dedication", "why": "'#25 Hallowed Necromancer feat-3459 \"focus spells... same tradition as your spell slots\"' — keep the app, nothing changes. The ruling settles WHICH tradition the focus spell uses, a value inside `focusSpells`, not whether the field exists." },
+  { "n": 27, "record": "feats/psychic-dedication", "why": "'keep the app on all 28 … nothing changes for a player' — a psychic archetype character gets their Focus Point at 6th level, not 2nd. A level gate is a value, not a field." },
+  { "n": 32, "record": "feats/elemental-existence", "why": "'#32 \"You gain the Adopted Ancestry feat\" is a grant — app right.' Nothing changes; the app already grants the feat, asks which ancestry and opens the oread feats." },
+  { "n": 34, "record": "feats/thats-not-natural", "why": "'#34 \"this circumstance bonus\" names the initiative bonus (the only thing the text calls a circumstance bonus) — app right.' Nothing changes." },
+  { "n": 35, "record": "feats/versatile-mutation", "why": "'hold the energy question until level 8 … Also remove the \"takable twice\" flag: no printed clause allows it.' A level gate on an existing picker plus the removal of `maxTakable`, which §1 protects as a limit and never strips." },
+  { "n": 36, "record": "feats/aon-sacred-ki", "why": "'Sacred Ki feat-1184 is a legacy printing … the app's holy-or-unholy picker (same as WG) with the note is the only workable translation; the empty twin record stays hidden. Nothing changes.' The ruled record carries no mechanical field; the live twin feats/sacred-ki has the picker WG also encodes." },
+  { "n": 37, "record": "feats/ardent-armiger", "why": "'yes' under R12 — 'Nothing changes. The free-action extra Will save is still only described, not offered as a control.'" },
+  { "n": 38, "record": "feats/devils-eye", "why": "'keep the app on all 28 … nothing changes for a player' — the app already matches the book on every piece the sentence names." },
+  { "n": 39, "record": "classFeatures/gunslinger-weapon-mastery", "why": "'Keep the printed scope. No change on 39/41/42/45/107/115/130.' The record is `agree` in work/.wg-diff-all.json." },
+  { "n": 41, "record": "classFeatures/weapon-expertise", "why": "'Keep the printed scope. No change on 39/41/42/45/107/115/130.' The record is `agree` in work/.wg-diff-all.json." },
+  { "n": 42, "record": "classFeatures/brutality", "why": "'Keep the printed scope. No change on 39/41/42/45/107/115/130.' Ranged strikes still show no critical specialization; the record is `agree`." },
+  { "n": 45, "record": "feats/shoony-lore", "why": "'Keep the printed scope. No change on 39/41/42/45/107/115/130.' A shoony still gets three trainings and no bonus skill increases." },
+  { "n": 46, "record": "feats/advanced-red-mantis-magic", "why": "'#46 legacy feat grants nothing on the new archetype' — a REMOVAL. The record already carries no mechanical field (theyOnly, missing=[spellSlot]) and the ruling marks it as belonging to the old book." },
+  { "n": 47, "record": "items/aeon-stone-agate-ellipsoid", "why": "'keep the wayfinder mark AND print the resonant sentence on the spell entry (augury)'. The resonant power on this stone is a `note` (public/core.json items['aeon-stone-agate-ellipsoid'].resonant is {note:…}), which §1 never strips, and the ruling only moves where that prose is shown." },
+  { "n": 48, "record": "items/aeon-stone-dusty-rose-prism", "why": "'#48 drop the duplicate yes/no picker' plus the same prose move as #47 — a REMOVAL of a control and a relocation of a `resonant.note`. Nothing a field carries changes." },
+  { "n": 49, "record": "items/aeon-stone-western-star", "why": "Same as #47: the invisibility rider is a `resonant.note` and the ruling only shows it on the spell entry the player uses." },
+  { "n": 50, "record": "feats/arcana-of-iron", "why": "'Arcana of Iron: trained in advanced weapons; IF the class grants the weapon expertise feature, martial AND advanced weapons rise to expert … Remove the wrong grant of the Weapon Expertise class feature.' The kept half lands on `weapon` fields and WG's row encodes `weapon` (theirKinds=[conditional,weapon,note]), so the gate leaves it on; the other half is a removal." },
+  { "n": 53, "record": "feats/instinct-ability", "why": "'keep the app on all 28 … nothing changes' — the ruling rejects WG's flat +3 Hit Points. The app's `derivedGrant` is unchanged by the ruling." },
+  { "n": 65, "record": "items/pistol-wand", "why": "'keep the app on all 28 … nothing changes today, though runes etched later on the pistol still will not reach the stock.' No field moves." },
+  { "n": 66, "record": "feats/tumbling-theft", "why": "'keep the app on all 28 … nothing changes, the app already does this.'" },
+  { "n": 72, "record": "items/screech-shooter-greater", "why": "'#72 Screech Shooter greater/major + the two upgraded wyrm spindles: one sentence per grade carrying only that grade's numbers (option A).' A TEXT fix — the wrong DC and area are shown, not carried by an effect field." },
+  { "n": 74, "record": "backgrounds/keys-to-destiny", "why": "'keep the app on all 28 … nothing changes' — the Labor Lore pick is unchanged. Backgrounds are chassis and all-on by construction (docs/trust-gate.md:118-121)." },
+  { "n": 75, "record": "backgrounds/concordance-scout", "why": "'keep the app on all 28 … nothing changes; the app already offers all six.' Background chassis is all-on." },
+  { "n": 76, "record": "ancestries/poppet", "why": "'keep the app on all 28 … a level 1 poppet keeps fire weakness 1.' A weakness is a COST, which §1 never strips, and ancestries are chassis." },
+  { "n": 77, "record": "ancestries/goloma", "why": "'keep the app on all 28 … goloma characters keep their own tongue.' Ancestry chassis is all-on." },
+  { "n": 78, "record": "ancestries/android", "why": "'yes' under R12 — 'Nothing changes; androids stay rare and keep Androffan.' Rarity is not an effect field, and ancestries are chassis." },
+  { "n": 79, "record": "backgrounds/aon-wishes-for-riches", "why": "'yes' under R12 — 'Nothing changes; both branches already work and the cold type is already recorded.' Background chassis is all-on." },
+  { "n": 80, "record": "backgrounds/traveling-gourmand", "why": "'keep the app on all 28 … the app already trains Survival.' Background chassis is all-on." },
+  { "n": 81, "record": "backgrounds/seer-of-the-dead", "why": "'keep the app on all 28 … seers keep their single boost.' A boost count is a value on `abilityBoosts`, and background chassis is all-on." },
+  { "n": 82, "record": "backgrounds/streetfood-vendor", "why": "'keep the app's CHOICE (Crafting or Society) — the book prints it.' The remaining work is a description rewrite plus a mirror refresh and a freshness guard; `trainedSkillChoice` is unchanged and background chassis is all-on." },
+  { "n": 83, "record": "backgrounds/haunted", "why": "'#83 no printing of Haunted names a feat — app right.' Nothing changes; background chassis is all-on." },
+  { "n": 84, "record": "backgrounds/tree-friend", "why": "'#84 \"you can choose Arboreal\" is permission, our picker already offers every language — nothing to do.'" },
+  { "n": 86, "record": "backgrounds/sense-of-belonging", "why": "'yes' under R12 — 'Nothing changes. The older note saying no feat is granted is out of date.'" },
+  { "n": 87, "record": "backgrounds/sponsored-by-a-village", "why": "'Adventure-path backgrounds stay common (no printed rarity trait); nothing changes on rarity.' Rarity is not an effect field." },
+  { "n": 88, "record": "backgrounds/sky-rider", "why": "'keep the app' — 'Sky Rider trains Acrobatics AND Plane of Air Lore; nothing changes.' Background chassis is all-on." },
+  { "n": 89, "record": "backgrounds/hammered-by-fate", "why": "'keep the app on all 28 … nothing changes, the app already does this.' The record is `agree` in work/.wg-diff-all.json." },
+  { "n": 90, "record": "backgrounds/lesser-scion", "why": "'keep the app on all 28 … nothing changes' — a Heraldry Lore spelling question, not a field." },
+  { "n": 91, "record": "backgrounds/bachuan-revolutionary", "why": "'keep the app on all 28 … nothing changes, the app already does this.'" },
+  { "n": 92, "record": "backgrounds/sponsored-by-teacher-ot", "why": "'#92 Teacher Ot: ask the Survival-or-Performance choice ONCE (drop the second control; the feat follows the one pick).' A REMOVAL of a duplicate control." },
+  { "n": 93, "record": "backgrounds/lost-loved-one", "why": "'yes' under R12 — 'Nothing changes. The older note about the wrong Ghostly Grasp is out of date.'" },
+  { "n": 94, "record": "backgrounds/unsponsored", "why": "'Adventure-path backgrounds stay common (no printed rarity trait); nothing changes on rarity.'" },
+  { "n": 95, "record": "backgrounds/wanderlust", "why": "'yes' under R12 — 'Nothing changes; the app already asks the question and grants the right feat.'" },
+  { "n": 96, "record": "backgrounds/sponsored-by-family", "why": "'Adventure-path backgrounds stay common (no printed rarity trait); nothing changes on rarity.'" },
+  { "n": 98, "record": "backgrounds/dreams-of-vengeance", "why": "'yes' under R12 — 'Nothing changes here; the answer carries over to the four records where their book is older.'" },
+  { "n": 99, "record": "backgrounds/beast-blessed", "why": "'yes' under R12 — 'Nothing changes; the reaction still reads enchantment and stays once per day.' A trait word and a `limitedUses` cap, which §1 never strips." },
+  { "n": 100, "record": "backgrounds/sponsored-by-a-stranger", "why": "'Adventure-path backgrounds stay common (no printed rarity trait); nothing changes on rarity.'" },
+  { "n": 101, "record": "backgrounds/total-power", "why": "'yes' under R12 — 'Nothing changes; dragon players keep getting Blasting Beams with electricity damage.'" },
+  { "n": 103, "record": "classFeatures/divine-font", "why": "'#103 Miraculous Spell bars 10th-rank slots from slot-granting abilities — font stays 9th.' Nothing changes; a 19th-level cleric keeps six 9th-rank heal or harm slots." },
+  { "n": 105, "record": "classes/animist", "why": "'Animist slot table: keep the app (matches the printed table row for row); nothing changes; close both.' Class records are chassis and all-on." },
+  { "n": 107, "record": "feats/bone-magic", "why": "'Keep the printed scope. No change on 39/41/42/45/107/115/130.' A lizardfolk who answers primal can still pick an occult-only cantrip." },
+  { "n": 108, "record": "feats/acute-vision", "why": "'#108 Acute Vision feat-5806 \"When you are raging... darkvision\" — only while the Rage toggle is on.' Keep the app; the sense lives in `whileActive[]`, a container whose `senses` maps to `sense`, which WG encodes on this row." },
+  { "n": 110, "record": "feats/spellmaster-dedication", "why": "'#110 Spellmaster's Ward feat-2244 prints no tradition — the character's own focus tradition stands (WG's fixed Arcane/Int has no printed basis).' Keep the app; a derivation, not a field." },
+  { "n": 111, "record": "feats/empathic-calm", "why": "'\"either X or Y\" / \"your choice of X or Y\" = ONE pick; keep the app on both, nothing changes.' (Standing rule R13.)" },
+  { "n": 112, "record": "feats/colugos-traversal", "why": "'\"either X or Y\" / \"your choice of X or Y\" = ONE pick; keep the app on both, nothing changes.' (Standing rule R13.)" },
+  { "n": 114, "record": "heritages/undine", "why": "'keep the app on all 28 … nothing changes; the app already does this.' The record is `agree` in work/.wg-diff-all.json." },
+  { "n": 115, "record": "heritages/mightyfall-kobold", "why": "'Keep the printed scope. No change on 39/41/42/45/107/115/130.' A Mightyfall kobold keeps two boosts, not three — a count inside `alternateAttributes`, not a field." },
+  { "n": 116, "record": "heritages/born-of-animal", "why": "'#116 Born of Animal heritage-412 \"If you have both hands free, you can increase your Speed to 30 feet\" (Yaoguai Form) — a table choice, star.' Keep the app; the Speed row keeps its star." },
+  { "n": 117, "record": "heritages/grave-orc", "why": "'keep the app on all 28 … a level 1 grave orc keeps resistance 1.' A minimum is a value inside `resistances`, and WG encodes `defense` on this row." },
+  { "n": 118, "record": "heritages/deny-lady-nanbyos-charity", "why": "'keep the app on all 28 … the app already ships +1 encumbered and +2 maximum.' `bulkLimitBonus`/`bulkMaxBonus` map to `carry`, which WG encodes on this row." },
+  { "n": 119, "record": "heritages/waning-moon-sarangay", "why": "'keep the app on all 28 … nothing changes.'" },
+  { "n": 130, "record": "feats/glyph-expert", "why": "'Keep the printed scope. No change on 39/41/42/45/107/115/130.' The mechanic is `degreeShifts`, a `_noCounterpart` field (scripts/wg-diff.mjs:582) the gate never strips." },
+  { "n": 131, "record": "feats/divine-breadth", "why": "'Breadth feats grant no cantrip (Divine, Primal, Occult, Arcane); WG's extra cantrip entry is a copied slip; nothing changes; close both.' The record is `agree` in work/.wg-diff-all.json." },
+  { "n": 132, "record": "feats/primal-breadth", "why": "'Breadth feats grant no cantrip (Divine, Primal, Occult, Arcane); WG's extra cantrip entry is a copied slip; nothing changes; close both.' The record is `agree` in work/.wg-diff-all.json." },
+  { "n": 133, "record": "feats/necromantic-tenacity", "why": "'#133 keep the necromancy wording' — a text decision. The mechanic is `degreeShifts`, a `_noCounterpart` field the gate never strips." },
+  { "n": 134, "record": "classFeatures/spore-order", "why": "'Spore + Cultivation count as Leaf Order: already built; know the membership, block nothing (B); nothing changes; close all three. Do not copy WG's whole-Leaf-Order grant.' Nothing to build and no field moves." },
+  { "n": 135, "record": "classFeatures/gleaming-blade", "why": "'#135 Gleaming Blade: printed name Flowing Spirit Strike only, never WG's Mirrored Spirit Strike; nothing changes.' A name, not a field." },
+  { "n": 136, "record": "classFeatures/barrows-edge", "why": "'keep the app on all 28 … nothing changes, the app already does this.' A damage-wording question." },
+  { "n": 137, "record": "classFeatures/gaze-sharp-as-steel", "why": "'keep the app on all 28 … nothing changes, the app already does this.'" },
+  { "n": 138, "record": "classFeatures/dragon-eidolon", "why": "'#138 dragon eidolon: arcane, fixed, no picker.' Keep the app — the tradition is fixed in data, and the ruling adds nothing." },
+  { "n": 139, "record": "classFeatures/spore-order", "why": "'B is good' — the same question as #134, filed twice. Already built; nothing changes; the record's `grantsFeats` is a `grantsRecord` path WG also encodes." },
+  { "n": 142, "record": "classFeatures/echo-of-lost-moments", "why": "'Echo of Lost Moments apparition-5: the ten-spell ladder matches print rung for rung (Illusory Scene at 5th). WG's rank-1 Illusory Disguise on the 5th rung is their mistake; settle so it stops coming back.' A settle, not a field." },
+  { "n": 144, "record": "classFeatures/cultivation-order", "why": "'B is good' — Cultivation counts as Leaf Order, already built; nothing changes. `grantsFeats` is a `grantsRecord` path WG also encodes on this row." },
+  { "n": 147, "record": "classFeatures/otherworldly-protection", "why": "'#147 Otherworldly Protection: resistance 3 + half level to void (or vitality with void healing) computed from the character, no control.' Keep the app; WG encodes `defense` on this row, so `resistances` stays on." },
+  { "n": 148, "record": "classFeatures/hyper-boosters", "why": "'keep the app on all 28 … nothing changes for a player; the record stops being re-checked in every future comparison.' The record is `agree` in work/.wg-diff-all.json." },
+  { "n": 150, "record": "feats/chronomancers-secrets", "why": "'keep the app on all 28 … nothing changes for a player.' A Stasis-is-focus question the app already answers; the ruling moves no field." }
+ ],
+
+ "engine": [
+  {
+   "n": 109,
+   "why": "'Guardian's Armor class-feature-1115 … The condition IS visible to the sheet (equipped armour category), so per his rule it is a real number: show the resistance automatically while medium/heavy armour is worn, drop the hand toggle.' The class-feature record carries no mechanical field at all (public/core.json classFeatures['guardians-armor'] has only actionCost); the resistance lives on core.modes['guardians-armor'] today and becomes a derive-time read of the equipped armour category.",
+   "laneId": "guardians-armor-auto"
+  },
+  {
+   "n": 127,
+   "why": "'Speed bonuses carry a TYPE (two status bonuses take the highest, never add), and a clause \"to your Speeds\" raises all Speeds, not only land. Engine lane; ~20 records carry a speed bonus today.' There is no desk record: the fix is in the speed-stacking code, and it changes what existing `speeds`/`landSpeedBonus` paths mean rather than adding one.",
+   "laneId": "speed-typing"
+  },
+  {
+   "n": 145,
+   "why": "'#145 spider Web = real damageless attack row (allow no-damage attacks)' — the ruling's own words make it an engine change: the strike pipeline must accept an attack with no damage. ⚠ docs/trust-gate.md:76 also names 'Web's damageless attack' in the add-a-mechanic list; no approvals entry is needed for the record half because the attack lands in classFeatures['animal-instinct'].grantedStrikes, and work/.wg-diff-all.json gives that row theirKinds=[choice,conditional,weapon,defense] — `weapon` is trusted, so the new strike stays on by the per-path rule.",
+   "laneId": "damageless-attacks"
+  },
+  {
+   "n": 146,
+   "why": "'yes — run the repair once (permission to write the six public/ast files). node scripts/apply-ast-patches.mjs in the fix pass; ast-content-check goes green; npm run data already ends with the same script so a rebuild cannot undo it.' Tooling, not a record field: the six pages are pre-rendered AST files, which the trust gate never reads.",
+   "laneId": "ast-patch-repair"
+  }
+ ],
+
+ "unruled": [
+  { "n": 1, "id": "backup-runic-enhancement", "status": "ruled" },
+  { "n": 2, "id": "circle-of-spirits", "status": "ruled" },
+  { "n": 6, "id": "summiting-dragonblood", "status": "ruled" },
+  { "n": 8, "id": "monastic-archer-stance", "status": "ruled" },
+  { "n": 31, "id": "barbarian-resiliency", "status": "ruled" },
+  { "n": 33, "id": "monk-resiliency", "status": "ruled" },
+  { "n": 52, "id": "avernal-cape", "status": "deferred" },
+  { "n": 54, "id": "kalmaugs-journal", "status": "deferred" },
+  { "n": 58, "id": "relic-gift-family-skysunder-sparkwarden-uniter-adamantine", "status": "deferred" },
+  { "n": 59, "id": "skysunder", "status": "deferred" },
+  { "n": 60, "id": "sparkwarden", "status": "deferred" },
+  { "n": 61, "id": "uniter-of-clans", "status": "deferred" },
+  { "n": 62, "id": "adamantine-echo", "status": "deferred" },
+  { "n": 63, "id": "spectacles-of-understanding", "status": "deferred" },
+  { "n": 64, "id": "spectacles-of-understanding-greater", "status": "deferred" },
+  { "n": 67, "id": "monarch", "status": "deferred" },
+  { "n": 106, "id": "wizard", "status": "deferred" },
+  { "n": 122, "id": "sign-bound", "status": "deferred" },
+  { "n": 123, "id": "raised-by-belief", "status": "deferred" },
+  { "n": 124, "id": null, "status": "authorisedException" },
+  { "n": 125, "id": null, "status": "authorisedException" },
+  { "n": 126, "id": null, "status": "authorisedException" }
+ ]
+}

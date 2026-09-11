@@ -1046,6 +1046,31 @@ function wentQuietOutsideBatch() {
   return wentQuiet(base, comparerFlags({ diff: readMaybe(`${dir}/diff.json`) }), batchIds());
 }
 
+/*
+ * THE TRUST GATE'S OFF LIST, REGENERATED — docs/trust-gate.md §6: "`scripts/wg-batch-run.mjs --stage
+ * close` regenerates src/data/trust-ledger.json … A closed batch therefore turns its WG-encoded kinds
+ * on the day it closes." Without this the batch's own records stay dark until somebody remembers to
+ * run the generator by hand, which is exactly the state generating the ledger was meant to remove.
+ *
+ * The generator reads work/.wg-diff-all.json, and this stage has just produced that very file for the
+ * went-quiet diff (corpus-wide, same script, no --batch), so the fresh dump is promoted to the
+ * canonical path instead of being left as per-batch scratch. That also keeps the verify-time
+ * regenerate-and-diff half of scripts/trust-ledger-check.mjs comparing like with like.
+ *
+ * A REFUSAL (exit 2 — no comparer output, or one older than public/core.json: the print lane, or any
+ * machine without the gitignored dump) is REPORTED, not fatal. The blocking guard is one stage later:
+ * `--stage verify` runs regen-durability-check.mjs, which goes red on a ledger whose coreSha is not
+ * this core.json, and names the same one command to run.
+ */
+function regenerateTrustLedger() {
+  const fresh = `${P('close')}/diff.json`;
+  if (has(fresh)) cpSync(abs(fresh), abs('work/.wg-diff-all.json'));
+  const r = node_('scripts/trust-ledger.mjs', []);
+  if (r.status === 2) return { ok: false, note: `trust ledger NOT regenerated: ${clip(refusalTail(r.out, 2), 240)}` };
+  if (r.status !== 0) refuse(`scripts/trust-ledger.mjs exited ${r.status} during the close stage — the trust gate's OFF list is generated, not hand-written, so a batch cannot close over a broken generator: ${tail(r.out, 4)}`);
+  return { ok: true, note: `trust ledger regenerated — ${clip(tail(r.out, 2), 220)}` };
+}
+
 async function stageClose() {
   if (!has('scripts/wg-batch-close.mjs')) refuse('needs scripts/wg-batch-close.mjs — the close stage derives the parity + residual artefacts through it (docs/wg-batch-pipeline.md §A) and never writes them itself');
   const r = node_('scripts/wg-batch-close.mjs', ['--batch', BATCH, '--write']);
@@ -1062,13 +1087,15 @@ async function stageClose() {
     }
   }
 
+  const ledger = regenerateTrustLedger();
+
   const parity = readMaybe(`work/wg-batch-${BATCH}-parity.json`);
   const residual = readMaybe(`work/wg-batch-${BATCH}-residual.json`);
   const counts = {};
   for (const v of parity?.records ?? []) counts[v.verdict] = (counts[v.verdict] ?? 0) + 1;
   return {
-    counts: { records: parity?.records?.length ?? 0, ...counts, flaggedResidues: residual?.flaggedResidues?.length ?? 0, wentQuietOutsideBatch: quiet.length },
-    digest: `closed: ${parity?.records?.length ?? 0} parity verdict(s) [${Object.entries(counts).map(([k, n]) => `${k} ${n}`).join(', ')}], ${residual?.flaggedResidues?.length ?? 0} flagged residue(s). ${PRINT ? 'went-quiet diff skipped (print lane: no comparer baseline).' : `${quiet.length} record(s) outside this batch went quiet${quiet.length ? ', each cited in ' + P('gaps.json') + ': ' + clip(quiet.map((q) => q.id).join(', '), 180) : ''}.`} ${clip(tail(r.out, 3), 200)}`,
+    counts: { records: parity?.records?.length ?? 0, ...counts, flaggedResidues: residual?.flaggedResidues?.length ?? 0, wentQuietOutsideBatch: quiet.length, trustLedgerRegenerated: ledger.ok ? 1 : 0 },
+    digest: `closed: ${parity?.records?.length ?? 0} parity verdict(s) [${Object.entries(counts).map(([k, n]) => `${k} ${n}`).join(', ')}], ${residual?.flaggedResidues?.length ?? 0} flagged residue(s). ${PRINT ? 'went-quiet diff skipped (print lane: no comparer baseline).' : `${quiet.length} record(s) outside this batch went quiet${quiet.length ? ', each cited in ' + P('gaps.json') + ': ' + clip(quiet.map((q) => q.id).join(', '), 180) : ''}.`} ${ledger.note} ${clip(tail(r.out, 3), 200)}`,
     next: 'node scripts/wg-batch-run.mjs --batch ' + BATCH + ' --stage experience',
   };
 }
@@ -1217,8 +1244,9 @@ const STAGES = {
   gaps: { allow: ['scripts/add-owner-question.mjs'], run: stageGaps },
   /* wg-diff is on the close allowlist for the went-quiet diff (the second half of plan §A close) — it is
    * the only corpus-wide comparer, so it is the only one that can see an EARLIER batch's record fall
-   * silent. */
-  close: { allow: ['scripts/wg-batch-close.mjs', 'scripts/wg-diff.mjs'], run: stageClose },
+   * silent. trust-ledger is the third half added by docs/trust-gate.md §6: a closed batch turns its
+   * WG-encoded kinds on by regenerating the OFF list here. */
+  close: { allow: ['scripts/wg-batch-close.mjs', 'scripts/wg-diff.mjs', 'scripts/trust-ledger.mjs'], run: stageClose },
   experience: { allow: ['scripts/wg-experience.mjs'], run: stageExperience },
   gate: { allow: ['scripts/wg-batch-gate.mjs'], run: stageGate },
   regate: { allow: ['scripts/wg-regate-all.mjs'], run: stageRegate },

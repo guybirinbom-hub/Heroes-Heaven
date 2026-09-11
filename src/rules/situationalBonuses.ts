@@ -4023,8 +4023,30 @@ export const setSituationalSuppressions = (ids: Iterable<string>): void => {
   for (const id of ids) suppressedIds.add(id);
 };
 
+/*
+ * Ids whose SHIPPED stars are off for the whole app — the trust gate (docs/trust-gate.md §3).
+ *
+ * WHY a SECOND set rather than reusing `suppressedIds`: that one is per CHARACTER. It is cleared and
+ * refilled on every explain pass (`setSituationalSuppressions`, called from `authoredSituational` in
+ * explain.ts), so anything the gate wrote there would be erased the moment a sheet opened. This set is
+ * written ONCE, at content load, by `applyTrustGate` in src/data/trustGate.ts, and never per character.
+ *
+ * Only the SHIPPED table goes dark here. A record's own data-side `situational` field is stripped by
+ * the ledger before the content ever reaches the engine, so `extra` needs no test of its own.
+ */
+const trustOffIds = new Set<string>();
+export const setSituationalTrustOff = (ids: Iterable<string>): void => {
+  trustOffIds.clear();
+  for (const id of ids) trustOffIds.add(id);
+};
+
+/** Whether this id's SHIPPED situational entries are trusted (false once the gate turns the id off).
+ *  Exported for the two readers that index `FEAT_SITUATIONAL` without going through `entriesFor`:
+ *  `sheetLoreKeys` (explain.ts) and the companion situational block (CompanionsTab.tsx). */
+export const shippedSituational = (id: string): boolean => !trustOffIds.has(id);
+
 const entriesFor = (id: string, extra?: ExtraSituational): readonly SituationalBonus[] => {
-  const shipped = suppressedIds.has(id) ? undefined : FEAT_SITUATIONAL[id];
+  const shipped = suppressedIds.has(id) || trustOffIds.has(id) ? undefined : FEAT_SITUATIONAL[id];
   const authored = extra?.[id];
   if (!authored?.length) return shipped ?? [];
   if (replacedIds.has(id)) return authored;
@@ -4130,6 +4152,13 @@ export const CHOICE_SITUATIONAL: Record<string, ChoiceSituational[]> = {
  * function is deliberately reachable with nothing but the character.
  */
 export function choiceSituationalFor(recordId: string, answer: string, answerLabel = answer): SituationalBonus[] {
+  /* The trust gate reaches THIS table too, and it is the one place `entriesFor` cannot cover: these
+   * entries arrive as `extra`, and `extra` is returned even for an off id (a record's own data-side
+   * `situational` is safe there because the ledger strips it — this table is CODE, so nothing strips
+   * it). All six ids are on `lanes.situational` today, and the star is the whole mechanic for every
+   * one of them (none moves a number), so a gated Assurance would keep the only effect it ever had.
+   * Gated at the source: both callers (explain.ts:532, :544) come through here. */
+  if (trustOffIds.has(recordId)) return [];
   const list = CHOICE_SITUATIONAL[recordId];
   if (!list?.length || !answer) return [];
   return list.map((e) => ({

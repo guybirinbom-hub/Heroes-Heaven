@@ -12,6 +12,7 @@ import type { ContentDatabase, SourceInfo } from '../rules/types';
 import { seedContent } from '../rules/seed';
 import { CATALOG_MODE_MAP } from '../rules/modes';
 import { loadHomebrewContent, loadHomebrewSources, loadModes, HOMEBREW_TYPES } from './storage';
+import { applyTrustGate, clearTrustGate, trustGateOn } from './trustGate';
 
 function merge<T>(base: Record<string, T>, over: Record<string, T>): Record<string, T> {
   return { ...base, ...over };
@@ -455,7 +456,16 @@ export function findCombinationFormIds(items: Record<string, unknown> | undefine
 }
 
 function mergeWithSeed(core: Partial<ContentDatabase>): ContentDatabase {
-  const c = core as ContentDatabase;
+  /*
+   * THE TRUST GATE (docs/trust-gate.md §3). Gate the CORE object HERE — before the seed, homebrew,
+   * the user's own modes and the catalog are merged in — so both callers (loadContent, rebuildContent)
+   * are covered by one line, and homebrew is untouched by construction rather than by a license test.
+   * `applyTrustGate` copies; `cachedCore` stays raw, which is what lets loadDescriptions keep writing
+   * into it and lets the switch turn the rules back on without a reload.
+   */
+  const gateOn = trustGateOn();
+  if (!gateOn) clearTrustGate(); // …and empty the code-side lanes, or a previous gated load's stars stay dark
+  const c = (gateOn ? applyTrustGate(core) : core) as ContentDatabase;
   // Seed → Core → user homebrew, so homebrew entries resolve everywhere core content does.
   const hb = loadHomebrewContent();
   // Tag each homebrew entry's source.book with its Source's name, so the per-character Sources filter

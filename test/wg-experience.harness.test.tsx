@@ -63,6 +63,14 @@ const OUT = process.env.WG_EXPERIENCE_OUT;
 /** REAL-CHARACTER MODE: a .codex.json export. The rows are everything that character owns and every
  *  host is the character's own build — the same judge, on the sheet the owner actually plays. */
 const CHARACTER = process.env.WG_EXPERIENCE_CHARACTER;
+/**
+ * `--gated` on scripts/wg-experience.mjs (docs/trust-gate.md §5): play the sweep on the content a
+ * player with the TRUST GATE on actually gets, so the proof runs through the real builder rather than
+ * over the raw database. Only the sweep below is gated — the five `classFeatureHost` / `featHost`
+ * regression describes in this file are ordinary engine tests and stay ungated, like the rest of the
+ * suite (docs/trust-gate.md §5: "The rest of the suite keeps building content WITHOUT the gate").
+ */
+const GATED = process.env.WG_EXPERIENCE_GATED === '1';
 const noop = () => undefined;
 const num = (s: string | undefined) => (s === undefined || s === '' ? null : Number(s));
 
@@ -1237,7 +1245,7 @@ describe('wg experience harness', () => {
   run(
     'records the controls and sheet effects every record in the batch adds',
     () => {
-      const db = content();
+      const db = content(GATED ? { trustGate: true } : undefined);
       const character = CHARACTER ? (JSON.parse(readFileSync(CHARACTER, 'utf8').replace(/^﻿/, '')) as CharacterExport) : null;
       const batch: Row[] = character ? characterRows(db, character) : (JSON.parse(readFileSync(BATCH!, 'utf8').replace(/^﻿/, '')) as Row[]);
       const records: Record<string, unknown>[] = [];
@@ -1352,7 +1360,10 @@ describe('wg experience harness', () => {
         rec.ms = Date.now() - t0;
         records.push(rec);
       }
-      const out = { batch: BATCH, generated: new Date().toISOString(), records, ms: Date.now() - started };
+      /* `gated` is stamped so the judge can REFUSE a mismatch: a sweep launched with --gated whose env
+       * never reached this process would otherwise produce an ungated dump under a gated name, which is
+       * the "measuring script that lied" failure this repo keeps finding. */
+      const out = { batch: BATCH, gated: GATED, generated: new Date().toISOString(), records, ms: Date.now() - started };
       writeFileSync(OUT!, JSON.stringify(out, null, 1));
       expect(records.length).toBe(batch.length);
     },

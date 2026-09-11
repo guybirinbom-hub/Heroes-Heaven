@@ -3,6 +3,7 @@ import { ActionGlyph, isActionCost } from './widgets';
 import { DescBody } from './DescBody';
 import { InfoTerm } from './InfoTerm';
 import { PinStar } from './PinStar';
+import { TrustMarker } from './TrustMarker';
 import { useContent } from './ContentContext';
 import { useEscapeClose } from './useEscapeClose';
 import { traitDesc, traitLabel } from '../rules/glossary';
@@ -41,6 +42,27 @@ export interface FeatEntry {
    *  them carry `limitedUses` ("once per day") and drew no pips, because featUse() was only ever
    *  handed a feat or a class feature and these rows carry neither id. */
   usesRecord?: { limitedUses?: LimitedUses };
+  /** A HERITAGE row's own `content.heritages` id. Heritages are an ordinary gated bucket (WG encodes
+   *  them as rows, so they are not chassis — docs/trust-gate.md §2), and without an id the 42 gated
+   *  ones would print their full text on the sheet with nothing to say why none of it applies. */
+  heritageId?: string;
+  /** The `content.classFeatures` id of a row that is a class feature but carries no `featureId`: a
+   *  SUBCLASS or extra-choice pick (a rogue's Ruffian racket, a witch's Lesson of Calamity — 51 of
+   *  the 105 gated class features reach the sheet this way), an inventor modification, an
+   *  override-granted feature. Deliberately NOT `featureId`: that field also drives the use pips, and
+   *  a "not yet verified" line must not put a new control on the row. */
+  trustFeatureId?: string;
+}
+
+/** Which core.json record a row is showing, for TrustMarker. A row built from something with no id
+ *  of its own (a background's granted line) answers nothing and the marker stays away — see the
+ *  reasoning on TrustMarker's own props. */
+export function trustRefOf(e: FeatEntry): { bucket?: string; id?: string } {
+  if (e.featId) return { bucket: 'feats', id: e.featId };
+  if (e.featureId) return { bucket: 'classFeatures', id: e.featureId };
+  if (e.trustFeatureId) return { bucket: 'classFeatures', id: e.trustFeatureId };
+  if (e.heritageId) return { bucket: 'heritages', id: e.heritageId };
+  return {};
 }
 
 function cap(s: string): string {
@@ -70,6 +92,9 @@ export function FeatDetail({ entry, onClose }: { entry: FeatEntry; onClose: () =
             {entry.groupLabel ? ` · ${entry.groupLabel}` : ''}
             {entry.rarity && entry.rarity !== 'common' ? ` · ${cap(entry.rarity)}` : ''}
           </div>
+          {/* Under the name, above the text — same position as the list row, the item popup and the
+              builder pick, so the line reads the same wherever the player meets it. */}
+          <TrustMarker {...trustRefOf(entry)} />
           {entry.traits.length > 0 && (
             <div className="sd-traits">
               {entry.traits.map((t) => (

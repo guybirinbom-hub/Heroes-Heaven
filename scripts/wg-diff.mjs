@@ -3358,8 +3358,13 @@ for (const [id, rec, bucket] of wgAllRecords(core)) {
   /* An action whose class feature or feat shares its id defers to that sibling — see wgOwnsComparison. */
   if (!wgOwnsComparison(core, bucket, id)) continue;
   const t = theirByBucket[bucket]?.get(norm(rec.name));
-  if (!t) { out.noMatch.push({ id, name: rec.name }); continue; }
-  if (!t.opCount) { out.theirsUnencoded.push({ id, name: rec.name }); continue; }
+  /* `bucket` rides on EVERY emitted row because an id alone does not name a record: `warrior` is a
+   * background AND a class feature (scripts/lib/wg-parse.mjs:146-149), `clan-pistol` a feat AND a
+   * weapon, and 266 normalised names exist in two of our buckets (:1591 above). Any consumer keyed by
+   * id alone — the trust ledger is the first — would place one twin's verdict on the other. It is
+   * already in scope here, so this is the whole fix. */
+  if (!t) { out.noMatch.push({ id, name: rec.name, bucket }); continue; }
+  if (!t.opCount) { out.theirsUnencoded.push({ id, name: rec.name, bucket }); continue; }
   const ours = ourKindsOf(rec, id, bucket);
   let missing = [...t.kinds].filter((k) => !ours.has(k) && k !== 'note');
   /* A conditional whose every branch holds kinds we already model is a wrapper, not a gap. */
@@ -3389,7 +3394,7 @@ for (const [id, rec, bucket] of wgAllRecords(core)) {
   if (settled) missing = missing.filter((k) => !settled.includes(k));
   const shared = [...t.kinds].filter((k) => ours.has(k));
   const extra = [...ours].filter((k) => !t.kinds.has(k));
-  const row = { id, name: rec.name, level: rec.level, theirKinds: [...t.kinds], ourKinds: [...ours], missing, extra, theirOps: t.opCount };
+  const row = { id, name: rec.name, bucket, level: rec.level, theirKinds: [...t.kinds], ourKinds: [...ours], missing, extra, theirOps: t.opCount };
   if (missing.length) out.theyOnly.push(row);
   else if (extra.length) out.weOnly.push(row);
   else out.agree.push(row);

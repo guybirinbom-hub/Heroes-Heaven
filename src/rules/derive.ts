@@ -55,6 +55,10 @@ import type {
   WeaponRunes,
 } from './types';
 import { PROFICIENCY_RANKS } from './types';
+/* The hard-coded lanes below are keyed by RECORD ID, so the trust gate cannot reach them by stripping
+ * a field — it turns them off through this list instead (docs/trust-gate.md section 3). Every id used
+ * that way is inventoried in scripts/data/trust-lanes.json. */
+import { engineLaneOff } from './trustLanes';
 import { conditionPenalty, conditionTypedMods, conditionsWithDrainedReduction, drainedHpLoss } from './conditions';
 import { DOMAIN_SPELLS } from './domains';
 import { applyCounterMods } from './counterMods';
@@ -2102,6 +2106,8 @@ export function shieldSwappedModes(c: Character, db: ContentDatabase) {
   const shield = deriveShield(c, db);
   const shieldAc = shield && !shield.broken ? shield.ac : 0;
   return (c.activeModes ?? []).map((mode) =>
+    /* NOT gated: `cat-raise-shield` is a SEED catalog mode, not a public/core.json record, and the
+     * trust gate runs on the core object before the seed is merged (docs/trust-gate.md section 3). */
     mode.id === 'cat-raise-shield' ? { ...mode, modifiers: mode.modifiers.map((mod) => ({ ...mod, value: shieldAc })) } : mode,
   );
 }
@@ -2440,6 +2446,8 @@ function fullLevelResistanceTarget(c: Character, db: ContentDatabase, owned: Ite
   if (c.inventor?.innovationType !== 'armor') return undefined;
   let upgrades = false;
   for (const id of owned) {
+    /* NOT gated: `inventor-initial` is the VALUE of the record's own `resistanceLevelUpgrade` field,
+     * not a record id — the ledger strips that field like any other, so the data gate reaches it. */
     if (db.classFeatures[id]?.resistanceLevelUpgrade === 'inventor-initial') {
       upgrades = true;
       break;
@@ -3165,7 +3173,7 @@ function deadlySimplicityDie(die: string, isFavored: boolean, isUnarmed: boolean
 
 /** True if the character has taken the Deadly Simplicity feat. */
 function hasDeadlySimplicity(c: Character): boolean {
-  return c.feats.some((f) => f.featId === 'deadly-simplicity');
+  return !engineLaneOff('deadly-simplicity') && c.feats.some((f) => f.featId === 'deadly-simplicity');
 }
 
 /** The set of the character's deity's favored weapon item ids that are SIMPLE weapons (real items),
@@ -3319,6 +3327,7 @@ export function doublingRingsAvailable(c: Character, db: ContentDatabase): boole
  * finesse trait", so that is the filter rather than a free choice of any weapon.
  */
 export function handwrapsRuneSharing(c: Character, db: ContentDatabase, inv: InventoryItem): boolean {
+  if (engineLaneOff('cutting-heaven-crushing-earth')) return false;
   if (!c.feats.some((f) => f.featId === 'cutting-heaven-crushing-earth')) return false;
   if (!c.inventory.some((x) => x.invested && (x.worn || x.equipped) && isHandwraps(db.items[x.itemId]))) return false;
   const item = db.items[inv.itemId];
@@ -3407,7 +3416,9 @@ export function bestMpHandwraps(c: Character, db: ContentDatabase): InventoryIte
 export function weaponSpecialization(c: Character, db: ContentDatabase): { spec: boolean; greater: boolean } {
   const cls = c.classId ? db.classes[c.classId] : undefined;
   if (!cls) return { spec: false, greater: false };
-  const owned = cls.features.filter((f) => f.level <= c.level).map((f) => f.featureId);
+  // …minus any whose engine lane the trust gate turned off: the feature is still the class's, it just
+  // stops paying the specialization damage (docs/trust-gate.md section 3).
+  const owned = cls.features.filter((f) => f.level <= c.level).map((f) => f.featureId).filter((id) => !engineLaneOff(id));
   const greater = owned.some((id) => id.startsWith('greater-weapon-specialization'));
   // 'eidolon-weapon-specialization' (summoner) is the pet's, not the character's — excluded by exact match.
   const spec = greater || owned.some((id) => id === 'weapon-specialization' || id === 'psychic-weapon-specialization');
@@ -3424,7 +3435,7 @@ export function weaponSpecialization(c: Character, db: ContentDatabase): { spec:
 export function runicOptimizationDamage(c: Character, db: ContentDatabase, strikingTier: number): number {
   const cls = c.classId ? db.classes[c.classId] : undefined;
   if (!cls || strikingTier < 1) return 0;
-  const owned = cls.features.filter((f) => f.level <= c.level).map((f) => f.featureId);
+  const owned = cls.features.filter((f) => f.level <= c.level).map((f) => f.featureId).filter((id) => !engineLaneOff(id));
   // Print stops at major striking; a 4th die (mythic) is treated as major rather than extrapolated.
   const tier = Math.min(strikingTier, 3);
   if (owned.includes('greater-runic-optimization')) return [0, 4, 6, 8][tier];
@@ -3683,7 +3694,7 @@ function strikePrecisionRiders(
   // Sneak Attack qualifies for an agile/finesse melee weapon, ANY unarmed attack, or a ranged attack (a
   // thrown ranged attack must itself be agile/finesse); off-guard target. The Rogue RUFFIAN racket also
   // qualifies simple weapons (die ≤ d8) and martial/advanced weapons (die ≤ d6), regardless of agile/finesse.
-  if (owned.has('sneak-attack')) {
+  if (owned.has('sneak-attack') && !engineLaneOff('sneak-attack')) {
     const faces = strike.dieFaces ?? 0;
     const ruffian =
       c.subclassId === 'ruffian' &&
@@ -3724,7 +3735,7 @@ function strikePrecisionRiders(
   // Ranger Precision hunter's edge applies to ANY Strike vs your hunted prey (no weapon restriction),
   // on the first hit of the round. It's the `precision` Hunter's Edge subclass option + Hunt Prey, and
   // only while Hunt Prey is toggled on (you've declared a prey).
-  if (c.subclassId === 'precision' && owned.has('hunt-prey') && c.classResources?.['hunt-prey']) {
+  if (c.subclassId === 'precision' && owned.has('hunt-prey') && c.classResources?.['hunt-prey'] && !engineLaneOff('hunt-prey')) {
     const dice = c.level >= 19 ? 3 : c.level >= 11 ? 2 : 1;
     out.push({ text: `${dice}d8 precision`, note: '* first hit vs hunted prey' });
   }
@@ -3796,12 +3807,12 @@ function rageStrikeRider(
 ): { text: string; note: string } | null {
   if (!c.classResources?.rage) return null; // not currently raging → no bonus
   const isBarb = c.classId === 'barbarian';
-  const isArchetype = !isBarb && c.feats.some((f) => f.featId === 'barbarian-dedication');
+  const isArchetype = !isBarb && !engineLaneOff('barbarian-dedication') && c.feats.some((f) => f.featId === 'barbarian-dedication');
   if (!isBarb && !isArchetype) return null;
   // Rage never applies to ranged Strikes — except that Raging Thrower extends it to THROWN weapons
   // ("You apply the additional damage from Rage to your thrown weapon attacks"). A thrown weapon is a
   // ranged Strike here, so it fell into the blanket refusal and the feat did nothing.
-  const thrownRage = opts.ranged && opts.thrown && c.feats.some((f) => f.featId === 'raging-thrower');
+  const thrownRage = opts.ranged && opts.thrown && !engineLaneOff('raging-thrower') && c.feats.some((f) => f.featId === 'raging-thrower');
   if (opts.ranged && !thrownRage) return null;
   let value = 2;
   let type = opts.weaponType;
@@ -3810,7 +3821,9 @@ function rageStrikeRider(
    * own type. Both branches are shown, because the choice is made at the table, every Rage. */
   let alt: { value: number; type: string } | null = null;
   if (isBarb) {
-    const inst = RAGE_DAMAGE[c.subclassId ?? ''];
+    // The instinct's own scaling is its record's mechanic: gated off, the barbarian still rages, at
+    // Rage's ordinary +2 of the weapon's own type.
+    const inst = engineLaneOff(c.subclassId) ? undefined : RAGE_DAMAGE[c.subclassId ?? ''];
     if (inst) {
       if (inst.unarmedOnly && !opts.unarmed) return null; // Animal Instinct: only its animal unarmed attack
       /*
@@ -5126,7 +5139,7 @@ export function deriveStrikes(c: Character, db: ContentDatabase): Strike[] {
    * narrow one. Both now carry their own `unarmedTraits`, which is also the only way a future heritage
    * can join them without an engine edit.
    */
-  const fistDieUpgraded = ownedFeatureIds(c, db).has('powerful-fist');
+  const fistDieUpgraded = ownedFeatureIds(c, db).has('powerful-fist') && !engineLaneOff('powerful-fist');
   const fistProfile: UnarmedProfile = fistDieUpgraded
     ? { ...FIST_PROFILE, die: 'd6', traits: FIST_PROFILE.traits.filter((t) => t !== 'nonlethal') }
     : FIST_PROFILE;

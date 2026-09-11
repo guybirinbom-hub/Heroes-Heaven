@@ -69,6 +69,7 @@ import {
   poolSituationalLines,
   setSituationalReplacements,
   setSituationalSuppressions,
+  shippedSituational,
   spellMarkersFor,
   supersededIds,
   DEGREE_SHIFT_SHORT,
@@ -251,6 +252,9 @@ export function sheetLoreKeys(c: Character, db?: ContentDatabase): ProficiencyKe
   let ids: string[];
   try { ids = characterSituationalIds(c, db); } catch { ids = (c.feats ?? []).map((f) => f.featId); }
   for (const id of ids) {
+    // Bypasses `entriesFor`, so the trust gate has to be asked here by name — otherwise a gated star
+    // would still conjure the untrained Lore row it was the only reason for showing.
+    if (!shippedSituational(id)) continue;
     for (const b of FEAT_SITUATIONAL[id] ?? []) {
       for (const t of b.targets ?? []) {
         const d = (t as { kind?: string; detail?: string }).detail;

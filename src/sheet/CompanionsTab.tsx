@@ -47,7 +47,7 @@ import { ActionGlyph } from './widgets';
 import { InfoTerm } from './InfoTerm';
 import { ConditionsModal } from './ConditionsModal';
 import { CATALOG_MODES, contentGatedModes, playerModeLibrary } from '../rules/modes';
-import { FEAT_SITUATIONAL } from '../rules/situationalBonuses';
+import { FEAT_SITUATIONAL, shippedSituational } from '../rules/situationalBonuses';
 import { AddItemsModal } from './AddItemsModal';
 import { PickerRow, descNodeOf } from './FilterableSelect';
 import { DescriptionModal } from './DescriptionModal';
@@ -586,7 +586,10 @@ function CompanionSituational({ cfg, content }: { cfg: CompanionConfig; content:
     if (!(inv.equipped || inv.worn || inv.invested)) continue;
     const item = content.items[inv.itemId];
     if (!item) continue;
-    for (const b of [...(FEAT_SITUATIONAL[inv.itemId] ?? []), ...(item.situational ?? [])]) {
+    // The other `entriesFor` bypass: ask the trust gate by name, same as `sheetLoreKeys`. The item's
+    // own `situational` field is already stripped by the ledger when the gate turns the item off.
+    const shipped = shippedSituational(inv.itemId) ? (FEAT_SITUATIONAL[inv.itemId] ?? []) : [];
+    for (const b of [...shipped, ...(item.situational ?? [])]) {
       lines.push({
         source: item.name,
         when: b.when,

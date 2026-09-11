@@ -3,6 +3,7 @@ import { seedContent } from '../src/rules/seed';
 import { buildCharacter, emptyBuild, type BuildState } from '../src/rules/build';
 import type { Character, ContentDatabase } from '../src/rules/types';
 import { findDuplicateIds } from '../src/data';
+import { applyTrustGate } from '../src/data/trustGate';
 
 /**
  * Load the imported game data (public/core.json) merged with the seed, exactly as
@@ -10,8 +11,19 @@ import { findDuplicateIds } from '../src/data';
  * Cached across the suite.
  */
 let cached: ContentDatabase | null = null;
-export function content(): ContentDatabase {
-  if (cached) return cached;
+let cachedGated: ContentDatabase | null = null;
+/**
+ * `content({ trustGate: true })` runs the REAL `applyTrustGate` over the parsed core before the merge
+ * below — the same function, on the same object, at the same point in the pipeline the app gates at
+ * (src/data/index.ts:mergeWithSeed gates the CORE, before seed/homebrew/catalog). That is what makes
+ * this shortcut sound even though this file re-implements the merge and never calls mergeWithSeed.
+ *
+ * The default stays UNGATED on purpose: the engine and its tests must keep seeing the complete
+ * database, so only the trust-gate tests ask for the gated one.
+ */
+export function content(opts?: { trustGate?: boolean }): ContentDatabase {
+  const gate = opts?.trustGate === true;
+  if (gate ? cachedGated : cached) return (gate ? cachedGated : cached)!;
   const core = JSON.parse(readFileSync('public/core.json', 'utf8')) as Record<string, Record<string, unknown>>;
   /*
    * Descriptions ship in a SECOND file (61% of the data, and nobody reads one until they open it), so
@@ -30,17 +42,20 @@ export function content(): ContentDatabase {
       if (v.r !== undefined) rec.descRefs = v.r;
     }
   }
+  const gated = gate ? applyTrustGate(core) : core;
   const merged: Record<string, unknown> = {};
   // Union of seed + core keys, so core-only catalogs (companionSpecializations, followers, pets)
   // are included just like the app's mergeWithSeed does.
-  for (const k of new Set([...Object.keys(seedContent), ...Object.keys(core)])) {
-    merged[k] = { ...((seedContent as Record<string, Record<string, unknown>>)[k] ?? {}), ...(core[k] ?? {}) };
+  for (const k of new Set([...Object.keys(seedContent), ...Object.keys(gated)])) {
+    merged[k] = { ...((seedContent as Record<string, Record<string, unknown>>)[k] ?? {}), ...(gated[k] ?? {}) };
   }
-  cached = merged as ContentDatabase;
+  const db = merged as ContentDatabase;
   // Same duplicate-scrape suppression the app computes in mergeWithSeed, using the SAME function, so
   // tests see the lists the user actually sees.
-  cached.duplicateIds = findDuplicateIds(cached);
-  return cached;
+  db.duplicateIds = findDuplicateIds(db);
+  if (gate) cachedGated = db;
+  else cached = db;
+  return db;
 }
 
 const c = () => content();

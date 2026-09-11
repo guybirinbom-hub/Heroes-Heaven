@@ -42,10 +42,26 @@ export interface Prefs {
    *  tri-state rather than a boolean because prefs sync between a user's devices, so a plain
    *  `hidden: false` chosen on a desktop would travel to the phone and put them back. */
   undoButtons: 'auto' | 'on' | 'off';
+  /** VERIFIED RULES ONLY (docs/trust-gate.md §4). On (the default) the app applies only the rules that
+   *  were checked line by line against the printed books and against Wanderer's Guide; every other
+   *  record is still shown, still pickable, still records the player's choices — it just doesn't touch
+   *  the sheet. Off applies everything. Device-global and cloud-synced like the rest of this bundle, so
+   *  a flip on one device reaches the others; App.tsx re-derives the whole roster when it changes. */
+  trustGate: boolean;
 }
 
 const STORAGE_KEY = 'pf2e-codex.prefs';
-const DEFAULTS: Prefs = { popupSizeSync: false, showNicheSources: false, pinnedModes: [], startupScreen: 'last', undoButtons: 'auto' };
+// A stored bundle written before a key existed gets the default back through the `{ ...DEFAULTS, ...stored }`
+// spread in initPrefs — which is the whole migration story for `trustGate` too: an existing install
+// has no key, so it lands on the gate being ON, the same as a fresh one.
+const DEFAULTS: Prefs = {
+  popupSizeSync: false,
+  showNicheSources: false,
+  pinnedModes: [],
+  startupScreen: 'last',
+  undoButtons: 'auto',
+  trustGate: true,
+};
 
 let prefs: Prefs = { ...DEFAULTS };
 const listeners = new Set<(p: Prefs) => void>();

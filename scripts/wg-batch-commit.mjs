@@ -110,7 +110,18 @@ const manifest = JSON.parse(readFileSync(p(SPECS_PATH), 'utf8'));
  * counts; it is evidence of the comparison state, as batch 28 committed it) — staged when changed, never
  * refused over."
  */
-const BATCH_EVIDENCE = ['work/experience-instrument-limits.json', 'work/wg-casting-parity.json'];
+const BATCH_EVIDENCE = ['work/experience-instrument-limits.json', 'work/wg-casting-parity.json',
+  /*
+   * THE TRUST GATE (docs/trust-gate.md §6). `--stage close` regenerates src/data/trust-ledger.json, so
+   * a batch that closed WG-encoded kinds moves it by construction — the ledger is how those records
+   * come back on, and a batch that shipped its data without it would leave its own work dark. The
+   * approvals + lanes files are the hand-maintained inputs beside it and move for the same reason (a
+   * desk fix landing inside a batch adds an entry).
+   *
+   * BATCH_EVIDENCE, not KEEP: every KEEP entry is a per-batch-TAG regex (:85-98) and a fixed path
+   * would never match one.
+   */
+  'src/data/trust-ledger.json', 'scripts/data/trust-approvals.json', 'scripts/data/trust-lanes.json'];
 
 const staged = new Set([
   ...DATA_FILES,
