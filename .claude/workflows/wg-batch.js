@@ -298,7 +298,28 @@ const verifyReadStage = (_prev, slice, i) => agent([
   'Then return, through the structured output tool, that file path and the number of verdicts in it (note = how many you REFUTED).',
 ].join('\n\n'), { label: 'verify:' + (i + 1), phase: 'Verify read', model: 'opus', effort: 'high', agentType: 'general-purpose', schema: SLICE_OUT })
 
-const sliceResults = await pipeline(SLICES, readStage, verifyReadStage)
+// DESK MODE (2026-09-11): args.desk names a prepared read file ({"findings":[...]} in FINDING_SHAPE) whose
+// findings are the OWNER'S RULINGS, not a reader's claims. The readers and adversarial verifiers are skipped:
+// one runner copies the file to read-slice-1 and writes verify-slice-1 with a CONFIRMED verdict per finding,
+// so the rest of the pipeline (read-digest, builders by family, verifiers, gaps, closer, gate-red round,
+// close-verifier) runs unchanged and every guard still applies. A ruling is not re-adjudicated by an agent.
+const DESK = args && args.desk ? String(args.desk) : ''
+let sliceResults
+if (DESK) {
+  SLICES.length = 0
+  SLICES.push(records)
+  log('desk mode: ' + DESK + ' - readers skipped, one slice of ' + records.length + ' records')
+  sliceResults = [await agent([
+    'You are the RUNNER for parity batch ' + BATCH + ' (' + LANE + ', DESK MODE). Repo: ' + REPO + '. You copy and report; you author nothing.',
+    NEVER,
+    'The findings for this batch are the OWNER\'S RULINGS, prepared in ' + DESK + ' as {"findings":[...]} (each finding has id, claim, printed, ours, theirs, proposal, playerVisible, askOwner). Do exactly this, with the Write tool (no heredocs):',
+    '1. Read ' + DESK + '. Write its contents UNCHANGED to work/' + B + '-read-slice-1.json.',
+    '2. Write work/' + B + '-verify-slice-1.json as {"verdicts":[...]} with one verdict per finding, same order: {"id": <same id>, "claim": <same claim>, "verdict": "CONFIRMED", "evidence": "owner ruling, 2026-09-10 desk pass (work/desk-answers-2026-09-10.json)"}.',
+    '3. Return, through the structured output tool, the path of the read slice and the number of findings.',
+  ].join('\n\n'), { label: 'desk:copy-rulings', phase: 'Read', model: 'opus', agentType: 'general-purpose', schema: SLICE_OUT })]
+} else {
+  sliceResults = await pipeline(SLICES, readStage, verifyReadStage)
+}
 log('read+verify done: ' + sliceResults.filter(Boolean).length + '/' + SLICES.length + ' slices returned')
 
 // ---------------------------------------------------------------- 3. runner: read-digest

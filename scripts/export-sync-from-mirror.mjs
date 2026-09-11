@@ -7,10 +7,16 @@
  * were in the mirror but not the export, so the created records failed as NO DOCUMENT).
  *
  * With no arguments: every aonId in public/core.json that the export lacks and the mirror has is
- * inserted. With --ids a,b,c: just those. Nothing is ever removed or overwritten.
+ * inserted. With --ids a,b,c: just those. Nothing is ever removed, and nothing is overwritten unless
+ * --refresh is given with --ids: then the listed documents are REPLACED from the mirror. That is for an
+ * AoN CORRECTION to an existing page (2026-09-11: Streetfood Vendor, background-479 — the live page
+ * prints "your choice of either the Crafting or the Society skill", the snapshot still said "the
+ * Crafting skill"; both WG and Foundry had the choice, and the stale snapshot was what put the record on
+ * the owner's desk). Refresh the mirror doc first (the ES proxy), then this, then the record.
  *
  *   node scripts/export-sync-from-mirror.mjs
  *   node scripts/export-sync-from-mirror.mjs --ids arcane-school-31,arcane-school-32
+ *   node scripts/export-sync-from-mirror.mjs --ids background-479 --refresh
  */
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
@@ -40,7 +46,9 @@ else {
   walk(core);
 }
 
-const missing = [...new Set(wanted.map(stripSynthetic))].filter((id) => !byId.has(id));
+/* --refresh only makes sense for an explicit list: a blanket overwrite would re-snapshot every document. */
+const REFRESH = process.argv.includes('--refresh') && !!arg('--ids');
+const missing = [...new Set(wanted.map(stripSynthetic))].filter((id) => REFRESH || !byId.has(id));
 const perFile = new Map();
 const notInMirror = [];
 for (const id of missing) {
