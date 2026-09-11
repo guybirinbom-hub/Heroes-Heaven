@@ -556,7 +556,16 @@ export const FEAT_SITUATIONAL: Record<string, SituationalBonus[]> = {
   "repositioning-block": [{ targets: [{ kind: 'skill', detail: 'athletics' }], when: "to Reposition after Shield Block (bonus scales with shield level)", bonus: "+1 item (or higher)" }],
   "reptile-rider": [{ targets: [{ kind: 'skill', detail: 'nature' }], when: "to Handle a reptile, dinosaur, or non-sapient dragon", bonus: "+1 circumstance" }],
   "resilient-mind": [{ targets: [{ kind: 'save', detail: 'all' }], when: "against mental effects (+2 vs. undead)", bonus: "+1 circumstance" }],
-  "reverse-engineer": [{ targets: [{ kind: 'skill', detail: 'crafting' }], when: "to reverse engineer or disassemble an item", bonus: "+2 circumstance" }],
+  /* WG parity b037, reverse-engineer#crafting-star. DELETED: the +2 Crafting star came from the
+   * SUPERSEDED 2021 printing (feat-8555). Our record is feat-3053, Guns & Gears Remastered 2025, and
+   * that entry grants no bonus at all — its whole mechanic is *"Furthermore, you can use Crafting
+   * instead of Thievery to Disable a Device or Pick a Lock."*, which the record's own
+   * `skillSubstitutions` carries and explain.ts:648 surfaces as a note on the THIEVERY rows. The
+   * description the player already reads is the new text, so the star advertised a number that
+   * appeared nowhere in the feat he was looking at. Owner ruling #15 ("drop the +2 Crafting star",
+   * scripts/data/trust-approvals.json). WG keeps the +2, which is the 2021 text; R12, the 2025
+   * printing wins. Named in apply-situational-lane.mjs's exclusion list so the lane cannot re-emit
+   * it — a deleted row is invisible to that script's `existingIds` check. */
   "right-hand-blood": [{ targets: [{ kind: 'skill', detail: 'medicine' }], when: "to Administer First Aid, Treat Disease, or Treat Wounds via your blood", bonus: "+1 item" }],
   "risky-surgery": [{ targets: [{ kind: 'skill', detail: 'medicine' }], when: "to Treat Wounds after dealing 1d8 damage to your patient", bonus: "+2 circumstance" }],
   "ritual-researcher": [{ targets: [{ kind: 'skill', detail: 'all' }], when: "on primary and secondary checks to cast a ritual", bonus: "+2 circumstance" }],

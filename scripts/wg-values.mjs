@@ -1384,6 +1384,65 @@ function ourAssertions(id, rec) {
  * and the disagreement is recorded rather than adopted.
  */
 const SETTLED_VALUES = {
+  /* ---- BATCH 37 (instruments-7) ------------------------------------------------------------------
+   *
+   * CURSE OF TURBULENT MOMENTS — sixteen flat rows for a penalty that applies in two narrow places.
+   *
+   * Print (AoN mystery-23, Curse Of Turbulent Moments): *"You take a status penalty to your AC against
+   * attacks made against you from reactions or free actions and a status penalty to saving throws
+   * against effects that would make you fatigued or slowed equal to your cursebound value."* Both
+   * halves are gated — one on the ATTACK's action cost, one on the EFFECT's condition — and neither
+   * gate is a fact the sheet holds, so under the owner's 2026-08-22 rule (a condition the sheet cannot
+   * see is a star, never a number) the penalty is a note. WG has no scope for either gate, so it flattens
+   * the cursebound ladder into sixteen unconditional numbers: −1/−2/−3/−4 on AC and on all three saves,
+   * with the printed conditions written beside them as loose text. Adopting them would penalise a
+   * cursebound Time oracle's AC and every save against everything.
+   *
+   * Ours holds both sentences where they are readable and applies neither to a number:
+   * situationalBonuses.ts:889 FEAT_SITUATIONAL['curse-of-turbulent-moments'] stars the AC row
+   * ("against attacks made against you from reactions or free actions, while cursebound") and all three
+   * saves ("against effects that would make you fatigued or slowed, while cursebound"), each reading
+   * "−(your cursebound value) status"; :4654 RECORD_MARKERS marks the `cursebound` condition itself.
+   * Owner ruled 2026-09-10 (desk #143, answer C): the book wins and the value stays a note.
+   *
+   * ⚠ BLAST RADIUS, MEASURED. Four keys, this record only — and they are the record's ENTIRE numeric
+   * content on both sides, so nothing else on it is silenced. The saves are named one track at a time
+   * rather than with a wildcard, so a future WG row on a track print does not touch still reports.
+   * Adversarially confirmed under `--raw` (the registry's own bypass): all sixteen rows come straight
+   * back as MISSING, so the settle is what silences them and is not redundant beside a carrier this
+   * comparer could already read. Pinned in test/batch037-instruments-7.test.ts.
+   */
+  // batch 037: curse-of-turbulent-moments#conditional-penalty
+  'curse-of-turbulent-moments': ['ac|', 'save|fortitude', 'save|reflex', 'save|will'],
+
+  /* ---- BATCH 37 (instruments-4) ------------------------------------------------------------------
+   *
+   * TUMBLING THEFT — THEIR +1 IS ON THE WRONG SKILL, AND THEIR OWN QUOTED PARAGRAPH SAYS SO.
+   *
+   * Print (AoN feat-6513, Player Core 2 pg. 235): *"You gain a +1 circumstance bonus to your Thievery
+   * check to Steal as your tumbling make it difficult for your enemy to keep track of your movement."*
+   * Their row's only value-bearing op is `addBonusToValue SKILL_STEALTH "1"` — the description text
+   * they ship beside it is the printed paragraph above, Thievery and all, so the placement contradicts
+   * their own record rather than the book. Adopting it would star Stealth on every character holding
+   * this feat and leave the Steal it is printed for unstarred.
+   *
+   * Ours puts it where print does, and as a star rather than a number, because the trigger is a fact
+   * the sheet cannot see: src/rules/situationalBonuses.ts FEAT_SITUATIONAL['tumbling-theft'] targets
+   * `{kind:'skill', detail:'thievery'}` with *"on the Thievery check to Steal after you critically
+   * succeed at Tumble Through an enemy's space"*, +1 circumstance. Owner-ruled 2026-09-10, desk #66,
+   * under the standing 2026-08-22 rule (the book wins): their Stealth placement is an adversarially
+   * confirmed deliberate difference.
+   *
+   * ⚠ BLAST RADIUS, MEASURED. ONE key, this record only, and `skill|stealth` is their ENTIRE numeric
+   * content on this row — so a future WG number on any other track here still reports. The Thievery
+   * side is not silenced by this entry and never could be: wg-values walks THEIR keys, and they
+   * assert none for Thievery. Adversarially confirmed under `--raw` (the registry's own bypass): the
+   * row comes straight back as MISSING, so the settle is what silences it and is not redundant beside
+   * a carrier this comparer could already read. Pinned in test/batch037-instruments-4.test.ts.
+   */
+  // batch 037: tumbling-theft#thievery
+  'tumbling-theft': ['skill|stealth'],
+
   /*
    * CREATIVE PRODIGY — a NAME TWIN, not a gap. Their SKILL_DECEPTION comes from ability_block 23367,
    * the GANZI Creative Prodigy (trait 3035, content_source 18 = Ancestry Guide backport, no
@@ -1469,7 +1528,13 @@ const SETTLED_VALUES = {
    * Ours is `critSpecWeapons: { melee: true }`, which is the sentence. What their row DID surface was
    * the gate: they wrap it in a conditional on the rage mode and ours applied always, so a barbarian
    * carried the benefit out of combat. That half was adopted — `critSpecRequiresModeGroup`.
+   *
+   * Owner ruled 2026-09-10 (desk #42, "keep the printed scope"), which is what turns this from a
+   * recorded disagreement into a settle: the book wins, the benefit is melee weapons and unarmed
+   * attacks, and WG's ranged-inclusive simple/martial/unarmed grant is a deliberate difference.
+   * `set|critspec` only — every other value on the record keeps reporting.
    */
+  // batch 037: brutality#melee-only
   brutality: ['set|critspec'],
 
   /*
@@ -1905,6 +1970,64 @@ const SETTLED_VALUES = {
    * `savesFromChoice: 'pathToPerfection:0'`, resolved to the picked save by explain.ts.
    */
   'path-to-perfection': ['save|fortitude', 'save|reflex', 'save|will'],
+
+  /*
+   * ---- BATCH 037 ---------------------------------------------------------------------------------
+   *
+   * TRAVELING GOURMAND — THEIR OPERATION UNTRAINS THE SKILL THE BACKGROUND PRINTS.
+   *
+   * Printed (AoN background-482): *"You're trained in the Survival skill, and the Cooking Lore skill.
+   * You gain the Forager skill feat."* Their row writes Survival as UNTRAINED (`"value":"U"`); ours is
+   * `backgrounds/traveling-gourmand.trainedSkill: 'survival'` with `trainedLore: 'cooking'` and
+   * `grantedFeatId: 'forager'`, which is the printed sentence entire. Their Cooking Lore and Forager
+   * halves agree with us — only the Survival scalar disagrees, and it disagrees with the book.
+   * Owner-ruled 2026-09-10, desk #80, under the standing 2026-08-22 rule (book wins): their
+   * untrained-Survival operation is an adversarially confirmed deliberate difference, never a value to
+   * import.
+   *
+   * ⚠ BLAST RADIUS, MEASURED, NOT ASSUMED, AND IT IS THE WHOLE RECORD FOR THIS COMPARER.
+   * `skill|survival` is the ONLY key either side asserts here — `ours(all): skill|survival=trained`,
+   * theirs one op — so quieting it leaves wg-values with nothing to say about the record. That is
+   * stated plainly rather than buried, and the cover is in two other places, both pinned in
+   * test/batch037-instruments-5.test.ts:
+   *   · wg-diff still compares the record's KINDS. With `trainedSkill` AND `trainedLore` stripped from
+   *     backgrounds/traveling-gourmand the background stops asserting the `skill` kind at all and goes
+   *     to THEY-ONLY `missing=[skill]` — with this settle in place, since the settle lives in a
+   *     different registry.
+   *   · the printed sentence is pinned on a really BUILT character (Survival trained, Cooking Lore
+   *     trained, Forager granted), against a content copy with those three fields deleted.
+   * Adversarially confirmed the other way too: under `--raw` the record goes straight back to
+   * `DIFFERENT skill|survival theirs=untrained ours=trained`, so the settle is what silences it and is
+   * not merely redundant beside a carrier this comparer could already read.
+   */
+  // batch 037: traveling-gourmand#survival
+  'traveling-gourmand': ['skill|survival'],
+
+  /*
+   * DENY LADY NANBYO'S CHARITY — PRINT NAMES TWO DIFFERENT BULK NUMBERS AND THEIR VOCABULARY HOLDS ONE.
+   *
+   * Printed (AoN heritage-407): *"Your vow grants you the strength to carry 1 more Bulk than normal
+   * before becoming encumbered and up to a maximum of 2 more Bulk"* — two thresholds, two numbers.
+   * Their whole encoding is the single op `adjValue BULK_LIMIT_BONUS 2`, which in their engine moves
+   * the ENCUMBERED threshold by 2 as well, so their one scalar cannot state the printed rule whichever
+   * value it takes. Ours states both, on the record: `heritages/deny-lady-nanbyos-charity`
+   * `bulkLimitBonus: 1` (read at src/rules/derive.ts:5533 into `limitBonus`, which moves BOTH
+   * thresholds) plus `bulkMaxBonus: 1` (:5534 into `maxOnlyBonus`, which moves the maximum only) —
+   * encumbered +1, maximum +2, exactly as printed. Owner-ruled 2026-09-10, desk #118, under the
+   * standing 2026-08-22 rule (book wins).
+   *
+   * ⚠ `bulk|` ONLY, and the record's other value keeps reporting by construction: SETTLED_VALUES is
+   * filtered per KEY, and this record also asserts `skill|athletics=1` — the printed *"+1 circumstance
+   * bonus to Force Open or Escape"*, held as situationalBonuses.ts:2719 and scraped by
+   * `situationalMagnitudes` — which is compared exactly as it stands on every run. Adversarially
+   * confirmed both ways in test/batch037-instruments-5.test.ts: under `--raw` the record goes straight
+   * back to `DIFFERENT bulk| theirs=2 ours=1 / 1 / 1 / 1`, so the settle is what silences it and is not
+   * merely redundant; and the two printed thresholds are pinned on a really BUILT yaksha (+1
+   * encumbered, +2 maximum) against a content copy with `bulkLimitBonus` and `bulkMaxBonus` deleted,
+   * which loses both — so the settle defers to carriers that really deliver.
+   */
+  // batch 037: deny-lady-nanbyos-charity#bulk-thresholds
+  'deny-lady-nanbyos-charity': ['bulk|'],
 };
 
 /* ---------------------------------------------------------------- compare */

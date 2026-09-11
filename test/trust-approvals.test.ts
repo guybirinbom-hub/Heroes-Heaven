@@ -71,9 +71,17 @@ const leafOf = (path: string) => {
 };
 
 describe('trust-approvals.json — completeness', () => {
-  it('the desk roster is the 150 numbers of work/owner-questions.json, with no gaps or repeats', () => {
+  /*
+   * The roster GROWS whenever a batch files an owner question, and batch 037 filed two: #151
+   * screech-shooter-major-rune-grade (whether the major grade keeps the greater's runes, which print
+   * never states for it) and #152 empty-description-marker-line (the marked-as-ours line owner ruling
+   * #17 asked for on merchants-scale, which the apply pre-check refuses as authored prose). Both are
+   * `open`, so both are `unruled` below.
+   */
+  // batch 037: screech-shooter-major#grade-numbers
+  it('the desk roster is every number in work/owner-questions.json — 152 once screech-shooter-major and merchants-scale were filed — with no gaps or repeats', () => {
     expect(new Set(deskNumbers).size).toBe(deskNumbers.length);
-    expect(deskNumbers.length).toBe(150);
+    expect(deskNumbers.length).toBe(152);
   });
 
   it('every desk number has exactly one disposition', () => {
@@ -101,10 +109,17 @@ describe('trust-approvals.json — completeness', () => {
     }
   });
 
-  it('an unruled entry carries the id and status work/owner-questions.json holds', () => {
+  /*
+   * `open` was missing from this map, so a question filed BY a batch and not yet answered could be in
+   * no list at all: the completeness test above requires every unanswered number to be `unruled`, and
+   * this one required `unruled` to come from deferred/ruled/authorisedExceptions. Batch 037's two new
+   * questions (#151 screech-shooter-major, #152 merchants-scale) are the first to sit in that gap.
+   */
+  // batch 037: merchants-scale#no-rules
+  it('an unruled entry carries the id and status work/owner-questions.json holds — including an open one, like merchants-scale #152', () => {
     const byN = new Map<number, { list: string; id?: string }>();
-    for (const list of ['deferred', 'ruled', 'authorisedExceptions']) for (const e of desk[list] ?? []) byN.set(e.n, { list, id: e.id });
-    const statusOf: Record<string, string> = { ruled: 'ruled', deferred: 'deferred', authorisedExceptions: 'authorisedException' };
+    for (const list of ['open', 'deferred', 'ruled', 'authorisedExceptions']) for (const e of desk[list] ?? []) byN.set(e.n, { list, id: e.id });
+    const statusOf: Record<string, string> = { open: 'open', ruled: 'ruled', deferred: 'deferred', authorisedExceptions: 'authorisedException' };
     for (const e of approvals.unruled) {
       const src = byN.get(e.n);
       expect(src, `unruled #${e.n} must come from owner-questions.json`).toBeDefined();

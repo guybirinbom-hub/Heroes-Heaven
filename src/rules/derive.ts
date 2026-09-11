@@ -1788,10 +1788,15 @@ export function dailySkillRank(c: Character, db: ContentDatabase | undefined, ke
   return best;
 }
 
-export function dailyChoiceGrants(c: Character, db: ContentDatabase): EffectGrant[] {
+/* `__from` is the NAME of the record that asked the question, carried out with the grant. Same
+ * private-field idiom deriveDefenses already uses for its sources, and for the same reason: a grant
+ * on its own cannot say who granted it, so every daily casting on the Spells tab was labelled
+ * "Borrowed today" — Loaner Spell's sentence — even when it came from an ancestry feat. Set only on
+ * the OPTION-grant branch; the open-pick branch below IS Loaner Spell, whose label is already right. */
+export function dailyChoiceGrants(c: Character, db: ContentDatabase): (EffectGrant & { __from?: string })[] {
   const stored = c.dailyChoices;
   if (!stored) return [];
-  const out: EffectGrant[] = [];
+  const out: (EffectGrant & { __from?: string })[] = [];
   for (const rec of ownedDailyChoiceRecords(c, db)) {
     const def = rec.choice;
     if (!def?.daily) continue;
@@ -1825,7 +1830,7 @@ export function dailyChoiceGrants(c: Character, db: ContentDatabase): EffectGran
     // An answer whose gate no longer holds grants nothing. A Haunting Memories pick made while a skill
     // was untrained has to stop applying once training arrives from somewhere else, or this morning's
     // answer outlives the condition it was chosen under.
-    if (opt?.grant && qualifiesForOption(c, opt.requiresSkillRank)) out.push(opt.grant);
+    if (opt?.grant && qualifiesForOption(c, opt.requiresSkillRank)) out.push({ ...opt.grant, __from: rec.name });
   }
   return out;
 }
@@ -2763,6 +2768,12 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
     !!(c.backgroundId && db.backgrounds[c.backgroundId]?.negativeHealing) ||
     c.feats.some((f) => db.feats[f.featId]?.negativeHealing) ||
     c.inventory.some((inv) => inv.invested && db.items[inv.itemId]?.negativeHealing);
+  /* WORN ARMOUR CATEGORY — the other "what the character has on" fact a printed IWR clause turns on.
+   * Guardian's Armor (AoN class-feature-1115): *"While wearing medium or heavy armor, you gain
+   * resistance to physical damage equal to 1 + half your level."* Read from the same helper the armour
+   * specialization block below already uses, so the two can never disagree about what is being worn.
+   * `undefined` means nothing worn, which fails every `whenArmorCategory` gate. */
+  const wornArmorCategory = findWornArmor(c, db)?.armor.category;
   // Formulas may reference the character's level and ability modifiers (Wyrmbane Aura's Cha-mod
   // resistance). Speed-relative formulas belong to deriveSpeeds, which knows the resolved Speeds.
   const scope: FormulaScope = { level: c.level, abilities: c.abilities, archetypeFeats: archetypeFeatCounts(c, db) };
@@ -2797,6 +2808,10 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
        * instead gain an equal amount of resistance to vitality damage."* Two mutually exclusive
        * entries on one record, switched by a fact this function already computes. */
       if (r.whenVoidHealing != null && r.whenVoidHealing !== voidHealing) continue;
+      // batch 037: guardians-armor#automatic-resistance — *"WHILE WEARING MEDIUM OR HEAVY ARMOR, you
+      // gain resistance to physical damage equal to 1 + half your level"* (class-feature-1115). The
+      // condition is on the sheet, so the number is automatic rather than a mode the player flips.
+      if (r.whenArmorCategory && !(wornArmorCategory && r.whenArmorCategory.includes(wornArmorCategory))) continue;
       const v = resolveFormula(r.value, scope);
       if (v <= 0) continue;
       /*
@@ -2825,6 +2840,7 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
       if (w.whenCreatureTrait && !hasCreatureTrait(c, db, w.whenCreatureTrait)) continue;
       if (w.unlessCreatureTrait && hasCreatureTrait(c, db, w.unlessCreatureTrait)) continue;
       if (w.whenVoidHealing != null && w.whenVoidHealing !== voidHealing) continue;
+      if (w.whenArmorCategory && !(wornArmorCategory && w.whenArmorCategory.includes(wornArmorCategory))) continue;
       const v = resolveFormula(w.value, scope);
       if (v > 0) {
         weak.set(w.type, Math.max(weak.get(w.type) ?? 0, v));
@@ -4781,8 +4797,13 @@ export function deriveBlastStrikes(c: Character, db: ContentDatabase): Strike[] 
 interface UnarmedProfile {
   instanceId: string;
   name: string;
-  die: string;
-  damageType: string;
+  /* batch 037: animal-instinct#spider-web — both ABSENT on a damageless attack (the spider
+   * instinct's Web, AoN instinct-8, whose damage column prints "Special"), which is why they are
+   * optional here and on NaturalAttack: the damage line then reads "no damage" instead of a die
+   * nothing printed. `onHit` is what such an attack does instead. */
+  die?: string;
+  damageType?: string;
+  onHit?: string;
   traits: string[];
   group: string;
   /** The record that GRANTED this strike, so a rider can name it rather than guess from the name —
@@ -4827,7 +4848,7 @@ function deriveUnarmedStrike(
 ): Strike {
   // Deadly Simplicity: if the deity's favored weapon is this unarmed attack and its die is smaller
   // than d6, raise it to d6 (Player Core). dsUnarmed is set by the caller for the qualifying attack.
-  const die = deadlySimplicityDie(p.die, dsUnarmed, true);
+  const die = p.die ? deadlySimplicityDie(p.die, dsUnarmed, true) : undefined;
   const strMod = abilityModOf(c, 'str');
   const dexMod = abilityModOf(c, 'dex');
   // A RANGED natural attack (spine) is a ranged attack → Dexterity to the attack roll and no ability to damage.
@@ -4903,7 +4924,7 @@ function deriveUnarmedStrike(
     return d.vs ? `${base} (${d.vs.dice}${d.vs.die} vs ${d.vs.trait})` : base;
   });
   // Monster-Parts imbued damage on the handwraps folds into unarmed damage as per-hit "plus" terms.
-  const mpDmg = mpHandwraps ? mpImbuedDamageTerms(mpHandwraps, p.damageType, c.level).map((t) => formatMpDamageTerm(t)) : [];
+  const mpDmg = mpHandwraps && p.damageType ? mpImbuedDamageTerms(mpHandwraps, p.damageType, c.level).map((t) => formatMpDamageTerm(t)) : [];
   const critPersistent = runeDamage
     .filter((d) => d.critPersistent)
     .map((d) => `${d.critPersistent!.dice}${d.critPersistent!.die} persistent ${DAMAGE_ABBR[d.type] ?? d.type}`);
@@ -4916,15 +4937,30 @@ function deriveUnarmedStrike(
   // innovation's Offensive Boost). `p.name === 'Fist'` and stance strikes are all unarmed here.
   const riderDmg = strikeDamageRiders(c, db, { rank, ranged: isRanged, unarmed: true, name: p.name });
   const extraDmg = [...runeDmg, ...mpDmg, ...riderDmg];
-  const damage =
-    `${dice}${die}${dmgBonus ? formatMod(dmgBonus) : ''} ${DAMAGE_ABBR[p.damageType] ?? p.damageType}` +
-    (extraDmg.length ? ` plus ${extraDmg.join(' plus ')}` : '') +
-    (nCritRiders.length ? ` (plus ${nCritRiders.join(', ')} on a crit)` : '') +
-    (nFatal ? ` (fatal ${nFatal})` : '');
-  const conditionalDamage = strikePrecisionRiders(c, db, { traits: p.traits, ranged: isRanged, unarmed: true });
+  /*
+   * batch 037: animal-instinct#spider-web — an attack that deals NO DAMAGE says so, rather than
+   * showing a die nobody printed: *"The spider's web attack deals no damage, but the target takes a
+   * -10-foot circumstance penalty to its Speeds for 1 round on a hit"* (AoN instinct-8). Handwraps,
+   * striking runes and Weapon Specialization all add to damage the attack does not have, so none of
+   * them may reach the cell; the on-hit effect is what the attack is FOR, so it rides in its place.
+   * `onHit` shows on a damaging attack too — it is an on-hit clause, not a substitute for damage.
+   */
+  const onHit = p.onHit ? ` (on a hit, ${p.onHit})` : '';
+  const damage = !p.die
+    ? `no damage${onHit}`
+    : `${dice}${die}${dmgBonus ? formatMod(dmgBonus) : ''} ${DAMAGE_ABBR[p.damageType ?? ''] ?? p.damageType}` +
+      (extraDmg.length ? ` plus ${extraDmg.join(' plus ')}` : '') +
+      (nCritRiders.length ? ` (plus ${nCritRiders.join(', ')} on a crit)` : '') +
+      (nFatal ? ` (fatal ${nFatal})` : '') +
+      onHit;
+  /* batch 037: animal-instinct#spider-web — extra-damage riders have nothing to ride on an attack
+   * that deals no damage (*"the spider's web attack deals no damage"*, AoN instinct-8): sneak
+   * attack, precision and Rage's *"+2 status bonus to melee damage rolls"* all add to a damage roll
+   * this Strike never makes, so a damageless attack collects none of them. */
+  const conditionalDamage = p.die ? strikePrecisionRiders(c, db, { traits: p.traits, ranged: isRanged, unarmed: true }) : [];
   // batch 035: animal-instinct#rage-damage-scope — the granting record, so Animal Instinct's raised
   // Rage damage reaches its animal's attacks and not the barbarian's own Fist.
-  const rageRider = rageStrikeRider(c, db, { ranged: isRanged, unarmed: true, weaponType: p.damageType, agile: p.traits.includes('agile'), source: p.source });
+  const rageRider = p.die ? rageStrikeRider(c, db, { ranged: isRanged, unarmed: true, weaponType: p.damageType ?? '', agile: p.traits.includes('agile'), source: p.source }) : null;
   if (rageRider) conditionalDamage.push(rageRider);
   return {
     instanceId: p.instanceId,
@@ -4936,7 +4972,7 @@ function deriveUnarmedStrike(
     ...(p.critSpec ? { critSpec: true } : {}),
     ranged: isRanged,
     range: p.range,
-    ...(isRanged ? {} : { reaches: strikeReaches(c, db, { traits: p.traits, unarmed: true, name: p.name, damageType: p.damageType, group: p.group }) }),
+    ...(isRanged ? {} : { reaches: strikeReaches(c, db, { traits: p.traits, unarmed: true, name: p.name, damageType: p.damageType ?? '', group: p.group }) }),
     group: p.group,
     base: p.instanceId,
     specDamage: specDamage || undefined,
@@ -5025,8 +5061,14 @@ function applyUnarmedRiders(c: Character, db: ContentDatabase, p: UnarmedProfile
     }
   }
 
-  // An absolute die states a result, so it wins; steps never compound across riders.
-  if (setDie) out = { ...out, die: setDie };
+  /* An absolute die states a result, so it wins; steps never compound across riders.
+   * batch 037: animal-instinct#spider-web — neither touches a DAMAGELESS attack. Animal Instinct's
+   * own level-7 rider steps *"the damage die size for the unarmed attacks granted by your chosen
+   * animal"* (AoN instinct-8), and the spider's Web has no damage die to step: *"the spider's web
+   * attack deals no damage"*. Without the guard a 7th-level spider barbarian's Web grew a d4. */
+  if (!out.die) {
+    /* nothing to enlarge */
+  } else if (setDie) out = { ...out, die: setDie };
   else if (bestStep) {
     let die = out.die;
     for (let i = 0; i < bestStep; i++) die = stepDie(die);
@@ -5118,6 +5160,9 @@ export function deriveStrikes(c: Character, db: ContentDatabase): Strike[] {
         source: na.source,
         die: na.die,
         damageType: na.damageType,
+        /* batch 037: animal-instinct#spider-web — the on-hit clause of a granted attack (the Web's
+         * Speed penalty), which had no carrier between the record and the Strikes row. */
+        onHit: na.onHit,
         traits: na.traits?.length ? na.traits : ['unarmed'],
         group: na.group ?? 'brawling',
         range: na.range,
@@ -5265,15 +5310,40 @@ export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {
   let statePenalty = 0;
   for (const wa of activeStateGrants(c, db)) statePenalty += wa.speedPenalty ?? 0;
   // Flat additive land-Speed from feats/class features/heritage (Hyper Boosters: +10 ft). After the base.
-  let featLandBonus = 0;
   /* A LEVEL-SCALING bonus is written as a formula (Vivacious Speed's always-on half steps at 11th and
    * 19th), in the same vocabulary every other speed value uses. Resolved through ONE helper so the
    * three record kinds cannot disagree about what a string means; a plain number passes through. */
   const landBonusOf = (v: number | string | undefined) =>
     v == null ? 0 : typeof v === 'number' ? v : resolveFormula(v, { level: c.level, abilities: c.abilities, speeds });
-  for (const f of c.feats) featLandBonus += landBonusOf(db.feats[f.featId]?.landSpeedBonus);
-  for (const fid of ownedFeatureIds(c, db)) featLandBonus += landBonusOf(db.classFeatures[fid]?.landSpeedBonus);
-  for (const h of heritageRecords(c, db)) featLandBonus += landBonusOf(h.landSpeedBonus);
+  /* batch 037: swashbucklers-speed#typed-all-speeds — *"You gain a +5-foot STATUS bonus to your
+   * SpeedS; this increases to a +10-foot status bonus while you have panache"* (feat-6238). Two
+   * clauses this loop could not say: the bonus TYPE and the PLURAL target. Every bonus used to be
+   * summed untyped into land Speed alone, so a swashbuckler holding both Vivacious Speed's standing
+   * status half and Swashbuckler's Speed walked 5 feet past the printed number, and no Speed but land
+   * ever moved. Same-type bonuses now take the HIGHEST; untyped ones (and the leshy's −5 penalty)
+   * still stack, which is RAW. Owner ruling 2026-09-10 #127: follow print on both halves. */
+  const speedBonuses: { value: number; type?: string; allSpeeds?: boolean }[] = [];
+  const pushSpeedBonus = (src: DefenseGrants | undefined) => {
+    const value = landBonusOf(src?.landSpeedBonus);
+    if (!value) return;
+    speedBonuses.push({ value, type: src!.speedBonusType, allSpeeds: src!.speedBonusAllSpeeds });
+  };
+  for (const f of c.feats) pushSpeedBonus(db.feats[f.featId]);
+  for (const fid of ownedFeatureIds(c, db)) pushSpeedBonus(db.classFeatures[fid]);
+  for (const h of heritageRecords(c, db)) pushSpeedBonus(h);
+  const stackSpeedBonuses = (rows: typeof speedBonuses) => {
+    let total = 0;
+    const best: Record<string, number> = {};
+    for (const b of rows) {
+      if (b.type) best[b.type] = Math.max(best[b.type] ?? 0, b.value);
+      else total += b.value; // untyped modifiers stack, and a penalty is never suppressed by a bonus
+    }
+    return Object.values(best).reduce((n, v) => n + v, total);
+  };
+  const featLandBonus = stackSpeedBonuses(speedBonuses);
+  // …and the same total restricted to the carriers whose clause says "your SpeedS", for every OTHER
+  // movement type. Applied below, where the grants have resolved and a Speed of 0 stays absent.
+  const allSpeedsBonus = stackSpeedBonuses(speedBonuses.filter((b) => b.allSpeeds));
   let passiveSpeedPenalty = 0;
   let passiveLandBonus = 0;
   for (const inv of c.inventory) {
@@ -5389,6 +5459,13 @@ export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {
     for (const k of adjustTargets(a.key)) {
       if ((speeds[k] ?? 0) > 0) speeds[k] = (speeds[k] as number) + a.add;
     }
+  }
+  /* batch 037: swashbucklers-speed#typed-all-speeds — the PLURAL half of *"a +5-foot status bonus to
+   * your SpeedS"* (feat-6238). Land already took it above with the rest of `featLandBonus`; every
+   * other movement type takes it here, after the grants and on the same terms as `speedAdjust`: a
+   * Speed the character doesn't have is not created by a bonus to the Speeds they do have. */
+  if (allSpeedsBonus) {
+    for (const k of ADJUST_KEYS) if (k !== 'land' && (speeds[k] ?? 0) > 0) speeds[k] = (speeds[k] as number) + allSpeedsBonus;
   }
 
   // ---- penalties. Every one of these hits EVERY movement type, not just land.

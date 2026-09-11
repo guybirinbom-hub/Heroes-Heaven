@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-09T11:16:22.689Z",
+ "generated": "2026-09-11T09:09:54.158Z",
  "classes": [
   {
    "classId": "animist",
@@ -25,44 +25,7 @@
     "attribute": "wis",
     "progression": "animist"
    },
-   "mismatches": [
-    {
-     "kind": "slots",
-     "level": 13,
-     "rank": 7,
-     "detail": "rank 7: WG 1 slot(s), ours 2"
-    },
-    {
-     "kind": "slots",
-     "level": 14,
-     "rank": 7,
-     "detail": "rank 7: WG 2 slot(s), ours 3"
-    },
-    {
-     "kind": "slots",
-     "level": 15,
-     "rank": 8,
-     "detail": "rank 8: WG 1 slot(s), ours 2"
-    },
-    {
-     "kind": "slots",
-     "level": 16,
-     "rank": 8,
-     "detail": "rank 8: WG 2 slot(s), ours 3"
-    },
-    {
-     "kind": "slots",
-     "level": 17,
-     "rank": 9,
-     "detail": "rank 9: WG 1 slot(s), ours 2"
-    },
-    {
-     "kind": "slots",
-     "level": 18,
-     "rank": 9,
-     "detail": "rank 9: WG 2 slot(s), ours 3"
-    }
-   ],
+   "mismatches": [],
    "levels": [
     {
      "level": 1,

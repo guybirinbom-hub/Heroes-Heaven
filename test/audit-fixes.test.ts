@@ -58,10 +58,18 @@ describe('audit fixes — advancement & proficiency', () => {
 });
 
 describe('audit fixes — spellcasting', () => {
-  it('Two-rank caster (magus) gets a full 2 slots of a newly-unlocked top rank: L5 → 2× rank 3 (per AoN)', () => {
+  /* The original ratchet was the 2021 two-rank table, where a newly-unlocked TOP rank arrived with its
+   * full 2 slots at L5 and the rank below kept 2 while every lower rank was discarded. The 2026
+   * Magus Spells per Day table (class-74, Impossible Magic pg. 9) keeps every rank it opens instead:
+   * row 5 is `2 2 1` — 1st and 2nd at two, the brand-new 3rd at one, filling to two at 6th. What the
+   * assertion still guards is the same thing it always guarded: the rank below the top is not
+   * short-changed, and a new rank fills on the following level. */
+  // batch 037: magus#2026-printing
+  it('magus on the 2026 retained-rank table: L5 → 2 2 1, and the new 3rd rank fills at L6', () => {
     const entry = build('magus', 5, { keyAbility: 'int' }).spellcasting.find((e) => e.id === 'magus-casting')!;
+    expect(entry.prepared?.[1]?.length).toBe(2);
     expect(entry.prepared?.[2]?.length).toBe(2);
-    expect(entry.prepared?.[3]?.length).toBe(2); // AoN magus table: 3rd rank arrives with its full 2 slots at L5
+    expect(entry.prepared?.[3]?.length).toBe(1); // class-74 row 5: the rank that just opened holds one
     const l6 = build('magus', 6, { keyAbility: 'int' }).spellcasting.find((e) => e.id === 'magus-casting')!;
     expect(l6.prepared?.[3]?.length).toBe(2);
   });

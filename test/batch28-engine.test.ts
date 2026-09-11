@@ -193,20 +193,32 @@ describe('batch 28 — class carriers (engine 1: types + build)', () => {
    *
    * One field for both: a per-rank allowance beyond the slot count.
    */
-  it('extraRepertoire gives a spontaneous caster known spells beyond its slots', () => {
+  /*
+   * ⚠ THE SUMMONER LOST ITS ALLOWANCE IN BATCH 037, and the field is still the field. The 2021 book's
+   * two-rank table discarded lower ranks, so the repertoire reached five against four slots and
+   * `extraRepertoire {1:1}` encoded that. The 2026 printing (class-77) says *"Each time you get a
+   * spell slot (see the Summoner Spells per Day table), you add a spell to your spell repertoire of
+   * the same rank"* — repertoire EQUALS slots — so the row dropped it. The lane is exercised here the
+   * other way round, on a copy that still carries it, which is what this test was always about; the
+   * oracle's 10th-rank allowance below is the unchanged shipped case.
+   */
+  // batch 037: summoner#2026-printing
+  it('summoner: extraRepertoire gives a spontaneous caster known spells beyond its slots', () => {
     const b: Partial<BuildState> = {
       classId: 'summoner',
       subclassId: db.classes.summoner.subclass!.options[0].id,
       keyAbility: 'cha',
       spells: { 1: ['grease', 'fear'] },
     };
-    expect(db.classes.summoner.spellcasting!.extraRepertoire, '"…your spell repertoire reaches its maximum size"').toEqual({ 1: 1 });
-    const grown = main(hero(b, db))!;
+    // batch 037: summoner#2026-printing
+    expect(db.classes.summoner.spellcasting!.extraRepertoire, 'the 2026 printing grants no spare pick').toBeUndefined();
+    const withExtra = withCasting('summoner', { extraRepertoire: { 1: 1 } });
+    const grown = main(hero(b, withExtra))!;
     expect(grown.repertoire![1].length, 'two 1st-rank spells known against one slot').toBe(2);
     expect(grown.slots![1].max, 'the SLOT table is untouched — only what you know grows').toBe(1);
-    // Strip the allowance and the repertoire is sized to the slot count again.
-    const noExtra = withCasting('summoner', { extraRepertoire: undefined });
-    expect(main(hero(b, noExtra))!.repertoire![1].length).toBe(1);
+    // Strip the allowance and the repertoire is sized to the slot count again — which is what ships.
+    // batch 037: summoner#2026-printing
+    expect(main(hero(b, db))!.repertoire![1].length).toBe(1);
   });
 
   it("extraRepertoire is ignored for a rank the caster cannot yet cast (the oracle's 10th)", () => {
@@ -241,11 +253,21 @@ describe('batch 28 — class carriers (engine 1: types + build)', () => {
    * builder, so the magus prepared straight off the arcane list with no book at all. The magus's 4 + 2
    * is NOT the wizard's 5 + 2, which is why the numbers ride on the class record.
    */
-  it("a class's spellbook budget comes off its own record, not a class-id test", () => {
+  /*
+   * ⚠ FIVE SINCE BATCH 037, not four: the 2026 printing (class-74) says *"eight arcane cantrips and
+   * five 1st-rank arcane spells"* where the 2021 book said four. `perLevel` is unchanged at two. The
+   * point of the test is unchanged too — the numbers ride on the class record, and they are still not
+   * the wizard's.
+   */
+  // batch 037: magus#2026-printing
+  it("magus: a class's spellbook budget comes off its own record, not a class-id test", () => {
     const spec = db.classes.magus.spellcasting!.spellbook!;
-    expect(spec, '"…your choice of eight arcane cantrips and four 1st-level arcane spells"').toEqual({ spells: 4, perLevel: 2 });
-    expect(spellbookBudget(spec, 1), 'four 1st-level arcane spells').toBe(4);
-    expect(spellbookBudget(spec, 5), 'plus two more each level').toBe(12);
+    // batch 037: magus#2026-printing
+    expect(spec, '"…your choice of eight arcane cantrips and five 1st-rank arcane spells"').toEqual({ spells: 5, perLevel: 2 });
+    // batch 037: magus#2026-printing
+    expect(spellbookBudget(spec, 1), 'five 1st-rank arcane spells').toBe(5);
+    // batch 037: magus#2026-printing
+    expect(spellbookBudget(spec, 5), 'plus two more each level').toBe(13);
     // …and it is genuinely a different ladder from the wizard's, so the class-id fallback could not
     // have served the magus even if it had matched.
     expect(spellbookBudget({ spells: 5, perLevel: 2 }, 5)).toBe(13);
@@ -271,7 +293,8 @@ describe('batch 28 — class carriers (engine 1: types + build)', () => {
       r.stop();
       return text;
     };
-    expect(bookLine(db), '"The spellbook contains … four 1st-level arcane spells"').toContain('0 / 4 learned');
+    // batch 037: magus#2026-printing
+    expect(bookLine(db), '"The spellbook contains … five 1st-rank arcane spells"').toContain('0 / 5 learned');
     const noBook = withCasting('magus', { spellbook: undefined });
     expect(bookLine(noBook), 'strip the book and the magus prepares straight off the arcane list — the class-id fallback never reaches it').toBeUndefined();
   });

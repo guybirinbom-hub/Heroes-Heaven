@@ -1,0 +1,39 @@
+{
+  "findings": [
+    {
+      "id": "otherworldly-protection#computed-value",
+      "backfillRows": [],
+      "note": "Instrument settle, no data row. Print (AoN innovation-5) works the resistance out from the character — \"You gain resistance equal to 3 + half your level to negative damage, or to positive damage if you have negative healing\" — and standing rule R14 (owner 2026-09-10, desk #147) says the app works such a value out and shows no picker. classFeatures/otherworldly-protection.resistances already carries all five outcomes (void whenVoidHealing:false, vitality whenVoidHealing:true, spirit flat, unholy whenCreatureTrait:'holy', holy whenCreatureTrait:'unholy', each '3+floor(@actor.level/2)'). The only live flag was the experience harness's MISSING-CONTROL for WG's two pickers; parked in work/experience-instrument-limits.json (lane derived-value-not-a-pick, the battle-creed class) with _cite \"// batch 037: otherworldly-protection#computed-value\"."
+    },
+    {
+      "id": "favored-terrain#conditional-speed",
+      "backfillRows": [],
+      "note": "Residual read, no row and no instrument change: nothing reports this record. Print (AoN feat-4866) gates the Plains +10-foot status bonus on the unimpeded journey class feature AND on standing in the terrain, so under the 2026-08-22 rule it is a star, not a number (owner 2026-09-10, desk #24). wg-diff has it in AGREE/WE-ONLY with missing=[], wg-values reports 0 to adjudicate, wg-identity 0, and the experience harness verdict is OK. A settle here would be dead weight that silences the NEXT, real difference on the record, so none was written; the absence is guarded by a test."
+    },
+    {
+      "id": "acute-vision#while-raging",
+      "backfillRows": [],
+      "note": "Instrument settle, no data row. Print (AoN feat-5806): \"When you are raging, your visual senses improve, granting you darkvision.\" feats/acute-vision already carries whileActive [{state:'rage', senses:[{name:'darkvision', acuity:'precise'}]}], resolved by derive.ts activeStateGrants (:1189) and named on the Rage card by stateGrantSummary (:1211). The harness host never rages, so WG's giveAbilityBlock \"Darkvision\" read as NO-SHEET-EFFECT — acute-scent's lane exactly. Parked in work/experience-instrument-limits.json (lane harness-state-toggle-off) with _cite \"// batch 037: acute-vision#while-raging\"."
+    },
+    {
+      "id": "born-of-animal#speed-dash",
+      "backfillRows": [],
+      "note": "Residual read, no row and no instrument change: nothing reports this record. Print (AoN heritage-412): \"If you have both hands free, you can increase your Speed to 30 feet as you run on all fours\" — conditional, therefore a star (owner 2026-09-10, desk #116). The carrier is situationalBonuses.ts:2908 FEAT_SITUATIONAL['born-of-animal'], whose speed target reads \"Speed becomes 30 feet\" under \"in Yaoguai Form, while both hands are free and you run on all fours\". wg-values agrees, wg-identity has nothing to name, the experience verdict is OK. No settle written."
+    },
+    {
+      "id": "curse-of-turbulent-moments#conditional-penalty",
+      "backfillRows": [],
+      "note": "Instrument settle, no data row. Print (AoN mystery-23) gates one half on the ATTACK's action cost and the other on the EFFECT's condition; neither is a fact the sheet holds, so the penalty is a note (owner 2026-09-10, desk #143 answer C). The carrier landed in batch 034: situationalBonuses.ts:889 FEAT_SITUATIONAL stars AC and all three saves, :4654 RECORD_MARKERS marks the cursebound condition. WG flattens the ladder into sixteen unconditional numbers, which wg-values reported as sixteen MISSING rows; settled with SETTLED_VALUES['curse-of-turbulent-moments'] = ['ac|','save|fortitude','save|reflex','save|will'] in scripts/wg-values.mjs."
+    },
+    {
+      "id": "echo-of-lost-moments#fifth-rung",
+      "backfillRows": [],
+      "note": "Instrument settle, no data row. Print (AoN apparition-5) puts Illusory Scene on the 5th rung; ours matches the ten-spell ladder rung for rung off classes.animist.extraChoices['apparition'].options['echo-of-lost-moments'].grantedSpells + focusSpells ['store-time']. WG's rank-1 Illusory Disguise on that rung is their mistake (owner 2026-09-10, desk #142: keep the app). Settled with SETTLED_IDENTITIES['echo-of-lost-moments'] = ['illusorydisguise'] in scripts/wg-identity.mjs — MEMBER scope, not the 'spells' bucket, measured: a bucket-wide settle hides a deleted dispel-magic."
+    },
+    {
+      "id": "gleaming-blade#transcendence-name",
+      "backfillRows": [],
+      "note": "Residual read, no row and no instrument change: nothing reports this record. Print (AoN ikon-6) names the transcendence Flowing Spirit Strike; classFeatures/gleaming-blade grants exactly that through grantsClassFeatures ['flowing-spirit-strike'], and the experience harness's own sheetDiff shows it arriving on a level-20 exemplar as an action plus ownedFeatures+flowing-spirit-strike. WG's \"Mirrored Spirit Strike\" appears nowhere in the AoN mirror (owner 2026-09-10, desk #135). wg-identity's identity buckets are empty on their side for this row (theirKinds=[note]), so there is nothing to settle."
+    }
+  ]
+}

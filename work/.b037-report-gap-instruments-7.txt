@@ -1,0 +1,93 @@
+BATCH 037 — GAP AGENT report, family "gap-instruments-7"
+1 open line in work/.b037-gaps.json, family "instruments-7": 1 AUTHORED, 0 PARKED, 0 still open.
+spec: work/.b037-rows-gap-instruments-7.json (24 overlay rows, 2 findings) · queue: nothing added
+      (no owner question — nothing here contradicts print or WG, and nothing needs an engine shape)
+files edited: none outside the workflow's own bookkeeping (work/.b037-specs.json manifest entry
+      appended, work/.b037-gaps.json status flipped). No src/, no scripts/, no test/ — so no vitest
+      run and no flip-audit citation is owed; npx tsc --noEmit unaffected (no TypeScript changed).
+
+
+PER LINE
+
+1. AUTHORED — ref work/.b037-rows-gap-instruments-7.json
+   (line: "classFeatures prose pointer for the 21 armor-innovation modifications
+    (otherworldly-protection included) is aonParentId \"innovation-5\", the PRE-REMASTER Guns & Gears
+    printing …", from work/.b037-verify-instruments-7.txt:131, surfaced by the CONFIRMED finding
+    otherworldly-protection#computed-value)
+
+   WHY IT IS AUTHORED, NOT PARKED: the line reads as a triage question, but there is no question in
+   it once both printings are opened. The mirror holds seven innovation documents; innovation-1
+   (Armor, "Guns & Gears (Remastered) pg. 16", release_date 2025-02-18) and innovation-5 (Armor,
+   "Guns & Gears pg. 16", release_date 2021-10-13) are the same innovation in two printings, and
+   every one of the 23 records encodes the REMASTERED one:
+     · classFeatures/otherworldly-protection.resistances is void / vitality-when-void-healing /
+       spirit / unholy-vs-holy / holy-vs-unholy at 3+floor(level/2) — innovation-1 word for word.
+       innovation-5 prints "negative damage, or to positive damage if you have negative healing"
+       plus "any types of alignment damage—good, evil, chaotic, lawful".
+     · classFeatures/energy-barrier.resistances is acid, cold, electricity, fire, force, sonic,
+       vitality, void — innovation-1's list. innovation-5 prints "negative, positive" in the same
+       slot.
+     · items/power-suit ships acBonus 5 / strength 3 and items/subterfuge-suit acBonus 2 /
+       strength 0 — Table 2-2 of innovation-1. The SAME table in innovation-5 prints +4 / 16 and
+       +1 / 10. Our own statistics contradict the document our own pointer names.
+     · All 23 aonSection strings ("Antimagic Plating", "Heavy Construction (Power Suit Only)", …)
+       are present verbatim in innovation-1, so the repoint resolves for every record; none is a
+       section that exists only in the legacy printing.
+     · 22 of the 23 records already stamp source.license "ORC", i.e. the remastered book.
+   So print is not in conflict with print, WG is not involved, and no engine shape is at stake:
+   the pointer is simply stale. Owner rule not needed; nothing to ask.
+
+   WHAT THE SPEC DOES (24 rows, no supersedes anywhere — the overlay holds no aonParentId or source
+   row for any of these 23 records; checked against scripts/data/effect-backfill.json, whose rows on
+   these records are resistances / defensesRequire / whileActive / landSpeedBonus / choice /
+   otherTags / armorRestat / requiresModification):
+     · 21 classFeatures + 2 items: aonParentId "innovation-5" -> "innovation-1".
+     · 1 extra row, flagged as adjacent rather than named by the gap line:
+       classFeatures/energy-barrier.source -> {book: "Pathfinder Guns & Gears", license: "ORC"}.
+       It is the only one of the 21 modifications stamped "OGL" while its data is the remastered
+       list; source is one field, so the whole value is re-emitted, and the value is byte-identical
+       to its twenty siblings'. Same defect, one field over — fixing the pointer and leaving the
+       licence would ship a record that cites the ORC printing under an OGL stamp.
+
+   BLAST RADIUS, MEASURED: none on any built character. `grep -rn "aonParentId" src` returns exactly
+   one hit, a comment in src/rules/situationalBonuses.ts:4647 — the field has NO reader in the app,
+   and the scripts that mention it (wg-batch.mjs, lane-sample.mjs, wg-field-catalogue.mjs,
+   wg-residual-dump.mjs) all list it as provenance NOISE they skip. That is also why the spec carries
+   no test: there is no built-character behaviour to pin, and a test asserting the field's value
+   against a content copy patched in memory would assert only the patch.
+   Durability is the reason to store it as an overlay row rather than leave it: scripts/migration/
+   stamp-aonid.mjs --write CLEARS and re-stamps every aon* field on each `npm run data`, and the
+   overlay is what survives that. Precedent for the exact shape and that it holds: the existing
+   overlay row classFeatures/blessed-swiftness.aonParentId = "class-feature-877" (a name-collision
+   repoint off equipment-2320), which is still the value in shipped public/core.json today.
+
+   CHECKS RUN: the driver owns scripts/apply-parity-fixes.mjs, so I re-ran its four refusals against
+   this spec in a read-only replica instead (record exists / field present / no un-superseded overlay
+   collision / every `why` names an AoN doc id that exists in the mirror, plus a duplicate-key scan):
+   24 rows, 0 problems. No row collides with any other batch-037 spec — I scanned every file in
+   work/.b037-specs.json for these 23 record ids and for field "aonParentId" and found none.
+
+
+NOT AUTHORED, DELIBERATELY — the same defect one innovation over (not in this gap line's records)
+   The WEAPON-innovation modifications have it too: 21 records carry aonParentId "innovation-7",
+   the 2021 Guns & Gears Weapon printing, whose remaster is innovation-3 (Guns & Gears (Remastered)
+   pg. 17, 2025-02-18) — and innovation-3 already has 2 records pointing at it, so the corpus is
+   split across both printings. Full pointer census taken while verifying this line:
+   innovation-5 → 23 records (fixed here), innovation-7 → 21, innovation-2 → 18 (remastered
+   Construct, correct), innovation-3 → 2 (remastered Weapon, correct), innovation-4 → 2 (Battlecry!
+   Light Mortar, correct). The weapon 21 are outside the records this gap line names and outside all
+   seven instruments-7 findings, so authoring them here would be a claim no verifier of this line
+   checks. Whoever takes them should confirm each aonSection resolves in innovation-3 the way this
+   run confirmed all 23 in innovation-1. Measured for them: 17 of the 21 aonSection strings appear
+   verbatim in innovation-3, and 4 do NOT — dynamic-weighting, extensible-weapon,
+   integrated-gauntlet and omnirange-stabilizers, all four of them sections whose parenthetical
+   qualifier was re-worded ("(One-handed Melee Weapon Only; Can't Have the Agile, Attached, or
+   Free-hand Trait)" and the like). Those four need their aonSection re-read against the remastered
+   text in the same row as their repoint, which is a second claim and another reason this chunk
+   does not author them.
+
+DATA STILL NEEDED
+   (none)
+
+CROSS-FILE GAPS
+   (none — this run edited no code file at all; the whole fix is overlay rows the driver applies.)

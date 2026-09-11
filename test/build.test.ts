@@ -92,14 +92,19 @@ describe('limited casters', () => {
     expect(mainCasting(build('magus', 5))?.keyAbility).toBe('int');
     expect(mainCasting(build('magus', 5))?.tradition).toBe('arcane');
   });
-  it('magus gains two studious slots at the tier rank (L7 -> rank 2), restricted to the studious list', () => {
-    // Batch 29: the studious slots are RESTRICTED slots fed by classFeatures/studious-spells'
-    // spellSlotBonus.restricted ladder (gecko grip, sure strike, water breathing at 7th), no longer an
-    // auto-prepared hard-coded pair in the ordinary rank-2 list.
+  /* Batch 29 moved the studious slots onto classFeatures/studious-spells' spellSlotBonus.restricted
+   * ladder; batch 037 emptied that ladder's byRank, because class-feature-1270 ("Studious Spell",
+   * Impossible Magic pg. 9) grants no spell slots at all — the feature is now three spellbook
+   * additions plus a free Arcane Cascade. The ladder OBJECT stays: build.ts stands its hard-coded
+   * `magusStudiousSpells` fallback down only while the field exists, and bookGrantedSpellIds reads
+   * the additions out of it. */
+  // batch 037: studious-spells#2026-rebuild
+  it('magus gains NO studious slots — the 2026 studious-spells feature adds spells to the book instead', () => {
     const e = mainCasting(build('magus', 7));
-    const studious = (e?.restrictedSlots ?? []).filter((s) => s.rank === 2);
-    expect(studious).toHaveLength(2);
-    expect(studious[0]?.allowed).toEqual(expect.arrayContaining(['sure-strike', 'gecko-grip', 'water-breathing']));
+    expect((e?.restrictedSlots ?? []).filter((s) => /studious/i.test(s.label ?? ''))).toEqual([]);
+    expect(Object.values(e?.spellbook ?? {}).flat()).toContain('gecko-grip');
+    // …and the 2021 auto-prepared pair does not come back through the fallback.
+    expect(e?.prepared?.[2]?.map((s) => s.spellId) ?? []).not.toContain('sure-strike');
   });
   it('summoner has the link spells as focus spells with a pool of 1', () => {
     const ch = build('summoner', 5);

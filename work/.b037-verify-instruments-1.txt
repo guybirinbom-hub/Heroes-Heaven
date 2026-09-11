@@ -1,0 +1,122 @@
+BATCH 037 — ADVERSARIAL VERIFY, CHUNK instruments-1 (WG-COMPARISON lane)
+12 findings judged. 10 DONE, 1 FIXED-BY-ME, 1 DONE-but-unclosable (android, see gaps).
+Checks re-run by me, not taken from the report:
+  npx tsc --noEmit                                              clean
+  node scripts/vt.mjs run test/batch037-instruments-1.test.ts   16 passed (14 the builder wrote, 2 mine)
+  node scripts/test-flip-audit.mjs --batch 037                  clean, 21 test files touched, every flip cited
+  node scripts/wg-diff.mjs --out …                              re-walked myself; buckets quoted below
+  node scripts/wg-values.mjs / wg-identity.mjs --ids <the 11>   7 compared / 7 agree, 0 to adjudicate; 7 checked / 7 match, 0 without counterpart
+  cross-spec row collision scan over all 8 work/.b037-rows-*.json (102 rows)  no duplicate category|id|field|path key
+
+PER FINDING
+  advanced-red-mantis-magic#legacy-slots — DONE. scripts/wg-diff.mjs:3373-3374 carries
+    `'advanced-red-mantis-magic': ['spellSlot']` under `// batch 037: advanced-red-mantis-magic#legacy-slots`,
+    and the key is unique (166 VERIFIED_EQUIVALENT keys, zero duplicates — a duplicate literal key would have
+    silently won last). My own wg-diff walk puts the record in `agree`, and the only rows still reporting
+    `spellSlot` in THEY-ONLY are unholy-resurrection and mortem-ultimatum — the blast radius is one row,
+    measured, not quoted. The mutation-proof case stunts the key through `--raw` and the record returns to
+    THEY-ONLY missing=[spellSlot]; since VERIFIED_EQUIVALENT is keyed by record id, no sibling key can be
+    what silences it. The carrier the settle defers to is real on a BUILT character (level-10 fighter,
+    red-mantis-assassin-dedication + basic-red-mantis-magic prepares ranks 1-3, and adding the legacy feat
+    leaves `spellcasting` deep-equal). Record confirmed in the packet and `edition: 'legacy'`, aonId feat-897,
+    granting nothing.
+
+  fear-no-law-fear-no-one#printing — FIXED-BY-ME. The finding's mechanical half holds (1 action, no save
+    upgrade, all four comparers quiet), but its OTHER half — "the app already carries the current printing" —
+    was FALSE in the shipped prose: core-descriptions.json feats/fear-no-law-fear-no-one read
+    *"each ally within a around you"*. AoN hellknight-order-14 prints *"each ally within a 20-foot emanation
+    around you who can see you reduces the value of their frightened condition by 1"* (read from the mirror,
+    quoted verbatim). This is the tracked stripped-"<N>-foot" hole class (scripts/dropped-inline-check.mjs
+    FOOT_BASELINE = 96, currently 96), so it is one of the 96, not a new regression — but it is a
+    player-visible defect on one of MY records and the finding would otherwise have shipped as
+    "ours matches print".
+    Fix: one description row appended to work/.b037-rows-instruments-1.json under this finding —
+      {category:'feats', id:'fear-no-law-fear-no-one', field:'description', value:<our sentence with
+       "20-foot emanation " restored>, why:<quotes hellknight-order-14>}
+    It restores exactly the two missing tokens and changes nothing else; it does not replace our wording with
+    mirror text. No path (the driver refuses a description row with one), no existing effect-backfill.json row
+    for this record, so no supersedes, and no sibling spec touches the key.
+    Test: test/batch037-instruments-1.test.ts, "fear-no-law-fear-no-one — the emanation the printing gives the
+    Strike is in our text, not deleted", cited `// batch 037: fear-no-law-fear-no-one#printing`. Written so it
+    does NOT flip when the row lands: it asserts the row value stripped of "20-foot emanation " equals the
+    shipped description stripped the same way (the repair property), and asserts the printed clause on a
+    content copy PATCHED in memory. Applying the row lowers the ratchet to 95; FOOT_BASELINE is not touched.
+
+  devil-allies#printing — DONE. core.json carries innateSpells summon-fiend rank 6 with
+    heightenAt 14/16/18/20 and the tradition choice — the 2026 printing, not their rank-5-until-16 ladder.
+    wg-diff bucket `weOnly`; values/identity clean.
+  steady-balance#grab-an-edge — DONE. degreeShifts `successToCrit` on Balance and nothing else; no
+    Acrobatics-for-Reflex substitution was added. wg-diff `weOnly`. The dropped Core Rulebook sentence stays
+    dropped, which is the whole ruling.
+  hellknight-dedication#armor-training — DONE, and I checked the half the finding merely asserts: the
+    Intimidation step really reaches a build via src/rules/featGrantsAuto.ts:463
+    (`conditionalSkills: { intimidation: { base: 'trained', upgraded: 'expert' } }`), the mental resistance is
+    on the record (`@actor.archetypeFeats.hellknight + 1`), Additional Lore is fixed to Hell in
+    featFeatGrants.ts:367, and armigers-protection exists in core.json. No armour training was added.
+  ardent-armiger#printing — DONE. Carrier verified: src/rules/situationalBonuses.ts:164, targets all saves,
+    when "against effects that could inflict controlled or frightened", +1 circumstance — the feat-8813 clause
+    word for word. Their attitude/Will-DC wording stays out.
+  aon-wishes-for-riches#classification-choice — DONE. choice.deviantClassification offers
+    consume-energy / borrowed-ability, and choiceOptionLimits pins the dragon branch to cold via
+    classFeatures/dragon-deviant-classification. Both feats exist in core.json.
+  sense-of-belonging#classification-choice — DONE. sonic-dash / eerie-flicker, both feats exist.
+  lost-loved-one#classification-choice — DONE. draining-touch / ghostly-grasp-deviant — the wraith option
+    really points at the DEVIANT record, not the same-named archetype feat; both exist.
+  wanderlust#classification-choice — DONE. overclock-senses / titan-swing plus grantedFeatId express-rider;
+    all three exist. The older troll-only text stays out.
+  beast-blessed#trigger — DONE. The prose is verbatim print: core-descriptions.json actions/bestial-clarity
+    reads "**Trigger** You fail a saving throw against an enchantment effect", and the background carries
+    grantsActions:['bestial-clarity'] with limitedUses 1/day. Their wider "mental effect" was not copied.
+  android#printing — DONE as a read, NOT CLOSABLE. ancestries/android is rare, source
+    "Pathfinder Lost Omens Ancestry Guide", languages.granted ['androffan','common'] — the Ancestry Guide
+    printing, exactly as ruled. I confirmed independently that no instrument can hold it: my wg-diff walk files
+    android under `noMatch` (bucket ancestries), and `--ids` gives it to neither value nor identity comparer
+    (7 of the 11 are compared; android is not one of them). The blocker is the packet, not the work — see gaps.
+
+  NO SETTLE FOR THE ELEVEN — I judged this deliberately and agree with it. The proposals all read
+  "instrument: settle <record>", but a settle whose record no comparer reports silences the NEXT difference on
+  that record unread (scripts/wg-diff.mjs:40-42), and wg-settle-stale.mjs would carry it forever. I re-measured
+  rather than trusting the report: none of the eleven is in wg-diff's THEY-ONLY work list, and the value and
+  identity comparers both return zero. Seven of them DO sit in wg-diff's `disagree` list, but that list is
+  agree∪weOnly filtered to numeric kinds — a candidate list handed to wg-values, which adjudicates zero of
+  them. So "quiet" is accurate.
+  ⚠ ONE HOLE I CLOSED: the guard's evidence was a pair of zeroes, and both comparers print the same zero when
+  `--ids` matches NOTHING — a renamed or retired record would have turned all ten guards into vacuous passes.
+  Added "devil-allies and its nine residual siblings were really compared, not skipped by --ids", cited
+  `// batch 037: devil-allies#printing`, pinning the denominators (7 compared / 7 agree, 7 checked / 7 match).
+
+MANIFEST
+  work/.b037-specs.json holds 17 entries, one per family and per created-prose spec; no entry is missing or
+  rewritten. This chunk's entry (family "instruments-1") lists every path it touched, and I appended
+  work/.b037-verify-instruments-1.txt to its stage[]. No superseding row exists in this chunk, so nothing
+  needed supersedes: true.
+
+DATA STILL NEEDED
+  (none — the one row this chunk needs is authored, in work/.b037-rows-instruments-1.json under
+   fear-no-law-fear-no-one#printing, for the driver to apply.)
+
+CROSS-FILE GAPS
+  android#printing is CONFIRMED but absent from work/wg-batch-037.json (verified: the packet holds 125
+    records, android is not one; work/.b037-cut.json `missing` lists it with ten others — wild-lights,
+    armigers-protection, flexible-spellcaster, soul-well, mask-of-the-mantis-major, zealot-staff,
+    screech-shooter-greater/major, wyrm-spindle-greater/major, which belong to other chunks). scripts/
+    wg-batch-close.mjs:240 will refuse with "confirmed finding android#printing maps to no record in
+    work/wg-batch-037.json". Driver decision: re-cut the packet to include the eleven, or drop those findings.
+  android#printing has no comparer surface at all — WG's dump carries no ancestry row of that name, so wg-diff
+    files it under `noMatch` and wg-values/wg-identity never see it. Whoever widens wgAllRecords / WG_PAIRING
+    to their ancestry table owns it; it is not settleable from this chunk.
+  scripts/wg-diff.mjs:814 reads src/rules/casterArchetypes.ts by a fixed path with no `--caster-archetypes`
+    override, so the carrier the advanced-red-mantis-magic settle defers to cannot be stunted from a content
+    copy; it is proved on a BUILT character instead. A one-line arg() would make it stuntable — left alone
+    because sibling chunks hold the same file this batch.
+  Five more records carry the same stripped-"<N>-foot" hole I repaired and are OUTSIDE this packet:
+    items/soulcutter-heroic, classFeatures+actions/break-the-suns-legs, classFeatures+actions/
+    heaven-rains-an-ending (all read "within a around you" / "within a cone"). They belong to the repair lane
+    (scripts/repair-stripped-skill-links.mjs, FOOT_BASELINE 96 in scripts/dropped-inline-check.mjs), not to
+    any batch-037 family — none of the three record ids is in the packet.
+
+MANIFEST stage[] PATHS I TOUCHED
+  work/.b037-rows-instruments-1.json      (one description row appended under fear-no-law-fear-no-one#printing)
+  test/batch037-instruments-1.test.ts     (two cases added: the --ids denominators, the emanation repair)
+  work/.b037-verify-instruments-1.txt     (this file)
+  work/.b037-specs.json                   (this chunk's stage[] only; every other entry untouched)

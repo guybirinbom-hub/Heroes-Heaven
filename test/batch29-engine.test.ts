@@ -311,13 +311,19 @@ describe('batch 29 — magus studious spells', () => {
     for (const level of [7, 11, 13]) {
       const before = counts(main(magus(level, stripped))!.prepared!);
       const after = counts(main(magus(level, authored))!.prepared!);
-      /* A magus is a TWO-RANK caster, so the studious tier (2nd at 7th, 3rd at 11th, 4th at 13th) is
-       * never a rank its own table gives — the shipped build's only entries there are the two
-       * auto-prepared studious ones, and they move wholesale into the restricted group. Every rank the
-       * magus's own table does give must come out byte-identical. */
+      /* The fallback's two auto-prepared studious spells sit at the tier rank (2nd at 7th, 3rd at
+       * 11th, 4th at 13th) and move wholesale into the restricted group once the grant is authored.
+       * Every rank the magus's own table gives must come out byte-identical either way.
+       * Written as "before is after PLUS TWO at the tier", not "the tier rank is studious-only": on
+       * the 2021 two-rank table the tier was a rank the magus's own table never gave, so the only
+       * entries there were the two studious ones; the 2026 table (below) opens it as an ordinary rank
+       * too, and the stunted build's count is then the ordinary count plus the fallback's pair. Both
+       * tables satisfy the line as written. */
       const tier = String(level >= 13 ? 4 : level >= 11 ? 3 : 2);
-      expect(before[tier], `level ${level}: the tier rank is studious-only`).toBe(2);
-      const { [tier]: _studious, ...ordinary } = before;
+      // batch 037: magus#2026-printing
+      expect(before[tier], `level ${level}: the fallback's two, on top of whatever the table gives`).toBe((after[tier] ?? 0) + 2);
+      const ordinary = { ...before, [tier]: before[tier] - 2 };
+      if (ordinary[tier] === 0) delete ordinary[tier];
       expect(after, `level ${level}`).toEqual(ordinary);
     }
   });
@@ -348,14 +354,18 @@ describe('batch 29 — Graceful Leaper rides the existing substitution lane', ()
   });
 });
 
-/* The shipped magus now runs on the data-driven ladder (the batch-29 rows landed): the two studious slots
- * are RESTRICTED slots offering the printed list, and the old hard-coded pair no longer fills rank 2. */
+/* The shipped magus runs on the data-driven ladder (the batch-29 rows landed), and batch 037 emptied
+ * every rung's byRank: class-feature-1270 ("Studious Spell", Impossible Magic pg. 9) grants no spell
+ * slots at all — only the spellbook additions and the free Arcane Cascade. What this block still
+ * pins is that the SHIPPED record drives it: no studious slot arrives from anywhere, and the 2021
+ * hard-coded pair (the `magusStudiousSpells` fallback) does not creep back in through `prepared`. */
 describe('batch 29 — the shipped magus runs on the studious ladder', () => {
-  it('offers gecko grip, sure strike and water breathing in two restricted rank-2 slots at 7th', () => {
+  // batch 037: studious-spells#2026-rebuild
+  it('studious-spells grants no restricted slot at 7th, and no auto-prepared sure strike either', () => {
     const e = main(build('magus', 7));
-    const studious = (e?.restrictedSlots ?? []).filter((s) => s.rank === 2);
-    expect(studious).toHaveLength(2);
-    expect(studious[0]?.allowed).toEqual(expect.arrayContaining(['gecko-grip', 'sure-strike', 'water-breathing']));
+    expect((e?.restrictedSlots ?? []).filter((s) => /studious/i.test(s.label ?? ''))).toEqual([]);
     expect(e?.prepared?.[2]?.map((s) => s.spellId) ?? []).not.toContain('sure-strike');
+    // …and the spellbook half of the feature survived the slot removal.
+    expect(Object.values(e?.spellbook ?? {}).flat()).toContain('gecko-grip');
   });
 });

@@ -70,7 +70,7 @@ import { DOMAIN_SPELLS } from './domains';
 import { mpImbuedSpellIds } from './monsterParts';
 import { openChoiceLabel } from './openChoice';
 import { initialClassResources } from './classResources';
-import { activeCasterArchetype, archetypeEntryIds, archetypeProficiency, archetypeSlots, archetypeTraditionOptions } from './casterArchetypes';
+import { activeCasterArchetype, archetypeCantripAllowed, archetypeEntryIds, archetypeProficiency, archetypeSlots, archetypeTraditionOptions } from './casterArchetypes';
 import { resolveRestrictedSlots } from './restrictedSlots';
 import { coinsToCp, cpToCoins, startingWealthGp } from './wealth';
 import { apparitionSlots, cantripsKnown, casterSlots, magusStudiousSpells, repertoireCounts } from './spellcasting';
@@ -1033,6 +1033,13 @@ export function levelChoices(build: BuildState, content: ContentDatabase): Missi
     // renders a control for them, so counting one here would put a "1 choice left" tag on the level
     // with nothing on the page able to clear it.
     if (askedAtDailyPrep(feat.choice)) continue;
+    // batch 037: versatile-mutation#energy-level — *"AT 8TH LEVEL, choose one of the following: acid,
+    // cold, electricity, fire, or sonic damage"* (feat-5454). A question the feat does not ask yet is
+    // not an outstanding answer: counted here, a 4th-level ostilli carried a permanent "1 choice left"
+    // tag that nothing on the page could clear, because renderChoice no longer draws the control.
+    // `FeatChoiceDef.minLevel` was declared and documented for exactly this and was read only on the
+    // daily path (dailyChoices.ts), which made it write-only for every build-time choice.
+    if (feat.choice.minLevel != null && build.level < feat.choice.minLevel) continue;
     // ⚠ Read the store the PICKER actually writes. A feat picked into a level slot stores its answer in
     // `featChoices` under the SLOT key (`setFeatChoice`, shared.tsx); `grantedFeatChoices` is keyed by
     // feat id and belongs to feats the character was GIVEN rather than picked. Checking only the latter
@@ -2389,6 +2396,24 @@ export function classArchetypeSpellMods(
 }
 
 /**
+ * batch 037: flexible-spellcaster#collection-shape — how many spells a Flexible Spellcaster's
+ * collection holds: *"The number of spells in your spell collection each day equals the total number
+ * of spell slots you get each day from your class spells"* (archetype-99), one flat pool, with
+ * *"at least one 1st-level spell for your collection each time you prepare"* the only stated limit.
+ *
+ * It was built PER RANK — as many collected spells at each rank as slots at that rank — which is
+ * Wanderer's Guide's shape, not print's (their own copy of the text still quotes the flat rule), and
+ * it stopped a 6th-level flexible wizard collecting six 1st-rank spells against six slots. Owner
+ * ruling 2026-09-10 #102: one flat pool sized by total slots, ≥1 first-rank, not per rank.
+ *
+ * ⚠ EXPORTED for the BUILDER, like `cantripBonusFor` and `classArchetypeSpellMods` above: the picker
+ * must offer exactly the pool the sheet keeps, or the player picks spells the sheet drops.
+ */
+export function flexibleCollectionSize(slotCounts: Record<number, number>): number {
+  return Object.entries(slotCounts).reduce((n, [rank, count]) => (Number(rank) >= 1 ? n + count : n), 0);
+}
+
+/**
  * The CLASS ARCHETYPE a character is running, resolved ONCE from the build — which class features it
  * removes, which it adds, and the carriers that said so.
  *
@@ -2859,12 +2884,15 @@ function collectGrantedNaturals(
       // The die is a VALUE on the row, not an annotation: an enhanced claw reads 1d6 and an enhanced
       // pincer 1d8, exactly as printed. Steps are applied before handwraps/striking, which add DICE.
       // `dieNote` rides along only when a step actually landed, so the breakdown can name the source.
+      /* batch 037: animal-instinct#spider-web — a DAMAGELESS granted attack has no die to step.
+       * *"The spider's web attack deals no damage"* (AoN instinct-8): stepping `undefined` through
+       * stepDie would invent one, so both damage fields ride through untouched and absent. */
       let die = g.die;
-      for (let i = 0; i < dieSteps; i++) die = stepDie(die);
+      for (let i = 0; die && i < dieSteps; i++) die = stepDie(die);
       /* batch 035: animal-instinct#rage-gate — *"WHILE RAGING, you gain your chosen animal's unarmed
        * attack (or attacks)"*. The gate rides onto the attack rather than being tested here, because
        * the live toggle only exists after the play overlay; deriveStrikes drops it while it is off. */
-      out.push({ name: g.name, source: sourceId, die, damageType: g.damageType, traits: g.traits, group: g.group, range: g.range, ...(die !== g.die && dieNote ? { dieNote } : {}), ...(requiresState ? { requiresState } : {}) });
+      out.push({ name: g.name, source: sourceId, die, damageType: g.damageType, traits: g.traits, group: g.group, range: g.range, ...(g.onHit ? { onHit: g.onHit } : {}), ...(die !== g.die && dieNote ? { dieNote } : {}), ...(requiresState ? { requiresState } : {}) });
     }
   };
   for (const f of feats) {
@@ -4485,10 +4513,21 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       entry.type = 'spontaneous';
       entry.slots = {};
       entry.repertoire = {};
-      for (const [rankStr, count] of Object.entries(slotCounts)) {
-        const rank = Number(rankStr);
-        entry.slots[rank] = { max: count, used: 0 };
-        entry.repertoire[rank] = [...new Set([...(build.spells[rank] ?? []).slice(0, count), ...(grantedByRank[rank] ?? [])])];
+      /* batch 037: flexible-spellcaster#collection-shape — *"The number of spells in your spell
+       * collection each day equals the TOTAL number of spell slots you get each day from your class
+       * spells"* (archetype-99). The SLOTS stay per rank (you still cast a collected spell with a slot
+       * of its rank or higher); the COLLECTION is one flat pool, which is what `slice(0, count)` per
+       * rank could not say — it capped each rank at that rank's slots, WG's shape, and threw away the
+       * sixth 1st-rank spell a 6th-level flexible wizard is entitled to collect. Filled from the lowest
+       * rank up, so the printed floor — *"you must select at least one 1st-level spell for your
+       * collection each time you prepare"* — holds for any player who picked one. Owner ruling
+       * 2026-09-10 #102. */
+      let collectionLeft = flexibleCollectionSize(slotCounts);
+      for (const rank of Object.keys(slotCounts).map(Number).sort((a, b) => a - b)) {
+        entry.slots[rank] = { max: slotCounts[rank], used: 0 };
+        const collected = (build.spells[rank] ?? []).slice(0, Math.max(0, collectionLeft));
+        collectionLeft -= collected.length;
+        entry.repertoire[rank] = [...new Set([...collected, ...(grantedByRank[rank] ?? [])])];
         if (grantedByRank[rank]?.length) (entry.grantedRepertoire ??= {})[rank] = [...grantedByRank[rank]];
       }
       if (Object.keys(slotCounts).some((r) => Number(r) >= 2)) {
@@ -5826,7 +5865,15 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         // "If you were already trained, you instead become trained in a skill of your choice" — the
         // redundant static grant converts into a replacement pick (recorded for the builder; applied
         // from featSkillChoices `<featId>:fallback:<skill>`). Lore grants stay as-is (they're new).
-        if (g.redundantFallback && src === g && !key.startsWith('lore:') && maxRank(cur, at(r)) === cur) {
+        //
+        // `redundantFallbackIfFeat` narrows that to the LAST of three printed branches: Intuitive
+        // Crafting's *"…IF YOU HAVE BOTH, you instead become trained in a skill of your choice"*
+        // (feat-7200) owes the free skill only to a character who already holds Specialty Crafting
+        // too. A taking this carrier itself granted does not count — "already" means from something
+        // else, the same rule `countOwnGrant: false` enforces on the other side of the pair.
+        const fallbackGateOk = !g.redundantFallbackIfFeat
+          || feats.some((f) => f.featId === g.redundantFallbackIfFeat && f.grantedBy !== fc.featId);
+        if (g.redundantFallback && fallbackGateOk && src === g && !key.startsWith('lore:') && maxRank(cur, at(r)) === cur) {
           skillFallbacks.push({ featId: fc.featId, skill: key });
           const picked = build.featSkillChoices?.[`${fc.featId}:fallback:${key}`];
           if (picked && SKILLS.includes(picked)) proficiencies.skills[picked] = maxRank(proficiencies.skills[picked] ?? 'untrained', 'trained');
@@ -7216,6 +7263,27 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         touched = true;
       }
     }
+    /* batch 037: arcana-of-iron#weapon-proficiency — *"You become trained in advanced weapons. If you
+     * gain the weapon expertise class feature, your proficiency in martial and advanced weapons
+     * increases to expert."* (feat-7980.) The condition is the CLASS's own feature at the CLASS's own
+     * level, read off the advancement table that delivers it, so a 5th-level fighter gets the step and
+     * an 11th-level wizard gets it at 11 — never the flat character level 13 their side encodes, which
+     * is right for no class. Here, with the familiarity mirrors, because this is after class
+     * advancement: that is when "if you gain the weapon expertise class feature" has finished
+     * happening. RAISES only, like every other grant in this file. */
+    const hasWeaponExpertise = ([[build.classId, build.subclassId], [build.classId2, build.subclassId2]] as const).some(
+      ([cid, sub]) =>
+        !!cid &&
+        advancementRows(cid, sub, arch.suppressed).some((e) => e.level <= level && /(^|-)weapon-expertise$/.test(e.source ?? '')),
+    );
+    if (hasWeaponExpertise) {
+      for (const fc of feats) {
+        const step = grantsFor(fc.featId)?.weaponIfWeaponExpertise;
+        for (const [cat, r] of Object.entries(step ?? {})) {
+          if (r) proficiencies.attacks[cat as WeaponCategory] = maxRank(proficiencies.attacks[cat as WeaponCategory], r);
+        }
+      }
+    }
     if (touched) proficiencies.weaponOverrides = wo;
     if (wgr.length) proficiencies.weaponGroupRanks = wgr;
   }
@@ -7543,7 +7611,23 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     if (arch) {
       const twoCaster = !!cls?.spellcasting; // class already has its own pool → use the separate surface
       const src = twoCaster ? build.archetypeSpells : undefined;
-      const srcCantrips = src?.cantrips ?? build.cantrips;
+      /*
+       * A dedication that NAMES its cantrips delivers those and nothing else — Oatia Skysage: *"You
+       * gain a spell repertoire with two of the following cantrips of your choice: detect magic,
+       * guidance, know the way, or read aura."* (feat-8112). Both pickers now offer the four, so this
+       * catches the pick STORED before the restriction existed: it stops being delivered, and the
+       * warning says why the entry is short rather than leaving the player to notice (owner
+       * 2026-09-10 #113). Narrowed on READ, not migrated — these builds live in localStorage, in
+       * Supabase and in exported `.codex` files, and a migration that never sees a file cannot fix it.
+       */
+      const srcCantripsRaw = src?.cantrips ?? build.cantrips;
+      const srcCantrips = srcCantripsRaw.filter((id) => archetypeCantripAllowed(arch, id));
+      for (const id of srcCantripsRaw)
+        if (!archetypeCantripAllowed(arch, id))
+          effectWarnings.push({
+            source: content.feats[arch.dedicationId]?.name ?? arch.dedicationId,
+            message: `${content.spells[id]?.name ?? id} is not one of the cantrips this dedication grants — choose again from the ones it names.`,
+          });
       const srcSpells = src?.spells ?? build.spells;
       const srcTradition = twoCaster ? src?.tradition ?? null : build.archetypeTradition ?? null;
       const srcKey = twoCaster ? src?.keyAbility ?? null : build.archetypeKeyAbility ?? null;
@@ -7800,6 +7884,11 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   const grantedItems: { itemId: string; quantity?: number; invested?: boolean; worn?: boolean; source: string }[] = [];
   for (const fc of feats) {
     for (const g of content.feats[fc.featId]?.grantsItems ?? []) {
+      /* …and the PER-ANSWER half: *"you receive a non-magical suit of Hellknight armor OF A TYPE YOU
+       * BECOME TRAINED IN (Hellknight breastplate, Hellknight half plate, or Hellknight plate)"*
+       * (Armiger's Protection, feat-8814) — one suit out of three, so the two the player did not pick
+       * must not arrive. Same gate as the innate-spell lane at build.ts:6887. */
+      if (g.whenChoice && g.whenChoice !== fc.choice?.value) continue;
       if (!content.items[g.itemId] || grantedItems.some((x) => x.itemId === g.itemId)) continue;
       grantedItems.push({ ...g, source: content.feats[fc.featId].name });
     }
@@ -8090,6 +8179,16 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
           innateGrants.push(asGranted(item, g));
           noteSrc(voidSwapped(item, g.spellId), `${item?.name} (resonant)`);
         }
+        /* …and the resonant clauses that are RULES ABOUT THE GRANTED SPELL rather than a second
+         * grant — *"The resonant power causes the augury spell from the aeon stone to always succeed
+         * at the DC 6 flat check to give an answer other than \"nothing.\""* (equipment-407-868).
+         * Written as `note` alone they were reachable only by opening the item, never from the spell
+         * the player casts from. Through the same N2 registry as every other record's clause, so it
+         * prints attributed and set apart; gated here, inside the wayfinder-slotted arm, because the
+         * item's own top-level `spellNotes` lane (build.ts:6843) has no designation check. */
+        for (const n of item.resonant.spellNotes ?? []) {
+          if (n.spellId) pushSpellNote(voidSwapped(item, n.spellId), `${item.name} (resonant)`, n.note);
+        }
       }
     }
     for (const f of feats)
@@ -8198,6 +8297,15 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
           return g.atWill ? 0 : g.rank;
         }
         if (g.heightenHalfLevel) return Math.max(base, Math.ceil(level / 2));
+        /* A ladder that belongs to ANOTHER record's answer — *"If you're a member of the Order of the
+         * Gate, when you reach 14th level, the spell is heightened to 5th rank."* (hellknight-order-9).
+         * The order is asked once, on Hellknight Dedication (`choice.flag: "hellknightOrder"`), and
+         * without this the only honest encodings were WG's (rank 5 at 14 for every Hellknight) or a
+         * standing note nothing reads. The grant itself is never gated — a Hellknight of any other
+         * order still casts Locate once a day, just never at 5th rank. */
+        if (g.heightenWhenFlag && choiceFlagAnswer(g.heightenWhenFlag.flag, build, content) !== g.heightenWhenFlag.value) {
+          return Math.max(base, g.rank ?? base);
+        }
         // A custom ladder ("8th at 18th level, 9th at 20th"): the highest step reached wins.
         const step = (g.heightenAt ?? []).filter((h) => level >= h.level).sort((a, b) => b.rank - a.rank)[0];
         return Math.max(base, step?.rank ?? g.rank ?? base);

@@ -1,0 +1,166 @@
+BATCH 037 — INSTRUMENTS family, CHUNK instruments-7
+7 findings, all CONFIRMED, all "nothing changes". 2 comparer settles, 2 experience-gate parks,
+3 residual reads that needed no instrument at all. No data rows.
+
+DATA STILL NEEDED
+(none — every one of my seven findings is an instrument settle or a residual read; no backfill row
+is owed by the driver for any of them.)
+
+CROSS-FILE GAPS
+(none — every change landed inside my granted files: scripts/wg-values.mjs, scripts/wg-identity.mjs,
+work/experience-instrument-limits.json, test/batch037-instruments-7.test.ts.)
+
+------------------------------------------------------------------------------------------------
+PER FINDING
+
+curse-of-turbulent-moments#conditional-penalty — instrument settle, taught in wg-values SETTLED_VALUES
+  SETTLE (instrument teach). scripts/wg-values.mjs, SETTLED_VALUES['curse-of-turbulent-moments'] =
+  ['ac|','save|fortitude','save|reflex','save|will'], cited "// batch 037:
+  curse-of-turbulent-moments#conditional-penalty".
+  Why: AoN mystery-23 gates one half on the ATTACK's action cost ("attacks made against you from
+  reactions or free actions") and the other on the EFFECT's condition ("effects that would make you
+  fatigued or slowed") — neither is a fact the sheet holds, so under the owner's 2026-08-22 rule the
+  cursebound value is a star, not a number (owner 2026-09-10, desk #143, answer C). WG flattens the
+  ladder into sixteen unconditional rows (-1..-4 on AC and on all three saves); adopting them would
+  penalise a cursebound Time oracle against everything. Our carrier landed in batch 034:
+  src/rules/situationalBonuses.ts:889 FEAT_SITUATIONAL stars AC and all three saves, and :4654
+  RECORD_MARKERS marks the `cursebound` condition itself.
+  Blast radius, measured: four keys, this record only, and they are the record's ENTIRE numeric
+  content on both sides. The saves are named one track at a time rather than with a wildcard, so a
+  future WG row on a track print does not touch still reports.
+  Test: test/batch037-instruments-7.test.ts, describe "batch 037 instruments-7 —
+  curse-of-turbulent-moments keeps the cursebound penalty as a star" — (1) MUTATION-PROOF: quiet with
+  the settle, and `--raw` (the registry's own bypass) puts all sixteen MISSING rows straight back;
+  (2) the carrier still delivers on a BUILT level-20 Time oracle — featSituationalFor over
+  ownedFeatureIds returns the AC line and all three save lines, and the same read with the record
+  removed from the owned list returns none of them.
+
+echo-of-lost-moments#fifth-rung — instrument settle, taught in wg-identity SETTLED_IDENTITIES
+  SETTLE (instrument teach). scripts/wg-identity.mjs, SETTLED_IDENTITIES['echo-of-lost-moments'] =
+  ['illusorydisguise'], cited "// batch 037: echo-of-lost-moments#fifth-rung".
+  Why: AoN apparition-5 prints "... 4th Vision of Death - 5th Illusory Scene - 6th Phantasmal
+  Calamity ...". Ours matches rung for rung off
+  classes.animist.extraChoices['apparition'].options['echo-of-lost-moments'].grantedSpells (figment,
+  de-ja-vu, dispel-magic, curse-of-lost-time, vision-of-death, illusory-scene, phantasmal-calamity,
+  retrocognition, quandary, foresight) plus focusSpells ['store-time']. WG's 5th rung is Illusory
+  Disguise, a RANK-1 spell (owner 2026-09-10, desk #142: keep the app).
+  Blast radius, measured: MEMBER scope, NOT the `spells` bucket — the witness-to-ancient-battles
+  trap one apparition over. With `dispel-magic` deleted from the option the comparer reports
+  theirs-not-ours=[dispelmagic]; a ['spells'] entry would have printed nothing at all.
+  Test: test/batch037-instruments-7.test.ts, describe "batch 037 instruments-7 —
+  echo-of-lost-moments keeps the printed 5th rung, Illusory Scene" — MUTATION-PROOF both ways:
+  `--raw` puts `illusorydisguise` back, and the stunted content copy still reports `dispelmagic`
+  while the settled member stays settled. (The probe deletes a spell THEY name, because the comparer
+  only reports theirs-not-ours and the whole finding is that their 5th rung lacks Illusory Scene.)
+
+otherworldly-protection#computed-value — instrument settle, taught as an experience-gate limit
+  SETTLE (experience-gate instrument limit). work/experience-instrument-limits.json, new record
+  "otherworldly-protection", verdict MISSING-CONTROL, lane derived-value-not-a-pick, _cite
+  "// batch 037: otherworldly-protection#computed-value".
+  Why: WG raises two `select optionType=CUSTOM` blocks ("Select a Resistence", "Select a
+  Sanctification") for a value AoN innovation-5 works out from the character — "You gain resistance
+  equal to 3 + half your level to negative damage, or to positive damage if you have negative
+  healing (such as if you're a dhampir)". That is standing rule R14 (owner 2026-09-10, desk #147),
+  the battle-creed class exactly. classFeatures/otherworldly-protection.resistances already carries
+  all five outcomes as derived rows at '3+floor(@actor.level/2)'.
+  Note: this record's OTHER half — their five option NAMES — is already settled on wg-identity's
+  `options` bucket from batch 033 (otherworldly-protection#sanctified-resistance); this batch adds
+  only the experience-gate park, so the two do not overlap.
+  Test: test/batch037-instruments-7.test.ts, describe "batch 037 instruments-7 —
+  otherworldly-protection works the resistance out, with no picker" — a BUILT level-20
+  armor-innovation inventor with the initial modification shows spirit 13 and void 13 (3 + half of
+  20) with no control asked; MUTATION-PROOF by deleting `resistances` from an in-memory content copy
+  of the record, after which the same character shows neither row.
+
+acute-vision#while-raging — instrument settle, taught as an experience-gate limit
+  SETTLE (experience-gate instrument limit). work/experience-instrument-limits.json, new record
+  "acute-vision", verdict NO-SHEET-EFFECT, lane harness-state-toggle-off, _cite
+  "// batch 037: acute-vision#while-raging".
+  Why: AoN feat-5806 — "When you are raging, your visual senses improve, granting you darkvision."
+  feats/acute-vision carries whileActive [{state:'rage', senses:[{name:'darkvision',
+  acuity:'precise'}]}]; derive.ts activeStateGrants (:1189) gates it on the live rage resource and
+  stateGrantSummary (:1211) names it on the Rage card before raging. The harness host is a freshly
+  built barbarian whose rage resource is 0, so WG's giveAbilityBlock "Darkvision" reads as
+  undelivered — acute-scent's lane, same feat family, one sense over. WG's permanent Darkvision is
+  the deliberate difference (owner 2026-09-10, desk #108).
+  Test: test/batch037-instruments-7.test.ts, describe "batch 037 instruments-7 — acute-vision grants
+  darkvision only while raging" — a BUILT level-20 barbarian holding the feat has no darkvision with
+  classResources.rage 0 and has it at rage 1; MUTATION-PROOF by deleting `whileActive` from an
+  in-memory copy of feats/acute-vision, after which the raging barbarian has none either.
+
+favored-terrain#conditional-speed — no settle written: every comparer already agrees (instrument clean)
+  NO INSTRUMENT CHANGE, deliberately — and this is the settle decision, not an omission. Nothing
+  reports this record: wg-diff has it in AGREE/WE-ONLY with missing=[], wg-values reports 0 to
+  adjudicate, wg-identity 0, and the experience harness verdict is OK (it even sees our popup, 9
+  live options). AoN feat-4866 gates the Plains "+10-foot status bonus to your land Speed" on the
+  unimpeded journey class feature AND on being in the terrain, so ours is a star naming both
+  conditions (owner 2026-09-10, desk #24); WG's unconditional Speed change from level 2 is the
+  deliberate difference. Writing a settle for a record no comparer flags would silence the NEXT,
+  real difference on it unread — the exact failure mode the registries' own headers warn about.
+  Test: test/batch037-instruments-7.test.ts, describe "batch 037 instruments-7 — favored-terrain,
+  born-of-animal and gleaming-blade need no instrument" — pins the absence, so a comparer that
+  starts reporting one of these is read as a REAL difference rather than answered with a settle.
+
+born-of-animal#speed-dash — no settle written: every comparer already agrees (instrument clean)
+  NO INSTRUMENT CHANGE, same reasoning and the same guard test. AoN heritage-412: "If you have both
+  hands free, you can increase your Speed to 30 feet as you run on all fours" — conditional,
+  therefore a star (owner 2026-09-10, desk #116). Carrier: src/rules/situationalBonuses.ts:2908
+  FEAT_SITUATIONAL['born-of-animal'], speed target "Speed becomes 30 feet" under "in Yaoguai Form,
+  while both hands are free and you run on all fours" (the test asserts that line). WG's always-on
+  +5 Speed on top of the 25-foot yaoguai Speed is the deliberate difference. wg-values agrees,
+  wg-identity has nothing to name, experience verdict OK.
+
+gleaming-blade#transcendence-name — no settle written: every comparer already agrees (instrument clean)
+  NO INSTRUMENT CHANGE, same reasoning and the same guard test. AoN ikon-6 names the transcendence
+  "Flowing Spirit Strike"; classFeatures/gleaming-blade grants exactly that through
+  grantsClassFeatures ['flowing-spirit-strike'] (the test asserts it), and the experience harness's
+  own sheetDiff shows it reaching a level-20 exemplar as an action plus
+  ownedFeatures+flowing-spirit-strike. WG's "Mirrored Spirit Strike" appears nowhere in the AoN
+  mirror (owner 2026-09-10, desk #135). Their row carries theirKinds=[note] and no identity buckets,
+  so there is nothing for a settle to name.
+
+------------------------------------------------------------------------------------------------
+COMPARER COUNTS, BEFORE AND AFTER (run on work/wg-batch-037.json and the two previous packets)
+
+Measured with the correct flag: these scripts take `--batch <path>`, not a positional argument — a
+positional path silently falls back to work/wg-batch-003.json, which is how the first pass of this
+chunk read 037 as already clean. Sibling chunks were landing their own settles between runs, so the
+"after" figures include their work; the per-record checks below are what isolate mine.
+
+  wg-diff (CORPUS-wide, no --batch)
+      THEY-ONLY   183 -> 179        WE-ONLY 2887 -> 2889      AGREE 1098 -> 1100
+      I changed nothing in wg-diff (no VERIFIED_EQUIVALENT key): the 4 closures are sibling chunks'.
+      None of my seven records is in THEY-ONLY before or after.
+
+  wg-values --batch work/wg-batch-037.json     5 -> 2 records to adjudicate
+      mine: curse-of-turbulent-moments (16 rows) closed. The 2 that remain (reverse-engineer,
+      astrolabe-of-falling-stars) belong to sibling chunks.
+  wg-values --batch work/wg-batch-035.json     0 -> 0 to adjudicate (27 compared, 27 agree)
+  wg-values --batch work/wg-batch-036.json     0 -> 0 to adjudicate (14 compared, 14 agree)
+
+  wg-identity --batch work/wg-batch-037.json   8 -> 4 records with an unmatched name
+      mine: echo-of-lost-moments closed. The 4 that remain (animal-instinct, time-mage-dedication,
+      haunting-memories, sky-rider) belong to sibling chunks or the owner queue.
+  wg-identity --batch work/wg-batch-035.json   1 -> 1  (animal-instinct / spiderweb — the
+      pre-existing owner-queued desk entry animal-instinct-spider-web, untouched by this chunk)
+  wg-identity --batch work/wg-batch-036.json   0 -> 0  (14 checked, 14 match)
+
+  wg-casting (npx jiti scripts/wg-casting.mjs — it imports src/rules/seed and cannot run under bare
+      node; a plain `node scripts/wg-casting.mjs` throws ERR_MODULE_NOT_FOUND, which is the loader,
+      not a defect)
+      16 class sources compared, 3 with mismatches (magus, summoner, wizard; 174 rows) before and
+      after. Untouched by this chunk — nothing here edits a class's casting.
+
+  Per-record proof that the two settles are load-bearing and nothing else moved:
+      node scripts/wg-values.mjs   --ids curse-of-turbulent-moments          -> 1 agree, 0 to adjudicate
+      node scripts/wg-values.mjs   --ids curse-of-turbulent-moments --raw    -> 16 MISSING rows
+      node scripts/wg-identity.mjs --ids echo-of-lost-moments                -> 1 match, 0 unmatched
+      node scripts/wg-identity.mjs --ids echo-of-lost-moments --raw          -> [illusorydisguise]
+
+  node scripts/test-flip-audit.mjs --batch 037 — my four additions (two registry keys, two limits
+  records) are all cited and mutation-proofed; the 9 violations the audit still reports are sibling
+  chunks' keys (tree-friend, instinct-ability, spirit-walk, tumbling-theft, traveling-gourmand,
+  deny-lady-nanbyos-charity, spore-order, cultivation-order, dragon-eidolon).
+
+  node scripts/vt.mjs run test/batch037-instruments-7.test.ts — 6 passed.
+  npx tsc --noEmit — clean.

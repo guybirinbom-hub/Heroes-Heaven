@@ -1,0 +1,164 @@
+BATCH 037 — ADVERSARIAL VERIFY, family data-rows-6 (chunk 6 of 6 of data-rows)
+Spec checked: work/.b037-rows-data-rows-6.json   Report checked: work/.b037-report-data-rows-6.txt
+Tests: test/batch037-data-rows-6.test.ts (10 RED on shipped content — every one of them goes green
+on the patched copy; simulated row-by-row against a content copy with the 10 rows applied).
+npx tsc --noEmit — clean.  node scripts/test-flip-audit.mjs --batch 037 — clean (21 files, every flip cited).
+
+ROW-LEVEL CHECKS (done before any verdict)
+- Every target record exists in core.json (feats/arcana-of-iron, items/astrolabe-of-falling-stars,
+  feats/breath-of-the-dragon, backgrounds/reborn-soul, items/screech-shooter-{greater,major},
+  items/wyrm-spindle-{greater,major}). No create:true row, so no created-prose spec is owed.
+- supersedes flags are exactly right: all 6 rows whose (category,id,field) already exists in
+  scripts/data/effect-backfill.json carry supersedes:true; the 2 that do not exist carry none.
+- Every superseded value was diffed WHOLE against the shipped overlay row: the four description rows
+  and the two wyrm effectChoices rows change exactly ONE sentence each and are byte-identical
+  elsewhere (frightened ladder, craft requirements, descRefs, the armor option, the affix prompt);
+  the reborn-soul dataWarning carries both halves of the old note, corrected.
+- Cross-spec collision scan over all 14 work/.b037-rows-*.json: ZERO collisions on record+field.
+  feats/arcana-of-iron is touched by data-rows-5 on `grantsClassFeatures` (value null) — a different
+  field, declared by the builder, no interaction with `situational`.
+- A reader exists for every field used: situational (explain.ts:525-556 feat walk + inventory walk),
+  effectChoices/answerFromChoiceFlag (build.ts:6183 resolvePick + build.ts:1978 choiceFlagAnswer),
+  dataWarning on a BACKGROUND (build.ts:7426), description (routed to core-descriptions.json by the
+  applier — scripts/apply-backfill-now.mjs:17-23, 1,938 precedent rows).
+- Rows name no spell / action / trait / item id, so nothing to resolve against core.json.
+- Manifest work/.b037-specs.json: 16 entries, all 14 families present; data-rows-6's stage[] lists
+  every path this chunk touched (spec, report, test) and I appended this verify file.
+- Harness: a throwaway vitest file applied the 10 rows to a content copy and built real characters
+  (fighter 10 with the feat; fighter 5 holding / carrying the astrolabe; a level-9 dragonblood with
+  breath-of-the-dragon). DELETED after the run.
+
+PER FINDING
+
+arcana-of-iron#bespell-strikes — DONE
+  Harness on a BUILT fighter 10 carrying the feat: statHasSituational(strikeDamage) is false on
+  shipped content and true with the row applied, so the 1d8 line reaches the strike-damage breakdown.
+  Print verified verbatim in the mirror (feat-7980 "The extra damage you deal with Bespell Strikes
+  increases to 1d8"); the `when` matches feat-5028's own "Until the end of your turn, the weapon or
+  unarmed attack…". The bonus states the replacement, not a delta, which is right while the base
+  feat's 1d6 has no carrier.
+
+astrolabe-of-falling-stars#identify-star — FIXED-BY-ME
+  The row's VALUE was right (skill/all, +1 item, Survival as the requirement inside `when`, not as the
+  target — owner 2026-09-10 #51, and equipment-4027 names no skill). It was UNREACHABLE: the item walk
+  is gated on itemInUse (derive.ts:278 = worn|invested|equipped|attachedTo), and this record is
+  itemType 'equipment' with no 'invested' trait, so equipControl (InventoryTab.tsx:72) offers no
+  Wear/Wield control and the drag path refuses it (isEquippable, InventoryTab.tsx:732) — a player can
+  never put an astrolabe in use, so the star would have shipped dark.
+  FIX: added "whileCarried": true to the clause (plus the why, and a test
+  "astrolabe-of-falling-stars qualifies its star while carried rather than going dark" cited to this
+  finding). Exactly the state the flag's own doc-comment was written for (situationalBonuses.ts:79-87,
+  the evercursed crystal: "nothing in the app equips a loose crystal, so the equip test hid that
+  clause outright rather than qualifying it"); the printed requirement stays stated in `when`.
+  Harness after the fix: a fighter 5 merely CARRYING the astrolabe gets one line on Survival and one
+  on Occultism (detail:'all'), and nothing at all on shipped content.
+  No double star: src/rules/situationalBonuses.ts keys "astrolabe-of-the-falling-stars", which is a
+  DIFFERENT record that also exists in core.json — see the closed gap below.
+
+breath-of-the-dragon#derive-from-exemplar — DONE
+  Harness on a BUILT level-9 dragonblood with the feat and featChoices['heritage:dragonblood']='cinder':
+  exactly ONE effectPick on the record, label "Cinder", note "15-foot cone, fire damage, basic Reflex
+  save. The ability gains the fire trait." — derived through choiceFlagAnswer with no answer stored on
+  the feat, so no illegal shape/damage/save triple is buildable.
+  The 40 options are value-and-label identical to heritages/dragonblood's own choice options (compared
+  programmatically, same order), and all 40 notes were checked one by one against the owner's
+  transcribed Draconic Benefactors table in the finding's proposal: 40/40 agree on shape, damage type
+  and save. The superseded 3-picker row's content survives whole inside the notes (shape, damage type,
+  damage trait, save), which is the only merge the printed sentence permits.
+
+reborn-soul#restricted-increases — NOT-DONE (note half DONE, mechanic absent)
+  The dataWarning row is correct and is an improvement worth shipping on its own: the shipped note
+  states WG's both-Lores-each-time reading (six raises) where print and owner #85 give three.
+  The finding also asks for the three BUILT increases and they do not reach a character: I confirmed
+  restrictedSkillIncreaseAllowed reads `cls?.restrictedSkillIncreaseLevels` only (build.ts:1137) and
+  bonusSkillIncreaseLevels likewise (build.ts:3724, 9983) — class-only, and `skills?: SkillId[]`
+  cannot name a player-chosen Lore. Engine lane; see CROSS-FILE GAPS.
+
+screech-shooter-greater#grade-numbers — DONE
+  Mirror equipment-1169-1109 verbatim: "The DC for the activation is 30 and it affects creatures in a
+  40-foot emanation." The row changes exactly that sentence and drops the base DC 25 / 30-foot text;
+  everything else (the +2 greater striking blurb, the frightened ladder, craft requirements) is
+  byte-identical to the superseded row.
+
+screech-shooter-major#grade-numbers — DONE
+  Mirror equipment-1169-1110 verbatim: "The DC for the activation is 37 and it affects creatures in a
+  50-foot emanation." Same single-sentence edit, rest byte-identical. The grade's rune sentence is a
+  separate defect print cannot settle — new owner question in DATA STILL NEEDED.
+
+wyrm-spindle-greater#grade-numbers — DONE
+  Mirror equipment-2243-1983: "damage from Dragon Breath when affixed to a weapon is 9d6 (DC 34)",
+  with the area and the save's name from the base page equipment-2243 ("in a 30-foot cone with a
+  DC 28 basic Reflex save"). Both rows land the same clause — the description AND the affix pick's
+  note, which had lost the area entirely ("in a with a save"). Resistance 10 and the 7th-rank summon
+  dragon line are re-emitted unchanged.
+
+wyrm-spindle-major#grade-numbers — DONE
+  Mirror equipment-2243-1984: 12d6, DC 41; same two places, same single clause, resistance 15 and the
+  summon draconic legion line unchanged.
+
+swashbucklers-speed#typed-all-speeds — NOT-DONE (correctly: no row is authorable today)
+  Verified the builder's reasoning rather than taking it: derive.ts:5274-5276 sums
+  `landSpeedBonus` from feats, class features and heritages into one untyped `featLandBonus` that is
+  added to LAND speed only; there is no type on any speed carrier anywhere, so neither half of the
+  finding (status typing so two status bonuses take the highest, and "to your Speeds" reaching every
+  Speed) can be expressed as data. A field invented today would have no reader. Engine lane.
+
+DATA STILL NEEDED (builder's list, corrected)
+- items/screech-shooter-major field "damage" value {"dice":1,"die":"d10","type":"sonic"} — CONFIRMED
+  by me: base and greater both ship type "sonic", major ships "piercing", and equipment-1169 prints
+  "A screech shooter deals sonic damage". No finding covers it, so no row.
+- heritages/dragonblood field "choice" (whole value, 40 options) — CONFIRMED by me: magma reads
+  "Primal dragon — fly, swim." where the owner's table gives Burrow, bog reads "fly, swim, burrow."
+  where the table gives Swim (adamantine and requiem do agree, so this is per-record, not systematic).
+  Only the speed words move; values and labels are already correct and the breath row depends on them.
+- feats/bespell-strikes field "situational" — CONFIRMED by me: the record has no `situational` field
+  at all, so the BASE 1d6 (feat-5028 "an extra 1d6 force damage") has no carrier. The arcana-of-iron
+  row reads correctly alone because it states "1d8 instead of 1d6", but the base star is missing.
+- feats/swashbucklers-speed — re-author the +5/+10 STATUS bonus the moment the engine grows a typed,
+  all-Speeds carrier; today the only field is the untyped land-only landSpeedBonus already shipped.
+- NEW (owner question): items/screech-shooter-major's first sentence calls it "a special +2 greater
+  striking harmona gun" — that is the GREATER grade's rune line (equipment-1169-1109). The major grade
+  prints NO rune sentence of its own, so the number belongs to no grade and cannot be invented from
+  print. The builder was right not to touch it; it needs the owner, not a row.
+- NEW: two near-duplicate item records ship — astrolabe-of-falling-stars (aonId equipment-4028,
+  150 gp, the AoN record) and astrolabe-of-the-falling-stars (no aonId, 50 gp, usage
+  held-in-two-hands). The CODE table's star is keyed to the second one, this finding's row to the
+  first; a player who owns the wrong record reads the wrong price and level. Names differ, so the
+  duplicate-name suppression does not catch it.
+
+CROSS-FILE GAPS (builder's list, corrected)
+- swashbucklers-speed#typed-all-speeds — engine: src/rules/derive.ts (the landSpeedBonus fold at
+  5274-5276) must give every speed bonus a TYPE so two status bonuses take the highest instead of
+  adding, and must honour a clause worded "to your Speeds" on every Speed, not land alone. ~20 records
+  carry a bonus through that one untyped field.
+- reborn-soul#restricted-increases, the BUILT half — engine: bonusSkillIncreaseLevels (build.ts:3724,
+  9983) and restrictedSkillIncreaseLevels (build.ts:1137) are read off the CLASS only and their
+  `skills` list is fixed SkillIds, so a BACKGROUND granting one restricted increase at 3/7/15 against
+  two player-chosen Lores has no reader; it needs a chosen-Lore resolver the way
+  includeSubclassGrantedSkills resolves a subclass skill.
+- breath-of-the-dragon#derive-from-exemplar asks for a new data file
+  scripts/data/draconic-benefactors.json (scripts/ is outside this chunk). The table itself is carried
+  whole inside the effectChoices row, so nothing is lost; the standalone file and its citation are for
+  whoever owns scripts/data.
+- MIRROR GAP: https://2e.aonprd.com/DraconicBenefactors.aspx is not in the AoN update pipeline.
+  CONFIRMED by me: the mirror has no such document, and all 44 draconic-exemplar docs carry
+  tradition / bloodline skill / sorcerous gifts but neither the breath nor the save column (only 5
+  mention "breath" at all, incidentally). Pipeline lane, not a row.
+- NEW: src/sheet/InventoryTab.tsx — equipControl (line 72) returns null for every itemType that is not
+  armor/weapon/shield and the Invest button needs the 'invested' trait (line 194), while the drag path
+  refuses the same items (isEquippable, line 732) and `toggleEquipped` (builder/shared.tsx:632) has no
+  caller. So an itemType 'equipment' record without the 'invested' trait can NEVER satisfy itemInUse,
+  and every `situational` / `passiveEffects` clause on one is unreachable — the six sibling astrolabes'
+  code-table stars are dark for exactly this reason. My row works around it with `whileCarried`; the
+  root fix is an in-use control for held gear, and it belongs to the sheet family.
+- CLOSED (was: "if the situational family also adds an astrolabe-of-falling-stars entry the item would
+  carry the star twice"). work/.b037-rows-situational.json contains ONE finding (reverse-engineer) and
+  no astrolabe entry, and src/rules/situationalBonuses.ts:3083 keys
+  "astrolabe-of-the-falling-stars" — a different record id that also exists in core.json. No double
+  star is possible in this batch.
+
+MANIFEST STAGE[] FOR THE FILES I TOUCHED
+  work/.b037-rows-data-rows-6.json   (astrolabe row: + whileCarried, + why)
+  test/batch037-data-rows-6.test.ts  (+ one cited test)
+  work/.b037-verify-data-rows-6.txt  (this file)
+  work/.b037-specs.json              (appended this verify file to data-rows-6's stage[] only)

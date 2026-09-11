@@ -1,0 +1,65 @@
+{
+ "_": "batch 037, chunk instruments-3. Twelve owner rulings from the 2026-09-10 desk pass, every one of them 'the book wins, keep the app'. No record changes, so every finding here carries backfillRows: [] — the work was in the INSTRUMENTS (two) and in retiring the desk entries (the driver's, see CROSS-FILE GAPS in work/.b037-report-instruments-3.txt).",
+ "findings": [
+  {
+   "id": "unsponsored#rarity",
+   "backfillRows": [],
+   "note": "No row and no instrument. backgrounds/unsponsored already carries rarity 'common', which is what background-227 prints (no rarity trait = common by the general rule); owner ruled 2026-09-10 (#94) that WG's uncommon rating is a deliberate difference. RARITY IS COMPARED BY NO INSTRUMENT — grepped 'rarity' across wg-diff.mjs, wg-values.mjs, wg-identity.mjs, wg-casting.mjs, wg-batch-gate.mjs and lib/wg-experience-lanes.mjs: zero hits, because WG carries rarity in a column their operations never mention. So there is nothing to settle and the record reports nowhere once the desk entry is retired."
+  },
+  {
+   "id": "sponsored-by-family#rarity",
+   "backfillRows": [],
+   "note": "Same shape as unsponsored#rarity, same evidence: backgrounds/sponsored-by-family is rarity 'common' with an empty printed traits block (background-223); owner ruled 2026-09-10 (#96). No comparer reads rarity, so no settle exists to write."
+  },
+  {
+   "id": "sponsored-by-a-stranger#rarity",
+   "backfillRows": [],
+   "note": "Same shape again: backgrounds/sponsored-by-a-stranger is rarity 'common', printed traits block empty (background-225); owner ruled 2026-09-10 (#100). No comparer reads rarity."
+  },
+  {
+   "id": "sky-rider#both-skills",
+   "backfillRows": [],
+   "note": "Instrument settle, no row. Print (background-381) trains Acrobatics AND Plane of Air Lore; ours already does (trainedSkill 'acrobatics' + trainedLore 'plane-of-air'). WG writes it as a pick, so its two option labels had no counterpart and wg-identity reported `options theirs-not-ours=[skillloreplaneofair, skillacrobatics]`. Settled MEMBER-SCOPED on those two names in SETTLED_IDENTITIES (scripts/wg-identity.mjs), never the `options` bucket, so the record's Cat Fall grant and attribute labels stay under comparison."
+  },
+  {
+   "id": "gunslinger-weapon-mastery#advanced-rank",
+   "backfillRows": [],
+   "note": "No row and no new settle. Ours already ships the printed split (master for simple and martial firearms and crossbows, expert for advanced, expert for simple/martial/unarmed) plus critical specialization on firearms and crossbows; owner ruled 2026-09-10 (#39). The record reaches no comparer as a difference: wg-diff has it in AGREE (`weapon` on both sides), wg-values files every one of its variables under the existing NOT_A_SCALAR entries for weapon proficiency by category and by group, and gate 9 reads it OK (delivered on the class chassis). Nothing to settle."
+  },
+  {
+   "id": "brutality#melee-only",
+   "backfillRows": [],
+   "note": "No row. The settle already existed — SETTLED_VALUES['brutality'] = ['set|critspec'] in scripts/wg-values.mjs — but its comment recorded the disagreement without a ruling. Updated to carry the 2026-09-10 ruling (#42): critSpecWeapons {melee:true} is the printed sentence (class-feature-853) and WG's ranged-inclusive simple/martial/unarmed grant is a deliberate difference. Comment only: no registry key added or removed."
+  },
+  {
+   "id": "shoony-lore#no-additional-lore",
+   "backfillRows": [],
+   "note": "No row. Two settle entries already existed and BOTH said in as many words that they were a parked owner question, not a settle — VERIFIED_EQUIVALENT['shoony-lore'] = ['grantsRecord'] (wg-diff) opened '⚠ SHOONY LORE IS NOT SETTLED — IT IS AN OPEN OWNER QUESTION … it comes out the moment he rules either way'. He ruled on 2026-09-10 (#45): the feat trains Shoony Lore and nothing else (feat-1219), WG's Additional Lore grant with its 3rd/7th/15th increases is a deliberate difference. Both comments rewritten to record the ruling; no key added or removed."
+  },
+  {
+   "id": "bone-magic#cantrip-list",
+   "backfillRows": [],
+   "note": "Instrument teach, no row. Ours already offers the printed union of the occult and primal cantrip lists (FEAT_CANTRIP_GRANTS['bone-magic'], 56 options) with the answer only setting the tradition, which is what feat-5632 prints; owner ruled 2026-09-10 (#107). What reported was gate 9: our tradition question is worded 'Bone Magic — are your innate spells primal or occult?', which lanes as [spell] and so fell out of the generic pool WG's `select \"Select a Tradition\"` falls back to — MISSING-CONTROL on a question we really do ask. Taught in CONTROL_TITLE_LANE (scripts/lib/wg-experience-lanes.mjs): a prompt whose tradition alternation is the ANSWER (not an adjective on a picked noun) is a tradition question."
+  },
+  {
+   "id": "mightyfall-kobold#boosts",
+   "backfillRows": [],
+   "note": "No row and no new settle. heritages/mightyfall-kobold already replaces the whole set — Strength boost, Charisma boost, Intelligence flaw, plus the 10 ancestry HP — which is what 'Instead of the normal attribute boosts and flaws' means (heritage-374); owner ruled 2026-09-10 (#115). The existing SETTLED_IDENTITIES['mightyfall-kobold'] = ['options'] settles the LABELS only and its comment named this as an open owner question; updated to record the ruling. The boost COUNT reaches no comparer at all (wg-values files ATTRIBUTE_* under NOT_A_SCALAR, the chassis lane), so nothing had to be quieted to close it."
+  },
+  {
+   "id": "glyph-expert#magical-writing",
+   "backfillRows": [],
+   "note": "No row and no instrument. Ours already fires the success-to-critical-success upgrade only against traps that feature magical writing, which is what feat-2242 prints; owner ruled 2026-09-10 (#130). The record reaches no comparer as a difference: wg-diff has it in WE-ONLY (ours = [conditional, save, perception, ac, skill] against their [perception, ac, save]), wg-values agrees on every value, and gate 9 reads it OK. The narrower trigger IS our extra `conditional`, so there is nothing for a settle to answer."
+  },
+  {
+   "id": "empathic-calm#one-pick",
+   "backfillRows": [],
+   "note": "No row and no instrument. 'either calm emotions or sanctuary' (feat-3970) is ONE pick and the app already asks it; owner ruled 2026-09-10 (#111/#112) and set STANDING RULE R13. The record reaches no comparer as a difference: wg-diff has it in WE-ONLY with `choice` on our side and not theirs (their vocabulary has no pick verb for this shape, so they grant both), and gate 9 reads it OK — our picker is rendered and answered."
+  },
+  {
+   "id": "colugos-traversal#one-pick",
+   "backfillRows": [],
+   "note": "No row and no new settle. 'your choice of gentle landing or jump' (feat-6975) is ONE pick and the app already asks it, with heightenAt [{level:9,rank:3}] — NOT heightenHalfLevel, corrected by the verifier against the shipped record — carrying the printed *\"At 9th level, these spells are heightened to 3rd rank\"*; owner ruled 2026-09-10 under R13. Gate 9 reads it OK and wg-diff has it in WE-ONLY. The existing VERIFIED_EQUIVALENT['colugos-traversal'] = ['conditional','spellcasting'] is a DIFFERENT aspect (the engine-wide innate-spell proficiency rule, Player Core p.298) and is untouched by this finding."
+  }
+ ]
+}

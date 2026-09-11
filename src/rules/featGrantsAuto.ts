@@ -72,6 +72,10 @@ export const FEAT_SKILL_GRANTS: Record<string, FeatGrant> = {
   'azarketi-weapon-expertise': { weaponFamiliarity: { weapons: ['crossbow', 'hand-crossbow', 'longspear', 'spear', 'trident', 'boarding-axe', 'gill-hook'], mirrorBestCategory: true } },
   'dwarven-weapon-expertise': { weaponFamiliarity: { weapons: ['battle-axe', 'pick', 'warhammer', 'clan-dagger', 'clan-pistol', 'dwarven-scattergun', 'dwarven-dorn-dergar', 'dwarven-war-axe', 'dwarven-waraxe', 'long-hammer', 'wrecker', 'wrecker-melee', 'wrecker-ranged'], mirrorBestCategory: true } },
   'elven-weapon-expertise': { weaponFamiliarity: { weapons: ['longbow', 'composite-longbow', 'longsword', 'rapier', 'shortbow', 'composite-shortbow', 'elven-curve-blade', 'elven-branched-spear', 'dawnsilver-tree', 'three-peaked-tree', 'three-peaked-tree-melee', 'three-peaked-tree-ranged'], mirrorBestCategory: true } },
+  // OVERRIDDEN in featGrants.ts HAND_AUTHORED_GRANTS, which restates this trained grant and adds
+  // feat-7980's second sentence ("if you gain the weapon expertise class feature, your proficiency in
+  // martial and advanced weapons increases to expert"). Kept here so a regeneration of this file is
+  // still a no-op; the hand-authored entry wins the merge either way.
   'arcana-of-iron': { weapon: { advanced: 'trained' } },
   'arcane-dragonblood': { skills: { arcana: 'trained' }, redundantFallback: true },
   'arcane-evolution': { skillChoices: [{ options: 'any', rank: 'trained' }] },

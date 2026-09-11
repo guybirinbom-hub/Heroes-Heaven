@@ -67,14 +67,32 @@ describe('a record that grants the same thing twice', () => {
     return lanes;
   };
 
-  it('no record grants the SAME lane from both a `choice` and its `effectChoices`', () => {
+  /*
+   * ⚠ AN ENHANCEMENT IS NOT A SECOND GRANT. A picker named in the record's `enhancement.choiceIds` is
+   * the ENHANCED version of what the base picker already gives — it is offered only once the
+   * innovation is enhanced, and its options are tied back to the base answer with `onlyWhenFlag`. So
+   * the two necessarily feed the same lane, on purpose. Hardened Chassis is the shape: the base
+   * `choice` picks a physical damage type at resistance 3, and the enhancement either widens it to all
+   * physical or raises that one type to half your level — same `resistances` lane, one value, since
+   * deriveDefenses takes the highest of same-type contributors. Excluded by the GATE, not by id, so a
+   * genuinely duplicated ungated picker on the same record still fails here.
+   */
+  // batch 037: hardened-chassis#enhancement
+  it('no record grants the SAME lane from both a `choice` and an ungated `effectChoices` — hardened-chassis is enhancement-gated, not doubled', () => {
     const both: string[] = [];
     for (const cat of ['feats', 'classFeatures', 'heritages', 'backgrounds'] as const) {
       for (const [id, r] of Object.entries(db[cat])) {
-        const rec = r as { choice?: Parameters<typeof grantLanes>[0]; effectChoices?: NonNullable<Parameters<typeof grantLanes>[0]>[] };
+        const rec = r as {
+          choice?: Parameters<typeof grantLanes>[0];
+          effectChoices?: (NonNullable<Parameters<typeof grantLanes>[0]> & { id?: string })[];
+          enhancement?: { choiceIds?: string[] };
+        };
         const fromChoice = grantLanes(rec.choice);
         if (!fromChoice.size) continue;
-        const fromEffects = new Set((rec.effectChoices ?? []).flatMap((ec) => [...grantLanes(ec)]));
+        const enhanced = new Set(rec.enhancement?.choiceIds ?? []);
+        const fromEffects = new Set(
+          (rec.effectChoices ?? []).filter((ec) => !(ec.id && enhanced.has(ec.id))).flatMap((ec) => [...grantLanes(ec)]),
+        );
         const shared = [...fromChoice].filter((k) => fromEffects.has(k));
         if (shared.length) both.push(`${cat}/${id} (${shared.join(', ')})`);
       }

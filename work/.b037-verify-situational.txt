@@ -1,0 +1,65 @@
+BATCH 037 - SITUATIONAL family, ADVERSARIAL VERIFY
+Findings in scope: 1 (reverse-engineer#crafting-star). Verdicts: 1 DONE, 0 FIXED-BY-ME, 0 NOT-DONE.
+
+reverse-engineer#crafting-star - DONE
+  Print re-read from the mirror, not from the report: C:/wonderers guide/aon-2e-archive/data/by-category/
+  feat/feat-3053.json is "Guns & Gears (Remastered) pg. 25", release_date 2025-02-18, legacy_id
+  ["feat-8555"], and its whole body is the Critical-Crafting reassembly clause plus "Furthermore, you
+  can use Crafting instead of Thievery to Disable a Device or Pick a Lock." - NO bonus of any kind.
+  feat-8555 (Guns & Gears pg. 26, 2021-10-13) is the printing that carries "+2 circumstance bonus to
+  Crafting checks to reverse engineer a formula from an item". R12 holds; the deletion is right.
+  Owner ruling verified verbatim in scripts/data/trust-approvals.json:315, n:15, record
+  feats/reverse-engineer, "'#15 drop the +2 Crafting star' - a REMOVAL".
+  The star is really gone: src/rules/situationalBonuses.ts line 559 is now the why-comment, and the
+  only surviving `reverse-engineer` match in the registry is line 1223 `"reverse-engineering"`
+  (feat-6406, Scrounger) whose printed +2 IS real ("+2 circumstance bonus to Crafting checks to
+  reverse engineer a formula from an item", core-descriptions feats/reverse-engineering) - correctly
+  untouched. No other src/ or test/ site re-grants it; no settle, ratchet, wg-*.mjs table, doc or
+  work/experience-instrument-limits.json entry names the record.
+  Both surviving clauses are shipped by existing overlay rows, as claimed: effect-backfill.json row
+  3164 (skillSubstitutions) and row 13523 (description, the 2025 text with no +2). So "no backfill
+  row" is correct, and work/.b037-rows-situational.json backfillRows:[] is the honest spec.
+  The lane guard is real, not decorative: scripts/apply-situational-lane.mjs:156 checks `handEdited`
+  BEFORE :157 `existingIds`, so naming 'reverse-engineer' in the set at :132 is what stops a lane
+  refresh from re-emitting the 2021 wording over a deleted row.
+  Test re-run by me, not taken on trust: `node scripts/vt.mjs run test/batch037-situational.test.ts`
+  - 3 passed. `npx tsc --noEmit` - clean.
+  I attacked the test's own claim that its empty assertion is meaningful, because
+  situationalBonuses.ts:4058 suppresses the SHIPPED table for any id in `trustOffIds` while letting
+  `extra` through - i.e. the `extra` re-injection alone would NOT distinguish "deleted" from "gated
+  off", and src/data/trust-ledger.json lanes.situational does list this id. It survives the attack:
+  the file calls `content()` with no options, so test/_content.ts:45 never runs applyTrustGate and
+  `setSituationalTrustOff` is never called in that module - trustOffIds is empty, the empty list is
+  the deletion, and re-adding the registry entry would fail it( #1. Verdict stands.
+  Citations check out under form (1): "// batch 037: reverse-engineer#crafting-star" sits in the 6
+  lines above each of the 3 its, the id is CONFIRMED in work/.b037-read.json, and the record id
+  "reverse-engineer" is in both the describe title and every it title. No settle and no comparer
+  teach in this family, so no "// mutation-proof" marker is owed.
+  `node scripts/test-flip-audit.mjs --batch 037` reports 3 violations, and ALL THREE are other
+  families' settle keys (wg-diff.mjs:3476 "spirit-walk"; wg-identity.mjs:1795 "dragon-eidolon";
+  :1817 "sky-rider"). Zero come from this family's files.
+
+SPEC ROWS (work/.b037-rows-situational.json), verified as rows without applying them
+  backfillRows is EMPTY, so there is nothing to collide, nothing to diff against a shipped value, no
+  create:true to justify, no created-prose spec owed and no spell/action/trait/item id to resolve.
+  Cross-family collision scan: `grep -l reverse-engineer work/.b037-rows-*.json` matches only this
+  family's file, so no other family targets the record.
+  No throwaway harness was needed: the mechanic is already exercised on a BUILT character (inventor 4
+  with the feat) by the family's own test, which I ran.
+
+MANIFEST (work/.b037-specs.json)
+  Intact. It now holds TWO entries - situational and instruments-1 - so no other family's entry was
+  clobbered (it held only situational when I first read it at 11:54; instruments-1 appended at 11:57).
+  The situational stage[] lists all five paths this family touched and nothing it did not:
+  work/.b037-rows-situational.json, work/.b037-report-situational.txt,
+  test/batch037-situational.test.ts, src/rules/situationalBonuses.ts, scripts/apply-situational-lane.mjs.
+  `git diff` for the two source files contains exactly the one hunk each that the report describes.
+  No superseding row exists in this family, so the supersedes:true rule is vacuous here.
+
+DATA STILL NEEDED
+- feats / reverse-engineer / skillSubstitutions / [{"use":"crafting","forSkill":"thievery","when":"to Disable a Device or Pick a Lock"}] - supersedes: true over effect-backfill.json row 3164, whose value is the same single entry with the importer-mangled when "to disable-device skill=crafting or pick-a-lock skill=crafting". VERIFIED player-visible by me: src/rules/explain.ts:648 emits `${s.when} — roll ${s.use} instead`, so the Thievery rows currently read "to disable-device skill=crafting or pick-a-lock skill=crafting — roll crafting instead". Print (feat-3053) is "you can use Crafting instead of Thievery to Disable a Device or Pick a Lock". Same artefact class the sibling description row on this record already repairs. Left as a gap, NOT authored: no finding covers it, and the family's test asserts the note by SHAPE, so the row can land without flipping anything.
+
+CROSS-FILE GAPS
+- src/data/trust-ledger.json is now STALE and `npm run verify` FAILS on it. The builder's note to the closer ("the ledger is derived from core.json + the WG comparer output and never from this registry ... no regeneration is needed") is WRONG: scripts/trust-ledger.mjs:83 declares LANE_REGISTRY.situational = ['src/rules/situationalBonuses.ts#FEAT_SITUATIONAL', '...#CHOICE_SITUATIONAL'] and :340-341 scrapes the lane straight out of that registry text. I regenerated to a throwaway path and diffed it against the tracked ledger (then deleted it): the ONLY difference in the whole 221 KB file is lanes.situational losing 'reverse-engineer' - records 0 differing, coreSha and wgSha identical - so the drift is exactly this deletion and nothing else. `node scripts/trust-ledger-check.mjs` today prints "FAIL the tracked ledger is what the generator produces". Runtime impact is nil (src/data/trustGate.ts:266 feeds the lane to setSituationalTrustOff, and an id with no registry entry suppresses nothing; only the census star count is one high), so this is a closer task, not a source defect. I did NOT regenerate it: the ledger stamps coreSha, and the data-rows families' overlay rows have not been applied yet, so any regeneration now is stale again the moment the driver runs. Regenerate ONCE after the driver applies batch 037's rows: `node scripts/trust-ledger.mjs`, then `node scripts/trust-ledger-check.mjs`.
+
+Files I changed: none - nothing needed fixing, so no manifest stage[] paths are appended.

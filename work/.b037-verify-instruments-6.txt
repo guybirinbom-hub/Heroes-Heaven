@@ -1,0 +1,153 @@
+BATCH 037 — ADVERSARIAL VERIFY, INSTRUMENTS CHUNK 6 (instruments-6). 12 findings judged.
+Default assumption was NOT DONE. Every claim in the builder's report was re-measured from the tools,
+not read off the report: wg-diff re-run corpus-wide to --out (the printed list is capped), wg-identity
+and wg-values re-run on the twelve ids, the EXPERIENCE harness re-run on a 12-record packet of my own
+(work/wg-batch-b037v6.json, deleted afterwards with its artefacts), and the two printed clauses checked
+against the AoN mirror.
+
+  npx tsc --noEmit                                          clean
+  node scripts/vt.mjs run test/batch037-instruments-6.test.ts   1 file, 9 tests passed
+  node scripts/test-flip-audit.mjs --batch 037              CLEAN — 19 test files, 13 new settle keys,
+                                                            every flip cited (see gap 2 below)
+
+SPEC ROWS — work/.b037-rows-instruments-6.json
+  12 findings, backfillRows: [] on every one. Zero rows, so: nothing to diff against a shipped value,
+  no create/supersedes obligation, no reader question, and NO collision with any sibling spec is
+  possible. Verified positively rather than assumed — every .b037-rows-*.json in work/ was walked for a
+  row whose `id` is one of these twelve records: none exists in ANY family's spec, including
+  data-rows-4, which owns the two sibling findings on these records (spirit-walk#printed-pieces,
+  skybearers-belt#scoped-stars) and authored no row for either. So no sibling row can contradict the
+  spirit-walk settle by adding the very sense it defers away. Spec shape matches the other thirteen
+  specs (top-level `findings`), and its twelve ids are exactly this chunk's twelve.
+
+MANIFEST — work/.b037-specs.json
+  16 entries, every other family present (situational, instruments-1..7, data-rows-1..6 plus the two
+  created-prose entries). instruments-6's entry lists exactly the five paths it touched plus its own
+  rows file: .b037-rows-instruments-6.json, .b037-report-instruments-6.txt,
+  test/batch037-instruments-6.test.ts, scripts/wg-diff.mjs, scripts/wg-identity.mjs,
+  work/experience-instrument-limits.json. No superseding row exists in this spec, so no `supersedes`
+  flag is owed. Registry-key duplication checked across wg-diff/wg-identity/wg-values and the limits
+  file: no duplicate keys (wg-identity's two `armor-innovation` lines are in two different objects,
+  :179 and :849 — not a shadowed settle).
+
+────────────────────────────────────────────────────────────────────────────── PER-FINDING VERDICTS
+
+barrows-edge#damage-wording              DONE
+  Re-measured, not taken on trust: wg-diff weOnly (theirKinds [note], ourKinds [grantsRecord,
+  conditional, weapon], missing []), wg-identity silent, wg-values prose-only, and the EXPERIENCE
+  harness re-run returns OK for classFeatures/barrows-edge. Nothing reports; no settle is owed and
+  writing one would only be able to hide the next finding on the record.
+
+gaze-sharp-as-steel#transcendence        DONE
+  wg-diff weOnly (missing []), wg-identity silent, wg-values prose-only, experience harness OK on
+  classFeatures/gaze-sharp-as-steel. Same reading.
+
+hyper-boosters#overdrive-bonus           DONE
+  wg-diff AGREE — missing [] and extra [], kinds [conditional, speed] on both sides. wg-values agrees.
+  Experience harness OK on classFeatures/hyper-boosters.
+
+chronomancers-secrets#focus-spell        DONE
+  wg-diff weOnly, missing [] (theirs [choice] is entirely inside our five kinds). wg-values does not
+  value-check it. Experience harness OK on feats/chronomancers-secrets.
+
+benefactors-resistance#floor-and-dragons DONE
+  wg-diff AGREE (their 72 ops collapse to kinds we carry; missing [], extra []). wg-values agrees.
+  Experience harness OK on feats/benefactors-resistance.
+
+northridge-scholar#seasonal-boon-frequency DONE
+  wg-diff weOnly (extra [attribute, conditional, save], missing []). wg-values agrees. Experience
+  harness OK on backgrounds/northridge-scholar.
+
+skybearers-belt#bulk-aura                DONE
+  wg-diff weOnly on classFeatures (missing []) and noMatch on the items twin; wg-identity silent;
+  wg-values prose-only; experience harness OK on classFeatures/skybearers-belt. The record's OTHER
+  finding (skybearers-belt#scoped-stars) is data-rows-4's and is correctly not covered here — I
+  confirmed data-rows-4 cites it by its own full finding id, so nothing on this record reads as taught
+  by proxy.
+
+spirit-walk#playtest-row                 DONE   (settle, verified honest)
+  scripts/wg-diff.mjs:3476 VERIFIED_EQUIVALENT['spirit-walk'] = ['sense'], cited
+  `// batch 037: spirit-walk#playtest-row` two lines above, with the record id in the enclosing test
+  titles. Checked four ways: (1) print — AoN mirror feat/feat-7137.json carries the builder's quote
+  verbatim and its ONLY occurrence of the word "sense" is the prerequisite name Apparition Sense, so
+  there is no printed sense clause to be hiding; (2) the settle really silences — with the settle the
+  record is out of theyOnly, under --raw it returns as missing=[sense] (the test's own mutation proof,
+  which I re-ran); (3) blast radius — `spirit-walk` names exactly one record in core.json (feats only,
+  checked bucket by bucket), and the five other records with a missing `sense` (attunement-to-stone,
+  hand-of-the-lich, bloodline-mutation, runesight, umbraex-eye) are all still reported in my own
+  corpus-wide run, so it is not a `sense` amnesty; (4) the record's other five kinds still compare —
+  it now lands in weOnly with our five kinds intact.
+
+shadowcaster-dedication#tradition        DONE
+  wg-diff weOnly (our extra is [note], missing []), wg-values not value-checked, wg-casting skips the
+  archetype as a non-class source, and the experience harness re-run returns OK on
+  feats/shadowcaster-dedication. Nothing reports.
+
+hallowed-necromancer-dedication#tradition DONE
+  wg-diff weOnly (missing []), experience harness OK on feats/hallowed-necromancer-dedication. Ours
+  carries focusSpells ['hallowed-ground'] + focusFromSpellSlots:true, which is feat-3459's own rule.
+
+spellmaster-dedication#tradition         DONE   (park, verified honest)
+  My independent harness run reproduces the parked verdict EXACTLY: `NO-SHEET-EFFECT feats/
+  spellmaster-dedication — WG encodes 1 value-bearing op(s); not on our built character:
+  defineCastingSource CASTING_SOURCES`, which is the string in work/experience-instrument-limits.json.
+  The park carries `_cite: // batch 037: spellmaster-dedication#tradition` inside its own block and
+  passes the limits audit. The carrier it defers to is REAL and is NOT this batch's work:
+  FEAT_SITUATIONAL['spellmaster-dedication'] is present unchanged in git HEAD
+  (src/rules/situationalBonuses.ts:612 at HEAD, :621 in the working tree — the shift is the situational
+  family's unrelated insertions), so this chunk's park does not lean on a sibling's uncommitted change.
+  The test pins the star on a built 6th-level wizard and loses it when the table entry is deleted in
+  memory.
+
+dragon-eidolon#tradition                 DONE   (member settle + park, verified honest)
+  Print checked in the mirror: eidolon/eidolon-7.json reads "Tradition Arcane" — one word, no list.
+  wg-identity is quiet on the record with the settle and, under --raw, reports exactly
+  `options theirs-not-ours=[divine, occult, primal]` with `arcane` on our side. The member scope is
+  genuinely member-scoped and I checked the consuming loop (wg-identity.mjs:1865-1879): a settle entry
+  that is not a bucket name drops that NAME only, so `arcane` keeps watching the carrier — and the
+  raw run shows the record's grants/spells/items buckets report nothing at all, so the three names
+  cannot be silencing anything else. ⚠ one imprecision in the comparer comment, behaviour-neutral: the
+  member filter applies in all four buckets, not only `options`; it is safe here only because those
+  buckets are empty of differences, not because the entry is bucket-restricted. Not worth an edit to a
+  file four siblings are writing. The experience park reproduces exactly: my harness run returns
+  `MISSING-CONTROL classFeatures/dragon-eidolon — WG asks "Select a Tradition" [tradition]; we render
+  no control for this record`, matching the parked text, and the park carries its `_cite`.
+
+NOTHING FIXED BY ME. No file was edited during this verification; the only files I created
+(work/wg-batch-b037v6.json and its -experience.json artefact, plus three scratch logs) were deleted,
+so this chunk's manifest stage[] is unchanged and correct as the builder wrote it.
+
+────────────────────────────────────────────────────────────────────────────── DATA STILL NEEDED
+
+  (none — confirmed by inspection, not accepted from the report. All twelve findings are "nothing
+  changes" rulings from the owner's 2026-09-10 desk pass; the spec carries zero rows and no row is
+  owed by any of them.)
+
+────────────────────────────────────────────────────────────────────────────── CROSS-FILE GAPS
+
+  1. STANDS — scripts/lib/wg-parse.mjs:304. `wgRowsByBucket`'s tie-break is literally
+     `if (!prev || ops.length > String(prev.operations ?? '').length) m.set(key, row)` — richest row
+     wins, with no notion of a PLAYTEST row, which is what paired us against a draft Paizo cut on
+     spirit-walk. Owner's standing rule (desk #149): a WG row marked (playtest) is never evidence about
+     the released record. The builder's measurement is in the right order of magnitude — the dump
+     carries 305 "(playtest)" markers — and the narrow shape they propose (prefer a NON-playtest row
+     when one exists for the same name; leave a playtest-only row alone) is the right one, because a
+     blanket rule would delete the comparison for six whole classes whose only WG row is a playtest
+     row. Correctly left out of grant: the file is shared by all four comparers and every family.
+
+  2. CLOSED, not a gap any more — the builder reported one uncited flip in test/batch031-data.test.ts:96
+     as an open cross-file item. `node scripts/test-flip-audit.mjs --batch 037` now passes clean (19
+     test files touched, 13 new settle keys, every flip cited): the owning chunk added its citation
+     after this report was written. Struck from the list.
+
+  3. NEW, found by this verification — wg-diff still reports classFeatures/dragon-eidolon as THEY-ONLY
+     `missing=[language]`, no batch-037 finding covers that aspect, and it is NOT a data gap: the
+     carrier exists and is correct. src/rules/companionGrants.ts:531 holds
+     `'dragon-eidolon': {kinds:["eidolon"], senses:["darkvision"], languages:["draconic"], …}`, which is
+     exactly what eidolon-7 prints ("Language Draconic", "Senses darkvision"). So wg-diff's `language`
+     kind does not read companionGrants.ts for a summoner subclass option, and the record is a false
+     positive that will outlive this batch — it is the ONLY eidolon row in the corpus-wide theyOnly
+     bucket, alongside five non-eidolon records (stone-communion, avenging-runelord-dedication,
+     tree-friend, belt-of-the-five-kings, robe-of-stone). It belongs to whoever owns the wg-diff
+     carrier walk, not to this chunk, and it should be READ, not settled blind: the chunk was right not
+     to touch it, but it deserved a line in this list rather than only a sentence inside a finding note.

@@ -1017,6 +1017,24 @@ const OFF_RECORD_CARRIERS = {
   'demon-eidolon': ['language'],
   'plant-eidolon': ['language'],
   'undead-eidolon': ['language'],
+  /*
+   * GAP CLOSER, batch 037 — the last eidolon type the batch-035 note above left as its control, and it
+   * is closed here because dragon-eidolon IS a batch-037 record (finding dragon-eidolon#tradition), so
+   * "a closer may not settle an id outside its own batch" no longer applies to it.
+   * No batch-037 finding covers this ASPECT, so print is the authority and the citation is the premise
+   * form: AoN eidolon-7 (and its remaster twin eidolon-21) print *"Language Draconic"*.
+   * // batch 037 premise: eidolon-7 "Language Draconic"
+   * The carrier is the same one its seven settled siblings use and it is LIVE, not assumed:
+   * COMPANION_MODS['dragon-eidolon'].languages = ['draconic'] (src/rules/companionGrants.ts:531) — the
+   * ID this time, because content.languages['draconic'] exists — read by the same
+   * `for (const l of mod.languages ?? [])` loop in deriveEidolon (src/rules/companions.ts:1059) onto
+   * EidolonBlock.languages and rendered at src/sheet/CompanionsTab.tsx:950.
+   * ⚠ STILL PER ID, for the reason the 033 note gives — a companionGrants.ts FILE row in REGISTRY_KINDS
+   * would credit `language` to every one of that file's ~112 ids. The control the batch-035 test used
+   * (dragon-eidolon itself) is spent, so test/batch035-closer.test.ts now pins the EXACT eight-id credit
+   * list instead: a blanket move fails there rather than passing.
+   */
+  'dragon-eidolon': ['language'],
   /* CLOSER, batch 033 — finding light-mortar-innovation#duplicate-modification-choice.
    * *"Choose one of the sets of statistics on the Innovation Siege Weapon Statistics table"* plus the
    * tiered modification picks (AoN innovation-9 / archetype-329). The record's own `choice` field was
@@ -2523,10 +2541,9 @@ const VERIFIED_EQUIVALENT = {
   'manipulative-charm': ['spellcasting'],
 
   /*
-   * ⚠ SHOONY LORE IS NOT SETTLED — IT IS AN OPEN OWNER QUESTION. This entry carried no justification
-   * at all, and was the ONLY one left bare once the settle audit's comment reader was fixed (it had
-   * been clearing a shared block after the first entry beneath it, so 22 well-grounded settles were
-   * also reporting empty). Reading this one showed the settle is not true.
+   * SHOONY LORE — RULED. The entry above this line used to read "NOT SETTLED — IT IS AN OPEN OWNER
+   * QUESTION", parked so the gate would not re-report a difference already written down. He ruled it on
+   * 2026-09-10 (desk #45, "keep the printed scope"), so this is now a settle with a reason.
    *
    * Their `giveAbilityBlock` hands over the ADDITIONAL LORE feat (their block #19873), not a bare Lore
    * training: *"Choose a Lore skill subcategory. You become trained in it. At 3rd, 7th, and 15th
@@ -2535,12 +2552,13 @@ const VERIFIED_EQUIVALENT = {
    * Diplomacy, Survival and Shoony Lore — the three the text names — with `redundantFallback` for the
    * "you would already be trained" clause.
    *
-   * Adopting theirs would give every shoony three skill increases the book does not grant, and would
-   * let the Lore be any subcategory rather than Shoony. That is the owner's call, recorded in
-   * work/owner-questions.json. The kind stays listed so the batch gate does not re-report a
-   * difference already written down and awaiting a ruling — it is NOT a claim of equivalence, and it
-   * comes out the moment he rules either way.
+   * Adopting theirs would give every shoony three skill increases the book does not grant, and would let
+   * the Lore be any subcategory rather than Shoony. The book wins: WG's Additional Lore grant is a
+   * deliberate difference. `grantsRecord` only — the record's `skill` kind, which is where the three
+   * trainings live, keeps reporting, and the matching `grants` entry in wg-identity's
+   * SETTLED_IDENTITIES carries the same ruling for the named-thing lane.
    */
+  // batch 037: shoony-lore#no-additional-lore
   'shoony-lore': ['grantsRecord'],
 
   /*
@@ -3335,6 +3353,145 @@ const VERIFIED_EQUIVALENT = {
    */
   // batch 036: armored-resistance#instrument
   'armored-resistance': ['hp'],
+  /* ---- BATCH 037 --------------------------------------------------------------------------------
+   *
+   * A LEGACY RECORD OF AN ARCHETYPE THE REMASTER REPLACED WHOLE — THE SLOTS IT PRINTS BELONG TO A
+   * SPELLBOOK NEITHER SIDE STILL DEFINES.
+   *
+   * `advanced-red-mantis-magic` (feats/advanced-red-mantis-magic, `edition: 'legacy'`, aonId feat-897)
+   * is the 2019 World Guide feat: *"Add two 2nd-level spells to your Red Mantis assassin spellbook.
+   * You gain a 2nd-level spell slot … At 8th level … a 3rd-level spell slot. At 10th level … a
+   * 4th-level spell slot."* Every noun in it — the Red Mantis assassin spellbook, its own slot ladder —
+   * belongs to a Red Mantis Assassin archetype that Prey for Death (ORC) reprinted whole. The live
+   * archetype's casting is on the REMASTER ladder instead, and the carrier is
+   * `src/rules/casterArchetypes.ts['red-mantis-assassin-dedication']` — divine / Charisma / 2 cantrips,
+   * basicId `basic-red-mantis-magic` (feat-6520), expertId/masterId the Prey for Death tiers. That one
+   * entry is read by BOTH sides of this settle: build.ts runs the ordinary archetype slot progression
+   * off it (a level-10 Red Mantis holding Basic Red Mantis Magic prepares ranks 1–3), and wg-diff
+   * credits the same three tier feats with `spellcasting`+`spellSlot` from it (the basicId/expertId/
+   * masterId walk over casterArchetypes.ts, :819), which is why
+   * `basic-red-mantis-magic` AGREEs. This record grants nothing, on purpose.
+   *
+   * ⚠ NOT `spellcastingGrant`. The tier feats carry one, but stripping it from
+   * feats/basic-red-mantis-magic changes neither the built ladder nor the comparer row — measured, not
+   * assumed. The profile comes from the casterArchetypes entry; the field is a second statement of it.
+   *
+   * Their row is the single op `giveSpellSlot`, hung on a spellcasting source their own data never
+   * defines (they have no Red Mantis assassin spellbook either). Owner-ruled 2026-09-10, desk #46,
+   * under standing rule R12 — the newest printing in our mirror wins — so their legacy slot grant is a
+   * deliberate difference, not a mechanic we are missing.
+   *
+   * ⚠ `spellSlot` ONLY, and the blast radius is one row: the settle is keyed by record id, and the two
+   * OTHER records whose `spellSlot` we do not reach — `unholy-resurrection` and `mortem-ultimatum` —
+   * are untouched and still report. Adversarially confirmed both ways: under `--raw` this record goes
+   * straight back to THEY-ONLY `missing=[spellSlot]`, and on a BUILT character the archetype ladder the
+   * settle defers to really arrives — and adding this feat on top of it moves nothing
+   * (test/batch037-instruments-1.test.ts).
+   */
+  // batch 037: advanced-red-mantis-magic#legacy-slots
+  'advanced-red-mantis-magic': ['spellSlot'],
+
+  /*
+   * TREE FRIEND — PRINT GRANTS A PERMISSION, NOT A LANGUAGE, AND A PERMISSION HAS NO CARRIER BECAUSE
+   * OUR PICKER ALREADY OFFERS EVERY LANGUAGE.
+   *
+   * Printed (AoN background-504): *"You gain the No Cause for Alarm skill feat, and you can choose
+   * Arboreal as one of your known languages."* The second clause is a PERMISSION — it widens what the
+   * player may pick, it does not hand the language over. Their row encodes it as `giveLanguage`, which
+   * `kindOfOp` (:346) reads as the `language` kind, so the pairing demands a language grant from a
+   * record that prints none.
+   *
+   * Ours has no `language` carrier BY CONSTRUCTION, and that is the whole reading: the bonus-language
+   * picker (src/builder/shared.tsx:4300) offers `Object.values(content.languages)` filtered only by
+   * what the character already has — no rarity filter, no ancestry-list filter; `listedFrom` merely
+   * SORTS the ancestry's and heritage's listed options to the top. `languages/arboreal` (uncommon,
+   * language-26) is one of the 120 entries in that bucket, so a Tree Friend can already choose it and
+   * a `grantsLanguages` row would hand it over FREE, which print does not say. Owner-ruled 2026-09-10,
+   * desk #84, under the standing 2026-08-22 rule (book wins): their outright grant is an adversarially
+   * confirmed deliberate difference, not a mechanic we are missing.
+   *
+   * ⚠ `language` ONLY, and the blast radius is one row: the settle is keyed by record id and
+   * `tree-friend` names exactly one record in the walk (backgrounds/tree-friend; no other bucket holds
+   * the id). Adversarially confirmed both ways: under `--raw` the record goes straight back to
+   * THEY-ONLY `missing=[language]`, and with `grantedFeatId` stripped from backgrounds/tree-friend the
+   * record is STILL reported — as THEY-ONLY `missing=[grantsRecord]`, with the settle in place — so
+   * this entry cannot stand in for the No Cause for Alarm grant it sits beside
+   * (test/batch037-instruments-5.test.ts).
+   */
+  // batch 037: tree-friend#arboreal
+  'tree-friend': ['language'],
+
+  /*
+   * INSTINCT ABILITY — THEIR `hp` IS BARBARIAN RESILIENCY'S +3, REPLICATED ONTO A ROW THAT PRINTS NO
+   * HIT POINTS AT ALL.
+   *
+   * Printed, in its entirety (AoN feat-6194): *"You gain the instinct ability for the instinct you
+   * chose for Barbarian Dedication."* Not a word about Hit Points. Their row is
+   * `conditional IF FEAT_NAMES INCLUDES "barbarian resiliency" THEN addBonusToValue MAX_HEALTH_BONUS
+   * = "+3"` and grants no instinct ability — their vocabulary has no "per feat of this archetype"
+   * verb, so Barbarian Resiliency's own per-archetype-feat +3 is copied onto each qualifying row.
+   * This is the THIRD archetype to show the identical shape: `monk-moves` (batch 031) and
+   * `armored-resistance` (batch 036) are the same settle one archetype over, and both note the same
+   * cause.
+   *
+   * Ours holds that +3 ONCE, where it is printed: `feats/barbarian-resiliency.maxHpBonus =
+   * {perArchetypeFeat: 3, archetype: 'barbarian'}`, multiplied by the count of taken feats whose
+   * `archetype === 'barbarian'` in featHpBonus (src/rules/derive.ts) — a set that already includes
+   * instinct-ability. What this record DOES carry is the printed sentence:
+   * `derivedGrant {fromFeat: 'barbarian-dedication'}`, resolved in derive.ts's derived-grant walk
+   * against the dedication's own instinct answer, which is why `grantsRecord` and `conditional` are
+   * already on our side of the row. Owner-ruled 2026-09-10, desk #53, under the standing 2026-08-22
+   * rule (the book wins): their Hit Points are an adversarially confirmed deliberate difference.
+   *
+   * ⚠ `hp` ONLY, and the blast radius is one row: the settle is keyed by record id and
+   * `instinct-ability` names exactly one record in the walk (feats/instinct-ability; no other bucket
+   * holds the id). Adversarially confirmed both ways: under `--raw` the record goes straight back to
+   * THEY-ONLY `missing=[hp]`, and with `derivedGrant` stripped from feats/instinct-ability the record
+   * is STILL reported — as THEY-ONLY `missing=[conditional]`, with the settle in place — so this entry
+   * cannot stand in for the instinct grant it sits beside (test/batch037-instruments-4.test.ts).
+   */
+  // batch 037: instinct-ability#no-hit-points
+  'instinct-ability': ['hp'],
+
+  /*
+   * SPIRIT WALK — their only sense comes from a row marked (playtest), which is not evidence about the
+   * released record.
+   *
+   * Printed, in its entirety (AoN feat-7137): *"Your allied apparitions ward you against the predations
+   * of their restless peers. You and allies in a 30-foot emanation gain a +2 status bonus to Recall
+   * Knowledge checks about spirits, haunts, and undead. While you're Searching or Detecting Magic in
+   * exploration mode, this bonus also applies to AC and saves against reactions any of you trigger from
+   * haunts and spirits. During your first turn in an encounter, you and allies in the aura have
+   * resistance equal to half your level against damage dealt by haunts or spirits."* There is no sense
+   * clause anywhere in it — no precise sense, no range, no acuity.
+   *
+   * WG holds TWO rows named "Spirit Walk". The released one encodes NOTHING (`operations` is the empty
+   * array, 2 characters); the War of Immortals PLAYTEST row carries 171 characters of ops, and the only
+   * thing in them is the precise 30-foot sense. `wgRowsByBucket`'s "richest row wins" tie-break
+   * (scripts/lib/wg-parse.mjs) therefore pairs us against the playtest draft, and the sense it grants is
+   * a mechanic Paizo dropped before print. Owner ruled 2026-09-10 (desk #149) and set the STANDING RULE:
+   * a WG row marked (playtest) is never evidence about the released record.
+   *
+   * Ours carries the printed block and nothing else: feats/spirit-walk.resistances (half level, "damage
+   * dealt by haunts or spirits, during your first turn in an encounter (you and allies in the 30-foot
+   * aura)") plus the record's Recall Knowledge / AC / saves stars, which is why `ourKinds` already reads
+   * [defense, conditional, skill, ac, save] on the report line.
+   *
+   * ⚠ `sense` ONLY, and the blast radius is one row: the settle is keyed by record id and `spirit-walk`
+   * names exactly one record in the walk (feats/spirit-walk; no other bucket holds the id), so this
+   * record's other five kinds keep comparing and the record's printed-pieces half is untouched.
+   * Adversarially confirmed: under `--raw` the record goes straight back to THEY-ONLY `missing=[sense]`,
+   * and the five OTHER records whose missing list contains `sense` (attunement-to-stone,
+   * hand-of-the-lich, bloodline-mutation, runesight, umbraex-eye) are still reported with this entry in
+   * place — the settle is not a `sense` amnesty (test/batch037-instruments-6.test.ts).
+   *
+   * ⚠ NOT generalised to a playtest-row rule. Measured before choosing: 203 playtest rows currently win
+   * the richest-row tie-break, and for ~120 of them the playtest row is WG's ONLY row — dropping them
+   * wholesale would delete the comparison for six entire classes. The durable fix belongs in
+   * wg-parse.mjs and is reported as a cross-file gap, not smuggled in behind one finding.
+   */
+  // batch 037: spirit-walk#playtest-row
+  'spirit-walk': ['sense'],
 };
 
 const out = { theyOnly: [], disagree: [], weOnly: [], agree: [], noMatch: [], theirsUnencoded: [] };

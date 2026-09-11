@@ -1,0 +1,128 @@
+{
+  "batch": "037",
+  "family": "gap-data-rows-2",
+  "note": "Gap-agent spec: the two DATA STILL NEEDED lines of work/.b037-report-data-rows-2.txt (report:8, report:9 and their verify twins at :124/:130). Both were blocked on a reader that did not exist; this run built it — InnateSpellGrant.heightenWhenFlag (src/rules/types.ts) read in castRank (src/rules/build.ts) — so the rows can land.",
+  "findings": [
+    {
+      "id": "locate-lawbreakers#order-of-the-gate",
+      "note": "The whole effectChoices value is re-emitted (one field = one row) with the existing four tradition options carried byte-for-byte and each option grant.innateSpells[0] gaining BOTH halves of the printed clause: the ladder heightenAt [{level:14,rank:5}] and the gate heightenWhenFlag {flag:hellknightOrder, value:order-of-the-gate}. Authoring the ladder without the gate would ship WG’s defect (rank 5 at 14 for every Hellknight), which this finding CONFIRMS as wrong. SUPERSEDES the existing effectChoices row in scripts/data/effect-backfill.json, whose value is merged whole into this one. The order is asked once, on feats/hellknight-dedication (choice.flag hellknightOrder, option value order-of-the-gate) and is read by choiceFlagAnswer, so no second question is added anywhere.",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "locate-lawbreakers",
+          "field": "effectChoices",
+          "value": [
+            {
+              "id": "locate-tradition",
+              "prompt": "The tradition you cast Locate as (Locate Lawbreakers)",
+              "options": [
+                {
+                  "value": "arcane",
+                  "label": "Arcane",
+                  "grant": {
+                    "innateSpells": [
+                      {
+                        "spellId": "locate",
+                        "tradition": "arcane",
+                        "usesPerDay": 1,
+                        "heightenAt": [
+                          {
+                            "level": 14,
+                            "rank": 5
+                          }
+                        ],
+                        "heightenWhenFlag": {
+                          "flag": "hellknightOrder",
+                          "value": "order-of-the-gate"
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "value": "divine",
+                  "label": "Divine",
+                  "grant": {
+                    "innateSpells": [
+                      {
+                        "spellId": "locate",
+                        "tradition": "divine",
+                        "usesPerDay": 1,
+                        "heightenAt": [
+                          {
+                            "level": 14,
+                            "rank": 5
+                          }
+                        ],
+                        "heightenWhenFlag": {
+                          "flag": "hellknightOrder",
+                          "value": "order-of-the-gate"
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "value": "occult",
+                  "label": "Occult",
+                  "grant": {
+                    "innateSpells": [
+                      {
+                        "spellId": "locate",
+                        "tradition": "occult",
+                        "usesPerDay": 1,
+                        "heightenAt": [
+                          {
+                            "level": 14,
+                            "rank": 5
+                          }
+                        ],
+                        "heightenWhenFlag": {
+                          "flag": "hellknightOrder",
+                          "value": "order-of-the-gate"
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "value": "primal",
+                  "label": "Primal",
+                  "grant": {
+                    "innateSpells": [
+                      {
+                        "spellId": "locate",
+                        "tradition": "primal",
+                        "usesPerDay": 1,
+                        "heightenAt": [
+                          {
+                            "level": 14,
+                            "rank": 5
+                          }
+                        ],
+                        "heightenWhenFlag": {
+                          "flag": "hellknightOrder",
+                          "value": "order-of-the-gate"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          "supersedes": true,
+          "why": "hellknight-order-9 (Locate Lawbreakers, Hellfire Dispatches) \"If you’re a member of the Order of the Gate, when you reach 14th level, the spell is heightened to 5th rank.\" — the rank-5-at-14 half was a standing note nothing read, and the order half was modelled nowhere. Owner 2026-09-10 #7: keep the printed scope."
+        },
+        {
+          "category": "feats",
+          "id": "locate-lawbreakers",
+          "field": "note",
+          "value": null,
+          "supersedes": true,
+          "why": "hellknight-order-9, the same clause as the row above, now built: the standing note \"If you are a member of the Order of the Gate, at 14th level the spell is heightened to 5th rank.\" was our stand-in for the unbuilt mechanic, and the printed sentence itself is already in the record’s description (public/core-descriptions.json feats/locate-lawbreakers). Keeping it would print the rule twice, once as prose we wrote. Deleted only WITH the row above, never before it."
+        }
+      ]
+    }
+  ]
+}

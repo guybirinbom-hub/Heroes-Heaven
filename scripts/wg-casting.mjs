@@ -13,6 +13,14 @@
  *   npx jiti scripts/wg-casting.mjs --class cleric
  *   npx jiti scripts/wg-casting.mjs --verbose    # print the level table for every class, not just mismatches
  *
+ * ALWAYS `npx jiti`, NEVER bare `node scripts/wg-casting.mjs`: the two imports below are TypeScript
+ * SOURCE (`../src/rules/seed`, `../src/rules/build`), extensionless, so node's ESM resolver dies with
+ * `ERR_MODULE_NOT_FOUND ... src\rules\seed` before a single class is compared. That failure is the
+ * INVOCATION, not a regression of this comparer — the driver runs it through jiti (wg-batch-run.mjs:352,
+ * allowlisted at :1240) and it works. Adding the `.ts` extension would not help: node would then have to
+ * compile TypeScript. (Recorded batch 037, gap-instruments-4: the bare-node failure was read as a defect
+ * twice in one batch.)
+ *
  * Report-only. Nothing is written into data; a mismatch is either a fix (with a test) or, where WG's
  * table contradicts the printed one, a question for work/owner-questions.json — never a decision here.
  */
@@ -27,6 +35,10 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
 const VERBOSE = process.argv.includes('--verbose');
 const ONLY = arg('--class', null);
+/* `--raw` bypasses SETTLED_CASTING, the same bypass wg-diff / wg-values / wg-identity give their own
+ * registries: a settle that no longer answers a real difference is a trap, because it will silence the
+ * NEXT difference on that key unread, and `--raw` is how a reader (or a test) sees that. */
+const RAW_SETTLES = process.argv.includes('--raw');
 const DUMP = join(ROOT, 'work/wg/wg-data.sql');
 if (!existsSync(DUMP)) { console.error("No Wanderer's Guide dump at work/wg/wg-data.sql (gitignored on purpose: GPL-3.0; differ only)."); process.exit(2); }
 
@@ -292,6 +304,43 @@ for (const t of sources.sort((a, b) => a.source.localeCompare(b.source))) {
     }
   }
   report.push(rec);
+}
+
+/**
+ * CASTING ROWS THAT HAVE BEEN READ AND SETTLED, keyed classId -> `kind|level|rank`.
+ *
+ * This comparer has no per-record settle lane of its own, so a ruled WG-vs-print divergence in a slot
+ * table reported on every run forever — and a standing red is where the NEXT, real animist slot bug
+ * would hide. Keys are one row each, never a class and never a kind: any other level, rank or kind on
+ * the same class still reports. Anything unlisted still reports.
+ *
+ * ⚠ Only for a difference adjudicated against the printed table. Never a place to quiet a real gap.
+ *
+ * ANIMIST, LEVELS 13–18, THE RANK THAT JUST OPENED. Ours is exactly the printed "Animist Spells per
+ * Day" table (class-64, War of Immortals), whose note reads *"The number before a plus sign indicates
+ * your spell slots via animist spellcasting, and the number after it indicates your spell slots from
+ * apparition spellcasting"* — so the 7th-rank column's "1+1" at 13 and "2+1" at 14–16 is TWO slots and
+ * then THREE, which is what a built animist gets: casterSlots('animist') plus APPARITION_SLOTS
+ * (src/rules/spellcasting.ts:96-117, the table's Y column). WG's ANIMIST_APPARITION source opens each
+ * new rank one level LATE, so their total is short exactly one slot at the top rank of 13, 14, 15, 16,
+ * 17 and 18 and nowhere else — six rows, listed one by one below.
+ *
+ * Owner ruled 2026-09-10 (desk #4 and #105): the book wins; WG's one-level-late apparition ladder is a
+ * deliberate difference, not a gap. Adversarially confirmed rather than taken from the finding's prose:
+ * the six rows are the ONLY animist mismatches in the run, ours is WG+1 at the newly-opened rank and
+ * equal at every other rank and at 19–20 (where WG's ladder has caught up), which is the signature of
+ * their table being late rather than of ours being generous. Mutation-proof test:
+ * test/batch037-instruments-2.test.ts — `--raw` puts all six straight back, and stunting
+ * APPARITION_SLOTS at rank 7 moves the level-13/14 rows, so the settle is scoped to the rows it names.
+ */
+const SETTLED_CASTING = {
+  // batch 037: animist#slot-table
+  // batch 037: animist-apparition-spellcasting#slot-levels
+  animist: ['slots|13|7', 'slots|14|7', 'slots|15|8', 'slots|16|8', 'slots|17|9', 'slots|18|9'],
+};
+for (const r of report) {
+  const settled = RAW_SETTLES ? [] : (SETTLED_CASTING[r.classId] ?? []);
+  if (settled.length) r.mismatches = r.mismatches.filter((m) => !settled.includes(`${m.kind}|${m.level ?? ''}|${m.rank ?? ''}`));
 }
 
 /* ---- output -------------------------------------------------------------------------------------- */

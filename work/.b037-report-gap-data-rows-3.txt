@@ -1,0 +1,122 @@
+BATCH 037 — WG-COMPARISON LANE — GAP AGENT, family gap-data-rows-3 (the 26 open lines of data-rows-3)
+Files written: work/.b037-rows-gap-data-rows-3.json (3 rows), test/batch037-gap-data-rows-3.test.ts.
+Files edited: src/rules/featGrants.ts, src/rules/build.ts, src/rules/types.ts,
+test/automaton-enhancement.test.ts. Manifest entry appended (kind "rows", family "gap-data-rows-3").
+scripts/data/effect-backfill.json was NOT written; no other family's file was touched.
+
+The 26 lines are 15 distinct asks (report and verify each carry most of them). One line per ask below;
+every line of the family is set to the same disposition in work/.b037-gaps.json.
+
+AUTHORED
+1. AUTHORED — work/.b037-rows-data-rows-3.json — feats/lesser-augmentation `effectChoices`, whole
+   value with supersedes:true, the 'hardened-chassis' option's note now "Computed on your sheet…".
+   Already in the chunk's own spec (the verifier's fix B); re-checked here with the driver's real
+   precheck: 17 options preserved, exactly one string differs, supersedes declared.
+2. AUTHORED — work/.b037-rows-data-rows-3.json — feats/greater-augmentation `effectChoices`, the same
+   change on its 29-option list. Same check, same result.
+3. AUTHORED — work/.b037-rows-gap-data-rows-3.json — items/armor-in-earth-medium, create row
+   re-emitted whole with supersedes:true, dropping "set that on the sheet if your best track is not
+   medium" from `note`. Authored in the SAME batch as its src half (line 8 below) and not before it:
+   with the borrow computed, the instruction is now wrong, and without the borrow it was the only
+   thing the player had.
+4. AUTHORED — work/.b037-rows-gap-data-rows-3.json — items/hardwood-armor-armor, the same note
+   cleanup on the one armour feat-4283 prints, same ordering rule.
+5. AUTHORED — src/rules/featGrants.ts:283 + src/rules/build.ts:5845 —
+   intuitive-crafting#middle-case. New FeatGrant field `redundantFallbackIfFeat`, read at the
+   redundant-static-skill branch: the replacement pick fires only when the character already owns the
+   named feat from some OTHER source (a taking this carrier granted does not open its own gate — the
+   `countOwnGrant: false` rule). featGrants.ts:787 overrides featGrantsAuto.ts:474 with
+   `redundantFallbackIfFeat: 'specialty-crafting'`, restating the generated row's two fields because
+   HAND_AUTHORED_GRANTS replaces the whole entry. feat-7200's third branch ("if you have both") is now
+   the only one that pays the free skill. Pinned by three tests, one per printed branch.
+6. AUTHORED — src/rules/featGrants.ts:788 — armor-in-earth#armour-proficiency.
+   `'armor-in-earth': { armorFamiliarity: { armors: ['armor-in-earth-medium','armor-in-earth-heavy'],
+   mirrorBest: true } }` and deliberately NO `armor: {…}` categories, so feat-4221's "uses your
+   highest armor proficiency" is borrowed per ITEM (build.ts:7083 → Proficiencies.armorOverrides,
+   read at derive.ts:2037) and the kineticist gains no medium/heavy training — never WG's shortcut,
+   which would also let them wear real plate. Same shape as the shipped armigers-protection entry.
+7. AUTHORED — src/rules/featGrants.ts:793 — hardwood-armor-armor#armour-proficiency.
+   `'hardwood-armor': { armorFamiliarity: { armors: ['hardwood-armor-armor'], mirrorBest: true } }`.
+   The finding's "(and its heavy version)" names an item that does not exist; the feat's other granted
+   item is a SHIELD and takes nothing. Pinned, including that the shield gets no override.
+8. AUTHORED — src/rules/types.ts:1116 + src/rules/build.ts:7862 + work/.b037-rows-gap-data-rows-3.json
+   — armigers-protection#armor-pick, the DELIVERY half the picker row left open. `grantsItems` gains
+   `whenChoice`, the project's existing per-answer idiom (InnateSpellGrant, types.ts:2461; the reader
+   is the same one-line gate as build.ts:6887), and the row supersedes the shipped unconditional
+   `[{itemId:'hellknight-breastplate'}]` with one gated entry per printed suit. An unanswered pick
+   grants nothing — feat-8814 is a real either/or, not a printed default with an escape hatch. Pinned
+   by four tests, the last of which strips `whenChoice` from a content copy and watches the shipped
+   defect (the breastplate arriving for a player who picked the plate) come straight back.
+9. AUTHORED — test/automaton-enhancement.test.ts:235 and :264 — hardened-chassis#enhancement, the
+   three ratchets in the file this family may not write, now unconditional because the two
+   augmentation note rows landed: the "Computed on your sheet" count on BOTH augmentation pickers
+   6 → 7, `a.computed` gains feats/hardened-chassis (6 → 7), `a.proseOnly` 23 → 22. Both enclosing
+   `it` titles gained "hardened-chassis" and every changed expect( carries
+   "// batch 037: hardened-chassis#enhancement". The file is red on exactly those two tests until the
+   driver applies the rows, and green on the other 21.
+
+PARKED
+10. PARKED — flaggedResidue — items/armor-in-earth-heavy note cleanup. Nothing to author: its note
+    never carried the "set it yourself" sentence, and the medium one's wording was not mirrored onto
+    it (it still reads "Everything else matches the 1st-level stone armor"). The src entry at line 6
+    covers both items, so the heavy suit's proficiency is right with no row at all.
+11. PARKED — flaggedResidue — the haunting-memories FALLBACK line. Its precondition is false: the
+    verifier ran the driver's real precheck and the path row
+    {feats/haunting-memories, path:['choice'], field:'note'} keys as
+    `feats/haunting-memories/choice.note`, distinct from the existing overlay key, with hasIdStep
+    false so check (3) never fires. I re-ran the same precheck over the whole 22-spec manifest and it
+    still reports 0 problems for that row. No whole-value re-emission is needed or wanted.
+12. PARKED — flaggedResidue — molten-wit#three-branches, the multi-skill option gate
+    (src/rules/types.ts SkillRankGate / derive.ts qualifiesForOption). The gate the line asks for is
+    small, but it CANNOT carry this finding, and building it with no working consumer would ship a
+    lane nothing reads. `qualifiesForOption(c, gate)` reads the BUILT character's
+    `proficiencies.skills`, and the builder narrows against `featPrereqChar = buildCharacter(build,
+    ovContent)` (Builder.tsx:477) — a character that already includes molten-wit's own answer's
+    grant. So "if you're already trained in Deception" is self-satisfying: the moment the player
+    answers `deception`, Deception is trained and the option gating on untrained-Deception
+    disappears, taking the stored answer with it. The missing piece is a rank-BEFORE-this-carrier's-
+    own-grant reader on Character (build.ts has one, `skillRankHere(skill, exceptId)` at :5551, and it
+    lives inside buildCharacter where derive cannot reach it). That is an engine shape, not a gate
+    field, and it is the same trap the chunk's builder named from the other side.
+13. PARKED — flaggedResidue — molten-wit#three-branches, the per-answer FEAT grant
+    (src/rules/featFeatGrants.ts CHOICE_FEAT_GRANTS / featGrantsLane.ts). The line's claim is already
+    true and needs no edit: CHOICE_FEAT_GRANTS['molten-wit'] = { deception: ['charming-liar'],
+    diplomacy: ['group-impression'] } is the home, a FEAT's choice.options[].grant.grantsFeats is
+    collected nowhere (build.ts:5406 heritage, :5465 classFeature, and the comment at :5400 says so).
+    Extending it to the branch-2/branch-3 answers is dead code until line 12 is built, because those
+    answers cannot exist on the record until the gate can express them.
+14. PARKED — flaggedResidue — flexible-spellcaster#collection-shape. The collection shape is
+    build.ts:4475 (per-rank slots) plus Builder.tsx:367/387 (a per-rank repertoire);
+    ClassArchetype.spellCollection is a boolean and archetype/flexible-spellcaster carries no field at
+    all. A flat pool sized by the character's TOTAL daily class slots with a one-1st-rank floor is a
+    new engine lane AND a new builder control — the finding's own proposal says "new engine work on
+    the spell-collection lane". No data row and no gate field reaches it.
+15. PARKED — flaggedResidue — work/.b037-rows-data-rows-4.json, items/merchants-scale description row
+    (SIBLING CHUNK; an absolute prohibition forbids me rewriting another agent's file). STILL LIVE: I
+    ran the driver's own precheck over the whole 22-spec manifest and it refuses with "introduces
+    token(s) that are in NEITHER our current text nor the mirror equipment-2734/equipment-34: heroes,
+    heaven, note, not, printed, text, the, book". The apply stage refuses the WHOLE manifest on one
+    problem, so this blocks this family too. The fix is that chunk's owner's: re-word the row using
+    only vocabulary from equipment-2734/equipment-34 or from the item's current text. ⚠ The same run
+    reports two more refusals nobody has flagged as a gap line —
+    work/.b037-rows-data-rows-4.json#mask-of-the-mantis-major ("no mirror document for
+    equipment-3497-3391") and work/.b037-rows-gap-data-rows-2.json#locate-lawbreakers (a `why` naming
+    no AoN doc id). Reported, not touched.
+
+VERIFICATION RUN
+- node scripts/vt.mjs run test/batch037-gap-data-rows-3.test.ts → 10 passed / 0 failed. The three
+  code-only lanes (armor-in-earth, hardwood-armor, intuitive-crafting) read the SHIPPED content and
+  are green now; the armiger lane patches the two rows' exact values onto a content copy in memory,
+  never a patched-vs-shipped delta, and its last test stunts the gate so the shipped defect returns.
+- node scripts/vt.mjs run test/automaton-enhancement.test.ts → 2 failed / 21 passed, both failures the
+  hardened-chassis ratchets waiting on the rows.
+- node scripts/vt.mjs run test/armiger-protection.test.ts test/trust-ledger.test.ts
+  test/authoring-guards.test.ts → 42 passed; test/batch20-parity.test.ts, test/batch25-engine.test.ts,
+  test/held-back-registry-fixes.test.ts, test/choice-filtering.test.ts,
+  test/builder-choice-sets.test.ts → 124 passed (every suite that names the four carriers or the two
+  fields I widened).
+- npx tsc --noEmit → clean.
+- node scripts/test-flip-audit.mjs --batch 037 → the only uncited flip is
+  test/locate-lawbreakers.test.ts:82, another family's file; every flip in mine is cited.
+- The driver's precheck over the whole 22-spec manifest: my 3 rows contribute 0 problems, 3 declared
+  supersessions and 0 collisions (143 row keys across the batch).

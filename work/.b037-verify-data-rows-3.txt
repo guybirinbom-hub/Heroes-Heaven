@@ -1,0 +1,186 @@
+BATCH 037 — WG-COMPARISON LANE — ADVERSARIAL VERIFY of family data-rows-3 (chunk 3 of 6 of "data-rows")
+Verifier files touched: work/.b037-rows-data-rows-3.json, work/.b037-created-desc-data-rows-3.json.
+No src/ file edited. Throwaway in-memory harness (test/_b037v3harness.test.ts + work/.b037v3-harness-overlay.json)
+applied the chunk's rows with the REAL applier (scripts/lib/apply-backfill.mjs) to a content copy, built
+real characters, went 6/6 green, and was deleted.
+
+WHAT I RAN
+- scripts/wg-batch-run.mjs `precheck` over the WHOLE 16-spec manifest against the live overlay
+  (the five pre-checks the driver refuses on). This is the check the builder never ran, and it found
+  a hard refusal in this chunk (see FIXED-BY-ME below). After my two fixes: 0 problems from this
+  family, 30 declared supersessions across the batch, 101 row keys, 0 collisions.
+- node scripts/vt.mjs run test/batch037-data-rows-3.test.ts -> 10 failed / 2 passed, every failure the
+  authored field not existing yet; the 2 passing ones are the controls that must stay green.
+- The deleted harness re-ran the same mechanics WITH the rows applied: 6/6 green.
+- npx tsc --noEmit -> clean. node scripts/test-flip-audit.mjs --batch 037 -> clean (20 test files, every
+  flip cited).
+
+ROW-SPEC AUDIT (rows judged as rows, nothing applied)
+- Every target record exists in public/core.json (items/unifying-emblem-shundar-quah, -sklar-quah,
+  -tamiir-quah, feats/hardened-chassis, feats/armigers-protection, feats/haunting-memories,
+  feats/lesser-augmentation, feats/greater-augmentation) except feats/haunting-memories-skill-feat,
+  which carries create:true.
+- Every id a row names exists: spells/thoughtful-gift, spells/concordant-choir, spells/tailwind,
+  items/hellknight-breastplate, items/hellknight-half-plate, items/hellknight-plate. The invented
+  'hellknight-plates' the shipped picker offered is confirmed absent from core.json.
+- Every spell's printed Cast matches the activation the row asserts: thoughtful-gift 1 action,
+  tailwind 2 actions, concordant-choir {type:'variable',min:1,max:3}.
+- Re-emitted values diffed field-by-field against the shipped value with node -e: the two augmentation
+  effectChoices values I authored differ from the overlay value in EXACTLY one string each
+  (options[13] on Lesser, options[22] on Greater); 17 and 29 options preserved, and the overlay value
+  is byte-identical to what public/core.json ships, so nothing is narrowed.
+- Readers confirmed for every field: Item.innateSpells at build.ts:8075 (invested items; the sibling
+  tattoo items/enveloping-light already ships {spellId,rank,usesPerDay}); Item.activationCost at
+  InventoryTab.tsx:284 / MainTab.tsx:489; Feat.enhancement.choiceIds at build.ts:6334-6345 with
+  Feat.effectChoices resolved by resolvePick; IwrEntry.value string formula by resolveFormula
+  (derive.ts:2361, which implements max/floor); IwrEntry.condition is COUNTED, not withheld
+  (types.ts:530 — unlike `against`); FeatChoiceDef.note by Builder.tsx:607/819 and
+  dailyChoices.ts:107; Feat.grantsFeats at build.ts:5413. `aonParentId`/`aonSection` is the shipped
+  idiom for a sub-record with no AoN doc of its own (553 records carry it).
+- No two rows in ANY spec hit the same record+field+path key (101 keys, 0 collisions across all 16
+  specs, checked with the driver's own keyOf).
+- The create row carries no `description`; its prose is the separate created-prose spec, as required.
+- The path row {feats/haunting-memories, path:['choice'], field:'note'} is NOT refused: keyOf makes it
+  `feats/haunting-memories/choice.note`, distinct from the existing overlay key
+  `feats/haunting-memories/choice`; hasIdStep is false so pre-check (3) (the magus case) does not fire;
+  and applyBackfill walks rows in array order, so the appended path row lands AFTER the whole-value
+  row. Verified by running the driver's precheck for real. The builder's FALLBACK item is therefore
+  dropped from DATA STILL NEEDED.
+
+PER FINDING
+1. unifying-emblem-shundar-quah#daily-spell — DONE. Built fighter at 5 with the emblem invested casts
+   thoughtful-gift once a day; an emblem left in the pack casts nothing (the invested gate at
+   build.ts:8073 holds).
+2. unifying-emblem-sklar-quah#daily-spell — DONE. concordant-choir reaches the built sheet and the
+   activation is {type:'variable',min:1,max:3}, which is the spell's own printed Cast; the record had
+   no activation at all before.
+3. unifying-emblem-tamiir-quah#daily-spell — DONE. tailwind reaches the built sheet behind the
+   2-action activation the record already showed, which is Tailwind's own Cast.
+4. molten-wit#three-branches — NOT-DONE. Nothing was authored and nothing reaches a built character:
+   both printed branch conditions name TWO skills and SkillRankGate (types.ts:2817) holds exactly one;
+   and an option's grant.grantsFeats is collected at only two sites in build.ts (5406 heritage, 5465
+   classFeature), neither of which is a FEAT — I re-grepped both and the builder's reading is right.
+   Two code gaps below.
+5. intuitive-crafting#middle-case — NOT-DONE. featGrantsAuto.ts:474 still carries
+   `redundantFallback: true`, whose only reader is build.ts:5829, and it fires for the middle case as
+   well as the both-already-held one, so a character already trained in Crafting still gets a free
+   skill print does not give. The record carries no choice and no skill lane, so no data row can
+   correct it. Code gap below.
+6. armor-in-earth#armour-proficiency — NOT-DONE. FeatGrant.armorFamiliarity (featGrants.ts:310) is the
+   only writer of Proficiencies.armorOverrides (build.ts:5806/5808/7082) and it reads the src registry;
+   I grepped every armorOverrides writer and no item or record field feeds it. The two granted armours
+   still carry no proficiency, so a kineticist's AC is still wrong. The builder's decision to keep the
+   "set it yourself" note until the lane lands is correct — dropping it first leaves the player with
+   neither the number nor the instruction.
+7. hardwood-armor-armor#armour-proficiency — NOT-DONE, same lane and same reason. The builder's
+   correction to the finding stands: feat-4283 prints one armour and a shield, our data has exactly
+   items/hardwood-armor-armor and items/hardwood-armor-shield, and there is no heavy version; only the
+   armour takes the borrowing.
+8. hardened-chassis#enhancement — DONE (after my fix). On a 9th-level automaton holding Lesser
+   Augmentation pointed at this feat, the harness built the character and the CHOSEN resistance is 4
+   (max(3,floor(9/2)) beating the base tier's flat 3), the all-physical branch gives physical 3, and
+   an un-augmented automaton gets enhancements undefined, slashing 3 and physical 0. With the base
+   damage-type question unanswered the tier grants nothing at all (four options survive onlyWhenFlag,
+   so resolvePick's one-option auto-apply can never fire — I exercised that case explicitly).
+   scan-enhancements moves the record proseOnly -> computed, which is the ratchet flip listed below.
+9. armigers-protection#armor-pick — NOT-DONE, half built. The picker half is right: the invented
+   'hellknight-plates' is gone, the three printed suits are offered, all three item ids exist, and the
+   printed light+medium condition is carried as FeatChoiceDef.note because no per-option gate can
+   express an ARMOUR proficiency. The half the finding actually asks for — "landing the chosen
+   non-magical suit in inventory" — is NOT built: I read types.ts:1073 and build.ts:7801-7806 and
+   grantsItems has no per-answer gate, so the shipped unconditional grantsItems still hands over a
+   breastplate whichever suit the player picks. Code gap below.
+10. flexible-spellcaster#collection-shape — NOT-DONE. ClassArchetype.spellCollection (types.ts:1666) is
+    a BOOLEAN; the whole per-rank shape is build.ts:4475 plus Builder.tsx:367/387, and
+    archetype/flexible-spellcaster carries nothing but id/name/edition/aonId. No data row can reach it.
+    Code gap below.
+11. haunting-memories#skill-feat-pick — DONE (after my fix). The harness built an 8th-level ghost:
+    feats/haunting-memories-skill-feat arrives in c.feats via grantsFeats, dailyChoicesFor returns BOTH
+    morning keys, the 8th-level list is capped at feat level 4 and holds only category 'skill' feats,
+    the 20th-level list rises above 4 and stops at 10 (half your level, not WG's flat 10th), and the
+    old "Take it as a temporary feat" note is gone. The carrier is category 'bonus', which
+    featSlots.ts:140 keeps out of every picker, and no archetype-feat counter reads archetype 'ghost',
+    so the extra record inflates nothing.
+
+FIXED-BY-ME
+A. work/.b037-created-desc-data-rows-3.json — the prose row for feats/haunting-memories-skill-feat was
+   a HARD REFUSAL: precheck (5) in scripts/wg-batch-run.mjs rejects a description row that introduces a
+   token present in neither our current text nor the cited mirror doc, and the draft introduced eight
+   (second, 7701, record, exists, only, carry, that, question). The whole 16-spec apply stage would
+   have refused. Rewritten to the vocabulary of feat-7701 and re-run through the real precheck: clean.
+B. work/.b037-rows-data-rows-3.json — added the two rows the builder listed as DATA STILL NEEDED and
+   then did not author: feats/lesser-augmentation and feats/greater-augmentation `effectChoices`, whole
+   value re-emitted with supersedes:true, changing exactly the 'hardened-chassis' option's note from
+   "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute
+   it." to "Computed on your sheet: resistance 3 to all physical damage, or the damage type you chose
+   on Hardened Chassis raised to half your level (minimum 3)." Without them this batch ships a sheet
+   that computes the tier beside a picker telling the player it does not — the exact Q27 state the
+   enhancement lane exists to end. Both rows diffed against the shipped value: one string changed each,
+   nothing else. Both declare supersedes:true and both pass the driver's precheck.
+
+MANIFEST
+work/.b037-specs.json is intact: 16 entries, every other family's entry present, and this family has
+both of its entries (kind "rows" and kind "createdprose"), each staging
+work/.b037-rows-data-rows-3.json, work/.b037-created-desc-data-rows-3.json,
+work/.b037-report-data-rows-3.txt and test/batch037-data-rows-3.test.ts. Every file I touched is
+already in that stage[], so no manifest entry needed appending. Every superseding row in the whole
+manifest declares supersedes:true (precheck (2) reports 0 problems and 30 declared supersessions).
+
+DATA STILL NEEDED
+- items/armor-in-earth-medium, create row re-emitted with supersedes:true, dropping only the sentence
+  "It uses your HIGHEST armor proficiency - set that on the sheet if your best track is not medium."
+  from `note` - to be authored in the SAME batch as the src armorFamiliarity entry, never before it.
+- items/armor-in-earth-heavy, create row re-emitted with supersedes:true, same note cleanup; needed
+  only if the medium one's wording is mirrored onto it (its note carries no "set it yourself" sentence
+  today).
+- items/hardwood-armor-armor, create row re-emitted with supersedes:true, dropping "It is medium armor
+  but uses your HIGHEST armor proficiency - set that on the sheet if your best track is not medium."
+  from `note`, same ordering rule.
+
+CROSS-FILE GAPS
+- src/rules/types.ts (SkillRankGate, line 2817) - molten-wit#three-branches needs a MULTI-skill option
+  gate (e.g. `requiresSkillRanks?: SkillRankGate[]`, honoured by qualifiesForOption at derive.ts:1771);
+  both printed branch conditions name two skills at once and the single-skill gate cannot express
+  either.
+- src/rules/featFeatGrants.ts (CHOICE_FEAT_GRANTS, line 57) + src/rules/featGrantsLane.ts (line 46) -
+  molten-wit#three-branches: the per-answer FEAT grant must stay here, because a FEAT's
+  choice.options[].grant.grantsFeats is read nowhere (build.ts:5406 is heritage, 5465 is classFeature;
+  the comment at build.ts:5400 says so outright).
+- src/rules/featGrantsAuto.ts:474 - intuitive-crafting#middle-case: `redundantFallback: true` must
+  become conditional on the character already owning specialty-crafting, so the middle case (trained in
+  Crafting, no Specialty Crafting) grants the feat ONLY and the free skill stays on the both-already-
+  held case. Needs a gate field on FeatGrant (src/rules/featGrants.ts:267) plus its reader at
+  build.ts:5829.
+- src/rules/featGrantsAuto.ts - armor-in-earth#armour-proficiency: add
+  `'armor-in-earth': { armorFamiliarity: { armors: ['armor-in-earth-medium','armor-in-earth-heavy'],
+  mirrorBest: true } }` and NO `armor: {...}` categories, so the kineticist borrows their best
+  light/medium/heavy rank for these two items only and gains no medium/heavy training (which would let
+  them wear real plate - WG's shortcut, refused by the owner). featGrants.ts:717 (Hellknight
+  Dedication) is the shipped precedent for this exact shape.
+- src/rules/featGrantsAuto.ts - hardwood-armor-armor#armour-proficiency: add
+  `'hardwood-armor': { armorFamiliarity: { armors: ['hardwood-armor-armor'], mirrorBest: true } }`.
+  The finding's "(and its heavy version)" names an item that does not exist.
+- src/rules/types.ts (grantsItems, line 1073) + src/rules/build.ts:7801 - armigers-protection#armor-pick:
+  the item a record grants needs a per-answer gate (the `whenChoice` idiom InnateSpellGrant already uses
+  at types.ts:2430) so the SUIT THE PLAYER PICKED lands in inventory. Today grantsItems is
+  unconditional and EffectGrant has no grantsItems arm, so the feat still hands over a breastplate
+  whichever of the three the player chooses. The row fixes the picker; this fixes the delivery.
+- test/automaton-enhancement.test.ts - hardened-chassis#enhancement flips three ratchet values in a
+  file this family may not write, and all three are now UNCONDITIONAL (the two augmentation note rows
+  landed in fix B above): line ~262 `a.computed.sort()` gains 'feats/hardened-chassis' (6 -> 7), line
+  ~264 `a.proseOnly` 23 -> 22, and line ~231 the "Computed on your sheet" option count on BOTH
+  lesser-augmentation and greater-augmentation 6 -> 7. Each changed expect( needs
+  "// batch 037: hardened-chassis#enhancement" in the 6 lines above it, and the two enclosing
+  describe/it titles carry no record id today - each must gain "hardened-chassis" or the flip audit
+  refuses the batch.
+- src/rules/build.ts:4475 + src/builder/Builder.tsx:367,387 - flexible-spellcaster#collection-shape: the
+  whole collection shape is those two code sites (per-rank slots and a per-rank repertoire);
+  archetype/flexible-spellcaster carries no field at all and ClassArchetype.spellCollection is a
+  boolean. A flat pool sized by the character's TOTAL daily class slots, with a one-1st-rank-spell
+  floor, is engine work. No backfill row can reach it.
+- work/.b037-rows-data-rows-4.json (SIBLING CHUNK, not mine to edit) - the description row for
+  items/merchants-scale fails the same precheck (5) that refused my prose row: it introduces heroes,
+  heaven, note, not, printed, text, the, book, none of which are in equipment-2734/equipment-34 or in
+  our current text. The apply stage refuses the WHOLE manifest on one problem, so this blocks this
+  family too. Reported here because the driver hard-refuses cross-spec, and rewritten by that chunk's
+  owner, never by me.

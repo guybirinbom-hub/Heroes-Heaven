@@ -1,0 +1,24 @@
+{
+  "findings": [
+    {
+      "id": "reverse-engineer#substitution-when-wording (gap line, print premise feat-3053)",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "reverse-engineer",
+          "field": "skillSubstitutions",
+          "supersedes": true,
+          "value": [
+            {
+              "use": "crafting",
+              "forSkill": "thievery",
+              "when": "to Disable a Device or Pick a Lock"
+            }
+          ],
+          "why": "wg-batch-037 GAP LANE. SUPERSEDES the shipped overlay row scripts/data/effect-backfill.json:3164 {category:'feats',id:'reverse-engineer',field:'skillSubstitutions',value:[{use:'crafting',forSkill:'thievery',when:'to disable-device skill=crafting or pick-a-lock skill=crafting'}]}; that array held ONE entry and this value re-emits the whole field, so `use` and `forSkill` are merged in unchanged and only the importer-mangled `when` is repaired. Print premise AoN feat-3053 (Guns & Gears Remastered pg. 25, 2025-02-18): \"Furthermore, you can use Crafting instead of Thievery to Disable a Device or Pick a Lock.\" The stored `when` is the same stripped-skill-link artefact class the SIBLING description row on this very record (effect-backfill.json:13523, finding graceful-leaper / scripts/repair-stripped-skill-links.mjs) already repairs — an importer collapsed AoN's action links to slug+query string. It is player-visible, not cosmetic: src/rules/explain.ts:648 emits `${s.when} - roll ${s.use} instead` onto the Thievery rows, so a sheet today reads \"to disable-device skill=crafting or pick-a-lock skill=crafting - roll crafting instead\". The repaired wording is not invented: feats/expert-disassembly ships the byte-identical `when` \"to Disable a Device or Pick a Lock\" at effect-backfill.json:3176 for the same printed clause."
+        }
+      ],
+      "note": "Data row only, no code change: the reader (src/rules/derive.ts:529 skillSubstitutions -> src/rules/explain.ts:648) is correct and already surfaces the note; only the stored string was wrong. No collision - a grep of every work/.b037-rows-*.json for 'reverse-engineer' matches only work/.b037-rows-situational.json, whose finding reverse-engineer#crafting-star is code-only with backfillRows: [], so no other row targets this record or this field. The situational family's own test asserts the Thievery note by SHAPE ('roll crafting instead'), so this row lands without flipping it."
+    }
+  ]
+}

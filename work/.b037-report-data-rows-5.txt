@@ -1,0 +1,171 @@
+BATCH 037 — data-rows-5 (WG-COMPARISON lane, data-rows family, chunk 5 of 6)
+Spec:   work/.b037-rows-data-rows-5.json   (12 rows across 11 findings; one finding correctly carries none)
+Tests:  test/batch037-data-rows-5.test.ts  (13 tests; 11 fail today for exactly the authored fields, 2 are
+        no-regression guards on what is already correct)
+Checks: npx tsc --noEmit clean; node scripts/test-flip-audit.mjs --batch 037 reports nothing in this file.
+I edited NO src/ and NO scripts/ file.
+
+================================================================================
+DATA STILL NEEDED  (rows the driver must author — exact category/id/field/value)
+================================================================================
+1. classFeatures/guardians-armor field "resistances" value [{"type":"physical","value":"1+floor(@actor.level/2)","whenArmorCategory":["medium","heavy"]}] — author ONLY in the same change as the IwrEntry armour gate in CROSS-FILE GAPS #5; authored earlier it is dead data.
+2. modes/guardians-armor {"delete": true} — author ONLY after row 1 is live, because until then this mode is the character's only route to the resistance and deleting it takes the number away entirely.
+
+================================================================================
+CROSS-FILE GAPS  (outside the files this chunk may write)
+================================================================================
+1. src/rules/featCantripGrants.ts — delete FEAT_CANTRIP_GRANTS['kitsune-spell-familiarity' | 'kitsune-spell-mysteries' | 'kitsune-spell-expertise' | 'nagaji-spell-mysteries' | 'nagaji-spell-expertise']; these five ARE the build-time duplicate picker the five #daily-control findings name, and the file's own removal comments (colugos-traversal, dream-magic, empathic-calm) are the established form. Its sibling 'nagaji-spell-familiarity' is not one of my findings but carries the identical entry and the identical defect.
+2. src/rules/play.ts:514 `if (rank <= 0) continue;` — a daily-choice grant whose spell is a CANTRIP is dropped before it reaches any entry, so kitsune-spell-familiarity's at-will divine cantrip cannot reach the sheet however the record is authored. This is the one blocker in the five that data cannot lift.
+3. src/rules/play.ts:514 `const rank = content.spells[b.spellId].rank ?? 0;` — the merge files a daily-granted spell at the SPELL's rank and ignores the grant's own `rank`, so Flicker (base 4) and Confusion (base 4) land a rank below the 5th-rank casting their feats print.
+4. src/rules/play.ts:513-518 — the merge ignores the grant's `tradition` and stamps every daily spell `spellSources[id] = 'Borrowed today'`. A kitsune with no other innate spell reads a divine Bane under whatever tradition the entry voted (arcane for a non-caster), labelled as borrowed rather than as their ancestry feat's.
+5. src/rules/types.ts (IwrEntry, ~line 480-539) + src/rules/derive.ts (deriveDefenses resistance loop, 2786-2818) — no gate exists for "while wearing medium or heavy armor". Add `whenArmorCategory?: ArmorCategory[]` beside minLevel/whenCreatureTrait/whenVoidHealing and honour it in BOTH the resistance and the weakness loop (the file's own comment warns that gating half a shared type makes the field write-only for the other half), reading `findWornArmor(c, db)?.armor.category` — the fact is already on the sheet. The formula route is closed: FormulaScope is {level, abilities, speeds, archetypeFeats} and substituteTokens leaves an unknown @token in place so the value resolves to 0. This is the whole of guardians-armor#automatic-resistance.
+6. src/builder/Builder.tsx:497 (renderChoice) and src/rules/build.ts:1035 (levelChoices) — `FeatChoiceDef.minLevel` is honoured only on the DAILY path (src/rules/dailyChoices.ts:53). A build-time choice with `minLevel` is still rendered and still counted as an outstanding answer, so the row authored for versatile-mutation#energy-level states the printed 8th-level gate but nothing enforces it until these two read the field.
+7. src/rules/featGrantsAuto.ts:75 — `'arcana-of-iron': { weapon: { advanced: 'trained' } }` is correct and must stay, but it carries no expert step. feat-7980: "If you gain the weapon expertise class feature, your proficiency in martial and advanced weapons increases to expert." Needs both MARTIAL and ADVANCED raised to expert, gated on the character's class actually granting a weapon-expertise feature at the level its own table says (src/rules/advancement.ts entries with source 'weapon-expertise' / '<class>-weapon-expertise'), never a flat level 13 as WG encodes it. No feat record in public/core.json carries any weapon-category proficiency field, so this cannot be a data row.
+8. test/batch031-data.test.ts:96 — `node scripts/test-flip-audit.mjs --batch 037` fails on one uncited assertion in that file. It is not from this chunk and I did not touch it; flagged so the driver does not attribute it here.
+
+================================================================================
+PER FINDING
+================================================================================
+
+kitsune-spell-familiarity#daily-control
+  DID: work/.b037-rows-data-rows-5.json — feats/kitsune-spell-familiarity field `choice`, supersedes:true,
+       whole value re-emitted with a `grant` on each of the three options
+       ({innateSpells:[{spellId, tradition:'divine', atWill:true}]}).
+  WHY THIS SHAPE: the "single daily control" half of the proposal was ALREADY true and I re-measured it
+       before writing — `choice.daily` is set, and Builder.tsx renders nothing for a choice that passes
+       `askedAtDailyPrep` (Builder.tsx:1703/2228, build.ts:1035). What was actually missing is the grant:
+       dailyChoiceGrants (derive.ts:1824-1828) pushes `opt.grant`, and every option shipped bare, so the
+       morning's answer was stored and granted nothing at all.
+  TEST: test/batch037-data-rows-5.test.ts — "every kitsune-spell-familiarity answer grants an at-will divine
+       innate cantrip" (and a no-regression guard "kitsune-spell-familiarity is asked once, at daily
+       preparations", which passes today and must keep passing).
+  COULD NOT DO: the build-time duplicate (CROSS-FILE GAPS #1) and the cantrip drop in play.ts (#2) — this
+       feat's grant is a CANTRIP, so even with the row applied nothing reaches the sheet until #2 lands.
+
+kitsune-spell-mysteries#daily-control
+  DID: feats/kitsune-spell-mysteries field `choice`, supersedes:true — `grant`
+       {innateSpells:[{spellId, tradition:'divine', rank:1, usesPerDay:1}]} on bane / illusory-object /
+       sanctuary, whole superseded value merged in unchanged.
+  TEST: "every kitsune-spell-mysteries answer grants a 1st-rank divine innate spell, once that day".
+  COULD NOT DO: CROSS-FILE GAPS #1 (duplicate picker) and #4 (tradition + label on the merge).
+
+nagaji-spell-mysteries#daily-control
+  DID: feats/nagaji-spell-mysteries field `choice`, supersedes:true — `grant`
+       {innateSpells:[{spellId, tradition:'occult', rank:1, usesPerDay:1}]} on charm / fleet-step / heal.
+  NOTE: "their middle option points at no spell at all" is WG's defect; all three of our option values
+       resolve to real records, which the test asserts rather than assumes.
+  TEST: "every nagaji-spell-mysteries answer grants a 1st-rank occult innate spell, once that day".
+  COULD NOT DO: CROSS-FILE GAPS #1, #4.
+
+kitsune-spell-expertise#daily-control
+  DID: feats/kitsune-spell-expertise field `choice`, supersedes:true — `grant`
+       {innateSpells:[{spellId, tradition:'divine', rank:5, usesPerDay:1}]} on confusion / death-ward /
+       illusory-scene. `rank: 5` is load-bearing: confusion's own record is rank 4.
+  DELIBERATELY NOT AUTHORED: the feat's second clause, "You become an expert in divine spell DCs and divine
+       spell attack rolls". A `spellcastingGrant` row would be dead data — build.ts:8272 already floors
+       EVERY innate caster at expert from 12th level (Player Core p.298, quoted in that comment) and this is
+       a 13th-level feat, so the row could not raise a number on any character at any level.
+  TEST: "every kitsune-spell-expertise answer grants a 5th-rank divine innate spell, once that day".
+  COULD NOT DO: CROSS-FILE GAPS #1, #3 (the grant's rank is ignored by the merge), #4.
+
+nagaji-spell-expertise#daily-control
+  DID: feats/nagaji-spell-expertise field `choice`, supersedes:true — `grant`
+       {innateSpells:[{spellId, tradition:'occult', rank:5, usesPerDay:1}]} on flicker / control-water /
+       subconscious-suggestion. `rank: 5` is load-bearing: flicker's own record is rank 4.
+  NOTE: print names "blink"; public/core.json ships no `blink` record — Flicker is the remaster record for
+       that spell, and our three option values already match print one for one in print's own order. The
+       test asserts both halves (`blink` absent, `flicker` present at rank 4) so a later rename cannot
+       silently strand the option.
+  DELIBERATELY NOT AUTHORED: the expert occult DC/attack clause, for the same measured reason as its
+       kitsune twin.
+  TEST: "every nagaji-spell-expertise answer grants a 5th-rank occult innate spell, once that day".
+  COULD NOT DO: CROSS-FILE GAPS #1, #3, #4.
+
+time-mage-dedication#innate-tradition
+  DID: feats/time-mage-dedication field `innateSpells`, supersedes:true, value
+       [{spellId:'time-sense', atWill:true, traditionFromCasting:true}] — the superseded value carried whole,
+       with only the derivation added.
+  WHY THIS SHAPE: the archetype's prerequisite is "You have a spellcasting class feature", so "the same
+       tradition as the spells you used to meet the archetype's prerequisites" IS the character's own class
+       casting. `InnateSpellGrant.traditionFromCasting` (types.ts:2494) is the existing field for exactly
+       that sentence and has a live reader at build.ts:8243, where `caster` is the prepared/spontaneous
+       entry; `asGranted` (build.ts:8039) passes the flag through untouched. No `tradition` fallback is
+       written because the prerequisite forbids the not-a-caster case, and the old fallback — the spell's
+       own first tradition — is precisely the arcane bug. No picker, as the owner ruled: three of WG's four
+       answers are illegal.
+  TEST: "time-mage-dedication grants Time Sense with no fixed tradition and no picker" (asserts
+       traditionFromCasting, asserts `tradition` stays absent, and asserts the record grows no `choice`).
+  COULD NOT DO: nothing outstanding.
+
+guardians-armor#automatic-resistance
+  DID: NO ROW, and the spec carries the entry with backfillRows: [] saying so.
+  WHY NO ROW: the printed condition gates on the WORN ARMOUR'S CATEGORY and nothing can read that today.
+       `IwrEntry` carries minLevel / whenCreatureTrait / unlessCreatureTrait / whenVoidHealing / against /
+       condition and nothing about armour; deriveDefenses' resistance loop honours exactly those. The
+       formula route is closed too — FormulaScope is {level, abilities, speeds, archetypeFeats} and an
+       unsupported @token makes the value resolve to 0. So this is a READER gap, not a data gap. Authoring
+       the row now would ship a dead field, and deleting modes/guardians-armor before the reader exists
+       would take the resistance away from the player outright.
+  TEST: none — a test that passed today would have to break when the real fix lands, and a test that fails
+       today would pin a row nobody may author yet.
+  COULD NOT DO: CROSS-FILE GAPS #5 is the whole fix; DATA STILL NEEDED #1 and #2 are the two rows that must
+       land WITH it, in that order.
+
+clawdancer-dedication#duplicate-strikes
+  DID: feats/clawdancer-dedication field `grantedStrikes`, supersedes:true, value null.
+  WHY A DELETE AND NOT A MOVE: both Strikes already live on the stances that print them —
+       core.stances['claw-stance'].strikes is frenzied claw 1d6 slashing (brawling; agile, finesse, grapple,
+       unarmed, versatile piercing) and core.stances['talon-stance'].strikes is Spinning Talon 1d8 slashing
+       (brawling; finesse, sweep, unarmed) — and deriveStrikes renders the ACTIVE stance's own strikes at
+       derive.ts:5155. build.ts's collectGrantedNaturals skips a feat's grantedStrikes only when the feat
+       ITSELF is a stance with a stance definition (build.ts:2881-2884); the dedication's traits are
+       ['archetype','dedication'] and there is no content.stances['clawdancer-dedication'], so its copies
+       were never skipped — hence both Strikes permanently, and twice over while a stance was on.
+       `grantsActions: ['claw-stance','talon-stance']` is untouched: that is what puts the two stance
+       toggles on the Main tab (MainTab.tsx:455 filters grantedActions through content.stances[id]).
+  TEST: "clawdancer-dedication carries no grantedStrikes of its own" plus "the Strikes clawdancer-dedication
+       stopped duplicating still live on their own stances" — the second passes today and is the guard that
+       the delete was aimed at the right carrier.
+  COULD NOT DO: nothing outstanding. Nothing in src/ names frenzied claw or spinning talon, so no later
+       clawdancer feat loses a referent (grepped).
+
+versatile-mutation#energy-level
+  DID: feats/versatile-mutation field `choice`, supersedes:true — the whole superseded value re-emitted with
+       `minLevel: 8` added and `distinctAcrossTakes` dropped. ONE row carries both of this record's
+       choice-side changes because the sibling finding below touches the same record+field and the applier
+       hard-refuses a collision.
+  WHY NO SIXTH OPTION: print makes bludgeoning-or-slashing a per-use decision at the table ("When you Spit
+       Ambient Magic, you CAN CHOOSE to have the ostilli deal bludgeoning or slashing damage instead of
+       piercing"), not a build answer; only the five energy types are a "choose one of the following".
+  TEST: "versatile-mutation holds its five-option energy question back to 8th level".
+  COULD NOT DO: CROSS-FILE GAPS #6 — the field is declared and documented for this meaning but is read only
+       on the daily path, so the gate is authored and inert until Builder.tsx and build.ts honour it.
+
+versatile-mutation#takable-twice
+  DID: two rows. (a) feats/versatile-mutation field `maxTakable` value null — `maxTakes()`
+       (featGrants.ts:881-884) reads an absent field as 1, so the delete is the whole fix and no replacement
+       value is needed. (b) feats/versatile-mutation field `description` — the shipped prose carried a
+       "**Special** You can take this feat a second time at 16th level..." paragraph that appears in NO
+       document in the AoN mirror (grepped the whole feat corpus for "second time at 16th level": zero
+       hits), and feat-5454's text ends at "adds that trait to the action." That paragraph is the text the
+       false flag was read from, so removing the flag alone would have left the player reading a promise the
+       builder no longer keeps. Restored to the printed body, verbatim; the row is pathless, as a
+       description row must be.
+  MERGE NOTE: the `distinctAcrossTakes` half of this finding rides on the `choice` row above, not on a row
+       of its own — same record, same field as versatile-mutation#energy-level.
+  TEST: "versatile-mutation may be taken once, and its choice no longer guards a second take" and
+       "versatile-mutation no longer prints the Special clause the flag was read from".
+  COULD NOT DO: nothing outstanding.
+
+arcana-of-iron#weapon-proficiency
+  DID: feats/arcana-of-iron field `grantsClassFeatures`, supersedes:true, value null — the wrong grant only.
+  WHY ONLY THAT: feat-7980 states a CONDITION on a feature the character's class may grant, never a grant of
+       the feature; `grantsClassFeatures: ['weapon-expertise']` handed a 6th-level war mage the Weapon
+       Expertise class feature outright. The two proficiency halves have no data carrier at all — measured:
+       no feat record in public/core.json carries any weapon-category proficiency field (the only weapon-ish
+       keys on any feat are untrainedProficiency, critSpecWeapons, weaponTraits, untrainedWeaponProficiency),
+       and the trained-in-advanced-weapons grant this feat DOES deliver lives in the code registry
+       src/rules/featGrantsAuto.ts:75. So the conditional expert step belongs beside it, in code.
+  TEST: "arcana-of-iron grants no class features".
+  COULD NOT DO: CROSS-FILE GAPS #7 — keep trained in advanced weapons, raise BOTH martial and advanced to
+       expert only when the class grants weapon expertise, at that class's own level, never a flat 13.

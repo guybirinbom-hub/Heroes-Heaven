@@ -1,0 +1,4 @@
+{
+ "note": "GATE-RED group \"close-offbatch-door\" (family red-close-offbatch-door) authored NO overlay rows. Its whole disposition is an instrument fix in scripts/wg-batch-close.mjs (the off-batch verdict router) plus its guard in test/wg-batch-close.test.ts. The file exists because work/.b037-specs.json entries are required to name a rows spec (scripts/wg-batch-run.mjs:554 refuses an entry missing file/kind/family and :555 refuses any kind but \"rows\"/\"created-prose\"), and it is deliberately empty so it contributes NO citation to scripts/wg-batch-close.mjs's citations(): a rowless spec entry must not settle anything. The family gap-instruments-6 entry names this same file for the same reason - that family wrote no spec either (see the last section of work/.b037-report-gap-instruments-6.txt) and its entry exists only to declare the two staged paths wg-batch-commit.mjs would otherwise leave behind.",
+ "findings": []
+}

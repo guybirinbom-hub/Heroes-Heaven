@@ -1,0 +1,178 @@
+BATCH 037 — ADVERSARIAL VERIFY, INSTRUMENTS CHUNK 3 (instruments-3)
+===================================================================
+
+Judged: the twelve findings of this chunk only. Everything below was re-measured from the shipped
+carriers, the AoN mirror and the comparers themselves; nothing is taken from the builder's report.
+
+Checks run by me
+  npx tsc --noEmit                                            clean
+  node scripts/vt.mjs test/batch037-instruments-3.test.ts     3 passed
+  node scripts/vt.mjs test/wg-experience-lanes.test.ts test/batch032-closer.test.ts
+                                                              44 passed — the shared lane module's own
+                                                              tests survive the teach
+  node scripts/test-flip-audit.mjs --batch 037                CLEAN (17 test files, 13 new settle keys,
+                                                              every flip cited) — the uncited flip the
+                                                              builder reported in test/batch031-data.test.ts
+                                                              has since been cited by its own chunk
+  wg-identity / wg-values on all twelve ids                   every record `ok`, sky-rider included
+  wg-diff --out (full corpus)                                 none of the twelve is in THEY-ONLY
+  throwaway blast harness (built, run, deleted)               OLD module vs SHIPPED module over all 43
+                                                              stored experience artefacts
+
+SPEC ROWS
+  work/.b037-rows-instruments-3.json holds twelve entries, every one with backfillRows: [] — so there is
+  no record target, no field, no re-emitted value and no created record to diff, and the row-level checks
+  (target exists / value holds everything it held / reader exists / ids exist in core.json) are vacuous
+  for this chunk. Verified positively instead: across ALL fourteen b037 row specs there are 99 rows and
+  99 distinct category|id|field|path keys (no collision anywhere, cross-spec included), not one of them
+  names any of my twelve records, and no b037 row needs `supersedes: true` (none of the 99 keys already
+  exists in scripts/data/effect-backfill.json's 14,306 overlay rows).
+
+MANIFEST
+  work/.b037-specs.json now carries SIXTEEN entries — every spec file on disk is in it, instruments-6
+  included (it was missing when I first read the file at 12:04 and landed at 12:05; a re-read cleared it).
+  This family's entry lists exactly the seven paths it touched: the rows json, the report, the test file,
+  scripts/wg-identity.mjs, scripts/wg-diff.mjs, scripts/wg-values.mjs, scripts/lib/wg-experience-lanes.mjs.
+
+
+PER FINDING
+-----------
+
+sky-rider#both-skills                                                                           DONE
+  core.json backgrounds/sky-rider = trainedSkill 'acrobatics' + trainedLore 'plane-of-air' +
+  grantedFeatId 'cat-fall', which is background-381 word for word. The settle
+  SETTLED_IDENTITIES['sky-rider'] = ['skillacrobatics','skillloreplaneofair'] is member-scoped, not the
+  `options` bucket; I re-ran the comparer both ways: `--raw` reports
+  `theirs-not-ours=[skillloreplaneofair, skillacrobatics]` and the settled run reports nothing, and on a
+  content copy with grantedFeatId deleted the record STILL reports `grants theirs-not-ours=[catfall]`, so
+  the settle cannot stand in for the record's real grant. wg-identity --batch 037 is 66 checked / 0
+  reporting with it in place.
+
+bone-magic#cantrip-list                                                                         DONE
+  The teach in CONTROL_TITLE_LANE is real and its blast radius is what the builder measured — I measured
+  it again independently, module-against-module over all 43 stored artefacts: SIX controls gain the
+  'tradition' lane (bone-magic in the 006 and 037 packets, centaur, budding-speaker-centaur,
+  wellspring-gnome, spellkeeper-shisk), every one of them a genuine tradition question, and exactly TWO
+  records' unmatched counts move — both of them bone-magic, both 1 -> 0. No record anywhere goes the
+  other way. Ours really does ask the question (core.json feats/bone-magic.choice.prompt "Bone Magic —
+  are your innate spells primal or occult?") and really does offer the printed union (56 cantrips in
+  FEAT_CANTRIP_GRANTS['bone-magic'], which is what feat-5632 prints). Guard confirmed: "Choose an occult
+  or primal cantrip" does NOT gain the lane.
+
+shoony-lore#no-additional-lore                                                                  DONE
+  Print (feat-1219) trains Diplomacy and Survival with the already-trained fallback, "You also become
+  trained in Shoony Lore", and nothing else. Ours is exactly that, in featGrantsAuto.ts:670 —
+  `{ skills: { diplomacy:'trained', survival:'trained', 'lore:shoony':'trained' }, redundantFallback:true }`.
+  Both parked comments (wg-diff VERIFIED_EQUIVALENT, wg-identity SETTLED_IDENTITIES) now carry the ruling
+  instead of an open question; neither key changed, and wg-diff still has the record in WE-ONLY with
+  ours=[skill,choice]. Settle scope re-checked: `grantsRecord` / `grants` only, so the skill kinds keep
+  reporting.
+
+brutality#melee-only                                                                            DONE
+  classFeatures/brutality = critSpec true, critSpecWeapons {melee:true}, critSpecRequiresModeGroup
+  'barbarian-rage' — class-feature-853's sentence and its gate. SETTLED_VALUES['brutality'] =
+  ['set|critspec'] unchanged, comment now carries desk #42. wg-values: record `ok`, and wg-diff has it in
+  AGREE (weapon on both sides), so nothing else was quieted.
+
+mightyfall-kobold#boosts                                                                        DONE
+  heritages/mightyfall-kobold.alternateAttributes = two fixed boosts (str, cha) + flaw int, whenChoice
+  'kaiju', ancestryHp 10 — "Instead of the normal attribute boosts and flaws" with the free boost gone,
+  which is the ruling. SETTLED_IDENTITIES['mightyfall-kobold'] = ['options'] unchanged (labels only); the
+  boost count genuinely reaches no comparer — wg-values reports it under NOT_A_SCALAR (ATTRIBUTE_STR /
+  DEX / CON / INT and MAX_HEALTH_ANCESTRY), which I re-ran and read.
+
+gunslinger-weapon-mastery#advanced-rank                                                         DONE
+  The printed split reaches a BUILT character and I traced it rather than trusting the claim:
+  src/rules/build.ts:3780 sets proficiencies.firearmProf = { simple: master@5, martial: master@5,
+  advanced: expert@5 } and deletes the coarse firearm/crossbow group ranks, derive.ts:4498 reads it per
+  weapon category, and advancement.ts:452-454 carries the simple/martial/unarmed expert rungs. The crit
+  spec WG omits is on the record (critSpecWeapons {groups:[firearm,crossbow]}). No instrument owed is
+  correct: wg-diff AGREE, wg-values NOT_A_SCALAR (five variables), gate 9 OK on the class chassis. I
+  agree with writing NO settle here — an empty settle would silence the next real difference.
+
+glyph-expert#magical-writing                                                                    DONE
+  Read the printed text from the mirror rather than the finding: feat-2242 ends *"if you roll a success,
+  you get a critical success instead. If you roll a critical failure, you get a failure instead."* Ours
+  carries BOTH degree shifts, each scoped `on a save against a trap that features magical writing` — so
+  the record matches print on the half the finding covers AND on the half it does not quote. wg-diff
+  WE-ONLY (ours=[conditional,save,perception,ac,skill]), wg-values `ok`, gate 9 OK. No instrument owed.
+
+empathic-calm#one-pick                                                                          DONE
+  feats/empathic-calm.effectChoices[0] is one prompt with two options (calm / sanctuary), each granting a
+  single occult innate at usesPerDay 1 with heightenHalfLevel — feat-3970's "either… or…" and "heightened
+  to half your level rounded up". R13 holds. wg-diff WE-ONLY with `choice` on our side only, gate 9 OK.
+
+colugos-traversal#one-pick                                                                      DONE (note corrected)
+  feats/colugos-traversal.effectChoices[0] is one prompt, two options (gentle-landing / jump), primal,
+  usesPerDay 1, heightenAt [{level:9,rank:3}] — which is feat-6975's *"At 9th level, these spells are
+  heightened to 3rd rank"*. ⚠ The spec note said heightenHalfLevel; that is NOT the shipped carrier and
+  heightenHalfLevel would have been WRONG against print. I corrected the note in
+  work/.b037-rows-instruments-3.json (data untouched — the data was already right). VERIFIED_EQUIVALENT
+  ['colugos-traversal'] = ['conditional','spellcasting'] is a different aspect and is untouched.
+
+unsponsored#rarity / sponsored-by-family#rarity / sponsored-by-a-stranger#rarity                DONE (×3)
+  All three carry rarity "common" in core.json, which is what background-227 / -223 / -225 print. The
+  "no instrument owed" claim is the load-bearing one and I re-ran it myself: `rarity` across wg-diff.mjs,
+  wg-values.mjs, wg-identity.mjs, wg-casting.mjs, wg-batch-gate.mjs, lib/wg-experience-lanes.mjs and
+  wg-experience.mjs returns exactly ONE hit, a prose comment in wg-diff.mjs:3388 about a spell-list
+  filter — no code path reads rarity. wg-identity `ok` on all three, gate 9 OK on all three. Nothing to
+  settle; retiring the desk entries closes them.
+
+
+DATA STILL NEEDED
+-----------------
+(none — confirmed, not inherited. Every one of the twelve is "ours already matches print", and I checked
+each against its shipped carrier: core.json backgrounds/feats/heritages/classFeatures, featGrantsAuto.ts,
+advancement.ts and build.ts. No effect-backfill row is owed by this chunk.)
+
+
+CROSS-FILE GAPS
+---------------
+· work/owner-questions.json — all TWELVE are still in `open`, and I verified every desk number the
+  builder quoted: #39 gunslinger-weapon-mastery, #42 brutality, #45 shoony-lore, #88 sky-rider, #94
+  unsponsored, #96 sponsored-by-family, #100 sponsored-by-a-stranger, #107 bone-magic, #111
+  empathic-calm, #112 colugos-traversal, #115 mightyfall-kobold, #130 glyph-expert. While they stand,
+  scripts/wg-batch-close.mjs takes the desk branch BEFORE it looks at any citation and parks all twelve
+  as OWNER-QUEUED. Driver's file; retire them with this chunk, not before.
+· VERDICT AFTER RETIREMENT — driver decision, found by reading the closer rather than reported by the
+  builder. With the desk entries gone, citations() reaches `TEACH_RE.test(f.note)` (this family staged no
+  src/ path, so the code-only branch cannot fire) and all twelve derive MATCHES. The honest verdict for
+  twelve records whose WG difference the owner RULED is OWNER-RULED, so the driver needs
+  `--reverdict <id>=OWNER-RULED --reason "desk #N, 2026-09-10"` per record, or an accepted MATCHES.
+· work/wg-batch-037-experience.json is STALE and the gate will fail on it: bone-magic is stored
+  MISSING-CONTROL, and recomputing that record's match against the SHIPPED lane module gives unmatched 0.
+  The driver must re-run `node scripts/wg-experience.mjs --batch work/wg-batch-037.json` before gating.
+  Batch 006's packet carries the same record and the same stale verdict.
+· 25 stored gate-9 OK verdicts across 13 artefacts recompute as MISSING-CONTROL against the CURRENT lane
+  module (my count, chassis-cleared records excluded; the builder said 26): 003 runic-repertoire, 006
+  tactics, 010 skillful-lessons, 011 stylish-tricks, 014 second-implement, 015 fighter-weapon-mastery,
+  018 expert-tactician, 029 third-apparition + implement-adept, 033 school-of-rooted-wisdom +
+  devotion-phantom-eidolon + construct-eidolon, 034 empiricism-methodology + way-of-the-pistolero +
+  elemental-instinct + giant-instinct, 035 dragon-instinct + superstition-instinct + animal-instinct +
+  anger-phantom-eidolon, 037 animal-instinct, and four repeats in the VALL packet. NOT this chunk's
+  doing, and I measured that rather than accepting it: module-against-module, the teach moves exactly two
+  records and both are bone-magic going MISSING-CONTROL -> OK. It is artefact staleness against lane
+  changes committed in earlier batches; a re-gate of those batches would fail on records nobody read.
+· work/wg-batch-037-parity.json and work/wg-batch-037-residual.json still do not exist (checked); the
+  gate fails on both. Driver's lane.
+· REPORT-LINE CITATIONS — three of the builder's per-finding headers (brutality#melee-only,
+  shoony-lore#no-additional-lore, mightyfall-kobold#boosts) read "COMMENT — RULING RECORDED", which names
+  the finding id but contains no word TEACH_RE matches, so those lines are not citations. Harmless today
+  (the spec notes cite all twelve) and closed by this file: every finding above is named on a line that
+  also says settle/teach/instrument/comparer.
+· CLOSED since the builder wrote his report: test/batch031-data.test.ts:96. `node
+  scripts/test-flip-audit.mjs --batch 037` now reports the batch CLEAN — the chunk that changed that
+  expect() has cited it.
+
+
+WHAT I CHANGED
+--------------
+  work/.b037-rows-instruments-3.json   colugos-traversal#one-pick note: heightenHalfLevel -> heightenAt
+                                       [{level:9,rank:3}] (the shipped carrier; the data was already
+                                       correct, only the note was wrong)
+  work/.b037-verify-instruments-3.txt  this file
+  No code, test or registry change was needed: I found nothing WRONG and nothing NOT DONE.
+
+  manifest stage[] additions for this family (paths I touched):
+    work/.b037-rows-instruments-3.json     (already listed)
+    work/.b037-verify-instruments-3.txt

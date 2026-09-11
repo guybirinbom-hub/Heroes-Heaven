@@ -1,0 +1,17 @@
+{
+  "findings": [
+    {
+      "id": "firework-technician-dedication#pyrotechnic-vial",
+      "note": "Prose for the record created by work/.b037-rows-data-rows-1.json. Kept to one verbatim contiguous clause of feat-8528 — the applier's added-prose guard diffs a NEW record's description against an empty string, so the whole text has to occur contiguously in the named mirror doc. The usage restriction (bombs / Launch Fireworks / Quick Alchemy only) stays on the dedication, which prints it and already ships it.",
+      "backfillRows": [
+        {
+          "category": "items",
+          "id": "pyrotechnic-versatile-vial",
+          "field": "description",
+          "value": "These vials have the fire trait and deal fire damage instead of acid.",
+          "why": "feat-8528 (Firework Technician Dedication, Guns & Gears (Remastered) pg. 134), verbatim."
+        }
+      ]
+    }
+  ]
+}

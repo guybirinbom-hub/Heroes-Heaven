@@ -1,0 +1,64 @@
+{
+ "findings": [
+  {
+   "id": "barrows-edge#damage-wording",
+   "backfillRows": [],
+   "note": "No row: owner ruled 2026-09-10 (#136, book wins) that WG's persistent spirit damage and their missing below-half clause are a deliberate difference, and ours already prints AoN ikon-2 exactly (+1 spirit per weapon damage die, +3 per die below half Hit Points). No instrument reports the record either: wg-diff files it WE-ONLY (theirKinds=[note], ourKinds=[grantsRecord,conditional,weapon]), wg-values files it under 'prose-only bonus (no number asserted)', wg-identity and wg-casting do not raise it. A residual read — no settle was added, because a settle for a comparer that is already quiet is a settle that can only hide the next real finding."
+  },
+  {
+   "id": "gaze-sharp-as-steel#transcendence",
+   "backfillRows": [],
+   "note": "No row: owner ruled 2026-09-10 (#137, book wins, offer no alternative). Ours is A Moment Unending as AoN ikon-5 prints it (1d6 precision, 2d6 at 10th, 3d6 at 18th); WG's Reactive Strike grant is a different ability wearing the printed name. No instrument reports it — wg-diff WE-ONLY (theirKinds=[note] against our [grantsRecord,conditional,perception,ac]), wg-values prose-only, wg-identity/wg-casting silent. Residual read, no settle."
+  },
+  {
+   "id": "hyper-boosters#overdrive-bonus",
+   "backfillRows": [],
+   "note": "No row: owner ruled 2026-09-10 (#148, book wins). AoN innovation-5's +20 in Overdrive and the legendary-Crafting +30 are both ours (Hyper Boosters and Speed Boosters each add 5 standing and 5 more in Overdrive; the legendary step shows as a note); WG's rank-free +30 is a mistake in their condition. The comparers agree: wg-diff files the record AGREE (kinds [conditional,speed] on both sides) and wg-values reports 'ok hyper-boosters (1 values, 0 sets agree)'. Residual read, no settle."
+  },
+  {
+   "id": "chronomancers-secrets#focus-spell",
+   "backfillRows": [],
+   "note": "No row: owner ruled 2026-09-10 (#150, book wins). AoN feat-8482 offers the stasis domain spell or the path of least resistance FOCUS spell; ours grants either as a focus spell with the focus trait on Stasis and no double-counted focus point, while WG hands Stasis over as an ordinary spell from their old record under a menu their own title calls 'Select a focus spell'. No instrument reports it — wg-diff WE-ONLY (theirKinds=[choice] against our [spellcasting,focus,choice,specialStat,spell]), wg-values not value-checked. Residual read, no settle."
+  },
+  {
+   "id": "benefactors-resistance#floor-and-dragons",
+   "backfillRows": [],
+   "note": "No row: owner ruled 2026-09-10 (#11) — keep the floor of 1 as a deliberate small step past the literal page (AoN feat-8064 prints no minimum and would give 0 at 1st level), and do not copy WG's dragon half (resistance 2 plus full level against dragon breath), which has no printed source. Both halves are already the shipped shape. The comparers agree: wg-diff files the record AGREE (their 72 ops collapse to kinds we carry) and wg-values reports 'ok benefactors-resistance (0 values, 1 sets agree)'. Residual read, no settle."
+  },
+  {
+   "id": "northridge-scholar#seasonal-boon-frequency",
+   "backfillRows": [],
+   "note": "No row: owner ruled 2026-09-10 (#97, 'leave it as it is'). AoN background-395 prints Seasonal Boon as a free action with a trigger and an effect and NO Frequency line — none of the six Willowshore boons prints one — so ours stays frequency-free; WG's 'Once per Season' on five of six boons and their extra general 'Seasonal Boon (Standard)' record are a deliberate difference. No instrument reports it: wg-diff WE-ONLY, wg-values 'ok northridge-scholar (1 values, 0 sets agree)'. Residual read, no settle."
+  },
+  {
+   "id": "skybearers-belt#bulk-aura",
+   "backfillRows": [],
+   "note": "No row: owner ruled 2026-09-10 (#141, follow the page Guy pasted). AoN ikon-16 prints only the two-sizes-larger clause and the +1 circumstance bonus to Disarm/Grapple/Shove/Trip and to the saves resisting them; WG's 15-foot 4-Bulk aura is printed nowhere and their row drops the +1 entirely. No instrument reports it — wg-diff WE-ONLY on classFeatures (theirKinds=[note]) and noMatch on the items twin, wg-values prose-only. Residual read, no settle. NOTE for the closer: the record's other finding, skybearers-belt#scoped-stars, belongs to another chunk and is NOT covered here or by anything this chunk changed."
+  },
+  {
+   "id": "spirit-walk#playtest-row",
+   "backfillRows": [],
+   "note": "No row — an INSTRUMENT SETTLE. wg-diff reported feats/spirit-walk as THEY-ONLY missing=[sense]; the sense comes from WG's War of Immortals PLAYTEST row (171 chars of ops, one op, the precise 30-foot sense), which wins wgRowsByBucket's richest-row tie-break over the released row that encodes nothing. AoN feat-7137 prints no sense clause at all. Owner ruled 2026-09-10 (#149) and set the STANDING RULE that a WG row marked (playtest) is never evidence about the released record, which closes the spirit-walk#sense item batch 036 REFUTED and queued. Settled member-wise as VERIFIED_EQUIVALENT['spirit-walk'] = ['sense'] in scripts/wg-diff.mjs; mutation-proofed in test/batch037-instruments-6.test.ts (quiet with the settle, missing=[sense] again under --raw, and the five other sense records still reported). Deliberately NOT generalised into a playtest rule in scripts/lib/wg-parse.mjs — see CROSS-FILE GAPS in the report for the measurement."
+  },
+  {
+   "id": "shadowcaster-dedication#tradition",
+   "backfillRows": [],
+   "note": "No row: owner ruled 2026-09-10 (#22) under standing rule R14. AoN feat-3009 says the archetype's domain spells are of the same tradition as the spells that met its prerequisites, so ours casts Cloak of Shadow on the character's own tradition and attribute and shows no picker; WG's fixed divine/Wisdom pin is a deliberate difference. No instrument reports it — wg-diff WE-ONLY (theirKinds=[spellcasting,spell,focus] all present on ours, our extra is [note]), wg-values not value-checked, wg-casting skips the archetype as a non-class source, and the experience harness returns OK. Residual read, no settle."
+  },
+  {
+   "id": "hallowed-necromancer-dedication#tradition",
+   "backfillRows": [],
+   "note": "No row: owner ruled 2026-09-10 (#25) under R14. AoN feat-3459 says the archetype's focus spells have the same tradition as your spell slots; ours carries focusSpells ['hallowed-ground'] plus focusFromSpellSlots:true, which is exactly that rule, while WG hard-pins divine/Intelligence. No instrument reports it — wg-diff WE-ONLY, wg-values not value-checked, wg-casting skips non-class sources, experience OK. Residual read, no settle."
+  },
+  {
+   "id": "spellmaster-dedication#tradition",
+   "backfillRows": [],
+   "note": "No row — an INSTRUMENT PARK. The EXPERIENCE harness returned NO-SHEET-EFFECT ('WG encodes 1 value-bearing op(s); not on our built character: defineCastingSource CASTING_SOURCES'). AoN feat-1134 names no tradition and no spell — its whole content is the +2 circumstance bonus to Identify Magic with a trained skill — and rules-2231 sends the attribute to the source of the focus spell, so ours builds no casting source and hangs each spellmaster focus spell on the feat that prints it (feats/familiar-form.focusSpells, feats/spellmasters-ward.focusSpells). The printed clause IS delivered, as FEAT_SITUATIONAL['spellmaster-dedication'] (src/rules/situationalBonuses.ts:621), and a situational star moves no number on a freshly built character — which is the whole of the harness's blindness. Owner ruled 2026-09-10 (#110) under R14. Parked in work/experience-instrument-limits.json (lane 'wg-unprinted-casting-source') with a mutation-proof pair in test/batch037-instruments-6.test.ts."
+  },
+  {
+   "id": "dragon-eidolon#tradition",
+   "backfillRows": [],
+   "note": "No row — an INSTRUMENT SETTLE plus a PARK, one per comparer that saw it. AoN eidolon-7 prints '**Tradition** Arcane', one word, no list; WG asks a four-branch 'Select a Tradition'. Owner ruled 2026-09-10 (#138) under R14: arcane is fixed and no picker is built. (1) wg-identity reported 'options theirs-not-ours=[divine, occult, primal]' — settled member-wise as SETTLED_IDENTITIES['dragon-eidolon'] = ['divine','occult','primal'] in scripts/wg-identity.mjs, never the whole options bucket, because their bucket is exactly the four tradition labels and a bucket settle would silence the matching 'arcane' too. (2) the EXPERIENCE harness returned MISSING-CONTROL ('WG asks \"Select a Tradition\"; we render no control') — parked in work/experience-instrument-limits.json under the existing derived-value-not-a-pick lane whose precedent is battle-creed. Both mutation-proofed in test/batch037-instruments-6.test.ts, including the stunt that strips classes.summoner.subclass.options[dragon-eidolon].tradition and shows the record still reported as theirs-not-ours=[arcane]. NOTE for the closer: wg-diff still reports this record THEY-ONLY missing=[language]; that aspect is NOT this finding and nothing here settles it."
+  }
+ ]
+}

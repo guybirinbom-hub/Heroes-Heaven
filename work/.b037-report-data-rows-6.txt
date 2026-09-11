@@ -1,0 +1,66 @@
+BATCH 037 — data-rows-6 (chunk 6 of 6 of the data-rows family)
+Spec: work/.b037-rows-data-rows-6.json   Tests: test/batch037-data-rows-6.test.ts
+9 findings assigned, 9 answered: 8 carry rows, 1 is an engine gap with no row.
+No src/ or scripts/ file was edited by this chunk.
+
+DATA STILL NEEDED
+- items/screech-shooter-major field "damage" value {"dice":1,"die":"d10","type":"sonic"} — the record ships type "piercing" while AoN equipment-1169 prints "A screech shooter deals sonic damage" and the greater grade already ships sonic; no finding covers it, so no row of mine touches it.
+- heritages/dragonblood field "choice" (whole value, 40 options) — the option descriptions disagree with the Draconic Benefactors speed column the owner transcribed: magma reads "Primal dragon — fly, swim" where the table gives Burrow, and bog reads "fly, swim, burrow" where the table gives Swim. Only the speed words move; the values and labels are already correct (my breath row depends on those values).
+- feats/bespell-strikes field "situational" — the BASE 1d6 extra damage (AoN feat-5028) has no carrier either, only prose; my arcana-of-iron row stars the upgrade and states "1d8 instead of 1d6" so it reads correctly alone, but the base star is still missing.
+- feats/swashbucklers-speed — re-author the +5/+10 status bonus the moment the engine grows a typed, all-Speeds carrier (see the first gap below); today the only field is the untyped land-only landSpeedBonus row already shipped.
+
+CROSS-FILE GAPS
+- swashbucklers-speed#typed-all-speeds belongs to the engine family: src/rules/derive.ts (landBonusOf / the landSpeedBonus fold) must give every speed bonus a TYPE so two status bonuses take the highest instead of adding, and must honour a clause worded "to your Speeds" on every Speed, not land alone — ~20 records carry a bonus through that one untyped field.
+- reborn-soul#restricted-increases, the BUILT half, belongs to the engine family: bonusSkillIncreaseLevels and restrictedSkillIncreaseLevels are read off the CLASS only (src/rules/build.ts:3724 and build.ts:1137) and their skills list is fixed SkillIds, so a BACKGROUND granting one restricted increase at 3/7/15 against two player-chosen Lores has no reader; the restriction needs a chosen-Lore resolver the way includeSubclassGrantedSkills resolves a subclass skill.
+- breath-of-the-dragon#derive-from-exemplar asks for a new data file scripts/data/draconic-benefactors.json (scripts/ is outside this chunk) — the table itself is carried whole inside my effectChoices row, so nothing is lost, but the standalone file and its citation are for whoever owns scripts/data.
+- breath-of-the-dragon#derive-from-exemplar also carries the owner's MIRROR GAP: https://2e.aonprd.com/DraconicBenefactors.aspx is not in the AoN update pipeline, so our 44 draconic-exemplar docs still lack the breath and save columns — pipeline lane, not a row.
+- astrolabe-of-falling-stars#identify-star: my row is the DATA twin of the six sibling stars in src/rules/situationalBonuses.ts (entries "astrolabe", "astrolabe-standard", "astrolabe-mariners"). If the situational family also adds an "astrolabe-of-falling-stars" entry to that file the item would carry the star twice — one of the two must be dropped, and the data row is the one that survives a regeneration.
+
+PER FINDING
+
+arcana-of-iron#bespell-strikes — DONE (row).
+  Row: feats/arcana-of-iron field "situational" = one entry, targets [{kind:"strikeDamage"}], when "until the end of your turn, on the weapon or unarmed attack you siphoned spell energy into with Bespell Strikes", bonus "the extra damage is 1d8 instead of 1d6".
+  Why this lane: the printed clause is conditional (after a non-cantrip spell, once per turn, one weapon), so it cannot be a flat number. The reader already exists — explain.ts's take() walk over c.feats at src/rules/explain.ts:583 files a record's own `situational` and the star shows in the strike-damage breakdown.
+  Test: test/batch037-data-rows-6.test.ts "arcana-of-iron stars strike damage with the 1d8 upgrade".
+  No collision: chunk data-rows-5 also writes feats/arcana-of-iron, but on grantsClassFeatures — a different field, so the two rows stand side by side.
+  Not done: the base feat's own 1d6 star — see the data list at the top, line 3.
+
+astrolabe-of-falling-stars#identify-star — DONE (row).
+  Row: items/astrolabe-of-falling-stars field "situational" = +1 item on skill/all, when "on checks to identify celestial bodies, if you are trained in Survival and hold the astrolabe in two hands".
+  Not narrowed to Survival (WG narrows it; print names no skill — owner 2026-09-10 #51). Same wording and shape as the shipped "astrolabe" entry; authored as data because this chunk may not edit src/, and the item walk at src/rules/explain.ts:552 reads the field through the same channel.
+  Test: "astrolabe-of-falling-stars grants +1 item on ALL skills to identify celestial bodies".
+
+breath-of-the-dragon#derive-from-exemplar — DONE (row), with two gaps above.
+  Row: feats/breath-of-the-dragon field "effectChoices" (supersedes: true) = ONE choice, answerFromChoiceFlag "draconicExemplar", 40 options whose values are byte-identical to heritages/dragonblood's own choice options. Each option's note states the shape, the damage type, the damage trait and the save together, so no illegal triple is buildable.
+  The derivation needs no code: choiceFlagAnswer (src/rules/build.ts:1978) reads featChoices["heritage:dragonblood"], resolvePick (build.ts:6183) takes the flag over any stored answer, and EffectChoicesPicker (src/builder/shared.tsx:4596) hides the control once the heritage has answered it.
+  The superseded 3-picker row is accounted for whole: shape, damage type and save all survive, inside each option's note. They are not re-emitted as free pickers because that is exactly the defect the finding names.
+  Tests: "breath-of-the-dragon asks ONE question, answered by the dragonblood exemplar flag" and "breath-of-the-dragon states shape, damage type and save together on each exemplar".
+
+reborn-soul#restricted-increases — PARTLY DONE (note row only).
+  Row: backgrounds/reborn-soul field "dataWarning" (supersedes: true) — rewritten to the owner's reading: ONE extra increase at each of 3rd, 7th and 15th, applicable to one of the two past-life Lores, player's choice each time, ordinary increases unaffected. The shipped note stated WG's both-Lores-each-time reading (six raises) without saying so, so a player following it built an illegal character.
+  Test: "reborn-soul's note states ONE extra increase per level, player's choice of Lore".
+  Not done: the three built increases — the reader is class-only; see the gap list at the top, line 2.
+
+screech-shooter-greater#grade-numbers — DONE (row).
+  Row: items/screech-shooter-greater field "description" (supersedes: true), the shipped text carried whole with one sentence changed: "All creatures in a 40-foot emanation from you must attempt a DC 30 Will save." (AoN equipment-1169-1109). The base DC 25 / 30-foot sentence is gone; descRefs untouched, every condition label still present.
+  Test: "screech-shooter-greater prints DC 30 in a 40-foot emanation".
+
+screech-shooter-major#grade-numbers — DONE (row).
+  Row: items/screech-shooter-major field "description" (supersedes: true) — same edit with the major grade's numbers, DC 37 in a 50-foot emanation (AoN equipment-1169-1110). The grade prints no rune sentence of its own, so the shipped first sentence is left exactly as it stands rather than invented against.
+  Test: "screech-shooter-major prints DC 37 in a 50-foot emanation".
+
+wyrm-spindle-greater#grade-numbers — DONE (two rows, one sentence).
+  Rows: items/wyrm-spindle-greater "description" and "effectChoices" (both supersedes: true) — "deals 9d6 damage to all creatures in a 30-foot cone with a DC 34 basic Reflex save" in both places. The grade's own DC (34, AoN equipment-2243-1983) was missing entirely and the affix pick's note had also lost the area ("in a with a save"); the area and the save's name come from the base page, AoN equipment-2243. The armor option and the base blurb are re-emitted unchanged.
+  Test: "wyrm-spindle-greater breathes 9d6 with a DC 34 basic Reflex save, in both places".
+
+wyrm-spindle-major#grade-numbers — DONE (two rows, one sentence).
+  Rows: items/wyrm-spindle-major "description" and "effectChoices" (both supersedes: true) — 12d6, DC 41 basic Reflex, 30-foot cone (AoN equipment-2243-1984 for the numbers, equipment-2243 for the area and save name).
+  Test: "wyrm-spindle-major breathes 12d6 with a DC 41 basic Reflex save, in both places".
+
+swashbucklers-speed#typed-all-speeds — NOT DONE, no row, engine lane.
+  Both halves the finding asks for are properties of the READER, not of a value: our only carrier is the bare number landSpeedBonus, which has no slot for a bonus type and no slot for a non-land Speed. Any field I invented today would have no reader and would clash with whatever shape the engine lane authors. Recorded in the two lists at the top of this report instead (gap line 1, data line 4); the spec entry carries backfillRows: [] with the reasoning.
+
+VERIFICATION
+- node scripts/vt.mjs run test/batch037-data-rows-6.test.ts — 9 tests, 9 RED, each failing on the shipped value (empty situational, three pickers, the old note, the base-grade numbers). They go green when the driver applies the spec; nothing in the file asserts a patched-in-memory copy.
+- npx tsc --noEmit — clean.
+- node scripts/test-flip-audit.mjs --batch 037 — reports nothing against this chunk's file (its three open items are sibling chunks' registry keys).

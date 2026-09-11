@@ -112,6 +112,14 @@ const escalatedIds = new Set(spec.filter((r) => r.needsHumanDecision).map((r) =>
  *     modification does not have. The lane row is `needsHumanDecision` today and so already skipped,
  *     but that flag lives in a regenerable spec.json; `existingIds` cannot exclude a deleted row, so
  *     name it here — the fire-gate / monk-moves call exactly.
+ *   reverse-engineer (WG parity b037, reverse-engineer#crafting-star): DELETED from the registry. The
+ *     knowledge-is-power case exactly — the star described a SUPERSEDED PRINTING. Our record is aonId
+ *     feat-3053 (Guns & Gears Remastered, 2025) and that entry grants no bonus: *"Furthermore, you can
+ *     use Crafting instead of Thievery to Disable a Device or Pick a Lock."* is the whole mechanic, and
+ *     the record's `skillSubstitutions` already carries it. The +2 Crafting lives only in feat-8555,
+ *     the 2021 printing. Owner ruling #15 ("drop the +2 Crafting star"). Nothing is left to keep.
+ *     ⚠ Do NOT confuse it with `reverse-engineering` (feat-6406, Scrounger), a DIFFERENT feat whose
+ *     printed +2 is real and whose lane row at the bottom of the registry stays.
  */
 const handEdited = new Set([
   'strong-oak', 'lethoci', 'sacred-nagaji', 'kanchil', 'respite-of-cloudless-paths',
@@ -121,6 +129,7 @@ const handEdited = new Set([
   'monk-moves', 'swashbucklers-speed', 'incredible-movement',
   'knowledge-is-power',
   'weapon-innovation',
+  'reverse-engineer',
 ]);
 
 const src = readFileSync(REGISTRY, 'utf8');

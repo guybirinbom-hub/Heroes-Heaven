@@ -1,0 +1,121 @@
+{
+ "findings": [
+  {
+   "id": "armor-in-earth#armour-proficiency",
+   "note": "The note half of the owner's answer, authored in the SAME batch as its src half (src/rules/featGrants.ts HAND_AUTHORED_GRANTS 'armor-in-earth', armorFamiliarity.mirrorBest over both granted items) and never before it: the sheet now works the rank out, so the sentence telling the player to set it by hand is the only thing that changes. The whole create value is re-emitted because a create row's own post-check compares the shipped record against the create value. items/armor-in-earth-heavy takes NO row: its note never carried that sentence and the medium wording was not mirrored onto it.",
+   "backfillRows": [
+    {
+     "category": "items",
+     "id": "armor-in-earth-medium",
+     "value": {
+      "level": 1,
+      "price": {},
+      "bulk": 1,
+      "rarity": "common",
+      "source": {
+       "book": "Pathfinder Rage of Elements",
+       "license": "OGL"
+      },
+      "itemType": "armor",
+      "group": "plate",
+      "dexCap": 1,
+      "checkPenalty": -2,
+      "speedPenalty": -10,
+      "strength": 3,
+      "edition": "neutral",
+      "id": "armor-in-earth-medium",
+      "name": "Armor in Earth",
+      "category": "medium",
+      "acBonus": 4,
+      "traits": [],
+      "description": "Stone encases you like armor, created by the Armor in Earth impulse. It is medium armor but uses your highest armor proficiency.",
+      "note": "Created by the Armor in Earth impulse and lasts 10 minutes (Dismissible; using the impulse again ends any existing one). It is medium armor but uses your highest armor proficiency, which your sheet works out for you. You gain its armor specialization effect. Any bonuses, runes and magical abilities of your actual armor are suppressed, and any runes that could apply to the stone armor are replicated onto it.",
+      "aonOrigin": "authored"
+     },
+     "create": true,
+     "supersedes": true,
+     "why": "feat-4221 \"The stone armor is medium armor but uses your highest armor proficiency.\" The borrowing is computed now (featGrants.ts armorFamiliarity.mirrorBest -> Proficiencies.armorOverrides, read at derive.ts:2037), so the instruction to set it by hand is wrong. CLOSER CORRECTION (batch 037 apply post-check): a corrected CREATE cannot reach an existing record — applyBackfill never overwrites one — so this row alone left the old note shipped and the post-check demanded a full regeneration. Two changes, neither of which needs `npm run data`: (a) `aonOrigin: \"authored\"` is restored to the create value, because the SHIPPED record carries it and the post-check compares the two whole records, so the row could never have matched without it (12 other create rows in the overlay carry it the same way); (b) the one field that actually changes, `note`, is emitted as a FIELD row below, which applyBackfill does apply to an existing record. Pre-check (1b) allows a field row beside a create row exactly when it lands after it and says byte-for-byte what the create row says, which it does."
+    },
+    {
+     "category": "items",
+     "id": "armor-in-earth-medium",
+     "field": "note",
+     "value": "Created by the Armor in Earth impulse and lasts 10 minutes (Dismissible; using the impulse again ends any existing one). It is medium armor but uses your highest armor proficiency, which your sheet works out for you. You gain its armor specialization effect. Any bonuses, runes and magical abilities of your actual armor are suppressed, and any runes that could apply to the stone armor are replicated onto it.",
+     "why": "feat-4221 \"The stone armor is medium armor but uses your highest armor proficiency.\" The delivery half of the create row above, byte-identical to its `note`: the shipped record already exists, so this is the row that actually replaces the stale sentence telling the player to set the proficiency by hand."
+    }
+   ]
+  },
+  {
+   "id": "hardwood-armor-armor#armour-proficiency",
+   "note": "The same note half for the one armour feat-4283 prints. Its sibling items/hardwood-armor-shield is a SHIELD and takes nothing; there is no heavy version of this armour.",
+   "backfillRows": [
+    {
+     "category": "items",
+     "id": "hardwood-armor-armor",
+     "value": {
+      "id": "hardwood-armor-armor",
+      "name": "Hardwood Armor",
+      "level": 1,
+      "price": {},
+      "bulk": 1,
+      "traits": [],
+      "rarity": "common",
+      "source": {
+       "book": "Pathfinder Rage of Elements",
+       "license": "OGL"
+      },
+      "itemType": "armor",
+      "category": "medium",
+      "group": "wood",
+      "acBonus": 3,
+      "dexCap": 2,
+      "checkPenalty": -2,
+      "speedPenalty": -5,
+      "strength": 2,
+      "edition": "neutral",
+      "description": "Wood and bark grow over your body like armor, created by the Hardwood Armor impulse. It is medium armor but uses your highest armor proficiency.",
+      "note": "Created by the Hardwood Armor impulse. It is medium armor but uses your highest armor proficiency, which your sheet works out for you. Any bonuses, runes and magical abilities of your actual armor are suppressed while it is worn, and any runes that could apply to the hardwood armor are replicated onto it.",
+      "aonOrigin": "authored"
+     },
+     "create": true,
+     "supersedes": true,
+     "why": "feat-4283 \"This hardwood armor is medium armor but uses your highest armor proficiency.\" Computed now off the same lane, so the set-it-yourself sentence goes. CLOSER CORRECTION (batch 037 apply post-check), the same two changes as the armor-in-earth row above and for the same reason: `aonOrigin: \"authored\"` restored to the create value so it equals the shipped record, and the one changed field, `note`, emitted as a FIELD row below so it reaches a record applyBackfill will not overwrite."
+    },
+    {
+     "category": "items",
+     "id": "hardwood-armor-armor",
+     "field": "note",
+     "value": "Created by the Hardwood Armor impulse. It is medium armor but uses your highest armor proficiency, which your sheet works out for you. Any bonuses, runes and magical abilities of your actual armor are suppressed while it is worn, and any runes that could apply to the hardwood armor are replicated onto it.",
+     "why": "feat-4283 \"This hardwood armor is medium armor but uses your highest armor proficiency.\" The delivery half of the create row above, byte-identical to its `note`."
+    }
+   ]
+  },
+  {
+   "id": "armigers-protection#armor-pick",
+   "note": "The DELIVERY half of owner option B, the half the builder's picker row left open: grantsItems gains the new per-answer gate (types.ts grantsItems[].whenChoice, read at build.ts's granted-items loop), so the ONE suit the player picked lands in inventory and the other two do not. Supersedes the shipped row, which handed every taker the breastplate whichever of the three they chose. The three values are exactly the option values on the choice row in work/.b037-rows-data-rows-3.json.",
+   "backfillRows": [
+    {
+     "category": "feats",
+     "id": "armigers-protection",
+     "field": "grantsItems",
+     "value": [
+      {
+       "itemId": "hellknight-breastplate",
+       "whenChoice": "hellknight-breastplate"
+      },
+      {
+       "itemId": "hellknight-half-plate",
+       "whenChoice": "hellknight-half-plate"
+      },
+      {
+       "itemId": "hellknight-plate",
+       "whenChoice": "hellknight-plate"
+      }
+     ],
+     "supersedes": true,
+     "why": "feat-8814 \"In addition, when you choose this feat, you receive a non-magical suit of Hellknight armor of a type you become trained in (Hellknight breastplate, Hellknight half plate, or Hellknight plate).\" One suit out of three, so the two the player did not pick must not arrive."
+    }
+   ]
+  }
+ ]
+}

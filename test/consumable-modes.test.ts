@@ -64,7 +64,12 @@ describe('consumable modes: the data', () => {
     // reaction cost and the standing fire 5, so nothing on the sheet moved when it fired. The mode
     // carries the 15 (same-type resistances take the highest, so it supersedes the passive 5) and its
     // note carries the healing clause, which has no numeric carrier.
-    expect(itemModes().length).toBe(378);
+    // batch 037 premise: equipment-3497 "as long as Vernai's Ire remains active, you gain a +1 item bonus to Intimidation checks."
+    // +1 for Mask of the Mantis (Major)'s Vernai's Ire. The Perception half of the same grade's "+3"
+    // already shipped as a passive, but the Intimidation half is switched on and off by an activation
+    // and is gated on being a member of the Vernai, so a passive would give it to a mask nobody has
+    // activated and to a wearer who is not Vernai.
+    expect(itemModes().length).toBe(379);
   });
 
   it('every item mode points at an item that actually exists', () => {

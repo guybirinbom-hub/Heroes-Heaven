@@ -1,0 +1,187 @@
+{
+  "findings": [
+    {
+      "id": "gap-instruments-7: armor-innovation#legacy-parent-pointer",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "antimagic-plating",
+          "field": "aonParentId",
+          "value": "innovation-1",
+          "why": "AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16, released 2025-02-18) prints the section \"Antimagic Plating\" verbatim; the shipped pointer innovation-5 is the 2021 Guns & Gears printing of the same Armor innovation, whose armor-modification block is pre-remaster (\"negative damage ... any types of alignment damage-good, evil, chaotic, lawful\", and a Table 2-2 with a +4 power suit at Strength 16 where we ship +5 at Strength 3). The record's own source.license is already ORC. No existing overlay row for this field on this record, so no supersedes."
+        },
+        {
+          "category": "classFeatures",
+          "id": "automated-impediments",
+          "field": "aonParentId",
+          "value": "innovation-1",
+          "why": "AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16) prints the section \"Automated Impediments\"; innovation-5 is the superseded 2021 Guns & Gears printing of the same Armor innovation. Record source.license is ORC. No existing overlay row for this field on this record, so no supersedes."
+        },
+        {
+          "category": "classFeatures",
+          "id": "camouflage-pigmentation",
+          "field": "aonParentId",
+          "value": "innovation-1",
+          "why": "AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16) prints the section \"Camouflage Pigmentation (Subterfuge Suit Only)\"; innovation-5 is the superseded 2021 Guns & Gears printing. Record source.license is ORC. No existing overlay row for this field on this record, so no supersedes."
+        },
+        {
+          "category": "classFeatures",
+          "id": "dense-plating",
+          "field": "aonParentId",
+          "value": "innovation-1",
+          "why": "AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16) prints the section \"Dense Plating\"; innovation-5 is the superseded 2021 Guns & Gears printing. Record source.license is ORC. No existing overlay row for this field on this record (its overlay rows are resistances and defensesRequire), so no supersedes."
+        },
+        {
+          "category": "classFeatures",
+          "id": "energy-barrier",
+          "field": "aonParentId",
+          "value": "innovation-1",
+          "why": "AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16) prints \"Energy Barrier ... resistance to all energy damage (acid, cold, electricity, fire, force, sonic, vitality, and void damage) equal to 2 + half your level\", which is our shipped resistances list exactly; innovation-5, the 2021 printing, prints the same clause with \"negative, positive\" in place of vitality/void, contradicting our own data. No existing overlay row for this field on this record (its overlay rows are resistances, defensesRequire and requiresModification), so no supersedes."
+        },
+        {
+          "category": "classFeatures",
+          "id": "enhanced-resistance",
+          "field": "aonParentId",
+          "value": "innovation-1",
+          "why": "AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16) prints the section \"Enhanced Resistance\"; innovation-5 is the superseded 2021 Guns & Gears printing. Record source.license is ORC. No existing overlay row for this field on this record, so no supersedes."
+        },
+        {
+          "category": "classFeatures",
+          "id": "harmonic-oscillator",
+          "field": "aonParentId",
+          "value": "innovation-1",
+          "why": "AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16) prints the section \"Harmonic Oscillator\"; innovation-5 is the superseded 2021 Guns & Gears printing. Record source.license is ORC. No existing overlay row for this field on this record, so no supersedes."
+        },
+        {
+          "category": "classFeatures",
+          "id": "heavy-construction",
+          "field": "aonParentId",
+          "value": "innovation-1",
+          "why": "AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16) prints the section \"Heavy Construction (Power Suit Only)\"; innovation-5 is the superseded 2021 Guns & Gears printing, whose Table 2-2 power suit (+4, Strength 16) is not the one this record's armorRestat row builds on. No existing overlay row for this field on this record, so no supersedes."
+        },
+        {
+          "category": "classFeatures",
+          "id": "hyper-boosters",
+          "field": "aonParentId",
+          "value": "innovation-1",
+          "why": "AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16) prints the section \"Hyper Boosters\"; innovation-5 is the superseded 2021 Guns & Gears printing. Record source.license is ORC. No existing overlay row for this field on this record (its overlay rows are landSpeedBonus, whileActive and requiresModification), so no supersedes."
+        },
+        {
+          "category": "classFeatures",
+          "id": "incredible-resistance",
+          "field": "aonParentId",
+          "value": "innovation-1",
+          "why": "AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16) prints the section \"Incredible Resistance\"; innovation-5 is the superseded 2021 Guns & Gears printing. Record source.license is ORC. No existing overlay row for this field on this record (its overlay row is choice), so no supersedes."
+        },
+        {
+          "category": "classFeatures",
+          "id": "layered-mesh",
+          "field": "aonParentId",
+          "value": "innovation-1",
+          "why": "AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16) prints the section \"Layered Mesh\"; innovation-5 is the superseded 2021 Guns & Gears printing. Record source.license is ORC. No existing overlay row for this field on this record, so no supersedes."
+        },
+        {
+          "category": "classFeatures",
+          "id": "metallic-reactance",
+          "field": "aonParentId",
+          "value": "innovation-1",
+          "why": "AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16) prints \"Metallic Reactance ... resistance equal to 3 + half your level to acid and electricity damage. When under the effects of Overdrive, the resistance increases by 2.\", matching our resistances and whileActive rows; innovation-5 is the superseded 2021 printing. No existing overlay row for this field on this record, so no supersedes."
+        },
+        {
+          "category": "classFeatures",
+          "id": "multisensory-mask",
+          "field": "aonParentId",
+          "value": "innovation-1",
+          "why": "AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16) prints the section \"Multisensory Mask (Subterfuge Suit Only)\"; innovation-5 is the superseded 2021 Guns & Gears printing. Record source.license is ORC. No existing overlay row for this field on this record, so no supersedes."
+        },
+        {
+          "category": "classFeatures",
+          "id": "muscular-exoskeleton",
+          "field": "aonParentId",
+          "value": "innovation-1",
+          "why": "AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16) prints the section \"Muscular Exoskeleton (Power Suit Only)\"; innovation-5 is the superseded 2021 Guns & Gears printing. Record source.license is ORC. No existing overlay row for this field on this record, so no supersedes."
+        },
+        {
+          "category": "classFeatures",
+          "id": "otherworldly-protection",
+          "field": "aonParentId",
+          "value": "innovation-1",
+          "why": "AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16) prints \"Otherworldly Protection ... resistance equal to 3 + half your level to void damage, or to vitality damage if you have void healing (such as if you're a dhampir). You gain the same amount of resistance to spirit damage. If you are sanctified ...\", which is our five resistances rows (void, vitality-when-void-healing, spirit, unholy-vs-holy, holy-vs-unholy) exactly; innovation-5, the 2021 printing, prints \"negative damage, or to positive damage if you have negative healing\" plus \"any types of alignment damage-good, evil, chaotic, lawful\", which contradicts our own data. No existing overlay row for this field on this record (its overlay row is resistances), so no supersedes."
+        },
+        {
+          "category": "classFeatures",
+          "id": "perfect-fortification",
+          "field": "aonParentId",
+          "value": "innovation-1",
+          "why": "AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16) prints the section \"Perfect Fortification (Power Suit Only)\"; innovation-5 is the superseded 2021 Guns & Gears printing. Record source.license is ORC. No existing overlay row for this field on this record (its overlay row is resistances), so no supersedes."
+        },
+        {
+          "category": "classFeatures",
+          "id": "phlogistonic-regulator",
+          "field": "aonParentId",
+          "value": "innovation-1",
+          "why": "AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16) prints the section \"Phlogistonic Regulator\"; innovation-5 is the superseded 2021 Guns & Gears printing. Record source.license is ORC. No existing overlay row for this field on this record (its overlay row is resistances), so no supersedes."
+        },
+        {
+          "category": "classFeatures",
+          "id": "physical-protections",
+          "field": "aonParentId",
+          "value": "innovation-1",
+          "why": "AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16) prints \"Physical Protections ... resistance to all physical damage (bludgeoning, piercing, and slashing damage, as well as persistent bleed damage) equal to half your level\", matching our four resistances rows; innovation-5 is the superseded 2021 printing. No existing overlay row for this field on this record (its overlay rows are resistances, defensesRequire and requiresModification), so no supersedes."
+        },
+        {
+          "category": "classFeatures",
+          "id": "speed-boosters",
+          "field": "aonParentId",
+          "value": "innovation-1",
+          "why": "AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16) prints the section \"Speed Boosters\"; innovation-5 is the superseded 2021 Guns & Gears printing. Record source.license is ORC. No existing overlay row for this field on this record (its overlay rows are landSpeedBonus and whileActive), so no supersedes."
+        },
+        {
+          "category": "classFeatures",
+          "id": "subtle-dampeners",
+          "field": "aonParentId",
+          "value": "innovation-1",
+          "why": "AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16) prints the section \"Subtle Dampeners (Subterfuge Suit Only)\"; innovation-5 is the superseded 2021 Guns & Gears printing. Record source.license is ORC. No existing overlay row for this field on this record, so no supersedes."
+        },
+        {
+          "category": "classFeatures",
+          "id": "tensile-absorption",
+          "field": "aonParentId",
+          "value": "innovation-1",
+          "why": "AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16) prints the section \"Tensile Absorption\"; innovation-5 is the superseded 2021 Guns & Gears printing. Record source.license is ORC. No existing overlay row for this field on this record (its overlay rows are resistances, otherTags and defensesRequire), so no supersedes."
+        },
+        {
+          "category": "items",
+          "id": "power-suit",
+          "field": "aonParentId",
+          "value": "innovation-1",
+          "why": "Our power suit ships acBonus 5 / dexCap 1 / checkPenalty -2 / speedPenalty -5 / strength 3, which is Table 2-2 of AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16) row by row. The shipped pointer innovation-5 prints a DIFFERENT table for the same suit - \"+4 ... 16\" - so the provenance pointer names a printing our own statistics contradict. No existing overlay row for this field on this record, so no supersedes."
+        },
+        {
+          "category": "items",
+          "id": "subterfuge-suit",
+          "field": "aonParentId",
+          "value": "innovation-1",
+          "why": "Our subterfuge suit ships acBonus 2 / dexCap 4 / checkPenalty -1 / strength 0, which is Table 2-2 of AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16); innovation-5 prints \"+1 ... 10\" for the same row. The pointer names a printing our own statistics contradict. No existing overlay row for this field on this record, so no supersedes."
+        }
+      ],
+      "note": "Closes the one open CROSS-FILE GAPS line of family instruments-7 (work/.b037-report-instruments-7.txt, surfaced by the CONFIRMED finding otherworldly-protection#computed-value). 23 records - the 21 armor-innovation modifications plus the two innovation armour items - carried aonParentId \"innovation-5\", the 2021 Guns & Gears printing, while every one of them encodes the 2025 remastered printing innovation-1 (void/vitality/spirit/holy/unholy, the +5 power suit, the vitality/void energy barrier). aonParentId is provenance only - grep finds no reader in src/ beyond one comment - so no built character changes and no test can pin it; the cost of leaving it is that the next prose fill or verification pass reads these records against the wrong printing, which is exactly how the legacy alignment-damage wording would land on top of our remastered resistances. Precedent for the shape: the existing overlay row classFeatures/blessed-swiftness.aonParentId = class-feature-877, which survives a regen (stamp-aonid.mjs clears aon* fields, the overlay is re-applied after it) and still holds in shipped core.json. The identical stale pointer on the 21 WEAPON-innovation modifications (aonParentId innovation-7, the 2021 Weapon printing, whose remaster is innovation-3) is NOT authored here - it is outside this gap line's records; see the report."
+    },
+    {
+      "id": "gap-instruments-7: energy-barrier#legacy-license-stamp",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "energy-barrier",
+          "field": "source",
+          "value": {
+            "book": "Pathfinder Guns & Gears",
+            "license": "ORC"
+          },
+          "why": "Same defect as the pointer row above, one field over: this record's resistances are AoN innovation-1's remastered list (acid, cold, electricity, fire, force, sonic, vitality, void), not innovation-5's OGL-era list (\"negative, positive\"), yet it alone of the 21 armor-innovation modifications is stamped license \"OGL\". Value matches its twenty sibling modifications and both innovation items byte for byte ({book: \"Pathfinder Guns & Gears\", license: \"ORC\"}), so only the license changes. No existing overlay row for this field on this record, so no supersedes."
+        }
+      ],
+      "note": "Adjacent to the gap line rather than named by it: found while checking that every one of the 23 records really encodes the remastered printing. One record, one field, whole value re-emitted."
+    }
+  ]
+}

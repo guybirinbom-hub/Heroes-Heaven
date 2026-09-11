@@ -1,0 +1,294 @@
+{
+  "findings": [
+    {
+      "id": "kitsune-spell-familiarity#daily-control",
+      "note": "The single daily-preparations control already exists (choice.daily = true, and Builder.tsx renders nothing for a choice askedAtDailyPrep). What was missing is the GRANT: dailyChoiceGrants (derive.ts:1824) reads `opt.grant` off the record's own options and every option here carried none, so the morning's answer was recorded and nothing was cast. The whole `choice` value is re-emitted because a member of one field cannot be patched. The build-time duplicate lives in src/rules/featCantripGrants.ts (FEAT_CANTRIP_GRANTS['kitsune-spell-familiarity']) and is a CROSS-FILE GAP, not a row.",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "kitsune-spell-familiarity",
+          "field": "choice",
+          "supersedes": true,
+          "why": "feat-2619 prints \"During your daily preparations, choose daze , forbidding ward , or ghost sound . Until your next daily preparations, you can cast this cantrip as a divine innate spell at will. A cantrip is heightened to a spell level equal to half your level rounded up.\" The daily control was already the single one asked; its three options carried no `grant`, so dailyChoiceGrants produced nothing and the answer granted no cantrip. Each option now carries the printed grant — divine, at will — in the option-grant shape derive.ts:1828 reads (the `endless-memories` shape). The superseded row's whole value (flag/prompt/kind/daily/options) is merged in unchanged; only `grant` is added. CLOSER CORRECTION (batch 037 verify, scripts/superseded-grant-check.mjs): the third option granted `ghost-sound`, and spell-132 Ghost Sound is SUPERSEDED — its remaster_id is spell-1528, Figment (spells/figment here) — so the grant handed the player the legacy printing, which that guard refuses for every grant route in the corpus. The grant now names `figment` and the label reads Figment; the option's `value` stays \"ghost-sound\" because it is the stored answer key and it is also the word feat-2619 prints. The sibling nagaji row already had this shape (print says \"mage hand\", the option is telekinetic-hand).",
+          "value": {
+            "flag": "kitsuneFamiliaritySpell",
+            "prompt": "Today's kitsune cantrip",
+            "kind": "array",
+            "daily": true,
+            "options": [
+              {
+                "value": "daze",
+                "label": "Daze",
+                "description": "A divine innate cantrip you can cast at will until your next daily preparations.",
+                "grant": { "innateSpells": [{ "spellId": "daze", "tradition": "divine", "atWill": true }] }
+              },
+              {
+                "value": "forbidding-ward",
+                "label": "Forbidding Ward",
+                "description": "A divine innate cantrip you can cast at will until your next daily preparations.",
+                "grant": { "innateSpells": [{ "spellId": "forbidding-ward", "tradition": "divine", "atWill": true }] }
+              },
+              {
+                "value": "ghost-sound",
+                "label": "Figment",
+                "description": "A divine innate cantrip you can cast at will until your next daily preparations.",
+                "grant": { "innateSpells": [{ "spellId": "figment", "tradition": "divine", "atWill": true }] }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "kitsune-spell-mysteries#daily-control",
+      "note": "Same shape as its four siblings: one daily control (already correct) whose options granted nothing. `rank: 1` is stated even though all three spells are base rank 1, because print names the rank and the sibling 13th-level feats need it; `usesPerDay: 1` states the printed \"once that day\".",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "kitsune-spell-mysteries",
+          "field": "choice",
+          "supersedes": true,
+          "why": "feat-2624 prints \"During your daily preparations, choose bane , illusory object , or sanctuary . You can cast this as a 1st-level divine innate spell once that day.\" The single daily control was already in place; its options carried no `grant`, so dailyChoiceGrants (derive.ts:1824) returned nothing and none of the three was castable. The superseded row's whole value is merged in unchanged; only `grant` and a per-option `description` are added.",
+          "value": {
+            "flag": "kitsuneMysteriesSpell",
+            "prompt": "Today's kitsune spell",
+            "kind": "array",
+            "daily": true,
+            "options": [
+              {
+                "value": "bane",
+                "label": "Bane",
+                "description": "A 1st-rank divine innate spell you can cast once today.",
+                "grant": { "innateSpells": [{ "spellId": "bane", "tradition": "divine", "rank": 1, "usesPerDay": 1 }] }
+              },
+              {
+                "value": "illusory-object",
+                "label": "Illusory Object",
+                "description": "A 1st-rank divine innate spell you can cast once today.",
+                "grant": { "innateSpells": [{ "spellId": "illusory-object", "tradition": "divine", "rank": 1, "usesPerDay": 1 }] }
+              },
+              {
+                "value": "sanctuary",
+                "label": "Sanctuary",
+                "description": "A 1st-rank divine innate spell you can cast once today.",
+                "grant": { "innateSpells": [{ "spellId": "sanctuary", "tradition": "divine", "rank": 1, "usesPerDay": 1 }] }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "nagaji-spell-mysteries#daily-control",
+      "note": "The occult twin of kitsune-spell-mysteries. Their middle option pointing at no spell at all is WG's defect, not ours — all three of our option values resolve to real records (charm, fleet-step, heal).",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "nagaji-spell-mysteries",
+          "field": "choice",
+          "supersedes": true,
+          "why": "feat-3988 prints \"During your daily preparations, choose charm , fleet step , or heal . You can cast the chosen spell as a 1st-level occult innate spell once that day.\" One daily control was already correct; its options carried no `grant`, so the morning's answer was recorded and granted nothing. The superseded row's whole value is merged in unchanged; only `grant` and a per-option `description` are added.",
+          "value": {
+            "flag": "nagajiMysteriesSpell",
+            "prompt": "Today's nagaji spell",
+            "kind": "array",
+            "daily": true,
+            "options": [
+              {
+                "value": "charm",
+                "label": "Charm",
+                "description": "A 1st-rank occult innate spell you can cast once today.",
+                "grant": { "innateSpells": [{ "spellId": "charm", "tradition": "occult", "rank": 1, "usesPerDay": 1 }] }
+              },
+              {
+                "value": "fleet-step",
+                "label": "Fleet Step",
+                "description": "A 1st-rank occult innate spell you can cast once today.",
+                "grant": { "innateSpells": [{ "spellId": "fleet-step", "tradition": "occult", "rank": 1, "usesPerDay": 1 }] }
+              },
+              {
+                "value": "heal",
+                "label": "Heal",
+                "description": "A 1st-rank occult innate spell you can cast once today.",
+                "grant": { "innateSpells": [{ "spellId": "heal", "tradition": "occult", "rank": 1, "usesPerDay": 1 }] }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "kitsune-spell-expertise#daily-control",
+      "note": "The grant half only. The feat's second clause — \"You become an expert in divine spell DCs and divine spell attack rolls\" — is deliberately NOT authored as a `spellcastingGrant`: build.ts:8272 already floors every innate caster at expert from 12th level (Player Core p.298, quoted there), and this is a 13th-level feat, so the row could never raise a number on any character and would ship as dead data. Confusion is base rank 4, so `rank: 5` is load-bearing here.",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "kitsune-spell-expertise",
+          "field": "choice",
+          "supersedes": true,
+          "why": "feat-2629 prints \"During your daily preparations, choose confusion , death ward , or illusory scene . You can Cast this Spell as a 5th-level divine innate spell once that day.\" The single daily control was already in place; its options carried no `grant`, so nothing was castable. The superseded row's whole value is merged in unchanged; only `grant` and a per-option `description` are added.",
+          "value": {
+            "flag": "kitsuneExpertiseSpell",
+            "prompt": "Today's kitsune spell",
+            "kind": "array",
+            "daily": true,
+            "options": [
+              {
+                "value": "confusion",
+                "label": "Confusion",
+                "description": "A 5th-rank divine innate spell you can cast once today.",
+                "grant": { "innateSpells": [{ "spellId": "confusion", "tradition": "divine", "rank": 5, "usesPerDay": 1 }] }
+              },
+              {
+                "value": "death-ward",
+                "label": "Death Ward",
+                "description": "A 5th-rank divine innate spell you can cast once today.",
+                "grant": { "innateSpells": [{ "spellId": "death-ward", "tradition": "divine", "rank": 5, "usesPerDay": 1 }] }
+              },
+              {
+                "value": "illusory-scene",
+                "label": "Illusory Scene",
+                "description": "A 5th-rank divine innate spell you can cast once today.",
+                "grant": { "innateSpells": [{ "spellId": "illusory-scene", "tradition": "divine", "rank": 5, "usesPerDay": 1 }] }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "nagaji-spell-expertise#daily-control",
+      "note": "The occult twin. Our first option is `flicker`, the remaster record for the spell print calls blink (public/core.json has no `blink`), so the option values already match print one for one; Flicker is base rank 4, which makes `rank: 5` load-bearing. The expert occult DC/attack clause is omitted for the same reason as its kitsune twin — build.ts:8272 already floors an innate caster at expert from 12th level and this feat is 13th.",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "nagaji-spell-expertise",
+          "field": "choice",
+          "supersedes": true,
+          "why": "feat-3996 prints \"During your daily preparations, choose blink , control water , or subconscious suggestion . You can Cast this Spell as a 5th-level occult innate spell once that day.\" The single daily control was already in place; its options carried no `grant`, so dailyChoiceGrants returned nothing. The superseded row's whole value is merged in unchanged; only `grant` and a per-option `description` are added.",
+          "value": {
+            "flag": "nagajiExpertiseSpell",
+            "prompt": "Today's nagaji spell",
+            "kind": "array",
+            "daily": true,
+            "options": [
+              {
+                "value": "flicker",
+                "label": "Flicker",
+                "description": "A 5th-rank occult innate spell you can cast once today.",
+                "grant": { "innateSpells": [{ "spellId": "flicker", "tradition": "occult", "rank": 5, "usesPerDay": 1 }] }
+              },
+              {
+                "value": "control-water",
+                "label": "Control Water",
+                "description": "A 5th-rank occult innate spell you can cast once today.",
+                "grant": { "innateSpells": [{ "spellId": "control-water", "tradition": "occult", "rank": 5, "usesPerDay": 1 }] }
+              },
+              {
+                "value": "subconscious-suggestion",
+                "label": "Subconscious Suggestion",
+                "description": "A 5th-rank occult innate spell you can cast once today.",
+                "grant": { "innateSpells": [{ "spellId": "subconscious-suggestion", "tradition": "occult", "rank": 5, "usesPerDay": 1 }] }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "time-mage-dedication#innate-tradition",
+      "note": "No picker, exactly as the owner ruled: the archetype's prerequisite is \"You have a spellcasting class feature\", so the tradition of the spells used to meet it IS the character's own class casting. `traditionFromCasting` is the existing field for that sentence (types.ts:2494) and has a reader at build.ts:8243 — `(g.traditionFromCasting ? caster?.tradition : undefined) ?? g.tradition ?? spell.traditions[0]` — where `caster` is the character's prepared/spontaneous entry. No `tradition` fallback is authored because the prerequisite forbids the not-a-caster case; without this the fallback was the spell's own first tradition, which is arcane for time-sense.",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "time-mage-dedication",
+          "field": "innateSpells",
+          "supersedes": true,
+          "why": "feat-8480 prints \"You also gain time sense as an innate cantrip usable at will. This innate spell and your focus spells from the time mage archetype are of the same tradition as the spells you used to meet the archetype's prerequisites.\" The shipped grant was `[{spellId:'time-sense',atWill:true}]` with no tradition, so build.ts fell through to the spell's first tradition (arcane) and a divine cleric's Time Sense read arcane. The superseded row's whole value is carried through; only `traditionFromCasting` is added.",
+          "value": [
+            { "spellId": "time-sense", "atWill": true, "traditionFromCasting": true }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "guardians-armor#automatic-resistance",
+      "note": "NO ROW — no reader exists for the printed condition, and authoring one would ship dead data while deleting the live toggle would take the resistance away entirely. The clause gates on the WORN ARMOUR'S CATEGORY. `IwrEntry` (types.ts:480-539) carries minLevel / whenCreatureTrait / unlessCreatureTrait / whenVoidHealing / against / condition and nothing about armour, and the deriveDefenses resistance loop (derive.ts:2786-2818) honours exactly those gates. The formula route is closed too: `FormulaScope` is {level, abilities, speeds, archetypeFeats} (derive.ts:2275) and substituteTokens leaves any other @token in place so the value resolves to 0. The fact itself IS on the sheet — `findWornArmor(c, db).armor.category` — so this is a reader gap, not a data gap; see CROSS-FILE GAPS and DATA STILL NEEDED in the report for the exact code change and the two rows that must land WITH it (never before it).",
+      "backfillRows": []
+    },
+    {
+      "id": "clawdancer-dedication#duplicate-strikes",
+      "note": "A delete, not a move: both Strikes are ALREADY on the stances that print them (core.stances['claw-stance'].strikes = frenzied claw 1d6 slashing, core.stances['talon-stance'].strikes = Spinning Talon 1d8 slashing), and deriveStrikes renders the active stance's own strikes at derive.ts:5155. build.ts's `collectGrantedNaturals` skips a feat's grantedStrikes only when the FEAT ITSELF is a stance with a stance definition (build.ts:2881-2884); the dedication is `['archetype','dedication']` with no `content.stances['clawdancer-dedication']`, so its copies were never skipped and surfaced permanently, beside the stance's copy. `grantsActions: ['claw-stance','talon-stance']` is untouched — that is the lane that puts the two stance toggles on the Main tab.",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "clawdancer-dedication",
+          "field": "grantedStrikes",
+          "supersedes": true,
+          "why": "feat-5436 defines both attacks INSIDE the stances: \"Claw Stance ... The only Strikes you can make are frenzied claw unarmed attacks. These deal 1d6 slashing damage, are in the brawling group, and have the agile, finesse, grapple, unarmed, and versatile piercing traits.\" and \"Talon Stance ... The only Strikes you can make are spinning talon unarmed attacks.\" The dedication grants neither Strike on its own, so the superseded row (a second copy of both, worth [{Frenzied Claw d6 slashing brawling agile/finesse/grapple/unarmed/versatile-p},{Spinning Talon d8 slashing brawling finesse/sweep/unarmed}]) showed each Strike twice while a stance was on and showed both while none was. Deleted whole; the stance definitions keep the printed statistics.",
+          "value": null
+        }
+      ]
+    },
+    {
+      "id": "versatile-mutation#energy-level",
+      "note": "One `choice` row carries BOTH of this record's choice-side changes, because two findings on the same record+field must be one row: the 8th-level gate (this finding) and the removal of `distinctAcrossTakes` (versatile-mutation#takable-twice — that flag only ever served a second taking of this feat, which print does not allow). The bludgeoning-or-slashing clause needs no option: print makes it a per-use decision at the table (\"When you Spit Ambient Magic, you CAN CHOOSE to have the ostilli deal bludgeoning or slashing damage instead of piercing\"), not a build answer. ⚠ `FeatChoiceDef.minLevel` has a reader on the DAILY path only (dailyChoices.ts:53); the build-time path ignores it — see CROSS-FILE GAPS.",
+          "backfillRows": [
+        {
+          "category": "feats",
+          "id": "versatile-mutation",
+          "field": "choice",
+          "supersedes": true,
+          "why": "feat-5454 prints \"At 8th level, choose one of the following: acid, cold, electricity, fire, or sonic damage; when your ostilli Spits Ambient Magic, it can deal that damage type instead and adds that trait to the action.\" The shipped choice asked the five-option question at 4th level with no gate, four levels before the character is entitled to any of its answers. `minLevel: 8` is the field FeatChoiceDef already declares for \"the character level from which this question is asked at all\". `distinctAcrossTakes` is dropped in the same value because the same document prints no Special clause allowing a second taking (see the maxTakable row). The superseded row's whole value (flag/prompt/kind/options) is merged in unchanged.",
+          "value": {
+            "flag": "choice",
+            "prompt": "Damage Type",
+            "kind": "array",
+            "minLevel": 8,
+            "options": [
+              { "value": "acid", "label": "Acid" },
+              { "value": "cold", "label": "Cold" },
+              { "value": "electricity", "label": "Electricity" },
+              { "value": "fire", "label": "Fire" },
+              { "value": "sonic", "label": "Sonic" }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "versatile-mutation#takable-twice",
+      "note": "`maxTakable` absent reads as 1 through `maxTakes()` (featGrants.ts:881-884), so deleting the field is the whole fix — no replacement value is needed. The `distinctAcrossTakes` half of this finding rides on the `choice` row above (same record, same field as versatile-mutation#energy-level, so it must be one row). The second row strips the SOURCE of the false flag: the shipped description carried a Special clause that is in no printed document, so removing the flag alone would have left the player reading a promise the builder no longer keeps. Both rows are pathless, as a description row must be.",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "versatile-mutation",
+          "field": "maxTakable",
+          "why": "feat-5454's full printed text ends \"...and adds that trait to the action.\" — there is no Special clause, and a corpus grep of the AoN mirror's feat documents for \"second time at 16th level\" finds none. The record shipped `maxTakable: 2`, letting the feat be taken twice on nothing but invented text. Deleted; `maxTakes()` reads an absent field as 1.",
+          "value": null
+        },
+        {
+          "category": "feats",
+          "id": "versatile-mutation",
+          "field": "description",
+          "why": "feat-5454's whole body is \"Your ostilli's darts can deal different types of damage. When you Spit Ambient Magic, you can choose to have the ostilli deal bludgeoning or slashing damage instead of piercing damage. At 8th level, choose one of the following: acid, cold, electricity, fire, or sonic damage; when your ostilli Spits Ambient Magic, it can deal that damage type instead and adds that trait to the action.\" Our description appended a \"**Special** You can take this feat a second time at 16th level...\" paragraph that appears in no document in the AoN mirror — it is the text the false `maxTakable: 2` was read from. Restored to the printed body, verbatim.",
+          "value": "Your ostilli's darts can deal different types of damage. When you Spit Ambient Magic, you can choose to have the ostilli deal bludgeoning or slashing damage instead of piercing damage. At 8th level, choose one of the following: acid, cold, electricity, fire, or sonic damage; when your ostilli Spits Ambient Magic, it can deal that damage type instead and adds that trait to the action."
+        }
+      ]
+    },
+    {
+      "id": "arcana-of-iron#weapon-proficiency",
+      "note": "Only the wrong grant is a row. The two proficiency halves have no data carrier at all: no feat in public/core.json carries any weapon-category proficiency field (the only weapon-ish keys on any feat record are untrainedProficiency / critSpecWeapons / weaponTraits / untrainedWeaponProficiency), and the trained-in-advanced-weapons grant this feat DOES deliver lives in the code registry src/rules/featGrantsAuto.ts as `'arcana-of-iron': { weapon: { advanced: 'trained' } }`. The conditional expert step therefore belongs in that registry beside it — see CROSS-FILE GAPS.",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "arcana-of-iron",
+          "field": "grantsClassFeatures",
+          "supersedes": true,
+          "why": "feat-7980 prints \"You become trained in advanced weapons. If you gain the weapon expertise class feature, your proficiency in martial and advanced weapons increases to expert.\" That is a CONDITION on a feature the character's class may grant, not a grant of the feature itself; the superseded row `grantsClassFeatures: ['weapon-expertise']` handed a war mage the Weapon Expertise class feature outright, which no class gives at 6th level and which this feat never gives at all. Deleted whole.",
+          "value": null
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,174 @@
+BATCH 037 — ADVERSARIAL VERIFY, family data-rows-2 (chunk 2 of 6 of data-rows)
+Spec checked:   work/.b037-rows-data-rows-2.json   (now 12 backfill rows, was 11)
+Report checked: work/.b037-report-data-rows-2.txt
+Tests checked:  test/batch037-data-rows-2.test.ts  (12 it(); 11 fail today for the one right reason)
+Manifest:       work/.b037-specs.json — all 16 entries present (situational, instruments-1..7,
+                data-rows-1..6, 2 created-prose); this family's stage[] now also lists this file.
+npx tsc --noEmit: CLEAN.  node scripts/test-flip-audit.mjs --batch 037: CLEAN (21 files, every flip cited).
+
+HOW THE ROWS WERE EXERCISED (harness built, run, deleted)
+  · scripts/wg-batch-run.mjs `precheck()` was imported and run over (a) this chunk's rows and (b) the
+    WHOLE manifest, against the real scripts/data/effect-backfill.json.
+  · lib/apply-backfill.mjs was then run over IN-MEMORY COPIES of public/core.json and
+    public/core-descriptions.json with this chunk's rows merged in — including the prose routing
+    apply-backfill-now.mjs performs — and the driver's own apply post-check replayed over the result.
+  · Real level-10 characters were built from the patched copy through src/rules/build.ts (jiti), and
+    every assertion in test/batch037-data-rows-2.test.ts was replayed against it.
+  Nothing was written to public/, to scripts/data/effect-backfill.json, or to any sibling's file.
+
+ROW-LEVEL CHECKS (all pass)
+  · 12 rows, 8 records; every target record exists in core.json — no create row needed.
+  · No two rows in this spec share a record+field+path key, and NO row in ANY of the 16 manifest specs
+    (100 rows total) collides with one of mine. No sibling spec touches any of my 8 records at all.
+    (The builder's "sponsored-by-teacher-ot#rarity" sibling row does not exist in any spec.)
+  · Every re-emitted value diffed against the shipped one: aeon-stone-agate-ellipsoid /
+    -dusty-rose-prism / -western-star `resonant` each keep their `note` BYTE-FOR-BYTE and add only
+    `spellNotes`; feats/spew-tentacles `spellNotes` keeps its `black-tentacles` entry BYTE-FOR-BYTE and
+    adds only `slither`. Nothing lost or narrowed.
+  · All 6 rows that land on an existing overlay key declare supersedes:true; the 6 that do not, do not
+    need it (verified key-by-key against the overlay on disk).
+  · Every spell id a row names ships: augury, shield, illusory-disguise, black-tentacles, slither.
+  · Description rows land in public/core-descriptions.json (`d`), paragraph-diffed: streetfood-vendor
+    changes paragraph 3 ONLY; toppling-tentacles changes two words ONLY ("bludgeoning" ×2);
+    wild-lights changes one word ONLY ("Light," -> "Dancing Lights,").
+
+PER FINDING
+
+sponsored-by-teacher-ot#one-pick — DONE.
+  Proved on a BUILT character, not on the data: with the two controls answered differently
+  (featChoices['background:sponsored-by-teacher-ot']='survival', backgroundSkillChoice='performance')
+  the SHIPPED build trains BOTH Survival and Performance; the PATCHED build trains Performance only,
+  and still grants impressive-performance. The deletion took the duplicate, not the working half.
+
+streetfood-vendor#printed-choice — DONE.
+  Paragraph 3 becomes the printed Tian Xia sentence verbatim; paragraphs 0,1,3-7 byte-identical;
+  trainedSkillChoice stays ['crafting','society'] and the record still carries no `choice`. The stale
+  mirror background-479 was correctly not used as the source (precheck 5 passes because every restored
+  token is already in our own text).
+
+locate-lawbreakers#order-of-the-gate — NOT-DONE, and the builder is RIGHT to leave it.
+  Independently checked: the clause is the Order of the Gate's own Lesser Order Benefit
+  (hellknight-order-9 / -2), but the benefit is reachable by a non-Gate Hellknight through order
+  cross-training, so "If you're a member of the Order of the Gate" is a real gate and not decoration —
+  the record's `prerequisites:["Order of the Gate"]` is a display string, not a mechanical gate.
+  Grepped: no `requiresFlag` / `whenFlag` / `requiresChoiceFlag` exists; `InnateSpellGrant.whenChoice`
+  is the record's OWN choice (types.ts:2430, "Granted only while the RECORD's own `choice` holds this
+  answer"). Authoring `heightenAt` without the gate would ship exactly the WG encoding this CONFIRMED
+  finding refutes. See CROSS-FILE GAPS.
+
+oatia-skysage-dedication#cantrip-picker — NOT-DONE, and the builder is RIGHT to leave it.
+  Verified by grep: `cantripOptions` / `allowedCantrips` exist nowhere in src/. The 38-cantrip list is
+  computed in code from the tradition alone at src/builder/shared.tsx:3902 and src/builder/Builder.tsx:971;
+  CASTER_ARCHETYPES['oatia-skysage-dedication'] (casterArchetypes.ts:304) carries tradition / keyAbility /
+  cantrips / repertoire / customUnlocks and no allowed-spell field. No core.json row can express it.
+
+aeon-stone-agate-ellipsoid#resonant-note — NOT-DONE (row is correct, but INERT).
+  The row is well-formed and lossless, and the reader does not exist. Built a level-10 character with
+  all three stones invested and marked 'wayfinder-slotted': the stones DO grant their spells (repertoire
+  {1:[illusory-disguise], 2:[augury]}, spellSources naming each stone) and `character.spellNotes` is
+  EMPTY. build.ts:8088 reads `item.resonant.innateSpells` and nothing else; `resonant.spellNotes` has no
+  reader anywhere and `ItemBase.resonant` does not declare the field. The printed clause still reaches
+  the player only by opening the item. Same evidence for the two below.
+
+aeon-stone-dusty-rose-prism#resonant-note — NOT-DONE (row correct, inert; no reader — see above).
+
+aeon-stone-dusty-rose-prism#duplicate-picker — DONE.
+  `effectChoices` held exactly one entry (id `resonant`), so the field deletion loses no other question;
+  on the patched build the stone still grants Shield (spellSources: "Aeon Stone (Dusty Rose Prism)"), so
+  the deletion did not take the power with the picker. The universal 'Slotted in a wayfinder'
+  designation remains the one control and is what build.ts:8088 gates on.
+
+aeon-stone-western-star#resonant-note — NOT-DONE (row correct, inert; no reader — see above).
+
+wild-lights#printed-spell-name — FIXED-BY-ME. As submitted it would have FAILED THE WHOLE BATCH, twice.
+  (1) The description row appended a `***Note** …*` line, and scripts/wg-batch-run.mjs precheck (5)
+      (lines 682-694) refuses a description row that introduces tokens present in neither our current
+      text nor the cited mirror doc. Running the real precheck over the manifest: "the description row
+      for feats/wild-lights introduces token(s) that are in NEITHER our current text nor the mirror
+      feat-3375: note, is, legacy, remaster, replaced, with, this, s" — NOTHING would have been written,
+      for any family. The guard is right: a description row carries PRINT, and this line is ours.
+      FIX: the description row now restores the printed spell name and changes nothing else, and the
+      line lives on the record's own `note` field — the app's own-voice lane, 87 feats already use it,
+      rendered on a built character as "**Note:** …" under the feat (src/sheet/FeatsTab.tsx:131). New
+      row: feats/wild-lights `note`, no supersedes (the record has no note and no note row).
+  (2) The descRefs row was value:null. apply-backfill-now.mjs hands `descRefs` to the applier as a
+      skipField (line 45) and then routes it to core-descriptions.json only when `Array.isArray(value)`
+      (line 72) — so a null row reaches NEITHER file, and the apply stage's post-check then refuses the
+      batch AFTER writing: "is a removal row (value:null) and the field is still present in the shipped
+      artefact". All 40 pre-existing descRefs rows target familiarAbilities, an UNSPLIT bucket, which is
+      why this had never been hit. FIX: value `[]`. It routes, it survives split-descriptions.mjs
+      (`if (r)` — [] is truthy), and it is equivalent to absent for every reader (each tests
+      `descRefs?.length` or maps it). Replayed the applier + the driver's post-check on copies: clean.
+  Test updated for both: `toEqual([])` for descRefs, and the Note assertion moved onto `rec.note` with a
+  new guard that the printed description does NOT contain "Remaster". The "no rider on Light" half of
+  the ruling still holds — no spellNote is authored on `light` by this record.
+
+toppling-tentacles#replacement-note — DONE.
+  Proved on a BUILT character holding both tentacle feats: `character.spellNotes` carries
+  black-tentacles -> ["Toppling Tentacles :: When you cast Black Tentacles, replace the spell's …"] and
+  slither -> ["Toppling Tentacles :: Printed for Black Tentacles, which Slither replaced. …"], each
+  attributed by the feat's own name, which is what "clearly marked as coming from the feat" asks for.
+  The "bludgeoning" repair is inside the right finding (no other spec touches this record) and precheck
+  (5) confirms both insertions are verbatim in mirror feat-3391.
+  Checked and NOT a duplicate risk: build.ts's `voidSwapped`/`renamedNote` pair (6796-6808) is the VOID
+  HEALING swap only, not a superseded-spell redirect, so the hand-written slither entry is not a second
+  copy of an auto-renamed one.
+
+spew-tentacles#replacement-note — DONE.
+  Same built-character evidence: black-tentacles and slither both carry the clause under "Spew
+  Tentacles". The existing overlay entry is carried byte-for-byte, the grant (overlaid to `slither`) and
+  the clause now name the same spell, and the grant carries no minLevel so build.ts:6849 withholds
+  neither entry.
+
+DATA STILL NEEDED (2)
+- feats/locate-lawbreakers / effectChoices — BLOCKED on the reader below. Once a cross-record
+  choice-flag gate exists, re-emit the whole `effectChoices` value with each of the four tradition
+  options' grant.innateSpells[0] gaining `heightenAt: [{ "level": 14, "rank": 5 }]` AND that new gate
+  ({ flag: "hellknightOrder", value: "order-of-the-gate" }); supersedes:true, carrying the existing four
+  options whole. Authoring the heightening without the gate ships WG's defect (rank 5 at 14 for every
+  taker), which this finding CONFIRMS as wrong.
+- feats/locate-lawbreakers / note — value:null, supersedes:true. Only AFTER the row above lands: the
+  standing note is the player's only information today, and deleting it first is a net loss.
+
+CROSS-FILE GAPS (6)
+- src/rules/types.ts, ItemBase.resonant — add `spellNotes?: SpellNote[]` to `{ note; innateSpells?;
+  resistances? }`. The three aeon-stone rows in this spec author it; it has NO READER today (verified on
+  a built character: spellNotes empty with all three stones slotted), so until the teach below lands the
+  rows are inert data. Nothing regresses — the item-side note keeps rendering as it already does.
+- src/rules/build.ts:8088, the `item?.resonant && inv.designations?.includes('wayfinder-slotted')` block
+  — push each `item.resonant.spellNotes` entry through `pushSpellNote(g.spellId, item.name +
+  ' (resonant)', g.note)`. Checked for whoever takes it: `pushSpellNote` is declared at build.ts:6837 and
+  the assembled `spellNotes` is written onto the character at build.ts:8791, so 8088 is inside the window
+  and needs no reordering. The item's own top-level `spellNotes` lane must NOT be used instead — it fires
+  at build.ts:6843 for any worn/invested item with no designation check, which would print the resonant
+  clause on a stone orbiting the player's head. Three findings unblock at once.
+- src/rules/build.ts + src/rules/types.ts — a predicate gating a grant on ANOTHER record's `choice.flag`
+  (locate-lawbreakers#order-of-the-gate). The order is already stored (feats/hellknight-dedication, flag
+  `hellknightOrder`, value `order-of-the-gate`) and `choiceFlagAnswer` (build.ts:1969) already reads
+  flags; nothing can consume one as a GATE. `InnateSpellGrant.whenChoice` is the record's OWN choice,
+  `EffectChoiceOption.onlyWhenFlag` (build.ts:1635) only filters options and passes an UNANSWERED flag
+  through, and `effectChoiceOffered`'s `requiresChoice` is same-record only.
+- test/locate-lawbreakers.test.ts, it('the heightening is still recorded as an open question rather than
+  silently decided') — asserts `locate-lawbreakers` is still in work/owner-questions.json `open[]`
+  (verified: it is, as entry n=7). The owner RULED on 2026-09-10 (#7, "keep the printed scope"), so this
+  test pins a question that is now closed and must flip when the gate above lands. Neither file may be
+  edited by an agent in this workflow.
+- src/rules/casterArchetypes.ts (CASTER_ARCHETYPES['oatia-skysage-dedication'], line 304) +
+  src/builder/shared.tsx:3902 + src/builder/Builder.tsx:971 — oatia-skysage-dedication#cantrip-picker.
+  Needs `CasterArchetype.cantripOptions?: string[]` = ['detect-magic','guidance','know-the-way',
+  'read-aura'], honoured by BOTH picker call sites, plus the re-choose path for a stored pick outside the
+  four (owner 2026-09-10 #113). No core.json field can express it.
+- NEW (found by this verify) scripts/apply-backfill-now.mjs:72 — a prose field cannot be REMOVED by a
+  row. `descRefs` with value:null is skipped for core.json (skipFields, line 45) and skipped again by the
+  routing (`Array.isArray(value)`), so it reaches neither artefact and the apply stage's post-check then
+  refuses the batch after writing. Same hole for `description: null` (isDesc requires a string). Worked
+  around here with `[]`, which is equivalent for every descRefs reader — but there is no equivalent for
+  `description`, and the next author to write a prose removal row will stop the batch. Fix: let the
+  routing accept `null` and `delete entry[key]`, deleting the descriptions entry when it empties.
+- (not a gap, recorded) sibling collisions: none. All 16 manifest specs were loaded and their 100 rows
+  keyed; no cross-spec collision exists anywhere in batch 037, and no sibling touches any of my records.
+
+MY MANIFEST stage[] (files this verify touched; already appended to work/.b037-specs.json)
+  work/.b037-rows-data-rows-2.json
+  work/.b037-verify-data-rows-2.txt
+  test/batch037-data-rows-2.test.ts

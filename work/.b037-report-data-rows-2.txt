@@ -1,0 +1,118 @@
+BATCH 037 — family data-rows-2 (chunk 2 of 6 of the data-rows family)
+Spec:   work/.b037-rows-data-rows-2.json   (11 findings, 11 backfill rows)
+Tests:  test/batch037-data-rows-2.test.ts  (12 it(); 11 fail today for the one right reason — the
+        rows are not applied yet — and 1 passes before and after, by design)
+No src/ or scripts/ file was edited. scripts/data/effect-backfill.json was NOT written.
+
+DATA STILL NEEDED
+- feats/locate-lawbreakers / effectChoices — BLOCKED on the reader below. Once a cross-record choice-flag gate exists, re-emit the whole `effectChoices` value with each of the four tradition options' grant.innateSpells[0] gaining `heightenAt: [{ "level": 14, "rank": 5 }]` AND that new gate ({ flag: "hellknightOrder", value: "order-of-the-gate" }); supersedes:true, carrying the existing four options whole. Authoring the heightening without the gate ships WG's defect (rank 5 at 14 for every taker), which this finding CONFIRMS as wrong.
+- feats/locate-lawbreakers / note — value:null, supersedes:true. Only AFTER the row above lands: the standing note is the player's only information today, and deleting it first is a net loss.
+- (nothing else — every other finding this chunk owns is authored in work/.b037-rows-data-rows-2.json)
+
+CROSS-FILE GAPS
+- src/rules/types.ts, ItemBase.resonant — add `spellNotes?: SpellNote[]` to `{ note; innateSpells?; resistances? }`. The three aeon-stone rows in this spec author it; it has NO READER today, so until the teach below lands the rows are inert data (the item-side note keeps rendering as it already does — nothing regresses).
+- src/rules/build.ts:8088, the `item?.resonant && inv.designations?.includes('wayfinder-slotted')` block — push each `item.resonant.spellNotes` entry through `pushSpellNote(g.spellId, item.name + ' (resonant)', g.note)`. Checked for whoever takes it: `pushSpellNote` is declared at build.ts:6837 and the assembled `spellNotes` is written onto the character at build.ts:8791, so 8088 is inside the window and needs no reordering. The item's own top-level `spellNotes` lane must NOT be used instead — it fires at build.ts:6843 for any worn/invested item with no designation check, which would print the resonant clause on a stone orbiting the player's head.
+- src/rules/build.ts + src/rules/types.ts — a predicate gating a grant on ANOTHER record's `choice.flag` (locate-lawbreakers#order-of-the-gate). The order is already stored (feats/hellknight-dedication, flag `hellknightOrder`, value `order-of-the-gate`) and `choiceFlagAnswer` (build.ts:1969) already reads flags; nothing can consume one as a gate. `InnateSpellGrant.whenChoice` is the record's OWN choice (here the tradition pick), `EffectChoiceOption.onlyWhenFlag` (build.ts:1635) only filters options and passes an UNANSWERED flag through, and `effectChoiceOffered`'s `requiresChoice` is same-record only. Grepped `requiresFlag` / `whenFlag` / `requiresChoiceFlag` across src/rules — none exist.
+- test/locate-lawbreakers.test.ts, it('the heightening is still recorded as an open question rather than silently decided') — asserts `locate-lawbreakers` is still in work/owner-questions.json `open[]`. The owner RULED on 2026-09-10 (#7, "keep the printed scope"), so this test pins a question that is now closed and must flip when the gate above lands. Not my file, and I must not edit work/owner-questions.json.
+- src/rules/casterArchetypes.ts (CASTER_ARCHETYPES['oatia-skysage-dedication'], line 304) + src/builder/shared.tsx:3902 + src/builder/Builder.tsx:971 — oatia-skysage-dedication#cantrip-picker. The 38-cantrip list is built in CODE from the tradition alone; `CasterArchetype` carries no allowed-cantrip field (its own header comment says so: "nothing here restricts WHICH cantrips may be prepared from it") and neither does `SpellcastingGrant`, so no core.json row can express the restriction. Needs `CasterArchetype.cantripOptions?: string[]` = ['detect-magic','guidance','know-the-way','read-aura'], honoured by BOTH picker call sites, plus the re-choose path for a stored pick outside the four (owner 2026-09-10 #113).
+- data-rows-1..6 siblings: no collision found. The only other batch-037 finding on any record I touch is `sponsored-by-teacher-ot#rarity`, which is a different FIELD (`rarity`) from mine (`choice`), so the two rows cannot collide.
+
+PER FINDING
+
+sponsored-by-teacher-ot#one-pick — DONE (row).
+  Row: backgrounds/sponsored-by-teacher-ot field `choice` -> null, supersedes:true.
+  The question was asked twice: `trainedSkillChoice` (rendered at src/builder/shared.tsx:3010, and the
+  answer `grantedFeatByChoice` reads at build.ts:534-536) and a second `choice` control with flag
+  `bgSkill` (rendered at src/builder/shared.tsx:3089). Nothing reads the second control's answer —
+  backgroundGrants.ts's `{kind:'bgSkill'}` spec and build.ts:1892 both resolve off
+  `trainedSkillChoice`, not off the flag — so its only effect was to let the player answer the two
+  differently and train two skills. Deleting it leaves one control driving both halves.
+  Pinned by: test/batch037-data-rows-2.test.ts, describe 'backgrounds/sponsored-by-teacher-ot asks its
+  one printed pick once' — it('carries no duplicate `choice` control…') flips on the row, and
+  it('the single answer drives both the training and the feat') is the built-character guard that the
+  deletion took the duplicate and not the working half (it passes before and after, deliberately).
+
+streetfood-vendor#printed-choice — DONE (row).
+  Row: backgrounds/streetfood-vendor field `description` -> the printed sentence verbatim in place of
+  our rewrite; every other paragraph carried through byte-for-byte (word-diffed: the only change is
+  "either Crafting or Society, and Cooking Lore." -> "your choice of either the Crafting or Society
+  skill, as well as the Cooking Lore skill.").
+  The pick itself was already correct and already asked exactly once — the record's own `choice`
+  control was deleted by an earlier overlay row, so `trainedSkillChoice` is the only control. NOT
+  re-derived from the mirror: background-479.json (release_date 2024-08-28) is stale and still reads
+  "trained in the Crafting skill, and the Cooking Lore skill".
+  Pinned by: describe 'backgrounds/streetfood-vendor prints the current Tian Xia sentence'.
+
+locate-lawbreakers#order-of-the-gate — NOT DONE, no row. See DATA STILL NEEDED + CROSS-FILE GAPS.
+  The data half is ready and written out there; it is blocked on a reader that does not exist, and
+  the half I could author alone is precisely the WG encoding this finding refutes. No test written:
+  a test today could only pin the defect.
+
+oatia-skysage-dedication#cantrip-picker — NOT DONE, no row. CODE-ONLY; see CROSS-FILE GAPS.
+  No core.json field can express "only these four cantrips": the list is computed in the builder from
+  the tradition, driven by the code-side CASTER_ARCHETYPES table. No test written for the same reason
+  as above.
+
+aeon-stone-agate-ellipsoid#resonant-note — DONE (row).
+  Row: items/aeon-stone-agate-ellipsoid field `resonant` re-emitted WHOLE, supersedes:true, its
+  existing `note` carried byte-for-byte and a `spellNotes: [{ spellId: 'augury', note: <same clause> }]`
+  member added. Hung on `resonant` rather than on the item's top-level `spellNotes` precisely because
+  `resonant` is already gated on the 'Slotted in a wayfinder' mark at build.ts:8088 — so the note
+  inherits the mark and WG's yes/no picker is not needed. Reader teach is in CROSS-FILE GAPS.
+  Pinned by: describe 'items/aeon-stone-agate-ellipsoid prints its resonant clause on Augury'.
+
+aeon-stone-dusty-rose-prism#resonant-note — DONE (row). Same shape, on `shield`.
+  Pinned by: describe 'items/aeon-stone-dusty-rose-prism prints its resonant clause on Shield, once',
+  it('carries the 5-to-10 clause on the shield entry').
+
+aeon-stone-dusty-rose-prism#duplicate-picker — DONE (row).
+  Row: items/aeon-stone-dusty-rose-prism field `effectChoices` -> null, supersedes:true. Verified the
+  field held nothing else — a single entry with id `resonant` — so deleting the whole field loses no
+  other question. The universal 'Slotted in a wayfinder' designation (offered to every character at
+  src/sheet/InventoryTab.tsx:705) remains the one control.
+  Pinned by: it('no longer carries the duplicate yes/no resonant picker'), which also asserts
+  `resonant` survived, so the deletion cannot silently take the power with the picker.
+
+aeon-stone-western-star#resonant-note — DONE (row). Same shape, on `illusory-disguise`.
+  Pinned by: describe 'items/aeon-stone-western-star prints its resonant clause on Illusory Disguise'.
+
+wild-lights#printed-spell-name — DONE (2 rows).
+  Rows: feats/wild-lights `description` -> printed name Dancing Lights restored (verified verbatim
+  against mirror feat-3375; word-diffed, the ONLY change to the body is "Light," -> "Dancing Lights,")
+  plus one line marked as ours in the app's existing `***Note** …*` convention (the shape
+  feats/quill-spray already uses); and feats/wild-lights `descRefs` -> null, dropping the import-time
+  link to spells/Light.
+  NO rider on Light and no spellNote anywhere, per the ruling. No note on Dancing Lights either: we
+  ship no `dancing-lights` record, and pushSpellNote (build.ts:6837) drops a clause whose spell does
+  not exist, so it would render nowhere.
+  Pinned by: describe 'feats/wild-lights keeps the printed spell name Dancing Lights' — two its, the
+  second of which also asserts no feat writes a spellNote onto `light` from this ruling.
+
+toppling-tentacles#replacement-note — DONE (2 rows).
+  Rows: feats/toppling-tentacles `spellNotes` -> two entries, the printed clause on `black-tentacles`
+  with the printed spell name intact and the same clause on `slither` prefaced "Printed for Black
+  Tentacles, which Slither replaced."; and feats/toppling-tentacles `description` -> the same text.
+  Reuses the existing spellNotes lane (build.ts:6843), which walks the feats the character HAS and
+  prints each clause under the record's own name — that IS "clearly marked as coming from the feat".
+  Both spell ids ship, so neither clause is dropped by pushSpellNote's guard.
+  ⚠ The description row also restores the word "bludgeoning" to BOTH damage lines, which our stored
+  copy had lost at import (mirror feat-3391 prints "takes 3d6 bludgeoning damage" and "deal 1d6
+  bludgeoning damage"; the word-diff shows those two insertions and nothing else). Done inside this
+  finding because a note quoting the damage type while the feat's own page omitted it would be a new
+  disagreement, and no other batch-037 finding touches this record.
+  Pinned by: describe 'feats/toppling-tentacles reaches Black Tentacles and Slither' — two its, the
+  second asserting the damage type on the description AND on both notes.
+
+spew-tentacles#replacement-note — DONE (row).
+  Row: feats/spew-tentacles `spellNotes` re-emitted WHOLE, supersedes:true — the existing
+  `black-tentacles` entry carried byte-for-byte, a `slither` entry added beside it, worded like its
+  sibling above. The record's grant was already overlaid to `slither`, so before this the feat granted
+  one spell and annotated a different, hidden one. No minLevel on the grant, so build.ts:6849's gate
+  does not withhold either entry.
+  Pinned by: describe 'feats/spew-tentacles reaches Black Tentacles and Slither', which also asserts
+  the grant and the clause name the same spell.
+
+CHECKED, NOT A RISK
+- test/aeon-resonance.test.ts asserts exactly 33 items carry `resonant`. This chunk adds `resonant` to
+  no new item and removes it from none, so that count is untouched.
+- npx tsc --noEmit is clean with the new test file in place.

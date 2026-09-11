@@ -159,6 +159,30 @@ const CONTROL_TITLE_LANE = [
   [/heritage/i, 'heritage'],
   [/sense|vision/i, 'sense'],
   [/trait/i, 'trait'],
+  /*
+   * …AND A TRADITION QUESTION ASKED BY NAMING THE TRADITIONS. Our prompts mostly do not use the word
+   * "tradition" at all — they spell the answers out: *"Select divine or primal — this choice can't be
+   * changed"* (centaur, budding-speaker-centaur), *"Choose arcane, divine, or occult…"*
+   * (wellspring-gnome), *"Choose occult or primal…"* (spellkeeper-shisk). Those four already match WG's
+   * `select "Select a Tradition"` only because their prompts name nothing else, so they fall through to
+   * the generic `option` lane. Bone Magic's does not: *"Bone Magic — are your innate spells primal or
+   * occult?"* says "spells", lanes as [spell], leaves the generic pool, and WG's tradition select then
+   * found no control — a MISSING-CONTROL on a question we really do ask (batch 6 and again batch 37).
+   *
+   * ⚠ THE ALTERNATION MUST BE THE ANSWER, NOT AN ADJECTIVE. The trailing `(?!\s*\w)` is the whole
+   * guard, and it is what keeps the teach from laundering: *"Choose an occult or primal CANTRIP"* and
+   * *"…as an innate primal or arcane SPELL"* name a picked noun after the alternation and are NOT
+   * tradition questions — they stay in the cantrip/spell lanes they belong to. Measured over all 44
+   * experience artefacts: 6 controls gain the lane, every one of them a real tradition question, and
+   * exactly one record's verdict moves (bone-magic, MISSING-CONTROL -> OK). Adversarially confirmed in
+   * test/batch037-instruments-3.test.ts: strip the tradition question from the record and the cantrip
+   * picker beside it does NOT stand in for it — the select goes unmatched and the record reports again.
+   *
+   * Last in the list on purpose: it only ever ADDS a lane to a control another word already named, so
+   * no existing control changes its PRIMARY lane except one that named nothing else (which is a
+   * tradition question and nothing but).
+   */
+  [/\b(?:arcane|divine|occult|primal)\b[^.?!]*\bor\s+(?:arcane|divine|occult|primal)\b(?!\s*\w)/i, 'tradition'],
 ];
 
 /**
@@ -444,6 +468,23 @@ export function effectDelivery(effect, surface, names = {}) {
        * record asserting the pair while granting no spell still reports.
        */
       if (surface.grantsInnateSpell && want <= RANK_WORD.trained) return 'delivered';
+      /*
+       * …AND THE SECOND HALF OF THE SAME PRINTED RULE, which the `want <= trained` bound cut off.
+       *
+       * batch 037 premise: rules-2232 "At 12th level, these proficiencies increase to expert."
+       *
+       * Nagaji Spell Expertise (feat-3996, a 13th-level ancestry feat) prints *"You become an expert in
+       * occult spell DCs and occult spell attack rolls"* and their side writes it as this same pair at
+       * `E`. Ours never writes it per record either: src/rules/build.ts's innate entry takes
+       * `maxRank(…, level >= 12 ? 'expert' : 'trained')`, so a host at 12 or above IS expert on the
+       * innate pair by construction — the record does not need a carrier for it, and the harness host
+       * for this feat is a level-20 nagaji fighter. Without this arm both ops read 'unchecked' and the
+       * record reached the EXPERIENCE gate as UNVERIFIED-EFFECT for a clause we deliver correctly.
+       *
+       * Bounded the same way as the trained arm and one step further: the host must actually be 12th
+       * level or higher, so a low-level record asserting expert still reports.
+       */
+      if (surface.grantsInnateSpell && want <= RANK_WORD.expert && Number(surface.hostLevel ?? 0) >= 12) return 'delivered';
       return 'unchecked';
     }
     let path = VAR_TRACK[variable];

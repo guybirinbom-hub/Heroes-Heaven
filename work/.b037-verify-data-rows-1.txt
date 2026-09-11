@@ -1,0 +1,179 @@
+BATCH 037 — ADVERSARIAL VERIFY, family data-rows-1 (chunk 1 of 6 of "data-rows"), WG-COMPARISON lane
+Verifier instrument: work/.b037-rows-data-rows-1.json + work/.b037-created-desc-data-rows-1.json applied to a
+content copy in memory (a throwaway vitest setup that served a patched public/core.json through node:fs), then
+162 existing test files run AGAINST THAT COPY — i.e. the suite as it will run after the driver applies. The
+harness, its config and its row-shape checker are deleted; nothing of them remains in the tree.
+
+HEADLINE: the eleven findings' MECHANICS are right and reach a built character — but the builder's report was
+wrong that the batch was finished. Two things it never measured:
+  (a) ELEVEN pre-existing assertions in six other test files flip from green to red the moment the rows land
+      (the magus/summoner slot table, the magus spellbook budget, the summoner repertoire, the studious
+      ladder, and the trust-approvals `pending` flag on the record this chunk creates). A batch that turns
+      eleven green assertions red and cites none of them is a red batch. All fixed here, all cited.
+  (b) the second half of firework-technician-dedication#pyrotechnic-vial was reported impossible ("ClassResource
+      has no item field") and is not: `grantsItems` is the shipped lane for exactly this, and
+      scripts/data/trust-approvals.json #13 approves exactly that field on exactly that record. Row added.
+
+
+PER FINDING
+
+firework-technician-dedication#pyrotechnic-vial — FIXED-BY-ME.
+  The create row is sound: items/pyrotechnic-versatile-vial does not exist today, the value is
+  items/versatile-vial field-for-field with acid→fire on `traits` and `damage` (diffed key by key against the
+  shipped record), carries no description in the create row, and its prose row quotes feat-8528 contiguously
+  (re-ran the applier's own added-run guard: clean).
+  NOT DONE by the builder, and now done: the proposal's "point the dedication's vial counter at that item id
+  so the 4 daily vials become throwable rows". `grantsItems` is read off FEATS by buildCharacter's granted-items
+  walk (src/rules/build.ts:7802), it is on this batch's REUSE list, WG's row for this record encodes
+  `grantsItem` (work/.wg-diff-all.json, disagree), and trust-approvals #13 names `grantsItems` on
+  feats/firework-technician-dedication with the why "our record does not carry the field yet". Added row
+  feats/firework-technician-dedication.grantsItems = [{itemId:'pyrotechnic-versatile-vial', quantity:4}].
+  MEASURED on a built 2nd-level fighter holding the dedication: 4 vials in the pack, grantedBy "Firework
+  Technician Dedication"; none at all without the row. New test "firework-technician-dedication actually HANDS
+  the four vials over".
+  ALSO FIXED: scripts/data/trust-approvals.json #13 carried `"pending": true`, which
+  test/trust-approvals.test.ts reads as "this record must NOT exist yet" — the create row would have turned
+  that assertion red. Flag cleared, with the reason written into the entry's own `why`.
+
+firework-technician-dedication#source — FIXED-BY-ME (evidence corrected; the rows themselves stand).
+  aonId feat-8528 + source {Pathfinder Guns & Gears (Remastered), ORC} are right and the shipped description is
+  already the feat-8528 text. But the row's `why` claimed "AoN lists feat-3245 as its legacy_id", and the mirror
+  says otherwise: feat-8528's legacy_id is ["feat-8750"] (the 2021 Guns & Gears page). What actually marks
+  feat-3245 superseded is feat-3245's own page — "There is a more recent version of this, click here to view"
+  pointing at Feats.aspx?ID=8528. The `why` now says that, so the next reader can re-check it.
+
+magus#2026-printing — FIXED-BY-ME (rows correct; three sibling assertions were left red).
+  The mechanic is right, and the builder's reasoning holds up under check: psychicSlots() in
+  src/rules/spellcasting.ts is `level>=2r -> 2, level==2r-1 -> 1, r<=9` which reproduces the printed class-74
+  table at every level (L1 {1:1}; L3 {1:2,2:1}; L13 {1..6:2,7:1}; L17 {1..8:2,9:1}; L18-20 all nine at 2; never
+  a 10th) — MEASURED on built magi at L1/3/7/13/17/20. casterSlots() is the only reader of `progression`.
+  Corroboration the builder did not cite: classes/necromancer (class-75, the SAME 2026 book) already ships
+  `progression: 'psychic'`, so this is the third user of that value, not a stretch of it.
+  spellbook 4 -> 5 is verbatim class-74 ("eight arcane cantrips and five 1st-rank arcane spells"), perLevel 2
+  unchanged ("you add two arcane spells"). The superseding value holds everything the shipped overlay row held.
+  FIXED: test/batch28-data.test.ts "spellbook: four 1st-level arcane spells…" (4 -> 5);
+  test/audit-fixes.test.ts "Two-rank caster (magus) gets a full 2 slots of a newly-unlocked top rank: L5 -> 2x
+  rank 3" (the 2026 row 5 is `2 2 1` — the new rank opens at ONE and fills at 6th, so the assertion was rewritten
+  to pin exactly that, plus rank 1 which the 2021 table had already discarded);
+  test/batch29-engine.test.ts "and the ORDINARY slot counts are untouched" (its premise "the studious tier is
+  never a rank the magus's own table gives" is false under the 2026 table — rewritten as "the stunted build is
+  the authored build PLUS the fallback's two at the tier", which is true under both tables).
+
+summoner#2026-printing — FIXED-BY-ME (rows correct; one sibling assertion was left red).
+  Same table, same progression value; MEASURED on built summoners at L5 and L13 — slots {1:2,2:2,3:2,4:2,5:2,
+  6:2,7:1} at 13 and the repertoire opening at exactly the slot ranks. Dropping extraRepertoire {1:1} is the
+  printed rule ("you add a spell to your spell repertoire of the same rank") and is the only key removed from
+  the superseded value.
+  FIXED: test/batch28-data.test.ts "summoner: the repertoire is one larger than the slot table" — that WAS the
+  2021 rule; rewritten as "the repertoire is exactly the slot table, on the 2026 retained-rank ladder".
+
+basic-magus-spellcasting#2026-printing — DONE.
+  feat-9285: Feat 4, Impossible Magic pg. 88, legacy_id feat-2950 — all four confirmed against the mirror. The
+  description row is feat-9285 verbatim (added-run guard clean) and supersedes the shipped overlay description
+  row, which is the only overlay row on this record. RANK_UNLOCKS in casterArchetypes.ts already opens rank 1 at
+  character level 4, so no mechanical row is needed — checked, and the two tests that place this feat in a
+  level-6 slot (feature-gaps, experience-gate-fixes) still pass with the feat at level 4.
+
+expert-magus-spellcasting#2026-printing — DONE.
+  feat-9290 confirmed (Impossible Magic pg. 88, legacy_id feat-2951). Its prerequisite line is "Basic Magus
+  Spellcasting; Master in Arcana" and the shipped array already reads that; leaving it alone is right.
+
+master-magus-spellcasting#2026-printing — DONE. feat-9291 confirmed; prerequisites already match print.
+
+basic-summoner-spellcasting#2026-printing — DONE.
+  feat-9308 confirmed as a Feat 4 (legacy_id feat-2957). Description verbatim, and the 2026 text really does
+  drop both "bounded" and the repertoire-removal sentence.
+
+expert-summoner-spellcasting#2026-printing — DONE. feat-9313 confirmed; the shipped prerequisites already read
+  feat-9313's line (AoN's own copy uses a curly apostrophe in "eidolon’s"; ours is the straight one, as every
+  other prerequisite string in the record set is — not a difference worth a row).
+
+master-summoner-spellcasting#2026-printing — DONE.
+  feat-9314 confirmed. The record really did ship with no `prerequisites` field and the scraped page header as
+  its description; both rows are right and the prerequisites row matches feat-9314's line.
+
+studious-spells#2026-rebuild — FIXED-BY-ME (rows correct; four sibling assertions were left red).
+  THE BUILDER'S DEPARTURE FROM THE PROPOSAL IS CORRECT AND I VERIFIED BOTH HALVES OF ITS REASON:
+  build.ts:4521 (`cls.id === 'magus' && !studiousGrant`) and build.ts:4658 (the dual-class arm) stand the
+  hard-coded magusStudiousSpells fallback down only while `spellSlotBonus.restricted` exists, and
+  bookGrantedSpellIds (build.ts:3293) reads the spellbook additions out of the same ladder, independent of
+  byRank. Deleting the field as the proposal asked would have handed the 2021 slots straight back from code.
+  resolveRestrictedSlots clears counts to the highest reached step and yields zero slots from an empty byRank
+  while addSpells still accumulate — MEASURED on a built 13th-level Aloof Firmament magus: no studious
+  restricted slot anywhere, no leftover sure strike, and gecko grip / haste / fly / water walk / wall of wind /
+  variable gravity all in the spellbook.
+  recordMarks: the shape {on:'action', id:'arcane-cascade', note} is a valid RecordMarker, actions/arcane-cascade
+  exists, and recordMarksFor() in explain.ts walks owned class features — reader confirmed.
+  FIXED: test/batch29-data.test.ts x2 (the ladder's byRank and its addSpells list); test/batch29-engine.test.ts
+  "the shipped magus runs on the studious ladder" (rewritten to pin no slot, no fallback pair, and gecko grip in
+  the book — the describe TITLE is unchanged, because renaming one reads to the flip audit as deleting it);
+  test/build.test.ts "magus gains two studious slots at the tier rank".
+
+
+ROWS CHECKED AS ROWS (all clean, 47 rows)
+  · every target record exists or the row carries create:true; the create row carries no description
+  · every re-emitted value diffed key-by-key against the shipped one: magus.spellcasting loses nothing but
+    progression + spellbook.spells; summoner.spellcasting loses only extraRepertoire (the intended change);
+    studious-spells.spellSlotBonus keeps entryId/label/ladder shape and loses only the slot counts, the two
+    2021 spells and the now-false slot `note`
+  · supersedes:true on exactly the four rows that replace an overlay row (magus.spellcasting,
+    summoner.spellcasting, basic-magus-spellcasting.description, studious-spells.spellSlotBonus) and on no
+    other — verified against scripts/data/effect-backfill.json
+  · no two rows in ANY batch-037 spec share a record+field+path key (106 keys across all 16 spec files)
+  · every `why` names a mirror doc id and every one of those docs exists; every description row's added runs
+    re-run through the applier's own LCS/added-run guard against the named doc: clean
+  · every id a row names is real — items/pyrotechnic-versatile-vial's six traits, spells gecko-grip/haste/fly,
+    actions/arcane-cascade, items/pyrotechnic-versatile-vial from the grantsItems row
+  · readers confirmed for every field: progression -> casterSlots; spellbook -> spellbookBudget;
+    extraRepertoire -> repertoireCounts; spellSlotBonus.restricted -> resolveRestrictedSlots +
+    bookGrantedSpellIds; recordMarks -> recordMarksFor; grantsItems -> buildCharacter's granted-items walk;
+    edition -> applyEditionFilter. No field here is another family's.
+
+MANIFEST
+  work/.b037-specs.json still holds all 16 entries and every other family's rows. data-rows-1's two entries now
+  stage the five test files and the one data file I touched as well as the builder's four paths.
+
+SUITE STATE
+  With the rows applied in memory: 359/359 pass across the seven touched files, and 2348/2368 across the 162
+  candidate files — the 20 that remain are nine belonging to sibling chunk data-rows-3 (their rows are not in my
+  patch) and eleven that are now fixed here. Without the rows: 30 fail, every one on the shipped value a row
+  replaces. npx tsc --noEmit clean. node scripts/test-flip-audit.mjs --batch 037 clean.
+
+
+DATA STILL NEEDED
+  (none — every row this chunk needs is authored in work/.b037-rows-data-rows-1.json)
+
+
+CROSS-FILE GAPS
+  src/rules/sources.ts — 'Pathfinder Impossible Magic' is in neither LEGACY_HARDCOVERS nor RULEBOOK_TITLES, so
+    categoryOfBook() shelves it as 'Other', a NICHE_CATEGORIES shelf hidden behind the show-niche-sources pref.
+    CORRECTION to the builder's line: this does not put TWO classes on a hidden shelf, it puts FOUR — 720
+    Impossible Magic records already ship, INCLUDING classes/necromancer (class-75) and classes/runesmith
+    (class-76), and this batch adds the magus and the summoner. Fix: add 'Pathfinder Impossible Magic' to
+    LEGACY_HARDCOVERS (one line, and it repairs the two classes that are already wrong).
+  src/rules/sources.ts — firework-technician-dedication#source moves ONE record to "Pathfinder Guns & Gears
+    (Remastered)", a book string no record carries today (measured: zero), so sourceCatalog() mints a one-entry
+    toggle for it. CORRECTION to the builder's line: that toggle does NOT land on the hidden shelf — stripBook()
+    drops the "(Remastered)" suffix and 'guns & gears' is already in RULEBOOK_TITLES, so it shelves as
+    'Rulebooks'. The other ~825 Guns & Gears records AoN also reprints remastered are a separate sweep, in no
+    batch-037 finding.
+  src/rules/casterArchetypes.ts — the comment on 'summoner-dedication' reads "caps at Expert (no
+    master-summoner-spellcasting feat exists)". Both halves are false (mk() mints the masterId and feat-9314
+    ships). Stale prose only. test/caster-archetypes.test.ts:43 repeats the same false claim and skips the
+    masterId existence check for this one archetype because of it — the check would pass today.
+  src/rules/spellcasting.ts — the progression value named 'psychic' now carries the psychic, the necromancer,
+    the magus and the summoner (four 2026 limited casters on one table). A rename ('limited') would read better
+    on a magus record; zero behaviour change, not worth a src edit inside a data batch.
+  test/wg-experience-lanes.test.ts:719/750 — both lists require 'studious-spells' to stay OUT of the comparer's
+    theyOnly map, plain and under --raw. That test runs the real comparer over the SHIPPED artefacts, so it
+    cannot be judged before the driver applies; the rebuilt record keeps spellSlotBonus and gains recordMarks, so
+    a key scan still finds carriers, but the driver's experience stage is where this is actually proven.
+
+MANIFEST STAGE[] ADDED BY ME (already written into work/.b037-specs.json)
+  work/.b037-verify-data-rows-1.txt
+  test/batch28-data.test.ts
+  test/batch29-data.test.ts
+  test/batch29-engine.test.ts
+  test/build.test.ts
+  test/audit-fixes.test.ts
+  scripts/data/trust-approvals.json

@@ -235,9 +235,31 @@ function citations(fid, rid) {
 
 // ── derive ───────────────────────────────────────────────────────────────────────────────────────
 const byRec = new Map();
+/** Confirmed findings this batch evidenced on records that have no WG packet at all. */
+const offBatch = [];
 for (const f of read.confirmed ?? []) {
   const rid = rec(f.id);
-  if (!idSet.has(rid)) { refuse(`confirmed finding ${f.id} maps to no record in ${BATCH_PATH} (the closer may not settle an id outside the batch)`); continue; }
+  if (!idSet.has(rid)) {
+    /*
+     * An off-batch confirmed finding is not a PARITY verdict and must not refuse the close.
+     *
+     * WHY: the gate states the parity artefact's own scope — "125 record(s) in this batch have an
+     * encoding on their side" — and a record with no WG ability_block cannot have one. Batch 037's
+     * read file carries twelve such findings from the 2026-09-10 owner desk pass (the PRINT-READ lane
+     * riding in the same file): `node scripts/wg-show.mjs "Armiger's Protection" --raw` prints "they
+     * do not carry this record at all". Deriving a WG-comparison verdict for them is meaningless, so
+     * they route out of the derivation into residual.offBatch carrying their citations (they are
+     * already in residual.confirmed, where rec() falls through to the raw id).
+     *
+     * The protection the old refusal gave stays: an off-batch finding with NO citation anywhere — no
+     * row, no code-only spec, no staged test, no teach — is unevidenced work, and that still refuses.
+     */
+    const c = citations(f.id, rid);
+    const ev = [...c.row, ...c.teach, ...c.weak];
+    if (!ev.length) { refuse(`confirmed finding ${f.id} maps to no record in ${BATCH_PATH} and nothing in this batch cites it (no row, no code-only spec, no staged test, no teach)`); continue; }
+    offBatch.push({ id: rid, finding: f.id, summary: String(f.claim ?? '').slice(0, 240), citations: ev });
+    continue;
+  }
   if (!byRec.has(rid)) byRec.set(rid, []);
   byRec.get(rid).push(f);
 }
@@ -377,6 +399,9 @@ const derivedResidual = {
 /* WHY only when non-empty: an always-present `reverdicts: []` would rewrite every batch's residual,
  * and the plan-E acceptance is that re-closing a closed batch is a byte-identical no-op. */
 if (reverdicted.length) derivedResidual.reverdicts = reverdicted;
+/* Same non-empty rule, same reason: batches 030-036 have zero off-batch confirmed findings, so their
+ * residuals stay byte-identical and the regate is a no-op. */
+if (offBatch.length) derivedResidual.offBatch = offBatch;
 for (const a of derivedResidual.askOwner) if (a.desk === null) refuse(`askOwner row ${a.id} has no desk number in ${QUESTIONS_PATH} / ${NUMBERING_PATH}`);
 
 /** Merge an array by key: existing entries keep their place and their content, new ones are appended. */
@@ -412,6 +437,7 @@ if (existingResidual) {
   /* WHY the `existing` half: a later close of the same batch passes no --reverdict, so without this the
    * merge would silently DROP the ruling log a previous run wrote — the one thing the residual keeps. */
   if (derivedResidual.reverdicts || existingResidual.reverdicts) mergeKeys.push(['reverdicts', (e) => `${e.id}|${e.to}`]);
+  if (derivedResidual.offBatch || existingResidual.offBatch) mergeKeys.push(['offBatch', pairKey]);
   for (const [k, keyOf] of mergeKeys) {
     const m = mergeArray(existingResidual[k], derivedResidual[k], keyOf);
     residual[k] = m.out;
@@ -424,7 +450,8 @@ const counts = records.reduce((a, r) => ((a[r.verdict] = (a[r.verdict] ?? 0) + 1
 console.log(`batch ${TAG}: ${ids.length} record(s), ${(read.confirmed ?? []).length} confirmed / ${(read.refuted ?? []).length} refuted / ${(read.askOwner ?? []).length} askOwner findings`);
 console.log(`manifest: ${manifest.length} spec(s), ${stagePaths.length} staged path(s), reports: ${reportPaths.length}`);
 console.log(`verdicts: ${JSON.stringify(counts)}  (kept ${kept}, added ${added})`);
-console.log(`residual: confirmed ${residual.confirmed.length}, refuted ${residual.refuted.length}, flaggedResidues ${residual.flaggedResidues.length}, askOwner ${residual.askOwner.length}`);
+console.log(`residual: confirmed ${residual.confirmed.length}, refuted ${residual.refuted.length}, flaggedResidues ${residual.flaggedResidues.length}, askOwner ${residual.askOwner.length}${residual.offBatch ? `, offBatch ${residual.offBatch.length}` : ''}`);
+for (const o of offBatch) console.log(`  off-batch (no WG packet; not a parity verdict): ${o.finding} — cited by ${o.citations[0]}`);
 for (const n of notes) console.log(`  note: ${n}`);
 
 if (committed) {

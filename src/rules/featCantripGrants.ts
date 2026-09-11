@@ -88,9 +88,31 @@ export const FEAT_CANTRIP_GRANTS: Record<string, CantripPickSpec> = {
   'first-world-magic': { prompt: "Choose a primal cantrip", tradition: 'primal', options: ['caustic-blast', 'deep-breath', 'detect-magic', 'detect-metal', 'draw-moisture', 'eat-fire', 'electric-arc', 'frostbite', 'gale-blast', 'glamorize', 'glass-shield', 'gouging-claw', 'guidance', 'ignition', 'illuminate', 'know-the-way', 'light', 'live-wire', 'needle-darts', 'prestidigitation', 'puff-of-poison', 'read-aura', 'root-reading', 'rousing-splash', 'scatter-scree', 'sigil', 'slashing-gust', 'spout', 'stabilize', 'take-root', 'tangle-vine', 'timber', 'tremor-signs', 'vitality-lash'] },
   'font-of-life-or-death': { prompt: "Choose Heal or Harm", options: ['heal', 'harm'] },
   'hag-magic': { prompt: "Choose a spell", tradition: 'occult', options: ['augury', 'charm', 'clairaudience', 'clairvoyance', 'dream-message', 'illusory-disguise', 'humanoid-form', 'water-walk', 'honeyed-words', 'outcasts-curse', 'nightmare', 'earthbind', 'solid-fog', 'hydraulic-torrent'] },
-  'kitsune-spell-expertise': { prompt: "Choose a 5th-rank divine innate spell (1/day)", tradition: 'divine', options: ['confusion', 'death-ward', 'illusory-scene'] },
-  'kitsune-spell-familiarity': { prompt: "Choose a cantrip", tradition: 'divine', options: ['daze', 'forbidding-ward', 'figment'] },
-  'kitsune-spell-mysteries': { prompt: "Choose a spell", tradition: 'divine', options: ['bane', 'illusory-object', 'sanctuary'] },
+  /* 'kitsune-spell-expertise', 'kitsune-spell-familiarity', 'kitsune-spell-mysteries' — REMOVED, with
+   * their two nagaji siblings below, in the same change as batch 037's five choice rows.
+   *
+   * All five print the SAME sentence shape: *"During your daily preparations, choose daze, forbidding
+   * ward, or ghost sound"* (feat-2619) — the question is re-made every morning, and the record's own
+   * `choice` now carries it with `daily: true` and a `grant` on every option. This registry is the
+   * BUILD-TIME lane: it asks once, at character creation, and never again. Two live lanes on one
+   * record ask the player the same question twice — the same reason colugos-traversal, dream-magic,
+   * empathic-calm and merge-with-the-source were removed above, and `scripts/duplicate-pick-check.mjs`
+   * (a shipped `npm run verify` guard) fails naming all five the moment the rows land, because it
+   * tests `rec.choice.options[].grant.innateSpells` against exactly this registry.
+   *
+   * The copies were also wrong on their own terms: kitsune-spell-familiarity offered 'figment' where
+   * feat-2619 prints GHOST SOUND, and neither expertise entry could express its printed 5th-rank
+   * casting — CantripPickSpec has no rank field, so Confusion and Flicker were cast at their own base
+   * rank 4. The records' options carry the rank; this lane cannot.
+   *
+   * ⚠ They must stay removed while those records carry a daily `choice` with grants.
+   *
+   * Their sibling 'nagaji-spell-familiarity' is REMOVED with them (batch 037 gap lane): the choice
+   * row that grants the cantrip from the morning's answer — occult, at will, one option per printed
+   * spell — is authored in work/.b037-rows-gap-data-rows-4.json, and the two must land together or
+   * the feat grants nothing. *"During your daily preparations, choose daze, detect magic, or mage
+   * hand … you can cast the chosen spell as an occult innate cantrip"* (feat-3984; mage hand is now
+   * Telekinetic Hand) — the same sentence as the five above, so the same lane. */
   'light-bending-jewel': { prompt: "Choose a spell", tradition: 'occult', options: ['invisibility', 'translocate'] },
   /* *"the spell's tradition is determined by the tradition tied to your warmask"* — the answer lives
    * on Orc Warmask, which is why this names a FLAG rather than a tradition. Without it build.ts:6283
@@ -100,9 +122,8 @@ export const FEAT_CANTRIP_GRANTS: Record<string, CantripPickSpec> = {
   // 'merge-with-the-source' — removed; its own effectChoices carries the pick with rank 7 per option,
   // which this lane cannot express. Two live lanes granted two forms to a player who answered both.
   'methodical-magic': { prompt: "Choose a spell", tradition: 'divine', options: ['calm', 'lock', 'mending', 'shape-wood', 'translate', 'dispel-magic'] },
-  'nagaji-spell-expertise': { prompt: "Choose a spell", tradition: 'occult', options: ['flicker', 'control-water', 'subconscious-suggestion'] },
-  'nagaji-spell-familiarity': { prompt: "Choose a cantrip", tradition: 'occult', options: ['daze', 'detect-magic', 'telekinetic-hand'] },
-  'nagaji-spell-mysteries': { prompt: "Choose a spell", tradition: 'occult', options: ['charm', 'fleet-step', 'heal'] },
+  // 'nagaji-spell-expertise', 'nagaji-spell-familiarity', 'nagaji-spell-mysteries' — REMOVED; see the
+  // kitsune block above, which is the same printed sentence and the same duplicate lane.
   'natural-illusionist': { prompt: "Choose a spell", options: ['illusory-disguise', 'item-facade', 'illusory-object'] },
   'open-mind': { prompt: "Choose an occult cantrip", tradition: 'occult', options: ['join-pasts', 'approximate', 'infectious-enthusiasm', 'protect-companion', 'read-the-air', 'tame', 'wash-your-luck', 'invoke-true-name', 'inside-ropes', 'musical-accompaniment', 'tremor-signs', 'eat-fire', 'illuminate', 'detect-metal', 'needle-darts', 'glowing-trail', 'daze', 'detect-magic', 'figment', 'forbidding-ward', 'guidance', 'know-the-way', 'light', 'message', 'prestidigitation', 'read-aura', 'shield', 'sigil', 'summon-instrument', 'telekinetic-hand', 'telekinetic-projectile', 'void-warp', 'bullhorn', 'haunting-hymn', 'glamorize', 'phase-bolt', 'warp-step', 'time-sense'] },
   'otherworldly-magic': { prompt: "Choose an arcane cantrip", tradition: 'arcane', options: ['approximate', 'bullhorn', 'caustic-blast', 'daze', 'deep-breath', 'detect-magic', 'detect-metal', 'draw-moisture', 'eat-fire', 'electric-arc', 'figment', 'frostbite', 'gale-blast', 'glamorize', 'glass-shield', 'gouging-claw', 'ignition', 'illuminate', 'infectious-enthusiasm', 'light', 'live-wire', 'message', 'musical-accompaniment', 'needle-darts', 'phase-bolt', 'prestidigitation', 'protect-companion', 'puff-of-poison', 'read-aura', 'root-reading', 'scatter-scree', 'shield', 'sigil', 'slashing-gust', 'spout', 'summon-instrument', 'take-root', 'tangle-vine', 'telekinetic-hand', 'telekinetic-projectile', 'timber', 'time-sense', 'tremor-signs', 'void-warp', 'warp-step'] },

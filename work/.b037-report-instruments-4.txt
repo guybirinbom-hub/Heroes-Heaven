@@ -1,0 +1,200 @@
+BATCH 037 — INSTRUMENTS BUILDER, CHUNK instruments-4 (WG-COMPARISON lane)
+=========================================================================
+
+Twelve findings, one verdict for all twelve: NOTHING CHANGES. Every one is an owner-ruled
+deliberate difference. work/desk-answers-2026-09-10.json carries a single answer covering 28 desk
+numbers — including all twelve of mine (#19, #27, #32, #34, #38, #53, #65, #66, #74, #75, #76, #77) —
+reading "DECIDED BY FABLE under the 2026-08-22 rule (book wins) … Keep the app on all 28 (it already
+follows the printed page); nothing changes for a player. Each gets WRITTEN DOWN as a known deliberate
+difference". So no record of mine takes a data row; two take a comparer settle, because a ruling does
+NOT park the data comparers (scripts/wg-batch-gate.mjs:150 — "The data comparers are not parked for
+ruled ids — a ruling is implemented there, and a mismatch would be a regression").
+
+
+DATA STILL NEEDED
+-----------------
+(none — no finding in this chunk needs a backfill row; all twelve are settles or residual reads)
+
+
+CROSS-FILE GAPS
+---------------
+- work/owner-questions.json (PROHIBITED for me to edit): all twelve of my records are still in the
+  `open` array with their desk numbers (#19 reinforced-chassis, #27 psychic-dedication,
+  #32 elemental-existence, #34 thats-not-natural, #38 devils-eye, #53 instinct-ability,
+  #65 pistol-wand, #66 tumbling-theft, #74 keys-to-destiny, #75 concordance-scout, #76 poppet,
+  #77 goloma), although work/desk-answers-2026-09-10.json ruled every one of them. The driver must
+  move these twelve entries from `open` to `ruled`. Until it does, scripts/wg-batch-close.mjs derives
+  OWNER-QUEUED for all twelve (its `desk` map is built from `open` + `deferred`, close.mjs:110) and
+  the teach citations below are never reached; the gate also parks them all as "await his ruling",
+  which hides the two settles this chunk actually owes. NOTE FOR THE DRIVER: once they move, the two
+  settles below are what keeps KINDS and VALUES green — the gate parks EXPERIENCE for a ruled id but
+  not the data comparers.
+- scripts/wg-casting.mjs cannot be run as `node scripts/wg-casting.mjs` — it imports
+  `../src/rules/seed` with no extension and dies with ERR_MODULE_NOT_FOUND. The pipeline invokes it
+  as `npx jiti scripts/wg-casting.mjs` (scripts/wg-batch-run.mjs:352), which works. Pre-existing, not
+  caused by this chunk, and the file is in my grant only as a comparer to RUN; recorded so the next
+  reader does not take the bare-node failure for a regression.
+
+
+WHAT I DID, PER FINDING
+-----------------------
+
+1. instinct-ability#no-hit-points — SETTLE (comparer teach).
+   scripts/wg-diff.mjs, VERIFIED_EQUIVALENT: added `'instinct-ability': ['hp']`, cited
+   `// batch 037: instinct-ability#no-hit-points`. Their row is `conditional IF FEAT_NAMES INCLUDES
+   "barbarian resiliency" THEN addBonusToValue MAX_HEALTH_BONUS = "+3"` and grants no instinct at
+   all; AoN feat-6194 prints one sentence with no Hit Points in it. Ours holds that +3 once, on
+   feats/barbarian-resiliency.maxHpBonus {perArchetypeFeat:3, archetype:'barbarian'} (summed in
+   derive.ts featHpBonus over the taken barbarian-archetype feats, a set that already includes this
+   one), and holds the printed sentence as feats/instinct-ability.derivedGrant
+   {fromFeat:'barbarian-dedication'}. Third archetype of the identical shape: monk-moves (b031) and
+   armored-resistance (b036) are the same settle one archetype over.
+   BLAST RADIUS, MEASURED: `hp` only, one row — the key is a record id and `instinct-ability` names
+   exactly one record in the walk. Adversarially confirmed both ways.
+   Tests (test/batch037-instruments-4.test.ts):
+     • "instinct-ability is clear on the shipped data, and `--raw` shows the registry is what quiets
+       it" — settled run has no row, `--raw` run returns missing=['hp'].
+     • "with instinct-ability stunted, the record reports its real kind again and never `hp`" —
+       MUTATION-PROOF, stunts feats/instinct-ability.derivedGrant in a core copy; the SETTLED run
+       reports missing=['conditional'] and still never 'hp', so the entry cannot stand in for the
+       instinct grant beside it.
+     • "instinct-ability delivers the instinct the dedication recorded…" — the credited carrier is
+       live (choiceOwnedFeatureIds returns the dedication's instinct) and the +3 really does live on
+       barbarian-resiliency, so the settle is not for a dead field.
+
+2. tumbling-theft#thievery — SETTLE (comparer teach).
+   scripts/wg-values.mjs, SETTLED_VALUES: added `'tumbling-theft': ['skill|stealth']`, cited
+   `// batch 037: tumbling-theft#thievery`. Their only value-bearing op is `addBonusToValue
+   SKILL_STEALTH "1"`, while the paragraph they ship beside it is the printed sentence of AoN
+   feat-6513 — "a +1 circumstance bonus to your Thievery check to Steal" — so their placement
+   contradicts their own record, not the book. Ours is the Thievery star:
+   src/rules/situationalBonuses.ts FEAT_SITUATIONAL['tumbling-theft'], targets
+   {kind:'skill', detail:'thievery'}, +1 circumstance, on the Steal after a critical Tumble Through.
+   BLAST RADIUS, MEASURED: one key, this record, and `skill|stealth` is their ENTIRE numeric content
+   on the row, so a future WG number on any other track here still reports. The Thievery side is not
+   silenced and never could be — wg-values walks THEIR keys and they assert none for Thievery.
+   Tests (test/batch037-instruments-4.test.ts):
+     • "tumbling-theft is clear on the shipped data, and `--raw` shows the registry is what quiets
+       it" — settled run reports 0 to adjudicate; `--raw` returns MISSING skill|stealth.
+     • "tumbling-theft stars Thievery on a built character and leaves Stealth alone" — through
+       featSituationalFor(characterSituationalIds(...)), the reader the sheet uses.
+     • "with tumbling-theft stunted, the Thievery star is gone" — MUTATION-PROOF, uses the app's own
+       setSituationalSuppressions to drop the shipped carrier in memory; the Thievery row goes bare
+       and comes back when the suppression is lifted.
+   NOT parked in work/experience-instrument-limits.json, deliberately: the harness reads this record
+   correctly (our stealth row genuinely is unstarred), and the gate already parks EXPERIENCE for an
+   owner-RULED id (wg-batch-gate.mjs:598). A limits entry would be a second, redundant park of a
+   record the harness can see perfectly well.
+
+3. pistol-wand#stock-runes — NOTE UPDATE on an existing settle, no new key.
+   scripts/wg-identity.mjs: SETTLED_IDENTITIES['pistol-wand'] = ['items'] already existed and its
+   comment said "The DELTA is queued, not settled … recorded in work/owner-questions.json". Desk #65
+   is now ruled, so the comment is rewritten to say so and cited `// batch 037: pistol-wand#stock-
+   runes`. The KEY is untouched. The rune half was never inside that settle's reach and the new note
+   says why: wg-identity compares NAMES, so no key of that registry could reach a rune. Ours ships
+   items/pistol-wand and items/pistol-wand-stock both with builtInRunes {potency:1}, wired through
+   combinationMeleeForm/formOf, exactly as AoN equipment-3589 prints. Pinned by the test
+   "pistol-wand carries the runes onto the stock".
+
+4. psychic-dedication#no-focus-point — RESIDUAL; the comparer was already taught.
+   No new settle: VERIFIED_EQUIVALENT['psychic-dedication'] = ['focus'] in scripts/wg-diff.mjs is an
+   earlier batch's entry carrying exactly this reading, and nothing reports the record today.
+   feats/psychic-dedication has no focusPoolBonus; feats/psi-development has focusPoolBonus 1, which
+   is where AoN feat-8395 prints the pool. Pinned by "the pool is printed on Psi Development at 6th".
+
+5. reinforced-chassis#ac-scaling — RESIDUAL instrument read, no row, no settle.
+   Every comparer agrees (wg-diff AGREE, wg-values clean, wg-identity clean, EXPERIENCE OK), so a
+   settle here would be a stale entry that silences the NEXT difference on this record unread — the
+   exact trap the registries' headers warn about. items/reinforced-chassis-armor ships acBonus 3,
+   acBonusByLevel [{5,+4},{10,+5}], dexCap 1 as AoN feat-3095 prints. Pinned by "reinforced-chassis
+   armour is +3 / +4 at 5th / +5 at 10th with a Dex cap of +1".
+
+6. elemental-existence#adopted-ancestry — RESIDUAL instrument read, no row, no settle.
+   wg-diff WE-ONLY, EXPERIENCE OK. FEAT_FEAT_GRANTS['elemental-existence'] = ['adopted-ancestry']
+   grants the feat outright; featPickGrants offers the 1st-level oread feat; extraAncestryFeatTraits
+   ['oread'] opens the later picks. Pinned by "the feat is granted, not hidden…".
+
+7. thats-not-natural#circumstance-bonus — RESIDUAL instrument read, no row, no settle.
+   wg-diff WE-ONLY, EXPERIENCE OK. The printed "this circumstance bonus increases to +2" names the
+   initiative bonus, and FEAT_SITUATIONAL['thats-not-natural'] stars initiative with
+   "+1 circumstance (+2 if master in Survival)", while the Perception-DC +1 sits on the record's own
+   `situational` and never grows. Pinned by "the initiative star carries the +1/+2 ladder…".
+
+8. devils-eye#legal-lore-rank — RESIDUAL instrument read, no row, no settle.
+   wg-diff WE-ONLY, EXPERIENCE OK. FEAT_SKILL_GRANTS['devils-eye'] carries lore:legal expert with
+   rankUpgrade [{7,master},{15,legendary}]; grantsActions ['objection'] carries the reaction; the +1
+   note is a FEAT_SITUATIONAL star. Pinned by "Legal Lore is expert, master at 7th and legendary at
+   15th, beside the Objection reaction".
+
+9. keys-to-destiny#labor-lore — RESIDUAL instrument read, no row, no settle.
+   wg-diff AGREE, wg-values clean, EXPERIENCE OK. trainedLoreOptions holds all nine printed lores of
+   AoN background-367 and Labor Lore trains Labor Lore. Pinned by "Labor Lore is on the list and
+   trains Labor Lore, not Herbalism Lore".
+
+10. concordance-scout#six-lores — RESIDUAL instrument read, no row, no settle.
+    wg-diff WE-ONLY, EXPERIENCE OK. The record's `choice` offers all six planar lores of AoN
+    background-383 including Plane of Earth. Pinned by "Plane of Earth Lore is present and every
+    option carries a usable value".
+
+11. poppet#fire-weakness — RESIDUAL instrument read, no row, no NEW settle.
+    SETTLED_IDENTITIES['poppet'] = ['grants'] is an earlier batch's entry about ability-block NAMES
+    and does not reach the weakness formula; nothing reports this record today. weaknesses is
+    [{type:'fire', value:'max(1,floor(@actor.level/3))'}] — AoN ancestry-49's "one-third your level
+    (minimum 1)". Pinned by "a 1st-level poppet has fire weakness 1…", measured through
+    deriveDefenses on built characters at levels 1, 2 and 9.
+
+12. goloma#languages — RESIDUAL instrument read, no row, no NEW settle.
+    SETTLED_IDENTITIES['goloma'] = ['grants'] is the same shape of earlier entry and does not reach
+    the language list; nothing reports this record today. languages.granted is ['goloma','mwangi'] as
+    AoN ancestry-45 prints, and languages/goloma exists. Pinned by "the printed pair is granted and
+    Common is not among them".
+
+
+COMPARER COUNTS, BEFORE AND AFTER
+---------------------------------
+Measured on the shipped dump. ⚠ Sibling chunks were editing the same comparers concurrently, so the
+corpus totals below move for their reasons as well as mine; the per-record and per-packet lines are
+the ones that isolate this chunk.
+
+wg-diff.mjs (corpus-wide; it has no --batch)
+  THEY-ONLY total            183 -> 179   (mine: instinct-ability, -1; the other -3 are siblings')
+  instinct-ability           THEY-ONLY missing=[hp] -> not reported;  --raw still missing=[hp]
+  batch 035 packet ids       0 THEY-ONLY before, 0 after
+  batch 036 packet ids       0 THEY-ONLY before, 0 after
+
+wg-values.mjs
+  --batch work/wg-batch-037.json     5 records to adjudicate -> 2   (mine: tumbling-theft, -1)
+  --ids tumbling-theft               1 -> 0;  --raw still reports MISSING skill|stealth theirs=1
+  --batch work/wg-batch-035.json     0 -> 0
+  --batch work/wg-batch-036.json     0 -> 0
+
+wg-identity.mjs  (my only edit here is a COMMENT; no key added or removed)
+  --batch work/wg-batch-037.json     8 records -> 3   (all of the -5 is sibling work; none is mine)
+  --batch work/wg-batch-035.json     1 -> 1   (animal-instinct / spiderweb, owner-queued desk #145)
+  --batch work/wg-batch-036.json     0 -> 0
+
+wg-casting.mjs  (run as `npx jiti scripts/wg-casting.mjs`; see CROSS-FILE GAPS)
+  16 class sources compared, 3 with mismatches (174 rows): magus, summoner, wizard.
+  Unchanged by this chunk by construction — it reads core.json and src/rules, neither of which this
+  chunk touches, and none of my twelve records is a class. The regenerated
+  work/wg-casting-parity.json does show animist's six slot mismatches gone since 2026-09-09; that is
+  a sibling's landing, captured by my run, not a change of mine.
+
+Neither of my two settle keys appears in the batch 035 or batch 036 packets (verified against
+work/wg-batch-035.json and work/wg-batch-036.json), so no earlier batch could have flipped on them.
+
+
+FILES TOUCHED
+-------------
+  scripts/wg-diff.mjs                        VERIFIED_EQUIVALENT += 'instinct-ability': ['hp']
+  scripts/wg-values.mjs                      SETTLED_VALUES += 'tumbling-theft': ['skill|stealth']
+  scripts/wg-identity.mjs                    comment only, on the existing 'pistol-wand' entry
+  test/batch037-instruments-4.test.ts        new, 17 cases, all green
+  work/.b037-rows-instruments-4.json         spec, 12 findings, 0 rows
+  work/.b037-report-instruments-4.txt        this file
+
+Not touched, deliberately: work/experience-instrument-limits.json (nothing of mine needs a park — see
+finding 2), scripts/lib/wg-experience-lanes.mjs, test/wg-experience-lanes.test.ts,
+scripts/data/effect-backfill.json (no agent writes it in this workflow, and this chunk owes no row).
+
+`npx tsc --noEmit` clean. `node scripts/vt.mjs run test/batch037-instruments-4.test.ts` — 17 passed.

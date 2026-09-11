@@ -1,0 +1,55 @@
+BATCH 037 - SITUATIONAL family report
+Findings assigned: reverse-engineer#crafting-star (1 of 1 done)
+
+DATA STILL NEEDED
+- feats / reverse-engineer / skillSubstitutions / [{"use":"crafting","forSkill":"thievery","when":"to Disable a Device or Pick a Lock"}] - supersedes: true over the existing effect-backfill row for the same key, whose value is the same single entry with the importer-mangled when "to disable-device skill=crafting or pick-a-lock skill=crafting"; explain.ts:648 prints that string verbatim to the player as "<when> - roll crafting instead", so the Thievery rows currently read "to disable-device skill=crafting or pick-a-lock skill=crafting - roll crafting instead". Same artefact class the sibling description row on this very record already repairs (scripts/repair-stripped-skill-links.mjs); print (AoN feat-3053) says "you can use Crafting instead of Thievery to Disable a Device or Pick a Lock". Not my finding, so specced here rather than authored.
+
+CROSS-FILE GAPS
+- (none)
+
+reverse-engineer#crafting-star - DONE, code only
+  What I did:
+    1. src/rules/situationalBonuses.ts, FEAT_SITUATIONAL - DELETED the "reverse-engineer" entry
+       ([{targets:[{kind:'skill',detail:'crafting'}], when:"to reverse engineer or disassemble an
+       item", bonus:"+2 circumstance"}], old line 559, the hand-authored block). Replaced by a comment
+       in its alphabetical place saying why, quoting the printed clause. Our record is aonId feat-3053
+       (Guns & Gears Remastered, 2025) and that entry grants NO bonus: "Furthermore, you can use
+       Crafting instead of Thievery to Disable a Device or Pick a Lock." is the whole mechanic. The +2
+       circumstance to Crafting exists only in feat-8555, the 2021 printing - which is what WG still
+       encodes, so WG is not evidence here (R12: the 2025 printing wins). The description the player
+       already reads on the sheet is the new text, so the star advertised a number that appeared
+       nowhere in the feat he had open. Owner ruling #15, "drop the +2 Crafting star"
+       (scripts/data/trust-approvals.json n:15; the record is question 15 in
+       test/owner-questions-numbering.test.ts).
+    2. scripts/apply-situational-lane.mjs - added 'reverse-engineer' to the `handEdited` exclusion set
+       with the standard header note. A deleted row is invisible to that script's `existingIds` check
+       (the fire-gate / monk-moves / knowledge-is-power precedent), so naming it is the durable guard
+       against the 2021 wording coming back on a lane refresh. The note also warns that
+       `reverse-engineering` (feat-6406, Scrounger) is a DIFFERENT feat whose printed +2 is real and
+       whose generated row at the bottom of the registry stays untouched.
+    3. NO backfill row. Both surviving clauses (skillSubstitutions, description) are already shipped by
+       existing overlay rows; work/.b037-rows-situational.json records the finding with
+       backfillRows: [] and that reason.
+  Test that pins it: test/batch037-situational.test.ts, describe "reverse-engineer grants the 2025
+    substitution and no Crafting bonus" (3 its, all cited "// batch 037: reverse-engineer#crafting-star",
+    all on a BUILT inventor 4 who has taken the feat):
+      - no +2 reaches the Crafting rows: `featSituationalFor(characterSituationalIds(c, db), ...)` and
+        `explainStat(c, db, {kind:'skill',skill:'crafting'}).situational` both list nothing for the
+        record, and no "Reverse Engineer" part is in the Crafting total. The empty list is proved
+        meaningful in the same test: feeding the reader the deleted entry back through `extra` makes it
+        reappear, so the deletion is what silenced it and not a dead harness.
+      - the substitution SURVIVES: `skillSubstitutions(c, db)` still yields use=crafting /
+        forSkill=thievery / conditional, and the Thievery rows still carry the note
+        ("... roll crafting instead"). Asserted by SHAPE, never by the stored `when` wording, so it does
+        not flip when the DATA STILL NEEDED row above lands.
+      - an inventor who never took the feat reads neither clause.
+    `node scripts/vt.mjs run test/batch037-situational.test.ts` - 3 passed. `npx tsc --noEmit` clean.
+  Could not do: nothing on this finding.
+
+Notes for the closer:
+  - src/data/trust-ledger.json lanes.situational lists "reverse-engineer" (its situational lane is
+    gated OFF), and scripts/data/trust-approvals.json n:15 already dispositions the removal as safe
+    ("a REMOVAL ... cannot ship dark"). The ledger is derived from core.json + the WG comparer output
+    and never from this registry, so deleting the entry does not drift it; no regeneration is needed.
+  - No settle, no comparer teach, no ratchet touched, so no "// mutation-proof" marker is owed; the
+    stunted-copy discipline is still honoured by the `extra` re-injection described above.

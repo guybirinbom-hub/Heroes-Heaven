@@ -24,13 +24,22 @@ const db = content();
 const NAME_RE = /(?:you can make|the only Strikes you can make are|you gain a|you gain an|can make)\s+([a-z][a-z' -]{2,40}?)\s+(?:ranged )?(?:unarmed )?(?:attacks?|strikes?|Strikes?)\b/i;
 const DICE_RE = /\b(?:deal|dealing|that deals?)\s+(\d+d\d+)(?:\s+([a-z]+))?\s+damage/i;
 
-/* Two stances are `actions` records granted by Clawdancer Dedication, and `grantedStrikes` is NOT read
- * from the `actions` bucket (build.ts's collector reads feats, heritages, ancestries, classFeatures,
- * the picked subclass, invested items and modes). Both live on the dedication that hands them over. */
-const REHOMED: Record<string, string> = {
-  'claw-stance': 'clawdancer-dedication',
-  'talon-stance': 'clawdancer-dedication',
-};
+/*
+ * WHERE A STANCE'S STRIKE LIVES, in order of preference.
+ *
+ * Most stances are `feats` and carry their own `grantedStrikes`. Two are `actions` records granted by
+ * Clawdancer Dedication, and `grantedStrikes` is NOT read from the `actions` bucket (build.ts's
+ * collector reads feats, heritages, ancestries, classFeatures, the picked subclass, invested items and
+ * modes) — so the carrier for those is the STANCE DEFINITION, `content.stances[id].strikes`, which is
+ * what deriveStrikes renders while the stance is on (derive.ts:5155).
+ *
+ * Batch 037 deleted the copy that used to sit on feats/clawdancer-dedication.grantedStrikes: the
+ * dedication is not itself a stance, so collectGrantedNaturals never skipped it and both Strikes
+ * showed permanently — twice while a stance was on, and at all while none was. The strikes did not
+ * move; the duplicate went away. This lookup follows them to the definition that always held them.
+ */
+const stanceStrikes = (id: string) =>
+  (db as unknown as { stances?: Record<string, { strikes?: { name: string; die: string }[] }> }).stances?.[id]?.strikes ?? [];
 
 type Row = { bucket: string; id: string; name: string; strikeName: string; dice: string };
 
@@ -50,9 +59,8 @@ function stancesPrintingAStrike(): Row[] {
 }
 
 const strikesOn = (bucket: string, id: string) => {
-  const home = REHOMED[id] ? { bucket: 'feats', id: REHOMED[id] } : { bucket, id };
-  const rec = (db as unknown as Record<string, Record<string, { grantedStrikes?: { name: string; die: string }[] }>>)[home.bucket]?.[home.id];
-  return rec?.grantedStrikes ?? [];
+  const rec = (db as unknown as Record<string, Record<string, { grantedStrikes?: { name: string; die: string }[] }>>)[bucket]?.[id];
+  return rec?.grantedStrikes ?? stanceStrikes(id);
 };
 
 describe('stance strikes', () => {
@@ -117,11 +125,33 @@ describe('stance strikes', () => {
     expect(entered.filter((n) => n === 'gale blossom').length).toBe(1);
   });
 
-  /* And through the re-homed carrier: both stances arrive from the one dedication that grants them. */
-  it('reaches a built character through the re-homed carrier — Clawdancer Dedication', () => {
+  /*
+   * And the same shape for the two stances Clawdancer Dedication hands over. This used to assert both
+   * Strikes in `naturalAttacks` off the dedication's own `grantedStrikes` — which is exactly the bug
+   * batch 037 deleted: the dedication is not a stance, so the copies were never skipped and a
+   * clawdancer carried a frenzied claw and a spinning talon while standing normally, and twice over
+   * while in either stance. *"The only Strikes you can make are frenzied claw unarmed attacks"*
+   * (feat-5436) means they arrive WITH the stance and not before it, which is what is asserted now.
+   */
+  // batch 037: clawdancer-dedication#duplicate-strikes
+  it('reaches a built character only once the stance is entered — clawdancer-dedication', () => {
     const ch = build('fighter', 4, { featPicks: { '2:class': 'clawdancer-dedication' } as BuildState['featPicks'] });
     expect(ch.feats.map((f) => f.featId)).toContain('clawdancer-dedication');
-    expect(naturalNames(ch)).toContain('frenzied claw');
-    expect(naturalNames(ch)).toContain('spinning talon');
+    expect(naturalNames(ch), 'not while standing normally').not.toContain('frenzied claw');
+    expect(naturalNames(ch), 'not while standing normally').not.toContain('spinning talon');
+
+    const claw = deriveStrikes({ ...ch, activeStance: 'claw-stance' }, db).map((s) => s.name.toLowerCase());
+    // batch 037: clawdancer-dedication#duplicate-strikes
+    expect(claw, 'and exactly once in Claw Stance').toContain('frenzied claw');
+    // batch 037: clawdancer-dedication#duplicate-strikes
+    expect(claw.filter((n) => n === 'frenzied claw').length).toBe(1);
+    // batch 037: clawdancer-dedication#duplicate-strikes
+    expect(claw, 'the other stance stays off').not.toContain('spinning talon');
+
+    const talon = deriveStrikes({ ...ch, activeStance: 'talon-stance' }, db).map((s) => s.name.toLowerCase());
+    // batch 037: clawdancer-dedication#duplicate-strikes
+    expect(talon, 'and exactly once in Talon Stance').toContain('spinning talon');
+    // batch 037: clawdancer-dedication#duplicate-strikes
+    expect(talon.filter((n) => n === 'spinning talon').length).toBe(1);
   });
 });

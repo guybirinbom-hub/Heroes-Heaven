@@ -49,9 +49,15 @@ describe('Diehard moves the dying-death threshold', () => {
     expect(applyDamage(at4, 40, 40, 5).conditions.find((c) => c.id === 'dying')?.value).toBe(5);
   });
 
-  it('both records that print the sentence carry the field', () => {
+  // Diehard prints the sentence with no duration and no area, so the permanent field is its carrier.
+  // Soul Well does NOT: "For the next minute … living creatures within the same area die from the
+  // dying condition at dying 5 rather than dying 4" (AoN feat-7707). `dyingThresholdBonus` is summed
+  // unconditionally into Character.dyingThreshold, which made a one-minute area effect a permanent
+  // personal one, so soul-well's copy is retired to modes/soul-well.
+  // batch 037: soul-well#dying-toggle
+  it('diehard carries the permanent field and soul-well, whose clause lasts a minute, does not', () => {
     const db = content();
     expect(db.feats['diehard'].dyingThresholdBonus).toBe(1);
-    expect(db.feats['soul-well'].dyingThresholdBonus).toBe(1);
+    expect(db.feats['soul-well'].dyingThresholdBonus).toBeUndefined();
   });
 });

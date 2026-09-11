@@ -51,11 +51,20 @@ describe('what the answer does', () => {
     expect(c.proficiencies.skills[`lore:${b}` as 'lore:guild'] ?? 'untrained').toBe('untrained');
   });
 
-  it('a skill answer trains that skill', () => {
-    const [id, bg] = firstOf('skill');
-    const pick = bg.choice!.options![0].value;
-    const c = build('fighter', 1, { backgroundId: id, featChoices: { [backgroundChoiceKey(id)]: pick } });
-    expect(c.proficiencies.skills[pick as 'stealth']).toBe('trained');
+  /*
+   * ⚠ THE FIXTURE MOVED IN BATCH 037. This used to take the first skill-kind background carrying an
+   * explicit `options` list, which was sponsored-by-teacher-ot — a record whose `choice` duplicated
+   * the `trainedSkillChoice` it already had, so one printed pick trained two skills and the row
+   * removed it. Every skill-kind background left asks through `kind: 'skills'`, whose options ARE the
+   * skill list, so the fixture is one of those and the answer is a skill id. The claim is unchanged:
+   * a background's own answer trains the skill it names.
+   */
+  // batch 037: sponsored-by-teacher-ot#one-pick
+  it('a skill answer trains that skill — through a `skills` picker, since sponsored-by-teacher-ot lost its duplicate list', () => {
+    const [id] = withChoice.find(([, b]) => b.choice!.kind === 'skills')!;
+    const c = build('fighter', 1, { backgroundId: id, featChoices: { [backgroundChoiceKey(id)]: 'stealth' } });
+    // batch 037: sponsored-by-teacher-ot#one-pick
+    expect(c.proficiencies.skills.stealth).toBe('trained');
   });
 
   it('a feat answer grants that feat', () => {

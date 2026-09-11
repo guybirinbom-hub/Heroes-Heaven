@@ -1,0 +1,214 @@
+{
+  "findings": [
+    {
+      "id": "arcana-of-iron#bespell-strikes",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "arcana-of-iron",
+          "field": "situational",
+          "value": [
+            {
+              "targets": [{ "kind": "strikeDamage" }],
+              "when": "until the end of your turn, on the weapon or unarmed attack you siphoned spell energy into with Bespell Strikes",
+              "bonus": "the extra damage is 1d8 instead of 1d6"
+            }
+          ],
+          "why": "AoN feat-7980 (Arcana of Iron, Battlecry! pg. 82): \"The extra damage you deal with Bespell Strikes increases to 1d8.\" The clause reached nothing on the record - Bespell Strikes (feat-5028) deals \"an extra 1d6 force damage\" only in prose, so the upgrade had no number-carrying lane either. `situational` is the lane the reader already exists for: explain.ts's take() walk over c.feats (src/rules/explain.ts:583) files the clause under the feat's id and it surfaces as a star in the strike-damage breakdown, which is where the player needs it. Not a flat strikeDamage bonus: it applies only after a non-cantrip spell, once per turn, on one weapon - a number would be wrong on every other Strike. Existing overlay rows for this record are grantsClassFeatures only, so no supersedes."
+        }
+      ],
+      "note": "One situational row on the upgrade feat. The base Bespell Strikes 1d6 has no carrier either; starring the UPGRADE alone would be misleading, so the `bonus` text states the replacement (1d8 instead of 1d6) rather than a delta."
+    },
+    {
+      "id": "astrolabe-of-falling-stars#identify-star",
+      "backfillRows": [
+        {
+          "category": "items",
+          "id": "astrolabe-of-falling-stars",
+          "field": "situational",
+          "value": [
+            {
+              "targets": [{ "kind": "skill", "detail": "all" }],
+              "when": "on checks to identify celestial bodies, if you are trained in Survival and hold the astrolabe in two hands",
+              "bonus": "+1 item",
+              "whileCarried": true
+            }
+          ],
+          "why": "AoN equipment-4028 (Astrolabe of Falling Stars): \"An astrolabe of falling stars can be used as a mariner's astrolabe\", and the base astrolabe (equipment-4027) prints \"An astrolabe also grants a +1 item bonus to checks to identify celestial bodies\" with NO skill named. Byte-identical in shape and wording to the shipped `astrolabe` entry in src/rules/situationalBonuses.ts:2995 and its five siblings (astrolabe-standard, astrolabe-mariners, standard-astrolabe, mariners-astrolabe, aon-astrolabe) - all on skill/all, not narrowed to Survival as WG does (owner 2026-09-10 #51). Authored as DATA rather than a code entry because this chunk may not edit src/: the reader is the item walk at src/rules/explain.ts:552, gated on itemInUse, which is the same channel the code table feeds. Existing overlay rows for this record are `frequency` only, so no supersedes. VERIFIER (b037 data-rows-6): `whileCarried: true` added, or the clause is unreachable. `itemInUse` needs worn/invested/equipped/attachedTo (derive.ts:278), and an itemType `equipment` record with no `invested` trait gets NO Wear/Wield control (equipControl, InventoryTab.tsx:72 returns null off itemType) and is refused by the drag path (`isEquippable`, InventoryTab.tsx:732), so a player can never put an astrolabe in use - the same state the flag's own doc-comment was written for (\"nothing in the app equips a loose crystal, so the equip test hid that clause outright rather than qualifying it\", situationalBonuses.ts:79-87). The printed requirement (trained in Survival, held in two hands) stays stated in `when`, so the clause qualifies itself instead of going dark. The six sibling astrolabes carry their star in the CODE table and are dark for the same reason - see CROSS-FILE GAPS."
+        }
+      ],
+      "note": "The star lives on the item record's own `situational` field (the data twin of FEAT_SITUATIONAL), so no src/ file moves. Survival is the printed REQUIREMENT, carried in `when`; it is not the bonus's target."
+    },
+    {
+      "id": "breath-of-the-dragon#derive-from-exemplar",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "breath-of-the-dragon",
+          "field": "effectChoices",
+          "supersedes": true,
+          "value": [
+            {
+              "id": "breath-exemplar",
+              "prompt": "Your draconic exemplar (the shape, damage type and save all follow from it)",
+              "answerFromChoiceFlag": "draconicExemplar",
+              "options": [
+                { "value": "adamantine", "label": "Adamantine", "note": "15-foot cone, bludgeoning damage, basic Reflex save. Physical damage carries no trait of its own." },
+                { "value": "barrage", "label": "Barrage", "note": "15-foot cone, force damage, basic Reflex save. The ability gains the force trait." },
+                { "value": "bog", "label": "Bog", "note": "15-foot cone, acid damage, basic Reflex save. The ability gains the acid trait." },
+                { "value": "brine", "label": "Brine", "note": "30-foot line, bludgeoning damage, basic Reflex save. Physical damage carries no trait of its own." },
+                { "value": "cinder", "label": "Cinder", "note": "15-foot cone, fire damage, basic Reflex save. The ability gains the fire trait." },
+                { "value": "cloud", "label": "Cloud", "note": "15-foot cone, electricity damage, basic Reflex save. The ability gains the electricity trait." },
+                { "value": "conspirator", "label": "Conspirator", "note": "15-foot cone, poison damage, basic Fortitude save. The ability gains the poison trait." },
+                { "value": "coral", "label": "Coral", "note": "30-foot line, bludgeoning damage, basic Reflex save. Physical damage carries no trait of its own." },
+                { "value": "crystal", "label": "Crystal", "note": "15-foot cone, piercing damage, basic Reflex save. Physical damage carries no trait of its own." },
+                { "value": "delight", "label": "Delight", "note": "15-foot cone, spirit damage, basic Reflex save. The ability gains the spirit trait." },
+                { "value": "despair", "label": "Despair", "note": "15-foot cone, sonic damage, basic Will save. The ability gains the sonic trait." },
+                { "value": "diabolic", "label": "Diabolic", "note": "15-foot cone, fire damage, basic Reflex save. The ability gains the fire trait." },
+                { "value": "empyreal", "label": "Empyreal", "note": "15-foot cone, spirit damage, basic Reflex save. The ability gains the spirit trait." },
+                { "value": "executor", "label": "Executor", "note": "15-foot cone, sonic damage, basic Reflex save. The ability gains the sonic trait." },
+                { "value": "forest", "label": "Forest", "note": "15-foot cone, piercing damage, basic Reflex save. Physical damage carries no trait of its own." },
+                { "value": "fortune", "label": "Fortune", "note": "15-foot cone, force damage, basic Reflex save. The ability gains the force trait." },
+                { "value": "horned", "label": "Horned", "note": "15-foot cone, poison damage, basic Fortitude save. The ability gains the poison trait." },
+                { "value": "magma", "label": "Magma", "note": "15-foot cone, fire damage, basic Reflex save. The ability gains the fire trait." },
+                { "value": "mirage", "label": "Mirage", "note": "15-foot cone, mental damage, basic Will save. The ability gains the mental trait." },
+                { "value": "mocking", "label": "Mocking", "note": "15-foot cone, bludgeoning damage, basic Reflex save. Physical damage carries no trait of its own." },
+                { "value": "oath", "label": "Oath", "note": "15-foot cone, spirit damage, basic Will save. The ability gains the spirit trait." },
+                { "value": "omen", "label": "Omen", "note": "15-foot cone, mental damage, basic Will save. The ability gains the mental trait." },
+                { "value": "phase", "label": "Phase", "note": "15-foot cone, force damage, basic Reflex save. The ability gains the force trait." },
+                { "value": "requiem", "label": "Requiem", "note": "30-foot line, spirit damage, basic Will save. The ability gains the spirit trait." },
+                { "value": "resurrection", "label": "Resurrection", "note": "15-foot cone, void damage, basic Fortitude save. The ability gains the void trait." },
+                { "value": "rime", "label": "Rime", "note": "15-foot cone, cold damage, basic Reflex save. The ability gains the cold trait." },
+                { "value": "rune", "label": "Rune", "note": "15-foot cone, fire damage, basic Reflex save. The ability gains the fire trait." },
+                { "value": "sage", "label": "Sage", "note": "15-foot cone, mental damage, basic Will save. The ability gains the mental trait." },
+                { "value": "sea", "label": "Sea", "note": "15-foot cone, bludgeoning damage, basic Reflex save. Physical damage carries no trait of its own." },
+                { "value": "sky", "label": "Sky", "note": "15-foot cone, electricity damage, basic Reflex save. The ability gains the electricity trait." },
+                { "value": "sovereign", "label": "Sovereign", "note": "15-foot cone, mental damage, basic Will save. The ability gains the mental trait." },
+                { "value": "stormcrown", "label": "Stormcrown", "note": "30-foot line, electricity damage, basic Reflex save. The ability gains the electricity trait." },
+                { "value": "time", "label": "Time", "note": "15-foot cone, force damage, basic Will save. The ability gains the force trait." },
+                { "value": "umbral", "label": "Umbral", "note": "15-foot cone, void damage, basic Reflex save. The ability gains the void trait." },
+                { "value": "underworld", "label": "Underworld", "note": "15-foot cone, fire damage, basic Reflex save. The ability gains the fire trait." },
+                { "value": "vizier", "label": "Vizier", "note": "15-foot cone, fire damage, basic Reflex save. The ability gains the fire trait." },
+                { "value": "vorpal", "label": "Vorpal", "note": "15-foot cone, void damage, basic Will save. The ability gains the void trait." },
+                { "value": "wailing", "label": "Wailing", "note": "15-foot cone, sonic damage, basic Fortitude save. The ability gains the sonic trait." },
+                { "value": "whisper", "label": "Whisper", "note": "15-foot cone, mental damage, basic Will save. The ability gains the mental trait." },
+                { "value": "wish", "label": "Wish", "note": "15-foot cone, mental damage, basic Will save. The ability gains the mental trait." }
+              ]
+            }
+          ],
+          "why": "AoN feat-5730 (Breath of the Dragon, Player Core 2 pg. 45): \"The shape of the breath, the damage type, and the saving throw match those of your draconic exemplar (see above).\" The three shipped pickers (breath-shape / breath-damage / breath-save) let a player build a breath no dragon has, and ignored the exemplar they had already chosen. SUPERSEDES the shipped 3-picker effectChoices row: all three of its facts are carried WHOLE into every option's note (shape + damage type + trait + save), which is the only merge the printed sentence permits - re-emitting the three free pickers beside a derived one would re-open exactly the illegal combinations the owner ruling closes (owner 2026-09-10 #55, option A). Derivation needs NO code: `answerFromChoiceFlag` (src/rules/types.ts:2083) resolves the pick from another record's choice flag, and heritages/dragonblood already asks the question under flag `draconicExemplar` (40 options, same lowercase values, stored at featChoices['heritage:dragonblood'] - exactly what choiceFlagAnswer reads at src/rules/build.ts:1978). resolvePick (build.ts:6183) takes the flag over any stored answer and EffectChoicesPicker (src/builder/shared.tsx:4596) hides the now-answered control, so the player answers once on the heritage and the feat follows. Rows are the Draconic Benefactors table (Draconic Codex pg. 206, https://2e.aonprd.com/DraconicBenefactors.aspx) as the owner transcribed it; all 40 of our exemplar values are covered, so the \"dragons not in the table\" fallback is empty."
+        }
+      ],
+      "note": "One field, one row: three pickers collapse to a single exemplar-derived choice. The shape/damage/save facts live in the option NOTES (prose the sheet shows beside the pick) rather than in grants, because Breath of the Dragon's damage, area and save have no numeric carrier on a feat record - the same reason the shipped pickers only carried notes. The new data file scripts/data/draconic-benefactors.json the proposal asks for is NOT written here (scripts/ is outside this chunk) - see CROSS-FILE GAPS; the table itself is in this row, so nothing is lost if the file lands later."
+    },
+    {
+      "id": "reborn-soul#restricted-increases",
+      "backfillRows": [
+        {
+          "category": "backgrounds",
+          "id": "reborn-soul",
+          "field": "dataWarning",
+          "supersedes": true,
+          "value": "At 3rd, 7th and 15th level you gain ONE extra skill increase, and it can be applied only to one of your two past-life Lore skills — you choose which one each time, and your ordinary skill increases at those levels are unaffected. The app's restricted bonus-increase lane is class-only today, so apply these three by hand.",
+          "why": "AoN background-590 (Reborn Soul): \"At 3rd level, 7th level, and 15th level, you receive skill increases, which you can apply only to these Lore skills.\" SUPERSEDES the shipped batch-021 dataWarning, whose wording (\"EXTRA skill increases that can only raise your two past-life Lore skills\") is silently WG's both-Lores-each-time reading - six raises where print grants three (owner 2026-09-10 #85, 'A as I describe it'). The superseded row's only content was that sentence plus its 'apply them by hand' instruction; both halves are carried into this value, corrected. The BUILT half (one restricted increase at each of 3/7/15) cannot be a row: bonusSkillIncreaseLevels + restrictedSkillIncreaseLevels are read off the CLASS only (src/rules/build.ts:3724 `cls?.bonusSkillIncreaseLevels`, build.ts:1137 `cls?.restrictedSkillIncreaseLevels`) and their `skills` list is fixed SkillIds, which cannot name the two Lores the player picked - see CROSS-FILE GAPS."
+        }
+      ],
+      "note": "The note half is a row; the mechanical half needs the bonus-increase reader extended to backgrounds and to player-chosen Lores (engine). Rewriting the note NOW matters on its own: today it states WG's reading, so a player following it raises both Lores every time."
+    },
+    {
+      "id": "screech-shooter-greater#grade-numbers",
+      "backfillRows": [
+        {
+          "category": "items",
+          "id": "screech-shooter-greater",
+          "field": "description",
+          "supersedes": true,
+          "value": "Built from the larynx of a terror shrike, or similar animal that possesses a frightening screech or similar special ability, a *greater screech shooter* is a special *+2 greater striking harmona gun* designed to fire terrifying blasts of sound. A *screech shooter* deals sonic damage but can otherwise be used like a normal harmona gun.\n\n---\n\n**Activate—Screech Shot** ⟨2⟩ (emotion, manipulate, mental)\n\n**Frequency** once per hour\n\n---\n\n**Effect** The screech shooter unleashes a frightening wail. All creatures in a 40-foot emanation from you must attempt a DC 30 Will save.\n\n---\n\n**Critical Success** The creature is unaffected.\n\n**Success** The creature is Frightened 1.\n\n**Failure** The creature is Frightened 2.\n\n**Critical Failure** The creature is Frightened 3 and fleeing for 1 round.\n\n---\n\n**Craft Requirements** The initial raw materials must include the larynx of a creature with a frightening screech.",
+          "why": "AoN equipment-1169-1109 (Screech Shooter (Greater), Guns & Gears (Remastered) pg. 155): \"A greater screech shooter is a +2 greater striking harmona gun. The DC for the activation is 30 and it affects creatures in a 40-foot emanation\", against the base page's \"All creatures in a 30-foot emanation from you must attempt a DC 25 Will save\" (equipment-1169). SUPERSEDES the shipped description row, carried whole and edited in exactly one sentence: the Effect line's two numbers become 40-foot and DC 30 (owner 2026-09-10 #72, option A - one sentence per grade carrying only that grade's numbers). The grade's rune line was already correct, and no other clause differs per grade in print, so nothing else moves. descRefs (the four frightened/fleeing condition links) are untouched - every label they name still appears verbatim."
+        }
+      ],
+      "note": "Description-only: the DC and emanation have no mechanical carrier on a weapon record, so the printed sentence is the whole fix."
+    },
+    {
+      "id": "screech-shooter-major#grade-numbers",
+      "backfillRows": [
+        {
+          "category": "items",
+          "id": "screech-shooter-major",
+          "field": "description",
+          "supersedes": true,
+          "value": "Built from the larynx of a terror shrike, or similar animal that possesses a frightening screech or similar special ability, a *major screech shooter* is a special *+2 greater striking harmona gun* designed to fire terrifying blasts of sound. A *screech shooter* deals sonic damage but can otherwise be used like a normal harmona gun.\n\n---\n\n**Activate—Screech Shot** ⟨2⟩ (emotion, manipulate, mental)\n\n**Frequency** once per hour\n\n---\n\n**Effect** The screech shooter unleashes a frightening wail. All creatures in a 50-foot emanation from you must attempt a DC 37 Will save.\n\n---\n\n**Critical Success** The creature is unaffected.\n\n**Success** The creature is Frightened 1.\n\n**Failure** The creature is Frightened 2.\n\n**Critical Failure** The creature is Frightened 3 and fleeing for 1 round.\n\n---\n\n**Craft Requirements** The initial raw materials must include the larynx of a creature with a frightening screech.",
+          "why": "AoN equipment-1169-1110 (Screech Shooter (Major), Guns & Gears (Remastered) pg. 155): \"The DC for the activation is 37 and it affects creatures in a 50-foot emanation\", against the base page's DC 25 / 30-foot emanation (equipment-1169). SUPERSEDES the shipped description row, carried whole with the Effect line's two numbers changed to 50-foot and DC 37 (owner 2026-09-10 #72). The major grade prints NO rune sentence of its own, so the shipped \"+2 greater striking\" first sentence is left exactly as it stands - changing it would be an invention, not a printed clause."
+        }
+      ],
+      "note": "Same shape as the greater grade. See DATA STILL NEEDED for this record's damage.type, which is a separate defect nobody's finding covers."
+    },
+    {
+      "id": "wyrm-spindle-greater#grade-numbers",
+      "backfillRows": [
+        {
+          "category": "items",
+          "id": "wyrm-spindle-greater",
+          "field": "description",
+          "supersedes": true,
+          "value": "The broken tips of four dragon claws—one of each magical tradition—are set into a silver fitting. They protrude in the shape of a star or compass.\n\n- **Armor** After you cast a non-cantrip spell by activating the spindle, you gain resistance 10 to fire, force, mental, and spirit for 1 minute.\n- **Weapon** After you cast a non-cantrip spell by activating the spindle, you gain a Dragon Breath activity that takes 2 actions and deals 9d6 damage to all creatures in a 30-foot cone with a basic Reflex save (DC 34). Choose the type of damage when you use Dragon Breath: fire, force, mental, or spirit. You can use this activity once before the end of your next turn.\n\n---\n\n**Activate** Cast a Spell\n\n**Effect** You cast Gouging Claw.\n\n---\n\n**Activate** Cast a Spell\n\n**Frequency** once per day\n\n**Effect** You cast 7th-rank Summon Dragon.",
+          "why": "CLOSER CORRECTION (batch 037 apply, apply-parity-fixes.mjs unbackedRun): this row first wrote \"with a DC 34 basic Reflex save\", and no named doc prints that run contiguously - equipment-2243 prints the save shape as \"with a DC 28 basic Reflex save\" (the BASE dc) and the greater block prints its own number parenthetically, \"9d6 (DC 34)\". Rewritten to print's own parenthetical form, \"with a basic Reflex save (DC 34)\", in the description and in the matching effectChoices weapon note; no number changed. AoN equipment-2243-1983 (Wyrm Spindle (Greater), Treasure Vault (Remastered) pg. 129): \"Resistance when affixed to armor is 10, and damage from Dragon Breath when affixed to a weapon is 9d6 (DC 34).\" The base page (equipment-2243) prints the save in full - \"in a 30-foot cone with a DC 28 basic Reflex save\" - and our greater description carried the area but lost the DC and the save name entirely (\"with a save\"), so the grade's one printed number was missing. SUPERSEDES the shipped batch description row (a repair-stripped-skill-links insertion that restored '30-foot cone'); its restored area is carried whole and only 'with a save' becomes 'with a DC 34 basic Reflex save' (owner 2026-09-10 #72)."
+        },
+        {
+          "category": "items",
+          "id": "wyrm-spindle-greater",
+          "field": "effectChoices",
+          "supersedes": true,
+          "value": [
+            {
+              "id": "affix",
+              "prompt": "What is the spellheart affixed to?",
+              "options": [
+                { "value": "armor", "label": "Armor", "note": "After you cast a non-cantrip spell by activating the spindle, you gain resistance 10 to fire, force, mental, and spirit for 1 minute." },
+                { "value": "weapon", "label": "Weapon", "note": "After you cast a non-cantrip spell by activating the spindle, you gain a Dragon Breath activity that takes 2 actions and deals 9d6 damage to all creatures in a 30-foot cone with a basic Reflex save (DC 34). Choose the type of damage when you use Dragon Breath: fire, force, mental, or spirit. You can use this activity once before the end of your next turn." }
+              ]
+            }
+          ],
+          "why": "The SAME sentence, on the answer the player actually reads on the sheet: the shipped weapon option's note says \"to all creatures in a with a save\" - the area was deleted by the import (the @Template/@Damage cleaner) and the DC was never there. AoN equipment-2243 gives the area and save shape (\"in a 30-foot cone with a DC 28 basic Reflex save\") and equipment-2243-1983 gives this grade's number (9d6, DC 34). SUPERSEDES the shipped effectChoices row: the whole value is re-emitted, armor option byte-identical, only the weapon note's broken clause repaired. Emitted with the description row because a description fixed on its own would leave the pick's own note still saying \"in a with a save\"."
+        }
+      ],
+      "note": "Two fields, two rows, one sentence: the grade's numbers have to be right in BOTH the description and the effectChoices note, which are the two places the player reads this item."
+    },
+    {
+      "id": "wyrm-spindle-major#grade-numbers",
+      "backfillRows": [
+        {
+          "category": "items",
+          "id": "wyrm-spindle-major",
+          "field": "description",
+          "supersedes": true,
+          "value": "The broken tips of four dragon claws—one of each magical tradition—are set into a silver fitting. They protrude in the shape of a star or compass.\n\n- **Armor** After you cast a non-cantrip spell by activating the spindle, you gain resistance 15 to fire, force, mental, and spirit for 1 minute.\n- **Weapon** After you cast a non-cantrip spell by activating the spindle, you gain a Dragon Breath activity that takes 2 actions and deals 12d6 damage to all creatures in a 30-foot cone with a basic Reflex save (DC 41). Choose the type of damage when you use Dragon Breath: fire, force, mental, or spirit. You can use this activity once before the end of your next turn.\n\n---\n\n**Activate** Cast a Spell\n\n**Effect** You cast Gouging Claw.\n\n---\n\n**Activate** Cast a Spell\n\n**Frequency** once per day\n\n**Effect** You cast Summon Draconic Legion.",
+          "why": "CLOSER CORRECTION (batch 037 apply, apply-parity-fixes.mjs unbackedRun), the same as the greater row: \"with a DC 41 basic Reflex save\" is printed contiguously by no named doc, so it reads as invented wording; print's greater/major blocks give the grade DC parenthetically, so the text is now \"with a basic Reflex save (DC 41)\" in the description and in the matching effectChoices weapon note. No number changed. AoN equipment-2243-1984 (Wyrm Spindle (Major), Treasure Vault (Remastered) pg. 129): \"Resistance when affixed to armor is 15, and damage from Dragon Breath when affixed to a weapon is 12d6 (DC 41).\" The save's shape comes from the base page (equipment-2243, \"a 30-foot cone with a DC 28 basic Reflex save\"), whose area and save name every grade keeps. SUPERSEDES the shipped description row, carried whole with 'with a save' becoming 'with a DC 41 basic Reflex save' (owner 2026-09-10 #72)."
+        },
+        {
+          "category": "items",
+          "id": "wyrm-spindle-major",
+          "field": "effectChoices",
+          "supersedes": true,
+          "value": [
+            {
+              "id": "affix",
+              "prompt": "What is the spellheart affixed to?",
+              "options": [
+                { "value": "armor", "label": "Armor", "note": "After you cast a non-cantrip spell by activating the spindle, you gain resistance 15 to fire, force, mental, and spirit for 1 minute." },
+                { "value": "weapon", "label": "Weapon", "note": "After you cast a non-cantrip spell by activating the spindle, you gain a Dragon Breath activity that takes 2 actions and deals 12d6 damage to all creatures in a 30-foot cone with a basic Reflex save (DC 41). Choose the type of damage when you use Dragon Breath: fire, force, mental, or spirit. You can use this activity once before the end of your next turn." }
+              ]
+            }
+          ],
+          "why": "Same repair as the greater grade, on this grade's numbers: the shipped weapon note reads \"to all creatures in a with a save\". Area and save shape from AoN equipment-2243, the 12d6/DC 41 from equipment-2243-1984. SUPERSEDES the shipped effectChoices row, re-emitted whole with the armor option unchanged."
+        }
+      ],
+      "note": "Identical treatment to wyrm-spindle-greater."
+    },
+    {
+      "id": "swashbucklers-speed#typed-all-speeds",
+      "backfillRows": [],
+      "note": "NO ROW - engine, and a row written today would be wrong in both directions. The finding asks for (a) a TYPE on every speed bonus so two status bonuses take the highest instead of adding, and (b) a clause worded 'to your Speeds' to raise EVERY Speed. Our only carrier is `landSpeedBonus: 5` (feats/swashbucklers-speed, already an overlay row), a bare number read by landBonusOf in src/rules/derive.ts - it has no type slot and no non-land slot, so no value of that field can express either half; ~20 records carry one today and all of them would need re-authoring against whatever shape the engine grows. Authoring a speculative field (speedBonus: {value,type,scope}) with no reader would be dead data and would collide with the engine builder's own shape. See CROSS-FILE GAPS."
+    }
+  ]
+}

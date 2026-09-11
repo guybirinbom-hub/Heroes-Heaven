@@ -526,6 +526,24 @@ export interface IwrEntry {
    */
   whenVoidHealing?: boolean;
   /**
+   * The entry applies only WHILE THE CHARACTER IS WEARING armour of one of these categories.
+   *
+   * The guardian's Guardian's Armor prints *"While wearing medium or heavy armor, you gain resistance
+   * to physical damage equal to 1 + half your level"* (AoN class-feature-1115) — a condition the sheet
+   * can check, because the worn armour is on it. Before this the whole clause had no carrier: the
+   * class feature shipped the number as a hand-flipped MODE, so a guardian in heavy armour read no
+   * resistance at all until they remembered to switch it on.
+   *
+   * The formula route is closed and must not be tried: `FormulaScope` is {level, abilities, speeds,
+   * archetypeFeats}, and `resolveFormula` leaves an unknown @token in place so the value resolves to
+   * 0 — a data formula gating on armour would look correct and grant nothing.
+   *
+   * ⚠ Read by BOTH the resistance and the weakness loop in `deriveDefenses`. Gating half of one shared
+   * type is how a field becomes silently write-only for the other half — the same warning the weakness
+   * loop already carries about minLevel/whenCreatureTrait/whenVoidHealing. Absent means unconditional.
+   */
+  whenArmorCategory?: ArmorCategory[];
+  /**
    * The printed clause the number is limited by, when that limit is NOT resolvable from the sheet but
    * the entry is still COUNTED — Backfire Mantle's *"from your own alchemical items and those of your
    * allies"*.
@@ -1083,6 +1101,19 @@ export interface DefenseGrants {
      *  clan dagger", and the dwarf ancestry grants the dagger. Applied after every carrier is
      *  collected, so ordering between them cannot matter. */
     replaces?: string;
+    /**
+     * Hand this item over only when the carrier's OWN `choice` answer equals this value — the
+     * project's whenChoice idiom (InnateSpellGrant, types.ts:2448; the reader is the same one-line
+     * gate as build.ts:6887).
+     *
+     * Armiger's Protection prints *"you receive a non-magical suit of Hellknight armor OF A TYPE YOU
+     * BECOME TRAINED IN (Hellknight breastplate, Hellknight half plate, or Hellknight plate)"*
+     * (feat-8814). The list is ONE suit chosen from three, and an ungated `grantsItems` handed every
+     * taker the breastplate whichever of the three they picked. An UNANSWERED pick grants nothing,
+     * deliberately: this is a real either/or the player must answer, not a printed default with an
+     * escape hatch, and defaulting one would put a suit nobody chose in the inventory.
+     */
+    whenChoice?: string;
   }[];
   /**
    * "You gain all the mechanical benefits of the <X> heritage you selected at 1st level."
@@ -1284,6 +1315,27 @@ export interface DefenseGrants {
    * where the printed floor is 40.
    */
   landSpeedBonus?: number | string;
+  /**
+   * The BONUS TYPE this record's `landSpeedBonus` is printed with — *"You gain a +5-foot STATUS bonus
+   * to your Speeds"* (Swashbuckler's Speed, feat-6238). Two bonuses of the same named type do not add:
+   * the highest applies. Every Speed bonus was summed untyped, so a swashbuckler carrying both
+   * Vivacious Speed's standing half and Swashbuckler's Speed walked 5 feet faster than print allows
+   * (owner ruling 2026-09-10 #127: follow print on both halves).
+   *
+   * ABSENT means the printed clause names no type (*"Your Speed increases by 5 feet"* — Fleet, Nimble
+   * Elf, the leshy's −5): those keep stacking, which is RAW for untyped modifiers. Only a record whose
+   * OWN text names a type carries this. A record that stores the DELTA over a sibling's bonus rather
+   * than its own total (Hyper Boosters over Speed Boosters, Tiller's Drive over Bellflower Dedication)
+   * stays untyped on purpose — the delta is the same status bonus increasing, not a second one, and
+   * typing it would make the pair take the highest of two halves instead of the printed whole.
+   */
+  speedBonusType?: 'status' | 'item' | 'circumstance';
+  /**
+   * The clause raises EVERY Speed, not land alone — *"a +5-foot status bonus to your SpeedS"*
+   * (Swashbuckler's Speed, feat-6238; the only carrier that prints the plural today). Applied to each
+   * movement type the character already has, like `speedAdjust`: a Speed you don't have stays absent.
+   */
+  speedBonusAllSpeeds?: true;
   /** A land-Speed FLOOR: "your land Speed increases TO 15 feet" (Strong Tail), "becomes 10 feet"
    *  (Cecaelia merfolk). Applied to the ancestry base before any additive bonus, so a merfolk who
    *  takes Strong Tail and Fleet walks at 20, not 25. Highest floor wins. */
@@ -2446,6 +2498,19 @@ export interface InnateSpellGrant {
   /** Auto-heighten: cast at ceil(level/2), the standard innate-heighten ladder ("heightened to half
    *  your level"). Overrides `rank`. */
   heightenHalfLevel?: boolean;
+  /**
+   * The `heightenAt` ladder below applies only to a character who answered ANOTHER record's flagged
+   * question a particular way — Locate Lawbreakers: *"If you're a member of the Order of the Gate,
+   * when you reach 14th level, the spell is heightened to 5th rank."* (hellknight-order-9). The order
+   * is asked once, on feats/hellknight-dedication (`choice.flag: "hellknightOrder"`), and this feat
+   * is one of several benefits that read it.
+   *
+   * Deliberately NOT `whenChoice`, which is the record's OWN choice (here the tradition pick), and
+   * deliberately gating the LADDER rather than the grant: a Hellknight of any other order still gets
+   * Locate once a day, just never at 5th rank. Unanswered reads as "not that order" — the ladder is a
+   * benefit, so withholding it until the question is answered can only under-grant, never over-grant.
+   */
+  heightenWhenFlag?: { flag: string; value: string };
   /** A CUSTOM heighten ladder — "7th rank, 8th at level 18, 9th at 20". The highest entry whose
    *  `level` the character has reached wins; below the first entry the base `rank` applies. */
   heightenAt?: { level: number; rank: number }[];
@@ -4003,8 +4068,16 @@ interface ItemBase extends ContentBase {
    * could only be written as `note` and so reached no total. Deliberately NOT `passiveEffects.resistances`
    * — that fold is unconditional for a worn or invested item and would hand the resistance to a stone
    * sitting loose in a pocket, which print does not grant.
+   *
+   * `spellNotes` is the third: an aeon stone's resonant clause is usually a rule about the spell the
+   * stone itself grants — *"The resonant power causes the augury spell from the aeon stone to always
+   * succeed at the DC 6 flat check"* (equipment-407-868) — and as `note` alone it was reachable only
+   * by opening the item, never from the spell entry the player actually casts from. Hung HERE rather
+   * than on the item's own top-level `spellNotes` because that lane fires for any worn or invested
+   * item with no designation check, which would print the resonant clause on a stone that is merely
+   * orbiting your head; `resonant` already inherits the "Slotted in a wayfinder" mark.
    */
-  resonant?: { note: string; innateSpells?: InnateSpellGrant[]; resistances?: IwrEntry[] };
+  resonant?: { note: string; innateSpells?: InnateSpellGrant[]; resistances?: IwrEntry[]; spellNotes?: SpellNote[] };
   /**
    * A relic GIFT's aspects (Air, Beast, Fire, Mind…) — the key that says which relics may ever take it.
    *
@@ -4735,6 +4808,19 @@ export interface ModeDef {
    *  it. Applied exactly where the active stance's strikes are, so they scale identically. */
   grantedStrikes?: StanceStrike[];
   /**
+   * How much HIGHER the dying value at which you die sits WHILE this mode is on — 1 for the two
+   * records that print it: Scar of the Survivor's immanence (*"You gain the benefits of the Diehard
+   * feat"*, AoN ikon-13) and Soul Well (*"For the next minute … living creatures within the same
+   * area die from the dying condition at dying 5 rather than dying 4"*, AoN feat-7707).
+   *
+   * The feat field of the same name (`DefenseGrants.dyingThresholdBonus`) is summed unconditionally
+   * at build time, so it can only say "always" — which made a one-minute activity and a
+   * spark-dependent immanence into permanent death-threshold raises. This is the same knob with an
+   * off switch: applyPlayState adds the ACTIVE modes' bonuses on top of `Character.dyingThreshold`,
+   * so the number the vitals rail already reads moves when the toggle moves and nowhere else.
+   */
+  dyingThresholdBonus?: number;
+  /**
    * Extra damage the mode adds to Strikes while it is on — iron wine's "+1d4 fire to your unarmed
    * attacks for 10 minutes".
    *
@@ -5313,10 +5399,27 @@ export interface NaturalAttack {
    * cannot tell them apart, which is why the gate exists.
    */
   source?: string;
-  /** Damage die, e.g. 'd6' / 'd8'. Base count is one die (Handwraps striking adds more). */
-  die: string;
-  /** 'piercing' | 'slashing' | 'bludgeoning' (or another damage type). */
-  damageType: string;
+  /**
+   * Damage die, e.g. 'd6' / 'd8'. Base count is one die (Handwraps striking adds more).
+   *
+   * ABSENT on a DAMAGELESS attack: *"The spider's web attack deals no damage, but the target takes a
+   * -10-foot circumstance penalty to its Speeds for 1 round on a hit"* (AoN instinct-8, whose table
+   * prints the Web's damage column as "Special"). The field was required, so the only way to carry
+   * such an attack was to invent a die for it — which is a rules error on the Strikes row — and the
+   * spider's Web had to ride as prose on the Rage action instead of being an attack the player can
+   * roll. deriveUnarmedStrike prints "no damage" for one; nothing steps or striking-dices it.
+   */
+  die?: string;
+  /** 'piercing' | 'slashing' | 'bludgeoning' (or another damage type). Absent with `die` — see it. */
+  damageType?: string;
+  /**
+   * What a HIT does when the attack itself deals no damage (or does in addition to its damage) —
+   * the spider Web's *"the target takes a -10-foot circumstance penalty to its Speeds for 1 round"*.
+   * Rendered onto the Strike's damage cell as "(on a hit, …)", because a granted attack had no
+   * carrier for an on-hit effect at all: GrantedStrike held damage and traits only, and
+   * StrikeDamageRider carries damage.
+   */
+  onHit?: string;
   /** Weapon traits (e.g. 'agile', 'finesse', 'grapple'); defaults to ['unarmed']. */
   traits?: string[];
   /** Weapon group (drives crit specialization); defaults to 'brawling'. */
@@ -5343,8 +5446,12 @@ export interface NaturalAttack {
  */
 export interface GrantedStrike {
   name: string;
-  die: string;
-  damageType: string;
+  /** Both damage fields are ABSENT on a damageless attack (the spider instinct's Web, AoN
+   *  instinct-8) — see `NaturalAttack.die`, onto which they are copied. */
+  die?: string;
+  damageType?: string;
+  /** An on-hit effect that is not damage — the Web's Speed penalty. See `NaturalAttack.onHit`. */
+  onHit?: string;
   traits: string[];
   group: string;
   /** Range increment in feet for a RANGED natural/unarmed attack (Spined Azarketi's spine); undefined = melee. */

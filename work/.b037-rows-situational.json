@@ -1,0 +1,9 @@
+{
+  "findings": [
+    {
+      "id": "reverse-engineer#crafting-star",
+      "backfillRows": [],
+      "note": "Code-only fix, no row. The record (feats/reverse-engineer, aonId feat-3053) already carries both halves of the 2025 printing: `skillSubstitutions` [{use: crafting, forSkill: thievery}] and the remastered `description`, both shipped by existing effect-backfill rows. The defect was ours alone - a +2 circumstance Crafting star in src/rules/situationalBonuses.ts that transcribed the SUPERSEDED 2021 printing (feat-8555). Deleting it is a source edit, and re-emission is blocked by naming the id in the exclusion list of scripts/apply-situational-lane.mjs. Owner ruling #15, 'drop the +2 Crafting star' (scripts/data/trust-approvals.json)."
+    }
+  ]
+}

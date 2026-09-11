@@ -1,0 +1,17 @@
+{
+  "findings": [
+    {
+      "id": "haunting-memories#skill-feat-pick",
+      "note": "Prose for the ONE record this chunk creates. Kept separate from the create row per the batch rule (a create row never carries a description). It states only what feat-7701 prints about this half of the feat, plus the one sentence saying where the pick lives. VERIFIER: rewritten to the vocabulary of feat-7701 — precheck (5) in scripts/wg-batch-run.mjs refuses a description row that introduces a token in neither our current text nor the cited mirror doc, and the first draft introduced eight (second, 7701, record, exists, only, carry, that, question).",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "haunting-memories-skill-feat",
+          "field": "description",
+          "value": "Your soul bears metaphysical impressions of the innumerable other spirits imprisoned with you in the final blade from which you escaped, allowing you to draw upon their memories. When you make your daily preparations, you can either gain the expert proficiency rank in one skill in which you’re untrained or raise your proficiency rank to master in one skill in which you’re trained or better. You also gain one skill feat with a minimum requirement of your new rank in the chosen skill. For the purpose of meeting level prerequisites for this feat, your level is equal to half your level. This proficiency and feat last until you make your daily preparations again. Since the proficiency is temporary, you can’t use it as a prerequisite for any permanent character option.",
+          "why": "feat-7701 \"You also gain one skill feat with a minimum requirement of your new rank in the chosen skill. For the purpose of meeting level prerequisites for this feat, your level is equal to half your level.\" CLOSER CORRECTION (batch 037 apply, apply-parity-fixes.mjs unbackedRun): the record is NEW, so its whole description counts as added prose and every 3+ word run of it must be a contiguous run feat-7701 actually prints. The draft restated print in its own order (a pulled quote, then \"Haunting Memories can either gain you…\") and was refused as one 131-word invented run. The value is now feat-7701's body VERBATIM, start to finish — the same text the parent record feats/haunting-memories carries — so the pick's popup reads exactly what the page prints and nothing else. The one sentence about where the pick lives is dropped from the description and lives on the record's `choice.note` instead (work/.b037-rows-data-rows-3.json), which is not a prose field and is where test/batch037-data-rows-3.test.ts already asserts it."
+        }
+      ]
+    }
+  ]
+}

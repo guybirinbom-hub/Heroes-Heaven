@@ -1,0 +1,85 @@
+BATCH 037 — GAP AGENT, FAMILY gap-instruments-4
+================================================
+
+Four open lines, two distinct issues (the builder raised each one and the verifier re-raised the same
+one, so report+verify pairs share a disposition). Both were re-measured here, not read off the
+reports: the desk state was dumped from work/owner-questions.json and work/desk-answers-2026-09-10.json,
+and the bare-node failure was reproduced.
+
+0 spec files written (no line asks for a data row — the chunk owed none). No manifest entry appended,
+deliberately: scripts/wg-batch-run.mjs:554 refuses any manifest kind other than "rows" /
+"created-prose", and neither artefact of mine needs one to be staged — this report is matched by
+scripts/wg-batch-commit.mjs's KEEP glob `^work/\.b037-report-.*\.txt$` (:93) and
+scripts/wg-casting.mjs is already in the instruments-2 manifest entry's stage[].
+
+
+LINE BY LINE
+------------
+
+1. work/owner-questions.json — twelve records still in `open`  (ref work/.b037-report-instruments-4.txt:21)
+   PARKED — flaggedResidue: driver-only desk move.
+   MEASURED, not taken on the report's word: work/owner-questions.json `open` (128 entries) holds all
+   twelve — 19:reinforced-chassis, 27:psychic-dedication, 32:elemental-existence, 34:thats-not-natural,
+   38:devils-eye, 53:instinct-ability, 65:pistol-wand, 66:tumbling-theft, 74:keys-to-destiny,
+   75:concordance-scout, 76:poppet, 77:goloma — while `ruled` holds six and none of them is these.
+   work/desk-answers-2026-09-10.json answers[] carries one entry whose `ns` is exactly
+   [19,27,32,34,38,53,65,66,74,75,76,77,80,81,83,84,89,90,91,103,114,117,118,119,136,137,148,150] —
+   "DECIDED BY FABLE under the 2026-08-22 rule (book wins) … Keep the app on all 28 … Each gets WRITTEN
+   DOWN as a known deliberate difference". So every one of the twelve IS ruled and the move is pure
+   bookkeeping.
+   WHY IT CANNOT BE AUTHORED HERE: the workflow forbids every agent to edit work/owner-questions.json,
+   and there is nothing else to author — the only writer the pipeline allows is
+   scripts/add-owner-question.mjs, which APPENDS to `open` and refuses an id already on the desk
+   (its four guards, add-owner-question.mjs:24-32); it has no open→ruled move, and `grep -l desk-answers`
+   over scripts/ + docs/ finds only the trust-ledger pair, so no script performs the move today.
+   NOT an owner question either: asking Guy to re-rule twelve ids he ruled on 2026-09-10 is noise, and
+   an entry in work/.b037-queue.json would be handed to add-owner-question.mjs, which would refuse all
+   twelve ids as already on the desk. A residue with the reason is the honest park.
+   CONSEQUENCE THE DRIVER MUST SEE (verified in source, both halves): while they sit in `open`,
+   wg-batch-close.mjs builds its desk map from open+deferred (:110-117) and derives OWNER-QUEUED for
+   all twelve at :258, and wg-batch-gate.mjs parks them at KINDS (:179), VALUES (:194), IDENTITY (:217)
+   and EXPERIENCE (:597). The moment the twelve move to `ruled`, the data comparers have NO ruled-id
+   park (ownerRuled is consulted only in the EXPERIENCE gate, :598) — which is exactly what makes this
+   chunk's two settles load-bearing: VERIFIED_EQUIVALENT['instinct-ability']=['hp'] in
+   scripts/wg-diff.mjs and SETTLED_VALUES['tumbling-theft']=['skill|stealth'] in scripts/wg-values.mjs
+   are both already in the tree, so the move is safe to make.
+
+2. work/owner-questions.json — the verifier's re-raise of line 1  (ref work/.b037-verify-instruments-4.txt:124)
+   PARKED — same flaggedResidue ref, so wg-batch-close.mjs:411 merges the pair into one residue rather
+   than reporting the same driver action twice. Nothing in the verifier's version was wrong and it adds
+   the gate/close line numbers quoted above.
+
+3. scripts/wg-casting.mjs cannot be run as bare `node`  (ref work/.b037-report-instruments-4.txt:32)
+   AUTHORED — scripts/wg-casting.mjs:16 (the file the line names).
+   REPRODUCED first: `node scripts/wg-casting.mjs` →
+   `Error [ERR_MODULE_NOT_FOUND]: Cannot find module 'C:\trying ai 2\pf2e codex\src\rules\seed'`.
+   Root cause, traced rather than guessed: lines 23-24 import TypeScript SOURCE (`../src/rules/seed`,
+   `../src/rules/build`) with no extension. NOT fixed by adding `.ts` — node would then have to compile
+   TypeScript, which is why the pipeline runs the comparer through jiti (wg-batch-run.mjs:352, and the
+   baseline allowlist at :1240) and why it works there. So there is no defect to fix and nothing to
+   test; the whole content of the gap line is "the next reader must not read this as a regression",
+   and the durable place for that is the file's own usage block, not a batch artefact nobody opens
+   next batch. Added six comment lines to the header beside the three `npx jiti` usage lines, naming
+   the error text, the cause, the jiti call sites and why the `.ts` extension is not the fix.
+   No citation comment is owed and none was written: the change touches no it( / expect( / settle-
+   registry entry / ratchet constant, so neither citation form (1) nor (2) applies — confirmed by
+   running `node scripts/test-flip-audit.mjs --batch 037` after the edit: "batch 037 clean — 23 test
+   file(s) touched, 13 new settle key(s), every flip cited." `node --check scripts/wg-casting.mjs` OK.
+
+4. scripts/wg-casting.mjs — the verifier's re-raise of line 3  (ref work/.b037-verify-instruments-4.txt:137)
+   AUTHORED — same ref, scripts/wg-casting.mjs:16; one comment closes both lines.
+
+
+WHAT I DID NOT TOUCH
+--------------------
+work/owner-questions.json (prohibited), work/.b037-queue.json (no owner question is owed — see line 1),
+work/.b037-specs.json (no spec file and no allowed kind — see the header), scripts/data/effect-backfill.json
+(no agent writes it in this workflow, and no line here asks for a row), every other family's gap lines.
+
+FILES TOUCHED
+-------------
+  scripts/wg-casting.mjs                          +6 header comment lines (lines 16-21), no code
+  work/.b037-gaps.json                            my four lines only: 2 authored, 2 parked
+  work/.b037-report-gap-instruments-4.txt         this file
+
+No vitest run is owed (no behaviour changed). `npx tsc --noEmit` clean.

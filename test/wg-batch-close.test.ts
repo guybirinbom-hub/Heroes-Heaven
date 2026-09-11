@@ -380,6 +380,66 @@ describe('wg-batch-close derives verdicts from evidence', () => {
   });
 });
 
+/*
+ * A read file carries the WG-comparison lane AND the print-read lane. Batch 037's read file holds
+ * twelve confirmed findings — android#printing among them — on records WG has no ability_block for at
+ * all, and the closer refused all twelve as "an id outside the batch". That refusal made every parity
+ * artefact unwritable, which is how a green comparer run still produced a red gate: the gate's own
+ * PARITY line asks whether "125 record(s) in this batch have an encoding on their side", and a record
+ * with no packet cannot have one. An off-batch finding is therefore routed, not refused — but only
+ * when this batch actually evidenced it, which is the half these two cases hold apart.
+ */
+describe('an off-batch confirmed finding (android) is routed to residual.offBatch, not refused', () => {
+  /** batch 900 plus one finding on a record that is NOT in the batch. */
+  const offBatchFixture = (spec: unknown) => fixture({
+    'work/.b900-read.json': {
+      confirmed: [
+        { id: 'alpha#one', claim: 'alpha drops the printed burst size', playerVisible: true, verdict: 'CONFIRMED', proposal: 'restore the text' },
+        { id: 'android#printing', claim: 'the printed Android ancestry entry is not the shipped one', playerVisible: true, verdict: 'CONFIRMED', proposal: 'restore the printed text' },
+      ],
+      refuted: [],
+      askOwner: [],
+    },
+    'work/.b900-rows-items.json': spec,
+  });
+
+  // batch 037: android#printing
+  it('writes both artefacts and files android#printing under offBatch when the batch cites it', () => {
+    const root = offBatchFixture({
+      findings: [
+        { id: 'alpha#one', backfillRows: [{ category: 'items', id: 'alpha', field: 'description', value: 'restored', why: 'AoN equipment-1' }], note: '' },
+        { id: 'android#printing', backfillRows: [{ category: 'ancestries', id: 'android', field: 'description', value: 'the printed entry', why: 'AoN ancestry-1' }], note: '' },
+      ],
+    });
+    // batch 037: android#printing
+    const r = close(root, '--batch', '900', '--write');
+    expect(r.code).toBe(0);
+    const parity = JSON.parse(readFileSync(join(root, 'work/wg-batch-900-parity.json'), 'utf8'));
+    // it is not a parity verdict: the batch's three records are all that is judged
+    expect(parity.records.map((v: { id: string }) => v.id).sort()).toEqual(['alpha', 'beta', 'gamma']);
+    const residual = JSON.parse(readFileSync(join(root, 'work/wg-batch-900-residual.json'), 'utf8'));
+    // batch 037: android#printing
+    expect(residual.offBatch).toHaveLength(1);
+    expect(residual.offBatch[0]).toMatchObject({ id: 'android#printing', finding: 'android#printing' });
+    expect(residual.offBatch[0].citations.join(' ')).toContain('row spec work/.b900-rows-items.json finding android#printing (1 row(s))');
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  // batch 037: android#printing
+  it('still REFUSES android#printing when nothing in the batch cites it, and names the id', () => {
+    const root = offBatchFixture({
+      findings: [{ id: 'alpha#one', backfillRows: [{ category: 'items', id: 'alpha', field: 'description', value: 'restored', why: 'AoN equipment-1' }], note: '' }],
+    });
+    // batch 037: android#printing
+    const r = close(root, '--batch', '900', '--write');
+    expect(r.code).toBe(1);
+    expect(r.out).toContain('android#printing');
+    expect(r.out).toContain('nothing in this batch cites it');
+    expect(existsSync(join(root, 'work/wg-batch-900-parity.json'))).toBe(false);
+    rmSync(root, { recursive: true, force: true });
+  });
+});
+
 describe('the plan-E acceptance: re-closing batch 029 changes nothing', () => {
   const have = ['work/.b029-read.json', 'work/wg-batch-029.json', 'work/wg-batch-029-parity.json', 'work/wg-batch-029-residual.json'].every((f) => existsSync(join(ROOT, f)));
   it.runIf(have)('derives the same two artefacts byte-for-byte and refuses to --write over a committed batch', () => {

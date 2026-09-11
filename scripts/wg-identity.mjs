@@ -762,6 +762,31 @@ const contains = (set, name) => {
  * ⚠ Only for a difference verified against the printed text. Never a place to quiet a real gap.
  */
 const SETTLED_IDENTITIES = {
+  /* ---- BATCH 37 (instruments-7) ------------------------------------------------------------------
+   *
+   * ECHO OF LOST MOMENTS — their 5th rung holds a RANK-1 SPELL. Ours holds the printed one.
+   *
+   * Print (AoN apparition-5): *"Apparition Spells - Cantrip Figment - 1st Déjà Vu - 2nd Dispel Magic -
+   * 3rd Curse of Lost Time - 4th Vision of Death - 5th Illusory Scene - 6th Phantasmal Calamity - 7th
+   * Retrocognition - 8th Quandary - 9th Foresight"*, Vessel Spell Store Time. Ours is
+   * classes.animist.extraChoices['apparition'].options['echo-of-lost-moments'] — grantedSpells figment,
+   * de-ja-vu, dispel-magic, curse-of-lost-time, vision-of-death, illusory-scene, phantasmal-calamity,
+   * retrocognition, quandary, foresight and focusSpells ['store-time'] — the ladder rung for rung.
+   * Theirs gives Illusory Disguise, a RANK-1 spell, on the 5th rung; nothing in print puts it there.
+   * Owner ruled 2026-09-10 (desk #142): keep the app.
+   *
+   * ⚠ MEMBER SCOPE, NOT THE `spells` BUCKET — the witness-to-ancient-battles trap, one apparition over.
+   * A bucket-wide settle was measured to hide a real gap: with `dispel-magic` deleted from the option's
+   * grantedSpells the comparer reports `theirs-not-ours=[dispelmagic]`, and a `['spells']` entry would
+   * have printed nothing at all. The member key keeps the other ten spells and the vessel spell under
+   * comparison. Adversarially confirmed both ways in test/batch037-instruments-7.test.ts: `--raw` puts
+   * `illusorydisguise` straight back, and the stunted copy still reports `dispelmagic` with this entry
+   * in place. (The probe deletes a spell THEY name: the comparer reports only theirs-not-ours, and the
+   * whole finding is that their 5th rung does not carry Illusory Scene at all.)
+   */
+  // batch 037: echo-of-lost-moments#fifth-rung
+  'echo-of-lost-moments': ['illusorydisguise'],
+
   /* ---- BATCH 34 (instruments-1) ------------------------------------------------------------------
    *
    * WAY OF THE PISTOLERO — NOT SETTLED, and the entry that was here in this batch's first pass has been
@@ -939,11 +964,15 @@ const SETTLED_IDENTITIES = {
    * identity comparer just cannot see that "reinforcedstock" and "pistolwandmelee" are the same
    * attached weapon. Same named thing, present on both sides.
    *
-   * ⚠ The DELTA is queued, not settled: print says "the pistol's weapon potency rune (and any other
-   * runes) applies to Strikes with the stock as well"; our stock carries builtInRunes {potency:1},
-   * their bare giveItem stock carries no rune at all — a WG-vs-print divergence recorded in
-   * work/owner-questions.json ('pistol-wand'). This settle covers ONLY the item identity.
+   * ⚠ The DELTA was queued, and is now RULED — batch 037 updates this note rather than the key. Print
+   * says "the pistol's weapon potency rune (and any other runes) applies to Strikes with the stock as
+   * well"; our stock carries builtInRunes {potency:1}, their bare giveItem stock carries no rune at
+   * all. Owner-ruled 2026-09-10, desk #65, under the standing 2026-08-22 rule (the book wins): ours
+   * stays as printed and their runeless stock is an adversarially confirmed deliberate difference.
+   * This settle still covers ONLY the item identity — the rune half is not silenced here, and never
+   * was: wg-identity compares NAMES, so no key of this registry could reach it.
    */
+  // batch 037: pistol-wand#stock-runes
   'pistol-wand': ['items'],
 
   /* ---- BATCH 1 ---------------------------------------------------------------------------------
@@ -1074,8 +1103,12 @@ const SETTLED_IDENTITIES = {
   /* Their item is named after the ancestry ("Kashrishi Skin"), ours after the feat ("Tough Skin"). One
    * granted armour, two labels. */
   'tough-skin': ['items'],
-  /* Recorded disagreement — their row grants the Additional Lore FEAT (and its 3rd/7th/15th increases);
-   * this record prints only "you also become trained in Shoony Lore". See work/wg-lane-backlog.md. */
+  /* Their row grants the Additional Lore FEAT (and its 3rd/7th/15th skill increases); this record prints
+   * only *"You also become trained in Shoony Lore."* (AoN feat-1219). Recorded as a disagreement until
+   * the owner ruled it on 2026-09-10 (desk #45, "keep the printed scope"): the book wins, ours trains
+   * Diplomacy, Survival and Shoony Lore and grants no feat, and WG's Additional Lore grant is a
+   * deliberate difference. `grants` only; the matching kinds entry is VERIFIED_EQUIVALENT in wg-diff. */
+  // batch 037: shoony-lore#no-additional-lore
   'shoony-lore': ['grants'],
   /* Their Claws branch hands over a new "Iruxi Claws" ITEM. Ours UPGRADES the claw the iruxi ancestry
    * already granted — `unarmedTraits: [{match: ['claw'], setDie: 'd6', add: ['versatile-p'],
@@ -1673,9 +1706,15 @@ const SETTLED_IDENTITIES = {
    * renders both (src/builder/shared.tsx:2556).
    *
    * ⚠ Settles the LABELS only. Whether their package hands back the kobold's untouched FREE boost —
-   * three boosts against the two print grants — is a values question this comparer never sees, and it
-   * is open with the owner (work/owner-questions.json, b026 mightyfall-kobold). Nothing here quiets it.
+   * three boosts against the two print grants — is a values question this comparer never sees. It was
+   * open with the owner when this entry was written and he ruled it on 2026-09-10 (desk #115, "keep the
+   * printed scope"): *"INSTEAD OF the normal attribute boosts and flaws"* (heritage-374) replaces the
+   * WHOLE set, the ancestry's free boost included, so ours giving two boosts and one flaw is right and
+   * WG's retained free boost is a deliberate difference. Nothing was quieted here to reach that: the
+   * ruling needed no instrument change, because no comparer ever reported the boost count on this
+   * record (wg-values files ATTRIBUTE_* under NOT_A_SCALAR, the chassis lane).
    */
+  // batch 037: mightyfall-kobold#boosts
   'mightyfall-kobold': ['options'],
   /*
    * DRAGONSCALED KOBOLD — their `giveAbilityBlock` hands over "Draconic Exemplar" (block 30853), a
@@ -1693,6 +1732,99 @@ const SETTLED_IDENTITIES = {
    * gated feats in core.json; the finding was adjudicated REFUTED on that evidence (work/.b026-read.json).
    */
   'dragonscaled-kobold': ['grants'],
+
+  /* ---- BATCH 37 (instruments-2) — THE TWO LEAF-ORDER VARIANTS -----------------------------------
+   *
+   * SPORE ORDER — the leaf-order membership is a PREREQUISITE FACT, not a granted record.
+   *
+   * Print (druidic-order-13): *"The spore order is a variant of the leaf order. If you have the spore
+   * order, you count as a member of the leaf order, and you qualify for leaf order feats. Your familiar
+   * must be a fungus leshy."* Two sentences, and only the second hands anything over. WG has no way to
+   * say "counts as", so its row `giveAbilityBlock #34226 "Leaf Order"` hands the druid the WHOLE Leaf
+   * Order feature — which would also hand over Leaf Order's own leshy familiar and order spell a second
+   * time. Ours states the membership where a membership is read: PARENT_ORDER in the prerequisite
+   * checker (src/rules/build.ts:10111, added in batch 035 with druidic-order-12/-13 quoted above it),
+   * which adds 'leaf-order' to the `has` set of a spore or cultivation druid so the ten records printing
+   * prerequisite "leaf order" are open to them. The familiar sentence is the record's own grant and is
+   * the `leshyfamiliar` our side already reports.
+   *
+   * Owner ruled 2026-09-10 (desk #134 and its duplicate #139, answer B): nothing to build — the
+   * membership is already known and no feat is blocked; WG's copy of the whole Leaf Order feature must
+   * NOT be imported. Adversarially confirmed on a built character rather than from the finding's prose:
+   * a spore-order druid meets the "leaf order" prerequisite line and a flame-order druid does not, so
+   * PARENT_ORDER is a live carrier and not a dead field (test/batch037-instruments-2.test.ts).
+   *
+   * ⚠ THE ONE NAME `leaforder`, never the `grants` bucket: a real feature this order ought to hand over
+   * — the leshy familiar included — still reports, which is the trap the header above warns about.
+   */
+  // batch 037: spore-order#leaf-order-membership
+  'spore-order': ['leaforder'],
+  /* CULTIVATION ORDER — the same sentence, one order over, and WG encodes even less of it. Print
+   * (druidic-order-12): *"The cultivation order is a variant of the leaf order. If you have the
+   * cultivation order, you count as a member of the leaf order, and you qualify for leaf order feats."*
+   * Their row hands over the same ability block #34226, which on their side is an EMPTY "Leaf Order"
+   * record — the name appears and nothing mechanical follows. Ours is the same PARENT_ORDER entry
+   * (src/rules/build.ts:10111) that covers spore order. Owner ruled 2026-09-10 (desk #144, answer B):
+   * already done, keep prerequisite blocking switched off. One entry per order, deliberately, so a
+   * third leaf variant added later still reports; `leaforder` only, so every other grant keeps reporting. */
+  // batch 037: cultivation-order#leaf-order-membership
+  'cultivation-order': ['leaforder'],
+
+  /*
+   * DRAGON EIDOLON — print FIXES the tradition, so the other three answers are a question print does
+   * not ask.
+   *
+   * Printed (AoN eidolon-7, the Dragon eidolon's own stat block): *"**Tradition** Arcane"* — one word,
+   * no list, no "choose". WG models it as a four-branch `select "Select a Tradition"` (arcane, divine,
+   * occult, primal), so three of their four branch labels have no counterpart on our side and the
+   * record reported `options theirs-not-ours=[divine, occult, primal]`.
+   *
+   * Ours answers it the way standing rule R14 requires (where print works a value out from the
+   * character, the app works it out and shows no picker): the summoner subclass option
+   * `classes.summoner.subclass.options[id='dragon-eidolon'].tradition = 'arcane'`, which is the
+   * `o.tradition` carrier this reader already credits — which is why `arcane` is on our side of the
+   * report line and why the record's other question, the Breath Weapon damage type and area, agrees on
+   * every one of its eleven labels. Owner ruled 2026-09-10 (desk #138): the book wins, arcane is fixed,
+   * and no tradition picker is built.
+   *
+   * ⚠ THREE NAMES, never the `options` bucket. WG's `options` bucket for this record holds exactly the
+   * four tradition labels, so a bucket-wide settle would silence `arcane` too — the one label that
+   * agrees, and the only one that can ever catch the carrier going missing. Measured, not assumed: with
+   * `tradition` stripped from the summoner subclass option the record is STILL reported with this entry
+   * in place — `options theirs-not-ours=[arcane]`, our side down to the breath-weapon labels — where a
+   * bucket settle reports nothing at all. So this entry cannot stand in for the carrier it defers to
+   * (test/batch037-instruments-6.test.ts), and the `grants`, `spells` and `items` buckets are untouched.
+   *
+   * ⚠ The settle is the comparer's whole job here, because a BUILT summoner would agree either way:
+   * `classes.summoner.spellcasting.tradition` is itself 'arcane', so build.ts:4268's
+   * `grantOptions.find((o) => o.tradition)?.tradition ?? sp.tradition` falls back to the same answer.
+   * That coincidence is why the carrier is proved through this comparer rather than on a character — and
+   * why the settle is member-scoped: `arcane` is the only instrument left watching the field.
+   */
+  // batch 037: dragon-eidolon#tradition
+  'dragon-eidolon': ['divine', 'occult', 'primal'],
+
+  /*
+   * SKY RIDER — WG ASKS A QUESTION PRINT DOES NOT ASK, so its two option labels have nowhere to land.
+   *
+   * Printed (AoN background-381): *"You're trained in the Acrobatics skill, and the Plane of Air Lore
+   * skill. You gain the Cat Fall skill feat."* An AND, not an OR — and the Foundry transcription of the
+   * same page agrees. WG splits it into a pick, `select "Trained in Acrobatics"` beside `select "Select
+   * Lore"`, so their option tokens `skillacrobatics` and `skillloreplaneofair` are the two halves of a
+   * choice that does not exist; ours trains both outright — backgrounds/sky-rider `trainedSkill:
+   * 'acrobatics'` + `trainedLore: 'plane-of-air'`, neither of them an option, which is why the report
+   * read `options theirs-not-ours=[skillloreplaneofair, skillacrobatics]` with our attribute-boost
+   * labels on the other side. Owner ruled 2026-09-10 (desk #88, "keep the app"): the book wins, both
+   * skills are trained, and no picker is built.
+   *
+   * ⚠ THE TWO NAMES, never the `options` bucket. Adversarially confirmed rather than assumed, the same
+   * way dragon-eidolon above was: with `grantedFeatId` deleted from a content copy the record is STILL
+   * reported — `grants theirs-not-ours=[catfall] ours=[(nothing)]` — so this entry cannot stand in for
+   * the record's real grant, and the attribute options it shows on our side stay under comparison
+   * (test/batch037-instruments-3.test.ts). `--raw` puts both names straight back.
+   */
+  // batch 037: sky-rider#both-skills
+  'sky-rider': ['skillacrobatics', 'skillloreplaneofair'],
 };
 
 /* ---------------------------------------------------------------- compare */

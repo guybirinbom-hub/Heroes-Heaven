@@ -1,0 +1,139 @@
+BATCH 037 — ADVERSARIAL VERIFY, family instruments-7 (7 findings, all CONFIRMED, all "nothing changes")
+Verifier default was NOT DONE; every verdict below is a measurement I made myself, not the builder's word.
+
+VERDICTS
+  curse-of-turbulent-moments#conditional-penalty   DONE
+  echo-of-lost-moments#fifth-rung                  DONE
+  otherworldly-protection#computed-value           DONE
+  acute-vision#while-raging                        DONE
+  favored-terrain#conditional-speed                DONE
+  born-of-animal#speed-dash                        DONE
+  gleaming-blade#transcendence-name                DONE
+
+PER FINDING — one line of evidence each (all re-measured on the working tree, 2026-09-11)
+
+curse-of-turbulent-moments#conditional-penalty — DONE.
+  `node scripts/wg-values.mjs --ids curse-of-turbulent-moments` -> "compared 1 ... 1 agree", and the
+  same run with `--raw` puts back exactly 16 MISSING rows (ac| / save|fortitude / save|reflex /
+  save|will x theirs=1..4, ours=(nothing)) — so the settle is load-bearing, and those 16 are the
+  record's ENTIRE numeric content on their side, i.e. the four keys silence nothing else. Print
+  verified VERBATIM in the mirror (by-category/mystery/mystery-23.json): "You take a status penalty to
+  your AC against attacks made against you from reactions or free actions and a status penalty to
+  saving throws against effects that would make you fatigued or slowed equal to your cursebound
+  value." The carrier is real on a BUILT character: the family test's oracle/20/time case passes and
+  loses all four lines when the record is dropped from ownedFeatureIds. Cited
+  "// batch 037: curse-of-turbulent-moments#conditional-penalty" at scripts/wg-values.mjs:1415.
+
+echo-of-lost-moments#fifth-rung — DONE.
+  `wg-identity --ids echo-of-lost-moments` -> "1 match on every one"; with `--raw`,
+  "spells theirs-not-ours=[illusorydisguise]" comes straight back. Ours dumped from the SHIPPED
+  core.json: classes.animist.extraChoices[apparition].options[echo-of-lost-moments].grantedSpells =
+  figment, de-ja-vu, dispel-magic, curse-of-lost-time, vision-of-death, illusory-scene,
+  phantasmal-calamity, retrocognition, quandary, foresight (+ focusSpells store-time) — rung for rung
+  against by-category/apparition/apparition-5.json, whose 5th rung reads "Illusory Scene"; spells
+  ['illusory-scene'].rank = 5 while their illusorydisguise is rank 1. MEMBER scope confirmed load-
+  bearing by the test's stunted copy (a deleted dispel-magic still reports while the settled member
+  stays settled) — a ['spells'] bucket settle would have hidden it. Cited at scripts/wg-identity.mjs:787.
+
+otherworldly-protection#computed-value — DONE.
+  The park is load-bearing, not decorative: work/.b037-baseline/experience.json really carries
+  `otherworldly-protection | MISSING-CONTROL | WG asks "Select a Resistence" [option], "Select a
+  Sanctification" [option]; we render no control for this record`. The carrier is in the shipped
+  core.json — classFeatures/otherworldly-protection.resistances = void(whenVoidHealing:false),
+  vitality(whenVoidHealing:true), spirit, unholy(whenCreatureTrait:'holy'), holy(whenCreatureTrait:
+  'unholy'), each '3+floor(@actor.level/2)' — and the test's BUILT level-20 armor-innovation inventor
+  reads spirit 13 / void 13 with no control, losing both when `resistances` is stunted. Print verified
+  verbatim in innovation-5, AND the REMASTERED printing innovation-1 attests our exact five-row
+  mapping ("... resistance ... to void damage, or to vitality damage if you have void healing ... the
+  same amount of resistance to spirit damage. If you are sanctified ..."), so the derived rows are
+  right and the pickers are genuinely WG-only. Record schema matches the file's 23 sibling entries
+  (batch/verdict/lane/class/_cite/verified/refuter/verifiedOn); no overlap with the batch-033
+  `options`-bucket settle on the same record (different instrument, different bucket).
+
+acute-vision#while-raging — DONE.
+  Load-bearing park: baseline experience.json carries `acute-vision | NO-SHEET-EFFECT | WG encodes 1
+  value-bearing op(s); not on our built character: giveAbilityBlock #20769 "Darkvision"`. Shipped
+  core.json feats/acute-vision.whileActive = [{state:'rage', senses:[{name:'darkvision',
+  acuity:'precise'}]}]; print verified verbatim in by-category/feat/feat-5806.json ("When you are
+  raging, your visual senses improve, granting you darkvision."). The test's BUILT level-20 barbarian
+  has no darkvision at classResources.rage 0, has it at rage 1, and has none in either state once
+  `whileActive` is stunted — so the park defers to a carrier that really fires.
+
+favored-terrain#conditional-speed — DONE (no instrument, and the absence is correct).
+  I re-ran all three comparers myself rather than trusting the "clean" claim: wg-values "compared 1 ...
+  1 agree, 0 to adjudicate"; wg-identity "0 records where a named thing on their side has no
+  counterpart on ours"; a fresh corpus `wg-diff --out` puts it in AGREE/WE-ONLY with missing=[] and it
+  is NOT in theyOnly; experience verdict OK. Print verified verbatim in feat-4866 (the Plains benefit
+  is gated on the unimpeded journey class feature AND on being in the terrain). Refusing a settle here
+  is right — a settle on a record no comparer reports would silence its NEXT, real difference unread.
+
+born-of-animal#speed-dash — DONE, and I checked WHY the comparer agrees rather than accepting that it
+  does. wg-values compares this record (not "prose-only"): situationalMagnitudes scrapes
+  FEAT_SITUATIONAL['born-of-animal'] — "Speed becomes 30 feet" — and, because 30 >= the yaoguai land
+  chassis 25, asserts BOTH 30 and the delta 5, which is exactly their addBonusToValue SPEED 5; their
+  addBonusToValue SKILL_INTIMIDATION 1 is answered by the same record's Intimidation star. So the
+  agreement is a real match of magnitudes, not a silence. Print verified verbatim in heritage-412
+  (both the +1 circumstance vs animals/beasts and the two-hands-free 30-foot dash). wg-identity 0,
+  wg-diff missing=[], experience OK. No settle needed.
+
+gleaming-blade#transcendence-name — DONE.
+  Shipped core.json: classFeatures/gleaming-blade.grantsClassFeatures = ["flowing-spirit-strike"] and
+  classFeatures/flowing-spirit-strike.name = "Flowing Spirit Strike". Print verified verbatim in
+  by-category/ikon/ikon-6.json: "Transcendence Two Actions (Spirit, Transcendence) Flowing Spirit
+  Strike; Effect Make two Strikes with the gleaming blade ...". wg-identity 0 unmatched, wg-diff
+  WE-ONLY with missing=[], experience verdict OK. Their row is note-only, so there is nothing a settle
+  could name. CORRECTION to the builder's report: on wg-values this record is NOT "agrees" — it is
+  uncomparable ("prose-only bonus (no number asserted)", 0 records compared). The batch verdict is
+  unaffected (0 to adjudicate either way, and the test pins the real carrier directly), but the report
+  line overstates what that comparer measured.
+
+SPEC ROWS, VERIFIED AS ROWS (work/.b037-rows-instruments-7.json)
+  Valid JSON, 7 findings, ids EXACTLY my chunk's seven, backfillRows [] on every one — so there is no
+  target record to check for existence, no re-emitted whole value to diff, no create/supersedes row,
+  no field needing a reader, and no record+field+path key to collide. Cross-checked all 14 sibling
+  spec files (.b037-rows-*.json): none carries any of my seven finding ids, so no cross-spec collision
+  for the driver to refuse. Each note carries a TEACH_RE word, so wg-batch-close derives MATCHES (not
+  FIXED) for all seven — correct, since the family staged no src/ path; and each of my seven records
+  carries exactly ONE finding in read.confirmed[], so no sibling finding can drag a record off MATCHES.
+  All seven record ids are present in work/wg-batch-037.json.
+
+MANIFEST (work/.b037-specs.json, re-read at verify time)
+  14 family entries present (situational, instruments-1..7, data-rows-1..6); the two families that
+  appear twice (data-rows-1, data-rows-3) are a rows entry plus a created-prose entry, which is the
+  prescribed shape, not a duplicate. instruments-7's entry is intact and lists every path this chunk
+  touched: work/.b037-rows-instruments-7.json, work/.b037-report-instruments-7.txt,
+  test/batch037-instruments-7.test.ts, scripts/wg-values.mjs, scripts/wg-identity.mjs,
+  work/experience-instrument-limits.json. No superseding rows exist in this spec, so nothing owes
+  supersedes:true.
+
+HYGIENE / AUDITS RUN BY ME
+  node scripts/test-flip-audit.mjs --batch 037  -> "clean — 16 test file(s) touched, 13 new settle
+      key(s), every flip cited" (the 9 violations the builder's report mentions are gone; siblings
+      fixed them). Both of my settle keys have a mutation-proof body containing the key, and both new
+      limits records carry a valid `_cite` to a CONFIRMED finding id inside their own block.
+  node scripts/vt.mjs run test/batch037-instruments-7.test.ts -> 6 passed.
+  npx tsc --noEmit -> clean (exit 0).
+  No duplicate keys in SETTLED_VALUES or SETTLED_IDENTITIES (the one repeated name in wg-identity.mjs,
+  'armor-innovation', is in OFF_RECORD_OPTIONS and SETTLED_IDENTITIES — two different objects, no
+  silent override). git diff on both comparers shows my two entries added and nothing of mine removed;
+  the removed lines in wg-identity.mjs belong to a sibling chunk's way-of-the-pistolero reversal.
+  No leftover stunt files (work/.b037-i7-stunt-*.json); my own scratch diff dump was deleted.
+
+FIXED BY ME: nothing. I found no change that contradicts print, breaks a sibling, or fails to reach a
+built character, so I edited no file and my manifest stage[] is unchanged (no new paths to append).
+
+DATA STILL NEEDED
+  (none — every one of the seven findings is an instrument settle or a residual read; no backfill row
+  is owed by the driver for any of them. Confirmed by re-reading each finding: none names a field the
+  app lacks.)
+
+CROSS-FILE GAPS
+  1. classFeatures prose pointer for the 21 armor-innovation modifications (otherworldly-protection
+     included) is aonParentId "innovation-5", the PRE-REMASTER Guns & Gears printing, whose wording
+     ("negative/positive damage ... any types of alignment damage—good, evil, chaotic, lawful")
+     contradicts our own resistances data; the remastered printing innovation-1 is the one that
+     matches us word for word (void/vitality/spirit/holy/unholy). The mirror's legacy-remaster index
+     does not cross-link the two, so this is a pointer/triage question for a data family, not a fix I
+     may make from this chunk: it needs overlay rows on records outside my grant (21 classFeatures +
+     items power-suit / subterfuge-suit). Out of scope of all seven findings; surfaced because
+     otherworldly-protection#computed-value made me read both printings.

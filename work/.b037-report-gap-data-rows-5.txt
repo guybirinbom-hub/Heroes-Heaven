@@ -1,0 +1,180 @@
+BATCH 037 — GAP LANE, family "gap-data-rows-5"
+Gap lines closed: 18 (16 AUTHORED, 2 PARKED). Open: 0.
+
+Spec written:  work/.b037-rows-gap-data-rows-5.json   (1 finding, 2 rows — the two guardians-armor rows,
+               authored only because this same change ships the reader that makes them live)
+Test written:  test/batch037-gap-data-rows-5.test.ts  (11 tests, ALL GREEN — every reader fix here is code,
+               so it holds the moment the change lands; the two rows the driver has not applied are
+               patched into an in-memory content copy, so no assertion flips when they are)
+Checks:        npx tsc --noEmit — CLEAN.
+               node scripts/vt.mjs run test/batch037-gap-data-rows-5.test.ts — 11 passed.
+               node scripts/vt.mjs run (the 7 files that touch what I changed: cantrip-grant-reachability,
+               daily-choices, feat-grants, innate-tradition, innate-spell-proficiency,
+               fey-influence-innate-proficiency, raging-resistance, trust-ledger) — all green.
+               test/batch037-data-rows-5.test.ts still 11 red / 11 green, unchanged — those are the data
+               chunk's rows waiting on the driver, not a regression.
+               node scripts/duplicate-pick-check.mjs — ok. node scripts/featgrants-raw-check.mjs — OK.
+               node scripts/test-flip-audit.mjs --batch 037 — one violation, and it is NOT in any file of
+               mine: test/locate-lawbreakers.test.ts:82 (another family's stage).
+
+Files changed: src/rules/featCantripGrants.ts, src/rules/play.ts, src/rules/derive.ts, src/rules/types.ts,
+               src/rules/build.ts, src/rules/featGrants.ts, src/rules/featGrantsAuto.ts,
+               src/builder/Builder.tsx.
+
+================================================================================
+LINE BY LINE
+================================================================================
+
+--- from work/.b037-report-data-rows-5.txt (the builder's eight) ---
+
+[1] CROSS-FILE GAPS #1 — featCantripGrants.ts: delete the five kitsune/nagaji registry entries.
+    AUTHORED — ref src/rules/featCantripGrants.ts:FEAT_CANTRIP_GRANTS (finding
+    kitsune-spell-familiarity#daily-control, and its four siblings kitsune-spell-mysteries /
+    kitsune-spell-expertise / nagaji-spell-mysteries / nagaji-spell-expertise #daily-control).
+    All five entries removed and replaced by the file's established removal comment, which states the
+    printed sentence, the duplicate-lane rule and the two ways the registry copies were wrong on their own
+    terms ('figment' for print's ghost sound; no rank field, so the 5th-rank castings were cast at 4).
+    NOTE, not a gap: the sibling 'nagaji-spell-familiarity' — which I deliberately KEPT, because the data
+    chunk authored no choice row for it — was removed by the gap agent for data-rows-4 while I was in the
+    file, pointing at work/.b037-rows-gap-data-rows-4.json for the row that grants it. I left their edit
+    exactly as they wrote it. duplicate-pick-check is green with both removals.
+
+[2] CROSS-FILE GAPS #2 — play.ts:514 drops a rank-0 (cantrip) daily grant.
+    AUTHORED — ref src/rules/play.ts:applyPlayState (borrowed-spell merge)
+    (finding kitsune-spell-familiarity#daily-control). The merge now files a rank-0 grant into the innate
+    entry's `cantrips` list instead of `continue`-ing past it, so feat-2619's at-will divine cantrip
+    reaches the sheet. Pinned by "kitsune-spell-familiarity's chosen cantrip is filed as a cantrip, not
+    dropped", which also asserts it is NOT filed as a ranked spell.
+
+[3] CROSS-FILE GAPS #3 — play.ts:514 ignores the grant's own `rank`.
+    AUTHORED — ref src/rules/play.ts:applyPlayState (borrowed-spell merge)
+    (finding kitsune-spell-expertise#daily-control). `const rank = b.rank ?? content.spells[...].rank ?? 0`
+    — the grant's printed cast rank wins over the spell record's base rank. Pinned by "kitsune-spell-
+    expertise files Confusion at 5th rank, not Confusion's own 4th", which first asserts Confusion's base
+    rank really is 4 so the fixture cannot go quietly vacuous.
+
+[4] CROSS-FILE GAPS #4 — play.ts:513-518 ignores `tradition` and stamps "Borrowed today".
+    AUTHORED — ref src/rules/play.ts:applyPlayState + src/rules/derive.ts:dailyChoiceGrants
+    (finding kitsune-spell-mysteries#daily-control). Two halves. The merge now writes the grant's
+    tradition into the entry's existing per-spell `spellTraditions` map, so a fighter-kitsune's divine Bane
+    is not relabelled by whatever tradition the entry voted. And `dailyChoiceGrants` now carries the ASKING
+    RECORD's name out on the grant as `__from` — the same private-field idiom deriveDefenses already uses
+    for its sources — which the merge uses as the spell's source label. Set only on the option-grant
+    branch: the open-pick branch IS Loaner Spell, whose "Borrowed today" is the right sentence and is
+    untouched. Pinned by "kitsune-spell-mysteries' Bane is divine, and credited to the feat rather than
+    borrowed".
+
+[5] CROSS-FILE GAPS #5 — no IWR gate for "while wearing medium or heavy armor".
+    AUTHORED — ref src/rules/types.ts:IwrEntry.whenArmorCategory + src/rules/derive.ts:deriveDefenses
+    (finding guardians-armor#automatic-resistance). New optional `whenArmorCategory?: ArmorCategory[]`
+    beside minLevel/whenCreatureTrait/whenVoidHealing, honoured in BOTH the resistance loop and the
+    weakness loop, reading `findWornArmor(c, db)?.armor.category` — the same helper the armour
+    specialization block already uses, so the two cannot disagree about what is worn. Three tests: the
+    resistance lands on a breastplated guardian (physical 4 at 6th), is absent unarmoured, and the gate is
+    proven on the WEAKNESS loop as well, which is the half that quietly becomes write-only when only one
+    loop is taught a shared field.
+
+[6] CROSS-FILE GAPS #6 — FeatChoiceDef.minLevel honoured only on the daily path.
+    AUTHORED — ref src/rules/build.ts:levelChoices + src/builder/Builder.tsx:renderChoice
+    (finding versatile-mutation#energy-level). levelChoices stops counting a build-time choice below its
+    minLevel; renderChoice draws no control for one. Measured before shipping: exactly ONE record in
+    public/core.json carries choice.minLevel today (classFeatures/experimental-spellshaping, and it is
+    daily), so nothing a player sees changes until the data chunk's row lands — which is the point.
+    Pinned by "versatile-mutation is counted at 8th level and not at 4th", asserting all three states:
+    gated-and-below (not asked), gated-and-above (asked), ungated (asked).
+
+[7] CROSS-FILE GAPS #7 — arcana-of-iron's conditional expert step.
+    AUTHORED — ref src/rules/featGrants.ts:FeatGrant.weaponIfWeaponExpertise (+ HAND_AUTHORED_GRANTS
+    'arcana-of-iron') and src/rules/build.ts (post-advancement weapon block)
+    (finding arcana-of-iron#weapon-proficiency). feat-7980's second sentence now has a carrier: a
+    weapon-category map applied only when the character's own class advancement holds an entry whose
+    `source` ends in `weapon-expertise` at a level they have reached — the fighter's 5, the wizard's 11 —
+    never WG's flat character level 13, which is right for no class.
+    ONE DEVIATION FROM THE GAP LINE'S WORDING, stated plainly: the line said featGrantsAuto.ts:75, and I
+    put the new clause in featGrants.ts HAND_AUTHORED_GRANTS instead, restating the trained-in-advanced
+    half so the shallow merge keeps it. Reason is that file's own rule, quoted at featGrants.ts:919 —
+    featGrantsAuto.ts is rewritten whole by five scripts, so a hand-authored field there dies at the next
+    regeneration. The auto entry is left untouched, with a comment saying it is overridden, so a
+    regeneration stays a no-op. The new key is also registered in GRANT_KEY_KINDS as a rider on its
+    sibling's kind ('weapon'), so the trust gate can darken it; 'weapon' is already in the ledger
+    vocabulary and test/trust-ledger.test.ts is green. Pinned by two tests: a 6th-level wizard is trained
+    in advanced and NOT expert in martial; an 11th-level one is expert in both, and a wizard without the
+    feat stays untrained.
+
+[8] CROSS-FILE GAPS #8 — the uncited assertion at test/batch031-data.test.ts:96.
+    PARKED — ref flaggedResidue: "b037 gap-data-rows-5 residue 1 — struck, not a gap".
+    The verifier already struck this one (work/.b037-verify-data-rows-5.txt CROSS-FILE GAPS #8): data-rows-4
+    owns that file and closed it. Re-measured here: `node scripts/test-flip-audit.mjs --batch 037` reports
+    nothing at test/batch031-data.test.ts:96. Nothing to author. (The audit's one current violation is
+    test/locate-lawbreakers.test.ts:82, a different family's file, flagged so it is not attributed here
+    either.)
+
+--- from work/.b037-verify-data-rows-5.txt ---
+
+[9]  DATA STILL NEEDED #1 — classFeatures/guardians-armor field "resistances".
+     AUTHORED — ref work/.b037-rows-gap-data-rows-5.json (finding guardians-armor#automatic-resistance,
+     row 1). Authored ONLY because line [5] above ships the reader in the same change, which is the exact
+     condition the builder and the verifier both set. Value is [{type:"physical",
+     value:"1+floor(@actor.level/2)", whenArmorCategory:["medium","heavy"]}] — the formula the retired
+     mode already carried, plus the printed condition. No supersedes: effect-backfill.json holds no row for
+     this id today (checked).
+
+[10] DATA STILL NEEDED #2 — modes/guardians-armor {"delete": true}.
+     AUTHORED — ref work/.b037-rows-gap-data-rows-5.json (finding guardians-armor#automatic-resistance,
+     row 2, emitted SECOND in the same finding so the applier keeps the order). With row 1 live the number
+     is automatic and armour-conditional; leaving the mode would let a guardian toggle on, while
+     unarmoured, a resistance print gives them only in medium or heavy.
+
+[11] CROSS-FILE GAPS #1 (⛔ BLOCKING) — same as line [1].
+     AUTHORED — ref src/rules/featCantripGrants.ts:FEAT_CANTRIP_GRANTS (finding
+     kitsune-spell-familiarity#daily-control and its four siblings). Done IN THIS CHANGE, which is what the
+     verifier's "in the same change as the five choice rows" requires of the batch. Re-measured after the
+     edit: node scripts/duplicate-pick-check.mjs — "ok — no record asks the same question in two lanes".
+
+[12] CROSS-FILE GAPS #2 — same as line [2]. AUTHORED — ref src/rules/play.ts:applyPlayState
+     (finding kitsune-spell-familiarity#daily-control).
+
+[13] CROSS-FILE GAPS #3 — same as line [3]. AUTHORED — ref src/rules/play.ts:applyPlayState
+     (finding kitsune-spell-expertise#daily-control).
+
+[14] CROSS-FILE GAPS #4 — same as line [4]. AUTHORED — ref src/rules/play.ts:applyPlayState +
+     src/rules/derive.ts:dailyChoiceGrants (finding kitsune-spell-mysteries#daily-control).
+
+[15] CROSS-FILE GAPS #5 — same as line [5]. AUTHORED — ref src/rules/types.ts:IwrEntry.whenArmorCategory +
+     src/rules/derive.ts:deriveDefenses (finding guardians-armor#automatic-resistance).
+
+[16] CROSS-FILE GAPS #6 — same as line [6]. AUTHORED — ref src/rules/build.ts:levelChoices +
+     src/builder/Builder.tsx:renderChoice (finding versatile-mutation#energy-level).
+
+[17] CROSS-FILE GAPS #7 — same as line [7]. AUTHORED — ref
+     src/rules/featGrants.ts:FeatGrant.weaponIfWeaponExpertise + src/rules/build.ts
+     (finding arcana-of-iron#weapon-proficiency).
+
+[18] CROSS-FILE GAPS #8 (STRUCK) — same subject as line [8].
+     PARKED — ref flaggedResidue: "b037 gap-data-rows-5 residue 1 — struck, not a gap". The verifier struck
+     it; re-measured and it is still struck. Nothing to author.
+
+================================================================================
+flaggedResidue
+================================================================================
+1. b037 gap-data-rows-5 residue 1 — struck, not a gap.
+   REASON: gap lines [8] and [18] both name the uncited assertion at test/batch031-data.test.ts:96. That
+   file belongs to data-rows-4's stage[], they closed it, and `node scripts/test-flip-audit.mjs --batch 037`
+   now reports nothing there. There is no defect left to author a fix for, and editing another family's
+   test file to "close" a gap that no longer exists would be the worse outcome. Out of scope by ownership
+   as well as by measurement.
+
+================================================================================
+CROSS-FILE GAPS opened by THIS run
+================================================================================
+NONE that block anything, and one observation the driver should have:
+
+· src/rules/featCantripGrants.ts is being written by TWO gap agents this batch — mine (the five
+  kitsune/nagaji entries) and data-rows-4's (the sixth, 'nagaji-spell-familiarity'). Both edits are in the
+  file and both are surgical; neither rewrote the other. The file's own header warns that
+  scripts/aon-verify/apply-clear.ts rewrites it whole through a serialiser — removal COMMENTS have
+  survived that before (colugos-traversal, dream-magic, empathic-calm are still there), so this is noted
+  rather than raised, but a re-run of that script is when to re-check that all six stay removed.
+
+· No new owner question. Every line here was a reader that did not exist, not a place where print and
+  Wanderer's Guide disagree — so work/.b037-queue.json is untouched by this run.

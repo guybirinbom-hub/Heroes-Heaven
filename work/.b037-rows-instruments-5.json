@@ -1,0 +1,64 @@
+{
+ "findings": [
+  {
+   "id": "traveling-gourmand#survival",
+   "backfillRows": [],
+   "note": "No row: the data already matches print (backgrounds/traveling-gourmand trainedSkill 'survival', trainedLore 'cooking', grantedFeatId 'forager' — AoN background-482). Owner-ruled 2026-09-10 desk #80, book wins. Instrument settle only: wg-values SETTLED_VALUES['traveling-gourmand'] = ['skill|survival'] so the comparer stops re-raising their untrained-Survival operation. Pinned in test/batch037-instruments-5.test.ts."
+  },
+  {
+   "id": "seer-of-the-dead#one-boost",
+   "backfillRows": [],
+   "note": "No row: backgrounds/seer-of-the-dead already prints one restricted boost (abilityBoosts [{kind:'choice',options:['con','wis']}] — AoN background-243) and no free boost. Owner-ruled 2026-09-10 desk #81, book wins. Instrument teach only: parked ALREADY-OK / wg-unprinted-extra-select in work/experience-instrument-limits.json, because WG's second 'Select an Attribute' has nothing on our side to pair with and matchSelects is one-to-one. Pinned in test/batch037-instruments-5.test.ts."
+  },
+  {
+   "id": "haunted#no-skill-feat",
+   "backfillRows": [],
+   "note": "No row and no settle: the record already matches print (AoN background-468 names no feat) and NO comparer flags it — kinds, values, identity all empty and the experience verdict is OK in work/.b037-baseline/flags.json. A settle here would match nothing and would pre-silence the next real difference on the record. Instrument residual read; the eight-record quiet set is pinned in test/batch037-instruments-5.test.ts."
+  },
+  {
+   "id": "tree-friend#arboreal",
+   "backfillRows": [],
+   "note": "No row: print (AoN background-504) grants a PERMISSION ('you can choose Arboreal'), and our bonus-language picker already offers all 120 content.languages entries with no rarity filter, Arboreal among them — a grantsLanguages row would hand the language over free, which print does not say. Owner-ruled 2026-09-10 desk #84, book wins. Instrument settle only: wg-diff VERIFIED_EQUIVALENT['tree-friend'] = ['language']. Pinned in test/batch037-instruments-5.test.ts."
+  },
+  {
+   "id": "hammered-by-fate#three-lores",
+   "backfillRows": [],
+   "note": "No row and no settle: all three printed Lores are offered and the Harrow the Fiend free action is built (AoN background-366), and no comparer flags the record — wg-values reports it under 'not a scalar we hold: ATTRIBUTE_STR', which is the chassis boost lane, not a gap. Instrument residual read; pinned in the quiet-set test in test/batch037-instruments-5.test.ts."
+  },
+  {
+   "id": "lesser-scion#heraldry-lore",
+   "backfillRows": [],
+   "note": "No row and no settle: we train Heraldry Lore exactly as printed (AoN background-37) and WG's misspelled 'Heradlry Lore' is their defect. No comparer flags the record (their misspelling produces a Lore key neither side can pair, and the values lane already agrees). Instrument residual read; pinned in the quiet-set test in test/batch037-instruments-5.test.ts."
+  },
+  {
+   "id": "bachuan-revolutionary#wisdom-boost",
+   "backfillRows": [],
+   "note": "No row and no settle: we offer Strength or Wisdom plus a free boost at uncommon rarity, exactly as printed (AoN background-472); their Wisdom branch writes the non-existent variable ATTRIBUTE_WISR and does nothing. No comparer flags the record. Instrument residual read; pinned in the quiet-set test in test/batch037-instruments-5.test.ts."
+  },
+  {
+   "id": "divine-font#rank-9",
+   "backfillRows": [],
+   "note": "No row and no settle: the font deliberately stops at 9th rank because Miraculous Spell (AoN class-feature-662) bars 10th-rank slots from abilities that grant more slots, and the font is one. No comparer flags it — wg-values lists divine-font under 'prose-only bonus', wg-diff has it in AGREE, and wg-casting compares CLASS casting sources and reports no cleric mismatch (16 sources, cleric not among the 3 that differ). Instrument residual read; pinned in the quiet-set test in test/batch037-instruments-5.test.ts."
+  },
+  {
+   "id": "undine#swim-speed",
+   "backfillRows": [],
+   "note": "No row and no settle: swim Speed 10 and the amphibious trait are unconditional as printed (AoN heritage-134); WG's conditional caps a faster swimmer and gives a non-swimmer nothing. wg-diff already puts the record in AGREE (their 'conditional' wraps only kinds we model, so gatesOnlyWhatWeHave drops it) and wg-values agrees on the value. Instrument residual read; pinned in the quiet-set test in test/batch037-instruments-5.test.ts."
+  },
+  {
+   "id": "grave-orc#void-resistance",
+   "backfillRows": [],
+   "note": "No row and no settle: resistance is half level with a minimum of 1 as printed (AoN heritage-275); WG's formula has no minimum. No comparer flags the record — wg-values reports '3 values, 1 sets agree'. Instrument residual read; pinned in the quiet-set test in test/batch037-instruments-5.test.ts."
+  },
+  {
+   "id": "deny-lady-nanbyos-charity#bulk-thresholds",
+   "backfillRows": [],
+   "note": "No row: both carriers are already shipped and read — heritages/deny-lady-nanbyos-charity bulkLimitBonus 1 (moves both thresholds, derive.ts:5533) + bulkMaxBonus 1 (maximum only, :5534) = the printed +1 encumbered / +2 maximum (AoN heritage-407). Owner-ruled 2026-09-10 desk #118, book wins. Instrument settle only: wg-values SETTLED_VALUES['deny-lady-nanbyos-charity'] = ['bulk|'], because their single BULK_LIMIT_BONUS scalar cannot state two different numbers at any value. Pinned in test/batch037-instruments-5.test.ts."
+  },
+  {
+   "id": "waning-moon-sarangay#reroll-skill",
+   "backfillRows": [],
+   "note": "No row and no settle: the once-per-day critical-failure reroll follows the chosen skill and the note sits on that skill's row, as printed (AoN heritage-394); WG pins it to Acrobatics on their Crafting and Performance options. No comparer flags the record — wg-values reports '3 values, 0 sets agree'. Instrument residual read; pinned in the quiet-set test in test/batch037-instruments-5.test.ts."
+  }
+ ]
+}

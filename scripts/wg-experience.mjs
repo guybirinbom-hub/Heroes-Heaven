@@ -248,7 +248,13 @@ for (const row of batch) {
    * because this script owns core.json. Pinned on a BUILT character by test/batch032-engine.test.ts. */
   const blastDiceBonus = Number(core[row.bucket]?.[row.id]?.blastDiceBonus ?? 0) || 0;
   // The chassis fallback: only consulted when the differential moved nothing.
-  const surface = ev?.surface ? { ...ev.surface, grantsInnateSpell, blastDiceBonus } : ev?.surface;
+  /* The HOST'S LEVEL, for the innate spell-attack/spell-DC pair. rules-2232 (Player Core p.298) makes
+   * that pair trained on the grant and *"At 12th level, these proficiencies increase to expert."*, and
+   * src/rules/build.ts's innate entry takes `maxRank(…, level >= 12 ? 'expert' : 'trained')` — so
+   * whether their `adjValue SPELL_DC = E` is delivered depends on the level of the character the
+   * harness built, not on anything the record carries. Passed through here for the same reason as
+   * grantsInnateSpell: the lane lib is given only a surface. */
+  const surface = ev?.surface ? { ...ev.surface, grantsInnateSpell, blastDiceBonus, hostLevel: ev?.host?.level ?? null } : ev?.surface;
   const delivery = openEffects.length && (ev?.sheetDiffCount ?? 0) === 0 ? judgeDelivery(openEffects, surface, names) : null;
   const v = verdictFor({
     supported: ev ? ev.supported !== false : false,

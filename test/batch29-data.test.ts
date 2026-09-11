@@ -289,19 +289,27 @@ describe('batch 29 — magus studious spells', () => {
     restricted?: { label: string; note?: string; ladder?: { level: number; byRank: Record<string, number>; addSpells?: string[] }[] };
   };
 
-  /* class-feature-431: "You gain two special 2nd-rank studious spell slots, which can be used to
-   * prepare gecko grip, sure strike, water breathing… At 11th level, the extra slots increase to 3rd
-   * level and you add haste. At 13th level… 4th level and you add fly." The spells were hardcoded as
-   * a fixed pair in spellcasting.ts (no gecko grip, no choice) and the record carried nothing. */
-  it('is a restricted-slot ladder of TWO slots per rung — never six', () => {
+  /* class-feature-431 printed "You gain two special 2nd-rank studious spell slots, which can be used
+   * to prepare gecko grip, sure strike, water breathing… At 11th level, the extra slots increase to
+   * 3rd level and you add haste. At 13th level… 4th level and you add fly." The spells were hardcoded
+   * as a fixed pair in spellcasting.ts (no gecko grip, no choice) and the record carried nothing.
+   * class-feature-1270 ("Studious Spell", Impossible Magic pg. 9) grants NO slots at all — the ladder
+   * stays as the carrier of the three spellbook additions (build.ts bookGrantedSpellIds reads its
+   * addSpells, and the hard-coded legacy fallback stands down only while the field exists) with every
+   * rung's byRank emptied, which is the shape all eight hybrid studies below already use. */
+  // batch 037: studious-spells#2026-rebuild
+  it('is a slotless ladder — the 2026 feature grants no studious spell slots at all', () => {
     const l = grant().restricted!.ladder!;
     expect(l.map((s) => s.level)).toEqual([7, 11, 13]);
-    expect(l.map((s) => s.byRank)).toEqual([{ '2': 2 }, { '3': 2 }, { '4': 2 }]);
+    expect(l.map((s) => s.byRank)).toEqual([{}, {}, {}]);
   });
 
+  // batch 037: studious-spells#2026-rebuild — "Your studious spells are gecko grip… At 11th level, add
+  // haste… At 13th level, add fly…" (class-feature-1270). Sure strike and water breathing were the
+  // 2021 list and are not printed in the 2026 feature.
   it('the ladder names every printed spell, gecko grip first', () => {
     const l = grant().restricted!.ladder!;
-    expect(l[0]!.addSpells).toEqual(['gecko-grip', 'sure-strike', 'water-breathing']);
+    expect(l[0]!.addSpells).toEqual(['gecko-grip']);
     expect(l[1]!.addSpells).toEqual(['haste']);
     expect(l[2]!.addSpells).toEqual(['fly']);
     for (const id of l.flatMap((s) => s.addSpells ?? [])) expect(db.spells[id], id).toBeTruthy();

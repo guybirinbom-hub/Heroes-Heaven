@@ -78,27 +78,46 @@ describe('batch 035 closer — demon-eidolon, plant-eidolon and undead-eidolon c
    * is proof that the carrier is LIVE — a credit for a dead field is a laundering — and that the credit
    * is PER ID rather than on the companionGrants.ts file row.
    *
-   * The control group is no longer "the eidolon types with no languages row" (this batch emptied it);
-   * it is dragon-eidolon, which HAS `languages: ['draconic']` and deliberately has NO per-id credit,
-   * because it is not a batch-035 record and a closer may not settle an id outside its own batch. If a
-   * later hand moves the credit onto the file row, dragon-eidolon goes quiet and this test fails.
+   * ⚠ THE CONTROL CHANGED IN BATCH 037 (the describe title above still names the old one; a batch never
+   * deletes a describe block, so the title is kept and corrected here). It used to be dragon-eidolon:
+   * that id HAS `languages: ['draconic']` and deliberately carried no per-id credit, because it was not
+   * a batch-035 record. It IS a batch-037 record, so batch 037's gap lane earned it the same credit
+   * (AoN eidolon-7 *"Language Draconic"*), and "dragon-eidolon still reports" is no longer a true
+   * statement about a healthy tree — it would now fail for the right reason, which is a useless control.
+   * The replacement is STRICTER than the id it replaces: the credit list inside OFF_RECORD_CARRIERS is
+   * pinned to the exact eight eidolon ids, so a hand that moves the credit onto the companionGrants.ts
+   * FILE row (which REGISTRY_KINDS would spread to every one of that file's ~112 ids) fails here just
+   * as loudly, and so does a ninth id credited without a batch behind it.
    */
   // batch 035: demon-eidolon#language-abyssal
   // batch 035: plant-eidolon#language
   // batch 035: undead-eidolon#language
+  // batch 037 premise: eidolon-7 "Language Draconic"
   it('the three carriers hold the printed language and the three records report no missing kind', () => {
     expect(COMPANION_MODS['demon-eidolon']?.languages).toEqual(['Abyssal']);
     expect(COMPANION_MODS['plant-eidolon']?.languages).toEqual(['Sylvan']);
     expect(COMPANION_MODS['undead-eidolon']?.languages).toEqual(['necril']);
+    /* The assertion batch 037 removed from below this loop was
+     * `expect(idx.get('dragon-eidolon')?.missing).toContain('language')`. Batch 037 gave dragon-eidolon
+     * the same earned per-id credit its siblings hold, so it no longer reports and the control moved to
+     * the exact-credit-list assertion further down. */
+    // batch 037 premise: eidolon-7 "Language Draconic"
     const idx = diffRows('eidolon');
     for (const id of ['demon-eidolon', 'plant-eidolon', 'undead-eidolon']) {
       expect(idx.get(id)?.missing).not.toContain('language');
     }
-    /* THE CONTROL — same file, same field, no per-id entry, so still red. */
-    expect(idx.get('dragon-eidolon')?.missing).toContain('language');
     const src = readFileSync(join(CLI_ROOT, 'scripts/wg-diff.mjs'), 'utf8');
     expect(src).toContain("'demon-eidolon': ['language'],");
     expect(src).not.toContain("['src/rules/companionGrants.ts', ['grantsRecord', 'choice', 'language']]");
+    /* THE CONTROL — the language credit is per id, and these are the only ids that hold it. Sliced to
+     * the OFF_RECORD_CARRIERS literal so a `['language']` settle in VERIFIED_EQUIVALENT is not counted. */
+    // batch 037 premise: eidolon-7 "Language Draconic"
+    const block = src.slice(src.indexOf('const OFF_RECORD_CARRIERS = {'));
+    const credited = [...block.slice(0, block.indexOf('\n};')).matchAll(/^ {2}'([a-z0-9-]+)': \['language'\],$/gm)].map((m) => m[1]);
+    expect(credited.sort()).toEqual([
+      'angel-eidolon', 'beast-eidolon', 'demon-eidolon', 'dragon-eidolon',
+      'fey-eidolon', 'plant-eidolon', 'psychopomp-eidolon', 'undead-eidolon',
+    ]);
   });
 });
 

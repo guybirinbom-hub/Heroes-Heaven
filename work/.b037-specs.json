@@ -1,0 +1,363 @@
+[
+  {
+    "file": "work/.b037-rows-gap-instruments-7.json",
+    "kind": "rows",
+    "family": "gap-instruments-7",
+    "stage": [
+      "work/.b037-rows-gap-instruments-7.json",
+      "work/.b037-report-gap-instruments-7.txt"
+    ]
+  },
+  {
+    "file": "work/.b037-rows-situational.json",
+    "kind": "rows",
+    "family": "situational",
+    "stage": [
+      "work/.b037-rows-situational.json",
+      "work/.b037-report-situational.txt",
+      "test/batch037-situational.test.ts",
+      "src/rules/situationalBonuses.ts",
+      "scripts/apply-situational-lane.mjs"
+    ]
+  },
+  {
+    "file": "work/.b037-rows-instruments-1.json",
+    "kind": "rows",
+    "family": "instruments-1",
+    "stage": [
+      "work/.b037-rows-instruments-1.json",
+      "work/.b037-report-instruments-1.txt",
+      "work/.b037-verify-instruments-1.txt",
+      "test/batch037-instruments-1.test.ts",
+      "scripts/wg-diff.mjs"
+    ]
+  },
+  {
+    "file": "work/.b037-rows-instruments-7.json",
+    "kind": "rows",
+    "family": "instruments-7",
+    "stage": [
+      "work/.b037-rows-instruments-7.json",
+      "work/.b037-report-instruments-7.txt",
+      "test/batch037-instruments-7.test.ts",
+      "scripts/wg-values.mjs",
+      "scripts/wg-identity.mjs",
+      "work/experience-instrument-limits.json"
+    ]
+  },
+  {
+    "file": "work/.b037-rows-data-rows-2.json",
+    "kind": "rows",
+    "family": "data-rows-2",
+    "stage": [
+      "work/.b037-rows-data-rows-2.json",
+      "work/.b037-report-data-rows-2.txt",
+      "work/.b037-verify-data-rows-2.txt",
+      "test/batch037-data-rows-2.test.ts"
+    ]
+  },
+  {
+    "file": "work/.b037-rows-data-rows-6.json",
+    "kind": "rows",
+    "family": "data-rows-6",
+    "stage": [
+      "work/.b037-rows-data-rows-6.json",
+      "work/.b037-report-data-rows-6.txt",
+      "work/.b037-verify-data-rows-6.txt",
+      "test/batch037-data-rows-6.test.ts"
+    ]
+  },
+  {
+    "file": "work/.b037-rows-instruments-4.json",
+    "kind": "rows",
+    "family": "instruments-4",
+    "stage": [
+      "work/.b037-rows-instruments-4.json",
+      "work/.b037-report-instruments-4.txt",
+      "test/batch037-instruments-4.test.ts",
+      "scripts/wg-diff.mjs",
+      "scripts/wg-values.mjs",
+      "scripts/wg-identity.mjs"
+    ]
+  },
+  {
+    "file": "work/.b037-rows-instruments-5.json",
+    "kind": "rows",
+    "family": "instruments-5",
+    "stage": [
+      "work/.b037-rows-instruments-5.json",
+      "work/.b037-report-instruments-5.txt",
+      "test/batch037-instruments-5.test.ts",
+      "scripts/wg-diff.mjs",
+      "scripts/wg-values.mjs",
+      "work/experience-instrument-limits.json"
+    ]
+  },
+  {
+    "file": "work/.b037-rows-instruments-2.json",
+    "kind": "rows",
+    "family": "instruments-2",
+    "stage": [
+      "work/.b037-rows-instruments-2.json",
+      "work/.b037-report-instruments-2.txt",
+      "test/batch037-instruments-2.test.ts",
+      "scripts/wg-identity.mjs",
+      "scripts/wg-casting.mjs",
+      "test/batch033-resume-instruments-the-three-comparers-11-red-records-every-one-a-verified-carrier-the-comparer-cannot-see-.test.ts"
+    ]
+  },
+  {
+    "file": "work/.b037-rows-data-rows-5.json",
+    "kind": "rows",
+    "family": "data-rows-5",
+    "stage": [
+      "work/.b037-rows-data-rows-5.json",
+      "work/.b037-report-data-rows-5.txt",
+      "test/batch037-data-rows-5.test.ts",
+      "test/batch037-closer.test.ts",
+      "scripts/lib/wg-experience-lanes.mjs",
+      "scripts/wg-experience.mjs",
+      "scripts/regen-durability-check.mjs",
+      "src/data/trust-ledger.json",
+      "test/batch037-gap-instruments-6.test.ts",
+      "test/batch035-gate-park.test.ts",
+      "test/batch036-closer.test.ts",
+      "test/batch28-engine.test.ts",
+      "test/stance-strikes.test.ts",
+      "test/overlay-durability.test.ts",
+      "test/integrity-sweeps.test.ts",
+      "test/coverage.test.ts",
+      "test/consumable-modes.test.ts",
+      "test/haunting-memories.test.ts",
+      "test/reach-fixes.test.ts",
+      "test/armiger-protection.test.ts",
+      "test/background-choice.test.ts",
+      "test/trust-approvals.test.ts",
+      "work/.b037-fix-gap-refs.mjs",
+      "work/.b037-gaps.json",
+      "work/.b037-commit.txt"
+    ]
+  },
+  {
+    "file": "work/.b037-rows-instruments-3.json",
+    "kind": "rows",
+    "family": "instruments-3",
+    "stage": [
+      "work/.b037-rows-instruments-3.json",
+      "work/.b037-report-instruments-3.txt",
+      "work/.b037-verify-instruments-3.txt",
+      "test/batch037-instruments-3.test.ts",
+      "scripts/wg-identity.mjs",
+      "scripts/wg-diff.mjs",
+      "scripts/wg-values.mjs",
+      "scripts/lib/wg-experience-lanes.mjs"
+    ]
+  },
+  {
+    "file": "work/.b037-rows-data-rows-3.json",
+    "kind": "rows",
+    "family": "data-rows-3",
+    "stage": [
+      "work/.b037-rows-data-rows-3.json",
+      "work/.b037-created-desc-data-rows-3.json",
+      "work/.b037-report-data-rows-3.txt",
+      "test/batch037-data-rows-3.test.ts"
+    ]
+  },
+  {
+    "file": "work/.b037-created-desc-data-rows-3.json",
+    "kind": "created-prose",
+    "family": "data-rows-3",
+    "stage": [
+      "work/.b037-rows-data-rows-3.json",
+      "work/.b037-created-desc-data-rows-3.json",
+      "work/.b037-report-data-rows-3.txt",
+      "test/batch037-data-rows-3.test.ts"
+    ]
+  },
+  {
+    "file": "work/.b037-rows-data-rows-4.json",
+    "kind": "rows",
+    "family": "data-rows-4",
+    "stage": [
+      "work/.b037-rows-data-rows-4.json",
+      "work/.b037-report-data-rows-4.txt",
+      "test/batch037-data-rows-4.test.ts",
+      "test/diehard-threshold.test.ts",
+      "test/batch031-data.test.ts",
+      "test/owner-rulings-qi-and-scale.test.ts",
+      "work/.b037-verify-data-rows-4.txt"
+    ]
+  },
+  {
+    "file": "work/.b037-rows-data-rows-1.json",
+    "kind": "rows",
+    "family": "data-rows-1",
+    "stage": [
+      "work/.b037-rows-data-rows-1.json",
+      "work/.b037-created-desc-data-rows-1.json",
+      "work/.b037-report-data-rows-1.txt",
+      "test/batch037-data-rows-1.test.ts",
+      "work/.b037-verify-data-rows-1.txt",
+      "test/batch28-data.test.ts",
+      "test/batch29-data.test.ts",
+      "test/batch29-engine.test.ts",
+      "test/build.test.ts",
+      "test/audit-fixes.test.ts",
+      "scripts/data/trust-approvals.json"
+    ]
+  },
+  {
+    "file": "work/.b037-created-desc-data-rows-1.json",
+    "kind": "created-prose",
+    "family": "data-rows-1",
+    "stage": [
+      "work/.b037-rows-data-rows-1.json",
+      "work/.b037-created-desc-data-rows-1.json",
+      "work/.b037-report-data-rows-1.txt",
+      "test/batch037-data-rows-1.test.ts",
+      "work/.b037-verify-data-rows-1.txt",
+      "test/batch28-data.test.ts",
+      "test/batch29-data.test.ts",
+      "test/batch29-engine.test.ts",
+      "test/build.test.ts",
+      "test/audit-fixes.test.ts",
+      "scripts/data/trust-approvals.json"
+    ]
+  },
+  {
+    "file": "work/.b037-rows-instruments-6.json",
+    "kind": "rows",
+    "family": "instruments-6",
+    "stage": [
+      "work/.b037-rows-instruments-6.json",
+      "work/.b037-report-instruments-6.txt",
+      "test/batch037-instruments-6.test.ts",
+      "scripts/wg-diff.mjs",
+      "scripts/wg-identity.mjs",
+      "work/experience-instrument-limits.json"
+    ]
+  },
+  {
+    "file": "work/.b037-rows-gap-data-rows-4.json",
+    "kind": "rows",
+    "family": "gap-data-rows-4",
+    "stage": [
+      "work/.b037-rows-gap-data-rows-4.json",
+      "work/.b037-report-gap-data-rows-4.txt",
+      "test/batch037-gap-data-rows-4.test.ts",
+      "src/rules/types.ts",
+      "src/rules/build.ts",
+      "src/rules/derive.ts",
+      "src/rules/play.ts",
+      "src/rules/featCantripGrants.ts"
+    ]
+  },
+  {
+    "file": "work/.b037-rows-gap-situational.json",
+    "kind": "rows",
+    "family": "gap-situational",
+    "stage": [
+      "work/.b037-rows-gap-situational.json",
+      "work/.b037-report-gap-situational.txt",
+      "test/batch037-gap-situational.test.ts"
+    ]
+  },
+  {
+    "file": "work/.b037-rows-gap-data-rows-6.json",
+    "kind": "rows",
+    "family": "gap-data-rows-6",
+    "stage": [
+      "work/.b037-rows-gap-data-rows-6.json",
+      "work/.b037-report-gap-data-rows-6.txt",
+      "test/batch037-gap-data-rows-6.test.ts",
+      "work/.b037-queue.json"
+    ]
+  },
+  {
+    "file": "work/.b037-rows-gap-data-rows-3.json",
+    "kind": "rows",
+    "family": "gap-data-rows-3",
+    "stage": [
+      "work/.b037-rows-gap-data-rows-3.json",
+      "work/.b037-report-gap-data-rows-3.txt",
+      "test/batch037-gap-data-rows-3.test.ts",
+      "test/automaton-enhancement.test.ts",
+      "src/rules/featGrants.ts",
+      "src/rules/types.ts",
+      "src/rules/build.ts"
+    ]
+  },
+  {
+    "file": "work/.b037-rows-gap-data-rows-2.json",
+    "kind": "rows",
+    "family": "gap-data-rows-2",
+    "stage": [
+      "work/.b037-rows-gap-data-rows-2.json",
+      "work/.b037-report-gap-data-rows-2.txt",
+      "test/batch037-gap-data-rows-2.test.ts",
+      "test/locate-lawbreakers.test.ts",
+      "src/rules/types.ts",
+      "src/rules/build.ts",
+      "src/rules/casterArchetypes.ts",
+      "src/builder/Builder.tsx",
+      "src/builder/shared.tsx"
+    ]
+  },
+  {
+    "file": "work/.b037-rows-gap-data-rows-5.json",
+    "kind": "rows",
+    "family": "gap-data-rows-5",
+    "stage": [
+      "work/.b037-rows-gap-data-rows-5.json",
+      "work/.b037-report-gap-data-rows-5.txt",
+      "test/batch037-gap-data-rows-5.test.ts",
+      "src/rules/featCantripGrants.ts",
+      "src/rules/play.ts",
+      "src/rules/derive.ts",
+      "src/rules/types.ts",
+      "src/rules/build.ts",
+      "src/rules/featGrants.ts",
+      "src/rules/featGrantsAuto.ts",
+      "src/builder/Builder.tsx"
+    ]
+  },
+  {
+    "file": "work/.b037-rows-engine-lanes.json",
+    "kind": "rows",
+    "family": "engine-lanes",
+    "stage": [
+      "work/.b037-rows-engine-lanes.json",
+      "work/.b037-report-engine-lanes.txt",
+      "test/batch037-engine-lanes.test.ts",
+      "src/rules/build.ts",
+      "src/rules/derive.ts",
+      "src/rules/types.ts",
+      "src/builder/Builder.tsx"
+    ]
+  },
+  {
+    "file": "work/.b037-rows-red-close-offbatch-door.json",
+    "kind": "rows",
+    "family": "red-close-offbatch-door",
+    "stage": [
+      "work/.b037-rows-red-close-offbatch-door.json",
+      "work/.b037-report-red-close-offbatch-door.txt",
+      "work/.b037-specs.json",
+      "scripts/wg-batch-close.mjs",
+      "test/wg-batch-close.test.ts"
+    ]
+  },
+  {
+    "file": "work/.b037-rows-red-close-offbatch-door.json",
+    "kind": "rows",
+    "family": "gap-instruments-6",
+    "note": "That family authored no rows spec (see the last section of work/.b037-report-gap-instruments-6.txt), so this entry names the empty red-close-offbatch-door spec and exists ONLY to declare its staged paths: scripts/wg-batch-commit.mjs stages the manifest's stage[] by explicit path, and test/batch035-closer.test.ts (re-pinned to the eight-id credit list for the wg-diff OFF_RECORD_CARRIERS['dragon-eidolon'] teach) was named by no entry, so the commit would have shipped the teach with its guard left in the working tree.",
+    "stage": [
+      "scripts/wg-diff.mjs",
+      "test/batch037-gap-instruments-6.test.ts",
+      "test/batch035-closer.test.ts",
+      "work/.b037-report-gap-instruments-6.txt"
+    ]
+  }
+]

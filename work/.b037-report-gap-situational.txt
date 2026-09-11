@@ -1,0 +1,39 @@
+BATCH 037 — GAP AGENT, family "situational"
+Spec written: work/.b037-rows-gap-situational.json (kind: rows, family gap-situational; manifest entry appended to work/.b037-specs.json, 17 entries, every pre-existing one intact)
+Test written: test/batch037-gap-situational.test.ts (3 its, all passing)
+Code touched: none — the gap is a stored string, not a reader
+Gates: node scripts/vt.mjs run test/batch037-gap-situational.test.ts test/batch037-situational.test.ts → 6 passed | npx tsc --noEmit → clean | node scripts/test-flip-audit.mjs --batch 037 → clean (0 violations)
+
+MY LINES — 4 collated (2 of them the same gap counted twice, 1 an extractor artefact), 0 left open
+
+[1] AUTHORED — work/.b037-rows-gap-situational.json
+    line: "feats / reverse-engineer / skillSubstitutions / [{\"use\":\"crafting\",\"forSkill\":\"thievery\",\"when\":\"to Disable a Device or Pick a Lock\"}] — supersedes: true over the existing effect-backfill row …"  (work/.b037-gaps.json[49], work/.b037-report-situational.txt:5)
+    Authored as one row with supersedes:true over effect-backfill.json:3164, whose array holds ONE entry, so the whole field is re-emitted with `use`/`forSkill` merged in unchanged and only the importer-mangled `when` repaired to the printed clause.
+
+[2] AUTHORED — work/.b037-rows-gap-situational.json
+    line: "feats / reverse-engineer / skillSubstitutions / … VERIFIED player-visible by me: src/rules/explain.ts:648 emits `${s.when} — roll ${s.use} instead` …"  (work/.b037-gaps.json[110], work/.b037-verify-situational.txt:60)
+    The verify agent's restatement of [1] after re-measuring it — one gap counted twice, closed by the same row.
+
+[3] PARKED — flaggedResidue: not a gap — the apply-digest collator sliced work/.b037-report-situational.txt:45 out of the middle of the situational family's "Test that pins it" paragraph. The line is the third bullet of that test's description ("an inventor who never took the feat reads neither clause") plus the gate transcript ("3 passed", "npx tsc --noEmit clean", "Could not do: nothing on this finding") — it makes no claim, names no record/field/value and asks for nothing. The thing it describes already exists and is green: test/batch037-situational.test.ts it #3, re-run by me in this run's gate line above. Same collator artefact parked in work/.b030-gaps.json and work/.b036-gaps.json.
+    line: "an inventor who never took the feat reads neither clause. `node scripts/vt.mjs run test/batch037-situational.test.ts` - 3 passed. …"  (work/.b037-gaps.json[50], work/.b037-report-situational.txt:45)
+
+[4] PARKED — flaggedResidue: src/data/trust-ledger.json drift is real and is the DRIVER's own close-stage task, not an agent edit. Re-measured by me: `node scripts/trust-ledger-check.mjs` today prints "FAIL the tracked ledger is what the generator produces". But scripts/wg-batch-run.mjs:1068 runs `scripts/trust-ledger.mjs` inside stageClose (allow-listed at :1249, counted as trustLedgerRegenerated in the digest at :1097), and the module header at :1051 says in so many words that a closed batch regenerates the ledger so nobody has to run the generator by hand. Regenerating it now would be wrong twice over: the ledger stamps coreSha, and none of batch 037's overlay rows — including my own — have been applied yet, so a hand regeneration is stale again the moment the driver runs and would then have to be redone at close anyway. Nothing to author. (Unrelated second failure in that same check, "#13 items/pyrotechnic-versatile-vial", is another family's approvals entry and not on my lines.)
+    line: "src/data/trust-ledger.json is now STALE and `npm run verify` FAILS on it. The builder's note to the closer … is WRONG: scripts/trust-ledger.mjs:83 declares LANE_REGISTRY.situational …"  (work/.b037-gaps.json[111], work/.b037-verify-situational.txt:63)
+
+OWNER QUESTIONS RAISED: none. Nothing on my lines has print and WG in conflict and nothing needed a ruling — work/.b037-queue.json is not created by me and work/owner-questions.json is untouched.
+
+EVIDENCE FOR THE AUTHORED ROW (measured, not assumed)
+- Print: mirror doc C:/wonderers guide/aon-2e-archive/data/by-category/feat/feat-3053.json, "Guns & Gears (Remastered) pg. 25", release_date 2025-02-18, legacy_id ["feat-8555"]. Verbatim clause: "Furthermore, you can use Crafting instead of Thievery to Disable a Device or Pick a Lock."
+- Shipped value: scripts/data/effect-backfill.json row 3164 is {category:"feats",id:"reverse-engineer",field:"skillSubstitutions",value:[{use:"crafting",forSkill:"thievery",when:"to disable-device skill=crafting or pick-a-lock skill=crafting"}]} — ONE entry, so re-emitting the whole field loses nothing. The row carries supersedes:true.
+- Player-visible, not cosmetic: src/rules/derive.ts:529 `skillSubstitutions` collects it and src/rules/explain.ts:648 pushes `when: `${s.when} — roll ${s.use} instead`` onto the Thievery rows, so the sheet reads the query string today.
+- Not an invented wording: of the 44 skillSubstitutions overlay rows, feats/expert-disassembly (row 3176) prints the same clause and already stores the byte-identical `when` "to Disable a Device or Pick a Lock". My test pins that sibling on SHIPPED data so the house shape is proved, not asserted.
+- Same artefact class the record's own sibling row already repairs: effect-backfill.json:13523 (the description) carries why "An importer collapsed AoN's action links to their slug plus query string … restored by scripts/repair-stripped-skill-links.mjs".
+- No collision: `grep -l reverse-engineer work/.b037-rows-*.json` matches only work/.b037-rows-situational.json, whose finding reverse-engineer#crafting-star is code-only with backfillRows: [] — no other family emits any row on this record, and no other row touches this field.
+- Citation form: no finding in confirmed[] covers this gap, so all 3 its use form (2), `// batch 037 premise: feat-3053 "Furthermore, you can use Crafting instead of Thievery to Disable a Device or Pick a Lock."` — the mirror file exists and the clause is verbatim. flip-audit green.
+- Flip discipline: the row has NOT been applied, so the two reverse-engineer assertions run on an in-memory PATCHED copy (`withSub`) and on a STRIPPED copy, never on a patched-vs-shipped delta; the cached db is never mutated. No settle and no comparer teach in this lane, so no "// mutation-proof" marker is owed.
+
+DATA STILL NEEDED
+  (none — the one row is authored in work/.b037-rows-gap-situational.json)
+
+CROSS-FILE GAPS
+  (none new. The one my family collated is [4] above: a driver close-stage regeneration, already automated.)

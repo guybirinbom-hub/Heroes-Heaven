@@ -334,15 +334,17 @@ describe('batch 28 — magus', () => {
     },
   );
 
-  /* class-17: "The spellbook contains your choice of eight arcane cantrips and four 1st-level arcane
-   * spells… Each time you gain a level, you add two more arcane spells to your spellbook."
-   * VERIFIER FIX: the reader LANDED as `ClassSpellcasting.spellbook = { spells, perLevel }` (read at
-   * Builder.tsx:403 `bookSpec` → spellbookBudget), replacing the hardcoded wizard/witch class-id test.
-   * The magus budget is 4 + 2, NOT the wizard's 5 + 2, which is why the numbers ride on the record.
-   * `cantrips: 8` is deliberately NOT carried — the book's cantrip count is modelled for no class (the
-   * wizard's included), so that key would be data with no reader, and the row does not author it. */
-  it('spellbook: "four 1st-level arcane spells" + two per level (the cantrip count has no reader)', () => {
-    expect(raw(cls('magus').spellcasting).spellbook).toEqual({ spells: 4, perLevel: 2 });
+  /* The reader LANDED as `ClassSpellcasting.spellbook = { spells, perLevel }` (read at Builder.tsx:403
+   * `bookSpec` → spellbookBudget), replacing the hardcoded wizard/witch class-id test — which is why
+   * the numbers ride on the record at all. `cantrips: 8` is deliberately NOT carried: the book's
+   * cantrip count is modelled for no class (the wizard's included), so that key would be data with no
+   * reader, and no row authors it.
+   * The COUNT moved with the book: class-17 printed "four 1st-level arcane spells"; class-74
+   * (Impossible Magic pg. 9) prints "The spellbook contains your choice of eight arcane cantrips and
+   * five 1st-rank arcane spells", and "you add two arcane spells" is unchanged. */
+  // batch 037: magus#2026-printing
+  it('spellbook: "five 1st-rank arcane spells" + two per level (the cantrip count has no reader)', () => {
+    expect(raw(cls('magus').spellcasting).spellbook).toEqual({ spells: 5, perLevel: 2 });
     expect(cls('magus').spellcasting?.type, 'still a prepared caster').toBe('prepared');
   });
 });
@@ -490,9 +492,15 @@ describe('batch 28 — spell chassis gaps', () => {
    * oracle's 10th-rank pick uses — so the proposed `repertoireBonus` name has no reader and the row
    * authors `{ 1: 1 }` instead. Measured on a built summoner: L4 slots {1:2, 2:2} = 4, repertoire
    * {1:3, 2:2} = the printed maximum of five. */
-  it('summoner: the repertoire is one larger than the slot table', () => {
-    expect(raw(cls('summoner').spellcasting).extraRepertoire).toEqual({ 1: 1 });
-    expect(cls('summoner').spellcasting?.progression, 'the slot table itself is unchanged').toBe('two-rank');
+  /* …and the 2026 printing takes the spare pick back. class-77 (Impossible Magic pg. 63) prints "Each
+   * time you get a spell slot (see the Summoner Spells per Day table), you add a spell to your spell
+   * repertoire of the same rank": repertoire == slots. The 2021 "maximum size of five" existed only
+   * because the two-rank table discarded the lower ranks; the 2026 table keeps every rank it opens,
+   * which is the 'psychic' ladder already implemented in src/rules/spellcasting.ts. */
+  // batch 037: summoner#2026-printing
+  it('summoner: the repertoire is exactly the slot table, on the 2026 retained-rank ladder', () => {
+    expect(raw(cls('summoner').spellcasting).extraRepertoire).toBeUndefined();
+    expect(cls('summoner').spellcasting?.progression, 'the 2026 Spells per Day table').toBe('psychic');
   });
 
   /* Oracular Clarity: "Add TWO common 10th-rank divine spells to your repertoire. You gain a SINGLE

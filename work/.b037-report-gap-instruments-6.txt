@@ -1,0 +1,136 @@
+BATCH 037 — GAP AGENT REPORT, family "gap-instruments-6" (WG-COMPARISON lane).
+3 open lines assigned. 1 AUTHORED, 2 PARKED, 0 still open. No spec file written and no manifest entry
+added — none of the three lines owes a data row; the one that could be closed here is a comparer
+credit, which is code, not an overlay row.
+
+⚠ NO FINDING ID APPEARS BELOW ON PURPOSE. None of my three lines is covered by a finding in
+work/.b037-read.json — line 3 is the verifier's own NEW find and the other two are cross-file items —
+so the one flip I made is cited in the PREMISE form (`// batch 037 premise: eidolon-7 "Language
+Draconic"`), which scripts/test-flip-audit.mjs validated against the AoN mirror. Nothing here should be
+read as a teach that earns any finding a MATCHES verdict.
+
+
+LINE 1 — work/.b037-verify-instruments-6.txt:128 — scripts/lib/wg-parse.mjs:304, the playtest tie-break
+  PARKED — ref `flaggedResidue: …` (the full reason is in work/.b037-gaps.json).
+  Why: the shape is not in doubt and no owner is owed a question — desk #149 already rules that a WG row
+  marked (playtest) is never evidence about the released record, and the narrow shape the builder and
+  the verifier both propose (prefer a NON-playtest row when one exists for the same name; leave a
+  playtest-only row alone) is the correct one. What is in doubt is the BLAST RADIUS, so I measured it
+  on the live dump rather than repeating the builder's estimate:
+
+    · the playtest marker is NOT the "(Playtest)" name suffix — wgNorm strips punctuation, so
+      "Spirit Walk (Playtest)" would not even collide with "Spirit Walk". It is
+      content_source.group === 'playtest'. Spirit Walk's two rows are src 85 (War of Immortals, group
+      playtest, 171 ops) and src 400 (War of Immortals, group pathfinder-core, 2 ops).
+    · 562 rows whose source group is 'playtest' win the richest-row tie-break today, 209 of them
+      because they are WG's ONLY row for that name (the six whole classes the builder names).
+    · 106 records' WG-side ENCODING actually changes under the narrow rule (the rest are ties between
+      two equally empty rows). Sample: Gleaming Blade 1170->2, Victor's Wreath 936->2, Titan's Breaker
+      1453->2, Skybearer's Belt 1130->2, Barrow's Edge 727->2, Gaze Sharp As Steel 740->2, Medium's
+      Awareness 2175->2026, Officer's Education 1913->1901, Tactical Expansion 5650->5296,
+      classFeatures/Consume Thrall 153->2, Runesmith Feat 455->428, Necromancer Feat 447->420.
+    · feats/Spirit Walk is in that list, 171->2 — which is the self-collision that decides the park.
+      Batch 037's own VERIFIED_EQUIVALENT['spirit-walk'] = ['sense'] would become a settle that answers
+      nothing, and test/batch037-instruments-6.test.ts asserts the record returns to `missing=[sense]`
+      under `--raw`, which would no longer be true. Landing this fix in the gaps stage would break this
+      batch's green tests and silently restate 106 records across every prior batch's settle registry.
+  So it needs a batch of its own, with a settle-staleness sweep (scripts/wg-settle-stale.mjs) attached
+  to retire the per-record settles it makes stale. That is a measurement out of scope, which is exactly
+  what a flaggedResidue is for — not an owner question, because the owner has already answered the only
+  question there is.
+
+LINE 2 — work/.b037-verify-instruments-6.txt:138 — the uncited flip in test/batch031-data.test.ts:96
+  PARKED — ref `flaggedResidue: not a gap — re-verified here …`.
+  Why: I re-ran the instrument rather than accepting the verifier's sentence.
+  `node scripts/test-flip-audit.mjs --batch 037` → "batch 037 clean — 23 test file(s) touched, 13 new
+  settle key(s), every flip cited", run BEFORE I touched anything (the verifier saw 19; siblings have
+  landed since, and the count reached 27 by the time I finished).
+  The owning chunk cited its own flip after the builder's report was written. Nothing to author, no
+  file to edit and nobody to ask, so the line is parked as a non-gap rather than left open.
+
+LINE 3 — work/.b037-verify-instruments-6.txt:143 — wg-diff's false positive on dragon-eidolon[language]
+  AUTHORED — ref scripts/wg-diff.mjs OFF_RECORD_CARRIERS['dragon-eidolon'] = ['language'],
+  pinned by test/batch037-gap-instruments-6.test.ts (3 cases).
+  Why it could be closed here rather than handed on: the lane already exists and this is its eighth and
+  last member, not a new mechanism. The verifier asked for it to be READ, not settled blind, and the
+  read is complete and matches the seven precedents exactly:
+    · print — AoN eidolon-7 (Dragon), verbatim: "Senses darkvision Language Draconic Speed 25 feet";
+      remaster twin eidolon-21 the same. One fixed line, no pick.
+    · carrier — COMPANION_MODS['dragon-eidolon'].languages = ['draconic']
+      (src/rules/companionGrants.ts:531). The ID rather than the printed name, because
+      content.languages['draconic'] exists (name "Draconic", aonId language-156) — the same branch
+      psychopomp (requian) and undead (necril) take.
+    · reader — the `for (const l of mod.languages ?? [])` loop in deriveEidolon,
+      src/rules/companions.ts:1059, onto EidolonBlock.languages, rendered at
+      src/sheet/CompanionsTab.tsx:950. No languageChoices, so the picker at :1287 correctly asks nothing.
+    · scope — dragon-eidolon IS a batch-037 record (its other aspect is the CONFIRMED finding
+      dragon-eidolon#tradition), so the batch-035 note's rule "a closer may not settle an id outside its
+      own batch" — the only reason this id was left bare in 035 — no longer applies.
+  Blast radius, measured not assumed: wg-diff run corpus-wide before and after, indexed and diffed.
+  EXACTLY ONE record moved — dragon-eidolon, theyOnly -> weOnly, missing [language] -> []. theyOnly
+  179 -> 178. Its `extra` stays ['specialStat','grantsRecord'], so the record is still watched on the
+  half WG has no op for; the credit closes one kind, not the record.
+  Tests (all three carry the premise citation; the second carries the `mutation-proof` marker):
+    1. the carrier holds the printed language as a content id and resolves onto a BUILT 5th-level
+       summoner's eidolon block ('Draconic'), and languageChoices is undefined;
+    2. MUTATION PROOF — with COMPANION_MODS['dragon-eidolon'].languages deleted in memory the built
+       eidolon loses Draconic (a credit for a dead field would be laundering), then restored;
+    3. wg-diff reports no missing kind for the record, still reports its two extra kinds, lands in
+       weOnly, and the seven siblings credited in 033/034/035 are unmoved.
+
+FILES CHANGED BY THIS AGENT
+  scripts/wg-diff.mjs                        + OFF_RECORD_CARRIERS['dragon-eidolon'] = ['language'],
+                                             with the premise citation and the per-id warning.
+  test/batch037-gap-instruments-6.test.ts    new, 3 cases.
+  test/batch035-closer.test.ts               ⚠ NOT MY FAMILY'S FILE, and edited anyway because the
+                                             credit above makes its CONTROL false: that test pinned
+                                             `idx.get('dragon-eidolon')?.missing` toContain 'language'
+                                             precisely because dragon-eidolon had no credit. The
+                                             describe block and its title are kept verbatim (a batch
+                                             never deletes a describe); the removed assertion carries
+                                             the premise citation; and the replacement control is
+                                             STRICTER than the id it replaces — the credit list inside
+                                             the OFF_RECORD_CARRIERS literal is pinned to the exact
+                                             eight eidolon ids, so a hand moving the credit onto the
+                                             companionGrants.ts FILE row (REGISTRY_KINDS would spread
+                                             it to ~112 ids) still fails there, and so does a ninth id
+                                             credited with no batch behind it. Raised here rather than
+                                             hidden: if the batch prefers the old control kept, the
+                                             wg-diff credit is the one line to revert.
+  work/.b037-gaps.json                       my three lines only, open -> parked/parked/authored.
+                                             Every other family's line is byte-identical (112 entries
+                                             before and after; 95 lines elsewhere still open).
+  Scratch created and deleted: work/.b037g6-diff-before.json, work/.b037g6-diff-after.json.
+
+GUARDS
+  node scripts/vt.mjs run test/batch037-gap-instruments-6.test.ts test/batch035-closer.test.ts
+                                             — 2 files, 6 tests, all pass.
+  node scripts/test-flip-audit.mjs --batch 037 — clean, on the last run "27 test file(s) touched, 13 new
+                                             settle key(s), every flip cited" (the file count keeps
+                                             climbing as siblings land; it was 26 immediately after my
+                                             two). Ran it BEFORE my edits too, which is what closed
+                                             line 2.
+  npx tsc --noEmit                           — CLEAN on the final run. ⚠ It was NOT clean mid-run, and
+                                             not because of me: I edited no TypeScript source at all
+                                             (two test files and one .mjs). Errors appeared in
+                                             src/rules/derive.ts and src/rules/build.ts and MOVED
+                                             between consecutive runs (4975 on one, 5135/5136 +
+                                             build.ts:2870 on the previous) — a sibling family was
+                                             mid-edit in files `git status` shows they own. They landed
+                                             before I finished and the final run is green. Noted so the
+                                             next reader does not chase a ghost.
+
+DATA STILL NEEDED
+  (none — no line of mine owes a backfill row, so no spec file and no work/.b037-specs.json entry.)
+
+CROSS-FILE GAPS
+  1. test/batch035-closer.test.ts — declared above rather than left silent. I edited another batch's
+     test because the record it used as a control became mine; the replacement control is tighter, but
+     the edit is outside the file list a gap agent would normally hold.
+  2. scripts/lib/wg-parse.mjs:304 — LINE 1, parked, restated here so it is not lost when the gaps file
+     is consumed: 106 records' WG encoding changes under the narrow non-playtest rule, one of them
+     feats/Spirit Walk, whose settle and test are batch 037's own. It needs its own batch plus a
+     settle-staleness sweep.
+  3. work/.b037-queue.json — NOT created. Neither parked line has a question a print citation or an
+     existing desk ruling cannot already answer, and an empty or invented owner question is worse than
+     none.

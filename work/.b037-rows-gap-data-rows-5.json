@@ -1,0 +1,29 @@
+{
+  "findings": [
+    {
+      "id": "guardians-armor#automatic-resistance",
+      "note": "The gap lane's two DATA STILL NEEDED rows for data-rows-5, authored in the SAME change as the reader that makes them live: IwrEntry.whenArmorCategory (src/rules/types.ts) plus the gate in BOTH deriveDefenses loops (src/rules/derive.ts, resistance and weakness). Until that reader existed the builder correctly withheld both rows — row 1 would have been a dead field and row 2 would have taken the resistance away outright. ORDER MATTERS AND THE APPLIER MUST KEEP IT: row 1 (the automatic resistance on the class feature) comes before row 2 (retiring the hand-flipped mode), because the mode is the player's only route to the number until row 1 lands. Neither row supersedes anything: scripts/data/effect-backfill.json carries no row for either id today.",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "guardians-armor",
+          "field": "resistances",
+          "why": "class-feature-1115 prints \"While wearing medium or heavy armor, you gain resistance to physical damage equal to 1 + half your level. In addition, you can rest normally while wearing medium and heavy armor.\" The condition is on the sheet — the worn armour's category — so by the owner's rule (2026-09-10 #109) it is a real automatic number, never WG's always-on version and never a switch the player has to remember. The formula is the same one the retired mode carried, and resolveFormula already substitutes @actor.level. The armour condition rides on the new IwrEntry.whenArmorCategory gate, which deriveDefenses honours in both the resistance and the weakness loop. The rest-normally half needs no row: it is prose on the record, not a number.",
+          "value": [
+            {
+              "type": "physical",
+              "value": "1+floor(@actor.level/2)",
+              "whenArmorCategory": ["medium", "heavy"]
+            }
+          ]
+        },
+        {
+          "category": "modes",
+          "id": "guardians-armor",
+          "delete": true,
+          "why": "class-feature-1115, the same printed clause as the row above (\"While wearing medium or heavy armor, you gain resistance to physical damage equal to 1 + half your level\"). The hand toggle this class feature shipped as — modes/guardians-armor, duration \"while wearing medium or heavy armor\", carrying the same physical resistance. With row 1 live the number is automatic and conditional on what the character is actually wearing, so the mode is now a SECOND source of the same resistance that a player can switch on while unarmoured. Retired rather than left inert: deriveDefenses takes the highest of same-type contributors, so leaving it would let a guardian in no armour toggle on a resistance print gives them only in medium or heavy. Apply AFTER row 1."
+        }
+      ]
+    }
+  ]
+}

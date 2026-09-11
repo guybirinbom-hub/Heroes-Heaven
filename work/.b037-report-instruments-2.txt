@@ -1,0 +1,168 @@
+BATCH 037 — INSTRUMENTS, CHUNK instruments-2 (12 findings, all CONFIRMED, all "nothing changes")
+
+DATA STILL NEEDED
+  (none — every finding in this chunk is a "nothing changes" read; no backfill row is required by any
+   of the twelve, and each spec entry carries backfillRows: [] with the reason.)
+
+CROSS-FILE GAPS
+  test/batch033-resume-instruments-the-three-comparers-11-red-records-every-one-a-verified-carrier-the-comparer-cannot-see-.test.ts:317
+      — the ONE test this chunk's settle flips, and it is outside my file grant. The assertion is
+        `expect(identity('spore-order')).toMatch(/grants\s+theirs-not-ours=\[leaforder\]/);` inside
+        it('spore-order: the settle leaves the Leaf Order membership gap reporting on wg-identity').
+        Its own comment says the membership is "a membership lane we do not model, filed as an owner
+        question" — batch 035 modelled it (build.ts:10111 PARENT_ORDER) and desk #134/#139/#144
+        answered the question B on 2026-09-10, so the assertion is stale, not broken. Exact edit the
+        driver should apply: add `['--raw']` to that one call —
+            expect(identity('spore-order', ['--raw'])).toMatch(/grants\s+theirs-not-ours=\[leaforder\]/);
+        which keeps the original claim intact (the wg-diff specialStat settle does not reach the
+        wg-identity grants row) now that a wg-identity settle of its own answers it, and add
+            // batch 037: spore-order#leaf-order-membership
+        in the six lines above that it(, per the flip-audit citation rule. Nothing else in the repo
+        flips: the only other unguarded reference, test/batch033-instruments.test.ts:423, already
+        passes --raw.
+  scripts/test-flip-audit.mjs REGISTRIES (line 120-123) lists wg-diff / wg-values / wg-identity only.
+      — this batch gives scripts/wg-casting.mjs its first settle registry (SETTLED_CASTING), so a key
+        added to it is NOT audited for a mutation-proof test. One line —
+        `'scripts/wg-casting.mjs': ['SETTLED_CASTING'],` — would close that. Outside my grant; the
+        mutation-proof test exists regardless (test/batch037-instruments-2.test.ts).
+  src/rules/build.ts:10157 (`const fid = slug(line); if (content.feats[fid] && !has.has(fid))`)
+      — NOT a defect and NOT a request: recording that PARENT_ORDER's leaf-order membership is
+        currently inert on shipped data because no feats['leaf-order'] exists to resolve against.
+        That is exactly the owner's answer B (know the membership, block nothing); it is noted only so
+        a later reader does not mistake the inertness for a missing carrier.
+
+WHAT I DID, PER FINDING ID
+
+  spore-order#leaf-order-membership — SETTLED in scripts/wg-identity.mjs: SETTLED_IDENTITIES
+      ['spore-order'] = ['leaforder'], a MEMBER-scope settle, never the `grants` bucket, so the
+      record's own leshyfamiliar grant and anything their row later grows keep reporting. Print
+      (druidic-order-13) states a MEMBERSHIP plus one grant; the grant is classFeatures/spore-order
+      .grantsFeats ['leshy-familiar'] and the membership is PARENT_ORDER at src/rules/build.ts:10111.
+      Owner ruled 2026-09-10 (#134 and its duplicate #139, answer B). No data row.
+      TEST: test/batch037-instruments-2.test.ts —
+        it('spore-order and cultivation-order are quiet on wg-identity, and report `leaforder` again
+        with settles bypassed') is the mutation-proof case (`--raw` stunts the settle key and both
+        records return); it('spore-order and cultivation-order hold the leaf-order membership, and
+        flame-order does not') proves the carrier is live rather than dead — on an in-memory content
+        copy carrying a feats['leaf-order'], the two variants pass the prerequisite line and
+        flame-order is refused it; it('the spore-order settle names one token…') pins the scope.
+
+  cultivation-order#leaf-order-membership — SETTLED in scripts/wg-identity.mjs: SETTLED_IDENTITIES
+      ['cultivation-order'] = ['leaforder']. Same sentence (druidic-order-12), one order over; their
+      #34226 is an EMPTY "Leaf Order" record on their side. Owner ruled 2026-09-10 (#144, answer B).
+      One entry per order deliberately, so a third leaf variant added later still reports. No data row.
+      TEST: the same three cases in test/batch037-instruments-2.test.ts, which name this record in
+      their titles and assert it beside spore-order.
+
+  animist#slot-table — SETTLED in scripts/wg-casting.mjs: this comparer had no settle lane, so the
+      batch gave it one — SETTLED_CASTING, keyed classId -> `kind|level|rank`, ONE KEY PER ROW, plus
+      the `--raw` bypass the other three comparers already have. animist gets exactly six keys
+      (slots|13|7, 14|7, 15|8, 16|8, 17|9, 18|9). Ours is the printed Animist Spells per Day table
+      (class-64) at every level and rank — casterSlots('animist') plus APPARITION_SLOTS
+      (src/rules/spellcasting.ts:96-117), summing to "1+1" at 13, "2+1" at 14-16, "2+2" at 17-18.
+      Owner ruled 2026-09-10 (#105). No data row.
+      TEST: test/batch037-instruments-2.test.ts — it('animist is clean on wg-casting, and all six rows
+      come back with settles bypassed') is the mutation-proof case; it('a built animist gets the
+      printed 7th/8th/9th-rank counts at levels 13 to 18') pins the sum on really built characters.
+
+  animist-apparition-spellcasting#slot-levels — SETTLED by the SAME SETTLED_CASTING.animist entry in
+      scripts/wg-casting.mjs (one teach, two findings: both finding ids are cited above the key). The
+      class table gives 7th/8th/9th-rank spells at 13/15/17 and the apparition column opens with them;
+      WG's opens at 14/16/18, which is why the six rows are all at the newly-opened top rank and
+      nowhere else. Owner ruled 2026-09-10 (#4). No data row.
+      TEST: test/batch037-instruments-2.test.ts — it('the apparition ladder opens the 7th, 8th and 9th
+      ranks at 13, 15 and 17 — the class table rows') plus the mutation-proof case above.
+
+  sequestered-spell#innate-proficiency — NO settle and NO row, deliberately. Nothing reports: wg-diff
+      quiet, wg-identity quiet, and wg-values already records their SPELL_ATTACK / SPELL_DC ops in
+      NOT_A_SCALAR as "spellcasting proficiency, which our side derives from the granted spellcasting
+      entry". Print (rules-2232) gives trained, expert at 12th, by the general innate-spell rule, which
+      the app already does; WG's four tradition-gated pickers and level-4 expert step are their shape.
+      The experience gate's UNVERIFIED-EFFECT on this record is parked by the open owner question and
+      by `ownerRuled` once the desk lands, so no experience-instrument-limits.json entry was authored —
+      it would be an unreachable branch. I also did NOT teach wg-experience-lanes a surface predicate
+      for SPELL_ATTACK / SPELL_DC: that is a corpus-wide teach whose blast radius I could not measure
+      inside this chunk, and it would hide real proficiency gaps if it read the wrong entry.
+      TEST: it('sequestered-spell keeps the one tradition-narrowed picker and the general innate-spell
+      proficiency') in test/batch037-instruments-2.test.ts.
+
+  total-power#classification-choice — NO settle and NO row. background-578 prints BOTH branches and the
+      app asks the question (choice + choiceOptionLimits); WG's row is troll-only. No comparer reports
+      it — wg-values --raw agrees on the one number both sides state. A settle here would answer
+      nothing and would silence the next real difference on the record unread. Owner ruled 2026-09-10
+      (#101) under R12: the book wins.
+      TEST: it('the value lane agrees with every number on total-power, sponsored-by-a-village and
+      sponsored-by-teacher-ot, settles bypassed') in test/batch037-instruments-2.test.ts.
+
+  necromantic-tenacity#trigger — NO settle and NO row. feat-886's printed trigger is "a necromancy
+      effect" and ours is that wording as degreeShifts; WG triggers on the death or void traits.
+      Nothing reports: their three addBonusToValue SAVE_* ops carry no value, so the value lane reads
+      them as prose, and no instrument compares a trigger word. Owner ruled 2026-09-10 (#133).
+      TEST: it('necromantic-tenacity and the three Breadth feats assert no number WG can disagree with,
+      and grant no named thing we lack') in test/batch037-instruments-2.test.ts.
+
+  divine-breadth#no-cantrip — NO settle and NO row. feat-5070 prints slots only; ours is spellSlotBonus
+      with no cantrip and wg-diff puts the record in AGREE. WG's extra cantrip entry is a copied slip.
+      Owner ruled 2026-09-10 (#131/#132, one ruling for the whole Breadth family).
+      TEST: the Breadth case above, which also asserts no 'cantrip' anywhere in the shipped record.
+
+  primal-breadth#no-cantrip — NO settle and NO row. feat-5078, identical shape, identical ruling; their
+      cantrip row is the same copy aimed at druid. TEST: the same Breadth case.
+
+  occult-breadth#no-cantrip — NO settle and NO row. The third copied-cantrip Breadth row, covered by
+      the same ruling (#131/#132, stated as covering Divine, Primal, Occult and Arcane). Arcane Breadth
+      needs nothing — WG carries no cantrip entry on it. TEST: the same Breadth case.
+
+  sponsored-by-a-village#rarity — NO settle and NO row, and no instrument to settle IN: rarity is
+      compared by none of the four comparers (grepped wg-diff, wg-values, wg-identity, wg-casting and
+      the experience lanes: no rarity reader anywhere). background-226 prints no rarity trait, so it is
+      common by the general rule, which is what the record already carries. Owner ruled 2026-09-10
+      (#87, one answer covering all five adventure-path backgrounds).
+      TEST: the value-lane case above pins the shipped rarity alongside the comparer measurement.
+
+  sponsored-by-teacher-ot#rarity — NO settle and NO row, same reason (background-224, no printed rarity
+      trait). Owner ruled 2026-09-10 (#87/#92/#94/#96/#100). ⚠ This line covers the #rarity aspect and
+      nothing else — sponsored-by-teacher-ot#one-pick is a separate player-visible finding owned by the
+      data-rows family and is untouched by anything here.
+      TEST: the value-lane case above.
+
+COMPARER COUNTS, BEFORE AND AFTER (run from this working tree; siblings were landing their own settles
+concurrently, so where a count moved for a record that is not mine it is named)
+
+  wg-diff (corpus, --out):        before 183 THEY-ONLY   after 179
+      The four that dropped are advanced-red-mantis-magic, instinct-ability, spirit-walk and
+      tree-friend — all sibling chunks' settles, none of them mine. NONE of my twelve records appears
+      in THEY-ONLY before or after, and I changed no line of scripts/wg-diff.mjs.
+
+  wg-identity --batch work/wg-batch-037.json:   before 8 records   after 3
+      My two are spore-order and cultivation-order; the rest of the move is siblings'. With --raw the
+      packet reports 18, so every settle in the file is still answering a live difference.
+  wg-identity --batch work/wg-batch-036.json:   0 before, 0 after   (--raw 0 — no settle is load-bearing there)
+  wg-identity --batch work/wg-batch-035.json:   1 before, 1 after   (--raw 2)
+      The one is animal-instinct `items theirs-not-ours=[spiderweb]`, the owner-queued desk entry
+      animal-instinct-spider-web — pre-existing, parked by the gate, untouched by this chunk.
+
+  wg-values --batch 035 / 036 / 037:            0 / 0 / 2 to adjudicate, before and after.
+      I changed no line of scripts/wg-values.mjs. The two on 037 are traveling-gourmand#survival and
+      deny-lady-nanbyos-charity#bulk-thresholds, both other families'.
+
+  wg-casting (corpus, via jiti):  before 4 classes with mismatches, 180 rows
+                                  after  3 classes with mismatches, 174 rows   (exit 0)
+      Exactly the six animist rows, and only those: with --raw the run returns to 4 classes / 180 rows.
+      magus (77), summoner (77) and wizard (20) are unchanged and untouched — they are not this
+      chunk's findings and no key was written for them.
+
+FILES CHANGED
+  scripts/wg-identity.mjs                 SETTLED_IDENTITIES + 'spore-order' and 'cultivation-order'
+  scripts/wg-casting.mjs                  new SETTLED_CASTING registry + `--raw` bypass + the filter
+  test/batch037-instruments-2.test.ts     new; 9 cases, 3 of them mutation-proof
+  work/.b037-rows-instruments-2.json      spec, 12 findings, every one backfillRows: []
+
+  Not written, and why: work/experience-instrument-limits.json (the three experience verdicts in this
+  chunk — spore-order, cultivation-order, sequestered-spell — are already parked by the owner-question
+  branch and by `ownerRuled`, so an entry would be an unreachable branch and a second place to keep the
+  same fact true); scripts/wg-diff.mjs and scripts/wg-values.mjs (nothing of mine reports there);
+  scripts/lib/wg-experience-lanes.mjs (see sequestered-spell above);
+  work/.b037-created-desc-instruments-2.json (no record is created).
+
+npx tsc --noEmit clean. node scripts/vt.mjs test/batch037-instruments-2.test.ts — 9 passed.

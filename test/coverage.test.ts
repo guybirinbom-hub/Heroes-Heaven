@@ -56,8 +56,16 @@ const REGISTRY_FLOOR: Record<string, number> = {
    *
    * 45, down from 46: a SEVENTH record, dream-magic, left for the same destination and the same
    * reason — the record's own `effectChoices`, which can carry the rank this registry cannot.
-   * batch 031 premise: feat-8518 "you learn this spell as a 4th-rank occult innate spell that you can cast once per day" */
-  featCantripGrants: 45,
+   * batch 031 premise: feat-8518 "you learn this spell as a 4th-rank occult innate spell that you can cast once per day"
+   *
+   * 39, down from 45: SIX MORE — the three kitsune and three nagaji spell feats — left for the same
+   * destination, and this time the registry was also asking the question in the wrong PLACE. All six
+   * print *"During your daily preparations, choose …"*, so the pick belongs to daily preparations; this
+   * registry is a build-time grant, so every one of them rendered a builder picker as well and only the
+   * builder one granted. The daily `choice` on each record now carries both halves, and play.ts's
+   * daily-grant block learned the rank-0 (cantrip) route the pair needs.
+   * batch 037 premise: feat-3984 "Until your next daily preparations, you can cast the chosen spell as an occult innate cantrip." */
+  featCantripGrants: 39,
   featFeatGrants: 254,
   companionGrants: 78,
   situationalBonuses: 2299,

@@ -1,0 +1,191 @@
+BATCH 037 — INSTRUMENTS, CHUNK 3 (instruments-3)
+================================================
+
+Twelve findings, every one of them an owner ruling from the 2026-09-10 desk pass and every one of them
+"the book wins, keep the app". So no record changes and no backfill rows: the work was (a) the two
+instruments that were still reporting the ruled difference, (b) the four settle comments that said in as
+many words that they were a parked owner question rather than a settle, and (c) telling the driver which
+desk entries are now spent.
+
+Spec: work/.b037-rows-instruments-3.json   (12 findings, all backfillRows: [])
+
+
+DATA STILL NEEDED
+-----------------
+(none — no finding in this chunk needs a row in scripts/data/effect-backfill.json; all twelve are
+"nothing changes" rulings, and the spec carries an entry with backfillRows: [] and a reason for each)
+
+
+CROSS-FILE GAPS
+---------------
+· work/owner-questions.json — all TWELVE of my findings are still in its `open` list (desk #94, #96,
+  #100, #88, #39, #42, #45, #107, #115, #130, #111, #112) and every one is now RULED (2026-09-10). I may
+  not edit that file. Until they are retired the gate parks these records as OWNER-QUEUED instead of
+  judging them; retire them together with this chunk's settles, not before — sky-rider and bone-magic
+  fail their gates without the two instruments below.
+· work/wg-batch-037-experience.json is STALE with respect to the lane teach — it was written at
+  08:38 and records bone-magic as MISSING-CONTROL. The driver must re-run
+  `node scripts/wg-experience.mjs --batch work/wg-batch-037.json` (the full harness) before the gate, or
+  bone-magic reads MISSING-CONTROL with the teach in place. I did NOT regenerate it deliberately: the
+  harness bakes in whatever sibling chunks have in flight under src/, and a mid-batch rewrite of a
+  shared artefact would carry their half-finished state into every other record's verdict.
+· 26 stored gate-9 verdicts OUTSIDE this batch recompute as MISSING-CONTROL against the CURRENT lane
+  module — 029 implement-adept; 033 school-of-rooted-wisdom, devotion-phantom-eidolon, construct-eidolon;
+  034 empiricism-methodology, way-of-the-pistolero, elemental-instinct, giant-instinct; 035
+  dragon-instinct, superstition-instinct, animal-instinct, anger-phantom-eidolon; 037 animal-instinct;
+  and the same four in the VALL packet. NOT THIS CHUNK'S DOING, measured rather than assumed: none of
+  those records has a control whose title the new regex touches (0 of them, checked across all 44
+  artefacts), and `git diff scripts/lib/wg-experience-lanes.mjs` shows my entry is the only uncommitted
+  change to that file. It is artefact staleness against a committed lane change, and it means a re-gate
+  of those batches would fail on records nobody has read. Worth a driver decision, outside my files.
+· work/wg-batch-037-parity.json and work/wg-batch-037-residual.json do not exist; the gate fails on both.
+  Driver's lane (the parity verdict for my twelve records is OWNER-RULED, desk numbers above).
+· test/batch031-data.test.ts:96 — `node scripts/test-flip-audit.mjs --batch 037` reports ONE uncited flip
+  and it is that line (a changed `expect(choice?.options…)` with no citation in the 6 lines above). Not
+  mine and not my file; the chunk that changed it has to cite it or the batch fails the audit.
+
+
+WHAT I DID, PER FINDING
+-----------------------
+
+sky-rider#both-skills                                                            TEACH/SETTLE — SETTLE
+  scripts/wg-identity.mjs, SETTLED_IDENTITIES['sky-rider'] = ['skillacrobatics', 'skillloreplaneofair'].
+  Print (background-381): "You're trained in the Acrobatics skill, and the Plane of Air Lore skill." An
+  AND; ours trains both (trainedSkill 'acrobatics' + trainedLore 'plane-of-air'). WG writes it as two
+  selects, so its two option labels have no counterpart and the comparer reported
+  `options theirs-not-ours=[skillloreplaneofair, skillacrobatics]`. Owner ruled 2026-09-10 (#88).
+  MEMBER-SCOPED on the two names, never the `options` bucket.
+  Test: test/batch037-instruments-3.test.ts, describe "…sky-rider trains both printed skills…", it
+  "sky-rider: the two option labels settle, and the record's own Cat Fall grant is still guarded".
+  Mutation-proof: with `grantedFeatId` deleted from a content copy the comparer STILL reports
+  `grants theirs-not-ours=[catfall]` with this settle in place, and `--raw` puts both labels back.
+  Blast radius: sky-rider only. wg-identity on batch 037 went 62/66 matching -> 63/66; batches 035 and
+  036 are unchanged (see COUNTS).
+
+bone-magic#cantrip-list                                                          TEACH/SETTLE — TEACH
+  scripts/lib/wg-experience-lanes.mjs, one entry appended to CONTROL_TITLE_LANE:
+  /\b(?:arcane|divine|occult|primal)\b[^.?!]*\bor\s+(?:arcane|divine|occult|primal)\b(?!\s*\w)/i ->
+  'tradition'. Print (feat-5632) offers the union of the occult and primal cantrip lists and asks the
+  tradition separately; ours does exactly that, but our tradition prompt is worded "Bone Magic — are your
+  innate spells primal or occult?", which lanes as [spell] and so falls out of the generic `option` pool
+  that WG's `select "Select a Tradition"` relies on — MISSING-CONTROL on a question we really do ask.
+  Owner ruled 2026-09-10 (#107). ONE teach, not a park in work/experience-instrument-limits.json,
+  because four records already pass for exactly this reason (centaur, budding-speaker-centaur,
+  wellspring-gnome, spellkeeper-shisk all spell the traditions out) — this is a family, not a one-off.
+  Test: same file, describe "…bone-magic asks WG's tradition question by naming the traditions", two
+  its. Mutation-proof: the taught carrier is the alternation IN THE PROMPT, so the stunt is the same two
+  controls with the tradition names taken out of the first — the select goes unmatched again. (Deleting
+  the control outright is NOT the proof and the test says so: one control against one select is paired by
+  a by-count rule that predates this teach.)
+  Blast radius, MEASURED over all 44 experience artefacts, not assumed: 6 controls gain the lane and
+  every one is a real tradition question; the guard `(?!\s*\w)` keeps "Choose an occult or primal
+  CANTRIP" and "…as an innate primal or arcane SPELL" out of it. Exactly ONE record's verdict moves:
+  bone-magic, MISSING-CONTROL -> OK (in batch 006's packet as well as 037's). No OK record becomes
+  MISSING-CONTROL. Nothing lands until the artefact is regenerated — see CROSS-FILE GAPS.
+
+shoony-lore#no-additional-lore                                                   COMMENT — RULING RECORDED
+  scripts/wg-diff.mjs VERIFIED_EQUIVALENT['shoony-lore'] and scripts/wg-identity.mjs
+  SETTLED_IDENTITIES['shoony-lore'] both existed and both said they were a parked owner question, the
+  wg-diff one opening "⚠ SHOONY LORE IS NOT SETTLED … it comes out the moment he rules either way".
+  He ruled (2026-09-10, #45): feat-1219 says only "You also become trained in Shoony Lore", so WG's
+  Additional Lore grant with its 3rd/7th/15th skill increases is a deliberate difference. Both comments
+  rewritten to carry the ruling. No registry key added or removed, no counts move.
+
+brutality#melee-only                                                             COMMENT — RULING RECORDED
+  scripts/wg-values.mjs SETTLED_VALUES['brutality'] = ['set|critspec'] already existed with the reading
+  but no ruling. class-feature-853: "While raging, you have the critical specialization benefits for
+  melee weapons and unarmed attacks." Ours is critSpecWeapons {melee:true}; owner ruled 2026-09-10 (#42).
+  Comment updated. No key added or removed.
+
+mightyfall-kobold#boosts                                                         COMMENT — RULING RECORDED
+  scripts/wg-identity.mjs SETTLED_IDENTITIES['mightyfall-kobold'] = ['options'] settles the LABELS and
+  its own ⚠ paragraph said the BOOST COUNT was open with the owner. He ruled (2026-09-10, #115):
+  heritage-374's "Instead of the normal attribute boosts and flaws" replaces the whole set, free boost
+  included, so ours (Str boost, Cha boost, Int flaw, 10 ancestry HP) is right. Comment updated. Nothing
+  was quieted to close it: the boost count reaches no comparer (wg-values files ATTRIBUTE_* under the
+  existing NOT_A_SCALAR chassis entry).
+
+unsponsored#rarity / sponsored-by-family#rarity / sponsored-by-a-stranger#rarity  NO INSTRUMENT OWED
+  All three are rarity 'common' in core.json, which is what background-227 / -223 / -225 print (an entry
+  with no rarity trait is common by the general rule); owner ruled 2026-09-10 (#94 / #96 / #100) that
+  WG's blanket uncommon rating for that free adventure guide is a deliberate difference. RARITY IS
+  COMPARED BY NO INSTRUMENT — grepped `rarity` across wg-diff.mjs, wg-values.mjs, wg-identity.mjs,
+  wg-casting.mjs, wg-batch-gate.mjs and lib/wg-experience-lanes.mjs and got zero hits, because WG keeps
+  rarity in a column its operations never mention. There is nothing to settle; retiring the desk entries
+  closes them. Gate 9 already reads all three OK.
+
+gunslinger-weapon-mastery#advanced-rank                                          NO INSTRUMENT OWED
+  Ours already ships the printed split (class-feature-520): master with simple and martial firearms and
+  crossbows, expert with advanced ones and with simple/martial/unarmed, plus the critical specialization
+  WG omits entirely; owner ruled 2026-09-10 (#39). The record reaches no comparer as a difference —
+  wg-diff AGREE (`weapon` both sides), wg-values files all five of its variables under the existing
+  NOT_A_SCALAR weapon-proficiency entries, gate 9 OK ("delivered on the class chassis"). No settle owed
+  and none written: a settle that answers nothing is a trap for the NEXT difference on that record.
+
+glyph-expert#magical-writing                                                     NO INSTRUMENT OWED
+  feat-2242 upgrades the save only against "traps that feature magical writing" and that is what ours
+  does; owner ruled 2026-09-10 (#130). wg-diff has it in WE-ONLY (ours [conditional, save, perception,
+  ac, skill] vs theirs [perception, ac, save]) — the narrower trigger IS our extra `conditional` — values
+  agree and gate 9 is OK. Nothing to settle.
+
+empathic-calm#one-pick                                                           NO INSTRUMENT OWED
+  feat-3970 "either calm emotions or sanctuary" is ONE pick, which the app asks; owner ruled 2026-09-10
+  (#111/#112), setting STANDING RULE R13 for every "either X or Y" / "your choice of X or Y" feat.
+  wg-diff WE-ONLY (our `choice` has no counterpart on their side), gate 9 OK. Nothing to settle.
+
+colugos-traversal#one-pick                                                       NO INSTRUMENT OWED
+  feat-6975 "your choice of gentle landing or jump" — same ruling, same R13. Gate 9 OK, wg-diff WE-ONLY.
+  The existing VERIFIED_EQUIVALENT['colugos-traversal'] = ['conditional','spellcasting'] answers a
+  DIFFERENT aspect (the engine-wide innate-spell proficiency rule, Player Core p.298) and is untouched.
+
+
+COMPARER COUNTS, BEFORE AND AFTER
+---------------------------------
+Taken immediately before and immediately after my edits. ⚠ Sibling chunks are landing settles in the
+same three registries throughout, so the wg-diff corpus numbers below moved for reasons that are not
+mine (my only wg-diff edit is a comment); the per-batch identity/values numbers are the ones that
+isolate this chunk.
+
+  wg-identity --batch 037    before: checked 66, 62 match, 4 reporting
+                             after : checked 66, 63 match, 3 reporting     <- sky-rider settled
+  wg-identity --batch 036    before: checked 14, 14 match, 0 reporting     after: identical
+  wg-identity --batch 035    before: checked 25, 24 match, 1 reporting     after: identical
+
+  wg-values   --batch 037    before: 58 compared, 56 agree, 2 to adjudicate   after: identical
+  wg-values   --batch 036    before: 14 compared, 14 agree, 0 to adjudicate   after: identical
+  wg-values   --batch 035    before: 27 compared, 27 agree, 0 to adjudicate   after: identical
+
+  wg-diff (corpus-wide; it has no --batch)
+                             before: 183 THEY-ONLY / 2887 WE-ONLY / 1098 AGREE
+                             after : 179 THEY-ONLY / 2889 WE-ONLY / 1100 AGREE
+                             my edit to this file is a COMMENT; the 4-record move is sibling chunks'.
+
+  wg-casting (npx jiti; it takes --class, not --batch)
+                             before: 16 class sources, 3 with mismatches (174 rows)
+                             after : 16 class sources, 3 with mismatches (174 rows)   — unchanged
+
+  gate 9 (scripts/wg-experience.mjs): recomputed from the stored artefacts with the patched module —
+                             batch 037 bone-magic MISSING-CONTROL -> controls match; no other record in
+                             any of the 44 artefacts moves because of this teach.
+
+
+CHECKS RUN
+----------
+  node scripts/vt.mjs test/batch037-instruments-3.test.ts     3 passed
+  npx tsc --noEmit                                            clean
+  node scripts/test-flip-audit.mjs --batch 037                1 flip, in test/batch031-data.test.ts
+                                                              (a sibling chunk's — see CROSS-FILE GAPS);
+                                                              nothing of mine uncited.
+
+
+FILES TOUCHED
+-------------
+  scripts/wg-identity.mjs                  sky-rider settle (new key) + two comments
+  scripts/lib/wg-experience-lanes.mjs      the tradition-question lane teach
+  scripts/wg-diff.mjs                      shoony-lore comment only
+  scripts/wg-values.mjs                    brutality comment only
+  test/batch037-instruments-3.test.ts      new
+  work/.b037-rows-instruments-3.json       new (12 findings, all backfillRows: [])
+  work/.b037-report-instruments-3.txt      this file
+  (work/experience-instrument-limits.json and test/wg-experience-lanes.test.ts: NOT touched — the teach
+   made a park unnecessary, and my tests live in my own file so a sibling's append cannot collide.)

@@ -1,0 +1,219 @@
+{
+  "findings": [
+    {
+      "id": "dream-magic#second-taking",
+      "note": "Print (feat-8518) ends *\"Special You can take this feat twice, gaining the spell you didn't select initially the second time.\"* An `effectChoices` answer is stored per RECORD (build.effectChoices, keyed by the record id), so both takings of a maxTakable:2 feat shared one answer and the second taking granted nothing new. A record `choice` answer is stored per FEAT ENTRY (`fc.choice.value`) and build.ts:6452's `for (const fc of feats)` loop applies `opt.grant` once per entry — so two takings grant two spells — and `choice.distinctAcrossTakes` is the shipped lane for *\"each time, choose a different one\"* (build.ts:2036 `answersInOtherTakes`, greyed with a reason per ruling Q27, which leaves exactly one selectable option on the second taking). Reused, not rebuilt: no new field, no new reader. The two rows move ONE question from the shared lane to the per-taking lane, so they are emitted together; the 4th-rank / once-per-day / occult grant is carried over byte-for-byte from the batch-031 row this supersedes.",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "dream-magic",
+          "field": "effectChoices",
+          "value": null,
+          "supersedes": true,
+          "why": "feat-8518 Special: \"You can take this feat twice, gaining the spell you didn't select initially the second time.\" Retires the batch-031 overlay row whose whole value was [{\"id\":\"dream-magic-spell\",\"prompt\":\"Dream Magic: choose Dream Message or Sleep (4th-rank occult innate spell, once per day)\",\"options\":[{\"value\":\"dream-message\",\"label\":\"Dream Message\",\"grant\":{\"innateSpells\":[{\"spellId\":\"dream-message\",\"tradition\":\"occult\",\"rank\":4,\"usesPerDay\":1}]}},{\"value\":\"sleep\",\"label\":\"Sleep\",\"grant\":{\"innateSpells\":[{\"spellId\":\"sleep\",\"tradition\":\"occult\",\"rank\":4,\"usesPerDay\":1}]}}]}] - that value is carried WHOLE into the sibling `choice` row below (same two options, same labels, same grants, same rank 4 / usesPerDay 1 / occult), which is the only reason this one can be retired. An effectChoices answer is keyed by record id, so both takings shared it."
+        },
+        {
+          "category": "feats",
+          "id": "dream-magic",
+          "field": "choice",
+          "value": {
+            "flag": "dreamMagicSpell",
+            "prompt": "Dream Magic: choose Dream Message or Sleep (4th-rank occult innate spell, once per day)",
+            "kind": "array",
+            "distinctAcrossTakes": true,
+            "options": [
+              {
+                "value": "dream-message",
+                "label": "Dream Message",
+                "grant": {
+                  "innateSpells": [
+                    { "spellId": "dream-message", "tradition": "occult", "rank": 4, "usesPerDay": 1 }
+                  ]
+                }
+              },
+              {
+                "value": "sleep",
+                "label": "Sleep",
+                "grant": {
+                  "innateSpells": [
+                    { "spellId": "sleep", "tradition": "occult", "rank": 4, "usesPerDay": 1 }
+                  ]
+                }
+              }
+            ]
+          },
+          "why": "feat-8518: \"Choose dream message or sleep upon taking this feat; you learn this spell as a 4th-rank occult innate spell that you can cast once per day.\" + \"Special You can take this feat twice, gaining the spell you didn't select initially the second time.\" A record `choice` is answered per feat ENTRY, so the two takings hold two answers and build.ts applies each option's grant once per entry; `distinctAcrossTakes` greys the first taking's answer on the second picker (build.ts:2036), which is what forces the spell not chosen initially."
+        }
+      ]
+    },
+    {
+      "id": "scar-of-the-survivor#dying-toggle",
+      "note": "Owner 2026-09-10 #140 asks for a divine-spark toggle in the shape of the three immanence toggles already shipped (modes/aura-fetching-bangles, aura-mirrored-aegis, aura-victors-wreath). Reused exactly: a gated ModeDef whose `feats` gate names the ikon's classFeature id (modeGateIds adds every ownedFeatureId, and an exemplar's chosen ikons arrive through Character.classChoices), with the printed duration as the toggle's label. The +1 status bonus to Fortitude is a real modifier, the same shape aura-mirrored-aegis uses for its +1 status AC. HALF THE SENTENCE CANNOT BE A NUMBER YET: ModeDef has no dying-threshold field and build.ts:6960 reads `dyingThresholdBonus` only off `content.feats[...]` and only unconditionally, so the Diehard clause rides the mode's `note` until that reader exists - see CROSS-FILE GAPS. The existing display star (src/rules/situationalBonuses.ts:1472) stays: mirrored-aegis carries both a star and a mode for the same sentence, which is the shipped precedent.",
+      "backfillRows": [
+        {
+          "category": "modes",
+          "id": "scar-of-the-survivor",
+          "create": true,
+          "value": {
+            "id": "scar-of-the-survivor",
+            "name": "Scar of the Survivor (immanence)",
+            "feats": ["scar-of-the-survivor"],
+            "duration": "while your divine spark is in the scar",
+            "modifiers": [
+              {
+                "value": 1,
+                "type": "status",
+                "target": "save",
+                "detail": "fortitude",
+                "appliesWhen": "while your divine spark is in the scar"
+              }
+            ],
+            "note": "Immanence: divine energy spreads outward from your scar, reinforcing your flesh. You gain the benefits of the Diehard feat - you die from the dying condition at dying 5 rather than dying 4 - and a +1 status bonus to Fortitude saving throws. The Fortitude bonus is applied while this toggle is on; the dying value is not moved yet (the sheet's death threshold has no toggle-driven lane), so raise it by hand while the spark is in the scar.",
+            "aonOrigin": "authored"
+          },
+          "why": "ikon-13 Immanence: \"Divine energy spreads outward from your scar, reinforcing your flesh. You gain the benefits of the Diehard feat and a +1 status bonus to Fortitude saving throws.\" Both halves are conditional on the divine spark being in this ikon, so both belong behind one toggle rather than on the always-on record - batch 034 already retired the ungated grantsFeats:[\"diehard\"] row for that reason."
+        }
+      ]
+    },
+    {
+      "id": "soul-well#dying-toggle",
+      "note": "Two rows, one sentence. feats/soul-well shipped `dyingThresholdBonus: 1`, which build.ts:6960 sums unconditionally into `Character.dyingThreshold` - a PERMANENT death threshold of 5 for anyone who owns the feat. Print (feat-7707) makes it a two-action activity lasting one minute, and it does not even target the exemplar specifically: *\"living creatures within the same area die from the dying condition at dying 5 rather than dying 4\"*. So the permanent field is deleted and the effect becomes the same toggle shape built for scar-of-the-survivor (owner 2026-09-10 #140, 'also fixes Soul Well'). The dying number itself stays in the note for now for the same reason as scar-of-the-survivor - see CROSS-FILE GAPS.",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "soul-well",
+          "field": "dyingThresholdBonus",
+          "value": null,
+          "supersedes": true,
+          "why": "feat-7707: \"For the next minute, incorporeal undead treat all squares within 30 feet of you as difficult terrain and living creatures within the same area die from the dying condition at dying 5 rather than dying 4.\" Retires the existing overlay row {\"category\":\"feats\",\"id\":\"soul-well\",\"field\":\"dyingThresholdBonus\",\"value\":1}, whose whole value (the +1 death-threshold step) is carried into the modes/soul-well toggle below: the printed rise lasts one minute and covers an area, so a field build.ts applies permanently and unconditionally is the wrong carrier."
+        },
+        {
+          "category": "modes",
+          "id": "soul-well",
+          "create": true,
+          "value": {
+            "id": "soul-well",
+            "name": "Soul Well",
+            "feats": ["soul-well"],
+            "duration": "1 minute",
+            "modifiers": [],
+            "note": "For 1 minute, incorporeal undead treat all squares within 30 feet of you as difficult terrain, and living creatures within the same area die from the dying condition at dying 5 rather than dying 4 - you included, while you stand in your own well. Raise the death threshold by hand while this is on; the sheet has no toggle-driven death threshold yet. If a living creature's dying value increases while within your Soul Well, your spectral dagger deals one additional weapon die of damage until the end of your next turn.",
+            "aonOrigin": "authored"
+          },
+          "why": "feat-7707: \"For the next minute, incorporeal undead treat all squares within 30 feet of you as difficult terrain and living creatures within the same area die from the dying condition at dying 5 rather than dying 4.\" A one-minute activity is a toggle, not a permanent character field."
+        }
+      ]
+    },
+    {
+      "id": "animal-instinct#spider-web",
+      "note": "NO ROW - the lane cannot hold the record yet, and a row written into it now would ship a broken Strike. `GrantedStrike` (src/rules/types.ts) declares `die: string` and `damageType: string` as REQUIRED, and build.ts:2860 (`collectGrantedNaturals`'s `push`) copies both straight onto the NaturalAttack and steps the die through `stepDie`; an entry with an empty die renders a damage line with no dice on the Strikes tab. Owner 2026-09-10 #145 option A is explicitly a LANE change first (\"Allow attacks with no damage in the granted-attack lane\"), and src/rules/types.ts and src/rules/build.ts are outside this chunk's files. The exact 32-entry value the row needs is in DATA STILL NEEDED; the 31 entries it already carries are unchanged, and the row supersedes the existing classFeatures/animal-instinct grantedStrikes overlay row.",
+      "backfillRows": []
+    },
+    {
+      "id": "merchants-scale#no-rules",
+      "note": "The item shipped `description: \"\"` and has no entry at all in public/core-descriptions.json, so the sheet opened a blank popup. Owner 2026-09-10 #17: ONE plain line, clearly marked as ours, saying the book prints no rules; no mechanical effect, and never WG's invented +1 item bonus to seven skills. No passiveEffects row and no situational star is emitted - that is the whole point of the finding. The line is explicitly labelled so it can never read as printed text (display hygiene: the marker is a sentence the player reads, not a synthetic token inside a game-data field). apply-backfill-now.mjs routes a pathless `description` row to public/core-descriptions.json, creating the missing items entry.",
+      "backfillRows": [
+        {
+          "category": "items",
+          "id": "merchants-scale",
+          "field": "description",
+          "value": "Source Player Core pg. 290 Price 2 sp Hands 2 Bulk L",
+          "why": "equipment-2734 (and the legacy equipment-34) print the entire entry as \"Merchant's Scale Source Player Core pg. 290 Price 2 sp Hands 2 Bulk L\" - there is no rules body, so the description is that entry and nothing else. CLOSER CORRECTION (batch 037 apply pre-check 5): the value this spec first carried opened with an authored marker sentence (\"Heroes Heaven note (not printed text) - the book prints no rules for this item...\"), and the pre-check refused it because every word of it is in NEITHER our current text nor the mirror - the guard forbids authored prose in a description row, which is exactly what owner ruling 2026-09-10 #17 asked for. Restated as print's own entry, VERBATIM AND IN PRINT'S OWN ORDER (the applier's unbackedRun check refused a reordered version too, and rightly: only a contiguous run the mirror actually prints is safe), which needs no marker because it IS the printed text; the marker wording, and the 243 OTHER items that ship an empty description for the same reason, are queued for the owner in work/.b037-queue.json. Inventing flavour text, or copying Wanderer's Guide's +1 item bonus to seven skills, would both be text the book does not have."
+        }
+      ]
+    },
+    {
+      "id": "mask-of-the-mantis-major#printed-contents",
+      "note": "CHECK, three parts. (1) Both Enhance Vision spells stay at the base 2nd rank on items/mask-of-the-mantis-major - heldSpells {\"2\":[\"darkvision\",\"see-the-unseen\"]} is already what ships and the owner ruled to follow the archive literally (only the Greater block restates the 5th-rank heightening, and items/mask-of-the-mantis-greater correctly stores rank 5): NOTHING CHANGES. (2) The once-per-day Locate Target activation is already present - heldSpells {\"8\":[\"pinpoint\"]} (pinpoint's printed rank is 8) with its own `freq2` per-day counter beside the Enhance Vision one: NOTHING CHANGES. (3) The +3 item bonus to Perception is present as passiveEffects.perception 3; the +3 item bonus to INTIMIDATION was missing, and it is not a passive - print gates it on being a member of the Vernai and on Vernai's Ire being switched ON. So it goes on the shipped item-mode lane (`fromItemId`), which ItemDetail.tsx:193 already renders as an Activate control on any non-consumable item and play.ts:toggleItemMode already switches - the same shape 72 other item modes use.",
+      "backfillRows": [
+        {
+          "category": "modes",
+          "id": "item-mask-of-the-mantis-major",
+          "create": true,
+          "value": {
+            "id": "item-mask-of-the-mantis-major",
+            "name": "Vernai's Ire",
+            "fromItemId": "mask-of-the-mantis-major",
+            "duration": "until you use the ability again to extinguish the glow",
+            "modifiers": [
+              { "value": 3, "type": "item", "target": "skill", "detail": "intimidation" }
+            ],
+            "note": "Requirements You are a member of the Vernai. Two Actions (concentrate): the mask's eyes shimmer with crimson light, a far more harrowing visage. The light is illumination equivalent to a candle. Use the ability again to extinguish the glow; as long as Vernai's Ire remains active you gain a +3 item bonus to Intimidation checks.",
+            "aonOrigin": "authored"
+          },
+          "why": "equipment-3497-3391, Activate-Vernai's Ire: \"as long as Vernai's Ire remains active, you gain a +3 item bonus to Intimidation checks.\" The Major block prints the item bonus as +3 for both Perception and Intimidation; Perception is already passiveEffects.perception 3, but the Intimidation half is switched on and off by an activation, so a passive would give it to a mask nobody has activated and to a wearer who is not Vernai. VERIFIER: the note said \"One action\" because the SHIPPED DESCRIPTION says so; the page says Two Actions, and the description row below fixes the description too."
+        },
+        {
+          "category": "items",
+          "id": "mask-of-the-mantis-major",
+          "field": "description",
+          "value": "The traditional headwear for the Red Mantis assassin is the *mask of the mantis*. Most of these masks are constructed from hard leather helmets that serve to obscure the assassin's identity and give them the appearance of possessing a mantis's head. Some variants, however, consist only of the mask itself, and are meant to be worn over the face. Regardless of the shape and style, all masks of the mantis function the same.\n\nMembers of the Vernai can use any *mask of the mantis* to enhance their frightening presence—something they often do simply to reveal their standing in the society without speaking a word, as detailed fully in the entry for Vernai's Ire activation below.\n\nWhile wearing a *mask of the mantis*, you gain a +3 item bonus to Perception checks.\n\n---\n\n**Activate—Enhance Vision** ⟨2⟩ (concentrate, manipulate)\n\n**Frequency** once per day\n\n**Effect** You cast either Darkvision or See the Unseen on yourself.\n\n---\n\n**Activate—Vernai's Ire** ⟨2⟩ (concentrate)\n\n**Requirements** You are a member of the Vernai\n\n**Effect** You cause the *mask of the mantis's* eyes to shimmer with crimson light, granting yourself a far more harrowing visage. This light creates illumination equivalent to that of a candle. You can use this ability again to extinguish the frightening glow, but as long as Vernai's Ire remains active, you gain a +3 item bonus to Intimidation checks.\n\n---\n\n**Activate—Locate Target** ⟨2⟩ 10 minutes (concentrate)\n\n**Frequency** once per day\n\n**Effect** You cast Pinpoint. If the target of this spell is a creature for which you've accepted a contract to assassinate, you are considered to have seen the creature in person for the purposes of *pinpoint's* requirements.",
+          "why": "VERIFIER ROW. The shipped description is the text the player actually reads, and it contradicts both the page and our own data on three points. CLOSER CORRECTION (batch 037 apply pre-check 5): this why cited only the variant id equipment-3497-3391, and the driver's mirrorText() derives a mirror DIRECTORY by stripping one trailing -NNN, so a two-segment variant id resolves to by-category/equipment-3497/ and reads nothing - the pre-check refused the row as uncheckable. The family doc equipment-3497 is byte-identical (2,391 chars, all three grade blocks) and is now cited beside it, so the token check runs against real print. equipment-3497 / equipment-3497-3391 print \"Activate—Enhance Vision Two Actions (concentrate, manipulate) Frequency once per day; Effect You cast either darkvision or see the unseen on yourself\" - no rank - and only the GREATER block adds \"heightened to 5th-rank\"; the shipped text said \"a 5th-rank Darkvision\", directly contradicting heldSpells {\"2\":[…]} that owner 2026-09-10 #68 (\"follow the archive literally\") keeps at rank 2. It prints \"Activate—Vernai's Ire Two Actions (concentrate)\", where the shipped text carried the one-action glyph. It prints \"Activate—Locate Target Two Actions 10 minutes (concentrate)\", where the shipped text carried no action glyph at all. Whole value re-emitted with exactly those three edits and nothing else changed; the record's descRefs are untouched (no ref labels sit on the edited words)."
+        }
+      ]
+    },
+    {
+      "id": "zealot-staff#free-action-limit",
+      "note": "Two rows, both removals, both on the same record and neither on the same field as the sibling finding's row. items/zealot-staff shipped `frequency: {max:1, per:\"minute\"}` plus a second `freq` counter labelled \"per minute\" sitting next to the charge pool. Print has NO Frequency line on the free action at all (owner 2026-09-10 #69: follow the page). Foundry's once-per-10-minutes is not our source and its text never reaches a player in this app. The `counters` row is re-emitted WHOLE (one field, one value) with only the `pool` entry left - which is exactly the shape items/celestial-staff and items/staff-of-power ship, both level-17 staves with a charge pool and no frequency.",
+      "backfillRows": [
+        {
+          "category": "items",
+          "id": "zealot-staff",
+          "field": "frequency",
+          "value": null,
+          "why": "equipment-2263: \"Activate Free Action (concentrate) Trigger You hit with a Strike using the staff; Effect A vicious blast of deific power explodes as you hit.\" The page prints no Frequency line for this activation, so the item must not carry a use limit."
+        },
+        {
+          "category": "items",
+          "id": "zealot-staff",
+          "field": "counters",
+          "value": [
+            {
+              "id": "pool",
+              "label": "Charges",
+              "max": "level",
+              "resetsOnRest": true,
+              "startsFull": true
+            }
+          ],
+          "why": "equipment-2263 prints no Frequency line on the free action, so the \"per minute\" pip next to the charge pool tracked a cadence no source prints. Whole-value re-emission of the one `counters` field: the charge pool entry is carried over unchanged and only the `freq` entry ({\"id\":\"freq\",\"label\":\"per minute\",\"max\":1,\"per\":\"minute\",\"resetsOnRest\":true}) is dropped, leaving the shape items/celestial-staff ships."
+        },
+        {
+          "category": "items",
+          "id": "zealot-staff",
+          "field": "description",
+          "value": "A *zealot staff*'s color, iconography, and materials vary depending on the faith it's dedicated to. An Iomedaean staff might be forged of gold and shaped like an ornamental sword, while a Lamashtan one could instead be made of blackened iron depicting monstrous faces. Used as a weapon, the staff is a *+3 greater striking staff*. The staff represents vehement support of the deity to whom the staff is dedicated, punishing defiance. When you prepare this staff, if you don't worship its deity, you become Drained 1 until your next daily preparations.\n\n**Activate** ⟨4⟩ (concentrate)\n\n**Trigger** You hit with a Strike using the staff\n\n---\n\n**Effect** A vicious blast of deific power explodes as you hit. You deal an additional 1d4 spirit damage per damage die of the staff to the target of your Strike.\n\n---\n\n**Activate** Cast a Spell\n\n---\n\n**Effect** You expend a number of charges from the staff to cast a spell from its list. Add the cleric spells granted by your deity to the list for their rank and each higher rank. For example, a zealot staff of Sarenrae would add *breathe fire* at 1st through 7th rank, *fireball* at 3rd through 7th rank, and *wall of fire* at 4th through 7th rank.\n\n- **Cantrip** Divine Lance\n- **1st** Bane\n- **2nd** Augury\n- **3rd** Warding Aggression\n- **4th** Divine Wrath\n- **5th** Crisis of Faith, Divine Wrath\n- **6th** Spiritual Armament, Zealous Conviction\n- **7th** Crisis of Faith, Divine Decree\n\n---\n\n**Craft Requirements** You worship the deity to which the staff is dedicated. Supply one casting of all listed spells, including your deity's cleric spells.",
+          "why": "VERIFIER ROW. The finding's premise - \"Foundry adds once per 10 minutes plus two traits; players never see that text in our app\" - is FALSE: the shipped description a player reads on the item card says verbatim \"**Frequency** once per 10 minutes\" and tags the activation \"(concentrate, sanctified, spirit)\". equipment-2263 prints \"Activate Free Action (concentrate) Trigger You hit with a Strike using the staff\" and NO Frequency line, so removing the `frequency` field and the `freq` pip while leaving that sentence on screen keeps the whole player-visible half of the defect. Owner 2026-09-10 #69 is \"follow the page\". Whole value re-emitted with exactly two edits - the Frequency line deleted and the two unprinted traits dropped from the Activate line - and nothing else changed; the record's descRefs carry no label on either edit."
+        }
+      ]
+    },
+    {
+      "id": "zealot-staff#printed-contents",
+      "note": "CHECK, four parts. (1) The spell list matches the page exactly at every printed rank - cantrip Divine Lance; 1st Bane; 2nd Augury; 3rd Warding Aggression; 4th Divine Wrath; 5th Crisis of Faith + Divine Wrath; 6th Spiritual Armament + Zealous Conviction; 7th Crisis of Faith + Divine Decree: NOTHING CHANGES. (2) The drained-1-until-your-next-daily-preparations clause reaches the player as printed text in the record's description; it is a condition applied at daily preparations when the wielder does not worship the deity, and there is no non-worshipper flag on a character to hang it off, so it stays text: NOTHING CHANGES. (3) \"Add the cleric spells granted by your deity to the list for their rank and each higher rank\" resolves per character and per deity; heldSpells is a static map and no lane widens a staff's list from the wielder's deity, so it stays printed text: NOTHING CHANGES. (4) \"Used as a weapon, the staff is a +3 greater striking staff\" was NOT built - the record shipped a bare 1d4 bludgeoning club with no runes, so the staff struck at no potency and one damage die. `builtInRunes` is the shipped lane (374 items use it, 26 of them staves; items/celestial-staff, the other level-17 staff, ships {potency:2, striking:\"greater\"}). That is the one row.",
+      "backfillRows": [
+        {
+          "category": "items",
+          "id": "zealot-staff",
+          "field": "builtInRunes",
+          "value": { "potency": 3, "striking": "greater" },
+          "why": "equipment-2263: \"Used as a weapon, the staff is a *+3 greater striking staff*.\" The record shipped no runes at all, so its Strike carried neither the +3 item bonus to attack rolls nor greater striking's extra damage dice. Same field and same value shape as items/celestial-staff and items/staff-of-power."
+        }
+      ]
+    },
+    {
+      "id": "skybearers-belt#scoped-stars",
+      "note": "CHECK - PASSES, no row. (1) The three +1 stars in src/rules/situationalBonuses.ts:2861 are already SCOPED, not blanket: the Athletics star reads \"to Disarm, Grapple, Shove or Trip, while your divine spark is in this ikon\", the Fortitude star \"to resist a Grapple or a Shove, while your divine spark is in this ikon\" and the Reflex star \"to resist a Disarm or a Trip, while your divine spark is in this ikon\". The save split is per-action rather than per-save-kind because Grapple and Shove are rolled against the defender's Fortitude DC and Disarm and Trip against their Reflex DC, so between them the two stars cover exactly \"your saving throws to resist these actions\" and nothing wider. (2) The two-sizes-larger permission reaches the player: the whole Immanence sentence is the first paragraph of the classFeatures/skybearers-belt description (overlay row items/skybearers-belt description, mirrored into the classFeature the exemplar actually owns). (3) The transcendence stays text - classFeatures/skybearers-belt grantsClassFeatures: [\"bear-allies-burdens\"], a prose record. Nothing in this finding needs a data row; the WG side of the same record (its 15-foot 4-Bulk aura) is skybearers-belt#bulk-aura, an instruments-family settle, not mine.",
+      "backfillRows": []
+    },
+    {
+      "id": "spirit-walk#printed-pieces",
+      "note": "CHECK - PASSES, no row. All three printed pieces are present. (1) +2 status to Recall Knowledge about spirits, haunts and undead across the aura: src/rules/situationalBonuses.ts:1078, first entry, targets skill/all, when \"on Recall Knowledge checks about spirits, haunts, and undead (you and allies in the Spirit Walk aura)\". (2) The exploration clause is TWO entries there - one on `ac` and one on `save`/all, both scoped \"while Searching or Detecting Magic in exploration mode, against reactions triggered from haunts and spirits\", +2 status, which is exactly what \"this bonus also applies to AC and saves against reactions any of you trigger from haunts and spirits\" prints. (3) The first-turn resistance is feats/spirit-walk.resistances [{type:\"all\", value:\"floor(@actor.level/2)\", against:\"damage dealt by haunts or spirits, during your first turn in an encounter (you and allies in the 30-foot aura)\"}], built in batch 036 and pinned by test/batch036-data-rows-2.test.ts:112. Print names no sense clause on this feat, so nothing sense-shaped is added; apparition sight stays on Apparition Sense where print puts it. The WG side (their playtest row's precise 30-foot sense) is spirit-walk#playtest-row, an instruments-family settle, not mine.",
+      "backfillRows": []
+    },
+    {
+      "id": "nagaji-spell-familiarity#daily-control",
+      "note": "NO ROW - WITHDRAWN BY THE VERIFIER, same reason the builder withdrew animal-instinct#spider-web: the lane cannot hold the record yet and the row shipped alone is a player-visible defect, not a no-op. Print (feat-3984) asks the question at daily preparations: *\"During your daily preparations, choose daze, detect magic, or mage hand. Until your next daily preparations, you can cast the chosen spell as an occult innate cantrip.\"* The record already carries the daily picker with the right three options; its options carry no `grant`, and derive.ts:1791 dailyChoiceGrants only pushes `opt.grant`, so the morning's answer is recorded and changes nothing. The builder's row added an `atWill` occult innate-cantrip grant to each option and reported that it \"removes nothing a player has today\". MEASURED, on a built nagaji fighter with the answer stored: dailyChoiceGrants DOES emit [{innateSpells:[{spellId:'daze',tradition:'occult',atWill:true}]}], and play.ts:511-517 then pushes it into `borrowed`, creates the `innate-casting` entry, and drops the spell itself at `if (rank <= 0) continue` - leaving an EMPTY innate entry on the character. SpellsTab renders that entry unconditionally (itemEntries at :1315, itemNodes at :1942, no emptiness guard), so a nagaji who answers this morning's question gets a new spellcasting card reading \"Innate spells - innate spells (Arcane)\" with \"No spells.\" inside it, and a martial nagaji's Spells tab stops showing its empty state (the early return at :1409 counts the entry). Zero benefit, one new visible defect. The exact row is preserved verbatim in DATA STILL NEEDED and must land in the SAME batch as the play.ts rank-0 route and the featCantripGrants deletion - which is what the builder's own report already said (\"the two gaps must land together or the feat grants nothing\").",
+      "backfillRows": []
+    }
+  ]
+}

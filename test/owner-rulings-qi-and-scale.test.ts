@@ -131,8 +131,16 @@ describe("Merchant's Scale", () => {
    */
   const scale = () => db.items['merchants-scale'];
 
-  it('has no printed description, and that is not a defect', () => {
-    expect(scale().description ?? '').toBe('');
+  /*
+   * BATCH 037. The empty string was never the ruling — it was the absence of one. The entry the book
+   * prints IS the item, so the description now restates it verbatim and the blank popup is gone. What
+   * this test guards is unchanged and is the half that matters: no rules body, and nothing invented.
+   */
+  // batch 037: merchants-scale#no-rules
+  it('merchants-scale describes itself with the printed entry and no rules body', () => {
+    const desc = scale().description ?? '';
+    expect(desc).toMatch(/Price 2 sp/);
+    expect(desc).not.toMatch(/item bonus/i);
   });
 
   it('grants no mechanical effect — the printed entry states none', () => {

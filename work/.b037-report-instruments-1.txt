@@ -1,0 +1,116 @@
+BATCH 037 — INSTRUMENTS, CHUNK instruments-1 (WG-COMPARISON lane)
+12 findings assigned, 12 handled. 1 comparer settle, 11 residual reads, 0 backfill rows.
+
+DATA STILL NEEDED
+  (none — no finding in this chunk needs a backfill row; all twelve are "nothing changes" reads under
+  owner ruling 2026-09-10 / R12, and the one comparer misread is settled in the instrument itself.)
+
+CROSS-FILE GAPS
+  android#printing — the record is NOT in work/wg-batch-037.json. work/.b037-cut.json lists "android"
+    under `missing`, so scripts/wg-batch-close.mjs will refuse the close with "confirmed finding
+    android#printing maps to no record in work/wg-batch-037.json". Ten other cut ids are missing the
+    same way (wild-lights, armigers-protection, flexible-spellcaster, soul-well, mask-of-the-mantis-major,
+    zealot-staff, screech-shooter-greater/major, wyrm-spindle-greater/major) and belong to other chunks.
+    Driver decision, outside my files: either re-cut the packet to include them or drop those findings.
+  android#printing — no instrument can hold this finding. WG's dump has no ancestry row named "Android",
+    so wg-diff files the record under `noMatch` and wg-values/wg-identity compare 0 records for it. The
+    difference (their Starfinder Player Core rarity/languages vs our Ancestry Guide printing) was found
+    by a reader and there is no comparer surface to settle it on. Owner of the ancestry-pairing lane:
+    whoever widens wgAllRecords/WG_PAIRING to their ancestry table — not this chunk.
+  scripts/wg-diff.mjs has no `--caster-archetypes` override (:817-827 read
+    src/rules/casterArchetypes.ts by a fixed path), so the carrier this batch's settle defers to cannot
+    be stunted from a content copy. Proved on a BUILT character instead. A one-line arg() would make it
+    stuntable; left alone because sibling chunks are editing the same file this batch.
+
+PER FINDING
+  advanced-red-mantis-magic#legacy-slots — SETTLED (instrument teach).
+    scripts/wg-diff.mjs, VERIFIED_EQUIVALENT: added the settle key 'advanced-red-mantis-magic':
+    ['spellSlot'], cited `// batch 037: advanced-red-mantis-magic#legacy-slots`. Their one op
+    `giveSpellSlot` is the 2019 World Guide ladder (feat-897) for a Red Mantis assassin spellbook
+    neither side defines; our record is the legacy stub (edition 'legacy') of an archetype Prey for
+    Death reprinted whole, and the live casting is
+    src/rules/casterArchetypes.ts['red-mantis-assassin-dedication']. Owner ruling 2026-09-10 desk #46
+    under R12. No data row: the record is already correct.
+    BLAST RADIUS, MEASURED: exactly one record went quiet (wg-diff THEY-ONLY 183 -> 180 across the run,
+    of which advanced-red-mantis-magic is mine; instinct-ability and tree-friend are sibling chunks').
+    The two other records whose carrier does NOT reach the printed slots — unholy-resurrection and
+    mortem-ultimatum — still report `spellSlot`.
+    TESTS test/batch037-instruments-1.test.ts:
+      "advanced-red-mantis-magic is quiet with the settle and reports missing=[spellSlot] again with
+       settles bypassed" — the // mutation-proof case, stunts the key through wg-diff's own `--raw`.
+      "blast radius is one row: the other two spellSlot gaps still report beside advanced-red-mantis-magic"
+      "the archetype ladder advanced-red-mantis-magic defers to really arrives, and the feat adds
+       nothing to it" — built level-10 fighter, Red Mantis dedication + Basic Red Mantis Magic prepares
+       ranks 1-3; adding the legacy feat leaves `spellcasting` deep-equal.
+
+  devil-allies#printing — RESIDUAL READ, no row, NO settle (deliberately).
+  fear-no-law-fear-no-one#printing — RESIDUAL READ, no row, NO settle (deliberately).
+  steady-balance#grab-an-edge — RESIDUAL READ, no row, NO settle (deliberately).
+  hellknight-dedication#armor-training — RESIDUAL READ, no row, NO settle (deliberately).
+  ardent-armiger#printing — RESIDUAL READ, no row, NO settle (deliberately).
+  aon-wishes-for-riches#classification-choice — RESIDUAL READ, no row, NO settle (deliberately).
+  sense-of-belonging#classification-choice — RESIDUAL READ, no row, NO settle (deliberately).
+  lost-loved-one#classification-choice — RESIDUAL READ, no row, NO settle (deliberately).
+  wanderlust#classification-choice — RESIDUAL READ, no row, NO settle (deliberately).
+  beast-blessed#trigger — RESIDUAL READ, no row, NO settle (deliberately).
+  android#printing — RESIDUAL READ, no row, NO settle POSSIBLE (see CROSS-FILE GAPS).
+
+    WHY NO SETTLE FOR THESE ELEVEN, MEASURED: every one of them is already quiet in all four comparers
+    and in the experience lane before this batch — wg-diff has none of them in THEY-ONLY, wg-values
+    `--ids` reports "0 records with at least one value to adjudicate", wg-identity `--ids` reports "0
+    records where a named thing on their side has no counterpart on ours", and all eleven that reach
+    the experience harness carry verdict OK in work/wg-batch-037-experience.json. A settle that matches
+    nothing is the trap wg-diff.mjs:40-42 names: it silences the NEXT difference of that kind on that
+    record, unread, and scripts/wg-settle-stale.mjs would carry it forever. What they get instead is a
+    per-record guard in test/batch037-instruments-1.test.ts (describe "batch 037 instruments-1 —
+    residual reads, no settle authored"), one `it` per finding, each asserting the record is absent
+    from wg-diff's work list and that both value/identity comparers report zero — so the day any of
+    them starts reporting, the batch fails and the ruling gets re-read.
+    Two of the eleven also carry a direct text assertion of the printed clause, because their
+    difference lives in prose no comparer reads: beast-blessed (Bestial Clarity's trigger is
+    "an enchantment effect", not "a mental effect") and android (rarity rare, source Ancestry Guide).
+
+COMPARER BEFORE/AFTER — MY CHANGE IS wg-diff ONLY
+  I edited one file, scripts/wg-diff.mjs, adding one VERIFIED_EQUIVALENT key. wg-values.mjs,
+  wg-identity.mjs and wg-casting.mjs are untouched by this chunk.
+  ⚠ Sibling chunks were editing the same comparers concurrently, so whole-corpus totals moved for
+  reasons that are not mine. The attributable numbers are the per-record ones.
+
+  wg-diff (whole corpus, the walk is not batch-scoped):
+    before  183 THEY-ONLY / 2887 WE-ONLY / 1098 AGREE
+    after   180 THEY-ONLY / 2888 WE-ONLY / 1100 AGREE
+    records that went quiet: advanced-red-mantis-magic (MINE), instinct-ability (sibling),
+    tree-friend (sibling). No record became newly THEY-ONLY, and no record's `missing` list changed.
+  wg-diff scoped to the previous two packets — UNCHANGED, no earlier batch flipped:
+    work/wg-batch-035.json  THEY-ONLY before: (none)            after: (none)
+    work/wg-batch-036.json  THEY-ONLY before: spirit-walk:sense after: spirit-walk:sense
+    advanced-red-mantis-magic appears in packet 037 only (035: 40 records, 036: 40 records, neither
+    contains it), so the settle cannot reach either.
+  wg-values --batch (not touched by me; movement is sibling chunks'):
+    035  before 27 compared / 27 agree / 0 to adjudicate   after 27 / 27 / 0
+    036  before 14 compared / 14 agree / 0 to adjudicate   after 14 / 14 / 0
+    037  before 58 compared / 53 agree / 5 to adjudicate   after 58 / 56 / 2
+  wg-identity --batch (not touched by me; movement is sibling chunks'):
+    035  before 25 checked / 2 without counterpart   after 25 checked / 1 without counterpart
+    036  before 14 checked / 0 without counterpart   after 14 checked / 0 without counterpart
+    037  before 66 checked / 8 without counterpart   after 66 checked / 4 without counterpart
+  wg-casting (npx jiti; plain `node` cannot run it — it imports src/rules/seed without an extension):
+    before  16 class sources compared, 4 with mismatches (180 rows)
+    after   16 class sources compared, 3 with mismatches (174 rows)
+    Not mine — no casting-lane record is in this chunk.
+
+CHECKS RUN
+  node scripts/vt.mjs run test/batch037-instruments-1.test.ts   -> 14 passed
+  npx tsc --noEmit                                              -> clean
+  node scripts/test-flip-audit.mjs --batch 037                  -> my key 'advanced-red-mantis-magic'
+    is cited and mutation-proofed (it is absent from the violation list). The 9 violations reported at
+    the time of writing are sibling chunks' settle keys with no mutation-proof test yet: tree-friend,
+    instinct-ability, spirit-walk (wg-diff), tumbling-theft, traveling-gourmand,
+    deny-lady-nanbyos-charity (wg-values), spore-order, cultivation-order, dragon-eidolon
+    (wg-identity). Not mine to fix.
+
+FILES
+  scripts/wg-diff.mjs                        one VERIFIED_EQUIVALENT key + its reasoning block
+  test/batch037-instruments-1.test.ts        new, 14 cases
+  work/.b037-rows-instruments-1.json         spec, 12 findings, 0 rows
+  work/.b037-report-instruments-1.txt        this file

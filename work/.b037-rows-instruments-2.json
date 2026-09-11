@@ -1,0 +1,64 @@
+{
+  "findings": [
+    {
+      "id": "spore-order#leaf-order-membership",
+      "backfillRows": [],
+      "note": "Instrument settle, no data row. druidic-order-13 prints a MEMBERSHIP (\"you count as a member of the leaf order\") and one grant (\"Your familiar must be a fungus leshy\"); the grant is already classFeatures/spore-order.grantsFeats ['leshy-familiar'] and the membership is already PARENT_ORDER in src/rules/build.ts:10111 (batch 035). WG has no \"counts as\" verb, so its row hands over the whole Leaf Order feature (giveAbilityBlock #34226) and wg-identity reported `grants theirs-not-ours=[leaforder]`. Owner ruled 2026-09-10 (desk #134/#139, answer B): nothing to build, block nothing, do not import their copy. Taught as SETTLED_IDENTITIES['spore-order'] = ['leaforder'] in scripts/wg-identity.mjs — MEMBER scope, so the record's leshyfamiliar grant and every other named thing keep reporting. Mutation-proof: test/batch037-instruments-2.test.ts (--raw puts `leaforder` straight back; an in-memory content copy carrying a feats['leaf-order'] turns the prerequisite line on and only the two variants pass it)."
+    },
+    {
+      "id": "cultivation-order#leaf-order-membership",
+      "backfillRows": [],
+      "note": "Instrument settle, no data row. Same sentence as spore-order one order over (druidic-order-12), and WG encodes even less of it — their #34226 is an empty \"Leaf Order\" record. Owner ruled 2026-09-10 (desk #144, answer B). Taught as SETTLED_IDENTITIES['cultivation-order'] = ['leaforder'] in scripts/wg-identity.mjs, one entry per order so a third leaf variant still reports. Same mutation-proof test."
+    },
+    {
+      "id": "animist#slot-table",
+      "backfillRows": [],
+      "note": "Instrument settle, no data row. Our slot table already IS the printed Animist Spells per Day table (class-64): casterSlots('animist') plus APPARITION_SLOTS in src/rules/spellcasting.ts:96-117, which sum to the table's \"1+1\" at 13, \"2+1\" at 14-16 and \"2+2\" at 17-18. WG's ANIMIST_APPARITION ladder opens each rank one level late, so wg-casting reported six slot rows. Owner ruled 2026-09-10 (desk #105): the book wins. wg-casting had no settle lane of its own, so this batch gave it one — SETTLED_CASTING in scripts/wg-casting.mjs, keyed classId -> `kind|level|rank`, one key per ROW, plus the `--raw` bypass every other comparer has. Mutation-proof: test/batch037-instruments-2.test.ts."
+    },
+    {
+      "id": "animist-apparition-spellcasting#slot-levels",
+      "backfillRows": [],
+      "note": "Instrument settle, no data row — the SAME six wg-casting rows as animist#slot-table, read from the other end: the class table gives 7th/8th/9th-rank spells at 13/15/17 and the apparition column opens with them, where WG opens at 14/16/18. Owner ruled 2026-09-10 (desk #4). One teach rather than two settles: the same SETTLED_CASTING.animist entry in scripts/wg-casting.mjs answers both findings, and both finding ids are cited above it. Mutation-proof: test/batch037-instruments-2.test.ts, which also pins apparitionSlots(13)[7]/(15)[8]/(17)[9] = 1 against apparitionSlots(12)/(14)/(16) = undefined."
+    },
+    {
+      "id": "sequestered-spell#innate-proficiency",
+      "backfillRows": [],
+      "note": "Residual read — no row and no settle, because nothing needs settling. Print (rules-2232, Player Core p. 298) gives a trained/expert-at-12th proficiency by the GENERAL innate-spell rule, which the app already derives from the granted entry; WG's four tradition-gated pickers and level-4 expert step are their own shape. No comparer reports the record: wg-diff quiet, wg-identity quiet, and wg-values already records their SPELL_ATTACK / SPELL_DC ops in NOT_A_SCALAR as a rank our side derives. The experience gate's UNVERIFIED-EFFECT on it is parked by the open owner question (and by `ownerRuled` once the desk lands), so no experience-instrument-limits.json entry is authored either — one would be an unreachable branch. Pinned by measurement in test/batch037-instruments-2.test.ts."
+    },
+    {
+      "id": "total-power#classification-choice",
+      "backfillRows": [],
+      "note": "Residual read — no row, no settle, no comparer reports it. background-578 prints both branches (\"If you choose dragon... If you choose troll...\") and the app asks the question; WG's row is troll-only. That is a CHOICE difference, and the value lane already agrees on every number both sides state (wg-values --raw: 1 value, agrees). Nothing to teach: a settle here would silence the next real difference on the record unread. Pinned by measurement in test/batch037-instruments-2.test.ts."
+    },
+    {
+      "id": "necromantic-tenacity#trigger",
+      "backfillRows": [],
+      "note": "Residual read — no row, no settle. feat-886's printed trigger is \"a necromancy effect\" and ours is that wording as degreeShifts; WG triggers on the death or void traits. Owner ruled 2026-09-10 (desk #133): keep print. No comparer reports it — their three addBonusToValue SAVE_* ops carry no value, so the value lane reads them as prose, and a trigger word is not a number any instrument compares. Pinned by measurement in test/batch037-instruments-2.test.ts."
+    },
+    {
+      "id": "divine-breadth#no-cantrip",
+      "backfillRows": [],
+      "note": "Residual read — no row, no settle. feat-5070 prints slots only; ours is spellSlotBonus with no cantrip, and wg-diff already puts the record in AGREE. WG's extra cantrip entry is a copied slip shared across their Breadth rows and is theirs alone. Owner ruled 2026-09-10 (desk #131/#132, one ruling for the whole Breadth family). Nothing reports, so nothing is settled. Pinned by measurement in test/batch037-instruments-2.test.ts."
+    },
+    {
+      "id": "primal-breadth#no-cantrip",
+      "backfillRows": [],
+      "note": "Residual read — no row, no settle. feat-5078, the same shape and the same ruling as divine-breadth; WG's cantrip entry is the identical copied row aimed at druid. Nothing reports on any comparer. Pinned by measurement in test/batch037-instruments-2.test.ts."
+    },
+    {
+      "id": "occult-breadth#no-cantrip",
+      "backfillRows": [],
+      "note": "Residual read — no row, no settle. The third of the copied-cantrip Breadth rows, covered by the same 2026-09-10 ruling (#131/#132, stated as covering Divine, Primal, Occult and Arcane). Arcane Breadth needs nothing at all — WG carries no cantrip entry on it. Nothing reports on any comparer. Pinned by measurement in test/batch037-instruments-2.test.ts."
+    },
+    {
+      "id": "sponsored-by-a-village#rarity",
+      "backfillRows": [],
+      "note": "Residual read — no row, no settle, and no instrument to settle in: RARITY is compared by none of the four comparers. background-226 prints no rarity trait, so it is common by the general rule, which is what backgrounds/sponsored-by-a-village already carries; WG rates it (and all five backgrounds of that free adventure guide) uncommon. Owner ruled 2026-09-10 (desk #87). test/batch037-instruments-2.test.ts pins the shipped rarity and the value lane's agreement, which is the whole measurable half."
+    },
+    {
+      "id": "sponsored-by-teacher-ot#rarity",
+      "backfillRows": [],
+      "note": "Residual read on the RARITY aspect only — no row, no settle, rarity is compared by no instrument. background-224 prints no rarity trait; ours is common; WG rates it uncommon. Owner ruled 2026-09-10 (desk #87/#92/#94/#96/#100). ⚠ This entry covers `#rarity` and nothing else: sponsored-by-teacher-ot#one-pick is a separate, player-visible finding owned by the data-rows family and is untouched here. Pinned by measurement in test/batch037-instruments-2.test.ts."
+    }
+  ]
+}

@@ -310,11 +310,18 @@ describe('flame-order, spore-order and stone-order — MAIN_DRUID_ORDER is their
   it('spore-order: the settle leaves the Leaf Order membership gap reporting on wg-identity', () => {
     /*
      * AoN druidic-order-13, Special: *"The spore order is a variant of the leaf order… you count as a
-     * member of the leaf order"* — a membership lane we do not model, filed as an owner question. The
-     * `specialStat` settle above must not touch it, and does not: it is a wg-diff KINDS settle and the
-     * gap is a wg-identity `grants` row, still printed.
+     * member of the leaf order"*. The `specialStat` settle above must not touch it, and does not: it is
+     * a wg-diff KINDS settle and the row it must leave alone is a wg-identity `grants` row.
+     *
+     * The claim this case makes is unchanged — the wg-diff settle does not reach the wg-identity row —
+     * but the membership is no longer unanswered: batch 035 modelled it (PARENT_ORDER,
+     * src/rules/build.ts) and the owner ruled it 2026-09-10 (desk #134/#139, answer B), so batch 037
+     * gave the row a wg-identity settle OF ITS OWN — and `SETTLED_IDENTITIES['spore-order']` is that
+     * one entry, so `--raw` on this single-record run bypasses it and nothing else, which is how this
+     * case keeps measuring the wg-diff settle's scope rather than the newer settle's.
      */
-    expect(identity('spore-order')).toMatch(/grants\s+theirs-not-ours=\[leaforder\]/);
+    // batch 037: spore-order#leaf-order-membership
+    expect(identity('spore-order', ['--raw'])).toMatch(/grants\s+theirs-not-ours=\[leaforder\]/);
   });
 });
 

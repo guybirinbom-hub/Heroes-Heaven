@@ -60,15 +60,31 @@ describe('Locate Lawbreakers grants Locate once per day', () => {
   });
 
   /*
-   * ⚠ NO HEIGHTENING IS ASSERTED, deliberately. Their encoding raises the rank to 5 at level 14 for
-   * EVERY character; the printed text raises it only for a member of the Order of the Gate. Encoding
-   * either one diverges from the other authority, so it is the owner's ruling and is recorded in
-   * work/owner-questions.json. Asserting a rank here would quietly settle the question this test's
-   * absence is holding open — so instead the open question itself is what gets asserted.
+   * The owner RULED on 2026-09-10 (#7, "keep the printed scope"), so this no longer holds a question
+   * open — it holds the ruling. *"If you're a member of the Order of the Gate, when you reach 14th
+   * level, the spell is heightened to 5th rank."* (hellknight-order-9): the ladder belongs to ONE
+   * order, and Wanderer's Guide hands it to every Hellknight at 14.
+   *
+   * Asserted as an implication rather than a fixed rank, so it is honest in both states: today the
+   * record carries no ladder at all and the clause is vacuously true; once batch 037's row lands it
+   * is the guard that the ladder never travels without its gate. The rank arithmetic itself is
+   * pinned on built characters in test/batch037-gap-data-rows-2.test.ts.
    */
-  it('the heightening is still recorded as an open question rather than silently decided', () => {
-    const doc = JSON.parse(readFileSync('work/owner-questions.json', 'utf8')) as { open: { id: string }[] };
-    expect(doc.open.map((q) => q.id)).toContain('locate-lawbreakers');
+  // batch 037: locate-lawbreakers#order-of-the-gate
+  it('never heightens for every Hellknight — a ladder here must carry the Order of the Gate gate', () => {
+    const rec = (db.feats as Record<string, { effectChoices?: { options: { grant?: { innateSpells?: { heightenAt?: unknown; heightenWhenFlag?: { flag: string; value: string } }[] } }[] }[] }>)[
+      'locate-lawbreakers'
+    ];
+    const grants = (rec.effectChoices?.[0].options ?? []).flatMap((o) => o.grant?.innateSpells ?? []);
+    expect(grants.length, 'the four tradition options must each still grant Locate').toBe(4);
+    for (const g of grants) {
+      if (!g.heightenAt) continue;
+      // batch 037: locate-lawbreakers#order-of-the-gate
+      expect(g.heightenWhenFlag, 'an ungated ladder is their encoding, not print').toEqual({
+        flag: 'hellknightOrder',
+        value: 'order-of-the-gate',
+      });
+    }
   });
 
   it('the grant survives `npm run data` — it is in effect-backfill.json', () => {

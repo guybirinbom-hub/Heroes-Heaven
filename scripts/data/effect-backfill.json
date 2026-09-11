@@ -38039,10 +38039,12 @@
   "category": "feats",
   "id": "time-mage-dedication",
   "field": "innateSpells",
+  "why": "feat-8480 prints \"You also gain time sense as an innate cantrip usable at will. This innate spell and your focus spells from the time mage archetype are of the same tradition as the spells you used to meet the archetype's prerequisites.\" The shipped grant was `[{spellId:'time-sense',atWill:true}]` with no tradition, so build.ts fell through to the spell's first tradition (arcane) and a divine cleric's Time Sense read arcane. The superseded row's whole value is carried through; only `traditionFromCasting` is added.",
   "value": [
    {
     "spellId": "time-sense",
-    "atWill": true
+    "atWill": true,
+    "traditionFromCasting": true
    }
   ]
  },
@@ -40914,7 +40916,7 @@
      {
       "value": "hardened-chassis",
       "label": "Hardened Chassis (5th)",
-      "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
+      "note": "Computed on your sheet: resistance 3 to all physical damage, or the damage type you chose on Hardened Chassis raised to half your level (minimum 3)."
      },
      {
       "value": "infiltration-automation",
@@ -40948,7 +40950,8 @@
      }
     ]
    }
-  ]
+  ],
+  "why": "feat-9400 \"Enhancement Your chassis gets even tougher. Choose one of the following benefits: you gain resistance 3 to all physical damage, or your chosen resistance increases to a value equal to half your level (minimum 3).\" With that tier now computed, the picker option on this augmentation must stop telling the player the app does not compute it. Whole value re-emitted with supersedes:true because an effectChoices OPTION is keyed by `value`, which apply-backfill-paths.mjs cannot address (it resolves an array step only by `id=`)."
  },
  {
   "category": "feats",
@@ -41065,7 +41068,7 @@
      {
       "value": "hardened-chassis",
       "label": "Hardened Chassis (5th)",
-      "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
+      "note": "Computed on your sheet: resistance 3 to all physical damage, or the damage type you chose on Hardened Chassis raised to half your level (minimum 3)."
      },
      {
       "value": "infiltration-automation",
@@ -41084,7 +41087,8 @@
      }
     ]
    }
-  ]
+  ],
+  "why": "feat-9400 \"Enhancement Your chassis gets even tougher. Choose one of the following benefits: you gain resistance 3 to all physical damage, or your chosen resistance increases to a value equal to half your level (minimum 3).\" With that tier now computed, the picker option on this augmentation must stop telling the player the app does not compute it. Whole value re-emitted with supersedes:true because an effectChoices OPTION is keyed by `value`, which apply-backfill-paths.mjs cannot address (it resolves an array step only by `id=`)."
  },
  {
   "category": "backgrounds",
@@ -47974,7 +47978,8 @@
   "category": "feats",
   "id": "soul-well",
   "field": "dyingThresholdBonus",
-  "value": 1
+  "value": null,
+  "why": "feat-7707: \"For the next minute, incorporeal undead treat all squares within 30 feet of you as difficult terrain and living creatures within the same area die from the dying condition at dying 5 rather than dying 4.\" Retires the existing overlay row {\"category\":\"feats\",\"id\":\"soul-well\",\"field\":\"dyingThresholdBonus\",\"value\":1}, whose whole value (the +1 death-threshold step) is carried into the modes/soul-well toggle below: the printed rise lasts one minute and covers an area, so a field build.ts applies permanently and unconditionally is the wrong carrier."
  },
  {
   "category": "feats",
@@ -62000,9 +62005,10 @@
    {
     "use": "crafting",
     "forSkill": "thievery",
-    "when": "to disable-device skill=crafting or pick-a-lock skill=crafting"
+    "when": "to Disable a Device or Pick a Lock"
    }
-  ]
+  ],
+  "why": "wg-batch-037 GAP LANE. SUPERSEDES the shipped overlay row scripts/data/effect-backfill.json:3164 {category:'feats',id:'reverse-engineer',field:'skillSubstitutions',value:[{use:'crafting',forSkill:'thievery',when:'to disable-device skill=crafting or pick-a-lock skill=crafting'}]}; that array held ONE entry and this value re-emits the whole field, so `use` and `forSkill` are merged in unchanged and only the importer-mangled `when` is repaired. Print premise AoN feat-3053 (Guns & Gears Remastered pg. 25, 2025-02-18): \"Furthermore, you can use Crafting instead of Thievery to Disable a Device or Pick a Lock.\" The stored `when` is the same stripped-skill-link artefact class the SIBLING description row on this very record (effect-backfill.json:13523, finding graceful-leaper / scripts/repair-stripped-skill-links.mjs) already repairs — an importer collapsed AoN's action links to slug+query string. It is player-visible, not cosmetic: src/rules/explain.ts:648 emits `${s.when} - roll ${s.use} instead` onto the Thievery rows, so a sheet today reads \"to disable-device skill=crafting or pick-a-lock skill=crafting - roll crafting instead\". The repaired wording is not invented: feats/expert-disassembly ships the byte-identical `when` \"to Disable a Device or Pick a Lock\" at effect-backfill.json:3176 for the same printed clause."
  },
  {
   "category": "feats",
@@ -62382,9 +62388,8 @@
   "category": "feats",
   "id": "arcana-of-iron",
   "field": "grantsClassFeatures",
-  "value": [
-   "weapon-expertise"
-  ]
+  "why": "feat-7980 prints \"You become trained in advanced weapons. If you gain the weapon expertise class feature, your proficiency in martial and advanced weapons increases to expert.\" That is a CONDITION on a feature the character's class may grant, not a grant of the feature itself; the superseded row `grantsClassFeatures: ['weapon-expertise']` handed a war mage the Weapon Expertise class feature outright, which no class gives at 6th level and which this feat never gives at all. Deleted whole.",
+  "value": null
  },
  {
   "category": "feats",
@@ -64342,6 +64347,7 @@
   "category": "feats",
   "id": "kitsune-spell-familiarity",
   "field": "choice",
+  "why": "feat-2619 prints \"During your daily preparations, choose daze , forbidding ward , or ghost sound . Until your next daily preparations, you can cast this cantrip as a divine innate spell at will. A cantrip is heightened to a spell level equal to half your level rounded up.\" The daily control was already the single one asked; its three options carried no `grant`, so dailyChoiceGrants produced nothing and the answer granted no cantrip. Each option now carries the printed grant — divine, at will — in the option-grant shape derive.ts:1828 reads (the `endless-memories` shape). The superseded row's whole value (flag/prompt/kind/daily/options) is merged in unchanged; only `grant` is added. CLOSER CORRECTION (batch 037 verify, scripts/superseded-grant-check.mjs): the third option granted `ghost-sound`, and spell-132 Ghost Sound is SUPERSEDED — its remaster_id is spell-1528, Figment (spells/figment here) — so the grant handed the player the legacy printing, which that guard refuses for every grant route in the corpus. The grant now names `figment` and the label reads Figment; the option's `value` stays \"ghost-sound\" because it is the stored answer key and it is also the word feat-2619 prints. The sibling nagaji row already had this shape (print says \"mage hand\", the option is telekinetic-hand).",
   "value": {
    "flag": "kitsuneFamiliaritySpell",
    "prompt": "Today's kitsune cantrip",
@@ -64350,15 +64356,45 @@
    "options": [
     {
      "value": "daze",
-     "label": "Daze"
+     "label": "Daze",
+     "description": "A divine innate cantrip you can cast at will until your next daily preparations.",
+     "grant": {
+      "innateSpells": [
+       {
+        "spellId": "daze",
+        "tradition": "divine",
+        "atWill": true
+       }
+      ]
+     }
     },
     {
      "value": "forbidding-ward",
-     "label": "Forbidding Ward"
+     "label": "Forbidding Ward",
+     "description": "A divine innate cantrip you can cast at will until your next daily preparations.",
+     "grant": {
+      "innateSpells": [
+       {
+        "spellId": "forbidding-ward",
+        "tradition": "divine",
+        "atWill": true
+       }
+      ]
+     }
     },
     {
      "value": "ghost-sound",
-     "label": "Ghost Sound"
+     "label": "Figment",
+     "description": "A divine innate cantrip you can cast at will until your next daily preparations.",
+     "grant": {
+      "innateSpells": [
+       {
+        "spellId": "figment",
+        "tradition": "divine",
+        "atWill": true
+       }
+      ]
+     }
     }
    ]
   }
@@ -64367,6 +64403,7 @@
   "category": "feats",
   "id": "kitsune-spell-mysteries",
   "field": "choice",
+  "why": "feat-2624 prints \"During your daily preparations, choose bane , illusory object , or sanctuary . You can cast this as a 1st-level divine innate spell once that day.\" The single daily control was already in place; its options carried no `grant`, so dailyChoiceGrants (derive.ts:1824) returned nothing and none of the three was castable. The superseded row's whole value is merged in unchanged; only `grant` and a per-option `description` are added.",
   "value": {
    "flag": "kitsuneMysteriesSpell",
    "prompt": "Today's kitsune spell",
@@ -64375,15 +64412,48 @@
    "options": [
     {
      "value": "bane",
-     "label": "Bane"
+     "label": "Bane",
+     "description": "A 1st-rank divine innate spell you can cast once today.",
+     "grant": {
+      "innateSpells": [
+       {
+        "spellId": "bane",
+        "tradition": "divine",
+        "rank": 1,
+        "usesPerDay": 1
+       }
+      ]
+     }
     },
     {
      "value": "illusory-object",
-     "label": "Illusory Object"
+     "label": "Illusory Object",
+     "description": "A 1st-rank divine innate spell you can cast once today.",
+     "grant": {
+      "innateSpells": [
+       {
+        "spellId": "illusory-object",
+        "tradition": "divine",
+        "rank": 1,
+        "usesPerDay": 1
+       }
+      ]
+     }
     },
     {
      "value": "sanctuary",
-     "label": "Sanctuary"
+     "label": "Sanctuary",
+     "description": "A 1st-rank divine innate spell you can cast once today.",
+     "grant": {
+      "innateSpells": [
+       {
+        "spellId": "sanctuary",
+        "tradition": "divine",
+        "rank": 1,
+        "usesPerDay": 1
+       }
+      ]
+     }
     }
    ]
   }
@@ -64410,6 +64480,7 @@
   "category": "feats",
   "id": "kitsune-spell-expertise",
   "field": "choice",
+  "why": "feat-2629 prints \"During your daily preparations, choose confusion , death ward , or illusory scene . You can Cast this Spell as a 5th-level divine innate spell once that day.\" The single daily control was already in place; its options carried no `grant`, so nothing was castable. The superseded row's whole value is merged in unchanged; only `grant` and a per-option `description` are added.",
   "value": {
    "flag": "kitsuneExpertiseSpell",
    "prompt": "Today's kitsune spell",
@@ -64418,15 +64489,48 @@
    "options": [
     {
      "value": "confusion",
-     "label": "Confusion"
+     "label": "Confusion",
+     "description": "A 5th-rank divine innate spell you can cast once today.",
+     "grant": {
+      "innateSpells": [
+       {
+        "spellId": "confusion",
+        "tradition": "divine",
+        "rank": 5,
+        "usesPerDay": 1
+       }
+      ]
+     }
     },
     {
      "value": "death-ward",
-     "label": "Death Ward"
+     "label": "Death Ward",
+     "description": "A 5th-rank divine innate spell you can cast once today.",
+     "grant": {
+      "innateSpells": [
+       {
+        "spellId": "death-ward",
+        "tradition": "divine",
+        "rank": 5,
+        "usesPerDay": 1
+       }
+      ]
+     }
     },
     {
      "value": "illusory-scene",
-     "label": "Illusory Scene"
+     "label": "Illusory Scene",
+     "description": "A 5th-rank divine innate spell you can cast once today.",
+     "grant": {
+      "innateSpells": [
+       {
+        "spellId": "illusory-scene",
+        "tradition": "divine",
+        "rank": 5,
+        "usesPerDay": 1
+       }
+      ]
+     }
     }
    ]
   }
@@ -65642,6 +65746,7 @@
   "category": "feats",
   "id": "nagaji-spell-familiarity",
   "field": "choice",
+  "why": "feat-3984 prints \"During your daily preparations, choose daze , detect magic , or mage hand . Until your next daily preparations, you can cast the chosen spell as an occult innate cantrip. A cantrip is heightened to a spell level equal to half your level rounded up.\" (mage hand is now Telekinetic Hand, which is why the third option is telekinetic-hand). `atWill` with no rank is the innate-cantrip shape - cast at will, auto-heightened - so the printed heightening falls out of the lane rather than being frozen at a number. The superseded row's whole value (flag/prompt/kind/daily/options, same order, same labels) is merged in unchanged; only `grant` and a per-option `description` are added.",
   "value": {
    "flag": "nagajiFamiliaritySpell",
    "prompt": "Today's nagaji cantrip",
@@ -65650,15 +65755,45 @@
    "options": [
     {
      "value": "daze",
-     "label": "Daze"
+     "label": "Daze",
+     "description": "An occult innate cantrip you can cast at will until your next daily preparations.",
+     "grant": {
+      "innateSpells": [
+       {
+        "spellId": "daze",
+        "tradition": "occult",
+        "atWill": true
+       }
+      ]
+     }
     },
     {
      "value": "detect-magic",
-     "label": "Detect Magic"
+     "label": "Detect Magic",
+     "description": "An occult innate cantrip you can cast at will until your next daily preparations.",
+     "grant": {
+      "innateSpells": [
+       {
+        "spellId": "detect-magic",
+        "tradition": "occult",
+        "atWill": true
+       }
+      ]
+     }
     },
     {
      "value": "telekinetic-hand",
-     "label": "Telekinetic Hand"
+     "label": "Telekinetic Hand",
+     "description": "An occult innate cantrip you can cast at will until your next daily preparations.",
+     "grant": {
+      "innateSpells": [
+       {
+        "spellId": "telekinetic-hand",
+        "tradition": "occult",
+        "atWill": true
+       }
+      ]
+     }
     }
    ]
   }
@@ -65676,6 +65811,7 @@
   "category": "feats",
   "id": "nagaji-spell-mysteries",
   "field": "choice",
+  "why": "feat-3988 prints \"During your daily preparations, choose charm , fleet step , or heal . You can cast the chosen spell as a 1st-level occult innate spell once that day.\" One daily control was already correct; its options carried no `grant`, so the morning's answer was recorded and granted nothing. The superseded row's whole value is merged in unchanged; only `grant` and a per-option `description` are added.",
   "value": {
    "flag": "nagajiMysteriesSpell",
    "prompt": "Today's nagaji spell",
@@ -65684,15 +65820,48 @@
    "options": [
     {
      "value": "charm",
-     "label": "Charm"
+     "label": "Charm",
+     "description": "A 1st-rank occult innate spell you can cast once today.",
+     "grant": {
+      "innateSpells": [
+       {
+        "spellId": "charm",
+        "tradition": "occult",
+        "rank": 1,
+        "usesPerDay": 1
+       }
+      ]
+     }
     },
     {
      "value": "fleet-step",
-     "label": "Fleet Step"
+     "label": "Fleet Step",
+     "description": "A 1st-rank occult innate spell you can cast once today.",
+     "grant": {
+      "innateSpells": [
+       {
+        "spellId": "fleet-step",
+        "tradition": "occult",
+        "rank": 1,
+        "usesPerDay": 1
+       }
+      ]
+     }
     },
     {
      "value": "heal",
-     "label": "Heal"
+     "label": "Heal",
+     "description": "A 1st-rank occult innate spell you can cast once today.",
+     "grant": {
+      "innateSpells": [
+       {
+        "spellId": "heal",
+        "tradition": "occult",
+        "rank": 1,
+        "usesPerDay": 1
+       }
+      ]
+     }
     }
    ]
   }
@@ -65719,6 +65888,7 @@
   "category": "feats",
   "id": "nagaji-spell-expertise",
   "field": "choice",
+  "why": "feat-3996 prints \"During your daily preparations, choose blink , control water , or subconscious suggestion . You can Cast this Spell as a 5th-level occult innate spell once that day.\" The single daily control was already in place; its options carried no `grant`, so dailyChoiceGrants returned nothing. The superseded row's whole value is merged in unchanged; only `grant` and a per-option `description` are added.",
   "value": {
    "flag": "nagajiExpertiseSpell",
    "prompt": "Today's nagaji spell",
@@ -65727,15 +65897,48 @@
    "options": [
     {
      "value": "flicker",
-     "label": "Flicker"
+     "label": "Flicker",
+     "description": "A 5th-rank occult innate spell you can cast once today.",
+     "grant": {
+      "innateSpells": [
+       {
+        "spellId": "flicker",
+        "tradition": "occult",
+        "rank": 5,
+        "usesPerDay": 1
+       }
+      ]
+     }
     },
     {
      "value": "control-water",
-     "label": "Control Water"
+     "label": "Control Water",
+     "description": "A 5th-rank occult innate spell you can cast once today.",
+     "grant": {
+      "innateSpells": [
+       {
+        "spellId": "control-water",
+        "tradition": "occult",
+        "rank": 5,
+        "usesPerDay": 1
+       }
+      ]
+     }
     },
     {
      "value": "subconscious-suggestion",
-     "label": "Subconscious Suggestion"
+     "label": "Subconscious Suggestion",
+     "description": "A 5th-rank occult innate spell you can cast once today.",
+     "grant": {
+      "innateSpells": [
+       {
+        "spellId": "subconscious-suggestion",
+        "tradition": "occult",
+        "rank": 5,
+        "usesPerDay": 1
+       }
+      ]
+     }
     }
    ]
   }
@@ -77489,21 +77692,8 @@
   "category": "backgrounds",
   "id": "sponsored-by-teacher-ot",
   "field": "choice",
-  "value": {
-   "flag": "bgSkill",
-   "prompt": "Trained skill",
-   "kind": "array",
-   "options": [
-    {
-     "value": "survival",
-     "label": "Survival (grants Survey Wildlife)"
-    },
-    {
-     "value": "performance",
-     "label": "Performance (grants Impressive Performance)"
-    }
-   ]
-  }
+  "value": null,
+  "why": "background-224 \"You're trained in your choice of the Survival or Performance skill. You gain a skill feat: Survey Wildlife if you chose Survival or Impressive Performance if you chose Performance.\" - ONE pick decides both halves. The duplicate `choice` control (flag bgSkill) let the two halves be answered differently and trained two skills; `trainedSkillChoice` + `grantedFeatByChoice` already ask it once. Owner 2026-09-10 #92."
  },
  {
   "category": "backgrounds",
@@ -100920,8 +101110,13 @@
    {
     "spellId": "black-tentacles",
     "note": "When you cast Black Tentacles from this feat, you spew the tentacles from your mouth out to the appropriate range, where they take root and begin Grappling creatures as usual. The tentacles recognize you as a part of them and don't attempt to Grapple you, even if you are in the area."
+   },
+   {
+    "spellId": "slither",
+    "note": "Printed for Black Tentacles, which Slither replaced. When you cast Slither from this feat, you spew the tentacles from your mouth out to the appropriate range, where they take root and begin Grappling creatures as usual. The tentacles recognize you as a part of them and don't attempt to Grapple you, even if you are in the area."
    }
-  ]
+  ],
+  "why": "feat-2531 \"You can cast black tentacles once per day as an innate occult spell, though when you do so, you spew them from your mouth out to the appropriate range, where they take root and begin Grappling creatures as usual. The tentacles recognize you as a part of them and don't attempt to Grapple you, even if you are in the area.\" - the clause reached neither Black Tentacles (hidden as superseded) nor Slither, which is the spell this feat's own grant was overlaid to. Owner 2026-09-10 #71 (\"same for Spew Tentacles\")."
  },
  {
   "category": "feats",
@@ -123511,32 +123706,8 @@
   "category": "feats",
   "id": "clawdancer-dedication",
   "field": "grantedStrikes",
-  "value": [
-   {
-    "name": "Frenzied Claw",
-    "die": "d6",
-    "damageType": "slashing",
-    "traits": [
-     "agile",
-     "finesse",
-     "grapple",
-     "unarmed",
-     "versatile-p"
-    ],
-    "group": "brawling"
-   },
-   {
-    "name": "Spinning Talon",
-    "die": "d8",
-    "damageType": "slashing",
-    "traits": [
-     "finesse",
-     "sweep",
-     "unarmed"
-    ],
-    "group": "brawling"
-   }
-  ]
+  "why": "feat-5436 defines both attacks INSIDE the stances: \"Claw Stance ... The only Strikes you can make are frenzied claw unarmed attacks. These deal 1d6 slashing damage, are in the brawling group, and have the agile, finesse, grapple, unarmed, and versatile piercing traits.\" and \"Talon Stance ... The only Strikes you can make are spinning talon unarmed attacks.\" The dedication grants neither Strike on its own, so the superseded row (a second copy of both, worth [{Frenzied Claw d6 slashing brawling agile/finesse/grapple/unarmed/versatile-p},{Spinning Talon d8 slashing brawling finesse/sweep/unarmed}]) showed each Strike twice while a stance was on and showed both while none was. Deleted whole; the stance definitions keep the printed statistics.",
+  "value": null
  },
  {
   "category": "items",
@@ -123889,7 +124060,17 @@
         {
          "spellId": "locate",
          "tradition": "arcane",
-         "usesPerDay": 1
+         "usesPerDay": 1,
+         "heightenAt": [
+          {
+           "level": 14,
+           "rank": 5
+          }
+         ],
+         "heightenWhenFlag": {
+          "flag": "hellknightOrder",
+          "value": "order-of-the-gate"
+         }
         }
        ]
       }
@@ -123902,7 +124083,17 @@
         {
          "spellId": "locate",
          "tradition": "divine",
-         "usesPerDay": 1
+         "usesPerDay": 1,
+         "heightenAt": [
+          {
+           "level": 14,
+           "rank": 5
+          }
+         ],
+         "heightenWhenFlag": {
+          "flag": "hellknightOrder",
+          "value": "order-of-the-gate"
+         }
         }
        ]
       }
@@ -123915,7 +124106,17 @@
         {
          "spellId": "locate",
          "tradition": "occult",
-         "usesPerDay": 1
+         "usesPerDay": 1,
+         "heightenAt": [
+          {
+           "level": 14,
+           "rank": 5
+          }
+         ],
+         "heightenWhenFlag": {
+          "flag": "hellknightOrder",
+          "value": "order-of-the-gate"
+         }
         }
        ]
       }
@@ -123928,20 +124129,32 @@
         {
          "spellId": "locate",
          "tradition": "primal",
-         "usesPerDay": 1
+         "usesPerDay": 1,
+         "heightenAt": [
+          {
+           "level": 14,
+           "rank": 5
+          }
+         ],
+         "heightenWhenFlag": {
+          "flag": "hellknightOrder",
+          "value": "order-of-the-gate"
+         }
         }
        ]
       }
      }
     ]
    }
-  ]
+  ],
+  "why": "hellknight-order-9 (Locate Lawbreakers, Hellfire Dispatches) \"If you’re a member of the Order of the Gate, when you reach 14th level, the spell is heightened to 5th rank.\" — the rank-5-at-14 half was a standing note nothing read, and the order half was modelled nowhere. Owner 2026-09-10 #7: keep the printed scope."
  },
  {
   "category": "feats",
   "id": "locate-lawbreakers",
   "field": "note",
-  "value": "If you are a member of the Order of the Gate, at 14th level the spell is heightened to 5th rank."
+  "value": null,
+  "why": "hellknight-order-9, the same clause as the row above, now built: the standing note \"If you are a member of the Order of the Gate, at 14th level the spell is heightened to 5th rank.\" was our stand-in for the unbuilt mechanic, and the printed sentence itself is already in the record’s description (public/core-descriptions.json feats/locate-lawbreakers). Keeping it would print the rule twice, once as prose we wrote. Deleted only WITH the row above, never before it."
  },
  {
   "category": "feats",
@@ -124178,9 +124391,11 @@
    "strength": 2,
    "edition": "neutral",
    "description": "Wood and bark grow over your body like armor, created by the Hardwood Armor impulse. It is medium armor but uses your highest armor proficiency.",
-   "note": "Created by the Hardwood Armor impulse. It is medium armor but uses your HIGHEST armor proficiency — set that on the sheet if your best track is not medium. Any bonuses, runes and magical abilities of your actual armor are suppressed while it is worn, and any runes that could apply to the hardwood armor are replicated onto it."
+   "note": "Created by the Hardwood Armor impulse. It is medium armor but uses your highest armor proficiency, which your sheet works out for you. Any bonuses, runes and magical abilities of your actual armor are suppressed while it is worn, and any runes that could apply to the hardwood armor are replicated onto it.",
+   "aonOrigin": "authored"
   },
-  "create": true
+  "create": true,
+  "why": "feat-4283 \"This hardwood armor is medium armor but uses your highest armor proficiency.\" Computed now off the same lane, so the set-it-yourself sentence goes. CLOSER CORRECTION (batch 037 apply post-check), the same two changes as the armor-in-earth row above and for the same reason: `aonOrigin: \"authored\"` restored to the create value so it equals the shipped record, and the one changed field, `note`, emitted as a FIELD row below so it reaches a record applyBackfill will not overwrite."
  },
  {
   "category": "items",
@@ -124281,9 +124496,11 @@
    "acBonus": 4,
    "traits": [],
    "description": "Stone encases you like armor, created by the Armor in Earth impulse. It is medium armor but uses your highest armor proficiency.",
-   "note": "Created by the Armor in Earth impulse and lasts 10 minutes (Dismissible; using the impulse again ends any existing one). It uses your HIGHEST armor proficiency — set that on the sheet if your best track is not medium. You gain its armor specialization effect. Any bonuses, runes and magical abilities of your actual armor are suppressed, and any runes that could apply to the stone armor are replicated onto it."
+   "note": "Created by the Armor in Earth impulse and lasts 10 minutes (Dismissible; using the impulse again ends any existing one). It is medium armor but uses your highest armor proficiency, which your sheet works out for you. You gain its armor specialization effect. Any bonuses, runes and magical abilities of your actual armor are suppressed, and any runes that could apply to the stone armor are replicated onto it.",
+   "aonOrigin": "authored"
   },
-  "create": true
+  "create": true,
+  "why": "feat-4221 \"The stone armor is medium armor but uses your highest armor proficiency.\" The borrowing is computed now (featGrants.ts armorFamiliarity.mirrorBest -> Proficiencies.armorOverrides, read at derive.ts:2037), so the instruction to set it by hand is wrong. CLOSER CORRECTION (batch 037 apply post-check): a corrected CREATE cannot reach an existing record — applyBackfill never overwrites one — so this row alone left the old note shipped and the post-check demanded a full regeneration. Two changes, neither of which needs `npm run data`: (a) `aonOrigin: \"authored\"` is restored to the create value, because the SHIPPED record carries it and the post-check compares the two whole records, so the row could never have matched without it (12 other create rows in the overlay carry it the same way); (b) the one field that actually changes, `note`, is emitted as a FIELD row below, which applyBackfill does apply to an existing record. Pre-check (1b) allows a field row beside a create row exactly when it lands after it and says byte-for-byte what the create row says, which it does."
  },
  {
   "category": "items",
@@ -130683,22 +130900,8 @@
   "category": "items",
   "id": "aeon-stone-dusty-rose-prism",
   "field": "effectChoices",
-  "value": [
-   {
-    "id": "resonant",
-    "prompt": "Slotted into a wayfinder? An invested aeon stone slotted in a wayfinder also grants its resonant power.",
-    "options": [
-     {
-      "value": "no",
-      "label": "No — orbiting your head"
-     },
-     {
-      "value": "yes",
-      "label": "Yes — resonant: the damage your aeon stone's Shield spell prevents rises from 5 to 10"
-     }
-    ]
-   }
-  ]
+  "value": null,
+  "why": "equipment-407-870 \"The resonant power increases the damage prevented by your aeon stone's shield spell from 5 to 10.\" - one printed condition (slotted in a wayfinder), so one control. Owner 2026-09-10 #48: the 'Slotted in a wayfinder' mark is the control; the duplicate yes/no picker goes."
  },
  {
   "category": "items",
@@ -138970,6 +139173,7 @@
   "category": "classFeatures",
   "id": "animal-instinct",
   "field": "grantedStrikes",
+  "why": "instinct-8's animal table prints the spider with TWO attacks - \"Spider Fangs 1d8 P Grapple, unarmed, venomous Web Special Range increment 15 feet\" - and the footnote \"The spider's web attack deals no damage, but the target takes a -10-foot circumstance penalty to its Speeds for 1 round on a hit.\" Only Fangs shipped, so a spider barbarian was missing half of what Bestial Rage grants: \"While raging, you gain your chosen animal's unarmed attack (or attacks)\". The Web carries no die and no damageType (the printed damage column is \"Special\", i.e. none), a 15-foot range increment, and the printed penalty as `onHit`. Every one of the superseded row's 31 entries is merged in byte-identical; only the Web is added.",
   "value": [
    {
     "name": "Fist",
@@ -139309,9 +139513,18 @@
     ],
     "group": "brawling",
     "choiceValue": "cat"
+   },
+   {
+    "name": "Web",
+    "traits": [
+     "unarmed"
+    ],
+    "group": "brawling",
+    "range": 15,
+    "choiceValue": "spider",
+    "onHit": "the target takes a -10-foot circumstance penalty to its Speeds for 1 round"
    }
-  ],
-  "why": "AoN instinct-8 (and instinct-1) list Cat | Jaws 1d10 P | Unarmed and Claw 1d6 S | Agile, unarmed. choice.options already offered Cat but grantedStrikes had no row for it, so a barbarian who picked Cat got no unarmed attacks at all. Supersedes the existing classFeatures/animal-instinct grantedStrikes row (all 29 existing entries merged whole, byte-identical to the shipped array, plus the two Cat rows)."
+  ]
  },
  {
   "category": "feats",
@@ -142832,11 +143045,12 @@
      {
       "value": "weapon",
       "label": "Weapon",
-      "note": "After you cast a non-cantrip spell by activating the spindle, you gain a Dragon Breath activity that takes 2 actions and deals 9d6 damage to all creatures in a with a save. Choose the type of damage when you use Dragon Breath: fire, force, mental, or spirit. You can use this activity once before the end of your next turn."
+      "note": "After you cast a non-cantrip spell by activating the spindle, you gain a Dragon Breath activity that takes 2 actions and deals 9d6 damage to all creatures in a 30-foot cone with a basic Reflex save (DC 34). Choose the type of damage when you use Dragon Breath: fire, force, mental, or spirit. You can use this activity once before the end of your next turn."
      }
     ]
    }
-  ]
+  ],
+  "why": "The SAME sentence, on the answer the player actually reads on the sheet: the shipped weapon option's note says \"to all creatures in a with a save\" - the area was deleted by the import (the @Template/@Damage cleaner) and the DC was never there. AoN equipment-2243 gives the area and save shape (\"in a 30-foot cone with a DC 28 basic Reflex save\") and equipment-2243-1983 gives this grade's number (9d6, DC 34). SUPERSEDES the shipped effectChoices row: the whole value is re-emitted, armor option byte-identical, only the weapon note's broken clause repaired. Emitted with the description row because a description fixed on its own would leave the pick's own note still saying \"in a with a save\"."
  },
  {
   "category": "items",
@@ -142855,11 +143069,12 @@
      {
       "value": "weapon",
       "label": "Weapon",
-      "note": "After you cast a non-cantrip spell by activating the spindle, you gain a Dragon Breath activity that takes 2 actions and deals 12d6 damage to all creatures in a with a save. Choose the type of damage when you use Dragon Breath: fire, force, mental, or spirit. You can use this activity once before the end of your next turn."
+      "note": "After you cast a non-cantrip spell by activating the spindle, you gain a Dragon Breath activity that takes 2 actions and deals 12d6 damage to all creatures in a 30-foot cone with a basic Reflex save (DC 41). Choose the type of damage when you use Dragon Breath: fire, force, mental, or spirit. You can use this activity once before the end of your next turn."
      }
     ]
    }
-  ]
+  ],
+  "why": "Same repair as the greater grade, on this grade's numbers: the shipped weapon note reads \"to all creatures in a with a save\". Area and save shape from AoN equipment-2243, the 12d6/DC 41 from equipment-2243-1984. SUPERSEDES the shipped effectChoices row, re-emitted whole with the armor option unchanged."
  },
  {
   "category": "items",
@@ -147879,7 +148094,7 @@
     {
      "value": "bog",
      "label": "Bog",
-     "description": "Primal dragon — fly, swim, burrow."
+     "description": "Primal dragon — fly, swim."
     },
     {
      "value": "brine",
@@ -147954,7 +148169,7 @@
     {
      "value": "magma",
      "label": "Magma",
-     "description": "Primal dragon — fly, swim."
+     "description": "Primal dragon — fly, burrow."
     },
     {
      "value": "mirage",
@@ -148067,7 +148282,8 @@
      "description": "Arcane dragon — fly, climb."
     }
    ]
-  }
+  },
+  "why": "The Draconic Benefactors table, transcribed by the owner on 2026-09-10 (work/desk-answers-2026-09-10.json, carried whole in the `proposal` of the CONFIRMED finding breath-of-the-dragon#derive-from-exemplar), gives each exemplar ONE extra Speed beside the flight every dragon has: \"Bog|Primal|Swim\" and \"Magma|Primal|Burrow\". Our option descriptions disagreed on exactly those two rows — bog read \"Primal dragon — fly, swim, burrow.\" (a burrow Speed no dragon in the table gives it) and magma read \"Primal dragon — fly, swim.\" where the table gives Burrow. The other 38 rows already agree with the table on both the tradition word and the Speed word, and adamantine (Burrow) and requiem (Swim) agree, so this is per-record scrape damage, not a systematic mis-mapping. SUPERSEDES the existing overlay row scripts/data/effect-backfill.json {heritages, dragonblood, choice}, whose value is byte-identical to what ships today: that value is re-emitted WHOLE here — same flag, same prompt, same kind, the same 40 options in the same order with the same `value` and `label` on every one — with only those two `description` strings changed. The values and labels must not move: feats/breath-of-the-dragon's effectChoices row (work/.b037-rows-data-rows-6.json) keys its 40 options off these `value` strings, and choiceFlagAnswer (src/rules/build.ts:1978) resolves the feat's answer from this record's stored flag. The speed words are display prose only — nothing derives a Speed from them — so this row moves what the player READS when picking an exemplar, and nothing else. There is no AoN document for this table: https://2e.aonprd.com/DraconicBenefactors.aspx is not in the mirror (the batch's standing MIRROR GAP), which is why the owner transcribed it by hand."
  },
  {
   "category": "feats",
@@ -149412,109 +149628,214 @@
   "field": "effectChoices",
   "value": [
    {
-    "id": "breath-shape",
-    "prompt": "Your draconic exemplar's breath shape",
+    "id": "breath-exemplar",
+    "prompt": "Your draconic exemplar (the shape, damage type and save all follow from it)",
+    "answerFromChoiceFlag": "draconicExemplar",
     "options": [
      {
-      "value": "cone",
-      "label": "15-foot cone",
-      "note": "Your breath fills a 15-foot cone."
+      "value": "adamantine",
+      "label": "Adamantine",
+      "note": "15-foot cone, bludgeoning damage, basic Reflex save. Physical damage carries no trait of its own."
      },
      {
-      "value": "line",
-      "label": "30-foot line",
-      "note": "Your breath fills a 30-foot line."
-     }
-    ]
-   },
-   {
-    "id": "breath-damage",
-    "prompt": "Your draconic exemplar's damage type (the ability gains the trait associated with the damage it deals)",
-    "options": [
-     {
-      "value": "acid",
-      "label": "Acid",
-      "note": "The breath deals acid damage, and the ability gains the acid trait."
+      "value": "barrage",
+      "label": "Barrage",
+      "note": "15-foot cone, force damage, basic Reflex save. The ability gains the force trait."
      },
      {
-      "value": "bludgeoning",
-      "label": "Bludgeoning",
-      "note": "The breath deals bludgeoning damage. Physical damage carries no trait of its own."
+      "value": "bog",
+      "label": "Bog",
+      "note": "15-foot cone, acid damage, basic Reflex save. The ability gains the acid trait."
      },
      {
-      "value": "cold",
-      "label": "Cold",
-      "note": "The breath deals cold damage, and the ability gains the cold trait."
+      "value": "brine",
+      "label": "Brine",
+      "note": "30-foot line, bludgeoning damage, basic Reflex save. Physical damage carries no trait of its own."
      },
      {
-      "value": "electricity",
-      "label": "Electricity",
-      "note": "The breath deals electricity damage, and the ability gains the electricity trait."
+      "value": "cinder",
+      "label": "Cinder",
+      "note": "15-foot cone, fire damage, basic Reflex save. The ability gains the fire trait."
      },
      {
-      "value": "fire",
-      "label": "Fire",
-      "note": "The breath deals fire damage, and the ability gains the fire trait."
+      "value": "cloud",
+      "label": "Cloud",
+      "note": "15-foot cone, electricity damage, basic Reflex save. The ability gains the electricity trait."
      },
      {
-      "value": "force",
-      "label": "Force",
-      "note": "The breath deals force damage, and the ability gains the force trait."
+      "value": "conspirator",
+      "label": "Conspirator",
+      "note": "15-foot cone, poison damage, basic Fortitude save. The ability gains the poison trait."
      },
      {
-      "value": "mental",
-      "label": "Mental",
-      "note": "The breath deals mental damage, and the ability gains the mental trait."
+      "value": "coral",
+      "label": "Coral",
+      "note": "30-foot line, bludgeoning damage, basic Reflex save. Physical damage carries no trait of its own."
      },
      {
-      "value": "piercing",
-      "label": "Piercing",
-      "note": "The breath deals piercing damage. Physical damage carries no trait of its own."
+      "value": "crystal",
+      "label": "Crystal",
+      "note": "15-foot cone, piercing damage, basic Reflex save. Physical damage carries no trait of its own."
      },
      {
-      "value": "poison",
-      "label": "Poison",
-      "note": "The breath deals poison damage, and the ability gains the poison trait."
+      "value": "delight",
+      "label": "Delight",
+      "note": "15-foot cone, spirit damage, basic Reflex save. The ability gains the spirit trait."
      },
      {
-      "value": "sonic",
-      "label": "Sonic",
-      "note": "The breath deals sonic damage, and the ability gains the sonic trait."
+      "value": "despair",
+      "label": "Despair",
+      "note": "15-foot cone, sonic damage, basic Will save. The ability gains the sonic trait."
      },
      {
-      "value": "spirit",
-      "label": "Spirit",
-      "note": "The breath deals spirit damage, and the ability gains the spirit trait."
+      "value": "diabolic",
+      "label": "Diabolic",
+      "note": "15-foot cone, fire damage, basic Reflex save. The ability gains the fire trait."
      },
      {
-      "value": "void",
-      "label": "Void",
-      "note": "The breath deals void damage, and the ability gains the void trait."
-     }
-    ]
-   },
-   {
-    "id": "breath-save",
-    "prompt": "The basic save your draconic exemplar's breath calls for",
-    "options": [
-     {
-      "value": "reflex",
-      "label": "Basic Reflex",
-      "note": "Each creature in the area attempts a basic Reflex save against your Breath of the Dragon DC."
+      "value": "empyreal",
+      "label": "Empyreal",
+      "note": "15-foot cone, spirit damage, basic Reflex save. The ability gains the spirit trait."
      },
      {
-      "value": "fortitude",
-      "label": "Basic Fortitude",
-      "note": "Each creature in the area attempts a basic Fortitude save against your Breath of the Dragon DC."
+      "value": "executor",
+      "label": "Executor",
+      "note": "15-foot cone, sonic damage, basic Reflex save. The ability gains the sonic trait."
      },
      {
-      "value": "will",
-      "label": "Basic Will",
-      "note": "Each creature in the area attempts a basic Will save against your Breath of the Dragon DC."
+      "value": "forest",
+      "label": "Forest",
+      "note": "15-foot cone, piercing damage, basic Reflex save. Physical damage carries no trait of its own."
+     },
+     {
+      "value": "fortune",
+      "label": "Fortune",
+      "note": "15-foot cone, force damage, basic Reflex save. The ability gains the force trait."
+     },
+     {
+      "value": "horned",
+      "label": "Horned",
+      "note": "15-foot cone, poison damage, basic Fortitude save. The ability gains the poison trait."
+     },
+     {
+      "value": "magma",
+      "label": "Magma",
+      "note": "15-foot cone, fire damage, basic Reflex save. The ability gains the fire trait."
+     },
+     {
+      "value": "mirage",
+      "label": "Mirage",
+      "note": "15-foot cone, mental damage, basic Will save. The ability gains the mental trait."
+     },
+     {
+      "value": "mocking",
+      "label": "Mocking",
+      "note": "15-foot cone, bludgeoning damage, basic Reflex save. Physical damage carries no trait of its own."
+     },
+     {
+      "value": "oath",
+      "label": "Oath",
+      "note": "15-foot cone, spirit damage, basic Will save. The ability gains the spirit trait."
+     },
+     {
+      "value": "omen",
+      "label": "Omen",
+      "note": "15-foot cone, mental damage, basic Will save. The ability gains the mental trait."
+     },
+     {
+      "value": "phase",
+      "label": "Phase",
+      "note": "15-foot cone, force damage, basic Reflex save. The ability gains the force trait."
+     },
+     {
+      "value": "requiem",
+      "label": "Requiem",
+      "note": "30-foot line, spirit damage, basic Will save. The ability gains the spirit trait."
+     },
+     {
+      "value": "resurrection",
+      "label": "Resurrection",
+      "note": "15-foot cone, void damage, basic Fortitude save. The ability gains the void trait."
+     },
+     {
+      "value": "rime",
+      "label": "Rime",
+      "note": "15-foot cone, cold damage, basic Reflex save. The ability gains the cold trait."
+     },
+     {
+      "value": "rune",
+      "label": "Rune",
+      "note": "15-foot cone, fire damage, basic Reflex save. The ability gains the fire trait."
+     },
+     {
+      "value": "sage",
+      "label": "Sage",
+      "note": "15-foot cone, mental damage, basic Will save. The ability gains the mental trait."
+     },
+     {
+      "value": "sea",
+      "label": "Sea",
+      "note": "15-foot cone, bludgeoning damage, basic Reflex save. Physical damage carries no trait of its own."
+     },
+     {
+      "value": "sky",
+      "label": "Sky",
+      "note": "15-foot cone, electricity damage, basic Reflex save. The ability gains the electricity trait."
+     },
+     {
+      "value": "sovereign",
+      "label": "Sovereign",
+      "note": "15-foot cone, mental damage, basic Will save. The ability gains the mental trait."
+     },
+     {
+      "value": "stormcrown",
+      "label": "Stormcrown",
+      "note": "30-foot line, electricity damage, basic Reflex save. The ability gains the electricity trait."
+     },
+     {
+      "value": "time",
+      "label": "Time",
+      "note": "15-foot cone, force damage, basic Will save. The ability gains the force trait."
+     },
+     {
+      "value": "umbral",
+      "label": "Umbral",
+      "note": "15-foot cone, void damage, basic Reflex save. The ability gains the void trait."
+     },
+     {
+      "value": "underworld",
+      "label": "Underworld",
+      "note": "15-foot cone, fire damage, basic Reflex save. The ability gains the fire trait."
+     },
+     {
+      "value": "vizier",
+      "label": "Vizier",
+      "note": "15-foot cone, fire damage, basic Reflex save. The ability gains the fire trait."
+     },
+     {
+      "value": "vorpal",
+      "label": "Vorpal",
+      "note": "15-foot cone, void damage, basic Will save. The ability gains the void trait."
+     },
+     {
+      "value": "wailing",
+      "label": "Wailing",
+      "note": "15-foot cone, sonic damage, basic Fortitude save. The ability gains the sonic trait."
+     },
+     {
+      "value": "whisper",
+      "label": "Whisper",
+      "note": "15-foot cone, mental damage, basic Will save. The ability gains the mental trait."
+     },
+     {
+      "value": "wish",
+      "label": "Wish",
+      "note": "15-foot cone, mental damage, basic Will save. The ability gains the mental trait."
      }
     ]
    }
-  ]
+  ],
+  "why": "AoN feat-5730 (Breath of the Dragon, Player Core 2 pg. 45): \"The shape of the breath, the damage type, and the saving throw match those of your draconic exemplar (see above).\" The three shipped pickers (breath-shape / breath-damage / breath-save) let a player build a breath no dragon has, and ignored the exemplar they had already chosen. SUPERSEDES the shipped 3-picker effectChoices row: all three of its facts are carried WHOLE into every option's note (shape + damage type + trait + save), which is the only merge the printed sentence permits - re-emitting the three free pickers beside a derived one would re-open exactly the illegal combinations the owner ruling closes (owner 2026-09-10 #55, option A). Derivation needs NO code: `answerFromChoiceFlag` (src/rules/types.ts:2083) resolves the pick from another record's choice flag, and heritages/dragonblood already asks the question under flag `draconicExemplar` (40 options, same lowercase values, stored at featChoices['heritage:dragonblood'] - exactly what choiceFlagAnswer reads at src/rules/build.ts:1978). resolvePick (build.ts:6183) takes the flag over any stored answer and EffectChoicesPicker (src/builder/shared.tsx:4596) hides the now-answered control, so the player answers once on the heritage and the feat follows. Rows are the Draconic Benefactors table (Draconic Codex pg. 206, https://2e.aonprd.com/DraconicBenefactors.aspx) as the owner transcribed it; all 40 of our exemplar values are covered, so the \"dragons not in the table\" fallback is empty."
  },
  {
   "category": "feats",
@@ -150427,11 +150748,12 @@
   "category": "feats",
   "id": "versatile-mutation",
   "field": "choice",
+  "why": "feat-5454 prints \"At 8th level, choose one of the following: acid, cold, electricity, fire, or sonic damage; when your ostilli Spits Ambient Magic, it can deal that damage type instead and adds that trait to the action.\" The shipped choice asked the five-option question at 4th level with no gate, four levels before the character is entitled to any of its answers. `minLevel: 8` is the field FeatChoiceDef already declares for \"the character level from which this question is asked at all\". `distinctAcrossTakes` is dropped in the same value because the same document prints no Special clause allowing a second taking (see the maxTakable row). The superseded row's whole value (flag/prompt/kind/options) is merged in unchanged.",
   "value": {
    "flag": "choice",
    "prompt": "Damage Type",
    "kind": "array",
-   "distinctAcrossTakes": true,
+   "minLevel": 8,
    "options": [
     {
      "value": "acid",
@@ -151242,8 +151564,15 @@
   "id": "aeon-stone-agate-ellipsoid",
   "field": "resonant",
   "value": {
-   "note": "The resonant power causes the *augury* spell from the aeon stone to always succeed at the DC 6 flat check to give an answer other than \"nothing.\""
-  }
+   "note": "The resonant power causes the *augury* spell from the aeon stone to always succeed at the DC 6 flat check to give an answer other than \"nothing.\"",
+   "spellNotes": [
+    {
+     "spellId": "augury",
+     "note": "The resonant power causes the *augury* spell from the aeon stone to always succeed at the DC 6 flat check to give an answer other than \"nothing.\""
+    }
+   ]
+  },
+  "why": "equipment-407-868 \"The resonant power causes the augury spell from the aeon stone to always succeed at the DC 6 flat check to give an answer other than \\\"nothing.\\\"\" - the clause is about the granted Augury and was reachable only by opening the item. Owner 2026-09-10 #47: keep the wayfinder mark as the only control and print the sentence on the spell too."
  },
  {
   "category": "items",
@@ -151258,8 +151587,15 @@
   "id": "aeon-stone-dusty-rose-prism",
   "field": "resonant",
   "value": {
-   "note": "The resonant power increases the damage prevented by your aeon stone's shield spell from 5 to 10."
-  }
+   "note": "The resonant power increases the damage prevented by your aeon stone's shield spell from 5 to 10.",
+   "spellNotes": [
+    {
+     "spellId": "shield",
+     "note": "The resonant power increases the damage prevented by your aeon stone's shield spell from 5 to 10."
+    }
+   ]
+  },
+  "why": "equipment-407-870 \"The resonant power increases the damage prevented by your aeon stone's shield spell from 5 to 10.\" - a number the player reads off the Shield entry, which carried nothing. Owner 2026-09-10 #47/#48."
  },
  {
   "category": "items",
@@ -151290,8 +151626,15 @@
   "id": "aeon-stone-western-star",
   "field": "resonant",
   "value": {
-   "note": "The resonant power allows you to render all of your aeon stones and your wayfinder invisible whenever you use the activation to gain the effects of illusory disguise."
-  }
+   "note": "The resonant power allows you to render all of your aeon stones and your wayfinder invisible whenever you use the activation to gain the effects of illusory disguise.",
+   "spellNotes": [
+    {
+     "spellId": "illusory-disguise",
+     "note": "The resonant power allows you to render all of your aeon stones and your wayfinder invisible whenever you use the activation to gain the effects of illusory disguise."
+    }
+   ]
+  },
+  "why": "equipment-407-874 \"The resonant power allows you to render all of your aeon stones and your wayfinder invisible whenever you use the activation to gain the effects of illusory disguise.\" - a rider on the activation the player triggers from the Illusory Disguise entry. Owner 2026-09-10 #49."
  },
  {
   "category": "items",
@@ -157044,7 +157387,8 @@
   "category": "feats",
   "id": "basic-magus-spellcasting",
   "field": "description",
-  "value": "You gain the basic bounded spellcasting benefits."
+  "value": "You gain the basic spellcasting benefits. Each time you gain a spell slot of a new rank from the magus archetype, add two common spells of that rank or lower to your spellbook.",
+  "why": "feat-9285 verbatim. Supersedes the shipped overlay row \"You gain the basic bounded spellcasting benefits.\" — the 2026 printing grants the ORDINARY basic spellcasting benefits, not the bounded ones, and adds the spellbook sentence the 2021 text had no equivalent for."
  },
  {
   "category": "items",
@@ -160686,9 +161030,19 @@
   "field": "grantsItems",
   "value": [
    {
-    "itemId": "hellknight-breastplate"
+    "itemId": "hellknight-breastplate",
+    "whenChoice": "hellknight-breastplate"
+   },
+   {
+    "itemId": "hellknight-half-plate",
+    "whenChoice": "hellknight-half-plate"
+   },
+   {
+    "itemId": "hellknight-plate",
+    "whenChoice": "hellknight-plate"
    }
-  ]
+  ],
+  "why": "feat-8814 \"In addition, when you choose this feat, you receive a non-magical suit of Hellknight armor of a type you become trained in (Hellknight breastplate, Hellknight half plate, or Hellknight plate).\" One suit out of three, so the two the player did not pick must not arrive."
  },
  {
   "category": "backgrounds",
@@ -164925,8 +165279,8 @@
   "category": "backgrounds",
   "id": "reborn-soul",
   "field": "dataWarning",
-  "value": "At 3rd, 7th and 15th level you receive EXTRA skill increases that can only raise your two past-life Lore skills. The app has no lane for restricted bonus increases yet — apply them by hand (flagged in the batch residual).",
-  "why": "wg-batch-021: the printed restricted extra increases have no lane; told until one exists. The WG auto-raise version is owner-queued (#85)."
+  "value": "At 3rd, 7th and 15th level you gain ONE extra skill increase, and it can be applied only to one of your two past-life Lore skills — you choose which one each time, and your ordinary skill increases at those levels are unaffected. The app's restricted bonus-increase lane is class-only today, so apply these three by hand.",
+  "why": "AoN background-590 (Reborn Soul): \"At 3rd level, 7th level, and 15th level, you receive skill increases, which you can apply only to these Lore skills.\" SUPERSEDES the shipped batch-021 dataWarning, whose wording (\"EXTRA skill increases that can only raise your two past-life Lore skills\") is silently WG's both-Lores-each-time reading - six raises where print grants three (owner 2026-09-10 #85, 'A as I describe it'). The superseded row's only content was that sentence plus its 'apply them by hand' instruction; both halves are carried into this value, corrected. The BUILT half (one restricted increase at each of 3/7/15) cannot be a row: bonusSkillIncreaseLevels + restrictedSkillIncreaseLevels are read off the CLASS only (src/rules/build.ts:3724 `cls?.bonusSkillIncreaseLevels`, build.ts:1137 `cls?.restrictedSkillIncreaseLevels`) and their `skills` list is fixed SkillIds, which cannot name the two Lores the player picked - see CROSS-FILE GAPS."
  },
  {
   "category": "actions",
@@ -173793,12 +174147,9 @@
    "tradition": "arcane",
    "keyAbility": "cha",
    "repertoire": true,
-   "progression": "two-rank",
-   "extraRepertoire": {
-    "1": 1
-   }
+   "progression": "psychic"
   },
-  "why": "class-18: 'you learn two 1st-level spells' and 'your spell repertoire reaches its maximum size of five spells', against a stated maximum of four slots — repertoire = slots + 1 at every level."
+  "why": "class-77 (Summoner, Impossible Magic pg. 63). Its Spells per Day table keeps 2 slots at every unlocked rank with no 10th, which is the 'psychic' progression. Supersedes the shipped overlay row {\"type\":\"spontaneous\",\"tradition\":\"arcane\",\"keyAbility\":\"cha\",\"repertoire\":true,\"progression\":\"two-rank\",\"extraRepertoire\":{\"1\":1}}, carried whole except progression and the deliberate removal of extraRepertoire — class-77: \"Each time you get a spell slot (see the Summoner Spells per Day table), you add a spell to your spell repertoire of the same rank.\""
  },
  {
   "category": "classes",
@@ -173821,13 +174172,13 @@
    "tradition": "arcane",
    "keyAbility": "int",
    "repertoire": false,
-   "progression": "two-rank",
+   "progression": "psychic",
    "spellbook": {
-    "spells": 4,
+    "spells": 5,
     "perLevel": 2
    }
   },
-  "why": "class-17: 'The spellbook contains your choice of eight arcane cantrips and four 1st-level arcane spells… Each time you gain a level, you add two more arcane spells to your spellbook.'"
+  "why": "class-74 (Magus, Impossible Magic pg. 9). Its Spells per Day table keeps 2 slots at every unlocked rank (1 the level a rank opens) and prints no 10th-rank slot — identical to the 'psychic' progression already implemented. Supersedes the shipped overlay row {\"type\":\"prepared\",\"tradition\":\"arcane\",\"keyAbility\":\"int\",\"repertoire\":false,\"progression\":\"two-rank\",\"spellbook\":{\"spells\":4,\"perLevel\":2}}, carried whole with only progression and spellbook.spells changed. class-74: \"The spellbook contains your choice of eight arcane cantrips and five 1st-rank arcane spells.\""
  },
  {
   "category": "classFeatures",
@@ -175296,33 +175647,24 @@
    "entryId": "magus-casting",
    "restricted": {
     "label": "Studious spells",
-    "note": "Studious spell slots: gecko grip, sure strike, water breathing, and an additional spell depending on your hybrid study. You add any spells from this class feature to your spellbook.",
     "ladder": [
      {
       "level": 7,
-      "byRank": {
-       "2": 2
-      },
+      "byRank": {},
       "addSpells": [
-       "gecko-grip",
-       "sure-strike",
-       "water-breathing"
+       "gecko-grip"
       ]
      },
      {
       "level": 11,
-      "byRank": {
-       "3": 2
-      },
+      "byRank": {},
       "addSpells": [
        "haste"
       ]
      },
      {
       "level": 13,
-      "byRank": {
-       "4": 2
-      },
+      "byRank": {},
       "addSpells": [
        "fly"
       ]
@@ -175330,7 +175672,7 @@
     ]
    }
   },
-  "why": "class-feature-431: 'You gain two special 2nd-level studious spell slots, which can be used to prepare gecko grip, sure strike, water breathing, and an additional spell depending on your hybrid study… At 11th level, the extra slots increase to 3rd level and you add haste… At 13th level, the extra slots increase to 4th level and you add fly.' The spells were hardcoded as a fixed pair in src/rules/spellcasting.ts with no gecko-grip and no player choice; the record itself carried nothing."
+  "why": "class-feature-1270 grants NO spell slots: \"Add any studious spell you gain to your spellbook if you don't know it already. Your studious spells are gecko grip and an additional spell depending on your hybrid study … At 11th level, add haste … At 13th level, add fly …\". Supersedes the shipped overlay row, which granted 2 extra 2nd-rank slots at 7, 2 extra 3rd at 11 and 2 extra 4th at 13 over the list [gecko-grip, sure-strike, water-breathing] / [haste] / [fly] with the note \"Studious spell slots: gecko grip, sure strike, water breathing, and an additional spell depending on your hybrid study. You add any spells from this class feature to your spellbook.\" — that whole value is carried here with byRank emptied at every step, sure-strike and water-breathing dropped (absent from the 2026 list) and the stale slot note removed. The field itself is KEPT because build.ts stands its hard-coded legacy fallback down only while it exists, and because bookGrantedSpellIds reads the spellbook additions out of it."
  },
  {
   "category": "items",
@@ -176162,15 +176504,15 @@
   "category": "items",
   "id": "wyrm-spindle-greater",
   "field": "description",
-  "value": "The broken tips of four dragon claws—one of each magical tradition—are set into a silver fitting. They protrude in the shape of a star or compass.\n\n- **Armor** After you cast a non-cantrip spell by activating the spindle, you gain resistance 10 to fire, force, mental, and spirit for 1 minute.\n- **Weapon** After you cast a non-cantrip spell by activating the spindle, you gain a Dragon Breath activity that takes 2 actions and deals 9d6 damage to all creatures in a 30-foot cone with a save. Choose the type of damage when you use Dragon Breath: fire, force, mental, or spirit. You can use this activity once before the end of your next turn.\n\n---\n\n**Activate** Cast a Spell\n\n**Effect** You cast Gouging Claw.\n\n---\n\n**Activate** Cast a Spell\n\n**Frequency** once per day\n\n**Effect** You cast 7th-rank Summon Dragon.",
-  "why": "The import deleted the area size and its noun, so the rule read \"creatures in a …\" with nothing after the article; AoN prints \"creatures in a 30-foot cone\" (restored by scripts/repair-stripped-skill-links.mjs, insertion only)."
+  "value": "The broken tips of four dragon claws—one of each magical tradition—are set into a silver fitting. They protrude in the shape of a star or compass.\n\n- **Armor** After you cast a non-cantrip spell by activating the spindle, you gain resistance 10 to fire, force, mental, and spirit for 1 minute.\n- **Weapon** After you cast a non-cantrip spell by activating the spindle, you gain a Dragon Breath activity that takes 2 actions and deals 9d6 damage to all creatures in a 30-foot cone with a basic Reflex save (DC 34). Choose the type of damage when you use Dragon Breath: fire, force, mental, or spirit. You can use this activity once before the end of your next turn.\n\n---\n\n**Activate** Cast a Spell\n\n**Effect** You cast Gouging Claw.\n\n---\n\n**Activate** Cast a Spell\n\n**Frequency** once per day\n\n**Effect** You cast 7th-rank Summon Dragon.",
+  "why": "CLOSER CORRECTION (batch 037 apply, apply-parity-fixes.mjs unbackedRun): this row first wrote \"with a DC 34 basic Reflex save\", and no named doc prints that run contiguously - equipment-2243 prints the save shape as \"with a DC 28 basic Reflex save\" (the BASE dc) and the greater block prints its own number parenthetically, \"9d6 (DC 34)\". Rewritten to print's own parenthetical form, \"with a basic Reflex save (DC 34)\", in the description and in the matching effectChoices weapon note; no number changed. AoN equipment-2243-1983 (Wyrm Spindle (Greater), Treasure Vault (Remastered) pg. 129): \"Resistance when affixed to armor is 10, and damage from Dragon Breath when affixed to a weapon is 9d6 (DC 34).\" The base page (equipment-2243) prints the save in full - \"in a 30-foot cone with a DC 28 basic Reflex save\" - and our greater description carried the area but lost the DC and the save name entirely (\"with a save\"), so the grade's one printed number was missing. SUPERSEDES the shipped batch description row (a repair-stripped-skill-links insertion that restored '30-foot cone'); its restored area is carried whole and only 'with a save' becomes 'with a DC 34 basic Reflex save' (owner 2026-09-10 #72)."
  },
  {
   "category": "items",
   "id": "wyrm-spindle-major",
   "field": "description",
-  "value": "The broken tips of four dragon claws—one of each magical tradition—are set into a silver fitting. They protrude in the shape of a star or compass.\n\n- **Armor** After you cast a non-cantrip spell by activating the spindle, you gain resistance 15 to fire, force, mental, and spirit for 1 minute.\n- **Weapon** After you cast a non-cantrip spell by activating the spindle, you gain a Dragon Breath activity that takes 2 actions and deals 12d6 damage to all creatures in a 30-foot cone with a save. Choose the type of damage when you use Dragon Breath: fire, force, mental, or spirit. You can use this activity once before the end of your next turn.\n\n---\n\n**Activate** Cast a Spell\n\n**Effect** You cast Gouging Claw.\n\n---\n\n**Activate** Cast a Spell\n\n**Frequency** once per day\n\n**Effect** You cast Summon Draconic Legion.",
-  "why": "The import deleted the area size and its noun, so the rule read \"creatures in a …\" with nothing after the article; AoN prints \"creatures in a 30-foot cone\" (restored by scripts/repair-stripped-skill-links.mjs, insertion only)."
+  "value": "The broken tips of four dragon claws—one of each magical tradition—are set into a silver fitting. They protrude in the shape of a star or compass.\n\n- **Armor** After you cast a non-cantrip spell by activating the spindle, you gain resistance 15 to fire, force, mental, and spirit for 1 minute.\n- **Weapon** After you cast a non-cantrip spell by activating the spindle, you gain a Dragon Breath activity that takes 2 actions and deals 12d6 damage to all creatures in a 30-foot cone with a basic Reflex save (DC 41). Choose the type of damage when you use Dragon Breath: fire, force, mental, or spirit. You can use this activity once before the end of your next turn.\n\n---\n\n**Activate** Cast a Spell\n\n**Effect** You cast Gouging Claw.\n\n---\n\n**Activate** Cast a Spell\n\n**Frequency** once per day\n\n**Effect** You cast Summon Draconic Legion.",
+  "why": "CLOSER CORRECTION (batch 037 apply, apply-parity-fixes.mjs unbackedRun), the same as the greater row: \"with a DC 41 basic Reflex save\" is printed contiguously by no named doc, so it reads as invented wording; print's greater/major blocks give the grade DC parenthetically, so the text is now \"with a basic Reflex save (DC 41)\" in the description and in the matching effectChoices weapon note. No number changed. AoN equipment-2243-1984 (Wyrm Spindle (Major), Treasure Vault (Remastered) pg. 129): \"Resistance when affixed to armor is 15, and damage from Dragon Breath when affixed to a weapon is 12d6 (DC 41).\" The save's shape comes from the base page (equipment-2243, \"a 30-foot cone with a DC 28 basic Reflex save\"), whose area and save name every grade keeps. SUPERSEDES the shipped description row, carried whole with 'with a save' becoming 'with a DC 41 basic Reflex save' (owner 2026-09-10 #72)."
  },
  {
   "category": "items",
@@ -177239,13 +177581,15 @@
   "category": "items",
   "id": "screech-shooter-greater",
   "field": "description",
-  "value": "Built from the larynx of a terror shrike, or similar animal that possesses a frightening screech or similar special ability, a *greater screech shooter* is a special *+2 greater striking harmona gun* designed to fire terrifying blasts of sound. A *screech shooter* deals sonic damage but can otherwise be used like a normal harmona gun.\n\n---\n\n**Activate—Screech Shot** ⟨2⟩ (emotion, manipulate, mental)\n\n**Frequency** once per hour\n\n---\n\n**Effect** The screech shooter unleashes a frightening wail. All creatures in a 30-foot emanation from you must attempt a DC 25 Will save.\n\n---\n\n**Critical Success** The creature is unaffected.\n\n**Success** The creature is Frightened 1.\n\n**Failure** The creature is Frightened 2.\n\n**Critical Failure** The creature is Frightened 3 and fleeing for 1 round.\n\n---\n\n**Craft Requirements** The initial raw materials must include the larynx of a creature with a frightening screech."
+  "value": "Built from the larynx of a terror shrike, or similar animal that possesses a frightening screech or similar special ability, a *greater screech shooter* is a special *+2 greater striking harmona gun* designed to fire terrifying blasts of sound. A *screech shooter* deals sonic damage but can otherwise be used like a normal harmona gun.\n\n---\n\n**Activate—Screech Shot** ⟨2⟩ (emotion, manipulate, mental)\n\n**Frequency** once per hour\n\n---\n\n**Effect** The screech shooter unleashes a frightening wail. All creatures in a 40-foot emanation from you must attempt a DC 30 Will save.\n\n---\n\n**Critical Success** The creature is unaffected.\n\n**Success** The creature is Frightened 1.\n\n**Failure** The creature is Frightened 2.\n\n**Critical Failure** The creature is Frightened 3 and fleeing for 1 round.\n\n---\n\n**Craft Requirements** The initial raw materials must include the larynx of a creature with a frightening screech.",
+  "why": "AoN equipment-1169-1109 (Screech Shooter (Greater), Guns & Gears (Remastered) pg. 155): \"A greater screech shooter is a +2 greater striking harmona gun. The DC for the activation is 30 and it affects creatures in a 40-foot emanation\", against the base page's \"All creatures in a 30-foot emanation from you must attempt a DC 25 Will save\" (equipment-1169). SUPERSEDES the shipped description row, carried whole and edited in exactly one sentence: the Effect line's two numbers become 40-foot and DC 30 (owner 2026-09-10 #72, option A - one sentence per grade carrying only that grade's numbers). The grade's rune line was already correct, and no other clause differs per grade in print, so nothing else moves. descRefs (the four frightened/fleeing condition links) are untouched - every label they name still appears verbatim."
  },
  {
   "category": "items",
   "id": "screech-shooter-major",
   "field": "description",
-  "value": "Built from the larynx of a terror shrike, or similar animal that possesses a frightening screech or similar special ability, a *major screech shooter* is a special *+2 greater striking harmona gun* designed to fire terrifying blasts of sound. A *screech shooter* deals sonic damage but can otherwise be used like a normal harmona gun.\n\n---\n\n**Activate—Screech Shot** ⟨2⟩ (emotion, manipulate, mental)\n\n**Frequency** once per hour\n\n---\n\n**Effect** The screech shooter unleashes a frightening wail. All creatures in a 30-foot emanation from you must attempt a DC 25 Will save.\n\n---\n\n**Critical Success** The creature is unaffected.\n\n**Success** The creature is Frightened 1.\n\n**Failure** The creature is Frightened 2.\n\n**Critical Failure** The creature is Frightened 3 and fleeing for 1 round.\n\n---\n\n**Craft Requirements** The initial raw materials must include the larynx of a creature with a frightening screech."
+  "value": "Built from the larynx of a terror shrike, or similar animal that possesses a frightening screech or similar special ability, a *major screech shooter* is a special *+2 greater striking harmona gun* designed to fire terrifying blasts of sound. A *screech shooter* deals sonic damage but can otherwise be used like a normal harmona gun.\n\n---\n\n**Activate—Screech Shot** ⟨2⟩ (emotion, manipulate, mental)\n\n**Frequency** once per hour\n\n---\n\n**Effect** The screech shooter unleashes a frightening wail. All creatures in a 50-foot emanation from you must attempt a DC 37 Will save.\n\n---\n\n**Critical Success** The creature is unaffected.\n\n**Success** The creature is Frightened 1.\n\n**Failure** The creature is Frightened 2.\n\n**Critical Failure** The creature is Frightened 3 and fleeing for 1 round.\n\n---\n\n**Craft Requirements** The initial raw materials must include the larynx of a creature with a frightening screech.",
+  "why": "AoN equipment-1169-1110 (Screech Shooter (Major), Guns & Gears (Remastered) pg. 155): \"The DC for the activation is 37 and it affects creatures in a 50-foot emanation\", against the base page's DC 25 / 30-foot emanation (equipment-1169). SUPERSEDES the shipped description row, carried whole with the Effect line's two numbers changed to 50-foot and DC 37 (owner 2026-09-10 #72). The major grade prints NO rune sentence of its own, so the shipped \"+2 greater striking\" first sentence is left exactly as it stands - changing it would be an invention, not a printed clause."
  },
  {
   "category": "items",
@@ -181097,43 +181441,8 @@
   "category": "feats",
   "id": "dream-magic",
   "field": "effectChoices",
-  "value": [
-   {
-    "id": "dream-magic-spell",
-    "prompt": "Dream Magic: choose Dream Message or Sleep (4th-rank occult innate spell, once per day)",
-    "options": [
-     {
-      "value": "dream-message",
-      "label": "Dream Message",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "dream-message",
-         "tradition": "occult",
-         "rank": 4,
-         "usesPerDay": 1
-        }
-       ]
-      }
-     },
-     {
-      "value": "sleep",
-      "label": "Sleep",
-      "grant": {
-       "innateSpells": [
-        {
-         "spellId": "sleep",
-         "tradition": "occult",
-         "rank": 4,
-         "usesPerDay": 1
-        }
-       ]
-      }
-     }
-    ]
-   }
-  ],
-  "why": "feat-8518 prints \"Choose dream message or sleep upon taking this feat; you learn this spell as a 4th-rank occult innate spell that you can cast once per day.\" The pick lane it currently runs through (FEAT_CANTRIP_GRANTS) has no rank field at all, so build.ts's castRank fell back to the spell's base rank — Sleep at 1st, Dream Message at 3rd. effectChoices.grant.innateSpells CAN carry the rank; this is the same lane move already made for colugos-traversal and empathic-calm for this exact reason (their comments in featCantripGrants.ts say so)."
+  "value": null,
+  "why": "feat-8518 Special: \"You can take this feat twice, gaining the spell you didn't select initially the second time.\" Retires the batch-031 overlay row whose whole value was [{\"id\":\"dream-magic-spell\",\"prompt\":\"Dream Magic: choose Dream Message or Sleep (4th-rank occult innate spell, once per day)\",\"options\":[{\"value\":\"dream-message\",\"label\":\"Dream Message\",\"grant\":{\"innateSpells\":[{\"spellId\":\"dream-message\",\"tradition\":\"occult\",\"rank\":4,\"usesPerDay\":1}]}},{\"value\":\"sleep\",\"label\":\"Sleep\",\"grant\":{\"innateSpells\":[{\"spellId\":\"sleep\",\"tradition\":\"occult\",\"rank\":4,\"usesPerDay\":1}]}}]}] - that value is carried WHOLE into the sibling `choice` row below (same two options, same labels, same grants, same rank 4 / usesPerDay 1 / occult), which is the only reason this one can be retired. An effectChoices answer is keyed by record id, so both takings shared it."
  },
  {
   "category": "feats",
@@ -185394,5 +185703,1163 @@
    }
   ],
   "why": "AoN innovation-5, Initial Modifications — Speed Boosters, verbatim: \"You gain a +5-foot status bonus to your Speed, which increases to a +10-foot status bonus when under the effects of Overdrive.\" (the mirror writes the first hyphen as U+2011). The standing +5 landed as `landSpeedBonus` 5 earlier in this batch; the Overdrive step had no carrier at all, so a speed-boosters-only inventor read +5 whether Overdrive was on or off. `whileActive` is the live lane activeStateGrants gates on classResources['overdrive'] (src/rules/derive.ts:1185, folded into deriveSpeeds at :5233), and land grants are ADDITIVE over landSpeedBonus, so +5 while the toggle is on reads exactly as the printed +10. WG agrees and is stricter than we were: `wg-show \"Speed Boosters\" --raw` is one conditional, IF ACTIVE_MODES NOT_INCLUDES overdrive AND NOT_INCLUDES 'critical overdrive' THEN SPEED +5 status ELSE SPEED +10 status. First assignment of the field on this record."
+ },
+ {
+  "category": "classFeatures",
+  "id": "antimagic-plating",
+  "field": "aonParentId",
+  "value": "innovation-1",
+  "why": "AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16, released 2025-02-18) prints the section \"Antimagic Plating\" verbatim; the shipped pointer innovation-5 is the 2021 Guns & Gears printing of the same Armor innovation, whose armor-modification block is pre-remaster (\"negative damage ... any types of alignment damage-good, evil, chaotic, lawful\", and a Table 2-2 with a +4 power suit at Strength 16 where we ship +5 at Strength 3). The record's own source.license is already ORC. No existing overlay row for this field on this record, so no supersedes."
+ },
+ {
+  "category": "classFeatures",
+  "id": "automated-impediments",
+  "field": "aonParentId",
+  "value": "innovation-1",
+  "why": "AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16) prints the section \"Automated Impediments\"; innovation-5 is the superseded 2021 Guns & Gears printing of the same Armor innovation. Record source.license is ORC. No existing overlay row for this field on this record, so no supersedes."
+ },
+ {
+  "category": "classFeatures",
+  "id": "camouflage-pigmentation",
+  "field": "aonParentId",
+  "value": "innovation-1",
+  "why": "AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16) prints the section \"Camouflage Pigmentation (Subterfuge Suit Only)\"; innovation-5 is the superseded 2021 Guns & Gears printing. Record source.license is ORC. No existing overlay row for this field on this record, so no supersedes."
+ },
+ {
+  "category": "classFeatures",
+  "id": "dense-plating",
+  "field": "aonParentId",
+  "value": "innovation-1",
+  "why": "AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16) prints the section \"Dense Plating\"; innovation-5 is the superseded 2021 Guns & Gears printing. Record source.license is ORC. No existing overlay row for this field on this record (its overlay rows are resistances and defensesRequire), so no supersedes."
+ },
+ {
+  "category": "classFeatures",
+  "id": "energy-barrier",
+  "field": "aonParentId",
+  "value": "innovation-1",
+  "why": "AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16) prints \"Energy Barrier ... resistance to all energy damage (acid, cold, electricity, fire, force, sonic, vitality, and void damage) equal to 2 + half your level\", which is our shipped resistances list exactly; innovation-5, the 2021 printing, prints the same clause with \"negative, positive\" in place of vitality/void, contradicting our own data. No existing overlay row for this field on this record (its overlay rows are resistances, defensesRequire and requiresModification), so no supersedes."
+ },
+ {
+  "category": "classFeatures",
+  "id": "enhanced-resistance",
+  "field": "aonParentId",
+  "value": "innovation-1",
+  "why": "AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16) prints the section \"Enhanced Resistance\"; innovation-5 is the superseded 2021 Guns & Gears printing. Record source.license is ORC. No existing overlay row for this field on this record, so no supersedes."
+ },
+ {
+  "category": "classFeatures",
+  "id": "harmonic-oscillator",
+  "field": "aonParentId",
+  "value": "innovation-1",
+  "why": "AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16) prints the section \"Harmonic Oscillator\"; innovation-5 is the superseded 2021 Guns & Gears printing. Record source.license is ORC. No existing overlay row for this field on this record, so no supersedes."
+ },
+ {
+  "category": "classFeatures",
+  "id": "heavy-construction",
+  "field": "aonParentId",
+  "value": "innovation-1",
+  "why": "AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16) prints the section \"Heavy Construction (Power Suit Only)\"; innovation-5 is the superseded 2021 Guns & Gears printing, whose Table 2-2 power suit (+4, Strength 16) is not the one this record's armorRestat row builds on. No existing overlay row for this field on this record, so no supersedes."
+ },
+ {
+  "category": "classFeatures",
+  "id": "hyper-boosters",
+  "field": "aonParentId",
+  "value": "innovation-1",
+  "why": "AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16) prints the section \"Hyper Boosters\"; innovation-5 is the superseded 2021 Guns & Gears printing. Record source.license is ORC. No existing overlay row for this field on this record (its overlay rows are landSpeedBonus, whileActive and requiresModification), so no supersedes."
+ },
+ {
+  "category": "classFeatures",
+  "id": "incredible-resistance",
+  "field": "aonParentId",
+  "value": "innovation-1",
+  "why": "AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16) prints the section \"Incredible Resistance\"; innovation-5 is the superseded 2021 Guns & Gears printing. Record source.license is ORC. No existing overlay row for this field on this record (its overlay row is choice), so no supersedes."
+ },
+ {
+  "category": "classFeatures",
+  "id": "layered-mesh",
+  "field": "aonParentId",
+  "value": "innovation-1",
+  "why": "AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16) prints the section \"Layered Mesh\"; innovation-5 is the superseded 2021 Guns & Gears printing. Record source.license is ORC. No existing overlay row for this field on this record, so no supersedes."
+ },
+ {
+  "category": "classFeatures",
+  "id": "metallic-reactance",
+  "field": "aonParentId",
+  "value": "innovation-1",
+  "why": "AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16) prints \"Metallic Reactance ... resistance equal to 3 + half your level to acid and electricity damage. When under the effects of Overdrive, the resistance increases by 2.\", matching our resistances and whileActive rows; innovation-5 is the superseded 2021 printing. No existing overlay row for this field on this record, so no supersedes."
+ },
+ {
+  "category": "classFeatures",
+  "id": "multisensory-mask",
+  "field": "aonParentId",
+  "value": "innovation-1",
+  "why": "AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16) prints the section \"Multisensory Mask (Subterfuge Suit Only)\"; innovation-5 is the superseded 2021 Guns & Gears printing. Record source.license is ORC. No existing overlay row for this field on this record, so no supersedes."
+ },
+ {
+  "category": "classFeatures",
+  "id": "muscular-exoskeleton",
+  "field": "aonParentId",
+  "value": "innovation-1",
+  "why": "AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16) prints the section \"Muscular Exoskeleton (Power Suit Only)\"; innovation-5 is the superseded 2021 Guns & Gears printing. Record source.license is ORC. No existing overlay row for this field on this record, so no supersedes."
+ },
+ {
+  "category": "classFeatures",
+  "id": "otherworldly-protection",
+  "field": "aonParentId",
+  "value": "innovation-1",
+  "why": "AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16) prints \"Otherworldly Protection ... resistance equal to 3 + half your level to void damage, or to vitality damage if you have void healing (such as if you're a dhampir). You gain the same amount of resistance to spirit damage. If you are sanctified ...\", which is our five resistances rows (void, vitality-when-void-healing, spirit, unholy-vs-holy, holy-vs-unholy) exactly; innovation-5, the 2021 printing, prints \"negative damage, or to positive damage if you have negative healing\" plus \"any types of alignment damage-good, evil, chaotic, lawful\", which contradicts our own data. No existing overlay row for this field on this record (its overlay row is resistances), so no supersedes."
+ },
+ {
+  "category": "classFeatures",
+  "id": "perfect-fortification",
+  "field": "aonParentId",
+  "value": "innovation-1",
+  "why": "AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16) prints the section \"Perfect Fortification (Power Suit Only)\"; innovation-5 is the superseded 2021 Guns & Gears printing. Record source.license is ORC. No existing overlay row for this field on this record (its overlay row is resistances), so no supersedes."
+ },
+ {
+  "category": "classFeatures",
+  "id": "phlogistonic-regulator",
+  "field": "aonParentId",
+  "value": "innovation-1",
+  "why": "AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16) prints the section \"Phlogistonic Regulator\"; innovation-5 is the superseded 2021 Guns & Gears printing. Record source.license is ORC. No existing overlay row for this field on this record (its overlay row is resistances), so no supersedes."
+ },
+ {
+  "category": "classFeatures",
+  "id": "physical-protections",
+  "field": "aonParentId",
+  "value": "innovation-1",
+  "why": "AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16) prints \"Physical Protections ... resistance to all physical damage (bludgeoning, piercing, and slashing damage, as well as persistent bleed damage) equal to half your level\", matching our four resistances rows; innovation-5 is the superseded 2021 printing. No existing overlay row for this field on this record (its overlay rows are resistances, defensesRequire and requiresModification), so no supersedes."
+ },
+ {
+  "category": "classFeatures",
+  "id": "speed-boosters",
+  "field": "aonParentId",
+  "value": "innovation-1",
+  "why": "AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16) prints the section \"Speed Boosters\"; innovation-5 is the superseded 2021 Guns & Gears printing. Record source.license is ORC. No existing overlay row for this field on this record (its overlay rows are landSpeedBonus and whileActive), so no supersedes."
+ },
+ {
+  "category": "classFeatures",
+  "id": "subtle-dampeners",
+  "field": "aonParentId",
+  "value": "innovation-1",
+  "why": "AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16) prints the section \"Subtle Dampeners (Subterfuge Suit Only)\"; innovation-5 is the superseded 2021 Guns & Gears printing. Record source.license is ORC. No existing overlay row for this field on this record, so no supersedes."
+ },
+ {
+  "category": "classFeatures",
+  "id": "tensile-absorption",
+  "field": "aonParentId",
+  "value": "innovation-1",
+  "why": "AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16) prints the section \"Tensile Absorption\"; innovation-5 is the superseded 2021 Guns & Gears printing. Record source.license is ORC. No existing overlay row for this field on this record (its overlay rows are resistances, otherTags and defensesRequire), so no supersedes."
+ },
+ {
+  "category": "items",
+  "id": "power-suit",
+  "field": "aonParentId",
+  "value": "innovation-1",
+  "why": "Our power suit ships acBonus 5 / dexCap 1 / checkPenalty -2 / speedPenalty -5 / strength 3, which is Table 2-2 of AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16) row by row. The shipped pointer innovation-5 prints a DIFFERENT table for the same suit - \"+4 ... 16\" - so the provenance pointer names a printing our own statistics contradict. No existing overlay row for this field on this record, so no supersedes."
+ },
+ {
+  "category": "items",
+  "id": "subterfuge-suit",
+  "field": "aonParentId",
+  "value": "innovation-1",
+  "why": "Our subterfuge suit ships acBonus 2 / dexCap 4 / checkPenalty -1 / strength 0, which is Table 2-2 of AoN innovation-1 (Armor, Guns & Gears (Remastered) pg. 16); innovation-5 prints \"+1 ... 10\" for the same row. The pointer names a printing our own statistics contradict. No existing overlay row for this field on this record, so no supersedes."
+ },
+ {
+  "category": "classFeatures",
+  "id": "energy-barrier",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder Guns & Gears",
+   "license": "ORC"
+  },
+  "why": "Same defect as the pointer row above, one field over: this record's resistances are AoN innovation-1's remastered list (acid, cold, electricity, fire, force, sonic, vitality, void), not innovation-5's OGL-era list (\"negative, positive\"), yet it alone of the 21 armor-innovation modifications is stamped license \"OGL\". Value matches its twenty sibling modifications and both innovation items byte for byte ({book: \"Pathfinder Guns & Gears\", license: \"ORC\"}), so only the license changes. No existing overlay row for this field on this record, so no supersedes."
+ },
+ {
+  "category": "feats",
+  "id": "fear-no-law-fear-no-one",
+  "field": "description",
+  "value": "When your allies see you stand up to fear, they become similarly emboldened. Make a Strike. If you hit and deal damage, each ally within a 20-foot emanation around you who can see you reduces the value of their frightened condition by 1. If the target of your Strike was the source of their frightened condition, they reduce the value by 2 instead.",
+  "why": "AoN hellknight-order-14 prints \"each ally within a 20-foot emanation around you who can see you reduces the value of their frightened condition by 1\". Our shipped text reads \"each ally within a around you\" — the emanation distance was deleted by the inline-value cleaner, the defect class of project_hh_dropped_inline_values. The row restores exactly the two missing tokens (\"20-foot emanation \") and changes nothing else; it never replaces our wording with mirror text."
+ },
+ {
+  "category": "backgrounds",
+  "id": "streetfood-vendor",
+  "field": "description",
+  "value": "You're an inspired chef, trying to make it as big as you can out on the open road. You travel with a wood or iron cart that doubles as your portable business and shelter. Struggling for funds or fighting for a place to set up shop are common plights in your daily life. However, there's no one hungrier than a budding adventurer, and you're very affordable, always there with the perfect meal.\n\nChoose two attribute boosts. One must be to **Strength** or **Dexterity**, and one is a free attribute boost.\n\nYou're trained in your choice of either the Crafting or Society skill, as well as the Cooking Lore skill. You gain the Seasoned skill feat.\n\n---\n\n## Background details\n\n**Attribute Boosts** Dexterity or Strength, one free\n\n**Lore** Cooking Lore\n\n**Skill Feat** Seasoned",
+  "why": "background-479 is the record's AoN doc, but its mirror copy is STALE; the current Tian Xia Character Guide pg. 11 page reads \"You're trained in your choice of either the Crafting or Society skill, as well as the Cooking Lore skill. You gain the Seasoned skill feat.\" Our text had been rewritten to \"either Crafting or Society\". Owner 2026-09-10 #82."
+ },
+ {
+  "category": "feats",
+  "id": "wild-lights",
+  "field": "description",
+  "value": "When you cast Dancing Lights, you can modify its duration to be 1 minute and modify its standard effects to create a single floating light in the shape of a Tiny creature, instead of up to four floating lights. The creature hovers over your head unless you spend a single action that has the concentrate trait to direct the light to move up to 30 feet, in which case it remains there until you direct it again. If you direct it back to your head, it hovers there and follows you again until you direct it elsewhere. If the light ever moves beyond 120 feet of you, it winks out immediately.",
+  "why": "feat-3375 \"When you cast dancing lights , you can modify its duration to be 1 minute and modify its standard effects to create a single floating light in the shape of a Tiny creature, instead of up to four floating lights.\" - the printed spell name is Dancing Lights and the import rewrote it to Light. Owner 2026-09-10 #70/#71 standing rule: never rewrite a printed spell name."
+ },
+ {
+  "category": "feats",
+  "id": "wild-lights",
+  "field": "note",
+  "value": "Dancing Lights is a legacy spell that the Remaster replaced with Light. This feat's modification is printed for Dancing Lights and is not applied to Light.",
+  "why": "feat-3375 names dancing lights and nothing else, and we ship no `dancing-lights` record, so the feat names a spell the player cannot reach. Owner 2026-09-10 #70/#71: one short line clearly marked as ours saying Light is the spell that replaced Dancing Lights, with NO mechanical rider on Light. `note` is the lane for exactly that - our voice, rendered as \"Note:\" under the feat on a built character (src/sheet/FeatsTab.tsx:131) and never mistaken for printed text."
+ },
+ {
+  "category": "feats",
+  "id": "wild-lights",
+  "field": "descRefs",
+  "value": [],
+  "why": "feat-3375 names dancing lights, never Light; the sole descRefs entry was an import-time link to spells/Light, which pointed the reader at a spell this feat does not modify. Owner 2026-09-10 #70/#71: remove the link, add no mechanical rider on Light. Empty array rather than null - see this finding's note for why a null prose row cannot be replayed."
+ },
+ {
+  "category": "feats",
+  "id": "toppling-tentacles",
+  "field": "spellNotes",
+  "value": [
+   {
+    "spellId": "black-tentacles",
+    "note": "When you cast Black Tentacles, replace the spell's standard effects with the following: Tentacles slither along the ground in the area, attempting to hinder anyone within. Sticky black tentacles attempt to Trip each creature in the area. Attempt spell attack rolls against the Reflex DCs of each affected creature. Any creature you succeed against is knocked prone and takes 3d6 bludgeoning damage. Whenever a creature ends its turn in the area, the tentacles attempt to Trip that creature if it isn't already prone, and they deal 1d6 bludgeoning damage to any creature already prone. Creatures treat the spell's area as difficult terrain."
+   },
+   {
+    "spellId": "slither",
+    "note": "Printed for Black Tentacles, which Slither replaced. When you cast Slither, replace the spell's standard effects with the following: Tentacles slither along the ground in the area, attempting to hinder anyone within. Sticky black tentacles attempt to Trip each creature in the area. Attempt spell attack rolls against the Reflex DCs of each affected creature. Any creature you succeed against is knocked prone and takes 3d6 bludgeoning damage. Whenever a creature ends its turn in the area, the tentacles attempt to Trip that creature if it isn't already prone, and they deal 1d6 bludgeoning damage to any creature already prone. Creatures treat the spell's area as difficult terrain."
+   }
+  ],
+  "why": "feat-3391 \"When you cast black tentacles , replace the spell's standard effects with the following: Tentacles slither along the ground in the area, attempting to hinder anyone within.\" - the feat's entire rule is a modification of a spell, and it reached neither Black Tentacles (hidden as superseded) nor Slither (its recorded replacement). Owner 2026-09-10 #70/#71: print it on the printed spell with its name intact, and on the replacement where the effect still works."
+ },
+ {
+  "category": "feats",
+  "id": "toppling-tentacles",
+  "field": "description",
+  "value": "When you cast Black Tentacles, replace the spell's standard effects with the following: Tentacles slither along the ground in the area, attempting to hinder anyone within. Sticky black tentacles attempt to Trip each creature in the area. Attempt spell attack rolls against the Reflex DCs of each affected creature. Any creature you succeed against is knocked prone and takes 3d6 bludgeoning damage. Whenever a creature ends its turn in the area, the tentacles attempt to Trip that creature if it isn't already prone, and they deal 1d6 bludgeoning damage to any creature already prone. Creatures treat the spell's area as difficult terrain.",
+  "why": "feat-3391 \"Any creature you succeed against is knocked prone and takes 3d6 bludgeoning damage. Whenever a creature ends its turn in the area, the tentacles attempt to Trip that creature if it isn't already prone, and they deal 1d6 bludgeoning damage to any creature already prone.\" - our stored copy had lost the word \"bludgeoning\" from both damage lines at import, so the feat's whole page named no damage type."
+ },
+ {
+  "category": "feats",
+  "id": "arcana-of-iron",
+  "field": "situational",
+  "value": [
+   {
+    "targets": [
+     {
+      "kind": "strikeDamage"
+     }
+    ],
+    "when": "until the end of your turn, on the weapon or unarmed attack you siphoned spell energy into with Bespell Strikes",
+    "bonus": "the extra damage is 1d8 instead of 1d6"
+   }
+  ],
+  "why": "AoN feat-7980 (Arcana of Iron, Battlecry! pg. 82): \"The extra damage you deal with Bespell Strikes increases to 1d8.\" The clause reached nothing on the record - Bespell Strikes (feat-5028) deals \"an extra 1d6 force damage\" only in prose, so the upgrade had no number-carrying lane either. `situational` is the lane the reader already exists for: explain.ts's take() walk over c.feats (src/rules/explain.ts:583) files the clause under the feat's id and it surfaces as a star in the strike-damage breakdown, which is where the player needs it. Not a flat strikeDamage bonus: it applies only after a non-cantrip spell, once per turn, on one weapon - a number would be wrong on every other Strike. Existing overlay rows for this record are grantsClassFeatures only, so no supersedes."
+ },
+ {
+  "category": "items",
+  "id": "astrolabe-of-falling-stars",
+  "field": "situational",
+  "value": [
+   {
+    "targets": [
+     {
+      "kind": "skill",
+      "detail": "all"
+     }
+    ],
+    "when": "on checks to identify celestial bodies, if you are trained in Survival and hold the astrolabe in two hands",
+    "bonus": "+1 item",
+    "whileCarried": true
+   }
+  ],
+  "why": "AoN equipment-4028 (Astrolabe of Falling Stars): \"An astrolabe of falling stars can be used as a mariner's astrolabe\", and the base astrolabe (equipment-4027) prints \"An astrolabe also grants a +1 item bonus to checks to identify celestial bodies\" with NO skill named. Byte-identical in shape and wording to the shipped `astrolabe` entry in src/rules/situationalBonuses.ts:2995 and its five siblings (astrolabe-standard, astrolabe-mariners, standard-astrolabe, mariners-astrolabe, aon-astrolabe) - all on skill/all, not narrowed to Survival as WG does (owner 2026-09-10 #51). Authored as DATA rather than a code entry because this chunk may not edit src/: the reader is the item walk at src/rules/explain.ts:552, gated on itemInUse, which is the same channel the code table feeds. Existing overlay rows for this record are `frequency` only, so no supersedes. VERIFIER (b037 data-rows-6): `whileCarried: true` added, or the clause is unreachable. `itemInUse` needs worn/invested/equipped/attachedTo (derive.ts:278), and an itemType `equipment` record with no `invested` trait gets NO Wear/Wield control (equipControl, InventoryTab.tsx:72 returns null off itemType) and is refused by the drag path (`isEquippable`, InventoryTab.tsx:732), so a player can never put an astrolabe in use - the same state the flag's own doc-comment was written for (\"nothing in the app equips a loose crystal, so the equip test hid that clause outright rather than qualifying it\", situationalBonuses.ts:79-87). The printed requirement (trained in Survival, held in two hands) stays stated in `when`, so the clause qualifies itself instead of going dark. The six sibling astrolabes carry their star in the CODE table and are dark for the same reason - see CROSS-FILE GAPS."
+ },
+ {
+  "category": "feats",
+  "id": "versatile-mutation",
+  "field": "maxTakable",
+  "why": "feat-5454's full printed text ends \"...and adds that trait to the action.\" — there is no Special clause, and a corpus grep of the AoN mirror's feat documents for \"second time at 16th level\" finds none. The record shipped `maxTakable: 2`, letting the feat be taken twice on nothing but invented text. Deleted; `maxTakes()` reads an absent field as 1.",
+  "value": null
+ },
+ {
+  "category": "feats",
+  "id": "versatile-mutation",
+  "field": "description",
+  "why": "feat-5454's whole body is \"Your ostilli's darts can deal different types of damage. When you Spit Ambient Magic, you can choose to have the ostilli deal bludgeoning or slashing damage instead of piercing damage. At 8th level, choose one of the following: acid, cold, electricity, fire, or sonic damage; when your ostilli Spits Ambient Magic, it can deal that damage type instead and adds that trait to the action.\" Our description appended a \"**Special** You can take this feat a second time at 16th level...\" paragraph that appears in no document in the AoN mirror — it is the text the false `maxTakable: 2` was read from. Restored to the printed body, verbatim.",
+  "value": "Your ostilli's darts can deal different types of damage. When you Spit Ambient Magic, you can choose to have the ostilli deal bludgeoning or slashing damage instead of piercing damage. At 8th level, choose one of the following: acid, cold, electricity, fire, or sonic damage; when your ostilli Spits Ambient Magic, it can deal that damage type instead and adds that trait to the action."
+ },
+ {
+  "category": "items",
+  "id": "unifying-emblem-shundar-quah",
+  "field": "innateSpells",
+  "value": [
+   {
+    "spellId": "thoughtful-gift",
+    "rank": 1,
+    "usesPerDay": 1
+   }
+  ],
+  "why": "equipment-2223-1924 \"Frequency once per day; Effect The tattoo casts its spell.\" plus \"The tattoo of the Spire clan depicts a cracked stone with a metal vein inside. It can cast thoughtful gift.\" Thoughtful Gift is a rank-1 spell whose own Cast is 1 action, which is the activationCost the record already shows."
+ },
+ {
+  "category": "items",
+  "id": "unifying-emblem-sklar-quah",
+  "field": "innateSpells",
+  "value": [
+   {
+    "spellId": "concordant-choir",
+    "rank": 1,
+    "usesPerDay": 1
+   }
+  ],
+  "why": "equipment-2223-1925 \"Frequency once per day; Effect The tattoo casts its spell.\" plus \"The tattoo of the Sun clan depicts a songbird with flame emitting from its beak. It can cast concordant choir.\" Concordant Choir is rank 1."
+ },
+ {
+  "category": "items",
+  "id": "unifying-emblem-sklar-quah",
+  "field": "activationCost",
+  "value": {
+   "type": "variable",
+   "min": 1,
+   "max": 3
+  },
+  "why": "equipment-2223-1925 \"Activate - the actions required to Activate the tattoo are the same as those needed to cast its spell\"; Concordant Choir (spell-1548 family, our spells/concordant-choir) casts in 1 to 3 actions, so the emblem's activation is variable 1-3 rather than absent."
+ },
+ {
+  "category": "items",
+  "id": "unifying-emblem-tamiir-quah",
+  "field": "innateSpells",
+  "value": [
+   {
+    "spellId": "tailwind",
+    "rank": 1,
+    "usesPerDay": 1
+   }
+  ],
+  "why": "equipment-2223-1920 \"Frequency once per day; Effect The tattoo casts its spell.\" plus \"The tattoo of the Wind clan depicts a pegasus riding a gust of wind. It can cast tailwind.\" Tailwind is rank 1 and casts in 2 actions, matching the activation the record already carries."
+ },
+ {
+  "category": "feats",
+  "id": "hardened-chassis",
+  "field": "effectChoices",
+  "value": [
+   {
+    "id": "hardened-chassis-enhancement",
+    "prompt": "Hardened Chassis (Enhancement) — which benefit",
+    "options": [
+     {
+      "value": "all-physical",
+      "label": "Resistance 3 to all physical damage",
+      "grant": {
+       "resistances": [
+        {
+         "type": "physical",
+         "value": 3,
+         "condition": "still bypassed by adamantine"
+        }
+       ]
+      }
+     },
+     {
+      "value": "raise-bludgeoning",
+      "label": "Raise your bludgeoning resistance to half your level (minimum 3)",
+      "onlyWhenFlag": {
+       "flag": "hardenedChassisDamage",
+       "value": "bludgeoning"
+      },
+      "grant": {
+       "resistances": [
+        {
+         "type": "bludgeoning",
+         "value": "max(3,floor(@actor.level/2))",
+         "condition": "still bypassed by adamantine"
+        }
+       ]
+      }
+     },
+     {
+      "value": "raise-piercing",
+      "label": "Raise your piercing resistance to half your level (minimum 3)",
+      "onlyWhenFlag": {
+       "flag": "hardenedChassisDamage",
+       "value": "piercing"
+      },
+      "grant": {
+       "resistances": [
+        {
+         "type": "piercing",
+         "value": "max(3,floor(@actor.level/2))",
+         "condition": "still bypassed by adamantine"
+        }
+       ]
+      }
+     },
+     {
+      "value": "raise-slashing",
+      "label": "Raise your slashing resistance to half your level (minimum 3)",
+      "onlyWhenFlag": {
+       "flag": "hardenedChassisDamage",
+       "value": "slashing"
+      },
+      "grant": {
+       "resistances": [
+        {
+         "type": "slashing",
+         "value": "max(3,floor(@actor.level/2))",
+         "condition": "still bypassed by adamantine"
+        }
+       ]
+      }
+     }
+    ]
+   }
+  ],
+  "why": "feat-9400 \"Enhancement Your chassis gets even tougher. Choose one of the following benefits: you gain resistance 3 to all physical damage, or your chosen resistance increases to a value equal to half your level (minimum 3). This resistance is still bypassed by adamantine.\" - the choice print states, with the chosen type taken from this record's own base answer."
+ },
+ {
+  "category": "feats",
+  "id": "hardened-chassis",
+  "field": "enhancement",
+  "value": {
+   "choiceIds": [
+    "hardened-chassis-enhancement"
+   ]
+  },
+  "why": "ancestry-98 \"You don't gain the benefits of the enhancement unless you take a feat that grants you those benefits, such as Lesser Augmentation.\" choiceIds is the gate build.ts applies for exactly that clause, so the question is asked (and the grant applied) only while Lesser or Greater Augmentation names feat-9400."
+ },
+ {
+  "category": "feats",
+  "id": "armigers-protection",
+  "field": "choice",
+  "value": {
+   "flag": "hellknightDedication",
+   "prompt": "Your free non-magical suit of Hellknight armor",
+   "kind": "array",
+   "options": [
+    {
+     "value": "hellknight-breastplate",
+     "label": "Hellknight Breastplate",
+     "description": "Medium armor. This feat always trains you in it, so this suit is always a legal choice."
+    },
+    {
+     "value": "hellknight-half-plate",
+     "label": "Hellknight Half Plate",
+     "description": "Heavy armor. Trained only if you were already trained in light armor AND medium armor when you took this feat."
+    },
+    {
+     "value": "hellknight-plate",
+     "label": "Hellknight Plate",
+     "description": "Heavy armor. Trained only if you were already trained in light armor AND medium armor when you took this feat."
+    }
+   ],
+   "note": "Print gives you \"a non-magical suit of Hellknight armor of a type you become trained in\". Hellknight half plate and Hellknight plate are types you become trained in only if you were already trained in light armor and medium armor when you took this feat."
+  },
+  "why": "feat-8814 \"In addition, when you choose this feat, you receive a non-magical suit of Hellknight armor of a type you become trained in (Hellknight breastplate, Hellknight half plate, or Hellknight plate).\" and \"If you were already trained in light armor and medium armor, you gain training in Hellknight half plate and Hellknight plate.\""
+ },
+ {
+  "category": "feats",
+  "id": "haunting-memories-skill-feat",
+  "create": true,
+  "value": {
+   "id": "haunting-memories-skill-feat",
+   "name": "Haunting Memories (Skill Feat)",
+   "level": 8,
+   "category": "bonus",
+   "traits": [],
+   "rarity": "common",
+   "source": {
+    "book": "Pathfinder Lost Omens Shining Kingdoms",
+    "license": "ORC"
+   },
+   "prerequisites": [
+    "Haunting Memories"
+   ],
+   "actionCost": {
+    "type": "passive"
+   },
+   "archetype": "ghost",
+   "aonParentId": "feat-7701",
+   "aonSection": "Haunting Memories",
+   "choice": {
+    "flag": "hauntingMemorySkillFeat",
+    "prompt": "Haunting Memories — this morning's borrowed skill feat",
+    "kind": "open",
+    "daily": true,
+    "from": {
+     "type": "feat",
+     "featCategory": "skill",
+     "grantFeat": true,
+     "excludeOwn": true,
+     "maxLevel": 4,
+     "maxLevelByLevel": [
+      {
+       "level": 10,
+       "maxLevel": 5
+      },
+      {
+       "level": 12,
+       "maxLevel": 6
+      },
+      {
+       "level": 14,
+       "maxLevel": 7
+      },
+      {
+       "level": 16,
+       "maxLevel": 8
+      },
+      {
+       "level": 18,
+       "maxLevel": 9
+      },
+      {
+       "level": 20,
+       "maxLevel": 10
+      }
+     ]
+    },
+    "note": "It must be a skill feat whose minimum requirement is the rank you raised your chosen skill to this morning — the app cannot filter on prerequisite text, so that half is yours to honour. The list is already capped at half your level, as print requires for its level prerequisite. The feat lasts until your next daily preparations, so it can't be a prerequisite for a permanent character option."
+   }
+  },
+  "why": "feat-7701 \"You also gain one skill feat with a minimum requirement of your new rank in the chosen skill. For the purpose of meeting level prerequisites for this feat, your level is equal to half your level.\" A second daily-preparations question needs its own record because a record carries exactly one choice def and feats/haunting-memories' is already the proficiency pick."
+ },
+ {
+  "category": "feats",
+  "id": "haunting-memories",
+  "field": "grantsFeats",
+  "value": [
+   "haunting-memories-skill-feat"
+  ],
+  "why": "feat-7701 - the same sentence. This is the hand-over: build.ts:5410 reads a taken feat's grantsFeats, so the carrier joins c.feats and its daily question joins the morning list."
+ },
+ {
+  "category": "feats",
+  "id": "haunting-memories",
+  "path": [
+   "choice"
+  ],
+  "field": "note",
+  "value": "Your new rank lasts until your next daily preparations. The skill feat print gives you alongside it is now its own question below.",
+  "why": "feat-7701 - the old note stood in for the missing mechanic (\"Take it as a temporary feat — for its level prerequisite only, count your level as half your level\"), which is the defect this finding names; with the pick built, the note must stop telling the player to do it by hand."
+ },
+ {
+  "category": "feats",
+  "id": "dream-magic",
+  "field": "choice",
+  "value": {
+   "flag": "dreamMagicSpell",
+   "prompt": "Dream Magic: choose Dream Message or Sleep (4th-rank occult innate spell, once per day)",
+   "kind": "array",
+   "distinctAcrossTakes": true,
+   "options": [
+    {
+     "value": "dream-message",
+     "label": "Dream Message",
+     "grant": {
+      "innateSpells": [
+       {
+        "spellId": "dream-message",
+        "tradition": "occult",
+        "rank": 4,
+        "usesPerDay": 1
+       }
+      ]
+     }
+    },
+    {
+     "value": "sleep",
+     "label": "Sleep",
+     "grant": {
+      "innateSpells": [
+       {
+        "spellId": "sleep",
+        "tradition": "occult",
+        "rank": 4,
+        "usesPerDay": 1
+       }
+      ]
+     }
+    }
+   ]
+  },
+  "why": "feat-8518: \"Choose dream message or sleep upon taking this feat; you learn this spell as a 4th-rank occult innate spell that you can cast once per day.\" + \"Special You can take this feat twice, gaining the spell you didn't select initially the second time.\" A record `choice` is answered per feat ENTRY, so the two takings hold two answers and build.ts applies each option's grant once per entry; `distinctAcrossTakes` greys the first taking's answer on the second picker (build.ts:2036), which is what forces the spell not chosen initially."
+ },
+ {
+  "category": "modes",
+  "id": "scar-of-the-survivor",
+  "create": true,
+  "value": {
+   "id": "scar-of-the-survivor",
+   "name": "Scar of the Survivor (immanence)",
+   "feats": [
+    "scar-of-the-survivor"
+   ],
+   "duration": "while your divine spark is in the scar",
+   "modifiers": [
+    {
+     "value": 1,
+     "type": "status",
+     "target": "save",
+     "detail": "fortitude",
+     "appliesWhen": "while your divine spark is in the scar"
+    }
+   ],
+   "note": "Immanence: divine energy spreads outward from your scar, reinforcing your flesh. You gain the benefits of the Diehard feat - you die from the dying condition at dying 5 rather than dying 4 - and a +1 status bonus to Fortitude saving throws. The Fortitude bonus is applied while this toggle is on; the dying value is not moved yet (the sheet's death threshold has no toggle-driven lane), so raise it by hand while the spark is in the scar.",
+   "aonOrigin": "authored"
+  },
+  "why": "ikon-13 Immanence: \"Divine energy spreads outward from your scar, reinforcing your flesh. You gain the benefits of the Diehard feat and a +1 status bonus to Fortitude saving throws.\" Both halves are conditional on the divine spark being in this ikon, so both belong behind one toggle rather than on the always-on record - batch 034 already retired the ungated grantsFeats:[\"diehard\"] row for that reason."
+ },
+ {
+  "category": "modes",
+  "id": "soul-well",
+  "create": true,
+  "value": {
+   "id": "soul-well",
+   "name": "Soul Well",
+   "feats": [
+    "soul-well"
+   ],
+   "duration": "1 minute",
+   "modifiers": [],
+   "note": "For 1 minute, incorporeal undead treat all squares within 30 feet of you as difficult terrain, and living creatures within the same area die from the dying condition at dying 5 rather than dying 4 - you included, while you stand in your own well. Raise the death threshold by hand while this is on; the sheet has no toggle-driven death threshold yet. If a living creature's dying value increases while within your Soul Well, your spectral dagger deals one additional weapon die of damage until the end of your next turn.",
+   "aonOrigin": "authored"
+  },
+  "why": "feat-7707: \"For the next minute, incorporeal undead treat all squares within 30 feet of you as difficult terrain and living creatures within the same area die from the dying condition at dying 5 rather than dying 4.\" A one-minute activity is a toggle, not a permanent character field."
+ },
+ {
+  "category": "items",
+  "id": "merchants-scale",
+  "field": "description",
+  "value": "Source Player Core pg. 290 Price 2 sp Hands 2 Bulk L",
+  "why": "equipment-2734 (and the legacy equipment-34) print the entire entry as \"Merchant's Scale Source Player Core pg. 290 Price 2 sp Hands 2 Bulk L\" - there is no rules body, so the description is that entry and nothing else. CLOSER CORRECTION (batch 037 apply pre-check 5): the value this spec first carried opened with an authored marker sentence (\"Heroes Heaven note (not printed text) - the book prints no rules for this item...\"), and the pre-check refused it because every word of it is in NEITHER our current text nor the mirror - the guard forbids authored prose in a description row, which is exactly what owner ruling 2026-09-10 #17 asked for. Restated as print's own entry, VERBATIM AND IN PRINT'S OWN ORDER (the applier's unbackedRun check refused a reordered version too, and rightly: only a contiguous run the mirror actually prints is safe), which needs no marker because it IS the printed text; the marker wording, and the 243 OTHER items that ship an empty description for the same reason, are queued for the owner in work/.b037-queue.json. Inventing flavour text, or copying Wanderer's Guide's +1 item bonus to seven skills, would both be text the book does not have."
+ },
+ {
+  "category": "modes",
+  "id": "item-mask-of-the-mantis-major",
+  "create": true,
+  "value": {
+   "id": "item-mask-of-the-mantis-major",
+   "name": "Vernai's Ire",
+   "fromItemId": "mask-of-the-mantis-major",
+   "duration": "until you use the ability again to extinguish the glow",
+   "modifiers": [
+    {
+     "value": 3,
+     "type": "item",
+     "target": "skill",
+     "detail": "intimidation"
+    }
+   ],
+   "note": "Requirements You are a member of the Vernai. Two Actions (concentrate): the mask's eyes shimmer with crimson light, a far more harrowing visage. The light is illumination equivalent to a candle. Use the ability again to extinguish the glow; as long as Vernai's Ire remains active you gain a +3 item bonus to Intimidation checks.",
+   "aonOrigin": "authored"
+  },
+  "why": "equipment-3497-3391, Activate-Vernai's Ire: \"as long as Vernai's Ire remains active, you gain a +3 item bonus to Intimidation checks.\" The Major block prints the item bonus as +3 for both Perception and Intimidation; Perception is already passiveEffects.perception 3, but the Intimidation half is switched on and off by an activation, so a passive would give it to a mask nobody has activated and to a wearer who is not Vernai. VERIFIER: the note said \"One action\" because the SHIPPED DESCRIPTION says so; the page says Two Actions, and the description row below fixes the description too."
+ },
+ {
+  "category": "items",
+  "id": "mask-of-the-mantis-major",
+  "field": "description",
+  "value": "The traditional headwear for the Red Mantis assassin is the *mask of the mantis*. Most of these masks are constructed from hard leather helmets that serve to obscure the assassin's identity and give them the appearance of possessing a mantis's head. Some variants, however, consist only of the mask itself, and are meant to be worn over the face. Regardless of the shape and style, all masks of the mantis function the same.\n\nMembers of the Vernai can use any *mask of the mantis* to enhance their frightening presence—something they often do simply to reveal their standing in the society without speaking a word, as detailed fully in the entry for Vernai's Ire activation below.\n\nWhile wearing a *mask of the mantis*, you gain a +3 item bonus to Perception checks.\n\n---\n\n**Activate—Enhance Vision** ⟨2⟩ (concentrate, manipulate)\n\n**Frequency** once per day\n\n**Effect** You cast either Darkvision or See the Unseen on yourself.\n\n---\n\n**Activate—Vernai's Ire** ⟨2⟩ (concentrate)\n\n**Requirements** You are a member of the Vernai\n\n**Effect** You cause the *mask of the mantis's* eyes to shimmer with crimson light, granting yourself a far more harrowing visage. This light creates illumination equivalent to that of a candle. You can use this ability again to extinguish the frightening glow, but as long as Vernai's Ire remains active, you gain a +3 item bonus to Intimidation checks.\n\n---\n\n**Activate—Locate Target** ⟨2⟩ 10 minutes (concentrate)\n\n**Frequency** once per day\n\n**Effect** You cast Pinpoint. If the target of this spell is a creature for which you've accepted a contract to assassinate, you are considered to have seen the creature in person for the purposes of *pinpoint's* requirements.",
+  "why": "VERIFIER ROW. The shipped description is the text the player actually reads, and it contradicts both the page and our own data on three points. CLOSER CORRECTION (batch 037 apply pre-check 5): this why cited only the variant id equipment-3497-3391, and the driver's mirrorText() derives a mirror DIRECTORY by stripping one trailing -NNN, so a two-segment variant id resolves to by-category/equipment-3497/ and reads nothing - the pre-check refused the row as uncheckable. The family doc equipment-3497 is byte-identical (2,391 chars, all three grade blocks) and is now cited beside it, so the token check runs against real print. equipment-3497 / equipment-3497-3391 print \"Activate—Enhance Vision Two Actions (concentrate, manipulate) Frequency once per day; Effect You cast either darkvision or see the unseen on yourself\" - no rank - and only the GREATER block adds \"heightened to 5th-rank\"; the shipped text said \"a 5th-rank Darkvision\", directly contradicting heldSpells {\"2\":[…]} that owner 2026-09-10 #68 (\"follow the archive literally\") keeps at rank 2. It prints \"Activate—Vernai's Ire Two Actions (concentrate)\", where the shipped text carried the one-action glyph. It prints \"Activate—Locate Target Two Actions 10 minutes (concentrate)\", where the shipped text carried no action glyph at all. Whole value re-emitted with exactly those three edits and nothing else changed; the record's descRefs are untouched (no ref labels sit on the edited words)."
+ },
+ {
+  "category": "items",
+  "id": "zealot-staff",
+  "field": "frequency",
+  "value": null,
+  "why": "equipment-2263: \"Activate Free Action (concentrate) Trigger You hit with a Strike using the staff; Effect A vicious blast of deific power explodes as you hit.\" The page prints no Frequency line for this activation, so the item must not carry a use limit."
+ },
+ {
+  "category": "items",
+  "id": "zealot-staff",
+  "field": "counters",
+  "value": [
+   {
+    "id": "pool",
+    "label": "Charges",
+    "max": "level",
+    "resetsOnRest": true,
+    "startsFull": true
+   }
+  ],
+  "why": "equipment-2263 prints no Frequency line on the free action, so the \"per minute\" pip next to the charge pool tracked a cadence no source prints. Whole-value re-emission of the one `counters` field: the charge pool entry is carried over unchanged and only the `freq` entry ({\"id\":\"freq\",\"label\":\"per minute\",\"max\":1,\"per\":\"minute\",\"resetsOnRest\":true}) is dropped, leaving the shape items/celestial-staff ships."
+ },
+ {
+  "category": "items",
+  "id": "zealot-staff",
+  "field": "description",
+  "value": "A *zealot staff*'s color, iconography, and materials vary depending on the faith it's dedicated to. An Iomedaean staff might be forged of gold and shaped like an ornamental sword, while a Lamashtan one could instead be made of blackened iron depicting monstrous faces. Used as a weapon, the staff is a *+3 greater striking staff*. The staff represents vehement support of the deity to whom the staff is dedicated, punishing defiance. When you prepare this staff, if you don't worship its deity, you become Drained 1 until your next daily preparations.\n\n**Activate** ⟨4⟩ (concentrate)\n\n**Trigger** You hit with a Strike using the staff\n\n---\n\n**Effect** A vicious blast of deific power explodes as you hit. You deal an additional 1d4 spirit damage per damage die of the staff to the target of your Strike.\n\n---\n\n**Activate** Cast a Spell\n\n---\n\n**Effect** You expend a number of charges from the staff to cast a spell from its list. Add the cleric spells granted by your deity to the list for their rank and each higher rank. For example, a zealot staff of Sarenrae would add *breathe fire* at 1st through 7th rank, *fireball* at 3rd through 7th rank, and *wall of fire* at 4th through 7th rank.\n\n- **Cantrip** Divine Lance\n- **1st** Bane\n- **2nd** Augury\n- **3rd** Warding Aggression\n- **4th** Divine Wrath\n- **5th** Crisis of Faith, Divine Wrath\n- **6th** Spiritual Armament, Zealous Conviction\n- **7th** Crisis of Faith, Divine Decree\n\n---\n\n**Craft Requirements** You worship the deity to which the staff is dedicated. Supply one casting of all listed spells, including your deity's cleric spells.",
+  "why": "VERIFIER ROW. The finding's premise - \"Foundry adds once per 10 minutes plus two traits; players never see that text in our app\" - is FALSE: the shipped description a player reads on the item card says verbatim \"**Frequency** once per 10 minutes\" and tags the activation \"(concentrate, sanctified, spirit)\". equipment-2263 prints \"Activate Free Action (concentrate) Trigger You hit with a Strike using the staff\" and NO Frequency line, so removing the `frequency` field and the `freq` pip while leaving that sentence on screen keeps the whole player-visible half of the defect. Owner 2026-09-10 #69 is \"follow the page\". Whole value re-emitted with exactly two edits - the Frequency line deleted and the two unprinted traits dropped from the Activate line - and nothing else changed; the record's descRefs carry no label on either edit."
+ },
+ {
+  "category": "items",
+  "id": "zealot-staff",
+  "field": "builtInRunes",
+  "value": {
+   "potency": 3,
+   "striking": "greater"
+  },
+  "why": "equipment-2263: \"Used as a weapon, the staff is a *+3 greater striking staff*.\" The record shipped no runes at all, so its Strike carried neither the +3 item bonus to attack rolls nor greater striking's extra damage dice. Same field and same value shape as items/celestial-staff and items/staff-of-power."
+ },
+ {
+  "category": "items",
+  "id": "pyrotechnic-versatile-vial",
+  "create": true,
+  "why": "feat-8528 (Firework Technician Dedication, Guns & Gears (Remastered) pg. 134): \"creating up to 4 pyrotechnic versatile vials during your daily preparations. These vials have the fire trait and deal fire damage instead of acid. You can use pyrotechnic versatile vials only to throw as bombs, for the Launch Fireworks action (see below), or with Quick Alchemy to create fireworks consumables\". Shape copied from the shipped items/versatile-vial so the two bombs behave identically on the Strikes page.",
+  "value": {
+   "id": "pyrotechnic-versatile-vial",
+   "name": "Pyrotechnic Versatile Vial",
+   "level": 1,
+   "price": {},
+   "bulk": 0,
+   "traits": [
+    "fire",
+    "alchemical",
+    "bomb",
+    "consumable",
+    "infused",
+    "splash"
+   ],
+   "rarity": "common",
+   "source": {
+    "book": "Pathfinder Guns & Gears (Remastered)",
+    "license": "ORC"
+   },
+   "usage": "held-in-one-hand",
+   "itemType": "weapon",
+   "hands": 1,
+   "category": "martial",
+   "group": "bomb",
+   "damage": {
+    "dice": 1,
+    "die": "d6",
+    "type": "fire"
+   },
+   "range": 20,
+   "reload": null
+  }
+ },
+ {
+  "category": "feats",
+  "id": "firework-technician-dedication",
+  "field": "grantsItems",
+  "value": [
+   {
+    "itemId": "pyrotechnic-versatile-vial",
+    "quantity": 4
+   }
+  ],
+  "why": "feat-8528 (Guns & Gears (Remastered) pg. 134): \"You gain the quick alchemy benefits, creating up to 4 pyrotechnic versatile vials during your daily preparations… You can use pyrotechnic versatile vials only to throw as bombs, for the Launch Fireworks action (see below), or with Quick Alchemy to create fireworks consumables\". The counter in src/rules/classResources.ts already tracks the daily FOUR; this row hands over the item itself, which is what makes them throwable. `grantsItems` is the shipped lane for it (buildCharacter's granted-items walk reads feats as well as class features) and no other row in any batch-037 spec touches this record's grantsItems."
+ },
+ {
+  "category": "feats",
+  "id": "firework-technician-dedication",
+  "field": "aonId",
+  "value": "feat-8528",
+  "why": "feat-8528 is the current printing (Guns & Gears (Remastered) pg. 134). VERIFIER FIX to this why: feat-8528's legacy_id is feat-8750 (the 2021 Guns & Gears page), NOT feat-3245 — what marks feat-3245 superseded is its own page, which prints \"There is a more recent version of this, click here to view\" pointing at Feats.aspx?ID=8528. The record's shipped description is already the feat-8528 text."
+ },
+ {
+  "category": "feats",
+  "id": "firework-technician-dedication",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder Guns & Gears (Remastered)",
+   "license": "ORC"
+  },
+  "why": "feat-8528 primary_source_raw is \"Guns & Gears (Remastered) pg. 134\". Whole-object re-emit because source is one field; license stays ORC."
+ },
+ {
+  "category": "classes",
+  "id": "magus",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder Impossible Magic",
+   "license": "ORC"
+  },
+  "why": "class-74 primary_source_raw is \"Impossible Magic pg. 9\" (release 2026-07-30); the 2021 Secrets of Magic printing is its legacy_id class-17."
+ },
+ {
+  "category": "classes",
+  "id": "magus",
+  "field": "aonId",
+  "value": "class-74",
+  "why": "class-74 is the current Magus page; class-17 is listed as its legacy_id."
+ },
+ {
+  "category": "classes",
+  "id": "magus",
+  "field": "edition",
+  "value": "remaster-era",
+  "why": "class-74 is a 2026 remaster-era printing. Left at 'legacy-era' the class would cite Impossible Magic and still be hidden by applyEditionFilter's \"Hide legacy data\" switch."
+ },
+ {
+  "category": "classes",
+  "id": "summoner",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder Impossible Magic",
+   "license": "ORC"
+  },
+  "why": "class-77 primary_source_raw is \"Impossible Magic pg. 63\" (release 2026-07-30); class-18 is its legacy_id."
+ },
+ {
+  "category": "classes",
+  "id": "summoner",
+  "field": "aonId",
+  "value": "class-77",
+  "why": "class-77 is the current Summoner page; class-18 is listed as its legacy_id."
+ },
+ {
+  "category": "classes",
+  "id": "summoner",
+  "field": "edition",
+  "value": "remaster-era",
+  "why": "class-77 is a 2026 remaster-era printing; left at 'legacy-era' the class would cite Impossible Magic and still be hidden by applyEditionFilter's \"Hide legacy data\" switch."
+ },
+ {
+  "category": "feats",
+  "id": "basic-magus-spellcasting",
+  "field": "level",
+  "value": 4,
+  "why": "feat-9285 is printed as Feat 4 (Impossible Magic pg. 88); feat-2950 (Feat 6) is its legacy_id."
+ },
+ {
+  "category": "feats",
+  "id": "basic-magus-spellcasting",
+  "field": "aonId",
+  "value": "feat-9285",
+  "why": "feat-9285 is the current printing; AoN lists feat-2950 as its legacy_id."
+ },
+ {
+  "category": "feats",
+  "id": "basic-magus-spellcasting",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder Impossible Magic",
+   "license": "ORC"
+  },
+  "why": "feat-9285 primary_source_raw is \"Impossible Magic pg. 88\"."
+ },
+ {
+  "category": "feats",
+  "id": "basic-magus-spellcasting",
+  "field": "edition",
+  "value": "remaster-era",
+  "why": "feat-9285 is a 2026 printing; 'legacy-era' would hide the current feat behind the \"Hide legacy data\" switch (applyEditionFilter, src/rules/build.ts)."
+ },
+ {
+  "category": "feats",
+  "id": "expert-magus-spellcasting",
+  "field": "aonId",
+  "value": "feat-9290",
+  "why": "feat-9290 is the current printing (Impossible Magic pg. 88); feat-2951 is its legacy_id."
+ },
+ {
+  "category": "feats",
+  "id": "expert-magus-spellcasting",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder Impossible Magic",
+   "license": "ORC"
+  },
+  "why": "feat-9290 primary_source_raw is \"Impossible Magic pg. 88\"."
+ },
+ {
+  "category": "feats",
+  "id": "expert-magus-spellcasting",
+  "field": "edition",
+  "value": "remaster-era",
+  "why": "feat-9290 is a 2026 printing; 'legacy-era' would hide the current feat behind the \"Hide legacy data\" switch."
+ },
+ {
+  "category": "feats",
+  "id": "expert-magus-spellcasting",
+  "field": "description",
+  "value": "You gain the expert spellcasting benefits.",
+  "why": "feat-9290 verbatim: \"You gain the expert spellcasting benefits.\" Ours shipped the stripped \"You gain the benefits.\" and the record's own note said bounded."
+ },
+ {
+  "category": "feats",
+  "id": "master-magus-spellcasting",
+  "field": "aonId",
+  "value": "feat-9291",
+  "why": "feat-9291 is the current printing (Impossible Magic pg. 88); feat-2952 is its legacy_id."
+ },
+ {
+  "category": "feats",
+  "id": "master-magus-spellcasting",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder Impossible Magic",
+   "license": "ORC"
+  },
+  "why": "feat-9291 primary_source_raw is \"Impossible Magic pg. 88\"."
+ },
+ {
+  "category": "feats",
+  "id": "master-magus-spellcasting",
+  "field": "edition",
+  "value": "remaster-era",
+  "why": "feat-9291 is a 2026 printing; 'legacy-era' would hide the current feat behind the \"Hide legacy data\" switch."
+ },
+ {
+  "category": "feats",
+  "id": "master-magus-spellcasting",
+  "field": "description",
+  "value": "You gain the master spellcasting benefits.",
+  "why": "feat-9291 verbatim: \"You gain the master spellcasting benefits.\""
+ },
+ {
+  "category": "feats",
+  "id": "basic-summoner-spellcasting",
+  "field": "level",
+  "value": 4,
+  "why": "feat-9308 is printed as Feat 4 (Impossible Magic pg. 91); feat-2957 (Feat 6) is its legacy_id."
+ },
+ {
+  "category": "feats",
+  "id": "basic-summoner-spellcasting",
+  "field": "aonId",
+  "value": "feat-9308",
+  "why": "feat-9308 is the current printing; feat-2957 is its legacy_id."
+ },
+ {
+  "category": "feats",
+  "id": "basic-summoner-spellcasting",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder Impossible Magic",
+   "license": "ORC"
+  },
+  "why": "feat-9308 primary_source_raw is \"Impossible Magic pg. 91\"."
+ },
+ {
+  "category": "feats",
+  "id": "basic-summoner-spellcasting",
+  "field": "edition",
+  "value": "remaster-era",
+  "why": "feat-9308 is a 2026 printing; 'legacy-era' would hide the current feat behind the \"Hide legacy data\" switch."
+ },
+ {
+  "category": "feats",
+  "id": "basic-summoner-spellcasting",
+  "field": "description",
+  "value": "You gain the basic spellcasting benefits. You gain the Cast a Spell activity. Your key spellcasting attribute for summoner archetype spells is Charisma, and they are summoner spells of your eidolon's tradition. You become trained in the spell attack modifier and spell DC statistics. You gain a spell repertoire and two cantrips. Each time you gain a spell slot of a new rank from the summoner archetype, add a spell of the appropriate spell rank to your repertoire.",
+  "why": "feat-9308 verbatim. The shipped text was the 2021 bounded version and carried \"Each time you lose spell slots of a particular rank, remove those spells from your repertoire\", a sentence the 2026 printing does not have because the ordinary ladder never takes slots away."
+ },
+ {
+  "category": "feats",
+  "id": "expert-summoner-spellcasting",
+  "field": "aonId",
+  "value": "feat-9313",
+  "why": "feat-9313 is the current printing (Impossible Magic pg. 91); feat-2959 is its legacy_id."
+ },
+ {
+  "category": "feats",
+  "id": "expert-summoner-spellcasting",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder Impossible Magic",
+   "license": "ORC"
+  },
+  "why": "feat-9313 primary_source_raw is \"Impossible Magic pg. 91\"."
+ },
+ {
+  "category": "feats",
+  "id": "expert-summoner-spellcasting",
+  "field": "edition",
+  "value": "remaster-era",
+  "why": "feat-9313 is a 2026 printing; 'legacy-era' would hide the current feat behind the \"Hide legacy data\" switch."
+ },
+ {
+  "category": "feats",
+  "id": "expert-summoner-spellcasting",
+  "field": "description",
+  "value": "You gain the expert spellcasting benefits.",
+  "why": "feat-9313 verbatim: \"You gain the expert spellcasting benefits.\""
+ },
+ {
+  "category": "feats",
+  "id": "master-summoner-spellcasting",
+  "field": "aonId",
+  "value": "feat-9314",
+  "why": "feat-9314 is the current printing (Impossible Magic pg. 91); feat-2961 is its legacy_id."
+ },
+ {
+  "category": "feats",
+  "id": "master-summoner-spellcasting",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder Impossible Magic",
+   "license": "ORC"
+  },
+  "why": "feat-9314 primary_source_raw is \"Impossible Magic pg. 91\". Whole-object re-emit adds the license the shipped record omitted."
+ },
+ {
+  "category": "feats",
+  "id": "master-summoner-spellcasting",
+  "field": "edition",
+  "value": "remaster-era",
+  "why": "feat-9314 is a 2026 printing; 'legacy-era' would hide the current feat behind the \"Hide legacy data\" switch."
+ },
+ {
+  "category": "feats",
+  "id": "master-summoner-spellcasting",
+  "field": "prerequisites",
+  "value": [
+   "Expert Summoner Spellcasting",
+   "legendary in the skill associated with your eidolon's tradition"
+  ],
+  "why": "feat-9314 prerequisite line: \"Expert Summoner Spellcasting; legendary in the skill associated with your eidolon's tradition\". The shipped record carried no prerequisites field at all, so the capstone feat read as having none."
+ },
+ {
+  "category": "feats",
+  "id": "master-summoner-spellcasting",
+  "field": "description",
+  "value": "You gain the master spellcasting benefits.",
+  "why": "feat-9314 verbatim: \"You gain the master spellcasting benefits.\" The shipped description was the scraped page header (\"Master Summoner Spellcasting / Source Secrets of Magic pg. 77 / Archetype Summoner / Prerequisites …\") with the bounded rule at the end."
+ },
+ {
+  "category": "classFeatures",
+  "id": "studious-spells",
+  "field": "name",
+  "value": "Studious Spell",
+  "why": "class-feature-1270 is titled \"Studious Spell\" (Impossible Magic pg. 9); class-17 is listed as its legacy_id."
+ },
+ {
+  "category": "classFeatures",
+  "id": "studious-spells",
+  "field": "aonId",
+  "value": "class-feature-1270",
+  "why": "class-feature-1270 is the current feature page; ours cited class-feature-431, the 2021 Secrets of Magic version."
+ },
+ {
+  "category": "classFeatures",
+  "id": "studious-spells",
+  "field": "source",
+  "value": {
+   "book": "Pathfinder Impossible Magic",
+   "license": "ORC"
+  },
+  "why": "class-feature-1270 primary_source_raw is \"Impossible Magic pg. 9\"."
+ },
+ {
+  "category": "classFeatures",
+  "id": "studious-spells",
+  "field": "edition",
+  "value": "remaster-era",
+  "why": "class-feature-1270 is a 2026 printing; 'legacy-era' would hide the current feature behind the \"Hide legacy data\" switch."
+ },
+ {
+  "category": "classFeatures",
+  "id": "studious-spells",
+  "field": "recordMarks",
+  "value": [
+   {
+    "on": "action",
+    "id": "arcane-cascade",
+    "note": "Studious Spell: when you cast a studious spell (gecko grip; haste at 11th; fly at 13th; plus your hybrid study's spell at each of those levels), you can use Arcane Cascade as a free action as your next action this turn."
+   }
+  ],
+  "why": "class-feature-1270: \"When you cast a studious spell, you can use Arcane Cascade as a free action as your next action this turn.\" The rider changes an ACTION rather than a stat, which is exactly what recordMarks exists for; recordMarksFor() in src/rules/explain.ts walks owned class features, and actions/arcane-cascade is the row it annotates."
+ },
+ {
+  "category": "classFeatures",
+  "id": "studious-spells",
+  "field": "description",
+  "value": "You've deeply studied certain beneficial spells to speedily enter Arcane Cascade when you cast them. When you cast a studious spell, you can use Arcane Cascade as a free action as your next action this turn. Add any studious spell you gain to your spellbook if you don't know it already. Your studious spells are gecko grip and an additional spell depending on your hybrid study, listed in the hybrid study's entry. At 11th level, add haste and an additional spell depending on your hybrid study to your studious spells. At 13th level, add fly and an additional spell depending on your hybrid study to your studious spells.",
+  "why": "class-feature-1270 verbatim. The shipped prose was the 2021 feature (\"You gain two special 2nd-rank studious spell slots…\") plus a hand-maintained table of the eight hybrid studies' spells; the 2026 printing points at \"the hybrid study's entry\" instead, and those eight entries already carry their own spells on classes/magus.subclass.options[].spellSlotBonus."
+ },
+ {
+  "category": "items",
+  "id": "screech-shooter-major",
+  "field": "damage",
+  "value": {
+   "dice": 1,
+   "die": "d10",
+   "type": "sonic"
+  },
+  "why": "AoN equipment-1169 (the Screech Shooter family page, the ONLY page that states the damage type): \"A screech shooter deals sonic damage but can otherwise be used like a normal harmona gun.\" Neither grade block overrides it — equipment-1169-1109 changes only the activation DC and emanation, equipment-1169-1110 likewise (\"The DC for the activation is 37 and it affects creatures in a 50-foot emanation\"). The record's OWN shipped description repeats the family sentence verbatim (\"A *screech shooter* deals sonic damage\"), so the `damage.type` field contradicts the same record's prose, and only the major grade does: items/screech-shooter ships type \"sonic\" and items/screech-shooter-greater ships type \"sonic\". Reader: src/rules/derive.ts reads w.damage.type for the strike row, the damage breakdown and the weaponType (derive.ts:4613, 4627, 4641), so today a major screech shooter rolls PIERCING on the sheet. Dice and die are re-emitted unchanged (1d10, the harmona gun's die) because `damage` is one field and must be written whole. No other b037 spec row and no existing overlay row touches items/screech-shooter-major.damage (the shipped overlay row on this record is `description`, and data-rows-6 supersedes that one), so no supersedes."
+ },
+ {
+  "category": "feats",
+  "id": "bespell-strikes",
+  "field": "situational",
+  "value": [
+   {
+    "targets": [
+     {
+      "kind": "strikeDamage"
+     }
+    ],
+    "when": "until the end of your turn, on the one weapon you are wielding (or the one unarmed attack) you siphoned spell energy into — once per turn, and only if your most recent action was to cast a non-cantrip spell",
+    "bonus": "+1d6 force damage, or the spell's own damage type instead if it dealt a different one"
+   }
+  ],
+  "why": "AoN feat-5028 (Bespell Strikes): \"You siphon spell energy into one weapon you're wielding, or into one of your unarmed attacks... Until the end of your turn, the weapon or unarmed attack deals an extra 1d6 force damage and gains the associated trait... If the spell dealt a different type of damage, the Strike deals this type of damage instead.\" The record ships NO `situational` field at all, so the base 1d6 had no carrier anywhere — the upgrade row on feats/arcana-of-iron (work/.b037-rows-data-rows-6.json) stars \"the extra damage is 1d8 instead of 1d6\" and was the only star the pair had. The clause cannot be a flat number: it is conditional (Requirements \"Your most recent action was to cast a non-cantrip spell\", Frequency \"once per turn\", and one chosen weapon), which is what the `situational` lane is for. Reader exists: src/rules/explain.ts:583 walks c.feats and files each record's own `situational`, the same channel the arcana-of-iron row uses, and 69 feats already ship the field. `targets: [{kind:'strikeDamage'}]` matches the arcana-of-iron row and the 12 shipped strikeDamage stars in src/rules/situationalBonuses.ts. The existing overlay row on this record is `limitedUses` (the once-per-turn frequency), a different field, so no supersedes."
+ },
+ {
+  "category": "items",
+  "id": "astrolabe-of-the-falling-stars",
+  "field": "price",
+  "value": {
+   "gp": 150
+  },
+  "why": "AoN equipment-4028 (Astrolabe of Falling Stars): \"Price 150 gp\". Two near-duplicate records of this one item ship — items/astrolabe-of-falling-stars (aonId equipment-4028, 150 gp, the AoN record, the one work/.b037-rows-data-rows-6.json stars) and items/astrolabe-of-the-falling-stars (no aonId, 50 gp, the id src/rules/situationalBonuses.ts:3083 and ITEM_ID_ALIASES['aon-astrolabe-of-falling-stars'] both key). Their names differ by one word, so the duplicate-name suppression never saw them, and a player who bought the second one paid 50 gp for a 150-gp item — a wealth-by-level error, not a display one. Level (5), bulk (L), rarity (uncommon), traits and the once-per-day frequency already agree on both records; the price was the only number that did not. `price` is one field, re-emitted whole. No other b037 spec row and no existing overlay row touches this record."
+ },
+ {
+  "category": "items",
+  "id": "astrolabe-of-the-falling-stars",
+  "field": "activationCost",
+  "value": {
+   "type": "actions",
+   "value": 2
+  },
+  "why": "AoN equipment-4028: \"Activate—Starfall Two Actions (manipulate) Frequency once per day\". The same duplicate record ships activationCost {type:'actions', value:1}, so its Starfall reads as a single action on the sheet; the counters row beside it ({id:'freq', max:1, per:'day'}) is the same activation's frequency and is already correct. `activationCost` is one field, re-emitted whole."
+ },
+ {
+  "category": "classFeatures",
+  "id": "guardians-armor",
+  "field": "resistances",
+  "why": "class-feature-1115 prints \"While wearing medium or heavy armor, you gain resistance to physical damage equal to 1 + half your level. In addition, you can rest normally while wearing medium and heavy armor.\" The condition is on the sheet — the worn armour's category — so by the owner's rule (2026-09-10 #109) it is a real automatic number, never WG's always-on version and never a switch the player has to remember. The formula is the same one the retired mode carried, and resolveFormula already substitutes @actor.level. The armour condition rides on the new IwrEntry.whenArmorCategory gate, which deriveDefenses honours in both the resistance and the weakness loop. The rest-normally half needs no row: it is prose on the record, not a number.",
+  "value": [
+   {
+    "type": "physical",
+    "value": "1+floor(@actor.level/2)",
+    "whenArmorCategory": [
+     "medium",
+     "heavy"
+    ]
+   }
+  ]
+ },
+ {
+  "category": "modes",
+  "id": "guardians-armor",
+  "delete": true,
+  "why": "class-feature-1115, the same printed clause as the row above (\"While wearing medium or heavy armor, you gain resistance to physical damage equal to 1 + half your level\"). The hand toggle this class feature shipped as — modes/guardians-armor, duration \"while wearing medium or heavy armor\", carrying the same physical resistance. With row 1 live the number is automatic and conditional on what the character is actually wearing, so the mode is now a SECOND source of the same resistance that a player can switch on while unarmoured. Retired rather than left inert: deriveDefenses takes the highest of same-type contributors, so leaving it would let a guardian in no armour toggle on a resistance print gives them only in medium or heavy. Apply AFTER row 1."
+ },
+ {
+  "category": "feats",
+  "id": "haunting-memories-skill-feat",
+  "field": "description",
+  "value": "Your soul bears metaphysical impressions of the innumerable other spirits imprisoned with you in the final blade from which you escaped, allowing you to draw upon their memories. When you make your daily preparations, you can either gain the expert proficiency rank in one skill in which you’re untrained or raise your proficiency rank to master in one skill in which you’re trained or better. You also gain one skill feat with a minimum requirement of your new rank in the chosen skill. For the purpose of meeting level prerequisites for this feat, your level is equal to half your level. This proficiency and feat last until you make your daily preparations again. Since the proficiency is temporary, you can’t use it as a prerequisite for any permanent character option.",
+  "why": "feat-7701 \"You also gain one skill feat with a minimum requirement of your new rank in the chosen skill. For the purpose of meeting level prerequisites for this feat, your level is equal to half your level.\" CLOSER CORRECTION (batch 037 apply, apply-parity-fixes.mjs unbackedRun): the record is NEW, so its whole description counts as added prose and every 3+ word run of it must be a contiguous run feat-7701 actually prints. The draft restated print in its own order (a pulled quote, then \"Haunting Memories can either gain you…\") and was refused as one 131-word invented run. The value is now feat-7701's body VERBATIM, start to finish — the same text the parent record feats/haunting-memories carries — so the pick's popup reads exactly what the page prints and nothing else. The one sentence about where the pick lives is dropped from the description and lives on the record's `choice.note` instead (work/.b037-rows-data-rows-3.json), which is not a prose field and is where test/batch037-data-rows-3.test.ts already asserts it."
+ },
+ {
+  "category": "items",
+  "id": "pyrotechnic-versatile-vial",
+  "field": "description",
+  "value": "These vials have the fire trait and deal fire damage instead of acid.",
+  "why": "feat-8528 (Firework Technician Dedication, Guns & Gears (Remastered) pg. 134), verbatim."
+ },
+ {
+  "category": "items",
+  "id": "armor-in-earth-medium",
+  "field": "note",
+  "value": "Created by the Armor in Earth impulse and lasts 10 minutes (Dismissible; using the impulse again ends any existing one). It is medium armor but uses your highest armor proficiency, which your sheet works out for you. You gain its armor specialization effect. Any bonuses, runes and magical abilities of your actual armor are suppressed, and any runes that could apply to the stone armor are replicated onto it.",
+  "why": "feat-4221 \"The stone armor is medium armor but uses your highest armor proficiency.\" The delivery half of the create row above, byte-identical to its `note`: the shipped record already exists, so this is the row that actually replaces the stale sentence telling the player to set the proficiency by hand."
+ },
+ {
+  "category": "items",
+  "id": "hardwood-armor-armor",
+  "field": "note",
+  "value": "Created by the Hardwood Armor impulse. It is medium armor but uses your highest armor proficiency, which your sheet works out for you. Any bonuses, runes and magical abilities of your actual armor are suppressed while it is worn, and any runes that could apply to the hardwood armor are replicated onto it.",
+  "why": "feat-4283 \"This hardwood armor is medium armor but uses your highest armor proficiency.\" The delivery half of the create row above, byte-identical to its `note`."
  }
 ]

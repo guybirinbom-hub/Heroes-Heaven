@@ -1,0 +1,579 @@
+{
+  "findings": [
+    {
+      "id": "unifying-emblem-shundar-quah#daily-spell",
+      "note": "Reuses the ITEM innate-spell lane (Item.innateSpells, read for every INVESTED item at build.ts:8075), which is the shape the sibling tattoo enveloping-light already uses for the identical 'Activate; Frequency once per day; Effect ... casts <spell>' paragraph. NOT heldSpells, which types.ts:4074 reserves for the staff/wand charge system. The record already carries the 1-action activationCost and the once-per-day counter, so only the spell behind them was missing.",
+      "backfillRows": [
+        {
+          "category": "items",
+          "id": "unifying-emblem-shundar-quah",
+          "field": "innateSpells",
+          "value": [
+            {
+              "spellId": "thoughtful-gift",
+              "rank": 1,
+              "usesPerDay": 1
+            }
+          ],
+          "why": "equipment-2223-1924 \"Frequency once per day; Effect The tattoo casts its spell.\" plus \"The tattoo of the Spire clan depicts a cracked stone with a metal vein inside. It can cast thoughtful gift.\" Thoughtful Gift is a rank-1 spell whose own Cast is 1 action, which is the activationCost the record already shows."
+        }
+      ]
+    },
+    {
+      "id": "unifying-emblem-sklar-quah#daily-spell",
+      "note": "Same innateSpells lane as its two siblings, plus the activation cost the record had none of: print sets it from the spell, and Concordant Choir's own Cast is \"1 to 3 actions\", which ActionCost spells as {type:'variable',min:1,max:3} (types.ts:132, the same shape wayfinder-of-rescue already ships).",
+      "backfillRows": [
+        {
+          "category": "items",
+          "id": "unifying-emblem-sklar-quah",
+          "field": "innateSpells",
+          "value": [
+            {
+              "spellId": "concordant-choir",
+              "rank": 1,
+              "usesPerDay": 1
+            }
+          ],
+          "why": "equipment-2223-1925 \"Frequency once per day; Effect The tattoo casts its spell.\" plus \"The tattoo of the Sun clan depicts a songbird with flame emitting from its beak. It can cast concordant choir.\" Concordant Choir is rank 1."
+        },
+        {
+          "category": "items",
+          "id": "unifying-emblem-sklar-quah",
+          "field": "activationCost",
+          "value": {
+            "type": "variable",
+            "min": 1,
+            "max": 3
+          },
+          "why": "equipment-2223-1925 \"Activate - the actions required to Activate the tattoo are the same as those needed to cast its spell\"; Concordant Choir (spell-1548 family, our spells/concordant-choir) casts in 1 to 3 actions, so the emblem's activation is variable 1-3 rather than absent."
+        }
+      ]
+    },
+    {
+      "id": "unifying-emblem-tamiir-quah#daily-spell",
+      "note": "Same innateSpells lane; the 2-action activationCost the record already shows is Tailwind's own Cast, so nothing else changes.",
+      "backfillRows": [
+        {
+          "category": "items",
+          "id": "unifying-emblem-tamiir-quah",
+          "field": "innateSpells",
+          "value": [
+            {
+              "spellId": "tailwind",
+              "rank": 1,
+              "usesPerDay": 1
+            }
+          ],
+          "why": "equipment-2223-1920 \"Frequency once per day; Effect The tattoo casts its spell.\" plus \"The tattoo of the Wind clan depicts a pegasus riding a gust of wind. It can cast tailwind.\" Tailwind is rank 1 and casts in 2 actions, matching the activation the record already carries."
+        }
+      ]
+    },
+    {
+      "id": "molten-wit#three-branches",
+      "note": "CODE-ONLY FIX - no row I can author is safe. The two branch conditions print are BOTH two-skill conditions (\"already trained in ONE of these skills\", \"trained in BOTH skills\") and the only per-option gate the choice lane has is SkillRankGate (types.ts:2817), which names exactly ONE skill. Gating the existing two options on their own skill being untrained would empty the picker for a character trained in both - the failure mode narrowChoiceOptions' own doc calls worse than an over-wide list. The feat half cannot be data either: a FEAT's choice.options[].grant.grantsFeats is NOT read (build.ts:5406/5465 collect that lane for heritage and classFeature effectChoices only, and the comment at build.ts:5400 says so outright - \"Heritage options only; applyAlwaysOn has no feat arm\"), which is exactly why the pairing lives in src/rules/featFeatGrants.ts CHOICE_FEAT_GRANTS today. Both halves are listed in CROSS-FILE GAPS.",
+      "backfillRows": []
+    },
+    {
+      "id": "intuitive-crafting#middle-case",
+      "note": "CODE-ONLY FIX. The wrong free skill is src/rules/featGrantsAuto.ts:474 `'intuitive-crafting': { skills: { crafting: 'trained' }, redundantFallback: true }`; redundantFallback is a FeatGrant field whose only reader is build.ts:5829 and it fires whenever the static skills map is redundant - i.e. for the MIDDLE case as well as the both-already-held one. The record itself carries no choice and no skill lane, so there is no data field to correct: an effect-backfill row would have to ADD a second carrier on top of the src one and double the grant. The one-line fix is in CROSS-FILE GAPS.",
+      "backfillRows": []
+    },
+    {
+      "id": "armor-in-earth#armour-proficiency",
+      "note": "CODE-ONLY FIX. The borrowing lane the proposal names is FeatGrant.armorFamiliarity {armors, rank, mirrorBest} (src/rules/featGrants.ts:310), whose ONLY writer of Proficiencies.armorOverrides is build.ts:5806/7082 reading grantsFor(featId) - a src registry. No item field and no record field feeds armorOverrides, so the item-side attachment the finding asks for cannot be authored as data. I deliberately did NOT emit the note-removal row either: dropping \"set it yourself\" before the lane lands leaves the player with neither the number nor the instruction. Both rows are listed under DATA STILL NEEDED, to be authored in the same batch as the src entry.",
+      "backfillRows": []
+    },
+    {
+      "id": "hardwood-armor-armor#armour-proficiency",
+      "note": "CODE-ONLY FIX, identical to armor-in-earth#armour-proficiency and for the same reason (armorFamiliarity is a src-side FeatGrant field). Note also that feats/hardwood-armor grants TWO items, hardwood-armor-armor and hardwood-armor-shield; only the armour takes the borrowing. See CROSS-FILE GAPS and DATA STILL NEEDED.",
+      "backfillRows": []
+    },
+    {
+      "id": "hardened-chassis#enhancement",
+      "note": "Built on the EXISTING automaton enhancement lane rather than a new one: Feat.enhancement (types.ts:3359, EnhancementDef) is the payload a record only HAS while an augmentation names it, and enhancement.choiceIds names which of the record's own effectChoices the tier switches on (build.ts:6334-6345 filters them out for any automaton whose augmentation has not picked this feat). That is exactly the proposal's \"switched on ONLY when an augmentation feat that names Hardened Chassis is held\", and it needs no reader of its own. The chosen-type branch reads the record's OWN base answer through onlyWhenFlag {flag:'hardenedChassisDamage'} (types.ts:2074, honoured by effectChoiceOptions at build.ts:1633 so the picker and resolvePick agree), so it is three flag-gated options rather than a second question. Half-your-level-minimum-3 is the string-formula form IwrEntry.value already takes (types.ts:482; max(1,floor(@actor.level/2)) etc. already ship). FOUR options, never one - build.ts:6347 warns that a one-option effectChoices picker is auto-applied by resolvePick and would deliver the tier unconditionally; with any flag answer at least two options survive the onlyWhenFlag filter. VERIFIER: the two augmentation picker notes are re-emitted here with supersedes:true — without them the sheet computes the tier while the picker still says it does not, which is the Q27 state this lane exists to end.",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "hardened-chassis",
+          "field": "effectChoices",
+          "value": [
+            {
+              "id": "hardened-chassis-enhancement",
+              "prompt": "Hardened Chassis (Enhancement) — which benefit",
+              "options": [
+                {
+                  "value": "all-physical",
+                  "label": "Resistance 3 to all physical damage",
+                  "grant": {
+                    "resistances": [
+                      {
+                        "type": "physical",
+                        "value": 3,
+                        "condition": "still bypassed by adamantine"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "value": "raise-bludgeoning",
+                  "label": "Raise your bludgeoning resistance to half your level (minimum 3)",
+                  "onlyWhenFlag": {
+                    "flag": "hardenedChassisDamage",
+                    "value": "bludgeoning"
+                  },
+                  "grant": {
+                    "resistances": [
+                      {
+                        "type": "bludgeoning",
+                        "value": "max(3,floor(@actor.level/2))",
+                        "condition": "still bypassed by adamantine"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "value": "raise-piercing",
+                  "label": "Raise your piercing resistance to half your level (minimum 3)",
+                  "onlyWhenFlag": {
+                    "flag": "hardenedChassisDamage",
+                    "value": "piercing"
+                  },
+                  "grant": {
+                    "resistances": [
+                      {
+                        "type": "piercing",
+                        "value": "max(3,floor(@actor.level/2))",
+                        "condition": "still bypassed by adamantine"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "value": "raise-slashing",
+                  "label": "Raise your slashing resistance to half your level (minimum 3)",
+                  "onlyWhenFlag": {
+                    "flag": "hardenedChassisDamage",
+                    "value": "slashing"
+                  },
+                  "grant": {
+                    "resistances": [
+                      {
+                        "type": "slashing",
+                        "value": "max(3,floor(@actor.level/2))",
+                        "condition": "still bypassed by adamantine"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          "why": "feat-9400 \"Enhancement Your chassis gets even tougher. Choose one of the following benefits: you gain resistance 3 to all physical damage, or your chosen resistance increases to a value equal to half your level (minimum 3). This resistance is still bypassed by adamantine.\" - the choice print states, with the chosen type taken from this record's own base answer."
+        },
+        {
+          "category": "feats",
+          "id": "hardened-chassis",
+          "field": "enhancement",
+          "value": {
+            "choiceIds": [
+              "hardened-chassis-enhancement"
+            ]
+          },
+          "why": "ancestry-98 \"You don't gain the benefits of the enhancement unless you take a feat that grants you those benefits, such as Lesser Augmentation.\" choiceIds is the gate build.ts applies for exactly that clause, so the question is asked (and the grant applied) only while Lesser or Greater Augmentation names feat-9400."
+        },
+        {
+          "category": "feats",
+          "id": "lesser-augmentation",
+          "field": "effectChoices",
+          "supersedes": true,
+          "value": [
+            {
+              "id": "enhancement",
+              "prompt": "Which automaton ancestry feat's Enhancement do you gain?",
+              "options": [
+                {
+                  "value": "automaton-armament",
+                  "label": "Automaton Armament (1st)",
+                  "note": "Computed on your sheet: the claw or pincer this feat grants steps up one damage die (1d4 to 1d6, 1d6 to 1d8)."
+                },
+                {
+                  "value": "arcane-communication",
+                  "label": "Arcane Communication (1st)",
+                  "note": "Computed on your sheet: your touch telepathy gains a 10-foot range, shown on the Senses row."
+                },
+                {
+                  "value": "arcane-eye",
+                  "label": "Arcane Eye (1st)",
+                  "note": "Computed on your sheet: See the Unseen becomes an arcane innate spell, once per hour, on the Spells page."
+                },
+                {
+                  "value": "automaton-lore",
+                  "label": "Automaton Lore (1st)",
+                  "note": "Computed on your sheet: choose Arcana or Crafting on Automaton Lore itself; that rank becomes expert."
+                },
+                {
+                  "value": "energy-beam",
+                  "label": "Energy Beam (1st)",
+                  "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
+                },
+                {
+                  "value": "reinforced-chassis",
+                  "label": "Reinforced Chassis (1st)",
+                  "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
+                },
+                {
+                  "value": "arcane-safeguards",
+                  "label": "Arcane Safeguards (5th)",
+                  "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
+                },
+                {
+                  "value": "integrated-armament",
+                  "label": "Integrated Armament (5th)",
+                  "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
+                },
+                {
+                  "value": "magical-resistance",
+                  "label": "Magical Resistance (5th)",
+                  "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
+                },
+                {
+                  "value": "expressive-face",
+                  "label": "Expressive Face (1st)",
+                  "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
+                },
+                {
+                  "value": "messenger",
+                  "label": "Messenger (1st)",
+                  "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
+                },
+                {
+                  "value": "powerful-tail",
+                  "label": "Powerful Tail (1st)",
+                  "note": "Computed on your sheet: you gain a climb Speed of 10 feet. (You also reduce the free hands needed to Climb or Trip by one — apply that in play.)"
+                },
+                {
+                  "value": "undead-hunter",
+                  "label": "Undead Hunter (1st)",
+                  "note": "Computed on your sheet: you gain Infuse Vitality as a 3rd-rank arcane innate spell once per day, targeting only yourself."
+                },
+                {
+                  "value": "hardened-chassis",
+                  "label": "Hardened Chassis (5th)",
+                  "note": "Computed on your sheet: resistance 3 to all physical damage, or the damage type you chose on Hardened Chassis raised to half your level (minimum 3)."
+                },
+                {
+                  "value": "infiltration-automation",
+                  "label": "Infiltration Automation (5th)",
+                  "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
+                },
+                {
+                  "value": "inscribed-blast",
+                  "label": "Inscribed Blast (5th)",
+                  "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
+                },
+                {
+                  "value": "resilient-chassis",
+                  "label": "Resilient Chassis (5th)",
+                  "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
+                }
+              ]
+            }
+          ],
+          "why": "feat-9400 \"Enhancement Your chassis gets even tougher. Choose one of the following benefits: you gain resistance 3 to all physical damage, or your chosen resistance increases to a value equal to half your level (minimum 3).\" With that tier now computed, the picker option on this augmentation must stop telling the player the app does not compute it. Whole value re-emitted with supersedes:true because an effectChoices OPTION is keyed by `value`, which apply-backfill-paths.mjs cannot address (it resolves an array step only by `id=`)."
+        },
+        {
+          "category": "feats",
+          "id": "greater-augmentation",
+          "field": "effectChoices",
+          "supersedes": true,
+          "value": [
+            {
+              "id": "enhancement",
+              "prompt": "Which automaton ancestry feat's Enhancement do you gain?",
+              "options": [
+                {
+                  "value": "automaton-armament",
+                  "label": "Automaton Armament (1st)",
+                  "note": "Computed on your sheet: the claw or pincer this feat grants steps up one damage die (1d4 to 1d6, 1d6 to 1d8)."
+                },
+                {
+                  "value": "arcane-communication",
+                  "label": "Arcane Communication (1st)",
+                  "note": "Computed on your sheet: your touch telepathy gains a 10-foot range, shown on the Senses row."
+                },
+                {
+                  "value": "arcane-eye",
+                  "label": "Arcane Eye (1st)",
+                  "note": "Computed on your sheet: See the Unseen becomes an arcane innate spell, once per hour, on the Spells page."
+                },
+                {
+                  "value": "automaton-lore",
+                  "label": "Automaton Lore (1st)",
+                  "note": "Computed on your sheet: choose Arcana or Crafting on Automaton Lore itself; that rank becomes expert."
+                },
+                {
+                  "value": "energy-beam",
+                  "label": "Energy Beam (1st)",
+                  "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
+                },
+                {
+                  "value": "reinforced-chassis",
+                  "label": "Reinforced Chassis (1st)",
+                  "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
+                },
+                {
+                  "value": "arcane-safeguards",
+                  "label": "Arcane Safeguards (5th)",
+                  "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
+                },
+                {
+                  "value": "integrated-armament",
+                  "label": "Integrated Armament (5th)",
+                  "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
+                },
+                {
+                  "value": "magical-resistance",
+                  "label": "Magical Resistance (5th)",
+                  "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
+                },
+                {
+                  "value": "arcane-camouflage",
+                  "label": "Arcane Camouflage (9th)",
+                  "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
+                },
+                {
+                  "value": "arcane-propulsion",
+                  "label": "Arcane Propulsion (9th)",
+                  "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
+                },
+                {
+                  "value": "arcane-slam",
+                  "label": "Arcane Slam (9th)",
+                  "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
+                },
+                {
+                  "value": "core-attunement",
+                  "label": "Core Attunement (9th)",
+                  "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
+                },
+                {
+                  "value": "rain-of-bolts",
+                  "label": "Rain of Bolts (9th)",
+                  "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
+                },
+                {
+                  "value": "arcane-locomotion",
+                  "label": "Arcane Locomotion (13th)",
+                  "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
+                },
+                {
+                  "value": "astral-blink",
+                  "label": "Astral Blink (13th)",
+                  "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
+                },
+                {
+                  "value": "core-rejuvenation",
+                  "label": "Core Rejuvenation (13th)",
+                  "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
+                },
+                {
+                  "value": "enlarged-chassis",
+                  "label": "Enlarged Chassis (13th)",
+                  "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
+                },
+                {
+                  "value": "expressive-face",
+                  "label": "Expressive Face (1st)",
+                  "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
+                },
+                {
+                  "value": "messenger",
+                  "label": "Messenger (1st)",
+                  "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
+                },
+                {
+                  "value": "powerful-tail",
+                  "label": "Powerful Tail (1st)",
+                  "note": "Computed on your sheet: you gain a climb Speed of 10 feet. (You also reduce the free hands needed to Climb or Trip by one — apply that in play.)"
+                },
+                {
+                  "value": "undead-hunter",
+                  "label": "Undead Hunter (1st)",
+                  "note": "Computed on your sheet: you gain Infuse Vitality as a 3rd-rank arcane innate spell once per day, targeting only yourself."
+                },
+                {
+                  "value": "hardened-chassis",
+                  "label": "Hardened Chassis (5th)",
+                  "note": "Computed on your sheet: resistance 3 to all physical damage, or the damage type you chose on Hardened Chassis raised to half your level (minimum 3)."
+                },
+                {
+                  "value": "infiltration-automation",
+                  "label": "Infiltration Automation (5th)",
+                  "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
+                },
+                {
+                  "value": "inscribed-blast",
+                  "label": "Inscribed Blast (5th)",
+                  "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
+                },
+                {
+                  "value": "resilient-chassis",
+                  "label": "Resilient Chassis (5th)",
+                  "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
+                },
+                {
+                  "value": "bodily-disintegration",
+                  "label": "Bodily Disintegration (9th)",
+                  "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
+                },
+                {
+                  "value": "overburn",
+                  "label": "Overburn (9th)",
+                  "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
+                },
+                {
+                  "value": "purge-system",
+                  "label": "Purge System (13th)",
+                  "note": "Prose benefit - read this feat's Enhancement entry and apply it in play; the app does not compute it."
+                }
+              ]
+            }
+          ],
+          "why": "feat-9400 \"Enhancement Your chassis gets even tougher. Choose one of the following benefits: you gain resistance 3 to all physical damage, or your chosen resistance increases to a value equal to half your level (minimum 3).\" With that tier now computed, the picker option on this augmentation must stop telling the player the app does not compute it. Whole value re-emitted with supersedes:true because an effectChoices OPTION is keyed by `value`, which apply-backfill-paths.mjs cannot address (it resolves an array step only by `id=`)."
+        }
+      ]
+    },
+    {
+      "id": "armigers-protection#armor-pick",
+      "note": "The picker half only. The three option values are now the REAL item ids (items/hellknight-breastplate, items/hellknight-half-plate, items/hellknight-plate all exist), replacing the invented 'hellknight-plates'. The printed training condition on the two heavy suits cannot be GATED - the choice lane's only per-option gate is skill-rank (SkillRankGate, types.ts:2817) and there is no armour-proficiency gate - so it is carried as FeatChoiceDef.note, which types.ts defines as exactly this case (\"a choice that works but whose printed restriction can't be enforced\"). The flag is left as 'hellknightDedication' so no other record's onlyWhenFlag can be stranded (it is the only occurrence in core.json). The second half of the owner's option B - landing the CHOSEN suit in inventory - cannot be data: grantsItems (types.ts:1073) has no per-answer gate and EffectGrant has no grantsItems arm, so the existing unconditional breastplate grant stands until that lane exists. See CROSS-FILE GAPS.",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "armigers-protection",
+          "field": "choice",
+          "value": {
+            "flag": "hellknightDedication",
+            "prompt": "Your free non-magical suit of Hellknight armor",
+            "kind": "array",
+            "options": [
+              {
+                "value": "hellknight-breastplate",
+                "label": "Hellknight Breastplate",
+                "description": "Medium armor. This feat always trains you in it, so this suit is always a legal choice."
+              },
+              {
+                "value": "hellknight-half-plate",
+                "label": "Hellknight Half Plate",
+                "description": "Heavy armor. Trained only if you were already trained in light armor AND medium armor when you took this feat."
+              },
+              {
+                "value": "hellknight-plate",
+                "label": "Hellknight Plate",
+                "description": "Heavy armor. Trained only if you were already trained in light armor AND medium armor when you took this feat."
+              }
+            ],
+            "note": "Print gives you \"a non-magical suit of Hellknight armor of a type you become trained in\". Hellknight half plate and Hellknight plate are types you become trained in only if you were already trained in light armor and medium armor when you took this feat."
+          },
+          "why": "feat-8814 \"In addition, when you choose this feat, you receive a non-magical suit of Hellknight armor of a type you become trained in (Hellknight breastplate, Hellknight half plate, or Hellknight plate).\" and \"If you were already trained in light armor and medium armor, you gain training in Hellknight half plate and Hellknight plate.\""
+        }
+      ]
+    },
+    {
+      "id": "flexible-spellcaster#collection-shape",
+      "note": "CODE-ONLY FIX. The collection is not a record field at all: archetype/flexible-spellcaster carries nothing but id/name/edition/aonId, and the shape comes from ClassArchetype.spellCollection (types.ts:1666) whose entire implementation is the branch at build.ts:4475 - it walks slotCounts PER RANK and writes entry.slots[rank] / entry.repertoire[rank], with Builder.tsx:367/387 mirroring it. Turning that into one flat pool sized by the TOTAL daily class slots (with a one-1st-rank-spell floor) is engine work in those two files; no backfill row can reach it. Listed in CROSS-FILE GAPS.",
+      "backfillRows": []
+    },
+    {
+      "id": "haunting-memories#skill-feat-pick",
+      "note": "The proposal's own shape - \"let the feat hand over a small feature carrying the second daily-preparations question\" - because a record has exactly ONE choice def and haunting-memories' is already the proficiency pick. The carrier is a category:'bonus' feat (the established grant-only shape: 14 such records ship and featSlots.ts:140 keeps category 'bonus' out of every picker), handed over by the feat's own grantsFeats, which build.ts:5410 reads for every taken feat and which lands the carrier in c.feats - the set ownedDailyChoiceRecords (derive.ts:1294) walks for daily questions. The question itself is the EXISTING wizard lane the proposal names: choice.kind 'open' + from.type 'feat' + from.grantFeat (types.ts:2202, Experimental Spellshaping), whose answer dailyChoiceGrants turns into a real day-long grantsFeats at derive.ts:1820. The half-level cap is from.maxLevelByLevel (featsMatching, openChoice.ts:53), NOT WG's flat level 10: base 4 at levels 8-9, then one step per two levels to 10 at 20th. The printed \"minimum requirement of your new rank in the chosen skill\" is a prerequisite-TEXT restriction nothing can filter on, so it is choice.note - the field dailyChoicesFor already renders beside the morning row.",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "haunting-memories-skill-feat",
+          "create": true,
+          "value": {
+            "id": "haunting-memories-skill-feat",
+            "name": "Haunting Memories (Skill Feat)",
+            "level": 8,
+            "category": "bonus",
+            "traits": [],
+            "rarity": "common",
+            "source": {
+              "book": "Pathfinder Lost Omens Shining Kingdoms",
+              "license": "ORC"
+            },
+            "prerequisites": [
+              "Haunting Memories"
+            ],
+            "actionCost": {
+              "type": "passive"
+            },
+            "archetype": "ghost",
+            "aonParentId": "feat-7701",
+            "aonSection": "Haunting Memories",
+            "choice": {
+              "flag": "hauntingMemorySkillFeat",
+              "prompt": "Haunting Memories — this morning's borrowed skill feat",
+              "kind": "open",
+              "daily": true,
+              "from": {
+                "type": "feat",
+                "featCategory": "skill",
+                "grantFeat": true,
+                "excludeOwn": true,
+                "maxLevel": 4,
+                "maxLevelByLevel": [
+                  {
+                    "level": 10,
+                    "maxLevel": 5
+                  },
+                  {
+                    "level": 12,
+                    "maxLevel": 6
+                  },
+                  {
+                    "level": 14,
+                    "maxLevel": 7
+                  },
+                  {
+                    "level": 16,
+                    "maxLevel": 8
+                  },
+                  {
+                    "level": 18,
+                    "maxLevel": 9
+                  },
+                  {
+                    "level": 20,
+                    "maxLevel": 10
+                  }
+                ]
+              },
+              "note": "It must be a skill feat whose minimum requirement is the rank you raised your chosen skill to this morning — the app cannot filter on prerequisite text, so that half is yours to honour. The list is already capped at half your level, as print requires for its level prerequisite. The feat lasts until your next daily preparations, so it can't be a prerequisite for a permanent character option."
+            }
+          },
+          "why": "feat-7701 \"You also gain one skill feat with a minimum requirement of your new rank in the chosen skill. For the purpose of meeting level prerequisites for this feat, your level is equal to half your level.\" A second daily-preparations question needs its own record because a record carries exactly one choice def and feats/haunting-memories' is already the proficiency pick."
+        },
+        {
+          "category": "feats",
+          "id": "haunting-memories",
+          "field": "grantsFeats",
+          "value": [
+            "haunting-memories-skill-feat"
+          ],
+          "why": "feat-7701 - the same sentence. This is the hand-over: build.ts:5410 reads a taken feat's grantsFeats, so the carrier joins c.feats and its daily question joins the morning list."
+        },
+        {
+          "category": "feats",
+          "id": "haunting-memories",
+          "path": [
+            "choice"
+          ],
+          "field": "note",
+          "value": "Your new rank lasts until your next daily preparations. The skill feat print gives you alongside it is now its own question below.",
+          "why": "feat-7701 - the old note stood in for the missing mechanic (\"Take it as a temporary feat — for its level prerequisite only, count your level as half your level\"), which is the defect this finding names; with the pick built, the note must stop telling the player to do it by hand."
+        }
+      ]
+    }
+  ]
+}

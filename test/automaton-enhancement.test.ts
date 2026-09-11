@@ -221,14 +221,18 @@ describe('the display half — the one fact the printed text cannot carry is tha
     expect(featEntries(off, db).find((e) => e.featId === 'automaton-armament')?.enhancedBy).toBeUndefined();
   });
 
-  it("each augmentation option says whether the app computes it — the honest Q27 answer", () => {
+  // batch 037: hardened-chassis#enhancement
+  it("each augmentation option says whether the app computes it, hardened-chassis included — the honest Q27 answer", () => {
     for (const id of ['lesser-augmentation', 'greater-augmentation']) {
       const ch = db.feats[id].effectChoices?.find((c) => c.id === 'enhancement');
       expect(ch, `${id} lost its enhancement choice`).toBeTruthy();
       for (const o of ch!.options ?? []) expect(o.note, `${id} -> ${o.value} has no note`).toBeTruthy();
       // 4 -> 5 -> 6: Undead Hunter's Infuse Vitality (batch 4) and Powerful Tail's climb Speed
       // (batch 6) are both computed now.
-      expect((ch!.options ?? []).filter((o) => /Computed on your sheet/.test(o.note ?? ''))).toHaveLength(6);
+      // batch 037: hardened-chassis#enhancement
+      // 6 -> 7 on BOTH pickers: the tier is computed, so the option that offers it may no longer say
+      // "the app does not compute it".
+      expect((ch!.options ?? []).filter((o) => /Computed on your sheet/.test(o.note ?? ''))).toHaveLength(7);
     }
     // The old note claimed "this feat's effect is one the app does not compute". It now does.
     expect(db.feats['lesser-augmentation'].note).not.toContain('does not compute');
@@ -256,13 +260,20 @@ describe('every record printing an **Enhancement** is accounted for', () => {
    * eleven were offered by NEITHER Augmentation picker — their benefit was unreachable. Found while
    * authoring Undead Hunter, which the old marker then reported as SPURIOUS.
    */
-  it('30 print one, 6 are computed, 23 carry a note, 1 is exempt with a stated reason', () => {
+  // batch 037: hardened-chassis#enhancement
+  it('30 print one, 7 are computed (hardened-chassis is the newest), 22 carry a note, 1 is exempt with a stated reason', () => {
     expect(a.printing).toHaveLength(30);
+    // batch 037: hardened-chassis#enhancement
+    // 6 -> 7. feats/hardened-chassis prints "Choose one of the following benefits: you gain
+    // resistance 3 to all physical damage, or your chosen resistance increases to a value equal to
+    // half your level (minimum 3)" and now computes it behind the augmentation gate.
     expect(a.computed.sort()).toEqual([
       'feats/arcane-communication', 'feats/arcane-eye', 'feats/automaton-armament', 'feats/automaton-lore',
-      'feats/powerful-tail', 'feats/undead-hunter',
+      'feats/hardened-chassis', 'feats/powerful-tail', 'feats/undead-hunter',
     ]);
-    expect(a.proseOnly).toHaveLength(23);
+    // batch 037: hardened-chassis#enhancement
+    // 23 -> 22: the same record left the prose-only bucket it was counted in.
+    expect(a.proseOnly).toHaveLength(22);
     expect(Object.keys(EXEMPT)).toEqual(['feats/lesser-augmentation']);
   });
 

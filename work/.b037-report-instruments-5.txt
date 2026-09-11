@@ -1,0 +1,184 @@
+BATCH 037 — INSTRUMENTS CHUNK 5 (WG-COMPARISON lane)
+====================================================
+
+Twelve findings, all CONFIRMED, all of the same shape: print says one thing, Wanderer's Guide's row
+says another, and ours already says what print says. The owner ruled all twelve on 2026-09-10
+(work/desk-answers-2026-09-10.json, desk #80 #81 #83 #84 #89 #90 #91 #103 #114 #117 #118 #119) under
+the standing 2026-08-22 rule — book wins — in his own words: "Keep the app on all 28 (it already
+follows the printed page); nothing changes for a player. Each gets WRITTEN DOWN as a known deliberate
+difference from WG (settle) so the comparer stops re-raising it."
+
+So this chunk authors NO data rows. It writes the differences down where the instruments read them,
+and only where an instrument actually raises them.
+
+
+DATA STILL NEEDED
+-----------------
+(none — every one of the twelve findings is "nothing changes"; the data already matches print and no
+backfill row is correct for any of them.)
+
+
+CROSS-FILE GAPS
+---------------
+- work/owner-questions.json (FORBIDDEN TO ME, driver/orchestrator must do it): all twelve records are
+  still entries in `open[]` (#80 #81 #83 #84 #89 #90 #91 #103 #114 #117 #118 #119) although the owner
+  ANSWERED them on 2026-09-10. scripts/wg-batch-close.mjs:258 derives OWNER-QUEUED for any record with
+  a desk entry BEFORE it ever looks at a finding's citations, so all twelve will close as OWNER-QUEUED
+  no matter what this report says. They should be moved from `open[]` to `ruled[]` (answer: book wins,
+  ours kept, settled in the instruments) so the closer derives OWNER-RULED / MATCHES instead, and so
+  scripts/wg-batch-gate.mjs parks them under "ruled" rather than "await his ruling".
+- scripts/lib/wg-experience-lanes.mjs matchSelects (NOT edited — a shared engine file, and the fix is
+  wider than this chunk): its one-select/one-control wording rescue is gated on `selects.length === 1`,
+  so a record where WG asks N questions and print asks fewer can never pair. seer-of-the-dead is the
+  case here and is parked instead; free-heart and dongun-education are two older parks of the same
+  shape. A "their surplus select is not printed" lane would retire all three parks at once.
+
+
+PER FINDING
+-----------
+
+1. traveling-gourmand#survival — TEACH (instrument settle), no row.
+   WG writes Survival as untrained where AoN background-482 trains it. Our record already carries the
+   printed sentence entire (trainedSkill 'survival', trainedLore 'cooking', grantedFeatId 'forager').
+   Settle: scripts/wg-values.mjs SETTLED_VALUES['traveling-gourmand'] = ['skill|survival'], cited
+   `// batch 037: traveling-gourmand#survival`.
+   BLAST RADIUS, measured: `skill|survival` is the ONLY key either side asserts on this record, so the
+   settle quiets it for wg-values entirely — stated plainly in the registry comment rather than buried.
+   The cover is a different registry and the engine, both pinned:
+     · wg-diff still compares the record's KINDS — with trainedSkill AND trainedLore deleted from a
+       content copy the background is back in THEY-ONLY as missing=[skill];
+     · a really built character has Survival trained, Cooking Lore trained and Forager granted, and a
+       content copy with those three fields deleted loses all three.
+   Test: test/batch037-instruments-5.test.ts, describe "traveling-gourmand settles a WG operation that
+   UNTRAINS a printed skill" (2 cases, both marked `// mutation-proof`).
+
+2. seer-of-the-dead#one-boost — TEACH (experience instrument park), no row.
+   AoN background-243 gives ONE boost, restricted to Con or Wis, and no free boost; ours is exactly
+   that (abilityBoosts one choice entry). WG asks "Select an Attribute" TWICE — the second is a free
+   boost the background never prints — and matchSelects is strictly one-to-one, so the surplus select
+   is unmatched and the harness reads MISSING-CONTROL on a record that matches print.
+   Park: work/experience-instrument-limits.json record "seer-of-the-dead", class ALREADY-OK, lane
+   `wg-unprinted-extra-select`, cited `// batch 037: seer-of-the-dead#one-boost`.
+   BLAST RADIUS: the park is per-record and the gate consults it only AFTER a non-OK verdict, so every
+   other lane on the record still judges (sheetDiffCount is 18 — Religion, Lore (Undead), the Spirit
+   Sense innate entry and its four +1 status stars all land). The park is INDIFFERENT to the carrier —
+   emptying abilityBoosts leaves the verdict MISSING-CONTROL either way — which is why the boost is
+   pinned on the content the Builder actually renders instead of parked blind.
+   Test: test/batch037-instruments-5.test.ts, describe "seer-of-the-dead asks the ONE boost print asks"
+   (2 cases; the first marked `// mutation-proof`, the second pins the park's verdict/lane/class/cite).
+
+3. haunted#no-skill-feat — residual read, no row, NO settle.
+   No printing of Haunted names a feat (AoN background-468); WG grants Recognize Spell. No comparer
+   raises it — kinds/values/identity all empty and experience OK in work/.b037-baseline/flags.json — so
+   a settle would match nothing and would pre-silence the next real difference on the record.
+   Test: the quiet-set case in test/batch037-instruments-5.test.ts (fails the day it starts reporting).
+
+4. tree-friend#arboreal — TEACH (instrument settle), no row.
+   AoN background-504 grants a PERMISSION ("you can choose Arboreal"), not a language; their
+   `giveLanguage` op reads as the `language` kind. Our bonus-language picker (src/builder/shared.tsx
+   :4300) offers every one of the 120 content.languages entries with no rarity filter — Arboreal
+   (language-26) among them — so the permission is already delivered and a grantsLanguages row would
+   hand the language over free, which print does not say.
+   Settle: scripts/wg-diff.mjs VERIFIED_EQUIVALENT['tree-friend'] = ['language'], cited
+   `// batch 037: tree-friend#arboreal`.
+   BLAST RADIUS, measured: one row, one kind. `--raw` puts the record straight back in THEY-ONLY with
+   missing=[language]; and with `grantedFeatId` deleted from a content copy the record is STILL
+   reported WITH the settle in place, as missing=[grantsRecord] — so the entry cannot stand in for the
+   No Cause for Alarm grant beside it.
+   Test: test/batch037-instruments-5.test.ts, describe "tree-friend settles a printed PERMISSION their
+   row encodes as a grant" (2 cases, the first marked `// mutation-proof`).
+
+5. hammered-by-fate#three-lores — residual read, no row, NO settle.
+   All three printed Lores are offered and the Harrow the Fiend free action is built (AoN
+   background-366); WG lists Daemon Lore twice and never offers Demon Lore. No comparer raises it —
+   wg-values files the record under "not a scalar we hold: ATTRIBUTE_STR", the chassis boost lane.
+   Test: the quiet-set case in test/batch037-instruments-5.test.ts.
+
+6. lesser-scion#heraldry-lore — residual read, no row, NO settle.
+   We train Heraldry Lore as printed (AoN background-37); WG trains a misspelled "Heradlry Lore". No
+   comparer raises it.
+   Test: the quiet-set case in test/batch037-instruments-5.test.ts.
+
+7. bachuan-revolutionary#wisdom-boost — residual read, no row, NO settle.
+   Strength or Wisdom plus a free boost, uncommon, exactly as printed (AoN background-472); WG's Wisdom
+   branch targets the non-existent variable ATTRIBUTE_WISR and delivers nothing. No comparer raises it.
+   Test: the quiet-set case in test/batch037-instruments-5.test.ts.
+
+8. divine-font#rank-9 — residual read, no row, NO settle.
+   The font stops at 9th rank because Miraculous Spell (AoN class-feature-662) bars 10th-rank slots
+   from abilities that grant more slots, and the font is one; WG raises the font to 10th at 19-20. No
+   comparer raises it: wg-values files divine-font under "prose-only bonus", wg-diff has it in AGREE,
+   and wg-casting (16 class sources compared) reports no cleric mismatch at all.
+   Test: the quiet-set case in test/batch037-instruments-5.test.ts.
+
+9. undine#swim-speed — residual read, no row, NO settle.
+   Swim Speed 10 and the amphibious trait, unconditional as printed (AoN heritage-134); WG's
+   conditional gives a non-swimmer nothing and caps a faster one. wg-diff already has the record in
+   AGREE (their `conditional` wraps only kinds we model, so gatesOnlyWhatWeHave drops it) and wg-values
+   agrees on the value.
+   Test: the quiet-set case in test/batch037-instruments-5.test.ts.
+
+10. grave-orc#void-resistance — residual read, no row, NO settle.
+    Half your level, minimum 1, as printed (AoN heritage-275); WG's formula carries no minimum. No
+    comparer raises it — wg-values reports "3 values, 1 sets agree".
+    Test: the quiet-set case in test/batch037-instruments-5.test.ts.
+
+11. deny-lady-nanbyos-charity#bulk-thresholds — TEACH (instrument settle), no row.
+    AoN heritage-407 names TWO numbers (encumbered +1, maximum +2) and WG's vocabulary holds one
+    (`adjValue BULK_LIMIT_BONUS 2`, which moves the encumbered threshold by 2 as well), so their scalar
+    cannot state the printed rule at any value. Ours states both on the record: bulkLimitBonus 1 (both
+    thresholds, src/rules/derive.ts:5533) + bulkMaxBonus 1 (maximum only, :5534).
+    Settle: scripts/wg-values.mjs SETTLED_VALUES['deny-lady-nanbyos-charity'] = ['bulk|'], cited
+    `// batch 037: deny-lady-nanbyos-charity#bulk-thresholds`.
+    BLAST RADIUS: `bulk|` only. SETTLED_VALUES filters per KEY, and this record also asserts
+    skill|athletics=1 (the printed +1 circumstance to Force Open or Escape, situationalBonuses.ts:2719,
+    scraped by situationalMagnitudes) — compared exactly as it stands on every run, which the `--raw`
+    output in the test shows. `--raw` also puts the bulk row straight back, so the settle is
+    load-bearing; and a really built yaksha gains +1 encumbered / +2 maximum, which an in-memory
+    content copy with both fields deleted loses.
+    Test: test/batch037-instruments-5.test.ts, describe "deny-lady-nanbyos-charity settles two printed
+    Bulk numbers their one scalar cannot hold" (2 cases, both marked `// mutation-proof`).
+
+12. waning-moon-sarangay#reroll-skill — residual read, no row, NO settle.
+    The once-per-day critical-failure reroll follows the chosen skill and the note already sits on that
+    skill's row, as printed (AoN heritage-394); WG's Crafting and Performance options both fire the
+    reroll on Acrobatics. No comparer raises it — wg-values reports "3 values, 0 sets agree".
+    Test: the quiet-set case in test/batch037-instruments-5.test.ts.
+
+
+COMPARER COUNTS — BEFORE / AFTER
+--------------------------------
+Taken with `node scripts/wg-diff.mjs`, `wg-values.mjs --batch`, `wg-identity.mjs --batch` and
+`npx jiti scripts/wg-casting.mjs`, on batch 037 and on the two previous packets.
+⚠ Sibling instrument chunks were landing their own settles between the two readings, so the totals move
+by more than this chunk's work; the per-record attribution below is measured, not inferred.
+
+  wg-diff (whole corpus)      THEY-ONLY 183 -> 179   WE-ONLY 2886 -> 2889   AGREE 1099 -> 1100
+      records that LEFT THEY-ONLY: advanced-red-mantis-magic, instinct-ability, spirit-walk,
+      tree-friend. Exactly ONE of those four is mine (tree-friend); the other three are sibling chunks'.
+      Records that ENTERED THEY-ONLY: none.
+
+  wg-values  batch 035:  27 compared, 27 agree, 0 to adjudicate  ->  unchanged (27 / 27 / 0)
+             batch 036:  14 compared, 14 agree, 0 to adjudicate  ->  unchanged (14 / 14 / 0)
+             batch 037:  58 compared, 52 agree, 6 to adjudicate  ->  58 / 56 / 2
+      the four that cleared: traveling-gourmand and deny-lady-nanbyos-charity (mine),
+      curse-of-turbulent-moments and tumbling-theft (a sibling chunk's).
+
+  wg-identity  batch 035: 2 -> 1    batch 036: 0 -> 0    batch 037: 8 -> 3
+      I did not touch scripts/wg-identity.mjs; every one of those moves is a sibling chunk's.
+
+  wg-casting  16 class sources compared, 4 with mismatches (180 rows) -> 3 with mismatches (174 rows)
+      I did not touch scripts/wg-casting.mjs; the animist source cleared on a sibling chunk's work.
+      Cleric never appeared in either reading, which is the divine-font#rank-9 evidence above.
+
+NO EARLIER BATCH FLIPPED: none of the four record ids this chunk touches (tree-friend,
+traveling-gourmand, deny-lady-nanbyos-charity, seer-of-the-dead) appears in work/wg-batch-035.json or
+work/wg-batch-036.json, and the 035/036 values counts are byte-identical before and after.
+
+GUARDS RUN
+----------
+  node scripts/vt.mjs run test/batch037-instruments-5.test.ts   -> 9 passed
+  npx tsc --noEmit                                              -> clean
+  node scripts/test-flip-audit.mjs --batch 037                  -> 0 violations on any file of mine
+      (3 violations remain, all on sibling chunks' in-flight keys: spirit-walk in wg-diff,
+      dragon-eidolon and sky-rider in wg-identity — not this chunk's to fix)

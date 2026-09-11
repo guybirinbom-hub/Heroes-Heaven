@@ -95,13 +95,20 @@ describe('batch 035 gate-park — animal-instinct is parked by desk entry #145, 
     } finally {
       rmSync(join(CLI_ROOT, rel), { force: true });
     }
-    /* The other half of the failure condition: the comparer still raises the record, so with nothing
-     * parking it the gate's `n` stays above zero. */
+    /*
+     * The other half of the failure condition USED to be that the comparer still raised the record —
+     * `--- animal-instinct (…) theirs-not-ours=[spiderweb]`. Batch 037 BUILT the Web (owner ruling
+     * #145's damageless-attack lane, plus the row on classFeatures/animal-instinct.grantedStrikes), so
+     * wg-identity has nothing left to raise and the gate no longer needs the park to stay green here.
+     * The park itself is unchanged and is still mutation-proofed above, against the desk entry: that is
+     * the half this test exists for. What is asserted now is the fix, not the gap.
+     */
+    // batch 037: animal-instinct#spider-web
     const identity = execFileSync(process.execPath, [join(CLI_ROOT, 'scripts/wg-identity.mjs'), '--batch', BATCH], {
       cwd: CLI_ROOT, encoding: 'utf8', maxBuffer: 1 << 28,
     });
-    expect(identity).toMatch(/^--- animal-instinct\s+\(/m);
-    expect(identity).toContain('theirs-not-ours=[spiderweb]');
+    expect(identity).not.toMatch(/^--- animal-instinct\s+\(/m);
+    expect(identity).not.toContain('theirs-not-ours=[spiderweb]');
   });
 
   // batch 035: animal-instinct#spider-web
@@ -125,7 +132,8 @@ describe('batch 035 gate-park — animal-instinct is parked by desk entry #145, 
   });
 
   // batch 035: animal-instinct#spider-web
-  it('the widening around animal-instinct is exactly five records, the two loose ones accepted and printed', () => {
+  // batch 037: screech-shooter-major#grade-numbers
+  it('the widening around animal-instinct is exactly six records since screech-shooter-major joined, the two loose ones accepted and printed', () => {
     /*
      * The pin against silent growth. `--queued-parks` lists every record parked by a desk id that is
      * not its own; today that is five, and each is deliberate:
@@ -144,10 +152,18 @@ describe('batch 035 gate-park — animal-instinct is parked by desk entry #145, 
      * `spore-order` is NOT here and that is the rule working: an exact desk id always beats a prefix,
      * and it carries both #134 (the old aspect key) and #139 (the record id).
      */
+    /*
+     * SIX since batch 037, which filed desk #151 `screech-shooter-major-rune-grade` — print states a
+     * rune grade for the base and the greater screech shooter and is SILENT for the major, so the
+     * major's grade cannot be invented and is queued. The id is an aspect key on a real record, the
+     * same shape as animal-instinct and dream-magic above, so the park is the rule working.
+     */
+    // batch 037: screech-shooter-major#grade-numbers
     expect(widened()).toEqual({
       'animal-instinct': 'animal-instinct-spider-web',
       'dream-magic': 'dream-magic-second-taking',
       'flexible-spellcaster': 'flexible-spellcaster-collection-shape',
+      'screech-shooter-major': 'screech-shooter-major-rune-grade',
       speed: 'speed-status-lane-031',
       relic: 'relic-gift-family-skysunder-sparkwarden-uniter-adamantine',
     });

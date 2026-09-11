@@ -1,0 +1,175 @@
+BATCH 037 — ADVERSARIAL VERIFY, INSTRUMENTS CHUNK 5 (WG-COMPARISON lane)
+=======================================================================
+
+Default assumption on entry: the work is not done. What I re-read, re-ran and re-measured myself:
+
+  · all twelve findings in work/.b037-read.json (confirmed[], 12 of 144 — none in refuted/askOwner)
+  · the spec work/.b037-rows-instruments-5.json (12 entries, ZERO backfillRows — nothing for the
+    applier to apply, so there is no row to diff against a shipped value and no create/supersedes
+    question to answer; verified by scanning ALL fourteen .b037-rows-*.json: no row in ANY family's
+    spec names any of this chunk's twelve record ids, and there are 0 cross-spec record+field
+    collisions in the whole batch)
+  · every changed file: scripts/wg-values.mjs, scripts/wg-diff.mjs,
+    work/experience-instrument-limits.json, test/batch037-instruments-5.test.ts (git diff read whole)
+  · the PRINTED text of all twelve, pulled from the AoN mirror myself (background-482, -243, -468,
+    -504, -366, -37, -472; heritage-407, -134, -275, -394; class-feature-662) — every quote in the
+    builder's report and in the settle comments is verbatim and complete
+  · WG's own row for seer-of-the-dead, read straight out of work/wg/wg-data.sql
+  · the carriers on a really BUILT character, through a throwaway jiti harness (now deleted)
+
+  npx tsc --noEmit                                        -> clean
+  node scripts/vt.mjs run test/batch037-instruments-5.test.ts -> 9 passed (9)
+  node scripts/test-flip-audit.mjs --batch 037            -> clean, 17 test files, 13 new settle keys,
+                                                             every flip cited (the 3 violations the
+                                                             builder saw on sibling keys are gone)
+  node scripts/wg-identity.mjs --ids <the twelve>         -> 9 records checked, 9 match, 0 to report
+  npx jiti scripts/wg-casting.mjs                         -> 16 sources, 3 with mismatches (magus,
+                                                             summoner, wizard) — cleric absent, which
+                                                             is the divine-font#rank-9 evidence
+  node scripts/wg-settle-stale.mjs                        -> 77 settles answer nothing; NONE of this
+                                                             chunk's three is among them (they are
+                                                             load-bearing), and that script is also
+                                                             why NOT settling the eight quiet records
+                                                             is the correct call, not a shortfall
+
+THE CENTRAL CLAIM I DID NOT TAKE ON TRUST — "only four of the twelve are flagged".
+work/.b037-baseline/flags.json, captured before the batch, says exactly that and nothing else:
+  traveling-gourmand        values: DIFFERENT skill|survival theirs=untrained ours=trained
+  deny-lady-nanbyos-charity values: DIFFERENT bulk| theirs=2 ours=1/1/1/1
+  tree-friend               kinds:  [language]
+  seer-of-the-dead          experience: MISSING-CONTROL
+  the other eight           kinds [] values [] identity [] experience OK
+Four settles/parks, four flags, one for one. I re-ran identity and casting live on top of that
+(above) and the eight are still silent on every instrument today, after the sibling chunks' settles.
+
+
+PER FINDING
+-----------
+traveling-gourmand#survival — DONE. wg-values SETTLED_VALUES['traveling-gourmand'] = ['skill|survival']
+  is cited "// batch 037: traveling-gourmand#survival"; the record really carries the printed sentence
+  (trainedSkill survival + trainedLore cooking + grantedFeatId forager, background-482 quoted verbatim)
+  and a built character gets all three — the test's stunted copy loses all three, so it reads the
+  carrier. --raw puts the DIFFERENT row straight back, so the settle silences something real.
+  Blast radius (the settle quiets wg-values for the WHOLE record, because skill|survival is the only
+  key either side asserts) is stated in the registry comment, not buried, and covered by wg-diff.
+
+seer-of-the-dead#one-boost — DONE (instrument teach: the experience park in
+  work/experience-instrument-limits.json, lane wg-unprinted-extra-select). I read WG's row in
+  work/wg/wg-data.sql myself: two `select`
+  ops both titled "Select an Attribute", the first PREDEFINED (ATTRIBUTE_CON | ATTRIBUTE_WIS), the
+  second FILTERED over group ATTRIBUTE — a free boost, while their own description text beside it says
+  "You gain one attribute boost". background-243 prints one boost and no free one. Ours is
+  abilityBoosts [{choice con|wis}], and a built seer gets Religion trained, Undead Lore trained and
+  Spirit Sense as a rank-2 divine innate ("spellSources": "Seer of the Dead") — verified on a real
+  build, not inferred. matchSelects (scripts/lib/wg-experience-lanes.mjs:307) really is gated on
+  `unmatched.length === 1 && selects.length === 1`, so the surplus select cannot pair: the
+  MISSING-CONTROL is theirs, not ours. Park recorded, scoped and cited, and pinned by a test.
+  OBSERVATION (not a defect): wg-batch-gate.mjs checks queuedFor() then ownerRuled() BEFORE
+  instrumentLimited(), so while this record sits in owner-questions open[] — and after it moves to
+  ruled[] — the park is never the branch that fires. It is correct and it is the durable written-down
+  record the owner asked for; it is simply belt-and-braces today.
+
+haunted#no-skill-feat — DONE (residual read, no settle, correctly). background-468 names no feat
+  anywhere (I read the whole entry); ours trains Occultism, asks the GM-chosen skill as a `choice`
+  (flag entitySkill) and stars it at situationalBonuses.ts:3150 with the printed aid clause. A built
+  haunted character has occultism trained and NO background feat. Every instrument silent.
+
+tree-friend#arboreal — DONE. wg-diff VERIFIED_EQUIVALENT['tree-friend'] = ['language'], cited. I
+  checked the claim the settle rests on rather than believing it: src/builder/shared.tsx:4300 builds
+  `available` from Object.values(content.languages) minus what you already know — no rarity filter, no
+  ancestry filter; `listedFrom` only SORTS — and languages/arboreal (language-26) is one of the 120.
+  A built tree-friend gets no-cause-for-alarm and languages [common, shoony] — i.e. no free Arboreal,
+  which is what print says. --raw returns the record to THEY-ONLY missing=[language]; stunting
+  grantedFeatId still reports (missing=[grantsRecord]), so the entry cannot cover the feat grant.
+
+hammered-by-fate#three-lores — DONE (residual read, no settle, correctly). background-366 verbatim:
+  Daemon, Demon or Devil Lore. Ours ships trainedLoreOptions ["daemon","demon","devil"], grants
+  hefty-hauler (built character confirms) and grantsActions ["harrow-the-fiend"]. Instruments silent.
+
+lesser-scion#heraldry-lore — DONE (residual read, no settle, correctly). background-37 prints
+  Heraldry Lore; ours is trainedLore "heraldry" + hobnobber. Instruments silent.
+
+bachuan-revolutionary#wisdom-boost — DONE (residual read, no settle, correctly). background-472
+  prints Wisdom or Strength + free, Uncommon; ours is abilityBoosts [{choice str|wis},{free}] with
+  rarity uncommon. Instruments silent.
+
+divine-font#rank-9 — DONE (residual read, no settle, correctly). I read the code, not the report:
+  build.ts:4577 `.filter((r) => r <= 9)` for the primary class and :4667 for the second, each with the
+  Miraculous Spell reason in the comment. class-feature-662's barring clause is quoted verbatim and
+  exists in the mirror. wg-casting run live: cleric is not among the 3 mismatching sources.
+
+undine#swim-speed — DONE (residual read, no settle, correctly). heritage-134 verbatim; ours is
+  speeds {swim:10} unconditional + traits/grantsCreatureTraits amphibious. Instruments silent.
+
+grave-orc#void-resistance — DONE (residual read, no settle, correctly). heritage-275 verbatim; ours
+  is resistances [{void, "max(1,floor(@actor.level/2))"}] — the minimum is in the formula — and the
+  entry's OTHER printed half (+1 circumstance vs death/void saves) is at situationalBonuses.ts:2683.
+  Instruments silent.
+
+deny-lady-nanbyos-charity#bulk-thresholds — DONE. wg-values SETTLED_VALUES['deny-lady-nanbyos-charity']
+  = ['bulk|'], cited. heritage-407 names two numbers; ours holds bulkLimitBonus 1 + bulkMaxBonus 1 and
+  BOTH have readers (derive.ts:5533 into limitBonus, :5534 into maxOnlyBonus — I read the lines). The
+  test measures a real yaksha: +1 encumbered, +2 maximum, and 0/0 on a copy with both fields deleted.
+  The record's other key (skill|athletics=1) is untouched by a key-scoped settle and still compared.
+
+waning-moon-sarangay#reroll-skill — DONE (residual read, no settle, correctly). heritage-394 verbatim;
+  ours offers the three trainings as effectChoices and puts the once-per-day fortune reroll on the
+  chosen skill's own row (situationalBonuses.ts:4136 + limitedUses {max:1, per:'day'}). Silent.
+
+FIXED-BY-ME: nothing. I changed no file; there was nothing to correct.
+
+
+WHY "NO SETTLE" ON EIGHT IS DONE AND NOT A SHORTFALL
+----------------------------------------------------
+The owner's words are "written down … so the comparer stops re-raising it". A comparer that never
+raises a record has nothing to stop, and scripts/wg-settle-stale.mjs exists precisely to hunt entries
+in that state ("A SETTLE THAT SILENCES NOTHING IS A TRAP WAITING TO SPRING … reported for DELETION"):
+it currently lists 77 such entries. Adding eight more would have been authoring the defect that script
+reports. The eight ARE written down — in the spec notes, in this report pair, and in a live guard
+(the quiet-set test fails the day any of them starts reporting on wg-values or wg-diff).
+
+
+DATA STILL NEEDED
+-----------------
+(none — confirmed. Twelve findings, zero rows is the right answer: in every case ours already states
+print, and the only correct row would be one that imports WG's error.)
+
+
+CROSS-FILE GAPS
+---------------
+- work/owner-questions.json (forbidden to every agent in this workflow; driver/orchestrator must do
+  it): all twelve are still in `open[]` with desk numbers #80 #81 #83 #84 #89 #90 #91 #103 #114 #117
+  #118 #119, although the owner ANSWERED them on 2026-09-10 (work/desk-answers-2026-09-10.json, the
+  answer block whose `ns` is exactly those twelve: "Keep the app on all 28 … Each gets WRITTEN DOWN as
+  a known deliberate difference from WG (settle)"). VERIFIED, not repeated: wg-batch-close.mjs builds
+  its desk map from open[] + deferred[] only (:107-118) and takes the OWNER-QUEUED branch (:257-262)
+  BEFORE it looks at any citation, so all twelve close as OWNER-QUEUED whatever this report says; and
+  wg-batch-gate.mjs:599 parks them via queuedFor() for the same reason. They belong in `ruled[]`
+  (answer: book wins, ours kept, settled in the instruments) so the closer derives OWNER-RULED /
+  MATCHES. Note the closer's own known defect (:120-130): a desk id shaped `<record>-<aspect>` is
+  invisible to desk.has(<record>) — these twelve are keyed by bare record id, so they ARE seen.
+- scripts/lib/wg-experience-lanes.mjs matchSelects (shared engine file; not edited, and the fix is
+  wider than this chunk): the one-select/one-control wording rescue at :307 is gated on
+  `selects.length === 1`, so a record where WG asks MORE questions than print can never pair.
+  seer-of-the-dead is parked instead; free-heart and dongun-education are older parks of the same
+  shape. A "their surplus select is not printed" lane would retire all three at once. (A sibling chunk
+  edited this file in-flight to add a tradition lane at :162-183; it does not touch the attribute lane
+  and does not collide with this chunk.)
+- work/.b037-specs.json — for the DRIVER to re-check at close, not for me to edit: as of this verify
+  the manifest holds 9 entries and five families that have already written a rows file have no entry
+  (data-rows-1, data-rows-3, data-rows-4, instruments-3, instruments-6). Those siblings are still
+  running, so this is most likely in-flight rather than a lost update — but the manifest is a
+  read-modify-write file being appended by concurrent agents, and a dropped entry is silent: every
+  family's rows would then go uncited at close. This chunk's own entry is intact and correct
+  (family instruments-5, file work/.b037-rows-instruments-5.json, stage[] = the rows spec, the report,
+  test/batch037-instruments-5.test.ts, scripts/wg-diff.mjs, scripts/wg-values.mjs,
+  work/experience-instrument-limits.json — all six paths it touched, no more), and every other entry
+  present carries its own file and stage[]. No superseding rows exist in this chunk (no rows at all),
+  so the supersedes:true requirement is vacuous here.
+
+
+MANIFEST STAGE PATHS FOR THIS VERIFY
+------------------------------------
+(none — I wrote only work/.b037-verify-instruments-5.txt and changed no other file. The throwaway
+build harness work/.b037-i5-verify-harness.ts was deleted after use; the test's own stunt/diff
+scratch files under work/.b037-i5-* are all cleaned up by their finally blocks — verified, none left.)

@@ -81,17 +81,23 @@ describe('flickering-stories marks Offer a Story', () => {
 });
 
 describe('dream-magic grants its spell at the printed rank', () => {
-  // batch 031: dream-magic#rank
-  it('offers Dream Message or Sleep as a 4th-rank occult innate spell, once per day', () => {
+  // The rank this batch-031 finding established is unchanged; only its CARRIER moved. "Special You
+  // can take this feat twice, gaining the spell you didn't select initially the second time" (AoN
+  // feat-8518) — an effectChoices answer is keyed by record id, so both takings shared it, and the
+  // pick moved to the record's own `choice`, which is answered per feat entry.
+  // batch 037: dream-magic#second-taking
+  it('dream-magic offers Dream Message or Sleep as a 4th-rank occult innate spell, once per day', () => {
     // "you learn this spell as a 4th-rank occult innate spell that you can cast once per day" (AoN
-    // feat-8518). The pick lane it used to run through carries no rank at all, so both spells were
-    // cast at their base rank; effectChoices.grant.innateSpells can carry it.
-    const choices = feat('dream-magic')?.effectChoices as
-      | { id: string; options: { value: string; grant: { innateSpells: { spellId: string; tradition: string; rank: number; usesPerDay: number }[] } }[] }[]
+    // feat-8518). The FEAT_CANTRIP_GRANTS lane carries no rank at all, so both spells were cast at
+    // their base rank; a choice option's grant.innateSpells can carry it.
+    const choice = feat('dream-magic')?.choice as
+      | { options: { value: string; grant: { innateSpells: { spellId: string; tradition: string; rank: number; usesPerDay: number }[] } }[] }
       | undefined;
-    expect(choices?.length).toBe(1);
-    expect(choices?.[0].options.map((o) => o.value).sort()).toEqual(['dream-message', 'sleep']);
-    for (const o of choices?.[0].options ?? []) {
+    // The old shape was a one-entry effectChoices ARRAY, so this line lost its `?.[0]` when the pick
+    // moved onto the record's own `choice`; the two options it names are unchanged.
+    // batch 037: dream-magic#second-taking
+    expect(choice?.options.map((o) => o.value).sort()).toEqual(['dream-message', 'sleep']);
+    for (const o of choice?.options ?? []) {
       expect(o.grant.innateSpells).toEqual([
         { spellId: o.value, tradition: 'occult', rank: 4, usesPerDay: 1 },
       ]);

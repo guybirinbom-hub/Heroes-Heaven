@@ -85,10 +85,10 @@ describe('batch 036 closer — energy-resistant delivers its resistance off the 
  * ================================================================== */
 
 /** wg-diff has no `--ids`: it is corpus-wide by construction, so it is run to a file and indexed. */
-function diffRows(tag: string, coreRel = 'public/core.json'): Map<string, Json> {
+function diffRows(tag: string, coreRel = 'public/core.json', extra: string[] = []): Map<string, Json> {
   const out = `work/.b036c-diff-${tag}.json`;
   try {
-    execFileSync(process.execPath, [join(CLI_ROOT, 'scripts/wg-diff.mjs'), '--out', out, '--core', coreRel], {
+    execFileSync(process.execPath, [join(CLI_ROOT, 'scripts/wg-diff.mjs'), '--out', out, '--core', coreRel, ...extra], {
       cwd: CLI_ROOT, encoding: 'utf8', maxBuffer: 1 << 28,
     });
     const j: Json = JSON.parse(readFileSync(join(CLI_ROOT, out), 'utf8'));
@@ -130,15 +130,33 @@ describe('batch 036 closer — spirit-walk: SENSES_PRECISE is routed to the sens
    * record with no carrier, or kept reporting it with one, the variable would be unwatched by every
    * comparer and the next real sense gap here would ship unread.
    */
-  // batch 036 premise: feat-7120 "You have apparition sight, an imprecise sense that allows you to detect the presence of"
-  it('feats/spirit-walk still reports a missing `sense` kind, and stops the moment a senses carrier lands', () => {
+  /*
+   * ⚠ BATCH 037 SETTLED THE DIVERGENCE THIS TEST LEFT OPEN. The read finding spirit-walk#playtest-row
+   * established that WG's operation-bearing Spirit Walk row is the PLAYTEST edition — it is not what
+   * the published feat prints — so the `sense` kind was added to wg-diff's per-record settle list as
+   * `'spirit-walk': ['sense']`. The routing claim below is unchanged and still worth a test: the
+   * variable is still read by wg-values, and the record is still the only one the settle touches. What
+   * the second half proves has moved with it — from "the lane still reports" to "the SETTLE is what
+   * silences it", which is the same guard against a suppression that outlives its reason.
+   */
+  // batch 037: spirit-walk#playtest-row
+  it('feats/spirit-walk is settled for `sense` by batch 037, and the lane still reports without the settle', () => {
     expect(readFileSync(join(CLI_ROOT, 'scripts/wg-values.mjs'), 'utf8')).toContain('SENSES_PRECISE:');
-    expect(diffRows('base').get('spirit-walk')?.missing).toContain('sense');
+    // batch 037: spirit-walk#playtest-row
+    expect(diffRows('base').get('spirit-walk')?.missing ?? []).not.toContain('sense');
 
+    /* mutation-proof — stunts the settle key `'spirit-walk': ['sense']` in wg-diff's per-record settle
+     * list by running the comparer under `--raw`, the registry's own bypass. With the settle gone the
+     * record reports the missing kind again, so the settle is doing the silencing and the lane has not
+     * quietly stopped watching SENSES_PRECISE for every other record. */
+    // batch 037: spirit-walk#playtest-row
+    expect(diffRows('raw', 'public/core.json', ['--raw']).get('spirit-walk')?.missing ?? []).toContain('sense');
+
+    /* …and the ORIGINAL half still holds: a real `senses` carrier silences it on its own merits. */
     const stunted = stuntedCore(
       'senses',
       (c) => { c.feats['spirit-walk'].senses = [{ name: 'apparition sight', acuity: 'precise', range: 30 }]; },
-      (coreRel) => diffRows('senses', coreRel),
+      (coreRel) => diffRows('senses', coreRel, ['--raw']),
     );
     expect(stunted.get('spirit-walk')?.missing ?? []).not.toContain('sense');
   });

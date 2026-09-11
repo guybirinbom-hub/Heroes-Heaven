@@ -1,0 +1,170 @@
+BATCH 037 — ADVERSARIAL VERIFY, data-rows-5 (chunk 5 of 6, 11 finding ids)
+Builder report: work/.b037-report-data-rows-5.txt
+Spec checked:   work/.b037-rows-data-rows-5.json   (12 rows over 11 findings; guardians-armor carries none)
+Tests checked:  test/batch037-data-rows-5.test.ts  (13 tests: 11 red until the driver applies, 2 green guards)
+Checks run:     npx tsc --noEmit — CLEAN.
+                node scripts/vt.mjs run test/batch037-data-rows-5.test.ts — 11 failed / 2 passed, exactly the
+                authored fields, same as the sibling data-rows files' convention.
+                node scripts/test-flip-audit.mjs --batch 037 — CLEAN (21 files, 13 new settle keys, every flip
+                cited). The builder's CROSS-FILE GAP #8 (an uncited assertion in test/batch031-data.test.ts:96)
+                is GONE — that file is data-rows-4's stage[] and they closed it. Gap #8 is struck below.
+                node scripts/duplicate-pick-check.mjs — ok TODAY, and FAILS once these rows land: see the
+                blocking finding under CROSS-FILE GAPS #1. This is the one thing the builder did not measure.
+I edited NO src/, NO scripts/ and NO test/ file. The in-memory harness (test/_b037v5harness.test.ts +
+work/_v5harness-out.json) applied all 12 rows to a content copy, built real characters, and was deleted.
+
+ROW-AS-ROW CHECKS (all pass)
+  · Every target record exists in public/core.json; no row needs create:true. Confirmed by id.
+  · Every re-emitted value diffed field-by-field against the shipped overlay row in
+    scripts/data/effect-backfill.json: each holds everything it held MINUS/PLUS exactly the intended change.
+    kitsune/nagaji ×5 → only `grant` + per-option `description` added to each of 3 options; time-mage →
+    only `traditionFromCasting:true` added; versatile-mutation.choice → only `minLevel:8` added and
+    `distinctAcrossTakes` dropped; clawdancer.grantedStrikes / arcana.grantsClassFeatures → whole delete.
+  · supersedes:true appears on exactly the 9 rows that replace a live effect-backfill row, and on none of
+    the 3 that do not (versatile-mutation maxTakable / description have no prior overlay row).
+  · No two rows in this spec share a record+field+path key; scanned all 14 .b037-rows-*.json specs together —
+    ZERO cross-spec collisions, so no sibling chunk's row collides with one of mine.
+  · Every spell id a row names exists in public/core.json (daze, forbidding-ward, ghost-sound, bane,
+    illusory-object, sanctuary, charm, fleet-step, heal, confusion, death-ward, illusory-scene, flicker,
+    control-water, subconscious-suggestion, time-sense). `blink` really is absent, as the row's note says.
+  · The description row is a bare string on a record that already has a core-descriptions entry, which is
+    the shape scripts/apply-backfill-now.mjs routes to core-descriptions.json `.d` (skipFields + isDesc).
+  · Readers confirmed live for every authored field: option `grant` → derive.ts:1826 (dailyChoiceGrants);
+    option `description` → FeatChoiceDef.options[].description (types.ts:2961); InnateSpellGrant.rank /
+    tradition / usesPerDay / atWill → types.ts:2425-2442; traditionFromCasting → build.ts:8243;
+    FeatChoiceDef.minLevel → dailyChoices.ts:54 ONLY (see gap #6); maxTakable → maxTakes(), featGrants.ts:881.
+  · Manifest work/.b037-specs.json: 16 entries, every other family present, data-rows-5's entry lists exactly
+    the three paths it touched (spec, report, test) and nothing else. Correct — this chunk wrote no src/.
+
+PER FINDING
+kitsune-spell-familiarity#daily-control — NOT-DONE
+  Row is correct and inert. Harness: feat owned, answer 'daze' stored, applyPlayState → innate entry
+  cantrips [] and repertoire {} — nothing at all reaches the sheet, because play.ts:514 `if (rank <= 0)
+  continue;` drops a cantrip before it can be filed. The builder's CROSS-FILE GAP #2 is real and is the
+  whole blocker; verified by building the character, not by reading.
+
+kitsune-spell-mysteries#daily-control — DONE
+  Harness on a built lv5 kitsune fighter: answer 'bane' → innate repertoire {1:['bane']}, one use. The
+  printed once-a-day 1st-rank casting reaches the sheet. Caveat recorded, not counted as done: the entry
+  votes tradition 'arcane' and labels the spell "Borrowed today" instead of divine (gap #4).
+
+nagaji-spell-mysteries#daily-control — DONE
+  Same harness, lv5 nagaji: charm / fleet-step / heal each reach innate repertoire {1:[id]} with one use.
+  All three option values resolve to real records. Same gap-#4 tradition/label caveat.
+
+kitsune-spell-expertise#daily-control — NOT-DONE
+  Harness, lv13 kitsune, answer 'confusion': the spell reaches the sheet at repertoire RANK 4, not the
+  printed 5th. play.ts:514 files a daily spell at `content.spells[id].rank` and never reads the grant's own
+  `rank`, so the row's load-bearing `rank: 5` is dead. Gap #3 is the blocker; the row itself is right.
+
+nagaji-spell-expertise#daily-control — NOT-DONE
+  Same, lv13 nagaji, answer 'flicker': lands at repertoire rank 4 instead of 5. Gap #3.
+
+time-mage-dedication#innate-tradition — DONE
+  Harness, built 6th-level CLERIC with the dedication: innate entry tradition 'divine', cantrips
+  ['time-sense'], spellTraditions {'time-sense':'divine'}, source "Time Mage Dedication". Without the flag
+  the reader falls to the spell's first tradition, which is arcane. The printed sentence now reaches a
+  built character, with no picker and no fixed tradition on the record.
+
+guardians-armor#automatic-resistance — NOT-DONE (correctly: no row authored)
+  Verified the builder's reason rather than taking it. IwrEntry (types.ts:481-539) carries type / value /
+  against / minLevel / whenCreatureTrait / unlessCreatureTrait / whenVoidHealing / condition and NOTHING
+  about armour; `grep -rn "whenArmor|armorCategory|whenWearing" src/rules/*.ts` → zero hits anywhere.
+  ModeDef has no auto-activation condition either (only class/ancestry/feat/background GATES), so the live
+  route really is the hand toggle in the modes bucket. Its formula "1+floor(@actor.level/2)" does resolve
+  (substituteTokens handles @actor.level, derive.ts:2334) — it is the CONDITION, not the number, that has
+  no carrier. Authoring the row now would ship a dead field; deleting the mode first would remove the
+  resistance outright. Withholding the row was the right call. Fix = CROSS-FILE GAPS #5 + DATA STILL NEEDED
+  #1 and #2, in that order.
+
+clawdancer-dedication#duplicate-strikes — DONE
+  Harness, built lv2 fighter with the dedication, strikes through deriveStrikes:
+    with the row     → no stance ['Fist']; claw stance ['frenzied claw','Fist']; talon ['Spinning Talon','Fist']
+    shipped (before) → no stance ['Frenzied Claw','Spinning Talon','Fist']; claw stance ['frenzied claw',
+                       'Frenzied Claw','Spinning Talon','Fist']
+  Exactly the printed behaviour: each Strike once, and only while its own stance is on. grantsActions is
+  untouched, so both stance toggles survive.
+
+versatile-mutation#energy-level — NOT-DONE
+  Row is correct and inert. Harness with the row applied: levelChoices() on a 4th-level build still returns
+  {page:4, label:'Versatile Mutation — choose', required:true}. build.ts:1035 skips only askedAtDailyPrep
+  choices and never reads `choice.minLevel`; this choice is not daily, so the 8th-level gate changes nothing
+  a player sees. Gap #6 is the blocker. No data lane can express it — checked requiresAnyFeature (record
+  ownership, not level) and the leveled-grant lanes (grants, not choices).
+
+versatile-mutation#takable-twice — DONE
+  maxTakable deleted → maxTakes() reads absent as 1; distinctAcrossTakes gone from the merged choice row.
+  The description row is verbatim the AoN mirror's feat-5454 body, which ENDS at "adds that trait to the
+  action." — I read the mirror document myself and grepped it: there is no Special clause, so the shipped
+  "second time at 16th level" paragraph is invented text and removing it is right, not a loss of print.
+  Both halves of the finding ride on rows that the applier will not collide (choice vs maxTakable vs
+  description are three distinct fields).
+
+arcana-of-iron#weapon-proficiency — NOT-DONE
+  The delete is verified right: harness on a built 6th-level wizard/war mage — with the row, ownedFeatureIds
+  holds no 'weapon-expertise'; with the shipped field restored, it does. Advanced-weapon training survives
+  either way (attacks.advanced 'trained' from featGrantsAuto.ts:75), so nothing printed was lost.
+  But TWO of the clause's three halves still do not reach any character: martial and advanced never reach
+  expert when the class grants weapon expertise. That is the larger half of the printed sentence and it has
+  no route at all. Gap #7 is the whole remainder.
+
+NOTHING FIXED BY ME — no WRONG verdicts. Every row is shaped right; what is missing is readers, and every
+reader lives in a file this family's stage[] does not own.
+
+================================================================================
+DATA STILL NEEDED  (rows the driver must author — exact category/id/field/value)
+================================================================================
+1. classFeatures/guardians-armor field "resistances" value
+   [{"type":"physical","value":"1+floor(@actor.level/2)","whenArmorCategory":["medium","heavy"]}] — author
+   ONLY in the same change as the IwrEntry armour gate in CROSS-FILE GAPS #5; authored earlier it is dead data.
+2. modes/guardians-armor {"delete": true} — author ONLY after row 1 is live, because until then that mode is
+   the character's only route to the resistance and deleting it takes the number away entirely.
+
+================================================================================
+CROSS-FILE GAPS  (outside the files this chunk may write)
+================================================================================
+1. ⛔ BLOCKING — src/rules/featCantripGrants.ts: delete FEAT_CANTRIP_GRANTS['kitsune-spell-familiarity' |
+   'kitsune-spell-mysteries' | 'kitsune-spell-expertise' | 'nagaji-spell-mysteries' | 'nagaji-spell-expertise']
+   IN THE SAME CHANGE as this chunk's five choice rows. Measured, not argued: with the five rows applied to a
+   core copy, scripts/duplicate-pick-check.mjs (a shipped `npm run verify` guard) FAILS naming all five —
+   "no record asks the same question in two lanes" is exactly what the rows create, because the guard tests
+   `rec.choice.options[].grant.innateSpells` against this registry. It passes today only because the options
+   were bare. The file's own removal comments (colugos-traversal, dream-magic, empathic-calm) are the
+   established form and say the same thing: "It must stay removed while the record carries an effectChoices
+   pick: two live lanes on one record ask the player the same question twice." The registry copy is also
+   WRONG on its own terms — its kitsune-spell-familiarity options are ['daze','forbidding-ward','figment']
+   where feat-2619 prints ghost sound. Its sibling 'nagaji-spell-familiarity' is not one of my findings but
+   carries the identical entry and the identical defect.
+2. src/rules/play.ts:514 `if (rank <= 0) continue;` — a daily-choice grant whose spell is a CANTRIP is dropped
+   before it reaches any entry, so kitsune-spell-familiarity's at-will divine cantrip cannot reach the sheet
+   however the record is authored. Proven on a built character. This is the one blocker in the five that data
+   cannot lift.
+3. src/rules/play.ts:514 `const rank = content.spells[b.spellId].rank ?? 0;` — the merge files a daily-granted
+   spell at the SPELL's rank and ignores the grant's own `rank`, so Flicker and Confusion (both base 4) land
+   at rank 4 instead of the 5th-rank casting their feats print. Measured on built lv13 characters.
+4. src/rules/play.ts:513-518 — the merge ignores the grant's `tradition` and stamps every daily spell
+   `spellSources[id] = 'Borrowed today'`. Measured: a kitsune with no other innate spell reads a divine Bane
+   in an entry whose header says arcane, labelled as borrowed rather than as their ancestry feat's.
+5. src/rules/types.ts (IwrEntry, ~481-539) + src/rules/derive.ts (deriveDefenses resistance loop, 2786-2818)
+   — no gate exists for "while wearing medium or heavy armor". Add `whenArmorCategory?: ArmorCategory[]`
+   beside minLevel/whenCreatureTrait/whenVoidHealing and honour it in BOTH the resistance and the weakness
+   loop (the file's own comment warns that gating half a shared type makes the field write-only for the other
+   half), reading `findWornArmor(c, db)?.armor.category` — the fact is already on the sheet. The formula route
+   is closed: an unsupported @token makes resolveFormula return 0 (derive.ts:2365). This is the whole of
+   guardians-armor#automatic-resistance.
+6. src/builder/Builder.tsx:497 (renderChoice) and src/rules/build.ts:1035 (levelChoices) — `FeatChoiceDef.minLevel`
+   is honoured only on the DAILY path (src/rules/dailyChoices.ts:54). Verified with the row applied: a
+   4th-level build still reports "Versatile Mutation — choose" as a required outstanding answer, so the
+   printed 8th-level gate is authored and inert until these two read the field.
+7. src/rules/featGrantsAuto.ts:75 — `'arcana-of-iron': { weapon: { advanced: 'trained' } }` is correct and
+   must stay, but it carries no expert step. feat-7980: "If you gain the weapon expertise class feature, your
+   proficiency in martial and advanced weapons increases to expert." Needs both MARTIAL and ADVANCED raised
+   to expert, gated on the character's class actually granting a weapon-expertise feature at the level its own
+   table says (src/rules/advancement.ts carries 61 such entries, source 'weapon-expertise' /
+   '<class>-weapon-expertise'), never a flat level 13 as WG encodes it. No feat record in public/core.json
+   carries any weapon-category proficiency field, so this cannot be a data row.
+8. STRUCK — the builder's gap #8 (uncited assertion at test/batch031-data.test.ts:96) no longer stands:
+   `node scripts/test-flip-audit.mjs --batch 037` is clean. data-rows-4 owns that file and closed it.
+
+Manifest stage[] additions from this verify: NONE — I changed no file. work/.b037-verify-data-rows-5.txt is
+this file.

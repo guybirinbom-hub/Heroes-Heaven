@@ -1,0 +1,201 @@
+BATCH 037 — WG-COMPARISON LANE — ADVERSARIAL VERIFY — family/chunk: data-rows-4 (chunk 4 of 6)
+Spec checked:  work/.b037-rows-data-rows-4.json   (was 11 rows / 11 findings; now 12 rows — see FIXED-BY-ME)
+Builder report: work/.b037-report-data-rows-4.txt
+Tests run:     test/batch037-data-rows-4.test.ts, test/diehard-threshold.test.ts, test/batch031-data.test.ts
+               (node scripts/vt.mjs, one process at a time) + a throwaway in-memory harness, now deleted.
+Gates:         npx tsc --noEmit CLEAN. node scripts/test-flip-audit.mjs --batch 037 CLEAN (22 files, every flip cited).
+Collisions:    re-scanned all 14 b037 spec files after my edits — 104 record+field+path keys, 0 collisions.
+Manifest:      work/.b037-specs.json still holds all 16 entries (situational, instruments-1..7, data-rows-1..6,
+               two created-prose); data-rows-4's stage[] grew by my verify file (below).
+
+HARNESS (built, run, deleted): loaded public/core.json + core-descriptions.json, applied this chunk's rows
+to the copy, then buildCharacter/applyPlayState/deriveStrikes/modeGateIds/modeRelevant on real characters.
+Every mechanical verdict below is from that run, not from reading the spec.
+
+--------------------------------------------------------------------------------------------------
+PER-FINDING VERDICTS
+--------------------------------------------------------------------------------------------------
+
+dream-magic#second-taking — DONE.
+  Harness, fighter 10 with Sleepwalker Dedication + dream-magic at 8 and 10, answers dream-message/sleep:
+  ch.feats holds TWO dream-magic entries with two separate `choice` answers and the innate entry comes out
+  {"4":["dream-message","sleep"]} — both takings reach a BUILT character. build.ts:6452's per-entry loop is
+  the reader; the superseded effectChoices value is carried whole into the `choice` row (same two options,
+  same labels, same occult/rank 4/usesPerDay 1 grants); `distinctAcrossTakes` is a real field (types.ts:3042,
+  read at build.ts:2036). supersedes:true present on the retiring row, absent where no overlay row existed.
+
+scar-of-the-survivor#dying-toggle — NOT-DONE (half).
+  Harness, exemplar 3 with the ikon picked: modeGateIds resolves `scar-of-the-survivor` through classChoices
+  and modeRelevant returns true, so the toggle is offered and its +1 status Fortitude modifier is real. The
+  half the finding actually names — "really raises the dying value while the spark is in the ikon" — moves no
+  number: build.ts:6958-6961 sums `dyingThresholdBonus` off content.feats only and unconditionally, ModeDef
+  has no threshold field (verified in types.ts). It reaches the player as prose in the mode's `note` only.
+  The blocker is correctly reported; the finding is not delivered. See CROSS-FILE GAPS 3.
+
+soul-well#dying-toggle — NOT-DONE (half).
+  Harness: with the row applied, a Splinter of Finality character carrying soul-well has dyingThreshold
+  undefined (it was a permanent 5) — the wrong permanent carrier is correctly retired, supersedes:true
+  present. But the printed one-minute rise still moves nothing while the new toggle is on, for the same
+  reason as scar-of-the-survivor, so the NET effect on a player today is the loss of a (wrongly permanent)
+  benefit and prose in its place. Honest, but not the mechanic the finding asks for. CROSS-FILE GAPS 3.
+
+animal-instinct#spider-web — NOT-DONE, correctly refused (no row).
+  Verified the blocker myself rather than taking it: types.ts `GrantedStrike` declares `die: string` and
+  `damageType: string` REQUIRED, and build.ts:2862's push copies both onto the NaturalAttack after stepDie.
+  The guard test ("every granted-attack row carries a real die") passes as shipped and would fail the moment
+  anyone half-ships the Web row. The exact 32nd entry stands in DATA STILL NEEDED. CROSS-FILE GAPS 1 and 2.
+
+merchants-scale#no-rules — DONE.
+  Harness: the description row reaches the record (apply-backfill-now routes a pathless `description` row to
+  public/core-descriptions.json and test/_content.ts merges it back; items/merchants-scale exists in core.json,
+  so the row is not one of the applier's proseMissing). One line, marked as ours, no passiveEffects row and no
+  FEAT_SITUATIONAL entry — WG's invented +1 to seven skills is nowhere. Matches AoN equipment-2734, which
+  prints no rules body at all.
+
+mask-of-the-mantis-major#printed-contents — FIXED-BY-ME (two defects; both fixed in this chunk's spec).
+  (a) The mode's note said "One action (concentrate)". AoN equipment-3497 / equipment-3497-3391 print
+      "Activate—Vernai's Ire Two Actions (concentrate)". Note corrected to Two Actions.
+  (b) The builder checked the DATA and never opened the text the player reads. The shipped description says
+      "You cast either a 5th-rank Darkvision or See the Unseen on yourself" — the GREATER block's heightening
+      printed onto the Major, contradicting, on the same item card, the rank-2 heldSpells that owner #68
+      ("follow the archive literally") is the whole reason for. It also carried the ONE-action glyph on
+      Vernai's Ire and no glyph at all on Locate Target, where the page prints Two Actions for both. Added
+      one items/mask-of-the-mantis-major `description` row: whole value re-emitted with exactly those three
+      edits, descRefs untouched (no ref label sits on an edited word), verified against the patched copy.
+  The three parts the builder passed as shipped DO hold: heldSpells {"2":["darkvision","see-the-unseen"]},
+  {"8":["pinpoint"]} with its own freq2 per-day counter, passiveEffects.perception 3, and the Greater still
+  at rank 5. The new mode's fromItemId resolves to a real item and its modifier shape matches the 9 other
+  skill/intimidation item modes.
+
+zealot-staff#free-action-limit — FIXED-BY-ME.
+  The field and the pip are correctly removed (AoN equipment-2263 prints no Frequency line; the resulting
+  counters value is byte-identical to items/celestial-staff's). But the finding's premise — "Foundry's once
+  per 10 minutes … players never see that text in our app" — is FALSE. The shipped description reads, verbatim:
+  "**Activate** ⟨4⟩ (concentrate, sanctified, spirit)\n\n**Frequency** once per 10 minutes". Removing the
+  field while leaving that sentence on the item card keeps the entire player-visible half of the defect, and
+  owner #69 is "follow the page". Added one items/zealot-staff `description` row: whole value re-emitted with
+  exactly two edits — the Frequency line deleted, the two unprinted traits dropped — everything else, including
+  the Trigger, the 1d4-spirit rider, the drained clause and the spell ladder, carried unchanged. descRefs
+  carry no label on either edit. Verified against the patched copy.
+
+zealot-staff#printed-contents — DONE.
+  Harness, fighter 17 wielding the staff: deriveStrikes gives attack [26,21,16], damage "3d4+6 B",
+  potencyBonus 3, strikingDice 2 — the +3 and greater striking both reach a built character. `builtInRunes`
+  has a real reader (derive.ts:3359) and the same shape items/staff-of-power ships. The spell ladder matches
+  the page at every rank and is now pinned. The two clauses left as text (drained-1-unless-you-worship,
+  the deity's cleric spells widening the list) genuinely have no carrier and are both in the description.
+
+skybearers-belt#scoped-stars — DONE (check, no row needed).
+  Re-read src/rules/situationalBonuses.ts:2870 rather than trusting the report: three rows, all "+1
+  circumstance", scoped "to Disarm, Grapple, Shove or Trip…", "to resist a Grapple or a Shove…", "to resist a
+  Disarm or a Trip…", each naming the divine spark; targets are exactly skill:athletics, save:fortitude,
+  save:reflex. The two-sizes-larger permission is in the classFeatures/skybearers-belt description (verified
+  in core-descriptions.json, not inferred), and grantsClassFeatures is ["bear-allies-burdens"].
+
+spirit-walk#printed-pieces — DONE (check, no row needed).
+  situationalBonuses.ts:1078 holds all three +2 status rows (skill:all Recall Knowledge; ac and save:all both
+  scoped "while Searching or Detecting Magic in exploration mode…"), feats/spirit-walk.resistances carries the
+  half-level first-turn resistance, and no sense field was invented onto a feat that prints none.
+
+nagaji-spell-familiarity#daily-control — NOT-DONE, and the builder's row is WITHDRAWN BY ME.
+  The builder reported the row "adds a correct answer and removes nothing a player has today". MEASURED on a
+  built nagaji with the answer stored: dailyChoiceGrants DOES emit the grant, and play.ts:511-517 then pushes
+  it into `borrowed`, CREATES the `innate-casting` entry, and drops the spell at `if (rank <= 0) continue` —
+  leaving an EMPTY innate entry on the character. SpellsTab renders it unconditionally (:1315 filter, :1942
+  map, no emptiness guard) as a card reading "Innate spells · innate spells (Arcane)" with "No spells." inside,
+  and a martial nagaji's Spells tab stops showing its empty state (the early return at :1409 counts the entry).
+  Zero benefit, one new visible defect, on a control the player is already shown — the same reason the builder
+  itself refused the spider Web row. Row removed from the spec, preserved verbatim in DATA STILL NEEDED, and
+  the test rewritten: it now pins the printed daily question AND guards that no daily-choice option anywhere
+  grants a rank-0 innate spell (true today, and still true after data-rows-5's nagaji rows, which are rank 1
+  and rank 5). Both code halves stand in CROSS-FILE GAPS and must land in ONE batch with the row.
+
+--------------------------------------------------------------------------------------------------
+SPEC ROWS AS ROWS — 12 rows, checked without applying
+--------------------------------------------------------------------------------------------------
+- Every target record exists in public/core.json (feats/dream-magic, feats/soul-well, items/merchants-scale,
+  items/zealot-staff, items/mask-of-the-mantis-major) or carries create:true (modes/scar-of-the-survivor,
+  modes/soul-well, modes/item-mask-of-the-mantis-major — none of the three exists today).
+- Every re-emitted value diffed against the shipped one with node -e: zealot-staff `counters` keeps the `pool`
+  entry byte-identical and drops only `freq`; dream-magic `choice` carries the retired effectChoices value
+  whole; both new description rows differ from the shipped text only in the edits named above.
+- Readers exist for every field: builtInRunes (derive.ts:3359), choice + distinctAcrossTakes (build.ts:2036,
+  6452), innateSpells grants (applyAlwaysOn), ModeDef feats/duration/modifiers/note (modes.ts, modeGateIds),
+  fromItemId (ItemDetail + play.toggleItemMode), description (core-descriptions route). `dyingThresholdBonus`
+  is only DELETED, never authored.
+- No two rows in this spec share a record+field+path key; no key collides with any of the 13 sibling specs.
+- The three created records carry no `description` (core-descriptions has no modes bucket, so no created-prose
+  file is needed for this chunk); integrity-sweeps' "every mode in core.json exists in a source file" accepts
+  overlay create rows, and both gates (feats:["scar-of-the-survivor"], feats:["soul-well"]) resolve.
+- Every id named by a row exists: dream-message, sleep, daze, detect-magic, telekinetic-hand, pinpoint,
+  divine-lance, bane, augury, warding-aggression, divine-wrath, crisis-of-faith, spiritual-armament,
+  zealous-conviction, divine-decree; items mask-of-the-mantis-major, zealot-staff, merchants-scale;
+  classFeatures scar-of-the-survivor; feats soul-well.
+- supersedes:true is on both rows that replace an existing overlay row (dream-magic effectChoices,
+  soul-well dyingThresholdBonus) and on none that do not. The withdrawn nagaji row was the third; with it gone,
+  the existing feats/nagaji-spell-familiarity choice overlay row stands untouched.
+
+--------------------------------------------------------------------------------------------------
+DATA STILL NEEDED (corrected)
+--------------------------------------------------------------------------------------------------
+- classFeatures/animal-instinct `grantedStrikes` (supersedes the existing overlay row): re-emit the shipped
+  31-entry array UNCHANGED and append the printed Web row — {"name":"Web","damageType":null,"die":null,
+  "traits":["unarmed"],"group":"brawling","range":15,"choiceValue":"spider"}. instinct-8 prints "| Spider |
+  Fangs | 1d8 P | Grapple, unarmed, venomous | / | Web | Special* | Range increment 15 feet |" with the
+  footnote "*The spider's web attack deals no damage, but the target takes a -10-foot circumstance penalty to
+  its Speeds for 1 round on a hit". BLOCKED on CROSS-FILE GAPS 1 and 2; the exact shape of the null damage
+  fields is the lane change's call.
+- feats/nagaji-spell-familiarity `choice` (supersedes the existing overlay row): the shipped value whole —
+  flag "nagajiFamiliaritySpell", prompt "Today's nagaji cantrip", kind "array", daily true, options daze /
+  detect-magic / telekinetic-hand in that order with those labels — plus, on each option,
+  grant.innateSpells [{spellId:<the option's value>, tradition:"occult", atWill:true}]. BLOCKED on CROSS-FILE
+  GAPS 4 and 5; it must be applied in the SAME batch as both, or it ships an empty innate spellcasting card.
+- modes for the other two grades of the mask: items/mask-of-the-mantis and items/mask-of-the-mantis-greater
+  print the same Vernai's Ire activation at +1 and +2 item bonus to Intimidation (equipment-3497). Only the
+  Major got a mode in this chunk, so a wearer of the base or greater mask still gets no Intimidation bonus.
+- items/mask-of-the-mantis-greater `description` carries the SAME scrape defect I fixed on the Major:
+  "**Activate—Vernai's Ire** ⟨1⟩" where the page prints Two Actions. (Its "5th-rank" IS correct — the Greater
+  block is the one that prints the heightening.) A sibling record, so a row, not an edit from here.
+- items/zealot-staff: the free action's "You deal an additional 1d4 spirit damage per damage die of the staff"
+  has no damage-rider row — the record carries no damageRiders/strikeDamageRiders field, so the number reaches
+  the player only as description prose while the Strike shows plain 3d4+6 B.
+- feats/dream-magic: "If you choose sleep, you can cast the spell only while in a Daydream Trance" (feat-8518)
+  has no carrier on either lane — the innate grant is unconditional. Prose only, on a record this chunk edits.
+
+--------------------------------------------------------------------------------------------------
+CROSS-FILE GAPS (corrected)
+--------------------------------------------------------------------------------------------------
+1. animal-instinct#spider-web — src/rules/types.ts `GrantedStrike` declares `die: string` and `damageType:
+   string` REQUIRED and src/rules/build.ts:2862 (collectGrantedNaturals' push) copies both onto the
+   NaturalAttack through stepDie. Owner #145 option A is a LANE change first: make a damageless granted attack
+   expressible and make the Strikes readout print "no damage" for one. VERIFIED in both files.
+2. animal-instinct#spider-web — the Web's rider ("-10-foot circumstance penalty to its Speeds for 1 round on a
+   hit") has no carrier on a granted attack: GrantedStrike has no on-hit effect field and StrikeDamageRider
+   carries damage only. Needs a rider lane or a recordMarks entry in src/rules/situationalBonuses.ts.
+3. scar-of-the-survivor#dying-toggle AND soul-well#dying-toggle — nothing can move the death threshold from a
+   TOGGLE. `ModeDef` (src/rules/types.ts:4672) has no dying-threshold field, and src/rules/build.ts:6958-6961
+   sums `dyingThresholdBonus` off content.feats only, unconditionally, into Character.dyingThreshold (read by
+   src/sheet/VitalsRail.tsx:180). Needs `ModeDef.dyingThresholdBonus` plus a read of the ACTIVE modes in
+   src/rules/play.ts's applyPlayState. Until then both toggles carry the clause in `note` only. VERIFIED.
+4. nagaji-spell-familiarity#daily-control — src/rules/featCantripGrants.ts:104 still carries
+   'nagaji-spell-familiarity': { prompt: "Choose a cantrip", tradition: 'occult', options: ['daze',
+   'detect-magic','telekinetic-hand'] }, the BUILD-TIME picker print does not have. Delete that entry, the
+   same deletion batch 031 made for dream-magic, colugos-traversal, empathic-calm and merge-with-the-source —
+   pinned by test/batch031-gap-data-rows.test.tsx:62-72 (a .tsx, not the .ts the builder's report named), whose
+   id list should grow this one. NOTE the file's warning: scripts/aon-verify/apply-clear.ts rewrites
+   featCantripGrants.ts whole through a serialiser.
+5. nagaji-spell-familiarity#daily-control — src/rules/play.ts:511-517 drops the grant AND leaves a phantom
+   entry behind: it pushes the cantrip into `borrowed`, builds/creates the `innate-casting` entry, then hits
+   `const rank = content.spells[b.spellId].rank ?? 0; if (rank <= 0) continue;`. Route rank 0 into the innate
+   entry's `cantrips` list, honour `atWill` instead of forcing `uses: s.usesPerDay ?? 1`, and do not create an
+   entry when nothing survives the loop. MEASURED, not inferred.
+
+--------------------------------------------------------------------------------------------------
+MANIFEST stage[] — paths I touched
+--------------------------------------------------------------------------------------------------
+  work/.b037-rows-data-rows-4.json        (mask note fix; +2 description rows; nagaji row withdrawn)
+  test/batch037-data-rows-4.test.ts       (2 new its; nagaji it rewritten as a guard; header updated)
+  work/.b037-verify-data-rows-4.txt       (this file — appended to the data-rows-4 entry in .b037-specs.json)
+  work/.b037-specs.json                   (data-rows-4 stage[] only; all 16 entries intact)
+Not touched: test/diehard-threshold.test.ts and test/batch031-data.test.ts were already correct and correctly
+cited; no src/ or scripts/ file was edited by me, and scripts/data/effect-backfill.json was not written.

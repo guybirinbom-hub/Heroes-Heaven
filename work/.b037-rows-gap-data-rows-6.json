@@ -1,0 +1,119 @@
+{
+  "batch": 37,
+  "family": "gap-data-rows-6",
+  "note": "GAP AGENT spec for family data-rows-6. Four rows, each closing one open DATA STILL NEEDED line of work/.b037-gaps.json that the builder and the verifier both left as prose. No finding of work/.b037-read.json covers rows 1, 3 and 4 — their authority is the printed AoN document quoted in each `why` (citation form 2). Row 2 rests on the table the owner transcribed into the CONFIRMED finding breath-of-the-dragon#derive-from-exemplar, because the Draconic Benefactors page is not in the mirror (that is the batch's standing MIRROR GAP).",
+  "findings": [
+    {
+      "id": "gap-037-screech-shooter-major-damage-type",
+      "backfillRows": [
+        {
+          "category": "items",
+          "id": "screech-shooter-major",
+          "field": "damage",
+          "value": { "dice": 1, "die": "d10", "type": "sonic" },
+          "why": "AoN equipment-1169 (the Screech Shooter family page, the ONLY page that states the damage type): \"A screech shooter deals sonic damage but can otherwise be used like a normal harmona gun.\" Neither grade block overrides it — equipment-1169-1109 changes only the activation DC and emanation, equipment-1169-1110 likewise (\"The DC for the activation is 37 and it affects creatures in a 50-foot emanation\"). The record's OWN shipped description repeats the family sentence verbatim (\"A *screech shooter* deals sonic damage\"), so the `damage.type` field contradicts the same record's prose, and only the major grade does: items/screech-shooter ships type \"sonic\" and items/screech-shooter-greater ships type \"sonic\". Reader: src/rules/derive.ts reads w.damage.type for the strike row, the damage breakdown and the weaponType (derive.ts:4613, 4627, 4641), so today a major screech shooter rolls PIERCING on the sheet. Dice and die are re-emitted unchanged (1d10, the harmona gun's die) because `damage` is one field and must be written whole. No other b037 spec row and no existing overlay row touches items/screech-shooter-major.damage (the shipped overlay row on this record is `description`, and data-rows-6 supersedes that one), so no supersedes."
+        }
+      ],
+      "note": "Closes the 'items/screech-shooter-major field damage' line, opened by the builder and CONFIRMED by the verifier, which neither could author because no finding covers it."
+    },
+    {
+      "id": "gap-037-dragonblood-exemplar-speeds",
+      "backfillRows": [
+        {
+          "category": "heritages",
+          "id": "dragonblood",
+          "field": "choice",
+          "supersedes": true,
+          "value": {
+            "flag": "draconicExemplar",
+            "prompt": "Draconic exemplar — the kind of dragon whose blood runs in your veins (optional until a feat requires one)",
+            "kind": "array",
+            "options": [
+              { "value": "adamantine", "label": "Adamantine", "description": "Primal dragon — fly, burrow." },
+              { "value": "barrage", "label": "Barrage", "description": "Arcane dragon — fly." },
+              { "value": "bog", "label": "Bog", "description": "Primal dragon — fly, swim." },
+              { "value": "brine", "label": "Brine", "description": "Primal dragon — fly, swim." },
+              { "value": "cinder", "label": "Cinder", "description": "Primal dragon — fly." },
+              { "value": "cloud", "label": "Cloud", "description": "Primal dragon — fly." },
+              { "value": "conspirator", "label": "Conspirator", "description": "Occult dragon — fly, climb." },
+              { "value": "coral", "label": "Coral", "description": "Primal dragon — fly, swim." },
+              { "value": "crystal", "label": "Crystal", "description": "Primal dragon — fly." },
+              { "value": "delight", "label": "Delight", "description": "Divine dragon — fly." },
+              { "value": "despair", "label": "Despair", "description": "Occult dragon — fly." },
+              { "value": "diabolic", "label": "Diabolic", "description": "Divine dragon — fly." },
+              { "value": "empyreal", "label": "Empyreal", "description": "Divine dragon — fly." },
+              { "value": "executor", "label": "Executor", "description": "Divine dragon — fly." },
+              { "value": "forest", "label": "Forest", "description": "Primal dragon — fly." },
+              { "value": "fortune", "label": "Fortune", "description": "Arcane dragon — fly." },
+              { "value": "horned", "label": "Horned", "description": "Primal dragon — fly, swim." },
+              { "value": "magma", "label": "Magma", "description": "Primal dragon — fly, burrow." },
+              { "value": "mirage", "label": "Mirage", "description": "Arcane dragon — fly, climb." },
+              { "value": "mocking", "label": "Mocking", "description": "Occult dragon — fly." },
+              { "value": "oath", "label": "Oath", "description": "Divine dragon — fly." },
+              { "value": "omen", "label": "Omen", "description": "Occult dragon — fly." },
+              { "value": "phase", "label": "Phase", "description": "Arcane dragon — fly." },
+              { "value": "requiem", "label": "Requiem", "description": "Divine dragon — fly, swim." },
+              { "value": "resurrection", "label": "Resurrection", "description": "Divine dragon — fly." },
+              { "value": "rime", "label": "Rime", "description": "Primal dragon — fly, swim." },
+              { "value": "rune", "label": "Rune", "description": "Arcane dragon — fly." },
+              { "value": "sage", "label": "Sage", "description": "Occult dragon — fly." },
+              { "value": "sea", "label": "Sea", "description": "Arcane dragon — fly, swim." },
+              { "value": "sky", "label": "Sky", "description": "Divine dragon — fly." },
+              { "value": "sovereign", "label": "Sovereign", "description": "Occult dragon — fly." },
+              { "value": "stormcrown", "label": "Stormcrown", "description": "Primal dragon — fly." },
+              { "value": "time", "label": "Time", "description": "Arcane dragon — fly." },
+              { "value": "umbral", "label": "Umbral", "description": "Occult dragon — fly." },
+              { "value": "underworld", "label": "Underworld", "description": "Arcane dragon — fly, burrow." },
+              { "value": "vizier", "label": "Vizier", "description": "Occult dragon — fly, swim." },
+              { "value": "vorpal", "label": "Vorpal", "description": "Arcane dragon — fly." },
+              { "value": "wailing", "label": "Wailing", "description": "Arcane dragon — fly." },
+              { "value": "whisper", "label": "Whisper", "description": "Occult dragon — fly." },
+              { "value": "wish", "label": "Wish", "description": "Arcane dragon — fly, climb." }
+            ]
+          },
+          "why": "The Draconic Benefactors table, transcribed by the owner on 2026-09-10 (work/desk-answers-2026-09-10.json, carried whole in the `proposal` of the CONFIRMED finding breath-of-the-dragon#derive-from-exemplar), gives each exemplar ONE extra Speed beside the flight every dragon has: \"Bog|Primal|Swim\" and \"Magma|Primal|Burrow\". Our option descriptions disagreed on exactly those two rows — bog read \"Primal dragon — fly, swim, burrow.\" (a burrow Speed no dragon in the table gives it) and magma read \"Primal dragon — fly, swim.\" where the table gives Burrow. The other 38 rows already agree with the table on both the tradition word and the Speed word, and adamantine (Burrow) and requiem (Swim) agree, so this is per-record scrape damage, not a systematic mis-mapping. SUPERSEDES the existing overlay row scripts/data/effect-backfill.json {heritages, dragonblood, choice}, whose value is byte-identical to what ships today: that value is re-emitted WHOLE here — same flag, same prompt, same kind, the same 40 options in the same order with the same `value` and `label` on every one — with only those two `description` strings changed. The values and labels must not move: feats/breath-of-the-dragon's effectChoices row (work/.b037-rows-data-rows-6.json) keys its 40 options off these `value` strings, and choiceFlagAnswer (src/rules/build.ts:1978) resolves the feat's answer from this record's stored flag. The speed words are display prose only — nothing derives a Speed from them — so this row moves what the player READS when picking an exemplar, and nothing else. There is no AoN document for this table: https://2e.aonprd.com/DraconicBenefactors.aspx is not in the mirror (the batch's standing MIRROR GAP), which is why the owner transcribed it by hand."
+        }
+      ],
+      "note": "Closes the 'heritages/dragonblood field choice (whole value, 40 options)' line. The whole field is re-emitted because a record's `choice` is ONE field."
+    },
+    {
+      "id": "gap-037-bespell-strikes-base-star",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "bespell-strikes",
+          "field": "situational",
+          "value": [
+            {
+              "targets": [{ "kind": "strikeDamage" }],
+              "when": "until the end of your turn, on the one weapon you are wielding (or the one unarmed attack) you siphoned spell energy into — once per turn, and only if your most recent action was to cast a non-cantrip spell",
+              "bonus": "+1d6 force damage, or the spell's own damage type instead if it dealt a different one"
+            }
+          ],
+          "why": "AoN feat-5028 (Bespell Strikes): \"You siphon spell energy into one weapon you're wielding, or into one of your unarmed attacks... Until the end of your turn, the weapon or unarmed attack deals an extra 1d6 force damage and gains the associated trait... If the spell dealt a different type of damage, the Strike deals this type of damage instead.\" The record ships NO `situational` field at all, so the base 1d6 had no carrier anywhere — the upgrade row on feats/arcana-of-iron (work/.b037-rows-data-rows-6.json) stars \"the extra damage is 1d8 instead of 1d6\" and was the only star the pair had. The clause cannot be a flat number: it is conditional (Requirements \"Your most recent action was to cast a non-cantrip spell\", Frequency \"once per turn\", and one chosen weapon), which is what the `situational` lane is for. Reader exists: src/rules/explain.ts:583 walks c.feats and files each record's own `situational`, the same channel the arcana-of-iron row uses, and 69 feats already ship the field. `targets: [{kind:'strikeDamage'}]` matches the arcana-of-iron row and the 12 shipped strikeDamage stars in src/rules/situationalBonuses.ts. The existing overlay row on this record is `limitedUses` (the once-per-turn frequency), a different field, so no supersedes."
+        }
+      ],
+      "note": "Closes the 'feats/bespell-strikes field situational' line. The trait half of the printed clause (the Strike gains arcane/divine/bloodline) is deliberately NOT stated here — it is a trait, not a bonus, and stating it in `bonus` would put un-numbered prose in a damage breakdown."
+    },
+    {
+      "id": "gap-037-astrolabe-duplicate-numbers",
+      "backfillRows": [
+        {
+          "category": "items",
+          "id": "astrolabe-of-the-falling-stars",
+          "field": "price",
+          "value": { "gp": 150 },
+          "why": "AoN equipment-4028 (Astrolabe of Falling Stars): \"Price 150 gp\". Two near-duplicate records of this one item ship — items/astrolabe-of-falling-stars (aonId equipment-4028, 150 gp, the AoN record, the one work/.b037-rows-data-rows-6.json stars) and items/astrolabe-of-the-falling-stars (no aonId, 50 gp, the id src/rules/situationalBonuses.ts:3083 and ITEM_ID_ALIASES['aon-astrolabe-of-falling-stars'] both key). Their names differ by one word, so the duplicate-name suppression never saw them, and a player who bought the second one paid 50 gp for a 150-gp item — a wealth-by-level error, not a display one. Level (5), bulk (L), rarity (uncommon), traits and the once-per-day frequency already agree on both records; the price was the only number that did not. `price` is one field, re-emitted whole. No other b037 spec row and no existing overlay row touches this record."
+        },
+        {
+          "category": "items",
+          "id": "astrolabe-of-the-falling-stars",
+          "field": "activationCost",
+          "value": { "type": "actions", "value": 2 },
+          "why": "AoN equipment-4028: \"Activate—Starfall Two Actions (manipulate) Frequency once per day\". The same duplicate record ships activationCost {type:'actions', value:1}, so its Starfall reads as a single action on the sheet; the counters row beside it ({id:'freq', max:1, per:'day'}) is the same activation's frequency and is already correct. `activationCost` is one field, re-emitted whole."
+        }
+      ],
+      "note": "Closes the 'NEW: two near-duplicate item records ship' line for the half that reaches a player: both records now read the printed price and the printed activation. RETIRING one of the two is NOT authored here — see the flaggedResidue line in work/.b037-report-gap-data-rows-6.txt: it needs a delete row, a re-pointed ITEM_ID_ALIASES entry and a re-keyed entry in src/rules/situationalBonuses.ts, and that file is staged by the situational family this batch. No star is lost meanwhile: the AoN record carries its star as data (data-rows-6's row) and the duplicate carries it in the code table, so whichever record a player owns, the star is there."
+    }
+  ]
+}

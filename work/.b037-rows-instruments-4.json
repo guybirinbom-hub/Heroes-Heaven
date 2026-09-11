@@ -1,0 +1,65 @@
+{
+ "_": "BATCH 037 — chunk instruments-4 (WG-COMPARISON family). All twelve findings are the same verdict: nothing changes. Every one is an owner-ruled deliberate difference (work/desk-answers-2026-09-10.json, the 28-id 'Keep the app on all 28' answer covering desk #19/#27/#32/#34/#38/#53/#65/#66/#74/#75/#76/#77) under the standing 2026-08-22 rule that the book wins. No record needs a data row; two need a comparer settle because a ruling does not park the DATA comparers (scripts/wg-batch-gate.mjs:150).",
+ "findings": [
+  {
+   "id": "instinct-ability#no-hit-points",
+   "backfillRows": [],
+   "note": "instrument settle, no row. wg-diff reported THEY-ONLY missing=[hp] on feats/instinct-ability: their row is `conditional IF FEAT_NAMES INCLUDES \"barbarian resiliency\" THEN addBonusToValue MAX_HEALTH_BONUS = \"+3\"` and grants no instinct at all, while print (AoN feat-6194) is one sentence with no Hit Points in it. Ours carries the +3 once, on feats/barbarian-resiliency.maxHpBonus {perArchetypeFeat:3, archetype:'barbarian'}, and carries the printed sentence as feats/instinct-ability.derivedGrant {fromFeat:'barbarian-dedication'}. Taught as VERIFIED_EQUIVALENT['instinct-ability'] = ['hp'] in scripts/wg-diff.mjs — the third archetype of the identical shape after monk-moves (b031) and armored-resistance (b036). Mutation-proof in test/batch037-instruments-4.test.ts."
+  },
+  {
+   "id": "tumbling-theft#thievery",
+   "backfillRows": [],
+   "note": "instrument settle, no row. wg-values reported MISSING skill|stealth theirs=1: their only value-bearing op is `addBonusToValue SKILL_STEALTH \"1\"`, while the paragraph they ship beside it is the printed sentence (AoN feat-6513) naming THIEVERY — so their placement contradicts their own record. Ours is the Thievery star: src/rules/situationalBonuses.ts FEAT_SITUATIONAL['tumbling-theft'] targets {kind:'skill', detail:'thievery'}, +1 circumstance, on the Steal after a critical Tumble Through. Taught as SETTLED_VALUES['tumbling-theft'] = ['skill|stealth'] in scripts/wg-values.mjs. Mutation-proof in test/batch037-instruments-4.test.ts."
+  },
+  {
+   "id": "reinforced-chassis#ac-scaling",
+   "backfillRows": [],
+   "note": "instrument residual, no row and no settle: every comparer already agrees (wg-diff AGREE, wg-values clean, wg-identity clean, EXPERIENCE OK), so a settle would be a stale entry that silences the next difference on this record unread. items/reinforced-chassis-armor already ships acBonus 3 with acBonusByLevel [{5,+4},{10,+5}] and dexCap 1 as AoN feat-3095 prints; WG's flat +3 is the ruled deliberate difference (desk #19). Pinned in test/batch037-instruments-4.test.ts."
+  },
+  {
+   "id": "psychic-dedication#no-focus-point",
+   "backfillRows": [],
+   "note": "instrument residual, no NEW settle: the comparer was already taught in an earlier batch — VERIFIED_EQUIVALENT['psychic-dedication'] = ['focus'] in scripts/wg-diff.mjs carries exactly this reading, and the identity settle beside it covers their key-attribute select. feats/psychic-dedication has no focusPoolBonus and feats/psi-development has focusPoolBonus 1, which is where AoN feat-8395 prints the pool. WG's dedication-granted point is the ruled deliberate difference (desk #27). Pinned in test/batch037-instruments-4.test.ts."
+  },
+  {
+   "id": "elemental-existence#adopted-ancestry",
+   "backfillRows": [],
+   "note": "instrument residual, no row and no settle: every comparer already agrees (wg-diff WE-ONLY, EXPERIENCE OK). FEAT_FEAT_GRANTS['elemental-existence'] = ['adopted-ancestry'] grants the feat outright as AoN feat-4378 prints, featPickGrants offers the 1st-level oread feat and extraAncestryFeatTraits ['oread'] opens the later picks. WG hides the feat from the list instead of granting it — the ruled deliberate difference (desk #32). Pinned in test/batch037-instruments-4.test.ts."
+  },
+  {
+   "id": "thats-not-natural#circumstance-bonus",
+   "backfillRows": [],
+   "note": "instrument residual, no row and no settle: every comparer already agrees (wg-diff WE-ONLY, EXPERIENCE OK). The printed 'this circumstance bonus increases to +2' names the INITIATIVE bonus, and that is where ours puts it — situationalBonuses.ts FEAT_SITUATIONAL['thats-not-natural'] stars initiative '+1 circumstance (+2 if master in Survival)', with the Perception-DC +1 held separately on the record's own `situational` and never growing. WG's Perception-only placement with a Perception-rank upgrade is the ruled deliberate difference (desk #34). Pinned in test/batch037-instruments-4.test.ts."
+  },
+  {
+   "id": "devils-eye#legal-lore-rank",
+   "backfillRows": [],
+   "note": "instrument residual, no row and no settle: every comparer already agrees (wg-diff WE-ONLY, EXPERIENCE OK). FEAT_SKILL_GRANTS['devils-eye'] in src/rules/featGrantsAuto.ts carries lore:legal expert with rankUpgrade [{7,master},{15,legendary}], grantsActions ['objection'] carries the reaction and FEAT_SITUATIONAL carries the +1 note, all as AoN feat-8404 prints. WG's trained-only row is the ruled deliberate difference (desk #38). Pinned in test/batch037-instruments-4.test.ts."
+  },
+  {
+   "id": "pistol-wand#stock-runes",
+   "backfillRows": [],
+   "note": "instrument residual, no row and no NEW settle: SETTLED_IDENTITIES['pistol-wand'] = ['items'] already settles the item identity, and its note is UPDATED this batch to record the ruling instead of pointing at an open owner question. items/pistol-wand and items/pistol-wand-stock both carry builtInRunes {potency:1} and are wired through combinationMeleeForm/formOf, as AoN equipment-3589 prints. WG's runeless bare Reinforced Stock is the ruled deliberate difference (desk #65). The rune half was never reachable by that settle — wg-identity compares NAMES. Pinned in test/batch037-instruments-4.test.ts."
+  },
+  {
+   "id": "keys-to-destiny#labor-lore",
+   "backfillRows": [],
+   "note": "instrument residual, no row and no settle: every comparer already agrees (wg-diff AGREE, wg-values clean, EXPERIENCE OK). backgrounds/keys-to-destiny.trainedLoreOptions holds all nine printed lores (AoN background-367) and Labor Lore trains Labor Lore. WG's Labor Lore option writing Herbalism Lore is their copy-paste slip and the ruled deliberate difference (desk #74) — not to be imported. Pinned in test/batch037-instruments-4.test.ts."
+  },
+  {
+   "id": "concordance-scout#six-lores",
+   "backfillRows": [],
+   "note": "instrument residual, no row and no settle: every comparer already agrees (wg-diff WE-ONLY, EXPERIENCE OK). backgrounds/concordance-scout.choice offers all six printed planar lores including Plane of Earth (AoN background-383), each with a usable value. WG's five-option list with a broken Plane of Air option is the ruled deliberate difference (desk #75). Pinned in test/batch037-instruments-4.test.ts."
+  },
+  {
+   "id": "poppet#fire-weakness",
+   "backfillRows": [],
+   "note": "instrument residual, no row and no NEW settle: SETTLED_IDENTITIES['poppet'] = ['grants'] is an earlier batch's entry about ability-block NAMES and does not reach the weakness formula; nothing reports it today. ancestries/poppet.weaknesses is [{type:'fire', value:'max(1,floor(@actor.level/3))'}], the printed 'one-third your level (minimum 1)' of AoN ancestry-49, and deriveDefenses returns 1 at levels 1-2. WG's minimum-less level/3 is the ruled deliberate difference (desk #76). Pinned in test/batch037-instruments-4.test.ts."
+  },
+  {
+   "id": "goloma#languages",
+   "backfillRows": [],
+   "note": "instrument residual, no row and no NEW settle: SETTLED_IDENTITIES['goloma'] = ['grants'] is an earlier batch's entry about ability-block NAMES and does not reach the language list; nothing reports it today. ancestries/goloma.languages.granted is ['goloma','mwangi'] as AoN ancestry-45 prints, and languages/goloma exists. WG handing every goloma Common instead is the ruled deliberate difference (desk #77). Pinned in test/batch037-instruments-4.test.ts."
+  }
+ ]
+}

@@ -1,0 +1,200 @@
+{
+  "findings": [
+    {
+      "id": "sponsored-by-teacher-ot#one-pick",
+      "note": "Pure deletion. The record asks the Survival-or-Performance question TWICE: once through `trainedSkillChoice` (rendered by src/builder/shared.tsx:3010, and the answer `grantedFeatByChoice` reads at src/rules/build.ts:534-536) and once more through a `choice` control with flag `bgSkill` (rendered by src/builder/shared.tsx:3089). Nothing reads that second control's answer - `backgroundGrants.ts`'s `{kind:'bgSkill'}` spec and build.ts:1892 both resolve off `trainedSkillChoice`, not off the flag - so its only effect is to let the player answer differently and train two skills. Deleting the field leaves exactly one control, which already drives both the training and the feat. SUPERSEDES the existing effect-backfill row that authored the duplicate control; nothing of the superseded value is carried forward because the whole point of the ruling is that this control must not exist.",
+      "backfillRows": [
+        {
+          "category": "backgrounds",
+          "id": "sponsored-by-teacher-ot",
+          "field": "choice",
+          "value": null,
+          "supersedes": true,
+          "why": "background-224 \"You're trained in your choice of the Survival or Performance skill. You gain a skill feat: Survey Wildlife if you chose Survival or Impressive Performance if you chose Performance.\" - ONE pick decides both halves. The duplicate `choice` control (flag bgSkill) let the two halves be answered differently and trained two skills; `trainedSkillChoice` + `grantedFeatByChoice` already ask it once. Owner 2026-09-10 #92."
+        }
+      ]
+    },
+    {
+      "id": "streetfood-vendor#printed-choice",
+      "note": "Description-only. The Crafting-or-Society pick is already correct and already asked exactly once (`trainedSkillChoice`; the record's own `choice` control was deleted by an earlier overlay row), so the only defect is our rewritten sentence. The third paragraph is replaced with the printed sentence verbatim; every other paragraph is carried through unchanged. Deliberately NOT re-derived from the mirror: background-479.json (release_date 2024-08-28) is stale and still reads \"trained in the Crafting skill, and the Cooking Lore skill\".",
+      "backfillRows": [
+        {
+          "category": "backgrounds",
+          "id": "streetfood-vendor",
+          "field": "description",
+          "value": "You're an inspired chef, trying to make it as big as you can out on the open road. You travel with a wood or iron cart that doubles as your portable business and shelter. Struggling for funds or fighting for a place to set up shop are common plights in your daily life. However, there's no one hungrier than a budding adventurer, and you're very affordable, always there with the perfect meal.\n\nChoose two attribute boosts. One must be to **Strength** or **Dexterity**, and one is a free attribute boost.\n\nYou're trained in your choice of either the Crafting or Society skill, as well as the Cooking Lore skill. You gain the Seasoned skill feat.\n\n---\n\n## Background details\n\n**Attribute Boosts** Dexterity or Strength, one free\n\n**Lore** Cooking Lore\n\n**Skill Feat** Seasoned",
+          "why": "background-479 is the record's AoN doc, but its mirror copy is STALE; the current Tian Xia Character Guide pg. 11 page reads \"You're trained in your choice of either the Crafting or Society skill, as well as the Cooking Lore skill. You gain the Seasoned skill feat.\" Our text had been rewritten to \"either Crafting or Society\". Owner 2026-09-10 #82."
+        }
+      ]
+    },
+    {
+      "id": "locate-lawbreakers#order-of-the-gate",
+      "note": "NO ROW - the fix needs a reader that does not exist, and authoring the data half alone would ship the WG defect the finding refutes. The heightening must fire only for a member of the Order of the Gate. The order IS recorded: feats/hellknight-dedication carries a `choice` with flag `hellknightOrder` whose value is `order-of-the-gate` (effect-backfill row index 6268), and src/rules/build.ts:1969 `choiceFlagAnswer` can read it. What is missing is a predicate that gates a grant on ANOTHER record's flag: `InnateSpellGrant.whenChoice` is the record's OWN choice (here the tradition pick), `EffectChoiceOption.onlyWhenFlag` only filters options out of a picker and passes an UNANSWERED flag through, and `effectChoiceOffered`'s `requiresChoice` is same-record only. Grepped `requiresFlag` / `whenFlag` / `requiresChoiceFlag` across src/rules - nothing. Writing `heightenAt:[{level:14,rank:5}]` on the four tradition options without that gate is exactly WG's encoding (rank 5 at 14 for everyone), which this finding CONFIRMS as wrong. Row and reader both listed in the report.",
+      "backfillRows": []
+    },
+    {
+      "id": "oatia-skysage-dedication#cantrip-picker",
+      "note": "NO ROW - the picker is built in CODE, not from core.json. The 38-cantrip list comes from src/builder/shared.tsx:3902 (`Object.values(content.spells).filter(s => s.rank === 0 && s.traditions.includes(trad))`) and src/builder/Builder.tsx:971 (`spellIndex.cantrips[tradition]`), both driven by `CASTER_ARCHETYPES['oatia-skysage-dedication']` in src/rules/casterArchetypes.ts:304. `CasterArchetype` carries no field naming which cantrips are allowed - its own header comment says so outright (\"nothing here restricts WHICH cantrips may be prepared from it\") - and `SpellcastingGrant` has none either. No core.json field can express the restriction today, so there is no durable overlay row to write; see CROSS-FILE GAPS.",
+      "backfillRows": []
+    },
+    {
+      "id": "aeon-stone-agate-ellipsoid#resonant-note",
+      "note": "The resonant clause is re-emitted WHOLE (one field, `resonant`) with a new `spellNotes` member carrying the same printed sentence keyed to the spell the stone grants. `resonant` is the existing lane and is already gated exactly as the ruling asks - src/rules/build.ts:8088 fires it only on `inv.invested && inv.designations?.includes('wayfinder-slotted')` - so hanging the note there inherits the 'Slotted in a wayfinder' mark and needs no second control. WG's yes/no picker is deliberately NOT added. The stone's own top-level `spellNotes` was NOT used: that lane (build.ts:6843) fires for any worn/invested item with no designation check, which would print the resonant sentence on a stone orbiting your head. ⚠ NO READER YET for `resonant.spellNotes` - the 3-line teach is in CROSS-FILE GAPS. SUPERSEDES the existing `resonant` row; its `note` is carried through byte-for-byte.",
+      "backfillRows": [
+        {
+          "category": "items",
+          "id": "aeon-stone-agate-ellipsoid",
+          "field": "resonant",
+          "value": {
+            "note": "The resonant power causes the *augury* spell from the aeon stone to always succeed at the DC 6 flat check to give an answer other than \"nothing.\"",
+            "spellNotes": [
+              {
+                "spellId": "augury",
+                "note": "The resonant power causes the *augury* spell from the aeon stone to always succeed at the DC 6 flat check to give an answer other than \"nothing.\""
+              }
+            ]
+          },
+          "supersedes": true,
+          "why": "equipment-407-868 \"The resonant power causes the augury spell from the aeon stone to always succeed at the DC 6 flat check to give an answer other than \\\"nothing.\\\"\" - the clause is about the granted Augury and was reachable only by opening the item. Owner 2026-09-10 #47: keep the wayfinder mark as the only control and print the sentence on the spell too."
+        }
+      ]
+    },
+    {
+      "id": "aeon-stone-dusty-rose-prism#resonant-note",
+      "note": "Same shape as the agate ellipsoid: `resonant` re-emitted whole with a `spellNotes` member on `shield`, inheriting the 'Slotted in a wayfinder' gate at src/rules/build.ts:8088. SUPERSEDES the existing `resonant` row, whose `note` is carried through byte-for-byte. Separate field from this record's other finding (`effectChoices`), so the two rows do not collide.",
+      "backfillRows": [
+        {
+          "category": "items",
+          "id": "aeon-stone-dusty-rose-prism",
+          "field": "resonant",
+          "value": {
+            "note": "The resonant power increases the damage prevented by your aeon stone's shield spell from 5 to 10.",
+            "spellNotes": [
+              {
+                "spellId": "shield",
+                "note": "The resonant power increases the damage prevented by your aeon stone's shield spell from 5 to 10."
+              }
+            ]
+          },
+          "supersedes": true,
+          "why": "equipment-407-870 \"The resonant power increases the damage prevented by your aeon stone's shield spell from 5 to 10.\" - a number the player reads off the Shield entry, which carried nothing. Owner 2026-09-10 #47/#48."
+        }
+      ]
+    },
+    {
+      "id": "aeon-stone-dusty-rose-prism#duplicate-picker",
+      "note": "Pure deletion. This is the ONE stone that carries both the universal 'Slotted in a wayfinder' inventory designation (offered to every character, src/sheet/InventoryTab.tsx:705) and an older per-item yes/no `effectChoices` picker asking the same question - two controls for one state, which can be set to disagree. Verified the field holds nothing else: `effectChoices` on this record is a single entry with id `resonant`, so deleting the whole field loses no other question. SUPERSEDES the existing `effectChoices` row; nothing is carried forward, because the ruling is that this picker must not exist.",
+      "backfillRows": [
+        {
+          "category": "items",
+          "id": "aeon-stone-dusty-rose-prism",
+          "field": "effectChoices",
+          "value": null,
+          "supersedes": true,
+          "why": "equipment-407-870 \"The resonant power increases the damage prevented by your aeon stone's shield spell from 5 to 10.\" - one printed condition (slotted in a wayfinder), so one control. Owner 2026-09-10 #48: the 'Slotted in a wayfinder' mark is the control; the duplicate yes/no picker goes."
+        }
+      ]
+    },
+    {
+      "id": "aeon-stone-western-star#resonant-note",
+      "note": "Same shape as the other two stones: `resonant` re-emitted whole with a `spellNotes` member on `illusory-disguise`, inheriting the 'Slotted in a wayfinder' gate. SUPERSEDES the existing `resonant` row, whose `note` is carried through byte-for-byte.",
+      "backfillRows": [
+        {
+          "category": "items",
+          "id": "aeon-stone-western-star",
+          "field": "resonant",
+          "value": {
+            "note": "The resonant power allows you to render all of your aeon stones and your wayfinder invisible whenever you use the activation to gain the effects of illusory disguise.",
+            "spellNotes": [
+              {
+                "spellId": "illusory-disguise",
+                "note": "The resonant power allows you to render all of your aeon stones and your wayfinder invisible whenever you use the activation to gain the effects of illusory disguise."
+              }
+            ]
+          },
+          "supersedes": true,
+          "why": "equipment-407-874 \"The resonant power allows you to render all of your aeon stones and your wayfinder invisible whenever you use the activation to gain the effects of illusory disguise.\" - a rider on the activation the player triggers from the Illusory Disguise entry. Owner 2026-09-10 #49."
+        }
+      ]
+    },
+    {
+      "id": "wild-lights#printed-spell-name",
+      "note": "Three rows, no mechanical row at all. The import rewrote the printed spell name Dancing Lights to Light inside the stored text and left a descRefs link pointing at spells/Light; our Light is the Remaster cantrip and none of this feat's modification is true of it, so the rewrite put a false rule on a real spell while the feat's display still read \"dancing lights\" in its prerequisites. Row 1 restores the printed name (verified verbatim against the mirror, feat-3375) and changes NOTHING ELSE in the printed text. Row 2 carries the one line marked as ours on the record's own `note` field, NOT inside the description: `note` is the app's own-voice lane (87 feats already use it) and it renders on a built character as \"**Note:** ...\" under the feat entry, src/sheet/FeatsTab.tsx:131. Authoring the line inside `description` was refused by the batch driver's pre-check (5) (scripts/wg-batch-run.mjs:682-694), which allows a description row only tokens that are in our current text or in the cited mirror doc - correctly, since a description row is supposed to carry PRINT, and this line is ours. Row 3 empties the descRefs link. `[]`, not null: a removal row for a prose field cannot be replayed - apply-backfill-now.mjs routes a descRefs row to core-descriptions.json only when `Array.isArray(value)` (scripts/apply-backfill-now.mjs:72), so a null row reaches neither file and the apply stage's post-check refuses the whole batch (\"removal row (value:null) and the field is still present in the shipped artefact\"). An empty array routes, survives split-descriptions.mjs (`if (r)` - [] is truthy), and is equivalent to absent for every reader, all of which test `descRefs?.length` or map over it. Deliberately NO spellNote and no rider on spells/light, per the ruling. No spellNote on Dancing Lights either: we ship no `dancing-lights` record, and `pushSpellNote` (src/rules/build.ts:6837) drops a note whose spell does not exist, so it would render nowhere.",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "wild-lights",
+          "field": "description",
+          "value": "When you cast Dancing Lights, you can modify its duration to be 1 minute and modify its standard effects to create a single floating light in the shape of a Tiny creature, instead of up to four floating lights. The creature hovers over your head unless you spend a single action that has the concentrate trait to direct the light to move up to 30 feet, in which case it remains there until you direct it again. If you direct it back to your head, it hovers there and follows you again until you direct it elsewhere. If the light ever moves beyond 120 feet of you, it winks out immediately.",
+          "why": "feat-3375 \"When you cast dancing lights , you can modify its duration to be 1 minute and modify its standard effects to create a single floating light in the shape of a Tiny creature, instead of up to four floating lights.\" - the printed spell name is Dancing Lights and the import rewrote it to Light. Owner 2026-09-10 #70/#71 standing rule: never rewrite a printed spell name."
+        },
+        {
+          "category": "feats",
+          "id": "wild-lights",
+          "field": "note",
+          "value": "Dancing Lights is a legacy spell that the Remaster replaced with Light. This feat's modification is printed for Dancing Lights and is not applied to Light.",
+          "why": "feat-3375 names dancing lights and nothing else, and we ship no `dancing-lights` record, so the feat names a spell the player cannot reach. Owner 2026-09-10 #70/#71: one short line clearly marked as ours saying Light is the spell that replaced Dancing Lights, with NO mechanical rider on Light. `note` is the lane for exactly that - our voice, rendered as \"Note:\" under the feat on a built character (src/sheet/FeatsTab.tsx:131) and never mistaken for printed text."
+        },
+        {
+          "category": "feats",
+          "id": "wild-lights",
+          "field": "descRefs",
+          "value": [],
+          "why": "feat-3375 names dancing lights, never Light; the sole descRefs entry was an import-time link to spells/Light, which pointed the reader at a spell this feat does not modify. Owner 2026-09-10 #70/#71: remove the link, add no mechanical rider on Light. Empty array rather than null - see this finding's note for why a null prose row cannot be replayed."
+        }
+      ]
+    },
+    {
+      "id": "toppling-tentacles#replacement-note",
+      "note": "One `spellNotes` row plus a description repair. The feat's whole text is a replacement for Black Tentacles' effects and it reached no spell page: Black Tentacles is edition `superseded` and Slither, the spell that replaced it, carried nothing. `spellNotes` is the existing lane (src/rules/build.ts:6843; it walks feats the character HAS and prints each clause under the record's name, which is what 'clearly marked as coming from the feat' means here). Two entries: the printed clause on `black-tentacles` with the printed spell name intact, and the same clause on `slither` prefaced by where it is printed. Both spell ids ship, so `pushSpellNote` will not drop either. The description row is the same text: our stored copy had lost the word \"bludgeoning\" from BOTH damage lines at import (mirror feat-3391 prints \"takes 3d6 bludgeoning damage\" and \"deal 1d6 bludgeoning damage\"), and a note quoting the damage type while the feat's own page omitted it would be a new disagreement. descRefs left alone - Black Tentacles / Trip / prone are all still named.",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "toppling-tentacles",
+          "field": "spellNotes",
+          "value": [
+            {
+              "spellId": "black-tentacles",
+              "note": "When you cast Black Tentacles, replace the spell's standard effects with the following: Tentacles slither along the ground in the area, attempting to hinder anyone within. Sticky black tentacles attempt to Trip each creature in the area. Attempt spell attack rolls against the Reflex DCs of each affected creature. Any creature you succeed against is knocked prone and takes 3d6 bludgeoning damage. Whenever a creature ends its turn in the area, the tentacles attempt to Trip that creature if it isn't already prone, and they deal 1d6 bludgeoning damage to any creature already prone. Creatures treat the spell's area as difficult terrain."
+            },
+            {
+              "spellId": "slither",
+              "note": "Printed for Black Tentacles, which Slither replaced. When you cast Slither, replace the spell's standard effects with the following: Tentacles slither along the ground in the area, attempting to hinder anyone within. Sticky black tentacles attempt to Trip each creature in the area. Attempt spell attack rolls against the Reflex DCs of each affected creature. Any creature you succeed against is knocked prone and takes 3d6 bludgeoning damage. Whenever a creature ends its turn in the area, the tentacles attempt to Trip that creature if it isn't already prone, and they deal 1d6 bludgeoning damage to any creature already prone. Creatures treat the spell's area as difficult terrain."
+            }
+          ],
+          "why": "feat-3391 \"When you cast black tentacles , replace the spell's standard effects with the following: Tentacles slither along the ground in the area, attempting to hinder anyone within.\" - the feat's entire rule is a modification of a spell, and it reached neither Black Tentacles (hidden as superseded) nor Slither (its recorded replacement). Owner 2026-09-10 #70/#71: print it on the printed spell with its name intact, and on the replacement where the effect still works."
+        },
+        {
+          "category": "feats",
+          "id": "toppling-tentacles",
+          "field": "description",
+          "value": "When you cast Black Tentacles, replace the spell's standard effects with the following: Tentacles slither along the ground in the area, attempting to hinder anyone within. Sticky black tentacles attempt to Trip each creature in the area. Attempt spell attack rolls against the Reflex DCs of each affected creature. Any creature you succeed against is knocked prone and takes 3d6 bludgeoning damage. Whenever a creature ends its turn in the area, the tentacles attempt to Trip that creature if it isn't already prone, and they deal 1d6 bludgeoning damage to any creature already prone. Creatures treat the spell's area as difficult terrain.",
+          "why": "feat-3391 \"Any creature you succeed against is knocked prone and takes 3d6 bludgeoning damage. Whenever a creature ends its turn in the area, the tentacles attempt to Trip that creature if it isn't already prone, and they deal 1d6 bludgeoning damage to any creature already prone.\" - our stored copy had lost the word \"bludgeoning\" from both damage lines at import, so the feat's whole page named no damage type."
+        }
+      ]
+    },
+    {
+      "id": "spew-tentacles#replacement-note",
+      "note": "One `spellNotes` row, re-emitted WHOLE. The record already carried a single clause keyed to `black-tentacles`, which is edition `superseded` and therefore hidden, so the note reached nobody - and the feat's own grant was overlaid to `slither` (existing effect-backfill row: innateSpells -> slither), which carried nothing. The existing black-tentacles entry is carried through byte-for-byte and a `slither` entry is added beside it, worded the same way as toppling-tentacles so the two siblings read alike. Note the `gate` check in src/rules/build.ts:6849 reads this record's `innateSpells` for a `minLevel`; there is none, so both entries print as soon as the feat is taken.",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "spew-tentacles",
+          "field": "spellNotes",
+          "value": [
+            {
+              "spellId": "black-tentacles",
+              "note": "When you cast Black Tentacles from this feat, you spew the tentacles from your mouth out to the appropriate range, where they take root and begin Grappling creatures as usual. The tentacles recognize you as a part of them and don't attempt to Grapple you, even if you are in the area."
+            },
+            {
+              "spellId": "slither",
+              "note": "Printed for Black Tentacles, which Slither replaced. When you cast Slither from this feat, you spew the tentacles from your mouth out to the appropriate range, where they take root and begin Grappling creatures as usual. The tentacles recognize you as a part of them and don't attempt to Grapple you, even if you are in the area."
+            }
+          ],
+          "supersedes": true,
+          "why": "feat-2531 \"You can cast black tentacles once per day as an innate occult spell, though when you do so, you spew them from your mouth out to the appropriate range, where they take root and begin Grappling creatures as usual. The tentacles recognize you as a part of them and don't attempt to Grapple you, even if you are in the area.\" - the clause reached neither Black Tentacles (hidden as superseded) nor Slither, which is the spell this feat's own grant was overlaid to. Owner 2026-09-10 #71 (\"same for Spew Tentacles\")."
+        }
+      ]
+    }
+  ]
+}

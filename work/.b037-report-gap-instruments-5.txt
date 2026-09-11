@@ -1,0 +1,115 @@
+BATCH 037 — GAP AGENT, family gap-instruments-5
+================================================
+Five open lines, all of kind CROSS-FILE GAPS, all from work/.b037-report-instruments-5.txt and
+work/.b037-verify-instruments-5.txt. They are THREE distinct issues: the builder raised two of them and
+the verifier restated the same two after confirming them (one gap counted twice, the batch-036
+blessed-swiftness precedent), plus one the verifier raised alone. All five are PARKED; none is
+authorable inside this family, and each park is re-measured below rather than inherited from the note.
+No spec file was written (no row is correct for any of the three), no owner question is owed (nothing
+about print or WG is in dispute in any of them), and no engine file was edited.
+
+DISPOSITION
+-----------
+1. PARKED — flaggedResidue (report:23, owner-questions.json open[] -> ruled[] for the twelve)
+   The owner ANSWERED these twelve on 2026-09-10 but the desk still files them under open[]; moving
+   them is an edit to work/owner-questions.json, which is forbidden to every agent in this workflow,
+   so only the driver/orchestrator can close it.
+
+2. PARKED — flaggedResidue (report:30, wg-experience-lanes.mjs matchSelects "surplus select" lane)
+   The proposed one-lane-retires-three-parks fix is WRONG on two of the three parks and would blind the
+   only detector the experience gate has; the per-record park is the correct mechanism and already
+   carries seer-of-the-dead.
+
+3. PARKED — flaggedResidue (verify:140, the same owner-questions.json line as #1)
+   Verifier's restatement of #1 after confirming it; one gap counted twice, parked on the same evidence.
+
+4. PARKED — flaggedResidue (verify:151, the same matchSelects line as #2)
+   Verifier's restatement of #2 after confirming it; one gap counted twice, parked on the same evidence.
+
+5. PARKED — flaggedResidue (verify:158, work/.b037-specs.json manifest read-modify-write race)
+   Re-measured at gap time: the race did NOT drop an entry — the manifest now holds 16 entries covering
+   all 14 rows files plus the 2 created-prose files, so the five families the verifier saw missing were
+   in flight, exactly as it suspected. Nothing to author; the line was a watch, and the watch is clear.
+
+EVIDENCE I RE-MEASURED (not inherited)
+--------------------------------------
+#1/#3 — work/owner-questions.json at gap time: open[] 128, deferred[] 13, ruled[] 6,
+  authorisedExceptions[] 3. All twelve ns are in open[] and NONE is in ruled[]/deferred[]:
+  80 traveling-gourmand, 81 seer-of-the-dead, 83 haunted, 84 tree-friend, 89 hammered-by-fate,
+  90 lesser-scion, 91 bachuan-revolutionary, 103 divine-font, 114 undine, 117 grave-orc,
+  118 deny-lady-nanbyos-charity, 119 waning-moon-sarangay.
+  The answer exists: work/desk-answers-2026-09-10.json carries one block whose `ns` is exactly
+  [19,27,32,34,38,53,65,66,74,75,76,77,80,81,83,84,89,90,91,103,114,117,118,119,136,137,148,150] —
+  "DECIDED BY FABLE under the 2026-08-22 rule (book wins)", note "Keep the app on all 28 (it already
+  follows the printed page); nothing changes for a player. Each gets WRITTEN DOWN as a known deliberate
+  difference from WG (settle)". All twelve of mine are inside it.
+  The mechanism the builder named is real, re-read by me: scripts/wg-batch-close.mjs:111 builds `desk`
+  from `['open','deferred']` ONLY, and :255 takes the OWNER-QUEUED branch on `desk.has(rid)` before it
+  looks at a single citation — so all twelve close as OWNER-QUEUED whatever this family reports. Moved
+  to ruled[], they leave `desk`, fall through to the findings path and derive OWNER-RULED / MATCHES.
+  The closer's known `<record>-<aspect>` defect (:120-130) does not apply: these twelve are keyed by
+  bare record id, so desk.has() does see them.
+  WHY NOT AUTHORED: the only file that closes it is work/owner-questions.json and the project rules
+  forbid every agent in this workflow from editing it. A queue entry is not an alternative route —
+  work/.b037-queue.json feeds scripts/add-owner-question.mjs, which files NEW questions, and
+  pendingQuestions() (scripts/wg-batch-run.mjs:966) filters out any id already on the desk, so queuing
+  these twelve is a silent no-op that would ask the owner a question he has already answered.
+
+#2/#4 — the proposed "their surplus select is not printed" lane, checked against the three parks it
+  claims to retire (work/experience-instrument-limits.json, read at gap time):
+   · seer-of-the-dead   lane wg-unprinted-extra-select        — WG's 2nd "Select an Attribute" is a free
+     boost background-243 never prints. There is no control to pair it with and there SHOULD NOT be:
+     the correct outcome is "their surplus", not a pairing.
+   · dongun-education   lane one-control-answers-n-selects    — WG asks "Select a Lore" twice; ours asks
+     ONCE over the three PAIRS. Our single control genuinely ANSWERS both selects: the correct outcome
+     is a 2-to-1 pairing.
+   · free-heart         lane harness-one-control-serves-many-selects — WG asks three questions; our one
+     background picker answers all three. Again a pairing, 3-to-1.
+  So the three are two OPPOSITE treatments, not one lane: two want capacity (pair N selects to one
+  control), one wants the select declared unprinted. The capacity half is already expressible —
+  controlCapacity() at scripts/lib/wg-experience-lanes.mjs:264 already lets one control absorb N
+  selects; those two parks exist because a `popup` control does not declare a capacity, which is a
+  harness-observation question about OUR controls, not a matchSelects question about THEIR selects.
+  The unprinted half cannot be derived at all: whether a WG select is printed is a fact about the book,
+  known only by reading the record — which is exactly what a park with a verbatim print quote records.
+  BLAST RADIUS of doing it generically, measured on work/.b037-baseline/experience.json (125 records):
+  7 read MISSING-CONTROL — otherworldly-protection, dragon-eidolon, bone-magic, molten-wit,
+  hardened-chassis, time-mage-dedication, seer-of-the-dead. Only 3 are parked; the other 4 (bone-magic,
+  molten-wit, hardened-chassis, time-mage-dedication) are LIVE detections. verdictFor() raises
+  MISSING-CONTROL on `unmatched.length` alone (wg-experience-lanes.mjs:613), so a generic relaxation of
+  the one-to-one rule silences all 7 — it would trade four live signals for three parks. The one-select
+  /one-control rescue at :307 is deliberately gated because "with two of either there is no way to know
+  which is which", and that reasoning still holds.
+  WHY NOT AUTHORED: the fix as described is not correct, and the correct fix is a per-record park that
+  ALREADY EXISTS and already carries seer-of-the-dead (verdict MISSING-CONTROL, lane
+  wg-unprinted-extra-select, class ALREADY-OK, cite "// batch 037: seer-of-the-dead#one-boost",
+  refuter-checked 2026-09-11, pinned by test/batch037-instruments-5.test.ts). Widening a shared engine
+  file to hide a difference the book settles is importing WG's error into the comparer.
+
+#5 — work/.b037-specs.json re-read at gap time: 16 entries. Every rows file on disk is cited —
+  situational, instruments-1..7, data-rows-1..6 (14 files) — plus work/.b037-created-desc-data-rows-1
+  .json and work/.b037-created-desc-data-rows-3.json as kind created-prose. The five families the
+  verifier listed as missing (data-rows-1, data-rows-3, data-rows-4, instruments-3, instruments-6) all
+  have their entry now. No lost update; no family's rows go uncited at close. This family's own entry
+  is intact and unchanged (family instruments-5, file work/.b037-rows-instruments-5.json).
+  WHY NOT AUTHORED: there is nothing to write. The line asked the driver to re-check a race at close;
+  the re-check passes, and re-checking it again at close is the driver's, not mine.
+
+DATA STILL NEEDED
+-----------------
+(none — no row is correct for any of the three issues. #1 and #5 are bookkeeping, #2 is an engine
+change that would be wrong.)
+
+CROSS-FILE GAPS
+---------------
+- work/owner-questions.json — UNCHANGED and still owed to the driver/orchestrator: the twelve entries
+  #80 #81 #83 #84 #89 #90 #91 #103 #114 #117 #118 #119 belong in ruled[] with the 2026-09-10 answer
+  ("book wins; ours kept; written down as a deliberate difference from WG"). Until they move, batch 037
+  closes all twelve as OWNER-QUEUED and scripts/wg-batch-gate.mjs:599 parks them under "await his
+  ruling" rather than "ruled". This is the one line of mine that a later actor must still act on; it is
+  parked here only because no agent in this workflow is permitted to touch that file.
+
+MANIFEST STAGE PATHS FOR THIS GAP RUN
+-------------------------------------
+work/.b037-report-gap-instruments-5.txt and work/.b037-gaps.json (my family's five lines only). No spec
+file, no queue entry, no source edit, no test — so no manifest entry is appended for this family.

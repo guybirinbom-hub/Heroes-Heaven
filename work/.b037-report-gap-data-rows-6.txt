@@ -1,0 +1,164 @@
+BATCH 037 — GAP AGENT report, family "gap-data-rows-6"
+22 open lines in work/.b037-gaps.json, family "data-rows-6": 7 AUTHORED, 15 PARKED, 0 still open.
+spec: work/.b037-rows-gap-data-rows-6.json (5 rows over 4 spec findings)
+queue: work/.b037-queue.json (1 new question — the file did not exist; I created it)
+tests: test/batch037-gap-data-rows-6.test.ts (7 cases: 5 RED on the shipped values, green when the
+       driver applies the spec; 2 green today and deliberately so — the value/label control on the
+       dragonblood re-emit, and the built-character reachability check)
+files edited: NONE under src/ or scripts/. The three files I wrote are the spec, the queue and the
+       new test, plus the manifest append and this report.
+npx tsc --noEmit: clean.
+node scripts/test-flip-audit.mjs --batch 037: "clean — 30 test file(s) touched, every flip cited".
+node scripts/add-owner-question.mjs --from work/.b037-queue.json (report only, no --write): accepted,
+       allocates #151.
+
+⚠ CONCURRENCY NOTE — work/.b037-queue.json did not exist at 12:49 and I created it with ONE entry.
+If another gap agent has added entries since, they are theirs; I never rewrote the file after creating
+it. (Batch 031's gap agent clobbered a sibling's queue entry by Write-ing this same file; the lesson is
+in work/.b031-report-gap-data-rows.txt. Whoever runs the gaps stage: the file must hold every agent's
+entries, so check it carries more than mine before feeding it to add-owner-question.mjs.)
+
+FINDING IDS I CITE
+  breath-of-the-dragon#derive-from-exemplar (CONFIRMED, work/.b037-read.json) — the only finding this
+  chunk's gap work rests on: its `proposal` carries the owner's transcription of the Draconic
+  Benefactors table (owner, 2026-09-10, work/desk-answers-2026-09-10.json), which is the authority for
+  the dragonblood row and for the two test cases that cite it. No settle, no comparer teach, no ratchet
+  and no registry entry was added, changed or removed by this agent — the other three spec findings are
+  authored under the premise form against equipment-1169, feat-5028 and equipment-4028.
+
+
+PER LINE  (in the order they appear in work/.b037-gaps.json)
+
+ 1. AUTHORED — work/.b037-rows-gap-data-rows-6.json, gap-037-screech-shooter-major-damage-type
+    "items/screech-shooter-major field damage … the record ships type piercing"
+    equipment-1169 states the damage type once for the whole family ("A screech shooter deals sonic
+    damage"), neither grade block overrides it, and this record's own shipped description repeats that
+    sentence — so the field contradicted the prose on the same record, and derive.ts rolled piercing.
+
+ 2. AUTHORED — work/.b037-rows-gap-data-rows-6.json, gap-037-dragonblood-exemplar-speeds
+    "heritages/dragonblood field choice (whole value, 40 options)"
+    Exactly two option descriptions disagreed with the owner's table (magma Burrow, bog Swim); the
+    whole 40-option value is re-emitted with supersedes:true because `choice` is one field and an
+    overlay row for it already exists. Verified after writing: the emitted value differs from the
+    shipped one in those two `description` strings and nothing else — same flag, prompt, kind, and the
+    same 40 values and labels in the same order, which is what feats/breath-of-the-dragon keys off.
+
+ 3. AUTHORED — work/.b037-rows-gap-data-rows-6.json, gap-037-bespell-strikes-base-star
+    "feats/bespell-strikes field situational — the BASE 1d6 has no carrier"
+    feat-5028's extra 1d6 force damage is conditional (non-cantrip spell this turn, once per turn, one
+    chosen weapon), so `situational` is its lane; the reader is the c.feats walk at explain.ts:583 that
+    the sibling arcana-of-iron row already uses, and 69 feats ship the field today.
+
+ 4. PARKED — owner question speed-status-lane-031 (work/owner-questions.json, open, n=127)
+    "feats/swashbucklers-speed — re-author the +5/+10 status bonus when the engine grows the carrier"
+    The question is already on the desk, unruled since batch 031, and names both halves (bonus TYPE and
+    "your Speeds" reaching every Speed); add-owner-question.mjs refuses a duplicate id, and re-asking it
+    under a new id would put the same decision in front of the owner twice.
+
+ 5. PARKED — owner question speed-status-lane-031 (n=127)
+    "swashbucklers-speed#typed-all-speeds belongs to the engine family: src/rules/derive.ts …"
+    Same decision from the engine side. I did not build it: typing the Speed lane is a measured
+    migration of every existing carrier (~20 records through one untyped `landSpeedBonus`), and the
+    plural half would go BEYOND Wanderer's Guide, whose model has a single SPEED variable — the one
+    direction an agent may never take on its own.
+
+ 6. PARKED — owner question reborn-soul (work/owner-questions.json, open, n=85)
+    "reborn-soul#restricted-increases, the BUILT half … bonusSkillIncreaseLevels is class-only"
+    The reader cannot be shaped before the reading is ruled: #85 asks whether print's restriction on
+    the increases the character already gets, or WG's free auto-raise of both Lores, is what we build —
+    and those two answers need different machinery. The builder's dataWarning row already tells the
+    player what to do by hand meanwhile.
+
+ 7. PARKED — flaggedResidue R1 (see RESIDUE below)
+    "breath-of-the-dragon#derive-from-exemplar asks for scripts/data/draconic-benefactors.json"
+
+ 8. PARKED — flaggedResidue R2 (see RESIDUE below)
+    "MIRROR GAP: DraconicBenefactors.aspx is not in the AoN update pipeline"
+
+ 9. PARKED — flaggedResidue R4 (see RESIDUE below)
+    "astrolabe-of-falling-stars#identify-star: my row is the DATA twin … one of the two must be dropped"
+    Re-checked rather than taken on trust: no double star is possible in this batch (the situational
+    family's spec holds one finding, reverse-engineer, and no astrolabe entry), so the line's premise
+    does not hold. What IS real between the two records is the price, and line 15 authors that.
+
+10. AUTHORED — same row as line 1 (the verifier's restatement, CONFIRMED by them).
+11. AUTHORED — same row as line 2 (the verifier's restatement, CONFIRMED by them).
+12. AUTHORED — same row as line 3 (the verifier's restatement, CONFIRMED by them).
+13. PARKED — owner question speed-status-lane-031 (n=127). The verifier's restatement of line 4.
+
+14. PARKED — work/.b037-queue.json, screech-shooter-major-rune-grade
+    "NEW (owner question): items/screech-shooter-major's first sentence calls it a +2 greater striking
+    harmona gun — that is the GREATER grade's rune line"
+    The verifier is right that it cannot be invented from print: equipment-1169-1110 prints no rune
+    sentence at all. I added the evidence they did not have — Wanderer's Guide DOES carry the record
+    (item 14469) and gives the major the greater's runes, meta_data.runes {"striking":2,"potency":2},
+    identical to their greater (14468) and unlike their base (14467, striking 1 / potency 1). So the
+    question is now answerable in one word, and it carries a second half worth ruling at the same time:
+    none of our three grades carries `builtInRunes` at all, so today no grade's runes reach the strike.
+    Filed as a follow-up of desk n=72, which owns the same four records' flattened descriptions.
+
+15. AUTHORED — work/.b037-rows-gap-data-rows-6.json, gap-037-astrolabe-duplicate-numbers
+    "NEW: two near-duplicate item records ship … a player who owns the wrong record reads the wrong
+    price and level"
+    Measured first: the level, bulk, rarity, traits and frequency already agree on both records, so the
+    only wrong number is the price — 50 gp against equipment-4028's "Price 150 gp". Two rows on the
+    duplicate fix it and its activation (print: "Activate—Starfall Two Actions"; we shipped 1). The star
+    is not split: the AoN record carries it as data (the data-rows-6 row) and the duplicate carries it
+    in the code table, so it reaches the player either way. Retiring one of the two records is residue
+    R5 — it is not a row.
+
+16. PARKED — owner question speed-status-lane-031 (n=127). The verifier's restatement of line 5.
+17. PARKED — owner question reborn-soul (n=85). First half of the verifier's restatement of line 6.
+18. PARKED — owner question reborn-soul (n=85). Second half of the same restatement (the chosen-Lore
+    resolver); one question covers both, so it is parked with it rather than separately.
+19. PARKED — flaggedResidue R1. The verifier's restatement of line 7.
+20. PARKED — flaggedResidue R2. The verifier's restatement of line 8.
+
+21. PARKED — flaggedResidue R3 (see RESIDUE below)
+    "NEW: src/sheet/InventoryTab.tsx — equipControl returns null for every itemType that is not
+    armor/weapon/shield … every situational/passiveEffects clause on one is unreachable"
+
+22. PARKED — flaggedResidue R4. The line reports itself CLOSED and I re-verified it; nothing owed.
+
+
+RESIDUE  (each line is a reason, not a plan — it says why the work is out of scope here)
+
+R1  scripts/data/draconic-benefactors.json — NOT authored.
+    The 40 rows are already carried whole, with their citation, inside feats/breath-of-the-dragon's
+    effectChoices row and again inside my dragonblood row's `why`. A standalone file would have no
+    reader anywhere, and a second copy of a table nobody reads is the shape that silently drifts from
+    the one that ships. Author it when something actually consumes the table by column (the breath and
+    save columns are what a derived feat would want), not before.
+
+R2  The AoN mirror does not carry https://2e.aonprd.com/DraconicBenefactors.aspx.
+    Adding it is pipeline work — a scraper pass in C:\pf2e-tracker plus a fetch stage — and this run may
+    not run `npm run data` or any apply-*.mjs. Nothing in batch 037 waits on it: the owner transcribed
+    the table precisely because it is missing, and both rows that need it cite the transcription.
+
+R3  An IN-USE control for held gear — src/sheet/InventoryTab.tsx (equipControl:72, the invested-trait
+    gate at :194, isEquippable:732) and the uncalled `toggleEquipped` in src/builder/shared.tsx:632.
+    This is an unmodelled mechanic, not a row: the app has no "held" state for an itemType `equipment`
+    record, and inventing one flips `itemInUse` for every such record at once — every passiveEffects and
+    situational clause they carry starts firing together, a blast radius nobody has measured. No family
+    stages InventoryTab.tsx in this batch, so the fix would also be authored blind of whoever owns the
+    sheet next. My astrolabe star reaches the player meanwhile through `whileCarried`, which is the flag
+    written for exactly this state.
+
+R4  The astrolabe double-star worry is CLOSED, re-verified here, and needs nothing.
+
+R5  Retiring ONE of the two astrolabe records — NOT authored, and deliberately.
+    It would take three changes in one commit: a {delete:true} row, a re-pointed
+    ITEM_ID_ALIASES["aon-astrolabe-of-falling-stars"] (src/rules/itemAliases.ts, which currently points
+    at the record that would go) so saved characters migrate instead of losing the item, and a re-keyed
+    entry in src/rules/situationalBonuses.ts:3083 — a file the situational family stages in this same
+    batch, so a third writer would clobber theirs. The surviving record would also have to absorb the
+    duplicate's `usage`, `activationCost` and `counters` first. Measured while I was there: exactly TWO
+    such no-aonId near-name twins exist in the whole item corpus (this one and
+    reinforced-chassis-armor ~ reinforced-chassis, whose record is already desk question n=19), so this
+    is a two-record clean-up, not a lane — worth doing, but in one owner-visible change, not inside a
+    gap run.
+
+
+CROSS-FILE GAPS
+  None left open by me. Everything this chunk would have had to reach outside its own files for is
+  either on the desk (n=127, n=85, and the new n=151) or in R1–R5 above.

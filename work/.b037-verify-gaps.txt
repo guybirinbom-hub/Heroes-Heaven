@@ -1,0 +1,592 @@
+BATCH 037 — GAP VERIFICATION · work/.b037-gaps.json, 112 lines
+verifier: family "gaps" · 2026-09-11T10:03:48Z · HEAD aed991a · default verdict: REFUTE
+
+SUMMARY: 107 CLOSED · 5 REOPENED · 0 left STILL-OPEN as filed · gapsOpen = 5
+
+INTEGRITY CHECKS
+  owner-questions — UNTOUCHED. `git diff HEAD -- work/owner-questions.json` is empty; the file still reads 128 open / 13 deferred / 6 ruled / 3 authorisedExceptions, max n=150.
+  gap lines — none removed. The apply-digest entry of work/.b037-run.json records "112 gap line(s)" and work/.b037-gaps.json holds exactly 112.
+  manifest — nothing removed or narrowed. 23 entries (16 before the gap stage + 7 gap families); every rows/created-desc file on disk is cited by exactly one entry and every stage[] path in every entry exists on disk. The ONE family with no entry at all is gap-instruments-6 — line [108].
+  specs — all 23 parse, all use findings[].backfillRows[], 145 rows total, zero cross-spec collisions on the driver's own key, and every non-create row targets a record that exists in public/core.json. (The two rows whose target "does not exist" are created-prose rows for records their own family's create row makes — the documented created-prose shape.)
+  flip audit — `node scripts/test-flip-audit.mjs --batch 037`: clean, 32 test files touched, 13 new settle keys, every flip cited.
+  types — `npx tsc --noEmit` exits 0.
+  tests — the seven gap test files plus test/locate-lawbreakers.test.ts and test/automaton-enhancement.test.ts run 78 passed / 7 failed. EVERY failure is an assertion against a POST-ROW value: test/batch037-gap-data-rows-6.test.ts (5) and test/automaton-enhancement.test.ts (2). That is the batch's pre-apply state, not a gap defect — work/.b037-run.json holds cut, baseline, read-digest, apply-digest and NO apply, and the sibling non-gap tests are red the same way (batch037-data-rows-3 10/12 red, -4 13/21, -6 10/10). Every gap test that pins a CODE change is green.
+
+⛔ BLOCKERS — the driver's own precheck refuses the WHOLE manifest
+  I re-ran the exported pure `precheck()` (scripts/wg-batch-run.mjs:597) over all 23 specs and the live overlay. It returns FOUR problems, and stageApply (:707) refuses before writing anything, so NOTHING in batch 037 lands until all four are fixed:
+    1. items/merchants-scale description row — introduces tokens in neither our text nor equipment-2734/equipment-34. Gap line [71], filed "parked"; REOPENED here. Owner: work/.b037-rows-data-rows-4.json.
+    2. feats/locate-lawbreakers `note` row — `why` names no AoN doc id. Gap line [1]/[52]; REOPENED here. Owner: work/.b037-rows-gap-data-rows-2.json.
+    3. modes/guardians-armor delete row — `why` names no AoN doc id. Gap line [79]; REOPENED here. Owner: work/.b037-rows-gap-data-rows-5.json.
+    4. items/mask-of-the-mantis-major description row — "no mirror document for equipment-3497-3391". NEW: covered by NO gap line, and it is a FALSE POSITIVE inside the precheck itself. mirrorText (scripts/wg-batch-run.mjs:579) derives the folder as `aonId.replace(/-\d+$/, "")`, which turns "equipment-3497-3391" into "equipment-3497" and looks in a folder that does not exist. The document IS in the mirror, at C:/wonderers guide/aon-2e-archive/data/by-category/equipment/equipment-3497-3391.json, with a populated `text`. EVERY two-part AoN id (a variant under a family page) hits this. Driver fix, in the driver's own file.
+
+NEW CROSS-FILE GAPS FOUND BY THIS PASS (none of them is one of the 112)
+  · scripts/wg-batch-run.mjs:579 mirrorText — two-part AoN ids resolve to a folder that does not exist (blocker 4).
+  · work/.b037-specs.json — no entry for family gap-instruments-6, so test/batch037-gap-instruments-6.test.ts, the re-pinned test/batch035-closer.test.ts and work/.b037-report-gap-instruments-6.txt are staged by nobody while the scripts/wg-diff.mjs change they guard IS staged.
+  · modes/scar-of-the-survivor and modes/soul-well still need `dyingThresholdBonus: 1`. The lane built for line [25]/[75] has a reader and no writer until that row lands; work/.b037-report-gap-data-rows-4.txt records why it could not be a row here.
+  · 25 desk numbers (#7 #19 #27 #32 #34 #38 #53 #65 #66 #74 #75 #76 #77 #80 #81 #83 #84 #89 #90 #91 #103 #114 #117 #118 #119) are ruled in work/desk-answers-2026-09-10.json but still sit in work/owner-questions.json open[]. scripts/wg-batch-close.mjs:255 takes the OWNER-QUEUED branch on desk.has(rid) BEFORE it looks at any citation, so all 25 records close OWNER-QUEUED unless the DRIVER moves them to ruled[] first. No agent in this workflow may edit that file.
+  · src/data/trust-ledger.json is stale — `node scripts/trust-ledger-check.mjs` FAILs today. The driver regenerates it inside stageClose; it must NOT be regenerated before apply, because it stamps coreSha.
+
+PER-LINE VERDICTS
+====================================================================================================
+
+[0] CLOSED · data-rows-2 · DATA STILL NEEDED · filed "authored"
+     line: feats/locate-lawbreakers / effectChoices — BLOCKED on the reader below. Once a cross-record choice-flag gate exists, re-emit the whole `effectChoices` value with each of the four tradition options' gr
+     ref : work/.b037-rows-gap-data-rows-2.json — finding locate-lawbreakers#order-of-the-gate, row feats/locate-lawbreakers field effectChoices (supersedes:true, the four shipped options carried whole, each grant.innateSpells[0] gaining heightenAt [{
+     evid: CLOSED — the spec file exists, parses, is in the spec format (findings[].backfillRows[]), every row targets a record that exists in public/core.json, and work/.b037-specs.json carries the family entry with stage[] paths that all exist on disk. The driver precheck raises no problem for this row. The effectChoices row itself is complete and correct (feats/locate-lawbreakers, supersedes:true, the four shipped tradition options carried whole, each grant.innateSpells[0] gaining heightenAt [{level:14,rank:5}] and heightenWhenFlag {hellknightOrder, order-of-the-gate}), and the reader it was blocked on is live — src/rules/types.ts:2492 read at src/rules/build.ts:8277 through the existing choiceFlagAnswer. ⚠ It cannot LAND while its sibling `note` row is refused by precheck (5): see line [1]/[52].
+
+[1] REOPENED · data-rows-2 · DATA STILL NEEDED · filed "authored"
+     line: feats/locate-lawbreakers / note — value:null, supersedes:true. Only AFTER the row above lands: the standing note is the player's only information today, and deleting it first is a net loss.
+     ref : work/.b037-rows-gap-data-rows-2.json — finding locate-lawbreakers#order-of-the-gate, second row: feats/locate-lawbreakers field note -> null (supersedes:true), emitted in the same spec AFTER the effectChoices row. The printed sentence itsel
+     evid: PRECHECK (5) REFUSES IT. I re-ran the driver's own exported pure precheck (scripts/wg-batch-run.mjs:597) over all 23 manifest specs and the live overlay: "row feats/locate-lawbreakers/note has a `why` that names no AoN doc id". That row's `why` cites only public/core-descriptions.json and prose reasoning. stageApply (:707) refuses the WHOLE manifest before writing anything, so this row and its sibling effectChoices row both fail to land. FIX by the owner of work/.b037-rows-gap-data-rows-2.json (rewriting another agent's file is prohibited to me): add the Locate Lawbreakers AoN doc id to that row's `why`.
+
+[2] CLOSED · data-rows-2 · DATA STILL NEEDED · filed "parked"
+     line: (nothing else — every other finding this chunk owns is authored in work/.b037-rows-data-rows-2.json)
+     ref : flaggedResidue: not a gap — this is the literal line "(nothing else — every other finding this chunk owns is authored in work/.b037-rows-data-rows-2.json)" from under the DATA STILL NEEDED heading of work/.b037-report-data-rows-2.txt, swept
+     evid: CLOSED (parked) — not a gap: the collator sliced the literal sentence "(nothing else — every other finding this chunk owns is authored in …)" out of the DATA STILL NEEDED heading of work/.b037-report-data-rows-2.txt. It names no record, field or value and asks for nothing.
+
+[3] CLOSED · data-rows-2 · CROSS-FILE GAPS · filed "authored"
+     line: src/rules/types.ts, ItemBase.resonant — add `spellNotes?: SpellNote[]` to `{ note; innateSpells?; resistances? }`. The three aeon-stone rows in this spec author it; it has NO READER today, so until th
+     ref : src/rules/types.ts, ItemBase.resonant — spellNotes?: SpellNote[] added to the resonant shape, with the printed clause quoted and the reason it hangs here rather than on the item top-level spellNotes lane. The three aeon-stone rows in work/.
+     evid: CLOSED — src/rules/types.ts:4059 ItemBase.resonant now carries `spellNotes?: SpellNote[]` (SpellNote itself at types.ts:324), so the three aeon-stone rows in work/.b037-rows-data-rows-2.json are no longer inert data. Flip-audit clean for batch 037; npx tsc --noEmit exits 0.
+
+[4] CLOSED · data-rows-2 · CROSS-FILE GAPS · filed "authored"
+     line: src/rules/build.ts:8088, the `item?.resonant && inv.designations?.includes('wayfinder-slotted')` block — push each `item.resonant.spellNotes` entry through `pushSpellNote(g.spellId, item.name + ' (res
+     ref : src/rules/build.ts, the item?.resonant && inv.designations?.includes("wayfinder-slotted") arm — each resonant.spellNotes entry is now pushed through pushSpellNote(voidSwapped(item, n.spellId), item.name + " (resonant)", n.note), inside the 
+     evid: CLOSED — src/rules/build.ts pushes each resonant.spellNotes entry through pushSpellNote inside the `item?.resonant && inv.designations?.includes("wayfinder-slotted")` arm — the designation gate the line asked for, not the item top-level spellNotes lane. Pinned on a built character by test/batch037-gap-data-rows-2.test.ts (slotted+data, data absent, worn-but-not-slotted), green. Flip-audit clean for batch 037; npx tsc --noEmit exits 0.
+
+[5] CLOSED · data-rows-2 · CROSS-FILE GAPS · filed "authored"
+     line: src/rules/build.ts + src/rules/types.ts — a predicate gating a grant on ANOTHER record's `choice.flag` (locate-lawbreakers#order-of-the-gate). The order is already stored (feats/hellknight-dedication,
+     ref : src/rules/types.ts InnateSpellGrant.heightenWhenFlag + src/rules/build.ts castRank — the cross-record choice-flag gate. It gates the LADDER, not the grant (a Hellknight of any other order still casts Locate once a day), and reads the order 
+     evid: CLOSED — src/rules/types.ts:2492 InnateSpellGrant.heightenWhenFlag, consumed at src/rules/build.ts:8277 (`if (g.heightenWhenFlag && choiceFlagAnswer(g.heightenWhenFlag.flag, build, content) !== g.heightenWhenFlag.value) continue`) — the cross-record choice-flag gate, gating the LADDER not the grant, asking no second question. test/batch037-gap-data-rows-2.test.ts green, including the shipped-record mirror image. Flip-audit clean for batch 037; npx tsc --noEmit exits 0.
+
+[6] CLOSED · data-rows-2 · CROSS-FILE GAPS · filed "authored"
+     line: test/locate-lawbreakers.test.ts, it('the heightening is still recorded as an open question rather than silently decided') — asserts `locate-lawbreakers` is still in work/owner-questions.json `open[]`.
+     ref : test/locate-lawbreakers.test.ts, it("never heightens for every Hellknight — a ladder here must carry the Order of the Gate gate") — the stale it() that asserted the question was still open in work/owner-questions.json is flipped to the owne
+     evid: CLOSED — test/locate-lawbreakers.test.ts it("never heightens for every Hellknight — a ladder here must carry the Order of the Gate gate") is the flipped assertion, written as an implication so it is honest before and after the row lands; cited "// batch 037: locate-lawbreakers#order-of-the-gate"; file green at 7 tests. work/owner-questions.json is byte-unchanged vs HEAD, and n=7 IS ruled "yes" in work/desk-answers-2026-09-10.json, so the flip matches the owner. Flip-audit clean for batch 037; npx tsc --noEmit exits 0.
+
+[7] CLOSED · data-rows-2 · CROSS-FILE GAPS · filed "authored"
+     line: src/rules/casterArchetypes.ts (CASTER_ARCHETYPES['oatia-skysage-dedication'], line 304) + src/builder/shared.tsx:3902 + src/builder/Builder.tsx:971 — oatia-skysage-dedication#cantrip-picker. The 38-ca
+     ref : src/rules/casterArchetypes.ts — CasterArchetype.cantripOptions + the exported archetypeCantripAllowed() helper, carrying ["detect-magic","guidance","know-the-way","read-aura"] on oatia-skysage-dedication; honoured at BOTH picker call sites 
+     evid: CLOSED — src/rules/casterArchetypes.ts:95 CasterArchetype.cantripOptions + :99 archetypeCantripAllowed(), carrying the four cantrips at :332; honoured at BOTH picker call sites (src/builder/shared.tsx:3909, src/builder/Builder.tsx:994-995) and again at delivery (src/rules/build.ts:7595-7597), where a stored out-of-range pick is dropped with an effectWarning rather than migrated. test/batch037-gap-data-rows-2.test.ts green (3 its). Flip-audit clean for batch 037; npx tsc --noEmit exits 0.
+
+[8] CLOSED · data-rows-2 · CROSS-FILE GAPS · filed "parked"
+     line: data-rows-1..6 siblings: no collision found. The only other batch-037 finding on any record I touch is `sponsored-by-teacher-ot#rarity`, which is a different FIELD (`rarity`) from mine (`choice`), so 
+     ref : flaggedResidue: not a gap — the builder and verifier recorded NON-collision note ("no sibling touches any of my records"), harvested as a line. Re-verified here against all 22 manifest specs, including the five other gap specs written this 
+     evid: CLOSED (parked) — flaggedResidue with a measured reason, re-checked here: no collision exists. I re-keyed all 145 rows across all 23 manifest specs with the driver's own keyOf() and found zero cross-spec collisions anywhere in batch 037, so the non-collision note this line records is true.
+
+[9] CLOSED · data-rows-3 · DATA STILL NEEDED · filed "authored"
+     line: feats/lesser-augmentation, field effectChoices, whole value re-emitted with supersedes:true (an effect-backfill row of this key already exists, valLen 3097): the 'hardened-chassis' option's note chang
+     ref : work/.b037-rows-data-rows-3.json
+     evid: CLOSED — the spec file exists, parses, is in the spec format (findings[].backfillRows[]), every row targets a record that exists in public/core.json, and work/.b037-specs.json carries the family entry with stage[] paths that all exist on disk. The driver precheck raises no problem for this row. (feats/lesser-augmentation and feats/greater-augmentation effectChoices, both supersedes:true over existing overlay rows, in work/.b037-rows-data-rows-3.json under finding hardened-chassis#enhancement.)
+
+[10] CLOSED · data-rows-3 · DATA STILL NEEDED · filed "authored"
+     line: feats/greater-augmentation, field effectChoices, same change, same supersedes:true (existing row valLen 5146).
+     ref : work/.b037-rows-data-rows-3.json
+     evid: CLOSED — the spec file exists, parses, is in the spec format (findings[].backfillRows[]), every row targets a record that exists in public/core.json, and work/.b037-specs.json carries the family entry with stage[] paths that all exist on disk. The driver precheck raises no problem for this row. (feats/lesser-augmentation and feats/greater-augmentation effectChoices, both supersedes:true over existing overlay rows, in work/.b037-rows-data-rows-3.json under finding hardened-chassis#enhancement.)
+
+[11] CLOSED · data-rows-3 · DATA STILL NEEDED · filed "authored"
+     line: items/armor-in-earth-medium, create row re-emitted with supersedes:true, dropping only the sentence "It uses your HIGHEST armor proficiency — set that on the sheet if your best track is not medium." f
+     ref : work/.b037-rows-gap-data-rows-3.json
+     evid: CLOSED — the spec file exists, parses, is in the spec format (findings[].backfillRows[]), every row targets a record that exists in public/core.json, and work/.b037-specs.json carries the family entry with stage[] paths that all exist on disk. The driver precheck raises no problem for this row. (items/armor-in-earth-medium create row, supersedes:true, in work/.b037-rows-gap-data-rows-3.json.) Its ordering condition is met in the same batch: src/rules/featGrants.ts:788 carries 'armor-in-earth': { armorFamiliarity: { armors: ['armor-in-earth-medium','armor-in-earth-heavy'], mirrorBest: true } }, read at src/rules/build.ts:5816 and :7101.
+
+[12] CLOSED · data-rows-3 · DATA STILL NEEDED · filed "parked"
+     line: items/armor-in-earth-heavy, create row re-emitted with supersedes:true, same note cleanup (its note carries no "set it yourself" sentence today, so this row is only needed if the medium one's wording 
+     ref : flaggedResidue: nothing to author — items/armor-in-earth-heavy's note never carried the "set it yourself" sentence and the medium suit's wording was not mirrored onto it, while the src/rules/featGrants.ts armorFamiliarity entry covers BOTH 
+     evid: CLOSED (parked) — flaggedResidue with a measured reason, re-checked here: items/armor-in-earth-heavy's note never carried the "set it yourself" sentence and the medium suit's wording was not mirrored onto it, and src/rules/featGrants.ts:788 covers BOTH granted suits in one armorFamiliarity entry — armors: ['armor-in-earth-medium','armor-in-earth-heavy'], mirrorBest:true, and no `armor: {…}` categories, exactly as the line specified. The heavy suit's proficiency is right with no row at all.
+
+[13] CLOSED · data-rows-3 · DATA STILL NEEDED · filed "authored"
+     line: items/hardwood-armor-armor, create row re-emitted with supersedes:true, dropping "It is medium armor but uses your HIGHEST armor proficiency — set that on the sheet if your best track is not medium." 
+     ref : work/.b037-rows-gap-data-rows-3.json
+     evid: CLOSED — the spec file exists, parses, is in the spec format (findings[].backfillRows[]), every row targets a record that exists in public/core.json, and work/.b037-specs.json carries the family entry with stage[] paths that all exist on disk. The driver precheck raises no problem for this row. (items/hardwood-armor-armor create row, supersedes:true.) Its ordering condition is met: src/rules/featGrants.ts:793 carries 'hardwood-armor': { armorFamiliarity: { armors: ['hardwood-armor-armor'], mirrorBest: true } }.
+
+[14] CLOSED · data-rows-3 · DATA STILL NEEDED · filed "parked"
+     line: FALLBACK ONLY: if the driver refuses my path row {category:'feats', id:'haunting-memories', path:['choice'], field:'note'} because a pathless whole-value row for feats/haunting-memories `choice` alrea
+     ref : flaggedResidue: precondition false — the driver's own precheck keys the path row as feats/haunting-memories/choice.note, distinct from the existing whole-value overlay key, with hasIdStep false so check (3) never fires; re-run over the whol
+     evid: CLOSED (parked) — flaggedResidue with a measured reason, re-checked here: the precondition is false. I re-ran the driver's precheck over all 23 specs: check (3) raises nothing for feats/haunting-memories — the path row keys as feats/haunting-memories/choice.note, distinct from the whole-value overlay key, with hasIdStep false. No whole-value re-emission is owed.
+
+[15] CLOSED · data-rows-3 · CROSS-FILE GAPS · filed "parked"
+     line: src/rules/types.ts (SkillRankGate, line 2817) — molten-wit#three-branches needs a MULTI-skill option gate (e.g. `requiresSkillRanks?: SkillRankGate[]`, honoured by qualifiesForOption at derive.ts:1771
+     ref : flaggedResidue: the multi-skill gate cannot carry molten-wit#three-branches and would ship a lane nothing reads — qualifiesForOption reads the BUILT character (Builder.tsx:477 narrows against buildCharacter, which already includes this feat
+     evid: CLOSED (parked) — flaggedResidue with a measured reason, re-checked here: qualifiesForOption reads the BUILT character, which already includes this feat's own answer's grant, so a "already trained in Deception" gate is self-satisfying and answering the option deletes it. A multi-skill gate field would ship a lane nothing can use; the missing piece is a rank-before-this-carrier's-grant reader — an engine shape, not a gate field.
+
+[16] CLOSED · data-rows-3 · CROSS-FILE GAPS · filed "parked"
+     line: src/rules/featFeatGrants.ts (CHOICE_FEAT_GRANTS, line 57) + src/rules/featGrantsLane.ts (line 46) — molten-wit#three-branches: the per-answer FEAT grant must stay here, because a FEAT's choice.options
+     ref : flaggedResidue: no edit owed — the line's claim is already true. CHOICE_FEAT_GRANTS['molten-wit'] = { deception: ['charming-liar'], diplomacy: ['group-impression'] } is the home, and a FEAT's choice.options[].grant.grantsFeats is collected 
+     evid: CLOSED (parked) — flaggedResidue with a measured reason, re-checked here: the line's claim is already true and needs no edit: src/rules/featFeatGrants.ts:57 holds CHOICE_FEAT_GRANTS['molten-wit'] = { deception: ['charming-liar'], diplomacy: ['group-impression'] }, and a FEAT's choice.options[].grant.grantsFeats is collected nowhere (build.ts:5406 is heritage, :5465 classFeature).
+
+[17] CLOSED · data-rows-3 · CROSS-FILE GAPS · filed "authored"
+     line: src/rules/featGrantsAuto.ts:474 — intuitive-crafting#middle-case: `redundantFallback: true` must become conditional on the character already owning specialty-crafting, so the middle case (trained in C
+     ref : src/rules/featGrants.ts:283
+     evid: CLOSED — src/rules/featGrants.ts:283 FeatGrant.redundantFallbackIfFeat, read at src/rules/build.ts:5845-5846 with the "granted by this same carrier does not count" exclusion the comment argues for. test/batch037-gap-data-rows-3.test.ts green. Flip-audit clean for batch 037; npx tsc --noEmit exits 0.
+
+[18] CLOSED · data-rows-3 · CROSS-FILE GAPS · filed "parked"
+     line: src/rules/featGrantsAuto.ts — armor-in-earth#armour-proficiency: add `'armor-in-earth': { armorFamiliarity: { armors: ['armor-in-earth-medium','armor-in-earth-heavy'], mirrorBest: true } }` and NO `ar
+     ref : flaggedResidue: nothing to author — items/armor-in-earth-heavy's note never carried the "set it yourself" sentence and the medium suit's wording was not mirrored onto it, while the src/rules/featGrants.ts armorFamiliarity entry covers BOTH 
+     evid: CLOSED (parked) — flaggedResidue with a measured reason, re-checked here: items/armor-in-earth-heavy's note never carried the "set it yourself" sentence and the medium suit's wording was not mirrored onto it, and src/rules/featGrants.ts:788 covers BOTH granted suits in one armorFamiliarity entry — armors: ['armor-in-earth-medium','armor-in-earth-heavy'], mirrorBest:true, and no `armor: {…}` categories, exactly as the line specified. The heavy suit's proficiency is right with no row at all.
+
+[19] CLOSED · data-rows-3 · CROSS-FILE GAPS · filed "authored"
+     line: src/rules/featGrantsAuto.ts — hardwood-armor-armor#armour-proficiency: add `'hardwood-armor': { armorFamiliarity: { armors: ['hardwood-armor-armor'], mirrorBest: true } }`. ⚠ The finding says "(and it
+     ref : src/rules/featGrants.ts:793
+     evid: CLOSED — src/rules/featGrants.ts:793 'hardwood-armor': { armorFamiliarity: { armors: ['hardwood-armor-armor'], mirrorBest: true } }, whose comment records that feat-4283's other granted item is a SHIELD and that no heavy version exists — the line's own correction of the finding. Reader live at src/rules/build.ts:5816 / :7101. test/batch037-gap-data-rows-3.test.ts green. Flip-audit clean for batch 037; npx tsc --noEmit exits 0.
+
+[20] CLOSED · data-rows-3 · CROSS-FILE GAPS · filed "authored"
+     line: src/rules/types.ts (grantsItems, line 1073) + src/rules/build.ts:7802 — armigers-protection#armor-pick: the item a record grants needs a per-answer gate (the `whenChoice` idiom InnateSpellGrant alread
+     ref : src/rules/build.ts:7862
+     evid: CLOSED — src/rules/types.ts:1116 grantsItems[].whenChoice with its reader at src/rules/build.ts:7862 (`if (g.whenChoice && g.whenChoice !== fc.choice?.value) continue`), quoting feat-8814, plus the feats/armigers-protection grantsItems row in work/.b037-rows-gap-data-rows-3.json (record exists, supersedes:true, precheck clean). test/batch037-gap-data-rows-3.test.ts green. Flip-audit clean for batch 037; npx tsc --noEmit exits 0.
+
+[21] CLOSED · data-rows-3 · CROSS-FILE GAPS · filed "authored"
+     line: test/automaton-enhancement.test.ts — hardened-chassis#enhancement flips three ratchet values in a file I may not write: line ~262 `a.computed.sort()` gains 'feats/hardened-chassis' (6 → 7), line ~264 
+     ref : work/.b037-rows-data-rows-3.json
+     evid: CLOSED — test/automaton-enhancement.test.ts carries the three flipped ratchets and scripts/test-flip-audit.mjs accepts all of them (batch 037 clean). The file is RED today (2 of 23) together with every other batch-037 data test, because the `apply` stage has not run — see the integrity block. That is the batch's pre-apply state, not a defect of this line.
+
+[22] CLOSED · data-rows-3 · CROSS-FILE GAPS · filed "parked"
+     line: src/rules/build.ts:4475 + src/builder/Builder.tsx:367,387 — flexible-spellcaster#collection-shape: the whole collection shape is those two code sites (per-rank slots and a per-rank repertoire); archet
+     ref : flaggedResidue: engine work no row reaches — the collection shape is build.ts:4475 (per-rank slots) plus Builder.tsx:367/387 (a per-rank repertoire), ClassArchetype.spellCollection is a boolean, and archetype/flexible-spellcaster carries no
+     evid: CLOSED (parked) — flaggedResidue with a measured reason, re-checked here: the collection shape is src/rules/build.ts:4475 plus src/builder/Builder.tsx:367/387, ClassArchetype.spellCollection is a boolean and archetype/flexible-spellcaster carries no field at all, so no overlay row can reach it. A flat pool sized by total daily class slots with a one-1st-rank floor is a new engine lane AND a new builder control, which the finding's own proposal says.
+
+[23] CLOSED · data-rows-4 · CROSS-FILE GAPS · filed "authored"
+     line: animal-instinct#spider-web — src/rules/types.ts `GrantedStrike` declares `die: string` and `damageType: string` as REQUIRED, and src/rules/build.ts:2860 (`collectGrantedNaturals`'s `push`) copies both
+     ref : src/rules/types.ts:GrantedStrike+NaturalAttack (die/damageType optional), src/rules/build.ts:collectGrantedNaturals, src/rules/derive.ts:deriveUnarmedStrike ("no damage") — test/batch037-gap-data-rows-4.test.ts; work/.b037-report-gap-data-r
+     evid: CLOSED — src/rules/types.ts makes GrantedStrike/NaturalAttack `die` and `damageType` optional, src/rules/build.ts:2877 omits them when absent instead of running undefined through stepDie, and src/rules/derive.ts:4946-4948 prints the damageless readout. test/batch037-gap-data-rows-4.test.ts green. Flip-audit clean for batch 037; npx tsc --noEmit exits 0.
+
+[24] CLOSED · data-rows-4 · CROSS-FILE GAPS · filed "authored"
+     line: animal-instinct#spider-web — the Web's rider ("the target takes a -10-foot circumstance penalty to its Speeds for 1 round on a hit") has no carrier on a granted attack: `GrantedStrike` has no on-hit e
+     ref : src/rules/types.ts:NaturalAttack.onHit (+GrantedStrike.onHit), rendered by src/rules/derive.ts:deriveUnarmedStrike as "(on a hit, …)" — test/batch037-gap-data-rows-4.test.ts; work/.b037-report-gap-data-rows-4.txt:2
+     evid: CLOSED — src/rules/types.ts:5401 NaturalAttack.onHit and :5433 GrantedStrike.onHit, copied at src/rules/build.ts:2877 and rendered at src/rules/derive.ts:4948 as " (on a hit, …)". The rider lane, not a recordMarks entry — either was allowed by the line. test/batch037-gap-data-rows-4.test.ts green. Flip-audit clean for batch 037; npx tsc --noEmit exits 0.
+
+[25] CLOSED · data-rows-4 · CROSS-FILE GAPS · filed "authored"
+     line: scar-of-the-survivor#dying-toggle AND soul-well#dying-toggle — nothing can move the death threshold from a TOGGLE. `ModeDef` (src/rules/types.ts) has no dying-threshold field, and src/rules/build.ts:6
+     ref : src/rules/types.ts:ModeDef.dyingThresholdBonus + src/rules/play.ts:applyPlayState (active modes summed onto Character.dyingThreshold) — test/batch037-gap-data-rows-4.test.ts; work/.b037-report-gap-data-rows-4.txt:3 (the two mode RECORDS sti
+     evid: CLOSED — src/rules/types.ts:4801 ModeDef.dyingThresholdBonus, summed off the ACTIVE modes at src/rules/play.ts:644 onto Character.dyingThreshold (on top of what the build worked out, so Diehard plus a toggle both count), quoting feat-7707 and ikon-13. test/batch037-gap-data-rows-4.test.ts green. ⚠ RESIDUAL, correctly carried forward in work/.b037-report-gap-data-rows-4.txt: the two mode RECORDS still need `dyingThresholdBonus: 1`, which cannot be a row this batch because both modes are created by work/.b037-rows-data-rows-4.json create rows. Until then the lane has a reader and no writer. Flip-audit clean for batch 037; npx tsc --noEmit exits 0.
+
+[26] CLOSED · data-rows-4 · CROSS-FILE GAPS · filed "authored"
+     line: nagaji-spell-familiarity#daily-control — src/rules/featCantripGrants.ts:104 still carries `'nagaji-spell-familiarity': { prompt: "Choose a cantrip", tradition: 'occult', options: ['daze','detect-magic
+     ref : src/rules/featCantripGrants.ts (entry deleted) + work/.b037-rows-gap-data-rows-4.json (feats/nagaji-spell-familiarity `choice`, supersedes) — test/batch037-gap-data-rows-4.test.ts; work/.b037-report-gap-data-rows-4.txt:4
+     evid: CLOSED — src/rules/featCantripGrants.ts: the 'nagaji-spell-familiarity' entry is deleted in the established comment form, naming feat-3984, and the paired feats/nagaji-spell-familiarity `choice` row is in work/.b037-rows-gap-data-rows-4.json (record exists, supersedes:true, precheck clean) — the two land together, as the line required. test/batch037-gap-data-rows-4.test.ts green. Flip-audit clean for batch 037; npx tsc --noEmit exits 0.
+
+[27] CLOSED · data-rows-4 · CROSS-FILE GAPS · filed "authored"
+     line: nagaji-spell-familiarity#daily-control — src/rules/play.ts:513 DROPS the grant my row authors: the daily-choice overlay reads `const rank = content.spells[b.spellId].rank ?? 0; if (rank <= 0) continue
+     ref : src/rules/play.ts, the daily-choice merge (rank 0 → the innate entry's `cantrips`, `atWill` honoured) — landed by the data-rows-5 gap agent on the same block, verified and pinned here in test/batch037-gap-data-rows-4.test.ts; work/.b037-rep
+     evid: CLOSED — src/rules/play.ts:511-545 — the daily-choice merge now carries the WHOLE InnateSpellGrant, routes rank 0 into the entry's `cantrips` list instead of `continue`, honours `atWill` rather than forcing usesPerDay, and leaves no phantom entry. Cited per clause. test/batch037-gap-data-rows-4.test.ts and test/batch037-gap-data-rows-5.test.ts both green. Flip-audit clean for batch 037; npx tsc --noEmit exits 0.
+
+[28] CLOSED · data-rows-5 · CROSS-FILE GAPS · filed "authored"
+     line: src/rules/featCantripGrants.ts — delete FEAT_CANTRIP_GRANTS['kitsune-spell-familiarity' | 'kitsune-spell-mysteries' | 'kitsune-spell-expertise' | 'nagaji-spell-mysteries' | 'nagaji-spell-expertise']; 
+     ref : src/rules/featCantripGrants.ts:FEAT_CANTRIP_GRANTS
+     evid: CLOSED — src/rules/featCantripGrants.ts: all five entries (kitsune-spell-familiarity / -mysteries / -expertise, nagaji-spell-mysteries / -expertise) are removed in the file's own established removal-comment form, quoting feat-2619 and naming the scripts/duplicate-pick-check.mjs guard that would otherwise fail once the rows land. test/batch037-gap-data-rows-5.test.ts green. Flip-audit clean for batch 037; npx tsc --noEmit exits 0.
+
+[29] CLOSED · data-rows-5 · CROSS-FILE GAPS · filed "authored"
+     line: src/rules/play.ts:514 `if (rank <= 0) continue;` — a daily-choice grant whose spell is a CANTRIP is dropped before it reaches any entry, so kitsune-spell-familiarity's at-will divine cantrip cannot re
+     ref : src/rules/play.ts:applyPlayState
+     evid: CLOSED — src/rules/play.ts: the `if (rank <= 0) continue;` drop is gone — a rank-0 grant now pushes into the innate entry's `cantrips`. test/batch037-gap-data-rows-5.test.ts green. Flip-audit clean for batch 037; npx tsc --noEmit exits 0.
+
+[30] CLOSED · data-rows-5 · CROSS-FILE GAPS · filed "authored"
+     line: src/rules/play.ts:514 `const rank = content.spells[b.spellId].rank ?? 0;` — the merge files a daily-granted spell at the SPELL's rank and ignores the grant's own `rank`, so Flicker (base 4) and Confus
+     ref : src/rules/play.ts:applyPlayState
+     evid: CLOSED — src/rules/play.ts: `const rank = b.rank ?? content.spells[b.spellId].rank ?? 0;` — the grant's own rank wins over the spell record's base rank, quoting feat-2629 and feat-3996. test/batch037-gap-data-rows-5.test.ts green. Flip-audit clean for batch 037; npx tsc --noEmit exits 0.
+
+[31] CLOSED · data-rows-5 · CROSS-FILE GAPS · filed "authored"
+     line: src/rules/play.ts:513-518 — the merge ignores the grant's `tradition` and stamps every daily spell `spellSources[id] = 'Borrowed today'`. A kitsune with no other innate spell reads a divine Bane under
+     ref : src/rules/play.ts:applyPlayState + src/rules/derive.ts:dailyChoiceGrants
+     evid: CLOSED — src/rules/play.ts: the merge writes `spellTraditions[b.spellId] = b.tradition` and `spellSources[b.spellId] = b.from ?? 'Borrowed today'`, with src/rules/derive.ts dailyChoiceGrants carrying the granting record out as `__from`. test/batch037-gap-data-rows-5.test.ts green. Flip-audit clean for batch 037; npx tsc --noEmit exits 0.
+
+[32] CLOSED · data-rows-5 · CROSS-FILE GAPS · filed "authored"
+     line: src/rules/types.ts (IwrEntry, ~line 480-539) + src/rules/derive.ts (deriveDefenses resistance loop, 2786-2818) — no gate exists for "while wearing medium or heavy armor". Add `whenArmorCategory?: Armo
+     ref : src/rules/types.ts:IwrEntry.whenArmorCategory + src/rules/derive.ts:deriveDefenses
+     evid: CLOSED — src/rules/types.ts:545 IwrEntry.whenArmorCategory, honoured in BOTH the resistance loop (src/rules/derive.ts:2814) and the weakness loop (:2843) — the file's own warning about gating half a shared type is respected. test/batch037-gap-data-rows-5.test.ts green. Flip-audit clean for batch 037; npx tsc --noEmit exits 0.
+
+[33] CLOSED · data-rows-5 · CROSS-FILE GAPS · filed "authored"
+     line: src/builder/Builder.tsx:497 (renderChoice) and src/rules/build.ts:1035 (levelChoices) — `FeatChoiceDef.minLevel` is honoured only on the DAILY path (src/rules/dailyChoices.ts:53). A build-time choice 
+     ref : src/rules/build.ts:levelChoices + src/builder/Builder.tsx:renderChoice
+     evid: CLOSED — both halves landed: src/rules/build.ts levelChoices skips a choice whose `minLevel` is above the build level (so it stops counting as an outstanding answer) and src/builder/Builder.tsx renderChoice returns null for it, each quoting feat-5454. test/batch037-gap-data-rows-5.test.ts green. Flip-audit clean for batch 037; npx tsc --noEmit exits 0.
+
+[34] CLOSED · data-rows-5 · CROSS-FILE GAPS · filed "authored"
+     line: src/rules/featGrantsAuto.ts:75 — `'arcana-of-iron': { weapon: { advanced: 'trained' } }` is correct and must stay, but it carries no expert step. feat-7980: "If you gain the weapon expertise class fea
+     ref : src/rules/featGrants.ts:FeatGrant.weaponIfWeaponExpertise + src/rules/build.ts
+     evid: CLOSED — src/rules/featGrants.ts:312 FeatGrant.weaponIfWeaponExpertise, carried on 'arcana-of-iron' at :820 ({ martial: 'expert', advanced: 'expert' }) alongside the flat trained grant, listed in the grant-key roster at :869, read at src/rules/build.ts:7252 off the class's own weapon-expertise feature. test/batch037-gap-data-rows-5.test.ts green. Flip-audit clean for batch 037; npx tsc --noEmit exits 0.
+
+[35] CLOSED · data-rows-5 · CROSS-FILE GAPS · filed "parked"
+     line: test/batch031-data.test.ts:96 — `node scripts/test-flip-audit.mjs --batch 037` fails on one uncited assertion in that file. It is not from this chunk and I did not touch it; flagged so the driver does
+     ref : work/.b037-report-gap-data-rows-5.txt flaggedResidue 1
+     evid: CLOSED (parked) — flaggedResidue with a measured reason, re-checked here: STRUCK and re-checked independently rather than taken on trust: `node scripts/test-flip-audit.mjs --batch 037` reports "batch 037 clean — 32 test file(s) touched, 13 new settle key(s), every flip cited". The uncited assertion at test/batch031-data.test.ts:96 was cited by its owning chunk.
+
+[36] CLOSED · data-rows-6 · DATA STILL NEEDED · filed "authored"
+     line: items/screech-shooter-major field "damage" value {"dice":1,"die":"d10","type":"sonic"} — the record ships type "piercing" while AoN equipment-1169 prints "A screech shooter deals sonic damage" and the
+     ref : work/.b037-rows-gap-data-rows-6.json — gap-037-screech-shooter-major-damage-type
+     evid: CLOSED — the spec file exists, parses, is in the spec format (findings[].backfillRows[]), every row targets a record that exists in public/core.json, and work/.b037-specs.json carries the family entry with stage[] paths that all exist on disk. The driver precheck raises no problem for this row. (items/screech-shooter-major damage -> sonic, in work/.b037-rows-gap-data-rows-6.json.)
+
+[37] CLOSED · data-rows-6 · DATA STILL NEEDED · filed "authored"
+     line: heritages/dragonblood field "choice" (whole value, 40 options) — the option descriptions disagree with the Draconic Benefactors speed column the owner transcribed: magma reads "Primal dragon — fly, sw
+     ref : work/.b037-rows-gap-data-rows-6.json — gap-037-dragonblood-exemplar-speeds
+     evid: CLOSED — the spec file exists, parses, is in the spec format (findings[].backfillRows[]), every row targets a record that exists in public/core.json, and work/.b037-specs.json carries the family entry with stage[] paths that all exist on disk. The driver precheck raises no problem for this row. (heritages/dragonblood choice, whole 40-option value re-emitted with supersedes:true; only the speed words move.)
+
+[38] CLOSED · data-rows-6 · DATA STILL NEEDED · filed "authored"
+     line: feats/bespell-strikes field "situational" — the BASE 1d6 extra damage (AoN feat-5028) has no carrier either, only prose; my arcana-of-iron row stars the upgrade and states "1d8 instead of 1d6" so it r
+     ref : work/.b037-rows-gap-data-rows-6.json — gap-037-bespell-strikes-base-star
+     evid: CLOSED — the spec file exists, parses, is in the spec format (findings[].backfillRows[]), every row targets a record that exists in public/core.json, and work/.b037-specs.json carries the family entry with stage[] paths that all exist on disk. The driver precheck raises no problem for this row. (feats/bespell-strikes situational — the record carried no `situational` field at all, so this is a create-a-field row, not a supersession.)
+
+[39] CLOSED · data-rows-6 · DATA STILL NEEDED · filed "parked"
+     line: feats/swashbucklers-speed — re-author the +5/+10 status bonus the moment the engine grows a typed, all-Speeds carrier (see the first gap below); today the only field is the untyped land-only landSpeed
+     ref : owner question speed-status-lane-031 (work/owner-questions.json, open, n=127) — both halves of the typed all-Speeds carrier are already on the desk; a duplicate id would be refused by add-owner-question.mjs
+     evid: CLOSED (parked) — the ref is a REAL entry in work/owner-questions.json: id "speed-status-lane-031", n=127, in open[] (128 open / 13 deferred / 6 ruled / 3 authorisedExceptions). It is NOT answered in work/desk-answers-2026-09-10.json, so it is genuinely unruled, and scripts/add-owner-question.mjs would refuse a duplicate id. That file is byte-unchanged vs HEAD.
+
+[40] CLOSED · data-rows-6 · CROSS-FILE GAPS · filed "parked"
+     line: swashbucklers-speed#typed-all-speeds belongs to the engine family: src/rules/derive.ts (landBonusOf / the landSpeedBonus fold) must give every speed bonus a TYPE so two status bonuses take the highest
+     ref : owner question speed-status-lane-031 (work/owner-questions.json, open, n=127) — the engine lane it asks for is exactly this line, unruled since batch 031
+     evid: CLOSED (parked) — the ref is a REAL entry in work/owner-questions.json: id "speed-status-lane-031", n=127, in open[] (128 open / 13 deferred / 6 ruled / 3 authorisedExceptions). It is NOT answered in work/desk-answers-2026-09-10.json, so it is genuinely unruled, and scripts/add-owner-question.mjs would refuse a duplicate id. That file is byte-unchanged vs HEAD.
+
+[41] CLOSED · data-rows-6 · CROSS-FILE GAPS · filed "parked"
+     line: reborn-soul#restricted-increases, the BUILT half, belongs to the engine family: bonusSkillIncreaseLevels and restrictedSkillIncreaseLevels are read off the CLASS only (src/rules/build.ts:3724 and buil
+     ref : owner question reborn-soul (work/owner-questions.json, open, n=85) — the reader's semantics are the unruled half: print's restriction vs WG's free auto-raise decides what a chosen-Lore resolver would build
+     evid: CLOSED (parked) — the ref is a REAL entry in work/owner-questions.json: id "reborn-soul", n=85, in open[] (128 open / 13 deferred / 6 ruled / 3 authorisedExceptions). It is NOT answered in work/desk-answers-2026-09-10.json, so it is genuinely unruled, and scripts/add-owner-question.mjs would refuse a duplicate id. That file is byte-unchanged vs HEAD.
+
+[42] CLOSED · data-rows-6 · CROSS-FILE GAPS · filed "parked"
+     line: breath-of-the-dragon#derive-from-exemplar asks for a new data file scripts/data/draconic-benefactors.json (scripts/ is outside this chunk) — the table itself is carried whole inside my effectChoices r
+     ref : flaggedResidue: the Draconic Benefactors table is already carried WHOLE, with its citation, inside feats/breath-of-the-dragon's effectChoices row (work/.b037-rows-data-rows-6.json) and again in my heritages/dragonblood row's `why`. A standa
+     evid: CLOSED (parked) — flaggedResidue with a measured reason, re-checked here: the 40 Draconic Benefactors rows are already carried WHOLE, with their citation, inside the feats/breath-of-the-dragon effectChoices row and again in the heritages/dragonblood row's `why`; a standalone scripts/data/draconic-benefactors.json would have no reader and would be a second source of truth for the same table. Author it when something actually reads a table.
+
+[43] CLOSED · data-rows-6 · CROSS-FILE GAPS · filed "parked"
+     line: breath-of-the-dragon#derive-from-exemplar also carries the owner's MIRROR GAP: https://2e.aonprd.com/DraconicBenefactors.aspx is not in the AoN update pipeline, so our 44 draconic-exemplar docs still 
+     ref : flaggedResidue: adding https://2e.aonprd.com/DraconicBenefactors.aspx to the AoN update pipeline is scraper work in C:\pf2e-tracker plus a fetch stage, and this run may not run `npm run data` or any apply-*.mjs. Nothing in batch 037 waits o
+     evid: CLOSED (parked) — flaggedResidue with a measured reason, re-checked here: pipeline lane, not a row: https://2e.aonprd.com/DraconicBenefactors.aspx is absent from the mirror, adding it is scraper work this run is forbidden to run (no `npm run data`), and nothing in batch 037 waits on it — the owner's transcription is the authority the two rows cite.
+
+[44] CLOSED · data-rows-6 · CROSS-FILE GAPS · filed "parked"
+     line: astrolabe-of-falling-stars#identify-star: my row is the DATA twin of the six sibling stars in src/rules/situationalBonuses.ts (entries "astrolabe", "astrolabe-standard", "astrolabe-mariners"). If the 
+     ref : flaggedResidue: CLOSED on inspection, nothing owed. work/.b037-rows-situational.json holds one finding (reverse-engineer) and no astrolabe entry, and src/rules/situationalBonuses.ts:3083 keys the DIFFERENT record id astrolabe-of-the-falling
+     evid: CLOSED (parked) — flaggedResidue with a measured reason, re-checked here: no double star is possible in this batch: work/.b037-rows-situational.json holds one finding (reverse-engineer) and no astrolabe entry (grep count 0), and src/rules/situationalBonuses.ts:3083 keys the OTHER record id 'astrolabe-of-the-falling-stars'. I confirmed both by reading the file.
+
+[45] CLOSED · instruments-4 · CROSS-FILE GAPS · filed "parked"
+     line: work/owner-questions.json (PROHIBITED for me to edit): all twelve of my records are still in the `open` array with their desk numbers (#19 reinforced-chassis, #27 psychic-dedication, #32 elemental-exi
+     ref : flaggedResidue: driver-only desk move — desk #19 #27 #32 #34 #38 #53 #65 #66 #74 #75 #76 #77 are ruled by the 28-id answer in work/desk-answers-2026-09-10.json but still sit in work/owner-questions.json `open`; every agent in this workflow 
+     evid: CLOSED (parked) — flaggedResidue with a measured reason, re-checked here: desk #19 #27 #32 #34 #38 #53 #65 #66 #74 #75 #76 #77 are all still in work/owner-questions.json open[] while work/desk-answers-2026-09-10.json rules all 28 ids of that block in one answer. I re-measured every n: none is in ruled[] or deferred[]. DRIVER ACTION, correctly parked — every agent in this workflow is forbidden to edit that file and scripts/add-owner-question.mjs only appends to open[], so only the driver can move them; until it does, scripts/wg-batch-close.mjs:255 takes the OWNER-QUEUED branch on desk.has(rid) before it looks at a single citation.
+
+[46] CLOSED · instruments-4 · CROSS-FILE GAPS · filed "authored"
+     line: scripts/wg-casting.mjs cannot be run as `node scripts/wg-casting.mjs` — it imports `../src/rules/seed` with no extension and dies with ERR_MODULE_NOT_FOUND. The pipeline invokes it as `npx jiti script
+     ref : scripts/wg-casting.mjs:16
+     evid: CLOSED — scripts/wg-casting.mjs:16 now carries the "ALWAYS npx jiti, NEVER bare node" header block explaining the extensionless TypeScript imports and naming the pipeline invocation (scripts/wg-batch-run.mjs:352). Report-only note with no behaviour to revert; the file is staged by the instruments-2 manifest entry. Flip-audit clean for batch 037; npx tsc --noEmit exits 0.
+
+[47] CLOSED · instruments-5 · CROSS-FILE GAPS · filed "parked"
+     line: work/owner-questions.json (FORBIDDEN TO ME, driver/orchestrator must do it): all twelve records are still entries in `open[]` (#80 #81 #83 #84 #89 #90 #91 #103 #114 #117 #118 #119) although the owner 
+     ref : flaggedResidue: re-measured at gap time, not inherited — work/owner-questions.json still holds all twelve in open[] (open 128 / deferred 13 / ruled 6 / authorisedExceptions 3; none of 80 81 83 84 89 90 91 103 114 117 118 119 is in ruled[] o
+     evid: CLOSED (parked) — flaggedResidue with a measured reason, re-checked here: desk #80 #81 #83 #84 #89 #90 #91 #103 #114 #117 #118 #119 are all still in work/owner-questions.json open[] while work/desk-answers-2026-09-10.json rules all 28 ids of that block in one answer. I re-measured every n: none is in ruled[] or deferred[]. DRIVER ACTION, correctly parked — every agent in this workflow is forbidden to edit that file and scripts/add-owner-question.mjs only appends to open[], so only the driver can move them; until it does, scripts/wg-batch-close.mjs:255 takes the OWNER-QUEUED branch on desk.has(rid) before it looks at a single citation.
+
+[48] CLOSED · instruments-5 · CROSS-FILE GAPS · filed "parked"
+     line: scripts/lib/wg-experience-lanes.mjs matchSelects (NOT edited — a shared engine file, and the fix is wider than this chunk): its one-select/one-control wording rescue is gated on `selects.length === 1`
+     ref : flaggedResidue: the proposed lane is WRONG on two of the three parks it claims to retire, so there is nothing correct to author. I read all three out of work/experience-instrument-limits.json instead of trusting the note: seer-of-the-dead (
+     evid: CLOSED (parked) — flaggedResidue with a measured reason, re-checked here: the three parks are two OPPOSITE shapes, so no single relaxation of matchSelects retires them: seer-of-the-dead's surplus WG select is UNPRINTED (background-243 prints one restricted boost and no free one) and must pair with nothing, while dongun-education and free-heart are N-selects-answered-by-one-control, which controlCapacity() at scripts/lib/wg-experience-lanes.mjs:264 already expresses. The measured blast radius on work/.b037-baseline/experience.json is 7 MISSING-CONTROL records of which only 3 are parked, so a generic relaxation would trade 4 live detections for 3 parks. The per-record limit in work/experience-instrument-limits.json is the existing mechanism and already carries seer-of-the-dead, cited and pinned.
+
+[49] CLOSED · situational · DATA STILL NEEDED · filed "authored"
+     line: feats / reverse-engineer / skillSubstitutions / [{"use":"crafting","forSkill":"thievery","when":"to Disable a Device or Pick a Lock"}] - supersedes: true over the existing effect-backfill row for the 
+     ref : work/.b037-rows-gap-situational.json
+     evid: CLOSED — the spec file exists, parses, is in the spec format (findings[].backfillRows[]), every row targets a record that exists in public/core.json, and work/.b037-specs.json carries the family entry with stage[] paths that all exist on disk. The driver precheck raises no problem for this row. (feats/reverse-engineer skillSubstitutions, supersedes:true over the shipped importer-mangled `when`; the player-visible path is src/rules/explain.ts:648.) test/batch037-gap-situational.test.ts green.
+
+[50] CLOSED · situational · DATA STILL NEEDED · filed "parked"
+     line: an inventor who never took the feat reads neither clause. `node scripts/vt.mjs run test/batch037-situational.test.ts` - 3 passed. `npx tsc --noEmit` clean. Could not do: nothing on this finding.
+     ref : flaggedResidue: not a gap — the collator sliced work/.b037-report-situational.txt:45 out of the middle of the situational family's 'Test that pins it' paragraph; it is that test's third bullet plus its gate transcript, makes no claim, names
+     evid: CLOSED (parked) — not a gap: the collator sliced work/.b037-report-situational.txt:45 out of the middle of the family's 'Test that pins it' paragraph. It names no record, field or value. The test it describes exists and is green.
+
+[51] CLOSED · data-rows-2 · DATA STILL NEEDED · filed "authored"
+     line: feats/locate-lawbreakers / effectChoices — BLOCKED on the reader below. Once a cross-record choice-flag gate exists, re-emit the whole `effectChoices` value with each of the four tradition options' gr
+     ref : work/.b037-rows-gap-data-rows-2.json — finding locate-lawbreakers#order-of-the-gate, row feats/locate-lawbreakers field effectChoices (supersedes:true, the four shipped options carried whole, each grant.innateSpells[0] gaining heightenAt [{
+     evid: CLOSED — the spec file exists, parses, is in the spec format (findings[].backfillRows[]), every row targets a record that exists in public/core.json, and work/.b037-specs.json carries the family entry with stage[] paths that all exist on disk. The driver precheck raises no problem for this row. The effectChoices row itself is complete and correct (feats/locate-lawbreakers, supersedes:true, the four shipped tradition options carried whole, each grant.innateSpells[0] gaining heightenAt [{level:14,rank:5}] and heightenWhenFlag {hellknightOrder, order-of-the-gate}), and the reader it was blocked on is live — src/rules/types.ts:2492 read at src/rules/build.ts:8277 through the existing choiceFlagAnswer. ⚠ It cannot LAND while its sibling `note` row is refused by precheck (5): see line [1]/[52].
+
+[52] REOPENED · data-rows-2 · DATA STILL NEEDED · filed "authored"
+     line: feats/locate-lawbreakers / note — value:null, supersedes:true. Only AFTER the row above lands: the standing note is the player's only information today, and deleting it first is a net loss.
+     ref : work/.b037-rows-gap-data-rows-2.json — finding locate-lawbreakers#order-of-the-gate, second row: feats/locate-lawbreakers field note -> null (supersedes:true), emitted in the same spec AFTER the effectChoices row. The printed sentence itsel
+     evid: PRECHECK (5) REFUSES IT. I re-ran the driver's own exported pure precheck (scripts/wg-batch-run.mjs:597) over all 23 manifest specs and the live overlay: "row feats/locate-lawbreakers/note has a `why` that names no AoN doc id". That row's `why` cites only public/core-descriptions.json and prose reasoning. stageApply (:707) refuses the WHOLE manifest before writing anything, so this row and its sibling effectChoices row both fail to land. FIX by the owner of work/.b037-rows-gap-data-rows-2.json (rewriting another agent's file is prohibited to me): add the Locate Lawbreakers AoN doc id to that row's `why`.
+
+[53] CLOSED · data-rows-2 · CROSS-FILE GAPS · filed "authored"
+     line: src/rules/types.ts, ItemBase.resonant — add `spellNotes?: SpellNote[]` to `{ note; innateSpells?; resistances? }`. The three aeon-stone rows in this spec author it; it has NO READER today (verified on
+     ref : src/rules/types.ts, ItemBase.resonant — spellNotes?: SpellNote[] added to the resonant shape, with the printed clause quoted and the reason it hangs here rather than on the item top-level spellNotes lane. The three aeon-stone rows in work/.
+     evid: CLOSED — src/rules/types.ts:4059 ItemBase.resonant now carries `spellNotes?: SpellNote[]` (SpellNote itself at types.ts:324), so the three aeon-stone rows in work/.b037-rows-data-rows-2.json are no longer inert data. Flip-audit clean for batch 037; npx tsc --noEmit exits 0.
+
+[54] CLOSED · data-rows-2 · CROSS-FILE GAPS · filed "authored"
+     line: src/rules/build.ts:8088, the `item?.resonant && inv.designations?.includes('wayfinder-slotted')` block — push each `item.resonant.spellNotes` entry through `pushSpellNote(g.spellId, item.name + ' (res
+     ref : src/rules/build.ts, the item?.resonant && inv.designations?.includes("wayfinder-slotted") arm — each resonant.spellNotes entry is now pushed through pushSpellNote(voidSwapped(item, n.spellId), item.name + " (resonant)", n.note), inside the 
+     evid: CLOSED — src/rules/build.ts pushes each resonant.spellNotes entry through pushSpellNote inside the `item?.resonant && inv.designations?.includes("wayfinder-slotted")` arm — the designation gate the line asked for, not the item top-level spellNotes lane. Pinned on a built character by test/batch037-gap-data-rows-2.test.ts (slotted+data, data absent, worn-but-not-slotted), green. Flip-audit clean for batch 037; npx tsc --noEmit exits 0.
+
+[55] CLOSED · data-rows-2 · CROSS-FILE GAPS · filed "authored"
+     line: src/rules/build.ts + src/rules/types.ts — a predicate gating a grant on ANOTHER record's `choice.flag` (locate-lawbreakers#order-of-the-gate). The order is already stored (feats/hellknight-dedication,
+     ref : src/rules/types.ts InnateSpellGrant.heightenWhenFlag + src/rules/build.ts castRank — the cross-record choice-flag gate. It gates the LADDER, not the grant (a Hellknight of any other order still casts Locate once a day), and reads the order 
+     evid: CLOSED — src/rules/types.ts:2492 InnateSpellGrant.heightenWhenFlag, consumed at src/rules/build.ts:8277 (`if (g.heightenWhenFlag && choiceFlagAnswer(g.heightenWhenFlag.flag, build, content) !== g.heightenWhenFlag.value) continue`) — the cross-record choice-flag gate, gating the LADDER not the grant, asking no second question. test/batch037-gap-data-rows-2.test.ts green, including the shipped-record mirror image. Flip-audit clean for batch 037; npx tsc --noEmit exits 0.
+
+[56] CLOSED · data-rows-2 · CROSS-FILE GAPS · filed "authored"
+     line: test/locate-lawbreakers.test.ts, it('the heightening is still recorded as an open question rather than silently decided') — asserts `locate-lawbreakers` is still in work/owner-questions.json `open[]` 
+     ref : test/locate-lawbreakers.test.ts, it("never heightens for every Hellknight — a ladder here must carry the Order of the Gate gate") — the stale it() that asserted the question was still open in work/owner-questions.json is flipped to the owne
+     evid: CLOSED — test/locate-lawbreakers.test.ts it("never heightens for every Hellknight — a ladder here must carry the Order of the Gate gate") is the flipped assertion, written as an implication so it is honest before and after the row lands; cited "// batch 037: locate-lawbreakers#order-of-the-gate"; file green at 7 tests. work/owner-questions.json is byte-unchanged vs HEAD, and n=7 IS ruled "yes" in work/desk-answers-2026-09-10.json, so the flip matches the owner. Flip-audit clean for batch 037; npx tsc --noEmit exits 0.
+
+[57] CLOSED · data-rows-2 · CROSS-FILE GAPS · filed "authored"
+     line: src/rules/casterArchetypes.ts (CASTER_ARCHETYPES['oatia-skysage-dedication'], line 304) + src/builder/shared.tsx:3902 + src/builder/Builder.tsx:971 — oatia-skysage-dedication#cantrip-picker. Needs `Ca
+     ref : src/rules/casterArchetypes.ts — CasterArchetype.cantripOptions + the exported archetypeCantripAllowed() helper, carrying ["detect-magic","guidance","know-the-way","read-aura"] on oatia-skysage-dedication; honoured at BOTH picker call sites 
+     evid: CLOSED — src/rules/casterArchetypes.ts:95 CasterArchetype.cantripOptions + :99 archetypeCantripAllowed(), carrying the four cantrips at :332; honoured at BOTH picker call sites (src/builder/shared.tsx:3909, src/builder/Builder.tsx:994-995) and again at delivery (src/rules/build.ts:7595-7597), where a stored out-of-range pick is dropped with an effectWarning rather than migrated. test/batch037-gap-data-rows-2.test.ts green (3 its). Flip-audit clean for batch 037; npx tsc --noEmit exits 0.
+
+[58] CLOSED · data-rows-2 · CROSS-FILE GAPS · filed "parked"
+     line: NEW (found by this verify) scripts/apply-backfill-now.mjs:72 — a prose field cannot be REMOVED by a row. `descRefs` with value:null is skipped for core.json (skipFields, line 45) and skipped again by 
+     ref : flaggedResidue: out of family and not pinnable as the script stands. scripts/apply-backfill-now.mjs is the DRIVER applier — the class of script this workflow forbids an agent to run — and nothing in batch 037 emits a prose-removal row (data
+     evid: CLOSED (parked) — flaggedResidue with a measured reason, re-checked here: the hole is LATENT, not live. I checked every prose row across all 23 manifest specs: there are 22 of them and every single one carries a string value — no row in batch 037 sets `description` or `descRefs` to null, so scripts/apply-backfill-now.mjs never reaches the path described. It is also the DRIVER's applier, which no agent here may run, and the recipe is recorded for the first batch that needs a prose removal.
+
+[59] CLOSED · data-rows-2 · CROSS-FILE GAPS · filed "parked"
+     line: (not a gap, recorded) sibling collisions: none. All 16 manifest specs were loaded and their 100 rows keyed; no cross-spec collision exists anywhere in batch 037, and no sibling touches any of my recor
+     ref : flaggedResidue: not a gap — the builder and verifier recorded NON-collision note ("no sibling touches any of my records"), harvested as a line. Re-verified here against all 22 manifest specs, including the five other gap specs written this 
+     evid: CLOSED (parked) — flaggedResidue with a measured reason, re-checked here: no collision exists. I re-keyed all 145 rows across all 23 manifest specs with the driver's own keyOf() and found zero cross-spec collisions anywhere in batch 037, so the non-collision note this line records is true.
+
+[60] CLOSED · data-rows-3 · DATA STILL NEEDED · filed "authored"
+     line: items/armor-in-earth-medium, create row re-emitted with supersedes:true, dropping only the sentence "It uses your HIGHEST armor proficiency - set that on the sheet if your best track is not medium." f
+     ref : work/.b037-rows-gap-data-rows-3.json
+     evid: CLOSED — the spec file exists, parses, is in the spec format (findings[].backfillRows[]), every row targets a record that exists in public/core.json, and work/.b037-specs.json carries the family entry with stage[] paths that all exist on disk. The driver precheck raises no problem for this row. (items/armor-in-earth-medium create row, supersedes:true, in work/.b037-rows-gap-data-rows-3.json.) Its ordering condition is met in the same batch: src/rules/featGrants.ts:788 carries 'armor-in-earth': { armorFamiliarity: { armors: ['armor-in-earth-medium','armor-in-earth-heavy'], mirrorBest: true } }, read at src/rules/build.ts:5816 and :7101.
+
+[61] CLOSED · data-rows-3 · DATA STILL NEEDED · filed "parked"
+     line: items/armor-in-earth-heavy, create row re-emitted with supersedes:true, same note cleanup; needed only if the medium one's wording is mirrored onto it (its note carries no "set it yourself" sentence t
+     ref : flaggedResidue: nothing to author — items/armor-in-earth-heavy's note never carried the "set it yourself" sentence and the medium suit's wording was not mirrored onto it, while the src/rules/featGrants.ts armorFamiliarity entry covers BOTH 
+     evid: CLOSED (parked) — flaggedResidue with a measured reason, re-checked here: items/armor-in-earth-heavy's note never carried the "set it yourself" sentence and the medium suit's wording was not mirrored onto it, and src/rules/featGrants.ts:788 covers BOTH granted suits in one armorFamiliarity entry — armors: ['armor-in-earth-medium','armor-in-earth-heavy'], mirrorBest:true, and no `armor: {…}` categories, exactly as the line specified. The heavy suit's proficiency is right with no row at all.
+
+[62] CLOSED · data-rows-3 · DATA STILL NEEDED · filed "authored"
+     line: items/hardwood-armor-armor, create row re-emitted with supersedes:true, dropping "It is medium armor but uses your HIGHEST armor proficiency - set that on the sheet if your best track is not medium." 
+     ref : work/.b037-rows-gap-data-rows-3.json
+     evid: CLOSED — the spec file exists, parses, is in the spec format (findings[].backfillRows[]), every row targets a record that exists in public/core.json, and work/.b037-specs.json carries the family entry with stage[] paths that all exist on disk. The driver precheck raises no problem for this row. (items/hardwood-armor-armor create row, supersedes:true.) Its ordering condition is met: src/rules/featGrants.ts:793 carries 'hardwood-armor': { armorFamiliarity: { armors: ['hardwood-armor-armor'], mirrorBest: true } }.
+
+[63] CLOSED · data-rows-3 · CROSS-FILE GAPS · filed "parked"
+     line: src/rules/types.ts (SkillRankGate, line 2817) - molten-wit#three-branches needs a MULTI-skill option gate (e.g. `requiresSkillRanks?: SkillRankGate[]`, honoured by qualifiesForOption at derive.ts:1771
+     ref : flaggedResidue: the multi-skill gate cannot carry molten-wit#three-branches and would ship a lane nothing reads — qualifiesForOption reads the BUILT character (Builder.tsx:477 narrows against buildCharacter, which already includes this feat
+     evid: CLOSED (parked) — flaggedResidue with a measured reason, re-checked here: qualifiesForOption reads the BUILT character, which already includes this feat's own answer's grant, so a "already trained in Deception" gate is self-satisfying and answering the option deletes it. A multi-skill gate field would ship a lane nothing can use; the missing piece is a rank-before-this-carrier's-grant reader — an engine shape, not a gate field.
+
+[64] CLOSED · data-rows-3 · CROSS-FILE GAPS · filed "parked"
+     line: src/rules/featFeatGrants.ts (CHOICE_FEAT_GRANTS, line 57) + src/rules/featGrantsLane.ts (line 46) - molten-wit#three-branches: the per-answer FEAT grant must stay here, because a FEAT's choice.options
+     ref : flaggedResidue: no edit owed — the line's claim is already true. CHOICE_FEAT_GRANTS['molten-wit'] = { deception: ['charming-liar'], diplomacy: ['group-impression'] } is the home, and a FEAT's choice.options[].grant.grantsFeats is collected 
+     evid: CLOSED (parked) — flaggedResidue with a measured reason, re-checked here: the line's claim is already true and needs no edit: src/rules/featFeatGrants.ts:57 holds CHOICE_FEAT_GRANTS['molten-wit'] = { deception: ['charming-liar'], diplomacy: ['group-impression'] }, and a FEAT's choice.options[].grant.grantsFeats is collected nowhere (build.ts:5406 is heritage, :5465 classFeature).
+
+[65] CLOSED · data-rows-3 · CROSS-FILE GAPS · filed "authored"
+     line: src/rules/featGrantsAuto.ts:474 - intuitive-crafting#middle-case: `redundantFallback: true` must become conditional on the character already owning specialty-crafting, so the middle case (trained in C
+     ref : src/rules/featGrants.ts:283
+     evid: CLOSED — src/rules/featGrants.ts:283 FeatGrant.redundantFallbackIfFeat, read at src/rules/build.ts:5845-5846 with the "granted by this same carrier does not count" exclusion the comment argues for. test/batch037-gap-data-rows-3.test.ts green. Flip-audit clean for batch 037; npx tsc --noEmit exits 0.
+
+[66] CLOSED · data-rows-3 · CROSS-FILE GAPS · filed "parked"
+     line: src/rules/featGrantsAuto.ts - armor-in-earth#armour-proficiency: add `'armor-in-earth': { armorFamiliarity: { armors: ['armor-in-earth-medium','armor-in-earth-heavy'], mirrorBest: true } }` and NO `ar
+     ref : flaggedResidue: nothing to author — items/armor-in-earth-heavy's note never carried the "set it yourself" sentence and the medium suit's wording was not mirrored onto it, while the src/rules/featGrants.ts armorFamiliarity entry covers BOTH 
+     evid: CLOSED (parked) — flaggedResidue with a measured reason, re-checked here: items/armor-in-earth-heavy's note never carried the "set it yourself" sentence and the medium suit's wording was not mirrored onto it, and src/rules/featGrants.ts:788 covers BOTH granted suits in one armorFamiliarity entry — armors: ['armor-in-earth-medium','armor-in-earth-heavy'], mirrorBest:true, and no `armor: {…}` categories, exactly as the line specified. The heavy suit's proficiency is right with no row at all.
+
+[67] CLOSED · data-rows-3 · CROSS-FILE GAPS · filed "authored"
+     line: src/rules/featGrantsAuto.ts - hardwood-armor-armor#armour-proficiency: add `'hardwood-armor': { armorFamiliarity: { armors: ['hardwood-armor-armor'], mirrorBest: true } }`. The finding's "(and its hea
+     ref : src/rules/featGrants.ts:793
+     evid: CLOSED — src/rules/featGrants.ts:793 'hardwood-armor': { armorFamiliarity: { armors: ['hardwood-armor-armor'], mirrorBest: true } }, whose comment records that feat-4283's other granted item is a SHIELD and that no heavy version exists — the line's own correction of the finding. Reader live at src/rules/build.ts:5816 / :7101. test/batch037-gap-data-rows-3.test.ts green. Flip-audit clean for batch 037; npx tsc --noEmit exits 0.
+
+[68] CLOSED · data-rows-3 · CROSS-FILE GAPS · filed "authored"
+     line: src/rules/types.ts (grantsItems, line 1073) + src/rules/build.ts:7801 - armigers-protection#armor-pick: the item a record grants needs a per-answer gate (the `whenChoice` idiom InnateSpellGrant alread
+     ref : src/rules/build.ts:7862
+     evid: CLOSED — src/rules/types.ts:1116 grantsItems[].whenChoice with its reader at src/rules/build.ts:7862 (`if (g.whenChoice && g.whenChoice !== fc.choice?.value) continue`), quoting feat-8814, plus the feats/armigers-protection grantsItems row in work/.b037-rows-gap-data-rows-3.json (record exists, supersedes:true, precheck clean). test/batch037-gap-data-rows-3.test.ts green. Flip-audit clean for batch 037; npx tsc --noEmit exits 0.
+
+[69] CLOSED · data-rows-3 · CROSS-FILE GAPS · filed "authored"
+     line: test/automaton-enhancement.test.ts - hardened-chassis#enhancement flips three ratchet values in a file this family may not write, and all three are now UNCONDITIONAL (the two augmentation note rows la
+     ref : test/automaton-enhancement.test.ts:264
+     evid: CLOSED — test/automaton-enhancement.test.ts carries the three flipped ratchets and scripts/test-flip-audit.mjs accepts all of them (batch 037 clean). The file is RED today (2 of 23) together with every other batch-037 data test, because the `apply` stage has not run — see the integrity block. That is the batch's pre-apply state, not a defect of this line.
+
+[70] CLOSED · data-rows-3 · CROSS-FILE GAPS · filed "parked"
+     line: src/rules/build.ts:4475 + src/builder/Builder.tsx:367,387 - flexible-spellcaster#collection-shape: the whole collection shape is those two code sites (per-rank slots and a per-rank repertoire); archet
+     ref : flaggedResidue: engine work no row reaches — the collection shape is build.ts:4475 (per-rank slots) plus Builder.tsx:367/387 (a per-rank repertoire), ClassArchetype.spellCollection is a boolean, and archetype/flexible-spellcaster carries no
+     evid: CLOSED (parked) — flaggedResidue with a measured reason, re-checked here: the collection shape is src/rules/build.ts:4475 plus src/builder/Builder.tsx:367/387, ClassArchetype.spellCollection is a boolean and archetype/flexible-spellcaster carries no field at all, so no overlay row can reach it. A flat pool sized by total daily class slots with a one-1st-rank floor is a new engine lane AND a new builder control, which the finding's own proposal says.
+
+[71] REOPENED · data-rows-3 · CROSS-FILE GAPS · filed "parked"
+     line: work/.b037-rows-data-rows-4.json (SIBLING CHUNK, not mine to edit) - the description row for items/merchants-scale fails the same precheck (5) that refused my prose row: it introduces heroes, heaven, 
+     ref : flaggedResidue: another agent's file (work/.b037-rows-data-rows-4.json) and an absolute prohibition forbids rewriting it. Still live: the driver's precheck over the whole 22-spec manifest refuses the description row for introducing heroes, 
+     evid: CONFIRMED LIVE — parking it closes nothing. My precheck re-run reproduces it verbatim: "the description row for items/merchants-scale introduces token(s) that are in NEITHER our current text nor the mirror equipment-2734/equipment-34: heroes, heaven, note, not, printed, text, the, book". The park's only reason is "another agent's file and I may not rewrite it" — out-of-scope with no artefact, which is exactly the shape that goes back to open. Nothing anywhere re-words the row and stageApply refuses the whole 23-spec manifest on it. The owner of work/.b037-rows-data-rows-4.json must re-word that description using tokens present in equipment-2734 / equipment-34 or in our shipped text.
+
+[72] CLOSED · data-rows-4 · DATA STILL NEEDED · filed "authored"
+     line: classFeatures/animal-instinct `grantedStrikes` (supersedes the existing overlay row): re-emit the shipped 31-entry array UNCHANGED and append the printed Web row — {"name":"Web","damageType":null,"die
+     ref : work/.b037-rows-gap-data-rows-4.json, finding animal-instinct#spider-web (classFeatures/animal-instinct `grantedStrikes`, supersedes:true — 31 entries unchanged + the Web, damage fields OMITTED rather than null); work/.b037-report-gap-data-
+     evid: CLOSED — the spec file exists, parses, is in the spec format (findings[].backfillRows[]), every row targets a record that exists in public/core.json, and work/.b037-specs.json carries the family entry with stage[] paths that all exist on disk. The driver precheck raises no problem for this row. (classFeatures/animal-instinct grantedStrikes, supersedes:true, 31 shipped entries re-emitted plus the printed Web with its damage fields OMITTED rather than null — the shape the lane change in [23]/[73] chose.)
+
+[73] CLOSED · data-rows-4 · CROSS-FILE GAPS · filed "authored"
+     line: animal-instinct#spider-web — src/rules/types.ts `GrantedStrike` declares `die: string` and `damageType: string` REQUIRED and src/rules/build.ts:2862 (collectGrantedNaturals' push) copies both onto the
+     ref : src/rules/types.ts:GrantedStrike+NaturalAttack (die/damageType optional), src/rules/build.ts:collectGrantedNaturals, src/rules/derive.ts:deriveUnarmedStrike ("no damage") — test/batch037-gap-data-rows-4.test.ts; work/.b037-report-gap-data-r
+     evid: CLOSED — src/rules/types.ts makes GrantedStrike/NaturalAttack `die` and `damageType` optional, src/rules/build.ts:2877 omits them when absent instead of running undefined through stepDie, and src/rules/derive.ts:4946-4948 prints the damageless readout. test/batch037-gap-data-rows-4.test.ts green. Flip-audit clean for batch 037; npx tsc --noEmit exits 0.
+
+[74] CLOSED · data-rows-4 · CROSS-FILE GAPS · filed "authored"
+     line: animal-instinct#spider-web — the Web's rider ("-10-foot circumstance penalty to its Speeds for 1 round on a hit") has no carrier on a granted attack: GrantedStrike has no on-hit effect field and Strik
+     ref : src/rules/types.ts:NaturalAttack.onHit (+GrantedStrike.onHit), rendered by src/rules/derive.ts:deriveUnarmedStrike as "(on a hit, …)" — test/batch037-gap-data-rows-4.test.ts; work/.b037-report-gap-data-rows-4.txt:2
+     evid: CLOSED — src/rules/types.ts:5401 NaturalAttack.onHit and :5433 GrantedStrike.onHit, copied at src/rules/build.ts:2877 and rendered at src/rules/derive.ts:4948 as " (on a hit, …)". The rider lane, not a recordMarks entry — either was allowed by the line. test/batch037-gap-data-rows-4.test.ts green. Flip-audit clean for batch 037; npx tsc --noEmit exits 0.
+
+[75] CLOSED · data-rows-4 · CROSS-FILE GAPS · filed "authored"
+     line: scar-of-the-survivor#dying-toggle AND soul-well#dying-toggle — nothing can move the death threshold from a TOGGLE. `ModeDef` (src/rules/types.ts:4672) has no dying-threshold field, and src/rules/build
+     ref : src/rules/types.ts:ModeDef.dyingThresholdBonus + src/rules/play.ts:applyPlayState (active modes summed onto Character.dyingThreshold) — test/batch037-gap-data-rows-4.test.ts; work/.b037-report-gap-data-rows-4.txt:3 (the two mode RECORDS sti
+     evid: CLOSED — src/rules/types.ts:4801 ModeDef.dyingThresholdBonus, summed off the ACTIVE modes at src/rules/play.ts:644 onto Character.dyingThreshold (on top of what the build worked out, so Diehard plus a toggle both count), quoting feat-7707 and ikon-13. test/batch037-gap-data-rows-4.test.ts green. ⚠ RESIDUAL, correctly carried forward in work/.b037-report-gap-data-rows-4.txt: the two mode RECORDS still need `dyingThresholdBonus: 1`, which cannot be a row this batch because both modes are created by work/.b037-rows-data-rows-4.json create rows. Until then the lane has a reader and no writer. Flip-audit clean for batch 037; npx tsc --noEmit exits 0.
+
+[76] CLOSED · data-rows-4 · CROSS-FILE GAPS · filed "authored"
+     line: nagaji-spell-familiarity#daily-control — src/rules/featCantripGrants.ts:104 still carries 'nagaji-spell-familiarity': { prompt: "Choose a cantrip", tradition: 'occult', options: ['daze', 'detect-magic
+     ref : src/rules/featCantripGrants.ts (entry deleted) + work/.b037-rows-gap-data-rows-4.json (feats/nagaji-spell-familiarity `choice`, supersedes) — test/batch037-gap-data-rows-4.test.ts; work/.b037-report-gap-data-rows-4.txt:4
+     evid: CLOSED — src/rules/featCantripGrants.ts: the 'nagaji-spell-familiarity' entry is deleted in the established comment form, naming feat-3984, and the paired feats/nagaji-spell-familiarity `choice` row is in work/.b037-rows-gap-data-rows-4.json (record exists, supersedes:true, precheck clean) — the two land together, as the line required. test/batch037-gap-data-rows-4.test.ts green. Flip-audit clean for batch 037; npx tsc --noEmit exits 0.
+
+[77] CLOSED · data-rows-4 · CROSS-FILE GAPS · filed "authored"
+     line: nagaji-spell-familiarity#daily-control — src/rules/play.ts:511-517 drops the grant AND leaves a phantom entry behind: it pushes the cantrip into `borrowed`, builds/creates the `innate-casting` entry, 
+     ref : src/rules/play.ts, the daily-choice merge (rank 0 → the innate entry's `cantrips`, `atWill` honoured, no phantom entry) — landed by the data-rows-5 gap agent on the same block, verified and pinned here in test/batch037-gap-data-rows-4.test.
+     evid: CLOSED — src/rules/play.ts:511-545 — the daily-choice merge now carries the WHOLE InnateSpellGrant, routes rank 0 into the entry's `cantrips` list instead of `continue`, honours `atWill` rather than forcing usesPerDay, and leaves no phantom entry. Cited per clause. test/batch037-gap-data-rows-4.test.ts and test/batch037-gap-data-rows-5.test.ts both green. Flip-audit clean for batch 037; npx tsc --noEmit exits 0.
+
+[78] CLOSED · data-rows-5 · DATA STILL NEEDED · filed "authored"
+     line: classFeatures/guardians-armor field "resistances" value [{"type":"physical","value":"1+floor(@actor.level/2)","whenArmorCategory":["medium","heavy"]}] — author
+     ref : work/.b037-rows-gap-data-rows-5.json
+     evid: CLOSED — the spec file exists, parses, is in the spec format (findings[].backfillRows[]), every row targets a record that exists in public/core.json, and work/.b037-specs.json carries the family entry with stage[] paths that all exist on disk. The driver precheck raises no problem for this row. (classFeatures/guardians-armor `resistances` = [{type:"physical", value:"1+floor(@actor.level/2)", whenArmorCategory:["medium","heavy"]}], record exists, precheck clean for THIS row.) Its reader landed in the same run: src/rules/types.ts:545 IwrEntry.whenArmorCategory, honoured at src/rules/derive.ts:2814 and :2843. ⚠ It cannot LAND while its sibling delete row is refused by precheck (5): see line [79].
+
+[79] REOPENED · data-rows-5 · CROSS-FILE GAPS · filed "authored"
+     line: modes/guardians-armor {"delete": true} — author ONLY after row 1 is live, because until then that mode is the character's only route to the resistance and deleting it takes the number away entirely.
+     ref : work/.b037-rows-gap-data-rows-5.json
+     evid: PRECHECK (5) REFUSES IT. Same re-run: "row modes/guardians-armor/(create) has a `why` that names no AoN doc id". The delete row's `why` is entirely mechanical prose (deriveDefenses, the duplicate-source argument) with no AoN citation. Row 1 of the same finding is clean and its reader is live (src/rules/types.ts:545 IwrEntry.whenArmorCategory, honoured in BOTH loops at src/rules/derive.ts:2814 and :2843), but apply refuses the whole manifest on one problem. FIX by the owner of work/.b037-rows-gap-data-rows-5.json: cite the Guardian's Armor class-feature doc id in that row's `why`.
+
+[80] CLOSED · data-rows-5 · CROSS-FILE GAPS · filed "authored"
+     line: ⛔ BLOCKING — src/rules/featCantripGrants.ts: delete FEAT_CANTRIP_GRANTS['kitsune-spell-familiarity' | 'kitsune-spell-mysteries' | 'kitsune-spell-expertise' | 'nagaji-spell-mysteries' | 'nagaji-spell-e
+     ref : src/rules/featCantripGrants.ts:FEAT_CANTRIP_GRANTS
+     evid: CLOSED — src/rules/featCantripGrants.ts: all five entries (kitsune-spell-familiarity / -mysteries / -expertise, nagaji-spell-mysteries / -expertise) are removed in the file's own established removal-comment form, quoting feat-2619 and naming the scripts/duplicate-pick-check.mjs guard that would otherwise fail once the rows land. test/batch037-gap-data-rows-5.test.ts green. Flip-audit clean for batch 037; npx tsc --noEmit exits 0.
+
+[81] CLOSED · data-rows-5 · CROSS-FILE GAPS · filed "authored"
+     line: src/rules/play.ts:514 `if (rank <= 0) continue;` — a daily-choice grant whose spell is a CANTRIP is dropped before it reaches any entry, so kitsune-spell-familiarity's at-will divine cantrip cannot re
+     ref : src/rules/play.ts:applyPlayState
+     evid: CLOSED — src/rules/play.ts: the `if (rank <= 0) continue;` drop is gone — a rank-0 grant now pushes into the innate entry's `cantrips`. test/batch037-gap-data-rows-5.test.ts green. Flip-audit clean for batch 037; npx tsc --noEmit exits 0.
+
+[82] CLOSED · data-rows-5 · CROSS-FILE GAPS · filed "authored"
+     line: src/rules/play.ts:514 `const rank = content.spells[b.spellId].rank ?? 0;` — the merge files a daily-granted spell at the SPELL's rank and ignores the grant's own `rank`, so Flicker and Confusion (both
+     ref : src/rules/play.ts:applyPlayState
+     evid: CLOSED — src/rules/play.ts: `const rank = b.rank ?? content.spells[b.spellId].rank ?? 0;` — the grant's own rank wins over the spell record's base rank, quoting feat-2629 and feat-3996. test/batch037-gap-data-rows-5.test.ts green. Flip-audit clean for batch 037; npx tsc --noEmit exits 0.
+
+[83] CLOSED · data-rows-5 · CROSS-FILE GAPS · filed "authored"
+     line: src/rules/play.ts:513-518 — the merge ignores the grant's `tradition` and stamps every daily spell `spellSources[id] = 'Borrowed today'`. Measured: a kitsune with no other innate spell reads a divine 
+     ref : src/rules/play.ts:applyPlayState + src/rules/derive.ts:dailyChoiceGrants
+     evid: CLOSED — src/rules/play.ts: the merge writes `spellTraditions[b.spellId] = b.tradition` and `spellSources[b.spellId] = b.from ?? 'Borrowed today'`, with src/rules/derive.ts dailyChoiceGrants carrying the granting record out as `__from`. test/batch037-gap-data-rows-5.test.ts green. Flip-audit clean for batch 037; npx tsc --noEmit exits 0.
+
+[84] CLOSED · data-rows-5 · CROSS-FILE GAPS · filed "authored"
+     line: src/rules/types.ts (IwrEntry, ~481-539) + src/rules/derive.ts (deriveDefenses resistance loop, 2786-2818) — no gate exists for "while wearing medium or heavy armor". Add `whenArmorCategory?: ArmorCate
+     ref : src/rules/types.ts:IwrEntry.whenArmorCategory + src/rules/derive.ts:deriveDefenses
+     evid: CLOSED — src/rules/types.ts:545 IwrEntry.whenArmorCategory, honoured in BOTH the resistance loop (src/rules/derive.ts:2814) and the weakness loop (:2843) — the file's own warning about gating half a shared type is respected. test/batch037-gap-data-rows-5.test.ts green. Flip-audit clean for batch 037; npx tsc --noEmit exits 0.
+
+[85] CLOSED · data-rows-5 · CROSS-FILE GAPS · filed "authored"
+     line: src/builder/Builder.tsx:497 (renderChoice) and src/rules/build.ts:1035 (levelChoices) — `FeatChoiceDef.minLevel` is honoured only on the DAILY path (src/rules/dailyChoices.ts:54). Verified with the ro
+     ref : src/rules/build.ts:levelChoices + src/builder/Builder.tsx:renderChoice
+     evid: CLOSED — both halves landed: src/rules/build.ts levelChoices skips a choice whose `minLevel` is above the build level (so it stops counting as an outstanding answer) and src/builder/Builder.tsx renderChoice returns null for it, each quoting feat-5454. test/batch037-gap-data-rows-5.test.ts green. Flip-audit clean for batch 037; npx tsc --noEmit exits 0.
+
+[86] CLOSED · data-rows-5 · CROSS-FILE GAPS · filed "authored"
+     line: src/rules/featGrantsAuto.ts:75 — `'arcana-of-iron': { weapon: { advanced: 'trained' } }` is correct and must stay, but it carries no expert step. feat-7980: "If you gain the weapon expertise class fea
+     ref : src/rules/featGrants.ts:FeatGrant.weaponIfWeaponExpertise + src/rules/build.ts
+     evid: CLOSED — src/rules/featGrants.ts:312 FeatGrant.weaponIfWeaponExpertise, carried on 'arcana-of-iron' at :820 ({ martial: 'expert', advanced: 'expert' }) alongside the flat trained grant, listed in the grant-key roster at :869, read at src/rules/build.ts:7252 off the class's own weapon-expertise feature. test/batch037-gap-data-rows-5.test.ts green. Flip-audit clean for batch 037; npx tsc --noEmit exits 0.
+
+[87] CLOSED · data-rows-5 · CROSS-FILE GAPS · filed "parked"
+     line: STRUCK — the builder's gap #8 (uncited assertion at test/batch031-data.test.ts:96) no longer stands: `node scripts/test-flip-audit.mjs --batch 037` is clean. data-rows-4 owns that file and closed it.
+     ref : work/.b037-report-gap-data-rows-5.txt flaggedResidue 1
+     evid: CLOSED (parked) — flaggedResidue with a measured reason, re-checked here: STRUCK and re-checked independently rather than taken on trust: `node scripts/test-flip-audit.mjs --batch 037` reports "batch 037 clean — 32 test file(s) touched, 13 new settle key(s), every flip cited". The uncited assertion at test/batch031-data.test.ts:96 was cited by its owning chunk.
+
+[88] CLOSED · data-rows-6 · DATA STILL NEEDED · filed "authored"
+     line: items/screech-shooter-major field "damage" value {"dice":1,"die":"d10","type":"sonic"} — CONFIRMED by me: base and greater both ship type "sonic", major ships "piercing", and equipment-1169 prints "A 
+     ref : work/.b037-rows-gap-data-rows-6.json — gap-037-screech-shooter-major-damage-type
+     evid: CLOSED — the spec file exists, parses, is in the spec format (findings[].backfillRows[]), every row targets a record that exists in public/core.json, and work/.b037-specs.json carries the family entry with stage[] paths that all exist on disk. The driver precheck raises no problem for this row. (items/screech-shooter-major damage -> sonic, in work/.b037-rows-gap-data-rows-6.json.)
+
+[89] CLOSED · data-rows-6 · DATA STILL NEEDED · filed "authored"
+     line: heritages/dragonblood field "choice" (whole value, 40 options) — CONFIRMED by me: magma reads "Primal dragon — fly, swim." where the owner's table gives Burrow, bog reads "fly, swim, burrow." where th
+     ref : work/.b037-rows-gap-data-rows-6.json — gap-037-dragonblood-exemplar-speeds
+     evid: CLOSED — the spec file exists, parses, is in the spec format (findings[].backfillRows[]), every row targets a record that exists in public/core.json, and work/.b037-specs.json carries the family entry with stage[] paths that all exist on disk. The driver precheck raises no problem for this row. (heritages/dragonblood choice, whole 40-option value re-emitted with supersedes:true; only the speed words move.)
+
+[90] CLOSED · data-rows-6 · DATA STILL NEEDED · filed "authored"
+     line: feats/bespell-strikes field "situational" — CONFIRMED by me: the record has no `situational` field at all, so the BASE 1d6 (feat-5028 "an extra 1d6 force damage") has no carrier. The arcana-of-iron ro
+     ref : work/.b037-rows-gap-data-rows-6.json — gap-037-bespell-strikes-base-star
+     evid: CLOSED — the spec file exists, parses, is in the spec format (findings[].backfillRows[]), every row targets a record that exists in public/core.json, and work/.b037-specs.json carries the family entry with stage[] paths that all exist on disk. The driver precheck raises no problem for this row. (feats/bespell-strikes situational — the record carried no `situational` field at all, so this is a create-a-field row, not a supersession.)
+
+[91] CLOSED · data-rows-6 · DATA STILL NEEDED · filed "parked"
+     line: feats/swashbucklers-speed — re-author the +5/+10 STATUS bonus the moment the engine grows a typed, all-Speeds carrier; today the only field is the untyped land-only landSpeedBonus already shipped.
+     ref : owner question speed-status-lane-031 (work/owner-questions.json, open, n=127) — the verifier's restatement of the same line; one question covers both
+     evid: CLOSED (parked) — the ref is a REAL entry in work/owner-questions.json: id "speed-status-lane-031", n=127, in open[] (128 open / 13 deferred / 6 ruled / 3 authorisedExceptions). It is NOT answered in work/desk-answers-2026-09-10.json, so it is genuinely unruled, and scripts/add-owner-question.mjs would refuse a duplicate id. That file is byte-unchanged vs HEAD.
+
+[92] CLOSED · data-rows-6 · DATA STILL NEEDED · filed "parked"
+     line: NEW (owner question): items/screech-shooter-major's first sentence calls it "a special +2 greater striking harmona gun" — that is the GREATER grade's rune line (equipment-1169-1109). The major grade p
+     ref : work/.b037-queue.json — screech-shooter-major-rune-grade (follow-up of desk n=72 screech-shooter-greater; add-owner-question.mjs accepts it, allocating n=151)
+     evid: CLOSED (parked) — the ref is a REAL entry in work/.b037-queue.json: id "screech-shooter-major-rune-grade", followUpOf screech-shooter-greater, carrying printed (equipment-1169 / -1169-1109 / -1169-1110 verbatim), theirs (WG item 14469, runes byte-identical to their greater), ours (the core-descriptions sentence plus the missing builtInRunes on all three grades) and a two-part question a print citation cannot answer, because the major page prints NO rune sentence at all. work/.b037-queue.json is staged by the gap-data-rows-6 manifest entry.
+
+[93] CLOSED · data-rows-6 · DATA STILL NEEDED · filed "authored"
+     line: NEW: two near-duplicate item records ship — astrolabe-of-falling-stars (aonId equipment-4028, 150 gp, the AoN record) and astrolabe-of-the-falling-stars (no aonId, 50 gp, usage held-in-two-hands). The
+     ref : work/.b037-rows-gap-data-rows-6.json — gap-037-astrolabe-duplicate-numbers (price + activationCost; the RETIRE-one-record half is flagged residue in work/.b037-report-gap-data-rows-6.txt, line R5)
+     evid: CLOSED — the spec file exists, parses, is in the spec format (findings[].backfillRows[]), every row targets a record that exists in public/core.json, and work/.b037-specs.json carries the family entry with stage[] paths that all exist on disk. The driver precheck raises no problem for this row. (items/astrolabe-of-the-falling-stars price + activationCost, two rows under gap-037-astrolabe-duplicate-numbers.) ⚠ Its test is red today for the pre-apply reason recorded in the integrity block, not for a defect.
+
+[94] CLOSED · data-rows-6 · CROSS-FILE GAPS · filed "parked"
+     line: swashbucklers-speed#typed-all-speeds — engine: src/rules/derive.ts (the landSpeedBonus fold at 5274-5276) must give every speed bonus a TYPE so two status bonuses take the highest instead of adding, a
+     ref : owner question speed-status-lane-031 (work/owner-questions.json, open, n=127) — the verifier's restatement of the engine line; same question
+     evid: CLOSED (parked) — the ref is a REAL entry in work/owner-questions.json: id "speed-status-lane-031", n=127, in open[] (128 open / 13 deferred / 6 ruled / 3 authorisedExceptions). It is NOT answered in work/desk-answers-2026-09-10.json, so it is genuinely unruled, and scripts/add-owner-question.mjs would refuse a duplicate id. That file is byte-unchanged vs HEAD.
+
+[95] CLOSED · data-rows-6 · CROSS-FILE GAPS · filed "parked"
+     line: reborn-soul#restricted-increases, the BUILT half — engine: bonusSkillIncreaseLevels (build.ts:3724,
+     ref : owner question reborn-soul (work/owner-questions.json, open, n=85) — first half of the verifier's two-line restatement; the ruling decides what the resolver must build
+     evid: CLOSED (parked) — the ref is a REAL entry in work/owner-questions.json: id "reborn-soul", n=85, in open[] (128 open / 13 deferred / 6 ruled / 3 authorisedExceptions). It is NOT answered in work/desk-answers-2026-09-10.json, so it is genuinely unruled, and scripts/add-owner-question.mjs would refuse a duplicate id. That file is byte-unchanged vs HEAD.
+
+[96] CLOSED · data-rows-6 · CROSS-FILE GAPS · filed "parked"
+     line: and restrictedSkillIncreaseLevels (build.ts:1137) are read off the CLASS only and their `skills` list is fixed SkillIds, so a BACKGROUND granting one restricted increase at 3/7/15 against two player-c
+     ref : owner question reborn-soul (work/owner-questions.json, open, n=85) — second half of the same restatement (the chosen-Lore resolver); parked with it, not separately
+     evid: CLOSED (parked) — the ref is a REAL entry in work/owner-questions.json: id "reborn-soul", n=85, in open[] (128 open / 13 deferred / 6 ruled / 3 authorisedExceptions). It is NOT answered in work/desk-answers-2026-09-10.json, so it is genuinely unruled, and scripts/add-owner-question.mjs would refuse a duplicate id. That file is byte-unchanged vs HEAD.
+
+[97] CLOSED · data-rows-6 · CROSS-FILE GAPS · filed "parked"
+     line: breath-of-the-dragon#derive-from-exemplar asks for a new data file scripts/data/draconic-benefactors.json (scripts/ is outside this chunk). The table itself is carried whole inside the effectChoices r
+     ref : flaggedResidue: same line as the builder's — the 40 rows are carried whole, with citation, in the breath-of-the-dragon effectChoices row and in my dragonblood row's `why`; a second copy with no reader is a drift risk, not a gain. See work/.
+     evid: CLOSED (parked) — flaggedResidue with a measured reason, re-checked here: the 40 Draconic Benefactors rows are already carried WHOLE, with their citation, inside the feats/breath-of-the-dragon effectChoices row and again in the heritages/dragonblood row's `why`; a standalone scripts/data/draconic-benefactors.json would have no reader and would be a second source of truth for the same table. Author it when something actually reads a table.
+
+[98] CLOSED · data-rows-6 · CROSS-FILE GAPS · filed "parked"
+     line: MIRROR GAP: https://2e.aonprd.com/DraconicBenefactors.aspx is not in the AoN update pipeline. CONFIRMED by me: the mirror has no such document, and all 44 draconic-exemplar docs carry tradition / bloo
+     ref : flaggedResidue: pipeline lane — the mirror fetch is scraper work this run is forbidden to run (no npm run data, no apply-*.mjs), and nothing in batch 037 waits on it. See work/.b037-report-gap-data-rows-6.txt, line R2.
+     evid: CLOSED (parked) — flaggedResidue with a measured reason, re-checked here: pipeline lane, not a row: https://2e.aonprd.com/DraconicBenefactors.aspx is absent from the mirror, adding it is scraper work this run is forbidden to run (no `npm run data`), and nothing in batch 037 waits on it — the owner's transcription is the authority the two rows cite.
+
+[99] CLOSED · data-rows-6 · CROSS-FILE GAPS · filed "parked"
+     line: NEW: src/sheet/InventoryTab.tsx — equipControl (line 72) returns null for every itemType that is not armor/weapon/shield and the Invest button needs the 'invested' trait (line 194), while the drag pat
+     ref : flaggedResidue: an IN-USE control for held gear is an unmodelled mechanic, not a row — the app has no 'held' state for an itemType `equipment` record, and giving it one flips `itemInUse` on for EVERY such record at once, firing every passiv
+     evid: CLOSED (parked) — flaggedResidue with a measured reason, re-checked here: an IN-USE control for held itemType `equipment` gear is an unmodelled mechanic, not a row: giving it one flips itemInUse for EVERY such record at once (blast radius unmeasured, and src/builder/shared.tsx:632 toggleEquipped has no caller), no family stages src/sheet/InventoryTab.tsx in batch 037, and the astrolabe star reaches the player meanwhile through `whileCarried`.
+
+[100] CLOSED · data-rows-6 · CROSS-FILE GAPS · filed "parked"
+     line: CLOSED (was: "if the situational family also adds an astrolabe-of-falling-stars entry the item would carry the star twice"). work/.b037-rows-situational.json contains ONE finding (reverse-engineer) an
+     ref : flaggedResidue: the line reports itself CLOSED and I re-checked it — no astrolabe entry in work/.b037-rows-situational.json, and situationalBonuses.ts:3083 keys the other record id. Nothing to author or ask. See work/.b037-report-gap-data-r
+     evid: CLOSED (parked) — flaggedResidue with a measured reason, re-checked here: no double star is possible in this batch: work/.b037-rows-situational.json holds one finding (reverse-engineer) and no astrolabe entry (grep count 0), and src/rules/situationalBonuses.ts:3083 keys the OTHER record id 'astrolabe-of-the-falling-stars'. I confirmed both by reading the file.
+
+[101] CLOSED · instruments-4 · CROSS-FILE GAPS · filed "parked"
+     line: work/owner-questions.json (prohibited for the builder and for me to edit): all twelve records are still in `open` with desk numbers #19 #27 #32 #34 #38 #53 #65 #66 #74 #75 #76 #77, although the 28-id 
+     ref : flaggedResidue: driver-only desk move — desk #19 #27 #32 #34 #38 #53 #65 #66 #74 #75 #76 #77 are ruled by the 28-id answer in work/desk-answers-2026-09-10.json but still sit in work/owner-questions.json `open`; every agent in this workflow 
+     evid: CLOSED (parked) — flaggedResidue with a measured reason, re-checked here: desk #19 #27 #32 #34 #38 #53 #65 #66 #74 #75 #76 #77 are all still in work/owner-questions.json open[] while work/desk-answers-2026-09-10.json rules all 28 ids of that block in one answer. I re-measured every n: none is in ruled[] or deferred[]. DRIVER ACTION, correctly parked — every agent in this workflow is forbidden to edit that file and scripts/add-owner-question.mjs only appends to open[], so only the driver can move them; until it does, scripts/wg-batch-close.mjs:255 takes the OWNER-QUEUED branch on desk.has(rid) before it looks at a single citation.
+
+[102] CLOSED · instruments-4 · CROSS-FILE GAPS · filed "authored"
+     line: scripts/wg-casting.mjs still cannot be run as `node scripts/wg-casting.mjs` — reproduced: ERR_MODULE_NOT_FOUND for '…/src/rules/seed' (extensionless import). The pipeline runs it as `npx jiti scripts/
+     ref : scripts/wg-casting.mjs:16
+     evid: CLOSED — scripts/wg-casting.mjs:16 now carries the "ALWAYS npx jiti, NEVER bare node" header block explaining the extensionless TypeScript imports and naming the pipeline invocation (scripts/wg-batch-run.mjs:352). Report-only note with no behaviour to revert; the file is staged by the instruments-2 manifest entry. Flip-audit clean for batch 037; npx tsc --noEmit exits 0.
+
+[103] CLOSED · instruments-5 · CROSS-FILE GAPS · filed "parked"
+     line: work/owner-questions.json (forbidden to every agent in this workflow; driver/orchestrator must do it): all twelve are still in `open[]` with desk numbers #80 #81 #83 #84 #89 #90 #91 #103 #114 #117 #11
+     ref : flaggedResidue: the verifier's restatement of the builder's owner-questions.json line after confirming it — one gap counted twice, the same shape as batch 036's blessed-swiftness#mounted pair, not a second gap. Parked for the same reason an
+     evid: CLOSED (parked) — flaggedResidue with a measured reason, re-checked here: desk #80 #81 #83 #84 #89 #90 #91 #103 #114 #117 #118 #119 are all still in work/owner-questions.json open[] while work/desk-answers-2026-09-10.json rules all 28 ids of that block in one answer. I re-measured every n: none is in ruled[] or deferred[]. DRIVER ACTION, correctly parked — every agent in this workflow is forbidden to edit that file and scripts/add-owner-question.mjs only appends to open[], so only the driver can move them; until it does, scripts/wg-batch-close.mjs:255 takes the OWNER-QUEUED branch on desk.has(rid) before it looks at a single citation.
+
+[104] CLOSED · instruments-5 · CROSS-FILE GAPS · filed "parked"
+     line: scripts/lib/wg-experience-lanes.mjs matchSelects (shared engine file; not edited, and the fix is wider than this chunk): the one-select/one-control wording rescue at :307 is gated on `selects.length =
+     ref : flaggedResidue: the verifier's restatement of the builder's matchSelects line after confirming it — one gap counted twice, not a second gap. Parked on the same re-measured evidence: the three parks are two OPPOSITE shapes, so no single lane
+     evid: CLOSED (parked) — flaggedResidue with a measured reason, re-checked here: the three parks are two OPPOSITE shapes, so no single relaxation of matchSelects retires them: seer-of-the-dead's surplus WG select is UNPRINTED (background-243 prints one restricted boost and no free one) and must pair with nothing, while dongun-education and free-heart are N-selects-answered-by-one-control, which controlCapacity() at scripts/lib/wg-experience-lanes.mjs:264 already expresses. The measured blast radius on work/.b037-baseline/experience.json is 7 MISSING-CONTROL records of which only 3 are parked, so a generic relaxation would trade 4 live detections for 3 parks. The per-record limit in work/experience-instrument-limits.json is the existing mechanism and already carries seer-of-the-dead, cited and pinned.
+
+[105] CLOSED · instruments-5 · CROSS-FILE GAPS · filed "parked"
+     line: work/.b037-specs.json — for the DRIVER to re-check at close, not for me to edit: as of this verify the manifest holds 9 entries and five families that have already written a rows file have no entry (d
+     ref : flaggedResidue: re-measured at gap time and the watch is CLEAR — no lost update, so there is nothing to author. work/.b037-specs.json now holds 16 entries and every rows file on disk is cited: work/.b037-rows-{situational,instruments-1..7,d
+     evid: CLOSED (parked) — flaggedResidue with a measured reason, re-checked here: re-measured at my own gap time: work/.b037-specs.json holds 23 entries, every work/.b037-rows-*.json and work/.b037-created-desc-*.json file on disk is cited by exactly one entry, and every stage[] path in every entry exists. No lost read-modify-write. ⚠ One family DOES lack an entry — gap-instruments-6 — which I report against line [108] rather than here, because this line is about a race that did not happen.
+
+[106] CLOSED · instruments-6 · CROSS-FILE GAPS · filed "parked"
+     line: STANDS — scripts/lib/wg-parse.mjs:304. `wgRowsByBucket`'s tie-break is literally `if (!prev || ops.length > String(prev.operations ?? '').length) m.set(key, row)` — richest row wins, with no notion of
+     ref : flaggedResidue: the narrow non-playtest tie-break is the right shape and desk #149 already rules it, but it is a CORPUS-WIDE re-pairing, not a batch-037 item: measured on the live dump, 562 playtest rows win the tie-break today (209 of them
+     evid: CLOSED (parked) — flaggedResidue with a measured reason, re-checked here: desk #149 rules the narrow non-playtest tie-break ("yes — a playtest row is never evidence"), but the measurement recorded in work/.b037-report-gap-instruments-6.txt shows it re-pairs 106 records across 36 prior batches' settle registries — feats/Spirit Walk among them, which is this batch's own VERIFIED_EQUIVALENT settle — so landing it in the gaps stage would silently restate those records and break batch 037's green tests. A batch of its own with a settle-staleness sweep, correctly not landed here.
+
+[107] CLOSED · instruments-6 · CROSS-FILE GAPS · filed "parked"
+     line: CLOSED, not a gap any more — the builder reported one uncited flip in test/batch031-data.test.ts:96 as an open cross-file item. `node scripts/test-flip-audit.mjs --batch 037` now passes clean (19 test
+     ref : flaggedResidue: not a gap — re-verified here, not taken on the verifier's word: `node scripts/test-flip-audit.mjs --batch 037` reports "batch 037 clean — 26 test file(s) touched, 13 new settle key(s), every flip cited" when run BEFORE this 
+     evid: CLOSED (parked) — flaggedResidue with a measured reason, re-checked here: re-run here, not inherited: `node scripts/test-flip-audit.mjs --batch 037` is clean (32 files touched, 13 new settle keys, every flip cited).
+
+[108] REOPENED · instruments-6 · CROSS-FILE GAPS · filed "authored"
+     line: NEW, found by this verification — wg-diff still reports classFeatures/dragon-eidolon as THEY-ONLY `missing=[language]`, no batch-037 finding covers that aspect, and it is NOT a data gap: the carrier e
+     ref : scripts/wg-diff.mjs:OFF_RECORD_CARRIERS['dragon-eidolon'] + test/batch037-gap-instruments-6.test.ts
+     evid: The CODE is real and green — scripts/wg-diff.mjs OFF_RECORD_CARRIERS['dragon-eidolon'] = ['language'] with the "// batch 037 premise: eidolon-7 \"Language Draconic\"" citation, the carrier live at src/rules/companionGrants.ts:531, test/batch037-gap-instruments-6.test.ts green, test/batch035-closer.test.ts re-pinned to the exact eight-id credit list — but there is NO MANIFEST ENTRY for family gap-instruments-6 in work/.b037-specs.json. Measured: test/batch037-gap-instruments-6.test.ts, test/batch035-closer.test.ts and work/.b037-report-gap-instruments-6.txt are staged by no entry, while scripts/wg-diff.mjs is staged (by instruments-1/3/4/5/6) — so the change would commit with its guard left behind. The driver must add a gap-instruments-6 entry staging those three paths.
+
+[109] CLOSED · instruments-7 · CROSS-FILE GAPS · filed "authored"
+     line: classFeatures prose pointer for the 21 armor-innovation modifications (otherworldly-protection included) is aonParentId "innovation-5", the PRE-REMASTER Guns & Gears printing, whose wording ("negative
+     ref : work/.b037-rows-gap-instruments-7.json (24 rows: 23 aonParentId repoints innovation-5 -> innovation-1, plus classFeatures/energy-barrier.source license OGL -> ORC); report work/.b037-report-gap-instruments-7.txt
+     evid: CLOSED — the spec file exists, parses, is in the spec format (findings[].backfillRows[]), every row targets a record that exists in public/core.json, and work/.b037-specs.json carries the family entry with stage[] paths that all exist on disk. The driver precheck raises no problem for this row. 24 rows — 23 aonParentId repoints innovation-5 -> innovation-1 across 21 classFeatures and 2 items, plus classFeatures/energy-barrier.source OGL -> ORC — and every target record exists. NOTE, not a reopen: this family wrote no test file (it changed no code, and work/.b037-report-gap-instruments-7.txt says so outright), so nothing in test/ pins the 24 repoints once they are applied.
+
+[110] CLOSED · situational · DATA STILL NEEDED · filed "authored"
+     line: feats / reverse-engineer / skillSubstitutions / [{"use":"crafting","forSkill":"thievery","when":"to Disable a Device or Pick a Lock"}] - supersedes: true over effect-backfill.json row 3164, whose valu
+     ref : work/.b037-rows-gap-situational.json
+     evid: CLOSED — the spec file exists, parses, is in the spec format (findings[].backfillRows[]), every row targets a record that exists in public/core.json, and work/.b037-specs.json carries the family entry with stage[] paths that all exist on disk. The driver precheck raises no problem for this row. (feats/reverse-engineer skillSubstitutions, supersedes:true over the shipped importer-mangled `when`; the player-visible path is src/rules/explain.ts:648.) test/batch037-gap-situational.test.ts green.
+
+[111] CLOSED · situational · CROSS-FILE GAPS · filed "parked"
+     line: src/data/trust-ledger.json is now STALE and `npm run verify` FAILS on it. The builder's note to the closer ("the ledger is derived from core.json + the WG comparer output and never from this registry 
+     ref : flaggedResidue: real drift, but it is the DRIVER's close-stage task and not an agent edit. scripts/wg-batch-run.mjs:1068 runs scripts/trust-ledger.mjs inside stageClose (allow-listed :1249, reported as trustLedgerRegenerated :1097; the head
+     evid: CLOSED (parked) — flaggedResidue with a measured reason, re-checked here: real drift, correctly left to the driver. `node scripts/trust-ledger-check.mjs` does print FAIL "the tracked ledger is what the generator produces" today, and scripts/wg-batch-run.mjs:1068 regenerates it inside stageClose (allow-listed at :1249) precisely so nobody runs the generator by hand. Regenerating now would be stale immediately, because the ledger stamps coreSha and no batch-037 row has been applied yet. Runtime impact meanwhile is nil — an id with no registry entry suppresses nothing (src/data/trustGate.ts:266).
+
+gapsOpen = 5

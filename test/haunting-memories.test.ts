@@ -61,10 +61,24 @@ describe('Haunting Memories — a nightly skill, on whichever branch fits', () =
     expect(stale.rank).toBe('untrained');
   });
 
-  it('the bonus skill feat is stated rather than granted as an unconstrained slot', () => {
-    // Its prerequisite is checked against HALF your level and it must have a minimum requirement of
-    // the new rank in that same skill — neither of which the slot filter can express.
-    expect(db.feats['haunting-memories'].choice?.note).toMatch(/half your level/i);
+  /*
+   * BATCH 037 MOVED THE SKILL-FEAT HALF TO ITS OWN QUESTION. Print gives two things each morning —
+   * the rank and *"one skill feat with a minimum requirement of your new rank in the chosen skill"*
+   * (feat-7701) — and one `choice` can only ask one of them, so the second is now the daily choice on
+   * feats/haunting-memories-skill-feat. The half-your-level cap moved with it, onto the record that
+   * actually filters the list; the skill record's note points at it. Both halves are asserted, so
+   * neither can go missing.
+   */
+  // batch 037: haunting-memories#skill-feat-pick
+  it('the bonus skill feat is its own daily question, capped at half your level', () => {
+    expect(db.feats['haunting-memories'].choice?.note).toMatch(/its own question/i);
     expect(db.feats['haunting-memories'].dataWarning).toBeUndefined();
+    const feat = db.feats['haunting-memories-skill-feat'];
+    expect(feat, 'the skill-feat half needs a record to live on').toBeTruthy();
+    expect(feat.choice?.daily).toBe(true);
+    // batch 037: haunting-memories#skill-feat-pick
+    expect(feat.choice?.note).toMatch(/half your level/i);
+    // batch 037: haunting-memories#skill-feat-pick
+    expect(feat.choice?.from?.featCategory).toBe('skill');
   });
 });

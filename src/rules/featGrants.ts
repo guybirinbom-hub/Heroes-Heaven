@@ -266,6 +266,22 @@ export interface FeatGrant {
    */
   redundantFallback?: boolean;
   /**
+   * A GATE on `redundantFallback`: the replacement pick fires only when the character already owns
+   * the named feat from some OTHER source.
+   *
+   * Intuitive Crafting prints THREE branches, not two — *"You are trained in Crafting. If you were
+   * already trained in Crafting, you INSTEAD gain the Specialty Crafting skill feat…; IF YOU HAVE
+   * BOTH, you instead become trained in a skill of your choice."* (feat-7200). Ungated,
+   * `redundantFallback` fired on the middle branch as well, so a character merely already trained in
+   * Crafting collected Specialty Crafting AND a free skill print does not give them.
+   *
+   * The feat this names is the one the carrier's own FEAT_RANK_FEAT_GRANTS row hands over, so a
+   * taking the CARRIER granted must not open its own gate — the reader excludes rows whose
+   * `grantedBy` is this carrier, the same "already means from something else" rule as
+   * `countOwnGrant: false` in featFeatGrants.ts.
+   */
+  redundantFallbackIfFeat?: string;
+  /**
    * A rank granted only while the character OWNS a named class feature.
    *
    * *"If you already have Hunt Prey, you become an expert in Survival"* (Game Hunter Dedication) — a
@@ -273,6 +289,27 @@ export interface FeatGrant {
    * because it compares the skill against itself.
    */
   skillsIfFeature?: { featureId: string; skills: Partial<Record<ProficiencyKey, ProficiencyRank>> };
+  /**
+   * Weapon-category ranks granted ONLY once the character's own class has given them a weapon
+   * expertise class feature.
+   *
+   * Arcana of Iron (AoN feat-7980): *"You become trained in advanced weapons. IF YOU GAIN THE WEAPON
+   * EXPERTISE CLASS FEATURE, your proficiency in martial and advanced weapons increases to expert."*
+   * The flat `weapon` map cannot say it — authored there, a 1st-level war mage would be an expert in
+   * advanced weapons — and `rankUpgrade` cannot either, because the trigger is a CLASS FEATURE at
+   * whatever level that class earns it, not a character level. (Their side encodes a flat 13, which
+   * is right for no class: the fighter's is 5, the ranger's 5, the bard's and wizard's 11.)
+   *
+   * The condition is read off the class advancement table — an `advancementRows` entry whose `source`
+   * ends in `weapon-expertise` at a level the character has reached — which is the same table that
+   * delivers the feature itself, so this cannot disagree with what the class actually granted. Applied
+   * after class advancement, beside the weapon-familiarity mirrors, for the same reason they are:
+   * that is when "if you gain the weapon expertise class feature" has finished happening.
+   *
+   * ⚠ Hand-authored HERE rather than on the auto entry in featGrantsAuto.ts, which five scripts
+   * rewrite whole — the same reason LOCKED_SKILL_KEYS lives here.
+   */
+  weaponIfWeaponExpertise?: Partial<Record<WeaponCategory, ProficiencyRank>>;
   /**
    * The ARMOUR twin of `weaponFamiliarity.mirrorBestCategory`.
    *
@@ -718,6 +755,42 @@ const HAND_AUTHORED_GRANTS: Record<string, FeatGrant> = {
     conditionalArmorFamiliarity: { ifTrainedIn: ['light', 'medium'], armors: ['hellknight-half-plate', 'hellknight-plate'], rank: 'trained' },
     crossConditionalArmor: { whenDefense: 'unarmored', whenRank: 'expert', minLevel: 13, rank: 'expert' },
   },
+  /*
+   * ARMOR IN EARTH (feat-4221) — *"The stone armor is medium armor but USES YOUR HIGHEST ARMOR
+   * PROFICIENCY."* At 3rd level it becomes heavy armour, and NO sentence anywhere trains the
+   * kineticist in medium or heavy armour. The two granted items shipped with no proficiency at all,
+   * so a kineticist's AC read off `defenses.medium` — untrained — and the item's `note` told the
+   * player to fix it by hand.
+   *
+   * `armorFamiliarity` with NO `rank` and NO `armor: {…}` categories is exactly that sentence: the
+   * mirrorBest pass (build.ts:7083) writes `armorOverrides[<itemId>]` = the best of the character's
+   * light/medium/heavy ranks, and derive.ts:2037 prefers that over the worn item's category rank.
+   * Deliberately NOT WG's shortcut of training the kineticist in medium (and heavy) armour, which
+   * would also let them wear real plate — owner ruling 2026-09-10 #10/#26. Same shape as
+   * armigers-protection above, which is the shipped precedent for an item-keyed borrow.
+   */
+  /*
+   * INTUITIVE CRAFTING (feat-7200) — *"You are trained in Crafting. If you were already trained in
+   * Crafting, you INSTEAD gain the Specialty Crafting skill feat in a specialty of your choice; IF
+   * YOU HAVE BOTH, you instead become trained in a skill of your choice."*
+   *
+   * Three branches, and featGrantsAuto.ts's generated row
+   * (`{ skills: { crafting: 'trained' }, redundantFallback: true }`) collapses the last two into one:
+   * a character already trained in Crafting but WITHOUT Specialty Crafting took the feat and got both
+   * Specialty Crafting (from FEAT_RANK_FEAT_GRANTS) and a free skill of choice. Print gives that
+   * middle case the feat ONLY; the free skill belongs to the character who already had both
+   * (owner ruling 2026-09-10 #16 — WG drops that branch entirely, we keep it).
+   *
+   * Hand-authored here because featGrantsAuto.ts is re-serialised whole by the extractor, which
+   * cannot emit the gate. This merge REPLACES the generated row, so its two fields are restated.
+   */
+  'intuitive-crafting': { skills: { crafting: 'trained' }, redundantFallback: true, redundantFallbackIfFeat: 'specialty-crafting' },
+  'armor-in-earth': { armorFamiliarity: { armors: ['armor-in-earth-medium', 'armor-in-earth-heavy'], mirrorBest: true } },
+  /* HARDWOOD ARMOR (feat-4283) — *"This hardwood armor is medium armor but USES YOUR HIGHEST ARMOR
+   * PROFICIENCY."* The identical answer, on the one armour the feat prints. The feat's other granted
+   * item is items/hardwood-armor-shield, a SHIELD: it has no armour proficiency to borrow and there
+   * is no heavy version of this armour. */
+  'hardwood-armor': { armorFamiliarity: { armors: ['hardwood-armor-armor'], mirrorBest: true } },
   'advanced-bow-training': { weaponFamiliarity: { weapons: ['daikyu', 'hongali-hornbow', 'phalanx-piercer'], mirrorCategory: 'martial' } },
   /* "You have familiarity with bombs and firearms; for the purposes of proficiency you treat bombs and
      martial firearms as simple weapons, and advanced firearms as martial weapons." Three clauses over
@@ -738,6 +811,13 @@ const HAND_AUTHORED_GRANTS: Record<string, FeatGrant> = {
       mirrorCategory: 'martial'
     }
   },
+  /* Arcana of Iron, feat-7980: *"You become trained in advanced weapons. If you gain the weapon
+   * expertise class feature, your proficiency in martial and advanced weapons increases to expert."*
+   * The trained half is unchanged from the auto entry (featGrantsAuto.ts) this OVERRIDES — the merge
+   * is shallow, so it has to be restated here or moving the record would drop it. Only the second
+   * sentence is new; see `weaponIfWeaponExpertise` for why it cannot be a flat rank or a rankUpgrade,
+   * and for why it is not a data row (no feat record in core.json carries weapon-category ranks). */
+  'arcana-of-iron': { weapon: { advanced: 'trained' }, weaponIfWeaponExpertise: { martial: 'expert', advanced: 'expert' } },
   // Firearms AND crossbows — the only one of the four that spans two groups.
   'advanced-shooter': {
     weaponFamiliarity: {
@@ -786,7 +866,10 @@ const GRANT_KEY_KINDS: Record<string, string[]> = {
   // …and the riders the comparer's table cannot name, on their sibling's kind.
   conditionalArmor: ['ac'], conditionalArmorFamiliarity: ['ac'], armorFamiliarity: ['ac'],
   armorMirrorBest: ['ac'], crossConditionalArmor: ['ac'], conditionalSkillsFallback: ['skill'],
-  skillsIfFeature: ['skill'],
+  skillsIfFeature: ['skill'], weaponIfWeaponExpertise: ['weapon'],
+  // …and one more no-kind modifier, beside `rankUpgrade`/`minLevel`: it only NARROWS
+  // `redundantFallback`, so darkening it could never remove a grant, only restore one.
+  redundantFallbackIfFeat: [],
 };
 
 /** carrier id -> the registry kinds that are OFF for it. Written once, at content load. */

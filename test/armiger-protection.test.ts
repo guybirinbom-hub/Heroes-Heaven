@@ -56,8 +56,27 @@ describe("Armiger's Protection — named armours, not categories", () => {
     expect(c.proficiencies.armorOverrides?.['hellknight-breastplate']).toBe('expert');
   });
 
-  it('the free non-magical suit arrives in the inventory', () => {
-    const c = take('swashbuckler', 4);
-    expect(c.inventory.some((i) => i.itemId === 'hellknight-breastplate')).toBe(true);
+  /*
+   * ⚠ ONE SUIT, THE ONE YOU PICKED. Print gives *"a non-magical suit of Hellknight armor of a type you
+   * become trained in"* (feat-8814) — singular, chosen. The feat used to hand every taker the
+   * breastplate whichever of the three they chose, so batch 037 gated each `grantsItems` entry on the
+   * answer (`whenChoice`). An UNANSWERED picker therefore delivers nothing, which is the honest state:
+   * the player has not said which suit yet.
+   */
+  // batch 037: armigers-protection#armor-pick
+  it('armigers-protection hands over the free non-magical suit the player picked, and only that one', () => {
+    const armed = build('swashbuckler', 4, {
+      featPicks: { '4:class': 'armigers-protection' },
+      featChoices: { '4:class': 'hellknight-breastplate' },
+    });
+    // batch 037: armigers-protection#armor-pick
+    expect(armed.inventory.some((i) => i.itemId === 'hellknight-breastplate')).toBe(true);
+    // batch 037: armigers-protection#armor-pick
+    expect(armed.inventory.some((i) => i.itemId === 'hellknight-half-plate')).toBe(false);
+    // batch 037: armigers-protection#armor-pick
+    expect(armed.inventory.some((i) => i.itemId === 'hellknight-plate')).toBe(false);
+    // …and with no answer yet, no suit is handed over at all.
+    // batch 037: armigers-protection#armor-pick
+    expect(take('swashbuckler', 4).inventory.some((i) => i.itemId.startsWith('hellknight-'))).toBe(false);
   });
 });

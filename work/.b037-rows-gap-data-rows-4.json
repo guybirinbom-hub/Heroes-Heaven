@@ -1,0 +1,57 @@
+{
+  "findings": [
+    {
+      "id": "animal-instinct#spider-web",
+      "note": "Owner 2026-09-10 #145 option A, now that the LANE exists. The builder withheld this row because GrantedStrike declared `die`/`damageType` required and build.ts copied both onto the NaturalAttack through stepDie, so a Web row shipped then would have rendered a Strike with an invented damage die. This gap run made a damageless granted attack expressible end to end: `GrantedStrike.die`/`damageType` are optional (src/rules/types.ts), collectGrantedNaturals no longer steps an absent die (src/rules/build.ts), applyUnarmedRiders no longer enlarges one (the level-7 animal-instinct die step would have given the Web a d4), and deriveUnarmedStrike prints \"no damage\" and drops every damage rider for one (src/rules/derive.ts). `onHit` is the new carrier for the printed Speed penalty, rendered onto the same damage cell as \"(on a hit, …)\" - GrantedStrike had no on-hit field at all and StrikeDamageRider carries damage only. The whole 31-entry array is re-emitted unchanged with the Web appended, because one member of one field cannot be patched.",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "animal-instinct",
+          "field": "grantedStrikes",
+          "supersedes": true,
+          "why": "instinct-8's animal table prints the spider with TWO attacks - \"Spider Fangs 1d8 P Grapple, unarmed, venomous Web Special Range increment 15 feet\" - and the footnote \"The spider's web attack deals no damage, but the target takes a -10-foot circumstance penalty to its Speeds for 1 round on a hit.\" Only Fangs shipped, so a spider barbarian was missing half of what Bestial Rage grants: \"While raging, you gain your chosen animal's unarmed attack (or attacks)\". The Web carries no die and no damageType (the printed damage column is \"Special\", i.e. none), a 15-foot range increment, and the printed penalty as `onHit`. Every one of the superseded row's 31 entries is merged in byte-identical; only the Web is added.",
+          "value": [{"name":"Fist","die":"d10","damageType":"bludgeoning","traits":["grapple","unarmed"],"group":"brawling","choiceValue":"ape"},{"name":"Jaws","die":"d10","damageType":"piercing","traits":["unarmed"],"group":"brawling","choiceValue":"bear"},{"name":"Jaws","die":"d10","damageType":"bludgeoning","traits":["unarmed"],"group":"brawling","choiceValue":"frog"},{"name":"Jaws","die":"d10","damageType":"piercing","traits":["unarmed","trip"],"group":"brawling","choiceValue":"wolf"},{"name":"Claw","die":"d6","damageType":"slashing","traits":["unarmed","agile"],"group":"brawling","choiceValue":"bear"},{"name":"Horn","die":"d10","damageType":"piercing","traits":["unarmed","shove"],"group":"brawling","choiceValue":"bull"},{"name":"Antler","die":"d10","damageType":"piercing","traits":["unarmed","grapple"],"group":"brawling","choiceValue":"deer"},{"name":"Tongue","die":"d6","damageType":"bludgeoning","traits":["unarmed","agile"],"group":"brawling","choiceValue":"frog"},{"name":"Jaws","die":"d10","damageType":"piercing","traits":["unarmed","grapple"],"group":"brawling","choiceValue":"shark"},{"name":"Fangs","die":"d10","damageType":"piercing","traits":["unarmed","grapple"],"group":"brawling","choiceValue":"snake"},{"name":"Tail","die":"d10","damageType":"bludgeoning","traits":["unarmed","razing"],"group":"brawling","choiceValue":"ankylosaurus"},{"name":"Mandibles","die":"d10","damageType":"piercing","traits":["unarmed","grapple"],"group":"brawling","choiceValue":"ant"},{"name":"Fangs","die":"d10","damageType":"piercing","traits":["unarmed"],"group":"brawling","choiceValue":"bat"},{"name":"Wing","die":"d4","damageType":"piercing","traits":["unarmed","parry"],"group":"brawling","choiceValue":"bat"},{"name":"Beak","die":"d10","damageType":"piercing","traits":["unarmed"],"group":"brawling","choiceValue":"bird"},{"name":"Talon","die":"d6","damageType":"slashing","traits":["unarmed","agile"],"group":"brawling","choiceValue":"bird"},{"name":"Tail","die":"d10","damageType":"bludgeoning","traits":["unarmed","trip"],"group":"brawling","choiceValue":"brontosaurus"},{"name":"BigClaw","die":"d10","damageType":"bludgeoning","traits":["unarmed","razing"],"group":"brawling","choiceValue":"crab"},{"name":"Claw","die":"d4","damageType":"slashing","traits":["unarmed","parry"],"group":"brawling","choiceValue":"crab"},{"name":"Jaws","die":"d10","damageType":"piercing","traits":["unarmed"],"group":"brawling","choiceValue":"crocodile"},{"name":"Tail","die":"d6","damageType":"bludgeoning","traits":["unarmed","agile"],"group":"brawling","choiceValue":"crocodile"},{"name":"Jaws","die":"d8","damageType":"piercing","traits":["unarmed","forceful"],"group":"brawling","choiceValue":"orca"},{"name":"Stinger","die":"d6","damageType":"piercing","traits":["unarmed","venomous","reach"],"group":"brawling","choiceValue":"scorpion"},{"name":"Pincer","die":"d4","damageType":"slashing","traits":["unarmed","parry"],"group":"brawling","choiceValue":"scorpion"},{"name":"Jaws","die":"d10","damageType":"piercing","traits":["unarmed","grapple"],"group":"brawling","choiceValue":"seal"},{"name":"Fangs","die":"d8","damageType":"piercing","traits":["unarmed","grapple","venomous"],"group":"brawling","choiceValue":"spider"},{"name":"Jaws","die":"d8","damageType":"piercing","traits":["unarmed","deadly-d12"],"group":"brawling","choiceValue":"tyrannosaurus"},{"name":"Tail","die":"d6","damageType":"bludgeoning","traits":["unarmed","agile"],"group":"brawling","choiceValue":"tyrannosaurus"},{"name":"Pincer","die":"d4","damageType":"piercing","traits":["unarmed","backstabber","deadly-d8","venomous"],"group":"brawling","choiceValue":"wasp"},{"name":"Jaws","die":"d10","damageType":"piercing","traits":["unarmed"],"group":"brawling","choiceValue":"cat"},{"name":"Claw","die":"d6","damageType":"slashing","traits":["unarmed","agile"],"group":"brawling","choiceValue":"cat"},{"name":"Web","traits":["unarmed"],"group":"brawling","range":15,"choiceValue":"spider","onHit":"the target takes a -10-foot circumstance penalty to its Speeds for 1 round"}]
+        }
+      ]
+    },
+    {
+      "id": "nagaji-spell-familiarity#daily-control",
+      "note": "The occult twin of kitsune-spell-familiarity, whose row data-rows-5 authored; this is the same shape with the same reasoning. The record already asked the question at daily preparations (choice.daily), but its three options carried no `grant`, so dailyChoiceGrants (derive.ts) produced nothing and the answer changed nothing - the only live control was the BUILD-TIME picker in FEAT_CANTRIP_GRANTS, which print does not have. That registry entry is deleted in this same gap run (src/rules/featCantripGrants.ts), so the two must land together: with only the deletion the feat grants nothing, with only the row it asks twice. The rank-0 half of the reader landed with data-rows-5's play.ts change (a daily-granted cantrip now joins the innate entry's `cantrips` list instead of being dropped by `if (rank <= 0) continue`). The whole `choice` value is re-emitted because a member of one field cannot be patched.",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "nagaji-spell-familiarity",
+          "field": "choice",
+          "supersedes": true,
+          "why": "feat-3984 prints \"During your daily preparations, choose daze , detect magic , or mage hand . Until your next daily preparations, you can cast the chosen spell as an occult innate cantrip. A cantrip is heightened to a spell level equal to half your level rounded up.\" (mage hand is now Telekinetic Hand, which is why the third option is telekinetic-hand). `atWill` with no rank is the innate-cantrip shape - cast at will, auto-heightened - so the printed heightening falls out of the lane rather than being frozen at a number. The superseded row's whole value (flag/prompt/kind/daily/options, same order, same labels) is merged in unchanged; only `grant` and a per-option `description` are added.",
+          "value": {
+            "flag": "nagajiFamiliaritySpell",
+            "prompt": "Today's nagaji cantrip",
+            "kind": "array",
+            "daily": true,
+            "options": [
+              {
+                "value": "daze",
+                "label": "Daze",
+                "description": "An occult innate cantrip you can cast at will until your next daily preparations.",
+                "grant": { "innateSpells": [{ "spellId": "daze", "tradition": "occult", "atWill": true }] }
+              },
+              {
+                "value": "detect-magic",
+                "label": "Detect Magic",
+                "description": "An occult innate cantrip you can cast at will until your next daily preparations.",
+                "grant": { "innateSpells": [{ "spellId": "detect-magic", "tradition": "occult", "atWill": true }] }
+              },
+              {
+                "value": "telekinetic-hand",
+                "label": "Telekinetic Hand",
+                "description": "An occult innate cantrip you can cast at will until your next daily preparations.",
+                "grant": { "innateSpells": [{ "spellId": "telekinetic-hand", "tradition": "occult", "atWill": true }] }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 {
- "coreSha": "3b5bdc990cc1872818b86bfa794b73a656602de38683ab4d49c209994ad87db0",
+ "coreSha": "121e0de315f34a29b023bee16a654eb907d1c106a52f14e283d2ba1bd7f5df97",
  "generator": "scripts/trust-ledger.mjs",
  "lanes": {
   "engine": [
@@ -80,7 +80,9 @@
     "weapon"
    ],
    "armigers-protection": [
-    "ac"
+    "ac",
+    "choice",
+    "skill"
    ],
    "armor-proficiency": [
     "choice"
@@ -353,6 +355,9 @@
    ],
    "halfling-weapon-expertise": [
     "weapon"
+   ],
+   "hardwood-armor": [
+    "ac"
    ],
    "harmless-doll": [
     "choice"
@@ -917,7 +922,6 @@
    "grand-medics-mask",
    "grasping-reach",
    "greater-transformation",
-   "guardians-armor",
    "harden-flesh",
    "hardwood-armor",
    "heavens-thunder",
@@ -1148,6 +1152,7 @@
    "item-malleable-mixture-lesser",
    "item-mana-rattler-liniment",
    "item-marking-snare",
+   "item-mask-of-the-mantis-major",
    "item-matsukis-medicinal-wine",
    "item-menders-soup",
    "item-moderate-crimson-godsblood-serum",
@@ -1317,6 +1322,7 @@
    "shadow-master",
    "shadow-sight",
    "shore-gift",
+   "soul-well",
    "spell-survivor",
    "stalwart-chant",
    "starlight-armor",
@@ -3173,7 +3179,6 @@
    "retaliating-rescue",
    "retribution-axe",
    "return-to-the-sea",
-   "reverse-engineer",
    "reverse-engineering",
    "rhyton-of-the-radiant-ifrit",
    "ridill",
@@ -4420,6 +4425,9 @@
   "classFeatures/starshot": [
    "grantsClassFeatures"
   ],
+  "classFeatures/studious-spells": [
+   "recordMarks"
+  ],
   "classFeatures/tempest": [
    "grantsFeats"
   ],
@@ -4612,9 +4620,6 @@
   "feats/appraisers-eye": [
    "innateSpells"
   ],
-  "feats/arcana-of-iron": [
-   "grantsClassFeatures"
-  ],
   "feats/arcane-communication": [
    "enhancement",
    "enhancement.grant.senses",
@@ -4703,6 +4708,9 @@
   ],
   "feats/become-thought": [
    "innateSpells"
+  ],
+  "feats/bespell-strikes": [
+   "situational"
   ],
   "feats/binding-serpents-celestial-arrow": [
    "grantsClassFeatures"
@@ -4809,9 +4817,6 @@
   ],
   "feats/claim-cardinal-domains": [
    "focusPoolBonus"
-  ],
-  "feats/clawdancer-dedication": [
-   "grantedStrikes"
   ],
   "feats/cloud-walk": [
    "innateSpells"
@@ -5000,6 +5005,9 @@
   ],
   "feats/draining-touch": [
    "grantsClassFeatures"
+  ],
+  "feats/dream-magic": [
+   "choice.options[].grant.innateSpells"
   ],
   "feats/echo-of-the-fallen": [
    "grantsActions"
@@ -5334,6 +5342,9 @@
   ],
   "feats/haughty-obstinacy": [
    "situational"
+  ],
+  "feats/haunting-memories": [
+   "grantsFeats"
   ],
   "feats/heal-animal": [
    "focusSpells"
@@ -10472,5 +10483,5 @@
    "heldSpells"
   ]
  },
- "wgSha": "d93e6e981e5750ef46312a7d33837cfe2c35534fa2e5fb8513cce06cd26bf7f5"
+ "wgSha": "432d85e2344b64bec017a2a849d09ab8093a64e0dcc00f9444cc054ca79a77bd"
 }

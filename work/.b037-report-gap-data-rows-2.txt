@@ -1,0 +1,159 @@
+BATCH 037 — GAP AGENT, family gap-data-rows-2
+Spec:   work/.b037-rows-gap-data-rows-2.json   (1 finding, 2 backfill rows)
+Tests:  test/batch037-gap-data-rows-2.test.ts  (11 it(), all green today — every one reads a content
+        copy with the field PATCHED IN MEMORY plus its mirror image with the field absent, so none of
+        them flips meaning when the rows land)
+        test/locate-lawbreakers.test.ts        (1 it() flipped, 7 green)
+Code:   src/rules/types.ts, src/rules/build.ts, src/rules/casterArchetypes.ts,
+        src/builder/shared.tsx, src/builder/Builder.tsx
+npx tsc --noEmit: clean.
+work/owner-questions.json: NOT touched. work/.b037-queue.json: no entry owed — every line either
+closed here or is a recorded non-gap; nothing needed a ruling the owner had not already given.
+
+18 lines, all closed: 14 AUTHORED, 4 PARKED (0 open).
+The 18 are 9 distinct items, each harvested twice (once from work/.b037-report-data-rows-2.txt and
+once from work/.b037-verify-data-rows-2.txt) plus one the verifier found on its own.
+
+─────────────────────────────────────────────────────────────────────────────────────────────────
+AUTHORED
+
+1. DATA STILL NEEDED — feats/locate-lawbreakers / effectChoices  (report:8, verify:124)
+   AUTHORED → work/.b037-rows-gap-data-rows-2.json, finding locate-lawbreakers#order-of-the-gate.
+   Row: feats/locate-lawbreakers field `effectChoices`, supersedes:true, the four shipped tradition
+   options carried byte-for-byte and each option's grant.innateSpells[0] gaining BOTH halves of the
+   printed clause — heightenAt [{level:14, rank:5}] AND heightenWhenFlag {flag:"hellknightOrder",
+   value:"order-of-the-gate"}. It was blocked on a reader; the reader is item 3 below, so the row is
+   no longer speculative. Authoring the ladder alone would have shipped WG's defect (rank 5 at 14 for
+   every Hellknight), which this finding CONFIRMS as wrong.
+   Printed: hellknight-order-9 — "If you're a member of the Order of the Gate, when you reach 14th
+   level, the spell is heightened to 5th rank." (verified verbatim against the mirror this run).
+
+2. DATA STILL NEEDED — feats/locate-lawbreakers / note  (report:9, verify:130)
+   AUTHORED → the same spec, second row: field `note` -> null, supersedes:true, emitted AFTER the row
+   above so the standing note is never deleted before the mechanic exists. Checked before writing it:
+   the printed sentence is already in public/core-descriptions.json feats/locate-lawbreakers, so the
+   player keeps the rule in prose and stops seeing it twice.
+
+3. CROSS-FILE GAP — the cross-record choice-flag gate  (report:15, verify:145)
+   AUTHORED → src/rules/types.ts `InnateSpellGrant.heightenWhenFlag?: {flag; value}` + the reader in
+   src/rules/build.ts `castRank` (it returns before the heightenAt ladder when the flag's answer is
+   not the named one).
+   Two shape decisions, both mine to take because print settles the mechanic and the owner had
+   already ruled (2026-09-10 #7, "keep the printed scope"):
+     • it gates the LADDER, not the grant — a Hellknight of any other order still casts Locate once a
+       day, just never at 5th rank. Gating the grant would have deleted the spell for six of seven
+       orders;
+     • UNANSWERED reads as "not that order". The ladder is a benefit, so failing closed can only
+       under-grant. (choiceFlagAnswer's own contract — leave the list WIDE while unanswered — is about
+       PICKERS; a gate is the opposite direction.)
+   It reuses choiceFlagAnswer (build.ts:1969) and the order already stored on
+   feats/hellknight-dedication (`choice.flag: "hellknightOrder"`, kind array, option
+   `order-of-the-gate`), so no second question is asked anywhere.
+   Pinned by test/batch037-gap-data-rows-2.test.ts, describe "locate-lawbreakers heightens Locate only
+   for the Order of the Gate": Gate member at 14 → rank 5; Order of the Nail at 14 → rank 3; no answer
+   → rank 3; below 14 → rank 3; and the SHIPPED record (no ladder at all) → rank 3 for a Gate member,
+   which is the mirror image proving the four above read the patched field and nothing else.
+
+4. CROSS-FILE GAP — src/rules/types.ts, ItemBase.resonant  (report:13, verify:134)
+   AUTHORED → `spellNotes?: SpellNote[]` added to `{ note; innateSpells?; resistances? }`, documented
+   with the printed clause and with the reason it hangs on `resonant` rather than on the item's own
+   top-level `spellNotes`.
+
+5. CROSS-FILE GAP — src/rules/build.ts, the wayfinder-slotted arm  (report:14, verify:138)
+   AUTHORED → inside `if (item?.resonant && inv.designations?.includes('wayfinder-slotted'))`, each
+   `item.resonant.spellNotes` entry now goes through
+   `pushSpellNote(voidSwapped(item, n.spellId), item.name + ' (resonant)', n.note)`.
+   The line's two warnings were both honoured: it is inside the designation gate (the item's own
+   top-level spellNotes lane at build.ts:6843 has no designation check and would print the resonant
+   rule on a stone merely orbiting the player's head), and it needed no reordering — pushSpellNote is
+   in scope there and the registry is written onto the character afterwards.
+   This unblocks THREE findings of the builder's spec at once: aeon-stone-agate-ellipsoid#resonant-note,
+   aeon-stone-dusty-rose-prism#resonant-note, aeon-stone-western-star#resonant-note.
+   Pinned by describe "items/aeon-stone-agate-ellipsoid carries its resonant clause to the Augury
+   entry": the clause reaches spellNotes.augury attributed "Aeon Stone (Agate Ellipsoid) (resonant)"
+   when slotted; nothing arrives with the data absent (the shipped record today); nothing arrives when
+   the stone is worn and invested but NOT slotted.
+
+6. CROSS-FILE GAP — test/locate-lawbreakers.test.ts  (report:16, verify:151)
+   AUTHORED → the stale it() ("the heightening is still recorded as an open question rather than
+   silently decided") is flipped to the ruling it now has. It still PASSED — the entry stays in
+   work/owner-questions.json open[] and an agent may not close it — which is exactly why it had to be
+   rewritten rather than left: a green test asserting that a decided question is undecided is a gate
+   that has stopped measuring anything.
+   Written as an IMPLICATION rather than a rank: any `heightenAt` on this record must carry
+   `heightenWhenFlag` {hellknightOrder, order-of-the-gate}. Vacuously true today (no ladder ships),
+   the guard against WG's encoding once the row lands, and it fails on exactly the defect the finding
+   names. The rank arithmetic is pinned on built characters in the new file. Cited
+   "// batch 037: locate-lawbreakers#order-of-the-gate"; the describe title carries the record id.
+   work/owner-questions.json was not edited.
+
+7. CROSS-FILE GAP — oatia-skysage-dedication#cantrip-picker  (report:17, verify:156)
+   AUTHORED → four files, one rule:
+     • src/rules/casterArchetypes.ts — `CasterArchetype.cantripOptions?: string[]` and the exported
+       `archetypeCantripAllowed(arch, spellId)` helper, with
+       ['detect-magic','guidance','know-the-way','read-aura'] on oatia-skysage-dedication. All four
+       are on the occult list, so it is a narrowing of the 38 the tradition filter offers, never a
+       widening.
+     • src/builder/shared.tsx (the archetype card's `cantripList`) — the surface when the class is
+       itself a caster;
+     • src/builder/Builder.tsx (`eligibleSpells`, rank 0, guarded on `!casting`) — the surface when it
+       is not. Both narrow the TRADITION half only: a cantrip a later feat adds to this entry
+       (`spellListAdditions`) was granted by that feat's own text and is not the dedication's to refuse.
+     • src/rules/build.ts (`srcCantrips`) — delivery. A pick stored before the restriction existed is
+       dropped from the entry and an effectWarning names it and says to choose again (owner
+       2026-09-10 #113). Narrowed on READ, never migrated: build.ts:1581 already records why this
+       project cannot run a one-shot migration — these builds live in localStorage, in Supabase and in
+       exported .codex files, and a migration that never sees a file cannot fix it.
+   Pinned by describe "oatia-skysage-dedication grants only the four cantrips it names": the helper's
+   allow/deny (including that wizard-dedication is untouched), a legal pair reaching the sheet, and the
+   stored off-list pick being dropped WITH the warning.
+   Honest limit: the two picker filters are one-line applications of the tested helper; the tests pin
+   the helper and the delivery, not the rendered list.
+
+─────────────────────────────────────────────────────────────────────────────────────────────────
+PARKED
+
+8. "(nothing else — every other finding this chunk owns is authored…)"  (report:10)
+   PARKED → flaggedResidue. A collator artefact: the literal prose line under the DATA STILL NEEDED
+   heading, harvested because it sits inside the section the apply-digest harvests. Re-checked against
+   work/.b037-rows-data-rows-2.json — all eleven findings accounted for. No row, question or edit
+   exists that this line could produce.
+
+9. sibling non-collision note  (report:18, verify:168)
+   PARKED → flaggedResidue. The builder's and verifier's recorded "no collision found" note, harvested
+   as a line. Re-verified here against all 22 manifest specs (including the five other gap specs
+   written this same stage): the only other batch-037 row on any record this family touches is
+   sponsored-by-teacher-ot#rarity, a different FIELD from ours (`choice`), and this family's two new
+   rows collide with nothing. Nothing is owed.
+
+10. NEW — scripts/apply-backfill-now.mjs:72, a prose field cannot be REMOVED by a row  (verify:161)
+    PARKED → flaggedResidue. Real, and confirmed by reading the script: `descRefs: null` is dropped by
+    skipFields for core.json and dropped again by the routing (`Array.isArray(value)`), and
+    `description: null` fails `isDesc`'s string test the same way, so a prose-removal row reaches
+    neither artefact and the apply stage's post-check then refuses the batch after writing.
+    Parked, not fixed, for three reasons that stack: (a) it is the DRIVER's applier — the class of
+    script this workflow explicitly forbids an agent to run — and the driver is about to run it on this
+    batch; (b) nothing in batch 037 needs it: data-rows-2 used `[]`, which every descRefs reader treats
+    identically to an absent list; (c) it cannot carry a test as the file stands, because the script's
+    body executes at import time and WRITES public/core.json, so no vitest file may import it — making
+    the fix checkable means first extracting that body behind an entry-point guard, which is a change
+    to the applier itself, not a family fix.
+    The recipe is ready for whoever owns it: in the prose-routing loop let `isDesc`/`isRefs` accept
+    `value === null`, then `delete entry[key]` (dropping the descriptions entry when it empties)
+    instead of assigning, and have the apply-stage post-check treat an absent prose field as satisfying
+    a null row. Re-raise as its own line the first time a batch needs to REMOVE a description.
+
+─────────────────────────────────────────────────────────────────────────────────────────────────
+CHECKED, NOT A RISK
+- test/aeon-resonance.test.ts (33 items carry `resonant`), test/caster-archetypes.test.ts,
+  test/caster-archetypes-missing.test.ts, test/captivator-archetype.test.ts and
+  test/parked-fields.test.ts all run green after these edits: `cantripOptions` exists on exactly one
+  archetype, so every other archetype's cantrip list is byte-identical, and no item gains or loses
+  `resonant`.
+- Nobody else's file was rewritten. src/builder/Builder.tsx already carried another family's batch-037
+  edit (versatile-mutation#energy-level); mine is a separate hunk inside `eligibleSpells` and leaves it
+  untouched.
+- No entry was owed to work/.b037-queue.json: the two shape questions this family could have asked
+  (where the order gate hangs, how an invalid stored cantrip is retired) are settled by print plus
+  rulings the owner had already given, and the project's own convention (build.ts:1581) settles the
+  second.

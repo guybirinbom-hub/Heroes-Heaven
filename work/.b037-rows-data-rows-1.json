@@ -1,0 +1,442 @@
+{
+  "findings": [
+    {
+      "id": "firework-technician-dedication#pyrotechnic-vial",
+      "note": "The dedication's 4 pyrotechnic vials were a bare counter (src/rules/classResources.ts, id 'versatile-vials', feat 'firework-technician-dedication') with no item anywhere in the items bucket, so the archetype's whole point — throwing them as bombs — had nothing to throw. Modelled field-for-field on the shipped items/versatile-vial, with acid swapped for fire exactly as feat-8528 prints. No aonId: AoN has no equipment page for this vial — it is defined inside the dedication's own text — and pointing an item's aonId at a feat doc would build a broken Equipment.aspx link. VERIFIER FIX: the proposal's second half — \"point the dedication's vial counter at that item id so the 4 daily vials become throwable rows\" — was reported as impossible (ClassResource has no item field) and is not: `grantsItems` is the existing lane for \"a record HANDS you this item\" (read by buildCharacter's granted-items walk, src/rules/build.ts:7802, off FEATS as well as class features), scripts/data/trust-approvals.json #13 approves exactly `grantsItems` on exactly this record, and work/.wg-diff-all.json has their row encoding `grantsItem` for it. Measured on a built 2nd-level fighter with the dedication: 4 vials in the pack labelled \"Firework Technician Dedication\", none without the row.",
+      "backfillRows": [
+        {
+          "category": "items",
+          "id": "pyrotechnic-versatile-vial",
+          "create": true,
+          "why": "feat-8528 (Firework Technician Dedication, Guns & Gears (Remastered) pg. 134): \"creating up to 4 pyrotechnic versatile vials during your daily preparations. These vials have the fire trait and deal fire damage instead of acid. You can use pyrotechnic versatile vials only to throw as bombs, for the Launch Fireworks action (see below), or with Quick Alchemy to create fireworks consumables\". Shape copied from the shipped items/versatile-vial so the two bombs behave identically on the Strikes page.",
+          "value": {
+            "id": "pyrotechnic-versatile-vial",
+            "name": "Pyrotechnic Versatile Vial",
+            "level": 1,
+            "price": {},
+            "bulk": 0,
+            "traits": ["fire", "alchemical", "bomb", "consumable", "infused", "splash"],
+            "rarity": "common",
+            "source": { "book": "Pathfinder Guns & Gears (Remastered)", "license": "ORC" },
+            "usage": "held-in-one-hand",
+            "itemType": "weapon",
+            "hands": 1,
+            "category": "martial",
+            "group": "bomb",
+            "damage": { "dice": 1, "die": "d6", "type": "fire" },
+            "range": 20,
+            "reload": null
+          }
+        },
+        {
+          "category": "feats",
+          "id": "firework-technician-dedication",
+          "field": "grantsItems",
+          "value": [{ "itemId": "pyrotechnic-versatile-vial", "quantity": 4 }],
+          "why": "feat-8528 (Guns & Gears (Remastered) pg. 134): \"You gain the quick alchemy benefits, creating up to 4 pyrotechnic versatile vials during your daily preparations… You can use pyrotechnic versatile vials only to throw as bombs, for the Launch Fireworks action (see below), or with Quick Alchemy to create fireworks consumables\". The counter in src/rules/classResources.ts already tracks the daily FOUR; this row hands over the item itself, which is what makes them throwable. `grantsItems` is the shipped lane for it (buildCharacter's granted-items walk reads feats as well as class features) and no other row in any batch-037 spec touches this record's grantsItems."
+        }
+      ]
+    },
+    {
+      "id": "firework-technician-dedication#source",
+      "note": "Text-only citation repair (R12): the record already SHOWS the Guns & Gears (Remastered) text, it just cited the superseded 2021 page. edition is already 'remaster-era', so nothing else moves. ⚠ 'Pathfinder Guns & Gears (Remastered)' is a book string no other record carries yet, so sourceCatalog() mints a one-entry toggle for it — see CROSS-FILE GAPS.",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "firework-technician-dedication",
+          "field": "aonId",
+          "value": "feat-8528",
+          "why": "feat-8528 is the current printing (Guns & Gears (Remastered) pg. 134). VERIFIER FIX to this why: feat-8528's legacy_id is feat-8750 (the 2021 Guns & Gears page), NOT feat-3245 — what marks feat-3245 superseded is its own page, which prints \"There is a more recent version of this, click here to view\" pointing at Feats.aspx?ID=8528. The record's shipped description is already the feat-8528 text."
+        },
+        {
+          "category": "feats",
+          "id": "firework-technician-dedication",
+          "field": "source",
+          "value": { "book": "Pathfinder Guns & Gears (Remastered)", "license": "ORC" },
+          "why": "feat-8528 primary_source_raw is \"Guns & Gears (Remastered) pg. 134\". Whole-object re-emit because source is one field; license stays ORC."
+        }
+      ]
+    },
+    {
+      "id": "magus#2026-printing",
+      "note": "The 2026 Spells per Day table (class-74) is 2 slots at EVERY unlocked rank, 1 the level a rank opens, no 10th-rank slot — which is byte-for-byte the table psychicSlots() already computes in src/rules/spellcasting.ts (verified level by level against the printed table in the finding). So the move is a data row on an EXISTING progression value, not a new one: 'two-rank' -> 'psychic'. The value name reads oddly on a magus and that is the only cost; casterSlots() is the single reader of the field (grepped build.ts / derive.ts / Builder.tsx), so nothing else sees it. spellbook.spells 4 -> 5 because class-74 prints \"eight arcane cantrips and five 1st-rank arcane spells\" (the 2021 book printed four); perLevel stays 2 (\"you add two arcane spells to your spellbook\"). edition is included because a record citing a 2026 book must not be hidden by the per-character \"Hide legacy data\" switch (applyEditionFilter in build.ts hides 'legacy-era').",
+      "backfillRows": [
+        {
+          "category": "classes",
+          "id": "magus",
+          "field": "spellcasting",
+          "supersedes": true,
+          "value": {
+            "type": "prepared",
+            "tradition": "arcane",
+            "keyAbility": "int",
+            "repertoire": false,
+            "progression": "psychic",
+            "spellbook": { "spells": 5, "perLevel": 2 }
+          },
+          "why": "class-74 (Magus, Impossible Magic pg. 9). Its Spells per Day table keeps 2 slots at every unlocked rank (1 the level a rank opens) and prints no 10th-rank slot — identical to the 'psychic' progression already implemented. Supersedes the shipped overlay row {\"type\":\"prepared\",\"tradition\":\"arcane\",\"keyAbility\":\"int\",\"repertoire\":false,\"progression\":\"two-rank\",\"spellbook\":{\"spells\":4,\"perLevel\":2}}, carried whole with only progression and spellbook.spells changed. class-74: \"The spellbook contains your choice of eight arcane cantrips and five 1st-rank arcane spells.\""
+        },
+        {
+          "category": "classes",
+          "id": "magus",
+          "field": "source",
+          "value": { "book": "Pathfinder Impossible Magic", "license": "ORC" },
+          "why": "class-74 primary_source_raw is \"Impossible Magic pg. 9\" (release 2026-07-30); the 2021 Secrets of Magic printing is its legacy_id class-17."
+        },
+        {
+          "category": "classes",
+          "id": "magus",
+          "field": "aonId",
+          "value": "class-74",
+          "why": "class-74 is the current Magus page; class-17 is listed as its legacy_id."
+        },
+        {
+          "category": "classes",
+          "id": "magus",
+          "field": "edition",
+          "value": "remaster-era",
+          "why": "class-74 is a 2026 remaster-era printing. Left at 'legacy-era' the class would cite Impossible Magic and still be hidden by applyEditionFilter's \"Hide legacy data\" switch."
+        }
+      ]
+    },
+    {
+      "id": "summoner#2026-printing",
+      "note": "Same table as the magus (class-77), so the same existing 'psychic' progression value carries it. extraRepertoire {1:1} is DROPPED deliberately: it encoded the 2021 rule where the repertoire reached five against four slots because the two-rank table discarded lower ranks. class-77 prints \"Each time you get a spell slot (see the Summoner Spells per Day table), you add a spell to your spell repertoire of the same rank\", i.e. repertoire == slots, and repertoireCounts() would otherwise hand out a spare 1st-rank pick at every level. Five cantrips (\"five cantrips of your choice\") is what cantripsKnown() already returns.",
+      "backfillRows": [
+        {
+          "category": "classes",
+          "id": "summoner",
+          "field": "spellcasting",
+          "supersedes": true,
+          "value": {
+            "type": "spontaneous",
+            "tradition": "arcane",
+            "keyAbility": "cha",
+            "repertoire": true,
+            "progression": "psychic"
+          },
+          "why": "class-77 (Summoner, Impossible Magic pg. 63). Its Spells per Day table keeps 2 slots at every unlocked rank with no 10th, which is the 'psychic' progression. Supersedes the shipped overlay row {\"type\":\"spontaneous\",\"tradition\":\"arcane\",\"keyAbility\":\"cha\",\"repertoire\":true,\"progression\":\"two-rank\",\"extraRepertoire\":{\"1\":1}}, carried whole except progression and the deliberate removal of extraRepertoire — class-77: \"Each time you get a spell slot (see the Summoner Spells per Day table), you add a spell to your spell repertoire of the same rank.\""
+        },
+        {
+          "category": "classes",
+          "id": "summoner",
+          "field": "source",
+          "value": { "book": "Pathfinder Impossible Magic", "license": "ORC" },
+          "why": "class-77 primary_source_raw is \"Impossible Magic pg. 63\" (release 2026-07-30); class-18 is its legacy_id."
+        },
+        {
+          "category": "classes",
+          "id": "summoner",
+          "field": "aonId",
+          "value": "class-77",
+          "why": "class-77 is the current Summoner page; class-18 is listed as its legacy_id."
+        },
+        {
+          "category": "classes",
+          "id": "summoner",
+          "field": "edition",
+          "value": "remaster-era",
+          "why": "class-77 is a 2026 remaster-era printing; left at 'legacy-era' the class would cite Impossible Magic and still be hidden by applyEditionFilter's \"Hide legacy data\" switch."
+        }
+      ]
+    },
+    {
+      "id": "basic-magus-spellcasting#2026-printing",
+      "note": "Level 6 -> 4, and the bounded wording drops. No mechanical row is needed for the slot ladder: RANK_UNLOCKS in src/rules/casterArchetypes.ts is the generic spellcasting-archetype schedule (rank 1 at character level 4) and the magus config already runs it — only the feat record's own level gated the pick, and it gated it two levels late.",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "basic-magus-spellcasting",
+          "field": "level",
+          "value": 4,
+          "why": "feat-9285 is printed as Feat 4 (Impossible Magic pg. 88); feat-2950 (Feat 6) is its legacy_id."
+        },
+        {
+          "category": "feats",
+          "id": "basic-magus-spellcasting",
+          "field": "aonId",
+          "value": "feat-9285",
+          "why": "feat-9285 is the current printing; AoN lists feat-2950 as its legacy_id."
+        },
+        {
+          "category": "feats",
+          "id": "basic-magus-spellcasting",
+          "field": "source",
+          "value": { "book": "Pathfinder Impossible Magic", "license": "ORC" },
+          "why": "feat-9285 primary_source_raw is \"Impossible Magic pg. 88\"."
+        },
+        {
+          "category": "feats",
+          "id": "basic-magus-spellcasting",
+          "field": "edition",
+          "value": "remaster-era",
+          "why": "feat-9285 is a 2026 printing; 'legacy-era' would hide the current feat behind the \"Hide legacy data\" switch (applyEditionFilter, src/rules/build.ts)."
+        },
+        {
+          "category": "feats",
+          "id": "basic-magus-spellcasting",
+          "field": "description",
+          "supersedes": true,
+          "value": "You gain the basic spellcasting benefits. Each time you gain a spell slot of a new rank from the magus archetype, add two common spells of that rank or lower to your spellbook.",
+          "why": "feat-9285 verbatim. Supersedes the shipped overlay row \"You gain the basic bounded spellcasting benefits.\" — the 2026 printing grants the ORDINARY basic spellcasting benefits, not the bounded ones, and adds the spellbook sentence the 2021 text had no equivalent for."
+        }
+      ]
+    },
+    {
+      "id": "expert-magus-spellcasting#2026-printing",
+      "note": "Prerequisites already read [\"Basic Magus Spellcasting\",\"master in Arcana\"], which is exactly what feat-9290 prints (AoN capitalises \"Master\" as a sentence opener in its prerequisite line); no prerequisites row, only the citation and the un-bounding of the benefit.",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "expert-magus-spellcasting",
+          "field": "aonId",
+          "value": "feat-9290",
+          "why": "feat-9290 is the current printing (Impossible Magic pg. 88); feat-2951 is its legacy_id."
+        },
+        {
+          "category": "feats",
+          "id": "expert-magus-spellcasting",
+          "field": "source",
+          "value": { "book": "Pathfinder Impossible Magic", "license": "ORC" },
+          "why": "feat-9290 primary_source_raw is \"Impossible Magic pg. 88\"."
+        },
+        {
+          "category": "feats",
+          "id": "expert-magus-spellcasting",
+          "field": "edition",
+          "value": "remaster-era",
+          "why": "feat-9290 is a 2026 printing; 'legacy-era' would hide the current feat behind the \"Hide legacy data\" switch."
+        },
+        {
+          "category": "feats",
+          "id": "expert-magus-spellcasting",
+          "field": "description",
+          "value": "You gain the expert spellcasting benefits.",
+          "why": "feat-9290 verbatim: \"You gain the expert spellcasting benefits.\" Ours shipped the stripped \"You gain the benefits.\" and the record's own note said bounded."
+        }
+      ]
+    },
+    {
+      "id": "master-magus-spellcasting#2026-printing",
+      "note": "As the expert half: prerequisites already read [\"Expert Magus Spellcasting\",\"legendary in Arcana\"], so only the citation and the un-bounded benefit move.",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "master-magus-spellcasting",
+          "field": "aonId",
+          "value": "feat-9291",
+          "why": "feat-9291 is the current printing (Impossible Magic pg. 88); feat-2952 is its legacy_id."
+        },
+        {
+          "category": "feats",
+          "id": "master-magus-spellcasting",
+          "field": "source",
+          "value": { "book": "Pathfinder Impossible Magic", "license": "ORC" },
+          "why": "feat-9291 primary_source_raw is \"Impossible Magic pg. 88\"."
+        },
+        {
+          "category": "feats",
+          "id": "master-magus-spellcasting",
+          "field": "edition",
+          "value": "remaster-era",
+          "why": "feat-9291 is a 2026 printing; 'legacy-era' would hide the current feat behind the \"Hide legacy data\" switch."
+        },
+        {
+          "category": "feats",
+          "id": "master-magus-spellcasting",
+          "field": "description",
+          "value": "You gain the master spellcasting benefits.",
+          "why": "feat-9291 verbatim: \"You gain the master spellcasting benefits.\""
+        }
+      ]
+    },
+    {
+      "id": "basic-summoner-spellcasting#2026-printing",
+      "note": "Level 6 -> 4 (the generic archetype ladder in casterArchetypes.ts already opens rank 1 at character level 4, so only the record's own level was late) and the description moves to the 2026 text, which drops both 'bounded' and the \"Each time you lose spell slots of a particular rank, remove those spells from your repertoire\" sentence.",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "basic-summoner-spellcasting",
+          "field": "level",
+          "value": 4,
+          "why": "feat-9308 is printed as Feat 4 (Impossible Magic pg. 91); feat-2957 (Feat 6) is its legacy_id."
+        },
+        {
+          "category": "feats",
+          "id": "basic-summoner-spellcasting",
+          "field": "aonId",
+          "value": "feat-9308",
+          "why": "feat-9308 is the current printing; feat-2957 is its legacy_id."
+        },
+        {
+          "category": "feats",
+          "id": "basic-summoner-spellcasting",
+          "field": "source",
+          "value": { "book": "Pathfinder Impossible Magic", "license": "ORC" },
+          "why": "feat-9308 primary_source_raw is \"Impossible Magic pg. 91\"."
+        },
+        {
+          "category": "feats",
+          "id": "basic-summoner-spellcasting",
+          "field": "edition",
+          "value": "remaster-era",
+          "why": "feat-9308 is a 2026 printing; 'legacy-era' would hide the current feat behind the \"Hide legacy data\" switch."
+        },
+        {
+          "category": "feats",
+          "id": "basic-summoner-spellcasting",
+          "field": "description",
+          "value": "You gain the basic spellcasting benefits. You gain the Cast a Spell activity. Your key spellcasting attribute for summoner archetype spells is Charisma, and they are summoner spells of your eidolon's tradition. You become trained in the spell attack modifier and spell DC statistics. You gain a spell repertoire and two cantrips. Each time you gain a spell slot of a new rank from the summoner archetype, add a spell of the appropriate spell rank to your repertoire.",
+          "why": "feat-9308 verbatim. The shipped text was the 2021 bounded version and carried \"Each time you lose spell slots of a particular rank, remove those spells from your repertoire\", a sentence the 2026 printing does not have because the ordinary ladder never takes slots away."
+        }
+      ]
+    },
+    {
+      "id": "expert-summoner-spellcasting#2026-printing",
+      "note": "Prerequisites already read [\"Basic Summoner Spellcasting\",\"master in the skill associated with your eidolon's tradition\"], exactly feat-9313's line; only the citation and the un-bounded benefit move.",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "expert-summoner-spellcasting",
+          "field": "aonId",
+          "value": "feat-9313",
+          "why": "feat-9313 is the current printing (Impossible Magic pg. 91); feat-2959 is its legacy_id."
+        },
+        {
+          "category": "feats",
+          "id": "expert-summoner-spellcasting",
+          "field": "source",
+          "value": { "book": "Pathfinder Impossible Magic", "license": "ORC" },
+          "why": "feat-9313 primary_source_raw is \"Impossible Magic pg. 91\"."
+        },
+        {
+          "category": "feats",
+          "id": "expert-summoner-spellcasting",
+          "field": "edition",
+          "value": "remaster-era",
+          "why": "feat-9313 is a 2026 printing; 'legacy-era' would hide the current feat behind the \"Hide legacy data\" switch."
+        },
+        {
+          "category": "feats",
+          "id": "expert-summoner-spellcasting",
+          "field": "description",
+          "value": "You gain the expert spellcasting benefits.",
+          "why": "feat-9313 verbatim: \"You gain the expert spellcasting benefits.\""
+        }
+      ]
+    },
+    {
+      "id": "master-summoner-spellcasting#2026-printing",
+      "note": "This record is the runt of the six: it shipped with NO prerequisites at all and a description that was the scraped page header rather than the rule. category:'archetype' is left alone — featSlots.ts line 164 already admits an 'archetype'-category feat with the archetype trait into a class-feat slot, and 138 feats rely on that.",
+      "backfillRows": [
+        {
+          "category": "feats",
+          "id": "master-summoner-spellcasting",
+          "field": "aonId",
+          "value": "feat-9314",
+          "why": "feat-9314 is the current printing (Impossible Magic pg. 91); feat-2961 is its legacy_id."
+        },
+        {
+          "category": "feats",
+          "id": "master-summoner-spellcasting",
+          "field": "source",
+          "value": { "book": "Pathfinder Impossible Magic", "license": "ORC" },
+          "why": "feat-9314 primary_source_raw is \"Impossible Magic pg. 91\". Whole-object re-emit adds the license the shipped record omitted."
+        },
+        {
+          "category": "feats",
+          "id": "master-summoner-spellcasting",
+          "field": "edition",
+          "value": "remaster-era",
+          "why": "feat-9314 is a 2026 printing; 'legacy-era' would hide the current feat behind the \"Hide legacy data\" switch."
+        },
+        {
+          "category": "feats",
+          "id": "master-summoner-spellcasting",
+          "field": "prerequisites",
+          "value": ["Expert Summoner Spellcasting", "legendary in the skill associated with your eidolon's tradition"],
+          "why": "feat-9314 prerequisite line: \"Expert Summoner Spellcasting; legendary in the skill associated with your eidolon's tradition\". The shipped record carried no prerequisites field at all, so the capstone feat read as having none."
+        },
+        {
+          "category": "feats",
+          "id": "master-summoner-spellcasting",
+          "field": "description",
+          "value": "You gain the master spellcasting benefits.",
+          "why": "feat-9314 verbatim: \"You gain the master spellcasting benefits.\" The shipped description was the scraped page header (\"Master Summoner Spellcasting / Source Secrets of Magic pg. 77 / Archetype Summoner / Prerequisites …\") with the bounded rule at the end."
+        }
+      ]
+    },
+    {
+      "id": "studious-spells#2026-rebuild",
+      "note": "⚠ The proposal's \"drop the spellSlotBonus entirely\" is the one thing that must NOT be done, and I did not do it. Two readers are keyed on the field's PRESENCE: (a) src/rules/build.ts ~4520 and ~4658 stand the hard-coded legacy fallback `magusStudiousSpells(level)` down only `if (content.classFeatures['studious-spells']?.spellSlotBonus?.restricted)` — delete the field and a built magus gets the 2021 two auto-prepared slots back, the exact behaviour the finding removes; (b) `bookGrantedSpellIds` (build.ts ~3293) reads the spellbook additions OUT of that same restricted grant, so deleting it also deletes \"Add any studious spell you gain to your spellbook\". So the field STAYS and the SLOTS go, by emptying every ladder step's byRank — which is not an invention: all eight magus hybrid-study options in classes/magus.subclass already ship exactly this shape ({level, byRank:{}, addSpells:[…]}) for their per-study studious spell, and resolveRestrictedSlots() produces zero slots from an empty byRank while its addSpells still accumulate. sure-strike and water-breathing leave the list (they are not in the 2026 feature). The free-action Arcane Cascade rider gets a recordMarks entry on the actions/arcane-cascade row — the DATA twin of RECORD_MARKERS, walked for owned class features by recordMarksFor() in src/rules/explain.ts — so the rider reaches the player's Arcane Cascade action instead of living only in prose. No descRefs row: the shipped ref list already carries Gecko Grip / Haste / Fly, and the 22 hybrid-study labels it also carries are inert once they leave the text (RichText builds its regex from the labels and simply never matches them).",
+      "backfillRows": [
+        {
+          "category": "classFeatures",
+          "id": "studious-spells",
+          "field": "name",
+          "value": "Studious Spell",
+          "why": "class-feature-1270 is titled \"Studious Spell\" (Impossible Magic pg. 9); class-17 is listed as its legacy_id."
+        },
+        {
+          "category": "classFeatures",
+          "id": "studious-spells",
+          "field": "aonId",
+          "value": "class-feature-1270",
+          "why": "class-feature-1270 is the current feature page; ours cited class-feature-431, the 2021 Secrets of Magic version."
+        },
+        {
+          "category": "classFeatures",
+          "id": "studious-spells",
+          "field": "source",
+          "value": { "book": "Pathfinder Impossible Magic", "license": "ORC" },
+          "why": "class-feature-1270 primary_source_raw is \"Impossible Magic pg. 9\"."
+        },
+        {
+          "category": "classFeatures",
+          "id": "studious-spells",
+          "field": "edition",
+          "value": "remaster-era",
+          "why": "class-feature-1270 is a 2026 printing; 'legacy-era' would hide the current feature behind the \"Hide legacy data\" switch."
+        },
+        {
+          "category": "classFeatures",
+          "id": "studious-spells",
+          "field": "spellSlotBonus",
+          "supersedes": true,
+          "value": {
+            "entryId": "magus-casting",
+            "restricted": {
+              "label": "Studious spells",
+              "ladder": [
+                { "level": 7, "byRank": {}, "addSpells": ["gecko-grip"] },
+                { "level": 11, "byRank": {}, "addSpells": ["haste"] },
+                { "level": 13, "byRank": {}, "addSpells": ["fly"] }
+              ]
+            }
+          },
+          "why": "class-feature-1270 grants NO spell slots: \"Add any studious spell you gain to your spellbook if you don't know it already. Your studious spells are gecko grip and an additional spell depending on your hybrid study … At 11th level, add haste … At 13th level, add fly …\". Supersedes the shipped overlay row, which granted 2 extra 2nd-rank slots at 7, 2 extra 3rd at 11 and 2 extra 4th at 13 over the list [gecko-grip, sure-strike, water-breathing] / [haste] / [fly] with the note \"Studious spell slots: gecko grip, sure strike, water breathing, and an additional spell depending on your hybrid study. You add any spells from this class feature to your spellbook.\" — that whole value is carried here with byRank emptied at every step, sure-strike and water-breathing dropped (absent from the 2026 list) and the stale slot note removed. The field itself is KEPT because build.ts stands its hard-coded legacy fallback down only while it exists, and because bookGrantedSpellIds reads the spellbook additions out of it."
+        },
+        {
+          "category": "classFeatures",
+          "id": "studious-spells",
+          "field": "recordMarks",
+          "value": [
+            {
+              "on": "action",
+              "id": "arcane-cascade",
+              "note": "Studious Spell: when you cast a studious spell (gecko grip; haste at 11th; fly at 13th; plus your hybrid study's spell at each of those levels), you can use Arcane Cascade as a free action as your next action this turn."
+            }
+          ],
+          "why": "class-feature-1270: \"When you cast a studious spell, you can use Arcane Cascade as a free action as your next action this turn.\" The rider changes an ACTION rather than a stat, which is exactly what recordMarks exists for; recordMarksFor() in src/rules/explain.ts walks owned class features, and actions/arcane-cascade is the row it annotates."
+        },
+        {
+          "category": "classFeatures",
+          "id": "studious-spells",
+          "field": "description",
+          "value": "You've deeply studied certain beneficial spells to speedily enter Arcane Cascade when you cast them. When you cast a studious spell, you can use Arcane Cascade as a free action as your next action this turn. Add any studious spell you gain to your spellbook if you don't know it already. Your studious spells are gecko grip and an additional spell depending on your hybrid study, listed in the hybrid study's entry. At 11th level, add haste and an additional spell depending on your hybrid study to your studious spells. At 13th level, add fly and an additional spell depending on your hybrid study to your studious spells.",
+          "why": "class-feature-1270 verbatim. The shipped prose was the 2021 feature (\"You gain two special 2nd-rank studious spell slots…\") plus a hand-maintained table of the eight hybrid studies' spells; the 2026 printing points at \"the hybrid study's entry\" instead, and those eight entries already carry their own spells on classes/magus.subclass.options[].spellSlotBonus."
+        }
+      ]
+    }
+  ]
+}

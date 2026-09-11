@@ -198,9 +198,30 @@ for (const bucket of ['kingdomStructure', 'kingdomEvent', 'creatureAdjustment', 
     return node && typeof node === 'object' ? node : null;
   };
 
+  /*
+   * A LEAF A LATER ROW AMENDS IS NOT A STALE BAKE.
+   *
+   * applyBackfill replays the overlay IN ORDER, so a pathless whole-value row followed by a `path` row
+   * into that same field is one intended two-step write: core.json holds the SECOND value by
+   * construction, and a regeneration reproduces it exactly — which is the only thing this check is
+   * about. Without this the pair reports the FIRST row as "not baked" forever.
+   *
+   * batch 037 premise: feat-7701 "You also gain one skill feat with a minimum requirement of your new rank in the chosen skill."
+   *
+   * That clause is the case: batch 037 moved the skill-feat half of Haunting Memories onto its own
+   * record, so the note on feats/haunting-memories.choice was rewritten by a `path: ['choice']` row
+   * over the whole-value `choice` row an earlier batch wrote. Indexed in one pass; only the pathless
+   * row of such a pair is excused, and only for the exact field the later row overwrites.
+   */
+  const lastAmend = new Map();
+  rows.forEach((q, j) => {
+    if (q.path?.length === 1) lastAmend.set(`${q.category}/${q.id}/${q.path[0]}`, j);
+  });
+
   const stale = [];
   let missingRecord = 0;
-  for (const fix of rows) {
+  for (const [i, fix] of rows.entries()) {
+    if (!fix.path?.length && fix.field && (lastAmend.get(`${fix.category}/${fix.id}/${fix.field}`) ?? -1) > i) continue;
     if (fix.create) {
       if (!core[fix.category]?.[fix.id]) stale.push(`${fix.category}/${fix.id} (created record absent)`);
       continue;

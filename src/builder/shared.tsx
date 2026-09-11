@@ -56,7 +56,7 @@ import { openChoiceOptions } from '../rules/openChoice';
 import { cantripsKnown } from '../rules/spellcasting';
 import { spellsMatching } from '../rules/spellChoice';
 import { abpSkillBudget } from '../rules/abp';
-import { activeCasterArchetype, archetypeEntryIds, archetypeSlots } from '../rules/casterArchetypes';
+import { activeCasterArchetype, archetypeCantripAllowed, archetypeEntryIds, archetypeSlots } from '../rules/casterArchetypes';
 import { snareAllowance, snareFormulaOptions, isBaseSnareSlot, SNARE_FORMULA_KEY } from '../rules/snareFormulas';
 import { formulaOptions, formulaSlots, type FormulaSlot } from '../rules/formulaBook';
 import { snareAllowanceFor } from '../rules/counterMods';
@@ -3899,8 +3899,14 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
               for (const sid of add.spells ?? []) if (content.spells[sid]?.rank === 0) widened.add(sid);
             }
           }
+          /* A dedication that NAMES its cantrips offers those and nothing else — Oatia Skysage:
+           * *"two of the following cantrips of your choice: detect magic, guidance, know the way, or
+           * read aura"* (feat-8112). It narrows the TRADITION half only — a cantrip a later feat adds
+           * to this entry (`spellListAdditions`, the `widened` set) was granted by that feat's own
+           * printed text and is not the dedication's list to refuse. */
           const cantripList = Object.values(content.spells)
             .filter((s) => (s.rank === 0 && s.traditions.includes(trad)) || widened.has(s.id))
+            .filter((s) => widened.has(s.id) || archetypeCantripAllowed(arch, s.id))
             .sort((a, b) => a.name.localeCompare(b.name));
           return (
             <SetupCard icon="ti-wand" label="Archetype spellcasting">

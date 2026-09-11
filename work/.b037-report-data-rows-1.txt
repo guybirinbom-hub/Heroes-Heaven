@@ -1,0 +1,95 @@
+BATCH 037 — family data-rows-1 (chunk 1 of 6 of "data-rows"), WG-COMPARISON lane
+11 assigned findings, all CONFIRMED, all 11 taught. 45 overlay rows in one spec + 1 created-prose row.
+
+Files written (and nothing else — no src/, no scripts/, no effect-backfill.json):
+  work/.b037-rows-data-rows-1.json          45 rows across 11 findings
+  work/.b037-created-desc-data-rows-1.json   1 description row for the created item
+  test/batch037-data-rows-1.test.ts         19 tests, all failing for the right reason (see below)
+
+
+DATA STILL NEEDED
+  (none — every row this chunk needs is authored in work/.b037-rows-data-rows-1.json)
+
+
+CROSS-FILE GAPS
+  src/rules/sources.ts — "Pathfinder Impossible Magic" is in neither LEGACY_HARDCOVERS nor RULEBOOK_TITLES, so categoryOfBook() shelves it as "Other", a NICHE_CATEGORIES shelf hidden behind the show-niche-sources pref; batch 037 moves the magus and summoner CLASSES and six archetype feats onto that book, so after this batch two whole classes sit on a hidden shelf (719 Impossible Magic records are already there). Fix: add 'Pathfinder Impossible Magic' to LEGACY_HARDCOVERS.
+  src/rules/sources.ts — firework-technician-dedication#source moves ONE record to "Pathfinder Guns & Gears (Remastered)", a book string nothing else carries, so sourceCatalog() mints a one-entry toggle for it; the other ~825 Guns & Gears records AoN also reprints in the Remastered edition are a separate sweep and are in no batch-037 finding.
+  src/rules/classResources.ts — ClassResource has no item field, so the Firework Technician's 4-vial counter cannot point at the new items/pyrotechnic-versatile-vial (finding firework-technician-dedication#pyrotechnic-vial asks for that link); the item now exists and is added by hand, exactly as an archetype alchemist adds items/versatile-vial today. An `itemId` on ClassResource would close it for both lanes at once.
+  src/rules/casterArchetypes.ts — the comment on 'summoner-dedication' reads "caps at Expert (no master-summoner-spellcasting feat exists)". Both halves are false: mk() mints masterId 'master-summoner-spellcasting' and the feat ships (feat-9314, Impossible Magic pg. 91). Stale prose only, the code is right; noted because it is the comment a reader would trust before touching that ladder.
+  src/rules/spellcasting.ts — after this batch the progression value named 'psychic' carries the magus and the summoner as well as the psychic (the 2026 tables are identical). An alias or rename ('limited') would read better on a magus record; purely cosmetic, zero behaviour change, and not worth a src edit inside a data batch.
+
+
+PER FINDING
+
+firework-technician-dedication#pyrotechnic-vial — TAUGHT.
+  Row: create items/pyrotechnic-versatile-vial, shaped field-for-field on the shipped items/versatile-vial with acid swapped for fire (level 1, price {}, bulk 0, rarity common, usage held-in-one-hand, itemType weapon, hands 1, category martial, group bomb, range 20, reload null, damage 1d6 fire, traits [fire, alchemical, bomb, consumable, infused, splash], source Guns & Gears (Remastered)/ORC).
+  Prose row (work/.b037-created-desc-data-rows-1.json): items/pyrotechnic-versatile-vial.description = "These vials have the fire trait and deal fire damage instead of acid." — one verbatim contiguous clause of feat-8528, because the applier diffs a NEW record's description against an empty string and so requires the WHOLE text to occur contiguously in the named mirror doc.
+  No aonId: AoN has no equipment page for this vial (it is defined inside feat-8528's own text), and an item aonId pointing at a feat doc would build a broken Equipment.aspx link. items/versatile-vial carries none either.
+  NOT done: the second half of the proposal, "point the dedication's vial counter at that item id". ClassResource (src/rules/classResources.ts) has no item field and I may not edit src/ — see CROSS-FILE GAPS.
+  Test: "firework-technician-dedication has a real pyrotechnic vial to throw" — asserts the item exists, deals 1d6 fire, has the fire trait and not acid, matches versatile-vial field-for-field on the nine shape fields, and carries the printed clause.
+
+firework-technician-dedication#source — TAUGHT.
+  Rows: feats/firework-technician-dedication.aonId = "feat-8528"; .source = {book:"Pathfinder Guns & Gears (Remastered)", license:"ORC"}.
+  edition is already 'remaster-era', so nothing else moved. The record's shipped description is already the feat-8528 text — this row only makes the citation match the prose it already prints.
+  Test: "firework-technician-dedication cites the Guns & Gears (Remastered) page whose text it prints".
+
+magus#2026-printing — TAUGHT.
+  Rows (4): classes/magus.spellcasting (supersedes the shipped overlay row), .source, .aonId = "class-74", .edition = "remaster-era".
+  ⚠ The mechanical finding here: the 2026 Spells per Day table (class-74) — a rank every two levels, 1 slot the level it opens, 2 from then on, no 10th-rank slot — is byte-for-byte the table psychicSlots() already computes in src/rules/spellcasting.ts. I verified it level by level against the printed table in the finding (L1 {1:1}, L3 {1:2,2:1}, L13 {1..6:2, 7:1}, L17 {1..8:2, 9:1}, L18-20 all nine at 2, no 10th). So the move is a DATA row on an existing progression value, 'two-rank' -> 'psychic', and needs no new progression and no code. casterSlots() is the only reader of the field (grepped build.ts, derive.ts, Builder.tsx); the value name reading oddly on a magus record is the whole cost, and it is in CROSS-FILE GAPS.
+  Also in the row: spellbook.spells 4 -> 5, because class-74 prints "The spellbook contains your choice of eight arcane cantrips and five 1st-rank arcane spells" (the 2021 book printed four). perLevel stays 2.
+  edition is included though the proposal did not name it: a record citing a 2026 book must not be hidden by the per-character "Hide legacy data" switch (applyEditionFilter, src/rules/build.ts:3172 hides 'legacy-era').
+  The eight arcane CANTRIPS in the spellbook are not modelled — `spellbook` counts levelled spells only (spellbookBudget) and cantripsKnown('magus') is the printed 5-per-day cap, which already matches the table's Cantrips column.
+  Tests (4): the citation; the spellcasting shape; a 13th-level magus preparing the printed row 2 2 2 2 2 2 1; a 20th-level magus stopping at 9th rank.
+
+summoner#2026-printing — TAUGHT.
+  Rows (4): classes/summoner.spellcasting (supersedes), .source, .aonId = "class-77", .edition = "remaster-era". Same 'psychic' progression as the magus — class-77's table is identical to class-74's.
+  extraRepertoire {1:1} is DROPPED deliberately (stated in the row's `why`): it encoded the 2021 rule where the repertoire reached five against four slots because the two-rank table discarded the lower ranks. class-77 prints "Each time you get a spell slot (see the Summoner Spells per Day table), you add a spell to your spell repertoire of the same rank" — repertoire == slots — and repertoireCounts() would otherwise keep handing out a spare 1st-rank pick at every level, at a level where the character has no 1st-rank slot.
+  Five cantrips ("five cantrips of your choice") is what cantripsKnown() already returns; no row needed.
+  Tests (3): the citation; progression + no extraRepertoire; a 13th-level summoner on the printed row with its repertoire ranks equal to its slot ranks.
+
+basic-magus-spellcasting#2026-printing — TAUGHT.
+  Rows (5): level 6 -> 4, aonId "feat-9285", source Impossible Magic/ORC, edition remaster-era, description (supersedes the shipped "You gain the basic bounded spellcasting benefits." overlay row) = feat-9285 verbatim.
+  No mechanical row: RANK_UNLOCKS in src/rules/casterArchetypes.ts is the generic spellcasting-archetype schedule and already opens rank 1 at character level 4 for every archetype; only the feat record's own level gated the pick two levels late.
+  Test: "basic-magus-spellcasting is a Feat 4 granting the ordinary basic spellcasting benefits".
+
+expert-magus-spellcasting#2026-printing — TAUGHT.
+  Rows (4): aonId "feat-9290", source, edition, description = "You gain the expert spellcasting benefits."
+  NO prerequisites row: the shipped record already reads ["Basic Magus Spellcasting","master in Arcana"], which is feat-9290's line (AoN capitalises "Master" only as its prerequisite-line sentence opener). Changing the case would be noise.
+  Test: "expert-magus-spellcasting grants the expert spellcasting benefits, not the bounded ones" — also pins the untouched prerequisites so a later batch cannot quietly reword them.
+
+master-magus-spellcasting#2026-printing — TAUGHT.
+  Rows (4): aonId "feat-9291", source, edition, description = "You gain the master spellcasting benefits." Prerequisites already matched print (["Expert Magus Spellcasting","legendary in Arcana"]); no row.
+  Test: "master-magus-spellcasting grants the master spellcasting benefits, not the bounded ones".
+
+basic-summoner-spellcasting#2026-printing — TAUGHT.
+  Rows (5): level 6 -> 4, aonId "feat-9308", source, edition, description = feat-9308 verbatim. The 2026 text drops both "bounded" and the 2021 sentence "Each time you lose spell slots of a particular rank, remove those spells from your repertoire", which the ordinary ladder makes impossible.
+  Test: "basic-summoner-spellcasting is a Feat 4 and no longer takes repertoire spells away" — asserts the level, the citation, and that neither "bounded" nor the removal sentence survives.
+
+expert-summoner-spellcasting#2026-printing — TAUGHT.
+  Rows (4): aonId "feat-9313", source, edition, description = "You gain the expert spellcasting benefits." Prerequisites already read exactly feat-9313's line; no row.
+  Test: "expert-summoner-spellcasting grants the expert spellcasting benefits, not the bounded ones".
+
+master-summoner-spellcasting#2026-printing — TAUGHT.
+  Rows (5): aonId "feat-9314", source (whole object, adding the license the shipped record omitted), edition, prerequisites, description.
+  This record was the runt of the six: it shipped with NO prerequisites field at all (so the archetype's capstone read as having none) and with the scraped page header as its description ("Master Summoner Spellcasting / Source Secrets of Magic pg. 77 / Archetype Summoner / Prerequisites …"). Both are now feat-9314's own text.
+  category:'archetype' is deliberately left alone: src/rules/featSlots.ts:164 already admits an 'archetype'-category feat carrying the archetype trait into a class-feat slot, and 138 shipped feats depend on that.
+  Test: "master-summoner-spellcasting states its rule and its two prerequisites".
+
+studious-spells#2026-rebuild — TAUGHT, with one deliberate departure from the proposal.
+  Rows (7): name "Studious Spell", aonId "class-feature-1270", source, edition, spellSlotBonus (supersedes), recordMarks, description (class-feature-1270 verbatim).
+  ⚠ THE DEPARTURE, and the finding inside the finding: the proposal says "drop the spellSlotBonus entirely". That is the one thing that must not be done, and I did not do it. Two readers are keyed on the field's PRESENCE, not its contents:
+    (a) src/rules/build.ts ~4520 (and ~4658 for a dual-class magus) stands the hard-coded LEGACY fallback `magusStudiousSpells(level)` down only `if (content.classFeatures['studious-spells']?.spellSlotBonus?.restricted)`. Delete the field and a built magus gets the 2021 two auto-prepared slots of sure strike + water breathing / haste / fly straight back — the exact behaviour this finding exists to remove, arriving silently from code instead of data.
+    (b) `bookGrantedSpellIds` (build.ts ~3293) derives the spellbook additions OUT of that same restricted grant. Delete it and "Add any studious spell you gain to your spellbook" stops working too.
+  So the field STAYS and the SLOTS go, by emptying every ladder step's byRank: resolveRestrictedSlots() (src/rules/restrictedSlots.ts) clears its counts to the highest reached step and produces ZERO slots from an empty byRank, while the same steps' addSpells still accumulate into the allowed list and into restrictedGrantSpells(). This is not an invention — all eight magus hybrid studies in classes/magus.subclass.options already ship exactly this shape ({level, byRank:{}, addSpells:[…]}) for their per-study studious spell, so the class feature now matches its own eight siblings.
+  The list becomes gecko-grip (7) / haste (11) / fly (13); sure-strike and water-breathing leave, being the 2021 list. The stale "Studious spell slots: …" note is dropped with the slots it described.
+  The free-action rider gets a mechanical carrier rather than prose alone: recordMarks [{on:'action', id:'arcane-cascade', note:…}] — the DATA twin of RECORD_MARKERS, walked for owned class features by recordMarksFor() in src/rules/explain.ts — so "you can use Arcane Cascade as a free action as your next action this turn" reaches the character's own Arcane Cascade action row. actions/arcane-cascade exists.
+  NO descRefs row: the shipped ref list already carries Gecko Grip / Haste / Fly, and the 22 hybrid-study labels it also carries go inert once they leave the text (RichText builds its match regex from the labels and simply never matches them). The per-study spells themselves are unaffected — they ride their own subclass-option grants, which the 2026 text points at ("listed in the hybrid study's entry").
+  Tests (4): the citation and rename; the zero-slot ladder with sure-strike/water-breathing gone; the recordMarks rider on actions/arcane-cascade; and a built 13th-level Aloof Firmament magus with all six spells (gecko grip, haste, fly + water walk, wall of wind, variable gravity) in the spellbook, no studious restricted slot, and no leftover sure strike from the legacy fallback.
+
+
+TEST STATUS
+  node scripts/vt.mjs run test/batch037-data-rows-1.test.ts  ->  19 failed / 19, every one on the shipped
+  value the row replaces (class-17 vs class-74, 'two-rank' vs 'psychic', {6:2,7:2} vs the printed
+  2 2 2 2 2 2 1, the missing items/pyrotechnic-versatile-vial, the 2021 studious slot ladder). They pass
+  once the driver applies the two specs. npx tsc --noEmit is clean.
+  node scripts/test-flip-audit.mjs --batch 037  ->  clean, every flip cited.

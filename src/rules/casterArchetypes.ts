@@ -79,6 +79,26 @@ export interface CasterArchetype {
    * `traditionOptions` alone is fixed at the dedication and cannot grow.
    */
   traditionOptionFeats?: { featId: string; add: Tradition[] }[];
+  /**
+   * The dedication names the cantrips it grants, so the picker must offer those and nothing else —
+   * Oatia Skysage Dedication: *"You gain a spell repertoire with two of the following cantrips of
+   * your choice: detect magic, guidance, know the way, or read aura."* (feat-8112). Every other
+   * archetype here says "cantrips from that tradition", which is what the tradition filter already
+   * computes; this is the exception, and without it a skysage was offered all 38 occult cantrips.
+   *
+   * Read at BOTH cantrip surfaces (the archetype card in shared.tsx when the class is itself a
+   * caster, the class picker in Builder.tsx when it is not) and again where the entry is built, so a
+   * pick stored before the restriction existed stops being delivered instead of being silently kept
+   * (owner 2026-09-10 #113). The stored id is left alone rather than migrated: builds live in
+   * localStorage, in Supabase and in exported `.codex` files, so this project narrows on READ.
+   */
+  cantripOptions?: string[];
+}
+
+/** Is `spellId` a cantrip this archetype may take? True for every archetype without `cantripOptions`. */
+export function archetypeCantripAllowed(a: ActiveCasterArchetype | null | undefined, spellId: string): boolean {
+  const opts = a?.config.cantripOptions;
+  return !opts || opts.includes(spellId);
 }
 
 /** The tradition list an archetype offers, once its widening feats are counted. */
@@ -306,6 +326,10 @@ export const CASTER_ARCHETYPES: Record<string, CasterArchetype> = {
     keyAbility: 'int',
     cantrips: 2,
     repertoire: true,
+    /* *"…two of the following cantrips of your choice: detect magic, guidance, know the way, or read
+     * aura"* (feat-8112). All four are on the occult list, so the restriction is a narrowing of the
+     * 38 the tradition filter offers, never a widening. */
+    cantripOptions: ['detect-magic', 'guidance', 'know-the-way', 'read-aura'],
     customUnlocks: [
       { rank: 1, level: 4, featId: 'basic-skysage-divination' },
       { rank: 2, level: 6, featId: 'basic-skysage-divination' },

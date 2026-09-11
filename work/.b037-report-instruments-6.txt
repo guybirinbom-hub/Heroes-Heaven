@@ -1,0 +1,175 @@
+BATCH 037 — INSTRUMENTS, CHUNK 6 (instruments-6).
+12 findings, all CONFIRMED, all "nothing changes": the owner's 2026-09-10 desk pass ruled the book the
+winner on every one. No data row is owed by any of them; the only question each raised was whether an
+INSTRUMENT still reports the record. Three did. Nine did not.
+
+DATA STILL NEEDED
+  (none — every one of the twelve findings is "nothing changes"; no backfill row is owed by this chunk.)
+
+CROSS-FILE GAPS
+  scripts/lib/wg-parse.mjs — wgRowsByBucket's "richest row wins" tie-break has no notion of a PLAYTEST
+    row, which is what pairs us against drafts Paizo later cut. Owner's standing rule (desk #149,
+    2026-09-10): "a WG row marked (playtest) is never evidence about the released record." MEASURED,
+    not assumed: 203 playtest rows currently win the tie-break; ~64 of them displace a released row of
+    the same name (Spirit Walk, Barrow's Edge, Gaze Sharp as Steel, Skybearer's Belt, Gleaming Blade,
+    Tactical Expansion, Medium's Awareness, Officer's Education …) and ~120 are WG's ONLY row for the
+    record (all of Exemplar, Necromancer, Runesmith, Animist, Guardian and Commander). A blanket rule
+    would therefore delete the comparison for six whole classes, so the honest shape is narrow —
+    prefer a NON-playtest row when one exists for the same name, leave a playtest-only row alone — and
+    it belongs in wg-parse.mjs, which is outside this chunk's files and shared by all four comparers
+    and every family. Implementing it here would have flipped records in six earlier batches at once.
+  test/batch031-data.test.ts:96 — `node scripts/test-flip-audit.mjs --batch 037` fails on exactly one
+    uncited flip, a changed `expect(choice?.options.map(...))` assertion in that file. Not this
+    chunk's: nothing here touches test/batch031-data.test.ts. Whichever chunk changed it owes the
+    `// batch 037: <finding id>` citation above it.
+  (no finding of mine belongs to another family; none was dropped.)
+
+────────────────────────────────────────────────────────────────────────────────────────────────────
+THE THREE FINDINGS AN INSTRUMENT REPORTED
+
+spirit-walk#playtest-row — SETTLED in the wg-diff comparer.
+  What: wg-diff reported feats/spirit-walk THEY-ONLY `missing=[sense]`. WG holds two rows of that name;
+  the released one encodes nothing (operations = "[]") and the War of Immortals PLAYTEST row carries
+  one op, `adjValue SENSES_PRECISE "apparition sight, 30"`, so richest-row-wins pairs us against the
+  draft. AoN feat-7137 prints no sense clause at all. Owner ruled 2026-09-10 (#149) and set the
+  standing playtest rule, which closes the spirit-walk#sense item batch 036 refuted and queued.
+  Where: scripts/wg-diff.mjs, VERIFIED_EQUIVALENT['spirit-walk'] = ['sense'] — a member settle on one
+  kind, keyed by record id; the record's other five kinds (defense, conditional, skill, ac, save) keep
+  comparing, so spirit-walk#printed-pieces (another chunk's finding) is untouched.
+  Test: test/batch037-instruments-6.test.ts, describe "spirit-walk settles the sense WG only has on a
+  (playtest) row" — three cases, all mutation-proof-marked: quiet with the settle and back to
+  `missing=[sense]` under `--raw`; the five other records that still report a missing sense
+  (attunement-to-stone, hand-of-the-lich, bloodline-mutation, runesight, umbraex-eye) listed by name;
+  and feats/spirit-walk.resistances still asserted so the settle stands in for nothing.
+
+dragon-eidolon#tradition — SETTLED in wg-identity, PARKED in the experience gate.
+  What: AoN eidolon-7 prints "**Tradition** Arcane" — one word, no list, no "choose". WG asks a
+  four-branch "Select a Tradition". Owner ruled 2026-09-10 (#138) under R14: arcane is fixed and no
+  picker is built. Two instruments saw it, so it took two entries.
+  Where (1): scripts/wg-identity.mjs, SETTLED_IDENTITIES['dragon-eidolon'] = ['divine','occult',
+  'primal'] — the three names, never the `options` bucket. Their bucket is exactly the four tradition
+  labels, so a bucket settle would have silenced the matching `arcane` too, i.e. the only instrument
+  left watching the carrier (classes.summoner.subclass.options[dragon-eidolon].tradition).
+  Where (2): work/experience-instrument-limits.json, record "dragon-eidolon", verdict MISSING-CONTROL,
+  lane `derived-value-not-a-pick` — the existing lane whose precedent is battle-creed (WG raises a
+  select, print offers no choice). _cite carries the finding id.
+  Test: same file, describe "dragon-eidolon settles the three traditions print does not offer" — agrees
+  with the settle, reports [divine, occult, primal] under `--raw`, and (the mutation proof) with
+  `tradition` stripped from the summoner subclass option in a stunted core copy the record is STILL
+  reported as `options theirs-not-ours=[arcane]`. A third case pins the breath damage/area pick print
+  DOES ask, which the settle must not touch.
+  Honest caveat recorded in the comparer comment: a BUILT summoner agrees either way, because
+  classes.summoner.spellcasting.tradition is itself 'arcane' and build.ts:4268 falls back to it. That
+  is why the carrier is proved through the comparer rather than on a character, and why the settle is
+  member-scoped rather than bucket-wide.
+  Still reported, deliberately: wg-diff files this record THEY-ONLY `missing=[language]`. That is a
+  different aspect and nothing here settles it.
+
+spellmaster-dedication#tradition — instrument park (experience gate); no row, no settle registry key.
+  What: the harness returned NO-SHEET-EFFECT, "WG encodes 1 value-bearing op(s); not on our built
+  character: defineCastingSource CASTING_SOURCES" — a separate Arcane/Intelligence focus source. AoN
+  feat-1134 names no tradition and no spell; its whole content is the +2 circumstance bonus to Identify
+  Magic with a trained skill, and rules-2231 sends the attribute to the source of the focus spell. Ours
+  builds no source and hangs each spellmaster focus spell on the feat that prints it
+  (feats/familiar-form.focusSpells, feats/spellmasters-ward.focusSpells). The printed clause IS
+  delivered — FEAT_SITUATIONAL['spellmaster-dedication'], src/rules/situationalBonuses.ts:621 — and a
+  situational star moves no number on a freshly built character, which is the whole of the blindness.
+  Owner ruled 2026-09-10 (#110) under R14.
+  Where: work/experience-instrument-limits.json, record "spellmaster-dedication", verdict
+  NO-SHEET-EFFECT, lane `wg-unprinted-casting-source`. _cite carries the finding id.
+  Test: same file, describe "spellmaster-dedication prints a bonus, not a casting source" — the star's
+  bonus/when/targets pinned against the printed clause; a built 6th-level wizard holding the dedication
+  stars Arcana; and the mutation proof, deleting FEAT_SITUATIONAL['spellmaster-dedication'] in memory,
+  which removes the star and restores it. A third case pins both focus spells on their own feats with
+  no spellcastingGrant anywhere.
+
+────────────────────────────────────────────────────────────────────────────────────────────────────
+THE NINE NO INSTRUMENT REPORTED — residual reads, no settle, and deliberately no settle
+
+  For each of these the owner ruled the book the winner and ours already IS the book, and every
+  comparer is already quiet on the record. A settle where nothing reports is a settle that can only
+  hide the NEXT finding on that record, so none was written. Each line names where the record lands.
+
+  barrows-edge#damage-wording (#136) — every instrument quiet, no settle written. wg-diff WE-ONLY
+    (theirs [note] vs ours [grantsRecord,conditional,weapon]); wg-values "prose-only bonus".
+  gaze-sharp-as-steel#transcendence (#137) — every instrument quiet, no settle written. wg-diff
+    WE-ONLY (theirs [note] vs ours [grantsRecord,conditional,perception,ac]); wg-values prose-only.
+  hyper-boosters#overdrive-bonus (#148) — every instrument quiet, no settle written. wg-diff AGREE
+    ([conditional,speed] both sides); wg-values "ok hyper-boosters (1 values, 0 sets agree)".
+  chronomancers-secrets#focus-spell (#150) — every instrument quiet, no settle written. wg-diff
+    WE-ONLY (theirs [choice] vs ours [spellcasting,focus,choice,specialStat,spell]); wg-values
+    not value-checked.
+  benefactors-resistance#floor-and-dragons (#11) — every instrument quiet, no settle written. wg-diff
+    AGREE (their 72 ops collapse to kinds we carry); wg-values "ok (0 values, 1 sets agree)".
+  northridge-scholar#seasonal-boon-frequency (#97) — every instrument quiet, no settle written.
+    wg-diff WE-ONLY; wg-values "ok northridge-scholar (1 values, 0 sets agree)".
+  skybearers-belt#bulk-aura (#141) — every instrument quiet, no settle written. wg-diff WE-ONLY on
+    classFeatures and noMatch on the items twin; wg-values prose-only. (The record's OTHER finding,
+    skybearers-belt#scoped-stars, is another chunk's and is not covered by anything here.)
+  shadowcaster-dedication#tradition (#22) — every instrument quiet, no settle written. wg-diff WE-ONLY
+    (their [spellcasting,spell,focus] all on ours; our extra is [note]); the wg-casting comparer skips
+    the archetype as a non-class source; experience OK.
+  hallowed-necromancer-dedication#tradition (#25) — every instrument quiet, no settle written. wg-diff
+    WE-ONLY; the wg-casting comparer skips non-class sources; experience OK. Ours carries focusSpells
+    ['hallowed-ground'] + focusFromSpellSlots:true, which IS feat-3459's rule.
+
+────────────────────────────────────────────────────────────────────────────────────────────────────
+COMPARER RUNS — BEFORE/AFTER, ON THE BATCH PACKET AND THE TWO PREVIOUS ONES
+
+"BEFORE" is the pre-batch snapshot of each comparer (work/.b037-testbase/*.mjs, run against the live
+scripts/lib and the live data); "AFTER" is the working tree. The AFTER column therefore also carries
+SIBLING CHUNKS' entries, so the attribution column says which moves are mine.
+
+  wg-diff (corpus-wide, intersected with each packet)   BEFORE 183 THEY-ONLY corpus-wide, AFTER 179
+    batch 035 packet:   0 -> 0
+    batch 036 packet:   1 -> 0   gone: spirit-walk[sense]                         <- MINE
+    batch 037 packet:   8 -> 4   gone: spirit-walk[sense]                         <- MINE
+                                       advanced-red-mantis-magic[spellSlot]       <- sibling
+                                       instinct-ability[hp]                       <- sibling
+                                       tree-friend[language]                      <- sibling
+                                 new: none, in any packet, and none corpus-wide.
+    ⚠ spirit-walk sits in BOTH the 036 and the 037 packet, so my settle closes it in 036 too. That is
+      the intended resolution, not a hidden flip: batch 036 REFUTED spirit-walk#sense as the known
+      edition-collision false positive and sent it to the desk; desk #149 ruled it on 2026-09-10 and
+      this settle is that ruling landing. No other 036 record moved.
+
+  wg-values --batch
+    batch 035:  27 compared / 27 agree / 0 to adjudicate  ->  identical
+    batch 036:  14 compared / 14 agree / 0 to adjudicate  ->  identical
+    batch 037:  58 compared / 52 agree / 6 to adjudicate  ->  58 / 56 / 2   (all four siblings' rows;
+                I added no SETTLED_VALUES or NOT_A_SCALAR key — none of my twelve is a value finding)
+
+  wg-identity --batch
+    batch 035:  25 checked / 23 match / 2 reported  ->  25 / 24 / 1
+                gone: cultivation-order  <- sibling (their batch-037 leaf-order settle; the record is
+                also in the 035 packet). animal-instinct still reported.
+    batch 036:  14 checked / 14 match / 0 reported  ->  identical
+    batch 037:  66 checked / 58 match / 8 reported  ->  66 / 63 / 3
+                gone: dragon-eidolon        <- MINE
+                      spore-order, echo-of-lost-moments, cultivation-order, sky-rider  <- siblings
+                still reported: animal-instinct, time-mage-dedication, haunting-memories.
+
+  wg-casting (class-wide; no --batch, run via `npx jiti`)
+    baseline (work/.b037-baseline/casting.json): 16 class sources, 4 with mismatches (180 rows)
+    now:                                          16 class sources, 3 with mismatches (174 rows)
+    The one that closed is `animist` (6 rows), from a sibling's data change. I edited no casting data
+    and no casting comparer; nothing of mine can move this instrument.
+    ⚠ `node scripts/wg-casting.mjs` alone throws ERR_MODULE_NOT_FOUND on '../src/rules/seed' — the
+      script is TypeScript-importing and is meant to be run through `npx jiti`, which is how
+      wg-batch-run.mjs invokes it. Pre-existing, unchanged by this chunk, noted so the next reader does
+      not mistake it for damage.
+
+  Other guards: `npx tsc --noEmit` clean. `node scripts/vt.mjs run test/batch037-instruments-6.test.ts`
+  — 9 passed. `node scripts/test-flip-audit.mjs --batch 037` — one failure, and it is not this chunk's
+  (see CROSS-FILE GAPS); both of my registry keys and both of my limits entries pass their citation and
+  mutation-proof checks.
+
+FILES THIS CHUNK CHANGED
+  scripts/wg-diff.mjs                       VERIFIED_EQUIVALENT['spirit-walk'] = ['sense']
+  scripts/wg-identity.mjs                   SETTLED_IDENTITIES['dragon-eidolon'] = ['divine','occult','primal']
+  work/experience-instrument-limits.json    + dragon-eidolon (MISSING-CONTROL, derived-value-not-a-pick)
+                                            + spellmaster-dedication (NO-SHEET-EFFECT, wg-unprinted-casting-source)
+  test/batch037-instruments-6.test.ts       new, 9 cases
+  work/.b037-rows-instruments-6.json        new, 12 findings, 0 rows
+Untouched on purpose: scripts/wg-values.mjs, scripts/wg-casting.mjs, scripts/lib/wg-experience-lanes.mjs
+(no finding of mine reaches them), and scripts/lib/wg-parse.mjs (out of grant — see CROSS-FILE GAPS).

@@ -51,13 +51,33 @@ describe('mechanical data survives a re-import', () => {
     expect(dead).toEqual([]);
   });
 
+  /*
+   * A LEAF A LATER ROW AMENDS IS NOT DRIFT.
+   *
+   * The overlay is replayed IN ORDER, so a pathless whole-value row followed by a `path` row into that
+   * same field is one intended two-step write and core.json holds the SECOND value by construction —
+   * a re-import reproduces it exactly, which is all this file guards. Batch 037 is the first to ship
+   * the shape: feats/haunting-memories writes the whole `choice` and then rewrites `choice.note` once
+   * the skill-feat half moved to its own record. Only the pathless row of such a pair is excused, and
+   * only for the exact field the later row overwrites; the later row itself is still checked.
+   */
+  /* Indexed in one pass rather than scanned per row: the overlay is ~14k rows and the pairwise form
+   * timed the suite out. Key is "<category>/<id>/<amended field>" -> the LAST index that amends it. */
+  const lastAmend = new Map<string, number>();
+  overlay.forEach((q, j) => {
+    if (q.path?.length === 1) lastAmend.set(`${q.category}/${q.id}/${q.path[0]}`, j);
+  });
+  const amendedLater = (p: { category: string; id: string; field?: string; path?: string[] }, i: number) =>
+    !p.path?.length && (lastAmend.get(`${p.category}/${p.id}/${p.field}`) ?? -1) > i;
+
   it('every overlay patch actually matches what core.json holds', () => {
     // A patch that has drifted from the shipped value means core.json was hand-edited after the fact,
     // and the next regeneration would silently revert that edit. That is how the two backgrounds
     // whose overlay said `performance` while core.json said `society` were found.
     const db = c as unknown as Record<string, Record<string, Record<string, unknown>>>;
     const drift = overlay
-      .filter((p) => {
+      .filter((p, i) => {
+        if (amendedLater(p, i)) return false;
         // A `create` entry carries a whole record rather than one field; it matches when the record
         // ships at all. (It never overwrites, so a differing shipped record is upstream's, not drift.)
         if (p.create) return !db[p.category]?.[p.id];

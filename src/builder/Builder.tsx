@@ -54,7 +54,9 @@ import {
 } from '../rules/derive';
 import { foldArchSpellSlotBonuses, grantedChoiceKey, narrowSpellFilter, skillSlotOptions } from '../rules/build';
 import { signaturesAt } from '../rules/build';
-import { activeCasterArchetype, archetypeEntryIds, archetypeSlots, archetypeTraditionOptions } from '../rules/casterArchetypes';
+// batch 037: flexible-spellcaster#collection-shape — the sheet's own sizer, never a copy of it.
+import { flexibleCollectionSize } from '../rules/build';
+import { activeCasterArchetype, archetypeCantripAllowed, archetypeEntryIds, archetypeSlots, archetypeTraditionOptions } from '../rules/casterArchetypes';
 import { bonusSkillFeatCount, bonusSkillFeatKey, choiceGrantFor, exhaustedGrantReason, FEAT_GRANTS, featUpgradesAtLevel, LOCKED_SKILL_KEYS, maxTakes } from '../rules/featGrants';
 import { FEAT_PICK_GRANTS, pickKeysFor, pickPrompt, pickableFeats } from '../rules/featPickGrants';
 import { FEAT_FEAT_GRANTS, isBoundGrant } from '../rules/featFeatGrants';
@@ -407,6 +409,12 @@ export function Builder({
   const isUmtBook = casterCls?.id === 'wizard' && subOption?.id === 'school-of-unified-magical-theory';
   const spellbookSize = bookSpec ? spellbookBudget(bookSpec, build.level) : wizardSpellbookBudget(build.level, isUmtBook);
   const learnedTotal = Object.values(build.spells).reduce((n, arr) => n + arr.length, 0);
+  /* batch 037: flexible-spellcaster#collection-shape — a spell COLLECTION is one flat pool across the
+   * ranks (*"equals the total number of spell slots you get each day"*, archetype-99), the same shape
+   * the spellbook rail already draws, so it rides that rail instead of the per-rank caps. Without it
+   * the picker offered one rank's slots at a time — the shape print does not print, and the shape the
+   * sheet no longer keeps. `isWizardBook` cannot cover it: a collection casts SPONTANEOUS. */
+  const isFlexCollection = !!casting && archMods.spellCollection;
   /* Known-beyond-slots for an archetype pool (the halcyon "2 common 1st-rank spells" over one slot,
    * Shattered Sacrament's extra known). The BUILDER's per-rank counts are pick caps, not the slot
    * pool, so they must include these or the sheet keeps spells the player was never given a picker
@@ -495,6 +503,14 @@ export function Builder({
    * by record id — see buildChoiceOptions.
    */
   const renderChoice = (def: FeatChoiceDef, key: string, recordId: string) => {
+                              // batch 037: versatile-mutation#energy-level — *"AT 8TH LEVEL, choose one
+                              // of the following: acid, cold, electricity, fire, or sonic damage"*
+                              // (feat-5454). A choice that starts at a printed level is not drawn before
+                              // it. `FeatChoiceDef.minLevel` already meant this on the daily path
+                              // (dailyChoices.ts) and was ignored here, so the picker appeared four
+                              // levels early — and `levelChoices` counted it, which is the matching half
+                              // of this fix in build.ts.
+                              if (def.minLevel != null && build.level < def.minLevel) return null;
                               // Annotated because the branches inside buildChoiceOptions are structurally
                               // different and the generic in choiceOptionsFor would otherwise narrow away `label`.
                               const opts: NarrowedOption[] =
@@ -977,6 +993,15 @@ export function Builder({
       ) as Sp[];
       base = pool.sort((a, b) => a.rank - b.rank || a.name.localeCompare(b.name));
     }
+    /* A caster ARCHETYPE that names its cantrips — Oatia Skysage: *"two of the following cantrips of
+     * your choice: detect magic, guidance, know the way, or read aura"* (feat-8112). This surface is
+     * the archetype's cantrip picker only when the CLASS is not itself a caster (a caster class picks
+     * its archetype pool on the Setup card instead), so the class's own list is never narrowed here.
+     * `listAdditions` below is deliberately still added on top: a feat that grants a cantrip grants it
+     * by its own printed text, which the dedication's list does not override. */
+    if (rank === 0 && !casting && archCaster?.config.cantripOptions) {
+      base = base.filter((s) => archetypeCantripAllowed(archCaster, s.id));
+    }
     if (!listAdditions.size) return base;
     const have = new Set(base.map((s) => s.id));
     const extra = [...listAdditions]
@@ -1042,6 +1067,11 @@ export function Builder({
   // Spellbook budget (a single across-rank total) at a given level — the class's own `spellbook` numbers
   // (magus 4 + 2) when it carries them, else the wizard ladder including the UMT +1.
   const bookAt = (L: number) => (L < 1 ? 0 : bookSpec ? spellbookBudget(bookSpec, L) : wizardSpellbookBudget(L, isUmtBook));
+  /* batch 037: flexible-spellcaster#collection-shape — the OTHER across-rank budget on this rail: the
+   * spell collection, sized by `flexibleCollectionSize` (buildCharacter's own function, so the picker
+   * and the sheet cannot disagree about how many spells the pool holds). */
+  const flatBudget = isWizardBook || isFlexCollection;
+  const flatAt = (L: number) => (L < 1 ? 0 : isFlexCollection ? flexibleCollectionSize(slotsAt(L)) : bookAt(L));
   // The first level this character can cast — cantrips, tradition, and divine font live here.
   const firstCasterLevel = (() => {
     if (!showSpells) return 0;
@@ -1058,7 +1088,8 @@ export function Builder({
       .map((r) => ({ rank: r, gained: (cur[r] ?? 0) - (prev[r] ?? 0), cap: cur[r] ?? 0 }));
     return {
       ranks,
-      bookGained: isWizardBook ? bookAt(L) - bookAt(L - 1) : 0,
+      // batch 037: flexible-spellcaster#collection-shape — both across-rank pools grow through here.
+      bookGained: flatBudget ? flatAt(L) - flatAt(L - 1) : 0,
       cantrips: L === firstCasterLevel ? cantripCap : 0,
     };
   };
@@ -1185,11 +1216,20 @@ export function Builder({
             </div>
           </div>
         )}
-        {isWizardBook && g.bookGained > 0 && (
+        {flatBudget && g.bookGained > 0 && (
           <>
+            {/* batch 037: flexible-spellcaster#collection-shape — one across-rank pool, named for the
+                rule that gives it: a spellbook, or the archetype's spell collection. */}
             <div className="bsec-sub">
-              Spellbook — {learnedTotal} / {bookAt(lvl)} learned (+{g.bookGained} this level)
+              {isFlexCollection ? 'Spell collection' : 'Spellbook'} — {learnedTotal} / {flatAt(lvl)}{' '}
+              {isFlexCollection ? 'collected' : 'learned'} (+{g.bookGained} this level)
             </div>
+            {isFlexCollection && (
+              // "You must select at least one 1st-level spell for your collection each time you
+              // prepare" (archetype-99) — the pool's only printed restriction, and the player is the
+              // one who satisfies it, so it is said where they choose.
+              <p className="setup-hint">Any ranks you like, up to the total — but at least one 1st-rank spell.</p>
+            )}
             {Object.keys(slotsAt(lvl))
               .map(Number)
               .filter((r) => r >= 1)
@@ -1200,7 +1240,7 @@ export function Builder({
                   <div className="spell-pick-row" key={rank}>
                     <div className="spr-head">
                       <span>{ord(rank)} rank</span>
-                      <span className="spr-count">{chosen.length} learned</span>
+                      <span className="spr-count">{chosen.length} {isFlexCollection ? 'collected' : 'learned'}</span>
                     </div>
                     <div className="spr-chips">
                       {chosen.map((id, idx) => (
@@ -1211,7 +1251,7 @@ export function Builder({
                           </button>
                         </span>
                       ))}
-                      <button className="spr-add" type="button" disabled={learnedTotal >= bookAt(lvl)} title={learnedTotal >= bookAt(lvl) ? `Your spellbook holds all ${bookAt(lvl)} spells it can at this level.` : undefined} data-ctl="spell" data-ctl-title={rank === 0 ? 'Cantrip' : `Rank ${rank} spell`} onClick={() => setPicker({ kind: 'spell', rank, cap: bookAt(lvl) })}>
+                      <button className="spr-add" type="button" disabled={learnedTotal >= flatAt(lvl)} title={learnedTotal >= flatAt(lvl) ? (isFlexCollection ? `Your collection holds all ${flatAt(lvl)} spells it can at this level.` : `Your spellbook holds all ${flatAt(lvl)} spells it can at this level.`) : undefined} data-ctl="spell" data-ctl-title={rank === 0 ? 'Cantrip' : `Rank ${rank} spell`} onClick={() => setPicker({ kind: 'spell', rank, cap: flatAt(lvl) })}>
                         + add
                       </button>
                     </div>
@@ -1220,7 +1260,9 @@ export function Builder({
               })}
           </>
         )}
-        {!isWizardBook &&
+        {/* batch 037: flexible-spellcaster#collection-shape — per-rank caps only where the rule is
+            per rank; a collection (like a spellbook) is drawn by the flat rail above. */}
+        {!flatBudget &&
           g.ranks.map(({ rank, gained, cap: capR }) => {
             const chosen = build.spells[rank] ?? [];
             return (
@@ -3163,9 +3205,11 @@ export function Builder({
         // swapped for its cls2 mirror so the same picker serves both (primary path unchanged).
         const c2 = picker.caster === 2;
         const capCantrip = c2 ? cantripCap2 : cantripCap;
-        const capBook = c2 ? spellbookSize2 : spellbookSize;
+        // batch 037: flexible-spellcaster#collection-shape — the collection is the second across-rank
+        // pool this picker serves; `flatBudget` covers both, so neither is capped by one rank's slots.
+        const capBook = c2 ? spellbookSize2 : isFlexCollection ? flexibleCollectionSize(slotCounts) : spellbookSize;
         const capSlots = c2 ? slotCounts2 : slotCounts;
-        const wizBook = c2 ? isWizardBook2 : isWizardBook;
+        const wizBook = c2 ? isWizardBook2 : flatBudget;
         const prepared = c2 ? isPrepared2 : isPrepared;
         const cantripList = c2 ? build.cantrips2 ?? [] : build.cantrips;
         const spellList = c2 ? build.spells2?.[picker.rank] ?? [] : build.spells[picker.rank] ?? [];

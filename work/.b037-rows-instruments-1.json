@@ -1,0 +1,72 @@
+{
+ "findings": [
+  {
+   "id": "advanced-red-mantis-magic#legacy-slots",
+   "backfillRows": [],
+   "note": "Instrument settle, no data row. The record is correct as it ships: the 2019 World Guide stub (edition 'legacy', aonId feat-897) of a Red Mantis Assassin archetype Prey for Death reprinted whole, granting nothing on the live archetype. Their single giveSpellSlot made it wg-diff THEY-ONLY missing=[spellSlot], so it is settled in wg-diff's VERIFIED_EQUIVALENT as 'advanced-red-mantis-magic': ['spellSlot'], citing owner ruling 2026-09-10 desk #46 under R12. Blast radius measured at ONE record: unholy-resurrection and mortem-ultimatum still report spellSlot. Mutation-proof + carrier proof in test/batch037-instruments-1.test.ts."
+  },
+  {
+   "id": "devil-allies#printing",
+   "backfillRows": [],
+   "note": "Residual read, no row and NO settle. Every comparer already reports this record clean (wg-diff WE-ONLY, wg-values 0 to adjudicate, wg-identity 0 without counterpart, experience lane OK), so there is nothing for an instrument to settle and a settle key here would be stale — it would silence the NEXT difference on the record unread. The measurement is pinned per record in test/batch037-instruments-1.test.ts."
+  },
+  {
+   "id": "fear-no-law-fear-no-one#printing",
+   "backfillRows": [
+    {
+     "category": "feats",
+     "id": "fear-no-law-fear-no-one",
+     "field": "description",
+     "value": "When your allies see you stand up to fear, they become similarly emboldened. Make a Strike. If you hit and deal damage, each ally within a 20-foot emanation around you who can see you reduces the value of their frightened condition by 1. If the target of your Strike was the source of their frightened condition, they reduce the value by 2 instead.",
+     "why": "AoN hellknight-order-14 prints \"each ally within a 20-foot emanation around you who can see you reduces the value of their frightened condition by 1\". Our shipped text reads \"each ally within a around you\" — the emanation distance was deleted by the inline-value cleaner, the defect class of project_hh_dropped_inline_values. The row restores exactly the two missing tokens (\"20-foot emanation \") and changes nothing else; it never replaces our wording with mirror text."
+    }
+   ],
+   "note": "NO settle (their three addBonusToValue SAVE_* ops carry no number, so the value comparer files them as prose-only and the record is quiet in all four comparers; a settle would match nothing) — but the verifier found the finding's \"ours matches print\" half to be FALSE: our shipped description had the 20-foot emanation distance deleted. One description row restores it. Measurement and the restored clause are pinned in test/batch037-instruments-1.test.ts."
+  },
+  {
+   "id": "steady-balance#grab-an-edge",
+   "backfillRows": [],
+   "note": "Residual read, no row and NO settle. Ours carries the Player Core clause as degreeShifts successToCrit on Balance; their extra Acrobatics-for-Reflex injectText is the dropped Core Rulebook sentence and must not be added. No comparer flags the record, so no settle is authored. Measurement pinned in test/batch037-instruments-1.test.ts."
+  },
+  {
+   "id": "hellknight-dedication#armor-training",
+   "backfillRows": [],
+   "note": "Residual read, no row and NO settle. feat-8812 prints no armour training; the armour training WG hangs here is printed on Armiger's Protection (feat-8814), which the app already builds. Every comparer reports the record clean, so a settle would be stale. Measurement pinned in test/batch037-instruments-1.test.ts."
+  },
+  {
+   "id": "ardent-armiger#printing",
+   "backfillRows": [],
+   "note": "Residual read, no row and NO settle. Ours is the FEAT_SITUATIONAL star in src/rules/situationalBonuses.ts, which is why the value comparer already agrees with their flat +1 on all three saves; their attitude-effect/Will-DC wording is the earlier printing. Nothing flagged, so no settle. Measurement pinned in test/batch037-instruments-1.test.ts."
+  },
+  {
+   "id": "android#printing",
+   "backfillRows": [],
+   "note": "Residual read, no row and NO settle POSSIBLE. WG's dump carries no ancestry row named Android, so wg-diff files the record under noMatch and the other comparers see nothing at all — no settle registry can hold this finding, and the record is not in work/wg-batch-037.json either (work/.b037-cut.json lists it under 'missing'). Reported as a CROSS-FILE GAP; the ancestry-side half of the ruling (rarity rare, source Ancestry Guide) is pinned in test/batch037-instruments-1.test.ts."
+  },
+  {
+   "id": "aon-wishes-for-riches#classification-choice",
+   "backfillRows": [],
+   "note": "Residual read, no row and NO settle. background-580's dragon/leech branch is already carried as choice.deviantClassification plus the choiceOptionLimits row pinning the dragon branch to cold; WG's choiceless Consume Energy grant is the older wording. No comparer flags it, so no settle is authored. Measurement pinned in test/batch037-instruments-1.test.ts."
+  },
+  {
+   "id": "sense-of-belonging#classification-choice",
+   "backfillRows": [],
+   "note": "Residual read, no row and NO settle. The flicker/wraith branch is carried as choice.deviantClassification and both granted feats resolve; WG's flat Eerie Flicker grant is a deliberate difference. Nothing flagged by any comparer. Measurement pinned in test/batch037-instruments-1.test.ts."
+  },
+  {
+   "id": "lost-loved-one#classification-choice",
+   "backfillRows": [],
+   "note": "Residual read, no row and NO settle. The leech/wraith branch is carried, and the wraith option points at the DEVIANT ghostly-grasp-deviant rather than the archetype feat of the same name. Nothing flagged by any comparer, so a settle would be stale. Measurement pinned in test/batch037-instruments-1.test.ts."
+  },
+  {
+   "id": "wanderlust#classification-choice",
+   "backfillRows": [],
+   "note": "Residual read, no row and NO settle. background-579's flicker/troll branch is carried plus Express Rider; WG's troll-only Titan Swing text is the older printing. Nothing flagged by any comparer. Measurement pinned in test/batch037-instruments-1.test.ts."
+  },
+  {
+   "id": "beast-blessed#trigger",
+   "backfillRows": [],
+   "note": "Residual read, no row and NO settle. Bestial Clarity's trigger is already word for word with background-362 ('an enchantment effect'); WG's wider 'mental effect' trigger must not be copied. No comparer flags the record — the trigger lives in prose, which no comparer reads — so the guard is a text assertion rather than a settle. Pinned in test/batch037-instruments-1.test.ts."
+  }
+ ]
+}

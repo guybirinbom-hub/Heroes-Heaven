@@ -1,0 +1,97 @@
+BATCH 037 — WG-COMPARISON LANE — GAP AGENT for family data-rows-4
+Spec:   work/.b037-rows-gap-data-rows-4.json   (2 findings, 2 backfill rows, both supersedes:true)
+Tests:  test/batch037-gap-data-rows-4.test.ts  (10 its, all green today; every row-dependent one runs
+        on an in-memory PATCHED copy of the content database, never a patched-vs-shipped delta)
+Code:   src/rules/types.ts, src/rules/build.ts, src/rules/derive.ts, src/rules/play.ts,
+        src/rules/featCantripGrants.ts
+npx tsc --noEmit clean. node scripts/test-flip-audit.mjs --batch 037: no violation in any file of mine
+(its single FAIL is test/locate-lawbreakers.test.ts:82, family data-rows-2).
+
+ONE LINE PER GAP LINE
+---------------------------------------------------------------------------------------------------
+1. AUTHORED — animal-instinct#spider-web, "GrantedStrike declares die/damageType REQUIRED"
+   (report:11 and verify:168, the same line twice)
+   ref: src/rules/types.ts:GrantedStrike + NaturalAttack, src/rules/build.ts:collectGrantedNaturals,
+        src/rules/derive.ts:UnarmedProfile + deriveUnarmedStrike + applyUnarmedRiders
+   Both damage fields are now optional end to end and a Strike with no die prints "no damage" — the
+   die step, striking dice, Weapon Specialization, precision and Rage damage are all skipped for one,
+   because *"the spider's web attack deals no damage"* (instinct-8) and every one of those adds to a
+   damage roll the Strike never makes. Owner #145 option A, finding animal-instinct#spider-web.
+
+2. AUTHORED — animal-instinct#spider-web, "the Web's rider has no carrier on a granted attack"
+   (report:12 and verify:172)
+   ref: src/rules/types.ts:NaturalAttack.onHit (and GrantedStrike.onHit), rendered in
+        src/rules/derive.ts:deriveUnarmedStrike as "(on a hit, …)"
+   A new one-field carrier rather than a recordMarks entry: the clause is the attack's whole content,
+   so it belongs on the attack row and travels with it, and src/rules/situationalBonuses.ts is the
+   situational family's live file this batch. Finding animal-instinct#spider-web.
+
+3. AUTHORED — scar-of-the-survivor#dying-toggle AND soul-well#dying-toggle, "nothing can move the
+   death threshold from a TOGGLE" (report:13 and verify:175)
+   ref: src/rules/types.ts:ModeDef.dyingThresholdBonus + src/rules/play.ts:applyPlayState
+   The active modes' bonuses are summed on top of what the build worked out and returned as
+   Character.dyingThreshold, the one field src/sheet/VitalsRail.tsx:180 already reads, so Soul Well's
+   *"For the next minute"* (feat-7707) and the Scar's spark-dependent Diehard (ikon-13) can be a
+   number with an off switch instead of a permanent field or prose. Findings
+   scar-of-the-survivor#dying-toggle and soul-well#dying-toggle. SEE "DATA STILL NEEDED" BELOW: the
+   two mode records themselves cannot carry the field from this spec.
+
+4. AUTHORED — nagaji-spell-familiarity#daily-control, "featCantripGrants.ts still carries the
+   BUILD-TIME picker" (report:14 and verify:180)
+   ref: src/rules/featCantripGrants.ts (entry deleted, with the reason in the kitsune block above it)
+        + work/.b037-rows-gap-data-rows-4.json (feats/nagaji-spell-familiarity `choice`)
+   The deletion and the choice row are one change and must land together — deletion alone takes the
+   cantrip away, the row alone asks the same question twice (and scripts/duplicate-pick-check.mjs
+   fails naming it) — so this gap run authored the row the builder had to withhold. The five sibling
+   entries data-rows-5 removed stay removed, pinned in my test file. Finding
+   nagaji-spell-familiarity#daily-control.
+
+5. AUTHORED — nagaji-spell-familiarity#daily-control, "play.ts DROPS the grant my row authors"
+   (report:15 and verify:187)
+   ref: src/rules/play.ts, the daily-choice merge (the `if (rank <= 0)` branch, now routing rank 0
+        into the innate entry's `cantrips`)
+   ALREADY LANDED, by the concurrent gap agent for family data-rows-5, whose own line covers the same
+   block for the kitsune twins: a rank-0 daily grant now joins `cantrips`, `atWill` is honoured
+   instead of `uses: s.usesPerDay ?? 1`, and the grant's tradition reaches `spellTraditions`. No
+   phantom entry is left behind either — every grant now lands somewhere, so nothing survives the
+   loop empty. I verified it against my own record rather than re-editing the block, and pinned it
+   for finding nagaji-spell-familiarity#daily-control in test/batch037-gap-data-rows-4.test.ts
+   (with the stunted-copy twin: the SHIPPED grant-less options must still reach no entry).
+
+6. AUTHORED — DATA STILL NEEDED: classFeatures/animal-instinct `grantedStrikes` (verify:141)
+   ref: work/.b037-rows-gap-data-rows-4.json, finding animal-instinct#spider-web
+   The shipped 31-entry array re-emitted byte-identical with the printed Web appended —
+   {"name":"Web","traits":["unarmed"],"group":"brawling","range":15,"choiceValue":"spider",
+   "onHit":"the target takes a -10-foot circumstance penalty to its Speeds for 1 round"} — with
+   supersedes:true. The lane change in line 1 decided the shape: the damage fields are OMITTED, not
+   null, because "no damage" is the absence of a die rather than a die whose value is null.
+
+DATA STILL NEEDED (next batch — could not be authored from here)
+---------------------------------------------------------------------------------------------------
+- modes/scar-of-the-survivor and modes/soul-well need `dyingThresholdBonus: 1` (ikon-13's Diehard
+  clause; feat-7707's *"die from the dying condition at dying 5 rather than dying 4"*). The lane is
+  built and tested, but both mode RECORDS are created by work/.b037-rows-data-rows-4.json's own
+  `create:true` rows in this same batch, and scripts/apply-parity-fixes.mjs refuses a field row whose
+  record does not exist in the shipped core.json ("would reach nothing") while a second `create` row
+  for the same id is a hard collision. So the toggles ship carrying the clause in their `note` — the
+  wording the data agent wrote, which asks the player to raise the number by hand — and one two-row
+  spec next batch (the field, plus a `note` row dropping the by-hand sentence) turns the number on.
+  Nothing else is missing: applyPlayState reads the field the moment it is there.
+- The second sentence of instinct-8's Web footnote — *"If a target is hit a second time by the same
+  character's web attack while they have this penalty, they're instead immobilized until they succeed
+  at a check to Escape against your class DC"* — stays printed text on the class feature's
+  description. It is a per-target state across two hits; nothing on the character can hold it, and
+  `onHit` is one line on a Strike row, not a tracker.
+
+CROSS-FILE GAPS
+---------------------------------------------------------------------------------------------------
+- None left from my six lines. Two notes for the closer, neither a gap:
+  · src/rules/play.ts and src/rules/featCantripGrants.ts were edited by the data-rows-5 gap agent and
+    by me in the same run. My edits are surgical (one added block in the play-state return, one
+    deleted registry entry and its two comments) and both files are tsc-clean with all six test files
+    I ran green — but if that agent's last write raced mine, re-check that
+    FEAT_CANTRIP_GRANTS['nagaji-spell-familiarity'] is gone and that the play-state return still
+    carries the `dyingThreshold` block.
+  · instinct-8's table prints the WASP's attack as a Stinger; classFeatures/animal-instinct ships it
+    as "Pincer" (d4 P, backstabber, deadly d8, venomous — the right numbers, the wrong name). Not in
+    any finding of mine, so the row I re-emit carries it through unchanged.

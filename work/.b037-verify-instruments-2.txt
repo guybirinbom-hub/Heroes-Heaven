@@ -1,0 +1,143 @@
+BATCH 037 — ADVERSARIAL VERIFY, CHUNK instruments-2 (12 findings)
+
+HEADLINE: the chunk shipped with a RED TEST. The builder's own settle flipped
+test/batch033-resume-instruments-…test.ts:317 and the builder filed the flip as a cross-file gap
+instead of closing it, so the batch would have gone to the driver with a failing suite. Fixed here.
+Everything else in the chunk holds up under independent measurement.
+
+  $ node scripts/vt.mjs test/batch033-resume-instruments-…test.ts        (BEFORE my fix)
+    × spore-order: the settle leaves the Leaf Order membership gap reporting on wg-identity
+      AssertionError: expected 'ok    spore-order  (2 identities agre…' to match
+      /grants\s+theirs-not-ours=\[leaforder\]/
+
+  AFTER: node scripts/vt.mjs <that file> test/batch037-instruments-2.test.ts → 2 files, 25 tests passed.
+  npx tsc --noEmit → exit 0.  node scripts/test-flip-audit.mjs --batch 037 → clean, 21 files, 13 new
+  settle key(s), every flip cited (my edit included).
+
+PER FINDING
+
+  spore-order#leaf-order-membership — FIXED-BY-ME
+      The settle itself is right and correctly scoped: SETTLED_IDENTITIES['spore-order'] = ['leaforder']
+      is a MEMBER key, not the `grants` bucket, so `leshyfamiliar` and anything their row grows keep
+      reporting (wg-identity.mjs:1866-1878 drops a bucket only when the entry names the bucket). Live,
+      not redundant: `--raw` puts `grants theirs-not-ours=[leaforder]` straight back. The carrier it
+      defers to is real — PARENT_ORDER at src/rules/build.ts:10111, read into the prerequisite `has`
+      set, and blocking only where the line resolves to a real feat id (build.ts:10157). Print checked
+      against the mirror: druidic-order-13 is a membership plus one familiar clause, nothing more.
+      WHAT I FIXED: the settle made test/batch033-resume-instruments-…test.ts:317 fail (evidence above).
+      Edited that one assertion to `identity('spore-order', ['--raw'])` — the case's claim is unchanged
+      (the wg-diff specialStat settle does not reach the wg-identity grants row) and `--raw` is what
+      keeps it measuring the OLD settle's scope now that the row has a wg-identity settle of its own.
+      Rewrote the stale half of its comment ("a membership lane we do not model, filed as an owner
+      question" — batch 035 modelled it and the owner answered it on 2026-09-10) and cited the flip
+      with `// batch 037: spore-order#leaf-order-membership` directly above the changed expect(. The
+      record id is in the it( title, so both halves of the audit rule are satisfied; flip audit clean.
+      Checked that no OTHER reference flips: test/batch033-instruments.test.ts:423 already passes
+      `--raw`, and those two are the only `leaforder` assertions in test/ (grep).
+
+  cultivation-order#leaf-order-membership — DONE
+      SETTLED_IDENTITIES['cultivation-order'] = ['leaforder'], one entry per order rather than a shared
+      one, so a third leaf variant would still report. Same PARENT_ORDER carrier, same `--raw` proof.
+      No duplicate keys anywhere in the registry (144 keys, 0 duplicates — parsed and checked). Not in
+      scripts/wg-settle-stale.mjs's 77 "answer NOTHING" list, i.e. still answering a live difference.
+
+  animist#slot-table — DONE
+      Verified against the MIRROR, not the finding's prose. AoN class-64's Animist Spells per Day table
+      reads, 7th/8th/9th columns: L13 "1+1", L14 "2+1", L15 8th "1+1", L16 "2+1", L17 9th "1+1",
+      L18 "2+1", with the tfoot note that the number after the plus is the apparition pool. I ran the
+      comparer myself (`--class animist --verbose --raw`) and read every level: ours is the printed
+      table cell for cell at ranks 1–9, levels 1–20; WG is short exactly one at the six newly-opened
+      top ranks and equal everywhere else — the signature of a late ladder, not of a generous one.
+      SETTLED_CASTING.animist lists exactly those six `kind|level|rank` keys; with `--raw` the run
+      returns to those six and nothing else. The corpus dump work/wg-casting-parity.json shows
+      animist:0 with magus/summoner/wizard untouched, so the new registry silenced only what it names.
+
+  animist-apparition-spellcasting#slot-levels — DONE
+      The same six rows read from the apparition end; one SETTLED_CASTING entry with BOTH finding ids
+      cited above it, which is the correct shape (one teach, two findings, each id named). The carrier
+      half is pinned separately on APPARITION_SLOTS: 7th/8th/9th open at 13/15/17 and are undefined at
+      12/14/16 — the class table's own rows.
+
+  sequestered-spell#innate-proficiency — DONE, with one correction to the report's wording
+      No settle and no row is the right call: our record is one `effectChoices` picker narrowed by
+      `spellFilter.traditionFromChoiceFlag: 'magiphageTradition'`, `grantAs: 'innate'`, `atWill`,
+      `heightenHalfLevel` — print's general innate-spell rule (rules-2232), which the app derives.
+      ⚠ CORRECTION: the report says "wg-diff quiet". wg-diff is quiet only because of a PRE-EXISTING
+      settle — scripts/wg-diff.mjs:2922 `'sequestered-spell': ['conditional','spellcasting']`, not
+      touched by this batch (confirmed against git diff). With `--raw` the record IS in THEY-ONLY
+      missing [conditional, spellcasting]. That changes nothing about the verdict (the settle predates
+      the batch and the owner ruled the difference), but "quiet" should have said "settled earlier".
+
+  total-power#classification-choice — DONE
+      Checked the record rather than the claim: backgrounds/total-power carries
+      choice{flag:'deviantClassification', options:['blasting-beams','bone-spikes']} plus
+      choiceOptionLimits locking dragon-deviant-classification's `deviantDamage` to electricity when
+      blasting-beams is the pick. Both option values ARE feat ids in core.json, so backgroundChoiceKind
+      (build.ts:518-527) classifies the choice as 'feat' and the picked branch is really granted
+      (build.ts:5107 bgChoiceFeat) — the printed "if you choose dragon … if you choose troll" reaches a
+      built character, which is what makes "no settle" correct rather than convenient.
+
+  necromantic-tenacity#trigger — DONE
+      feats/necromantic-tenacity.degreeShifts is print's wording verbatim: successToCrit and
+      critFailToFail, both `when: "on a save against a necromancy effect"`, saves ["all"] — feat-886.
+      No comparer reports a trigger word; wg-diff has it as we-model-more (extra ['conditional'],
+      missing []), never THEY-ONLY. No settle is the right call.
+
+  divine-breadth#no-cantrip / primal-breadth#no-cantrip / occult-breadth#no-cantrip — DONE (all three)
+      All three carry spellSlotBonus {perRank:1, exceptHighest:2, entryId:<class>-dedication-casting}
+      and no cantrip field anywhere in the record. All three sit in wg-diff's AGREE bucket even with
+      `--raw` (I ran the corpus myself). Arcane Breadth carries the same shape and needs nothing, as
+      the report says. No settle is the right call — nothing reports.
+
+  sponsored-by-a-village#rarity / sponsored-by-teacher-ot#rarity — DONE (both)
+      Both shipped records carry rarity "common"; background-226 and background-224 print no rarity
+      trait. Grepped the four comparers and the experience lanes: no rarity reader anywhere, so there
+      is no instrument to settle in. ⚠ Scope confirmed: sponsored-by-teacher-ot#one-pick is a separate
+      finding owned by another family and nothing in this chunk touches it.
+
+SPEC ROWS, VERIFIED AS ROWS
+  work/.b037-rows-instruments-2.json — 12 findings, every one `backfillRows: []`. Nothing to diff
+  against a shipped value, no create rows, no created-prose spec, no field whose reader has to exist,
+  and therefore NO possible record+field+path collision with a sibling chunk's spec. Every record id
+  the notes name exists in core.json (checked: druid subclass options carry cultivation-order,
+  spore-order and leaf-order; feats divine-/primal-/occult-/arcane-breadth, necromantic-tenacity,
+  sequestered-spell, blasting-beams, bone-spikes; classFeatures dragon-deviant-classification;
+  backgrounds total-power, sponsored-by-a-village, sponsored-by-teacher-ot). No harness was needed
+  because no row exists to apply; the mechanics were exercised on really built characters instead
+  (the prerequisite check on armed content, the animist slot sums, the comparer's own level table).
+
+MANIFEST
+  work/.b037-specs.json holds all 15 family entries (instruments-1..7, situational, data-rows-1..6,
+  plus the two created-prose entries) — instruments-6 landed after the builder's read and is present.
+  The instruments-2 entry lists every path the chunk touched; I appended the batch033 test file I
+  fixed. No supersedes flag is needed anywhere in this chunk (no rows). No path in this chunk's stage
+  is claimed by another family except the shared comparer scripts, which is expected.
+
+DATA STILL NEEDED
+  (none — confirmed. All twelve are "nothing changes" reads; no backfill row is required by any of
+   them and none is authored.)
+
+CROSS-FILE GAPS
+  scripts/test-flip-audit.mjs REGISTRIES (line ~119-123) lists wg-diff / wg-values / wg-identity only,
+      and scripts/wg-settle-stale.mjs has the SAME hole ("370 settle(s) across three registries").
+      This batch gives scripts/wg-casting.mjs its first settle registry, SETTLED_CASTING, so its keys
+      are audited by NEITHER: the flip audit's own line reads "13 new settle key(s)" and the animist
+      key is not among them, and the stale checker will never notice the day WG fixes its apparition
+      ladder and the settle starts answering nothing. Two lines close it —
+        scripts/test-flip-audit.mjs:  'scripts/wg-casting.mjs': ['SETTLED_CASTING'],
+        scripts/wg-settle-stale.mjs:  the same registry added to its three-registry list
+      Outside my grant and outside the builder's; the mutation-proof test exists regardless
+      (test/batch037-instruments-2.test.ts). The builder reported the flip-audit half; the stale-check
+      half is mine.
+  src/rules/build.ts:10157 (`const fid = slug(line); if (content.feats[fid] && !has.has(fid))`)
+      — a NOTE, not a defect and not a request, and I confirmed it: there is no feats['leaf-order'] in
+      core.json (leaf-order is a druid SUBCLASS OPTION), so PARENT_ORDER's membership currently blocks
+      nobody. That is exactly the owner's answer B (know the membership, block nothing). Recorded only
+      so a later reader does not mistake the inertness for a missing carrier.
+
+  CLOSED BY THIS VERIFY (was a gap in the builder's list, is not one any more)
+  test/batch033-resume-instruments-…test.ts:317 — the flipped assertion, fixed in place; see above.
+
+MANIFEST stage[] PATHS I TOUCHED
+  test/batch033-resume-instruments-the-three-comparers-11-red-records-every-one-a-verified-carrier-the-comparer-cannot-see-.test.ts
+  (appended to the instruments-2 entry in work/.b037-specs.json)

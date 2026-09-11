@@ -41,9 +41,8 @@
    "n": 13,
    "record": "items/pyrotechnic-versatile-vial",
    "fields": ["damage", "range", "reload"],
-   "pending": true,
    "modelledOn": "items/versatile-vial",
-   "why": "The ruling CREATES a record that does not exist yet: '#13 vials item' — 'add a pyrotechnic copy of the existing Versatile Vial item (fire damage instead of acid, thrown, range 20)'. The intended id is items/pyrotechnic-versatile-vial, shaped on items/versatile-vial, which is itself `noMatch` in work/.wg-diff-all.json (WG has no row) — so the copy inherits no trust. Its fields are weapon chassis, which §1 protects (docs/trust-gate.md:35-38); the entry exists so the new record is on the ledger's books rather than appearing later as an unexplained ungated item."
+   "why": "The ruling CREATES a record that did not exist: '#13 vials item' — 'add a pyrotechnic copy of the existing Versatile Vial item (fire damage instead of acid, thrown, range 20)'. The id is items/pyrotechnic-versatile-vial, shaped on items/versatile-vial, which is itself `noMatch` in work/.wg-diff-all.json (WG has no row) — so the copy inherits no trust. Its fields are weapon chassis, which §1 protects (docs/trust-gate.md:35-38); the entry exists so the new record is on the ledger's books rather than appearing later as an unexplained ungated item. `pending` cleared in batch 037 (finding firework-technician-dedication#pyrotechnic-vial), which creates the record — a pending entry asserts the record does NOT exist yet (test/trust-approvals.test.ts), so the flag had to come off with the create row."
   },
   {
    "n": 13,
@@ -441,6 +440,8 @@
   { "n": 123, "id": "raised-by-belief", "status": "deferred" },
   { "n": 124, "id": null, "status": "authorisedException" },
   { "n": 125, "id": null, "status": "authorisedException" },
-  { "n": 126, "id": null, "status": "authorisedException" }
+  { "n": 126, "id": null, "status": "authorisedException" },
+  { "n": 151, "id": "screech-shooter-major-rune-grade", "status": "open" },
+  { "n": 152, "id": "empty-description-marker-line", "status": "open" }
  ]
 }

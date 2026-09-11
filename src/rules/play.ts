@@ -12,7 +12,7 @@
  * changes — a Con boost, a level-up — the character stays as hurt as they were,
  * rather than the current value silently desyncing from the new max.
  */
-import type { AbilityId, ActiveCondition, Character, CharacterAppearance, CharacterDetails, CharacterImage, Coins, CompanionConfig, ContentDatabase, InventoryItem, ItemDesignation, ItemImbuement, ItemPassiveEffects, ItemMonsterPart, ModeDef, NotePage, PinnedDesc, PreparedSlot, RestrictedSlot, SpellcastingEntry } from './types';
+import type { AbilityId, ActiveCondition, Character, CharacterAppearance, CharacterDetails, CharacterImage, Coins, CompanionConfig, ContentDatabase, InventoryItem, ItemDesignation, ItemImbuement, ItemPassiveEffects, ItemMonsterPart, InnateSpellGrant, ModeDef, NotePage, PinnedDesc, PreparedSlot, RestrictedSlot, SpellcastingEntry } from './types';
 import { resolveRestrictedSlots } from './restrictedSlots';
 import { deriveMaxHp, deriveBulk, dailyChoiceGrants, ownedFeatureIds } from './derive';
 import { FORMULA_BOOK_ITEM_ID, formulaBooks, grantsFormulaBook, withFormula } from './formulaBook';
@@ -489,9 +489,12 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
   // re-made nightly — so they are appended to the innate entry here, or given one of their own when
   // the character has no innate spells at all.
   {
-    const borrowed: { spellId: string; uses: number }[] = [];
+    /* The WHOLE grant is carried, not just its id and use count. A daily-choice grant is an
+     * `InnateSpellGrant` like any other, and three of its fields were being thrown away here — see
+     * the loop below. `from` is the record that asked the question, so the sheet can name it. */
+    const borrowed: (InnateSpellGrant & { from?: string })[] = [];
     for (const g of dailyChoiceGrants({ ...ch, dailyChoices: play.dailyChoices }, content))
-      for (const s of g.innateSpells ?? []) if (content.spells[s.spellId]) borrowed.push({ spellId: s.spellId, uses: s.usesPerDay ?? 1 });
+      for (const s of g.innateSpells ?? []) if (content.spells[s.spellId]) borrowed.push({ ...s, from: g.__from });
     if (borrowed.length) {
       const i = spellcasting.findIndex((e) => e.id === 'innate-casting');
       const base: SpellcastingEntry =
@@ -508,16 +511,47 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
               repertoire: {},
             };
       const repertoire: Record<number, string[]> = { ...(base.repertoire ?? {}) };
+      const cantrips: string[] = [...(base.cantrips ?? [])];
       const innateUses = { ...(base.innateUses ?? {}) };
       const spellSources = { ...(base.spellSources ?? {}) };
+      const spellTraditions = { ...(base.spellTraditions ?? {}) };
       for (const b of borrowed) {
-        const rank = content.spells[b.spellId].rank ?? 0;
-        if (rank <= 0) continue;
-        if (!(repertoire[rank] ??= []).includes(b.spellId)) repertoire[rank].push(b.spellId);
-        if (b.uses !== 1) innateUses[b.spellId] = b.uses;
-        spellSources[b.spellId] = 'Borrowed today';
+        // batch 037: kitsune-spell-expertise#daily-control — *"You can cast this as a 5th-rank divine
+        // innate spell once that day"* (feat-2629), and its nagaji twin (feat-3996). The grant's OWN
+        // `rank` is the printed cast rank and was being ignored for the spell record's base rank, so
+        // Confusion and Flicker (both base 4) reached the sheet a rank below what their feats print.
+        const rank = b.rank ?? content.spells[b.spellId].rank ?? 0;
+        // batch 037: kitsune-spell-familiarity#daily-control — *"you can cast the chosen spell as a
+        // divine innate CANTRIP"* (feat-2619). A cantrip resolves to rank 0 and used to be dropped
+        // here (`if (rank <= 0) continue;`), so an at-will daily cantrip could reach the sheet by no
+        // route at all, however the record was authored. Cantrips live in their own list on the
+        // entry, and auto-heighten there — which is the feat's "heightened to half your level".
+        if (rank <= 0) {
+          if (!cantrips.includes(b.spellId)) cantrips.push(b.spellId);
+        } else {
+          if (!(repertoire[rank] ??= []).includes(b.spellId)) repertoire[rank].push(b.spellId);
+          const uses = b.usesPerDay ?? 1;
+          if (!b.atWill && uses !== 1) innateUses[b.spellId] = uses;
+        }
+        // batch 037: kitsune-spell-mysteries#daily-control — *"You can cast this as a 1st-level DIVINE
+        // innate spell once that day"* (feat-2624). The entry's header tradition is a vote of whatever
+        // caster the character already is (arcane for a non-caster), so a kitsune's divine Bane was
+        // labelled arcane. `spellTraditions` is the per-spell override the entry already carries for
+        // exactly this, and the grant has been carrying the tradition all along.
+        if (b.tradition) spellTraditions[b.spellId] = b.tradition;
+        // …and it is not "Borrowed today" unless it was borrowed. That label belongs to Loaner Spell;
+        // an ancestry feat's morning casting is the ancestry feat's, and the record's name is what
+        // `dailyChoiceGrants` now carries out with the grant.
+        spellSources[b.spellId] = b.from ?? 'Borrowed today';
       }
-      const merged = { ...base, repertoire, ...(Object.keys(innateUses).length ? { innateUses } : {}), spellSources };
+      const merged = {
+        ...base,
+        repertoire,
+        cantrips,
+        ...(Object.keys(innateUses).length ? { innateUses } : {}),
+        spellSources,
+        ...(Object.keys(spellTraditions).length ? { spellTraditions } : {}),
+      };
       if (i >= 0) spellcasting[i] = merged;
       else spellcasting.push(merged);
     }
@@ -596,6 +630,20 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
     shieldDamage: Math.max(0, play.shieldDamage ?? 0),
     speedOverride: play.tempSpeed,
     conditions,
+    /*
+     * batch 037: scar-of-the-survivor#dying-toggle, soul-well#dying-toggle — a death threshold an
+     * active TOGGLE raises. Soul Well: *"For the next minute … living creatures within the same area
+     * die from the dying condition at dying 5 rather than dying 4"* (AoN feat-7707); Scar of the
+     * Survivor's immanence: *"You gain the benefits of the Diehard feat"* (AoN ikon-13), which holds
+     * only while your divine spark is in that ikon. The feat-level `dyingThresholdBonus` build.ts
+     * sums is unconditional, so both sentences shipped as permanent raises or as prose; this is the
+     * same number with an off switch. Added on top of what the build worked out, so a character with
+     * Diehard AND a toggle on gets both, and the vitals rail reads the one field it always read.
+     */
+    ...(() => {
+      const bonus = (play.activeModes ?? []).reduce((n, id) => n + (content.modes[id]?.dyingThresholdBonus ?? 0), 0);
+      return bonus ? { dyingThreshold: (ch.dyingThreshold ?? 4) + bonus } : {};
+    })(),
     inventory: play.inventory ?? ch.inventory,
     // An item bought in PLAY can carry a "choose one of N" whose answer lives in play state, so the
     // picked option's item bonuses are merged here. buildCharacter already does the same for items in

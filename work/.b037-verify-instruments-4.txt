@@ -1,0 +1,164 @@
+BATCH 037 — ADVERSARIAL VERIFY, CHUNK instruments-4 (WG-COMPARISON lane)
+========================================================================
+Verifier default was "not done". Everything below was re-measured from the shipped tree, not read
+off the builder's report: core.json dumped with node -e, the three comparers run fresh, the AoN
+mirror opened for every printed clause, `npx tsc --noEmit` clean, the family's test file run alone
+through scripts/vt.mjs (17 passed), and scripts/test-flip-audit.mjs --batch 037 clean
+(0 violations, 13 added registry keys across the batch).
+
+VERDICT: 12 DONE, 0 WRONG, 0 NOT-DONE, 0 FIXED-BY-ME. I changed no file.
+
+
+PER FINDING
+-----------
+instinct-ability#no-hit-points        DONE — fresh `node scripts/wg-diff.mjs --out …`: instinct-ability
+  is gone from theyOnly (baseline work/.b037-baseline/diff.json had it; 183 -> 179, the other 3 are
+  siblings'); under `--raw` the test gets it back as missing=['hp']. The stunt case (derivedGrant
+  deleted from a core copy) reports ['conditional'] with the settle in place, so the key cannot cover
+  the instinct grant. Print re-read in the mirror: feat-6194 is one sentence and contains no Hit
+  Points. Carriers confirmed in core.json: feats/instinct-ability.derivedGrant {fromFeat:
+  'barbarian-dedication'}, feats/barbarian-resiliency.maxHpBonus {perArchetypeFeat:3,
+  archetype:'barbarian'}, and feats/instinct-ability has no maxHpBonus of its own.
+
+tumbling-theft#thievery               DONE — fresh `node scripts/wg-values.mjs --batch
+  work/wg-batch-037.json`: 2 records to adjudicate (reverse-engineer, astrolabe-of-falling-stars —
+  both other chunks'); tumbling-theft is not among them, and `--ids tumbling-theft --raw` still
+  reports MISSING skill|stealth. Print re-read: feat-6513 says *"+1 circumstance bonus to your
+  Thievery check to Steal"*. Our carrier is live —
+  situationalBonuses.ts:1258 FEAT_SITUATIONAL['tumbling-theft'] targets {kind:'skill',
+  detail:'thievery'} — and the mutation case (setSituationalSuppressions) takes the star away and
+  gives it back. The no-park decision is CORRECT and I verified the mechanism rather than the claim:
+  the record IS NO-SHEET-EFFECT in the baseline experience dump, and wg-batch-gate.mjs:597 parks it
+  through queuedFor() while the desk entry sits in `open`, then through ownerRuled at :598 once the
+  driver moves it — an experience-instrument-limits.json entry would be a second, redundant park.
+
+reinforced-chassis#ac-scaling         DONE (residual, no row, no settle — correct). wg-diff lists it
+  under `agree`; wg-values and wg-identity do not report it; EXPERIENCE verdict OK. core.json:
+  items/reinforced-chassis-armor acBonus 3, acBonusByLevel [{5,+4},{10,+5}], dexCap 1;
+  feats/reinforced-chassis.grantsItems [{reinforced-chassis-armor,1}]. Mirror feat-3095 prints
+  exactly that ladder. A settle here would be stale — nothing reports the record.
+
+psychic-dedication#no-focus-point     DONE (residual, no NEW settle — correct). VERIFIED_EQUIVALENT
+  ['psychic-dedication'] = ['focus'] is an earlier batch's key and still the only one; nothing
+  reports the record today (wg-diff missing=[]). feats/psychic-dedication has no focusPoolBonus;
+  feats/psi-development has focusPoolBonus 1. aonIds check out (dedication feat-8391, the pool on
+  feat-8395).
+
+elemental-existence#adopted-ancestry  DONE (residual). wg-diff missing=[], extra=['grantsRecord'];
+  EXPERIENCE OK. featFeatGrants.ts:494 'elemental-existence': ['adopted-ancestry'],
+  featPickGrants.ts:290 offers the 1st-level oread feat, and the record carries
+  extraAncestryFeatTraits ['oread']. Mirror feat-4378 prints the grant.
+
+thats-not-natural#circumstance-bonus  DONE (residual). wg-diff weOnly extra=['skill'], EXPERIENCE OK.
+  situationalBonuses.ts:1175 stars initiative "+1 circumstance (+2 if master in Survival)"; the
+  Perception-DC +1 sits on the record's own `situational` and carries no ladder. Mirror feat-3897
+  re-read in full: the only thing the text calls a circumstance bonus is the initiative bonus, which
+  is also what desk #34's answer says it re-checked. Our placement is the printed one.
+
+devils-eye#legal-lore-rank            DONE (residual). featGrantsAuto.ts:269 lore:legal expert with
+  rankUpgrade [{7,master},{15,legendary}]; grantsActions ['objection'] and actions/objection exists
+  in core.json; situationalBonuses.ts:1305 carries the +1 on {kind:'skill', detail:'all'} — which is
+  right, because feat-8404 prints *"any check you make to read or negotiate a treatise, contract, or
+  similar text"*, i.e. not one skill. (That is why the test probes it on the Thievery row; the probe
+  is odd-looking but sound.)
+
+pistol-wand#stock-runes               DONE (note-only edit, key untouched — correct). wg-identity
+  --batch 037 reports 3 records, none of them pistol-wand. The rewritten comment is accurate:
+  wg-identity compares NAMES, so no key of SETTLED_IDENTITIES could ever reach the rune half.
+  core.json: items/pistol-wand builtInRunes {potency:1} + combinationMeleeForm 'pistol-wand-stock';
+  items/pistol-wand-stock builtInRunes {potency:1} + formOf 'pistol-wand'. Mirror equipment-3589
+  prints the carry-over verbatim.
+
+keys-to-destiny#labor-lore            DONE (residual). wg-diff `agree`, missing=[], extra=[].
+  backgrounds/keys-to-destiny.trainedLoreOptions is the nine printed lores in order; nothing writes
+  herbalism for the labor pick. Mirror background-367 lists the same nine.
+
+concordance-scout#six-lores           DONE (residual). backgrounds/concordance-scout.choice carries
+  all six planar lores, each with a clean value and label (no stray space). Mirror background-383
+  lists the same six including Plane of Earth.
+
+poppet#fire-weakness                  DONE (residual, no NEW settle — correct: the existing
+  SETTLED_IDENTITIES['poppet'] = ['grants'] is about ability-block names and cannot reach a formula,
+  and nothing reports the record). ancestries/poppet.weaknesses is
+  [{fire, 'max(1,floor(@actor.level/3))'}]; the test measures 1/1/3 at levels 1/2/9 through
+  deriveDefenses on BUILT characters. Mirror ancestry-49: *"weakness to fire damage equal to
+  one-third your level (minimum 1)"*.
+
+goloma#languages                      DONE (residual, no NEW settle, same reasoning).
+  ancestries/goloma.languages.granted is ['goloma','mwangi']; languages/goloma and languages/mwangi
+  both exist. Mirror ancestry-45 prints "Languages Goloma Mwangi".
+
+
+SPEC ROWS, CHECKED AS ROWS
+--------------------------
+work/.b037-rows-instruments-4.json holds 12 findings and ZERO backfillRows, so there is no target
+record, no re-emitted value, no created record and no id reference to check. I confirmed the absence
+is the right answer rather than an omission: every one of the twelve is covered by the 28-id answer
+in work/desk-answers-2026-09-10.json ("Keep the app on all 28 … nothing changes for a player"), and
+every printed clause above is already delivered by a shipped carrier with a live reader.
+Collision scan across ALL fourteen batch-037 spec files: 99 rows total, none on any of this chunk's
+sixteen touched record ids (the twelve plus reinforced-chassis-armor, psi-development,
+barbarian-resiliency, pistol-wand-stock) — no cross-spec collision.
+Duplicate-key scan of the three comparer registries: wg-diff 182 keys, wg-values 51, wg-identity 145,
+zero duplicates (the two 'armor-innovation' hits sit in different objects, OFF_RECORD_OPTIONS and
+SETTLED_IDENTITIES — not a collision).
+Every AoN doc id quoted in the code comments and tests matches the record's own aonId field.
+
+MANIFEST
+--------
+work/.b037-specs.json now holds 16 entries for 14 families (data-rows-1 and data-rows-3 each carry a
+second `created-prose` entry — not a duplicate). No family entry was dropped. The instruments-4 entry
+lists exactly the paths this chunk touched: the spec, the report, test/batch037-instruments-4.test.ts,
+scripts/wg-diff.mjs, scripts/wg-values.mjs, scripts/wg-identity.mjs. No superseding row exists in this
+chunk, so no `supersedes: true` was owed.
+
+
+DATA STILL NEEDED
+-----------------
+(none — confirmed by measurement, not accepted on the report's word: no finding in this chunk needs a
+backfill row)
+
+
+CROSS-FILE GAPS
+---------------
+- work/owner-questions.json (prohibited for the builder and for me to edit): all twelve records are
+  still in `open` with desk numbers #19 #27 #32 #34 #38 #53 #65 #66 #74 #75 #76 #77, although the
+  28-id answer in work/desk-answers-2026-09-10.json rules every one of them (`ruled` holds 6 entries,
+  none of them these). VERIFIED CONSEQUENCE, both halves: while they sit in `open`,
+  wg-batch-close.mjs:258 derives OWNER-QUEUED for all twelve (its desk map is open+deferred,
+  close.mjs:110-117), and wg-batch-gate.mjs parks them at KINDS (:179), VALUES (:194), IDENTITY (:217)
+  and EXPERIENCE (:597) as "await his ruling". The driver must move the twelve from `open` to `ruled`.
+  ⚠ THE MOVE IS WHAT MAKES THIS CHUNK'S TWO SETTLES LOAD-BEARING, and I confirmed it in the gate
+  source: `ownerRuled` is consulted ONLY in the EXPERIENCE gate (:598) — the data comparers have no
+  ruled-id park at all, so the moment the entries move, instinct-ability would fail KINDS and
+  tumbling-theft would fail VALUES if the two settles were not in place. tumbling-theft's
+  NO-SHEET-EFFECT stays parked across the move (queuedFor before, ownerRuled after), so the builder's
+  decision not to add an experience-instrument-limits.json entry survives the move too.
+- scripts/wg-casting.mjs still cannot be run as `node scripts/wg-casting.mjs` — reproduced:
+  ERR_MODULE_NOT_FOUND for '…/src/rules/seed' (extensionless import). The pipeline runs it as
+  `npx jiti scripts/wg-casting.mjs` (wg-batch-run.mjs:352, and the baseline allowlist at :1240), which
+  works. Pre-existing, unrelated to this chunk; recorded so the bare-node failure is not mistaken for
+  a regression.
+
+(2 lines stand. Nothing in the builder's two lists was wrong, and I found nothing to add.)
+
+
+TEACH LINES, ONE PER FINDING ID (for scripts/wg-batch-close.mjs)
+----------------------------------------------------------------
+instinct-ability#no-hit-points — instrument settle VERIFIED, comparer taught: VERIFIED_EQUIVALENT['instinct-ability']=['hp'] in scripts/wg-diff.mjs, mutation-proof.
+tumbling-theft#thievery — instrument settle VERIFIED, comparer taught: SETTLED_VALUES['tumbling-theft']=['skill|stealth'] in scripts/wg-values.mjs, mutation-proof.
+pistol-wand#stock-runes — instrument settle already in place and VERIFIED: SETTLED_IDENTITIES['pistol-wand']=['items'] in scripts/wg-identity.mjs, note updated to the ruling; comparer clean.
+psychic-dedication#no-focus-point — instrument residual VERIFIED: the comparer was taught in an earlier batch (VERIFIED_EQUIVALENT['psychic-dedication']=['focus']); nothing reports it.
+reinforced-chassis#ac-scaling — instrument residual VERIFIED: every comparer agrees, no settle owed, printed AC ladder pinned on the shipped item.
+elemental-existence#adopted-ancestry — instrument residual VERIFIED: every comparer agrees, no settle owed, the printed grant is live in featFeatGrants.ts.
+thats-not-natural#circumstance-bonus — instrument residual VERIFIED: every comparer agrees, no settle owed, the printed initiative ladder is the star we ship.
+devils-eye#legal-lore-rank — instrument residual VERIFIED: every comparer agrees, no settle owed, the printed Legal Lore ladder and Objection reaction are live.
+keys-to-destiny#labor-lore — instrument residual VERIFIED: every comparer agrees, no settle owed, all nine printed lores ship and Labor trains Labor.
+concordance-scout#six-lores — instrument residual VERIFIED: every comparer agrees, no settle owed, all six printed planar lores ship.
+poppet#fire-weakness — instrument residual VERIFIED: no comparer reports it, no new settle owed, the printed minimum-1 formula is measured on built characters.
+goloma#languages — instrument residual VERIFIED: no comparer reports it, no new settle owed, the printed Goloma/Mwangi pair is granted.
+
+
+MANIFEST STAGE[] FOR MY OWN EDITS
+---------------------------------
+(none — I changed no file. The only artefact I created, a scratch wg-diff dump, was deleted.)

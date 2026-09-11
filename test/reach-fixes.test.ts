@@ -69,13 +69,22 @@ describe('Deviant abilities', () => {
 });
 
 describe('Hellknight Order Training', () => {
-  it('offers the 14 order feats it says it grants', () => {
+  /*
+   * `bonus` used to mean exactly one thing — a feat Hellknight Order Training hands over — so the list
+   * and the category were the same set. Batch 037 created feats/haunting-memories-skill-feat as the
+   * carrier for the SECOND thing Haunting Memories gives you each morning (*"You also gain one skill
+   * feat with a minimum requirement of your new rank in the chosen skill"*, feat-7701); it is granted
+   * by its parent and costs no slot, which is what `bonus` means, so it is in the category and not in
+   * this list. Named here one by one rather than loosened to a filter: a THIRD stray in `bonus` still
+   * has to fail, because that is how an order feat would go missing from the picker.
+   */
+  // batch 037: haunting-memories#skill-feat-pick
+  it('offers the 14 order feats it says it grants, and haunting-memories-skill-feat is the only other bonus feat', () => {
     const spec = FEAT_PICK_GRANTS['order-training'];
     expect(spec?.ids).toHaveLength(14);
-    // Every one exists, and every category-'bonus' feat in the data is covered by the list.
     for (const id of spec!.ids!) expect(c().feats[id], id).toBeTruthy();
     const bonusIds = Object.values(c().feats).filter((f) => f.category === 'bonus').map((f) => f.id).sort();
-    expect([...spec!.ids!].sort()).toEqual(bonusIds);
+    expect(bonusIds).toEqual([...spec!.ids!, 'haunting-memories-skill-feat'].sort());
   });
 });
 
